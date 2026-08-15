@@ -2794,5 +2794,1020 @@
         "interpretation_fa": "مروری روایتی است که اصل رزیستنس فرم و ماهیت صفر و یکی آن را جمع‌بندی می‌کند و می‌گوید رسیدن به آن در مولرها سخت‌تر از قدامی‌هاست. نقش گراو در مارجین‌های نامنظم و ناسازگاری روش Weed با دو روش دیگر، برداشت‌های عملی‌اش هستند. رابطه‌ی رزیستنس فرم با موفقیت بالینی را خودش هم محل مناقشه می‌داند."
       }
     ]
+  },
+  "sharehub/share-11": {
+    "scored_at": "2026-08-15",
+    "sources": [
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Association between signs and symptoms of bruxism and presence of tori: a systematic review.",
+          "authors": "Bertazzo-Silveira E, Stuginski-Barbosa J, Porporatti AL, Dick B, Flores-Mir C, Manfredini D, De Luca Canto G",
+          "year": 2017,
+          "journal": "Clinical Oral Investigations",
+          "doi": "10.1007/s00784-017-2081-7"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review of observational studies (ETIOLOGY SR/meta-analysis row, 100)",
+          "evidence_quote": "This systematic review aims to answer the question: \"Is there an association between any specific signs and symptoms of bruxism and the presence of tori?\""
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "Search-strategies were developed for five databases, in addition to three gray literature's databases.",
+              "note": "پنج دیتابیس، بالاتر از آستانه‌ی دو دیتابیسِ بند 3b-i."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "The risk of bias was evaluated using the \"Meta-Analysis of Statistics Assessment and Review Instrument\"."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "از ۵۷۵ مطالعه فقط پنج تا وارد شد و هر پنج تا سوگیری متوسط یا بالا داشتند. نتیجه‌ی قابل استفاده‌اش باریک است: سایش غیرطبیعی دندان با توروس، به‌ویژه توروس مندیبولاریس، همراهی دارد. برای بقیه‌ی نشانه‌های بروکسیسم خود مقاله می‌گوید شواهد نه تأیید می‌کند نه رد."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Ultrasound analysis of the masseter and anterior temporalis muscles in edentulous patients rehabilitated with full-arch fixed implant-supported prostheses.",
+          "authors": "Alkaya B, Duyan Yüksel H, Evlice B, Özcan M, Türer OU, İşler SÇ, Haytaç MC",
+          "year": 2024,
+          "journal": "Clinical Oral Investigations",
+          "doi": "10.1007/s00784-024-05676-5"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 65,
+          "anchor": "prospective non-randomized controlled clinical trial (THERAPY prospective cohort / non-randomized trial row, 65)",
+          "evidence_quote": "The study was designed as a prospective, single-center, controlled clinical trial."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "low",
+              "evidence_quote": "Group II (Control Group): 30 dentate individuals of an age and sex-matched group.",
+              "note": "تطبیق بر اساس سن و جنس صریحاً گزارش شده است."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "A total of 60 participants were included in the present study.",
+              "note": "تعداد و تقسیم گروه‌ها آمده اما معیار ورود و خروج و نحوه‌ی انتخاب در چکیده نیست."
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "Group I (Test Group): 30 edentulous patients who received implant-supported fixed prostheses"
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده درباره‌ی داده‌های ازدست‌رفته یا ریزش نمونه چیزی نمی‌گوید؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "Ultrasonography was used to measure the cross-sectional thickness of the left and right musculus masseter and anterior temporalis",
+              "note": "ابزار و زمان‌بندی سنجش شرح داده شده اما کورسازی ارزیاب ذکر نشده؛ دامنه‌ای که توصیف شده ولی یک عنصر شناخته‌شده‌اش غایب است، طبق 3b برابر some_concerns است نه high."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه تصادفی‌سازی‌شده نیست."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 36,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۳۶ و باند D گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "در بی‌دندان‌های بازسازی‌شده با پروتز ثابت متکی بر ایمپلنت، ضخامت ماستر و تمپورال قدامی در شش ماه بالا می‌رود و به سطح افراد دندان‌دار می‌رسد. عدم تقارن چپ و راست هم کم می‌شود. عدد شش ماه، بازه‌ی انتظار عملی را برای بیمار روشن می‌کند. حجم نمونه کوچک و گروه‌ها تصادفی‌سازی نشده‌اند."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Electromyographic Evaluation of Muscle Activity in Patients Rehabilitated with Full Arch Fixed Implant-Supported Prostheses.",
+          "authors": "Mostovei M, Solomon O, Chele N, Sinescu C, Duma VF, Mostovei A",
+          "year": 2023,
+          "journal": "Medicina (Kaunas)",
+          "doi": "10.3390/medicina59020299"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 65,
+          "anchor": "prospective non-randomized comparative study with a dentate control group (THERAPY prospective cohort / non-randomized trial row, 65)",
+          "evidence_quote": "A total of 63 patients were accepted in the study. They were divided into a first control (dentate) group (CG) and a second study group (edentulous, SG)."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ تطبیق، محدودسازی یا تعدیلی برای مخدوش‌گرها گزارش نمی‌کند و درباره‌اش ساکت است؛ تحت ABSTRACT_ONLY این NR است، نه high."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "A total of 63 patients were accepted in the study.",
+              "note": "تعداد و تقسیم گروه‌ها آمده اما معیار ورود و نحوه‌ی انتخاب در چکیده نیست."
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "For the latter, 30 patients received 204 two-stage implants immediately loaded with provisional prostheses."
+            },
+            {
+              "domain": "missing data",
+              "rating": "some_concerns",
+              "evidence_quote": "Surface electromyography (EMG) was assessed at the time of prostheses fixation, while for some patients it was applied six months after the fixation of the fixed prostheses, as well.",
+              "note": "چکیده خودش می‌گوید سنجش شش‌ماهه فقط برای بخشی از بیماران انجام شده و آن‌ها گروه سومی تشکیل داده‌اند؛ دامنه پرداخته شده اما ناقص، پس some_concerns."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "low",
+              "evidence_quote": "All assessments were performed during the processes of clenching and mastication."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه تصادفی‌سازی‌شده نیست."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 36,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۳۶ و باند D گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "فعالیت EMG بیماران بلافاصله بعد از نصب پروتز ثابت متکی بر ایمپلنت با افراد دندان‌دار تفاوت معنادار نداشت و بعد از شش ماه هم تغییر نکرد. برداشت عملی این است که بازگشت توان انقباض عضله به دوره‌ی سازگاری نیاز ندارد. گروه‌ها تصادفی‌سازی نشده‌اند و سنجش شش‌ماهه فقط روی بخشی از بیماران انجام شده."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Bruxism and dental implant failures: a multilevel mixed effects parametric survival analysis approach.",
+          "authors": "Chrcanovic BR, Kisch J, Albrektsson T, Wennerberg A",
+          "year": 2016,
+          "journal": "Journal of Oral Rehabilitation",
+          "doi": "10.1111/joor.12431"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 60,
+          "anchor": "retrospective cohort of 10 096 implants (ETIOLOGY has no retrospective-cohort row; routed to the case-control row, 60, per Step 2 routing)",
+          "evidence_quote": "This retrospective study is based on 2670 patients who received 10 096 implants at one specialist clinic."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "low",
+              "evidence_quote": "Multilevel mixed effects parametric survival analysis was used to test the association between bruxism and risk of implant failure adjusting for several potential confounders.",
+              "note": "همین مدل چندسطحی، خوشه‌ای‌بودن ایمپلنت‌ها در یک بیمار را هم می‌پوشاند، پس نقص واحدِ تحلیل (Step 3c) شلیک نمی‌کند."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "This retrospective study is based on 2670 patients who received 10 096 implants at one specialist clinic.",
+              "note": "جمعیت منبع نام برده شده اما معیار ورود، بازه‌ی زمانی و پیاپی‌بودن بیماران در چکیده نیامده."
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "were used to define and diagnose the condition"
+            },
+            {
+              "domain": "missing data",
+              "rating": "some_concerns",
+              "evidence_quote": "The number of implants with information available for all variables totalled 3549, placed in 994 patients, with 179 implants reported as failures.",
+              "note": "چکیده صریحاً می‌گوید تحلیل روی زیرمجموعه‌ی دارای داده‌ی کامل انجام شده؛ دامنه پرداخته شده ولی روش جبران داده‌ی ازدست‌رفته نیامده، پس some_concerns."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده روش سنجش پیامد را شرح نمی‌دهد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه تصادفی‌سازی‌شده نیست."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 33,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۳۳ و باند D گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "روی داده‌ی یک کلینیک، نرخ شکست ایمپلنت در بروکسرها ۱۳ درصد در برابر ۴٫۶ درصد بود و مدل تعدیل‌شده خطر را حدود سه برابر برآورد کرد. عدد قابل استفاده در مشاوره‌ی پیش از درمان همین است. طرح گذشته‌نگر است و تحلیل فقط روی زیرمجموعه‌ی دارای داده‌ی کامل انجام شده."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Bruxism and dental implants: A systematic review and meta-analysis.",
+          "authors": "Häggman-Henrikson B, Ali D, Aljamal M, Chrcanovic BR",
+          "year": 2024,
+          "journal": "Journal of Oral Rehabilitation",
+          "doi": "10.1111/joor.13567"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review with pairwise meta-analysis of observational studies (ETIOLOGY SR/meta-analysis row, 100)",
+          "evidence_quote": "The results of the present systematic review show that implants placed in probable bruxers present a significantly higher risk of failure than implants placed in non-bruxers."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "low",
+              "evidence_quote": "The study was registered in PROSPERO (CRD42021238397)."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "An electronic search September 2022 in PubMed/Medline, Web of Science and Science Direct was combined with a hand search.",
+              "note": "سه دیتابیس، بالاتر از آستانه‌ی دو دیتابیسِ بند 3b-i؛ هند‌سرچ جداگانه شمرده نمی‌شود."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "Two independent reviewers carried out abstract screening, full-text assessment, quality assessment (National Institutes of Health tool) and data extraction."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "A pairwise random-effect meta-analysis was carried out."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.75
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 75,
+        "band": "B",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۷۵ و باند B گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "بیست‌وهفت مطالعه با بیش از دوازده هزار ایمپلنت جمع شده و خطر شکست در بروکسرهای محتمل حدود دو برابر برآورد شده. متارگرسیون نشان داد طول پیگیری این نسبت را تغییر نمی‌دهد. تحلیل استخوان مارژینال ممکن نشد چون مطالعات داده را تفکیک‌نشده گزارش کرده بودند. پروتکل ثبت‌شده و ارزیابی کیفیت، این را قوی‌ترین منبع صفحه می‌کند."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Bruxism in implant-supported rehabilitations: a narrative review of clinical complications and management strategies.",
+          "authors": "Shafiee E, Nourizadeh A",
+          "year": 2025,
+          "journal": "BMC Oral Health",
+          "doi": "10.1186/s12903-025-07005-y"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review of complications and management strategies (THERAPY narrative review row, 15)",
+          "evidence_quote": "A comprehensive narrative review was conducted using PubMed/MEDLINE, Embase, Web of Science, Scopus, Cochrane Library, and Science Direct databases covering publications from January 1990 to December 2024."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "using PubMed/MEDLINE, Embase, Web of Science, Scopus, Cochrane Library, and Science Direct databases covering publications from January 1990 to December 2024",
+              "note": "شش دیتابیس با بازه‌ی زمانی مشخص، بالاتر از آستانه‌ی دو دیتابیسِ بند 3b-i."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "مرور روایتی است، پس دامنه‌ی دو تا چهار و نیم برابری خطر شکست را از مرورهای دیگر نقل می‌کند نه از تحلیل خودش. سهم عملی‌اش جمع‌بندی راهکارهاست: اسپلینت اکلوزال، طراحی پروتز اصلاح‌شده و پروتکل پیگیری. خودش هم می‌گوید شواهد درباره‌ی تحلیل استخوان پری‌ایمپلنت محدود است."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Bruxism and dental implant treatment complications: a retrospective comparative study of 98 bruxer patients and a matched group.",
+          "authors": "Chrcanovic BR, Kisch J, Albrektsson T, Wennerberg A",
+          "year": 2017,
+          "journal": "Clinical Oral Implants Research",
+          "doi": "10.1111/clr.12844"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 60,
+          "anchor": "matched retrospective comparative (case-control) study (ETIOLOGY case-control row, 60)",
+          "evidence_quote": "A case-control matching model was used to match the bruxers with a group of non-bruxers, based on five variables."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "low",
+              "evidence_quote": "A case-control matching model was used to match the bruxers with a group of non-bruxers, based on five variables."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "low",
+              "evidence_quote": "Patients being diagnosed as bruxers were identified within a group of patients consecutively treated with implant-supported prostheses at one specialist clinic"
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "A diagnostic grading system of \"possible,\" \"probable,\" and \"definite\" sleep or awake bruxism was used, according to a recent published international consensus."
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده درباره‌ی داده‌های ازدست‌رفته یا ریزش نمونه چیزی نمی‌گوید؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "Implant-, prosthetic-, and patient-related data were collected, as well as 14 mechanical complications, and compared between groups.",
+              "note": "فهرست پیامدها شمرده شده اما نحوه‌ی ثبت و کورسازی ارزیاب در چکیده نیامده."
+            }
+          ],
+          "multiplier": 0.75
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه تصادفی‌سازی‌شده نیست."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 45,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۴۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "نودوهشت بروکسر با گروه همتاشده بر پنج متغیر مقایسه شده‌اند و نسبت شانس شکست ایمپلنت ۲٫۷۱ درآمده. نکته‌ی عملی‌اش جنس عوارض است: شکست مکانیکی و تکنیکی رستوریشن هم در بروکسرها بیشتر بود. طرح گذشته‌نگر است و خود مقاله می‌گوید عوامل خطر دیگر هم ممکن است اثر گذاشته باشند."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "DIAGNOSTIC",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "International consensus on the assessment of bruxism: Report of a work in progress.",
+          "authors": "Lobbezoo F, Ahlberg J, Raphael KG, Wetselaar P, Glaros AG, Kato T, Santiago V, Winocur E, De Laat A, De Leeuw R, Koyano K, Lavigne GJ, Svensson P, Manfredini D",
+          "year": 2018,
+          "journal": "Journal of Oral Rehabilitation",
+          "doi": "10.1111/joor.12663"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "expert consensus report on how bruxism is defined and assessed, with no search or synthesis method (DIAGNOSTIC narrative review row, 15)",
+          "evidence_quote": "This study discusses the need for an updated consensus and has the following aims: (i) to further clarify the 2013 definition and to develop separate definitions for sleep and awake bruxism;"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده نام هیچ دیتابیس یا استراتژی جست‌وجویی نمی‌آورد؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش DIAGNOSTIC امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "سند اجماع است نه مطالعه، پس امتیاز ساختاری‌اش پایین می‌ماند در حالی که کاربردش زیاد است: تعریف جداگانه‌ی بروکسیسم خواب و بیداری، و اینکه در فرد سالم بروکسیسم رفتار است نه اختلال. همچنین می‌گوید نقطه‌ی برش استاندارد برای حضور یا نبود بروکسیسم نباید استفاده شود."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Sleep bruxism in individuals with and without attrition-type tooth wear: An exploratory matched case-control electromyographic study.",
+          "authors": "Jonsgar C, Hordvik PA, Berge ME, Johansson AK, Svensson P, Johansson A",
+          "year": 2015,
+          "journal": "Journal of Dentistry",
+          "doi": "10.1016/j.jdent.2015.10.002"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 60,
+          "anchor": "matched case-control electromyographic study (ETIOLOGY case-control row, 60)",
+          "evidence_quote": "Sixteen individuals with pronounced attritional-type tooth wear were compared with sex and aged matched controls without tooth wear"
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "low",
+              "evidence_quote": "compared with sex and aged matched controls without tooth wear"
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "low",
+              "evidence_quote": "The attrition group presented incisal/occlusal attrition wear into dentin and matching wear facets between opposing anterior teeth. The controls had negligible signs of incisal/occlusal wear and a minimal number of matching wear facets."
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "by means of measurement of electromyographic (EMG) activity during a minimum of four consecutive nights of sleep"
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده درباره‌ی داده‌های ازدست‌رفته یا ریزش نمونه چیزی نمی‌گوید؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "low",
+              "evidence_quote": "none of the measures of jaw muscle EMG activity during sleep, as recorded by the portable EMG equipment, differed significantly between the attrition group and the matched controls"
+            }
+          ],
+          "multiplier": 0.75
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه تصادفی‌سازی‌شده نیست."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 45,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۴۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "در افراد با سایش اتریشن‌تایپ، بروکسیسم خودگزارش‌شده بیشتر بود اما فعالیت EMG حین خواب هیچ تفاوت معناداری با گروه کنترل نداشت. یعنی سایش، شاهدِ فعالیت بروکسیسم امروز نیست. حجم نمونه شانزده نفر در هر گروه است و خود مقاله خودش را اکتشافی می‌نامد."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Epidemiology of bruxism in adults: a systematic review of the literature.",
+          "authors": "Manfredini D, Winocur E, Guarda-Nardini L, Paesani D, Lobbezoo F",
+          "year": 2013,
+          "journal": "Journal of Orofacial Pain",
+          "doi": "10.11607/jop.921"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review of prevalence studies (ETIOLOGY SR/meta-analysis row, 100)",
+          "evidence_quote": "To perform a systematic review of the literature dealing with the prevalence of bruxism in adult populations."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "some_concerns",
+              "evidence_quote": "A systematic search of the medical literature was performed to identify all peer-reviewed English-language papers",
+              "note": "جست‌وجو اعلام شده اما نام هیچ دیتابیسی نیامده، پس آستانه‌ی «کمتر از دو دیتابیس» بند 3b-i قابل احراز نیست و رتبه some_concerns می‌ماند نه high."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "Quality assessment of the reviewed papers was performed according to the Methodological evaluation of Observational REsearch (MORE) checklist"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "از سی‌وپنج مقاله فقط هفت‌تا اعتبار بیرونی کافی داشتند، پس اعداد شیوع را باید با احتیاط خواند. بروکسیسم خواب در حدود سیزده درصد و بروکسیسم بیداری بین بیست‌ودو تا سی‌ویک درصد گزارش شده. دو یافته‌ی پایدارتر: بی‌ارتباطی با جنسیت و کاهش شیوع با بالا رفتن سن."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "The effect of bruxism on treatment planning for dental implants.",
+          "authors": "Misch CE",
+          "year": 2002,
+          "journal": "Dentistry Today",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative clinical review of treatment planning under parafunctional load (THERAPY narrative review row, 15)",
+          "evidence_quote": "Bruxism is a potential risk factor for implant failure."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده نام هیچ دیتابیس یا استراتژی جست‌وجویی نمی‌آورد؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "متنی آموزشی از سال ۲۰۰۲ است و پشتوانه‌اش استدلال بیومکانیکی است نه داده‌ی تجمیع‌شده. کاری که می‌کند ترجمه‌ی نیرو به تصمیم طراحی است: ایمپلنت بیشتر و پهن‌تر، حذف کانتی‌لیور، گاید قدامی و سطح اکلوزال فلزی. همین فهرست هنوز چارچوب طرح درمان بیمار پرنیرو را می‌سازد."
+      }
+    ]
   }
 }
