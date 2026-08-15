@@ -101928,7 +101928,7 @@
       "journal": "British Dental Journal",
       "crossref_year": 2010,
       "subjects": [],
-      "abstract": "",
+      "abstract": "Abstract The 'ferrule effect' is a long standing, accepted concept in dentistry that is a foundation principle for the restoration of teeth that have suffered advanced structure loss. A review of the literature based on a search in PubMed was performed looking at the various components of the ferrule effect, with particular attention to some of the less explored dimensions that influence the effectiveness of the ferrule when restoring severely broken down teeth. These include the width of the ferrule, the effect of a partial ferrule, the influence of both, the type of the restored tooth and the lateral loads present as well as the well established 2 mm ferrule height rule. The literature was collaborated and a classification based on risk assessment was derived from the available evidence. The system categorises teeth according to the effectiveness of ferrule effect that can be achieved based on the remaining amount of sound tooth structure. Furthermore, risk assessment for failure can be performed so that the practitioner and patient can better understand the prognosis of restoring a particular tooth. Clinical recommendations were extrapolated and presented as guidelines so as to improve the predictability and outcome of treatment when restoring structurally compromised teeth. The evidence relating to restoring the endodontic treated tooth with extensive destruction is deficient. This article aims to rethink ferrule by looking at other aspects of this accepted concept, and proposes a paradigm shift in the way it is thought of and utilised.",
       "resolution_method": "pdf-doi",
       "display_title": "Rethinking ferrule – a new approach to an old dilemma",
       "authors": [
@@ -102611,132 +102611,6 @@
       "name_bucket": "meaningful",
       "semantic_tagged": true,
       "display_title": "intendodonticj-2022-patel-presentstatusandfuturedirectionsverticalrootfracturesinrootfilledteeth"
-    },
-    {
-      "id": "P2120",
-      "title": "jotkowitz2010",
-      "file_name": "jotkowitz2010.pdf",
-      "topic": "Post & core",
-      "topic_path": "Post & core",
-      "type": "primary/other",
-      "local_path": "E:\\Paper farzad\\Post & core\\jotkowitz2010.pdf",
-      "file_size": 573479,
-      "key_finding": "",
-      "clinical_bottom_line": "",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1ubFdmTaTvNIGjkRZgYnbXqc4AVmY7u4H",
-      "drive_view": "https://drive.google.com/file/d/1ubFdmTaTvNIGjkRZgYnbXqc4AVmY7u4H/view",
-      "drive_id": "1ubFdmTaTvNIGjkRZgYnbXqc4AVmY7u4H",
-      "tags": [
-        "ferrule",
-        "topic:post-core",
-        "post-and-core"
-      ],
-      "name_bucket": "author_year",
-      "semantic_tagged": true,
-      "real_title": "Rethinking ferrule – a new approach to an old dilemma",
-      "doi": "10.1038/sj.bdj.2010.580",
-      "journal": "British Dental Journal",
-      "crossref_year": 2010,
-      "subjects": [],
-      "abstract": "",
-      "resolution_method": "pdf-doi",
-      "display_title": "Rethinking ferrule – a new approach to an old dilemma",
-      "authors": [
-        "Anna Jotkowitz",
-        "Naama Samet"
-      ],
-      "concepts": [
-        {
-          "name": "Ferrule",
-          "score": 0.9864
-        },
-        {
-          "name": "Dilemma",
-          "score": 0.5843
-        },
-        {
-          "name": "Dentistry",
-          "score": 0.5589
-        },
-        {
-          "name": "Medicine",
-          "score": 0.5232
-        },
-        {
-          "name": "Orthodontics",
-          "score": 0.4415
-        },
-        {
-          "name": "Computer science",
-          "score": 0.3329
-        }
-      ]
-    },
-    {
-      "id": "P2121",
-      "title": "jotkowitz2010مهم",
-      "file_name": "jotkowitz2010مهم.pdf",
-      "topic": "Post & core",
-      "topic_path": "Post & core",
-      "type": "primary/other",
-      "local_path": "E:\\Paper farzad\\Post & core\\jotkowitz2010مهم.pdf",
-      "file_size": 573479,
-      "key_finding": "",
-      "clinical_bottom_line": "",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1ubFdmTaTvNIGjkRZgYnbXqc4AVmY7u4H",
-      "drive_view": "https://drive.google.com/file/d/1ubFdmTaTvNIGjkRZgYnbXqc4AVmY7u4H/view",
-      "drive_id": "1ubFdmTaTvNIGjkRZgYnbXqc4AVmY7u4H",
-      "tags": [
-        "ferrule",
-        "topic:post-core",
-        "post-and-core"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "Rethinking ferrule – a new approach to an old dilemma",
-      "doi": "10.1038/sj.bdj.2010.580",
-      "journal": "British Dental Journal",
-      "crossref_year": 2010,
-      "subjects": [],
-      "abstract": "",
-      "resolution_method": "pdf-doi",
-      "display_title": "Rethinking ferrule – a new approach to an old dilemma",
-      "authors": [
-        "Anna Jotkowitz",
-        "Naama Samet"
-      ],
-      "concepts": [
-        {
-          "name": "Ferrule",
-          "score": 0.9864
-        },
-        {
-          "name": "Dilemma",
-          "score": 0.5843
-        },
-        {
-          "name": "Dentistry",
-          "score": 0.5589
-        },
-        {
-          "name": "Medicine",
-          "score": 0.5232
-        },
-        {
-          "name": "Orthodontics",
-          "score": 0.4415
-        },
-        {
-          "name": "Computer science",
-          "score": 0.3329
-        }
-      ]
     },
     {
       "id": "P2122",
@@ -137602,5 +137476,5 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2207
+  "total_papers": 2205
 }

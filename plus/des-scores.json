@@ -287,6 +287,20 @@
         },
         "penalties": [
           {
+            "item": "CoI not disclosed",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors do not report any conflicts of interest related to the present study.",
+            "note": "disclosed; funded by the authors' own institution"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "RCTs only; not applicable to a retrospective cohort"
+          },
+          {
             "item": "no sample size justification / power analysis",
             "base_points": 5,
             "points": 3,
@@ -294,11 +308,11 @@
             "note": "no power or sample-size calculation anywhere in the paper; not covered by ROBINS-I, so no double jeopardy"
           },
           {
-            "item": "CoI not disclosed",
-            "base_points": 8,
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
             "points": 0,
-            "evidence_quote": "The authors do not report any conflicts of interest related to the present study.",
-            "note": "disclosed; funded by the authors' own institution"
+            "evidence_quote": "after a mean loading time of 13.3 ± 2.7 years (range: 10–18.6 years)",
+            "note": "پیامدِ مطالعه بقای ایمپلنت و تغییر سطح استخوان مارجینال است؛ میانگین ۱۳٫۳ سال بارگذاری بسیار فراتر از چیزی است که این پیامدها لازم دارند."
           }
         ],
         "commentary_checklist": null,
@@ -369,11 +383,25 @@
             "note": "read in full: no conflict-of-interest, funding, grant or acknowledgement statement anywhere in the paper, while every implant studied is one manufacturer's (Institut Straumann AG)"
           },
           {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "RCTs only; not applicable to a retrospective controlled comparison"
+          },
+          {
             "item": "no sample size justification / power analysis",
             "base_points": 5,
             "points": 0,
             "evidence_quote": "a post hoc power analysis based on assessed differences between the groups and variances in the samples 17 patients in each group were required",
             "note": "a power analysis is reported, though post hoc rather than a priori"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "After a mean observation period of 5.3 years",
+            "note": "پیامدِ اصلی تغییر سطح استخوان اطراف ایمپلنت است؛ میانگین دوره‌ی مشاهده ۵٫۳ سال (بازه‌ی ۳ تا ۱۲٫۷ سال) برای همین پیامد کافی است."
           }
         ],
         "commentary_checklist": null,
