@@ -10811,9 +10811,9 @@
         "des_version": "1.9",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
-        "text_basis": "ABSTRACT_ONLY",
+        "text_basis": "FULL_TEXT",
         "citation": {
-          "title": "Rethinking ferrule--a new approach to an old dilemma.",
+          "title": "Rethinking ferrule - a new approach to an old dilemma",
           "authors": "Jotkowitz A, Samet N",
           "year": 2010,
           "journal": "British Dental Journal",
@@ -10833,55 +10833,55 @@
           "domains": [
             {
               "domain": "protocol registered before commencement",
-              "rating": "NR",
+              "rating": "high",
               "evidence_quote": "",
-              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+              "note": "غایب است. بخش‌های خوانده‌شده: بلوک شناسنامه‌ی مقاله (Refereed Paper / Accepted 9 April 2010 / ©British Dental Journal 2010; 209: 25-33)، چکیده، INTRODUCTION، PART 1: LITERATURE REVIEW، PART 2: FERRULE CLASSIFICATION، CONCLUSION و انتهای سند پس از منبع ۱۰۲. هیچ اشاره‌ای به protocol، registration یا PROSPERO در کل متن نیست."
             },
             {
               "domain": "adequacy of the literature search",
               "rating": "high",
               "evidence_quote": "A review of the literature based on a search in PubMed was performed",
-              "note": "آستانه‌ی 3b-i: کمتر از دو دیتابیس کتاب‌شناختی. تنها PubMed نام برده شده که یک دیتابیس است، پس این high از شاخه‌ی دوم است و نقلِ روشِ ناکافی را دارد."
+              "note": "این high از شاخه‌ی دوم است، نه غیاب: جست‌وجو توصیف شده اما تنها یک دیتابیس نام برده شده. آستانه‌ی 3b-i کمتر از دو دیتابیس کتاب‌شناختی است. کل متن جست‌وجو شد و هیچ نامی از Medline، Embase، Scopus، Web of Science، Cochrane یا Google Scholar نیامده و بخش Methods یا معیار ورود و خروج هم ندارد."
             },
             {
               "domain": "justification for excluding individual studies",
-              "rating": "NR",
+              "rating": "high",
               "evidence_quote": "",
-              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+              "note": "غایب است. کل متن خوانده شد و هیچ فهرستی از مطالعات کنارگذاشته‌شده و هیچ معیار ورود یا خروجی وجود ندارد. جمله‌ی «No papers that looked at the effect of having a dentine thickness of less than 1 mm incorporated as part of the ferrule were located by the authors» گزارش نبودِ ادبیات در یک موضوع است، نه فهرست مطالعات کنارگذاشته‌شده که این دامنه می‌خواهد."
             },
             {
               "domain": "risk of bias assessment of included studies",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "«risk assessment» در چکیده به ریسک شکستِ دندان برمی‌گردد نه ارزیابی سوگیری مطالعات واردشده؛ چکیده درباره‌ی ارزیابی مطالعات ساکت است و تحت ABSTRACT_ONLY سکوت NR است."
+              "rating": "some_concerns",
+              "evidence_quote": "However, this result should be interpreted with caution",
+              "note": "مقاله واژه‌ی quality یا risk of bias را به کار نمی‌برد، اما مطالعات واردشده را واقعاً نقد می‌کند: جهت و ماهیت بار، نوع دندان آزمون‌شده و تعمیم‌پذیری. طبق 3b-ii نباید غیاب را با جست‌وجوی کلیدواژه نتیجه گرفت. با این حال نقد موردی و بدون ابزار یکنواخت روی همه‌ی مطالعات است، پس نه low و نه high."
             },
             {
               "domain": "appropriateness of meta-analytical methods",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+              "rating": "some_concerns",
+              "evidence_quote": "The evidence base available relating to the ferrule effect was pooled",
+              "note": "هیچ سنتز کمی انجام نشده و ادعایش را هم ندارد. روش ترکیب توصیف شده اما بسیار کلی و بدون توجیه است، پس مصداق «توصیف‌شده ولی مبهم» است. طبق مثال هشدارِ 3b-i، استدلال اینکه یک روشِ توصیف‌شده آن‌قدر ضعیف است که غایب حساب شود، همان استدلالی است که بازتولید نمی‌شود."
             },
             {
               "domain": "assessment of publication bias",
-              "rating": "NR",
+              "rating": "high",
               "evidence_quote": "",
-              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+              "note": "غایب است. کل متن از چکیده تا CONCLUSION و انتهای سند خوانده شد و هیچ اشاره‌ای به publication bias، funnel plot یا آزمون Egger نیست؛ سنتز کمی هم وجود ندارد که چنین ارزیابی‌ای در آن گزارش شود."
             }
           ],
-          "multiplier": 0.55
+          "multiplier": 0.3
         },
         "penalties": [
           {
             "item": "بیانیه‌ی تعارض منافع وجود ندارد",
-            "points": 0,
+            "points": 8,
             "evidence_quote": "",
-            "note": "not assessable in abstract"
+            "note": "غیاب است و چیزی برای نقل ندارد. متن پس از NFKC و حذف فاصله‌ها جست‌وجو شد و برای conflict، competing، interest، declaration، disclosure، financial، grant و sponsor صفر نتیجه داد؛ دو نتیجه‌ی fund هر دو fundamental بودند. طبق 3b-ii به جست‌وجو اکتفا نشد: بلوک شناسنامه‌ی مقاله و انتهای سند پس از منبع ۱۰۲ هم خوانده شد و هیچ‌کدام بیانیه‌ای ندارند. در AMSTAR-2 دامنه‌ی تعارض منافع وجود ندارد، پس این کسر دوباره‌شماری Q_method نیست."
           },
           {
             "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
             "points": 0,
             "evidence_quote": "",
-            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مطالعه‌ی ثانویه است."
           },
           {
             "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
@@ -10897,11 +10897,11 @@
           }
         ],
         "commentary_checklist": null,
-        "des_score": 8,
+        "des_score": 0,
         "band": "E",
-        "provisional": true,
-        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
-        "interpretation_fa": "مرور روایتی است و ارزشش در بازتعریف فرول است نه در وزن شواهد. می‌گوید کارآمدی فرول به محل دیواره‌ها و بار لترال بستگی دارد، نه فقط به قاعده‌ی دو میلی‌متر و حلقه‌ی کامل، و از همان‌جا یک طبقه‌بندی ریسک بیرون می‌کشد. خودش هم اعلام می‌کند شواهدِ ترمیم دندان اندوشده‌ی با تخریب وسیع ناکافی است."
+        "provisional": false,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۰ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "مرور روایتی است و ارزشش در بازتعریف فرول است نه در وزن شواهد. می‌گوید محل دیواره‌ها و جهت بار مهم‌تر از حلقه‌ی کامل ۳۶۰ درجه است و از همان‌جا یک طبقه‌بندی ریسک بیرون می‌کشد. خودش هم اعلام می‌کند شواهدِ ترمیم دندان اندوشده‌ی با تخریب وسیع ناکافی است."
       }
     ]
   }
