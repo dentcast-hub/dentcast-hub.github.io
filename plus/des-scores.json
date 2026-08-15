@@ -2693,5 +2693,106 @@
         "interpretation_fa": "متن معرفی یک گفت‌وگوی تخصصی است و مسیر اثر دخانیات را از ترشوندگی سطح ایمپلنت تا هیپوکسی و پری‌ایمپلنتیتیس روشن می‌گوید. پرسش‌های بالینی مثل بازه‌ی قطع سیگار و آسیب‌پذیری فک بالا را نام می‌برد اما پاسخشان در فایل صوتی است. ادعاهایش دامنه‌بندی عددی ندارند و متن خودش را تجربه نمی‌نامد."
       }
     ]
+  },
+  "sharehub/share-10": {
+    "scored_at": "2026-08-15",
+    "sources": [
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Resistance form in tooth preparation.",
+          "authors": "Parker MH",
+          "year": 2004,
+          "journal": "Dental Clinics of North America",
+          "doi": "10.1016/j.cden.2003.12.009"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review of theoretical and clinical studies of resistance form (THERAPY narrative review row, 15)",
+          "evidence_quote": "Theoretical and clinical studies of resistance form are reviewed, supporting the basic prosthodontic principle that resistance form is an essential element in preparation design."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده فقط می‌گوید مطالعات مرور شده‌اند و نام هیچ دیتابیس یا بازه‌ی جست‌وجویی نمی‌آورد؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده یا معیار ورود و خروج در چکیده نیست؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی کیفیت مطالعات را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی یا برآورد تجمیعی گزارش نمی‌کند و درباره‌ی روش ترکیب هم ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مقاله مرور است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "مروری روایتی است که اصل رزیستنس فرم و ماهیت صفر و یکی آن را جمع‌بندی می‌کند و می‌گوید رسیدن به آن در مولرها سخت‌تر از قدامی‌هاست. نقش گراو در مارجین‌های نامنظم و ناسازگاری روش Weed با دو روش دیگر، برداشت‌های عملی‌اش هستند. رابطه‌ی رزیستنس فرم با موفقیت بالینی را خودش هم محل مناقشه می‌داند."
+      }
+    ]
   }
 }
