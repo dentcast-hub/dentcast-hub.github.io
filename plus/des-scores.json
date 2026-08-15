@@ -4198,5 +4198,1047 @@
         "interpretation_fa": "معرفی کوتاه گایدلاین بریتانیاست و ادعای پژوهشی خودش را ندارد. حرف عملی‌اش تیم چندتخصصی و مسیر مراقبت است، یعنی همان جایی که نقش دندانپزشک عمومی تشخیص زودهنگام و ارجاع درست است. برای بیمار هم مواد آموزشی دارد."
       }
     ]
+  },
+  "sharehub/share-13": {
+    "scored_at": "2026-08-15",
+    "sources": [
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Dental implants and diabetes mellitus-a systematic review.",
+          "authors": "Naujokat H, Kunzendorf B, Wiltfang J",
+          "year": 2016,
+          "journal": "International Journal of Implant Dentistry",
+          "doi": "10.1186/s40729-016-0038-2"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review of clinical studies and aggregated literature (ETIOLOGY SR/meta-analysis row, 100)",
+          "evidence_quote": "by a systematic literature search based on the PRISMA statement"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "some_concerns",
+              "evidence_quote": "by a systematic literature search based on the PRISMA statement",
+              "note": "جست‌وجوی سیستماتیک اعلام شده اما نام هیچ دیتابیسی در چکیده نیست، پس آستانه‌ی «کمتر از دو دیتابیس» بند 3b-i قابل احراز نیست و رتبه some_concerns می‌ماند."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "خط اصلی همین است: دیابت کنترل‌شده منع ایمپلنت نیست و نرخ عارضه‌اش شبیه فرد سالم است، اما دیابت کنترل‌نشده استئواینتگریشن مختل، ریسک بالاتر پری‌ایمپلنتیتیس و شکست بیشتر می‌دهد. اثر مدت ابتلا روشن نیست. مطالعات واردشده از نظر روش و نتیجه ناهمگن بودند."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Systematic review on diabetes mellitus and dental implants: an update.",
+          "authors": "Wagner J, Spille JH, Wiltfang J, Naujokat H",
+          "year": 2022,
+          "journal": "International Journal of Implant Dentistry",
+          "doi": "10.1186/s40729-021-00399-8"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "updated systematic review of clinical studies and aggregated literature (ETIOLOGY SR/meta-analysis row, 100)",
+          "evidence_quote": "A systematic literature research based on the PRISMA statement was conducted"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "some_concerns",
+              "evidence_quote": "A systematic literature research based on the PRISMA statement was conducted",
+              "note": "جست‌وجوی سیستماتیک اعلام شده اما نام هیچ دیتابیسی در چکیده نیست، پس آستانه‌ی «کمتر از دو دیتابیس» بند 3b-i قابل احراز نیست و رتبه some_concerns می‌ماند."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "نسخه‌ی به‌روزشده‌ی همان مرور با چهل مطالعه‌ی بالینی است و نتیجه‌اش عوض نمی‌شود: تحت کنترل، دیابت منع ایمپلنت نیست. دو افزوده‌ی مهم دارد. اول اینکه پیش‌دیابت شاید بیماری پری‌ایمپلنت را بیشتر کند اما بقا را تغییر نمی‌دهد. دوم اینکه درمان ضدعفونی پری‌اپراتیو حالا استاندارد شمرده می‌شود."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Association between diabetes mellitus/hyperglycaemia and peri-implant diseases: Systematic review and meta-analysis.",
+          "authors": "Monje A, Catena A, Borgnakke WS",
+          "year": 2017,
+          "journal": "Journal of Clinical Periodontology",
+          "doi": "10.1111/jcpe.12724"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review with random-effects meta-analysis of observational studies (ETIOLOGY SR/meta-analysis row, 100)",
+          "evidence_quote": "This systematic review investigates whether hyperglycaemia/diabetes mellitus is associated with peri-implant diseases (peri-implant mucositis and peri-implantitis)."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "some_concerns",
+              "evidence_quote": "Electronic and manual literature searching was conducted.",
+              "note": "جست‌وجوی الکترونیک و دستی اعلام شده اما نام هیچ دیتابیسی نمی‌آید، پس آستانه‌ی بند 3b-i قابل احراز نیست و رتبه some_concerns می‌ماند."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "The Newcastle-Ottawa Scale was used for quality assessment"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "random effect models were applied; and results were reported according to the PRISMA Statement."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "ریسک پری‌ایمپلنتیتیس در دیابتی‌ها حدود پنجاه درصد بیشتر برآورد شده و این افزایش مستقل از سیگار است. در غیرسیگاری‌ها با هایپرگلایسمی، نسبت به سه و چند دهم برابر می‌رسد. اما موکوزیت پری‌ایمپلنت تفاوت معناداری نداشت، یعنی اثر روی مرحله‌ی استخوانی است نه التهاب اولیه."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Impact of Maintenance Therapy for the Prevention of Peri-implant Diseases: A Systematic Review and Meta-analysis.",
+          "authors": "Monje A, Aranda L, Diaz KT, Alarcón MA, Bagramian RA, Wang HL, Catena A",
+          "year": 2016,
+          "journal": "Journal of Dental Research",
+          "doi": "10.1177/0022034515622432"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review with meta-analysis of clinical trials of maintenance therapy (THERAPY SR/meta-analysis row, 100, via Step 2 routing for a review of non-randomized evidence)",
+          "evidence_quote": "we aimed herein at assessing the impact of peri-implant maintenance therapy (PIMT) on the prevention of peri-implant diseases"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "using several databases, including MEDLINE, EMBASE, Cochrane Central Register of Controlled Trials, and Cochrane Oral Health Group Trials Register, for articles up to June 2015 without language restriction",
+              "note": "چهار منبع نام‌برده، بالاتر از آستانه‌ی دو دیتابیسِ بند 3b-i."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "some_concerns",
+              "evidence_quote": "A meta-analysis was conducted to evaluate the influence of PIMT and other reported variables upon peri-implant diseases.",
+              "note": "انجام متاآنالیز اعلام شده اما مدل آماری، سنجش ناهمگنی و نحوه‌ی ترکیب در چکیده نیامده؛ پرداخته‌شده اما ناقص."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "این منبعِ عددِ ریکالِ پنج تا شش ماه است و همان چیزی است که برنامه‌ی نگهدارنده را از سلیقه بیرون می‌آورد. فاصله‌ی نگهدارنده بروز پری‌ایمپلنتیتیس را تغییر می‌دهد و سابقه‌ی پریودنتیت پیش‌بینی‌کننده‌ی هر دو بیماری پری‌ایمپلنت است. خود مقاله تأکید می‌کند حتی با نگهدارنده هم عارضه ممکن است رخ دهد."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Does a higher glycemic level lead to a higher rate of dental implant failure?: A meta-analysis.",
+          "authors": "Shi Q, Xu J, Huo N, Cai C, Liu H",
+          "year": 2016,
+          "journal": "Journal of the American Dental Association",
+          "doi": "10.1016/j.adaj.2016.06.011"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "meta-analysis of studies comparing implant failure by glycemic control (ETIOLOGY SR/meta-analysis row, 100)",
+          "evidence_quote": "The authors of this meta-analysis evaluated whether the failure rate for patients with diabetes that was not well controlled was higher than the failure rate for patients with well-controlled diabetes."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "The authors searched PubMed, the Cochrane Library, and ClinicalTrials.gov without limitations",
+              "note": "PubMed و Cochrane Library دو دیتابیس مستقل‌اند و آستانه‌ی بند 3b-i را رد می‌کنند؛ ClinicalTrials.gov رجیستری است و در شمارش نیامد."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "The authors pooled the relative risk (RR) and 95% confidence interval (CI) values to estimate the relative effect of the glycemic level on dental implant failures."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "نتیجه‌ی منفی مهمی دارد: بین دیابت کنترل‌شده و کنترل‌نشده تفاوت معناداری در نرخ شکست ایمپلنت پیدا نشد. حجم داده کوچک است، هفت مطالعه و ۵۸۷ ایمپلنت، و بازه‌ی اطمینان‌ها پهن‌اند. خود نویسندگان می‌گویند مطالعات با کنترل بهتر مخدوش‌گرها لازم است."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Impact of hyperglycemia on the rate of implant failure and peri-implant parameters in patients with type 2 diabetes mellitus: Systematic review and meta-analysis.",
+          "authors": "Shang R, Gao L",
+          "year": 2021,
+          "journal": "Journal of the American Dental Association",
+          "doi": "10.1016/j.adaj.2020.11.015"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review with meta-analysis of clinical studies (ETIOLOGY SR/meta-analysis row, 100)",
+          "evidence_quote": "In this systematic review and meta-analysis, the authors compared the rates of implant failure and peri-implant bleeding on probing (BOP), probing depth (PD), and peri-implant bone loss (PIBL) among patients with type 2 diabetes mellitus and nondiabetic patients."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "The authors searched 4 databases for original clinical studies.",
+              "note": "چهار دیتابیس، بالاتر از آستانه‌ی دو دیتابیسِ بند 3b-i؛ نامشان در چکیده نیامده اما شمارش صریح است."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "some_concerns",
+              "evidence_quote": "The authors performed subgroup analyses based on glycemic level to evaluate whether patients with higher glycemic levels were more prone to peri-implant inflammation.",
+              "note": "تحلیل زیرگروهی نام برده شده اما مدل ترکیب، سنجش ناهمگنی و شاخص اثر در چکیده نمی‌آید؛ پرداخته‌شده اما ناقص."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "تفکیک مفیدی می‌کند: نرخ شکست و عمق پروبینگ بین دیابتی و غیردیابتی تفاوت معناداری نداشت، اما خونریزی حین پروبینگ و تحلیل استخوان پری‌ایمپلنت در دیابتی‌ها بیشتر بود. یعنی مسئله بقای ایمپلنت نیست، التهاب پری‌ایمپلنت است. با بهداشت دهانی دقیق، سطح قند این پارامترها را تغییر نداد."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Diabetes and oral implant failure: a systematic review.",
+          "authors": "Chrcanovic BR, Albrektsson T, Wennerberg A",
+          "year": 2014,
+          "journal": "Journal of Dental Research",
+          "doi": "10.1177/0022034514538820"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review with meta-analysis of clinical human studies (ETIOLOGY SR/meta-analysis row, 100)",
+          "evidence_quote": "The aim of this systematic review and meta-analysis was to investigate whether there are any effects of diabetes mellitus on implant failure rates, postoperative infections, and marginal bone loss."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "some_concerns",
+              "evidence_quote": "An electronic search without time or language restrictions was undertaken in March 2014.",
+              "note": "جست‌وجوی الکترونیک با تاریخ مشخص اعلام شده اما نام هیچ دیتابیسی نمی‌آید، پس آستانه‌ی بند 3b-i قابل احراز نیست."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "The inverse variance method was used for the random effects model when heterogeneity was detected or for the fixed effects model when heterogeneity was not detected."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "دو یافته‌ی جداگانه دارد و تفکیکشان مهم است: نرخ شکست ایمپلنت بین دیابتی و غیردیابتی تفاوت معناداری نداشت، اما تحلیل استخوان مارژینال به‌طور معنادار به سود غیردیابتی‌ها بود، حدود دو دهم میلی‌متر. خود مقاله می‌گوید مخدوش‌گرهای کنترل‌نشده در مطالعات واردشده نتیجه را محتاطانه می‌کند."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Glycemic control and implant stabilization in type 2 diabetes mellitus.",
+          "authors": "Oates TW, Dowell S, Robinson M, McMahan CA",
+          "year": 2009,
+          "journal": "Journal of Dental Research",
+          "doi": "10.1177/0022034509334203"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 80,
+          "anchor": "prospective clinical cohort with a non-diabetic comparison group (ETIOLOGY prospective cohort row, 80)",
+          "evidence_quote": "This prospective clinical study evaluated 10 non-diabetic individuals (12 implants) and 20 persons with type 2 diabetes (30 implants)."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ تطبیق، محدودسازی یا تعدیلی برای مخدوش‌گرها گزارش نمی‌کند و درباره‌اش ساکت است؛ تحت ABSTRACT_ONLY این NR است، نه high."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "This prospective clinical study evaluated 10 non-diabetic individuals (12 implants) and 20 persons with type 2 diabetes (30 implants).",
+              "note": "تعداد شرکت‌کننده‌ها و ایمپلنت‌ها آمده اما معیار ورود و نحوه‌ی انتخاب در چکیده نیست."
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "Glycated hemoglobin (HbA1c) levels ranged from 4.7-12.6%.",
+              "note": "مواجهه با یک سنجه‌ی آزمایشگاهی عینی تعریف شده است."
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده درباره‌ی داده‌های ازدست‌رفته یا ریزش نمونه چیزی نمی‌گوید؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "low",
+              "evidence_quote": "Implant stability was assessed by resonance frequency analysis over 4 months following placement.",
+              "note": "پیامد با یک ابزار عینی و در بازه‌ی مشخص سنجیده شده؛ ضمناً نتیجه در سطح فرد هم گزارش شده، پس نقص واحدِ تحلیل (Step 3c) شلیک نمی‌کند."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه تصادفی‌سازی‌شده نیست."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 44,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۴۴ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "نقطه‌ی حداقل ثباتِ ایمپلنت در هفته‌ی دو تا شش بعد از جراحی است و در افراد با HbA1c هشت و یک‌دهم و بالاتر، افت بیشتر و بازگشت به خط پایه کندتر بود. همین عدد است که دوره‌ی healing دست‌بازتر را در بیمار دیابتیک توجیه می‌کند. نمونه کوچک است و گروه‌ها تعدیل مخدوش‌گر ندارند."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "The effects of elevated hemoglobin A(1c) in patients with type 2 diabetes mellitus on dental implants: Survival and stability at one year.",
+          "authors": "Oates TW, Galloway P, Alexander P, Vargas Green A, Huynh-Ba G, Feine J, McMahan CA",
+          "year": 2014,
+          "journal": "Journal of the American Dental Association",
+          "doi": "10.14219/jada.2014.93"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 80,
+          "anchor": "prospective cohort of 117 edentulous patients stratified by HbA1c (ETIOLOGY prospective cohort row, 80)",
+          "evidence_quote": "The authors conducted a prospective cohort study to determine whether poor glycemic control is a contraindication to implant therapy in patients with type 2 diabetes."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ تطبیق، محدودسازی یا تعدیلی برای مخدوش‌گرها گزارش نمی‌کند و درباره‌اش ساکت است؛ تحت ABSTRACT_ONLY این NR است، نه high."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "low",
+              "evidence_quote": "The study sample consisted of 117 edentulous patients, each of whom received two mandibular implants, for a total of 234 implants."
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "The authors assessed implant survival and stability (by means of resonance frequency analysis) relative to glycated hemoglobin A1c (HbA1c) levels"
+            },
+            {
+              "domain": "missing data",
+              "rating": "low",
+              "evidence_quote": "The authors considered the seven patients lost to follow-up as having had failed implants; consequently, their conservative estimates of survival rates in the three groups were 93.0 percent, 92.6 percent and 95.0 percent",
+              "note": "ریزش نمونه شمرده شده و به بدترین حالت نسبت داده شده، که برخورد محافظه‌کارانه‌ی صریحی است."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "low",
+              "evidence_quote": "Two implants failed at four weeks, one in the nondiabetes group and the other in the well-controlled diabetes group."
+            }
+          ],
+          "multiplier": 0.75
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه تصادفی‌سازی‌شده نیست."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 3,
+            "evidence_quote": "",
+            "note": "ادعای مقاله بقای ایمپلنت است و پیگیری آن یک سال بعد از لود اعلام شده، که برای ادعای بقا کوتاه‌تر از حد لازم است. این را خود چکیده صریحاً نشان می‌دهد، پس تحت ABSTRACT_ONLY هم قابل اعمال است: «followed up for an additional one year». در هیچ دامنه‌ی Step 3 لحاظ نشده، پس دوباره‌شماری نیست."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 57,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۵۷ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "با HbA1c پایه تا یازده درصد، بقای ایمپلنت در یک سال بین گروه‌ها تفاوت معناداری نداشت. اما تثبیت اولیه در قند بالا با تأخیر همراه بود. جمله‌ی عملی همین است: قند بالا مانع بقای یک‌ساله نیست ولی ترمیم استخوانِ اولیه را کند می‌کند. یک سال برای ادعای بقا کوتاه است."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Success Rates of Dental Implants in Patients With Diabetes: A Systematic Review.",
+          "authors": "James Y, Butt WMM, Shahid H, Ahmad S, Imran MTB, Anthony N",
+          "year": 2024,
+          "journal": "Cureus",
+          "doi": "10.7759/cureus.76361"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review whose included units are systematic reviews and meta-analyses, an umbrella review (ETIOLOGY SR/meta-analysis row, 100)",
+          "evidence_quote": "This systematic review evaluates the success rates of dental implants in patients with type 2 diabetes mellitus, focusing on outcomes such as implant survival, marginal bone loss, and peri-implant biomarkers."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "A comprehensive literature search was conducted across multiple databases, including PubMed, Cochrane, Embase, Scopus, and Web of Science",
+              "note": "پنج دیتابیس، بالاتر از آستانه‌ی دو دیتابیسِ بند 3b-i."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "مرورِ مرورهاست و فقط چهار مطالعه دارد، پس عددهایش تکرار همان ادبیات‌اند نه داده‌ی تازه. کاری که می‌کند گذاشتن یک آستانه‌ی عملی است: زیر هشت درصد HbA1c بقا با غیردیابتی قابل مقایسه است و بالای آن پارامترهای پری‌ایمپلنت بدتر می‌شوند، با رابطه‌ی دوز و پاسخ."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Long-term periodontal and peri-implant tissue stability under supportive therapy.",
+          "authors": "Wang HL, Calatrava J, Soldini MC, Vilarrasa J, Sculean A, Monje A",
+          "year": 2026,
+          "journal": "Periodontology 2000",
+          "doi": "10.1111/prd.70038"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "comprehensive narrative literature review of supportive periodontal and peri-implant care (THERAPY narrative review row, 15)",
+          "evidence_quote": "A comprehensive literature review was conducted using PubMed, Embase, and Scopus databases"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "A comprehensive literature review was conducted using PubMed, Embase, and Scopus databases",
+              "note": "سه دیتابیس، بالاتر از آستانه‌ی دو دیتابیسِ بند 3b-i."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "some_concerns",
+              "evidence_quote": "were collated and critically appraised",
+              "note": "ارزیابی انتقادی ادعا شده اما هیچ ابزار نام‌برده‌ای پشتش نیست؛ پرداخته‌شده اما مبهم."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "مرور روایتی است، پس امتیاز ساختاری‌اش پایین می‌ماند، اما همان عددی را می‌دهد که برنامه‌ی ریکال به آن نیاز دارد: هر سه تا شش ماه برای ریسک متوسط و بالا، تا دوازده ماه برای کم‌خطر. دو پیش‌بینی‌کننده‌ی عود را هم نام می‌برد: عدم پایبندی بیمار و پاکت باقی‌مانده‌ی پنج تا شش میلی‌متر."
+      }
+    ]
   }
 }
