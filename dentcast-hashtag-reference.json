@@ -848,6 +848,52 @@
    ]
   },
   {
+   "key": "dentai",
+   "tag": "#DentAI",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری DentAI — خلاصه‌ی یک مقاله‌ی پژوهشی.",
+   "use_when": "روی هر مدخل DentAI، و هیچ‌جای دیگر.",
+   "aliases": [
+    "دنت ای آی",
+    "dent ai"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 29,
+   "content_ids": [
+    "dentai/dentai-1",
+    "dentai/dentai-2",
+    "dentai/dentai-3",
+    "dentai/dentai-4",
+    "dentai/dentai-5",
+    "dentai/dentai-6",
+    "dentai/dentai-7",
+    "dentai/dentai-8",
+    "dentai/dentai-9",
+    "dentai/dentai-10",
+    "dentai/dentai-11",
+    "dentai/dentai-12",
+    "dentai/dentai-13",
+    "dentai/dentai-14",
+    "dentai/dentai-15",
+    "dentai/dentai-16",
+    "dentai/dentai-17",
+    "dentai/dentai-18",
+    "dentai/dentai-19",
+    "dentai/dentai-20",
+    "dentai/dentai-21",
+    "dentai/dentai-22",
+    "dentai/dentai-23",
+    "dentai/dentai-24",
+    "dentai/dentai-25",
+    "dentai/dentai-26",
+    "dentai/dentai-27",
+    "dentai/dentai-28",
+    "dentai/dentai-29"
+   ]
+  },
+  {
    "key": "دنتوپدیا",
    "tag": "#دنتوپدیا",
    "domain": "brand",
@@ -893,48 +939,52 @@
    ]
   },
   {
-   "key": "dentai",
-   "tag": "#DentAI",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام سری DentAI — خلاصه‌ی یک مقاله‌ی پژوهشی.",
-   "use_when": "روی هر مدخل DentAI، و هیچ‌جای دیگر.",
+   "key": "پروتز_ثابت",
+   "tag": "#پروتز_ثابت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
    "aliases": [
-    "دنت ای آی",
-    "dent ai"
+    "پروتز فیکس",
+    "fixed prosthesis"
    ],
-   "variants": [],
+   "variants": [
+    "#Prosthodontics",
+    "#پروتز_دندانی"
+   ],
    "co_tags": [],
-   "count": 28,
+   "count": 29,
    "content_ids": [
-    "dentai/dentai-1",
-    "dentai/dentai-2",
-    "dentai/dentai-3",
-    "dentai/dentai-4",
-    "dentai/dentai-5",
-    "dentai/dentai-6",
+    "episodes/episode-87",
+    "episodes/episode-88",
+    "episodes/episode-95",
+    "episodes/episode-106",
+    "episodes/episode-112",
+    "episodes/episode-113",
+    "episodes/episode-121",
+    "episodes/episode-123",
+    "episodes/episode-124",
+    "episodes/episode-126",
+    "episodes/episode-132",
+    "episodes/episode-136",
+    "episodes/episode-147-5",
+    "notecast/episode-14",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "insight/insight-18",
     "dentai/dentai-7",
-    "dentai/dentai-8",
-    "dentai/dentai-9",
-    "dentai/dentai-10",
-    "dentai/dentai-11",
-    "dentai/dentai-12",
-    "dentai/dentai-13",
-    "dentai/dentai-14",
-    "dentai/dentai-15",
-    "dentai/dentai-16",
-    "dentai/dentai-17",
-    "dentai/dentai-18",
-    "dentai/dentai-19",
-    "dentai/dentai-20",
-    "dentai/dentai-21",
-    "dentai/dentai-22",
-    "dentai/dentai-23",
-    "dentai/dentai-24",
-    "dentai/dentai-25",
-    "dentai/dentai-26",
-    "dentai/dentai-27",
-    "dentai/dentai-28"
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST17",
+    "litecast/lite-CAST18",
+    "metanotes/meta-9",
+    "insight/insight-24",
+    "insight/insight-25",
+    "insight/insight-29",
+    "insight/insight-34",
+    "insight/insight-49",
+    "insight/insight-54",
+    "dentai/dentai-29"
    ]
   },
   {
@@ -982,54 +1032,6 @@
     "insight/insight-62",
     "insight/insight-63",
     "chairside/chairside-31"
-   ]
-  },
-  {
-   "key": "پروتز_ثابت",
-   "tag": "#پروتز_ثابت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "پروتز فیکس",
-    "fixed prosthesis"
-   ],
-   "variants": [
-    "#Prosthodontics",
-    "#پروتز_دندانی"
-   ],
-   "co_tags": [],
-   "count": 28,
-   "content_ids": [
-    "episodes/episode-87",
-    "episodes/episode-88",
-    "episodes/episode-95",
-    "episodes/episode-106",
-    "episodes/episode-112",
-    "episodes/episode-113",
-    "episodes/episode-121",
-    "episodes/episode-123",
-    "episodes/episode-124",
-    "episodes/episode-126",
-    "episodes/episode-132",
-    "episodes/episode-136",
-    "episodes/episode-147-5",
-    "notecast/episode-14",
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "insight/insight-18",
-    "dentai/dentai-7",
-    "litecast/lite-CAST16",
-    "litecast/lite-CAST17",
-    "litecast/lite-CAST18",
-    "metanotes/meta-9",
-    "insight/insight-24",
-    "insight/insight-25",
-    "insight/insight-29",
-    "insight/insight-34",
-    "insight/insight-49",
-    "insight/insight-54"
    ]
   },
   {
@@ -1672,6 +1674,45 @@
    ]
   },
   {
+   "key": "ترمیم_غیرمستقیم",
+   "tag": "#ترمیم_غیرمستقیم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رستوریشنی که بیرون دهان ساخته و بعد باند می‌شود — اینله، آنله، اورلی.",
+   "use_when": "مقاله بین مستقیم و غیرمستقیم انتخاب کند یا رستوریشنِ غیرمستقیم را موضوع داشته باشد.",
+   "aliases": [
+    "indirect restoration",
+    "رستوریشن غیرمستقیم",
+    "اینله",
+    "inlay",
+    "اینله آنله",
+    "اینله و آنله"
+   ],
+   "variants": [
+    "#اینله"
+   ],
+   "co_tags": [],
+   "count": 16,
+   "content_ids": [
+    "episodes/episode-6",
+    "episodes/episode-7",
+    "episodes/episode-9",
+    "episodes/episode-15",
+    "episodes/episode-122",
+    "episodes/episode-123-3",
+    "episodes/episode-137",
+    "episodes/episode-148",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-8",
+    "notecast/episode-11",
+    "notecast/episode-15",
+    "notecast/episode-18",
+    "episodes/episode-159-1",
+    "dentai/dentai-29"
+   ]
+  },
+  {
    "key": "curated_content",
    "tag": "#Curated_Content",
    "domain": "brand",
@@ -1734,44 +1775,6 @@
     "sharehub/share-13",
     "sharehub/share-14",
     "sharehub/share-15"
-   ]
-  },
-  {
-   "key": "ترمیم_غیرمستقیم",
-   "tag": "#ترمیم_غیرمستقیم",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "رستوریشنی که بیرون دهان ساخته و بعد باند می‌شود — اینله، آنله، اورلی.",
-   "use_when": "مقاله بین مستقیم و غیرمستقیم انتخاب کند یا رستوریشنِ غیرمستقیم را موضوع داشته باشد.",
-   "aliases": [
-    "indirect restoration",
-    "رستوریشن غیرمستقیم",
-    "اینله",
-    "inlay",
-    "اینله آنله",
-    "اینله و آنله"
-   ],
-   "variants": [
-    "#اینله"
-   ],
-   "co_tags": [],
-   "count": 15,
-   "content_ids": [
-    "episodes/episode-6",
-    "episodes/episode-7",
-    "episodes/episode-9",
-    "episodes/episode-15",
-    "episodes/episode-122",
-    "episodes/episode-123-3",
-    "episodes/episode-137",
-    "episodes/episode-148",
-    "notecast/episode-6",
-    "notecast/episode-7",
-    "notecast/episode-8",
-    "notecast/episode-11",
-    "notecast/episode-15",
-    "notecast/episode-18",
-    "episodes/episode-159-1"
    ]
   },
   {
@@ -2098,6 +2101,37 @@
    ]
   },
   {
+   "key": "دقت_اسکن",
+   "tag": "#دقت_اسکن",
+   "domain": null,
+   "words": 2,
+   "definition": "دقتِ نهاییِ اسکن و آنچه آن را خراب می‌کند.",
+   "use_when": "مقاله دقت را بسنجد یا بهبود دهد.",
+   "aliases": [
+    "scanning accuracy",
+    "trueness",
+    "precision",
+    "صحت اسکن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-133",
+    "episodes/episode-144-2",
+    "sharehub/share-2",
+    "insight/insight-33",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "insight/insight-51",
+    "metanotes/meta-16",
+    "sharehub/share-15",
+    "dentai/dentai-29"
+   ]
+  },
+  {
    "key": "دوام_ترمیم",
    "tag": "#دوام_ترمیم",
    "domain": "clinical",
@@ -2255,7 +2289,7 @@
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
    "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
    "aliases": [
@@ -2314,6 +2348,41 @@
    ]
   },
   {
+   "key": "اسکنر_داخل_دهانی",
+   "tag": "#اسکنر_داخل_دهانی",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "اسکنرِ داخل‌دهانی که قالبِ دیجیتالِ مستقیم می‌گیرد.",
+   "use_when": "مقاله اسکنر داخل‌دهانی را موضوع داشته باشد.",
+   "aliases": [
+    "intraoral scanner",
+    "اسکنر دیجیتال",
+    "IOS",
+    "اسکنر"
+   ],
+   "variants": [
+    "#اسکن_داخل_دهانی",
+    "#Intraoral_Scanner"
+   ],
+   "co_tags": [
+    "#Intraoral_Scanner"
+   ],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-106-2",
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-149-2",
+    "sharehub/share-2",
+    "insight/insight-33",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "metanotes/meta-16",
+    "sharehub/share-15",
+    "dentai/dentai-29"
+   ]
+  },
+  {
    "key": "اوردنچر",
    "tag": "#اوردنچر",
    "domain": "clinical",
@@ -2342,36 +2411,6 @@
     "notecast/episode-27",
     "chairside/chairside-8",
     "chairside/chairside-11"
-   ]
-  },
-  {
-   "key": "دقت_اسکن",
-   "tag": "#دقت_اسکن",
-   "domain": null,
-   "words": 2,
-   "definition": "دقتِ نهاییِ اسکن و آنچه آن را خراب می‌کند.",
-   "use_when": "مقاله دقت را بسنجد یا بهبود دهد.",
-   "aliases": [
-    "scanning accuracy",
-    "trueness",
-    "precision",
-    "صحت اسکن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-122-2",
-    "episodes/episode-128-1",
-    "episodes/episode-133",
-    "episodes/episode-144-2",
-    "sharehub/share-2",
-    "insight/insight-33",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "insight/insight-51",
-    "metanotes/meta-16",
-    "sharehub/share-15"
    ]
   },
   {
@@ -2434,37 +2473,33 @@
    ]
   },
   {
-   "key": "اسکنر_داخل_دهانی",
-   "tag": "#اسکنر_داخل_دهانی",
+   "key": "آنله",
+   "tag": "#آنله",
    "domain": "clinical",
-   "words": 3,
-   "definition": "اسکنرِ داخل‌دهانی که قالبِ دیجیتالِ مستقیم می‌گیرد.",
-   "use_when": "مقاله اسکنر داخل‌دهانی را موضوع داشته باشد.",
+   "words": 1,
+   "definition": "ترمیمِ پوششیِ کاسپ، بدون روکشِ کامل.",
+   "use_when": "مقاله آنله را انتخاب یا ارزیابی کند.",
    "aliases": [
-    "intraoral scanner",
-    "اسکنر دیجیتال",
-    "IOS",
-    "اسکنر"
+    "onlay",
+    "آنلی",
+    "انله",
+    "انلی",
+    "آنله سرامیکی"
    ],
-   "variants": [
-    "#اسکن_داخل_دهانی",
-    "#Intraoral_Scanner"
-   ],
-   "co_tags": [
-    "#Intraoral_Scanner"
-   ],
+   "variants": [],
+   "co_tags": [],
    "count": 10,
    "content_ids": [
-    "episodes/episode-106-2",
-    "episodes/episode-122-2",
-    "episodes/episode-128-1",
-    "episodes/episode-149-2",
-    "sharehub/share-2",
-    "insight/insight-33",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "metanotes/meta-16",
-    "sharehub/share-15"
+    "episodes/episode-15",
+    "episodes/episode-123-3",
+    "episodes/episode-137",
+    "episodes/episode-138",
+    "notecast/episode-15",
+    "insight/insight-39",
+    "dentai/dentai-25",
+    "episodes/episode-159-1",
+    "metanotes/meta-14",
+    "dentai/dentai-29"
    ]
   },
   {
@@ -2743,35 +2778,6 @@
     "chairside/chairside-7",
     "insight/insight-32",
     "chairside/chairside-14"
-   ]
-  },
-  {
-   "key": "آنله",
-   "tag": "#آنله",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "ترمیمِ پوششیِ کاسپ، بدون روکشِ کامل.",
-   "use_when": "مقاله آنله را انتخاب یا ارزیابی کند.",
-   "aliases": [
-    "onlay",
-    "آنلی",
-    "انله",
-    "انلی",
-    "آنله سرامیکی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-15",
-    "episodes/episode-123-3",
-    "episodes/episode-137",
-    "episodes/episode-138",
-    "notecast/episode-15",
-    "insight/insight-39",
-    "dentai/dentai-25",
-    "episodes/episode-159-1",
-    "metanotes/meta-14"
    ]
   },
   {
@@ -3431,6 +3437,32 @@
    ]
   },
   {
+   "key": "متاآنالیز",
+   "tag": "#متاآنالیز",
+   "domain": null,
+   "words": 1,
+   "definition": "مرور سیستماتیک با تجمیع آماری.",
+   "use_when": "مقاله بر یک متاآنالیز استوار باشد.",
+   "aliases": [
+    "meta analysis",
+    "meta-analysis",
+    "systematic review",
+    "مرور سیستماتیک"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "dentai/dentai-7",
+    "notecast/episode-26",
+    "notecast/episode-27",
+    "dentai/dentai-22",
+    "dentai/dentai-26",
+    "dentai/dentai-27",
+    "dentai/dentai-29"
+   ]
+  },
+  {
    "key": "پروتز_متحرک",
    "tag": "#پروتز_متحرک",
    "domain": null,
@@ -3976,31 +4008,6 @@
     "insight/insight-44",
     "insight/insight-52",
     "metanotes/meta-20"
-   ]
-  },
-  {
-   "key": "متاآنالیز",
-   "tag": "#متاآنالیز",
-   "domain": null,
-   "words": 1,
-   "definition": "مرور سیستماتیک با تجمیع آماری.",
-   "use_when": "مقاله بر یک متاآنالیز استوار باشد.",
-   "aliases": [
-    "meta analysis",
-    "meta-analysis",
-    "systematic review",
-    "مرور سیستماتیک"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "dentai/dentai-7",
-    "notecast/episode-26",
-    "notecast/episode-27",
-    "dentai/dentai-22",
-    "dentai/dentai-26",
-    "dentai/dentai-27"
    ]
   },
   {
@@ -5394,7 +5401,7 @@
    "key": "رادیوگرافی_تشخیصی",
    "tag": "#رادیوگرافی_تشخیصی",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "انتخاب و تفسیرِ درستِ تصویر — پانورامیک در برابر پری‌اپیکال.",
    "use_when": "مقاله کفایت یا نارساییِ یک تصویر را مسئله بداند.",
    "aliases": [
@@ -6284,6 +6291,28 @@
    ]
   },
   {
+   "key": "تراش_عمودی",
+   "tag": "#تراش_عمودی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "تراشِ بدون شانه‌ی مشخص، با فرز نایف‌اج.",
+   "use_when": "مقاله تراش عمودی را انتخابِ آگاهانه بداند.",
+   "aliases": [
+    "vertical prep",
+    "تراش ورتیکال",
+    "vertical preparation",
+    "بدون شولدر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-95",
+    "insight/insight-18",
+    "dentai/dentai-29"
+   ]
+  },
+  {
    "key": "ترانسلوسنسی",
    "tag": "#ترانسلوسنسی",
    "domain": "clinical",
@@ -6617,7 +6646,7 @@
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
-   "words": 6,
+   "words": 4,
    "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
    "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
    "aliases": [
@@ -7603,6 +7632,22 @@
    "content_ids": [
     "dentcast-plus/video-4",
     "dentcast-plus/video-5"
+   ]
+  },
+  {
+   "key": "bopt",
+   "tag": "#BOPT",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-95",
+    "dentai/dentai-29"
    ]
   },
   {
@@ -8794,27 +8839,6 @@
    "content_ids": [
     "insight/insight-46",
     "chairside/chairside-31"
-   ]
-  },
-  {
-   "key": "تراش_عمودی",
-   "tag": "#تراش_عمودی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "تراشِ بدون شانه‌ی مشخص، با فرز نایف‌اج.",
-   "use_when": "مقاله تراش عمودی را انتخابِ آگاهانه بداند.",
-   "aliases": [
-    "vertical prep",
-    "تراش ورتیکال",
-    "vertical preparation",
-    "بدون شولدر"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-95",
-    "insight/insight-18"
    ]
   },
   {
@@ -10204,6 +10228,26 @@
    ]
   },
   {
+   "key": "ونیر",
+   "tag": "#ونیر",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "ونیر به‌عنوان راه‌حلِ زیبایی.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [
+    "veneer",
+    "ونیر دندان",
+    "روکش ونیر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "metanotes/meta-1",
+    "dentai/dentai-29"
+   ]
+  },
+  {
    "key": "پارافانکشن",
    "tag": "#پارافانکشن",
    "domain": "clinical",
@@ -10725,21 +10769,6 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-157"
-   ]
-  },
-  {
-   "key": "bopt",
-   "tag": "#BOPT",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-95"
    ]
   },
   {
@@ -12772,7 +12801,7 @@
    "key": "اینتروژن_ارتودنسی",
    "tag": "#اینتروژن_ارتودنسی",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
    "use_when": "مقاله اینتروژن را راه‌حل بداند.",
    "aliases": [
@@ -13619,7 +13648,7 @@
    "key": "تفسیر_رادیوگرافی",
    "tag": "#تفسیر_رادیوگرافی",
    "domain": "clinical",
-   "words": 4,
+   "words": 2,
    "definition": "خواندنِ الگو — مرزِ صاف در برابر مرزِ منتشر — نه صرفاً دیدنِ لکه.",
    "use_when": "مقاله معیارِ تمایزِ تصویری بدهد.",
    "aliases": [
@@ -14690,7 +14719,7 @@
    "key": "رادیوگرافی_کنترل",
    "tag": "#رادیوگرافی_کنترل",
    "domain": "clinical",
-   "words": 4,
+   "words": 2,
    "definition": "پری‌اپیکالِ صحیح، به‌عنوان تأییدِ قطعیِ نشست.",
    "use_when": "مقاله رادیوگرافی را تأییدِ نهایی بداند، نه حس.",
    "aliases": [
@@ -17121,7 +17150,7 @@
    "key": "هوش_مصنوعی_رادیوگرافی",
    "tag": "#هوش_مصنوعی_رادیوگرافی",
    "domain": "ai",
-   "words": 5,
+   "words": 3,
    "definition": "نرم‌افزاری که روی رادیوگرافی ضایعه یا سطح استخوان را علامت می‌زند — تصویری که اغلب با ChatGPT اشتباه گرفته می‌شود.",
    "use_when": "مقاله همین دسته را موضوع یا نقطه‌ی تمایز قرار دهد.",
    "aliases": [
@@ -17213,25 +17242,6 @@
    "count": 1,
    "content_ids": [
     "metanotes/meta-10"
-   ]
-  },
-  {
-   "key": "ونیر",
-   "tag": "#ونیر",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "ونیر به‌عنوان راه‌حلِ زیبایی.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "aliases": [
-    "veneer",
-    "ونیر دندان",
-    "روکش ونیر"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "metanotes/meta-1"
    ]
   },
   {
@@ -18907,6 +18917,7 @@
   "تلفیق داده دیجیتال": "بیمار مجازی",
   "adolescent patient": "بیمار نوجوان",
   "painless injection": "تزریق بی درد",
+  "retrograde filling": "جراحی اپیکال",
   "حساسیت پس از درمان": "حساسیت بعد از درمان",
   "ridge preservation": "حفظ ریج",
   "flangeless denture": "پروتز متحرک بدون فلنج",
@@ -18927,15 +18938,14 @@
   "failure prediction": "پیش بینی شکست",
   "زمان به عنوان داده": "پیگیری زمانی",
   "flowable composite": "کامپوزیت فلو",
-  "retrograde filling": "جراحی اپیکال",
   "پروتز روی ایمپلنت": "پروتز ایمپلنت",
   "تصمیم گیری درمانی": "تصمیم درمانی",
   "تصمیم گیری بالینی": "تصمیم درمانی",
   "digital dentistry": "دندانپزشکی دیجیتال",
   "ترمیم با کامپوزیت": "کامپوزیت",
   "crown lengthening": "افزایش طول تاج",
-  "scanning accuracy": "دقت اسکن",
   "دکتر فواد شهابیان": "دکتر شهابیان",
+  "scanning accuracy": "دقت اسکن",
   "intraoral scanner": "اسکنر داخل دهانی",
   "میزان کردن اکلوژن": "تنظیم اکلوژن",
   "پری ایمپلنت دیزیز": "پری ایمپلنتیتیس",
@@ -19014,6 +19024,7 @@
   "خواندن رادیوگرافی": "تفسیر رادیوگرافی",
   "anterior symmetry": "تقارن قدامی",
   "کامپوزیت سلف کیور": "جایگزین آمالگام",
+  "جراحی انتهای ریشه": "جراحی اپیکال",
   "tooth sensitivity": "حساسیت دندانی",
   "disc displacement": "داخل کپسولی",
   "حرکت مزیالی دندان": "دریفت مزیالی",
@@ -19035,7 +19046,6 @@
   "infection control": "کنترل عفونت",
   "retention control": "کنترل گیر",
   "anterior guidance": "گایدنس قدامی",
-  "جراحی انتهای ریشه": "جراحی اپیکال",
   "کلینیکال اینسایت": "اینسایت",
   "روکش روی ایمپلنت": "روکش ایمپلنت",
   "fixed prosthesis": "پروتز ثابت",
@@ -19064,6 +19074,7 @@
   "از دست رفتن تماس": "از دست رفتن کانتکت",
   "dental equipment": "تجهیزات دندانپزشکی",
   "درمان کانال ریشه": "درمان ریشه",
+  "فاصله بین دندانی": "دیاستم",
   "loading protocol": "زمان بارگذاری ایمپلنت",
   "temporary cement": "سمان موقت",
   "proximal contact": "کانتکت باز",
@@ -19074,7 +19085,6 @@
   "insertion torque": "ثبات اولیه",
   "درمان طولانی مدت": "درمان بلندمدت",
   "مولتی دیسیپلینری": "درمان بین رشته ای",
-  "فاصله بین دندانی": "دیاستم",
   "کاهش درد حین کار": "راحتی بیمار",
   "سایش دندان مقابل": "سایش آنتاگونیست",
   "cusp inclination": "شیب کاسپی",
@@ -19093,6 +19103,7 @@
   "ambiguous prompt": "ابهام در پرامپت",
   "کامپوننت ایمپلنت": "اجزای ایمپلنت",
   "مرحله بندی درمان": "استیج بندی درمان",
+  "space management": "اصلاح فضا",
   "false confidence": "اطمینان کاذب",
   "implant survival": "بقای ایمپلنت",
   "قابلیت تمیز کردن": "بهداشت پذیری",
@@ -19127,7 +19138,6 @@
   "chameleon effect": "اثر آفتاب پرست",
   "space assessment": "فضای ارتودنسی",
   "بازتاب نور اسکنر": "اسکن سطح براق",
-  "space management": "اصلاح فضا",
   "crown indication": "اندیکاسیون روکش",
   "اندیکاسیون کراون": "اندیکاسیون روکش",
   "over preparation": "اورپرپ",
@@ -19150,6 +19160,7 @@
   "bonding sequence": "توالی باند",
   "تکنیک گورل ماکاپ": "تکنیک گورل",
   "قرارگیری ایمپلنت": "جایگذاری ایمپلنت",
+  "پرکردگی رتروگراد": "جراحی اپیکال",
   "حرکات خارج مرکزی": "حرکات اکسکورسیو",
   "tactile feedback": "حس لامسه",
   "حساسیت بعد ترمیم": "حساسیت بعد از درمان",
@@ -19191,7 +19202,6 @@
   "هدایت طرفی کانین": "گایدنس کانین",
   "چت با هوش مصنوعی": "مصاحبه با هوش مصنوعی",
   "فاصله پست و گوتا": "گپ پست و گوتا",
-  "پرکردگی رتروگراد": "جراحی اپیکال",
   "لامینیت سرامیکی": "لمینیت سرامیکی",
   "veneer laminate": "لمینیت سرامیکی",
   "ترمیم کامپوزیتی": "کامپوزیت",
@@ -19201,9 +19211,9 @@
   "نگه داشتن دندان": "حفظ دندان",
   "tooth retention": "حفظ دندان",
   "temporary crown": "روکش موقت",
+  "خارج کردن دندان": "کشیدن دندان",
   "اختلال مفصل فکی": "tmd",
   "ceramic etching": "اچ سرامیک",
-  "خارج کردن دندان": "کشیدن دندان",
   "ceramic bonding": "باندینگ سرامیک",
   "آماده سازی روکش": "تراش روکش",
   "silane coupling": "سایلان",
@@ -19221,6 +19231,7 @@
   "بارگذاری فیکسچر": "بارگذاری ایمپلنت",
   "جلسه تحویل روکش": "تحویل روکش",
   "استدلال کلینیکی": "تفکر اینسایت",
+  "عدم پذیرش بیمار": "شروع نکردن درمان",
   "پرسلن فلدسپاتیک": "فلدسپاتیک",
   "کور ریختگی فلزی": "کور ریختگی",
   "جداسازی با زمان": "dwt",
@@ -19229,7 +19240,6 @@
   "ترمیم کم تهاجمی": "حداقل تهاجم",
   "skeletal change": "رشد فک",
   "cement retained": "سمان ریتین",
-  "عدم پذیرش بیمار": "شروع نکردن درمان",
   "کانتور رستوریشن": "کانتور ترمیم",
   "شناسایی ایمپلنت": "برند ایمپلنت",
   "bio restorative": "بیو رستوریتیو",
@@ -19371,10 +19381,10 @@
   "بعد عمودی صورت": "بعد عمودی",
   "تحلیل استخوانی": "تحلیل استخوان",
   "طول عمر سرامیک": "دوام ترمیم",
-  "language model": "مدل زبانی",
-  "پیش آگهی دندان": "پروگنوز دندان",
   "کانسپت شهابیان": "دکتر شهابیان",
   "foad shahabian": "دکتر شهابیان",
+  "language model": "مدل زبانی",
+  "پیش آگهی دندان": "پروگنوز دندان",
   "caries removal": "برداشت پوسیدگی",
   "anterior teeth": "دندان قدامی",
   "دندان اندو شده": "دندان اندوشده",
@@ -19472,6 +19482,7 @@
   "بازخورد دیداری": "بیوفیدبک دیداری",
   "تزریق بدون درد": "تزریق بی درد",
   "تعدیل فک مقابل": "تعدیل آنتاگونیست",
+  "apical surgery": "جراحی اپیکال",
   "خطای اسکن بادی": "خطای داده",
   "ایمپرشن اشتباه": "خطای قالبگیری",
   "پیست کنارزننده": "خمیر کنارزننده",
@@ -19525,7 +19536,6 @@
   "composite core": "کور کامپوزیتی",
   "راهنمایی کانین": "گایدنس کانین",
   "post gutta gap": "گپ پست و گوتا",
-  "apical surgery": "جراحی اپیکال",
   "prosthodontics": "پروتز",
   "ویزیت کلینیکی": "کیس اینسایت",
   "implant crown": "روکش ایمپلنت",
@@ -19751,11 +19761,11 @@
   "over denture": "اوردنچر",
   "زیرو بون لاس": "zero تحلیل استخوان",
   "جدا شدن روکش": "افتادن روکش",
+  "استتیک قدامی": "زیبایی قدامی",
   "اسکن دیجیتال": "قالبگیری دیجیتال",
   "digital scan": "قالبگیری دیجیتال",
   "دیجیتال اسکن": "قالبگیری دیجیتال",
   "آنله سرامیکی": "آنله",
-  "استتیک قدامی": "زیبایی قدامی",
   "فضای بازسازی": "فضای رستوریتیو",
   "اینگات ایمکس": "لیتیوم دی سیلیکات",
   "hydrofluoric": "اچ سرامیک",
@@ -19779,6 +19789,8 @@
   "عملکرد گروهی": "گروپ فانکشن",
   "خطای دیجیتال": "خطای لابراتوار",
   "چسباندن روکش": "سمان کردن",
+  "رد طرح درمان": "شروع نکردن درمان",
+  "نپذیرفتن کیس": "شروع نکردن درمان",
   "نوشتن پرامپت": "پرامپت نویسی",
   "pascal magne": "کتاب مانیه",
   "پاسکال مانیه": "کتاب مانیه",
@@ -19787,8 +19799,6 @@
   "بهداشت دهانی": "بهداشت دهان",
   "لود زودهنگام": "زمان بارگذاری ایمپلنت",
   "سمان آزمایشی": "سمان موقت",
-  "رد طرح درمان": "شروع نکردن درمان",
-  "نپذیرفتن کیس": "شروع نکردن درمان",
   "کانتکت پوینت": "کانتکت",
   "open contact": "کانتکت باز",
   "گیر کردن غذا": "گیر غذایی",
@@ -19961,10 +19971,10 @@
   "loose crown": "افتادن روکش",
   "حذف پوسیدگی": "برداشت پوسیدگی",
   "دندان جلویی": "دندان قدامی",
+  "زیبایی قدام": "زیبایی قدامی",
   "periodontal": "پریودنتال",
   "آگاهی بیمار": "آگاهی درمانی",
   "provisional": "روکش موقت",
-  "زیبایی قدام": "زیبایی قدامی",
   "فضای پروتزی": "فضای رستوریتیو",
   "سی ای دی کم": "cad cam",
   "هیدروفلوریک": "اچ سرامیک",
@@ -20041,6 +20051,7 @@
   "آلوی پرایمر": "باند به فلز",
   "بریج ترکیبی": "بریج دندان ایمپلنت",
   "بقای فیکسچر": "بقای ایمپلنت",
+  "sinus tract": "تریس آبسه",
   "تطبیق بیمار": "تطابق بیمار",
   "حداقل دخالت": "حداقل مداخله",
   "model error": "خطای مدل",
@@ -20085,11 +20096,11 @@
   "بیمار دخانی": "بیمار دخانیات",
   "biofeedback": "بیوفیدبک دیداری",
   "امتحان روکش": "تثبیت موقت روکش",
-  "sinus tract": "تریس آبسه",
   "گپ مارجینال": "تطابق مارجینال",
   "تعویض پروتز": "تعویض روکش",
   "ساخت دوباره": "تکرار کار",
   "عمق ایمپلنت": "جایگذاری ایمپلنت",
+  "apicoectomy": "جراحی اپیکال",
   "رد کردن علل": "حذف گام به گام",
   "حساسیت عاجی": "حساسیت دندانی",
   "حفظ حجم ریج": "حفظ ریج",
@@ -20170,7 +20181,6 @@
   "محدوده اسکن": "گسترش اسکن",
   "google play": "گوگل پلی",
   "گیر اصطکاکی": "گیر مکانیکی",
-  "apicoectomy": "جراحی اپیکال",
   "بایومیمتیک": "بیومیمتیک",
   "بیو میمتیک": "بیومیمتیک",
   "بیومی متیک": "بیومیمتیک",
@@ -20245,6 +20255,7 @@
   "اکریل موقت": "pmma",
   "اثر امبرلا": "اثر چتر",
   "اسلاید کست": "اسلایدکست",
+  "مدیریت فضا": "اصلاح فضا",
   "قطعیت کاذب": "اطمینان کاذب",
   "اصلاح مینا": "اناملوپلاستی",
   "درمان اندو": "اندو",
@@ -20293,7 +20304,6 @@
   "عرض استتیک": "زیبایی ویدث",
   "لایه اسمیر": "اسمیر لایر",
   "اتصال روکش": "اسپلینت پروتزی",
-  "مدیریت فضا": "اصلاح فضا",
   "اصول درمان": "اصول درمانی",
   "ایمنی اشعه": "ایمنی پرتو",
   "حفاظت پرتو": "ایمنی پرتو",
@@ -20313,6 +20323,7 @@
   "انطباق لبه": "تطابق مارژینال",
   "proportion": "تناسب با مجاور",
   "ترتیب باند": "توالی باند",
+  "اپیکوکتومی": "جراحی اپیکال",
   "جمینی گوگل": "جمینای",
   "protrusive": "حرکت پروتروزیو",
   "حساسیت طوق": "حساسیت دندانی",
@@ -20381,7 +20392,6 @@
   "light cure": "کیور",
   "سطح راهنما": "گاید پلین",
   "play store": "گوگل پلی",
-  "اپیکوکتومی": "جراحی اپیکال",
   "کامپلیکیشن": "عوارض",
   "occlusion": "اکلوژن",
   "پلن درمان": "طرح درمان",
@@ -20459,6 +20469,7 @@
   "whitening": "بلیچینگ",
   "آفیس بلیچ": "بلیچینگ",
   "کریز لاین": "ترک مینایی",
+  "تریس کردن": "تریس آبسه",
   "تفکیک خطا": "تفکیک منشأ خطا",
   "retrieval": "تکنیک خارج سازی",
   "خارج کردن": "تکنیک خارج سازی",
@@ -20519,7 +20530,6 @@
   "full arch": "بیمار بی دندان",
   "face scan": "بیمار مجازی",
   "آینه دستی": "بیوفیدبک دیداری",
-  "تریس کردن": "تریس آبسه",
   "عبور سوند": "تست سوند",
   "بایت وینگ": "تفسیر رادیوگرافی",
   "handpiece": "توربین",
@@ -20617,8 +20627,8 @@
   "chat gpt": "chatgpt",
   "جی پی تی": "chatgpt",
   "فایبرپست": "فایبر پست",
-  "تی ام دی": "tmd",
   "اکسترکشن": "کشیدن دندان",
+  "تی ام دی": "tmd",
   "پرپ روکش": "تراش روکش",
   "دی ام ای": "dme",
   "آی دی اس": "ids",
@@ -20641,6 +20651,7 @@
   "براکسیزم": "براکسیسم",
   "بروکسیزم": "براکسیسم",
   "کم تهاجم": "حداقل تهاجم",
+  "diastema": "دیاستم",
   "رزین کوت": "رزین کوتینگ",
   "رشد فکین": "رشد فک",
   "لود فوری": "زمان بارگذاری ایمپلنت",
@@ -20661,7 +20672,6 @@
   "توهم مدل": "توهم هوش مصنوعی",
   "jaw pain": "درد فکی",
   "درد صورت": "درد فکی",
-  "diastema": "دیاستم",
   "پی اف ام": "روکش pfm",
   "شیب کاسپ": "شیب کاسپی",
   "فوتو کست": "فوتوکست",
@@ -20679,6 +20689,7 @@
   "تخمین vd": "vd تخمینی",
   "خطای دید": "ادراک بصری",
   "استیجینگ": "استیج بندی درمان",
+  "بستن فضا": "اصلاح فضا",
   "ریشیپینگ": "اناملوپلاستی",
   "overhang": "اورهنگ",
   "باند زدن": "باند",
@@ -20715,7 +20726,6 @@
   "آنکیلوزه": "آنکیلوز",
   "ابفراکشن": "ابفرکشن",
   "کاهش ریج": "استئوپلاستی",
-  "بستن فضا": "اصلاح فضا",
   "رد بیمار": "انتخاب بیمار",
   "apple id": "اپل آیدی",
   "اپل ایدی": "اپل آیدی",
@@ -20795,10 +20805,10 @@
   "دایمنشن": "vd",
   "امبرژور": "امبراژور",
   "عصب کشی": "درمان ریشه",
+  "دیاستما": "دیاستم",
   "رشد فکی": "رشد فک",
   "biobase": "بایوبیس",
   "opacity": "ترانسلوسنسی",
-  "دیاستما": "دیاستم",
   "لقی پیچ": "شل شدن پیچ",
   "library": "لایبرری دیجیتال",
   "نوع گیر": "نوع ریتنشن",
@@ -20808,6 +20818,7 @@
   "ونت هول": "smart ونت روکش",
   "amalgam": "آمالگام",
   "staging": "استیج بندی درمان",
+  "tracing": "تریس آبسه",
   "مرض قند": "دیابت",
   "دیابتیک": "دیابت",
   "ری سمان": "سمان مجدد",
@@ -20835,7 +20846,6 @@
   "trismus": "بازشدن محدود دهان",
   "آب دهان": "بزاق",
   "فول آرچ": "بیمار بی دندان",
-  "tracing": "تریس آبسه",
   "turbine": "توربین",
   "airotor": "توربین",
   "یکی یکی": "حذف گام به گام",
@@ -20908,6 +20918,7 @@
   "ریج لپ": "ridge lap",
   "okeson": "اوکیسون",
   "خط ترک": "ترک مینایی",
+  "فیستول": "تریس آبسه",
   "dawson": "داوسون",
   "سیگاری": "دخانیات",
   "تنباکو": "دخانیات",
@@ -20928,7 +20939,6 @@
   "bridge": "بریج",
   "آنستزی": "بی حسی",
   "try in": "تثبیت موقت روکش",
-  "فیستول": "تریس آبسه",
   "هندپیس": "توربین",
   "remake": "تکرار کار",
   "gemini": "جمینای",

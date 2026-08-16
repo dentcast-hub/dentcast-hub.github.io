@@ -11673,5 +11673,110 @@
         "interpretation_fa": "رد درمان زیبایی فوری را به دلیلش وصل کرده: فیستول فعال و توزیع غلط فضا با تعویض روکش حل نمی‌شوند. دیاستم متقارن میدلاین را پیامد آبسه ندانسته و طرح ایمپلنت را به پروگنوز دندان ۱۱ مشروط کرده است. ارزش بالینی‌اش جداکردن عفونت اپیکال از مسئلهٔ فضاست. آنچه ندارد نسبت‌دادن این اصول به منبع منتشرشده است."
       }
     ]
+  },
+  "dentai/dentai-29": {
+    "scored_at": "2026-08-16",
+    "sources": [
+      {
+        "des_version": "2.1",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Comparative Influence of Marginal Design and Digital Scanning Accuracy on the Clinical Longevity of Ceramic Restorations: An Evidence-Based Approach. Consensus Statement From SSRD, SEPES, and PROSEC Conference on Minimally Invasive Restorations",
+          "authors": "Pradies G, Gil A, Morón-Conejo B, Bonfanti-Gris M, Martínez-Rus F, et al.",
+          "year": 2025,
+          "journal": "Journal of Esthetic and Restorative Dentistry",
+          "doi": "10.1111/jerd.13474"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR/meta-analysis pooling RCTs, prospective and retrospective studies on finish-line design outcomes (THERAPY SR/MA row, 100, via Step 2 routing; the paper also carries a secondary DIAGNOSTIC-type SR/MA on IOS accuracy, noted in interpretation)",
+          "evidence_quote": "This key finding is supported by the meta-analysis, including 4 randomized controlled trials (RCTs), 7 prospective studies, and 4 retrospective studies."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no PROSPERO or other prospective-registration statement anywhere in the text; sections read: Abstract, Introduction, both systematic-review sections (2.1-2.7 and 3.1-3.7), Conflicts of Interest, Data Availability Statement, References — no registration wording found."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no database names, search strings, or search-strategy description anywhere in the text; only final included-study counts are reported. Sections read: Introduction, both review sections in full — no search-strategy wording anywhere."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "neither a PRISMA-style screening account (records found -> duplicates removed -> screened -> full-text assessed -> excluded -> included) nor explicit inclusion/exclusion criteria are reported anywhere; only final included-study totals are given (e.g. 15 studies, 33 studies). Both halves of the 3b-iii test are missing."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no risk-of-bias tool (e.g. Cochrane RoB, ROBINS-I, Newcastle-Ottawa) or appraisal step is named anywhere in the text; both review sections read in full, no appraisal wording found."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "some_concerns",
+              "evidence_quote": "due to data heterogeneity, a meta-analysis was not feasible",
+              "note": "shows heterogeneity was considered when deciding whether to pool one outcome, but never describes the pooling model, heterogeneity statistic, or sensitivity analysis actually used for the outcomes that were pooled."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no funnel plot, Egger's test, or any publication-bias assessment is mentioned anywhere in the text."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors declare no conflicts of interest.",
+            "note": "CoI declared, and funding disclosed (\"All authors received travel compensation from the PROSEC Foundation, SEPES or SSRD.\") — professional/scientific societies, not manufacturers of a tested product."
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "RCTs only; not applicable to a systematic review/consensus paper."
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study."
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "follow-up period ranging from 3 to 7 years",
+            "note": "3-7y follow-up is adequate for the survival/success claim being made; not shorter than plausibly required."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 30,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این منبع در نوعِ سؤال THERAPY امتیاز ۳۰ از ۱۰۰ و باند D (شواهد ضعیف) گرفته است.",
+        "interpretation_fa": "این مقاله بیانیه‌ی اجماعِ دو مرورِ سیستماتیک با متاآنالیز است، اما متنِ خودِ آن استراتژیِ جست‌وجو، معیارهای ورود و خروج، ابزارِ ارزیابیِ ریسکِ تورش و روشِ متاآنالیز را گزارش نمی‌کند. همین شفافیتِ پایینِ روش‌شناختی امتیاز را می‌کاهد، هرچند طراحیِ زیربناییِ متاآنالیز در نوعِ خود قوی است. ارزشِ بالینیِ آن بیشتر در جمع‌بندی و اجماعِ تخصصی است تا در قابلیتِ راستی‌آزماییِ مستقلِ خواننده."
+      }
+    ]
   }
 }
