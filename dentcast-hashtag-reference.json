@@ -652,7 +652,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 36,
+   "count": 37,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-25",
@@ -689,7 +689,8 @@
     "chairside/chairside-29",
     "insight/insight-64",
     "chairside/chairside-31",
-    "episodes/episode-161"
+    "episodes/episode-161",
+    "chairside/chairside-33"
    ]
   },
   {
@@ -705,7 +706,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 32,
+   "count": 33,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -738,7 +739,8 @@
     "chairside/chairside-29",
     "chairside/chairside-30",
     "chairside/chairside-31",
-    "chairside/chairside-32"
+    "chairside/chairside-32",
+    "chairside/chairside-33"
    ]
   },
   {
@@ -759,7 +761,7 @@
     "#گزارش_کیس"
    ],
    "co_tags": [],
-   "count": 32,
+   "count": 33,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -792,7 +794,8 @@
     "chairside/chairside-29",
     "chairside/chairside-30",
     "chairside/chairside-31",
-    "chairside/chairside-32"
+    "chairside/chairside-32",
+    "chairside/chairside-33"
    ]
   },
   {
@@ -1271,7 +1274,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 23,
+   "count": 24,
    "content_ids": [
     "episodes/episode-48",
     "episodes/episode-49",
@@ -1295,7 +1298,8 @@
     "insight/insight-58",
     "chairside/chairside-26",
     "insight/insight-64",
-    "episodes/episode-161"
+    "episodes/episode-161",
+    "chairside/chairside-33"
    ]
   },
   {
@@ -2126,6 +2130,37 @@
    ]
   },
   {
+   "key": "دکتر_شهابیان",
+   "tag": "#دکتر_شهابیان",
+   "domain": "brand",
+   "words": 2,
+   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
+   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
+   "aliases": [
+    "شهابیان",
+    "کانسپت شهابیان",
+    "foad shahabian",
+    "دکتر فواد شهابیان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-148-2",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31",
+    "chairside/chairside-32",
+    "chairside/chairside-33"
+   ]
+  },
+  {
    "key": "سایش_دندان",
    "tag": "#سایش_دندان",
    "domain": "clinical",
@@ -2220,7 +2255,7 @@
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
    "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
    "aliases": [
@@ -2337,36 +2372,6 @@
     "insight/insight-51",
     "metanotes/meta-16",
     "sharehub/share-15"
-   ]
-  },
-  {
-   "key": "دکتر_شهابیان",
-   "tag": "#دکتر_شهابیان",
-   "domain": "brand",
-   "words": 2,
-   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
-   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
-   "aliases": [
-    "شهابیان",
-    "کانسپت شهابیان",
-    "foad shahabian",
-    "دکتر فواد شهابیان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-148-2",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30",
-    "chairside/chairside-31",
-    "chairside/chairside-32"
    ]
   },
   {
@@ -2582,6 +2587,33 @@
     "insight/insight-28",
     "chairside/chairside-19",
     "chairside/chairside-22"
+   ]
+  },
+  {
+   "key": "زیبایی_قدامی",
+   "tag": "#زیبایی_قدامی",
+   "domain": null,
+   "words": 2,
+   "definition": "نتیجه‌ی زیبایی در ناحیه‌ی قدام.",
+   "use_when": "مقاله تصمیمش را بر معیار زیبایی قدام بنا کند.",
+   "aliases": [
+    "استتیک قدامی",
+    "زیبایی قدام"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-13",
+    "notecast/episode-28",
+    "chairside/chairside-1",
+    "insight/insight-28",
+    "chairside/chairside-8",
+    "chairside/chairside-16",
+    "insight/insight-55",
+    "insight/insight-61",
+    "insight/insight-62",
+    "chairside/chairside-33"
    ]
   },
   {
@@ -2856,32 +2888,6 @@
    ]
   },
   {
-   "key": "زیبایی_قدامی",
-   "tag": "#زیبایی_قدامی",
-   "domain": null,
-   "words": 2,
-   "definition": "نتیجه‌ی زیبایی در ناحیه‌ی قدام.",
-   "use_when": "مقاله تصمیمش را بر معیار زیبایی قدام بنا کند.",
-   "aliases": [
-    "استتیک قدامی",
-    "زیبایی قدام"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-13",
-    "notecast/episode-28",
-    "chairside/chairside-1",
-    "insight/insight-28",
-    "chairside/chairside-8",
-    "chairside/chairside-16",
-    "insight/insight-55",
-    "insight/insight-61",
-    "insight/insight-62"
-   ]
-  },
-  {
    "key": "فضای_رستوریتیو",
    "tag": "#فضای_رستوریتیو",
    "domain": null,
@@ -2968,6 +2974,34 @@
     "episodes/episode-159-1",
     "metanotes/meta-14",
     "dentai/dentai-26"
+   ]
+  },
+  {
+   "key": "کشیدن_دندان",
+   "tag": "#کشیدن_دندان",
+   "domain": null,
+   "words": 2,
+   "definition": "تصمیم به خارج کردن دندان.",
+   "use_when": "مقاله بین حفظ و کشیدن انتخاب کند.",
+   "aliases": [
+    "اکستراکشن",
+    "extraction",
+    "اکسترکشن",
+    "خارج کردن دندان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-151",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-21",
+    "sharehub/share-12",
+    "chairside/chairside-30",
+    "chairside/chairside-33"
    ]
   },
   {
@@ -3166,33 +3200,6 @@
     "insight/insight-36",
     "dentai/dentai-25",
     "chairside/chairside-32"
-   ]
-  },
-  {
-   "key": "کشیدن_دندان",
-   "tag": "#کشیدن_دندان",
-   "domain": null,
-   "words": 2,
-   "definition": "تصمیم به خارج کردن دندان.",
-   "use_when": "مقاله بین حفظ و کشیدن انتخاب کند.",
-   "aliases": [
-    "اکستراکشن",
-    "extraction",
-    "اکسترکشن",
-    "خارج کردن دندان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-151",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-21",
-    "sharehub/share-12",
-    "chairside/chairside-30"
    ]
   },
   {
@@ -4676,6 +4683,31 @@
    ]
   },
   {
+   "key": "شروع_نکردن_درمان",
+   "tag": "#شروع_نکردن_درمان",
+   "domain": null,
+   "words": 3,
+   "definition": "تصمیم به شروع نکردن تا وقتی مجهول‌ها روشن نشده‌اند.",
+   "use_when": "مقاله توقف پیش از شروع را انتخابِ درست بداند.",
+   "aliases": [
+    "رد طرح درمان",
+    "نپذیرفتن کیس",
+    "عدم پذیرش بیمار"
+   ],
+   "variants": [
+    "#رد_طرح_درمان"
+   ],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "chairside/chairside-17",
+    "chairside/chairside-20",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-33"
+   ]
+  },
+  {
    "key": "شکست_ایمپلنت",
    "tag": "#شکست_ایمپلنت",
    "domain": "clinical",
@@ -5337,10 +5369,32 @@
    ]
   },
   {
+   "key": "دیاستم",
+   "tag": "#دیاستم",
+   "domain": null,
+   "words": 1,
+   "definition": "فاصله‌ی بین دو دندان مجاور در قدام.",
+   "use_when": "مقاله درباره‌ی بستن یا مدیریت دیاستم تصمیم بگیرد.",
+   "aliases": [
+    "diastema",
+    "دیاستما",
+    "فاصله بین دندانی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-26",
+    "insight/insight-61",
+    "chairside/chairside-33"
+   ]
+  },
+  {
    "key": "رادیوگرافی_تشخیصی",
    "tag": "#رادیوگرافی_تشخیصی",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "انتخاب و تفسیرِ درستِ تصویر — پانورامیک در برابر پری‌اپیکال.",
    "use_when": "مقاله کفایت یا نارساییِ یک تصویر را مسئله بداند.",
    "aliases": [
@@ -5522,30 +5576,6 @@
     "insight/insight-29",
     "insight/insight-44",
     "insight/insight-59"
-   ]
-  },
-  {
-   "key": "شروع_نکردن_درمان",
-   "tag": "#شروع_نکردن_درمان",
-   "domain": null,
-   "words": 3,
-   "definition": "تصمیم به شروع نکردن تا وقتی مجهول‌ها روشن نشده‌اند.",
-   "use_when": "مقاله توقف پیش از شروع را انتخابِ درست بداند.",
-   "aliases": [
-    "رد طرح درمان",
-    "نپذیرفتن کیس",
-    "عدم پذیرش بیمار"
-   ],
-   "variants": [
-    "#رد_طرح_درمان"
-   ],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "chairside/chairside-17",
-    "chairside/chairside-20",
-    "chairside/chairside-25",
-    "chairside/chairside-26"
    ]
   },
   {
@@ -6587,7 +6617,7 @@
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
-   "words": 4,
+   "words": 6,
    "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
    "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
    "aliases": [
@@ -6602,27 +6632,6 @@
     "insight/insight-19",
     "chairside/chairside-2",
     "insight/insight-38"
-   ]
-  },
-  {
-   "key": "دیاستم",
-   "tag": "#دیاستم",
-   "domain": null,
-   "words": 1,
-   "definition": "فاصله‌ی بین دو دندان مجاور در قدام.",
-   "use_when": "مقاله درباره‌ی بستن یا مدیریت دیاستم تصمیم بگیرد.",
-   "aliases": [
-    "diastema",
-    "دیاستما",
-    "فاصله بین دندانی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-26",
-    "insight/insight-61"
    ]
   },
   {
@@ -8223,6 +8232,26 @@
    ]
   },
   {
+   "key": "اصلاح_فضا",
+   "tag": "#اصلاح_فضا",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بستن یا ایجادِ فضا با جابه‌جایی دندان.",
+   "use_when": "مقاله تصمیمِ اصلاح فضا را بررسی کند.",
+   "aliases": [
+    "space management",
+    "مدیریت فضا",
+    "بستن فضا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-5",
+    "chairside/chairside-33"
+   ]
+  },
+  {
    "key": "اطمینان_کاذب",
    "tag": "#اطمینان_کاذب",
    "domain": "ai",
@@ -8826,6 +8855,27 @@
    "content_ids": [
     "dentai/dentai-1",
     "dentai/dentai-14"
+   ]
+  },
+  {
+   "key": "تریس_آبسه",
+   "tag": "#تریس_آبسه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "دنبال کردنِ مسیرِ سینوس تراکت تا منشأ واقعی.",
+   "use_when": "مقاله تریس کردن را گامِ تشخیصی بداند.",
+   "aliases": [
+    "sinus tract",
+    "تریس کردن",
+    "فیستول",
+    "tracing"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-9",
+    "chairside/chairside-33"
    ]
   },
   {
@@ -12347,25 +12397,6 @@
    ]
   },
   {
-   "key": "اصلاح_فضا",
-   "tag": "#اصلاح_فضا",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "بستن یا ایجادِ فضا با جابه‌جایی دندان.",
-   "use_when": "مقاله تصمیمِ اصلاح فضا را بررسی کند.",
-   "aliases": [
-    "space management",
-    "مدیریت فضا",
-    "بستن فضا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "sharehub/share-5"
-   ]
-  },
-  {
    "key": "اصول_درمانی",
    "tag": "#اصول_درمانی",
    "domain": "clinical",
@@ -12741,7 +12772,7 @@
    "key": "اینتروژن_ارتودنسی",
    "tag": "#اینتروژن_ارتودنسی",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
    "use_when": "مقاله اینتروژن را راه‌حل بداند.",
    "aliases": [
@@ -13467,26 +13498,6 @@
    ]
   },
   {
-   "key": "تریس_آبسه",
-   "tag": "#تریس_آبسه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "دنبال کردنِ مسیرِ سینوس تراکت تا منشأ واقعی.",
-   "use_when": "مقاله تریس کردن را گامِ تشخیصی بداند.",
-   "aliases": [
-    "sinus tract",
-    "تریس کردن",
-    "فیستول",
-    "tracing"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-9"
-   ]
-  },
-  {
    "key": "تزریق_بی_درد",
    "tag": "#تزریق_بی‌درد",
    "domain": "clinical",
@@ -13608,7 +13619,7 @@
    "key": "تفسیر_رادیوگرافی",
    "tag": "#تفسیر_رادیوگرافی",
    "domain": "clinical",
-   "words": 2,
+   "words": 4,
    "definition": "خواندنِ الگو — مرزِ صاف در برابر مرزِ منتشر — نه صرفاً دیدنِ لکه.",
    "use_when": "مقاله معیارِ تمایزِ تصویری بدهد.",
    "aliases": [
@@ -13863,6 +13874,28 @@
    "count": 1,
    "content_ids": [
     "sharehub/share-14"
+   ]
+  },
+  {
+   "key": "جراحی_اپیکال",
+   "tag": "#جراحی_اپیکال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "جراحی انتهای ریشه برای حذف ضایعهٔ پری‌اپیکال؛ سیلِ کانال فقط وقتی کامل است که پرکردگی رتروگراد (retrograde filling) در آپکس گذاشته شود. باز کردن و درناژِ صرف، باکتری را در سیستم کانال باقی می‌گذارد.",
+   "use_when": "مقاله‌ای که شکست یا اصول جراحی اپیکال، نبودِ پرکردگی رتروگراد، یا پیامدِ عفونت فعالِ باقی‌مانده پس از آپیکوکتومی را بررسی می‌کند.",
+   "aliases": [
+    "apicoectomy",
+    "apical surgery",
+    "retrograde filling",
+    "پرکردگی رتروگراد",
+    "اپیکوکتومی",
+    "جراحی انتهای ریشه"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-33"
    ]
   },
   {
@@ -14657,7 +14690,7 @@
    "key": "رادیوگرافی_کنترل",
    "tag": "#رادیوگرافی_کنترل",
    "domain": "clinical",
-   "words": 2,
+   "words": 4,
    "definition": "پری‌اپیکالِ صحیح، به‌عنوان تأییدِ قطعیِ نشست.",
    "use_when": "مقاله رادیوگرافی را تأییدِ نهایی بداند، نه حس.",
    "aliases": [
@@ -17088,7 +17121,7 @@
    "key": "هوش_مصنوعی_رادیوگرافی",
    "tag": "#هوش_مصنوعی_رادیوگرافی",
    "domain": "ai",
-   "words": 3,
+   "words": 5,
    "definition": "نرم‌افزاری که روی رادیوگرافی ضایعه یا سطح استخوان را علامت می‌زند — تصویری که اغلب با ChatGPT اشتباه گرفته می‌شود.",
    "use_when": "مقاله همین دسته را موضوع یا نقطه‌ی تمایز قرار دهد.",
    "aliases": [
@@ -18832,13 +18865,13 @@
   "سلامت دهان و دندان": "سلامت دهان",
   "زیرکونیا ترنسلوسنت": "نسل زیرکونیا",
   "minimally invasive": "حداقل تهاجم",
+  "کامپلیکیشن ایمپلنت": "عوارض ایمپلنت",
   "critical appraisal": "تحلیل مطالعه",
   "تماس باز پروگزیمال": "تماس باز",
   "force distribution": "توزیع نیرو",
   "ثبات اولیه ایمپلنت": "ثبات اولیه",
   "جایگزین کردن دندان": "جایگزینی دندان",
   "cuspal inclination": "شیب کاسپی",
-  "کامپلیکیشن ایمپلنت": "عوارض ایمپلنت",
   "digital prosthesis": "پروتز دیجیتال",
   "پروتز زیبایی دندان": "پروتز زیبایی",
   "implant connection": "کانکشن ایمپلنت",
@@ -18894,6 +18927,7 @@
   "failure prediction": "پیش بینی شکست",
   "زمان به عنوان داده": "پیگیری زمانی",
   "flowable composite": "کامپوزیت فلو",
+  "retrograde filling": "جراحی اپیکال",
   "پروتز روی ایمپلنت": "پروتز ایمپلنت",
   "تصمیم گیری درمانی": "تصمیم درمانی",
   "تصمیم گیری بالینی": "تصمیم درمانی",
@@ -19001,6 +19035,7 @@
   "infection control": "کنترل عفونت",
   "retention control": "کنترل گیر",
   "anterior guidance": "گایدنس قدامی",
+  "جراحی انتهای ریشه": "جراحی اپیکال",
   "کلینیکال اینسایت": "اینسایت",
   "روکش روی ایمپلنت": "روکش ایمپلنت",
   "fixed prosthesis": "پروتز ثابت",
@@ -19013,8 +19048,8 @@
   "peri implantitis": "پری ایمپلنتیتیس",
   "افزایش بعد عمودی": "افزایش vd",
   "لیتیوم دیسیلیکات": "لیتیوم دی سیلیکات",
-  "bonding protocol": "پروتکل باند",
   "استخوان مارژینال": "تحلیل استخوان کرستال",
+  "bonding protocol": "پروتکل باند",
   "بیومیمتیک ترمیمی": "ترمیم بیومیمتیک",
   "درمان با ایمپلنت": "درمان ایمپلنت",
   "cement selection": "انتخاب سمان",
@@ -19156,6 +19191,7 @@
   "هدایت طرفی کانین": "گایدنس کانین",
   "چت با هوش مصنوعی": "مصاحبه با هوش مصنوعی",
   "فاصله پست و گوتا": "گپ پست و گوتا",
+  "پرکردگی رتروگراد": "جراحی اپیکال",
   "لامینیت سرامیکی": "لمینیت سرامیکی",
   "veneer laminate": "لمینیت سرامیکی",
   "ترمیم کامپوزیتی": "کامپوزیت",
@@ -19364,6 +19400,7 @@
   "posterior stop": "استاپ خلفی",
   "تغییرات اسکلتی": "رشد فک",
   "immediate load": "زمان بارگذاری ایمپلنت",
+  "مشکلات ایمپلنت": "عوارض ایمپلنت",
   "food impaction": "گیر غذایی",
   "veneer removal": "debonding",
   "خارج کردن ونیر": "debonding",
@@ -19376,7 +19413,6 @@
   "ثبت رابطه فکین": "ثبت رابطه",
   "درد اوروفاسیال": "درد فکی",
   "orofacial pain": "درد فکی",
-  "مشکلات ایمپلنت": "عوارض ایمپلنت",
   "پیگیری ایمپلنت": "پیگیری زمانی ایمپلنت",
   "retention type": "نوع ریتنشن",
   "ceramic veneer": "ونیر سرامیکی",
@@ -19489,6 +19525,7 @@
   "composite core": "کور کامپوزیتی",
   "راهنمایی کانین": "گایدنس کانین",
   "post gutta gap": "گپ پست و گوتا",
+  "apical surgery": "جراحی اپیکال",
   "prosthodontics": "پروتز",
   "ویزیت کلینیکی": "کیس اینسایت",
   "implant crown": "روکش ایمپلنت",
@@ -19535,6 +19572,7 @@
   "resin coating": "رزین کوتینگ",
   "ceramic crown": "روکش سرامیکی",
   "کراون سرامیکی": "روکش سرامیکی",
+  "عارضه ایمپلنت": "عوارض ایمپلنت",
   "crown seating": "نشست روکش",
   "implant screw": "پیچ ایمپلنت",
   "اسکرو ایمپلنت": "پیچ ایمپلنت",
@@ -19551,7 +19589,6 @@
   "پیامد بلندمدت": "درمان بلندمدت",
   "هیبرید سرامیک": "سرامیک هیبرید",
   "dental cement": "سمان دندانی",
-  "عارضه ایمپلنت": "عوارض ایمپلنت",
   "قوس کوتاه شده": "قوس دندانی کوتاه شده",
   "کوتاه شدن قوس": "قوس دندانی کوتاه شده",
   "esthetic zone": "ناحیه زیبایی",
@@ -19722,8 +19759,8 @@
   "فضای بازسازی": "فضای رستوریتیو",
   "اینگات ایمکس": "لیتیوم دی سیلیکات",
   "hydrofluoric": "اچ سرامیک",
-  "استحکام باند": "قدرت باند",
   "تحلیل کرستال": "تحلیل استخوان کرستال",
+  "استحکام باند": "قدرت باند",
   "non invasive": "درمان غیرتهاجمی",
   "smile design": "طراحی لبخند",
   "دیزاین لبخند": "طراحی لبخند",
@@ -20133,6 +20170,7 @@
   "محدوده اسکن": "گسترش اسکن",
   "google play": "گوگل پلی",
   "گیر اصطکاکی": "گیر مکانیکی",
+  "apicoectomy": "جراحی اپیکال",
   "بایومیمتیک": "بیومیمتیک",
   "بیو میمتیک": "بیومیمتیک",
   "بیومی متیک": "بیومیمتیک",
@@ -20343,6 +20381,7 @@
   "light cure": "کیور",
   "سطح راهنما": "گاید پلین",
   "play store": "گوگل پلی",
+  "اپیکوکتومی": "جراحی اپیکال",
   "کامپلیکیشن": "عوارض",
   "occlusion": "اکلوژن",
   "پلن درمان": "طرح درمان",
@@ -20391,6 +20430,7 @@
   "لایه سمان": "سمان",
   "پیچ پروتز": "پیچ ایمپلنت",
   "اورکانتور": "کانتور ترمیم",
+  "کانتیلیور": "کانتی لیور",
   "دیباندینگ": "debonding",
   "نقد مقاله": "تحلیل مطالعه",
   "pulp test": "تست اندو",
@@ -20404,7 +20444,6 @@
   "هیلینگ کپ": "هیلینگ اباتمنت",
   "پوشش نسبی": "پارشیال کاوریج",
   "پری مولار": "پرمولر",
-  "کانتیلیور": "کانتی لیور",
   "lab check": "کنترل کار لابراتوار",
   "قوس کوتاه": "sda",
   "vent hole": "smart ونت روکش",
@@ -20608,6 +20647,7 @@
   "ارلی لود": "زمان بارگذاری ایمپلنت",
   "سمان تمپ": "سمان موقت",
   "سیت روکش": "نشست روکش",
+  "کانتیلور": "کانتی لیور",
   "دباندینگ": "debonding",
   "پی دی ال": "pdl",
   "referral": "ارجاع تخصصی",
@@ -20630,7 +20670,6 @@
   "بار برشی": "نیروی برشی",
   "پره مولر": "پرمولر",
   "premolar": "پرمولر",
-  "کانتیلور": "کانتی لیور",
   "build up": "بازسازی دیواره",
   "ال تی دی": "ltd",
   "ام دی پی": "mdp",
