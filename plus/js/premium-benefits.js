@@ -16,7 +16,7 @@
 // «بریز», «بخون». That voice is right beside a button someone already paid for
 // and wrong on the page asking them for a million toman. Same features,
 // register to match the moment.
-import { PREMIUM_FEATURES } from './config.js?v=8';
+import { PREMIUM_FEATURES } from './config.js?v=9';
 
 /**
  * Keyed by title with a fallback to the shared hint, so a feature added to the

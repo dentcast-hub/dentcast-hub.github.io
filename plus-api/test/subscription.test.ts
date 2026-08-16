@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterAll } from 'vitest';
 import { resetDb } from './helpers.js';
 import { pool, closePool } from '../src/db.js';
 import {
-  activateMonths, grantLifetime, revokeSubscription, getSubscription, isPremiumNow,
+  activateMonths, activateDays, grantLifetime, revokeSubscription, getSubscription, isPremiumNow,
   sweepExpiredSubscriptions, summarizeSubscription, getSubscriptionSummary,
   PLAN_PAID, PLAN_FOUNDER,
 } from '../src/services/subscription.js';
@@ -142,6 +142,84 @@ describe('activateMonths', () => {
     await expect(activateMonths(user, -3, { source: 'admin' })).rejects.toThrow(/months/);
     await expect(activateMonths(user, 1.5, { source: 'admin' })).rejects.toThrow(/months/);
     await expect(activateMonths(user, 999, { source: 'admin' })).rejects.toThrow(/months/);
+    expect(await getSubscription(user)).toBeNull();
+  });
+});
+
+describe('activateDays', () => {
+  it('gives a free account exactly N days from now', async () => {
+    const user = await makeUser();
+    const now = new Date('2026-08-05T09:00:00Z');
+    const sub = await activateDays(user, 7, { source: 'admin', now });
+
+    expect(sub.status).toBe('active');
+    expect(sub.plan).toBe(PLAN_PAID);
+    expect(daysBetween(sub.expires_at!, now)).toBe(7);
+    expect(await tierOf(user)).toBe('premium');
+  });
+
+  it('adds to whatever is left, not to today — the "0 -> 7, 20 -> 27" rule', async () => {
+    const user = await makeUser();
+    const bought = new Date('2026-08-05T09:00:00Z');
+    // Twenty real days still on the clock.
+    const first = await activateMonths(user, 1, { source: 'payment', now: bought });
+    const twentyLeft = new Date(first.expires_at!.getTime() - 20 * 86_400_000);
+
+    const gifted = await activateDays(user, 7, { source: 'admin', now: twentyLeft });
+
+    // 27 days out from the moment of the gift, not 7.
+    expect(daysBetween(gifted.expires_at!, twentyLeft)).toBe(27);
+    // And it is the SAME extension the paid month already bought, plus seven —
+    // the gift never burns the days that were already there.
+    expect(gifted.expires_at!.getTime()).toBe(first.expires_at!.getTime() + 7 * 86_400_000);
+  });
+
+  it('leaves a founder alone — already premium forever, nothing to add', async () => {
+    const user = await makeUser();
+    await grantLifetime(user, { source: 'admin' });
+    const sub = await activateDays(user, 7, { source: 'admin' });
+
+    expect(sub.is_founder).toBe(true);
+    expect(sub.expires_at).toBeNull();
+  });
+
+  it('is exactly what runs down after the gift window — no special-case needed', async () => {
+    const user = await makeUser();
+    const bought = new Date('2026-08-05T09:00:00Z');
+    const first = await activateMonths(user, 1, { source: 'payment', now: bought });
+    const twentyLeft = new Date(first.expires_at!.getTime() - 20 * 86_400_000);
+    await activateDays(user, 7, { source: 'admin', now: twentyLeft });
+
+    // Seven days after the gift ran, the account is exactly back on its own
+    // real expiry — the sweep needs no knowledge of where the days came from.
+    const sub = await getSubscription(user);
+    const sevenDaysLater = new Date(twentyLeft.getTime() + 7 * 86_400_000);
+    expect(isPremiumNow(sub, sevenDaysLater)).toBe(true);
+    expect(isPremiumNow(sub, new Date(first.expires_at!.getTime() + 1000))).toBe(false);
+  });
+
+  it('logs an audit event tagged by kind, separate from month activations', async () => {
+    const user = await makeUser();
+    await activateDays(user, 7, {
+      source: 'admin', now: new Date('2026-08-05T09:00:00Z'), meta: { campaign: 'anniversary_7' },
+    });
+
+    const ev = await pool.query<{ action: string; meta: Record<string, unknown> }>(
+      'select action, meta from user_activity where user_id = $1',
+      [user],
+    );
+    expect(ev.rows).toHaveLength(1);
+    expect(ev.rows[0].meta.kind).toBe('days');
+    expect(ev.rows[0].meta.days).toBe(7);
+    expect(ev.rows[0].meta.campaign).toBe('anniversary_7');
+  });
+
+  it('rejects a day count that is not a sane whole number', async () => {
+    const user = await makeUser();
+    await expect(activateDays(user, 0, { source: 'admin' })).rejects.toThrow(/days/);
+    await expect(activateDays(user, -3, { source: 'admin' })).rejects.toThrow(/days/);
+    await expect(activateDays(user, 3.5, { source: 'admin' })).rejects.toThrow(/days/);
+    await expect(activateDays(user, 9999, { source: 'admin' })).rejects.toThrow(/days/);
     expect(await getSubscription(user)).toBeNull();
   });
 });
