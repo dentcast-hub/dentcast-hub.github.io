@@ -1194,10 +1194,25 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v2.0.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v2.1.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v2.0 is the current spec, and its one change from 1.x is that a transparency
+**v2.1 is the current spec, and its one change from 2.0 is that the AMSTAR-2
+excluded-studies domain has THREE outcomes instead of two (Step 3b-iii).** A
+review that published no per-study list of excluded full-text studies is now
+`some_concerns` rather than `high` **when it reported both** a screening account
+with counts (a PRISMA flow diagram, or records screened → full texts assessed →
+included) **and** explicit inclusion/exclusion criteria; a review that documented
+neither, or only one of the two, is still `high`, and that `high` still counts
+toward AMSTAR-2 *critically low*. The reason is that the old rule failed **9 of
+the 9** full-text reviews on record — a domain nothing can pass carries no
+information, and it was rating a PROSPERO-registered five-database review with a
+PRISMA flow identically to a narrative review with no Methods section at all.
+Under `ABSTRACT_ONLY` nothing changes: silence there stays `NR`. Two scores moved
+when this landed, both systematic reviews cited by `sharehub/share-9`, from 55/C
+to 80/A; everything else on record is arithmetically identical.
+
+**v2.0 remains in force for everything else, and its change from 1.x is that a transparency
 penalty is a SHARE of the design anchor, not a flat deduction (Step 4a).** The
 table's numbers are now `base_points`, and what gets subtracted is
 `max(1, round_half_up(base_points × S_design ÷ 100))`. Every penalty object
