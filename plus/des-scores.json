@@ -2782,7 +2782,7 @@
         "interpretation_fa": "این بررسی مقدماتی in-vitro نشان می‌دهد دود توتون شیمی سطح و wettability را تغییر می‌دهد، با جهت متفاوت در تیتانیوم و زیرکونیا. سازوکار آلودگی سطح ایمپلنت را مستند می‌کند اما پیامد بالینی نمی‌سنجد. حجم نمونه توجیه نشده، تخصیص تصادفی گزارش نشده و ارزیابی کور انجام نشده. نویسندگان خودشان آن را دارای risk of bias متوسط می‌دانند."
       },
       {
-        "des_version": "2.0",
+        "des_version": "2.1",
         "content_type": "RESEARCH",
         "question_type": "ETIOLOGY",
         "text_basis": "FULL_TEXT",
@@ -2819,9 +2819,9 @@
             },
             {
               "domain": "justification for excluding individual studies",
-              "rating": "high",
-              "evidence_quote": "",
-              "note": "فهرست مطالعات کنارگذاشته‌شده ارائه نشده است. بخش‌های خوانده‌شده: Materials and Methods (۲٫۱ تا ۲٫۶)، Results ۳٫۱ Literature Search، Figure 1 (نمودار غربالگری) و فهرست Supplementary Materials. معیارهای ورود و خروج نوشته شده و شمارش اولیه‌ی ۴۴۵۰ رکورد گزارش شده، اما آنچه در Supplementary آمده «Reference list of the included articles» است؛ هیچ فهرستی از مقالات تمام‌متنِ کنارگذاشته‌شده و هیچ دلیلِ به‌ازای مطالعه‌ای وجود ندارد. طبق 3b-i همین نبودِ فهرست، این دامنه‌ی بحرانی را high می‌کند."
+              "rating": "some_concerns",
+              "evidence_quote": "The search initially resulted in\n\n4450 papers (1454 in PubMed, 1767 in Web of Science, 1229 in ScienceDirect—in the last one\n\nthe filter ‘Article type—Research articles’ was used, as well as the terms ‘dental implant’\n\nand ‘oral implant’ between quotation marks, due to the great number of initial entries), of\n\nwhich 292 publications were eligible for inclusion",
+              "note": "طبق 3b-iii نسخه‌ی ۲٫۱ این دامنه some_concerns است نه high. فهرست به‌ازای مطالعه‌ی مقالات کنارگذاشته‌شده منتشر نشده — مواد تکمیلی «Reference list of the included articles» دارد نه excluded — اما هر دو نیمه‌ی لازم گزارش شده‌اند: (الف) شرح غربالگری با عدد، یعنی ۴۴۵۰ رکورد اولیه به تفکیک سه دیتابیس تا ۲۹۲ مطالعه‌ی واردشده، به‌علاوه‌ی «Figure 1. Study screening process»؛ و (ب) معیارهای صریح ورود و خروج در بخش «2.3. Inclusion and Exclusion Criteria». نقل‌قول، شرح غربالگری است همان‌طور که 3b-iii می‌خواهد."
             },
             {
               "domain": "risk of bias assessment of included studies",
@@ -2842,7 +2842,7 @@
               "note": "سوگیری انتشار با funnel plot ارزیابی و نتیجه‌اش در متن بحث شده است."
             }
           ],
-          "multiplier": 0.55
+          "multiplier": 0.8
         },
         "penalties": [
           {
@@ -2875,14 +2875,14 @@
           }
         ],
         "commentary_checklist": null,
-        "des_score": 55,
-        "band": "C",
+        "des_score": 80,
+        "band": "A",
         "provisional": false,
-        "fact_fa": "این مرور نظام‌مند در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
-        "interpretation_fa": "این مرور روی ۲۹۲ مطالعه و بیش از ۱۵۰ هزار ایمپلنت، خطر شکست در سیگاری‌ها را حدود ۲٫۴ برابر و اختلاف MBL را حدود ۰٫۵۸ میلی‌متر گزارش می‌کند. تفکیک فک بالا و پایین و بی‌اثری طول پیگیری بر اندازه‌ی اثر هم در آن آمده. پروتکل ثبت‌شده و ارزیابی کیفیت دارد اما فهرست مطالعات کنارگذاشته‌شده را منتشر نکرده است."
+        "fact_fa": "این مرور نظام‌مند در نوع پرسش ETIOLOGY امتیاز ۸۰ و باند A گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "این مرور روی ۲۹۲ مطالعه و بیش از ۱۵۰ هزار ایمپلنت، خطر شکست در سیگاری‌ها را حدود ۲٫۴ برابر و اختلاف MBL را حدود ۰٫۵۸ میلی‌متر گزارش می‌کند. تفکیک فک بالا و پایین و بی‌اثری طول پیگیری بر اندازه‌ی اثر هم در آن آمده. پروتکل در PROSPERO ثبت شده و کیفیت مطالعات با ابزار NIH ارزیابی شده. تنها کاستی‌اش نبودِ فهرست مطالعات کنارگذاشته‌شده است."
       },
       {
-        "des_version": "2.0",
+        "des_version": "2.1",
         "content_type": "RESEARCH",
         "question_type": "ETIOLOGY",
         "text_basis": "FULL_TEXT",
@@ -2919,9 +2919,9 @@
             },
             {
               "domain": "justification for excluding individual studies",
-              "rating": "high",
-              "evidence_quote": "",
-              "note": "فهرست مطالعات کنارگذاشته‌شده ارائه نشده است. بخش‌های خوانده‌شده: ۲٫۱ Research design تا ۲٫۵ Data synthesis، ۳٫۱ Literature search، Fig. 1 (نمودار PRISMA)، و بخش Supplementary materials. نمودار PRISMA گزارش می‌کند که از ۷۹ مقاله‌ی تمام‌متن ۲۹ مقاله وارد شده، یعنی حدود پنجاه مقاله‌ی تمام‌متن کنار گذاشته شده، اما نه فهرستشان آمده و نه دلیلِ به‌ازای مطالعه. مواد تکمیلی S1 تا S4 راهبرد جست‌وجو، NOS، مشخصات مطالعات واردشده و نمرات کیفیت‌اند، نه فهرست کنارگذاشته‌ها. طبق 3b-i همین نبودِ فهرست، این دامنه‌ی بحرانی را high می‌کند؛ شمارش تجمعی جایگزین آن نیست."
+              "rating": "some_concerns",
+              "evidence_quote": "3588 records were screened by title and/or abstract for relevance, and 3509 records were excluded.",
+              "note": "طبق 3b-iii نسخه‌ی ۲٫۱ این دامنه some_concerns است نه high. فهرست به‌ازای مطالعه‌ی حدود پنجاه مقاله‌ی تمام‌متنِ کنارگذاشته‌شده منتشر نشده و مواد S1 تا S4 راهبرد جست‌وجو، NOS، مشخصات مطالعات واردشده و نمرات کیفیت‌اند؛ اما هر دو نیمه‌ی لازم گزارش شده‌اند: (الف) شرح غربالگری با عدد، از ۴۶۵۰ رکورد و ۱۰۶۲ تکراری تا ۳۵۸۸ غربال‌شده، ۳۵۰۹ حذف، ۷۹ تمام‌متن و ۲۹ واردشده، به‌علاوه‌ی نمودار PRISMA در Fig. 1؛ و (ب) معیارهای صریح ورود و خروج در بخش «2.3. Eligibility criteria and selection of studies»."
             },
             {
               "domain": "risk of bias assessment of included studies",
@@ -2942,7 +2942,7 @@
               "note": "سوگیری انتشار هم با آزمون Egger و هم با funnel plot ارزیابی و نتیجه‌اش گزارش شده است."
             }
           ],
-          "multiplier": 0.55
+          "multiplier": 0.8
         },
         "penalties": [
           {
@@ -2975,11 +2975,11 @@
           }
         ],
         "commentary_checklist": null,
-        "des_score": 55,
-        "band": "C",
+        "des_score": 80,
+        "band": "A",
         "provisional": false,
-        "fact_fa": "این مرور نظام‌مند در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
-        "interpretation_fa": "این مرور تازه‌ترین برآورد از شکست زودرس ایمپلنت است و روی ۳۲ مطالعه‌ی مشاهده‌ای نشان می‌دهد خطر در سیگاری‌ها حدود ۲٫۶ برابر است، با تفاوت چشمگیر بین فک بالا و پایین. پروتکل ثبت‌شده، پنج دیتابیس و ارزیابی NOS دارد اما فهرست مطالعات کنارگذاشته‌شده را منتشر نکرده. همه‌ی مطالعات واردشده مشاهده‌ای‌اند، پس رابطه‌ی علّی قطعی نیست."
+        "fact_fa": "این مرور نظام‌مند در نوع پرسش ETIOLOGY امتیاز ۸۰ و باند A گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "این مرور تازه‌ترین برآورد از شکست زودرس ایمپلنت است و روی ۳۲ مطالعه‌ی مشاهده‌ای نشان می‌دهد خطر در سیگاری‌ها حدود ۲٫۶ برابر است، با تفاوت چشمگیر بین فک بالا و پایین. پروتکل ثبت‌شده، پنج دیتابیس و ارزیابی NOS دارد و تنها کاستی‌اش نبودِ فهرست مطالعات کنارگذاشته‌شده است. همه‌ی مطالعات واردشده مشاهده‌ای‌اند، پس رابطه‌ی علّی قطعی نیست."
       }
     ]
   },
