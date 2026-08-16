@@ -183,19 +183,22 @@ describe('activateDays', () => {
     expect(sub.expires_at).toBeNull();
   });
 
-  it('is exactly what runs down after the gift window — no special-case needed', async () => {
+  it('there is no separate "gift portion" to run down — one expiry, extended once', async () => {
     const user = await makeUser();
     const bought = new Date('2026-08-05T09:00:00Z');
     const first = await activateMonths(user, 1, { source: 'payment', now: bought });
     const twentyLeft = new Date(first.expires_at!.getTime() - 20 * 86_400_000);
     await activateDays(user, 7, { source: 'admin', now: twentyLeft });
 
-    // Seven days after the gift ran, the account is exactly back on its own
-    // real expiry — the sweep needs no knowledge of where the days came from.
+    // The gift landed on an UNLAPSED subscription, so its base is the existing
+    // expiry (first.expires_at), not "now" — the seven days extend the real
+    // expiry itself rather than opening a second, independently-expiring
+    // window. So premium runs all the way to first.expires_at + 7 days, not to
+    // first.expires_at: there is nothing for the sweep to special-case.
     const sub = await getSubscription(user);
-    const sevenDaysLater = new Date(twentyLeft.getTime() + 7 * 86_400_000);
-    expect(isPremiumNow(sub, sevenDaysLater)).toBe(true);
-    expect(isPremiumNow(sub, new Date(first.expires_at!.getTime() + 1000))).toBe(false);
+    const combinedExpiry = new Date(first.expires_at!.getTime() + 7 * 86_400_000);
+    expect(isPremiumNow(sub, new Date(combinedExpiry.getTime() - 1000))).toBe(true);
+    expect(isPremiumNow(sub, new Date(combinedExpiry.getTime() + 1000))).toBe(false);
   });
 
   it('logs an audit event tagged by kind, separate from month activations', async () => {
