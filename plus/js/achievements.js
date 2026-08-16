@@ -1,6 +1,6 @@
-import { el, faNum } from './util.js?v=8';
-import { api } from './api.js?v=8';
-import { openSheet, closeSheet } from './sheet.js?v=8';
+import { el, faNum } from './util.js?v=10';
+import { api } from './api.js?v=10';
+import { openSheet, closeSheet } from './sheet.js?v=10';
 
 /**
  * The profile's «افتخارات» section: two league medals and the badge wall.
@@ -79,6 +79,12 @@ const ICONS = {
   // A graduation cap — «دانشجو», the second founder-granted badge. The story is
   // the student-discount claim was approved, and a cap says that in one shape.
   student: '<path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11.5V16c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4.5"/>',
+  // A cake with scalloped frosting and its candle bent into the numeral it is
+  // — «هفت‌سالگی», the third founder-granted badge. One shape carries both the
+  // occasion (frosting reads as a cake, not a plain box — checked at size,
+  // like `lamp`/`pillar`) and the number (the candle IS a 7), so the wall
+  // needs no second glyph to say which anniversary this is.
+  anniversary7: '<path d="M4 20H20V13L17 15.5L14 13L11 15.5L8 13L5 15.5L4 13Z"/><path d="M9 4H15L11 12"/>',
 };
 
 const METAL_PIP = { bronze: 'b', silver: 's', gold: 'g' };

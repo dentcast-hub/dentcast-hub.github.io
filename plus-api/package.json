@@ -16,6 +16,7 @@
     "migrate:down": "node-pg-migrate down",
     "seed": "tsx src/scripts/seed.ts",
     "rebuild-streaks": "tsx src/scripts/rebuild-streaks.ts",
+    "anniversary-grant": "tsx src/scripts/anniversary-grant.ts",
     "test": "vitest run",
     "test:watch": "vitest"
   },

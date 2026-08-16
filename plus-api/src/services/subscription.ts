@@ -203,6 +203,82 @@ export async function activateMonths(
   return opts.client ? run(opts.client) : withTransaction(run);
 }
 
+/** A campaign day-grant may add at most this many days at once — a sanity rail, not a plan. */
+const MAX_DAYS = 90;
+
+/**
+ * Add `days` to a user's subscription — `activateMonths()`'s sibling for
+ * day-granularity gifts (the anniversary badge is the first caller). Same
+ * rule, same guarantees, just `make_interval(days => N)` instead of months:
+ * row-locked, `max(now, current expiry) + N days`, tier applied, activation
+ * logged. A founder row is left untouched for the same reason `activateMonths`
+ * leaves it untouched — already premium forever, nothing to add.
+ *
+ * Deliberately not a `days` branch inside `activateMonths`: the two mean
+ * different things (a purchased plan vs. a fixed-length gift) and keeping them
+ * as two small functions over one Postgres expression is simpler than a shared
+ * function with a unit flag.
+ */
+export async function activateDays(
+  userId: string,
+  days: number,
+  opts: {
+    source: ActivationSource; now?: Date; meta?: Record<string, unknown>;
+    client?: pg.PoolClient;
+  },
+): Promise<Subscription> {
+  if (!Number.isInteger(days) || days < 1 || days > MAX_DAYS) {
+    throw new Error(`activateDays: days must be an integer in 1..${MAX_DAYS}, got ${days}`);
+  }
+  const now = opts.now ?? new Date();
+
+  const run = async (client: pg.PoolClient): Promise<Subscription> => {
+    const existing = await one<Subscription>(
+      `select ${SUB_COLUMNS} from subscriptions where user_id = $1 for update`,
+      [userId],
+      client,
+    );
+
+    if (existing?.is_founder) return existing;
+
+    const base = existing?.expires_at && existing.expires_at.getTime() > now.getTime()
+      ? existing.expires_at
+      : now;
+
+    const nextExpiry = (await one<{ expires_at: Date }>(
+      `select ((($1::timestamptz at time zone $3) + make_interval(days => $2::int))
+                 at time zone $3) as expires_at`,
+      [base.toISOString(), days, config.streakTimezone],
+      client,
+    ))!.expires_at;
+
+    const row = (await one<Subscription>(
+      `insert into subscriptions (user_id, status, plan, started_at, expires_at, is_founder)
+       values ($1, 'active', $2, $3, $4, false)
+       on conflict (user_id) do update
+          set status     = 'active',
+              plan       = excluded.plan,
+              expires_at = excluded.expires_at
+        returning ${SUB_COLUMNS}`,
+      [userId, PLAN_PAID, now.toISOString(), nextExpiry.toISOString()],
+      client,
+    ))!;
+
+    await applyTier(userId, client);
+    await recordActivation(userId, {
+      kind: 'days',
+      days,
+      source: opts.source,
+      expires_at: row.expires_at,
+      ...opts.meta,
+    }, client);
+
+    return row;
+  };
+
+  return opts.client ? run(opts.client) : withTransaction(run);
+}
+
 /**
  * Grant a lifetime subscription: premium with no end date, ever.
  *
