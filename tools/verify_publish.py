@@ -355,7 +355,10 @@ def des_source_text(source, doc):
     # So the abstract is the wrong haystack here: a quote pulled from the
     # Methods section is correctly absent from it, and checking against it
     # would fail every honest full-text score. Skip instead, and say why.
-    if source.get("text_basis") == "FULL_TEXT":
+    # SECONDARY_REPORT is the same situation: the whole consensus/guideline
+    # document was read, so its quotes can come from anywhere in it, and the
+    # cabinet holds only the abstract.
+    if source.get("text_basis") in ("FULL_TEXT", "SECONDARY_REPORT"):
         return None
     doi = ((source.get("citation") or {}).get("doi") or "").strip().lower()
     if not doi:
@@ -858,18 +861,26 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                               f"{tag} is RESEARCH but carries a commentary_checklist or no question_type",
                               "spec §Output format")
 
-                # the abstract-only rule, which is load-bearing and was got wrong once
-                if s.get("text_basis") == "ABSTRACT_ONLY":
+                # The capped-basis rule, which is load-bearing and was got wrong
+                # once. Two bases share it, for the same reason from opposite
+                # directions: ABSTRACT_ONLY condenses the document by LENGTH,
+                # SECONDARY_REPORT (spec v2.2 — a consensus statement, a
+                # guideline) condenses it by ROLE. In both, a method is missing
+                # from the text because of what the text is, not because the
+                # study skipped it, so silence rates NR and the multiplier is
+                # capped at 0.75.
+                basis = s.get("text_basis")
+                if basis in ("ABSTRACT_ONLY", "SECONDARY_REPORT"):
                     mult = (s.get("q_method") or {}).get("multiplier")
                     rep.check(mult is None or mult <= 0.75, "4.13 DES",
-                              f"{tag} abstract-only multiplier is capped ({mult})",
-                              f"{tag} is ABSTRACT_ONLY but its multiplier is {mult} — the spec caps it "
+                              f"{tag} {basis} multiplier is capped ({mult})",
+                              f"{tag} is {basis} but its multiplier is {mult} — the spec caps it "
                               f"at 0.75, so this score is inflated",
                               "step 4.13 Part 1 — recompute with 0.75")
                     rep.check(s.get("provisional") is True, "4.13 DES",
-                              f"{tag} abstract-only is marked provisional",
-                              f"{tag} is ABSTRACT_ONLY but provisional is {s.get('provisional')}",
-                              "spec Step 0 — ABSTRACT_ONLY forces provisional: true")
+                              f"{tag} {basis} is marked provisional",
+                              f"{tag} is {basis} but provisional is {s.get('provisional')}",
+                              f"spec Step 0 — {basis} forces provisional: true")
 
                 # Absence protocol (spec v1.5 Step 3b-ii). An empty
                 # evidence_quote is legal in exactly one place — a domain rated
