@@ -2,23 +2,23 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=7';
-import { currentUser, api } from './js/api.js?v=7';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=7';
-import { openCollectionPicker } from './js/collections.js?v=7';
-import { el } from './js/util.js?v=7';
-import { initHomeCard } from './js/home-card.js?v=7';
-import { initHomeFeatures } from './js/home-features.js?v=7';
-import { initHomeBundles } from './js/home-bundles.js?v=7';
-import { initHomeUpboard } from './js/home-upboard.js?v=7';
-import { initHeader } from './js/header.js?v=7';
-import { initTourAutostart } from './js/tour.js?v=7';
-import { initReadingTracker } from './js/reading.js?v=7';
-import { initListeningTracker } from './js/listening.js?v=7';
-import { initShareScoring, buildShareButton } from './js/share.js?v=7';
-import { initHeart, buildHeartChip } from './js/votes.js?v=7';
-import { mountArticleThreads } from './js/article-threads.js?v=7';
-import { mountDes } from './js/des.js?v=7';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=8';
+import { currentUser, api } from './js/api.js?v=8';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=8';
+import { openCollectionPicker } from './js/collections.js?v=8';
+import { el } from './js/util.js?v=8';
+import { initHomeCard } from './js/home-card.js?v=8';
+import { initHomeFeatures } from './js/home-features.js?v=8';
+import { initHomeBundles } from './js/home-bundles.js?v=8';
+import { initHomeUpboard } from './js/home-upboard.js?v=8';
+import { initHeader } from './js/header.js?v=8';
+import { initTourAutostart } from './js/tour.js?v=8';
+import { initReadingTracker } from './js/reading.js?v=8';
+import { initListeningTracker } from './js/listening.js?v=8';
+import { initShareScoring, buildShareButton } from './js/share.js?v=8';
+import { initHeart, buildHeartChip } from './js/votes.js?v=8';
+import { mountArticleThreads } from './js/article-threads.js?v=8';
+import { mountDes } from './js/des.js?v=8';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -28,7 +28,7 @@ import { mountDes } from './js/des.js?v=7';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=7').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=8').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -239,11 +239,24 @@ function initEpisodeActions() {
   if (!document.getElementById('ep-audio')) return; // not an audio episode
   const box = findProseBox();
   if (!box) return;
+  const contentId = detectContentId();
   if (!document.getElementById('dcActionRow')) {
     const { aux } = ensureActionRow(box);
     aux.appendChild(buildShareButton(() => ({ title: document.title, url: location.href })));
     // The قلب itself is left to initHeart(), which boot() calls a line later and
     // which is the single mounting point for every surface that has this row.
+  }
+  // «افزودن به کالکشن» — saving the whole episode, same control every article
+  // gets next to میز کار (injectCollectionButton, shared). An episode has no
+  // میز کار, so this is the first thing in its main group; قلب lands after it
+  // (appended by initHeart(), called a line later in boot()). Guarded on the
+  // cap's own class since it — unlike the button — is unambiguously ours.
+  if (!document.querySelector('#dcActionRow .dcp-wb-cap')) {
+    const { main, row } = ensureActionRow(box);
+    const { btn: collectBtn, info: collectInfo, cap: collectCap } = injectCollectionButton(contentId);
+    main.appendChild(collectBtn);
+    main.appendChild(collectInfo);
+    row.appendChild(collectCap);
   }
   // DES, for an episode too — and NOT because episodes are special. The badge is
   // driven entirely by whether plus/des-scores.json has a record: an episode that
@@ -353,8 +366,15 @@ async function mountArticleWorkbench(root, url) {
     const box = findProseBox(root);
     if (box) {
       if (!root.querySelector('#dcActionRow')) {
-        const { main, aux } = ensureActionRow(box);
+        const { main, aux, row } = ensureActionRow(box);
+        // «افزودن به کالکشن» before قلب, same order as initEpisodeActions()
+        // builds on the standalone episode page — no میز کار on this surface
+        // either, so it is the first thing in the main group.
+        const { btn: collectBtn, info: collectInfo, cap: collectCap } = injectCollectionButton(contentId);
+        main.appendChild(collectBtn);
+        main.appendChild(collectInfo);
         main.appendChild(buildHeartChip(contentId, 'dc-act dc-act-heart'));
+        row.appendChild(collectCap);
         aux.appendChild(buildShareButton(shellShare));
       }
       mountArticleThreads(findProseEnd(root) || box, contentId); // the conversation, on this surface too
