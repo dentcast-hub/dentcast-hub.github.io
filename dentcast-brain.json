@@ -13297,5 +13297,41 @@
       "secondary": [],
       "subtopic": "peri-implant-health"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-33",
+    "title": "چالش‌های توزیع فضا و بیومکانیک در حضور عفونت فعال اپیکال",
+    "caption": "در این کیس Chairside می‌بینیم چرا شروع فوری درمان زیبایی روی بریج‌های قدامی در حضور فیستول فعال رد شد: جراحی اپیکال بدون پرکردگی رتروگراد، سانترال‌های اورسایز با دیاستم میدلاینِ باز، پونتیک‌های باریک لترال، و چرا حتی با کشیدن دندان ۲۱ بدون ارزیابی دندان ۱۱ و اصلاح توزیع فضا، زیبایی قابل اصلاح نیست.",
+    "hashtags": [
+      "#چیرساید",
+      "#کیس_بالینی",
+      "#دکتر_شهابیان",
+      "#شروع_نکردن_درمان",
+      "#اصلاح_فضا",
+      "#دیاستم",
+      "#تریس_آبسه",
+      "#جراحی_اپیکال",
+      "#کشیدن_دندان",
+      "#طرح_درمان",
+      "#بیومکانیک",
+      "#زیبایی_قدامی"
+    ],
+    "keywords": [
+      "active apical infection sinus tract maxillary central",
+      "failed apicoectomy no retrograde filling",
+      "poor space management oversized central incisors",
+      "midline diastema two separate bridges",
+      "missing lateral incisor narrow pontics",
+      "declining immediate anterior esthetic treatment",
+      "extraction hopeless tooth 21",
+      "two implant space distribution anterior"
+    ],
+    "page_url": "/chairside/chairside-33.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]
