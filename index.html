@@ -4265,7 +4265,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۸۹<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۹۰<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4539,9 +4539,9 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <p class="dc-rail-title">چالش‌های توزیع فضا و بیومکانیک در حضور عفونت فعال اپیکال</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="dentai" href="/dentai/dentai-28.html">
+        <a class="dc-rail-card" data-cat="dentai" href="/dentai/dentai-29.html">
           <span class="dc-type-chip t-ai">DentAI</span>
-          <p class="dc-rail-title">وقتی هوش مصنوعی تنها بهتر از پزشکِ مجهز به هوش مصنوعی عمل می‌کند</p>
+          <p class="dc-rail-title">نکاتی در مورد خط تراش و دقت اسکنر داخل دهانی</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="promptologist" href="/dentai/promptologist/prompt4-4.html">
@@ -4578,10 +4578,10 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک <a href="/dentai/dentai-29.html">مقاله‌ی DentAI</a> با عنوانِ «نکاتی در مورد خط تراش و دقت اسکنر داخل دهانی» منتشر شد · ۲۵ مرداد</li>
           <li>یک <a href="/chairside/chairside-33.html">کیس چیرساید</a> با عنوانِ «چالش‌های توزیع فضا و بیومکانیک در حضور عفونت فعال اپیکال» منتشر شد · ۲۵ مرداد</li>
           <li>یک <a href="/episodes/episode-161.html">اپیزود دنت‌کست</a> با عنوانِ «Cantilever in Implant Dentistry :part1» منتشر شد · ۲۳ مرداد</li>
           <li>یک <a href="/sharehub/share-15.html">مطلب Share Hub</a> با عنوانِ «چرا اسکنر روی روکش‌های خیلی براق یا کامپوزیت/رزین‌های خیلی سفید خوب اسکن نمی‌کنه؟» منتشر شد · ۲۳ مرداد</li>
-          <li>یک <a href="/sharehub/share-14.html">مطلب Share Hub</a> با عنوانِ «از تشخیص تا درمان لبخند لثه‌ای» منتشر شد · ۲۲ مرداد</li>
         </ul>
       </div>
 
@@ -5354,7 +5354,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=b9c622fe56',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=7541c82cde',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -5701,7 +5701,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=b9c622fe56';
+  const FEED_URL='/dentcast-brain.json?v=7541c82cde';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -5957,7 +5957,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=b9c622fe56', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=7541c82cde', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });

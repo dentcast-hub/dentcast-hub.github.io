@@ -11673,5 +11673,206 @@
         "interpretation_fa": "رد درمان زیبایی فوری را به دلیلش وصل کرده: فیستول فعال و توزیع غلط فضا با تعویض روکش حل نمی‌شوند. دیاستم متقارن میدلاین را پیامد آبسه ندانسته و طرح ایمپلنت را به پروگنوز دندان ۱۱ مشروط کرده است. ارزش بالینی‌اش جداکردن عفونت اپیکال از مسئلهٔ فضاست. آنچه ندارد نسبت‌دادن این اصول به منبع منتشرشده است."
       }
     ]
+  },
+  "dentai/dentai-29": {
+    "scored_at": "2026-08-16",
+    "sources": [
+      {
+        "des_version": "2.2",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Vertical Versus Horizontal Finishing Lines for Dental Preparations: A Systematic Review With Meta-Analysis",
+          "authors": "Bonfanti-Gris M, Pradies G, Moron-Conejo B, Gil A, Martinez-Rus F",
+          "year": 2025,
+          "journal": "Journal of Esthetic and Restorative Dentistry",
+          "doi": "10.1111/jerd.13360"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR/meta-analysis of RCTs/CCTs, prospective and retrospective cohort studies and case series (THERAPY SR/MA row, 100, via Step 2 routing)",
+          "evidence_quote": "A comprehensive literature search of relevant randomized and controlled clinical trials (RCTs/CCTs), prospective/retrospective cohort studies, and case series"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "not addressed in the abstract; under ABSTRACT_ONLY silence is NR"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "across electronic databases (Medline, Embase, and Cochrane) up to January 2024"
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "Step 3b-iii does not apply under ABSTRACT_ONLY — an abstract carries no flow diagram, so silence stays NR"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "Two reviewers independently conducted study selection, data extraction, and quality assessment."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "some_concerns",
+              "evidence_quote": "A meta-analysis was conducted to compare the preparation techniques using survival and success rates as the main outcomes.",
+              "note": "the meta-analysis is described and its outcomes named, but the abstract states no pooling model, heterogeneity statistic or sensitivity analysis"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "not addressed in the abstract"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "RCTs only; not applicable to a systematic review"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "the abstract states a minimum follow-up of 3 years, adequate for the survival and success claims made"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این منبع در نوعِ سؤال THERAPY امتیاز ۵۵ از ۱۰۰ و باند C (شواهد محدود) گرفته است.",
+        "interpretation_fa": "مرورِ سیستماتیک و متاآنالیزی که جست‌وجوی سه‌پایگاهی و ارزیابیِ کیفیتِ مستقل توسط دو داور را گزارش می‌کند و بر پایه‌ی ۱۹ مطالعه تفاوتی بین خطِ تراشِ افقی و عمودی در بقا و موفقیت نمی‌یابد. امتیاز به این دلیل در باند C می‌ماند که فقط چکیده در دسترس بود و ثبتِ پروتکل و سوگیریِ انتشار از آن قابلِ ارزیابی نیست."
+      },
+      {
+        "des_version": "2.2",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Accuracy of Intraoral Scanner Systems for Fabricating Inlay, Onlay, and Veneer Restorations: A Systematic Review and Meta-Analysis",
+          "authors": "Revilla-Leon M, Alonso Perez-Barquero J, Barmak AB, Agustin-Panadero R, Fernandez-Estevan L, Gomez-Polo M",
+          "year": 2025,
+          "journal": "Journal of Esthetic and Restorative Dentistry",
+          "doi": "10.1111/jerd.13361"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR/meta-analysis of in-vitro scanner accuracy studies (MATERIAL SR/MA row, 100; question type routed from DIAGNOSTIC to MATERIAL per Step 2 because trueness/precision on casts is a bench measurement with no patient spectrum or in-vivo reference standard)",
+          "evidence_quote": "Thirty four articles were included: 17 analyzed the accuracy of definitive virtual casts and 17 assessed the marginal and internal discrepancies."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "not addressed in the abstract; under ABSTRACT_ONLY silence is NR"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "A literature search was completed in five databases: PubMed/Medline, Scopus, Embase, Web of Science, and Cochrane."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "Step 3b-iii does not apply under ABSTRACT_ONLY — an abstract carries no flow diagram, so silence stays NR"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "Two investigators evaluated the studies independently by applying the Joanna Briggs Institute critical appraisal."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "some_concerns",
+              "evidence_quote": "in the marginal discrepancy between conventional and IOS methods was found with a significant heterogeneity",
+              "note": "subgroup tests and heterogeneity are reported, but the abstract names no pooling model and does not say how the very high heterogeneity was handled"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "not addressed in the abstract"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "RCTs only; not applicable to a systematic review"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "in-vitro accuracy measurements on casts and restorations; there is no clinical follow-up period to be short"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این منبع در نوعِ سؤال MATERIAL امتیاز ۵۵ از ۱۰۰ و باند C (شواهد محدود) گرفته است.",
+        "interpretation_fa": "مرورِ سیستماتیک و متاآنالیزی با جست‌وجوی پنج‌پایگاهی و ارزیابیِ مستقل بر پایه‌ی Joanna Briggs که روی ۳۴ مطالعه نشان می‌دهد روشِ قالب‌گیری تطابقِ مارجینالِ اینله و آنله را تغییر نمی‌دهد. ناهمگونیِ گزارش‌شده بسیار بالاست و شواهدِ ونیر ناکافی می‌ماند. دسترسیِ فقط به چکیده امتیاز را در باند C نگه می‌دارد."
+      }
+    ]
   }
 }

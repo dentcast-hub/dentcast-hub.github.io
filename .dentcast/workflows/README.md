@@ -260,6 +260,32 @@ Record the DOI(s) and carry them to step 4.13, which resolves each into its own
 `source_text` and scores each one separately — **one DES record per cited source,
 never one blended score for the page.**
 
+**Follow the chain one level when the cited source is a SECONDARY REPORT.** A
+consensus statement, a clinical guideline or a conference synthesis is not the
+study it reports: its methods live in the papers it summarises, which it cites by
+DOI in its own reference list. Scoring the wrapper asks AMSTAR-2 whether *it*
+searched databases and appraised studies, when the answer is five pages away in a
+different document — so when a cited source names its primary studies with
+retrievable identifiers, **score those instead of the wrapper**, one record each.
+The wrapper then gets no record of its own; it is the page's citation, not the
+page's evidence.
+
+Recognise the case mechanically: the source is labelled a consensus statement,
+guideline, position paper or conference report, **and** its own text names the
+studies behind it with a DOI/PubMed id. If it names them, follow. If it does not
+— an expert-panel consensus that rests on nothing retrievable — score the wrapper
+itself with `text_basis: SECONDARY_REPORT` (spec v2.2), which rates its silences
+as `NR` rather than as absent safeguards.
+
+This was found on `dentai/dentai-29` (2026-08-16). The SSRD/SEPES/PROSEC
+consensus statement was scored as though it were the review, earning `high` on
+search strategy, risk-of-bias appraisal and excluded studies — three claims that
+are false: the two systematic reviews it summarises searched three and five
+databases and both appraised their studies independently. The tell was that the
+same class of document scored 55/C from its abstract alone and 30/D once the full
+text was read, i.e. **reading more of it made it worse**, which never happens when
+the tool fits the document.
+
 **3. INDETERMINATE — research-shaped content with no identified paper. ASK.**
 The content plainly rests on the literature but no specific study is pinned down:
 an episode with only a caption and audio and no «منابع» block, a NoteCast
@@ -1152,7 +1178,10 @@ from the paper's title, or from what you happen to know about the study.
 record from Question 3.5 (the post-decision text, edited if rewrites were approved),
 exactly as it will ship. `text_basis` is `FULL_TEXT`. No DOI, no lookup, done.
 
-**RESEARCH basket:** resolve **each** DOI through this ladder, stopping at the first
+**RESEARCH basket:** first confirm Question 4.8's **secondary-report** decision is
+already made — if a cited source is a consensus statement/guideline that names its
+primary studies, the DOIs you resolve here are **those studies', not the
+wrapper's**. Then resolve **each** DOI through this ladder, stopping at the first
 real hit:
 
 1. **The local cabinet first** — `dentcast_cabinet_full_catalog.json` already holds
@@ -1194,10 +1223,23 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v2.1.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v2.2.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v2.1 is the current spec, and its one change from 2.0 is that the AMSTAR-2
+**v2.2 is the current spec, and its change from 2.1 is `text_basis:
+SECONDARY_REPORT` (Step 0 + Step 1).** A document that reports work published
+elsewhere — a consensus statement, a guideline, a conference synthesis — rates
+silence about a method as `NR` rather than `high`, and caps the multiplier at
+0.75, exactly as `ABSTRACT_ONLY` does: an abstract condenses by length, a
+secondary report condenses by role, and in neither is a missing method evidence
+that the study skipped it. It is the **fallback**, not the default — Question
+4.8's chain rule scores the primary studies wherever they are retrievable, and
+this basis is for the wrapper you could not get past. Only records scored
+`FULL_TEXT` against a secondary report move under this bump; the four
+consensus/guideline sources already on record were all `ABSTRACT_ONLY` and are
+arithmetically unchanged.
+
+**v2.1's change from 2.0 is that the AMSTAR-2
 excluded-studies domain has THREE outcomes instead of two (Step 3b-iii).** A
 review that published no per-study list of excluded full-text studies is now
 `some_concerns` rather than `high` **when it reported both** a screening account

@@ -137119,6 +137119,72 @@
       "drive_id": "1ikuHSaPrYp3BMmPSiY74rAHZurvLfi0h",
       "drive_view": "https://drive.google.com/file/d/1ikuHSaPrYp3BMmPSiY74rAHZurvLfi0h/view",
       "drive_download": "https://drive.google.com/uc?export=download&id=1ikuHSaPrYp3BMmPSiY74rAHZurvLfi0h"
+    },
+    {
+      "id": "P2894",
+      "title": "Comparative Influence of Marginal Design and Digital Scanning Accuracy on the Clinical Longevity of Ceramic Restorations: An Evidence-Based Approach. Consensus Statement From SSRD, SEPES, and PROSEC Conference on Minimally Invasive Restorations",
+      "file_name": "marginal-design-and-digital-scanning.pdf",
+      "topic": "finishing line",
+      "topic_path": "finishing line",
+      "type": "systematic review + meta-analysis",
+      "local_path": "",
+      "file_size": 108043,
+      "key_finding": "خط تراش افقی و عمودی از نظر بقا، موفقیت و سلامت پریودنتال تفاوت معناداری ندارند؛ اسکنر داخل دهانی برای اینله و آنله تک‌واحدی قابل‌اعتماد است اما شواهد آن برای ونیر ناکافی است.",
+      "clinical_bottom_line": "انتخاب بین خط تراش افقی/عمودی بر پایه‌ی شرایط کیس است نه برتری بالینی؛ پیش از اسکن دیجیتال، فاکتورهای scanability (هندسه تراش، پرداخت سطح، فضای اینترپروگزیمال، build-up) را ارزیابی کنید.",
+      "linked_episodes": [
+        "dentai-29"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1Rclx5Z0sB84lJvYJVMcgJNUzGm6ts4Ni/view",
+      "status": "linked",
+      "tags": [
+        "vertical-finish-line",
+        "horizontal-finish-line",
+        "bopt",
+        "intraoral-scanner",
+        "ios-accuracy",
+        "inlay",
+        "onlay",
+        "veneer",
+        "scanability",
+        "systematic-review",
+        "meta-analysis",
+        "consensus-statement",
+        "topic:finishing-line",
+        "comparative-influence-of-marginal-design-and-digital-scanning-accuracy-on-the-clinical-longevity-of-ceramic-restorations"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "display_title": "Comparative Influence of Marginal Design and Digital Scanning Accuracy on the Clinical Longevity of Ceramic Restorations: An Evidence-Based Approach. Consensus Statement From SSRD, SEPES, and PROSEC Conference on Minimally Invasive Restorations",
+      "doi": "10.1111/jerd.13474",
+      "authors": [
+        "Guillermo Pradies",
+        "Alfonso Gil",
+        "Belén Morón-Conejo",
+        "Mónica Bonfanti-Gris",
+        "Francisco Martínez-Rus",
+        "Jorge Alonso Pérez-Barquero",
+        "Abdul Basir Barmak",
+        "Rubén Agustín-Panadero",
+        "Lucía Fernández-Estevan",
+        "Miguel Gómez-Polo",
+        "Iria Lopez-Fernandez",
+        "Maren Soetebeer",
+        "Peter Pizzi",
+        "Zhen Mao",
+        "Benedikt C. Spies",
+        "Rade Paravina",
+        "Pedro Molinero-Mourelle",
+        "Samir Abou-Ayash",
+        "Tim Joda",
+        "Felix Burkhardt",
+        "Marta Revilla-Leon"
+      ],
+      "journal": "Journal of Esthetic and Restorative Dentistry",
+      "crossref_year": 2025,
+      "abstract": "Objectives: This consensus paper aims to evaluate the impact of vertical and horizontal finishing lines on the survival, success, and periodontal outcomes of veneer, crown, and fixed partial denture (FPD) restorations, as well as the accuracy of intraoral scanner (IOS) systems in fabricating inlay, onlay, and veneer restorations. Material and Methods: Two systematic reviews with meta-analyses were conducted following PRISMA guidelines. The first review analyzed 15 studies comparing vertical and horizontal finishing lines. The second review included 33 studies on IOS accuracy for inlays, onlays, and veneers. Key findings, clinical recommendations, and unanswered research questions were synthesized into consensus statements. Results: Vertical and horizontal finish lines demonstrated no significant differences in restoration survival, success rates (65%-100%), or periodontal outcomes over 3-7 years. However, vertical designs were deemed technique-sensitive. IOSs reliably fabricated single-unit inlay and onlay restorations with high accuracy, but data on veneer restorations remained inconclusive due to limited studies. Conclusions: Both finishing line designs are clinically viable, with material selection and planning being critical. IOSs offer reliable alternatives to conventional methods for inlays and onlays but require further evaluation for veneers. Future research should address clinical selection criteria, esthetic parameters, and patient-reported outcomes to refine restorative protocols.",
+      "drive_id": "1Rclx5Z0sB84lJvYJVMcgJNUzGm6ts4Ni",
+      "drive_view": "https://drive.google.com/file/d/1Rclx5Z0sB84lJvYJVMcgJNUzGm6ts4Ni/view",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1Rclx5Z0sB84lJvYJVMcgJNUzGm6ts4Ni"
     }
   ],
   "drive_matched": 2845,
@@ -137643,5 +137709,5 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2208
+  "total_papers": 2209
 }
