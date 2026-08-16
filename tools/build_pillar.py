@@ -31,6 +31,54 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+# ---------------------------------------------------------------- asset stamps
+# Shared-asset cache-bust stamps are read from the manifest that owns them,
+# never written into this file. They used to be hardcoded here, and that is a
+# trap the CI guard caught on 2026-08-16: `tools/asset_version.py` owns the
+# manifest but has no idea this builder exists, so every `--bump` left these
+# constants behind, and the next routine `build_pillar.py all` silently rolled
+# all 12 generated pages (10 pillars + the hub + the glossary index) back to a
+# stale stamp. `/dc-nav.js` had drifted 14 versions that way — those pages were
+# serving v=95 while the other 770 pages were on v=109, so everything dc-nav.js
+# does there (nav, the Spot loader hook, the article action row, the .org
+# trust-seal removal) ran from an old cached copy. Deployed, live, invisible.
+_ASSET_V: dict | None = None
+
+
+def asset_v(path: str) -> str:
+    """`/dc-nav.js` -> `/dc-nav.js?v=109`, per .dentcast/asset-versions.json.
+
+    Raises rather than guessing: emitting an unstamped or wrongly-stamped URL is
+    exactly the silent-rollback failure this function exists to prevent, so a
+    missing manifest entry has to stop the build and be added there.
+    """
+    global _ASSET_V
+    if _ASSET_V is None:
+        manifest = Path(__file__).resolve().parent.parent / '.dentcast' / 'asset-versions.json'
+        if not manifest.exists():
+            raise SystemExit(f'build_pillar: cache-buster manifest missing at {manifest}')
+        _ASSET_V = json.loads(manifest.read_text(encoding='utf-8'))
+    entry = _ASSET_V.get(path)
+    if not isinstance(entry, dict) or 'v' not in entry:
+        raise SystemExit(
+            f'build_pillar: {path} has no entry in .dentcast/asset-versions.json — '
+            f'add it there (and run tools/asset_version.py --check) rather than '
+            f'hardcoding a stamp here.')
+    return f'{path}?v={entry["v"]}'
+
+
+def restamp(block: str) -> str:
+    """Re-stamp every /asset.js|.css?v=N inside a literal HTML block.
+
+    The big glossary templates below are plain triple-quoted strings full of CSS
+    and JSON-LD braces, so they cannot be f-strings. Rather than leave their
+    stamps hardcoded — the exact thing asset_v() exists to stop — the whole
+    block is rewritten from the manifest at import time, and whatever number is
+    typed in the template is discarded.
+    """
+    return re.sub(r'(/[A-Za-z0-9/_.-]+\.(?:js|css))\?v=\d+',
+                  lambda m: asset_v(m.group(1)), block)
+
 # -------------------------------------------------------------------
 # Google Analytics 4 — deferred (lazy-loaded) so it never blocks first
 # paint. gtag.js is appended only after the page's `load` event. This
@@ -386,11 +434,11 @@ GLOBAL_SEARCH_HTML = (
     '  </div>\n'
 )
 
-GLOBAL_SEARCH_CSS_LINK = '  <link rel="stylesheet" href="/global-search.css?v=5">\n'
+GLOBAL_SEARCH_CSS_LINK = f'  <link rel="stylesheet" href="{asset_v("/global-search.css")}">\n'
 
 GLOBAL_SEARCH_SCRIPTS = (
-    '<script src="/global-search.js?v=9"></script>\n'
-    '<script src="/global-search-ui.js?v=5"></script>\n'
+    f'<script src="{asset_v("/global-search.js")}"></script>\n'
+    f'<script src="{asset_v("/global-search-ui.js")}"></script>\n'
 )
 
 URL_TO_TYPE = [
@@ -639,10 +687,8 @@ PREMIUM_ARROW = (
 # deferred by default, and a relative dynamic import inside one resolves
 # against the MODULE's URL — inside a classic script it would resolve against
 # the document, which differs between /pillar/ and /pillar/<slug>/.
-# NOTE: this ?v= is hardcoded here and NOT owned by tools/asset_version.py.
-# Raise it to match the live pages whenever --bump moves it, or the next
-# `build_pillar.py all` silently rolls every pillar page back to an old stamp.
-PREMIUM_SCRIPT_TAG = '<script type="module" src="/pillar/premium-index.js?v=25"></script>\n'
+PREMIUM_SCRIPT_TAG = (
+    f'<script type="module" src="{asset_v("/pillar/premium-index.js")}"></script>\n')
 
 # Styles for the two things this split introduces: the premium referral
 # banner (both page types) and the flat article list (pillar pages only).
@@ -1019,10 +1065,10 @@ def render_page(slug, cfg, intro_html, flat_ordered):
         + jsonld_body + '\n'
         '  </script>\n'
         '\n'
-        '  <link rel="stylesheet" href="/dc-theme.css?v=2">\n'
-        '  <link rel="stylesheet" href="/dc-nav.css?v=17">\n'
-        '  <link rel="stylesheet" href="/dc-landing.css?v=2">\n'
-        '  <link rel="stylesheet" href="/global-search.css?v=5">\n'
+        f'  <link rel="stylesheet" href="{asset_v("/dc-theme.css")}">\n'
+        f'  <link rel="stylesheet" href="{asset_v("/dc-nav.css")}">\n'
+        f'  <link rel="stylesheet" href="{asset_v("/dc-landing.css")}">\n'
+        f'  <link rel="stylesheet" href="{asset_v("/global-search.css")}">\n'
         '\n'
         '  <link rel="stylesheet" href="/pillar/bonding/bonding.css">\n'
         '\n'
@@ -1261,9 +1307,9 @@ def render_page(slug, cfg, intro_html, flat_ordered):
         '<!-- تم تاگل -->\n'
         '\n'
         '<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->\n'
-        '<script src="/global-search.js?v=9"></script>\n'
-        '<script src="/global-search-ui.js?v=5"></script>\n'
-        '<script src="/dc-nav.js?v=109" defer></script>\n'
+        f'<script src="{asset_v("/global-search.js")}"></script>\n'
+        f'<script src="{asset_v("/global-search-ui.js")}"></script>\n'
+        f'<script src="{asset_v("/dc-nav.js")}" defer></script>\n'
         + PREMIUM_SCRIPT_TAG +
         '\n'
         '</body>\n'
@@ -1735,10 +1781,10 @@ def _render_index_page(pillars_info, cards_html):
         + jsonld_body + '\n'
         '  </script>\n'
         '\n'
-        '  <link rel="stylesheet" href="/dc-theme.css?v=2">\n'
-        '  <link rel="stylesheet" href="/dc-nav.css?v=17">\n'
-        '  <link rel="stylesheet" href="/dc-landing.css?v=2">\n'
-        '  <link rel="stylesheet" href="/global-search.css?v=5">\n'
+        f'  <link rel="stylesheet" href="{asset_v("/dc-theme.css")}">\n'
+        f'  <link rel="stylesheet" href="{asset_v("/dc-nav.css")}">\n'
+        f'  <link rel="stylesheet" href="{asset_v("/dc-landing.css")}">\n'
+        f'  <link rel="stylesheet" href="{asset_v("/global-search.css")}">\n'
         '\n'
         '  ' + INDEX_INLINE_STYLE + '\n'
         '  <style>\n'
@@ -1853,9 +1899,9 @@ def _render_index_page(pillars_info, cards_html):
         '<!-- تم تاگل -->\n'
         '\n'
         '<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->\n'
-        '<script src="/global-search.js?v=9"></script>\n'
-        '<script src="/global-search-ui.js?v=5"></script>\n'
-        '<script src="/dc-nav.js?v=109" defer></script>\n'
+        f'<script src="{asset_v("/global-search.js")}"></script>\n'
+        f'<script src="{asset_v("/global-search-ui.js")}"></script>\n'
+        f'<script src="{asset_v("/dc-nav.js")}" defer></script>\n'
         + PREMIUM_SCRIPT_TAG +
         '\n'
         '</body>\n'
@@ -2013,7 +2059,7 @@ _GLOSSARY_HEAD_TOP = """<!DOCTYPE html>
   <script type="application/ld+json">
 """
 
-_GLOSSARY_HEAD_AFTER_JSONLD = """</script>
+_GLOSSARY_HEAD_AFTER_JSONLD = restamp("""</script>
 
   <script>
     (function(){
@@ -2386,7 +2432,7 @@ section[id^="sec-"]{ scroll-margin-top:160px; }
       </div>
 
       <div class="metaRow">
-"""
+""")
 
 _GLOSSARY_BETWEEN_CHIP_AND_ALPHANAV = """        <div class="chip" id="hintChip">برای پرش، حروف A–Z رو بزن</div>
       </div>
@@ -2552,7 +2598,7 @@ _GLOSSARY_HYDRATION_SCRIPT = """  <script>
   </script>
 """
 
-_GLOSSARY_TAIL = """<div class="dc-global-filter-box" id="dcGlobalBox">
+_GLOSSARY_TAIL = restamp("""<div class="dc-global-filter-box" id="dcGlobalBox">
   <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
   <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
   <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
@@ -2573,7 +2619,7 @@ _GLOSSARY_TAIL = """<div class="dc-global-filter-box" id="dcGlobalBox">
 <script src="/dc-nav.js?v=109" defer></script>
 </body>
 </html>
-"""
+""")
 
 
 def _render_glossary_page(*, jsonld_body, count_chip_text, alpha_nav_html, sections_html):
