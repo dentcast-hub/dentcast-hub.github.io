@@ -1,0 +1,1246 @@
+<title>ارزیاب DES</title>
+<div dir="rtl" lang="fa" id="app">
+
+<style>
+  @font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-weight:100 900;font-display:swap;}
+  /* ══════════════════════════════════════════════════════════════════════
+     TOKENS — the site's own values (dc-theme.css + index.html inline system).
+     ══════════════════════════════════════════════════════════════════════ */
+  :root{
+    --pr:#022360; --ac:#0b5fff;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-bg:#ffffff; --card-border:rgba(2,35,96,.09);
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+
+    /* amber = «this is what a subscription buys», site-wide. one meaning. */
+    --x-amber:#c9922b; --x-amber-ink:#8a6414;
+    --x-amber-wash:rgba(201,146,43,.075); --x-amber-wash-2:rgba(201,146,43,.15);
+    --x-amber-bd:rgba(154,107,21,.22);
+
+    /* the band scale — grey → dark green, never through red */
+    --des-E:#78808f; --des-D:#5f8a63; --des-C:#3f9a49; --des-B:#2f8f3f; --des-A:#1f7a34;
+    /* the machine's own chrome — indigo, meaning only «computed, not authored» */
+    --des-chrome:#6455a6; --des-chrome-rgb:100,85,166;
+
+    --r-tab:.875rem;
+    --ease:cubic-bezier(.4,0,.2,1);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --pr:#5b9cf6; --ac:#5b9cf6;
+      --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+      --border:rgba(255,255,255,.08);
+      --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+      --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
+      --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+      --x-amber:#e3b849; --x-amber-ink:#e3b849;
+      --x-amber-wash:rgba(227,184,73,.085); --x-amber-wash-2:rgba(227,184,73,.16);
+      --x-amber-bd:rgba(227,184,73,.26);
+      --des-E:#8b93a3; --des-D:#89a68c; --des-C:#6fae74; --des-B:#4f9d5c; --des-A:#2f8f52;
+      --des-chrome:#a99ce0; --des-chrome-rgb:169,156,224;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --x-amber:#e3b849; --x-amber-ink:#e3b849;
+    --x-amber-wash:rgba(227,184,73,.085); --x-amber-wash-2:rgba(227,184,73,.16);
+    --x-amber-bd:rgba(227,184,73,.26);
+    --des-E:#8b93a3; --des-D:#89a68c; --des-C:#6fae74; --des-B:#4f9d5c; --des-A:#2f8f52;
+    --des-chrome:#a99ce0; --des-chrome-rgb:169,156,224;
+    color-scheme:dark;
+  }
+
+  #app{
+    font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif;
+    background:var(--bg); color:var(--txt); min-height:100vh;
+    box-sizing:border-box; padding:0 0 3rem;
+  }
+  #app *{ box-sizing:border-box; }
+  #app :focus-visible{ outline:2px solid var(--x-amber); outline-offset:2px; border-radius:4px; }
+  .shell{ max-width:430px; margin:0 auto; padding:0 1rem; }
+
+  /* ── homepage context ── */
+  .topbar{ display:flex; align-items:center; justify-content:space-between; padding:.85rem 1rem .4rem; }
+  .logo{ font-weight:800; font-size:1rem; color:var(--pr); letter-spacing:-.2px; }
+  .logo b{ color:var(--ac); }
+  .topbar-ico{ display:flex; gap:.85rem; color:var(--txt3); font-size:.95rem; }
+  .trust{ display:flex; gap:.5rem; margin:.4rem 0 1.1rem; }
+  .trust div{ flex:1; text-align:center; padding:.6rem .3rem; border-radius:.75rem;
+    background:var(--card-bg); border:1px solid var(--card-border); }
+  .trust b{ display:block; font-size:1.05rem; font-weight:800; color:var(--pr); font-variant-numeric:tabular-nums; }
+  .trust span{ font-size:.66rem; color:var(--txt3); }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     THE TWO TABS — formal twins, differing only in colour: chrome explains
+     the machine, amber says «this is what a subscription buys».
+     ══════════════════════════════════════════════════════════════════════ */
+  .tab{
+    display:flex; align-items:center; gap:.7rem; width:100%;
+    font-family:inherit; text-align:right; cursor:pointer;
+    border-radius:var(--r-tab); padding:.75rem .9rem; box-shadow:var(--card-sh);
+    transition:background .2s var(--ease), border-radius .2s var(--ease);
+  }
+  .tab-ico{ width:2rem; height:2rem; border-radius:50%; flex:none;
+    display:flex; align-items:center; justify-content:center; }
+  .tab-ico svg{ width:1.05rem; height:1.05rem; }
+  .tab-body{ flex:1; min-width:0; }
+  .tab-ttl{ display:block; font-size:.82rem; font-weight:700; color:var(--txt); }
+  .tab-sub{ display:block; font-size:.72rem; color:var(--txt3); margin-top:.18rem; line-height:1.75; }
+
+  .tab-des{ background:rgba(var(--des-chrome-rgb),.045);
+    border:1px solid rgba(var(--des-chrome-rgb),.22); border-right:3px solid var(--des-chrome); }
+  .tab-des .tab-ico{ background:rgba(var(--des-chrome-rgb),.10);
+    border:1px solid rgba(var(--des-chrome-rgb),.28); color:var(--des-chrome); }
+  .tab-des .tab-ttl b{ color:var(--des-chrome); }
+  .bandstrip{ display:flex; direction:ltr; border-radius:5px; overflow:hidden; flex:none; border:1px solid var(--border); }
+  .bandstrip span{ width:1.15rem; height:1.15rem; display:flex; align-items:center; justify-content:center;
+    font-size:.56rem; font-weight:800; color:#fff; }
+
+  .tab-tool{ background:linear-gradient(180deg, var(--x-amber-wash-2) 0%, var(--x-amber-wash) 45%);
+    border:1px solid var(--x-amber-bd); border-right:3px solid var(--x-amber); margin-top:.55rem; }
+  .tab-tool:hover{ background:var(--x-amber-wash-2); }
+  .tab-tool .tab-ico{ background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd); color:var(--x-amber-ink); }
+  .tab-tool .tab-ttl b{ color:var(--x-amber-ink); }
+  .tab-pill{ flex:none; font-size:.63rem; font-weight:800; color:var(--x-amber-ink);
+    background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd);
+    border-radius:999px; padding:.14rem .6rem; white-space:nowrap; }
+  .tab-chev{ flex:none; font-size:1rem; font-weight:900; color:var(--x-amber-ink);
+    transition:transform .24s var(--ease); }
+
+  .tab[aria-expanded="true"]{ border-radius:var(--r-tab) var(--r-tab) 0 0; box-shadow:none; }
+  .tab-tool[aria-expanded="true"] .tab-chev{ transform:rotate(90deg); }
+
+  .drawer{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .3s var(--ease); }
+  .drawer.is-open{ grid-template-rows:1fr; }
+  .drawer > div{ overflow:hidden; }
+
+  .panel{
+    border:1px solid rgba(var(--des-chrome-rgb),.22); border-top:0;
+    border-right:3px solid var(--des-chrome);
+    border-radius:0 0 var(--r-tab) var(--r-tab);
+    background:rgba(var(--des-chrome-rgb),.045); box-shadow:var(--card-sh);
+    padding:.35rem 1rem 1rem; font-size:.8rem; color:var(--txt2); line-height:1.85;
+  }
+  .panel p{ margin:.55rem 0 0; }
+  .minilegend{ display:flex; direction:ltr; gap:.3rem; margin:.7rem 0; }
+  .minilegend div{ flex:1; text-align:center; padding:.35rem 0; border-radius:6px;
+    font-size:.68rem; font-weight:800; color:#fff; }
+  .panel-tool{ border-color:var(--x-amber-bd); border-right-color:var(--x-amber);
+    background:var(--x-amber-wash); padding:.85rem 1rem 1.05rem; }
+
+  /* ── inside the tool ── */
+  .quota{ display:flex; align-items:center; justify-content:space-between; gap:.6rem;
+    font-size:.7rem; color:var(--txt3); margin-bottom:.7rem; }
+  .quota-ticks{ display:flex; gap:.28rem; }
+  .qt{ width:.5rem; height:.5rem; border-radius:50%; border:1.5px solid var(--x-amber);
+    transition:background .3s var(--ease); }
+  .qt.on{ background:var(--x-amber); }
+
+  .field{ position:relative; }
+  .field textarea{
+    width:100%; min-height:8.5rem; resize:vertical; display:block;
+    font:inherit; font-size:.82rem; line-height:1.95; color:var(--txt);
+    background:var(--card-bg); border:1px solid var(--border);
+    border-radius:.75rem; padding:.75rem .8rem 1.6rem; outline:none;
+    transition:border-color .18s var(--ease);
+  }
+  .field textarea::placeholder{ color:var(--txt3); }
+  .field textarea:focus{ border-color:var(--x-amber); }
+  .field-count{ position:absolute; bottom:.5rem; left:.7rem; font-size:.64rem; color:var(--txt3);
+    font-variant-numeric:tabular-nums; pointer-events:none; }
+
+  /* the title, asked for outright. Guessing it from the text was the single
+     biggest source of wrong keys, and a reader with two scores a day is happy
+     to type one line to get it right. */
+  .titlerow{ margin-bottom:.5rem; }
+  .titlerow input{
+    width:100%; font:inherit; font-size:.8rem; font-weight:600; color:var(--txt);
+    background:var(--card-bg); border:1px solid var(--border); border-radius:.6rem;
+    padding:.55rem .7rem; outline:none; transition:border-color .18s var(--ease);
+  }
+  .titlerow input::placeholder{ color:var(--txt3); font-weight:400; }
+  .titlerow input:focus{ border-color:var(--x-amber); }
+
+  /* what the text IS — a claim the reader makes, checked against the text. */
+  .chips{ display:flex; align-items:center; gap:.35rem; margin-top:.5rem; }
+  .chips > span{ font-size:.68rem; color:var(--txt3); margin-inline-end:.15rem; }
+  .chip{
+    font:inherit; font-size:.7rem; font-weight:700; cursor:pointer;
+    border-radius:999px; padding:.28rem .75rem; color:var(--txt2);
+    background:var(--card-bg); border:1px solid var(--border);
+    transition:background .16s var(--ease), border-color .16s var(--ease);
+  }
+  .chip.on{ background:var(--x-amber-wash-2); border-color:var(--x-amber-bd); color:var(--x-amber-ink); }
+
+  /* the sanity report. Shown only when there is something to say, and never
+     after the fact: it appears before the slot is spent. */
+  .issues{ margin-top:.6rem; display:flex; flex-direction:column; gap:.35rem; }
+  .issue{
+    display:flex; gap:.45rem; align-items:flex-start;
+    font-size:.71rem; line-height:1.8; border-radius:.55rem; padding:.42rem .6rem;
+  }
+  .issue b{ font-weight:800; }
+  .issue-stop{ color:#9a2b2b; background:rgba(154,43,43,.07); border:1px solid rgba(154,43,43,.22); }
+  .issue-warn{ color:var(--x-amber-ink); background:var(--x-amber-wash); border:1px dashed var(--x-amber-bd); }
+  [data-theme="dark"] .issue-stop{ color:#f0a3a3; background:rgba(240,163,163,.09); border-color:rgba(240,163,163,.26); }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .issue-stop{ color:#f0a3a3; background:rgba(240,163,163,.09); border-color:rgba(240,163,163,.26); } }
+
+  /* the optional link. NOT a gate — it sits under the paste box, not in front
+     of it, and accepts any form a person is likely to have. When a DOI is
+     already inside the pasted text we fill it ourselves and never ask. */
+  .linkrow{ display:flex; align-items:center; gap:.45rem; margin-top:.5rem; }
+  .linkrow input{
+    flex:1; min-width:0; font:inherit; font-size:.72rem; color:var(--txt);
+    background:var(--card-bg); border:1px solid var(--border); border-radius:.55rem;
+    padding:.42rem .6rem; outline:none; direction:ltr; text-align:left;
+    transition:border-color .18s var(--ease);
+  }
+  .linkrow input::placeholder{ color:var(--txt3); text-align:right; direction:rtl; }
+  .linkrow input:focus{ border-color:var(--x-amber); }
+  .linkrow .auto{
+    flex:none; font-size:.62rem; font-weight:800; color:#1f7a34;
+    background:rgba(31,122,52,.1); border:1px solid rgba(31,122,52,.28);
+    border-radius:999px; padding:.15rem .5rem; opacity:0; transition:opacity .2s var(--ease);
+  }
+  .linkrow .auto.on{ opacity:1; }
+  [data-theme="dark"] .linkrow .auto{ color:#6fae74; background:rgba(111,174,116,.12); border-color:rgba(111,174,116,.3); }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .linkrow .auto{ color:#6fae74; background:rgba(111,174,116,.12); border-color:rgba(111,174,116,.3); } }
+
+  /* topic tags. they say what the paper is ABOUT — which is why they are shown
+     and stored, and equally why they can never be a match key: two different
+     trials on one subject carry the same tags. */
+  .tags{ display:flex; flex-wrap:wrap; gap:.3rem; margin-top:.8rem;
+    padding-top:.7rem; border-top:1px solid rgba(var(--des-chrome-rgb),.16); }
+  .tag{ font-size:.65rem; font-weight:700; color:var(--des-chrome);
+    background:rgba(var(--des-chrome-rgb),.09); border:1px solid rgba(var(--des-chrome-rgb),.22);
+    border-radius:999px; padding:.12rem .5rem; }
+
+  .row{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; margin-top:.7rem; }
+  .btn{ font:inherit; font-size:.82rem; font-weight:800; cursor:pointer;
+    border-radius:999px; padding:.55rem 1.35rem; border:1px solid transparent;
+    transition:background .18s var(--ease), opacity .18s var(--ease); }
+  .btn-go{ background:var(--x-amber); color:#fff; }
+  [data-theme="dark"] .btn-go{ color:#1a1405; }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .btn-go{ color:#1a1405; } }
+  .btn-go:disabled{ background:var(--surface3); color:var(--txt3); cursor:not-allowed; }
+  .btn-quiet{ background:transparent; color:var(--txt2); border-color:var(--border);
+    font-weight:700; font-size:.74rem; padding:.42rem .9rem; }
+  .btn-quiet:hover{ background:var(--surface2); color:var(--txt); }
+  .btn-link{ background:none; border:0; font:inherit; font-size:.7rem; font-weight:700;
+    color:var(--txt3); cursor:pointer; padding:.2rem 0; text-decoration:underline;
+    text-underline-offset:3px; text-decoration-color:var(--border); }
+  .btn-link:hover{ color:var(--txt2); }
+
+  .whisper{ margin-top:.6rem; }
+  .whisper summary{ cursor:pointer; font-size:.7rem; color:var(--txt3); font-weight:600;
+    list-style:none; display:inline-flex; align-items:center; gap:.3rem; }
+  .whisper summary::-webkit-details-marker{ display:none; }
+  .whisper summary::before{ content:"؟"; width:1.05rem; height:1.05rem; border-radius:50%; flex:none;
+    display:inline-flex; align-items:center; justify-content:center;
+    border:1px solid var(--border); font-size:.62rem; font-weight:800; color:var(--txt3); }
+  .whisper p{ font-size:.72rem; color:var(--txt3); line-height:1.9; margin:.45rem 0 0; }
+
+  .view{ display:none; }
+  .view.is-on{ display:block; animation:fade .32s var(--ease) both; }
+  @keyframes fade{ from{ opacity:0; transform:translateY(5px); } to{ opacity:1; transform:none; } }
+
+  .think{ padding:.5rem 0 .2rem; }
+  .think-line{ display:flex; align-items:center; gap:.5rem; font-size:.78rem; color:var(--txt2); min-height:1.6rem; }
+  .think-line i{ width:.42rem; height:.42rem; border-radius:50%; background:var(--des-chrome); flex:none;
+    animation:pulse 1.15s var(--ease) infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:.3; transform:scale(.8); } 50%{ opacity:1; transform:scale(1); } }
+  .think-txt{ animation:fade .28s var(--ease) both; }
+  .sweep{ height:2px; border-radius:99px; background:var(--border); overflow:hidden; margin-top:.7rem; }
+  .sweep i{ display:block; height:100%; width:35%; border-radius:inherit; background:var(--des-chrome);
+    animation:sweep 1.25s var(--ease) infinite; }
+  @keyframes sweep{ 0%{ transform:translateX(120%); } 100%{ transform:translateX(-320%); } }
+
+  /* ── the answer ── */
+  .answer{ background:rgba(var(--des-chrome-rgb),.05);
+    border:1px solid rgba(var(--des-chrome-rgb),.22); border-right:3px solid var(--des-chrome);
+    border-radius:.8rem; padding:.9rem 1rem 1rem; }
+  .answer-h{ display:flex; align-items:center; gap:.4rem;
+    font-size:.66rem; font-weight:800; letter-spacing:.4px;
+    color:var(--des-chrome); text-transform:uppercase; margin-bottom:.75rem; }
+  .answer-h::after{ content:""; flex:1; height:1px; background:rgba(var(--des-chrome-rgb),.2); }
+
+  .verdict{ display:flex; align-items:center; gap:.75rem; }
+  .bar{ display:flex; direction:ltr; border-radius:7px; overflow:hidden; border:1px solid var(--border); flex:none; }
+  .blk{ width:1.85rem; height:1.85rem; display:flex; align-items:center; justify-content:center;
+    font-size:.72rem; font-weight:800; background:var(--card-bg); color:var(--txt3);
+    border-left:1px solid var(--border); }
+  .blk:first-child{ border-left:0; }
+  .blk.on{ color:#fff; background:var(--bandc); animation:pop .4s var(--ease) both .12s; }
+  .blk.on.prov{ background:
+      repeating-linear-gradient(45deg, rgba(255,255,255,.34) 0 3px, transparent 3px 6px), var(--bandc); }
+  @keyframes pop{ from{ transform:scale(.72); } to{ transform:scale(1); } }
+
+  .verdict-meta{ display:flex; flex-direction:column; gap:.1rem; min-width:0; }
+  .verdict-band{ font-size:.9rem; font-weight:800; color:var(--bandc); letter-spacing:-.2px; }
+  .verdict-q{ font-size:.7rem; color:var(--txt3); }
+  .verdict-num{ margin-inline-start:auto; flex:none; font-size:.72rem; color:var(--txt3);
+    font-variant-numeric:tabular-nums; background:var(--card-bg);
+    border:1px solid var(--border); border-radius:6px; padding:.12rem .45rem; }
+
+  .basis{ display:inline-flex; align-items:center; gap:.35rem; margin-top:.7rem;
+    font-size:.68rem; font-weight:700; border-radius:999px; padding:.2rem .65rem; }
+  .basis-full{ color:var(--des-chrome); background:rgba(var(--des-chrome-rgb),.09);
+    border:1px solid rgba(var(--des-chrome-rgb),.24); }
+  .basis-abs{ color:var(--x-amber-ink); border:1px dashed var(--x-amber-bd);
+    background:repeating-linear-gradient(45deg, var(--x-amber-wash) 0 4px, transparent 4px 8px); }
+
+  .answer-read{ margin:.75rem 0 0; font-size:.78rem; color:var(--txt2); line-height:2;
+    padding-top:.7rem; border-top:1px solid rgba(var(--des-chrome-rgb),.16); }
+
+  .trace{ margin-top:.7rem; }
+  .trace summary{ cursor:pointer; font-size:.7rem; font-weight:700; color:var(--des-chrome);
+    list-style:none; display:inline-flex; align-items:center; gap:.3rem; }
+  .trace summary::-webkit-details-marker{ display:none; }
+  .trace summary::after{ content:"↓"; font-size:.68rem; }
+  .trace[open] summary::after{ content:"↑"; }
+  .trace ol{ margin:.5rem 0 0; padding-inline-start:1.1rem; font-size:.72rem; color:var(--txt3); line-height:2.05; }
+  .trace li::marker{ color:var(--des-chrome); font-weight:700; }
+
+  .answer-foot{ margin:.8rem 0 0; font-size:.66rem; color:var(--txt3); line-height:1.85; }
+  .after-row{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; margin-top:.75rem; }
+
+  .locked{ text-align:center; padding:.4rem 0 .2rem; }
+  .locked h4{ margin:0 0 .35rem; font-size:.88rem; font-weight:800; color:var(--txt); }
+  .locked p{ margin:0 0 .9rem; font-size:.75rem; color:var(--txt2); line-height:1.95; }
+  .spent{ display:flex; gap:.6rem; align-items:flex-start; font-size:.76rem; color:var(--txt2); line-height:1.95; }
+  .spent b{ color:var(--x-amber-ink); }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     BACKSTAGE — mockup scaffolding only. Nothing here exists in the product.
+     ══════════════════════════════════════════════════════════════════════ */
+  .backstage{ max-width:430px; margin:2.5rem auto 0; padding:0 1rem; }
+  .bs-box{ border:1px dashed var(--border); border-radius:.75rem; background:var(--surface2); padding:.7rem .85rem; }
+  .bs-h{ display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+    font-size:.68rem; font-weight:800; color:var(--txt3); letter-spacing:.2px; }
+  .bs-h span{ font-weight:600; }
+  .bs-lbl{ font-size:.6rem; font-weight:800; color:var(--txt3); margin:.75rem 0 .3rem; letter-spacing:.3px; }
+  .bs-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:.35rem; }
+  .bs-cell{ background:var(--card-bg); border:1px solid var(--border); border-radius:.5rem; padding:.4rem .3rem; text-align:center; }
+  .bs-cell b{ display:block; font-size:.85rem; font-weight:800; color:var(--txt); font-variant-numeric:tabular-nums; }
+  .bs-cell span{ font-size:.55rem; color:var(--txt3); }
+
+  .bs-panel{ background:var(--card-bg); border:1px solid var(--border); border-radius:.5rem;
+    padding:.5rem .6rem; font-size:.66rem; line-height:1.95; color:var(--txt3); }
+  .bs-panel .r{ display:flex; gap:.4rem; }
+  .bs-panel .r::before{ content:"·"; }
+  .bs-panel b{ color:var(--txt2); font-weight:700; }
+  .bs-panel .mono{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.62rem;
+    direction:ltr; unicode-bidi:embed; }
+  .bs-key{ display:inline-block; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:.6rem; direction:ltr; border-radius:4px; padding:.05rem .3rem; margin:.1rem .15rem .1rem 0;
+    border:1px solid var(--border); background:var(--surface2); color:var(--txt3); }
+  .bs-key.miss{ text-decoration:line-through; opacity:.55; }
+  .bs-key.hit{ border-color:rgba(31,122,52,.45); color:#1f7a34; background:rgba(31,122,52,.08); font-weight:700; }
+  [data-theme="dark"] .bs-key.hit{ border-color:rgba(111,174,116,.45); color:#6fae74; background:rgba(111,174,116,.1); }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .bs-key.hit{ border-color:rgba(111,174,116,.45); color:#6fae74; background:rgba(111,174,116,.1); } }
+
+  .bs-verdict{ display:inline-block; margin-top:.35rem; font-size:.62rem; font-weight:800;
+    border-radius:999px; padding:.12rem .55rem; }
+  .v-hit{ color:#1f7a34; background:rgba(31,122,52,.1); border:1px solid rgba(31,122,52,.3); }
+  .v-up{ color:var(--x-amber-ink); background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd); }
+  .v-new{ color:var(--des-chrome); background:rgba(var(--des-chrome-rgb),.1); border:1px solid rgba(var(--des-chrome-rgb),.3); }
+  [data-theme="dark"] .v-hit{ color:#6fae74; background:rgba(111,174,116,.12); border-color:rgba(111,174,116,.3); }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .v-hit{ color:#6fae74; background:rgba(111,174,116,.12); border-color:rgba(111,174,116,.3); } }
+
+  .bs-json{ background:var(--card-bg); border:1px solid var(--border); border-radius:.5rem;
+    padding:.5rem .6rem; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:.6rem; line-height:1.7; color:var(--txt3); direction:ltr; text-align:left;
+    max-height:13rem; overflow:auto; white-space:pre; }
+
+  .bs-states{ display:flex; flex-wrap:wrap; gap:.3rem; }
+  .bs-btn{ font:inherit; font-size:.62rem; font-weight:700; cursor:pointer; padding:.25rem .6rem;
+    border-radius:999px; border:1px solid var(--border); background:var(--card-bg); color:var(--txt3); }
+  .bs-btn.on{ background:var(--txt2); color:var(--bg); border-color:var(--txt2); }
+  .bs-btn-fill{ border-style:dashed; }
+
+  @media (prefers-reduced-motion:reduce){
+    #app *{ animation:none !important; transition:none !important; }
+    .drawer{ grid-template-rows:1fr; }
+    .drawer:not(.is-open){ display:none; }
+  }
+</style>
+
+
+<!-- ═══════════════ homepage context ═══════════════ -->
+<div class="topbar">
+  <span class="logo">دنت<b>کست</b></span>
+  <span class="topbar-ico">🔍 🔔 👤</span>
+</div>
+
+<div class="shell">
+  <div class="trust">
+    <div><b>۴۴۴</b><span>مطلب</span></div>
+    <div><b>۲۱۰</b><span>اپیزود</span></div>
+    <div><b>۱۵</b><span>مسیر</span></div>
+  </div>
+
+  <!-- ── tab 1: the existing explainer ── -->
+  <button type="button" class="tab tab-des" id="tabDes" aria-expanded="false" aria-controls="panelDes">
+    <span class="tab-ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <rect x="2.5" y="13" width="5.5" height="8.5" rx="1.1" fill="currentColor"/>
+        <rect x="9.25" y="7" width="5.5" height="14.5" rx="1.1" fill="currentColor"/>
+        <rect x="16" y="10.5" width="5.5" height="11" rx="1.1" fill="currentColor"/>
+      </svg>
+    </span>
+    <span class="tab-body">
+      <span class="tab-ttl"><b>DentCast Evidence Score</b> چیست؟</span>
+      <span class="tab-sub">روشی که دنت‌کست با آن اعتبار شواهد علمی محتوا را نشان می‌دهد.</span>
+    </span>
+    <span class="bandstrip" aria-hidden="true">
+      <span style="background:var(--des-E)">E</span><span style="background:var(--des-D)">D</span><span style="background:var(--des-C)">C</span><span style="background:var(--des-B)">B</span><span style="background:var(--des-A)">A</span>
+    </span>
+  </button>
+  <div class="drawer" id="drawerDes"><div>
+    <div class="panel" id="panelDes">
+      <p>روشی که دنت‌کست با آن نشان می‌دهد هر مطلب علمی چقدر روی طراحی قوی و اجرای دقیق ایستاده — نه اینکه چقدر برای شما کاربردی است.</p>
+      <div class="minilegend" aria-hidden="true">
+        <div style="background:var(--des-E)">E</div><div style="background:var(--des-D)">D</div><div style="background:var(--des-C)">C</div><div style="background:var(--des-B)">B</div><div style="background:var(--des-A)">A</div>
+      </div>
+      <p>از E تا A — و A فقط از بهترین طراحی‌ها به‌دست می‌آید. A هم فقط داخل یک نوع سؤال معنی دارد.</p>
+    </div>
+  </div></div>
+
+  <!-- ── tab 2: the tool ── -->
+  <button type="button" class="tab tab-tool" id="tabTool" aria-expanded="false" aria-controls="panelTool">
+    <span class="tab-ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9.5 3v5.2L4.8 17.4A2.4 2.4 0 0 0 6.9 21h10.2a2.4 2.4 0 0 0 2.1-3.6L14.5 8.2V3"/>
+        <path d="M8.2 3h7.6"/><path d="M7.4 14.2h9.2"/>
+      </svg>
+    </span>
+    <span class="tab-body">
+      <span class="tab-ttl"><b>مقاله‌ی خودت</b> را بگذار، امتیاز DES بگیر</span>
+      <span class="tab-sub">متن یا چکیده را بگذار تا ببینی چقدر شواهد پشتش هست — با همان DentCast Evidence Score.</span>
+    </span>
+    <span class="tab-pill">پریمیوم</span>
+    <span class="tab-chev" aria-hidden="true">›</span>
+  </button>
+
+  <div class="drawer" id="drawerTool"><div>
+    <div class="panel panel-tool" id="panelTool">
+
+      <div class="view is-on" data-view="compose">
+        <div class="quota">
+          <span>امروز <b id="qLeft">۲</b> بررسی داری</span>
+          <span class="quota-ticks" id="qTicks" aria-hidden="true"><i class="qt on"></i><i class="qt on"></i></span>
+        </div>
+        <div class="titlerow">
+          <input id="title" type="text" placeholder="عنوان مقاله" aria-label="عنوان مقاله">
+        </div>
+        <div class="field">
+          <textarea id="paste" placeholder="متن چکیده یا متن کامل مقاله را اینجا بگذار…" aria-label="متن مقاله"></textarea>
+          <span class="field-count" id="count">۰ واژه</span>
+        </div>
+        <div class="chips">
+          <span>این متن:</span>
+          <button class="chip on" type="button" data-basis="ABSTRACT_ONLY">چکیده است</button>
+          <button class="chip" type="button" data-basis="FULL_TEXT">متن کامل است</button>
+        </div>
+        <div class="linkrow">
+          <input id="link" type="text" placeholder="لینک مقاله را هم داری؟ (اختیاری)" aria-label="لینک مقاله یا DOI">
+          <span class="auto" id="linkAuto">از متن پیدا شد</span>
+        </div>
+        <div class="issues" id="issues"></div>
+        <div class="row">
+          <button class="btn btn-go" id="go" type="button">بسنج</button>
+          <button class="btn-link" id="sample" type="button">یک نمونه بگذار</button>
+        </div>
+        <details class="whisper">
+          <summary>این امتیاز از کجا می‌آید؟</summary>
+          <p>همان چارچوب DES، این‌بار روی متنی که خودت گذاشته‌ای — با یک مدل مستقل که استدلالش را نشان می‌دهد. اگر فقط چکیده بدهی امتیاز مقدماتی است؛ متن کامل امتیاز قطعی‌تری می‌دهد. نتیجه برای مطالعه‌ی شخصی توست و امتیاز رسمی دنت‌کست روی مطالب منتشرشده نیست.</p>
+        </details>
+      </div>
+
+      <div class="view" data-view="think">
+        <div class="think">
+          <div class="think-line"><i></i><span class="think-txt" id="thinkTxt">در حال خواندن متن…</span></div>
+          <div class="sweep"><i></i></div>
+        </div>
+      </div>
+
+      <div class="view" data-view="answer">
+        <div class="answer" id="answerCard"></div>
+        <div class="after-row">
+          <button class="btn btn-quiet" data-again type="button">مقاله‌ی دیگر</button>
+          <button class="btn-link" data-close type="button">بستن</button>
+        </div>
+      </div>
+
+      <div class="view" data-view="spent">
+        <div class="spent">
+          <span aria-hidden="true">⏳</span>
+          <span>هر روز <b>دو</b> بررسی داری و امروز هر دو را استفاده کرده‌ای. فردا از نو.</span>
+        </div>
+        <div class="after-row"><span></span><button class="btn-link" data-close type="button">بستن</button></div>
+      </div>
+
+      <div class="view" data-view="locked">
+        <div class="locked">
+          <h4>بخشی از پریمیوم</h4>
+          <p>هر روز دو مقاله یا چکیده‌ی دلخواهت را با همان چارچوب DES بسنج.</p>
+          <button class="btn btn-go" type="button">دیدن پریمیوم</button>
+        </div>
+        <div class="after-row"><span></span><button class="btn-link" data-close type="button">بستن</button></div>
+      </div>
+
+    </div>
+  </div></div>
+</div>
+
+
+<!-- ═══════════════ backstage (mockup only) ═══════════════ -->
+<div class="backstage">
+  <div class="bs-box">
+    <div class="bs-h">پشت صحنه — فقط در ماکاپ <span>در محصول دیده نمی‌شود</span></div>
+
+    <div class="bs-lbl">شمارنده‌ها</div>
+    <div class="bs-grid">
+      <div class="bs-cell"><b id="bsPapers">۰</b><span>مقاله</span></div>
+      <div class="bs-cell"><b id="bsKeys">۰</b><span>کلید</span></div>
+      <div class="bs-cell"><b id="bsHit">۰</b><span>بدون امتیازدهی</span></div>
+      <div class="bs-cell"><b id="bsBytes">۰</b><span>بایت/رکورد</span></div>
+    </div>
+
+    <div class="bs-lbl">۱ — ویژگی‌های استخراج‌شده از متنِ ورودی</div>
+    <div class="bs-panel" id="bsFeat"><div class="r">هنوز درخواستی نیامده</div></div>
+
+    <div class="bs-lbl">۲ — کلیدها، به ترتیب جست‌وجو</div>
+    <div class="bs-panel" id="bsKeysBox"><div class="r">—</div></div>
+
+    <div class="bs-lbl">۳ — تصمیم</div>
+    <div class="bs-panel" id="bsTrace"><div class="r">—</div></div>
+
+    <div class="bs-lbl">des-index.json</div>
+    <div class="bs-json" id="bsJson">{}</div>
+
+    <div class="bs-lbl">سناریو</div>
+    <div class="bs-states">
+      <button class="bs-btn bs-btn-fill" data-fill="abs">پُر کن: چکیده</button>
+      <button class="bs-btn bs-btn-fill" data-fill="full">پُر کن: متن کامل (همان مقاله)</button>
+      <button class="bs-btn bs-btn-fill" data-fill="other">پُر کن: مقاله‌ی دیگر</button>
+      <button class="bs-btn bs-btn-fill" data-fill="dump">پُر کن: کپیِ کلِ صفحه‌ی PubMed</button>
+      <button class="bs-btn bs-btn-fill" data-fill="en">پُر کن: چکیده‌ی انگلیسی</button>
+      <button class="bs-btn bs-btn-fill" data-fill="junk">پُر کن: متنِ بی‌ربط</button>
+    </div>
+    <div class="bs-lbl">حالت‌ها</div>
+    <div class="bs-states">
+      <button class="bs-btn on" data-state="compose">فرم</button>
+      <button class="bs-btn" data-state="think">تحلیل</button>
+      <button class="bs-btn" data-state="answer">نتیجه</button>
+      <button class="bs-btn" data-state="spent">سهمیه تمام</button>
+      <button class="bs-btn" data-state="locked">قفل</button>
+      <button class="bs-btn" data-reset>ریست</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+(function(){
+  var app = document.getElementById('app');
+  var FA = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  function fa(n){ return String(n).replace(/\d/g, function(d){ return FA[+d]; }); }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     WHAT IS STORED IS THE PAPER'S IDENTITY, NOT THE PAPER.
+
+     The store never holds the abstract, the full text, or a fingerprint of
+     either. It holds a handful of FIELDS that identify the study — the same
+     fields a citation is made of — plus the DES record. Roughly 200 bytes a
+     paper, and lookup is a dictionary hit on a short key: no scanning, no
+     comparing 5000 words against anything.
+
+     Two tables. `index` maps every key we have ever seen onto a paper id;
+     `papers` holds the records. ONE PAPER, MANY KEYS — which is what lets an
+     abstract and a full text of the same study land on a single record.
+     ══════════════════════════════════════════════════════════════════════ */
+  var store = { index:Object.create(null), papers:Object.create(null) };
+  var hits = 0, calls = 0, used = 0, LIMIT = 2, seq = 0;
+
+  /* Persian folding — ZWNJ is not a space, and ی/ي + ک/ك are two spellings of
+     one letter (the reason hl-view.js has foldFa). Applied to KEYS only. */
+  function fold(t){
+    return String(t)
+      .replace(/[‌‎‏]/g,'')
+      .replace(/[يى]/g,'ی').replace(/ك/g,'ک')
+      .replace(/[ً-ْ]/g,'')
+      .replace(/[.,;:!?()\[\]{}"'«»،؛؟\-–—\/\\]/g,' ')
+      .replace(/\s+/g,' ').trim().toLowerCase();
+  }
+  function hash(s){
+    var h = 5381;
+    for (var i = 0; i < s.length; i++) h = ((h * 33) ^ s.charCodeAt(i)) >>> 0;
+    return h.toString(16).padStart(8,'0');
+  }
+
+  /* ── FEATURE EXTRACTION. Cheap and deterministic where it can be. In
+        production the regex layer runs first and free; only when it comes up
+        empty does a SMALL, CHEAP model get asked for {title, first_author,
+        year, doi} — a few hundred tokens, and a different model from the
+        reasoning scorer, which is the expensive one we are protecting. ── */
+  /* ══════════════════════════════════════════════════════════════════════
+     EXTRACTION — and the one rule the whole thing hangs on:
+
+         AMBIGUITY MEANS DECLINE. If we are not sure, no key is minted.
+
+     A missed cache hit costs a few tokens. A WRONG key returns another
+     paper's evaluation, and that is not a degraded answer, it is a false
+     one. The failure that taught us this: somebody pasted a whole PubMed
+     web page, whose first line is «Skip to main page content». Under a
+     first-line-is-the-title rule that becomes the title — and so does it
+     for every other PubMed page anyone ever pastes, so all of them collide
+     on one title key and the second reader is served the first reader's
+     score for a completely different study.
+     ══════════════════════════════════════════════════════════════════════ */
+
+  // Lines a copied web page carries that are not the paper.
+  var CHROME = /(skip to|main (page )?content|official website|\.gov\b|cookie|sign in|log ?in|create account|navigation|search|menu|javascript|browser|save\b|email\b|permalink|clipboard|share\b|cite\b|display options|full[- ]text links|similar articles|cited by|mesh terms|related information|figures?\b|copy download|actions\b|https?:\/\/|www\.)/i;
+
+  function looksLikeTitle(s){
+    if (!s) return false;
+    if (CHROME.test(s)) return false;
+    if (/[.؛]$/.test(s)) return false;             // a sentence, not a heading
+    // must contain a letter — and the test has to be Unicode-aware. `\W` is
+    // ASCII-only, so `^[\d\W_]+$` matches every Persian string ever written
+    // and would reject exactly the titles this site is made of.
+    if (!/\p{L}/u.test(s)) return false;
+    // a citation line, not a title: no real title carries an identifier or an
+    // author list. Without this the line right under the title on a PubMed
+    // page («… J Endod. 2024. PMID: … doi: …») wins the look-back.
+    if (/10\.\d{4}|pmid|doi\s*:/i.test(s)) return false;
+    if (/et\s*al\.?|و همکاران/i.test(s)) return false;
+    var w = s.split(/\s+/).filter(Boolean).length;
+    return w >= 6 && w <= 35;                       // real paper titles are long
+  }
+
+  // Structure beats position. On a PubMed page — and in most abstracts — the
+  // title is the last real line ABOVE «Abstract»/«چکیده», which is far more
+  // reliable than «the first line».
+  function findTitle(text){
+    var lines = text.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
+    var at = -1;
+    for (var i = 0; i < lines.length; i++)
+      if (/^(abstract|چکیده)\b[:：]?$/i.test(lines[i])) { at = i; break; }
+
+    if (at > 0) {
+      for (var j = at - 1; j >= 0 && j >= at - 6; j--)
+        if (looksLikeTitle(lines[j])) return { title:lines[j], how:'خط بالای «Abstract»' };
+      return { title:null, how:'بالای «Abstract» چیزی شبیه عنوان نبود' };
+    }
+    // no structural anchor: only the opening lines are eligible, and only if
+    // they pass the gate. A page dump fails here, which is the point.
+    for (var k = 0; k < Math.min(lines.length, 5); k++)
+      if (looksLikeTitle(lines[k])) return { title:lines[k], how:'خط ابتدایی' };
+    return { title:null, how:'هیچ خطی شبیه عنوان نبود' };
+  }
+
+  /* Identifiers. The LINK FIELD WINS, always — the reader put it there on
+     purpose. Body text is only consulted when the field is empty, and then
+     only when it names ONE candidate: a PubMed page lists the PMIDs of
+     «Similar articles» and «Cited by», and a full text carries the DOI of
+     every work in its reference list, so «the first number found» is a coin
+     toss. Several candidates ⇒ decline.
+
+     Before counting candidates, cut the text where OTHER papers' identifiers
+     start. This is not a heuristic window — those sections announce
+     themselves by name, and everything after the announcement belongs to
+     someone else's paper. It is what turns three ambiguous PMIDs on a PubMed
+     page into the one that is actually this article's. */
+  function paperScope(t){
+    var m = String(t).match(/(^|\n)\s*(similar articles|cited by|references?|bibliography|related information|mesh terms|publication types|منابع|مراجع|فهرست منابع)\b/i);
+    return m ? String(t).slice(0, m.index) : String(t);
+  }
+  function allDois(s){
+    var out = [], re = /10\.\d{4,9}\/[^\s"'<>,;)\]]+/g, m;
+    while ((m = re.exec(String(s)))) {
+      var v = m[0].toLowerCase().replace(/[.,;]$/,'');
+      if (out.indexOf(v) < 0) out.push(v);
+    }
+    return out;
+  }
+  function allPmids(s){
+    var out = [], re = /(?:pmid[:\s]*|pubmed\.ncbi\.nlm\.nih\.gov\/)([0-9]{6,9})/gi, m;
+    while ((m = re.exec(String(s)))) if (out.indexOf(m[1]) < 0) out.push(m[1]);
+    return out;
+  }
+
+  function pick(fromLink, fromBody, head, note){
+    if (fromLink.length === 1) return { v:fromLink[0], why:'از لینک' };
+    if (fromLink.length > 1)   return { v:null, why:'لینک چند شناسه داشت' };
+    if (fromBody.length === 1) return { v:fromBody[0], why:'از متن' };
+    if (fromBody.length > 1) {
+      // several in the body — accept only if exactly one sits in the front
+      // matter, where a paper's own identifier lives.
+      var up = fromBody.filter(function(v){ return head.indexOf(v) >= 0; });
+      if (up.length === 1) return { v:up[0], why:'از ابتدای متن' };
+      return { v:null, why:note + ' چند مورد پیدا شد — رد شد' };
+    }
+    return { v:null, why:'پیدا نشد' };
+  }
+
+  function extract(text, link, userTitle){
+    var f = { doi:null, pmid:null, title:null, author:null, year:null,
+              via:'regex', notes:[] };
+    var scope = paperScope(text);              // this paper's own front matter
+    var head  = scope.slice(0, 900).toLowerCase();
+    link = link || '';
+
+    var d = pick(allDois(link),  allDois(scope),  head, 'DOI');
+    var p = pick(allPmids(link), allPmids(scope), head, 'PMID');
+    f.doi = d.v; f.pmid = p.v;
+    f.notes.push('DOI: ' + d.why, 'PMID: ' + p.why);
+
+    // The reader's own title wins outright — it is the one field a guess can
+    // never beat, and asking for it is cheaper than every heuristic below.
+    // findTitle survives only as a fallback, and as a way to notice when the
+    // typed title and the text disagree.
+    if (userTitle && fold(userTitle)) {
+      f.title = userTitle.trim();
+      f.notes.push('عنوان: از فیلدِ خودِ کاربر');
+    } else {
+      var t = findTitle(text);
+      f.title = t.title;
+      f.notes.push('عنوان: ' + t.how);
+    }
+
+    var m = text.match(/([A-Z][a-zA-Z؀-ۿ]{2,})\s+(?:et\s*al\.?|و همکاران)/);
+    if (m) f.author = m[1];
+    m = text.match(/\b(19|20)\d{2}\b/) || text.match(/\b1[34]\d{2}\b/);
+    if (m) f.year = m[0];
+
+    // With no identifier and no trustworthy title there is nothing to key on.
+    // In production this is the ONE place the cheap extraction model is
+    // called — a few hundred tokens for {title, first_author, year, doi} —
+    // and it is called precisely because guessing here is what breaks things.
+    if (!f.title && !f.doi && !f.pmid) f.via = 'cheap-model';
+    return f;
+  }
+
+  /* ── KEYS. Short strings, strongest first, each an O(1) dictionary lookup —
+        the whole search is at most four of them.
+
+        Two things are deliberately NOT keys.
+        · author+year alone: two papers by one author in one year is ordinary,
+          so it can corroborate a title match but must never make one.
+        · hashtags: they are a TOPIC vocabulary, not an identity. Two different
+          trials on single-visit endodontics carry identical tags, so matching
+          on them would hand one paper's score to another paper — which is the
+          worst failure this tool has. They are stored, never matched. ── */
+  function keysOf(f, text){
+    var k = [];
+    if (f.doi)   k.push({ k:'doi:' + f.doi,               why:'DOI' });
+    if (f.pmid)  k.push({ k:'pmid:' + f.pmid,             why:'PMID' });
+    if (f.title) k.push({ k:'ttl:' + hash(fold(f.title)), why:'عنوان' });
+    k.push({ k:'sha:' + hash(fold(text)).slice(0,8),      why:'متنِ یکسان' });
+    return k;
+  }
+
+  /* Topic tags. In production these come back from the SAME scoring call — no
+     extra request — and are then resolved to canonical forms against
+     dentcast-hashtag-reference.json exactly the way a publish resolves them,
+     so the corpus speaks the site's own vocabulary rather than free text. */
+  function tagsFor(text){
+    return /ریزنشت|کامپوزیت|بالک/.test(text)
+      ? ['#کامپوزیت_بالک‌فیل', '#ریزنشت_لبه‌ای', '#مطالعه_آزمایشگاهی']
+      : ['#درمان_ریشه', '#پالپیت_برگشت‌ناپذیر', '#کارآزمایی_بالینی', '#درد_پس_از_درمان'];
+  }
+
+  /* ── the DES spec's own vocabulary. text_basis / provisional already exist
+        in v2.2, where ABSTRACT_ONLY caps the method multiplier at 0.75 — so
+        «full is preferred» is not a rule we invented, it is the spec's. ── */
+  var RANK = { ABSTRACT_ONLY:1, FULL_TEXT:2 };
+
+  /* Basis. The old test was «longer than 1500 chars, or has section headings»
+     and it was wrong on both halves: a STRUCTURED ABSTRACT carries its own
+     Background/Methods/Results headings, and a copied web page's chrome
+     inflates the character count. Neither signal separates the two things.
+
+     What separates them is the size of the body itself — an abstract is a few
+     hundred words, a full text a few thousand — and that must be counted
+     AFTER the chrome is cut, in words, not characters.
+
+     And it is not cosmetic: ABSTRACT_ONLY caps the method multiplier at 0.75,
+     so calling an abstract a full text inflates the score. It is the one place
+     this tool could be gamed, which is why the reader's own claim is checked
+     against the count rather than believed. */
+  function words(t){ return fold(paperScope(t)).split(' ').filter(Boolean).length; }
+  function detectBasis(t){
+    var n = words(t);
+    if (n >= 1200) return 'FULL_TEXT';
+    if (n <= 600)  return 'ABSTRACT_ONLY';
+    return null;                                    // genuinely ambiguous
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     THE SANITY GATE — «if somebody types nonsense, we notice».
+     Everything here is free: no model, no network, run before a slot is spent.
+     Two severities, and the difference matters. STOP means we will not score
+     it. WARN means we will, but the reader is told what looks off first.
+     ══════════════════════════════════════════════════════════════════════ */
+
+  /* What tells a study apart from an opinion is METHODOLOGICAL language — a
+     named design, statistics, a counted sample, structural headings — not
+     topical vocabulary. «دندان» and «روش» appear in a home-remedy post as
+     readily as in a trial, so counting them measured nothing.
+
+     And every family is BILINGUAL. The first version had five Persian
+     families and folded all of English into one, so a fully English abstract
+     could score at most 1 of 6 and was rejected every single time — which is
+     most of what anyone actually pastes. A language-shaped gate is not a
+     gate, it is a filter on language. */
+  var RESEARCH = [
+    ['طرح مطالعه',
+      /randomi[sz]ed|controlled trial|clinical trial|cohort|case[-\s]?control|cross[-\s]?sectional|systematic review|meta[-\s]?analys|in vitro|in vivo|double[-\s]?blind|placebo|split[-\s]?mouth|کارآزمایی|مرور نظام|فراتحلیل|هم‌?گروهی|مورد[-\s]?شاهد|مقطعی|آزمایشگاهی|دوسوکور|کارآزمائی/i],
+    ['آمار',
+      /\bp\s*[<=>]\s*0?[.,]\d|\bp[-\s]?value|\bn\s*=\s*\d|95\s*%|confidence interval|standard deviation|\bSD\b|\bCI\b|statistically significan|معنادار|انحراف معیار|فاصله اطمینان|سطح معنی/i],
+    ['نمونه با عدد',
+      /\d+\s*(patients?|subjects?|teeth|tooth|specimens?|samples?|participants?|cases|volunteers?)|[\d۰-۹]+\s*(بیمار|نمونه|دندان|شرکت‌کننده|مورد|داوطلب)/i],
+    ['سرتیتر ساختاری',
+      /\b(background|objectives?|aims?|materials?|methods?|results?|conclusions?|discussion)\s*[:：]|(زمینه|هدف|روش‌?ها|مواد و روش|نتایج|نتیجه‌?گیری|بحث|یافته‌?ها)\s*[:：]/i],
+    ['سنجه',
+      /\b(mean|median|prevalence|incidence|odds ratio|risk ratio|hazard ratio|survival rate|follow[-\s]?up)\b|میانگین|میانه|شیوع|نسبت شانس|پیگیری/i]
+  ];
+
+  function validate(title, text, claim){
+    var out = [], n = words(text);
+    // markers are matched on the RAW text: fold() strips the punctuation these
+    // patterns depend on — «p < 0.05» and «Methods:» both lose their tell.
+    var found = RESEARCH.filter(function(r){ return r[1].test(text); }).map(function(r){ return r[0]; });
+    var t = fold(text);
+
+    if (!fold(title)) out.push(['stop','عنوان مقاله را بنویس — کلیدِ ذخیره‌سازی از روی عنوان ساخته می‌شود.']);
+    else if (fold(title).split(' ').length < 4)
+      out.push(['warn','عنوان خیلی کوتاه است؛ عنوان کاملِ مقاله را بگذار تا دفعهٔ بعد پیدا شود.']);
+
+    if (n < 80) {
+      out.push(['stop','متن برای ارزیابی خیلی کوتاه است (' + fa(n) + ' واژه). دست‌کم یک چکیدهٔ کامل لازم است.']);
+    } else if (!found.length) {
+      // ONE signal is enough to proceed. The free gate only stops what it is
+      // sure about; the scoring model reads the text and is the real judge, so
+      // a false stop here costs a reader their paper while a false pass costs
+      // one call the model itself will refuse.
+      if (n < 300) out.push(['stop','این متن نشانه‌ای از یک گزارش پژوهشی ندارد — نه طرح مطالعه، نه آمار، نه تعداد نمونه. ارزیابی DES فقط روی مقالهٔ پژوهشی معنی دارد.']);
+      else out.push(['warn','نشانه‌های روش‌شناختی در این متن پیدا نشد. اگر مقالهٔ پژوهشی نباشد، ارزیابی انجام نمی‌شود.']);
+    }
+
+    // does the title actually belong to this text? a cheap, honest check —
+    // a short title against a long text, not a document comparison.
+    if (fold(title) && n >= 80) {
+      var tw = fold(title).split(' ').filter(function(w){ return w.length >= 4; });
+      if (tw.length >= 3) {
+        var seen = tw.filter(function(w){ return t.indexOf(w) >= 0; }).length;
+        if (seen / tw.length < 0.34)
+          out.push(['warn','عنوان با متن هم‌خوان نیست — مطمئنی هر دو مالِ یک مقاله‌اند؟']);
+      }
+    }
+
+    // the reader's claim, measured. the claim never overrides the count.
+    var seenBasis = detectBasis(text);
+    if (claim === 'FULL_TEXT' && seenBasis === 'ABSTRACT_ONLY')
+      out.push(['warn','این متن ' + fa(n) + ' واژه است — اندازهٔ یک چکیده، نه متن کامل. به‌عنوان چکیده ارزیابی می‌شود.']);
+    if (claim === 'ABSTRACT_ONLY' && seenBasis === 'FULL_TEXT')
+      out.push(['warn','این متن ' + fa(n) + ' واژه است — به نظر متن کامل می‌آید و کامل‌تر ارزیابی می‌شود.']);
+
+    // the count wins; an ambiguous count defers to the reader.
+    var basis = seenBasis || claim;
+    return { issues:out, basis:basis, found:found, n:n,
+             stop:out.some(function(i){ return i[0] === 'stop'; }) };
+  }
+
+  var RESULT = {
+    ABSTRACT_ONLY:{
+      band:'C', score:52, qtype:'درمانی', provisional:true,
+      read:'فقط چکیده در دسترس بود. آنچه گزارش نشده «نامعلوم» حساب شده، نه «انجام‌نشده» — پس امتیاز محتاطانه است و با متن کامل می‌تواند بالاتر برود.',
+      trace:['نوع منبع: کارآزمایی بالینی تصادفی‌شده','نوع سؤال: درمانی → ابزار RoB 2','پایه‌ی متن: فقط چکیده → سقف ضریب روش ۰٫۷۵','سه دامنه گزارش‌نشده تلقی شد','۵۲ از ۱۰۰ → باند C (مقدماتی)']
+    },
+    FULL_TEXT:{
+      band:'B', score:68, qtype:'درمانی', provisional:false,
+      read:'طراحی قوی است و بیشتر دامنه‌های ارزیابی کم‌خطر بودند؛ نامشخص‌بودن کوری‌سازی و گزارش‌نشدن بخشی از پیامدها امتیاز را از A پایین آورده.',
+      trace:['نوع منبع: کارآزمایی بالینی تصادفی‌شده','نوع سؤال: درمانی → ابزار RoB 2','پایه‌ی متن: متن کامل','پنج دامنه بررسی شد؛ ریسک کلی: نگرانی کم','جریمه‌ی شفافیت: کوری‌سازی نامشخص','۶۸ از ۱۰۰ → باند B']
+    }
+  };
+  var BAND_FA = { A:'شواهد قوی', B:'شواهد متوسط', C:'شواهد محدود', D:'شواهد ضعیف', E:'سطح پایه' };
+
+  /* ── the decision. four outcomes, and the order is the design. ── */
+  function decide(text, link, userTitle, basis){
+    var f = extract(text, link, userTitle), ks = keysOf(f, text);
+    var found = null;
+    for (var i = 0; i < ks.length; i++) {
+      if (store.index[ks[i].k]) { found = { id:store.index[ks[i].k], at:i, why:ks[i].why }; break; }
+      ks[i].miss = true;
+    }
+    if (found) ks[found.at].hit = true;
+
+    var d = { f:f, keys:ks, basis:basis };
+    if (!found) { d.kind = 'new'; return d; }
+    var p = store.papers[found.id];
+    d.id = found.id; d.why = found.why;
+    if (RANK[basis] > RANK[p.text_basis])      { d.kind = 'upgrade';    d.from = p.text_basis; }
+    else if (RANK[basis] < RANK[p.text_basis]) { d.kind = 'hit-better'; d.asked = basis; d.basis = p.text_basis; }
+    else                                        { d.kind = 'hit'; }
+    return d;
+  }
+
+  /* every key seen for a paper is attached to it, so the next paste of the
+     abstract — or of the full text, or a citation carrying only the DOI —
+     lands on the same record without any comparison at all. */
+  function attach(id, ks){
+    var p = store.papers[id];
+    ks.forEach(function(x){
+      if (p.keys.indexOf(x.k) < 0) p.keys.push(x.k);
+      store.index[x.k] = id;
+    });
+  }
+
+  function write(id, d){
+    var p = store.papers[id] || { id:id, keys:[], history:[] };
+    if (p.text_basis) p.history.push({ text_basis:p.text_basis, band:p.band, score:p.score });
+    var r = RESULT[d.basis];
+    p.doi = d.f.doi || p.doi || null;
+    p.pmid = d.f.pmid || p.pmid || null;
+    p.title = d.f.title || p.title || null;
+    p.author = d.f.author || p.author || null;
+    p.year = d.f.year || p.year || null;
+    p.text_basis = d.basis;
+    p.band = r.band; p.score = r.score; p.provisional = r.provisional;
+    p.tags = d.tags || p.tags || [];
+    p.spec = '2.2';
+    store.papers[id] = p;
+    attach(id, d.keys);
+  }
+
+  /* ── render. The reader is never told about the store; they ARE always told
+        the text basis, because that is part of what the score means. ── */
+  function renderAnswer(basis, tags){
+    var r = RESULT[basis];
+    var blocks = ['E','D','C','B','A'].map(function(b){
+      return '<span class="blk' + (b === r.band ? ' on' + (r.provisional ? ' prov' : '') : '') + '">' + b + '</span>';
+    }).join('');
+    app.querySelector('#answerCard').innerHTML =
+      '<div class="answer-h">ارزیابی شواهد</div>' +
+      '<div class="verdict" style="--bandc:var(--des-' + r.band + ')">' +
+        '<span class="bar" aria-hidden="true">' + blocks + '</span>' +
+        '<span class="verdict-meta">' +
+          '<span class="verdict-band">' + r.band + ' · ' + BAND_FA[r.band] + '</span>' +
+          '<span class="verdict-q">نوع سؤال: ' + r.qtype + '</span>' +
+        '</span>' +
+        '<span class="verdict-num">' + fa(r.score) + '</span>' +
+      '</div>' +
+      (r.provisional
+        ? '<span class="basis basis-abs">امتیاز مقدماتی — فقط از روی چکیده</span>'
+        : '<span class="basis basis-full">بر پایه‌ی متن کامل مقاله</span>') +
+      '<p class="answer-read">' + r.read + '</p>' +
+      '<details class="trace"><summary>مسیر استدلال</summary><ol>' +
+        r.trace.map(function(l){ return '<li>' + l + '</li>'; }).join('') +
+      '</ol></details>' +
+      ((tags && tags.length)
+        ? '<div class="tags">' + tags.map(function(t){ return '<span class="tag">' + t + '</span>'; }).join('') + '</div>'
+        : '') +
+      '<p class="answer-foot">ساختار مطالعه سنجیده می‌شود، نه مناسب‌بودن یافته برای بیمار شما.</p>';
+  }
+
+  /* ── UI ─────────────────────────────────────────────────────────────── */
+  function wire(tabId, drawerId, onClose){
+    var tab = app.querySelector('#'+tabId), dr = app.querySelector('#'+drawerId);
+    tab.addEventListener('click', function(){
+      var open = !dr.classList.contains('is-open');
+      dr.classList.toggle('is-open', open);
+      tab.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (!open && onClose) onClose();
+    });
+    return { tab:tab, drawer:dr, close:function(){
+      dr.classList.remove('is-open'); tab.setAttribute('aria-expanded','false'); if (onClose) onClose(); }};
+  }
+  var tool = wire('tabTool','drawerTool', function(){ reset(); });
+  wire('tabDes','drawerDes');
+
+  var views = app.querySelectorAll('#panelTool .view');
+  var stateBtns = app.querySelectorAll('.bs-btn[data-state]');
+  function show(n){
+    views.forEach(function(v){ v.classList.toggle('is-on', v.getAttribute('data-view') === n); });
+    stateBtns.forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-state') === n); });
+  }
+
+  var paste = app.querySelector('#paste'), count = app.querySelector('#count');
+  var title = app.querySelector('#title'), issues = app.querySelector('#issues');
+  var link  = app.querySelector('#link'),  linkAuto = app.querySelector('#linkAuto');
+  var qLeft = app.querySelector('#qLeft'), qTicks = app.querySelector('#qTicks');
+  var claim = 'ABSTRACT_ONLY';
+
+  app.querySelectorAll('.chip[data-basis]').forEach(function(c){
+    c.addEventListener('click', function(){
+      claim = c.getAttribute('data-basis');
+      app.querySelectorAll('.chip[data-basis]').forEach(function(x){ x.classList.toggle('on', x === c); });
+      showIssues();
+    });
+  });
+
+  function showIssues(){
+    var v = validate(title.value, paste.value, claim);
+    issues.innerHTML = (fold(paste.value).length < 40 && !fold(title.value)) ? '' :
+      v.issues.map(function(i){
+        return '<div class="issue issue-' + i[0] + '"><b>' + (i[0] === 'stop' ? '✕' : '!') + '</b><span>' + i[1] + '</span></div>';
+      }).join('');
+    return v;
+  }
+
+  var TITLE = 'مقایسه‌ی اثربخشی درمان ریشه‌ی یک‌جلسه‌ای و چندجلسه‌ای در مولرهای دائمی با پالپیت برگشت‌ناپذیر';
+  var TEXTS = {
+    abs: TITLE + '\n' +
+      'Shahabian و همکاران، ۲۰۲۴. کارآزمایی بالینی تصادفی‌شده‌ی دوسوکور. هشتاد و چهار بیمار به‌طور تصادفی به دو گروه درمان یک‌جلسه‌ای و چندجلسه‌ای تخصیص یافتند و درد پس از درمان در ۲۴ و ۴۸ ساعت و یک هفته با مقیاس VAS ثبت شد. تخصیص با جدول اعداد تصادفی رایانه‌ای انجام شد و ارزیابان پیامد نسبت به گروه‌بندی ناآگاه بودند. میانگین درد در گروه یک‌جلسه‌ای در ۲۴ ساعت بالاتر بود اما این تفاوت در یک هفته از بین رفت.',
+    other:'بررسی ریزنشت لبه‌ای در سه نوع کامپوزیت بالک‌فیل\n' +
+      'Rezaei و همکاران، ۲۰۲۳. مطالعه‌ی آزمایشگاهی. شصت دندان پرمولر کشیده‌شده در سه گروه بیست‌تایی ترمیم شدند و پس از ترموسایکلینگ در محلول فوشین بازی غوطه‌ور و برش داده شدند. نفوذ رنگ زیر استریومیکروسکوپ ارزیابی شد. تفاوت معنادار آماری میان سه گروه مشاهده نشد.'
+  };
+  // A real English abstract — the input the first gate rejected outright.
+  TEXTS.en = [
+    'Objective: To compare postoperative pain following single-visit and multiple-visit root canal treatment in mandibular molars with symptomatic irreversible pulpitis.',
+    'Materials and Methods: In this double-blind randomized controlled trial, 84 patients aged 18-60 years were randomly allocated to a single-visit group (n = 42) or a multiple-visit group (n = 42) using a computer-generated randomization table with sealed opaque envelopes. Canal preparation with rotary nickel-titanium files and irrigation with 2.5% sodium hypochlorite were identical in both groups. In the multiple-visit group, calcium hydroxide was placed as an intracanal medicament and obturation was completed one week later. Outcome assessors and patients were blinded to group allocation. Pain was recorded on a 0-10 visual analogue scale at 24 hours, 48 hours and one week. Analysis followed the intention-to-treat principle.',
+    'Results: Seventy-nine patients completed follow-up. Mean VAS score at 24 hours was 3.8 (SD 1.9) in the single-visit group and 2.6 (SD 1.7) in the multiple-visit group (p = 0.014, 95% CI 0.25 to 2.15). The difference narrowed at 48 hours and was no longer statistically significant at one week (p = 0.42). Analgesic consumption was higher in the single-visit group. No serious adverse events were reported.',
+    'Conclusions: Single-visit treatment was associated with greater pain on the first day, but both approaches produced comparable outcomes by the end of the first week. Multicentre trials with longer follow-up are needed.'
+  ].join('\n');
+
+  // Not a study. Long enough to look serious, and says nothing a paper says.
+  TEXTS.junk = 'خیلی از دوستان می‌پرسند بهترین راه از بین بردن پوسیدگی چیست. تجربه‌ی شخصی من نشان داده که ترکیب روغن نارگیل و جوش شیرین معجزه می‌کند و ظرف چند هفته اثرش را می‌بینید. من خودم این روش را به ده‌ها نفر معرفی کرده‌ام و همه راضی بودند. کافی است هر شب قبل از خواب این کار را تکرار کنید و از مصرف شیرینی پرهیز کنید. دندان‌پزشکی امروز بیش از حد به ابزار و تجهیزات گران وابسته شده است، در حالی که راه‌های ساده‌تری هم وجود دارد که نسل‌های قبل از آن‌ها استفاده می‌کردند و هیچ مشکلی هم نداشتند.';
+
+  // A real page dump: chrome on top, the paper's own PMID buried among the
+  // PMIDs of «Similar articles». This is the input that broke the old rule.
+  TEXTS.dump = [
+    'Skip to main page content',
+    'An official website of the United States government',
+    'Log in    Search    Save    Email    Send to    Display options',
+    'Full-text links    Actions    Cite    Collections    Share',
+    TITLE,
+    'Shahabian F, و همکاران. J Endod. 2024.  PMID: 38550112   doi: 10.1016/j.joen.2024.03.017',
+    'Abstract',
+    'کارآزمایی بالینی تصادفی‌شده‌ی دوسوکور. هشتاد و چهار بیمار به‌طور تصادفی به دو گروه درمان یک‌جلسه‌ای و چندجلسه‌ای تخصیص یافتند و درد پس از درمان در ۲۴ و ۴۸ ساعت و یک هفته با مقیاس VAS ثبت شد. تخصیص با جدول اعداد تصادفی رایانه‌ای انجام شد و ارزیابان پیامد نسبت به گروه‌بندی ناآگاه بودند.',
+    'Similar articles',
+    'Single-visit versus multiple-visit endodontic treatment. PMID: 9340725',
+    'Postoperative pain after root canal therapy. PMID: 31122045',
+    'Cited by    MeSH terms    Related information'
+  ].join('\n');
+
+  // Deliberately long enough to actually be a full text — the point of the
+  // upgrade demo is lost if the "full text" is abstract-sized.
+  TEXTS.full = [
+    TEXTS.abs,
+    'مقدمه: درمان ریشه در دندان‌های دارای پالپیت برگشت‌ناپذیر یکی از رایج‌ترین مداخلات اندودانتیک است و پرسش درباره‌ی تعداد جلسات لازم برای آن سابقه‌ای طولانی دارد. طرفداران درمان یک‌جلسه‌ای بر کاهش تعداد مراجعات، صرفه‌جویی در زمان بیمار و درمانگر و حذف خطر آلودگی مجدد میان جلسات تأکید می‌کنند. در مقابل، طرفداران درمان چندجلسه‌ای معتقدند قرار دادن داروی داخل کانال میان جلسات، بار میکروبی را کاهش می‌دهد و می‌تواند درد پس از درمان را کمتر کند. شواهد موجود در این زمینه ناهمگون است و مرورهای نظام‌مند پیشین به نتیجه‌ی قطعی نرسیده‌اند. هدف این مطالعه، مقایسه‌ی شدت درد پس از درمان میان دو رویکرد در یک جمعیت مشخص و با پروتکل یکسان بود.',
+    'روش‌ها: این کارآزمایی بالینی تصادفی‌شده‌ی دوسوکور در کلینیک تخصصی اندودانتیکس دانشکده‌ی دندان‌پزشکی و در بازه‌ی هجده‌ماهه اجرا شد. پروتکل مطالعه پیش از شروع در سامانه‌ی ثبت کارآزمایی‌های بالینی ثبت و توسط کمیته‌ی اخلاق دانشگاه تأیید شد و از همه‌ی شرکت‌کنندگان رضایت آگاهانه‌ی کتبی گرفته شد. معیارهای ورود عبارت بودند از: سن هجده تا شصت سال، مولر دائمی فک پایین با تشخیص بالینی پالپیت برگشت‌ناپذیر علامت‌دار، پاسخ مثبت به تست حرارتی، و رادیوگرافی پری‌اپیکال بدون ضایعه. معیارهای خروج شامل بارداری، مصرف مسکن در دوازده ساعت گذشته، سابقه‌ی درمان ریشه در همان دندان، تحلیل ریشه و بیماری سیستمیک کنترل‌نشده بود.',
+    'حجم نمونه با توان آزمون هشتاد درصد، آلفای پنج صدم و اندازه‌ی اثر برآوردشده از مطالعه‌ی پایلوت محاسبه شد و با احتساب ریزش پیش‌بینی‌شده، هشتاد و چهار بیمار وارد مطالعه شدند. تخصیص تصادفی با جدول اعداد تصادفی رایانه‌ای و به‌صورت بلوکی با بلوک‌های چهارتایی انجام گرفت. تخصیص پنهان با پاکت‌های مات، شماره‌گذاری‌شده و مهروموم‌شده‌ی متوالی تضمین شد و کد تخصیص تا پایان تحلیل آماری شکسته نشد. بیماران و ارزیابان پیامد نسبت به گروه‌بندی ناآگاه بودند؛ کوری‌سازی درمانگر به دلیل ماهیت مداخله ممکن نبود.',
+    'در هر دو گروه، بی‌حسی موضعی با لیدوکائین دو درصد حاوی اپی‌نفرین انجام شد و پس از ایزولاسیون با رابردم، حفره‌ی دسترسی تهیه گردید. طول کارکرد با اپکس‌لوکیتور تعیین و با رادیوگرافی تأیید شد. آماده‌سازی کانال با سیستم فایل روتاری نیکل-تیتانیوم و شست‌وشو با هیپوکلریت سدیم دو و نیم درصد در هر دو گروه یکسان بود. در گروه یک‌جلسه‌ای، پرکردن کانال با گوتاپرکا و سیلر مبتنی بر رزین در همان جلسه انجام شد. در گروه چندجلسه‌ای، هیدروکسید کلسیم به‌عنوان داروی داخل کانال قرار گرفت و پرکردن نهایی یک هفته بعد صورت پذیرفت. به همه‌ی بیماران دستور یکسانی برای مصرف مسکن در صورت نیاز داده شد.',
+    'شدت درد در بازه‌های ۲۴ ساعت، ۴۸ ساعت و یک هفته با مقیاس دیداری آنالوگ صفر تا ده ثبت شد. تعداد قرص مسکن مصرفی نیز به‌عنوان پیامد ثانویه شمارش شد. داده‌ها با آزمون من-ویتنی و تحلیل واریانس با اندازه‌گیری‌های مکرر تحلیل شدند و سطح معناداری پنج صدم در نظر گرفته شد. تحلیل بر پایه‌ی قصد درمان انجام گرفت.',
+    'نتایج: از هشتاد و چهار بیمار واردشده، هفتاد و نه نفر تحلیل نهایی شدند و پنج نفر به دلیل عدم مراجعه در پیگیری از مطالعه خارج شدند. دو گروه از نظر سن، جنسیت و شدت درد پیش از درمان تفاوت معناداری نداشتند. میانگین نمره‌ی درد در ۲۴ ساعت در گروه یک‌جلسه‌ای ۳٫۸ با انحراف معیار ۱٫۹ و در گروه چندجلسه‌ای ۲٫۶ با انحراف معیار ۱٫۷ بود و این تفاوت از نظر آماری معنادار بود. در ۴۸ ساعت این اختلاف کاهش یافت و در پیگیری یک‌هفته‌ای میانگین درد در هر دو گروه به کمتر از یک رسید و تفاوت معناداری میان آن‌ها دیده نشد. میانگین تعداد قرص مسکن مصرفی نیز در گروه یک‌جلسه‌ای بیشتر بود. هیچ عارضه‌ی جدی مانند تورم شدید یا نیاز به مداخله‌ی اورژانسی در دو گروه گزارش نشد.',
+    'بحث: یافته‌های این مطالعه نشان می‌دهد درمان یک‌جلسه‌ای در روز نخست با درد بیشتری همراه است، اما این تفاوت گذراست و در پایان هفته‌ی اول از میان می‌رود. این الگو با نتایج چند مرور نظام‌مند پیشین هم‌خوان است، هرچند برخی مطالعات هیچ تفاوتی میان دو رویکرد گزارش نکرده‌اند. تفاوت در پروتکل شست‌وشو، نوع سیلر و معیار سنجش درد می‌تواند بخشی از این ناهمگونی را توضیح دهد.',
+    'محدودیت‌های مطالعه باید در تفسیر یافته‌ها لحاظ شود. نخست، مطالعه تک‌مرکزی است و تعمیم‌پذیری آن به جمعیت‌های دیگر محدود می‌ماند. دوم، کوری‌سازی کامل برای درمانگر ممکن نبود که می‌تواند منبعی از سوگیری اجرا باشد، هرچند ارزیابان پیامد ناآگاه بودند. سوم، پیگیری تنها تا یک هفته ادامه یافت و درباره‌ی پیامدهای بلندمدت مانند موفقیت رادیوگرافیک اظهارنظری نمی‌کند. چهارم، برخی پیامدهای ثانویه‌ی از پیش تعریف‌شده در گزارش نهایی ارائه نشده‌اند.',
+    'نتیجه‌گیری: هر دو رویکرد در پایان هفته‌ی اول پیامد مشابهی دارند و انتخاب میان آن‌ها می‌تواند بر پایه‌ی شرایط بیمار و ملاحظات عملی صورت گیرد. مطالعات چندمرکزی با پیگیری بلندمدت برای پاسخ قطعی لازم است.',
+    'doi:10.1016/j.joen.2024.03.017'
+  ].join('\n');
+
+  function refresh(){
+    count.textContent = fa(words(paste.value)) + ' واژه';
+    var left = Math.max(0, LIMIT - used);
+    qLeft.textContent = fa(left);
+    qTicks.querySelectorAll('.qt').forEach(function(t,i){ t.classList.toggle('on', i < left); });
+
+    var ids = Object.keys(store.papers);
+    app.querySelector('#bsPapers').textContent = fa(ids.length);
+    app.querySelector('#bsKeys').textContent   = fa(Object.keys(store.index).length);
+    app.querySelector('#bsHit').textContent    = fa(hits);
+
+    var json = ids.length ? JSON.stringify({
+      index: Object.keys(store.index).reduce(function(o,k){ o[k] = store.index[k]; return o; }, {}),
+      papers: ids.reduce(function(o,id){
+        var p = store.papers[id];
+        o[id] = { doi:p.doi, title:(p.title||'').slice(0,34) + (p.title && p.title.length > 34 ? '…' : ''),
+                  author:p.author, year:p.year, text_basis:p.text_basis,
+                  hashtags:p.tags || [],
+                  des:{ band:p.band, score:p.score, provisional:p.provisional, spec:p.spec },
+                  keys:p.keys.length, replaced:p.history.length };
+        return o;
+      }, {})
+    }, null, 1) : '{}';
+    app.querySelector('#bsJson').textContent = json;
+    app.querySelector('#bsBytes').textContent = ids.length
+      ? fa(Math.round(new Blob([json]).size / ids.length)) : fa(0);
+  }
+
+  function report(d, spent){
+    var f = d.f;
+    app.querySelector('#bsFeat').innerHTML = [
+      'DOI: <b>' + (f.doi ? '<span class="mono">' + f.doi + '</span>' : '—') + '</b>',
+      'PMID: <b>' + (f.pmid ? '<span class="mono">' + f.pmid + '</span>' : '—') + '</b>',
+      'عنوان: <b>' + (f.title ? f.title.slice(0,44) + '…' : 'تشخیص داده نشد') + '</b>',
+      'نویسنده / سال: <b>' + (f.author || '—') + ' · ' + (f.year || '—') + '</b>',
+      'پایه‌ی متن: <b>' + (d.asked || d.basis) + '</b> · استخراج: <b>' + (f.via === 'regex' ? 'رایگان (regex)' : 'مدل ارزان') + '</b>',
+      'نشانه‌های پژوهشی: <b>' + (d.found && d.found.length ? d.found.join('، ') : 'هیچ') + '</b>'
+    ].concat(f.notes.map(function(n){ return '<span style="opacity:.85">' + n + '</span>'; }))
+     .map(function(r){ return '<div class="r">' + r + '</div>'; }).join('');
+
+    app.querySelector('#bsKeysBox').innerHTML =
+      d.keys.map(function(x){
+        return '<span class="bs-key ' + (x.hit ? 'hit' : x.miss ? 'miss' : '') + '">' + x.k + '</span>';
+      }).join('') +
+      '<div class="r" style="margin-top:.3rem">' + (d.kind === 'new'
+        ? 'هیچ‌کدام در حافظه نبود'
+        : 'یافت شد با <b>' + d.why + '</b> — بدونِ مقایسه‌ی متن') + '</div>' +
+      '<div class="r">هشتگ‌ها ذخیره می‌شوند ولی <b>کلید نیستند</b> — دو مطالعه‌ی متفاوت روی یک موضوع، هشتگ یکسان دارند</div>' +
+      (d.f.title ? '' :
+        '<div class="r"><b>کلید عنوان ساخته نشد</b> — بهتر است این مقاله دوباره سنجیده شود تا اینکه با کلیدی مشکوک ذخیره شود</div>');
+
+    var label = { hit:['سرو از حافظه','v-hit'],
+                  'hit-better':['سرو از حافظه — کامل‌تر از خواسته','v-hit'],
+                  upgrade:['ارتقا: چکیده → متن کامل','v-up'],
+                  new:['ارزیابی تازه','v-new'] }[d.kind];
+    var rows = [];
+    if (d.kind === 'hit-better') rows.push('در حافظه <b>FULL_TEXT</b> بود؛ کامل همیشه ارجح است، پس همان سرو شد');
+    if (d.kind === 'upgrade')    rows.push('در حافظه <b>' + d.from + '</b> بود؛ رکورد با نتیجه‌ی متن کامل جایگزین شد');
+    if (d.kind === 'new')        rows.push('رکورد تازه ساخته و کلیدهایش ثبت شد');
+    rows.push('امتیازدهی با مدل: <b>' + (spent ? 'بله' : 'خیر') + '</b> · سهمیه: <b>' + (spent ? 'یکی کم شد' : 'مصرف نشد') + '</b>');
+    app.querySelector('#bsTrace').innerHTML =
+      rows.map(function(r){ return '<div class="r">' + r + '</div>'; }).join('') +
+      '<span class="bs-verdict ' + label[1] + '">' + label[0] + '</span>';
+  }
+
+  // If the pasted text already carries an identifier — which is the common
+  // case for an abstract copied off a journal page — fill the field ourselves
+  // and say so. Nobody who doesn't know what a DOI is has to learn.
+  function sniffLink(){
+    var found = findDoi(paste.value) || findPmid(paste.value);
+    var mine  = link.dataset.auto === '1';
+    if (found && (!link.value || mine)) {
+      link.value = findDoi(paste.value) || ('PMID ' + found);
+      link.dataset.auto = '1';
+    } else if (!found && mine) {
+      link.value = ''; delete link.dataset.auto;
+    }
+    linkAuto.classList.toggle('on', link.dataset.auto === '1');
+  }
+  link.addEventListener('input', function(){ delete link.dataset.auto; linkAuto.classList.remove('on'); });
+  paste.addEventListener('input', function(){ refresh(); sniffLink(); showIssues(); });
+  title.addEventListener('input', showIssues);
+  app.querySelector('#sample').addEventListener('click', function(){
+    fill('abs'); paste.focus();
+  });
+  var FILL = {
+    abs:   { t:TITLE, basis:'ABSTRACT_ONLY' },
+    full:  { t:TITLE, basis:'FULL_TEXT' },
+    dump:  { t:'',    basis:'ABSTRACT_ONLY' },   // page dump: reader typed nothing
+    en:    { t:'Postoperative pain after single-visit versus multiple-visit root canal treatment', basis:'ABSTRACT_ONLY' },
+    other: { t:'بررسی ریزنشت لبه‌ای در سه نوع کامپوزیت بالک‌فیل', basis:'ABSTRACT_ONLY' },
+    junk:  { t:'درمان قطعی پوسیدگی با روش خانگی', basis:'ABSTRACT_ONLY' }
+  };
+  function fill(which){
+    tool.drawer.classList.add('is-open'); tool.tab.setAttribute('aria-expanded','true');
+    show('compose');
+    paste.value = TEXTS[which];
+    title.value = FILL[which].t;
+    claim = FILL[which].basis;
+    app.querySelectorAll('.chip[data-basis]').forEach(function(x){
+      x.classList.toggle('on', x.getAttribute('data-basis') === claim);
+    });
+    refresh(); sniffLink(); showIssues();
+  }
+  app.querySelectorAll('[data-fill]').forEach(function(b){
+    b.addEventListener('click', function(){ fill(b.getAttribute('data-fill')); });
+  });
+
+  var LINES = ['در حال خواندن متن…','نوع مطالعه: کارآزمایی تصادفی‌شده','انتخاب ابزار ارزیابی: RoB 2','بررسی دامنه‌ها…','محاسبه‌ی امتیاز و باند…'];
+  var timers = [];
+  function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+
+  app.querySelector('#go').addEventListener('click', function(){
+    var text = paste.value;
+    // the free gate runs first, always. a slot is never spent on something we
+    // could tell was wrong without asking a model.
+    var v = showIssues();
+    if (v.stop) { (fold(title.value) ? paste : title).focus(); return; }
+
+    var d = decide(text, link.value, title.value, v.basis);
+    d.tags = tagsFor(text);
+    d.found = v.found;
+
+    // ── served from the store: no scoring call, no quota, and the reader is
+    //    told nothing about any of it — it simply answers.
+    if (d.kind === 'hit' || d.kind === 'hit-better') {
+      hits++;
+      attach(d.id, d.keys);      // the paper learns this paste's keys too
+      report(d, false); refresh();
+      var stored = store.papers[d.id];
+      show('think');
+      app.querySelector('#thinkTxt').textContent = 'در حال آماده‌سازی نتیجه…';
+      timers.push(setTimeout(function(){ renderAnswer(d.basis, stored.tags); show('answer'); }, 340));
+      return;
+    }
+
+    if (used >= LIMIT) { show('spent'); return; }
+
+    show('think');
+    var txt = app.querySelector('#thinkTxt');
+    LINES.forEach(function(line, i){
+      timers.push(setTimeout(function(){
+        txt.textContent = line;
+        txt.style.animation = 'none'; void txt.offsetWidth; txt.style.animation = '';
+      }, i * 430));
+    });
+    timers.push(setTimeout(function(){
+      calls++; used++;
+      write(d.kind === 'upgrade' ? d.id : ('p_' + (++seq).toString().padStart(2,'0')), d);
+      report(d, true); refresh();
+      renderAnswer(d.basis, d.tags); show('answer');
+    }, LINES.length * 430 + 250));
+  });
+
+  function clearForm(){
+    paste.value = ''; title.value = ''; link.value = '';
+    delete link.dataset.auto; linkAuto.classList.remove('on');
+    issues.innerHTML = '';
+    claim = 'ABSTRACT_ONLY';
+    app.querySelectorAll('.chip[data-basis]').forEach(function(x){
+      x.classList.toggle('on', x.getAttribute('data-basis') === claim);
+    });
+  }
+  function reset(){ clearTimers(); clearForm(); refresh(); show('compose'); }
+  app.querySelectorAll('[data-again]').forEach(function(b){
+    b.addEventListener('click', function(){ clearTimers(); clearForm(); refresh(); show('compose'); paste.focus(); });
+  });
+  app.querySelectorAll('[data-close]').forEach(function(b){ b.addEventListener('click', function(){ tool.close(); }); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && tool.drawer.classList.contains('is-open')) tool.close();
+  });
+
+  stateBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      clearTimers();
+      tool.drawer.classList.add('is-open'); tool.tab.setAttribute('aria-expanded','true');
+      var s = b.getAttribute('data-state');
+      if (s === 'answer' && !app.querySelector('#answerCard').innerHTML) renderAnswer('FULL_TEXT', tagsFor(''));
+      show(s);
+    });
+  });
+  app.querySelector('[data-reset]').addEventListener('click', function(){
+    store = { index:Object.create(null), papers:Object.create(null) };
+    hits = 0; calls = 0; used = 0; seq = 0;
+    app.querySelector('#bsFeat').innerHTML = '<div class="r">هنوز درخواستی نیامده</div>';
+    app.querySelector('#bsKeysBox').innerHTML = '<div class="r">—</div>';
+    app.querySelector('#bsTrace').innerHTML = '<div class="r">—</div>';
+    reset();
+  });
+
+  refresh();
+})();
+</script>
+</div>
