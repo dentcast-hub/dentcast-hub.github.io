@@ -1195,6 +1195,96 @@ function renderHtml(
     load();
   })();
   </script>
+
+  <h3 style="margin-top:26px">افزودنِ مستقیم به کتابخانه‌ی DES</h3>
+  <div class="muted">بدون درخواستِ خواننده — یک امتیازی که خودت داری و می‌خواهی به کتابخانه اضافه شود. هیچ اطلاعیه‌ای فرستاده نمی‌شود.</div>
+  <div id="dlBox" class="ds-work" style="margin-top:8px">
+    <label>عنوان مقاله</label>
+    <input id="dlTitle" type="text">
+    <label>خروجی JSON مدل</label>
+    <textarea id="dlJson" class="ds-json" placeholder="کل شیء JSON را این‌جا پیست کن" dir="ltr"></textarea>
+    <label>هشتگ‌ها (با کاما)</label>
+    <input id="dlTags" type="text" placeholder="#ایمپلنت, #دخانیات">
+    <label>PMID (اختیاری)</label>
+    <input id="dlPmid" type="text" dir="ltr">
+    <div class="row">
+      <button id="dlSave" type="button">ثبت در کتابخانه</button>
+    </div>
+    <div id="dlMsg" class="muted"></div>
+  </div>
+  <script>
+  (function () {
+    var box = document.getElementById('dlBox');
+    if (!box) return;
+    var titleEl = document.getElementById('dlTitle');
+    var jsonEl = document.getElementById('dlJson');
+    var tagsEl = document.getElementById('dlTags');
+    var pmidEl = document.getElementById('dlPmid');
+    var saveBtn = document.getElementById('dlSave');
+    var msg = document.getElementById('dlMsg');
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    function candidateRow(c) {
+      var agree = c.authorAgrees === true ? 'نویسنده ✓' : (c.authorAgrees === false ? 'نویسنده ✗' : '');
+      return '<div class="ds-cand" data-paper="' + esc(c.paperId) + '">'
+        + '<b>' + Math.round(c.score * 100) + '٪ — ' + esc(c.title) + '</b>'
+        + '<div class="muted">' + [esc(c.authors), c.year ? esc(String(c.year)) : '', esc(c.doi), agree]
+            .filter(Boolean).join(' · ') + '</div>'
+        + '<div class="row">'
+        + '<button type="button" data-dl-cand-act="same">همان مقاله است</button>'
+        + '<button type="button" data-dl-cand-act="force">مقاله‌ی دیگری است</button>'
+        + '</div></div>';
+    }
+
+    function save(extra) {
+      var payload = Object.assign({
+        title: titleEl.value.trim(),
+        record: jsonEl.value.trim(),
+        tags: tagsEl.value.trim(),
+        pmid: pmidEl.value.trim(),
+      }, extra || {});
+      if (!payload.title || !payload.record) { msg.textContent = 'عنوان و خروجی JSON هر دو لازم‌اند.'; return; }
+      msg.textContent = 'در حال ثبت…';
+      fetch('/admin/des/library', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, status: r.status, j: j }; }); })
+        .then(function (res) {
+          if (res.status === 409 && res.j.candidates) {
+            msg.innerHTML = 'عنوانِ نزدیک در کتابخانه هست — تصمیم بگیر:'
+              + res.j.candidates.map(candidateRow).join('');
+            return;
+          }
+          if (res.status === 409) { msg.textContent = res.j.message || 'تداخل.'; return; }
+          if (!res.ok) {
+            msg.innerHTML = (res.j.issues || [res.j.message || res.j.error || 'نشد.'])
+              .map(function (x) { return '<div>· ' + esc(x) + '</div>'; }).join('');
+            return;
+          }
+          msg.innerHTML = 'ثبت شد (شناسه: ' + esc(res.j.paper_id) + ').'
+            + (res.j.warnings || []).map(function (w) { return '<div>· ' + esc(w) + '</div>'; }).join('');
+          titleEl.value = ''; jsonEl.value = ''; tagsEl.value = ''; pmidEl.value = '';
+        })
+        .catch(function () { msg.textContent = 'ارسال نشد.'; });
+    }
+
+    saveBtn.addEventListener('click', function () { save({}); });
+    msg.addEventListener('click', function (ev) {
+      var candBtn = ev.target.closest ? ev.target.closest('[data-dl-cand-act]') : null;
+      if (!candBtn) return;
+      var candRow = candBtn.closest('.ds-cand');
+      var paperId = candRow.getAttribute('data-paper');
+      var act = candBtn.getAttribute('data-dl-cand-act');
+      save(act === 'same' ? { same_as: paperId } : { force: true });
+    });
+  })();
+  </script>
 </div></body></html>`;
 }
 
@@ -2763,6 +2853,99 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     if (!desReq) return reply.code(404).send({ error: 'not_found' });
     await markRejected(id);
     return reply.send({ ok: true });
+  });
+
+  // POST /admin/des/library { title, record, tags, pmid?, same_as?, force? }
+  // — the founder adding a paper to des_papers with NO reader waiting on it:
+  // no des_requests row, no notification. Same validate/normalise/hashtag/
+  // near-duplicate/createPaper pipeline as /admin/des/:id/answer, minus
+  // everything that pipeline only has because it is ANSWERING a specific
+  // submission. A DOI is read from the record's own citation; a PMID has no
+  // home in the DES citation schema and there is no submission body/link to
+  // sniff one from here, so it is accepted as its own optional field.
+  app.post('/admin/des/library', {
+    schema: {
+      body: {
+        type: 'object', required: ['title', 'record'],
+        properties: {
+          title: { type: 'string', minLength: 1, maxLength: 300 },
+          record: { type: 'string', minLength: 1 },
+          tags: { type: 'string' },
+          pmid: { type: 'string' },
+          same_as: { type: 'string' },
+          force: { type: 'boolean' },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as {
+      title: string; record: string; tags?: string; pmid?: string; same_as?: string; force?: boolean;
+    };
+
+    let parsed: any;
+    try {
+      parsed = JSON.parse(b.record);
+    } catch (err) {
+      return reply.code(400).send({ error: 'bad_json', detail: (err as Error).message });
+    }
+
+    const warnings: string[] = [];
+    const title = b.title.trim();
+    parsed.citation = parsed.citation || {};
+    const recordTitle = String(parsed.citation.title || '').trim();
+    if (recordTitle && keyHash(recordTitle) !== keyHash(title)) {
+      warnings.push('عنوانِ داخل رکورد با عنوانی که دادی یکی نیست؛ عنوانِ تو ثبت شد.');
+    }
+    parsed.citation.title = title;
+
+    const issues = validateDesRecord(parsed);
+    if (issues.length) {
+      return reply.code(400).send({ error: 'invalid_record', issues });
+    }
+
+    const { changed } = normaliseDesRecord(parsed);
+    warnings.push(...changed);
+
+    const doi: string | null = parsed.citation.doi || null;
+    const pmid: string | null = (b.pmid || '').trim() || null;
+    const year: number | null = typeof parsed.citation.year === 'number' ? parsed.citation.year : null;
+    const firstAuthor: string | null = String(parsed.citation.authors || '').split(/[,;،]/)[0]?.trim() || null;
+    const tags = resolveHashtags((b.tags || '').split(',').map((t) => t.trim()).filter(Boolean));
+
+    let paperId: string;
+    if (b.same_as) {
+      // Same paper under a title the exact key could not match — attach this
+      // submission's keys to the EXISTING record. Its score is never touched:
+      // that is the founder's earlier, already-verified evaluation.
+      paperId = b.same_as;
+      await attachKeys(paperId, keysFor({ doi, pmid, title }));
+    } else {
+      if (!b.force) {
+        const candidates = await nearDuplicates(title, firstAuthor || undefined);
+        if (candidates.length) {
+          return reply.code(409).send({ error: 'near_duplicate', candidates });
+        }
+      }
+      try {
+        paperId = await createPaper({
+          doi, pmid, title, firstAuthor, year, hashtags: tags,
+          des: parsed, specVersion: String(parsed.des_version || ''),
+        });
+      } catch (err) {
+        // A DOI/PMID unique-index collision means the exact key missed but
+        // the identifier itself did not — surface it like a near-duplicate
+        // rather than a raw 500.
+        if ((err as { code?: string }).code === '23505') {
+          return reply.code(409).send({
+            error: 'identifier_collision',
+            message: 'مقاله‌ای با همین DOI یا PMID از قبل در کتابخانه هست.',
+          });
+        }
+        throw err;
+      }
+    }
+
+    return reply.send({ ok: true, paper_id: paperId, warnings });
   });
 
   app.post('/admin/subscriptions/run-sweep', async (_request, reply) => {

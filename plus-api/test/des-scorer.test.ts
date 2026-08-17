@@ -389,3 +389,95 @@ describe('nearDuplicates (service level)', () => {
     expect(cands[0].authorAgrees).toBe(true); // "Fan YY" vs "Ying-Ying Fan" — the authorWords fix
   });
 });
+
+/* ============================================ POST /admin/des/library == */
+// The founder adding a paper with no reader request behind it — no
+// des_requests row anywhere in this flow, and no notification.
+
+function libraryAdd(payload: Record<string, unknown>) {
+  return app.inject({
+    method: 'POST', url: '/admin/des/library', headers: { authorization: basic }, payload,
+  });
+}
+
+describe('POST /admin/des/library (standalone add, no reader request)', () => {
+  it('requires admin auth', async () => {
+    const res = await app.inject({ method: 'POST', url: '/admin/des/library', payload: { title: TITLE, record: '{}' } });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('rejects arithmetic that does not add up — nothing written', async () => {
+    const res = await libraryAdd({ title: TITLE, record: JSON.stringify(goodRecord({ des_score: 85 })) });
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error).toBe('invalid_record');
+    const papers = await pool.query('select count(*)::int as n from des_papers');
+    expect(papers.rows[0].n).toBe(0);
+  });
+
+  it('creates a paper directly, with no des_requests row anywhere', async () => {
+    const res = await libraryAdd({
+      title: TITLE, record: JSON.stringify(goodRecord()), tags: '#ایمپلنت', pmid: '38012345',
+    });
+    expect(res.statusCode).toBe(200);
+    const j = res.json();
+    expect(j.paper_id).toBeTruthy();
+
+    const paper = await pool.query('select doi, pmid, hashtags, des from des_papers where id = $1', [j.paper_id]);
+    expect(paper.rows[0].pmid).toBe('38012345');
+    expect(paper.rows[0].hashtags).toContain('#ایمپلنت');
+    expect(paper.rows[0].des.des_score).toBe(80);
+
+    const reqs = await pool.query('select count(*)::int as n from des_requests');
+    expect(reqs.rows[0].n).toBe(0);
+
+    // and it now answers a real reader submission instantly
+    const submitRes = await submit({ title: TITLE, body: ENGLISH_ABSTRACT, claim: 'ABSTRACT_ONLY' });
+    expect(submitRes.json().answered).toBe(true);
+  });
+
+  it('a near-duplicate title returns candidates; same_as attaches keys without creating a second paper', async () => {
+    const existingId = await createPaper({
+      doi: null, pmid: null, title: TITLE, firstAuthor: 'Fan',
+      year: 2024, hashtags: [], des: goodRecord({ citation: { ...goodRecord().citation, doi: null } }), specVersion: '2.2',
+    });
+
+    const typoTitle = TITLE.replace('Smoking', 'Smokig');
+    const rec = goodRecord({ citation: { ...goodRecord().citation, title: typoTitle, doi: null } });
+
+    const dup = await libraryAdd({ title: typoTitle, record: JSON.stringify(rec) });
+    expect(dup.statusCode).toBe(409);
+    expect(dup.json().error).toBe('near_duplicate');
+    expect(dup.json().candidates[0].paperId).toBe(existingId);
+
+    const attached = await libraryAdd({ title: typoTitle, record: JSON.stringify(rec), same_as: existingId });
+    expect(attached.statusCode).toBe(200);
+    expect(attached.json().paper_id).toBe(existingId);
+
+    const papers = await pool.query('select count(*)::int as n from des_papers');
+    expect(papers.rows[0].n).toBe(1);
+  });
+
+  it('force mints a second paper despite a near-duplicate candidate', async () => {
+    await createPaper({
+      doi: null, pmid: null, title: TITLE, firstAuthor: 'Fan',
+      year: 2024, hashtags: [], des: goodRecord({ citation: { ...goodRecord().citation, doi: null } }), specVersion: '2.2',
+    });
+    const typoTitle = TITLE.replace('Smoking', 'Smokig');
+    const rec = goodRecord({ citation: { ...goodRecord().citation, title: typoTitle, doi: null } });
+
+    const res = await libraryAdd({ title: typoTitle, record: JSON.stringify(rec), force: true });
+    expect(res.statusCode).toBe(200);
+    const papers = await pool.query('select count(*)::int as n from des_papers');
+    expect(papers.rows[0].n).toBe(2);
+  });
+
+  it('drops a hashtag that is not in the canonical reference', async () => {
+    const res = await libraryAdd({
+      title: TITLE, record: JSON.stringify(goodRecord()), tags: '#ایمپلنت, #یک_هشتگ_ساختگی_که_وجود_ندارد',
+    });
+    expect(res.statusCode).toBe(200);
+    const paper = await pool.query('select hashtags from des_papers where id = $1', [res.json().paper_id]);
+    expect(paper.rows[0].hashtags).toContain('#ایمپلنت');
+    expect(paper.rows[0].hashtags).not.toContain('#یک_هشتگ_ساختگی_که_وجود_ندارد');
+  });
+});
