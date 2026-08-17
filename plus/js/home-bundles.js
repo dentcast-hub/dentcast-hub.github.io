@@ -12,10 +12,10 @@
 // PREMIUM_FEATURES. `glyph` is a symbol id from the shared icon sprite
 // (assets/icons/icons.svg — the single source of truth for every icon on the
 // site; see assets/icons/README.md), never a raw emoji.
-import { el, faNum, icon } from './util.js?v=14';
-import { currentUser, api } from './api.js?v=14';
-import { pricingHref, premiumCta } from './premium-cta.js?v=14';
-import { openSheet, gateCard } from './sheet.js?v=14';
+import { el, faNum, icon } from './util.js?v=15';
+import { currentUser, api } from './api.js?v=15';
+import { pricingHref, premiumCta } from './premium-cta.js?v=15';
+import { openSheet, gateCard } from './sheet.js?v=15';
 
 const BUNDLES = [
   { id: 'bundle-laminate', glyph: 'icon-tooth', title: 'لمینیت: شروع کن', steps: 6 },

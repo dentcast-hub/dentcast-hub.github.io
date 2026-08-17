@@ -4495,6 +4495,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         .dc-destool-drawer{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .3s cubic-bezier(.4,0,.2,1); }
         .dc-destool-drawer.is-open{ grid-template-rows:1fr; }
         .dc-destool-drawer > div{ overflow:hidden; }
+        .dc-destool-boot{ padding:.9rem 1rem 1rem; font-size:.86rem; line-height:1.9; color:var(--muted,#5a6472); }
       </style>
       <div class="dc-destool-wrap">
         <button type="button" class="dc-destool-tab" id="dcDesToolTab" aria-expanded="false" aria-controls="dcDesToolPanel">
@@ -4515,6 +4516,41 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <div id="dcDesToolPanel"></div>
         </div></div>
       </div>
+
+      <script>
+      /* The tab OPENS from here, not from plus/js/des-scorer.js — the same way
+         the explainer box above it does, and for the reason that box got right
+         first: this markup is static, so its toggle must be static too. When
+         the toggle lived in the module, a tab that painted perfectly did
+         nothing on tap for anyone whose module graph had not arrived (or had
+         thrown), and a dead button is indistinguishable from a bad deploy.
+         des-scorer.js now only FILLS the panel; opening never depends on it. */
+      (function(){
+        var tab = document.getElementById('dcDesToolTab');
+        var drawer = document.getElementById('dcDesToolDrawer');
+        var panel = document.getElementById('dcDesToolPanel');
+        if (!tab || !drawer || !panel) return;
+        function setOpen(open){
+          drawer.classList.toggle('is-open', open);
+          tab.setAttribute('aria-expanded', open ? 'true' : 'false');
+          /* Never open onto nothing. des-scorer.js replaces this the moment it
+             is ready; if it never arrives, this is what the reader gets
+             instead of a drawer that silently expands to zero height. */
+          if (open && !panel.firstChild) {
+            var p = document.createElement('div');
+            p.className = 'dc-destool-boot';
+            p.textContent = 'در حال آماده‌سازی…';
+            panel.appendChild(p);
+          }
+        }
+        tab.addEventListener('click', function(){
+          setOpen(!drawer.classList.contains('is-open'));
+        });
+        document.addEventListener('keydown', function(e){
+          if (e.key === 'Escape' && drawer.classList.contains('is-open')) setOpen(false);
+        });
+      })();
+      </script>
 
       <!-- DentCast Plus personal card. One of exactly two anonymous invitation
            points (spec 2.3). For guests: a quiet one-line invitation. For a
@@ -5501,7 +5537,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=115" defer></script>
+<script src="/dc-nav.js?v=116" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

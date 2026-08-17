@@ -23,12 +23,33 @@ const { initDesTool } = await import('/plus/js/des-scorer.js');
 
 const settle = () => new Promise((r) => setTimeout(r, 0));
 
+/**
+ * index.html's shell — INCLUDING its inline toggle, which is what actually
+ * opens the drawer on the real page. The module deliberately does not toggle
+ * (see initDesTool's header), so a shell without this would test a page that
+ * does not exist and would hide the very bug this mirrors.
+ */
 function shell(): void {
   document.body.innerHTML = `
     <div class="dc-destool-wrap">
       <button type="button" id="dcDesToolTab" aria-expanded="false" aria-controls="dcDesToolPanel">tab</button>
       <div id="dcDesToolDrawer"><div><div id="dcDesToolPanel"></div></div></div>
     </div>`;
+
+  const tab = document.getElementById('dcDesToolTab')!;
+  const drawer = document.getElementById('dcDesToolDrawer')!;
+  const panel = document.getElementById('dcDesToolPanel')!;
+  const setOpen = (open: boolean) => {
+    drawer.classList.toggle('is-open', open);
+    tab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open && !panel.firstChild) {
+      const p = document.createElement('div');
+      p.className = 'dc-destool-boot';
+      p.textContent = 'در حال آماده‌سازی…';
+      panel.appendChild(p);
+    }
+  };
+  tab.addEventListener('click', () => setOpen(!drawer.classList.contains('is-open')));
 }
 
 function openTab(): void {
@@ -74,6 +95,35 @@ beforeEach(() => {
   submitImpl = () => Promise.resolve({ ok: true, answered: false, reference: 'D-KRM-TQF', has_pdf: false });
   stateImpl = () => Promise.resolve({ ok: true, limit: 2, open: [] });
   shell();
+});
+
+describe('opening never depends on this module', () => {
+  // The bug this guards: the tab's markup is static in index.html, so a
+  // toggle that lives only in the module leaves a perfectly-painted button
+  // doing nothing whenever the module graph is slow, blocked, or throwing.
+  it('opens and shows a placeholder with initDesTool() never called', async () => {
+    openTab();
+    await settle();
+    expect(document.getElementById('dcDesToolDrawer')!.classList.contains('is-open')).toBe(true);
+    expect(document.getElementById('dcDesToolTab')!.getAttribute('aria-expanded')).toBe('true');
+    expect(document.querySelector('.dc-destool-boot')).not.toBeNull();
+  });
+
+  it('catches up when the module arrives after the reader already opened it', async () => {
+    openTab();            // reader taps before plus.js lands
+    await settle();
+    initDesTool();        // module finally arrives
+    await settle();
+    expect(document.querySelector('.dc-destool-titlerow input')).not.toBeNull();
+    expect(document.querySelector('.dc-destool-boot')).toBeNull(); // placeholder replaced
+  });
+
+  it('does not double-toggle the drawer shut', async () => {
+    initDesTool();
+    openTab();
+    await settle();
+    expect(document.getElementById('dcDesToolDrawer')!.classList.contains('is-open')).toBe(true);
+  });
 });
 
 describe('gating', () => {
