@@ -4265,7 +4265,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۹۲<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۹۳<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4614,9 +4614,9 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <p class="dc-rail-title">نکاتی در مورد خط تراش و دقت اسکنر داخل دهانی</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="promptologist" href="/dentai/promptologist/prompt4-4.html">
+        <a class="dc-rail-card" data-cat="promptologist" href="/dentai/promptologist/prompt5-1.html">
           <span class="dc-type-chip t-ai">Promptologist</span>
-          <p class="dc-rail-title">پرامپتولوژیست — روشِ کار، نه فقط متنِ درخواست</p>
+          <p class="dc-rail-title">پرامپتولوژیست — خطِ تقسیم</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-15.html">
@@ -4648,10 +4648,10 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک قسمتِ تازه از <a href="/dentai/promptologist/prompt5-1.html">پرامپتولوژیست</a> با عنوانِ «خطِ تقسیم» منتشر شد · ۲۶ مرداد</li>
           <li>یک <a href="/dentcast-plus/video-7.html">ویدیوی دنت‌کست پلاس</a> با عنوانِ «راه حل خارج کردن پست و  کور  با فیت زیاد از داخل دندان» منتشر شد · ۲۵ مرداد</li>
           <li>یک <a href="/insight/insight-65.html">اینسایت بالینی</a> با عنوانِ «چرا بعد هر بار سمان مجدد اکلوژن رو چک میکنم؟» منتشر شد · ۲۵ مرداد</li>
           <li>یک <a href="/dentai/dentai-29.html">مقاله‌ی DentAI</a> با عنوانِ «نکاتی در مورد خط تراش و دقت اسکنر داخل دهانی» منتشر شد · ۲۵ مرداد</li>
-          <li>یک <a href="/chairside/chairside-33.html">کیس چیرساید</a> با عنوانِ «چالش‌های توزیع فضا و بیومکانیک در حضور عفونت فعال اپیکال» منتشر شد · ۲۵ مرداد</li>
         </ul>
       </div>
 
@@ -5424,7 +5424,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=28e3c2db11',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=6019630b9f',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -5501,7 +5501,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=112" defer></script>
+<script src="/dc-nav.js?v=114" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -5771,7 +5771,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=28e3c2db11';
+  const FEED_URL='/dentcast-brain.json?v=6019630b9f';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -6027,7 +6027,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=28e3c2db11', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=6019630b9f', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });

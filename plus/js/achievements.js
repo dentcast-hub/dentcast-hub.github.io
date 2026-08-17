@@ -1,6 +1,6 @@
-import { el, faNum } from './util.js?v=11';
-import { api } from './api.js?v=11';
-import { openSheet, closeSheet } from './sheet.js?v=11';
+import { el, faNum } from './util.js?v=13';
+import { api } from './api.js?v=13';
+import { openSheet, closeSheet } from './sheet.js?v=13';
 
 /**
  * The profile's «افتخارات» section: two league medals and the badge wall.
@@ -79,12 +79,16 @@ const ICONS = {
   // A graduation cap — «دانشجو», the second founder-granted badge. The story is
   // the student-discount claim was approved, and a cap says that in one shape.
   student: '<path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11.5V16c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4.5"/>',
-  // A cake with scalloped frosting and its candle bent into the numeral it is
-  // — «هفت‌سالگی», the third founder-granted badge. One shape carries both the
-  // occasion (frosting reads as a cake, not a plain box — checked at size,
-  // like `lamp`/`pillar`) and the number (the candle IS a 7), so the wall
-  // needs no second glyph to say which anniversary this is.
-  anniversary7: '<path d="M4 20H20V13L17 15.5L14 13L11 15.5L8 13L5 15.5L4 13Z"/><path d="M9 4H15L11 12"/>',
+  // «هفت‌سالگی», the third founder-granted badge: a small cake beside a
+  // full-height 7. Went through three drafts before this one passed the
+  // same at-size check `lamp`/`pillar` describe: folding the candle into the
+  // 7's own diagonal read as neither shape, and a single candle on a plain
+  // box read as a lamp on a stand, not a cake. THREE candles is what tips it
+  // — one candle is an ambiguous stick, three is unmistakably a birthday
+  // cake, and the flames are filled dots (not outlined, like every other
+  // icon here) because an outline circle that small reads as a hole, not a
+  // flame.
+  anniversary7: '<path d="M1 21H13V16H1Z"/><path d="M4 16V13"/><path d="M7 16V12"/><path d="M10 16V13"/><circle cx="4" cy="11.4" r="1.1" fill="currentColor" stroke="none"/><circle cx="7" cy="10.4" r="1.1" fill="currentColor" stroke="none"/><circle cx="10" cy="11.4" r="1.1" fill="currentColor" stroke="none"/><path d="M14 4H22L15.5 21"/>',
 };
 
 const METAL_PIP = { bronze: 'b', silver: 's', gold: 'g' };

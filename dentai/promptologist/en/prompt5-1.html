@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Dividing Line | Promptologist | DentCast</title>
+  <meta name="description" content="Chapter 5, Part 1: After a few weeks of working with the model, one question usually remains: what is this actually good for? This part gives a criterion instead of a list &mdash; the model works with words, not with the patient &mdash; and puts one question before every task: do you already have the information it needs, or are you expecting the model to bring it? Using this criterion, four safe uses: rewriting post-surgical instructions, editing chairside notes, working through a paper with real back-and-forth, and putting the model across from you to critique a treatment plan.">
+  <link rel="canonical" href="https://dentcast.org/dentai/promptologist/en/prompt5-1.html">
+  <meta name="author" content="Dr. Foad Shahabian">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="The Dividing Line | DentCast">
+  <meta property="og:description" content="Chapter 5, Part 1: After a few weeks of working with the model, one question usually remains: what is this actually good for? This part gives a criterion instead of a list &mdash; the model works with words, not with the patient &mdash; and puts one question before every task: do you already have the information it needs, or are you expecting the model to bring it? Using this criterion, four safe uses: rewriting post-surgical instructions, editing chairside notes, working through a paper with real back-and-forth, and putting the model across from you to critique a treatment plan.">
+  <meta property="og:url" content="https://dentcast.org/dentai/promptologist/en/prompt5-1.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Dividing Line | DentCast">
+  <meta name="twitter:description" content="Chapter 5, Part 1: A criterion, not a list &mdash; the model works with words, not with the patient. One question before every task, and four safe uses that follow from it.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/promptologist/en/prompt5-1.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/dentai/promptologist/en/prompt5-1.html"
+      },
+      "url": "https://dentcast.org/dentai/promptologist/en/prompt5-1.html",
+      "headline": "The Dividing Line",
+      "description": "Chapter 5, Part 1: After a few weeks of working with the model, one question usually remains: what is this actually good for? This part gives a criterion instead of a list — the model works with words, not with the patient — and puts one question before every task: do you already have the information it needs, or are you expecting the model to bring it? Using this criterion, four safe uses: rewriting post-surgical instructions, editing chairside notes, working through a paper with real back-and-forth, and putting the model across from you to critique a treatment plan.",
+      "datePublished": "2026-08-17",
+      "dateModified": "2026-08-17",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "Promptologist",
+        "url": "https://dentcast.org/dentai/promptologist"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Promptologist",
+          "item": "https://dentcast.org/dentai/promptologist"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "The Dividing Line",
+          "item": "https://dentcast.org/dentai/promptologist/en/prompt5-1.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css?v=2">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-left:4px solid var(--ac);padding-left:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+  </style>
+</head>
+<body>
+
+<!-- ── TOP BAR (English chrome, cloned from metanotes/en/meta-1.html) ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT (Promptologist structure, translated, LTR) ── -->
+<main class="article-content-wrap ep-page">
+  <a href="/dentai/promptologist/" class="ep-back">&#8592; Back to Promptologist</a>
+
+  <!-- 🌐 Persian Version (SEO-friendly language toggle) -->
+  <a class="lang-btn" href="../prompt5-1.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">Season 5 · Part 1</div>
+      <h1 class="ep-title">The Dividing Line</h1>
+      <div class="ep-meta">
+        <span>&#9201; 6 min read</span>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">This Part</h2>
+      <div class="ep-caption"><p>After a few weeks of working with the model, one question usually stays in your mind: what is this actually good for? Not in general &mdash; specifically, in our everyday professional life as dentists.</p><p>If you go looking for the answer, you&rsquo;ll find a pile of lists on different sites. &ldquo;Ten things AI does for dentists.&rdquo; &ldquo;Twenty things every dentist should know about AI.&rdquo; Memorizing these isn&rsquo;t bad &mdash; you pick up a few good ideas. But next week a task comes up that wasn&rsquo;t on that list of twenty, and you&rsquo;re back where you started.</p><p>What actually helps isn&rsquo;t a list, it&rsquo;s a criterion &mdash; something you can hold up against any new task yourself and see whether this one belongs to the model or not.</p><p>In its simplest form, the criterion is this: <strong>the model works with words, not with the patient.</strong></p><p>And the practical way to apply it is a single question. Before any task, ask yourself:</p><p><strong>Do I already have the information this task needs, or am I expecting the model to bring it itself?</strong></p><p>If you have the information and the model is only going to change its form, that&rsquo;s the safest case there is. You&rsquo;ve written a text and want it simplified. You have a paper and want to understand it. You&rsquo;ve written a messy note and want it tidied up. In all of these, the model adds nothing to what you already have &mdash; it only rearranges it. And if it rearranges it badly, the original is right in front of you, and you&rsquo;ll notice.</p><p>But if you don&rsquo;t have that information and you&rsquo;re waiting for the model to bring it, you&rsquo;re standing on the other side of the line. There, the model produces something you have no original to compare it against. And <a href="prompt2-1.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Chapter 2</a> showed that exactly this kind of fabrication looks confident, fluent, and flawless.</p><p><strong>The Bright Side of the Line</strong></p><p>Four tasks that sit squarely on this side:</p><p><strong>Post-surgical instructions in the patient&rsquo;s language.</strong> You know what to say after flap surgery. The problem isn&rsquo;t not knowing; it&rsquo;s that thirteen times a day you have to say the same thing in a way an anxious patient understands and still remembers at home. Write the text yourself, and let the model rewrite it.</p><p><strong>Chairside notes.</strong> Let me give an example from my own work. Part of DentCast&rsquo;s clinical content is written exactly this way: chairside, with the patient in the chair, I jot down whatever caught my interest right there &mdash; a few broken, scribbled lines that I can barely read myself the next day. Then I sit down and tell the model the same thing, with the details of what I actually saw. The model adds nothing to the account; it edits. The content came from the chairside, not from the model&rsquo;s memory.</p><p>Notice how different this is from &ldquo;write me a clinical text about this topic.&rdquo; In the first, you&rsquo;re organizing something you actually saw; in the second, you&rsquo;re asking the model to guess what you saw.</p><p><strong>Working through a paper.</strong> When I want to read a paper for DentCast, the method matters more than the tool itself. I give the model the paper itself, and then we talk about it together. It&rsquo;s not that I sit across from it like an all-knowing professor and ask, &ldquo;what do you know about this paper?&rdquo;</p><p>The difference isn&rsquo;t only in accuracy, it&rsquo;s in my role. When I&rsquo;ve read the paper and the model says something, I push back on it. And because I have my own knowledge of the paper, I know right there where it got something wrong. Chapter 2 said the model can misread a real source; this back-and-forth is exactly where the misreading gives itself away. After a few rounds, I end up with a text that&rsquo;s both fluent and clear &mdash; and more importantly, I know it&rsquo;s correct, because I&rsquo;ve checked it step by step.</p><p>And one that gets thought about less: put the model across from you, not beside you.</p><p>Write out a treatment plan you&rsquo;ve already put together, and tell the model to point out its weaknesses, to say what you might have missed, to say what a demanding colleague would object to.</p><p>This is safe for one specific reason: the plan is your own. The model doesn&rsquo;t make the decision; it only offers an angle that your tired seven-o&rsquo;clock-in-the-evening mind has lost. And more importantly, you&rsquo;re able to judge its answer. If it raises an irrelevant objection, you&rsquo;ll know; if it points out something genuinely missed, you&rsquo;ll know that too.</p><p>The difference from asking &ldquo;what plan should I give this patient&rdquo; is subtle, but everything hinges on it. In the first, you&rsquo;ve made the decision and are asking for critique. In the second, you&rsquo;ve handed the decision over.</p><p>Which brings us to the question that&rsquo;s been left hanging so far: so what is the model&rsquo;s role in diagnosis? Now that models can read radiographs too, where does that leave us?</p></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Keywords</h2>
+      <div class="ep-chips">
+        <span class="ep-chip">Safe-Use Criterion for the Model</span>
+        <span class="ep-chip">Rewriting Post-Surgical Instructions</span>
+        <span class="ep-chip">Chairside Notes</span>
+        <span class="ep-chip">Working Through a Paper with Back-and-Forth</span>
+        <span class="ep-chip">The Model Critiquing a Treatment Plan</span>
+        <span class="ep-chip">Large Language Model (LLM)</span>
+        <span class="ep-chip">ChatGPT</span>
+        <span class="ep-chip">AI Literacy</span>
+      </div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Tags</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#AI</span><span class="ep-hashtag">#ChatGPT</span><span class="ep-hashtag">#LLM</span><span class="ep-hashtag">#LanguageModel</span><span class="ep-hashtag">#AIinDentistry</span><span class="ep-hashtag">#DentalAI</span><span class="ep-hashtag">#FactChecking</span><span class="ep-hashtag">#ClinicalJudgment</span><span class="ep-hashtag">#TreatmentPlanning</span><span class="ep-hashtag">#AILiteracy</span><span class="ep-hashtag">#Promptologist</span></div>
+    </div>
+  </div>
+  <!-- Series prev/next (en tier). Targets are en counterparts only.
+       Previous part en page (en/prompt4-4.html) exists, so the previous
+       slot links to it; there is no next part yet, so the next slot stays a
+       disabled placeholder. -->
+  <div class="ep-nav">
+    <a href="prompt4-4.html" class="ep-nav-btn">&#8592; Previous Part</a>
+    <span class="ep-nav-btn ep-nav-empty">Next Part &#8594;</span>
+  </div>
+</main>
+
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=114" defer></script>
+</body>
+</html>
