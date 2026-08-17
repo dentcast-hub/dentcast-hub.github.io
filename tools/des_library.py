@@ -369,6 +369,26 @@ def keys_for(citation, title_ok=True):
     return out
 
 
+def site_tags():
+    """content_id → its canonical hashtags, read from the reference library.
+
+    The site's own scored sources carry no hashtags of their own — tags belong
+    to the PAGE, in dentcast-hashtag-reference.json, keyed by content_id. So
+    they are read across at search time rather than copied into a record.
+
+    This is the whole reason the library does not import the site's 56 papers.
+    Copying would give one paper two records that drift apart the moment a spec
+    bump re-scores the published one (v2.0 → v2.1 already forced exactly that
+    recomputation), and nobody would remember to sync. Reading across costs one
+    file load and cannot go stale."""
+    ref = load(HASHTAGS, {'concepts': []})
+    out = {}
+    for c in ref.get('concepts', []):
+        for cid in c.get('content_ids', []):
+            out.setdefault(cid, []).append(c['tag'])
+    return out
+
+
 def site_corpus():
     """The site's OWN scored sources. 51 unique DOIs already — the library does
     not start empty, and a reader pasting one of them must be answered from
@@ -438,11 +458,12 @@ def cmd_search(args):
     # workflow's, read here and never written.
     entries = [(pid, p, p['des']) for pid, p in lib['papers'].items()]
     if not args.mine:
-        site = load(SITE, {})
+        site, tags = load(SITE, {}), site_tags()
         for cid, r in site.items():
             for s in r.get('sources', []):
                 if s.get('content_type') == 'RESEARCH':
-                    entries.append((cid, {'hashtags': [], 'also_cited_by': [], 'site': True}, s))
+                    entries.append((cid, {'hashtags': tags.get(cid, []),
+                                          'also_cited_by': [], 'site': True}, s))
 
     rows = []
     for pid, p, des in entries:
