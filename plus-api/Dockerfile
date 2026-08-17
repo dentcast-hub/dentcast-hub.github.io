@@ -29,7 +29,6 @@ ENV CONTENT_INDEX_PATH=/app/content-index.json
 ENV PATHWAYS_PATH=/app/pathways.json
 ENV BADGES_PATH=/app/badges.json
 ENV FLASHCARDS_PATH=/app/flashcards-index.json
-ENV DES_LIBRARY_PATH=/app/des-library.json
 # ...and where to refresh them from while the container runs, so publishing an
 # article no longer means building an image. The baked copies above stay the
 # boot value and the fallback; these are only ever an upgrade. Both mirrors are
@@ -38,7 +37,6 @@ ENV CONTENT_INDEX_URL=https://dentcast.ir/plus/content-index.json,https://dentca
 ENV PATHWAYS_URL=https://dentcast.ir/plus/pathways.json,https://dentcast.org/plus/pathways.json
 ENV BADGES_URL=https://dentcast.ir/plus/badges.json,https://dentcast.org/plus/badges.json
 ENV FLASHCARDS_URL=https://dentcast.ir/plus/flashcards-index.json,https://dentcast.org/plus/flashcards-index.json
-ENV DES_LIBRARY_URL=https://dentcast.ir/plus/des-library.json,https://dentcast.org/plus/des-library.json
 WORKDIR /app
 
 # Prod dependencies only.
@@ -57,7 +55,6 @@ COPY plus/content-index.json ./content-index.json
 COPY plus/pathways.json ./pathways.json
 COPY plus/badges.json ./badges.json
 COPY plus/flashcards-index.json ./flashcards-index.json
-COPY plus/des-library.json ./des-library.json
 
 # Build stamp — what GET /health reports back.
 #

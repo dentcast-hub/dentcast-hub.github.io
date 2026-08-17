@@ -3,7 +3,6 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { one, query, withTransaction, type Queryable } from '../db.js';
 import { fold, keysFor, titleTokens, jaccard, sameAuthor, roundHalfUp, bandFor } from './des-identity.js';
-import { getFileLibrary, type FileLibraryPaper } from './des-library-file.js';
 
 /**
  * ارزیاب DES — the paper corpus. DB-backed identity lookup and the founder's
@@ -18,14 +17,6 @@ import { getFileLibrary, type FileLibraryPaper } from './des-library-file.js';
  * ONE PAPER, MANY KEYS: des_paper_keys maps every identifier or title hash
  * ever seen onto a paper id, so an abstract and a full text of the same study
  * — or a typo'd resubmission — land on one record instead of forking it.
- *
- * TWO SHELVES, ONE LOOKUP. des_papers/des_paper_keys is the LIVE corpus,
- * written when the founder answers a specific reader's request through the
- * admin panel. plus/des-library.json (des-library-file.ts) is a second shelf
- * for papers the founder adds proactively, in chat, with no reader waiting —
- * the «DES دارم» workflow (.dentcast/workflows/des-library-add.md). Both are
- * checked by lookupExact/nearDuplicates so either source answers a real
- * submission; a `lib:`-prefixed paperId always means the file, never a row.
  */
 
 /* ------------------------------------------------------- validation gate -- */
@@ -279,38 +270,12 @@ interface PaperRow {
   des: unknown;
 }
 
-/**
- * A `lib:`-prefixed paperId means the file library, never a Postgres row —
- * same-as/attachKeys branches on this (see admin.ts). The prefix is minted
- * here rather than stored: plus/des-library.json's own ids (`p_0001`, …) are
- * unprefixed, so the two spaces of ids never collide on their own.
- */
-export const LIB_PREFIX = 'lib:';
-export const isFilePaperId = (id: string): boolean => id.startsWith(LIB_PREFIX);
-
-/**
- * Exact lookup, strongest key first, file library before the DB.
- *
- * The file (plus/des-library.json) is checked first — an in-memory map, no
- * round trip — for papers the founder added proactively via the «DES دارم»
- * workflow. des_paper_keys/des_papers stay exactly as built: the LIVE corpus,
- * written when the founder answers a specific reader's request through the
- * admin panel. Never scans, never compares text.
- */
+/** Exact lookup, strongest key first. Never scans, never compares text. */
 export async function lookupExact(
   c: { doi?: string | null; pmid?: string | null; title?: string | null },
   client?: Queryable,
 ): Promise<LookupHit | null> {
   const keys = keysFor(c);
-  const lib = getFileLibrary();
-  for (const key of keys) {
-    const pid = lib.index[key];
-    const paper = pid ? lib.papers[pid] : undefined;
-    if (paper) {
-      const via = key.startsWith('doi:') ? 'doi' : key.startsWith('pmid:') ? 'pmid' : 'title';
-      return { paperId: LIB_PREFIX + paper.id, via, des: paper.des, hashtags: paper.hashtags };
-    }
-  }
   for (const key of keys) {
     const row = await one<{ paper_id: string }>(
       'select paper_id from des_paper_keys where key = $1',
@@ -328,12 +293,6 @@ export async function lookupExact(
   return null;
 }
 
-/** A file-library paper by its `lib:`-prefixed id, or null if it is not one / not found. */
-export function fileLibraryPaper(paperId: string): FileLibraryPaper | null {
-  if (!isFilePaperId(paperId)) return null;
-  return getFileLibrary().papers[paperId.slice(LIB_PREFIX.length)] || null;
-}
-
 export interface Candidate {
   paperId: string;
   score: number;
@@ -345,17 +304,16 @@ export interface Candidate {
 }
 
 /**
- * Near-duplicate titles, ranked, across BOTH shelves — the file library and
- * des_papers. Token-set Jaccard, measured on the site's own 54 unique
- * research titles (see des-identity.ts's STOPWORDS comment and the handoff
- * §4/§10): 0.55 is the cut, far below the 0.90 that would catch almost
- * nothing beyond word reordering, because no threshold alone can separate a
- * typo (0.82) from a genuinely different paper (worst real false positive:
- * 0.86). Author agreement is the corroborating signal, not the key.
+ * Near-duplicate titles, ranked. Token-set Jaccard, measured on the site's own
+ * 54 unique research titles (see des-identity.ts's STOPWORDS comment and the
+ * handoff §4/§10): 0.55 is the cut, far below the 0.90 that would catch
+ * almost nothing beyond word reordering, because no threshold alone can
+ * separate a typo (0.82) from a genuinely different paper (worst real false
+ * positive: 0.86). Author agreement is the corroborating signal, not the key.
  *
- * Scans des_papers directly and the file library's `papers` map — acceptable
- * at this corpus's size (a founder's manually-scored library, not the site's
- * 2000+ paper cabinet); revisit if it ever needs to.
+ * Scans des_papers directly — acceptable at this corpus's size (a founder's
+ * manually-scored library, not the site's 2000+ paper cabinet); revisit if it
+ * ever needs to.
  */
 const FUZZY_MIN = 0.55;
 
@@ -366,23 +324,8 @@ export async function nearDuplicates(
 ): Promise<Candidate[]> {
   const q = titleTokens(title);
   if (q.size < 3) return [];
-  const out: Candidate[] = [];
-  for (const paper of Object.values(getFileLibrary().papers)) {
-    const c = paper.des.citation || {};
-    const score = jaccard(q, titleTokens(c.title || ''));
-    if (score >= FUZZY_MIN) {
-      out.push({
-        paperId: LIB_PREFIX + paper.id,
-        score,
-        title: c.title || '',
-        authors: c.authors || '',
-        year: typeof c.year === 'number' ? c.year : null,
-        doi: c.doi || null,
-        authorAgrees: author ? sameAuthor(c.authors || '', author) : null,
-      });
-    }
-  }
   const rows = (await query<PaperRow>('select * from des_papers', [], client)).rows;
+  const out: Candidate[] = [];
   for (const row of rows) {
     const score = jaccard(q, titleTokens(row.title));
     if (score >= FUZZY_MIN) {

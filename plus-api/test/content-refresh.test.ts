@@ -9,9 +9,6 @@ import {
   applyRemoteFlashcards, flashcardsSource, resetRemoteFlashcards,
   getCardsFor, getCard, contentIdsWithCards,
 } from '../src/flashcards.js';
-import {
-  applyRemoteDesLibrary, desLibrarySource, resetRemoteDesLibrary, getFileLibrary,
-} from '../src/services/des-library-file.js';
 
 const GOOD_INDEX = {
   version: 42,
@@ -31,24 +28,8 @@ const GOOD_FLASHCARDS = {
   },
 };
 
-const GOOD_DES_LIBRARY = {
-  version: 1,
-  index: { 'doi:10.1/x': 'p_0001', 'ttl:abc0000000': 'p_0001' },
-  papers: {
-    p_0001: {
-      id: 'p_0001',
-      keys: ['doi:10.1/x', 'ttl:abc0000000'],
-      hashtags: ['#ایمپلنت'],
-      des: { content_type: 'RESEARCH', band: 'B', des_score: 68, citation: { title: 'یک', doi: '10.1/x' } },
-    },
-  },
-};
-
-beforeEach(() => { resetRemoteIndex(); resetRemotePathways(); resetRemoteFlashcards(); resetRemoteDesLibrary(); });
-afterEach(() => {
-  resetRemoteIndex(); resetRemotePathways(); resetRemoteFlashcards(); resetRemoteDesLibrary();
-  vi.restoreAllMocks();
-});
+beforeEach(() => { resetRemoteIndex(); resetRemotePathways(); resetRemoteFlashcards(); });
+afterEach(() => { resetRemoteIndex(); resetRemotePathways(); resetRemoteFlashcards(); vi.restoreAllMocks(); });
 
 describe('a published index replaces the baked one', () => {
   it('adopts a well-formed payload and serves it', () => {
@@ -150,39 +131,6 @@ describe('flashcards follow the same rules', () => {
     expect(getCard('does/not-exist', 'nope')).toBeNull();
     const known = contentIdsWithCards()[0];
     expect(getCard(known, 'nope')).toBeNull();
-  });
-});
-
-describe('the des paper library follows the same rules', () => {
-  it('adopts a well-formed payload and serves it', () => {
-    expect(desLibrarySource()).toBe('image/disk');
-    expect(applyRemoteDesLibrary(GOOD_DES_LIBRARY)).toBe(true);
-    expect(desLibrarySource()).toBe('published (1 paper(s))');
-    expect(getFileLibrary().papers.p_0001.des.citation?.title).toBe('یک');
-  });
-
-  const rejected: Array<[string, unknown]> = [
-    ['an HTML error page', '<!doctype html><title>404</title>'],
-    ['null', null],
-    ['an array where an object belongs', []],
-    ['no index', { version: 1, papers: { p_0001: { id: 'p_0001', keys: [], des: {} } } }],
-    ['no papers', { version: 1, index: {} }],
-    ['a structurally valid but EMPTY papers map', { version: 1, index: {}, papers: {} }],
-    ['a paper missing keys', { version: 1, index: {}, papers: { p_0001: { id: 'p_0001', des: {} } } }],
-    ['a paper missing des', { version: 1, index: {}, papers: { p_0001: { id: 'p_0001', keys: [] } } }],
-  ];
-
-  for (const [label, payload] of rejected) {
-    it(`refuses ${label}`, () => {
-      applyRemoteDesLibrary(GOOD_DES_LIBRARY); // a good copy is already in service
-      expect(applyRemoteDesLibrary(payload)).toBe(false);
-      expect(desLibrarySource(), 'the previous copy must still be served').toBe('published (1 paper(s))');
-    });
-  }
-
-  it('falls back to the on-disk library when nothing was ever adopted', () => {
-    expect(desLibrarySource()).toBe('image/disk');
-    expect(Object.keys(getFileLibrary().papers).length).toBeGreaterThan(0);
   });
 });
 

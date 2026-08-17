@@ -453,7 +453,7 @@ to "no per-domain logic"** (the seal is issued for `dentcast.ir` and renders as
 *invalid* off the `.org` mirror, which is why the `dc-no-seal` guard and the
 `dc-nav.js` removal block exist): never "fix" that guard, and never rewrite the
 `referrerpolicy`/`id`/`Code`/`code` attributes enamad verifies. Details in
-`AGENTS.md` §۹.
+`AGENTS.md` §۸.
 
 **Opening paragraph before any list (body-structure requirement).** The body must
 open with at least one real `<p>` of prose **before** the first `<ul>`/`<ol>`. This is

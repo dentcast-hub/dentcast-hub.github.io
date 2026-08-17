@@ -53,7 +53,7 @@ import {
   requestQueue, getRequest, requestByReference, markAnswered, markRejected,
 } from '../services/des-requests.js';
 import {
-  nearDuplicates, createPaper, attachKeys, isFilePaperId,
+  nearDuplicates, createPaper, attachKeys,
   validateDesRecord, normaliseDesRecord, resolveHashtags,
 } from '../services/des-library.js';
 import { keyHash, keysFor, allDois, allPmids, paperScope, pickIdentifier } from '../services/des-identity.js';
@@ -2714,19 +2714,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       // submission's keys to the EXISTING record. Its score is never touched:
       // that is the founder's earlier, already-verified evaluation.
       paperId = b.same_as;
-      if (isFilePaperId(paperId)) {
-        // A candidate from plus/des-library.json — read-only from the live
-        // API (it is only ever written by `tools/des_library.py add`, via
-        // the «DES دارم» workflow). This reader's request is still answered
-        // correctly the moment it resolves through it, but a FUTURE
-        // submission spelled exactly this way will surface as a
-        // near-duplicate again rather than an instant hit, until this title
-        // is registered against the same record with `add --same-as`.
-        warnings.push('این نامزد از کتابخانه‌ی فایلی (plus/des-library.json) است؛ کلیدهای این عنوان به آن وصل نشد. '
-          + 'برای این‌که دفعه‌ی بعد فوری جواب بدهد، همین عنوان را با «DES دارم» و --same-as به کتابخانه هم اضافه کن.');
-      } else {
-        await attachKeys(paperId, keysFor({ doi, pmid, title }));
-      }
+      await attachKeys(paperId, keysFor({ doi, pmid, title }));
     } else {
       if (!b.force) {
         const candidates = await nearDuplicates(title, firstAuthor || undefined);

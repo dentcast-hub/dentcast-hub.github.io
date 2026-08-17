@@ -102,33 +102,6 @@ an ad 20 times is 20 — there is deliberately no per-user attribution, so
 measurement**, and no data of any kind exists before 2026-07-26. Numbers are
 never guessed — if the data isn't in hand, hand over the command instead.
 
-## DES library — founder add (trigger)
-
-There is a **fourth** workflow alongside the publishing router, the en-version
-router, and the ad routers. When the founder says they have a DES score to add
-**themselves** — trigger phrases like **«DES دارم»**, «یه DES دیگه دارم اضافه
-کنم», «این مقاله رو امتیاز دادم» — and hands over a scored JSON record plus
-the paper's title, read `.dentcast/workflows/des-library-add.md` and follow it
-strictly. This is **not** ارزیاب DES, the reader-facing tool
-(`.dentcast/des-scorer-handoff.md`): that one runs live in production, when
-the founder answers a specific reader's pending request through the deployed
-admin panel, against `des_papers`/`des_paper_keys` in Postgres. This trigger
-has no reader request behind it and this agent session has neither production
-database credentials nor an admin-panel login — so it writes to
-**`plus/des-library.json`** instead, a repo-versioned file exactly like
-`plus/pathways.json`/`plus/badges.json` that the live API re-fetches from the
-published site every few minutes (`content-refresh.ts`). A paper added there
-starts answering real `/des/submit` calls with no redeploy, once the one-time
-API wiring for it has shipped. **`tools/des_library.py add` is the only
-writer** — never hand-edit the file — and it enforces the same rules as the
-live admin panel: the title is supplied, never guessed (an invented title
-mints a key that collides every future submission onto it); a near-duplicate
-title always STOPS for the founder's «همان مقاله است؟» vs «مقاله‌ی دیگری
-است؟» call, never decided automatically; and hashtags must already be
-canonical in `dentcast-hashtag-reference.json` or the add is refused.
-`plus/des-scores.json` — the publishing workflow's own file — is never
-touched by this trigger.
-
 ## Attached paper file (trigger — ANY type, file-driven)
 
 The paper actions are triggered by the **paper file itself**, *not* by the
