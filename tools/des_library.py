@@ -69,7 +69,19 @@ def fold(t):
 
 
 def h8(s):
-    return hashlib.sha1(fold(s).encode('utf-8')).hexdigest()[:10]
+    """Key hash. ALL whitespace is dropped, not merely collapsed — and that is
+    the difference between the key working and not.
+
+    fold() strips ZWNJ, so «نظام‌مند» becomes «نظاممند» while somebody who typed
+    a real space gives «نظام مند». Those are two different strings, so the two
+    spellings of one title minted two keys and never matched. hl-view.js's
+    foldFa has the same shape and gets away with it because its search is a
+    substring test; a key is an equality test and cannot.
+
+    Removing whitespace outright collapses all three spellings — ZWNJ, space,
+    and joined — onto one key. Safe here because a paper title is a long letter
+    sequence: two different papers do not collide on it."""
+    return hashlib.sha1(re.sub(r'\s+', '', fold(s)).encode('utf-8')).hexdigest()[:10]
 
 
 def round_half_up(x):
