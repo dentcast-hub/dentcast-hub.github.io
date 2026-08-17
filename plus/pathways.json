@@ -483,6 +483,10 @@
       {
         "content_id": "dentai/promptologist/prompt4-4",
         "milestone": false
+      },
+      {
+        "content_id": "dentai/promptologist/prompt5-1",
+        "milestone": false
       }
     ],
     "reserved": {}
