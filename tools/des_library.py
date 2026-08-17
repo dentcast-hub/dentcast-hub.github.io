@@ -25,8 +25,9 @@ Usage
   python3 tools/des_library.py lookup --title "..."
   python3 tools/des_library.py add rec.json --tags '#a,#b' [--submitted-by UUID]
                                                          validate + normalise + append
-  python3 tools/des_library.py seed                      import the site's own
-                                                         scored sources as a base
+  python3 tools/des_library.py search "implant" --band A
+  python3 tools/des_library.py search --tag '#دخانیات'  searches BOTH the library
+                                                         and the site's own pages
 """
 import argparse
 import hashlib
@@ -290,6 +291,69 @@ def cmd_lookup(args):
     return 1
 
 
+def cmd_search(args):
+    """Free text over title / authors / journal / hashtags, plus filters.
+
+    Matching folds both sides, so «نظام‌مند» finds «نظام مند» and «Meta-Analysis»
+    finds «meta analysis» — the same normalisation the keys use, minus the
+    whitespace stripping, because a search is a substring test and a key is an
+    equality test."""
+    lib = load(LIB, new_library())
+    q = fold(args.query or '')
+
+    # Both stores, always. The site has already scored 52 research sources and
+    # a founder asking "have we appraised this?" means either shelf. They are
+    # NOT merged into one file — des-scores.json stays the publishing
+    # workflow's, read here and never written.
+    entries = [(pid, p, p['des']) for pid, p in lib['papers'].items()]
+    if not args.mine:
+        site = load(SITE, {})
+        for cid, r in site.items():
+            for s in r.get('sources', []):
+                if s.get('content_type') == 'RESEARCH':
+                    entries.append((cid, {'hashtags': [], 'also_cited_by': [], 'site': True}, s))
+
+    rows = []
+    for pid, p, des in entries:
+        c = des.get('citation') or {}
+        hay = fold(' '.join([
+            c.get('title') or '', c.get('authors') or '', c.get('journal') or '',
+            ' '.join(p.get('hashtags') or []), des.get('fact_fa') or '',
+        ]))
+        if q and q not in hay:
+            continue
+        if args.band and des.get('band') != args.band:
+            continue
+        if args.question_type and des.get('question_type') != args.question_type:
+            continue
+        if args.tag and args.tag not in (p.get('hashtags') or []):
+            continue
+        rows.append((pid, p, des, c))
+
+    if not rows:
+        print('چیزی پیدا نشد.')
+        return 1
+    # strongest first — the band is what a reader judges with
+    order = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4}
+    rows.sort(key=lambda r: (order.get(r[2].get('band'), 9), -(r[2].get('des_score') or 0)))
+    for pid, p, des, c in rows:
+        prov = ' (مقدماتی)' if des.get('provisional') else ''
+        where = 'سایت' if p.get('site') else 'کتابخانه'
+        print('[%s] %s  %s %s/۱۰۰%s · %s' % (where, pid, des.get('band'), des.get('des_score'),
+                                             prov, des.get('question_type') or '—'))
+        print('   %s' % (c.get('title') or '؟'))
+        meta = ' · '.join(x for x in [c.get('journal'), str(c.get('year') or ''), c.get('doi')] if x)
+        if meta:
+            print('   %s' % meta)
+        if p.get('hashtags'):
+            print('   %s' % '  '.join(p['hashtags']))
+        if p.get('also_cited_by'):
+            print('   در سایت: %s' % '، '.join(p['also_cited_by']))
+        print()
+    print('%d مقاله' % len(rows))
+    return 0
+
+
 def cmd_check(args):
     lib = load(LIB, new_library())
     bad = 0
@@ -309,14 +373,32 @@ def cmd_check(args):
 
 def cmd_add(args):
     rec = json.loads(Path(args.record).read_text(encoding='utf-8'))
-    citation = rec.get('citation') or {}
+    rec.setdefault('citation', {})
+    citation = rec['citation']
     title = (citation.get('title') or '').strip()
 
-    # RULE 1. No title, no title key — and for a reader submission a missing
-    # title is worth one question rather than a guess.
+    # The title is supplied, not guessed. A scoring model may omit it, get it
+    # from a running head, or truncate it; whoever has the PDF in front of them
+    # has the real one, so --title always wins and a disagreement is reported
+    # rather than silently resolved.
+    if args.title:
+        given = args.title.strip()
+        if title and h8(title) != h8(given):
+            print('توجه: عنوانِ داخل رکورد با عنوانی که دادی یکی نیست.')
+            print('   رکورد : %s' % title)
+            print('   تو    : %s' % given)
+            print('   عنوانِ تو ثبت شد.')
+        citation['title'] = given
+        title = given
+
+    # RULE 1. No title, no title key. For a reader submission that is worth one
+    # question rather than a guess — an invented title collides every future
+    # submission onto it.
     if not title:
-        sys.exit('این رکورد عنوان ندارد. عنوان مقاله را بپرس و در citation.title بگذار — '
-                 'بدون آن فقط DOI/PMID کلید می‌سازند و اگر آن‌ها هم نباشند مقاله عملاً کش نمی‌شود.')
+        sys.exit('این رکورد عنوان ندارد.\n'
+                 '  عنوان را از PDF بردار و با --title "…" بده، یا در citation.title بگذار.\n'
+                 '  بدون عنوان فقط DOI/PMID کلید می‌سازند، و اگر آن‌ها هم نباشند\n'
+                 '  این مقاله هر بار دوباره امتیاز می‌گیرد.')
 
     probs = validate(rec)
     if probs:
@@ -394,10 +476,19 @@ def main():
 
     ad = sub.add_parser('add')
     ad.add_argument('record', help='فایل JSON خروجی مدل')
+    ad.add_argument('--title', default=None, help='عنوان مقاله — بر عنوانِ داخل رکورد مقدم است')
     ad.add_argument('--tags', default='', help='هشتگ‌ها با کاما، همه canonical')
     ad.add_argument('--submitted-by', default=None)
     ad.add_argument('--scored-by', default='gemini')
     ad.set_defaults(fn=cmd_add)
+
+    se = sub.add_parser('search')
+    se.add_argument('query', nargs='?', default='', help='متن آزاد در عنوان، نویسنده، ژورنال، هشتگ')
+    se.add_argument('--band', choices=list('ABCDE'))
+    se.add_argument('--question-type', choices=['THERAPY', 'DIAGNOSTIC', 'MATERIAL', 'ETIOLOGY'])
+    se.add_argument('--tag')
+    se.add_argument('--mine', action='store_true', help='فقط کتابخانه، بدون صفحات سایت')
+    se.set_defaults(fn=cmd_search)
 
     args = ap.parse_args()
     sys.exit(args.fn(args))
