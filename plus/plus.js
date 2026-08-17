@@ -2,24 +2,24 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=13';
-import { currentUser, api } from './js/api.js?v=13';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=13';
-import { openCollectionPicker } from './js/collections.js?v=13';
-import { el } from './js/util.js?v=13';
-import { initHomeCard } from './js/home-card.js?v=13';
-import { initHomeFeatures } from './js/home-features.js?v=13';
-import { initHomeBundles } from './js/home-bundles.js?v=13';
-import { initHomeUpboard } from './js/home-upboard.js?v=13';
-import { initDesTool } from './js/des-scorer.js?v=13';
-import { initHeader } from './js/header.js?v=13';
-import { initTourAutostart } from './js/tour.js?v=13';
-import { initReadingTracker } from './js/reading.js?v=13';
-import { initListeningTracker } from './js/listening.js?v=13';
-import { initShareScoring, buildShareButton } from './js/share.js?v=13';
-import { initHeart, buildHeartChip } from './js/votes.js?v=13';
-import { mountArticleThreads } from './js/article-threads.js?v=13';
-import { mountDes } from './js/des.js?v=13';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=14';
+import { currentUser, api } from './js/api.js?v=14';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=14';
+import { openCollectionPicker } from './js/collections.js?v=14';
+import { el } from './js/util.js?v=14';
+import { initHomeCard } from './js/home-card.js?v=14';
+import { initHomeFeatures } from './js/home-features.js?v=14';
+import { initHomeBundles } from './js/home-bundles.js?v=14';
+import { initHomeUpboard } from './js/home-upboard.js?v=14';
+import { initDesTool } from './js/des-scorer.js?v=14';
+import { initHeader } from './js/header.js?v=14';
+import { initTourAutostart } from './js/tour.js?v=14';
+import { initReadingTracker } from './js/reading.js?v=14';
+import { initListeningTracker } from './js/listening.js?v=14';
+import { initShareScoring, buildShareButton } from './js/share.js?v=14';
+import { initHeart, buildHeartChip } from './js/votes.js?v=14';
+import { mountArticleThreads } from './js/article-threads.js?v=14';
+import { mountDes } from './js/des.js?v=14';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -29,7 +29,7 @@ import { mountDes } from './js/des.js?v=13';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=13').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=14').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -526,37 +526,60 @@ if (typeof window !== 'undefined') {
   }
 }
 
-function boot() {
+/**
+ * Run one feature's init, and never let it take the others down with it.
+ *
+ * boot() used to be a single try around every init call in sequence, which
+ * reads as "never break the page" but does something much worse: the FIRST
+ * one to throw silently cancels every feature listed AFTER it. The page keeps
+ * working, the console has one warning nobody is looking at, and the missing
+ * features are indistinguishable from features that were never deployed —
+ * which is exactly how a broken homepage tab gets diagnosed as a bad deploy.
+ *
+ * Each feature is independent, so each one gets its own boundary and names
+ * itself in the warning.
+ */
+function step(name, fn) {
   try {
-    initHeader();
-    initArticle();
-    initListening(); // episode-page audio → episode_listened
-    initHomeCard(); // homepage personal card on all viewports (desktop + mobile)
-    initHomeFeatures(); // homepage premium section, under the ad card (both layouts)
-    initHomeBundles(); // homepage "از کجا شروع کنم؟" starter-bundle rail (both layouts)
-    initHomeUpboard(); // homepage مطالب box: the «بالاترین» tab + /up-board/ door
-    initDesTool(); // homepage ارزیاب DES tab, right under the DES explainer box
-    markViewed(detectContentId()); // mark THIS content page seen on open (any folder, incl. episodes)
-    // Credit shares of THIS page. Wired at boot rather than inside the article
-    // path on purpose: dc-nav.js puts its share chip on every page built on the
-    // shared article layer, including the episode pages initArticle() bows out
-    // of, and a chip whose taps nobody listens for is worse than no chip.
-    initShareScoring(detectContentId());
-    initEpisodeActions(); // audio episodes: the short row (قلب + اشتراک‌گذاری)
-    // The قلب, in the article's action row above the prose. Wired at boot for
-    // the same reason share is: the row exists on every page built on the shared
-    // article layer, including the audio episodes initArticle() bows out of —
-    // and an episode is as votable as an article. Called AFTER the line above,
-    // which is what puts a row on those pages for it to mount into.
-    // initHeart() no-ops wherever the row is absent (the homepage, /plus/, the
-    // desktop shell), so this is safe on every page.
-    initHeart(detectContentId());
-    initSeenTicks(); // landing pages: green ticks next to already-seen content
-    initTourAutostart(); // /?tour=1 handoff: start the guided tour on the homepage
+    fn();
   } catch (e) {
-    // Progressive enhancement: never break the page.
-    if (window.console) console.warn('[plus] init failed', e);
+    // Progressive enhancement: never break the page, and never take a
+    // neighbouring feature down either.
+    if (window.console) console.warn(`[plus] ${name} failed`, e);
   }
+}
+
+function boot() {
+  // Read once, and behind the same guard as everything else: it is the one
+  // call three features share, so an exception here (rather than inside one
+  // of them) would be the single point that takes all three down.
+  let contentId = null;
+  step('detect-content-id', () => { contentId = detectContentId(); });
+  step('header', () => initHeader());
+  step('article', () => initArticle());
+  step('listening', () => initListening()); // episode-page audio → episode_listened
+  step('home-card', () => initHomeCard()); // homepage personal card on all viewports (desktop + mobile)
+  step('home-features', () => initHomeFeatures()); // homepage premium section, under the ad card (both layouts)
+  step('home-bundles', () => initHomeBundles()); // homepage "از کجا شروع کنم؟" starter-bundle rail (both layouts)
+  step('home-upboard', () => initHomeUpboard()); // homepage مطالب box: the «بالاترین» tab + /up-board/ door
+  step('des-tool', () => initDesTool()); // homepage ارزیاب DES tab, right under the DES explainer box
+  step('mark-viewed', () => markViewed(contentId)); // mark THIS content page seen on open (any folder, incl. episodes)
+  // Credit shares of THIS page. Wired at boot rather than inside the article
+  // path on purpose: dc-nav.js puts its share chip on every page built on the
+  // shared article layer, including the episode pages initArticle() bows out
+  // of, and a chip whose taps nobody listens for is worse than no chip.
+  step('share-scoring', () => initShareScoring(contentId));
+  step('episode-actions', () => initEpisodeActions()); // audio episodes: the short row (قلب + اشتراک‌گذاری)
+  // The قلب, in the article's action row above the prose. Wired at boot for
+  // the same reason share is: the row exists on every page built on the shared
+  // article layer, including the audio episodes initArticle() bows out of —
+  // and an episode is as votable as an article. Called AFTER the line above,
+  // which is what puts a row on those pages for it to mount into.
+  // initHeart() no-ops wherever the row is absent (the homepage, /plus/, the
+  // desktop shell), so this is safe on every page.
+  step('heart', () => initHeart(contentId));
+  step('seen-ticks', () => initSeenTicks()); // landing pages: green ticks next to already-seen content
+  step('tour', () => initTourAutostart()); // /?tour=1 handoff: start the guided tour on the homepage
 }
 
 if (document.readyState === 'loading') {
