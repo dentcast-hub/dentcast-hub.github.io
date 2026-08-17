@@ -11927,5 +11927,341 @@
         "interpretation_fa": "متن یک عادتِ بالینیِ روتین را با دو مکانیسمِ مجزا توضیح می‌دهد: پویاییِ زمانیِ سیستمِ دندانی و اختلافِ فیلم‌تیکنس بینِ سمان‌ها. کاربردش را هم به شرایطِ مشخص محدود می‌کند، فاصله‌ی زمانیِ طولانی یا تعویضِ نوعِ سمان. ارزشِ آن رویه‌ای و آموزشی است، نه اثباتیِ پژوهشی؛ برای تصمیمِ روزمره درباره‌ی چک‌کردنِ اکلوژن پس از سمان‌کردنِ مجدد راهنمای عملیِ مناسبی است."
       }
     ]
+  },
+  "episodes/episode-9": {
+    "scored_at": "2026-08-17",
+    "sources": [
+      {
+        "des_version": "2.2",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Preparing Porcelain Surfaces for Optimal Bonding",
+          "authors": "Gary Alex",
+          "year": 2008,
+          "journal": "AEGIS Dental Network",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Dental porcelain generally consists of an amorphous glassy phase or matrix and a crystalline phase. Treating porcelain with HF tends to selectively dissolve the glassy matrix, resulting in a microscopically porous, high-energy, and microretentive surface",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Numerous in vitro studies clearly demonstrate that etching feldspathic-based porcelain with HF has the potential to significantly increase its bond strength to composite resin.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "These protocols may not be valid for all stacked porcelains and when available, manufacturer recommendations regarding etching times and HF concentrations should be followed.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "Two general treatment protocols successfully used by the author for surface treatment of stacked (powder/liquid) porcelain veneers prior to placement are presented below.",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله به عنوان یک یادداشت بالینی ارزیابی شده و با امتیاز ۱۹ در رده‌ی شواهد E قرار می‌گیرد.",
+        "interpretation_fa": "این متن یک مرور روایتی است که توصیه‌های بالینی شخصی نویسنده درباره آماده‌سازی سطح سرامیک‌ها (مانند استفاده از اسید اچ و سایلن) را بیان می‌کند. مقاله برای درک مکانیسم‌های باندینگ به پرسلن کاربردی است، اما یک مطالعه پژوهشی نظام‌مند محسوب نمی‌شود و ارزش آن در حد تجربه و نظر کارشناسی است."
+      }
+    ]
+  },
+  "notecast/episode-9": {
+    "scored_at": "2026-08-17",
+    "sources": [
+      {
+        "des_version": "2.2",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Preparing Porcelain Surfaces for Optimal Bonding",
+          "authors": "Gary Alex",
+          "year": 2008,
+          "journal": "AEGIS Dental Network",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Dental porcelain generally consists of an amorphous glassy phase or matrix and a crystalline phase. Treating porcelain with HF tends to selectively dissolve the glassy matrix, resulting in a microscopically porous, high-energy, and microretentive surface",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Numerous in vitro studies clearly demonstrate that etching feldspathic-based porcelain with HF has the potential to significantly increase its bond strength to composite resin.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "These protocols may not be valid for all stacked porcelains and when available, manufacturer recommendations regarding etching times and HF concentrations should be followed.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "Two general treatment protocols successfully used by the author for surface treatment of stacked (powder/liquid) porcelain veneers prior to placement are presented below.",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله به عنوان یک یادداشت بالینی ارزیابی شده و با امتیاز ۱۹ در رده‌ی شواهد E قرار می‌گیرد.",
+        "interpretation_fa": "این متن یک مرور روایتی است که توصیه‌های بالینی شخصی نویسنده درباره آماده‌سازی سطح سرامیک‌ها (مانند استفاده از اسید اچ و سایلن) را بیان می‌کند. مقاله برای درک مکانیسم‌های باندینگ به پرسلن کاربردی است، اما یک مطالعه پژوهشی نظام‌مند محسوب نمی‌شود و ارزش آن در حد تجربه و نظر کارشناسی است."
+      }
+    ]
+  },
+  "episodes/episode-10": {
+    "scored_at": "2026-08-17",
+    "sources": [
+      {
+        "des_version": "2.2",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Preparing Porcelain Surfaces for Optimal Bonding",
+          "authors": "Gary Alex",
+          "year": 2008,
+          "journal": "AEGIS Dental Network",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Dental porcelain generally consists of an amorphous glassy phase or matrix and a crystalline phase. Treating porcelain with HF tends to selectively dissolve the glassy matrix, resulting in a microscopically porous, high-energy, and microretentive surface",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Numerous in vitro studies clearly demonstrate that etching feldspathic-based porcelain with HF has the potential to significantly increase its bond strength to composite resin.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "These protocols may not be valid for all stacked porcelains and when available, manufacturer recommendations regarding etching times and HF concentrations should be followed.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "Two general treatment protocols successfully used by the author for surface treatment of stacked (powder/liquid) porcelain veneers prior to placement are presented below.",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله به عنوان یک یادداشت بالینی ارزیابی شده و با امتیاز ۱۹ در رده‌ی شواهد E قرار می‌گیرد.",
+        "interpretation_fa": "این متن یک مرور روایتی است که توصیه‌های بالینی شخصی نویسنده درباره آماده‌سازی سطح سرامیک‌ها (مانند استفاده از اسید اچ و سایلن) را بیان می‌کند. مقاله برای درک مکانیسم‌های باندینگ به پرسلن کاربردی است، اما یک مطالعه پژوهشی نظام‌مند محسوب نمی‌شود و ارزش آن در حد تجربه و نظر کارشناسی است."
+      }
+    ]
+  },
+  "notecast/episode-10": {
+    "scored_at": "2026-08-17",
+    "sources": [
+      {
+        "des_version": "2.2",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Preparing Porcelain Surfaces for Optimal Bonding",
+          "authors": "Gary Alex",
+          "year": 2008,
+          "journal": "AEGIS Dental Network",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Dental porcelain generally consists of an amorphous glassy phase or matrix and a crystalline phase. Treating porcelain with HF tends to selectively dissolve the glassy matrix, resulting in a microscopically porous, high-energy, and microretentive surface",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Numerous in vitro studies clearly demonstrate that etching feldspathic-based porcelain with HF has the potential to significantly increase its bond strength to composite resin.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "These protocols may not be valid for all stacked porcelains and when available, manufacturer recommendations regarding etching times and HF concentrations should be followed.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "Two general treatment protocols successfully used by the author for surface treatment of stacked (powder/liquid) porcelain veneers prior to placement are presented below.",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله به عنوان یک یادداشت بالینی ارزیابی شده و با امتیاز ۱۹ در رده‌ی شواهد E قرار می‌گیرد.",
+        "interpretation_fa": "این متن یک مرور روایتی است که توصیه‌های بالینی شخصی نویسنده درباره آماده‌سازی سطح سرامیک‌ها (مانند استفاده از اسید اچ و سایلن) را بیان می‌کند. مقاله برای درک مکانیسم‌های باندینگ به پرسلن کاربردی است، اما یک مطالعه پژوهشی نظام‌مند محسوب نمی‌شود و ارزش آن در حد تجربه و نظر کارشناسی است."
+      }
+    ]
+  },
+  "episodes/episode-11": {
+    "scored_at": "2026-08-17",
+    "sources": [
+      {
+        "des_version": "2.2",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Preparing Porcelain Surfaces for Optimal Bonding",
+          "authors": "Gary Alex",
+          "year": 2008,
+          "journal": "AEGIS Dental Network",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Dental porcelain generally consists of an amorphous glassy phase or matrix and a crystalline phase. Treating porcelain with HF tends to selectively dissolve the glassy matrix, resulting in a microscopically porous, high-energy, and microretentive surface",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Numerous in vitro studies clearly demonstrate that etching feldspathic-based porcelain with HF has the potential to significantly increase its bond strength to composite resin.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "These protocols may not be valid for all stacked porcelains and when available, manufacturer recommendations regarding etching times and HF concentrations should be followed.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "Two general treatment protocols successfully used by the author for surface treatment of stacked (powder/liquid) porcelain veneers prior to placement are presented below.",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله به عنوان یک یادداشت بالینی ارزیابی شده و با امتیاز ۱۹ در رده‌ی شواهد E قرار می‌گیرد.",
+        "interpretation_fa": "این متن یک مرور روایتی است که توصیه‌های بالینی شخصی نویسنده درباره آماده‌سازی سطح سرامیک‌ها (مانند استفاده از اسید اچ و سایلن) را بیان می‌کند. مقاله برای درک مکانیسم‌های باندینگ به پرسلن کاربردی است، اما یک مطالعه پژوهشی نظام‌مند محسوب نمی‌شود و ارزش آن در حد تجربه و نظر کارشناسی است."
+      }
+    ]
+  },
+  "notecast/episode-11": {
+    "scored_at": "2026-08-17",
+    "sources": [
+      {
+        "des_version": "2.2",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Preparing Porcelain Surfaces for Optimal Bonding",
+          "authors": "Gary Alex",
+          "year": 2008,
+          "journal": "AEGIS Dental Network",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Dental porcelain generally consists of an amorphous glassy phase or matrix and a crystalline phase. Treating porcelain with HF tends to selectively dissolve the glassy matrix, resulting in a microscopically porous, high-energy, and microretentive surface",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Numerous in vitro studies clearly demonstrate that etching feldspathic-based porcelain with HF has the potential to significantly increase its bond strength to composite resin.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "These protocols may not be valid for all stacked porcelains and when available, manufacturer recommendations regarding etching times and HF concentrations should be followed.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "Two general treatment protocols successfully used by the author for surface treatment of stacked (powder/liquid) porcelain veneers prior to placement are presented below.",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله به عنوان یک یادداشت بالینی ارزیابی شده و با امتیاز ۱۹ در رده‌ی شواهد E قرار می‌گیرد.",
+        "interpretation_fa": "این متن یک مرور روایتی است که توصیه‌های بالینی شخصی نویسنده درباره آماده‌سازی سطح سرامیک‌ها (مانند استفاده از اسید اچ و سایلن) را بیان می‌کند. مقاله برای درک مکانیسم‌های باندینگ به پرسلن کاربردی است، اما یک مطالعه پژوهشی نظام‌مند محسوب نمی‌شود و ارزش آن در حد تجربه و نظر کارشناسی است."
+      }
+    ]
   }
 }
