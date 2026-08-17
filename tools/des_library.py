@@ -28,6 +28,11 @@ Usage
   python3 tools/des_library.py search "implant" --band A
   python3 tools/des_library.py search --tag '#دخانیات'  searches BOTH the library
                                                          and the site's own pages
+
+When the exact key misses, lookup and add fall back to NEAR-DUPLICATE titles
+(token-set Jaccard) and print the candidates with author/year agreement. They
+never decide: `add --same-as <id>` attaches this submission's keys to an
+existing record, `add --force` mints a new one.
 """
 import argparse
 import hashlib
@@ -83,6 +88,122 @@ def h8(s):
     and joined — onto one key. Safe here because a paper title is a long letter
     sequence: two different papers do not collide on it."""
     return hashlib.sha1(re.sub(r'\s+', '', fold(s)).encode('utf-8')).hexdigest()[:10]
+
+
+# ── Near-duplicate titles ────────────────────────────────────────────────────
+# The exact key is an equality test: one typo and it misses. This is the
+# fallback — the title as a TOKEN SET, which survives reordering and small
+# edits. It never decides anything on its own; it produces candidates that a
+# human confirms, because RULE 1 says ambiguity declines.
+#
+# MEASURED on the 54 unique research titles the site already carries (1431
+# pairs), and the two numbers that set the design:
+#
+#   Jaccard ≥ 0.90      → 0 false positives
+#   containment ≥ 0.90  → 2 false positives, both at 100%, because a short
+#                         title sitting entirely inside a longer one scores
+#                         perfectly: «Dental implants and diabetes mellitus-a
+#                         systematic review» inside «Systematic review on
+#                         diabetes mellitus and dental implants: an update».
+#                         Two different papers. Hence Jaccard, not containment.
+#
+# The threshold is deliberately far BELOW 0.90. At 0.90 this catches almost
+# nothing the exact key does not already have (only word reordering); a single
+# typo scores 0.82 and a dropped subtitle 0.60. And no threshold can separate
+# those from a different paper by number alone — the worst real false positive
+# scores 0.86, above both. So the cut is low, and AUTHOR + YEAR does the
+# separating, which on the real corpus is decisive: Naujokat 2016 vs Wagner
+# 2022, Cruccu 2008 vs Chong 2023.
+STOPWORDS = {
+    'a', 'an', 'the', 'of', 'in', 'on', 'for', 'to', 'and', 'or', 'with', 'by', 'from',
+    'at', 'as', 'is', 'are', 'its', 'this', 'that', 'after', 'before', 'during',
+    'between', 'vs', 'versus', 'study', 'studies',
+}
+FUZZY_MIN = 0.55
+
+
+def title_tokens(t):
+    """Content words of a title. Stopwords out — they are a third of a title and
+    every paper shares them, which inflates every comparison equally."""
+    return {w for w in re.findall(r'[a-z]+', fold(t)) if len(w) > 2 and w not in STOPWORDS}
+
+
+def jaccard(a, b):
+    return len(a & b) / len(a | b) if (a or b) else 0.0
+
+
+def author_words(authors):
+    """Name words of the FIRST author, initials dropped, order irrelevant.
+
+    Taking «the last token» looked obvious and was wrong on the very first real
+    pair: journals write «Fan YY» and the model wrote «Ying-Ying Fan», so the
+    last token was `yy` in one and `fan` in the other, and the same paper failed
+    its own author check. Keeping the set of words ≥3 letters makes both sides
+    contain `fan`, whichever order the name is printed in."""
+    first = re.split(r'[,;،]', str(authors or ''))[0]
+    return {w for w in re.findall(r'[a-z]+', fold(first)) if len(w) > 2}
+
+
+def same_author(a, b):
+    """A corroborating signal inside an already-narrow candidate list — not a
+    key. Two authors sharing a surname is a tolerable false match here; a same
+    paper failing its own check is not."""
+    wa, wb = author_words(a), author_words(b)
+    return bool(wa and wb and (wa & wb))
+
+
+def surname(authors):
+    """One word, for display."""
+    w = author_words(authors)
+    return sorted(w)[0] if w else ''
+
+
+def fuzzy_candidates(title, exclude_keys=()):
+    """Both shelves, ranked. Returns (score, where, ident, citation)."""
+    q = title_tokens(title)
+    if len(q) < 3:
+        return []
+    out = []
+    lib = load(LIB, new_library())
+    for pid, p in lib['papers'].items():
+        c = (p['des'].get('citation') or {})
+        s = jaccard(q, title_tokens(c.get('title') or ''))
+        if s >= FUZZY_MIN:
+            out.append((s, 'کتابخانه', pid, c))
+    for cid, r in load(SITE, {}).items():
+        for src in r.get('sources', []):
+            if src.get('content_type') != 'RESEARCH':
+                continue
+            c = src.get('citation') or {}
+            s = jaccard(q, title_tokens(c.get('title') or ''))
+            if s >= FUZZY_MIN:
+                out.append((s, 'سایت', cid, c))
+    out.sort(reverse=True, key=lambda x: x[0])
+    return out
+
+
+def agreement(citation, author, year):
+    """What the number cannot settle: does the metadata agree? This is the
+    'look closer' step, made mechanical."""
+    marks = []
+    if author and citation.get('authors'):
+        marks.append('نویسنده ✓' if same_author(citation['authors'], author) else 'نویسنده ✗')
+    if year and citation.get('year'):
+        marks.append('سال ✓' if str(citation['year']) == str(year) else 'سال ✗')
+    return marks
+
+
+def print_candidates(cands, author=None, year=None, indent='   '):
+    for s, where, ident, c in cands[:6]:
+        marks = agreement(c, author, year)
+        tail = ('  ·  ' + '، '.join(marks)) if marks else ''
+        print('%s%3.0f%%  [%s] %s%s' % (indent, s * 100, where, ident, tail))
+        print('%s      %s' % (indent, (c.get('title') or '؟')[:70]))
+        meta = ' · '.join(x for x in [re.split(r'[,;،]', str(c.get('authors') or ''))[0].strip() or None,
+                                      str(c.get('year') or '') or None,
+                                      c.get('doi')] if x)
+        if meta:
+            print('%s      %s' % (indent, meta))
 
 
 def round_half_up(x):
@@ -287,6 +408,16 @@ def cmd_lookup(args):
             print('در صفحات خودِ سایت — %s با کلید %s' % ('، '.join(site[k]), k))
             print('   امتیازدهی لازم نیست؛ همان رکورد سرو می‌شود.')
             return 0
+
+    # No exact key. Before declaring it unknown, look for near-duplicate titles
+    # — a typo or a dropped subtitle misses the key but is the same paper.
+    if args.title:
+        cands = fuzzy_candidates(args.title)
+        if cands:
+            print('کلیدِ دقیق پیدا نشد، ولی عنوان‌های نزدیک هست — خودت تصمیم بگیر:')
+            print_candidates(cands, args.author, args.year)
+            print('\n   اگر یکی از این‌ها همان مقاله است، موقع ثبت --same-as <id> بده.')
+            return 2
     print('پیدا نشد — این مقاله باید امتیاز بگیرد.')
     return 1
 
@@ -419,6 +550,38 @@ def cmd_add(args):
             return 0
     already = [(k, site[k]) for k in ks if k in site]
 
+    # The near-duplicate gate. A new record is the expensive mistake here: it
+    # splits one paper across two entries and neither ever finds the other. So
+    # candidates are surfaced BEFORE the record is written, and the decision is
+    # the founder's — never the threshold's.
+    if not args.same_as and not args.force:
+        cands = fuzzy_candidates(title)
+        if cands:
+            print('عنوانِ نزدیک در انبار هست. پیش از ساختنِ رکوردِ تازه نگاه کن:')
+            print_candidates(cands, citation.get('authors'), citation.get('year'))
+            print('\n   همان مقاله است؟   --same-as <id>   (کلیدهای این ارسال به آن وصل می‌شود)')
+            print('   مقاله‌ی دیگری است؟ --force          (رکورد تازه ساخته می‌شود)')
+            return 2
+
+    # Same paper, seen under a title the key could not match: attach the new
+    # keys to the existing record rather than minting a second one.
+    if args.same_as:
+        pid = args.same_as
+        if pid not in lib['papers']:
+            sys.exit('در کتابخانه رکوردی به نام %s نیست.' % pid)
+        p = lib['papers'][pid]
+        added = [k for k in ks if k not in p['keys']]
+        p['keys'].extend(added)
+        for k in added:
+            lib['index'][k] = pid
+        for t in [x.strip() for x in (args.tags or '').split(',') if x.strip()]:
+            if t not in p['hashtags']:
+                p['hashtags'].append(t)
+        LIB.write_text(json.dumps(lib, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+        print('به %s وصل شد. کلیدهای تازه: %s' % (pid, '  '.join(added) or '—'))
+        print('   رکوردِ امتیاز دست‌نخورده ماند؛ فقط راه‌های رسیدن به آن بیشتر شد.')
+        return 0
+
     pid = 'p_%04d' % (len(lib['papers']) + 1)
     tags = [t.strip() for t in (args.tags or '').split(',') if t.strip()]
     if tags:
@@ -472,6 +635,8 @@ def main():
     lk.add_argument('--doi')
     lk.add_argument('--pmid')
     lk.add_argument('--title')
+    lk.add_argument('--author', help='برای تأیید نامزدهای مشابه')
+    lk.add_argument('--year')
     lk.set_defaults(fn=cmd_lookup)
 
     ad = sub.add_parser('add')
@@ -480,6 +645,8 @@ def main():
     ad.add_argument('--tags', default='', help='هشتگ‌ها با کاما، همه canonical')
     ad.add_argument('--submitted-by', default=None)
     ad.add_argument('--scored-by', default='gemini')
+    ad.add_argument('--same-as', default=None, help='همان مقاله‌ی موجود است — کلیدها به آن وصل شود')
+    ad.add_argument('--force', action='store_true', help='مقاله‌ی دیگری است، رکورد تازه بساز')
     ad.set_defaults(fn=cmd_add)
 
     se = sub.add_parser('search')
