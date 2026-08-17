@@ -584,6 +584,63 @@
    ]
   },
   {
+   "key": "طرح_درمان",
+   "tag": "#طرح_درمان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخاب مسیر درمان در سطح کل کیس.",
+   "use_when": "مقاله بین مسیرهای درمانی تصمیم بگیرد.",
+   "aliases": [
+    "treatment plan",
+    "پلن درمان",
+    "پلن درمانی",
+    "تریتمنت پلن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 38,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-25",
+    "episodes/episode-64",
+    "episodes/episode-78",
+    "episodes/episode-116",
+    "episodes/episode-117",
+    "episodes/episode-119",
+    "episodes/episode-119-1",
+    "episodes/episode-120",
+    "episodes/episode-121",
+    "episodes/episode-123-5",
+    "episodes/episode-124",
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "insight/insight-13",
+    "insight/insight-14",
+    "insight/insight-19",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "sharehub/share-5",
+    "chairside/chairside-6",
+    "chairside/chairside-11",
+    "episodes/episode-156",
+    "insight/insight-38",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "episodes/episode-160",
+    "chairside/chairside-24",
+    "chairside/chairside-26",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "insight/insight-64",
+    "chairside/chairside-31",
+    "episodes/episode-161",
+    "chairside/chairside-33",
+    "dentai/promptologist/prompt5-1"
+   ]
+  },
+  {
    "key": "نوت_کست",
    "tag": "#نوت_کست",
    "domain": "brand",
@@ -637,62 +694,6 @@
     "notecast/episode-37",
     "notecast/episode-38",
     "notecast/episode-39"
-   ]
-  },
-  {
-   "key": "طرح_درمان",
-   "tag": "#طرح_درمان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخاب مسیر درمان در سطح کل کیس.",
-   "use_when": "مقاله بین مسیرهای درمانی تصمیم بگیرد.",
-   "aliases": [
-    "treatment plan",
-    "پلن درمان",
-    "پلن درمانی",
-    "تریتمنت پلن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 37,
-   "content_ids": [
-    "episodes/episode-14",
-    "episodes/episode-25",
-    "episodes/episode-64",
-    "episodes/episode-78",
-    "episodes/episode-116",
-    "episodes/episode-117",
-    "episodes/episode-119",
-    "episodes/episode-119-1",
-    "episodes/episode-120",
-    "episodes/episode-121",
-    "episodes/episode-123-5",
-    "episodes/episode-124",
-    "episodes/episode-150-2",
-    "episodes/episode-151",
-    "insight/insight-13",
-    "insight/insight-14",
-    "insight/insight-19",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "sharehub/share-5",
-    "chairside/chairside-6",
-    "chairside/chairside-11",
-    "episodes/episode-156",
-    "insight/insight-38",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "episodes/episode-160",
-    "chairside/chairside-24",
-    "chairside/chairside-26",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "insight/insight-64",
-    "chairside/chairside-31",
-    "episodes/episode-161",
-    "chairside/chairside-33"
    ]
   },
   {
@@ -1493,6 +1494,42 @@
    ]
   },
   {
+   "key": "هوش_مصنوعی",
+   "tag": "#هوش_مصنوعی",
+   "domain": "ai",
+   "words": 2,
+   "definition": "چترِ عامِ هوش مصنوعی.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "artificial intelligence",
+    "ای آی",
+    "ماشین هوشمند"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 18,
+   "content_ids": [
+    "episodes/episode-109",
+    "episodes/episode-109-2",
+    "episodes/episode-149-1",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "sharehub/share-15",
+    "dentai/promptologist/prompt5-1"
+   ]
+  },
+  {
    "key": "انتخاب_متریال",
    "tag": "#انتخاب_متریال",
    "domain": "clinical",
@@ -1642,41 +1679,6 @@
    ]
   },
   {
-   "key": "هوش_مصنوعی",
-   "tag": "#هوش_مصنوعی",
-   "domain": "ai",
-   "words": 2,
-   "definition": "چترِ عامِ هوش مصنوعی.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "artificial intelligence",
-    "ای آی",
-    "ماشین هوشمند"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 17,
-   "content_ids": [
-    "episodes/episode-109",
-    "episodes/episode-109-2",
-    "episodes/episode-149-1",
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/dentai-28",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "sharehub/share-15"
-   ]
-  },
-  {
    "key": "ترمیم_غیرمستقیم",
    "tag": "#ترمیم_غیرمستقیم",
    "domain": "clinical",
@@ -1815,6 +1817,45 @@
    ]
   },
   {
+   "key": "سواد_هوش_مصنوعی",
+   "tag": "#سواد_هوش_مصنوعی",
+   "domain": "ai",
+   "words": 3,
+   "definition": "سوادِ هوشِ مصنوعی — مفاهیمِ پایه‌ی AI، یادگیریِ ماشین و یادگیریِ عمیق برای دندانپزشک.",
+   "use_when": "مقاله مفاهیمِ پایه یا مسیرِ یادگیریِ هوش مصنوعی را آموزش دهد.",
+   "aliases": [
+    "یادگیری ماشین",
+    "machine learning",
+    "deep learning",
+    "یادگیری عمیق",
+    "یادگیری ai",
+    "ai research",
+    "مسیر یادگیری هوش مصنوعی"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#AI_Literacy"
+   ],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-109",
+    "episodes/episode-109-2",
+    "episodes/episode-149-1",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1"
+   ]
+  },
+  {
    "key": "ادهزیو",
    "tag": "#ادهزیو",
    "domain": "clinical",
@@ -1879,30 +1920,21 @@
    ]
   },
   {
-   "key": "سواد_هوش_مصنوعی",
-   "tag": "#سواد_هوش_مصنوعی",
+   "key": "llm",
+   "tag": "#LLM",
    "domain": "ai",
-   "words": 3,
-   "definition": "سوادِ هوشِ مصنوعی — مفاهیمِ پایه‌ی AI، یادگیریِ ماشین و یادگیریِ عمیق برای دندانپزشک.",
-   "use_when": "مقاله مفاهیمِ پایه یا مسیرِ یادگیریِ هوش مصنوعی را آموزش دهد.",
+   "words": 1,
+   "definition": "سرنامِ Large Language Model.",
+   "use_when": "همیشه همراه #مدل_زبانی.",
    "aliases": [
-    "یادگیری ماشین",
-    "machine learning",
-    "deep learning",
-    "یادگیری عمیق",
-    "یادگیری ai",
-    "ai research",
-    "مسیر یادگیری هوش مصنوعی"
+    "ال ال ام"
    ],
    "variants": [],
    "co_tags": [
-    "#AI_Literacy"
+    "#مدل_زبانی"
    ],
-   "count": 14,
+   "count": 13,
    "content_ids": [
-    "episodes/episode-109",
-    "episodes/episode-109-2",
-    "episodes/episode-149-1",
     "dentai/promptologist/prompt1-1",
     "dentai/promptologist/prompt1-2",
     "dentai/promptologist/prompt1-3",
@@ -1912,8 +1944,10 @@
     "dentai/promptologist/prompt3-1",
     "dentai/promptologist/prompt4-1",
     "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28",
     "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4"
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1"
    ]
   },
   {
@@ -1944,6 +1978,68 @@
     "chairside/chairside-29",
     "insight/insight-61",
     "sharehub/share-15"
+   ]
+  },
+  {
+   "key": "مدل_زبانی",
+   "tag": "#مدل_زبانی",
+   "domain": "ai",
+   "words": 2,
+   "definition": "LLM — مدلی که با حدسِ ادامه‌ی محتملِ متن جواب می‌سازد.",
+   "use_when": "مقاله درباره‌ی سازوکار یا رفتار خودِ مدل زبانی باشد.",
+   "aliases": [
+    "language model",
+    "لنگویج مدل"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#LLM"
+   ],
+   "count": 13,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1"
+   ]
+  },
+  {
+   "key": "پرامپتولوژیست",
+   "tag": "#پرامپتولوژیست",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری «پرامپتولوژیست».",
+   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
+   "aliases": [
+    "promptologist",
+    "پرامپتولوژی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1"
    ]
   },
   {
@@ -1978,18 +2074,18 @@
    ]
   },
   {
-   "key": "llm",
-   "tag": "#LLM",
+   "key": "ai_literacy",
+   "tag": "#AI_Literacy",
    "domain": "ai",
-   "words": 1,
-   "definition": "سرنامِ Large Language Model.",
-   "use_when": "همیشه همراه #مدل_زبانی.",
-   "aliases": [
-    "ال ال ام"
+   "words": 2,
+   "definition": "همان #سواد_هوش_مصنوعی، با اصطلاح انگلیسی.",
+   "use_when": "همیشه همراه #سواد_هوش_مصنوعی.",
+   "aliases": [],
+   "variants": [
+    "#AILiteracy"
    ],
-   "variants": [],
    "co_tags": [
-    "#مدل_زبانی"
+    "#سواد_هوش_مصنوعی"
    ],
    "count": 12,
    "content_ids": [
@@ -2002,9 +2098,9 @@
     "dentai/promptologist/prompt3-1",
     "dentai/promptologist/prompt4-1",
     "dentai/promptologist/prompt4-2",
-    "dentai/dentai-28",
     "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4"
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1"
    ]
   },
   {
@@ -2229,70 +2325,10 @@
    ]
   },
   {
-   "key": "مدل_زبانی",
-   "tag": "#مدل_زبانی",
-   "domain": "ai",
-   "words": 2,
-   "definition": "LLM — مدلی که با حدسِ ادامه‌ی محتملِ متن جواب می‌سازد.",
-   "use_when": "مقاله درباره‌ی سازوکار یا رفتار خودِ مدل زبانی باشد.",
-   "aliases": [
-    "language model",
-    "لنگویج مدل"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#LLM"
-   ],
-   "count": 12,
-   "content_ids": [
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/dentai-28",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4"
-   ]
-  },
-  {
-   "key": "پرامپتولوژیست",
-   "tag": "#پرامپتولوژیست",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام سری «پرامپتولوژیست».",
-   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
-   "aliases": [
-    "promptologist",
-    "پرامپتولوژی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4"
-   ]
-  },
-  {
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
    "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
    "aliases": [
@@ -2322,32 +2358,33 @@
    ]
   },
   {
-   "key": "ai_literacy",
-   "tag": "#AI_Literacy",
+   "key": "chatgpt",
+   "tag": "#ChatGPT",
    "domain": "ai",
-   "words": 2,
-   "definition": "همان #سواد_هوش_مصنوعی، با اصطلاح انگلیسی.",
-   "use_when": "همیشه همراه #سواد_هوش_مصنوعی.",
-   "aliases": [],
-   "variants": [
-    "#AILiteracy"
+   "words": 1,
+   "definition": "سرویسِ ChatGPT.",
+   "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
+   "aliases": [
+    "چت جی پی تی",
+    "chat gpt",
+    "جی پی تی",
+    "gpt"
    ],
-   "co_tags": [
-    "#سواد_هوش_مصنوعی"
-   ],
+   "variants": [],
+   "co_tags": [],
    "count": 11,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
     "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-append1",
     "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
     "dentai/promptologist/prompt3-1",
     "dentai/promptologist/prompt4-1",
     "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28",
     "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4"
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1"
    ]
   },
   {
@@ -2414,35 +2451,6 @@
     "notecast/episode-27",
     "chairside/chairside-8",
     "chairside/chairside-11"
-   ]
-  },
-  {
-   "key": "chatgpt",
-   "tag": "#ChatGPT",
-   "domain": "ai",
-   "words": 1,
-   "definition": "سرویسِ ChatGPT.",
-   "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
-   "aliases": [
-    "چت جی پی تی",
-    "chat gpt",
-    "جی پی تی",
-    "gpt"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/dentai-28",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4"
    ]
   },
   {
@@ -5429,7 +5437,7 @@
    "key": "رادیوگرافی_تشخیصی",
    "tag": "#رادیوگرافی_تشخیصی",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "انتخاب و تفسیرِ درستِ تصویر — پانورامیک در برابر پری‌اپیکال.",
    "use_when": "مقاله کفایت یا نارساییِ یک تصویر را مسئله بداند.",
    "aliases": [
@@ -6675,7 +6683,7 @@
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
-   "words": 6,
+   "words": 4,
    "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
    "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
    "aliases": [
@@ -6711,6 +6719,27 @@
     "episodes/episode-122-4",
     "insight/insight-3",
     "insight/insight-56"
+   ]
+  },
+  {
+   "key": "راستی_آزمایی",
+   "tag": "#راستی_آزمایی",
+   "domain": "ai",
+   "words": 2,
+   "definition": "نگاهِ بدبینانه به جوابِ مدل به‌عنوان بخشی از روند کار.",
+   "use_when": "مقاله راستی‌آزمایی را در جریان کار جا بدهد.",
+   "aliases": [
+    "fact checking",
+    "وریفیکیشن",
+    "بررسی صحت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1"
    ]
   },
   {
@@ -6996,6 +7025,27 @@
     "episodes/episode-20",
     "episodes/episode-21",
     "notecast/episode-21"
+   ]
+  },
+  {
+   "key": "قضاوت_بالینی",
+   "tag": "#قضاوت_بالینی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "تصمیمِ نهاییِ دندان‌پزشک، که به ابزار واگذار نمی‌شود.",
+   "use_when": "مقاله مرزِ ابزار و تصمیم‌گیرنده را تعیین کند.",
+   "aliases": [
+    "clinical judgment",
+    "قضاوت کلینیکی",
+    "داوری بالینی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "chairside/chairside-18",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt5-1"
    ]
   },
   {
@@ -9347,26 +9397,6 @@
    ]
   },
   {
-   "key": "راستی_آزمایی",
-   "tag": "#راستی_آزمایی",
-   "domain": "ai",
-   "words": 2,
-   "definition": "نگاهِ بدبینانه به جوابِ مدل به‌عنوان بخشی از روند کار.",
-   "use_when": "مقاله راستی‌آزمایی را در جریان کار جا بدهد.",
-   "aliases": [
-    "fact checking",
-    "وریفیکیشن",
-    "بررسی صحت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-4"
-   ]
-  },
-  {
    "key": "رزین_اینفیلتریشن",
    "tag": "#رزین_اینفیلتریشن",
    "domain": null,
@@ -9795,26 +9825,6 @@
    "content_ids": [
     "episodes/episode-28",
     "notecast/episode-28"
-   ]
-  },
-  {
-   "key": "قضاوت_بالینی",
-   "tag": "#قضاوت_بالینی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "تصمیمِ نهاییِ دندان‌پزشک، که به ابزار واگذار نمی‌شود.",
-   "use_when": "مقاله مرزِ ابزار و تصمیم‌گیرنده را تعیین کند.",
-   "aliases": [
-    "clinical judgment",
-    "قضاوت کلینیکی",
-    "داوری بالینی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "chairside/chairside-18",
-    "dentai/promptologist/prompt1-5"
    ]
   },
   {
@@ -12809,7 +12819,7 @@
    "key": "اینتروژن_ارتودنسی",
    "tag": "#اینتروژن_ارتودنسی",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
    "use_when": "مقاله اینتروژن را راه‌حل بداند.",
    "aliases": [
@@ -13656,7 +13666,7 @@
    "key": "تفسیر_رادیوگرافی",
    "tag": "#تفسیر_رادیوگرافی",
    "domain": "clinical",
-   "words": 4,
+   "words": 2,
    "definition": "خواندنِ الگو — مرزِ صاف در برابر مرزِ منتشر — نه صرفاً دیدنِ لکه.",
    "use_when": "مقاله معیارِ تمایزِ تصویری بدهد.",
    "aliases": [
@@ -14727,7 +14737,7 @@
    "key": "رادیوگرافی_کنترل",
    "tag": "#رادیوگرافی_کنترل",
    "domain": "clinical",
-   "words": 4,
+   "words": 2,
    "definition": "پری‌اپیکالِ صحیح، به‌عنوان تأییدِ قطعیِ نشست.",
    "use_when": "مقاله رادیوگرافی را تأییدِ نهایی بداند، نه حس.",
    "aliases": [
@@ -17178,7 +17188,7 @@
    "key": "هوش_مصنوعی_رادیوگرافی",
    "tag": "#هوش_مصنوعی_رادیوگرافی",
    "domain": "ai",
-   "words": 5,
+   "words": 3,
    "definition": "نرم‌افزاری که روی رادیوگرافی ضایعه یا سطح استخوان را علامت می‌زند — تصویری که اغلب با ChatGPT اشتباه گرفته می‌شود.",
    "use_when": "مقاله همین دسته را موضوع یا نقطه‌ی تمایز قرار دهد.",
    "aliases": [
@@ -19014,6 +19024,7 @@
   "immediate loading": "زمان بارگذاری ایمپلنت",
   "لیگامان پریودنتال": "pdl",
   "load distribution": "توزیع نیرو",
+  "removal technique": "تکنیک خارج سازی",
   "primary stability": "ثبات اولیه",
   "bite registration": "ثبت رابطه",
   "tooth replacement": "جایگزینی دندان",
@@ -19031,7 +19042,6 @@
   "تداخل سمت working": "تداخل سمت کارگر",
   "اصلاح دندان مقابل": "تراش آنتاگونیست",
   "premature contact": "تماس زودرس",
-  "removal technique": "تکنیک خارج سازی",
   "بی حرکتی قبل سمان": "ثبات قبل از سمان",
   "فناوری دندانپزشکی": "دندانپزشکی هوشمند",
   "abutment rigidity": "سختی تکیه گاه",
@@ -19468,6 +19478,7 @@
   "خارج کردن روکش": "برداشت ترمیم",
   "باز کردن ترمیم": "برداشت ترمیم",
   "بایو رستوریتیو": "بیو رستوریتیو",
+  "تکنیک خارجسازی": "تکنیک خارج سازی",
   "ثبت رابطه فکین": "ثبت رابطه",
   "درد اوروفاسیال": "درد فکی",
   "orofacial pain": "درد فکی",
@@ -19494,7 +19505,6 @@
   "black triangle": "بلک تراینگل",
   "دسترسی بهداشتی": "بهداشت پذیری",
   "بهداشت ایمپلنت": "بهداشت پذیری",
-  "تکنیک خارجسازی": "تکنیک خارج سازی",
   "نگه داشتن مینا": "حفظ مینای دندان",
   "درد پس از روکش": "درد بعد از روکش",
   "ریشه های کوتاه": "ریشه کوتاه",
@@ -19587,10 +19597,10 @@
   "post gutta gap": "گپ پست و گوتا",
   "prosthodontics": "پروتز",
   "ویزیت کلینیکی": "کیس اینسایت",
+  "post and core": "پست و کور",
   "implant crown": "روکش ایمپلنت",
   "روکش ایمپلنتی": "روکش ایمپلنت",
   "کراون ایمپلنت": "روکش ایمپلنت",
-  "post and core": "پست و کور",
   "افتراق تشخیصی": "تشخیص افتراقی",
   "یادگیری ماشین": "سواد هوش مصنوعی",
   "deep learning": "سواد هوش مصنوعی",
@@ -19608,11 +19618,11 @@
   "bond strength": "قدرت باند",
   "پروتکل ادهزیو": "پروتکل باند",
   "ایمپلنت تراپی": "درمان ایمپلنت",
+  "dentcast plus": "دنتکست پلاس",
   "meta analysis": "متاآنالیز",
   "اسپلینت تراپی": "اسپلینت",
   "titanium base": "تیتانیوم لاینر",
   "سرجری ایمپلنت": "جراحی ایمپلنت",
-  "dentcast plus": "دنتکست پلاس",
   "excess cement": "سمان باقیمانده",
   "supraeruption": "سوپرااراپشن",
   "کانتور امرجنس": "پروفایل امرجنس",
@@ -19862,6 +19872,7 @@
   "تراش ورتیکال": "تراش عمودی",
   "translucency": "ترانسلوسنسی",
   "dentin crack": "ترک عاجی",
+  "درآوردن قطعه": "تکنیک خارج سازی",
   "تورک اینسرشن": "ثبات اولیه",
   "ریپلیس دندان": "جایگزینی دندان",
   "متال پالاتال": "روکش pfm",
@@ -19898,7 +19909,6 @@
   "ترمیم دایرکت": "ترمیم مستقیم",
   "error source": "تفکیک منشأ خطا",
   "کنتاکت زودرس": "تماس زودرس",
-  "درآوردن قطعه": "تکنیک خارج سازی",
   "چک ثبات روکش": "ثبات قبل از سمان",
   "دیواره باریک": "دیواره نازک",
   "ضخامت دیواره": "دیواره نازک",
@@ -20494,6 +20504,8 @@
   "نقد مقاله": "تحلیل مطالعه",
   "pulp test": "تست اندو",
   "توزیع بار": "توزیع نیرو",
+  "retrieval": "تکنیک خارج سازی",
+  "خارج کردن": "تکنیک خارج سازی",
   "self etch": "سلف اچ",
   "طراحی تاج": "طراحی روکش",
   "عاج دندان": "عاج",
@@ -20520,8 +20532,6 @@
   "کریز لاین": "ترک مینایی",
   "تریس کردن": "تریس آبسه",
   "تفکیک خطا": "تفکیک منشأ خطا",
-  "retrieval": "تکنیک خارج سازی",
-  "خارج کردن": "تکنیک خارج سازی",
   "حفظ انامل": "حفظ مینای دندان",
   "حیات پالپ": "حفظ پالپ",
   "stitching": "خطای استیچینگ",
