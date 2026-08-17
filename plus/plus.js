@@ -2,23 +2,24 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=10';
-import { currentUser, api } from './js/api.js?v=10';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=10';
-import { openCollectionPicker } from './js/collections.js?v=10';
-import { el } from './js/util.js?v=10';
-import { initHomeCard } from './js/home-card.js?v=10';
-import { initHomeFeatures } from './js/home-features.js?v=10';
-import { initHomeBundles } from './js/home-bundles.js?v=10';
-import { initHomeUpboard } from './js/home-upboard.js?v=10';
-import { initHeader } from './js/header.js?v=10';
-import { initTourAutostart } from './js/tour.js?v=10';
-import { initReadingTracker } from './js/reading.js?v=10';
-import { initListeningTracker } from './js/listening.js?v=10';
-import { initShareScoring, buildShareButton } from './js/share.js?v=10';
-import { initHeart, buildHeartChip } from './js/votes.js?v=10';
-import { mountArticleThreads } from './js/article-threads.js?v=10';
-import { mountDes } from './js/des.js?v=10';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=11';
+import { currentUser, api } from './js/api.js?v=11';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=11';
+import { openCollectionPicker } from './js/collections.js?v=11';
+import { el } from './js/util.js?v=11';
+import { initHomeCard } from './js/home-card.js?v=11';
+import { initHomeFeatures } from './js/home-features.js?v=11';
+import { initHomeBundles } from './js/home-bundles.js?v=11';
+import { initHomeUpboard } from './js/home-upboard.js?v=11';
+import { initDesTool } from './js/des-scorer.js?v=11';
+import { initHeader } from './js/header.js?v=11';
+import { initTourAutostart } from './js/tour.js?v=11';
+import { initReadingTracker } from './js/reading.js?v=11';
+import { initListeningTracker } from './js/listening.js?v=11';
+import { initShareScoring, buildShareButton } from './js/share.js?v=11';
+import { initHeart, buildHeartChip } from './js/votes.js?v=11';
+import { mountArticleThreads } from './js/article-threads.js?v=11';
+import { mountDes } from './js/des.js?v=11';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -28,7 +29,7 @@ import { mountDes } from './js/des.js?v=10';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=10').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=11').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -534,6 +535,7 @@ function boot() {
     initHomeFeatures(); // homepage premium section, under the ad card (both layouts)
     initHomeBundles(); // homepage "از کجا شروع کنم؟" starter-bundle rail (both layouts)
     initHomeUpboard(); // homepage مطالب box: the «بالاترین» tab + /up-board/ door
+    initDesTool(); // homepage ارزیاب DES tab, right under the DES explainer box
     markViewed(detectContentId()); // mark THIS content page seen on open (any folder, incl. episodes)
     // Credit shares of THIS page. Wired at boot rather than inside the article
     // path on purpose: dc-nav.js puts its share chip on every page built on the

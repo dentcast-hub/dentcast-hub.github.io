@@ -95,6 +95,11 @@ export async function mergeProfiles(
     'user_activity', 'highlights', 'card_state', 'collections',
     'subscriptions', 'payments', 'certificates', 'push_subscriptions',
     'auth_identities',
+    // ارزیاب DES: a reader's own submissions. des_papers carries no user
+    // column at all — the corpus outlives any single account — so only this
+    // table needs repointing. Without it a merge would cascade-delete a
+    // reader's pending requests.
+    'des_requests',
   ];
   for (const table of plainTables) {
     await client.query(`update ${table} set user_id = $2 where user_id = $1`, [fromId, toId]);

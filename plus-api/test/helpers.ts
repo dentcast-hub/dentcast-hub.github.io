@@ -36,6 +36,7 @@ export async function resetDb(): Promise<void> {
       discount_grants, discount_redemptions, badge_grants,
       referral_codes, referrals,
       support_tickets, ticket_messages,
+      des_requests, des_paper_keys, des_papers,
       assistant_rounds, assistant_tag_scores,
       leagues, league_members, league_weekly_stats, league_audit_log
     restart identity cascade

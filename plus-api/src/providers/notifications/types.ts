@@ -61,7 +61,15 @@ export type NotificationKind =
    * reply the reader is owed, so a busy day may drop it to اطلاعیه-only —
    * the row still lands either way.
    */
-  | 'referral_bonus';
+  | 'referral_bonus'
+  /**
+   * ارزیاب DES: the founder finished scoring a reader's submitted paper.
+   * UNCAPPED in notify-policy.ts for the same reason as 'support_reply' — this
+   * is the answer to something the reader asked and waited a day for, not a
+   * nudge we chose to send, so a streak reminder arriving first must not be
+   * why it never lands.
+   */
+  | 'des_result';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.
