@@ -3,6 +3,7 @@ import { applyRemoteIndex, indexSource } from './content-index.js';
 import { applyRemotePathways, pathwaysSource } from './pathways.js';
 import { applyRemoteBadges, badgesSource } from './badges.js';
 import { applyRemoteFlashcards, flashcardsSource } from './flashcards.js';
+import { applyRemoteDesLibrary, desLibrarySource } from './services/des-library-file.js';
 
 /**
  * Keeps the taxonomy index and the pathway definitions current WITHOUT a
@@ -61,6 +62,7 @@ let lastIndexSource = '';
 let lastPathwaysSource = '';
 let lastBadgesSource = '';
 let lastFlashcardsSource = '';
+let lastDesLibrarySource = '';
 
 export async function refreshOnce(): Promise<void> {
   if (config.content.indexUrls.length) {
@@ -118,6 +120,20 @@ export async function refreshOnce(): Promise<void> {
       console.log(`[content-refresh] flashcards now served from ${src}`);
     }
   }
+
+  if (config.content.desLibraryUrls.length) {
+    const raw = await fetchJson(config.content.desLibraryUrls, 'des-library');
+    if (raw !== null && !applyRemoteDesLibrary(raw)) {
+      // eslint-disable-next-line no-console
+      console.warn('[content-refresh] des-library: payload rejected by shape check; keeping the current copy');
+    }
+    const src = desLibrarySource();
+    if (src !== lastDesLibrarySource) {
+      lastDesLibrarySource = src;
+      // eslint-disable-next-line no-console
+      console.log(`[content-refresh] des-library now served from ${src}`);
+    }
+  }
 }
 
 /**
@@ -128,7 +144,8 @@ export async function refreshOnce(): Promise<void> {
  */
 export function startContentRefresh(): () => void {
   if (!config.content.indexUrls.length && !config.content.pathwaysUrls.length
-      && !config.content.badgesUrls.length && !config.content.flashcardsUrls.length) {
+      && !config.content.badgesUrls.length && !config.content.flashcardsUrls.length
+      && !config.content.desLibraryUrls.length) {
     return () => { /* not configured: the baked files are the whole story */ };
   }
   // Fetch once at boot rather than waiting out the first interval, so a

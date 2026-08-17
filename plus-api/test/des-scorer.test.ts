@@ -8,6 +8,7 @@ import {
   keyHash, allDois, allPmids, paperScope, pickIdentifier,
 } from '../src/services/des-identity.js';
 import { createPaper, nearDuplicates } from '../src/services/des-library.js';
+import { applyRemoteDesLibrary } from '../src/services/des-library-file.js';
 
 let app: FastifyInstance;
 let cookie: string;
@@ -15,8 +16,23 @@ let phone: string;
 
 const basic = 'Basic ' + Buffer.from(`${config.admin.user}:${config.admin.password}`).toString('base64');
 
+// The real plus/des-library.json on disk already carries a scored paper
+// titled "Smoking in relation to early dental implant failure..." — the same
+// fixture this file's own TITLE constant uses. Left alone, getFileLibrary()
+// would read it and answer several of these tests instantly from the file
+// instead of exercising the Postgres-backed request queue they mean to test.
+// A harmless, never-matching stub keeps every pre-existing test isolated from
+// the real file; the "file-backed library" tests below override it with their
+// own fixture via applyRemoteDesLibrary.
+const STUB_LIBRARY = {
+  version: 1,
+  index: {},
+  papers: { p_stub: { id: 'p_stub', keys: [], hashtags: [], des: { content_type: 'RESEARCH', citation: { title: '__test stub, never matches__' } } } },
+};
+
 beforeEach(async () => {
   await resetDb();
+  applyRemoteDesLibrary(STUB_LIBRARY);
   if (!app) app = await makeApp();
   phone = '09121200005';
   cookie = await loginAs(app, phone);
@@ -387,5 +403,83 @@ describe('nearDuplicates (service level)', () => {
     expect(cands.length).toBeGreaterThan(0);
     expect(cands[0].score).toBeGreaterThan(0.75);
     expect(cands[0].authorAgrees).toBe(true); // "Fan YY" vs "Ying-Ying Fan" — the authorWords fix
+  });
+});
+
+/* ============================================ the file-backed library == */
+// A paper the founder added out-of-band via the «DES دارم» workflow
+// (tools/des_library.py add → plus/des-library.json → content-refresh.ts),
+// simulated here the same way content-refresh.test.ts simulates a published
+// taxonomy: applyRemoteDesLibrary() adopts a payload without touching disk.
+
+const LIB_TITLE = 'Fluoride varnish effectiveness in preventing caries among children: a systematic review';
+
+function libraryWith(id: string, title: string, extra: Record<string, unknown> = {}) {
+  return {
+    version: 1,
+    index: { [`ttl:${keyHash(title)}`]: id },
+    papers: {
+      [id]: {
+        id,
+        keys: [`ttl:${keyHash(title)}`],
+        hashtags: ['#فلوراید'],
+        des: goodRecord({ citation: { ...goodRecord().citation, title, doi: null }, ...extra }),
+      },
+    },
+  };
+}
+
+describe('the file-backed library (plus/des-library.json)', () => {
+  it('answers /des/submit instantly, spending no open slot and writing no request row', async () => {
+    applyRemoteDesLibrary(libraryWith('p_x1', LIB_TITLE));
+    const res = await submit({ title: LIB_TITLE, body: ENGLISH_ABSTRACT, claim: 'ABSTRACT_ONLY' });
+    expect(res.statusCode).toBe(200);
+    const j = res.json();
+    expect(j.answered).toBe(true);
+    expect(j.des.des_score).toBe(80);
+    expect(j.hashtags).toContain('#فلوراید');
+
+    const state = await app.inject({ method: 'GET', url: '/des/state', headers: { cookie } });
+    expect(state.json().open).toEqual([]);
+    const rows = await pool.query('select count(*)::int as n from des_requests');
+    expect(rows.rows[0].n).toBe(0);
+  });
+
+  it('nearDuplicates surfaces a file-backed candidate with a lib: id', async () => {
+    applyRemoteDesLibrary(libraryWith('p_x2', LIB_TITLE));
+    const cands = await nearDuplicates(LIB_TITLE.replace('Fluoride', 'Flouride'));
+    expect(cands.length).toBeGreaterThan(0);
+    expect(cands[0].paperId).toBe('lib:p_x2');
+  });
+
+  it('admin same_as against a lib: paper answers the reader without touching des_paper_keys', async () => {
+    applyRemoteDesLibrary(libraryWith('p_x3', LIB_TITLE));
+    const typoTitle = LIB_TITLE.replace('Fluoride', 'Flouride');
+
+    const ref = await submit({ title: typoTitle, body: ENGLISH_ABSTRACT, claim: 'ABSTRACT_ONLY' })
+      .then((r) => r.json().reference);
+    const list = await app.inject({ method: 'GET', url: '/admin/des', headers: { authorization: basic } });
+    const id = list.json().pending.find((r: { reference: string }) => r.reference === ref).id;
+
+    const rec = goodRecord({ citation: { ...goodRecord().citation, title: typoTitle, doi: null } });
+    const dup = await adminAnswer(id, { title: typoTitle, record: JSON.stringify(rec) });
+    expect(dup.statusCode).toBe(409);
+    expect(dup.json().candidates[0].paperId).toBe('lib:p_x3');
+
+    const before = await pool.query('select count(*)::int as n from des_paper_keys');
+    const res = await adminAnswer(id, { title: typoTitle, record: JSON.stringify(rec), same_as: 'lib:p_x3' });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().paper_id).toBe('lib:p_x3');
+    expect(res.json().warnings.some((w: string) => /کتابخانه‌ی فایلی/.test(w))).toBe(true);
+
+    const after = await pool.query('select count(*)::int as n from des_paper_keys');
+    expect(after.rows[0].n).toBe(before.rows[0].n); // no key was attached — the file is read-only from here
+
+    const req = await pool.query('select status, paper_id from des_requests where id = $1', [id]);
+    expect(req.rows[0].status).toBe('answered');
+    expect(req.rows[0].paper_id).toBe('lib:p_x3');
+
+    const papers = await pool.query('select count(*)::int as n from des_papers');
+    expect(papers.rows[0].n).toBe(0); // no Postgres row was ever created for this paper
   });
 });

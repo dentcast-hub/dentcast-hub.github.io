@@ -600,6 +600,14 @@ export const config = {
   // the container.
   flashcardsPath: process.env.FLASHCARDS_PATH || '',
 
+  // Path to plus/des-library.json (the founder's own out-of-band DES paper
+  // corpus — versioned in the repo, no DB). Same story as pathwaysPath: repo
+  // default in dev, explicit in the container. The LIVE reader-submission
+  // corpus (des_papers/des_paper_keys, answered through the admin panel)
+  // stays Postgres; this file is a second source merged into the same
+  // lookup for papers the founder adds proactively, in chat.
+  desLibraryPath: process.env.DES_LIBRARY_PATH || '',
+
   // Where to re-fetch those files from at runtime (content-refresh.ts).
   // The paths above are the boot value and the permanent fallback; these URLs
   // are what stop every publish from needing an image rebuild. Comma-separated
@@ -610,6 +618,7 @@ export const config = {
     pathwaysUrls: list('PATHWAYS_URL', []),
     badgesUrls: list('BADGES_URL', []),
     flashcardsUrls: list('FLASHCARDS_URL', []),
+    desLibraryUrls: list('DES_LIBRARY_URL', []),
     refreshSeconds: int('CONTENT_REFRESH_SECONDS', 300),
   },
 };
