@@ -4542,13 +4542,35 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
             p.textContent = 'در حال آماده‌سازی…';
             panel.appendChild(p);
 
-            /* …and never hang on that placeholder either. If the module has
-               not taken over within a few seconds it is not coming (blocked,
-               404, or a throw somewhere in the graph), and "در حال
-               آماده‌سازی…" forever is the worst of every option: the reader
-               is stranded and the failure is invisible. Fall back to plain
-               links — no modules, no fetch, cannot fail — and name the
-               problem in the console for whoever is debugging. */
+            /* …and if plus.js has not wired us up shortly, LOAD THE TOOL
+               OURSELVES rather than waiting on it.
+
+               plus.js is one bootstrap for a dozen features and the tool is
+               only one of them, so any reason it is absent — an older copy
+               still in flight, a throw upstream, a slow graph — silently
+               costs this panel everything while the rest of the page looks
+               fine. That is precisely the state this shipped in: the home
+               card and the league row rendered from plus.js while this panel
+               sat empty.
+
+               No ?v= on purpose. Every internal /plus/ import is unstamped
+               and kept fresh by the no-cache rule on /plus/* (see _headers
+               and the stamp_tree pass in .github/workflows/deploy-arvan.yml),
+               so a hand-written stamp here would be a second source of truth
+               that goes stale — the exact failure this repo has been bitten
+               by before. data-filled keeps the two paths from both building. */
+            setTimeout(function(){
+              if (panel.getAttribute('data-filled')) return;
+              import('/plus/js/des-scorer.js').then(function(m){
+                if (!panel.getAttribute('data-filled') && m && m.initDesTool) m.initDesTool();
+              }).catch(function(err){
+                if (window.console) console.warn('[destool] self-load failed', err);
+              });
+            }, 2500);
+
+            /* Last resort. If even that did not land, the reader is not left
+               on a spinner: plain links, no modules, no fetch, cannot fail —
+               plus a precise console line for whoever is debugging. */
             setTimeout(function(){
               if (panel.getAttribute('data-filled')) return;
               panel.textContent = '';
