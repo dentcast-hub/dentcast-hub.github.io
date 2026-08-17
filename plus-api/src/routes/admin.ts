@@ -49,6 +49,14 @@ import {
   ticketByReference, kindTitle, setThreadPublic, notifyPublished,
 } from '../services/support.js';
 import { normalizeReference } from '../services/reference.js';
+import {
+  requestQueue, getRequest, requestByReference, markAnswered, markRejected,
+} from '../services/des-requests.js';
+import {
+  nearDuplicates, createPaper, attachKeys,
+  validateDesRecord, normaliseDesRecord, resolveHashtags,
+} from '../services/des-library.js';
+import { keyHash, keysFor, allDois, allPmids, paperScope, pickIdentifier } from '../services/des-identity.js';
 import { config } from '../config.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
@@ -192,6 +200,17 @@ function renderHtml(
     font:inherit;font-weight:800;cursor:pointer}
   .bt-actions button.gold{background:#7a5a20}
   .bt-actions button.danger{background:#7a2020}
+  .ds-work{display:flex;flex-direction:column;gap:8px}
+  .ds-work label{font-size:.82rem;color:#93a1b8;margin-top:4px}
+  .ds-work input[type=text],.ds-work textarea{width:100%;box-sizing:border-box;background:#0f1420;
+    color:#e8eef7;border:1px solid #2a3448;border-radius:9px;padding:9px 11px;font:inherit;font-size:.9rem}
+  .ds-work textarea.ds-json{min-height:220px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:.8rem;direction:ltr;text-align:left;resize:vertical}
+  .ds-work .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+  .ds-cand{background:#0f1420;border:1px solid #2a3448;border-radius:9px;padding:8px 10px;margin-top:6px}
+  .ds-cand b{display:block;font-size:.88rem}
+  .ds-cand .muted{margin-top:2px}
+  .ds-cand .row{margin-top:8px}
 </style></head><body><div class="wrap">
   <h1>پیشخوان بنیان‌گذار</h1>
   <div class="muted">تولید: ${k.generated_at} · منطقه زمانی: ${k.tz}</div>
@@ -984,6 +1003,286 @@ function renderHtml(
     });
 
     load();
+  })();
+  </script>
+
+  <h3 style="margin-top:26px">ارزیاب DES <span id="dsWaiting" class="pill"></span></h3>
+  <div class="muted">مقاله‌هایی که خواننده‌ها فرستاده‌اند. قدیمی‌ترین بالاتر. برای ارسال‌های PDF، کد را از تلگرام پشتیبانی این‌جا جست‌وجو کن.</div>
+  <form class="bc" onsubmit="return false">
+    <div class="row">
+      <div style="flex:1 1 220px"><label for="dsRef">جست‌وجوی کد</label>
+        <input id="dsRef" type="text" placeholder="D-ABC-DEF"></div>
+      <div style="flex:0 0 auto;align-self:flex-end"><button id="dsFind" type="button">پیدا کن</button></div>
+    </div>
+    <div id="dsOut" class="tk-out"></div>
+  </form>
+  <div id="dsList"></div>
+  <script>
+  (function () {
+    var list = document.getElementById('dsList');
+    var out = document.getElementById('dsOut');
+    var waiting = document.getElementById('dsWaiting');
+    if (!list) return;
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+    function when(iso) {
+      try { return new Date(iso).toLocaleString('fa-IR'); } catch (e) { return iso; }
+    }
+    function who(r) {
+      return esc(r.display_name || r.phone || r.user_id);
+    }
+
+    function card(r) {
+      return '<div class="tk" data-id="' + esc(r.id) + '">'
+        + '<div class="tk-h"><b>' + esc(r.title) + '</b>'
+        + '<span class="pill">' + esc(r.reference) + '</span>'
+        + (r.has_pdf ? '<span class="pill hot">📎 PDF در تلگرام</span>' : '')
+        + '<span class="pill">' + (r.claim === 'FULL_TEXT' ? 'متن کامل' : 'چکیده') + '</span>'
+        + '</div>'
+        + '<div class="muted">' + who(r) + ' · ' + when(r.created_at) + '</div>'
+        + '<div class="tk-x">' + esc(r.excerpt) + (r.excerpt && r.excerpt.length >= 200 ? '…' : '') + '</div>'
+        + '<div class="tk-body"></div></div>';
+    }
+
+    function render(rows) {
+      if (!rows.length) { list.innerHTML = '<div class="muted">چیزی این‌جا نیست.</div>'; return; }
+      list.innerHTML = rows.map(card).join('');
+    }
+
+    function load() {
+      list.innerHTML = '<div class="muted">در حال خواندن…</div>';
+      fetch('/admin/des', { credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          waiting.textContent = j.count ? j.count + ' منتظر' : '';
+          render(j.pending || []);
+        })
+        .catch(function () { list.innerHTML = '<div class="muted">خوانده نشد.</div>'; });
+    }
+
+    function candidateRow(c) {
+      var agree = c.authorAgrees === true ? 'نویسنده ✓' : (c.authorAgrees === false ? 'نویسنده ✗' : '');
+      return '<div class="ds-cand" data-paper="' + esc(c.paperId) + '">'
+        + '<b>' + Math.round(c.score * 100) + '٪ — ' + esc(c.title) + '</b>'
+        + '<div class="muted">' + [esc(c.authors), c.year ? esc(String(c.year)) : '', esc(c.doi), agree]
+            .filter(Boolean).join(' · ') + '</div>'
+        + '<div class="row">'
+        + '<button type="button" data-cand-act="same">همان مقاله است</button>'
+        + '<button type="button" data-cand-act="force">مقاله‌ی دیگری است</button>'
+        + '</div></div>';
+    }
+
+    function work(box, id, req) {
+      box.innerHTML = '<div class="ds-work">'
+        + (req.link ? '<div class="muted">لینک: ' + esc(req.link) + '</div>' : '')
+        + '<div class="tk-x" style="white-space:pre-wrap">' + esc(req.body || '(بدون متن — فقط PDF)') + '</div>'
+        + '<label>عنوان مقاله</label>'
+        + '<input class="ds-title" type="text" value="' + esc(req.title) + '">'
+        + '<label>خروجی JSON مدل</label>'
+        + '<textarea class="ds-json" placeholder="کل شیء JSON را این‌جا پیست کن" dir="ltr"></textarea>'
+        + '<label>هشتگ‌ها (با کاما)</label>'
+        + '<input class="ds-tags" type="text" placeholder="#ایمپلنت, #دخانیات">'
+        + '<div class="row">'
+        + '<button type="button" data-act="save">ثبت و اطلاع بده</button>'
+        + '<button type="button" data-act="reject">رد کن</button>'
+        + '</div>'
+        + '<div class="ds-msg muted"></div>'
+        + '</div>';
+    }
+
+    function thread(box, id) {
+      box.innerHTML = '<div class="muted">در حال خواندن…</div>';
+      fetch('/admin/des/' + id, { credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          if (!j.ok) { box.innerHTML = '<div class="muted">پیدا نشد.</div>'; return; }
+          work(box, id, j.request);
+        })
+        .catch(function () { box.innerHTML = '<div class="muted">خوانده نشد.</div>'; });
+    }
+
+    function doSave(box, id, extra) {
+      var msg = box.querySelector('.ds-msg');
+      var titleEl = box.querySelector('.ds-title');
+      var jsonEl = box.querySelector('.ds-json');
+      var tagsEl = box.querySelector('.ds-tags');
+      var payload = Object.assign({
+        title: titleEl.value.trim(),
+        record: jsonEl.value.trim(),
+        tags: tagsEl.value.trim(),
+      }, extra || {});
+      if (!payload.title || !payload.record) { msg.textContent = 'عنوان و خروجی JSON هر دو لازم‌اند.'; return; }
+      msg.textContent = 'در حال ثبت…';
+      fetch('/admin/des/' + id + '/answer', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, status: r.status, j: j }; }); })
+        .then(function (res) {
+          if (res.status === 409 && res.j.candidates) {
+            msg.innerHTML = 'عنوانِ نزدیک در کتابخانه هست — تصمیم بگیر:'
+              + res.j.candidates.map(candidateRow).join('');
+            return;
+          }
+          if (res.status === 409) { msg.textContent = res.j.message || 'تداخل.'; return; }
+          if (!res.ok) {
+            msg.innerHTML = (res.j.issues || [res.j.message || res.j.error || 'نشد.'])
+              .map(function (x) { return '<div>· ' + esc(x) + '</div>'; }).join('');
+            return;
+          }
+          msg.innerHTML = 'ثبت شد و به کاربر اطلاع داده شد.'
+            + (res.j.warnings || []).map(function (w) { return '<div>· ' + esc(w) + '</div>'; }).join('');
+          setTimeout(load, 900);
+        })
+        .catch(function () { msg.textContent = 'ارسال نشد.'; });
+    }
+
+    list.addEventListener('click', function (ev) {
+      var candBtn = ev.target.closest ? ev.target.closest('[data-cand-act]') : null;
+      if (candBtn) {
+        var candRow = candBtn.closest('.ds-cand');
+        var box = candBtn.closest('.tk-body');
+        var wrap = candBtn.closest('.tk');
+        var paperId = candRow.getAttribute('data-paper');
+        var act = candBtn.getAttribute('data-cand-act');
+        doSave(box, wrap.getAttribute('data-id'),
+          act === 'same' ? { same_as: paperId } : { force: true });
+        return;
+      }
+
+      var actBtn = ev.target.closest ? ev.target.closest('[data-act]') : null;
+      if (actBtn) {
+        var wrap2 = actBtn.closest('.tk');
+        var box2 = actBtn.closest('.tk-body');
+        var id2 = wrap2.getAttribute('data-id');
+        if (actBtn.getAttribute('data-act') === 'reject') {
+          if (!confirm('این درخواست رد شود؟')) return;
+          fetch('/admin/des/' + id2 + '/reject', { method: 'POST', credentials: 'include' })
+            .then(load).catch(function () { box2.querySelector('.ds-msg').textContent = 'نشد.'; });
+          return;
+        }
+        doSave(box2, id2, {});
+        return;
+      }
+
+      var wrap3 = ev.target.closest ? ev.target.closest('.tk') : null;
+      if (!wrap3) return;
+      if (ev.target.closest && ev.target.closest('.tk-body')) return;
+      var box3 = wrap3.querySelector('.tk-body');
+      if (box3.innerHTML) { box3.innerHTML = ''; return; }
+      thread(box3, wrap3.getAttribute('data-id'));
+    });
+
+    document.getElementById('dsFind').addEventListener('click', function () {
+      var ref = document.getElementById('dsRef').value.trim();
+      if (!ref) { out.textContent = 'کد را بنویس.'; return; }
+      out.textContent = 'در حال جست‌وجو…';
+      fetch('/admin/des/by-reference/' + encodeURIComponent(ref), { credentials: 'include' })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          if (!res.ok) { out.textContent = 'کدی با این نشانی پیدا نشد.'; return; }
+          out.textContent = '';
+          waiting.textContent = '';
+          render([Object.assign({}, res.j.request, { excerpt: (res.j.request.body || '').slice(0, 200) })]);
+        })
+        .catch(function () { out.textContent = 'جست‌وجو نشد.'; });
+    });
+
+    load();
+  })();
+  </script>
+
+  <h3 style="margin-top:26px">افزودنِ مستقیم به کتابخانه‌ی DES</h3>
+  <div class="muted">بدون درخواستِ خواننده — یک امتیازی که خودت داری و می‌خواهی به کتابخانه اضافه شود. هیچ اطلاعیه‌ای فرستاده نمی‌شود.</div>
+  <div id="dlBox" class="ds-work" style="margin-top:8px">
+    <label>عنوان مقاله</label>
+    <input id="dlTitle" type="text">
+    <label>خروجی JSON مدل</label>
+    <textarea id="dlJson" class="ds-json" placeholder="کل شیء JSON را این‌جا پیست کن" dir="ltr"></textarea>
+    <label>هشتگ‌ها (با کاما)</label>
+    <input id="dlTags" type="text" placeholder="#ایمپلنت, #دخانیات">
+    <label>PMID (اختیاری)</label>
+    <input id="dlPmid" type="text" dir="ltr">
+    <div class="row">
+      <button id="dlSave" type="button">ثبت در کتابخانه</button>
+    </div>
+    <div id="dlMsg" class="muted"></div>
+  </div>
+  <script>
+  (function () {
+    var box = document.getElementById('dlBox');
+    if (!box) return;
+    var titleEl = document.getElementById('dlTitle');
+    var jsonEl = document.getElementById('dlJson');
+    var tagsEl = document.getElementById('dlTags');
+    var pmidEl = document.getElementById('dlPmid');
+    var saveBtn = document.getElementById('dlSave');
+    var msg = document.getElementById('dlMsg');
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    function candidateRow(c) {
+      var agree = c.authorAgrees === true ? 'نویسنده ✓' : (c.authorAgrees === false ? 'نویسنده ✗' : '');
+      return '<div class="ds-cand" data-paper="' + esc(c.paperId) + '">'
+        + '<b>' + Math.round(c.score * 100) + '٪ — ' + esc(c.title) + '</b>'
+        + '<div class="muted">' + [esc(c.authors), c.year ? esc(String(c.year)) : '', esc(c.doi), agree]
+            .filter(Boolean).join(' · ') + '</div>'
+        + '<div class="row">'
+        + '<button type="button" data-dl-cand-act="same">همان مقاله است</button>'
+        + '<button type="button" data-dl-cand-act="force">مقاله‌ی دیگری است</button>'
+        + '</div></div>';
+    }
+
+    function save(extra) {
+      var payload = Object.assign({
+        title: titleEl.value.trim(),
+        record: jsonEl.value.trim(),
+        tags: tagsEl.value.trim(),
+        pmid: pmidEl.value.trim(),
+      }, extra || {});
+      if (!payload.title || !payload.record) { msg.textContent = 'عنوان و خروجی JSON هر دو لازم‌اند.'; return; }
+      msg.textContent = 'در حال ثبت…';
+      fetch('/admin/des/library', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, status: r.status, j: j }; }); })
+        .then(function (res) {
+          if (res.status === 409 && res.j.candidates) {
+            msg.innerHTML = 'عنوانِ نزدیک در کتابخانه هست — تصمیم بگیر:'
+              + res.j.candidates.map(candidateRow).join('');
+            return;
+          }
+          if (res.status === 409) { msg.textContent = res.j.message || 'تداخل.'; return; }
+          if (!res.ok) {
+            msg.innerHTML = (res.j.issues || [res.j.message || res.j.error || 'نشد.'])
+              .map(function (x) { return '<div>· ' + esc(x) + '</div>'; }).join('');
+            return;
+          }
+          msg.innerHTML = 'ثبت شد (شناسه: ' + esc(res.j.paper_id) + ').'
+            + (res.j.warnings || []).map(function (w) { return '<div>· ' + esc(w) + '</div>'; }).join('');
+          titleEl.value = ''; jsonEl.value = ''; tagsEl.value = ''; pmidEl.value = '';
+        })
+        .catch(function () { msg.textContent = 'ارسال نشد.'; });
+    }
+
+    saveBtn.addEventListener('click', function () { save({}); });
+    msg.addEventListener('click', function (ev) {
+      var candBtn = ev.target.closest ? ev.target.closest('[data-dl-cand-act]') : null;
+      if (!candBtn) return;
+      var candRow = candBtn.closest('.ds-cand');
+      var paperId = candRow.getAttribute('data-paper');
+      var act = candBtn.getAttribute('data-dl-cand-act');
+      save(act === 'same' ? { same_as: paperId } : { force: true });
+    });
   })();
   </script>
 </div></body></html>`;
@@ -2391,6 +2690,262 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     const ticket = await reopenTicket(id);
     if (!ticket) return reply.code(404).send({ error: 'not_closed' });
     return reply.send({ ok: true, ticket });
+  });
+
+  // ارزیاب DES — the founder's side. Reader endpoints live in routes/des.ts;
+  // there is no AI provider anywhere in this feature (handoff §0/RULE 7), so
+  // everything past the free gate in routes/des.ts waits here for a human.
+
+  // GET /admin/des — the queue, oldest first.
+  app.get('/admin/des', async (_request, reply) => {
+    const rows = await requestQueue();
+    return reply.send({
+      ok: true,
+      count: rows.length,
+      pending: rows.map((r) => ({
+        id: r.id,
+        reference: r.reference,
+        title: r.title,
+        claim: r.claim,
+        has_pdf: r.has_pdf,
+        created_at: r.created_at,
+        display_name: r.display_name,
+        phone: r.phone,
+        excerpt: (r.body || '').slice(0, 200),
+      })),
+    });
+  });
+
+  // GET /admin/des/:id — the full submission, for the work area.
+  app.get('/admin/des/:id', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const r = await getRequest(id);
+    if (!r) return reply.code(404).send({ error: 'not_found' });
+    return reply.send({ ok: true, request: r });
+  });
+
+  // GET /admin/des/by-reference/:reference — the lookup a PDF's code enables:
+  // it arrives in Telegram with «D-ABC-DEF» typed under it, and this is how
+  // that becomes a submission.
+  app.get('/admin/des/by-reference/:reference', async (request, reply) => {
+    const { reference } = request.params as { reference: string };
+    const r = await requestByReference(reference);
+    if (!r) return reply.code(404).send({ error: 'not_found' });
+    return reply.send({ ok: true, request: r });
+  });
+
+  // POST /admin/des/:id/answer { title, record, tags, same_as?, force? } — the
+  // paste box. One request does the whole job: parse, validate, normalise,
+  // check for a near-duplicate paper, write, and notify the reader.
+  app.post('/admin/des/:id/answer', {
+    schema: {
+      body: {
+        type: 'object', required: ['title', 'record'],
+        properties: {
+          title: { type: 'string', minLength: 1, maxLength: 300 },
+          record: { type: 'string', minLength: 1 },
+          tags: { type: 'string' },
+          same_as: { type: 'string' },
+          force: { type: 'boolean' },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const b = request.body as {
+      title: string; record: string; tags?: string; same_as?: string; force?: boolean;
+    };
+
+    const desReq = await getRequest(id);
+    if (!desReq) return reply.code(404).send({ error: 'not_found' });
+
+    let parsed: any;
+    try {
+      parsed = JSON.parse(b.record);
+    } catch (err) {
+      return reply.code(400).send({ error: 'bad_json', detail: (err as Error).message });
+    }
+
+    const warnings: string[] = [];
+    const title = b.title.trim();
+    parsed.citation = parsed.citation || {};
+    const recordTitle = String(parsed.citation.title || '').trim();
+    if (recordTitle && keyHash(recordTitle) !== keyHash(title)) {
+      warnings.push('عنوانِ داخل رکورد با عنوانی که دادی یکی نیست؛ عنوانِ تو ثبت شد.');
+    }
+    parsed.citation.title = title;
+
+    const issues = validateDesRecord(parsed);
+    if (issues.length) {
+      return reply.code(400).send({ error: 'invalid_record', issues });
+    }
+
+    const { changed } = normaliseDesRecord(parsed);
+    warnings.push(...changed);
+
+    // Identifiers: prefer what the founder's scored record says (it names the
+    // paper they actually verified); fall back to what the reader's own
+    // submission carried, extracted the same way routes/des.ts does at
+    // submit time — a PMID never appears in the DES citation schema, so it
+    // can only come from here.
+    const scope = paperScope(desReq.body || '');
+    const head = scope.slice(0, 900).toLowerCase();
+    const fallbackDoi = pickIdentifier(allDois(desReq.link || ''), allDois(scope), head);
+    const fallbackPmid = pickIdentifier(allPmids(desReq.link || ''), allPmids(scope), head);
+    const doi: string | null = parsed.citation.doi || fallbackDoi;
+    const pmid: string | null = fallbackPmid;
+    const year: number | null = typeof parsed.citation.year === 'number' ? parsed.citation.year : null;
+    const firstAuthor: string | null = String(parsed.citation.authors || '').split(/[,;،]/)[0]?.trim() || null;
+    const tags = resolveHashtags((b.tags || '').split(',').map((t) => t.trim()).filter(Boolean));
+
+    let paperId: string;
+    if (b.same_as) {
+      // Same paper under a title the exact key could not match — attach this
+      // submission's keys to the EXISTING record. Its score is never touched:
+      // that is the founder's earlier, already-verified evaluation.
+      paperId = b.same_as;
+      await attachKeys(paperId, keysFor({ doi, pmid, title }));
+    } else {
+      if (!b.force) {
+        const candidates = await nearDuplicates(title, firstAuthor || undefined);
+        if (candidates.length) {
+          return reply.code(409).send({ error: 'near_duplicate', candidates });
+        }
+      }
+      try {
+        paperId = await createPaper({
+          doi, pmid, title, firstAuthor, year, hashtags: tags,
+          des: parsed, specVersion: String(parsed.des_version || ''),
+        });
+      } catch (err) {
+        // A DOI/PMID unique-index collision means the exact key missed but
+        // the identifier itself did not — surface it like a near-duplicate
+        // rather than a raw 500.
+        if ((err as { code?: string }).code === '23505') {
+          return reply.code(409).send({
+            error: 'identifier_collision',
+            message: 'مقاله‌ای با همین DOI یا PMID از قبل در کتابخانه هست.',
+          });
+        }
+        throw err;
+      }
+    }
+
+    await markAnswered(id, paperId);
+    await sendCapped(desReq.user_id, {
+      title: 'ارزیابی مقاله‌ات آماده است',
+      body: title,
+      url: `/?des=${encodeURIComponent(desReq.reference)}`,
+    }, 'des_result');
+
+    return reply.send({ ok: true, paper_id: paperId, warnings });
+  });
+
+  // POST /admin/des/:id/reject { reason? } — not a study, spam, or a
+  // duplicate already covered by an open request. No reader-facing message
+  // is sent: routes/des.ts's free gate already screens for the common case,
+  // so a rejection here is the exception, not the flow, and des_result is
+  // reserved for an actual score (handoff §8 — the notification is the
+  // ANSWER to what the reader asked, not a status update).
+  app.post('/admin/des/:id/reject', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const desReq = await getRequest(id);
+    if (!desReq) return reply.code(404).send({ error: 'not_found' });
+    await markRejected(id);
+    return reply.send({ ok: true });
+  });
+
+  // POST /admin/des/library { title, record, tags, pmid?, same_as?, force? }
+  // — the founder adding a paper to des_papers with NO reader waiting on it:
+  // no des_requests row, no notification. Same validate/normalise/hashtag/
+  // near-duplicate/createPaper pipeline as /admin/des/:id/answer, minus
+  // everything that pipeline only has because it is ANSWERING a specific
+  // submission. A DOI is read from the record's own citation; a PMID has no
+  // home in the DES citation schema and there is no submission body/link to
+  // sniff one from here, so it is accepted as its own optional field.
+  app.post('/admin/des/library', {
+    schema: {
+      body: {
+        type: 'object', required: ['title', 'record'],
+        properties: {
+          title: { type: 'string', minLength: 1, maxLength: 300 },
+          record: { type: 'string', minLength: 1 },
+          tags: { type: 'string' },
+          pmid: { type: 'string' },
+          same_as: { type: 'string' },
+          force: { type: 'boolean' },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as {
+      title: string; record: string; tags?: string; pmid?: string; same_as?: string; force?: boolean;
+    };
+
+    let parsed: any;
+    try {
+      parsed = JSON.parse(b.record);
+    } catch (err) {
+      return reply.code(400).send({ error: 'bad_json', detail: (err as Error).message });
+    }
+
+    const warnings: string[] = [];
+    const title = b.title.trim();
+    parsed.citation = parsed.citation || {};
+    const recordTitle = String(parsed.citation.title || '').trim();
+    if (recordTitle && keyHash(recordTitle) !== keyHash(title)) {
+      warnings.push('عنوانِ داخل رکورد با عنوانی که دادی یکی نیست؛ عنوانِ تو ثبت شد.');
+    }
+    parsed.citation.title = title;
+
+    const issues = validateDesRecord(parsed);
+    if (issues.length) {
+      return reply.code(400).send({ error: 'invalid_record', issues });
+    }
+
+    const { changed } = normaliseDesRecord(parsed);
+    warnings.push(...changed);
+
+    const doi: string | null = parsed.citation.doi || null;
+    const pmid: string | null = (b.pmid || '').trim() || null;
+    const year: number | null = typeof parsed.citation.year === 'number' ? parsed.citation.year : null;
+    const firstAuthor: string | null = String(parsed.citation.authors || '').split(/[,;،]/)[0]?.trim() || null;
+    const tags = resolveHashtags((b.tags || '').split(',').map((t) => t.trim()).filter(Boolean));
+
+    let paperId: string;
+    if (b.same_as) {
+      // Same paper under a title the exact key could not match — attach this
+      // submission's keys to the EXISTING record. Its score is never touched:
+      // that is the founder's earlier, already-verified evaluation.
+      paperId = b.same_as;
+      await attachKeys(paperId, keysFor({ doi, pmid, title }));
+    } else {
+      if (!b.force) {
+        const candidates = await nearDuplicates(title, firstAuthor || undefined);
+        if (candidates.length) {
+          return reply.code(409).send({ error: 'near_duplicate', candidates });
+        }
+      }
+      try {
+        paperId = await createPaper({
+          doi, pmid, title, firstAuthor, year, hashtags: tags,
+          des: parsed, specVersion: String(parsed.des_version || ''),
+        });
+      } catch (err) {
+        // A DOI/PMID unique-index collision means the exact key missed but
+        // the identifier itself did not — surface it like a near-duplicate
+        // rather than a raw 500.
+        if ((err as { code?: string }).code === '23505') {
+          return reply.code(409).send({
+            error: 'identifier_collision',
+            message: 'مقاله‌ای با همین DOI یا PMID از قبل در کتابخانه هست.',
+          });
+        }
+        throw err;
+      }
+    }
+
+    return reply.send({ ok: true, paper_id: paperId, warnings });
   });
 
   app.post('/admin/subscriptions/run-sweep', async (_request, reply) => {

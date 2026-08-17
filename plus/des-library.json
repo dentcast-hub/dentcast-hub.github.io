@@ -1,0 +1,131 @@
+{
+ "version": 1,
+ "about": "پیکره‌ی مقالات امتیازخورده‌ی DES — کلید هویت، نه متن مقاله. plus/des-scores.json دست‌نخورده می‌ماند؛ آن فایل برای صفحات سایت است.",
+ "index": {
+  "doi:10.1016/j.jdent.2024.105396": "p_0001",
+  "ttl:cf664355ee": "p_0001",
+  "ttl:413ced15b3": "p_0001"
+ },
+ "papers": {
+  "p_0001": {
+   "id": "p_0001",
+   "keys": [
+    "doi:10.1016/j.jdent.2024.105396",
+    "ttl:cf664355ee",
+    "ttl:413ced15b3"
+   ],
+   "hashtags": [
+    "#ایمپلنت",
+    "#Dental_Implant",
+    "#شکست_ایمپلنت",
+    "#Implant_Failure",
+    "#دخانیات",
+    "#Smoking",
+    "#متاآنالیز",
+    "#ریسک_فاکتور",
+    "#استئواینتگریشن"
+   ],
+   "des": {
+    "des_version": "2.2",
+    "content_type": "RESEARCH",
+    "question_type": "ETIOLOGY",
+    "text_basis": "FULL_TEXT",
+    "citation": {
+     "title": "Smoking in relation to early dental implant failure: A systematic review and meta-analysis",
+     "authors": "Ying-Ying Fan, Shu Li, Ye-Jun Cai, Tai Wei, Peng Ye",
+     "year": 2024,
+     "journal": "Journal of Dentistry",
+     "doi": "10.1016/j.jdent.2024.105396"
+    },
+    "journal_quartile": {
+     "value": "Q1",
+     "source": "Scopus"
+    },
+    "s_design": {
+     "value": 100,
+     "anchor": "SR/meta-analysis (ETIOLOGY SR/meta-analysis row, 100)",
+     "evidence_quote": "To assess the association between smoking and early dental implant failure by conducting a systematic review and meta-analysis of observational studies."
+    },
+    "q_method": {
+     "tool": "AMSTAR-2",
+     "domains": [
+      {
+       "domain": "protocol registered before commencement",
+       "rating": "low",
+       "evidence_quote": "This systematic review and meta-analysis was registered at the PROSPERO database (registration number CRD42024561240)."
+      },
+      {
+       "domain": "adequacy of the literature search",
+       "rating": "low",
+       "evidence_quote": "A comprehensive systematic search of the literature published between database inception and June 30, 2024 was performed, without language restriction, in five databases: PubMed, Embase, Scopus, Web of Science, and Cochrane Central Register of Controlled Trials."
+      },
+      {
+       "domain": "justification for excluding individual studies",
+       "rating": "some_concerns",
+       "evidence_quote": "The initial systematic database search yielded 4650 citations, from which 1062 articles were excluded owing to duplication. The remaining 3588 records were screened by title and/or abstract for relevance, and 3509 records were excluded. Of the remaining 79 full-text articles, 29 articles met the inclusion criteria and were included for further systematic review and meta-analysis"
+      },
+      {
+       "domain": "risk of bias assessment of included studies",
+       "rating": "low",
+       "evidence_quote": "Using the Newcastle-Ottawa Scale (NOS) for observational studies, two authors (YYF and SL) conducted separate evaluations of the methodological quality of the eligible studies (Material S2)."
+      },
+      {
+       "domain": "appropriateness of meta-analytical methods",
+       "rating": "low",
+       "evidence_quote": "Summary ORs were pooled using generic random effect meta-analysis with inverse-variance weighting."
+      },
+      {
+       "domain": "assessment of publication bias",
+       "rating": "low",
+       "evidence_quote": "Publication bias was evaluated using the Egger test and graphically by using a funnel plot."
+      }
+     ],
+     "multiplier": 0.8
+    },
+    "penalties": [
+     {
+      "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+      "base_points": 8,
+      "points": 0,
+      "evidence_quote": "The authors declare no conflict of interest, financial or otherwise.",
+      "note": "Independent research with non-commercial government/hospital funding disclosed."
+     },
+     {
+      "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+      "base_points": 5,
+      "points": 0,
+      "evidence_quote": "",
+      "note": "not applicable to a systematic review"
+     },
+     {
+      "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+      "base_points": 5,
+      "points": 0,
+      "evidence_quote": "",
+      "note": "not applicable to a secondary study"
+     },
+     {
+      "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+      "base_points": 3,
+      "points": 0,
+      "evidence_quote": "Early dental implant failure, defined as failure occurring before the abutment connection",
+      "note": "Time frame is clinically adequate for the defined outcome."
+     }
+    ],
+    "commentary_checklist": null,
+    "des_score": 80,
+    "band": "A",
+    "provisional": false,
+    "fact_fa": "این مقاله نمره ۸۰ از ۱۰۰ را در سطح شواهد A برای سوال‌های اتیولوژی (Etiology) کسب می‌کند.",
+    "interpretation_fa": "این متاآنالیز با پروتکل ثبت‌شده و جستجوی جامع نشان می‌دهد سیگار کشیدن ریسک فیلیر زودهنگام ایمپلنت را به‌ویژه در ماگزیلا به شکل معناداری بالا می‌برد. با وجود اتکا به مطالعات گذشته‌نگر، روش سنتز داده‌ها و ارزیابی سوگیری ساختاریافته است و ارزش استنادی بالایی در ارزیابی ریسک دارد."
+   },
+   "scored_at": "2026-08-17",
+   "scored_by": "gemini",
+   "submitted_by": null,
+   "notified": false,
+   "also_cited_by": [
+    "sharehub/share-9"
+   ]
+  }
+ }
+}

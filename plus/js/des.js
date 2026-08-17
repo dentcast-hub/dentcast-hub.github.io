@@ -23,7 +23,7 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=12';
+import { el, faNum } from './util.js?v=13';
 
 /* ------------------------------------------------------------ the data -- */
 
@@ -45,7 +45,11 @@ function loadScores() {
 
 const BANDS = ['E', 'D', 'C', 'B', 'A'];
 
-const BAND_FA = {
+// Exported so any OTHER surface that draws a DES band — currently
+// plus/js/des-scorer.js's answer card — uses this exact vocabulary instead of
+// re-typing it. "Reuse the vocabulary, never draw a second band" is the rule
+// this file was built on; it applies to every future caller too.
+export const BAND_FA = {
   A: 'شواهد قوی',
   B: 'شواهد متوسط',
   C: 'شواهد محدود',
@@ -57,7 +61,7 @@ const BAND_FA = {
 // comparable only INSIDE one question type — an A on a bench test and an A on a
 // clinical trial come from two different design tables — so the band letter is
 // never printed without it.
-const QTYPE_FA = {
+export const QTYPE_FA = {
   THERAPY: 'درمانی',
   DIAGNOSTIC: 'تشخیصی',
   MATERIAL: 'مواد (آزمایشگاهی)',
@@ -70,8 +74,8 @@ const SOURCE_KIND_FA = { book: 'کتاب مرجع' };
 
 // Five discrete blocks, only the current one coloured. Deliberately not a gauge
 // or a continuous bar: the output is not continuous, and a needle would give a
-// two-point difference a meaning it does not have.
-function bandBar(band) {
+// two-point difference a meaning it does not have. Exported for des-scorer.js.
+export function bandBar(band) {
   return el('span', { class: 'dc-des-bar', 'aria-hidden': 'true' },
     BANDS.map((b) => el('span', {
       class: 'dc-des-blk dc-des-b-' + b + (b === band ? ' is-on' : ''),
@@ -202,7 +206,13 @@ function researchHead(src) {
   ]);
 }
 
-function sourceBlock(src, index, total) {
+// Exported so des-scorer.js can build a single-source answer card with the
+// exact same DOM — band header, provisional hatching, the "محاسبه" detail,
+// "تفسیر امتیاز" — without a second implementation of any of it. Its own
+// heading/provenance/footer text differs by context (a reader's own
+// submission, not a cited source on an article), so des-scorer.js wraps this
+// in its own shell rather than reusing card().
+export function sourceBlock(src, index, total) {
   const parts = [];
   if (total > 1) {
     const cite = src.citation || {};

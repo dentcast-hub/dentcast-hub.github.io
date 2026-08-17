@@ -49,6 +49,9 @@ const UNCAPPED: ReadonlySet<NotificationKind> = new Set<NotificationKind>([
   // A reply to a ticket the reader opened. They asked; a streak nudge that
   // arrived first must not be why the answer never reaches them.
   'support_reply',
+  // ارزیاب DES: the founder finished scoring a paper the reader submitted.
+  // Same reasoning as support_reply — the reader asked and waited for this.
+  'des_result',
 ]);
 
 /**

@@ -1,0 +1,734 @@
+<title>ارزیاب DES</title>
+<div dir="rtl" lang="fa" id="app">
+
+<style>
+  @font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-weight:100 900;font-display:swap;}
+  :root{
+    --pr:#022360; --ac:#0b5fff;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-bg:#ffffff; --card-border:rgba(2,35,96,.09);
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --x-amber:#c9922b; --x-amber-ink:#8a6414;
+    --x-amber-wash:rgba(201,146,43,.075); --x-amber-wash-2:rgba(201,146,43,.15);
+    --x-amber-bd:rgba(154,107,21,.22);
+    --des-E:#78808f; --des-D:#5f8a63; --des-C:#3f9a49; --des-B:#2f8f3f; --des-A:#1f7a34;
+    --des-chrome:#6455a6; --des-chrome-rgb:100,85,166;
+    --tg:#2a9fd6; --tg-rgb:42,159,214;          /* telegram hand-off, its own quiet blue */
+    --r-tab:.875rem; --ease:cubic-bezier(.4,0,.2,1);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --x-amber:#e3b849; --x-amber-ink:#e3b849;
+    --x-amber-wash:rgba(227,184,73,.085); --x-amber-wash-2:rgba(227,184,73,.16);
+    --x-amber-bd:rgba(227,184,73,.26);
+    --des-E:#8b93a3; --des-D:#89a68c; --des-C:#6fae74; --des-B:#4f9d5c; --des-A:#2f8f52;
+    --des-chrome:#a99ce0; --des-chrome-rgb:169,156,224;
+    --tg:#5fc0ea; --tg-rgb:95,192,234;
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --x-amber:#e3b849; --x-amber-ink:#e3b849;
+    --x-amber-wash:rgba(227,184,73,.085); --x-amber-wash-2:rgba(227,184,73,.16);
+    --x-amber-bd:rgba(227,184,73,.26);
+    --des-E:#8b93a3; --des-D:#89a68c; --des-C:#6fae74; --des-B:#4f9d5c; --des-A:#2f8f52;
+    --des-chrome:#a99ce0; --des-chrome-rgb:169,156,224;
+    --tg:#5fc0ea; --tg-rgb:95,192,234;
+    color-scheme:dark;
+  }
+
+  #app{ font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif;
+    background:var(--bg); color:var(--txt); min-height:100vh; box-sizing:border-box; padding:0 0 3rem; }
+  #app *{ box-sizing:border-box; }
+  #app :focus-visible{ outline:2px solid var(--x-amber); outline-offset:2px; border-radius:4px; }
+  .shell{ max-width:430px; margin:0 auto; padding:0 1rem; }
+
+  .topbar{ display:flex; align-items:center; justify-content:space-between; padding:.85rem 1rem .4rem; }
+  .logo{ font-weight:800; font-size:1rem; color:var(--pr); letter-spacing:-.2px; }
+  .logo b{ color:var(--ac); }
+  .topbar-ico{ display:flex; gap:.85rem; color:var(--txt3); font-size:.95rem; position:relative; }
+  .bell{ position:relative; }
+  .bell.has::after{ content:""; position:absolute; top:-1px; left:-2px; width:.45rem; height:.45rem;
+    border-radius:50%; background:var(--x-amber); border:1.5px solid var(--bg); }
+  .trust{ display:flex; gap:.5rem; margin:.4rem 0 1.1rem; }
+  .trust div{ flex:1; text-align:center; padding:.6rem .3rem; border-radius:.75rem;
+    background:var(--card-bg); border:1px solid var(--card-border); }
+  .trust b{ display:block; font-size:1.05rem; font-weight:800; color:var(--pr); font-variant-numeric:tabular-nums; }
+  .trust span{ font-size:.66rem; color:var(--txt3); }
+
+  /* ── the two tabs: formal twins, chrome explains the machine, amber sells ── */
+  .tab{ display:flex; align-items:center; gap:.7rem; width:100%; font-family:inherit; text-align:right;
+    cursor:pointer; border-radius:var(--r-tab); padding:.75rem .9rem; box-shadow:var(--card-sh);
+    transition:background .2s var(--ease), border-radius .2s var(--ease); }
+  .tab-ico{ width:2rem; height:2rem; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center; }
+  .tab-ico svg{ width:1.05rem; height:1.05rem; }
+  .tab-body{ flex:1; min-width:0; }
+  .tab-ttl{ display:block; font-size:.82rem; font-weight:700; color:var(--txt); }
+  .tab-sub{ display:block; font-size:.72rem; color:var(--txt3); margin-top:.18rem; line-height:1.75; }
+  .tab-des{ background:rgba(var(--des-chrome-rgb),.045); border:1px solid rgba(var(--des-chrome-rgb),.22);
+    border-right:3px solid var(--des-chrome); }
+  .tab-des .tab-ico{ background:rgba(var(--des-chrome-rgb),.10); border:1px solid rgba(var(--des-chrome-rgb),.28); color:var(--des-chrome); }
+  .tab-des .tab-ttl b{ color:var(--des-chrome); }
+  .bandstrip{ display:flex; direction:ltr; border-radius:5px; overflow:hidden; flex:none; border:1px solid var(--border); }
+  .bandstrip span{ width:1.15rem; height:1.15rem; display:flex; align-items:center; justify-content:center;
+    font-size:.56rem; font-weight:800; color:#fff; }
+  .tab-tool{ background:linear-gradient(180deg,var(--x-amber-wash-2) 0%,var(--x-amber-wash) 45%);
+    border:1px solid var(--x-amber-bd); border-right:3px solid var(--x-amber); margin-top:.55rem; }
+  .tab-tool:hover{ background:var(--x-amber-wash-2); }
+  .tab-tool .tab-ico{ background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd); color:var(--x-amber-ink); }
+  .tab-tool .tab-ttl b{ color:var(--x-amber-ink); }
+  .tab-pill{ flex:none; font-size:.63rem; font-weight:800; color:var(--x-amber-ink);
+    background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd); border-radius:999px; padding:.14rem .6rem; white-space:nowrap; }
+  .tab-chev{ flex:none; font-size:1rem; font-weight:900; color:var(--x-amber-ink); transition:transform .24s var(--ease); }
+  .tab[aria-expanded="true"]{ border-radius:var(--r-tab) var(--r-tab) 0 0; box-shadow:none; }
+  .tab-tool[aria-expanded="true"] .tab-chev{ transform:rotate(90deg); }
+  .tab-dot{ position:absolute; }
+
+  .drawer{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .3s var(--ease); }
+  .drawer.is-open{ grid-template-rows:1fr; }
+  .drawer > div{ overflow:hidden; }
+  .panel{ border:1px solid rgba(var(--des-chrome-rgb),.22); border-top:0; border-right:3px solid var(--des-chrome);
+    border-radius:0 0 var(--r-tab) var(--r-tab); background:rgba(var(--des-chrome-rgb),.045);
+    box-shadow:var(--card-sh); padding:.35rem 1rem 1rem; font-size:.8rem; color:var(--txt2); line-height:1.85; }
+  .panel p{ margin:.55rem 0 0; }
+  .minilegend{ display:flex; direction:ltr; gap:.3rem; margin:.7rem 0; }
+  .minilegend div{ flex:1; text-align:center; padding:.35rem 0; border-radius:6px; font-size:.68rem; font-weight:800; color:#fff; }
+  .panel-tool{ border-color:var(--x-amber-bd); border-right-color:var(--x-amber);
+    background:var(--x-amber-wash); padding:.85rem 1rem 1.05rem; }
+
+  /* ── who answers. stated first, because it changes what «send» means. ── */
+  .byline{ display:flex; align-items:flex-start; gap:.5rem; margin-bottom:.85rem; padding:.55rem .7rem;
+    border-radius:.6rem; background:var(--card-bg); border:1px solid var(--border);
+    font-size:.73rem; color:var(--txt2); line-height:1.8; }
+  .byline b{ color:var(--txt); font-weight:800; }
+  .byline .av{ flex:none; width:1.6rem; height:1.6rem; border-radius:50%; background:var(--x-amber-wash-2);
+    border:1px solid var(--x-amber-bd); display:flex; align-items:center; justify-content:center; font-size:.8rem; }
+
+  .quota{ display:flex; align-items:center; justify-content:space-between; gap:.6rem;
+    font-size:.7rem; color:var(--txt3); margin-bottom:.65rem; }
+  .quota-ticks{ display:flex; gap:.28rem; }
+  .qt{ width:.5rem; height:.5rem; border-radius:50%; border:1.5px solid var(--x-amber); }
+  .qt.on{ background:var(--x-amber); }
+
+  .titlerow{ margin-bottom:.5rem; }
+  .titlerow input, .linkrow input{ width:100%; font:inherit; color:var(--txt); background:var(--card-bg);
+    border:1px solid var(--border); border-radius:.6rem; outline:none; transition:border-color .18s var(--ease); }
+  .titlerow input{ font-size:.8rem; font-weight:600; padding:.55rem .7rem; }
+  .titlerow input::placeholder{ color:var(--txt3); font-weight:400; }
+  .titlerow input:focus, .linkrow input:focus{ border-color:var(--x-amber); }
+
+  /* the PDF fork — a tick, not an upload. no object storage, and a journal PDF
+     is copyrighted: it goes to a messenger with its code, never to our server. */
+  .pdfrow{ display:flex; align-items:center; gap:.5rem; margin:.55rem 0;
+    padding:.5rem .65rem; border-radius:.6rem; cursor:pointer;
+    background:var(--card-bg); border:1px solid var(--border); transition:border-color .18s var(--ease); }
+  .pdfrow.on{ border-color:rgba(var(--tg-rgb),.5); background:rgba(var(--tg-rgb),.06); }
+  .pdfrow input{ width:1rem; height:1rem; accent-color:var(--tg); flex:none; margin:0; }
+  .pdfrow span{ font-size:.75rem; color:var(--txt2); }
+  .pdfrow.on span{ color:var(--txt); }
+  .pdfrow em{ font-style:normal; color:var(--txt3); font-size:.7rem; }
+
+  .field{ position:relative; }
+  .field textarea{ width:100%; min-height:7.5rem; resize:vertical; display:block; font:inherit;
+    font-size:.82rem; line-height:1.95; color:var(--txt); background:var(--card-bg);
+    border:1px solid var(--border); border-radius:.75rem; padding:.75rem .8rem 1.6rem; outline:none;
+    transition:border-color .18s var(--ease), opacity .18s var(--ease); }
+  .field textarea::placeholder{ color:var(--txt3); }
+  .field textarea:focus{ border-color:var(--x-amber); }
+  .field.dim textarea{ opacity:.6; min-height:4.5rem; }
+  .field-count{ position:absolute; bottom:.5rem; left:.7rem; font-size:.64rem; color:var(--txt3);
+    font-variant-numeric:tabular-nums; pointer-events:none; }
+
+  .linkrow{ display:flex; align-items:center; gap:.45rem; margin-top:.5rem; }
+  .linkrow input{ flex:1; min-width:0; font-size:.72rem; padding:.42rem .6rem; direction:ltr; text-align:left; border-radius:.55rem; }
+  .linkrow input::placeholder{ color:var(--txt3); text-align:right; direction:rtl; }
+  .linkrow .auto{ flex:none; font-size:.62rem; font-weight:800; color:#1f7a34;
+    background:rgba(31,122,52,.1); border:1px solid rgba(31,122,52,.28); border-radius:999px;
+    padding:.15rem .5rem; opacity:0; transition:opacity .2s var(--ease); }
+  .linkrow .auto.on{ opacity:1; }
+
+  .chips{ display:flex; align-items:center; gap:.35rem; margin-top:.55rem; }
+  .chips > span{ font-size:.68rem; color:var(--txt3); margin-inline-end:.15rem; }
+  .chip{ font:inherit; font-size:.7rem; font-weight:700; cursor:pointer; border-radius:999px;
+    padding:.28rem .75rem; color:var(--txt2); background:var(--card-bg); border:1px solid var(--border);
+    transition:background .16s var(--ease), border-color .16s var(--ease); }
+  .chip.on{ background:var(--x-amber-wash-2); border-color:var(--x-amber-bd); color:var(--x-amber-ink); }
+
+  .issues{ margin-top:.6rem; display:flex; flex-direction:column; gap:.35rem; }
+  .issue{ display:flex; gap:.45rem; align-items:flex-start; font-size:.71rem; line-height:1.8;
+    border-radius:.55rem; padding:.42rem .6rem; }
+  .issue b{ font-weight:800; }
+  .issue-stop{ color:#9a2b2b; background:rgba(154,43,43,.07); border:1px solid rgba(154,43,43,.22); }
+  .issue-warn{ color:var(--x-amber-ink); background:var(--x-amber-wash); border:1px dashed var(--x-amber-bd); }
+  [data-theme="dark"] .issue-stop{ color:#f0a3a3; background:rgba(240,163,163,.09); border-color:rgba(240,163,163,.26); }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .issue-stop{ color:#f0a3a3; background:rgba(240,163,163,.09); border-color:rgba(240,163,163,.26); } }
+
+  .row{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; margin-top:.7rem; }
+  .btn{ font:inherit; font-size:.82rem; font-weight:800; cursor:pointer; border-radius:999px;
+    padding:.55rem 1.35rem; border:1px solid transparent; transition:background .18s var(--ease); }
+  .btn-go{ background:var(--x-amber); color:#fff; }
+  [data-theme="dark"] .btn-go{ color:#1a1405; }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .btn-go{ color:#1a1405; } }
+  .btn-go:disabled{ background:var(--surface3); color:var(--txt3); cursor:not-allowed; }
+  .btn-quiet{ background:transparent; color:var(--txt2); border-color:var(--border); font-weight:700; font-size:.74rem; padding:.42rem .9rem; }
+  .btn-quiet:hover{ background:var(--surface2); color:var(--txt); }
+  .btn-link{ background:none; border:0; font:inherit; font-size:.7rem; font-weight:700; color:var(--txt3);
+    cursor:pointer; padding:.2rem 0; text-decoration:underline; text-underline-offset:3px; text-decoration-color:var(--border); }
+  .btn-link:hover{ color:var(--txt2); }
+
+  .whisper{ margin-top:.6rem; }
+  .whisper summary{ cursor:pointer; font-size:.7rem; color:var(--txt3); font-weight:600; list-style:none;
+    display:inline-flex; align-items:center; gap:.3rem; }
+  .whisper summary::-webkit-details-marker{ display:none; }
+  .whisper summary::before{ content:"؟"; width:1.05rem; height:1.05rem; border-radius:50%; flex:none;
+    display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--border);
+    font-size:.62rem; font-weight:800; color:var(--txt3); }
+  .whisper p{ font-size:.72rem; color:var(--txt3); line-height:1.9; margin:.45rem 0 0; }
+
+  .view{ display:none; }
+  .view.is-on{ display:block; animation:fade .32s var(--ease) both; }
+  @keyframes fade{ from{ opacity:0; transform:translateY(5px);} to{ opacity:1; transform:none;} }
+
+  /* ── queued: a receipt, not a spinner ── */
+  .receipt{ text-align:center; padding:.3rem 0 .1rem; }
+  .receipt-ico{ font-size:1.5rem; margin-bottom:.4rem; }
+  .receipt h4{ margin:0 0 .3rem; font-size:.95rem; font-weight:800; color:var(--txt); }
+  .receipt p{ margin:0 0 .85rem; font-size:.77rem; color:var(--txt2); line-height:1.95; }
+  .refcode{ display:inline-block; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:1.05rem; font-weight:700; letter-spacing:.12em; direction:ltr;
+    color:var(--txt); background:var(--card-bg); border:1px dashed var(--border);
+    border-radius:.6rem; padding:.45rem 1rem; margin-bottom:.2rem; }
+  .refnote{ font-size:.68rem; color:var(--txt3); line-height:1.85; margin:.35rem 0 0; }
+  .tgbtn{ text-decoration:none; display:inline-flex; align-items:center; gap:.4rem; margin-top:.9rem; font:inherit;
+    font-size:.82rem; font-weight:800; cursor:pointer; border-radius:999px; padding:.55rem 1.3rem;
+    color:#fff; background:var(--tg); border:none; }
+  [data-theme="dark"] .tgbtn{ color:#06202b; }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .tgbtn{ color:#06202b; } }
+
+  /* ── in flight ── */
+  .flight{ display:flex; flex-direction:column; gap:.5rem; }
+  .fitem{ display:flex; gap:.6rem; align-items:flex-start; background:var(--card-bg);
+    border:1px solid var(--border); border-radius:.6rem; padding:.6rem .7rem; }
+  .fdot{ flex:none; width:.5rem; height:.5rem; border-radius:50%; background:var(--x-amber); margin-top:.42rem;
+    animation:breathe 2s var(--ease) infinite; }
+  @keyframes breathe{ 0%,100%{opacity:.35} 50%{opacity:1} }
+  .fbody{ flex:1; min-width:0; }
+  .ftitle{ font-size:.76rem; font-weight:700; color:var(--txt); line-height:1.6; }
+  .fmeta{ font-size:.66rem; color:var(--txt3); margin-top:.2rem; }
+  .fmeta code{ font-family:ui-monospace,Menlo,monospace; direction:ltr; }
+
+  /* ── the answer ── */
+  .answer{ background:rgba(var(--des-chrome-rgb),.05); border:1px solid rgba(var(--des-chrome-rgb),.22);
+    border-right:3px solid var(--des-chrome); border-radius:.8rem; padding:.9rem 1rem 1rem; }
+  .answer-h{ display:flex; align-items:center; gap:.4rem; font-size:.66rem; font-weight:800;
+    letter-spacing:.4px; color:var(--des-chrome); text-transform:uppercase; margin-bottom:.75rem; }
+  .answer-h::after{ content:""; flex:1; height:1px; background:rgba(var(--des-chrome-rgb),.2); }
+  .verdict{ display:flex; align-items:center; gap:.75rem; }
+  .bar{ display:flex; direction:ltr; border-radius:7px; overflow:hidden; border:1px solid var(--border); flex:none; }
+  .blk{ width:1.85rem; height:1.85rem; display:flex; align-items:center; justify-content:center;
+    font-size:.72rem; font-weight:800; background:var(--card-bg); color:var(--txt3); border-left:1px solid var(--border); }
+  .blk:first-child{ border-left:0; }
+  .blk.on{ color:#fff; background:var(--bandc); animation:pop .4s var(--ease) both .12s; }
+  .blk.on.prov{ background:repeating-linear-gradient(45deg,rgba(255,255,255,.34) 0 3px,transparent 3px 6px),var(--bandc); }
+  @keyframes pop{ from{transform:scale(.72)} to{transform:scale(1)} }
+  .verdict-meta{ display:flex; flex-direction:column; gap:.1rem; min-width:0; }
+  .verdict-band{ font-size:.9rem; font-weight:800; color:var(--bandc); letter-spacing:-.2px; }
+  .verdict-q{ font-size:.7rem; color:var(--txt3); }
+  .verdict-num{ margin-inline-start:auto; flex:none; font-size:.72rem; color:var(--txt3);
+    font-variant-numeric:tabular-nums; background:var(--card-bg); border:1px solid var(--border);
+    border-radius:6px; padding:.12rem .45rem; }
+  .basis{ display:inline-flex; align-items:center; gap:.35rem; margin-top:.7rem; font-size:.68rem;
+    font-weight:700; border-radius:999px; padding:.2rem .65rem; }
+  .basis-full{ color:var(--des-chrome); background:rgba(var(--des-chrome-rgb),.09); border:1px solid rgba(var(--des-chrome-rgb),.24); }
+  .basis-abs{ color:var(--x-amber-ink); border:1px dashed var(--x-amber-bd);
+    background:repeating-linear-gradient(45deg,var(--x-amber-wash) 0 4px,transparent 4px 8px); }
+  .answer-read{ margin:.75rem 0 0; font-size:.78rem; color:var(--txt2); line-height:2;
+    padding-top:.7rem; border-top:1px solid rgba(var(--des-chrome-rgb),.16); }
+  .trace{ margin-top:.7rem; }
+  .trace summary{ cursor:pointer; font-size:.7rem; font-weight:700; color:var(--des-chrome);
+    list-style:none; display:inline-flex; align-items:center; gap:.3rem; }
+  .trace summary::-webkit-details-marker{ display:none; }
+  .trace summary::after{ content:"↓"; font-size:.68rem; }
+  .trace[open] summary::after{ content:"↑"; }
+  .trace ol{ margin:.5rem 0 0; padding-inline-start:1.1rem; font-size:.72rem; color:var(--txt3); line-height:2.05; }
+  .trace li::marker{ color:var(--des-chrome); font-weight:700; }
+  .tags{ display:flex; flex-wrap:wrap; gap:.3rem; margin-top:.8rem; padding-top:.7rem;
+    border-top:1px solid rgba(var(--des-chrome-rgb),.16); }
+  .tag{ font-size:.65rem; font-weight:700; color:var(--des-chrome); background:rgba(var(--des-chrome-rgb),.09);
+    border:1px solid rgba(var(--des-chrome-rgb),.22); border-radius:999px; padding:.12rem .5rem; }
+  .answer-foot{ margin:.8rem 0 0; font-size:.66rem; color:var(--txt3); line-height:1.85; }
+  .after-row{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; margin-top:.75rem; }
+
+  .locked{ text-align:center; padding:.4rem 0 .2rem; }
+  .locked h4{ margin:0 0 .35rem; font-size:.88rem; font-weight:800; color:var(--txt); }
+  .locked p{ margin:0 0 .9rem; font-size:.75rem; color:var(--txt2); line-height:1.95; }
+  .spent{ display:flex; gap:.6rem; align-items:flex-start; font-size:.76rem; color:var(--txt2); line-height:1.95; }
+  .spent b{ color:var(--x-amber-ink); }
+
+  /* backstage — mockup only */
+  .backstage{ max-width:430px; margin:2.5rem auto 0; padding:0 1rem; }
+  .bs-box{ border:1px dashed var(--border); border-radius:.75rem; background:var(--surface2); padding:.7rem .85rem; }
+  .bs-h{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; font-size:.68rem;
+    font-weight:800; color:var(--txt3); letter-spacing:.2px; }
+  .bs-h span{ font-weight:600; }
+  .bs-lbl{ font-size:.6rem; font-weight:800; color:var(--txt3); margin:.75rem 0 .3rem; letter-spacing:.3px; }
+  .bs-panel{ background:var(--card-bg); border:1px solid var(--border); border-radius:.5rem;
+    padding:.5rem .6rem; font-size:.66rem; line-height:1.95; color:var(--txt3); }
+  .bs-panel .r{ display:flex; gap:.4rem; }
+  .bs-panel .r::before{ content:"·"; }
+  .bs-panel b{ color:var(--txt2); font-weight:700; }
+  .bs-states{ display:flex; flex-wrap:wrap; gap:.3rem; }
+  .bs-btn{ font:inherit; font-size:.62rem; font-weight:700; cursor:pointer; padding:.25rem .6rem;
+    border-radius:999px; border:1px solid var(--border); background:var(--card-bg); color:var(--txt3); }
+  .bs-btn.on{ background:var(--txt2); color:var(--bg); border-color:var(--txt2); }
+  .bs-btn-fill{ border-style:dashed; }
+
+  @media (prefers-reduced-motion:reduce){
+    #app *{ animation:none !important; transition:none !important; }
+    .drawer{ grid-template-rows:1fr; }
+    .drawer:not(.is-open){ display:none; }
+  }
+</style>
+
+
+<div class="topbar">
+  <span class="logo">دنت<b>کست</b></span>
+  <span class="topbar-ico">🔍 <span class="bell" id="bell">🔔</span> 👤</span>
+</div>
+
+<div class="shell">
+  <div class="trust">
+    <div><b>۴۴۴</b><span>مطلب</span></div>
+    <div><b>۲۱۰</b><span>اپیزود</span></div>
+    <div><b>۱۵</b><span>مسیر</span></div>
+  </div>
+
+  <button type="button" class="tab tab-des" id="tabDes" aria-expanded="false" aria-controls="panelDes">
+    <span class="tab-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none">
+      <rect x="2.5" y="13" width="5.5" height="8.5" rx="1.1" fill="currentColor"/>
+      <rect x="9.25" y="7" width="5.5" height="14.5" rx="1.1" fill="currentColor"/>
+      <rect x="16" y="10.5" width="5.5" height="11" rx="1.1" fill="currentColor"/></svg></span>
+    <span class="tab-body">
+      <span class="tab-ttl"><b>DentCast Evidence Score</b> چیست؟</span>
+      <span class="tab-sub">روشی که دنت‌کست با آن اعتبار شواهد علمی محتوا را نشان می‌دهد.</span>
+    </span>
+    <span class="bandstrip" aria-hidden="true">
+      <span style="background:var(--des-E)">E</span><span style="background:var(--des-D)">D</span><span style="background:var(--des-C)">C</span><span style="background:var(--des-B)">B</span><span style="background:var(--des-A)">A</span>
+    </span>
+  </button>
+  <div class="drawer" id="drawerDes"><div><div class="panel" id="panelDes">
+    <p>روشی که دنت‌کست با آن نشان می‌دهد هر مطلب علمی چقدر روی طراحی قوی و اجرای دقیق ایستاده — نه اینکه چقدر برای شما کاربردی است.</p>
+    <div class="minilegend" aria-hidden="true">
+      <div style="background:var(--des-E)">E</div><div style="background:var(--des-D)">D</div><div style="background:var(--des-C)">C</div><div style="background:var(--des-B)">B</div><div style="background:var(--des-A)">A</div>
+    </div>
+    <p>از E تا A — و A فقط از بهترین طراحی‌ها به‌دست می‌آید. A هم فقط داخل یک نوع سؤال معنی دارد.</p>
+  </div></div></div>
+
+  <button type="button" class="tab tab-tool" id="tabTool" aria-expanded="false" aria-controls="panelTool">
+    <span class="tab-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9.5 3v5.2L4.8 17.4A2.4 2.4 0 0 0 6.9 21h10.2a2.4 2.4 0 0 0 2.1-3.6L14.5 8.2V3"/>
+      <path d="M8.2 3h7.6"/><path d="M7.4 14.2h9.2"/></svg></span>
+    <span class="tab-body">
+      <span class="tab-ttl"><b>مقاله‌ی خودت</b> را بگذار، امتیاز DES بگیر</span>
+      <span class="tab-sub">متن یا چکیده را بفرست تا ببینی چقدر شواهد پشتش هست — با همان DentCast Evidence Score.</span>
+    </span>
+    <span class="tab-pill">پریمیوم</span>
+    <span class="tab-chev" aria-hidden="true">›</span>
+  </button>
+
+  <div class="drawer" id="drawerTool"><div><div class="panel panel-tool" id="panelTool">
+
+    <!-- who answers. first thing in the panel, because it changes what «send» means. -->
+    <div class="byline">
+      <span class="av" aria-hidden="true">✍️</span>
+      <span>ارزیابی را <b>خودم</b> انجام می‌دهم، نه یک ربات. نتیجه در <b>اطلاعیه‌ات</b> می‌آید — معمولاً کمتر از یک روز.</span>
+    </div>
+
+    <!-- ══ compose ══ -->
+    <div class="view is-on" data-view="compose">
+      <div class="quota">
+        <span>الان <b id="qOpen">۰</b> از ۲ درخواستِ باز داری</span>
+        <span class="quota-ticks" id="qTicks" aria-hidden="true"><i class="qt"></i><i class="qt"></i></span>
+      </div>
+
+      <div class="titlerow"><input id="title" type="text" placeholder="عنوان مقاله" aria-label="عنوان مقاله"></div>
+
+      <label class="pdfrow" id="pdfRow">
+        <input type="checkbox" id="pdfTick">
+        <span>PDF مقاله را دارم <em>— در تلگرام می‌فرستم</em></span>
+      </label>
+
+      <div class="field" id="textField">
+        <textarea id="paste" placeholder="متن چکیده یا متن کامل مقاله را اینجا بگذار…" aria-label="متن مقاله"></textarea>
+        <span class="field-count" id="count">۰ واژه</span>
+      </div>
+
+      <div class="chips">
+        <span>این متن:</span>
+        <button class="chip on" type="button" data-basis="ABSTRACT_ONLY">چکیده است</button>
+        <button class="chip" type="button" data-basis="FULL_TEXT">متن کامل است</button>
+      </div>
+
+      <div class="linkrow">
+        <input id="link" type="text" placeholder="لینک مقاله را هم داری؟ (اختیاری)" aria-label="لینک مقاله یا DOI">
+        <span class="auto" id="linkAuto">از متن پیدا شد</span>
+      </div>
+
+      <div class="issues" id="issues"></div>
+
+      <div class="row">
+        <button class="btn btn-go" id="go" type="button">بفرست</button>
+        <button class="btn-link" id="sample" type="button">یک نمونه بگذار</button>
+      </div>
+
+      <details class="whisper">
+        <summary>چطور ارزیابی می‌شود؟</summary>
+        <p>با همان چارچوب DES که روی مطالب سایت اجرا می‌شود — طراحی مطالعه، ابزار سنجش روش، و جریمه‌های شفافیت. اگر فقط چکیده بدهی امتیاز مقدماتی است؛ متن کامل امتیاز قطعی‌تری می‌دهد. نتیجه برای مطالعه‌ی شخصی توست.</p>
+      </details>
+    </div>
+
+    <!-- ══ queued ══ -->
+    <div class="view" data-view="queued">
+      <div class="receipt">
+        <div class="receipt-ico" id="qIco">📥</div>
+        <h4 id="qHead">در نوبت ارزیابی</h4>
+        <p id="qLead">خواندمش و در صف گذاشتمش. نتیجه در اطلاعیه‌ات می‌آید.</p>
+        <div class="refcode" id="refCode">D-KRM-TQF</div>
+        <p class="refnote" id="refNote">این کد را نگه دار.</p>
+        <div id="tgBlock" hidden>
+          <a class="tgbtn" href="https://t.me/dentcast_support" target="_blank" rel="noopener">فرستادن PDF در تلگرام ↗</a>
+          <p class="refnote">PDF را بفرست و همین کد را زیرش بنویس تا به درخواستت وصل شود.</p>
+        </div>
+      </div>
+      <div class="after-row">
+        <button class="btn btn-quiet" data-again type="button">مقاله‌ی دیگر</button>
+        <button class="btn-link" data-close type="button">بستن</button>
+      </div>
+    </div>
+
+    <!-- ══ instant — already in the library ══ -->
+    <div class="view" data-view="answer">
+      <div class="answer" id="answerCard"></div>
+      <div class="after-row">
+        <button class="btn btn-quiet" data-again type="button">مقاله‌ی دیگر</button>
+        <button class="btn-link" data-close type="button">بستن</button>
+      </div>
+    </div>
+
+    <!-- ══ in flight ══ -->
+    <div class="view" data-view="pending">
+      <div class="flight" id="flightList"></div>
+      <div class="after-row">
+        <button class="btn btn-quiet" data-again type="button">مقاله‌ی دیگر</button>
+        <button class="btn-link" data-close type="button">بستن</button>
+      </div>
+    </div>
+
+    <!-- ══ two open ══ -->
+    <div class="view" data-view="spent">
+      <div class="spent"><span aria-hidden="true">⏳</span>
+        <span>همزمان تا <b>دو</b> درخواست می‌توانی باز داشته باشی. تا جواب یکی‌شان بیاید صبر کن — مقاله‌هایی که قبلاً سنجیده‌ام همچنان فوری جواب می‌دهند.</span></div>
+      <div class="after-row"><button class="btn btn-quiet" data-flight type="button">درخواست‌های باز</button>
+        <button class="btn-link" data-close type="button">بستن</button></div>
+    </div>
+
+    <!-- ══ locked ══ -->
+    <div class="view" data-view="locked">
+      <div class="locked"><h4>بخشی از پریمیوم</h4>
+        <p>مقاله‌ی دلخواهت را بفرست تا با همان چارچوب DES برایت بسنجم.</p>
+        <button class="btn btn-go" type="button">دیدن پریمیوم</button></div>
+      <div class="after-row"><span></span><button class="btn-link" data-close type="button">بستن</button></div>
+    </div>
+
+  </div></div></div>
+</div>
+
+
+<div class="backstage">
+  <div class="bs-box">
+    <div class="bs-h">پشت صحنه — فقط در ماکاپ <span>در محصول دیده نمی‌شود</span></div>
+    <div class="bs-lbl">تصمیمِ آخرین ارسال</div>
+    <div class="bs-panel" id="bsTrace"><div class="r">هنوز چیزی نیامده</div></div>
+    <div class="bs-lbl">سناریو</div>
+    <div class="bs-states">
+      <button class="bs-btn bs-btn-fill" data-fill="known">مقاله‌ای که قبلاً سنجیده‌ام</button>
+      <button class="bs-btn bs-btn-fill" data-fill="new">مقاله‌ی تازه</button>
+      <button class="bs-btn bs-btn-fill" data-fill="junk">متنِ بی‌ربط</button>
+    </div>
+    <div class="bs-lbl">حالت‌ها</div>
+    <div class="bs-states">
+      <button class="bs-btn on" data-state="compose">فرم</button>
+      <button class="bs-btn" data-state="answer">جوابِ فوری</button>
+      <button class="bs-btn" data-state="queued">در نوبت</button>
+      <button class="bs-btn" data-state="pending">درخواست‌های باز</button>
+      <button class="bs-btn" data-state="spent">دو تا باز</button>
+      <button class="bs-btn" data-state="locked">قفل</button>
+      <button class="bs-btn" data-reset>ریست</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var app=document.getElementById('app');
+  var FA=['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  var fa=function(n){ return String(n).replace(/\d/g,function(d){return FA[+d];}); };
+
+  function fold(t){ return String(t||'').replace(/[‌‎‏]/g,'').replace(/[يى]/g,'ی').replace(/ك/g,'ک')
+    .replace(/[.,;:!?()\[\]{}"'«»،؛؟\-–—\/\\]/g,' ').replace(/\s+/g,' ').trim().toLowerCase(); }
+  function keyOf(t){ return fold(t).replace(/\s+/g,''); }
+  function words(t){ return fold(t).split(' ').filter(Boolean).length; }
+
+  /* the library. a paper already in here is answered on the spot — no queue,
+     no waiting, and nothing said about why. that is what makes the corpus
+     worth building: it gets faster for everyone as it fills. */
+  var KNOWN_TITLE='Smoking in relation to early dental implant failure: A systematic review and meta-analysis';
+  var LIBRARY={};
+  LIBRARY[keyOf(KNOWN_TITLE)]={
+    band:'B', score:68, qtype:'ETIOLOGY', provisional:false,
+    read:'مرور نظام‌مند با پروتکل ثبت‌شده و جست‌وجوی پنج پایگاه. طراحی در بالاترین سطحِ نوع سؤال است و ارزیابی سوگیری ساختاریافته دارد؛ اتکا به مطالعات گذشته‌نگر امتیاز را از سقف پایین آورده.',
+    trace:['نوع منبع: مرور نظام‌مند و متاآنالیز','نوع سؤال: علت‌شناسی → ابزار AMSTAR-2','شش دامنه بررسی شد','۶۸ از ۱۰۰ → باند B'],
+    tags:['#ایمپلنت','#دخانیات','#شکست_ایمپلنت','#متاآنالیز']
+  };
+  var BAND_FA={A:'شواهد قوی',B:'شواهد متوسط',C:'شواهد محدود',D:'شواهد ضعیف',E:'سطح پایه'};
+
+  /* reference code — the support system's alphabet: no 0/O, 1/I/L, 5/S, 8/B,
+     because a human reads it aloud and types it into a box that is not ours. */
+  var ALPHA='ACDEFGHJKMNPQRTUVWXYZ2346799';
+  function refCode(){
+    var s=''; for(var i=0;i<6;i++){ s+=ALPHA[Math.floor(Math.random()*ALPHA.length)]; if(i===2)s+='-'; }
+    return 'D-'+s;
+  }
+
+  function wire(tabId,drawerId,onClose){
+    var tab=app.querySelector('#'+tabId), dr=app.querySelector('#'+drawerId);
+    tab.addEventListener('click',function(){
+      var open=!dr.classList.contains('is-open');
+      dr.classList.toggle('is-open',open); tab.setAttribute('aria-expanded',open?'true':'false');
+      if(open) onOpen&&onOpen(); else if(onClose) onClose();
+    });
+    var onOpen=null;
+    return { tab:tab, drawer:dr, set open(f){onOpen=f;},
+      close:function(){ dr.classList.remove('is-open'); tab.setAttribute('aria-expanded','false'); if(onClose)onClose(); } };
+  }
+  var tool=wire('tabTool','drawerTool',function(){ resetForm(); });
+  wire('tabDes','drawerDes');
+
+  var views=app.querySelectorAll('#panelTool .view');
+  var stateBtns=app.querySelectorAll('.bs-btn[data-state]');
+  function show(n){
+    views.forEach(function(v){ v.classList.toggle('is-on', v.getAttribute('data-view')===n); });
+    stateBtns.forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-state')===n); });
+  }
+
+  var title=app.querySelector('#title'), paste=app.querySelector('#paste'), link=app.querySelector('#link');
+  var linkAuto=app.querySelector('#linkAuto'), count=app.querySelector('#count'), issues=app.querySelector('#issues');
+  var pdfTick=app.querySelector('#pdfTick'), pdfRow=app.querySelector('#pdfRow'), textField=app.querySelector('#textField');
+  var qOpen=app.querySelector('#qOpen'), qTicks=app.querySelector('#qTicks'), bell=app.querySelector('#bell');
+  var claim='ABSTRACT_ONLY', openReqs=[];
+
+  var RESEARCH=[
+    /randomi[sz]ed|controlled trial|clinical trial|cohort|systematic review|meta[-\s]?analys|in vitro|double[-\s]?blind|کارآزمایی|مرور نظام|فراتحلیل|آزمایشگاهی|دوسوکور/i,
+    /\bp\s*[<=>]\s*0?[.,]\d|\bn\s*=\s*\d|95\s*%|confidence interval|\bSD\b|\bCI\b|significan|معنادار|انحراف معیار/i,
+    /\d+\s*(patients?|subjects?|teeth|specimens?|samples?|participants?)|[\d۰-۹]+\s*(بیمار|نمونه|دندان|شرکت‌کننده)/i,
+    /\b(background|objectives?|methods?|results?|conclusions?)\s*[:：]|(زمینه|هدف|روش‌?ها|نتایج|نتیجه‌?گیری|بحث)\s*[:：]/i,
+    /\b(mean|median|prevalence|incidence|odds ratio|follow[-\s]?up)\b|میانگین|شیوع|پیگیری/i
+  ];
+
+  function validate(){
+    var out=[], t=title.value, x=paste.value, n=words(x), pdf=pdfTick.checked;
+    if(!fold(t)) out.push(['stop','عنوان مقاله را بنویس — بدون آن نمی‌توانم پیدایش کنم.']);
+    if(!pdf){
+      if(n<80) out.push(['stop','متن برای ارزیابی خیلی کوتاه است ('+fa(n)+' واژه). یا چکیده‌ی کامل بگذار، یا تیکِ PDF را بزن.']);
+      else if(!RESEARCH.some(function(r){return r.test(x);}))
+        out.push(['warn','نشانه‌های روش‌شناختی در این متن پیدا نشد. اگر مقاله‌ی پژوهشی نباشد نمی‌توانم بسنجمش.']);
+    }
+    if(!pdf && n>=80 && fold(t)){
+      var tw=fold(t).split(' ').filter(function(w){return w.length>=4;});
+      if(tw.length>=3){
+        var ft=fold(x), seen=tw.filter(function(w){return ft.indexOf(w)>=0;}).length;
+        if(seen/tw.length<0.34) out.push(['warn','عنوان با متن هم‌خوان نیست — مطمئنی هر دو مالِ یک مقاله‌اند؟']);
+      }
+    }
+    if(!pdf){
+      if(claim==='FULL_TEXT' && n<=600 && n>=80) out.push(['warn','این متن '+fa(n)+' واژه است — اندازه‌ی یک چکیده. به‌عنوان چکیده می‌سنجمش.']);
+    }
+    return { issues:out, stop:out.some(function(i){return i[0]==='stop';}) };
+  }
+
+  function showIssues(){
+    var v=validate();
+    var blank=!fold(title.value)&&!fold(paste.value)&&!pdfTick.checked;
+    issues.innerHTML = blank ? '' : v.issues.map(function(i){
+      return '<div class="issue issue-'+i[0]+'"><b>'+(i[0]==='stop'?'✕':'!')+'</b><span>'+i[1]+'</span></div>';
+    }).join('');
+    return v;
+  }
+
+  function refresh(){
+    count.textContent=fa(words(paste.value))+' واژه';
+    qOpen.textContent=fa(openReqs.length);
+    qTicks.querySelectorAll('.qt').forEach(function(t,i){ t.classList.toggle('on', i<openReqs.length); });
+    bell.classList.toggle('has', openReqs.length>0);
+  }
+
+  function syncPdf(){
+    var on=pdfTick.checked;
+    pdfRow.classList.toggle('on',on);
+    textField.classList.toggle('dim',on);
+    paste.placeholder = on ? 'اختیاری — اگر متن را هم داری بگذار' : 'متن چکیده یا متن کامل مقاله را اینجا بگذار…';
+    showIssues();
+  }
+  pdfTick.addEventListener('change',syncPdf);
+
+  app.querySelectorAll('.chip[data-basis]').forEach(function(c){
+    c.addEventListener('click',function(){
+      claim=c.getAttribute('data-basis');
+      app.querySelectorAll('.chip[data-basis]').forEach(function(x){ x.classList.toggle('on',x===c); });
+      showIssues();
+    });
+  });
+
+  function sniffLink(){
+    var m=paste.value.match(/10\.\d{4,9}\/[^\s"'<>,;)\]]+/);
+    var mine=link.dataset.auto==='1';
+    if(m&&(!link.value||mine)){ link.value=m[0]; link.dataset.auto='1'; }
+    else if(!m&&mine){ link.value=''; delete link.dataset.auto; }
+    linkAuto.classList.toggle('on',link.dataset.auto==='1');
+  }
+  link.addEventListener('input',function(){ delete link.dataset.auto; linkAuto.classList.remove('on'); });
+  paste.addEventListener('input',function(){ refresh(); sniffLink(); showIssues(); });
+  title.addEventListener('input',showIssues);
+
+  function renderAnswer(r){
+    var blocks=['E','D','C','B','A'].map(function(b){
+      return '<span class="blk'+(b===r.band?' on'+(r.provisional?' prov':''):'')+'">'+b+'</span>'; }).join('');
+    app.querySelector('#answerCard').innerHTML=
+      '<div class="answer-h">ارزیابی شواهد</div>'+
+      '<div class="verdict" style="--bandc:var(--des-'+r.band+')">'+
+        '<span class="bar" aria-hidden="true">'+blocks+'</span>'+
+        '<span class="verdict-meta"><span class="verdict-band">'+r.band+' · '+BAND_FA[r.band]+'</span>'+
+        '<span class="verdict-q">نوع سؤال: '+r.qtype+'</span></span>'+
+        '<span class="verdict-num">'+fa(r.score)+'</span></div>'+
+      (r.provisional?'<span class="basis basis-abs">امتیاز مقدماتی — فقط از روی چکیده</span>'
+                    :'<span class="basis basis-full">بر پایه‌ی متن کامل مقاله</span>')+
+      '<p class="answer-read">'+r.read+'</p>'+
+      '<details class="trace"><summary>مسیر استدلال</summary><ol>'+
+        r.trace.map(function(l){return '<li>'+l+'</li>';}).join('')+'</ol></details>'+
+      '<div class="tags">'+r.tags.map(function(t){return '<span class="tag">'+t+'</span>';}).join('')+'</div>'+
+      '<p class="answer-foot">ساختار مطالعه سنجیده می‌شود، نه مناسب‌بودن یافته برای بیمار شما.</p>';
+  }
+
+  function trace(rows){
+    app.querySelector('#bsTrace').innerHTML=rows.map(function(r){return '<div class="r">'+r+'</div>';}).join('');
+  }
+
+  function drawFlight(){
+    app.querySelector('#flightList').innerHTML = openReqs.length ? openReqs.map(function(r){
+      return '<div class="fitem"><span class="fdot"></span><div class="fbody">'+
+        '<div class="ftitle">'+r.title+'</div>'+
+        '<div class="fmeta">در نوبت · <code>'+r.code+'</code>'+(r.pdf?' · منتظر PDF در تلگرام':'')+'</div>'+
+      '</div></div>'; }).join('') : '<div class="fitem"><div class="fbody"><div class="fmeta">درخواست بازی نداری.</div></div></div>';
+  }
+
+  app.querySelector('#go').addEventListener('click',function(){
+    var v=showIssues();
+    if(v.stop){ (fold(title.value)?paste:title).focus(); return; }
+
+    // 1 — already scored? answer now. no queue, and the reader is told nothing
+    //     about why it was fast.
+    var hit=LIBRARY[keyOf(title.value)];
+    if(hit){
+      trace(['کلیدِ عنوان در کتابخانه بود','<b>جوابِ فوری</b> — نه صف، نه کارِ دستی','درخواستِ باز مصرف نشد']);
+      renderAnswer(hit); show('answer'); return;
+    }
+
+    // 2 — new paper: it goes to the founder, not to a model.
+    if(openReqs.length>=2){ show('spent'); return; }
+    var code=refCode(), pdf=pdfTick.checked;
+    openReqs.push({ title:title.value.slice(0,70), code:code, pdf:pdf });
+    refresh(); drawFlight();
+
+    app.querySelector('#refCode').textContent=code;
+    app.querySelector('#tgBlock').hidden=!pdf;
+    app.querySelector('#qIco').textContent=pdf?'📎':'📥';
+    app.querySelector('#qHead').textContent=pdf?'کد درخواستت آماده است':'در نوبت ارزیابی';
+    app.querySelector('#qLead').textContent=pdf
+      ? 'PDF را در تلگرام بفرست و این کد را زیرش بنویس. بعدش می‌خوانمش و نتیجه در اطلاعیه‌ات می‌آید.'
+      : 'خواندمش و در صف گذاشتمش. نتیجه در اطلاعیه‌ات می‌آید.';
+    app.querySelector('#refNote').textContent=pdf?'':'این کد را نگه دار.';
+    trace(['در کتابخانه نبود','رفت به صفِ <b>ارزیابیِ خودم</b>',
+           pdf?'منتظرِ PDF در تلگرام با کد '+code:'متن ضمیمه شد',
+           'یکی از دو درخواستِ باز مصرف شد']);
+    show('queued');
+  });
+
+  function resetForm(){
+    title.value=''; paste.value=''; link.value='';
+    delete link.dataset.auto; linkAuto.classList.remove('on');
+    pdfTick.checked=false; syncPdf();
+    claim='ABSTRACT_ONLY';
+    app.querySelectorAll('.chip[data-basis]').forEach(function(x){ x.classList.toggle('on',x.getAttribute('data-basis')===claim); });
+    issues.innerHTML=''; refresh();
+  }
+  app.querySelectorAll('[data-again]').forEach(function(b){
+    b.addEventListener('click',function(){ resetForm(); show('compose'); title.focus(); }); });
+  app.querySelectorAll('[data-flight]').forEach(function(b){
+    b.addEventListener('click',function(){ drawFlight(); show('pending'); }); });
+  app.querySelectorAll('[data-close]').forEach(function(b){
+    b.addEventListener('click',function(){ tool.close(); }); });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&tool.drawer.classList.contains('is-open')) tool.close(); });
+
+  // reopening the tab shows what is in flight, not an empty form
+  tool.open=function(){ if(openReqs.length){ drawFlight(); show('pending'); } };
+
+  var SAMPLES={
+    known:{ t:KNOWN_TITLE,
+      x:'Objective: To assess the association between smoking and early dental implant failure. Methods: Five databases were searched. Thirty-two observational studies with 59,246 implants were included. Results: Meta-analysis of 21 cohort studies showed increased risk (OR 2.59; 95% CI 2.08-3.23). Conclusions: Smoking is associated with early implant failure.' },
+    new:{ t:'Marginal bone loss around platform-switched implants: a five-year randomized controlled trial',
+      x:'Background: Platform switching has been proposed to limit crestal bone remodelling. Methods: Sixty patients were randomly allocated to platform-switched or matched-diameter abutments and followed for five years. Radiographic marginal bone level was measured by a blinded assessor. Results: Mean bone loss was 0.42 mm (SD 0.31) versus 0.78 mm (SD 0.44), p = 0.003. Conclusions: Platform switching reduced marginal bone loss over five years.' },
+    junk:{ t:'درمان قطعی پوسیدگی با روش خانگی',
+      x:'خیلی از دوستان می‌پرسند بهترین راه از بین بردن پوسیدگی چیست. تجربه‌ی شخصی من نشان داده ترکیب روغن نارگیل و جوش شیرین معجزه می‌کند. من خودم این روش را به ده‌ها نفر معرفی کرده‌ام و همه راضی بودند. کافی است هر شب قبل از خواب تکرار کنید و از شیرینی پرهیز کنید.' }
+  };
+  app.querySelectorAll('[data-fill]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var s=SAMPLES[b.getAttribute('data-fill')];
+      tool.drawer.classList.add('is-open'); tool.tab.setAttribute('aria-expanded','true');
+      show('compose'); title.value=s.t; paste.value=s.x; pdfTick.checked=false; syncPdf();
+      refresh(); sniffLink(); showIssues();
+    });
+  });
+
+  stateBtns.forEach(function(b){
+    b.addEventListener('click',function(){
+      tool.drawer.classList.add('is-open'); tool.tab.setAttribute('aria-expanded','true');
+      var s=b.getAttribute('data-state');
+      if(s==='answer'&&!app.querySelector('#answerCard').innerHTML) renderAnswer(LIBRARY[keyOf(KNOWN_TITLE)]);
+      if(s==='pending') drawFlight();
+      show(s);
+    });
+  });
+  app.querySelector('[data-reset]').addEventListener('click',function(){
+    openReqs=[]; resetForm(); drawFlight();
+    trace(['هنوز چیزی نیامده']); show('compose');
+  });
+
+  syncPdf(); refresh(); drawFlight();
+})();
+</script>
+</div>

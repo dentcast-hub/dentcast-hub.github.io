@@ -4446,6 +4446,76 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
       })();
       </script>
 
+      <!-- ارزیاب DES — a formal twin of the explainer box above: same height,
+           same icon circle, same 3px leading edge, same radius. Only the
+           colour differs, and it has to: chrome (above) says «this explains
+           the machine», amber says «this is what a subscription buys» —
+           site-wide, in every other premium surface. Critical CSS lives here
+           (like the box above, index.html loads no shared stylesheet) so the
+           tab paints before plus.css arrives; the panel's own CSS is in
+           plus/plus.css because the panel only renders after a click, by
+           which time plus.css is already on the page. Behaviour (the
+           disclosure toggle + everything inside the panel) is
+           plus/js/des-scorer.js — mobile-shell only, matching the box above:
+           #mobile-shell has no desktop equivalent to mirror this into yet. -->
+      <style>
+        .dc-destool-wrap{
+          margin:.7rem 0 1.1rem;
+          --destool-amber:#c9922b; --destool-amber-ink:#8a6414;
+          --destool-amber-wash:rgba(201,146,43,.075); --destool-amber-wash-2:rgba(201,146,43,.15);
+          --destool-amber-bd:rgba(154,107,21,.22);
+        }
+        [data-theme="dark"] .dc-destool-wrap{
+          --destool-amber:#e3b849; --destool-amber-ink:#e3b849;
+          --destool-amber-wash:rgba(227,184,73,.085); --destool-amber-wash-2:rgba(227,184,73,.16);
+          --destool-amber-bd:rgba(227,184,73,.26);
+        }
+        .dc-destool-tab{
+          display:flex; align-items:center; gap:.7rem; width:100%;
+          font-family:inherit; text-align:right; cursor:pointer; border:0;
+          background:linear-gradient(180deg, var(--destool-amber-wash-2) 0%, var(--destool-amber-wash) 45%);
+          border:1px solid var(--destool-amber-bd); border-right:3px solid var(--destool-amber);
+          border-radius:.875rem; padding:.75rem .9rem; box-shadow:var(--card-sh);
+        }
+        .dc-destool-tab .dc-destool-ico{ width:2rem; height:2rem; border-radius:50%; flex:none;
+          display:flex; align-items:center; justify-content:center;
+          background:var(--destool-amber-wash-2); border:1px solid var(--destool-amber-bd); color:var(--destool-amber-ink); }
+        .dc-destool-tab .dc-destool-ico svg{ width:1.05rem; height:1.05rem; }
+        .dc-destool-tab .dc-destool-body{ flex:1; min-width:0; }
+        .dc-destool-tab .dc-destool-ttl{ display:block; font-size:.82rem; font-weight:700; color:var(--txt); }
+        .dc-destool-tab .dc-destool-ttl b{ color:var(--destool-amber-ink); }
+        .dc-destool-tab .dc-destool-sub{ display:block; font-size:.72rem; color:var(--txt3); margin-top:.18rem; line-height:1.75; }
+        .dc-destool-tab .dc-destool-pill{ flex:none; font-size:.63rem; font-weight:800; color:var(--destool-amber-ink);
+          background:var(--destool-amber-wash-2); border:1px solid var(--destool-amber-bd);
+          border-radius:999px; padding:.14rem .6rem; white-space:nowrap; }
+        .dc-destool-tab .dc-destool-chev{ flex:none; font-size:1rem; font-weight:900; color:var(--destool-amber-ink);
+          transition:transform .24s cubic-bezier(.4,0,.2,1); }
+        .dc-destool-tab[aria-expanded="true"]{ border-radius:.875rem .875rem 0 0; box-shadow:none; }
+        .dc-destool-tab[aria-expanded="true"] .dc-destool-chev{ transform:rotate(90deg); }
+        .dc-destool-drawer{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .3s cubic-bezier(.4,0,.2,1); }
+        .dc-destool-drawer.is-open{ grid-template-rows:1fr; }
+        .dc-destool-drawer > div{ overflow:hidden; }
+      </style>
+      <div class="dc-destool-wrap">
+        <button type="button" class="dc-destool-tab" id="dcDesToolTab" aria-expanded="false" aria-controls="dcDesToolPanel">
+          <span class="dc-destool-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9.5 3v5.2L4.8 17.4A2.4 2.4 0 0 0 6.9 21h10.2a2.4 2.4 0 0 0 2.1-3.6L14.5 8.2V3"/>
+              <path d="M8.2 3h7.6"/><path d="M7.4 14.2h9.2"/>
+            </svg>
+          </span>
+          <span class="dc-destool-body">
+            <span class="dc-destool-ttl"><b>مقاله‌ی خودت</b> را بگذار، امتیاز DES بگیر</span>
+            <span class="dc-destool-sub">متن یا چکیده را بفرست تا ببینی چقدر شواهد پشتش هست — با همان DentCast Evidence Score.</span>
+          </span>
+          <span class="dc-destool-pill">پریمیوم</span>
+          <span class="dc-destool-chev" aria-hidden="true">›</span>
+        </button>
+        <div class="dc-destool-drawer" id="dcDesToolDrawer"><div>
+          <div id="dcDesToolPanel"></div>
+        </div></div>
+      </div>
+
       <!-- DentCast Plus personal card. One of exactly two anonymous invitation
            points (spec 2.3). For guests: a quiet one-line invitation. For a
            logged-in free user: streak + a line back into their own material +
@@ -5431,7 +5501,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=113" defer></script>
+<script src="/dc-nav.js?v=114" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
