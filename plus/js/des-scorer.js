@@ -8,11 +8,11 @@
 // the DES explainer box right above it), so it paints before this module
 // arrives. Everything inside #dcDesToolPanel is built here, lazily, the
 // first time the tab opens.
-import { el, faNum } from './util.js?v=14';
-import { api, currentUser, meStatus } from './api.js?v=14';
-import { openLoginModal } from './login-modal.js?v=14';
-import { premiumCta, unreachableGate } from './premium-cta.js?v=14';
-import { sourceBlock } from './des.js?v=14';
+import { el, faNum } from './util.js?v=15';
+import { api, currentUser, meStatus } from './api.js?v=15';
+import { openLoginModal } from './login-modal.js?v=15';
+import { premiumCta, unreachableGate } from './premium-cta.js?v=15';
+import { sourceBlock } from './des.js?v=15';
 
 const FROM = 'des-tool';
 const TG_URL = 'https://t.me/dentcast_support';
@@ -72,6 +72,20 @@ function clientGate({ title, body, claim, hasPdf }) {
       the real code always comes from the server. ── */
 function looksLikeReference(s) { return /^D-[A-Z0-9]{3}-[A-Z0-9]{3}$/.test(s || ''); }
 
+/**
+ * Fill the panel. OPENING IS NOT THIS MODULE'S JOB.
+ *
+ * The inline script in index.html owns the drawer's open/close, because the
+ * tab's markup is static and its toggle has to be too — a tab that paints
+ * from raw HTML and then does nothing on tap, for every reader whose module
+ * graph is slow, blocked or broken, is worse than no tab at all. That is not
+ * hypothetical: it is exactly how this shipped the first time.
+ *
+ * So this module never toggles anything. It listens for the click the inline
+ * script has ALREADY handled (inline runs first — it is registered at parse
+ * time), reads the resulting state, and builds or notifies. Toggling here too
+ * would flip the class a second time and cancel the open outright.
+ */
 export function initDesTool() {
   const tab = document.getElementById('dcDesToolTab');
   const drawer = document.getElementById('dcDesToolDrawer');
@@ -81,23 +95,24 @@ export function initDesTool() {
   let built = false;
   let ctl = null; // the controller returned by buildPanel(), once built
 
+  function fill() {
+    if (!built) { built = true; ctl = buildPanel(panel); }
+    else if (ctl && ctl.onReopen) ctl.onReopen();
+  }
+
+  // The reader may have opened it before this module arrived — the inline
+  // toggle works without us, which is the entire point of it. Catch up.
+  if (drawer.classList.contains('is-open')) fill();
+
   tab.addEventListener('click', () => {
-    const open = !drawer.classList.contains('is-open');
-    drawer.classList.toggle('is-open', open);
-    tab.setAttribute('aria-expanded', open ? 'true' : 'false');
-    if (open) {
-      if (!built) { built = true; ctl = buildPanel(panel); }
-      else if (ctl && ctl.onReopen) ctl.onReopen();
-    } else if (ctl && ctl.onClose) {
-      ctl.onClose();
-    }
+    if (drawer.classList.contains('is-open')) fill();
+    else if (ctl && ctl.onClose) ctl.onClose();
   });
 
+  // Escape is closed by the inline script; we only need the side effect.
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
-      drawer.classList.remove('is-open');
-      tab.setAttribute('aria-expanded', 'false');
-      if (ctl && ctl.onClose) ctl.onClose();
+    if (e.key === 'Escape' && !drawer.classList.contains('is-open') && ctl && ctl.onClose) {
+      ctl.onClose();
     }
   });
 }
