@@ -8,11 +8,11 @@
 // the DES explainer box right above it), so it paints before this module
 // arrives. Everything inside #dcDesToolPanel is built here, lazily, the
 // first time the tab opens.
-import { el, faNum } from './util.js?v=15';
-import { api, currentUser, meStatus } from './api.js?v=15';
-import { openLoginModal } from './login-modal.js?v=15';
-import { premiumCta, unreachableGate } from './premium-cta.js?v=15';
-import { sourceBlock } from './des.js?v=15';
+import { el, faNum } from './util.js?v=16';
+import { api, currentUser, meStatus } from './api.js?v=16';
+import { openLoginModal } from './login-modal.js?v=16';
+import { premiumCta, unreachableGate } from './premium-cta.js?v=16';
+import { sourceBlock } from './des.js?v=16';
 
 const FROM = 'des-tool';
 const TG_URL = 'https://t.me/dentcast_support';
@@ -122,6 +122,12 @@ export function initDesTool() {
  * gate check. Returns a small controller the tab wires Escape/close into.
  */
 function buildPanel(panel) {
+  // Claim the panel synchronously, before the async gate resolves. The inline
+  // script in index.html arms a watchdog that swaps in module-free fallback
+  // links if nothing takes over; this is what stands it down. Set it FIRST —
+  // if it were set after the gate resolved, a slow /me would race the
+  // watchdog and the reader would see the fallback flash over a working panel.
+  panel.setAttribute('data-filled', '1');
   const gateHost = el('div', {});
   panel.replaceChildren(gateHost);
 

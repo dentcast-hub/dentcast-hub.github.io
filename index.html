@@ -4541,6 +4541,34 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
             p.className = 'dc-destool-boot';
             p.textContent = 'در حال آماده‌سازی…';
             panel.appendChild(p);
+
+            /* …and never hang on that placeholder either. If the module has
+               not taken over within a few seconds it is not coming (blocked,
+               404, or a throw somewhere in the graph), and "در حال
+               آماده‌سازی…" forever is the worst of every option: the reader
+               is stranded and the failure is invisible. Fall back to plain
+               links — no modules, no fetch, cannot fail — and name the
+               problem in the console for whoever is debugging. */
+            setTimeout(function(){
+              if (panel.getAttribute('data-filled')) return;
+              panel.textContent = '';
+              var box = document.createElement('div');
+              box.className = 'dc-destool-boot';
+              box.appendChild(document.createTextNode(
+                'این بخش روی این مرورگر بالا نیامد. از این دو راه هم می‌شود رفت: '));
+              var a1 = document.createElement('a');
+              a1.href = '/plus/'; a1.textContent = 'ورود به حساب';
+              var a2 = document.createElement('a');
+              a2.href = '/plus/pricing.html'; a2.textContent = 'دنت‌کست پریمیوم';
+              box.appendChild(a1);
+              box.appendChild(document.createTextNode(' · '));
+              box.appendChild(a2);
+              panel.appendChild(box);
+              if (window.console) {
+                console.warn('[destool] panel never filled — plus/js/des-scorer.js did not run. '
+                  + 'Check that /plus/plus.js loaded and look for a [plus] …failed line above.');
+              }
+            }, 6000);
           }
         }
         tab.addEventListener('click', function(){
@@ -5537,7 +5565,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=116" defer></script>
+<script src="/dc-nav.js?v=117" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

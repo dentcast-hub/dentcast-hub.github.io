@@ -47,6 +47,17 @@ function shell(): void {
       p.className = 'dc-destool-boot';
       p.textContent = 'در حال آماده‌سازی…';
       panel.appendChild(p);
+      setTimeout(() => {
+        if (panel.getAttribute('data-filled')) return;
+        panel.textContent = '';
+        const box = document.createElement('div');
+        box.className = 'dc-destool-boot';
+        const a = document.createElement('a');
+        a.href = '/plus/pricing.html';
+        a.textContent = 'دنت‌کست پریمیوم';
+        box.appendChild(a);
+        panel.appendChild(box);
+      }, 6000);
     }
   };
   tab.addEventListener('click', () => setOpen(!drawer.classList.contains('is-open')));
@@ -123,6 +134,28 @@ describe('opening never depends on this module', () => {
     openTab();
     await settle();
     expect(document.getElementById('dcDesToolDrawer')!.classList.contains('is-open')).toBe(true);
+  });
+
+  it('falls back to plain links instead of hanging on the placeholder forever', async () => {
+    vi.useFakeTimers();
+    try {
+      openTab();                 // module never arrives
+      vi.advanceTimersByTime(7000);
+      expect(document.body.textContent).not.toContain('در حال آماده‌سازی');
+      expect(document.querySelector('a[href*="pricing"]')).not.toBeNull();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('a working panel is never overwritten by that fallback', async () => {
+    initDesTool();
+    openTab();
+    await settle();
+    expect(document.getElementById('dcDesToolPanel')!.getAttribute('data-filled')).toBe('1');
+    await new Promise((r) => setTimeout(r, 0));
+    // the watchdog is armed but must stand down
+    expect(document.querySelector('.dc-destool-titlerow input')).not.toBeNull();
   });
 });
 
