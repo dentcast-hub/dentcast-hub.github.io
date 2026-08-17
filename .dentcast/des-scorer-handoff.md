@@ -1,864 +1,626 @@
 # ارزیاب DES — handoff
 
-**Feature:** a premium tool on the homepage that runs the DentCast Evidence
-Score on a paper the *reader* pastes, and remembers every paper it has scored so
-the same study is never paid for twice.
+Build this exactly as written. Every decision below is already made; nothing
+here is a suggestion. Where a Persian string is given, use it character for
+character. Where a rule is marked **RULE**, it exists because it was already
+gotten wrong once — the rationale is attached so you do not "improve" it.
 
-**Status:** design is settled and a working reference mockup exists. Nothing is
-built in the product yet. This document is the specification; build from it.
-
-**Reference implementation:** `.dentcast/des-scorer-mockup.html` — a
-single-file, self-contained mockup with the real algorithms in plain JS
-(identity keys, extraction, the validity gate, the upgrade rule) plus a
-«پشت صحنه» panel that shows the store and the decision for every request. Open
-it before writing code. Every rule below is implemented and tested there; where
-this document and the mockup disagree, **this document wins**, but check the
-mockup first — it probably encodes a case the prose glossed over.
+**Reference mockup:** `.dentcast/des-scorer-mockup.html` — open it first. It is
+the visual and behavioural target, self-contained, with a «پشت صحنه» panel.
 
 ---
 
-## 0. How to read this
+## 0. What this is, in one paragraph
 
-Sections marked **RULE** are non-negotiable and each one exists because it was
-already gotten wrong once during design. Do not "improve" them without reading
-the rationale attached — the rationale *is* the reason the rule looks
-over-cautious.
+A premium tab on the homepage, directly under the existing «DES چیست؟» box. A
+reader pastes a paper (or ticks «PDF دارم» and sends it to Telegram) and submits
+it. **A human — the founder — scores it**, not a model in the API. The result
+lands in the reader's اطلاعیه inbox. Every scored paper is remembered in a
+library, so the *next* reader who submits the same paper is answered instantly
+with no queue at all.
 
-Everything in `§13` is an executable test fixture with an expected result. Your
-implementation is not done until all of them pass.
-
----
-
-## 1. What it is, in one page
-
-A second tab on the homepage, directly under the existing «DentCast Evidence
-Score چیست؟» explainer box. It is a formal twin of that box — same height, same
-icon circle, same 3px leading edge, same radius, same inline-disclosure
-behaviour — differing only in colour: the explainer is DES chrome (indigo), the
-tool is **amber**, because amber means «this is what a subscription buys»
-site-wide and this is the one thing here that a subscription buys.
-
-Pressing it expands a panel **in flow, on the homepage**. It does not navigate,
-it is not a modal, it is not a bottom sheet. It closes back to the same place,
-three ways: pressing the tab again, «بستن» inside the panel, and `Escape`.
-
-Inside the panel: a title field, a text field, two chips («چکیده است» /
-«متن کامل است»), an optional link field, and one button. On submit the reader
-gets a DES band, a question type, a 0–100 score, a short interpretation and a
-collapsed reasoning trace.
-
-Behind it: a store of every paper ever scored, keyed by the paper's identity.
-A paper already in the store is answered from the store — no model call, no
-quota spent, and **the reader is told nothing about any of it**.
-
-Two model roles, and they are different models with different API keys: a cheap
-one that extracts `{title, first_author, year, doi}` when regex cannot, and a
-**reasoning** model that does the scoring. The expensive one is what the whole
-store exists to protect.
+There is **no AI provider, no API key, no model call anywhere in this feature.**
+Do not build one. Do not add an adapter "for later".
 
 ---
 
-## 2. Non-negotiables
+## 1. The flow, end to end
 
-### RULE 1 — Ambiguity means decline
-
-> If we are not sure a key identifies this paper, **no key is minted.**
-
-A missed cache hit costs a few tokens. A *wrong* key returns **another paper's
-evaluation**, which is not a degraded answer — it is a false one, presented with
-a band and a number and a reasoning trace.
-
-The failure that produced this rule: a reader pasted a whole PubMed web page.
-The title heuristic was "first non-empty line", so the title became
-`Skip to main page content`. That is not a one-off — it is the title *every*
-PubMed page dump would produce, so all of them collide on one title key and the
-second reader is served the first reader's score for an unrelated study.
-
-Consequence you must implement: a paper whose title cannot be trusted is stored
-with `sha:` (and identifiers, if any) and **no `ttl:` key**. It scores fine; it
-just caches badly.
-
-### RULE 2 — Hashtags are stored, never matched
-
-Hashtags are a *topic* vocabulary, not an identity. Two different RCTs on
-single-visit endodontics carry identical hashtags. Matching on them hands one
-paper's score to another. They are stored because they make the corpus a
-searchable asset; they never enter the lookup path.
-
-### RULE 3 — The free gate is generous; the expensive layer is strict
-
-The regex/heuristic layer runs before any model call and must only stop what it
-is **certain** about. Everything else passes through to the reasoning model,
-which reads the text and is the real judge.
-
-This was gotten wrong three times in a row during design, always the same way:
-an early guess asserted with confidence. The last instance shipped a validity
-gate whose signal families were five Persian and one English, so **every fully
-English abstract scored at most 1 of 6 and was rejected outright** — i.e. most
-real input. A language-shaped gate is not a gate, it is a filter on language.
-
-### RULE 4 — The reader's claim never overrides the measurement
-
-`ABSTRACT_ONLY` caps the method multiplier at 0.75 (DES spec v2.2). So calling
-an abstract a full text **inflates the score**. It is the one place this tool
-can be gamed. The chips are a hint; the word count decides; and the final
-authoritative `text_basis` is whatever the scoring model returns in its own
-output object.
-
-Direction of error is deliberate: under-claiming is allowed (it only lowers your
-own score), over-claiming is caught.
-
-### RULE 5 — Nothing derivable is stored beside the spec output
-
-Same doctrine as `plus/des-scores.json`, `pathways.json`, `badges.json`. The
-`des` column holds the spec's output object **verbatim**. `band`,
-`question_type`, `provisional`, `text_basis` already live inside it. A second
-copy is a second source of truth. (Identity fields — doi/pmid/title/author/year
-— are *not* derivable from the spec output and are separate columns; that is
-fine and intended.)
-
-### RULE 6 — `plus/des-scores.json` is not touched
-
-Not "prefer not to" — must not.
-
-- `plus/js/des.js` fetches it on **every article page load**. Reader
-  submissions would grow a file every visitor downloads.
-- Its keys are `content_id` (a page path). A reader's paper has no page.
-- It is written by the publishing workflow and gated by
-  `tools/verify_publish.py`. A second writer means merge conflicts and a gate
-  that sees rows it does not understand.
-- CLAUDE.md: "An absent `content_id` is how the display knows there is nothing
-  to show." Polluting it breaks that.
-
-### RULE 7 — The store is a Postgres table, not a repo file
-
-The API container's disk is **ephemeral**. A JSON file written at runtime by the
-API vanishes on the next restart. Every JSON file in this repo
-(`pathways.json`, `badges.json`, `des-scores.json`) is written by an *agent at
-deploy time*; this data is written by *users at runtime*. Different lifetime,
-different home.
-
-If a reader-facing browsable corpus is ever wanted, a job can publish a curated
-subset from the table into a repo JSON. That is a later feature, not this one.
-
-### RULE 8 — No network is required, anywhere
-
-We never *resolve* a DOI. It is a key string: extracted by regex, stored, looked
-up. Zero outbound calls.
-
-Optional enrichment (title/journal/year from Crossref) runs **in the reader's
-browser**, never in the container — the established pattern in this codebase
-(`§9.3`). If it fails, nothing breaks; we simply do not have it.
+```
+READER                          SYSTEM                        FOUNDER
+──────                          ──────                        ───────
+opens the amber tab
+fills عنوان + متن
+(or ticks PDF)
+presses «بفرست»
+                    ──►  key lookup in the library
+                         ├─ HIT  ──► instant answer, no queue,
+                         │           no open-request spent
+                         └─ MISS ──► row in des_requests (pending)
+                                     reference code D-XXX-XXX
+                                                              sees it in GET /admin
+                                                              runs the DES prompt
+                                                              in their own Claude
+                                                              pastes JSON + title
+                                                              presses «ثبت و اطلاع بده»
+                                     ◄── library row written
+                                     ◄── اطلاعیه sent
+sees the دot on 🔔
+opens اطلاعیه → the result
+```
 
 ---
 
-## 3. Where it lives
+## 2. Files
 
-| Layer | Path | New? |
-|---|---|---|
-| Migration | `plus-api/migrations/0047_des_scorer.cjs` | new |
-| Identity + extraction | `plus-api/src/services/des-identity.ts` | new |
-| Validity gate | `plus-api/src/services/des-validate.ts` | new |
-| Orchestration | `plus-api/src/services/des-scorer.ts` | new |
-| Routes | `plus-api/src/routes/des-scorer.ts` | new |
-| Reasoning provider | `plus-api/src/providers/ai/` | extend |
-| Config | `plus-api/src/config.ts` | extend |
-| Server registration | `plus-api/src/server.ts` | edit |
-| Tab markup + critical CSS | `index.html` | edit |
-| Panel CSS | `plus/plus.css` | edit |
-| Panel behaviour | `plus/js/des-scorer.js` | new |
-| Mount | `plus/js/…` whatever `plus.js` boots on the homepage | edit |
-| Tests | `plus-api/test/des-scorer.test.ts`, `plus/js/…des-scorer.dom.test.ts` | new |
+| Action | Path |
+|---|---|
+| create | `plus-api/migrations/0047_des_scorer.cjs` |
+| create | `plus-api/src/services/des-identity.ts` |
+| create | `plus-api/src/services/des-library.ts` |
+| create | `plus-api/src/routes/des.ts` |
+| edit | `plus-api/src/server.ts` — register `desRoutes` |
+| edit | `plus-api/src/routes/admin.ts` — add the «ارزیاب DES» block (§7) |
+| edit | `plus-api/src/services/notify-policy.ts` — add the `des_result` kind |
+| edit | `plus-api/src/services/merge-profiles.ts` — carry two columns (§3) |
+| create | `plus/js/des-scorer.js` |
+| edit | `index.html` — the tab markup + critical CSS |
+| edit | `plus/plus.css` — the panel CSS |
+| edit | `plus/js/plus.js` — mount `des-scorer.js` on the homepage |
+| create | `plus-api/test/des-scorer.test.ts` |
 
-**Latest existing migration is `0046_notice_reads.cjs`** — confirm before
-numbering, another branch may have landed one.
+Latest existing migration is `0046_notice_reads.cjs`. Confirm before numbering.
 
-Read these first, they are the closest precedents:
-- `plus-api/src/routes/case-assistant.ts` — premium gate + per-user rate limit +
-  a model call. The nearest structural sibling.
-- `plus-api/src/providers/ai/openai-compatible.ts` — retry policy, JSON-mode
-  latching, `outboundFetch`.
-- `plus-api/migrations/0044_referrals.cjs` — the house style for a migration
-  that documents its own decisions in a header comment. Match it.
-- `plus/js/des.js` — the DES display vocabulary. **Reuse its visual language**
-  (band bar, `question_type` welded to the band, provisional hatching); do not
-  invent a second way to draw a band.
+Read these three first; they are the patterns to copy, not invent:
+- `plus-api/src/routes/support.ts` — a reader queue with a founder inbox
+- `plus-api/src/routes/admin.ts` lines ~802–900 — the «صندوق پشتیبانی» block,
+  which the DES block in §7 mirrors exactly
+- `plus/js/des.js` — the DES display vocabulary; reuse it, do not re-draw a band
 
 ---
 
-## 4. Data model
+## 3. Migration `0047_des_scorer.cjs`
 
-Migration `0047_des_scorer.cjs`. Write a header comment in the style of
-`0044_referrals.cjs` explaining the two-table split and RULE 1.
+Write a header comment in the style of `0044_referrals.cjs`.
 
 ```sql
--- One row per PAPER. Identity fields + the spec's output object, nothing else.
+-- One row per PAPER. Identity + the spec's output object. Never the text.
 create table des_papers (
   id            uuid primary key default gen_random_uuid(),
   doi           text,
   pmid          text,
-  title         text,
-  title_key     text,               -- hash(fold(title)); null when untrusted
+  title         text not null,
   first_author  text,
   year          smallint,
-  text_basis    text not null,      -- 'ABSTRACT_ONLY' | 'FULL_TEXT'
   hashtags      text[] not null default '{}',
-  des           jsonb not null,     -- the spec's output object, VERBATIM
-  spec_version  text not null,      -- e.g. '2.2'
-  first_seen_by uuid references profiles(id) on delete set null,
-  created_at    timestamptz not null default now(),
-  updated_at    timestamptz not null default now(),
-  check (text_basis in ('ABSTRACT_ONLY','FULL_TEXT'))
+  des           jsonb  not null,
+  spec_version  text   not null,
+  scored_at     timestamptz not null default now(),
+  created_at    timestamptz not null default now()
 );
-
 create unique index des_papers_doi_uq  on des_papers (lower(doi)) where doi  is not null;
 create unique index des_papers_pmid_uq on des_papers (pmid)       where pmid is not null;
 
--- Every key ever seen for a paper. ONE PAPER, MANY KEYS — this is what lets an
--- abstract and a full text of the same study land on a single record.
+-- Every key ever seen for a paper. ONE PAPER, MANY KEYS.
 create table des_paper_keys (
-  key        text primary key,      -- 'doi:…' | 'pmid:…' | 'ttl:…' | 'sha:…'
-  paper_id   uuid not null references des_papers(id) on delete cascade,
-  created_at timestamptz not null default now()
+  key      text primary key,
+  paper_id uuid not null references des_papers(id) on delete cascade
 );
 create index des_paper_keys_paper on des_paper_keys (paper_id);
 
--- What a record USED to say, when an upgrade replaced it. Never lost.
-create table des_paper_history (
-  id         uuid primary key default gen_random_uuid(),
-  paper_id   uuid not null references des_papers(id) on delete cascade,
-  text_basis text not null,
-  des        jsonb not null,
-  spec_version text not null,
-  replaced_at timestamptz not null default now()
-);
-
--- One row per submission. The quota is counted from here; there is no counter
--- column to drift. `outcome` distinguishes what was actually paid for.
+-- A reader's submission.
 create table des_requests (
-  id          uuid primary key default gen_random_uuid(),
-  user_id     uuid not null references profiles(id) on delete cascade,
-  paper_id    uuid references des_papers(id) on delete set null,
-  outcome     text not null,       -- see below
-  matched_by  text,                -- 'doi' | 'pmid' | 'title' | 'text' | null
-  created_at  timestamptz not null default now(),
-  check (outcome in ('served','upgraded','scored','rejected','invalid'))
+  id         uuid primary key default gen_random_uuid(),
+  user_id    uuid not null references profiles(id) on delete cascade,
+  reference  text not null unique,
+  title      text not null,
+  body       text,
+  claim      text not null,
+  link       text,
+  has_pdf    boolean not null default false,
+  status     text not null default 'pending',
+  paper_id   uuid references des_papers(id) on delete set null,
+  created_at timestamptz not null default now(),
+  answered_at timestamptz,
+  check (claim  in ('ABSTRACT_ONLY','FULL_TEXT')),
+  check (status in ('pending','answered','rejected'))
 );
-create index des_requests_user_day on des_requests (user_id, created_at desc);
+create index des_requests_open on des_requests (user_id) where status = 'pending';
+create index des_requests_queue on des_requests (created_at) where status = 'pending';
 ```
 
-`outcome` values and what they mean:
+**`merge-profiles.ts` must carry `des_requests.user_id`.** Without it a profile
+merge cascade-deletes a reader's pending submissions. `des_papers` has no user
+column on purpose — the corpus outlives any account.
 
-| value | model ran? | counts against quota? |
+---
+
+## 4. `services/des-identity.ts`
+
+Port these from `tools/des_library.py`, which is the tested reference. Same
+behaviour, same names.
+
+```ts
+export function fold(s: string): string
+export function keyHash(s: string): string
+export function keysFor(c: {doi?, pmid?, title?}): string[]
+export function titleTokens(t: string): Set<string>
+export function jaccard(a: Set<string>, b: Set<string>): number
+export function authorWords(authors: string): Set<string>
+export function sameAuthor(a: string, b: string): boolean
+```
+
+**`fold`** — strip `‌‎‏`, `ي ى → ی`, `ك → ک`, strip
+`ً-ْ`, punctuation `.,;:!?()[]{}"'«»،؛؟-–—/\` → space, collapse
+whitespace, trim, lowercase.
+
+**`keyHash`** — `sha1(fold(s).replace(/\s+/g,'')).slice(0,10)`.
+
+> **RULE — the whitespace is REMOVED, not collapsed.** `fold` strips ZWNJ, so
+> «نظام‌مند» becomes «نظاممند» while a reader who typed a real space gives
+> «نظام مند». Two strings, two keys, and the same title never matched itself.
+> Removing whitespace outright collapses all three spellings onto one key.
+> `hl-view.js`'s `foldFa` has the same shape and survives it only because its
+> search is a substring test; a key is an equality test and cannot.
+
+**`keysFor`** returns, in this order, skipping absent ones:
+`doi:<lowercased>` · `pmid:<digits>` · `ttl:<keyHash(title)>`.
+Author+year is **not** a key — two papers by one author in one year is ordinary.
+
+**`titleTokens`** — words of `fold(t)` with length > 2, minus this stopword set:
+`a an the of in on for to and or with by from at as is are its this that after
+before during between vs versus study studies`.
+
+**`authorWords`** — words ≥3 letters of the **first** author only (split on
+`,;،`).
+
+> **RULE — never compare "the last name token".** Journals write `Fan YY`, a
+> model writes `Ying-Ying Fan`; the last token is `yy` versus `fan`, and the
+> same paper fails its own author check. Compare the word SETS and intersect.
+
+---
+
+## 5. `services/des-library.ts`
+
+```ts
+export interface LookupHit { paperId: string; via: 'doi'|'pmid'|'title'; des: unknown; hashtags: string[]; }
+export interface Candidate { paperId: string; score: number; title: string; authors: string;
+                             year: number|null; doi: string|null; authorAgrees: boolean|null; }
+
+export async function lookupExact(c: Citation): Promise<LookupHit | null>
+export async function nearDuplicates(title: string): Promise<Candidate[]>   // Jaccard ≥ 0.55
+export async function attachKeys(paperId: string, keys: string[]): Promise<void>
+export async function createPaper(input): Promise<string>
+export function validateDesRecord(rec: unknown): string[]                   // [] = sound
+export function normaliseDesRecord(rec: any): { rec: any; changed: string[] }
+```
+
+### 5.1 `validateDesRecord` — port §"validate" from `tools/des_library.py`
+
+Returns Persian problem strings. Non-empty = refuse the record. Checks:
+
+1. `content_type` is `RESEARCH` | `COMMENTARY` | `NOT_APPRAISABLE`
+   (non-RESEARCH short-circuits with no further checks)
+2. `s_design.value` an integer 0–100; `multiplier` ∈ {0.30, 0.55, 0.80, 1.00}
+3. domain count matches the tool exactly:
+   `RoB2 5 · ROBINS-I 5 · AMSTAR-2 6 · QUIN 6 · QUADAS-2 4`
+4. every domain has a rating ∈ `low|some_concerns|high|NR`, and an
+   `evidence_quote` **or** a `note`
+5. the multiplier follows from the counts (`NR` counts as `some_concerns`):
+   `≥2 high → 0.30` · `1 high or ≥3 concerns → 0.55` · `≥1 concern → 0.80` ·
+   else `1.00`. Flag only when the record's multiplier is **higher** than this.
+6. exactly 4 penalty rows; a fired row equals
+   `max(1, roundHalfUp(base_points × s_design ÷ 100))`; a `points: 0` row has a `note`
+7. `des_score === max(0, roundHalfUp(s_design × multiplier) − Σ points)`
+8. `band` matches: `A 80-100 · B 60-79 · C 40-59 · D 20-39 · E 0-19`
+9. `ABSTRACT_ONLY`/`SECONDARY_REPORT` ⇒ `provisional: true`; `FULL_TEXT` ⇒ false
+10. `interpretation_fa` ≤ 60 words and ≤ 4 sentences
+
+> `roundHalfUp(x) = Math.floor(x + 0.5)` for x ≥ 0. Not `Math.round` on
+> negatives, and never a language default — the spec makes the rounding rule
+> part of the score.
+
+### 5.2 `normaliseDesRecord` — conventions the spec does not state
+
+Two fixes, both mechanical, neither touching judgement. Report what changed.
+
+1. **Persian digits** in `fact_fa` and `interpretation_fa`
+   (`0123456789` → `۰۱۲۳۴۵۶۷۸۹`). 180 of 181 stored records use them and the
+   string renders straight onto the card.
+2. **The four penalty item strings**, matched by `base_points` + a keyword:
+
+| base | keyword regex | canonical Persian string |
 |---|---|---|
-| `served` | no — answered from the store | **no** |
-| `upgraded` | yes — abstract record replaced by full text | yes |
-| `scored` | yes — new paper | yes |
-| `rejected` | no — stopped by the free gate | no |
-| `invalid` | yes — the model refused it as not-a-study | **no**, but see §10 |
+| 8 | `conflict\|interest\|تعارض\|منافع` | `بیانیه‌ی تعارض منافع وجود ندارد` |
+| 5 | `regist\|prospectiv\|ثبت\|پیش‌?نگر` | `کارآزمایی به‌صورت پیش‌نگر ثبت نشده` |
+| 5 | `sample\|size\|power\|نمونه\|توان` | `توجیه حجم نمونه یا آنالیز توان وجود ندارد` |
+| 3 | `follow\|پیگیری` | `دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد` |
 
-**`merge-profiles.ts` must carry `des_papers.first_seen_by` and
-`des_requests.user_id`.** Cascade-deletes off `profiles` would otherwise erase
-the corpus when two accounts merge. `first_seen_by` is `on delete set null`
-precisely so a departing account cannot take the corpus with it.
+### 5.3 Hashtags
 
----
+Resolve every proposed tag against `dentcast-hashtag-reference.json`
+(`concepts[].tag`). **Drop anything that does not resolve** — never mint a
+concept from a submission, never store an alias as a tag.
 
-## 5. The lookup — identity, not similarity
-
-### 5.1 Why not text comparison
-
-An earlier design stored a 5-gram shingle set per paper and matched by
-containment. **Do not do this.** It stores thousands of entries per paper and
-turns every request into a linear scan of the whole corpus. It is the document
-in a costume.
-
-What is stored instead is what a *citation* is made of. Roughly 200–550 bytes a
-paper, and lookup is a primary-key hit on a short string.
-
-### 5.2 The key ladder
-
-Strongest first. Each is one `select … where key = $1` against
-`des_paper_keys`. The whole search is at most four of them; stop at the first
-hit.
-
-```
-1.  doi:<lowercased doi>
-2.  pmid:<digits>
-3.  ttl:<hash(fold(title))>       -- only when the title is trusted (RULE 1)
-4.  sha:<hash(fold(whole text))>  -- exact re-paste; free, catches the trivial case
-```
-
-**Author+year is deliberately NOT a key.** Two papers by one author in one year
-is ordinary. It may corroborate a title match; it may never make one.
-
-### 5.3 `fold()` — Persian normalisation
-
-Applied to key material **only**, never to stored display text. Same reasoning
-as `foldFa` in `plus/js/hl-view.js`.
-
-```
-strip ZWNJ (U+200C) and bidi marks (U+200E, U+200F)
-ي, ى → ی      ك → ک
-strip harakat (U+064B–U+0652)
-punctuation → space:  . , ; : ! ? ( ) [ ] { } " ' « » ، ؛ ؟ - – — / \
-collapse whitespace, trim, lowercase
-```
-
-A ZWNJ is not a space. «اندو‌شده» ≠ «اندو شده». Without folding, two copies of
-one paper become two keys.
-
-### 5.4 Key accumulation
-
-Every request attaches **all** of its keys to the matched paper, including on a
-cache hit. So a paper first stored from an abstract (title key only) gains its
-DOI key the first time someone pastes the full text, and every later citation
-carrying only that DOI finds it. The corpus cleans itself.
+> **RULE — hashtags are stored, never matched on.** They are a topic vocabulary,
+> not an identity: two different RCTs on single-visit endodontics carry
+> identical tags, and matching on them hands one paper's score to another.
 
 ---
 
-## 6. Extraction
+## 6. Reader API — `routes/des.ts`
 
-### 6.1 The title is a form field
+`app.addHook('preHandler', requireAuth)` then `requirePremium`, exactly as
+`routes/case-assistant.ts` does. Register in `server.ts`.
 
-Ask for it. Do not guess it. This single decision removes the largest source of
-wrong keys, and a reader with two scores a day will happily type one line.
+### `GET /des/state`
 
-`findTitle()` survives only as a fallback and as a way to notice disagreement
-between the typed title and the text.
-
-### 6.2 `findTitle()` — fallback only
-
-Structure beats position. Position was the bug.
-
-1. Find a line matching `/^(abstract|چکیده)\b[:：]?$/i`. If found, walk **back**
-   up to 6 lines and return the first that passes the gate.
-2. Otherwise, only the **first 5** non-empty lines are eligible, and only if
-   they pass the gate.
-3. Nothing passes → `null` → no `ttl:` key.
-
-Gate (`looksLikeTitle`), all must hold:
-
-- does not match the chrome pattern (below)
-- does not end in `.` or `؛` — that is a sentence
-- **contains a letter, tested with `/\p{L}/u`**
-- contains no identifier: `/10\.\d{4}|pmid|doi\s*:/i` → reject
-- contains no author list: `/et\s*al\.?|و همکاران/i` → reject
-- 6 ≤ words ≤ 35
-
-> **Trap, found the hard way:** the "contains a letter" test was originally
-> `/^[\d\W_]+$/` → reject. In JavaScript `\W` is **ASCII-only**, so that pattern
-> matches every pure-Persian string ever written and rejected exactly the titles
-> this site is made of. Use `\p{L}` with the `u` flag. Assume this class of bug
-> exists elsewhere in anything you write.
-
-> **Trap:** without the identifier/author rejections, the line immediately below
-> the title on a PubMed page — `Shahabian F, et al. J Endod. 2024. PMID: … doi: …`
-> — passes the word-count gate and wins the look-back.
-
-Chrome pattern (case-insensitive, extend freely):
-
-```
-skip to | main (page )?content | official website | \.gov\b | cookie |
-sign in | log ?in | create account | navigation | search | menu | javascript |
-browser | save\b | email\b | permalink | clipboard | share\b | cite\b |
-display options | full[- ]text links | similar articles | cited by |
-mesh terms | related information | figures?\b | copy download | actions\b |
-https?:// | www\.
+```json
+{ "open": [ { "reference": "D-KRM-TQF", "title": "…", "has_pdf": true,
+              "created_at": "…" } ], "limit": 2 }
 ```
 
-### 6.3 `paperScope()` — cut before harvesting identifiers
+### `POST /des/submit`
 
-Before looking for any DOI or PMID, truncate the text at the first line that
-announces **other papers' identifiers**:
+Body: `{ title, body, claim, link, has_pdf }`.
+Server-side caps: `title` 300 chars, `body` 60 000, `link` 500.
+
+Order of operations, exactly:
+
+1. **Free gate** (§6.1). Any `stop` → `400 { ok:false, error:'invalid_input', issues:[…] }`.
+2. **Exact lookup** on `keysFor({doi, pmid, title})`, where doi/pmid come from
+   `link` first and from `body` second (§6.2). A hit returns
+   `200 { ok:true, answered:true, des, hashtags }` — **no row is written, no
+   open request is spent, and nothing in the response says it came from the
+   library.**
+3. `select count(*) … where user_id = $1 and status = 'pending'` ≥ 2 →
+   `429 { ok:false, error:'too_many_open' }`.
+4. Insert `des_requests` with a fresh reference (§6.3) and return
+   `200 { ok:true, answered:false, reference, has_pdf }`.
+
+### 6.1 The free gate
+
+**stop** — refuses:
+- `fold(title)` empty → `عنوان مقاله را بنویس — بدون آن نمی‌توانم پیدایش کنم.`
+- `has_pdf === false` and word count < 80 →
+  `متن برای ارزیابی خیلی کوتاه است (N واژه). یا چکیده‌ی کامل بگذار، یا تیکِ PDF را بزن.`
+
+**warn** — returned in `issues` but does not block:
+- no research signal (§6.4) and ≥300 words →
+  `نشانه‌های روش‌شناختی در این متن پیدا نشد. اگر مقاله‌ی پژوهشی نباشد نمی‌توانم بسنجمش.`
+- no research signal and <300 words → this one is a **stop**:
+  `این متن نشانه‌ای از یک گزارش پژوهشی ندارد — نه طرح مطالعه، نه آمار، نه تعداد نمونه.`
+- title/body incoherence: of the title's words ≥4 chars (folded), fewer than 34%
+  appear in the folded body (only when ≥3 such words) →
+  `عنوان با متن هم‌خوان نیست — مطمئنی هر دو مالِ یک مقاله‌اند؟`
+- `claim === 'FULL_TEXT'` and 80 ≤ words ≤ 600 →
+  `این متن N واژه است — اندازه‌ی یک چکیده. به‌عنوان چکیده می‌سنجمش.`
+
+Word count is `fold(paperScope(body)).split(' ').filter(Boolean).length`.
+
+`paperScope(t)` truncates `t` at the first line matching
+`/(^|\n)\s*(similar articles|cited by|references?|bibliography|related information|mesh terms|publication types|منابع|مراجع|فهرست منابع)\b/i`.
+
+> **RULE — the free gate is generous; the founder is strict.** It stops only
+> what it is certain about. A false stop costs a reader their paper. The
+> version before this had five Persian signal families and one English, so
+> every fully English abstract scored at most 1 of 6 and was rejected — most of
+> the real input.
+
+### 6.2 Identifier extraction
 
 ```
-similar articles | cited by | references? | bibliography |
-related information | mesh terms | publication types |
-منابع | مراجع | فهرست منابع
+allDois(s)  = /10\.\d{4,9}\/[^\s"'<>,;)\]]+/g   → dedupe, lowercase, strip trailing .,;
+allPmids(s) = /(?:pmid[:\s]*|pubmed\.ncbi\.nlm\.nih\.gov\/)([0-9]{6,9})/gi → dedupe
 ```
 
-This is not a heuristic window — those sections name themselves, and everything
-after the name belongs to somebody else's paper.
+Both are harvested from `paperScope(body)`, never the raw body. Selection, per
+identifier type: **link field with exactly 1 wins**; else body with exactly 1;
+else, if several, the one inside the first 900 chars if exactly one is; else
+**none**.
 
-It solves two problems at once: the PubMed page whose «Similar articles» block
-supplies a plausible-looking wrong PMID, and the full text whose reference list
-supplies dozens of wrong DOIs.
+> **RULE — cut before harvesting.** A PubMed page lists the PMIDs of «Similar
+> articles»; a full text carries the DOI of everything in its references. A
+> reader once got `pmid:9340725` — a related article, not theirs.
 
-> The original report: a reader pasted a PubMed page and got `pmid:9340725`,
-> which was a *related* article. The tell was in the same panel — that PMID is
-> from ~1997 while the extracted year was 2016.
+### 6.3 Reference codes
 
-### 6.4 Identifier selection
+`D-` + 3 chars + `-` + 3 chars from the alphabet `ACDEFGHJKMNPQRTUVWXYZ2346799`.
+Reuse `services/reference.ts`. No `0/O`, `1/I/L`, `5/S`, `8/B` — a human reads
+it aloud and types it into Telegram. `D-` distinguishes it from support's `T-`.
 
-```
-allDois(s)  →  /10\.\d{4,9}\/[^\s"'<>,;)\]]+/g   (dedup, lowercase, strip trailing .,;)
-allPmids(s) →  /(?:pmid[:\s]*|pubmed\.ncbi\.nlm\.nih\.gov\/)([0-9]{6,9})/gi  (dedup)
-```
+### 6.4 Research signals — five families, each bilingual
 
-Note the PMID pattern requires a **label or a PubMed URL**. A bare 8-digit
-number is not a PMID.
-
-Selection order (`pick()`), for DOI and PMID independently:
-
-| condition | result |
-|---|---|
-| link field has exactly 1 | use it — *the link field always wins* |
-| link field has >1 | decline |
-| body (within `paperScope`) has exactly 1 | use it |
-| body has >1, exactly 1 of them in the first 900 chars | use that one |
-| body has >1 otherwise | **decline** |
-| none anywhere | none |
-
-### 6.5 The link field
-
-One optional input under the text box, **after** the paste, never in front of
-it. Label it «لینک مقاله را هم داری؟ (اختیاری)» — *not* "DOI"; many readers do
-not know the word. It accepts a bare DOI, a `doi.org` URL, a PubMed URL, a
-PMID, or a journal page URL carrying either.
-
-**Auto-fill:** on every `input` event on the text box, run the identifier
-regexes over it. If one is found and the field is empty (or was auto-filled
-before), fill it and show a small confirmation chip. Clear it if the text
-changes and no identifier remains. Mark auto-filled state with a data attribute
-so a reader's own typing is never overwritten.
-
-Net effect: the common case — an abstract copied from a journal page, which
-carries its DOI — never asks the reader anything.
-
-### 6.6 When the cheap model is called
-
-Only when there is **no DOI, no PMID, and no trusted title**. That is the entire
-trigger. A few hundred tokens for `{title, first_author, year, doi}`. See §9.2.
-
----
-
-## 7. The validity gate
-
-Free, deterministic, runs before any model call. Two severities.
-
-### 7.1 Research signals — five bilingual families
-
-What separates a study from an opinion is **methodological language**, not
-topical vocabulary. «دندان» and «روش» appear in a home-remedy post as readily as
-in a trial; `p = 0.014` and `n = 42` and `Methods:` do not.
-
-Every family carries both languages. (See RULE 3 for what happens otherwise.)
+At least one must match the **raw** body (not folded — `fold` strips the
+punctuation `p < 0.05` and `Methods:` depend on).
 
 | family | pattern (case-insensitive) |
 |---|---|
-| طرح مطالعه | `randomi[sz]ed\|controlled trial\|clinical trial\|cohort\|case[-\s]?control\|cross[-\s]?sectional\|systematic review\|meta[-\s]?analys\|in vitro\|in vivo\|double[-\s]?blind\|placebo\|split[-\s]?mouth\|کارآزمایی\|مرور نظام\|فراتحلیل\|هم‌?گروهی\|مورد[-\s]?شاهد\|مقطعی\|آزمایشگاهی\|دوسوکور` |
-| آمار | `\bp\s*[<=>]\s*0?[.,]\d\|\bp[-\s]?value\|\bn\s*=\s*\d\|95\s*%\|confidence interval\|standard deviation\|\bSD\b\|\bCI\b\|statistically significan\|معنادار\|انحراف معیار\|فاصله اطمینان\|سطح معنی` |
-| نمونه با عدد | `\d+\s*(patients?\|subjects?\|teeth\|tooth\|specimens?\|samples?\|participants?\|cases\|volunteers?)\|[\d۰-۹]+\s*(بیمار\|نمونه\|دندان\|شرکت‌کننده\|مورد\|داوطلب)` |
-| سرتیتر ساختاری | `\b(background\|objectives?\|aims?\|materials?\|methods?\|results?\|conclusions?\|discussion)\s*[:：]\|(زمینه\|هدف\|روش‌?ها\|مواد و روش\|نتایج\|نتیجه‌?گیری\|بحث\|یافته‌?ها)\s*[:：]` |
-| سنجه | `\b(mean\|median\|prevalence\|incidence\|odds ratio\|risk ratio\|hazard ratio\|survival rate\|follow[-\s]?up)\b\|میانگین\|میانه\|شیوع\|نسبت شانس\|پیگیری` |
-
-> **RULE — match these against the RAW text, never the folded text.** `fold()`
-> strips punctuation, and `p < 0.05` and `Methods:` both lose the exact
-> character that makes them a signal.
-
-### 7.2 Severities
-
-**STOP** (do not score, do not spend a slot):
-
-- title empty
-- fewer than 80 words
-- **zero** research signals **and** fewer than 300 words
-
-**WARN** (score anyway, but say this first):
-
-- zero research signals and ≥ 300 words
-- title shorter than 4 words
-- title/text incoherence: of the title's words with ≥4 characters (folded),
-  fewer than 34% appear in the folded text. Only checked when the title has ≥3
-  such words. This is a short string against a long one — cheap, and a
-  legitimate use of text comparison, unlike §5.1.
-- the reader's basis claim disagrees with the word count
-
-**One signal is enough to pass.** Not three. RULE 3.
-
-### 7.3 Word counting
-
-`words(t) = fold(paperScope(t)).split(' ').filter(Boolean).length`
-
-Chrome and reference lists are cut first. Count words, never characters.
+| design | `randomi[sz]ed\|controlled trial\|clinical trial\|cohort\|case[-\s]?control\|cross[-\s]?sectional\|systematic review\|meta[-\s]?analys\|in vitro\|in vivo\|double[-\s]?blind\|placebo\|split[-\s]?mouth\|کارآزمایی\|مرور نظام\|فراتحلیل\|هم‌?گروهی\|مورد[-\s]?شاهد\|مقطعی\|آزمایشگاهی\|دوسوکور` |
+| stats | `\bp\s*[<=>]\s*0?[.,]\d\|\bp[-\s]?value\|\bn\s*=\s*\d\|95\s*%\|confidence interval\|standard deviation\|\bSD\b\|\bCI\b\|statistically significan\|معنادار\|انحراف معیار\|فاصله اطمینان\|سطح معنی` |
+| counted sample | `\d+\s*(patients?\|subjects?\|teeth\|tooth\|specimens?\|samples?\|participants?\|cases\|volunteers?)\|[\d۰-۹]+\s*(بیمار\|نمونه\|دندان\|شرکت‌کننده\|مورد\|داوطلب)` |
+| headings | `\b(background\|objectives?\|aims?\|materials?\|methods?\|results?\|conclusions?\|discussion)\s*[:：]\|(زمینه\|هدف\|روش‌?ها\|مواد و روش\|نتایج\|نتیجه‌?گیری\|بحث\|یافته‌?ها)\s*[:：]` |
+| measures | `\b(mean\|median\|prevalence\|incidence\|odds ratio\|risk ratio\|hazard ratio\|survival rate\|follow[-\s]?up)\b\|میانگین\|میانه\|شیوع\|نسبت شانس\|پیگیری` |
 
 ---
 
-## 8. `text_basis` and the upgrade rule
+## 7. Admin — this is where the founder works
 
-### 8.1 Detection
+### 7.1 Endpoints (all behind the existing admin guard in `routes/admin.ts`)
 
 ```
-words ≥ 1200  →  FULL_TEXT
-words ≤ 600   →  ABSTRACT_ONLY
-between       →  null (genuinely ambiguous → defer to the reader's chip)
+GET  /admin/des                     → { pending: [...], count }
+GET  /admin/des/:id                 → the full submission (title, body, claim, link, has_pdf, reader)
+GET  /admin/des/by-reference/:ref   → the same, found by the code typed under a Telegram PDF
+POST /admin/des/:id/answer          → { title, record, tags }   ← THE PASTE BOX
+POST /admin/des/:id/reject          → { reason }
 ```
 
-The previous rule was `chars > 1500 || hasSectionHeadings` and it was wrong on
-both halves: a **structured abstract carries its own Background/Methods/Results
-headings**, and page chrome inflates the character count. Neither signal
-separates the two things.
+**`POST /admin/des/:id/answer`** does all of this in one transaction:
 
-### 8.2 The four outcomes
+1. `JSON.parse(record)` — bad JSON → `400 { error:'bad_json', detail }`
+2. `title` overrides `record.citation.title`. If both exist and their
+   `keyHash` differs, still take `title` and return the disagreement in
+   `warnings` so the founder sees it.
+3. `validateDesRecord` — non-empty → `400 { error:'invalid_record', issues }`.
+   **Nothing is written.**
+4. `normaliseDesRecord` — collect `changed` into `warnings`
+5. `nearDuplicates(title)` — if any and the request carries no `same_as`, return
+   `409 { error:'near_duplicate', candidates }`. The founder resubmits with
+   `same_as: "<paperId>"` (attach keys to that paper, do not create) or
+   `force: true` (create a new paper).
+6. write `des_papers` + `des_paper_keys`, set `des_requests.status='answered'`,
+   `paper_id`, `answered_at`
+7. `sendCapped(userId, 'des_result', …)` (§8)
+8. return `200 { ok:true, paperId, warnings }`
 
-`RANK = { ABSTRACT_ONLY: 1, FULL_TEXT: 2 }`
+### 7.2 The admin page block
 
-| incoming | in store | outcome | model | quota |
-|---|---|---|---|---|
-| abstract | abstract | serve stored | — | — |
-| **abstract** | **full text** | **serve the full-text answer** | — | — |
-| **full text** | **abstract** | **re-score, replace record, push old to history** | ✓ | −1 |
-| anything | nothing | score, create record | ✓ | −1 |
+Insert into `renderHtml` in `routes/admin.ts`, immediately **after** the
+«صندوق پشتیبانی» block. Mirror that block's markup conventions exactly:
+`<h3>`, `.muted`, `<form class="bc" onsubmit="return false">`, `.pill`,
+`.pill.hot`, an inline `<script>` that fetches and renders, and the local `esc`
+and `when` helpers.
 
-Full is always preferred. This is not a rule we invented — DES spec v2.2 caps
-`ABSTRACT_ONLY` at a 0.75 method multiplier and rates silence as `NR`, so the
-full-text evaluation is strictly the better-founded one.
+```html
+<h3 style="margin-top:26px">ارزیاب DES <span id="dsWaiting" class="pill"></span></h3>
+<div class="muted">مقاله‌هایی که خواننده‌ها فرستاده‌اند. قدیمی‌ترین بالاتر.
+  برای ارسال‌های PDF، کد را از تلگرام پشتیبانی این‌جا جست‌وجو کن.</div>
 
-### 8.3 What the reader is told
+<form class="bc" onsubmit="return false">
+  <div class="row">
+    <div style="flex:1 1 220px"><label for="dsRef">جست‌وجوی کد</label>
+      <input id="dsRef" type="text" placeholder="D-ABC-DEF"></div>
+    <div style="flex:0 0 auto;align-self:flex-end"><button id="dsFind" type="button">پیدا کن</button></div>
+  </div>
+  <div id="dsOut"></div>
+</form>
 
-Never anything about the store. **Always** the text basis, because the DES spec
-already treats it as part of the score's meaning:
+<div id="dsList"></div>
+```
 
-- `provisional: true` → the existing hatched «امتیاز مقدماتی — فقط از روی چکیده»
-- otherwise → «بر پایه‌ی متن کامل مقاله»
+Each pending row renders as a card carrying:
+`<b>{title}</b>` · `<span class="pill">{reference}</span>` ·
+`has_pdf` → `<span class="pill hot">📎 PDF در تلگرام</span>` ·
+`<span class="pill">{claim === 'FULL_TEXT' ? 'متن کامل' : 'چکیده'}</span>` ·
+a `.muted` line with the reader's `display_name` and `when(created_at)` ·
+and the submitted `body` in a scrollable `.tk-x`.
 
-The second one matters for honesty: a reader who pasted an abstract and is
-served a stored full-text score needs to know the evaluation rests on the
-complete paper, not on what they pasted.
+Clicking the card opens the work area inside it:
+
+```html
+<div class="ds-work">
+  <label>عنوان مقاله</label>
+  <input class="ds-title" type="text" value="{the reader's title, prefilled}">
+
+  <label>خروجی JSON مدل</label>
+  <textarea class="ds-json" rows="12" dir="ltr"
+            placeholder="کل شیء JSON را این‌جا پیست کن"></textarea>
+
+  <label>هشتگ‌ها (با کاما)</label>
+  <input class="ds-tags" type="text" placeholder="#ایمپلنت, #دخانیات">
+
+  <div class="row">
+    <button class="ds-save" type="button">ثبت و اطلاع بده</button>
+    <button class="ds-reject" type="button">رد کن</button>
+  </div>
+  <div class="ds-msg muted"></div>
+</div>
+```
+
+Behaviour of `.ds-save`:
+- POST to `/admin/des/{id}/answer` with `{title, record, tags}`
+- `400 invalid_record` → print every `issues[]` line into `.ds-msg`, **keep the
+  textarea filled** so nothing is retyped
+- `409 near_duplicate` → render the candidates with their score, title, author,
+  year and `authorAgrees`, plus two buttons: «همان مقاله است» (resend with
+  `same_as`) and «مقاله‌ی دیگری است» (resend with `force: true`)
+- `200` → print `ثبت شد و به کاربر اطلاع داده شد.` plus any `warnings`, then
+  reload the list
+
+Copy the DES block's own small CSS into the page's existing `<style>`; do not
+introduce a stylesheet.
 
 ---
 
-## 9. The models
+## 8. The notification
 
-### 9.1 Two roles, two configurations
+Add `des_result` to `notify-policy.ts` as an **UNCAPPED** kind, on the same
+reasoning `support_reply` is uncapped: this is the answer to a question the
+reader asked and waited a day for, and a streak nudge that arrived first must
+not be why it never lands.
 
-The repo already has a provider abstraction: `plus-api/src/providers/ai/` with
-`createAiProvider()`, `AiProvider`, an `openai-compatible` implementation and a
-`stub`. Config lives at `config.ai` (`AI_PROVIDER`, `AI_API_BASE`, `AI_API_KEY`,
-`AI_MODEL`, `AI_MAX_ATTEMPTS`, `AI_RETRY_BUDGET_MS`, `AI_JSON_MODE`).
+- اطلاعیه row: lands instantly at any hour — it is a row in a table and wakes
+  nobody.
+- push: respects the awake window, unforced.
 
-**Do not reuse `config.ai` for the scorer.** The reasoning model is a separate
-account with a separate key, chosen for a different job, and will be swapped
-independently. Add a parallel block:
+Title: `ارزیابی مقاله‌ات آماده است`
+Body: the paper's title, nothing else.
 
-```
-DES_AI_PROVIDER, DES_AI_API_BASE, DES_AI_API_KEY, DES_AI_MODEL,
-DES_AI_MAX_ATTEMPTS, DES_AI_RETRY_BUDGET_MS, DES_AI_JSON_MODE,
-DES_AI_REASONING_EFFORT      (pass through if the endpoint supports it)
-```
+> The inbox line is deliberately short and links back to the tool. It does not
+> carry the band card — «a paragraph about the argument belongs on a lock
+> screen, not in a row people scan».
 
-Extend the provider interface with a second method rather than inventing a
-second abstraction:
-
-```ts
-export interface DesScoreInput {
-  title: string;
-  text: string;
-  text_basis: 'ABSTRACT_ONLY' | 'FULL_TEXT';
-  doi: string | null;
-  pmid: string | null;
-}
-
-export interface DesScoreOutput {
-  ok: boolean;
-  reason?: 'not_a_study' | 'insufficient_text' | 'not_appraisable';
-  des?: unknown;        // the spec's output object, VERBATIM — do not reshape
-  hashtags?: string[];  // proposed, raw; resolved server-side (§9.4)
-  reasoning?: string[]; // short trace lines for the «مسیر استدلال» disclosure
-}
-```
-
-Reuse `outboundFetch`, the retry policy, and the JSON-mode latching from
-`openai-compatible.ts` — including its unusual decision to treat `400` as
-transient for the ArvanCloud gateway. Read the comment there before copying.
-
-### 9.2 The cheap extractor
-
-Same file, a third method, but pointed at `config.ai` (the existing cheap
-model), **not** the DES config. It is called only under §6.6 and returns
-`{title, first_author, year, doi}` or nulls. A few hundred tokens.
-
-### 9.3 Crossref enrichment — browser only
-
-If the reader supplies a DOI, the **client** may fetch Crossref for
-title/journal/year and send it along with the submission. The container's
-international egress is unreliable; this is the established pattern — see the
-reference pins in `.dentcast/collections-pins-export-handoff.md`, which do
-exactly this for the same reason. It is optional everywhere: never block a
-submission on it, never call it server-side.
-
-### 9.4 The scoring prompt
-
-Load `.dentcast/dentcast-evidence-score-v2.2.md` **whole, minus its appendix**
-(the appendix is a pipeline contract, not prompt text) as the system prompt.
-Send exactly **one** input block — the reader's paper is one source.
-
-Two additions on top of the spec, both of which must be additive and must not
-alter the spec's own output object:
-
-1. **A validity verdict first.** Instruct the model that if the text is not a
-   report of a study, it must answer `{"ok": false, "reason": "not_a_study"}`
-   and nothing else. This is the strict layer RULE 3 defers to. On this answer:
-   show the reader a plain message, write `outcome='invalid'`, and **store
-   nothing** — the corpus is shared, and a non-study must not enter it.
-2. **Hashtags.** Ask for topic hashtags in the same call — no second request.
-   Then resolve them server-side against `dentcast-hashtag-reference.json` to
-   canonical forms, exactly the way a publish does (`tools/hashtag_ref.py`).
-   Never store a free-text tag; never store an alias as a tag. Drop anything
-   that will not resolve rather than minting a concept from a reader submission.
-
-Stamp `spec_version` on the record from the file name you loaded.
+Tapping it opens the homepage with `?des=<reference>`; `des-scorer.js` reads
+that, opens the tab and shows the result.
 
 ---
 
-## 10. Quota
+## 9. Frontend
 
-Two per user per day. **Calendar day, Tehran time** — the same convention
-`spot_stats` uses; do not implement a rolling 24-hour window and do not describe
-it as one.
+### 9.1 The tab
 
-Counted with a `select count(*) from des_requests where user_id = $1 and
-outcome in ('scored','upgraded') and created_at >= <Tehran midnight>`. No
-counter column.
+Markup in `index.html` immediately after `.dc-des-legend-wrap`. A formal twin of
+that box: same height, same 2rem icon circle, same 3px leading edge, same
+`.875rem` radius — differing only in colour, amber instead of chrome, because
+amber means «this is what a subscription buys» site-wide.
 
-- `served` never counts. There was no model call to pay for, and telling a
-  reader their free instant answer cost them a slot would be a lie about work
-  that did not happen.
-- `rejected` never counts — the free gate caught it.
-- `invalid` does not count against the two, **but** cap it separately at 3 per
-  day per user so a bad actor cannot burn the reasoning model indefinitely. On
-  the fourth, refuse without calling the model.
+`index.html` loads no shared CSS statically (`dc-nav.js` appends `plus*.css` at
+runtime), so anything painted before first interaction is inline critical CSS
+there — the tab itself. The panel's CSS goes in `plus/plus.css`, because the
+panel renders only after a click. Amber tokens already exist in
+`index.html`'s `<style id="dcDepthTheme">` as `--x-amber*`.
 
-Also add a per-user-per-hour limiter with `services/rate-limit.ts`'s `consume()`,
-mirroring `case-assistant.ts`. The daily quota is the product rule; the limiter
-bounds a runaway client.
+### 9.2 The panel — `plus/js/des-scorer.js`
 
----
+Views: `compose` · `queued` · `answer` · `pending` · `spent` · `locked`.
 
-## 11. API surface
+Disclosure animates with `grid-template-rows: 0fr → 1fr` on a wrapper whose
+child has `overflow:hidden`. No height measurement. The tab drops its bottom
+radius while open. `aria-expanded` + `aria-controls`. Close via the tab, the
+«بستن» button, or `Escape` — and closing always resets to `compose`.
 
-All routes premium-gated: `app.addHook('preHandler', requireAuth)` then
-`requirePremium`, as `case-assistant.ts` does. Register in `server.ts`.
+**On open**, call `GET /des/state`. If `open.length > 0`, show `pending`, not an
+empty form — a reader who submitted an hour ago must not see a blank box.
 
-### `GET /des/quota`
+Compose contains, in this order: the byline (§9.3), the open-request counter,
+`عنوان مقاله`, the PDF tick, the textarea, the basis chips, the optional link
+row, the issues block, then «بفرست» and «یک نمونه بگذار».
 
-```json
-{ "limit": 2, "used": 1, "resets_at": "2026-08-18T20:30:00Z" }
-```
+**The PDF tick** (`PDF مقاله را دارم — در تلگرام می‌فرستم`) dims the textarea,
+makes it optional, and changes its placeholder to
+`اختیاری — اگر متن را هم داری بگذار`.
 
-Used to paint the quota strip when the panel opens.
+**The link row auto-fills.** On every `input` on the textarea, run the DOI regex
+over it; if found and the field is empty or was auto-filled, fill it and show
+the `از متن پیدا شد` chip. Mark auto-filled state with a data attribute so a
+reader's own typing is never overwritten.
 
-### `POST /des/score`
+**Queued view** shows the reference code large, in a monospace dashed box. When
+`has_pdf`, it also shows a link button to **`https://t.me/dentcast_support`**
+labelled `فرستادن PDF در تلگرام ↗` and the line
+`PDF را بفرست و همین کد را زیرش بنویس تا به درخواستت وصل شود.`
 
-Request:
+**Answer view** reuses `plus/js/des.js`'s vocabulary: five discrete band blocks
+with only the current one coloured (never a gauge), `question_type` printed with
+the band and never apart from it, the 0–100 number small and dim beside the band
+and never a headline, `provisional` drawn as hatching. Band scale `--des-A…E`,
+card chrome `--des-chrome`. Amber never appears inside the answer.
 
-```json
-{
-  "title": "…",
-  "text": "…",
-  "claim": "ABSTRACT_ONLY",
-  "link": "https://pubmed.ncbi.nlm.nih.gov/38550112/",
-  "crossref": { "title": "…", "year": 2024, "journal": "…" }
-}
-```
+### 9.3 Copy — use verbatim
 
-Cap `text` server-side (suggest 60 000 chars) and `title` (300). Never trust the
-client's `claim` — see RULE 4.
-
-Responses:
-
-```json
-// scored / upgraded / served — identical shape, deliberately
-{ "ok": true, "des": { … spec output verbatim … },
-  "hashtags": ["#درمان_ریشه"], "reasoning": ["…"],
-  "quota": { "limit": 2, "used": 1 } }
-
-// stopped by the free gate — 400
-{ "ok": false, "error": "invalid_input",
-  "issues": [ { "severity": "stop", "message": "…" } ] }
-
-// refused by the model — 200, this is a real answer
-{ "ok": false, "error": "not_a_study" }
-
-// quota — 429
-{ "ok": false, "error": "quota_exhausted", "resets_at": "…" }
-```
-
-> **The response must not reveal whether it came from the store.** No `cached`
-> field, no `served_from`, no timing hint the client could surface. The reader
-> is never told. Latency will differ and that is fine; a field would end up on
-> screen.
-
-Founder-facing, on the rendered `GET /admin` page (same pattern as the support
-queue and the gift-card queue):
-
-- `GET /admin/des` — corpus size, requests per day, share served from store,
-  the papers with the most hits, and the records stored **without** a `ttl:` key
-  (RULE 1's cost, made visible so it can be tuned)
-- `POST /admin/des/:id/purge` — remove one paper and its keys. Needed because
-  the corpus is shared and a poisoned record affects every reader.
-
----
-
-## 12. Frontend
-
-### 12.1 The tab
-
-Markup goes in `index.html` immediately after the existing
-`.dc-des-legend-wrap` block. Mirror that block's structure exactly.
-
-**`index.html` loads no shared CSS statically** — `dc-nav.js` appends
-`plus*.css` at runtime. The existing DES legend therefore duplicates its colour
-tokens inline, and you must do the same for anything that paints **before**
-first interaction:
-
-- the tab itself (inline critical CSS in `index.html`, amber tokens are already
-  defined there as `--x-amber*` in `<style id="dcDepthTheme">`)
-- the panel's CSS may live in `plus/plus.css`, because the panel only renders
-  after a click, by which time `plus.css` has arrived
-
-Verify this on a cold load with a throttled network before calling it done.
-
-### 12.2 The disclosure
-
-Animate with `grid-template-rows: 0fr → 1fr` on a wrapper whose child has
-`overflow: hidden`. No height measurement, no `max-height` guess. The tab drops
-its bottom corner radius while open so tab and panel read as one card — the
-existing legend already does this; copy it.
-
-`aria-expanded` on the tab, `aria-controls` pointing at the panel.
-
-### 12.3 Behaviour
-
-`plus/js/des-scorer.js`, mounted by whatever `plus.js` runs on the homepage.
-Views inside the panel: `compose` → `think` → `answer`, plus `spent` and
-`locked`. Closing always resets to `compose` and clears the form; it does **not**
-reset the quota display or anything server-side.
-
-The thinking state is one quiet line at a time plus a hairline sweep — not a
-scrolling terminal. The full trace is a collapsed `<details>` in the answer.
-
-Validation runs on every `input` and on submit; a `stop` blocks submission and
-focuses the offending field.
-
-### 12.4 Answer rendering
-
-Reuse the DES display vocabulary from `plus/js/des.js`: five discrete band
-blocks with only the current one coloured (never a gauge), `question_type`
-printed with the band and never apart from it, the 0–100 number small and dim
-beside the band and never as a headline, provisional shown as hatching.
-
-Colours: band scale `--des-A…E` (grey → dark green, never through red), card
-chrome `--des-chrome` (indigo, means only «a machine wrote this»), amber for the
-premium tab only. Three scales, three meanings, no mixing.
-
-### 12.5 Accessibility and motion
-
-Visible `:focus-visible` on every control. `prefers-reduced-motion: reduce`
-disables the drawer animation, the sweep and the block pop. The panel must not
-scroll the page body horizontally at 320px.
-
----
-
-## 13. Test fixtures — all must pass
-
-Fixture texts are in the mockup (`TEXTS.abs`, `.full`, `.en`, `.dump`, `.junk`).
-Copy them into the test file rather than re-inventing them; they were written to
-break specific rules.
-
-### 13.1 Validity gate + basis
-
-| # | input | title | claim | expect |
-|---|---|---|---|---|
-| 1 | English abstract, 253 w | given | ABSTRACT_ONLY | pass · all 5 signals · `ABSTRACT_ONLY` |
-| 2 | Persian abstract, 89 w | given | ABSTRACT_ONLY | pass · ≥1 signal · `ABSTRACT_ONLY` |
-| 3 | Persian full text, 852 w | given | FULL_TEXT | pass · `FULL_TEXT` (ambiguous band defers to claim) |
-| 4 | Persian abstract, 89 w | given | **FULL_TEXT** | pass · **WARN** · resolves to `ABSTRACT_ONLY` |
-| 5 | PubMed page dump | **empty** | any | **STOP** — title required |
-| 6 | home-remedy text, 97 w | given | any | **STOP** — zero signals · also WARN on title/text mismatch |
-| 7 | one sentence, 6 w | given | any | **STOP** — too short |
-
-Fixture 1 is the regression test for RULE 3. Fixture 6 must still stop after you
-make the gate bilingual — generosity about language, not about evidence.
-
-### 13.2 Extraction
-
-| # | input | expect |
-|---|---|---|
-| 8 | page dump, DOI in the citation line | `title` = the real title (found above `Abstract`) · `doi` = the paper's own · `pmid` = **38550112**, *not* 9340725 from «Similar articles» |
-| 9 | page dump with the DOI removed, PubMed URL in the link field | `pmid` from the link · `doi` null |
-| 10 | clean Persian abstract | title from the first line · no identifiers |
-| 11 | chrome only, no paper | title null → **no `ttl:` key minted** |
-| 12 | full text with a reference list containing 12 DOIs | only the paper's own DOI selected |
-| 13 | title = pure Persian, 13 words | **accepted** (the `\p{L}` regression) |
-
-### 13.3 Store behaviour
-
-| # | sequence | expect |
-|---|---|---|
-| 14 | abstract → score | new record, `ABSTRACT_ONLY`, provisional, keys `ttl:` + `sha:` |
-| 15 | then full text of the same paper | matched by `ttl:` · **upgrade** · record replaced · old row in `des_paper_history` · `doi:` key now attached · quota −1 |
-| 16 | then the abstract again | matched · **full-text answer served** · no model call · quota unchanged |
-| 17 | a different paper | no match · new record |
-| 18 | same text pasted twice verbatim | second matched by `sha:` |
-| 19 | model answers `not_a_study` | **nothing stored** · `outcome='invalid'` · daily quota unchanged |
-
-### 13.4 Quota
-
-| # | expect |
+| where | string |
 |---|---|
-| 20 | 2 scored → third `scored` refused with 429 |
-| 21 | a `served` request while at 2/2 still answers |
-| 22 | quota resets at Tehran midnight, not 24h after the first use |
-| 23 | 4th `invalid` in a day refused **without** a model call |
+| tab title | `**مقاله‌ی خودت** را بگذار، امتیاز DES بگیر` |
+| tab sub | `متن یا چکیده را بفرست تا ببینی چقدر شواهد پشتش هست — با همان DentCast Evidence Score.` |
+| tab pill | `پریمیوم` |
+| byline | `ارزیابی را **خودم** انجام می‌دهم، نه یک ربات. نتیجه در **اطلاعیه‌ات** می‌آید — معمولاً کمتر از یک روز.` |
+| counter | `الان N از ۲ درخواستِ باز داری` |
+| submit | `بفرست` |
+| queued (text) | `در نوبت ارزیابی` / `خواندمش و در صف گذاشتمش. نتیجه در اطلاعیه‌ات می‌آید.` |
+| queued (pdf) | `کد درخواستت آماده است` / `PDF را در تلگرام بفرست و این کد را زیرش بنویس. بعدش می‌خوانمش و نتیجه در اطلاعیه‌ات می‌آید.` |
+| two open | `همزمان تا **دو** درخواست می‌توانی باز داشته باشی. تا جواب یکی‌شان بیاید صبر کن — مقاله‌هایی که قبلاً سنجیده‌ام همچنان فوری جواب می‌دهند.` |
+| locked | `بخشی از پریمیوم` / `مقاله‌ی دلخواهت را بفرست تا با همان چارچوب DES برایت بسنجم.` |
+| whisper | `چطور ارزیابی می‌شود؟` → `با همان چارچوب DES که روی مطالب سایت اجرا می‌شود — طراحی مطالعه، ابزار سنجش روش، و جریمه‌های شفافیت. اگر فقط چکیده بدهی امتیاز مقدماتی است؛ متن کامل امتیاز قطعی‌تری می‌دهد. نتیجه برای مطالعه‌ی شخصی توست.` |
+| answer footer | `ساختار مطالعه سنجیده می‌شود، نه مناسب‌بودن یافته برای بیمار شما.` |
 
 ---
 
-## 14. Deployment checklist
+## 10. Rules that decide correctness
 
-- [ ] Migration numbered after the current highest (`0046` at time of writing)
-- [ ] `merge-profiles.ts` updated for both user-referencing columns
-- [ ] `server.ts` registers the new routes
-- [ ] `.env` / deploy config carries the `DES_AI_*` block; `plus-api/DEPLOY.md`
-      documents it
-- [ ] **API container rebuild** — new env vars and a migration, not a content
-      refresh
-- [ ] `python3 tools/asset_version.py --bump` in the **same commit** as any
-      change to `plus.js`'s module graph or `plus.css`. CI runs `--check`.
-      A new module imported by `plus.js` is part of that graph.
-- [ ] `python3 .github/scripts/inject_ga.py --check` still passes
-- [ ] Tests: `plus-api/test/des-scorer.test.ts` and a DOM test for the panel
-- [ ] Verify the tab paints correctly on a cold, throttled load (§12.1)
-- [ ] Verify light **and** dark, and the un-stamped system-default state
+**RULE 1 — Ambiguity declines.** A title that cannot be trusted mints no `ttl:`
+key. A wrong key returns *another paper's* evaluation, presented with a band, a
+number and a reasoning trace. A reader once pasted a whole PubMed page whose
+first line is `Skip to main page content`; under a first-line-is-the-title rule
+every such paste collides onto one key.
+
+**RULE 2 — Hashtags are stored, never matched.** §5.3.
+
+**RULE 3 — Never touch `plus/des-scores.json`.** `plus/js/des.js` fetches it on
+every article page load; its keys are page paths; the publishing workflow writes
+it and `verify_publish.py` gates it. The library is a separate table and the two
+are never merged. `lookup` and `search` read both — that is how the corpus is
+already 56 papers deep on day one.
+
+**RULE 4 — Nothing derivable is stored beside the spec output.** `band`,
+`des_score`, `question_type`, `text_basis`, `provisional` and the citation all
+live inside `des`. A second copy is a second source of truth.
+
+**RULE 5 — The library answer is silent about itself.** No `cached` field, no
+`served_from`, no timing hint. The reader is never told why it was fast.
+
+**RULE 6 — Private, always.** A DES submission is a reader's own paper. There is
+no «عمومی کن» switch, no public thread, no shared view. Do not add one.
+
+**RULE 7 — No AI provider.** §0.
 
 ---
 
-## 15. Decisions already made — do not reopen
+## 11. Test fixtures — `plus-api/test/des-scorer.test.ts`
 
-| question | answer | why |
+| # | given | expect |
 |---|---|---|
-| Same JSON as the site's DES scores? | No | RULE 6 |
-| A parallel JSON file in the repo? | No — a table | RULE 7 |
-| DOI mandatory? | No — optional, asked after the paste | The cache pays off on papers many people paste, and those carry a DOI in their text anyway. A wall would cost every reader to optimise a case that never pays. And nothing is lost: a title-keyed record **gains** its DOI later (§5.4) |
-| Match on hashtags? | No | RULE 2 |
-| Match on text similarity? | No | §5.1 |
-| Author+year as a key? | No | §5.2 |
-| Tell the reader it came from the store? | No | §11 |
-| Show the text basis? | Always | §8.3 |
-| Do served hits cost quota? | No | §10 |
-| Cabinet kebab tags or canonical hashtags? | Canonical | The corpus is meant to be reusable inside the product, and the AI case-assistant reads the hashtag reference |
+| 1 | title empty | 400, stop |
+| 2 | body 6 words, no PDF tick | 400, stop |
+| 3 | body 97 words, no research signal | 400, stop |
+| 4 | English abstract, 253 words | accepted, no stop |
+| 5 | PDF ticked, body empty, title present | accepted |
+| 6 | claim FULL_TEXT, body 89 words | accepted **with** the size warning |
+| 7 | title of a paper already in `des_papers` | `answered:true`, no row written, open count unchanged |
+| 8 | same title with ZWNJ vs space vs joined | all three hit the same key |
+| 9 | same title with `ي`/`ك` Arabic forms | hits |
+| 10 | title with one typo | misses the key; `nearDuplicates` returns it at ~0.82 |
+| 11 | PubMed page dump with `Similar articles` | the paper's own PMID, not the related one |
+| 12 | body with a 12-DOI reference list | only the front-matter DOI selected |
+| 13 | 2 pending, third submit | 429 `too_many_open` |
+| 14 | 2 pending, submit a paper in the library | still answered |
+| 15 | admin answer with `des_score` off by 5 | 400, nothing written |
+| 16 | admin answer, AMSTAR-2 with 5 domains | 400, nothing written |
+| 17 | admin answer with Latin digits in `fact_fa` | 200, normalised, reported in `warnings` |
+| 18 | admin answer with English penalty names | 200, replaced with the four Persian strings |
+| 19 | admin answer whose title near-matches an existing paper | 409 with candidates |
+| 20 | same, resent with `same_as` | keys attached, no new paper, score untouched |
+| 21 | successful answer | `des_result` notification sent, request `answered` |
+| 22 | hashtag not in the reference library | dropped, not stored |
 
-## 16. Still open
+Fixtures 4 and 11 are regressions — both were live bugs.
 
-- **Corpus visibility.** The store is invisible to readers today. Whether it
-  ever becomes a browsable «papers we have scored» surface is a product
-  decision; nothing here forecloses it (§11's admin view is the seed).
-- **Cross-user poisoning.** Current defence is the model's validity verdict plus
-  the admin purge. If abuse appears, the next step is requiring a strong key
-  (DOI/PMID) before a record may be served to a *different* user than the one
-  who submitted it — the data model already supports this via
-  `first_seen_by`. Do not build it pre-emptively.
-- **Free-tier taste.** Whether a signed-in free reader gets one scored paper
-  ever, as a taste of the feature, is unresolved. Build the gate so the limit is
-  a config number per tier, not a constant.
+---
+
+## 12. Deployment
+
+- [ ] migration numbered after the current highest
+- [ ] `merge-profiles.ts` carries `des_requests.user_id`
+- [ ] `server.ts` registers `desRoutes`
+- [ ] **API container rebuild** — new migration, not a content refresh
+- [ ] `python3 tools/asset_version.py --bump` in the same commit as any change
+      to `plus.js`'s module graph or `plus.css`. CI runs `--check`.
+- [ ] `python3 .github/scripts/inject_ga.py --check` passes
+- [ ] verify the tab paints on a cold, throttled load (§9.1)
+- [ ] verify light, dark, and the un-stamped system-default state
+
+---
+
+## 13. Later, not now
+
+- **Automating the scoring.** Deliberately out of scope. If it is ever built, it
+  slots in where the founder's paste box is and changes nothing else — the
+  library, the keys, the gate, the display and the notification are all already
+  independent of who produced the record. Cost analysis if it becomes relevant:
+  the DES prompt is ~13 700 tokens, which is ~95% of the input cost of scoring
+  an abstract, so prompt caching or per-question-type prompt assembly is where
+  the leverage is, not the choice of model.
+- **A public corpus view.** No surface today. `RULE 6` governs submissions;
+  a curated, founder-chosen view would be a separate decision.
+- **A free-tier taste.** Keep the limit a config number per tier, not a
+  constant, so this stays a one-line change.
