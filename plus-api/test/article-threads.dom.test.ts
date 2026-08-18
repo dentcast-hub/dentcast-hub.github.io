@@ -1,12 +1,16 @@
 // @vitest-environment jsdom
 // Drives the REAL shipped block (/plus/js/article-threads.js).
 //
-// Three behaviours carry this feature and none of them is visible from the API
-// tests:
+// Behaviours that carry this feature and are not visible from the API tests:
 //
-//   · with nothing published and no way to write, the block REMOVES ITSELF —
-//     444 articles wearing an empty comment box reads as a dead site, and that
-//     is the whole reason publishing is a founder decision here,
+//   · the block is ALWAYS visible, even with nothing published and no way to
+//     write — before 2026-08-18 it removed itself in that case, which meant
+//     the feature was invisible to everyone who did not already know it
+//     existed,
+//   · a non-premium reader still cannot write, but the gate is never shown
+//     up front: a plain "پاسخ یا سؤال" button is, and only pressing it swaps
+//     in the subscription message — so nobody is greeted with a paywall
+//     before they have asked to write anything,
 //   · a signed-out visitor still reads a published thread (it is part of the
 //     page now), and
 //   · the warning that the founder may publish is shown BEFORE the reader
@@ -51,19 +55,37 @@ beforeEach(() => {
   mineImpl = () => Promise.resolve({ thread: null, messages: [] });
 });
 
-describe('the block earns its place or leaves', () => {
-  it('removes itself when nothing is published and the reader cannot write', async () => {
+describe('the block is always visible; writing is what stays gated', () => {
+  it('shows the heading for a signed-out visitor even with nothing published', async () => {
     const a = anchor();
     expect(mountArticleThreads(a, 'notecast/n-1')).toBe(true);
     await settle();
-    expect(document.querySelector('.dc-threads')).toBeNull();
+    const block = document.querySelector('.dc-threads');
+    expect(block).not.toBeNull();
+    expect(block!.textContent).toContain('گفت‌وگو زیر این مطلب');
+    // Asked to write, not told to pay, before they have pressed anything.
+    expect(document.querySelector('.dc-th-ask')).not.toBeNull();
+    expect(document.querySelector('.dc-th-gate')).toBeNull();
+    expect(document.querySelector('.dc-th-input')).toBeNull();
   });
 
-  it('removes itself for a signed-in FREE reader too — no advert-only block', async () => {
+  it('shows the heading for a signed-in FREE reader too', async () => {
     user = { tier: 'free' };
     mountArticleThreads(anchor(), 'notecast/n-1');
     await settle();
-    expect(document.querySelector('.dc-threads')).toBeNull();
+    expect(document.querySelector('.dc-threads')).not.toBeNull();
+    expect(document.querySelector('.dc-th-ask')).not.toBeNull();
+    expect(document.querySelector('.dc-th-gate')).toBeNull();
+  });
+
+  it('reveals the subscription gate only after the ask button is pressed', async () => {
+    mountArticleThreads(anchor(), 'notecast/n-1');
+    await settle();
+    (document.querySelector('.dc-th-ask') as HTMLButtonElement).click();
+    expect(document.querySelector('.dc-th-ask')).toBeNull();
+    const gate = document.querySelector('.dc-th-gate');
+    expect(gate).not.toBeNull();
+    expect(gate!.textContent).toContain('پریمیوم');
   });
 
   it('stays for a premium reader, because they can start the conversation', async () => {
@@ -72,6 +94,7 @@ describe('the block earns its place or leaves', () => {
     await settle();
     expect(document.querySelector('.dc-threads')).not.toBeNull();
     expect(document.querySelector('.dc-th-input')).not.toBeNull();
+    expect(document.querySelector('.dc-th-ask')).toBeNull();
   });
 });
 
@@ -97,9 +120,10 @@ describe('a published thread is part of the page', () => {
     expect(block.textContent).toContain('سؤال من');
     expect(block.textContent).toContain('جواب من');
     expect(block.textContent).toContain('دکتر شهابیان');
-    // Nothing to write with, but the upsell rides beside real content.
+    // Nothing to write with, and the gate itself waits to be asked for.
     expect(document.querySelector('.dc-th-input')).toBeNull();
-    expect(document.querySelector('.dc-th-gate')).not.toBeNull();
+    expect(document.querySelector('.dc-th-ask')).not.toBeNull();
+    expect(document.querySelector('.dc-th-gate')).toBeNull();
   });
 
   it('never asks a free reader for a session it does not need', async () => {

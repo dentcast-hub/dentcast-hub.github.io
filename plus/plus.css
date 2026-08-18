@@ -1305,8 +1305,12 @@ html.dcp-touring #mobile-body { overflow: hidden; }
 
    Two things it deliberately is NOT: it is not amber (that colour means «this
    is what a subscription buys» site-wide, and a published thread is free to
-   read), and it never renders at all when there is nothing published and the
-   reader cannot write — so these rules only ever paint something real.
+   read), and — since 2026-08-18 — the heading is never hidden even when
+   nothing is published and the reader cannot write: a block that only ever
+   existed for readers who already had a reason to look for it was invisible
+   to everyone else. What non-premium readers still cannot do is write
+   without being asked first: .dc-th-ask is a plain reply button carrying no
+   mention of a subscription, and only pressing it swaps in .dc-th-gate.
 
    Every colour is a theme token, so the block follows light/dark with the rest
    of the article instead of carrying its own palette. */
@@ -1422,6 +1426,23 @@ html.dcp-touring #mobile-body { overflow: hidden; }
   font-weight:800;
   text-decoration:none;
 }
+.dc-th-ask{
+  margin-top:1rem;
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  background:var(--surface, #fff);
+  color:var(--txt, #0a1a33);
+  border:1px solid var(--border, rgba(2,35,96,.10));
+  border-radius:999px;
+  padding:.55rem 1.1rem;
+  font:inherit;
+  font-size:.88rem;
+  font-weight:700;
+  cursor:pointer;
+}
+.dc-th-ask:hover{ border-color:rgba(var(--ac-rgb, 11,95,255),.4); color:var(--ac, #0b5fff); }
+.dc-th-ask-ic{ width:16px; height:16px; flex:none; }
 
 /* ============================================================================
    DentCast Evidence Score (DES) — chip + evaluation card
