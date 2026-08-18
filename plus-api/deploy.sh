@@ -11,12 +11,17 @@
 #   ./plus-api/deploy.sh --dry-run    # print the build command, run nothing
 #   ./plus-api/deploy.sh --verify v52 # poll /health until that tag is serving
 #
-# One-time setup: point it at your registry repository, from the ArvanCloud
-# panel's Container Registry page.
+# One-time setup: point it at your registry repository. Copy the address from
+# the panel rather than typing one that looks right — Arvan issues a per-account
+# registry host, so it is NOT a shared registry.arvancloud.ir path:
 #
-#   echo 'DENTCAST_REGISTRY=registry.arvancloud.ir/<namespace>/dentcast-plus-api' \
-#     > plus-api/.deploy.env
-#   docker login registry.arvancloud.ir
+#   registry-<id>-<account>.apps.<region>.arvancaas.ir/<namespace>/dentcast-plus-api
+#
+# The shortcut is Cloud Container → the API app → the Image field, which already
+# shows the running image. Drop the `:vNN` off the end and that is the value.
+#
+#   echo 'DENTCAST_REGISTRY=<that address, no tag>' > plus-api/.deploy.env
+#   docker login <the host only — everything before the first slash>
 #
 # See DEPLOY.md for the container's environment variables, the database, and
 # everything else that is not the image itself.
@@ -28,7 +33,10 @@ set -euo pipefail
 # plus/flashcards-index.json, which live outside this directory. Deriving the
 # root from git rather than from $PWD is what makes the script safe to run from
 # anywhere — building from the wrong directory is the failure this removes.
-ROOT="$(git rev-parse --show-toplevel)"
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || {
+  printf '\033[31m✗ run this from inside the dentcast repo (it builds from the repo root).\033[0m\n' >&2
+  exit 1
+}
 cd "$ROOT"
 
 HEALTH_HOSTS=(https://api.dentcast.ir https://api.dentcast.org)
@@ -92,7 +100,11 @@ while [ $# -gt 0 ]; do
     --tag)     TAG="${2:-}"; shift 2 ;;
     --verify)  verify "${2:?--verify needs a tag, e.g. --verify v52}"; exit 0 ;;
     --dry-run) DRY_RUN=1; shift ;;
-    -h|--help) sed -n '3,22p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    # The header comment IS the help text: everything from the title down to the
+    # last line before `set`. Derived rather than a hard-coded range, which went
+    # stale the first time the header grew.
+    -h|--help) sed -n "3,$(( $(grep -n '^set -euo' "$0" | cut -d: -f1) - 2 ))p" "$0" \
+                 | sed 's/^# \{0,1\}//'; exit 0 ;;
     *)         die "unknown option: $1" ;;
   esac
 done
@@ -105,9 +117,12 @@ if [ -f plus-api/.deploy.env ]; then
   . plus-api/.deploy.env
 fi
 [ -n "${DENTCAST_REGISTRY:-}" ] || die \
-  "DENTCAST_REGISTRY is not set. From the ArvanCloud panel → Container Registry:
+  "DENTCAST_REGISTRY is not set.
 
-  echo 'DENTCAST_REGISTRY=registry.arvancloud.ir/<namespace>/dentcast-plus-api' > plus-api/.deploy.env"
+  Copy the address from the ArvanCloud panel — Cloud Container → the API app →
+  the Image field shows the image running right now. Drop the ':vNN' off the end:
+
+  echo 'DENTCAST_REGISTRY=<that address, no tag>' > plus-api/.deploy.env"
 
 # ---------------------------------------------------------------------------
 # Preflight. Every check here is a mistake that is cheap to catch now and

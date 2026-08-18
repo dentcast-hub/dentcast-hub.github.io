@@ -75,10 +75,18 @@ tag is changed in the ArvanCloud panel by a person and no script should be able
 to deploy to production on its own. One-time setup:
 
 ```bash
-echo 'DENTCAST_REGISTRY=registry.arvancloud.ir/<namespace>/dentcast-plus-api' \
-  > plus-api/.deploy.env      # gitignored; from the panel's Container Registry page
-docker login registry.arvancloud.ir
+echo 'DENTCAST_REGISTRY=<registry address, no :tag>' > plus-api/.deploy.env  # gitignored
+docker login <the host only — everything before the first slash>
 ```
+
+**Copy that address from the panel; do not type one that looks right.** Arvan
+issues a **per-account registry host**, so it is not a shared
+`registry.arvancloud.ir` path but something of the shape
+`registry-<id>-<account>.apps.<region>.arvancaas.ir/<namespace>/dentcast-plus-api`.
+The reliable shortcut is **Cloud Container → the API app → the Image field**,
+which shows the image running right now: drop the `:vNN` off the end and that is
+the value. Reading it from there also means you are copying an address that is
+provably working, rather than one assembled from the docs.
 
 Then, per release: `./plus-api/deploy.sh` (it reads the live tag off `/health`
 and builds the next one), change the tag in the panel, and
