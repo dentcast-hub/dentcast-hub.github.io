@@ -23,7 +23,7 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=17';
+import { el, faNum } from './util.js?v=18';
 
 /* ------------------------------------------------------------ the data -- */
 
@@ -269,10 +269,12 @@ function card(rec) {
  *            NoteCast pages whose body is a row of sibling boxes, findProseBox()
  *            would put it after section 1 of 8.
  *
- * Order under the article is the score first, then the conversation about it.
+ * Order under the article is the conversation first, then the score behind it
+ * (flipped 2026-08-19 on founder feedback — leading with the evaluation card
+ * pushed the "پاسخ یا سؤال" button below it on every single page).
  * article-threads.js hangs off the same anchor, so rather than depend on which
  * of the two runs last (this one is async, which would settle it by accident),
- * the card is placed explicitly BEFORE any `.dc-threads` block already there.
+ * the card is placed explicitly AFTER any `.dc-threads` block already there.
  *
  * Returns false when there is nothing to draw — which is the normal case for any
  * page with no record, and needs no apology on screen.
@@ -301,11 +303,10 @@ export async function mountDes(row, anchor, contentId) {
 
   const body = card(rec);
   if (anchor && body) {
-    // Before the conversation if it is already mounted, otherwise straight after
-    // the article. Either way the reader meets the score before the discussion.
+    // After the conversation if it is already mounted, otherwise straight after
+    // the article. Either way the reader meets the discussion before the score.
     const threads = host && host.querySelector('.dc-threads');
-    if (threads) threads.insertAdjacentElement('beforebegin', body);
-    else anchor.insertAdjacentElement('afterend', body);
+    (threads || anchor).insertAdjacentElement('afterend', body);
   }
 
   if (row) {
