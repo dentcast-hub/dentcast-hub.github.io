@@ -13474,5 +13474,41 @@
       "secondary": [],
       "subtopic": "ai"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-34",
+    "title": "آیا واقعاً می‌توانیم شکایت اصلی بیمار را بهتر کنیم؟",
+    "caption": "در این کیس Chairside می‌بینیم چرا تعویض فوری یک بریج PFM نازیبا برای شکایتِ حجیم‌بودن سمت لینگوال رد شد: کانتور لینگوال در محدودهٔ طبیعی است، پس ساخت زیباترین بریج هم فضای زبان را خالی‌تر نمی‌کند — و چرا عکس پری‌اپیکال شرطِ تصمیم است نه شروع توربین.",
+    "hashtags": [
+      "#چیرساید",
+      "#کیس_بالینی",
+      "#دکتر_شهابیان",
+      "#شروع_نکردن_درمان",
+      "#شکایت_اصلی",
+      "#بریج",
+      "#روکش_PFM",
+      "#اورکانتور",
+      "#تعویض_روکش",
+      "#رادیوگرافی_تشخیصی",
+      "#مارجین_روکش",
+      "#طرح_درمان"
+    ],
+    "keywords": [
+      "lingual overcontour vs subjective bulk",
+      "PFM three unit bridge mandibular left",
+      "chief complaint matching retreatment",
+      "panoramic distortion anterior abutment margin",
+      "periapical radiograph before turbine",
+      "declining immediate prosthesis replacement",
+      "opaque show through occlusal reduction",
+      "normal lingual contour cannot be made thinner"
+    ],
+    "page_url": "/chairside/chairside-34.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]
