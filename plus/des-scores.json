@@ -12316,5 +12316,106 @@
         "interpretation_fa": "این متن یک مرور روایتی است که توصیه‌های بالینی شخصی نویسنده درباره آماده‌سازی سطح سرامیک‌ها (مانند استفاده از اسید اچ و سایلن) را بیان می‌کند. مقاله برای درک مکانیسم‌های باندینگ به پرسلن کاربردی است، اما یک مطالعه پژوهشی نظام‌مند محسوب نمی‌شود و ارزش آن در حد تجربه و نظر کارشناسی است."
       }
     ]
+  },
+  "dentai/dentai-30": {
+    "scored_at": "2026-08-18",
+    "sources": [
+      {
+        "des_version": "2.2",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Clinical survival and complication rate of ceramic veneers bonded to different substrates: A systematic review and meta-analysis",
+          "authors": "Alqutaibi AY, Saker S, Alghauli MA, Algabri RS, AbdElaziz MH",
+          "year": 2024,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/j.prosdent.2024.03.019"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR/meta-analysis of 6 clinical trials (1 RCT + 5 non-randomized cohort studies) comparing survival/complications of ceramic veneers bonded to different substrates (THERAPY SR/MA row, 100, via Step 2 routing note — the review pools mostly non-randomized studies)",
+          "evidence_quote": "Of 973 screened articles, 6 clinical studies were included."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "low",
+              "evidence_quote": "The protocol is available in the International Prospective Register of Systematic Reviews (PROSPERO): CRD42021240267."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "The database search yielded 5493 articles (PubMed=3177; Scopus=2267 and the Cochrane Library=49). The manual search resulted in 1 additional study."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "some_concerns",
+              "evidence_quote": "3439 were excluded, 9 records were found to be illegible, and 6 studies",
+              "note": "Screening account with counts (PRISMA flow: 5493 identified → 3448 screened → 9 sought for retrieval → 4 excluded) AND explicit inclusion/exclusion criteria are both reported (3b-iii branch 2), but the 4 excluded full-text records are covered by one shared reason rather than an individual reason per study, so the branch-1 'low' bar (a list of excluded studies each with its own reason) is not met."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "Two reviewers (A.Y.A., R.A.) evaluated each study's potential for bias separately. Any conflicts or discrepancies during the assessment were resolved by a third reviewer (M.A.A.)."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "if statistically significant heterogeneity (P<.10) was found, a random-effects model was used to assess the significance of treatment effects."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence checked by reading the full Material and Methods / statistical-analysis section (search strategy → risk-of-bias tools → data categorization → pooling model → heterogeneity/I2 → RevMan). No funnel plot, Egger's test, or any 'publication bias' wording appears anywhere in the text (Methods, Results, or Discussion)."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all, or funding by a commercial manufacturer whose own product is among those tested",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.",
+            "note": "CoI explicitly declared as none; funded by the Deputyship for Research & Innovation, Ministry of Education, Saudi Arabia — a government academic funder, not a manufacturer, and no single company's product is under test."
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable — this is an SR/MA, not a primary RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis (clinical studies); for in-vitro, specimen count per group <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires (e.g. survival claims with <3y follow-up)",
+            "base_points": 3,
+            "points": 3,
+            "evidence_quote": "the short-term follow-up periods in most studies may not provide a comprehensive understanding of long-term outcomes and veneer longevity.",
+            "note": "The review's own limitations paragraph states most included studies had short-term follow-up (individual studies range ~2–3 years) while the paper draws survival/success conclusions."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 52,
+        "band": "C",
+        "provisional": false,
+        "fact_fa": "امتیاز شواهد این منبع ۵۲ از ۱۰۰ و باند C است؛ نوع سوال Therapy است.",
+        "interpretation_fa": "این مرور سیستماتیک و متاآنالیز روی ۶ مطالعه بالینی (عمدتاً غیر تصادفی‌سازی‌شده) با پروتکل ثبت‌شده در PROSPERO انجام شده و جست‌وجوی دیتابیس و ارزیابی ریسک بایاس با دو ارزیاب مستقل به‌طور کامل توصیف شده‌اند. اما ارزیابی publication bias در متن ذکر نشده و پیگیری بیشتر مطالعات کوتاه‌مدت بوده، دو نقطه‌ضعفی که اعتبار یافته‌های بقا و موفقیت را محدود می‌کند بدون آنکه آن‌ها را بی‌اعتبار کند."
+      }
+    ]
   }
 }
