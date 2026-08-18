@@ -19,8 +19,8 @@
 // stripped out. mountArticleThreads() is exported for that second case, because
 // a feature that quietly works on phones and not on desktop is the exact gap
 // buildShareButton() was written to close.
-import { api, currentUser } from './api.js?v=16';
-import { el, faNum } from './util.js?v=16';
+import { api, currentUser } from './api.js?v=17';
+import { el, faNum, icon } from './util.js?v=17';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' });
 const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } catch (_) { return ''; } };
@@ -82,6 +82,19 @@ function upsell() {
   ]);
 }
 
+// A plain reply affordance for a non-premium reader — no mention of a
+// subscription until they press it. Saying "این ویژه‌ی پریمیوم است" before
+// anyone asked to write reads as a paywall greeting every visitor; the gate
+// still exists, it just waits to be asked for.
+function askThenGate() {
+  const btn = el('button', { class: 'dc-th-ask', type: 'button' }, [
+    icon('icon-message', { class: 'dc-th-ask-ic' }),
+    'پاسخ یا سؤال',
+  ]);
+  btn.addEventListener('click', () => btn.replaceWith(upsell()), { once: true });
+  return btn;
+}
+
 /* ------------------------------------------------------------- the block -- */
 
 async function draw(host, contentId) {
@@ -98,18 +111,17 @@ async function draw(host, contentId) {
 
   const threads = pub.threads || [];
 
-  // Nothing published, and this reader cannot write: render NOTHING. With 444
-  // articles and a premium readership, an always-on comment box would sit empty
-  // under almost every page forever — which reads as a dead site rather than a
-  // quiet one, and is the whole reason publishing is a decision here. A heading
-  // with an upsell under it is not content; it is an advert on every page.
-  if (!threads.length && !isPremium) { host.remove(); return; }
-
+  // Always rendered now — a reader who never sees the heading never learns
+  // this exists. What used to gate visibility (host.remove() with nothing
+  // published and no way to write) now only gates the WRITE side, and even
+  // that is asked for (askThenGate), not announced up front.
   const parts = [el('h2', { class: 'dc-th-title' }, 'گفت‌وگو زیر این مطلب')];
 
   if (threads.length) {
     parts.push(el('div', { class: 'dc-th-count' }, faNum(threads.length) + ' گفت‌وگوی منتشرشده'));
     parts.push(...threads.map(publicThread));
+  } else {
+    parts.push(el('div', { class: 'dc-th-count' }, 'هنوز گفت‌وگویی منتشر نشده — اولین نفر باشید.'));
   }
 
   // The reader's own thread, shown only to them. Drawn after the public ones so
@@ -122,11 +134,9 @@ async function draw(host, contentId) {
     ]));
   }
 
-  // A non-premium reader only ever reaches here when there IS something to
-  // read, so the upsell arrives beside real content rather than instead of it.
   parts.push(isPremium
     ? composer(contentId, mine.thread, () => draw(host, contentId))
-    : upsell());
+    : askThenGate());
 
   host.replaceChildren(...parts);
 }
