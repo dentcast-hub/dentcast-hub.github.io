@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DentAI – The Fate of Ceramic Veneers: Bonding to Enamel, Dentin, or Old Composite?</title>
+<meta name="description" content="A systematic review and meta-analysis of 6 studies and 1429 glass-ceramic veneers shows survival and success for enamel-bonded veneers are both near 99%, while increasing dentin exposure or bonding to old composite substantially lowers success in particular.">
+
+<link rel="canonical" href="https://dentcast.org/dentai/en/dentai-30.html">
+
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="DentCast">
+<meta property="og:title" content="DentAI – The Fate of Ceramic Veneers: Bonding to Enamel, Dentin, or Old Composite?">
+<meta property="og:description" content="A systematic review and meta-analysis of 6 studies and 1429 glass-ceramic veneers shows survival and success for enamel-bonded veneers are both near 99%, while increasing dentin exposure or bonding to old composite substantially lowers success in particular.">
+<meta property="og:url" content="https://dentcast.org/dentai/en/dentai-30.html">
+<meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DentAI – The Fate of Ceramic Veneers: Bonding to Enamel, Dentin, or Old Composite?">
+<meta name="twitter:description" content="A systematic review and meta-analysis of 6 studies and 1429 glass-ceramic veneers shows survival and success for enamel-bonded veneers are both near 99%, while increasing dentin exposure or bonding to old composite substantially lowers success in particular.">
+<meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css?v=2">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
+
+  <!-- Theme init — no flash -->
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --gold:rgba(255,199,44,0.95);
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
+      --text:#111;
+      --muted:#444;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.2);
+    }
+
+    html,body { margin:0; padding:0; height:100%; }
+
+    body {
+      font-family:'vazirmatn', sans-serif;
+      background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+      color: var(--text);
+      max-width: 56.25rem;
+      margin: 0 auto;
+      padding: 3.75rem 1.625rem 6.25rem;
+      line-height: 2;
+      direction: ltr;
+      text-align: left;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 1.9rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .caption{
+      background:rgba(255, 185, 40, 0.15);
+      border:1px solid rgba(255, 220, 100, 0.55);
+      border-radius:var(--radius);
+      padding:1.25rem 1.5rem;
+      margin-bottom:2.1875rem;
+      box-shadow:0 0 30px rgba(255,200,0,0.1);
+    }
+    .caption p{
+      color:#9a6b00;
+      font-weight:600;
+      font-size:1.1rem;
+      margin:0;
+      text-align:left;
+      line-height:1.9;
+    }
+
+    .text-box {
+      background: #ffffff;
+      border: 1px solid rgba(11,95,255,0.18);
+      border-radius: 1.375rem;
+      padding: 1.75rem 2.25rem;
+      margin: 1.5rem 0;
+      box-shadow: var(--shadow);
+      color: #111;
+      font-size: 1.05rem;
+      line-height: 2;
+    }
+
+    .text-box h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--blue);
+      margin: 1.625rem 0 0.75rem 0;
+      border-left: 4px solid var(--blue);
+      padding-left: 0.75rem;
+    }
+    .text-box h2:first-child { margin-top: 0.25rem; }
+
+    .text-box h3 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #0a1638;
+      margin: 1.375rem 0 0.625rem 0;
+    }
+
+    .text-box ul{
+      list-style:none;
+      padding:0;
+      margin:0 0 0.875rem 0;
+    }
+    .text-box ul li{
+      margin-bottom:0.625rem;
+      padding-left:1.1rem;
+      position:relative;
+    }
+    .text-box ul li::before{
+      content:"•";
+      color:#0b5fff;
+      font-weight:bold;
+      position:absolute;
+      left:0;
+    }
+
+    .text-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .text-box table th,
+    .text-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:left;
+      vertical-align:top;
+    }
+    .text-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .text-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+
+    .author-note{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      align-items:center;
+      gap:0.375rem 0.625rem;
+      margin:2.5rem auto 1rem;
+      padding-top:1.25rem;
+      border-top:1px solid rgba(120,140,170,0.18);
+      color:var(--txt3);
+      font-size:.78rem;
+    }
+    .author-note .author-link{
+      color:var(--txt2);
+      font-weight:600;
+      text-decoration:none;
+    }
+    .author-note .author-link:hover{
+      color:var(--ac);
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+    .author-note .author-role{
+      color:var(--txt3);
+    }
+
+    /* Persian-version toggle button (top corner) */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 0 1.125rem auto;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      .caption p{font-size:1rem;}
+      .text-box{padding:1.25rem 1.125rem; font-size:.98rem;}
+      .text-box table{font-size:.9rem;}
+      .text-box table th,.text-box table td{padding:0.45rem 0.5rem;}
+    }
+  </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dentcast.org/dentai/en/dentai-30.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "DentAI",
+          "item": "https://dentcast.org/dentai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "The Fate of Ceramic Veneers: Bonding to Enamel, Dentin, or Old Composite?",
+          "item": "https://dentcast.org/dentai/en/dentai-30.html"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/en/dentai-30.html#article",
+      "headline": "The Fate of Ceramic Veneers: Bonding to Enamel, Dentin, or Old Composite?",
+      "description": "A systematic review and meta-analysis of 6 clinical studies and 1429 glass-ceramic veneers evaluating how the bonding substrate (enamel, dentin, or an existing composite resin restoration) affects veneer survival, treatment success, and clinical complications.",
+      "datePublished": "2026-08-18T10:00:00+03:30",
+      "dateModified": "2026-08-18T10:00:00+03:30",
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/dentai/en/dentai-30.html"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "url": "https://doi.org/10.1016/j.prosdent.2024.03.019",
+          "name": "Clinical survival and complication rate of ceramic veneers bonded to different substrates: A systematic review and meta-analysis"
+        }
+      ],
+      "inLanguage": "en",
+      "articleSection": "Fixed Prosthodontics / Esthetic Dentistry",
+      "keywords": [
+        "ceramic veneer",
+        "bonding substrate",
+        "enamel bonding",
+        "dentin bonding",
+        "composite resin substrate",
+        "immediate dentin sealing",
+        "IDS",
+        "microleakage",
+        "systematic review",
+        "meta-analysis",
+        "survival rate",
+        "success rate"
+      ],
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Ceramic Veneer Bonding Substrate"
+        },
+        {
+          "@type": "Thing",
+          "name": "Dental Adhesion"
+        }
+      ],
+      "mentions": [
+        {
+          "@type": "Thing",
+          "name": "Enamel"
+        },
+        {
+          "@type": "Thing",
+          "name": "Dentin"
+        },
+        {
+          "@type": "Thing",
+          "name": "Composite Resin Restoration"
+        },
+        {
+          "@type": "Thing",
+          "name": "Immediate Dentin Sealing"
+        },
+        {
+          "@type": "Thing",
+          "name": "Microleakage"
+        }
+      ],
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h2",
+          ".text-box"
+        ]
+      }
+    },
+    {
+      "@type": "Dentist",
+      "@id": "https://dentcast.org/#dentist-ahvaz",
+      "name": "Dr. Foad Shahabian",
+      "url": "https://dentcast.org/about.html",
+      "jobTitle": "Prosthodontist and Implant Specialist",
+      "medicalCode": "114707",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "addressCountry": "IR"
+      },
+      "sameAs": [
+        "https://www.instagram.com/dr.foad_shahabian/",
+        "https://t.me/dentcast",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364"
+      ]
+    }
+  ]
+}
+</script>
+  <meta name="theme-color" content="#0b5fff">
+</head>
+
+<body>
+<!-- ── TOP BAR ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<h1><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/></svg> DentAI – The Fate of Ceramic Veneers: Bonding to Enamel, Dentin, or Old Composite?</h1>
+
+<a class="lang-btn" href="../dentai-30.html" rel="noopener">
+  <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+</a>
+
+<div class="caption">
+  <p>
+A systematic review and meta-analysis has examined how the substrate under a ceramic veneer affects veneer survival, treatment success, and clinical complications. "Substrate" here means the surface the veneer is bonded to: enamel, dentin, or an existing composite resin restoration. The review evaluated 6 clinical studies and a total of 1429 glass-ceramic veneers.
+  </p>
+</div>
+
+<div class="text-box">
+
+<h2>An Important Distinction: Survival vs. Success</h2>
+
+<p>
+Before getting to the numbers, two concepts need to be separated.
+</p>
+
+<p>
+<strong>Survival:</strong> the veneer has not suffered absolute failure — meaning no need for veneer remake, no endodontic treatment after veneer placement, no change of treatment plan, and no tooth extraction.
+</p>
+
+<p>
+<strong>Success:</strong> the veneer required no clinical intervention at all throughout the follow-up period.
+</p>
+
+<p>
+So a veneer may still be in the mouth and count as successful for survival, yet fall outside the success group because it was worked on chairside at least once during follow-up. The gap between these two numbers in each group is exactly what shows how much clinical trouble that substrate causes.
+</p>
+
+<h2>The Main Numbers</h2>
+
+<p>
+When the data from these 6 studies were pooled, the results by bonding substrate were as follows:
+</p>
+
+<table>
+<thead>
+<tr><th>Substrate</th><th>Survival</th><th>Success</th></tr>
+</thead>
+<tbody>
+<tr><td>Enamel</td><td>99%</td><td>99%</td></tr>
+<tr><td>Dentin, minimal exposure</td><td>95%</td><td>95%</td></tr>
+<tr><td>Existing composite resin</td><td>94%</td><td>70%</td></tr>
+<tr><td>Dentin, severe exposure</td><td>91%</td><td>74%</td></tr>
+</tbody>
+</table>
+
+<p>
+Reported ranges: enamel 98% to 100% for both measures; minimal dentin exposure 91% to 100% for survival and 90% to 99% for success; existing composite 91% to 97% and 60% to 80%; severe dentin exposure 84% to 98% and 64% to 85%.
+</p>
+
+<p>
+The key point in the table is that for enamel and for minimal dentin exposure, the survival and success figures are nearly identical. But for existing composite and for severe dentin exposure, the veneer usually stays in place, yet keeping it there has required intervention. Existing composite was the worst group in this regard; about 30% of veneers needed intervention during follow-up.
+</p>
+
+<p>
+In direct comparison, veneers bonded to dentin had more complications and failures than veneers bonded to enamel. Veneers on dentin with minimal exposure also needed significantly less clinical intervention than those with severe exposure.
+</p>
+
+<h2>Why Bonding to Dentin Is More Troublesome</h2>
+
+<p>
+Bonding to enamel relies mainly on the formation of resin tags and clinically gives a more reliable bond. Dentin, because of its wet nature, is a more difficult surface, and resin penetration into it can remain incomplete. The paper emphasizes that with a proper adhesive protocol and correct surface preparation, a durable bond to dentin is also achievable.
+</p>
+
+<p>
+What clinical follow-up shows is that a significant share of complications trace back to loss of adhesion: microleakage, margin discoloration, secondary caries, and veneer debonding or fracture. In many failure cases too, the fractured segment had already lost its bond before the fracture — meaning loss of adhesion may precede failure.
+</p>
+
+<h2>Clinical Points</h2>
+
+<h3>Preserving Enamel Is the Most Important Variable</h3>
+
+<p>
+The paper identifies enamel as the most favorable substrate for veneer adhesion and stresses that preserving enamel during preparation, and keeping margins on enamel, matters for long-term success. Conservative approaches, including non-preparation techniques and veneers with a maximum thickness of about 0.2 mm, help preserve enamel. The paper notes that fabricating such ultra-thin veneers is difficult with hand techniques, heat-press, and CAD-CAM, and that 3D printing could be a potential solution.
+</p>
+
+<h3>More Caution Is Needed on Old Composite</h3>
+
+<p>
+Veneers bonded to existing composite restorations showed more complications than veneers bonded to tooth structure. The paper notes that proper conditioning, an appropriate bonding protocol, and silica-coating the existing composite can improve results, though outcomes still remained weaker than bonding to tooth structure.
+</p>
+
+<h3>Extending the Preparation Palatally in Certain Situations</h3>
+
+<p>
+On teeth with a large composite restoration or significant dentin exposure, the paper suggests extending the preparation palatally when needed so that more of the bonding surface sits on enamel, increasing the bonding area.
+</p>
+
+<p>
+Conversely, a palatal chamfer is better avoided unless there is a clear indication for it. This preparation design is not conservative and has shown greater marginal discrepancy compared with a shoulder design.
+</p>
+
+<h3>The Cervical Area Is the Most Sensitive Spot</h3>
+
+<p>
+Microleakage and margin discoloration were seen more often at the cervical area across studies. The paper links this to the thinner enamel in this region and the greater likelihood of the veneer margin sitting on dentin there. In contrast, proximal margins, which were hidden in these studies, were generally reported without discoloration.
+</p>
+
+<h3>IDS Helps When Dentin Exposure Exceeds 50%</h3>
+
+<p>
+In one of the studies included in this review, using Immediate Dentin Sealing in preparations with more than 50% dentin exposure was associated with survival increasing from 81.8% to 96.4%. The authors present IDS, alongside checking veneer fit before bonding and appropriate surface treatment, as a preventive strategy.
+</p>
+
+<h3>Veneer Fit Before Bonding</h3>
+
+<p>
+The paper raises evaluating veneer fit before bonding, especially when dentin exposure is significant, alongside other preventive measures.
+</p>
+
+<h3>Subsequent Interventions Are Risky in Extensive Dentin Exposure</h3>
+
+<p>
+The paper reports cases of veneer fracture during preparation of an endodontic access cavity and emphasizes that invasive interventions can cause veneer or even tooth fracture. Pulp status and the likelihood of needing endodontic treatment should therefore be considered from the start of treatment planning.
+</p>
+
+<h3>Parafunction and Occlusal Guards</h3>
+
+<p>
+One study found no clear relationship between bruxism and failure. Another study, however, recommended protective occlusal devices for patients with parafunctional habits. The evidence here is not as conclusive as the findings related to substrate.
+</p>
+
+<h3>Heat-Pressed vs. CAD-CAM</h3>
+
+<p>
+Both methods come with a marginal gap, and eliminating that gap entirely is not possible. Even so, glass-ceramic veneers made by the heat-pressed method have shown better internal and marginal fit and less microleakage than CAD-CAM veneers.
+</p>
+
+<h2>Absolute Failure Numbers</h2>
+
+<p>
+In this review's data, the absolute failure rate for veneers bonded to existing composite restorations was reported at 25.3%, versus 9.5% for veneers bonded to unrestored tooth substrate. The authors raise this gap in their conclusions as one of the study's important findings.
+</p>
+
+<p>
+For dentin, too, the difference was notable: absolute failure was 9.5% at minimal exposure and 30.6% at severe exposure.
+</p>
+
+<h2>Study Limitations</h2>
+
+<p>
+These results should be interpreted in light of the study's limitations. Only 6 clinical studies were included in the review, and the studies differed in design, sample size, and follow-up duration.
+</p>
+
+<p>
+All studies were conducted on glass-matrix ceramics, but some did not separately report data for the different ceramic types, including feldspathic, leucite-reinforced, and lithium disilicate. Based on this review, therefore, the performance of these materials cannot be compared independently of one another.
+</p>
+
+<p>
+The authors also note that follow-up in most studies was relatively short and may not be sufficient to assess long-term outcomes and veneer longevity.
+</p>
+
+<h2>Summary</h2>
+
+<p>
+Enamel is the most favorable substrate for ceramic veneers. Veneers bonded to enamel had the highest survival and success rates, both at 99%.
+</p>
+
+<p>
+Bonding to existing composite resin was associated with survival around 94%, but success dropped to 70%.
+</p>
+
+<p>
+At minimal dentin exposure, survival and success were both around 95%. But at severe dentin exposure, survival fell to 91% and success to 74%.
+</p>
+
+<p>
+From this paper's standpoint, then, maximizing enamel preservation and carefully selecting the substrate during preparation are important factors in reducing complications and increasing the longevity of ceramic veneers. Where dentin or existing composite makes up a significant part of the substrate, greater care is warranted around surface treatment, bonding protocol, IDS in extensive dentin exposure, checking veneer fit, and preventive strategies.
+</p>
+
+
+<div style="
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 1.75rem;
+">
+  <div style="
+    background: rgba(255, 220, 80, 0.07);
+    border: 1px solid rgba(255, 220, 80, 0.18);
+    border-radius: 0.5625rem;
+    padding: 0.5rem 0.875rem;
+    text-align: center;
+    font-size: .8rem;
+    color: #0a1638;
+    line-height: 1.55;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.25);
+    backdrop-filter: blur(5px);
+  ">
+    <p style="margin: 0; font-weight: 600; color: #0a1638;">
+      "Clinical survival and complication rate of ceramic veneers bonded to different substrates: A systematic review and meta-analysis"
+    </p>
+    <p style="margin: 0.125rem 0 0 0;">
+      <a href="https://doi.org/10.1016/j.prosdent.2024.03.019" target="_blank" rel="noopener noreferrer">Alqutaibi AY</a>, Saker S, Alghauli MA, Algabri RS, AbdElaziz MH — <em>The Journal of Prosthetic Dentistry. 2024;134(4):1030–1039</em>
+    </p>
+    <p style="margin: 0;">DOI: 10.1016/j.prosdent.2024.03.019</p>
+  </div>
+</div>
+
+</div>
+
+<div class="author-note">
+  <a href="/about.html" class="author-link">Dr. Foad Shahabian</a>
+  <span class="author-role">Prosthodontist &amp; Implant Specialist</span>
+</div>
+
+<footer class="dc-site-footer" style="text-align:center; margin-top:2.8125rem; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+  <div style="margin-bottom:1.375rem;">
+    <a href="/"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Back to DentCast
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=119" defer></script>
+</body>
+</html>

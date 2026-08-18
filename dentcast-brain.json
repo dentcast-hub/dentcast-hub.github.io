@@ -13532,5 +13532,53 @@
       "secondary": [],
       "subtopic": "crowns-onlays"
     }
+  },
+  {
+    "type": "dentai",
+    "id": "dentai-30",
+    "title": "سرنوشت ونیرهای سرامیکی: باند رو انامل، دنتین یا کامپوزیت قدیمی؟",
+    "caption": "یک مرور سیستماتیک و متاآنالیز بررسی کرده است که بستر زیر ونیر سرامیکی چه اثری بر بقای ونیر، موفقیت درمان و عوارض کلینیکی دارد. منظور از بستر، سطحی است که ونیر روی آن باند می‌شود: انامل، دنتین، یا ترمیم کامپوزیت رزینی موجود. در این مرور ۶ مطالعه بالینی و در مجموع ۱۴۲۹ ونیر گلاس‌سرامیک ارزیابی شدند.",
+    "hashtags": [
+      "#DentAI",
+      "#ونیر_سرامیکی",
+      "#کامپوزیت",
+      "#IDS",
+      "#Survival",
+      "#باند_به_دنتین",
+      "#ریز_نشت",
+      "#CAD_CAM",
+      "#متاآنالیز"
+    ],
+    "keywords": [
+      "ceramic veneer",
+      "bonding substrate",
+      "enamel bonding",
+      "dentin bonding",
+      "composite resin substrate",
+      "immediate dentin sealing",
+      "IDS",
+      "microleakage",
+      "systematic review",
+      "meta-analysis",
+      "survival rate",
+      "success rate",
+      "ونیر سرامیکی",
+      "بستر باندینگ",
+      "باند به انامل",
+      "باند به دنتین",
+      "ترمیم کامپوزیت رزینی",
+      "سیل فوری دنتین",
+      "میکرولیکیج",
+      "مرور سیستماتیک",
+      "متاآنالیز",
+      "نرخ بقا",
+      "نرخ موفقیت"
+    ],
+    "page_url": "/dentai/dentai-30.html",
+    "pillar": {
+      "primary": "esthetic",
+      "secondary": [],
+      "subtopic": "veneers-laminates"
+    }
   }
 ]

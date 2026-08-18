@@ -724,6 +724,10 @@
         "milestone": true
       },
       {
+        "content_id": "dentai/dentai-30",
+        "milestone": false
+      },
+      {
         "content_id": "dentai/dentai-13",
         "milestone": false
       },
@@ -1180,6 +1184,10 @@
       },
       {
         "content_id": "dentai/dentai-29",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-30",
         "milestone": false
       },
       {
@@ -1665,6 +1673,10 @@
       },
       {
         "content_id": "notecast/episode-6",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-30",
         "milestone": false
       },
       {
@@ -2219,6 +2231,10 @@
         "milestone": false
       },
       {
+        "content_id": "dentai/dentai-30",
+        "milestone": false
+      },
+      {
         "content_id": "dentai/dentai-17",
         "milestone": true
       },
@@ -2369,6 +2385,10 @@
       },
       {
         "content_id": "notecast/episode-6",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-30",
         "milestone": false
       },
       {

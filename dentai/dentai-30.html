@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="dc-notify" content="true">
+
+<title>DentAI – سرنوشت ونیرهای سرامیکی: باند رو انامل، دنتین یا کامپوزیت قدیمی؟</title>
+
+<meta name="description" content="مروری سیستماتیک با متاآنالیز روی ۶ مطالعه و ۱۴۲۹ ونیر گلاس‌سرامیک نشان می‌دهد بقا و موفقیت ونیرهای باندشده به انامل نزدیک به ۹۹٪ است، اما با افزایش اکسپوژر دنتین یا باند به کامپوزیت قدیمی، به‌ویژه نرخ موفقیت به‌طور محسوسی افت می‌کند.">
+
+
+<link rel="canonical" href="https://dentcast.org/dentai/dentai-30.html">
+<link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/dentai/dentai-30.html">
+<link rel="alternate" hreflang="fa" href="https://dentcast.org/dentai/dentai-30.html">
+<link rel="alternate" hreflang="x-default" href="https://dentcast.org/dentai/dentai-30.html">
+
+
+  <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css?v=4">
+  <style>
+    :root{
+      --blue:#0b5fff;
+      --gold:rgba(255,199,44,0.85);
+      --bg:#0b1220;
+      --bg2:#121a2b;
+      --text:#e7eaf1;
+      --muted:#9aa1b3;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.35);
+    }
+
+    .caption{
+      background:rgba(255, 185, 40, 0.15);
+      border:1px solid rgba(255, 220, 100, 0.4);
+      border-radius:var(--radius);
+      backdrop-filter:blur(10px);
+      padding:1.25rem 1.5rem;
+      margin-bottom:2.1875rem;
+      box-shadow:0 0 30px rgba(255,200,0,0.1);
+    }
+
+    .caption p{
+      color:var(--gold);
+      font-weight:600;
+      font-size:1.1rem;
+      margin:0;
+      text-align:justify;
+      line-height:1.9;
+    }
+
+   .text-box {
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 1.375rem;
+  padding: 1.75rem 2.125rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  color: #111;
+  font-size: 1.05rem;
+  line-height: 2;
+   }
+
+    ul{
+      list-style:none;
+      padding:0;
+      margin:0 0 0.875rem 0;
+    }
+
+    ul li{
+      margin-bottom:0.625rem;
+    }
+
+    ul li::before{
+      content:"• ";
+      color:#0b5fff;
+      font-weight:bold;
+    }
+
+    /* جدول‌های امتیازدهی/سکستانت/ریسک — همرنگ با text-box روشن */
+    .text-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .text-box table th,
+    .text-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:right;
+      vertical-align:top;
+    }
+    .text-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .text-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+
+    @media (max-width:768px){
+      .caption p{font-size:1rem;}
+      .text-box{padding:1.25rem 1.125rem; font-size:.98rem;}
+      .text-box table{font-size:.9rem;}
+      .text-box table th,.text-box table td{padding:0.45rem 0.5rem;}
+    }
+    .text-box{
+  position: relative;
+}
+
+.text-box { background: #fff !important; }
+
+/* دکمه‌ی نسخه انگلیسی (بالا-چپ) */
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+  </style>
+
+
+
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
+  <meta name="theme-color" content="#0b5fff">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dentcast.org/dentai/dentai-30.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "خانه",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "DentAI",
+          "item": "https://dentcast.org/dentai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "سرنوشت ونیرهای سرامیکی: باند رو انامل، دنتین یا کامپوزیت قدیمی؟",
+          "item": "https://dentcast.org/dentai/dentai-30.html"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/dentai-30.html#article",
+      "headline": "سرنوشت ونیرهای سرامیکی: باند رو انامل، دنتین یا کامپوزیت قدیمی؟",
+      "description": "مروری سیستماتیک با متاآنالیز روی ۶ مطالعه و ۱۴۲۹ ونیر گلاس‌سرامیک نشان می‌دهد بقا و موفقیت ونیرهای باندشده به انامل نزدیک به ۹۹٪ است، اما با افزایش اکسپوژر دنتین یا باند به کامپوزیت قدیمی، به‌ویژه نرخ موفقیت به‌طور محسوسی افت می‌کند.",
+      "datePublished": "2026-08-18T10:00:00+03:30",
+      "dateModified": "2026-08-18T10:00:00+03:30",
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/dentai/dentai-30.html"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "url": "https://doi.org/10.1016/j.prosdent.2024.03.019",
+          "name": "Clinical survival and complication rate of ceramic veneers bonded to different substrates: A systematic review and meta-analysis"
+        }
+      ],
+      "inLanguage": "fa",
+      "articleSection": "Fixed Prosthodontics / Esthetic Dentistry",
+      "keywords": [
+        "ceramic veneer",
+        "bonding substrate",
+        "enamel bonding",
+        "dentin bonding",
+        "composite resin substrate",
+        "immediate dentin sealing",
+        "IDS",
+        "microleakage",
+        "systematic review",
+        "meta-analysis",
+        "survival rate",
+        "success rate",
+        "ونیر سرامیکی",
+        "بستر باندینگ",
+        "باند به انامل",
+        "باند به دنتین",
+        "ترمیم کامپوزیت رزینی",
+        "سیل فوری دنتین",
+        "میکرولیکیج",
+        "مرور سیستماتیک",
+        "متاآنالیز",
+        "نرخ بقا",
+        "نرخ موفقیت"
+      ],
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Ceramic Veneer Bonding Substrate"
+        },
+        {
+          "@type": "Thing",
+          "name": "Dental Adhesion"
+        }
+      ],
+      "mentions": [
+        {
+          "@type": "Thing",
+          "name": "Enamel"
+        },
+        {
+          "@type": "Thing",
+          "name": "Dentin"
+        },
+        {
+          "@type": "Thing",
+          "name": "Composite Resin Restoration"
+        },
+        {
+          "@type": "Thing",
+          "name": "Immediate Dentin Sealing"
+        },
+        {
+          "@type": "Thing",
+          "name": "Microleakage"
+        }
+      ],
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h2",
+          ".text-box"
+        ]
+      }
+    },
+    {
+      "@type": "Dentist",
+      "@id": "https://dentcast.org/#dentist-ahvaz",
+      "name": "دکتر فواد شهابیان",
+      "url": "https://dentcast.org/about.html",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "medicalCode": "114707",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "addressCountry": "IR"
+      },
+      "sameAs": [
+        "https://www.instagram.com/dr.foad_shahabian/",
+        "https://t.me/dentcast",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364"
+      ]
+    }
+  ]
+}
+</script>
+
+    <link rel="stylesheet" href="/dc-theme.css?v=2">
+<link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="DentAI – سرنوشت ونیرهای سرامیکی: باند رو انامل، دنتین یا کامپوزیت قدیمی؟">
+  <meta property="og:description" content="مروری سیستماتیک با متاآنالیز روی ۶ مطالعه و ۱۴۲۹ ونیر گلاس‌سرامیک نشان می‌دهد بقا و موفقیت ونیرهای باندشده به انامل نزدیک به ۹۹٪ است، اما با افزایش اکسپوژر دنتین یا باند به کامپوزیت قدیمی، به‌ویژه نرخ موفقیت به‌طور محسوسی افت می‌کند.">
+  <meta property="og:url" content="https://dentcast.org/dentai/dentai-30.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DentAI – سرنوشت ونیرهای سرامیکی: باند رو انامل، دنتین یا کامپوزیت قدیمی؟">
+  <meta name="twitter:description" content="مروری سیستماتیک با متاآنالیز روی ۶ مطالعه و ۱۴۲۹ ونیر گلاس‌سرامیک نشان می‌دهد بقا و موفقیت ونیرهای باندشده به انامل نزدیک به ۹۹٪ است، اما با افزایش اکسپوژر دنتین یا باند به کامپوزیت قدیمی، به‌ویژه نرخ موفقیت به‌طور محسوسی افت می‌کند.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<h1><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/></svg> DentAI – سرنوشت ونیرهای سرامیکی: باند رو انامل، دنتین یا کامپوزیت قدیمی؟</h1>
+
+<a class="lang-btn" href="en/dentai-30.html" rel="noopener">
+  <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> English
+</a>
+
+<div class="caption">
+  <p>
+یک مرور سیستماتیک و متاآنالیز بررسی کرده است که بستر زیر ونیر سرامیکی چه اثری بر بقای ونیر، موفقیت درمان و عوارض کلینیکی دارد. منظور از بستر، سطحی است که ونیر روی آن باند می‌شود: انامل، دنتین، یا ترمیم کامپوزیت رزینی موجود. در این مرور ۶ مطالعه بالینی و در مجموع ۱۴۲۹ ونیر گلاس‌سرامیک ارزیابی شدند.
+  </p>
+</div>
+
+<div class="text-box">
+
+<h2>یک تفکیک مهم: بقا در برابر موفقیت</h2>
+
+<p>
+قبل از رفتن سراغ اعداد، باید دو مفهوم را از هم جدا کرد.
+</p>
+
+<p>
+<strong>بقا (Survival):</strong> ونیر دچار شکست مطلق نشده باشد. یعنی نیاز به ساخت مجدد ونیر، درمان اندودنتیک پس از قرارگیری ونیر، تغییر طرح درمان یا کشیدن دندان پیدا نکرده باشد.
+</p>
+
+<p>
+<strong>موفقیت (Success):</strong> ونیر در طول دوره پیگیری به هیچ مداخله کلینیکی نیاز پیدا نکرده باشد.
+</p>
+
+<p>
+پس ممکن است ونیری هنوز در دهان باشد و از نظر Survival موفق حساب شود، اما چون در طول پیگیری حداقل یک بار پای صندلی کار برده، در گروه Success قرار نگیرد. فاصله‌ی این دو عدد در هر گروه، همان چیزی است که مقدار دردسر بالینی آن بستر را نشان می‌دهد.
+</p>
+
+<h2>اعداد اصلی</h2>
+
+<p>
+وقتی داده‌های این ۶ مطالعه با هم ترکیب شد، نتایج بر اساس بستر باندینگ این‌طور بود:
+</p>
+
+<table>
+<thead>
+<tr><th>بستر</th><th>بقا</th><th>موفقیت</th></tr>
+</thead>
+<tbody>
+<tr><td>انامل</td><td>۹۹٪</td><td>۹۹٪</td></tr>
+<tr><td>دنتین، اکسپوژر حداقل</td><td>۹۵٪</td><td>۹۵٪</td></tr>
+<tr><td>کامپوزیت رزینی موجود</td><td>۹۴٪</td><td>۷۰٪</td></tr>
+<tr><td>دنتین، اکسپوژر شدید</td><td>۹۱٪</td><td>۷۴٪</td></tr>
+</tbody>
+</table>
+
+<p>
+محدوده‌های گزارش‌شده: انامل ۹۸ تا ۱۰۰ برای هر دو شاخص؛ اکسپوژر حداقل دنتین ۹۱ تا ۱۰۰ برای بقا و ۹۰ تا ۹۹ برای موفقیت؛ کامپوزیت موجود ۹۱ تا ۹۷ و ۶۰ تا ۸۰؛ اکسپوژر شدید دنتین ۸۴ تا ۹۸ و ۶۴ تا ۸۵.
+</p>
+
+<p>
+نکته‌ی کلیدی جدول این است که در انامل و در اکسپوژر حداقل دنتین، دو عدد بقا و موفقیت تقریباً یکی هستند. اما در کامپوزیت موجود و در اکسپوژر شدید دنتین، ونیر معمولاً سر جایش می‌ماند ولی برای نگه داشتنش مداخله لازم شده است. کامپوزیت موجود از این نظر بدترین گروه بود؛ حدود ۳۰٪ ونیرها در طول پیگیری به مداخله نیاز پیدا کردند.
+</p>
+
+<p>
+در مقایسه مستقیم، ونیرهای باندشده به دنتین عوارض و شکست بیشتری نسبت به ونیرهای باندشده به انامل داشتند. همچنین ونیرهای روی دنتین با اکسپوژر حداقل، نسبت به اکسپوژر شدید، به‌طور معنی‌داری کمتر به مداخله کلینیکی نیاز پیدا کردند.
+</p>
+
+<h2>چرا باند به دنتین دردسر بیشتری دارد</h2>
+
+<p>
+باند به انامل عمدتاً بر تشکیل resin tags تکیه دارد و از نظر بالینی اتصال قابل‌اعتمادتری می‌دهد. دنتین به دلیل ماهیت مرطوبش سطح دشوارتری است و نفوذ رزین در آن می‌تواند ناقص بماند. مقاله تأکید می‌کند که با <a href="/glossary/bonding-protocol.html">پروتکل ادهزیو</a> مناسب و آماده‌سازی درست سطح، باند بادوام به دنتین هم قابل دستیابی است.
+</p>
+
+<p>
+آنچه در پیگیری‌های بالینی دیده شده این است که بخش قابل‌توجهی از عوارض به از دست رفتن اتصال برمی‌گردد: <a href="/glossary/microleakage.html">مایکرولیکیج</a>، تغییر رنگ مارژین، پوسیدگی ثانویه و جداشدگی یا شکست ونیر. در بسیاری از موارد شکست هم، قطعه‌ی شکسته پیش از fracture اتصالش را از دست داده بود؛ یعنی loss of adhesion ممکن است مقدم بر شکست باشد.
+</p>
+
+<h2>نکات کلینیکی</h2>
+
+<h3>حفظ انامل مهم‌ترین متغیر است</h3>
+
+<p>
+مقاله انامل را مطلوب‌ترین بستر برای adhesion ونیر معرفی می‌کند و تأکید دارد که حفظ انامل هنگام preparation و قرار گرفتن مارژین‌ها روی انامل برای موفقیت بلندمدت اهمیت دارد. رویکردهای محافظه‌کارانه، از جمله تکنیک‌های non-preparation و ونیرهای با ضخامت حداکثر حدود ۰/۲ میلی‌متر، به حفظ انامل کمک می‌کنند. مقاله اشاره می‌کند که ساخت چنین ونیرهای فوق‌نازکی با تکنیک‌های دستی، heat-press و CAD-CAM دشوار بوده و 3D printing می‌تواند یک راهکار بالقوه باشد.
+</p>
+
+<h3>روی کامپوزیت قدیمی باید محتاط‌تر بود</h3>
+
+<p>
+ونیرهای باندشده به ترمیم‌های کامپوزیتی موجود، نسبت به ونیرهای باندشده به ساختار دندان، عوارض بیشتری نشان دادند. مقاله اشاره می‌کند که conditioning و bonding protocol مناسب و silica-coating کامپوزیت موجود می‌تواند نتایج را بهبود دهد، هرچند نتایج همچنان از باند به ساختار دندان ضعیف‌تر بود.
+</p>
+
+<h3>گسترش preparation به سمت پالاتال در برخی شرایط</h3>
+
+<p>
+در دندان‌هایی با ترمیم کامپوزیت بزرگ یا اکسپوژر قابل‌توجه دنتین، مقاله پیشنهاد می‌کند preparation در صورت نیاز به سمت پالاتال گسترش پیدا کند تا مقدار بیشتری از سطح باندشونده روی انامل قرار بگیرد و سطح اتصال زیاد شود.
+</p>
+
+<p>
+در مقابل، بهتر است از palatal chamfer پرهیز شود مگر اینکه اندیکاسیون مشخصی داشته باشد. این طرح preparation محافظه‌کارانه نیست و در مقایسه با طراحی shoulder، marginal discrepancy بیشتری نشان داده است.
+</p>
+
+<h3>ناحیه سرویکال حساس‌ترین نقطه است</h3>
+
+<p>
+مایکرولیکیج و تغییر رنگ مارژین در مطالعات بیشتر در ناحیه سرویکال دیده شدند. مقاله این را به کاهش ضخامت انامل در این ناحیه و احتمال بیشتر قرار گرفتن مارژین ونیر روی دنتین ربط می‌دهد. در مقابل، مارژین‌های پروگزیمال که در این مطالعات پنهان بودند، عموماً بدون تغییر رنگ گزارش شدند.
+</p>
+
+<h3>در اکسپوژر بیش از ۵۰٪ دنتین، IDS کمک می‌کند</h3>
+
+<p>
+در یکی از مطالعات واردشده در این مرور، استفاده از <a href="/glossary/immediate-dentin-sealing.html">Immediate Dentin Sealing (IDS)</a> در preparationهایی با بیش از ۵۰٪ dentin exposure با افزایش survival از ۸۱/۸٪ به ۹۶/۴٪ همراه بود. نویسندگان IDS را در کنار بررسی fit ونیر قبل از bonding و surface treatment مناسب، به‌عنوان استراتژی پیشگیرانه مطرح کرده‌اند.
+</p>
+
+<h3>فیت ونیر قبل از باندینگ</h3>
+
+<p>
+مقاله ارزیابی fit ونیر پیش از bonding را، به‌خصوص وقتی اکسپوژر دنتین قابل‌توجه است، در کنار سایر اقدامات پیشگیرانه مطرح می‌کند.
+</p>
+
+<h3>در اکسپوژر وسیع دنتین، مداخلات بعدی خطرناک‌اند</h3>
+
+<p>
+مقاله مواردی از fracture ونیر هنگام آماده‌سازی access cavity اندودنتیک را گزارش کرده و تأکید می‌کند که مداخلات تهاجمی می‌توانند باعث شکست ونیر یا حتی دندان شوند. بنابراین وضعیت پالپ و احتمال نیاز به درمان اندودنتیک باید از ابتدا در برنامه‌ریزی درمان دیده شود.
+</p>
+
+<h3>پارافانکشن و محافظ اکلوزالی</h3>
+
+<p>
+در یکی از مطالعات رابطه‌ی مشخصی میان bruxism و failure دیده نشد. با این حال مطالعه‌ی دیگری استفاده از protective occlusal devices را برای بیماران دارای عادات پارافانکشنال توصیه کرده بود. شواهد این بخش به اندازه‌ی یافته‌های مربوط به substrate قطعی نیستند.
+</p>
+
+<h3>Heat-pressed در مقایسه با CAD-CAM</h3>
+
+<p>
+هر دو روش با marginal gap همراه‌اند و حذف کامل این gap ممکن نیست. با این حال ونیرهای <a href="/glossary/glass-ceramics.html">glass-ceramic</a> ساخته‌شده به روش heat-pressed، fit داخلی و مارژینال بهتر و microleakage کمتری نسبت به ونیرهای CAD-CAM نشان داده‌اند.
+</p>
+
+<h2>ارقام شکست مطلق</h2>
+
+<p>
+در داده‌های این مرور، میزان absolute failure برای ونیرهای باندشده به ترمیم‌های کامپوزیتی موجود ۲۵/۳٪ و برای ونیرهای باندشده به substrate دندانی بدون ترمیم ۹/۵٪ گزارش شده است. نویسندگان در نتیجه‌گیری این اختلاف را به‌عنوان یکی از یافته‌های مهم مطالعه مطرح کرده‌اند.
+</p>
+
+<p>
+در مورد دنتین هم تفاوت قابل‌توجه بود: absolute failure در اکسپوژر حداقل ۹/۵٪ و در اکسپوژر شدید ۳۰/۶٪ گزارش شد.
+</p>
+
+<h2>محدودیت‌های مطالعه</h2>
+
+<p>
+این نتایج باید با توجه به محدودیت‌های مطالعه تفسیر شوند. تنها ۶ مطالعه بالینی وارد مرور شدند و مطالعات از نظر طراحی، تعداد نمونه و مدت پیگیری با هم تفاوت داشتند.
+</p>
+
+<p>
+تمام مطالعات روی glass-matrix ceramics انجام شده بودند، اما در برخی از آن‌ها داده‌های انواع مختلف سرامیک، از جمله feldspathic، leucite-reinforced و lithium disilicate، جداگانه گزارش نشده بود. بنابراین بر اساس این مرور نمی‌توان عملکرد این مواد را مستقل از یکدیگر مقایسه کرد.
+</p>
+
+<p>
+نویسندگان همچنین اشاره می‌کنند که follow-up در بیشتر مطالعات نسبتاً کوتاه بوده و ممکن است برای ارزیابی نتایج بلندمدت و longevity ونیر کافی نباشد.
+</p>
+
+<h2>جمع‌بندی</h2>
+
+<p>
+انامل مطلوب‌ترین substrate برای ونیرهای سرامیکی است. ونیرهای باندشده به انامل بالاترین میزان بقا و موفقیت را داشتند، هر دو ۹۹٪.
+</p>
+
+<p>
+باند به کامپوزیت رزینی موجود با survival حدود ۹۴٪ همراه بود، اما success به ۷۰٪ کاهش یافت.
+</p>
+
+<p>
+در اکسپوژر حداقل دنتین، survival و success هر دو حدود ۹۵٪ بودند. اما در اکسپوژر شدید دنتین، survival به ۹۱٪ و success به ۷۴٪ رسید.
+</p>
+
+<p>
+بنابراین از دیدگاه این مقاله، حفظ حداکثری انامل و انتخاب دقیق substrate هنگام preparation از عوامل مهم در کاهش عوارض و افزایش longevity ونیرهای سرامیکی هستند. جایی که دنتین یا کامپوزیت موجود بخش قابل‌توجهی از substrate را تشکیل می‌دهد، باید با دقت بیشتری سراغ surface treatment، bonding protocol، IDS در اکسپوژر وسیع دنتین، بررسی fit ونیر و استراتژی‌های پیشگیرانه رفت.
+</p>
+
+
+<div style="
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 1.75rem;
+">
+  <div style="
+    background: rgba(255, 220, 80, 0.07);
+    border: 1px solid rgba(255, 220, 80, 0.18);
+    border-radius: 0.5625rem;
+    padding: 0.5rem 0.875rem;
+    text-align: center;
+    font-size: .8rem;
+    color: #0a1638;
+    line-height: 1.55;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.25);
+    backdrop-filter: blur(5px);
+  ">
+    <p style="margin: 0; font-weight: 600; color: #0a1638;">
+      "Clinical survival and complication rate of ceramic veneers bonded to different substrates: A systematic review and meta-analysis"
+    </p>
+    <p style="margin: 0.125rem 0 0 0;">
+      <a href="https://doi.org/10.1016/j.prosdent.2024.03.019" target="_blank" rel="noopener noreferrer">Alqutaibi AY</a>, Saker S, Alghauli MA, Algabri RS, AbdElaziz MH — <em>The Journal of Prosthetic Dentistry. 2024;134(4):1030–1039</em>
+    </p>
+    <p style="margin: 0;">DOI: 10.1016/j.prosdent.2024.03.019</p>
+  </div>
+</div>
+
+</div>
+
+<div class="author-note">
+  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
+  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
+</div>
+
+<div class="dc-related-section">
+  <h2 class="dc-related-label">کاوش بیشتر</h2>
+  <div class="dc-related-capsules">
+    <a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+    <a href="/pillar/esthetic/" class="dc-related-capsule">فهرست موضوعی</a>
+    <a href="/dentai/dentai-17.html" class="dc-related-capsule">سیل فوری عاج (IDS) و رزین کوتینگ</a>
+    <a href="/notecast/episode-19.html" class="dc-related-capsule">پایداری رنگ ونیرهای سرامیکی — JPD 2018</a>
+    <a href="/sharehub/share-8.html" class="dc-related-capsule">اصول علمی آماده‌سازی دندان برای لمینت‌های سرامیکی</a>
+  </div>
+</div>
+
+<footer class="dc-site-footer" style="text-align:center; margin-top:2.8125rem; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+  <div style="margin-bottom:1.375rem;">
+    <a href="index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=119" defer></script>
+</body>
+</html>

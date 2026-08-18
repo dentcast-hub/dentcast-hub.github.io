@@ -137185,6 +137185,54 @@
       "drive_id": "1Rclx5Z0sB84lJvYJVMcgJNUzGm6ts4Ni",
       "drive_view": "https://drive.google.com/file/d/1Rclx5Z0sB84lJvYJVMcgJNUzGm6ts4Ni/view",
       "drive_download": "https://drive.google.com/uc?export=download&id=1Rclx5Z0sB84lJvYJVMcgJNUzGm6ts4Ni"
+    },
+    {
+      "id": "P2895",
+      "title": "Clinical survival and complication rate of ceramic veneers bonded to different substrates: A systematic review and meta-analysis",
+      "file_name": "Clinical-survival-and-complication-rate-of-ceramic-veneers-bonded-to-different-substrates-A-systematic-review-and-meta-analysis.pdf",
+      "topic": "Esthetic",
+      "topic_path": "Esthetic",
+      "type": "systematic review + meta-analysis",
+      "local_path": "",
+      "file_size": 4164477,
+      "key_finding": "ونیرهای سرامیکی باندشده به انامل بالاترین بقا و موفقیت (هر دو ۹۹٪) را دارند؛ باند به کامپوزیت رزینی موجود موفقیت را تا ۷۰٪ و باند به دنتین با اکسپوژر شدید بقا را تا ۹۱٪ و موفقیت را تا ۷۴٪ کاهش می‌دهد.",
+      "clinical_bottom_line": "حفظ حداکثری انامل هنگام preparation ونیر مهم‌ترین عامل موفقیت است؛ در اکسپوژر دنتین یا کامپوزیت موجود، از پروتکل ادهزیو و surface treatment مناسب، و در اکسپوژر بیش از ۵۰٪ دنتین از IDS استفاده کنید.",
+      "linked_episodes": [
+        "dentai-30"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1Yw5mjpHoEkTYo-w8UpD1AdUoSQKkyqmQ/view",
+      "status": "linked",
+      "tags": [
+        "ceramic-veneer",
+        "bonding-substrate",
+        "enamel-bonding",
+        "dentin-bonding",
+        "composite-resin-restoration",
+        "immediate-dentin-sealing",
+        "microleakage",
+        "survival-rate",
+        "systematic-review",
+        "meta-analysis",
+        "topic:esthetic",
+        "clinical-survival-and-complication-rate-of-ceramic-veneers-bonded-to-different-substrates"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "display_title": "Clinical survival and complication rate of ceramic veneers bonded to different substrates: A systematic review and meta-analysis",
+      "doi": "10.1016/j.prosdent.2024.03.019",
+      "authors": [
+        "Ahmed Yaseen Alqutaibi",
+        "Samah Saker",
+        "Mohammed Ahmed Alghauli",
+        "Radhwan S. Algabri",
+        "Mohammed H. AbdElaziz"
+      ],
+      "journal": "The Journal of Prosthetic Dentistry",
+      "crossref_year": 2024,
+      "abstract": "Statement of problem. Evidence on the long-term clinical assessment and longevity of ceramic veneers bonded to different substrates is limited. Purpose. The purpose of this systematic review and meta-analysis was to evaluate the effect of various substrates, including enamel, dentin, or an existing composite resin restoration, on the clinical survival and complication rates of ceramic veneers. Material and methods. The PubMed, Scopus, and the Cochrane Library electronic databases were searched, and related journals were hand searched without time or language restrictions to identify clinical trials that compared the survival rate and clinical complication rates when bonding ceramic veneers to different tooth substrates. The success rate of the included participants was estimated by the number of veneers that did not require a clinical intervention, and the survival rate by all veneers that did not fail absolutely. The risk difference (RD) with 95% confidence intervals (CIs) for dichotomous outcomes was used to quantify the intervention effect. Results. Of 973 screened articles, 6 clinical studies were included. The survival and success rates varied depending on the bonding substrate. Enamel-bonded veneers had almost perfect rates of survival (99% with a range of 98% to 100%) and success (99% with a range of 98% to 100%). Veneers bonded to composite resin or surfaces with minimal dentin exposure had slightly lower survival rates (94% with a range of 91% to 97% and 95% with a range of 91% to 100%, respectively) and success rates (70% with a range of 60% to 80% and 95% with a range of 90% to 99%). Severe dentin exposure significantly decreased both survival rates (91% with a range of 84% to 98%) and success rates (74% with a range of 64% to 85%). The combined findings suggested that ceramic veneers bonded to enamel had fewer clinical complications (RD: -0.04; 95% CI: -0.09 to 0.02) and lower failure rates (RD: -0.13; 95% CI: -0.32 to 0.07) compared with those bonded to exposed dentin. Additionally, veneers attached to teeth with minimal dentin exposure were significantly less likely to require clinical interventions (RD: -0.16; 95% CI: -0.31 to -0.01) and had a reduced incidence of failure (RD: -0.08; 95% CI: -0.17 to 0.01) compared with those with severe dentin exposure. Conclusions. Ceramic veneers bonded to enamel showed higher survival and success rates with lower clinical incidences of complications and failure than those bonded to dentin or teeth with existing composite resin restorations.",
+      "drive_id": "1Yw5mjpHoEkTYo-w8UpD1AdUoSQKkyqmQ",
+      "drive_view": "https://drive.google.com/file/d/1Yw5mjpHoEkTYo-w8UpD1AdUoSQKkyqmQ/view",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1Yw5mjpHoEkTYo-w8UpD1AdUoSQKkyqmQ"
     }
   ],
   "drive_matched": 2845,
