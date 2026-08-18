@@ -22,6 +22,11 @@ import { sms } from '../providers/registry.js';
  * روز», which is both true and still actionable — not «تمام شد», which would be
  * a lie told several hours early.
  *
+ * "IF THEY HAVEN'T RENEWED" NEEDS NO CHECK. Each run re-reads `expires_at`, so
+ * a renewal moves the subscription out of the day-of cohort before the second
+ * message is ever considered. There is nothing to cancel and no state to keep in
+ * step — the second warning is skipped by the same query that found the first.
+ *
  * IDEMPOTENCY IS KEYED ON THE EXPIRY DATE, not on a flag. A claim is
  * (user, kind, expires_on) in `user_activity`, which gives the re-arm for free:
  * the moment someone renews, `expires_on` moves to a date nothing has been said
@@ -43,7 +48,8 @@ const JALALI = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
 
 interface DueRow {
   user_id: string;
-  phone: string;
+  phone: string | null;
+  display_name: string;
   expires_at: Date;
   telegram_id: number | null;
   bale_id: number | null;
@@ -78,7 +84,8 @@ function message(kind: ReminderKind, row: DueRow, daysBefore: number) {
  */
 async function due(offset: number, today: string): Promise<DueRow[]> {
   const res = await query<DueRow>(
-    `select s.user_id, p.phone, s.expires_at, p.telegram_id, p.bale_id,
+    `select s.user_id, nullif(p.phone, '') as phone, p.display_name, s.expires_at,
+            p.telegram_id, p.bale_id,
             exists (select 1 from push_subscriptions ps where ps.user_id = s.user_id) as has_push
        from subscriptions s
        join profiles p on p.id = s.user_id
@@ -105,9 +112,30 @@ async function alreadySent(userId: string, kind: ReminderKind, expiresOn: string
  * all — and this is the one message worth paying a few toman of SMS for. Every
  * other notification the site sends is a nudge; this one is the difference
  * between a renewal and a lapse.
+ *
+ * SMS is the EXTRA channel for the people it can reach, never the default one:
+ * a reader with Telegram, Bale or browser push already heard it for free, and
+ * texting them too would be paying to say the same thing twice. The phone test
+ * is not redundant with the rest — a Telegram-first account has no phone at all
+ * (migration 0004), and `nullif` above folds the empty string in with it, so the
+ * provider is never handed a blank number to reject.
  */
 function needsSms(row: DueRow): boolean {
-  return row.telegram_id === null && row.bale_id === null && !row.has_push;
+  return row.phone !== null && row.telegram_id === null && row.bale_id === null && !row.has_push;
+}
+
+/**
+ * How many days the SMS says are left — the ONE number in the registered
+ * template, so it has to mean the same thing the message around it does.
+ *
+ * On the last day that number is 1, not 0. The subscription is settled at the
+ * Tehran midnight boundary, so at 10:00 the whole day is still theirs and «فقط
+ * ۱ روز باقی مونده» is both true and still actionable; «۰ روز» would describe
+ * something already lost and turn the one message with a renewal on the other
+ * side of it into an obituary.
+ */
+function daysLabel(kind: ReminderKind, daysBefore: number): string {
+  return toFa(kind === 'expiry_today' ? 1 : daysBefore);
 }
 
 async function sendOne(
@@ -127,8 +155,9 @@ async function sendOne(
   if (needsSms(row) && config.subscriptionReminder.smsTemplateId > 0) {
     // Never fails the run: an SMS that does not go out is bad, a reminder batch
     // that stops halfway because of it is worse.
-    await sms.sendTemplate(row.phone, config.subscriptionReminder.smsTemplateId, [
-      { name: config.subscriptionReminder.smsParamName, value: JALALI.format(row.expires_at) },
+    await sms.sendTemplate(row.phone as string, config.subscriptionReminder.smsTemplateId, [
+      { name: config.subscriptionReminder.smsNameParam, value: row.display_name },
+      { name: config.subscriptionReminder.smsDaysParam, value: daysLabel(kind, daysBefore) },
     ]).catch((err: unknown) => {
       // eslint-disable-next-line no-console
       console.error(`[subscription-reminder] sms to ${row.phone} failed: ${(err as Error).message}`);
