@@ -6,6 +6,7 @@ import { runSubscriptionReminders } from '../src/services/subscription-reminder.
 import { activateMonths, grantLifetime } from '../src/services/subscription.js';
 import { notifications, sms } from '../src/providers/registry.js';
 import type { NotificationMessage } from '../src/providers/notifications/types.js';
+import type { TemplateParam } from '../src/providers/sms/types.js';
 
 /**
  * The renewal reminders (level 3.2): one three days out, one on the last day.
@@ -17,7 +18,7 @@ import type { NotificationMessage } from '../src/providers/notifications/types.j
 
 let seq = 0;
 let sent: Array<{ userId: string; kind: string; msg: NotificationMessage }> = [];
-let texted: Array<{ phone: string; templateId: number }> = [];
+let texted: Array<{ phone: string; templateId: number; params: TemplateParam[] }> = [];
 
 /** 10:00 Tehran on the day the reminder job runs. */
 const RUN = (day: string) => new Date(`${day}T10:00:00+03:30`);
@@ -53,8 +54,8 @@ beforeEach(async () => {
   vi.spyOn(notifications, 'send').mockImplementation(async (userId, msg, kind) => {
     sent.push({ userId, kind, msg: msg as NotificationMessage });
   });
-  vi.spyOn(sms, 'sendTemplate').mockImplementation(async (phone, templateId) => {
-    texted.push({ phone, templateId });
+  vi.spyOn(sms, 'sendTemplate').mockImplementation(async (phone, templateId, params) => {
+    texted.push({ phone, templateId, params });
   });
 });
 afterAll(closePool);
@@ -157,7 +158,65 @@ describe('runSubscriptionReminders', () => {
     expect(texted).toHaveLength(1);
     const phone = (await pool.query<{ phone: string }>(
       'select phone from profiles where id = $1', [alone])).rows[0].phone;
-    expect(texted[0]).toEqual({ phone, templateId: 77 });
+    expect(texted[0].phone).toBe(phone);
+    expect(texted[0].templateId).toBe(77);
+  });
+
+  /**
+   * SMS.ir refuses to register a template with no variable in it, and refuses to
+   * SEND one whose parameters don't match the registered names. Both halves of
+   * that contract are invisible from inside the service, so they are pinned here:
+   * the shape below is template 530460 and nothing else.
+   */
+  it('fills the registered template by name — «#name#» and «#days#»', async () => {
+    await subscriber({ expiresOn: '2026-09-10' });
+
+    await runSubscriptionReminders(RUN('2026-09-07'));
+
+    expect(texted[0].params).toEqual([
+      { name: 'name', value: 'کاربر 1' },
+      { name: 'days', value: '۳' },
+    ]);
+  });
+
+  it('says ONE day left on the last day, never zero', async () => {
+    await subscriber({ expiresOn: '2026-09-10' });
+
+    await runSubscriptionReminders(RUN('2026-09-10'));
+
+    // The sweep settles premium at midnight, so the whole of the last day is
+    // still theirs — and «۰ روز» would be describing something already lost.
+    expect(texted[0].params[1]).toEqual({ name: 'days', value: '۱' });
+  });
+
+  it('never texts a phone-less account', async () => {
+    // `profiles.phone` is nullable since migration 0004 (Telegram-first signup).
+    // Deliberately given NO messenger either, so the phone guard is the only
+    // thing that can stop this — handing the provider a null number is a 400
+    // from SMS.ir, not a quietly skipped message.
+    const r = await pool.query<{ id: string }>(
+      "insert into profiles (phone, display_name) values (null, 'ناشناس') returning id",
+    );
+    await activateMonths(r.rows[0].id, 1, { source: 'payment' });
+    await pool.query("update subscriptions set expires_at = '2026-09-10T14:00:00+03:30' where user_id = $1",
+      [r.rows[0].id]);
+
+    await runSubscriptionReminders(RUN('2026-09-07'));
+
+    expect(sent).toHaveLength(1);
+    expect(texted).toHaveLength(0);
+  });
+
+  it('does not text somebody who already heard it for free', async () => {
+    // SMS is the extra channel for people it can reach, not a second copy for
+    // everyone: paying to repeat a message Telegram already delivered is the
+    // one cost this whole gate exists to avoid.
+    await subscriber({ expiresOn: '2026-09-10', messenger: true });
+
+    await runSubscriptionReminders(RUN('2026-09-07'));
+
+    expect(sent).toHaveLength(1);
+    expect(texted).toHaveLength(0);
   });
 
   it('skips SMS entirely until a template is registered', async () => {
