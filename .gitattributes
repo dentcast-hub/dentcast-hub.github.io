@@ -1,0 +1,13 @@
+# Shell scripts are always LF, on every platform.
+#
+# Git for Windows defaults to core.autocrlf=true, which rewrites LF to CRLF on
+# checkout. A shell script is the one file type that cannot survive it: bash
+# reads the trailing \r as part of the command and fails with
+# `$'\r': command not found`, which names neither the file nor the real cause.
+# The founder's working copy is on Windows and deploy.sh is run from Git Bash
+# there, so this is not hypothetical.
+#
+# Deliberately narrow. A repo-wide `* text=auto` would renormalise 700-odd HTML
+# and JSON files in one commit, which is a large diff for no benefit — every
+# other format here is read by tools that do not care.
+*.sh text eol=lf
