@@ -335,11 +335,21 @@ def des_norm(s):
 _cabinet_by_doi = None
 
 
-def des_source_text(source, doc):
+def des_source_text(source, doc, page_title=None):
     """The text a source's evidence_quotes must be substrings of, or None when
     the gate cannot see it.
 
-    COMMENTARY was scored on the page's own body, which is right here.
+    COMMENTARY normally means DentCast's (or a guest's) own authored piece,
+    scored on the page's own body, which is right here — every prior COMMENTARY
+    record's citation.title IS the page's own brain title (chairside-1,
+    sharehub/share-1…). But basket 2's "one record per cited source" can also
+    land a source on the COMMENTARY track when the CITED article itself is a
+    narrative/opinion piece rather than a systematic study (episodes/episode-9's
+    Gary Alex source is the first: AEGIS Dental Network, no DOI, explicitly
+    "in this author's opinion" throughout — AMSTAR-2 has nothing to appraise in
+    it). That article's text is not in this repo, so — like an uncached
+    RESEARCH abstract below — it is unverifiable here, not wrong; the
+    citation.title vs. brain-title mismatch is what tells the two cases apart.
     RESEARCH was scored on a paper's abstract, which lives in the repo only if
     that paper is in the local cabinet — the same lookup step 4.13 Part 1 does,
     including its case-insensitive DOI compare (the catalog stores DOIs as
@@ -348,6 +358,9 @@ def des_source_text(source, doc):
     """
     global _cabinet_by_doi
     if source.get("content_type") == "COMMENTARY":
+        cite_title = des_norm((source.get("citation") or {}).get("title") or "")
+        if page_title is not None and cite_title and cite_title != des_norm(page_title):
+            return None
         return des_norm(text_of(article_region(doc)))
     # A FULL_TEXT research score was read off the paper's PDF, which is not in
     # this repo and must not be — those are copyrighted articles, and the
@@ -943,16 +956,19 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                               "spec v1.6 — copy the declaration verbatim, never paraphrase it")
 
                 # 1 — quote verification, wherever the source text is reachable.
-                # COMMENTARY quotes come from this page's own body, so they are
-                # always checkable. RESEARCH quotes come from an abstract, which
-                # the gate can only see when the paper is in the local cabinet.
+                # A COMMENTARY source whose citation IS this page (the ordinary
+                # case) has quotes from the page's own body, so they are always
+                # checkable. RESEARCH quotes come from an abstract, which the
+                # gate can only see when the paper is in the local cabinet — and
+                # a COMMENTARY source citing a DIFFERENT, externally-authored
+                # article is the same situation: unverifiable here, not wrong.
                 quotes = [q for q in (
                     [(s.get("s_design") or {}).get("evidence_quote")]
                     + [d.get("evidence_quote") for d in ((s.get("q_method") or {}).get("domains") or [])]
                     + [c.get("evidence_quote") for c in (s.get("commentary_checklist") or [])]
                     + [p.get("evidence_quote") for p in (s.get("penalties") or [])]
                 ) if q and q not in section_quotes]
-                haystack = des_source_text(s, doc) if quotes else None
+                haystack = des_source_text(s, doc, page_title=title) if quotes else None
                 if haystack is None:
                     rep.skip("4.13 DES", f"{tag} quotes not checkable (source text not in the repo)")
                 else:
