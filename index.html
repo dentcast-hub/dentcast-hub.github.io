@@ -4265,7 +4265,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۹۳<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۹۴<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4690,9 +4690,9 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <p class="dc-rail-title">پست و کور یک‌مرحله‌ای؛ وقتی «عدم تطابق» به نفع درمان تمام می‌شود</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-33.html">
+        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-34.html">
           <span class="dc-type-chip t-chair">Chairside</span>
-          <p class="dc-rail-title">چالش‌های توزیع فضا و بیومکانیک در حضور عفونت فعال اپیکال</p>
+          <p class="dc-rail-title">آیا واقعاً می‌توانیم شکایت اصلی بیمار را بهتر کنیم؟</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="dentai" href="/dentai/dentai-29.html">
@@ -4734,10 +4734,10 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک کیس <a href="/chairside/chairside-34.html">Chairside</a> با عنوانِ «آیا واقعاً می‌توانیم شکایت اصلی بیمار را بهتر کنیم؟» منتشر شد · ۲۷ مرداد</li>
           <li>یک قسمتِ تازه از <a href="/dentai/promptologist/prompt5-1.html">پرامپتولوژیست</a> با عنوانِ «خطِ تقسیم» منتشر شد · ۲۶ مرداد</li>
           <li>یک <a href="/dentcast-plus/video-7.html">ویدیوی دنت‌کست پلاس</a> با عنوانِ «راه حل خارج کردن پست و  کور  با فیت زیاد از داخل دندان» منتشر شد · ۲۵ مرداد</li>
           <li>یک <a href="/insight/insight-65.html">اینسایت بالینی</a> با عنوانِ «چرا بعد هر بار سمان مجدد اکلوژن رو چک میکنم؟» منتشر شد · ۲۵ مرداد</li>
-          <li>یک <a href="/dentai/dentai-29.html">مقاله‌ی DentAI</a> با عنوانِ «نکاتی در مورد خط تراش و دقت اسکنر داخل دهانی» منتشر شد · ۲۵ مرداد</li>
         </ul>
       </div>
 
@@ -5510,7 +5510,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=6019630b9f',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=fbeeb44fbe',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -5857,7 +5857,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=6019630b9f';
+  const FEED_URL='/dentcast-brain.json?v=fbeeb44fbe';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -6113,7 +6113,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=6019630b9f', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=fbeeb44fbe', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
