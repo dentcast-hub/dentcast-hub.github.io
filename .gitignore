@@ -21,3 +21,8 @@ node_modules/
 # scripts-dev/*.png above: the work these produce lands in the site or in a
 # published Artifact, so the scratch copies are disposable and never committed.
 tmp/
+
+# deploy.sh's registry address. Not a secret in itself, but it names the
+# account's private registry namespace and belongs to whoever is deploying,
+# not to the repo.
+plus-api/.deploy.env

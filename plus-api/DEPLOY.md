@@ -69,6 +69,22 @@ Migrations run automatically on container start (the image's entrypoint runs
 
 ## 4. Deploy the API container
 
+**`./plus-api/deploy.sh` does everything in this section up to the registry** —
+preflight, the build with its arguments, the push — and stops there, because the
+tag is changed in the ArvanCloud panel by a person and no script should be able
+to deploy to production on its own. One-time setup:
+
+```bash
+echo 'DENTCAST_REGISTRY=registry.arvancloud.ir/<namespace>/dentcast-plus-api' \
+  > plus-api/.deploy.env      # gitignored; from the panel's Container Registry page
+docker login registry.arvancloud.ir
+```
+
+Then, per release: `./plus-api/deploy.sh` (it reads the live tag off `/health`
+and builds the next one), change the tag in the panel, and
+`./plus-api/deploy.sh --verify vNN`. The rest of this section is what the script
+does and why — read it when something goes wrong, or when deploying by hand.
+
 The image is defined in `plus-api/Dockerfile`. **Build context = repo root**
 (the image bakes in `plus/content-index.json` for the dashboard tree and
 `plus/pathways.json` for the learning pathways):
@@ -76,8 +92,17 @@ The image is defined in `plus-api/Dockerfile`. **Build context = repo root**
 ```bash
 # from the repo root. TAG is the registry tag you are about to push (v46, ...).
 TAG=v46
-docker build -f plus-api/Dockerfile -t dentcast-plus-api:$TAG   --build-arg BUILD_TAG=$TAG   --build-arg GIT_SHA=$(git rev-parse --short HEAD)   --build-arg BUILT_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)   .
+docker build --platform linux/amd64 -f plus-api/Dockerfile -t dentcast-plus-api:$TAG   --build-arg BUILD_TAG=$TAG   --build-arg GIT_SHA=$(git rev-parse --short HEAD)   --build-arg BUILT_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)   .
 ```
+
+**`--platform linux/amd64` is not optional on an Apple Silicon machine.** Docker
+otherwise builds an arm64 image, the registry accepts it, and the container then
+crash-loops on Arvan's amd64 hosts — with nothing in the logs that names the
+architecture as the cause. On an amd64 machine the flag costs nothing.
+
+**Never reuse a tag.** The registry accepts the overwrite, but the panel sees the
+string it is already running and has no reason to pull, so the deploy silently
+does nothing while `/health` keeps honestly reporting the old build.
 
 **Always pass the three build args.** They are what `GET /health` reports back:
 
