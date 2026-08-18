@@ -1416,7 +1416,11 @@ html.dcp-touring #mobile-body { overflow: hidden; }
   margin-top:1rem;
 }
 .dc-th-gate p{ margin:0 0 .625rem; font-size:.9rem; color:var(--txt2, #4a5f85); }
-.dc-th-cta{
+/* Scoped under .dc-threads (two classes), not just `.dc-th-cta` (one) — dc-theme.css's
+   "content area links" rule (`body:has(.dc-topbar) main a`) outranks a single class on
+   specificity alone and was repainting this button's white text the same blue as its
+   own background, so the CTA read as a blank pill (2026-08-19). */
+.dc-threads .dc-th-cta{
   display:inline-block;
   background:var(--ac, #0b5fff);
   color:var(--txt-inv, #fff);

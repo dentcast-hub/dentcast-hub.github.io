@@ -2,24 +2,24 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=17';
-import { currentUser, api } from './js/api.js?v=17';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=17';
-import { openCollectionPicker } from './js/collections.js?v=17';
-import { el } from './js/util.js?v=17';
-import { initHomeCard } from './js/home-card.js?v=17';
-import { initHomeFeatures } from './js/home-features.js?v=17';
-import { initHomeBundles } from './js/home-bundles.js?v=17';
-import { initHomeUpboard } from './js/home-upboard.js?v=17';
-import { initDesTool } from './js/des-scorer.js?v=17';
-import { initHeader } from './js/header.js?v=17';
-import { initTourAutostart } from './js/tour.js?v=17';
-import { initReadingTracker } from './js/reading.js?v=17';
-import { initListeningTracker } from './js/listening.js?v=17';
-import { initShareScoring, buildShareButton } from './js/share.js?v=17';
-import { initHeart, buildHeartChip } from './js/votes.js?v=17';
-import { mountArticleThreads } from './js/article-threads.js?v=17';
-import { mountDes } from './js/des.js?v=17';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=18';
+import { currentUser, api } from './js/api.js?v=18';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=18';
+import { openCollectionPicker } from './js/collections.js?v=18';
+import { el } from './js/util.js?v=18';
+import { initHomeCard } from './js/home-card.js?v=18';
+import { initHomeFeatures } from './js/home-features.js?v=18';
+import { initHomeBundles } from './js/home-bundles.js?v=18';
+import { initHomeUpboard } from './js/home-upboard.js?v=18';
+import { initDesTool } from './js/des-scorer.js?v=18';
+import { initHeader } from './js/header.js?v=18';
+import { initTourAutostart } from './js/tour.js?v=18';
+import { initReadingTracker } from './js/reading.js?v=18';
+import { initListeningTracker } from './js/listening.js?v=18';
+import { initShareScoring, buildShareButton } from './js/share.js?v=18';
+import { initHeart, buildHeartChip } from './js/votes.js?v=18';
+import { mountArticleThreads } from './js/article-threads.js?v=18';
+import { mountDes } from './js/des.js?v=18';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -29,7 +29,7 @@ import { mountDes } from './js/des.js?v=17';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=17').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=18').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -296,15 +296,16 @@ async function initArticle() {
   const { wb, updateBtn } = await setupWorkbench({
     proseRoot, proseAnchor: findProseBox(), contentId, shareTarget,
   });
-  // گفت‌وگوی زیر مطلب, under the prose. Draws itself lazily and removes itself
-  // when there is nothing published and this reader cannot write.
+  // گفت‌وگوی زیر مطلب, under the prose. Draws itself lazily, always visible now
+  // (2026-08-19) — only the write side stays gated, and only on request.
   // findProseEnd, not findProseBox: the conversation goes UNDER the article.
   // On the 26 legacy NoteCast pages the body is a row of sibling boxes, and
   // anchoring on the first one put the block after section 1 of 8 — nobody
   // talks about a piece halfway through reading it (user report, 2026-08-12).
   mountArticleThreads(findProseEnd() || proseRoot, contentId);
-  // ارزیابی شواهد, above that conversation. Draws only if this content_id has a
-  // record in plus/des-scores.json — no record, no badge, no apology on screen.
+  // ارزیابی شواهد, under that conversation (flipped 2026-08-19; used to lead).
+  // Draws only if this content_id has a record in plus/des-scores.json — no
+  // record, no badge, no apology on screen.
   mountDesHere(findProseEnd() || proseRoot, contentId);
 
   // Post-login return-to-study (the funnel) or a remembered choice this session.
@@ -391,7 +392,7 @@ async function mountArticleWorkbench(root, url) {
   });
   desktopWb = wb;
   mountArticleThreads(findProseEnd(root) || proseRoot, contentId); // under the article, not after its first box
-  mountDesHere(findProseEnd(root) || proseRoot, contentId, root);  // the score, above that conversation
+  mountDesHere(findProseEnd(root) || proseRoot, contentId, root);  // the score, under that conversation
   const hlId = query ? new URLSearchParams(query).get('dcphl') : null;
   if (hlId && await currentUser()) await openDeepLinkedHighlight(wb, updateBtn, hlId);
 }
