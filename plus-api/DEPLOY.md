@@ -72,7 +72,16 @@ Migrations run automatically on container start (the image's entrypoint runs
 **`./plus-api/deploy.sh` does everything in this section up to the registry** —
 preflight, the build with its arguments, the push — and stops there, because the
 tag is changed in the ArvanCloud panel by a person and no script should be able
-to deploy to production on its own. One-time setup:
+to deploy to production on its own.
+
+**On Windows use `plus-api\deploy.ps1`**, which is the same script in PowerShell
+and takes the same options (`-Tag`, `-DryRun`, `-Verify`). It is not a
+convenience: PowerShell cannot execute a `.sh` file at all, and typing `bash`
+there resolves to **WSL's** bash rather than Git Bash — which, with no distro
+installed, fails with `execvpe(/bin/bash) failed`, an error that names neither
+problem. Keep the two in step when either changes.
+
+One-time setup:
 
 ```bash
 echo 'DENTCAST_REGISTRY=<registry address, no :tag>' > plus-api/.deploy.env  # gitignored
@@ -90,8 +99,10 @@ provably working, rather than one assembled from the docs.
 
 Then, per release: `./plus-api/deploy.sh` (it reads the live tag off `/health`
 and builds the next one), change the tag in the panel, and
-`./plus-api/deploy.sh --verify vNN`. The rest of this section is what the script
-does and why — read it when something goes wrong, or when deploying by hand.
+`./plus-api/deploy.sh --verify vNN` — or on Windows, `.\plus-api\deploy.ps1`
+and `.\plus-api\deploy.ps1 -Verify vNN`. The rest of this section is what the
+script does and why — read it when something goes wrong, or when deploying by
+hand.
 
 The image is defined in `plus-api/Dockerfile`. **Build context = repo root**
 (the image bakes in `plus/content-index.json` for the dashboard tree and
