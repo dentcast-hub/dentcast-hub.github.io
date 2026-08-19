@@ -118,9 +118,6 @@ export interface Ticket {
   created_at: Date;
   /** The article this thread hangs under; null for a support-page ticket. */
   content_id: string | null;
-  /** Published to everyone by the founder. Never true unless somebody decided it. */
-  is_public: boolean;
-  made_public_at: Date | null;
   /**
    * The reader ticked «عکسی دارم که برای این درخواست می‌فرستم» — a claim they
    * made, not a derived fact (same kind of column as `status`). Lets the admin
@@ -135,11 +132,21 @@ export interface TicketMessage {
   author: TicketAuthor;
   body: string;
   created_at: Date;
+  /**
+   * Published to everyone by the founder — MESSAGE by message, never the
+   * whole thread at once. A reader's remark and the founder's reply are two
+   * rows, and one of them being fit for the page says nothing about the
+   * other.
+   */
+  is_public: boolean;
+  made_public_at: Date | null;
 }
 
 const TICKET_COLUMNS =
   'id, user_id, reference, kind, subject, status, closed_at, created_at, '
-  + 'content_id, is_public, made_public_at, has_photo';
+  + 'content_id, has_photo';
+
+const MESSAGE_COLUMNS = 'id, ticket_id, author, body, created_at, is_public, made_public_at';
 
 /** What a reader's own surfaces call this kind — falls back to the raw key. */
 export const kindTitle = (kind: string): string => TICKET_KINDS[kind]?.title_fa ?? kind;
@@ -323,25 +330,44 @@ export async function commentOnArticle(input: {
 }
 
 /**
- * Publish a thread, or take it back.
+ * Publish one message, or take it back.
  *
- * The founder's switch, and the only thing that ever makes a reader's words
- * visible to anyone else. Unpublishing is a real path rather than a nicety: a
- * thread published in the morning may need to stop being public at noon, and
- * "delete it and ask them to write it again" is not a remedy.
+ * The founder's switch, and the only thing that ever makes a reader's words —
+ * or the founder's own reply — visible to anyone else. Scoped to ONE message,
+ * not the thread it lives in: a reader's remark and the founder's answer are
+ * two rows, and deciding one of them is fit for the page says nothing about
+ * the other (0048 — a thread-level switch published a private aside in the
+ * same motion as the reply it was meant to expose, in production).
+ * Unpublishing is a real path rather than a nicety: a message published in
+ * the morning may need to stop being public at noon, and "delete it and ask
+ * them to write it again" is not a remedy.
  *
- * `made_public_at` is kept because it is NOT derivable from anything — it is a
- * decision's own timestamp, the same reason `closed_at` exists.
+ * Scoped to an article thread the same way the old thread-level switch was
+ * (`content_id is not null`) — a support-page ticket has no page to appear
+ * on, so its messages can never be published.
+ *
+ * `made_public_at` is kept because it is NOT derivable from anything — it is
+ * a decision's own timestamp, the same reason `closed_at` exists.
  */
-export async function setThreadPublic(ticketId: string, isPublic: boolean): Promise<Ticket | null> {
-  return one<Ticket>(
-    `update support_tickets
+export async function setMessagePublic(
+  messageId: string, isPublic: boolean,
+): Promise<{ message: TicketMessage; ticket: Ticket } | null> {
+  const message = await one<TicketMessage>(
+    `update ticket_messages m
         set is_public = $2,
             made_public_at = case when $2 then coalesce(made_public_at, now()) else null end
-      where id = $1 and content_id is not null
-      returning ${TICKET_COLUMNS}`,
-    [ticketId, isPublic],
+       where m.id = $1
+         and exists (
+           select 1 from support_tickets t
+            where t.id = m.ticket_id and t.content_id is not null
+         )
+       returning ${MESSAGE_COLUMNS}`,
+    [messageId, isPublic],
   );
+  if (!message) return null;
+  const ticket = await getTicket(message.ticket_id);
+  if (!ticket) return null; // unreachable (FK), but keeps the return type honest
+  return { message, ticket };
 }
 
 export interface PublicThread {
@@ -353,9 +379,11 @@ export interface PublicThread {
 }
 
 /**
- * Every published thread under one page — the ONLY read path in this service
- * that answers without a session, because a published thread is part of the
- * page now.
+ * Every published MESSAGE under one page, grouped back into the thread it
+ * belongs to — the ONLY read path in this service that answers without a
+ * session, because a published message is part of the page now. A thread
+ * with three messages and one published shows that one message, not the
+ * other two: publishing is per message, so reading is too.
  *
  * The author is their `display_name`, which defaults to a generated Persian
  * pseudonym (services/pseudonym.ts). That is what makes publishing safe to offer
@@ -364,16 +392,16 @@ export interface PublicThread {
  */
 export async function publicThreadsFor(contentId: string): Promise<PublicThread[]> {
   const r = await query<{
-    id: string; content_id: string; author_name: string | null; made_public_at: Date | null;
-    author: TicketAuthor; body: string; created_at: Date;
+    id: string; content_id: string; author_name: string | null;
+    author: TicketAuthor; body: string; created_at: Date; made_public_at: Date | null;
   }>(
-    `select t.id, t.content_id, p.display_name as author_name, t.made_public_at,
-            m.author, m.body, m.created_at
-       from support_tickets t
+    `select t.id, t.content_id, p.display_name as author_name,
+            m.author, m.body, m.created_at, m.made_public_at
+       from ticket_messages m
+       join support_tickets t on t.id = m.ticket_id
        join profiles p on p.id = t.user_id
-       join ticket_messages m on m.ticket_id = t.id
-      where t.content_id = $1 and t.is_public
-      order by t.made_public_at asc, t.id, m.created_at, m.id`,
+      where t.content_id = $1 and m.is_public
+      order by m.made_public_at asc, t.id, m.created_at, m.id`,
     [contentId],
   );
   const out = new Map<string, PublicThread>();
@@ -388,6 +416,12 @@ export async function publicThreadsFor(contentId: string): Promise<PublicThread[
         messages: [],
       };
       out.set(row.id, thread);
+    }
+    // The thread's own made_public_at is its EARLIEST public message — later
+    // published messages don't move it, so a thread's position in the list
+    // (ordered by made_public_at above) stays put once it first appears.
+    if (row.made_public_at && (!thread.made_public_at || row.made_public_at < thread.made_public_at)) {
+      thread.made_public_at = row.made_public_at;
     }
     thread.messages.push({ author: row.author, body: row.body, created_at: row.created_at });
   }
@@ -430,7 +464,7 @@ export async function addMessage(input: {
 
   const row = (await one<TicketMessage>(
     `insert into ticket_messages (ticket_id, author, body) values ($1, $2, $3)
-     returning id, ticket_id, author, body, created_at`,
+     returning ${MESSAGE_COLUMNS}`,
     [ticket.id, input.author, body],
   ))!;
 
@@ -464,7 +498,7 @@ export async function ticketByReference(reference: string): Promise<Ticket | nul
 
 export async function messagesOf(ticketId: string): Promise<TicketMessage[]> {
   const r = await query<TicketMessage>(
-    `select id, ticket_id, author, body, created_at from ticket_messages
+    `select ${MESSAGE_COLUMNS} from ticket_messages
       where ticket_id = $1 order by created_at, id`,
     [ticketId],
   );
@@ -479,6 +513,12 @@ export interface TicketSummary extends Ticket {
   last_excerpt: string;
   /** Whose turn it is — derived from who wrote last, never stored. */
   awaiting: TicketAuthor;
+  /**
+   * Whether ANY message in this thread is public — a summary of message-level
+   * `is_public` flags, for the admin queue's «عمومی» pill. Never a thread-level
+   * decision of its own; the founder's actual switch lives per message.
+   */
+  has_public_message: boolean;
 }
 
 /**
@@ -490,14 +530,16 @@ export interface TicketSummary extends Ticket {
  */
 const SUMMARY_SELECT = `
   select t.id, t.user_id, t.reference, t.kind, t.subject, t.status, t.closed_at, t.created_at,
-         t.content_id, t.is_public, t.made_public_at, t.has_photo,
-         m.n::int as message_count, m.last_at, m.last_author, m.last_excerpt
+         t.content_id, t.has_photo,
+         m.n::int as message_count, m.last_at, m.last_author, m.last_excerpt,
+         m.has_public as has_public_message
     from support_tickets t
     join lateral (
       select count(*) as n,
              max(created_at) as last_at,
              (array_agg(author order by created_at desc, id desc))[1] as last_author,
-             (array_agg(body   order by created_at desc, id desc))[1] as last_excerpt
+             (array_agg(body   order by created_at desc, id desc))[1] as last_excerpt,
+             bool_or(is_public) as has_public
         from ticket_messages where ticket_id = t.id
     ) m on true
 `;

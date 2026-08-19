@@ -19,16 +19,24 @@
 // stripped out. mountArticleThreads() is exported for that second case, because
 // a feature that quietly works on phones and not on desktop is the exact gap
 // buildShareButton() was written to close.
-import { api, currentUser } from './api.js?v=18';
-import { el, faNum, icon } from './util.js?v=18';
+import { api, currentUser } from './api.js?v=19';
+import { el, faNum, icon } from './util.js?v=19';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' });
 const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } catch (_) { return ''; } };
 
-function bubble(m, authorName) {
+// `showStatus`: only the reader's OWN thread needs to say which of their
+// messages are public — a message in the public list (`publicThread` below)
+// is public by definition, saying so again would be noise. Publishing is per
+// MESSAGE, not per thread (0048): the reader's question and the founder's
+// reply are two separate decisions, and a mixed thread is the normal case,
+// not an edge one.
+function bubble(m, authorName, showStatus) {
   const mine = m.author === 'founder';
+  const who = (mine ? 'دکتر شهابیان' : authorName) + ' · ' + when(m.created_at)
+    + (showStatus ? (m.is_public ? ' · عمومی' : ' · خصوصی') : '');
   return el('div', { class: 'dc-th-msg' + (mine ? ' dc-th-msg-founder' : '') }, [
-    el('div', { class: 'dc-th-who' }, (mine ? 'دکتر شهابیان' : authorName) + ' · ' + when(m.created_at)),
+    el('div', { class: 'dc-th-who' }, who),
     el('div', { class: 'dc-th-body' }, m.body),
   ]);
 }
@@ -125,12 +133,14 @@ async function draw(host, contentId) {
   }
 
   // The reader's own thread, shown only to them. Drawn after the public ones so
-  // the page reads the same for everybody down to this point.
+  // the page reads the same for everybody down to this point. The header is a
+  // fixed label now, not a public/private state — that state is per MESSAGE
+  // (each bubble says so itself via `showStatus`), and a thread with some
+  // public and some private messages is the normal case, not an edge one.
   if (mine.thread) {
     parts.push(el('div', { class: 'dc-th-mine' }, [
-      el('div', { class: 'dc-th-mine-head' },
-        mine.thread.is_public ? 'گفت‌وگوی شما (عمومی شده)' : 'گفت‌وگوی خصوصی شما'),
-      ...mine.messages.map((m) => bubble(m, 'شما')),
+      el('div', { class: 'dc-th-mine-head' }, 'گفت‌وگوی شما'),
+      ...mine.messages.map((m) => bubble(m, 'شما', true)),
     ]));
   }
 

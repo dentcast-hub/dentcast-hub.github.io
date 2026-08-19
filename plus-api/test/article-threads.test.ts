@@ -5,8 +5,10 @@
 //   writing is premium-only (here that gate is simply right — nobody needs to
 //   comment in order to become a subscriber, unlike the support kinds),
 //   PRIVATE IS THE DEFAULT and publishing is a decision nothing else can make,
+//   publishing is PER MESSAGE, not per thread (0048) — a mixed thread with
+//   some public and some private messages is the normal case,
 //   one reader + one page = ONE conversation, never N parallel threads,
-//   a published thread is readable with NO session at all, and
+//   a published message is readable with NO session at all, and
 //   unpublishing really takes it back.
 import { describe, it, expect, beforeEach, afterAll } from 'vitest';
 import type { FastifyInstance } from 'fastify';
@@ -47,6 +49,20 @@ function comment(body: string, c = cookie, content_id = CONTENT) {
 
 const publicThreads = (content_id = CONTENT) =>
   app.inject({ method: 'GET', url: `/threads/public?content_id=${encodeURIComponent(content_id)}` });
+
+async function messageIds(ticketId: string): Promise<string[]> {
+  const r = await pool.query(
+    'select id from ticket_messages where ticket_id = $1 order by created_at, id', [ticketId],
+  );
+  return r.rows.map((row: { id: string }) => row.id);
+}
+
+function setMessagePublic(messageId: string, isPublic: boolean) {
+  return app.inject({
+    method: 'POST', url: `/admin/support/messages/${messageId}/publish`,
+    headers: { authorization: auth }, payload: { public: isPublic },
+  });
+}
 
 /* ------------------------------------------------------------ who writes -- */
 
@@ -121,7 +137,9 @@ describe('private is the default; publishing is a decision', () => {
   it('shows nothing publicly until the founder says so', async () => {
     cookie = await premium();
     const t = (await comment('این را زیر مطلب نوشتم')).json().ticket;
-    expect(t.is_public).toBe(false);
+    const [msgId] = await messageIds(t.id);
+    const rows = await pool.query('select is_public from ticket_messages where id = $1', [msgId]);
+    expect(rows.rows[0].is_public).toBe(false);
     expect((await publicThreads()).json().threads).toEqual([]);
 
     // Another signed-in premium reader cannot see it either — "private" means
@@ -134,41 +152,62 @@ describe('private is the default; publishing is a decision', () => {
     expect(theirView.json().thread).toBeNull();
   });
 
-  it('publishes on the founder\'s press, with the whole exchange and a pseudonym', async () => {
+  it('publishes ONE message on the founder\'s press, with a pseudonym', async () => {
     cookie = await premium();
     const t = (await comment('سؤالی دارم')).json().ticket;
     await app.inject({
       method: 'POST', url: `/admin/support/${t.id}/reply`, headers: { authorization: auth },
       payload: { body: 'جواب من' },
     });
+    const [, founderMsg] = await messageIds(t.id);
 
-    const pub = await app.inject({
-      method: 'POST', url: `/admin/support/${t.id}/publish`, headers: { authorization: auth },
-      payload: { public: true },
-    });
+    const pub = await setMessagePublic(founderMsg, true);
     expect(pub.statusCode).toBe(200);
-    expect(pub.json().ticket.is_public).toBe(true);
-    expect(pub.json().ticket.made_public_at).toBeTruthy();
+    expect(pub.json().message.is_public).toBe(true);
+    expect(pub.json().message.made_public_at).toBeTruthy();
 
-    // Readable with NO session — a published thread is part of the page now.
+    // Readable with NO session — a published message is part of the page now.
+    // Only the published message appears; the reader's own question stays
+    // private, since it was never told to publish.
     const seen = await publicThreads();
     expect(seen.statusCode).toBe(200);
     expect(seen.json().threads).toHaveLength(1);
     const thread = seen.json().threads[0];
-    expect(thread.messages.map((m: { author: string }) => m.author)).toEqual(['user', 'founder']);
-    expect(thread.messages[0].body).toBe('سؤالی دارم');
+    expect(thread.messages.map((m: { author: string }) => m.author)).toEqual(['founder']);
+    expect(thread.messages[0].body).toBe('جواب من');
     // The display name is a generated Persian pseudonym, never the phone.
     expect(thread.author_name).toBeTruthy();
     expect(thread.author_name).not.toContain(PHONE);
   });
 
+  it('publishes some messages of a thread and keeps others private — the actual ask', async () => {
+    cookie = await premium();
+    const t = (await comment('پیام اول')).json().ticket;
+    await comment('پیام دوم', cookie);
+    const [first, second] = await messageIds(t.id);
+
+    // Only the second message is published.
+    await setMessagePublic(second, true);
+
+    const seen = (await publicThreads()).json().threads;
+    expect(seen).toHaveLength(1);
+    expect(seen[0].messages.map((m: { body: string }) => m.body)).toEqual(['پیام دوم']);
+
+    // The first message is still private: absent from the public read, but
+    // still there for the reader's own view and the founder's queue.
+    const firstRow = await pool.query('select is_public from ticket_messages where id = $1', [first]);
+    expect(firstRow.rows[0].is_public).toBe(false);
+    const mine = await app.inject({
+      method: 'GET', url: `/threads/mine?content_id=${encodeURIComponent(CONTENT)}`, headers: { cookie },
+    });
+    expect(mine.json().messages).toHaveLength(2);
+  });
+
   it('tells the reader their words went public', async () => {
     cookie = await premium();
     const t = (await comment('نظر من')).json().ticket;
-    await app.inject({
-      method: 'POST', url: `/admin/support/${t.id}/publish`, headers: { authorization: auth },
-      payload: { public: true },
-    });
+    const [msgId] = await messageIds(t.id);
+    await setMessagePublic(msgId, true);
     const notices = await app.inject({ method: 'GET', url: '/notices', headers: { cookie } });
     expect(JSON.stringify(notices.json())).toContain('عمومی شد');
   });
@@ -176,47 +215,47 @@ describe('private is the default; publishing is a decision', () => {
   it('really takes it back', async () => {
     cookie = await premium();
     const t = (await comment('نظر من')).json().ticket;
-    const pubUrl = `/admin/support/${t.id}/publish`;
-    await app.inject({ method: 'POST', url: pubUrl, headers: { authorization: auth }, payload: { public: true } });
+    const [msgId] = await messageIds(t.id);
+    await setMessagePublic(msgId, true);
     expect((await publicThreads()).json().threads).toHaveLength(1);
 
-    await app.inject({ method: 'POST', url: pubUrl, headers: { authorization: auth }, payload: { public: false } });
+    await setMessagePublic(msgId, false);
     expect((await publicThreads()).json().threads).toEqual([]);
-    const row = await pool.query('select is_public, made_public_at from support_tickets where id = $1', [t.id]);
+    const row = await pool.query('select is_public, made_public_at from ticket_messages where id = $1', [msgId]);
     expect(row.rows[0].is_public).toBe(false);
     expect(row.rows[0].made_public_at).toBeNull();
   });
 
-  it('refuses to publish a support ticket — it has no page to appear on', async () => {
+  it('refuses to publish a support-ticket message — it has no page to appear on', async () => {
     const t = (await app.inject({
       method: 'POST', url: '/support/tickets', headers: { cookie },
       payload: { kind: 'bug', subject: 'یک مشکل', body: 'توضیح' },
     })).json().ticket;
-    const r = await app.inject({
-      method: 'POST', url: `/admin/support/${t.id}/publish`, headers: { authorization: auth },
-      payload: { public: true },
-    });
+    const [msgId] = await messageIds(t.id);
+    const r = await setMessagePublic(msgId, true);
     expect(r.statusCode).toBe(404);
-    expect(r.json().error).toBe('not_an_article_thread');
+    expect(r.json().error).toBe('not_a_publishable_message');
   });
 
   it('stays private on an omitted `public` field — no fail-open', async () => {
     cookie = await premium();
     const t = (await comment('نظر من')).json().ticket;
+    const [msgId] = await messageIds(t.id);
     const r = await app.inject({
-      method: 'POST', url: `/admin/support/${t.id}/publish`, headers: { authorization: auth },
+      method: 'POST', url: `/admin/support/messages/${msgId}/publish`, headers: { authorization: auth },
       payload: {},
     });
     expect(r.statusCode).toBe(200);
-    expect(r.json().ticket.is_public).toBe(false);
+    expect(r.json().message.is_public).toBe(false);
     expect((await publicThreads()).json().threads).toEqual([]);
   });
 
   it('keeps the switch behind admin auth', async () => {
     cookie = await premium();
     const t = (await comment('نظر')).json().ticket;
+    const [msgId] = await messageIds(t.id);
     const r = await app.inject({
-      method: 'POST', url: `/admin/support/${t.id}/publish`, payload: { public: true },
+      method: 'POST', url: `/admin/support/messages/${msgId}/publish`, payload: { public: true },
     });
     expect(r.statusCode).toBe(401);
     expect((await publicThreads()).json().threads).toEqual([]);

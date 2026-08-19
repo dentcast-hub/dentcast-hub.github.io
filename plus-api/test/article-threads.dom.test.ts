@@ -146,17 +146,24 @@ describe('the reader is told before they write, not after', () => {
     expect(note.textContent).toContain('خصوصی');
   });
 
-  it('shows a premium reader their own private thread, marked as private', async () => {
+  it('shows a premium reader their own thread, each message marked public or private', async () => {
     user = { tier: 'premium' };
     mineImpl = () => Promise.resolve({
-      thread: { id: 't9', content_id: 'notecast/n-1', is_public: false },
-      messages: [msg('user', 'حرف خودم')],
+      thread: { id: 't9', content_id: 'notecast/n-1' },
+      messages: [
+        { ...msg('user', 'حرف خودم'), is_public: false },
+        { ...msg('founder', 'جواب عمومی‌شده'), is_public: true },
+      ],
     });
     mountArticleThreads(anchor(), 'notecast/n-1');
     await settle();
     const mine = document.querySelector('.dc-th-mine')!;
     expect(mine.textContent).toContain('خصوصی');
     expect(mine.textContent).toContain('حرف خودم');
+    // Publishing is per message — the founder's reply can be public while the
+    // reader's own line, in the same thread, stays private (0048).
+    expect(mine.textContent).toContain('عمومی');
+    expect(mine.textContent).toContain('جواب عمومی‌شده');
   });
 
   it('sends the comment and refuses an empty one', async () => {

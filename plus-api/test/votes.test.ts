@@ -353,7 +353,7 @@ describe('GET /votes/board', () => {
       await loginAs(app, '09120000002');
       const t = await comment('09120000001', ART);
       await comment('09120000002', OTHER);
-      await pool.query('update support_tickets set is_public = true where id = $1', [t]);
+      await pool.query('update ticket_messages set is_public = true where ticket_id = $1', [t]);
 
       const b = await board();
       expect(find(b, ART).score).toBe(find(b, OTHER).score);
