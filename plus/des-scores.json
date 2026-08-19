@@ -12417,5 +12417,198 @@
         "interpretation_fa": "این مرور سیستماتیک و متاآنالیز روی ۶ مطالعه بالینی (عمدتاً غیر تصادفی‌سازی‌شده) با پروتکل ثبت‌شده در PROSPERO انجام شده و جست‌وجوی دیتابیس و ارزیابی ریسک بایاس با دو ارزیاب مستقل به‌طور کامل توصیف شده‌اند. اما ارزیابی publication bias در متن ذکر نشده و پیگیری بیشتر مطالعات کوتاه‌مدت بوده، دو نقطه‌ضعفی که اعتبار یافته‌های بقا و موفقیت را محدود می‌کند بدون آنکه آن‌ها را بی‌اعتبار کند."
       }
     ]
+  },
+  "sharehub/share-16": {
+    "scored_at": "2026-08-19",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Tirzepatide Once Weekly for the Treatment of Obesity",
+          "authors": "Jastreboff AM, Aronne LJ, Ahmad NN, et al.",
+          "year": 2022,
+          "journal": "The New England Journal of Medicine",
+          "doi": "10.1056/NEJMoa2206038"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "phase 3 double-blind randomized placebo-controlled trial (THERAPY RCT row, 85)",
+          "evidence_quote": "In this phase 3 double-blind, randomized, controlled trial, we assigned 2539 adults"
+        },
+        "q_method": {
+          "tool": "RoB2",
+          "domains": [
+            {
+              "domain": "randomization process",
+              "rating": "some_concerns",
+              "evidence_quote": "in a 1:1:1:1 ratio to receive once-weekly, subcutaneous tirzepatide (5 mg, 10 mg, or 15 mg) or placebo for 72 weeks",
+              "note": "چکیده به نسبت تخصیص و درمان اشاره می‌کند اما روش تولید توالی تصادفی یا پنهان‌سازی تخصیص را توصیف نمی‌کند."
+            },
+            {
+              "domain": "deviations from intended interventions",
+              "rating": "some_concerns",
+              "evidence_quote": "The treatment-regimen estimand assessed effects regardless of treatment discontinuation in the intention-to-treat population.",
+              "note": "استراتژی estimand برای انحراف از پروتکل ذکر شده اما جزئیات پنهان‌سازی درمان یا مداخلات هم‌زمان بیان نشده."
+            },
+            {
+              "domain": "missing outcome data",
+              "rating": "some_concerns",
+              "evidence_quote": "The treatment-regimen estimand assessed effects regardless of treatment discontinuation in the intention-to-treat population.",
+              "note": "جمعیت intention-to-treat و رویکرد estimand به داده‌های ازدست‌رفته اشاره دارد، اما درصد دقیق ازدست‌رفتگی یا روش انتساب گزارش نشده."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "In this phase 3 double-blind, randomized, controlled trial",
+              "note": "دوسوکور بودن کارآزمایی ذکر شده که پنهان‌سازی از ارزیاب را ضمنی می‌کند، اما روش دقیق اندازه‌گیری وزن یا پنهان‌سازی ارزیاب توصیف نشده."
+            },
+            {
+              "domain": "selection of the reported result",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به تطابق نتایج گزارش‌شده با پروتکل ثبت‌شده اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding without independent-analysis statement",
+            "base_points": 8,
+            "points": 7,
+            "evidence_quote": "Supported by Eli Lilly; SURMOUNT-1 ClinicalTrials.gov number, NCT04184622",
+            "note": "تأمین مالی توسط الی‌لیلی، سازنده‌ی خودِ تیرزپاتاید، بدون بیانیه‌ی تحلیل مستقل."
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "SURMOUNT-1 ClinicalTrials.gov number, NCT04184622",
+            "note": "کارآزمایی پیش‌ثبت شده است؛ این بند اعمال نمی‌شود."
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 40,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "امتیاز این منبع ۴۰ از ۱۰۰ و در باند C (شواهد محدود) برای پرسش نوع THERAPY است.",
+        "interpretation_fa": "این کارآزمایی تصادفی فاز ۳ روی تیرزپاتاید برای چاقی است، ولی فقط چکیده در دسترس بوده و تأمین مالی توسط الی‌لیلی، سازنده‌ی خودِ دارو، بدون بیانیه‌ی تحلیل مستقل امتیاز را کاسته. کاهش وزن قابل‌توجه گزارش شده، اما جزئیات پنهان‌سازی تخصیص و گزارش‌دهی انتخابی از چکیده قابل ارزیابی نیست."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Tirzepatide once weekly for the treatment of obesity in people with type 2 diabetes (SURMOUNT-2): a double-blind, randomised, multicentre, placebo-controlled, phase 3 trial",
+          "authors": "Garvey WT, Frias JP, Jastreboff AM, et al.",
+          "year": 2023,
+          "journal": "The Lancet",
+          "doi": "10.1016/S0140-6736(23)01200-X"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "phase 3, double-blind, randomised, placebo-controlled trial (THERAPY RCT row, 85)",
+          "evidence_quote": "This phase 3, double-blind, randomised, placebo-controlled trial was conducted in seven countries."
+        },
+        "q_method": {
+          "tool": "RoB2",
+          "domains": [
+            {
+              "domain": "randomization process",
+              "rating": "low",
+              "evidence_quote": "were randomly assigned (1:1:1), using a computer-generated random sequence via a validated interactive web-response system",
+              "note": ""
+            },
+            {
+              "domain": "deviations from intended interventions",
+              "rating": "low",
+              "evidence_quote": "The treatment-regimen estimand assessed effects regardless of treatment discontinuation or initiation of antihyperglycaemic rescue therapy.",
+              "note": ""
+            },
+            {
+              "domain": "missing outcome data",
+              "rating": "low",
+              "evidence_quote": "Efficacy and safety endpoints were analysed with data from all randomly assigned participants (intention-to-treat population).",
+              "note": ""
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "low",
+              "evidence_quote": "All participants, investigators, and the sponsor were masked to treatment assignment.",
+              "note": ""
+            },
+            {
+              "domain": "selection of the reported result",
+              "rating": "some_concerns",
+              "evidence_quote": "This trial is registered with ClinicalTrials.gov, NCT04657003.",
+              "note": "ثبتِ کارآزمایی و اندپوینت‌های از پیش تعیین‌شده ذکر شده، اما تطابق کامل نتایج گزارش‌شده با پروتکل ثبت‌شده به‌صراحت بیان نشده."
+            }
+          ],
+          "multiplier": 0.75
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding without independent-analysis statement",
+            "base_points": 8,
+            "points": 7,
+            "evidence_quote": "Eli Lilly and Company.",
+            "note": "تأمین مالی توسط الی‌لیلی، سازنده‌ی خودِ تیرزپاتاید، بدون بیانیه‌ی تحلیل مستقل."
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "This trial is registered with ClinicalTrials.gov, NCT04657003.",
+            "note": "کارآزمایی پیش‌ثبت شده است؛ این بند اعمال نمی‌شود."
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 57,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "امتیاز این منبع ۵۷ از ۱۰۰ و در باند C (شواهد محدود) برای پرسش نوع THERAPY است.",
+        "interpretation_fa": "این کارآزمایی تصادفی فاز ۳ روش تصادفی‌سازی و پنهان‌سازی تخصیص را به‌روشنی توصیف کرده و نسبت به SURMOUNT-1 شفاف‌تر است. تأمین مالی توسط الی‌لیلی بدون بیانیه‌ی تحلیل مستقل و محدودیت به چکیده امتیاز نهایی را پایین آورده، هرچند کاهش وزنِ گزارش‌شده در بیماران دیابتی نوع ۲ از نظر بالینی معنادار است."
+      }
+    ]
   }
 }
