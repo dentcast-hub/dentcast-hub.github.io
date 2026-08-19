@@ -2669,7 +2669,10 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   }, async (request, reply) => {
     const { id } = request.params as { id: string };
     const body = (request.body ?? {}) as { public?: boolean };
-    const isPublic = body.public !== false;
+    // Private is the default (migration 0042): an omitted/malformed `public`
+    // must NOT publish. `!== false` used to fail OPEN — a request with no body
+    // (or one where the field silently didn't parse) published the thread.
+    const isPublic = body.public === true;
     const ticket = await setThreadPublic(id, isPublic);
     if (!ticket) return reply.code(404).send({ error: 'not_an_article_thread' });
     // Their words are on a public page now — they hear it from us, not by

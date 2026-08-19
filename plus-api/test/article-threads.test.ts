@@ -200,6 +200,18 @@ describe('private is the default; publishing is a decision', () => {
     expect(r.json().error).toBe('not_an_article_thread');
   });
 
+  it('stays private on an omitted `public` field — no fail-open', async () => {
+    cookie = await premium();
+    const t = (await comment('نظر من')).json().ticket;
+    const r = await app.inject({
+      method: 'POST', url: `/admin/support/${t.id}/publish`, headers: { authorization: auth },
+      payload: {},
+    });
+    expect(r.statusCode).toBe(200);
+    expect(r.json().ticket.is_public).toBe(false);
+    expect((await publicThreads()).json().threads).toEqual([]);
+  });
+
   it('keeps the switch behind admin auth', async () => {
     cookie = await premium();
     const t = (await comment('نظر')).json().ticket;
