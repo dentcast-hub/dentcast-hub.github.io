@@ -1223,7 +1223,7 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v2.3.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v2.4.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
 **v2.2 is the current spec, and its change from 2.1 is `text_basis:

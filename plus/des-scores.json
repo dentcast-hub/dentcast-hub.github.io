@@ -12321,7 +12321,7 @@
     "scored_at": "2026-08-18",
     "sources": [
       {
-        "des_version": "2.2",
+        "des_version": "2.4",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
         "text_basis": "FULL_TEXT",
@@ -12356,9 +12356,9 @@
             },
             {
               "domain": "justification for excluding individual studies",
-              "rating": "some_concerns",
-              "evidence_quote": "3439 were excluded, 9 records were found to be illegible, and 6 studies",
-              "note": "Screening account with counts (PRISMA flow: 5493 identified → 3448 screened → 9 sought for retrieval → 4 excluded) AND explicit inclusion/exclusion criteria are both reported (3b-iii branch 2), but the 4 excluded full-text records are covered by one shared reason rather than an individual reason per study, so the branch-1 'low' bar (a list of excluded studies each with its own reason) is not met."
+              "rating": "low",
+              "evidence_quote": "Four records were excluded with reason",
+              "note": "the four excluded full-text records are individually identified by reference number (9,33-35) and given one specific, checkable shared reason (Fig. 1: \"These articles did not include a comparison between ceramic veneers bonded to different substrates\") — satisfies 3b-iii's low tier per DES v2.4 (a shared reason across individually-cited studies is still \"each with its reason\")"
             },
             {
               "domain": "risk of bias assessment of included studies",
