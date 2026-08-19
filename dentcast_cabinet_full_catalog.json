@@ -137233,9 +137233,51 @@
       "drive_id": "1Yw5mjpHoEkTYo-w8UpD1AdUoSQKkyqmQ",
       "drive_view": "https://drive.google.com/file/d/1Yw5mjpHoEkTYo-w8UpD1AdUoSQKkyqmQ/view",
       "drive_download": "https://drive.google.com/uc?export=download&id=1Yw5mjpHoEkTYo-w8UpD1AdUoSQKkyqmQ"
+    },
+    {
+      "id": "P2896",
+      "title": "HIGHLIGHTS OF PRESCRIBING INFORMATION — ZEPBOUND (tirzepatide)",
+      "file_name": "HIGHLIGHTS-OF-PRESCRIBING INFORMATION _ZEPBOUND.pdf",
+      "topic": "Drug",
+      "topic_path": "Drug",
+      "type": "primary/other",
+      "local_path": "",
+      "file_size": 2012899,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "share-16"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1TQdfO9qDJlt_Pf0PJPnqVLc1zwFegMjS/view",
+      "status": "linked",
+      "tags": [
+        "tirzepatide",
+        "glp-1-receptor-agonist",
+        "zepbound",
+        "mounjaro",
+        "prescribing-information",
+        "pulmonary-aspiration",
+        "gastric-emptying",
+        "hypoglycemia",
+        "topic:drug",
+        "highlights-of-prescribing-information-zepbound"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "display_title": "HIGHLIGHTS OF PRESCRIBING INFORMATION — ZEPBOUND (tirzepatide)",
+      "doi": "",
+      "authors": [
+        "Eli Lilly and Company"
+      ],
+      "journal": "",
+      "crossref_year": null,
+      "abstract": "ZEPBOUND (tirzepatide) injection, for subcutaneous use, Initial U.S. Approval: 2022. Revised 12/2024. Boxed warning: risk of thyroid C-cell tumors observed in rats; human relevance not determined; contraindicated in personal/family history of medullary thyroid carcinoma or MEN 2. Warnings and precautions include severe gastrointestinal adverse reactions, acute kidney injury, acute gallbladder disease, acute pancreatitis, hypersensitivity reactions, hypoglycemia (with insulin or insulin secretagogues), diabetic retinopathy complications, suicidal behavior and ideation, and pulmonary aspiration during general anesthesia or deep sedation. Most common adverse reactions (>=5%): nausea, diarrhea, vomiting, constipation, abdominal pain, dyspepsia, injection site reactions, fatigue, hypersensitivity reactions, eructation, hair loss, gastroesophageal reflux disease. Drug interactions: delays gastric emptying, may impact absorption of concomitant oral medications.",
+      "drive_id": "1TQdfO9qDJlt_Pf0PJPnqVLc1zwFegMjS",
+      "drive_view": "https://drive.google.com/file/d/1TQdfO9qDJlt_Pf0PJPnqVLc1zwFegMjS/view",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1TQdfO9qDJlt_Pf0PJPnqVLc1zwFegMjS"
     }
   ],
-  "drive_matched": 2845,
+  "drive_matched": 2846,
   "drive_match_breakdown": {
     "by_full_path": 2844,
     "by_filename": 0
@@ -137757,5 +137799,5 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2209
+  "total_papers": 2210
 }
