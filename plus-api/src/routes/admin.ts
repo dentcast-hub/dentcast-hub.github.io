@@ -46,7 +46,7 @@ import {
 import { telegramBreakerStatus } from '../providers/notifications/telegram.js';
 import {
   ticketQueue, getTicket, messagesOf, addMessage, closeTicket, reopenTicket,
-  ticketByReference, kindTitle, setThreadPublic, notifyPublished,
+  ticketByReference, kindTitle, setMessagePublic, notifyPublished,
 } from '../services/support.js';
 import { normalizeReference } from '../services/reference.js';
 import {
@@ -857,7 +857,7 @@ function renderHtml(
         + '<div class="tk-h"><b>' + esc(t.subject) + '</b>'
         + '<span class="pill">' + esc(t.kind_title_fa) + '</span>'
         + (t.content_id ? '<span class="pill">' + esc(t.content_id) + '</span>' : '')
-        + (t.is_public ? '<span class="pill hot">عمومی</span>' : '')
+        + (t.has_public_message ? '<span class="pill hot">عمومی</span>' : '')
         + (t.has_photo ? '<span class="pill hot">📎 عکس در راه</span>' : '')
         + '<span class="pill">' + esc(t.reference) + '</span>'
         + (t.status === 'closed' ? '<span class="pill">بسته</span>'
@@ -893,20 +893,26 @@ function renderHtml(
         .then(function (r) { return r.json(); })
         .then(function (j) {
           if (!j.ok) { box.innerHTML = '<div class="muted">پیدا نشد.</div>'; return; }
+          // Only an article thread has a page to appear on, so only it gets a
+          // switch — and it is now PER MESSAGE, not one for the whole thread:
+          // the founder's reply and the reader's own line are two decisions,
+          // never one (0048 — a thread-level switch published a private aside
+          // in the same motion as the reply it was meant to expose).
+          var isArticle = !!j.ticket.content_id;
           var msgs = (j.messages || []).map(function (m) {
+            var pub = isArticle
+              ? '<button type="button" class="pubbtn" data-msg-id="' + esc(m.id) + '" data-act="'
+                + (m.is_public ? 'unpublish">خصوصی کن (الان عمومی است)' : 'publish">عمومی کن')
+                + '</button>'
+              : '';
             return '<div class="msg ' + (m.author === 'founder' ? 'me' : 'them') + '">'
-              + '<div class="muted">' + (m.author === 'founder' ? 'تو' : 'کاربر') + ' · ' + when(m.created_at) + '</div>'
-              + esc(m.body).replace(/\\n/g, '<br>') + '</div>';
+              + '<div class="muted">' + (m.author === 'founder' ? 'تو' : 'کاربر') + ' · ' + when(m.created_at)
+              + (m.is_public ? ' · <b>عمومی</b>' : '') + '</div>'
+              + esc(m.body).replace(/\\n/g, '<br>')
+              + (pub ? '<div class="row">' + pub + '</div>' : '')
+              + '</div>';
           }).join('');
           var closed = j.ticket.status === 'closed';
-          // Only an article thread has a page to appear on, so only it gets the
-          // switch. Private is the default and publishing is a decision — this
-          // button IS that decision.
-          var pub = j.ticket.content_id
-            ? '<div class="row"><button type="button" class="pubbtn" data-act="'
-              + (j.ticket.is_public ? 'unpublish">خصوصی کن (الان عمومی است)' : 'publish">عمومی کن')
-              + '</button></div>'
-            : '';
           box.innerHTML = '<div class="thread">' + msgs + '</div>'
             + (closed
               ? '<button type="button" data-act="reopen">بازکردن دوباره</button>'
@@ -914,7 +920,6 @@ function renderHtml(
                 + '<div class="row"><button type="button" data-act="reply">ارسال پاسخ</button>'
                 + '<button type="button" data-act="reply-close">ارسال و بستن</button>'
                 + '<button type="button" data-act="close">فقط بستن</button></div>')
-            + pub
             + '<div class="tk-out muted"></div>';
         })
         .catch(function () { box.innerHTML = '<div class="muted">خوانده نشد.</div>'; });
@@ -944,8 +949,9 @@ function renderHtml(
       var o = box.querySelector('.tk-out');
       if (act === 'publish' || act === 'unpublish') {
         var going = act === 'publish';
-        if (going && !confirm('این گفت‌وگو زیر همان مطلب برای همه دیده می‌شود و به نویسنده‌اش خبر می‌رسد. مطمئنی؟')) return;
-        fetch('/admin/support/' + id + '/publish', {
+        var msgId = hit.getAttribute('data-msg-id');
+        if (going && !confirm('این پیام زیر همان مطلب برای همه دیده می‌شود؛ بقیه‌ی پیام‌های این گفت‌وگو خصوصی می‌مانند. به نویسنده‌اش خبر می‌رسد. مطمئنی؟')) return;
+        fetch('/admin/support/messages/' + msgId + '/publish', {
           method: 'POST', credentials: 'include',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify({ public: going })
@@ -994,6 +1000,7 @@ function renderHtml(
             last_at: res.j.messages[res.j.messages.length - 1].created_at,
             last_excerpt: res.j.messages[res.j.messages.length - 1].body.slice(0, 160),
             awaiting: res.j.messages[res.j.messages.length - 1].author === 'user' ? 'founder' : 'user',
+            has_public_message: res.j.messages.some(function (m) { return m.is_public; }),
             display_name: res.j.user && res.j.user.display_name,
             phone: res.j.user && res.j.user.phone,
             tier: res.j.user && res.j.user.tier
@@ -2657,25 +2664,31 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ ok: true, message: r.row, ticket });
   });
 
-  // POST /admin/support/:id/publish { public } — the founder's switch, and the
-  // only thing that ever makes a reader's words visible to anybody else. Only an
-  // article thread can be published; a support ticket has no page to appear on,
-  // which the service's `content_id is not null` guard enforces rather than
-  // trusting the caller to pass the right id.
-  app.post('/admin/support/:id/publish', {
+  // POST /admin/support/messages/:messageId/publish { public } — the founder's
+  // switch, and the only thing that ever makes a reader's words (or the
+  // founder's own reply) visible to anybody else. Scoped to ONE message, not
+  // its thread (0048): a thread-level switch published a private aside in the
+  // same motion as the reply it was meant to expose. Only a message inside an
+  // article thread can be published; a support ticket has no page to appear
+  // on, which the service's `content_id is not null` guard enforces rather
+  // than trusting the caller to pass the right id.
+  app.post('/admin/support/messages/:messageId/publish', {
     schema: {
       body: { type: 'object', properties: { public: { type: 'boolean' } } },
     },
   }, async (request, reply) => {
-    const { id } = request.params as { id: string };
+    const { messageId } = request.params as { messageId: string };
     const body = (request.body ?? {}) as { public?: boolean };
-    const isPublic = body.public !== false;
-    const ticket = await setThreadPublic(id, isPublic);
-    if (!ticket) return reply.code(404).send({ error: 'not_an_article_thread' });
+    // Private is the default (migration 0042/0048): an omitted/malformed
+    // `public` must NOT publish. `!== false` used to fail OPEN — a request
+    // with no body (or one where the field silently didn't parse) published.
+    const isPublic = body.public === true;
+    const r = await setMessagePublic(messageId, isPublic);
+    if (!r) return reply.code(404).send({ error: 'not_a_publishable_message' });
     // Their words are on a public page now — they hear it from us, not by
     // stumbling on it. Fire-and-forget: publishing must not fail on a push.
-    if (isPublic) notifyPublished(ticket).catch(() => { /* logged upstream */ });
-    return reply.send({ ok: true, ticket });
+    if (isPublic) notifyPublished(r.ticket).catch(() => { /* logged upstream */ });
+    return reply.send({ ok: true, message: r.message, ticket: r.ticket });
   });
 
   app.post('/admin/support/:id/close', async (request, reply) => {
