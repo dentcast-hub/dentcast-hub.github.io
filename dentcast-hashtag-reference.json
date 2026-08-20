@@ -710,7 +710,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 34,
+   "count": 35,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -745,7 +745,8 @@
     "chairside/chairside-31",
     "chairside/chairside-32",
     "chairside/chairside-33",
-    "chairside/chairside-34"
+    "chairside/chairside-34",
+    "chairside/chairside-35"
    ]
   },
   {
@@ -766,7 +767,7 @@
     "#گزارش_کیس"
    ],
    "co_tags": [],
-   "count": 34,
+   "count": 35,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -801,7 +802,8 @@
     "chairside/chairside-31",
     "chairside/chairside-32",
     "chairside/chairside-33",
-    "chairside/chairside-34"
+    "chairside/chairside-34",
+    "chairside/chairside-35"
    ]
   },
   {
@@ -1498,6 +1500,48 @@
    ]
   },
   {
+   "key": "لمینیت_سرامیکی",
+   "tag": "#لمینیت_سرامیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ونیر/لمینیتِ سرامیکی — رستوریشنِ نازکِ باندشونده‌ی زیبایی.",
+   "use_when": "مقاله لمینیتِ سرامیکی را موضوع داشته باشد.",
+   "aliases": [
+    "ceramic laminate",
+    "لامینیت",
+    "لمینت",
+    "لامینیت سرامیکی",
+    "veneer laminate"
+   ],
+   "variants": [
+    "#لمینیت"
+   ],
+   "co_tags": [
+    "#Laminate_Veneer"
+   ],
+   "count": 18,
+   "content_ids": [
+    "episodes/episode-9",
+    "episodes/episode-19",
+    "episodes/episode-37",
+    "episodes/episode-38",
+    "episodes/episode-39",
+    "episodes/episode-148",
+    "notecast/episode-19",
+    "metanotes/meta-1",
+    "dentai/dentai-10",
+    "chairside/chairside-1",
+    "insight/insight-36",
+    "insight/insight-37",
+    "sharehub/share-6",
+    "sharehub/share-8",
+    "notecast/episode-37",
+    "notecast/episode-38",
+    "chairside/chairside-32",
+    "chairside/chairside-35"
+   ]
+  },
+  {
    "key": "هوش_مصنوعی",
    "tag": "#هوش_مصنوعی",
    "domain": "ai",
@@ -1639,47 +1683,6 @@
     "insight/insight-36",
     "dentai/dentai-27",
     "insight/insight-59"
-   ]
-  },
-  {
-   "key": "لمینیت_سرامیکی",
-   "tag": "#لمینیت_سرامیکی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ونیر/لمینیتِ سرامیکی — رستوریشنِ نازکِ باندشونده‌ی زیبایی.",
-   "use_when": "مقاله لمینیتِ سرامیکی را موضوع داشته باشد.",
-   "aliases": [
-    "ceramic laminate",
-    "لامینیت",
-    "لمینت",
-    "لامینیت سرامیکی",
-    "veneer laminate"
-   ],
-   "variants": [
-    "#لمینیت"
-   ],
-   "co_tags": [
-    "#Laminate_Veneer"
-   ],
-   "count": 17,
-   "content_ids": [
-    "episodes/episode-9",
-    "episodes/episode-19",
-    "episodes/episode-37",
-    "episodes/episode-38",
-    "episodes/episode-39",
-    "episodes/episode-148",
-    "notecast/episode-19",
-    "metanotes/meta-1",
-    "dentai/dentai-10",
-    "chairside/chairside-1",
-    "insight/insight-36",
-    "insight/insight-37",
-    "sharehub/share-6",
-    "sharehub/share-8",
-    "notecast/episode-37",
-    "notecast/episode-38",
-    "chairside/chairside-32"
    ]
   },
   {
@@ -1893,6 +1896,39 @@
    ]
   },
   {
+   "key": "دکتر_شهابیان",
+   "tag": "#دکتر_شهابیان",
+   "domain": "brand",
+   "words": 2,
+   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
+   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
+   "aliases": [
+    "شهابیان",
+    "کانسپت شهابیان",
+    "foad shahabian",
+    "دکتر فواد شهابیان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-148-2",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31",
+    "chairside/chairside-32",
+    "chairside/chairside-33",
+    "chairside/chairside-34",
+    "chairside/chairside-35"
+   ]
+  },
+  {
    "key": "سرامیک_دندانی",
    "tag": "#سرامیک_دندانی",
    "domain": "clinical",
@@ -1986,38 +2022,6 @@
     "dentai/promptologist/prompt4-3",
     "dentai/promptologist/prompt4-4",
     "dentai/promptologist/prompt5-1"
-   ]
-  },
-  {
-   "key": "دکتر_شهابیان",
-   "tag": "#دکتر_شهابیان",
-   "domain": "brand",
-   "words": 2,
-   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
-   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
-   "aliases": [
-    "شهابیان",
-    "کانسپت شهابیان",
-    "foad shahabian",
-    "دکتر فواد شهابیان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-148-2",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30",
-    "chairside/chairside-31",
-    "chairside/chairside-32",
-    "chairside/chairside-33",
-    "chairside/chairside-34"
    ]
   },
   {
@@ -3382,6 +3386,32 @@
    ]
   },
   {
+   "key": "تراش_لمینیت",
+   "tag": "#تراش_لمینیت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "آماده‌سازی دندان برای لمینت — حفظ مینا، فضا، مسیر نشست.",
+   "use_when": "مقاله اصولِ تراش لمینت را بدهد.",
+   "aliases": [
+    "تراش ونیر",
+    "veneer preparation",
+    "پرپ لمینت",
+    "تراش برای لمینت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-37",
+    "episodes/episode-38",
+    "dentai/dentai-10",
+    "sharehub/share-8",
+    "notecast/episode-37",
+    "notecast/episode-38",
+    "chairside/chairside-35"
+   ]
+  },
+  {
    "key": "ترمیم_بیومیمتیک",
    "tag": "#ترمیم_بیومیمتیک",
    "domain": null,
@@ -3854,31 +3884,6 @@
     "notecast/episode-13",
     "insight/insight-18",
     "chairside/chairside-7"
-   ]
-  },
-  {
-   "key": "تراش_لمینیت",
-   "tag": "#تراش_لمینیت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "آماده‌سازی دندان برای لمینت — حفظ مینا، فضا، مسیر نشست.",
-   "use_when": "مقاله اصولِ تراش لمینت را بدهد.",
-   "aliases": [
-    "تراش ونیر",
-    "veneer preparation",
-    "پرپ لمینت",
-    "تراش برای لمینت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-37",
-    "episodes/episode-38",
-    "dentai/dentai-10",
-    "sharehub/share-8",
-    "notecast/episode-37",
-    "notecast/episode-38"
    ]
   },
   {
@@ -4654,6 +4659,32 @@
    ]
   },
   {
+   "key": "حداقل_تهاجم",
+   "tag": "#حداقل_تهاجم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "دندانپزشکیِ کم‌تهاجم (MID) — حفظِ حداکثری ساختار و مداخله‌ی به‌اندازه.",
+   "use_when": "مقاله رویکردِ کم‌تهاجم را مبنا قرار دهد.",
+   "aliases": [
+    "minimal intervention",
+    "MID",
+    "ترمیم کم تهاجمی",
+    "کم تهاجم",
+    "minimally invasive",
+    "دندانپزشکی کم تهاجم"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-134",
+    "episodes/episode-135",
+    "dentai/dentai-2",
+    "episodes/episode-159-1",
+    "chairside/chairside-35"
+   ]
+  },
+  {
    "key": "خطای_لابراتوار",
    "tag": "#خطای_لابراتوار",
    "domain": "clinical",
@@ -5399,31 +5430,6 @@
     "insight/insight-5",
     "chairside/chairside-29",
     "insight/insight-62"
-   ]
-  },
-  {
-   "key": "حداقل_تهاجم",
-   "tag": "#حداقل_تهاجم",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "دندانپزشکیِ کم‌تهاجم (MID) — حفظِ حداکثری ساختار و مداخله‌ی به‌اندازه.",
-   "use_when": "مقاله رویکردِ کم‌تهاجم را مبنا قرار دهد.",
-   "aliases": [
-    "minimal intervention",
-    "MID",
-    "ترمیم کم تهاجمی",
-    "کم تهاجم",
-    "minimally invasive",
-    "دندانپزشکی کم تهاجم"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-134",
-    "episodes/episode-135",
-    "dentai/dentai-2",
-    "episodes/episode-159-1"
    ]
   },
   {
@@ -6325,6 +6331,31 @@
    ]
   },
   {
+   "key": "بلیچینگ",
+   "tag": "#بلیچینگ",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "سفید کردنِ دندان با عواملِ اکسیدکننده.",
+   "use_when": "مقاله بلیچینگ را موضوع یا گزینه‌ی درمان قرار دهد.",
+   "aliases": [
+    "bleaching",
+    "سفید کردن دندان",
+    "whitening",
+    "وایتنینگ",
+    "office bleach",
+    "آفیس بلیچ",
+    "بلیچینگ مطبی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-61",
+    "episodes/episode-70",
+    "chairside/chairside-35"
+   ]
+  },
+  {
    "key": "بیو_رستوریتیو",
    "tag": "#بیو_رستوریتیو",
    "domain": "clinical",
@@ -6674,6 +6705,27 @@
     "episodes/episode-119-1",
     "litecast/lite-CAST12",
     "episodes/episode-160"
+   ]
+  },
+  {
+   "key": "حفظ_مینا",
+   "tag": "#حفظ_مینا",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "باقی گذاشتنِ حداکثریِ مینا برای باندِ پایدار.",
+   "use_when": "مقاله حفظ مینا را اصلِ حاکم بداند.",
+   "aliases": [
+    "enamel preservation",
+    "حفظ انامل",
+    "نگه داشتن مینا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "sharehub/share-8",
+    "notecast/episode-38",
+    "chairside/chairside-35"
    ]
   },
   {
@@ -8880,30 +8932,6 @@
    ]
   },
   {
-   "key": "بلیچینگ",
-   "tag": "#بلیچینگ",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "سفید کردنِ دندان با عواملِ اکسیدکننده.",
-   "use_when": "مقاله بلیچینگ را موضوع یا گزینه‌ی درمان قرار دهد.",
-   "aliases": [
-    "bleaching",
-    "سفید کردن دندان",
-    "whitening",
-    "وایتنینگ",
-    "office bleach",
-    "آفیس بلیچ",
-    "بلیچینگ مطبی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-61",
-    "episodes/episode-70"
-   ]
-  },
-  {
    "key": "بهداشت_پذیری",
    "tag": "#بهداشت_پذیری",
    "domain": "clinical",
@@ -9210,26 +9238,6 @@
    "content_ids": [
     "metanotes/meta-8",
     "chairside/chairside-27"
-   ]
-  },
-  {
-   "key": "حفظ_مینا",
-   "tag": "#حفظ_مینا",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "باقی گذاشتنِ حداکثریِ مینا برای باندِ پایدار.",
-   "use_when": "مقاله حفظ مینا را اصلِ حاکم بداند.",
-   "aliases": [
-    "enamel preservation",
-    "حفظ انامل",
-    "نگه داشتن مینا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "sharehub/share-8",
-    "notecast/episode-38"
    ]
   },
   {
