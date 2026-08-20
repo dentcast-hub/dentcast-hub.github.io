@@ -1,0 +1,257 @@
+===== چیرساید =====
+query: چیرساید
+words: ['چیرساید']
+
+ 1. #چیرساید   score=1.00 specificity=6.6 articles=33
+     -> chairside/chairside-1  تصمیم‌گیری زیبایی در حضور دیاستم قدامی
+
+
+===== کیس بالینی =====
+query: کیس بالینی
+words: ['اینسایت', 'کیس']
+
+ 1. #کیس_بالینی   score=1.00 specificity=12.8 articles=33
+     -> chairside/chairside-1  تصمیم‌گیری زیبایی در حضور دیاستم قدامی
+ 2. #اینسایت   score=1.00 specificity=6.1 articles=84
+     -> episodes/episode-122-1  اینسایت — اسکرو یا سمان و بیماری‌های پری‌ایمپلنت
+ 3. #تفکر_بالینی   score=0.50 specificity=13.2 articles=5
+     -> metanotes/meta-6  Meta Decision Method — چطور تصمیم بگیریم؟
+ 4. #قضاوت_بالینی   score=0.50 specificity=13.2 articles=3
+     -> chairside/chairside-18  وقتی یک یافته‌ی مبهم، دو احتمال رقیب می‌سازد
+
+
+===== دکتر شهابیان =====
+query: دکتر شهابیان
+words: ['دکتر', 'شهابیان']
+
+ 1. #دکتر_شهابیان   score=1.00 specificity=13.7 articles=12
+     -> episodes/episode-148-2  دنتوپدیا — کانسپت شهابیان (Smart Vent Crown)
+ 2. #بهترین_دکتر   score=0.50 specificity=13.3 articles=1
+     -> litecast/lite-CAST11  بهترین دکتر، بهترین متخصص پروتز یا بهترین کلینیک؟ معیار درست
+
+
+===== شکایت اصلی =====
+query: شکایت اصلی
+words: ['اصلی', 'شکایت']
+
+(nothing cleared the 0.5 threshold — falls back to the pillar tree)
+
+
+===== بریج =====
+query: بریج
+words: ['بریج']
+
+ 1. #بریج   score=1.00 specificity=6.4 articles=1
+     -> episodes/episode-119-1  دنتوپدیا — بریج یا ایمپلنت؟ (Bridge vs Implant)
+ 2. #بریج_ثابت   score=0.50 specificity=12.7 articles=1
+     -> litecast/lite-CAST5  دندان مصنوعی متحرک یا ایمپلنت ثابت؟ بهترین انتخاب کدام است؟
+
+
+===== PFM =====
+query: PFM
+words: ['pfm']
+
+ 1. #روکش_PFM   score=0.50 specificity=11.4 articles=3
+     -> episodes/episode-125-1  اینسایت — زیرکونیا یا PFM در ایمپلنت خلفی؟
+
+
+===== کانتور =====
+query: کانتور
+words: ['کانتور']
+
+ 1. #کانتور_محدب   score=0.50 specificity=13.2 articles=1
+     -> insight/insight-32  کانتور مقعر در روکش سرامیکی
+ 2. #کانتور_باکال   score=0.50 specificity=12.8 articles=1
+     -> insight/insight-53  ایراد مکرر طراح‌ها در روکش پره‌مولر بالا که بهتر است از قبل 
+ 3. #کانتور_ترمیم   score=0.50 specificity=11.3 articles=4
+     -> insight/insight-16  مراقبت بیولوژیک در ایمپلنت‌های اسپلینت‌شده
+ 4. #اورکانتور   score=0.50 specificity=11.3 articles=2
+     -> insight/insight-25  وقتی دندان مجاور نیست، روکش بزرگ‌تر به نظر می‌رسد
+
+
+===== لینگوال =====
+query: لینگوال
+words: ['لینگوال']
+
+(nothing cleared the 0.5 threshold — falls back to the pillar tree)
+
+
+===== تعویض پروتز =====
+query: تعویض پروتز
+words: ['تعویض', 'روکش']
+
+ 1. #تعویض_روکش   score=1.00 specificity=11.4 articles=1
+     -> insight/insight-58  ضرورت تعویض روکش‌های قدیمی در دندان‌های پایه پارسیل: بررسی ر
+ 2. #روکش   score=1.00 specificity=4.3 articles=13
+     -> episodes/episode-2  انواع سمان و اصول سمان‌کردن
+ 3. #افتادن_روکش   score=0.50 specificity=11.4 articles=10
+     -> notecast/episode-15  آنلِی‌های سرامیکی — طول عمر، عوامل موفقیت و دلایل شکست
+ 4. #مارجین_روکش   score=0.50 specificity=11.4 articles=5
+     -> insight/insight-32  کانتور مقعر در روکش سرامیکی
+ 5. #روکش_PFM   score=0.50 specificity=11.4 articles=3
+     -> episodes/episode-125-1  اینسایت — زیرکونیا یا PFM در ایمپلنت خلفی؟
+ 6. #روکش_تازه   score=0.50 specificity=11.4 articles=1
+     -> insight/insight-11  درد مبهم و مرزهای مسئولیت در درمان — تشخیص اندو و مدیریت روک
+ 7. #اندیکاسیون_روکش   score=0.50 specificity=11.4 articles=1
+     -> photocast/episode-3  دندان ۶ پایین در زیر ۱۸ سال — چه روکشی و چه زمانی؟
+ 8. #راک_روکش   score=0.50 specificity=11.4 articles=1
+     -> dentcast-plus/video-3  وقتی روکش راک دارد؛ ترتیب بررسی مهم است
+ 9. #ریچموند_کراون   score=0.50 specificity=11.4 articles=1
+     -> metanotes/meta-15  احیای دیجیتال ایده‌ی ریچموند در دندان خلفی
+10. #تحویل_روکش   score=0.50 specificity=11.0 articles=5
+     -> dentcast-plus/video-2  آخرین مرحله قبل از خداحافظی با بیمار — چک فرمیتوس بعد از تحو
+
+
+===== شروع نکردن درمان =====
+query: شروع نکردن درمان
+words: ['درمان', 'شروع', 'نکردن']
+
+ 1. #شروع_نکردن_درمان   score=1.00 specificity=19.2 articles=5
+     -> chairside/chairside-17  وقتی قبل از شروع درمان، باید به جراحیِ قبلی شک کرد
+ 2. #طرح_درمان   score=0.50 specificity=12.2 articles=38
+     -> episodes/episode-14  افزایش Vertical Dimension
+ 3. #درمان_غیرتهاجمی   score=0.50 specificity=12.2 articles=7
+     -> episodes/episode-32  اپلاینس‌های اسنپ‌آن اسمایل
+ 4. #درمان_بلندمدت   score=0.50 specificity=12.2 articles=3
+     -> episodes/episode-62  اثر رشد فکین بر نتایج بلندمدت ایمپلنت – بخش اول
+ 5. #درمان_ریشه   score=0.50 specificity=11.1 articles=4
+     -> insight/insight-17  اعداد و اندازه‌هایی که بهتر است حفظ کنیم
+ 6. #درمان_ایمپلنت   score=0.50 specificity=8.6 articles=7
+     -> litecast/lite-CAST12  ایمپلنت چیست؟
+
+
+===== طرح درمان =====
+query: طرح درمان
+words: ['درمان', 'طرح']
+
+ 1. #طرح_درمان   score=1.00 specificity=12.2 articles=38
+     -> episodes/episode-14  افزایش Vertical Dimension
+ 2. #درمان_غیرتهاجمی   score=0.50 specificity=12.2 articles=7
+     -> episodes/episode-32  اپلاینس‌های اسنپ‌آن اسمایل
+ 3. #درمان_بلندمدت   score=0.50 specificity=12.2 articles=3
+     -> episodes/episode-62  اثر رشد فکین بر نتایج بلندمدت ایمپلنت – بخش اول
+ 4. #درمان_ریشه   score=0.50 specificity=11.1 articles=4
+     -> insight/insight-17  اعداد و اندازه‌هایی که بهتر است حفظ کنیم
+ 5. #درمان_ایمپلنت   score=0.50 specificity=8.6 articles=7
+     -> litecast/lite-CAST12  ایمپلنت چیست؟
+
+
+===== پری اپیکال =====
+query: پری اپیکال
+words: ['رادیوگرافی', 'کنترل']
+
+ 1. #رادیوگرافی_کنترل   score=1.00 specificity=11.6 articles=1
+     -> insight/insight-52  وقتی حس لامسه، خطای لابراتوار را رد کرد
+ 2. #تفسیر_رادیوگرافی   score=0.50 specificity=13.2 articles=1
+     -> insight/insight-23  وقتی رادیولوسنسی زیر ترمیم، پوسیدگی نیست
+ 3. #رادیوگرافی_تشخیصی   score=0.50 specificity=12.5 articles=4
+     -> insight/insight-7  چرا این دندان امکان بازسازی دائمی ندارد؟ تحلیل ساختاری، پریو
+ 4. #کنترل_عمق   score=0.50 specificity=12.5 articles=2
+     -> insight/insight-17  اعداد و اندازه‌هایی که بهتر است حفظ کنیم
+ 5. #کنترل_خونریزی   score=0.50 specificity=12.5 articles=2
+     -> insight/insight-40  مدیریت خونریزی پیش از اسکن: پیش‌نیاز ثبت دقیق مارجین
+ 6. #کنترل_عفونت   score=0.50 specificity=12.5 articles=1
+     -> episodes/episode-106-1  دنتوپدیا — پدیده Suck-Back در توربین‌ها
+ 7. #کنترل_رطوبت   score=0.50 specificity=12.5 articles=1
+     -> dentai/dentai-21  تاثیر مایع روی سطح دندان بر دقت اسکنر داخل‌دهانی
+ 8. #کنترل_لثه   score=0.50 specificity=11.8 articles=1
+     -> notecast/episode-20  نکات قالب‌گیری در پروتز ثابت
+ 9. #کنترل_گیر   score=0.50 specificity=11.8 articles=1
+     -> insight/insight-59  چرا برای مطبم زینک فسفات می‌خرم
+
+
+===== مارجین =====
+query: مارجین
+words: ['مارجین']
+
+ 1. #مارجین_روکش   score=0.50 specificity=11.4 articles=5
+     -> insight/insight-32  کانتور مقعر در روکش سرامیکی
+
+
+===== اوپک =====
+query: اوپک
+words: ['اوپکر']
+
+ 1. #اوپکر   score=1.00 specificity=7.0 articles=1
+     -> insight/insight-28    راهکار مقابله با ته رنگ خاکستری روکش 
+
+
+===== پانورامیک =====
+query: پانورامیک
+words: ['تشخیصی', 'رادیوگرافی']
+
+ 1. #رادیوگرافی_تشخیصی   score=1.00 specificity=12.5 articles=4
+     -> insight/insight-7  چرا این دندان امکان بازسازی دائمی ندارد؟ تحلیل ساختاری، پریو
+ 2. #استدلال_تشخیصی   score=0.50 specificity=13.4 articles=1
+     -> dentai/dentai-28  وقتی هوش مصنوعی تنها بهتر از پزشکِ مجهز به هوش مصنوعی عمل می
+ 3. #تفسیر_رادیوگرافی   score=0.50 specificity=13.2 articles=1
+     -> insight/insight-23  وقتی رادیولوسنسی زیر ترمیم، پوسیدگی نیست
+ 4. #رادیوگرافی_کنترل   score=0.50 specificity=11.6 articles=1
+     -> insight/insight-52  وقتی حس لامسه، خطای لابراتوار را رد کرد
+
+
+===== اوورکانتور =====
+query: اوورکانتور
+words: ['اوورکانتور']
+
+(nothing cleared the 0.5 threshold — falls back to the pillar tree)
+
+
+===== overcontour =====
+query: overcontour
+words: ['ترمیم', 'کانتور']
+
+ 1. #کانتور_ترمیم   score=1.00 specificity=11.3 articles=4
+     -> insight/insight-16  مراقبت بیولوژیک در ایمپلنت‌های اسپلینت‌شده
+ 2. #اورکانتور   score=1.00 specificity=11.3 articles=2
+     -> insight/insight-25  وقتی دندان مجاور نیست، روکش بزرگ‌تر به نظر می‌رسد
+ 3. #کانتور_باکال   score=0.50 specificity=12.8 articles=1
+     -> insight/insight-53  ایراد مکرر طراح‌ها در روکش پره‌مولر بالا که بهتر است از قبل 
+ 4. #ترمیم_غیرمستقیم   score=0.50 specificity=12.2 articles=16
+     -> episodes/episode-6  Immediate Dentin Sealing (IDS)
+ 5. #دوام_ترمیم   score=0.50 specificity=12.2 articles=12
+     -> episodes/episode-15  طول عمر آنله‌های سرامیکی
+ 6. #ترمیم_مستقیم   score=0.50 specificity=12.2 articles=2
+     -> episodes/episode-123-3  اینسایت — آنله مستقیم یا غیرمستقیم؟
+ 7. #ترمیم_بیومیمتیک   score=0.50 specificity=11.8 articles=7
+     -> episodes/episode-53  آغاز مبحث دندانپزشکی بیومیمتیک – بخش اول
+ 8. #برداشت_ترمیم   score=0.50 specificity=11.8 articles=3
+     -> insight/insight-14  ارزیابی واقعی دندان فقط بعد از برداشتن روکش
+ 9. #ترمیم_خلفی   score=0.50 specificity=11.5 articles=5
+     -> episodes/episode-121  گایدلاین ترمیم‌های خلفی — (قسمت اول)
+10. #ترمیم_ادهزیو   score=0.50 specificity=11.3 articles=6
+     -> episodes/episode-55  آماده‌سازی دندان برای اورلی‌های سرامیکی – بخش اول
+
+
+===== chief complaint =====
+query: chief complaint
+words: ['chief', 'complaint']
+
+(nothing cleared the 0.5 threshold — falls back to the pillar tree)
+
+
+===== نارضایتی بیمار =====
+query: نارضایتی بیمار
+words: ['بیمار', 'نارضایتی']
+
+ 1. #راحتی_بیمار   score=0.50 specificity=12.1 articles=3
+     -> episodes/episode-122-4  دنتوپدیا — تزریق بدون درد (Computer-Controlled Anesthesia)
+ 2. #معاینه_بیمار   score=0.50 specificity=12.1 articles=1
+     -> episodes/episode-117  Global Diagnosis — معاینه و فرم GAD (قسمت دوم)
+ 3. #بیمار_مجازی   score=0.50 specificity=12.1 articles=1
+     -> episodes/episode-150-1  دنتوپدیا — بیمار مجازی (The Virtual Patient)
+ 4. #رفتار_بیمار   score=0.50 specificity=12.1 articles=1
+     -> metanotes/meta-2  نقش رفتار بیمار در درمان پریو و ایمپلنت
+ 5. #بیمار_آشنا   score=0.50 specificity=12.1 articles=1
+     -> metanotes/meta-13  سندرم بیمار آشنا
+ 6. #بیمار_نوجوان   score=0.50 specificity=12.1 articles=1
+     -> chairside/chairside-30  سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم
+ 7. #ایمنی_بیمار   score=0.50 specificity=11.7 articles=2
+     -> episodes/episode-22  سه تداخل دارویی مهم در دندان‌پزشکی
+ 8. #بیمار_سیگاری   score=0.50 specificity=11.7 articles=1
+     -> sharehub/share-9  دخانیات و شکست زودرس ایمپلنت دندانی؛ از سازوکار زیستی تا مدی
+ 9. #تطابق_بیمار   score=0.50 specificity=11.4 articles=2
+     -> notecast/episode-14  افزایش بعد عمودی (VD) — دیدگاه داوسون، شواهد جدید و پروتکل د
+10. #انتخاب_بیمار   score=0.50 specificity=10.7 articles=1
+     -> chairside/chairside-25  گاهی نپذیرفتن بیمار بهتر است
+
