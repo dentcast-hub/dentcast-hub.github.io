@@ -22,7 +22,7 @@
   <meta name="robots" content="noindex, follow">
 
   <title>کارت نرخ اسپانسری | Spot</title>
-  <meta name="description" content="قیمت جایگاه‌های تبلیغاتی دنت‌کست به‌صورت تکی و باندل کامل — مرجع رسمی اعلام قیمت به اسپانسرها.">
+  <meta name="description" content="قیمت جایگاه‌های تبلیغاتی دنت‌کست، سهمی یا کامل، و باندل کامل — مرجع رسمی اعلام قیمت به اسپانسرها.">
 
   <style>
     @font-face{
@@ -44,6 +44,7 @@
       --accent-ink:#ffffff;
       --accent-soft:#e8f0ff;
       --accent-soft-line:#c3d8ff;
+      --seg-off:rgba(2,35,96,.12);
       --shadow: 0 1px 2px rgba(2,35,96,0.04), 0 8px 24px -12px rgba(2,35,96,0.14);
     }
     @media (prefers-color-scheme: dark){
@@ -60,6 +61,7 @@
         --accent-ink:#06101f;
         --accent-soft:#152238;
         --accent-soft-line:#25406b;
+        --seg-off:rgba(255,255,255,.14);
         --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 8px 24px -12px rgba(0,0,0,0.6);
       }
     }
@@ -76,6 +78,7 @@
       --accent-ink:#06101f;
       --accent-soft:#152238;
       --accent-soft-line:#25406b;
+      --seg-off:rgba(255,255,255,.14);
       --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 8px 24px -12px rgba(0,0,0,0.6);
     }
 
@@ -91,25 +94,25 @@
     }
 
     .wrap{
-      max-width:880px;
+      max-width:920px;
       margin:0 auto;
-      padding:48px 24px 72px;
+      padding:48px 24px 80px;
       display:flex;
       flex-direction:column;
-      gap:40px;
+      gap:36px;
     }
 
     header{
       display:flex;
       flex-direction:column;
-      gap:16px;
-      padding-bottom:28px;
+      gap:14px;
+      padding-bottom:26px;
       border-bottom:1px solid var(--line);
     }
     .eyebrow{
       display:flex;
       align-items:center;
-      gap:10px;
+      gap:9px;
       font-size:12.5px;
       letter-spacing:.06em;
       color:var(--accent);
@@ -118,44 +121,36 @@
     .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:none; }
     h1{
       margin:0;
-      font-size:clamp(26px,4vw,34px);
+      font-size:clamp(26px,4vw,32px);
       font-weight:800;
       letter-spacing:-.01em;
       text-wrap:balance;
     }
-    .lede{ margin:0; max-width:64ch; color:var(--ink-muted); font-size:15.5px; }
+    .lede{ margin:0; max-width:60ch; color:var(--ink-muted); font-size:15.5px; }
 
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:1px;
-      background:var(--line);
-      border:1px solid var(--line);
-      border-radius:14px;
-      overflow:hidden;
+    .strategy{
+      background:var(--accent-soft);
+      border:1px solid var(--accent-soft-line);
+      border-radius:16px;
+      padding:22px 24px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
     }
-    .stat{ background:var(--surface); padding:20px 18px; display:flex; flex-direction:column; gap:6px; }
-    .stat .label{ font-size:12px; color:var(--ink-faint); font-weight:600; }
-    .stat .value{ font-size:22px; font-weight:800; letter-spacing:-.01em; }
-    .stat .value .unit{ font-size:12.5px; font-weight:600; color:var(--ink-muted); margin-inline-start:4px; }
-    .stat .sub{ font-size:12.5px; color:var(--ink-muted); }
-    .stat.accent .value{ color:var(--accent); }
-
-    section{ display:flex; flex-direction:column; gap:14px; }
-    .section-head{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-    h2{ margin:0; font-size:18px; font-weight:700; letter-spacing:-.005em; }
-    .section-note{ font-size:13px; color:var(--ink-faint); }
+    .strategy .head-row{ display:flex; align-items:center; gap:10px; }
+    .strategy h2{ margin:0; font-size:17px; font-weight:700; }
+    .strategy p{ margin:0; font-size:14px; color:var(--ink); }
 
     .notice{
       display:flex;
       align-items:flex-start;
       gap:12px;
-      background:var(--accent-soft);
-      border:1px solid var(--accent-soft-line);
-      border-radius:12px;
+      background:var(--surface-2);
+      border:1px solid var(--line);
+      border-radius:14px;
       padding:14px 16px;
       font-size:13.5px;
-      color:var(--ink);
+      color:var(--ink-muted);
     }
     .notice .icn{
       flex:none; width:20px; height:20px; border-radius:50%;
@@ -163,68 +158,68 @@
       color:var(--accent); font-size:11px; font-weight:800;
       display:flex; align-items:center; justify-content:center;
     }
-    .notice b{ font-weight:700; }
+    .notice b{ font-weight:700; color:var(--ink); }
 
-    .card{ background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); overflow:hidden; }
-    .table-scroll{ overflow-x:auto; }
-    table{ width:100%; border-collapse:collapse; min-width:600px; font-size:14px; }
-    thead th{
-      text-align:start; font-size:11.5px; font-weight:600; color:var(--ink-faint);
-      letter-spacing:.02em; padding:12px 16px; background:var(--surface-2);
-      border-bottom:1px solid var(--line); white-space:nowrap;
+    h2.section-title{ margin:0; font-size:18px; font-weight:700; }
+
+    .slot-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:16px;
     }
-    tbody td{ padding:12px 16px; border-bottom:1px solid var(--line); vertical-align:middle; }
-    tbody tr:last-child td{ border-bottom:none; }
-    tbody tr.total td{ background:var(--surface-2); font-weight:700; border-top:1px solid var(--line-strong); }
-    .slot-name{ font-weight:600; }
-    .slot-loc{ display:block; font-size:12px; color:var(--ink-faint); font-weight:400; margin-top:2px; }
-    .num{ font-weight:600; white-space:nowrap; }
-    .num.money{ color:var(--accent); }
-    .share-bar-wrap{ display:flex; align-items:center; gap:8px; }
-    .share-bar{ width:56px; height:6px; border-radius:3px; background:var(--surface-2); border:1px solid var(--line); overflow:hidden; flex:none; }
-    .share-bar i{ display:block; height:100%; background:var(--accent); }
-    .share-pct{ font-size:12.5px; color:var(--ink-muted); white-space:nowrap; }
-    .locked{ font-size:11px; color:var(--accent); font-weight:700; margin-top:2px; }
+    .slot-card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      padding:20px 20px 18px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .slot-card.wide{ grid-column:1 / -1; }
+    .slot-name{ font-weight:700; font-size:15px; }
+    .slot-loc{ font-size:12px; color:var(--ink-faint); margin-top:2px; }
+    .slot-badge{
+      font-size:11px; font-weight:700; color:var(--accent);
+      background:var(--accent-soft); border:1px solid var(--accent-soft-line);
+      border-radius:999px; padding:3px 10px; white-space:nowrap;
+    }
+    .tiers{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px; }
+    .tiers.stack{ display:flex; flex-direction:column; }
+    .tier-row{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:10px 12px; border-radius:12px; background:var(--surface-2);
+    }
+    .tier-row.full{ background:var(--accent-soft); border:1px solid var(--accent-soft-line); }
+    .segs{ display:flex; align-items:center; gap:6px; }
+    .seg{ width:16px; height:8px; border-radius:4px; background:var(--seg-off); display:inline-block; }
+    .seg.on{ background:var(--accent); }
+    .tier-label{ font-size:11.5px; color:var(--ink-muted); }
+    .tier-price{ font-weight:700; font-size:13.5px; }
+    .tier-row.full .tier-label{ color:var(--accent); font-weight:700; }
+    .tier-row.full .tier-price{ color:var(--accent); font-weight:800; }
 
-    .ladder{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
-    .rung{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px 12px; display:flex; flex-direction:column; gap:6px; text-align:center; }
-    .rung .count{ font-size:11.5px; color:var(--ink-faint); font-weight:600; }
-    .rung .pct{ font-size:20px; font-weight:800; }
-    .rung.full{ background:var(--accent-soft); border-color:var(--accent-soft-line); }
-    .rung.full .pct{ color:var(--accent); }
-    .rung .tag{ font-size:11px; color:var(--ink-faint); }
-
-    .example{ background:var(--accent-soft); border:1px solid var(--accent-soft-line); border-radius:14px; padding:22px 24px; display:flex; flex-direction:column; gap:12px; }
-    .example .kicker{ font-size:12px; font-weight:700; color:var(--accent); letter-spacing:.02em; }
-    .example-line{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; font-size:14px; padding:6px 0; border-bottom:1px dashed var(--accent-soft-line); }
-    .example-line:last-of-type{ border-bottom:none; }
-    .example-line .k{ color:var(--ink-muted); }
-    .example-line .v{ font-weight:700; }
-    .example-total{ display:flex; align-items:baseline; justify-content:space-between; padding-top:8px; border-top:1px solid var(--accent-soft-line); }
-    .example-total .k{ font-weight:700; font-size:14.5px; }
-    .example-total .v{ font-weight:800; font-size:19px; color:var(--accent); }
-
-    ol.rules{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:13px; }
-    ol.rules li{ display:flex; gap:13px; align-items:flex-start; font-size:14px; color:var(--ink-muted); }
-    ol.rules li .n{ flex:none; width:24px; height:24px; border-radius:50%; background:var(--surface-2); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:700; color:var(--ink-faint); }
-    ol.rules li b{ color:var(--ink); font-weight:700; }
-
-    .prepay{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; background:var(--surface); border:1px solid var(--line-strong); border-radius:14px; padding:20px 24px; }
-    .prepay .lhs{ display:flex; flex-direction:column; gap:4px; }
-    .prepay .lhs .t{ font-weight:700; font-size:15px; }
-    .prepay .lhs .d{ font-size:13px; color:var(--ink-muted); }
-    .prepay .rhs{ text-align:end; }
-    .prepay .rhs .v{ font-size:24px; font-weight:800; }
-    .prepay .rhs .u{ font-size:12px; color:var(--ink-faint); }
+    .cta{
+      background:var(--accent);
+      border-radius:20px;
+      padding:30px 28px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      color:var(--accent-ink);
+    }
+    .cta h2{ margin:0; font-size:19px; font-weight:800; }
+    .cta p{ margin:0; font-size:14px; opacity:.85; }
+    .cta .stats{
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+      gap:1px; background:rgba(255,255,255,.18); border-radius:14px; overflow:hidden;
+    }
+    .cta .stat{ background:rgba(255,255,255,.08); padding:18px 16px; display:flex; flex-direction:column; gap:5px; }
+    .cta .stat .label{ font-size:12px; opacity:.75; font-weight:600; }
+    .cta .stat .value{ font-size:21px; font-weight:800; }
 
     footer{ padding-top:22px; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; font-size:12px; color:var(--ink-faint); }
-
-    @media (max-width:640px){
-      .stats{ grid-template-columns:1fr; }
-      .ladder{ grid-template-columns:repeat(2,1fr); }
-      .prepay{ flex-direction:column; align-items:flex-start; }
-      .prepay .rhs{ text-align:start; }
-    }
   </style>
 </head>
 <body>
@@ -233,150 +228,138 @@
   <header>
     <div class="eyebrow"><span class="dot"></span>کارت نرخ اسپانسری &nbsp;·&nbsp; Spot</div>
     <h1>هزینهٔ تبلیغات دنت‌کست</h1>
-    <p class="lede">قیمت هر جایگاه به‌صورت تکی، و باندل کامل ۸ جایگاه با یک نرخ ثابت ماهانه. مرجع رسمی اعلام قیمت به اسپانسرها.</p>
+    <p class="lede">قیمت هر جایگاه تبلیغاتی سایت، تکی یا کامل.</p>
   </header>
 
-  <div class="stats">
-    <div class="stat accent">
-      <span class="label">باندل کامل (X)</span>
-      <span class="value">۵۰,۰۰۰,۰۰۰<span class="unit">تومان / ماه</span></span>
-      <span class="sub">هر ۸ جایگاه، هم‌زمان</span>
+  <div class="strategy">
+    <div class="head-row">
+      <div class="segs"><span class="seg on" style="width:20px;height:10px;border-radius:5px;"></span><span class="seg on" style="width:20px;height:10px;border-radius:5px;"></span><span class="seg on" style="width:20px;height:10px;border-radius:5px;"></span></div>
+      <h2>هر جایگاه بین ۳ تبلیغ می‌چرخد</h2>
     </div>
-    <div class="stat">
-      <span class="label">تخفیف باندل</span>
-      <span class="value">≈۳۲٪</span>
-      <span class="sub">نسبت به خرید تک‌تک جایگاه‌ها</span>
-    </div>
-    <div class="stat">
-      <span class="label">حداقل مدت قرارداد</span>
-      <span class="value">۵ <span class="unit">ماه</span></span>
-      <span class="sub">بدون تخفیف زمانی، پیش‌پرداخت کامل</span>
-    </div>
+    <p>هر جایگاه هم‌زمان بین ۳ تبلیغ مختلف نمایش داده می‌شود. اگر فقط <b>۱ زمان</b> بخری، تبلیغت یک‌سوم دفعات دیده می‌شود. اگر هر <b>۳ زمان</b> را بخری، آن جایگاه کاملاً مال توست — و همیشه ارزان‌تر تمام می‌شود.</p>
   </div>
 
-  <section>
-    <div class="notice">
-      <span class="icn">i</span>
-      <span><b>جایگاه «مقاله» هرگز به‌تنهایی فروخته نمی‌شود.</b> طبق دادهٔ واقعی نمایش تبلیغات سایت، همین یک جایگاه ۵۲٪ از کل نمایش‌ها را می‌گیرد؛ هر قرارداد شامل مقاله باید حداقل یک جایگاه دیگر هم داشته باشد.</span>
-    </div>
-  </section>
+  <div class="notice">
+    <span class="icn">i</span>
+    <span><b>مقاله را نمی‌شود تنها خرید.</b> بیش از نصف بازدید تبلیغات سایت همین یک جایگاه است، پس همیشه باید با حداقل یک جایگاه دیگر خریده شود.</span>
+  </div>
 
-  <section>
-    <div class="section-head">
-      <h2>قیمت هر جایگاه</h2>
-      <span class="section-note">سهم از کل نمایش‌های تبلیغاتی سایت</span>
-    </div>
-    <div class="card">
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr><th>جایگاه</th><th>سهم واقعی</th><th>قیمت (تومان/ماه)</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="slot-name">مقاله<span class="slot-loc">وسط همهٔ مقاله‌های سایت</span><span class="locked">فقط در ترکیب با جایگاه دیگر</span></span></td>
-              <td><div class="share-bar-wrap"><span class="share-bar"><i style="width:100%"></i></span><span class="share-pct">۵۲٪</span></div></td>
-              <td class="num money">۳۲,۰۰۰,۰۰۰</td>
-            </tr>
-            <tr>
-              <td><span class="slot-name">صفحهٔ اصلی<span class="slot-loc">بعد از پالس</span></span></td>
-              <td><div class="share-bar-wrap"><span class="share-bar"><i style="width:27%"></i></span><span class="share-pct">۱۴٪</span></div></td>
-              <td class="num money">۱۰,۵۰۰,۰۰۰</td>
-            </tr>
-            <tr>
-              <td><span class="slot-name">اپیزودها<span class="slot-loc">زیر «اپیزود پیشنهادی»</span></span></td>
-              <td><div class="share-bar-wrap"><span class="share-bar"><i style="width:17%"></i></span><span class="share-pct">۹٪</span></div></td>
-              <td class="num money">۷,۵۰۰,۰۰۰</td>
-            </tr>
-            <tr>
-              <td><span class="slot-name">جستجوی سراسری<span class="slot-loc">بین فیلترها و نتایج</span></span></td>
-              <td><div class="share-bar-wrap"><span class="share-bar"><i style="width:2%"></i></span><span class="share-pct">~۱٪</span></div></td>
-              <td class="num money">۶,۲۵۰,۰۰۰</td>
-            </tr>
-            <tr>
-              <td><span class="slot-name">پلیر<span class="slot-loc">بالای «جستجو در دنت‌کست»</span></span></td>
-              <td><div class="share-bar-wrap"><span class="share-bar"><i style="width:6%"></i></span><span class="share-pct">~۳٪</span></div></td>
-              <td class="num money">۵,۰۰۰,۰۰۰</td>
-            </tr>
-            <tr>
-              <td><span class="slot-name">تب آرشیو<span class="slot-loc">زیر «اپیزودهای پادکست»</span></span></td>
-              <td><div class="share-bar-wrap"><span class="share-bar"><i style="width:0%"></i></span><span class="share-pct">—</span></div></td>
-              <td class="num money">۵,۰۰۰,۰۰۰</td>
-            </tr>
-            <tr>
-              <td><span class="slot-name">پیشخوان<span class="slot-loc">زیر «استریک»</span></span></td>
-              <td><div class="share-bar-wrap"><span class="share-bar"><i style="width:19%"></i></span><span class="share-pct">~۱۰٪</span></div></td>
-              <td class="num money">۴,۵۰۰,۰۰۰</td>
-            </tr>
-            <tr>
-              <td><span class="slot-name">پروفایل<span class="slot-loc">زیر «پلن»</span></span></td>
-              <td><div class="share-bar-wrap"><span class="share-bar"><i style="width:0%"></i></span><span class="share-pct">—</span></div></td>
-              <td class="num money">۳,۰۰۰,۰۰۰</td>
-            </tr>
-            <tr class="total">
-              <td>جمع خرید تکی (۸ جایگاه)</td>
-              <td></td>
-              <td class="num money">۷۳,۷۵۰,۰۰۰</td>
-            </tr>
-          </tbody>
-        </table>
+  <section style="display:flex; flex-direction:column; gap:16px;">
+    <h2 class="section-title">قیمت هر جایگاه</h2>
+    <div class="slot-grid">
+
+      <!-- مقاله -->
+      <div class="slot-card wide">
+        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+          <div>
+            <div class="slot-name">مقاله</div>
+            <div class="slot-loc">وسط همهٔ مقاله‌های سایت &nbsp;·&nbsp; ۵۲٪ از کل نمایش‌ها</div>
+          </div>
+          <span class="slot-badge">فقط در ترکیب با جایگاه دیگر</span>
+        </div>
+        <div class="tiers">
+          <div class="tier-row">
+            <div class="segs"><span class="seg on"></span><span class="seg"></span><span class="seg"></span></div>
+            <span class="tier-label">۱ زمان</span>
+            <span class="tier-price">۱۱,۷۵۰,۰۰۰</span>
+          </div>
+          <div class="tier-row">
+            <div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg"></span></div>
+            <span class="tier-label">۲ زمان</span>
+            <span class="tier-price">۲۲,۴۰۰,۰۰۰</span>
+          </div>
+          <div class="tier-row full">
+            <div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg on"></span></div>
+            <span class="tier-label">هر ۳ (کامل)</span>
+            <span class="tier-price">۳۲,۰۰۰,۰۰۰</span>
+          </div>
+        </div>
       </div>
+
+      <!-- صفحه اصلی -->
+      <div class="slot-card">
+        <div><div class="slot-name">صفحهٔ اصلی</div><div class="slot-loc">بعد از پالس &nbsp;·&nbsp; ~۱۴٪</div></div>
+        <div class="tiers stack">
+          <div class="tier-row"><div class="segs"><span class="seg on"></span><span class="seg"></span><span class="seg"></span></div><span class="tier-label">۱ زمان</span><span class="tier-price">۳,۸۵۰,۰۰۰</span></div>
+          <div class="tier-row"><div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg"></span></div><span class="tier-label">۲ زمان</span><span class="tier-price">۷,۳۵۰,۰۰۰</span></div>
+          <div class="tier-row full"><div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg on"></span></div><span class="tier-label">کامل</span><span class="tier-price">۱۰,۵۰۰,۰۰۰</span></div>
+        </div>
+      </div>
+
+      <!-- اپیزودها -->
+      <div class="slot-card">
+        <div><div class="slot-name">اپیزودها</div><div class="slot-loc">زیر «اپیزود پیشنهادی» &nbsp;·&nbsp; ~۹٪</div></div>
+        <div class="tiers stack">
+          <div class="tier-row"><div class="segs"><span class="seg on"></span><span class="seg"></span><span class="seg"></span></div><span class="tier-label">۱ زمان</span><span class="tier-price">۲,۷۵۰,۰۰۰</span></div>
+          <div class="tier-row"><div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg"></span></div><span class="tier-label">۲ زمان</span><span class="tier-price">۵,۲۵۰,۰۰۰</span></div>
+          <div class="tier-row full"><div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg on"></span></div><span class="tier-label">کامل</span><span class="tier-price">۷,۵۰۰,۰۰۰</span></div>
+        </div>
+      </div>
+
+      <!-- جستجو -->
+      <div class="slot-card">
+        <div><div class="slot-name">جستجوی سراسری</div><div class="slot-loc">بین فیلترها و نتایج &nbsp;·&nbsp; ~۱٪</div></div>
+        <div class="tiers stack">
+          <div class="tier-row"><div class="segs"><span class="seg on"></span><span class="seg"></span><span class="seg"></span></div><span class="tier-label">۱ زمان</span><span class="tier-price">۲,۳۰۰,۰۰۰</span></div>
+          <div class="tier-row"><div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg"></span></div><span class="tier-label">۲ زمان</span><span class="tier-price">۴,۴۰۰,۰۰۰</span></div>
+          <div class="tier-row full"><div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg on"></span></div><span class="tier-label">کامل</span><span class="tier-price">۶,۲۵۰,۰۰۰</span></div>
+        </div>
+      </div>
+
+      <!-- پلیر -->
+      <div class="slot-card">
+        <div><div class="slot-name">پلیر</div><div class="slot-loc">بالای «جستجو در دنت‌کست» &nbsp;·&nbsp; ~۳٪</div></div>
+        <div class="tiers stack">
+          <div class="tier-row"><div class="segs"><span class="seg on"></span><span class="seg"></span><span class="seg"></span></div><span class="tier-label">۱ زمان</span><span class="tier-price">۱,۸۵۰,۰۰۰</span></div>
+          <div class="tier-row"><div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg"></span></div><span class="tier-label">۲ زمان</span><span class="tier-price">۳,۵۰۰,۰۰۰</span></div>
+          <div class="tier-row full"><div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg on"></span></div><span class="tier-label">کامل</span><span class="tier-price">۵,۰۰۰,۰۰۰</span></div>
+        </div>
+      </div>
+
+      <!-- تب آرشیو -->
+      <div class="slot-card">
+        <div><div class="slot-name">تب آرشیو</div><div class="slot-loc">زیر «اپیزودهای پادکست»</div></div>
+        <div class="tiers stack">
+          <div class="tier-row"><div class="segs"><span class="seg on"></span><span class="seg"></span><span class="seg"></span></div><span class="tier-label">۱ زمان</span><span class="tier-price">۱,۸۵۰,۰۰۰</span></div>
+          <div class="tier-row"><div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg"></span></div><span class="tier-label">۲ زمان</span><span class="tier-price">۳,۵۰۰,۰۰۰</span></div>
+          <div class="tier-row full"><div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg on"></span></div><span class="tier-label">کامل</span><span class="tier-price">۵,۰۰۰,۰۰۰</span></div>
+        </div>
+      </div>
+
+      <!-- پیشخوان -->
+      <div class="slot-card">
+        <div><div class="slot-name">پیشخوان</div><div class="slot-loc">زیر «استریک» &nbsp;·&nbsp; ~۱۰٪</div></div>
+        <div class="tiers stack">
+          <div class="tier-row"><div class="segs"><span class="seg on"></span><span class="seg"></span><span class="seg"></span></div><span class="tier-label">۱ زمان</span><span class="tier-price">۱,۶۵۰,۰۰۰</span></div>
+          <div class="tier-row"><div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg"></span></div><span class="tier-label">۲ زمان</span><span class="tier-price">۳,۱۵۰,۰۰۰</span></div>
+          <div class="tier-row full"><div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg on"></span></div><span class="tier-label">کامل</span><span class="tier-price">۴,۵۰۰,۰۰۰</span></div>
+        </div>
+      </div>
+
+      <!-- پروفایل -->
+      <div class="slot-card">
+        <div><div class="slot-name">پروفایل</div><div class="slot-loc">زیر «پلن»</div></div>
+        <div class="tiers stack">
+          <div class="tier-row"><div class="segs"><span class="seg on"></span><span class="seg"></span><span class="seg"></span></div><span class="tier-label">۱ زمان</span><span class="tier-price">۱,۱۰۰,۰۰۰</span></div>
+          <div class="tier-row"><div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg"></span></div><span class="tier-label">۲ زمان</span><span class="tier-price">۲,۱۰۰,۰۰۰</span></div>
+          <div class="tier-row full"><div class="segs"><span class="seg on"></span><span class="seg on"></span><span class="seg on"></span></div><span class="tier-label">کامل</span><span class="tier-price">۳,۰۰۰,۰۰۰</span></div>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <div class="prepay">
-    <div class="lhs">
-      <span class="t">خرید تک‌تک ۸ جایگاه در برابر باندل کامل</span>
-      <span class="d">جمع تکی ۷۳٫۷۵ میلیون تومان است؛ باندل کامل نرخی مستقل و ثابت دارد.</span>
+  <div class="cta">
+    <div>
+      <h2>همه‌ی ۸ جایگاه را با هم بخر، خیلی ارزان‌تر تمام می‌شود</h2>
+      <p>به‌جای خرید جایگاه‌ها یکی‌یکی، باندل کامل یک قیمت ثابت ماهانه دارد.</p>
     </div>
-    <div class="rhs">
-      <span class="v">۷۳,۷۵۰,۰۰۰ ← ۵۰,۰۰۰,۰۰۰</span>
-      <span class="u">تومان در ماه، با خرید باندل کامل</span>
+    <div class="stats">
+      <div class="stat"><span class="label">همه‌ی ۸ جایگاه</span><span class="value">۵۰,۰۰۰,۰۰۰ تومان/ماه</span></div>
+      <div class="stat"><span class="label">نسبت به خرید تکی</span><span class="value">≈۳۲٪ ارزان‌تر</span></div>
+      <div class="stat"><span class="label">حداقل مدت (برای هر خریدی)</span><span class="value">۵ ماه</span></div>
     </div>
   </div>
-
-  <section>
-    <div class="section-head">
-      <h2>پلکان تخفیف ترکیب جایگاه‌ها</h2>
-      <span class="section-note">برای اسپانسری که کمتر از ۸ جایگاه می‌خواهد</span>
-    </div>
-    <div class="ladder">
-      <div class="rung"><span class="count">۱ جایگاه</span><span class="pct">۰٪</span><span class="tag">مقاله در این حالت مجاز نیست</span></div>
-      <div class="rung"><span class="count">۲–۳ جایگاه</span><span class="pct">۵٪</span><span class="tag">تخفیف</span></div>
-      <div class="rung"><span class="count">۴–۶ جایگاه</span><span class="pct">۱۲٪</span><span class="tag">تخفیف</span></div>
-      <div class="rung"><span class="count">۷ جایگاه</span><span class="pct">۱۶٪</span><span class="tag">تخفیف</span></div>
-      <div class="rung full"><span class="count">۸ جایگاه</span><span class="pct">≈۳۲٪</span><span class="tag">= باندل کامل</span></div>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-head">
-      <h2>نمونهٔ محاسبهٔ یک قرارداد</h2>
-      <span class="section-note">مقاله + صفحهٔ اصلی + جستجوی سراسری (۳ جایگاه، مقاله همراه با ۲ جایگاه دیگر ← مجاز)</span>
-    </div>
-    <div class="example">
-      <span class="kicker">محاسبه</span>
-      <div class="example-line"><span class="k">مقاله</span><span class="v">۳۲,۰۰۰,۰۰۰</span></div>
-      <div class="example-line"><span class="k">صفحهٔ اصلی</span><span class="v">+ ۱۰,۵۰۰,۰۰۰</span></div>
-      <div class="example-line"><span class="k">جستجوی سراسری</span><span class="v">+ ۶,۲۵۰,۰۰۰</span></div>
-      <div class="example-line"><span class="k">جمع پیش از تخفیف</span><span class="v">۴۸,۷۵۰,۰۰۰</span></div>
-      <div class="example-line"><span class="k">تخفیف ترکیب ۳ جایگاه</span><span class="v">− ۵٪</span></div>
-      <div class="example-total"><span class="k">نرخ ماهانه نهایی</span><span class="v">۴۶,۳۱۲,۵۰۰ تومان</span></div>
-      <div class="example-line" style="border-top:1px solid var(--accent-soft-line);padding-top:10px;"><span class="k">حداقل قرارداد (۵ ماه)</span><span class="v">۲۳۱,۵۶۲,۵۰۰ تومان</span></div>
-      <div class="example-line"><span class="k">قرارداد پیشنهادی (۱۰ ماه)</span><span class="v">۴۶۳,۱۲۵,۰۰۰ تومان</span></div>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-head"><h2>قواعد قرارداد</h2></div>
-    <ol class="rules">
-      <li><span class="n">۱</span><span>واحد قیمت، <b>حضور با سهم کامل چرخش اسپانسری</b> در آن جایگاه است. اگر چند اسپانسر هم‌زمان در یک جایگاه بچرخند، قیمت به نسبت سهم چرخش تقسیم می‌شود.</span></li>
-      <li><span class="n">۲</span><span><b>حداقل مدت قرارداد ۵ ماه است.</b> تخفیف زمانی وجود ندارد — نرخ ماهانه در هر مدتی ثابت می‌ماند و مبلغ کامل پیش از شروع دریافت می‌شود. مدت پیشنهادی همچنان ۱۰ ماهه است.</span></li>
-      <li><span class="n">۳</span><span><b>مقاله هرگز در قراردادی با فقط همان یک جایگاه فروخته نمی‌شود.</b> هر قرارداد شامل مقاله باید حداقل یک جایگاه دیگر هم داشته باشد.</span></li>
-      <li><span class="n">۴</span><span><b>هدف‌گیری مخاطب قیمت را عوض نمی‌کند.</b> اسپانسری که فقط کاربران لاگین‌نشده را هدف می‌گیرد، همان قیمت جایگاه را می‌پردازد.</span></li>
-      <li><span class="n">۵</span><span><b>بازبینی فصلی با دادهٔ واقعی.</b> سهم نمایش واقعی هر جایگاه هر فصل استخراج و با این جدول مقایسه می‌شود؛ قیمت قراردادهای در جریان تا پایان دوره ثابت می‌ماند.</span></li>
-    </ol>
-  </section>
 
   <footer>
     <span>مرجع رسمی اعلام قیمت به اسپانسرها</span>
