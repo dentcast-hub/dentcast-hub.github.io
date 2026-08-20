@@ -8,6 +8,12 @@
 3. The «تازه‌های دنت‌کست» rail's static fallback cards — each data-cat
    card gets its category's newest entry (title + href). The homepage JS
    does the same at runtime; this keeps the no-JS/SEO text fresh too.
+4. The «دسته‌های محتوا» grid counts — one COUNTER:CAT_*:START/END marker
+   per card. Every card counts its brain `type`, except CAT_EPISODES
+   (dentcast.json) and CAT_LITECAST: LiteCast migrated off the brain, so
+   litecast/lite-glossary.json is its own source of truth going forward —
+   the 19 old `type: "litecast"` brain rows are pre-migration leftovers,
+   kept for history but never grown, and must NOT be used for this count.
 
 A url-less newest entry leaves its card untouched (never regress to an
 older item). Standard library only.
@@ -91,6 +97,46 @@ RAIL_CATS = (
     "clinical", "notecast", "meta", "chairside",
     "dentai", "promptologist", "sharehub", "dentcast_plus",
 )
+
+# دسته‌های محتوا grid: COUNTER name -> brain `type` to count, or None for a
+# card counted from its own source (episodes.json / lite-glossary.json)
+# instead of the brain.
+CAT_COUNTERS = {
+    "CAT_EPISODES": None,
+    "CAT_INSIGHT": "clinical",
+    "CAT_NOTECAST": "notecast",
+    "CAT_CHAIRSIDE": "chairside",
+    "CAT_DENTAI": "dentai",
+    "CAT_METANOTES": "meta",
+    "CAT_LITECAST": None,
+    "CAT_SHAREHUB": "sharehub",
+    "CAT_PROMPTOLOGIST": "promptologist",
+    "CAT_PLUS": "dentcast_plus",
+}
+
+
+def compute_category_counts():
+    """{COUNTER name -> Persian-digit count} for the دسته‌های محتوا grid."""
+    brain = json.loads(BRAIN_JSON.read_text(encoding="utf-8"))
+    by_type = {}
+    for e in brain:
+        if isinstance(e, dict):
+            ty = e.get("type") or ""
+            by_type[ty] = by_type.get(ty, 0) + 1
+
+    episodes_count = len(json.loads(EPISODES_JSON.read_text(encoding="utf-8")))
+    lite_count = len(json.loads(LITE_GLOSSARY_JSON.read_text(encoding="utf-8"))["LightGlossary"])
+
+    out = {}
+    for name, ty in CAT_COUNTERS.items():
+        if name == "CAT_EPISODES":
+            n = episodes_count
+        elif name == "CAT_LITECAST":
+            n = lite_count
+        else:
+            n = by_type.get(ty, 0)
+        out[name] = to_fa(n)
+    return out
 
 
 def esc_html(s):
@@ -191,6 +237,7 @@ def main():
         "HOURS": persian_half(compute_hours()),
         "CONTENT": to_fa(content_total),
     }
+    values.update(compute_category_counts())
 
     changes = []
     for name, new_fa in values.items():
