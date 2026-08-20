@@ -17,7 +17,7 @@
   "rotation": {
     "advance": "view",
     "session_minutes": 1,
-    "sequence": ["idc-welcome", "premium", "idc-platform", "idc-launch"]
+    "sequence": ["bundle-promo", "premium", "pathway-promo", "highlights-promo"]
   },
   "creatives": {
     "premium": {
@@ -71,7 +71,7 @@
       },
       {
         "id": "idc-welcome",
-        "enabled": true,
+        "enabled": false,
         "badge": "حامی دنت‌کست",
         "title": "",
         "text": "",
@@ -79,11 +79,11 @@
         "url": "",
         "image": "/spot/img/idc-welcome-2.webp",
         "weight": 1,
-        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن (url خالی = کارت کلیک‌پذیر نیست، پس rel و کلیک هم ندارد). عکس: «به آینده دیزاین خوش آمدید — Powered by Ai». زمانِ ۱ از ۴. منبع: ad_photos/ad3.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳)"
+        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن (url خالی = کارت کلیک‌پذیر نیست، پس rel و کلیک هم ندارد). عکس: «به آینده دیزاین خوش آمدید — Powered by Ai». زمانِ ۱ از ۴. منبع: ad_photos/ad3.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳). از ۱۴۰۵/۰۵/۲۸ خاموش شد و زمانش را bundle-promo گرفت؛ حذف نشده و هر وقت لازم شد دوباره روشن می‌شود"
       },
       {
         "id": "idc-platform",
-        "enabled": true,
+        "enabled": false,
         "badge": "حامی دنت‌کست",
         "title": "",
         "text": "",
@@ -91,11 +91,11 @@
         "url": "",
         "image": "/spot/img/idc-platform-2.webp",
         "weight": 1,
-        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن. عکس: «اولین پلتفرم دنتال مبتنی بر Ai». زمانِ ۳ از ۴. منبع: ad_photos/ad2.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳)"
+        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن. عکس: «اولین پلتفرم دنتال مبتنی بر Ai». زمانِ ۳ از ۴. منبع: ad_photos/ad2.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳). از ۱۴۰۵/۰۵/۲۸ خاموش شد و زمانش را pathway-promo گرفت؛ حذف نشده و هر وقت لازم شد دوباره روشن می‌شود"
       },
       {
         "id": "idc-launch",
-        "enabled": true,
+        "enabled": false,
         "badge": "حامی دنت‌کست",
         "title": "",
         "text": "",
@@ -103,7 +103,46 @@
         "url": "",
         "image": "/spot/img/idc-launch-2.webp",
         "weight": 1,
-        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن. عکس: «لانچ در اکسیدا — ۳ شهریور». زمانِ ۴ از ۴. منبع: ad_photos/ad1.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳). تاریخِ روی عکس ۱۴۰۵/۰۶/۰۳ است؛ موتور زمان‌بند ندارد، پس بعد از آن تاریخ باید دستی خاموش شود"
+        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن. عکس: «لانچ در اکسیدا — ۳ شهریور». زمانِ ۴ از ۴. منبع: ad_photos/ad1.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳). تاریخِ روی عکس ۱۴۰۵/۰۶/۰۳ است؛ موتور زمان‌بند ندارد. از ۱۴۰۵/۰۵/۲۸ خاموش شد و زمانش را highlights-promo گرفت؛ حذف نشده و هر وقت لازم شد دوباره روشن می‌شود"
+      },
+      {
+        "id": "bundle-promo",
+        "enabled": true,
+        "badge": "دنت‌کست پریمیوم",
+        "title": "دنت‌کست بیش از ۵۹۰ مطلب داره",
+        "text": "باندل‌ها بهت می‌گن از کجا شروع کنی.",
+        "cta": "مشاهده باندل‌ها",
+        "url": "/plus/pathways.html",
+        "image": null,
+        "weight": 1,
+        "audience": ["plus"],
+        "note": "تبلیغ داخلی (خانگی) — پولی نیست، لینکش داخلی است، rel=\"sponsored\" نمی‌گیرد. از ۱۴۰۵/۰۵/۲۸ صاحبِ زمانِ ۱ از ۴؛ جایگزینِ idc-welcome"
+      },
+      {
+        "id": "pathway-promo",
+        "enabled": true,
+        "badge": "دنت‌کست پریمیوم",
+        "title": "بین این‌همه مطلب نمی‌دونی چطوری بخونی؟",
+        "text": "تو مسیرهای یادگیری، مطالب رو با ترتیب درست برات چیدیم.",
+        "cta": "مسیرهای یادگیری",
+        "url": "/plus/pathways.html",
+        "image": null,
+        "weight": 1,
+        "audience": ["plus"],
+        "note": "تبلیغ داخلی (خانگی) — پولی نیست، لینکش داخلی است، rel=\"sponsored\" نمی‌گیرد. از ۱۴۰۵/۰۵/۲۸ صاحبِ زمانِ ۳ از ۴؛ جایگزینِ idc-platform"
+      },
+      {
+        "id": "highlights-promo",
+        "enabled": true,
+        "badge": "دنت‌کست پریمیوم",
+        "title": "کلی هایلایت داری؟",
+        "text": "برای استفاده ازش، دفترچه‌ی هایلایت‌ها رو پیشنهاد می‌کنم.",
+        "cta": "دفترچه‌ی هایلایت‌ها",
+        "url": "/plus/highlights.html",
+        "image": null,
+        "weight": 1,
+        "audience": ["plus"],
+        "note": "تبلیغ داخلی (خانگی) — پولی نیست، لینکش داخلی است، rel=\"sponsored\" نمی‌گیرد. از ۱۴۰۵/۰۵/۲۸ صاحبِ زمانِ ۴ از ۴؛ جایگزینِ idc-launch"
       },
       {
         "id": "premium-invite",
@@ -117,6 +156,45 @@
         "weight": 1,
         "audience": ["plus"],
         "note": "تبلیغ داخلی (خانگی) — پولی نیست و لینکش داخلی است، پس rel=\"sponsored\" نمی‌گیرد. کارتِ خانگیِ کاربر لاگین‌شده از ۱۴۰۵/۰۵/۱۵؛ جایگزین league-prize و صاحبِ همان زمانِ دوم. id تازه گرفت (نه ویرایشِ league-prize) تا آمارِ کمپینِ «جایزهٔ لیگ» با آمارِ فروشِ پریمیوم در یک ردیف قاطی نشود. ?from=spot-premium در pricing-page.js به رویداد pricing_view می‌رود تا معلوم شود خریدها از این کارت آمده‌اند"
+      },
+      {
+        "id": "bundle-anon",
+        "enabled": true,
+        "badge": "دنت‌کست پریمیوم",
+        "title": "دنت‌کست بیش از ۵۹۰ مطلب داره",
+        "text": "باندل‌ها بهت می‌گن از کجا شروع کنی.",
+        "cta": "مشاهده باندل‌ها",
+        "url": "/plus/pathways.html",
+        "image": null,
+        "weight": 1,
+        "audience": ["anon"],
+        "note": "تبلیغ داخلی (خانگی) — پولی نیست، لینکش داخلی است، rel=\"sponsored\" نمی‌گیرد. نسخهٔ کاربر لاگین‌نشده از bundle-promo؛ از ۱۴۰۵/۰۵/۲۸ در زمان‌های ۱/۳/۴ برای مهمان از طریق فال‌بکِ اسپانسر انتخاب می‌شود (چون bundle-promo/pathway-promo/highlights-promo فقط برای audience:plus مجازند)"
+      },
+      {
+        "id": "compass-anon",
+        "enabled": true,
+        "badge": "دنت‌کست پریمیوم",
+        "title": "بین این‌همه مطلب دندون‌پزشکی، کجا ایستادی؟",
+        "text": "قطب‌نمای مطالعه نشونت می‌ده تو هر حوزه چقدر جلو رفتی و کجا هنوز مونده.",
+        "cta": "قطب‌نمای مطالعه",
+        "url": "/plus/reading-compass.html",
+        "image": null,
+        "weight": 1,
+        "audience": ["anon"],
+        "note": "تبلیغ داخلی (خانگی) — پولی نیست، لینکش داخلی است، rel=\"sponsored\" نمی‌گیرد. مخصوص کاربر لاگین‌نشده؛ از ۱۴۰۵/۰۵/۲۸ در زمان‌های ۱/۳/۴ از طریق فال‌بکِ اسپانسر انتخاب می‌شود"
+      },
+      {
+        "id": "collection-anon",
+        "enabled": true,
+        "badge": "دنت‌کست پریمیوم",
+        "title": "مطالب موردعلاقه‌تو یه‌جا جمع کن",
+        "text": "با کالکشن‌ها، هایلایت‌ها و مقاله‌های موردعلاقه‌تو تو پوشه‌های خودت دسته‌بندی کن.",
+        "cta": "کالکشن‌ها",
+        "url": "/plus/collections.html",
+        "image": null,
+        "weight": 1,
+        "audience": ["anon"],
+        "note": "تبلیغ داخلی (خانگی) — پولی نیست، لینکش داخلی است، rel=\"sponsored\" نمی‌گیرد. مخصوص کاربر لاگین‌نشده؛ از ۱۴۰۵/۰۵/۲۸ در زمان‌های ۱/۳/۴ از طریق فال‌بکِ اسپانسر انتخاب می‌شود"
       }
     ]
   }

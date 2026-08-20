@@ -655,7 +655,14 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
             rep.check("ep-related-link" not in sec.group(0), "2.5 related",
                       "uses dc-related-* classes only",
                       "ep-* classes leaked into a dc-related-section")
-            want = f"/pillar/{pillar.get('primary')}/" if pillar.get("primary") else "/pillar/"
+            primary = pillar.get("primary")
+            # A non-structured pillar (live in the brain but absent from
+            # PILLARS, e.g. "oral-medicine") has no /pillar/<slug>/ page to
+            # link to — step 2.5's own precedent (notecast/episode-22) falls
+            # back to the bare hub /pillar/ in that case, matching the 2.4
+            # pillar check just above, which already treats "not in PILLARS"
+            # as unstructured rather than a defect.
+            want = f"/pillar/{primary}/" if primary and primary in live_pillars() else "/pillar/"
             rep.check(want in links, "2.5 related",
                       f"فهرست موضوعی → {want}",
                       f"pillar capsule does not point at {want} (found {links})",
