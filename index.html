@@ -4658,19 +4658,21 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 
 
       <!-- Examine-style category grid — every cell is a plain link to a
-           directory that already exists; counts are editorial (hand-kept). -->
+           directory that already exists; counts are brain-derived (see
+           tools/update-homepage-counters.py, COUNTER:CAT_* markers) — never
+           hand-edit a number here, it is overwritten on every publish. -->
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">دسته‌های محتوا</h2></div>
       <div class="dc-exa-cats">
-        <a class="dc-exa-cat" href="episodes.html"><span><b>اپیزودها</b><i>۲۰۲ قسمت</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
-        <a class="dc-exa-cat" href="/insight/"><span><b>اینسایت</b><i>۶۴ تحلیل</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
-        <a class="dc-exa-cat" href="/notecast/"><span><b>نوت‌کست</b><i>۳۸ مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
-        <a class="dc-exa-cat" href="/chairside/"><span><b>چیرساید</b><i>۳۰ کیس</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
-        <a class="dc-exa-cat" href="/dentai/"><span><b>DentAI</b><i>۲۸ مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
-        <a class="dc-exa-cat" href="/metanotes/"><span><b>متانوت</b><i>۲۰ مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
-        <a class="dc-exa-cat" href="/litecast/"><span><b>لایت‌کست</b><i>۱۹ مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
-        <a class="dc-exa-cat" href="/sharehub/"><span><b>ShareHub</b><i>۱۳ مرور</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
-        <a class="dc-exa-cat" href="/dentai/promptologist/"><span><b>پرامپتولوژیست</b><i>۱۲ مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
-        <a class="dc-exa-cat" href="/dentcast-plus/"><span><b>دنت‌کست پلاس</b><i>۶ ویدیو</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="episodes.html"><span><b>اپیزودها</b><i><!-- COUNTER:CAT_EPISODES:START -->۲۱۰<!-- COUNTER:CAT_EPISODES:END --> قسمت</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/insight/"><span><b>اینسایت</b><i><!-- COUNTER:CAT_INSIGHT:START -->۶۵<!-- COUNTER:CAT_INSIGHT:END --> تحلیل</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/notecast/"><span><b>نوت‌کست</b><i><!-- COUNTER:CAT_NOTECAST:START -->۳۸<!-- COUNTER:CAT_NOTECAST:END --> مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/chairside/"><span><b>چیرساید</b><i><!-- COUNTER:CAT_CHAIRSIDE:START -->۳۴<!-- COUNTER:CAT_CHAIRSIDE:END --> کیس</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/dentai/"><span><b>DentAI</b><i><!-- COUNTER:CAT_DENTAI:START -->۳۰<!-- COUNTER:CAT_DENTAI:END --> مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/metanotes/"><span><b>متانوت</b><i><!-- COUNTER:CAT_METANOTES:START -->۲۰<!-- COUNTER:CAT_METANOTES:END --> مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/litecast/"><span><b>لایت‌کست</b><i><!-- COUNTER:CAT_LITECAST:START -->۳۵<!-- COUNTER:CAT_LITECAST:END --> مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/sharehub/"><span><b>ShareHub</b><i><!-- COUNTER:CAT_SHAREHUB:START -->۱۶<!-- COUNTER:CAT_SHAREHUB:END --> مرور</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/dentai/promptologist/"><span><b>پرامپتولوژیست</b><i><!-- COUNTER:CAT_PROMPTOLOGIST:START -->۱۳<!-- COUNTER:CAT_PROMPTOLOGIST:END --> مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/dentcast-plus/"><span><b>دنت‌کست پلاس</b><i><!-- COUNTER:CAT_PLUS:START -->۸<!-- COUNTER:CAT_PLUS:END --> ویدیو</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
       </div>
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2></div>
