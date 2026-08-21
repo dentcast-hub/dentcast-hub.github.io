@@ -26533,6 +26533,153 @@
           ]
         }
       ]
+    },
+    "dentai/dentai-31": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/dentai/dentai-31.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا در پروتکل all-on-4 لود فوری بدون گیر اولیه‌ی کافی مجاز است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ لود فوری فقط وقتی مجاز است که ایمپلنت در همان جلسه‌ی جراحی گیر مکانیکی کافی داشته باشد و معیار عملی این گیر تورک درج ۳۰ تا ۵۰ نیوتن‌سانتی‌متر است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا اکثر شکست‌های ایمپلنت در پروتکل all-on-4 در بلندمدت رخ می‌دهد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ از ۱۷۵ شکست گزارش‌شده روی ۱۱۷۴۳ ایمپلنت، ۱۳۴ مورد در سال اول رخ داده و اکثریت قاطع شکست‌ها مربوط به فاز اولیه‌ی ترمیم است نه بلندمدت."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا عدد ۹۹٫۸ درصدی که در abstract مرور all-on-4 آمده برآورد تجمیعی همه‌ی مطالعات است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ آن عدد به یک مطالعه تعلق دارد نه برآورد تجمیعی، و برای مشاوره‌ی بالینی محدوده‌ی ۹۵ تا ۹۸ درصد در بازه‌های پنج تا ده ساله بیان دقیق‌تری است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا all-on-4 برای فک‌های تحلیل‌رفته‌ی کلاس IV تا VI در طبقه‌بندی Cawood & Howell پروتکل ایمن و مؤثری گزارش شده است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ در مطالعه‌ای که از این طبقه‌بندی استفاده کرده، all-on-4 در کلاس‌های IV، V و VI پروتکل ایمن و مؤثری بوده است؛ یعنی همان فک‌هایی که ایمپلنت‌گذاری معمول در آن‌ها بدون گرفت ممکن نیست."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا شایع‌ترین عارضه‌ی پروتزی در all-on-4 شکست پیچ است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ شایع‌ترین عارضه‌ی پروتزی شکست پروتز اکریلی است که در ۹ مطالعه گزارش شده، و پس از آن کنده شدن المان پروتز نهایی و شل شدن یا شکست پیچ قرار دارند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا وقتی قوس مقابل دنچر کامل متحرک است، در ماه‌های اول all-on-4 از mutually protected occlusion استفاده می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ وقتی قوس مقابل دنچر کامل متحرک باشد به‌جای mutually protected از balanced occlusion استفاده می‌شود، چون پایداری دنچر مقابل به تماس‌های دوطرفه‌ی هم‌زمان وابسته است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "دومین عارضه‌ی بیولوژیک شایع در پروتکل all-on-4 پس از از دست رفتن ایمپلنت چیست؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "پری‌ایمپلنتایتیس، که پس از حدود دو سال ظاهر می‌شود و در شش مطالعه گزارش شده است؛ داده‌های موجود درباره‌ی آن بدون تعریف استاندارد ثبت شده‌اند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا مطالعات واردشده در مرور all-on-4 برای تصمیم لود فوری از resonance frequency analysis مثل Osstell استفاده کرده‌اند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ هیچ‌کدام از مطالعات از resonance frequency analysis استفاده نکرده‌اند و تنها ملاک لود فوری عددی بوده که هنگام بستن ایمپلنت روی راتچت خوانده شده است."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c1",
+              "name": "شرط تورک برای لود فوری در all-on-4",
+              "description": "لود فوری فقط با گیر اولیه‌ی کافی مجاز است؛ معیار عملی تورک درج ۳۰ تا ۵۰ نیوتن‌سانتی‌متر هنگام قراردهی ایمپلنت است.",
+              "source": "faq",
+              "sourceFaqIndex": 0
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c2",
+              "name": "زمان‌بندی غالب شکست ایمپلنت در all-on-4",
+              "description": "از ۱۷۵ شکست روی ۱۱۷۴۳ ایمپلنت، ۱۳۴ مورد در سال اول رخ داده؛ فاز اولیه‌ی ترمیم نقطه‌ی حساس پرونده است نه سال‌های دور.",
+              "source": "faq",
+              "sourceFaqIndex": 1
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c3",
+              "name": "معنای عدد ۹۹٫۸٪ در abstract مرور all-on-4",
+              "description": "این رقم برآورد تجمیعی همه‌ی مطالعات نیست و به یک مطالعه تعلق دارد؛ برای مشاوره محدوده‌ی ۹۵ تا ۹۸ درصد در بازه‌ی پنج تا ده ساله دقیق‌تر است.",
+              "source": "faq",
+              "sourceFaqIndex": 2
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c4",
+              "name": "اندیکاسیون all-on-4 در کلاس‌های Cawood & Howell",
+              "description": "در مطالعه‌ای که از این طبقه‌بندی استفاده کرده، پروتکل در کلاس‌های IV، V و VI — یعنی ریج تیغه‌ای، تخت یا فرورفته — ایمن و مؤثر گزارش شده است.",
+              "source": "faq",
+              "sourceFaqIndex": 3
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c5",
+              "name": "شایع‌ترین عارضه‌ی پروتزی all-on-4",
+              "description": "شکست پروتز اکریلی شایع‌ترین عارضه‌ی پروتزی است (۹ مطالعه)؛ بعد از آن جدا شدن المان پروتز نهایی و شل شدن یا شکست پیچ قرار می‌گیرند.",
+              "source": "faq",
+              "sourceFaqIndex": 4
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c6",
+              "name": "اکلوژن مقابل دنچر کامل در all-on-4",
+              "description": "در برابر دنچر کامل متحرک به‌جای mutually protected از balanced occlusion استفاده می‌شود تا تماس دوطرفه‌ی هم‌زمان پایداری دنچر مقابل را حفظ کند.",
+              "source": "faq",
+              "sourceFaqIndex": 5
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c7",
+              "name": "جایگاه پری‌ایمپلنتایتیس میان عوارض بیولوژیک all-on-4",
+              "description": "پس از از دست رفتن ایمپلنت، پری‌ایمپلنتایتیس دومین عارضه‌ی بیولوژیک شایع است و معمولاً پس از حدود دو سال ظاهر می‌شود؛ گزارش‌ها بدون تعریف استانداردند.",
+              "source": "faq",
+              "sourceFaqIndex": 6
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c8",
+              "name": "ملاک استابیلیتی برای لود فوری در مطالعات all-on-4",
+              "description": "هیچ مطالعه‌ای از resonance frequency analysis مانند Osstell استفاده نکرده؛ تنها ملاک، عدد تورک خوانده‌شده روی راتچت هنگام بستن ایمپلنت بوده است.",
+              "source": "faq",
+              "sourceFaqIndex": 7
+            }
+          ]
+        }
+      ]
     }
   }
 }

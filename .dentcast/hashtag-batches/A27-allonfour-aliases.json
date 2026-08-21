@@ -1,0 +1,21 @@
+{
+  "type": "dentai",
+  "note": "Alias enrichment for #ایمپلنت_فول_آرچ while publishing dentai/dentai-31. Queries «all on four» and «allonfour» missed the concept: existing aliases only covered the digit form (all on 4 / allon4 / all-on-4). «four» is a different token from «4», and allonfour is a single word. aliases REPLACES the list — pre-existing spellings are repeated. No new concept (All-on-4 already lives on this tag). Episode 144.1 already carries the canonical tag; chips unchanged.",
+  "concepts": [
+    {
+      "tag": "#ایمپلنت_فول_آرچ",
+      "aliases": [
+        "all on 4",
+        "all-on-4",
+        "آل آن فور",
+        "allon4",
+        "ایمپلنت تمام فک",
+        "all on 6",
+        "all on four",
+        "all-on-four",
+        "allonfour"
+      ]
+    }
+  ],
+  "articles": {}
+}

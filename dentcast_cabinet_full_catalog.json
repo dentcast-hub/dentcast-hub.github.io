@@ -2,7 +2,7 @@
   "schema_version": "2.0",
   "source": "local hard drive — E:\\Paper farzad (recursive)",
   "total_files_scanned": 3313,
-  "unique_papers": 2882,
+  "unique_papers": 2883,
   "duplicates_collapsed": 435,
   "fields_generated": [
     "topic",
@@ -137275,6 +137275,52 @@
       "drive_id": "1TQdfO9qDJlt_Pf0PJPnqVLc1zwFegMjS",
       "drive_view": "https://drive.google.com/file/d/1TQdfO9qDJlt_Pf0PJPnqVLc1zwFegMjS/view",
       "drive_download": "https://drive.google.com/uc?export=download&id=1TQdfO9qDJlt_Pf0PJPnqVLc1zwFegMjS"
+    },
+    {
+      "id": "P2897",
+      "title": "The all-on-four treatment concept: Systematic review",
+      "file_name": "Soto-Penaloza-2017-all-on-four-systematic-review.pdf",
+      "topic": "all on 4",
+      "topic_path": "all on 4",
+      "type": "systematic-review",
+      "local_path": "",
+      "file_size": 0,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "dentai/dentai-31"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1s-kmN0bpYHH_-whEKEeN1HyVqgu6A4Ra/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1s-kmN0bpYHH_-whEKEeN1HyVqgu6A4Ra",
+      "drive_view": "https://drive.google.com/file/d/1s-kmN0bpYHH_-whEKEeN1HyVqgu6A4Ra/view",
+      "drive_id": "1s-kmN0bpYHH_-whEKEeN1HyVqgu6A4Ra",
+      "tags": [
+        "all-on-4",
+        "all-on-four",
+        "tilted-implants",
+        "immediate-loading",
+        "full-arch",
+        "systematic-review",
+        "topic:all-on-4",
+        "dental-implant",
+        "edentulous"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "The all-on-four treatment concept: Systematic review",
+      "doi": "10.4317/jced.53613",
+      "journal": "Journal of Clinical and Experimental Dentistry",
+      "crossref_year": 2017,
+      "subjects": [],
+      "abstract": "Objectives: To systematically review the literature on the \"all-on-four\" treatment concept regarding its indications, surgical procedures, prosthetic protocols and technical and biological complications after at least three years in function. Study Design: The three major electronic databases were screened: MEDLINE (via PubMed), EMBASE, and the Cochrane Library of the Cochrane Collaboration (CENTRAL). In addition, electronic screening was made of the 'grey literature' using the System for Information on Grey Literature in Europe - Open Grey, covering the period from January 2005 up to and including April 2016. Results: A total of 728 articles were obtained from the initial screening process. Of these articles, 24 fulfilled the inclusion criteria. Methodological quality assessment showed sample size calculation to be reported by only one study, and follow-up did not include a large number of participants - a fact that may introduce bias and lead to misleading interpretations of the study results. Conclusions: The all-on-four treatment concept offers a predictable way to treat the atrophic jaw in patients that do not prefer regenerative procedures, which increase morbidity and the treatment fees. The results obtained indicate a survival rate for more than 24 months of 99.8%. However, current evidence is limited due the scarcity of information referred to methodological quality, a lack of adequate follow-up, and sample attrition. Biological complications (e.g., peri-implantitis) are reported in few patients after a mean follow-up of two years. Adequate definition of the success / survival criteria is thus necessary, due the high prevalence of peri-implant diseases.",
+      "display_title": "The all-on-four treatment concept: Systematic review",
+      "authors": [
+        "David Soto-Peñaloza",
+        "Regino Zaragozí-Alonso",
+        "María Peñarrocha-Diago",
+        "Miguel Peñarrocha-Diago"
+      ]
     }
   ],
   "drive_matched": 2846,
