@@ -13705,5 +13705,41 @@
       "secondary": [],
       "subtopic": "surgical-planning"
     }
+  },
+  {
+    "type": "sharehub",
+    "id": "17",
+    "title": "شکست بریج زیرکونیا در بیمار بروکسر: آیا دارو یا تغییر ماده مسئله را حل می‌کند؟",
+    "caption": "بریج زیرکونیا خلفی در بیمار بروکسر بعد از پنج ماه شکسته. مشروط کردن رستوریشن به دارو درست نیست؛ فول متال چیپینگ را حذف می‌کند ولی نیرو را حل نمی‌کند. اول نوع شکست و تکنیک، بعد اسپلینت و اصلاح اکلوزال.",
+    "author": "دنت‌کست",
+    "source": "https://dentcast.org",
+    "hashtags": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#براکسیسم",
+      "#زیرکونیا",
+      "#بریج",
+      "#پارافانکشن",
+      "#اسپلینت",
+      "#شکست_پرسلن"
+    ],
+    "keywords": [
+      "شکست بریج زیرکونیا",
+      "بروکسیسم و رستوریشن",
+      "چیپینگ پرسلن زیرکونیا",
+      "فول متال در بروکسر",
+      "اسپلینت اکلوزال",
+      "ابعاد کانکتور بریج",
+      "zirconia bridge failure bruxism",
+      "porcelain chipping zirconia",
+      "full metal bridge bruxer",
+      "occlusal splint fixed prosthesis"
+    ],
+    "url": "/sharehub/share-17.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "failures"
+    }
   }
 ]
