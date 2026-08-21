@@ -26500,6 +26500,39 @@
           ]
         }
       ]
+    },
+    "dentcast-plus/video-9": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/dentcast-plus/video-9.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا برای خارج کردنِ روکشِ قدیمیِ سمان‌شده، وارد کردنِ ضرباتِ شدید به آن روشِ درستی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ وارد کردنِ ضرباتِ شدید به روکشِ قدیمی برای خارج کردنش، احتمالِ شکستنِ دندانِ زیرین را افزایش می‌دهد. روشِ ایمن‌تر این است که روکش بریده شود و سپس خارج شود."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/dentcast-plus/video-9.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentcast-plus/video-9.html#flashcards-c1",
+              "name": "خطرِ ضربه‌ی شدید هنگامِ خارج کردنِ روکشِ قدیمی",
+              "description": "کوبیدنِ ضرباتِ شدید برای بازکردنِ روکشِ قدیمیِ سمان‌شده، ریسکِ شکستنِ دندانِ زیرِ آن را بالا می‌برد؛ به همین دلیل، بریدنِ روکش پیش از خارج کردن، رویکردِ ایمن‌تری برای حفظِ ساختارِ دندان محسوب می‌شود.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
