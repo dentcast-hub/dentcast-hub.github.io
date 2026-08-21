@@ -90,15 +90,30 @@
    two surfaces — the standalone article page and the desktop shell — and the
    shell strips dc-nav.js and dc-article.css out of the article it fetches while
    keeping this file. One row may not have two stylesheets. */
+/* Framed as one surface, not a loose scatter of pills — the same
+   surface+line+radius+shadow the rest of this design system already uses for
+   any self-contained block (.dcp-card, .dcp-invite, …). Before this the row
+   was a bare flex line directly on the page background, so its 6-8 buttons
+   had nothing tying them together and read as clutter rather than one
+   toolbar (founder feedback, 2026-08-21). Purely visual: the two group
+   elements, their classes and every button inside keep the exact same
+   markup and behaviour. */
 .dc-actions {
   display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 10px 14px;
-  margin: 14px 0 18px;
+  flex-wrap: wrap; gap: 10px 16px;
+  margin: 16px 0 20px;
+  padding: 12px 14px;
+  background: var(--dcp-surface);
+  border: 1px solid var(--dcp-line);
+  border-radius: var(--dcp-radius);
+  box-shadow: var(--dcp-shadow);
 }
 .dc-actions-main { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .dc-actions-aux {
   display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
   margin-inline-start: auto; /* holds the far edge even when the row wraps */
+  padding-inline-start: 14px;
+  border-inline-start: 1px solid var(--dcp-line); /* a quiet seam between "what you do" and "what this page says about itself" */
 }
 
 /* One button vocabulary for the whole row. Every control is the same height and
@@ -180,6 +195,10 @@
   .dc-actions-aux {
     flex: 0 0 100%; margin-inline-start: 0;
     justify-content: space-between;
+    /* The seam moves from the side to the top once aux drops to its own
+       line — a vertical line with nothing to its right would float. */
+    border-inline-start: none; padding-inline-start: 0;
+    border-top: 1px solid var(--dcp-line); padding-top: 10px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -187,6 +206,13 @@
   .dc-act-heart.is-pop .dcp-heart-icon { transform: none; }
   .dc-act:active { transform: none; }
 }
+
+/* The end-of-article twin (plus.js's mountBottomActions) — same card, same
+   button vocabulary, so it reads as the same row met a second time rather
+   than a different control. No aux group here: there is no share/زمان
+   مطالعه/دس chip to repeat, only the two acts a finished reader wants. */
+.dc-actions-end { margin-top: 28px; justify-content: flex-start; }
+.dc-actions-end-lead { flex: 0 0 100%; margin: 0 0 2px; font-weight: 700; color: var(--dcp-ink); }
 
 /* «؟» reveal, reused by both the کالکشن button in this row and the workbench
    toolbar's own — hidden by default, toggles a plain caption line. */
