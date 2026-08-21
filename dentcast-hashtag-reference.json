@@ -807,6 +807,54 @@
    ]
   },
   {
+   "key": "dentai",
+   "tag": "#DentAI",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری DentAI — خلاصه‌ی یک مقاله‌ی پژوهشی.",
+   "use_when": "روی هر مدخل DentAI، و هیچ‌جای دیگر.",
+   "aliases": [
+    "دنت ای آی",
+    "dent ai"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 31,
+   "content_ids": [
+    "dentai/dentai-1",
+    "dentai/dentai-2",
+    "dentai/dentai-3",
+    "dentai/dentai-4",
+    "dentai/dentai-5",
+    "dentai/dentai-6",
+    "dentai/dentai-7",
+    "dentai/dentai-8",
+    "dentai/dentai-9",
+    "dentai/dentai-10",
+    "dentai/dentai-11",
+    "dentai/dentai-12",
+    "dentai/dentai-13",
+    "dentai/dentai-14",
+    "dentai/dentai-15",
+    "dentai/dentai-16",
+    "dentai/dentai-17",
+    "dentai/dentai-18",
+    "dentai/dentai-19",
+    "dentai/dentai-20",
+    "dentai/dentai-21",
+    "dentai/dentai-22",
+    "dentai/dentai-23",
+    "dentai/dentai-24",
+    "dentai/dentai-25",
+    "dentai/dentai-26",
+    "dentai/dentai-27",
+    "dentai/dentai-28",
+    "dentai/dentai-29",
+    "dentai/dentai-30",
+    "dentai/dentai-31"
+   ]
+  },
+  {
    "key": "پروتز_ایمپلنت",
    "tag": "#پروتز_ایمپلنت",
    "domain": "clinical",
@@ -853,53 +901,6 @@
     "chairside/chairside-24",
     "chairside/chairside-25",
     "episodes/episode-161"
-   ]
-  },
-  {
-   "key": "dentai",
-   "tag": "#DentAI",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام سری DentAI — خلاصه‌ی یک مقاله‌ی پژوهشی.",
-   "use_when": "روی هر مدخل DentAI، و هیچ‌جای دیگر.",
-   "aliases": [
-    "دنت ای آی",
-    "dent ai"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 30,
-   "content_ids": [
-    "dentai/dentai-1",
-    "dentai/dentai-2",
-    "dentai/dentai-3",
-    "dentai/dentai-4",
-    "dentai/dentai-5",
-    "dentai/dentai-6",
-    "dentai/dentai-7",
-    "dentai/dentai-8",
-    "dentai/dentai-9",
-    "dentai/dentai-10",
-    "dentai/dentai-11",
-    "dentai/dentai-12",
-    "dentai/dentai-13",
-    "dentai/dentai-14",
-    "dentai/dentai-15",
-    "dentai/dentai-16",
-    "dentai/dentai-17",
-    "dentai/dentai-18",
-    "dentai/dentai-19",
-    "dentai/dentai-20",
-    "dentai/dentai-21",
-    "dentai/dentai-22",
-    "dentai/dentai-23",
-    "dentai/dentai-24",
-    "dentai/dentai-25",
-    "dentai/dentai-26",
-    "dentai/dentai-27",
-    "dentai/dentai-28",
-    "dentai/dentai-29",
-    "dentai/dentai-30"
    ]
   },
   {
@@ -3338,6 +3339,41 @@
    ]
   },
   {
+   "key": "ایمپلنت_فول_آرچ",
+   "tag": "#ایمپلنت_فول_آرچ",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
+   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
+   "aliases": [
+    "all on 4",
+    "all-on-4",
+    "آل آن فور",
+    "allon4",
+    "ایمپلنت تمام فک",
+    "all on 6",
+    "all on four",
+    "all-on-four",
+    "allonfour"
+   ],
+   "variants": [
+    "#AllOn4"
+   ],
+   "co_tags": [
+    "#Full_Arch_Implant"
+   ],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-108",
+    "episodes/episode-144-1",
+    "insight/insight-51",
+    "metanotes/meta-17",
+    "sharehub/share-11",
+    "insight/insight-60",
+    "dentai/dentai-31"
+   ]
+  },
+  {
    "key": "باندینگ_سرامیک",
    "tag": "#باندینگ_سرامیک",
    "domain": "clinical",
@@ -3798,37 +3834,6 @@
     "chairside/chairside-20",
     "insight/insight-55",
     "chairside/chairside-26"
-   ]
-  },
-  {
-   "key": "ایمپلنت_فول_آرچ",
-   "tag": "#ایمپلنت_فول_آرچ",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
-   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
-   "aliases": [
-    "all on 4",
-    "all-on-4",
-    "آل آن فور",
-    "allon4",
-    "ایمپلنت تمام فک",
-    "all on 6"
-   ],
-   "variants": [
-    "#AllOn4"
-   ],
-   "co_tags": [
-    "#Full_Arch_Implant"
-   ],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-108",
-    "episodes/episode-144-1",
-    "insight/insight-51",
-    "metanotes/meta-17",
-    "sharehub/share-11",
-    "insight/insight-60"
    ]
   },
   {
@@ -4779,6 +4784,35 @@
    ]
   },
   {
+   "key": "زمان_لود_ایمپلنت",
+   "tag": "#زمان_لود_ایمپلنت",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "زمان‌بندیِ بارگذاریِ ایمپلنت — فوری، زودهنگام یا تأخیری — و اثرش بر ثبات و موفقیت.",
+   "use_when": "مقاله زمانِ لود را انتخاب یا مقایسه کند.",
+   "aliases": [
+    "loading protocol",
+    "immediate loading",
+    "لود فوری",
+    "لود زودهنگام",
+    "زمان لود",
+    "immediate load",
+    "ایمیدیت لود",
+    "early load",
+    "ارلی لود"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-26",
+    "episodes/episode-45",
+    "episodes/episode-52",
+    "notecast/episode-26",
+    "dentai/dentai-31"
+   ]
+  },
+  {
    "key": "سلامت_دهان",
    "tag": "#سلامت_دهان",
    "domain": "clinical",
@@ -5001,6 +5035,29 @@
     "dentai/dentai-3",
     "dentai/dentai-12",
     "sharehub/share-7"
+   ]
+  },
+  {
+   "key": "کانتی_لیور",
+   "tag": "#کانتی_لیور",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "واحدِ طره‌ای که فقط از یک سمت تکیه دارد.",
+   "use_when": "مقاله کانتی‌لیور را انتخاب یا رد کند.",
+   "aliases": [
+    "کانتیلور",
+    "کانتی‌لیور",
+    "کانتیلیور"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "dentai/dentai-7",
+    "sharehub/share-3",
+    "metanotes/meta-18",
+    "episodes/episode-161",
+    "dentai/dentai-31"
    ]
   },
   {
@@ -5435,6 +5492,30 @@
    ]
   },
   {
+   "key": "ثبات_اولیه",
+   "tag": "#ثبات_اولیه",
+   "domain": null,
+   "words": 2,
+   "definition": "گیرِ مکانیکیِ ایمپلنت در لحظه‌ی جراحی.",
+   "use_when": "مقاله ثبات اولیه را شرطِ لود بداند.",
+   "aliases": [
+    "primary stability",
+    "ثبات اولیه ایمپلنت",
+    "ISQ",
+    "insertion torque",
+    "تورک اینسرشن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-45",
+    "notecast/episode-25",
+    "notecast/episode-26",
+    "dentai/dentai-31"
+   ]
+  },
+  {
    "key": "درمان_ریشه",
    "tag": "#درمان_ریشه",
    "domain": "clinical",
@@ -5573,34 +5654,6 @@
     "insight/insight-28",
     "insight/insight-29",
     "insight/insight-32"
-   ]
-  },
-  {
-   "key": "زمان_لود_ایمپلنت",
-   "tag": "#زمان_لود_ایمپلنت",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "زمان‌بندیِ بارگذاریِ ایمپلنت — فوری، زودهنگام یا تأخیری — و اثرش بر ثبات و موفقیت.",
-   "use_when": "مقاله زمانِ لود را انتخاب یا مقایسه کند.",
-   "aliases": [
-    "loading protocol",
-    "immediate loading",
-    "لود فوری",
-    "لود زودهنگام",
-    "زمان لود",
-    "immediate load",
-    "ایمیدیت لود",
-    "early load",
-    "ارلی لود"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-26",
-    "episodes/episode-45",
-    "episodes/episode-52",
-    "notecast/episode-26"
    ]
   },
   {
@@ -5850,28 +5903,6 @@
     "photocast/episode-1",
     "insight/insight-29",
     "metanotes/meta-12"
-   ]
-  },
-  {
-   "key": "کانتی_لیور",
-   "tag": "#کانتی_لیور",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "واحدِ طره‌ای که فقط از یک سمت تکیه دارد.",
-   "use_when": "مقاله کانتی‌لیور را انتخاب یا رد کند.",
-   "aliases": [
-    "کانتیلور",
-    "کانتی‌لیور",
-    "کانتیلیور"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "dentai/dentai-7",
-    "sharehub/share-3",
-    "metanotes/meta-18",
-    "episodes/episode-161"
    ]
   },
   {
@@ -6222,6 +6253,29 @@
     "dentai/dentai-5",
     "notecast/episode-4",
     "notecast/episode-5"
+   ]
+  },
+  {
+   "key": "ایمپلنت_زاویه_دار",
+   "tag": "#ایمپلنت_زاویه_دار",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "فیکسچری با زاویه‌ی نامناسب — مسئله‌ای فراتر از انتخابِ اباتمنت.",
+   "use_when": "مقاله زاویه را عاملِ عوارضِ بعدی بداند، نه صرفاً مسئله‌ی مسیر.",
+   "aliases": [
+    "ایمپلنت زاویه دار",
+    "angled implant",
+    "زاویه فیکسچر",
+    "ایمپلنت کج",
+    "تیلت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-144-1",
+    "insight/insight-47",
+    "dentai/dentai-31"
    ]
   },
   {
@@ -6641,29 +6695,6 @@
     "insight/insight-15",
     "insight/insight-22",
     "dentcast-plus/video-7"
-   ]
-  },
-  {
-   "key": "ثبات_اولیه",
-   "tag": "#ثبات_اولیه",
-   "domain": null,
-   "words": 2,
-   "definition": "گیرِ مکانیکیِ ایمپلنت در لحظه‌ی جراحی.",
-   "use_when": "مقاله ثبات اولیه را شرطِ لود بداند.",
-   "aliases": [
-    "primary stability",
-    "ثبات اولیه ایمپلنت",
-    "ISQ",
-    "insertion torque",
-    "تورک اینسرشن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-45",
-    "notecast/episode-25",
-    "notecast/episode-26"
    ]
   },
   {
@@ -8717,28 +8748,6 @@
    "content_ids": [
     "episodes/episode-22",
     "notecast/episode-22"
-   ]
-  },
-  {
-   "key": "ایمپلنت_زاویه_دار",
-   "tag": "#ایمپلنت_زاویه_دار",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "فیکسچری با زاویه‌ی نامناسب — مسئله‌ای فراتر از انتخابِ اباتمنت.",
-   "use_when": "مقاله زاویه را عاملِ عوارضِ بعدی بداند، نه صرفاً مسئله‌ی مسیر.",
-   "aliases": [
-    "ایمپلنت زاویه دار",
-    "angled implant",
-    "زاویه فیکسچر",
-    "ایمپلنت کج",
-    "تیلت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-144-1",
-    "insight/insight-47"
    ]
   },
   {
@@ -20240,6 +20249,7 @@
   "باند سرامیک": "باندینگ سرامیک",
   "linkevicius": "کتاب لینکویچیوس",
   "لینکوییسیوس": "کتاب لینکویچیوس",
+  "all on four": "ایمپلنت بیمار بی دندان",
   "سوپرا اراپت": "سوپرااراپشن",
   "passive fit": "فیت پروتز",
   "مارژین دقیق": "مارجین روکش",
@@ -20682,6 +20692,7 @@
   "قالب گیری": "قالبگیری",
   "کدام سمان": "انتخاب سمان",
   "آل آن فور": "ایمپلنت بیمار بی دندان",
+  "allonfour": "ایمپلنت بیمار بی دندان",
   "guideline": "گایدلاین",
   "سیل محیطی": "psz",
   "اینتگریشن": "استئواینتگریشن",

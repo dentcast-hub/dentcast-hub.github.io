@@ -295,6 +295,10 @@
         "milestone": false
       },
       {
+        "content_id": "dentai/dentai-31",
+        "milestone": false
+      },
+      {
         "content_id": "episodes/episode-147-5",
         "milestone": false
       },
@@ -924,6 +928,10 @@
       {
         "content_id": "episodes/episode-108",
         "milestone": true
+      },
+      {
+        "content_id": "dentai/dentai-31",
+        "milestone": false
       },
       {
         "content_id": "episodes/episode-133",
@@ -2018,6 +2026,10 @@
       },
       {
         "content_id": "chairside/chairside-3",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-31",
         "milestone": false
       },
       {
