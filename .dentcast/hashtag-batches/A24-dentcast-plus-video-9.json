@@ -1,0 +1,24 @@
+{
+  "type": "dentcast_plus",
+  "note": "Publish of dentcast-plus/video-9 (چند نکته برای خارج کردن روکش قدیمی بیمار). Mints #خارج_کردن_روکش (no existing concept covers the technique of physically removing an already-cemented crown — #برداشت_ترمیم is generic restoration removal as a diagnostic step, #تعویض_روکش is the replace-vs-keep decision); reuses #دنتکست_پلاس #روکش.",
+  "concepts": [
+    {
+      "tag": "#خارج_کردن_روکش",
+      "domain": "clinical",
+      "definition": "خارج کردنِ روکشِ قبلاً سمان‌شده از روی دندان — برای بازسازی، تعویض یا دسترسیِ زیرِ آن.",
+      "use_when": "مقاله روشِ عملیِ باز کردن یا درآوردنِ روکشِ موجود را توضیح دهد.",
+      "aliases": [
+        "برداشتن روکش",
+        "درآوردن روکش",
+        "crown removal"
+      ]
+    }
+  ],
+  "articles": {
+    "dentcast-plus/video-9": [
+      "#دنتکست_پلاس",
+      "#روکش",
+      "#خارج_کردن_روکش"
+    ]
+  }
+}

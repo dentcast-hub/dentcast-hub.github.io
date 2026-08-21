@@ -25777,6 +25777,89 @@
         }
       ]
     },
+    "chairside/chairside-35": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/chairside/chairside-35.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا برای پوشاندن رنگ زرد دندان پایه و رسیدن به رنگ روشن سرامیک، تراش عمیق‌تر انامل لازم می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ هرچه بستر زردتر باشد و رنگ نهایی روشن‌تر خواسته شود، برای مسدود کردن رنگ تیره فضای سرامیک بیشتری لازم است و انامل بیشتری برداشته می‌شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا بلیچینگ پیش از لمینت می‌تواند نیاز به لمینت را از بین ببرد اگر بیمار از رنگ راضی شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ اگر بلیچینگ دندان‌ها را به قدری روشن کند که بیمار از زیبایی و رنگ رضایت کامل پیدا کند، ممکن است کلاً نیازی به لمینت نباشد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا وقتی بعد از بلیچینگ هنوز به‌خاطر فرم یا اصرار بیمار به لمینت نیاز است، روشن‌تر شدن بستر تراش را کمتر می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ رنگ پایه‌ی روشن‌تر سایه‌ی زیرین را کمتر روی لمینت نهایی می‌اندازد و می‌توان با حداقل تراش به رنگ دلخواه رسید."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا تراش محافظه‌کارانه که بستر را روی انامل نگه می‌دارد طول عمر رستوریشن را بیشتر می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ تراش محافظه‌کارانه و بستر روی انامل طول عمر رستوریشن را بیشتر می‌کند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/chairside/chairside-35.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-35.html#flashcards-c1",
+              "name": "اثر رنگ بستر روی ضخامت سرامیک لمینت",
+              "description": "رنگ دندان زیرین همیشه روی خروجی لمینت اثر می‌گذارد؛ شدت اثر به نوع سمان بستگی دارد ولی صفر نمی‌شود. بستر زردتر به‌علاوهٔ رنگ نهایی روشن‌تر یعنی فضای بیشتری برای مسدود کردن رنگ و تراش عمیق‌تر انامل.",
+              "source": "faq",
+              "sourceFaqIndex": 0
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-35.html#flashcards-c2",
+              "name": "بلیچینگ به‌عنوان فاز مقدماتی پیش از لمینت",
+              "description": "اگر روشن‌کردن بستر بیمار را از رنگ راضی کند، مسیر می‌تواند بدون لمینت تمام شود. اگر فرم یا خواست بیمار هنوز لمینت بخواهد، همان روشن‌شدن سایهٔ زیر سرامیک را کم می‌کند و اجازه می‌دهد تراش در حداقل بماند.",
+              "source": "faq",
+              "sourceFaqIndex": 1
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-35.html#flashcards-c3",
+              "name": "Stump shade و تراش محافظه‌کارانه",
+              "description": "کلید کم‌کردن ضخامت سرامیک لازم، روشن‌تر کردن دندان پایه است نه تراش بیشتر از اول. بستر روشن یعنی سایه‌ی زیرین کمتر روی لمینت نهایی می‌افتد.",
+              "source": "faq",
+              "sourceFaqIndex": 2
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-35.html#flashcards-c4",
+              "name": "بستر انامل و طول عمر رستوریشن",
+              "description": "وقتی تراش محافظه‌کارانه بستر را روی انامل نگه می‌دارد، سطح باند قابل‌اعتمادتری می‌ماند و طول عمر رستوریشن بالاتر می‌رود — همان دلیلی که بلیچینگ مقدماتی را به تراش فوری ترجیح می‌دهد.",
+              "source": "faq",
+              "sourceFaqIndex": 3
+            }
+          ]
+        }
+      ]
+    },
     "dentai/dentai-29": {
       "faqPages": [
         {
@@ -26413,6 +26496,186 @@
               "name": "چهار سؤال ضروری درباره‌ی مصرف تیرزپاتاید در تاریخچه‌ی پرونده",
               "description": "نام و شناسایی آمپول هفتگی لاغری یا قند، مدت مصرف و اخیراً بالا رفتن دوز، وجود تهوع/استفراغ/ترش‌کردن، و مصرف هم‌زمان انسولین یا قرص قند؛ سؤال دوم اهمیت ویژه دارد چون بیشتر عوارض گوارشی در ۲۰ هفته‌ی اول افزایش دوز رخ می‌دهند.",
               "source": "authored"
+            }
+          ]
+        }
+      ]
+    },
+    "dentcast-plus/video-9": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/dentcast-plus/video-9.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا برای خارج کردنِ روکشِ قدیمیِ سمان‌شده، وارد کردنِ ضرباتِ شدید به آن روشِ درستی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ وارد کردنِ ضرباتِ شدید به روکشِ قدیمی برای خارج کردنش، احتمالِ شکستنِ دندانِ زیرین را افزایش می‌دهد. روشِ ایمن‌تر این است که روکش بریده شود و سپس خارج شود."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/dentcast-plus/video-9.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentcast-plus/video-9.html#flashcards-c1",
+              "name": "خطرِ ضربه‌ی شدید هنگامِ خارج کردنِ روکشِ قدیمی",
+              "description": "کوبیدنِ ضرباتِ شدید برای بازکردنِ روکشِ قدیمیِ سمان‌شده، ریسکِ شکستنِ دندانِ زیرِ آن را بالا می‌برد؛ به همین دلیل، بریدنِ روکش پیش از خارج کردن، رویکردِ ایمن‌تری برای حفظِ ساختارِ دندان محسوب می‌شود.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
+    },
+    "dentai/dentai-31": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/dentai/dentai-31.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا در پروتکل all-on-4 لود فوری بدون گیر اولیه‌ی کافی مجاز است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ لود فوری فقط وقتی مجاز است که ایمپلنت در همان جلسه‌ی جراحی گیر مکانیکی کافی داشته باشد و معیار عملی این گیر تورک درج ۳۰ تا ۵۰ نیوتن‌سانتی‌متر است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا اکثر شکست‌های ایمپلنت در پروتکل all-on-4 در بلندمدت رخ می‌دهد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ از ۱۷۵ شکست گزارش‌شده روی ۱۱۷۴۳ ایمپلنت، ۱۳۴ مورد در سال اول رخ داده و اکثریت قاطع شکست‌ها مربوط به فاز اولیه‌ی ترمیم است نه بلندمدت."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا عدد ۹۹٫۸ درصدی که در abstract مرور all-on-4 آمده برآورد تجمیعی همه‌ی مطالعات است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ آن عدد به یک مطالعه تعلق دارد نه برآورد تجمیعی، و برای مشاوره‌ی بالینی محدوده‌ی ۹۵ تا ۹۸ درصد در بازه‌های پنج تا ده ساله بیان دقیق‌تری است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا all-on-4 برای فک‌های تحلیل‌رفته‌ی کلاس IV تا VI در طبقه‌بندی Cawood & Howell پروتکل ایمن و مؤثری گزارش شده است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ در مطالعه‌ای که از این طبقه‌بندی استفاده کرده، all-on-4 در کلاس‌های IV، V و VI پروتکل ایمن و مؤثری بوده است؛ یعنی همان فک‌هایی که ایمپلنت‌گذاری معمول در آن‌ها بدون گرفت ممکن نیست."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا شایع‌ترین عارضه‌ی پروتزی در all-on-4 شکست پیچ است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ شایع‌ترین عارضه‌ی پروتزی شکست پروتز اکریلی است که در ۹ مطالعه گزارش شده، و پس از آن کنده شدن المان پروتز نهایی و شل شدن یا شکست پیچ قرار دارند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا وقتی قوس مقابل دنچر کامل متحرک است، در ماه‌های اول all-on-4 از mutually protected occlusion استفاده می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ وقتی قوس مقابل دنچر کامل متحرک باشد به‌جای mutually protected از balanced occlusion استفاده می‌شود، چون پایداری دنچر مقابل به تماس‌های دوطرفه‌ی هم‌زمان وابسته است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "دومین عارضه‌ی بیولوژیک شایع در پروتکل all-on-4 پس از از دست رفتن ایمپلنت چیست؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "پری‌ایمپلنتایتیس، که پس از حدود دو سال ظاهر می‌شود و در شش مطالعه گزارش شده است؛ داده‌های موجود درباره‌ی آن بدون تعریف استاندارد ثبت شده‌اند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا مطالعات واردشده در مرور all-on-4 برای تصمیم لود فوری از resonance frequency analysis مثل Osstell استفاده کرده‌اند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ هیچ‌کدام از مطالعات از resonance frequency analysis استفاده نکرده‌اند و تنها ملاک لود فوری عددی بوده که هنگام بستن ایمپلنت روی راتچت خوانده شده است."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c1",
+              "name": "شرط تورک برای لود فوری در all-on-4",
+              "description": "لود فوری فقط با گیر اولیه‌ی کافی مجاز است؛ معیار عملی تورک درج ۳۰ تا ۵۰ نیوتن‌سانتی‌متر هنگام قراردهی ایمپلنت است.",
+              "source": "faq",
+              "sourceFaqIndex": 0
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c2",
+              "name": "زمان‌بندی غالب شکست ایمپلنت در all-on-4",
+              "description": "از ۱۷۵ شکست روی ۱۱۷۴۳ ایمپلنت، ۱۳۴ مورد در سال اول رخ داده؛ فاز اولیه‌ی ترمیم نقطه‌ی حساس پرونده است نه سال‌های دور.",
+              "source": "faq",
+              "sourceFaqIndex": 1
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c3",
+              "name": "معنای عدد ۹۹٫۸٪ در abstract مرور all-on-4",
+              "description": "این رقم برآورد تجمیعی همه‌ی مطالعات نیست و به یک مطالعه تعلق دارد؛ برای مشاوره محدوده‌ی ۹۵ تا ۹۸ درصد در بازه‌ی پنج تا ده ساله دقیق‌تر است.",
+              "source": "faq",
+              "sourceFaqIndex": 2
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c4",
+              "name": "اندیکاسیون all-on-4 در کلاس‌های Cawood & Howell",
+              "description": "در مطالعه‌ای که از این طبقه‌بندی استفاده کرده، پروتکل در کلاس‌های IV، V و VI — یعنی ریج تیغه‌ای، تخت یا فرورفته — ایمن و مؤثر گزارش شده است.",
+              "source": "faq",
+              "sourceFaqIndex": 3
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c5",
+              "name": "شایع‌ترین عارضه‌ی پروتزی all-on-4",
+              "description": "شکست پروتز اکریلی شایع‌ترین عارضه‌ی پروتزی است (۹ مطالعه)؛ بعد از آن جدا شدن المان پروتز نهایی و شل شدن یا شکست پیچ قرار می‌گیرند.",
+              "source": "faq",
+              "sourceFaqIndex": 4
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c6",
+              "name": "اکلوژن مقابل دنچر کامل در all-on-4",
+              "description": "در برابر دنچر کامل متحرک به‌جای mutually protected از balanced occlusion استفاده می‌شود تا تماس دوطرفه‌ی هم‌زمان پایداری دنچر مقابل را حفظ کند.",
+              "source": "faq",
+              "sourceFaqIndex": 5
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c7",
+              "name": "جایگاه پری‌ایمپلنتایتیس میان عوارض بیولوژیک all-on-4",
+              "description": "پس از از دست رفتن ایمپلنت، پری‌ایمپلنتایتیس دومین عارضه‌ی بیولوژیک شایع است و معمولاً پس از حدود دو سال ظاهر می‌شود؛ گزارش‌ها بدون تعریف استانداردند.",
+              "source": "faq",
+              "sourceFaqIndex": 6
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-31.html#flashcards-c8",
+              "name": "ملاک استابیلیتی برای لود فوری در مطالعات all-on-4",
+              "description": "هیچ مطالعه‌ای از resonance frequency analysis مانند Osstell استفاده نکرده؛ تنها ملاک، عدد تورک خوانده‌شده روی راتچت هنگام بستن ایمپلنت بوده است.",
+              "source": "faq",
+              "sourceFaqIndex": 7
             }
           ]
         }

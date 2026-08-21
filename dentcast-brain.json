@@ -13615,5 +13615,95 @@
       "secondary": [],
       "subtopic": null
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-35",
+    "title": "بلیچینگ پیش از لمینت: استراتژی هوشمندانه برای تراش کمتر",
+    "caption": "در این کیس Chairside بیمار از رنگ زرد و فرم دندان‌های قدامی ناراضی است و مسیر روتین، تراش مستقیم برای لمینت به نظر می‌رسد؛ اما رنگ تیره‌ی دندان پایه روی ضخامت سرامیک و میزان تراش انامل اثر می‌گذارد. کار این ویزیت پیدا کردن مسیری محافظه‌کارانه‌تر است، قبل از دست به توربین شدن.",
+    "hashtags": [
+      "#چیرساید",
+      "#کیس_بالینی",
+      "#دکتر_شهابیان",
+      "#بلیچینگ",
+      "#لمینیت_سرامیکی",
+      "#تراش_لمینیت",
+      "#حداقل_تهاجم",
+      "#حفظ_مینا"
+    ],
+    "keywords": [
+      "bleaching before ceramic laminate",
+      "stump shade ceramic thickness",
+      "minimally invasive veneer preparation",
+      "enamel preservation laminate longevity",
+      "yellow teeth laminate masking"
+    ],
+    "page_url": "/chairside/chairside-35.html",
+    "pillar": {
+      "primary": "esthetic",
+      "secondary": [],
+      "subtopic": "veneers-laminates"
+    }
+  },
+  {
+    "type": "dentcast_plus",
+    "video": "9",
+    "title": "چند نکته برای خارج کردن روکش قدیمی بیمار",
+    "caption": "نکاتی در مورد خارج کردن روکش قدیمی بیمار",
+    "hashtags": [
+      "#دنتکست_پلاس",
+      "#روکش",
+      "#خارج_کردن_روکش"
+    ],
+    "keywords": [
+      "خارج کردن روکش قدیمی",
+      "روکش قدیمی بیمار",
+      "removing old crown",
+      "crown removal technique"
+    ],
+    "page_url": "/dentcast-plus/video-9.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "crowns-onlays"
+    }
+  },
+  {
+    "type": "dentai",
+    "id": "dentai-31",
+    "title": "All-on-4: خلاصه‌ی بالینی",
+    "caption": "مرور سیستماتیک ۲۰۱۷ می‌گوید all-on-4 یعنی چهار ایمپلنت در قدام فک بی‌دندان: دو تای قدامی اگزیال، دو تای خلفی زاویه‌دار به سمت دیستال، تا استخوان باقی‌مانده کافی باشد و نیازی به لیفت سینوس و گرفت نباشد. پروتز ثابت موقت همان جلسه لود می‌شود. در ۱۱۷۴۳ ایمپلنت گزارش‌شده، بیشتر شکست‌ها مال سال اول است و آنچه بیمار بعداً با آن سروکار دارد عمدتاً عارضه‌ی پروتزی است.",
+    "hashtags": [
+      "#DentAI",
+      "#ایمپلنت_فول_آرچ",
+      "#ایمپلنت_زاویه_دار",
+      "#زمان_لود_ایمپلنت",
+      "#ثبات_اولیه",
+      "#کانتی_لیور"
+    ],
+    "keywords": [
+      "All-on-4",
+      "tilted implants",
+      "immediate loading",
+      "full-arch implant",
+      "primary stability",
+      "cantilever",
+      "edentulous jaw",
+      "systematic review",
+      "آل آن فور",
+      "ایمپلنت زاویه‌دار",
+      "لود فوری",
+      "ایمپلنت فول آرچ",
+      "ثبات اولیه",
+      "کانتی‌لور",
+      "فک بی‌دندان",
+      "مرور سیستماتیک"
+    ],
+    "page_url": "/dentai/dentai-31.html",
+    "pillar": {
+      "primary": "implantology",
+      "secondary": [],
+      "subtopic": "surgical-planning"
+    }
   }
 ]

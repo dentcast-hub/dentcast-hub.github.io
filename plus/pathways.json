@@ -295,6 +295,10 @@
         "milestone": false
       },
       {
+        "content_id": "dentai/dentai-31",
+        "milestone": false
+      },
+      {
         "content_id": "episodes/episode-147-5",
         "milestone": false
       },
@@ -926,6 +930,10 @@
         "milestone": true
       },
       {
+        "content_id": "dentai/dentai-31",
+        "milestone": false
+      },
+      {
         "content_id": "episodes/episode-133",
         "milestone": false
       },
@@ -1192,6 +1200,10 @@
       },
       {
         "content_id": "dentai/dentai-30",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-35",
         "milestone": false
       },
       {
@@ -1559,6 +1571,14 @@
         "milestone": false
       },
       {
+        "content_id": "dentcast-plus/video-9",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-8",
+        "milestone": false
+      },
+      {
         "content_id": "insight/insight-64",
         "milestone": false
       },
@@ -1617,6 +1637,10 @@
       },
       {
         "content_id": "chairside/chairside-29",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-35",
         "milestone": false
       },
       {
@@ -1905,6 +1929,10 @@
         "milestone": false
       },
       {
+        "content_id": "chairside/chairside-35",
+        "milestone": false
+      },
+      {
         "content_id": "sharehub/share-12",
         "milestone": false
       },
@@ -1998,6 +2026,10 @@
       },
       {
         "content_id": "chairside/chairside-3",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-31",
         "milestone": false
       },
       {
@@ -2239,6 +2271,10 @@
         "milestone": false
       },
       {
+        "content_id": "chairside/chairside-35",
+        "milestone": false
+      },
+      {
         "content_id": "dentai/dentai-17",
         "milestone": true
       },
@@ -2421,6 +2457,10 @@
       },
       {
         "content_id": "chairside/chairside-29",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-35",
         "milestone": false
       },
       {

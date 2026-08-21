@@ -1,0 +1,15 @@
+{
+  "type": "dentai",
+  "note": "Publish of dentai/dentai-31 (All-on-4: خلاصه‌ی بالینی). Reuses existing canonical tags only; All-on-4 search reachability already enriched on #ایمپلنت_فول_آرچ in A27.",
+  "concepts": [],
+  "articles": {
+    "dentai/dentai-31": [
+      "#DentAI",
+      "#ایمپلنت_فول_آرچ",
+      "#ایمپلنت_زاویه_دار",
+      "#زمان_لود_ایمپلنت",
+      "#ثبات_اولیه",
+      "#کانتی_لیور"
+    ]
+  }
+}
