@@ -19,12 +19,28 @@
 // and it has to be able to fail. A chip built by a classic script that cannot
 // reach the session would be a dead control on any page where this module did
 // not load, and a heart that does nothing is worse than no heart.
-import { api, currentUser } from './api.js?v=19';
-import { openLoginModal, openOrgNotice } from './login-modal.js?v=19';
-import { el, faNum } from './util.js?v=19';
-import { isOrgHost } from './config.js?v=19';
+import { api, currentUser } from './api.js?v=20';
+import { openLoginModal, openOrgNotice } from './login-modal.js?v=20';
+import { el, faNum } from './util.js?v=20';
+import { isOrgHost } from './config.js?v=20';
 
 const HEART_PATH = 'M12 20.5s-7.5-4.7-7.5-10A4.5 4.5 0 0 1 12 7.6a4.5 4.5 0 0 1 7.5 2.9c0 5.3-7.5 10-7.5 10z';
+
+// Two independent قلب chips can now exist on one page — the action row above
+// the prose and its twin at the end of the article (plus.js's
+// mountBottomActions), so a reader who finishes the article never has to
+// scroll back up to press either one. Each chip keeps its OWN closure state
+// and talks to the API on its own; this event is the only thing that keeps a
+// second chip for the SAME content in step with whichever one the reader
+// actually pressed. Broadcast only once a vote has SETTLED (server-confirmed
+// or reverted) — never the optimistic frame — so the other chip converges on
+// the same authoritative number rather than a guess that might unwind.
+const HEART_SYNC_EVENT = 'dcp:heart-sync';
+function broadcastHeartSync(contentId, hearts, voted) {
+  try {
+    document.dispatchEvent(new CustomEvent(HEART_SYNC_EVENT, { detail: { contentId, hearts, voted } }));
+  } catch (_) { /* ignore */ }
+}
 
 function heartIcon() {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -97,6 +113,15 @@ export function buildHeartChip(contentId, extraClass) {
     setTimeout(() => btn.classList.remove('is-pop'), 240);
   };
 
+  // Pick up a settled vote from this content's OTHER chip, if one exists.
+  document.addEventListener(HEART_SYNC_EVENT, (e) => {
+    const d = e.detail;
+    if (!d || d.contentId !== contentId) return;
+    hearts = d.hearts;
+    voted = d.voted;
+    paint();
+  });
+
   // The count is public, so this runs for signed-out readers too and simply
   // comes back with voted:false. A failure leaves the chip in its empty state
   // rather than showing an error: nobody may ever be shown a stack trace for
@@ -130,6 +155,7 @@ export function buildHeartChip(contentId, extraClass) {
         hearts = state.hearts || 0;
         voted = Boolean(state.voted);
         paint();
+        broadcastHeartSync(contentId, hearts, voted);
       } catch (_) { /* leave the chip as it was */ }
       return;
     }
@@ -155,6 +181,7 @@ export function buildHeartChip(contentId, extraClass) {
     } finally {
       busy = false;
       paint();
+      broadcastHeartSync(contentId, hearts, voted);
     }
   });
 

@@ -2,24 +2,24 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=19';
-import { currentUser, api } from './js/api.js?v=19';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=19';
-import { openCollectionPicker } from './js/collections.js?v=19';
-import { el } from './js/util.js?v=19';
-import { initHomeCard } from './js/home-card.js?v=19';
-import { initHomeFeatures } from './js/home-features.js?v=19';
-import { initHomeBundles } from './js/home-bundles.js?v=19';
-import { initHomeUpboard } from './js/home-upboard.js?v=19';
-import { initDesTool } from './js/des-scorer.js?v=19';
-import { initHeader } from './js/header.js?v=19';
-import { initTourAutostart } from './js/tour.js?v=19';
-import { initReadingTracker } from './js/reading.js?v=19';
-import { initListeningTracker } from './js/listening.js?v=19';
-import { initShareScoring, buildShareButton } from './js/share.js?v=19';
-import { initHeart, buildHeartChip } from './js/votes.js?v=19';
-import { mountArticleThreads } from './js/article-threads.js?v=19';
-import { mountDes } from './js/des.js?v=19';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=20';
+import { currentUser, api } from './js/api.js?v=20';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=20';
+import { openCollectionPicker } from './js/collections.js?v=20';
+import { el } from './js/util.js?v=20';
+import { initHomeCard } from './js/home-card.js?v=20';
+import { initHomeFeatures } from './js/home-features.js?v=20';
+import { initHomeBundles } from './js/home-bundles.js?v=20';
+import { initHomeUpboard } from './js/home-upboard.js?v=20';
+import { initDesTool } from './js/des-scorer.js?v=20';
+import { initHeader } from './js/header.js?v=20';
+import { initTourAutostart } from './js/tour.js?v=20';
+import { initReadingTracker } from './js/reading.js?v=20';
+import { initListeningTracker } from './js/listening.js?v=20';
+import { initShareScoring, buildShareButton } from './js/share.js?v=20';
+import { initHeart, buildHeartChip } from './js/votes.js?v=20';
+import { mountArticleThreads } from './js/article-threads.js?v=20';
+import { mountDes } from './js/des.js?v=20';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -29,7 +29,7 @@ import { mountDes } from './js/des.js?v=19';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=19').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=20').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -124,6 +124,42 @@ function injectActionRow(anchorEl, contentId, shareTarget) {
   if (heart) main.appendChild(heart);
   row.appendChild(collectCap); // full-width, below both groups
   return btn;
+}
+
+// A second, independent پسندیدم + افزودن‌به‌کالکشن pair at the END of the
+// article — a reader who reads all the way through should never have to
+// scroll back up to press either. Each button performs its OWN action
+// directly (this is not a shortcut back to the top row): «کالکشن» opens the
+// same picker again, and the قلب is a second buildHeartChip() instance kept
+// in step with the top one via votes.js's dcp:heart-sync event.
+//
+// Anchored directly on `anchor` (findProseEnd — the last prose box), inserted
+// AFTER article-threads.js's and des.js's own afterend calls so it lands
+// between the article and them: [article] › [این پیام] › [گفتگو] › [ارزیابی
+// شواهد]. article-threads.js's insertion is synchronous, so its position is
+// already settled by the time this runs; des.js's is not (it awaits
+// plus/des-scores.json first), so it always lands after whatever is already
+// sitting next to `anchor` — this call included.
+//
+// Idempotent per surface like its two neighbours above: on the desktop shell,
+// re-mounting for a second article REPLACES the previous one's row rather
+// than stacking a second one (scoped to `anchor`'s own parent, same as
+// article-threads.js's `.dc-threads` lookup — a document-wide check would
+// refuse to mount the second article at all).
+function mountBottomActions(anchor, contentId) {
+  if (!anchor || !contentId) return false;
+  const host = anchor.parentNode;
+  if (host) {
+    const old = host.querySelector('.dc-actions-end');
+    if (old) old.remove();
+  }
+  const { btn: collectBtn, info: collectInfo, cap: collectCap } = injectCollectionButton(contentId);
+  const heart = buildHeartChip(contentId, 'dc-act dc-act-heart');
+  const lead = el('p', { class: 'dc-actions-end-lead' }, 'این مطلب به کارتان آمد؟');
+  const main = el('div', { class: 'dc-actions-main' }, [collectBtn, collectInfo, heart]);
+  const row = el('div', { class: 'dc-actions dc-actions-end' }, [lead, main, collectCap]);
+  anchor.insertAdjacentElement('afterend', row);
+  return true;
 }
 
 function showInvitation(anchorBtn, onProceed) {
@@ -273,6 +309,9 @@ function initEpisodeActions() {
   // has exactly one), so the conversation lands under the whole episode card and
   // above the ‹قبلی/بعدی› nav, which is page chrome rather than the episode.
   mountArticleThreads(findProseEnd() || box, detectContentId());
+  // پسندیدم + افزودن به کالکشن again, at the end of the episode card — same
+  // reasoning as initArticle()'s call below.
+  mountBottomActions(findProseEnd() || box, detectContentId());
 }
 
 async function initArticle() {
@@ -307,6 +346,12 @@ async function initArticle() {
   // Draws only if this content_id has a record in plus/des-scores.json — no
   // record, no badge, no apology on screen.
   mountDesHere(findProseEnd() || proseRoot, contentId);
+  // پسندیدم + افزودن به کالکشن again, right at the end of the article — a
+  // reader who reads to the bottom should not have to scroll back up for
+  // either. Called last so it lands directly after the prose, ahead of the
+  // conversation and the evidence card above (see mountBottomActions' own
+  // comment for why the ordering works out that way).
+  mountBottomActions(findProseEnd() || proseRoot, contentId);
 
   // Post-login return-to-study (the funnel) or a remembered choice this session.
   // Never auto-enters on a fresh visit: sessionStorage is empty then.
@@ -381,6 +426,7 @@ async function mountArticleWorkbench(root, url) {
       }
       mountArticleThreads(findProseEnd(root) || box, contentId); // the conversation, on this surface too
       mountDesHere(findProseEnd(root) || box, contentId, root);  // and the score, on this surface too
+      mountBottomActions(findProseEnd(root) || box, contentId);  // and the end-of-article pair, on this surface too
     }
     return;
   }
@@ -393,6 +439,7 @@ async function mountArticleWorkbench(root, url) {
   desktopWb = wb;
   mountArticleThreads(findProseEnd(root) || proseRoot, contentId); // under the article, not after its first box
   mountDesHere(findProseEnd(root) || proseRoot, contentId, root);  // the score, under that conversation
+  mountBottomActions(findProseEnd(root) || proseRoot, contentId);  // the end-of-article پسندیدم/کالکشن pair
   const hlId = query ? new URLSearchParams(query).get('dcphl') : null;
   if (hlId && await currentUser()) await openDeepLinkedHighlight(wb, updateBtn, hlId);
 }
