@@ -42,6 +42,13 @@ ZWNJ = "‌"
 LITECAST = "litecast"
 NO_NOTIFY_TYPES = {"litecast", "glossary"}
 
+# DentCast+ videos: flashcards/quiz are optional, not mandatory (steps 4.11 /
+# 4.12) — the founder's own tips-video series carries its content in the
+# video itself, not in re-typable prose, so there is often no grounded text
+# to author a card/question from without fabricating a clinical claim.
+# Decided 2026-08-22 on dentcast-plus/video-10.
+FLASHCARD_OPTIONAL_TYPES = {"litecast", "dentcast_plus"}
+
 # Forbidden in a FAQ question `name` — step 4.12(a): the question must be
 # answerable by someone who does not have this page in front of them.
 DEIXIS = [
@@ -461,6 +468,7 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
 
     etype = entry.get("type") or ("episode" if kind == "brain" else LITECAST)
     is_lite = etype == LITECAST
+    is_flashcard_optional = etype in FLASHCARD_OPTIONAL_TYPES
     page_rel = content_id + ".html"
 
     # ---------------- brain ----------------
@@ -690,6 +698,9 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
     if is_lite:
         rep.skip("4.12 quiz", "LiteCast is outside the quiz ecosystem")
         rep.skip("4.11 cards", "LiteCast is outside the flashcard ecosystem")
+    elif is_flashcard_optional and not questions:
+        rep.skip("4.12 quiz", "dentcast_plus: flashcards/quiz are optional — no FAQ authored")
+        rep.skip("4.11 cards", "dentcast_plus: flashcards/quiz are optional — no cards authored")
     else:
         rep.check(bool(questions), "4.12 quiz", f"{len(questions)} FAQ questions",
                   "no FAQ entry for this page in plus/faq-corpus.json", "step 4.12")
@@ -1186,7 +1197,9 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
         rep.check(f'"{content_id}"' in ci, "8 plus-index", "in plus/content-index.json",
                   "missing from plus/content-index.json — the میز کار tree will not show it",
                   "node tools/build_plus_index.mjs")
-    if not is_lite:
+    if is_flashcard_optional and not questions:
+        rep.skip("8 flashcards", "dentcast_plus: flashcards/quiz are optional — no cards authored")
+    elif not is_lite:
         rep.check(content_id in read("plus/flashcards-index.json"), "8 flashcards",
                   "in plus/flashcards-index.json", "missing from plus/flashcards-index.json",
                   "node tools/build_flashcards_index.mjs")
