@@ -976,9 +976,21 @@ about, and confirm nothing was guessed.
 
 ### 4.11. Flashcards (Leitner) — semantic `DefinedTermSet` in the FAQ corpus
 
-**Runs for EVERY type, on EVERY publish that produces a page — LiteCast is the
-sole exception** (LiteCast stays outside the specialist ecosystem, same as the
-glossary/pillar linking it skips in step 0). A flashcard is **a concept, not a
+**Runs for EVERY type, on EVERY publish that produces a page — LiteCast and
+DentCast+ (`dentcast_plus`) are the two exceptions.** LiteCast stays outside
+the specialist ecosystem, same as the glossary/pillar linking it skips in
+step 0. **DentCast+ is optional, not skipped:** a video's real content is
+in the video itself, not in re-typable prose — the page's own text is often
+just a one-line caption — so authoring a card/question requires the founder
+to supply the actual clinical tips from the recording. When that text is
+available, run this step normally (same standard as every other type). When
+it is not, and the founder declines to supply it, no cards are written and
+that is a **documented skip**, never a fabricated card standing in for real
+content (Hard Rule 13; a thin or fabricated card is worse than no card —
+see the "ask, don't guess" note below). Decided 2026-08-22 on
+`dentcast-plus/video-10`; `tools/verify_publish.py`'s `FLASHCARD_OPTIONAL_TYPES`
+enforces the same two-type exception so the gate reports a skip, not a FAIL.
+A flashcard is **a concept, not a
 question** — so it lives in schema.org's real vocabulary for exactly that:
 `DefinedTermSet` → `hasDefinedTerm[]` of `DefinedTerm { name, description }`.
 This block is written into **`plus/faq-corpus.json`, under the new page's
