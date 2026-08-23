@@ -12977,5 +12977,111 @@
         "interpretation_fa": "این یک دستورالعمل روایتی برای پاک‌سازی سطح آلوده‌ی رستوریشن‌های سرامیکی پیش از سمان‌کاری است، نه مطالعه‌ای اولیه. ارزشش در جمع‌بندی عملی پروتکل است، نه وزن آماری شواهد. جست‌وجوی ادبیات و ارزیابی کیفیت مطالعات گزارش نشده و بیانیه‌ی تعارض منافعی هم نیست، حال آنکه نویسنده‌ی اول در Ivoclar Vivadent کار می‌کند و محصول همین شرکت، Ivoclean، توصیه شده است."
       }
     ]
+  },
+  "episodes/episode-13": {
+    "scored_at": "2026-08-23",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "source_kind": null,
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "The Esthetic Width in Fixed Prosthodontics",
+          "authors": "Pascal Magne, Michel Magne, Urs Belser",
+          "year": 1999,
+          "journal": "J Prosthod",
+          "doi": null
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review (THERAPY narrative review row, 15)",
+          "evidence_quote": "Based on the concept of the biologic width, a systematic approach is proposed for the elaboration of an \"esthetic width\""
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no protocol registration mentioned anywhere in the text"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no search strategy or bibliographic databases mentioned in the text"
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "missing both screening account and inclusion/exclusion criteria; no Methods section"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no risk of bias or quality appraisal step mentioned anywhere in the text"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no meta-analysis described or mentioned in the text"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no assessment of publication bias mentioned in the text"
+            }
+          ],
+          "multiplier": 0.30
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement",
+            "base_points": 8,
+            "points": 1,
+            "evidence_quote": "",
+            "note": "no conflict of interest statement anywhere in the text at all; funding mentioned but no COI declared"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a narrative review"
+          },
+          {
+            "item": "no sample size justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "source text does not address follow-up duration for its own claims"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 4,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله با توجه به اینکه یک مرور نقلی است، نمره ۴ و سطح شواهد E را در بخش مداخلات درمانی دریافت می‌کند.",
+        "interpretation_fa": "فایل esthetic width umbrella effect.pdf یک مقاله مروری نقلی و بیان رویکرد مفهومی بر پایه مفاهیم بیولوژیک است و یک مطالعه بالینی یا مرور سیستماتیک محسوب نمی‌شود. به همین دلیل این ارزیابی در پایین‌ترین سطح از هرم شواهد ساختاریافته قرار می‌گیرد، اما محتوای آن به عنوان یک مبنای تئوریک برای درک عرض استتیک و طراحی رستوریشن‌ها ارزشمند است."
+      }
+    ]
   }
 }
