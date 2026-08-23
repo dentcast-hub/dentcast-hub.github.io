@@ -128,19 +128,24 @@ function renderHtml(
 <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
 <title>KPI ادمین | دنت‌کست پلاس</title>
 <style>
-  body{margin:0;background:#0f1420;color:#e8eef7;font-family:system-ui,'Segoe UI',Tahoma,sans-serif;line-height:1.8}
+  /* Light palette mirroring the site's own light-mode tokens (dc-theme.css
+     :root) — this page is standalone-rendered and never loads that
+     stylesheet, so its colors are copied in rather than shared. */
+  body{margin:0;background:#f0f2f5;color:#0a1a33;font-family:system-ui,'Segoe UI',Tahoma,sans-serif;line-height:1.8}
   .wrap{max-width:880px;margin:0 auto;padding:22px 16px 60px}
   h1{font-size:1.3rem}
-  .muted{color:#93a1b8;font-size:.85rem}
+  .muted{color:#62779a;font-size:.85rem}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:16px}
-  .card{background:#171e2d;border:1px solid #2a3448;border-radius:14px;padding:14px 16px}
-  .card .k{color:#4f9cf0;font-weight:800;font-size:.8rem}
-  .card h3{margin:.2rem 0;font-size:.95rem;color:#c8d4e6}
+  .card{background:#fff;border:1px solid rgba(2,35,96,.10);border-radius:14px;padding:14px 16px;
+    box-shadow:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04)}
+  .card .k{color:#0b5fff;font-weight:800;font-size:.8rem}
+  .card h3{margin:.2rem 0;font-size:.95rem;color:#4a5f85}
   .card .v{font-size:1.8rem;font-weight:900}
-  .card .s{color:#93a1b8;font-size:.82rem}
+  .card .s{color:#62779a;font-size:.82rem}
   .wrap{overflow-x:hidden}
-  table{width:100%;border-collapse:collapse;margin-top:8px;background:#171e2d;border:1px solid #2a3448;border-radius:14px;overflow:hidden}
-  th,td{padding:8px 12px;text-align:center;border-bottom:1px solid #2a3448}
+  table{width:100%;border-collapse:collapse;margin-top:8px;background:#fff;border:1px solid rgba(2,35,96,.10);
+    border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04)}
+  th,td{padding:8px 12px;text-align:center;border-bottom:1px solid rgba(2,35,96,.10)}
   /* Wide report tables (5 unbreakable-value columns: phone numbers, dates) can
      exceed a phone's viewport. Scrolling THIS box, not the RTL page body, is
      what keeps the fix local — an unconstrained overflow here shifts the whole
@@ -148,66 +153,68 @@ function renderHtml(
   .tblwrap{overflow-x:auto;margin-top:8px;border-radius:14px}
   .tblwrap table{margin-top:0;min-width:480px}
   .tblwrap th,.tblwrap td{white-space:nowrap}
-  th{color:#93a1b8;font-weight:700}
-  form.bc{background:#171e2d;border:1px solid #2a3448;border-radius:14px;padding:14px 16px;margin-top:8px;
-    display:flex;flex-direction:column;gap:9px}
-  form.bc label{font-size:.82rem;color:#93a1b8}
+  th{color:#62779a;font-weight:700}
+  form.bc{background:#fff;border:1px solid rgba(2,35,96,.10);border-radius:14px;padding:14px 16px;margin-top:8px;
+    display:flex;flex-direction:column;gap:9px;box-shadow:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04)}
+  form.bc label{font-size:.82rem;color:#62779a}
   form.bc input[type=text],form.bc textarea,form.bc select{width:100%;box-sizing:border-box;
-    background:#0f1420;color:#e8eef7;border:1px solid #2a3448;border-radius:9px;padding:9px 11px;
+    background:#f4f6fb;color:#0a1a33;border:1px solid rgba(2,35,96,.10);border-radius:9px;padding:9px 11px;
     font:inherit;font-size:.92rem}
   form.bc textarea{min-height:64px;resize:vertical}
   form.bc .row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-  form.bc .chk{display:flex;gap:6px;align-items:center;font-size:.86rem;color:#c8d4e6}
-  form.bc button{background:#2f7de0;color:#fff;border:0;border-radius:999px;padding:10px 22px;
+  form.bc .chk{display:flex;gap:6px;align-items:center;font-size:.86rem;color:#4a5f85}
+  form.bc button{background:#0b5fff;color:#fff;border:0;border-radius:999px;padding:10px 22px;
     font:inherit;font-weight:800;cursor:pointer;align-self:flex-start}
   form.bc button:disabled{opacity:.55;cursor:default}
-  #bcOut,#bgOut,#tkOut{font-size:.85rem;color:#93a1b8;min-height:1.6em}
+  #bcOut,#bgOut,#tkOut{font-size:.85rem;color:#62779a;min-height:1.6em}
   .tabs{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-  .tabs button{background:#171e2d;color:#c8d4e6;border:1px solid #2a3448;border-radius:999px;
+  .tabs button{background:#f4f6fb;color:#4a5f85;border:1px solid rgba(2,35,96,.10);border-radius:999px;
     padding:7px 16px;font:inherit;font-weight:700;cursor:pointer}
-  .tabs button.on{background:#2f7de0;color:#fff;border-color:#2f7de0}
-  .sp-c{background:#171e2d;border:1px solid #2a3448;border-radius:14px;padding:12px 14px;margin-top:10px}
+  .tabs button.on{background:#0b5fff;color:#fff;border-color:#0b5fff}
+  .sp-c{background:#fff;border:1px solid rgba(2,35,96,.10);border-radius:14px;padding:12px 14px;margin-top:10px;
+    box-shadow:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04)}
   .sp-c h4{margin:0;font-size:1rem}
   .sp-c .head{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
   .sp-c .big{font-size:1.25rem;font-weight:900}
   .sp-row{margin-top:9px}
-  .sp-row .lbl{display:flex;justify-content:space-between;gap:10px;font-size:.86rem;color:#c8d4e6}
-  .sp-bar{height:7px;border-radius:99px;background:#0f1420;border:1px solid #2a3448;margin-top:3px;overflow:hidden}
-  .sp-bar i{display:block;height:100%;background:#4f9cf0}
-  .warn{color:#e0b657;font-size:.83rem;margin-top:10px}
-  .pill{display:inline-block;background:#0f1420;border:1px solid #2a3448;border-radius:999px;
-    padding:1px 9px;font-size:.74rem;color:#93a1b8;margin-inline-start:6px;vertical-align:middle}
-  .pill.hot{background:#3a2a12;border-color:#7a5a20;color:#e3b849}
-  .tk{background:#171e2d;border:1px solid #2a3448;border-radius:14px;padding:12px 14px;margin-top:10px;cursor:pointer}
-  .tk.need{border-color:#7a5a20}
+  .sp-row .lbl{display:flex;justify-content:space-between;gap:10px;font-size:.86rem;color:#4a5f85}
+  .sp-bar{height:7px;border-radius:99px;background:#eaecf5;border:1px solid rgba(2,35,96,.10);margin-top:3px;overflow:hidden}
+  .sp-bar i{display:block;height:100%;background:#0b5fff}
+  .warn{color:#8a6414;font-size:.83rem;margin-top:10px}
+  .pill{display:inline-block;background:#f4f6fb;border:1px solid rgba(2,35,96,.10);border-radius:999px;
+    padding:1px 9px;font-size:.74rem;color:#62779a;margin-inline-start:6px;vertical-align:middle}
+  .pill.hot{background:rgba(201,146,43,.10);border-color:rgba(154,107,21,.30);color:#8a6414}
+  .tk{background:#fff;border:1px solid rgba(2,35,96,.10);border-radius:14px;padding:12px 14px;margin-top:10px;
+    cursor:pointer;box-shadow:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04)}
+  .tk.need{border-color:rgba(154,107,21,.45)}
   .tk-h{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:.95rem}
-  .tk-x{color:#c8d4e6;font-size:.87rem;margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tk-x{color:#4a5f85;font-size:.87rem;margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .tk-body{cursor:auto}
-  .tk-body:not(:empty){margin-top:12px;border-top:1px solid #2a3448;padding-top:12px}
+  .tk-body:not(:empty){margin-top:12px;border-top:1px solid rgba(2,35,96,.10);padding-top:12px}
   .thread{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
   .msg{border-radius:12px;padding:8px 11px;font-size:.9rem;max-width:88%}
-  .msg.them{background:#0f1420;border:1px solid #2a3448;align-self:flex-start}
-  .msg.me{background:#16304f;border:1px solid #2f7de0;align-self:flex-end}
-  .tk-body textarea.reply{width:100%;box-sizing:border-box;min-height:76px;background:#0f1420;color:#e8eef7;
-    border:1px solid #2a3448;border-radius:9px;padding:9px 11px;font:inherit;font-size:.92rem;resize:vertical}
-  .tk-body button{background:#2f7de0;color:#fff;border:0;border-radius:999px;padding:8px 18px;
+  .msg.them{background:#f4f6fb;border:1px solid rgba(2,35,96,.10);align-self:flex-start}
+  .msg.me{background:rgba(11,95,255,.08);border:1px solid #0b5fff;align-self:flex-end}
+  .tk-body textarea.reply{width:100%;box-sizing:border-box;min-height:76px;background:#f4f6fb;color:#0a1a33;
+    border:1px solid rgba(2,35,96,.10);border-radius:9px;padding:9px 11px;font:inherit;font-size:.92rem;resize:vertical}
+  .tk-body button{background:#0b5fff;color:#fff;border:0;border-radius:999px;padding:8px 18px;
     font:inherit;font-weight:800;cursor:pointer;margin-top:8px;margin-inline-end:8px}
   .tk-out{min-height:1.4em;font-size:.85rem}
   .bt-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
-  .bt-actions input[type=text]{flex:1 1 140px;box-sizing:border-box;background:#0f1420;color:#e8eef7;
-    border:1px solid #2a3448;border-radius:9px;padding:8px 10px;font:inherit;font-size:.86rem}
-  .bt-actions button{background:#2f7de0;color:#fff;border:0;border-radius:999px;padding:7px 16px;
+  .bt-actions input[type=text]{flex:1 1 140px;box-sizing:border-box;background:#f4f6fb;color:#0a1a33;
+    border:1px solid rgba(2,35,96,.10);border-radius:9px;padding:8px 10px;font:inherit;font-size:.86rem}
+  .bt-actions button{background:#0b5fff;color:#fff;border:0;border-radius:999px;padding:7px 16px;
     font:inherit;font-weight:800;cursor:pointer}
-  .bt-actions button.gold{background:#7a5a20}
-  .bt-actions button.danger{background:#7a2020}
+  .bt-actions button.gold{background:#8a6414}
+  .bt-actions button.danger{background:#b3261e}
   .ds-work{display:flex;flex-direction:column;gap:8px}
-  .ds-work label{font-size:.82rem;color:#93a1b8;margin-top:4px}
-  .ds-work input[type=text],.ds-work textarea{width:100%;box-sizing:border-box;background:#0f1420;
-    color:#e8eef7;border:1px solid #2a3448;border-radius:9px;padding:9px 11px;font:inherit;font-size:.9rem}
+  .ds-work label{font-size:.82rem;color:#62779a;margin-top:4px}
+  .ds-work input[type=text],.ds-work textarea{width:100%;box-sizing:border-box;background:#f4f6fb;
+    color:#0a1a33;border:1px solid rgba(2,35,96,.10);border-radius:9px;padding:9px 11px;font:inherit;font-size:.9rem}
   .ds-work textarea.ds-json{min-height:220px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
     font-size:.8rem;direction:ltr;text-align:left;resize:vertical}
   .ds-work .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
-  .ds-cand{background:#0f1420;border:1px solid #2a3448;border-radius:9px;padding:8px 10px;margin-top:6px}
+  .ds-cand{background:#f4f6fb;border:1px solid rgba(2,35,96,.10);border-radius:9px;padding:8px 10px;margin-top:6px}
   .ds-cand b{display:block;font-size:.88rem}
   .ds-cand .muted{margin-top:2px}
   .ds-cand .row{margin-top:8px}
