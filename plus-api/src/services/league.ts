@@ -41,10 +41,26 @@ export async function getTiers(db: Db = pool): Promise<Tier[]> {
   return res.rows;
 }
 
-/** Resolve the user's tier id, treating NULL as (and healing it to) acrylic. */
+/**
+ * Resolve the user's tier id, treating NULL as (and healing it to) acrylic.
+ *
+ * `for update`: this runs inside awardLeagueXp's transaction, right before a
+ * FIRST-of-the-week join decides which tier's group to place the user in —
+ * and finalizeWeek's own promotion/demotion UPDATE on this exact row runs in
+ * its own transaction, both triggered by the same 00:00 Tehran boundary. A
+ * plain SELECT does not wait on a concurrent writer (MVCC), so a user whose
+ * first action of the new week lands in the same instant as finalize can read
+ * the OLD tier a beat before the promotion commits — locking them into a
+ * group one tier below where they just earned their way to, permanently
+ * (nothing ever re-evaluates a membership once created). Found 2026-08-22:
+ * a user promoted out of amalgam (final_rank 1, outcome 'promoted') stayed
+ * placed in an amalgam group because their next action landed 785ms after
+ * midnight. `for update` makes this read block on finalizeWeek's row lock
+ * and see the committed tier once it releases, closing the window.
+ */
 export async function effectiveTierId(client: pg.PoolClient, userId: string): Promise<string> {
   const r = await client.query<{ current_tier_id: string | null }>(
-    'select current_tier_id from profiles where id = $1', [userId],
+    'select current_tier_id from profiles where id = $1 for update', [userId],
   );
   const tid = r.rows[0]?.current_tier_id ?? null;
   if (tid) return tid;

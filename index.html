@@ -4692,9 +4692,9 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <p class="dc-rail-title">پست و کور یک‌مرحله‌ای؛ وقتی «عدم تطابق» به نفع درمان تمام می‌شود</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-35.html">
+        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-36.html">
           <span class="dc-type-chip t-chair">Chairside</span>
-          <p class="dc-rail-title">بلیچینگ پیش از لمینت: استراتژی هوشمندانه برای تراش کمتر</p>
+          <p class="dc-rail-title">فضای ۱۲ میلی‌متری و فقط یک ایمپلنت: چطور پروتز را طراحی کنیم</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="dentai" href="/dentai/dentai-31.html">
@@ -4736,10 +4736,10 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک <a href="/chairside/chairside-36.html">کیس چیرساید</a> با عنوانِ «فضای ۱۲ میلی‌متری و فقط یک ایمپلنت: چطور پروتز را طراحی کنیم» منتشر شد · ۱ شهریور</li>
           <li>یک <a href="/dentcast-plus/video-10.html">ویدیوی دنت‌کست پلاس</a> با عنوانِ «چند نکته برای ساخت پست مستقیم آکریلی چیرساید» منتشر شد · ۳۱ مرداد</li>
           <li>یک <a href="/sharehub/share-17.html">مطلب Share Hub</a> با عنوانِ «شکست بریج زیرکونیا در بیمار بروکسر: آیا دارو یا تغییر ماده مسئله را حل می‌کند؟» منتشر شد · ۳۰ مرداد</li>
           <li>یک مطلب <a href="/dentai/dentai-31.html">DentAI</a> با عنوانِ «All-on-4: خلاصه‌ی بالینی» منتشر شد · ۳۰ مرداد</li>
-          <li>یک <a href="/dentcast-plus/video-9.html">ویدیوی دنت‌کست پلاس</a> با عنوانِ «چند نکته برای خارج کردن روکش قدیمی بیمار» منتشر شد · ۳۰ مرداد</li>
         </ul>
       </div>
 
@@ -5512,7 +5512,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=acf88d3593',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=d820ccf0ea',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -5859,7 +5859,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=acf88d3593';
+  const FEED_URL='/dentcast-brain.json?v=d820ccf0ea';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -6115,7 +6115,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=acf88d3593', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=d820ccf0ea', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
