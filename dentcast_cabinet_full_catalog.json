@@ -137368,6 +137368,54 @@
         "Thorsten Bock",
         "Mutlu Özcan"
       ]
+    },
+    {
+      "id": "P2899",
+      "title": "The Esthetic Width in Fixed Prosthodontics",
+      "file_name": "esthetic width umbrella effect.pdf",
+      "topic": "Esthetic",
+      "topic_path": "Esthetic",
+      "type": "narrative review",
+      "local_path": "",
+      "file_size": 1265949,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "episodes/episode-13"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1DiLrUYzxWwEhU_W-6FTWR9Y9y93GPxfU/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1DiLrUYzxWwEhU_W-6FTWR9Y9y93GPxfU",
+      "drive_view": "https://drive.google.com/file/d/1DiLrUYzxWwEhU_W-6FTWR9Y9y93GPxfU/view",
+      "drive_id": "1DiLrUYzxWwEhU_W-6FTWR9Y9y93GPxfU",
+      "tags": [
+        "porcelain-fused-to-metal",
+        "esthetic-width",
+        "biologic-width",
+        "framework-design",
+        "pontics",
+        "interdental-design",
+        "marginal-design",
+        "umbrella-effect",
+        "fixed-prosthodontics",
+        "gingival-esthetics",
+        "topic:esthetic",
+        "the-esthetic-width-in-fixed-prosthodontics"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "The esthetic width in fixed prosthodontics.",
+      "doi": "10.1111/j.1532-849x.1999.tb00019.x",
+      "journal": "Journal of Prosthodontics",
+      "crossref_year": 1999,
+      "subjects": [],
+      "abstract": "With the evolution of adhesive dentistry and the increasing use of porcelain veneers, single-unit crowns generally are restricted to the replacement of pre-existing full-coverage crowns and the restoration of nonvital and/or severely damaged teeth. Porcelain-fused-to-metal restorations are still widely used to generate single-unit crowns and fixed partial dentures. Collarless metal-ceramic restorations represent the most successful evolution among efforts to meet maximum esthetic requirements using porcelain-fused-to-metal restorations. Extended metal frameworks and opaque aluminous ceramic cores are associated with unpleasant optical effects in the soft tissues surrounding such restorations. This problem is particularly evident in the presence of the upper lip, which can generate an \"umbrella effect\" characterized by gray marginal gingivae and dark interdental papillae. Based on the concept of the biologic width, a systematic approach is proposed for the elaboration of an \"esthetic width,\" including: 1) positioning of preparation margins; 2) reduction of the metal framework; and (c) appropriate marginal design of porcelain-fused-to-metal restorations. Strategic features of pontics and a specific interdental design are suggested to compensate for deficient anatomical features of the soft tissue and the edentulous ridge.",
+      "display_title": "The Esthetic Width in Fixed Prosthodontics",
+      "authors": [
+        "Pascal Magne",
+        "Michel Magne",
+        "Urs Belser"
+      ]
     }
   ],
   "drive_matched": 2847,
