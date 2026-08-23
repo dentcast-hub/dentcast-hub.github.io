@@ -570,7 +570,12 @@ export async function ticketsOfUser(userId: string): Promise<TicketSummary[]> {
  *
  * Ordered by what needs a human: open threads whose last word came from the
  * reader, oldest first — so the person who has been waiting longest is answered
- * first, rather than whoever wrote most recently.
+ * first, rather than whoever wrote most recently. Everything else (already
+ * answered, or closed) sorts NEWEST-first instead: this endpoint is capped at
+ * `limit`, with no pagination on the admin page, so a ticket you just replied
+ * to has to land at the top of that group — sorting it oldest-first (as before)
+ * pushed a freshly-answered ticket to the bottom, where a full queue could push
+ * it past `limit` and out of the response entirely.
  */
 export async function ticketQueue(opts: { status?: TicketStatus | 'all'; limit?: number } = {}):
 Promise<Array<TicketSummary & { phone: string | null; display_name: string | null; tier: string }>> {
@@ -583,7 +588,9 @@ Promise<Array<TicketSummary & { phone: string | null; display_name: string | nul
        join profiles p on p.id = q.user_id
       ${status === 'all' ? '' : 'where q.status = $2'}
       order by (q.status = 'open' and q.last_author = 'user') desc,
-               q.last_at asc
+               case when (q.status = 'open' and q.last_author = 'user')
+                 then q.last_at end asc,
+               q.last_at desc
       limit $1`,
     status === 'all' ? [limit] : [limit, status],
   );
