@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chairside 36 — A 12 mm Span and Only One Implant: How to Design the Prosthesis | DentCast</title>
+<meta name="description" content="In this Chairside case a 12 mm span between teeth 3 and 5 takes only one implant; we compare four prosthetic designs and why one implant plus one cantilever unit is more sensible than a wide crown in the middle of the space.">
+
+<link rel="canonical" href="https://dentcast.org/chairside/en/chairside-36.html">
+
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="DentCast">
+<meta property="og:title" content="Chairside 36 — A 12 mm Span and Only One Implant: How to Design the Prosthesis">
+<meta property="og:description" content="The surgeon said only one implant fits between 3 and 5, and the distance is 12 mm — four prosthetic options are on the table, and which one keeps the lever controllable.">
+<meta property="og:url" content="https://dentcast.org/chairside/en/chairside-36.html">
+<meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Chairside 36 — A 12 mm Span and Only One Implant: How to Design the Prosthesis">
+<meta name="twitter:description" content="The surgeon said only one implant fits between 3 and 5, and the distance is 12 mm — four prosthetic options are on the table, and which one keeps the lever controllable.">
+<meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css?v=2">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
+
+  <!-- Theme init — no flash -->
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
+      --text:#111;
+      --muted:#444;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.2);
+    }
+
+    html,body { margin:0; padding:0; height:100%; }
+
+    body {
+      font-family:'vazirmatn', sans-serif;
+      background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+      color: var(--text);
+      max-width: 56.25rem;
+      margin: 0 auto;
+      padding: 3.75rem 1.625rem 6.25rem;
+      line-height: 2;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 1.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 1.02rem;
+      margin: 0 0 1.875rem;
+    }
+
+    .text-box {
+      background: rgba(255,255,255,0.99);
+      border: 1px solid rgba(11,95,255,0.25);
+      border-radius: var(--radius);
+      padding: 1.75rem 2.25rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .text-box img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      margin: 0 auto 0.625rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      border: 2px solid rgba(11,95,255,0.1);
+    }
+
+    figure { margin: 0 0 1.5rem; }
+    figcaption { text-align: center; font-size: .85rem; color: #555; margin-top: 0.5rem; }
+
+    p { margin: 0.875rem 0; font-size: 1.05rem; text-align: justify; }
+
+    ul { padding-left: 1.375rem; margin: 0.875rem 0 1.25rem; }
+    ul li { margin: 0.5rem 0; font-size: 1.05rem; }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 1.25rem 0 0.625rem 0;
+      border-bottom: 2px solid var(--lightblue);
+      padding-bottom: 0.25rem;
+    }
+
+    .text-divider {
+      margin: 1.875rem 0;
+      border: 0;
+      height: 0.0625rem;
+      background-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0),
+        rgba(11,95,255,0.4),
+        rgba(0,0,0,0)
+      );
+    }
+
+.author-note{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:0.375rem 0.625rem;
+  margin:2.5rem auto 1rem;
+  padding-top:1.25rem;
+  border-top:1px solid rgba(120,140,170,0.18);
+  color:var(--txt3);
+  font-size:.78rem;
+}
+.author-note .author-link{
+  color:var(--txt2);
+  font-weight:600;
+  text-decoration:none;
+}
+.author-note .author-link:hover{
+  color:var(--ac);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.author-note .author-role{
+  color:var(--txt3);
+}
+
+/* English-version toggle button (top-right) */
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 0 1.125rem auto;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/chairside/en/chairside-36.html"
+      },
+      "headline": "A 12 mm Span and Only One Implant: How to Design the Prosthesis",
+      "description": "In this Chairside case a 12 mm span between teeth 3 and 5 takes only one implant; we compare four prosthetic designs and why one implant plus one cantilever unit is more sensible than a wide crown in the middle of the space.",
+      "image": [
+        "https://dentcast.org/chairside/cs36.webp"
+      ],
+      "datePublished": "2026-08-23",
+      "dateModified": "2026-08-23",
+      "lastReviewed": "2026-08-23",
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "reviewedBy": { "@id": "https://dentcast.org/#person-foad" },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "keywords": "12 mm mesiodistal space one implant, cantilever implant prosthesis design, inter-implant distance three millimeters, bilateral cantilever emergence angle, mesial vs distal cantilever occlusion, screw-retained monolithic zirconia cantilever, Tarnow inter-implant papilla, peri-implantitis emergence angle thirty degrees",
+      "articleSection": "Chairside",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "DentCast", "item": "https://dentcast.org/" },
+        { "@type": "ListItem", "position": 2, "name": "Chairside", "item": "https://dentcast.org/chairside/" },
+        { "@type": "ListItem", "position": 3, "name": "Chairside 36 — A 12 mm Span and Only One Implant: How to Design the Prosthesis", "item": "https://dentcast.org/chairside/en/chairside-36.html" }
+      ]
+    }
+  ]
+}
+</script>
+  <meta name="theme-color" content="#0b5fff">
+</head>
+
+<body>
+<!-- ── TOP BAR ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+  <h2>Chairside 36</h2>
+  <h1>A 12 mm Span and Only One Implant: How to Design the Prosthesis</h1>
+  <div class="dc-trustline" aria-label="Author and review information">
+    <span>Published: <time datetime="2026-08-23">2026-08-23</time></span>
+    <span>Last reviewed: <time datetime="2026-08-23">2026-08-23</time></span>
+  </div>
+
+
+<div class="text-box">
+
+   <!-- 🌐 Persian Version (SEO-friendly link) -->
+  <a class="lang-btn" href="../chairside-36.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+<figure>
+  <img loading="lazy" src="../cs36.webp" alt="Diagram of a 12 mm edentulous span between a canine and a second premolar, with a note that the surgeon said only one implant can be placed." width="1079" height="1224">
+  <figcaption>Diagram of a 12 mm edentulous space between the canine (3) and the second premolar (5); the surgeon said only one implant fits in this distance.</figcaption>
+</figure>
+
+<p>The patient has an edentulous posterior span. The canine and the second premolar are still present, and the edentulous space sits between those two teeth. The mesiodistal width of this space measures 12 mm — wider than a typical premolar (about 7 mm), but not enough for two implants either. The surgical assessment confirms the same: only one implant fits in this space.</p>
+
+<p>Four options on the table:</p>
+
+<ol>
+  <li>One implant in the middle of the space and one wide, molar-like crown</li>
+  <li>One implant in the middle of the space and two crowns with the appearance of two premolars</li>
+  <li>Two premolar units, implant on the mesial side and a distal cantilever</li>
+  <li>Two premolar units, implant on the distal side and a mesial cantilever</li>
+</ol>
+
+<p><strong>Answer:</strong> design three or four — that is, one implant plus one cantilever unit. The clinical rationale and the evidence behind it follow.</p>
+
+<p><strong>1. Why two implants do not fit in 12 mm</strong></p>
+
+<p>Three numbers have to sit side by side:</p>
+
+<ul>
+  <li>At least 1.5 mm between the implant platform and the adjacent tooth</li>
+  <li>At least 3 mm between two adjacent implants</li>
+  <li>The diameter of the implants themselves</li>
+</ul>
+
+<p>With two narrow implants (platform about 3.3 mm):<br>
+1.5 + 3.3 + 3 + 3.3 + 1.5 ≈ 12.6 mm</p>
+
+<p>With two standard 4.1 mm diameter implants, that number reaches about 14 mm.</p>
+
+<p>So 12 mm is short even for two narrow implants. If someone ignores that rule and brings the inter-implant distance under 3 mm, bone loss between the two implants rises noticeably and the papilla between them is lost. That is what the classic inter-implant distance studies showed.</p>
+
+<p>Practical takeaway: when the space is 12 mm, two implants truly do not fit surgically or anatomically, so the implant-count debate is over. The remaining question is purely prosthetic: how do we rebuild this 12 mm width on a single implant.</p>
+
+<p><strong>2. The four options from a lever perspective</strong></p>
+
+<p>The key concept is the lever. Any part of the crown that sits off the implant axis transmits chewing force as bending into the abutment and the screw.</p>
+
+<p>Option 1 (one wide crown) and option 2 (two crowns on a mid-span implant) are mechanically the same: a bilateral cantilever. They create two clinical problems.</p>
+
+<p>The first problem is the lever. With a one-sided cantilever, the lever arm is a separate unit, so you can lighten or take the entire occlusal surface of that unit out of contact and you are done. When the implant is in the middle, the lever is bilateral and, inside one continuous crown, the mid portion over the implant must stay in function while the mesial and distal margins are lightened. Instead of taking one clear unit out of occlusion, you have to define a light/non-light boundary in the middle of a continuous occlusal surface. That has three practical flaws: it is hard to verify and reproduce with articulating paper; the boundary is imprecise because it is the same continuous crown; and the slightest attrition or drift of adjacent teeth puts contact back on the lever arm. If, out of caution, you lighten the whole crown, almost nothing remains for function.</p>
+
+<p>The second problem is crown form. Emergence angle is the angle at which the crown leaves the implant axis as it emerges from under the gingiva to reach the tooth width. The implant is about 4 mm in diameter and we want to build 12 mm of width, so the crown must open steeply on both sides. The result is an over-contoured crown with a convex profile — a belly-like bulge at the neck that holds plaque and that the patient cannot clean under. Evidence shows that on bone-level implants, an angle greater than 30 degrees roughly doubles the prevalence of peri-implantitis, and adding a convex profile raises the risk further.</p>
+
+<p>Options 3 and 4 (implant at one end of the space, one cantilever unit) have only one lever arm, and that is the main difference:</p>
+
+<ul>
+  <li>The crown on the implant itself can be built with a natural contour and an acceptable emergence angle, because its width is roughly one premolar, not two.</li>
+  <li>Only one unit sits off-axis, and that same unit can be deliberately lightened: narrower occlusal table, flatter cusp inclines, light centric contact, zero excursive contact.</li>
+</ul>
+
+<p>In other words, options 3 and 4 move the risk from uncontrollable to controllable.</p>
+
+<p><strong>3. Evidence</strong></p>
+
+<p>Cantilevers are not a new topic on DentCast; we have covered them in several episodes, including episode 161, which focused specifically on implant-supported cantilever prostheses and reviewed the reference papers for this discussion. For a deeper dive, go back to those episodes. A summary of what those reviews mean for this case:</p>
+
+<ul>
+  <li>A “one implant with one cantilever unit” design does not show lower implant survival than “two implants with two separate crowns.”</li>
+  <li>No meaningful difference has been seen in marginal bone loss or probing depth between the two designs.</li>
+  <li>What is meaningfully higher in the cantilever group is mechanical complications: screw loosening, veneer chipping, and loss of retention.</li>
+</ul>
+
+<p>Office takeaway: the risk of this design is not biologic; it is mechanical. The main concern is screw loosening and chipping, not implant loss or bone resorption. And mechanical complications are exactly the ones that drop with sound design and occlusal control.</p>
+
+<p><strong>4. Clinical execution</strong></p>
+
+<p><strong>Implant position.</strong> Decide first by bone volume and quality and by anatomy, not by an absolute rule. Place the implant on the side with better bone, keeping at least 1.5 mm from the adjacent tooth.</p>
+
+<p><strong>Cantilever direction.</strong> All else equal, a mesial cantilever is more sensible, because occlusal force magnitude rises as you move posteriorly. Overall, cantilever length matters far more than its direction.</p>
+
+<p><strong>Cantilever length.</strong> Shorter is better. Mechanical complications become more common especially beyond about 7 mm of extension. In a 12 mm space, if the implant is placed at one end with proper clearance, the cantilever unit is about 5.5 to 6 mm — under that threshold.</p>
+
+<p><strong>Occlusion.</strong> On the cantilever unit: narrow occlusal table, low cusp incline, clearance or very light contact in centric, and no contact in excursive movements. Lateral guidance should stay on the natural canine.</p>
+
+<p><strong>Retention type and material.</strong> Prefer screw-retained, both for retrievability (screw loosening is the most common complication) and to avoid residual cement. Monolithic zirconia lowers the risk of veneer chipping.</p>
+
+<p><strong>Contraindications.</strong> Bruxism and high occlusal force. In those patients a cantilever design is not recommended.</p>
+
+<p><strong>Follow-up.</strong> Because the dominant complications are mechanical, regular recall and checking torque and occlusal contacts are part of the treatment, not an add-on.</p>
+
+<p><strong>Talking with the patient.</strong> Explain that screw loosening or chipping can occur with this design, that both are repairable, and that if needed the cantilever can be removed.</p>
+
+<p><strong>5. Why “mid-span implant with the look of two crowns” is not the answer</strong></p>
+
+<p>This option looks intuitively attractive because it seems symmetric, but:</p>
+
+<ul>
+  <li>It does not remove the lever; it makes it bilateral and eliminates targeted occlusal lightening.</li>
+  <li>Contour and emergence angle go out of control on both sides, with the same hygiene consequences noted above.</li>
+  <li>It has no dedicated evidence body, whereas for “one implant and one cantilever unit” there are systematic reviews, randomized trials, and long-term studies.</li>
+</ul>
+
+<p>When two designs have similar mechanical logic, the weight of the evidence decides.</p>
+
+<p><strong>For further reading</strong></p>
+
+<p>A detailed discussion of cantilevers, including survival and complication data and the bone-loss question, is in the DentCast episodes on cantilevers, especially episode 161.</p>
+
+<p>Reference papers:</p>
+
+<ul>
+  <li>De Angelis P, et al. J Prosthodont. 2024;33(9):841-851</li>
+  <li>Thoma DS, et al. J Clin Periodontol. 2021;48(11):1480-1490</li>
+  <li>Aglietta M, et al. Clin Oral Implants Res. 2009;20(5):441-451</li>
+  <li>Zurdo J, et al. Clin Oral Implants Res. 2009;20(Suppl 4):59-66</li>
+  <li>Kondo Y, et al. Int J Implant Dent. 2024;10:57</li>
+  <li>Schmid E, et al. Clin Implant Dent Relat Res. 2021;23(2):189-196</li>
+  <li>Tarnow DP, et al. J Periodontol. 2000;71(4):546-549</li>
+  <li>Katafuchi M, et al. J Clin Periodontol. 2018;45(2):225-232</li>
+</ul>
+
+<p><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="4"/></svg>️Clinical Tip: In a 12 mm space that takes only one implant, a wide mid-span crown makes the lever bilateral and takes emergence out of control. One implant at one end of the space plus a short cantilever unit turns the lever into a single arm you can lighten; the dominant risk is mechanical, not biologic — and manageable with occlusion and screw retention.</p>
+
+  
+
+  <p class="dc-disclaimer">The content of this page is intended for the educational use of dentists and dental students.</p>
+
+</div>
+
+  <div class="author-note">
+  <a href="/about.html" class="author-link">Dr. Foad Shahabian</a>
+  <span class="author-role">Prosthodontist &amp; Implant Specialist</span>
+</div>
+
+<footer class="dc-site-footer" style="text-align:center; margin-top:2.8125rem; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+  <div style="margin-bottom:1.375rem;">
+    <a href="/"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Back to DentCast
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=121" defer></script>
+</body>
+</html>
