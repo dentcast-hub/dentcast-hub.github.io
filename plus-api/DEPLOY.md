@@ -93,6 +93,32 @@ and builds the next one), change the tag in the panel, and
 `./plus-api/deploy.sh --verify vNN`. The rest of this section is what the script
 does and why — read it when something goes wrong, or when deploying by hand.
 
+### 4a. Building without a laptop (GitHub Actions)
+
+`deploy.sh` needs a local Docker daemon and a `docker login`'d machine, which
+is not always at hand. **`.github/workflows/deploy-plus-api.yml`** does the
+identical build+push (same Dockerfile, same three build args, same
+never-reuse-a-tag guard) inside a GitHub-hosted runner instead, so a release
+can be cut from the GitHub mobile app — Actions → *Build & push DentCast Plus
+API image* → Run workflow — with no laptop and no local Docker involved. It
+still only reaches the registry: applying the new tag in the ArvanCloud panel
+stays a manual step, exactly as with the script, and the run's summary spells
+out that step + the `curl .../health` check.
+
+One-time setup — add these under repo **Settings → Secrets and variables →
+Actions**:
+
+| Secret | Value |
+|---|---|
+| `ARVAN_REGISTRY_HOST` | the registry host only — same value you'd pass to `docker login` |
+| `ARVAN_REGISTRY_REPO` | the full image path, no tag — same value as `DENTCAST_REGISTRY` above |
+| `ARVAN_REGISTRY_USER` | registry login username |
+| `ARVAN_REGISTRY_PASSWORD` | registry login password/token |
+
+Copy `ARVAN_REGISTRY_HOST`/`ARVAN_REGISTRY_REPO` from the same panel field
+described above — host is everything before the first `/`, repo is everything
+before the `:vNN`.
+
 The image is defined in `plus-api/Dockerfile`. **Build context = repo root**
 (the image bakes in `plus/content-index.json` for the dashboard tree and
 `plus/pathways.json` for the learning pathways):

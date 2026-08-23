@@ -1,0 +1,133 @@
+name: Build & push DentCast Plus API image
+
+# Manual only, on purpose — pushing a fresh image to the registry is inert
+# (nothing runs it until a human points the ArvanCloud panel at the new tag),
+# but nothing here should ever fire unattended.
+#
+# Why this exists: plus-api/deploy.sh does the identical build+push, but it
+# needs a local Docker daemon and a `docker login`'d machine to run it. This
+# workflow does the SAME build inside GitHub's runner, so a release can be cut
+# from the GitHub mobile app with no laptop and no local Docker at all —
+# Actions → this workflow → Run workflow.
+#
+# This workflow only reaches the registry, exactly like deploy.sh. Applying
+# the new tag to the running container in the ArvanCloud panel stays a manual
+# step by a human — see the summary this run prints at the end.
+#
+# One-time setup (repo Settings → Secrets and variables → Actions):
+#   ARVAN_REGISTRY_HOST  the registry host only, e.g.
+#                        registry-<id>-<account>.apps.<region>.arvancaas.ir
+#                        (same value you'd pass to `docker login`)
+#   ARVAN_REGISTRY_REPO  the full image path, no tag, e.g.
+#                        registry-<id>-<account>.apps.<region>.arvancaas.ir/<namespace>/dentcast-plus-api
+#                        (same value as DENTCAST_REGISTRY in plus-api/.deploy.env)
+#   ARVAN_REGISTRY_USER      registry login username
+#   ARVAN_REGISTRY_PASSWORD  registry login password/token
+# Copy these from the ArvanCloud panel — Cloud Container → the API app → the
+# Image field shows the image running right now; drop the `:vNN` to get
+# ARVAN_REGISTRY_REPO, and everything before the first `/` is ARVAN_REGISTRY_HOST.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to build (e.g. v52). Leave empty to auto-pick the next one from /health."
+        required: false
+        default: ""
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Same rule deploy.sh enforces locally: a tag is never reused. The
+      # registry accepts the overwrite, but the ArvanCloud panel sees the
+      # string it is already running and has no reason to pull, so the
+      # "deploy" would silently do nothing.
+      - name: Work out the tag, commit and build time
+        id: meta
+        run: |
+          set -euo pipefail
+          INPUT_TAG="${{ github.event.inputs.tag }}"
+          if [ -n "$INPUT_TAG" ]; then
+            TAG="$INPUT_TAG"
+          else
+            LIVE=""
+            for host in https://api.dentcast.ir https://api.dentcast.org; do
+              BODY="$(curl -fsS --max-time 15 "$host/health" 2>/dev/null || true)"
+              if [ -n "$BODY" ]; then
+                LIVE="$(printf '%s' "$BODY" | sed -n 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
+                break
+              fi
+            done
+            case "$LIVE" in
+              v[0-9]*) TAG="v$(( ${LIVE#v} + 1 ))" ;;
+              "")
+                echo "::error::could not reach /health to work out the next tag — re-run with an explicit tag input." >&2
+                exit 1 ;;
+              *)
+                echo "::error::/health reports version '$LIVE', which is not a vNN tag — re-run with an explicit tag input." >&2
+                exit 1 ;;
+            esac
+            echo "live is $LIVE — building $TAG"
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "git_sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "built_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to the ArvanCloud registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.ARVAN_REGISTRY_HOST }}
+          username: ${{ secrets.ARVAN_REGISTRY_USER }}
+          password: ${{ secrets.ARVAN_REGISTRY_PASSWORD }}
+
+      - name: Refuse to reuse a tag already in the registry
+        run: |
+          set -euo pipefail
+          IMAGE="${{ secrets.ARVAN_REGISTRY_REPO }}:${{ steps.meta.outputs.tag }}"
+          if docker manifest inspect "$IMAGE" >/dev/null 2>&1; then
+            echo "::error::$IMAGE already exists in the registry. Never reuse a tag — pick the next one." >&2
+            exit 1
+          fi
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # --platform linux/amd64 is not optional (see plus-api/deploy.sh): an
+      # arm64 image is accepted by the registry and then crash-loops on
+      # Arvan's amd64 hosts with nothing in the logs naming the real cause.
+      #
+      # Build context = repo root, never plus-api/: the image bakes in
+      # plus/content-index.json, plus/pathways.json, plus/badges.json and
+      # plus/flashcards-index.json, which live outside plus-api/.
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: plus-api/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ secrets.ARVAN_REGISTRY_REPO }}:${{ steps.meta.outputs.tag }}
+          build-args: |
+            BUILD_TAG=${{ steps.meta.outputs.tag }}
+            GIT_SHA=${{ steps.meta.outputs.git_sha }}
+            BUILT_AT=${{ steps.meta.outputs.built_at }}
+
+      - name: Summary
+        run: |
+          {
+            echo "### Image pushed :white_check_mark:"
+            echo ""
+            echo "\`${{ secrets.ARVAN_REGISTRY_REPO }}:${{ steps.meta.outputs.tag }}\`"
+            echo ""
+            echo "**Now, by hand, in the ArvanCloud panel:**"
+            echo "Cloud Container → the API app → set the image tag to \`${{ steps.meta.outputs.tag }}\` → Apply"
+            echo ""
+            echo "**Then verify:**"
+            echo '```'
+            echo "curl -s https://api.dentcast.ir/health"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
