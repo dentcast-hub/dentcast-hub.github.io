@@ -1,0 +1,57 @@
+{
+  "type": "sharehub",
+  "note": "Author-name hashtags for ShareHub external curators, so searching the curator's own last name surfaces their article — same pattern already established by #نشاطی on sharehub/share-6. Mints one #tag per distinct curator surname across share-1..9 (share-10..17 are DentCast's own authored ShareHub notes and already carry #دنتکست via the pillar/brand system elsewhere; share-7's \"Zhou G, et al\" is the cited paper's academic authors, not a curator identity, so it gets no tag).",
+  "concepts": [
+    {
+      "tag": "#جوان",
+      "domain": "brand",
+      "definition": "ارجاع به دکتر مهدی جوان به‌عنوان منبعِ این مطلب.",
+      "use_when": "روی مدخل‌هایی که مطلبِ ایشان بازنشر شده.",
+      "aliases": ["دکتر جوان", "دکتر مهدی جوان", "mehdi javan"]
+    },
+    {
+      "tag": "#شیخ‌فرشی",
+      "domain": "brand",
+      "definition": "ارجاع به دکتر علیرضا شیخ‌فرشی به‌عنوان منبعِ این مطلب.",
+      "use_when": "روی مدخل‌هایی که مطلبِ ایشان بازنشر شده.",
+      "aliases": ["دکتر شیخ‌فرشی", "دکتر علیرضا شیخ‌فرشی", "شیخ فرشی", "alireza sheikhfarshi"]
+    },
+    {
+      "tag": "#ستایش",
+      "domain": "brand",
+      "definition": "ارجاع به دکتر فرزاد ستایش به‌عنوان منبعِ این مطلب.",
+      "use_when": "روی مدخل‌هایی که مطلبِ ایشان بازنشر شده.",
+      "aliases": ["دکتر ستایش", "دکتر فرزاد ستایش", "farzad setayesh"]
+    },
+    {
+      "tag": "#گوران",
+      "domain": "brand",
+      "definition": "ارجاع به مرتضی گوران به‌عنوان منبعِ این مطلب.",
+      "use_when": "روی مدخل‌هایی که مطلبِ ایشان بازنشر شده.",
+      "aliases": ["مرتضی گوران", "morteza goran"]
+    },
+    {
+      "tag": "#رسایی‌پور",
+      "domain": "brand",
+      "definition": "ارجاع به دکتر ساسان رسایی‌پور به‌عنوان منبعِ این مطلب.",
+      "use_when": "روی مدخل‌هایی که مطلبِ ایشان بازنشر شده.",
+      "aliases": ["دکتر رسایی‌پور", "دکتر ساسان رسایی‌پور", "رسایی پور", "sasan rasaeipour"]
+    },
+    {
+      "tag": "#شجاعی",
+      "domain": "brand",
+      "definition": "ارجاع به دکتر نرگس شجاعی به‌عنوان منبعِ این مطلب.",
+      "use_when": "روی مدخل‌هایی که مطلبِ ایشان بازنشر شده.",
+      "aliases": ["دکتر شجاعی", "دکتر نرگس شجاعی", "narges shojaei"]
+    }
+  ],
+  "articles": {
+    "sharehub/share-1": ["#Share_Hub", "#Curated_Content", "#جوان", "#پیچ_ایمپلنت", "#پیچ_هرز_شده", "#تورک_پیچ", "#ابزار_ایمپلنت", "#پروتز_متکی_بر_ایمپلنت", "#تحویل_پروتز", "#عوارض_ایمپلنت", "#Implant_Complications", "#Implant_Prosthetics"],
+    "sharehub/share-2": ["#Share_Hub", "#Curated_Content", "#شیخ‌فرشی", "#اسکنر_داخل_دهانی", "#دقت_اسکن", "#خطای_اسکن", "#Distortion", "#اسکن_بادی", "#ایمپلنت_دیجیتال", "#دندانپزشکی_دیجیتال"],
+    "sharehub/share-3": ["#Share_Hub", "#Curated_Content", "#ستایش", "#ایمپلنت_قدامی", "#Anterior_Implant", "#فاصله_ایمپلنت", "#پاپیلا", "#پونتیک", "#کانتی_لیور", "#طراحی_پروتز", "#Prosthetic_Design", "#زیبایی_ایمپلنت", "#Implant_Esthetics", "#پوزیشن_ایمپلنت"],
+    "sharehub/share-4": ["#Share_Hub", "#Curated_Content", "#جوان", "#سمان_باقیمانده", "#Residual_Cement", "#سمان_کردن", "#سیلیکون_رپلیکا", "#رابردم", "#اسکرو_سمنتد", "#سمان_ریتین", "#روکش_ایمپلنت", "#پروتز_ایمپلنت", "#پری_ایمپلنتیتیس"],
+    "sharehub/share-5": ["#Share_Hub", "#Curated_Content", "#گوران", "#رابطه_کانینی", "#کلاس_یک", "#اصلاح_فضا", "#ارتودنسی", "#Orthodontics", "#گایدنس_کانین", "#میدلاین", "#اکلوژن", "#طرح_درمان"],
+    "sharehub/share-8": ["#Share_Hub", "#Curated_Content", "#رسایی‌پور", "#لمینیت_سرامیکی", "#Laminate_Veneer", "#تراش_لمینیت", "#بات_جوینت", "#Butt_Joint", "#لبه_اینسایزال", "#حفظ_مینا", "#تکنیک_گورل", "#دندانپزشکی_زیبایی", "#شکست_پرسلن", "#افتادن_روکش"],
+    "sharehub/share-9": ["#Share_Hub", "#Curated_Content", "#شجاعی", "#دخانیات", "#Smoking", "#بیمار_سیگاری", "#ایمپلنت", "#Dental_Implant", "#شکست_ایمپلنت", "#Implant_Failure", "#پری_ایمپلنتیتیس", "#استئواینتگریشن", "#جراحی_ایمپلنت"]
+  }
+}
