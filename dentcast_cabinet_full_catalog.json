@@ -2,7 +2,7 @@
   "schema_version": "2.0",
   "source": "local hard drive — E:\\Paper farzad (recursive)",
   "total_files_scanned": 3313,
-  "unique_papers": 2883,
+  "unique_papers": 2884,
   "duplicates_collapsed": 435,
   "fields_generated": [
     "topic",
@@ -137321,9 +137321,56 @@
         "María Peñarrocha-Diago",
         "Miguel Peñarrocha-Diago"
       ]
+    },
+    {
+      "id": "P2898",
+      "title": "Protocol for Removal of Clinically Relevant Contaminants from Glass Ceramic-based Restorations",
+      "file_name": "Protocol for Removal of Clinically Relevant Contaminants from Glass Ceramic-based Restorations.pdf",
+      "topic": "Ceramics",
+      "topic_path": "Ceramics",
+      "type": "primary/other",
+      "local_path": "",
+      "file_size": 58006,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "episodes/episode-12"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1D4-w3UKaCndJCWGXsM-gPWsVFrBLlvG9/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1D4-w3UKaCndJCWGXsM-gPWsVFrBLlvG9",
+      "drive_view": "https://drive.google.com/file/d/1D4-w3UKaCndJCWGXsM-gPWsVFrBLlvG9/view",
+      "drive_id": "1D4-w3UKaCndJCWGXsM-gPWsVFrBLlvG9",
+      "tags": [
+        "ceramic",
+        "glass-ceramic",
+        "surface-contamination",
+        "saliva-contamination",
+        "silicone-contamination",
+        "phosphoric-acid-etching",
+        "hydrofluoric-acid-etching",
+        "silane",
+        "resin-cement-bonding",
+        "adhesive-dentistry",
+        "cleaning-protocol",
+        "topic:ceramics"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Protocol for Removal of Clinically Relevant Contaminants from Glass Ceramic-based Restorations",
+      "doi": "10.3290/j.jad.a35018",
+      "journal": "The Journal of Adhesive Dentistry",
+      "crossref_year": 2015,
+      "subjects": [],
+      "abstract": "",
+      "display_title": "Protocol for Removal of Clinically Relevant Contaminants from Glass Ceramic-based Restorations",
+      "authors": [
+        "Thorsten Bock",
+        "Mutlu Özcan"
+      ]
     }
   ],
-  "drive_matched": 2846,
+  "drive_matched": 2847,
   "drive_match_breakdown": {
     "by_full_path": 2844,
     "by_filename": 0
@@ -137845,5 +137892,5 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2210
+  "total_papers": 2211
 }

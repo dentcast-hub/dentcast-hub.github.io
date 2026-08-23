@@ -12872,5 +12872,110 @@
         "interpretation_fa": "روکش پهن وسط‌فضا را به اهرم دوطرفه و emergence تند وصل کرده و کانتی‌لور یک‌طرفه را جایگزین کرده است. ادعای بقا را به مرورها نسبت داده و براکسیسم را منع کرده. ارزش بالینی‌اش تبدیل ریسک غیرقابل‌کنترل به بازوی قابل سبک‌کردن است."
       }
     ]
+  },
+  "episodes/episode-12": {
+    "scored_at": "2026-08-23",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Protocol for Removal of Clinically Relevant Contaminants from Glass Ceramic-based Restorations",
+          "authors": "Bock T, Özcan M",
+          "year": 2015,
+          "journal": "The Journal of Adhesive Dentistry",
+          "doi": "10.3290/j.jad.a35018"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative synthesis recommending a clinical protocol for cleaning contaminated bonding surfaces of glass-ceramic restorations before cementation (THERAPY narrative review row, 15)",
+          "evidence_quote": "the following surface cleaning sequence can be recommended to eliminate contaminants from ceramic surfaces, based on the available scientific reports."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. کل متن دو‌صفحه‌ای خوانده شد: عنوان، Question، Answer، جدول Do/Why، CAVE، وابستگی‌های نویسندگان و فهرست ۱۱ منبع. هیچ اشاره‌ای به protocol registration یا PROSPERO در متن نیست."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ بخش Methods یا استراتژی جست‌وجو در متن نیست؛ نام هیچ دیتابیسی (PubMed، MEDLINE، Embase، Scopus، Cochrane) نیامده. تنها عبارت «based on the available scientific reports» آمده که هیچ روش جست‌وجویی توصیف نمی‌کند."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "نه شرح روند غربالگری (تعداد رکوردهای یافت‌شده، غربال‌شده یا نهایی، یا نموداری مشابه PRISMA) و نه معیار ورود/خروج در متن آمده؛ کل متن از عنوان تا فهرست ۱۱ منبع خوانده شد."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. بخش Answer یافته‌های ۱۱ منبع را به‌صورت مستقیم گزارش می‌کند بدون هیچ نقد یا ارزیابی کیفیت/سوگیری برای هیچ‌کدام؛ واژه‌های quality، bias یا risk of bias در کل متن نیستند."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ سنتز کمّی یا متاآنالیز آماری انجام یا ادعا نشده؛ یافته‌های ۱۱ منبع فقط به‌صورت روایتی در جدول Do/Why کنار هم آمده‌اند."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ اشاره‌ای به سوگیری انتشار، فانل‌پلات یا آزمون Egger نیست؛ چون سنتز کمّی وجود ندارد چنین ارزیابی‌ای هم موضوعیت ندارد."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "base_points": 8,
+            "points": 1,
+            "evidence_quote": "Research and Development, Ivoclar Vivadent, Schaan, Liechtenstein.",
+            "note": "کل متن از عنوان تا REFERENCES خوانده شد؛ هیچ بیانیه‌ی conflict of interest، disclosure یا funding در متن نیست. نویسنده‌ی اول در بخش تحقیق‌وتوسعه‌ی Ivoclar Vivadent، یک شرکت تجاری سازنده‌ی مواد دندانی، شاغل است و پروتکل پیشنهادی محصول همین شرکت (Ivoclean) را به‌عنوان یکی از گزینه‌های تمیزکاری توصیه می‌کند، بدون هیچ بیانیه‌ی افشای تعارض منافع."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک دستورالعمل/مرور روایتی است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study (دستورالعمل/مرور روایتی)."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این متن ادعای بقا یا پیامد وابسته به دوره‌ی پیگیری مطرح نمی‌کند؛ موضوع آن موفقیت فوری پروتکل تمیزکاری پیش از سمان‌کاری است، نه بقای بلندمدت."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 4,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۴ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "این یک دستورالعمل روایتی برای پاک‌سازی سطح آلوده‌ی رستوریشن‌های سرامیکی پیش از سمان‌کاری است، نه مطالعه‌ای اولیه. ارزشش در جمع‌بندی عملی پروتکل است، نه وزن آماری شواهد. جست‌وجوی ادبیات و ارزیابی کیفیت مطالعات گزارش نشده و بیانیه‌ی تعارض منافعی هم نیست، حال آنکه نویسنده‌ی اول در Ivoclar Vivadent کار می‌کند و محصول همین شرکت، Ivoclean، توصیه شده است."
+      }
+    ]
   }
 }
