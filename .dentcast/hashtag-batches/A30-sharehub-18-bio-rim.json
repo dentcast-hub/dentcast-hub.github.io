@@ -1,0 +1,27 @@
+{
+  "type": "sharehub",
+  "note": "Publish of sharehub/share-18 (فرول در رستوریشن‌های باند شونده). Mints #بایوریم (Bio-Rim / compression-dome cervical structure), the article's central new concept; reuses existing canonical tags for everything else.",
+  "concepts": [
+    {
+      "tag": "#بایوریم",
+      "domain": "clinical",
+      "definition": "نیمه‌ی سرویکال خود دندان، از زیر ناحیه‌ی تماس با دندان مجاور تا CEJ؛ در مدل compression dome نقش دیواره‌ی نگه‌دارنده‌ی گنبد تاج را دارد و بیشترین تنش کششی دندان را تحمل می‌کند. با فاصله‌ی مارجین رستوریشن تا لثه (biologic width) اشتباه گرفته نشود.",
+      "use_when": "مقاله درباره‌ی حفظ یا تراش این ناحیه‌ی سرویکال خود دندان، یا مدل compression dome/Bio-Dome بحث کند.",
+      "aliases": ["Bio-Rim", "بایو ریم", "بایو-ریم", "کمپرشن دام"]
+    }
+  ],
+  "articles": {
+    "sharehub/share-18": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#فرول",
+      "#اندوکراون",
+      "#اورلی",
+      "#تراش_دندان",
+      "#پوشش_کاسپ",
+      "#دندان_اندوشده",
+      "#Butt_Joint",
+      "#بایوریم"
+    ]
+  }
+}
