@@ -31,6 +31,7 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
     const { week_start, week_end } = leagueWeek(today);
     const tiers = await getTiers();
     const tierById = new Map(tiers.map((t) => [t.id, t]));
+    const byOrder = new Map(tiers.map((t) => [t.tier_order, t]));
 
     const currentTierId = request.user!.id
       ? (await pool.query<{ current_tier_id: string | null }>(
@@ -110,11 +111,16 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
       // the user to go for it next week) reads it from here instead of a
       // hardcoded number that would quietly start lying the moment it changed.
       //
-      // Since 0033 it also depends on WHICH tier is being nudged: the highest
-      // active one pays top_tier_prize_days, because it has no promotion to
-      // offer. Resolved from the reader's own tier — the nudge is about the week
-      // ahead, which they will spend where they are now.
-      prize_days: currentTier.tier_order >= cfg.max_active_tier_order && cfg.top_tier_prize_days > 0
+      // Since 0033 it also depends on WHICH tier is being nudged: the tier with
+      // no tier above it (titanium — see the `up` comment in league-finalize.ts)
+      // pays top_tier_prize_days, because it has no promotion to offer. NOT
+      // "whichever tier is currently is_active-highest": since 2026-08-25
+      // promotion (and the activation it triggers) is available from every
+      // tier below titanium the moment someone qualifies, so nudging composite's
+      // reader with the long "no promotion" copy would misdescribe their own
+      // real odds next week. Resolved from the reader's own tier — the nudge is
+      // about the week ahead, which they will spend where they are now.
+      prize_days: !byOrder.get(currentTier.tier_order + 1) && cfg.top_tier_prize_days > 0
         ? cfg.top_tier_prize_days
         : cfg.prize_days,
     };
@@ -143,7 +149,14 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
     // its capacity IS its population, so "when it fills" is already now.
     const neutral_mode = size < cfg.min_valid_group_size && size < mem.capacity_at_creation;
     const groupTier = tierById.get(mem.tier_id) ?? currentTier;
-    const isTop = groupTier.tier_order >= cfg.max_active_tier_order;
+    // Structural, not cfg.max_active_tier_order: since 2026-08-25 a group
+    // promotes into the tier above the moment someone qualifies, whether or
+    // not that tier was already active — see league-finalize.ts's `up`. So
+    // "no promotion out of this tier" is only true for titanium, which has no
+    // tier above it at all; anything else, the finalize this week WILL open
+    // the next tier for a qualifying member, and showing promotion_zone: 0
+    // here would flatly contradict what actually happens at week's end.
+    const isTop = !byOrder.get(groupTier.tier_order + 1);
     const isBottom = groupTier.tier_order <= 1;
     const me = rows.find((r) => r.user_id === userId);
 

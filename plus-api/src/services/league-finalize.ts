@@ -7,9 +7,13 @@ import { getLeagueConfig, setLeagueConfig, type LeagueConfig } from './league-co
 /**
  * Weekly finalization + self-tuning. Runs once per closed week, transactional and
  * IDEMPOTENT: it only touches groups whose status is not yet 'finalized', so a
- * re-run of an already-finalized week changes nothing. Self-tuning (group size +
- * tier activation) happens ONLY here, takes effect the following week, and every
- * automatic change is written to league_audit_log.
+ * re-run of an already-finalized week changes nothing.
+ *
+ * Group-size self-tuning happens in selfTune() below and takes effect the
+ * FOLLOWING week (see there). Tier ACTIVATION is different and lives inline in
+ * the main loop: it takes effect IMMEDIATELY, in the same transaction, the
+ * moment a real promotion needs a tier that is not yet active — see the
+ * comment at `up` below for why.
  */
 
 export interface FinalizeResult { finalized: number; promotions: number; demotions: number; }
@@ -41,13 +45,16 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
     const tiers = await getTiers(client);
     const byOrder = new Map(tiers.map((t) => [t.tier_order, t]));
     const tierById = new Map(tiers.map((t) => [t.id, t]));
-    const maxActiveOrder = Math.max(...tiers.filter((t) => t.is_active).map((t) => t.tier_order));
+    // The highest tier currently is_active. Mutated in place below whenever a
+    // promotion activates a new tier mid-run, so max_active_tier_order (read by
+    // routes/league.ts, premium-prize.ts, premium-prize-notify.ts for "is this
+    // the top of the ladder" copy) is never stale for longer than this transaction.
+    let maxActiveOrder = Math.max(...tiers.filter((t) => t.is_active).map((t) => t.tier_order));
 
     let promotions = 0;
     let demotions = 0;
     let activeUsers = 0;
     let fillSum = 0;
-    const sizeByGroup = new Map<string, number>();
 
     for (const g of groupsRes.rows) {
       const tier = tierById.get(g.tier_id)!;
@@ -61,7 +68,6 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
       )).rows;
 
       const size = members.length;
-      sizeByGroup.set(g.id, size);
       activeUsers += members.filter((m) => m.weekly_xp > 0).length;
       if (g.capacity_at_creation > 0) fillSum += size / g.capacity_at_creation;
 
@@ -75,8 +81,9 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
        * 2026-08-09, every one of them competing. Calling that "not a real
        * group" told the five most engaged readers on the site that their league
        * did not count, and left the tier everyone is climbing towards with no
-       * promotion (isTop), no demotion (invalid) and no medals
-       * (services/achievements.ts reads the same rule).
+       * demotion (invalid) and no medals (services/achievements.ts reads the
+       * same rule) — and, at the time, no promotion either (see `up` below
+       * for why that second part changed on 2026-08-25).
        *
        * So a group is also valid when it is FULL — when it holds everyone its
        * tier had to offer. Since 0033 capacity is the tier's own population
@@ -91,10 +98,36 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
        * a year later, whatever the tier's population has done since.
        */
       const valid = size >= cfg.min_valid_group_size || filled;
-      const isTop = tier.tier_order >= maxActiveOrder;
       const isBottom = tier.tier_order <= 1;
       const promotedCount = Math.ceil((size * cfg.promotion_pct) / 100);
       const demotedCount = Math.ceil((size * cfg.demotion_pct) / 100);
+
+      /**
+       * The tier above this one, or null only for the true ceiling (titanium,
+       * tier_order 7 — the one tier with nothing above it to promote into).
+       * `up.is_active` is deliberately NOT part of the promotion condition
+       * below — promotion no longer waits on whether the next tier happens to
+       * be switched on yet; activation is a CONSEQUENCE of promotion, not a
+       * gate on it.
+       *
+       * Until 2026-08-25 promotion was blocked whenever this tier was the
+       * highest ACTIVE one (`isTop`), and the next tier activated separately,
+       * in selfTune, only once its own group reached a size threshold — a bar
+       * the top tier, fed solely by promotions trickling up from the tier
+       * below, could take a very long time to reach on its own. The result:
+       * composite (2026-08-24) held its group full at 11-12 members for
+       * weeks, its #1 and #2 ranked and won the weekly prize, and neither
+       * ever promoted, because metal-ceramic had never crossed that bar.
+       *
+       * Founder's fix: as long as a real person qualifies to promote (ranks in
+       * the promo zone AND clears promotion_min_weekly_xp, same as at every
+       * other level of the ladder), the tier above opens for them — even if
+       * that means it opens with as few as 1-3 members its first week. A
+       * group that thin is still a real competition once it exists: it is
+       * "filled" the moment tierCapacity clamps to its (small) population, so
+       * `valid` already treats it as one — see that comment below.
+       */
+      const up = byOrder.get(tier.tier_order + 1) ?? null;
 
       for (let i = 0; i < size; i += 1) {
         const m = members[i];
@@ -104,7 +137,7 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
 
         let outcome: 'promoted' | 'stayed' | 'demoted' = 'stayed';
         if (valid) {
-          if (inPromoZone && !isTop && m.weekly_xp >= cfg.promotion_min_weekly_xp) {
+          if (inPromoZone && up && m.weekly_xp >= cfg.promotion_min_weekly_xp) {
             outcome = 'promoted';
           } else if (inDemoZone && !inPromoZone && filled && !isBottom) {
             // Demotions apply ONLY when the group filled to capacity (spec 7).
@@ -117,9 +150,21 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
           [m.id, rank, outcome],
         );
         if (outcome === 'promoted') {
-          const up = byOrder.get(tier.tier_order + 1);
-          if (up) await client.query('update profiles set current_tier_id = $2 where id = $1', [m.user_id, up.id]);
+          await client.query('update profiles set current_tier_id = $2 where id = $1', [m.user_id, up!.id]);
           promotions += 1;
+          if (!up!.is_active) {
+            await client.query(
+              'update league_tiers set is_active = true, activated_at = now() where id = $1', [up!.id],
+            );
+            if (up!.tier_order > maxActiveOrder) {
+              await setLeagueConfig(
+                'max_active_tier_order', String(up!.tier_order),
+                { triggerMetric: `promotion opened ${up!.slug} (from ${tier.slug}, week ${weekStart})` }, client,
+              );
+              maxActiveOrder = up!.tier_order;
+            }
+            up!.is_active = true; // in-memory, so a second promotion into `up` this same run is a no-op above
+          }
         } else if (outcome === 'demoted') {
           const down = byOrder.get(tier.tier_order - 1);
           if (down) await client.query('update profiles set current_tier_id = $2 where id = $1', [m.user_id, down.id]);
@@ -142,23 +187,11 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
       [weekStart, activeUsers, groupsCount, avgFill, promotions, demotions],
     );
 
-    // --- self-tuning (only here; effective next week) ------------------------
-    await selfTune(client, weekStart, cfg, {
-      maxActiveOrder,
-      // Measured against group_size_current, NOT the group's own
-      // capacity_at_creation. Since 0033 capacity is per-tier and the top tier's
-      // capacity is its own population (tierCapacity in league.ts), so the top
-      // group is full the moment everyone in it has earned a point — and reading
-      // that as "the ladder is crowded, open the next rung" would unroll all
-      // seven tiers onto a handful of readers, one person per tier, which is the
-      // opposite of what activation is for. The question here has always been
-      // "did the top tier fill a STANDARD group", and that is what it now asks.
-      hadFullTopGroup: groupsRes.rows.some(
-        (g) => tierById.get(g.tier_id)!.tier_order === maxActiveOrder
-          && (sizeByGroup.get(g.id) ?? 0) >= cfg.group_size_current,
-      ),
-      nextTierId: byOrder.get(maxActiveOrder + 1)?.id ?? null,
-    });
+    // --- self-tuning: group size only (effective next week) ------------------
+    // Tier activation is no longer decided here — see `up` above, which opens
+    // the next tier the moment a real promotion needs it, in this same
+    // transaction.
+    await selfTune(client, weekStart, cfg);
 
     return { finalized: groupsCount, promotions, demotions };
   });
@@ -168,7 +201,6 @@ async function selfTune(
   client: pg.PoolClient,
   weekStart: string,
   cfg: LeagueConfig,
-  ctx: { maxActiveOrder: number; hadFullTopGroup: boolean; nextTierId: string | null },
 ): Promise<void> {
   // Smoothed input: mean weekly-active users over the last <=4 weeks (incl. now).
   const hist = await client.query<{ active_users: number }>(
@@ -202,18 +234,10 @@ async function selfTune(
       }
     }
   }
-
-  // --- tier activation: one-way, floor 3 (seed), ceiling 7 ---
-  if (ctx.hadFullTopGroup && ctx.maxActiveOrder < 7 && ctx.nextTierId) {
-    await client.query(
-      'update league_tiers set is_active = true, activated_at = now() where id = $1',
-      [ctx.nextTierId],
-    );
-    await setLeagueConfig(
-      'max_active_tier_order', String(ctx.maxActiveOrder + 1),
-      { triggerMetric: `full top-tier group at order ${ctx.maxActiveOrder}` }, client,
-    );
-  }
+  // Tier activation used to live here too (a one-way flip gated on the top
+  // tier's group hitting a size threshold). It is now decided inline in
+  // finalizeWeek's main loop, the moment a real promotion needs the next
+  // tier — see the `up` comment there for why.
 }
 
 /**
