@@ -13043,7 +13043,7 @@
               "note": "no assessment of publication bias mentioned in the text"
             }
           ],
-          "multiplier": 0.30
+          "multiplier": 0.3
         },
         "penalties": [
           {
@@ -13081,6 +13081,494 @@
         "provisional": false,
         "fact_fa": "این مقاله با توجه به اینکه یک مرور نقلی است، نمره ۴ و سطح شواهد E را در بخش مداخلات درمانی دریافت می‌کند.",
         "interpretation_fa": "فایل esthetic width umbrella effect.pdf یک مقاله مروری نقلی و بیان رویکرد مفهومی بر پایه مفاهیم بیولوژیک است و یک مطالعه بالینی یا مرور سیستماتیک محسوب نمی‌شود. به همین دلیل این ارزیابی در پایین‌ترین سطح از هرم شواهد ساختاریافته قرار می‌گیرد، اما محتوای آن به عنوان یک مبنای تئوریک برای درک عرض استتیک و طراحی رستوریشن‌ها ارزشمند است."
+      }
+    ]
+  },
+  "sharehub/share-18": {
+    "scored_at": "2026-08-24",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "The Influence of Ferrule Design and Pulpal Extensions on the Accuracy of Fit and the Fracture Resistance of Zirconia-Reinforced Lithium Silicate Endocrowns",
+          "authors": "Saker S, Alqutaibi AY, Alghauli MA, Hashem D, Borzangy S, Farghal AE, Alnazzawi AA, Ainoosah S, AbdElaziz MH",
+          "year": 2024,
+          "journal": "Materials",
+          "doi": "10.3390/ma17061411"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 65,
+          "anchor": "in-vitro comparative fracture-resistance/marginal-adaptation study, fully described but non-ISO-standardized protocol (MATERIAL non-standard-but-described row, 65)",
+          "evidence_quote": "Sixty extracted maxillary first molar teeth were divided into six groups (n = 10) according to pulpal inlay extension and marginal configuration."
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "the present study aimed to compare the effects of varying lengths of pulp inlays (2 mm, 3 mm, and 4 mm) and the inclusion of ferrules in the design"
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no sample-size or power justification anywhere in Methods or elsewhere in the full text; only the n=10/group group sizes are stated, with no rationale"
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no random-allocation method is described for assigning the 60 teeth to the six groups; Methods states only that similarly-sized teeth were divided into six groups"
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no blinding of the single operator who performed all endodontic treatment, or of the two examiners who classified failure mode, is mentioned anywhere in the text"
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "a two-way analysis of variance (ANOVA) was conducted to evaluate the overall statistical significance of differences"
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "low",
+              "evidence_quote": "The authors declare no conflicts of interest."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding of tested product",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "This research received no external funding.",
+            "note": "CoI and funding explicitly disclosed; not applicable"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis; in-vitro specimen count <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "specimen count is 10/group (not <10 threshold); also covered in Q_method (sample size justification domain already rated high)"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "in-vitro single-timepoint fracture test; no survival/follow-up-duration claim is made"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 20,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این مطالعه‌ی آزمایشگاهی مقاومت شکست اندوکراون با و بدون فرول را با ابزار QUIN ارزیابی کرد و در پرسش نوع متریال امتیاز ۲۰ از ۱۰۰، باند D گرفت.",
+        "interpretation_fa": "نبود تصادفی‌سازی مشخص، بلایندینگ ارزیاب، و توجیه حجم نمونه، امتیاز روش‌شناسی را پایین آورده است. یافته‌ی اصلی، یعنی کاهش مقاومت شکست با فرول یک‌میلی‌متری، در بستر تراش اضافه‌ی لازم برای ساخت فرول قابل تفسیر است، اما با این سطح شواهد نباید قطعی گرفته شود."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Influence of Cementation Mode and Ferrule Design on the Fatigue Resistance of Monolithic Zirconia Endocrowns",
+          "authors": "Stoilov M, Boehmer T, Stoilov L, Stark H, Marder M, Enkling N, Kraus D",
+          "year": 2024,
+          "journal": "Journal of Clinical Medicine",
+          "doi": "10.3390/jcm13041165"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "in-vitro step-stress fatigue study with an established test methodology (Kaplan-Meier survival / step-stress protocol), adequate specimen count (n=20/group) and defined thermocycling/loading (MATERIAL validated-protocol row, 85)",
+          "evidence_quote": "Eighty human molars were divided into four groups (n = 20): NFC (no-ferrule, conventional cementation), NFA (no-ferrule, adhesive luting), FC (ferrule, conventional cementation) and FA (ferrule, adhesive luting)."
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "The first null hypothesis was that there is no difference in fatigue resistance between conventional endocrown restorations and endocrowns with modified preparation design."
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no power calculation or sample-size justification is given for n=20/group anywhere in Methods; the Discussion only notes post hoc that 'the statistical validity is restricted due to limited power', which is not a pre-study justification"
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "low",
+              "evidence_quote": "Specimens were then randomly divided into four groups"
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no blinding of the researcher who performed all preparations, or of the two calibrated examiners who classified failure mode, to group allocation is described anywhere in the text"
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "Survival analysis was conducted using the Kaplan–Meier method followed by the Mantel"
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "low",
+              "evidence_quote": "The authors declare no conflicts of interest."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding of tested product",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "This study was supported by Dentsply Sirona who provided the technical equipment.",
+            "note": "funding transparently disclosed; the funder (Dentsply Sirona, equipment support) does not manufacture the zirconia endocrown material under test (IPS e.max ZirCAD, Ivoclar Vivadent)"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis; in-vitro specimen count <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "specimen count is 20/group (not <10 threshold); also covered in Q_method (sample size justification domain already rated high)"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "in-vitro step-stress fatigue test to a fixed cycle/load ceiling, not a clinical survival/follow-up-duration claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 26,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این مطالعه‌ی آزمایشگاهی مقاومت خستگی اندوکراون‌های زیرکونیا را با روش step-stress و ابزار QUIN سنجید و در پرسش نوع متریال امتیاز ۲۶ از ۱۰۰، باند D گرفت.",
+        "interpretation_fa": "طرح آزمون با شبیه‌سازی خستگی و آنالیز کاپلان-مایر به بار عملکردی واقعی نزدیک‌تر از یک تست شکست ساده است، اما نبود بلایندینگ ارزیاب و توجیه حجم نمونه امتیاز نهایی را محدود کرده. یافته‌ی اصلی، یعنی بی‌تفاوتی نسبی فرول و نوع سمان در مقاومت خستگی، در همین سطح شواهد قابل استناد است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Mechanical behavior of endocrown vs. post-and-crown: a systematic review and meta-regression analysis",
+          "authors": "Fraga S, Balbinot GS, Quadros BG, Rodrigues SB, Foggi CC, Collares FM",
+          "year": 2026,
+          "journal": "Brazilian Dental Journal",
+          "doi": "10.1590/0103-644020256632"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review with meta-regression of in-vitro studies (MATERIAL SR/MA row, 100)",
+          "evidence_quote": "The eligibility criteria considered in vitro studies that evaluated the load-to-fracture of endodontically treated teeth restored with endocrowns and had a control group consisting of teeth restored with post-and-crown."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no mention of PROSPERO or any pre-registered protocol anywhere in Methods or elsewhere in the full text; searched for 'protocol', 'PROSPERO', 'registered' — none found"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "A literature search was performed in PubMed/MEDLINE, Web of Science, Scopus, EMBASE, and LILACS databases for studies published up to September 2025."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "some_concerns",
+              "evidence_quote": "Database searching identified 862 records. After removing duplicates, 511 records were analyzed by title and abstract. Of these, 417 were excluded because they did not meet the inclusion criteria, and 94 were deemed eligible for full-text analysis.",
+              "note": "reports a PRISMA-style screening account with counts (511 screened, 417 excluded at title/abstract, 94 assessed full-text, 25 included) and explicit inclusion/exclusion criteria, but does not individually list or reason the ~69 studies excluded at the full-text stage"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "Two authors (S.F. and B.N.Q.) independently assessed the risk of bias in the included studies using the RoBDEMAT tool (14), evaluating four domains."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "The model was adjusted for a Monte Carlo permutation test for meta-regression to consider possible overestimations in the model."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no funnel plot, Egger's test, or any other publication-bias assessment is mentioned anywhere in Methods or Results; searched for 'publication bias', 'funnel', 'Egger' — none found"
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding of tested product",
+            "base_points": 8,
+            "points": 8,
+            "evidence_quote": "",
+            "note": "no conflict-of-interest or funding disclosure statement is present anywhere in the published article, including the reference list and appendix tables"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis; in-vitro specimen count <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "reports in-vitro load-to-fracture outcomes, not a survival/success claim requiring a follow-up duration"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 22,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این مرور سیستماتیک با متارگرسیون، رفتار مکانیکی اندوکراون در برابر پست‌وکور را با ابزار AMSTAR-2 ارزیابی کرد و در پرسش نوع متریال امتیاز ۲۲ از ۱۰۰، باند D گرفت.",
+        "interpretation_fa": "نبود ثبت پروتکل پیشینی، نبود ارزیابی سوگیری انتشار، و نبود بیانیه‌ی تعارض منافع، امتیاز این مرور را با وجود جست‌وجوی پنج پایگاه داده و ارزیابی مستقل کیفیت پایین آورده. یافته‌ی اصلی، یعنی بی‌تفاوتی فرول و نوع رستوریشن در برابر تأثیر نوع سمان و زاویه‌ی بار، در همین سطح شواهد قابل استناد است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Effect of Preparation Design on Marginal Integrity and Fracture Resistance of Endocrowns: A Systematic Review",
+          "authors": "Mostafavi AS, Allahyari S, Niakan S, Atri F",
+          "year": 2022,
+          "journal": "Frontiers in Dentistry",
+          "doi": "10.18502/fid.v19i37.11250"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review of in-vitro studies; no meta-analysis performed due to heterogeneity (MATERIAL SR/MA row, 100)",
+          "evidence_quote": "All included studies were in vitro."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no mention of PROSPERO or any pre-registered protocol anywhere in Methods or elsewhere in the text; the review states only that it followed PRISMA reporting guidelines, which is a reporting checklist, not a registered protocol"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "PubMed, Embase, Scopus, and the Cochrane Library were searched"
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "low",
+              "evidence_quote": "One study was excluded due to the specimens’ type which were central theeth"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "Two reviewers independently examined the methodological quality of each included study"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "Meta-analysis could not be done due to heterogeneity of preparation designs and evaluation methods.",
+              "note": "no pooling was performed; the authors explicitly and correctly declined to combine data given substantial heterogeneity across preparation designs and evaluation methods, which is the methodologically appropriate choice rather than an inadequate method"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no funnel plot, Egger's test, or any other publication-bias assessment is mentioned anywhere in the text; searched for 'publication bias', 'funnel', 'Egger' — none found"
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding of tested product",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "CONFLICT OF INTEREST STATEMENT None declared.",
+            "note": "CoI explicitly disclosed as none; review synthesizes many manufacturers' materials, no single funder"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis; in-vitro specimen count <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "reports in-vitro fracture-resistance and marginal-adaptation outcomes, not a survival/success claim requiring a follow-up duration; the text explicitly calls for future clinical trials with long follow-up rather than asserting one"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 30,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این مرور سیستماتیک اثر طرح تراش بر انطباق مارجینال و مقاومت شکست اندوکراون را با ابزار AMSTAR-2 ارزیابی کرد و در پرسش نوع متریال امتیاز ۳۰ از ۱۰۰، باند D گرفت.",
+        "interpretation_fa": "نبود ثبت پروتکل پیشینی و نبود ارزیابی سوگیری انتشار امتیاز نهایی را پایین آورده، هرچند جست‌وجوی چهار پایگاه داده و ارزیابی مستقل کیفیت مطالعات به‌خوبی گزارش شده‌اند. یافته‌های آن درباره‌ی افزایش مقاومت شکست با تراش اکلوزالی و عمق حفره‌ی بیشتر، در همین سطح شواهد قابل استناد است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Preparation Ferrule Design Effect on Endocrown Failure Resistance",
+          "authors": "Einhorn M, DuVall N, Wajdowicz M, Brewster J, Roberts H",
+          "year": 2019,
+          "journal": "Journal of Prosthodontics",
+          "doi": "10.1111/jopr.12671"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "in-vitro fracture-load study using a loading protocol adapted from a previously validated bulk-failure test (Kelly et al.), adequate specimen count (n=12/group) and defined storage/loading conditions (MATERIAL validated-protocol row, 85)",
+          "evidence_quote": "subdivided into three groups (n = 12)"
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "determine the effect on endocrown restoration failure strength"
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no power calculation or sample-size justification is given for n=12/group anywhere in Methods; the Discussion only notes post hoc that 'more definitive research involving increased sample size is required', which is not a pre-study justification"
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "low",
+              "evidence_quote": "subdivided into three groups (n = 12)"
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no blinding of the two researchers who performed preparation and restoration, or of the examiners who assessed failure mode visually and by microCT, to group allocation is described anywhere in the full text"
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "with Kruskal-Wallis with Dunn's post hoc test when required"
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "low",
+              "evidence_quote": "The authors deny any conflicts of interest."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding of tested product",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors deny any conflicts of interest.",
+            "note": "CoI explicitly disclosed as none; the study reports no external funding source and no single manufacturer's product is uniquely under test"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis; in-vitro specimen count <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "specimen count is 12/group (not <10 threshold); also covered in Q_method (sample size justification domain already rated high)"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "single-timepoint in-vitro failure test (loaded to failure 24 hours after cementation); no survival/follow-up-duration claim is made"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 26,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این مطالعه‌ی آزمایشگاهی، از روی متن کامل مقاله (موجود در کتابخانه‌ی دنت‌کست)، اثر فرول تراش بر مقاومت شکست اندوکراون مولر را با ابزار QUIN سنجید و در پرسش نوع متریال امتیاز ۲۶ از ۱۰۰، باند D گرفت.",
+        "interpretation_fa": "نبود بلایندینگ ارزیاب و توجیه حجم نمونه امتیاز روش‌شناسی را پایین آورده، هرچند تصادفی‌سازی و آنالیز آماری به‌خوبی گزارش شده‌اند. یافته‌ی اصلی، یعنی بار شکست بالاتر با فرول ولی بدون تفاوت در تنش محاسبه‌شده بر واحد سطح، در همین سطح شواهد قابل استناد است."
       }
     ]
   }
