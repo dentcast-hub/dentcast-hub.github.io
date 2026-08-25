@@ -148,16 +148,34 @@ describe('finalizeWeek — outcome edge rules', () => {
     expect(await tierOf(userIds[0])).toBe('amalgam'); // top still promoted up
   });
 
-  it('no promotion out of the highest active tier; rank still recorded', async () => {
-    // composite is the top active tier (max_active_tier_order = 3).
+  it('promotes out of the highest ACTIVE tier once someone qualifies, opening the tier above (2026-08-25)', async () => {
+    // composite is the top active tier going in (max_active_tier_order = 3),
+    // but it is not the true ceiling — metal-ceramic exists, just inactive.
+    // Promotion is no longer blocked here: a qualifying member opens it.
     const { userIds } = await seedGroup('composite', 6, [
       { xp: 90, at: T(1) }, { xp: 80, at: T(2) },
       { xp: 40, at: T(3) }, { xp: 30, at: T(4) },
       { xp: 20, at: T(5) }, { xp: 10, at: T(6) },
     ]);
     const res = await finalizeWeek(WEEK);
+    expect(res.promotions).toBe(2); // promotion_pct=20% of 6 -> ceil(1.2)=2, both clear the xp floor (30)
+    expect(await tierOf(userIds[0])).toBe('metal-ceramic');
+    expect((await memberOf(userIds[0])).outcome).toBe('promoted');
+    expect((await memberOf(userIds[0])).final_rank).toBe(1);
+    const active = (await pool.query("select is_active from league_tiers where slug='metal-ceramic'")).rows[0].is_active;
+    expect(active).toBe(true);
+    expect((await pool.query("select value from league_config where key='max_active_tier_order'")).rows[0].value).toBe('4');
+  });
+
+  it('no promotion out of the TRUE ceiling (titanium) — there is nothing above it', async () => {
+    const { userIds } = await seedGroup('titanium', 6, [
+      { xp: 90, at: T(1) }, { xp: 80, at: T(2) },
+      { xp: 40, at: T(3) }, { xp: 30, at: T(4) },
+      { xp: 20, at: T(5) }, { xp: 10, at: T(6) },
+    ]);
+    const res = await finalizeWeek(WEEK);
     expect(res.promotions).toBe(0);
-    expect(await tierOf(userIds[0])).toBe('composite');
+    expect(await tierOf(userIds[0])).toBe('titanium');
     expect((await memberOf(userIds[0])).outcome).toBe('stayed');
     expect((await memberOf(userIds[0])).final_rank).toBe(1); // recorded for future rewards
   });
@@ -218,31 +236,31 @@ describe('self-tuning — group size hysteresis + cooldown', () => {
   });
 });
 
-describe('self-tuning — tier activation', () => {
-  it('activates the next tier when the top active tier had a full group', async () => {
-    // composite (order 3) is top active; a full group there opens metal-ceramic.
-    //
-    // "Full" is measured against group_size_current (8), NOT the group's own
-    // capacity_at_creation, since 0033 made capacity per-tier: the top tier's
-    // capacity is its own population, so a group there is full as soon as
-    // everybody has scored, and reading that as "the ladder is crowded" would
-    // unroll all seven tiers onto a handful of readers.
-    await seedGroup('composite', 8, [
+describe('self-tuning — tier activation (2026-08-25: driven by a real promotion, not a size bar)', () => {
+  it('activates the next tier the moment someone in the top active tier actually qualifies to promote', async () => {
+    // composite (order 3) is top active going in; metal-ceramic exists but is
+    // inactive. A single qualifying member (rank in the promo zone, clears
+    // promotion_min_weekly_xp) is enough — it does not wait for the group to
+    // reach any particular size.
+    await seedGroup('composite', 6, [
       { xp: 80, at: T(1) }, { xp: 70, at: T(2) }, { xp: 60, at: T(3) },
       { xp: 50, at: T(4) }, { xp: 40, at: T(5) }, { xp: 30, at: T(6) },
-      { xp: 20, at: T(7) }, { xp: 10, at: T(8) },
-    ]); // size 8 == group_size_current -> a standard group filled
+    ]);
     await finalizeWeek(WEEK);
     const active = (await pool.query("select is_active from league_tiers where slug='metal-ceramic'")).rows[0].is_active;
     expect(active).toBe(true);
     expect((await pool.query("select value from league_config where key='max_active_tier_order'")).rows[0].value).toBe('4');
   });
 
-  it('does NOT activate a tier when no top group filled', async () => {
-    await seedGroup('composite', 8, [
-      { xp: 60, at: T(1) }, { xp: 50, at: T(2) }, { xp: 40, at: T(3) },
-      { xp: 30, at: T(4) }, { xp: 20, at: T(5) }, { xp: 10, at: T(6) },
-    ]); // size 6 < group_size_current 8 -> not a filled standard group
+  it('does NOT activate a tier when nobody in the top group actually qualifies (below the xp floor)', async () => {
+    // Filled AND valid (so `valid` is true and rank alone would put someone in
+    // the promo zone) but every member is below promotion_min_weekly_xp (30) —
+    // the xp floor is still what decides a REAL promotion, same as everywhere
+    // else in the ladder, so no promotion happens and metal-ceramic stays off.
+    await seedGroup('composite', 6, [
+      { xp: 25, at: T(1) }, { xp: 20, at: T(2) }, { xp: 15, at: T(3) },
+      { xp: 10, at: T(4) }, { xp: 5, at: T(5) }, { xp: 1, at: T(6) },
+    ]);
     await finalizeWeek(WEEK);
     expect((await pool.query("select is_active from league_tiers where slug='metal-ceramic'")).rows[0].is_active).toBe(false);
     expect((await pool.query("select value from league_config where key='max_active_tier_order'")).rows[0].value).toBe('3');
@@ -766,19 +784,23 @@ describe('validity — the floor OR a full group', () => {
     expect(await tierOf(userIds[0])).toBe('amalgam');
   });
 
-  it('the top tier now has a way DOWN, which it never had', async () => {
-    // composite is top active: no promotion by definition. Before this rule its
-    // group was never valid either, so nobody could leave it in any direction.
+  it('the top active tier now has a way both up AND down, once its group is a real competition', async () => {
+    // composite is top active going in. Before 0033 its group was never valid,
+    // so nobody could leave in any direction; before 2026-08-25, validity got
+    // it a way down but promotion stayed blocked by definition regardless.
+    // Now that a real member qualifies (rank 1, xp 90 clears the 30 floor),
+    // it promotes AND opens metal-ceramic, same transaction as the demotion.
     const { userIds } = await seedGroup('composite', 5, [
       { xp: 90, at: T(1) }, { xp: 70, at: T(2) }, { xp: 50, at: T(3) },
       { xp: 30, at: T(4) }, { xp: 10, at: T(5) },
     ]);
     const res = await finalizeWeek(WEEK);
 
-    expect(res.promotions, 'still no promotion out of the top').toBe(0);
+    expect(res.promotions).toBe(1);
     expect(res.demotions).toBe(1);
     expect(await tierOf(userIds[4])).toBe('amalgam');
-    expect(await tierOf(userIds[0])).toBe('composite');
+    expect(await tierOf(userIds[0])).toBe('metal-ceramic');
+    expect((await pool.query("select is_active from league_tiers where slug='metal-ceramic'")).rows[0].is_active).toBe(true);
   });
 
   it('GET /league drops neutral_mode for a full group', async () => {
