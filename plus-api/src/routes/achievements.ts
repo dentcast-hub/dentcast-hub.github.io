@@ -59,7 +59,17 @@ export async function achievementRoutes(app: FastifyInstance): Promise<void> {
         grantCredits(user.id), referralCredits(user.id),
       ]);
       spent = await spentSources(user.id);
-      const mine = [...badgeCredits(facts), ...grants, ...referral];
+      // Largest first, same ordering discount-credits.ts's own availableCredits()
+      // applies before its callers pick from it — and for the same reason: the
+      // line below feeds this straight into pickCredits(), whose greedy walk
+      // fills the cap in ARRAY ORDER, not by size. Unsorted, a handful of small
+      // badge levels (1-2% each, and first in this concatenation) filled the
+      // cap on their own and stranded a real 5-10% grant/referral credit that
+      // came after them — quoting a smaller "تمدید بعدی" than /pay/plans would
+      // actually charge for the exact same account (kamyabhimself, 2026-08-24:
+      // shown ٪۲۷ here while the ٪۳۰ /pay/plans would give was sitting unused).
+      const mine = [...badgeCredits(facts), ...grants, ...referral]
+        .sort((a, b) => b.percent - a.percent || (a.source < b.source ? -1 : 1));
       readyCredits = mine.filter((c) => !spent!.has(c.source));
       // The other half of the same partition. A reader looking at «تخفیف‌های
       // من» is asking about their whole position, and "what is left" alone

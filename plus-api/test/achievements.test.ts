@@ -409,6 +409,55 @@ describe('GET /achievements names every credit in `discount.items`', () => {
   });
 });
 
+// User report, 2026-08-24 (support ticket T-7C6-UKM, kamyabhimself): profile
+// showed ready_percent correctly (٪۱۲) but next_purchase_percent as ٪۲۷ —
+// pillar's ٪۲۰ plus only ٪۷, though /pay/plans would have picked the full
+// ٪۱۰ cap for the exact same credits.
+//
+// Root cause: this route builds `readyCredits` as
+// [...badgeCredits, ...grants, ...referral] and feeds it straight to
+// pickCredits(), which walks the array in ARRAY ORDER and fills the cap
+// greedily — it does NOT sort by size itself. discount-credits.ts's own
+// availableCredits() (what /pay/plans actually calls) sorts largest-first
+// before any caller picks from it, precisely so the cap is filled with the
+// fewest, most valuable credits. This route reimplemented the union without
+// that sort, so whenever several small credits (issued/evaluated first)
+// summed to under the cap on their own, they got picked in full and
+// stranded a later, larger credit that would never fit behind them —
+// quoting a SMALLER discount than the same account would actually receive
+// at checkout.
+describe('next_purchase_percent picks the largest credits, not just the first ones', () => {
+  it('does not let small credits fill the cap and strand a larger one issued after them', async () => {
+    const me = await userId();
+    // Two small grants first (mirrors badges being evaluated/concatenated
+    // before grants), issued/ordered before a larger one — 3 + 4 = 7 fits the
+    // cap on its own, which is exactly what let the old unsorted walk stop
+    // there and never even look at the third.
+    await pool.query(
+      `insert into discount_grants (user_id, percent, label_fa, created_at)
+       values ($1, 3, 'کوچک یک', now() - interval '2 days'),
+              ($1, 4, 'کوچک دو', now() - interval '1 day')`,
+      [me],
+    );
+    // A larger grant, issued after them: it alone plus the first small one
+    // fills the cap EXACTLY (6 + 4 = 10), the true best pick — but it does
+    // not fit behind both small ones (3 + 4 + 6 = 13 > 10).
+    await pool.query(
+      `insert into discount_grants (user_id, percent, label_fa, created_at)
+       values ($1, 6, 'بزرگ', now())`,
+      [me],
+    );
+
+    const body = await get();
+    expect(body.discount.ready_percent).toBe(13); // 3 + 4 + 6, unspent — the whole position
+    // The buggy, unsorted (insertion-order) walk picks [3, 4] first (fits,
+    // sum 7) and never reaches 6 (7+6=13>10) — quoting ٪۷. Sorted
+    // largest-first tries 6 first (sum 6), then 4 still fits (sum 10 exactly)
+    // — the true optimum, ٪۱۰, and it is the LARGER credit that survives.
+    expect(body.discount.next_purchase_percent).toBe(10);
+  });
+});
+
 describe('a medal is never minted for doing nothing', () => {
   it('ignores a first place in a group too small to be competitive', async () => {
     // 3 members: below league_config.min_valid_group_size (6). The UI already
