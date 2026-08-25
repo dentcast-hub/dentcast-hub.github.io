@@ -4496,6 +4496,28 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         .dc-destool-drawer.is-open{ grid-template-rows:1fr; }
         .dc-destool-drawer > div{ overflow:hidden; }
         .dc-destool-boot{ padding:.9rem 1rem 1rem; font-size:.86rem; line-height:1.9; color:var(--muted,#5a6472); }
+
+        /* مسیریاب homepage entry — same box model as .dc-des-legend above, brand
+           blue (--ac) since most of the tool is free; only the قطب‌نما chip is
+           amber, per the site-wide rule that amber marks what a subscription
+           buys (index.html's --x-amber tokens, defined earlier in this file). */
+        .dc-wf-home-entry{
+          display:flex; align-items:center; gap:.7rem;
+          background:var(--card-bg); border:1px solid var(--border);
+          border-right:3px solid var(--ac); border-radius:.875rem;
+          padding:.75rem .9rem; margin:.7rem 0 1.1rem;
+          text-decoration:none; box-shadow:var(--card-sh);
+        }
+        .dc-wf-home-entry .dc-wf-ico{ width:2rem; height:2rem; border-radius:50%; flex-shrink:0;
+          background:rgba(var(--ac-rgb),.10); border:1px solid rgba(var(--ac-rgb),.25);
+          display:flex; align-items:center; justify-content:center; color:var(--ac); }
+        .dc-wf-home-entry .dc-wf-ico svg{ width:1.05rem; height:1.05rem; }
+        .dc-wf-home-entry .dc-wf-body{ flex:1; min-width:0; }
+        .dc-wf-home-entry .dc-wf-ttl{ display:block; font-size:.82rem; font-weight:700; color:var(--txt); }
+        .dc-wf-home-entry .dc-wf-sub{ display:block; font-size:.72rem; color:var(--txt3); margin-top:.15rem; line-height:1.7; }
+        .dc-wf-home-entry .dc-wf-amber-pill{ flex:none; font-size:.63rem; font-weight:800; color:var(--x-amber-ink);
+          background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd);
+          border-radius:999px; padding:.14rem .6rem; white-space:nowrap; }
       </style>
       <div class="dc-destool-wrap">
         <button type="button" class="dc-destool-tab" id="dcDesToolTab" aria-expanded="false" aria-controls="dcDesToolPanel">
@@ -4656,6 +4678,26 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         </div>
       </div>
 
+      <!-- مسیریاب — homepage entry point for /plus/wayfinder.html. Placed here,
+           between the episode hero and «دسته‌های محتوا», on purpose: it helps a
+           visitor find their way BEFORE they'd otherwise browse the category
+           grid manually, so it needs to be seen first, not after. This is also
+           where spot.js's homepage ad renders — carries id="dcWayfinderHome" so
+           spot.js's renderHome() anchors the ad card immediately above this
+           element instead of immediately above the «دسته‌های محتوا» heading
+           (its old anchor), keeping the ad ABOVE and this card right below it
+           without moving .dc-exa-cats or its heading (see spot/spot.js). Mostly
+           free (the wizard + one real suggestion need no subscription), so the
+           card itself stays brand blue — only the قطب‌نما chip is amber, per
+           the site-wide rule that amber marks what a subscription buys. -->
+      <a class="dc-wf-home-entry" id="dcWayfinderHome" href="/plus/wayfinder.html" aria-label="مسیریاب یادگیری">
+        <span class="dc-wf-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.2 8.8l-2 5.2-5.2 2 2-5.2 5.2-2z"/></svg></span>
+        <span class="dc-wf-body">
+          <span class="dc-wf-ttl">مسیریاب یادگیری</span>
+          <span class="dc-wf-sub">بگو چیکاره‌ای، یه مسیر شخصی از محتوای دنت‌کست بگیر</span>
+        </span>
+        <span class="dc-wf-amber-pill">قطب‌نما · پریمیوم</span>
+      </a>
 
       <!-- Examine-style category grid — every cell is a plain link to a
            directory that already exists; counts are brain-derived (see
@@ -5589,7 +5631,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=121" defer></script>
+<script src="/dc-nav.js?v=123" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
