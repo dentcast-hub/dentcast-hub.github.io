@@ -216,7 +216,14 @@
    record exists (plus/js/return-trail.js), so an organic visit is unchanged. */
 .dcp-trail-anchor {
   display: flex; align-items: center; gap: 4px;
-  margin: 0 0 10px;
+  /* Small margin on BOTH sides, not just below: this is the first thing
+     mounted into a container we don't fully control the shape of across
+     every template (return-trail.js is inserted before the article's own
+     first child, whatever that happens to be). The top margin is a cheap
+     safety gap against a template that gives its own opening element a
+     negative top offset (a hero bleeding under the header, say) — nothing
+     currently does that here, but nothing guarantees a future one won't. */
+  margin: 6px 0 10px;
 }
 .dcp-trail {
   display: inline-flex; align-items: center; gap: 8px;
