@@ -3,10 +3,10 @@
 // the starting point: enough to show the mechanism actually works, short
 // enough that nobody learns the whole subtopic before ever seeing the
 // premium gate (founder feedback — some demo chains ran too long).
-import { el, icon, faNum } from './util.js?v=24';
-import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=24';
-import { openLoginModal } from './login-modal.js?v=24';
-import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor } from './wayfinder-engine.js?v=24';
+import { el, icon, faNum } from './util.js?v=26';
+import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=26';
+import { openLoginModal } from './login-modal.js?v=26';
+import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=26';
 
 const FLAVORS = {
   continue: { name: 'ادامه مسیر', hint: 'قدم منطقی بعدی', primary: true, iconId: 'icon-arrow-left' },
@@ -16,9 +16,11 @@ const FLAVORS = {
 };
 const FLAVOR_ORDER = ['continue', 'deeper', 'format', 'lateral'];
 
-// Which pillars matter to each job is an editorial call (like the rest of
-// the wizard's copy) — the pillars/subtopics THEMSELVES, and every content
-// suggestion inside them, are real and live (wayfinder-engine.js / catalog()).
+// `pillars` is only a per-persona RECOMMENDATION order (renderPillarGrid
+// sorts these first with a «پیشنهادی» badge) — never a filter. Every حوزه in
+// the real catalog stays pickable from every شغل; the pillars/subtopics
+// THEMSELVES, and every content suggestion inside them, are real and live
+// (wayfinder-engine.js / catalog()).
 const PERSONAS = [
   { key: 'labtech', title: 'پروتزیست', sub: 'تکنسین لابراتوار پروتز', pillars: ['fixed-pros', 'ceramics', 'esthetic', 'removable-pros'] },
   { key: 'dentist', title: 'دندان‌پزشک', sub: 'عمومی یا متخصص', pillars: ['fixed-pros', 'removable-pros', 'implantology', 'occlusion', 'bonding'] },
@@ -68,7 +70,7 @@ export async function renderWayfinder(root, me) {
   const pillarCatalog = catalog(engine);
   const isPremium = !!(me && me.tier === 'premium');
 
-  const state = { personaKey: null, mode: null, pillarKey: null, subtopicKey: null, path: [] };
+  const state = { personaKey: null, mode: null, pillarKey: null, subtopicKey: null, bundleId: null, path: [] };
 
   const wrap = el('div', { class: 'dcp-wf' });
   const { section: personaStep, grid: personaGrid } = stepSection('۱', 'چیکاره‌ای؟');
@@ -77,10 +79,23 @@ export async function renderWayfinder(root, me) {
     el('div', { class: 'dcp-wf-step-label' }, [el('span', { class: 'dcp-wf-step-num' }, '۳'), el('span', {}, 'قطب‌نما')]),
   ]);
   const { section: pillarStep, grid: pillarGrid } = stepSection('۳', 'دوست داری از کدوم حوزه شروع کنیم؟');
+  // دانشجو-only: a «باندل‌های شروع» shortcut ABOVE the normal pillar grid —
+  // founder feedback: a student is better served starting from a bundle's
+  // curated basics than picking a whole حوزه cold. Still just an offer, not
+  // a gate — the pillar grid right below it stays the full, unfiltered
+  // catalog for anything a bundle doesn't cover.
+  const bundleGrid = el('div', { class: 'dcp-wf-grid dcp-wf-bundle-grid' });
+  const bundleHint = el('p', { class: 'dcp-wf-substep-hint' },
+    'برای دانشجو: بهتره اول از یه باندلِ شروع بری — پایه‌های همون موضوع رو قدم‌به‌قدم می‌بینی.');
+  const pillarHint = el('p', { class: 'dcp-wf-substep-hint' },
+    'یا مستقیم برو سراغ حوزه‌ها — شامل چیزهایی هم که تو باندل‌ها نیست:');
+  const bundleBlock = el('div', { class: 'dcp-wf-bundle-block', hidden: true }, [bundleHint, bundleGrid, pillarHint]);
+  pillarStep.insertBefore(bundleBlock, pillarGrid);
   const { section: subtopicStep, grid: subtopicGrid } = stepSection('۴', 'کدوم زیرموضوعش؟');
   const { section: levelStep, grid: levelGrid } = stepSection('۵', 'توی این زیرموضوع در چه سطحی هستی؟');
+  const bundleBanner = el('div', { class: 'dcp-wf-bundle-banner', hidden: true });
   const chainWrap = el('div', { class: 'dcp-wf-chain' });
-  const flowSection = el('section', { class: 'dcp-wf-step dcp-wf-flow', hidden: true }, [chainWrap]);
+  const flowSection = el('section', { class: 'dcp-wf-step dcp-wf-flow', hidden: true }, [bundleBanner, chainWrap]);
 
   modeStep.hidden = true;
   compassStep.hidden = true;
@@ -113,7 +128,7 @@ export async function renderWayfinder(root, me) {
   function selectPersona(key) {
     if (state.personaKey === key) return;
     state.personaKey = key;
-    state.mode = null; state.pillarKey = null; state.subtopicKey = null; state.path = [];
+    state.mode = null; state.pillarKey = null; state.subtopicKey = null; state.bundleId = null; state.path = [];
     renderPersonaGrid();
     renderModeGrid();
     hide(compassStep, pillarStep, subtopicStep, levelStep, flowSection);
@@ -142,7 +157,7 @@ export async function renderWayfinder(root, me) {
   function selectMode(mode) {
     if (state.mode === mode) return;
     state.mode = mode;
-    state.pillarKey = null; state.subtopicKey = null; state.path = [];
+    state.pillarKey = null; state.subtopicKey = null; state.bundleId = null; state.path = [];
     renderModeGrid();
     hide(flowSection);
     if (mode === 'compass') {
@@ -151,9 +166,40 @@ export async function renderWayfinder(root, me) {
       reveal(compassStep);
     } else {
       hide(compassStep, subtopicStep, levelStep);
+      renderBundleBlock();
       renderPillarGrid();
       reveal(pillarStep);
     }
+  }
+
+  // Only دانشجو gets the «باندل‌های شروع» shortcut — پروتزیست/دندان‌پزشک go
+  // straight to the full حوزه grid, exactly as before.
+  function renderBundleBlock() {
+    bundleBlock.hidden = state.personaKey !== 'student';
+    if (bundleBlock.hidden) return;
+    renderBundleGrid();
+  }
+
+  function renderBundleGrid() {
+    bundleGrid.replaceChildren(...bundles(engine).map((b) => pickCard({
+      title: b.title_fa,
+      sub: b.description_fa || `${faNum((b.steps || []).length)} قدم`,
+      active: state.bundleId === b.id,
+      onClick: () => startBundle(b.id),
+    })));
+  }
+
+  function startBundle(id) {
+    const b = pathwayById(engine, id);
+    if (!b || !b.steps || !b.steps.length) return;
+    state.bundleId = id;
+    state.pillarKey = null; state.subtopicKey = null;
+    state.path = [b.steps[0].content_id];
+    renderBundleGrid();
+    renderPillarGrid();
+    hide(subtopicStep, levelStep);
+    renderChain();
+    reveal(flowSection);
   }
 
   function renderCompassComingSoon() {
@@ -172,23 +218,35 @@ export async function renderWayfinder(root, me) {
     compassStep.replaceChildren(compassStep.firstChild, body);
   }
 
+  // Persona never blocks a حوزه — it only sorts the persona's own pillars to
+  // the front with a «پیشنهادی» hint. A دندان‌پزشک still reaches «دیجیتال»
+  // (founder feedback: the curated list was read as a hard wall, not a
+  // suggestion — every حوزه has to stay reachable from every شغل).
   function renderPillarGrid() {
     const persona = PERSONAS.find((p) => p.key === state.personaKey);
-    const rows = persona.pillars
-      .map((key) => pillarCatalog.find((c) => c.key === key))
-      .filter(Boolean);
-    pillarGrid.replaceChildren(...rows.map((c) => pickCard({
-      title: c.title_fa,
-      sub: `${faNum(c.count)} محتوا در این حوزه`,
-      active: state.pillarKey === c.key,
-      accent: { light: c.accentRgb, dark: c.accentRgbDark },
-      onClick: () => selectPillar(c.key),
-    })));
+    const recommended = new Set(persona ? persona.pillars : []);
+    const rows = [...pillarCatalog].sort((a, b) => {
+      const ra = recommended.has(a.key) ? 0 : 1;
+      const rb = recommended.has(b.key) ? 0 : 1;
+      return ra - rb;
+    });
+    pillarGrid.replaceChildren(...rows.map((c) => {
+      const active = state.pillarKey === c.key;
+      return pickCard({
+        title: c.title_fa,
+        sub: `${faNum(c.count)} محتوا در این حوزه`,
+        active,
+        badge: (!active && recommended.has(c.key)) ? 'پیشنهادی' : null,
+        accent: { light: c.accentRgb, dark: c.accentRgbDark },
+        onClick: () => selectPillar(c.key),
+      });
+    }));
   }
 
   function selectPillar(key) {
-    if (state.pillarKey === key) return;
-    state.pillarKey = key; state.subtopicKey = null; state.path = [];
+    if (state.pillarKey === key && !state.bundleId) return;
+    state.pillarKey = key; state.subtopicKey = null; state.bundleId = null; state.path = [];
+    renderBundleGrid();
     renderPillarGrid();
     renderSubtopicGrid();
     hide(levelStep, flowSection);
@@ -269,7 +327,47 @@ export async function renderWayfinder(root, me) {
     return a ? `--wf-rgb-l:${a.light};--wf-rgb-d:${a.dark || a.light};` : null;
   }
 
+  // While a باندل is active, «ادامه مسیر» follows the bundle's OWN curated
+  // step order, never the generic engine guess — the generic `continue`
+  // follows whichever pathway lists a content_id FIRST (a full pathway,
+  // ahead of any bundle), which is a much more granular, unrelated next step
+  // than what the bundle itself curated. Once the bundle's steps run out,
+  // sequenceNextId simply returns null and the wizard falls through to the
+  // engine's own suggestion — the natural "بسته تموم شد، حالا آزاد ادامه بده"
+  // moment, with no separate end-of-bundle screen needed.
+  function getOptions(id, visited) {
+    const opts = optionsFor(engine, id, visited);
+    if (state.bundleId) {
+      const seqNext = sequenceNextId(pathwayById(engine, state.bundleId), id);
+      if (seqNext && !visited.has(seqNext)) {
+        opts.continue = seqNext;
+        for (const f of ['deeper', 'format', 'lateral']) {
+          if (opts[f] === seqNext) delete opts[f];
+        }
+      }
+    }
+    return opts;
+  }
+
+  // Shown only while the LAST node is still one of the bundle's own steps —
+  // the moment a detour (عمیق‌تر/فرمت دیگه/جانبی) takes the reader off that
+  // curated list, this quietly disappears rather than keep claiming a bundle
+  // that is no longer actually being followed.
+  function renderBundleBanner() {
+    const b = state.bundleId ? pathwayById(engine, state.bundleId) : null;
+    const lastId = state.path[state.path.length - 1];
+    const stillInBundle = !!(b && (b.steps || []).some((s) => s.content_id === lastId));
+    bundleBanner.hidden = !stillInBundle;
+    if (!stillInBundle) return;
+    const stepNo = (b.steps || []).findIndex((s) => s.content_id === lastId) + 1;
+    bundleBanner.replaceChildren(
+      el('span', { class: 'dcp-wf-bundle-tag' }, 'باندل شروع'),
+      el('span', {}, `${b.title_fa} — قدم ${faNum(stepNo)} از ${faNum((b.steps || []).length)}`)
+    );
+  }
+
   function renderChain() {
+    renderBundleBanner();
     chainWrap.replaceChildren();
     state.path.forEach((id, i) => {
       const isLast = i === state.path.length - 1;
@@ -285,7 +383,7 @@ export async function renderWayfinder(root, me) {
         if (cappedByTier) {
           item.appendChild(endGate());
         } else {
-          const opts = optionsFor(engine, id, visited);
+          const opts = getOptions(id, visited);
           const flavors = FLAVOR_ORDER.filter((f) => opts[f]);
           if (!flavors.length) item.appendChild(naturalEnd());
           else item.appendChild(optionsBlock(opts, flavors, i));
@@ -308,7 +406,7 @@ export async function renderWayfinder(root, me) {
   function histNode(info, id, idx) {
     const chosenId = state.path[idx + 1];
     const visited = new Set(state.path.slice(0, idx + 1));
-    const opts = optionsFor(engine, id, visited);
+    const opts = getOptions(id, visited);
     const flavors = FLAVOR_ORDER.filter((f) => opts[f]);
     const pills = flavors.map((f) => {
       const targetId = opts[f];
