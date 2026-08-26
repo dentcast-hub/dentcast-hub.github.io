@@ -6,11 +6,16 @@
 // (mode, حوزه, زیرموضوع, سطح, and the whole flowchart) is premium — see
 // renderPersonaGate(). Because of that, the flow itself is only ever reached
 // by a premium visitor, so it carries no tier cap of its own any more.
-import { el, icon, faNum } from './util.js?v=31';
-import { api } from './api.js?v=31';
-import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=31';
-import { openLoginModal } from './login-modal.js?v=31';
-import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=31';
+import { el, icon, faNum } from './util.js?v=33';
+import { api } from './api.js?v=33';
+import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=33';
+import { openLoginModal } from './login-modal.js?v=33';
+import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=33';
+import { markReturnTrail } from './return-trail.js?v=33';
+
+const returnToWayfinder = () => markReturnTrail({
+  url: '/plus/wayfinder.html', eyebrow: 'مسیریاب', title: 'مسیریاب یادگیری', iconId: 'icon-radar',
+});
 
 const FLAVORS = {
   continue: { name: 'ادامه مسیر', hint: 'قدم منطقی بعدی', primary: true, iconId: 'icon-arrow-left' },
@@ -513,7 +518,7 @@ export async function renderWayfinder(root, me) {
       // subtopic → level → chain), rebuilt from nothing on load, so leaving
       // in the same tab would silently reset the wizard the moment someone
       // came back from the article.
-      info.url ? el('a', { class: 'dcp-wf-node-open', href: info.url, target: '_blank', rel: 'noopener' }, [
+      info.url ? el('a', { class: 'dcp-wf-node-open', href: info.url, target: '_blank', rel: 'noopener', onclick: returnToWayfinder }, [
         icon('icon-book', { class: 'dc-icon' }),
         el('span', {}, 'مطالعه‌ی این مطلب'),
       ]) : null,
@@ -545,6 +550,7 @@ export async function renderWayfinder(root, me) {
       const openLink = targetInfo && targetInfo.url ? el('a', {
         class: 'dcp-wf-pill-open', href: targetInfo.url, target: '_blank', rel: 'noopener',
         title: 'باز کردنِ مقاله در تب جدید', 'aria-label': 'باز کردنِ «' + targetInfo.title + '» در تب جدید',
+        onclick: returnToWayfinder,
       }, icon('icon-book', { class: 'dc-icon' })) : null;
       return el('div', { class: 'dcp-wf-pill-wrap' }, [pillBtn, openLink].filter(Boolean));
     });
@@ -590,6 +596,7 @@ export async function renderWayfinder(root, me) {
       ]);
       const openLink = info && info.url ? el('a', {
         class: 'dcp-wf-option-open', href: info.url, target: '_blank', rel: 'noopener',
+        onclick: returnToWayfinder,
       }, [icon('icon-book', { class: 'dc-icon' }), el('span', {}, 'مطالعه‌ی مستقیم')]) : null;
       return el('div', {
         class: `dcp-wf-option${spec.primary ? ' is-primary' : ''}${style ? ' has-accent' : ''}`,

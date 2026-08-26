@@ -7,9 +7,9 @@
 // every assistant turn, a typing indicator while waiting, a recap trail of
 // the case + past answers) without becoming free-form chat - see
 // dcp-assist-* in plus-pages.css.
-import { el, faNum } from './util.js?v=31';
-import { api, ApiError } from './api.js?v=31';
-import { FOLDER_EN, getModel } from './content-index.js?v=31';
+import { el, faNum } from './util.js?v=33';
+import { api, ApiError } from './api.js?v=33';
+import { FOLDER_EN, getModel } from './content-index.js?v=33';
 
 function sparkAvatar(isSmall) {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
