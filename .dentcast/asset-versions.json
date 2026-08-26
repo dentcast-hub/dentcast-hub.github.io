@@ -16,8 +16,8 @@
     "hash": "86bdf5ada52dd362"
   },
   "/dc-theme.css": {
-    "v": 2,
-    "hash": "c5abab1a4bf1051c"
+    "v": 3,
+    "hash": "a7c2b915985c04da"
   },
   "/global-search-ui.js": {
     "v": 5,
@@ -97,15 +97,15 @@
   },
   "/plus/js/wayfinder-page.js": {
     "v": 10,
-    "hash": "13c1f68002ce64eb"
+    "hash": "0737ac8f925e2a44"
   },
   "/plus/plus-desktop.css": {
     "v": 7,
     "hash": "fb9348a5cf72e5f3"
   },
   "/plus/plus-pages.css": {
-    "v": 33,
-    "hash": "9389d7ceab919b9d"
+    "v": 34,
+    "hash": "3e144501f242b71a"
   },
   "/plus/plus.css": {
     "v": 34,
@@ -113,11 +113,11 @@
   },
   "dc-nav.js:V": {
     "v": 125,
-    "hash": "dd53e5fac9b7c05b"
+    "hash": "f71fa3d60810c2d4"
   },
   "modules:M": {
-    "v": 30,
-    "hash": "df0f60cc850aa2cc"
+    "v": 29,
+    "hash": "e9bac9356330c398"
   },
   "spot.js:SPOT_V": {
     "v": 32,

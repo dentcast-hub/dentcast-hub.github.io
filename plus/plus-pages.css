@@ -1430,9 +1430,18 @@ html:not([data-theme="dark"]) .dcp-overlay {
    card here carries a real per-pillar color (--wf-rgb-l/--wf-rgb-d, set
    inline per element from tools/build_pillar.py's own PILLAR_ACCENT_RGB via
    plus/pillar-subtopics.json — the SAME color that pillar's own /pillar/
-   page uses), not a single flat blue. --dcp-gold is still the one plus.css
-   already uses for a bundle's "شروع کن" tag; قطب‌نما reuses it rather than
-   inventing a second premium color. */
+   page uses), not a single flat blue.
+
+   Two golds, two different jobs — never conflate them. --dcp-gold (plus.css)
+   is a TYPE accent — it marks "این یه باندله" or "این پیشنهادیه" the same
+   way it marks a bundle's «شروع کن» tag elsewhere, regardless of tier.
+   --amber (dc-theme.css, matching index.html's own --x-amber*) is the site's
+   actual PREMIUM colour, used here for the wizard's own chrome — step-number
+   circles, the primary flavor option, hover states — because founder
+   feedback (2026-08-26) moved the paywall to right after «چیکاره‌ای؟»
+   (see renderPersonaGate in wayfinder.js): once almost the whole tool is
+   premium, its chrome should read that way from the first free step on,
+   not just at the one card that happens to be locked. */
 .dcp-wf-title { font-size: 1.6rem; font-weight: 800; margin: 4px 2px 6px; letter-spacing: -.01em; }
 .dcp-wf-lede { color: var(--txt2, #4a5f85); font-size: .95rem; line-height: 1.8; margin: 0 2px 26px; max-width: 62ch; }
 
@@ -1440,7 +1449,7 @@ html:not([data-theme="dark"]) .dcp-overlay {
 .dcp-wf-step-label { display: flex; align-items: center; gap: 10px; font-size: .92rem; font-weight: 800; color: var(--txt); margin-bottom: 13px; }
 .dcp-wf-step-num {
   flex: 0 0 auto; width: 24px; height: 24px; border-radius: 50%;
-  background: var(--ac, #0b5fff); color: #fff; font-size: .74rem; font-weight: 800;
+  background: var(--amber, #c9922b); color: #fff; font-size: .74rem; font-weight: 800;
   display: flex; align-items: center; justify-content: center;
   font-variant-numeric: tabular-nums;
 }
@@ -1479,19 +1488,24 @@ html:not([data-theme="dark"]) .dcp-overlay {
   transition: border-color .15s ease, box-shadow .15s ease, transform .1s ease;
 }
 [data-theme="dark"] .dcp-wf-card { box-shadow: 0 3px 14px -6px rgba(0,0,0,.5); }
-.dcp-wf-card:hover { border-color: var(--wf-accent, var(--ac, #0b5fff)); box-shadow: 0 6px 20px -8px rgba(9,32,74,.22); }
+.dcp-wf-card:hover { border-color: var(--wf-accent, var(--amber, #c9922b)); box-shadow: 0 6px 20px -8px rgba(9,32,74,.22); }
 .dcp-wf-card:active { transform: scale(.99); }
 .dcp-wf-card.has-accent { border-inline-start: 4px solid var(--wf-accent); }
 .dcp-wf-card.is-active {
-  border-color: var(--wf-accent, var(--ac, #0b5fff));
-  background: linear-gradient(180deg, rgba(var(--wf-accent-rgb, var(--ac-rgb, 11,95,255)), .10), transparent 60%), var(--card-bg, #fff);
+  border-color: var(--wf-accent, var(--amber, #c9922b));
+}
+.dcp-wf-card.has-accent.is-active {
+  background: linear-gradient(180deg, rgba(var(--wf-accent-rgb, 11,95,255), .10), transparent 60%), var(--card-bg, #fff);
+}
+.dcp-wf-card:not(.has-accent).is-active {
+  background: linear-gradient(180deg, var(--amber-wash, rgba(201,146,43,.08)), transparent 60%), var(--card-bg, #fff);
 }
 .dcp-wf-card.is-compass.is-active { border-color: var(--dcp-gold, #b7791f); background: linear-gradient(180deg, var(--dcp-gold-bg, rgba(183,121,31,.1)), transparent 60%), var(--card-bg, #fff); }
 .dcp-wf-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
 .dcp-wf-card-top h3 { font-size: 1.02rem; font-weight: 800; margin: 0; }
 .dcp-wf-card.has-accent .dcp-wf-card-top h3 { color: var(--wf-accent); }
 .dcp-wf-card-sub { color: var(--txt2, #4a5f85); font-size: .85rem; margin: 0; line-height: 1.7; }
-.dcp-wf-active-flag { flex: 0 0 auto; font-size: .66rem; font-weight: 700; color: #fff; background: var(--wf-accent, var(--ac, #0b5fff)); border-radius: 999px; padding: 3px 9px; }
+.dcp-wf-active-flag { flex: 0 0 auto; font-size: .66rem; font-weight: 700; color: #fff; background: var(--wf-accent, var(--amber, #c9922b)); border-radius: 999px; padding: 3px 9px; }
 .dcp-wf-badge { flex: 0 0 auto; font-size: .64rem; font-weight: 700; color: var(--dcp-gold, #b7791f); background: var(--dcp-gold-bg, rgba(183,121,31,.1)); border: 1px solid color-mix(in srgb, var(--dcp-gold, #b7791f) 35%, transparent); border-radius: 999px; padding: 3px 9px; white-space: nowrap; }
 .dcp-wf-compass-soon { cursor: default; }
 .dcp-wf-compass-soon:hover { border-color: var(--card-border, rgba(2,35,96,.09)); box-shadow: 0 3px 14px -6px rgba(9,32,74,.16); }
@@ -1557,8 +1571,8 @@ html:not([data-theme="dark"]) .dcp-overlay {
   transition: border-color .15s ease, box-shadow .15s ease;
 }
 [data-theme="dark"] .dcp-wf-option { box-shadow: 0 2px 10px -6px rgba(0,0,0,.4); }
-.dcp-wf-option:hover { border-color: var(--ac, #0b5fff); box-shadow: 0 5px 16px -6px rgba(9,32,74,.2); }
-.dcp-wf-option.is-primary { border-color: color-mix(in srgb, var(--ac, #0b5fff) 50%, transparent); background: linear-gradient(180deg, rgba(var(--ac-rgb, 11,95,255), .09), transparent 65%), var(--card-bg, #fff); }
+.dcp-wf-option:hover { border-color: var(--amber, #c9922b); box-shadow: 0 5px 16px -6px rgba(9,32,74,.2); }
+.dcp-wf-option.is-primary { border-color: var(--amber-bd, rgba(154,107,21,.22)); background: linear-gradient(180deg, var(--amber-wash, rgba(201,146,43,.08)), transparent 65%), var(--card-bg, #fff); }
 /* The primary action — picks this as the next step. Same look the whole
    card used to have; only the click target shrank to exclude the open link
    below it. */
@@ -1574,7 +1588,7 @@ html:not([data-theme="dark"]) .dcp-overlay {
    must set its own, or the sprite's raw SVG falls back to the UA default
    (~300x150px). Both icon sizes used on this page need an explicit rule. */
 .dcp-wf-option-ico svg { width: 17px; height: 17px; }
-.dcp-wf-option.is-primary .dcp-wf-option-ico { background: var(--ac, #0b5fff); color: #fff; }
+.dcp-wf-option.is-primary .dcp-wf-option-ico { background: var(--amber, #c9922b); color: #fff; }
 .dcp-wf-option-name { display: block; font-size: .84rem; font-weight: 700; color: var(--txt); }
 .dcp-wf-option-hint { display: block; font-size: .71rem; color: var(--txt3, #62779a); margin-top: 1px; }
 .dcp-wf-option-title { font-size: .95rem; font-weight: 700; line-height: 1.6; color: var(--txt); }
