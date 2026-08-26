@@ -9,10 +9,10 @@
 // gateway did not answer, the payment stays pending and this page says so
 // plainly, because telling someone who has just been charged that their payment
 // failed is the single worst thing this flow can do.
-import { el } from './util.js?v=25';
-import { api, currentUser } from './api.js?v=25';
-import { registerSW } from './pwa.js?v=25';
-import { paymentsNeedIrHost, paymentsIrUrl } from './config.js?v=25';
+import { el } from './util.js?v=26';
+import { api, currentUser } from './api.js?v=26';
+import { registerSW } from './pwa.js?v=26';
+import { paymentsNeedIrHost, paymentsIrUrl } from './config.js?v=26';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const toFa = (s) => String(s).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);

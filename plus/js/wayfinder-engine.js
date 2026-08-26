@@ -5,7 +5,7 @@
 // from plus/content-index.json's cluster/subtopic/hashtag overlap. As new
 // content publishes and joins a cluster/subtopic or a pathway, it becomes a
 // candidate automatically — nobody has to add a node by hand.
-import { getModel, contentInfo } from './content-index.js?v=25';
+import { getModel, contentInfo } from './content-index.js?v=26';
 
 let _pathwaysPromise;
 function pathwaysModel() {
@@ -52,7 +52,33 @@ function buildIndexes(model, pathways) {
 export async function loadEngine() {
   const [model, pathways, pillars] = await Promise.all([getModel(), pathwaysModel(), pillarsCatalog()]);
   const { tagsOf, nextInPathway } = buildIndexes(model, pathways);
-  return { model, pillars, tagsOf, nextInPathway };
+  return { model, pillars, tagsOf, nextInPathway, pathways };
+}
+
+// Starter bundles («شروع کن») — a short, curated subset of ONE full
+// pathway's steps, offered as the دانشجو persona's recommended entry point
+// (founder feedback: a student is better served starting from the basics a
+// bundle already curated than guessing a حوزه cold). `catalog()`/`optionsFor`
+// never surface these — a bundle is picked as a whole, not discovered node
+// by node.
+export function bundles(engine) {
+  return (engine.pathways || []).filter((p) => p.kind === 'bundle');
+}
+
+export function pathwayById(engine, id) {
+  return (engine.pathways || []).find((p) => p.id === id) || null;
+}
+
+// The next content_id in a specific bundle/pathway's OWN step order — never
+// the generic engine `continue`, which follows whichever pathway lists a
+// content_id FIRST (full pathways before bundles) and can jump to a totally
+// different, much more granular next step than the bundle's own curated one.
+export function sequenceNextId(pw, currentId) {
+  if (!pw) return null;
+  const steps = pw.steps || [];
+  const i = steps.findIndex((s) => s.content_id === currentId);
+  if (i === -1 || i >= steps.length - 1) return null;
+  return steps[i + 1].content_id;
 }
 
 // Real pillar → subtopic catalog for the wizard, but only subtopics that

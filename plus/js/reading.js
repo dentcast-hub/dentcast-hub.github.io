@@ -6,9 +6,9 @@
 // though the server counts it as a qualifying streak + scoring action. So plain
 // reading earned no score, no active day and no streak — only highlighting did.
 // This closes that gap; the streak flame also lights live via signalStreakActivity.
-import { api } from './api.js?v=25';
-import { signalStreakActivity } from './util.js?v=25';
-import { READ_WPM, READ_FRACTION, READ_MIN_MS, READ_MAX_MS, SS_READ_DONE } from './config.js?v=25';
+import { api } from './api.js?v=26';
+import { signalStreakActivity } from './util.js?v=26';
+import { READ_WPM, READ_FRACTION, READ_MIN_MS, READ_MAX_MS, SS_READ_DONE } from './config.js?v=26';
 
 // Dwell threshold for THIS article, scaled by its length. Persian words are
 // space-separated; the ZWNJ (‌) that joins parts of one word is NOT

@@ -1446,6 +1446,25 @@ html:not([data-theme="dark"]) .dcp-overlay {
 }
 .dcp-wf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
 
+/* دانشجو-only «باندل‌های شروع» shortcut above the full پیلار grid. Sits inside
+   pillarStep's own section — no card/border of its own so it never reads as a
+   second, competing step. */
+.dcp-wf-bundle-block { margin-bottom: 18px; }
+.dcp-wf-substep-hint { font-size: .8rem; color: var(--txt3, #7c8aa8); margin: 0 2px 10px; line-height: 1.7; }
+.dcp-wf-bundle-block .dcp-wf-bundle-grid { margin-bottom: 14px; }
+
+.dcp-wf-bundle-banner {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-size: .78rem; color: var(--txt2, #4a5f85); font-weight: 700;
+  margin: 0 2px 14px;
+}
+.dcp-wf-bundle-tag {
+  flex: 0 0 auto; font-size: .68rem; font-weight: 800; color: var(--dcp-gold, #b7791f);
+  background: var(--dcp-gold-bg, rgba(183,121,31,.1));
+  border: 1px solid color-mix(in srgb, var(--dcp-gold, #b7791f) 35%, transparent);
+  border-radius: 999px; padding: 3px 9px;
+}
+
 /* --wf-accent resolves per-theme from the two inline literals JS sets on
    .has-accent elements; anything WITHOUT that class (mode/level cards, which
    have no single subject) just falls back to brand blue via --ac below. */
