@@ -7,18 +7,18 @@
 // opens into a masonry grid of "pins." This module is shared by
 // /plus/collections.html, /plus/collection.html, the workbench's two
 // single-purpose collection buttons, and the dashboard.
-import { el, faNum } from './util.js?v=20';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=20';
-import { premiumCta } from './premium-cta.js?v=20';
-import { api, currentUser, apiBase } from './api.js?v=20';
-import { openLoginModal } from './login-modal.js?v=20';
-import { FOLDER_EN } from './content-index.js?v=20';
-import { PALETTE } from './config.js?v=20';
+import { el, faNum } from './util.js?v=21';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=21';
+import { premiumCta } from './premium-cta.js?v=21';
+import { api, currentUser, apiBase } from './api.js?v=21';
+import { openLoginModal } from './login-modal.js?v=21';
+import { FOLDER_EN } from './content-index.js?v=21';
+import { PALETTE } from './config.js?v=21';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
   kindChip, snippetInlineEditor, looksLatin,
-} from './hl-view.js?v=20';
+} from './hl-view.js?v=21';
 
 const hlColorCss = (key) => (PALETTE.find((p) => p.key === key) || {}).css || '#eaecf5';
 

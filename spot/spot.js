@@ -66,7 +66,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=20';
+import { findProseRoot } from '/plus/js/config.js?v=21';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -160,7 +160,7 @@ function report(kind, slotName, creativeId) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ [key]: name, content_id: contentId }),
   });
-  import('/plus/js/api.js?v=20')
+  import('/plus/js/api.js?v=21')
     .then((m) => m.apiBase())
     .then((base) => {
       if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
@@ -179,7 +179,7 @@ function report(kind, slotName, creativeId) {
       // A network-level failure (not an HTTP error) may mean the cached base is
       // dead — self-heal so the NEXT event, and the next page's /me, re-probe
       // instead of retrying the same unreachable host all session.
-      import('/plus/js/api.js?v=20').then((m) => m.forgetBase()).catch(() => {});
+      import('/plus/js/api.js?v=21').then((m) => m.forgetBase()).catch(() => {});
     });
 }
 
@@ -855,8 +855,18 @@ function renderHome(cfg, creative) {
   // heading and the content it labels. The Pulse card (far down the page since
   // the reorder) stays the fallback so the paid card can never disappear.
   let placed = false;
+  // مسیریاب (plus/js/wayfinder.js) sits right after the featured episode too
+  // (2026-08-25), between it and «دسته‌های محتوا» — exactly where this card
+  // used to anchor. Prefer #dcWayfinderHome as the anchor when it's on the
+  // page so the ad still renders directly ABOVE it (paid placement stays
+  // first), falling back to the old heading/grid anchor otherwise so nothing
+  // breaks if that element is ever removed.
+  const wf = document.querySelector('#panel-studio #dcWayfinderHome');
   const cats = document.querySelector('#panel-studio .dc-exa-cats');
-  if (cats) {
+  if (wf) {
+    wf.parentNode.insertBefore(buildCard(creative, 'home'), wf);
+    placed = true;
+  } else if (cats) {
     const head = cats.previousElementSibling;
     const anchor = (head && head.classList.contains('dc-home-sec')) ? head : cats;
     anchor.parentNode.insertBefore(buildCard(creative, 'home'), anchor);
@@ -1035,7 +1045,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=20')
+  return import('/plus/js/api.js?v=21')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }

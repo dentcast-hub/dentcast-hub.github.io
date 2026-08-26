@@ -1,0 +1,220 @@
+{
+  "bonding": {
+    "title_fa": "باندینگ",
+    "subtopics": [
+      {
+        "slug": "basics",
+        "title_fa": "مفاهیم پایه"
+      },
+      {
+        "slug": "materials",
+        "title_fa": "مواد و شیمی"
+      },
+      {
+        "slug": "strategies",
+        "title_fa": "استراتژی‌ها و نسل‌ها"
+      },
+      {
+        "slug": "clinical",
+        "title_fa": "کاربردهای بالینی"
+      },
+      {
+        "slug": "advanced",
+        "title_fa": "موضوعات پیشرفته"
+      }
+    ]
+  },
+  "ceramics": {
+    "title_fa": "سرامیک",
+    "subtopics": [
+      {
+        "slug": "basics",
+        "title_fa": "مفاهیم پایه"
+      },
+      {
+        "slug": "types",
+        "title_fa": "انواع سرامیک"
+      },
+      {
+        "slug": "surface-prep",
+        "title_fa": "آماده‌سازی سطح"
+      },
+      {
+        "slug": "indications",
+        "title_fa": "کاربردهای بالینی"
+      },
+      {
+        "slug": "failures",
+        "title_fa": "چالش‌ها و شکست"
+      }
+    ]
+  },
+  "fixed-pros": {
+    "title_fa": "پروتز ثابت",
+    "subtopics": [
+      {
+        "slug": "post-and-core",
+        "title_fa": "پست و کور"
+      },
+      {
+        "slug": "preparation",
+        "title_fa": "آماده‌سازی و تراش"
+      },
+      {
+        "slug": "impression",
+        "title_fa": "قالب‌گیری"
+      },
+      {
+        "slug": "crowns-onlays",
+        "title_fa": "روکش و اینله/آنله"
+      },
+      {
+        "slug": "cementation",
+        "title_fa": "سمان‌کردن"
+      },
+      {
+        "slug": "failures",
+        "title_fa": "شکست و عوارض"
+      }
+    ]
+  },
+  "implantology": {
+    "title_fa": "ایمپلنتولوژی",
+    "subtopics": [
+      {
+        "slug": "surgical-planning",
+        "title_fa": "جراحی، جایگذاری و طرح درمان"
+      },
+      {
+        "slug": "peri-implant-health",
+        "title_fa": "بیولوژی، حفظ استخوان و عوارض پری‌ایمپلنت"
+      },
+      {
+        "slug": "prosthetic-components",
+        "title_fa": "اجزا، اباتمنت، اتصالات و پیچ‌ها"
+      },
+      {
+        "slug": "restoration-design",
+        "title_fa": "رستوریشن: ریتنشن، سمان، متریال و اِمرجِنس"
+      },
+      {
+        "slug": "fundamentals",
+        "title_fa": "مبانی و آموزش بیمار"
+      }
+    ]
+  },
+  "occlusion": {
+    "title_fa": "اکلوژن",
+    "subtopics": [
+      {
+        "slug": "vertical-dimension",
+        "title_fa": "بُعد عمودی (VDO)"
+      },
+      {
+        "slug": "occlusal-scheme-guidance",
+        "title_fa": "الگوی هدایت و اسکیم اکلوزال"
+      },
+      {
+        "slug": "tooth-wear-dahl",
+        "title_fa": "سایش دندانی و کانسپت دال"
+      },
+      {
+        "slug": "tmd-orofacial-pain",
+        "title_fa": "اختلالات گیجگاهی‌فکی و درد"
+      },
+      {
+        "slug": "occlusal-analysis-adjustment",
+        "title_fa": "تحلیل و تنظیم اکلوزال"
+      }
+    ]
+  },
+  "esthetic": {
+    "title_fa": "زیبایی",
+    "subtopics": [
+      {
+        "slug": "smile-design",
+        "title_fa": "طراحی و آنالیز لبخند"
+      },
+      {
+        "slug": "shade-and-whitening",
+        "title_fa": "رنگ، شید و سفیدکردن"
+      },
+      {
+        "slug": "veneers-laminates",
+        "title_fa": "ونیر و لمینیت"
+      }
+    ]
+  },
+  "treatment-planning": {
+    "title_fa": "طرح درمان",
+    "subtopics": [
+      {
+        "slug": "comprehensive-diagnosis",
+        "title_fa": "تشخیص جامع و طرح‌ریزی"
+      },
+      {
+        "slug": "extraction-vs-preservation",
+        "title_fa": "حفظ یا کشیدن دندان"
+      },
+      {
+        "slug": "replacing-missing-teeth",
+        "title_fa": "جایگزینیِ دندانِ ازدست‌رفته"
+      }
+    ]
+  },
+  "removable-pros": {
+    "title_fa": "پروتز متحرک",
+    "subtopics": [
+      {
+        "slug": "implant-overdentures",
+        "title_fa": "اوردنچرِ متکی بر ایمپلنت"
+      },
+      {
+        "slug": "complete-dentures",
+        "title_fa": "دنچر کامل"
+      },
+      {
+        "slug": "snap-on-smile",
+        "title_fa": "اسنپ‌آن اسمایل"
+      }
+    ]
+  },
+  "operative": {
+    "title_fa": "دندانپزشکی ترمیمی",
+    "subtopics": [
+      {
+        "slug": "caries-management",
+        "title_fa": "مدیریت و برداشتِ پوسیدگی"
+      },
+      {
+        "slug": "cracked-tooth",
+        "title_fa": "ترک و آسیبِ ساختاریِ دندان"
+      },
+      {
+        "slug": "direct-restorations",
+        "title_fa": "ترمیمِ مستقیم و مواد"
+      }
+    ]
+  },
+  "digital": {
+    "title_fa": "دندانپزشکی دیجیتال",
+    "subtopics": [
+      {
+        "slug": "intraoral-scanning",
+        "title_fa": "اسکنِ داخل‌دهانی و قالب‌گیریِ دیجیتال"
+      },
+      {
+        "slug": "cad-cam",
+        "title_fa": "CAD/CAM و موادِ دیجیتال"
+      },
+      {
+        "slug": "digital-workflow",
+        "title_fa": "گردش‌کارِ دیجیتال و بیمارِ مجازی"
+      },
+      {
+        "slug": "ai",
+        "title_fa": "هوشِ مصنوعی"
+      }
+    ]
+  }
+}
