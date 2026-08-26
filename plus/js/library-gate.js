@@ -51,13 +51,13 @@ function setBadge(isPremium) {
  * because "confirmed anonymous" and "could not ask" must not behave alike.
  */
 function probe() {
-  return import('/plus/js/api.js?v=29')
+  return import('/plus/js/api.js?v=30')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
 
 function openGate(from) {
-  return Promise.all([import('/plus/js/sheet.js?v=29'), import('/plus/js/premium-cta.js?v=29')])
+  return Promise.all([import('/plus/js/sheet.js?v=30'), import('/plus/js/premium-cta.js?v=30')])
     .then(([sheet, cta]) => {
       sheet.openSheet(sheet.gateCard({
         title: 'کتابخانهٔ دنت‌کست ویژه‌ی پریمیوم است',

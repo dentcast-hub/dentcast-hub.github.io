@@ -3,11 +3,11 @@
 // the starting point: enough to show the mechanism actually works, short
 // enough that nobody learns the whole subtopic before ever seeing the
 // premium gate (founder feedback — some demo chains ran too long).
-import { el, icon, faNum } from './util.js?v=29';
-import { api } from './api.js?v=29';
-import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=29';
-import { openLoginModal } from './login-modal.js?v=29';
-import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=29';
+import { el, icon, faNum } from './util.js?v=30';
+import { api } from './api.js?v=30';
+import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=30';
+import { openLoginModal } from './login-modal.js?v=30';
+import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=30';
 
 const FLAVORS = {
   continue: { name: 'ادامه مسیر', hint: 'قدم منطقی بعدی', primary: true, iconId: 'icon-arrow-left' },
@@ -479,7 +479,17 @@ export async function renderWayfinder(root, me) {
     return el('div', { class: `dcp-wf-node${style ? ' has-accent' : ''}`, style }, [
       el('div', { class: 'dcp-wf-node-chips' }, nodeChips(info)),
       el('h2', {}, info.title),
-    ]);
+      // Until now the current step had no way to actually be READ — every
+      // control here only picked what becomes the NEXT step. New tab, on
+      // purpose: this whole flow is client-side state (persona → pillar →
+      // subtopic → level → chain), rebuilt from nothing on load, so leaving
+      // in the same tab would silently reset the wizard the moment someone
+      // came back from the article.
+      info.url ? el('a', { class: 'dcp-wf-node-open', href: info.url, target: '_blank', rel: 'noopener' }, [
+        icon('icon-book', { class: 'dc-icon' }),
+        el('span', {}, 'مطالعه‌ی این مطلب'),
+      ]) : null,
+    ].filter(Boolean));
   }
 
   function histNode(info, id, idx) {
@@ -493,13 +503,22 @@ export async function renderWayfinder(root, me) {
       const targetInfo = nodeInfo(engine, targetId);
       const targetAccent = targetInfo ? accentFor(engine, targetInfo.cluster) : null;
       const pillStyle = targetAccent ? `--wf-pill-rgb:${targetAccent.light};` : null;
-      return el('button', {
+      const pillBtn = el('button', {
         type: 'button',
         class: `dcp-wf-pill${isChosen ? ' is-chosen' : ''}`,
         style: pillStyle,
         title: `${FLAVORS[f].name}: ${targetInfo ? targetInfo.title : ''}`,
         onclick: () => goTo(idx, targetId),
       }, [icon(FLAVORS[f].iconId, { class: 'dc-icon dcp-wf-pill-icon' }), el('span', {}, (targetInfo ? targetInfo.title : '').slice(0, 22))]);
+      // Same reasoning as the option cards below: picking this pill only
+      // rebuilds the chain from here — it never opens the article. A small
+      // separate open-in-new-tab affordance beside it does that instead,
+      // without giving up the pill's own job of steering the flow.
+      const openLink = targetInfo && targetInfo.url ? el('a', {
+        class: 'dcp-wf-pill-open', href: targetInfo.url, target: '_blank', rel: 'noopener',
+        title: 'باز کردنِ مقاله در تب جدید', 'aria-label': 'باز کردنِ «' + targetInfo.title + '» در تب جدید',
+      }, icon('icon-book', { class: 'dc-icon' })) : null;
+      return el('div', { class: 'dcp-wf-pill-wrap' }, [pillBtn, openLink].filter(Boolean));
     });
     const style = accentStyle(info.cluster);
     return el('div', { class: `dcp-wf-hist${style ? ' has-accent' : ''}`, style }, [
@@ -518,10 +537,17 @@ export async function renderWayfinder(root, me) {
       // جانبی suggestion often points at a different pillar than the current
       // node), so its pillar chip never just inherits the CURRENT node's color.
       const style = info ? accentStyle(info.cluster) : null;
-      return el('button', {
+      // Was one <button> for the whole card, so the ONLY thing clicking it
+      // could do was pick this as the next step in the chain — never open
+      // the article itself. Now a <div> holding two separate actions: the
+      // body (still a button, still advances the chain — that behaviour
+      // doesn't change) and, only when there's somewhere to send it, an
+      // explicit "read it" link. New tab: the chain built so far is pure
+      // client-side state, gone on reload, so leaving this tab would reset
+      // the whole وایفایندر the moment someone came back from the article.
+      const body = el('button', {
         type: 'button',
-        class: `dcp-wf-option${spec.primary ? ' is-primary' : ''}${style ? ' has-accent' : ''}`,
-        style,
+        class: 'dcp-wf-option-body',
         onclick: () => goTo(idx, targetId),
       }, [
         el('div', { class: 'dcp-wf-option-flavor' }, [
@@ -534,6 +560,13 @@ export async function renderWayfinder(root, me) {
         el('span', { class: 'dcp-wf-option-title' }, info ? info.title : ''),
         info ? el('div', { class: 'dcp-wf-option-meta' }, [chip(folderFa(engine.model, info.type)), chip(pillarFa(info.cluster), 'dcp-wf-chip-pillar')]) : null,
       ]);
+      const openLink = info && info.url ? el('a', {
+        class: 'dcp-wf-option-open', href: info.url, target: '_blank', rel: 'noopener',
+      }, [icon('icon-book', { class: 'dc-icon' }), el('span', {}, 'مطالعه‌ی مستقیم')]) : null;
+      return el('div', {
+        class: `dcp-wf-option${spec.primary ? ' is-primary' : ''}${style ? ' has-accent' : ''}`,
+        style,
+      }, [body, openLink].filter(Boolean));
     });
     return el('div', {}, [
       el('div', { class: 'dcp-wf-connector' }, `${faNum(flavors.length)} گزینه برای قدم بعد`),

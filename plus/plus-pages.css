@@ -1547,17 +1547,27 @@ html:not([data-theme="dark"]) .dcp-overlay {
 
 .dcp-wf-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 11px; }
 @media (max-width: 560px) { .dcp-wf-options { grid-template-columns: 1fr; } }
+/* The card itself: a plain container now, not a <button> — it holds TWO
+   separate actions (advance the chain / open the article), and a button
+   cannot contain another interactive element. */
 .dcp-wf-option {
-  text-align: right; font: inherit; cursor: pointer;
   background: var(--card-bg, #fff); border: 1px solid var(--card-border, rgba(2,35,96,.09));
   border-radius: 14px; padding: 15px 16px 14px; display: flex; flex-direction: column; gap: 9px;
   box-shadow: 0 2px 10px -6px rgba(9,32,74,.12);
-  transition: border-color .15s ease, box-shadow .15s ease, transform .1s ease;
+  transition: border-color .15s ease, box-shadow .15s ease;
 }
 [data-theme="dark"] .dcp-wf-option { box-shadow: 0 2px 10px -6px rgba(0,0,0,.4); }
 .dcp-wf-option:hover { border-color: var(--ac, #0b5fff); box-shadow: 0 5px 16px -6px rgba(9,32,74,.2); }
-.dcp-wf-option:active { transform: scale(.99); }
 .dcp-wf-option.is-primary { border-color: color-mix(in srgb, var(--ac, #0b5fff) 50%, transparent); background: linear-gradient(180deg, rgba(var(--ac-rgb, 11,95,255), .09), transparent 65%), var(--card-bg, #fff); }
+/* The primary action — picks this as the next step. Same look the whole
+   card used to have; only the click target shrank to exclude the open link
+   below it. */
+.dcp-wf-option-body {
+  display: flex; flex-direction: column; gap: 9px; width: 100%;
+  text-align: right; font: inherit; color: inherit; cursor: pointer;
+  background: none; border: 0; padding: 0; margin: 0;
+}
+.dcp-wf-option-body:active { transform: scale(.99); }
 .dcp-wf-option-flavor { display: flex; align-items: center; gap: 9px; }
 .dcp-wf-option-ico { width: 30px; height: 30px; border-radius: 9px; background: var(--surface2, #f4f6fb); color: var(--txt2, #4a5f85); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
 /* .dc-icon (plus.css) ships with NO default width/height — every call site
@@ -1570,6 +1580,41 @@ html:not([data-theme="dark"]) .dcp-overlay {
 .dcp-wf-option-title { font-size: .95rem; font-weight: 700; line-height: 1.6; color: var(--txt); }
 .dcp-wf-option-meta { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; padding-top: 2px; }
 .dcp-wf-option-meta .dcp-wf-chip { font-size: .64rem; padding: 3px 9px; }
+
+/* The second action — reads the article directly, in a new tab. A quiet
+   text link under a hairline seam, not a second card: the card's own click
+   (advancing the chain) is still what most people want most of the time. */
+.dcp-wf-option-open {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 2px; padding-top: 10px; border-top: 1px solid var(--border, rgba(2,35,96,.12));
+  font-size: .78rem; font-weight: 700; color: var(--ac, #0b5fff); text-decoration: none;
+}
+.dcp-wf-option-open:hover { text-decoration: underline; }
+.dcp-wf-option-open .dc-icon { width: 14px; height: 14px; flex: 0 0 auto; }
+
+/* The current-step card's own "read it" CTA — filled, since this is the one
+   thing the whole screen is pointing at right now. New tab (see wayfinder.js). */
+.dcp-wf-node-open {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 14px;
+  padding: 9px 16px; border-radius: 999px; font-size: .84rem; font-weight: 700;
+  color: #fff; background: var(--wf-accent, var(--ac, #0b5fff)); text-decoration: none;
+  transition: opacity .15s ease;
+}
+.dcp-wf-node-open:hover { opacity: .88; }
+.dcp-wf-node-open .dc-icon { width: 15px; height: 15px; flex: 0 0 auto; }
+
+/* A pill plus its own small "open" circle, kept as one unit in the wrapping
+   row — same reasoning as the option cards: the pill itself still just
+   re-aims the chain, this is the second, explicit way to actually read it. */
+.dcp-wf-pill-wrap { display: inline-flex; align-items: center; gap: 3px; }
+.dcp-wf-pill-open {
+  width: 24px; height: 24px; border-radius: 50%; flex: 0 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface2, #f4f6fb); color: var(--txt2, #4a5f85);
+  border: 1px solid var(--border, rgba(2,35,96,.12));
+}
+.dcp-wf-pill-open:hover { color: var(--ac, #0b5fff); border-color: var(--ac, #0b5fff); }
+.dcp-wf-pill-open .dc-icon { width: 12px; height: 12px; }
 
 .dcp-wf-gate {
   margin-top: 4px; display: flex; flex-direction: column; align-items: flex-start; gap: 11px;
