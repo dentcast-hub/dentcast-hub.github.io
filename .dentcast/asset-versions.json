@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 128,
-    "hash": "86bdf5ada52dd362"
+    "v": 129,
+    "hash": "8e9f232c3e09b8a4"
   },
   "/dc-theme.css": {
     "v": 3,
@@ -44,32 +44,32 @@
     "hash": "1f581f9754e3aea4"
   },
   "/plus/js/collection-page.js": {
-    "v": 35,
-    "hash": "2d084e2463bd122e"
+    "v": 36,
+    "hash": "4a794844f3374ef3"
   },
   "/plus/js/collections-page.js": {
-    "v": 35,
-    "hash": "3fd01b2d03d8e8bb"
+    "v": 36,
+    "hash": "dcf18126a9411938"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 51,
-    "hash": "09a7c2d17957d202"
+    "v": 52,
+    "hash": "da41b16cd1c7cd7c"
   },
   "/plus/js/desboard-page.js": {
     "v": 3,
     "hash": "86796f62d49923c7"
   },
   "/plus/js/highlights-page.js": {
-    "v": 34,
-    "hash": "2f1520eda96f533d"
+    "v": 35,
+    "hash": "ccd6f9fbf6ed5af3"
   },
   "/plus/js/pathway-page.js": {
-    "v": 33,
-    "hash": "b70cbe3f3953f3c6"
+    "v": 34,
+    "hash": "aca1496048baacd0"
   },
   "/plus/js/pathways-page.js": {
-    "v": 33,
-    "hash": "467044f02d78ef9a"
+    "v": 34,
+    "hash": "f8eacb7417f93d72"
   },
   "/plus/js/pay-result-page.js": {
     "v": 27,
@@ -84,40 +84,40 @@
     "hash": "d5788fc0e4b114a2"
   },
   "/plus/js/reading-compass-page.js": {
-    "v": 31,
-    "hash": "7e014873c3cd32ed"
+    "v": 32,
+    "hash": "9c7f4e566337675e"
   },
   "/plus/js/support-page.js": {
     "v": 16,
     "hash": "23e438ce497f82b5"
   },
   "/plus/js/upboard-page.js": {
-    "v": 13,
-    "hash": "d5f71db282314882"
+    "v": 14,
+    "hash": "5d41ebd8de02a090"
   },
   "/plus/js/wayfinder-page.js": {
-    "v": 10,
-    "hash": "0737ac8f925e2a44"
+    "v": 11,
+    "hash": "962cea260cb13835"
   },
   "/plus/plus-desktop.css": {
     "v": 7,
     "hash": "fb9348a5cf72e5f3"
   },
   "/plus/plus-pages.css": {
-    "v": 34,
-    "hash": "3e144501f242b71a"
+    "v": 35,
+    "hash": "b1a9e3b887cd8a61"
   },
   "/plus/plus.css": {
-    "v": 34,
+    "v": 35,
     "hash": "f9d8b4218a72df92"
   },
   "dc-nav.js:V": {
-    "v": 125,
-    "hash": "f71fa3d60810c2d4"
+    "v": 126,
+    "hash": "83f54cf4a172309c"
   },
   "modules:M": {
-    "v": 29,
-    "hash": "e9bac9356330c398"
+    "v": 31,
+    "hash": "e0aeec0b59332a03"
   },
   "spot.js:SPOT_V": {
     "v": 32,
