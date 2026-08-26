@@ -1,6 +1,8 @@
 {
   "bonding": {
     "title_fa": "باندینگ",
+    "accent_rgb": "45,106,122",
+    "accent_rgb_dark": "74,154,171",
     "subtopics": [
       {
         "slug": "basics",
@@ -26,6 +28,8 @@
   },
   "ceramics": {
     "title_fa": "سرامیک",
+    "accent_rgb": "28,165,165",
+    "accent_rgb_dark": "61,214,196",
     "subtopics": [
       {
         "slug": "basics",
@@ -51,6 +55,8 @@
   },
   "fixed-pros": {
     "title_fa": "پروتز ثابت",
+    "accent_rgb": "154,106,45",
+    "accent_rgb_dark": "200,148,86",
     "subtopics": [
       {
         "slug": "post-and-core",
@@ -80,6 +86,8 @@
   },
   "implantology": {
     "title_fa": "ایمپلنتولوژی",
+    "accent_rgb": "107,114,128",
+    "accent_rgb_dark": "156,163,175",
     "subtopics": [
       {
         "slug": "surgical-planning",
@@ -105,6 +113,8 @@
   },
   "occlusion": {
     "title_fa": "اکلوژن",
+    "accent_rgb": "124,92,191",
+    "accent_rgb_dark": "169,143,224",
     "subtopics": [
       {
         "slug": "vertical-dimension",
@@ -130,6 +140,8 @@
   },
   "esthetic": {
     "title_fa": "زیبایی",
+    "accent_rgb": "168,83,107",
+    "accent_rgb_dark": "199,125,146",
     "subtopics": [
       {
         "slug": "smile-design",
@@ -147,6 +159,8 @@
   },
   "treatment-planning": {
     "title_fa": "طرح درمان",
+    "accent_rgb": "74,90,138",
+    "accent_rgb_dark": "125,140,192",
     "subtopics": [
       {
         "slug": "comprehensive-diagnosis",
@@ -164,6 +178,8 @@
   },
   "removable-pros": {
     "title_fa": "پروتز متحرک",
+    "accent_rgb": "156,102,68",
+    "accent_rgb_dark": "192,138,99",
     "subtopics": [
       {
         "slug": "implant-overdentures",
@@ -181,6 +197,8 @@
   },
   "operative": {
     "title_fa": "دندانپزشکی ترمیمی",
+    "accent_rgb": "94,140,106",
+    "accent_rgb_dark": "134,184,148",
     "subtopics": [
       {
         "slug": "caries-management",
@@ -198,6 +216,8 @@
   },
   "digital": {
     "title_fa": "دندانپزشکی دیجیتال",
+    "accent_rgb": "107,91,149",
+    "accent_rgb_dark": "157,142,199",
     "subtopics": [
       {
         "slug": "intraoral-scanning",

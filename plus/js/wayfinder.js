@@ -3,10 +3,10 @@
 // the starting point: enough to show the mechanism actually works, short
 // enough that nobody learns the whole subtopic before ever seeing the
 // premium gate (founder feedback — some demo chains ran too long).
-import { el, icon, faNum } from './util.js?v=21';
-import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=21';
-import { openLoginModal } from './login-modal.js?v=21';
-import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo } from './wayfinder-engine.js?v=21';
+import { el, icon, faNum } from './util.js?v=23';
+import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=23';
+import { openLoginModal } from './login-modal.js?v=23';
+import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor } from './wayfinder-engine.js?v=23';
 
 const FLAVORS = {
   continue: { name: 'ادامه مسیر', hint: 'قدم منطقی بعدی', primary: true, iconId: 'icon-arrow-left' },
@@ -25,10 +25,16 @@ const PERSONAS = [
   { key: 'student', title: 'دانشجوی دندان‌پزشکی', sub: 'پایه‌های بالینی و تصمیم‌گیری', pillars: ['operative', 'bonding', 'fixed-pros', 'treatment-planning'] },
 ];
 
-function pickCard({ title, sub, active, badge, cls = '', onClick }) {
+// `accent` is this pillar's REAL color from tools/build_pillar.py's own
+// PILLAR_ACCENT_RGB (via plus/pillar-subtopics.json) — the same one that
+// pillar's own /pillar/<slug>/ page uses. Cards with no single subject
+// (persona, mode, level) pass none and stay brand blue.
+function pickCard({ title, sub, active, badge, accent, cls = '', onClick }) {
+  const style = accent ? `--wf-rgb-l:${accent.light};--wf-rgb-d:${accent.dark || accent.light};` : null;
   const card = el('button', {
     type: 'button',
-    class: `dcp-wf-card${active ? ' is-active' : ''}${cls ? ' ' + cls : ''}`,
+    class: `dcp-wf-card${active ? ' is-active' : ''}${accent ? ' has-accent' : ''}${cls ? ' ' + cls : ''}`,
+    style,
     onclick: onClick,
   }, [
     el('div', { class: 'dcp-wf-card-top' }, [
@@ -169,6 +175,7 @@ export async function renderWayfinder(root, me) {
       title: c.title_fa,
       sub: `${faNum(c.count)} محتوا در این حوزه`,
       active: state.pillarKey === c.key,
+      accent: { light: c.accentRgb, dark: c.accentRgbDark },
       onClick: () => selectPillar(c.key),
     })));
   }
@@ -184,10 +191,12 @@ export async function renderWayfinder(root, me) {
 
   function renderSubtopicGrid() {
     const c = pillarCatalog.find((x) => x.key === state.pillarKey);
+    const accent = c ? { light: c.accentRgb, dark: c.accentRgbDark } : null;
     subtopicGrid.replaceChildren(...(c ? c.subtopics : []).map((s) => pickCard({
       title: s.title_fa,
       sub: `${faNum(s.count)} محتوا در این زیرموضوع`,
       active: state.subtopicKey === s.slug,
+      accent,
       onClick: () => selectSubtopic(s.slug),
     })));
   }
@@ -206,11 +215,13 @@ export async function renderWayfinder(root, me) {
     const c = pillarCatalog.find((x) => x.key === state.pillarKey);
     const s = c ? c.subtopics.find((x) => x.slug === state.subtopicKey) : null;
     const label = s ? s.title_fa : '';
+    const accent = c ? { light: c.accentRgb, dark: c.accentRgbDark } : null;
     const cards = [
       pickCard({
         title: 'از پایه شروع کن',
         sub: `قدم اولِ «${label}» رو نشونم بده`,
         active: state.path[0] === (roots && roots.basic),
+        accent,
         onClick: () => startFlow(roots.basic),
       }),
     ];
@@ -219,6 +230,7 @@ export async function renderWayfinder(root, me) {
         title: 'باهاش آشنام',
         sub: `رد شو، عمیق‌ترِ «${label}» رو بیار`,
         active: state.path[0] === roots.advanced,
+        accent,
         onClick: () => startFlow(roots.advanced),
       }));
     }
@@ -238,8 +250,18 @@ export async function renderWayfinder(root, me) {
 
   function chip(text, cls) { return el('span', { class: `dcp-wf-chip${cls ? ' ' + cls : ''}` }, text); }
 
+  function pillarFa(clusterKey) {
+    const c = (engine.model.clusters || []).find((x) => x.key === clusterKey);
+    return c ? c.fa : clusterKey;
+  }
+
   function nodeChips(info) {
-    return [chip(folderFa(engine.model, info.type))];
+    return [chip(folderFa(engine.model, info.type)), chip(pillarFa(info.cluster), 'dcp-wf-chip-pillar')];
+  }
+
+  function accentStyle(clusterKey) {
+    const a = accentFor(engine, clusterKey);
+    return a ? `--wf-rgb-l:${a.light};--wf-rgb-d:${a.dark || a.light};` : null;
   }
 
   function renderChain() {
@@ -247,7 +269,8 @@ export async function renderWayfinder(root, me) {
     state.path.forEach((id, i) => {
       const isLast = i === state.path.length - 1;
       const info = nodeInfo(engine, id);
-      const item = el('div', { class: 'dcp-wf-chain-item' });
+      const style = info ? accentStyle(info.cluster) : null;
+      const item = el('div', { class: `dcp-wf-chain-item${style ? ' has-accent' : ''}`, style });
       if (!info) { chainWrap.appendChild(item); return; }
 
       if (isLast) {
@@ -270,7 +293,8 @@ export async function renderWayfinder(root, me) {
   }
 
   function fullNode(info) {
-    return el('div', { class: 'dcp-wf-node' }, [
+    const style = accentStyle(info.cluster);
+    return el('div', { class: `dcp-wf-node${style ? ' has-accent' : ''}`, style }, [
       el('div', { class: 'dcp-wf-node-chips' }, nodeChips(info)),
       el('h2', {}, info.title),
     ]);
@@ -285,14 +309,18 @@ export async function renderWayfinder(root, me) {
       const targetId = opts[f];
       const isChosen = targetId === chosenId;
       const targetInfo = nodeInfo(engine, targetId);
+      const targetAccent = targetInfo ? accentFor(engine, targetInfo.cluster) : null;
+      const pillStyle = targetAccent ? `--wf-pill-rgb:${targetAccent.light};` : null;
       return el('button', {
         type: 'button',
         class: `dcp-wf-pill${isChosen ? ' is-chosen' : ''}`,
+        style: pillStyle,
         title: `${FLAVORS[f].name}: ${targetInfo ? targetInfo.title : ''}`,
         onclick: () => goTo(idx, targetId),
       }, [icon(FLAVORS[f].iconId, { class: 'dc-icon dcp-wf-pill-icon' }), el('span', {}, (targetInfo ? targetInfo.title : '').slice(0, 22))]);
     });
-    return el('div', { class: 'dcp-wf-hist' }, [
+    const style = accentStyle(info.cluster);
+    return el('div', { class: `dcp-wf-hist${style ? ' has-accent' : ''}`, style }, [
       el('div', { class: 'dcp-wf-hist-chips' }, nodeChips(info)),
       el('div', { class: 'dcp-wf-hist-title' }, info.title),
       el('div', { class: 'dcp-wf-pill-row' }, pills),
@@ -304,9 +332,14 @@ export async function renderWayfinder(root, me) {
       const targetId = opts[f];
       const info = nodeInfo(engine, targetId);
       const spec = FLAVORS[f];
+      // has-accent scopes --wf-accent to THIS option's own target pillar (a
+      // جانبی suggestion often points at a different pillar than the current
+      // node), so its pillar chip never just inherits the CURRENT node's color.
+      const style = info ? accentStyle(info.cluster) : null;
       return el('button', {
         type: 'button',
-        class: `dcp-wf-option${spec.primary ? ' is-primary' : ''}`,
+        class: `dcp-wf-option${spec.primary ? ' is-primary' : ''}${style ? ' has-accent' : ''}`,
+        style,
         onclick: () => goTo(idx, targetId),
       }, [
         el('div', { class: 'dcp-wf-option-flavor' }, [
@@ -317,7 +350,7 @@ export async function renderWayfinder(root, me) {
           ]),
         ]),
         el('span', { class: 'dcp-wf-option-title' }, info ? info.title : ''),
-        el('span', { class: 'dcp-wf-option-meta' }, info ? folderFa(engine.model, info.type) : ''),
+        info ? el('div', { class: 'dcp-wf-option-meta' }, [chip(folderFa(engine.model, info.type)), chip(pillarFa(info.cluster), 'dcp-wf-chip-pillar')]) : null,
       ]);
     });
     return el('div', {}, [
