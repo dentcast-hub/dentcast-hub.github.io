@@ -4532,10 +4532,16 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         }
         .dc-wf-home-entry .dc-wf-ico svg{ width:1.6rem; height:1.6rem; }
         .dc-wf-home-entry .dc-wf-body{ flex:1; min-width:0; }
+        /* «دروازه‌ی دنت‌کست» stays navy — the SAME --x-grad language every other
+           badge/button on the homepage uses (the episode hero's own
+           «قسمت ۱۶۱ · تازه‌ترین» badge, .dc-radar-hero-btn) — rather than
+           amber. Amber still marks the premium parts of THIS card (icon,
+           wash, border, the «۱ قدم رایگان · بقیه پریمیوم» chip); this one
+           label is naming the card itself, not a price. */
         .dc-wf-home-entry .dc-wf-eyebrow{
-          display:inline-flex; align-items:center; font-size:.66rem; font-weight:800; color:var(--x-amber-ink);
-          background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd);
-          border-radius:62.4375rem; padding:.15rem .65rem; margin-bottom:.4rem;
+          display:inline-flex; align-items:center; font-size:.66rem; font-weight:800; color:#fff;
+          background:var(--x-grad); border-radius:62.4375rem; padding:.15rem .65rem; margin-bottom:.4rem;
+          box-shadow:0 4px 12px -4px rgba(18,87,214,.5);
         }
         .dc-wf-home-entry .dc-wf-ttl{ display:block; font-size:1.04rem; font-weight:800; color:var(--x-ink); line-height:1.6; }
         .dc-wf-home-entry .dc-wf-sub{ display:block; font-size:.76rem; color:var(--txt3); margin-top:.3rem; line-height:1.75; }
