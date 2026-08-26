@@ -297,7 +297,6 @@ export async function renderWayfinder(root, me) {
     renderChain();
     reveal(flowSection);
   }
-
   // Persona never blocks a حوزه — it only sorts the persona's own pillars to
   // the front with a «پیشنهادی» hint. A دندان‌پزشک still reaches «دیجیتال»
   // (founder feedback: the curated list was read as a hard wall, not a
