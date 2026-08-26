@@ -3,10 +3,11 @@
 // the starting point: enough to show the mechanism actually works, short
 // enough that nobody learns the whole subtopic before ever seeing the
 // premium gate (founder feedback — some demo chains ran too long).
-import { el, icon, faNum } from './util.js?v=26';
-import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=26';
-import { openLoginModal } from './login-modal.js?v=26';
-import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=26';
+import { el, icon, faNum } from './util.js?v=27';
+import { api } from './api.js?v=27';
+import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=27';
+import { openLoginModal } from './login-modal.js?v=27';
+import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=27';
 
 const FLAVORS = {
   continue: { name: 'ادامه مسیر', hint: 'قدم منطقی بعدی', primary: true, iconId: 'icon-arrow-left' },
@@ -162,7 +163,7 @@ export async function renderWayfinder(root, me) {
     hide(flowSection);
     if (mode === 'compass') {
       hide(pillarStep, subtopicStep, levelStep);
-      renderCompassComingSoon();
+      renderCompassStep();
       reveal(compassStep);
     } else {
       hide(compassStep, subtopicStep, levelStep);
@@ -202,22 +203,100 @@ export async function renderWayfinder(root, me) {
     reveal(flowSection);
   }
 
-  function renderCompassComingSoon() {
-    const body = el('div', { class: 'dcp-wf-card dcp-wf-compass-soon' }, [
-      el('div', { class: 'dcp-wf-card-top' }, [
-        el('h3', {}, 'قطب‌نما به‌زودی'),
-        el('span', { class: 'dcp-wf-badge' }, 'در دست ساخت'),
-      ]),
-      el('p', { class: 'dcp-wf-card-sub' },
-        'قطب‌نما باید بر اساس فعالیت واقعیِ حسابت پیشنهاد بده — این بخش هنوز به آن دیتا وصل نشده، پس چیزی ساختگی نشونت نمی‌دیم. فعلاً از «خودم مسیر رو می‌چینم» استفاده کن.'),
+  // قطب‌نما reuses the SAME real report /plus/reading-compass.html already
+  // shows (api.readingCompass() — a coverage derivation over the user's own
+  // consumption, no interest-guessing) — never a second, invented signal.
+  // Its two buckets map directly onto مسیریاب's two compass suggestions:
+  // `same_area` (unread items in the pillar read the most) seeds "ادامه در
+  // همون حوزه", `unexplored` (items from the largest untouched پیلارها)
+  // seeds "یه حوزه‌ی تازه کشف کن". Picking either just seeds state.path and
+  // hands off to the exact same optionsFor-driven flow every other entry
+  // point uses — قطب‌نما only guesses the START, never invents a suggestion
+  // engine of its own.
+  async function renderCompassStep() {
+    if (!me) {
+      const signIn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
+      signIn.addEventListener('click', async () => {
+        const res = await openLoginModal({ returnTo: location.pathname });
+        if (res && res.user) location.reload();
+      });
+      compassStep.replaceChildren(compassStep.firstChild, el('div', { class: 'dcp-wf-gate' }, [
+        el('p', {}, 'قطب‌نما از رویِ تاریخچه‌ی واقعیِ مطالعه‌ات پیشنهاد می‌ده — برای دیدنش اول وارد شو.'),
+        signIn,
+        ...guestPremiumExtras('wayfinder-compass'),
+      ]));
+      return;
+    }
+    if (!isPremium) {
+      const note = lapsedNote(me);
+      compassStep.replaceChildren(compassStep.firstChild, el('div', { class: 'dcp-wf-gate' }, [
+        note ? el('p', { class: 'dcp-gate-lapsed' }, note) : null,
+        el('p', {}, 'قطب‌نما ویژه‌ی دنت‌کست پریمیومه — از رویِ چیزهایی که واقعاً خوندی مسیرو برات می‌چینه.'),
+        premiumCta('wayfinder-compass'),
+      ].filter(Boolean)));
+      return;
+    }
+
+    compassStep.replaceChildren(compassStep.firstChild, el('p', { class: 'dcp-loading' }, 'در حال بررسیِ تاریخچه‌ی مطالعه‌ات…'));
+    const data = await api.readingCompass().catch(() => null);
+    // stale response guard: persona/mode may have changed while this was in flight
+    if (state.mode !== 'compass') return;
+
+    if (!data || !data.total_read) {
+      compassStep.replaceChildren(compassStep.firstChild, compassEmptyCard(
+        'هنوز چیزی برای قطب‌نما نیست',
+        'قطب‌نما وقتی فعال می‌شه که حداقل یه مقاله یا اپیزود رو تموم کرده باشی.'));
+      return;
+    }
+
+    const cards = [];
+    if (data.top_cluster && data.same_area.length) {
+      const seed = data.same_area[0];
+      cards.push(pickCard({
+        title: `ادامه در «${data.top_cluster.fa}»`,
+        sub: `بیشترین مطالعه‌ات همین‌جا بوده — «${seed.title}» رو هنوز نخوندی`,
+        accent: accentFor(engine, data.top_cluster.key),
+        onClick: () => startFromCompass(seed.content_id),
+      }));
+    }
+    if (data.unexplored.length) {
+      const seed = data.unexplored[0];
+      const seedInfo = nodeInfo(engine, seed.content_id);
+      cards.push(pickCard({
+        title: 'یه حوزه‌ی تازه رو کشف کن',
+        sub: `اصلاً سراغش نرفتی — شروع با «${seed.title}»`,
+        accent: seedInfo ? accentFor(engine, seedInfo.cluster) : null,
+        onClick: () => startFromCompass(seed.content_id),
+      }));
+    }
+    if (!cards.length) {
+      compassStep.replaceChildren(compassStep.firstChild, compassEmptyCard(
+        'همه‌چیزو خوندی',
+        'همه‌ی چیزهایی که قطب‌نما می‌شناسه رو تا الان خوندی — خودت یه حوزه رو انتخاب کن.'));
+      return;
+    }
+    compassStep.replaceChildren(compassStep.firstChild, el('div', { class: 'dcp-wf-grid' }, cards));
+  }
+
+  function compassEmptyCard(title, sub) {
+    return el('div', { class: 'dcp-wf-card dcp-wf-compass-soon' }, [
+      el('div', { class: 'dcp-wf-card-top' }, [el('h3', {}, title)]),
+      el('p', { class: 'dcp-wf-card-sub' }, sub),
       el('button', {
         type: 'button', class: 'dcp-btn dcp-btn-ghost',
         onclick: () => selectMode('manual'),
       }, 'خودم مسیر رو می‌چینم'),
     ]);
-    compassStep.replaceChildren(compassStep.firstChild, body);
   }
 
+  function startFromCompass(contentId) {
+    if (!contentId) return;
+    state.pillarKey = null; state.subtopicKey = null; state.bundleId = null;
+    state.path = [contentId];
+    hide(pillarStep, subtopicStep, levelStep);
+    renderChain();
+    reveal(flowSection);
+  }
   // Persona never blocks a حوزه — it only sorts the persona's own pillars to
   // the front with a «پیشنهادی» hint. A دندان‌پزشک still reaches «دیجیتال»
   // (founder feedback: the curated list was read as a hard wall, not a

@@ -31,10 +31,10 @@
 // with no coordination between the modules. When there is no ad — a premium
 // visitor, or the slot switched off — the section simply moves up under the
 // Pulse and nothing else changes.
-import { el, faNum } from './util.js?v=26';
-import { currentUser, api } from './api.js?v=26';
-import { PREMIUM_FEATURES } from './config.js?v=26';
-import { pricingHref } from './premium-cta.js?v=26';
+import { el, faNum } from './util.js?v=27';
+import { currentUser, api } from './api.js?v=27';
+import { PREMIUM_FEATURES } from './config.js?v=27';
+import { pricingHref } from './premium-cta.js?v=27';
 
 // Crafted inline icons, one per feature (same reasoning as home-card.js's promo
 // chips: emoji would sit at a different weight than the site's own stroke icons).
