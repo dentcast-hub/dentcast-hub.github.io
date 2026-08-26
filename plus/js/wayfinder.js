@@ -3,10 +3,10 @@
 // the starting point: enough to show the mechanism actually works, short
 // enough that nobody learns the whole subtopic before ever seeing the
 // premium gate (founder feedback — some demo chains ran too long).
-import { el, icon, faNum } from './util.js?v=23';
-import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=23';
-import { openLoginModal } from './login-modal.js?v=23';
-import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor } from './wayfinder-engine.js?v=23';
+import { el, icon, faNum } from './util.js?v=24';
+import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=24';
+import { openLoginModal } from './login-modal.js?v=24';
+import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor } from './wayfinder-engine.js?v=24';
 
 const FLAVORS = {
   continue: { name: 'ادامه مسیر', hint: 'قدم منطقی بعدی', primary: true, iconId: 'icon-arrow-left' },
@@ -93,6 +93,13 @@ export async function renderWayfinder(root, me) {
 
   function hide(...els) { els.forEach((e) => { e.hidden = true; }); }
   function show(e) { e.hidden = false; }
+  // Every step reveal scrolls to itself — matching the mockup, where picking
+  // an answer always brought the newly-opened question into view instead of
+  // leaving the reader to find it themselves further down the page.
+  function reveal(e) {
+    show(e);
+    requestAnimationFrame(() => e.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  }
 
   function renderPersonaGrid() {
     personaGrid.replaceChildren(...PERSONAS.map((p) => pickCard({
@@ -109,8 +116,8 @@ export async function renderWayfinder(root, me) {
     state.mode = null; state.pillarKey = null; state.subtopicKey = null; state.path = [];
     renderPersonaGrid();
     renderModeGrid();
-    show(modeStep);
     hide(compassStep, pillarStep, subtopicStep, levelStep, flowSection);
+    reveal(modeStep);
   }
 
   function renderModeGrid() {
@@ -141,12 +148,11 @@ export async function renderWayfinder(root, me) {
     if (mode === 'compass') {
       hide(pillarStep, subtopicStep, levelStep);
       renderCompassComingSoon();
-      show(compassStep);
+      reveal(compassStep);
     } else {
-      hide(compassStep);
+      hide(compassStep, subtopicStep, levelStep);
       renderPillarGrid();
-      show(pillarStep);
-      hide(subtopicStep, levelStep);
+      reveal(pillarStep);
     }
   }
 
@@ -185,8 +191,8 @@ export async function renderWayfinder(root, me) {
     state.pillarKey = key; state.subtopicKey = null; state.path = [];
     renderPillarGrid();
     renderSubtopicGrid();
-    show(subtopicStep);
     hide(levelStep, flowSection);
+    reveal(subtopicStep);
   }
 
   function renderSubtopicGrid() {
@@ -206,8 +212,8 @@ export async function renderWayfinder(root, me) {
     state.subtopicKey = slug; state.path = [];
     renderSubtopicGrid();
     renderLevelGrid();
-    show(levelStep);
     hide(flowSection);
+    reveal(levelStep);
   }
 
   function renderLevelGrid() {
@@ -241,9 +247,8 @@ export async function renderWayfinder(root, me) {
     if (!rootId) return;
     state.path = [rootId];
     renderLevelGrid();
-    show(flowSection);
     renderChain();
-    flowSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    reveal(flowSection);
   }
 
   // ---------------- flowchart ----------------
