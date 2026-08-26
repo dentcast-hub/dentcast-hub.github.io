@@ -5,7 +5,7 @@
 // from plus/content-index.json's cluster/subtopic/hashtag overlap. As new
 // content publishes and joins a cluster/subtopic or a pathway, it becomes a
 // candidate automatically — nobody has to add a node by hand.
-import { getModel, contentInfo } from './content-index.js?v=21';
+import { getModel, contentInfo } from './content-index.js?v=23';
 
 let _pathwaysPromise;
 function pathwaysModel() {
@@ -74,9 +74,21 @@ export function catalog(engine) {
       .map((s) => ({ slug: s.slug, title_fa: s.title_fa, count: counts.get(cluster.key + '|' + s.slug) || 0 }))
       .filter((s) => s.count > 0);
     if (!subtopics.length) continue;
-    out.push({ key: cluster.key, title_fa: cluster.fa, count: cluster.contentCount, subtopics });
+    out.push({
+      key: cluster.key, title_fa: cluster.fa, count: cluster.contentCount, subtopics,
+      accentRgb: def.accent_rgb, accentRgbDark: def.accent_rgb_dark,
+    });
   }
   return out;
+}
+
+// The SAME per-pillar accent tools/build_pillar.py uses for that pillar's own
+// /pillar/<slug>/ page (PILLAR_ACCENT_RGB) — reused here, not reinvented, so
+// a subject reads as the same color everywhere on the site.
+export function accentFor(engine, pillarKey) {
+  const c = (engine.model.clusters || []).find((x) => x.key === pillarKey);
+  const def = c && engine.pillars[c.key];
+  return def ? { light: def.accent_rgb, dark: def.accent_rgb_dark } : null;
 }
 
 // Natural insertion order (content-index.json is generated from
