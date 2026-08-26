@@ -4,9 +4,10 @@
 // dcp-pw-step for suggestion rows); is-spotlight/is-unexplored/
 // dcp-progress-badge/dcp-compass-ico are the only additions, in
 // plus-pages.css.
-import { el, faNum } from './util.js?v=28';
-import { api } from './api.js?v=28';
-import { FOLDER_EN } from './content-index.js?v=28';
+import { el, faNum } from './util.js?v=29';
+import { api } from './api.js?v=29';
+import { FOLDER_EN } from './content-index.js?v=29';
+import { markReturnTrail } from './return-trail.js?v=29';
 
 // The badge and the percent next to it answer two DIFFERENT questions: the
 // badge ranks pillars by the raw NUMBER of items read (service's sort on
@@ -43,7 +44,13 @@ function pathwayRow(p) {
 }
 
 function itemRow(item) {
-  return el('a', { class: 'dcp-pw-step', href: item.url }, [
+  const onclick = () => markReturnTrail({
+    url: '/plus/reading-compass.html',
+    eyebrow: 'قطب‌نمای مطالعه',
+    title: 'قطب‌نمای مطالعه',
+    iconId: 'icon-compass',
+  });
+  return el('a', { class: 'dcp-pw-step', href: item.url, onclick }, [
     el('span', { class: 'dcp-pw-step-marker', 'aria-hidden': 'true' }, '📖'),
     el('div', { class: 'dcp-pw-step-body' }, [
       el('div', { class: 'dcp-pw-step-top' }, el('span', { class: 'dcp-pw-step-kind', dir: 'ltr' }, FOLDER_EN[item.type] || item.type)),

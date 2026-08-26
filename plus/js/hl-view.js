@@ -6,9 +6,9 @@
 // things depending on where you found it.
 //
 // Everything here is presentational + one inline editor. No page owns a copy.
-import { el, renderNoteLines } from './util.js?v=28';
-import { api } from './api.js?v=28';
-import { LABELS, PALETTE } from './config.js?v=28';
+import { el, renderNoteLines } from './util.js?v=29';
+import { api } from './api.js?v=29';
+import { LABELS, PALETTE } from './config.js?v=29';
 
 export const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
 
@@ -67,7 +67,7 @@ export function kindChip(kind) {
 /** One small pill action. `href` makes it a link, otherwise a button. */
 export function actionBtn(text, { onClick = null, href = null, danger = false, title = null } = {}) {
   const cls = 'dcp-hlib-act' + (danger ? ' dcp-hlib-del' : '');
-  if (href) return el('a', { class: cls, href, title }, text);
+  if (href) return el('a', { class: cls, href, title, onclick: onClick || null }, text);
   const b = el('button', { class: cls, type: 'button', title }, text);
   if (onClick) b.addEventListener('click', onClick);
   return b;

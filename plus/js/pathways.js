@@ -4,9 +4,10 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum, icon } from './util.js?v=28';
-import { api } from './api.js?v=28';
-import { FOLDER_EN } from './content-index.js?v=28';
+import { el, faNum, icon } from './util.js?v=29';
+import { api } from './api.js?v=29';
+import { FOLDER_EN } from './content-index.js?v=29';
+import { markReturnTrail } from './return-trail.js?v=29';
 
 /** A "lightning + label" chip — a leading icon from the shared sprite
  * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
@@ -114,12 +115,19 @@ export async function renderPathwaysList(container) {
   container.replaceChildren(...sections);
 }
 
-function stepRow(step, idx, currentStep) {
+function stepRow(step, idx, currentStep, pathway) {
   const isCurrent = !step.completed && idx === currentStep;
   const cls = 'dcp-pw-step' + (step.completed ? ' is-done' : '') + (isCurrent ? ' is-current' : '');
   const marker = el('span', { class: 'dcp-pw-step-marker' }, step.completed ? '✓' : faNum(idx + 1));
+  const isBundle = pathway.kind === 'bundle';
+  const onclick = () => markReturnTrail({
+    url: '/plus/pathway.html?id=' + encodeURIComponent(pathway.id),
+    eyebrow: isBundle ? 'باندل' : 'مسیر یادگیری',
+    title: pathway.title_fa,
+    iconId: isBundle ? 'icon-lightning' : 'icon-node-graph',
+  });
 
-  return el('a', { class: cls, href: step.url }, [
+  return el('a', { class: cls, href: step.url, onclick }, [
     marker,
     el('div', { class: 'dcp-pw-step-body' }, [
       el('div', { class: 'dcp-pw-step-top' }, [
@@ -217,7 +225,7 @@ export async function renderPathwayDetail(container, id) {
   ]);
 
   const steps = el('div', { class: 'dcp-pw-steps' },
-    data.steps.map((s, i) => stepRow(s, i, data.current_step)));
+    data.steps.map((s, i) => stepRow(s, i, data.current_step, data)));
 
   container.replaceChildren(...[
     head, progressWrap, enrollArea(data.id, data.enrolled), steps,

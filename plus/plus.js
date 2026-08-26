@@ -2,24 +2,25 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=28';
-import { currentUser, api } from './js/api.js?v=28';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=28';
-import { openCollectionPicker } from './js/collections.js?v=28';
-import { el } from './js/util.js?v=28';
-import { initHomeCard } from './js/home-card.js?v=28';
-import { initHomeFeatures } from './js/home-features.js?v=28';
-import { initHomeBundles } from './js/home-bundles.js?v=28';
-import { initHomeUpboard } from './js/home-upboard.js?v=28';
-import { initDesTool } from './js/des-scorer.js?v=28';
-import { initHeader } from './js/header.js?v=28';
-import { initTourAutostart } from './js/tour.js?v=28';
-import { initReadingTracker } from './js/reading.js?v=28';
-import { initListeningTracker } from './js/listening.js?v=28';
-import { initShareScoring, buildShareButton } from './js/share.js?v=28';
-import { initHeart, buildHeartChip } from './js/votes.js?v=28';
-import { mountArticleThreads } from './js/article-threads.js?v=28';
-import { mountDes } from './js/des.js?v=28';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=29';
+import { currentUser, api } from './js/api.js?v=29';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=29';
+import { openCollectionPicker } from './js/collections.js?v=29';
+import { el } from './js/util.js?v=29';
+import { initHomeCard } from './js/home-card.js?v=29';
+import { initHomeFeatures } from './js/home-features.js?v=29';
+import { initHomeBundles } from './js/home-bundles.js?v=29';
+import { initHomeUpboard } from './js/home-upboard.js?v=29';
+import { initDesTool } from './js/des-scorer.js?v=29';
+import { initHeader } from './js/header.js?v=29';
+import { initTourAutostart } from './js/tour.js?v=29';
+import { initReadingTracker } from './js/reading.js?v=29';
+import { initListeningTracker } from './js/listening.js?v=29';
+import { initShareScoring, buildShareButton } from './js/share.js?v=29';
+import { initHeart, buildHeartChip } from './js/votes.js?v=29';
+import { mountArticleThreads } from './js/article-threads.js?v=29';
+import { mountDes } from './js/des.js?v=29';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=29';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -29,7 +30,7 @@ import { mountDes } from './js/des.js?v=28';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=28').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=29').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -276,6 +277,7 @@ function initEpisodeActions() {
   if (!document.getElementById('ep-audio')) return; // not an audio episode
   const box = findProseBox();
   if (!box) return;
+  mountReturnTrail(box.parentNode);
   const contentId = detectContentId();
   if (!document.getElementById('dcActionRow')) {
     const { aux } = ensureActionRow(box);
@@ -324,6 +326,13 @@ async function initArticle() {
   // element is the reliable tell.
   if (document.getElementById('ep-audio')) return;
 
+  // findProseBox()'s parent, NOT `main` — on the glossary template `main` is
+  // an OUTER wrapper around a second, differently-laid-out `<main class="page">`
+  // (the box model that actually carries the width/padding/centering), so a
+  // chip prepended to the outer element rendered full-width, offset above the
+  // page entirely. findProseBox()'s parent is the properly-styled container the
+  // action row already anchors to; that keeps the two consistent everywhere.
+  mountReturnTrail(findProseBox()?.parentNode || main);
   const contentId = detectContentId();
   // A share target for the pages dc-nav.js's phase 7 never reaches — the 12
   // پرامپتولوژیست chapters, whose shell is `.ep-box` and which load no
@@ -387,6 +396,7 @@ async function mountArticleWorkbench(root, url) {
   // so a document-wide lookup would find one of those first.
   const proseRoot = findProseRoot(root);
   if (!proseRoot) return; // not an article (e.g. a viewer / patients panel)
+  mountReturnTrail(root);
   // The url may carry ?dcphl=<id> (a highlight deep link) and/or a hash; neither
   // is part of the content_id.
   const [path, query] = url.split('#')[0].split('?');
@@ -574,6 +584,27 @@ if (typeof window !== 'undefined') {
   }
 }
 
+// فهرست موضوعی (pillar) pages are static HTML generated by
+// tools/build_pillar.py — there is no per-link JS creation site to hang an
+// onclick off of, unlike the other six return-trail sources. One delegated
+// listener (loaded on every page already, via this file) catches a click on
+// any `.pillar-item-link` instead: cheap, and a no-op on the 99% of pages
+// that have none. The pillar's own name comes from its <h1> (e.g. «سرامیک»)
+// rather than a data attribute, so build_pillar.py needs no changes either.
+function initReturnTrailWriters() {
+  document.body.addEventListener('click', (e) => {
+    const a = e.target.closest('.pillar-item-link');
+    if (!a) return;
+    const title = document.querySelector('h1')?.textContent.trim();
+    markReturnTrail({
+      url: location.pathname + location.search,
+      eyebrow: 'فهرست موضوعی',
+      title: title || 'فهرست موضوعی',
+      iconId: 'icon-book',
+    });
+  });
+}
+
 /**
  * Run one feature's init, and never let it take the others down with it.
  *
@@ -627,6 +658,7 @@ function boot() {
   // desktop shell), so this is safe on every page.
   step('heart', () => initHeart(contentId));
   step('seen-ticks', () => initSeenTicks()); // landing pages: green ticks next to already-seen content
+  step('return-trail-writers', () => initReturnTrailWriters()); // فهرست موضوعی click → sets مسیر بازگشت for the article it opens
   step('tour', () => initTourAutostart()); // /?tour=1 handoff: start the guided tour on the homepage
 }
 

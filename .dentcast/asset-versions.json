@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 126,
-    "hash": "4fc73a536466f1fc"
+    "v": 127,
+    "hash": "6778e5ad5bb7df93"
   },
   "/dc-theme.css": {
     "v": 2,
@@ -44,32 +44,32 @@
     "hash": "1f581f9754e3aea4"
   },
   "/plus/js/collection-page.js": {
-    "v": 34,
-    "hash": "e2c394ac07fa8c5d"
+    "v": 35,
+    "hash": "2d084e2463bd122e"
   },
   "/plus/js/collections-page.js": {
-    "v": 34,
-    "hash": "5841ea37ec885b1e"
+    "v": 35,
+    "hash": "3fd01b2d03d8e8bb"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 50,
-    "hash": "ad0ad1b74742bc1c"
+    "v": 51,
+    "hash": "09a7c2d17957d202"
   },
   "/plus/js/desboard-page.js": {
     "v": 3,
     "hash": "86796f62d49923c7"
   },
   "/plus/js/highlights-page.js": {
-    "v": 33,
-    "hash": "d4988f765d84b21d"
+    "v": 34,
+    "hash": "2f1520eda96f533d"
   },
   "/plus/js/pathway-page.js": {
-    "v": 32,
-    "hash": "c2c1fdd67d4cc6b5"
+    "v": 33,
+    "hash": "b70cbe3f3953f3c6"
   },
   "/plus/js/pathways-page.js": {
-    "v": 32,
-    "hash": "29fdf578655658b4"
+    "v": 33,
+    "hash": "467044f02d78ef9a"
   },
   "/plus/js/pay-result-page.js": {
     "v": 27,
@@ -80,20 +80,20 @@
     "hash": "9cd23dab12506c8c"
   },
   "/plus/js/profile-page.js": {
-    "v": 44,
-    "hash": "33a8b597d54c22c2"
+    "v": 45,
+    "hash": "d5788fc0e4b114a2"
   },
   "/plus/js/reading-compass-page.js": {
-    "v": 30,
-    "hash": "5e1d343157013314"
+    "v": 31,
+    "hash": "7e014873c3cd32ed"
   },
   "/plus/js/support-page.js": {
     "v": 16,
     "hash": "23e438ce497f82b5"
   },
   "/plus/js/upboard-page.js": {
-    "v": 12,
-    "hash": "9e2d148819af8170"
+    "v": 13,
+    "hash": "d5f71db282314882"
   },
   "/plus/js/wayfinder-page.js": {
     "v": 9,
@@ -108,16 +108,16 @@
     "hash": "4a9ef963fc249859"
   },
   "/plus/plus.css": {
-    "v": 33,
-    "hash": "6282688b7837ebe1"
+    "v": 34,
+    "hash": "f9d8b4218a72df92"
   },
   "dc-nav.js:V": {
-    "v": 123,
-    "hash": "495168df6e497ab9"
+    "v": 124,
+    "hash": "87d8a5eb5e33af66"
   },
   "modules:M": {
-    "v": 28,
-    "hash": "8ae036dd51245134"
+    "v": 29,
+    "hash": "ff0725528ebd4921"
   },
   "spot.js:SPOT_V": {
     "v": 32,

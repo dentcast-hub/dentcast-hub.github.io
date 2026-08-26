@@ -283,14 +283,14 @@
 
 <script src="/global-search.js?v=9"></script>
 <script src="/global-search-ui.js?v=5"></script>
-<script src="/dc-nav.js?v=126" defer></script>
+<script src="/dc-nav.js?v=127" defer></script>
 <!-- The ?v= is not decoration: the module carries its own stamp onto the
      up-board/index.json fetch (ASSET_V in upboard-page.js), so one bump
      invalidates both the code and the 443-item catalog it draws. Managed by
      tools/asset_version.py, which reads stamped paths out of the page text —
      an inline import counts. -->
 <script type="module">
-  import { initUpBoard } from '/plus/js/upboard-page.js?v=12';
+  import { initUpBoard } from '/plus/js/upboard-page.js?v=13';
   initUpBoard(document.getElementById('ubRoot'));
 </script>
 
