@@ -6,11 +6,11 @@
 // (mode, حوزه, زیرموضوع, سطح, and the whole flowchart) is premium — see
 // renderPersonaGate(). Because of that, the flow itself is only ever reached
 // by a premium visitor, so it carries no tier cap of its own any more.
-import { el, icon, faNum } from './util.js?v=30';
-import { api } from './api.js?v=30';
-import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=30';
-import { openLoginModal } from './login-modal.js?v=30';
-import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=30';
+import { el, icon, faNum } from './util.js?v=31';
+import { api } from './api.js?v=31';
+import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=31';
+import { openLoginModal } from './login-modal.js?v=31';
+import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=31';
 
 const FLAVORS = {
   continue: { name: 'ادامه مسیر', hint: 'قدم منطقی بعدی', primary: true, iconId: 'icon-arrow-left' },

@@ -12,15 +12,15 @@
 //   - the visitor is not signed in -> the button signs them in first
 // Each says something different, because a customer who is told the wrong
 // reason goes away for good.
-import { el } from './util.js?v=29';
-import { api, currentUser } from './api.js?v=29';
-import { openLoginModal } from './login-modal.js?v=29';
+import { el } from './util.js?v=31';
+import { api, currentUser } from './api.js?v=31';
+import { openLoginModal } from './login-modal.js?v=31';
 import {
   paymentsNeedIrHost, paymentsIrUrl, PLAN_MONTHS, PLAN_PRICES_RIAL, FROM_MONTHLY_RIAL,
   GIFT_CARD, BANK_TRANSFER,
-} from './config.js?v=29';
-import { premiumBenefits } from './premium-benefits.js?v=29';
-import { registerSW } from './pwa.js?v=29';
+} from './config.js?v=31';
+import { premiumBenefits } from './premium-benefits.js?v=31';
+import { registerSW } from './pwa.js?v=31';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const toFa = (s) => String(s).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);
