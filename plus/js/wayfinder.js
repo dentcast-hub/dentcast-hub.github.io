@@ -6,16 +6,53 @@
 // (mode, حوزه, زیرموضوع, سطح, and the whole flowchart) is premium — see
 // renderPersonaGate(). Because of that, the flow itself is only ever reached
 // by a premium visitor, so it carries no tier cap of its own any more.
-import { el, icon, faNum } from './util.js?v=33';
-import { api } from './api.js?v=33';
-import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=33';
-import { openLoginModal } from './login-modal.js?v=33';
-import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=33';
-import { markReturnTrail } from './return-trail.js?v=33';
+import { el, icon, faNum } from './util.js?v=34';
+import { api } from './api.js?v=34';
+import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=34';
+import { openLoginModal } from './login-modal.js?v=34';
+import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=34';
+import { markReturnTrail } from './return-trail.js?v=34';
 
 const returnToWayfinder = () => markReturnTrail({
   url: '/plus/wayfinder.html', eyebrow: 'مسیریاب', title: 'مسیریاب یادگیری', iconId: 'icon-radar',
 });
+
+// The wizard's own progress — separate from مسیر بازگشت (return-trail.js),
+// which only remembers WHERE to send someone back; this remembers what they
+// had actually built once they got there. Without it, every return to
+// /plus/wayfinder.html — via the return-trail chip, the browser's own back
+// button, or just a bookmark — was a fresh renderWayfinder() call: state is
+// a plain object private to that one closure, so the wizard always
+// restarted at «چیکاره‌ای؟» no matter how many steps deep the reader had
+// gone (founder report, 2026-08-26 — "این آزاردهنده‌ست"). localStorage, like
+// return-trail.js, so a same-origin new tab (an opened article) never
+// matters — the ORIGINAL tab already keeps its state in memory regardless;
+// this is for every other way of coming back. A day, not 45 minutes like
+// return-trail's own TTL: a research thread through the catalog is
+// reasonably resumed the next day, and every id in it is re-validated
+// against the live catalog on restore anyway (see tryRestore below), so an
+// actually-stale snapshot degrades to a fresh start rather than a broken one.
+const WF_STATE_KEY = 'dcp:wayfinder-state';
+const WF_STATE_TTL_MS = 24 * 60 * 60 * 1000;
+
+function persistWfState(state) {
+  try {
+    localStorage.setItem(WF_STATE_KEY, JSON.stringify({ ...state, ts: Date.now() }));
+  } catch (_) { /* ignore */ }
+}
+
+function readPersistedWfState() {
+  let raw;
+  try { raw = localStorage.getItem(WF_STATE_KEY); } catch (_) { return null; }
+  if (!raw) return null;
+  let rec;
+  try { rec = JSON.parse(raw); } catch (_) { return null; }
+  if (!rec || Date.now() - rec.ts > WF_STATE_TTL_MS) {
+    try { localStorage.removeItem(WF_STATE_KEY); } catch (_) { /* ignore */ }
+    return null;
+  }
+  return rec;
+}
 
 const FLAVORS = {
   continue: { name: 'ادامه مسیر', hint: 'قدم منطقی بعدی', primary: true, iconId: 'icon-arrow-left' },
@@ -125,6 +162,8 @@ export async function renderWayfinder(root, me) {
     requestAnimationFrame(() => e.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   }
 
+  function persist() { persistWfState(state); }
+
   function renderPersonaGrid() {
     personaGrid.replaceChildren(...PERSONAS.map((p) => pickCard({
       title: p.title,
@@ -143,6 +182,7 @@ export async function renderWayfinder(root, me) {
     if (isPremium) renderModeGrid();
     else renderPersonaGate();
     reveal(modeStep);
+    persist();
   }
 
   // Only «چیکاره‌ای؟» is free — everything from here on (mode, حوزه,
@@ -206,6 +246,7 @@ export async function renderWayfinder(root, me) {
       renderPillarGrid();
       reveal(pillarStep);
     }
+    persist();
   }
 
   // Only دانشجو gets the «باندل‌های شروع» shortcut — پروتزیست/دندان‌پزشک go
@@ -236,6 +277,7 @@ export async function renderWayfinder(root, me) {
     hide(subtopicStep, levelStep);
     renderChain();
     reveal(flowSection);
+    persist();
   }
 
   // قطب‌نما reuses the SAME real report /plus/reading-compass.html already
@@ -331,6 +373,7 @@ export async function renderWayfinder(root, me) {
     hide(pillarStep, subtopicStep, levelStep);
     renderChain();
     reveal(flowSection);
+    persist();
   }
   // Persona never blocks a حوزه — it only sorts the persona's own pillars to
   // the front with a «پیشنهادی» hint. A دندان‌پزشک still reaches «دیجیتال»
@@ -365,6 +408,7 @@ export async function renderWayfinder(root, me) {
     renderSubtopicGrid();
     hide(levelStep, flowSection);
     reveal(subtopicStep);
+    persist();
   }
 
   function renderSubtopicGrid() {
@@ -386,6 +430,7 @@ export async function renderWayfinder(root, me) {
     renderLevelGrid();
     hide(flowSection);
     reveal(levelStep);
+    persist();
   }
 
   function renderLevelGrid() {
@@ -421,6 +466,7 @@ export async function renderWayfinder(root, me) {
     renderLevelGrid();
     renderChain();
     reveal(flowSection);
+    persist();
   }
 
   // ---------------- flowchart ----------------
@@ -630,7 +676,101 @@ export async function renderWayfinder(root, me) {
       const last = items[items.length - 1];
       if (last) last.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
+    persist();
   }
 
-  renderPersonaGrid();
+  // Re-plays a persisted snapshot of `state` through the SAME render/reveal
+  // calls a person clicking through would trigger — never a raw DOM/state
+  // copy, so a future change to how a step renders can't drift out of step
+  // with what restore produces. Validated bottom-up BEFORE anything is
+  // mutated: every id it would apply is checked against the just-loaded,
+  // live engine/catalog first, and the whole thing is abandoned at the
+  // first mismatch (a pillar renamed, a content id unpublished since the
+  // snapshot was taken) rather than applying a partially-broken restore.
+  // Returns true if it restored something (caller then skips its own
+  // from-scratch renderPersonaGrid()).
+  function tryRestore() {
+    const rec = readPersistedWfState();
+    if (!rec || !rec.personaKey) return false;
+    if (!PERSONAS.some((p) => p.key === rec.personaKey)) return false;
+    if (rec.mode && rec.mode !== 'manual' && rec.mode !== 'compass') return false;
+
+    let pillarEntry = null;
+    if (rec.mode === 'manual' && rec.pillarKey) {
+      pillarEntry = pillarCatalog.find((c) => c.key === rec.pillarKey);
+      if (!pillarEntry) return false;
+      if (rec.subtopicKey && !pillarEntry.subtopics.some((s) => s.slug === rec.subtopicKey)) return false;
+    }
+    if (rec.mode === 'manual' && rec.bundleId && !pathwayById(engine, rec.bundleId)) return false;
+    if (rec.path && rec.path.length && rec.path.some((id) => !nodeInfo(engine, id))) return false;
+
+    // Validated — apply, in the same order a person would have clicked.
+    state.personaKey = rec.personaKey;
+    renderPersonaGrid();
+    show(modeStep);
+
+    if (!isPremium) {
+      // Lapsed or never premium since this was saved: stop exactly where a
+      // live click would — at the gate, nothing past step ۱ restored.
+      renderPersonaGate();
+      return true;
+    }
+
+    if (rec.mode) {
+      state.mode = rec.mode;
+      renderModeGrid();
+      if (rec.mode === 'compass') {
+        hide(pillarStep, subtopicStep, levelStep);
+        show(compassStep);
+        renderCompassStep();
+      } else {
+        hide(compassStep);
+        show(pillarStep);
+        renderBundleBlock();
+        renderPillarGrid();
+
+        if (rec.bundleId) {
+          state.bundleId = rec.bundleId;
+          renderBundleGrid();
+          renderPillarGrid();
+          hide(subtopicStep, levelStep);
+        } else if (rec.pillarKey) {
+          state.pillarKey = rec.pillarKey;
+          renderBundleGrid();
+          renderPillarGrid();
+          renderSubtopicGrid();
+          show(subtopicStep);
+
+          if (rec.subtopicKey) {
+            state.subtopicKey = rec.subtopicKey;
+            renderSubtopicGrid();
+            renderLevelGrid();
+            show(levelStep);
+          }
+        }
+      }
+    }
+
+    if (rec.path && rec.path.length) {
+      state.path = rec.path.slice();
+      renderChain();
+      show(flowSection);
+    }
+
+    // One jump to the deepest point reached — not reveal()'s smooth scroll,
+    // which is for a click reacting to something already on screen; this is
+    // a page load with nothing to animate from.
+    requestAnimationFrame(() => {
+      const target = !flowSection.hidden ? flowSection
+        : !levelStep.hidden ? levelStep
+        : !subtopicStep.hidden ? subtopicStep
+        : !pillarStep.hidden ? pillarStep
+        : !compassStep.hidden ? compassStep
+        : modeStep;
+      target.scrollIntoView({ behavior: 'auto', block: 'start' });
+    });
+    return true;
+  }
+
+  if (!tryRestore()) renderPersonaGrid();
 }
