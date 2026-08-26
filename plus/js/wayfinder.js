@@ -3,11 +3,11 @@
 // the starting point: enough to show the mechanism actually works, short
 // enough that nobody learns the whole subtopic before ever seeing the
 // premium gate (founder feedback — some demo chains ran too long).
-import { el, icon, faNum } from './util.js?v=27';
-import { api } from './api.js?v=27';
-import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=27';
-import { openLoginModal } from './login-modal.js?v=27';
-import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=27';
+import { el, icon, faNum } from './util.js?v=28';
+import { api } from './api.js?v=28';
+import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=28';
+import { openLoginModal } from './login-modal.js?v=28';
+import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=28';
 
 const FLAVORS = {
   continue: { name: 'ادامه مسیر', hint: 'قدم منطقی بعدی', primary: true, iconId: 'icon-arrow-left' },
