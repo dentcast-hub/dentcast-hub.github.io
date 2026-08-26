@@ -6,12 +6,12 @@
 // (mode, حوزه, زیرموضوع, سطح, and the whole flowchart) is premium — see
 // renderPersonaGate(). Because of that, the flow itself is only ever reached
 // by a premium visitor, so it carries no tier cap of its own any more.
-import { el, icon, faNum } from './util.js?v=34';
-import { api } from './api.js?v=34';
-import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=34';
-import { openLoginModal } from './login-modal.js?v=34';
-import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=34';
-import { markReturnTrail } from './return-trail.js?v=34';
+import { el, icon, faNum } from './util.js?v=35';
+import { api } from './api.js?v=35';
+import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=35';
+import { openLoginModal } from './login-modal.js?v=35';
+import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=35';
+import { markReturnTrail } from './return-trail.js?v=35';
 
 const returnToWayfinder = () => markReturnTrail({
   url: '/plus/wayfinder.html', eyebrow: 'مسیریاب', title: 'مسیریاب یادگیری', iconId: 'icon-radar',
@@ -705,6 +705,12 @@ export async function renderWayfinder(root, me) {
     if (rec.path && rec.path.length && rec.path.some((id) => !nodeInfo(engine, id))) return false;
 
     // Validated — apply, in the same order a person would have clicked.
+    // state.path is set here, up front, rather than down at the flowSection
+    // block below: renderLevelGrid() (reached earlier, from the subtopicKey
+    // branch) reads state.path[0] to flag which level card is "در حال
+    // نمایش" — setting it after that render left the level step's own
+    // active badge missing on every restore.
+    state.path = rec.path ? rec.path.slice() : [];
     state.personaKey = rec.personaKey;
     renderPersonaGrid();
     show(modeStep);
@@ -751,8 +757,7 @@ export async function renderWayfinder(root, me) {
       }
     }
 
-    if (rec.path && rec.path.length) {
-      state.path = rec.path.slice();
+    if (state.path.length) {
       renderChain();
       show(flowSection);
     }
