@@ -43,7 +43,13 @@ function pathwayRow(p) {
 }
 
 function itemRow(item) {
-  return el('a', { class: 'dcp-pw-step', href: item.url }, [
+  const onclick = () => markReturnTrail({
+    url: '/plus/reading-compass.html',
+    eyebrow: 'قطب‌نمای مطالعه',
+    title: 'قطب‌نمای مطالعه',
+    iconId: 'icon-compass',
+  });
+  return el('a', { class: 'dcp-pw-step', href: item.url, onclick }, [
     el('span', { class: 'dcp-pw-step-marker', 'aria-hidden': 'true' }, '📖'),
     el('div', { class: 'dcp-pw-step-body' }, [
       el('div', { class: 'dcp-pw-step-top' }, el('span', { class: 'dcp-pw-step-kind', dir: 'ltr' }, FOLDER_EN[item.type] || item.type)),

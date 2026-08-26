@@ -533,8 +533,14 @@ export async function openCollectionPicker({ highlightId, contentId } = {}) {
  *
  * @param collectionId  the board it lives in (needed for move + remove)
  */
-function pinCard(item, collectionId, { onRemove, onChanged, arrange = null }) {
+function pinCard(item, collectionId, { onRemove, onChanged, arrange = null, collectionTitle = null }) {
   const kindLabel = FOLDER_EN[item.type] || item.type;
+  const onReturnTrail = () => markReturnTrail({
+    url: '/plus/collection.html?id=' + encodeURIComponent(collectionId),
+    eyebrow: 'کالکشن',
+    title: collectionTitle || 'کالکشن',
+    iconId: 'icon-bookmark',
+  });
   const pinKindClass = item.kind === 'text' ? ' dcp-cl-pin-note' : item.kind === 'reference' ? ' dcp-cl-pin-ref' : '';
   const pin = el('div', { class: 'dcp-cl-pin' + pinKindClass });
 
@@ -691,11 +697,12 @@ function pinCard(item, collectionId, { onRemove, onChanged, arrange = null }) {
     // A highlight-item opens ON its highlight (?dcphl=); a page-item opens the page.
     actions.push(actionBtn(item.highlight_id ? 'متنِ مقاله ›' : 'بازکردن ›', {
       href: highlightHref(item.url, item.highlight_id),
+      onClick: onReturnTrail,
     }));
     actions.push(deleteAction());
 
     const foot = el('div', { class: 'dcp-cl-pin-foot' }, [
-      el('a', { class: 'dcp-cl-pin-src', href: item.url }, [
+      el('a', { class: 'dcp-cl-pin-src', href: item.url, onclick: onReturnTrail }, [
         el('span', { dir: 'ltr', class: 'dcp-hlib-folder' }, kindLabel),
         item.highlight_id ? el('span', {}, item.title) : null,
       ].filter(Boolean)),
@@ -1121,6 +1128,7 @@ export async function renderCollectionDetail(container, id) {
     grid.replaceChildren(...rows.map((item, i) => pinCard(item, id, {
       onRemove: removeItem,
       onChanged: () => renderItems(),
+      collectionTitle: data.title,
       arrange: arranging
         ? { index: i, total: rows.length, move: (delta) => moveItem(item.id, delta) }
         : null,

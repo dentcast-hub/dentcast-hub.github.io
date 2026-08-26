@@ -207,6 +207,106 @@
   .dc-act:active { transform: none; }
 }
 
+/* ---- مسیر بازگشت — the return-trail chip -------------------------------- *
+   A SECOND, independent breadcrumb — never the .dc-actions row above, never
+   the site's own fa↔en .lang-btn (which sits lower, inside the prose box's
+   own first child). This one is the very first thing in the article: mounted
+   by return-trail.js as container.firstChild, above the title itself, so it
+   never fights either of them for the same line. Renders only when a fresh
+   record exists (plus/js/return-trail.js), so an organic visit is unchanged. */
+.dcp-trail-anchor {
+  display: flex; align-items: center; gap: 4px;
+  margin: 0 0 10px;
+}
+.dcp-trail {
+  display: inline-flex; align-items: center; gap: 8px;
+  max-width: 100%;
+  padding: 7px 8px 7px 13px;
+  border-radius: var(--dcp-radius-pill);
+  background: var(--dcp-chip-bg);
+  border: 1px solid var(--dcp-line);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.dcp-trail:hover { background: var(--dcp-accent); }
+.dcp-trail:hover .dcp-trail-caret,
+.dcp-trail:hover .dcp-trail-ico,
+.dcp-trail:hover .dcp-trail-eyebrow,
+.dcp-trail:hover .dcp-trail-title { color: #fff; }
+.dcp-trail:hover .dcp-trail-ico { background: rgba(255, 255, 255, .22); }
+.dcp-trail:focus-visible { outline: 2px solid var(--dcp-accent); outline-offset: 2px; }
+.dcp-trail-caret { display: flex; color: var(--dcp-accent); flex-shrink: 0; }
+.dcp-trail-caret .dc-icon { width: 15px; height: 15px; }
+.dcp-trail-ico {
+  width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--dcp-surface); color: var(--dcp-accent);
+}
+.dcp-trail-ico .dc-icon { width: 13px; height: 13px; }
+.dcp-trail-text {
+  display: flex; flex-direction: column; overflow: hidden; line-height: 1.45;
+}
+.dcp-trail-eyebrow { font-size: .68rem; font-weight: 600; color: var(--dcp-accent); }
+.dcp-trail-title {
+  font-size: .82rem; font-weight: 700; color: var(--dcp-ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 46ch;
+}
+.dcp-trail-dismiss {
+  flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; border: 0; color: var(--dcp-muted); cursor: pointer;
+  opacity: .6; transition: opacity .15s ease, background .15s ease;
+}
+.dcp-trail-dismiss .dc-icon { width: 12px; height: 12px; }
+.dcp-trail-dismiss:hover { opacity: 1; background: var(--dcp-surface-2); }
+
+/* Condensed sticky form — appears once the chip above scrolls out of view
+   (return-trail.js's IntersectionObserver), so the way back stays reachable
+   without following the reader down the whole article. position:sticky
+   resolves against whichever ancestor actually scrolls: the page itself on a
+   standalone article, #dcd-col-c-scroll inside the desktop shell — no extra
+   wiring needed for either. `top` is set inline per-mount (stickyTopOffset())
+   to clear the real site header where one is fixed; on the shell that header
+   is back in flow, so the offset is simply 0 there. */
+.dcp-trail-sticky {
+  position: sticky; z-index: 30;
+  /* display:block on purpose — a flex row here would default to
+     align-items:stretch and squash the pill to THIS wrapper's own height:0
+     (the pill's padding is then all that is left to see, a near-invisible
+     sliver). Block keeps the wrapper's height:0 trick while letting the pill
+     size to its own content and sit at the RTL inline-start edge on its own. */
+  display: block;
+  height: 0; overflow: visible;
+  pointer-events: none;
+}
+.dcp-trail-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  max-width: 220px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  border-radius: var(--dcp-radius-pill);
+  background: var(--dcp-accent);
+  font-size: .74rem; font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--dcp-shadow);
+  opacity: 0; transform: translateY(-6px);
+  transition: opacity .18s ease, transform .18s ease;
+}
+/* Color set on the ICON and TEXT directly, not inherited from the <a> — the
+   site's own `main a{color:var(--ac) !important}` rule (dc-theme.css) forces
+   every anchor's OWN color to accent-blue, which would otherwise paint this
+   white text/icon the same blue as the pill's background behind it (invisible
+   white-on-blue... except it isn't white, it's blue-on-blue). Setting it on
+   these non-anchor descendants sidesteps that rule instead of fighting it. */
+.dcp-trail-pill .dc-icon { width: 13px; height: 13px; flex-shrink: 0; color: #fff; }
+.dcp-trail-pill span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #fff; }
+.dcp-trail-sticky.is-shown { pointer-events: auto; }
+.dcp-trail-sticky.is-shown .dcp-trail-pill { opacity: 1; transform: translateY(0); pointer-events: auto; }
+@media (prefers-reduced-motion: reduce) {
+  .dcp-trail-pill { transition: none; }
+}
+
 /* The end-of-article twin (plus.js's mountBottomActions) — same card, same
    button vocabulary, so it reads as the same row met a second time rather
    than a different control. No aux group here: there is no share/زمان

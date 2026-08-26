@@ -256,8 +256,14 @@ export function initUpBoard(root) {
       }, faNum(index + 1)));
     }
 
+    const onclick = () => markReturnTrail({
+      url: location.pathname + location.search,
+      eyebrow: 'آپ‌بورد',
+      title: 'آپ‌بورد',
+      iconId: 'icon-heart',
+    });
     const main = el('div', { class: 'ub-main' }, [
-      el('a', { class: 'ub-row-title', href: item.u }, item.ti),
+      el('a', { class: 'ub-row-title', href: item.u, onclick }, item.ti),
       el('div', { class: 'ub-meta' }, [
         el('span', { class: 'ub-type' }, item.tf),
         item.d ? el('span', { class: 'ub-date' }, item.d) : null,

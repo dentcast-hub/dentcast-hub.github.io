@@ -67,7 +67,7 @@ export function kindChip(kind) {
 /** One small pill action. `href` makes it a link, otherwise a button. */
 export function actionBtn(text, { onClick = null, href = null, danger = false, title = null } = {}) {
   const cls = 'dcp-hlib-act' + (danger ? ' dcp-hlib-del' : '');
-  if (href) return el('a', { class: cls, href, title }, text);
+  if (href) return el('a', { class: cls, href, title, onclick: onClick || null }, text);
   const b = el('button', { class: cls, type: 'button', title }, text);
   if (onClick) b.addEventListener('click', onClick);
   return b;

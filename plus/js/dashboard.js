@@ -61,7 +61,7 @@ function streakDetail(me) {
 function continueBlock(progress, model) {
   const info = progress.last_content_id ? contentInfo(model, progress.last_content_id) : null;
   if (!info) return el('div', { class: 'dcp-muted' }, 'هنوز جایی نبوده‌اید.');
-  return el('a', { class: 'dcp-continue', href: info.url }, [
+  return el('a', { class: 'dcp-continue', href: info.url, onclick: returnToDashboard }, [
     el('span', {}, info.title),
   ]);
 }
@@ -155,7 +155,7 @@ async function recentBlock(model, isPremium) {
     // highlights are invisible until you press «میز کار» again. The text
     // fragment stays as a fallback for a highlight whose anchor no longer
     // matches the page.
-    const link = el('a', { class: 'dcp-recent-link', href: (info ? info.url : '#') + '?dcphl=' + encodeURIComponent(h.id) + '#:~:text=' + encodeURIComponent(h.exact.slice(0, 100)) }, [
+    const link = el('a', { class: 'dcp-recent-link', href: (info ? info.url : '#') + '?dcphl=' + encodeURIComponent(h.id) + '#:~:text=' + encodeURIComponent(h.exact.slice(0, 100)), onclick: returnToDashboard }, [
       el('span', { class: 'dcp-recent-text' }, h.exact.slice(0, 70)),
       h.label ? el('span', { class: 'dcp-card-label' }, labelFa(h.label)) : null,
     ]);

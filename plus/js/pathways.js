@@ -114,12 +114,19 @@ export async function renderPathwaysList(container) {
   container.replaceChildren(...sections);
 }
 
-function stepRow(step, idx, currentStep) {
+function stepRow(step, idx, currentStep, pathway) {
   const isCurrent = !step.completed && idx === currentStep;
   const cls = 'dcp-pw-step' + (step.completed ? ' is-done' : '') + (isCurrent ? ' is-current' : '');
   const marker = el('span', { class: 'dcp-pw-step-marker' }, step.completed ? '✓' : faNum(idx + 1));
+  const isBundle = pathway.kind === 'bundle';
+  const onclick = () => markReturnTrail({
+    url: '/plus/pathway.html?id=' + encodeURIComponent(pathway.id),
+    eyebrow: isBundle ? 'باندل' : 'مسیر یادگیری',
+    title: pathway.title_fa,
+    iconId: isBundle ? 'icon-lightning' : 'icon-node-graph',
+  });
 
-  return el('a', { class: cls, href: step.url }, [
+  return el('a', { class: cls, href: step.url, onclick }, [
     marker,
     el('div', { class: 'dcp-pw-step-body' }, [
       el('div', { class: 'dcp-pw-step-top' }, [
@@ -217,7 +224,7 @@ export async function renderPathwayDetail(container, id) {
   ]);
 
   const steps = el('div', { class: 'dcp-pw-steps' },
-    data.steps.map((s, i) => stepRow(s, i, data.current_step)));
+    data.steps.map((s, i) => stepRow(s, i, data.current_step, data)));
 
   container.replaceChildren(...[
     head, progressWrap, enrollArea(data.id, data.enrolled), steps,
