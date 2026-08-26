@@ -83,6 +83,17 @@ body.dc-content-only main.article-page {
   --heart-bg: rgba(217,43,82,.11);
   --heart-bd: rgba(217,43,82,.34);
 
+  /* ── Amber = premium, site-wide — same rule this file already states above
+     for --heart, now actually given a token. Until now it only existed as
+     index.html's locally-scoped --x-amber* (the desktop shell inlines its own
+     styles and loads no shared CSS), so every OTHER page had no way to reuse
+     the site's own "this is what a subscription buys" colour. Same hex values
+     as --x-amber*, so it reads as the same colour everywhere, not a second
+     amber. */
+  --amber:      #c9922b;  --amber-ink: #8a6414;
+  --amber-wash: rgba(201,146,43,.08); --amber-wash-2: rgba(201,146,43,.13);
+  --amber-bd:   rgba(154,107,21,.22);
+
   --tr:  .17s cubic-bezier(.4,0,.2,1);
   --tr2: .26s cubic-bezier(.4,0,.2,1);
 
@@ -147,6 +158,11 @@ body.dc-content-only main.article-page {
   --heart:    #ff6b8a;
   --heart-bg: rgba(255,107,138,.16);
   --heart-bd: rgba(255,107,138,.38);
+
+  /* Same values as index.html's dark --x-amber*. */
+  --amber:      #e3b849;  --amber-ink: #e3b849;
+  --amber-wash: rgba(227,184,73,.09); --amber-wash-2: rgba(227,184,73,.14);
+  --amber-bd:   rgba(227,184,73,.26);
 
   /* ── Semantic role tokens (link + heading) — dark mode ── */
   --link:       #7ab4ff;        /* default link, dark mode             */

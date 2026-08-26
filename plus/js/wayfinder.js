@@ -1,13 +1,16 @@
 // مسیریاب — renders the wizard (شغل → حوزه → زیرموضوع → سطح آشنایی) and the
-// resulting flowchart. The free depth is capped at one real suggestion past
-// the starting point: enough to show the mechanism actually works, short
-// enough that nobody learns the whole subtopic before ever seeing the
-// premium gate (founder feedback — some demo chains ran too long).
-import { el, icon, faNum } from './util.js?v=28';
-import { api } from './api.js?v=28';
-import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=28';
-import { openLoginModal } from './login-modal.js?v=28';
-import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=28';
+// resulting flowchart. Only «چیکاره‌ای؟» (step ۱) is free — founder feedback
+// (2026-08-26): the earlier "one real hop free" demo let a free visitor walk
+// the whole wizard and see a real suggestion before ever meeting a paywall,
+// which read as "no premium stop at all". Everything past persona selection
+// (mode, حوزه, زیرموضوع, سطح, and the whole flowchart) is premium — see
+// renderPersonaGate(). Because of that, the flow itself is only ever reached
+// by a premium visitor, so it carries no tier cap of its own any more.
+import { el, icon, faNum } from './util.js?v=29';
+import { api } from './api.js?v=29';
+import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=29';
+import { openLoginModal } from './login-modal.js?v=29';
+import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=29';
 
 const FLAVORS = {
   continue: { name: 'ادامه مسیر', hint: 'قدم منطقی بعدی', primary: true, iconId: 'icon-arrow-left' },
@@ -131,9 +134,36 @@ export async function renderWayfinder(root, me) {
     state.personaKey = key;
     state.mode = null; state.pillarKey = null; state.subtopicKey = null; state.bundleId = null; state.path = [];
     renderPersonaGrid();
-    renderModeGrid();
     hide(compassStep, pillarStep, subtopicStep, levelStep, flowSection);
+    if (isPremium) renderModeGrid();
+    else renderPersonaGate();
     reveal(modeStep);
+  }
+
+  // Only «چیکاره‌ای؟» is free — everything from here on (mode, حوزه,
+  // زیرموضوع, سطح, and the whole flowchart) is premium. Shown inside
+  // modeStep's own grid, reusing its «چطور شروع کنیم؟» heading, the same way
+  // renderCompassStep reuses compassStep's heading for its own gate.
+  function renderPersonaGate() {
+    if (!me) {
+      const signIn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
+      signIn.addEventListener('click', async () => {
+        const res = await openLoginModal({ returnTo: location.pathname });
+        if (res && res.user) location.reload();
+      });
+      modeGrid.replaceChildren(el('div', { class: 'dcp-wf-gate' }, [
+        el('p', {}, 'قدمِ اول رایگانه — برای ادامه‌ی مسیریاب (انتخاب حوزه، زیرموضوع و کل مسیر) اول وارد شو.'),
+        signIn,
+        ...guestPremiumExtras('wayfinder-persona'),
+      ]));
+      return;
+    }
+    const note = lapsedNote(me);
+    modeGrid.replaceChildren(el('div', { class: 'dcp-wf-gate' }, [
+      note ? el('p', { class: 'dcp-gate-lapsed' }, note) : null,
+      el('p', {}, 'قدمِ اول رایگانه — بقیه‌ی مسیریاب، از انتخاب حوزه تا کل فلوچارت، ویژه‌ی دنت‌کست پریمیومه.'),
+      premiumCta('wayfinder-persona'),
+    ].filter(Boolean)));
   }
 
   function renderModeGrid() {
@@ -457,16 +487,14 @@ export async function renderWayfinder(root, me) {
 
       if (isLast) {
         item.appendChild(fullNode(info));
+        // The flow is only ever reached by a premium visitor (renderPersonaGate
+        // blocks everyone else before step ۲), so there is no tier cap here —
+        // a path can only run out for a genuine lack-of-more-content reason.
         const visited = new Set(state.path);
-        const cappedByTier = !isPremium && i >= 1; // one real hop free, then the gate
-        if (cappedByTier) {
-          item.appendChild(endGate());
-        } else {
-          const opts = getOptions(id, visited);
-          const flavors = FLAVOR_ORDER.filter((f) => opts[f]);
-          if (!flavors.length) item.appendChild(naturalEnd());
-          else item.appendChild(optionsBlock(opts, flavors, i));
-        }
+        const opts = getOptions(id, visited);
+        const flavors = FLAVOR_ORDER.filter((f) => opts[f]);
+        if (!flavors.length) item.appendChild(naturalEnd());
+        else item.appendChild(optionsBlock(opts, flavors, i));
       } else {
         item.appendChild(histNode(info, id, i));
       }
@@ -539,27 +567,6 @@ export async function renderWayfinder(root, me) {
       el('div', { class: 'dcp-wf-connector' }, `${faNum(flavors.length)} گزینه برای قدم بعد`),
       el('div', { class: 'dcp-wf-options' }, cards),
     ]);
-  }
-
-  function endGate() {
-    const from = 'wayfinder-flow';
-    const kids = [
-      el('h2', {}, 'همین‌جا نسخه‌ی رایگان تموم می‌شه'),
-      el('p', { class: 'dcp-muted' }, 'بقیه‌ی این مسیر، و بقیه‌ی مسیرهای مشابه، با پریمیوم باز می‌مونه و پیشرفتت خودکار ثبت می‌شه.'),
-    ];
-    if (!me) {
-      const signIn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
-      signIn.addEventListener('click', async () => {
-        const res = await openLoginModal({ returnTo: location.pathname });
-        if (res && res.user) location.reload();
-      });
-      kids.push(signIn, ...guestPremiumExtras(from));
-    } else {
-      const note = lapsedNote(me);
-      if (note) kids.push(el('p', { class: 'dcp-gate-lapsed' }, note));
-      kids.push(premiumCta(from));
-    }
-    return el('div', { class: 'dcp-wf-gate' }, kids);
   }
 
   // A premium visitor's own path can genuinely run out (no unvisited item

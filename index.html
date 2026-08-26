@@ -4497,18 +4497,20 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         .dc-destool-drawer > div{ overflow:hidden; }
         .dc-destool-boot{ padding:.9rem 1rem 1rem; font-size:.86rem; line-height:1.9; color:var(--muted,#5a6472); }
 
-        /* مسیریاب homepage entry — hero-tier weight, matching the episode hero
-           card right above it (same --x-grad/--x-card/--x-sh tokens that card
-           and every premium surface already use), not the plain list rows
-           below it. Founder feedback (2026-08-26 mockup, approved): the old
-           single-row treatment read as "one more archive item" instead of
-           "this is the entry point to the whole site". Brand blue throughout
-           since most of the tool is free; only the قطب‌نما chip stays amber,
-           per the site-wide rule that amber marks what a subscription buys. */
+        /* مسیریاب homepage entry — the SAME amber-wash treatment as
+           .dcp-hf-card (دنت‌کست پریمیوم locked-feature rail, above) and
+           #card-library (the premium cabinet card), not the blue hero
+           gradient. Founder decision (2026-08-26): the paywall moved to
+           right after «چیکاره‌ای؟» — only step ۱ is free, everything past
+           persona selection is premium (see renderPersonaGate in
+           wayfinder.js) — so per the site-wide rule that amber marks what a
+           subscription buys, the card now has to say that honestly up
+           front rather than promising a mostly-free tool in blue and
+           landing on a mostly-premium one a click later. */
         .dc-wf-home-entry{
           position:relative; display:block; overflow:hidden;
-          background:var(--x-grad-soft), var(--x-card);
-          border:1px solid var(--x-line); border-radius:1.375rem;
+          background:linear-gradient(180deg, var(--x-amber-wash), transparent 45%), var(--x-card);
+          border:1px solid var(--x-amber-bd); border-radius:1.375rem;
           box-shadow:var(--x-sh); padding:1.125rem; margin:.7rem 0 1.1rem;
           text-decoration:none;
         }
@@ -4518,30 +4520,30 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           content:''; position:absolute; inset-inline-end:-18px; top:-18px;
           width:120px; height:120px; pointer-events:none;
           background-image:
-            radial-gradient(circle 3px at 30px 70px, rgba(var(--ac-rgb),.22) 98%, transparent),
-            radial-gradient(circle 3px at 80px 40px, rgba(var(--ac-rgb),.22) 98%, transparent),
-            radial-gradient(circle 3px at 95px 95px, rgba(var(--ac-rgb),.16) 98%, transparent);
+            radial-gradient(circle 3px at 30px 70px, rgba(var(--ac-rgb),.18) 98%, transparent),
+            radial-gradient(circle 3px at 80px 40px, rgba(var(--ac-rgb),.18) 98%, transparent),
+            radial-gradient(circle 3px at 95px 95px, rgba(var(--ac-rgb),.13) 98%, transparent);
         }
         .dc-wf-home-entry .dc-wf-top{ display:flex; gap:.875rem; align-items:flex-start; position:relative; }
         .dc-wf-home-entry .dc-wf-ico{
           width:3.1rem; height:3.1rem; border-radius:1rem; flex-shrink:0;
-          background:var(--x-grad); box-shadow:0 10px 22px -8px rgba(18,87,214,.5);
-          display:flex; align-items:center; justify-content:center; color:#fff;
+          background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd); color:var(--x-amber-ink);
+          display:flex; align-items:center; justify-content:center;
         }
         .dc-wf-home-entry .dc-wf-ico svg{ width:1.6rem; height:1.6rem; }
         .dc-wf-home-entry .dc-wf-body{ flex:1; min-width:0; }
         .dc-wf-home-entry .dc-wf-eyebrow{
-          display:inline-flex; align-items:center; font-size:.66rem; font-weight:800; color:#fff;
-          background:var(--x-grad); border-radius:62.4375rem; padding:.15rem .65rem; margin-bottom:.4rem;
-          box-shadow:0 4px 12px -4px rgba(18,87,214,.5);
+          display:inline-flex; align-items:center; font-size:.66rem; font-weight:800; color:var(--x-amber-ink);
+          background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd);
+          border-radius:62.4375rem; padding:.15rem .65rem; margin-bottom:.4rem;
         }
         .dc-wf-home-entry .dc-wf-ttl{ display:block; font-size:1.04rem; font-weight:800; color:var(--x-ink); line-height:1.6; }
         .dc-wf-home-entry .dc-wf-sub{ display:block; font-size:.76rem; color:var(--txt3); margin-top:.3rem; line-height:1.75; }
         .dc-wf-home-entry .dc-wf-row{
           display:flex; align-items:center; justify-content:space-between; gap:.75rem;
-          margin-top:.9rem; padding-top:.8rem; border-top:1px solid var(--x-line); position:relative;
+          margin-top:.9rem; padding-top:.8rem; border-top:1px solid var(--x-amber-bd); position:relative;
         }
-        .dc-wf-home-entry .dc-wf-cta{ display:inline-flex; align-items:center; gap:.4rem; font-size:.82rem; font-weight:800; color:var(--ac); }
+        .dc-wf-home-entry .dc-wf-cta{ display:inline-flex; align-items:center; gap:.4rem; font-size:.82rem; font-weight:800; color:var(--x-amber-ink); }
         .dc-wf-home-entry .dc-wf-cta svg{ width:1rem; height:1rem; transform:scaleX(-1); }
         .dc-wf-home-entry .dc-wf-amber-pill{ flex:none; font-size:.63rem; font-weight:800; color:var(--x-amber-ink);
           background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd);
@@ -4714,16 +4716,12 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
            spot.js's renderHome() anchors the ad card immediately above this
            element instead of immediately above the «دسته‌های محتوا» heading
            (its old anchor), keeping the ad ABOVE and this card right below it
-           without moving .dc-exa-cats or its heading (see spot/spot.js). Mostly
-           free (the wizard + one real suggestion need no subscription), so the
-           card itself stays brand blue — only the قطب‌نما chip is amber, per
-           the site-wide rule that amber marks what a subscription buys.
-           Hero-tier weight, not list-row weight (founder feedback,
-           2026-08-26): a plain bordered row here read as one more archive
-           item, not the entry point to the whole site, so it borrows the
-           episode hero's own "this is important" grammar (--x-grad/--x-card/
-           --x-sh, the same tokens that card and the premium surfaces already
-           use) rather than inventing a new visual language. -->
+           without moving .dc-exa-cats or its heading (see spot/spot.js).
+           Amber throughout (2026-08-26): only «چیکاره‌ای؟» (step ۱) is free —
+           everything past persona selection needs پریمیوم (renderPersonaGate
+           in wayfinder.js) — so per the site-wide rule that amber marks what
+           a subscription buys, the card says that honestly up front instead
+           of advertising a free tool in blue. -->
       <a class="dc-wf-home-entry" id="dcWayfinderHome" href="/plus/wayfinder.html" aria-label="مسیریاب یادگیری">
         <span class="dc-wf-top">
           <span class="dc-wf-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.2 8.8l-2 5.2-5.2 2 2-5.2 5.2-2z"/></svg></span>
@@ -4735,7 +4733,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         </span>
         <span class="dc-wf-row">
           <span class="dc-wf-cta">شروع کن <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></span>
-          <span class="dc-wf-amber-pill">قطب‌نما · پریمیوم</span>
+          <span class="dc-wf-amber-pill">۱ قدم رایگان · بقیه پریمیوم</span>
         </span>
       </a>
 
@@ -5671,7 +5669,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=126" defer></script>
+<script src="/dc-nav.js?v=128" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
