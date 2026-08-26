@@ -19,8 +19,8 @@
 // stripped out. mountArticleThreads() is exported for that second case, because
 // a feature that quietly works on phones and not on desktop is the exact gap
 // buildShareButton() was written to close.
-import { api, currentUser } from './api.js?v=24';
-import { el, faNum, icon } from './util.js?v=24';
+import { api, currentUser } from './api.js?v=25';
+import { el, faNum, icon } from './util.js?v=25';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' });
 const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } catch (_) { return ''; } };

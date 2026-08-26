@@ -3,10 +3,10 @@
 // the starting point: enough to show the mechanism actually works, short
 // enough that nobody learns the whole subtopic before ever seeing the
 // premium gate (founder feedback — some demo chains ran too long).
-import { el, icon, faNum } from './util.js?v=24';
-import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=24';
-import { openLoginModal } from './login-modal.js?v=24';
-import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor } from './wayfinder-engine.js?v=24';
+import { el, icon, faNum } from './util.js?v=25';
+import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=25';
+import { openLoginModal } from './login-modal.js?v=25';
+import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor } from './wayfinder-engine.js?v=25';
 
 const FLAVORS = {
   continue: { name: 'ادامه مسیر', hint: 'قدم منطقی بعدی', primary: true, iconId: 'icon-arrow-left' },
@@ -16,9 +16,11 @@ const FLAVORS = {
 };
 const FLAVOR_ORDER = ['continue', 'deeper', 'format', 'lateral'];
 
-// Which pillars matter to each job is an editorial call (like the rest of
-// the wizard's copy) — the pillars/subtopics THEMSELVES, and every content
-// suggestion inside them, are real and live (wayfinder-engine.js / catalog()).
+// `pillars` is only a per-persona RECOMMENDATION order (renderPillarGrid
+// sorts these first with a «پیشنهادی» badge) — never a filter. Every حوزه in
+// the real catalog stays pickable from every شغل; the pillars/subtopics
+// THEMSELVES, and every content suggestion inside them, are real and live
+// (wayfinder-engine.js / catalog()).
 const PERSONAS = [
   { key: 'labtech', title: 'پروتزیست', sub: 'تکنسین لابراتوار پروتز', pillars: ['fixed-pros', 'ceramics', 'esthetic', 'removable-pros'] },
   { key: 'dentist', title: 'دندان‌پزشک', sub: 'عمومی یا متخصص', pillars: ['fixed-pros', 'removable-pros', 'implantology', 'occlusion', 'bonding'] },
@@ -172,18 +174,29 @@ export async function renderWayfinder(root, me) {
     compassStep.replaceChildren(compassStep.firstChild, body);
   }
 
+  // Persona never blocks a حوزه — it only sorts the persona's own pillars to
+  // the front with a «پیشنهادی» hint. A دندان‌پزشک still reaches «دیجیتال»
+  // (founder feedback: the curated list was read as a hard wall, not a
+  // suggestion — every حوزه has to stay reachable from every شغل).
   function renderPillarGrid() {
     const persona = PERSONAS.find((p) => p.key === state.personaKey);
-    const rows = persona.pillars
-      .map((key) => pillarCatalog.find((c) => c.key === key))
-      .filter(Boolean);
-    pillarGrid.replaceChildren(...rows.map((c) => pickCard({
-      title: c.title_fa,
-      sub: `${faNum(c.count)} محتوا در این حوزه`,
-      active: state.pillarKey === c.key,
-      accent: { light: c.accentRgb, dark: c.accentRgbDark },
-      onClick: () => selectPillar(c.key),
-    })));
+    const recommended = new Set(persona ? persona.pillars : []);
+    const rows = [...pillarCatalog].sort((a, b) => {
+      const ra = recommended.has(a.key) ? 0 : 1;
+      const rb = recommended.has(b.key) ? 0 : 1;
+      return ra - rb;
+    });
+    pillarGrid.replaceChildren(...rows.map((c) => {
+      const active = state.pillarKey === c.key;
+      return pickCard({
+        title: c.title_fa,
+        sub: `${faNum(c.count)} محتوا در این حوزه`,
+        active,
+        badge: (!active && recommended.has(c.key)) ? 'پیشنهادی' : null,
+        accent: { light: c.accentRgb, dark: c.accentRgbDark },
+        onClick: () => selectPillar(c.key),
+      });
+    }));
   }
 
   function selectPillar(key) {
