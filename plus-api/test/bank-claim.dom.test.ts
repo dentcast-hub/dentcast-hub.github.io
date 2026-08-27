@@ -99,12 +99,11 @@ describe('an ordinary claim', () => {
       ...PENDING, amount_confirmed_at: null, student_request: false,
     });
 
-    const fine = root.querySelector('.dcp-bank .dcp-price-fine')!.textContent!;
-    expect(fine).toContain('همین مبلغ را');
-    expect(fine).not.toContain('هنوز واریز نکنید');
+    const card = root.querySelector('.dcp-bank')!.textContent!;
+    expect(card).not.toContain('هنوز واریز نکنید');
 
     const steps = root.querySelector('.dcp-gift-steps')!.textContent!;
-    expect(steps).toContain('هماهنگی لازم نیست');
+    expect(steps).toContain('به شبای بالا بفرستید');
     // The reference still has to reach the transfer's «بابت» field, or the
     // deposit arrives with nothing tying it to this claim.
     expect(steps).toContain('DC-KTP-RWQ');
@@ -136,12 +135,14 @@ describe('a student claim, before the card has been seen', () => {
 
     const steps = root.querySelector('.dcp-gift-steps')!.textContent!;
     expect(steps).toContain('کارت دانشجویی');
-    expect(steps).toContain('تا آن موقع واریز نکنید');
+    // «do not transfer yet» is said ONCE, in the banner above — repeating it in
+    // the steps was the same instruction printed twice.
+    expect(notice.textContent).toContain('هنوز واریز نکنید');
 
-    // The figure on screen is still the list price, and says so — a student
-    // who transfers it has overpaid, which is the one mistake on this rail
-    // that needs a refund to undo.
-    expect(root.querySelector('.dcp-bank .dcp-price-fine')!.textContent).toContain('قیمت لیست');
+    // The figure on screen is still the list price, and the banner says so once
+    // — a student who transfers it has overpaid, which is the one mistake on
+    // this rail that needs a refund to undo.
+    expect(notice.textContent).toContain('قیمت لیست');
   });
 });
 
@@ -156,9 +157,9 @@ describe('a student claim the founder has settled', () => {
     expect(root.querySelector('.dcp-bank .dcp-price-notice.is-ok')!.textContent)
       .toContain('مبلغ دانشجویی تأیید شد');
 
-    const fine = root.querySelector('.dcp-bank .dcp-price-fine')!.textContent!;
-    expect(fine).toContain('همین مبلغ را');
-    expect(fine).not.toContain('قیمت لیست');
+    const card = root.querySelector('.dcp-bank')!.textContent!;
+    expect(card).not.toContain('قیمت لیست');
+    expect(card).toContain('به شبای بالا بفرستید');
   });
 
   it('quotes the amount the claim carries, not the plan list price', async () => {

@@ -12,15 +12,15 @@
 //   - the visitor is not signed in -> the button signs them in first
 // Each says something different, because a customer who is told the wrong
 // reason goes away for good.
-import { el } from './util.js?v=39';
-import { api, currentUser } from './api.js?v=39';
-import { openLoginModal } from './login-modal.js?v=39';
+import { el } from './util.js?v=40';
+import { api, currentUser } from './api.js?v=40';
+import { openLoginModal } from './login-modal.js?v=40';
 import {
   paymentsNeedIrHost, paymentsIrUrl, PLAN_MONTHS, PLAN_PRICES_RIAL, FROM_MONTHLY_RIAL,
   GIFT_CARD, BANK_TRANSFER,
-} from './config.js?v=39';
-import { premiumBenefits } from './premium-benefits.js?v=39';
-import { registerSW } from './pwa.js?v=39';
+} from './config.js?v=40';
+import { premiumBenefits } from './premium-benefits.js?v=40';
+import { registerSW } from './pwa.js?v=40';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const toFa = (s) => String(s).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);
@@ -158,9 +158,22 @@ function planCard(plan, { featured, onPick, selected, base }) {
  * which every account has had all along.)
  */
 function whatYouGet() {
-  return el('ul', { class: 'dcp-price-list' }, premiumBenefits().map((f) => el('li', {}, [
-    el('strong', {}, f.title), el('span', {}, f.hint),
-  ])));
+  // NINE NAMES, and the sentence behind each one on a tap.
+  //
+  // As nine title+paragraph pairs this block was 791 characters — more than
+  // half the words on a page whose job is to show three prices and a button,
+  // and all of it below the button, where a reader who has already decided
+  // scrolls past it and a reader who has not is met with an essay. Nothing is
+  // deleted: <details> keeps every sentence exactly one tap away, and the
+  // page's resting state becomes a list of what you get, which is what a
+  // person reads at this moment anyway.
+  return el('ul', { class: 'dcp-price-list' }, premiumBenefits().map((f) => {
+    const d = el('details', {}, [
+      el('summary', {}, f.title),
+      el('span', {}, f.hint),
+    ]);
+    return el('li', {}, d);
+  }));
 }
 
 /**
@@ -351,8 +364,7 @@ function bankIntro(bank, plan, onStart, offline) {
   return el('div', { class: 'dcp-gift dcp-bank' }, [
     el('h2', { class: 'dcp-price-h2' }, 'واریز به حساب'),
     el('p', { class: 'dcp-gift-lead' },
-      'برای کسی که کارت بانکی ایرانی ندارد، خارج از کشور است، یا تخفیف دانشجویی گرفته. '
-      + 'با پل فوری می‌رسد، با پایا تا یک روز کاری. تأیید دستی است.'),
+      'برای کسی که کارت ایرانی ندارد، خارج از کشور است، یا دانشجوست.'),
     // The LIST price, and labelled as such. This card must never quote the
     // personalised figure /pay/plans returns: a per-reader discount belongs to
     // the gateway, and a discounted number here is a promise the next screen
@@ -361,19 +373,22 @@ function bankIntro(bank, plan, onStart, offline) {
       termName(plan.months), ' — ', toman(planListRial(plan)),
       el('span', { class: 'dcp-plan-unit' }, 'تومان (قیمت لیست)'),
     ]),
-    // Same figure the gateway charges, so there is nothing to agree first.
-    el('p', { class: 'dcp-price-fine' },
-      'همین مبلغ را واریز می‌کنید — هماهنگی قبلی لازم نیست. کد پیگیری را می‌گیرید، '
-      + 'در «بابت» می‌نویسید، و بعد از دیدن واریز اشتراک فعال می‌شود.'),
+    // The one thing worth saying before the button, because it is the thing
+    // this rail was getting wrong: nobody has to ask permission to pay. The
+    // steps that follow are on the next screen, where they are actually
+    // needed — printing them here as well is a rehearsal of a form nobody has
+    // filled in yet.
+    el('p', { class: 'dcp-price-fine' }, 'هماهنگی لازم نیست — همین مبلغ را واریز کنید.'),
     isStudentTerm ? studentLabel : el('p', { class: 'dcp-muted' },
       `دانشجو ٪${pct} تخفیف دارد — فقط روی اشتراک ${months} ماهه؛ همان را انتخاب کنید.`),
     isStudentTerm ? studentNote : null,
     el('div', { class: 'dcp-bank-iban-row' }, [iban, copyBtn]),
     el('p', { class: 'dcp-muted' }, `به نام ${bank.holder} — ${bank.bank_name}`),
     start,
-    el('p', { class: 'dcp-price-fine' },
-      'کارت لازم نیست — واریز به شبا از هر اپ بانکی ممکن است، و سقف روزانه‌ی کارت‌به‌کارت را هم '
-      + 'ندارد. این مسیر سهمیه‌ی ماهانه‌ی درگاه را مصرف نمی‌کند.'),
+    // Deleted, not shortened: «کارت لازم نیست، سقف کارت‌به‌کارت را ندارد, this
+    // route does not spend the gateway's monthly quota» is an argument FOR a
+    // rail the reader is already looking at, and the last third of it is about
+    // our own regulatory ceiling, which is not their problem.
   ]);
 }
 
@@ -401,45 +416,32 @@ function bankSteps(bank, plan, reference, confirmed, studentRequest, opts) {
   const o = opts || {};
 
   // Shared tail: what to do at the bank, once there is a figure to send.
+  //
+  // Three lines, each one an instruction. The fallback for a banking app with
+  // no «بابت» field is real and has to be somewhere, but it is not a step —
+  // most people never need it — so it sits under the list as fine print
+  // instead of being the longest thing on the card.
   const transferSteps = [
-    el('li', {}, 'در اپ بانکی‌تان پل (فوری) یا پایا (تا یک روز کاری) را بزنید و همان مبلغ را به شبای بالا بفرستید.'),
-    el('li', {}, [
-      `کد ${reference} را در قسمت «بابت» یا «شرح» بنویسید. اگر اپ‌تان این فیلد را ندارد، رسید را `
-      + 'در یک تیکت «مشکل در پرداخت» (با تیکِ «عکسی دارم») یا به ',
-      telegramId(),
-      ' بفرستید.',
-    ]),
-    el('li', {}, 'بعد از دیدن واریز، اشتراک فعال می‌شود و در «اطلاعیه» خبرش را می‌گیرید.'),
+    el('li', {}, 'مبلغ بالا را به شبای بالا بفرستید (پل یا پایا).'),
+    el('li', {}, `کد ${reference} را در «بابت» بنویسید.`),
+    el('li', {}, 'بعد از دیدن واریز، اشتراک فعال می‌شود و در «اطلاعیه» خبر می‌گیرید.'),
   ];
 
+  // An ordinary claim needs no step of its own — the three below already say
+  // everything, and «هماهنگی لازم نیست» is on the card that opened it.
   const steps = holding
     ? [
       el('li', {}, [
-        `عکس کارت دانشجویی را با کد ${reference} بفرستید — به `,
+        `عکس کارت دانشجویی را با کد ${reference} به `,
         telegramId(),
         ' یا ',
-        el('a', { href: '/plus/support.html', target: '_blank', rel: 'noopener' },
-          'با یک تیکت «تخفیف دانشجویی»'),
-        '.',
+        el('a', { href: '/plus/support.html', target: '_blank', rel: 'noopener' }, 'پشتیبانی'),
+        ' بفرستید.',
       ]),
-      el('li', {}, [
-        `مبلغ ٪${pct} تخفیف‌خورده را اعلام می‌کنیم: هم در «اطلاعیه» خبرش را می‌گیرید، هم `
-        + 'همین‌جا بالا نوشته می‌شود. ',
-        el('b', {}, 'تا آن موقع واریز نکنید'),
-        '.',
-      ]),
+      el('li', {}, `مبلغ با ٪${pct} تخفیف را همین‌جا می‌نویسیم و خبرتان می‌کنیم.`),
       ...transferSteps,
     ]
-    : [
-      el('li', {}, [
-        'همین مبلغ بالا را واریز کنید. ',
-        el('b', {}, 'هماهنگی لازم نیست'),
-        '؛ اگر سؤالی دارید به ',
-        telegramId(),
-        ' پیام بدهید.',
-      ]),
-      ...transferSteps,
-    ];
+    : transferSteps;
 
   const copyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'کپی کد');
   copyBtn.addEventListener('click', () => copyToClipboard(reference, copyBtn, 'کپی شد ✓'));
@@ -473,7 +475,7 @@ function bankSteps(bank, plan, reference, confirmed, studentRequest, opts) {
   if (holding) {
     head = el('div', { class: 'dcp-price-notice is-warn' }, [
       el('b', {}, 'هنوز واریز نکنید'),
-      el('p', {}, 'اول کارت دانشجویی، بعد مبلغِ تخفیف‌خورده را همین‌جا می‌بینید.'),
+      el('p', {}, `عددِ بالا هنوز قیمت لیست است؛ مبلغ با ٪${pct} تخفیف بعد از دیدن کارت این‌جا می‌نشیند.`),
     ]);
   } else if (studentRequest) {
     head = el('div', { class: 'dcp-price-notice is-ok' }, [
@@ -490,15 +492,25 @@ function bankSteps(bank, plan, reference, confirmed, studentRequest, opts) {
       termName(plan.months), ' — ', toman(plan.amount_rial),
       el('span', { class: 'dcp-plan-unit' }, 'تومان'),
     ]),
-    el('p', { class: 'dcp-price-fine' }, holding
-      ? `این هنوز قیمت لیست است؛ مبلغ ٪${pct} تخفیف‌خورده بعد از دیدن کارت این‌جا می‌نشیند.`
-      : 'همین مبلغ را به شبای بالا واریز کنید.'),
+    // Nothing here in either state. The ordinary claim's steps already say
+    // where to send the money, and the holding one's banner already says the
+    // figure is not final — both had a line under the amount repeating it.
+    //
+    // `pct` still names the rate in the banner and in step two, which is where
+    // a student needs to read it.
+
     el('div', { class: 'dcp-gift-ref' }, [
       el('span', { class: 'dcp-gift-ref-label' }, 'کد پیگیری'),
       el('code', { class: 'dcp-gift-ref-code' }, reference),
       copyBtn,
     ]),
     el('ol', { class: 'dcp-gift-steps' }, steps),
+    // The one case the three steps do not cover, kept out of them.
+    el('p', { class: 'dcp-price-fine' }, [
+      'اگر اپ بانکی‌تان «بابت» ندارد، رسید را با همین کد به ',
+      telegramId(),
+      ' بفرستید.',
+    ]),
     cancelBtn,
   ]);
 }
@@ -573,19 +585,16 @@ function referralInput(info, value, onApply) {
   applyBtn.addEventListener('click', submit);
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
 
-  // What the field IS, under the field. An empty box labelled «کد معرف داری؟»
-  // asks for something without ever saying what it does or where one comes
-  // from, so a buyer who has never heard of the program reads it as a coupon
-  // slot for a campaign they missed and scrolls past. Both halves are named —
-  // the ٪۱۰ here and the ٪۵ that goes to whoever gave you the code — because
-  // the second half is the whole reason the code reached them.
-  const about = el('p', { class: 'dcp-price-fine' }, [
-    `کد معرف را هر عضو دنت‌کست دارد. اگر کدِ کسی را وارد کنی، ٪${toFa(10)} از همین `
-    + `خرید کم می‌شود و ٪${toFa(5)} هم به‌عنوان اعتبارِ خریدِ بعدی برای صاحبِ کد ثبت `
-    + 'می‌شود. فقط روی اولین خرید کار می‌کند. کدِ خودت را در ',
-    el('a', { href: '/plus/profile.html#referral' }, 'پروفایلت'),
-    ' بساز.',
-  ]);
+  // What the field does, for the person standing in front of it — one line.
+  //
+  // It used to be four sentences, three of which were about somebody else: the
+  // ٪۵ credited to whoever gave you the code, that it works on a first purchase
+  // only, and where to mint your own. None of that helps a buyer decide whether
+  // to type something into this box, and the last of them is an invitation to
+  // leave the page one tap above the pay button. The referrer's half is
+  // explained where it can be acted on, in the profile.
+  const about = el('p', { class: 'dcp-price-fine' },
+    `کدِ کسی را دارید؟ ٪${toFa(10)} از این خرید کم می‌شود.`);
 
   return el('div', { class: 'dcp-referral' }, [
     el('label', { class: 'dcp-label' }, 'کد معرف داری؟'),
@@ -773,20 +782,23 @@ async function main() {
       'پرداخت امن از طریق درگاه زیبال'));
   };
 
+  // ONE line above the prices, and it is the only sales sentence on this page.
+  //
+  // There used to be two, and the first of them — «از ماهی … تومان، هرچه مدت
+  // بلندتر، ماه ارزان‌تر» — explained in prose exactly what the three cards
+  // underneath it already show: each carries its own price, its per-month rate
+  // and a «٪۱۷ ارزان‌تر» chip. Copy that narrates the table below it is not
+  // information, it is a delay between somebody arriving and seeing what things
+  // cost. What is left says what the product is, once, in nine words.
   const head = [
     el('h1', { class: 'dcp-price-title' }, 'اشتراک پریمیوم'),
-    // «از ماهی …», not «هر ماه …»: the terms no longer cost the same per month,
-    // so a single monthly figure would be true of one card and wrong about the
-    // other two. `monthly_rial` is the old name of the same number, still read
-    // here for an API that has not been redeployed yet.
     el('p', { class: 'dcp-price-sub' },
-      `از ماهی ${toman(info.from_monthly_rial || info.monthly_rial)} تومان — `
-      + 'هرچه مدت بلندتر، ماه ارزان‌تر.'),
-    el('p', { class: 'dcp-price-sub' },
-      'شش ابزار برای اینکه آنچه می‌خوانید بماند و به کارتان بیاید، و سایتی بدون تبلیغ.'),
+      'ابزارهای مطالعه، و سایتی بدون تبلیغ.'),
   ];
 
   const notices = [];
+  // Rendered between the plan grid and the buy button — see below.
+  let studentLine = null;
   if (info.offline) {
     // Deliberately silent here: "the gateway is not active yet" would be a
     // claim, and when we could not reach the server we do not have one. The
@@ -872,13 +884,18 @@ async function main() {
   // it there is nothing left to say. Shown to everyone: we cannot know who is
   // a student, and the ones who are must not have to already know this to find
   // it.
+  //
+  // ONE line, and it is deliberately not a card at the top of the page any
+  // more. As a full notice above the plan grid it pushed the prices — the one
+  // thing everybody came for — below the fold, for a discount most visitors
+  // cannot claim. It now sits directly above the buy button, which is where
+  // the mistake it prevents actually happens: buying at the gateway costs a
+  // student the rate, and nothing downstream can give it back.
   if (info.bank_transfer) {
     const bankPct = toFa(info.bank_transfer.student_discount_percent || 15);
     const bankMonths = toFa(info.bank_transfer.student_months || 6);
-    notices.push(notice('ok', 'دانشجو هستید؟',
-      `٪${bankPct} تخفیف روی اشتراک ${bankMonths} ماهه دارید — فقط از راه «واریز به حساب» پایین همین صفحه. `
-      + 'از درگاه که بخرید، قیمت کامل حساب می‌شود. آن‌جا تیکِ «دانشجو هستم» را بزنید '
-      + '(عکس کارت دانشجویی لازم است).'));
+    studentLine = el('p', { class: 'dcp-price-fine dcp-price-student' },
+      `دانشجو هستید؟ ٪${bankPct} تخفیف روی ${bankMonths} ماهه — از «واریز به حساب» پایین صفحه، نه از درگاه.`);
   }
 
   drawPlans();
@@ -1035,7 +1052,7 @@ async function main() {
   drawGift(null, false);
 
   root.replaceChildren(el('div', { class: 'dcp-pricing' }, [
-    ...head, ...notices, grid, referralWrap, action, bankWrap, giftWrap,
+    ...head, ...notices, grid, studentLine, referralWrap, action, bankWrap, giftWrap,
     el('h2', { class: 'dcp-price-h2' }, 'با پریمیوم چه چیزی اضافه می‌شود'),
     whatYouGet(),
   ]));
