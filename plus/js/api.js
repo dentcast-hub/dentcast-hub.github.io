@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=36';
+import { API_BASES } from './config.js?v=37';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -236,8 +236,14 @@ export const api = {
   giftStatus: () => request('/pay/gift'),
   // Bank transfer (واریز به شبا) — second manual rail, same shape as the gift
   // card pair above. The amount is computed server-side from `months`.
-  bankTransferStart: (months, referralCode) =>
-    request('/pay/bank-transfer', { method: 'POST', body: { months, referral_code: referralCode } }),
+  // `student` asks for the ٪۱۵ six-month rate: the claim then HOLDS until the
+  // founder has seen a student card and announced a figure, instead of telling
+  // the buyer to transfer the list price straight away.
+  bankTransferStart: (months, referralCode, student) =>
+    request('/pay/bank-transfer', {
+      method: 'POST',
+      body: { months, referral_code: referralCode, student: student === true },
+    }),
   bankTransferStatus: () => request('/pay/bank-transfer'),
 
   // کد معرف — services/referrals.ts. referralGet returns my code (or null) +

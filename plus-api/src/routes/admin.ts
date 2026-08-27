@@ -662,17 +662,18 @@ function renderHtml(
 
   <h3 style="margin-top:26px">صف واریز به حساب</h3>
   <div class="muted">
-    <b>این‌ها واریز نیستند — درخواست‌اند.</b> ردیف همان لحظه‌ای ساخته می‌شود که خریدار در صفحه‌ی خرید
-    «دریافت کد پیگیری» را می‌زند، یعنی <b>قبل از</b> هر جابه‌جایی پول. پس «پولی نیامده» حالتِ عادیِ
-    هر ردیفِ تازه است.
+    <b>این‌ها واریز نیستند — درخواست‌اند.</b> ردیف همان لحظه‌ای ساخته می‌شود که خریدار «دریافت کد پیگیری»
+    را می‌زند، یعنی <b>قبل از</b> جابه‌جایی پول. پس «پولی نیامده» حالتِ عادیِ هر ردیفِ تازه است.
     <br>
-    <b>ترتیب کار دو مرحله است و دو دکمه‌ی جدا دارد:</b>
-    اول «<b>تأیید مبلغ</b>» — یعنی «همین عدد را واریز کن». تا این را نزنی، صفحه‌ی خریدار می‌نویسد
-    که عدد فقط قیمتِ لیست است و او منتظرِ توست؛ زدنش برایش اطلاعیه و پیام می‌فرستد. اگر عدد همین
-    که هست درست باشد، فیلد را <b>خالی بگذار</b> و همان دکمه را بزن.
-    بعد، وقتی پول در صورت‌حساب نشست، «<b>تأیید</b>» — این است که اشتراک را فعال می‌کند.
+    <b>ردیفِ معمولی هیچ کاری با تو ندارد تا وقتی پول برسد.</b> مبلغش قیمتِ لیست است — همان که درگاه هم
+    می‌گیرد — و صفحه‌ی خریدار از همان اول به او گفته واریز کند. تو فقط وقتی پول در صورت‌حساب نشست
+    «<b>تأیید (پول رسید)</b>» را می‌زنی و اشتراک فعال می‌شود.
     <br>
-    <b>تخفیف دانشجویی همین است و بس:</b> «مبلغ دانشجویی» را بزن تا فیلد پر شود، بعد «تأیید مبلغ».
+    <b>فقط ردیفِ «دانشجو» منتظرِ توست.</b> او تیکِ تخفیف را زده، هنوز واریز نکرده، و صفحه‌اش می‌گوید
+    منتظرِ عدد بماند. کارت دانشجویی‌اش را که دیدی: «مبلغ دانشجویی» را بزن تا فیلد پر شود، بعد
+    «<b>تأیید مبلغ</b>» — این برایش اطلاعیه و پیام می‌فرستد و تازه آن‌وقت واریز می‌کند. (اگر عددِ روی
+    ردیف را قبول داری، فیلد را خالی بگذار و همان دکمه را بزن.)
+    <br>
     نشان هیچ نقشی در تخفیف یا فعال‌سازی ندارد — «تأیید» به‌تنهایی اشتراک را فعال می‌کند،
     و «تأیید + یادگاریِ دانشجو» فقط همان کار را می‌کند به‌علاوه‌ی یک کاشیِ تزئینی روی دیوار افتخارات.
   </div>
@@ -741,21 +742,29 @@ function renderHtml(
       return Math.floor((listRial * (100 - STUDENT.percent) / 100) / 10);
     }
 
+    // Whether this row is waiting on a HUMAN. Only a student's is: an ordinary
+    // claim's amount is the list price and was never in question, so marking it
+    // «waiting for you» would bury the one row that actually is.
+    function needsMe(r) { return r.student_request && !r.amount_confirmed_at; }
+
     // The queue's own state, and the reason the panel needed one: «تأیید» and
     // «تأیید مبلغ» are two different acts a day apart, and a row that looked
     // identical before and after the first one left the founder unable to tell
-    // whether they had done it. amount_confirmed_at is the fact; this is how
-    // the row wears it.
+    // whether they had done it.
     function stage(r) {
-      return r.amount_confirmed_at
-        ? '<span class="pill ok">مبلغ اعلام شد · ' + when(r.amount_confirmed_at) + '</span>'
-        : '<span class="pill hot">منتظر اعلامِ مبلغ</span>';
+      if (r.amount_confirmed_at) {
+        return '<span class="pill ok">مبلغ اعلام شد · ' + when(r.amount_confirmed_at) + '</span>';
+      }
+      return r.student_request
+        ? '<span class="pill hot">دانشجو · منتظر اعلامِ مبلغ</span>'
+        : '<span class="pill">منتظر واریز</span>';
     }
 
     function row(r) {
       var stu = studentToman(r.months);
       var cur = r.amount_rial == null ? '' : Math.round(r.amount_rial / 10);
-      return '<div class="tk" data-ref="' + esc(r.reference) + '" data-toman="' + cur + '" style="cursor:auto">'
+      return '<div class="tk' + (needsMe(r) ? ' need' : '') + '" data-ref="' + esc(r.reference)
+        + '" data-toman="' + cur + '" style="cursor:auto">'
         + '<div class="tk-h"><b>' + esc(r.reference) + '</b>'
         + '<span class="pill">' + r.months + ' ماهه</span>'
         + '<span class="pill">' + toman(r.amount_rial) + '</span>'
@@ -785,7 +794,12 @@ function renderHtml(
 
     function render(rows) {
       if (!rows.length) { list.innerHTML = '<div class="muted">صف خالی است.</div>'; return; }
-      list.innerHTML = rows.map(row).join('');
+      // Whoever is waiting on a person comes first; the sort is stable, so
+      // oldest-first still holds inside each group.
+      var ordered = rows.slice().sort(function (a, b) {
+        return (needsMe(b) ? 1 : 0) - (needsMe(a) ? 1 : 0);
+      });
+      list.innerHTML = ordered.map(row).join('');
     }
 
     function load() {

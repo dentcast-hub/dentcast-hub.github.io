@@ -158,6 +158,7 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
         properties: {
           months: { type: 'integer', minimum: 1, maximum: 60 },
           referral_code: { type: 'string', maxLength: 24 },
+          student: { type: 'boolean' },
         },
       },
     },
@@ -340,12 +341,24 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       },
     },
   }, async (request, reply) => {
-    const { months, referral_code: referralCode } = request.body as {
-      months: number; referral_code?: string;
+    const { months, referral_code: referralCode, student } = request.body as {
+      months: number; referral_code?: string; student?: boolean;
     };
     const listRial = planAmountRial(months);
     if (listRial === null) {
       return reply.code(400).send({ error: 'unknown_plan', message: 'این مدت اشتراک تعریف نشده است.' });
+    }
+
+    // The student rate lives on ONE term (config.bankTransfer.studentMonths).
+    // Refused rather than ignored: quietly opening a full-price claim for
+    // somebody who just said they are a student is how they end up
+    // transferring the wrong figure, which is the one mistake on this rail
+    // that needs a refund to undo.
+    if (student && months !== config.bankTransfer.studentMonths) {
+      return reply.code(400).send({
+        error: 'student_term',
+        message: `تخفیف دانشجویی فقط روی اشتراک ${config.bankTransfer.studentMonths} ماهه است.`,
+      });
     }
 
     // کد معرف on the manual rail (founder's call, 2026-08-13): the figure the
@@ -376,7 +389,7 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
     }
 
     const r = await startRedemption(request.user!.id, 'bank_transfer', {
-      months, amountRial, referralId,
+      months, amountRial, referralId, studentRequest: student === true,
     });
 
     if (r.outcome === 'disabled') {
@@ -398,6 +411,10 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       // reused claim can already carry one, so this is not always null even on
       // the call that opens a claim.
       amount_confirmed_at: r.redemption!.amount_confirmed_at,
+      // A reused claim keeps whatever it was opened as: someone who ticked
+      // «دانشجو هستم» yesterday must not be told to transfer today because
+      // they came back without ticking it.
+      student_request: r.redemption!.student_request,
       reused: r.outcome === 'already_pending',
     });
   });
@@ -414,6 +431,7 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
         // THE field the pending view turns on: until it is set, the amount
         // above is only the list price and the page must keep saying so.
         amount_confirmed_at: row.amount_confirmed_at,
+        student_request: row.student_request,
         referral_applied: row.referral_id !== null,
         note: row.status === 'rejected' ? row.note : null,
         created_at: row.created_at, reviewed_at: row.reviewed_at,

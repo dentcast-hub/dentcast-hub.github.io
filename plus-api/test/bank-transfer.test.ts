@@ -31,8 +31,11 @@ beforeEach(async () => {
 });
 afterAll(async () => { await app?.close(); await pool.end(); });
 
-const claim = (cookie: string, months = 6) =>
-  app.inject({ method: 'POST', url: '/pay/bank-transfer', headers: { cookie }, payload: { months } });
+const claim = (cookie: string, months = 6, student?: boolean) =>
+  app.inject({
+    method: 'POST', url: '/pay/bank-transfer', headers: { cookie },
+    payload: student === undefined ? { months } : { months, student },
+  });
 
 const giftClaim = (cookie: string) =>
   app.inject({ method: 'POST', url: '/pay/gift', headers: { cookie } });
@@ -237,6 +240,96 @@ describe('the founder queue', () => {
 });
 
 /**
+ * WHO WAITS, AND WHO DOES NOT — the correction of 1405/06/05.
+ *
+ * The rail shipped asking every buyer to agree the amount with support before
+ * transferring. For an ordinary subscription that is a step invented for
+ * nobody: the price is the list price, computed server-side, exactly what the
+ * gateway charges, and there is nothing to negotiate. It is also a step that
+ * loses the sale, because somebody who has to open Telegram before paying
+ * mostly does not. One amount on this rail is decided by a human — the ٪۱۵
+ * student rate, on the six-month plan, earned by sending a card — so the wait
+ * belongs to the claims that ask for it and to no others.
+ */
+describe('an ordinary claim waits for nobody; a student claim waits for a human', () => {
+  it('opens ordinary by default — nothing is asked of the founder before the money', async () => {
+    const cookie = await loginAs(app, PHONE);
+    expect((await claim(cookie, 1)).json().student_request).toBe(false);
+    expect((await mine(cookie)).json().redemption.student_request).toBe(false);
+  });
+
+  it('marks the claim when the buyer asks for the student rate', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const r = (await claim(cookie, config.bankTransfer.studentMonths, true)).json();
+    expect(r.student_request).toBe(true);
+    // …and it opens at the LIST price all the same: the discounted figure is
+    // the founder's to announce after seeing a card, never computed here.
+    expect(r.amount_rial).toBe(config.payments.planPricesRial[config.bankTransfer.studentMonths]);
+    expect(r.amount_confirmed_at).toBeNull();
+
+    expect((await pending()).json().redemptions[0].student_request).toBe(true);
+  });
+
+  /**
+   * Refused rather than ignored. Quietly opening a full-price claim for
+   * somebody who has just said they are a student is how they transfer the
+   * wrong figure — the one mistake on this rail that needs a refund to undo.
+   */
+  it('refuses the student tick on a term the rate does not exist on', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const res = await claim(cookie, 1, true);
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error).toBe('student_term');
+    expect(res.json().message).toContain(String(config.bankTransfer.studentMonths));
+    // Nothing was opened, so a second try can still choose correctly.
+    expect((await mine(cookie)).json().redemption).toBeNull();
+  });
+
+  /**
+   * The one direction a reused claim may change in. Somebody who opened an
+   * ordinary claim and only then learns about the student rate would otherwise
+   * be looking at a page saying «transfer 6,000,000» while waiting for a
+   * discount — and the transfer is the mistake that needs a refund to undo.
+   * Never the reverse: releasing a hold is the founder's act, and un-ticking a
+   * box must not be able to tell somebody to pay a figure nobody has settled.
+   */
+  it('upgrades an open ordinary claim to a hold when the buyer ticks the box', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const months = config.bankTransfer.studentMonths;
+    const first = (await claim(cookie, months)).json();
+    expect(first.student_request).toBe(false);
+
+    const upgraded = (await claim(cookie, months, true)).json();
+    expect(upgraded.reused).toBe(true);
+    expect(upgraded.reference).toBe(first.reference);
+    expect(upgraded.student_request).toBe(true);
+    expect((await mine(cookie)).json().redemption.student_request).toBe(true);
+  });
+
+  it('never releases a hold from the buyer\'s side', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const months = config.bankTransfer.studentMonths;
+    await claim(cookie, months, true);
+    // Coming back with the box unticked changes nothing — only the founder's
+    // «تأیید مبلغ» releases it.
+    expect((await claim(cookie, months, false)).json().student_request).toBe(true);
+  });
+
+  it('keeps a reused claim as whatever it was opened as', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const months = config.bankTransfer.studentMonths;
+    const first = (await claim(cookie, months, true)).json();
+
+    // Coming back without ticking the box hands back the SAME claim — someone
+    // who is already waiting for a figure must not be told to transfer.
+    const again = (await claim(cookie, months)).json();
+    expect(again.reused).toBe(true);
+    expect(again.reference).toBe(first.reference);
+    expect(again.student_request).toBe(true);
+  });
+});
+
+/**
  * The student rate is a NUMBER THE FOUNDER TYPES, and these pin the two places
  * that make it findable — because the failure mode is silent on both sides: a
  * student who never learns the rate exists pays full price at the gateway, and
@@ -264,9 +357,13 @@ describe('the student rate is announced, and the panel hands over the number', (
     const page = await app.inject({ method: 'GET', url: '/admin', headers: { authorization: basic } });
     expect(page.body).toContain('>تأیید مبلغ<');
     expect(page.body).toContain('>تأیید (پول رسید)<');
-    // The queue's own state, so a confirmed row is legible as one.
-    expect(page.body).toContain('منتظر اعلامِ مبلغ');
+    // The queue's own state, so a confirmed row is legible as one — and so an
+    // ordinary row never claims to be waiting for the founder, which would
+    // bury the one row that is.
+    expect(page.body).toContain('دانشجو · منتظر اعلامِ مبلغ');
     expect(page.body).toContain('مبلغ اعلام شد');
+    expect(page.body).toContain('منتظر واریز');
+    expect(page.body).toContain('ردیفِ معمولی هیچ کاری با تو ندارد');
     // «no amount typed» is an ordinary press, not an error — the deadlock above.
     expect(page.body).toContain('خالی یعنی همین عدد');
   });

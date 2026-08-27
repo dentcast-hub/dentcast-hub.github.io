@@ -57,6 +57,13 @@ export interface Redemption {
    * agreed to yet, which is the difference the buyer's page turns on.
    */
   amount_confirmed_at: Date | null;
+  /**
+   * The buyer asked for the student rate when they opened this — migration
+   * 0051. THIS is what decides whether a claim waits for a human: an ordinary
+   * transfer is the list price and nothing about it needs settling, so only a
+   * student's claim holds until `amount_confirmed_at` is stamped.
+   */
+  student_request: boolean;
   status: RedemptionStatus;
   note: string | null;
   reviewed_at: Date | null;
@@ -65,7 +72,7 @@ export interface Redemption {
 
 const COLUMNS =
   'id, user_id, reference, code, kind, months, amount_rial, referral_id, '
-  + 'amount_confirmed_at, status, note, reviewed_at, created_at';
+  + 'amount_confirmed_at, student_request, status, note, reviewed_at, created_at';
 
 /** The tag the buyer writes into the transfer/gift message — services/reference.ts owns the alphabet. */
 const mintClaimReference = (): string => mintReference('DC');
@@ -122,7 +129,10 @@ export function bankTransferInstructions() {
 export async function startRedemption(
   userId: string,
   kind: RedemptionKind = 'apple_us',
-  opts: { months?: number; amountRial?: number; referralId?: string | null } = {},
+  opts: {
+    months?: number; amountRial?: number; referralId?: string | null;
+    studentRequest?: boolean;
+  } = {},
 ): Promise<StartResult> {
   if (kind === 'apple_us' && !config.giftCard.enabled) {
     return { outcome: 'disabled', redemption: null, message: 'این روش پرداخت فعلاً فعال نیست.' };
@@ -136,6 +146,10 @@ export async function startRedemption(
   // Only the bank rail can carry a کد معرف: a gift card's price is in dollars
   // and set by Apple, so there is no figure here for a percentage to act on.
   const referralId = kind === 'apple_us' ? null : opts.referralId ?? null;
+  // A gift card has no student rate to ask for — that discount exists on one
+  // rial plan on one rail, and routes/pay.ts has already refused the tick
+  // anywhere else by the time this runs.
+  const studentRequest = kind === 'bank_transfer' && opts.studentRequest === true;
 
   // One open claim PER RAIL at a time — not globally: someone with a pending
   // gift-card claim must not be refused a bank-transfer claim by the same
@@ -145,6 +159,25 @@ export async function startRedemption(
     [userId, kind],
   );
   if (pending) {
+    // UPGRADE-ONLY: someone who opened an ordinary claim and then ticks
+    // «دانشجو هستم» on the same term gets that claim put on hold, instead of
+    // being handed back a page that tells them to transfer the list price
+    // while they wait for a discount. Never the reverse — releasing a hold is
+    // the founder's act (confirmRedemptionAmount), and un-ticking a box must
+    // not be able to tell somebody to pay a figure nobody has settled.
+    if (studentRequest && !pending.student_request && pending.months === months) {
+      const held = await one<Redemption>(
+        `update gift_redemptions set student_request = true
+          where id = $1 and status = 'pending' returning ${COLUMNS}`,
+        [pending.id],
+      );
+      if (held) {
+        return {
+          outcome: 'already_pending', redemption: held,
+          message: 'یک درخواست باز دارید؛ از همان کد پیگیری استفاده کنید.',
+        };
+      }
+    }
     return {
       outcome: 'already_pending', redemption: pending,
       message: 'یک درخواست باز دارید؛ از همان کد پیگیری استفاده کنید.',
@@ -156,9 +189,10 @@ export async function startRedemption(
   for (let attempt = 0; attempt < 5; attempt += 1) {
     try {
       const row = (await one<Redemption>(
-        `insert into gift_redemptions (user_id, reference, kind, months, amount_rial, referral_id)
-         values ($1, $2, $3, $4, $5, $6) returning ${COLUMNS}`,
-        [userId, mintClaimReference(), kind, months, amountRial, referralId],
+        `insert into gift_redemptions
+           (user_id, reference, kind, months, amount_rial, referral_id, student_request)
+         values ($1, $2, $3, $4, $5, $6, $7) returning ${COLUMNS}`,
+        [userId, mintClaimReference(), kind, months, amountRial, referralId, studentRequest],
       ))!;
       await notifyFounder(row);
       return { outcome: 'started', redemption: row, message: '' };
@@ -187,10 +221,21 @@ async function notifyFounder(row: Redemption): Promise<void> {
   }
   const target = await one<{ id: string }>('select id from profiles where phone = $1', [phone]);
   if (!target) return;
-  const title = row.kind === 'bank_transfer' ? 'واریز بانکی در راه است' : 'گیفت‌کارت در راه است';
-  const body = row.kind === 'bank_transfer'
-    ? `کد پیگیری ${row.reference} — ${row.months} ماه. صورت‌حساب را بررسی کنید.`
-    : `کد پیگیری ${row.reference} — ${row.months} ماه. ایمیل را بررسی کنید.`;
+  // A student's claim is the one that needs the founder BEFORE any money
+  // moves — they are holding, waiting for a figure. An ordinary transfer needs
+  // nothing until it lands, so its alert must not read like a request.
+  const title = row.kind !== 'bank_transfer'
+    ? 'گیفت‌کارت در راه است'
+    : (row.student_request ? 'درخواست تخفیف دانشجویی' : 'واریز بانکی در راه است');
+  let body;
+  if (row.kind !== 'bank_transfer') {
+    body = `کد پیگیری ${row.reference} — ${row.months} ماه. ایمیل را بررسی کنید.`;
+  } else if (row.student_request) {
+    body = `کد پیگیری ${row.reference} — ${row.months} ماه. منتظر کارت دانشجویی است؛ `
+      + 'بعد از دیدنش مبلغ را اعلام کن — تا آن موقع واریز نمی‌کند.';
+  } else {
+    body = `کد پیگیری ${row.reference} — ${row.months} ماه. صورت‌حساب را بررسی کنید.`;
+  }
   await sendCapped(target.id, {
     title, body, url: '/admin', tag: 'gift_claim',
   }, 'system').catch(() => { /* alerting never blocks a customer */ });
