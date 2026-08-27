@@ -12,15 +12,15 @@
 //   - the visitor is not signed in -> the button signs them in first
 // Each says something different, because a customer who is told the wrong
 // reason goes away for good.
-import { el } from './util.js?v=35';
-import { api, currentUser } from './api.js?v=35';
-import { openLoginModal } from './login-modal.js?v=35';
+import { el } from './util.js?v=39';
+import { api, currentUser } from './api.js?v=39';
+import { openLoginModal } from './login-modal.js?v=39';
 import {
   paymentsNeedIrHost, paymentsIrUrl, PLAN_MONTHS, PLAN_PRICES_RIAL, FROM_MONTHLY_RIAL,
   GIFT_CARD, BANK_TRANSFER,
-} from './config.js?v=35';
-import { premiumBenefits } from './premium-benefits.js?v=35';
-import { registerSW } from './pwa.js?v=35';
+} from './config.js?v=39';
+import { premiumBenefits } from './premium-benefits.js?v=39';
+import { registerSW } from './pwa.js?v=39';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const toFa = (s) => String(s).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);
@@ -304,20 +304,49 @@ const planListRial = (plan) => plan.list_amount_rial || plan.amount_rial;
  * second plan picker). Always visible — unlike the gift-card rail this needs
  * no toggle, since it is the domestic route and works for anyone with an
  * Iranian bank account, gateway or no gateway.
+ *
+ * ORDINARY TRANSFERS COORDINATE WITH NOBODY. This card used to tell every
+ * buyer to agree the amount with support first, which is a step invented for
+ * no one: an ordinary subscription costs the list price, computed
+ * server-side, exactly what the gateway would charge. There is one amount on
+ * this rail a human decides — the student rate, ٪۱۵ off, on the six-month
+ * plan, earned by sending a student card — so the tick below is offered on
+ * that term and no other, and it is the ONLY thing that makes a claim wait.
  */
 function bankIntro(bank, plan, onStart, offline) {
   const iban = el('span', { class: 'dcp-bank-iban', dir: 'ltr' }, ibanGrouped(bank.iban));
   const copyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'کپی شبا');
   copyBtn.addEventListener('click', () => copyToClipboard(bank.iban, copyBtn, 'کپی شد ✓'));
 
+  const pct = toFa(bank.student_discount_percent || 15);
+  const months = toFa(bank.student_months || 6);
+
+  // The student tick, on the one term the rate exists for. It is a real change
+  // of path, not a preference: a ticked claim HOLDS instead of telling the
+  // buyer to transfer, so it says out loud what it costs them (a card, and a
+  // wait) before they choose it.
+  const isStudentTerm = plan.months === (bank.student_months || 6);
+  const studentChk = el('input', { type: 'checkbox', id: 'dcp-bank-student' });
+  const studentLabel = el('label', {
+    for: 'dcp-bank-student', class: 'dcp-bank-student-label',
+  }, [studentChk, el('span', {}, `دانشجو هستم — ٪${pct} تخفیف می‌خواهم`)]);
+  const studentNote = el('p', { class: 'dcp-gift-warn dcp-bank-student-note' }, [
+    'با این تیک، ',
+    el('b', {}, 'هنوز واریز نکنید'),
+    '. اول عکس کارت دانشجویی را با کد پیگیری به ',
+    telegramId(),
+    ' بفرستید؛ مبلغ تخفیف‌خورده را همین‌جا اعلام می‌کنیم و بعد واریز کنید.',
+  ]);
+  studentNote.hidden = true;
+  studentChk.addEventListener('change', () => { studentNote.hidden = !studentChk.checked; });
+
   const start = offline
     ? el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button', disabled: 'disabled' },
       'در دسترس نیست')
     : el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'دریافت کد پیگیری');
-  if (!offline) start.addEventListener('click', () => onStart(start));
-
-  const pct = toFa(bank.student_discount_percent || 15);
-  const months = toFa(bank.student_months || 6);
+  if (!offline) {
+    start.addEventListener('click', () => onStart(start, isStudentTerm && studentChk.checked));
+  }
 
   return el('div', { class: 'dcp-gift dcp-bank' }, [
     el('h2', { class: 'dcp-price-h2' }, 'واریز به حساب'),
@@ -325,19 +354,20 @@ function bankIntro(bank, plan, onStart, offline) {
       'برای کسی که کارت بانکی ایرانی ندارد، خارج از کشور است، یا تخفیف دانشجویی گرفته. '
       + 'با پل فوری می‌رسد، با پایا تا یک روز کاری. تأیید دستی است.'),
     // The LIST price, and labelled as such. This card must never quote the
-    // personalised figure /pay/plans returns: the amount on this rail is set
-    // by the founder after talking to the buyer, so a discounted number here
-    // is a promise the next screen contradicts.
+    // personalised figure /pay/plans returns: a per-reader discount belongs to
+    // the gateway, and a discounted number here is a promise the next screen
+    // contradicts.
     el('div', { class: 'dcp-bank-plan' }, [
       termName(plan.months), ' — ', toman(planListRial(plan)),
       el('span', { class: 'dcp-plan-unit' }, 'تومان (قیمت لیست)'),
     ]),
-    el('p', { class: 'dcp-gift-warn' }, [
-      `قبل از واریز، مبلغ را با پشتیبانی هماهنگ کنید — در تلگرام `,
-      telegramId(),
-      ` یا از صفحه‌ی پشتیبانی. دانشجو ٪${pct} تخفیف روی اشتراک ${months} ماهه دارد؛ `
-      + 'مبلغ نهایی را بعد از هماهنگی همین‌جا می‌بینید.',
-    ]),
+    // Same figure the gateway charges, so there is nothing to agree first.
+    el('p', { class: 'dcp-price-fine' },
+      'همین مبلغ را واریز می‌کنید — هماهنگی قبلی لازم نیست. کد پیگیری را می‌گیرید، '
+      + 'در «بابت» می‌نویسید، و بعد از دیدن واریز اشتراک فعال می‌شود.'),
+    isStudentTerm ? studentLabel : el('p', { class: 'dcp-muted' },
+      `دانشجو ٪${pct} تخفیف دارد — فقط روی اشتراک ${months} ماهه؛ همان را انتخاب کنید.`),
+    isStudentTerm ? studentNote : null,
     el('div', { class: 'dcp-bank-iban-row' }, [iban, copyBtn]),
     el('p', { class: 'dcp-muted' }, `به نام ${bank.holder} — ${bank.bank_name}`),
     start,
@@ -350,53 +380,126 @@ function bankIntro(bank, plan, onStart, offline) {
 /**
  * Once they have a tag: the steps, in order.
  *
- * COORDINATION IS STEP ONE, not a footnote, and that is the whole shape of
- * this rail. The amount is decided by a human — the student's ٪۱۵, or any
- * other adjustment — and written onto this claim from the admin panel, so a
- * buyer who transfers before asking can transfer the wrong figure, which is
- * the one mistake on this path that costs real money and needs a refund to
- * undo. The number below is whatever the claim currently holds: the list
- * price until the founder changes it, and their figure afterwards.
+ * TWO SHAPES, and which one a claim gets is decided by `student_request`
+ * (migration 0051) — never by the plan and never by the amount.
+ *
+ *  - An ORDINARY claim is ready the moment it exists. Its amount is the list
+ *    price, computed server-side, the same figure the gateway would charge —
+ *    there is nothing to agree, so telling the buyer to message support first
+ *    was a step invented for nobody, and one that loses the sale: somebody who
+ *    has to open Telegram before paying mostly does not.
+ *  - A STUDENT claim holds. The ٪۱۵ rate is earned by sending a card, so its
+ *    figure genuinely is not known yet, and a buyer who transfers the list
+ *    price before asking has overpaid — the one mistake on this rail that
+ *    needs a refund to undo. `confirmed` (`amount_confirmed_at`, migration
+ *    0050) is what releases it, and before that column existed this screen had
+ *    no way to ever stop saying wait.
  */
-function bankSteps(bank, plan, reference) {
+function bankSteps(bank, plan, reference, confirmed, studentRequest, opts) {
   const pct = toFa(bank.student_discount_percent || 15);
-  const months = toFa(bank.student_months || 6);
+  const holding = Boolean(studentRequest) && !confirmed;
+  const o = opts || {};
 
-  const steps = [
-    el('li', {}, [
-      `مبلغ را با پشتیبانی هماهنگ کنید — با کد ${reference}. `,
-      el('a', { href: '/plus/support.html', target: '_blank', rel: 'noopener' },
-        'یک تیکت «مشکل در پرداخت» باز کنید'),
-      ' یا به ',
-      telegramId(),
-      ` پیام بدهید. دانشجو ٪${pct} تخفیف روی اشتراک ${months} ماهه دارد (عکس کارت دانشجویی لازم است).`,
-    ]),
-    el('li', {}, 'مبلغ تأییدشده بالا نوشته می‌شود. همین صفحه را دوباره باز کنید تا عدد نهایی را ببینید.'),
+  // Shared tail: what to do at the bank, once there is a figure to send.
+  const transferSteps = [
     el('li', {}, 'در اپ بانکی‌تان پل (فوری) یا پایا (تا یک روز کاری) را بزنید و همان مبلغ را به شبای بالا بفرستید.'),
     el('li', {}, [
-      `کد ${reference} را در قسمت «بابت» یا «شرح» بنویسید. اگر اپ‌تان این فیلد را ندارد، رسید را در همان تیکت `
-      + '(با تیکِ «عکسی دارم») به ',
+      `کد ${reference} را در قسمت «بابت» یا «شرح» بنویسید. اگر اپ‌تان این فیلد را ندارد، رسید را `
+      + 'در یک تیکت «مشکل در پرداخت» (با تیکِ «عکسی دارم») یا به ',
       telegramId(),
       ' بفرستید.',
     ]),
-    el('li', {}, 'بعد از تأیید، اشتراک فعال می‌شود و در «اطلاعیه» خبرش را می‌گیرید.'),
+    el('li', {}, 'بعد از دیدن واریز، اشتراک فعال می‌شود و در «اطلاعیه» خبرش را می‌گیرید.'),
   ];
+
+  const steps = holding
+    ? [
+      el('li', {}, [
+        `عکس کارت دانشجویی را با کد ${reference} بفرستید — به `,
+        telegramId(),
+        ' یا ',
+        el('a', { href: '/plus/support.html', target: '_blank', rel: 'noopener' },
+          'با یک تیکت «تخفیف دانشجویی»'),
+        '.',
+      ]),
+      el('li', {}, [
+        `مبلغ ٪${pct} تخفیف‌خورده را اعلام می‌کنیم: هم در «اطلاعیه» خبرش را می‌گیرید، هم `
+        + 'همین‌جا بالا نوشته می‌شود. ',
+        el('b', {}, 'تا آن موقع واریز نکنید'),
+        '.',
+      ]),
+      ...transferSteps,
+    ]
+    : [
+      el('li', {}, [
+        'همین مبلغ بالا را واریز کنید. ',
+        el('b', {}, 'هماهنگی لازم نیست'),
+        '؛ اگر سؤالی دارید به ',
+        telegramId(),
+        ' پیام بدهید.',
+      ]),
+      ...transferSteps,
+    ];
+
   const copyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'کپی کد');
   copyBtn.addEventListener('click', () => copyToClipboard(reference, copyBtn, 'کپی شد ✓'));
 
+  // The claim is for a term they are no longer looking at. One pending claim
+  // per rail is the rule, so pressing the button again just hands this one
+  // back — and without saying so the page reads as if the button is broken:
+  // «شش ماهه» is selected above and «یک ماهه» appears below it.
+  const mismatch = o.selectedMonths && o.selectedMonths !== plan.months
+    ? el('div', { class: 'dcp-price-notice is-warn' }, [
+      el('b', {}, `درخواستِ بازِ شما برای ${termName(plan.months)} است`),
+      el('p', {}, `اگر ${termName(o.selectedMonths)} می‌خواهید، اول این درخواست را لغو کنید `
+        + 'و دوباره «دریافت کد پیگیری» را بزنید.'),
+    ])
+    : null;
+
+  // The way out. Quiet, but always present: a buyer who pressed the button
+  // once to see what it did must not be locked to that plan until somebody
+  // rejects their claim by hand.
+  let cancelBtn = null;
+  if (o.onCancel) {
+    cancelBtn = el('button', { class: 'dcp-btn dcp-btn-ghost dcp-bank-cancel', type: 'button' },
+      'لغو این درخواست');
+    cancelBtn.addEventListener('click', () => o.onCancel(cancelBtn, Boolean(confirmed)));
+  }
+
+  // Only a student's claim has a state worth announcing — an ordinary one has
+  // never been waiting for anything, and either banner over it would be an
+  // answer to a question it never asked.
+  let head = null;
+  if (holding) {
+    head = el('div', { class: 'dcp-price-notice is-warn' }, [
+      el('b', {}, 'هنوز واریز نکنید'),
+      el('p', {}, 'اول کارت دانشجویی، بعد مبلغِ تخفیف‌خورده را همین‌جا می‌بینید.'),
+    ]);
+  } else if (studentRequest) {
+    head = el('div', { class: 'dcp-price-notice is-ok' }, [
+      el('b', {}, 'مبلغ دانشجویی تأیید شد — می‌توانید واریز کنید'),
+      el('p', {}, 'کد پیگیری را در «بابت» بنویسید.'),
+    ]);
+  }
+
   return el('div', { class: 'dcp-gift dcp-bank' }, [
     el('h2', { class: 'dcp-price-h2' }, 'مراحل'),
+    mismatch,
+    head,
     el('div', { class: 'dcp-bank-plan' }, [
       termName(plan.months), ' — ', toman(plan.amount_rial),
       el('span', { class: 'dcp-plan-unit' }, 'تومان'),
     ]),
-    el('p', { class: 'dcp-price-fine' }, 'تا وقتی پشتیبانی مبلغ را تأیید نکرده، این عدد قیمت لیست است.'),
+    el('p', { class: 'dcp-price-fine' }, holding
+      ? `این هنوز قیمت لیست است؛ مبلغ ٪${pct} تخفیف‌خورده بعد از دیدن کارت این‌جا می‌نشیند.`
+      : 'همین مبلغ را به شبای بالا واریز کنید.'),
     el('div', { class: 'dcp-gift-ref' }, [
       el('span', { class: 'dcp-gift-ref-label' }, 'کد پیگیری'),
       el('code', { class: 'dcp-gift-ref-code' }, reference),
       copyBtn,
     ]),
     el('ol', { class: 'dcp-gift-steps' }, steps),
+    cancelBtn,
   ]);
 }
 
@@ -774,7 +877,8 @@ async function main() {
     const bankMonths = toFa(info.bank_transfer.student_months || 6);
     notices.push(notice('ok', 'دانشجو هستید؟',
       `٪${bankPct} تخفیف روی اشتراک ${bankMonths} ماهه دارید — فقط از راه «واریز به حساب» پایین همین صفحه. `
-      + 'از درگاه که بخرید، قیمت کامل حساب می‌شود. اول مبلغ را با پشتیبانی هماهنگ کنید.'));
+      + 'از درگاه که بخرید، قیمت کامل حساب می‌شود. آن‌جا تیکِ «دانشجو هستم» را بزنید '
+      + '(عکس کارت دانشجویی لازم است).'));
   }
 
   drawPlans();
@@ -818,7 +922,31 @@ async function main() {
 
     if (claim && claim.status === 'pending') {
       bankWrap.replaceChildren(
-        bankSteps(bank, { months: claim.months, amount_rial: claim.amount_rial }, claim.reference),
+        bankSteps(
+          bank, { months: claim.months, amount_rial: claim.amount_rial },
+          claim.reference, Boolean(claim.amount_confirmed_at), Boolean(claim.student_request),
+          {
+            // What they have selected ABOVE, so the card can say when the two
+            // disagree instead of looking broken.
+            selectedMonths: selected,
+            onCancel: async (btn, announced) => {
+              const warn = announced
+                ? 'مبلغ این درخواست اعلام شده. اگر واریز کرده‌اید لغو نکنید — به پشتیبانی بگویید.\n\nلغو شود؟'
+                : 'این درخواست لغو شود؟ بعدش می‌توانید درخواست تازه بگیرید.';
+              if (!window.confirm(warn)) return;
+              btn.disabled = true;
+              btn.textContent = 'در حال لغو…';
+              try {
+                await api.bankTransferCancel(claim.reference);
+                drawBank(null);
+              } catch (err) {
+                btn.disabled = false;
+                btn.textContent = 'لغو این درخواست';
+                msg.textContent = (err && err.message) || 'لغو انجام نشد.';
+              }
+            },
+          },
+        ),
       );
       return;
     }
@@ -826,7 +954,7 @@ async function main() {
     const plan = info.plans.find((p) => p.months === selected) || info.plans[0];
     if (!plan) { bankWrap.replaceChildren(...[done].filter(Boolean)); return; }
 
-    bankWrap.replaceChildren(...[done, bankIntro(bank, plan, async (btn) => {
+    bankWrap.replaceChildren(...[done, bankIntro(bank, plan, async (btn, student) => {
       if (!user) {
         const res = await openLoginModal({ returnTo: location.pathname + location.search });
         if (res && res.user) location.reload();
@@ -840,10 +968,14 @@ async function main() {
         // the figure the buyer is told to transfer — a buyer who sends the list
         // price has simply overpaid, and getting it back is a conversation.
         const r = await api.bankTransferStart(
-          plan.months, info.referral?.percent ? refInputValue : undefined,
+          plan.months, info.referral?.percent ? refInputValue : undefined, student,
         );
         drawBank({
           status: 'pending', reference: r.reference, months: r.months, amount_rial: r.amount_rial,
+          // A REUSED claim can already be confirmed, and keeps whatever it was
+          // opened as — so neither of these is always what this call asked for.
+          amount_confirmed_at: r.amount_confirmed_at || null,
+          student_request: Boolean(r.student_request),
           referral_applied: r.referral_applied,
         });
       } catch (err) {

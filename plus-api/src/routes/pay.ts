@@ -11,7 +11,8 @@ import {
 } from '../services/discount-credits.js';
 import { readCallback } from '../services/zibal.js';
 import {
-  startRedemption, latestRedemption, giftInstructions, bankTransferInstructions,
+  startRedemption, latestRedemption, cancelRedemption,
+  giftInstructions, bankTransferInstructions,
 } from '../services/gift-redemption.js';
 import {
   checkClaim, claimReferral, claimRefusalMessage, normalizeCode, REFERRED_DISCOUNT_PERCENT,
@@ -158,6 +159,7 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
         properties: {
           months: { type: 'integer', minimum: 1, maximum: 60 },
           referral_code: { type: 'string', maxLength: 24 },
+          student: { type: 'boolean' },
         },
       },
     },
@@ -252,21 +254,20 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
     const { order } = request.query as { order?: string };
     const user = request.user!;
 
+    // `bank_ref` is the gateway's own reference (migration 0052) — the number a
+    // person quotes to their own bank, so the receipt can finally print it.
+    type StatusRow = {
+      order_id: string; status: string; months: number | null;
+      amount_rial: number; bank_ref: string | null; created_at: Date;
+    };
+    const COLS = 'order_id, status, months, amount_rial, bank_ref, created_at';
     const row = order
-      ? (await query<{
-        order_id: string; status: string; months: number | null;
-        amount_rial: number; created_at: Date;
-      }>(
-        `select order_id, status, months, amount_rial, created_at
-           from payments where order_id = $1 and user_id = $2`,
+      ? (await query<StatusRow>(
+        `select ${COLS} from payments where order_id = $1 and user_id = $2`,
         [order, user.id],
       )).rows[0]
-      : (await query<{
-        order_id: string; status: string; months: number | null;
-        amount_rial: number; created_at: Date;
-      }>(
-        `select order_id, status, months, amount_rial, created_at
-           from payments where user_id = $1 order by created_at desc limit 1`,
+      : (await query<StatusRow>(
+        `select ${COLS} from payments where user_id = $1 order by created_at desc limit 1`,
         [user.id],
       )).rows[0];
 
@@ -340,12 +341,24 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       },
     },
   }, async (request, reply) => {
-    const { months, referral_code: referralCode } = request.body as {
-      months: number; referral_code?: string;
+    const { months, referral_code: referralCode, student } = request.body as {
+      months: number; referral_code?: string; student?: boolean;
     };
     const listRial = planAmountRial(months);
     if (listRial === null) {
       return reply.code(400).send({ error: 'unknown_plan', message: 'این مدت اشتراک تعریف نشده است.' });
+    }
+
+    // The student rate lives on ONE term (config.bankTransfer.studentMonths).
+    // Refused rather than ignored: quietly opening a full-price claim for
+    // somebody who just said they are a student is how they end up
+    // transferring the wrong figure, which is the one mistake on this rail
+    // that needs a refund to undo.
+    if (student && months !== config.bankTransfer.studentMonths) {
+      return reply.code(400).send({
+        error: 'student_term',
+        message: `تخفیف دانشجویی فقط روی اشتراک ${config.bankTransfer.studentMonths} ماهه است.`,
+      });
     }
 
     // کد معرف on the manual rail (founder's call, 2026-08-13): the figure the
@@ -376,7 +389,7 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
     }
 
     const r = await startRedemption(request.user!.id, 'bank_transfer', {
-      months, amountRial, referralId,
+      months, amountRial, referralId, studentRequest: student === true,
     });
 
     if (r.outcome === 'disabled') {
@@ -394,8 +407,44 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       // one did.
       list_amount_rial: listRial,
       referral_applied: r.redemption!.referral_id !== null,
+      // Null until a human settles the figure with them (migration 0050). A
+      // reused claim can already carry one, so this is not always null even on
+      // the call that opens a claim.
+      amount_confirmed_at: r.redemption!.amount_confirmed_at,
+      // A reused claim keeps whatever it was opened as: someone who ticked
+      // «دانشجو هستم» yesterday must not be told to transfer today because
+      // they came back without ticking it.
+      student_request: r.redemption!.student_request,
       reused: r.outcome === 'already_pending',
     });
+  });
+
+  // DELETE /pay/bank-transfer { reference } — the buyer withdrawing their own
+  // open claim.
+  //
+  // The way out of a claim that no longer matches what they want to buy. One
+  // pending claim per rail is the rule (it is what stops a queue filling with
+  // duplicates of the same person), so without this the rule was a trap:
+  // choose a one-month plan, press the button to see what happens, and every
+  // later attempt hands back that same one-month claim until the founder
+  // rejects it by hand.
+  app.delete('/pay/bank-transfer', {
+    preHandler: requireAuth,
+    schema: {
+      body: {
+        type: 'object', required: ['reference'],
+        properties: { reference: { type: 'string', maxLength: 32 } },
+      },
+    },
+  }, async (request, reply) => {
+    const { reference } = request.body as { reference: string };
+    const row = await cancelRedemption(request.user!.id, reference);
+    if (!row) {
+      return reply.code(404).send({
+        error: 'not_pending', message: 'درخواستِ بازی با این کد پیگیری ندارید.',
+      });
+    }
+    return reply.send({ ok: true, reference: row.reference });
   });
 
   // Where the submitter checks back. Their own only.
@@ -407,6 +456,10 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       redemption: row && {
         reference: row.reference,
         status: row.status, months: row.months, amount_rial: row.amount_rial,
+        // THE field the pending view turns on: until it is set, the amount
+        // above is only the list price and the page must keep saying so.
+        amount_confirmed_at: row.amount_confirmed_at,
+        student_request: row.student_request,
         referral_applied: row.referral_id !== null,
         note: row.status === 'rejected' ? row.note : null,
         created_at: row.created_at, reviewed_at: row.reviewed_at,

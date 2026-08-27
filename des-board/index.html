@@ -335,13 +335,13 @@ a{color:inherit}
 
 <script src="/global-search.js?v=9"></script>
 <script src="/global-search-ui.js?v=5"></script>
-<script src="/dc-nav.js?v=131" defer></script>
+<script src="/dc-nav.js?v=135" defer></script>
 <!-- The ?v= is not decoration: the module carries its own stamp onto the two
      catalogs it fetches (ASSET_V in desboard-page.js), so one bump invalidates
      the code and the data together. Managed by tools/asset_version.py, which
      reads stamped paths out of the page text — an inline import counts. -->
 <script type="module">
-  import { initDesBoard } from '/plus/js/desboard-page.js?v=3';
+  import { initDesBoard } from '/plus/js/desboard-page.js?v=5';
   initDesBoard(document.getElementById('dbRoot'));
 </script>
 

@@ -38,7 +38,7 @@ import { mintReference } from './reference.js';
  * through Zibal.
  */
 
-export type RedemptionStatus = 'pending' | 'approved' | 'rejected';
+export type RedemptionStatus = 'pending' | 'approved' | 'rejected' | 'canceled';
 export type RedemptionKind = 'apple_us' | 'bank_transfer';
 
 export interface Redemption {
@@ -51,6 +51,19 @@ export interface Redemption {
   amount_rial: number | null;
   /** The کد معرف this claim is spending, if any — migration 0045. */
   referral_id: string | null;
+  /**
+   * When a human settled the figure with the buyer — migration 0050. Null
+   * means the amount on this row is still only the list price nobody has
+   * agreed to yet, which is the difference the buyer's page turns on.
+   */
+  amount_confirmed_at: Date | null;
+  /**
+   * The buyer asked for the student rate when they opened this — migration
+   * 0051. THIS is what decides whether a claim waits for a human: an ordinary
+   * transfer is the list price and nothing about it needs settling, so only a
+   * student's claim holds until `amount_confirmed_at` is stamped.
+   */
+  student_request: boolean;
   status: RedemptionStatus;
   note: string | null;
   reviewed_at: Date | null;
@@ -58,7 +71,24 @@ export interface Redemption {
 }
 
 const COLUMNS =
-  'id, user_id, reference, code, kind, months, amount_rial, referral_id, status, note, reviewed_at, created_at';
+  'id, user_id, reference, code, kind, months, amount_rial, referral_id, '
+  + 'amount_confirmed_at, student_request, status, note, reviewed_at, created_at';
+
+/**
+ * Persian digits and separators for anything a buyer reads. A notification is
+ * a sentence in Persian, and `12,000,000` sitting inside one is a number in
+ * somebody else's alphabet — the site writes every other figure this way.
+ */
+const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
+const faNum = (n: number): string => n.toLocaleString('en-US')
+  .replace(/\d/g, (d) => FA_DIGITS[Number(d)])
+  .replace(/,/g, '٬');
+
+/** The term as it is said out loud, since «اشتراک 1 ماهه» is nobody's Persian. */
+const TERM_FA: Record<number, string> = {
+  1: 'یک‌ماهه', 3: 'سه‌ماهه', 6: 'شش‌ماهه', 12: 'دوازده‌ماهه',
+};
+const termFa = (months: number): string => TERM_FA[months] || `${faNum(months)} ماهه`;
 
 /** The tag the buyer writes into the transfer/gift message — services/reference.ts owns the alphabet. */
 const mintClaimReference = (): string => mintReference('DC');
@@ -115,7 +145,10 @@ export function bankTransferInstructions() {
 export async function startRedemption(
   userId: string,
   kind: RedemptionKind = 'apple_us',
-  opts: { months?: number; amountRial?: number; referralId?: string | null } = {},
+  opts: {
+    months?: number; amountRial?: number; referralId?: string | null;
+    studentRequest?: boolean;
+  } = {},
 ): Promise<StartResult> {
   if (kind === 'apple_us' && !config.giftCard.enabled) {
     return { outcome: 'disabled', redemption: null, message: 'این روش پرداخت فعلاً فعال نیست.' };
@@ -129,6 +162,10 @@ export async function startRedemption(
   // Only the bank rail can carry a کد معرف: a gift card's price is in dollars
   // and set by Apple, so there is no figure here for a percentage to act on.
   const referralId = kind === 'apple_us' ? null : opts.referralId ?? null;
+  // A gift card has no student rate to ask for — that discount exists on one
+  // rial plan on one rail, and routes/pay.ts has already refused the tick
+  // anywhere else by the time this runs.
+  const studentRequest = kind === 'bank_transfer' && opts.studentRequest === true;
 
   // One open claim PER RAIL at a time — not globally: someone with a pending
   // gift-card claim must not be refused a bank-transfer claim by the same
@@ -138,6 +175,25 @@ export async function startRedemption(
     [userId, kind],
   );
   if (pending) {
+    // UPGRADE-ONLY: someone who opened an ordinary claim and then ticks
+    // «دانشجو هستم» on the same term gets that claim put on hold, instead of
+    // being handed back a page that tells them to transfer the list price
+    // while they wait for a discount. Never the reverse — releasing a hold is
+    // the founder's act (confirmRedemptionAmount), and un-ticking a box must
+    // not be able to tell somebody to pay a figure nobody has settled.
+    if (studentRequest && !pending.student_request && pending.months === months) {
+      const held = await one<Redemption>(
+        `update gift_redemptions set student_request = true
+          where id = $1 and status = 'pending' returning ${COLUMNS}`,
+        [pending.id],
+      );
+      if (held) {
+        return {
+          outcome: 'already_pending', redemption: held,
+          message: 'یک درخواست باز دارید؛ از همان کد پیگیری استفاده کنید.',
+        };
+      }
+    }
     return {
       outcome: 'already_pending', redemption: pending,
       message: 'یک درخواست باز دارید؛ از همان کد پیگیری استفاده کنید.',
@@ -149,9 +205,10 @@ export async function startRedemption(
   for (let attempt = 0; attempt < 5; attempt += 1) {
     try {
       const row = (await one<Redemption>(
-        `insert into gift_redemptions (user_id, reference, kind, months, amount_rial, referral_id)
-         values ($1, $2, $3, $4, $5, $6) returning ${COLUMNS}`,
-        [userId, mintClaimReference(), kind, months, amountRial, referralId],
+        `insert into gift_redemptions
+           (user_id, reference, kind, months, amount_rial, referral_id, student_request)
+         values ($1, $2, $3, $4, $5, $6, $7) returning ${COLUMNS}`,
+        [userId, mintClaimReference(), kind, months, amountRial, referralId, studentRequest],
       ))!;
       await notifyFounder(row);
       return { outcome: 'started', redemption: row, message: '' };
@@ -180,13 +237,61 @@ async function notifyFounder(row: Redemption): Promise<void> {
   }
   const target = await one<{ id: string }>('select id from profiles where phone = $1', [phone]);
   if (!target) return;
-  const title = row.kind === 'bank_transfer' ? 'واریز بانکی در راه است' : 'گیفت‌کارت در راه است';
-  const body = row.kind === 'bank_transfer'
-    ? `کد پیگیری ${row.reference} — ${row.months} ماه. صورت‌حساب را بررسی کنید.`
-    : `کد پیگیری ${row.reference} — ${row.months} ماه. ایمیل را بررسی کنید.`;
+  // A student's claim is the one that needs the founder BEFORE any money
+  // moves — they are holding, waiting for a figure. An ordinary transfer needs
+  // nothing until it lands, so its alert must not read like a request.
+  const title = row.kind !== 'bank_transfer'
+    ? 'گیفت‌کارت در راه است'
+    : (row.student_request ? 'درخواست تخفیف دانشجویی' : 'واریز بانکی در راه است');
+  let body;
+  if (row.kind !== 'bank_transfer') {
+    body = `کد پیگیری ${row.reference} — ${termFa(row.months)}. ایمیل را بررسی کنید.`;
+  } else if (row.student_request) {
+    body = `کد پیگیری ${row.reference} — ${termFa(row.months)}. منتظر کارت دانشجویی است؛ `
+      + 'بعد از دیدنش مبلغ را اعلام کن — تا آن موقع واریز نمی‌کند.';
+  } else {
+    body = `کد پیگیری ${row.reference} — ${termFa(row.months)}. صورت‌حساب را بررسی کنید.`;
+  }
   await sendCapped(target.id, {
     title, body, url: '/admin', tag: 'gift_claim',
   }, 'system').catch(() => { /* alerting never blocks a customer */ });
+}
+
+/**
+ * Tell the buyer how their claim was decided.
+ *
+ * The gateway hands its customer a result page; these rails hand theirs
+ * nothing — the subscription simply began, silently, whenever the founder got
+ * round to the queue — while the pricing page promised «بعد از دیدن واریز،
+ * اشتراک فعال می‌شود و در «اطلاعیه» خبرش را می‌گیرید» with nothing on the
+ * other end of it. A refusal matters more, not less: it is the one message
+ * that has to carry a reason, since somebody has sent money and is not getting
+ * a subscription for it.
+ *
+ * Called AFTER the transaction commits, never inside it: a notification for an
+ * approval that then rolled back is worse than a late one.
+ */
+async function notifyDecision(
+  row: Redemption,
+  outcome: 'approved' | 'rejected',
+  reason?: string,
+): Promise<void> {
+  const rail = row.kind === 'bank_transfer' ? 'واریز' : 'گیفت‌کارت';
+  const message = outcome === 'approved'
+    ? {
+      title: `${rail} شما تأیید شد`,
+      body: `اشتراک ${termFa(row.months)}‌ی شما فعال شد. (کد پیگیری ${row.reference})`,
+      url: '/plus/',
+      tag: `claim_${row.reference}`,
+    }
+    : {
+      title: `${rail} شما تأیید نشد`,
+      body: `${reason || 'برای پیگیری با پشتیبانی تماس بگیرید.'} (کد پیگیری ${row.reference})`,
+      url: '/plus/support.html',
+      tag: `claim_${row.reference}`,
+    };
+  await sendCapped(row.user_id, message, 'payment_result')
+    .catch(() => { /* an unreachable buyer never fails the review */ });
 }
 
 export interface ReviewResult {
@@ -209,7 +314,7 @@ export interface ReviewResult {
  * anything.
  */
 export async function approveRedemption(reference: string, note?: string): Promise<ReviewResult> {
-  return withTransaction(async (client) => {
+  const result = await withTransaction(async (client) => {
     const row = await one<Redemption>(
       `update gift_redemptions
           set status = 'approved', reviewed_at = now(), note = coalesce($2, note)
@@ -227,6 +332,8 @@ export async function approveRedemption(reference: string, note?: string): Promi
     });
     return { ok: true, redemption: row, subscription, message: 'تأیید شد و اشتراک فعال است.' };
   });
+  if (result.ok) await notifyDecision(result.redemption!, 'approved');
+  return result;
 }
 
 export interface ReviewAndGrantResult extends ReviewResult {
@@ -245,7 +352,7 @@ export async function approveRedemptionAndGrantBadge(
   badgeKey: string,
   opts: { note?: string; discountPercent?: number } = {},
 ): Promise<ReviewAndGrantResult> {
-  return withTransaction(async (client) => {
+  const result = await withTransaction(async (client) => {
     const row = await one<Redemption>(
       `update gift_redemptions
           set status = 'approved', reviewed_at = now(), note = coalesce($2, note)
@@ -273,6 +380,8 @@ export async function approveRedemptionAndGrantBadge(
       message: 'تأیید شد، اشتراک فعال است و نشان اهدا شد.',
     };
   });
+  if (result.ok) await notifyDecision(result.redemption!, 'approved');
+  return result;
 }
 
 /**
@@ -288,6 +397,7 @@ export async function rejectRedemption(reference: string, reason: string): Promi
       returning ${COLUMNS}`,
     [reference.trim().toUpperCase(), reason],
   );
+  if (row) await notifyDecision(row, 'rejected', reason);
   return row
     ? { ok: true, redemption: row, subscription: null, message: 'رد شد.' }
     : { ok: false, redemption: null, subscription: null, message: 'این کد پیگیری در صف بررسی نیست.' };
@@ -326,16 +436,85 @@ export async function pendingRedemptions(limit = 50, kind?: RedemptionKind): Pro
 }
 
 /**
- * Write the amount onto a pending bank-transfer claim — how the founder types
- * in the student-discounted price after seeing the student's card. Only
- * touches a PENDING row: once approved, the amount is history.
+ * Settle the amount on a pending bank-transfer claim — the founder saying
+ * «this is the figure, transfer it». Only touches a PENDING row: once
+ * approved, the amount is history.
+ *
+ * `amountRial` is OPTIONAL, and that is the whole point of the rewrite. This
+ * used to be «write the student's discounted price», which quietly assumed the
+ * founder always has a new number to type; in the ordinary case they do not —
+ * the list price the claim opened at is already right — and there was no way
+ * to say so. So the buyer, told to agree the amount before transferring,
+ * waited for a message that had nowhere to come from. Passing no amount keeps
+ * the figure and confirms it; passing one overwrites and confirms in the same
+ * write, because announcing a number and settling it are one act.
+ *
+ * The notification is what makes it an announcement rather than a database
+ * change: the buyer is not sitting on this page waiting for a poll.
  */
-export async function setRedemptionAmount(reference: string, amountRial: number): Promise<Redemption | null> {
-  return one<Redemption>(
-    `update gift_redemptions set amount_rial = $2
+export async function confirmRedemptionAmount(
+  reference: string,
+  amountRial?: number | null,
+): Promise<Redemption | null> {
+  const row = await one<Redemption>(
+    `update gift_redemptions
+        set amount_rial = coalesce($2, amount_rial), amount_confirmed_at = now()
       where reference = $1 and status = 'pending'
       returning ${COLUMNS}`,
-    [reference.trim().toUpperCase(), amountRial],
+    [reference.trim().toUpperCase(), amountRial ?? null],
+  );
+  if (row) await notifyAmountConfirmed(row);
+  return row;
+}
+
+/**
+ * Tell the buyer their figure is settled and they may transfer.
+ *
+ * UNCAPPED (notify-policy.ts) on the renewal warning's reasoning: the reader
+ * asked what to transfer and is waiting to spend money, so a streak nudge that
+ * arrived first must not be why they never hear back. It travels at any hour
+ * for the same reason — this is the answer to their own question, not news we
+ * decided to push at them.
+ */
+async function notifyAmountConfirmed(row: Redemption): Promise<void> {
+  const toman = row.amount_rial === null ? null : faNum(Math.round(row.amount_rial / 10));
+  await sendCapped(row.user_id, {
+    title: 'مبلغ واریز شما تأیید شد',
+    body: toman
+      ? `کد پیگیری ${row.reference} — ${toman} تومان. حالا می‌توانید واریز کنید.`
+      : `کد پیگیری ${row.reference} — مبلغ تأیید شد. حالا می‌توانید واریز کنید.`,
+    url: '/plus/pricing.html?from=bank-amount',
+    tag: `bank_amount_${row.reference}`,
+  }, 'bank_amount').catch(() => { /* an unreachable buyer never fails the write */ });
+}
+
+/**
+ * The buyer withdrawing their OWN open claim (migration 0052).
+ *
+ * Until this existed there was no way out of one. The partial unique index
+ * allows a single pending claim per rail, so anyone who pressed «دریافت کد
+ * پیگیری» on a one-month plan and then decided on six months was handed the
+ * one-month claim back — at the one-month price, with the six-month plan
+ * selected right above it — and the only release was the founder rejecting it.
+ * Somebody who pressed the button once out of curiosity was locked to that
+ * term.
+ *
+ * Scoped to the owner, and to a PENDING row: an approved claim has already
+ * bought months, and a rejected one is the founder's answer, not the buyer's
+ * to overwrite. Filed as `canceled` rather than `rejected` because nobody
+ * refused anything — putting the founder's name on the buyer's change of mind
+ * would also count it in whatever the queue reports as refusals.
+ */
+export async function cancelRedemption(
+  userId: string,
+  reference: string,
+): Promise<Redemption | null> {
+  return one<Redemption>(
+    `update gift_redemptions
+        set status = 'canceled', reviewed_at = now()
+      where reference = $1 and user_id = $2 and status = 'pending'
+      returning ${COLUMNS}`,
+    [reference.trim().toUpperCase(), userId],
   );
 }
 

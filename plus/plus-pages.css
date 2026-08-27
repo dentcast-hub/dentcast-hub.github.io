@@ -865,6 +865,13 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-pay-actions { display: flex; flex-direction: column; gap: 8px; }
 .dcp-pay-actions .dcp-btn { width: 100%; text-align: center; padding: 13px 16px; }
 .dcp-pay-fine { margin: 0; text-align: center; font-size: .79rem; color: var(--txt3, #62779a); }
+/* The bank's reference number: a Latin run inside an RTL line, isolated for
+   the same reason the IBAN is, and selectable in one tap because the whole
+   point of printing it is that somebody reads it out to their bank. */
+.dcp-pay-ref {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  direction: ltr; unicode-bidi: isolate; user-select: all;
+}
 
 @media (prefers-color-scheme: dark) {
   .is-ok   .dcp-pay-glyph { background: rgba(95,211,155,.11); border-color: rgba(95,211,155,.28); color: #5fd39b; }
@@ -996,6 +1003,17 @@ a.dcp-progress-row:hover { text-decoration: none; }
   display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
   background: var(--surface, #fff); border: 1px dashed rgba(var(--ac-rgb, 11,95,255), .5);
   border-radius: 12px; padding: 12px 14px;
+}
+/* The student tick — a change of path, not a preference, so its consequence
+   («don't transfer yet») sits directly under it and appears with it. */
+.dcp-bank-student-label {
+  display: flex; align-items: center; gap: 8px; font-size: .9rem; cursor: pointer;
+}
+.dcp-bank-student-note { margin-top: 0; }
+/* The way out of an open claim. Deliberately quiet and small — it must be
+   findable by somebody stuck, without competing with the steps above it. */
+.dcp-bank-cancel {
+  align-self: flex-start; font-size: .82rem; padding: 6px 12px; opacity: .8;
 }
 .dcp-bank-iban {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;

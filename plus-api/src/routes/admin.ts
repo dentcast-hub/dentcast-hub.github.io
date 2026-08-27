@@ -20,7 +20,7 @@ import {
   availableCredits, creditPercent, pickCredits, insertGrant, CREDIT_CAP_PERCENT,
 } from '../services/discount-credits.js';
 import {
-  pendingRedemptions, approveRedemption, rejectRedemption, setRedemptionAmount,
+  pendingRedemptions, approveRedemption, rejectRedemption, confirmRedemptionAmount,
   approveRedemptionAndGrantBadge,
 } from '../services/gift-redemption.js';
 import { grantBadge, revokeBadgeGrant, listBadgeGrants } from '../services/badge-grants.js';
@@ -184,6 +184,7 @@ function renderHtml(
   .pill{display:inline-block;background:#f4f6fb;border:1px solid rgba(2,35,96,.10);border-radius:999px;
     padding:1px 9px;font-size:.74rem;color:#62779a;margin-inline-start:6px;vertical-align:middle}
   .pill.hot{background:rgba(201,146,43,.10);border-color:rgba(154,107,21,.30);color:#8a6414}
+  .pill.ok{background:rgba(15,122,74,.09);border-color:rgba(15,122,74,.25);color:#0f7a4a}
   .tk{background:#fff;border:1px solid rgba(2,35,96,.10);border-radius:14px;padding:12px 14px;margin-top:10px;
     cursor:pointer;box-shadow:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04)}
   .tk.need{border-color:rgba(154,107,21,.45)}
@@ -661,12 +662,19 @@ function renderHtml(
 
   <h3 style="margin-top:26px">صف واریز به حساب</h3>
   <div class="muted">
-    درخواست‌های واریز به شبا. صفحه‌ی خرید به خریدار می‌گوید <b>قبل از واریز</b> مبلغ را با تو هماهنگ کند،
-    و عددی که این‌جا می‌نویسی همان است که او می‌بیند — پس مبلغ را قبل از واریزِ او ثبت کن، نه بعدش.
-    تا وقتی چیزی ننوشته‌ای، عددِ ردیف قیمتِ لیست است.
+    <b>این‌ها واریز نیستند — درخواست‌اند.</b> ردیف همان لحظه‌ای ساخته می‌شود که خریدار «دریافت کد پیگیری»
+    را می‌زند، یعنی <b>قبل از</b> جابه‌جایی پول. پس «پولی نیامده» حالتِ عادیِ هر ردیفِ تازه است.
     <br>
-    <b>تخفیف دانشجویی همین است و بس:</b> «مبلغ دانشجویی» را بزن تا فیلد با مبلغِ تخفیف‌خورده پر شود،
-    بعد «ثبت مبلغ». نشان هیچ نقشی در تخفیف یا فعال‌سازی ندارد — «تأیید» به‌تنهایی اشتراک را فعال می‌کند،
+    <b>ردیفِ معمولی هیچ کاری با تو ندارد تا وقتی پول برسد.</b> مبلغش قیمتِ لیست است — همان که درگاه هم
+    می‌گیرد — و صفحه‌ی خریدار از همان اول به او گفته واریز کند. تو فقط وقتی پول در صورت‌حساب نشست
+    «<b>تأیید (پول رسید)</b>» را می‌زنی و اشتراک فعال می‌شود.
+    <br>
+    <b>فقط ردیفِ «دانشجو» منتظرِ توست.</b> او تیکِ تخفیف را زده، هنوز واریز نکرده، و صفحه‌اش می‌گوید
+    منتظرِ عدد بماند. کارت دانشجویی‌اش را که دیدی: «مبلغ دانشجویی» را بزن تا فیلد پر شود، بعد
+    «<b>تأیید مبلغ</b>» — این برایش اطلاعیه و پیام می‌فرستد و تازه آن‌وقت واریز می‌کند. (اگر عددِ روی
+    ردیف را قبول داری، فیلد را خالی بگذار و همان دکمه را بزن.)
+    <br>
+    نشان هیچ نقشی در تخفیف یا فعال‌سازی ندارد — «تأیید» به‌تنهایی اشتراک را فعال می‌کند،
     و «تأیید + یادگاریِ دانشجو» فقط همان کار را می‌کند به‌علاوه‌ی یک کاشیِ تزئینی روی دیوار افتخارات.
   </div>
   <div id="btList"></div>
@@ -678,6 +686,13 @@ function renderHtml(
     // rather than an edit to arithmetic buried in this page.
     var STUDENT = ${JSON.stringify(student)};
 
+    // What the founder was told after their last press, kept ACROSS the reload
+    // that press triggers. Without it every action wiped its own confirmation:
+    // the list re-rendered, the field cleared, the message vanished, and a
+    // «تأیید مبلغ» on an unchanged figure left a row that looked exactly like
+    // one nothing had been done to.
+    var FLASH = {};
+
     function esc(s) {
       return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
         return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
@@ -688,6 +703,29 @@ function renderHtml(
     }
     function toman(rial) {
       return rial == null ? '—' : Math.round(rial / 10).toLocaleString('en-US') + ' ت';
+    }
+    // Persian/Arabic digits -> ASCII. The founder types on a Persian keyboard
+    // and pastes from a Persian page; parseInt('۳۳۰۰۰۰۰') is NaN, which read on
+    // screen as «مبلغ معتبر نیست» for a number that was perfectly valid.
+    function ascii(s) {
+      return String(s == null ? '' : s)
+        .replace(/[۰-۹]/g, function (d) { return String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)); })
+        .replace(/[٠-٩]/g, function (d) { return String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)); });
+    }
+    // A toman figure out of whatever a human typed, or null.
+    //
+    // Everything that is not a digit is dropped, and that is the important
+    // half: parseInt('3,300,000') is 3, so a copy-pasted separated amount used
+    // to sail through the «> 0» check and silently announce THREE TOMAN to a
+    // buyer, with a success message and a row that looked fine.
+    function parseToman(raw) {
+      var s = ascii(raw).replace(/[^0-9]/g, '');
+      if (!s) return null;
+      var n = parseInt(s, 10);
+      return n > 0 ? n : null;
+    }
+    function faToman(n) {
+      return Number(n).toLocaleString('en-US') + ' تومان';
     }
     function who(r) {
       return esc(r.display_name || r.phone || r.username || r.user_id);
@@ -704,37 +742,64 @@ function renderHtml(
       return Math.floor((listRial * (100 - STUDENT.percent) / 100) / 10);
     }
 
+    // Whether this row is waiting on a HUMAN. Only a student's is: an ordinary
+    // claim's amount is the list price and was never in question, so marking it
+    // «waiting for you» would bury the one row that actually is.
+    function needsMe(r) { return r.student_request && !r.amount_confirmed_at; }
+
+    // The queue's own state, and the reason the panel needed one: «تأیید» and
+    // «تأیید مبلغ» are two different acts a day apart, and a row that looked
+    // identical before and after the first one left the founder unable to tell
+    // whether they had done it.
+    function stage(r) {
+      if (r.amount_confirmed_at) {
+        return '<span class="pill ok">مبلغ اعلام شد · ' + when(r.amount_confirmed_at) + '</span>';
+      }
+      return r.student_request
+        ? '<span class="pill hot">دانشجو · منتظر اعلامِ مبلغ</span>'
+        : '<span class="pill">منتظر واریز</span>';
+    }
+
     function row(r) {
       var stu = studentToman(r.months);
-      return '<div class="tk" data-ref="' + esc(r.reference) + '" style="cursor:auto">'
+      var cur = r.amount_rial == null ? '' : Math.round(r.amount_rial / 10);
+      return '<div class="tk' + (needsMe(r) ? ' need' : '') + '" data-ref="' + esc(r.reference)
+        + '" data-toman="' + cur + '" style="cursor:auto">'
         + '<div class="tk-h"><b>' + esc(r.reference) + '</b>'
         + '<span class="pill">' + r.months + ' ماهه</span>'
         + '<span class="pill">' + toman(r.amount_rial) + '</span>'
+        + stage(r)
         + '</div>'
         + '<div class="muted">' + who(r) + ' · ' + when(r.created_at) + '</div>'
         + '<div class="bt-actions">'
-        + '<input type="text" class="btAmount" inputmode="numeric" placeholder="مبلغ تازه (تومان، اختیاری)">'
+        + '<input type="text" class="btAmount" inputmode="numeric" placeholder="مبلغ تازه (تومان) — خالی یعنی همین عدد">'
         // Fills the field, never submits: the founder still reads the number
-        // and presses «ثبت مبلغ», so the amount stays theirs to announce.
+        // and presses «تأیید مبلغ», so the amount stays theirs to announce.
         + (stu
            ? '<button type="button" data-act="student-amount" data-toman="' + stu + '">'
              + 'مبلغ دانشجویی (٪' + STUDENT.percent + ')</button>'
            : '')
-        + '<button type="button" data-act="set-amount">ثبت مبلغ</button>'
-        + '<button type="button" data-act="approve">تأیید</button>'
+        + '<button type="button" data-act="set-amount">تأیید مبلغ</button>'
+        + '<button type="button" data-act="approve">تأیید (پول رسید)</button>'
         // The badge grants NOTHING — months come from «تأیید» either way. The
         // label says «یادگاری» so this never reads as the button that applies
         // the discount; the discount is the amount above, and only that.
         + '<button type="button" class="gold" data-act="approve-badge">تأیید + یادگاریِ دانشجو</button>'
         + '<button type="button" class="danger" data-act="reject">رد</button>'
         + '</div>'
-        + '<div class="bt-out muted"></div>'
+        // Survives the reload that follows every action — see FLASH.
+        + '<div class="bt-out muted">' + esc(FLASH[r.reference] || '') + '</div>'
         + '</div>';
     }
 
     function render(rows) {
       if (!rows.length) { list.innerHTML = '<div class="muted">صف خالی است.</div>'; return; }
-      list.innerHTML = rows.map(row).join('');
+      // Whoever is waiting on a person comes first; the sort is stable, so
+      // oldest-first still holds inside each group.
+      var ordered = rows.slice().sort(function (a, b) {
+        return (needsMe(b) ? 1 : 0) - (needsMe(a) ? 1 : 0);
+      });
+      list.innerHTML = ordered.map(row).join('');
     }
 
     function load() {
@@ -755,25 +820,43 @@ function renderHtml(
 
       if (act === 'student-amount') {
         wrap.querySelector('.btAmount').value = ev.target.getAttribute('data-toman');
-        out.textContent = 'مبلغ دانشجویی پر شد — «ثبت مبلغ» را بزن تا برای خریدار نوشته شود.';
+        out.textContent = 'مبلغ دانشجویی پر شد — «تأیید مبلغ» را بزن تا به خریدار اعلام شود.';
         return;
       }
 
+      // «تأیید مبلغ» — the announcement, not the activation. An empty field
+      // means «the figure on the row is right»: that is the ordinary case (the
+      // claim opened at the list price) and having no way to say it is what
+      // deadlocked this rail. A filled field announces a different figure.
+      //
+      // The number is read back to the founder before it goes out, because the
+      // buyer is told to transfer exactly it and nothing downstream checks it
+      // against anything.
       if (act === 'set-amount') {
+        var typed = parseToman(wrap.querySelector('.btAmount').value);
+        var current = parseToman(wrap.getAttribute('data-toman'));
         var raw = wrap.querySelector('.btAmount').value.trim();
-        var toman2 = raw ? parseInt(raw, 10) : NaN;
-        if (!raw || !toman2 || toman2 <= 0) { out.textContent = 'مبلغ معتبر نیست.'; return; }
-        out.textContent = 'در حال ثبت…';
+        if (raw && typed === null) { out.textContent = 'مبلغ معتبر نیست — فقط عدد بنویس.'; return; }
+        var announced = typed === null ? current : typed;
+        if (announced === null) { out.textContent = 'این ردیف مبلغی ندارد؛ عدد را بنویس.'; return; }
+        if (!confirm('به خریدار اعلام شود: ' + faToman(announced) + '؟\\n'
+          + 'برایش اطلاعیه و پیام می‌رود که همین مبلغ را واریز کند. (اشتراک فعال نمی‌شود.)')) return;
+        out.textContent = 'در حال اعلام…';
         fetch('/admin/bank-transfer/amount', {
           method: 'POST', credentials: 'include',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ reference: ref, amount_rial: toman2 * 10 })
+          // Omitted when nothing was typed: the server then keeps the figure
+          // it already has and only stamps it confirmed.
+          body: JSON.stringify(typed === null
+            ? { reference: ref }
+            : { reference: ref, amount_rial: typed * 10 })
         }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
           .then(function (res) {
             if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error); return; }
+            FLASH[ref] = faToman(announced) + ' به خریدار اعلام شد. حالا منتظر واریز بمان، بعد «تأیید».';
             load();
           })
-          .catch(function () { out.textContent = 'ثبت نشد.'; });
+          .catch(function () { out.textContent = 'اعلام نشد.'; });
         return;
       }
 
@@ -790,7 +873,8 @@ function renderHtml(
       }
 
       if (act === 'approve') {
-        if (!confirm('واریز ' + ref + ' تأیید و اشتراک فعال شود؟')) return;
+        if (!confirm('پول ' + ref + ' را در صورت‌حساب دیدی؟\\n'
+          + 'با تأیید، اشتراک فعال می‌شود — این دکمه پول نمی‌گیرد.')) return;
         out.textContent = 'در حال تأیید…';
         fetch('/admin/gift/approve', {
           method: 'POST', credentials: 'include',
@@ -2528,14 +2612,22 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ ok: true, redemptions: await pendingRedemptions(50, 'bank_transfer') });
   });
 
-  // POST /admin/bank-transfer/amount { reference, amount_rial } — write the
-  // amount onto a still-pending claim. This is how the student-discounted
-  // price (full price × ٪85) reaches the row: the founder types it in after
-  // seeing the student's card, never an engine (handoff decision 2.3).
+  // POST /admin/bank-transfer/amount { reference, amount_rial? } — settle the
+  // amount on a still-pending claim and tell the buyer they may transfer.
+  //
+  // `amount_rial` is OPTIONAL, which is the fix for a deadlock this endpoint
+  // caused by requiring it: the student-discounted price is the exceptional
+  // case, and in the ordinary one the founder has no new number to type — the
+  // claim already opened at the list price. With no way to say «that figure is
+  // right, go ahead», the buyer went on waiting for the confirmation their own
+  // page had promised them, and the founder went on waiting for a deposit.
+  // Omit it to confirm what the row already holds; send one to announce a
+  // different figure. Either way the claim is stamped confirmed and the buyer
+  // is notified — see services/gift-redemption.ts.
   app.post('/admin/bank-transfer/amount', {
     schema: {
       body: {
-        type: 'object', required: ['reference', 'amount_rial'],
+        type: 'object', required: ['reference'],
         properties: {
           reference: { type: 'string' },
           amount_rial: { type: 'integer', minimum: 1 },
@@ -2544,9 +2636,9 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     },
   }, async (request, reply) => {
     const { reference, amount_rial: amountRial } = request.body as {
-      reference: string; amount_rial: number;
+      reference: string; amount_rial?: number;
     };
-    const row = await setRedemptionAmount(reference, amountRial);
+    const row = await confirmRedemptionAmount(reference, amountRial);
     if (!row) return reply.code(404).send({ error: 'not_pending', message: 'این کد پیگیری در صف بررسی نیست.' });
     return reply.send({ ok: true, redemption: row });
   });

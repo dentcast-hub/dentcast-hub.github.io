@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 131,
-    "hash": "5741a89c1669e75c"
+    "v": 135,
+    "hash": "66c554225f071b65"
   },
   "/dc-theme.css": {
     "v": 3,
@@ -32,95 +32,95 @@
     "hash": "bd50932cb1d75571"
   },
   "/pillar/premium-index.js": {
-    "v": 25,
-    "hash": "86604a31ebcba90b"
+    "v": 27,
+    "hash": "35ad24037f2eea38"
   },
   "/plus/js/assistant-page.js": {
-    "v": 29,
-    "hash": "9084d6e08e425b85"
+    "v": 31,
+    "hash": "66fd3fe7e23726df"
   },
   "/plus/js/cards-page.js": {
-    "v": 29,
-    "hash": "1f581f9754e3aea4"
+    "v": 31,
+    "hash": "625bbcf4883197d7"
   },
   "/plus/js/collection-page.js": {
-    "v": 37,
-    "hash": "53795ec4d2c83cca"
+    "v": 39,
+    "hash": "bbaa190c33943413"
   },
   "/plus/js/collections-page.js": {
-    "v": 37,
-    "hash": "c66677291d111c72"
+    "v": 39,
+    "hash": "b26a5b080774294f"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 53,
-    "hash": "f3beebce6bde0914"
+    "v": 55,
+    "hash": "8850535fc74150c9"
   },
   "/plus/js/desboard-page.js": {
-    "v": 3,
-    "hash": "86796f62d49923c7"
+    "v": 5,
+    "hash": "f6273b7652445f76"
   },
   "/plus/js/highlights-page.js": {
-    "v": 36,
-    "hash": "1b7e11ebdbd10f3d"
+    "v": 38,
+    "hash": "6b106f4c007fc0a2"
   },
   "/plus/js/pathway-page.js": {
-    "v": 35,
-    "hash": "c48e34c34081d806"
+    "v": 37,
+    "hash": "ee526c002dc3e551"
   },
   "/plus/js/pathways-page.js": {
-    "v": 35,
-    "hash": "b9a6e7900515f6a8"
+    "v": 37,
+    "hash": "4c56a8f3de80340f"
   },
   "/plus/js/pay-result-page.js": {
-    "v": 27,
-    "hash": "ad5e5da0f4889705"
+    "v": 29,
+    "hash": "a9f09090ff1e00be"
   },
   "/plus/js/pricing-page.js": {
-    "v": 40,
-    "hash": "9cd23dab12506c8c"
+    "v": 44,
+    "hash": "cc68c57d914a6ed5"
   },
   "/plus/js/profile-page.js": {
-    "v": 45,
-    "hash": "d5788fc0e4b114a2"
+    "v": 47,
+    "hash": "3d7ea85b9657795d"
   },
   "/plus/js/reading-compass-page.js": {
-    "v": 33,
-    "hash": "7e30873e08466271"
+    "v": 35,
+    "hash": "bd6c462fcb7fcd39"
   },
   "/plus/js/support-page.js": {
-    "v": 16,
-    "hash": "23e438ce497f82b5"
+    "v": 18,
+    "hash": "bf5fd98d5cd92cec"
   },
   "/plus/js/upboard-page.js": {
-    "v": 15,
-    "hash": "bca6eecf0ad6e9ac"
+    "v": 17,
+    "hash": "6b98be6146fa1934"
   },
   "/plus/js/wayfinder-page.js": {
-    "v": 14,
-    "hash": "c416996c80332fc8"
+    "v": 16,
+    "hash": "8be1387f9fdca2c2"
   },
   "/plus/plus-desktop.css": {
     "v": 7,
     "hash": "fb9348a5cf72e5f3"
   },
   "/plus/plus-pages.css": {
-    "v": 35,
-    "hash": "b1a9e3b887cd8a61"
+    "v": 37,
+    "hash": "88dbd7c79846ea09"
   },
   "/plus/plus.css": {
     "v": 36,
     "hash": "ca02d71108d92d6c"
   },
   "dc-nav.js:V": {
-    "v": 128,
-    "hash": "e61573d9534ad8e4"
+    "v": 132,
+    "hash": "0908ca547da2d789"
   },
   "modules:M": {
-    "v": 35,
-    "hash": "ab6788a3ecab3dcd"
+    "v": 39,
+    "hash": "977416ee90609456"
   },
   "spot.js:SPOT_V": {
-    "v": 32,
-    "hash": "077e8bbc7544f3e5"
+    "v": 34,
+    "hash": "49cb20fc79631ebb"
   }
 }

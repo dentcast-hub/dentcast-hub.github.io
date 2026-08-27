@@ -249,7 +249,15 @@ describe('the «ستون» seat-holder view', () => {
     expect(warn.querySelector('.dcp-tg-id')!.getAttribute('dir')).toBe('ltr');
   });
 
-  it('tells the buyer to agree the amount first, and what a student gets', async () => {
+  /**
+   * The rail's shape, corrected 1405/06/05: an ordinary transfer coordinates
+   * with NOBODY. Its amount is the list price, computed server-side, the same
+   * figure the gateway charges — so «message support before you pay» was a
+   * step invented for no one, and one that loses the sale, since a buyer who
+   * has to open Telegram first mostly does not. The one amount a human decides
+   * is the student rate, and that is a tick on one term.
+   */
+  it('promises no coordination, and offers the student rate as a tick', async () => {
     const root = await renderPricing(
       {
         ...LIVE,
@@ -260,10 +268,35 @@ describe('the «ستون» seat-holder view', () => {
       },
       { id: 'u2' },
     );
-    const warn = root.querySelector('.dcp-bank .dcp-gift-warn')!.textContent!;
-    expect(warn).toContain('هماهنگ');
-    expect(warn).toContain('٪۱۵');
-    expect(warn).toContain('۶ ماهه');
+    const card = root.querySelector('.dcp-bank')!;
+    expect(card.textContent).toContain('هماهنگی قبلی لازم نیست');
+
+    // The featured plan is the six-month one, which is the term the rate exists
+    // on — so the tick is on screen, unticked, with its ٪۱۵ named.
+    const tick = card.querySelector('.dcp-bank-student-label')!;
+    expect(tick.textContent).toContain('٪۱۵');
+    expect((tick.querySelector('input') as HTMLInputElement).checked).toBe(false);
+    // …and what it costs them (a card, and a wait) is not revealed only after
+    // they have committed to it.
+    expect(card.querySelector('.dcp-bank-student-note')!.textContent).toContain('هنوز واریز نکنید');
+  });
+
+  it('does not offer the student tick on a term the rate does not exist on', async () => {
+    const root = await renderPricing(
+      {
+        ...LIVE,
+        plans: [{ months: 1, amount_rial: 12_000_000, available: true, blocked_by: null }],
+        bank_transfer: {
+          enabled: true, iban: 'IR110560930380000825945001', holder: 'ف', bank_name: 'س',
+          student_discount_percent: 15, student_months: 6,
+        },
+      },
+      { id: 'u2' },
+    );
+    const card = root.querySelector('.dcp-bank')!;
+    expect(card.querySelector('.dcp-bank-student-label')).toBeNull();
+    // Said, not hidden: a student on the wrong term is told which one to pick.
+    expect(card.textContent).toContain('۶ ماهه');
   });
 });
 
