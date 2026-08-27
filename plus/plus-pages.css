@@ -807,10 +807,22 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-price-notice.is-off { background: rgba(107,124,150,.10); border-color: var(--border, rgba(2,35,96,.11)); }
 .dcp-price-notice.is-off b { color: var(--txt2, #4a5f85); }
 
+/* Nine names, each opening onto its own sentence. The resting state is a list
+   of what you get; the explanation is one tap away rather than nine paragraphs
+   down the page. `list-style: none` on the summary too — Safari and Firefox
+   draw their own marker otherwise, beside the ▸ we position ourselves. */
 .dcp-price-list { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
 .dcp-price-list li { display: flex; flex-direction: column; gap: 1px; }
-.dcp-price-list strong { font-size: .96rem; }
-.dcp-price-list span { font-size: .86rem; color: var(--txt2, #4a5f85); }
+.dcp-price-list summary {
+  font-size: .96rem; font-weight: 700; cursor: pointer; list-style: none;
+  display: flex; align-items: center; gap: 6px;
+}
+.dcp-price-list summary::-webkit-details-marker { display: none; }
+.dcp-price-list summary::before {
+  content: '▸'; color: var(--txt3, #62779a); font-size: .8em; transition: transform .15s;
+}
+.dcp-price-list details[open] summary::before { transform: rotate(-90deg); }
+.dcp-price-list span { display: block; font-size: .86rem; color: var(--txt2, #4a5f85); margin-top: 3px; }
 
 /* کد معرف — between the plan grid and the buy button (decision 2.10). No new
    input chrome: reuses .dcp-field-row/.dcp-input from :324-325 and
@@ -1012,6 +1024,9 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-bank-student-note { margin-top: 0; }
 /* The way out of an open claim. Deliberately quiet and small — it must be
    findable by somebody stuck, without competing with the steps above it. */
+/* The student line, between the plan grid and the buy button. Quiet — it is a
+   pointer for a minority, sitting where the mistake it prevents happens. */
+.dcp-price-student { margin: -4px 0 0; text-align: center; }
 .dcp-bank-cancel {
   align-self: flex-start; font-size: .82rem; padding: 6px 12px; opacity: .8;
 }

@@ -108,14 +108,19 @@ describe('the published ladder', () => {
     expect(save(2)).toBe('٪۱۷ ارزان‌تر');
   });
 
-  it('quotes the headline as a floor, not as what every month costs', async () => {
+  /**
+   * The headline used to quote «از ماهی … تومان — هرچه مدت بلندتر، ماه
+   * ارزان‌تر»: one lie away from disaster (a flat «هر ماه» figure is true of
+   * one card and wrong about the other two) and, more simply, prose narrating
+   * the table directly underneath it. It is gone, so the invariant is now that
+   * NO price is quoted outside the cards — each of which carries its own
+   * price, its own per-month rate and its own saving chip.
+   */
+  it('quotes no price outside the plan cards', async () => {
     const root = await renderPricing(LIVE);
     const sub = root.querySelector('.dcp-price-sub')!.textContent!;
-
-    // «هر ماه ۱٬۰۰۰٬۰۰۰» was true when the ladder was flat and is now a lie on
-    // two of the three cards.
-    expect(sub).toContain('از ماهی ۱٬۰۰۰٬۰۰۰ تومان');
-    expect(sub).not.toContain('هر ماه');
+    expect(sub).not.toMatch(/[۰-۹]/);
+    expect(sub).not.toContain('تومان');
   });
 
   it('claims no discount when a flat price list comes back', async () => {
@@ -215,18 +220,21 @@ describe('the «ستون» seat-holder view', () => {
       },
       { id: 'u2' },
     );
-    const text = Array.from(root.querySelectorAll('.dcp-price-notice'))
-      .map((n) => n.textContent).join(' ');
-    expect(text).toContain('دانشجو');
-    expect(text).toContain('٪۱۵');
-    expect(text).toContain('واریز به حساب');
-    expect(text).toContain('درگاه');
+    const line = root.querySelector('.dcp-price-student')!;
+    expect(line.textContent).toContain('دانشجو');
+    expect(line.textContent).toContain('٪۱۵');
+    expect(line.textContent).toContain('واریز به حساب');
+    expect(line.textContent).toContain('درگاه');
 
-    // Above the plans, not below them — after the button there is nothing left
-    // to say.
-    const notice = root.querySelector('.dcp-price-notice')!;
+    // BETWEEN the prices and the button, not above the prices. As a full card
+    // at the top it pushed the three prices — the one thing everybody came for
+    // — below the fold, for a rate most visitors cannot claim; and it belongs
+    // next to the button because pressing that button is the mistake it
+    // prevents.
     const plans = root.querySelector('.dcp-plans')!;
-    expect(notice.compareDocumentPosition(plans) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    const action = root.querySelector('.dcp-price-action')!;
+    expect(plans.compareDocumentPosition(line) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(line.compareDocumentPosition(action) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
   it('says nothing about a student rate when the bank rail is off', async () => {
@@ -269,7 +277,7 @@ describe('the «ستون» seat-holder view', () => {
       { id: 'u2' },
     );
     const card = root.querySelector('.dcp-bank')!;
-    expect(card.textContent).toContain('هماهنگی قبلی لازم نیست');
+    expect(card.textContent).toContain('هماهنگی لازم نیست');
 
     // The featured plan is the six-month one, which is the term the rate exists
     // on — so the tick is on screen, unticked, with its ٪۱۵ named.
@@ -344,8 +352,8 @@ describe('when the API cannot be reached', () => {
     expect(prices[0]).toContain('۱٬۲۰۰٬۰۰۰');
     expect(prices[1]).toContain('۳٬۳۰۰٬۰۰۰');
     expect(prices[2]).toContain('۶٬۰۰۰٬۰۰۰');
-    expect(root.querySelector('.dcp-price-sub')!.textContent)
-      .toContain('از ماهی ۱٬۰۰۰٬۰۰۰ تومان');
+    // …and still no price in the headline, offline or not.
+    expect(root.querySelector('.dcp-price-sub')!.textContent).not.toMatch(/[۰-۹]/);
     // Prices shown, purchase not attemptable — saying "buy" and then failing is
     // worse than saying we could not ask.
     expect(root.querySelector('.dcp-price-action')!.textContent).toContain('در دسترس نیست');
