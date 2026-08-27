@@ -13,6 +13,7 @@ import {
 } from './discount-credits.js';
 import { zibalRequest, zibalVerify, isSandbox } from './zibal.js';
 import { checkCapacityAlert } from './payment-cap-alert.js';
+import { sendCapped } from './notify-policy.js';
 
 /**
  * Buying a subscription, end to end. Two entry points — start a payment, settle
@@ -56,6 +57,13 @@ export interface Payment {
   months: number | null;
   gateway: string | null;
   ref_id: string | null;
+  /**
+   * The GATEWAY's own reference for the transaction (Zibal's `refNumber`) —
+   * the «شماره پیگیری» a bank prints on its receipt, migration 0052. Distinct
+   * from `ref_id`, which holds OUR trackId and is half of the index that makes
+   * settling idempotent.
+   */
+  bank_ref: string | null;
   order_id: string | null;
   status: PaymentStatus;
   verified_at: Date | null;
@@ -63,7 +71,7 @@ export interface Payment {
 }
 
 const PAYMENT_COLUMNS =
-  'id, user_id, amount_rial, months, gateway, ref_id, order_id, status, verified_at, created_at';
+  'id, user_id, amount_rial, months, gateway, ref_id, bank_ref, order_id, status, verified_at, created_at';
 
 /**
  * Our own reference for an attempt, and the only handle we have when
@@ -334,10 +342,11 @@ export async function settlePayment(trackId: string, now: Date = new Date()): Pr
   const subscription = await withTransaction(async (client) => {
     const claimed = await one<{ id: string }>(
       `update payments
-          set status = 'paid', verified_at = $2, updated_at = now()
+          set status = 'paid', verified_at = $2, bank_ref = coalesce($3, bank_ref),
+              updated_at = now()
         where id = $1 and status <> 'paid'
         returning id`,
-      [existing.id, now.toISOString()],
+      [existing.id, now.toISOString(), v.refNumber],
       client,
     );
     // Lost the race to a concurrent callback; that one is doing the activation.
@@ -389,6 +398,16 @@ export async function settlePayment(trackId: string, now: Date = new Date()): Pr
   // quietly if this account was never referred.
   if (seat === null) scheduleReferralNotify(existing.user_id, now);
 
+  // The receipt the buyer keeps. The result page already tells them, but it
+  // lives in one browser tab: close it, pay from a phone that is not the one
+  // they read on, and the purchase left no trace they can find — a walk
+  // through this flow (1405/06/05) found an ordinary buyer's اطلاعیه empty
+  // right after a successful payment. Fire-and-forget, after the money and the
+  // subscription are both settled: a notification that fails must never turn a
+  // completed sale into an error.
+  void notifyPaid(existing, v.refNumber, months)
+    .catch(() => { /* a receipt that cannot be delivered is not a failed sale */ });
+
   return {
     outcome: 'activated',
     payment: { ...existing, status: 'paid' },
@@ -396,6 +415,43 @@ export async function settlePayment(trackId: string, now: Date = new Date()): Pr
     needsReview: reconciled,
     message: 'پرداخت با موفقیت انجام شد و اشتراک شما فعال است.',
   };
+}
+
+const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
+const faNum = (n: number): string => n.toLocaleString('en-US')
+  .replace(/\d/g, (d) => FA_DIGITS[Number(d)])
+  .replace(/,/g, '٬');
+const TERM_FA: Record<number, string> = {
+  1: 'یک‌ماهه', 3: 'سه‌ماهه', 6: 'شش‌ماهه', 12: 'دوازده‌ماهه',
+};
+
+/**
+ * The buyer's own copy of the receipt, in اطلاعیه (and wherever they have a
+ * channel linked).
+ *
+ * It carries the bank's reference number when the gateway gave one, because
+ * that is the number a person quotes to their own bank — and the page that
+ * prints it is a tab they may already have closed.
+ */
+async function notifyPaid(
+  payment: Payment,
+  bankRef: string | null,
+  months: number,
+): Promise<void> {
+  const term = TERM_FA[months] || `${faNum(months)} ماهه`;
+  const parts = [
+    `اشتراک ${term}‌ی شما فعال شد.`,
+    `مبلغ ${faNum(Math.round(payment.amount_rial / 10))} تومان.`,
+    bankRef ? `شماره پیگیری بانک: ${bankRef}` : null,
+  ].filter(Boolean);
+  await sendCapped(payment.user_id, {
+    title: 'پرداخت شما ثبت شد',
+    body: parts.join(' '),
+    url: payment.order_id
+      ? `/plus/pay-result.html?order=${encodeURIComponent(payment.order_id)}`
+      : '/plus/',
+    tag: `payment_${payment.id}`,
+  }, 'payment_result');
 }
 
 /** Where the customer's browser is sent once we know the answer. */

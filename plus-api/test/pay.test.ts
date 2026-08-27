@@ -292,6 +292,59 @@ describe('GET /pay/callback — the money-critical path', () => {
   });
 });
 
+/**
+ * What the buyer is left holding once the money has moved. Both of these were
+ * missing until a walk through the flow found them (1405/06/05): the result
+ * page lives in one browser tab, and the gateway's own reference — the number
+ * a person quotes to their own bank — was read from the verify response and
+ * then written nowhere anybody could reach.
+ */
+describe('the receipt the buyer keeps', () => {
+  it('stores the gateway\'s reference and publishes it on /pay/status', async () => {
+    const cookie = await loginAs(app, PHONE);
+    gatewayReplies(REQUEST_OK, VERIFY_OK);
+    await app.inject({ method: 'POST', url: '/pay/start', headers: { cookie }, payload: { months: 6 } });
+    await app.inject({ method: 'GET', url: '/pay/callback?trackId=TRK-1&success=1&status=1' });
+
+    const st = await app.inject({ method: 'GET', url: '/pay/status', headers: { cookie } });
+    expect(st.json().payment.bank_ref).toBe('REF-9');
+    // Not the same column as our own trackId, which the dedup index owns.
+    const row = await pool.query('select ref_id, bank_ref from payments limit 1');
+    expect(row.rows[0].ref_id).toBe('TRK-1');
+    expect(row.rows[0].bank_ref).toBe('REF-9');
+  });
+
+  it('lands a receipt in اطلاعیه, with the bank reference on it', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const uid = await userId(cookie);
+    gatewayReplies(REQUEST_OK, VERIFY_OK);
+    await app.inject({ method: 'POST', url: '/pay/start', headers: { cookie }, payload: { months: 6 } });
+    await app.inject({ method: 'GET', url: '/pay/callback?trackId=TRK-1&success=1&status=1' });
+    // Fire-and-forget off the settle, so let it land.
+    await new Promise((r) => { setTimeout(r, 50); });
+
+    const notes = await pool.query(
+      "select title, body from notification_log where user_id=$1 and kind='payment_result'", [uid]);
+    expect(notes.rowCount).toBe(1);
+    expect(notes.rows[0].body).toContain('REF-9');
+    // Persian digits: this is a Persian sentence, not a log line.
+    expect(notes.rows[0].body).toContain('۶٬۰۰۰٬۰۰۰');
+  });
+
+  it('sends no receipt for a payment that did not go through', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const uid = await userId(cookie);
+    gatewayReplies(REQUEST_OK, { result: 202, status: -1 });
+    await app.inject({ method: 'POST', url: '/pay/start', headers: { cookie }, payload: { months: 6 } });
+    await app.inject({ method: 'GET', url: '/pay/callback?trackId=TRK-1&success=0&status=-1' });
+    await new Promise((r) => { setTimeout(r, 50); });
+
+    const notes = await pool.query(
+      "select 1 from notification_log where user_id=$1 and kind='payment_result'", [uid]);
+    expect(notes.rowCount).toBe(0);
+  });
+});
+
 describe('GET /pay/plans', () => {
   it('is public — the price is visible without an account', async () => {
     const res = await app.inject({ method: 'GET', url: '/pay/plans' });

@@ -9,10 +9,10 @@
 // gateway did not answer, the payment stays pending and this page says so
 // plainly, because telling someone who has just been charged that their payment
 // failed is the single worst thing this flow can do.
-import { el } from './util.js?v=38';
-import { api, currentUser } from './api.js?v=38';
-import { registerSW } from './pwa.js?v=38';
-import { paymentsNeedIrHost, paymentsIrUrl } from './config.js?v=38';
+import { el } from './util.js?v=39';
+import { api, currentUser } from './api.js?v=39';
+import { registerSW } from './pwa.js?v=39';
+import { paymentsNeedIrHost, paymentsIrUrl } from './config.js?v=39';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const toFa = (s) => String(s).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);
@@ -77,7 +77,17 @@ function screen(payment, me) {
         months ? ['مدت', months] : null,
         ['مبلغ', `${toman(payment.amount_rial)} تومان`],
         payment.order_id ? ['شماره سفارش', payment.order_id] : null,
+        // The gateway's OWN reference (migration 0052). It was read from the
+        // verify response and then existed nowhere a person could reach — and
+        // it is the number a customer quotes to their own bank when they want
+        // a charge traced. Latin, so it is isolated like every other such run
+        // on this site.
+        payment.bank_ref
+          ? ['شماره پیگیری بانک', el('span', { class: 'dcp-pay-ref', dir: 'ltr' }, payment.bank_ref)]
+          : null,
       ]),
+      el('p', { class: 'dcp-pay-fine' },
+        'همین رسید در «اطلاعیه»ی حساب شما هم ثبت شد؛ اگر این صفحه را بستید، از آن‌جا پیدایش می‌کنید.'),
       el('div', { class: 'dcp-pay-actions' }, [dashboard]),
     );
     return root;

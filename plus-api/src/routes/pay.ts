@@ -11,7 +11,8 @@ import {
 } from '../services/discount-credits.js';
 import { readCallback } from '../services/zibal.js';
 import {
-  startRedemption, latestRedemption, giftInstructions, bankTransferInstructions,
+  startRedemption, latestRedemption, cancelRedemption,
+  giftInstructions, bankTransferInstructions,
 } from '../services/gift-redemption.js';
 import {
   checkClaim, claimReferral, claimRefusalMessage, normalizeCode, REFERRED_DISCOUNT_PERCENT,
@@ -253,21 +254,20 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
     const { order } = request.query as { order?: string };
     const user = request.user!;
 
+    // `bank_ref` is the gateway's own reference (migration 0052) — the number a
+    // person quotes to their own bank, so the receipt can finally print it.
+    type StatusRow = {
+      order_id: string; status: string; months: number | null;
+      amount_rial: number; bank_ref: string | null; created_at: Date;
+    };
+    const COLS = 'order_id, status, months, amount_rial, bank_ref, created_at';
     const row = order
-      ? (await query<{
-        order_id: string; status: string; months: number | null;
-        amount_rial: number; created_at: Date;
-      }>(
-        `select order_id, status, months, amount_rial, created_at
-           from payments where order_id = $1 and user_id = $2`,
+      ? (await query<StatusRow>(
+        `select ${COLS} from payments where order_id = $1 and user_id = $2`,
         [order, user.id],
       )).rows[0]
-      : (await query<{
-        order_id: string; status: string; months: number | null;
-        amount_rial: number; created_at: Date;
-      }>(
-        `select order_id, status, months, amount_rial, created_at
-           from payments where user_id = $1 order by created_at desc limit 1`,
+      : (await query<StatusRow>(
+        `select ${COLS} from payments where user_id = $1 order by created_at desc limit 1`,
         [user.id],
       )).rows[0];
 
@@ -417,6 +417,34 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       student_request: r.redemption!.student_request,
       reused: r.outcome === 'already_pending',
     });
+  });
+
+  // DELETE /pay/bank-transfer { reference } — the buyer withdrawing their own
+  // open claim.
+  //
+  // The way out of a claim that no longer matches what they want to buy. One
+  // pending claim per rail is the rule (it is what stops a queue filling with
+  // duplicates of the same person), so without this the rule was a trap:
+  // choose a one-month plan, press the button to see what happens, and every
+  // later attempt hands back that same one-month claim until the founder
+  // rejects it by hand.
+  app.delete('/pay/bank-transfer', {
+    preHandler: requireAuth,
+    schema: {
+      body: {
+        type: 'object', required: ['reference'],
+        properties: { reference: { type: 'string', maxLength: 32 } },
+      },
+    },
+  }, async (request, reply) => {
+    const { reference } = request.body as { reference: string };
+    const row = await cancelRedemption(request.user!.id, reference);
+    if (!row) {
+      return reply.code(404).send({
+        error: 'not_pending', message: 'درخواستِ بازی با این کد پیگیری ندارید.',
+      });
+    }
+    return reply.send({ ok: true, reference: row.reference });
   });
 
   // Where the submitter checks back. Their own only.

@@ -38,7 +38,7 @@ import { mintReference } from './reference.js';
  * through Zibal.
  */
 
-export type RedemptionStatus = 'pending' | 'approved' | 'rejected';
+export type RedemptionStatus = 'pending' | 'approved' | 'rejected' | 'canceled';
 export type RedemptionKind = 'apple_us' | 'bank_transfer';
 
 export interface Redemption {
@@ -486,6 +486,36 @@ async function notifyAmountConfirmed(row: Redemption): Promise<void> {
     url: '/plus/pricing.html?from=bank-amount',
     tag: `bank_amount_${row.reference}`,
   }, 'bank_amount').catch(() => { /* an unreachable buyer never fails the write */ });
+}
+
+/**
+ * The buyer withdrawing their OWN open claim (migration 0052).
+ *
+ * Until this existed there was no way out of one. The partial unique index
+ * allows a single pending claim per rail, so anyone who pressed «دریافت کد
+ * پیگیری» on a one-month plan and then decided on six months was handed the
+ * one-month claim back — at the one-month price, with the six-month plan
+ * selected right above it — and the only release was the founder rejecting it.
+ * Somebody who pressed the button once out of curiosity was locked to that
+ * term.
+ *
+ * Scoped to the owner, and to a PENDING row: an approved claim has already
+ * bought months, and a rejected one is the founder's answer, not the buyer's
+ * to overwrite. Filed as `canceled` rather than `rejected` because nobody
+ * refused anything — putting the founder's name on the buyer's change of mind
+ * would also count it in whatever the queue reports as refusals.
+ */
+export async function cancelRedemption(
+  userId: string,
+  reference: string,
+): Promise<Redemption | null> {
+  return one<Redemption>(
+    `update gift_redemptions
+        set status = 'canceled', reviewed_at = now()
+      where reference = $1 and user_id = $2 and status = 'pending'
+      returning ${COLUMNS}`,
+    [reference.trim().toUpperCase(), userId],
+  );
 }
 
 /**

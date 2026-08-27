@@ -353,6 +353,58 @@ describe('an ordinary claim waits for nobody; a student claim waits for a human'
     expect((await claim(cookie, months, false)).json().student_request).toBe(true);
   });
 
+  /**
+   * The trap the one-pending-claim rule was without a way out. Somebody who
+   * pressed «دریافت کد پیگیری» on a one-month plan and then decided on six
+   * months was handed the one-month claim back — at the one-month price, with
+   * the six-month plan selected right above it — and the only release was the
+   * founder rejecting it by hand.
+   */
+  it('lets the buyer withdraw their own open claim and start again', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const first = (await claim(cookie, 1)).json();
+
+    const del = await app.inject({
+      method: 'DELETE', url: '/pay/bank-transfer', headers: { cookie },
+      payload: { reference: first.reference },
+    });
+    expect(del.statusCode).toBe(200);
+
+    // Out of the founder's queue, and not filed as a refusal: nobody refused
+    // anything, and the queue's own numbers must not count a change of mind.
+    expect((await pending()).json().redemptions).toHaveLength(0);
+    const row = await pool.query('select status from gift_redemptions where reference = $1',
+      [first.reference]);
+    expect(row.rows[0].status).toBe('canceled');
+
+    // …and the term they actually wanted is now open to them.
+    const second = (await claim(cookie, 6)).json();
+    expect(second.reused).toBe(false);
+    expect(second.reference).not.toBe(first.reference);
+    expect(second.amount_rial).toBe(config.payments.planPricesRial[6]);
+  });
+
+  it('cancels nobody else\'s claim, and nothing already decided', async () => {
+    const mine2 = await loginAs(app, PHONE);
+    const ref = (await claim(mine2, 1)).json().reference;
+
+    const stranger = await loginAs(app, '09121300009');
+    const theirs = await app.inject({
+      method: 'DELETE', url: '/pay/bank-transfer', headers: { cookie: stranger },
+      payload: { reference: ref },
+    });
+    expect(theirs.statusCode).toBe(404);
+
+    await approve(ref);
+    // An approved claim has already bought months; withdrawing it would be
+    // taking back a subscription that is live.
+    const late = await app.inject({
+      method: 'DELETE', url: '/pay/bank-transfer', headers: { cookie: mine2 },
+      payload: { reference: ref },
+    });
+    expect(late.statusCode).toBe(404);
+  });
+
   it('keeps a reused claim as whatever it was opened as', async () => {
     const cookie = await loginAs(app, PHONE);
     const months = config.bankTransfer.studentMonths;

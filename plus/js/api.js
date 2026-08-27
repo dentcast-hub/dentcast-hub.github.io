@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=38';
+import { API_BASES } from './config.js?v=39';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -245,6 +245,10 @@ export const api = {
       body: { months, referral_code: referralCode, student: student === true },
     }),
   bankTransferStatus: () => request('/pay/bank-transfer'),
+  // Withdraw an open claim. One pending claim per rail is the rule, so this is
+  // the buyer's way out of one that no longer matches what they want to buy.
+  bankTransferCancel: (reference) =>
+    request('/pay/bank-transfer', { method: 'DELETE', body: { reference } }),
 
   // کد معرف — services/referrals.ts. referralGet returns my code (or null) +
   // stats; referralMint creates the one-and-only code; referralCheck is a

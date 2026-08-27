@@ -15,11 +15,11 @@
 //     to drift — and no race with a script that fills the same <ul> we do.
 //
 // It is only ever the top five. The box is a doorway, not the board.
-import { api } from './api.js?v=38';
-import { el, faNum } from './util.js?v=38';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=38';
-import { premiumCta, guestPremiumExtras } from './premium-cta.js?v=38';
-import { openLoginModal } from './login-modal.js?v=38';
+import { api } from './api.js?v=39';
+import { el, faNum } from './util.js?v=39';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=39';
+import { premiumCta, guestPremiumExtras } from './premium-cta.js?v=39';
+import { openLoginModal } from './login-modal.js?v=39';
 
 const FROM = 'home-upboard';
 

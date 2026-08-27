@@ -12,15 +12,15 @@
 //   - the visitor is not signed in -> the button signs them in first
 // Each says something different, because a customer who is told the wrong
 // reason goes away for good.
-import { el } from './util.js?v=38';
-import { api, currentUser } from './api.js?v=38';
-import { openLoginModal } from './login-modal.js?v=38';
+import { el } from './util.js?v=39';
+import { api, currentUser } from './api.js?v=39';
+import { openLoginModal } from './login-modal.js?v=39';
 import {
   paymentsNeedIrHost, paymentsIrUrl, PLAN_MONTHS, PLAN_PRICES_RIAL, FROM_MONTHLY_RIAL,
   GIFT_CARD, BANK_TRANSFER,
-} from './config.js?v=38';
-import { premiumBenefits } from './premium-benefits.js?v=38';
-import { registerSW } from './pwa.js?v=38';
+} from './config.js?v=39';
+import { premiumBenefits } from './premium-benefits.js?v=39';
+import { registerSW } from './pwa.js?v=39';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const toFa = (s) => String(s).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);
@@ -395,9 +395,10 @@ function bankIntro(bank, plan, onStart, offline) {
  *    0050) is what releases it, and before that column existed this screen had
  *    no way to ever stop saying wait.
  */
-function bankSteps(bank, plan, reference, confirmed, studentRequest) {
+function bankSteps(bank, plan, reference, confirmed, studentRequest, opts) {
   const pct = toFa(bank.student_discount_percent || 15);
   const holding = Boolean(studentRequest) && !confirmed;
+  const o = opts || {};
 
   // Shared tail: what to do at the bank, once there is a figure to send.
   const transferSteps = [
@@ -443,6 +444,28 @@ function bankSteps(bank, plan, reference, confirmed, studentRequest) {
   const copyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'کپی کد');
   copyBtn.addEventListener('click', () => copyToClipboard(reference, copyBtn, 'کپی شد ✓'));
 
+  // The claim is for a term they are no longer looking at. One pending claim
+  // per rail is the rule, so pressing the button again just hands this one
+  // back — and without saying so the page reads as if the button is broken:
+  // «شش ماهه» is selected above and «یک ماهه» appears below it.
+  const mismatch = o.selectedMonths && o.selectedMonths !== plan.months
+    ? el('div', { class: 'dcp-price-notice is-warn' }, [
+      el('b', {}, `درخواستِ بازِ شما برای ${termName(plan.months)} است`),
+      el('p', {}, `اگر ${termName(o.selectedMonths)} می‌خواهید، اول این درخواست را لغو کنید `
+        + 'و دوباره «دریافت کد پیگیری» را بزنید.'),
+    ])
+    : null;
+
+  // The way out. Quiet, but always present: a buyer who pressed the button
+  // once to see what it did must not be locked to that plan until somebody
+  // rejects their claim by hand.
+  let cancelBtn = null;
+  if (o.onCancel) {
+    cancelBtn = el('button', { class: 'dcp-btn dcp-btn-ghost dcp-bank-cancel', type: 'button' },
+      'لغو این درخواست');
+    cancelBtn.addEventListener('click', () => o.onCancel(cancelBtn, Boolean(confirmed)));
+  }
+
   // Only a student's claim has a state worth announcing — an ordinary one has
   // never been waiting for anything, and either banner over it would be an
   // answer to a question it never asked.
@@ -461,6 +484,7 @@ function bankSteps(bank, plan, reference, confirmed, studentRequest) {
 
   return el('div', { class: 'dcp-gift dcp-bank' }, [
     el('h2', { class: 'dcp-price-h2' }, 'مراحل'),
+    mismatch,
     head,
     el('div', { class: 'dcp-bank-plan' }, [
       termName(plan.months), ' — ', toman(plan.amount_rial),
@@ -475,6 +499,7 @@ function bankSteps(bank, plan, reference, confirmed, studentRequest) {
       copyBtn,
     ]),
     el('ol', { class: 'dcp-gift-steps' }, steps),
+    cancelBtn,
   ]);
 }
 
@@ -900,6 +925,27 @@ async function main() {
         bankSteps(
           bank, { months: claim.months, amount_rial: claim.amount_rial },
           claim.reference, Boolean(claim.amount_confirmed_at), Boolean(claim.student_request),
+          {
+            // What they have selected ABOVE, so the card can say when the two
+            // disagree instead of looking broken.
+            selectedMonths: selected,
+            onCancel: async (btn, announced) => {
+              const warn = announced
+                ? 'مبلغ این درخواست اعلام شده. اگر واریز کرده‌اید لغو نکنید — به پشتیبانی بگویید.\n\nلغو شود؟'
+                : 'این درخواست لغو شود؟ بعدش می‌توانید درخواست تازه بگیرید.';
+              if (!window.confirm(warn)) return;
+              btn.disabled = true;
+              btn.textContent = 'در حال لغو…';
+              try {
+                await api.bankTransferCancel(claim.reference);
+                drawBank(null);
+              } catch (err) {
+                btn.disabled = false;
+                btn.textContent = 'لغو این درخواست';
+                msg.textContent = (err && err.message) || 'لغو انجام نشد.';
+              }
+            },
+          },
         ),
       );
       return;

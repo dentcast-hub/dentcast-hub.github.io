@@ -24,6 +24,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 const payPlans = vi.fn();
 const bankTransferStatus = vi.fn();
+const bankTransferCancel = vi.fn();
 let viewer: unknown = null;
 
 vi.mock('../../plus/js/api.js', () => ({
@@ -32,6 +33,7 @@ vi.mock('../../plus/js/api.js', () => ({
     payStart: vi.fn(),
     bankTransferStart: vi.fn(),
     bankTransferStatus: () => bankTransferStatus(),
+    bankTransferCancel: (...a: unknown[]) => bankTransferCancel(...a),
     giftStatus: vi.fn().mockRejectedValue(new Error('no')),
   },
   currentUser: () => Promise.resolve(viewer),
@@ -61,6 +63,7 @@ async function renderClaim(claim: Record<string, unknown>): Promise<HTMLElement>
   document.body.innerHTML = '<div id="dcp-root"></div>';
   viewer = { id: 'u2' };
   payPlans.mockReset().mockResolvedValue(PLANS);
+  bankTransferCancel.mockReset().mockResolvedValue({ ok: true });
   bankTransferStatus.mockReset().mockResolvedValue({ redemption: claim });
 
   await import('../../plus/js/pricing-page.js');
@@ -108,8 +111,11 @@ describe('an ordinary claim', () => {
   });
 
   it('is told nothing about a state it was never in', async () => {
+    // On the term they have selected — a claim for a DIFFERENT term has its own
+    // notice, which is the case below this one.
     const root = await renderClaim({
-      ...PENDING, amount_confirmed_at: null, student_request: false,
+      ...PENDING, months: 6, amount_rial: 60_000_000,
+      amount_confirmed_at: null, student_request: false,
     });
     // No «wait» banner, and no «your amount was approved» either: an ordinary
     // claim has never been waiting, so both are answers to a question it never
@@ -163,5 +169,64 @@ describe('a student claim the founder has settled', () => {
     // 6,000,000 toman less ٪۱۵, typed by the founder — and the page must never
     // quietly re-quote the list figure over it.
     expect(root.querySelector('.dcp-bank-plan')!.textContent).toContain('۵٬۱۰۰٬۰۰۰');
+  });
+});
+
+/**
+ * One pending claim per rail is the rule that stops a queue filling with
+ * duplicates of the same person — and without a way out it was a trap. Press
+ * «دریافت کد پیگیری» on a one-month plan to see what it does, and every later
+ * attempt hands that claim back, at that price, until the founder rejects it
+ * by hand.
+ */
+describe('a claim for a term the buyer is no longer looking at', () => {
+  // The featured (and so selected) plan is the six-month one.
+  const ONE_MONTH_CLAIM = {
+    status: 'pending', reference: 'DC-KTP-RWQ', months: 1, amount_rial: 12_000_000,
+    amount_confirmed_at: null, student_request: false,
+  };
+
+  it('says so, instead of looking like a button that does nothing', async () => {
+    const root = await renderClaim(ONE_MONTH_CLAIM);
+    const warn = root.querySelector('.dcp-bank .dcp-price-notice.is-warn')!;
+    expect(warn.textContent).toContain('یک ماهه');
+    expect(warn.textContent).toContain('شش ماهه');
+  });
+
+  it('offers the way out, and reopens the rail once it is taken', async () => {
+    const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true);
+    const root = await renderClaim(ONE_MONTH_CLAIM);
+
+    const cancel = root.querySelector('.dcp-bank-cancel') as HTMLButtonElement;
+    expect(cancel).toBeTruthy();
+    cancel.click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(bankTransferCancel).toHaveBeenCalledWith('DC-KTP-RWQ');
+    // Back to the card that opens a claim, for whatever they now want to buy.
+    expect(root.querySelector('.dcp-bank-iban')).toBeTruthy();
+    expect(root.querySelector('.dcp-gift-steps')).toBeNull();
+    confirmSpy.mockRestore();
+  });
+
+  it('cancels nothing when the confirm is declined', async () => {
+    const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(false);
+    const root = await renderClaim(ONE_MONTH_CLAIM);
+    (root.querySelector('.dcp-bank-cancel') as HTMLButtonElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+    expect(bankTransferCancel).not.toHaveBeenCalled();
+    confirmSpy.mockRestore();
+  });
+
+  it('warns harder when a figure has already been announced', async () => {
+    const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(false);
+    const root = await renderClaim({
+      ...PENDING, months: 6, amount_rial: 51_000_000,
+      amount_confirmed_at: '2026-08-27T10:00:00.000Z', student_request: true,
+    });
+    (root.querySelector('.dcp-bank-cancel') as HTMLButtonElement).click();
+    // Somebody may already have transferred against that figure.
+    expect(confirmSpy.mock.calls[0][0]).toContain('اگر واریز کرده‌اید لغو نکنید');
+    confirmSpy.mockRestore();
   });
 });
