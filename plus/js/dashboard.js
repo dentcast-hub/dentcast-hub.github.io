@@ -1,17 +1,17 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, streakIsActiveToday } from './util.js?v=37';
-import { api } from './api.js?v=37';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=37';
-import { leagueEntryButton } from './league.js?v=37';
-import { openCollectionPicker, boardCover } from './collections.js?v=37';
-import { bundleRailCard } from './pathways.js?v=37';
-import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js?v=37';
-import { renewalBanner } from './renewal-banner.js?v=37';
-import { premiumCta } from './premium-cta.js?v=37';
-import { maybeCelebrate } from './achievements.js?v=37';
-import { markReturnTrail } from './return-trail.js?v=37';
+import { el, faNum, streakIsActiveToday } from './util.js?v=38';
+import { api } from './api.js?v=38';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=38';
+import { leagueEntryButton } from './league.js?v=38';
+import { openCollectionPicker, boardCover } from './collections.js?v=38';
+import { bundleRailCard } from './pathways.js?v=38';
+import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js?v=38';
+import { renewalBanner } from './renewal-banner.js?v=38';
+import { premiumCta } from './premium-cta.js?v=38';
+import { maybeCelebrate } from './achievements.js?v=38';
+import { markReturnTrail } from './return-trail.js?v=38';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',

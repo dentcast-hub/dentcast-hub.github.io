@@ -79,7 +79,20 @@ export type NotificationKind =
    * rather than a report of one — without it the buyer waits for a figure and
    * the founder waits for a deposit, which is exactly what happened.
    */
-  | 'bank_amount';
+  | 'bank_amount'
+  /**
+   * A manual rail's claim was decided: the transfer/gift-card was accepted and
+   * the subscription is live, or it was refused and here is why. UNCAPPED for
+   * the renewal warning's reason — money on the other side, and the reader has
+   * been waiting on a human since they paid.
+   *
+   * It exists because the gateway hands its buyer a result page and these
+   * rails hand theirs NOTHING: the subscription simply started, silently,
+   * whenever the founder got round to the queue. The pricing page has been
+   * promising «بعد از دیدن واریز… در «اطلاعیه» خبرش را می‌گیرید» the whole
+   * time, with nothing on the other end of the promise.
+   */
+  | 'payment_result';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.

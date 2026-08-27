@@ -74,6 +74,22 @@ const COLUMNS =
   'id, user_id, reference, code, kind, months, amount_rial, referral_id, '
   + 'amount_confirmed_at, student_request, status, note, reviewed_at, created_at';
 
+/**
+ * Persian digits and separators for anything a buyer reads. A notification is
+ * a sentence in Persian, and `12,000,000` sitting inside one is a number in
+ * somebody else's alphabet — the site writes every other figure this way.
+ */
+const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
+const faNum = (n: number): string => n.toLocaleString('en-US')
+  .replace(/\d/g, (d) => FA_DIGITS[Number(d)])
+  .replace(/,/g, '٬');
+
+/** The term as it is said out loud, since «اشتراک 1 ماهه» is nobody's Persian. */
+const TERM_FA: Record<number, string> = {
+  1: 'یک‌ماهه', 3: 'سه‌ماهه', 6: 'شش‌ماهه', 12: 'دوازده‌ماهه',
+};
+const termFa = (months: number): string => TERM_FA[months] || `${faNum(months)} ماهه`;
+
 /** The tag the buyer writes into the transfer/gift message — services/reference.ts owns the alphabet. */
 const mintClaimReference = (): string => mintReference('DC');
 
@@ -229,16 +245,53 @@ async function notifyFounder(row: Redemption): Promise<void> {
     : (row.student_request ? 'درخواست تخفیف دانشجویی' : 'واریز بانکی در راه است');
   let body;
   if (row.kind !== 'bank_transfer') {
-    body = `کد پیگیری ${row.reference} — ${row.months} ماه. ایمیل را بررسی کنید.`;
+    body = `کد پیگیری ${row.reference} — ${termFa(row.months)}. ایمیل را بررسی کنید.`;
   } else if (row.student_request) {
-    body = `کد پیگیری ${row.reference} — ${row.months} ماه. منتظر کارت دانشجویی است؛ `
+    body = `کد پیگیری ${row.reference} — ${termFa(row.months)}. منتظر کارت دانشجویی است؛ `
       + 'بعد از دیدنش مبلغ را اعلام کن — تا آن موقع واریز نمی‌کند.';
   } else {
-    body = `کد پیگیری ${row.reference} — ${row.months} ماه. صورت‌حساب را بررسی کنید.`;
+    body = `کد پیگیری ${row.reference} — ${termFa(row.months)}. صورت‌حساب را بررسی کنید.`;
   }
   await sendCapped(target.id, {
     title, body, url: '/admin', tag: 'gift_claim',
   }, 'system').catch(() => { /* alerting never blocks a customer */ });
+}
+
+/**
+ * Tell the buyer how their claim was decided.
+ *
+ * The gateway hands its customer a result page; these rails hand theirs
+ * nothing — the subscription simply began, silently, whenever the founder got
+ * round to the queue — while the pricing page promised «بعد از دیدن واریز،
+ * اشتراک فعال می‌شود و در «اطلاعیه» خبرش را می‌گیرید» with nothing on the
+ * other end of it. A refusal matters more, not less: it is the one message
+ * that has to carry a reason, since somebody has sent money and is not getting
+ * a subscription for it.
+ *
+ * Called AFTER the transaction commits, never inside it: a notification for an
+ * approval that then rolled back is worse than a late one.
+ */
+async function notifyDecision(
+  row: Redemption,
+  outcome: 'approved' | 'rejected',
+  reason?: string,
+): Promise<void> {
+  const rail = row.kind === 'bank_transfer' ? 'واریز' : 'گیفت‌کارت';
+  const message = outcome === 'approved'
+    ? {
+      title: `${rail} شما تأیید شد`,
+      body: `اشتراک ${termFa(row.months)}‌ی شما فعال شد. (کد پیگیری ${row.reference})`,
+      url: '/plus/',
+      tag: `claim_${row.reference}`,
+    }
+    : {
+      title: `${rail} شما تأیید نشد`,
+      body: `${reason || 'برای پیگیری با پشتیبانی تماس بگیرید.'} (کد پیگیری ${row.reference})`,
+      url: '/plus/support.html',
+      tag: `claim_${row.reference}`,
+    };
+  await sendCapped(row.user_id, message, 'payment_result')
+    .catch(() => { /* an unreachable buyer never fails the review */ });
 }
 
 export interface ReviewResult {
@@ -261,7 +314,7 @@ export interface ReviewResult {
  * anything.
  */
 export async function approveRedemption(reference: string, note?: string): Promise<ReviewResult> {
-  return withTransaction(async (client) => {
+  const result = await withTransaction(async (client) => {
     const row = await one<Redemption>(
       `update gift_redemptions
           set status = 'approved', reviewed_at = now(), note = coalesce($2, note)
@@ -279,6 +332,8 @@ export async function approveRedemption(reference: string, note?: string): Promi
     });
     return { ok: true, redemption: row, subscription, message: 'تأیید شد و اشتراک فعال است.' };
   });
+  if (result.ok) await notifyDecision(result.redemption!, 'approved');
+  return result;
 }
 
 export interface ReviewAndGrantResult extends ReviewResult {
@@ -297,7 +352,7 @@ export async function approveRedemptionAndGrantBadge(
   badgeKey: string,
   opts: { note?: string; discountPercent?: number } = {},
 ): Promise<ReviewAndGrantResult> {
-  return withTransaction(async (client) => {
+  const result = await withTransaction(async (client) => {
     const row = await one<Redemption>(
       `update gift_redemptions
           set status = 'approved', reviewed_at = now(), note = coalesce($2, note)
@@ -325,6 +380,8 @@ export async function approveRedemptionAndGrantBadge(
       message: 'تأیید شد، اشتراک فعال است و نشان اهدا شد.',
     };
   });
+  if (result.ok) await notifyDecision(result.redemption!, 'approved');
+  return result;
 }
 
 /**
@@ -340,6 +397,7 @@ export async function rejectRedemption(reference: string, reason: string): Promi
       returning ${COLUMNS}`,
     [reference.trim().toUpperCase(), reason],
   );
+  if (row) await notifyDecision(row, 'rejected', reason);
   return row
     ? { ok: true, redemption: row, subscription: null, message: 'رد شد.' }
     : { ok: false, redemption: null, subscription: null, message: 'این کد پیگیری در صف بررسی نیست.' };
@@ -419,9 +477,7 @@ export async function confirmRedemptionAmount(
  * decided to push at them.
  */
 async function notifyAmountConfirmed(row: Redemption): Promise<void> {
-  const toman = row.amount_rial === null
-    ? null
-    : Math.round(row.amount_rial / 10).toLocaleString('en-US');
+  const toman = row.amount_rial === null ? null : faNum(Math.round(row.amount_rial / 10));
   await sendCapped(row.user_id, {
     title: 'مبلغ واریز شما تأیید شد',
     body: toman

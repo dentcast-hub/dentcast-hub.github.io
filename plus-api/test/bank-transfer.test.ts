@@ -198,7 +198,9 @@ describe('the founder queue', () => {
     expect(notes.rowCount).toBe(1);
     expect(notes.rows[0].delivered).toBe(true);
     expect(notes.rows[0].body).toContain(ref);
-    expect(notes.rows[0].body).toContain('500,000');
+    // Persian digits and separators: a notification is a Persian sentence, and
+    // `500,000` inside one is a number in somebody else's alphabet.
+    expect(notes.rows[0].body).toContain('۵۰۰٬۰۰۰');
   });
 
   /**
@@ -229,6 +231,42 @@ describe('the founder queue', () => {
     // Once approved the amount is history, and re-announcing it would notify a
     // buyer who has already been charged nothing further.
     expect((await setAmount(ref)).statusCode).toBe(404);
+  });
+
+  /**
+   * The gateway hands its buyer a result page; this rail handed theirs
+   * NOTHING. The subscription simply began, silently, whenever the founder got
+   * round to the queue — while the pricing page had been promising «بعد از
+   * دیدن واریز… در «اطلاعیه» خبرش را می‌گیرید» with nothing on the other end
+   * of the promise (found by walking the flow, 1405/06/05).
+   */
+  it('tells the buyer when the claim is approved, and when it is refused', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const uid = await userId(cookie);
+    const ref = (await claim(cookie, 6)).json().reference;
+    await approve(ref);
+
+    const ok = await pool.query(
+      "select title, body from notification_log where user_id=$1 and kind='payment_result'", [uid]);
+    expect(ok.rowCount).toBe(1);
+    expect(ok.rows[0].title).toContain('تأیید شد');
+    expect(ok.rows[0].body).toContain(ref);
+
+    const other = await loginAs(app, '09121300002');
+    const uid2 = await userId(other);
+    const ref2 = (await claim(other, 1)).json().reference;
+    await app.inject({
+      method: 'POST', url: '/admin/gift/reject', headers: { authorization: basic },
+      payload: { reference: ref2, reason: 'واریزی پیدا نشد' },
+    });
+
+    const no = await pool.query(
+      "select title, body from notification_log where user_id=$1 and kind='payment_result'", [uid2]);
+    expect(no.rowCount).toBe(1);
+    expect(no.rows[0].title).toContain('تأیید نشد');
+    // A refusal is the one message that HAS to carry a reason: somebody sent
+    // money and is not getting a subscription for it.
+    expect(no.rows[0].body).toContain('واریزی پیدا نشد');
   });
 
   it('never spends the Zibal ceiling or mints a payments row', async () => {

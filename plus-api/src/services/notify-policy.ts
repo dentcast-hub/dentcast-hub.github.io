@@ -56,6 +56,9 @@ const UNCAPPED: ReadonlySet<NotificationKind> = new Set<NotificationKind>([
   // number and cannot pay without it — same reasoning as support_reply, with a
   // sale on the other side of it.
   'bank_amount',
+  // The answer on a manually-reviewed payment: approved and live, or refused
+  // and why. They have been waiting on a person since they paid.
+  'payment_result',
 ]);
 
 /**
