@@ -52,6 +52,10 @@ const UNCAPPED: ReadonlySet<NotificationKind> = new Set<NotificationKind>([
   // ارزیاب DES: the founder finished scoring a paper the reader submitted.
   // Same reasoning as support_reply — the reader asked and waited for this.
   'des_result',
+  // واریز به شبا: the amount the buyer must transfer. They asked for this
+  // number and cannot pay without it — same reasoning as support_reply, with a
+  // sale on the other side of it.
+  'bank_amount',
 ]);
 
 /**

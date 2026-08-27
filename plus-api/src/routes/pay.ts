@@ -394,6 +394,10 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       // one did.
       list_amount_rial: listRial,
       referral_applied: r.redemption!.referral_id !== null,
+      // Null until a human settles the figure with them (migration 0050). A
+      // reused claim can already carry one, so this is not always null even on
+      // the call that opens a claim.
+      amount_confirmed_at: r.redemption!.amount_confirmed_at,
       reused: r.outcome === 'already_pending',
     });
   });
@@ -407,6 +411,9 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       redemption: row && {
         reference: row.reference,
         status: row.status, months: row.months, amount_rial: row.amount_rial,
+        // THE field the pending view turns on: until it is set, the amount
+        // above is only the list price and the page must keep saying so.
+        amount_confirmed_at: row.amount_confirmed_at,
         referral_applied: row.referral_id !== null,
         note: row.status === 'rejected' ? row.note : null,
         created_at: row.created_at, reviewed_at: row.reviewed_at,

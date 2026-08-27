@@ -25,7 +25,7 @@
 //   3. The reader's choice outranks the default. Someone who switches back to
 //      the date list stays there on the next pillar page too, until they say
 //      otherwise — the arrangement is a feature, not an obligation.
-import { currentUser, meStatus } from '../plus/js/api.js?v=35';
+import { currentUser, meStatus } from '../plus/js/api.js?v=36';
 
 const VIEW_KEY = 'dc:pillar-view';       // 'chain' (default) | 'flat'
 const ASSET_V = new URL(import.meta.url).search;   // carry ?v= onto the fetch

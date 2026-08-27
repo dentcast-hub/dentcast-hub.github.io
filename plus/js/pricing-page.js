@@ -12,15 +12,15 @@
 //   - the visitor is not signed in -> the button signs them in first
 // Each says something different, because a customer who is told the wrong
 // reason goes away for good.
-import { el } from './util.js?v=35';
-import { api, currentUser } from './api.js?v=35';
-import { openLoginModal } from './login-modal.js?v=35';
+import { el } from './util.js?v=36';
+import { api, currentUser } from './api.js?v=36';
+import { openLoginModal } from './login-modal.js?v=36';
 import {
   paymentsNeedIrHost, paymentsIrUrl, PLAN_MONTHS, PLAN_PRICES_RIAL, FROM_MONTHLY_RIAL,
   GIFT_CARD, BANK_TRANSFER,
-} from './config.js?v=35';
-import { premiumBenefits } from './premium-benefits.js?v=35';
-import { registerSW } from './pwa.js?v=35';
+} from './config.js?v=36';
+import { premiumBenefits } from './premium-benefits.js?v=36';
+import { registerSW } from './pwa.js?v=36';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const toFa = (s) => String(s).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);
@@ -355,14 +355,37 @@ function bankIntro(bank, plan, onStart, offline) {
  * other adjustment — and written onto this claim from the admin panel, so a
  * buyer who transfers before asking can transfer the wrong figure, which is
  * the one mistake on this path that costs real money and needs a refund to
- * undo. The number below is whatever the claim currently holds: the list
- * price until the founder changes it, and their figure afterwards.
+ * undo.
+ *
+ * `confirmed` (the claim's `amount_confirmed_at`, migration 0050) is what
+ * turns the page from «wait» to «go», and until it existed this screen had no
+ * way to stop saying wait. Step one and the fine print below the amount both
+ * spoke in the future tense forever — including in the ordinary case where the
+ * founder had nothing to change and the list price was already the figure —
+ * so the buyer waited for a confirmation nothing could send and the founder
+ * waited for a transfer nobody had been told to make.
  */
-function bankSteps(bank, plan, reference) {
+function bankSteps(bank, plan, reference, confirmed) {
   const pct = toFa(bank.student_discount_percent || 15);
   const months = toFa(bank.student_months || 6);
 
-  const steps = [
+  const steps = confirmed ? [
+    el('li', {}, [
+      'مبلغ بالا تأییدشده است — همین را واریز کنید. ',
+      el('b', {}, 'مبلغ دیگری نفرستید'),
+      '؛ اگر ایراد دارد، اول به ',
+      telegramId(),
+      ' بگویید.',
+    ]),
+    el('li', {}, 'در اپ بانکی‌تان پل (فوری) یا پایا (تا یک روز کاری) را بزنید و همان مبلغ را به شبای بالا بفرستید.'),
+    el('li', {}, [
+      `کد ${reference} را در قسمت «بابت» یا «شرح» بنویسید. اگر اپ‌تان این فیلد را ندارد، رسید را `
+      + 'در یک تیکت «مشکل در پرداخت» (با تیکِ «عکسی دارم») یا به ',
+      telegramId(),
+      ' بفرستید.',
+    ]),
+    el('li', {}, 'بعد از دیدن واریز، اشتراک فعال می‌شود و در «اطلاعیه» خبرش را می‌گیرید.'),
+  ] : [
     el('li', {}, [
       `مبلغ را با پشتیبانی هماهنگ کنید — با کد ${reference}. `,
       el('a', { href: '/plus/support.html', target: '_blank', rel: 'noopener' },
@@ -386,11 +409,19 @@ function bankSteps(bank, plan, reference) {
 
   return el('div', { class: 'dcp-gift dcp-bank' }, [
     el('h2', { class: 'dcp-price-h2' }, 'مراحل'),
+    confirmed
+      ? el('div', { class: 'dcp-price-notice is-ok' }, [
+        el('b', {}, 'مبلغ تأیید شد — می‌توانید واریز کنید'),
+        el('p', {}, 'پشتیبانی مبلغ زیر را تأیید کرده است. کد پیگیری را در «بابت» بنویسید.'),
+      ])
+      : null,
     el('div', { class: 'dcp-bank-plan' }, [
       termName(plan.months), ' — ', toman(plan.amount_rial),
       el('span', { class: 'dcp-plan-unit' }, 'تومان'),
     ]),
-    el('p', { class: 'dcp-price-fine' }, 'تا وقتی پشتیبانی مبلغ را تأیید نکرده، این عدد قیمت لیست است.'),
+    el('p', { class: 'dcp-price-fine' }, confirmed
+      ? 'این مبلغِ تأییدشده‌ی شماست — همین را واریز کنید.'
+      : 'هنوز واریز نکنید: تا وقتی پشتیبانی مبلغ را تأیید نکرده، این عدد قیمت لیست است.'),
     el('div', { class: 'dcp-gift-ref' }, [
       el('span', { class: 'dcp-gift-ref-label' }, 'کد پیگیری'),
       el('code', { class: 'dcp-gift-ref-code' }, reference),
@@ -818,7 +849,10 @@ async function main() {
 
     if (claim && claim.status === 'pending') {
       bankWrap.replaceChildren(
-        bankSteps(bank, { months: claim.months, amount_rial: claim.amount_rial }, claim.reference),
+        bankSteps(
+          bank, { months: claim.months, amount_rial: claim.amount_rial },
+          claim.reference, Boolean(claim.amount_confirmed_at),
+        ),
       );
       return;
     }
@@ -844,6 +878,9 @@ async function main() {
         );
         drawBank({
           status: 'pending', reference: r.reference, months: r.months, amount_rial: r.amount_rial,
+          // A REUSED claim can already be confirmed, so this is not always
+          // null on the call that opens one.
+          amount_confirmed_at: r.amount_confirmed_at || null,
           referral_applied: r.referral_applied,
         });
       } catch (err) {

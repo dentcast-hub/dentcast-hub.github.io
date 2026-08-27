@@ -69,7 +69,17 @@ export type NotificationKind =
    * nudge we chose to send, so a streak reminder arriving first must not be
    * why it never lands.
    */
-  | 'des_result';
+  | 'des_result'
+  /**
+   * واریز به شبا: the founder settled the figure and the buyer may now
+   * transfer. UNCAPPED in notify-policy.ts, and the argument is the renewal
+   * warning's: the buyer asked what to send and is waiting to spend money, so
+   * a streak nudge that arrived first must not be why they never hear back.
+   * The one notification on the site that is a PRECONDITION for a payment
+   * rather than a report of one — without it the buyer waits for a figure and
+   * the founder waits for a deposit, which is exactly what happened.
+   */
+  | 'bank_amount';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.

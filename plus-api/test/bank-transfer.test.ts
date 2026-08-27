@@ -52,10 +52,11 @@ const approveWithBadge = (reference: string) =>
     headers: { authorization: basic }, payload: { reference },
   });
 
-const setAmount = (reference: string, amountRial: number) =>
+const setAmount = (reference: string, amountRial?: number) =>
   app.inject({
     method: 'POST', url: '/admin/bank-transfer/amount',
-    headers: { authorization: basic }, payload: { reference, amount_rial: amountRial },
+    headers: { authorization: basic },
+    payload: amountRial === undefined ? { reference } : { reference, amount_rial: amountRial },
   });
 
 async function userId(cookie: string): Promise<string> {
@@ -169,6 +170,64 @@ describe('the founder queue', () => {
     expect(row.amount_rial).toBe(studentAmount);
   });
 
+  it('stamps the amount confirmed and tells the buyer they may transfer', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const uid = await userId(cookie);
+    const ref = (await claim(cookie, 6)).json().reference;
+
+    // Before: the figure is only the list price nobody has agreed to, and the
+    // buyer's page is right to keep saying so.
+    expect((await mine(cookie)).json().redemption.amount_confirmed_at).toBeNull();
+
+    expect((await setAmount(ref, 5_000_000)).statusCode).toBe(200);
+
+    const row = (await mine(cookie)).json().redemption;
+    expect(row.amount_rial).toBe(5_000_000);
+    expect(row.amount_confirmed_at).not.toBeNull();
+
+    // …and it is an ANNOUNCEMENT, not a database change: the buyer is not
+    // sitting on the page waiting for a poll, which is exactly how a claim ends
+    // up waiting for a deposit that is itself waiting for a figure.
+    const notes = await pool.query(
+      "select title, body, delivered from notification_log where user_id = $1 and kind = 'bank_amount'",
+      [uid],
+    );
+    expect(notes.rowCount).toBe(1);
+    expect(notes.rows[0].delivered).toBe(true);
+    expect(notes.rows[0].body).toContain(ref);
+    expect(notes.rows[0].body).toContain('500,000');
+  });
+
+  /**
+   * The deadlock this rail shipped with. The endpoint REQUIRED an amount, on
+   * the assumption that the founder always has a new number to type — but the
+   * discounted price is the exception and the list price the claim opened at is
+   * usually already right. With no way to say «that figure is correct, go
+   * ahead», the buyer waited for the confirmation their own page promised them
+   * and the founder waited for a deposit nobody had been told to make (found in
+   * production, 1405/06/05, with two claims sitting in the queue).
+   */
+  it('confirms the figure already on the row when no amount is sent', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const ref = (await claim(cookie, 3)).json().reference;
+    const listRial = config.payments.planPricesRial[3];
+
+    const res = await setAmount(ref);
+    expect(res.statusCode).toBe(200);
+    // Confirmed, and the amount is untouched — «no amount» means «this one».
+    expect(res.json().redemption.amount_rial).toBe(listRial);
+    expect(res.json().redemption.amount_confirmed_at).not.toBeNull();
+  });
+
+  it('confirms nothing on a claim that is no longer pending', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const ref = (await claim(cookie, 6)).json().reference;
+    await approve(ref);
+    // Once approved the amount is history, and re-announcing it would notify a
+    // buyer who has already been charged nothing further.
+    expect((await setAmount(ref)).statusCode).toBe(404);
+  });
+
   it('never spends the Zibal ceiling or mints a payments row', async () => {
     const cookie = await loginAs(app, PHONE);
     const ref = (await claim(cookie, 6)).json().reference;
@@ -193,6 +252,23 @@ describe('the student rate is announced, and the panel hands over the number', (
     // …and the rule itself travels as data, so retuning it is a config change.
     expect(page.body).toContain(`"percent":${config.bankTransfer.studentDiscountPercent}`);
     expect(page.body).toContain(`"months":${config.bankTransfer.studentMonths}`);
+  });
+
+  /**
+   * Two acts, a day apart, that the panel used to draw identically: announcing
+   * the figure, and activating the subscription once the money is in. The
+   * founder pressed one expecting the other, and a row that had been confirmed
+   * looked exactly like one nothing had been done to.
+   */
+  it('separates announcing the amount from activating the subscription', async () => {
+    const page = await app.inject({ method: 'GET', url: '/admin', headers: { authorization: basic } });
+    expect(page.body).toContain('>تأیید مبلغ<');
+    expect(page.body).toContain('>تأیید (پول رسید)<');
+    // The queue's own state, so a confirmed row is legible as one.
+    expect(page.body).toContain('منتظر اعلامِ مبلغ');
+    expect(page.body).toContain('مبلغ اعلام شد');
+    // «no amount typed» is an ordinary press, not an error — the deadlock above.
+    expect(page.body).toContain('خالی یعنی همین عدد');
   });
 
   it('never calls the badge button the thing that applies the discount', async () => {

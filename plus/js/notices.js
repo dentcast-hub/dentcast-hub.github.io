@@ -1,6 +1,6 @@
-import { el, faNum } from './util.js?v=35';
-import { api } from './api.js?v=35';
-import { sameMirrorUrl } from './config.js?v=35';
+import { el, faNum } from './util.js?v=36';
+import { api } from './api.js?v=36';
+import { sameMirrorUrl } from './config.js?v=36';
 
 /**
  * اطلاعیه — the in-app inbox, opened from the account menu.
@@ -36,6 +36,7 @@ const KIND_ICON = {
   review: '🗂',
   premium_prize: '🎁',
   subscription_expiry: '⏳',
+  bank_amount: '🏦',
   system: '📣',
 };
 
@@ -52,6 +53,7 @@ const KIND_FA = {
   review: 'مرور',
   premium_prize: 'جایزه',
   subscription_expiry: 'اشتراک',
+  bank_amount: 'پرداخت',
   system: 'دنت‌کست',
 };
 

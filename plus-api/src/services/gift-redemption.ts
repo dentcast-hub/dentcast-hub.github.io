@@ -51,6 +51,12 @@ export interface Redemption {
   amount_rial: number | null;
   /** The کد معرف this claim is spending, if any — migration 0045. */
   referral_id: string | null;
+  /**
+   * When a human settled the figure with the buyer — migration 0050. Null
+   * means the amount on this row is still only the list price nobody has
+   * agreed to yet, which is the difference the buyer's page turns on.
+   */
+  amount_confirmed_at: Date | null;
   status: RedemptionStatus;
   note: string | null;
   reviewed_at: Date | null;
@@ -58,7 +64,8 @@ export interface Redemption {
 }
 
 const COLUMNS =
-  'id, user_id, reference, code, kind, months, amount_rial, referral_id, status, note, reviewed_at, created_at';
+  'id, user_id, reference, code, kind, months, amount_rial, referral_id, '
+  + 'amount_confirmed_at, status, note, reviewed_at, created_at';
 
 /** The tag the buyer writes into the transfer/gift message — services/reference.ts owns the alphabet. */
 const mintClaimReference = (): string => mintReference('DC');
@@ -326,17 +333,58 @@ export async function pendingRedemptions(limit = 50, kind?: RedemptionKind): Pro
 }
 
 /**
- * Write the amount onto a pending bank-transfer claim — how the founder types
- * in the student-discounted price after seeing the student's card. Only
- * touches a PENDING row: once approved, the amount is history.
+ * Settle the amount on a pending bank-transfer claim — the founder saying
+ * «this is the figure, transfer it». Only touches a PENDING row: once
+ * approved, the amount is history.
+ *
+ * `amountRial` is OPTIONAL, and that is the whole point of the rewrite. This
+ * used to be «write the student's discounted price», which quietly assumed the
+ * founder always has a new number to type; in the ordinary case they do not —
+ * the list price the claim opened at is already right — and there was no way
+ * to say so. So the buyer, told to agree the amount before transferring,
+ * waited for a message that had nowhere to come from. Passing no amount keeps
+ * the figure and confirms it; passing one overwrites and confirms in the same
+ * write, because announcing a number and settling it are one act.
+ *
+ * The notification is what makes it an announcement rather than a database
+ * change: the buyer is not sitting on this page waiting for a poll.
  */
-export async function setRedemptionAmount(reference: string, amountRial: number): Promise<Redemption | null> {
-  return one<Redemption>(
-    `update gift_redemptions set amount_rial = $2
+export async function confirmRedemptionAmount(
+  reference: string,
+  amountRial?: number | null,
+): Promise<Redemption | null> {
+  const row = await one<Redemption>(
+    `update gift_redemptions
+        set amount_rial = coalesce($2, amount_rial), amount_confirmed_at = now()
       where reference = $1 and status = 'pending'
       returning ${COLUMNS}`,
-    [reference.trim().toUpperCase(), amountRial],
+    [reference.trim().toUpperCase(), amountRial ?? null],
   );
+  if (row) await notifyAmountConfirmed(row);
+  return row;
+}
+
+/**
+ * Tell the buyer their figure is settled and they may transfer.
+ *
+ * UNCAPPED (notify-policy.ts) on the renewal warning's reasoning: the reader
+ * asked what to transfer and is waiting to spend money, so a streak nudge that
+ * arrived first must not be why they never hear back. It travels at any hour
+ * for the same reason — this is the answer to their own question, not news we
+ * decided to push at them.
+ */
+async function notifyAmountConfirmed(row: Redemption): Promise<void> {
+  const toman = row.amount_rial === null
+    ? null
+    : Math.round(row.amount_rial / 10).toLocaleString('en-US');
+  await sendCapped(row.user_id, {
+    title: 'مبلغ واریز شما تأیید شد',
+    body: toman
+      ? `کد پیگیری ${row.reference} — ${toman} تومان. حالا می‌توانید واریز کنید.`
+      : `کد پیگیری ${row.reference} — مبلغ تأیید شد. حالا می‌توانید واریز کنید.`,
+    url: '/plus/pricing.html?from=bank-amount',
+    tag: `bank_amount_${row.reference}`,
+  }, 'bank_amount').catch(() => { /* an unreachable buyer never fails the write */ });
 }
 
 /**
