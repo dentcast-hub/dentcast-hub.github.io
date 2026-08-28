@@ -2,10 +2,6 @@
 // Drives the REAL shipped block (/plus/js/challenge.js) against a stub
 // GET /challenge/:id + a stub /me, the same shape article-threads.dom.test.ts
 // and des-scorer.dom.test.ts already use.
-//
-// The one assertion this file exists for (handoff RULE 11): a free or
-// signed-out reader NEVER gets a <textarea> in the DOM — the lock has to
-// arrive before the effort, not after a submit is rejected.
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 const CONTENT = 'chairside/chairside-99';
@@ -47,6 +43,8 @@ vi.mock('/plus/js/api.js', () => ({
 vi.mock('/plus/js/login-modal.js', () => ({
   openLoginModal: () => Promise.resolve(null),
 }));
+
+const PREMIUM_MSG = 'برای شرکت در چالش و بررسی پاسختون با هوش مصنوعی اشتراک پرمیوم تهیه کنید';
 
 function anchor(): HTMLElement {
   document.body.innerHTML = `<main><div class="glass-box" id="p">
@@ -108,8 +106,8 @@ describe('static page markup', () => {
   });
 });
 
-describe('RULE 11 — the box never renders for a reader who cannot submit', () => {
-  it('a free reader sees the question and the lock line, and no textarea', async () => {
+describe('the answer box — visible to everyone, gated on submit', () => {
+  it('a free reader sees the same box as premium, not an upfront lock card', async () => {
     user = { tier: 'free' };
     status = 'user';
     mountChallenge(anchor(), CONTENT);
@@ -117,19 +115,29 @@ describe('RULE 11 — the box never renders for a reader who cannot submit', () 
     const block = document.querySelector('.dc-challenge')!;
     expect(block).not.toBeNull();
     expect(block.textContent).toContain('سؤال چالش؟');
-    expect(block.textContent).toContain('جواب‌دادن بخشی از پریمیوم است');
-    expect(document.querySelector('textarea')).toBeNull();
+    expect(document.querySelector('textarea')).not.toBeNull();
+    expect(document.querySelector('.dc-ch-gate')).toBeNull();
   });
 
-  it('a signed-out visitor sees the question and the sign-in path leading, no textarea', async () => {
+  it('a free reader who presses send sees the premium message and CTA, not an API call', async () => {
+    user = { tier: 'free' };
+    status = 'user';
+    mountChallenge(anchor(), CONTENT);
+    await settle();
+    document.querySelector<HTMLButtonElement>('.dc-act-primary')!.click();
+    await settle();
+    expect(document.querySelector('.dc-ch-premium-msg')?.textContent).toBe(PREMIUM_MSG);
+    expect(document.querySelector('.dcp-btn-primary')?.textContent).toContain('خرید اشتراک پریمیوم');
+  });
+
+  it('a signed-out visitor also sees the box', async () => {
     user = null;
     status = 'anon';
     mountChallenge(anchor(), CONTENT);
     await settle();
     const block = document.querySelector('.dc-challenge')!;
     expect(block.textContent).toContain('سؤال چالش؟');
-    expect(block.textContent).toContain('برای جواب‌دادن وارد شو.');
-    expect(document.querySelector('textarea')).toBeNull();
+    expect(document.querySelector('textarea')).not.toBeNull();
   });
 
   it('/me unreachable: the question alone, no upsell and no box', async () => {

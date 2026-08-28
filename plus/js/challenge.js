@@ -1,15 +1,11 @@
 // چالش — a founder-authored question, model-graded against key points the
 // founder wrote at publish time. Design ledger: .dentcast/challenge-handoff.md.
 //
-// Reading the question is public; everything else — the box, the verdict,
-// the founder's own answer — is premium (handoff RULE 11/12). The view is
-// decided from /me on load, the way every other gated surface on this site
-// already does: a signed-out or free reader never sees a <textarea> at all,
-// because a box that renders and then rejects on submit can lose a real
-// answer somebody just spent minutes writing. RULE 6: `answer_fa` is
-// released by ONE fact — this reader has an attempt row for this
-// content_id — never by tier, so a lapsed reader who answered while
-// premium keeps seeing it and everyone else does not.
+// Reading the question is public; answering is premium-gated on submit. Every
+// reader sees the same box; non-premium users hear about the subscription only
+// when they press «بفرست». RULE 6: `answer_fa` is released by ONE fact —
+// this reader has an attempt row for this content_id — never by tier, so a
+// lapsed reader who answered while premium keeps seeing it and everyone else does not.
 //
 // The public half (question + image) is generated into plus/challenges.json
 // by tools/build_challenge_index.mjs and fetched here directly, the same
@@ -22,10 +18,9 @@
 // inserted until BOTH checks confirm there is something to show — a
 // half-published چالش (page markup + challenges.json entry, but no admin
 // paste yet) must be invisible, never a box that 404s on submit.
-import { api, currentUser, meStatus } from './api.js?v=43';
-import { el, faNum } from './util.js?v=43';
-import { premiumCta } from './premium-cta.js?v=43';
-import { openLoginModal } from './login-modal.js?v=43';
+import { api, currentUser, meStatus } from './api.js?v=45';
+import { el, faNum } from './util.js?v=45';
+import { premiumCta } from './premium-cta.js?v=45';
 
 let filePromise = null;
 
@@ -48,9 +43,7 @@ const COPY = {
   submit: 'بفرست',
   underBox: 'فقط یک بار می‌توانی جواب بدهی — چون بعدش جوابِ من را می‌بینی.',
   tooShort: 'کمی بیشتر بنویس تا بشود سنجید.',
-  lockedTitle: 'جواب‌دادن بخشی از پریمیوم است',
-  lockedBody: 'سؤال برای همه باز است. جواب‌دادن — و دیدنِ جوابِ من — بخشی از پریمیوم است.',
-  signedOut: 'برای جواب‌دادن وارد شو.',
+  premiumRequired: 'برای شرکت در چالش و بررسی پاسختون با هوش مصنوعی اشتراک پرمیوم تهیه کنید',
   unreachable: 'الان نتوانستیم بررسی کنیم. کمی بعد دوباره امتحان کن.',
   yourAnswerHeading: 'جوابِ تو',
   resultFull: 'درست بود',
@@ -118,16 +111,38 @@ function resultView(state) {
   return el('div', { class: 'dc-ch-result' }, parts);
 }
 
-/** premium + signed-in, no attempt yet: the box (RULE 11 — the only view a box exists in). */
-function answerBox(contentId, onSettled) {
+/** Everyone sees this box; premium is checked on submit, not at render time. */
+function answerBox(contentId, onSettled, { isPremium }) {
   const box = el('textarea', { class: 'dc-ch-input', rows: '5', placeholder: COPY.placeholder });
   const note = el('div', { class: 'dc-ch-note' }, '');
+  const gate = el('div', { class: 'dc-ch-gate-cta', hidden: true });
   const send = el('button', { class: 'dc-act dc-act-primary', type: 'button' }, COPY.submit);
+
+  const hideGate = () => {
+    gate.hidden = true;
+    gate.replaceChildren();
+  };
+
+  const showPremiumGate = () => {
+    note.textContent = '';
+    gate.replaceChildren(
+      el('p', { class: 'dc-ch-premium-msg' }, COPY.premiumRequired),
+      premiumCta('challenge'),
+    );
+    gate.hidden = false;
+  };
 
   send.addEventListener('click', async () => {
     const answer = box.value.trim();
-    send.disabled = true;
+    hideGate();
     note.textContent = '';
+
+    if (!isPremium) {
+      showPremiumGate();
+      return;
+    }
+
+    send.disabled = true;
     try {
       const res = await api.submitChallenge(contentId, answer);
       onSettled(res);
@@ -138,6 +153,8 @@ function answerBox(contentId, onSettled) {
       } else if (err === 'already_answered') {
         note.textContent = COPY.already;
         onSettled(e.body);
+      } else if (e && e.status === 402) {
+        showPremiumGate();
       } else if (e && e.status === 429) {
         note.textContent = COPY.rateLimited;
       } else {
@@ -152,33 +169,8 @@ function answerBox(contentId, onSettled) {
     box,
     el('p', { class: 'dc-ch-under' }, COPY.underBox),
     el('div', { class: 'dc-ch-row' }, [send, note]),
+    gate,
     el('p', { class: 'dc-ch-invite' }, COPY.invite),
-  ]);
-}
-
-/** free/premium-unclear or lapsed-out: the premium card. RULE 12's second answer. */
-function lockedView() {
-  return el('div', { class: 'dc-ch-gate' }, [
-    el('p', { class: 'dc-ch-gate-title' }, COPY.lockedTitle),
-    el('p', { class: 'dc-ch-gate-body' }, COPY.lockedBody),
-    premiumCta('challenge'),
-  ]);
-}
-
-/** signed-out: the sign-in path leads, the purchase link follows quieter — they
- * may already be a subscriber logged out on this device. */
-function signedOutView(contentId, onSignedIn) {
-  const btn = el('button', { class: 'dc-act dc-act-primary', type: 'button' }, 'ورود');
-  btn.addEventListener('click', async () => {
-    const res = await openLoginModal({ returnTo: location.pathname });
-    if (res && res.user) onSignedIn();
-  });
-  return el('div', { class: 'dc-ch-gate' }, [
-    el('p', { class: 'dc-ch-gate-title' }, COPY.lockedTitle),
-    el('p', { class: 'dc-ch-gate-body' }, COPY.lockedBody),
-    el('p', {}, COPY.signedOut),
-    btn,
-    premiumCta('challenge', { ghost: true }),
   ]);
 }
 
@@ -238,15 +230,11 @@ async function draw(anchor, contentId) {
 
     if (state && state.status) {
       parts.push(resultView(state));
-    } else if (status === 'anon') {
-      parts.push(signedOutView(contentId, () => draw(anchor, contentId)));
     } else if (status === 'error') {
       // RULE 12, third answer: "we could not ask" must never render as an
       // upsell — the question alone, no box, no lock copy, no card.
-    } else if (!isPremium) {
-      parts.push(lockedView());
     } else {
-      parts.push(answerBox(contentId, (res) => render(res)));
+      parts.push(answerBox(contentId, (res) => render(res), { isPremium }));
     }
 
     host.replaceChildren(...parts);
