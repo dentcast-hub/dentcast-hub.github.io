@@ -54,7 +54,7 @@ export const SHIELD_STEP = 50;  // each further shield costs this much more
 // Actions that count toward an "active day" for the score. Kept local (not the
 // streak module's QUALIFYING_ACTIONS) to avoid a circular import; the two sets
 // are intentionally the same today.
-export const SCORING_ACTIONS = ['article_completed', 'episode_listened', 'highlight_created', 'card_reviewed_manual', 'review_finished'];
+export const SCORING_ACTIONS = ['article_completed', 'episode_listened', 'highlight_created', 'card_reviewed_manual', 'review_finished', 'challenge_answered'];
 
 /**
  * The consumption actions that additionally pay PER PIECE OF CONTENT. A strict

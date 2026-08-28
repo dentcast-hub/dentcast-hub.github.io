@@ -20,7 +20,7 @@
     - **The only valid no-op is a documented empty result.** A step may add nothing **only** when you actually performed the analysis and there were **zero genuinely-qualifying candidates** (or the section is at the 5-link cap). You must then **say so explicitly** in the report ("4.8: analyzed body, 0 qualifying glossary/episode candidates" / "4.9: section at cap, skipped"). Silence is not an allowed state.
     - **Type mapping for core episodes (no on-disk `dc-related-section`).** Episodes use the **«محتوای مرتبط»** block (`ep-related-link`), not a `dc-related-section` «کاوش بیشتر». For episodes, **step 4.9 targets the «محتوای مرتبط» block** (fill its free slots, under the Hard-Rule-9 cap, with semantically related brain entries — e.g. sibling parts of a multi-part series first), and **step 4.8 targets the «درباره این اپیزود» caption body**. The naming difference is **not** an excuse to skip; the «محتوای مرتبط» block IS the episode's related-links section for 4.9 purposes.
 
-12. **Every published page ships bilingual: the English mirror + fa↔en toggle is MANDATORY (Phase D), never an afterthought.** A `.org` publish is **incomplete** until the new page has a real English counterpart at `/{type}/en/{same-filename}.html` and a working **per-document fa↔en language toggle on both sides**. The toggle button (`.lang-btn`) is **never** added alone: a toggle whose English target does not exist on disk is a forbidden phantom pair, so the en page MUST be created in the same publish. The en mirror ships **noindexed** (`noindex, follow`, no hreflang, out of the sitemap — it is an unreviewed AI translation and a reader feature, not a search surface; see Phase D). This is produced by running the **English-version workflow** (`.dentcast/workflows/en-version.md`) on the just-published page as the final phase — see **Phase D**. "The cloned template had no toggle, so I matched it" is an **explicitly forbidden** justification (same spirit as Hard Rule 11): if earlier same-type pages lack the toggle/en mirror, that is a gap, never a pattern to copy forward. **The single exception is LiteCast**, which is `.ir`-only, carries **no** hreflang, and gets **no** en mirror or toggle (Hard Rule 10) — for LiteCast, Phase D is a documented skip.
+12. **Every published page ships bilingual: the English mirror + fa↔en toggle is MANDATORY (Phase D), never an afterthought.** A `.org` publish is **incomplete** until the new page has a real English counterpart at `/{type}/en/{same-filename}.html` and a working **per-document fa↔en language toggle on both sides**. The toggle button (`.lang-btn`) is **never** added alone: a toggle whose English target does not exist on disk is a forbidden phantom pair, so the en page MUST be created in the same publish. The en mirror ships **noindexed** (`noindex, follow`, no hreflang, out of the sitemap — it is an unreviewed AI translation and a reader feature, not a search surface; see Phase D). This is produced by running the **English-version workflow** (`.dentcast/workflows/en-version.md`) on the just-published page as the final phase — see **Phase D**. "The cloned template had no toggle, so I matched it" is an **explicitly forbidden** justification (same spirit as Hard Rule 11): if earlier same-type pages lack the toggle/en mirror, that is a gap, never a pattern to copy forward, EXCEPT for the two documented exceptions below — do not let that sentence talk you into building a toggle for either of them. **Two exceptions, and no others.** LiteCast is `.ir`-only, carries **no** hreflang, and gets **no** en mirror or toggle (Hard Rule 10). A **چالش** (`.dentcast/challenge-handoff.md` RULE 16, decided 2026-08-28) gets none either, for a mechanical reason: its en mirror would be a *different* `content_id` with no row in the `challenges` table, so the toggle would lead to a page missing the only thing on it. For either, Phase D is a documented skip.
 
 13. **Never guess — this generalizes every scattered "ask, don't guess" note elsewhere in this document into one binding rule that applies to the whole workflow, not just the paper branch.** If a fact is not (a) directly stated by the user, (b) verifiable by reading a file already in the repo, (c) verifiable by reading the live taxonomy at runtime, or (d) successfully fetched/probed from a real source (the audio file itself, a DOI lookup, a Drive listing) — **you do not know it, and you may not estimate, infer, round, or fabricate a stand-in value for it.** Stop and ask the user instead. Zero exceptions:
     - **Numeric/factual metadata — duration, file size, dates, counts, IDs — is never estimated.** If the audio host is unreachable (network policy block, missing tool, timeout, anything else) and the duration can't be probed, **ask the user for the exact duration.** Do not write a "reasonable-sounding" placeholder into the brain, `dentcast.json`, the page's visible time, or its JSON-LD `duration` — not even temporarily, not even flagged as an estimate in a later report. A wrong number silently shipped to a live page is exactly the failure this rule exists to prevent.
@@ -308,6 +308,27 @@ and ask, as a two-option menu:
 - **There is no third option.** Do not go hunting for "probably this paper", do not
   score the caption as commentary just to have *something*, and do not defer the
   question to the final report.
+
+### Question 4.9 — چالش؟
+
+**Skip when the user already said so at Question 1.** Otherwise, on every publish,
+ask: «این پست آزمون است یا مطلب معمولی؟» A چالش is a **post whose body is a
+question** — published through this same router, into an existing folder, taking
+that folder's next number and its ordinary brain shape (never a new `type`, never a
+new folder — see step 4.14/RULE 15 in `.dentcast/challenge-handoff.md`).
+
+When it **is** a چالش, collect four things from the founder: the **question**, the
+**image**, the **answer**, and **3–5 نکات کلیدی**. Propose the key points yourself
+from the answer and have the user confirm or rewrite them — they are the grading
+rubric a model will compare a reader's answer against, so getting them right here is
+what makes the whole feature work. Hard Rule 16 applies to every string the user
+supplies: copied, never re-typed.
+
+**Question 3.5's de-AI pass runs on the question and the answer as usual.** The key
+points are not prose a reader ever sees and are exempt.
+
+When the answer is «مطلب معمولی» (the ordinary case), proceed exactly as before —
+this question changes nothing about the rest of the publish.
 
 ### Question 5 — Pulse sentence
 
@@ -1433,6 +1454,59 @@ why; the resulting `des_score`, `band`, `question_type` and whether `provisional
 true; and the outcome of each of the four Part-3 checks. For a skip, the documented
 reason line. Explicitly confirm that no DOI, abstract, or quartile was guessed.
 
+### 4.14. چالش — public half on the page, private half in the admin queue
+
+**Runs only when Question 4.9 answered «چالش».** Full design in
+`.dentcast/challenge-handoff.md`; this step is a summary of its §11.3, not a
+second source of truth for it — read the handoff before touching this step.
+
+Two halves, two homes, and mixing them up is the one mistake that cannot be
+walked back once it is in git history (RULE 2):
+
+1. **The public half — the question + image — goes ON THE PAGE**, inside the
+   folder's normal prose box, the same place an ordinary post's body would go
+   (a چالش clones the same page template; only the body differs). Mark up the
+   question element with `data-dc-challenge-question` and the image with
+   `data-dc-challenge-image` — `tools/build_challenge_index.mjs` reads exactly
+   that markup. **Never** put the answer or the key points on the page, in the
+   brain entry, or in any committed file.
+2. Run `node tools/build_challenge_index.mjs` in step 8 (after the pillar
+   builder, before `build_plus_index.mjs`) so this `content_id` lands in the
+   generated `plus/challenges.json`.
+
+Then **print the founder's paste box** into the publish report, for
+`GET /admin` → «صندوق چالش»:
+
+```json
+{ "content_id": "chairside/chairside-31",
+  "answer_fa": "…",
+  "key_points": [ { "id": "kp1", "text": "…" }, … ] }
+```
+
+**Say explicitly, in the report, that the چالش is not live until that paste
+happens** — until the founder posts this to `/admin/challenges/upsert`, the
+page renders the question with no answer box at all (`GET /challenge/:id`
+answers `{exists:false}` and the block removes itself), so a half-published
+چالش is invisible rather than broken. This is expected, not a defect to fix
+in this step.
+
+**A چالش skips the article-shaped steps** that assume prose to work from —
+give each its own explicit verdict in the report, never a silent skip
+(Hard Rule 11):
+
+| step | on a چالش |
+|---|---|
+| 4.11 flashcards | **skip** — no FAQ; a چالش has no prose to define terms from |
+| 4.12 quiz-ready FAQ | **skip** — same reason (and see RULE 1: never confuse this with `quiz-index.json`) |
+| 4.13 DES | **skip, reported** — a question cites nothing and appraises nothing; write **no key** in `des-scores.json` |
+| 5.6 / 5.6-ب pathways & bundles | **skip** — a pathway step is something to read |
+| Phase D en mirror | **skip — decided** (RULE 16, the second documented exception to Hard Rule 12 alongside LiteCast) |
+
+Steps 2.4 (pillar), 2.5 (کاوش بیشتر), 2.6 (landing page), 5.0 (hashtags), 5
+(brain entry, per RULE 15 — the folder's ordinary shape, never a new `type`),
+6 (Pulse), and Phase E/F all **run** exactly as they would for an ordinary
+post in that folder.
+
 ### 5.0. Hashtag standardization against the reference library (Hard Rule 15)
 
 The entry's `hashtags` are a **standardized vocabulary** governed by `dentcast-hashtag-reference.json` — the canonical library the AI case-assistant search reads (mirrored into `plus/content-index.json`, which the live API loads with auto-reload). Settle the **final canonical hashtag list here**, before it is consumed by the brain write (step 5) and the page's visible chips. This runs on **every publish that writes a brain entry** — LiteCast included (its brain is `litecast/lite-glossary.json`; run the same discipline against the library). The `dentcast_cabinet_full_catalog.json` paper `tags` are a **separate** kebab-style system and are **out of scope here** (step 4.10 owns them).
@@ -1718,6 +1792,7 @@ Run the builders from the project root, in this order. Capture stdout/stderr for
    **Never hand-edit `episodes.html`** (the builder overwrites it; hand-edits silently desync from the builder — the failure that motivated this template split). To change page **chrome** (CSS/JS/layout/nav/the sort-toggle/pagination/`dc-jump`/the search filter row/asset-version bumps), edit **`tools/episodes_template.html`**, then run the builder. The template carries those features verbatim, so a normal run preserves them; the only build-to-build deltas are the new episode, the stats, and any brain-driven hashtag/caption changes.
 4. **Flashcards index builder — run whenever step 4.11 added a `DefinedTermSet` to the corpus.** Run `node tools/build_flashcards_index.mjs`. It reads `plus/faq-corpus.json` (never page HTML — pages carry no `DefinedTermSet` of their own, see step 4.11) for every content id's `DefinedTermSet`, skipping LiteCast and `/en/` entries, and regenerates `plus/flashcards-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. Skip only on the documented "4.11: skipped — LiteCast" publishes.
 4b. **Quiz index builder — run on every non-LiteCast publish that produced a page (step 4.12).** Run `node tools/build_quiz_index.mjs`. It reads `plus/faq-corpus.json` (never page HTML) for every content id's `FAQPage`, skipping LiteCast, `/en/` entries, and the homepage, keeps only the binary (yes/no) questions whose answer opens with an explicit «بله»/«خیر» verdict, and regenerates `plus/quiz-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. It prints `<pages>, <questions> binary questions (of <N> FAQ items scanned)`; the "scanned − kept" gap is the open/hedged questions correctly left out of the scored bank. Skip only on the documented "4.12: skipped — LiteCast" publishes.
+4c. **چالش index builder — run whenever step 4.14 fired (a چالش publish).** Run `node tools/build_challenge_index.mjs`. It walks the specialist content folders for the `data-dc-challenge-question`/`data-dc-challenge-image` markup step 4.14 wrote and regenerates `plus/challenges.json` from scratch — **never hand-edit that file**, this builder is its only writer, and it never carries `answer_fa`/`key_points` (it asserts so itself). Runs after the pillar builder (step 2) and before the plus content-index builder (step 5b). Skip on any publish that did not answer «چالش» at Question 4.9.
 5. **Image attributes backfill.** Run `python3 .github/scripts/inject_img_attrs.py` (idempotent, cheap). New pages cloned in this publish may carry images without intrinsic `width`/`height` (CLS) or `alt`; this backfills them site-wide. `--check` mode exists for CI.
 5b. **Plus content-index builder — run on every publish that wrote/changed a brain entry (i.e. every non-paper-only publish).** Run `node tools/build_plus_index.mjs`. It regenerates `plus/content-index.json` from `dentcast-brain.json` (+ `glossary/glossary.json`, the pillar hub page for the categories, and **each pillar's `structure.json` for the subtopics** — it used to scrape those out of the pillar pages' HTML, which no longer contains them). **That makes step 2 a hard prerequisite of this one:** run the pillar builder first, or a missing/stale sidecar silently costs the میز کار tree its subcategories. The builder warns on a missing one rather than failing, so read its output. It is the single taxonomy model the **DentCast Plus «میز کار» dashboard navigation tree** and the homepage "last read" resolver both read (`content_id` → `{cluster, subtopic, type, title, url}`). **It also mirrors the standardized hashtag vocabulary** — every real `#tag` and the compiled **alias table** from `dentcast-hashtag-reference.json` — into `content-index.json`, which is what the AI case-assistant search folds queries and hashtags through (Hard Rule 15 / step 5.0). If step 5.0 minted or re-aliased any concept, this run is what carries it to the live search, so it must run after that. **A stale content-index silently drops the new page from the میز کار tree**, so this builder must run whenever brain content changes. It is the only writer of `plus/content-index.json` — never hand-edit that file. (Note: the `notify-new-articles` Action's sibling CI job `sitemap_only.yml` also runs this builder — and `gen_sitemap.py` — on push to `main`, so the live site self-heals even if this local step is missed; running it here keeps the committed tree correct and the local step-8 verification honest. The **«seen» ticks and study-mode/میز کار activation are separate and path-based** — they need no builder, only that the page lives under a ticked folder and appears on its landing page.)
 5c. **up-board catalog builder — run on every publish that wrote/changed a brain entry (same trigger as 5b).** Run `python3 tools/build_upboard_index.py`. It regenerates `up-board/index.json` — the id/title/type/url/date list that `/up-board/` draws BOTH of its arrangements from — and it is the only writer of that file; never hand-edit it. Two things it takes from the brain that nothing else can supply: the **global publication order** (the brain array is one flat, append-ordered list with the types interleaved, so its index is the only place on the site that knows how a NoteCast and a Chairside sort against each other — Hard Rule 4's append rule is what makes that true, and a per-type list cannot answer it), and each item's **date**, read from the page's own JSON-LD `datePublished` via `build_pillar.py`'s helpers, so the two builders can never disagree about what a date is. **A stale index silently leaves the new page off up-board entirely** — it will not appear under «تازه‌ترین» and cannot be ranked under «بالاترین», even once readers heart it, because the board returns ids and the catalog is what turns an id into a row. The builder reads both `page_url` and `url` (the brain carries two schemas) and derives the type from the URL folder, so a new content type needs no edit here. It does NOT carry heart counts: those live in the API (`GET /votes/board`) and change by the minute. `/up-board/` is `noindex, follow` and stays out of the sitemap by design (`gen_sitemap.py` drops it on its own), and `up-board/index.json` is disallowed in `robots.txt` — do not "fix" either.
@@ -1742,7 +1817,13 @@ After the pillar builder finishes, verify **both** outputs — the page and its 
 
 **This phase is not optional and is not the «… رو انگلیسی کن» trigger — it runs automatically at the end of every `.org` publish.** A publish that produced a new fa page but no English counterpart + working toggle is **incomplete**. The recurring failure this prevents: shipping an insight/notecast/etc. page with **no language toggle** because the cloned template never had one. The toggle is meaningless without its target, so the en page and the toggle are produced together, here, by reusing the existing English-version machinery.
 
-**LiteCast exception (the only skip):** if the locked category is **LiteCast**, skip Phase D entirely and **say so in the report** ("Phase D: skipped — LiteCast is `.ir`-only, no hreflang/en mirror per Hard Rule 10"). Every other category runs it.
+**Two documented skips, and no others:** if the locked category is **LiteCast**,
+skip Phase D entirely and **say so in the report** ("Phase D: skipped — LiteCast
+is `.ir`-only, no hreflang/en mirror per Hard Rule 10"). If Question 4.9 answered
+**چالش**, skip Phase D too and say so ("Phase D: skipped — چالش ships with no
+English mirror, RULE 16 of `.dentcast/challenge-handoff.md`: the mirror would be a
+different `content_id` with no row in `challenges`, so the toggle would lead to a
+page missing the only thing on it"). Every other publish runs it.
 
 **Steps:**
 
@@ -1913,6 +1994,7 @@ fix on its own, never a pattern to copy forward.
 - **Flashcards (step 4.11)** — or the documented "skipped — LiteCast" line: the `DefinedTermSet` node written into `plus/faq-corpus.json` (term count and their `@id`s); how many came from `source: "faq"` vs `"authored"`; which FAQ entries (if any) were judged comparison/decision-shaped and skipped; confirmation no `name`/`description` is a verbatim FAQ copy; anything you asked the user about; confirmation `node tools/build_flashcards_index.mjs` was re-run in step 8 so `plus/flashcards-index.json` reflects the new page
 - **Quiz (step 4.12)** — or the documented "skipped — LiteCast" line: confirmation every FAQ question `name` is standalone (no article deixis per 4.12(a)); how many of the content's FAQ questions are binary/scored vs open (and that any binary answer opens with an explicit «بله»/«خیر» verdict); confirmation `node tools/build_quiz_index.mjs` was re-run in step 8 and the new content's binary count appears in `plus/quiz-index.json`
 - **DES (Question 4.8 + step 4.13)** — or one of the two documented skip lines ("skipped — LiteCast" / "skipped — کاربر انتخاب کرد بدون DES منتشر شود"): which **basket** Question 4.8 landed in (COMMENTARY / RESEARCH / INDETERMINATE-then-asked) and, when it was asked, which of the two options the user picked; then **per source**: the DOI (or «متنِ خودِ مطلب» for COMMENTARY), where `source_text` was resolved from (cabinet hit / MCP lookup / WebFetch / pasted by the user), the `text_basis` with its justification, and the resulting `des_score` + `band` + `question_type` + `provisional`; the outcome of all four Part-3 validation checks (quote verification, arithmetic recomputation, band agreement, schema) and the reproducibility run when one was required; confirmation the record was written to `plus/des-scores.json` under the correct `content_id` with the spec objects **verbatim** and **no** derivable wrapper fields, that nothing was added to the brain entry (Hard Rule 5), and that **no page markup or CSS was inlined** (Part 5); explicit confirmation that no DOI, abstract, or journal quartile was guessed, and that any unscorable source is recorded as `INSUFFICIENT_TEXT` rather than scored from the DentCast متن about it
+- **چالش (Question 4.9 + step 4.14)** — or the documented "4.9: مطلب معمولی" line when it is not one: the question + image markup written on the page (and confirmation it carries no answer/key points anywhere); the paste-box JSON printed for `GET /admin` → «صندوق چالش», with an explicit note that the چالش is not live until the founder pastes it; confirmation `node tools/build_challenge_index.mjs` ran in step 8 and this `content_id` now appears in `plus/challenges.json`; and an explicit per-step verdict for 4.11/4.12/4.13/5.6/5.6-ب/Phase D (all skip, per the table in step 4.14) so none reads as a silent omission (Hard Rule 11)
 - **Cross-linking completion gate (Hard Rule 11) — REQUIRED; the publish is incomplete if any of these is missing.** For **each** of steps 4.7, 4.8, 4.9, report its explicit outcome — never leave one unstated:
   - **4.7 (glossary → new content):** the candidate terms considered, which were linked (auto-applied vs. asked-and-confirmed, per Hard Rule 14, with the link text used), and which were skipped and why (at 5-cap / no section / judged unrelated / asked-and-declined). An empty result is acceptable **only** as a documented "analyzed, 0 qualifying terms".
   - **4.8 (in-body inline links on the new page):** confirmation that a **fresh** semantic analysis of *this* body was run (NOT inherited from the clone); which candidates were auto-applied at high confidence vs. presented to the user (Hard Rule 14); which of the presented ones were approved/inserted (first-occurrence) and which rejected. For episodes, confirm the «درباره این اپیزود» caption was the analyzed body. An empty result is acceptable **only** as a documented "analyzed body, 0 qualifying glossary/episode candidates".

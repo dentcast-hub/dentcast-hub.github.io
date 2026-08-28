@@ -592,6 +592,21 @@ export const config = {
     maxPerUserPerHour: int('ASSISTANT_MAX_PER_USER_PER_HOUR', 20),
   },
 
+  // چالش — the second route on the site (after the assistant) that spends
+  // real model money per call. maxAnswerChars/minAnswerChars bound the model
+  // input and what counts as an answer worth grading; maxExamples caps how
+  // many founder rulings ride along in the prompt (§6.3) — unbounded would
+  // grow the prompt without bound on the most popular چالش, exactly where
+  // cost matters most. Same provider/model/timeout/retry budget as
+  // config.ai — this is a closed classification, the same shape as
+  // selectTags with a smaller catalog, so it needs no AI config of its own.
+  challenge: {
+    maxPerUserPerHour: int('CHALLENGE_MAX_PER_USER_PER_HOUR', 10),
+    maxAnswerChars: int('CHALLENGE_MAX_ANSWER_CHARS', 1500),
+    minAnswerChars: int('CHALLENGE_MIN_ANSWER_CHARS', 40),
+    maxExamples: int('CHALLENGE_MAX_EXAMPLES', 12),
+  },
+
   streakTimezone: str('STREAK_TIMEZONE', 'Asia/Tehran'),
 
   // Path to the generated taxonomy index (tools/build_plus_index.mjs output).

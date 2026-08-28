@@ -89,7 +89,7 @@ export async function computeAchievementFacts(
         shield_used: number; review_sessions: number;
         collections: number; collection_items: number;
         pathways_completed: number; signup_order: number;
-        shares: number;
+        shares: number; challenges_settled: number;
       }>(
         `select
            (select count(*)::int from highlights where user_id = $1) as highlights,
@@ -141,7 +141,13 @@ export async function computeAchievementFacts(
                and exists (select 1 from user_activity r
                             where r.user_id = $1 and r.action = 'article_completed'
                               and r.content_id = s.content_id
-                              and r.created_at <= s.created_at)) as shares`,
+                              and r.created_at <= s.created_at)) as shares,
+           -- «چالشگر»: every attempt, not only settled ones — a queued attempt
+           -- already earned its score under RULE 7, and a badge that lights only
+           -- once the founder gets to the queue would disagree with the score
+           -- for days.
+           (select count(*)::int from challenge_attempts
+             where user_id = $1) as challenges_settled`,
         [userId, tz], // tz: «یادآور» counts review DAYS, in Tehran
       ),
 
@@ -342,6 +348,7 @@ export async function computeAchievementFacts(
     collections: c.collections,
     collection_items: c.collection_items,
     shares: c.shares,
+    challenges_settled: c.challenges_settled,
     // Inverted by nature (a LOWER signup order is better), so it is settled here
     // and handed on as a plain 0/1 — the evaluator only ever compares >=.
     founder_seat: c.signup_order > 0 && c.signup_order <= FOUNDER_SEATS ? 1 : 0,

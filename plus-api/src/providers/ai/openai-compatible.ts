@@ -1,6 +1,6 @@
 import { config } from '../../config.js';
 import { outboundFetch, describeError } from '../outbound.js';
-import type { AiProvider, SelectTagsInput } from './types.js';
+import type { AiProvider, SelectTagsInput, MatchKeyPointsInput, PointState } from './types.js';
 
 // The ONE model call a round ever makes. It shows the model the site's real
 // hashtag catalog and asks for nothing but a subset of it, because the thing
@@ -20,6 +20,32 @@ const SELECT_TAGS_SYSTEM_PROMPT = `تو نمایه‌سازِ معناییِ س�
 - اگر هیچ قلمِ واقعاً مرتبطی نبود، فهرست خالی برگردان؛ خالی برگرداندن بهتر از حدسِ بی‌ربط است.
 - هرگز تشخیص، توصیه‌ی درمانی یا نظرِ بالینی نده.
 - فقط یک شیء JSON برگردان، دقیقاً به این شکل: {"tags": ["...", "..."]}.`;
+
+// چالش grading. English, like its neighbour above (handoff §6.5) — no clinical
+// examples are added here; those come from challenge_examples at call time
+// (§6.3). The model is never shown the founder's prose answer (RULE 5): it
+// sees only the key points, the reader's answer and past examples, which is
+// what keeps this a closed classification rather than an open essay grade.
+const MATCH_KEY_POINTS_SYSTEM_PROMPT = `You compare a student's written answer against a list of key points an expert wrote in advance. You are not a teacher, an examiner, or a clinician. You do not evaluate whether the answer is medically correct, only whether each key point is present in it.
+
+For each key point, answer exactly one of:
+  "covered" — the answer states this point, in any wording, including a
+              paraphrase or an equivalent clinical synonym.
+  "missing" — the answer does not state this point at all.
+  "unsure"  — you cannot tell. Use this whenever the answer is ambiguous,
+              partially states the point, uses a term you cannot confidently
+              map onto it, or is written in a way you cannot parse.
+
+"unsure" is a correct and expected answer. A human reviews every "unsure",
+so choosing it costs nothing and is always better than a guess. Never choose
+between "covered" and "missing" to avoid it.
+
+Judge only the key points given. Never invent a key point, never merge two,
+never comment on anything the answer says beyond them.
+
+Answer with a bare JSON object and nothing else:
+{"points":[{"id":"kp1","state":"covered"},{"id":"kp2","state":"unsure"}]}
+Return exactly one entry per key point, in the order given.`;
 
 interface ChatCompletionResponse {
   choices?: Array<{ message?: { content?: string } }>;
@@ -211,5 +237,32 @@ export class OpenAiCompatibleProvider implements AiProvider {
       .filter((t): t is string => typeof t === 'string' && t.trim().length > 0)
       .map((t) => t.trim().slice(0, 60))
       .slice(0, 8);
+  }
+
+  async matchKeyPoints(input: MatchKeyPointsInput): Promise<{ id: string; state: PointState }[]> {
+    return this.withRetry(() => this.matchKeyPointsAttempt(input));
+  }
+
+  // Shape cleanup only, same posture as selectTagsAttempt above — the REAL
+  // validation (every id present, exactly the key-point set, no extras, every
+  // state one of the three) is services/challenge.ts's job against the live
+  // key-point set, same as case-assistant.ts re-validates every tag against
+  // the live content index.
+  private async matchKeyPointsAttempt({ keyPoints, answer, examples }: MatchKeyPointsInput):
+  Promise<{ id: string; state: PointState }[]> {
+    const parsed = await this.chatJson(
+      MATCH_KEY_POINTS_SYSTEM_PROMPT,
+      JSON.stringify({ key_points: keyPoints, answer, examples }),
+    ) as { points?: unknown };
+
+    const raw = Array.isArray(parsed.points) ? parsed.points : [];
+    const ids = new Set(keyPoints.map((k) => k.id));
+    const states = new Set(['covered', 'missing', 'unsure']);
+    return raw
+      .filter((p): p is { id: string; state: PointState } => !!p && typeof p === 'object'
+        && typeof (p as { id?: unknown }).id === 'string'
+        && ids.has((p as { id: string }).id)
+        && states.has((p as { state?: unknown }).state as string))
+      .map((p) => ({ id: p.id, state: p.state }));
   }
 }

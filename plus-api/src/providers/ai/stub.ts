@@ -14,4 +14,11 @@ export class StubAiProvider implements AiProvider {
   async selectTags(): Promise<string[]> {
     return [];
   }
+
+  // AI_PROVIDER=stub (the default, and what CI runs) — every attempt therefore
+  // queues, which is the correct degraded behaviour (handoff §6.4) and lets
+  // the whole challenge test suite run without a key.
+  async matchKeyPoints(): Promise<{ id: string; state: 'covered' | 'missing' | 'unsure' }[]> {
+    return [];
+  }
 }

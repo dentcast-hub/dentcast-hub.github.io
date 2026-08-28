@@ -46,6 +46,22 @@ export async function mergeProfiles(
   );
   await client.query('update article_notes set user_id = $2 where user_id = $1', [fromId, toId]);
 
+  // چالش: challenge_attempts.user_id — without it a merge cascade-deletes a
+  // reader's attempts, which are score-bearing (handoff §5). Same collision
+  // shape as user_pathways/article_notes above: `challenge_attempts_one_per_page`
+  // is a per-user unique index on (user_id, content_id), so if BOTH accounts
+  // separately answered the same چالش, keep the target's own attempt (it
+  // already has a founder ruling or a settled verdict on it, if either does)
+  // and drop the source's rather than let the repoint violate the index.
+  await client.query(
+    `delete from challenge_attempts ca
+      where ca.user_id = $1
+        and exists (select 1 from challenge_attempts k
+                     where k.user_id = $2 and k.content_id = ca.content_id)`,
+    [fromId, toId],
+  );
+  await client.query('update challenge_attempts set user_id = $2 where user_id = $1', [fromId, toId]);
+
   // --- کد معرف (services/referrals.ts). Both tables cascade-delete off
   //     profiles, so skipping them here would silently erase real referral
   //     history and financial credit the moment a merge runs — see the
