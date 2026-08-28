@@ -49,7 +49,11 @@ vi.mock('/plus/js/login-modal.js', () => ({
 }));
 
 function anchor(): HTMLElement {
-  document.body.innerHTML = '<main><div class="prose" id="p">متن</div></main>';
+  document.body.innerHTML = `<main><div class="glass-box" id="p">
+    <img data-dc-challenge-image src="/img/x.jpg" alt="">
+    <h3>چالش</h3>
+    <p data-dc-challenge-question>سؤال چالش؟</p>
+  </div></main>`;
   return document.getElementById('p')!;
 }
 
@@ -83,9 +87,24 @@ describe('no چالش for this page', () => {
 
   it('never inserts anything when the API says the row does not exist yet (half-published)', async () => {
     stateImpl = () => Promise.resolve({ exists: false });
-    mountChallenge(anchor(), CONTENT);
+    const a = anchor();
+    mountChallenge(a, CONTENT);
     await settle();
     expect(document.querySelector('.dc-challenge')).toBeNull();
+    expect(document.querySelector('[data-dc-challenge-question]')?.hidden).not.toBe(true);
+  });
+});
+
+describe('static page markup', () => {
+  it('hides the step-4.14 copy once the live block mounts', async () => {
+    user = { tier: 'free' };
+    status = 'user';
+    mountChallenge(anchor(), CONTENT);
+    await settle();
+    expect(document.querySelector('[data-dc-challenge-question]')?.hidden).toBe(true);
+    expect(document.querySelector('[data-dc-challenge-image]')?.hidden).toBe(true);
+    expect(document.querySelector('h3')?.hidden).toBe(true);
+    expect(document.querySelectorAll('.dc-ch-q')).toHaveLength(1);
   });
 });
 

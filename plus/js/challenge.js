@@ -22,10 +22,10 @@
 // inserted until BOTH checks confirm there is something to show — a
 // half-published چالش (page markup + challenges.json entry, but no admin
 // paste yet) must be invisible, never a box that 404s on submit.
-import { api, currentUser, meStatus } from './api.js?v=42';
-import { el, faNum } from './util.js?v=42';
-import { premiumCta } from './premium-cta.js?v=42';
-import { openLoginModal } from './login-modal.js?v=42';
+import { api, currentUser, meStatus } from './api.js?v=43';
+import { el, faNum } from './util.js?v=43';
+import { premiumCta } from './premium-cta.js?v=43';
+import { openLoginModal } from './login-modal.js?v=43';
 
 let filePromise = null;
 
@@ -182,6 +182,21 @@ function signedOutView(contentId, onSignedIn) {
   ]);
 }
 
+// Step 4.14 writes the public half into the page body for crawlers and for the
+// half-published state (exists:false). Once the live block mounts, this module
+// owns the display — leaving the static copy visible duplicates question + image.
+function hideStaticChallenge(anchor) {
+  const scope = anchor || document;
+  const q = scope.querySelector('[data-dc-challenge-question]');
+  const img = scope.querySelector('[data-dc-challenge-image]');
+  if (img) img.hidden = true;
+  if (q) {
+    const prev = q.previousElementSibling;
+    if (prev && prev.tagName === 'H3') prev.hidden = true;
+    q.hidden = true;
+  }
+}
+
 async function draw(anchor, contentId) {
   const map = await loadChallenges();
   const pub = map && map.byContent && map.byContent[contentId];
@@ -194,6 +209,8 @@ async function draw(anchor, contentId) {
   // handoff 11.3: exists:false (the page markup + index exist, but the
   // founder has not pasted the admin form yet) — invisible, not broken.
   if (!apiState || !apiState.exists) return;
+
+  hideStaticChallenge(anchor);
 
   const host = el('section', { class: 'dc-challenge' });
   const parent = anchor.parentNode;

@@ -11,7 +11,7 @@
 // pricing page can report WHICH gate sends people who actually buy. That is the
 // only way to learn whether the review cards or the collections are what people
 // are really paying for.
-import { el } from './util.js?v=42';
+import { el } from './util.js?v=43';
 
 export const PRICING_URL = '/plus/pricing.html';
 
