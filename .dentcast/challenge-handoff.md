@@ -10,21 +10,31 @@ it.
 
 ## 0. What this is, in one paragraph
 
-A **چالش** is an attribute of an ordinary publish, not a content type. The
-founder publishes a page in its normal folder (`chairside/`, `notecast/`, …)
-and says «این پست چالش هم دارد». The page then carries, under the article, a
-question the founder wrote, an image, and a box the reader writes a free-text
-answer into. On submit, a model compares that answer against **key points the
-founder wrote at publish time** and reports which ones were covered. If the
-model is not sure about even one key point, nothing is shown as a verdict —
-the attempt goes into the founder's queue in `GET /admin`, the founder rules,
-and the reader is told in اطلاعیه. Answering is premium; reading the question
-is public. Every settled attempt earns score, and score feeds a badge that
-mints a real subscription discount.
+A **چالش** is a **post whose body is a question**. It is published through the
+ordinary publishing router, into an **existing folder** — `chairside/`,
+`insight/`, whichever the founder names — taking that folder's next number and
+that folder's brain shape. It is not a new folder and not a new brain type
+(RULE 14). What differs is the *page*: where a chairside post carries an article,
+a چالش carries a question, an image, and a box the reader writes a free-text
+answer into.
+
+The founder gives the question **and the answer** at publish time. Only the
+question is published. The answer never leaves the database.
+
+On submit, a model compares the reader's answer against **key points the founder
+wrote at publish time** and decides, per key point, whether it was covered. If
+the model is not sure about even one of them, no verdict is shown — the attempt
+goes into the founder's queue in `GET /admin`, the founder rules, and the reader
+is told in اطلاعیه.
+
+Reading the question is **public**. Answering is **premium**; a signed-out or
+free reader is told so. The reader is shown **whether their answer was right** —
+never the founder's answer, and never the key points (RULE 6). Every attempt
+earns score, and score feeds a badge that mints a real subscription discount.
 
 The model **never writes a sentence a reader sees.** It returns a verdict per
-key point from a closed three-value set, and plain code renders the founder's
-own prose. See RULE 2.
+key point from a closed three-value set, and plain code renders a verdict word.
+See RULE 2.
 
 ---
 
@@ -61,8 +71,8 @@ READER                          SYSTEM                        FOUNDER
                                                      publishes a page with
                                                      چالش: question + image
                                                      + 3–5 نکات کلیدی
-                                                     (workflow step 4.14,
-                                                      filed via GET /admin)
+                                                     (step 4.14; answer filed
+                                                      via GET /admin)
 reads the article
 sees the چالش block
 (public: question + image)
@@ -73,11 +83,11 @@ presses «بفرست»
                     ──►  one attempt per (user, page)
                     ──►  ai.matchKeyPoints(key_points, answer, examples)
                          ├─ every point covered/missing  ──► SETTLED NOW
-                         │      verdict + the founder's own answer
-                         │      shown immediately
+                         │      one verdict word + «N از M نکته»
+                         │      (never the answer, never the points)
                          └─ ANY point «unsure»           ──► QUEUED
                                 reference code C-XXX-XXX
-                                the founder's answer is STILL shown
+                                «این یکی را خودم می‌خوانم»
                                                               sees it in GET /admin
                                                               ticks each key point
                                                               presses «ثبت و اطلاع بده»
@@ -212,10 +222,13 @@ profile merge cascade-deletes a reader's attempts, which are score-bearing.
 about *text*, and it outlives the account that produced it.
 
 > **RULE 3 — One attempt per reader per page, enforced by the unique index,
-> never by a count.** A second attempt is not a retry: submitting reveals the
-> founder's full answer, so attempt two would be answering with the answer on
-> screen. The unique index is the enforcement; do not add a friendlier
-> "attempts_used" column that can drift from it.
+> never by a count.** The answer key is hidden and stays hidden (RULE 6), so a
+> retry is not a second chance to think — it is a probe. A reader who is told
+> «نادرست» and can resubmit will widen the answer until something sticks, which
+> turns a graded question into a search over a key they cannot see and makes the
+> score meaningless. One attempt also matches what the reader is told up front:
+> think first, then write. The unique index is the enforcement; do not add a
+> friendlier "attempts_used" column that can drift from it.
 
 ---
 
@@ -361,9 +374,16 @@ POST /challenge/:contentId/answer requireAuth + requirePremium
 **`GET /challenge/:contentId`** is the only endpoint here without
 `requirePremium`, and it must stay that way — the block needs to render for a
 signed-out reader. It returns `{ exists: true }` plus, when the caller has an
-attempt, that attempt's `status`, `verdict`, `answer_text`, and the founder's
-`answer_fa`. **`answer_fa` and `key_points` are returned only to a reader who
-has already submitted.** Everyone else gets neither.
+attempt, that attempt's `status`, `answer_text`, and — only when settled —
+`result` and `covered_count` / `point_count` (§7.2).
+
+> **RULE 6 — `answer_fa` and the key-point TEXTS never leave the server.** Not
+> in `GET`, not in `POST`, not to a reader who already answered, not to a
+> premium reader, not ever. They are the answer key: `key_points[2].text` is
+> «باید ابتدا اباتمنت را خارج کرد», which *is* the answer written shorter. The
+> route must select the columns it needs for the model call and shape a response
+> object explicitly — never `select *` and never spread the challenge row into a
+> reply. The one thing that crosses the wire is the verdict of §7.2.
 
 **`POST /challenge/:contentId/answer`**, in order:
 
@@ -379,19 +399,36 @@ has already submitted.** Everyone else gets neither.
 4. `recordActivity(userId, 'challenge_answered', contentId, {})` — see §8.
 5. Call the model. On a clean verdict → `status='settled'`, `verdict`,
    `settled_at`. On anything else → leave `status='queued'`.
-6. Return `{ status, verdict, answer_fa, key_points, reference }`. **`answer_fa`
-   is returned in both branches** — a queued reader still gets the founder's
-   answer immediately; only the verdict on their own text is pending.
+6. Return `{ status, reference }` plus, when settled, the §7.2 verdict. Never
+   `answer_fa`, never `key_points`, never the per-point array (RULE 6).
 
-> **RULE 6 — Score is recorded before the model is called, and never depends on
+### 7.2 What a settled attempt returns
+
+The per-point array is stored in `challenge_attempts.verdict` — the founder
+needs it in the queue and the examples are built from it — but it is **reduced
+before it crosses the wire**:
+
+```ts
+{ result: 'full' | 'partial' | 'none',   // covered === total | > 0 | 0
+  covered_count: number,
+  point_count: number }
+```
+
+Do the reduction in `services/challenge.ts` in one exported function and call it
+from both `GET` and `POST`. Two shapes for one answer is how the raw array ends
+up on the wire from the endpoint somebody edits later.
+
+> **RULE 7 — Score is recorded before the model is called, and never depends on
 > the verdict.** `case-assistant.ts` records after its call resolves, because
-> there a failed generation means the user got nothing. Here the user got
-> something either way: the attempt is stored and the founder's answer is
-> shown. Making score wait on the verdict would mean a queued reader waits days
-> for points they already earned by writing, and it would make a model error
-> cost a reader score — which is the thing §6.2 exists to prevent.
+> there a failed generation means the user got nothing. Here what the reader
+> earned is the writing, which is done and stored before any model runs. Making
+> score wait on the verdict would mean a queued reader waits days for points
+> they already earned, and it would make a model error cost a reader score —
+> which is the thing §6.2 exists to prevent. It is also what keeps a queued
+> attempt from feeling like a punishment: the score lands at once, only the
+> verdict waits.
 
-### 7.2 Founder — added to `routes/admin.ts` behind the existing admin guard
+### 7.3 Founder — added to `routes/admin.ts` behind the existing admin guard
 
 ```
 GET  /admin/challenges                  → { pending: [...], count }
@@ -413,7 +450,7 @@ key points, each with a non-empty `id` and `text`, ids unique.
 4. insert into `challenge_examples`
 5. `sendCapped(userId, …, 'challenge_ruled')`
 
-### 7.3 The admin page block
+### 7.4 The admin page block
 
 Insert into `renderHtml` in `routes/admin.ts` immediately **after** the
 «ارزیاب DES» block, mirroring its markup conventions exactly: `<h3>`, `.muted`,
@@ -447,14 +484,14 @@ a share "costs one second, and score is never deducted", so it would be a farm.
 An answer is minutes of writing, capped at one per page by the unique index in
 §5. It is the most expensive thing a reader can do on this site.
 
-> **RULE 7 — Never deduct for a wrong answer.** `score.ts`: "Score is never
+> **RULE 8 — Never deduct for a wrong answer.** `score.ts`: "Score is never
 > deducted — a threshold is a milestone, not a purchase." A reader who tried and
 > missed every key point learned more than one who skipped the box, and the
 > feature dies the day being wrong is punished.
 
 **Score is for answering, not for being right.** There is deliberately no
 correctness bonus in v1: it would reintroduce the dependency on the verdict that
-RULE 6 removes, and it would make the model's mistakes cost points. Revisit only
+RULE 7 removes, and it would make the model's mistakes cost points. Revisit only
 after the queue rate is known.
 
 ### 8.2 League
@@ -506,7 +543,7 @@ Add `challenges_settled` to the counts query in
 
 Count **attempts, not settled attempts**, despite the metric name reading that
 way — rename the metric `challenges_answered` if that reads better to you, but
-keep the semantics: a queued attempt already earned its score under RULE 6, and
+keep the semantics: a queued attempt already earned its score under RULE 7, and
 a badge that lights only once the founder gets around to the queue would make
 the wall disagree with the score for days.
 
@@ -537,7 +574,7 @@ immediately **before** the `mountArticleThreads` call in each:
 On the two shell sites `findProseEnd` takes `root` and the mount takes the same
 `root` as its scope — copy `mountDesHere`'s signature there exactly.
 
-> **RULE 8 — Mount on all four, including episodes, and let the data decide.**
+> **RULE 9 — Mount on all four, including episodes, and let the data decide.**
 > Do not add an "articles only" condition. Both neighbours in this area learned
 > this the hard way and say so in their own comments: DES mounts on episodes
 > "and NOT because episodes are special — the badge is driven entirely by
@@ -550,7 +587,7 @@ On the two shell sites `findProseEnd` takes `root` and the mount takes the same
 
 Anchor on **`findProseEnd()`**, never `findProseBox()`.
 
-> **RULE 9 — `findProseEnd()`, and this is not a style preference.** On every
+> **RULE 10 — `findProseEnd()`, and this is not a style preference.** On every
 > page whose body is a single box the three anchors in `config.js` agree, which
 > is why picking the wrong one stays invisible in testing. گفت‌وگوی زیر مطلب
 > shipped on `findProseBox()` and read correctly on 400-odd pages while opening
@@ -573,7 +610,7 @@ upsell under it is an advert on every page.
 The question, the image and the invitation line are **public**. The answer box
 renders for everyone. The gate fires on submit.
 
-> **RULE 10 — Three answers, never two.** 401 = signed out → the sign-in path
+> **RULE 11 — Three answers, never two.** 401 = signed out → the sign-in path
 > leads and the purchase link follows quieter (they may be a subscriber logged
 > out on this device). 402 = free → the premium card. **Anything else = «we
 > could not ask», which must never render as an upsell.** A redeploy is minutes
@@ -586,23 +623,27 @@ renders for everyone. The gate fires on submit.
 (the reader's own earlier attempt, re-rendered on a later visit — `GET` returns
 it, so a returning reader never sees an empty box).
 
-**`settled`** shows each key point with its state — covered and missing, both
-listed, never a bare score — then the founder's `answer_fa` under a heading.
-**`queued`** shows the reference code in a monospace dashed box, the line below,
-and `answer_fa` exactly as `settled` does. The only difference between the two
-views is the verdict area.
+**`settled`** shows the reader their own answer back, one verdict word, and the
+count line — nothing else. **`queued`** shows their answer back, the reference
+code in a monospace dashed box, and the waiting line.
 
-> **RULE 11 — The founder's answer is shown on submit in every branch,
-> including queued and including a model failure.** It is the thing the reader
-> actually came for; the verdict is commentary on it. A queued reader who is
-> shown nothing but a wait message has been charged an attempt and given
-> nothing.
+> **RULE 12 — A settled چالش shows a verdict, never a correction.** No key point
+> is named, no key point is listed as missing, and the founder's answer is not
+> shown — not on submit, not afterwards, not to a premium reader. This is a
+> graded question, not a lesson: the point of publishing only the question is
+> that the answer stays worth having. A "you missed X" line is the answer
+> delivered one bullet at a time.
+>
+> The count («۲ از ۴ نکته») is the one exception and it leaks nothing: it says
+> how many, never which, and with one attempt per reader (RULE 3) there is
+> nothing to do with it. It is there because a bare «نادرست» to somebody who
+> got three of four is a lie.
 
 ### 9.4 CSS
 
 Goes in `plus/plus.css`, **not** `dc-article.css`.
 
-> **RULE 12 — plus.css, for the same reason article threads live there.** The
+> **RULE 13 — plus.css, for the same reason article threads live there.** The
 > desktop shell keeps `plus.css` and strips `dc-article.css`, which is linked by
 > article pages alone; `index.html` loads no shared CSS at all. A block that
 > mounts on both surfaces cannot be styled in a file only one of them has.
@@ -618,20 +659,22 @@ wrote the question and the answer, and the machine only ticked boxes.
 | where | string |
 |---|---|
 | heading | `چالش` |
-| invite | `قبل از دیدن جواب، خودت جواب بده.` |
+| invite | `جوابت را بنویس. یک بار.` |
 | box placeholder | `جوابت را این‌جا بنویس…` |
 | submit | `بفرست` |
+| under the box | `فقط یک بار می‌توانی جواب بدهی — با حوصله بنویس.` |
 | too short | `کمی بیشتر بنویس تا بشود سنجید.` |
 | locked (title) | `جواب‌دادن بخشی از پریمیوم است` |
-| locked (body) | `سؤال برای همه باز است. جواب‌دادن و دیدنِ تطبیقِ جوابت با جوابِ من، بخشی از پریمیوم است.` |
+| locked (body) | `سؤال برای همه باز است. جواب‌دادن بخشی از پریمیوم است.` |
 | signed out | `برای جواب‌دادن وارد شو.` |
 | unreachable | `الان نتوانستیم بررسی کنیم. کمی بعد دوباره امتحان کن.` |
-| settled heading | `تطبیق جوابت` |
-| covered | `گفتی` |
-| missing | `این را جا انداختی` |
+| your answer heading | `جوابِ تو` |
+| result `full` | `درست بود` |
+| result `partial` | `تا حدی درست بود` |
+| result `none` | `درست نبود` |
+| count line | `{N} از {M} نکته‌ی کلیدی` |
 | queued (title) | `جوابت رسید` |
 | queued (body) | `این یکی را خودم می‌خوانم — مدل مطمئن نبود. نتیجه در **اطلاعیه‌ات** می‌آید.` |
-| answer heading | `جوابِ من` |
 | already answered | `به این چالش قبلاً جواب داده‌ای.` |
 | footer | `تطبیق با نکات کلیدی انجام می‌شود، نه با کلمه‌به‌کلمه‌ی جواب.` |
 
@@ -659,20 +702,74 @@ smaller catalog. If the served model ever proves unequal to it, that is a
 
 ## 11. The publishing workflow
 
-### 11.1 Phase B — Question 4.9 (new, after Question 4.8)
+### 11.1 What a چالش publish IS — read this before touching the router
 
-> **Question 4.9 — چالش؟** Ask only when the user has not already said. «این
-> پست چالش هم دارد؟» If yes, collect: the question text, the image, and 3–5
-> نکات کلیدی. **Propose the key points from the متن and have the user confirm
-> or rewrite them** — they are the answer key and Hard Rule 16 applies to every
-> string the user supplies. If no, the publish carries no چالش and step 4.14 is
-> a documented skip.
+A چالش is triggered exactly the way every other publish is: «یه پست جدید دارم
+برای انتشار», then the type. The user names **the folder and that it is a
+چالش** — «چیرساید، و آزمونه». Two things follow, and getting either wrong
+breaks a Hard Rule:
 
-### 11.2 Phase C — step 4.14 (new, after 4.13)
+**It takes the folder's brain type, not a new one.** A چالش in `chairside/`
+writes an ordinary chairside brain entry —
+`{type:'chairside', id, title, caption, hashtags, keywords, page_url, pillar}`,
+the exact shape of the last chairside entry, appended at the END of the list.
 
-Writes the **public half only**: appends this `content_id` to
-`plus/challenges.json` via `node tools/build_challenge_index.mjs` in step 8, and
-puts the question + image markup on the page.
+> **RULE 14 — Never mint a `type: 'challenge'` in the brain and never give a
+> چالش its own folder.** Hard Rule 3 says categories never mix and each
+> category's entries go to their own directory; Hard Rule 6 says the entry
+> schema is sacred and no new field may appear. A چالش that is filed in
+> `chairside/` but typed `challenge` violates both at once — it would be a
+> category whose directory belongs to another category. «نوع پست متفاوت» is a
+> property of the PAGE BODY and of `challenges.json`, never of the taxonomy.
+> The homepage's latest-content widget, the pillar, the landing page and
+> up-board then carry it for free, because to all of them it is a chairside
+> post — which is what the founder asked for.
+
+**Its body is a question, so the article-shaped steps do not apply.** Give each
+of these an explicit verdict in the publish report; a silent skip is what Hard
+Rule 11 exists to forbid.
+
+| step | on a چالش |
+|---|---|
+| 2.4 pillar & subtopic | **runs** — it is a real page in the taxonomy |
+| 2.5 «کاوش بیشتر» capsules | **runs** |
+| 2.6 landing/index page | **runs** |
+| 4.11 flashcards | **skip** — no FAQ; a چالش has no prose to define terms from |
+| 4.12 quiz-ready FAQ | **skip** — same, and see RULE 1 |
+| 4.13 DES | **skip, reported** — a question cites nothing and appraises nothing. It is not basket 3: basket 3 is research-shaped content with no identified paper, and this is not research-shaped. Write **no key** in `des-scores.json` |
+| 5.0 hashtags | **runs** — Hard Rule 15 is unconditional |
+| 5 brain entry | **runs**, per RULE 14 above |
+| 5.6 / 5.6-ب pathways & bundles | **skip** — a pathway step is something to read |
+| 6 Pulse | **runs** — it is new content and worth announcing |
+| Phase D en mirror | **ask the founder** — see below |
+| Phase E / F | **run** |
+
+> **Phase D is the one open question in this document.** Hard Rule 12 makes the
+> English mirror mandatory and names LiteCast as its single exception. A چالش
+> mirror would live at `chairside/en/chairside-31`, which is a **different
+> `content_id`** — so it has no row in `challenges.json`, the block removes
+> itself, and the toggle leads to a page missing the only thing on it. Adding a
+> second Hard-Rule-12 exception is the founder's call, not this document's.
+> Until they make it, **ask on the first چالش publish** and record the answer
+> here.
+
+### 11.2 Phase B — Question 4.9 (new, after Question 4.8)
+
+> **Question 4.9 — چالش؟** Skip when the user already said so at Question 1.
+> Otherwise: «این پست آزمون است یا مطلب معمولی؟» When it is a چالش, collect the
+> question text, the image, the **answer**, and 3–5 **نکات کلیدی**. Propose the
+> key points from the answer and have the user confirm or rewrite them — they
+> are the answer key, and Hard Rule 16 applies to every string the user
+> supplies: copied, never re-typed.
+>
+> **Question 3.5's de-AI pass runs on the question and the answer as usual.**
+> The key points are not prose the reader ever sees and are exempt.
+
+### 11.3 Phase C — step 4.14 (new, after 4.13)
+
+Writes the **public half only**: the question + image markup on the page, and
+this `content_id` into `plus/challenges.json` via
+`node tools/build_challenge_index.mjs` in step 8.
 
 Then prints into the publish report, for the founder to paste into
 `GET /admin` → «صندوق چالش»:
@@ -689,7 +786,7 @@ the row exists. Have `GET /challenge/:id` return `{ exists: false }` for a
 missing row and have the block remove itself on it, so a half-published چالش is
 invisible rather than broken.
 
-### 11.3 `tools/build_challenge_index.mjs`
+### 11.4 `tools/build_challenge_index.mjs`
 
 Generated-only, run in step 8, never hand-edited — same contract as
 `build_flashcards_index.mjs` and `build_quiz_index.mjs`. `content_id` is the
@@ -708,14 +805,14 @@ No answer, no key points, ever. Add an assertion in the builder that throws if
 either key appears in its output — the file is public and this is the one
 mistake that cannot be walked back once it is in git history.
 
-### 11.4 `tools/verify_publish.py`
+### 11.5 `tools/verify_publish.py`
 
 Add a row beside the existing quiz row (line ~1207): when the publish declared a
 چالش, `content_id` must be present in `plus/challenges.json`, and the entry must
 carry a question and an image and **must not** carry `answer_fa` or
 `key_points`. Print the fix command on FAIL, like every other row.
 
-### 11.5 Parity
+### 11.6 Parity
 
 `CLAUDE.md`, `AGENTS.md` and `.cursor/rules/dentcast-router.mdc` are updated
 **in the same commit** — that is the maintenance rule at the top of `CLAUDE.md`,
@@ -746,12 +843,18 @@ not a nicety. Add چالش to the repo-conventions list with a pointer here.
 | 15 | founder verdict containing `unsure` | 400, nothing written |
 | 16 | founder verdict missing a key point | 400, nothing written |
 | 17 | 20 examples exist | the call carries the newest 12 |
-| 18 | `GET` as the answer's owner, settled | `answer_fa` present |
-| 19 | `GET` as a premium reader with no attempt | `answer_fa` and `key_points` **absent** |
-| 20 | `GET` for a `content_id` with no row | `{ exists: false }` |
-| 21 | profile merge | attempts survive, score unchanged |
-| 22 | upsert with 6 key points | 400 |
-| 23 | upsert with duplicate ids | 400 |
+| 18 | `GET` as the settled attempt's own owner | `result` + counts present; `answer_fa`, `key_points` and the per-point array **all absent** |
+| 19 | `POST` response, settled | same — the three never appear |
+| 20 | `GET` as a premium reader with no attempt | no `answer_fa`, no `key_points`, no verdict |
+| 21 | 4 key points, 4 covered / 2 covered / 0 covered | `result` = `full` / `partial` / `none`, `covered_count` correct |
+| 22 | `GET` for a `content_id` with no row | `{ exists: false }` |
+| 23 | profile merge | attempts survive, score unchanged |
+| 24 | upsert with 6 key points | 400 |
+| 25 | upsert with duplicate ids | 400 |
+
+Fixtures 18–20 are the leak tests and are the reason RULE 6 is a rule: assert on
+the **serialized response body**, not on a typed object, so a future `select *`
+or an object spread fails them.
 
 Fixtures 7–10 are the ones that matter most: each is a way a model failure could
 have reached a reader as «missing».
@@ -760,8 +863,9 @@ have reached a reader as «missing».
 
 Renders the block against a stub `GET`: no entry → the host is removed; 402 →
 the premium card, amber only there; a network error → the unreachable copy and
-**not** an upsell (RULE 10); settled → both covered and missing points listed
-plus `answer_fa`; queued → the reference code **and** `answer_fa`.
+**not** an upsell (RULE 11); settled → the verdict word and the count line, and
+**no key-point text anywhere in the rendered DOM**; queued → the reference code
+and the waiting line.
 
 ---
 
@@ -786,7 +890,7 @@ plus `answer_fa`; queued → the reference code **and** `answer_fa`.
 
 ## 14. Later, not now
 
-- **A correctness bonus on score.** Out of scope by RULE 6/7. Revisit once the
+- **A correctness bonus on score.** Out of scope by RULE 7/8. Revisit once the
   real queue rate is known.
 - **A league XP kind.** §8.2.
 - **Publishing an exemplary answer.** گفت‌وگوی زیر مطلب already has the
@@ -794,5 +898,14 @@ plus `answer_fa`; queued → the reference code **and** `answer_fa`.
   here, it is that switch again — a founder decision written down, never a
   default.
 - **A surface for `quiz-index.json`.** Still dormant, still separate (RULE 1).
-- **Retries.** RULE 3 forbids them while submitting reveals the answer. A
-  "practice mode" that does not reveal is a different feature.
+- **Retries.** RULE 3 forbids them.
+- **Revealing the answer, ever.** RULE 12 is a product decision, not a
+  limitation: publishing only the question is what keeps the answer worth
+  having. If it is ever revisited, the shape is a per-چالش `reveal` column the
+  founder sets at publish (`verdict` | `points` | `answer`) — never a global
+  flip, and never a delay timer, which would just move the question to "how
+  long".
+- **A چالش whose folder has no page template for a question.** All nine
+  specialist folders clone their last entry; a چالش clones the same page and
+  replaces the body. If a folder ever needs its own چالش layout, that is a
+  template decision inside that folder, not a new content type.
