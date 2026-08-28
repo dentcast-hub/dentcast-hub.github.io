@@ -18,9 +18,9 @@
 // inserted until BOTH checks confirm there is something to show — a
 // half-published چالش (page markup + challenges.json entry, but no admin
 // paste yet) must be invisible, never a box that 404s on submit.
-import { api, currentUser, meStatus } from './api.js?v=46';
-import { el, faNum } from './util.js?v=46';
-import { premiumCta } from './premium-cta.js?v=46';
+import { api, currentUser, meStatus } from './api.js?v=47';
+import { el, faNum } from './util.js?v=47';
+import { premiumCta } from './premium-cta.js?v=47';
 
 let filePromise = null;
 
@@ -188,7 +188,38 @@ function hideStaticChallenge(anchor) {
   }
 }
 
-async function draw(anchor, contentId) {
+function challengeQuestionEl(anchor, scope) {
+  const root = scope === document
+    ? ((anchor && anchor.closest && anchor.closest('main')) || document)
+    : scope;
+  return root.querySelector('[data-dc-challenge-question]');
+}
+
+function insertChallengeHost(host, anchor, scope) {
+  const q = challengeQuestionEl(anchor, scope);
+  if (q && q.parentNode) {
+    // Step 4.14 leaves the question inside `.glass-box`. When findProseEnd()
+    // is that same box, `afterend` lands OUTSIDE it — action row and ads stay
+    // in/around the box while the live question floats below. Mount in-box.
+    const parent = q.parentNode;
+    const existing = parent.querySelector('.dc-challenge');
+    if (existing) existing.remove();
+    parent.insertBefore(host, q);
+    return true;
+  }
+  const parent = anchor && anchor.parentNode;
+  if (!parent) return false;
+  const existing = parent.querySelector('.dc-challenge');
+  if (existing) existing.remove();
+  // No step-4.14 markup: hang below the prose anchor, before گفت‌وگو when
+  // that block is already on the page (plus.js ordering).
+  const threadsHost = parent.querySelector('.dc-threads');
+  if (threadsHost) threadsHost.insertAdjacentElement('beforebegin', host);
+  else anchor.insertAdjacentElement('afterend', host);
+  return true;
+}
+
+async function draw(anchor, contentId, scope = document) {
   const map = await loadChallenges();
   const pub = map && map.byContent && map.byContent[contentId];
   if (!pub) return; // handoff 9.1: no entry in plus/challenges.json — never inserted
@@ -204,18 +235,7 @@ async function draw(anchor, contentId) {
   hideStaticChallenge(anchor);
 
   const host = el('section', { class: 'dc-challenge' });
-  const parent = anchor.parentNode;
-  if (!parent) return;
-  const existing = parent.querySelector('.dc-challenge');
-  if (existing) existing.remove();
-  // Deterministic ordering (plus.js:137's technique, applied here): چالش must
-  // land BEFORE گفت‌وگوی زیر مطلب regardless of which of the two resolves
-  // first, so it chains onto `.dc-threads` with 'beforebegin' when that block
-  // is already there, rather than a raw insert on `anchor` (which would only
-  // ever win front position by being the temporally-last synchronous call).
-  const threadsHost = parent.querySelector('.dc-threads');
-  if (threadsHost) threadsHost.insertAdjacentElement('beforebegin', host);
-  else anchor.insertAdjacentElement('afterend', host);
+  if (!insertChallengeHost(host, anchor, scope)) return;
 
   const status = meStatus(); // 'user' | 'anon' | 'error' — set by currentUser() above
   const isPremium = !!user && user.tier === 'premium';
@@ -258,7 +278,7 @@ export function mountChallenge(anchor, contentId, scope = document) {
   const go = () => {
     if (drawn) return;
     drawn = true;
-    draw(anchor, contentId).catch(() => {});
+    draw(anchor, contentId, scope).catch(() => {});
   };
 
   if (typeof IntersectionObserver === 'function') {
