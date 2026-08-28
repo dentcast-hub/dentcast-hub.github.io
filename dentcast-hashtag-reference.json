@@ -367,7 +367,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 85,
+   "count": 86,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -453,7 +453,8 @@
     "insight/insight-63",
     "insight/insight-64",
     "insight/insight-65",
-    "insight/insight-66"
+    "insight/insight-66",
+    "insight/insight-67"
    ]
   },
   {
@@ -2820,6 +2821,36 @@
    ]
   },
   {
+   "key": "فینیش_لاین",
+   "tag": "#فینیش_لاین",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "خط ختم تراش — مرزی که مارجین رستوریشن روی آن می‌نشیند.",
+   "use_when": "مقاله شکل، موقعیت، یا کیفیت خط ختم را تعیین کند.",
+   "aliases": [
+    "فینیشینگ لاین",
+    "فینیش‌لاین",
+    "خط ختم"
+   ],
+   "variants": [
+    "#فینیشینگ_لاین"
+   ],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-95",
+    "episodes/episode-114",
+    "dentcast-plus/video-1",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "insight/insight-18",
+    "chairside/chairside-12",
+    "insight/insight-40",
+    "notecast/episode-37",
+    "insight/insight-67"
+   ]
+  },
+  {
    "key": "قالب_گیری_دیجیتال",
    "tag": "#قالب‌گیری_دیجیتال",
    "domain": "clinical",
@@ -3049,35 +3080,6 @@
     "chairside/chairside-19",
     "insight/insight-57",
     "chairside/chairside-31"
-   ]
-  },
-  {
-   "key": "فینیش_لاین",
-   "tag": "#فینیش_لاین",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "خط ختم تراش — مرزی که مارجین رستوریشن روی آن می‌نشیند.",
-   "use_when": "مقاله شکل، موقعیت، یا کیفیت خط ختم را تعیین کند.",
-   "aliases": [
-    "فینیشینگ لاین",
-    "فینیش‌لاین",
-    "خط ختم"
-   ],
-   "variants": [
-    "#فینیشینگ_لاین"
-   ],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-95",
-    "episodes/episode-114",
-    "dentcast-plus/video-1",
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "insight/insight-18",
-    "chairside/chairside-12",
-    "insight/insight-40",
-    "notecast/episode-37"
    ]
   },
   {
@@ -5982,6 +5984,23 @@
    ]
   },
   {
+   "key": "bopt",
+   "tag": "#BOPT",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-95",
+    "dentai/dentai-29",
+    "insight/insight-67"
+   ]
+  },
+  {
    "key": "bruxism",
    "tag": "#bruxism",
    "domain": "clinical",
@@ -6150,6 +6169,26 @@
     "notecast/episode-14",
     "episodes/episode-154",
     "episodes/episode-155"
+   ]
+  },
+  {
+   "key": "آمالگام",
+   "tag": "#آمالگام",
+   "domain": null,
+   "words": 1,
+   "definition": "ترمیم آمالگام و جایگاهش امروز.",
+   "use_when": "مقاله آمالگام را با گزینه‌ی دیگری مقایسه کند.",
+   "aliases": [
+    "amalgam",
+    "dental amalgam"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-49",
+    "dentai/dentai-22",
+    "insight/insight-67"
    ]
   },
   {
@@ -7447,6 +7486,29 @@
    ]
   },
   {
+   "key": "نخ_زیرلثه",
+   "tag": "#نخ_زیرلثه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نخِ ریترکشن، تنها یا آغشته به هموستاتیک.",
+   "use_when": "مقاله نخ را ابزارِ کنارزدنِ لثه یا کنترلِ خون بداند.",
+   "aliases": [
+    "retraction cord",
+    "نخ رترکشن",
+    "نخ زیر لثه",
+    "دابل کورد",
+    "double cord"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-40",
+    "insight/insight-63",
+    "insight/insight-67"
+   ]
+  },
+  {
    "key": "نوع_ریتنشن",
    "tag": "#نوع_ریتنشن",
    "domain": "clinical",
@@ -7981,22 +8043,6 @@
    ]
   },
   {
-   "key": "bopt",
-   "tag": "#BOPT",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-95",
-    "dentai/dentai-29"
-   ]
-  },
-  {
    "key": "butt_joint",
    "tag": "#Butt_Joint",
    "domain": "clinical",
@@ -8462,25 +8508,6 @@
    ]
   },
   {
-   "key": "آمالگام",
-   "tag": "#آمالگام",
-   "domain": null,
-   "words": 1,
-   "definition": "ترمیم آمالگام و جایگاهش امروز.",
-   "use_when": "مقاله آمالگام را با گزینه‌ی دیگری مقایسه کند.",
-   "aliases": [
-    "amalgam",
-    "dental amalgam"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-49",
-    "dentai/dentai-22"
-   ]
-  },
-  {
    "key": "ابزار_ایمپلنت",
    "tag": "#ابزار_ایمپلنت",
    "domain": "clinical",
@@ -8659,6 +8686,22 @@
    "content_ids": [
     "litecast/lite-CAST8",
     "litecast/lite-CAST9"
+   ]
+  },
+  {
+   "key": "اسکن_دیجیتال",
+   "tag": "#اسکن_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "litecast/lite-CAST14",
+    "insight/insight-67"
    ]
   },
   {
@@ -10391,28 +10434,6 @@
    "content_ids": [
     "chairside/chairside-5",
     "chairside/chairside-6"
-   ]
-  },
-  {
-   "key": "نخ_زیرلثه",
-   "tag": "#نخ_زیرلثه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نخِ ریترکشن، تنها یا آغشته به هموستاتیک.",
-   "use_when": "مقاله نخ را ابزارِ کنارزدنِ لثه یا کنترلِ خون بداند.",
-   "aliases": [
-    "retraction cord",
-    "نخ رترکشن",
-    "نخ زیر لثه",
-    "دابل کورد",
-    "double cord"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-40",
-    "insight/insight-63"
    ]
   },
   {
@@ -12628,21 +12649,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-55"
-   ]
-  },
-  {
-   "key": "اسکن_دیجیتال",
-   "tag": "#اسکن_دیجیتال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "litecast/lite-CAST14"
    ]
   },
   {
