@@ -1056,189 +1056,11 @@
     document.body.appendChild(searchDim);
   }
 
-  /* ── SHAKE → PLAYER DRAWER ──────────────────────────
-     Shake-to-play. The shake gesture (formerly shake-search.js, which opened
-     the search sheet on breed C only) now slides up a bottom drawer hosting
-     player.html in an iframe — and it lives here in dc-nav.js, so it reaches
-     ALL 488 pages with one shared file.
-
-     TOP-LEVEL ONLY: guarded to the top window so the iframe'd player.html
-     itself (and index.html's desktop content iframe) never inject a nested
-     drawer or double-handle devicemotion.
-
-     The drawer + dim + chrome styling are injected once (mirroring the
-     float-search / search-dim pattern), so no per-page markup is needed. The
-     iframe is created LAZILY on first open (not 488 hidden iframes at load) and
-     is NEVER reset on close — we only hide the drawer via transform, so audio
-     keeps playing / its position survives a re-open. */
-  if (window.top === window.self) {
-    /* NAMESPACE: this shake drawer uses the `dc-shake-*` namespace. dc-nav.js
-       ALREADY ships a separate "podcast overlay" feature that owns DC_PLAYER_CSS,
-       the <style id="dc-player-style">, and #dcPlayerOverlay. Reusing those names
-       made our injection guard (getElementById('dc-player-style')) find the
-       podcast style already present and SKIP injecting ours — so the drawer
-       rendered unstyled. Distinct names keep the two features fully separate. */
-    var DC_SHAKE_CSS =
-'#dc-shake-dim{position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.5);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .45s ease,visibility .45s ease;}' +
-'body.dc-shake-open #dc-shake-dim{opacity:1;visibility:visible;pointer-events:auto;}' +
-'body.dc-shake-open{overflow:hidden;}' +
-/* While the player is open, hide the floating search toggle so it doesn't sit on top of the overlay. */
-'body.dc-shake-open #dc-float-search{display:none!important;}' +
-'#dc-shake-drawer{position:fixed;left:0;right:0;bottom:0;z-index:100001;height:88vh;height:88dvh;max-height:88vh;max-height:88dvh;background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.35);transform:translateY(100%);transition:transform .55s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column;overflow:hidden;}' +
-'body.dc-shake-open #dc-shake-drawer{transform:translateY(0);}' +
-'#dc-shake-drawer .dc-shake-grip{position:absolute;top:6px;left:50%;transform:translateX(-50%);width:42px;height:4px;border-radius:2px;background:#cdd3e6;pointer-events:none;}' +
-'#dc-shake-drawer .dc-shake-bar{flex:0 0 auto;display:flex;align-items:center;justify-content:flex-end;padding:7px 8px 2px;}' +
-'#dc-shake-close{width:34px;height:34px;border:none;border-radius:50%;background:#f0f0f5;color:#333;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;transition:transform .15s ease,background .15s ease;}' +
-'#dc-shake-close:active{transform:scale(.88);background:#e2e2ee;}' +
-'#dc-shake-close .dc-svg-icon{width:20px;height:20px;}' +
-'#dc-shake-iframe{flex:1 1 auto;width:100%;border:0;background:#f4f7ff;}' +
-'[data-theme="dark"] #dc-shake-drawer{background:#1a2940;}' +
-'[data-theme="dark"] #dc-shake-close{background:#2a3a55;color:#cfe2ff;}' +
-'[data-theme="dark"] #dc-shake-iframe{background:#1a2940;}';
-
-    if (!document.getElementById('dc-shake-style')) {
-      var pst = document.createElement('style');
-      pst.id = 'dc-shake-style';
-      pst.textContent = DC_SHAKE_CSS;
-      (document.head || document.documentElement).appendChild(pst);
-    }
-
-    var dcPlayerIframe = null;
-
-    function dcEnsurePlayerEls() {
-      if (!document.getElementById('dc-shake-dim')) {
-        var pdim = document.createElement('div');
-        pdim.id = 'dc-shake-dim';
-        document.body.appendChild(pdim);
-      }
-      var drawer = document.getElementById('dc-shake-drawer');
-      if (!drawer) {
-        drawer = document.createElement('div');
-        drawer.id = 'dc-shake-drawer';
-        drawer.setAttribute('role', 'dialog');
-        drawer.setAttribute('aria-label', 'پخش‌کننده دنت‌کست');
-        drawer.innerHTML =
-          '<span class="dc-shake-grip"></span>' +
-          '<div class="dc-shake-bar">' +
-            '<button type="button" id="dc-shake-close" aria-label="بستن">' +
-              dcSvgIcon('x') +
-            '</button>' +
-          '</div>';
-        document.body.appendChild(drawer);
-      }
-      return drawer;
-    }
-
-    function dcOpenPlayer() {
-      var drawer = dcEnsurePlayerEls();
-      /* Mutually exclusive with search: never stack the player over an open
-         search sheet/dim. */
-      var sb = document.getElementById('dcGlobalBox');
-      if (sb) sb.classList.remove('open');
-      document.body.classList.remove('search-open');
-      /* Lazy iframe — created on first open, kept forever after. Absolute
-         /player.html so its own relative fetches resolve from any page depth. */
-      if (!dcPlayerIframe) {
-        dcPlayerIframe = document.createElement('iframe');
-        dcPlayerIframe.id = 'dc-shake-iframe';
-        dcPlayerIframe.title = 'DentCast Player';
-        dcPlayerIframe.setAttribute('allow', 'autoplay; encrypted-media');
-        dcPlayerIframe.src = '/player.html';
-        drawer.appendChild(dcPlayerIframe);
-      }
-      document.body.classList.add('dc-shake-open');
-    }
-
-    /* Close = hide only. We NEVER clear/reset the iframe src, so playback (and
-       the player's restored position) survives a re-open. */
-    function dcClosePlayer() {
-      document.body.classList.remove('dc-shake-open');
-    }
-
-    function dcTogglePlayer() {
-      if (document.body.classList.contains('dc-shake-open')) dcClosePlayer();
-      else dcOpenPlayer();
-    }
-
-    /* Close affordances: the × button or a tap on the dim. */
-    document.addEventListener('click', function (e) {
-      if (!e.target) return;
-      if ((e.target.closest && e.target.closest('#dc-shake-close')) ||
-          e.target.id === 'dc-shake-dim') {
-        dcClosePlayer();
-      }
-    });
-
-    /* Public API (parity with window.dcSearch). */
-    window.dcPlayer = { open: dcOpenPlayer, close: dcClosePlayer, toggle: dcTogglePlayer };
-
-    /* Shake detection — same threshold/debounce as the old shake-search.js, but
-       the action is now dcPlayer.toggle() instead of dcSearch.open(). A short
-       cooldown stops a single continuous shake from flapping open/closed. The
-       listener body is wrapped so it can be attached either immediately
-       (Android/desktop) or only after iOS grants motion permission (below). */
-    var _shLast = 0, _shPrimed = false, _shHits = 0, _shTime = 0, _shCooldown = 0, _shAttached = false;
-    function attachShakeListener() {
-      if (_shAttached) return; /* never bind twice */
-      _shAttached = true;
-      window.addEventListener('devicemotion', function (e) {
-        /* Prefer gravity-excluded acceleration when the device provides it;
-           fall back to accelerationIncludingGravity (the only one some Androids
-           expose). Null-safe per-axis: some devices deliver null components. */
-        var a = e.acceleration && (e.acceleration.x != null) ? e.acceleration : e.accelerationIncludingGravity;
-        if (!a) return;
-        var x = a.x || 0, y = a.y || 0, z = a.z || 0;
-        var mag = Math.sqrt(x * x + y * y + z * z);
-        var delta = Math.abs(mag - _shLast);
-        _shLast = mag;
-        /* Skip the very first sample so the rest→first jump isn't counted. */
-        if (!_shPrimed) { _shPrimed = true; return; }
-        var now = Date.now();
-        if (delta > 12) {
-          _shHits = (now - _shTime < 600) ? _shHits + 1 : 1;
-          _shTime = now;
-          if (_shHits >= 2 && now - _shCooldown > 1000) {
-            _shCooldown = now;
-            _shHits = 0;
-            window.dcPlayer.toggle();
-          }
-        }
-      }, { passive: true });
-    }
-
-    /* iOS 13+ gates devicemotion behind DeviceMotionEvent.requestPermission(),
-       which MUST be called from inside a user gesture or motion never fires. We
-       add NO UI of our own — instead we piggy-back on the user's FIRST tap
-       anywhere on the page (once + capture, so it fires no matter what was
-       tapped and without disturbing that tap's normal action) to silently
-       request it. The only thing the user sees is iOS's own native popup. On
-       'granted' we attach the shake listener; on 'denied' — or a throw in odd
-       embedded webviews — we stay silent and never re-prompt this page load.
-       Android/desktop have no requestPermission, so they fall through and bind
-       the listener normally at load (where present; harmless if it never fires). */
-    if (typeof DeviceMotionEvent !== 'undefined' &&
-        typeof DeviceMotionEvent.requestPermission === 'function') {
-      var _shReqDone = false;
-      var dcRequestMotionOnce = function () {
-        if (_shReqDone) return; /* request at most once per page load */
-        _shReqDone = true;
-        try {
-          DeviceMotionEvent.requestPermission().then(function (state) {
-            if (state === 'granted') attachShakeListener();
-          }).catch(function () { /* denied / unsupported — stay silent */ });
-        } catch (err) { /* embedded webview threw — skip silently */ }
-      };
-      document.addEventListener('pointerdown', dcRequestMotionOnce, { once: true, capture: true });
-    } else if ('DeviceMotionEvent' in window) {
-      attachShakeListener();
-    }
-  }
-
   /* ── HAPTIC TICK ─────────────────────────────────────
      A tiny ~6ms vibration "tick" when a tap actually ACTIVATES an interactive
      control (buttons, play boxes, toggles, tabs…), so a press feels like a
      real button — and it lives here in dc-nav.js, so it reaches ALL pages with
-     one shared file (same delivery as shake-to-play).
+     one shared file.
 
      - navigator.vibrate is Android-only; iOS Safari has no Vibration API, so
        there this whole module is inert (zero cost, zero errors, no fallback
@@ -1249,13 +1071,13 @@
        (or a finger that merely grazes a button mid-scroll) never produces a
        click, so it never ticks. This is exactly "buzz only if the tap opens
        the button." Delegated capture-phase listener so it covers controls
-       injected later (drawer, search sheet, shake player chrome) and survives
-       handlers that stopPropagation in the bubble phase.
-     - NOT guarded to the top window (unlike shake): the player iframe loads
-       dc-nav.js too and its own play/pause controls should tick as well.
+       injected later (drawer, search sheet) and survives handlers that
+       stopPropagation in the bubble phase.
+     - NOT guarded to the top window: the player iframe loads dc-nav.js too
+       and its own play/pause controls should tick as well.
      - Respects prefers-reduced-motion, and a short throttle stops a
        double-fire from bouncing the same activation.
-     - Public API (parity with dcSearch/dcPlayer): window.dcHaptics.tick()
+     - Public API (parity with dcSearch): window.dcHaptics.tick()
        for any JS-built control that wants to fire a tick manually. */
   if ('vibrate' in navigator) {
     /* Only REAL buttons tick — primary controls, not every link. Generic
