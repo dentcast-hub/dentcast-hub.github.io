@@ -18,9 +18,9 @@
 // inserted until BOTH checks confirm there is something to show — a
 // half-published چالش (page markup + challenges.json entry, but no admin
 // paste yet) must be invisible, never a box that 404s on submit.
-import { api, currentUser, meStatus } from './api.js?v=45';
-import { el, faNum } from './util.js?v=45';
-import { premiumCta } from './premium-cta.js?v=45';
+import { api, currentUser, meStatus } from './api.js?v=46';
+import { el, faNum } from './util.js?v=46';
+import { premiumCta } from './premium-cta.js?v=46';
 
 let filePromise = null;
 
@@ -174,14 +174,13 @@ function answerBox(contentId, onSettled, { isPremium }) {
   ]);
 }
 
-// Step 4.14 writes the public half into the page body for crawlers and for the
-// half-published state (exists:false). Once the live block mounts, this module
-// owns the display — leaving the static copy visible duplicates question + image.
+// Step 4.14 leaves question (+ image path as a data attribute) in the page
+// for the index builder and the half-published state. The live block renders
+// the image; any legacy visible <img data-dc-challenge-image> is suppressed.
 function hideStaticChallenge(anchor) {
-  const scope = anchor || document;
+  const scope = (anchor && anchor.closest && anchor.closest('main')) || anchor || document;
   const q = scope.querySelector('[data-dc-challenge-question]');
-  const img = scope.querySelector('[data-dc-challenge-image]');
-  if (img) img.hidden = true;
+  scope.querySelectorAll('img[data-dc-challenge-image]').forEach((img) => { img.hidden = true; });
   if (q) {
     const prev = q.previousElementSibling;
     if (prev && prev.tagName === 'H3') prev.hidden = true;

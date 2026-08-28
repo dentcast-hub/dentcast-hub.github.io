@@ -94,6 +94,14 @@ function extractChallenge(html) {
     const src = imgMatch[0].match(/\bsrc\s*=\s*"([^"]+)"/) || imgMatch[0].match(/\bsrc\s*=\s*'([^']+)'/);
     image = src ? src[1] : null;
   }
+  if (!image) {
+    const qOpen = html.match(/<([a-zA-Z0-9]+)\b[^>]*\bdata-dc-challenge-question\b[^>]*>/);
+    if (qOpen) {
+      const attr = qOpen[0].match(/\bdata-dc-challenge-image\s*=\s*"([^"]+)"/)
+        || qOpen[0].match(/\bdata-dc-challenge-image\s*=\s*'([^']+)'/);
+      image = attr ? attr[1] : null;
+    }
+  }
 
   return { question, image };
 }

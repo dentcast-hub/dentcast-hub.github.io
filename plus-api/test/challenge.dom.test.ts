@@ -48,9 +48,8 @@ const PREMIUM_MSG = 'برای شرکت در چالش و بررسی پاسختو�
 
 function anchor(): HTMLElement {
   document.body.innerHTML = `<main><div class="glass-box" id="p">
-    <img data-dc-challenge-image src="/img/x.jpg" alt="">
     <h3>چالش</h3>
-    <p data-dc-challenge-question>سؤال چالش؟</p>
+    <p data-dc-challenge-question data-dc-challenge-image="/img/x.jpg">سؤال چالش؟</p>
   </div></main>`;
   return document.getElementById('p')!;
 }
@@ -100,9 +99,9 @@ describe('static page markup', () => {
     mountChallenge(anchor(), CONTENT);
     await settle();
     expect(document.querySelector('[data-dc-challenge-question]')?.hidden).toBe(true);
-    expect(document.querySelector('[data-dc-challenge-image]')?.hidden).toBe(true);
     expect(document.querySelector('h3')?.hidden).toBe(true);
     expect(document.querySelectorAll('.dc-ch-q')).toHaveLength(1);
+    expect(document.querySelectorAll('.dc-ch-img')).toHaveLength(1);
   });
 });
 
