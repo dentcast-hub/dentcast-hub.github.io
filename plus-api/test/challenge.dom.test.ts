@@ -103,6 +103,18 @@ describe('static page markup', () => {
     expect(document.querySelectorAll('.dc-ch-q')).toHaveLength(1);
     expect(document.querySelectorAll('.dc-ch-img')).toHaveLength(1);
   });
+
+  it('mounts inside the glass-box, not after it', async () => {
+    user = { tier: 'free' };
+    status = 'user';
+    const box = anchor();
+    mountChallenge(box, CONTENT);
+    await settle();
+    const block = document.querySelector('.dc-challenge')!;
+    expect(block).not.toBeNull();
+    expect(box.contains(block)).toBe(true);
+    expect(box.nextElementSibling?.classList.contains('dc-challenge')).not.toBe(true);
+  });
 });
 
 describe('the answer box — visible to everyone, gated on submit', () => {
