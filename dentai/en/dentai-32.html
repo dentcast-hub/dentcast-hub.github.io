@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DentAI – What Moves Intraoral Scanner Accuracy During Scanning?</title>
+<meta name="description" content="Review of the Hardan et al. meta-analysis, Journal of Advanced Prosthodontics 2023; 15(6): 315-332.">
+
+<link rel="canonical" href="https://dentcast.org/dentai/en/dentai-32.html">
+
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="DentCast">
+<meta property="og:title" content="DentAI – What Moves Intraoral Scanner Accuracy During Scanning?">
+<meta property="og:description" content="Review of the Hardan et al. meta-analysis, Journal of Advanced Prosthodontics 2023; 15(6): 315-332.">
+<meta property="og:url" content="https://dentcast.org/dentai/en/dentai-32.html">
+<meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DentAI – What Moves Intraoral Scanner Accuracy During Scanning?">
+<meta name="twitter:description" content="Review of the Hardan et al. meta-analysis, Journal of Advanced Prosthodontics 2023; 15(6): 315-332.">
+<meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css?v=3">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
+
+  <!-- Theme init — no flash -->
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --gold:rgba(255,199,44,0.95);
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
+      --text:#111;
+      --muted:#444;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.2);
+    }
+
+    html,body { margin:0; padding:0; height:100%; }
+
+    body {
+      font-family:'vazirmatn', sans-serif;
+      background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+      color: var(--text);
+      max-width: 56.25rem;
+      margin: 0 auto;
+      padding: 3.75rem 1.625rem 6.25rem;
+      line-height: 2;
+      direction: ltr;
+      text-align: left;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 1.9rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .caption{
+      background:rgba(255, 185, 40, 0.15);
+      border:1px solid rgba(255, 220, 100, 0.55);
+      border-radius:var(--radius);
+      padding:1.25rem 1.5rem;
+      margin-bottom:2.1875rem;
+      box-shadow:0 0 30px rgba(255,200,0,0.1);
+    }
+    .caption p{
+      color:#9a6b00;
+      font-weight:600;
+      font-size:1.1rem;
+      margin:0;
+      text-align:left;
+      line-height:1.9;
+    }
+
+    .text-box {
+      background: #ffffff;
+      border: 1px solid rgba(11,95,255,0.18);
+      border-radius: 1.375rem;
+      padding: 1.75rem 2.25rem;
+      margin: 1.5rem 0;
+      box-shadow: var(--shadow);
+      color: #111;
+      font-size: 1.05rem;
+      line-height: 2;
+    }
+
+    .text-box h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--blue);
+      margin: 1.625rem 0 0.75rem 0;
+      border-left: 4px solid var(--blue);
+      padding-left: 0.75rem;
+    }
+    .text-box h2:first-child { margin-top: 0.25rem; }
+
+    .text-box h3 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #0a1638;
+      margin: 1.375rem 0 0.625rem 0;
+    }
+
+    .text-box ul{
+      list-style:none;
+      padding:0;
+      margin:0 0 0.875rem 0;
+    }
+    .text-box ul li{
+      margin-bottom:0.625rem;
+      padding-left:1.1rem;
+      position:relative;
+    }
+    .text-box ul li::before{
+      content:"•";
+      color:#0b5fff;
+      font-weight:bold;
+      position:absolute;
+      left:0;
+    }
+
+    .text-box ol{
+      padding-left:1.25rem;
+      margin:0 0 0.875rem 0;
+    }
+    .text-box ol li{
+      margin-bottom:0.625rem;
+    }
+
+    .text-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .text-box table th,
+    .text-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:left;
+      vertical-align:top;
+    }
+    .text-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .text-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+
+    .author-note{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      align-items:center;
+      gap:0.375rem 0.625rem;
+      margin:2.5rem auto 1rem;
+      padding-top:1.25rem;
+      border-top:1px solid rgba(120,140,170,0.18);
+      color:var(--txt3);
+      font-size:.78rem;
+    }
+    .author-note .author-link{
+      color:var(--txt2);
+      font-weight:600;
+      text-decoration:none;
+    }
+    .author-note .author-link:hover{
+      color:var(--ac);
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+    .author-note .author-role{
+      color:var(--txt3);
+    }
+
+    /* Persian-version toggle button (top corner) */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 0 1.125rem auto;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      .caption p{font-size:1rem;}
+      .text-box{padding:1.25rem 1.125rem; font-size:.98rem;}
+      .text-box table{font-size:.9rem;}
+      .text-box table th,.text-box table td{padding:0.45rem 0.5rem;}
+    }
+  </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dentcast.org/dentai/en/dentai-32.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "DentAI",
+          "item": "https://dentcast.org/dentai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "What Moves Intraoral Scanner Accuracy During Scanning?",
+          "item": "https://dentcast.org/dentai/en/dentai-32.html"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/en/dentai-32.html#article",
+      "headline": "What Moves Intraoral Scanner Accuracy During Scanning?",
+      "description": "Review of the Hardan et al. meta-analysis, Journal of Advanced Prosthodontics 2023; 15(6): 315-332.",
+      "datePublished": "2026-08-28T10:00:00+03:30",
+      "dateModified": "2026-08-28T10:00:00+03:30",
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/dentai/en/dentai-32.html"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "url": "https://doi.org/10.4047/jap.2023.15.6.315",
+          "name": "Effect of scanning strategies on the accuracy of digital intraoral scanners: a meta-analysis of in vitro studies"
+        }
+      ],
+      "inLanguage": "en",
+      "articleSection": "Digital Dentistry",
+      "keywords": [
+        "intraoral scanner",
+        "scanning strategy",
+        "trueness",
+        "precision",
+        "scanning accuracy",
+        "digital impression",
+        "meta-analysis",
+        "in vitro",
+        "moisture control",
+        "artificial landmarks"
+      ],
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Intraoral Scanner"
+        },
+        {
+          "@type": "Thing",
+          "name": "Digital Impression Accuracy"
+        }
+      ],
+      "mentions": [
+        {
+          "@type": "Thing",
+          "name": "Trueness"
+        },
+        {
+          "@type": "Thing",
+          "name": "Precision"
+        },
+        {
+          "@type": "Thing",
+          "name": "Scanning Pattern"
+        },
+        {
+          "@type": "Thing",
+          "name": "Artificial Landmarks"
+        }
+      ],
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h2",
+          ".text-box"
+        ]
+      }
+    },
+    {
+      "@type": "Dentist",
+      "@id": "https://dentcast.org/#dentist-ahvaz",
+      "name": "Dr. Foad Shahabian",
+      "url": "https://dentcast.org/about.html",
+      "jobTitle": "Prosthodontist and Implant Specialist",
+      "medicalCode": "114707",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "addressCountry": "IR"
+      },
+      "sameAs": [
+        "https://www.instagram.com/dr.foad_shahabian/",
+        "https://t.me/dentcast",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364"
+      ]
+    }
+  ]
+}
+</script>
+  <meta name="theme-color" content="#0b5fff">
+</head>
+
+<body>
+<!-- ── TOP BAR ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<h1><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/></svg> DentAI – What Moves Intraoral Scanner Accuracy During Scanning?</h1>
+
+<a class="lang-btn" href="../dentai-32.html" rel="noopener">
+  <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+</a>
+
+<div class="caption">
+  <p>
+Review of the Hardan et al. meta-analysis, Journal of Advanced Prosthodontics 2023; 15(6): 315-332.
+  </p>
+</div>
+
+<div class="text-box">
+
+<p>
+Before you change your hand-movement pattern, know that Hardan et al.'s (2023) meta-analysis pooled fifteen in vitro studies to see which factors during scanning actually shift IOS trueness and precision. This summary keeps the same ISO 5725-1 split and states each finding with separate clinical reading—with the caveat that the data are in vitro and these figures are not a ceiling for error in the mouth.
+</p>
+
+<h2>First, a distinction everything depends on</h2>
+
+<p>
+The word "accuracy" is an umbrella, and under it sit two completely different things. Until you separate the two, this study's results look misleading. The paper itself uses the ISO 5725-1 split as its basis.
+</p>
+
+<p>
+Trueness means how close your scan is to reality—systematic error. Imagine throwing ten arrows at a target. Trueness is how close the center of where those ten arrows land is to the bullseye.
+</p>
+
+<p>
+Precision means if you repeat the same scan several times, how similar the outcomes are—random error. In the same example, precision is how close the ten arrows sit to each other, regardless of where on the target they are.
+</p>
+
+<p>
+An <a href="/glossary/intraoral-scanner.html">intraoral scanner</a> can be good at one and weak at the other, and below we'll see that scanning patterns behave exactly that way.
+</p>
+
+<h3>Table 2. Trueness vs. precision</h3>
+
+<table>
+<thead>
+<tr><th>Component</th><th>What it means</th><th>Sign of decline</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Trueness</strong></td><td>How close the scan is to reality. Systematic error. In the target example: how close the center of the arrows is to the bullseye.</td><td>Accumulated error along the arch. Most sensitive situations: full-arch framework and implant cases.</td></tr>
+<tr><td><strong>Precision</strong></td><td>How similar repeated scans of the same object are. Random error. In the target example: how close the arrows sit together, regardless of target location.</td><td>Unpredictability. One scan turns out well and the next from the same patient does not.</td></tr>
+</tbody>
+</table>
+
+<p>
+<em>The third column is the author's clinical reading. The paper defines both terms per ISO 5725-1 but does not translate them into these specific scenarios.</em>
+</p>
+
+<p>
+<strong>Clinical reading:</strong> The paper says impression accuracy determines marginal fit and final restoration quality, but it does not translate these two components into specific clinical scenarios. If we translate: trueness loss shows up mainly in dimensions and inter-arch relationships, where error accumulates along the arch, which is why it matters more in full-arch frameworks and implant cases. Precision loss shows up mainly as unpredictability—one scan goes well and the next from the same patient does not.
+</p>
+
+<h2>What this study was and was not</h2>
+
+<p>
+The article pooled results from 15 studies and asked: if we do something different from the manufacturer's recommendation, do we get a better scan?
+</p>
+
+<p>
+All included studies were in vitro and done on models. Clinical studies were deliberately and explicitly excluded from analysis—in screening, seven studies were dropped for that reason alone. The authors themselves cite this as a limitation: excluding clinical studies limits how far these results can be generalized to clinical conditions.
+</p>
+
+<p>
+So the size of these effects cannot be directly extrapolated to the patient's mouth.
+</p>
+
+<p>
+<strong>Clinical reading:</strong> Real oral conditions—saliva, tongue, patient movement, and limited access—all push error upward, not downward. So it is reasonable to treat these numbers as a floor for error, not a ceiling. This is inference, not a statement from the paper.
+</p>
+
+<h2>Findings</h2>
+
+<h3>Table 1. Effect of each variable on the two accuracy components</h3>
+
+<table>
+<thead>
+<tr><th>Variable</th><th>Effect</th><th>Strength of evidence</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Surface moisture</strong></td><td>Both components decline. Dry surface gave better results.</td><td>Strongest finding in the paper. Large effect and consistent across all studies.</td></tr>
+<tr><td><strong>Artificial landmark</strong></td><td>Both trueness and precision improved.</td><td>Significant, but the effect was not uniform across all studies; in one, the effect on trueness was not significant.</td></tr>
+<tr><td><strong>Scanning pattern</strong></td><td>Two-sided. S-shaped pattern: lower precision; linear pattern: lower trueness.</td><td>Small effect. No absolute best pattern; outcome depends on the device.</td></tr>
+<tr><td><strong>Ambient light</strong></td><td>No significant difference in either component.</td><td>Limited to comparing room light with complete darkness. The review section of the same paper has inconsistent results.</td></tr>
+<tr><td><strong>Scanning aid materials</strong></td><td>Only precision improved. Trueness unchanged.</td><td>Significant for precision. Liquid superiority over powder spray is cited from a single study, not from the meta-analysis.</td></tr>
+</tbody>
+</table>
+
+<p>
+<em>Note on reading the table: the last column is intentional. If you read only the middle column, five findings look equal in weight, when only the first has a large, stable effect.</em>
+</p>
+
+<h3>1. Dry surface—the strongest finding</h3>
+
+<p>
+Among all variables examined, surface moisture had the clearest and most consistent effect. Liquid on the tooth surface significantly reduced scan accuracy. This is the only finding where the effect was both large and unidirectional across studies.
+</p>
+
+<p>
+The mechanism the authors describe is simple: a thin saliva layer makes the scanner misread surface geometry.
+</p>
+
+<p>
+The authors cite a prior study to show the scale of this error: deviations in saliva-contaminated samples exceeded 120 microns, considered an acceptable clinical threshold. This number is not from the meta-analysis itself, but it gives a sense of scale.
+</p>
+
+<p>
+<strong>Clinical reading:</strong> Fully drying the surface before starting the scan pays off more than any change in how you move the scanner. This is the only place the data show a large effect.
+</p>
+
+<h3>2. Artificial landmarks—for when anatomy does not help</h3>
+
+<p>
+Using artificial markers improved both trueness and precision.
+</p>
+
+<p>
+The logic: the scanner builds the model by stitching successive images together and needs stable reference points. In a dentate arch, the teeth themselves provide those points. In a fully edentulous jaw or over large areas of mobile soft tissue, such points are absent and error accumulates along the scan. The paper focuses specifically on this situation and points to resin markers on the palate.
+</p>
+
+<p>
+Note that this effect was not uniform across all studies; in one, no significant effect on trueness was seen.
+</p>
+
+<p>
+The authors refer in the discussion to Flügge's study, where large distance between implant scan bodies was problematic. That is a single-study finding and not part of the landmark analysis.
+</p>
+
+<p>
+<strong>Clinical reading:</strong> In a dentate arch this is unnecessary because the teeth provide reference points. In full edentulism it is worth considering—and that is exactly the situation the paper emphasizes. Implant cases with long edentulous spans may also warrant attention, but the paper did not say this: it is inference from putting two separate findings together—that artificial landmarks improve accuracy, and that in Flügge's study large distance between scan bodies was problematic.
+</p>
+
+<h3>3. Scanning pattern—where oversimplification is dangerous</h3>
+
+<p>
+This is where the most common misunderstanding occurs. The meta-analysis did not say one pattern is better. The result was two-sided, and the Results section states both claims side by side:
+</p>
+
+<ul>
+<li>With an S-shaped pattern, differences between repeated measurements were greater—i.e., lower precision.</li>
+<li>With a linear pattern, differences between the reference model and the digital model were greater—i.e., lower trueness.</li>
+</ul>
+
+<p>
+In other words, each pattern sacrifices one of the two components, and neither is an absolute winner. The size of these effects was also small.
+</p>
+
+<p>
+<strong>Supplementary points from the same paper:</strong>
+</p>
+
+<ul>
+<li>Pattern effect is device-dependent. The paper explicitly says scanning strategy behaves differently depending on each scanner's acquisition method and is tied to merging software.</li>
+<li>In Müller et al., the manufacturer's recommended strategy gave the highest trueness and precision for full-arch scanning. This aligns with the authors' general advice that a trained operator should follow the manufacturer's recommended path.</li>
+<li>Abrupt changes in scanner head orientation and very fast movement can disrupt stitching. The paper recommends slow scanning without time pressure. It did not rank this factor against pattern choice.</li>
+<li>On scan starting point, studies disagree. One linked precision to starting point; another refuted that.</li>
+</ul>
+
+<p>
+<strong>Clinical reading:</strong> Because pattern effect is device-dependent, a pattern that works on one brand may not on another. This is inference from the statement above, not a cross-brand comparison from the meta-analysis. Practical work: instead of chasing patterns that circulate by word of mouth, learn and consistently repeat your device's manufacturer-recommended path with slow, controlled movement.
+</p>
+
+<h3>4. Ambient light</h3>
+
+<p>
+Comparing scan under typical room light with complete darkness showed no significant difference in trueness or precision.
+</p>
+
+<p>
+This result is limited to that two-way comparison. In the review section of the same paper, several studies confirmed an effect of lighting conditions, and recommendations do not align: from 500 lux at 3900 K to 1000 lux suggested. In one study, blocking direct unit light from the field was recommended. The authors' summary is that lighting should be chosen according to that scanner's specifications.
+</p>
+
+<p>
+<strong>Clinical reading:</strong> You do not need to darken the room. Keeping direct unit light off the work area costs nothing, and at least one study supports that recommendation.
+</p>
+
+<h3>5. Scanning aid materials</h3>
+
+<p>
+These materials improved precision only and had no effect on trueness—more consistent results, not necessarily closer to reality.
+</p>
+
+<p>
+A point from the discussion, cited from a single study: liquid materials applied with a brush form a thinner, more uniform layer than powder spray, because powder layer thickness depends on saliva, operator skill, and available space. This is not a meta-analysis finding.
+</p>
+
+<p>
+<strong>Clinical reading:</strong> Main use is on glossy surfaces and reflective materials, not routine scanning of natural teeth.
+</p>
+
+<h2>How much can you rely on these results?</h2>
+
+<p>
+Three limitations when citing this paper:
+</p>
+
+<ol>
+<li>All data are in vitro; the authors themselves limit generalization to clinical conditions.</li>
+<li>Per the paper's own assessment, most included studies were moderate risk of bias and a notable number high; only three were low. Recurring weaknesses: operator not blinded, unclear number of operators, no sample size calculation.</li>
+<li>Studies pooled in each analysis were not truly alike—scanners, measurement software, and even pattern definitions differed. The authors say method standardization is needed for meaningful comparison. In practice, reported means show general direction, not a citable number.</li>
+</ol>
+
+<p>
+A citation warning: For the S-shaped pattern, this paper's abstract is inconsistent with its own Results and Discussion. The abstract says trueness and precision improved with this pattern, while results, discussion, and figures show the opposite. If you cite this paper, cite the results section, not the abstract.
+</p>
+
+<h2>Chairside summary</h2>
+
+<p>
+<em>This order is the author's clinical reading from the paper, not the paper's own order.</em>
+</p>
+
+<ol>
+<li>Dry the surface completely—the only item where data show a large, consistent effect.</li>
+<li>Learn and stick to your device's manufacturer-recommended path. Data do not support any universal pattern, and in at least one study the factory path gave the best result.</li>
+<li>Move slowly and in control. High speed and sudden direction changes create stitching error.</li>
+<li>Consider artificial landmarks in full edentulism—where anatomy gives no reference point.</li>
+<li>Keep direct unit light off the scan area—zero cost, zero risk.</li>
+</ol>
+
+
+<div style="
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 1.75rem;
+">
+  <div style="
+    background: rgba(255, 220, 80, 0.07);
+    border: 1px solid rgba(255, 220, 80, 0.18);
+    border-radius: 0.5625rem;
+    padding: 0.5rem 0.875rem;
+    text-align: center;
+    font-size: .8rem;
+    color: #0a1638;
+    line-height: 1.55;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.25);
+    backdrop-filter: blur(5px);
+  ">
+    <p style="margin: 0; font-weight: 600; color: #0a1638;">
+      "Effect of scanning strategies on the accuracy of digital intraoral scanners: a meta-analysis of in vitro studies"
+    </p>
+    <p style="margin: 0.125rem 0 0 0;">
+      <a href="https://doi.org/10.4047/jap.2023.15.6.315" target="_blank" rel="noopener noreferrer">L. Hardan</a>, Bourgi R, Lukomska-Szymanska M, Hernández-Cabanillas JC, Zamarripa-Calderón JE, Jorquera G, Ghishan S, Cuevas-Suárez CE — <em>J Adv Prosthodont. 2023;15(6):315-332</em>
+    </p>
+    <p style="margin: 0;">DOI: 10.4047/jap.2023.15.6.315</p>
+  </div>
+</div>
+
+</div>
+
+<div class="author-note">
+  <a href="/about.html" class="author-link">Dr. Foad Shahabian</a>
+  <span class="author-role">Prosthodontist &amp; Implant Specialist</span>
+</div>
+
+<footer class="dc-site-footer" style="text-align:center; margin-top:2.8125rem; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+  <div style="margin-bottom:1.375rem;">
+    <a href="/"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Back to DentCast
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=136" defer></script>
+</body>
+</html>

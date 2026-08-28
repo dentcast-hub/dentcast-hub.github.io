@@ -13679,5 +13679,107 @@
         "interpretation_fa": "متن مکانیزم روشنی می‌گذارد: شیار کم‌عمق کنار آمالگام هم خون می‌آورد و هم نخ را روی اسکن پس می‌زند. ادعا به همان موقعیتِ سه‌دیوارهٔ طبیعی و یک دیوارهٔ آمالگام محدود است. نسبت با ادبیاتِ منتشرشده بیان نشده. ارزشش رویه‌ای است، برای تصمیمِ نخ‌گذاری در قالب‌گیری دیجیتال."
       }
     ]
+  },
+  "dentai/dentai-32": {
+    "scored_at": "2026-08-28",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "DIAGNOSTIC",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Effect of scanning strategies on the accuracy of digital intraoral scanners: a meta-analysis of in vitro studies",
+          "authors": "Hardan L, Bourgi R, Lukomska-Szymanska M, Hernández-Cabanillas JC, Zamarripa-Calderón JE, Jorquera G, Ghishan S, Cuevas-Suárez CE",
+          "year": 2023,
+          "journal": "Journal of Advanced Prosthodontics",
+          "doi": "10.4047/jap.2023.15.6.315"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR/meta-analysis of diagnostic accuracy studies (in vitro IOS trueness/precision)",
+          "evidence_quote": "The meta-analysis included 15 articles."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "low",
+              "evidence_quote": "The protocol and important documents regarding to this review were recorded at Open Science Framework (https://osf.io/gf7b4/)."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "The following databases were investigated: Embase, Scielo, PubMed, Scopus, and Web of Science."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "low",
+              "evidence_quote": "Among these, 37 studies were excluded for the following reasons: (23) did not include comparisons between different scanning techniques",
+              "note": "PRISMA flow reports screening counts plus numbered reasons for full-text exclusions; v2.4 low tier — shared reason per category with individually cited studies"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "some_concerns",
+              "evidence_quote": "The risk of bias (RoB) of the manuscripts included in this review was independently assessed by two participants of the review (LH and RB) according to the evaluation of the following parameters: specimen randomization, single operator, control group, operator blinded, standardized specimens, and sample size calculation.",
+              "note": "Independent dual assessment with a custom six-parameter checklist, not an established diagnostic-accuracy RoB tool such as QUADAS-2"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "A random-effect model was used for the analyses, and pooled-effect estimates were obtained by comparing the standardized mean difference of the trueness and precision"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "No funnel plot, Egger's test, or publication-bias wording in Methods, Results, or Discussion of the full text"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all, or funding by a commercial manufacturer whose own product is among those tested",
+            "base_points": 8,
+            "points": 8,
+            "evidence_quote": "",
+            "note": "Full text on jap.or.kr carries no conflict-of-interest or funding disclosure section"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable — secondary SR/MA"
+          },
+          {
+            "item": "no sample size justification / power analysis (clinical studies); for in-vitro, specimen count per group <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires (e.g. survival claims with <3y follow-up)",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable — diagnostic accuracy in vitro, not a survival outcome"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 47,
+        "band": "C",
+        "provisional": false,
+        "fact_fa": "امتیاز شواهد این منبع ۴۷ از ۱۰۰ و باند C است؛ نوع سؤال Diagnostic است.",
+        "interpretation_fa": "این متاآنالیز پانزده مطالعهٔ آزمایشگاهی را با پروتکل ثبت‌شده در OSF و جست‌وجوی پنج دیتابیس جمع کرده و خشک بودن سطح و لندمارک مصنوعی را به‌عنوان بهبوددهندهٔ دقت نشان می‌دهد، اما ارزیابی publication bias در متن نیامده، RoB مطالعات واردشده با چک‌لیست اختصاصی (نه QUADAS-2) انجام شده، و اعلان تعارض منافع/حمایت مالی در متن کامل دیده نشد. یافته‌ها in vitro‌اند و چکیده دربارهٔ الگوی S شکل با Results ناسازگار است — برای استناد به Results تکیه کنید."
+      }
+    ]
   }
 }
