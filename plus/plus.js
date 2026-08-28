@@ -2,25 +2,25 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=40';
-import { currentUser, api } from './js/api.js?v=40';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=40';
-import { openCollectionPicker } from './js/collections.js?v=40';
-import { el } from './js/util.js?v=40';
-import { initHomeCard } from './js/home-card.js?v=40';
-import { initHomeFeatures } from './js/home-features.js?v=40';
-import { initHomeBundles } from './js/home-bundles.js?v=40';
-import { initHomeUpboard } from './js/home-upboard.js?v=40';
-import { initDesTool } from './js/des-scorer.js?v=40';
-import { initHeader } from './js/header.js?v=40';
-import { initTourAutostart } from './js/tour.js?v=40';
-import { initReadingTracker } from './js/reading.js?v=40';
-import { initListeningTracker } from './js/listening.js?v=40';
-import { initShareScoring, buildShareButton } from './js/share.js?v=40';
-import { initHeart, buildHeartChip } from './js/votes.js?v=40';
-import { mountArticleThreads } from './js/article-threads.js?v=40';
-import { mountDes } from './js/des.js?v=40';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=40';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=41';
+import { currentUser, api } from './js/api.js?v=41';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=41';
+import { openCollectionPicker } from './js/collections.js?v=41';
+import { el } from './js/util.js?v=41';
+import { initHomeCard } from './js/home-card.js?v=41';
+import { initHomeFeatures } from './js/home-features.js?v=41';
+import { initHomeBundles } from './js/home-bundles.js?v=41';
+import { initHomeUpboard } from './js/home-upboard.js?v=41';
+import { initDesTool } from './js/des-scorer.js?v=41';
+import { initHeader } from './js/header.js?v=41';
+import { initTourAutostart } from './js/tour.js?v=41';
+import { initReadingTracker } from './js/reading.js?v=41';
+import { initListeningTracker } from './js/listening.js?v=41';
+import { initShareScoring, buildShareButton } from './js/share.js?v=41';
+import { initHeart, buildHeartChip } from './js/votes.js?v=41';
+import { mountArticleThreads } from './js/article-threads.js?v=41';
+import { mountDes } from './js/des.js?v=41';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=41';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -30,7 +30,7 @@ import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=40';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=40').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=41').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -127,12 +127,22 @@ function injectActionRow(anchorEl, contentId, shareTarget) {
   return btn;
 }
 
-// A second, independent پسندیدم + افزودن‌به‌کالکشن pair at the END of the
-// article — a reader who reads all the way through should never have to
-// scroll back up to press either. Each button performs its OWN action
-// directly (this is not a shortcut back to the top row): «کالکشن» opens the
-// same picker again, and the قلب is a second buildHeartChip() instance kept
-// in step with the top one via votes.js's dcp:heart-sync event.
+// A second, independent میز کار + پسندیدم + افزودن‌به‌کالکشن trio at the END
+// of the article — a reader who reads all the way through should never have
+// to scroll back up to press any of them, and a long article is exactly where
+// a reader is most likely to find something worth highlighting only once
+// they reach it (support ticket T-2NJ-QEC, 2026-08-28). Each button performs
+// its OWN action directly (this is not a shortcut back to the top row):
+// «کالکشن» opens the same picker again, the قلب is a second buildHeartChip()
+// instance kept in step with the top one via votes.js's dcp:heart-sync event,
+// and میز کار toggles the SAME workbench instance as the top button —
+// `workbenchCtx.bindButton` (setupWorkbench, above) keeps the two in sync
+// with each other and with the toolbar's own ✕ خروج, the same way onChange
+// already kept the top button honest on its own.
+//
+// `workbenchCtx` is omitted on the surfaces that have no workbench at all
+// (an audio episode — highlighting a podcast makes no sense), so the row
+// there stays just کالکشن/پسندیدم, same as the top one.
 //
 // Anchored directly on `anchor` (findProseEnd — the last prose box), inserted
 // AFTER article-threads.js's and des.js's own afterend calls so it lands
@@ -147,7 +157,7 @@ function injectActionRow(anchorEl, contentId, shareTarget) {
 // than stacking a second one (scoped to `anchor`'s own parent, same as
 // article-threads.js's `.dc-threads` lookup — a document-wide check would
 // refuse to mount the second article at all).
-function mountBottomActions(anchor, contentId) {
+function mountBottomActions(anchor, contentId, workbenchCtx) {
   if (!anchor || !contentId) return false;
   const host = anchor.parentNode;
   if (host) {
@@ -157,7 +167,13 @@ function mountBottomActions(anchor, contentId) {
   const { btn: collectBtn, info: collectInfo, cap: collectCap } = injectCollectionButton(contentId);
   const heart = buildHeartChip(contentId, 'dc-act dc-act-heart');
   const lead = el('p', { class: 'dc-actions-end-lead' }, 'این مطلب به کارتان آمد؟');
-  const main = el('div', { class: 'dc-actions-main' }, [collectBtn, collectInfo, heart]);
+  const mainChildren = [collectBtn, collectInfo, heart];
+  if (workbenchCtx) {
+    const wbBtn = el('button', { class: 'dc-act dc-act-primary', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
+    workbenchCtx.bindButton(wbBtn);
+    mainChildren.unshift(wbBtn); // میز کار › کالکشن › پسندیدم, same order as the top row
+  }
+  const main = el('div', { class: 'dc-actions-main' }, mainChildren);
   const row = el('div', { class: 'dc-actions dc-actions-end' }, [lead, main, collectCap]);
   anchor.insertAdjacentElement('afterend', row);
   return true;
@@ -181,9 +197,11 @@ function showInvitation(anchorBtn, onProceed) {
 // article pages (initArticle) and the desktop 3-column viewer (mountArticleWorkbench).
 async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget }) {
   const Workbench = await loadWorkbench();
-  // onChange keeps the button below in sync with the mode no matter WHO changed
-  // it. The toolbar's own ✕ خروج calls wb.exit() directly, so without this the
-  // article button kept saying «خروج از میز کار» after the workbench had closed.
+  // onChange keeps every میز کار button on the page in sync with the mode no
+  // matter WHO changed it: the toolbar's own ✕ خروج, the top button, or the
+  // second one mountBottomActions may add at the end of the article via
+  // bindButton below. Without this the article button kept saying «خروج از
+  // میز کار» after the workbench had closed some other way.
   const wb = new Workbench({ contentId, proseRoot, onChange: () => updateBtn() });
   const btn = injectActionRow(proseAnchor || proseRoot, contentId, shareTarget);
 
@@ -203,39 +221,55 @@ async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget }
     readingStarted = true;
     initReadingTracker({ contentId, proseRoot });
   };
+
+  // Every میز کار button bound so far — the top one always, plus whatever
+  // mountBottomActions registers through bindButton. updateBtn() (and
+  // therefore wb's onChange) keeps all of them in lockstep.
+  const buttons = [btn];
   const updateBtn = () => {
     const on = wb.isActive();
-    btn.textContent = on ? 'خروج از میز کار' : 'میز کار';
-    btn.setAttribute('aria-pressed', String(on));
-    btn.classList.toggle('is-active', on);
+    for (const b of buttons) {
+      b.textContent = on ? 'خروج از میز کار' : 'میز کار';
+      b.setAttribute('aria-pressed', String(on));
+      b.classList.toggle('is-active', on);
+    }
   };
 
-  btn.addEventListener('click', async () => {
-    // .org gate (temporary): Plus login cannot work cross-site on the .org hosts,
-    // so instead of the OTP flow show the dentcast.ir notice.
-    if (isOrgHost()) { openOrgNotice({ source: 'workbench', contentId }); return; }
-    const user = await currentUser({ refresh: true });
-    if (!user) {
-      api.anonEvent('workbench_button_anon_click', contentId).catch(() => {});
-      showInvitation(btn, async () => {
-        sessionStorage.setItem(SS_RETURN_STUDY, location.pathname);
-        const res = await openLoginModal({ returnTo: location.pathname + location.search });
-        if (res && res.user) {
-          sessionStorage.removeItem(SS_RETURN_STUDY);
-          startReading();
-          await wb.enter();
-          updateBtn();
-        }
-      });
-      return;
-    }
-    if (wb.isActive()) wb.exit(); else await wb.enter();
-    updateBtn();
-  });
+  // Toggle behaviour — login gate, invitation card, enter/exit — shared by
+  // every میز کار button on the page rather than written once per button.
+  const wireToggle = (b) => {
+    b.addEventListener('click', async () => {
+      // .org gate (temporary): Plus login cannot work cross-site on the .org hosts,
+      // so instead of the OTP flow show the dentcast.ir notice.
+      if (isOrgHost()) { openOrgNotice({ source: 'workbench', contentId }); return; }
+      const user = await currentUser({ refresh: true });
+      if (!user) {
+        api.anonEvent('workbench_button_anon_click', contentId).catch(() => {});
+        showInvitation(b, async () => {
+          sessionStorage.setItem(SS_RETURN_STUDY, location.pathname);
+          const res = await openLoginModal({ returnTo: location.pathname + location.search });
+          if (res && res.user) {
+            sessionStorage.removeItem(SS_RETURN_STUDY);
+            startReading();
+            await wb.enter();
+            updateBtn();
+          }
+        });
+        return;
+      }
+      if (wb.isActive()) wb.exit(); else await wb.enter();
+      updateBtn();
+    });
+  };
+  wireToggle(btn);
+
+  // Registers a second میز کار button (mountBottomActions' end-of-article
+  // one) so it toggles this same workbench and stays synced with the rest.
+  const bindButton = (b) => { buttons.push(b); wireToggle(b); updateBtn(); return b; };
 
   const user = await currentUser();
   if (user) startReading(); // count this read for an already-signed-in visitor
-  return { wb, updateBtn };
+  return { wb, updateBtn, bindButton };
 }
 
 // ?dcphl=<highlight_id> — "take me to THIS highlight". Every link out of the
@@ -341,7 +375,7 @@ async function initArticle() {
   // 197 pages dc-nav.js does cover, the chip stays that script's and there is no
   // second button for the same act.
   const shareTarget = () => ({ title: document.title, url: location.href });
-  const { wb, updateBtn } = await setupWorkbench({
+  const { wb, updateBtn, bindButton } = await setupWorkbench({
     proseRoot, proseAnchor: findProseBox(), contentId, shareTarget,
   });
   // گفت‌وگوی زیر مطلب, under the prose. Draws itself lazily, always visible now
@@ -355,12 +389,12 @@ async function initArticle() {
   // Draws only if this content_id has a record in plus/des-scores.json — no
   // record, no badge, no apology on screen.
   mountDesHere(findProseEnd() || proseRoot, contentId);
-  // پسندیدم + افزودن به کالکشن again, right at the end of the article — a
-  // reader who reads to the bottom should not have to scroll back up for
-  // either. Called last so it lands directly after the prose, ahead of the
-  // conversation and the evidence card above (see mountBottomActions' own
-  // comment for why the ordering works out that way).
-  mountBottomActions(findProseEnd() || proseRoot, contentId);
+  // میز کار + پسندیدم + افزودن به کالکشن again, right at the end of the
+  // article — a reader who reads to the bottom should not have to scroll back
+  // up for any of them. Called last so it lands directly after the prose,
+  // ahead of the conversation and the evidence card above (see
+  // mountBottomActions' own comment for why the ordering works out that way).
+  mountBottomActions(findProseEnd() || proseRoot, contentId, { bindButton });
 
   // Post-login return-to-study (the funnel) or a remembered choice this session.
   // Never auto-enters on a fresh visit: sessionStorage is empty then.
@@ -440,7 +474,7 @@ async function mountArticleWorkbench(root, url) {
     }
     return;
   }
-  const { wb, updateBtn } = await setupWorkbench({
+  const { wb, updateBtn, bindButton } = await setupWorkbench({
     proseRoot,
     proseAnchor: findProseBox(root),
     contentId,
@@ -449,7 +483,7 @@ async function mountArticleWorkbench(root, url) {
   desktopWb = wb;
   mountArticleThreads(findProseEnd(root) || proseRoot, contentId); // under the article, not after its first box
   mountDesHere(findProseEnd(root) || proseRoot, contentId, root);  // the score, under that conversation
-  mountBottomActions(findProseEnd(root) || proseRoot, contentId);  // the end-of-article پسندیدم/کالکشن pair
+  mountBottomActions(findProseEnd(root) || proseRoot, contentId, { bindButton });  // the end-of-article میز کار/پسندیدم/کالکشن trio
   const hlId = query ? new URLSearchParams(query).get('dcphl') : null;
   if (hlId && await currentUser()) await openDeepLinkedHighlight(wb, updateBtn, hlId);
 }
