@@ -14,7 +14,7 @@ A **چالش** is a **post whose body is a question**. It is published through t
 ordinary publishing router, into an **existing folder** — `chairside/`,
 `insight/`, whichever the founder names — taking that folder's next number and
 that folder's brain shape. It is not a new folder and not a new brain type
-(RULE 14). What differs is the *page*: where a chairside post carries an article,
+(RULE 15). What differs is the *page*: where a chairside post carries an article,
 a چالش carries a question, an image, and a box the reader writes a free-text
 answer into.
 
@@ -28,11 +28,15 @@ the model is not sure about even one of them, no verdict is shown — the attemp
 goes into the founder's queue in `GET /admin`, the founder rules, and the reader
 is told in اطلاعیه.
 
-Reading the question is **public**. Answering is **premium**; a signed-out or
-free reader is told so. On submit the reader gets **whether their answer was
-right, and then the founder's answer** — that is the payoff, and it is why one
-attempt is all anyone gets. Every attempt earns score, and score feeds a badge
-that mints a real subscription discount.
+**Reading the question is public. Everything else is premium.** A signed-out or
+free reader gets the question, the image, and one line saying answering is part
+of premium — **no answer box at all** (RULE 11), no answer, no verdict. The lock
+arrives before the effort, never after it.
+
+A premium reader writes once and gets **whether their answer was right, and then
+the founder's answer** — that is the payoff, and it is why one attempt is all
+anyone gets. Every attempt earns score, and score feeds a badge that mints a
+real subscription discount.
 
 The model **never writes a sentence a reader sees.** It returns a verdict per
 key point from a closed three-value set, and plain code renders a verdict word.
@@ -79,9 +83,12 @@ reads the article
 sees the چالش block
 (public: question + image)
 
+    ├─ not premium ──► the lock line, NO BOX. ends here.
+    └─ premium     ──► the box
+
 writes an answer,
 presses «بفرست»
-                    ──►  premium gate (402 → the card)
+                    ──►  requirePremium on the route too
                     ──►  one attempt per (user, page)
                     ──►  ai.matchKeyPoints(key_points, answer, examples)
                          ├─ every point covered/missing  ──► SETTLED NOW
@@ -395,6 +402,14 @@ settled — `result` and `covered_count` / `point_count` (§7.2).
 > per-point array before it crosses the wire. The route shapes its response
 > object explicitly: never `select *`, never spread the challenge row into a
 > reply.
+>
+> Two consequences of "the attempt row is the key", both correct, both worth
+> stating so nobody `requirePremium`s them away later. **A reader whose
+> subscription has lapsed still sees the answer to a چالش they answered while
+> subscribed** — they paid, they wrote, it is theirs; taking it back would be
+> the only place on this site where expiry removes something already earned.
+> And **a lapsed reader still cannot answer a NEW چالش**, because that needs a
+> new attempt row and `POST` is `requirePremium`. One rule produces both.
 
 **`POST /challenge/:contentId/answer`**, in order:
 
@@ -626,21 +641,40 @@ upsell under it is an advert on every page.
 
 ### 9.2 The gate
 
-The question, the image and the invitation line are **public**. The answer box
-renders for everyone. The gate fires on submit.
+Exactly one thing is public: **the question and its image.** A reader who is not
+premium sees that, plus one line saying answering is part of premium. Nothing
+else — no answer, no key points, no verdict, and **no answer box**.
 
-> **RULE 11 — Three answers, never two.** 401 = signed out → the sign-in path
-> leads and the purchase link follows quieter (they may be a subscriber logged
-> out on this device). 402 = free → the premium card. **Anything else = «we
-> could not ask», which must never render as an upsell.** A redeploy is minutes
-> of exactly that. `premium-cta.js`'s `unreachableGate` exists for this and is
-> what you reuse.
+> **RULE 11 — The box is not rendered for a reader who cannot submit.** Decide
+> the view on load from `/me`, the way every other gated surface on this site
+> already does; do not render the textarea to everyone and reject on submit.
+> That version is worse than a lock: it invites somebody to think about a
+> clinical question, type out a real answer, press «بفرست» and only then be told
+> it was never going to be accepted. The lock has to arrive **before** the
+> effort, not after it. It is also the only version that can lose their text.
+>
+> This is presentation only. **`POST` stays `requirePremium` regardless** — a
+> hidden box is not an authorization check, and the route is what actually
+> enforces this.
+
+> **RULE 12 — Three answers, never two.** Signed out → the sign-in path leads
+> and the purchase link follows quieter (they may be a subscriber logged out on
+> this device). Free → the premium card. **Anything else — `/me` failed, the
+> API is mid-redeploy — is «we could not ask», and must never render as an
+> upsell.** A redeploy is minutes of exactly that. `premium-cta.js`'s
+> `unreachableGate` exists for this and is what you reuse. In that third state
+> render the question and stop: no box, no lock copy, no card.
 
 ### 9.3 Views
 
-`idle` (the box) · `sending` · `settled` · `queued` · `locked` · `done`
-(the reader's own earlier attempt, re-rendered on a later visit — `GET` returns
-it, so a returning reader never sees an empty box).
+`idle` (the box — **premium only**) · `sending` · `settled` · `queued` ·
+`locked` (the question + the lock line, **no box**) · `unknown` (the question
+alone, when `/me` could not be reached — RULE 12) · `done` (the reader's own
+earlier attempt, re-rendered on a later visit — `GET` returns it, so a returning
+reader never sees an empty box).
+
+`locked` and `unknown` are the two views a non-premium reader can ever get, and
+neither contains a `<textarea>`.
 
 **`settled`** shows, in this order: the reader's own answer back, the verdict
 word with the count line, then **the founder's answer** under its own heading.
@@ -648,7 +682,7 @@ word with the count line, then **the founder's answer** under its own heading.
 code in a monospace dashed box and the waiting line — the founder's answer is
 in the same place, at the same moment.
 
-> **RULE 12 — The founder's answer appears on submit, in every branch,
+> **RULE 13 — The founder's answer appears on submit, in every branch,
 > including queued and including a model failure.** It is what the reader came
 > for; the verdict is commentary on it. A queued reader shown nothing but a wait
 > message has spent their one attempt and been given nothing, and a model
@@ -664,7 +698,7 @@ in the same place, at the same moment.
 
 Goes in `plus/plus.css`, **not** `dc-article.css`.
 
-> **RULE 13 — plus.css, for the same reason article threads live there.** The
+> **RULE 14 — plus.css, for the same reason article threads live there.** The
 > desktop shell keeps `plus.css` and strips `dc-article.css`, which is linked by
 > article pages alone; `index.html` loads no shared CSS at all. A block that
 > mounts on both surfaces cannot be styled in a file only one of them has.
@@ -736,7 +770,7 @@ writes an ordinary chairside brain entry —
 `{type:'chairside', id, title, caption, hashtags, keywords, page_url, pillar}`,
 the exact shape of the last chairside entry, appended at the END of the list.
 
-> **RULE 14 — Never mint a `type: 'challenge'` in the brain and never give a
+> **RULE 15 — Never mint a `type: 'challenge'` in the brain and never give a
 > چالش its own folder.** Hard Rule 3 says categories never mix and each
 > category's entries go to their own directory; Hard Rule 6 says the entry
 > schema is sacred and no new field may appear. A چالش that is filed in
@@ -760,13 +794,13 @@ Rule 11 exists to forbid.
 | 4.12 quiz-ready FAQ | **skip** — same, and see RULE 1 |
 | 4.13 DES | **skip, reported** — a question cites nothing and appraises nothing. It is not basket 3: basket 3 is research-shaped content with no identified paper, and this is not research-shaped. Write **no key** in `des-scores.json` |
 | 5.0 hashtags | **runs** — Hard Rule 15 is unconditional |
-| 5 brain entry | **runs**, per RULE 14 above |
+| 5 brain entry | **runs**, per RULE 15 above |
 | 5.6 / 5.6-ب pathways & bundles | **skip** — a pathway step is something to read |
 | 6 Pulse | **runs** — it is new content and worth announcing |
-| Phase D en mirror | **skip — decided** (RULE 15) |
+| Phase D en mirror | **skip — decided** (RULE 16) |
 | Phase E / F | **run** |
 
-> **RULE 15 — A چالش ships with no English mirror and no fa↔en toggle. This is
+> **RULE 16 — A چالش ships with no English mirror and no fa↔en toggle. This is
 > the SECOND documented exception to Hard Rule 12, decided by the founder on
 > 2026-08-28, alongside LiteCast.** Do not "fix" it, and do not let Hard Rule
 > 12's own wording — that a missing toggle is "a gap, never a pattern to copy
@@ -854,7 +888,7 @@ not a nicety. Add چالش to the repo-conventions list with a pointer here.
 
 **Hard Rule 12 itself must be edited, in both `CLAUDE.md` and `AGENTS.md`, in
 that same commit.** It currently reads "The single exception is LiteCast". It
-becomes two exceptions — LiteCast and چالش — with RULE 15's one-line reason
+becomes two exceptions — LiteCast and چالش — with RULE 16's one-line reason
 (the mirror is a different `content_id`, so the toggle would lead to a page the
 feature cannot reach). Leaving that rule saying "single" while this document
 says otherwise is how a later publish rebuilds the mirror: the workflow is the
@@ -892,7 +926,8 @@ must refuse a چالش page for the same reason, rather than producing an orphan
 | 18 | `GET` as the settled attempt's own owner | `answer_fa` + `result` + counts present |
 | 19 | `GET`/`POST` as the owner of a **queued** attempt | `answer_fa` present, no verdict |
 | 20 | `GET` as a **premium** reader with no attempt | `answer_fa` **absent** |
-| 21 | `GET` signed out, and as a free reader | `answer_fa` **absent** |
+| 21 | `GET` signed out, and as a free reader | `answer_fa` **absent**, `exists: true` only |
+| 21b | reader answered while premium, then lapsed | `GET` still returns `answer_fa`; `POST` to a **different** چالش is 402 |
 | 22 | any response carrying `answer_fa` | `key_points` and the per-point array **absent** |
 | 23 | 4 key points, 4 covered / 2 covered / 0 covered | `result` = `full` / `partial` / `none`, `covered_count` correct |
 | 24 | `GET` for a `content_id` with no row | `{ exists: false }` |
@@ -912,11 +947,18 @@ have reached a reader as «missing».
 
 ### `plus-api/test/challenge.dom.test.ts`
 
-Renders the block against a stub `GET`: no entry → the host is removed; 402 →
-the premium card, amber only there; a network error → the unreachable copy and
-**not** an upsell (RULE 11); settled → the verdict word, the count line and
-`answer_fa`, with **no key-point text anywhere in the rendered DOM**; queued →
-the reference code, the waiting line, **and `answer_fa`**.
+Renders the block against a stub `GET` + `/me`:
+
+- no entry in `challenges.json` → the host is removed
+- **free reader → the question and the lock line, and `querySelector('textarea')`
+  is null**; signed out → the same with the sign-in path leading
+- `/me` unreachable → the question alone, **no** upsell and **no** box (RULE 12)
+- settled → the verdict word, the count line and `answer_fa`, with **no
+  key-point text anywhere in the rendered DOM**
+- queued → the reference code, the waiting line, **and `answer_fa`**
+
+The `textarea` assertion is the one that encodes RULE 11: a box that renders and
+then fails is the exact regression this test exists to catch.
 
 ---
 
