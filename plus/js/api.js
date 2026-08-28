@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=41';
+import { API_BASES } from './config.js?v=42';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -314,6 +314,12 @@ export const api = {
   publicThreads: (content_id) => request('/threads/public', { query: { content_id } }),
   myThread: (content_id) => request('/threads/mine', { query: { content_id } }),
   postThread: (content_id, body) => request('/threads', { method: 'POST', body: { content_id, body } }),
+
+  // چالش. `challengeState` needs no session either — a signed-out/free reader
+  // still gets `{exists}`; writing is premium-only, enforced server-side.
+  challengeState: (content_id) => request('/challenge/' + encodeURIComponent(content_id)),
+  submitChallenge: (content_id, answer) =>
+    request('/challenge/' + encodeURIComponent(content_id) + '/answer', { method: 'POST', body: { answer } }),
 
   // dashboard (later milestones)
   tree: () => request('/tree'),

@@ -528,6 +528,10 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
         return rep
     doc = read(page_rel)
     rep.ok("2 page", f"{page_rel} ({len(doc):,} bytes)")
+    # چالش (step 4.14): detected from the page's own markup. Computed once,
+    # here, so both the Phase D en-mirror exemption (RULE 16) and the
+    # generated-index check further down (§11.5) agree on the same signal.
+    is_challenge = "data-dc-challenge-question" in strip_code(doc)
 
     rep.check(doc.count(GA_ID) == 2, "GA4",
               "deferred GA4 snippet present exactly once",
@@ -1007,6 +1011,15 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
         rep.skip("E notify", "LiteCast is outside the Plus push ecosystem")
         rep.check("hreflang" not in doc, "D en-mirror", "no hreflang on a .ir page",
                   "a LiteCast page carries hreflang tags", "Hard Rule 10")
+    elif is_challenge:
+        rep.skip("D en-mirror", "چالش: no en mirror — RULE 16 of .dentcast/challenge-handoff.md "
+                                 "(the mirror would be a different content_id with no row in `challenges`)")
+        rep.check('class="lang-btn"' not in doc, "D en-mirror",
+                  "no fa↔en toggle on a چالش page",
+                  "a چالش page carries a .lang-btn toggle with no reachable en mirror behind it (RULE 16)")
+        rep.check("hreflang" not in doc, "D hreflang",
+                  "no hreflang on a چالش page (RULE 16 — no en mirror to alternate with)",
+                  "a چالش page carries hreflang tags")
     else:
         if rep.check(exists(en_rel), "D en-mirror", f"{en_rel} exists",
                      f"{en_rel} missing — the fa page's toggle would be a phantom pair",
@@ -1197,7 +1210,36 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
         rep.check(f'"{content_id}"' in ci, "8 plus-index", "in plus/content-index.json",
                   "missing from plus/content-index.json — the میز کار tree will not show it",
                   "node tools/build_plus_index.mjs")
-    if is_flashcard_optional and not questions:
+    # چالش (step 4.14, handoff §11.5) — a چالش skips flashcards/quiz/pathway
+    # entirely (see the table in step 4.14) but still needs its own public
+    # index verified. Detected from the page's own markup:
+    # `data-dc-challenge-question` is what step 4.14 writes and
+    # tools/build_challenge_index.mjs reads. RULE 2 is the one mistake that
+    # cannot be walked back once it is in git history, so this gate checks
+    # the PUBLIC index carries no answer_fa/key_points, not just that the
+    # entry exists.
+    if is_challenge:
+        try:
+            challenges = json.loads(read("plus/challenges.json")).get("byContent", {})
+        except (OSError, ValueError):
+            challenges = {}
+        entry = challenges.get(content_id)
+        rep.check(entry is not None, "4.14 challenge",
+                  "in plus/challenges.json",
+                  "declared a چالش but missing from plus/challenges.json",
+                  "node tools/build_challenge_index.mjs")
+        if entry is not None:
+            rep.check(bool(entry.get("question")), "4.14 challenge",
+                      "carries a question", "entry has no question text",
+                      "node tools/build_challenge_index.mjs")
+            rep.check("answer_fa" not in entry and "key_points" not in entry, "4.14 challenge",
+                      "carries no answer_fa/key_points (RULE 2)",
+                      "answer_fa/key_points leaked into the PUBLIC index — "
+                      "fix tools/build_challenge_index.mjs and regenerate",
+                      "node tools/build_challenge_index.mjs")
+        rep.skip("8 flashcards", "چالش: 4.11/4.12 are a documented skip — no prose to define terms from")
+        rep.skip("5.6 pathway", "چالش: 5.6/5.6-ب are a documented skip — a pathway step is something to read")
+    elif is_flashcard_optional and not questions:
         rep.skip("8 flashcards", "dentcast_plus: flashcards/quiz are optional — no cards authored")
     elif not is_lite:
         rep.check(content_id in read("plus/flashcards-index.json"), "8 flashcards",

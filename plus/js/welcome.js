@@ -4,9 +4,9 @@
 // whole page EXCEPT the header, and pulses the header person icon so the login
 // entry point is the obvious next step. Shown at most MAX_SHOWS times per device
 // (and once per session), never to a logged-in user.
-import { el } from './util.js?v=41';
-import { openLoginModal } from './login-modal.js?v=41';
-import { telegramLoginEnabled } from './config.js?v=41';
+import { el } from './util.js?v=42';
+import { openLoginModal } from './login-modal.js?v=42';
+import { telegramLoginEnabled } from './config.js?v=42';
 
 const LS_COUNT = 'dcp:welcome:count';   // total appearances on this device
 const SS_SHOWN = 'dcp:welcome:shown';   // once per browser session

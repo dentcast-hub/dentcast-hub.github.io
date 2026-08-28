@@ -33,7 +33,7 @@ const COMPUTED = new Set([
   'distinct_folders', 'folders_completed', 'archive_read', 'night_activity',
   'dawn_activity', 'weekend_pair', 'early_reads', 'weeks_no_demotion',
   'pathways_completed', 'review_sessions', 'collections', 'collection_items',
-  'shares', 'tiers_won', 'founder_seat', 'pillar_seat',
+  'shares', 'tiers_won', 'founder_seat', 'pillar_seat', 'challenges_settled',
 ]);
 
 beforeEach(async () => {

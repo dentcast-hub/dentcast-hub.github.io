@@ -20,10 +20,10 @@
 // tools/build_upboard_index.py on every publish). There is no endpoint, no
 // migration, and no third copy of a page's title that could drift from the other
 // two — the API is asked exactly one question, «is this reader premium».
-import { el, faNum } from './util.js?v=41';
-import { currentUser, meStatus } from './api.js?v=41';
-import { premiumCta, guestPremiumExtras, lapsedNote, unreachableGate } from './premium-cta.js?v=41';
-import { openLoginModal } from './login-modal.js?v=41';
+import { el, faNum } from './util.js?v=42';
+import { currentUser, meStatus } from './api.js?v=42';
+import { premiumCta, guestPremiumExtras, lapsedNote, unreachableGate } from './premium-cta.js?v=42';
+import { openLoginModal } from './login-modal.js?v=42';
 
 /** Which gate sent a buyer, for the pricing page's ?from= report. */
 const FROM = 'gate-desboard';

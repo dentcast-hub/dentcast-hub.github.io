@@ -2,25 +2,26 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=41';
-import { currentUser, api } from './js/api.js?v=41';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=41';
-import { openCollectionPicker } from './js/collections.js?v=41';
-import { el } from './js/util.js?v=41';
-import { initHomeCard } from './js/home-card.js?v=41';
-import { initHomeFeatures } from './js/home-features.js?v=41';
-import { initHomeBundles } from './js/home-bundles.js?v=41';
-import { initHomeUpboard } from './js/home-upboard.js?v=41';
-import { initDesTool } from './js/des-scorer.js?v=41';
-import { initHeader } from './js/header.js?v=41';
-import { initTourAutostart } from './js/tour.js?v=41';
-import { initReadingTracker } from './js/reading.js?v=41';
-import { initListeningTracker } from './js/listening.js?v=41';
-import { initShareScoring, buildShareButton } from './js/share.js?v=41';
-import { initHeart, buildHeartChip } from './js/votes.js?v=41';
-import { mountArticleThreads } from './js/article-threads.js?v=41';
-import { mountDes } from './js/des.js?v=41';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=41';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=42';
+import { currentUser, api } from './js/api.js?v=42';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=42';
+import { openCollectionPicker } from './js/collections.js?v=42';
+import { el } from './js/util.js?v=42';
+import { initHomeCard } from './js/home-card.js?v=42';
+import { initHomeFeatures } from './js/home-features.js?v=42';
+import { initHomeBundles } from './js/home-bundles.js?v=42';
+import { initHomeUpboard } from './js/home-upboard.js?v=42';
+import { initDesTool } from './js/des-scorer.js?v=42';
+import { initHeader } from './js/header.js?v=42';
+import { initTourAutostart } from './js/tour.js?v=42';
+import { initReadingTracker } from './js/reading.js?v=42';
+import { initListeningTracker } from './js/listening.js?v=42';
+import { initShareScoring, buildShareButton } from './js/share.js?v=42';
+import { initHeart, buildHeartChip } from './js/votes.js?v=42';
+import { mountArticleThreads } from './js/article-threads.js?v=42';
+import { mountChallenge } from './js/challenge.js?v=42';
+import { mountDes } from './js/des.js?v=42';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=42';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -30,7 +31,7 @@ import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=41';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=41').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=42').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -337,6 +338,10 @@ function initEpisodeActions() {
   // a caption and an audio file has no identified paper, gets no record at
   // Question 4.8, and therefore draws nothing here. No audio test is needed.
   mountDesHere(findProseEnd() || box, detectContentId());
+  // چالش, for an episode too — written against a content_id like DES above,
+  // and let the data decide (handoff RULE 9): if this episode has no چالش in
+  // plus/challenges.json, the block mounts nothing.
+  mountChallenge(findProseEnd() || box, detectContentId());
   // گفت‌وگوی زیر مطلب, for an episode too. It reached articles only because
   // initArticle() mounts it and initArticle() bows out here — an accident of
   // where the call sat, not a decision: the whole block is written against a
@@ -378,6 +383,11 @@ async function initArticle() {
   const { wb, updateBtn, bindButton } = await setupWorkbench({
     proseRoot, proseAnchor: findProseBox(), contentId, shareTarget,
   });
+  // چالش, under the prose, before the conversation — the block that asks the
+  // reader to DO something comes above the one that shows what others said
+  // (handoff RULE 9/10). Draws only if this content_id has a row in
+  // plus/challenges.json; no row, no block, no apology on screen.
+  mountChallenge(findProseEnd() || proseRoot, contentId);
   // گفت‌وگوی زیر مطلب, under the prose. Draws itself lazily, always visible now
   // (2026-08-19) — only the write side stays gated, and only on request.
   // findProseEnd, not findProseBox: the conversation goes UNDER the article.
@@ -468,6 +478,7 @@ async function mountArticleWorkbench(root, url) {
         row.appendChild(collectCap);
         aux.appendChild(buildShareButton(shellShare));
       }
+      mountChallenge(findProseEnd(root) || box, contentId, root); // چالش, on this surface too
       mountArticleThreads(findProseEnd(root) || box, contentId); // the conversation, on this surface too
       mountDesHere(findProseEnd(root) || box, contentId, root);  // and the score, on this surface too
       mountBottomActions(findProseEnd(root) || box, contentId);  // and the end-of-article pair, on this surface too
@@ -481,6 +492,7 @@ async function mountArticleWorkbench(root, url) {
     shareTarget: shellShare,
   });
   desktopWb = wb;
+  mountChallenge(findProseEnd(root) || proseRoot, contentId, root); // چالش, above the conversation
   mountArticleThreads(findProseEnd(root) || proseRoot, contentId); // under the article, not after its first box
   mountDesHere(findProseEnd(root) || proseRoot, contentId, root);  // the score, under that conversation
   mountBottomActions(findProseEnd(root) || proseRoot, contentId, { bindButton });  // the end-of-article میز کار/پسندیدم/کالکشن trio

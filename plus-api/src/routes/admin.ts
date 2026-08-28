@@ -57,6 +57,10 @@ import {
   validateDesRecord, normaliseDesRecord, resolveHashtags,
 } from '../services/des-library.js';
 import { keyHash, keysFor, allDois, allPmids, paperScope, pickIdentifier } from '../services/des-identity.js';
+import {
+  queueRows as challengeQueueRows, getAttempt as getChallengeAttempt,
+  settleByFounder, upsertChallenge, validateKeyPoints,
+} from '../services/challenge.js';
 import { config } from '../config.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
@@ -1288,6 +1292,104 @@ function renderHtml(
           render([Object.assign({}, res.j.request, { excerpt: (res.j.request.body || '').slice(0, 200) })]);
         })
         .catch(function () { out.textContent = 'جست‌وجو نشد.'; });
+    });
+
+    load();
+  })();
+  </script>
+
+  <h3 style="margin-top:26px">صندوق چالش <span id="chWaiting" class="pill"></span></h3>
+  <div class="muted">پاسخ‌هایی که مدل مطمئن نبود. قدیمی‌ترین بالاتر. هر نکته را تیک بزن یا خالی بگذار.</div>
+  <div id="chList"></div>
+  <script>
+  (function () {
+    var list = document.getElementById('chList');
+    var waiting = document.getElementById('chWaiting');
+    if (!list) return;
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+    function when(iso) {
+      try { return new Date(iso).toLocaleString('fa-IR'); } catch (e) { return iso; }
+    }
+    function who(r) {
+      return esc(r.display_name || r.phone || r.user_id);
+    }
+
+    function card(r) {
+      return '<div class="tk" data-id="' + esc(r.id) + '" data-row="' + esc(JSON.stringify(r.key_points)) + '">'
+        + '<div class="tk-h"><b>' + esc(r.content_id) + '</b>'
+        + '<span class="pill">' + esc(r.reference) + '</span>'
+        + '</div>'
+        + '<div class="muted">' + who(r) + ' · ' + when(r.created_at) + '</div>'
+        + '<div class="tk-x">' + esc(r.answer_text) + '</div>'
+        + '<div class="tk-body"></div></div>';
+    }
+
+    function render(rows) {
+      if (!rows.length) { list.innerHTML = '<div class="muted">چیزی این‌جا نیست.</div>'; return; }
+      list.innerHTML = rows.map(card).join('');
+    }
+
+    function load() {
+      list.innerHTML = '<div class="muted">در حال خواندن…</div>';
+      fetch('/admin/challenges', { credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          waiting.textContent = j.count ? j.count + ' منتظر' : '';
+          render(j.pending || []);
+        })
+        .catch(function () { list.innerHTML = '<div class="muted">خوانده نشد.</div>'; });
+    }
+
+    function work(box, keyPoints) {
+      var checks = keyPoints.map(function (kp) {
+        return '<label><input type="checkbox" data-kp="' + esc(kp.id) + '" checked> '
+          + esc(kp.text) + '</label>';
+      }).join('');
+      box.innerHTML = '<div class="ds-work">'
+        + checks
+        + '<div class="row"><button type="button" data-act="rule">ثبت و اطلاع بده</button></div>'
+        + '<div class="ds-msg muted"></div>'
+        + '</div>';
+    }
+
+    list.addEventListener('click', function (ev) {
+      var actBtn = ev.target.closest ? ev.target.closest('[data-act="rule"]') : null;
+      if (actBtn) {
+        var wrap = actBtn.closest('.tk');
+        var box = actBtn.closest('.tk-body');
+        var id = wrap.getAttribute('data-id');
+        var msg = box.querySelector('.ds-msg');
+        var verdict = Array.prototype.map.call(box.querySelectorAll('[data-kp]'), function (cb) {
+          return { id: cb.getAttribute('data-kp'), state: cb.checked ? 'covered' : 'missing' };
+        });
+        msg.textContent = 'در حال ثبت…';
+        fetch('/admin/challenges/attempts/' + id + '/rule', {
+          method: 'POST', credentials: 'include',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ verdict: verdict })
+        }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+          .then(function (res) {
+            if (!res.ok) { msg.textContent = res.j.message || res.j.error || 'نشد.'; return; }
+            msg.textContent = 'ثبت شد و به کاربر اطلاع داده شد.';
+            setTimeout(load, 900);
+          })
+          .catch(function () { msg.textContent = 'ارسال نشد.'; });
+        return;
+      }
+
+      var wrap2 = ev.target.closest ? ev.target.closest('.tk') : null;
+      if (!wrap2) return;
+      if (ev.target.closest && ev.target.closest('.tk-body')) return;
+      var box2 = wrap2.querySelector('.tk-body');
+      if (box2.innerHTML) { box2.innerHTML = ''; return; }
+      var keyPoints;
+      try { keyPoints = JSON.parse(wrap2.getAttribute('data-row')); } catch (e) { keyPoints = []; }
+      work(box2, keyPoints);
     });
 
     load();
@@ -3063,5 +3165,93 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.post('/admin/subscriptions/run-sweep', async (_request, reply) => {
     const result = await sweepExpiredSubscriptions(new Date());
     return reply.send({ ok: true, ...result });
+  });
+
+  // صندوق چالش — the founder's side. Reader endpoints live in routes/challenge.ts;
+  // this is where a channel a reader wrote to actually gets a human, exactly
+  // like ارزیاب DES and صندوق پشتیبانی before it.
+
+  // GET /admin/challenges — the queue, oldest first.
+  app.get('/admin/challenges', async (_request, reply) => {
+    const rows = await challengeQueueRows();
+    return reply.send({ ok: true, count: rows.length, pending: rows });
+  });
+
+  // GET /admin/challenges/by-reference/:reference — same lookup shape as
+  // ارزیاب DES's own by-reference route.
+  app.get('/admin/challenges/by-reference/:reference', async (request, reply) => {
+    const { reference } = request.params as { reference: string };
+    const r = await one<{ id: string }>(
+      'select id from challenge_attempts where reference = $1',
+      [normalizeReference(reference)],
+    );
+    if (!r) return reply.code(404).send({ error: 'not_found' });
+    const attempt = await getChallengeAttempt(r.id);
+    if (!attempt) return reply.code(404).send({ error: 'not_found' });
+    return reply.send({ ok: true, attempt });
+  });
+
+  // POST /admin/challenges/upsert { content_id, answer_fa, key_points } — where
+  // a چالش is created and edited (on conflict … do update). This is the paste
+  // box the publish report (workflow step 4.14) sends the founder to: the
+  // چالش is not live until this runs (GET /challenge/:id answers exists:false
+  // until then, and the block on the page renders nothing).
+  app.post('/admin/challenges/upsert', {
+    schema: {
+      body: {
+        type: 'object', required: ['content_id', 'answer_fa', 'key_points'],
+        properties: {
+          content_id: { type: 'string', minLength: 1 },
+          answer_fa: { type: 'string', minLength: 1 },
+          key_points: { type: 'array' },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as { content_id: string; answer_fa: string; key_points: unknown };
+    const keyPoints = validateKeyPoints(b.key_points);
+    if (!keyPoints) {
+      return reply.code(400).send({
+        error: 'invalid_key_points',
+        message: '۳ تا ۵ نکتهٔ کلیدی لازم است، هر کدام با id و text غیرخالی، و idها یکتا.',
+      });
+    }
+    const challenge = await upsertChallenge({
+      contentId: b.content_id, answerFa: b.answer_fa, keyPoints,
+    });
+    return reply.send({ ok: true, challenge });
+  });
+
+  // POST /admin/challenges/attempts/:id/rule { verdict: [{id, state}] } — the
+  // founder settles a queued attempt: no `unsure` (the queue is where
+  // ambiguity is resolved, not deferred again), exactly the challenge's key
+  // points, each stamped by:'founder', and the ruling is kept as a worked
+  // example for the SAME چالش (handoff §6.3 — this is what makes the queue
+  // shrink as a چالش ages).
+  app.post('/admin/challenges/attempts/:id/rule', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const b = request.body as { verdict?: unknown };
+    if (!Array.isArray(b.verdict) || !b.verdict.length) {
+      return reply.code(400).send({ error: 'verdict_required' });
+    }
+    const verdictInput = b.verdict as { id?: unknown; state?: unknown }[];
+    if (verdictInput.some((v) => typeof v.id !== 'string' || typeof v.state !== 'string')) {
+      return reply.code(400).send({ error: 'invalid_verdict' });
+    }
+    const result = await settleByFounder(id, verdictInput as { id: string; state: string }[]);
+    if (!result.ok) {
+      const messages: Record<string, string> = {
+        not_found: 'یافت نشد.',
+        unsure_not_allowed: 'صف همین‌جا برای رفعِ ابهام است — «نامطمئن» پذیرفته نمی‌شود.',
+        key_points_mismatch: 'باید دقیقاً همان نکته‌های کلیدیِ همین چالش باشد، هرکدام covered یا missing.',
+      };
+      return reply.code(400).send({ error: result.error, message: messages[result.error] });
+    }
+    await sendCapped(result.userId, {
+      title: 'جوابِ چالش رسید',
+      body: 'نتیجهٔ جوابت آماده شد.',
+      url: `/${result.attempt.content_id}.html`,
+    }, 'challenge_ruled');
+    return reply.send({ ok: true, attempt: result.attempt });
   });
 }

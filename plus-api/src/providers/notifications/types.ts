@@ -92,7 +92,14 @@ export type NotificationKind =
    * promising «بعد از دیدن واریز… در «اطلاعیه» خبرش را می‌گیرید» the whole
    * time, with nothing on the other end of the promise.
    */
-  | 'payment_result';
+  | 'payment_result'
+  /**
+   * چالش: the founder ruled on a queued attempt (services/challenge.ts). Same
+   * reasoning as 'support_reply' and 'des_result' — the reader wrote an
+   * answer, spent their one attempt on it, and is waiting on a human for the
+   * verdict. UNCAPPED in notify-policy.ts for the same reason.
+   */
+  | 'challenge_ruled';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.

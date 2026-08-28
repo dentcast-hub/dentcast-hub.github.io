@@ -59,6 +59,10 @@ const UNCAPPED: ReadonlySet<NotificationKind> = new Set<NotificationKind>([
   // The answer on a manually-reviewed payment: approved and live, or refused
   // and why. They have been waiting on a person since they paid.
   'payment_result',
+  // چالش: the founder ruled a queued attempt. Same reasoning as support_reply
+  // and des_result — the reader wrote an answer, spent their one attempt, and
+  // is waiting on a human for the verdict on it.
+  'challenge_ruled',
 ]);
 
 /**
