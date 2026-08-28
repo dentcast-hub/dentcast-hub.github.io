@@ -18,9 +18,9 @@
 // inserted until BOTH checks confirm there is something to show — a
 // half-published چالش (page markup + challenges.json entry, but no admin
 // paste yet) must be invisible, never a box that 404s on submit.
-import { api, currentUser, meStatus } from './api.js?v=47';
-import { el, faNum } from './util.js?v=47';
-import { premiumCta } from './premium-cta.js?v=47';
+import { api, currentUser, meStatus } from './api.js?v=48';
+import { el, faNum } from './util.js?v=48';
+import { premiumCta } from './premium-cta.js?v=48';
 
 let filePromise = null;
 
@@ -38,10 +38,8 @@ function loadChallenges() {
 
 const COPY = {
   heading: 'چالش',
-  invite: 'اول خودت جواب بده، بعد جوابِ من را ببین.',
   placeholder: 'جوابت را این‌جا بنویس…',
   submit: 'بفرست',
-  underBox: 'فقط یک بار می‌توانی جواب بدهی — چون بعدش جوابِ من را می‌بینی.',
   tooShort: 'کمی بیشتر بنویس تا بشود سنجید.',
   premiumRequired: 'برای شرکت در چالش و بررسی پاسختون با هوش مصنوعی اشتراک پرمیوم تهیه کنید',
   unreachable: 'الان نتوانستیم بررسی کنیم. کمی بعد دوباره امتحان کن.',
@@ -167,10 +165,8 @@ function answerBox(contentId, onSettled, { isPremium }) {
 
   return el('div', { class: 'dc-ch-box' }, [
     box,
-    el('p', { class: 'dc-ch-under' }, COPY.underBox),
     el('div', { class: 'dc-ch-row' }, [send, note]),
     gate,
-    el('p', { class: 'dc-ch-invite' }, COPY.invite),
   ]);
 }
 

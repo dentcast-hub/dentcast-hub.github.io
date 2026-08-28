@@ -1635,17 +1635,6 @@ html.dcp-touring #mobile-body { overflow: hidden; }
   line-height:1.8;
   resize:vertical;
 }
-.dc-ch-under{
-  font-size:.78rem;
-  line-height:1.8;
-  color:var(--txt2, #4a5f85);
-  margin:.5rem 0 0;
-}
-.dc-ch-invite{
-  font-size:.82rem;
-  color:var(--txt2, #4a5f85);
-  margin:.35rem 0 0;
-}
 .dc-ch-row{
   display:flex;
   align-items:center;
