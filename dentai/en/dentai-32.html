@@ -188,6 +188,22 @@
       background:rgba(11,95,255,0.03);
     }
 
+    /* Table footnote — visually distinct from body text */
+    .text-box table + p:has(em):not(:has(strong)){
+      font-size:0.88rem;
+      color:#5f677a;
+      line-height:1.75;
+      margin-top:-0.65rem;
+      margin-bottom:1.25rem;
+    }
+    .text-box table + p:has(em):not(:has(strong)) em{
+      font-style:normal;
+      color:inherit;
+    }
+    html[data-theme="dark"] .text-box table + p:has(em):not(:has(strong)){
+      color:#9aa3b5;
+    }
+
     .author-note{
       display:flex;
       flex-wrap:wrap;
@@ -469,10 +485,6 @@ An <a href="/glossary/intraoral-scanner.html">intraoral scanner</a> can be good 
 <tr><td><strong>Precision</strong></td><td>How similar repeated scans of the same object are. Random error. In the target example: how close the arrows sit together, regardless of target location.</td><td>Unpredictability. One scan turns out well and the next from the same patient does not.</td></tr>
 </tbody>
 </table>
-
-<p>
-<em>The third column is the author's clinical reading. The paper defines both terms per ISO 5725-1 but does not translate them into these specific scenarios.</em>
-</p>
 
 <p>
 <strong>Clinical reading:</strong> The paper says impression accuracy determines marginal fit and final restoration quality, but it does not translate these two components into specific clinical scenarios. If we translate: trueness loss shows up mainly in dimensions and inter-arch relationships, where error accumulates along the arch, which is why it matters more in full-arch frameworks and implant cases. Precision loss shows up mainly as unpredictability—one scan goes well and the next from the same patient does not.
