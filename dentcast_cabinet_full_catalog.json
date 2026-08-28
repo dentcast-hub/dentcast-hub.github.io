@@ -137565,9 +137565,62 @@
         "Somayeh Niakan",
         "Faezeh Atri"
       ]
+    },
+    {
+      "id": "P2903",
+      "title": "Effect of scanning strategies on the accuracy of digital intraoral scanners: a meta-analysis of in vitro studies",
+      "file_name": "effect-of-scanning-strategies-on-the-accuracy-of-digital-intraoral-scanners-a-meta-analysis-of-in-vitro-studies.pdf",
+      "topic": "Scaning",
+      "topic_path": "Scaning",
+      "type": "meta-analysis",
+      "local_path": "",
+      "file_size": 4825646,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "dentai/dentai-32"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1_flNVgNjAiDyr07TcedAq6WEEkM3FQRF/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1_flNVgNjAiDyr07TcedAq6WEEkM3FQRF",
+      "drive_view": "https://drive.google.com/file/d/1_flNVgNjAiDyr07TcedAq6WEEkM3FQRF/view",
+      "drive_id": "1_flNVgNjAiDyr07TcedAq6WEEkM3FQRF",
+      "tags": [
+        "accuracy",
+        "digital-impression",
+        "in-vitro",
+        "intraoral-scanning",
+        "intraoral-scanner",
+        "meta-analysis",
+        "precision",
+        "scanning-strategy",
+        "systematic-review",
+        "trueness",
+        "topic:scaning",
+        "effect-of-scanning-strategies-on-the-accuracy-of-digital-intraoral-scanners-a-meta-analysis-of-in-vitro-studies"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Effect of scanning strategies on the accuracy of digital intraoral scanners: a meta-analysis of in vitro studies",
+      "doi": "10.4047/jap.2023.15.6.315",
+      "journal": "Journal of Advanced Prosthodontics",
+      "crossref_year": 2023,
+      "subjects": [],
+      "abstract": "PURPOSE: This study aimed to investigate whether the accuracy of intraoral scanners is influenced by different scanning strategies in an in vitro setting, through a systematic review and meta-analysis. MATERIALS AND METHODS: This review was conducted in accordance with the PRISMA 2020 standard. The following PICOS approach was used: population, tooth impressions; intervention, the use of intraoral scanners with scanning strategies different from the manufacturer's instructions; control, the use of intraoral scanners following the manufacturers' requirements; outcome, accuracy of intraoral scanners; type of studies, in vitro. A comprehensive literature search was conducted across various databases including Embase, SciELO, PubMed, Scopus, and Web of Science. The inclusion criteria were based on in vitro studies that reported the accuracy of digital impressions using intraoral scanners. Analysis was performed using Review Manager software (version 5.3.5; Cochrane Collaboration, Copenhagen, Denmark). Global comparisons were made using a standardized mean difference based on random-effect models, with a significance level of α = 0.05. RESULTS: The meta-analysis included 15 articles. Digital impression accuracy significantly improved under dry conditions (P < 0.001). Moreover, trueness and precision were enhanced when artificial landmarks were used (P ≤ 0.02) and when an S-shaped pattern was followed (P ≤ 0.01). However, the type of light used did not have a significant impact on the accuracy of the digital intraoral scanners (P ≥ 0.16). CONCLUSION: The accuracy of digital intraoral scanners can be enhanced by employing scanning processes using artificial landmarks and digital impressions under dry conditions.",
+      "display_title": "Effect of scanning strategies on the accuracy of digital intraoral scanners: a meta-analysis of in vitro studies",
+      "authors": [
+        "Louis Hardan",
+        "Rim Bourgi",
+        "Monika Lukomska-Szymanska",
+        "Juan Carlos Hernández-Cabanillas",
+        "Juan Eliezer Zamarripa-Calderón",
+        "Gilbert Jorquera",
+        "Sinan Ghishan",
+        "Carlos Enrique Cuevas-Suárez"
+      ]
     }
   ],
-  "drive_matched": 2847,
+  "drive_matched": 2848,
   "drive_match_breakdown": {
     "by_full_path": 2844,
     "by_filename": 0
