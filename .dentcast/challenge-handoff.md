@@ -126,7 +126,8 @@ Score is awarded on **submit**, in both branches — see §8.
 | create | `tools/build_challenge_index.mjs` |
 | create | `plus/challenges.json` — generated, public half only |
 | edit | `.dentcast/workflows/README.md` — Phase B Question 4.9 + step 4.14 |
-| edit | `AGENTS.md`, `.cursor/rules/dentcast-router.mdc` — the parity mirror |
+| edit | `CLAUDE.md` — Hard Rule 12's exception list + the conventions entry (§11.6) |
+| edit | `AGENTS.md`, `.cursor/rules/dentcast-router.mdc` — the parity mirror, same commit |
 | edit | `tools/verify_publish.py` — the چالش row (§11) |
 | create | `plus-api/test/challenge.test.ts` |
 | create | `plus-api/test/challenge.dom.test.ts` |
@@ -741,17 +742,29 @@ Rule 11 exists to forbid.
 | 5 brain entry | **runs**, per RULE 14 above |
 | 5.6 / 5.6-ب pathways & bundles | **skip** — a pathway step is something to read |
 | 6 Pulse | **runs** — it is new content and worth announcing |
-| Phase D en mirror | **ask the founder** — see below |
+| Phase D en mirror | **skip — decided** (RULE 15) |
 | Phase E / F | **run** |
 
-> **Phase D is the one open question in this document.** Hard Rule 12 makes the
-> English mirror mandatory and names LiteCast as its single exception. A چالش
-> mirror would live at `chairside/en/chairside-31`, which is a **different
-> `content_id`** — so it has no row in `challenges.json`, the block removes
-> itself, and the toggle leads to a page missing the only thing on it. Adding a
-> second Hard-Rule-12 exception is the founder's call, not this document's.
-> Until they make it, **ask on the first چالش publish** and record the answer
-> here.
+> **RULE 15 — A چالش ships with no English mirror and no fa↔en toggle. This is
+> the SECOND documented exception to Hard Rule 12, decided by the founder on
+> 2026-08-28, alongside LiteCast.** Do not "fix" it, and do not let Hard Rule
+> 12's own wording — that a missing toggle is "a gap, never a pattern to copy
+> forward" — talk you back into building one: that sentence governs pages which
+> merely *lack* a mirror, not the two types whose exception is written down.
+>
+> The reason is mechanical, not editorial. An en mirror lives at
+> `chairside/en/chairside-31`, which is a **different `content_id`**. It has no
+> row in `challenges.json` and no row in `challenges`, so the block removes
+> itself and the toggle leads to a page missing the only thing on it. Making it
+> work would mean either a second challenge row per page (two answer keys and
+> two attempt namespaces for one question) or teaching the whole feature to fold
+> `…/en/…` back to its fa id — a special case in `detectContentId()`, the
+> builder, the API and the admin queue, for an unreviewed machine translation of
+> a question whose grading is in Persian.
+>
+> So: no `/en/` page, no `.lang-btn`, no hreflang, out of the sitemap. The
+> builder already excludes any `en/` path (§11.4) and `verify_publish.py` must
+> not ask a چالش for a mirror.
 
 ### 11.2 Phase B — Question 4.9 (new, after Question 4.8)
 
@@ -817,6 +830,18 @@ carry a question and an image and **must not** carry `answer_fa` or
 `CLAUDE.md`, `AGENTS.md` and `.cursor/rules/dentcast-router.mdc` are updated
 **in the same commit** — that is the maintenance rule at the top of `CLAUDE.md`,
 not a nicety. Add چالش to the repo-conventions list with a pointer here.
+
+**Hard Rule 12 itself must be edited, in both `CLAUDE.md` and `AGENTS.md`, in
+that same commit.** It currently reads "The single exception is LiteCast". It
+becomes two exceptions — LiteCast and چالش — with RULE 15's one-line reason
+(the mirror is a different `content_id`, so the toggle would lead to a page the
+feature cannot reach). Leaving that rule saying "single" while this document
+says otherwise is how a later publish rebuilds the mirror: the workflow is the
+thing an agent actually reads on a publish, and it must not contradict the
+handoff the feature was built from.
+
+Same for the English-version trigger section of `CLAUDE.md`: «… رو انگلیسی کن»
+must refuse a چالش page for the same reason, rather than producing an orphan.
 
 ---
 
