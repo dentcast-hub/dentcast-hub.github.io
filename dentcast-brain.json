@@ -13910,5 +13910,45 @@
       "secondary": [],
       "subtopic": "impression"
     }
+  },
+  {
+    "type": "dentai",
+    "id": "dentai-32",
+    "title": "چه چیزهایی حین اسکن، دقت اسکنر داخل دهانی را جابه‌جا می‌کنند؟",
+    "caption": "مروری بر متاآنالیز Hardan و همکاران، Journal of Advanced Prosthodontics 2023؛ 15(6): 315-332.",
+    "hashtags": [
+      "#DentAI",
+      "#اسکنر_داخل_دهانی",
+      "#دقت_اسکن",
+      "#قالب‌گیری_دیجیتال",
+      "#متاآنالیز"
+    ],
+    "keywords": [
+      "intraoral scanner",
+      "scanning strategy",
+      "trueness",
+      "precision",
+      "scanning accuracy",
+      "digital impression",
+      "meta-analysis",
+      "in vitro",
+      "moisture control",
+      "artificial landmarks",
+      "scanning pattern",
+      "ISO 5725-1",
+      "اسکنر داخل دهانی",
+      "استراتژی اسکن",
+      "ترونس",
+      "پرسیژن",
+      "دقت اسکن",
+      "قالب‌گیری دیجیتال",
+      "متاآنالیز"
+    ],
+    "page_url": "/dentai/dentai-32.html",
+    "pillar": {
+      "primary": "digital",
+      "secondary": [],
+      "subtopic": "intraoral-scanning"
+    }
   }
 ]

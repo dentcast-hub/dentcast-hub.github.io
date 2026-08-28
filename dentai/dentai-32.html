@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="dc-notify" content="true">
+
+<title>DentAI – چه چیزهایی حین اسکن، دقت اسکنر داخل دهانی را جابه‌جا می‌کنند؟</title>
+
+<meta name="description" content="مروری بر متاآنالیز Hardan و همکاران، Journal of Advanced Prosthodontics 2023؛ 15(6): 315-332.">
+
+
+<link rel="canonical" href="https://dentcast.org/dentai/dentai-32.html">
+<link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/dentai/dentai-32.html">
+<link rel="alternate" hreflang="fa" href="https://dentcast.org/dentai/dentai-32.html">
+<link rel="alternate" hreflang="x-default" href="https://dentcast.org/dentai/dentai-32.html">
+
+
+  <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css?v=4">
+  <style>
+    :root{
+      --blue:#0b5fff;
+      --gold:rgba(255,199,44,0.85);
+      --bg:#0b1220;
+      --bg2:#121a2b;
+      --text:#e7eaf1;
+      --muted:#9aa1b3;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.35);
+    }
+
+    .caption{
+      background:rgba(255, 185, 40, 0.15);
+      border:1px solid rgba(255, 220, 100, 0.4);
+      border-radius:var(--radius);
+      backdrop-filter:blur(10px);
+      padding:1.25rem 1.5rem;
+      margin-bottom:2.1875rem;
+      box-shadow:0 0 30px rgba(255,200,0,0.1);
+    }
+
+    .caption p{
+      color:var(--gold);
+      font-weight:600;
+      font-size:1.1rem;
+      margin:0;
+      text-align:justify;
+      line-height:1.9;
+    }
+
+   .text-box {
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 1.375rem;
+  padding: 1.75rem 2.125rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  color: #111;
+  font-size: 1.05rem;
+  line-height: 2;
+   }
+
+    ul{
+      list-style:none;
+      padding:0;
+      margin:0 0 0.875rem 0;
+    }
+
+    ul li{
+      margin-bottom:0.625rem;
+    }
+
+    ul li::before{
+      content:"• ";
+      color:#0b5fff;
+      font-weight:bold;
+    }
+
+    /* جدول‌های امتیازدهی/سکستانت/ریسک — همرنگ با text-box روشن */
+    .text-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .text-box table th,
+    .text-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:right;
+      vertical-align:top;
+    }
+    .text-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .text-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+
+    @media (max-width:768px){
+      .caption p{font-size:1rem;}
+      .text-box{padding:1.25rem 1.125rem; font-size:.98rem;}
+      .text-box table{font-size:.9rem;}
+      .text-box table th,.text-box table td{padding:0.45rem 0.5rem;}
+    }
+    .text-box{
+  position: relative;
+}
+
+.text-box { background: #fff !important; }
+
+/* دکمه‌ی نسخه انگلیسی (بالا-چپ) */
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+  </style>
+
+
+
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
+  <meta name="theme-color" content="#0b5fff">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dentcast.org/dentai/dentai-32.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "خانه",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "DentAI",
+          "item": "https://dentcast.org/dentai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "چه چیزهایی حین اسکن، دقت اسکنر داخل دهانی را جابه‌جا می‌کنند؟",
+          "item": "https://dentcast.org/dentai/dentai-32.html"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/dentai-32.html#article",
+      "headline": "چه چیزهایی حین اسکن، دقت اسکنر داخل دهانی را جابه‌جا می‌کنند؟",
+      "description": "مروری بر متاآنالیز Hardan و همکاران، Journal of Advanced Prosthodontics 2023؛ 15(6): 315-332.",
+      "datePublished": "2026-08-28T10:00:00+03:30",
+      "dateModified": "2026-08-28T10:00:00+03:30",
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/dentai/dentai-32.html"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "url": "https://doi.org/10.4047/jap.2023.15.6.315",
+          "name": "Effect of scanning strategies on the accuracy of digital intraoral scanners: a meta-analysis of in vitro studies"
+        }
+      ],
+      "inLanguage": "fa",
+      "articleSection": "Digital Dentistry",
+      "keywords": [
+        "intraoral scanner",
+        "scanning strategy",
+        "trueness",
+        "precision",
+        "scanning accuracy",
+        "digital impression",
+        "meta-analysis",
+        "in vitro",
+        "moisture control",
+        "artificial landmarks",
+        "اسکنر داخل دهانی",
+        "استراتژی اسکن",
+        "ترونس",
+        "پرسیژن",
+        "دقت اسکن",
+        "قالب‌گیری دیجیتال",
+        "متاآنالیز"
+      ],
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Intraoral Scanner"
+        },
+        {
+          "@type": "Thing",
+          "name": "Digital Impression Accuracy"
+        }
+      ],
+      "mentions": [
+        {
+          "@type": "Thing",
+          "name": "Trueness"
+        },
+        {
+          "@type": "Thing",
+          "name": "Precision"
+        },
+        {
+          "@type": "Thing",
+          "name": "Scanning Pattern"
+        },
+        {
+          "@type": "Thing",
+          "name": "Artificial Landmarks"
+        }
+      ],
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h2",
+          ".text-box"
+        ]
+      }
+    },
+    {
+      "@type": "Dentist",
+      "@id": "https://dentcast.org/#dentist-ahvaz",
+      "name": "دکتر فواد شهابیان",
+      "url": "https://dentcast.org/about.html",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "medicalCode": "114707",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "addressCountry": "IR"
+      },
+      "sameAs": [
+        "https://www.instagram.com/dr.foad_shahabian/",
+        "https://t.me/dentcast",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364"
+      ]
+    }
+  ]
+}
+</script>
+
+    <link rel="stylesheet" href="/dc-theme.css?v=3">
+<link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="DentAI – چه چیزهایی حین اسکن، دقت اسکنر داخل دهانی را جابه‌جا می‌کنند؟">
+  <meta property="og:description" content="مروری بر متاآنالیز Hardan و همکاران، Journal of Advanced Prosthodontics 2023؛ 15(6): 315-332.">
+  <meta property="og:url" content="https://dentcast.org/dentai/dentai-32.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DentAI – چه چیزهایی حین اسکن، دقت اسکنر داخل دهانی را جابه‌جا می‌کنند؟">
+  <meta name="twitter:description" content="مروری بر متاآنالیز Hardan و همکاران، Journal of Advanced Prosthodontics 2023؛ 15(6): 315-332.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<h1><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/></svg> DentAI – چه چیزهایی حین اسکن، دقت اسکنر داخل دهانی را جابه‌جا می‌کنند؟</h1>
+
+<a class="lang-btn" href="en/dentai-32.html" rel="noopener">
+  <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> English
+</a>
+
+<div class="caption">
+  <p>
+مروری بر متاآنالیز Hardan و همکاران، Journal of Advanced Prosthodontics 2023؛ 15(6): 315-332.
+  </p>
+</div>
+
+<div class="text-box">
+
+<p>
+قبل از تغییر الگوی حرکت دست، بدانید متاآنالیز Hardan و همکاران (۲۰۲۳) پانزده مطالعه آزمایشگاهی را روی هم گذاشته تا ببیند کدام عوامل حین اسکن واقعاً ترونس و پرسیژن IOS را جابه‌جا می‌کنند. این خلاصه همان تفکیک ISO 5725-1 را نگه می‌دارد و هر یافته را با خوانش بالینی جدا می‌گوید — با این قید که داده‌ها in vitro‌اند و سقف خطا در دهان نیستند.
+</p>
+
+<h2>اول یک تفکیک که همه چیز به آن بستگی دارد</h2>
+
+<p>
+واژه‌ی «دقت» یا accuracy یک چتر است و زیرش دو چیز کاملاً متفاوت قرار دارد. تا این دو را از هم جدا نکنیم، نتایج این مطالعه گمراه‌کننده به نظر می‌رسند. خود مقاله هم بر اساس ISO 5725-1 همین تفکیک را مبنا قرار داده است.
+</p>
+
+<p>
+ترونس (trueness) یعنی اسکن شما چقدر به واقعیت نزدیک است، یعنی خطای سیستماتیک. تصور کنید ده تیر به سمت سیبل پرتاب می‌کنید. ترونس یعنی مرکز برخورد این ده تیر چقدر به مرکز سیبل نزدیک است.
+</p>
+
+<p>
+پرسیژن (precision) یعنی اگر همان اسکن را چند بار تکرار کنید نتایج چقدر شبیه هم درمی‌آیند، یعنی خطای تصادفی. در همان مثال، پرسیژن یعنی ده تیر چقدر نزدیک به هم نشسته‌اند، فارغ از اینکه کجای سیبل هستند.
+</p>
+
+<p>
+یک <a href="/glossary/intraoral-scanner.html">اسکنر داخل‌دهانی</a> می‌تواند در یکی از این دو خوب و در دیگری ضعیف باشد، و در ادامه خواهیم دید که الگوهای اسکن دقیقاً همین رفتار را دارند.
+</p>
+
+<h3>جدول ۲. ترونس در برابر پرسیژن</h3>
+
+<table>
+<thead>
+<tr><th>مولفه</th><th>یعنی چه</th><th>نشانه‌ی افت آن</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>ترونس (trueness)</strong></td><td>اسکن چقدر به واقعیت نزدیک است. خطای سیستماتیک. در مثال سیبل: مرکز تیرها چقدر به مرکز هدف نزدیک است.</td><td>خطای انباشته در طول قوس. حساس‌ترین موقعیت‌ها: فریم‌ورک full-arch و کیس ایمپلنت.</td></tr>
+<tr><td><strong>پرسیژن (precision)</strong></td><td>تکرار همان اسکن چقدر نتیجه‌ی مشابه می‌دهد. خطای تصادفی. در مثال سیبل: تیرها چقدر نزدیک هم نشسته‌اند، فارغ از جای هدف.</td><td>پیش‌بینی‌ناپذیری. یک اسکن خوب درمی‌آید و اسکن بعدی از همان بیمار بد.</td></tr>
+</tbody>
+</table>
+
+<p>
+<em>ستون سوم، خوانش بالینی نویسنده است. مقاله بر اساس ISO 5725-1 این دو را تعریف می‌کند ولی به این سناریوهای مشخص ترجمه‌شان نمی‌کند.</em>
+</p>
+
+<p>
+<strong>خوانش بالینی:</strong> مقاله می‌گوید دقت قالب‌گیری، مارجینال فیت و کیفیت رستوریشن نهایی را تعیین می‌کند، ولی این دو مولفه را به سناریوهای بالینی مشخص ترجمه نمی‌کند. اگر بخواهیم ترجمه کنیم: افت ترونس بیشتر خودش را در ابعاد و روابط بین‌قوسی نشان می‌دهد، جایی که خطا در طول قوس انباشته می‌شود، و به همین دلیل در فریم‌ورک‌های full-arch و کیس‌های ایمپلنت حساس‌تر است. افت پرسیژن بیشتر خودش را به شکل پیش‌بینی‌ناپذیری نشان می‌دهد، یعنی یک اسکن خوب درمی‌آید و اسکن بعدی از همان بیمار بد.
+</p>
+
+<h2>این مطالعه چه بود و چه نبود</h2>
+
+<p>
+این مقاله نتایج ۱۵ مطالعه را روی هم جمع کرده و پرسیده: آیا کاری متفاوت با توصیه‌ی کارخانه انجام دهیم، اسکن بهتری می‌گیریم؟
+</p>
+
+<p>
+تمام مطالعات وارد شده آزمایشگاهی (in vitro) بودند و روی مدل انجام شده‌اند. مطالعات بالینی عمداً و به‌صراحت از تحلیل کنار گذاشته شدند، به‌طوری که در فرآیند غربالگری، هفت مطالعه فقط به همین دلیل حذف شده‌اند. خود نویسندگان این را به‌عنوان یک محدودیت ذکر کرده‌اند: حذف مطالعات بالینی، تعمیم این نتایج به شرایط بالینی را محدود می‌کند.
+</p>
+
+<p>
+بنابراین اندازه‌ی این اثرها را نمی‌توان مستقیماً به دهان بیمار تعمیم داد.
+</p>
+
+<p>
+<strong>خوانش بالینی:</strong> شرایط دهان واقعی، یعنی بزاق، زبان، حرکت بیمار و محدودیت دسترسی، همه در جهت افزایش خطا عمل می‌کنند نه کاهش آن. پس منطقی است که این اعداد را کف خطا در نظر بگیریم نه سقف آن. این استنباط است، نه گزاره‌ی مقاله.
+</p>
+
+<h2>یافته‌ها</h2>
+
+<h3>جدول ۱. اثر هر متغیر بر دو مولفه‌ی دقت</h3>
+
+<table>
+<thead>
+<tr><th>متغیر</th><th>اثر</th><th>قدرت شواهد</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>رطوبت سطح</strong></td><td>هر دو مولفه افت می‌کنند. سطح خشک نتیجه‌ی بهتری داد.</td><td>قوی‌ترین یافته‌ی مقاله. اثر بزرگ و در همه‌ی مطالعات یک‌جهت.</td></tr>
+<tr><td><strong>لندمارک مصنوعی</strong></td><td>هر دو مولفه بهبود یافتند.</td><td>معنادار، ولی اثر در همه‌ی مطالعات یکسان نبود و در یکی از آنها اثر بر ترونس معنادار نشد.</td></tr>
+<tr><td><strong>الگوی اسکن</strong></td><td>دوسویه. با S شکل پرسیژن پایین‌تر، با خطی ترونس پایین‌تر.</td><td>اثر کوچک. الگوی برتر مطلق وجود ندارد و نتیجه وابسته به دستگاه است.</td></tr>
+<tr><td><strong>نور محیط</strong></td><td>تفاوت معناداری در هیچ‌کدام دیده نشد.</td><td>محدود به مقایسه‌ی نور اتاق با تاریکی مطلق. بخش مروری همان مقاله نتایج ناهمسو دارد.</td></tr>
+<tr><td><strong>مواد کمک‌اسکن</strong></td><td>فقط پرسیژن بهبود یافت. ترونس بدون تغییر.</td><td>معنادار برای پرسیژن. برتری ماده‌ی مایع بر اسپری پودری از یک مطالعه‌ی منفرد نقل شده، نه از متاآنالیز.</td></tr>
+</tbody>
+</table>
+
+<p>
+<em>نکته‌ی خواندن جدول: ستون آخر عمداً وجود دارد. اگر فقط ستون میانی را بخوانید، پنج یافته هم‌وزن به نظر می‌رسند، در حالی که فقط اولی اثر بزرگ و پایدار دارد.</em>
+</p>
+
+<h3>۱. خشک بودن سطح، قوی‌ترین یافته</h3>
+
+<p>
+از میان همه‌ی متغیرهای بررسی‌شده، رطوبت واضح‌ترین و یک‌دست‌ترین اثر را داشت. حضور مایع روی سطح دندان به‌طور معنادار دقت اسکن را پایین آورد. این تنها یافته‌ای است که در آن اثر هم بزرگ بود و هم بین مطالعات یک‌جهت.
+</p>
+
+<p>
+مکانیسمی که نویسندگان توضیح می‌دهند ساده است: لایه‌ی نازک بزاق باعث می‌شود اسکنر هندسه‌ی سطح را اشتباه بخواند.
+</p>
+
+<p>
+نویسندگان برای اینکه نشان دهند این خطا در چه مقیاسی است، به یک مطالعه‌ی قبلی استناد می‌کنند که در آن انحرافات در نمونه‌های آلوده به بزاق از حد ۱۲۰ میکرون، که به‌عنوان آستانه‌ی قابل قبول بالینی در نظر گرفته می‌شود، فراتر رفته بود. این عدد یافته‌ی خود متاآنالیز نیست، ولی مقیاس را دستمان می‌دهد.
+</p>
+
+<p>
+<strong>خوانش بالینی:</strong> خشک کردن کامل سطح قبل از شروع اسکن، از هر تغییری در تکنیک حرکت دادن اسکنر بازده بیشتری دارد. این تنها جایی است که داده‌ها اثر بزرگی نشان می‌دهند.
+</p>
+
+<h3>۲. لندمارک مصنوعی، برای جاهایی که آناتومی کمکتان نمی‌کند</h3>
+
+<p>
+استفاده از مارکرهای مصنوعی هم ترونس و هم پرسیژن را بهبود داد.
+</p>
+
+<p>
+منطقش این است: اسکنر با چسباندن تصاویر پی‌درپی به هم (stitching) مدل را می‌سازد و برای این کار به نقاط مرجع پایدار نیاز دارد. در یک قوس دنددار، خود دندان‌ها این نقاط را فراهم می‌کنند. در فک بی‌دندان کامل یا در نواحی وسیع بافت نرم متحرک چنین نقاطی وجود ندارد و خطا در طول اسکن انباشته می‌شود. مقاله به‌طور مشخص روی همین موقعیت تمرکز می‌کند و به مارکرهای رزینی روی کام اشاره می‌کند.
+</p>
+
+<p>
+باید توجه داشت که این اثر در همه‌ی مطالعات یکسان نبود و در یکی از آنها اثر معناداری روی ترونس دیده نشد.
+</p>
+
+<p>
+نویسندگان در بخش بحث به مطالعه‌ی Flügge اشاره می‌کنند که در آن فاصله‌ی زیاد بین اسکن‌بادی‌های ایمپلنت مشکل‌ساز بود. این یافته‌ی یک مطالعه‌ی منفرد است و بخشی از تحلیل لندمارک نیست.
+</p>
+
+<p>
+<strong>خوانش بالینی:</strong> در قوس دنددار نیازی به این کار نیست، چون خود دندان‌ها نقاط مرجع را می‌دهند. در بی‌دندانی کامل ارزش دارد، و این همان موقعیتی است که خود مقاله رویش تمرکز کرده. کیس ایمپلنت با فواصل بی‌دندان طولانی هم می‌تواند مورد توجه باشد، ولی این را مقاله نگفته: استنباط از کنار هم گذاشتن دو یافته‌ی جدا است، اینکه لندمارک مصنوعی دقت را بهبود می‌دهد، و اینکه در مطالعه‌ی Flügge فاصله‌ی زیاد بین اسکن‌بادی‌ها مشکل‌ساز بود.
+</p>
+
+<h3>۳. الگوی اسکن، جایی که ساده‌سازی خطرناک است</h3>
+
+<p>
+اینجا رایج‌ترین بدفهمی اتفاق می‌افتد. متاآنالیز نگفت یک الگو بهتر است. نتیجه دو طرفه بود و بخش Results مقاله دقیقاً این دو گزاره را کنار هم می‌آورد:
+</p>
+
+<ul>
+<li>با الگوی S شکل، اختلاف بین اندازه‌گیری‌های مکرر بیشتر بود. یعنی پرسیژن پایین‌تر.</li>
+<li>با الگوی خطی، اختلاف بین مدل مرجع و مدل دیجیتال بیشتر بود. یعنی ترونس پایین‌تر.</li>
+</ul>
+
+<p>
+به بیان دیگر هر الگو یکی از دو مولفه را قربانی می‌کند و هیچ‌کدام برنده‌ی مطلق نیست. اندازه‌ی این اثرها هم کوچک بود.
+</p>
+
+<p>
+<strong>نکات مکملی که از دل همین مقاله بیرون می‌آید:</strong>
+</p>
+
+<ul>
+<li>اثر الگو وابسته به دستگاه است. مقاله به‌صراحت می‌گوید استراتژی اسکن بسته به روش داده‌برداری هر اسکنر متفاوت عمل می‌کند و به نرم‌افزار merging گره خورده است.</li>
+<li>در مطالعه‌ی Müller و همکاران، استراتژی پیشنهادی خود کارخانه بالاترین ترونس و پرسیژن را در اسکن full-arch داد. این یافته با توصیه‌ی کلی نویسندگان هم‌راستاست که اپراتور آموزش‌دیده مسیر پیشنهادی سازنده را دنبال کند.</li>
+<li>تغییر شدید جهت‌گیری هد اسکنر و حرکت خیلی سریع می‌توانند فرآیند stitching را مختل کنند. توصیه‌ی مقاله اسکن آرام و بدون محدودیت زمانی است. مقاله بین این عامل و انتخاب الگو رتبه‌بندی نکرده است.</li>
+<li>درباره‌ی نقطه‌ی شروع اسکن، بین مطالعات توافق وجود ندارد. یک مطالعه پرسیژن را وابسته به نقطه‌ی شروع دانسته و مطالعه‌ی دیگری این را رد کرده است.</li>
+</ul>
+
+<p>
+<strong>خوانش بالینی:</strong> چون اثر الگو وابسته به دستگاه است، پترنی که روی یک برند جواب می‌دهد لزوماً روی برند دیگر همان نتیجه را نمی‌دهد. این استنباط از گزاره‌ی بالاست، نه مقایسه‌ای که متاآنالیز بین برندها انجام داده باشد. کار عملی این است که به‌جای دنبال کردن پترن‌هایی که دست به دست می‌شوند، مسیر پیشنهادی سازنده‌ی دستگاه خودتان را یاد بگیرید و همان را با حرکت آرام و کنترل‌شده تکرار کنید.
+</p>
+
+<h3>۴. نور محیط</h3>
+
+<p>
+مقایسه‌ی اسکن در نور معمول اتاق با تاریکی مطلق، تفاوت معناداری در ترونس یا پرسیژن نشان نداد.
+</p>
+
+<p>
+این نتیجه محدود به همین مقایسه‌ی دوحالته است. در بخش مروری همان مقاله، چند مطالعه اثر شرایط نوری را تایید کرده‌اند و توصیه‌ها با هم نمی‌خوانند: از ۵۰۰ لوکس با دمای رنگ ۳۹۰۰ کلوین تا پیشنهاد ۱۰۰۰ لوکس. در یکی از این مطالعات، جلوگیری از تابش مستقیم چراغ یونیت توصیه شده بود. جمع‌بندی نویسندگان این است که شرایط نوری باید بر اساس مشخصات همان اسکنر انتخاب شود.
+</p>
+
+<p>
+<strong>خوانش بالینی:</strong> لازم نیست اتاق را تاریک کنید. کنار زدن نور مستقیم یونیت از ناحیه‌ی کار هزینه‌ای ندارد و توصیه‌ی دست‌کم یک مطالعه پشتش هست.
+</p>
+
+<h3>۵. مواد کمک‌اسکن</h3>
+
+<p>
+این مواد فقط پرسیژن را بهبود دادند و روی ترونس هیچ اثری نداشتند. یعنی نتیجه را یکنواخت‌تر می‌کنند ولی لزوماً به واقعیت نزدیک‌تر نمی‌کنند.
+</p>
+
+<p>
+نکته‌ای که در بخش بحث مقاله و به نقل از یک مطالعه‌ی منفرد آمده: مواد مایع که با براش اعمال می‌شوند لایه‌ی نازک‌تر و یکنواخت‌تری نسبت به اسپری پودری می‌سازند، چون ضخامت لایه‌ی پودر به بزاق، مهارت اپراتور و فضای در دسترس وابسته است. این یافته‌ی متاآنالیز نیست.
+</p>
+
+<p>
+<strong>خوانش بالینی:</strong> کاربرد اصلی این مواد در سطوح براق و متریال‌های بازتاب‌دهنده است، نه در اسکن روتین دندان طبیعی.
+</p>
+
+<h2>چقدر می‌توان به این نتایج تکیه کرد</h2>
+
+<p>
+سه محدودیت که در استناد به این مقاله باید در نظر گرفته شوند:
+</p>
+
+<ol>
+<li>همه‌ی داده‌ها آزمایشگاهی هستند و خود نویسندگان تعمیم به شرایط بالینی را محدود دانسته‌اند.</li>
+<li>بر اساس ارزیابی خود مقاله، بیشتر مطالعات وارد شده در سطح risk of bias متوسط و تعداد قابل توجهی در سطح بالا قرار داشتند. فقط سه مطالعه در گروه low risk of bias بودند. ضعف‌های تکرارشونده: بلایند نبودن اپراتور، مشخص نبودن تعداد اپراتورها و نبود محاسبه‌ی حجم نمونه.</li>
+<li>مطالعات جمع‌شده در هر تحلیل واقعاً شبیه هم نبودند. اسکنرها، نرم‌افزارهای اندازه‌گیری و حتی تعریف پترن‌ها بین مطالعات فرق داشت. خود نویسندگان می‌گویند استانداردسازی روش‌ها لازم است تا مقایسه‌ها معنا پیدا کنند. عملاً یعنی میانگین‌های گزارش‌شده جهت کلی را نشان می‌دهند، نه عدد قابل استناد.</li>
+</ol>
+
+<p>
+یک هشدار برای استناد: در مورد الگوی S شکل، چکیده‌ی این مقاله با بخش Results و Discussion خودش ناسازگار است. چکیده می‌نویسد ترونس و پرسیژن با این الگو بهبود یافتند، در حالی که بخش نتایج، بخش بحث و نمودارها جهت مخالف را نشان می‌دهند. اگر به این مقاله ارجاع می‌دهید، به بخش نتایج استناد کنید نه به چکیده.
+</p>
+
+<h2>جمع‌بندی چیرساید</h2>
+
+<p>
+<em>این ترتیب، خوانش بالینی نویسنده از مقاله است و ترتیب خود مقاله نیست.</em>
+</p>
+
+<ol>
+<li>سطح را کاملاً خشک کنید. تنها موردی که داده‌ها اثر بزرگ و یک‌دست نشان می‌دهند.</li>
+<li>مسیر پیشنهادی سازنده‌ی دستگاه خودتان را یاد بگیرید و به آن پایبند باشید. داده‌ها از هیچ الگوی جهان‌شمولی حمایت نمی‌کنند، و در دست‌کم یک مطالعه، مسیر خود کارخانه بهترین نتیجه را داد.</li>
+<li>آرام و کنترل‌شده حرکت کنید. سرعت بالا و تغییر ناگهانی جهت، خطای stitching می‌سازند.</li>
+<li>در بی‌دندانی کامل، لندمارک مصنوعی را در نظر بگیرید. جایی که آناتومی نقطه‌ی مرجع نمی‌دهد.</li>
+<li>نور مستقیم یونیت را از ناحیه‌ی اسکن کنار ببرید. هزینه‌ی صفر، ریسک صفر.</li>
+</ol>
+
+
+<div style="
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 1.75rem;
+">
+  <div style="
+    background: rgba(255, 220, 80, 0.07);
+    border: 1px solid rgba(255, 220, 80, 0.18);
+    border-radius: 0.5625rem;
+    padding: 0.5rem 0.875rem;
+    text-align: center;
+    font-size: .8rem;
+    color: #0a1638;
+    line-height: 1.55;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.25);
+    backdrop-filter: blur(5px);
+  ">
+    <p style="margin: 0; font-weight: 600; color: #0a1638;">
+      "Effect of scanning strategies on the accuracy of digital intraoral scanners: a meta-analysis of in vitro studies"
+    </p>
+    <p style="margin: 0.125rem 0 0 0;">
+      <a href="https://doi.org/10.4047/jap.2023.15.6.315" target="_blank" rel="noopener noreferrer">L. Hardan</a>, Bourgi R, Lukomska-Szymanska M, Hernández-Cabanillas JC, Zamarripa-Calderón JE, Jorquera G, Ghishan S, Cuevas-Suárez CE — <em>J Adv Prosthodont. 2023;15(6):315-332</em>
+    </p>
+    <p style="margin: 0;">DOI: 10.4047/jap.2023.15.6.315</p>
+  </div>
+</div>
+
+</div>
+
+<div class="author-note">
+  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
+  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
+</div>
+
+<div class="dc-related-section">
+  <h2 class="dc-related-label">کاوش بیشتر</h2>
+  <div class="dc-related-capsules">
+    <a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+    <a href="/pillar/digital/" class="dc-related-capsule">فهرست موضوعی</a>
+    <a href="/dentai/dentai-21.html" class="dc-related-capsule">تأثیر مایع روی سطح دندان بر دقت IOS</a>
+    <a href="/episodes/episode-128-1.html" class="dc-related-capsule">دقت اسکنرهای داخل‌دهانی</a>
+    <a href="/episodes/episode-122-2.html" class="dc-related-capsule">تأثیر سرعت اسکن بر دقت</a>
+  </div>
+</div>
+
+<footer class="dc-site-footer" style="text-align:center; margin-top:2.8125rem; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+  <div style="margin-bottom:1.375rem;">
+    <a href="index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=136" defer></script>
+</body>
+</html>

@@ -27166,6 +27166,121 @@
           ]
         }
       ]
+    },
+    "dentai/dentai-32": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/dentai/dentai-32.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا خشک بودن سطح دندان قبل از اسکن داخل‌دهانی بر دقت اثر معنادار دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ در متاآنالیز Hardan و همکاران (۲۰۲۳) حضور رطوبت روی سطح دندان به‌طور معنادار دقت اسکنرهای داخل‌دهانی را پایین آورد (P < 0.001) و این تنها متغیری بود که هم اثر بزرگ داشت و هم در همهٔ مطالعات یک‌جهت بود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا متاآنالیز Hardan و همکاران یک الگوی اسکن جهان‌شمول بهتر از بقیه معرفی کرده است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ نتیجهٔ تجمیعی دوسویه بود: با الگوی S شکل اختلاف بین اندازه‌گیری‌های مکرر بیشتر بود (پرسیژن پایین‌تر) و با الگوی خطی اختلاف بین مدل مرجع و مدل دیجیتال بیشتر بود (ترونس پایین‌تر)، بدون برندهٔ مطلق."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا چکیدهٔ مقاله Hardan و همکاران دربارهٔ الگوی S شکل با بخش Results هم‌خوان است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ چکیده می‌نویسد ترونس و پرسیژن با الگوی S شکل بهبود یافتند، در حالی که Results، Discussion و نمودارها جهت مخالف را نشان می‌دهند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا مواد کمک‌اسکن هم ترونس و هم پرسیژن اسکنر داخل‌دهانی را بهبود می‌دهند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ در همان متاآنالیز فقط پرسیژن با مواد کمک‌اسکن بهبود یافت (P < 0.001) و ترونس تغییر معناداری نداشت."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا نتایج این متاآنالیز را می‌توان مستقیماً به شرایط بالینی دهان بیمار تعمیم داد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ همهٔ مطالعات واردشده in vitro بودند و مطالعات بالینی عمداً از تحلیل حذف شدند؛ خود نویسندگان تعمیم به شرایط بالینی را محدودیت اصلی دانسته‌اند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا لندمارک مصنوعی در اسکن فک بی‌دندان کامل بر دقت اثر دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ متاآنالیز نشان داد استفاده از لندمارک مصنوعی هم ترونس (P < 0.001) و هم پرسیژن (P = 0.0009) را بهبود داد، هرچند اثر در همهٔ مطالعات یکسان نبود."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/dentai/dentai-32.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-32.html#flashcards-c1",
+              "name": "قوی‌ترین متغیر در متاآنالیز استراتژی اسکن",
+              "description": "رطوبت سطح: حضور مایع دقت را معنادار پایین آورد (P < 0.001) و تنها عاملی بود که هم اثر بزرگ داشت و هم در همهٔ مطالعات یک‌جهت بود.",
+              "source": "faq",
+              "sourceFaqIndex": 0
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-32.html#flashcards-c2",
+              "name": "نتیجهٔ دوسویهٔ الگوی اسکن",
+              "description": "الگوی S شکل پرسیژن را پایین می‌آورد و الگوی خطی ترونس را — هیچ الگوی برتر مطلقی وجود ندارد و اثر وابسته به دستگاه است.",
+              "source": "faq",
+              "sourceFaqIndex": 1
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-32.html#flashcards-c3",
+              "name": "ناسازگاری چکیده با Results دربارهٔ S شکل",
+              "description": "چکیده بهبود ترونس و پرسیژن با S شکل را ادعا می‌کند؛ Results و Discussion جهت مخالف را گزارش می‌کنند — برای استناد به Results تکیه کنید.",
+              "source": "faq",
+              "sourceFaqIndex": 2
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-32.html#flashcards-c4",
+              "name": "اثر مواد کمک‌اسکن بر ترونس و پرسیژن",
+              "description": "فقط پرسیژن بهبود یافت؛ ترونس تغییر معنادار نداشت — یعنی یکنواخت‌تر می‌کنند نه لزوماً نزدیک‌تر به واقعیت.",
+              "source": "faq",
+              "sourceFaqIndex": 3
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-32.html#flashcards-c5",
+              "name": "محدودیت in vitro متاآنالیز Hardan",
+              "description": "پانزده مطالعهٔ آزمایشگاهی وارد شد و مطالعات بالینی حذف شدند؛ نویسندگان تعمیم به دهان بیمار را محدودیت اصلی می‌دانند.",
+              "source": "faq",
+              "sourceFaqIndex": 4
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/dentai-32.html#flashcards-c6",
+              "name": "لندمارک مصنوعی در بی‌دندانی",
+              "description": "در فک بی‌دندان یا بافت نرم متحرک، مارکر مصنوعی هم ترونس و هم پرسیژن را بهبود داد؛ در قوس دنددار معمولاً خود دندان‌ها نقاط مرجع را می‌دهند.",
+              "source": "faq",
+              "sourceFaqIndex": 5
+            }
+          ]
+        }
+      ]
     }
   }
 }
