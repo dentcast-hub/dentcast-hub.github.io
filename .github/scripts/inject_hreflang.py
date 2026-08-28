@@ -205,6 +205,15 @@ def process_file(file_path: str, rel_path: str):
     if NOINDEX_RE.search(content):
         return ("skipped", "page is noindex (no hreflang)")
 
+    # چالش guard: no en mirror exists or ever will (RULE 16,
+    # .dentcast/challenge-handoff.md — the mirror would be a different
+    # content_id with no row in `challenges`), so no hreflang alternate cluster
+    # either. Keyed on the page's own چالش markup, same as the noindex guard
+    # above is keyed on the page's own robots meta — never on a path/section
+    # name, so a چالش published into any folder needs no edit here.
+    if "data-dc-challenge-question" in content:
+        return ("skipped", "چالش page — no en mirror, no hreflang (RULE 16)")
+
     # Compute desired block (lines, no trailing newline).
     expected_block = desired_block(rel_path, canonical_path, canonical_indent)
 

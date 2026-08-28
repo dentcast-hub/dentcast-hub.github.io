@@ -1396,6 +1396,59 @@ function renderHtml(
   })();
   </script>
 
+  <h3 style="margin-top:26px">ثبت/ویرایشِ یک چالش</h3>
+  <div class="muted">جواب و نکات کلیدی را این‌جا ثبت کن — تا این کار انجام نشود، چالش روی صفحه زنده نیست (GET /challenge/:id همچنان exists:false برمی‌گرداند). همان content_id را دوباره بفرست تا ویرایش شود.</div>
+  <div id="chUpBox" class="ds-work" style="margin-top:8px">
+    <label>content_id (مسیر صفحه، بدون / ابتدایی و بدون .html)</label>
+    <input id="chUpContentId" type="text" dir="ltr" placeholder="insight/insight-68">
+    <label>جواب (برای نمایش به خواننده، بعد از پاسخ‌دادن)</label>
+    <textarea id="chUpAnswer" rows="4"></textarea>
+    <label>نکات کلیدی — آرایه‌ی JSON، سه تا پنج مورد</label>
+    <textarea id="chUpKeyPoints" class="ds-json" placeholder='[{&quot;id&quot;:&quot;kp1&quot;,&quot;text&quot;:&quot;…&quot;}, {&quot;id&quot;:&quot;kp2&quot;,&quot;text&quot;:&quot;…&quot;}]' dir="ltr"></textarea>
+    <div class="row">
+      <button id="chUpSave" type="button">ثبت</button>
+    </div>
+    <div id="chUpMsg" class="muted"></div>
+  </div>
+  <script>
+  (function () {
+    var contentIdEl = document.getElementById('chUpContentId');
+    var answerEl = document.getElementById('chUpAnswer');
+    var kpEl = document.getElementById('chUpKeyPoints');
+    var saveBtn = document.getElementById('chUpSave');
+    var msg = document.getElementById('chUpMsg');
+    if (!saveBtn) return;
+
+    saveBtn.addEventListener('click', function () {
+      var contentId = contentIdEl.value.trim();
+      var answer = answerEl.value.trim();
+      var kpRaw = kpEl.value.trim();
+      var keyPoints;
+      try {
+        keyPoints = JSON.parse(kpRaw);
+      } catch (e) {
+        msg.textContent = 'JSONِ نکات کلیدی نامعتبر است.';
+        return;
+      }
+      if (!contentId || !answer) {
+        msg.textContent = 'content_id و جواب هر دو لازم‌اند.';
+        return;
+      }
+      msg.textContent = 'در حال ثبت…';
+      fetch('/admin/challenges/upsert', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ content_id: contentId, answer_fa: answer, key_points: keyPoints })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, status: r.status, j: j }; }); })
+        .then(function (res) {
+          if (!res.ok) { msg.textContent = res.j.message || res.j.error || 'نشد.'; return; }
+          msg.textContent = 'ثبت شد — چالش زنده است.';
+        })
+        .catch(function () { msg.textContent = 'ارسال نشد.'; });
+    });
+  })();
+  </script>
+
   <h3 style="margin-top:26px">افزودنِ مستقیم به کتابخانه‌ی DES</h3>
   <div class="muted">بدون درخواستِ خواننده — یک امتیازی که خودت داری و می‌خواهی به کتابخانه اضافه شود. هیچ اطلاعیه‌ای فرستاده نمی‌شود.</div>
   <div id="dlBox" class="ds-work" style="margin-top:8px">

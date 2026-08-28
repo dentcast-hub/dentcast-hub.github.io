@@ -702,6 +702,9 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
     if is_lite:
         rep.skip("4.12 quiz", "LiteCast is outside the quiz ecosystem")
         rep.skip("4.11 cards", "LiteCast is outside the flashcard ecosystem")
+    elif is_challenge:
+        rep.skip("4.12 quiz", "چالش: no prose to author FAQ from (step 4.14)")
+        rep.skip("4.11 cards", "چالش: no prose to define terms from (step 4.14)")
     elif is_flashcard_optional and not questions:
         rep.skip("4.12 quiz", "dentcast_plus: flashcards/quiz are optional — no FAQ authored")
         rep.skip("4.11 cards", "dentcast_plus: flashcards/quiz are optional — no cards authored")
@@ -771,6 +774,8 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
     # so out loud instead of guessing in either direction.
     if is_lite:
         rep.skip("4.13 DES", "LiteCast is outside the DES ecosystem (Hard Rule 10)")
+    elif is_challenge:
+        rep.skip("4.13 DES", "چالش: a question cites nothing and appraises nothing (step 4.14)")
     else:
         des_all = json.loads(read("plus/des-scores.json")) if exists("plus/des-scores.json") else {}
         rec = des_all.get(content_id)

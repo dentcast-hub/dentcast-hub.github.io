@@ -367,7 +367,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 86,
+   "count": 87,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -454,7 +454,8 @@
     "insight/insight-64",
     "insight/insight-65",
     "insight/insight-66",
-    "insight/insight-67"
+    "insight/insight-67",
+    "insight/insight-68"
    ]
   },
   {
@@ -827,7 +828,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 31,
+   "count": 32,
    "content_ids": [
     "dentai/dentai-1",
     "dentai/dentai-2",
@@ -859,7 +860,8 @@
     "dentai/dentai-28",
     "dentai/dentai-29",
     "dentai/dentai-30",
-    "dentai/dentai-31"
+    "dentai/dentai-31",
+    "dentai/dentai-32"
    ]
   },
   {
@@ -2074,6 +2076,38 @@
    ]
   },
   {
+   "key": "دقت_اسکن",
+   "tag": "#دقت_اسکن",
+   "domain": null,
+   "words": 2,
+   "definition": "دقتِ نهاییِ اسکن و آنچه آن را خراب می‌کند.",
+   "use_when": "مقاله دقت را بسنجد یا بهبود دهد.",
+   "aliases": [
+    "scanning accuracy",
+    "trueness",
+    "precision",
+    "صحت اسکن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-133",
+    "episodes/episode-144-2",
+    "sharehub/share-2",
+    "insight/insight-33",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "insight/insight-51",
+    "metanotes/meta-16",
+    "sharehub/share-15",
+    "dentai/dentai-29",
+    "dentai/dentai-32"
+   ]
+  },
+  {
    "key": "مدل_زبانی",
    "tag": "#مدل_زبانی",
    "domain": "ai",
@@ -2163,6 +2197,42 @@
     "dentai/promptologist/prompt4-3",
     "dentai/promptologist/prompt4-4",
     "dentai/promptologist/prompt5-1"
+   ]
+  },
+  {
+   "key": "اسکنر_داخل_دهانی",
+   "tag": "#اسکنر_داخل_دهانی",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "اسکنرِ داخل‌دهانی که قالبِ دیجیتالِ مستقیم می‌گیرد.",
+   "use_when": "مقاله اسکنر داخل‌دهانی را موضوع داشته باشد.",
+   "aliases": [
+    "intraoral scanner",
+    "اسکنر دیجیتال",
+    "IOS",
+    "اسکنر"
+   ],
+   "variants": [
+    "#اسکن_داخل_دهانی",
+    "#Intraoral_Scanner"
+   ],
+   "co_tags": [
+    "#Intraoral_Scanner"
+   ],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-106-2",
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-149-2",
+    "sharehub/share-2",
+    "insight/insight-33",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "metanotes/meta-16",
+    "sharehub/share-15",
+    "dentai/dentai-29",
+    "dentai/dentai-32"
    ]
   },
   {
@@ -2259,37 +2329,6 @@
     "notecast/episode-24",
     "metanotes/meta-4",
     "chairside/chairside-14"
-   ]
-  },
-  {
-   "key": "دقت_اسکن",
-   "tag": "#دقت_اسکن",
-   "domain": null,
-   "words": 2,
-   "definition": "دقتِ نهاییِ اسکن و آنچه آن را خراب می‌کند.",
-   "use_when": "مقاله دقت را بسنجد یا بهبود دهد.",
-   "aliases": [
-    "scanning accuracy",
-    "trueness",
-    "precision",
-    "صحت اسکن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-122-2",
-    "episodes/episode-128-1",
-    "episodes/episode-133",
-    "episodes/episode-144-2",
-    "sharehub/share-2",
-    "insight/insight-33",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "insight/insight-51",
-    "metanotes/meta-16",
-    "sharehub/share-15",
-    "dentai/dentai-29"
    ]
   },
   {
@@ -2419,41 +2458,6 @@
    ]
   },
   {
-   "key": "اسکنر_داخل_دهانی",
-   "tag": "#اسکنر_داخل_دهانی",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "اسکنرِ داخل‌دهانی که قالبِ دیجیتالِ مستقیم می‌گیرد.",
-   "use_when": "مقاله اسکنر داخل‌دهانی را موضوع داشته باشد.",
-   "aliases": [
-    "intraoral scanner",
-    "اسکنر دیجیتال",
-    "IOS",
-    "اسکنر"
-   ],
-   "variants": [
-    "#اسکن_داخل_دهانی",
-    "#Intraoral_Scanner"
-   ],
-   "co_tags": [
-    "#Intraoral_Scanner"
-   ],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-106-2",
-    "episodes/episode-122-2",
-    "episodes/episode-128-1",
-    "episodes/episode-149-2",
-    "sharehub/share-2",
-    "insight/insight-33",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "metanotes/meta-16",
-    "sharehub/share-15",
-    "dentai/dentai-29"
-   ]
-  },
-  {
    "key": "اوردنچر",
    "tag": "#اوردنچر",
    "domain": "clinical",
@@ -2511,6 +2515,37 @@
     "chairside/chairside-19",
     "chairside/chairside-22",
     "insight/insight-66"
+   ]
+  },
+  {
+   "key": "قالب_گیری_دیجیتال",
+   "tag": "#قالب‌گیری_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ثبتِ دیجیتالِ آرچ با اسکنر، به‌جای قالب سنتی.",
+   "use_when": "مقاله دقت یا پروتکلِ ثبت دیجیتال را بررسی کند.",
+   "aliases": [
+    "قالب گیری دیجیتال",
+    "digital impression",
+    "اسکن دیجیتال",
+    "digital scan",
+    "دیجیتال اسکن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "insight/insight-3",
+    "insight/insight-19",
+    "insight/insight-26",
+    "insight/insight-31",
+    "insight/insight-33",
+    "insight/insight-38",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "insight/insight-51",
+    "sharehub/share-15",
+    "dentai/dentai-32"
    ]
   },
   {
@@ -2851,36 +2886,6 @@
    ]
   },
   {
-   "key": "قالب_گیری_دیجیتال",
-   "tag": "#قالب‌گیری_دیجیتال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ثبتِ دیجیتالِ آرچ با اسکنر، به‌جای قالب سنتی.",
-   "use_when": "مقاله دقت یا پروتکلِ ثبت دیجیتال را بررسی کند.",
-   "aliases": [
-    "قالب گیری دیجیتال",
-    "digital impression",
-    "اسکن دیجیتال",
-    "digital scan",
-    "دیجیتال اسکن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "insight/insight-3",
-    "insight/insight-19",
-    "insight/insight-26",
-    "insight/insight-31",
-    "insight/insight-33",
-    "insight/insight-38",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "insight/insight-51",
-    "sharehub/share-15"
-   ]
-  },
-  {
    "key": "پریودنتال",
    "tag": "#پریودنتال",
    "domain": "clinical",
@@ -3116,6 +3121,34 @@
    ]
   },
   {
+   "key": "متاآنالیز",
+   "tag": "#متاآنالیز",
+   "domain": null,
+   "words": 1,
+   "definition": "مرور سیستماتیک با تجمیع آماری.",
+   "use_when": "مقاله بر یک متاآنالیز استوار باشد.",
+   "aliases": [
+    "meta analysis",
+    "meta-analysis",
+    "systematic review",
+    "مرور سیستماتیک"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "dentai/dentai-7",
+    "notecast/episode-26",
+    "notecast/episode-27",
+    "dentai/dentai-22",
+    "dentai/dentai-26",
+    "dentai/dentai-27",
+    "dentai/dentai-29",
+    "dentai/dentai-30",
+    "dentai/dentai-32"
+   ]
+  },
+  {
    "key": "کشیدن_دندان",
    "tag": "#کشیدن_دندان",
    "domain": null,
@@ -3279,33 +3312,6 @@
     "dentai/dentai-4",
     "insight/insight-4",
     "dentai/dentai-16"
-   ]
-  },
-  {
-   "key": "متاآنالیز",
-   "tag": "#متاآنالیز",
-   "domain": null,
-   "words": 1,
-   "definition": "مرور سیستماتیک با تجمیع آماری.",
-   "use_when": "مقاله بر یک متاآنالیز استوار باشد.",
-   "aliases": [
-    "meta analysis",
-    "meta-analysis",
-    "systematic review",
-    "مرور سیستماتیک"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "dentai/dentai-7",
-    "notecast/episode-26",
-    "notecast/episode-27",
-    "dentai/dentai-22",
-    "dentai/dentai-26",
-    "dentai/dentai-27",
-    "dentai/dentai-29",
-    "dentai/dentai-30"
    ]
   },
   {
@@ -5137,6 +5143,29 @@
    ]
   },
   {
+   "key": "پیچ_ایمپلنت",
+   "tag": "#پیچ_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پیچ اباتمنت/پروتز و رفتار مکانیکی‌اش.",
+   "use_when": "مقاله درباره‌ی خودِ پیچ تصمیم بگیرد.",
+   "aliases": [
+    "implant screw",
+    "اسکرو ایمپلنت",
+    "پیچ پروتز"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "litecast/lite-CAST10",
+    "sharehub/share-1",
+    "litecast/lite-CAST17",
+    "metanotes/meta-8",
+    "insight/insight-68"
+   ]
+  },
+  {
    "key": "کتاب_مانیه",
    "tag": "#کتاب_مانیه",
    "domain": "clinical",
@@ -5456,6 +5485,30 @@
    ]
   },
   {
+   "key": "ایمپلنت_زاویه_دار",
+   "tag": "#ایمپلنت_زاویه_دار",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "فیکسچری با زاویه‌ی نامناسب — مسئله‌ای فراتر از انتخابِ اباتمنت.",
+   "use_when": "مقاله زاویه را عاملِ عوارضِ بعدی بداند، نه صرفاً مسئله‌ی مسیر.",
+   "aliases": [
+    "ایمپلنت زاویه دار",
+    "angled implant",
+    "زاویه فیکسچر",
+    "ایمپلنت کج",
+    "تیلت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-144-1",
+    "insight/insight-47",
+    "dentai/dentai-31",
+    "insight/insight-68"
+   ]
+  },
+  {
    "key": "بهداشت_دهان",
    "tag": "#بهداشت_دهان",
    "domain": null,
@@ -5734,6 +5787,29 @@
    ]
   },
   {
+   "key": "شل_شدن_پیچ",
+   "tag": "#شل_شدن_پیچ",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "شل شدنِ تدریجیِ پیچ که مقدمه‌ی شکستِ ثانویه است.",
+   "use_when": "مقاله شل شدن را مرحله‌ی پیش از شکست بداند.",
+   "aliases": [
+    "screw loosening",
+    "لقی پیچ",
+    "شل شدن اسکرو",
+    "لق شدن روکش"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-123-6",
+    "insight/insight-22",
+    "insight/insight-47",
+    "insight/insight-68"
+   ]
+  },
+  {
    "key": "عوارض_ایمپلنت",
    "tag": "#عوارض_ایمپلنت",
    "domain": "clinical",
@@ -5846,28 +5922,6 @@
     "episodes/episode-67",
     "insight/insight-7",
     "dentai/dentai-11"
-   ]
-  },
-  {
-   "key": "پیچ_ایمپلنت",
-   "tag": "#پیچ_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پیچ اباتمنت/پروتز و رفتار مکانیکی‌اش.",
-   "use_when": "مقاله درباره‌ی خودِ پیچ تصمیم بگیرد.",
-   "aliases": [
-    "implant screw",
-    "اسکرو ایمپلنت",
-    "پیچ پروتز"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "litecast/lite-CAST10",
-    "sharehub/share-1",
-    "litecast/lite-CAST17",
-    "metanotes/meta-8"
    ]
   },
   {
@@ -6324,29 +6378,6 @@
    ]
   },
   {
-   "key": "ایمپلنت_زاویه_دار",
-   "tag": "#ایمپلنت_زاویه_دار",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "فیکسچری با زاویه‌ی نامناسب — مسئله‌ای فراتر از انتخابِ اباتمنت.",
-   "use_when": "مقاله زاویه را عاملِ عوارضِ بعدی بداند، نه صرفاً مسئله‌ی مسیر.",
-   "aliases": [
-    "ایمپلنت زاویه دار",
-    "angled implant",
-    "زاویه فیکسچر",
-    "ایمپلنت کج",
-    "تیلت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-144-1",
-    "insight/insight-47",
-    "dentai/dentai-31"
-   ]
-  },
-  {
    "key": "ایمپلنت_کوتاه",
    "tag": "#ایمپلنت_کوتاه",
    "domain": null,
@@ -6545,6 +6576,27 @@
     "metanotes/meta-4",
     "metanotes/meta-5",
     "metanotes/meta-14"
+   ]
+  },
+  {
+   "key": "تداخل_اکلوزالی",
+   "tag": "#تداخل_اکلوزالی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "تماسِ مزاحمِ اکلوزالی به‌طور عام — برای تداخلِ مشخصاً سمت کارگر از #تداخل_سمت_کارگر استفاده شود.",
+   "use_when": "مقاله تداخلی را پیدا کند که سمتش تعیین‌کننده نیست.",
+   "aliases": [
+    "occlusal interference",
+    "interference",
+    "تداخل تماس"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-8",
+    "insight/insight-56",
+    "insight/insight-68"
    ]
   },
   {
@@ -7138,28 +7190,6 @@
     "insight/insight-54",
     "chairside/chairside-32",
     "insight/insight-65"
-   ]
-  },
-  {
-   "key": "شل_شدن_پیچ",
-   "tag": "#شل_شدن_پیچ",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "شل شدنِ تدریجیِ پیچ که مقدمه‌ی شکستِ ثانویه است.",
-   "use_when": "مقاله شل شدن را مرحله‌ی پیش از شکست بداند.",
-   "aliases": [
-    "screw loosening",
-    "لقی پیچ",
-    "شل شدن اسکرو",
-    "لق شدن روکش"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-123-6",
-    "insight/insight-22",
-    "insight/insight-47"
    ]
   },
   {
@@ -9135,26 +9165,6 @@
    "content_ids": [
     "insight/insight-16",
     "sharehub/share-1"
-   ]
-  },
-  {
-   "key": "تداخل_اکلوزالی",
-   "tag": "#تداخل_اکلوزالی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "تماسِ مزاحمِ اکلوزالی به‌طور عام — برای تداخلِ مشخصاً سمت کارگر از #تداخل_سمت_کارگر استفاده شود.",
-   "use_when": "مقاله تداخلی را پیدا کند که سمتش تعیین‌کننده نیست.",
-   "aliases": [
-    "occlusal interference",
-    "interference",
-    "تداخل تماس"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-8",
-    "insight/insight-56"
    ]
   },
   {
@@ -19713,6 +19723,7 @@
   "لایبرری ایمپلنت": "لایبرری دیجیتال",
   "لبه برنده لمینت": "لبه اینسایزال",
   "risk management": "مدیریت ریسک",
+  "retraction cord": "نخ زیرلثه",
   "polycrystalline": "پلی کریستالین",
   "کنترل لابراتوار": "کنترل کار لابراتوار",
   "چک قبل از تحویل": "کنترل کار لابراتوار",
@@ -19733,7 +19744,6 @@
   "implant spacing": "فاصله ایمپلنت",
   "distance فیکسچر": "فاصله ایمپلنت",
   "لکه سفید مینایی": "لکه سفید",
-  "retraction cord": "نخ زیرلثه",
   "نیروی زاویه دار": "نیروی مایل",
   "هوش مصنوعی خلاق": "هوش مصنوعی مولد",
   "decontamination": "پاکسازی سرامیک",
@@ -19880,6 +19890,7 @@
   "veneer removal": "debonding",
   "خارج کردن ونیر": "debonding",
   "لیزر دیباندینگ": "debonding",
+  "dental amalgam": "آمالگام",
   "screw retained": "اتصال پیچ شونده",
   "etch and rinse": "اچ اند رینس",
   "angled implant": "ایمپلنت زاویه دار",
@@ -19902,7 +19913,6 @@
   "universal bond": "یونیورسال باند",
   "باند یونیورسال": "یونیورسال باند",
   "شکست لبه محیطی": "prf",
-  "dental amalgam": "آمالگام",
   "intraoral scan": "اسکن دهانی",
   "تراش سطحی مینا": "اناملوپلاستی",
   "patient safety": "ایمنی بیمار",
@@ -20026,8 +20036,8 @@
   "پری ایمپلنتیت": "پری ایمپلنتیتیس",
   "تنظیم اکلوزال": "تنظیم اکلوژن",
   "dentcast plus": "دنتکست پلاس",
-  "periodontitis": "پریودنتال",
   "فینیشینگ لاین": "فینیش لاین",
+  "periodontitis": "پریودنتال",
   "bond strength": "قدرت باند",
   "meta analysis": "متاآنالیز",
   "پروتکل ادهزیو": "پروتکل باند",
@@ -20514,6 +20524,7 @@
   "مواد پروتزی": "متریال پروتزی",
   "third molar": "مولر سوم",
   "ناحیه لبخند": "ناحیه زیبایی",
+  "double cord": "نخ زیرلثه",
   "shear force": "نیروی برشی",
   "گایدنس طرفی": "هدایت طرفی",
   "هدایت جانبی": "هدایت طرفی",
@@ -20550,7 +20561,6 @@
   "ناحیه فورکا": "فورکا",
   "mclaren law": "قانون مکلارن",
   "ضایعات سفید": "لکه سفید",
-  "double cord": "نخ زیرلثه",
   "لایه هیبرید": "هیبرید لیر",
   "پاپیلای لثه": "پاپیلا",
   "الگوی رزینی": "پترن رزین",
@@ -20739,6 +20749,7 @@
   "کنترل ریسک": "مدیریت ریسک",
   "مدیریت خطر": "مدیریت ریسک",
   "زون استتیک": "ناحیه زیبایی",
+  "نخ زیر لثه": "نخ زیرلثه",
   "گلس آینومر": "گلاس آینومر",
   "گلس سرامیک": "گلاس سرامیک",
   "هیدروترمال": "ltd",
@@ -20772,7 +20783,6 @@
   "لبه چاقویی": "نایف اج",
   "فرز نیف اج": "نایف اج",
   "فرول ندارد": "نبود فرول",
-  "نخ زیر لثه": "نخ زیرلثه",
   "تجویز دارو": "نسخه نویسی",
   "ای آی مولد": "هوش مصنوعی مولد",
   "ونیر دندان": "ونیر",
@@ -20955,6 +20965,8 @@
   "عاج دندان": "عاج",
   "photocast": "فوتوکست",
   "دندان عقل": "مولر سوم",
+  "نخ رترکشن": "نخ زیرلثه",
+  "دابل کورد": "نخ زیرلثه",
   "نیروی شیر": "نیروی برشی",
   "هیلینگ کپ": "هیلینگ اباتمنت",
   "پوشش نسبی": "پارشیال کاوریج",
@@ -20989,8 +21001,6 @@
   "furcation": "فورکا",
   "تست موقتی": "روکش موقت به عنوان مرجع",
   "بدون فرول": "نبود فرول",
-  "نخ رترکشن": "نخ زیرلثه",
-  "دابل کورد": "نخ زیرلثه",
   "c i ratio": "نسبت تاج به ایمپلنت",
   "c r ratio": "نسبت تاج به ریشه",
   "فشار مایل": "نیروی مایل",
@@ -21312,6 +21322,7 @@
   "عصب کشی": "درمان ریشه",
   "دیاستما": "دیاستم",
   "رشد فکی": "رشد فک",
+  "amalgam": "آمالگام",
   "biobase": "بایوبیس",
   "opacity": "ترانسلوسنسی",
   "مرض قند": "دیابت",
@@ -21324,7 +21335,6 @@
   "alumina": "پلی کریستالین",
   "robbins": "کتاب رابینز",
   "ونت هول": "smart ونت روکش",
-  "amalgam": "آمالگام",
   "staging": "استیج بندی درمان",
   "tracing": "تریس آبسه",
   "ایربورن": "سندبلاست",
@@ -21400,9 +21410,9 @@
   "شیرهاب": "share hub",
   "شر هاب": "share hub",
   "ادهسیو": "ادهزیو",
+  "خط ختم": "فینیش لاین",
   "میلینگ": "cad cam",
   "cadcam": "cad cam",
-  "خط ختم": "فینیش لاین",
   "اورلای": "اورلی",
   "splint": "اسپلینت",
   "allon4": "ایمپلنت بیمار بی دندان",
