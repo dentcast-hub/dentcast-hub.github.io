@@ -1353,6 +1353,14 @@ a.dcp-cl-board {
 .dcp-btn { box-sizing: border-box; font: inherit; font-weight: 600; padding: 10px 16px; border-radius: 10px; cursor: pointer; border: 1px solid var(--dcp-line); background: transparent; color: var(--dcp-ink); }
 /* @end-home-critical */
 .dcp-btn-primary { background: var(--dcp-accent); color: #fff; border-color: transparent; }
+/* dc-theme.css paints every anchor in prose boxes with --ac; element+class beats
+   a lone .dcp-btn-primary, so a filled accent link goes blue-on-blue and
+   disappears (2026-08-28, challenge premium gate — same fix as plus-pages.css). */
+body:has(.dc-topbar) .glass-box a.dcp-btn-primary,
+body:has(.dc-topbar) .text-box a.dcp-btn-primary,
+body:has(.dc-topbar) .content-box a.dcp-btn-primary {
+  color: #fff;
+}
 .dcp-btn-ghost { background: transparent; }
 
 /* ---- toast --------------------------------------------------------------- */
@@ -1655,9 +1663,6 @@ html.dcp-touring #mobile-body { overflow: hidden; }
 }
 .dc-ch-gate-cta{
   margin-top:.35rem;
-}
-.dc-ch-gate-cta .dcp-btn-primary{
-  color:#fff;
 }
 .dc-ch-gate{
   background:var(--surface2, #f4f6fb);
