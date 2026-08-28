@@ -12,9 +12,9 @@
 //     the account, not localStorage).
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
-import { el, faNum } from './util.js?v=43';
-import { api, currentUser } from './api.js?v=43';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=43';
+import { el, faNum } from './util.js?v=45';
+import { api, currentUser } from './api.js?v=45';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=45';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 

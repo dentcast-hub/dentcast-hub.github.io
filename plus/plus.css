@@ -1658,6 +1658,18 @@ html.dcp-touring #mobile-body { overflow: hidden; }
   line-height:1.8;
   color:var(--txt2, #4a5f85);
 }
+.dc-ch-premium-msg{
+  margin:0 0 .625rem;
+  font-size:.9rem;
+  line-height:1.75;
+  color:var(--txt, #0a1a33);
+}
+.dc-ch-gate-cta{
+  margin-top:.35rem;
+}
+.dc-ch-gate-cta .dcp-btn-primary{
+  color:#fff;
+}
 .dc-ch-gate{
   background:var(--surface2, #f4f6fb);
   border:1px solid var(--border2, rgba(2,35,96,.06));
