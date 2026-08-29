@@ -17,6 +17,7 @@
     "seed": "tsx src/scripts/seed.ts",
     "rebuild-streaks": "tsx src/scripts/rebuild-streaks.ts",
     "anniversary-grant": "tsx src/scripts/anniversary-grant.ts",
+    "backfill-league-prize-stack": "tsx src/scripts/backfill-league-prize-stack.ts",
     "test": "vitest run",
     "test:watch": "vitest"
   },

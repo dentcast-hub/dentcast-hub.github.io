@@ -8,14 +8,15 @@ import { notifyPremiumPrizes, PREMIUM_FEATURE_TITLES } from '../src/services/pre
 import { readFile, readdir } from 'node:fs/promises';
 import { notifications } from '../src/providers/registry.js';
 import { getLeagueConfig } from '../src/services/league-config.js';
-import { activateMonths } from '../src/services/subscription.js';
+import { activateMonths, grantLifetime } from '../src/services/subscription.js';
 import { vi } from 'vitest';
 
 /**
  * Weekly league prize: the top of EVERY VALID group (not the top of one tier),
  * prize_days of premium, a cooldown that passes the prize down rather than
- * wasting it, idempotent, never misleads an already-premium winner, and
- * auto-reverts unless the user wins again or holds a real subscription.
+ * wasting it, idempotent, stacks days onto a paid subscription instead of
+ * skipping the winner, and auto-reverts unless the user wins again or holds a
+ * real subscription.
  */
 
 const WEEK = '2026-02-07';
@@ -227,7 +228,34 @@ describe('grantWeeklyPrizes — top of every valid group', () => {
     expect(count.rows[0].n).toBe(1);
   });
 
-  it('skips a winner who is already premium and passes the prize down', async () => {
+  it('stacks prize days onto a paid subscription instead of passing down', async () => {
+    const ids = await seedGroup('composite', [90, 80, 70]);
+    const before = new Date('2026-02-01T00:00:00Z');
+    await activateMonths(ids[0], 1, { source: 'admin', now: before });
+    const subBefore = await pool.query<{ expires_at: Date }>(
+      'select expires_at from subscriptions where user_id = $1', [ids[0]],
+    );
+    await finalizeWeek(WEEK);
+
+    const res = await grantWeeklyPrizes(NEAR_WEEK);
+    expect(res.granted).toBe(1);
+    const grant = await grantRow(ids[0]);
+    expect(grant, 'paid winner still gets a grant row (cooldown + banner)').not.toBeNull();
+    const flag = await pool.query<{ extends_subscription: boolean }>(
+      'select extends_subscription from premium_grants where user_id = $1 and week_start = $2',
+      [ids[0], WEEK],
+    );
+    expect(flag.rows[0].extends_subscription).toBe(true);
+    expect(await grantRow(ids[1]), 'rank 2 must NOT get the prize').toBeNull();
+
+    const subAfter = await pool.query<{ expires_at: Date }>(
+      'select expires_at from subscriptions where user_id = $1', [ids[0]],
+    );
+    expect(subAfter.rows[0].expires_at.getTime())
+      .toBeGreaterThan(subBefore.rows[0].expires_at.getTime());
+  });
+
+  it('still passes the prize down for orphan premium with no subscription', async () => {
     const ids = await seedGroup('composite', [90, 80, 70]);
     await pool.query("update profiles set tier = 'premium' where id = $1", [ids[0]]);
     await finalizeWeek(WEEK);
@@ -236,6 +264,17 @@ describe('grantWeeklyPrizes — top of every valid group', () => {
     expect(res.granted).toBe(1);
     expect(await grantRow(ids[0]), 'never claim credit for premium we did not grant').toBeNull();
     expect(await grantRow(ids[1]), 'rank 2 gets the prize instead of it being wasted').not.toBeNull();
+  });
+
+  it('still passes the prize down for a founder/lifetime account', async () => {
+    const ids = await seedGroup('composite', [90, 80, 70]);
+    await grantLifetime(ids[0], { source: 'admin' });
+    await finalizeWeek(WEEK);
+
+    const res = await grantWeeklyPrizes(NEAR_WEEK);
+    expect(res.granted).toBe(1);
+    expect(await grantRow(ids[0])).toBeNull();
+    expect(await grantRow(ids[1])).not.toBeNull();
   });
 });
 
@@ -701,5 +740,89 @@ describe('the champion of the highest tier (titanium — nothing above it)', () 
       (new Date(g!.expires_at).getTime() - new Date(g!.granted_at).getTime()) / 86_400_000,
     );
     expect(days).toBe(cfg.prize_days);
+  });
+});
+
+describe('backfillSkippedPaidWinners', () => {
+  it('finds a paid rank-1 who lost the prize to pass-down and compensates once', async () => {
+    const {
+      findSkippedPaidWinners,
+      runBackfillLeaguePrizeStack,
+    } = await import('../src/scripts/backfill-league-prize-stack.js');
+
+    const ids = await seedGroup('composite', [90, 80, 70]);
+    // Simulate the OLD skip: mark rank 1 premium without a subscription row,
+    // grant runs → rank 2 wins. THEN give rank 1 a paid sub and run backfill
+    // as if they had been a paying subscriber at the time (subscription row
+    // existing is the proxy the script uses).
+    await pool.query("update profiles set tier = 'premium' where id = $1", [ids[0]]);
+    await finalizeWeek(WEEK);
+    await grantWeeklyPrizes(NEAR_WEEK);
+    expect(await grantRow(ids[1])).not.toBeNull();
+    expect(await grantRow(ids[0])).toBeNull();
+
+    await activateMonths(ids[0], 1, { source: 'admin', now: new Date('2026-01-15T00:00:00Z') });
+    const before = await pool.query<{ expires_at: Date }>(
+      'select expires_at from subscriptions where user_id = $1', [ids[0]],
+    );
+
+    const dry = await runBackfillLeaguePrizeStack({ dryRun: true, now: NEAR_WEEK });
+    expect(dry.candidates).toBeGreaterThanOrEqual(1);
+    expect((await findSkippedPaidWinners()).some((c) => c.user_id === ids[0])).toBe(true);
+
+    const live = await runBackfillLeaguePrizeStack({ dryRun: false, now: NEAR_WEEK });
+    expect(live.stacked).toBeGreaterThanOrEqual(1);
+    expect(await grantRow(ids[0])).not.toBeNull();
+    // Rank 2 keeps their prize.
+    expect(await grantRow(ids[1])).not.toBeNull();
+
+    const after = await pool.query<{ expires_at: Date }>(
+      'select expires_at from subscriptions where user_id = $1', [ids[0]],
+    );
+    expect(after.rows[0].expires_at.getTime()).toBeGreaterThan(before.rows[0].expires_at.getTime());
+
+    // Idempotent.
+    const again = await runBackfillLeaguePrizeStack({ dryRun: false, now: NEAR_WEEK });
+    expect(again.stacked).toBe(0);
+  });
+
+  it('does not treat a cooldown pass-down as a paid skip', async () => {
+    const { findSkippedPaidWinners } = await import('../src/scripts/backfill-league-prize-stack.js');
+    const ids = await seedGroup('composite', [90, 80, 70]);
+    await finalizeWeek(WEEK);
+    await grantWeeklyPrizes(NEAR_WEEK);
+    await activateMonths(ids[0], 1, { source: 'admin', now: new Date('2026-01-15T00:00:00Z') });
+
+    const WEEK2 = '2026-02-14';
+    const tid = await tierId('composite');
+    const lg = await pool.query<{ id: string }>(
+      `insert into leagues (tier_id, week_start, week_end, status, capacity_at_creation)
+       values ($1, $2, $2, 'closed', 8) returning id`,
+      [tid, WEEK2],
+    );
+    await pool.query(
+      `insert into league_members (league_id, user_id, week_start, weekly_xp, first_reached_current_xp_at)
+       values ($1, $2, $3, 100, $4)`,
+      [lg.rows[0].id, ids[0], WEEK2, `${WEEK2}T00:00:00Z`],
+    );
+    for (let i = 0; i < MIN_VALID - 1; i += 1) {
+      seq += 1;
+      const u = await pool.query<{ id: string }>(
+        'insert into profiles (display_name, current_tier_id) values ($1, $2) returning id',
+        [`bf${seq}`, tid],
+      );
+      await pool.query(
+        `insert into league_members (league_id, user_id, week_start, weekly_xp, first_reached_current_xp_at)
+         values ($1, $2, $3, $4, $5)`,
+        [lg.rows[0].id, u.rows[0].id, WEEK2, 50 - i, `${WEEK2}T00:00:00Z`],
+      );
+    }
+    await finalizeWeek(WEEK2, NEAR_WEEK);
+    await grantWeeklyPrizes(new Date('2026-02-15T00:00:00Z'));
+
+    const hits = (await findSkippedPaidWinners()).filter(
+      (c) => c.user_id === ids[0] && c.week_start === WEEK2,
+    );
+    expect(hits).toHaveLength(0);
   });
 });
