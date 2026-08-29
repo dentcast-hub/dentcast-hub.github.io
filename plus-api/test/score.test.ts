@@ -3,7 +3,7 @@ import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import {
-  computeScore, POINTS_PER_ACTIVE_DAY, POINTS_PER_CONTENT,
+  computeScore, POINTS_PER_ACTIVE_DAY, POINTS_PER_CONTENT, POINTS_PER_CHALLENGE,
 } from '../src/services/score.js';
 
 // The per-content component of the score. Before it existed, consumption only
@@ -161,6 +161,18 @@ describe('per-content score', () => {
     expect((await computeScore(pool, userId)).content_completed).toBe(0);
   });
 
+  it('a challenge_answered row pays twice an article, on top of the active day', async () => {
+    await pool.query(
+      `insert into user_activity (user_id, action, content_id) values
+         ($1,'challenge_answered','insight/insight-68')`,
+      [userId],
+    );
+    const b = await computeScore(pool, userId);
+    expect(b.challenges_correct).toBe(1);
+    expect(b.content_completed).toBe(0);
+    expect(b.score).toBe(POINTS_PER_ACTIVE_DAY + POINTS_PER_CHALLENGE);
+  });
+
   it('the breakdown adds up to the score it reports', async () => {
     await listen('episodes/episode-1');
     await read('insight/insight-20');
@@ -171,9 +183,11 @@ describe('per-content score', () => {
 
     const b = await computeScore(pool, userId);
     expect(b.content_completed).toBe(2);
+    expect(b.challenges_correct).toBe(0);
     expect(b.score).toBe(
       b.active_days * POINTS_PER_ACTIVE_DAY
       + b.content_completed * POINTS_PER_CONTENT
+      + b.challenges_correct * POINTS_PER_CHALLENGE
       + b.total_highlights,
     );
   });
@@ -207,6 +221,8 @@ describe('/progress exposes the new component and its rank agrees with it', () =
 
     expect(body.score_content_completed).toBe(3);
     expect(body.score_points_per_content).toBe(POINTS_PER_CONTENT);
+    expect(body.score_challenges_correct).toBe(0);
+    expect(body.score_points_per_challenge).toBe(POINTS_PER_CHALLENGE);
     expect(body.score).toBe(POINTS_PER_ACTIVE_DAY + 3 * POINTS_PER_CONTENT);
     // The rank query is a second, whole-table copy of the arithmetic. If it ever
     // drifts from computeScore the user is ranked against a number that is not

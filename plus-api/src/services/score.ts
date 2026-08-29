@@ -6,9 +6,16 @@ import { config } from '../config.js';
  * and the streak engine (auto-consume on a missed day). Kept in one place so the
  * number the user sees and the number the engine spends never drift apart.
  *
- * Score = active_days * 10 + content_completed * 5 + total_highlights
+ * Score = active_days * 10 + content_completed * 5
+ *       + challenges_correct * 10 + total_highlights
  * (activity-log derived, monotonic), except that a day earned while the account
  * was premium pays PREMIUM_POINTS_PER_ACTIVE_DAY (12) instead of 10.
+ *
+ * `challenges_correct` is a separate term, not folded into `content_completed`:
+ * a fully-correct چالش is worth twice an article (POINTS_PER_CHALLENGE), and
+ * only `challenge_answered` rows exist for a `full` verdict — a wrong or
+ * partial answer writes nothing, so it cannot buy a shield. See
+ * services/challenge.ts `awardIfCorrect`.
  *
  * `content_completed` counts each (action, content) pair ONCE FOR ALL TIME —
  * except listening, which pays again ONCE PER LEAGUE WEEK (2026-08-10). Reading
@@ -64,6 +71,14 @@ export const SCORING_ACTIONS = ['article_completed', 'episode_listened', 'highli
 export const CONSUMPTION_ACTIONS = ['article_completed', 'episode_listened'];
 
 /**
+ * Written only when a چالش attempt settles as `full`. Lives in SCORING_ACTIONS
+ * (active day + streak) and has its own points term, never CONSUMPTION_ACTIONS
+ * — an article is +5, a correct challenge is +10, and mixing them in one
+ * count would make the dashboard's «تمام‌شده» number lie about reading.
+ */
+export const CHALLENGE_SCORE_ACTION = 'challenge_answered';
+
+/**
  * Passing a page on to somebody else (the article header's «اشتراک‌گذاری»).
  *
  * Deliberately NOT in SCORING_ACTIONS, and deliberately not in the streak's
@@ -85,6 +100,7 @@ export const SHARE_ACTION = 'content_shared';
 
 export const POINTS_PER_ACTIVE_DAY = 10;
 export const POINTS_PER_CONTENT = 5; // half a day: visible, but the daily habit still leads
+export const POINTS_PER_CHALLENGE = 10; // twice an article: being right is the expensive act
 
 /**
  * What a premium subscriber's DAILY point is worth — the subscription perk.
@@ -132,7 +148,8 @@ type Db = pg.Pool | pg.PoolClient;
 
 export interface ScoreBreakdown {
   score: number;
-  active_days: number; content_completed: number; total_highlights: number;
+  active_days: number; content_completed: number; challenges_correct: number;
+  total_highlights: number;
   /** Of `active_days`, how many were earned while premium (a subset, not an extra). */
   premium_days: number;
   /** Points this account owes purely to the multiplier. Zero on a free plan. */
@@ -143,6 +160,8 @@ export interface ScoreBreakdown {
 export interface ScoreParts {
   active_days: number; content_completed: number; total_highlights: number;
   premium_days: number;
+  /** Fully-correct چالش answers. */
+  challenges_correct: number;
 }
 
 /**
@@ -159,9 +178,11 @@ export interface ScoreParts {
 export function combineScore(p: ScoreParts): { score: number; premium_bonus: number } {
   const freeDays = p.active_days - p.premium_days;
   const premium_bonus = p.premium_days * (PREMIUM_POINTS_PER_ACTIVE_DAY - POINTS_PER_ACTIVE_DAY);
+  const challenges = p.challenges_correct;
   const score = freeDays * POINTS_PER_ACTIVE_DAY
     + p.premium_days * PREMIUM_POINTS_PER_ACTIVE_DAY
     + p.content_completed * POINTS_PER_CONTENT
+    + challenges * POINTS_PER_CHALLENGE
     + p.total_highlights;
   return { score, premium_bonus };
 }
@@ -203,6 +224,7 @@ export function scoreSelectSql(p: { tz: string; scoring: string; consumption: st
                  ( coalesce(ad.n, 0) - coalesce(ad.pr, 0) ) * ${POINTS_PER_ACTIVE_DAY}
                + coalesce(ad.pr, 0) * ${PREMIUM_POINTS_PER_ACTIVE_DAY}
                + coalesce(cc.n, 0) * ${POINTS_PER_CONTENT}
+               + coalesce(ch.n, 0) * ${POINTS_PER_CHALLENGE}
                + coalesce(hl.n, 0) as score
             from profiles p
             left join (
@@ -219,6 +241,12 @@ export function scoreSelectSql(p: { tz: string; scoring: string; consumption: st
                where action = any(${p.consumption}) and content_id is not null
                group by user_id
             ) cc on cc.user_id = p.id
+            left join (
+              select user_id, count(distinct content_id) as n
+                from user_activity
+               where action = '${CHALLENGE_SCORE_ACTION}' and content_id is not null
+               group by user_id
+            ) ch on ch.user_id = p.id
             left join (
               select user_id, count(*) as n from highlights group by user_id
             ) hl on hl.user_id = p.id`;
@@ -246,9 +274,15 @@ export async function computeScore(db: Db, userId: string): Promise<ScoreBreakdo
     `select count(*)::int as n from highlights where user_id = $1`,
     [userId],
   );
+  const ch = await db.query<{ n: number }>(
+    `select count(distinct content_id)::int as n from user_activity
+      where user_id = $1 and action = $2 and content_id is not null`,
+    [userId, CHALLENGE_SCORE_ACTION],
+  );
   const parts: ScoreParts = {
     active_days: ad.rows[0]?.n ?? 0,
     content_completed: cc.rows[0]?.n ?? 0,
+    challenges_correct: ch.rows[0]?.n ?? 0,
     total_highlights: hl.rows[0]?.n ?? 0,
     premium_days: ad.rows[0]?.pr ?? 0,
   };

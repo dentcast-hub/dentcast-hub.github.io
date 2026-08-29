@@ -324,6 +324,15 @@ describe('GET /league — placement on first XP', () => {
     expect(await myXp(cookie)).toBe(10);
   });
 
+  it('POST /activity refuses challenge_answered — only a full چالش mints that row', async () => {
+    const cookie = await loginAs(app, '09120000055');
+    const r = await act(cookie, 'challenge_answered', 'insight/insight-68');
+    expect(r.statusCode).toBe(400);
+    expect(r.json().error).toBe('invalid_action');
+    const body = (await app.inject({ method: 'GET', url: '/league', headers: { cookie } })).json();
+    expect(body.joined).toBe(false);
+  });
+
   // ── content_shared ────────────────────────────────────────────────────────
   // The button behind these cases cannot be verified by anyone: navigator.share
   // resolves on a dismissed sheet on some platforms, and the clipboard fallback
@@ -479,8 +488,10 @@ describe('GET /league — the scoring table the explainer shows', () => {
       highlight_cap: cfg.xp_highlight_cap,
       review: cfg.xp_review,
       active_bonus: cfg.xp_active_bonus,
-      share: cfg.xp_share,
-      share_cap: cfg.xp_share_weekly_cap,
+        share: cfg.xp_share,
+        share_cap: cfg.xp_share_weekly_cap,
+        challenge: cfg.xp_challenge,
+        challenge_cap: cfg.xp_challenge_weekly_cap,
       premium: {
         pathway_step: cfg.xp_pathway_step,
         pathway_step_cap: cfg.xp_pathway_step_weekly_cap,

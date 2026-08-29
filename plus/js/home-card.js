@@ -1,13 +1,13 @@
 // Homepage personal card, in the existing "یادگیری هفتگی" slot (spec 2.4).
 // Two states: anonymous invitation, and logged-in free daily status. NO due-card
 // counter for free users, not even a zero or a locked stub. No minutes target.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=48';
-import { currentUser, api } from './api.js?v=48';
-import { openLoginModal, openOrgNotice } from './login-modal.js?v=48';
-import { getModel, contentInfo } from './content-index.js?v=48';
-import { isOrgHost, detectContentId, baleEnabled, telegramLoginEnabled } from './config.js?v=48';
-import { ensurePushSubscription, removePushSubscription } from './push.js?v=48';
-import { leagueChip, maybeAnnounceOutcome } from './league.js?v=48';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=49';
+import { currentUser, api } from './api.js?v=49';
+import { openLoginModal, openOrgNotice } from './login-modal.js?v=49';
+import { getModel, contentInfo } from './content-index.js?v=49';
+import { isOrgHost, detectContentId, baleEnabled, telegramLoginEnabled } from './config.js?v=49';
+import { ensurePushSubscription, removePushSubscription } from './push.js?v=49';
+import { leagueChip, maybeAnnounceOutcome } from './league.js?v=49';
 
 function flame(active) {
   const s = el('span', { class: 'dc-plus-flame' + (active ? ' is-active' : ''), 'aria-hidden': 'true' });
@@ -129,7 +129,7 @@ async function renderLoggedIn(card, user) {
   ]);
 
   // Score (⭐) sits inline beside the streak: the all-time total from score.ts
-  // (active_days*10 + content_completed*5 + highlights). It UNLOCKS shields — it
+  // (active_days*10 + content_completed*5 + challenges_correct*10 + highlights). It UNLOCKS shields — it
   // is never spent, because there is no stored balance at all: score is derived
   // from the activity log, so it can only grow. It is also NOT the league
   // currency — the league ranks on weekly_xp, a separate per-action quantity

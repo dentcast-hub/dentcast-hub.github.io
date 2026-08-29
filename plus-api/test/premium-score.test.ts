@@ -190,6 +190,7 @@ describe('the premium multiplier', () => {
     for (const n of [1, 3, 7, 11, 13]) {
       const { score: s, premium_bonus } = combineScore({
         active_days: n, premium_days: n, content_completed: n, total_highlights: n,
+        challenges_correct: 0,
       });
       expect(Number.isInteger(s)).toBe(true);
       expect(Number.isInteger(premium_bonus)).toBe(true);
@@ -223,7 +224,7 @@ describe('the premium multiplier', () => {
   });
 
   it('reaches the first streak shield sooner than the same days would free', () => {
-    const parts = { active_days: 17, content_completed: 0, total_highlights: 0 };
+    const parts = { active_days: 17, content_completed: 0, total_highlights: 0, challenges_correct: 0 };
     const free = combineScore({ ...parts, premium_days: 0 });
     const premium = combineScore({ ...parts, premium_days: 17 });
 

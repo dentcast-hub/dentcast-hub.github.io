@@ -142,12 +142,20 @@ export async function computeAchievementFacts(
                             where r.user_id = $1 and r.action = 'article_completed'
                               and r.content_id = s.content_id
                               and r.created_at <= s.created_at)) as shares,
-           -- «چالشگر»: every attempt, not only settled ones — a queued attempt
-           -- already earned its score under RULE 7, and a badge that lights only
-           -- once the founder gets to the queue would disagree with the score
-           -- for days.
-           (select count(*)::int from challenge_attempts
-             where user_id = $1) as challenges_settled`,
+           -- «چلنجر»: fully-correct attempts only. A wrong, partial, or
+           -- still-queued answer writes no score and must not light the wall
+           -- either — otherwise the badge would disagree with the shield
+           -- number for as long as the founder has not ruled, and a miss
+           -- would still count toward silver/gold discounts.
+           (select count(*)::int from challenge_attempts a
+             where a.user_id = $1
+               and a.status = 'settled'
+               and a.verdict is not null
+               and jsonb_array_length(a.verdict) > 0
+               and not exists (
+                 select 1 from jsonb_array_elements(a.verdict) e
+                  where e->>'state' is distinct from 'covered'
+               )) as challenges_settled`,
         [userId, tz], // tz: «یادآور» counts review DAYS, in Tehran
       ),
 

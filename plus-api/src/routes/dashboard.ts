@@ -8,7 +8,8 @@ import { getConsumedContentIds } from '../services/consumption.js';
 import {
   computeScore, freezesUsedCount, freezesAvailable, pointsToNextFreeze,
   SHIELD_BASE, SHIELD_STEP, shieldCost, shieldsGranted, SCORING_ACTIONS,
-  CONSUMPTION_ACTIONS, POINTS_PER_CONTENT, POINTS_PER_ACTIVE_DAY, scoreSelectSql,
+  CONSUMPTION_ACTIONS, POINTS_PER_CONTENT, POINTS_PER_ACTIVE_DAY,
+  POINTS_PER_CHALLENGE, scoreSelectSql,
 } from '../services/score.js';
 import { dayInTz, previousDay, nextDay, weekStartSaturday } from '../services/time.js';
 
@@ -153,6 +154,7 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     // the headline; this is the comparable total.
     const {
       score, active_days: activeDays, content_completed: contentCompleted,
+      challenges_correct: challengesCorrect,
     } = await computeScore(pool, userId);
     const totalHl = stats.rows[0]?.total_highlights ?? 0;
 
@@ -202,6 +204,8 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
       // instead of leaving a listener to guess why the number moved.
       score_content_completed: contentCompleted,
       score_points_per_content: POINTS_PER_CONTENT,
+      score_challenges_correct: challengesCorrect,
+      score_points_per_challenge: POINTS_PER_CHALLENGE,
       score_points_per_active_day: POINTS_PER_ACTIVE_DAY,
       rank,
       freezes: {

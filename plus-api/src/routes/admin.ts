@@ -58,7 +58,8 @@ import {
 } from '../services/des-library.js';
 import { keyHash, keysFor, allDois, allPmids, paperScope, pickIdentifier } from '../services/des-identity.js';
 import {
-  queueRows as challengeQueueRows, getAttempt as getChallengeAttempt,
+  queueRows as challengeQueueRows, attemptReportRows as challengeAttemptReportRows,
+  getAttempt as getChallengeAttempt,
   settleByFounder, upsertChallenge, validateKeyPoints,
 } from '../services/challenge.js';
 import { config } from '../config.js';
@@ -194,6 +195,9 @@ function renderHtml(
   .tk.need{border-color:rgba(154,107,21,.45)}
   .tk-h{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:.95rem}
   .tk-x{color:#4a5f85;font-size:.87rem;margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  /* چالش queue: whole answer, wrap + scroll. The nowrap .tk-x above stays
+     for پشتیبانی/DES one-line previews. */
+  .tk-x.full{white-space:pre-wrap;overflow:auto;max-height:16em;text-overflow:unset;word-break:break-word}
   .tk-body{cursor:auto}
   .tk-body:not(:empty){margin-top:12px;border-top:1px solid rgba(2,35,96,.10);padding-top:12px}
   .thread{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
@@ -1325,7 +1329,7 @@ function renderHtml(
         + '<span class="pill">' + esc(r.reference) + '</span>'
         + '</div>'
         + '<div class="muted">' + who(r) + ' · ' + when(r.created_at) + '</div>'
-        + '<div class="tk-x">' + esc(r.answer_text) + '</div>'
+        + '<div class="tk-x full">' + esc(r.answer_text) + '</div>'
         + '<div class="tk-body"></div></div>';
     }
 
@@ -1393,6 +1397,61 @@ function renderHtml(
     });
 
     load();
+  })();
+  </script>
+
+  <h3 style="margin-top:26px">گزارش چالش‌ها <span id="chRepCount" class="pill"></span></h3>
+  <div class="muted">همهٔ جواب‌ها، تازه‌ترین بالاتر. «چند شده» یعنی چند نکته از نکات کلیدی پوشش داده شده — نه امتیاز سایت. صندوق بالا فقط مبهم‌ها را نگه می‌دارد؛ این‌جا settledها هم می‌مانند.</div>
+  <div id="chRep" class="muted" style="margin-top:10px">در حال خواندن…</div>
+  <script>
+  (function () {
+    var out = document.getElementById('chRep');
+    var countEl = document.getElementById('chRepCount');
+    if (!out) return;
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+    function when(iso) {
+      try { return new Date(iso).toLocaleString('fa-IR'); } catch (e) { return iso; }
+    }
+    function who(r) {
+      return esc(r.display_name || r.phone || r.id);
+    }
+    function scoreCell(r) {
+      if (r.status !== 'settled' || r.covered_count == null) return 'در صف';
+      var word = r.result === 'full' ? 'درست بود'
+        : (r.result === 'none' ? 'درست نبود' : 'تا حدی درست بود');
+      return Number(r.covered_count).toLocaleString('fa-IR') + ' از '
+        + Number(r.point_count).toLocaleString('fa-IR') + ' · ' + word;
+    }
+
+    function rowsHtml(rows) {
+      if (!rows.length) return '<tr><td colspan="6">هنوز کسی جواب نداده.</td></tr>';
+      return rows.map(function (r) {
+        return '<tr><td>' + who(r) + '</td>'
+          + '<td>' + esc(r.phone || '—') + '</td>'
+          + '<td dir="ltr">' + esc(r.content_id) + '</td>'
+          + '<td>' + esc(scoreCell(r)) + '</td>'
+          + '<td>' + when(r.created_at) + '</td>'
+          + '<td><span class="pill">' + esc(r.reference) + '</span></td></tr>';
+      }).join('');
+    }
+
+    fetch('/admin/challenges/attempts', { credentials: 'include' })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok) { out.textContent = 'خوانده نشد.'; return; }
+        var rows = res.j.attempts || [];
+        if (countEl) countEl.textContent = rows.length ? rows.length + ' جواب' : '';
+        out.className = '';
+        out.innerHTML = '<div class="tblwrap"><table><thead><tr>'
+          + '<th>کاربر</th><th>موبایل</th><th>چالش</th><th>نتیجه</th><th>زمان</th><th>کد</th>'
+          + '</tr></thead><tbody>' + rowsHtml(rows) + '</tbody></table></div>';
+      })
+      .catch(function () { out.textContent = 'خوانده نشد (شبکه).'; });
   })();
   </script>
 
@@ -3228,6 +3287,15 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.get('/admin/challenges', async (_request, reply) => {
     const rows = await challengeQueueRows();
     return reply.send({ ok: true, count: rows.length, pending: rows });
+  });
+
+  // GET /admin/challenges/attempts — the roster, newest first. Who answered
+  // and how many key points they covered. Separate from the queue on purpose:
+  // a settled attempt is gone from pending, and an AI-settled one never
+  // entered it.
+  app.get('/admin/challenges/attempts', async (_request, reply) => {
+    const rows = await challengeAttemptReportRows();
+    return reply.send({ ok: true, count: rows.length, attempts: rows });
   });
 
   // GET /admin/challenges/by-reference/:reference — same lookup shape as

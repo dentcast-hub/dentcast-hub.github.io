@@ -2,8 +2,10 @@ import { one, query, withTransaction, type Queryable } from '../db.js';
 import { config } from '../config.js';
 import { mintReference } from './reference.js';
 import { recordActivity } from './activity.js';
+import { scheduleAchievementSync } from './achievement-sync.js';
 import { ai } from '../providers/registry.js';
 import type { KeyPoint, PointState } from '../providers/ai/types.js';
+import type pg from 'pg';
 
 /**
  * چالش — a founder-authored question, model-assisted grading against key
@@ -194,10 +196,43 @@ export async function gradeAttempt(challenge: Challenge, attempt: ChallengeAttem
 }
 
 /**
- * Score is recorded before the model runs and never depends on the verdict
- * (RULE 7) — what the reader earned is the writing, already done and stored.
- * Returns 'already_answered' when a prior attempt exists; the caller answers
- * 409 with it rather than an error.
+ * Score, streak, league XP, and the badge metric all ride on one activity
+ * row, written only when the attempt is `full`. A wrong or partial answer
+ * writes nothing — there is no participation consolation and no deduction
+ * (RULE 8). A queued attempt waits until the founder rules; if that ruling
+ * is full, this runs then.
+ *
+ * Idempotent: the unique attempt plus this exists-check means a second
+ * call (founder re-submit, retry) cannot mint a second row.
+ */
+export async function awardIfCorrect(
+  userId: string,
+  contentId: string,
+  attempt: ChallengeAttempt,
+  client?: pg.PoolClient,
+): Promise<void> {
+  if (reduceVerdict(attempt.verdict)?.result !== 'full') return;
+
+  const run = async (c: pg.PoolClient) => {
+    const existing = await c.query(
+      `select 1 from user_activity
+        where user_id = $1 and action = 'challenge_answered' and content_id = $2
+        limit 1`,
+      [userId, contentId],
+    );
+    if (existing.rows.length) return;
+    await recordActivity(userId, 'challenge_answered', contentId, {}, c);
+  };
+
+  if (client) return run(client);
+  return withTransaction(run);
+}
+
+/**
+ * Score is awarded only after a `full` verdict, never before the model
+ * (or the founder) has spoken, and never for partial/none/queued. Returns
+ * 'already_answered' when a prior attempt exists; the caller answers 409
+ * with it rather than an error.
  */
 export async function submitAnswer(
   userId: string,
@@ -207,12 +242,12 @@ export async function submitAnswer(
   const { inserted, attempt } = await createAttempt(userId, contentId, answerText);
   if (!inserted) return { status: 'already_answered', attempt };
 
-  await recordActivity(userId, 'challenge_answered', contentId, {});
-
   const challenge = await getChallenge(contentId);
   if (!challenge) return { status: 'queued', attempt }; // defensive: route already checked existence
 
   const graded = await gradeAttempt(challenge, attempt);
+  await awardIfCorrect(userId, contentId, graded);
+  if (reduceVerdict(graded.verdict)?.result === 'full') scheduleAchievementSync(userId);
   return { status: graded.status === 'settled' ? 'settled' : 'queued', attempt: graded };
 }
 
@@ -256,6 +291,57 @@ export async function queueRows(): Promise<QueueRow[]> {
   return r.rows;
 }
 
+/**
+ * The founder's roster of every attempt, newest first — who answered, and
+ * how many key points they covered. This is what the queue is not: the
+ * queue drops a row the moment it is settled (and never sees an attempt
+ * the model settled on its own), so without this the founder has no
+ * picture of "کی جواب داده و چند شده".
+ *
+ * Shaped explicitly: no `answer_text`, no raw `verdict`, no `key_points`.
+ * The counts come from the same `reduceVerdict` the reader endpoints use.
+ */
+export interface AttemptReportRow {
+  id: string;
+  content_id: string;
+  reference: string;
+  status: 'queued' | 'settled';
+  created_at: string;
+  display_name: string | null;
+  phone: string | null;
+  result: 'full' | 'partial' | 'none' | null;
+  covered_count: number | null;
+  point_count: number | null;
+}
+
+export async function attemptReportRows(): Promise<AttemptReportRow[]> {
+  const r = await query<Pick<ChallengeAttempt, 'id' | 'content_id' | 'reference' | 'status' | 'verdict' | 'created_at'> & {
+    display_name: string | null;
+    phone: string | null;
+  }>(
+    `select a.id, a.content_id, a.reference, a.status, a.verdict, a.created_at,
+            p.display_name, p.phone
+       from challenge_attempts a
+       join profiles p on p.id = a.user_id
+      order by a.created_at desc`,
+  );
+  return r.rows.map((row) => {
+    const reduced = reduceVerdict(row.verdict);
+    return {
+      id: row.id,
+      content_id: row.content_id,
+      reference: row.reference,
+      status: row.status,
+      created_at: row.created_at,
+      display_name: row.display_name,
+      phone: row.phone,
+      result: reduced ? reduced.result : null,
+      covered_count: reduced ? reduced.covered_count : null,
+      point_count: reduced ? reduced.point_count : null,
+    };
+  });
+}
+
 export async function getAttempt(id: string): Promise<ChallengeAttempt | null> {
   return one<ChallengeAttempt>(`select ${ATTEMPT_COLUMNS} from challenge_attempts where id = $1`, [id]);
 }
@@ -275,7 +361,7 @@ export async function settleByFounder(
   attemptId: string,
   verdictInput: { id: string; state: string }[],
 ): Promise<RuleResult> {
-  return withTransaction(async (client) => {
+  const result = await withTransaction(async (client): Promise<RuleResult> => {
     const attempt = await one<ChallengeAttempt>(
       `select ${ATTEMPT_COLUMNS} from challenge_attempts where id = $1 for update`,
       [attemptId],
@@ -317,6 +403,12 @@ export async function settleByFounder(
       client,
     );
 
+    await awardIfCorrect(attempt.user_id, attempt.content_id, settled!, client);
+
     return { ok: true, attempt: settled!, userId: attempt.user_id };
   });
+  if (result.ok && reduceVerdict(result.attempt.verdict)?.result === 'full') {
+    scheduleAchievementSync(result.userId);
+  }
+  return result;
 }

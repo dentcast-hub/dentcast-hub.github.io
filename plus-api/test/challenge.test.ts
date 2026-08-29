@@ -3,8 +3,8 @@
 // properties pinned here: reading is public, answering is premium-only, ONE
 // attempt per reader per page, the model NEVER settles an ambiguous point
 // (any `unsure` queues the WHOLE attempt), a model failure is never rendered
-// as "missing", score is recorded before the model runs, and `answer_fa` is
-// released by having an attempt row — never by tier.
+// as "missing", score/XP/badge fire only on a `full` verdict, and `answer_fa`
+// is released by having an attempt row — never by tier.
 import {
   describe, it, expect, beforeEach, afterEach, afterAll, vi,
 } from 'vitest';
@@ -14,6 +14,7 @@ import { pool, withTransaction } from '../src/db.js';
 import { config } from '../src/config.js';
 import { ai } from '../src/providers/registry.js';
 import { mergeProfiles } from '../src/services/merge-profiles.js';
+import { computeScore, POINTS_PER_CHALLENGE, POINTS_PER_ACTIVE_DAY } from '../src/services/score.js';
 
 let app: FastifyInstance;
 let cookie: string;
@@ -92,6 +93,22 @@ async function activityCount(ph: string, action: string): Promise<number> {
     [ph, action],
   );
   return r.rows[0].n;
+}
+
+async function profileId(ph = phone): Promise<string> {
+  const r = await pool.query<{ id: string }>('select id from profiles where phone = $1', [ph]);
+  return r.rows[0].id;
+}
+
+async function weeklyXp(ph = phone): Promise<number> {
+  const r = await pool.query<{ weekly_xp: number }>(
+    `select lm.weekly_xp from league_members lm
+       join profiles p on p.id = lm.user_id
+      where p.phone = $1
+      order by week_start desc limit 1`,
+    [ph],
+  );
+  return r.rows[0]?.weekly_xp ?? 0;
 }
 
 const allCovered = () => vi.spyOn(ai, 'matchKeyPoints')
@@ -221,12 +238,112 @@ describe('the model contract — RULE 4/6.2: any degraded outcome queues, never 
     expect(r.json().status).toBe('queued');
   });
 
-  it('#11 challenge_answered is recorded exactly once regardless of the verdict', async () => {
+  it('#11 a queued / failed model writes no challenge_answered row', async () => {
     await seedChallenge();
     await makePremium();
     vi.spyOn(ai, 'matchKeyPoints').mockRejectedValue(new Error('boom'));
     await answer(GOOD_ANSWER);
+    expect(await activityCount(phone, 'challenge_answered')).toBe(0);
+  });
+});
+
+/* ------------------------------------------ score only on a full verdict -- */
+
+describe('score, XP and the badge fire only on a fully-correct answer', () => {
+  it('a full verdict writes one activity row, +10 shield points and xp_challenge', async () => {
+    await seedChallenge();
+    await makePremium();
+    allCovered();
+    await answer(GOOD_ANSWER);
     expect(await activityCount(phone, 'challenge_answered')).toBe(1);
+
+    const uid = await profileId();
+    const b = await computeScore(pool, uid);
+    expect(b.challenges_correct).toBe(1);
+    expect(b.content_completed).toBe(0);
+    // First scoring action of the day: +10 (day) + 10 (correctness bonus).
+    // makePremium only flips profiles.tier (the 402 gate); the score stamp
+    // reads subscriptions, so this fixture is the free-day rate.
+    expect(b.score).toBe(POINTS_PER_ACTIVE_DAY + POINTS_PER_CHALLENGE);
+    expect(await weeklyXp()).toBe(10); // 5 active bonus + 5 xp_challenge
+  });
+
+  it('a none verdict writes no activity, no shield points, no league XP', async () => {
+    await seedChallenge();
+    await makePremium();
+    vi.spyOn(ai, 'matchKeyPoints').mockResolvedValue(
+      KEY_POINTS.map((k) => ({ id: k.id, state: 'missing' as const })),
+    );
+    const r = await answer(GOOD_ANSWER);
+    expect(r.json().result).toBe('none');
+    expect(await activityCount(phone, 'challenge_answered')).toBe(0);
+    const b = await computeScore(pool, await profileId());
+    expect(b.challenges_correct).toBe(0);
+    expect(b.score).toBe(0);
+    expect(await weeklyXp()).toBe(0);
+  });
+
+  it('a partial verdict is not "درست" — zero score, zero XP', async () => {
+    await seedChallenge();
+    await makePremium();
+    vi.spyOn(ai, 'matchKeyPoints').mockResolvedValue([
+      { id: 'kp1', state: 'covered' }, { id: 'kp2', state: 'covered' }, { id: 'kp3', state: 'missing' },
+    ]);
+    const r = await answer(GOOD_ANSWER);
+    expect(r.json().result).toBe('partial');
+    expect(await activityCount(phone, 'challenge_answered')).toBe(0);
+    expect((await computeScore(pool, await profileId())).score).toBe(0);
+    expect(await weeklyXp()).toBe(0);
+  });
+
+  it('a queued attempt pays nothing until the founder rules it full', async () => {
+    await seedChallenge();
+    await makePremium();
+    vi.spyOn(ai, 'matchKeyPoints').mockResolvedValue([]);
+    await answer(GOOD_ANSWER);
+    expect(await activityCount(phone, 'challenge_answered')).toBe(0);
+
+    const id = (await pool.query<{ id: string }>('select id from challenge_attempts')).rows[0].id;
+    await adminRule(id, KEY_POINTS.map((k) => ({ id: k.id, state: 'covered' })));
+    expect(await activityCount(phone, 'challenge_answered')).toBe(1);
+    expect((await computeScore(pool, await profileId())).challenges_correct).toBe(1);
+    expect(await weeklyXp()).toBe(10);
+  });
+
+  it('a founder ruling of none still pays nothing', async () => {
+    await seedChallenge();
+    await makePremium();
+    vi.spyOn(ai, 'matchKeyPoints').mockResolvedValue([]);
+    await answer(GOOD_ANSWER);
+    const id = (await pool.query<{ id: string }>('select id from challenge_attempts')).rows[0].id;
+    await adminRule(id, KEY_POINTS.map((k) => ({ id: k.id, state: 'missing' })));
+    expect(await activityCount(phone, 'challenge_answered')).toBe(0);
+    expect(await weeklyXp()).toBe(0);
+  });
+
+  it('«چلنجر» bronze lights on a full answer and stays dark on a miss', async () => {
+    await seedChallenge();
+    await makePremium();
+    vi.spyOn(ai, 'matchKeyPoints').mockResolvedValue(
+      KEY_POINTS.map((k) => ({ id: k.id, state: 'missing' as const })),
+    );
+    await answer(GOOD_ANSWER);
+    const miss = await app.inject({ method: 'GET', url: '/achievements', headers: { cookie } });
+    const missBadge = miss.json().badges.find((b: { key: string }) => b.key === 'challenger');
+    expect(missBadge.earned).toBe(false);
+
+    await seedChallenge(KEY_POINTS, `${CONTENT}-win`);
+    allCovered();
+    const other = await loginAs(app, '09121300077');
+    await makePremium('09121300077');
+    await answer(GOOD_ANSWER, `${CONTENT}-win`, other);
+    const win = await app.inject({
+      method: 'GET', url: '/achievements', headers: { cookie: other },
+    });
+    const winBadge = win.json().badges.find((b: { key: string }) => b.key === 'challenger');
+    expect(winBadge.earned).toBe(true);
+    expect(winBadge.metal).toBe('bronze');
+    expect(winBadge.title_fa).toBe('چلنجر');
   });
 });
 
@@ -505,5 +622,98 @@ describe('POST /admin/challenges/upsert validation', () => {
       payload: { content_id: CONTENT, answer_fa: ANSWER_FA, key_points: KEY_POINTS },
     });
     expect(r.statusCode).toBe(401);
+  });
+});
+
+/* ---------------------------------------------------- founder roster -- */
+
+function adminAttempts() {
+  return app.inject({
+    method: 'GET', url: '/admin/challenges/attempts', headers: { authorization: basic },
+  });
+}
+
+describe('GET /admin/challenges/attempts — who answered and how they scored', () => {
+  it('requires admin auth', async () => {
+    const r = await app.inject({ method: 'GET', url: '/admin/challenges/attempts' });
+    expect(r.statusCode).toBe(401);
+  });
+
+  it('is empty when nobody has answered', async () => {
+    await seedChallenge();
+    const r = await adminAttempts();
+    expect(r.statusCode).toBe(200);
+    expect(r.json()).toEqual({ ok: true, count: 0, attempts: [] });
+  });
+
+  it('lists a settled attempt with N of M, and a queued one as در-صف (null counts)', async () => {
+    await seedChallenge();
+    await makePremium();
+    const spy = allCovered();
+    await answer(GOOD_ANSWER);
+
+    const otherPhone = '09121300002';
+    const otherCookie = await loginAs(app, otherPhone);
+    await makePremium(otherPhone);
+    await seedChallenge(KEY_POINTS, `${CONTENT}-b`);
+    spy.mockResolvedValue([]);
+    await answer(GOOD_ANSWER, `${CONTENT}-b`, otherCookie);
+
+    const r = await adminAttempts();
+    expect(r.statusCode).toBe(200);
+    const body = r.json() as {
+      count: number;
+      attempts: Array<{
+        phone: string | null;
+        content_id: string;
+        status: string;
+        result: string | null;
+        covered_count: number | null;
+        point_count: number | null;
+        reference: string;
+      }>;
+    };
+    expect(body.count).toBe(2);
+    expect(body.attempts).toHaveLength(2);
+
+    // newest first: the queued second-user row, then the settled first-user row
+    expect(body.attempts[0].phone).toBe(otherPhone);
+    expect(body.attempts[0].status).toBe('queued');
+    expect(body.attempts[0].result).toBeNull();
+    expect(body.attempts[0].covered_count).toBeNull();
+    expect(body.attempts[0].point_count).toBeNull();
+
+    expect(body.attempts[1].phone).toBe(phone);
+    expect(body.attempts[1].status).toBe('settled');
+    expect(body.attempts[1].result).toBe('full');
+    expect(body.attempts[1].covered_count).toBe(3);
+    expect(body.attempts[1].point_count).toBe(3);
+
+    const raw = JSON.stringify(body);
+    expect(raw).not.toContain('key_points');
+    expect(raw).not.toContain('"verdict"');
+    expect(raw).not.toContain(GOOD_ANSWER);
+    expect(raw).not.toContain(ANSWER_FA);
+  });
+
+  it('keeps settled rows after the queue has dropped them', async () => {
+    await seedChallenge();
+    await makePremium();
+    vi.spyOn(ai, 'matchKeyPoints').mockResolvedValue([]);
+    await answer(GOOD_ANSWER);
+    const queued = await pool.query<{ id: string }>('select id from challenge_attempts');
+    await adminRule(queued.rows[0].id, KEY_POINTS.map((k) => ({ id: k.id, state: 'missing' })));
+
+    const queue = await app.inject({
+      method: 'GET', url: '/admin/challenges', headers: { authorization: basic },
+    });
+    expect(queue.json().pending).toEqual([]);
+
+    const roster = await adminAttempts();
+    expect(roster.json().count).toBe(1);
+    expect(roster.json().attempts[0].status).toBe('settled');
+    expect(roster.json().attempts[0].result).toBe('none');
+    expect(roster.json().attempts[0].covered_count).toBe(0);
+    expect(roster.json().attempts[0].point_count).toBe(3);
   });
 });

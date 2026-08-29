@@ -77,6 +77,8 @@ export async function resetDb(): Promise<void> {
       when 'xp_review' then '2'
       when 'xp_share' then '1'
       when 'xp_share_weekly_cap' then '0'
+      when 'xp_challenge' then '5'
+      when 'xp_challenge_weekly_cap' then '0'
       when 'xp_pathway_step' then '3'
       when 'xp_pathway_step_weekly_cap' then '5'
       when 'xp_pathway_enrolled' then '5'

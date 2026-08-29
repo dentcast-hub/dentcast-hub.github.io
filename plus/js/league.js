@@ -2,9 +2,9 @@
 // overlay (this week's group table), and the finalized-outcome announcement.
 // Data comes from GET /league (the backend already returns everything: members,
 // ranks, zone sizes, countdown, neutral-mode, and any pending outcome).
-import { el, faNum } from './util.js?v=48';
-import { api } from './api.js?v=48';
-import { PREMIUM_FEATURES } from './config.js?v=48';
+import { el, faNum } from './util.js?v=49';
+import { api } from './api.js?v=49';
+import { PREMIUM_FEATURES } from './config.js?v=49';
 
 const TOOTH = '<svg class="dcp-tier-tooth" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C8 2 5 4 5 8c0 3 1 5 1.6 8.5C7 19 7.6 22 9 22c1.2 0 1.3-2 1.6-4 .2-1.4.5-2 1.4-2s1.2.6 1.4 2c.3 2 .4 4 1.6 4 1.4 0 2-3 2.4-5.5C19 13 20 11 20 8c0-4-3-6-8-6z"/></svg>';
 
@@ -154,6 +154,14 @@ function buildCard(data, onClose) {
       // render «تا ۰ مطلب در هفته», which reads as "sharing pays nothing".
       el('li', {}, 'اشتراک‌گذاریِ مطلبی که تا آخر خوانده‌ای: +' + n(xp.share, 1)
         + (Number(xp.share_cap) > 0 ? ' (تا ' + n(xp.share_cap, 5) + ' مطلب در هفته)' : '')),
+      // Only a fully-correct answer writes the activity row, so this line is
+      // the price of being right — a miss is +0, not a consolation. Hidden
+      // when the weight is 0 so a founder retune off the path does not
+      // advertise «+۰». Missing field (older API) falls through to +5.
+      ...(typeof xp.challenge === 'number' && xp.challenge <= 0 ? [] : [
+        el('li', {}, 'جوابِ درستِ یک چالش: +' + n(xp.challenge, 5)
+          + (Number(xp.challenge_cap) > 0 ? ' (تا ' + n(xp.challenge_cap, 5) + ' چالش در هفته)' : '')),
+      ]),
     ]),
     // The premium block. Shown to EVERYONE — a free reader has to be able to see
     // exactly what the four extra lines are, otherwise a premium neighbour with a

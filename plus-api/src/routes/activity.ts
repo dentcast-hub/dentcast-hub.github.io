@@ -38,6 +38,13 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
       return reply.code(400).send({ error: 'invalid_action' });
     }
 
+    // Server-minted: only services/challenge.ts writes this, and only on a
+    // `full` verdict. An open vocabulary here would let a client buy shield
+    // score + league XP + the badge without answering anything.
+    if (action === 'challenge_answered') {
+      return reply.code(400).send({ error: 'invalid_action' });
+    }
+
     // ── Spot telemetry: aggregate counter, NOT an activity row ──────────────
     // Deliberately short-circuits recordActivity: an ad impression is not user
     // activity, so it must never appear in the append-only log, never keep a

@@ -16,6 +16,7 @@ export const QUALIFYING_ACTIONS = new Set([
   'highlight_created',
   'card_reviewed_manual', // free path
   'review_finished', // premium scheduled session (Phase 2)
+  'challenge_answered', // only written on a fully-correct attempt
 ]);
 
 export interface StreakState {
