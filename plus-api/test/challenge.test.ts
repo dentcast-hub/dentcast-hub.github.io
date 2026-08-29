@@ -66,15 +66,16 @@ async function seedChallenge(
 
 function answer(text: string, contentId = CONTENT, c = cookie) {
   return app.inject({
-    method: 'POST', url: `/challenge/${encodeURIComponent(contentId)}/answer`,
-    headers: { cookie: c }, payload: { answer: text },
+    method: 'POST', url: '/challenge/answer',
+    headers: { cookie: c }, payload: { content_id: contentId, answer: text },
   });
 }
 
 function getState(contentId = CONTENT, c: string | null = cookie) {
   return app.inject({
-    method: 'GET', url: `/challenge/${encodeURIComponent(contentId)}`,
+    method: 'GET', url: '/challenge',
     headers: c ? { cookie: c } : {},
+    query: { content_id: contentId },
   });
 }
 
@@ -128,8 +129,8 @@ describe('reading is public, answering is premium-only', () => {
   it('#2 a signed-out submit is refused with 401 and writes no row', async () => {
     await seedChallenge();
     const r = await app.inject({
-      method: 'POST', url: `/challenge/${encodeURIComponent(CONTENT)}/answer`,
-      payload: { answer: GOOD_ANSWER },
+      method: 'POST', url: '/challenge/answer',
+      payload: { content_id: CONTENT, answer: GOOD_ANSWER },
     });
     expect(r.statusCode).toBe(401);
     const n = await pool.query('select count(*)::int as n from challenge_attempts');
@@ -138,7 +139,9 @@ describe('reading is public, answering is premium-only', () => {
 
   it('the question reads for everyone once a چالش exists', async () => {
     await seedChallenge();
-    const signedOut = await app.inject({ method: 'GET', url: `/challenge/${encodeURIComponent(CONTENT)}` });
+    const signedOut = await app.inject({
+      method: 'GET', url: '/challenge', query: { content_id: CONTENT },
+    });
     expect(signedOut.json()).toEqual({ exists: true });
   });
 });
@@ -643,7 +646,14 @@ describe('GET /admin/challenges/attempts — who answered and how they scored', 
     await seedChallenge();
     const r = await adminAttempts();
     expect(r.statusCode).toBe(200);
-    expect(r.json()).toEqual({ ok: true, count: 0, attempts: [] });
+    const body = r.json();
+    expect(body.ok).toBe(true);
+    expect(body.count).toBe(0);
+    expect(body.people).toBe(0);
+    expect(body.attempts).toEqual([]);
+    expect(body.summary).toMatchObject({
+      people: 0, total: 0, settled: 0, queued: 0, last_at: null, by_content: [],
+    });
   });
 
   it('lists a settled attempt with N of M, and a queued one as در-صف (null counts)', async () => {
@@ -663,6 +673,8 @@ describe('GET /admin/challenges/attempts — who answered and how they scored', 
     expect(r.statusCode).toBe(200);
     const body = r.json() as {
       count: number;
+      people: number;
+      summary: { people: number; total: number; settled: number; queued: number };
       attempts: Array<{
         phone: string | null;
         content_id: string;
@@ -674,6 +686,8 @@ describe('GET /admin/challenges/attempts — who answered and how they scored', 
       }>;
     };
     expect(body.count).toBe(2);
+    expect(body.people).toBe(2);
+    expect(body.summary).toMatchObject({ people: 2, total: 2, settled: 1, queued: 1 });
     expect(body.attempts).toHaveLength(2);
 
     // newest first: the queued second-user row, then the settled first-user row

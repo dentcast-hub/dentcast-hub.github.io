@@ -314,18 +314,58 @@ export interface AttemptReportRow {
   point_count: number | null;
 }
 
-export async function attemptReportRows(): Promise<AttemptReportRow[]> {
-  const r = await query<Pick<ChallengeAttempt, 'id' | 'content_id' | 'reference' | 'status' | 'verdict' | 'created_at'> & {
-    display_name: string | null;
-    phone: string | null;
-  }>(
-    `select a.id, a.content_id, a.reference, a.status, a.verdict, a.created_at,
-            p.display_name, p.phone
-       from challenge_attempts a
-       join profiles p on p.id = a.user_id
-      order by a.created_at desc`,
-  );
-  return r.rows.map((row) => {
+export interface AttemptReportSummary {
+  /** Distinct readers who have at least one attempt. */
+  people: number;
+  /** Total attempt rows (one per reader per چالش). */
+  total: number;
+  settled: number;
+  queued: number;
+  last_at: string | null;
+  by_content: Array<{ content_id: string; attempts: number; people: number }>;
+}
+
+export interface AttemptReport {
+  attempts: AttemptReportRow[];
+  summary: AttemptReportSummary;
+}
+
+/**
+ * Founder roster + headline counts. Counts come from SQL (not `rows.length`)
+ * so a truncated response can never lie about how many people answered.
+ */
+export async function attemptReport(): Promise<AttemptReport> {
+  const [listR, sumR, byR] = await Promise.all([
+    query<Pick<ChallengeAttempt, 'id' | 'content_id' | 'reference' | 'status' | 'verdict' | 'created_at'> & {
+      display_name: string | null;
+      phone: string | null;
+    }>(
+      `select a.id, a.content_id, a.reference, a.status, a.verdict, a.created_at,
+              p.display_name, p.phone
+         from challenge_attempts a
+         join profiles p on p.id = a.user_id
+        order by a.created_at desc`,
+    ),
+    query<{ people: string; total: string; settled: string; queued: string; last_at: string | null }>(
+      `select count(distinct user_id)::text as people,
+              count(*)::text as total,
+              count(*) filter (where status = 'settled')::text as settled,
+              count(*) filter (where status = 'queued')::text as queued,
+              max(created_at) as last_at
+         from challenge_attempts`,
+    ),
+    query<{ content_id: string; attempts: string; people: string }>(
+      `select content_id,
+              count(*)::text as attempts,
+              count(distinct user_id)::text as people
+         from challenge_attempts
+        group by content_id
+        order by max(created_at) desc`,
+    ),
+  ]);
+
+  const s = sumR.rows[0];
+  const attempts = listR.rows.map((row) => {
     const reduced = reduceVerdict(row.verdict);
     return {
       id: row.id,
@@ -340,6 +380,27 @@ export async function attemptReportRows(): Promise<AttemptReportRow[]> {
       point_count: reduced ? reduced.point_count : null,
     };
   });
+
+  return {
+    attempts,
+    summary: {
+      people: Number(s?.people ?? 0),
+      total: Number(s?.total ?? 0),
+      settled: Number(s?.settled ?? 0),
+      queued: Number(s?.queued ?? 0),
+      last_at: s?.last_at ?? null,
+      by_content: byR.rows.map((r) => ({
+        content_id: r.content_id,
+        attempts: Number(r.attempts),
+        people: Number(r.people),
+      })),
+    },
+  };
+}
+
+/** @deprecated Prefer `attemptReport()` — kept for callers that only need the list. */
+export async function attemptReportRows(): Promise<AttemptReportRow[]> {
+  return (await attemptReport()).attempts;
 }
 
 export async function getAttempt(id: string): Promise<ChallengeAttempt | null> {

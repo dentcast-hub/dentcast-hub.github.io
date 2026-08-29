@@ -169,6 +169,7 @@ describe('a thread, from both ends', () => {
 
     const q = await app.inject({ method: 'GET', url: '/admin/support', headers: { authorization: auth } });
     expect(q.json().waiting).toBe(1);
+    expect(q.json().waiting_tickets[0].reference).toBe(t.reference);
     expect(q.json().tickets[0].reference).toBe(t.reference);
 
     const rep = await app.inject({
@@ -281,5 +282,53 @@ describe('a reader sees only their own thread', () => {
     expect(page.statusCode).toBe(200);
     expect(page.body).toContain('صندوق پشتیبانی');
     expect(page.body).toContain('/admin/support/by-reference/'); // the student-card lookup
+    expect(page.body).toContain('نمایش بیشتر');
+    expect(page.body).toContain('answered_limit');
+  });
+});
+
+describe('admin queue pages answered tickets', () => {
+  it('returns every waiting ticket and only a page of answered ones', async () => {
+    // Close as we go so we stay under MAX_OPEN_PER_USER; answered side of
+    // status=all is then the closed threads.
+    for (let i = 0; i < 3; i++) {
+      const t = (await open({
+        ...TICKET,
+        kind: 'bug',
+        subject: `جواب‌داده‌شده ${i}`,
+        body: `متن ${i}`,
+      })).json().ticket;
+      const rep = await app.inject({
+        method: 'POST', url: `/admin/support/${t.id}/reply`, headers: { authorization: auth },
+        payload: { body: `پاسخ ${i}`, close: true },
+      });
+      expect(rep.statusCode).toBe(200);
+    }
+    const waiting = (await open({ ...TICKET, subject: 'منتظر' })).json().ticket;
+
+    const first = await app.inject({
+      method: 'GET',
+      url: '/admin/support?status=all&answered_limit=2&answered_offset=0',
+      headers: { authorization: auth },
+    });
+    const j = first.json();
+    expect(j.waiting).toBe(1);
+    expect(j.waiting_tickets[0].id).toBe(waiting.id);
+    expect(j.answered).toHaveLength(2);
+    expect(j.answered_total).toBe(3);
+    expect(j.answered_has_more).toBe(true);
+    expect(j.answered.every((x: { status: string }) => x.status === 'closed')).toBe(true);
+
+    const more = await app.inject({
+      method: 'GET',
+      url: '/admin/support?status=all&answered_limit=10&answered_offset=2',
+      headers: { authorization: auth },
+    });
+    const m = more.json();
+    expect(m.answered).toHaveLength(1);
+    expect(m.answered_offset).toBe(2);
+    expect(m.answered_has_more).toBe(false);
+    const firstIds = new Set(j.answered.map((x: { id: string }) => x.id));
+    expect(firstIds.has(m.answered[0].id)).toBe(false);
   });
 });
