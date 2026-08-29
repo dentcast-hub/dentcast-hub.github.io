@@ -2,6 +2,7 @@ import { config } from '../config.js';
 import { pool, query, one, withTransaction } from '../db.js';
 import { dayInTz, addDays, startOfDayInstant } from './time.js';
 import { getLeagueConfig } from './league-config.js';
+import { activateDays } from './subscription.js';
 
 /**
  * Weekly league prize: after finalizeWeek() has written final_rank for a week,
@@ -24,6 +25,13 @@ import { getLeagueConfig } from './league-config.js';
  * next eligible member while the winner sits out, it rotates through roughly
  * three different people per group instead of one, at no extra cost.
  *
+ * An already-paying subscriber (active non-founder `subscriptions` row) does
+ * NOT pass the prize down: their days are stacked onto the subscription via
+ * `activateDays()`, and a `premium_grants` row is still written (cooldown,
+ * banner, idempotency) with `extends_subscription = true` so the copy says
+ * "days were added" rather than "you became premium". A founder/lifetime row
+ * still passes down — forever already has nothing to add.
+ *
  * Idempotent via premium_grants' (user_id, week_start) unique constraint —
  * grantWeeklyPrizes() re-scans a small trailing window every day (like
  * notifyLeagueOutcomes' FRESH_DAYS), so a missed run self-heals the next day.
@@ -38,6 +46,9 @@ export interface PendingPremiumGrant {
   /** So the banner can say when they may win again, instead of leaving a winner
    *  who earns nothing next week to conclude the league is broken. */
   cooldown_weeks: number;
+  /** True when the prize extended an existing paid subscription rather than
+   *  flipping a free account to premium — banner/push wording depends on it. */
+  extends_subscription: boolean;
 }
 
 async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> {
@@ -109,9 +120,6 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
 
     let granted = 0;
     for (const g of groups) {
-      const expiresAt = startOfDayInstant(
-        addDays(grantDay, prizeDaysFor(g.tier_order)),
-      ).toISOString();
       // How many winners THIS group may have. prize_winners_per_group is a
       // ceiling, not a quota: it is scaled down by how many whole
       // prize_min_group_size blocks the group actually contains.
@@ -170,23 +178,49 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
           if ((recent.rows[0]?.n ?? 0) > 0) continue;
         }
 
-        const profile = await client.query<{ tier: string }>('select tier from profiles where id = $1', [m.user_id]);
-        if (profile.rows[0]?.tier === 'premium') {
-          // Already premium. Skip ONLY if that premium is not ours to extend —
-          // a real subscriber or a manual founder override — because claiming
-          // credit for it would show a "you won premium!" banner to someone who
-          // already had it, and burn the group's prize on a no-op.
-          //
-          // Any grant history at all (even an expired one) means this IS our
-          // premium: the daily sweep grants before it expires, so a past
-          // winner can still be sitting on a grant that has run out but not yet
-          // been reverted. Reading that as "a real subscriber" would lock them
-          // out of ever winning again.
-          const ours = await client.query<{ n: number }>(
-            'select count(*)::int as n from premium_grants where user_id = $1',
-            [m.user_id],
+        const days = prizeDaysFor(g.tier_order);
+        const memberExpiresAt = startOfDayInstant(addDays(grantDay, days)).toISOString();
+
+        // Active real subscription? Paid days stack; founder passes down.
+        const sub = await client.query<{ is_founder: boolean }>(
+          `select is_founder from subscriptions
+            where user_id = $1 and status = 'active'
+              and (expires_at is null or expires_at > $2)
+            limit 1`,
+          [m.user_id, now.toISOString()],
+        );
+        const activeSub = sub.rows[0] ?? null;
+        if (activeSub?.is_founder) continue; // lifetime — nothing to add; pass down
+
+        let extendsSubscription = false;
+        if (activeSub) {
+          await activateDays(m.user_id, days, {
+            source: 'league_prize',
+            now,
+            client,
+            meta: { week_start: weekStart },
+          });
+          extendsSubscription = true;
+        } else {
+          const profile = await client.query<{ tier: string }>(
+            'select tier from profiles where id = $1', [m.user_id],
           );
-          if ((ours.rows[0]?.n ?? 0) === 0) continue;
+          if (profile.rows[0]?.tier === 'premium') {
+            // Already premium with no active subscription. Skip ONLY if that
+            // premium is not ours to extend (orphan / manual tier) — claiming
+            // credit would show a "you won premium!" banner for a no-op.
+            //
+            // Any grant history at all (even an expired one) means this IS our
+            // premium: the daily sweep grants before it expires, so a past
+            // winner can still be sitting on a grant that has run out but not yet
+            // been reverted. Reading that as "a real subscriber" would lock them
+            // out of ever winning again.
+            const ours = await client.query<{ n: number }>(
+              'select count(*)::int as n from premium_grants where user_id = $1',
+              [m.user_id],
+            );
+            if ((ours.rows[0]?.n ?? 0) === 0) continue;
+          }
         }
 
         // granted_at comes from the SAME day boundary expires_at was derived
@@ -196,18 +230,22 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
         // difference is exactly prize_days whole days instead of that minus
         // however long the finalization ahead of it took.
         const ins = await client.query(
-          `insert into premium_grants (user_id, week_start, granted_at, expires_at)
-           values ($1, $2, $3, $4)
+          `insert into premium_grants
+             (user_id, week_start, granted_at, expires_at, extends_subscription)
+           values ($1, $2, $3, $4, $5)
            on conflict (user_id, week_start) do nothing
            returning id`,
-          [m.user_id, weekStart, grantedAt, expiresAt],
+          [m.user_id, weekStart, grantedAt, memberExpiresAt, extendsSubscription],
         );
         if (!ins.rowCount) continue; // already granted for this week (idempotent re-run)
 
         // Writer 2 of the three sanctioned `profiles.tier` writers (the contract
         // is stated in full atop services/subscription.ts). Upward only: the
-        // grant row is the authority, this just projects it.
-        await client.query("update profiles set tier = 'premium' where id = $1", [m.user_id]);
+        // grant row is the authority, this just projects it. Skipped when we
+        // already stacked onto a subscription — activateDays applied tier.
+        if (!extendsSubscription) {
+          await client.query("update profiles set tier = 'premium' where id = $1", [m.user_id]);
+        }
         granted += 1;
         winnersHere += 1;
       }
@@ -268,8 +306,8 @@ export async function expirePremiumPrizes(now: Date = new Date()): Promise<{ exp
 
 /** The caller's own unseen, still-active grant (for GET /me), or null. */
 export async function getPendingPremiumGrant(userId: string): Promise<PendingPremiumGrant | null> {
-  const row = await one<{ granted_at: string; expires_at: string }>(
-    `select granted_at, expires_at from premium_grants
+  const row = await one<{ granted_at: string; expires_at: string; extends_subscription: boolean }>(
+    `select granted_at, expires_at, extends_subscription from premium_grants
       where user_id = $1 and seen = false and revoked_at is null
       order by granted_at desc limit 1`,
     [userId],

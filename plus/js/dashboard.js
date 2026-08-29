@@ -1,17 +1,17 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, streakIsActiveToday } from './util.js?v=50';
-import { api } from './api.js?v=50';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=50';
-import { leagueEntryButton } from './league.js?v=50';
-import { openCollectionPicker, boardCover } from './collections.js?v=50';
-import { bundleRailCard } from './pathways.js?v=50';
-import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js?v=50';
-import { renewalBanner } from './renewal-banner.js?v=50';
-import { premiumCta } from './premium-cta.js?v=50';
-import { maybeCelebrate } from './achievements.js?v=50';
-import { markReturnTrail } from './return-trail.js?v=50';
+import { el, faNum, streakIsActiveToday } from './util.js?v=51';
+import { api } from './api.js?v=51';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=51';
+import { leagueEntryButton } from './league.js?v=51';
+import { openCollectionPicker, boardCover } from './collections.js?v=51';
+import { bundleRailCard } from './pathways.js?v=51';
+import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js?v=51';
+import { renewalBanner } from './renewal-banner.js?v=51';
+import { premiumCta } from './premium-cta.js?v=51';
+import { maybeCelebrate } from './achievements.js?v=51';
+import { markReturnTrail } from './return-trail.js?v=51';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',
@@ -232,6 +232,7 @@ function premiumGrantBanner(grant) {
   const days = Math.max(1, Math.round(
     (new Date(grant.expires_at) - new Date(grant.granted_at)) / 86400000,
   ));
+  const stacked = !!grant.extends_subscription;
   const list = el('ul', { class: 'dcp-prize-list' }, PREMIUM_FEATURES.map((f) =>
     el('li', {}, [el('b', {}, f.title + ': '), f.hint])));
   const dismiss = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'متوجه شدم');
@@ -242,9 +243,12 @@ function premiumGrantBanner(grant) {
       faNum(grant.cooldown_weeks) + ' هفته‌ی بعد نوبتِ بقیه‌ی گروه است؛ بعدش دوباره می‌توانی برنده شوی.')
     : null;
   const banner = el('div', { class: 'dcp-prize-banner' }, [
-    el('h2', { class: 'dcp-prize-h' }, '🎉 نفر اولِ گروهت شدی: ' + faNum(days) + ' روز پرمیوم'),
-    el('p', { class: 'dcp-sec-hint' },
-      'این هفته در گروهت اول شدی — تا ' + faNum(days) + ' روز همه‌ی این‌ها برات بازه:'),
+    el('h2', { class: 'dcp-prize-h' }, stacked
+      ? '🎉 نفر اولِ گروهت شدی: ' + faNum(days) + ' روز به اشتراکت اضافه شد'
+      : '🎉 نفر اولِ گروهت شدی: ' + faNum(days) + ' روز پرمیوم'),
+    el('p', { class: 'dcp-sec-hint' }, stacked
+      ? 'این هفته در گروهت اول شدی — ' + faNum(days) + ' روز به اشتراک پرمیومت اضافه شد. همین‌ها برات بازه:'
+      : 'این هفته در گروهت اول شدی — تا ' + faNum(days) + ' روز همه‌ی این‌ها برات بازه:'),
     list,
     cooldown,
     dismiss,

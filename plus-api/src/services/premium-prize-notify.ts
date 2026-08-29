@@ -57,9 +57,10 @@ export async function notifyPremiumPrizes(now: Date = new Date()): Promise<{ not
   // a LEFT join — a grant whose league row is somehow missing still gets its
   // notification, with the ordinary wording.
   const due = await query<{
-    id: string; user_id: string; granted_at: string; expires_at: string; tier_order: number | null;
+    id: string; user_id: string; granted_at: string; expires_at: string;
+    tier_order: number | null; extends_subscription: boolean;
   }>(
-    `select g.id, g.user_id, g.granted_at, g.expires_at, t.tier_order
+    `select g.id, g.user_id, g.granted_at, g.expires_at, g.extends_subscription, t.tier_order
        from premium_grants g
        join profiles p on p.id = g.user_id
        left join league_members lm on lm.user_id = g.user_id and lm.week_start = g.week_start
@@ -100,12 +101,19 @@ export async function notifyPremiumPrizes(now: Date = new Date()): Promise<{ not
     // point of the longer prize — a champion who reads the same sentence as
     // everybody else has no way to know they won something different.
     const isChampion = g.tier_order != null && g.tier_order >= cfg.max_active_tier_order;
+    const stacked = g.extends_subscription;
+    const lead = stacked
+      ? (isChampion
+        ? `اولِ بالاترین لیگِ دنت‌کست شدی — ${toFa(days)} روز به اشتراک پرمیومت اضافه شد. `
+        : `نفر اولِ گروهت شدی — ${toFa(days)} روز به اشتراک پرمیومت اضافه شد. `)
+      : (isChampion
+        ? `اولِ بالاترین لیگِ دنت‌کست شدی — ${toFa(days)} روز پرمیوم مهمانِ ما هستی: `
+        : `نفر اولِ گروهت شدی — ${toFa(days)} روز پرمیوم مهمانِ ما هستی: `);
     const message: NotificationMessage = {
       title: isChampion ? 'قهرمان شدی 🏆' : 'برنده شدی 🎉',
-      body: (isChampion
-        ? `اولِ بالاترین لیگِ دنت‌کست شدی — ${toFa(days)} روز پرمیوم مهمانِ ما هستی: `
-        : `نفر اولِ گروهت شدی — ${toFa(days)} روز پرمیوم مهمانِ ما هستی: `)
-        + `${faList(PREMIUM_FEATURE_TITLES)}.`,
+      body: stacked
+        ? lead + 'همین قابلیت‌ها برات بازه: ' + `${faList(PREMIUM_FEATURE_TITLES)}.`
+        : lead + `${faList(PREMIUM_FEATURE_TITLES)}.`,
       url: '/plus/',
       tag: 'premium_prize',
     };

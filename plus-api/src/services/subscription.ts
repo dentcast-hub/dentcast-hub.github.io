@@ -66,7 +66,7 @@ import { dayInTz, dayDiff } from './time.js';
  * 'backfill' is written only by migration 0019, for accounts that were premium
  * before subscriptions existed.
  */
-export type ActivationSource = 'payment' | 'admin' | 'backfill';
+export type ActivationSource = 'payment' | 'admin' | 'backfill' | 'league_prize';
 
 /** `plan` for a bought/gifted subscription with a finite end date. */
 export const PLAN_PAID = 'paid';
