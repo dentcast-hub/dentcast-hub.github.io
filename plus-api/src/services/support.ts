@@ -565,36 +565,92 @@ export async function ticketsOfUser(userId: string): Promise<TicketSummary[]> {
   return r.rows.map(decorate);
 }
 
+/** One row of the founder's queue, with the account it belongs to. */
+export type TicketQueueRow = TicketSummary & {
+  phone: string | null;
+  display_name: string | null;
+  tier: string;
+};
+
+export interface TicketQueuePage {
+  /** Open threads whose last word is the reader's — every one of them. */
+  waiting_tickets: TicketQueueRow[];
+  /** Already-answered (or closed) threads for this filter, one page. */
+  answered: TicketQueueRow[];
+  answered_total: number;
+  answered_offset: number;
+  answered_limit: number;
+  /**
+   * Flat list kept for callers that still expect `tickets`: waiting first,
+   * then the answered page. Prefer the split fields above on new code.
+   */
+  tickets: TicketQueueRow[];
+}
+
 /**
  * The founder's queue.
  *
- * Ordered by what needs a human: open threads whose last word came from the
- * reader, oldest first — so the person who has been waiting longest is answered
- * first, rather than whoever wrote most recently. Everything else (already
- * answered, or closed) sorts NEWEST-first instead: this endpoint is capped at
- * `limit`, with no pagination on the admin page, so a ticket you just replied
- * to has to land at the top of that group — sorting it oldest-first (as before)
- * pushed a freshly-answered ticket to the bottom, where a full queue could push
- * it past `limit` and out of the response entirely.
+ * Two groups, on purpose: EVERY open thread awaiting the founder (no cap —
+ * those are the job), and a PAGE of everything else (already answered, or
+ * closed under the status filter). The admin page shows the waiting group in
+ * full and only the first answered page; «نمایش بیشتر» walks the answered
+ * side ten at a time. Waiting sorts oldest-first (longest wait first);
+ * answered sorts newest-first so a ticket you just replied to stays visible.
  */
-export async function ticketQueue(opts: { status?: TicketStatus | 'all'; limit?: number } = {}):
-Promise<Array<TicketSummary & { phone: string | null; display_name: string | null; tier: string }>> {
+export async function ticketQueue(opts: {
+  status?: TicketStatus | 'all';
+  answeredLimit?: number;
+  answeredOffset?: number;
+} = {}): Promise<TicketQueuePage> {
   const status = opts.status ?? 'open';
-  const limit = Math.min(Math.max(opts.limit ?? 50, 1), 200);
-  const r = await query<TicketSummary & {
+  const answeredLimit = Math.min(Math.max(opts.answeredLimit ?? 15, 1), 50);
+  const answeredOffset = Math.max(opts.answeredOffset ?? 0, 0);
+
+  type Row = TicketSummary & {
     phone: string | null; display_name: string | null; tier: string;
-  }>(
+  };
+  const mapRows = (rows: Row[]): TicketQueueRow[] =>
+    rows.map((row) => ({ ...row, ...decorate(row) }));
+
+  // status=closed: nothing is waiting on the founder.
+  // status=open|all: open + last word from the reader.
+  const waiting = status === 'closed'
+    ? []
+    : mapRows((await query<Row>(
+      `select q.*, p.phone, p.display_name, p.tier from (${SUMMARY_SELECT}) q
+         join profiles p on p.id = q.user_id
+        where q.status = 'open' and q.last_author = 'user'
+        order by q.last_at asc`,
+    )).rows);
+
+  // Answered side of the filter: open+awaiting user, closed, or both.
+  const answeredWhere =
+    status === 'open' ? `q.status = 'open' and q.last_author = 'founder'`
+    : status === 'closed' ? `q.status = 'closed'`
+    : `not (q.status = 'open' and q.last_author = 'user')`;
+
+  const totalR = await query<{ n: string }>(
+    `select count(*)::text as n from (${SUMMARY_SELECT}) q where ${answeredWhere}`,
+  );
+  const answered_total = Number(totalR.rows[0]?.n ?? 0);
+
+  const answered = mapRows((await query<Row>(
     `select q.*, p.phone, p.display_name, p.tier from (${SUMMARY_SELECT}) q
        join profiles p on p.id = q.user_id
-      ${status === 'all' ? '' : 'where q.status = $2'}
-      order by (q.status = 'open' and q.last_author = 'user') desc,
-               case when (q.status = 'open' and q.last_author = 'user')
-                 then q.last_at end asc,
-               q.last_at desc
-      limit $1`,
-    status === 'all' ? [limit] : [limit, status],
-  );
-  return r.rows.map((row) => ({ ...row, ...decorate(row) }));
+      where ${answeredWhere}
+      order by q.last_at desc
+      limit $1 offset $2`,
+    [answeredLimit, answeredOffset],
+  )).rows);
+
+  return {
+    waiting_tickets: waiting,
+    answered,
+    answered_total,
+    answered_offset: answeredOffset,
+    answered_limit: answeredLimit,
+    tickets: [...waiting, ...answered],
+  };
 }
 
 /** Close a ticket. Either side may; `userId` scopes it to its owner. */

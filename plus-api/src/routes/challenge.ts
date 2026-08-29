@@ -13,6 +13,12 @@ import {
  * lock line — for a signed-out or free reader too. `POST` stays
  * `requirePremium` regardless of what the client shows, because a hidden box
  * is presentation, not an authorization check.
+ *
+ * `content_id` travels in the query/body, never in the path — same shape
+ * `/votes` and `/activity` already use. An id here is the page's own PATH
+ * (`insight/insight-68`), so `/challenge/:contentId` silently matches only
+ * ids with no slash (or depends on the reverse proxy leaving `%2F` alone).
+ * votes.ts learned this the hard way; do not put the slash back in the path.
  */
 
 function attemptPayload(attempt: ChallengeAttempt, answerFa: string) {
@@ -28,9 +34,15 @@ function attemptPayload(attempt: ChallengeAttempt, answerFa: string) {
   return base;
 }
 
+function readContentId(raw: unknown): string {
+  return typeof raw === 'string' ? raw.trim() : '';
+}
+
 export async function challengeRoutes(app: FastifyInstance): Promise<void> {
-  app.get('/challenge/:contentId', async (request, reply) => {
-    const { contentId } = request.params as { contentId: string };
+  app.get('/challenge', async (request, reply) => {
+    const contentId = readContentId((request.query as { content_id?: unknown }).content_id);
+    if (!contentId) return reply.code(400).send({ error: 'missing_content_id' });
+
     const challenge = await getChallenge(contentId);
     if (!challenge) return reply.send({ exists: false });
 
@@ -45,10 +57,13 @@ export async function challengeRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ exists: true, ...attemptPayload(attempt, challenge.answer_fa) });
   });
 
-  app.post('/challenge/:contentId/answer', {
+  app.post('/challenge/answer', {
     preHandler: [requireAuth, requirePremium],
   }, async (request, reply) => {
-    const { contentId } = request.params as { contentId: string };
+    const body = request.body as { content_id?: unknown; answer?: unknown };
+    const contentId = readContentId(body.content_id);
+    if (!contentId) return reply.code(400).send({ error: 'missing_content_id' });
+
     const userId = request.user!.id;
 
     // This is the second route on the site (after case-assistant.ts) that
@@ -61,7 +76,6 @@ export async function challengeRoutes(app: FastifyInstance): Promise<void> {
     const challenge = await getChallenge(contentId);
     if (!challenge) return reply.code(404).send({ error: 'not_found' });
 
-    const body = request.body as { answer?: unknown };
     const answer = typeof body.answer === 'string'
       ? body.answer.trim().slice(0, config.challenge.maxAnswerChars)
       : '';

@@ -58,7 +58,7 @@ import {
 } from '../services/des-library.js';
 import { keyHash, keysFor, allDois, allPmids, paperScope, pickIdentifier } from '../services/des-identity.js';
 import {
-  queueRows as challengeQueueRows, attemptReportRows as challengeAttemptReportRows,
+  queueRows as challengeQueueRows, attemptReport as challengeAttemptReport,
   getAttempt as getChallengeAttempt,
   settleByFounder, upsertChallenge, validateKeyPoints,
 } from '../services/challenge.js';
@@ -918,7 +918,7 @@ function renderHtml(
   </script>
 
   <h3 style="margin-top:26px">صندوق پشتیبانی <span id="tkWaiting" class="pill"></span></h3>
-  <div class="muted">درخواست‌های خواننده‌ها. ترتیب صف: هرکس بیشتر منتظر مانده، بالاتر. برای کارت دانشجویی، کد پیگیری را از پیام بله/تلگرام این‌جا جست‌وجو کن.</div>
+  <div class="muted">فقط تیکت‌های بی‌جواب بالا می‌آیند؛ از جواب‌داده‌شده‌ها ابتدا ۱۵ تا، بقیه با «نمایش بیشتر» ده‌تا ده‌تا. برای کارت دانشجویی، کد پیگیری را از پیام بله/تلگرام این‌جا جست‌وجو کن.</div>
   <form class="bc" onsubmit="return false">
     <div class="row">
       <div style="flex:0 0 auto"><label for="tkStatus">نمایش</label><select id="tkStatus">
@@ -936,6 +936,11 @@ function renderHtml(
     var out = document.getElementById('tkOut');
     var waiting = document.getElementById('tkWaiting');
     if (!list) return;
+
+    var ANSWERED_FIRST = 15;
+    var ANSWERED_MORE = 10;
+    var answeredOffset = 0;
+    var answeredTotal = 0;
 
     function esc(s) {
       return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
@@ -970,20 +975,77 @@ function renderHtml(
         + '<div class="tk-body"></div></div>';
     }
 
-    function render(tickets) {
-      if (!tickets.length) { list.innerHTML = '<div class="muted">چیزی این‌جا نیست.</div>'; return; }
-      list.innerHTML = tickets.map(card).join('');
+    function moreBtn(hasMore) {
+      if (!hasMore) return '';
+      var left = Math.max(0, answeredTotal - answeredOffset);
+      return '<div id="tkMoreWrap" style="margin:12px 0 4px">'
+        + '<button type="button" id="tkMore">نمایش بیشتر'
+        + (left ? ' (' + left + ' مانده)' : '')
+        + '</button></div>';
     }
 
-    function load() {
-      list.innerHTML = '<div class="muted">در حال خواندن…</div>';
-      fetch('/admin/support?status=' + document.getElementById('tkStatus').value, { credentials: 'include' })
+    function paint(waitingTickets, answeredTickets, hasMore, append) {
+      var waitingHtml = (waitingTickets || []).map(card).join('');
+      var answeredHtml = (answeredTickets || []).map(card).join('');
+      if (append) {
+        var wrap = document.getElementById('tkMoreWrap');
+        var host = document.getElementById('tkAnswered');
+        if (!host) {
+          host = document.createElement('div');
+          host.id = 'tkAnswered';
+          list.appendChild(host);
+        }
+        host.insertAdjacentHTML('beforeend', answeredHtml);
+        if (wrap) wrap.outerHTML = moreBtn(hasMore);
+        else if (hasMore) list.insertAdjacentHTML('beforeend', moreBtn(true));
+        return;
+      }
+      if (!waitingHtml && !answeredHtml) {
+        list.innerHTML = '<div class="muted">چیزی این‌جا نیست.</div>';
+        return;
+      }
+      var parts = [];
+      if (waitingHtml) {
+        parts.push('<div class="muted" style="margin:8px 0 4px">بی‌جواب</div>' + waitingHtml);
+      }
+      if (answeredHtml || hasMore) {
+        parts.push('<div class="muted" style="margin:16px 0 4px">جواب‌داده‌شده'
+          + (answeredTotal ? ' · ' + answeredTotal : '') + '</div>'
+          + '<div id="tkAnswered">' + answeredHtml + '</div>'
+          + moreBtn(hasMore));
+      }
+      list.innerHTML = parts.join('');
+    }
+
+    function render(tickets) {
+      paint([], tickets || [], false, false);
+    }
+
+    function load(opts) {
+      opts = opts || {};
+      var append = !!opts.append;
+      if (!append) {
+        answeredOffset = 0;
+        list.innerHTML = '<div class="muted">در حال خواندن…</div>';
+      }
+      var limit = append ? ANSWERED_MORE : ANSWERED_FIRST;
+      var url = '/admin/support?status=' + encodeURIComponent(document.getElementById('tkStatus').value)
+        + '&answered_limit=' + limit
+        + '&answered_offset=' + answeredOffset;
+      fetch(url, { credentials: 'include' })
         .then(function (r) { return r.json(); })
         .then(function (j) {
-          waiting.textContent = j.waiting ? j.waiting + ' منتظر پاسخ' : '';
-          render(j.tickets || []);
+          answeredTotal = j.answered_total || 0;
+          var batch = j.answered || [];
+          answeredOffset = (j.answered_offset || 0) + batch.length;
+          if (!append) {
+            waiting.textContent = j.waiting ? j.waiting + ' منتظر پاسخ' : '';
+          }
+          paint(append ? [] : (j.waiting_tickets || []), batch, !!j.answered_has_more, append);
         })
-        .catch(function () { list.innerHTML = '<div class="muted">خوانده نشد.</div>'; });
+        .catch(function () {
+          if (!append) list.innerHTML = '<div class="muted">خوانده نشد.</div>';
+        });
     }
 
     function thread(box, id) {
@@ -1025,6 +1087,10 @@ function renderHtml(
     }
 
     list.addEventListener('click', function (ev) {
+      if (ev.target && (ev.target.id === 'tkMore' || (ev.target.closest && ev.target.closest('#tkMore')))) {
+        load({ append: true });
+        return;
+      }
       // closest(), not getAttribute() on the target itself: a click can land on
       // a node INSIDE a button, and reading only the target would miss the
       // action and fall through to the toggle below.
@@ -1303,7 +1369,7 @@ function renderHtml(
   </script>
 
   <h3 style="margin-top:26px">صندوق چالش <span id="chWaiting" class="pill"></span></h3>
-  <div class="muted">پاسخ‌هایی که مدل مطمئن نبود. قدیمی‌ترین بالاتر. هر نکته را تیک بزن یا خالی بگذار.</div>
+  <div class="muted">فقط پاسخ‌هایی که مدل مطمئن نبود — نه همهٔ جواب‌ها. قدیمی‌ترین بالاتر. همهٔ کسانی که جواب داده‌اند در «گزارش چالش‌ها»ی زیر است.</div>
   <div id="chList"></div>
   <script>
   (function () {
@@ -1401,12 +1467,16 @@ function renderHtml(
   </script>
 
   <h3 style="margin-top:26px">گزارش چالش‌ها <span id="chRepCount" class="pill"></span></h3>
-  <div class="muted">همهٔ جواب‌ها، تازه‌ترین بالاتر. «چند شده» یعنی چند نکته از نکات کلیدی پوشش داده شده — نه امتیاز سایت. صندوق بالا فقط مبهم‌ها را نگه می‌دارد؛ این‌جا settledها هم می‌مانند.</div>
+  <div class="muted">همهٔ جواب‌ها (settled و در صف)، تازه‌ترین بالاتر. عدد بالای عنوان از خودِ دیتابیس است — نه از طول جدول. «چند شده» یعنی چند نکتهٔ کلیدی پوشش داده شده، نه امتیاز سایت.</div>
+  <div id="chRepSum" class="grid" style="margin-top:10px"></div>
   <div id="chRep" class="muted" style="margin-top:10px">در حال خواندن…</div>
+  <div class="row" style="margin-top:8px"><button type="button" id="chRepRefresh">تازه‌سازی گزارش</button></div>
   <script>
   (function () {
     var out = document.getElementById('chRep');
+    var sumEl = document.getElementById('chRepSum');
     var countEl = document.getElementById('chRepCount');
+    var refreshBtn = document.getElementById('chRepRefresh');
     if (!out) return;
 
     function esc(s) {
@@ -1416,6 +1486,9 @@ function renderHtml(
     }
     function when(iso) {
       try { return new Date(iso).toLocaleString('fa-IR'); } catch (e) { return iso; }
+    }
+    function num(n) {
+      return Number(n || 0).toLocaleString('fa-IR');
     }
     function who(r) {
       return esc(r.display_name || r.phone || r.id);
@@ -1440,23 +1513,54 @@ function renderHtml(
       }).join('');
     }
 
-    fetch('/admin/challenges/attempts', { credentials: 'include' })
-      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
-      .then(function (res) {
-        if (!res.ok) { out.textContent = 'خوانده نشد.'; return; }
-        var rows = res.j.attempts || [];
-        if (countEl) countEl.textContent = rows.length ? rows.length + ' جواب' : '';
-        out.className = '';
-        out.innerHTML = '<div class="tblwrap"><table><thead><tr>'
-          + '<th>کاربر</th><th>موبایل</th><th>چالش</th><th>نتیجه</th><th>زمان</th><th>کد</th>'
-          + '</tr></thead><tbody>' + rowsHtml(rows) + '</tbody></table></div>';
-      })
-      .catch(function () { out.textContent = 'خوانده نشد (شبکه).'; });
+    function summaryHtml(s) {
+      if (!s) return '';
+      var cards = ''
+        + '<div class="card"><h3>افراد</h3><div class="v">' + num(s.people) + '</div><div class="s">خوانندهٔ متمایز</div></div>'
+        + '<div class="card"><h3>جواب‌ها</h3><div class="v">' + num(s.total) + '</div><div class="s">یک نفر × یک چالش = یک جواب</div></div>'
+        + '<div class="card"><h3>سنجیده‌شده</h3><div class="v">' + num(s.settled) + '</div><div class="s">در صف مدل/تو: ' + num(s.queued) + '</div></div>'
+        + '<div class="card"><h3>آخرین جواب</h3><div class="v" style="font-size:1rem">'
+        + (s.last_at ? when(s.last_at) : '—') + '</div><div class="s">اگر این جلو نرود، جوابِ تازه به دیتابیس نرسیده</div></div>';
+      var by = (s.by_content || []).map(function (c) {
+        return '<div class="muted" style="margin-top:6px" dir="ltr">' + esc(c.content_id)
+          + ' — ' + num(c.people) + ' نفر · ' + num(c.attempts) + ' جواب</div>';
+      }).join('');
+      return cards + (by ? '<div style="grid-column:1/-1">' + by + '</div>' : '');
+    }
+
+    function load() {
+      out.textContent = 'در حال خواندن…';
+      out.className = 'muted';
+      if (sumEl) sumEl.innerHTML = '';
+      fetch('/admin/challenges/attempts', { credentials: 'include', cache: 'no-store' })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          if (!res.ok) { out.textContent = 'خوانده نشد.'; return; }
+          var rows = res.j.attempts || [];
+          var s = res.j.summary || {};
+          var people = s.people != null ? s.people : rows.length;
+          var total = s.total != null ? s.total : rows.length;
+          if (countEl) {
+            countEl.textContent = total
+              ? num(people) + ' نفر · ' + num(total) + ' جواب'
+              : '';
+          }
+          if (sumEl) sumEl.innerHTML = summaryHtml(s);
+          out.className = '';
+          out.innerHTML = '<div class="tblwrap"><table><thead><tr>'
+            + '<th>کاربر</th><th>موبایل</th><th>چالش</th><th>نتیجه</th><th>زمان</th><th>کد</th>'
+            + '</tr></thead><tbody>' + rowsHtml(rows) + '</tbody></table></div>';
+        })
+        .catch(function () { out.textContent = 'خوانده نشد (شبکه).'; });
+    }
+
+    if (refreshBtn) refreshBtn.addEventListener('click', load);
+    load();
   })();
   </script>
 
   <h3 style="margin-top:26px">ثبت/ویرایشِ یک چالش</h3>
-  <div class="muted">جواب و نکات کلیدی را این‌جا ثبت کن — تا این کار انجام نشود، چالش روی صفحه زنده نیست (GET /challenge/:id همچنان exists:false برمی‌گرداند). همان content_id را دوباره بفرست تا ویرایش شود.</div>
+  <div class="muted">جواب و نکات کلیدی را این‌جا ثبت کن — تا این کار انجام نشود، چالش روی صفحه زنده نیست (GET /challenge?content_id= همچنان exists:false برمی‌گرداند). همان content_id را دوباره بفرست تا ویرایش شود.</div>
   <div id="chUpBox" class="ds-work" style="margin-top:8px">
     <label>content_id (مسیر صفحه، بدون / ابتدایی و بدون .html)</label>
     <input id="chUpContentId" type="text" dir="ltr" placeholder="insight/insight-68">
@@ -2900,25 +3004,42 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // in routes/support.ts and are scoped to their owner; these are not scoped at
   // all, which is the whole difference between the two files.
 
-  // GET /admin/support?status=open|closed|all&limit= — the queue, ordered so the
-  // person who has been waiting longest for a human is first.
+  // GET /admin/support?status=open|closed|all&answered_limit=&answered_offset=
+  // Waiting (awaiting founder) comes back in full; answered is one page — the
+  // admin UI shows 15 first, then «نمایش بیشتر» walks ten at a time.
   app.get('/admin/support', {
     schema: {
       querystring: {
         type: 'object',
         properties: {
           status: { type: 'string', enum: ['open', 'closed', 'all'] },
-          limit: { type: 'integer', minimum: 1, maximum: 200 },
+          answered_limit: { type: 'integer', minimum: 1, maximum: 50 },
+          answered_offset: { type: 'integer', minimum: 0 },
         },
       },
     },
   }, async (request, reply) => {
-    const q = request.query as { status?: 'open' | 'closed' | 'all'; limit?: number };
-    const tickets = await ticketQueue({ status: q.status, limit: q.limit });
+    const q = request.query as {
+      status?: 'open' | 'closed' | 'all';
+      answered_limit?: number;
+      answered_offset?: number;
+    };
+    const page = await ticketQueue({
+      status: q.status,
+      answeredLimit: q.answered_limit,
+      answeredOffset: q.answered_offset,
+    });
     return reply.send({
       ok: true,
-      waiting: tickets.filter((t) => t.status === 'open' && t.awaiting === 'founder').length,
-      tickets,
+      waiting: page.waiting_tickets.length,
+      waiting_tickets: page.waiting_tickets,
+      answered: page.answered,
+      answered_total: page.answered_total,
+      answered_offset: page.answered_offset,
+      answered_limit: page.answered_limit,
+      answered_has_more: page.answered_offset + page.answered.length < page.answered_total,
+      // Flat list kept so older callers (and the support tests) keep working.
+      tickets: page.tickets,
     });
   });
 
@@ -3292,10 +3413,17 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // GET /admin/challenges/attempts — the roster, newest first. Who answered
   // and how many key points they covered. Separate from the queue on purpose:
   // a settled attempt is gone from pending, and an AI-settled one never
-  // entered it.
+  // entered it. `summary` is counted in SQL so the headline cannot drift from
+  // the table if a client ever truncates the list.
   app.get('/admin/challenges/attempts', async (_request, reply) => {
-    const rows = await challengeAttemptReportRows();
-    return reply.send({ ok: true, count: rows.length, attempts: rows });
+    const report = await challengeAttemptReport();
+    return reply.send({
+      ok: true,
+      count: report.summary.total,
+      people: report.summary.people,
+      summary: report.summary,
+      attempts: report.attempts,
+    });
   });
 
   // GET /admin/challenges/by-reference/:reference — same lookup shape as
@@ -3315,7 +3443,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // POST /admin/challenges/upsert { content_id, answer_fa, key_points } — where
   // a چالش is created and edited (on conflict … do update). This is the paste
   // box the publish report (workflow step 4.14) sends the founder to: the
-  // چالش is not live until this runs (GET /challenge/:id answers exists:false
+  // چالش is not live until this runs (GET /challenge?content_id= answers exists:false
   // until then, and the block on the page renders nothing).
   app.post('/admin/challenges/upsert', {
     schema: {
