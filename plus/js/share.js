@@ -13,8 +13,8 @@
 // and buildShareButton() below supplies one. That is a real gap being closed,
 // not a nicety — without it, scoring shares would have paid mobile readers and
 // silently paid desktop readers nothing.
-import { api } from './api.js?v=48';
-import { el } from './util.js?v=48';
+import { api } from './api.js?v=49';
+import { el } from './util.js?v=49';
 
 /** Dispatched on `document` after a share actually went through. */
 export const SHARE_EVENT = 'dcp:content-shared';

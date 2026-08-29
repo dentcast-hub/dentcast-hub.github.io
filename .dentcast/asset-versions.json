@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 145,
-    "hash": "6da9b78a1e3d32a1"
+    "v": 146,
+    "hash": "dca53edd8dd77221"
   },
   "/dc-theme.css": {
     "v": 3,
@@ -52,8 +52,8 @@
     "hash": "863295ffefd4ab6d"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 56,
-    "hash": "f5857c69ada81732"
+    "v": 57,
+    "hash": "d4922e3954fcbecc"
   },
   "/plus/js/desboard-page.js": {
     "v": 6,
@@ -80,8 +80,8 @@
     "hash": "8e21c69fc5dfdeb0"
   },
   "/plus/js/profile-page.js": {
-    "v": 48,
-    "hash": "d0cb6f02d7581c28"
+    "v": 49,
+    "hash": "788bc196836c6086"
   },
   "/plus/js/reading-compass-page.js": {
     "v": 36,
@@ -112,12 +112,12 @@
     "hash": "221180d89ef64af7"
   },
   "dc-nav.js:V": {
-    "v": 142,
-    "hash": "1886523c00271c65"
+    "v": 143,
+    "hash": "cf5ae25b3332aeae"
   },
   "modules:M": {
-    "v": 48,
-    "hash": "5ec8d0558629171b"
+    "v": 49,
+    "hash": "422fa7ef2fa35ed5"
   },
   "spot.js:SPOT_V": {
     "v": 35,

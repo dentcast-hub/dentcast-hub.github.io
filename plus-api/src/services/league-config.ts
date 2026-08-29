@@ -31,6 +31,8 @@ export interface LeagueConfig {
   xp_review: number;         // manual card review
   xp_share: number;          // passing on an article you finished (once per article/week)
   xp_share_weekly_cap: number; // ...and at most this many articles a week
+  xp_challenge: number;      // fully-correct چالش answer (once per page, forever)
+  xp_challenge_weekly_cap: number; // 0 = no cap; supply is founder-gated
   // Review was the only earning path with no ceiling at all (2026-08-08).
   // Counted in PAYING reviews a week, not XP; 0 = no cap, like the others.
   xp_review_weekly_cap: number;
@@ -67,7 +69,7 @@ export const NUMERIC_KEYS: Array<keyof LeagueConfig> = [
   'group_size_current', 'min_group_capacity', 'promotion_pct', 'demotion_pct', 'min_valid_group_size',
   'promotion_min_weekly_xp', 'cooldown_weeks', 'max_active_tier_order',
   'xp_active_bonus', 'xp_read', 'xp_listen', 'xp_highlight', 'xp_highlight_cap', 'xp_review',
-  'xp_share', 'xp_share_weekly_cap', 'xp_review_weekly_cap',
+  'xp_share', 'xp_share_weekly_cap', 'xp_review_weekly_cap', 'xp_challenge', 'xp_challenge_weekly_cap',
   'xp_pathway_step', 'xp_pathway_step_weekly_cap',
   'xp_pathway_enrolled', 'xp_pathway_enrolled_weekly_cap',
   'xp_collection_created', 'xp_collection_created_weekly_cap',

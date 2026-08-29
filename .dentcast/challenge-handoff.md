@@ -35,8 +35,8 @@ arrives before the effort, never after it.
 
 A premium reader writes once and gets **whether their answer was right, and then
 the founder's answer** — that is the payoff, and it is why one attempt is all
-anyone gets. Every attempt earns score, and score feeds a badge that mints a
-real subscription discount.
+anyone gets. A fully-correct answer earns score, league XP, and the «چلنجر»
+badge; a miss earns none of those.
 
 The model **never writes a sentence a reader sees.** It returns a verdict per
 key point from a closed three-value set, and plain code renders a verdict word.
@@ -105,7 +105,7 @@ sees the dot on 🔔
 opens اطلاعیه → the verdict
 ```
 
-Score is awarded on **submit**, in both branches — see §8.
+Score is awarded when the attempt settles as **`full`** — see §8.
 
 ---
 
@@ -113,7 +113,8 @@ Score is awarded on **submit**, in both branches — see §8.
 
 | Action | Path |
 |---|---|
-| create | `plus-api/migrations/0050_challenges.cjs` |
+| create | `plus-api/migrations/0053_challenges.cjs` |
+| create | `plus-api/migrations/0054_challenge_xp.cjs` |
 | create | `plus-api/src/services/challenge.ts` |
 | create | `plus-api/src/routes/challenge.ts` |
 | edit | `plus-api/src/server.ts` — import + `app.register(challengeRoutes)` |
@@ -126,7 +127,7 @@ Score is awarded on **submit**, in both branches — see §8.
 | edit | `plus-api/src/services/merge-profiles.ts` — carry `challenge_attempts.user_id` |
 | edit | `plus-api/src/services/score.ts` — `challenge_answered` in `SCORING_ACTIONS` |
 | edit | `plus-api/src/config.ts` — the `challenge` block (§10) |
-| edit | `plus/badges.json` — the «چالشگر» badge (§8.3) |
+| edit | `plus/badges.json` — the «چلنجر» badge (§8.3) |
 | edit | `plus-api/src/services/achievements.ts` — the `challenges_settled` metric |
 | create | `plus/js/challenge.js` |
 | edit | `plus/plus.css` — the block's CSS (§9.4) |
@@ -422,9 +423,11 @@ settled — `result` and `covered_count` / `point_count` (§7.2).
 3. `insert … on conflict do nothing` on `challenge_attempts`. No row inserted →
    409 `{ error: 'already_answered' }`, and return the existing attempt so the
    client can render it rather than showing an error.
-4. `recordActivity(userId, 'challenge_answered', contentId, {})` — see §8.
-5. Call the model. On a clean verdict → `status='settled'`, `verdict`,
+4. Call the model. On a clean verdict → `status='settled'`, `verdict`,
    `settled_at`. On anything else → leave `status='queued'`.
+5. `awardIfCorrect` — writes `challenge_answered` **only** when the reduced
+   result is `full`. Queued / partial / none write nothing. A later founder
+   ruling of `full` is the other call site.
 6. Return `{ status, reference, answer_fa }` plus, when settled, the §7.2
    verdict. **`answer_fa` is returned in both branches** — a queued reader has
    written their answer and earned it; only the verdict on their own text is
@@ -452,15 +455,15 @@ founder's answer and working out which two you missed is the learning act;
 ticking the boxes for the reader does that work for them. It is a one-line
 change if it is ever wanted (§14).
 
-> **RULE 7 — Score is recorded before the model is called, and never depends on
-> the verdict.** `case-assistant.ts` records after its call resolves, because
-> there a failed generation means the user got nothing. Here what the reader
-> earned is the writing, which is done and stored before any model runs. Making
-> score wait on the verdict would mean a queued reader waits days for points
-> they already earned, and it would make a model error cost a reader score —
-> which is the thing §6.2 exists to prevent. It is also what keeps a queued
-> attempt from feeling like a punishment: the score and the founder's answer
-> both land at once, and only the verdict waits.
+> **RULE 7 — Score is awarded only on a `full` verdict, after the model (or
+> the founder) has spoken.** A wrong or partial answer writes no
+> `challenge_answered` row: no shield points, no league XP, no badge credit.
+> A queued attempt waits; if the founder then rules it full, `awardIfCorrect`
+> runs at settle time. The original v1 rule recorded score on submit so a
+> model error could not cost the reader points — that is the thing this
+> revisits, founder decision 1405/06/07: being right is what is valuable, and
+> a miss is zero rather than a consolation. `POST /activity` refuses the
+> action; only this service mints the row.
 
 ### 7.3 Founder — added to `routes/admin.ts` behind the existing admin guard
 
@@ -482,7 +485,8 @@ key points, each with a non-empty `id` and `text`, ids unique.
 3. `challenge_attempts` → `status='settled'`, `verdict` (each entry stamped
    `by: 'founder'`), `settled_at`
 4. insert into `challenge_examples`
-5. `sendCapped(userId, …, 'challenge_ruled')`
+5. `awardIfCorrect` — only if the ruling is `full`
+6. `sendCapped(userId, …, 'challenge_ruled')`
 
 ### 7.4 The admin page block
 
@@ -511,75 +515,84 @@ waited longest for a human is first, the same ordering the support queue uses.
 
 ### 8.1 The action
 
-Add `challenge_answered` to `SCORING_ACTIONS` in `services/score.ts`.
+Add `challenge_answered` to `SCORING_ACTIONS` in `services/score.ts` (active
+day) and to `QUALIFYING_ACTIONS` in `streak.ts`. It is **not** in
+`CONSUMPTION_ACTIONS`. A correct چالش has its own term:
+`challenges_correct * POINTS_PER_CHALLENGE` where `POINTS_PER_CHALLENGE = 10`
+— twice an article. The row is written only by `awardIfCorrect`, only when
+`reduceVerdict` is `full`.
 
-It belongs there and `content_shared` does not, on that file's own stated test:
-a share "costs one second, and score is never deducted", so it would be a farm.
-An answer is minutes of writing, capped at one per page by the unique index in
-§5. It is the most expensive thing a reader can do on this site.
+It belongs in SCORING_ACTIONS and `content_shared` does not, on that file's
+own stated test: a share "costs one second, and score is never deducted", so
+it would be a farm. A fully-correct answer is minutes of writing, capped at
+one per page by the unique index in §5.
 
 > **RULE 8 — Never deduct for a wrong answer.** `score.ts`: "Score is never
-> deducted — a threshold is a milestone, not a purchase." A reader who tried and
-> missed every key point learned more than one who skipped the box, and the
-> feature dies the day being wrong is punished.
+> deducted — a threshold is a milestone, not a purchase." A miss earns
+> **nothing** (no row), which is not a deduction. Do not subtract points, do
+> not write a negative, do not "undo" a full that was later reconsidered —
+> there is no second attempt (RULE 3).
 
-**Score is for answering, not for being right.** There is deliberately no
-correctness bonus in v1: it would reintroduce the dependency on the verdict that
-RULE 7 removes, and it would make the model's mistakes cost points. Revisit only
-after the queue rate is known.
+**Score is for being right.** Partial and none are zero. A queued reader
+waits for the founder; that wait is the cost of model-uncertainty, not a
+punishment for writing.
 
 ### 8.2 League
 
-Do **not** add an `xp_*` kind. League XP is a separate currency with per-action
-weekly caps, and `xp_share` had to be capped to zero (migration 0028) after
-shipping at a value that unbalanced a week. Score plus the badge is enough on
-day one; a league kind is a later, separate decision with its own cap analysis.
+`xp_challenge = 5` (same weight as `xp_read` / `xp_listen`),
+`xp_challenge_weekly_cap = 0` (no ceiling: supply is founder-gated). Migration
+`0054_challenge_xp.cjs`. `POST /activity` must refuse the action so a client
+cannot mint the row. Weekly XP already granted under the v1 "score on submit"
+rule is not unwound; the all-time score is derived from the log, so 0054's
+DELETE of non-full rows is enough for shields.
 
-### 8.3 The badge — «چالشگر»
+### 8.3 The badge — «چلنجر»
 
 Append to `plus/badges.json` following the `treasury` entry's shape exactly.
 Every badge is derived, so this needs no migration and is retroactive by
-construction.
+construction. Silver/gold discounts are the file's existing convention (٪۱
+and ٪۲).
 
 ```json
 {
   "key": "challenger",
-  "title_fa": "چالشگر",
+  "title_fa": "چلنجر",
   "icon": "target",
   "group": "premium",
   "premium": true,
   "leveled": true,
   "visibility": "always",
   "metric": "challenges_settled",
-  "locked_fa": "به اولین چالش یک مطلب جواب بده.",
-  "detail_fa": "چالش‌ها را جواب دادن یعنی قبل از دیدنِ جواب، خودت فکر کرده‌ای.",
+  "locked_fa": "اولین چالش را درست جواب بده.",
+  "detail_fa": "فقط جوابِ کامل امتیاز می‌سازد — اشتباه صفر است.",
   "levels": [
     { "tier": "bronze", "threshold": 1,
-      "unlock_fa": "اولین چالشت را جواب دادی." },
+      "unlock_fa": "اولین چالش را درست جواب دادی." },
     { "tier": "silver", "threshold": 15,
-      "unlock_fa": "پانزده چالش. این دیگر عادت است، نه کنجکاوی.",
+      "unlock_fa": "پانزده چالشِ درست. این دیگر عادت است، نه کنجکاوی.",
       "discount_percent": 1 },
     { "tier": "gold", "threshold": 50,
-      "unlock_fa": "پنجاه چالش — پیش از هر جوابی، جوابِ خودت را نوشته‌ای.",
+      "unlock_fa": "پنجاه چالشِ درست — پیش از هر جوابی، جوابِ خودت را نوشته‌ای.",
       "discount_percent": 2 }
   ],
   "unit_fa": "چالش"
 }
 ```
 
-Add `challenges_settled` to the counts query in
-`plus-api/src/services/achievements.ts` beside `collection_items`:
+Count **fully-correct settled attempts only** — the same fact that writes the
+score row, so the wall and the shield number cannot disagree:
 
 ```sql
-(select count(*)::int from challenge_attempts
-  where user_id = $1) as challenges_settled,
+(select count(*)::int from challenge_attempts a
+  where a.user_id = $1
+    and a.status = 'settled'
+    and a.verdict is not null
+    and jsonb_array_length(a.verdict) > 0
+    and not exists (
+      select 1 from jsonb_array_elements(a.verdict) e
+       where e->>'state' is distinct from 'covered'
+    )) as challenges_settled,
 ```
-
-Count **attempts, not settled attempts**, despite the metric name reading that
-way — rename the metric `challenges_answered` if that reads better to you, but
-keep the semantics: a queued attempt already earned its score under RULE 7, and
-a badge that lights only once the founder gets around to the queue would make
-the wall disagree with the score for days.
 
 The silver/gold `discount_percent` values are the file's existing convention
 (٪۱ and ٪۲, capped with everything else at `CREDIT_CAP_PERCENT`). Nothing else
@@ -916,7 +929,7 @@ must refuse a چالش page for the same reason, rather than producing an orphan
 | 8 | provider throws after retries | `queued`, attempt row still written |
 | 9 | provider returns an unknown key-point id | `queued`, nothing from the model stored |
 | 10 | provider returns 2 entries for 3 key points | `queued` |
-| 11 | any of 5–10 | `challenge_answered` recorded exactly once |
+| 11 | any of 5–10 | no `challenge_answered` row (verdict is not `full`) |
 | 12 | second submit, same user + page | 409, existing attempt returned, no second score row |
 | 13 | 11 submits in an hour | 429 on the 11th |
 | 14 | founder rules a queued attempt | `settled`, example row written, `challenge_ruled` sent |
@@ -983,9 +996,6 @@ then fails is the exact regression this test exists to catch.
 
 ## 14. Later, not now
 
-- **A correctness bonus on score.** Out of scope by RULE 7/8. Revisit once the
-  real queue rate is known.
-- **A league XP kind.** §8.2.
 - **Publishing an exemplary answer.** گفت‌وگوی زیر مطلب already has the
   machinery (`is_public` per message, founder-decided). If it is ever wanted
   here, it is that switch again — a founder decision written down, never a

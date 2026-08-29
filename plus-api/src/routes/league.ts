@@ -88,6 +88,8 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
         active_bonus: cfg.xp_active_bonus,
         share: cfg.xp_share,
         share_cap: cfg.xp_share_weekly_cap,
+        challenge: cfg.xp_challenge,
+        challenge_cap: cfg.xp_challenge_weekly_cap,
         // The premium earning paths (migration 0030), under their own key so the
         // explainer can render them as a separate, labelled block. They are sent
         // to EVERY reader, free included, and that is deliberate: these are extra

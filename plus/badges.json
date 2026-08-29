@@ -36,7 +36,7 @@
     "collections": "count از جدول collections",
     "collection_items": "count از جدول collection_items",
     "shares": "count(distinct content_id) از user_activity where action='content_shared' — فقط محتوایی که کاربر برای آن article_completed هم دارد، و فقط اشتراک‌هایی که بعد از آن اتفاق افتاده‌اند. همان دروازه‌ای که XP لیگ با آن پرداخت می‌شود (league.ts، shareXp)، تا دیوار و نردبان دربارهٔ یک کار دو حرف نزنند.",
-    "challenges_settled": "count از جدول challenge_attempts where user_id = کاربر — هر تلاش، نه فقط تلاش‌های نتیجه‌دارشده: امتیاز همان لحظهٔ نوشتن گرفته می‌شود (RULE 7 در .dentcast/challenge-handoff.md)، پس نشان هم نباید منتظر رسیدگیِ بنیان‌گذار به صف بماند.",
+    "challenges_settled": "count از جدول challenge_attempts where user_id = کاربر AND status = settled AND همهٔ نکته‌ها covered — فقط جوابِ کاملاً درست. جواب غلط/جزئی/در صف نه امتیاز سپر می‌سازد نه این نشان را جلو می‌برد.",
     "league_best_rank_tier": "بالاترین league_tiers.tier_order در هفته‌هایی که کاربر آن رتبه را گرفته — فقط بالا می‌رود",
     "tiers_won": "تعدادِ لیگ‌های (tier) متمایزی که کاربر در آن‌ها رتبهٔ ۱ گرفته. رتبهٔ ۱ فقط، نه ۲ — و متمایز، پس سه هفته اول‌شدن در یک لیگ عددش ۱ است. از همان کوئریِ مدال‌ها خوانده می‌شود، تا فیلترِ اعتبارِ زیر دو نسخه نشود.",
     "founder_seat": "۱ اگر رتبهٔ profiles.created_at کاربر ≤ league-independent seat count (۵۰۰) باشد، وگرنه ۰",
@@ -630,31 +630,31 @@
     },
     {
       "key": "challenger",
-      "title_fa": "چالشگر",
+      "title_fa": "چلنجر",
       "icon": "target",
       "group": "premium",
       "premium": true,
       "leveled": true,
       "visibility": "always",
       "metric": "challenges_settled",
-      "locked_fa": "به اولین چالش یک مطلب جواب بده.",
-      "detail_fa": "چالش‌ها را جواب دادن یعنی قبل از دیدنِ جواب، خودت فکر کرده‌ای.",
+      "locked_fa": "اولین چالش را درست جواب بده.",
+      "detail_fa": "فقط جوابِ کامل امتیاز می‌سازد — اشتباه صفر است.",
       "levels": [
         {
           "tier": "bronze",
           "threshold": 1,
-          "unlock_fa": "اولین چالشت را جواب دادی."
+          "unlock_fa": "اولین چالش را درست جواب دادی."
         },
         {
           "tier": "silver",
           "threshold": 15,
-          "unlock_fa": "پانزده چالش. این دیگر عادت است، نه کنجکاوی.",
+          "unlock_fa": "پانزده چالشِ درست. این دیگر عادت است، نه کنجکاوی.",
           "discount_percent": 1
         },
         {
           "tier": "gold",
           "threshold": 50,
-          "unlock_fa": "پنجاه چالش — پیش از هر جوابی، جوابِ خودت را نوشته‌ای.",
+          "unlock_fa": "پنجاه چالشِ درست — پیش از هر جوابی، جوابِ خودت را نوشته‌ای.",
           "discount_percent": 2
         }
       ],

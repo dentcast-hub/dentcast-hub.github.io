@@ -319,6 +319,8 @@ async function pathwayStepXp(
  *   xp_highlight     — per highlight_created, capped xp_highlight_cap per (content, week)
  *   xp_review        — card_reviewed_manual / review_finished
  *   xp_share         — content_shared, gated + capped (shareXp above)
+ *   xp_challenge     — challenge_answered, only written on a `full` verdict
+ *                      (once per page forever; weekly cap currently 0)
  *
  * and the premium earning paths (migration 0030), each capped per week:
  *
@@ -459,6 +461,17 @@ export async function awardLeagueXp(
     // then bounds the honest version of the same act: pinning is one tap.
     if (contentId && (await weekCount(action)) <= 1) {
       xpDelta += await capped(action, cfg.xp_collection_item, cfg.xp_collection_item_weekly_cap, true);
+    }
+  } else if (action === 'challenge_answered') {
+    // Once per (content, week) — and in practice once per life, because the
+    // attempt unique index plus awardIfCorrect's idempotent guard write at
+    // most one row. The weekly cap is a knob for a later daily cadence; 0
+    // means no ceiling, same reading as xp_share_weekly_cap after 0028.
+    if (contentId && cfg.xp_challenge > 0 && (await weekCount(action)) <= 1) {
+      const cap = cfg.xp_challenge_weekly_cap;
+      if (cap <= 0 || (await weekActionCount(action, true)) <= cap) {
+        xpDelta += cfg.xp_challenge;
+      }
     }
   } else if (action === 'highlight_created') {
     if (contentId && (await weekCount(action)) <= cfg.xp_highlight_cap) xpDelta += cfg.xp_highlight;
