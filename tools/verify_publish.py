@@ -1242,6 +1242,30 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                       "answer_fa/key_points leaked into the PUBLIC index — "
                       "fix tools/build_challenge_index.mjs and regenerate",
                       "node tools/build_challenge_index.mjs")
+            image = entry.get("image")
+            rep.check(not image or image.startswith("/"), "4.14 challenge",
+                      "image path is site-absolute",
+                      f'data-dc-challenge-image ("{image}") is a bare filename — it 404s on the '
+                      "desktop shell (index.html injects the article IN PLACE, not in an iframe, "
+                      "so a relative src resolves against the site root, not the folder)",
+                      f'fix the data-dc-challenge-image attribute on {content_id}.html to a '
+                      'site-absolute path (e.g. "/insight/insight68.webp"), then '
+                      'node tools/build_challenge_index.mjs')
+        # RULE (2026-08-30): چالش already owns reader interaction — گفتگوی
+        # زیر مطلب (article-threads / the support-ticket-backed comment
+        # thread) must never mount underneath it. Fixed in
+        # plus/js/article-threads.js's mountArticleThreads() by an early
+        # `data-dc-challenge-question` scope check. This is a repo-wide
+        # invariant, not a per-page one — verified here so a future refactor
+        # of that guard fails a publish loudly instead of silently
+        # reintroducing the ticket thread under every چالش page ever built.
+        threads_js = read("plus/js/article-threads.js")
+        rep.check("data-dc-challenge-question" in threads_js, "4.14 challenge",
+                  "plus/js/article-threads.js still skips چالش pages",
+                  "mountArticleThreads() no longer checks data-dc-challenge-question — "
+                  "گفتگوی زیر مطلب (the support-ticket thread) will mount under every چالش again",
+                  "restore the data-dc-challenge-question scope check in mountArticleThreads() "
+                  "(plus/js/article-threads.js)")
         rep.skip("8 flashcards", "چالش: 4.11/4.12 are a documented skip — no prose to define terms from")
         rep.skip("5.6 pathway", "چالش: 5.6/5.6-ب are a documented skip — a pathway step is something to read")
     elif is_flashcard_optional and not questions:

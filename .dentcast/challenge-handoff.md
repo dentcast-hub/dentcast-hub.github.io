@@ -642,11 +642,39 @@ Anchor on **`findProseEnd()`**, never `findProseBox()`.
 > the fix either — on exactly those pages it is `main.article-content-wrap`, so
 > inserting after it lands outside the article shell.
 
-Order under the prose is: چالش → گفت‌وگوی زیر مطلب → ارزیابی شواهد. Insert
-before `mountArticleThreads` so the block that asks the reader to *do* something
-comes above the one that shows what others said. Follow `mountBottomActions`'s
-comment at `plus.js:137` for how the ordering of `afterend` insertions is kept
-deterministic when one of them awaits.
+Order under the prose is: چالش → گفت‌وگوی زیر مطلب → ارزیابی شواهد — **on a page
+with no چالش.** Insert before `mountArticleThreads` so the block that asks the
+reader to *do* something comes above the one that shows what others said.
+Follow `mountBottomActions`'s comment at `plus.js:137` for how the ordering of
+`afterend` insertions is kept deterministic when one of them awaits.
+
+> **RULE 17 — گفت‌وگوی زیر مطلب never mounts on a چالش page at all (founder
+> decision, 2026-08-30).** Not "after", not "collapsed" — **absent.** A چالش
+> already owns the reader's one interaction with the page (the answer box);
+> a second open-ended comment thread underneath it is a second, unrelated
+> invitation to write, and insight-68 shipped with both mounted at once —
+> the چالش block *and* a گفتگوی زیر مطلب / support-ticket thread stacked right
+> below it, which nobody asked to see and which competes with the thing the
+> چالش already asks the reader to do.
+>
+> Enforced in `plus/js/article-threads.js`'s `mountArticleThreads()` itself,
+> **not** by skipping the call site: it scopes to `anchor.closest('main') ||
+> anchor.closest('.ep-box') || document`, checks
+> `scope.querySelector('[data-dc-challenge-question]')`, and returns `false`
+> before drawing anything if that markup is present. All four `plus.js` call
+> sites keep calling `mountArticleThreads` unconditionally, exactly as RULE 9
+> says for `mountChallenge` — **the data decides, the call site never
+> branches on content type.** Do not "fix" this by wrapping the four call
+> sites in an `if (!is_challenge)`; that duplicates the check four times and
+> is exactly the kind of accident-of-call-site bug RULE 9's own DES/گفت‌وگو
+> history warns about.
+>
+> `tools/verify_publish.py`'s چالش row asserts this guard is still present in
+> `plus/js/article-threads.js` on every publish — not because a per-page
+> check can prove the thread doesn't render (it can't; this is a shared,
+> repo-wide module), but so a future refactor that quietly drops the guard
+> fails loudly instead of silently putting the ticket thread back under
+> every چالش page ever published.
 
 **The block removes itself when there is nothing to show** — no چالش for this
 `content_id` in `plus/challenges.json`, or a fetch failure. A heading with an
@@ -851,6 +879,42 @@ Rule 11 exists to forbid.
 Writes the **public half only**: the question + image markup on the page, and
 this `content_id` into `plus/challenges.json` via
 `node tools/build_challenge_index.mjs` in step 8.
+
+**The exact markup, copied from insight-68 (the reference implementation,
+reachable at any time as a live example) — inside the folder's normal prose
+box, replacing the body:**
+
+```html
+<div class="glass-box">
+<h3>… چالش</h3>
+<p data-dc-challenge-question data-dc-challenge-image="/insight/insight68.webp">
+  …the question, verbatim…
+</p>
+<p class="dc-disclaimer">…</p>
+</div>
+```
+
+> **RULE 18 — No visible `<img>`, ever, and the image path is site-absolute.**
+> The image is a **data attribute on the question paragraph itself** —
+> `data-dc-challenge-image="/insight/insight68.webp"` — never a separate
+> `<img>` element. insight-68's first draft had a real, visible `<img
+> data-dc-challenge-image>` sitting in the static HTML; `plus/js/challenge.js`
+> then drew the *same* image again once it mounted, so the question and the
+> photo both rendered twice on the page (fixed 2026-08-28, commits
+> `ba358998` → `5eea644e` → `8a9e31ed`). Writing the path as a bare attribute
+> value, with no `<img>` tag anywhere in the page's static HTML, is what
+> keeps a static-vs-live duplicate from being possible in the first place.
+>
+> The path itself must be **site-absolute** (`/insight/insight68.webp`), never
+> a bare filename (`insight68.webp`). `plus/js/challenge.js` writes this value
+> straight into `<img src>`, and the desktop 3-column shell injects the
+> article's markup **in place** inside `index.html` (not an iframe) — a bare
+> filename then resolves against the site root and 404s there, even though it
+> happens to work on the standalone page (which really does live in the same
+> folder). `tools/build_challenge_index.mjs` throws if a captured `image`
+> value doesn't start with `/`, and `tools/verify_publish.py`'s چالش row
+> re-checks the built `plus/challenges.json` entry for the same thing — both
+> are the gate for this, not a step to remember by hand.
 
 Then prints into the publish report, for the founder to paste into
 `GET /admin` → «صندوق چالش»:

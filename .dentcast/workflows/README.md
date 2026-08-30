@@ -1470,6 +1470,25 @@ walked back once it is in git history (RULE 2):
    `data-dc-challenge-image` — `tools/build_challenge_index.mjs` reads exactly
    that markup. **Never** put the answer or the key points on the page, in the
    brain entry, or in any committed file.
+
+   **Copy insight-68's markup exactly (RULE 18, handoff §11.3) — it is the
+   reference implementation, not just the first example:**
+   ```html
+   <p data-dc-challenge-question data-dc-challenge-image="/insight/insight68.webp">
+     …the question, verbatim…
+   </p>
+   ```
+   Two things this is not allowed to drift on: **no separate `<img>` tag** —
+   the image lives only as that data-attribute value, because insight-68's
+   first draft had a real `<img>` *and* the live JS block redrawing the same
+   image, so the question and the photo both rendered twice on the page
+   before that was fixed. And the path is **site-absolute** (`/insight/
+   insight68.webp`), never a bare filename — a bare filename happens to work
+   on the standalone page but 404s on the desktop 3-column shell, which
+   injects the article in place inside `index.html` rather than in an
+   iframe. Both are enforced by `tools/build_challenge_index.mjs` (throws on
+   a non-absolute path) and re-checked by `tools/verify_publish.py`'s چالش
+   row — do not rely on memory for either.
 2. Run `node tools/build_challenge_index.mjs` in step 8 (after the pillar
    builder, before `build_plus_index.mjs`) so this `content_id` lands in the
    generated `plus/challenges.json`.

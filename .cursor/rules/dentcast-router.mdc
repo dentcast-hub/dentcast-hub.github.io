@@ -84,7 +84,15 @@ alwaysApply: true
   `README.md`) از همین ردیفِ «محتوای جدید» منتشر می‌شود — نه تریگر یا فایلِ
   جداگانه. جواب و نکته‌های کلیدی هرگز در ریپو نیستند (فقط جدولِ دیتابیسِ
   `challenges`، از `GET /admin` → «صندوق چالش»)؛ سند کامل:
-  `.dentcast/challenge-handoff.md`.
+  `.dentcast/challenge-handoff.md`. **insight-68 پیاده‌سازیِ مرجع است**: مارک‌آپ
+  عیناً همان‌جا کپی شود — `data-dc-challenge-question` + `data-dc-challenge-image`
+  روی **همان** `<p>` (هرگز یک `<img>` جداگانه — نسخهٔ اول عکس را دوبار رندر
+  می‌کرد)، مسیرِ عکس همیشه site-absolute (`/insight/insight68.webp`، نه اسمِ
+  خامِ فایل — رو دسکتاپ‌شل ۴۰۴ می‌دهد؛ RULE 18). **گفتگوی زیر مطلب اصلاً
+  زیرِ چالش مونت نمی‌شود** (RULE 17 — چک `data-dc-challenge-question` داخلِ
+  خودِ `mountArticleThreads()`، نه شرطی سرِ فراخوانی). هر دو با
+  `tools/build_challenge_index.mjs` + ردیفِ چالشِ `tools/verify_publish.py`
+  گیت می‌شوند.
 - هر publish **تخصصی** (همه جز LiteCast) در **گام ۵.۶** محتوا را به مسیرهای
   یادگیریِ `plus/pathways.json` هم اضافه می‌کند — تصمیمی **کاملاً معنایی**،
   مستقل از pillar؛ اگر شک داشتی بپرس. بعدش **گام 5.6-ب** زنجیرهٔ گیتِ
