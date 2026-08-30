@@ -27167,6 +27167,89 @@
         }
       ]
     },
+    "insight/insight-69": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/insight/insight-69.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا وقتی روکش از نظر مارجین و اکلوژن قابل قبول است اما کانتکت پروگزیمال باز مانده، ارسال مجدد به لابراتوار تنها راه است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ در کیس‌های منتخب اصلاح فرم دندان طبیعی مجاور با کامپوزیت می‌تواند جایگزین ارسال مجدد به لابراتوار باشد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "یکی از مزایای اصلاح کانتکت با کامپوزیت روی دندان مجاور در همان جلسه چیست؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "کاهش ریسک‌های لابراتواری مانند پخت مجدد سرامیک و امکان تحویل نهایی کار به بیمار در همان جلسه."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "چرا در فرم‌دهی کامپوزیت برای اصلاح کانتکت باید به Emergence Profile توجه کرد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "چون کامپوزیت باید بدون اورهنگ و پله در امتداد دندان قرار گیرد تا از تجمع پلاک و التهاب لثه جلوگیری شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا کانتکت اصلاح‌شده با کامپوزیت در کنار روکش سرامیکی برای همیشه پایدار می‌ماند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "نه لزوماً؛ تفاوت سایش کامپوزیت و سرامیک می‌تواند در درازمدت کانتکت را ضعیف کند و نیاز به ارزیابی سفتی با نخ دندان در معاینات دوره‌ای دارد."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/insight/insight-69.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-69.html#flashcards-c1",
+              "name": "اصلاح کانتکت با کامپوزیت روی دندان مجاور",
+              "description": "وقتی روکش از نظر مارجین و اکلوژن قابل قبول است اما کانتکت پروگزیمال باز یا ضعیف مانده، در کیس‌های منتخب می‌توان به‌جای ارسال مجدد به لابراتوار، فرم دندان طبیعی مجاور را با کامپوزیت اصلاح کرد.",
+              "source": "faq",
+              "sourceFaqIndex": 0
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-69.html#flashcards-c2",
+              "name": "مزیت مطبیِ اصلاح کانتکت در همان جلسه",
+              "description": "این رویکرد از ریسک‌های لابراتواری مانند پخت مجدد سرامیک جلوگیری می‌کند و امکان تحویل نهایی کار به بیمار در همان جلسه را فراهم می‌سازد.",
+              "source": "faq",
+              "sourceFaqIndex": 1
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-69.html#flashcards-c3",
+              "name": "Emergence Profile در اصلاح کامپوزیت مجاور",
+              "description": "کامپوزیت باید بدون اورهنگ و پله در امتداد دندان قرار گیرد تا از تجمع پلاک و التهاب لثه جلوگیری شود.",
+              "source": "faq",
+              "sourceFaqIndex": 2
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-69.html#flashcards-c4",
+              "name": "پایداری درازمدت کانتکت کامپوزیت کنار سرامیک",
+              "description": "سرامیک سخت‌تر از کامپوزیت سایش می‌خورد؛ در درازمدت ممکن است کانتکت ضعیف شود و گیر غذایی برگردد — پس سفتی کانتکت با نخ دندان در معاینات دوره‌ای مهم است.",
+              "source": "faq",
+              "sourceFaqIndex": 3
+            }
+          ]
+        }
+      ]
+    },
     "dentai/dentai-32": {
       "faqPages": [
         {
