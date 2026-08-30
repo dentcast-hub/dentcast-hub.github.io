@@ -554,6 +554,14 @@ export interface SubscriptionReport {
  * is reported separately because a `premium_grants` row never creates a
  * `subscriptions` row (see the tier contract above) — folding it into
  * `active_now` would silently undercount who is actually premium right now.
+ *
+ * `league_premium_now` MUST exclude a user who also holds an active
+ * `subscriptions` row, or the admin card's `active_now + league_premium_now`
+ * double-counts them — found 2026-08-30 when a mass `activateDays()` grant
+ * (the anniversary campaign, then the league-prize backfill) gave a
+ * `subscriptions` row to every free-tier league winner that used to be
+ * `league_premium_now`'s only membership, and the card read ~28 more premium
+ * users than the ~739 who were actually premium.
  */
 export async function subscriptionReport(now: Date = new Date()): Promise<SubscriptionReport> {
   const tz = config.streakTimezone;
@@ -568,7 +576,15 @@ export async function subscriptionReport(now: Date = new Date()): Promise<Subscr
   ))!;
 
   const leaguePremium = (await one<{ n: number }>(
-    `select count(*)::int as n from premium_grants where revoked_at is null and expires_at > $1`,
+    `select count(distinct g.user_id)::int as n
+       from premium_grants g
+      where g.revoked_at is null and g.expires_at > $1
+        and not exists (
+          select 1 from subscriptions s
+           where s.user_id = g.user_id
+             and s.status = 'active'
+             and (s.expires_at is null or s.expires_at > $1)
+        )`,
     [nowIso],
   ))!;
 
