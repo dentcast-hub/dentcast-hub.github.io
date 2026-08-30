@@ -126,9 +126,25 @@ for (const dir of CONTENT_DIRS) {
 // The one mistake that cannot be walked back once this file is in git
 // history: never let the founder's answer or key points leak into the public
 // index, even by an accidental future edit to the extraction above.
-for (const entry of Object.values(byContent)) {
+//
+// image must be site-absolute (leading "/"), never a bare filename. The
+// standalone page happens to render a bare filename correctly (the document
+// itself lives in the same folder), but plus/js/challenge.js writes this
+// value straight into <img src>, and the desktop 3-column shell injects the
+// article's markup IN PLACE inside index.html (not an iframe) — a bare
+// filename then resolves against the site root and 404s there. insight-68
+// shipped exactly this bug (fixed 2026-08-30: "insight68.webp" -> "/insight/
+// insight68.webp"); this assertion is what stops it recurring silently.
+for (const [contentId, entry] of Object.entries(byContent)) {
   if ('answer_fa' in entry || 'key_points' in entry) {
     throw new Error('build_challenge_index: answer_fa/key_points must never appear in plus/challenges.json');
+  }
+  if (entry.image && !entry.image.startsWith('/')) {
+    throw new Error(
+      `build_challenge_index: ${contentId}'s data-dc-challenge-image ("${entry.image}") ` +
+      'is not site-absolute — prefix it with the folder path (e.g. "/insight/insight68.webp") ' +
+      'or it breaks on the desktop shell.'
+    );
   }
 }
 
