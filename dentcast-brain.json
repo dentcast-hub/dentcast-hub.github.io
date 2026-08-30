@@ -13990,7 +13990,7 @@
       "#کانتکت_باز",
       "#تحویل_روکش",
       "#کامپوزیت",
-      "#Emergence_Profile"
+      "#پروفایل_امرجنس"
     ],
     "keywords": [
       "open proximal contact crown delivery",
@@ -14011,6 +14011,38 @@
       "primary": "fixed-pros",
       "secondary": [],
       "subtopic": "cementation"
+    }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-70",
+    "title": "این طراحی دیجیتال روکش مولر رو تایید می‌کنید؟",
+    "caption": "لابراتوار طراحی دیجیتال روکش مولر فک پایین را برای تایید فرستاده است (تصویر پیوست). آیا این طراحی را تایید می‌کنید؟ اگر نه، ایراد آن را توضیح دهید.",
+    "hashtags": [
+      "#اینسایت",
+      "#فلوتینگ",
+      "#کانتور_باکال",
+      "#اورکانتور",
+      "#پروفایل_امرجنس"
+    ],
+    "keywords": [
+      "buccal fluting molar crown",
+      "axial contour overcontour crown design",
+      "furcation entrance concavity crown",
+      "root concavity crown contour digital design",
+      "digital crown design review flaw",
+      "emergence profile plaque accumulation",
+      "فلوتینگ روکش مولر",
+      "کانتور اگزیال باکال روکش",
+      "اورکانتور سرویکال باکال",
+      "تقعر ریشه و فورکیشن باکال",
+      "طراحی دیجیتال روکش مولر فک پایین"
+    ],
+    "page_url": "/insight/insight-70.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "crowns-onlays"
     }
   }
 ]
