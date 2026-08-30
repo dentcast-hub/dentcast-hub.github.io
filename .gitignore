@@ -26,3 +26,8 @@ tmp/
 # account's private registry namespace and belongs to whoever is deploying,
 # not to the repo.
 plus-api/.deploy.env
+
+# deploy-frontend.sh/.ps1 credentials for direct-to-Arvan static sync (S3 access
+# key + secret). Same rule as plus-api/.deploy.env: belongs to whoever is
+# deploying, never the repo.
+.deploy-frontend.env
