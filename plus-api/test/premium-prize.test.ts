@@ -914,6 +914,44 @@ describe('backfillGrantedButNotStackedWinners — shape 2: granted, but never st
     expect(hits).toHaveLength(0);
   });
 
+  it('never re-credits a free win that was already used up before the user later paid', async () => {
+    // The exact trap: won 2 free days while free, used them, they expired and
+    // were reverted — THEN, weeks later, the user became a real subscriber.
+    // Backdating this backfill must not hand them a second, unearned 2 days
+    // just because it now sees a paid subscription on the account.
+    const {
+      findGrantedButNotStackedWinners,
+      runBackfillLeaguePrizeStack,
+    } = await import('../src/scripts/backfill-league-prize-stack.js');
+
+    const ids = await seedGroup('composite', [90, 80, 70]);
+    const grantedAt = new Date('2026-02-08T00:00:00Z');
+    const expiresAt = new Date('2026-02-10T00:00:00Z'); // 2-day free prize
+    await pool.query(
+      `insert into premium_grants
+         (user_id, week_start, granted_at, expires_at, extends_subscription, revoked_at)
+       values ($1, $2, $3, $4, false, $4)`, // revoked at its own expiry — fully used up
+      [ids[0], WEEK, grantedAt.toISOString(), expiresAt.toISOString()],
+    );
+    await pool.query("update profiles set tier = 'free' where id = $1", [ids[0]]);
+
+    // Weeks later, they pay for real.
+    await activateMonths(ids[0], 1, { source: 'payment', now: new Date('2026-03-01T00:00:00Z') });
+    const subBefore = await pool.query<{ expires_at: Date }>(
+      'select expires_at from subscriptions where user_id = $1', [ids[0]],
+    );
+
+    expect((await findGrantedButNotStackedWinners()).some((c) => c.user_id === ids[0])).toBe(false);
+
+    const res = await runBackfillLeaguePrizeStack({ dryRun: false, now: new Date('2026-03-05T00:00:00Z') });
+    expect(res.fixed).toBe(0);
+
+    const subAfter = await pool.query<{ expires_at: Date }>(
+      'select expires_at from subscriptions where user_id = $1', [ids[0]],
+    );
+    expect(subAfter.rows[0].expires_at.getTime()).toBe(subBefore.rows[0].expires_at.getTime());
+  });
+
   it('never touches a founder — nothing to add', async () => {
     const { findGrantedButNotStackedWinners } = await import('../src/scripts/backfill-league-prize-stack.js');
     const ids = await seedGroup('composite', [90, 80, 70]);
