@@ -19,8 +19,8 @@
 // stripped out. mountArticleThreads() is exported for that second case, because
 // a feature that quietly works on phones and not on desktop is the exact gap
 // buildShareButton() was written to close.
-import { api, currentUser } from './api.js?v=52';
-import { el, faNum, icon } from './util.js?v=52';
+import { api, currentUser } from './api.js?v=53';
+import { el, faNum, icon } from './util.js?v=53';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' });
 const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } catch (_) { return ''; } };
@@ -160,6 +160,10 @@ async function draw(host, contentId) {
  */
 export function mountArticleThreads(anchor, contentId) {
   if (!anchor || !contentId) return false;
+  // چالش pages carry `data-dc-challenge-question`; they already have their
+  // own answer box — no گفت‌وگوی زیر مطلب underneath.
+  const scope = anchor.closest('main') || anchor.closest('.ep-box') || document;
+  if (scope.querySelector('[data-dc-challenge-question]')) return false;
   // Audio episodes carry this too, since 2026-08-12. Nothing here ever excluded
   // them — the block is written against a content_id and the API gates on
   // nothing else; they simply had no caller, because initArticle() (which used

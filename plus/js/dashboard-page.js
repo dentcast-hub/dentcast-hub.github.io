@@ -1,11 +1,11 @@
 // Controller for the standalone /plus/ page (PWA start URL). Renders the same
 // dashboard the header overlay uses. Requires login.
-import { currentUser, meStatus } from './api.js?v=52';
-import { unreachableGate } from './premium-cta.js?v=52';
-import { openLoginModal } from './login-modal.js?v=52';
-import { renderDashboard } from './dashboard.js?v=52';
-import { el } from './util.js?v=52';
-import { registerSW } from './pwa.js?v=52';
+import { currentUser, meStatus } from './api.js?v=53';
+import { unreachableGate } from './premium-cta.js?v=53';
+import { openLoginModal } from './login-modal.js?v=53';
+import { renderDashboard } from './dashboard.js?v=53';
+import { el } from './util.js?v=53';
+import { registerSW } from './pwa.js?v=53';
 
 async function main() {
   registerSW();

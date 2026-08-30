@@ -5,7 +5,7 @@
 // from plus/content-index.json's cluster/subtopic/hashtag overlap. As new
 // content publishes and joins a cluster/subtopic or a pathway, it becomes a
 // candidate automatically — nobody has to add a node by hand.
-import { getModel, contentInfo } from './content-index.js?v=52';
+import { getModel, contentInfo } from './content-index.js?v=53';
 
 let _pathwaysPromise;
 function pathwaysModel() {

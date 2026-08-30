@@ -10,7 +10,7 @@
 // from the SAME place plus.js already mounts the میز کار row, so this works
 // identically on a standalone article page and on the desktop shell's injected
 // column-C fragment, with no HTML added to any article page.
-import { el, icon } from './util.js?v=52';
+import { el, icon } from './util.js?v=53';
 
 const STORAGE_KEY = 'dcp:return-trail';
 // A reasonable reading session — long enough that a reader who spends a while
