@@ -18,9 +18,9 @@
 // inserted until BOTH checks confirm there is something to show — a
 // half-published چالش (page markup + challenges.json entry, but no admin
 // paste yet) must be invisible, never a box that 404s on submit.
-import { api, currentUser, meStatus } from './api.js?v=51';
-import { el, faNum } from './util.js?v=51';
-import { premiumCta } from './premium-cta.js?v=51';
+import { api, currentUser, meStatus } from './api.js?v=52';
+import { el, faNum } from './util.js?v=52';
+import { premiumCta } from './premium-cta.js?v=52';
 
 let filePromise = null;
 
@@ -38,7 +38,7 @@ function loadChallenges() {
 
 const COPY = {
   heading: 'چالش',
-  placeholder: 'جوابت را این‌جا بنویس…',
+  placeholder: 'جوابت رو اینجا بنویس .فقط خودت میبینیش و توسط هوش مصنوعی با جواب اصلی تطابق داده میشه.در صورت درستی امتیاز میگیری و نکته ی کلینیکی هم نمایش داده میشه',
   submit: 'بفرست',
   tooShort: 'کمی بیشتر بنویس تا بشود سنجید.',
   premiumRequired: 'برای شرکت در چالش و بررسی پاسختون با هوش مصنوعی اشتراک پرمیوم تهیه کنید',
