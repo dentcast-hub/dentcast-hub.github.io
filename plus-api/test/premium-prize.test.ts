@@ -826,3 +826,145 @@ describe('backfillSkippedPaidWinners', () => {
     expect(hits).toHaveLength(0);
   });
 });
+
+describe('backfillGrantedButNotStackedWinners — shape 2: granted, but never stacked', () => {
+  it('finds and fixes a paid winner whose old grant row never added a day', async () => {
+    const {
+      findGrantedButNotStackedWinners,
+      runBackfillLeaguePrizeStack,
+    } = await import('../src/scripts/backfill-league-prize-stack.js');
+
+    const ids = await seedGroup('composite', [90, 80, 70]);
+    // A real paid subscription, active well before the week they won. Backdate
+    // the activity-log row too — recordActivation timestamps it at the real
+    // wall-clock instant of the write (correct in production, where the row is
+    // written as the payment happens), so a *simulated* past payment has to
+    // move its own row back in time for the "already a subscriber then" check
+    // to see it as historical.
+    await activateMonths(ids[0], 3, { source: 'payment', now: new Date('2026-01-01T00:00:00Z') });
+    await pool.query(
+      `update user_activity set created_at = '2026-01-01T00:00:00Z'
+        where user_id = $1 and action = 'subscription_activated'`,
+      [ids[0]],
+    );
+    const before = await pool.query<{ expires_at: Date }>(
+      'select expires_at from subscriptions where user_id = $1', [ids[0]],
+    );
+
+    // Simulate the OLD rule's silent no-op: a grant row was written (this user
+    // had won before, while still free, so `ours > 0` let a fresh row through)
+    // but no day was ever added to the subscription that was already active.
+    const grantedAt = new Date('2026-02-08T00:00:00Z');
+    const expiresAt = new Date('2026-02-10T00:00:00Z'); // 2-day prize
+    await pool.query(
+      `insert into premium_grants (user_id, week_start, granted_at, expires_at, extends_subscription)
+       values ($1, $2, $3, $4, false)`,
+      [ids[0], WEEK, grantedAt.toISOString(), expiresAt.toISOString()],
+    );
+
+    const found = await findGrantedButNotStackedWinners();
+    expect(found.some((c) => c.user_id === ids[0] && c.week_start === WEEK && c.days === 2)).toBe(true);
+
+    const now = new Date('2026-02-20T00:00:00Z');
+    const res = await runBackfillLeaguePrizeStack({ dryRun: false, now });
+    expect(res.fixed).toBeGreaterThanOrEqual(1);
+
+    const flag = await pool.query<{ extends_subscription: boolean }>(
+      'select extends_subscription from premium_grants where user_id = $1 and week_start = $2',
+      [ids[0], WEEK],
+    );
+    expect(flag.rows[0].extends_subscription).toBe(true);
+
+    const after = await pool.query<{ expires_at: Date }>(
+      'select expires_at from subscriptions where user_id = $1', [ids[0]],
+    );
+    // Exactly the 2 days the winner was owed — added onto the existing expiry,
+    // not reset from `now` (this is a stack, not a fresh grant).
+    expect(after.rows[0].expires_at.getTime() - before.rows[0].expires_at.getTime()).toBe(2 * 86_400_000);
+
+    // Idempotent: the row no longer matches `extends_subscription = false`.
+    const again = await runBackfillLeaguePrizeStack({ dryRun: false, now });
+    expect(again.fixed).toBe(0);
+  });
+
+  it('does not flag a legitimate free-tier flip as a stacking miss', async () => {
+    const { findGrantedButNotStackedWinners } = await import('../src/scripts/backfill-league-prize-stack.js');
+    const ids = await seedGroup('composite', [90, 80, 70]);
+    await finalizeWeek(WEEK);
+    await grantWeeklyPrizes(NEAR_WEEK); // ids[0] had no subscription at all — a correct free flip.
+
+    const hits = (await findGrantedButNotStackedWinners()).filter((c) => c.user_id === ids[0]);
+    expect(hits).toHaveLength(0);
+  });
+
+  it('does not flag a subscription that only started AFTER the win', async () => {
+    const { findGrantedButNotStackedWinners } = await import('../src/scripts/backfill-league-prize-stack.js');
+    const ids = await seedGroup('composite', [90, 80, 70]);
+    const grantedAt = new Date('2026-02-08T00:00:00Z');
+    const expiresAt = new Date('2026-02-10T00:00:00Z');
+    await pool.query(
+      `insert into premium_grants (user_id, week_start, granted_at, expires_at, extends_subscription)
+       values ($1, $2, $3, $4, false)`,
+      [ids[0], WEEK, grantedAt.toISOString(), expiresAt.toISOString()],
+    );
+    // Became a subscriber only afterwards — the free flip they got was correct.
+    await activateMonths(ids[0], 1, { source: 'payment', now: new Date('2026-03-01T00:00:00Z') });
+
+    const hits = (await findGrantedButNotStackedWinners()).filter((c) => c.user_id === ids[0]);
+    expect(hits).toHaveLength(0);
+  });
+
+  it('never re-credits a free win that was already used up before the user later paid', async () => {
+    // The exact trap: won 2 free days while free, used them, they expired and
+    // were reverted — THEN, weeks later, the user became a real subscriber.
+    // Backdating this backfill must not hand them a second, unearned 2 days
+    // just because it now sees a paid subscription on the account.
+    const {
+      findGrantedButNotStackedWinners,
+      runBackfillLeaguePrizeStack,
+    } = await import('../src/scripts/backfill-league-prize-stack.js');
+
+    const ids = await seedGroup('composite', [90, 80, 70]);
+    const grantedAt = new Date('2026-02-08T00:00:00Z');
+    const expiresAt = new Date('2026-02-10T00:00:00Z'); // 2-day free prize
+    await pool.query(
+      `insert into premium_grants
+         (user_id, week_start, granted_at, expires_at, extends_subscription, revoked_at)
+       values ($1, $2, $3, $4, false, $4)`, // revoked at its own expiry — fully used up
+      [ids[0], WEEK, grantedAt.toISOString(), expiresAt.toISOString()],
+    );
+    await pool.query("update profiles set tier = 'free' where id = $1", [ids[0]]);
+
+    // Weeks later, they pay for real.
+    await activateMonths(ids[0], 1, { source: 'payment', now: new Date('2026-03-01T00:00:00Z') });
+    const subBefore = await pool.query<{ expires_at: Date }>(
+      'select expires_at from subscriptions where user_id = $1', [ids[0]],
+    );
+
+    expect((await findGrantedButNotStackedWinners()).some((c) => c.user_id === ids[0])).toBe(false);
+
+    const res = await runBackfillLeaguePrizeStack({ dryRun: false, now: new Date('2026-03-05T00:00:00Z') });
+    expect(res.fixed).toBe(0);
+
+    const subAfter = await pool.query<{ expires_at: Date }>(
+      'select expires_at from subscriptions where user_id = $1', [ids[0]],
+    );
+    expect(subAfter.rows[0].expires_at.getTime()).toBe(subBefore.rows[0].expires_at.getTime());
+  });
+
+  it('never touches a founder — nothing to add', async () => {
+    const { findGrantedButNotStackedWinners } = await import('../src/scripts/backfill-league-prize-stack.js');
+    const ids = await seedGroup('composite', [90, 80, 70]);
+    await grantLifetime(ids[0], { source: 'admin', now: new Date('2026-01-01T00:00:00Z') });
+    const grantedAt = new Date('2026-02-08T00:00:00Z');
+    const expiresAt = new Date('2026-02-10T00:00:00Z');
+    await pool.query(
+      `insert into premium_grants (user_id, week_start, granted_at, expires_at, extends_subscription)
+       values ($1, $2, $3, $4, false)`,
+      [ids[0], WEEK, grantedAt.toISOString(), expiresAt.toISOString()],
+    );
+
+    const hits = (await findGrantedButNotStackedWinners()).filter((c) => c.user_id === ids[0]);
+    expect(hits).toHaveLength(0);
+  });
+});
