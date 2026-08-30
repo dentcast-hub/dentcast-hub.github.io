@@ -17,15 +17,15 @@
 //      scrolls to the mark).
 //   4. Every filter lives in the URL, so a filtered view survives a refresh,
 //      the back button, and being sent to yourself.
-import { el, faNum, debounce } from './util.js?v=51';
-import { api } from './api.js?v=51';
-import { FOLDER_EN } from './content-index.js?v=51';
-import { openCollectionPicker } from './collections.js?v=51';
-import { LABELS, PALETTE } from './config.js?v=51';
+import { el, faNum, debounce } from './util.js?v=52';
+import { api } from './api.js?v=52';
+import { FOLDER_EN } from './content-index.js?v=52';
+import { openCollectionPicker } from './collections.js?v=52';
+import { LABELS, PALETTE } from './config.js?v=52';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
-} from './hl-view.js?v=51';
+} from './hl-view.js?v=52';
 
 // How many article groups (or flat cards) are drawn before the "load more"
 // sentinel takes over. A library of a few thousand highlights must not build a
