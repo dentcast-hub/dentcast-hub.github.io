@@ -509,6 +509,21 @@ the reader's `display_name` and `when(created_at)`, the answer in a scrollable
 = `covered`). One «ثبت و اطلاع بده» button. Ordered oldest-first — whoever
 waited longest for a human is first, the same ordering the support queue uses.
 
+**«ثبت/ویرایشِ یک چالش» takes the whole JSON in one paste.** The draft a چالش
+arrives as is already exactly this endpoint's body — `{content_id, answer_fa,
+key_points}` — so the form's first control is a paste box that parses it and
+fills the three fields beneath it. That is not only a shortcut: `answer_fa`
+carries escaped newlines, and hand-splitting the object meant retyping them,
+so a paste that skipped `JSON.parse` reached the reader with literal `\n` in
+the answer. Two rules hold it in place. **A paste fills, it never posts** —
+the three fields stay the only thing `ثبت` reads, so there is one path to
+`/admin/challenges/upsert` and the founder sees what will be sent before it
+goes. And **the browser re-checks what `validateKeyPoints` checks** (3–5
+points, non-empty `id`/`text`, ids unique) so a bad paste says which point is
+wrong in Persian instead of coming back a bare 400. A bare key-points array
+pastes too, filling that field alone. Driven end-to-end against the shipped
+markup by `plus-api/test/admin-challenge-paste.dom.test.ts`.
+
 ---
 
 ## 8. Score, and what it buys
