@@ -62,6 +62,10 @@ import {
   getAttempt as getChallengeAttempt,
   settleByFounder, upsertChallenge, validateKeyPoints,
 } from '../services/challenge.js';
+import {
+  listClosures, addClosure, removeClosure, clinicStatus, backOn, closureText, today as tehranToday,
+} from '../services/clinic.js';
+import { parseJalali, formatJalaliLong, formatJalaliDay } from '../services/jalali.js';
 import { config } from '../config.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
@@ -227,6 +231,9 @@ function renderHtml(
   .ds-cand b{display:block;font-size:.88rem}
   .ds-cand .muted{margin-top:2px}
   .ds-cand .row{margin-top:8px}
+  #clOut{font-size:.85rem;color:#62779a;min-height:1.6em}
+  #clList td button{background:#b3261e;color:#fff;border:0;border-radius:999px;padding:5px 14px;
+    font:inherit;font-weight:800;font-size:.82rem;cursor:pointer}
 </style></head><body><div class="wrap">
   <h1>پیشخوان بنیان‌گذار</h1>
   <div class="muted">تولید: ${k.generated_at} · منطقه زمانی: ${k.tz}</div>
@@ -549,6 +556,113 @@ function renderHtml(
       load(Number(btn.getAttribute('data-days')));
     });
     load(1);
+  })();
+  </script>
+
+  <h3 style="margin-top:26px">تعطیلی مطب</h3>
+  <div class="muted">
+    کارتِ تماس (<span dir="ltr">dentcast.ir/card/</span>) باز یا بسته بودن مطب را خودش از ساعت کاری حساب
+    می‌کند — و وسط تعطیلی همین باعث می‌شود به مراجع بگوید فردا ساعت ۱۲:۳۰ باز می‌شود. روزهای تعطیل را
+    این‌جا بنویس تا به‌جای آن، خبر تعطیلی بنشیند.
+    <br>
+    <b>اگر این‌جا چیزی نباشد، همان روال عادی است.</b> ردیف هم که تمام شد خودش از کار می‌افتد —
+    پاک کردنش لازم نیست. تاریخ‌ها شمسی‌اند و هر دو سرِ بازه، تعطیل حساب می‌شوند.
+  </div>
+  <form class="bc" id="clForm" onsubmit="return false">
+    <div class="row">
+      <div style="flex:1 1 160px"><label for="clFrom">از تاریخ</label>
+        <input id="clFrom" type="text" inputmode="numeric" placeholder="۱۴۰۵/۰۶/۰۹"></div>
+      <div style="flex:1 1 160px"><label for="clTo">تا تاریخ (خالی = همان یک روز)</label>
+        <input id="clTo" type="text" inputmode="numeric" placeholder="۱۴۰۵/۰۶/۱۳"></div>
+    </div>
+    <div><label for="clNote">متنِ دلخواه روی کارت (اختیاری)</label>
+      <input id="clNote" type="text" maxlength="120" placeholder="خالی بگذار تا خودش بنویسد: مطب تعطیل است · شنبه ۱۴ شهریور ساعت ۱۲:۳۰ باز می‌شود"></div>
+    <button id="clSend" type="button">ثبت تعطیلی</button>
+    <div id="clOut"></div>
+  </form>
+  <div id="clList"></div>
+  <script>
+  (function () {
+    var box = document.getElementById('clList');
+    var out = document.getElementById('clOut');
+    var btn = document.getElementById('clSend');
+    if (!box || !btn) return;
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    function val(id) { return document.getElementById(id).value.trim(); }
+
+    // The first line is the point of the whole section: what the card is saying
+    // RIGHT NOW. A list of dates alone leaves the founder converting calendars
+    // in their head to answer the only question they came here with.
+    function render(d) {
+      var head = '<div class="muted" style="margin-top:10px">الان روی کارت: <b>'
+        + (d.status.closed ? esc(d.status.text) : 'روال عادی — باز/بسته از روی ساعت کاری')
+        + '</b></div>';
+      var rows = d.closures || [];
+      if (!rows.length) {
+        box.innerHTML = head + '<div class="muted">هیچ تعطیلی‌ای ثبت نشده.</div>';
+        return;
+      }
+      var body = rows.map(function (r) {
+        var state = r.state === 'active' ? '<span class="pill hot">همین حالا</span>'
+          : (r.state === 'upcoming' ? '<span class="pill">پیشِ رو</span>' : '<span class="pill">گذشته</span>');
+        var span = esc(r.starts_fa) + (r.ends_on === r.starts_on ? '' : ' تا ' + esc(r.ends_fa));
+        return '<tr><td>' + state + '</td><td>' + span + '</td><td>' + esc(r.text) + '</td><td>'
+          + esc(r.back_fa) + '</td><td><button type="button" data-cl-del="' + esc(r.id)
+          + '">حذف</button></td></tr>';
+      }).join('');
+      box.innerHTML = head + '<div class="tblwrap"><table><tr><th>وضعیت</th><th>بازه</th>'
+        + '<th>متنِ روی کارت</th><th>بازگشت</th><th></th></tr>' + body + '</table></div>';
+    }
+
+    function load() {
+      fetch('/admin/clinic', { credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(render)
+        .catch(function () { box.textContent = 'فهرست نیامد.'; });
+    }
+
+    btn.addEventListener('click', function () {
+      if (!val('clFrom')) { out.textContent = 'تاریخ شروع را بنویس.'; return; }
+      btn.disabled = true; out.textContent = 'در حال ثبت…';
+      fetch('/admin/clinic', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          from: val('clFrom'),
+          to: val('clTo') || undefined,
+          note: val('clNote') || undefined
+        })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          btn.disabled = false;
+          if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+          out.textContent = 'ثبت شد — ' + res.j.summary;
+          document.getElementById('clFrom').value = '';
+          document.getElementById('clTo').value = '';
+          document.getElementById('clNote').value = '';
+          load();
+        })
+        .catch(function () { btn.disabled = false; out.textContent = 'ارسال نشد.'; });
+    });
+
+    box.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-cl-del]') : null;
+      if (!b) return;
+      if (!confirm('این تعطیلی حذف شود؟ کارت برمی‌گردد به روال عادی.')) return;
+      b.disabled = true;
+      fetch('/admin/clinic/delete', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ id: b.getAttribute('data-cl-del') })
+      }).then(function () { out.textContent = 'حذف شد.'; load(); })
+        .catch(function () { b.disabled = false; out.textContent = 'حذف نشد.'; });
+    });
+
+    load();
   })();
   </script>
 
@@ -3570,5 +3684,93 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       url: `/${result.attempt.content_id}.html`,
     }, 'challenge_ruled');
     return reply.send({ ok: true, attempt: result.attempt });
+  });
+
+  /**
+   * تعطیلی مطب — the days the contact card announces instead of computing its
+   * open/closed pill. See services/clinic.ts; the rule is that no row means the
+   * card behaves exactly as it did before this existed.
+   *
+   * GET /admin/clinic answers with what the card is saying RIGHT NOW plus every
+   * row, past ones included — a closure that has expired is not an error to
+   * hide, it is the evidence that last month's break ended by itself.
+   */
+  app.get('/admin/clinic', async (_request, reply) => {
+    const day = tehranToday();
+    const closures = await listClosures();
+    return reply.send({
+      ok: true,
+      today: day,
+      today_fa: formatJalaliLong(day),
+      status: await clinicStatus(day),
+      closures: closures.map((c) => {
+        const back = backOn(c, closures);
+        return {
+          ...c,
+          starts_fa: formatJalaliLong(c.starts_on),
+          ends_fa: formatJalaliLong(c.ends_on),
+          back_fa: formatJalaliDay(back),
+          text: closureText(c, back, c.starts_on),
+          state: c.starts_on <= day && c.ends_on >= day ? 'active'
+            : (c.starts_on > day ? 'upcoming' : 'past'),
+        };
+      }),
+    });
+  });
+
+  /**
+   * POST /admin/clinic — { from, to?, note? }, dates typed in JALALI
+   * ('1405/06/09'), because that is the calendar the founder has the closure
+   * in. They are stored Gregorian like every other day in this API; nothing
+   * downstream learns a second calendar.
+   *
+   * `to` omitted means a single day, which is the shape of most closures and
+   * the one a required end date would get wrong most often. `note` is printed
+   * on the card verbatim — an empty note is not a missing field, it is the
+   * request for the sentence to be built from the dates.
+   */
+  app.post('/admin/clinic', async (request, reply) => {
+    const b = (request.body ?? {}) as { from?: string; to?: string; note?: string };
+    const from = parseJalali(b.from ?? '');
+    if (!from) {
+      return reply.code(400).send({
+        error: 'invalid_from',
+        message: 'تاریخ شروع را شمسی بنویس، مثل ۱۴۰۵/۰۶/۰۹.',
+      });
+    }
+    const to = b.to && b.to.trim() ? parseJalali(b.to) : from;
+    if (!to) {
+      return reply.code(400).send({
+        error: 'invalid_to',
+        message: 'تاریخ پایان را شمسی بنویس، مثل ۱۴۰۵/۰۶/۱۳ (یا خالی بگذار).',
+      });
+    }
+    if (to < from) {
+      return reply.code(400).send({
+        error: 'invalid_range',
+        message: 'تاریخ پایان از شروع جلوتر نیست.',
+      });
+    }
+    const note = (b.note ?? '').trim();
+    const closure = await addClosure(from, to, note || null);
+    const closures = await listClosures();
+    const back = backOn(closure, closures);
+    return reply.send({
+      ok: true,
+      closure,
+      back_on: back,
+      text: closureText(closure, back, closure.starts_on),
+      summary: `از ${formatJalaliLong(from)}`
+        + (to === from ? '' : ` تا ${formatJalaliLong(to)}`)
+        + ` · بازگشت ${formatJalaliDay(back)}`,
+    });
+  });
+
+  app.post('/admin/clinic/delete', async (request, reply) => {
+    const { id } = (request.body ?? {}) as { id?: string };
+    if (!id) return reply.code(400).send({ error: 'id_required' });
+    const removed = await removeClosure(id);
+    if (!removed) return reply.code(404).send({ error: 'not_found' });
+    return reply.send({ ok: true });
   });
 }
