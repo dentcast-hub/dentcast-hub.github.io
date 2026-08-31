@@ -1562,6 +1562,9 @@ function renderHtml(
   <h3 style="margin-top:26px">ثبت/ویرایشِ یک چالش</h3>
   <div class="muted">جواب و نکات کلیدی را این‌جا ثبت کن — تا این کار انجام نشود، چالش روی صفحه زنده نیست (GET /challenge?content_id= همچنان exists:false برمی‌گرداند). همان content_id را دوباره بفرست تا ویرایش شود.</div>
   <div id="chUpBox" class="ds-work" style="margin-top:8px">
+    <label>کلِ JSON را یک‌ضرب این‌جا پیست کن — سه فیلدِ زیر خودشان پر می‌شوند</label>
+    <textarea id="chUpPaste" class="ds-json" rows="4" placeholder='{&quot;content_id&quot;:&quot;insight/insight-70&quot;, &quot;answer_fa&quot;:&quot;…&quot;, &quot;key_points&quot;:[{&quot;id&quot;:&quot;kp1&quot;,&quot;text&quot;:&quot;…&quot;}]}' dir="ltr"></textarea>
+    <div id="chUpPasteMsg" class="muted">آرایه‌ی نکات کلیدی به‌تنهایی هم پذیرفته می‌شود. پیست چیزی را ثبت نمی‌کند — فقط فرم را پر می‌کند؛ ثبت با دکمه‌ی پایین است.</div>
     <label>content_id (مسیر صفحه، بدون / ابتدایی و بدون .html)</label>
     <input id="chUpContentId" type="text" dir="ltr" placeholder="insight/insight-68">
     <label>جواب (برای نمایش به خواننده، بعد از پاسخ‌دادن)</label>
@@ -1575,12 +1578,75 @@ function renderHtml(
   </div>
   <script>
   (function () {
+    var pasteEl = document.getElementById('chUpPaste');
+    var pasteMsg = document.getElementById('chUpPasteMsg');
     var contentIdEl = document.getElementById('chUpContentId');
     var answerEl = document.getElementById('chUpAnswer');
     var kpEl = document.getElementById('chUpKeyPoints');
     var saveBtn = document.getElementById('chUpSave');
     var msg = document.getElementById('chUpMsg');
     if (!saveBtn) return;
+
+    // Same rule the server enforces (services/challenge.ts validateKeyPoints):
+    // three to five points, each with a non-empty id and text, no repeated id.
+    // Checked here too so a bad paste says what is wrong in Persian instead of
+    // coming back as a bare 400.
+    function keyPointProblem(kp) {
+      if (!Array.isArray(kp)) return 'نکات کلیدی باید یک آرایه باشد.';
+      if (kp.length < 3 || kp.length > 5) return 'نکات کلیدی باید سه تا پنج مورد باشد — الان ' + kp.length + ' مورد است.';
+      var seen = {};
+      for (var i = 0; i < kp.length; i++) {
+        var it = kp[i];
+        var n = i + 1;
+        if (!it || typeof it !== 'object' || Array.isArray(it)) return 'موردِ ' + n + ' یک شیء با id و text نیست.';
+        if (typeof it.id !== 'string' || !it.id.trim()) return 'موردِ ' + n + ' id ندارد.';
+        if (typeof it.text !== 'string' || !it.text.trim()) return 'موردِ ' + n + ' text ندارد.';
+        if (seen[it.id]) return 'id تکراری: ' + it.id;
+        seen[it.id] = true;
+      }
+      return '';
+    }
+
+    // A paste fills the three fields; it never posts. JSON.parse is also what
+    // turns the answer's escaped newlines into real ones, which is the half of
+    // this that hand-splitting got wrong.
+    function fillFrom(raw) {
+      var obj;
+      try { obj = JSON.parse(raw); } catch (e) { return 'JSONِ پیست‌شده نامعتبر است — چیزی پر نشد.'; }
+      var kp = null;
+      var filled = [];
+      if (Array.isArray(obj)) {
+        kp = obj;
+      } else if (obj && typeof obj === 'object') {
+        if (typeof obj.content_id === 'string' && obj.content_id.trim()) {
+          contentIdEl.value = obj.content_id.trim();
+          filled.push('content_id');
+        }
+        if (typeof obj.answer_fa === 'string' && obj.answer_fa.trim()) {
+          answerEl.value = obj.answer_fa;
+          filled.push('جواب');
+        }
+        if (obj.key_points != null) kp = obj.key_points;
+      } else {
+        return 'JSONِ پیست‌شده نه شیء است نه آرایه.';
+      }
+      var problem = '';
+      if (kp != null) {
+        kpEl.value = JSON.stringify(kp, null, 2);
+        filled.push('نکات کلیدی' + (Array.isArray(kp) ? ' (' + kp.length + ' مورد)' : ''));
+        problem = keyPointProblem(kp);
+      }
+      if (!filled.length) return 'چیزی برای پرکردن پیدا نشد — کلیدهای content_id / answer_fa / key_points نبودند.';
+      return 'پر شد: ' + filled.join('، ') + (problem ? ' — ولی ' + problem : '');
+    }
+
+    if (pasteEl) {
+      pasteEl.addEventListener('input', function () {
+        var raw = pasteEl.value.trim();
+        if (!raw) { pasteMsg.textContent = ''; return; }
+        pasteMsg.textContent = fillFrom(raw);
+      });
+    }
 
     saveBtn.addEventListener('click', function () {
       var contentId = contentIdEl.value.trim();
@@ -1597,6 +1663,8 @@ function renderHtml(
         msg.textContent = 'content_id و جواب هر دو لازم‌اند.';
         return;
       }
+      var problem = keyPointProblem(keyPoints);
+      if (problem) { msg.textContent = problem; return; }
       msg.textContent = 'در حال ثبت…';
       fetch('/admin/challenges/upsert', {
         method: 'POST', credentials: 'include',
