@@ -767,51 +767,77 @@
       }
     });
 
-    /* --- Live open/closed pill ---
-       Clinic hours: Sat–Wed, 12:30–19:00 (Asia/Tehran), matching the
-       openingHoursSpecification in /about.html. Update both together.
+    /* --- Open/closed pill ---
+       Two sources, in this order. The page itself computes the ORDINARY week
+       (Sat-Wed, 12:30-19:00 Asia/Tehran, matching the openingHoursSpecification
+       in /about.html — update both together). The API's GET /clinic/status is
+       asked whether today falls inside an announced closure, and if it does its
+       sentence replaces the calculation outright.
 
-       HOLIDAY_UNTIL is a temporary override: while today's Tehran date is
-       before it, the pill shows the closure notice instead of the live
-       calculation — which would otherwise promise an opening time in the
-       middle of the break. It expires on its own (the live pill is back on
-       the first day at work, no edit needed); clear it early by setting
-       HOLIDAY_UNTIL to ''. */
+       The split is deliberate: an ordinary week is a fact this page already
+       knows and must never need a network call to state, while a holiday is a
+       decision the founder makes from a phone and must never need a deploy
+       (it is written in the admin panel: «تعطیلی مطب»). So the API can only
+       ever ADD a closure — no answer, no network, no API at all, and the pill
+       is exactly what it was before any of this existed.
+
+       The pill waits up to `GRACE` for that answer before drawing, so on a
+       closed day a visitor is not first told the clinic opens at 12:30. A late
+       answer still corrects the line: a wrong pill for a second beats a wrong
+       pill all day. */
     try {
-      var HOLIDAY_UNTIL = '2026-09-05';                        /* ۱۴ شهریور ۱۴۰۵ — first day back */
-      var HOLIDAY_TEXT = 'مطب تا ۱۴ شهریور تعطیل است';
-
+      var GRACE = 900;
       var OPEN = 12 * 60 + 30, CLOSE = 19 * 60;
       var WEEK = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
       var FA_DAY = { Sat: 'شنبه', Sun: 'یکشنبه', Mon: 'دوشنبه', Tue: 'سه‌شنبه', Wed: 'چهارشنبه' };
       var parts = new Intl.DateTimeFormat('en-US', {
         timeZone: 'Asia/Tehran', weekday: 'short',
-        year: 'numeric', month: '2-digit', day: '2-digit',
         hour: '2-digit', minute: '2-digit', hour12: false
       }).formatToParts(new Date());
       var p = {};
       for (var j = 0; j < parts.length; j++) { p[parts[j].type] = parts[j].value; }
-      var today = p.year + '-' + p.month + '-' + p.day;
       var idx = WEEK.indexOf(p.weekday);
       var mins = (parseInt(p.hour, 10) % 24) * 60 + parseInt(p.minute, 10);
       var isWorkday = idx >= 0 && idx <= 4;
 
-      var pill = document.getElementById('clinic-status');
-      var txt = document.getElementById('clinic-status-text');
-      if (HOLIDAY_UNTIL && today < HOLIDAY_UNTIL) {
-        txt.textContent = HOLIDAY_TEXT;
-      } else if (isWorkday && mins >= OPEN && mins < CLOSE) {
-        pill.classList.add('is-open');
-        txt.textContent = 'مطب الان باز است · تا ساعت ۱۹:۰۰';
+      var open = false, live;
+      if (isWorkday && mins >= OPEN && mins < CLOSE) {
+        open = true;
+        live = 'مطب الان باز است · تا ساعت ۱۹:۰۰';
       } else if (isWorkday && mins < OPEN) {
-        txt.textContent = 'مطب بسته است · امروز ساعت ۱۲:۳۰ باز می‌شود';
+        live = 'مطب بسته است · امروز ساعت ۱۲:۳۰ باز می‌شود';
       } else {
         var n = 1;
         while (WEEK[(idx + n) % 7] === 'Thu' || WEEK[(idx + n) % 7] === 'Fri') { n++; }
         var when = (n === 1) ? 'فردا' : FA_DAY[WEEK[(idx + n) % 7]];
-        txt.textContent = 'مطب بسته است · ' + when + ' ساعت ۱۲:۳۰ باز می‌شود';
+        live = 'مطب بسته است · ' + when + ' ساعت ۱۲:۳۰ باز می‌شود';
       }
-      pill.hidden = false;
+
+      var pill = document.getElementById('clinic-status');
+      var txt = document.getElementById('clinic-status-text');
+      var drawn = false;
+
+      function draw(text, isOpen) {
+        txt.textContent = text;
+        pill.classList.toggle('is-open', !!isOpen);
+        pill.hidden = false;
+        drawn = true;
+      }
+      function drawLive() { if (!drawn) draw(live, open); }
+
+      var grace = setTimeout(drawLive, GRACE);
+      /* Each site talks to its own API host, same rule as the rest of the site
+         (plus/js/config.js). No credentials: the answer is about the clinic's
+         door, not about whoever is reading. */
+      var api = (location.hostname.indexOf('dentcast.org') !== -1)
+        ? 'https://api.dentcast.org' : 'https://api.dentcast.ir';
+      fetch(api + '/clinic/status', { cache: 'no-store' })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          clearTimeout(grace);
+          if (d && d.closed && d.text) { draw(d.text, false); } else { drawLive(); }
+        })
+        .catch(function () { clearTimeout(grace); drawLive(); });
     } catch (e) { /* keep the pill hidden if Intl/timeZone is unavailable */ }
   })();
   </script>
