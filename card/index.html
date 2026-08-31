@@ -769,24 +769,38 @@
 
     /* --- Live open/closed pill ---
        Clinic hours: Sat–Wed, 12:30–19:00 (Asia/Tehran), matching the
-       openingHoursSpecification in /about.html. Update both together. */
+       openingHoursSpecification in /about.html. Update both together.
+
+       HOLIDAY_UNTIL is a temporary override: while today's Tehran date is
+       before it, the pill shows the closure notice instead of the live
+       calculation — which would otherwise promise an opening time in the
+       middle of the break. It expires on its own (the live pill is back on
+       the first day at work, no edit needed); clear it early by setting
+       HOLIDAY_UNTIL to ''. */
     try {
+      var HOLIDAY_UNTIL = '2026-09-05';                        /* ۱۴ شهریور ۱۴۰۵ — first day back */
+      var HOLIDAY_TEXT = 'مطب تا ۱۴ شهریور تعطیل است';
+
       var OPEN = 12 * 60 + 30, CLOSE = 19 * 60;
       var WEEK = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
       var FA_DAY = { Sat: 'شنبه', Sun: 'یکشنبه', Mon: 'دوشنبه', Tue: 'سه‌شنبه', Wed: 'چهارشنبه' };
       var parts = new Intl.DateTimeFormat('en-US', {
         timeZone: 'Asia/Tehran', weekday: 'short',
+        year: 'numeric', month: '2-digit', day: '2-digit',
         hour: '2-digit', minute: '2-digit', hour12: false
       }).formatToParts(new Date());
       var p = {};
       for (var j = 0; j < parts.length; j++) { p[parts[j].type] = parts[j].value; }
+      var today = p.year + '-' + p.month + '-' + p.day;
       var idx = WEEK.indexOf(p.weekday);
       var mins = (parseInt(p.hour, 10) % 24) * 60 + parseInt(p.minute, 10);
       var isWorkday = idx >= 0 && idx <= 4;
 
       var pill = document.getElementById('clinic-status');
       var txt = document.getElementById('clinic-status-text');
-      if (isWorkday && mins >= OPEN && mins < CLOSE) {
+      if (HOLIDAY_UNTIL && today < HOLIDAY_UNTIL) {
+        txt.textContent = HOLIDAY_TEXT;
+      } else if (isWorkday && mins >= OPEN && mins < CLOSE) {
         pill.classList.add('is-open');
         txt.textContent = 'مطب الان باز است · تا ساعت ۱۹:۰۰';
       } else if (isWorkday && mins < OPEN) {
