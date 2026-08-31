@@ -1,0 +1,13 @@
+{
+  "type": "promptologist",
+  "note": "Publish of dentai/promptologist/prompt5-2 (فصل ۵ قسمت ۲ — تشخیص و طرح درمان). Mints #سوگیری_لنگر, the article's closing argument: the model's answer arrives before your own and your reading stops being independent. Every other tag on the article reuses an existing canonical form (#رادیوگرافی_تشخیصی was reused rather than minting a bare #رادیوگرافی — the article's subject is the insufficiency of the image, which is exactly that concept's use_when).",
+  "concepts": [
+    {
+      "tag": "#سوگیری_لنگر",
+      "domain": "clinical",
+      "definition": "اولین تشخیصی که می‌خوانید یا می‌شنوید مثل لنگر می‌افتد و بقیه‌ی نگاهتان دورِ آن می‌چرخد — از آن به بعد به‌جای نگاهِ تازه، دنبالِ شاهدی برای تأیید یا ردِ همان تشخیص می‌گردید.",
+      "use_when": "مقاله ترتیبِ رسیدنِ اطلاعات را عاملِ خطا بداند، نه خودِ اطلاعات را — مثلاً وقتی جوابِ یک ابزار یا همکار پیش از قضاوتِ مستقلِ خودِ دندان‌پزشک می‌رسد.",
+      "aliases": ["anchoring bias", "لنگر تشخیصی", "سوگیری لنگرانداختن", "اثر لنگر"]
+    }
+  ]
+}
