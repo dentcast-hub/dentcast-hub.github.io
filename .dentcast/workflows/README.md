@@ -648,6 +648,65 @@ After the new NoteCast page is built and verified, locate the parent episode pag
 
 Hash the parent episode page before editing and after. Report both. The only diff allowed is the related-content insertion.
 
+### 4.5-ب. Shared evidence base — DES score and article credit mirror across the episode/NoteCast pair
+
+**A NoteCast is the written version of its episode.** When either side of the
+pair cites a scientific source, they are citing the **same** source — so a DES
+record (step 4.13) and a first-author→DOI/PubMed credit (step 4.10 Part 3) are
+not a property of the page they were written on, they are a property of the
+**paper**, and belong on **both** pages of the pair whenever the paper is
+identified on either one. Runs whenever the publish is a **NoteCast** or a
+core **episode**, in either direction:
+
+- **Publishing a NoteCast whose Question 4.8 basket 2 source is already scored
+  on the parent episode** (`plus/des-scores.json` has a `episodes/episode-XX`
+  record, or the parent episode page already carries a `.author`/«منابع»
+  credit for that source): copy the DES `sources[]` array **verbatim** into
+  `notecast/episode-XX` (new `scored_at` = today), and add the same
+  first-author→DOI/PubMed credit link to the NoteCast page, in the NoteCast's
+  own credit-block convention (`.author` block, «نویسنده:» label, placed
+  right after the article body — add the `.author` CSS rule to the page's
+  `<style>` if the template doesn't already carry it).
+- **Publishing/editing a core episode whose cited source is already scored on
+  its NoteCast** (the reverse case): copy the NoteCast's DES record into
+  `episodes/episode-XX` and add the credit block to the episode page (right
+  before «محتوای مرتبط», the precedent placement — see `episodes/episode-12.html`).
+- **Neither side has a record yet:** run step 4.13 once, on whichever page is
+  being published, then immediately mirror the result to the sibling per the
+  rule above — never score the same source twice independently. Two
+  independent scoring runs of the identical source are not guaranteed to
+  agree token-for-token even when the arithmetic lands the same, and mirroring
+  is what keeps the pair's numbers *identical*, not just close.
+- **No DOI exists for the source:** never fabricate one. Ask the user what to
+  link the credit to (a PubMed/PMID record, a publisher page, ResearchGate,
+  or no link at all) — the same standard as step 4.10 Part 3 — and reuse that
+  same answer on both pages rather than asking twice.
+
+**Found on `episodes/episode-40` / `notecast/episode-40` (2026-09-01).** The
+NoteCast was published first (basket 2, Fages & Bennasar 2013, no DOI — the
+user supplied the paper and confirmed a PubMed credit link), and got a DES
+record and credit. The parent episode, which discusses the exact same source,
+was never touched — until the user pointed out that a NoteCast and its
+episode are the same evidence claim told twice, so a reader landing on either
+page should see the same score and the same source. Nothing in steps 4.5,
+4.10, or 4.13 as originally written said to check the sibling page at all;
+each treated its own publish as the entire scope. This step closes that gap
+going forward. **This is a real gap on old pairs, not just a future rule**:
+`episodes/episode-6`/`notecast/episode-6` and `episode-7`/`notecast/episode-7`
+already had matching DES records but no credit link on the NoteCast side, and
+`episode-12`/`-13`'s NoteCasts had neither — all four were backfilled by hand
+when this rule was written and are not migrated automatically by anything.
+When touching an older episode/NoteCast pair for an unrelated reason, check
+this in passing per Hard Rule 11's spirit (a gap on an old page is something
+to fix on its own, never a pattern to copy forward) rather than leaving it.
+
+Verify & report: for the sibling page touched, its before/after hash (the only
+diffs allowed are the DES record's `scored_at` in `plus/des-scores.json` plus,
+on the page itself, the added `.author` block and its CSS rule); confirm the
+mirrored `sources[]` array is byte-for-byte identical to the original record
+except `scored_at`; confirm the credit link target matches the original
+(same DOI/PubMed/other URL, never re-resolved independently).
+
 ### 4.6. Promptologist series prev/next navigation (Promptologist only)
 
 Only when the locked category is **Promptologist**. Skip entirely for every other type.
