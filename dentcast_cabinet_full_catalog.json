@@ -2,7 +2,7 @@
   "schema_version": "2.0",
   "source": "local hard drive — E:\\Paper farzad (recursive)",
   "total_files_scanned": 3313,
-  "unique_papers": 2884,
+  "unique_papers": 2885,
   "duplicates_collapsed": 435,
   "fields_generated": [
     "topic",
@@ -137618,9 +137618,56 @@
         "Sinan Ghishan",
         "Carlos Enrique Cuevas-Suárez"
       ]
+    },
+    {
+      "id": "P2904",
+      "title": "The Endocrown: A Different Type of All-Ceramic Reconstruction for Molars",
+      "file_name": "The Endocrown-A Different Type of All-Ceramic Reconstruction for Molars.pdf",
+      "topic": "endocrown",
+      "topic_path": "endocrown",
+      "type": "narrative review",
+      "local_path": "",
+      "file_size": 335881,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "notecast/episode-40"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1mbFb1Hz1rnZnolDavVtbXMK-mejtU2MV/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1mbFb1Hz1rnZnolDavVtbXMK-mejtU2MV",
+      "drive_view": "https://drive.google.com/file/d/1mbFb1Hz1rnZnolDavVtbXMK-mejtU2MV/view",
+      "drive_id": "1mbFb1Hz1rnZnolDavVtbXMK-mejtU2MV",
+      "tags": [
+        "endocrown",
+        "all-ceramic-restoration",
+        "monolithic-restoration",
+        "butt-joint-margin",
+        "pulp-chamber-retention",
+        "cervical-margin-preparation",
+        "adhesive-bonding",
+        "post-free-restoration",
+        "molar-restoration",
+        "endodontically-treated-tooth",
+        "topic:endocrown",
+        "the-endocrown-a-different-type-of-all-ceramic-reconstruction-for-molars"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "The Endocrown: A Different Type of All-Ceramic Reconstruction for Molars",
+      "doi": "",
+      "journal": "Journal of the Canadian Dental Association",
+      "crossref_year": 2013,
+      "subjects": [],
+      "abstract": "The endocrown is indicated for the endodontic restoration of severely damaged molars. This monolithic, ceramic adhesive restoration requires specific preparation techniques to satisfy criteria that are primarily biomechanical in nature: a cervical margin in the form of a butt joint and a preparation of the pulp chamber that does not extend into the root canals. The remaining tooth substance is thus more robust, resulting in increased longevity. This simple and efficient concept is compatible with the philosophy of biointegrated prostheses. This type of reconstruction, which is still uncommon, should be more widely known and used.",
+      "display_title": "The Endocrown: A Different Type of All-Ceramic Reconstruction for Molars",
+      "authors": [
+        "Michel Fages",
+        "Bertrand Bennasar"
+      ]
     }
   ],
-  "drive_matched": 2848,
+  "drive_matched": 2849,
   "drive_match_breakdown": {
     "by_full_path": 2844,
     "by_filename": 0

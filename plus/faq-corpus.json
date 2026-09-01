@@ -27463,6 +27463,153 @@
           ]
         }
       ]
+    },
+    "notecast/episode-40": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/notecast/episode-40.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "چرا در ترمیم اندوکراون از استفاده از پست در کانال ریشه اجتناب می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "چون قرار دادن پست در کانال ریشه باعث تضعیف ساختار ریشه می‌شود؛ اندوکراون به‌جای پست، گیر خود را از فضای پالپ چمبر و باند ادهزیو می‌گیرد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "حداقل ضخامت تراش اکلوزال لازم برای رستوریشن اندوکراون چقدر است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "حداقل ۲ میلی‌متر، تا استحکام کافی رستوریشن تامین شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "در آماده‌سازی اگزیال اندوکراون، زاویه تقارب دیواره‌ها و حداقل عمق کویتی چقدر باید باشد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "دیواره‌های داخلی با فرز مخروطی و زاویه تقارب ۷ درجه تراش می‌خورند و عمق کویتی نباید کمتر از ۳ میلی‌متر باشد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "الزامات ضخامت مینا و شیب اتصال در مارجین سرویکال اندوکراون چیست؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "ضخامت مینا در ناحیه مارجین سرویکال نباید کمتر از ۲ میلی‌متر باشد و اگر مارجین هم‌سطح نیست، شیب اتصال نباید از ۶۰ درجه بیشتر شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "در آماده‌سازی کف پالپ چمبر برای اندوکراون، گوتاپرکا تا چه عمقی برداشته می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "گوتاپرکا فقط از ابتدای کانال‌ها و نهایتاً تا عمق ۲ میلی‌متر خالی می‌شود؛ به کف پالپ نباید دست زده شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا اندوکراون برای دندان‌های مولر بهترین گزینه رستوریشن محسوب می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ اندوکراون بهترین گزینه برای دندان‌های مولر است، هرچند با کمی اختلاف‌نظر برای پرمولرها و قدامی‌های ماگزیلا هم استفاده می‌شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "اندوکراون در چه شرایطی کنترااندیکه است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "وقتی امکان ایزولاسیون و باندینگ خوب وجود ندارد، عمق حفره کمتر از ۳ میلی‌متر است، یا عرض مارجین سرویکال کمتر از ۲ میلی‌متر است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا برای سمان کردن اندوکراون، سمان‌های سلف‌ادهزیو نسبت به سمان‌های دوال‌کیور توصیه می‌شوند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ سیستم‌های باندینگ همراه با سمان‌های دوال‌کیور به‌جای سمان‌های سلف‌ادهزیو توصیه می‌شود تا گیر و ثبات بهتری حاصل شود."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/notecast/episode-40.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/notecast/episode-40.html#flashcards-c1",
+              "name": "چرایی اجتناب از پست در اندوکراون",
+              "description": "قرار دادن پست در کانال ریشه، ریشه را تضعیف می‌کند؛ اندوکراون گیر خود را از پالپ چمبر و باند ادهزیو می‌گیرد، نه از پست.",
+              "source": "faq",
+              "sourceFaqIndex": 0
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/notecast/episode-40.html#flashcards-c2",
+              "name": "حداقل ضخامت تراش اکلوزال اندوکراون",
+              "description": "دست‌کم ۲ میلی‌متر، برای تامین استحکام کافی رستوریشن.",
+              "source": "faq",
+              "sourceFaqIndex": 1
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/notecast/episode-40.html#flashcards-c3",
+              "name": "زاویه تقارب و عمق آماده‌سازی اگزیال اندوکراون",
+              "description": "فرز مخروطی با زاویه تقارب ۷ درجه؛ عمق کویتی حداقل ۳ میلی‌متر.",
+              "source": "faq",
+              "sourceFaqIndex": 2
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/notecast/episode-40.html#flashcards-c4",
+              "name": "الزامات مارجین سرویکال اندوکراون",
+              "description": "ضخامت مینا حداقل ۲ میلی‌متر؛ شیب اتصال بین سطوح ناهم‌سطح حداکثر ۶۰ درجه.",
+              "source": "faq",
+              "sourceFaqIndex": 3
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/notecast/episode-40.html#flashcards-c5",
+              "name": "عمق برداشتن گوتاپرکا در آماده‌سازی کف پالپ چمبر",
+              "description": "حداکثر تا ۲ میلی‌متر از ابتدای کانال‌ها، بدون دست‌زدن به کف پالپ.",
+              "source": "faq",
+              "sourceFaqIndex": 4
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/notecast/episode-40.html#flashcards-c6",
+              "name": "اندیکاسیون اصلی اندوکراون",
+              "description": "دندان‌های مولر؛ با کمی اختلاف‌نظر برای پرمولر و دندان‌های قدامی ماگزیلا هم به کار می‌رود.",
+              "source": "faq",
+              "sourceFaqIndex": 5
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/notecast/episode-40.html#flashcards-c7",
+              "name": "کنترااندیکاسیون‌های اندوکراون",
+              "description": "ایزولاسیون/باندینگ نامناسب، عمق حفره کمتر از ۳ میلی‌متر، یا عرض مارجین سرویکال کمتر از ۲ میلی‌متر.",
+              "source": "faq",
+              "sourceFaqIndex": 6
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/notecast/episode-40.html#flashcards-c8",
+              "name": "سمان توصیه‌شده برای اندوکراون",
+              "description": "سیستم‌های باندینگ همراه با سمان‌های دوال‌کیور، نه سمان‌های سلف‌ادهزیو، برای گیر و ثبات بهتر.",
+              "source": "faq",
+              "sourceFaqIndex": 7
+            }
+          ]
+        }
+      ]
     }
   }
 }
