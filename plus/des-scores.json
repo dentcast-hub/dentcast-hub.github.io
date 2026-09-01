@@ -14692,5 +14692,110 @@
         "interpretation_fa": "این یک مرور روایتی است که اصول تراش، آماده‌سازی و اندیکاسیون‌های بالینی اندوکراون را توصیف می‌کند، نه یک مطالعه‌ی اولیه یا مرور نظام‌مند. جست‌وجوی ادبیات، غربالگری مطالعات و ارزیابی کیفیت آن‌ها در متن گزارش نشده است. شواهد ماندگاری که ذکر می‌شود بر پایه‌ی پیگیری‌های کوتاه‌مدت ۲ تا ۳ساله‌اند. ارزش بالینی آن در تبیین اصول آماده‌سازی و اندیکاسیون‌هاست، نه در اثبات کارایی درازمدت."
       }
     ]
+  },
+  "episodes/episode-40": {
+    "scored_at": "2026-09-01",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "The Endocrown: A Different Type of All-Ceramic Reconstruction for Molars",
+          "authors": "Fages M, Bennasar B",
+          "year": 2013,
+          "journal": "Journal of the Canadian Dental Association",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review describing endocrown preparation technique, indications and longevity, citing individual studies without a systematic search or appraisal (THERAPY narrative review row, 15)",
+          "evidence_quote": "The purpose of this paper is to describe the preparation and insertion of endocrowns as well as the materials used to achieve a reliable and durable result."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "کل متن هشت‌صفحه‌ای از عنوان تا REFERENCES خوانده شد: Abstract، مقدمه، Methods (Occlusal/Axial Preparation، Polishing the Cervical Band، Preparation of the Cavity Floor، Cleaning the Pulp Chamber، Bonding)، Discussion (Longevity and Effectiveness، Indications and Contraindications، Choice of Materials، Preparation)، Conclusion، و فهرست ۲۷ منبع. هیچ اشاره‌ای به protocol registration یا PROSPERO در متن نیست."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ بخش Methods مربوط به جست‌وجوی ادبیات در متن نیست؛ نام هیچ دیتابیسی (PubMed، MEDLINE، Embase، Scopus، Cochrane) نیامده و منابع ۱ تا ۲۷ به‌صورت روایتی در متن ارجاع داده شده‌اند، نه از طریق یک استراتژی جست‌وجوی مشخص."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "نه شرح روند غربالگری (تعداد رکوردهای یافت‌شده، غربال‌شده یا نهایی، یا نموداری مشابه PRISMA) و نه معیار ورود/خروج در متن آمده؛ کل متن از Abstract تا فهرست ۲۷ منبع خوانده شد و اثری از فرایند انتخاب مطالعات نیست."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. بخش Discussion یافته‌های مطالعات Bindl و Mörmann (1999)، Bernhart و همکاران (2010) و Biacchi و Basting (2012) را مستقیماً نقل می‌کند بدون هیچ نقد یا ارزیابی کیفیت/سوگیری برای هیچ‌کدام؛ واژه‌های quality، bias یا risk of bias در کل متن نیستند."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ سنتز کمّی یا متاآنالیز آماری انجام یا ادعا نشده؛ یافته‌های مطالعات ذکرشده فقط به‌صورت روایتی در بخش Discussion کنار هم آمده‌اند."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ اشاره‌ای به سوگیری انتشار، فانل‌پلات یا آزمون Egger نیست؛ چون سنتز کمّی وجود ندارد چنین ارزیابی‌ای هم موضوعیت ندارد."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع افشا شده",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors have no declared financial interests in any company manufacturing the types of products mentioned in this article.",
+            "note": "بیانیه‌ی صریح تعارض منافع در انتهای متن وجود دارد؛ نویسندگان اعلام کرده‌اند هیچ منفعت مالی در شرکت‌های سازنده‌ی محصولات ذکرشده ندارند."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مرور روایتی/توصیف تکنیک بالینی است، نه کارآزمایی."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study (مرور روایتی، بدون نمونه یا specimen اولیه‌ی خودش)."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 1,
+            "evidence_quote": "In an evaluation of adhesively placed endocrowns after 2 years",
+            "note": "متن برای پشتیبانی از کیفیت بالینی و ماندگاری اندوکراون، مستقیماً به یافته‌های ارزیابی‌های ۲ و ۳ساله (Bindl و Mörmann؛ Bernhart و همکاران) استناد می‌کند بدون طرح این محدودیت که این بازه‌ها برای ادعای ماندگاری/بقای بلندمدت کوتاه‌اند."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 4,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۴ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "این یک مرور روایتی است که اصول تراش، آماده‌سازی و اندیکاسیون‌های بالینی اندوکراون را توصیف می‌کند، نه یک مطالعه‌ی اولیه یا مرور نظام‌مند. جست‌وجوی ادبیات، غربالگری مطالعات و ارزیابی کیفیت آن‌ها در متن گزارش نشده است. شواهد ماندگاری که ذکر می‌شود بر پایه‌ی پیگیری‌های کوتاه‌مدت ۲ تا ۳ساله‌اند. ارزش بالینی آن در تبیین اصول آماده‌سازی و اندیکاسیون‌هاست، نه در اثبات کارایی درازمدت."
+      }
+    ]
   }
 }
