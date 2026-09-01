@@ -1805,6 +1805,25 @@
         "secondary": [],
         "subtopic": "tooth-wear-dahl"
       }
+    },
+    {
+      "slug": "dental-implant",
+      "title": "Dental Implant",
+      "fa_title": "ایمپلنت دندانی",
+      "synonyms": [
+        "ایمپلنت",
+        "ایمپلنت دندانی",
+        "فیکسچر",
+        "dental implant",
+        "endosseous implant",
+        "ایمپلنت اندواسئوس"
+      ],
+      "url": "/glossary/dental-implant.html",
+      "pillar": {
+        "primary": "implantology",
+        "secondary": [],
+        "subtopic": "fundamentals"
+      }
     }
   ]
 }
