@@ -14692,5 +14692,321 @@
         "interpretation_fa": "این یک مرور روایتی است که اصول تراش، آماده‌سازی و اندیکاسیون‌های بالینی اندوکراون را توصیف می‌کند، نه یک مطالعه‌ی اولیه یا مرور نظام‌مند. جست‌وجوی ادبیات، غربالگری مطالعات و ارزیابی کیفیت آن‌ها در متن گزارش نشده است. شواهد ماندگاری که ذکر می‌شود بر پایه‌ی پیگیری‌های کوتاه‌مدت ۲ تا ۳ساله‌اند. ارزش بالینی آن در تبیین اصول آماده‌سازی و اندیکاسیون‌هاست، نه در اثبات کارایی درازمدت."
       }
     ]
+  },
+  "episodes/episode-40": {
+    "scored_at": "2026-09-01",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "The Endocrown: A Different Type of All-Ceramic Reconstruction for Molars",
+          "authors": "Fages M, Bennasar B",
+          "year": 2013,
+          "journal": "Journal of the Canadian Dental Association",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review describing endocrown preparation technique, indications and longevity, citing individual studies without a systematic search or appraisal (THERAPY narrative review row, 15)",
+          "evidence_quote": "The purpose of this paper is to describe the preparation and insertion of endocrowns as well as the materials used to achieve a reliable and durable result."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "کل متن هشت‌صفحه‌ای از عنوان تا REFERENCES خوانده شد: Abstract، مقدمه، Methods (Occlusal/Axial Preparation، Polishing the Cervical Band، Preparation of the Cavity Floor، Cleaning the Pulp Chamber، Bonding)، Discussion (Longevity and Effectiveness، Indications and Contraindications، Choice of Materials، Preparation)، Conclusion، و فهرست ۲۷ منبع. هیچ اشاره‌ای به protocol registration یا PROSPERO در متن نیست."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ بخش Methods مربوط به جست‌وجوی ادبیات در متن نیست؛ نام هیچ دیتابیسی (PubMed، MEDLINE، Embase، Scopus، Cochrane) نیامده و منابع ۱ تا ۲۷ به‌صورت روایتی در متن ارجاع داده شده‌اند، نه از طریق یک استراتژی جست‌وجوی مشخص."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "نه شرح روند غربالگری (تعداد رکوردهای یافت‌شده، غربال‌شده یا نهایی، یا نموداری مشابه PRISMA) و نه معیار ورود/خروج در متن آمده؛ کل متن از Abstract تا فهرست ۲۷ منبع خوانده شد و اثری از فرایند انتخاب مطالعات نیست."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. بخش Discussion یافته‌های مطالعات Bindl و Mörmann (1999)، Bernhart و همکاران (2010) و Biacchi و Basting (2012) را مستقیماً نقل می‌کند بدون هیچ نقد یا ارزیابی کیفیت/سوگیری برای هیچ‌کدام؛ واژه‌های quality، bias یا risk of bias در کل متن نیستند."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ سنتز کمّی یا متاآنالیز آماری انجام یا ادعا نشده؛ یافته‌های مطالعات ذکرشده فقط به‌صورت روایتی در بخش Discussion کنار هم آمده‌اند."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ اشاره‌ای به سوگیری انتشار، فانل‌پلات یا آزمون Egger نیست؛ چون سنتز کمّی وجود ندارد چنین ارزیابی‌ای هم موضوعیت ندارد."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع افشا شده",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors have no declared financial interests in any company manufacturing the types of products mentioned in this article.",
+            "note": "بیانیه‌ی صریح تعارض منافع در انتهای متن وجود دارد؛ نویسندگان اعلام کرده‌اند هیچ منفعت مالی در شرکت‌های سازنده‌ی محصولات ذکرشده ندارند."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مرور روایتی/توصیف تکنیک بالینی است، نه کارآزمایی."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study (مرور روایتی، بدون نمونه یا specimen اولیه‌ی خودش)."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 1,
+            "evidence_quote": "In an evaluation of adhesively placed endocrowns after 2 years",
+            "note": "متن برای پشتیبانی از کیفیت بالینی و ماندگاری اندوکراون، مستقیماً به یافته‌های ارزیابی‌های ۲ و ۳ساله (Bindl و Mörmann؛ Bernhart و همکاران) استناد می‌کند بدون طرح این محدودیت که این بازه‌ها برای ادعای ماندگاری/بقای بلندمدت کوتاه‌اند."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 4,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۴ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "این یک مرور روایتی است که اصول تراش، آماده‌سازی و اندیکاسیون‌های بالینی اندوکراون را توصیف می‌کند، نه یک مطالعه‌ی اولیه یا مرور نظام‌مند. جست‌وجوی ادبیات، غربالگری مطالعات و ارزیابی کیفیت آن‌ها در متن گزارش نشده است. شواهد ماندگاری که ذکر می‌شود بر پایه‌ی پیگیری‌های کوتاه‌مدت ۲ تا ۳ساله‌اند. ارزش بالینی آن در تبیین اصول آماده‌سازی و اندیکاسیون‌هاست، نه در اثبات کارایی درازمدت."
+      }
+    ]
+  },
+  "notecast/episode-12": {
+    "scored_at": "2026-09-01",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Protocol for Removal of Clinically Relevant Contaminants from Glass Ceramic-based Restorations",
+          "authors": "Bock T, Özcan M",
+          "year": 2015,
+          "journal": "The Journal of Adhesive Dentistry",
+          "doi": "10.3290/j.jad.a35018"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative synthesis recommending a clinical protocol for cleaning contaminated bonding surfaces of glass-ceramic restorations before cementation (THERAPY narrative review row, 15)",
+          "evidence_quote": "the following surface cleaning sequence can be recommended to eliminate contaminants from ceramic surfaces, based on the available scientific reports."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. کل متن دو‌صفحه‌ای خوانده شد: عنوان، Question، Answer، جدول Do/Why، CAVE، وابستگی‌های نویسندگان و فهرست ۱۱ منبع. هیچ اشاره‌ای به protocol registration یا PROSPERO در متن نیست."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ بخش Methods یا استراتژی جست‌وجو در متن نیست؛ نام هیچ دیتابیسی (PubMed، MEDLINE، Embase، Scopus، Cochrane) نیامده. تنها عبارت «based on the available scientific reports» آمده که هیچ روش جست‌وجویی توصیف نمی‌کند."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "نه شرح روند غربالگری (تعداد رکوردهای یافت‌شده، غربال‌شده یا نهایی، یا نموداری مشابه PRISMA) و نه معیار ورود/خروج در متن آمده؛ کل متن از عنوان تا فهرست ۱۱ منبع خوانده شد."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. بخش Answer یافته‌های ۱۱ منبع را به‌صورت مستقیم گزارش می‌کند بدون هیچ نقد یا ارزیابی کیفیت/سوگیری برای هیچ‌کدام؛ واژه‌های quality، bias یا risk of bias در کل متن نیستند."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ سنتز کمّی یا متاآنالیز آماری انجام یا ادعا نشده؛ یافته‌های ۱۱ منبع فقط به‌صورت روایتی در جدول Do/Why کنار هم آمده‌اند."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ اشاره‌ای به سوگیری انتشار، فانل‌پلات یا آزمون Egger نیست؛ چون سنتز کمّی وجود ندارد چنین ارزیابی‌ای هم موضوعیت ندارد."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "base_points": 8,
+            "points": 1,
+            "evidence_quote": "Research and Development, Ivoclar Vivadent, Schaan, Liechtenstein.",
+            "note": "کل متن از عنوان تا REFERENCES خوانده شد؛ هیچ بیانیه‌ی conflict of interest، disclosure یا funding در متن نیست. نویسنده‌ی اول در بخش تحقیق‌وتوسعه‌ی Ivoclar Vivadent، یک شرکت تجاری سازنده‌ی مواد دندانی، شاغل است و پروتکل پیشنهادی محصول همین شرکت (Ivoclean) را به‌عنوان یکی از گزینه‌های تمیزکاری توصیه می‌کند، بدون هیچ بیانیه‌ی افشای تعارض منافع."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک دستورالعمل/مرور روایتی است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study (دستورالعمل/مرور روایتی)."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این متن ادعای بقا یا پیامد وابسته به دوره‌ی پیگیری مطرح نمی‌کند؛ موضوع آن موفقیت فوری پروتکل تمیزکاری پیش از سمان‌کاری است، نه بقای بلندمدت."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 4,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۴ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "این یک دستورالعمل روایتی برای پاک‌سازی سطح آلوده‌ی رستوریشن‌های سرامیکی پیش از سمان‌کاری است، نه مطالعه‌ای اولیه. ارزشش در جمع‌بندی عملی پروتکل است، نه وزن آماری شواهد. جست‌وجوی ادبیات و ارزیابی کیفیت مطالعات گزارش نشده و بیانیه‌ی تعارض منافعی هم نیست، حال آنکه نویسنده‌ی اول در Ivoclar Vivadent کار می‌کند و محصول همین شرکت، Ivoclean، توصیه شده است."
+      }
+    ]
+  },
+  "notecast/episode-13": {
+    "scored_at": "2026-09-01",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "source_kind": null,
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "The Esthetic Width in Fixed Prosthodontics",
+          "authors": "Pascal Magne, Michel Magne, Urs Belser",
+          "year": 1999,
+          "journal": "J Prosthod",
+          "doi": null
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review (THERAPY narrative review row, 15)",
+          "evidence_quote": "Based on the concept of the biologic width, a systematic approach is proposed for the elaboration of an \"esthetic width\""
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no protocol registration mentioned anywhere in the text"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no search strategy or bibliographic databases mentioned in the text"
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "missing both screening account and inclusion/exclusion criteria; no Methods section"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no risk of bias or quality appraisal step mentioned anywhere in the text"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no meta-analysis described or mentioned in the text"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no assessment of publication bias mentioned in the text"
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement",
+            "base_points": 8,
+            "points": 1,
+            "evidence_quote": "",
+            "note": "no conflict of interest statement anywhere in the text at all; funding mentioned but no COI declared"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a narrative review"
+          },
+          {
+            "item": "no sample size justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "source text does not address follow-up duration for its own claims"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 4,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله با توجه به اینکه یک مرور نقلی است، نمره ۴ و سطح شواهد E را در بخش مداخلات درمانی دریافت می‌کند.",
+        "interpretation_fa": "فایل esthetic width umbrella effect.pdf یک مقاله مروری نقلی و بیان رویکرد مفهومی بر پایه مفاهیم بیولوژیک است و یک مطالعه بالینی یا مرور سیستماتیک محسوب نمی‌شود. به همین دلیل این ارزیابی در پایین‌ترین سطح از هرم شواهد ساختاریافته قرار می‌گیرد، اما محتوای آن به عنوان یک مبنای تئوریک برای درک عرض استتیک و طراحی رستوریشن‌ها ارزشمند است."
+      }
+    ]
   }
 }
