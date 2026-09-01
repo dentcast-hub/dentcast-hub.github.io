@@ -14079,5 +14079,37 @@
       "secondary": [],
       "subtopic": "ai"
     }
+  },
+  {
+    "type": "notecast",
+    "id": "40",
+    "title": "همه‌چیز درباره اندوکراون‌ها (Endocrown)",
+    "caption": "خلاصه‌ای از دنت‌کست درباره اندوکراون بر اساس یک مقاله پایه و پرارجاع از سال ۲۰۱۳؛ چرایی اجتناب از پست و کانال ریشه، اصول تراش اکلوزال و اگزیال و مارجین سرویکال، عمق کویتی و کف پالپ چمبر، موارد تجویز و عدم تجویز، و توصیه به سمان‌های دوال‌کیور برای سمان کردن.",
+    "hashtags": [
+      "#نوت_کست",
+      "#اندوکراون",
+      "#بات_جوینت",
+      "#درمان_محافظه‌کارانه",
+      "#پست_و_کور",
+      "#سمان_رزینی"
+    ],
+    "keywords": [
+      "endocrown",
+      "monolithic restoration",
+      "post-free restoration",
+      "butt-joint margin",
+      "minimally invasive dentistry",
+      "occlusal reduction",
+      "axial preparation convergence angle",
+      "cervical margin preparation",
+      "pulp chamber retention",
+      "dual-cure resin cement"
+    ],
+    "url": "/notecast/episode-40.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "crowns-onlays"
+    }
   }
 ]
