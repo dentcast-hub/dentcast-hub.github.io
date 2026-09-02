@@ -1,5 +1,17 @@
 # Handoff — the one-time glossary cross-link sweep
 
+> **SPENT — run to completion 1405/06/10.** All 68 candidates from that run
+> got a settled disposition (37 AUTO + 1 resolved quoted false positive + 18
+> founder-approved density anchors applied · 1 structural skip, tag-boundary
+> span · 4 density holds on notecast/episode-5–8 by founder decision · 6 glued
+> · 1 reported-speech quote). Commits:
+> `5328ca354`, `21918d086`, `0cbc5647c`, `1e7e0f8c2`.
+> The durable half — `cross-link.md` + step 4.7-ب — keeps running per-term on
+> every future glossary publish. This file stays only as the record of that
+> one run; do not treat it as a live to-do list.
+
+---
+
 **This is a job, not a rule.** The rules live in
 `.dentcast/workflows/cross-link.md`; read that file end to end first. This file
 is the brief for running its **unscoped backlog sweep** once, and it stops being
