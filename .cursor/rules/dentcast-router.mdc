@@ -1,5 +1,5 @@
 ---
-description: DentCast content router — for ANY request about publishing content, translating a page to English, publishing or managing an ad, reporting ad stats, writing a glossary term, or handling an attached research paper, read this first to find which canonical workflow file governs it.
+description: DentCast content router — for ANY request about publishing content, translating a page to English, publishing or managing an ad, reporting ad stats, writing a glossary term, cross-linking old articles to a new glossary term, or handling an attached research paper, read this first to find which canonical workflow file governs it.
 alwaysApply: true
 ---
 
@@ -35,6 +35,7 @@ alwaysApply: true
 | **تبلیغ/آگهی** دارد یا می‌خواهد تبلیغی را مدیریت کند («تبلیغ دارم»، «اسپانسر گرفتیم»، «تبلیغ X رو خاموش کن») | `.dentcast/workflows/ads.md` |
 | **آمار/گزارش تبلیغ** می‌خواهد («گزارش تبلیغ بده»، «کلیک اسپانسر X چقدر بوده؟») | `.dentcast/workflows/spot-report.md` |
 | می‌خواهد محتوای علمی یک **ترم دانشنامه** نوشته شود | `.claude/skills/glossary-writer/SKILL.md` |
+| می‌خواهد **متن‌های منتشرشده به یک ترمِ تازهٔ دانشنامه لینک شوند** («کراس‌لینک بزن»، «بک‌لینک دانشنامه»، «واژه‌های جدید رو به متن‌های قدیمی وصل کن») | `.dentcast/workflows/cross-link.md` — **هرگز داخل یک publish**؛ پاسِ جدا با کامیت جدا. نیمهٔ مکانیکی: `tools/cross_link_candidates.py` (read-only) |
 | یک **فایل مقاله/پیپر** پیوست کرده (هر نوع محتوا، با یا بدون متن) | `.dentcast/workflows/README.md` — فاز ۰ (روتینگ)، سوال ۴.۷ فاز B (مسلح‌شدن)، **گام ۴.۱۰** (آپلود Drive → غنی‌سازی `dentcast_cabinet_full_catalog.json` → کردیت نویسندهٔ اول با DOI). فقط فایل بدون متن ⇒ فقط اکشن ۱ و ۲ |
 | نقشهٔ کلی ریپو، تریگرها، سطوح Plus/Premium، ثابت‌های سراسری | `AGENTS.md` (نسخهٔ agent-neutralِ `CLAUDE.md`) |
 
