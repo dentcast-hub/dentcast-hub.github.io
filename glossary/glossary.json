@@ -1824,6 +1824,25 @@
         "secondary": [],
         "subtopic": "fundamentals"
       }
+    },
+    {
+      "slug": "treatment-plan",
+      "title": "Treatment Plan",
+      "fa_title": "طرح درمان",
+      "synonyms": [
+        "طرح درمان",
+        "برنامه درمانی",
+        "treatment plan",
+        "treatment planning",
+        "backward planning",
+        "طراحی معکوس"
+      ],
+      "url": "/glossary/treatment-plan.html",
+      "pillar": {
+        "primary": "treatment-planning",
+        "secondary": [],
+        "subtopic": "comprehensive-diagnosis"
+      }
     }
   ]
 }

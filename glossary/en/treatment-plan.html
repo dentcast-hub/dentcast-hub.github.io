@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What Is a Treatment Plan? | DentCast Glossary</title>
+  <meta name="description" content="A treatment plan is the process that converts diagnostic data into a sequence of treatment decisions; why backward planning is its core, how it differs from a procedure list and from a diagnosis, the phasing logic based on biological urgency, and why esthetic decisions are set from the start rather than at the end.">
+  <link rel="canonical" href="https://dentcast.org/glossary/en/treatment-plan.html" />
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card-bg: #ffffff;
+      --text-main: #1f2937;
+      --text-muted: #6b7280;
+      --accent: #0b5fff;
+      --border: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Vazirmatn', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.9;
+    }
+
+    main.page {
+      max-width: 47.5rem;
+      margin: 0 auto;
+      padding: 3.5rem 1.25rem 5rem;
+    }
+
+    header.term-header {
+      margin-bottom: 1.75rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 0;
+      color: var(--text-main);
+    }
+
+    .subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-top: 0.375rem;
+    }
+
+    .content-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1.125rem;
+      padding: 1.875rem 1.625rem;
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      border-right: 4px solid var(--accent);
+      padding-right: 0.75rem;
+      margin-bottom: 0.875rem;
+    }
+
+    p {
+      margin: 0 0 0.875rem 0;
+    }
+
+    footer.term-footer {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      text-decoration: none;
+      font-weight: 500;
+      background: var(--accent);
+      color: #022360;
+    }
+
+    .about-link {
+      margin-top: 1.125rem;
+      font-size: 0.9rem;
+    }
+
+    .about-link a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .about-link a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 0 1.125rem auto;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.7rem; }
+    }
+  </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://dentcast.org/glossary/en/treatment-plan.html#article",
+      "headline": "What Is a Treatment Plan? The Logic of Backward Planning, Phasing and the Boundary with Diagnosis",
+      "description": "Defining a treatment plan as the process of converting diagnostic data into an organized sequence of treatment decisions based on backward planning, distinguishing it from a procedure list and from a diagnosis, the phasing logic based on biological urgency, and the place of esthetic decisions at the start of the decision chain, by Dr. Foad Shahabian.",
+      "image": "https://dentcast.org/logo-v2.png",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "lastReviewed": "2026-09-02",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "reviewedBy": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": "https://dentcast.org/glossary/en/treatment-plan.html"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://dentcast.org/glossary/en/treatment-plan.html#term",
+      "name": "Treatment Plan",
+      "alternateName": "طرح درمان",
+      "description": "The process that converts diagnostic data into an organized sequence of treatment decisions; it is designed backward from the desired end result (backward planning) and places functional, biological and esthetic goals, together with prognosis, patient risk and real constraints, within a single framework.",
+      "inDefinedTermSet": {
+        "@id": "https://dentcast.org/glossary/#termset"
+      }
+    }
+  ]
+}
+</script>
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css?v=3">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="What Is a Treatment Plan? | DentCast Glossary">
+  <meta property="og:description" content="A treatment plan is the process that converts diagnostic data into a sequence of treatment decisions; why backward planning is its core, how it differs from a procedure list and from a diagnosis, the phasing logic based on biological urgency, and why esthetic decisions are set from the start rather than at the end.">
+  <meta property="og:url" content="https://dentcast.org/glossary/en/treatment-plan.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What Is a Treatment Plan? | DentCast Glossary">
+  <meta name="twitter:description" content="A treatment plan is the process that converts diagnostic data into a sequence of treatment decisions; why backward planning is its core, how it differs from a procedure list and from a diagnosis, the phasing logic based on biological urgency, and why esthetic decisions are set from the start rather than at the end.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DentCast",
+      "item": "https://dentcast.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Glossary",
+      "item": "https://dentcast.org/glossary/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "What Is a Treatment Plan? | DentCast Glossary",
+      "item": "https://dentcast.org/glossary/en/treatment-plan.html"
+    }
+  ]
+}
+</script>
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#0b5fff">
+</head>
+<body>
+<!-- ── TOP BAR ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<main class="article-content-wrap">
+  <main class="page">
+    <article>
+      <header class="term-header">
+        <h1>Treatment Plan</h1>
+        <div class="subtitle">طرح درمان</div>
+        <div class="dc-trustline" aria-label="Author and review information">
+          <span><a class="dc-author-link" href="/about.html">Dr. Foad Shahabian</a> — Prosthodontist</span>
+          <span>Published: <time datetime="2026-09-02">2026-09-02</time></span>
+          <span>Last reviewed: <time datetime="2026-09-02">2026-09-02</time></span>
+        </div>
+      </header>
+
+      <div class="content-box">
+
+        <!-- 🌐 Persian Version (SEO-friendly link) -->
+        <a class="lang-btn" href="../treatment-plan.html" rel="noopener">
+          <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+        </a>
+
+        <section>
+          <h2>Definition</h2>
+          <p>
+            A treatment plan is the process that converts diagnostic data into an organized sequence of decisions: what is done, in what order, for what goal, and on what reasoning. Its core is not a list of procedures. The desired end result is defined first, and the path is then worked backward from that result to the necessary steps. In prosthodontics this logic is called backward planning, and the diagnostic wax-up and digital design are its operational embodiment.
+          </p>
+          <p>
+            A treatment plan places functional, biological and esthetic goals, together with the prognosis of each individual tooth, the patient's systemic and behavioral risks, and real time and financial constraints, within a single framework. It also defines alternative pathways in advance for the case where the predictions do not hold.
+          </p>
+        </section>
+
+        <section>
+          <h2>Concept Boundary &amp; Misconceptions</h2>
+          <p>
+            The most common error is conflating a treatment plan with a tooth-by-tooth list of procedures. That list is the output of the plan, not the plan itself. A list that is not derived from a specific end result is merely an aggregation of local treatments.
+          </p>
+          <p>
+            The second error is conflating a treatment plan with a diagnosis. A diagnosis states what the condition is, and a treatment plan states what should be done about that condition and in what order. A single diagnosis can lead to several valid treatment plans, whose difference lies in how risk, cost and reversibility are weighted, not in being right or wrong.
+          </p>
+          <p>
+            The third misconception is regarding a treatment plan as a fixed document written once. A treatment plan is a conditional structure that is revisited at reassessment points. Prognosis, too, is a dynamic category and changes after the disease-control phase. What is determined before inflammation is controlled is the initial prognosis, and it is not sufficient grounds for irreversible decisions.
+          </p>
+          <p>
+            A conceptual error specific to prosthodontics also occurs here. Because esthetic treatments are executed at the end of the sequence, esthetic decisions are assumed to come late as well. The opposite is true. Incisal edge position, the occlusal plane and tooth position are determined from the outset, because these are exactly what dictate restorative space, the need for surgery, and even implant position. Esthetics is the last stage in execution but the first determinant in decision-making.
+          </p>
+        </section>
+
+        <section>
+          <h2>Role in Clinical Decision-Making</h2>
+          <p>
+            The treatment plan is the highest layer of the decision. Material selection, the type of restoration, the decision to keep or extract a tooth, and the occlusal approach all take on meaning within this framework and cannot be evaluated at all outside it.
+          </p>
+          <p>
+            The treatment plan's place is immediately after the diagnostic data is complete and before any irreversible action. A plan built on incomplete data gets rewritten midway, and that rewriting usually ends in further cutting or removal of tissue.
+          </p>
+          <p>
+            The logic of phasing treatment is biological urgency, not order of complexity: first systemic issues, then emergency conditions, then control of active disease (caries, periodontal inflammation, endodontic pathology), then reassessment, and only after stability is established, entry into the final reconstruction phase followed by the maintenance phase.
+          </p>
+          <p>
+            The most sensitive point of any plan is where the prognosis is uncertain. At these points, choosing a path that does not close off the future of treatment and allows for staging takes precedence over an early definitive decision.
+          </p>
+          <p>
+            In extensive reconstructions, the function of the provisional phase is to test the treatment plan, and it provides information that no analysis on a cast can replace. Removing this stage to save time means transferring risk to the final restoration.
+          </p>
+        </section>
+
+      </div>
+
+      <p class="dc-disclaimer">The content of this page is intended for the educational use of dentists and dental students.</p>
+    </article>
+
+    <footer class="term-footer dc-site-footer">
+      <a class="btn" href="/glossary/">Back to the DentCast Glossary</a>
+
+      <div class="about-link">
+        Scientific review and editing: <strong>Dr. Foad Shahabian</strong> — Prosthodontist
+      </div>
+
+      <div class="about-link">
+        <a href="/about.html">About Dr. Foad Shahabian</a>
+      </div>
+    </footer>
+  </main>
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=150" defer></script>
+</body>
+</html>
