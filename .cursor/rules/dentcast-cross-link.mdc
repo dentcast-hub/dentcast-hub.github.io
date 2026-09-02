@@ -29,7 +29,19 @@ python3 tools/cross_link_candidates.py --slug <new-slug> --json /tmp/cross-link.
 python3 tools/cross_link_candidates.py --json /tmp/cross-link.json > /tmp/cross-link.md
 ```
 
-read-only است و هیچ فایلی را عوض نمی‌کند. **از روی نثر دوباره ننویسش** — اسکنِ
+و اعمال **فقط** با ابزار، نه ویرایش دستی:
+
+```bash
+python3 tools/cross_link_apply.py /tmp/cross-link.json --dry-run
+python3 tools/cross_link_apply.py /tmp/cross-link.json --slug <term>
+python3 tools/cross_link_apply.py /tmp/cross-link.json --approve <content_id>:<slug>
+```
+
+`cross_link_apply.py` تنها نویسندهٔ این پاس است: متنِ رندرشدهٔ هر فایل را قبل از
+نوشتن می‌سنجد و اگر فرق می‌کرد آن فایل را اصلاً نمی‌نویسد. اولین سویپِ کامل بریفِ
+اجرای خودش را دارد: `.dentcast/glossary-crosslink-sweep-handoff.md`.
+
+تولیدکننده read-only است و هیچ فایلی را عوض نمی‌کند. **از روی نثر دوباره ننویسش** — اسکنِ
 کلِ سند به‌جای جعبه‌های بدنهٔ هر تایپ، در اجرای اول ۷۴ کاندید کاذب ساخت (تطبیق در
 `<title>`، در ردیف چیپ‌های هشتگ، و داخل JSON-LD).
 

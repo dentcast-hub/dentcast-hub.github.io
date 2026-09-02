@@ -14,7 +14,10 @@ direction: **N pages that already exist, pointed at a term published later.**
 - **On demand, full sweep:** «کراس‌لینک بزن» · «بک‌لینک دانشنامه» · «واژه‌های
   جدید رو به متن‌های قدیمی وصل کن» — for the backlog: terms published before
   step 4.7-ب existed, and pages published after a term that never got linked to
-  it. Same phases, no `--slug`.
+  it. Same phases, no `--slug`. The **first** such sweep has its own run brief,
+  `.dentcast/glossary-crosslink-sweep-handoff.md` (batching, the ASK message to
+  the founder, what to do when it is finished) — that file is spent once its
+  commit lands; this workflow is not.
 
 The two differ only in scope. Every rule below applies identically to both.
 
@@ -80,6 +83,10 @@ their body and none linked the term published that morning.
    glued to a dangling suffix. Punctuation, spaces and quotation marks are
    boundaries; letters, digits and **U+200C** are not. 15 of the first run's 85
    candidates failed this and every one of them looked fine in a plain diff.
+   The generator resolves this itself: it walks **every** occurrence and anchors
+   the first one that stands alone, so a glued first occurrence is not an ASK
+   unless *every* occurrence on the page is glued. It reports which occurrence
+   it picked; the applier targets that same one by ordinal.
 
 5. **Wrap what the PAGE has, not what the glossary has.** The two spellings
    legitimately differ by a ZWNJ or by case — glossary «گروپ فانکشن» vs page
@@ -87,7 +94,7 @@ their body and none linked the term published that morning.
    page's own characters; substituting the glossary's spelling would be a text
    edit, which rule 1 forbids.
 
-6. **First occurrence, one link per term per page.** Never a second anchor for
+6. **First ANCHORABLE occurrence, one link per term per page.** Never a second anchor for
    the same target, never inside a heading, never inside an existing `<a>`.
    Same rule as publishing step 4.8, and for the same reason: only the first
    link to a URL on a page is believed to carry anchor text, so a repeat is pure
@@ -191,17 +198,23 @@ the script printed. The founder may approve all, a subset, or none.
 
 ## Phase C — Apply
 
-For each approved candidate, on its page:
+**`tools/cross_link_apply.py` is the only writer.** Do not hand-edit pages: the
+anchor must land on one exact occurrence — not the first, not a suffixed one,
+not one inside an existing link or a heading — and each of those mistakes
+renders as plausible HTML that a diff review waves through. The applier verifies
+every file before writing it (strip all tags, compare the rendered string) and
+refuses the file outright if it would differ.
 
-1. Locate the exact character run the report names (`surface`), at the first
-   qualifying occurrence, outside every existing `<a>` and every heading.
-2. Wrap it: `<a href="/glossary/<slug>.html">…</a>`, matching the in-body link
-   markup that page already uses. Introduce no new class, no new style.
-3. If the run sits inside a `<strong>`/`<em>`, put the anchor **inside** the
-   emphasis, not around it, unless the surrounding page does the opposite.
+```bash
+python3 tools/cross_link_apply.py /tmp/cross-link.json --dry-run          # show, write nothing
+python3 tools/cross_link_apply.py /tmp/cross-link.json --slug <term>      # AUTO rows, one term
+python3 tools/cross_link_apply.py /tmp/cross-link.json \
+        --approve <content_id>:<slug>                                     # + a founder-approved ASK
+```
 
-Never touch a page the founder did not approve, and never add a second link to a
-page beyond what the report listed for it.
+It applies **AUTO** rows plus whatever `--approve` names, groups by file so a
+page with two links is written and verified once, and exits non-zero if any row
+failed. Read stderr; never work around a failure.
 
 ## Phase D — The gate (mandatory; the run is not done until it is green)
 

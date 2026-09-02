@@ -214,38 +214,54 @@ def scan(only=None):
                 skipped["already_linked"] += 1
                 continue
 
-            hit = None
+            # Walk EVERY occurrence of every surface form and take the first one
+            # that is actually anchorable. The workflow's rule for a first
+            # occurrence glued to a suffix is "use a later occurrence that
+            # stands alone" — doing that here rather than leaving it to a human
+            # to hunt is the difference between 15 judgement calls and none.
+            occurrences = []
             for form in forms[slug]:
                 ffm = fold(form)
                 k = ftext.find(ffm)
-                if k >= 0:
-                    hit = (form, k, len(ffm))
-                    break
-            if hit is None:
+                while k >= 0:
+                    start, end = origin[k], origin[k + len(ffm) - 1] + 1
+                    left = text[start - 1] if start > 0 else " "
+                    right = text[end] if end < len(text) else " "
+                    before = text[max(0, start - 80):start]
+                    occurrences.append({
+                        "form": form, "start": start, "end": end,
+                        "glued": bool(LETTER.match(left) or LETTER.match(right)),
+                        "quoted": before.count("«") > before.count("»"),
+                        "stuck": right if LETTER.match(right) else left,
+                    })
+                    k = ftext.find(ffm, k + 1)
+                if occurrences:
+                    break          # longest form wins; don't mix forms
+            if not occurrences:
                 skipped["term_not_in_body"] += 1
                 continue
 
-            form, k, flen = hit
-            # back to real positions in the untouched text
-            start, end = origin[k], origin[k + flen - 1] + 1
+            occurrences.sort(key=lambda o: o["start"])
+            clean = [o for o in occurrences if not o["glued"] and not o["quoted"]]
+            chosen = clean[0] if clean else occurrences[0]
+            nth = occurrences.index(chosen) + 1
+
+            form, start, end = chosen["form"], chosen["start"], chosen["end"]
             surface = text[start:end]
-
-            left = text[start - 1] if start > 0 else " "
-            right = text[end] if end < len(text) else " "
-            glued = bool(LETTER.match(left) or LETTER.match(right))
-
             before, after = text[max(0, start - 80):start], text[end:end + 80]
-            quoted = before.count("«") > before.count("»")
+            glued, quoted = chosen["glued"], chosen["quoted"]
 
             reasons = []
             if glued:
-                stuck = right if LETTER.match(right) else left
                 reasons.append(
-                    "glued: the match is part of a longer word (%r is attached to it) — wrapping it "
-                    "would cut a word in half" % stuck
+                    "glued: EVERY occurrence on this page is part of a longer word (%r is attached "
+                    "to it) — there is no standalone one to wrap" % chosen["stuck"]
                 )
             if quoted:
-                reasons.append("inside a quotation — prefer a later occurrence in the author's own prose")
+                reasons.append(
+                    "inside a quotation and no unquoted occurrence exists — decide whether these are "
+                    "reported speech (skip the page) or scare-quotes around the concept (wrap it)"
+                )
 
             page_rows.append({
                 "content_id": cid,
@@ -254,6 +270,8 @@ def scan(only=None):
                 # what actually stands in the page, which may differ from the
                 # glossary's spelling by a ZWNJ — the anchor wraps THIS.
                 "surface": surface,
+                "occurrence": nth,
+                "occurrences_total": len(occurrences),
                 "signals": sorted({"%s %s" % (k2, r) for k2, r in index[cid][slug]}),
                 "context": re.sub(r"\s+", " ", (before + "【" + surface + "】" + after)).strip(),
                 "glued": glued,
@@ -323,9 +341,13 @@ def markdown(proposals, skipped):
             for r in group:
                 w("")
                 same = r["surface"] == r["form"]
-                w("- **`%s`** ← wrap «%s»%s"
+                where = ("" if r["occurrence"] == 1 else
+                         "  *(occurrence %d of %d — the earlier ones are not anchorable)*"
+                         % (r["occurrence"], r["occurrences_total"]))
+                w("- **`%s`** ← wrap «%s»%s%s"
                   % (r["slug"], r["surface"],
-                     "" if same else "  *(glossary spells it «%s» — wrap what the PAGE has)*" % r["form"]))
+                     "" if same else "  *(glossary spells it «%s» — wrap what the PAGE has)*" % r["form"],
+                     where))
                 w("  - signal: %s" % "، ".join(r["signals"]))
                 w("  - context: …%s…" % r["context"])
                 for reason in r["ask_reasons"]:

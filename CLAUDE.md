@@ -128,8 +128,10 @@ scoped, it is bounded and no different in kind from step 4.7, which already edit
 other pages mid-publish; the **unscoped** sweep opens every page in the corpus,
 which no publish gate can verify, so that one keeps its own invocation and its
 own commit.
-The mechanical half is `tools/cross_link_candidates.py` (read-only proposal
-generator) and it is **not** to be re-derived in prose — a whole-document scan
+The mechanical half is two tools — `tools/cross_link_candidates.py` (read-only
+proposal generator) and `tools/cross_link_apply.py` (**the only writer**, which
+verifies each file's rendered text before writing it and refuses the file if it
+would change) — and neither is to be re-derived in prose — a whole-document scan
 instead of the per-type body boxes produced 74 false positives on the first run.
 Four rules the whole thing rests on: **anchors only, text never changes** (gated
 by stripping every tag and comparing the rendered string byte-for-byte, because
@@ -141,7 +143,9 @@ run's 85 candidates, all invisible in a plain diff); and the density ceiling is
 the site's **measured p90 of 12 in-body links per 1000 words**, not an invented
 number. `episodes/` is out of scope — its body is the «درباره این اپیزود»
 caption, median 13 words, where one link is ~77 per 1000 — alongside LiteCast, en
-mirrors and the glossary's own pages. Nothing outside the touched pages changes:
+mirrors and the glossary's own pages. The **first** unscoped sweep over the
+107-term backlog has its own spent-when-done brief,
+`.dentcast/glossary-crosslink-sweep-handoff.md`. Nothing outside the touched pages changes:
 no brain write, no builder, and **no version bump** (article pages are not in
 `stamp-version.py`'s content hash — confirm it reports *unchanged*).
 
