@@ -747,6 +747,8 @@ Match the label register to whatever the series already uses for these buttons (
 
 Runs whenever new content is published, regardless of category. The goal is to surface the new content from the glossary terms it genuinely relates to — by adding a single back-link on each truly-related term's page.
 
+**This step is narrower than its name suggests, and the gap is a separate workflow, not something to widen it into.** Its candidate pool is `glossary/glossary.json` only — an insight, a chairside or an episode is never a candidate here — and it writes only into a «کاوش بیشتر» section, never into prose. So the direction *"an already-published article's BODY should link a term published later"* is **not** covered by this step, by 4.8 (which only ever runs on the page in flight, pointing outward), or by 4.9. That direction has one owner: **`.dentcast/workflows/cross-link.md`**, reached two ways — automatically and **scoped to the new slug** by **step 4.7-ب** on a glossary publish, and as an unscoped backlog sweep on its own trigger. The unscoped sweep is what must never run from inside a publish: it opens every page in the corpus, which this publish's gate cannot verify.
+
 #### Step 1 — Semantic review of glossary terms
 
 Read `glossary/glossary.json`. Perform a genuinely **semantic** review of its terms — **not** keyword/string matching. Compare the *conceptual subject* of the new content against each glossary term's meaning and scope, and identify the terms whose topic is genuinely conceptually related to the new content.
@@ -774,6 +776,42 @@ For each glossary term judged semantically related (auto-applied or user-confirm
 - Each edited page differs from its pre-edit state by exactly one appended link, nothing else (confirmed by the before/after hashes and a diff).
 - No page that was at the 5-link cap was touched.
 - Report the full candidate list, which terms were linked, which were skipped (and why: cap reached / no section / judged unrelated), and the link text used on each edited page.
+
+### 4.7-ب. Cross-link the new TERM into existing bodies (glossary publishes only)
+
+**Runs only when the locked category is `glossary`.** Every other type reports it
+as a documented skip ("4.7-ب: skipped — not a glossary publish") and moves on:
+this step is about a newly published *term*, and a NoteCast or an Insight
+publishes no term.
+
+A glossary term is born with **zero** inbound in-body links, and nothing in this
+workflow would ever give it one: 4.7 links only *from glossary pages* and only
+into a «کاوش بیشتر» section, and 4.8 runs on the page in flight pointing
+outward. So a term's inbound link count is a function of how much content is
+published *after* it — which for a term published today is nothing, forever.
+This step closes that at the moment it opens.
+
+**Run `.dentcast/workflows/cross-link.md` scoped to the slug just published**, the
+same way Phase D hands the finished page to `en-version.md`:
+
+```bash
+python3 tools/cross_link_candidates.py --slug <the new slug> --json /tmp/cross-link.json > /tmp/cross-link.md
+```
+
+Then follow that workflow's Phases B → E. Everything it says applies unchanged —
+anchors only with the mechanical text gate, the ZWNJ word-boundary rule, the
+AUTO/ASK split, the density ceiling, `episodes/`+LiteCast+en out of scope. It
+writes **no** brain entry, runs **no** builder, and needs **no** version bump, so
+it does not disturb the ordering of steps 5–8; run it here, before the brain
+write, so its page edits are in the same commit as the publish.
+
+**Do not run the unscoped sweep from inside a publish.** `--slug` is what keeps
+this bounded (today's `dental-implant` produced 32 candidates; the full sweep
+opens 71 pages, which this publish's gate cannot verify).
+
+**Report:** the candidate count for the new slug, what was applied, and every ASK
+with its verdict — or the explicit "0 candidates: every tagged page already links
+it or does not say the term in its body", which is a real and common outcome.
 
 ### 4.8. Suggest in-article internal links (all content types)
 
@@ -2075,6 +2113,7 @@ fix on its own, never a pattern to copy forward.
 - **چالش (Question 4.9 + step 4.14)** — or the documented "4.9: مطلب معمولی" line when it is not one: the question + image markup written on the page (and confirmation it carries no answer/key points anywhere); the paste-box JSON printed for `GET /admin` → «صندوق چالش», with an explicit note that the چالش is not live until the founder pastes it; confirmation `node tools/build_challenge_index.mjs` ran in step 8 and this `content_id` now appears in `plus/challenges.json`; and an explicit per-step verdict for 4.11/4.12/4.13/5.6/5.6-ب/Phase D (all skip, per the table in step 4.14) so none reads as a silent omission (Hard Rule 11)
 - **Cross-linking completion gate (Hard Rule 11) — REQUIRED; the publish is incomplete if any of these is missing.** For **each** of steps 4.7, 4.8, 4.9, report its explicit outcome — never leave one unstated:
   - **4.7 (glossary → new content):** the candidate terms considered, which were linked (auto-applied vs. asked-and-confirmed, per Hard Rule 14, with the link text used), and which were skipped and why (at 5-cap / no section / judged unrelated / asked-and-declined). An empty result is acceptable **only** as a documented "analyzed, 0 qualifying terms".
+  - **4.7-ب (the new TERM into existing bodies — glossary publishes only):** the scoped candidate count for the new slug, what was applied, every ASK with its verdict — or the documented "0 candidates" / "skipped — not a glossary publish".
   - **4.8 (in-body inline links on the new page):** confirmation that a **fresh** semantic analysis of *this* body was run (NOT inherited from the clone); which candidates were auto-applied at high confidence vs. presented to the user (Hard Rule 14); which of the presented ones were approved/inserted (first-occurrence) and which rejected. For episodes, confirm the «درباره این اپیزود» caption was the analyzed body. An empty result is acceptable **only** as a documented "analyzed body, 0 qualifying glossary/episode candidates".
   - **4.9 (related links on the new page):** for episodes, confirm this targeted the **«محتوای مرتبط»** block (not skipped due to the naming difference); the related brain entries considered (sibling series parts first), how many slots were free under the 5-cap, which links were auto-applied vs. presented to the user (Hard Rule 14) and which of those were approved/added, and the remaining-budget math. An empty result is acceptable **only** as a documented "at cap" / "0 qualifying entries".
   - Explicitly confirm that **none** of 4.7/4.8/4.9 was skipped on the grounds that the cloned/previous/sibling page lacked such links (a Hard-Rule-11 violation).
