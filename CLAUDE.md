@@ -112,14 +112,22 @@ A **fifth** workflow. When the user asks to point **existing** article bodies at
 a **newly published glossary term** — trigger phrases like **«کراس‌لینک بزن»**,
 «بک‌لینک دانشنامه», «واژه‌های جدید رو به متن‌های قدیمی وصل کن», and in practice
 after publishing a batch of terms — read `.dentcast/workflows/cross-link.md` and
-follow it. It exists because the publishing router links **forward only**: step
+follow it. **It has two entry points and one machine, the same split
+`en-version.md` uses:** every **glossary** publish ends by running it *scoped to
+the term it just published* (publishing-workflow **step 4.7-ب**, `--slug <new
+slug>`), because a term must not be born with zero inbound links; and the
+**unscoped** backlog sweep is the on-demand trigger above. A publish of any other
+type skips it — its subject is a page, not a term. It exists because the
+publishing router links **forward only**: step
 4.8 runs on the page in flight and points it OUT at terms that already exist, and
 4.7 (the one inbound step) reads only `glossary/glossary.json` and writes only
 into the «کاوش بیشتر» section, never into prose. So a term's inbound in-body link
 count is a function of how much content was published *after* it — a foundational
-term born today starts at zero and stays there. **This never runs as part of a
-publish** (it opens an unbounded set of unrelated files that the publish gate
-cannot verify): it is a periodic, curated pass with its own trigger and commit.
+term born today starts at zero and stays there. **Scope is what makes it safe inside a publish, not staying out of one**:
+scoped, it is bounded and no different in kind from step 4.7, which already edits
+other pages mid-publish; the **unscoped** sweep opens every page in the corpus,
+which no publish gate can verify, so that one keeps its own invocation and its
+own commit.
 The mechanical half is `tools/cross_link_candidates.py` (read-only proposal
 generator) and it is **not** to be re-derived in prose — a whole-document scan
 instead of the per-type body boxes produced 74 false positives on the first run.

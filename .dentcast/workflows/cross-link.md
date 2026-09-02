@@ -4,9 +4,19 @@ Fourth router, alongside `README.md` (publishing), `en-version.md` and `ads.md`.
 Those three all act on **one page in flight**. This one acts on the opposite
 direction: **N pages that already exist, pointed at a term published later.**
 
-**Trigger:** «کراس‌لینک بزن» · «بک‌لینک دانشنامه» · «واژه‌های جدید رو به متن‌های
-قدیمی وصل کن» — and, in practice, after publishing a batch of glossary terms.
-It is **never** a tail of an ordinary publish (see Hard rule 11).
+**Two entry points, one machine** — the same split `en-version.md` already uses:
+
+- **Automatic, scoped:** every **glossary** publish ends by running this workflow
+  for the term it just published (publishing-workflow **step 4.7-ب**, invoked
+  with `--slug <the new slug>`). A term must not be born with zero inbound
+  links; that is the whole defect this workflow exists for, and leaving it to a
+  later manual pass recreates it.
+- **On demand, full sweep:** «کراس‌لینک بزن» · «بک‌لینک دانشنامه» · «واژه‌های
+  جدید رو به متن‌های قدیمی وصل کن» — for the backlog: terms published before
+  step 4.7-ب existed, and pages published after a term that never got linked to
+  it. Same phases, no `--slug`.
+
+The two differ only in scope. Every rule below applies identically to both.
 
 ---
 
@@ -109,10 +119,14 @@ their body and none linked the term published that morning.
     what each ASK class means and how to decide it. An ASK is never resolved by
     guessing and never silently dropped.
 
-11. **This never runs as part of a publish.** It opens an unbounded set of files
-    that have nothing to do with the page being published, and the publish gate
-    cannot verify them. It is a periodic, curated pass with its own trigger and
-    its own commit.
+11. **Scope is what makes this safe inside a publish — not staying out of one.**
+    A **glossary** publish runs it scoped (`--slug <new slug>`): bounded, about
+    the term just published, and no different in kind from step 4.7, which
+    already edits other pages mid-publish. A publish of any **other** type runs
+    it not at all — its subject is a page, not a term, and there is nothing new
+    to point at. The **unscoped** sweep is never a tail of anything: it opens
+    every page in the corpus, which no publish gate can verify, so it gets its
+    own invocation and its own commit.
 
 12. **Nothing outside the touched pages changes.** No brain write, no
     `glossary.json` write, no builder, **no version bump** — `stamp-version.py`
@@ -125,11 +139,18 @@ their body and none linked the term published that morning.
 ## Phase A — Generate the candidates (read-only)
 
 ```bash
+# from a glossary publish (step 4.7-ب) — scoped to the term just published
+python3 tools/cross_link_candidates.py --slug <new-slug> --json /tmp/cross-link.json > /tmp/cross-link.md
+
+# the backlog sweep — every term
 python3 tools/cross_link_candidates.py --json /tmp/cross-link.json > /tmp/cross-link.md
 ```
 
 The script owns every mechanical rule above (2–8). Do **not** re-derive the
 matcher in prose — that is what produced the 74 false positives. Read its report.
+`--slug` filters **before** the per-page density is computed, so a scoped run is
+judged on the links it actually adds; a page is never flagged for a density it
+would only reach if candidates from other terms also landed.
 
 Baseline from the first run (2026-09-01, 107 glossary terms, 472 brain entries):
 

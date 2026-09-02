@@ -183,7 +183,12 @@ def build_signal_index():
     return index, forms
 
 
-def scan():
+def scan(only=None):
+    """`only` = restrict to these glossary slugs (step 4.7-ب scopes to the term
+    just published). It is applied BEFORE the per-page density is computed, so a
+    scoped run is judged on the links it would actually add — filtering the
+    output afterwards would flag a page for a density it never reaches.
+    """
     index, forms = build_signal_index()
     proposals, skipped = [], collections.Counter()
 
@@ -203,6 +208,8 @@ def scan():
 
         page_rows = []
         for slug in sorted(index[cid]):
+            if only is not None and slug not in only:
+                continue
             if "/glossary/%s.html" % slug in body:
                 skipped["already_linked"] += 1
                 continue
@@ -330,9 +337,21 @@ def markdown(proposals, skipped):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--json", metavar="PATH", help="also write the machine-readable candidate list")
+    ap.add_argument(
+        "--slug", action="append", metavar="SLUG", default=None,
+        help="restrict to these glossary slugs (repeatable). This is what the publishing "
+             "workflow's step 4.7-ب passes: a glossary publish cross-links the term it just "
+             "published and nothing else. Omit it for the full backlog sweep.",
+    )
     args = ap.parse_args()
 
-    proposals, skipped = scan()
+    only = set(args.slug) if args.slug else None
+    proposals, skipped = scan(only)
+    for s in sorted((only or set()) - {p["slug"] for p in proposals}):
+        sys.stderr.write(
+            "note: %s has no candidate — every tagged page either already links it, "
+            "or does not say the term in its body\n" % s
+        )
     if args.json:
         with io.open(args.json, "w", encoding="utf-8") as fh:
             json.dump(proposals, fh, ensure_ascii=False, indent=1)
