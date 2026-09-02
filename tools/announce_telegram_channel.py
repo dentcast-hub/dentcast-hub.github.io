@@ -203,6 +203,19 @@ def candidates(files, commits, brain_titles, brain_captions):
             continue
 
         content_id = content_id_from_path(path)
+        # An en mirror is never announced, full stop (site-wide rule: en pages
+        # stay out of the brain ecosystem, Phase D). This must be checked BEFORE
+        # the MARKERLESS_FOLDERS carve-out below: `content_id.split("/", 1)[0]`
+        # only reads the first path segment, so "glossary/en/<slug>" resolves to
+        # folder "glossary" just like the real fa page does, and — because
+        # glossary is in MARKERLESS_FOLDERS precisely so its marker-less fa pages
+        # aren't skipped — the same carve-out was silently letting the en mirror
+        # through too, whenever both landed in the same push (found 2026-09-02,
+        # after glossary/dental-implant's fa+en pair both got announced).
+        if "/en/" in "/" + content_id + "/":
+            yield (content_id, path, None, None, "en mirror (never announced)")
+            continue
+
         folder = content_id.split("/", 1)[0]
         if folder not in MARKERLESS_FOLDERS and not has_marker(page_html):
             yield (content_id, path, None, None, "no dc-notify marker (draft or en-mirror)")
