@@ -747,6 +747,8 @@ Match the label register to whatever the series already uses for these buttons (
 
 Runs whenever new content is published, regardless of category. The goal is to surface the new content from the glossary terms it genuinely relates to — by adding a single back-link on each truly-related term's page.
 
+**This step is narrower than its name suggests, and the gap is a separate workflow, not something to widen it into.** Its candidate pool is `glossary/glossary.json` only — an insight, a chairside or an episode is never a candidate here — and it writes only into a «کاوش بیشتر» section, never into prose. So the direction *"an already-published article's BODY should link a term published later"* is **not** covered by this step, by 4.8 (which only ever runs on the page in flight, pointing outward), or by 4.9. That direction has one owner: **`.dentcast/workflows/cross-link.md`**, a periodic pass with its own trigger. Do **not** run it from inside a publish — it opens an unbounded set of files unrelated to the page being published, which this publish's gate cannot verify.
+
 #### Step 1 — Semantic review of glossary terms
 
 Read `glossary/glossary.json`. Perform a genuinely **semantic** review of its terms — **not** keyword/string matching. Compare the *conceptual subject* of the new content against each glossary term's meaning and scope, and identify the terms whose topic is genuinely conceptually related to the new content.

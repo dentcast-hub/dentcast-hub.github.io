@@ -106,6 +106,37 @@ an ad 20 times is 20 — there is deliberately no per-user attribution, so
 measurement**, and no data of any kind exists before 2026-07-26. Numbers are
 never guessed — if the data isn't in hand, hand over the command instead.
 
+## Cross-link protocol (trigger)
+
+A **fifth** workflow. When the user asks to point **existing** article bodies at
+a **newly published glossary term** — trigger phrases like **«کراس‌لینک بزن»**,
+«بک‌لینک دانشنامه», «واژه‌های جدید رو به متن‌های قدیمی وصل کن», and in practice
+after publishing a batch of terms — read `.dentcast/workflows/cross-link.md` and
+follow it. It exists because the publishing router links **forward only**: step
+4.8 runs on the page in flight and points it OUT at terms that already exist, and
+4.7 (the one inbound step) reads only `glossary/glossary.json` and writes only
+into the «کاوش بیشتر» section, never into prose. So a term's inbound in-body link
+count is a function of how much content was published *after* it — a foundational
+term born today starts at zero and stays there. **This never runs as part of a
+publish** (it opens an unbounded set of unrelated files that the publish gate
+cannot verify): it is a periodic, curated pass with its own trigger and commit.
+The mechanical half is `tools/cross_link_candidates.py` (read-only proposal
+generator) and it is **not** to be re-derived in prose — a whole-document scan
+instead of the per-type body boxes produced 74 false positives on the first run.
+Four rules the whole thing rests on: **anchors only, text never changes** (gated
+by stripping every tag and comparing the rendered string byte-for-byte, because
+those paragraphs are the founder's own words — Hard Rule 16); **the signal is the
+page's own hashtags + `keywords`**, resolved through the hashtag reference's alias
+layer, never a site-wide string scan; **a ZWNJ is not a word boundary**, so
+«ایمپلنت» inside «ایمپلنت‌محور» or «ایمپلنتی» is never wrapped (15 of the first
+run's 85 candidates, all invisible in a plain diff); and the density ceiling is
+the site's **measured p90 of 12 in-body links per 1000 words**, not an invented
+number. `episodes/` is out of scope — its body is the «درباره این اپیزود»
+caption, median 13 words, where one link is ~77 per 1000 — alongside LiteCast, en
+mirrors and the glossary's own pages. Nothing outside the touched pages changes:
+no brain write, no builder, and **no version bump** (article pages are not in
+`stamp-version.py`'s content hash — confirm it reports *unchanged*).
+
 ## Attached paper file (trigger — ANY type, file-driven)
 
 The paper actions are triggered by the **paper file itself**, *not* by the
