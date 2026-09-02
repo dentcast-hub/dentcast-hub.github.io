@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="dc-notify" content="true">
+  <title>پرامپتولوژیست — تله‌ی ندانستن | دنت‌کست</title>
+  <meta name="description" content="فصل ۵، قسمت ۳: توصیه‌ی «اول تشخیصِ خودتان را بنویسید» یک فرضِ خاموش دارد — اینکه اصلاً تشخیصی برای نوشتن دارید. وقتی از سرِ ندانستن سراغِ مدل می‌روید، لحنِ مطمئنِ جواب حسِ ندانستن را خاموش می‌کند بی‌آنکه خودِ ندانستن از بین برود، و برخلافِ آدم‌ها، تردیدِ مدل هیچ‌وقت نشت نمی‌کند. یک مطالعه‌ی روی کولونوسکوپی نشان می‌دهد این وابستگی نسخه‌ی کندترِ ماه‌به‌ماه هم دارد: مهارتِ خودِ پزشک را می‌فرساید. راهِ کار در این قلمرو، خواستنِ نقشه (طبقه‌بندی، استناد قابلِ‌ردیابی) به‌جای حکم است.">
+  <link rel="canonical" href="https://dentcast.org/dentai/promptologist/prompt5-3.html">
+  <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/dentai/promptologist/prompt5-3.html">
+  <link rel="alternate" hreflang="fa" href="https://dentcast.org/dentai/promptologist/prompt5-3.html">
+  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/dentai/promptologist/prompt5-3.html">
+  <meta name="author" content="دکتر فواد شهابیان">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="پرامپتولوژیست — تله‌ی ندانستن | دنت‌کست">
+  <meta property="og:description" content="فصل ۵، قسمت ۳: توصیه‌ی «اول تشخیصِ خودتان را بنویسید» یک فرضِ خاموش دارد — اینکه اصلاً تشخیصی برای نوشتن دارید. وقتی از سرِ ندانستن سراغِ مدل می‌روید، لحنِ مطمئنِ جواب حسِ ندانستن را خاموش می‌کند بی‌آنکه خودِ ندانستن از بین برود، و برخلافِ آدم‌ها، تردیدِ مدل هیچ‌وقت نشت نمی‌کند. یک مطالعه‌ی روی کولونوسکوپی نشان می‌دهد این وابستگی نسخه‌ی کندترِ ماه‌به‌ماه هم دارد: مهارتِ خودِ پزشک را می‌فرساید. راهِ کار در این قلمرو، خواستنِ نقشه (طبقه‌بندی، استناد قابلِ‌ردیابی) به‌جای حکم است.">
+  <meta property="og:url" content="https://dentcast.org/dentai/promptologist/prompt5-3.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="پرامپتولوژیست — تله‌ی ندانستن | دنت‌کست">
+  <meta name="twitter:description" content="فصل ۵، قسمت ۳: توصیه‌ی «اول تشخیصِ خودتان را بنویسید» یک فرضِ خاموش دارد — اینکه اصلاً تشخیصی برای نوشتن دارید. وقتی از سرِ ندانستن سراغِ مدل می‌روید، لحنِ مطمئنِ جواب حسِ ندانستن را خاموش می‌کند بی‌آنکه خودِ ندانستن از بین برود، و برخلافِ آدم‌ها، تردیدِ مدل هیچ‌وقت نشت نمی‌کند. یک مطالعه‌ی روی کولونوسکوپی نشان می‌دهد این وابستگی نسخه‌ی کندترِ ماه‌به‌ماه هم دارد: مهارتِ خودِ پزشک را می‌فرساید. راهِ کار در این قلمرو، خواستنِ نقشه (طبقه‌بندی، استناد قابلِ‌ردیابی) به‌جای حکم است.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/promptologist/prompt5-3.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/dentai/promptologist/prompt5-3.html"
+      },
+      "url": "https://dentcast.org/dentai/promptologist/prompt5-3.html",
+      "headline": "پرامپتولوژیست — تله‌ی ندانستن",
+      "description": "فصل ۵، قسمت ۳: توصیه‌ی «اول تشخیصِ خودتان را بنویسید» یک فرضِ خاموش دارد — اینکه اصلاً تشخیصی برای نوشتن دارید. وقتی از سرِ ندانستن سراغِ مدل می‌روید، لحنِ مطمئنِ جواب حسِ ندانستن را خاموش می‌کند بی‌آنکه خودِ ندانستن از بین برود، و برخلافِ آدم‌ها، تردیدِ مدل هیچ‌وقت نشت نمی‌کند. یک مطالعه‌ی روی کولونوسکوپی نشان می‌دهد این وابستگی نسخه‌ی کندترِ ماه‌به‌ماه هم دارد: مهارتِ خودِ پزشک را می‌فرساید. راهِ کار در این قلمرو، خواستنِ نقشه (طبقه‌بندی، استناد قابلِ‌ردیابی) به‌جای حکم است.",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "fa",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "پرامپتولوژیست",
+        "url": "https://dentcast.org/dentai/promptologist"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "پرامپتولوژیست",
+          "item": "https://dentcast.org/dentai/promptologist"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "تله‌ی ندانستن",
+          "item": "https://dentcast.org/dentai/promptologist/prompt5-3.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css?v=3">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-right:4px solid var(--ac);padding-right:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-related-link{display:inline-flex;align-items:center;gap:0.375rem;font-size:.87rem;font-weight:600;color:var(--ac);text-decoration:none;padding:0.5rem 1rem;border:1px solid var(--ac);border-radius:0.625rem;transition:background .15s,color .15s;}
+.ep-related-link:hover{background:var(--ac);color:#fff;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{display:flex;width:fit-content;max-width:100%;align-items:center;gap:0.375rem;margin:0 0 1.125rem auto;background:rgba(255,255,255,0.92);border:1px solid rgba(0,0,0,0.1);border-radius:0.75rem;padding:0.375rem 0.75rem;font-size:0.8125rem;font-weight:700;color:#0b5fff;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.12);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);cursor:pointer;transition:transform .18s ease,background .18s ease;}
+.lang-btn:hover{background:#fff;transform:scale(1.03);}
+  </style>
+</head>
+<body>
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">&#9776;</button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">&#128225;</button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">&#128269;</button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">&#128241;</span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">&#128231;</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">&#10024;</span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<main class="article-content-wrap ep-page">
+  <a href="/dentai/promptologist/" class="ep-back">&#8592; بازگشت به پرامپتولوژیست</a>
+
+  <!-- 🌐 English Version (SEO-friendly language toggle) -->
+  <a class="lang-btn" href="en/prompt5-3.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> English
+  </a>
+
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">فصل ۵ · قسمت ۳</div>
+      <h1 class="ep-title">تله‌ی ندانستن</h1>
+      <div class="ep-meta">
+        <span>&#9201; ۱۱ دقیقه مطالعه</span>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">متنِ این قسمت</h2>
+      <div class="ep-caption"><p><a href="/dentai/promptologist/prompt5-2.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">قسمتِ قبل</a> با توصیه‌ای تمام شد که ظاهرش ساده بود: اول تشخیصِ خودتان را بنویسید، واقعاً بنویسید، بعد بروید سراغِ مدل. توصیه‌ی درستی است و بیشترِ روزهای کاری‌تان را پوشش می‌دهد. ولی یک فرضِ خاموش دارد، و آن فرض این است که شما تشخیصی برای نوشتن دارید.</p><p>کمی فکر کنید و به خاطر بیارید آخرین بار کی کیسی رو با هوش مصنوعی در میون گذاشتید، کیسِ روتین را با مدل چک نمی‌کنید. مولرِ سومی که صد بار کشیده‌اید، پالپیتِ برگشت‌ناپذیری که علائمش کتابی است، بیمارِ سالمی که فقط اسکیلینگ می‌خواهد — این‌ها را کسی نمی‌برد جلوی مدل. سراغِ مدل وقتی می‌روید که چیزی سرِ جایش نیست. یک خطِ اضافه در پرونده، یک تصویری که شبیهِ هیچ‌کدام از چیزهایی که دیده‌اید نیست، یک دارویی که اسمش را می‌شناسید ولی نمی‌دانید که چه تداخلی با کار امروزتان دارد.</p><p>یعنی جایی مدل و ابزار رو برمی‌دارید که آگاهی کمتری دارید و خب این طبیعیه.</p><p><strong>وقتی «نمی‌دانم» تبدیل می‌شود به «می‌دانم»</strong></p><p>بیمارِ سالمندی روی صندلی نشسته، سابقه‌ی مصرفِ دارو برای استئوپروز دارد، و یک مولرِ غیرقابلِ نگهداری که باید کشیده شود. حالا سؤال‌هایی جلوی شماست که جوابشان را با اطمینان نمی‌دانید: آیا دارو باید قطع شود، چه مدت قبل، اصلاً قطع‌کردنش فایده‌ای دارد یا نه، و تصمیمش با کیست.</p><p>سؤال را تایپ می‌کنید. جوابی که برمی‌گردد مرتب است، دسته‌بندی‌شده، با فاکتورهای خطر و یک عددِ مشخص برای مدتِ قطعِ دارو. متن هیچ جای لنگی ندارد.</p><p>حالا مهم‌ترین نکته‌ی این قسمت: بحث سرِ این نیست که آن جواب غلط است. ممکن است بخشِ زیادش درست باشد. اتفاقی که افتاد جای دیگری افتاد — پنج دقیقه پیش یک سؤالِ باز جلوی شما بود و حالا نیست. حسِ ندانستن رفته، ولی خودِ ندانستن هنوز سرِ جایش است.</p><p>و همان حسِ ندانستن بود که کار می‌کرد. ناراحت‌کننده بود، و چون ناراحت‌کننده بود شما را وامی‌داشت به همکار زنگ بزنید، به پزشکِ بیمار نامه بنویسید، دو ساعت وقت بگذارید و یک ریویو بخوانید، یا اصلاً بیمار را ارجاع بدهید. مدل آن جواب را به شما داد و در همان حرکت، زنگِ خطر را هم خاموش کرد. شکاف پر نشد؛ فقط چراغش خاموش شد.</p><p><a href="/dentai/promptologist/prompt1-5.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">فصل ۱</a> این را به‌عنوانِ یک قید گفته بود: مدل فقط در محدوده‌ای که خودتان واردید ابزار است، بیرونش دام. آنجا این جمله یک هشدار بود. اینجا مکانیزمش را می‌بینید — نیازِ شما به مدل و توانِ سنجشتان در دو جهتِ مخالف حرکت می‌کنند.</p><p>هرچه بیشتر بدانید کمتر لازمش دارید و راحت‌تر مچش را می‌گیرید؛ هرچه کمتر بدانید بیشتر لازمش دارید و کمتر می‌توانید مطالبی که می‌گوید را صحت سنجی کنید و دام دقیقاً همین جاست.</p><p><strong>چرا هیچ علامتی به شما نمی‌رسد</strong></p><p>وقتی همان سؤال را از یک همکار می‌پرسید، فقط جوابش را نمی‌گیرید. مکثش را هم می‌گیرید. اینکه بگوید «والا من دو تا کیس بیشتر ندیدم»، یا ابرو بالا بیندازد، یا وسطِ حرفش برگردد و بگوید بگذار یک جا چکش کنم — این‌ها بخشی از جواب‌اند و شما ناخودآگاه دارید رویشان حساب می‌کنید. تردیدِ آدم‌ها نشت می‌کند.</p><p>وقتی تردید را می‌بینید به ندانستن و ناآگاهی طرف مقابل آگاه میشید و همین در مسیر درمان و پیدا کردن راه درست به شما کمک می‌کند.</p><p>تردیدِ مدل نشت نمی‌کند. <a href="/dentai/promptologist/prompt2-1.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">فصل ۲</a> سرِ همین بود: لحنِ مطمئن از درستی جدا است، چون روانی کلمات و درستی هر دو از یک فرایند بیرون می‌آیند. جمله‌ای که پشتش سه هزار مقاله ایستاده و جمله‌ای که پشتش هیچ چیز نیست، با یک لحن نوشته می‌شوند. پس تنها علامتی که در دنیای واقعی رویش حساب می‌کردید، اینجا صاف است و هیچ اطلاعاتی به شما نمی‌دهد.</p><p>یک چیز را هم اضافه کنید که راحت از قلم می‌افتد: مدل نمی‌داند شما چقدر می‌دانید. همان جوابِ استئونکروز را به یک جراحِ فک با بیست سال کار و به دانشجوی سالِ آخر با یک لحن و یک عمق تحویل می‌دهد. هیچ دربانی وسط نیست که بگوید این سؤال از حیطه‌ی تو بیرون است. تنها دربان خودتان هستید، و درست همان لحظه کمترین اطلاعات را برای دربانی دارید.</p><p><strong>نسخه‌ی کُندترِ همین ماجرا</strong></p><p>تا اینجا حرف بر سرِ یک گفت‌وگو بود. یک بیمار، یک سؤال، یک تصمیم. ولی این ماجرا یک نسخه‌ی ماه‌به‌ماه هم دارد که سر و صدا ندارد و برای همین دیرتر دیده می‌شود.</p><p>در یک مطالعه‌ روی کولونوسکوپی، نرخِ کشفِ آدنوم در کولونوسکوپی‌های معمولی — یعنی آن‌هایی که بدونِ کمکِ هوش مصنوعی انجام می‌شدند — بعد از دوره‌ای که همان اندوسکوپیست‌ها مدتی با سیستمِ کمکی کار کرده بودند، و بعد ابزار را ازشان گرفتند، از حدود ۲۸ درصد به حدود ۲۲ درصد افت کرده بود. یعنی وقتی ابزار را از دستشان گرفتند، از قبل از آشنایی با ابزار هم ضعیف‌تر بودند.</p><p>دو قید را باید همین‌جا کنارش گذاشت، چون بدونشان این عدد بیشتر از آنچه هست ادعا می‌کند. اول اینکه مطالعه مشاهده‌ای است، نه کارآزمایی؛ یک مطالعه هم به‌تنهایی چیزی را قطعی نمی‌کند. دوم و مهم‌تر: آن سیستم هوش مصنوعی اصلاً از خانواده‌ی چیزی که ما در این کتاب درباره‌اش حرف می‌زنیم نبود. آن هوش مصنوعیِ تشخیصی و تخصصی بود، همان نژادِ فصلِ اول، آموزش‌دیده روی درستی، و در کارش هم خوب بود.</p><p>و همین دومی است که استدلال را قوی‌تر می‌کند نه ضعیف‌تر. فرسایش از غلط‌گفتنِ ابزار نیامده بود؛ ابزار درست می‌گفت. فرسایش از این آمد که آدم بخشی از کار را که داشت او را می‌ساخت و ورزیده میکرد، واگذار کرد. اگر این با ابزارِ دقیق اتفاق می‌افتد، هیچ دلیلی ندارد فکر کنیم با ابزاری که دقیق نیست اتفاق نمی‌افتد.</p><p>نکته این نیست که استفاده نکنید. نکته این است که ترتیبِ قسمتِ قبل این یکی را حل نمی‌کند.</p><p>آنجا حرف سرِ یک گفت‌وگو بود و راه‌حلش این بود که جوابِ خودتان را زودتر بنویسید. اینجا حرف سرِ ماه‌هاست، و چیزی که آرام‌آرام کوچک می‌شود همان چیزی است که قرار بود اول بنویسیدش، یعنی با استفاده‌ی مداوم توانایی و آگاهی شما تحلیل میرود.</p><p><strong>پس در قلمروِ ندانستن چه کار می‌شود کرد</strong></p><p>جوابِ صادقانه این نیست که مدل را کنار بگذارید. جواب این است که در این قلمرو نقشش را عوض کنید: از کسی که حکم می‌دهد، به کسی که نقشه می‌دهد.</p><p>اسم‌ها را بخواهید، نه حکم را. بزرگ‌ترین مانع در جایی که وارد نیستید این است که نمی‌دانید اصلاً دنبالِ چه بگردید. ضایعه‌ی سفیدی در مخاط می‌بینید که شبیهِ هیچ‌کدام از چیزهای آشنا نیست؛ پرسیدنِ «این چیست» بدترین سؤالِ ممکن است، چون جوابش دقیقاً همان چیزی است که نمی‌توانید بسنجید. ولی اگر بپرسید دسته‌بندیِ ضایعات سفید چیست، هر کدام با چه ویژگی‌ای از بقیه جدا می‌شود، و برای افتراقشان چه چیزی را باید ببینم — چیزی می‌گیرید که ارزشش با ارزشِ حکم فرق دارد.</p><p>این نقشه ارائه شده توسط هوش مصنوعی ارزان و سریع راستی‌آزمایی می‌شود و شما را از چت‌باکس می‌برد بیرون، سمتِ کتاب و مقاله و آدم.</p><p>اگر جوابِ محتوایی می‌خواهید، حداقل قابلِ ردیابی‌اش کنید. قسمتِ قبل نشان داد که بستنِ مدل به منبع، دقتِ بالینی را معجزه‌آسا بالا نمی‌برد. ولی همان مطالعه یک چیزِ دیگر را نشان داد که اینجا دقیقاً به کار می‌آید: استناد و ردیابی بهتر شد. یعنی وقتی نمی‌توانید بپرسید «این درست است؟»، هنوز می‌توانید بپرسید «این جمله در آن مقاله هست؟» — و سؤالِ دوم را، برخلافِ اولی، بلدید جواب بدهید. مقاله را باز کنید و نگاه کنید. این سنجشِ درستی نیست، سنجشِ صداقتِ ارجاع است، ولی در قلمروی که هیچ سنجشِ دیگری ندارید، همین یکی هم غنیمت است.</p><p>و یک خط که هیچ تکنیکی آن را به چالش نمیکشد: وقتی سؤال درباره‌ی همین بیمارِ روی صندلی است و جوابش را نمی‌دانید، جوابِ درست یک آدم است، نه یک مدل. ارجاع، مشاوره، تلفن به پزشکِ معالج. هیچ پرامپتی این را جایگزین نمی‌کند و کلِ این فصل عملاً برای رسیدن به همین جمله نوشته شد.</p><p><strong>و از اینجا به بعد</strong></p><p>پنج فصل گذشت و بیشترِ حرفشان درباره‌ی مرز بود: مدل چیست، چرا مطمئن حرف می‌زند، چطور باهاش حرف بزنید، و کجای کارِ بالینی نباید بنشیند. اگر تا اینجا حس کرده‌اید کتاب بیشتر دارد جلویتان را می‌گیرد تا راه باز کند، حق دارید.</p><p>ولی همه‌ی این محدودیت‌ها یک چیزِ مشترک داشتند: در قلمرویی بودند که ماده‌ی خام دستِ شما نبود و توانِ سنجش نداشتید. حالا برویم سراغِ جایی که هر دو را دارید — تولیدِ محتوای علمی و آموزشی. متن مالِ خودتان است، منبع جلوی دستتان، و هر ادعا قابلِ برگرداندن به اصلش. اینجا همان جایی است که مدل واقعاً چیزی به شما اضافه می‌کند، و اتفاقاً همان جایی است که تکنیک‌های جدی‌ترش زندگی می‌کنند.</p><p>یک تذکر برای شروعِ فصلِ بعد: تا اینجا هرجا «مدل» گفتیم، انگار یک چیزِ واحد بود. نیست. ابزارها با هم فرق دارند، بعضی‌شان برای کاری ساخته شده‌اند که بقیه در آن ضعیف‌اند، و بخشی از مهارت همین است که بدانید کدام مدل هوش مصنوعی را کجا ببرید. فصل ۶ از همان‌جا شروع می‌شود.</p></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">کلیدواژه‌ها</h2>
+      <div class="ep-chips">
+        <span class="ep-chip">قلمروِ ندانستن در استفاده از مدل زبانی</span>
+        <span class="ep-chip">اطمینانِ کاذبِ لحن به‌جای حسِ ندانستن</span>
+        <span class="ep-chip">غیابِ نشانه‌های تردید در پاسخِ مدل</span>
+        <span class="ep-chip">فرسایشِ مهارت با اتکای مداوم به ابزارِ دقیق</span>
+        <span class="ep-chip">درخواستِ طبقه‌بندی از مدل، نه حکمِ نهایی</span>
+        <span class="ep-chip">راستی‌آزماییِ ردیابی‌پذیرِ استناد به‌جای درستی</span>
+        <span class="ep-chip">مدل زبانی بزرگ (LLM)</span>
+        <span class="ep-chip">قضاوت بالینی</span>
+      </div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">برچسب‌ها</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#پرامپتولوژیست</span><span class="ep-hashtag">#هوش_مصنوعی</span><span class="ep-hashtag">#سواد_هوش_مصنوعی</span><span class="ep-hashtag">#AI_Literacy</span><span class="ep-hashtag">#ChatGPT</span><span class="ep-hashtag">#مدل_زبانی</span><span class="ep-hashtag">#LLM</span><span class="ep-hashtag">#اطمینان_کاذب</span><span class="ep-hashtag">#قضاوت_بالینی</span><span class="ep-hashtag">#راستی_آزمایی</span><span class="ep-hashtag">#فرسایش_مهارت</span></div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">محتوای مرتبط</h2>
+      <a href="/dentai/promptologist/" class="ep-related-link">بازگشت به فهرست پرامپتولوژیست</a>
+    </div>
+
+    <div class="dc-related-section">
+      <h2 class="dc-related-label">کاوش بیشتر</h2>
+      <div class="dc-related-capsules">
+        <a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+        <a href="/pillar/digital/" class="dc-related-capsule">فهرست موضوعی</a>
+        <a href="/dentai/promptologist/prompt5-1.html" class="dc-related-capsule">خطِ تقسیم: معیارِ کاربردِ امن</a>
+        <a href="/dentai/promptologist/prompt5-2.html" class="dc-related-capsule">تشخیص و طرح درمان: برشِ نازک از کیس</a>
+      </div>
+    </div>
+  </div>
+  <div class="ep-nav">
+    <a href="/dentai/promptologist/prompt5-2.html" class="ep-nav-btn">&#8592; قسمت قبلی</a>
+    <span class="ep-nav-btn ep-nav-empty">قسمت بعدی &#8594;</span>
+  </div>
+</main>
+
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results">&#10006;</button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همه بخش‌های دنت‌کست...">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=150" defer></script>
+</body>
+</html>

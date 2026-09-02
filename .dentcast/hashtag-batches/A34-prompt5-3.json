@@ -1,0 +1,13 @@
+{
+  "type": "promptologist",
+  "note": "Publish of dentai/promptologist/prompt5-3 (فصل ۵ قسمت ۳ — تله‌ی ندانستن). Mints #فرسایش_مهارت: the colonoscopy study cited in the article shows a skill cost from continuous reliance on an AI tool that itself works correctly — a distinct concept from #سوگیری_لنگر (prompt5-2, about answer ORDER causing bias) and from #اطمینان_کاذب (reused here, about a confident TONE masking uncertainty). Every other tag reuses an existing canonical form.",
+  "concepts": [
+    {
+      "tag": "#فرسایش_مهارت",
+      "domain": "ai",
+      "definition": "کاهشِ تدریجیِ مهارت و توانِ تشخیصی/تحلیلیِ فرد بر اثرِ واگذاریِ مداومِ بخشی از کارِ فکری به یک ابزارِ کمکی، حتی وقتی خودِ ابزار دقیق و درست عمل می‌کند.",
+      "use_when": "مقاله اثرِ استفاده‌ی مداوم و طولانی‌مدت از یک ابزارِ هوش مصنوعیِ دقیق را بر مهارتِ مستقلِ کاربر بررسی کند — نه خطای خودِ ابزار، بلکه هزینه‌ی واگذاریِ مداومِ بخشی از کار به آن.",
+      "aliases": ["افت مهارت", "وابستگی به هوش مصنوعی", "Automation Bias", "Skill Decay", "Deskilling"]
+    }
+  ]
+}

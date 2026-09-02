@@ -434,7 +434,7 @@
   </url>
   <url>
     <loc>https://dentcast.org/dentai/promptologist/</loc>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-09-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -519,6 +519,12 @@
   <url>
     <loc>https://dentcast.org/dentai/promptologist/prompt5-2.html</loc>
     <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/dentai/promptologist/prompt5-3.html</loc>
+    <lastmod>2026-09-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

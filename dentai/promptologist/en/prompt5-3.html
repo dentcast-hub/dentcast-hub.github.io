@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Trap of Not-Knowing | Promptologist | DentCast</title>
+  <meta name="description" content="Chapter 5, Part 3: The advice to &ldquo;write your own diagnosis first&rdquo; carries one silent assumption &mdash; that you actually have a diagnosis to write. When you turn to the model out of not-knowing, its confident tone switches off the feeling of not-knowing without the not-knowing itself going away, and unlike people, a model&rsquo;s doubt never leaks. A study on colonoscopy shows this dependence has a slower, month-by-month version too: it erodes the physician&rsquo;s own skill. The way through this territory is asking for a map (classification, traceable citation) instead of a verdict.">
+  <link rel="canonical" href="https://dentcast.org/dentai/promptologist/en/prompt5-3.html">
+  <meta name="author" content="Dr. Foad Shahabian">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="The Trap of Not-Knowing | DentCast">
+  <meta property="og:description" content="Chapter 5, Part 3: The advice to &ldquo;write your own diagnosis first&rdquo; carries one silent assumption &mdash; that you actually have a diagnosis to write. When you turn to the model out of not-knowing, its confident tone switches off the feeling of not-knowing without the not-knowing itself going away, and unlike people, a model&rsquo;s doubt never leaks. A study on colonoscopy shows this dependence has a slower, month-by-month version too: it erodes the physician&rsquo;s own skill. The way through this territory is asking for a map (classification, traceable citation) instead of a verdict.">
+  <meta property="og:url" content="https://dentcast.org/dentai/promptologist/en/prompt5-3.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Trap of Not-Knowing | DentCast">
+  <meta name="twitter:description" content="Chapter 5, Part 3: A confident model switches off the feeling of not-knowing without filling the actual gap &mdash; and a study on colonoscopy shows this costs your own skill over time. The fix: ask for a map, not a verdict.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/promptologist/en/prompt5-3.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/dentai/promptologist/en/prompt5-3.html"
+      },
+      "url": "https://dentcast.org/dentai/promptologist/en/prompt5-3.html",
+      "headline": "The Trap of Not-Knowing",
+      "description": "Chapter 5, Part 3: The advice to “write your own diagnosis first” carries one silent assumption — that you actually have a diagnosis to write. When you turn to the model out of not-knowing, its confident tone switches off the feeling of not-knowing without the not-knowing itself going away, and unlike people, a model's doubt never leaks. A study on colonoscopy shows this dependence has a slower, month-by-month version too: it erodes the physician's own skill. The way through this territory is asking for a map (classification, traceable citation) instead of a verdict.",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "Promptologist",
+        "url": "https://dentcast.org/dentai/promptologist"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Promptologist",
+          "item": "https://dentcast.org/dentai/promptologist"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "The Trap of Not-Knowing",
+          "item": "https://dentcast.org/dentai/promptologist/en/prompt5-3.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css?v=3">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-left:4px solid var(--ac);padding-left:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+  </style>
+</head>
+<body>
+
+<!-- ── TOP BAR (English chrome, cloned from metanotes/en/meta-1.html) ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT (Promptologist structure, translated, LTR) ── -->
+<main class="article-content-wrap ep-page">
+  <a href="/dentai/promptologist/" class="ep-back">&#8592; Back to Promptologist</a>
+
+  <!-- 🌐 Persian Version (SEO-friendly language toggle) -->
+  <a class="lang-btn" href="../prompt5-3.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">Season 5 · Part 3</div>
+      <h1 class="ep-title">The Trap of Not-Knowing</h1>
+      <div class="ep-meta">
+        <span>&#9201; 11 min read</span>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">This Part</h2>
+      <div class="ep-caption"><p><a href="prompt5-2.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">The previous part</a> ended with advice that looked simple: write your own diagnosis first, really write it, and only then go to the model. It&rsquo;s good advice, and it covers most of your working days. But it carries one silent assumption &mdash; that you have a diagnosis to write in the first place.</p><p>Think for a moment about the last time you actually put a case to an AI. You don&rsquo;t check a routine case with the model. The third molar you&rsquo;ve pulled a hundred times, the irreversible pulpitis with textbook symptoms, the healthy patient who just needs a scaling &mdash; nobody takes these in front of the model. You turn to the model exactly when something isn&rsquo;t sitting right. An extra line in the chart, an image that looks like nothing you&rsquo;ve seen before, a drug whose name you recognize but whose interaction with today&rsquo;s work you don&rsquo;t.</p><p>Which means the place you pick up the model and the tool is exactly where you have the least awareness &mdash; and that&rsquo;s natural enough.</p><p><strong>When &ldquo;I Don&rsquo;t Know&rdquo; Turns Into &ldquo;I Know&rdquo;</strong></p><p>An elderly patient is in the chair, with a history of osteoporosis medication, and an unsalvageable molar that needs to come out. Now you face questions you don&rsquo;t confidently know the answers to: should the drug be stopped, how long before, does stopping it even help, and whose call is it.</p><p>You type the question. The answer that comes back is tidy, categorized, complete with risk factors and a specific number for how long to hold the drug. Nothing in the text feels shaky.</p><p>Now the most important point of this part: the issue isn&rsquo;t that the answer is wrong. Much of it may well be right. What actually happened happened somewhere else &mdash; five minutes ago you had an open question in front of you, and now you don&rsquo;t. The feeling of not knowing is gone, but the not-knowing itself is still exactly where it was.</p><p>And it was that very feeling of not knowing that was doing the work. It was uncomfortable, and because it was uncomfortable it used to push you to call a colleague, write to the patient&rsquo;s physician, spend two hours reading a review, or refer the patient outright. The model handed you that answer and, in the same motion, switched off the alarm. The gap wasn&rsquo;t filled; only its warning light went dark.</p><p><a href="prompt1-5.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Chapter 1</a> stated this as a constraint: the model is a tool only within the range where you yourself are qualified; outside it, it&rsquo;s a trap. There, that was a warning. Here you see the mechanism &mdash; your need for the model and your capacity to judge it move in opposite directions.</p><p>The more you know, the less you need it and the more easily you catch it out; the less you know, the more you need it and the less you can verify what it tells you &mdash; and that&rsquo;s exactly where the trap is set.</p><p><strong>Why No Signal Reaches You</strong></p><p>When you ask a colleague the same question, you don&rsquo;t just get their answer. You also get their hesitation. The fact that they say &ldquo;well, I&rsquo;ve only seen two cases like this,&rdquo; or raise an eyebrow, or stop mid-sentence and say let me check on that &mdash; these are part of the answer, and you&rsquo;re unconsciously factoring them in. People&rsquo;s doubt leaks.</p><p>Seeing that doubt makes you aware of the other person&rsquo;s not-knowing, and that awareness itself helps you find the right path through treatment.</p><p>A model&rsquo;s doubt doesn&rsquo;t leak. <a href="prompt2-1.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Chapter 2</a> was about exactly this: a confident tone is separate from correctness, because the fluency of the words and their correctness come out of the same process. A sentence backed by three thousand papers and a sentence backed by nothing are written in the very same tone. So the one signal you used to rely on in the real world is flat here, and it tells you nothing.</p><p>Add one more thing that&rsquo;s easy to overlook: the model doesn&rsquo;t know how much you know. It hands the same answer about osteonecrosis, at the same tone and the same depth, to a maxillofacial surgeon with twenty years of practice and to a final-year student. There&rsquo;s no gatekeeper in between to say this question is outside your scope. You are the only gatekeeper, and that is exactly the moment you have the least information to gatekeep with.</p><p><strong>The Slower Version of the Same Story</strong></p><p>So far this has been about a single conversation. One patient, one question, one decision. But this story also has a month-by-month version that makes no noise, which is exactly why it&rsquo;s noticed later.</p><p>In a study on colonoscopy, the adenoma detection rate in ordinary colonoscopies &mdash; the ones performed without AI assistance &mdash; dropped from about 28 percent to about 22 percent after a period in which the same endoscopists had worked with an assistive system and then had it taken away. That is, once the tool was taken from them, they were even weaker than before they&rsquo;d ever gotten used to it.</p><p>Two caveats have to be set alongside this right away, because without them the number claims more than it should. First, the study is observational, not a trial; a single study doesn&rsquo;t settle anything on its own either. Second, and more importantly: that AI system was not at all from the family we&rsquo;re talking about in this book. It was a diagnostic, specialized AI &mdash; the same breed as Chapter 1 &mdash; trained for accuracy, and good at its job.</p><p>And it&rsquo;s that second point that makes the argument stronger, not weaker. The erosion didn&rsquo;t come from the tool getting things wrong; the tool was getting things right. The erosion came from handing off part of the work that had been building and sharpening the person&rsquo;s own skill. If this happens with an accurate tool, there&rsquo;s no reason to think it doesn&rsquo;t happen with an inaccurate one.</p><p>The point isn&rsquo;t to stop using it. The point is that the ordering from the previous part doesn&rsquo;t solve this one.</p><p>There, it was about a single conversation, and the fix was to write your own answer sooner. Here it&rsquo;s about months, and what slowly shrinks is exactly the thing you were supposed to write first &mdash; meaning that with continuous use, your own ability and awareness erode.</p><p><strong>So What Can You Do in the Territory of Not-Knowing</strong></p><p>The honest answer isn&rsquo;t to set the model aside. The answer is to change its role in this territory: from something that hands down a verdict to something that hands you a map.</p><p>Ask for names, not a verdict. The biggest obstacle where you&rsquo;re not qualified is that you don&rsquo;t even know what to look for. You see a white lesion in the mucosa that looks like nothing familiar; asking &ldquo;what is this&rdquo; is the worst possible question, because its answer is exactly the thing you cannot judge. But if you ask what the classification of white lesions is, what distinguishes each one, and what you should look for to tell them apart &mdash; you get something whose value is different from the value of a verdict.</p><p>This map, offered cheaply and quickly by AI, gets verified and takes you out of the chat box, toward a book, a paper, and a person.</p><p>If you do want a content-level answer, at least make it traceable. The previous part showed that tying the model to a source doesn&rsquo;t miraculously raise clinical accuracy. But that same study showed something else that&rsquo;s exactly useful here: citation and traceability got better. Meaning that when you can&rsquo;t ask &ldquo;is this correct,&rdquo; you can still ask &ldquo;is this sentence actually in that paper&rdquo; &mdash; and unlike the first question, you know how to answer the second one. Open the paper and look. This isn&rsquo;t a check on correctness, it&rsquo;s a check on the honesty of the citation, but in a territory with no other check available, even this one is worth having.</p><p>And one line that no technique can get past: when the question is about the very patient in your chair and you don&rsquo;t know the answer, the right answer is a person, not a model. A referral, a consult, a call to the treating physician. No prompt replaces this, and this whole chapter was really written to arrive at just this sentence.</p><p><strong>And From Here On</strong></p><p>Five chapters have gone by, and most of what they said was about the boundary: what the model is, why it sounds so confident, how to talk to it, and where it must not sit in clinical work. If by now it feels like the book has spent more time holding you back than opening a path forward, you&rsquo;re right.</p><p>But all these limits had one thing in common: they were in territory where you didn&rsquo;t hold the raw material and couldn&rsquo;t judge it. Now let&rsquo;s move to the territory where you have both &mdash; producing scientific and educational content. The text is your own, the source is right in front of you, and every claim can be traced back to it. This is exactly where the model actually adds something, and it happens to be where its more serious techniques live.</p><p>One note before the next chapter starts: everywhere we&rsquo;ve said &ldquo;the model&rdquo; so far, it&rsquo;s as if it were a single thing. It isn&rsquo;t. Tools differ from each other; some are built for tasks the others are weak at, and part of the skill is knowing which AI model to bring where. Chapter 6 starts right there.</p></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Keywords</h2>
+      <div class="ep-chips">
+        <span class="ep-chip">The Territory of Not-Knowing in Using a Language Model</span>
+        <span class="ep-chip">False Tonal Confidence Instead of the Feeling of Not-Knowing</span>
+        <span class="ep-chip">The Absence of Doubt Signals in a Model&rsquo;s Answer</span>
+        <span class="ep-chip">Skill Erosion from Continuous Reliance on an Accurate Tool</span>
+        <span class="ep-chip">Asking the Model for Classification, Not a Verdict</span>
+        <span class="ep-chip">Traceable Verification of Citation Rather Than Correctness</span>
+        <span class="ep-chip">Large Language Model (LLM)</span>
+        <span class="ep-chip">Clinical Judgment</span>
+      </div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Tags</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#Promptologist</span><span class="ep-hashtag">#AI</span><span class="ep-hashtag">#AILiteracy</span><span class="ep-hashtag">#ChatGPT</span><span class="ep-hashtag">#LanguageModel</span><span class="ep-hashtag">#LLM</span><span class="ep-hashtag">#FalseConfidence</span><span class="ep-hashtag">#ClinicalJudgment</span><span class="ep-hashtag">#Verifiability</span><span class="ep-hashtag">#SkillErosion</span></div>
+    </div>
+  </div>
+  <!-- Series prev/next (en tier). Targets are en counterparts only.
+       Previous part en page (en/prompt5-2.html) exists, so the previous
+       slot links to it; there is no next part yet, so the next slot stays a
+       disabled placeholder. -->
+  <div class="ep-nav">
+    <a href="prompt5-2.html" class="ep-nav-btn">&#8592; Previous Part</a>
+    <span class="ep-nav-btn ep-nav-empty">Next Part &#8594;</span>
+  </div>
+</main>
+
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=150" defer></script>
+</body>
+</html>
