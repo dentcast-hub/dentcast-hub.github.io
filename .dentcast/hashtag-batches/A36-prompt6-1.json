@@ -1,0 +1,20 @@
+{
+  "type": "promptologist",
+  "note": "Publish of dentai/promptologist/prompt6-1 (فصل ۶ قسمت ۱ — کلاد،چت جی پی تی یا جمینای؟مدل یک چیز نیست). Mints two concepts the article genuinely resolves: #مالتی_مودال (a model's ability to take more than one input type — text/image/audio/video — as one of the article's stated axes for comparing model families) and #ایجنت_هوش_مصنوعی (a model given latitude to take real actions — search, run code, decide its own next step — between a question and a final answer, as distinct from an ordinary model that only ever produces text). Every other tag reuses an existing canonical form, including #جمینای and #کلود which the article names and compares directly.",
+  "concepts": [
+    {
+      "tag": "#مالتی_مودال",
+      "domain": "ai",
+      "definition": "توانِ یک مدلِ هوش مصنوعی برای گرفتنِ بیش از یک نوعِ ورودی — متن، تصویر، فایل، صدا، ویدیو — و فهمیدنِ آن‌ها در کنارِ هم، نه صرفاً متن.",
+      "use_when": "مقاله ورودی‌پذیریِ مدل‌های زبانی را محورِ مقایسه یا محدودیت قرار بدهد — مثلاً توانایی یا ناتوانیِ یک مدل در خواندنِ مستقیمِ پی‌دی‌اف، تصویر، یا فایلِ صوتی.",
+      "aliases": ["Multimodal", "ورودی چندرسانه‌ای", "مدل چندوجهی"]
+    },
+    {
+      "tag": "#ایجنت_هوش_مصنوعی",
+      "domain": "ai",
+      "definition": "مدلی که اجازه دارد بینِ گرفتنِ سؤال و دادنِ جوابِ نهایی چند کارِ واقعی هم انجام بدهد — جستجو کند، فایل بسازد، کدی را اجرا کند — و خودش دربارهٔ قدمِ بعدی تصمیم بگیرد، برخلافِ مدلِ معمولی که فقط متن تولید می‌کند.",
+      "use_when": "مقاله دربارهٔ مدلی باشد که خودش چند قدمِ عملی بین سؤال و جواب برمی‌دارد — نه صرفاً مدلی که یک‌باره متن تولید می‌کند.",
+      "aliases": ["AI Agent", "Agentic AI", "ایجنتیک"]
+    }
+  ]
+}

@@ -523,6 +523,10 @@
       {
         "content_id": "dentai/promptologist/prompt5-3",
         "milestone": false
+      },
+      {
+        "content_id": "dentai/promptologist/prompt6-1",
+        "milestone": false
       }
     ],
     "reserved": {}
