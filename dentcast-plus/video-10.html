@@ -448,7 +448,7 @@
 <div class="yt-container">
 
   <button id="yt-btn-v5" type="button" class="capsule-btn">
-    پلیر خارجی برای این ویدیو الان فعال نیست
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg> مشاهده ویدیو در یوتیوب (پلیر خارجی)
   </button>
 
   <div id="yt-wrap-v5" class="yt-wrap" hidden>
@@ -462,6 +462,46 @@
   </div>
 
 </div>
+
+<script>
+(function(){
+
+  const btn    = document.getElementById("yt-btn-v5");
+  const wrap   = document.getElementById("yt-wrap-v5");
+  const close  = document.getElementById("yt-close-v5");
+  const holder = document.getElementById("yt-holder-v5");
+
+  let iframe = null;
+
+  btn.addEventListener("click", function(){
+
+    btn.style.display = "none";
+    wrap.hidden = false;
+
+    iframe = document.createElement("iframe");
+    iframe.src = "https://www.youtube.com/embed/NykXWh2T_bs";
+    iframe.frameBorder = "0";
+    iframe.loading = "lazy";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+
+    holder.appendChild(iframe);
+  });
+
+  close.addEventListener("click", function(){
+
+    wrap.hidden = true;
+    btn.style.display = "inline-flex";
+
+    if (iframe){
+      iframe.remove();
+      iframe = null;
+    }
+
+  });
+
+})();
+</script>
 <div class="text-box">
    <!-- 🌐 English Version (SEO-friendly link) -->
   <a class="lang-btn"
