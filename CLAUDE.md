@@ -303,10 +303,20 @@ guess.**
   section 1 of 8 on the 26 legacy NoteCast pages. `findProseRoot()` is not the
   fix for that either: on exactly those pages it is `main.article-content-wrap`
   itself, so inserting after it lands outside the article shell. **Audio
-  episodes get a SHORTER row of the same kind** — قلب + اشتراک‌گذاری, no میز کار
-  (there is no workbench for a podcast) — built by `initEpisodeActions()` on the
-  standalone page and by `mountArticleWorkbench`'s episode branch on the desktop
-  shell — and the same two callers give an episode its **گفت‌وگوی زیر مطلب**,
+  episodes get the SAME row an article does** — میز کار, افزودن به کالکشن, قلب,
+  اشتراک‌گذاری, highlighting + یادداشتِ کلی on the caption/references, all
+  through the same `setupWorkbench()` call — built by `initEpisodeActions()` on
+  the standalone page and by `mountArticleWorkbench`'s episode branch on the
+  desktop shell (2026-09-04; before that, episodes got a hand-built row with no
+  میز کار at all — "highlighting a podcast makes no sense" — and that hand-built
+  copy is also where a قلب-only-at-the-bottom bug lived: `initEpisodeActions()`
+  ran synchronously and called `mountBottomActions()`, which always builds its
+  own `.dcp-like`, before `boot()` ever reached `step('heart')`; `initHeart()`
+  no-ops the instant any `.dcp-like` exists anywhere on the page, so the top row
+  silently never got one). Episodes are excluded from the `article_completed`
+  reading-streak signal inside `setupWorkbench()` (same guard as LiteCast) since
+  they already have `episode_listened`. And the same two callers give an episode
+  its **گفت‌وگوی زیر مطلب**,
   which had reached articles only because `initArticle()` mounts it and
   `initArticle()` bows out at the audio player. Nothing ever excluded a podcast:
   the block is written against a `content_id` and the API gates on nothing else,
