@@ -420,9 +420,10 @@ function renderHtml(
   واحد همه‌جا <b>تعدادِ بارِ نمایش</b> است، نه تعدادِ آدم: یک نفر که در یک مرور ۲۰ بار یک تبلیغ ببیند، ۲۰ شمرده می‌شود.
   «نمایش» یعنی کارت دست‌کم ۵۰٪ روی صفحه، یک ثانیهٔ پیوسته، در تبِ فعال دیده شده — پس از تعداد صفحه‌هایی که تبلیغ داشته‌اند کمتر است و همین آن را برای اسپانسر قابل‌دفاع می‌کند.</div>
   <div class="tabs" id="spWin">
-    <button type="button" data-days="1" class="on">۲۴ ساعت (امروزِ تهران)</button>
-    <button type="button" data-days="7">۷ روز</button>
-    <button type="button" data-days="30">۳۰ روز</button>
+    <button type="button" data-days="1" data-offset="0" class="on">۲۴ ساعت (امروزِ تهران)</button>
+    <button type="button" data-days="1" data-offset="-1">دیروز (روزِ کاملِ تهران)</button>
+    <button type="button" data-days="7" data-offset="0">۷ روز</button>
+    <button type="button" data-days="30" data-offset="0">۳۰ روز</button>
   </div>
   <div id="spOut" class="muted" style="margin-top:10px">در حال خواندن…</div>
   <script>
@@ -506,9 +507,12 @@ function renderHtml(
       return h + '</div>';
     }
 
-    function warnings(b, days) {
+    function warnings(b, days, offset) {
       var w = [];
-      if (days === 1) w.push('امروز یک روزِ ناقص است — از نیمه‌شبِ تهران تا همین لحظه، نه ۲۴ ساعتِ لغزان.');
+      // Only the CURRENT Tehran day is partial (from midnight to right now).
+      // Yesterday's tab is the previous calendar day start-to-finish, so it
+      // carries no such caveat — that is the whole point of having it.
+      if (days === 1 && offset === 0) w.push('امروز یک روزِ ناقص است — از نیمه‌شبِ تهران تا همین لحظه، نه ۲۴ ساعتِ لغزان.');
       if (b.from < FIRST_DAY) w.push('پیش از ' + FIRST_DAY + ' هیچ دادهٔ تبلیغی وجود ندارد؛ روزهای قبلِ آن در این بازه خالی‌اند، نه صفر.');
       if (b.from <= SLOT_SPLIT_DAY && b.to >= SLOT_SPLIT_DAY) {
         w.push('این بازه روی ' + SLOT_SPLIT_DAY + ' افتاده: تا آن روز صفحه‌های تکِ اپیزود زیر «مقاله» شمرده می‌شدند و از آن روز زیر «صفحهٔ اپیزود». افتِ «مقاله» در این مرز برچسب‌گذاریِ دوباره است، نه ریزش.');
@@ -517,7 +521,7 @@ function renderHtml(
       return w.length ? '<div class="warn">' + w.map(function (t) { return '⚠️ ' + esc(t); }).join('<br>') + '</div>' : '';
     }
 
-    function render(b, days) {
+    function render(b, days, offset) {
       var cs = b.by_creative_slot || [];
       out.className = '';
       out.innerHTML =
@@ -531,11 +535,15 @@ function renderHtml(
         + '<h4 style="margin:18px 0 0">به تفکیک بیننده</h4>' + viewerRows(b)
         + '<h4 style="margin:18px 0 0">هر تبلیغ (زمانِ چرخش) و محل‌هایش</h4>'
         + (cs.length ? cs.map(creativeCard).join('') : '<div class="muted" style="margin-top:8px">هیچ تبلیغی در این بازه نمایشی نداشته.</div>')
-        + warnings(b, days);
+        + warnings(b, days, offset);
     }
 
-    function load(days) {
-      var to = tehranToday();
+    // offset shifts the window's END day back from today — 0 for the
+    // current (partial) Tehran day, -1 for the full previous calendar day
+    // (yesterday), so right after midnight there is still a complete day's
+    // worth of numbers to read instead of an almost-empty "24 hours" tab.
+    function load(days, offset) {
+      var to = shift(tehranToday(), offset);
       var from = shift(to, -(days - 1));
       out.className = 'muted';
       out.textContent = 'در حال خواندن…';
@@ -543,7 +551,7 @@ function renderHtml(
         .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
         .then(function (res) {
           if (!res.ok) { out.textContent = 'خوانده نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
-          render(res.j, days);
+          render(res.j, days, offset);
         })
         .catch(function () { out.textContent = 'خوانده نشد (شبکه).'; });
     }
@@ -553,9 +561,9 @@ function renderHtml(
       if (!btn) return;
       [].forEach.call(tabs.querySelectorAll('button'), function (b) { b.classList.remove('on'); });
       btn.classList.add('on');
-      load(Number(btn.getAttribute('data-days')));
+      load(Number(btn.getAttribute('data-days')), Number(btn.getAttribute('data-offset') || 0));
     });
-    load(1);
+    load(1, 0);
   })();
   </script>
 
