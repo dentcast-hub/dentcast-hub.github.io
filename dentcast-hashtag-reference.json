@@ -1386,7 +1386,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 21,
+   "count": 22,
    "content_ids": [
     "episodes/episode-109",
     "episodes/episode-109-2",
@@ -1408,7 +1408,8 @@
     "dentai/promptologist/prompt5-1",
     "dentai/promptologist/prompt5-2",
     "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1"
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2"
    ]
   },
   {
@@ -1521,6 +1522,49 @@
     "chairside/chairside-28",
     "sharehub/share-12",
     "chairside/chairside-29"
+   ]
+  },
+  {
+   "key": "سواد_هوش_مصنوعی",
+   "tag": "#سواد_هوش_مصنوعی",
+   "domain": "ai",
+   "words": 3,
+   "definition": "سوادِ هوشِ مصنوعی — مفاهیمِ پایه‌ی AI، یادگیریِ ماشین و یادگیریِ عمیق برای دندانپزشک.",
+   "use_when": "مقاله مفاهیمِ پایه یا مسیرِ یادگیریِ هوش مصنوعی را آموزش دهد.",
+   "aliases": [
+    "یادگیری ماشین",
+    "machine learning",
+    "deep learning",
+    "یادگیری عمیق",
+    "یادگیری ai",
+    "ai research",
+    "مسیر یادگیری هوش مصنوعی"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#AI_Literacy"
+   ],
+   "count": 19,
+   "content_ids": [
+    "episodes/episode-109",
+    "episodes/episode-109-2",
+    "episodes/episode-149-1",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2"
    ]
   },
   {
@@ -1665,48 +1709,6 @@
    ]
   },
   {
-   "key": "سواد_هوش_مصنوعی",
-   "tag": "#سواد_هوش_مصنوعی",
-   "domain": "ai",
-   "words": 3,
-   "definition": "سوادِ هوشِ مصنوعی — مفاهیمِ پایه‌ی AI، یادگیریِ ماشین و یادگیریِ عمیق برای دندانپزشک.",
-   "use_when": "مقاله مفاهیمِ پایه یا مسیرِ یادگیریِ هوش مصنوعی را آموزش دهد.",
-   "aliases": [
-    "یادگیری ماشین",
-    "machine learning",
-    "deep learning",
-    "یادگیری عمیق",
-    "یادگیری ai",
-    "ai research",
-    "مسیر یادگیری هوش مصنوعی"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#AI_Literacy"
-   ],
-   "count": 18,
-   "content_ids": [
-    "episodes/episode-109",
-    "episodes/episode-109-2",
-    "episodes/episode-149-1",
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1"
-   ]
-  },
-  {
    "key": "لمینیت_سرامیکی",
    "tag": "#لمینیت_سرامیکی",
    "domain": "clinical",
@@ -1746,6 +1748,41 @@
     "notecast/episode-38",
     "chairside/chairside-32",
     "chairside/chairside-35"
+   ]
+  },
+  {
+   "key": "llm",
+   "tag": "#LLM",
+   "domain": "ai",
+   "words": 1,
+   "definition": "سرنامِ Large Language Model.",
+   "use_when": "همیشه همراه #مدل_زبانی.",
+   "aliases": [
+    "ال ال ام"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#مدل_زبانی"
+   ],
+   "count": 17,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2"
    ]
   },
   {
@@ -1823,20 +1860,21 @@
    ]
   },
   {
-   "key": "llm",
-   "tag": "#LLM",
+   "key": "مدل_زبانی",
+   "tag": "#مدل_زبانی",
    "domain": "ai",
-   "words": 1,
-   "definition": "سرنامِ Large Language Model.",
-   "use_when": "همیشه همراه #مدل_زبانی.",
+   "words": 2,
+   "definition": "LLM — مدلی که با حدسِ ادامه‌ی محتملِ متن جواب می‌سازد.",
+   "use_when": "مقاله درباره‌ی سازوکار یا رفتار خودِ مدل زبانی باشد.",
    "aliases": [
-    "ال ال ام"
+    "language model",
+    "لنگویج مدل"
    ],
    "variants": [],
    "co_tags": [
-    "#مدل_زبانی"
+    "#LLM"
    ],
-   "count": 16,
+   "count": 17,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
     "dentai/promptologist/prompt1-2",
@@ -1853,7 +1891,76 @@
     "dentai/promptologist/prompt5-1",
     "dentai/promptologist/prompt5-2",
     "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1"
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2"
+   ]
+  },
+  {
+   "key": "پرامپتولوژیست",
+   "tag": "#پرامپتولوژیست",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری «پرامپتولوژیست».",
+   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
+   "aliases": [
+    "promptologist",
+    "پرامپتولوژی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 17,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2"
+   ]
+  },
+  {
+   "key": "ai_literacy",
+   "tag": "#AI_Literacy",
+   "domain": "ai",
+   "words": 2,
+   "definition": "همان #سواد_هوش_مصنوعی، با اصطلاح انگلیسی.",
+   "use_when": "همیشه همراه #سواد_هوش_مصنوعی.",
+   "aliases": [],
+   "variants": [
+    "#AILiteracy"
+   ],
+   "co_tags": [
+    "#سواد_هوش_مصنوعی"
+   ],
+   "count": 16,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2"
    ]
   },
   {
@@ -1931,28 +2038,26 @@
    ]
   },
   {
-   "key": "مدل_زبانی",
-   "tag": "#مدل_زبانی",
+   "key": "chatgpt",
+   "tag": "#ChatGPT",
    "domain": "ai",
-   "words": 2,
-   "definition": "LLM — مدلی که با حدسِ ادامه‌ی محتملِ متن جواب می‌سازد.",
-   "use_when": "مقاله درباره‌ی سازوکار یا رفتار خودِ مدل زبانی باشد.",
+   "words": 1,
+   "definition": "سرویسِ ChatGPT.",
+   "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
    "aliases": [
-    "language model",
-    "لنگویج مدل"
+    "چت جی پی تی",
+    "chat gpt",
+    "جی پی تی",
+    "gpt"
    ],
    "variants": [],
-   "co_tags": [
-    "#LLM"
-   ],
-   "count": 16,
+   "co_tags": [],
+   "count": 15,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
     "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-append1",
     "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
     "dentai/promptologist/prompt3-1",
     "dentai/promptologist/prompt4-1",
     "dentai/promptologist/prompt4-2",
@@ -1962,73 +2067,8 @@
     "dentai/promptologist/prompt5-1",
     "dentai/promptologist/prompt5-2",
     "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1"
-   ]
-  },
-  {
-   "key": "پرامپتولوژیست",
-   "tag": "#پرامپتولوژیست",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام سری «پرامپتولوژیست».",
-   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
-   "aliases": [
-    "promptologist",
-    "پرامپتولوژی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 16,
-   "content_ids": [
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1"
-   ]
-  },
-  {
-   "key": "ai_literacy",
-   "tag": "#AI_Literacy",
-   "domain": "ai",
-   "words": 2,
-   "definition": "همان #سواد_هوش_مصنوعی، با اصطلاح انگلیسی.",
-   "use_when": "همیشه همراه #سواد_هوش_مصنوعی.",
-   "aliases": [],
-   "variants": [
-    "#AILiteracy"
-   ],
-   "co_tags": [
-    "#سواد_هوش_مصنوعی"
-   ],
-   "count": 15,
-   "content_ids": [
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1"
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2"
    ]
   },
   {
@@ -2096,39 +2136,6 @@
     "sharehub/share-15",
     "dentai/dentai-30",
     "insight/insight-69"
-   ]
-  },
-  {
-   "key": "chatgpt",
-   "tag": "#ChatGPT",
-   "domain": "ai",
-   "words": 1,
-   "definition": "سرویسِ ChatGPT.",
-   "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
-   "aliases": [
-    "چت جی پی تی",
-    "chat gpt",
-    "جی پی تی",
-    "gpt"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/dentai-28",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1"
    ]
   },
   {
@@ -6266,6 +6273,27 @@
    ]
   },
   {
+   "key": "notebooklm",
+   "tag": "#NotebookLM",
+   "domain": "ai",
+   "words": 1,
+   "definition": "سرویسِ NotebookLM گوگل.",
+   "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
+   "aliases": [
+    "notebook lm",
+    "نوت بوک ال ام",
+    "نوتبوک ال ام"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt6-2"
+   ]
+  },
+  {
    "key": "pdl",
    "tag": "#PDL",
    "domain": "clinical",
@@ -6983,6 +7011,27 @@
     "episodes/episode-119-1",
     "litecast/lite-CAST12",
     "episodes/episode-160"
+   ]
+  },
+  {
+   "key": "جمینای",
+   "tag": "#جمینای",
+   "domain": "ai",
+   "words": 1,
+   "definition": "سرویسِ Gemini گوگل.",
+   "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
+   "aliases": [
+    "gemini",
+    "جمنای",
+    "جمینی گوگل"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2"
    ]
   },
   {
@@ -8005,6 +8054,27 @@
    ]
   },
   {
+   "key": "کلود",
+   "tag": "#کلود",
+   "domain": "ai",
+   "words": 1,
+   "definition": "سرویسِ Claude.",
+   "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
+   "aliases": [
+    "claude",
+    "کلاد",
+    "کلود ای آی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2"
+   ]
+  },
+  {
    "key": "کنترل_کار_لابراتوار",
    "tag": "#کنترل_کار_لابراتوار",
    "domain": "clinical",
@@ -8350,26 +8420,6 @@
    "content_ids": [
     "dentai/dentai-2",
     "photocast/episode-3"
-   ]
-  },
-  {
-   "key": "notebooklm",
-   "tag": "#NotebookLM",
-   "domain": "ai",
-   "words": 1,
-   "definition": "سرویسِ NotebookLM گوگل.",
-   "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
-   "aliases": [
-    "notebook lm",
-    "نوت بوک ال ام",
-    "نوتبوک ال ام"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1"
    ]
   },
   {
@@ -9434,26 +9484,6 @@
    "content_ids": [
     "dentcast-plus/video-4",
     "dentcast-plus/video-5"
-   ]
-  },
-  {
-   "key": "جمینای",
-   "tag": "#جمینای",
-   "domain": "ai",
-   "words": 1,
-   "definition": "سرویسِ Gemini گوگل.",
-   "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
-   "aliases": [
-    "gemini",
-    "جمنای",
-    "جمینی گوگل"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt6-1"
    ]
   },
   {
@@ -11053,26 +11083,6 @@
    ]
   },
   {
-   "key": "کلود",
-   "tag": "#کلود",
-   "domain": "ai",
-   "words": 1,
-   "definition": "سرویسِ Claude.",
-   "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
-   "aliases": [
-    "claude",
-    "کلاد",
-    "کلود ای آی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt6-1"
-   ]
-  },
-  {
    "key": "کنترل_خونریزی",
    "tag": "#کنترل_خونریزی",
    "domain": "clinical",
@@ -11750,6 +11760,26 @@
    ]
   },
   {
+   "key": "markdown",
+   "tag": "#Markdown",
+   "domain": "ai",
+   "words": 1,
+   "definition": "فرمتِ متنیِ ساده که ساختارِ سند (تیتر، بولد، فهرست) را با علائمِ کوچک داخلِ خودِ متن نگه می‌دارد، نه در ظاهرِ چاپی.",
+   "use_when": "مقاله دربارهٔ آماده‌سازیِ فایل برای دادن به مدل یا نگه‌داشتنِ خروجیِ مدل به‌شکلی باشد که ساختارش برای ماشین سالم بماند.",
+   "aliases": [
+    "مارک‌داون",
+    "md فایل",
+    "markdown format",
+    "مارکداون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "dentai/promptologist/prompt6-2"
+   ]
+  },
+  {
    "key": "mesial_drift",
    "tag": "#Mesial_Drift",
    "domain": "clinical",
@@ -11951,6 +11981,26 @@
    "count": 1,
    "content_ids": [
     "sharehub/share-3"
+   ]
+  },
+  {
+   "key": "rag",
+   "tag": "#RAG",
+   "domain": "ai",
+   "words": 1,
+   "definition": "بازیابیِ تکه‌های مرتبط از منابعِ کاربر و گذاشتنشان جلوی مدل، پیش از نوشتنِ جواب — Retrieval-Augmented Generation؛ مدل کلِ سند را نمی‌خواند، فقط همان تکه‌های بازیابی‌شده را می‌بیند.",
+   "use_when": "مقاله دربارهٔ سازوکارِ پشتِ‌صحنه‌ی سرویس‌های مبتنی‌بر منبع باشد و نشان بدهد که مدل کلِ اسناد را نمی‌خواند، فقط تکه‌های بازیابی‌شده را می‌بیند.",
+   "aliases": [
+    "Retrieval-Augmented Generation",
+    "بازیابی و تولید",
+    "retrieval augmented generation",
+    "بازیابی‌افزوده"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "dentai/promptologist/prompt6-2"
    ]
   },
   {
@@ -16583,6 +16633,27 @@
    ]
   },
   {
+   "key": "فضای_کار_ثابت",
+   "tag": "#فضای_کارِ_ثابت",
+   "domain": "ai",
+   "words": 3,
+   "definition": "فضایی در یک سرویسِ هوش مصنوعی (پروجکت، جِم، یا جی‌پی‌تیِ سفارشی) که پرامپتِ ثابت و فایل‌های مرجعِ کاربر را نگه می‌دارد تا هر گفت‌وگوی تازه از نو تکرار نشوند.",
+   "use_when": "مقاله دربارهٔ Project/Gem/Custom GPT یا هر فضای ذخیره‌شده‌ی مشابه در یک سرویسِ هوش مصنوعی باشد.",
+   "aliases": [
+    "Project هوش مصنوعی",
+    "Gem گوگل",
+    "Custom GPT",
+    "پروجکت هوش مصنوعی",
+    "جم گوگل"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "dentai/promptologist/prompt6-2"
+   ]
+  },
+  {
    "key": "فقدان_دندان",
    "tag": "#فقدان_دندان",
    "domain": null,
@@ -19297,6 +19368,7 @@
   "computer controlled anesthesia": "تزریق بی درد",
   "تشخیص رادیوگرافی با هوش مصنوعی": "هوش مصنوعی رادیوگرافی",
   "prosthetically driven planning": "پلنینگ پروتز محور",
+  "retrieval augmented generation": "rag",
   "endodontically treated teeth": "دندان اندوشده",
   "stability before cementation": "ثبات قبل از سمان",
   "previous dentist restoration": "رستوریشن همکار قبلی",
@@ -19611,6 +19683,7 @@
   "failure prediction": "پیش بینی شکست",
   "زمان به عنوان داده": "پیگیری زمانی",
   "flowable composite": "کامپوزیت فلو",
+  "project هوش مصنوعی": "مدیریت دسترسی ثابت",
   "آفت بعد دندانپزشکی": "محرک آفت",
   "پروتز روی ایمپلنت": "پروتز ایمپلنت",
   "تصمیم گیری درمانی": "تصمیم درمانی",
@@ -19713,6 +19786,7 @@
   "فقدان دندان مجاور": "فضای بی دندان",
   "از دست رفتن دندان": "فقدان دندان",
   "lip repositioning": "لیپ ری پوزیشنینگ",
+  "ورودی چندرسانه ای": "مالتی مودال",
   "prompt generation": "متاپرامپت",
   "access management": "مدیریت دسترسی",
   "at home whitening": "هوم بلیچ",
@@ -19724,14 +19798,14 @@
   "آنتی بیوتیک دندان": "آنتی بیوتیک دندانپزشکی",
   "antibiotic dental": "آنتی بیوتیک دندانپزشکی",
   "dental antibiotic": "آنتی بیوتیک دندانپزشکی",
-  "ورودی چندرسانه ای": "مالتی مودال",
+  "پروجکت هوش مصنوعی": "مدیریت دسترسی ثابت",
   "کلینیکال اینسایت": "اینسایت",
   "fixed prosthesis": "پروتز ثابت",
   "روکش روی ایمپلنت": "روکش ایمپلنت",
   "محتوای گلچین شده": "curated content",
+  "machine learning": "سواد هوش مصنوعی",
   "ceramic laminate": "لمینیت سرامیکی",
   "دیجیتال دنتیستری": "دندانپزشکی دیجیتال",
-  "machine learning": "سواد هوش مصنوعی",
   "طبقه بندی سرامیک": "سرامیک دندانی",
   "peri implantitis": "پری ایمپلنتیتیس",
   "سلکتیو گرایندینگ": "تنظیم اکلوژن",
@@ -20063,12 +20137,14 @@
   "جینگوال ریترکشن": "کنترل لثه",
   "مکالمه با ای آی": "مصاحبه با هوش مصنوعی",
   "گپ پست گوتاپرکا": "گپ پست و گوتا",
+  "markdown format": "markdown",
+  "بازیابی و تولید": "rag",
   "treatment plan": "طرح درمان",
   "پست داخل کانال": "پست و کور",
   "پروتز ایمپلنتی": "پروتز ایمپلنت",
+  "language model": "مدل زبانی",
   "کانسپت شهابیان": "دکتر شهابیان",
   "foad shahabian": "دکتر شهابیان",
-  "language model": "مدل زبانی",
   "dental ceramic": "سرامیک دندانی",
   "بعد عمودی صورت": "بعد عمودی",
   "تحلیل استخوانی": "تحلیل استخوان",
@@ -20232,6 +20308,7 @@
   "composite core": "کور کامپوزیتی",
   "راهنمایی کانین": "گایدنس کانین",
   "post gutta gap": "گپ پست و گوتا",
+  "بازیابی افزوده": "rag",
   "aphthous ulcer": "آفت دهان",
   "آرام بخشی عمیق": "بیهوشی",
   "prosthodontics": "پروتز",
@@ -20674,8 +20751,8 @@
   "case report": "کیس اینسایت",
   "پست اند کور": "پست و کور",
   "بایو مکانیک": "بیومکانیک",
-  "انتخاب ماده": "انتخاب متریال",
   "ai research": "سواد هوش مصنوعی",
+  "انتخاب ماده": "انتخاب متریال",
   "پرامپتولوژی": "پرامپتولوژیست",
   "چت جی پی تی": "chatgpt",
   "overdenture": "اوردنچر",
@@ -20862,6 +20939,7 @@
   "gummy smile": "لبخند لثه ای",
   "لیزر اربیوم": "لیزر دندانپزشکی",
   "لیزر er yag": "لیزر دندانپزشکی",
+  "مدل چندوجهی": "مالتی مودال",
   "دندان قرینه": "مرجع آناتومیک",
   "جنبه قانونی": "مسئولیت حرفه ای",
   "فرم استخوان": "معماری استخوان",
@@ -20902,7 +20980,6 @@
   "canker sore": "آفت دهان",
   "mouth ulcer": "آفت دهان",
   "semaglutide": "تیرزپاتاید",
-  "مدل چندوجهی": "مالتی مودال",
   "بایومیمتیک": "بیومیمتیک",
   "بیو میمتیک": "بیومیمتیک",
   "بیومی متیک": "بیومیمتیک",
@@ -20989,6 +21066,7 @@
   "درمان اندو": "اندو",
   "چسب دندانی": "باند",
   "craze line": "ترک مینایی",
+  "جمینی گوگل": "جمینای",
   "vital pulp": "حفظ پالپ",
   "میکرولیکیج": "ریز نشت",
   "short root": "ریشه کوتاه",
@@ -21014,6 +21092,7 @@
   "پروفیلاکسی": "پیشگیری",
   "ضخامت کاغذ": "کاغذ ارتیکولاسیون",
   "مدل پرینتی": "کست پرینتی",
+  "کلود ای آی": "کلود",
   "hemostasis": "کنترل خونریزی",
   "ناحیه ایمن": "کنترل عمق",
   "ناحیه آرنج": "elbow zone",
@@ -21030,6 +21109,7 @@
   "لایه اسمیر": "اسمیر لایر",
   "اتصال روکش": "اسپلینت پروتزی",
   "اصول درمان": "اصول درمانی",
+  "agentic ai": "ایجنت هوش مصنوعی",
   "ایمنی اشعه": "ایمنی پرتو",
   "حفاظت پرتو": "ایمنی پرتو",
   "زیر اکلوژن": "اینفرااکلوژن",
@@ -21051,7 +21131,6 @@
   "proportion": "تناسب با مجاور",
   "ترتیب باند": "توالی باند",
   "اپیکوکتومی": "جراحی اپیکال",
-  "جمینی گوگل": "جمینای",
   "protrusive": "حرکت پروتروزیو",
   "حساسیت طوق": "حساسیت دندانی",
   "smile line": "خط لب",
@@ -21092,6 +21171,7 @@
   "قالب خروجی": "فرمت خروجی",
   "pic system": "فوتوگرامتری",
   "لثه چسبنده": "لثه کراتینیزه",
+  "multimodal": "مالتی مودال",
   "متا پرامپت": "متاپرامپت",
   "hinge axis": "محور لولایی",
   "هینج اکسیس": "محور لولایی",
@@ -21115,14 +21195,12 @@
   "فرم کانتور": "کانتور محدب",
   "کانفبولیشن": "کانفابیولیشن",
   "gear ratio": "کدگذاری توربین",
-  "کلود ای آی": "کلود",
   "فضای حرکتی": "کلیرنس دینامیک",
   "تمیزی تراش": "کیفیت تراش",
   "light cure": "کیور",
   "سطح راهنما": "گاید پلین",
   "play store": "گوگل پلی",
-  "agentic ai": "ایجنت هوش مصنوعی",
-  "multimodal": "مالتی مودال",
+  "custom gpt": "مدیریت دسترسی ثابت",
   "کامپلیکیشن": "عوارض",
   "پلن درمان": "طرح درمان",
   "occlusion": "اکلوژن",
@@ -21343,6 +21421,7 @@
   "پلی استور": "گوگل پلی",
   "gift card": "گیفت کارت",
   "کارت هدیه": "گیفت کارت",
+  "مارک داون": "markdown",
   "آفت دهانی": "آفت دهان",
   "آفت راجعه": "آفت دهان",
   "سماگلوتید": "تیرزپاتاید",
@@ -21360,9 +21439,9 @@
   "abutment": "اباتمنت",
   "metanote": "متانوت",
   "ال ال ام": "llm",
-  "adhesive": "ادهزیو",
   "chat gpt": "chatgpt",
   "جی پی تی": "chatgpt",
+  "adhesive": "ادهزیو",
   "trueness": "دقت اسکن",
   "صحت اسکن": "دقت اسکن",
   "اوردنچور": "اوردنچر",
@@ -21470,6 +21549,7 @@
   "apple id": "اپل آیدی",
   "اپل ایدی": "اپل آیدی",
   "اچ اضافه": "اچ ناخواسته",
+  "ai agent": "ایجنت هوش مصنوعی",
   "بایو ریم": "بایوریم",
   "branding": "برندینگ",
   "ترای این": "تثبیت موقت روکش",
@@ -21517,8 +21597,9 @@
   "خشک کردن": "کنترل رطوبت",
   "quietron": "کویترون",
   "کوایترون": "کویترون",
+  "مارکداون": "markdown",
   "زخم آفتی": "آفت دهان",
-  "ai agent": "ایجنت هوش مصنوعی",
+  "gem گوگل": "مدیریت دسترسی ثابت",
   "فرول اثر": "فرول",
   "اثر فرول": "فرول",
   "اکلوزالی": "اکلوزال",
@@ -21589,6 +21670,7 @@
   "اور پرپ": "اورپرپ",
   "opaquer": "اوپکر",
   "explant": "اکسپلنت ایمپلنت",
+  "ایجنتیک": "ایجنت هوش مصنوعی",
   "isthmus": "ایستموس",
   "دز اشعه": "ایمنی پرتو",
   "زایگوما": "ایمپلنت زایگوماتیک",
@@ -21635,9 +21717,10 @@
   "جوش سرد": "کلد ولدینگ",
   "ریترکشن": "کنترل لثه",
   "کیورینگ": "کیور",
+  "md فایل": "markdown",
   "اوزمپیک": "تیرزپاتاید",
   "ozempic": "تیرزپاتاید",
-  "ایجنتیک": "ایجنت هوش مصنوعی",
+  "جم گوگل": "مدیریت دسترسی ثابت",
   "اکلوژال": "اکلوزال",
   "اکلوژنی": "اکلوزال",
   "امرجنسی": "امرجنس",
@@ -21678,6 +21761,7 @@
   "okeson": "اوکیسون",
   "خط ترک": "ترک مینایی",
   "فیستول": "تریس آبسه",
+  "gemini": "جمینای",
   "dawson": "داوسون",
   "سیگاری": "دخانیات",
   "تنباکو": "دخانیات",
@@ -21688,6 +21772,7 @@
   "enamel": "مینای دندان",
   "ننشستن": "نشست ناقص",
   "veneer": "ونیر",
+  "claude": "کلود",
   "کن بیم": "cbct",
   "مریلند": "rbfdp",
   "saucer": "saucerization",
@@ -21699,7 +21784,6 @@
   "try in": "تثبیت موقت روکش",
   "هندپیس": "توربین",
   "remake": "تکرار کار",
-  "gemini": "جمینای",
   "حس دست": "حس لامسه",
   "واترجت": "سوپرفلاس",
   "fluted": "فلوتینگ",
@@ -21720,7 +21804,6 @@
   "تگرتول": "کاربامازپین",
   "convex": "کانتور محدب",
   "confab": "کانفابیولیشن",
-  "claude": "کلود",
   "ساک بک": "کنترل عفونت",
   "نخ کشی": "کنترل لثه",
   "curing": "کیور",
@@ -21749,6 +21832,7 @@
   "ortho": "ارتودنسی",
   "aging": "ltd",
   "loupe": "بزرگ نمایی",
+  "جمنای": "جمینای",
   "سیگار": "دخانیات",
   "اطفال": "دندانپزشکی کودکان",
   "لیکیج": "ریز نشت",
@@ -21764,7 +21848,6 @@
   "botox": "بوتاکس",
   "بیحسی": "بی حسی",
   "stela": "جایگزین آمالگام",
-  "جمنای": "جمینای",
   "سمانت": "سمنتیشن",
   "سگمنت": "سگمنته کردن",
   "flute": "فلوتینگ",
@@ -21793,6 +21876,7 @@
   "دارو": "داروشناسی",
   "icon": "رزین اینفیلتریشن",
   "مینا": "مینای دندان",
+  "کلاد": "کلود",
   "بیوی": "bewe",
   "bopt": "finish zone",
   "oaot": "one اباتمنت one time",
@@ -21812,7 +21896,6 @@
   "ptfe": "نوار تفلون",
   "vent": "ونت",
   "آنگل": "کدگذاری توربین",
-  "کلاد": "کلود",
   "glp1": "داروهای لاغری",
   "gpt": "chatgpt",
   "ios": "اسکنر داخل دهانی",
