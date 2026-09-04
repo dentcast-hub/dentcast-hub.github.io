@@ -11,8 +11,8 @@
 // to prevent anything, and the thing they actually need to hear — that none of
 // their work has gone anywhere — is better said here, where they are already
 // looking at it.
-import { el } from './util.js?v=53';
-import { pricingHref } from './premium-cta.js?v=53';
+import { el } from './util.js?v=55';
+import { pricingHref } from './premium-cta.js?v=55';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const toFa = (n) => String(n).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);

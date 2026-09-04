@@ -2,26 +2,26 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=53';
-import { currentUser, api } from './js/api.js?v=53';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=53';
-import { openCollectionPicker } from './js/collections.js?v=53';
-import { el } from './js/util.js?v=53';
-import { initHomeCard } from './js/home-card.js?v=53';
-import { initHomeFeatures } from './js/home-features.js?v=53';
-import { initHomeBundles } from './js/home-bundles.js?v=53';
-import { initHomeUpboard } from './js/home-upboard.js?v=53';
-import { initDesTool } from './js/des-scorer.js?v=53';
-import { initHeader } from './js/header.js?v=53';
-import { initTourAutostart } from './js/tour.js?v=53';
-import { initReadingTracker } from './js/reading.js?v=53';
-import { initListeningTracker } from './js/listening.js?v=53';
-import { initShareScoring, buildShareButton } from './js/share.js?v=53';
-import { initHeart, buildHeartChip } from './js/votes.js?v=53';
-import { mountArticleThreads } from './js/article-threads.js?v=53';
-import { mountChallenge } from './js/challenge.js?v=53';
-import { mountDes } from './js/des.js?v=53';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=53';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=55';
+import { currentUser, api } from './js/api.js?v=55';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=55';
+import { openCollectionPicker } from './js/collections.js?v=55';
+import { el } from './js/util.js?v=55';
+import { initHomeCard } from './js/home-card.js?v=55';
+import { initHomeFeatures } from './js/home-features.js?v=55';
+import { initHomeBundles } from './js/home-bundles.js?v=55';
+import { initHomeUpboard } from './js/home-upboard.js?v=55';
+import { initDesTool } from './js/des-scorer.js?v=55';
+import { initHeader } from './js/header.js?v=55';
+import { initTourAutostart } from './js/tour.js?v=55';
+import { initReadingTracker } from './js/reading.js?v=55';
+import { initListeningTracker } from './js/listening.js?v=55';
+import { initShareScoring, buildShareButton } from './js/share.js?v=55';
+import { initHeart, buildHeartChip } from './js/votes.js?v=55';
+import { mountArticleThreads } from './js/article-threads.js?v=55';
+import { mountChallenge } from './js/challenge.js?v=55';
+import { mountDes } from './js/des.js?v=55';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=55';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -31,7 +31,7 @@ import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=53';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=53').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=55').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -214,8 +214,13 @@ async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget }
   // Today it happens to carry no prose container so it never reaches here, but we
   // guard EXPLICITLY too, so even if a LiteCast page later gains a .text-box it
   // still never fires article_completed. Every other readable type lights the
-  // streak; audio episodes light it via episode_listened instead.
-  const streakExcluded = /^litecast\//.test(contentId);
+  // streak; audio episodes light it via episode_listened instead — now that
+  // initEpisodeActions() also routes through setupWorkbench() (for میز کار +
+  // یادداشت on the episode card), an episode reaches this function too, and
+  // must stay excluded here for the exact reason LiteCast is: it already has
+  // its own streak signal and must not additionally fire article_completed for
+  // scrolling past a caption and a reference list.
+  const streakExcluded = /^litecast\//.test(contentId) || /^episodes\//.test(contentId);
   let readingStarted = false;
   const startReading = () => {
     if (readingStarted || streakExcluded) return;
@@ -294,54 +299,46 @@ async function openDeepLinkedHighlight(wb, updateBtn, id) {
   return true;
 }
 
-// An audio episode gets an action row too — but a SHORTER one: قلب and
-// اشتراک‌گذاری, and nothing else. It bows out of initArticle() below (there is
-// no workbench for a podcast, because highlighting one makes no sense), and the
-// consequence nobody had noticed was that the 209 episode pages had no قلب at
-// all: initHeart() mounts into a row, and on these pages no script built one.
-// So they were the only content on the site a reader could not press پسندیدم on,
-// while sitting in up-board's catalog like everything else — 210 of its 444
-// entries, rankable by an engagement they earn (`episode_listened` is one of the
-// four actions the score counts) and by hearts they could not receive.
-//
-// Nothing is added to the page markup here, on purpose: the episode pages are
-// built from tools/episodes_template.html, and a row in the template would mean
-// rebuilding 209 files for something the shared module can put there for free —
-// the same reason no article page carries this markup either.
-function initEpisodeActions() {
+// An audio episode gets the SAME action row an article does now — میز کار,
+// افزودن به کالکشن, قلب, اشتراک‌گذاری — via the same setupWorkbench() path
+// initArticle() uses below. It used to bow out of that path entirely ("no
+// workbench for a podcast, because highlighting one makes no sense") and build
+// a stripped-down row by hand instead; that hand-built copy was also where the
+// قلب-only-at-the-bottom bug lived (initHeart() no-ops the instant any .dcp-like
+// exists anywhere on the page, and the hand-built version below called
+// mountBottomActions() — which always builds its own — before boot() ever
+// reached step('heart')). Reusing setupWorkbench() fixes that for free, because
+// injectActionRow() builds the top قلب itself rather than deferring to
+// initHeart() (see its own comment). The caption and every other bit of text on
+// the episode card ("درباره این اپیزود", منابع, برچسب‌ها, …) sit inside the same
+// .ep-box that PROSE_SELECTORS already covers, so highlighting + the
+// per-episode یادداشتِ کلی both work exactly as they do on an article — a
+// listener can now mark the part of the description or references worth
+// remembering, or leave a note on the episode as a whole. Nothing is added to
+// the page markup here, on purpose: the episode pages are built from
+// tools/episodes_template.html, and a row in the template would mean rebuilding
+// 209 files for something the shared module can put there for free — the same
+// reason no article page carries this markup either.
+async function initEpisodeActions() {
   if (!document.getElementById('ep-audio')) return; // not an audio episode
   const box = findProseBox();
   if (!box) return;
   mountReturnTrail(box.parentNode);
   const contentId = detectContentId();
-  if (!document.getElementById('dcActionRow')) {
-    const { aux } = ensureActionRow(box);
-    aux.appendChild(buildShareButton(() => ({ title: document.title, url: location.href })));
-    // The قلب itself is left to initHeart(), which boot() calls a line later and
-    // which is the single mounting point for every surface that has this row.
-  }
-  // «افزودن به کالکشن» — saving the whole episode, same control every article
-  // gets next to میز کار (injectCollectionButton, shared). An episode has no
-  // میز کار, so this is the first thing in its main group; قلب lands after it
-  // (appended by initHeart(), called a line later in boot()). Guarded on the
-  // cap's own class since it — unlike the button — is unambiguously ours.
-  if (!document.querySelector('#dcActionRow .dcp-wb-cap')) {
-    const { main, row } = ensureActionRow(box);
-    const { btn: collectBtn, info: collectInfo, cap: collectCap } = injectCollectionButton(contentId);
-    main.appendChild(collectBtn);
-    main.appendChild(collectInfo);
-    row.appendChild(collectCap);
-  }
+  const shareTarget = () => ({ title: document.title, url: location.href });
+  const { bindButton } = await setupWorkbench({
+    proseRoot: findProseRoot() || box, proseAnchor: box, contentId, shareTarget,
+  });
   // DES, for an episode too — and NOT because episodes are special. The badge is
   // driven entirely by whether plus/des-scores.json has a record: an episode that
   // cites papers (episode-161 cites three) is scored and shown; one that is only
   // a caption and an audio file has no identified paper, gets no record at
   // Question 4.8, and therefore draws nothing here. No audio test is needed.
-  mountDesHere(findProseEnd() || box, detectContentId());
+  mountDesHere(findProseEnd() || box, contentId);
   // چالش, for an episode too — written against a content_id like DES above,
   // and let the data decide (handoff RULE 9): if this episode has no چالش in
   // plus/challenges.json, the block mounts nothing.
-  mountChallenge(findProseEnd() || box, detectContentId());
+  mountChallenge(findProseEnd() || box, contentId);
   // گفت‌وگوی زیر مطلب, for an episode too. It reached articles only because
   // initArticle() mounts it and initArticle() bows out here — an accident of
   // where the call sat, not a decision: the whole block is written against a
@@ -349,20 +346,22 @@ function initEpisodeActions() {
   // excluded, only unreachable. findProseEnd() is the `.ep-box` here (an episode
   // has exactly one), so the conversation lands under the whole episode card and
   // above the ‹قبلی/بعدی› nav, which is page chrome rather than the episode.
-  mountArticleThreads(findProseEnd() || box, detectContentId());
-  // پسندیدم + افزودن به کالکشن again, at the end of the episode card — same
-  // reasoning as initArticle()'s call below.
-  mountBottomActions(findProseEnd() || box, detectContentId());
+  mountArticleThreads(findProseEnd() || box, contentId);
+  // میز کار + پسندیدم + افزودن به کالکشن again, at the end of the episode card —
+  // same reasoning as initArticle()'s own call below, and bindButton keeps this
+  // second میز کار toggling the SAME workbench instance as the top one.
+  mountBottomActions(findProseEnd() || box, contentId, { bindButton });
 }
 
 async function initArticle() {
   const main = document.querySelector('main.article-content-wrap');
   const proseRoot = findProseRoot();
   if (!main || !proseRoot) return; // not a standalone article page
-  // Audio content (episodes) shares the .ep-box shell but gets NO workbench —
-  // highlighting a podcast makes no sense; it only gets the "seen" tick (fired
-  // from boot) and the short row initEpisodeActions() builds. The audio player
-  // element is the reliable tell.
+  // Audio content (episodes) shares the .ep-box shell but is wired by
+  // initEpisodeActions() instead — its own reading-tracker exclusion
+  // (episodes already have episode_listened) and its own set of "seen" tick,
+  // میز کار and یادداشت calls, so it must not also run through this path. The
+  // audio player element is the reliable tell.
   if (document.getElementById('ep-audio')) return;
 
   // findProseBox()'s parent, NOT `main` — on the glossary template `main` is
@@ -446,9 +445,8 @@ async function mountArticleWorkbench(root, url) {
   const [path, query] = url.split('#')[0].split('?');
   const contentId = path.replace(/^\/+/, '').replace(/\.html$/i, '') || detectContentId();
   markViewed(contentId); // record the open for the landing-page "seen" ticks
-  // Re-aim share crediting at the article now on screen. Done BEFORE the
-  // episode early-return, because a podcast can be shared too — it just gets no
-  // workbench, and therefore no button of its own on this surface.
+  // Re-aim share crediting at the article now on screen (a podcast can be
+  // shared too, same as any other page).
   initShareScoring(contentId);
   // The address bar still shows the homepage here, so the article's own URL has
   // to be carried in — and stripped of ?dcphl / #hash, which are this reader's
@@ -458,33 +456,12 @@ async function mountArticleWorkbench(root, url) {
     title: (root.querySelector('h1')?.textContent || document.title).trim(),
     url: shareUrl,
   });
-  if (contentId.startsWith('episodes/')) {
-    // Audio: seen tick and the short row, never a workbench. Without this the
-    // قلب would exist for a phone reader opening an episode and not for a
-    // desktop one opening the same episode in column C — the exact split
-    // buildShareButton() was written to close, and one this feature would make
-    // again for its own 210 pages.
-    const box = findProseBox(root);
-    if (box) {
-      if (!root.querySelector('#dcActionRow')) {
-        const { main, aux, row } = ensureActionRow(box);
-        // «افزودن به کالکشن» before قلب, same order as initEpisodeActions()
-        // builds on the standalone episode page — no میز کار on this surface
-        // either, so it is the first thing in the main group.
-        const { btn: collectBtn, info: collectInfo, cap: collectCap } = injectCollectionButton(contentId);
-        main.appendChild(collectBtn);
-        main.appendChild(collectInfo);
-        main.appendChild(buildHeartChip(contentId, 'dc-act dc-act-heart'));
-        row.appendChild(collectCap);
-        aux.appendChild(buildShareButton(shellShare));
-      }
-      mountChallenge(findProseEnd(root) || box, contentId, root); // چالش, on this surface too
-      mountArticleThreads(findProseEnd(root) || box, contentId); // the conversation, on this surface too
-      mountDesHere(findProseEnd(root) || box, contentId, root);  // and the score, on this surface too
-      mountBottomActions(findProseEnd(root) || box, contentId);  // and the end-of-article pair, on this surface too
-    }
-    return;
-  }
+  // Audio episodes used to stop here with a hand-built, workbench-less row
+  // ("no workbench for a podcast"). They now go through the exact same
+  // setupWorkbench() call as any article — proseRoot already resolves to the
+  // episode's own .ep-box (findProseRoot() above), so میز کار + یادداشت +
+  // highlighting on the caption/references work here too, in step with the
+  // standalone episode page (initEpisodeActions(), same fix, same reasoning).
   const { wb, updateBtn, bindButton } = await setupWorkbench({
     proseRoot,
     proseAnchor: findProseBox(root),

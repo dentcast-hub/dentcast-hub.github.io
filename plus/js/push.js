@@ -3,8 +3,8 @@
 // handled by the /plus service worker. The user's reminder preferences live in
 // settings.reminders.*; this module only manages the browser subscription that
 // lets the backend actually deliver them.
-import { api } from './api.js?v=53';
-import { VAPID_PUBLIC_KEY } from './config.js?v=53';
+import { api } from './api.js?v=55';
+import { VAPID_PUBLIC_KEY } from './config.js?v=55';
 
 export function pushSupported() {
   return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
