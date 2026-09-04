@@ -1,0 +1,21 @@
+{
+  "type": "dentcast_plus",
+  "note": "Publish of dentcast-plus/video-11 (لثه روی فینیش‌لاین: راهکاری برای Try-in و سمان‌کردن روکش بدون خطا). Mints #الکتروسرجری, the technique the video uses to clear gingival overgrowth off the finish line before try-in/cementation; every other tag reuses an existing canonical form.",
+  "concepts": [
+    {
+      "tag": "#الکتروسرجری",
+      "domain": "clinical",
+      "definition": "برداشتن یا کنترل بافت نرم لثه با جریان الکتریکی فرکانس‌بالا (الکتروکوتری)، معمولاً برای آشکارسازی فینیش‌لاین یا مارجین تراش پیش از قالب‌گیری، Try-in یا سمان‌کردن روکش.",
+      "use_when": "محتوا دربارهٔ برداشتن یا کنار زدن بافت لثه‌ای روی مارجین/فینیش‌لاین با کوتر برای دسترسی به تراش یا سمان‌کردن روکش باشد.",
+      "aliases": ["Electrosurgery", "الکتروکوتری", "کوتر لثه", "electrocautery", "الکتروسرجری لثه"]
+    }
+  ],
+  "articles": {
+    "dentcast-plus/video-11": [
+      "#دنتکست_پلاس",
+      "#فینیش_لاین",
+      "#سمان_کردن",
+      "#الکتروسرجری"
+    ]
+  }
+}
