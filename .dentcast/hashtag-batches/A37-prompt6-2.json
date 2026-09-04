@@ -1,0 +1,27 @@
+{
+  "type": "promptologist",
+  "note": "Publish of dentai/promptologist/prompt6-2 (فصل ۶ قسمت ۲ — فضای کارِ خودتان). Mints three concepts the article genuinely resolves: #RAG (the retrieval-then-generate mechanism the article explains — a model never reads a whole source, only the passages a retrieval step hands it), #Markdown (the plain-text structuring format the article recommends for keeping a document's structure intact when handing it to a model), and #فضای_کارِ_ثابت (the persistent AI-service workspace — Project on Claude/ChatGPT, Gem on Gemini — that holds a fixed prompt and reference files across conversations, as distinct from a strict source-bound tool like NotebookLM). Every other tag reuses an existing canonical form, including #NotebookLM which the article names directly and which prior promptologist parts already carry.",
+  "concepts": [
+    {
+      "tag": "#RAG",
+      "domain": "ai",
+      "definition": "بازیابیِ تکه‌های مرتبط از منابعِ کاربر و گذاشتنشان جلوی مدل، پیش از نوشتنِ جواب — Retrieval-Augmented Generation؛ مدل کلِ سند را نمی‌خواند، فقط همان تکه‌های بازیابی‌شده را می‌بیند.",
+      "use_when": "مقاله دربارهٔ سازوکارِ پشتِ‌صحنه‌ی سرویس‌های مبتنی‌بر منبع باشد و نشان بدهد که مدل کلِ اسناد را نمی‌خواند، فقط تکه‌های بازیابی‌شده را می‌بیند.",
+      "aliases": ["Retrieval-Augmented Generation", "بازیابی و تولید", "retrieval augmented generation", "بازیابی‌افزوده"]
+    },
+    {
+      "tag": "#Markdown",
+      "domain": "ai",
+      "definition": "فرمتِ متنیِ ساده که ساختارِ سند (تیتر، بولد، فهرست) را با علائمِ کوچک داخلِ خودِ متن نگه می‌دارد، نه در ظاهرِ چاپی.",
+      "use_when": "مقاله دربارهٔ آماده‌سازیِ فایل برای دادن به مدل یا نگه‌داشتنِ خروجیِ مدل به‌شکلی باشد که ساختارش برای ماشین سالم بماند.",
+      "aliases": ["مارک‌داون", "md فایل", "markdown format", "مارکداون"]
+    },
+    {
+      "tag": "#فضای_کارِ_ثابت",
+      "domain": "ai",
+      "definition": "فضایی در یک سرویسِ هوش مصنوعی (پروجکت، جِم، یا جی‌پی‌تیِ سفارشی) که پرامپتِ ثابت و فایل‌های مرجعِ کاربر را نگه می‌دارد تا هر گفت‌وگوی تازه از نو تکرار نشوند.",
+      "use_when": "مقاله دربارهٔ Project/Gem/Custom GPT یا هر فضای ذخیره‌شده‌ی مشابه در یک سرویسِ هوش مصنوعی باشد.",
+      "aliases": ["Project هوش مصنوعی", "Gem گوگل", "Custom GPT", "پروجکت هوش مصنوعی", "جم گوگل"]
+    }
+  ]
+}

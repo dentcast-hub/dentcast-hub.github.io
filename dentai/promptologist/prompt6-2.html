@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="dc-notify" content="true">
+  <title>پرامپتولوژیست — فضای کارِ خودتان | دنت‌کست</title>
+  <meta name="description" content="فصل ۶، قسمت ۲: منابعِ شما جای ثابتی برای ماندن لازم دارند، و این قسمت پشتِ صحنه‌ی همان کار را باز می‌کند — RAG، یعنی اینکه مدل کلِ منبع را نمی‌خواند، فقط تکه‌هایی را می‌بیند که سیستم برایش پیدا کرده. بعد دو فضای متفاوت را کنارِ هم می‌گذارد: نوت‌بوک‌ال‌ام که سخت‌گیر است و از منبع بیرون نمی‌رود، و پروجکت/جِم که نرم‌ترند و پرامپتِ ثابت و نالج را نگه می‌دارند. آخرش هم مارک‌داون را معرفی می‌کند، فرمتی که ساختارِ متن را برای مدل سالم نگه می‌دارد.">
+  <link rel="canonical" href="https://dentcast.org/dentai/promptologist/prompt6-2.html">
+  <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/dentai/promptologist/prompt6-2.html">
+  <link rel="alternate" hreflang="fa" href="https://dentcast.org/dentai/promptologist/prompt6-2.html">
+  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/dentai/promptologist/prompt6-2.html">
+  <meta name="author" content="دکتر فواد شهابیان">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="پرامپتولوژیست — فضای کارِ خودتان | دنت‌کست">
+  <meta property="og:description" content="فصل ۶، قسمت ۲: منابعِ شما جای ثابتی برای ماندن لازم دارند، و این قسمت پشتِ صحنه‌ی همان کار را باز می‌کند — RAG، یعنی اینکه مدل کلِ منبع را نمی‌خواند، فقط تکه‌هایی را می‌بیند که سیستم برایش پیدا کرده. بعد دو فضای متفاوت را کنارِ هم می‌گذارد: نوت‌بوک‌ال‌ام که سخت‌گیر است و از منبع بیرون نمی‌رود، و پروجکت/جِم که نرم‌ترند و پرامپتِ ثابت و نالج را نگه می‌دارند. آخرش هم مارک‌داون را معرفی می‌کند، فرمتی که ساختارِ متن را برای مدل سالم نگه می‌دارد.">
+  <meta property="og:url" content="https://dentcast.org/dentai/promptologist/prompt6-2.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="پرامپتولوژیست — فضای کارِ خودتان | دنت‌کست">
+  <meta name="twitter:description" content="فصل ۶، قسمت ۲: منابعِ شما جای ثابتی برای ماندن لازم دارند، و این قسمت پشتِ صحنه‌ی همان کار را باز می‌کند — RAG، یعنی اینکه مدل کلِ منبع را نمی‌خواند، فقط تکه‌هایی را می‌بیند که سیستم برایش پیدا کرده. بعد دو فضای متفاوت را کنارِ هم می‌گذارد: نوت‌بوک‌ال‌ام که سخت‌گیر است و از منبع بیرون نمی‌رود، و پروجکت/جِم که نرم‌ترند و پرامپتِ ثابت و نالج را نگه می‌دارند. آخرش هم مارک‌داون را معرفی می‌کند، فرمتی که ساختارِ متن را برای مدل سالم نگه می‌دارد.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/promptologist/prompt6-2.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/dentai/promptologist/prompt6-2.html"
+      },
+      "url": "https://dentcast.org/dentai/promptologist/prompt6-2.html",
+      "headline": "پرامپتولوژیست — فضای کارِ خودتان",
+      "description": "فصل ۶، قسمت ۲: منابعِ شما جای ثابتی برای ماندن لازم دارند، و این قسمت پشتِ صحنه‌ی همان کار را باز می‌کند — RAG، یعنی اینکه مدل کلِ منبع را نمی‌خواند، فقط تکه‌هایی را می‌بیند که سیستم برایش پیدا کرده. بعد دو فضای متفاوت را کنارِ هم می‌گذارد: نوت‌بوک‌ال‌ام که سخت‌گیر است و از منبع بیرون نمی‌رود، و پروجکت/جِم که نرم‌ترند و پرامپتِ ثابت و نالج را نگه می‌دارند. آخرش هم مارک‌داون را معرفی می‌کند، فرمتی که ساختارِ متن را برای مدل سالم نگه می‌دارد.",
+      "datePublished": "2026-09-04",
+      "dateModified": "2026-09-04",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "fa",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "پرامپتولوژیست",
+        "url": "https://dentcast.org/dentai/promptologist"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "پرامپتولوژیست",
+          "item": "https://dentcast.org/dentai/promptologist"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "فضای کارِ خودتان",
+          "item": "https://dentcast.org/dentai/promptologist/prompt6-2.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css?v=3">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-right:4px solid var(--ac);padding-right:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-related-link{display:inline-flex;align-items:center;gap:0.375rem;font-size:.87rem;font-weight:600;color:var(--ac);text-decoration:none;padding:0.5rem 1rem;border:1px solid var(--ac);border-radius:0.625rem;transition:background .15s,color .15s;}
+.ep-related-link:hover{background:var(--ac);color:#fff;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{display:flex;width:fit-content;max-width:100%;align-items:center;gap:0.375rem;margin:0 0 1.125rem auto;background:rgba(255,255,255,0.92);border:1px solid rgba(0,0,0,0.1);border-radius:0.75rem;padding:0.375rem 0.75rem;font-size:0.8125rem;font-weight:700;color:#0b5fff;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.12);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);cursor:pointer;transition:transform .18s ease,background .18s ease;}
+.lang-btn:hover{background:#fff;transform:scale(1.03);}
+  </style>
+</head>
+<body>
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">&#9776;</button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">&#128225;</button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">&#128269;</button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">&#128241;</span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">&#128231;</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">&#10024;</span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<main class="article-content-wrap ep-page">
+  <a href="/dentai/promptologist/" class="ep-back">&#8592; بازگشت به پرامپتولوژیست</a>
+
+  <!-- 🌐 English Version (SEO-friendly language toggle) -->
+  <a class="lang-btn" href="en/prompt6-2.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> English
+  </a>
+
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">فصل ۶ · قسمت ۲</div>
+      <h1 class="ep-title">فضای کارِ خودتان</h1>
+      <div class="ep-meta">
+        <span>&#9201; ۱۳ دقیقه مطالعه</span>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">متنِ این قسمت</h2>
+      <div class="ep-caption"><p>قسمتِ قبل با این جمله تمام شد که مدلِ عمومی اطلاعات خودش را دارد و منابعِ شما در آن اطلاعات نیست. حالا سؤال این است که چطور واردشان کنیم.</p><p>ساده‌ترین جوابش را احتمالاً بلدید و بارها انجام داده‌اید: فایل را در همان گفت‌وگو آپلود می‌کنید یا متن را کپی می‌کنید و بعد paste میکنید. این روش کار می‌کند و برای خیلی از کارها کافی است. ولی دو مشکل دارد. اول اینکه با بسته‌شدنِ آن گفت‌وگو همه‌چیز تمام می‌شود و دفعه‌ی بعد در گفتگوی بعدی باید از نو همان کار را بکنید. دوم اینکه هر چه بیشتر بچسبانید، زودتر به همان سقفی می‌رسید که در قسمتِ قبل گفتیم، و از یک جایی به بعد مدل دارد از روی چیزی جواب می‌دهد که نصفش را دیگر جلوی چشمش ندارد.</p><p>برای کارِ جدی روشی لازم است که کمک کند تا منابع بمانند. جایی که منابعِ شما یک بار آنجا گذاشته شوند و در هر گفت‌وگو حاضر باشند. دو نوع از این فضاها امروز در دسترس است و چون شبیه به‌نظر می‌رسند اغلب با هم اشتباه گرفته می‌شوند، در حالی که دو کارِ متفاوت می‌کنند.</p><p><strong>اول باید بدانید پشتِ صحنه چه اتفاقی می‌افتد</strong></p><p>فرض کنید بیست مقاله درباره‌ی درمانِ پری‌ایمپلنتایتیس داده‌اید و می‌پرسید در این مقاله‌ها درباره‌ی دبریدمانِ مکانیکی چه گفته شده.</p><p>آنچه اتفاق می‌افتد این نیست که مدل بیست مقاله را می‌خواند و بعد جواب می‌دهد. سیستم اول در آن بیست مقاله دنبالِ تکه‌های مرتبط با سؤالِ شما می‌گردد، چند تکه را بیرون می‌کشد، و آن تکه‌ها را همراهِ سؤالِ شما جلوی مدل می‌گذارد. مدل بعد از روی همان تکه‌ها می‌نویسد. اسمِ این روش RAG است، مخففِ Retrieval-Augmented Generation، و ترجمه‌ی تحت‌اللفظی‌اش هم دقیقاً همین است: تولیدِ متن با کمکِ بازیابی، این اصطلاح و مثال‌هایش را یاد بگیرید، در منابع مربوط به هوش مصنوعی زیاد خواهید شنید.</p><p>در <a href="/dentai/promptologist/prompt2-1.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">فصل ۱ و ۲</a> گفتیم این کار جلوی جعل را می‌گیرد ولی جلوی بدفهمی را نه. حالا که مکانیزمش را دیدید، یک نکته‌ی سومی هم اضافه می‌شود که مهم‌تر از هر دو است و کمتر کسی به آن توجه می‌کند: مدل فقط آن تکه‌هایی را می‌بیند که سیستم برایش پیدا کرده. اگر جستجو تکه‌ی درست را برندارد، مدل از بودنش خبر ندارد. با همان لحنِ مطمئن از روی تکه‌های موجود جواب می‌دهد، و شما جوابی می‌گیرید که دقیقاً به منابعِ خودتان مستند است ولی حرفِ اصلیِ آن بیست مقاله را نمی‌زند.</p><p>به زبانِ دیگر: منبع‌دادن مسئله‌ی «از خودش درمی‌آورد» را حل می‌کند، نه مسئله‌ی «همه‌ی حرف را دید یا نه» را. این را نگه دارید، چون قسمتِ بعد کلاً درباره‌ی همین است.</p><p>اما گفتیم دو نوع از این فضاها در دسترسند، باهم مرور میکنیم:</p><p><strong>نوعِ اول: نوت‌بوک‌ال‌ام و همنوعانش</strong></p><p>نوت‌بوک‌ال‌ام (NotebookLM) که از <a href="/dentai/promptologist/prompt1-5.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">فصل ۱</a> اسمش را عقب انداخته بودیم، سرویسی از گوگل است که کارش دقیقاً همین بود. شما یک نوت‌بوک می‌سازید، منابعتان را در آن می‌ریزید (پی‌دی‌اف، لینک، متن، حتی فایلِ صوتی) و بعد فقط درباره‌ی همان‌ها سؤال می‌پرسید.</p><p>تفاوتِ اصلی‌اش با یک چتِ معمولی این است که سخت‌گیر است. از منابع بیرون نمی‌رود، و اگر چیزی را بپرسید که در منابعتان نیست معمولاً می‌گوید نیست، نه اینکه از دانشِ عمومی‌اش پرش کند. هر جمله‌ای هم که می‌نویسد به تکه‌ی مشخصی از منبع وصل است و با یک کلیک همان‌جا را نشانتان می‌دهد.</p><p>این ویژگیِ آخر مهم‌ترین چیزی است که به کارِ شما می‌آید، ولی دقیقاً به همان دلیلی که در <a href="/dentai/promptologist/prompt5-3.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">فصل ۵</a> گفتیم: شما نمی‌توانید بسنجید که «این حرف درست است یا نه»، ولی خیلی راحت می‌توانید بسنجید که «این جمله در آن مقاله هست یا نه». نوت‌بوک‌ال‌ام دومی را راحت می‌کند. اولی همچنان کارِ خودتان است.</p><p>کجا واقعاً به درد می‌خورد: وقتی مجموعه‌ای از مقاله‌ها را برای یک موضوعِ مشخص جمع کرده‌اید و می‌خواهید بینشان بگردید. مثلاً ده مقاله درباره‌ی بقای ایمپلنتِ فوری در ناحیه‌ی زیبایی، و سؤالتان این است که کدامشان دوره‌ی پیگیریِ بیش از پنج سال داشته‌اند، یا کدام‌ها معیارِ موفقیتشان را متفاوت تعریف کرده‌اند. این کار را دستی هم می‌شود کرد و چند ساعت طول می‌کشد.</p><p>کجا به درد نمی‌خورد: وقتی می‌خواهید چیزی بنویسید که در منابعتان نیست، یا وقتی می‌خواهید مدل با دانشِ عمومی‌اش به شما کمک کند. برای آن کار جای دیگری لازم است.</p><p><strong>نوعِ دوم: فضای ثابتِ خودتان</strong></p><p>اینجا اسم‌ها بین سرویس‌ها فرق می‌کند و همین باعثِ سردرگمی است. کلاد و چت‌جی‌پی‌تی چیزی دارند به اسمِ پروجکت (Project). جمینای پروجکت ندارد و به‌جایش جِم (Gem) دارد. چت‌جی‌پی‌تی جدا از پروجکت، جی‌پی‌تی‌های سفارشی (GPTs) هم دارد. اسم‌ها متفاوت‌اند ولی ایده یکی است: فضایی که چیزهای ثابتِ شما را نگه می‌دارد تا هر بار از نو نگویید.</p><p>دو چیز است که می‌شود ثابت نگه داشت.</p><p>اولی یک پرامپتِ ثابت است. همان چیزی که در قسمتِ قبل گفتیم شرکت‌ها پشتِ دستیارهای آماده می‌نویسند، منتها این‌بار خودتان می‌نویسید و خودتان می‌بینید چه نوشته‌اید. مثلاً: من دندانپزشکِ عمومی‌ام، مخاطبِ متن‌هایم بیمار است نه همکار، از اصطلاحِ تخصصی بدونِ توضیح استفاده نکن، هر عددی گفتی منبعش را هم بگو.</p><p>این را یک بار می‌نویسید و دیگر لازم نیست سرِ هر گفت‌وگو تکرارش کنید. هر چیزی که در <a href="/dentai/promptologist/prompt4-4.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">فصل ۴</a> یاد گرفتید و بعد دیدید مدام دارید تکرارش می‌کنید، جایش همین‌جاست.</p><p>دومی نالج (knowledge) است، یعنی فایل‌هایی که همیشه دمِ دستِ مدل‌اند. پروتکل‌های مطبتان، متنِ رضایت‌نامه‌ها، مقاله‌های مرجعتان، یادداشت‌هایی که درباره‌ی سبکِ نوشتنتان دارید.</p><p><strong>یک مثالِ واقعی از کارِ خودم</strong></p><p>من پرامپتی نوشته‌ام که اعتبارِ یک مقاله را می‌سنجد. یعنی به‌جای اینکه از مدل بپرسم این مقاله خوب است یا نه (که همان سؤالِ بدی است که در فصل ۵ درباره‌اش حرف زدیم)، در خودِ پرامپت ملاک‌ها را تعریف کرده‌ام و مدل موظف است مقاله را در برابرِ همان ملاک‌ها بسنجد و آخرش یک عددِ اعتبار بدهد.</p><p>نکته این است که این پرامپت طولانی است و هر بار کپی‌کردنش کارِ راحتی نیست. الان کدهای سایت دنت‌کست برای اعتبارسنجی ازش استفاده میکنن، اما اگر می‌خواستم بدونِ ابزارِ خاصی استفاده‌اش کنم، راهش این بود که یک پروجکت بسازم و این پرامپت را همان پرامپتِ ثابتش کنم؛ آن‌وقت هر گفت‌وگویی که داخلِ آن پروجکت شروع می‌شد از قبل می‌دانست قرار است چه کار کند. خودم یک gem با همین پرامپت ساخته‌ام (بالاتر گفتم جم چیه). حالا خیلی راحت بدون تکرار پرامپت مقاله را در آن جِم میفرستم و میگویم اعتبارش را بگو، و خروجی طبقِ همان ملاک‌ها می‌آید.</p><p>این تفاوتِ عملیِ جِم و پروجکت را هم نشان می‌دهد. جِم برای یک کارِ مشخص است که مدام تکرارش می‌کنید؛ پروجکت برای یک حوزه‌ی کاری است که چند جور کار داخلش انجام می‌دهید و منابعِ مشترکی دارد.</p><p><strong>پس کدام را کجا</strong></p><p>تفاوتِ این فضاها با نوت‌بوک‌ال‌ام مهم است و بی‌اهمیت نیست: اینها نرم‌ترند. مدل نالج را دارد ولی دانشِ عمومی‌اش را هم دارد و آزادانه از هر دو استفاده می‌کند، و همیشه هم برایتان روشن نمی‌کند که این جمله از کدام‌شان آمده. برای نوشتن عالی است و برای راستی‌آزمایی بد.</p><p>پس قاعده‌ی انتخاب ساده است. اگر می‌خواهید بگویید «فقط از روی این ده مقاله حرف بزن»، نوت‌بوک‌ال‌ام. اگر می‌خواهید بگویید «با چارچوب و لحنِ همیشگیِ من بنویس و این فایل‌ها را هم دمِ دستت داشته باش»، پروجکت یا جِم.</p><p>یک قیدِ عملی هم دارد که بهتر است زود بدانید: هر چه در نالج بریزید همان‌قدر که فکر می‌کنید کاملاً خوانده نمی‌شود. اینجا هم پشتِ صحنه همان کارِ بازیابی انجام می‌شود و تکه‌ها می‌آیند. پس نالج جای انبارکردن نیست؛ جای گذاشتنِ چیزهایی است که واقعاً مرجعِ کارتان‌اند. سی فایلِ نامرتب کارِ شما را بدتر می‌کند، نه بهتر.</p><p><strong>و یک چیزِ کوچک که خیلی به کارتان می‌آید: مارک‌داون</strong></p><p>تا اینجا مدام حرف از فایل زدیم. حالا این سؤال پیش می‌آید که چه فایلی و با چه فرمتی، این را هم یاد بگیرید چون در منابع هوش مصنوعی زیاد در موردش خواهید شنید:</p><p>مارک‌داون (Markdown) یک روشِ خیلی ساده برای نوشتنِ متنِ ساختاردار است. یک فایلِ متنیِ معمولی است با پسوندِ md، و در آن با چند علامتِ کوچک ساختار می‌دهید: علامتِ # اولِ خط یعنی این تیتر است، ستاره‌ی دوتایی دورِ یک کلمه یعنی این بولد است، خط تیره اولِ خط یعنی این یک بند از فهرست است. کلِ چیزی که باید یاد بگیرید همین اندازه است و پنج دقیقه وقت می‌برد.</p><p>چرا به دردِ کارِ ما می‌خورد؟ چون در مارک‌داون ساختار داخلِ خودِ متن است، نه در ظاهرش. در فایلِ وُرد یا پی‌دی‌اف، تیتر تیتر است چون بزرگ‌تر و پررنگ‌تر چاپ شده؛ آن بزرگی و پررنگی چیزی است که چشمِ شما می‌بیند و لزوماً چیزی نیست که به دستِ مدل می‌رسد. در مارک‌داون تیتر تیتر است چون قبلش # هست، و آن علامت بخشی از متن است و هیچ‌جا گم نمی‌شود. برای همین وقتی متنی را به مارک‌داون به مدل می‌دهید، ساختارِ سندتان سالم می‌رسد.</p><p>از آن طرف هم به کارتان می‌آید: از مدل بخواهید خروجی را به مارک‌داون بدهد. فایلش سبک است، در هر ویرایشگرِ متنی باز می‌شود، سال‌ها بعد هم باز خواهد شد، و مهم‌تر از همه، همان فایل را میتوانید مستقیم بگذارید داخلِ نالج یا نوت‌بوک. یعنی چیزی که امروز ساخته‌اید، فردا خودش می‌شود منبعِ کارِ بعدی.</p><p><strong>و بعد</strong></p><p>تا اینجا مدل را از جهانِ عمومی‌اش بیرون آوردیم و نشاندیمش روی منابعِ خودتان. این یک پیشرفتِ واقعی است و بیشترین کاری است که اکثرِ آدم‌ها می‌کنند.</p><p>ولی به آن نکته‌ی وسطِ همین قسمت برگردید: مدل فقط تکه‌هایی را دید که برایش پیدا شده بود، و آن تکه‌ها را هم فهمید یا نفهمید، شما نمی‌دانید. اینکه هر جمله به منبع لینک دارد ثابت می‌کند نقلِ‌قول جعلی نیست؛ ثابت نمی‌کند برداشت مدل درست است.</p><p>پس هنوز یک حلقه کم داریم. اینکه چطور بفهمید آنچه یک مدل از منابعِ شما فهمیده درست است یا نه، بدونِ اینکه مجبور باشید خودتان هر بیست مقاله را از اول بخوانید. جوابی که برای خودم پیدا کرده‌ام و مدتهاست استفاده می‌کنم موضوعِ قسمتِ بعد است.</p></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">کلیدواژه‌ها</h2>
+      <div class="ep-chips"><span class="ep-chip">RAG (بازیابی‌افزوده‌ی تولید)</span><span class="ep-chip">نوت‌بوک‌ال‌ام (NotebookLM) و راستی‌آزماییِ منبع</span><span class="ep-chip">پروجکت و جِم در سرویس‌های هوش مصنوعی</span><span class="ep-chip">پرامپتِ ثابت و نالج (knowledge)</span><span class="ep-chip">مارک‌داون (Markdown) برای اسنادِ ساختاریافته</span><span class="ep-chip">محدودیتِ راستی‌آزماییِ خروجیِ RAG</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">برچسب‌ها</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#پرامپتولوژیست</span><span class="ep-hashtag">#هوش_مصنوعی</span><span class="ep-hashtag">#سواد_هوش_مصنوعی</span><span class="ep-hashtag">#AI_Literacy</span><span class="ep-hashtag">#ChatGPT</span><span class="ep-hashtag">#مدل_زبانی</span><span class="ep-hashtag">#LLM</span><span class="ep-hashtag">#جمینای</span><span class="ep-hashtag">#کلود</span><span class="ep-hashtag">#NotebookLM</span><span class="ep-hashtag">#RAG</span><span class="ep-hashtag">#Markdown</span><span class="ep-hashtag">#فضای_کارِ_ثابت</span></div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">محتوای مرتبط</h2>
+      <a href="/dentai/promptologist/" class="ep-related-link">بازگشت به فهرست پرامپتولوژیست</a>
+    </div>
+
+    <div class="dc-related-section">
+      <h2 class="dc-related-label">کاوش بیشتر</h2>
+      <div class="dc-related-capsules">
+        <a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+        <a href="/pillar/digital/" class="dc-related-capsule">فهرست موضوعی</a>
+        <a href="/episodes/episode-109-2.html" class="dc-related-capsule">مصاحبه: مسیر یادگیری هوش مصنوعی</a>
+        <a href="/episodes/episode-149-1.html" class="dc-related-capsule">اسلایدکست — مبانی هوش مصنوعی برای دندانپزشکان</a>
+      </div>
+    </div>
+  </div>
+  <div class="ep-nav">
+    <a href="/dentai/promptologist/prompt6-1.html" class="ep-nav-btn">&#8592; قسمت قبلی</a>
+    <span class="ep-nav-btn ep-nav-empty">قسمت بعدی &#8594;</span>
+  </div>
+</main>
+
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results">&#10006;</button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همه بخش‌های دنت‌کست...">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=152" defer></script>
+</body>
+</html>
