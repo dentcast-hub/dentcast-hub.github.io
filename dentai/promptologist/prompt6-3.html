@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="dc-notify" content="true">
+  <title>پرامپتولوژیست — روشی که خودم استفاده می‌کنم | دنت‌کست</title>
+  <meta name="description" content="فصل ۶، قسمت ۳: بعد از بستنِ مدل به منبع، دو مشکل حل‌نشده می‌ماند: دیدنِ کاملِ حرفِ منبع، و برداشتِ درستِ آن. این قسمت روشی می‌دهد که خودِ نویسنده مدتی است استفاده می‌کند: متنِ مدلِ اول را جلوی یک مدلِ دوم و مستقل می‌گذارد و از او می‌خواهد جمله‌به‌جمله در برابرِ همان مقاله بسنجدش — نه اینکه بگوید درست است یا نه، بلکه بگوید در مقاله هست یا نه، و اگر هست، وفادارانه نقل شده یا نه. نتیجه سه دسته می‌شود: نقلِ درست، افزوده‌ی بی‌منبع، و خطرناک‌ترینشان، ادعایی که در مقاله هست ولی قید یا پیامدش عوض شده. اسمِ این روش را الک گذاشته چون بارِ قضاوت را از دوش برنمی‌دارد، فقط جمعش می‌کند روی چند نقطه‌ی مشخص.">
+  <link rel="canonical" href="https://dentcast.org/dentai/promptologist/prompt6-3.html">
+  <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/dentai/promptologist/prompt6-3.html">
+  <link rel="alternate" hreflang="fa" href="https://dentcast.org/dentai/promptologist/prompt6-3.html">
+  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/dentai/promptologist/prompt6-3.html">
+  <meta name="author" content="دکتر فواد شهابیان">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="پرامپتولوژیست — روشی که خودم استفاده می‌کنم | دنت‌کست">
+  <meta property="og:description" content="فصل ۶، قسمت ۳: بعد از بستنِ مدل به منبع، دو مشکل حل‌نشده می‌ماند: دیدنِ کاملِ حرفِ منبع، و برداشتِ درستِ آن. این قسمت روشی می‌دهد که خودِ نویسنده مدتی است استفاده می‌کند: متنِ مدلِ اول را جلوی یک مدلِ دوم و مستقل می‌گذارد و از او می‌خواهد جمله‌به‌جمله در برابرِ همان مقاله بسنجدش — نه اینکه بگوید درست است یا نه، بلکه بگوید در مقاله هست یا نه، و اگر هست، وفادارانه نقل شده یا نه. نتیجه سه دسته می‌شود: نقلِ درست، افزوده‌ی بی‌منبع، و خطرناک‌ترینشان، ادعایی که در مقاله هست ولی قید یا پیامدش عوض شده. اسمِ این روش را الک گذاشته چون بارِ قضاوت را از دوش برنمی‌دارد، فقط جمعش می‌کند روی چند نقطه‌ی مشخص.">
+  <meta property="og:url" content="https://dentcast.org/dentai/promptologist/prompt6-3.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="پرامپتولوژیست — روشی که خودم استفاده می‌کنم | دنت‌کست">
+  <meta name="twitter:description" content="فصل ۶، قسمت ۳: بعد از بستنِ مدل به منبع، دو مشکل حل‌نشده می‌ماند: دیدنِ کاملِ حرفِ منبع، و برداشتِ درستِ آن. این قسمت روشی می‌دهد که خودِ نویسنده مدتی است استفاده می‌کند: متنِ مدلِ اول را جلوی یک مدلِ دوم و مستقل می‌گذارد و از او می‌خواهد جمله‌به‌جمله در برابرِ همان مقاله بسنجدش — نه اینکه بگوید درست است یا نه، بلکه بگوید در مقاله هست یا نه، و اگر هست، وفادارانه نقل شده یا نه. نتیجه سه دسته می‌شود: نقلِ درست، افزوده‌ی بی‌منبع، و خطرناک‌ترینشان، ادعایی که در مقاله هست ولی قید یا پیامدش عوض شده. اسمِ این روش را الک گذاشته چون بارِ قضاوت را از دوش برنمی‌دارد، فقط جمعش می‌کند روی چند نقطه‌ی مشخص.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/promptologist/prompt6-3.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/dentai/promptologist/prompt6-3.html"
+      },
+      "url": "https://dentcast.org/dentai/promptologist/prompt6-3.html",
+      "headline": "پرامپتولوژیست — روشی که خودم استفاده می‌کنم",
+      "description": "فصل ۶، قسمت ۳: بعد از بستنِ مدل به منبع، دو مشکل حل‌نشده می‌ماند: دیدنِ کاملِ حرفِ منبع، و برداشتِ درستِ آن. این قسمت روشی می‌دهد که خودِ نویسنده مدتی است استفاده می‌کند: متنِ مدلِ اول را جلوی یک مدلِ دوم و مستقل می‌گذارد و از او می‌خواهد جمله‌به‌جمله در برابرِ همان مقاله بسنجدش — نه اینکه بگوید درست است یا نه، بلکه بگوید در مقاله هست یا نه، و اگر هست، وفادارانه نقل شده یا نه. نتیجه سه دسته می‌شود: نقلِ درست، افزوده‌ی بی‌منبع، و خطرناک‌ترینشان، ادعایی که در مقاله هست ولی قید یا پیامدش عوض شده. اسمِ این روش را الک گذاشته چون بارِ قضاوت را از دوش برنمی‌دارد، فقط جمعش می‌کند روی چند نقطه‌ی مشخص.",
+      "datePublished": "2026-09-05",
+      "dateModified": "2026-09-05",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "fa",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "پرامپتولوژیست",
+        "url": "https://dentcast.org/dentai/promptologist"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "پرامپتولوژیست",
+          "item": "https://dentcast.org/dentai/promptologist"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "روشی که خودم استفاده می‌کنم",
+          "item": "https://dentcast.org/dentai/promptologist/prompt6-3.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css?v=3">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-right:4px solid var(--ac);padding-right:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-fig{display:block;max-width:18.75rem;width:100%;height:auto;margin:1.125rem auto;border:1px solid var(--card-border);border-radius:0.875rem;box-shadow:var(--card-sh);}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-related-link{display:inline-flex;align-items:center;gap:0.375rem;font-size:.87rem;font-weight:600;color:var(--ac);text-decoration:none;padding:0.5rem 1rem;border:1px solid var(--ac);border-radius:0.625rem;transition:background .15s,color .15s;}
+.ep-related-link:hover{background:var(--ac);color:#fff;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{display:flex;width:fit-content;max-width:100%;align-items:center;gap:0.375rem;margin:0 0 1.125rem auto;background:rgba(255,255,255,0.92);border:1px solid rgba(0,0,0,0.1);border-radius:0.75rem;padding:0.375rem 0.75rem;font-size:0.8125rem;font-weight:700;color:#0b5fff;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.12);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);cursor:pointer;transition:transform .18s ease,background .18s ease;}
+.lang-btn:hover{background:#fff;transform:scale(1.03);}
+  </style>
+</head>
+<body>
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">&#9776;</button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">&#128225;</button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">&#128269;</button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">&#128241;</span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">&#128231;</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">&#10024;</span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<main class="article-content-wrap ep-page">
+  <a href="/dentai/promptologist/" class="ep-back">&#8592; بازگشت به پرامپتولوژیست</a>
+
+  <!-- 🌐 English Version (SEO-friendly language toggle) -->
+  <a class="lang-btn" href="en/prompt6-3.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> English
+  </a>
+
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">فصل ۶ · قسمت ۳</div>
+      <h1 class="ep-title">روشی که خودم استفاده می‌کنم</h1>
+      <div class="ep-meta">
+        <span>&#9201; ۱۵ دقیقه مطالعه</span>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">متنِ این قسمت</h2>
+      <div class="ep-caption"><p><a href="/dentai/promptologist/prompt6-2.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">قسمتِ قبل</a> با یک بن‌بست تمام شد. مدل را بستیم به منابعِ خودمان و دیدیم این کار جلوی جعل را می‌گیرد، ولی دو چیز را حل نمی‌کند: اینکه مدل همه‌ی حرفِ آن منابع را دیده باشد، و اینکه آنچه دیده درست فهمیده باشد.</p><p>جوابِ بدیهی این است که خودتان بروید مقاله را از اول بخوانید و ببینید مدل درست گفته یا نه. ولی خوب که نگاه می‌کنید این اصلاً اصلاح کردن نیست، شما کار مدل را تصحیح نکرده‌اید، کل کار را از اول انجام داده‌اید. و اگر قرار بود هر بار خودتان مقاله را کامل بخوانید، از همان اول چرا سراغِ مدل رفتید؟</p><p>پس اگر می‌خواهیم مدل واقعاً برایمان زمان بخرد و کارمان را راحت کند، راهِ بررسی باید از خودِ کار سبک‌تر باشد. وگرنه چیزی به دست نیاورده‌ایم.</p><p>آنچه در ادامه می‌گویم روشی است که خودم برای همین مشکل درست کرده‌ام و مدتی است استفاده می‌کنم. نه استانداردِ جهانی است و نه ادعا می‌کنم بهترین راه است. راهی است که برای کارِ من جواب داده و منطقش قابلِ توضیح است، و همین را می‌خواهم برایتان باز کنم تا اگر پسندیدید برای خودتان تنظیمش کنید.</p><p><strong>نقطه‌ی شروع: دو سؤالِ متفاوت که همیشه قاطی می‌شوند</strong></p><p>در <a href="/dentai/promptologist/prompt5-3.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">فصل ۵</a> گفتیم شما نمی‌توانید بسنجید که «این حرف درست است یا نه»، ولی خیلی راحت می‌توانید بسنجید که «این جمله در آن مقاله هست یا نه». آنجا این را به‌عنوان یک توصیه‌ی کوتاه گفتیم. حالا می‌خواهم رویش بایستم، چون تمامِ این روش روی همین یک تفاوت بنا شده.</p><p>سؤالِ اول، یعنی «درست است یا نه»، سؤالی است باز و تخصصی. جوابش تجربه و قضاوتِ بالینی می‌خواهد، و اگر بلد بودید که اصلاً سراغِ مدل نمی‌رفتید.</p><p>سؤالِ دوم، یعنی «این ادعا در این متن هست یا نه»، سؤالی است بسته. جوابش را باید در خودِ متن نشان داد، و مهم‌تر از آن، کاری است که ماشین از پسش برمی‌آید. مقایسه‌ی یک ادعا با یک متن کارِ خلاقانه‌ای نیست؛ کارِ حوصله‌بر و مکانیکی است، و دقیقاً از آن دسته کارهایی است که سپردنش به مدل عاقلانه است.</p><p>پس ایده این است: سؤالِ اول را که نمی‌شود سپرد، نگه می‌دارم برای خودم. ولی حجمش را با سؤالِ دوم کم می‌کنم. یعنی به‌جای اینکه از مدل بپرسم این متن درست است یا نه، متنش را می‌گذارم روبه‌روی خودِ مقاله.</p><p><strong>خودِ کار، مرحله به مرحله</strong></p><p>فرض کنید مروری خوانده‌اید درباره‌ی پروفیلاکسیِ آنتی‌بیوتیک قبل از جراحیِ ایمپلنت و از مدل خواسته‌اید برایتان جمع‌بندی‌اش کند. متنی گرفته‌اید که روان است، منظم است، و چند عدد و چند توصیه‌ی مشخص دارد. حالا نمی‌دانید کدام تکه‌اش واقعاً از آن مقاله آمده و کدام تکه‌اش را مدل از جای دیگری آورده.</p><p>قدمِ اول: می‌روم سراغِ یک مدلِ دوم. ترجیحاً از شرکتِ دیگری، و ترجیحاً همان نوعِ منبع‌محوری که در قسمتِ قبل گفتیم.</p><p>قدمِ دوم: دو چیز را با هم جلویش می‌گذارم. اول خودِ مقاله‌ی اصلی، و دوم متنی که مدلِ اول نوشته بود. هر دو، نه فقط یکی.</p><p>قدمِ سوم: از او نمی‌پرسم این متن خوب است یا نه. می‌گویم این متن را جمله‌به‌جمله در برابرِ آن مقاله بررسی کن، و برای هر ادعا مشخص کن که در مقاله هست، در مقاله نیست، یا هست ولی وفادارانه نقل نشده. و برای هر کدام که هست، بگو کجای مقاله.</p><p>و یک جمله‌ی دیگر هم اضافه می‌کنم که به‌نظرم مهم‌ترین جمله‌ی کلِ این روش است: فقط دنبالِ شباهتِ کلمات نگرد؛ مشخص کن که جمعیتِ بیماران، مداخله، پیامد، جهتِ اثر و عددها هم با مقاله می‌خوانند یا نه.</p><p>بدونِ این جمله، مدلِ دوم دنبالِ جمله‌ی شبیه می‌گردد و پیدا هم می‌کند. مثالش را در بخشِ بعد می‌بینید.</p><p>تفاوتِ این با «این را چک کن» کمتر از چیزی است که به‌نظر می‌رسد، ولی نتیجه‌اش خیلی فرق می‌کند. جلوتر می‌گویم چرا.</p><p><strong>چه چیزی بیرون می‌آید</strong></p><p>خروجی معمولاً سه دسته دارد.</p><p>دسته‌ی اول، جمله‌هایی که در مقاله هستند و سرِ جایشان نقل شده‌اند. کارتان با اینها تمام است.</p><p>دسته‌ی دوم، جمله‌هایی که در مقاله نبوده‌اند و مدلِ اول از دانشِ عمومی‌اش اضافه کرده. اینها لزوماً غلط نیستند، ولی دیگر مستند به آن مقاله نیستند و شما باید بدانید کدام‌ها هستند. اگر قرار است این متن جایی منتشر شود یا مبنای تصمیمی قرار بگیرد، این تفاوت اهمیت دارد.</p><p>دسته‌ی سوم از هر دو خطرناک‌تر است و قابِ درستش این است: ادعا در مقاله هست، ولی وفادارانه منتقل نشده.</p><p>ساده‌ترین حالتش این است که قید یا شرطش افتاده باشد. عدد درست است ولی معلوم نیست مالِ کدام زیرگروه بود. توصیه درست است ولی مقاله گفته بود در بیمارِ پرخطر، و در متنی که دستِ شماست این قید نیست.</p><p>حالتِ بدترش این است که خودِ ادعا عوض شده باشد بی‌آنکه کلمه‌ها خیلی فرق کنند. فرض کنید در متنِ مدلِ اول نوشته شده «پروفیلاکسیِ آنتی‌بیوتیک شکستِ ایمپلنت را کم می‌کند»، در حالی که مقاله از کاهشِ عفونتِ بعد از جراحی حرف زده بود. پیامد عوض شده. اگر مدلِ دوم فقط دنبالِ جمله‌ی شبیه بگردد، جمله‌ای درباره‌ی آنتی‌بیوتیک و کاهش پیدا می‌کند و می‌گوید بله، در مقاله هست. برای همین بود که در قدمِ سوم صریح گفتم پیامد و جهتِ اثر را جدا تطبیق بدهد.</p><p>همین دسته‌ی سوم است که با یک خواندنِ معمولی هیچ‌وقت گیرتان نمی‌آید، چون متن غلط به‌نظر نمی‌رسد. کاملاً درست به‌نظر می‌رسد. فقط همان چیزی نیست که مقاله گفته بود.</p><p><strong>این کار در واقع دارد چه می‌کند</strong></p><p>حالا که دیدید خروجی چه شکلی است، یک نکته‌ی مهم را بگویم که به‌راحتی از قلم می‌افتد.</p><p>وقتی من متنِ مدل را با آن مقاله مقایسه می‌کنم، مقاله را از قبل پذیرفته‌ام. یعنی پیش از این مرحله سنجیده‌ام که این مقاله ارزشِ استناد دارد یا نه. حالا آن مقاله برای من نقشِ مرجع را بازی می‌کند؛ چیزی که در دنیای فنی به آن سورس آو تروث (source of truth) می‌گویند، یعنی متنی که در این کارِ مشخص قرار است ملاک باشد.</p><p>معنی‌اش این است که وقتی مطمئن می‌شوم این ادعا واقعاً در مقاله آمده و شرط و شکلش هم همان است که مقاله گفته بود، دارم از اعتبارِ خودِ مقاله قرض می‌گیرم. اعتبار را نه من ساخته‌ام و نه مدل؛ از قبل آنجا بوده و من فقط ادعا را به آن وصل کرده‌ام.</p><p>و حالا روشن است چرا آن قیدِ دوم را اضافه کردم. دسته‌ی سومی که همین بالا دیدید دقیقاً همان جایی است که این قرض‌گرفتن شکست می‌خورد: ادعا در مقاله هست، ولی چیزی که به دستِ شما رسیده همان ادعا نیست. لینک وصل است و اعتبار منتقل نشده.</p><p><strong>چرا اسمش را الک گذاشته‌ام</strong></p><p>چون کاری که می‌کند دقیقاً همین است: چیزی را که ادعای بی‌پشتوانه ندارد رد می‌کند و می‌گذارد برود، و دانه‌های درشت‌تر را روی خودش نگه می‌دارد تا شما نگاهشان کنید.</p><p>با یک متنِ دوصفحه‌ای وارد می‌شوید که هر جمله‌اش ممکن است مشکل داشته باشد، و معمولاً با چند موردِ مشخص بیرون می‌آیید که ارزشِ بررسیِ دستی دارند. کارِ قضاوت هنوز مالِ شماست و کسی از دوشتان برنداشته. فقط به‌جای اینکه روی کلِ متن پخش شود، جمع شده روی چند نقطه‌ی مشخص.</p><p>و یک چیز را همین‌جا روشن کنم که اسم گمراهتان نکند: الک متن را تمیز نمی‌کند. آنچه از الک رد شد لزوماً درست نیست؛ فقط ادعایی است که در منبع پشتوانه دارد. درست‌بودنِ خودِ آن منبع بحثِ دیگری است که پایین‌تر می‌گویم.</p><p>این تمامِ ادعای این روش است و عمداً کوچک نگهش می‌دارم. اگر جایی خواندید که با دو مدل می‌شود به جوابِ مطمئن رسید، آن ادعا از جنسِ همان ضمانت‌های خیالی است که فصلِ بعد درباره‌شان حرف می‌زنیم.</p><p><strong>چرا اصلاً کار می‌کند</strong></p><p>سؤالِ منصفانه‌ای است. اگر مدلِ دوم هم به همان اندازه نمی‌فهمد، چطور قرار است خطای مدلِ اول را بگیرد؟</p><p>دو دلیل دارد.</p><p>اول اینکه کاری که به مدلِ دوم سپرده‌ایم از جنسِ دیگری است. نوشتنِ جمع‌بندی کارِ بازی است؛ مدل باید خودش تصمیم بگیرد چه بیاورد و چه نیاورد، و هر جا چیزی کم داشت با محتمل‌ترین گزینه پرش کند. ولی تطبیقِ یک ادعای مشخص با یک متنِ مشخص کارِ بسته‌ای است. جای کمتری برای انحراف دارد، چون باید یک جای مشخص از متن را نشان بدهد.</p><p>دوم، و به‌نظرِ من مهم‌تر: مدلِ دوم در آن گفت‌وگوی اول حضور نداشته و بنابراین حدس‌ها و مسیرِ استدلالیِ مدلِ اول را با خودش حمل نمی‌کند. این دقیقاً همان چیزی است که در فصل ۵ درباره‌ی خودمان گفتیم: وقتی یک مسیر را رفته‌اید، برگشتن و دیدنِ ایرادِ همان مسیر سخت است. برای مدل هم همین‌طور است، منتها راهِ حلش برای ما ساده‌تر است. یکی دیگر را صدا می‌زنیم.</p><p>و به همین دلیل بود که در قسمت ۱ گفتم دو مدلِ رایگان از دو شرکتِ متفاوت به کارتان بیشتر می‌آید تا یک اشتراکِ گران. اینجا آن حرف نقد می‌شود.</p><p><strong>کجاها شکست می‌خورد</strong></p><p>سه جا. و هر سه را باید بدانید، وگرنه این روش خودش تبدیل می‌شود به همان چیزی که از آن فرار می‌کردیم.</p><p>اول، مدلِ دوم هم ممکن است چیزی را ندیده باشد. او هم از همان مکانیزمِ بازیابیِ قسمتِ قبل استفاده می‌کند. ممکن است تکه‌ای را که باید با ادعا مقایسه می‌کرد اصلاً پیدا نکند و بگوید «در مقاله نیست»، در حالی که هست. پس «نیست»ی که می‌گوید حکم نیست، علامتِ سؤال است. جای اینکه ادعا را دور بیندازید، خودتان بروید همان یک مورد را در مقاله ببینید.</p><p>دوم، مدل‌ها تمایل به تأیید دارند. اگر بپرسید «این متن درست است؟» احتمالِ اینکه بگوید بله زیاد است. برای همین سؤال باید بسته و بی‌طرف باشد. تفاوتِ «این را بررسی کن» با «برای هر ادعا بگو در کدام بخشِ مقاله آمده» همین است: دومی جای تعارف ندارد. باید یک جای مشخص را نشان بدهد یا اعتراف کند که پیدا نکرده.</p><p>سوم، و مهم‌تر از هر دو: این روش فقط وفاداری به منبع را می‌سنجد، نه درستیِ خودِ منبع را. اگر آن مقاله ضعیف باشد، الک با کمالِ آرامش یک متنِ ضعیفِ کاملاً مستند تحویلتان می‌دهد. برای همین بود که در قسمتِ قبل از سنجشِ اعتبارِ مقاله حرف زدم. آن کار قبل از این می‌آید، نه بعد از آن.</p><p>یک نکته‌ی چهارم هم هست که در متونِ تخصصی زیاد بهش اشاره می‌شود و ارزش دانستن دارد: وقتی دو مدل با هم موافق‌اند، این موافقت لزوماً به‌معنای تأیید نیست. اگر هر دو شبیهِ هم آموزش دیده باشند، ممکن است هر دو یک اشتباه را با هم بکنند. توافقشان آن‌وقت خطای مشترک است، نه شاهدِ مستقل. این هم دلیلِ دیگری است که چرا مدلِ دوم را از شرکتِ دیگری برمی‌دارم.</p><p><strong>نسبتش با چیزی که در فصل ۴ گفتیم</strong></p><p>در <a href="/dentai/promptologist/prompt4-4.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">فصل ۴</a> حرکتی داشتیم که در آن به مدل می‌گفتید فعلاً فقط بررسی کن و گزارش بده و هنوز پیشنهادی نده؛ بعد خودتان گزارش را می‌خواندید؛ و بعد می‌گفتید حالا بر اساسِ همین گزارش پیشنهاد بده.</p><p>آن یکی کنترلِ کیفیتِ دستی بود درونِ یک گفت‌وگو، و بازرسش خودتان بودید. این یکی راستی‌آزمایی بینِ دو مدل است در برابرِ یک منبعِ بیرونی، و چیزی را می‌گیرد که ممکن است از چشمِ هر دویتان افتاده باشد.</p><p>رقیبِ هم نیستند و من هر دو را استفاده می‌کنم.</p><p><strong>و بعد</strong></p><p>تا اینجای فصل حرف از این بود که با چه چیزی کار کنید و چطور جلوی خطا را بگیرید. یعنی هنوز داریم از کارِ انجام‌شده محافظت می‌کنیم.</p><p>قسمتِ بعد یک قدم می‌رود عقب‌تر، به قبل از شروع. چون بخشِ بزرگی از خروجی‌های بدی که آدم می‌گیرد اصلاً از خطای مدل نمی‌آید. از این می‌آید که خودش هم دقیقاً نمی‌دانست چه می‌خواهد، و مدل با اولین حدسش شروع کرد به ساختن.</p></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">کلیدواژه‌ها</h2>
+      <div class="ep-chips"><span class="ep-chip">مقایسه‌ی خروجیِ مدل با متنِ مقاله توسطِ مدلِ دوم</span><span class="ep-chip">تفاوتِ درست‌بودنِ ادعا با وفاداری‌به‌منبع</span><span class="ep-chip">سه دسته‌ی خروجی: نقلِ درست، افزوده، ادعای واردشده</span><span class="ep-chip">تطبیقِ جمعیت، مداخله، پیامد و جهتِ اثر</span><span class="ep-chip">روشِ الک برای فیلترکردنِ ادعاهای بی‌پشتوانه</span><span class="ep-chip">مدلِ دوم از شرکتِ دیگر برای اجتنابِ از خطای مشترک</span><span class="ep-chip">محدودیت‌های راستی‌آزماییِ دو-مدلی</span><span class="ep-chip">مدل زبانی بزرگ (LLM)</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">برچسب‌ها</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#پرامپتولوژیست</span><span class="ep-hashtag">#هوش_مصنوعی</span><span class="ep-hashtag">#سواد_هوش_مصنوعی</span><span class="ep-hashtag">#AI_Literacy</span><span class="ep-hashtag">#ChatGPT</span><span class="ep-hashtag">#مدل_زبانی</span><span class="ep-hashtag">#LLM</span><span class="ep-hashtag">#راستی_آزمایی</span><span class="ep-hashtag">#قضاوت_بالینی</span></div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">محتوای مرتبط</h2>
+      <a href="/dentai/promptologist/" class="ep-related-link">بازگشت به فهرست پرامپتولوژیست</a>
+    </div>
+
+    <div class="dc-related-section">
+      <h2 class="dc-related-label">کاوش بیشتر</h2>
+      <div class="dc-related-capsules">
+        <a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+        <a href="/pillar/digital/" class="dc-related-capsule">فهرست موضوعی</a>
+        <a href="/episodes/episode-109-2.html" class="dc-related-capsule">مصاحبه: مسیر یادگیری هوش مصنوعی</a>
+        <a href="/episodes/episode-149-1.html" class="dc-related-capsule">اسلایدکست — مبانی هوش مصنوعی برای دندانپزشکان</a>
+      </div>
+    </div>
+  </div>
+  <div class="ep-nav">
+    <a href="/dentai/promptologist/prompt6-2.html" class="ep-nav-btn">&#8592; قسمت قبلی</a>
+    <span class="ep-nav-btn ep-nav-empty">قسمت بعدی &#8594;</span>
+  </div>
+</main>
+
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results">&#10006;</button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همه بخش‌های دنت‌کست...">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=152" defer></script>
+</body>
+</html>

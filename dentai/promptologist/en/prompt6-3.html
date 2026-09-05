@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Method I Use Myself | Promptologist | DentCast</title>
+  <meta name="description" content="Chapter 6, Part 3: After tying a model to a source, two problems remain unsolved: whether it saw everything the source said, and whether it understood that correctly. This part gives a method the author has been using for a while: it puts the first model&rsquo;s text in front of a second, independent model and has it check the text sentence by sentence against that same paper &mdash; not whether it&rsquo;s correct, but whether it&rsquo;s in the paper, and if so, whether it was faithfully quoted. The result falls into three categories: faithful citations, unsourced additions, and the most dangerous of them &mdash; a claim that is in the paper but whose qualifier or outcome has changed. The method is named the Sieve, because it doesn&rsquo;t carry the burden of judgment away; it just concentrates it onto a handful of specific spots.">
+  <link rel="canonical" href="https://dentcast.org/dentai/promptologist/en/prompt6-3.html">
+  <meta name="author" content="Dr. Foad Shahabian">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="The Method I Use Myself | DentCast">
+  <meta property="og:description" content="Chapter 6, Part 3: After tying a model to a source, two problems remain unsolved: whether it saw everything the source said, and whether it understood that correctly. This part gives a method the author has been using for a while: it puts the first model&rsquo;s text in front of a second, independent model and has it check the text sentence by sentence against that same paper &mdash; not whether it&rsquo;s correct, but whether it&rsquo;s in the paper, and if so, whether it was faithfully quoted. The result falls into three categories: faithful citations, unsourced additions, and the most dangerous of them &mdash; a claim that is in the paper but whose qualifier or outcome has changed. The method is named the Sieve, because it doesn&rsquo;t carry the burden of judgment away; it just concentrates it onto a handful of specific spots.">
+  <meta property="og:url" content="https://dentcast.org/dentai/promptologist/en/prompt6-3.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Method I Use Myself | DentCast">
+  <meta name="twitter:description" content="Chapter 6, Part 3: The author&rsquo;s own method for checking whether a model&rsquo;s summary is faithful to its source &mdash; without re-reading the whole paper yourself. A second, independent model checks each claim sentence by sentence against the source. He calls it the Sieve.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/promptologist/en/prompt6-3.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/dentai/promptologist/en/prompt6-3.html"
+      },
+      "url": "https://dentcast.org/dentai/promptologist/en/prompt6-3.html",
+      "headline": "The Method I Use Myself",
+      "description": "Chapter 6, Part 3: After tying a model to a source, two problems remain unsolved: whether it saw everything the source said, and whether it understood that correctly. This part gives a method the author has been using for a while: it puts the first model’s text in front of a second, independent model and has it check the text sentence by sentence against that same paper — not whether it’s correct, but whether it’s in the paper, and if so, whether it was faithfully quoted. The result falls into three categories: faithful citations, unsourced additions, and the most dangerous of them — a claim that is in the paper but whose qualifier or outcome has changed. The method is named the Sieve, because it doesn’t carry the burden of judgment away; it just concentrates it onto a handful of specific spots.",
+      "datePublished": "2026-09-05",
+      "dateModified": "2026-09-05",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "Promptologist",
+        "url": "https://dentcast.org/dentai/promptologist"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Promptologist",
+          "item": "https://dentcast.org/dentai/promptologist"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "The Method I Use Myself",
+          "item": "https://dentcast.org/dentai/promptologist/en/prompt6-3.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css?v=3">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-left:4px solid var(--ac);padding-left:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-fig{display:block;max-width:18.75rem;width:100%;height:auto;margin:1.125rem auto;border:1px solid var(--card-border);border-radius:0.875rem;box-shadow:var(--card-sh);}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+  </style>
+</head>
+<body>
+
+<!-- ── TOP BAR (English chrome, cloned from metanotes/en/meta-1.html) ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT (Promptologist structure, translated, LTR) ── -->
+<main class="article-content-wrap ep-page">
+  <a href="/dentai/promptologist/" class="ep-back">&#8592; Back to Promptologist</a>
+
+  <!-- 🌐 Persian Version (SEO-friendly language toggle) -->
+  <a class="lang-btn" href="../prompt6-3.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">Season 6 · Part 3</div>
+      <h1 class="ep-title">The Method I Use Myself</h1>
+      <div class="ep-meta">
+        <span>&#9201; 15 min read</span>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">This Part</h2>
+      <div class="ep-caption"><p>The <a href="prompt6-2.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">last part</a> ended on a dead end. We tied the model to our own sources and saw that this blocks fabrication, but it doesn&rsquo;t solve two things: whether the model actually saw everything those sources said, and whether what it saw was understood correctly.</p><p>The obvious answer is to go read the paper yourself from the start and check whether the model got it right. But look closer and this isn&rsquo;t correction at all &mdash; you haven&rsquo;t fixed the model&rsquo;s work, you&rsquo;ve redone the whole thing from scratch. And if you were always going to read the paper in full anyway, why did you turn to the model in the first place?</p><p>So if we actually want the model to buy us time and make our work easier, the checking process has to be lighter than the work itself. Otherwise we&rsquo;ve gained nothing.</p><p>What follows is a method I built for exactly this problem myself, and have been using for a while. It isn&rsquo;t a global standard, and I&rsquo;m not claiming it&rsquo;s the best way. It&rsquo;s a method that has worked for my own use, and its logic can be explained &mdash; and that&rsquo;s exactly what I want to open up here, so you can adapt it for yourself if you like it.</p><p><strong>Starting Point: Two Different Questions That Always Get Mixed Up</strong></p><p>In <a href="prompt5-3.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Chapter 5</a> we said you can&rsquo;t judge whether &ldquo;this statement is true,&rdquo; but you can very easily check whether &ldquo;this sentence exists in that paper.&rdquo; There, we said it as a short piece of advice in passing. Now I want to dwell on it, because this entire method is built on exactly that one distinction.</p><p>The first question &mdash; is it true &mdash; is open and specialized. Its answer needs experience and clinical judgment, and if you already had that judgment you wouldn&rsquo;t have turned to the model in the first place.</p><p>The second question &mdash; is this claim present in this text &mdash; is closed. Its answer has to be demonstrated in the text itself, and more importantly, it&rsquo;s work a machine can actually do. Comparing a claim against a text isn&rsquo;t creative work; it&rsquo;s tedious, mechanical work, and it&rsquo;s exactly the kind of task it&rsquo;s sensible to hand to a model.</p><p>So the idea is: I keep the first question &mdash; the one that can&rsquo;t be delegated &mdash; for myself. But I shrink its volume with the second question. Instead of asking the model whether a piece of text is true, I put its text in front of the source paper itself.</p><p><strong>The Work Itself, Step by Step</strong></p><p>Say you&rsquo;ve read a review on antibiotic prophylaxis before implant surgery and asked the model to summarize it for you. You get back text that&rsquo;s fluent, well organized, and carries a few specific numbers and recommendations. Now you don&rsquo;t know which piece actually came from that paper and which piece the model pulled in from somewhere else.</p><p>Step one: I go to a second model. Preferably from a different company, and preferably the same source-bound kind we talked about in the last part.</p><p>Step two: I put two things in front of it together. First, the original paper itself, and second, the text the first model wrote. Both, not just one.</p><p>Step three: I don&rsquo;t ask it whether the text is good. I say: check this text sentence by sentence against that paper, and for every claim, determine whether it&rsquo;s in the paper, isn&rsquo;t in the paper, or is in the paper but not faithfully quoted. And for every one that is in the paper, say exactly where.</p><p>And I add one more sentence that I think is the single most important sentence in this entire method: don&rsquo;t just look for word similarity &mdash; check whether the patient population, the intervention, the outcome, the direction of the effect, and the numbers also match the paper.</p><p>Without that sentence, the second model goes looking for a similar-sounding sentence &mdash; and finds one. You&rsquo;ll see the example of this in the next section.</p><p>The difference between this and &ldquo;check this&rdquo; is smaller than it looks, but the result is very different. I&rsquo;ll say why further down.</p><p><strong>What Comes Out</strong></p><p>The output usually falls into three categories.</p><p>The first: sentences that are in the paper and cited right where they belong. Your work with these is done.</p><p>The second: sentences that weren&rsquo;t in the paper, added by the first model from its own general knowledge. These aren&rsquo;t necessarily wrong, but they&rsquo;re no longer documented against that paper, and you need to know which ones they are. If this text is going to be published somewhere or become the basis of a decision, that difference matters.</p><p>The third is more dangerous than both, and its shape is this: the claim is in the paper, but it wasn&rsquo;t faithfully carried over.</p><p>The simplest version of this is a dropped qualifier or condition. The number is correct, but it&rsquo;s not clear which subgroup it belonged to. The recommendation is correct, but the paper said it applies to high-risk patients, and the text in front of you has dropped that qualifier.</p><p>The worse version is when the claim itself has changed without the words looking very different. Say the first model&rsquo;s text reads &ldquo;antibiotic prophylaxis reduces implant failure,&rdquo; while the paper actually talked about a reduction in post-surgical infection. The outcome has changed. If the second model is only looking for a similar-sounding sentence, it finds one about antibiotics and reduction and says yes, it&rsquo;s in the paper. That&rsquo;s exactly why, in step three, I explicitly said to match the outcome and the direction of the effect separately.</p><p>This third category is exactly the one an ordinary read never catches, because the text doesn&rsquo;t look wrong. It looks perfectly correct. It just isn&rsquo;t what the paper actually said.</p><p><strong>What This Is Actually Doing</strong></p><p>Now that you&rsquo;ve seen what the output looks like, let me say something important that&rsquo;s easy to miss.</p><p>When I compare the model&rsquo;s text against that paper, I&rsquo;ve already accepted the paper beforehand. Meaning: before this stage, I&rsquo;ve already judged that this paper is worth citing. That paper now plays the role of a reference for me &mdash; what&rsquo;s called, in technical terms, a source of truth: the text that is meant to be the standard for this specific task.</p><p>That means when I make sure a claim is genuinely in the paper, and its condition and shape match what the paper said, I&rsquo;m borrowing from the paper&rsquo;s own credibility. Neither I nor the model built that credibility; it was already there, and I&rsquo;ve simply attached the claim to it.</p><p>And now it&rsquo;s clear why I added that second qualifier. The third category you saw above is exactly the point where this borrowing fails: the claim is in the paper, but what actually reached you isn&rsquo;t that same claim. The link is connected, but the credibility hasn&rsquo;t transferred.</p><p><strong>Why I Call It the Sieve</strong></p><p>Because that&rsquo;s exactly what it does: it rejects and lets go whatever claim has no backing, and holds onto the coarser grains on top for you to look at.</p><p>You go in with a two-page text where every sentence could potentially have a problem, and you usually come out with a handful of specific spots worth checking by hand. The work of judgment is still yours, and nobody has taken it off your shoulders. It&rsquo;s just no longer spread across the whole text &mdash; it&rsquo;s concentrated on a few specific points.</p><p>And let me be clear about one thing right here, so the name doesn&rsquo;t mislead you: the sieve doesn&rsquo;t clean the text. What passes through the sieve isn&rsquo;t necessarily true; it&rsquo;s only a claim that has backing in the source. Whether that source itself is any good is a separate discussion, which I&rsquo;ll get to below.</p><p>That&rsquo;s the entire claim of this method, and I&rsquo;m deliberately keeping it small. If you ever read that two models can get you to a certain answer, that claim belongs to exactly the kind of false guarantees we&rsquo;ll talk about in the next chapter.</p><p><strong>Why It Works At All</strong></p><p>It&rsquo;s a fair question. If the second model doesn&rsquo;t understand any better, how is it supposed to catch the first model&rsquo;s mistake?</p><p>Two reasons.</p><p>First, what we&rsquo;ve handed the second model is a different kind of task. Writing a summary is open-ended work; the model has to decide for itself what to include and what to leave out, and wherever something is missing, fill the gap with the most likely guess. But matching a specific claim against a specific text is closed work. There&rsquo;s much less room to drift, because it has to point to one specific place in the text.</p><p>Second, and to my mind more important: the second model wasn&rsquo;t present in that first conversation, so it isn&rsquo;t carrying the first model&rsquo;s guesses and its chain of reasoning along with it. This is exactly what we said about ourselves in Chapter 5: once you&rsquo;ve gone down a path, it&rsquo;s hard to turn around and see that same path&rsquo;s flaw. The same is true for a model &mdash; except the fix, for us, is simpler. We just call in someone else.</p><p>And that&rsquo;s exactly why, back in Part 1, I said two free models from two different companies serve you better than one expensive subscription. That statement cashes out right here.</p><p><strong>Where It Fails</strong></p><p>Three places. And you need to know all three, or this method itself turns into the very thing we were trying to escape.</p><p>First, the second model may also have missed something. It uses the same retrieval mechanism we talked about in the last part. It might fail to find the exact passage it needed to compare against a claim and say &ldquo;not in the paper&rdquo; when it actually is. So a &ldquo;not in there&rdquo; from the model isn&rsquo;t a verdict, it&rsquo;s a question mark. Instead of throwing the claim out, go check that one spot in the paper yourself.</p><p>Second, models tend toward agreement. If you ask &ldquo;is this text correct?&rdquo; the odds it says yes are high. That&rsquo;s exactly why the question has to be closed and neutral. The difference between &ldquo;check this&rdquo; and &ldquo;for every claim, tell me which section of the paper it came from&rdquo; is exactly this: the second leaves no room for courtesy. It has to point to a specific place, or admit it couldn&rsquo;t find one.</p><p>Third, and more important than either of the above: this method only measures fidelity to the source, not the correctness of the source itself. If that paper is weak, the sieve will calmly hand you a weak but perfectly documented piece of text. That&rsquo;s exactly why, in the last part, I talked about judging a paper&rsquo;s credibility first. That step comes before this one, not after it.</p><p>There&rsquo;s a fourth point too, one that comes up a lot in specialized literature and is worth knowing: when two models agree, that agreement doesn&rsquo;t necessarily mean confirmation. If both were trained in similar ways, they might both make the same mistake together. Their agreement then is a shared error, not independent evidence. This is another reason I pick the second model from a different company.</p><p><strong>How This Relates to What We Said in Chapter 4</strong></p><p>In <a href="prompt4-4.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Chapter 4</a> we had a move where you&rsquo;d tell the model to just check the situation first and report back, without offering a suggestion yet; then you&rsquo;d read the report yourself; and then you&rsquo;d say, now make a recommendation based on this exact report.</p><p>That one was manual quality control inside a single conversation, and you were the inspector. This one is cross-verification between two models, against an external source, and it catches something that could have slipped past both of you.</p><p>They aren&rsquo;t rivals, and I use both.</p><p><strong>And Next</strong></p><p>Up to this point in the chapter, we&rsquo;ve been talking about what to work with and how to keep errors out. That&rsquo;s still protecting work that&rsquo;s already been done.</p><p>The next part takes one step further back, to before the work even starts. Because a large share of the bad outputs people get don&rsquo;t come from the model&rsquo;s error at all. They come from the fact that the person themselves didn&rsquo;t quite know what they wanted, and the model started building on its very first guess.</p></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Keywords</h2>
+      <div class="ep-chips"><span class="ep-chip">Comparing a Model&rsquo;s Output Against the Source Paper With a Second Model</span><span class="ep-chip">Correctness of a Claim vs. Fidelity to Its Source</span><span class="ep-chip">Three Output Categories: Faithful Citation, Addition, Altered Claim</span><span class="ep-chip">Matching Population, Intervention, Outcome, and Effect Direction</span><span class="ep-chip">The Sieve Method for Filtering Unsupported Claims</span><span class="ep-chip">A Second Model From a Different Company to Avoid Shared Error</span><span class="ep-chip">The Limits of Two-Model Verification</span><span class="ep-chip">Large Language Model (LLM)</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Tags</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#Promptologist</span><span class="ep-hashtag">#AI</span><span class="ep-hashtag">#AILiteracy</span><span class="ep-hashtag">#ChatGPT</span><span class="ep-hashtag">#LanguageModel</span><span class="ep-hashtag">#LLM</span><span class="ep-hashtag">#Verifiability</span><span class="ep-hashtag">#ClinicalJudgment</span></div>
+    </div>
+  </div>
+  <!-- Series prev/next (en tier). Targets are en counterparts only.
+       Previous part en page (en/prompt6-1.html) exists, so the previous
+       slot links to it; there is no next part yet, so the next slot stays a
+       disabled placeholder. -->
+  <div class="ep-nav">
+    <a href="prompt6-2.html" class="ep-nav-btn">&#8592; Previous Part</a>
+    <span class="ep-nav-btn ep-nav-empty">Next Part &#8594;</span>
+  </div>
+</main>
+
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=152" defer></script>
+</body>
+</html>
