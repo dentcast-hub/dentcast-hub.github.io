@@ -9,8 +9,9 @@ import { runStreakReminders } from '../services/streak-reminder.js';
 import { one, query } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import {
-  activateMonths, grantLifetime, revokeSubscription, getSubscription,
-  summarizeSubscription, sweepExpiredSubscriptions, subscriptionReport, type Subscription,
+  activateMonths, activateDays, grantLifetime, revokeSubscription, getSubscription,
+  summarizeSubscription, sweepExpiredSubscriptions, subscriptionReport, neverPremiumUserIds,
+  type Subscription,
 } from '../services/subscription.js';
 import { getCapacity } from '../services/payment-capacity.js';
 import { reconcilePendingPayments } from '../services/payment-reconcile.js';
@@ -315,6 +316,7 @@ function renderHtml(
             num(t.active_now) + ' با اشتراک · ' + num(t.league_premium_now) + ' با جایزهٔ لیگ')
         + card('عمرِ همیشگی', num(t.lifetime_total), 'بنیان‌گذار یا نشانِ اهدایی')
         + card('کل تاریخِ اشتراک', num(t.ever_subscribed), 'هر کسی که حداقل یک بار خرید/هدیه گرفت')
+        + card('هرگز پریمیوم را تجربه نکرده‌اند', num(t.never_premium), 'نه خرید، نه هدیه، نه جایزه‌ی لیگ')
         + '</div>'
         + '<h4 style="margin:18px 0 0">به تفکیک ماهِ شروع</h4>'
         + '<div class="tblwrap"><table><thead><tr><th>ماه</th><th>مشترکِ جدید</th><th>عمرِ همیشگی</th></tr></thead>'
@@ -338,6 +340,86 @@ function renderHtml(
         render(res.j);
       })
       .catch(function () { out.textContent = 'خوانده نشد (شبکه).'; });
+  })();
+  </script>
+
+  <h3 style="margin-top:26px">هدیه‌ی پریمیوم به کسانی که تا حالا تجربه نکرده‌اند</h3>
+  <div class="muted">همان گروهِ کارتِ «هرگز پریمیوم را تجربه نکرده‌اند» بالا — هر تعداد روز که بخواهی، با یک پیامِ اختصاصی، به همه‌شان یک‌جا. برای هر نفر یک هدیه‌ی جداگانه ثبت و یک اطلاعیه‌ی جداگانه فرستاده می‌شود؛ کسی که تا الان اشتراک نداشته، این روزها را از همین امروز شروع می‌کند.</div>
+  <div id="ntCount" class="muted" style="margin-top:6px">در حال شمارش…</div>
+  <form class="bc" id="ntForm" onsubmit="return false">
+    <div class="row">
+      <div style="flex:0 0 140px"><label for="ntDays">چند روز</label><input id="ntDays" type="number" min="1" max="90" value="7"></div>
+      <div style="flex:1 1 200px"><label for="ntTitle">عنوانِ پیام</label><input id="ntTitle" type="text" maxlength="120" placeholder="مثلاً: یک هفته پریمیوم مهمانِ ما باش"></div>
+    </div>
+    <div><label for="ntBody">متن (اختیاری)</label><textarea id="ntBody" maxlength="600"></textarea></div>
+    <div class="row">
+      <div style="flex:1 1 200px"><label for="ntUrl">لینک (اختیاری)</label><input id="ntUrl" type="text" placeholder="/plus/"></div>
+    </div>
+    <div class="row">
+      <label class="chk"><input id="ntPush" type="checkbox"> پوش/پیام‌رسان هم بفرست</label>
+      <label class="chk"><input id="ntForce" type="checkbox"> حتی خارج از ۹ تا ۲۲</label>
+    </div>
+    <button id="ntSend" type="button">هدیه بده</button>
+    <div id="ntOut"></div>
+  </form>
+  <script>
+  (function () {
+    var countBox = document.getElementById('ntCount');
+    var lastCount = null;
+
+    function loadCount() {
+      fetch('/admin/subscriptions/report', { credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          lastCount = j.totals ? j.totals.never_premium : null;
+          countBox.textContent = lastCount == null
+            ? 'شمارش نیامد.'
+            : 'الان ' + Number(lastCount).toLocaleString('en-US') + ' نفر تا حالا پریمیوم را تجربه نکرده‌اند.';
+        })
+        .catch(function () { countBox.textContent = 'شمارش نیامد (شبکه).'; });
+    }
+
+    var btn = document.getElementById('ntSend');
+    var out = document.getElementById('ntOut');
+    btn.addEventListener('click', function () {
+      var days = parseInt(document.getElementById('ntDays').value, 10);
+      var title = document.getElementById('ntTitle').value.trim();
+      if (!days || days < 1 || days > 90) { out.textContent = 'تعداد روز باید بین ۱ تا ۹۰ باشد.'; return; }
+      if (!title) { out.textContent = 'عنوانِ پیام لازم است.'; return; }
+      var who = lastCount == null
+        ? 'همه‌ی کسانی که تا حالا پریمیوم را تجربه نکرده‌اند'
+        : (Number(lastCount).toLocaleString('en-US') + ' نفر');
+      if (!confirm(days + ' روز پریمیوم به ' + who + ' هدیه داده شود؟ برای هر نفر یک پیامِ جداگانه هم می‌رود.')) return;
+      btn.disabled = true; out.textContent = 'در حال اهدا... ممکن است کمی طول بکشد.';
+      fetch('/admin/subscriptions/gift-never-tried', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          days: days,
+          title: title,
+          body: document.getElementById('ntBody').value.trim() || undefined,
+          url: document.getElementById('ntUrl').value.trim() || undefined,
+          push: document.getElementById('ntPush').checked,
+          force: document.getElementById('ntForce').checked
+        })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          btn.disabled = false;
+          if (!res.ok) { out.textContent = 'نشد: ' + (res.j.error || 'خطا'); return; }
+          var m = res.j.targeted + ' نفر هدف؛ ' + res.j.granted + ' نفر هدیه گرفتند';
+          if (res.j.failed) m += '، ' + res.j.failed + ' مورد خطا خورد';
+          m += '.';
+          if (res.j.push === 'queued') { m += ' پوش/پیام‌رسان هم رفت.'; }
+          else if (res.j.push_skipped === 'outside_awake_window') { m += ' پوش نرفت (خارج از ۹ تا ۲۲)؛ فقط اطلاعیه نشست.'; }
+          out.textContent = m;
+          document.getElementById('ntTitle').value = '';
+          document.getElementById('ntBody').value = '';
+          loadCount();
+        })
+        .catch(function () { btn.disabled = false; out.textContent = 'ارسال نشد.'; });
+    });
+
+    loadCount();
   })();
   </script>
 
@@ -2722,6 +2804,88 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     if (!who) return reply;
     const removed = await revokeSubscription(who.id, { source: 'admin' });
     return reply.send({ ...subscriptionView(who, null), removed });
+  });
+
+  /**
+   * POST /admin/subscriptions/gift-never-tried { days, title, body?, url?, push?, force? }
+   * — gift N days of premium to EVERY account that has never once experienced
+   * it (see neverPremiumUserIds()/NEVER_PREMIUM_WHERE in subscription.ts),
+   * with one personal message to each.
+   *
+   * Same building blocks as the single-user tools above, run in a plain loop —
+   * the anniversary-campaign script (scripts/anniversary-grant.ts) is the
+   * precedent for a one-off bulk grant over `activateDays()`, and this is the
+   * same shape wired to a button instead of a CLI, targeting a segment rather
+   * than everyone. `activateDays()` keeps its own row lock per user, so this
+   * needs no transaction of its own and a re-run only ever extends further.
+   *
+   * The message goes through the exact door POST /admin/notices/user uses —
+   * `sendCapped`'s `system` kind, uncapped, so gifting a hundred people in one
+   * click never eats into anyone's ordinary daily push budget — with the same
+   * awake-window/`force` rule for the push half and an instant اطلاعیه row
+   * either way.
+   */
+  app.post('/admin/subscriptions/gift-never-tried', {
+    schema: {
+      body: {
+        type: 'object',
+        required: ['days', 'title'],
+        properties: {
+          days: { type: 'integer', minimum: 1, maximum: 90 },
+          title: { type: 'string' },
+          body: { type: 'string' },
+          url: { type: 'string' },
+          push: { type: 'boolean' },
+          force: { type: 'boolean' },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as {
+      days: number; title: string; body?: string; url?: string; push?: boolean; force?: boolean;
+    };
+    const title = (b.title || '').trim();
+    if (!title) return reply.code(400).send({ error: 'empty_title' });
+
+    const now = new Date();
+    const targets = await neverPremiumUserIds();
+    if (!targets.length) return reply.send({ ok: true, targeted: 0, granted: 0, failed: 0 });
+
+    const message: NotificationMessage = {
+      title,
+      body: (b.body || '').trim() || '',
+      url: mirrorPath((b.url || '').trim() || null) ?? undefined,
+      tag: 'admin_notice',
+    };
+    const travels = Boolean(b.push) && (inAwakeWindow(now) || Boolean(b.force));
+
+    let granted = 0;
+    let failed = 0;
+    for (const userId of targets) {
+      try {
+        await activateDays(userId, b.days, {
+          source: 'admin', now, meta: { campaign: 'never_tried_premium' },
+        });
+        if (travels) {
+          await sendCapped(userId, message, 'system', now, { inbox: true });
+        } else {
+          await recordInAppNotice(userId, 'system', message, dayInTz(now, config.streakTimezone));
+        }
+        granted += 1;
+      } catch (err) {
+        failed += 1;
+        request.log.error({ err, user_id: userId }, 'gift-never-tried: failed for one user');
+      }
+    }
+
+    return reply.send({
+      ok: true,
+      targeted: targets.length,
+      granted,
+      failed,
+      push: travels ? 'queued' : 'off',
+      push_skipped: !travels && b.push ? 'outside_awake_window' : null,
+    });
   });
 
   // GET /admin/payments/capacity — how much of this month's gateway ceiling is

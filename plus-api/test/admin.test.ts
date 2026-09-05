@@ -298,6 +298,105 @@ describe('admin subscriptions', () => {
   });
 });
 
+describe('POST /admin/subscriptions/gift-never-tried', () => {
+  const NEVER = '09121800020';
+  const PAID = '09121800021';
+  const LEAGUE_ONLY = '09121800022';
+
+  it('requires admin auth', async () => {
+    const res = await app.inject({
+      method: 'POST', url: '/admin/subscriptions/gift-never-tried',
+      payload: { days: 7, title: 'هدیه' },
+    });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('rejects an empty title', async () => {
+    const res = await app.inject({
+      method: 'POST', url: '/admin/subscriptions/gift-never-tried',
+      headers: { authorization: basic }, payload: { days: 7, title: '   ' },
+    });
+    expect(res.statusCode).toBe(400);
+  });
+
+  it('reports zero targeted rather than erroring when nobody qualifies', async () => {
+    const res = await app.inject({
+      method: 'POST', url: '/admin/subscriptions/gift-never-tried',
+      headers: { authorization: basic }, payload: { days: 3, title: 'سلام' },
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.json()).toMatchObject({ ok: true, targeted: 0, granted: 0 });
+  });
+
+  it('grants days ONLY to accounts that never experienced premium, one personal message each, and leaves everyone else untouched', async () => {
+    await loginAs(app, NEVER); // never touched premium — the one real target
+    await loginAs(app, PAID);
+    await loginAs(app, LEAGUE_ONLY);
+
+    // PAID already has activation history via an ordinary gift — must be skipped.
+    await app.inject({
+      method: 'POST', url: '/admin/subscriptions/grant',
+      headers: { authorization: basic }, payload: { phone: PAID, months: 1 },
+    });
+
+    // LEAGUE_ONLY has no subscriptions row at all — only a premium_grants row,
+    // even revoked — the exact shape a league prize on a free account leaves
+    // (premium-prize.ts's `else` branch never calls activateDays). Must be
+    // skipped too, or "never tried" would wrongly re-gift a past winner.
+    const leagueUser = await pool.query('select id from profiles where phone = $1', [LEAGUE_ONLY]);
+    await pool.query(
+      `insert into premium_grants (user_id, week_start, expires_at, revoked_at)
+       values ($1, current_date, now() - interval '1 day', now())`,
+      [leagueUser.rows[0].id],
+    );
+
+    const before = await app.inject({
+      method: 'GET', url: '/admin/subscriptions/report', headers: { authorization: basic },
+    });
+    expect(before.json().totals.never_premium).toBe(1);
+
+    const res = await app.inject({
+      method: 'POST', url: '/admin/subscriptions/gift-never-tried',
+      headers: { authorization: basic },
+      payload: { days: 5, title: 'یک هفته پریمیوم مهمانِ ما باش', body: 'برای اینکه امتحانش کنی' },
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.json()).toMatchObject({ ok: true, targeted: 1, granted: 1, failed: 0 });
+
+    const neverUser = await pool.query('select id, tier from profiles where phone = $1', [NEVER]);
+    expect(neverUser.rows[0].tier).toBe('premium');
+
+    const neverSubs = await pool.query(
+      'select count(*)::int as n from subscriptions where user_id = $1', [neverUser.rows[0].id],
+    );
+    expect(neverSubs.rows[0].n).toBe(1);
+
+    const notice = await pool.query(
+      "select title, body from notification_log where user_id = $1 and kind = 'system'",
+      [neverUser.rows[0].id],
+    );
+    expect(notice.rows).toHaveLength(1);
+    expect(notice.rows[0].title).toBe('یک هفته پریمیوم مهمانِ ما باش');
+    expect(notice.rows[0].body).toBe('برای اینکه امتحانش کنی');
+
+    // Untouched: still exactly the one subscription row the earlier grant made.
+    const paidUser = await pool.query('select id from profiles where phone = $1', [PAID]);
+    const paidSubs = await pool.query(
+      'select count(*)::int as n from subscriptions where user_id = $1', [paidUser.rows[0].id],
+    );
+    expect(paidSubs.rows[0].n).toBe(1);
+    const leagueSubs = await pool.query(
+      'select count(*)::int as n from subscriptions where user_id = $1', [leagueUser.rows[0].id],
+    );
+    expect(leagueSubs.rows[0].n).toBe(0);
+
+    const after = await app.inject({
+      method: 'GET', url: '/admin/subscriptions/report', headers: { authorization: basic },
+    });
+    expect(after.json().totals.never_premium).toBe(0);
+  });
+});
+
 describe('admin KPIs', () => {
   it('computes the six KPIs from activity + anon events', async () => {
     // an anonymous demand signal
