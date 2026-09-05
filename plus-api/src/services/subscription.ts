@@ -527,6 +527,51 @@ export interface SubscriptionMonthCohort {
   founders: number;
 }
 
+/**
+ * "Has this account EVER experienced premium, by any door — purchase, admin
+ * gift/gift-card/bank-transfer, backfill, or a league prize?" This is the
+ * predicate, shared between the report count and the bulk-gift target list
+ * below, so the two can never quietly disagree about who "never tried it"
+ * means.
+ *
+ * Deliberately two EXISTS checks rather than one, because a league prize that
+ * lands on an already-free account (see premium-prize.ts) writes NEITHER a
+ * `subscriptions` row NOR a `user_activity` activation row — only a
+ * `premium_grants` row, revoked or not. Missing that second check would count
+ * a past prize winner as having "never tried" premium.
+ *
+ *   user_activity  - action = 'subscription_activated' (payment, admin gift,
+ *                    backfill, or a prize that stacked onto an existing sub).
+ *   premium_grants - ANY row at all, including expired/revoked (a prize on a
+ *                    free account) — the same test premium-prize.ts already
+ *                    applies when telling a real founder from a past winner.
+ */
+const NEVER_PREMIUM_WHERE = `
+  not exists (
+    select 1 from user_activity a
+     where a.user_id = p.id and a.action = 'subscription_activated'
+  )
+  and not exists (
+    select 1 from premium_grants g where g.user_id = p.id
+  )
+`;
+
+/**
+ * Every account that has signed up and never once experienced premium — the
+ * admin bulk-gift's target list. Read-then-act, not transactional: two admins
+ * clicking the button together could double-gift the handful of accounts that
+ * activate in between, which `activateMonths`'s own row lock still makes safe
+ * (a second grant extends rather than corrupts), so this stays a plain query.
+ */
+export async function neverPremiumUserIds(client: Queryable = pool): Promise<string[]> {
+  const rows = await query<{ id: string }>(
+    `select p.id from profiles p where ${NEVER_PREMIUM_WHERE}`,
+    [],
+    client,
+  );
+  return rows.rows.map((r) => r.id);
+}
+
 export interface SubscriptionReport {
   generated_at: string;
   tz: string;
@@ -536,6 +581,8 @@ export interface SubscriptionReport {
     lifetime_total: number;
     /** Premium right now via the weekly league prize, not via a subscriptions row. */
     league_premium_now: number;
+    /** Signed up, never once experienced premium by any door — see NEVER_PREMIUM_WHERE. */
+    never_premium: number;
   };
   by_month: SubscriptionMonthCohort[];
   days_left_buckets: { d0_3: number; d4_7: number; d8_30: number; d31_plus: number };
@@ -586,6 +633,10 @@ export async function subscriptionReport(now: Date = new Date()): Promise<Subscr
              and (s.expires_at is null or s.expires_at > $1)
         )`,
     [nowIso],
+  ))!;
+
+  const neverPremium = (await one<{ n: number }>(
+    `select count(*)::int as n from profiles p where ${NEVER_PREMIUM_WHERE}`,
   ))!;
 
   const byMonth = (await query<{ month: string; new_subscribers: number; founders: number }>(
@@ -640,6 +691,7 @@ export async function subscriptionReport(now: Date = new Date()): Promise<Subscr
       active_now: Number(totals.active_now),
       lifetime_total: Number(totals.lifetime_total),
       league_premium_now: Number(leaguePremium.n),
+      never_premium: Number(neverPremium.n),
     },
     by_month: byMonth.map((r) => ({
       month: r.month, new_subscribers: Number(r.new_subscribers), founders: Number(r.founders),
