@@ -51,9 +51,6 @@ interface DueRow {
   phone: string | null;
   display_name: string;
   expires_at: Date;
-  telegram_id: number | null;
-  bale_id: number | null;
-  has_push: boolean;
 }
 
 function message(kind: ReminderKind, row: DueRow, daysBefore: number) {
@@ -84,9 +81,7 @@ function message(kind: ReminderKind, row: DueRow, daysBefore: number) {
  */
 async function due(offset: number, today: string): Promise<DueRow[]> {
   const res = await query<DueRow>(
-    `select s.user_id, nullif(p.phone, '') as phone, p.display_name, s.expires_at,
-            p.telegram_id, p.bale_id,
-            exists (select 1 from push_subscriptions ps where ps.user_id = s.user_id) as has_push
+    `select s.user_id, nullif(p.phone, '') as phone, p.display_name, s.expires_at
        from subscriptions s
        join profiles p on p.id = s.user_id
       where s.expires_at is not null
@@ -108,20 +103,21 @@ async function alreadySent(userId: string, kind: ReminderKind, expiresOn: string
 }
 
 /**
- * Anyone with no messenger and no browser push has no way of hearing this at
- * all — and this is the one message worth paying a few toman of SMS for. Every
- * other notification the site sends is a nudge; this one is the difference
- * between a renewal and a lapse.
+ * This is the one message worth paying a few toman of SMS for regardless of
+ * what else was sent: every other notification the site sends is a nudge,
+ * this one is the difference between a renewal and a lapse, and a push or
+ * Telegram message is silent proof of nothing — it can be missed, muted, or
+ * sitting unread in an app the reader hasn't opened. Founder decision
+ * (2026-09-06): unlike every other channel-fallback in this codebase, SMS
+ * here is NOT gated on already having Telegram/Bale/push — it goes out
+ * whenever there is a phone number to send it to.
  *
- * SMS is the EXTRA channel for the people it can reach, never the default one:
- * a reader with Telegram, Bale or browser push already heard it for free, and
- * texting them too would be paying to say the same thing twice. The phone test
- * is not redundant with the rest — a Telegram-first account has no phone at all
- * (migration 0004), and `nullif` above folds the empty string in with it, so the
- * provider is never handed a blank number to reject.
+ * The phone test still matters on its own: a Telegram-first account has no
+ * phone at all (migration 0004), and `nullif` above folds the empty string in
+ * with it, so the provider is never handed a blank number to reject.
  */
 function needsSms(row: DueRow): boolean {
-  return row.phone !== null && row.telegram_id === null && row.bale_id === null && !row.has_push;
+  return row.phone !== null;
 }
 
 /**

@@ -148,17 +148,19 @@ describe('runSubscriptionReminders', () => {
     expect(sent).toHaveLength(1);
   });
 
-  it('texts only the people who have no other way of hearing it', async () => {
-    await subscriber({ expiresOn: '2026-09-10', messenger: true });   // has Telegram
-    const alone = await subscriber({ expiresOn: '2026-09-10' });      // has nothing
+  it('texts everyone with a phone, whether or not they have another channel', async () => {
+    // Founder decision (2026-09-06): a push or Telegram message is silent
+    // proof of nothing, so SMS is no longer gated on already having one — it
+    // goes out to anyone with a phone number.
+    await subscriber({ expiresOn: '2026-09-10', messenger: true }); // has Telegram too
+    await subscriber({ expiresOn: '2026-09-10' });                  // has nothing else
 
     await runSubscriptionReminders(RUN('2026-09-07'));
 
+    const phones = (await pool.query<{ phone: string }>(
+      'select phone from profiles order by created_at')).rows.map((r) => r.phone);
     expect(sent).toHaveLength(2);
-    expect(texted).toHaveLength(1);
-    const phone = (await pool.query<{ phone: string }>(
-      'select phone from profiles where id = $1', [alone])).rows[0].phone;
-    expect(texted[0].phone).toBe(phone);
+    expect(texted.map((t) => t.phone).sort()).toEqual(phones.sort());
     expect(texted[0].templateId).toBe(77);
   });
 
@@ -200,18 +202,6 @@ describe('runSubscriptionReminders', () => {
     await activateMonths(r.rows[0].id, 1, { source: 'payment' });
     await pool.query("update subscriptions set expires_at = '2026-09-10T14:00:00+03:30' where user_id = $1",
       [r.rows[0].id]);
-
-    await runSubscriptionReminders(RUN('2026-09-07'));
-
-    expect(sent).toHaveLength(1);
-    expect(texted).toHaveLength(0);
-  });
-
-  it('does not text somebody who already heard it for free', async () => {
-    // SMS is the extra channel for people it can reach, not a second copy for
-    // everyone: paying to repeat a message Telegram already delivered is the
-    // one cost this whole gate exists to avoid.
-    await subscriber({ expiresOn: '2026-09-10', messenger: true });
 
     await runSubscriptionReminders(RUN('2026-09-07'));
 
