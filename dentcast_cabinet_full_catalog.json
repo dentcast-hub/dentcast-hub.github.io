@@ -137665,6 +137665,53 @@
         "Michel Fages",
         "Bertrand Bennasar"
       ]
+    },
+    {
+      "id": "P2905",
+      "title": "Management of Grossly Decayed Mandibular Molar with Different Designs of Split Cast Post and Core",
+      "file_name": "Management-of-Grossly-Decayed-Mandibular-Molar-with-Different-Designs-of-Split-Cast-Post-and-Core.pdf",
+      "topic": "Post & core",
+      "topic_path": "Post & core",
+      "type": "primary/other",
+      "local_path": "",
+      "file_size": 5780028,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "dentai/dentai-33"
+      ],
+      "drive_link": "https://drive.google.com/file/d/192G2mbEJhCJowPUIwvL0KbX1hyqpMEBx/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=192G2mbEJhCJowPUIwvL0KbX1hyqpMEBx",
+      "drive_view": "https://drive.google.com/file/d/192G2mbEJhCJowPUIwvL0KbX1hyqpMEBx/view",
+      "drive_id": "192G2mbEJhCJowPUIwvL0KbX1hyqpMEBx",
+      "tags": [
+        "split-post-and-core",
+        "multisection-post-and-core",
+        "auxiliary-post",
+        "divergent-root-canals",
+        "mandibular-molar",
+        "ferrule",
+        "endodontically-treated-tooth",
+        "case-report",
+        "topic:post-core",
+        "management-of-grossly-decayed-mandibular-molar-with-different-designs-of-split-cast-post-and-core"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Management of Grossly Decayed Mandibular Molar with Different Designs of Split Cast Post and Core",
+      "doi": "10.1155/2016/2976941",
+      "journal": "Case Reports in Dentistry",
+      "crossref_year": 2016,
+      "subjects": [],
+      "abstract": "Mandibular molar with extensive loss of tooth structure, especially where no cavity wall is remaining, and insertion of posts in both the roots appear necessary so as to achieve proper retention for the core material. A single unit metal casting with two posts, one in the mesial root and the other in the distal divergent root, is difficult to fabricate due to difference in the path of insertion of the two posts. Multisection post and core or single cast post and core with auxiliary post can be an effective design to manage grossly decayed mandibular molars.",
+      "display_title": "Management of Grossly Decayed Mandibular Molar with Different Designs of Split Cast Post and Core",
+      "authors": [
+        "Rashmi Bansal",
+        "Nakul Mehrotra",
+        "Priyanka Chowdhary",
+        "Anuraag Gurtu"
+      ]
     }
   ],
   "drive_matched": 2849,

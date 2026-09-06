@@ -15378,5 +15378,102 @@
         "interpretation_fa": "متن، روش را تجربه‌ی شخصی نویسنده معرفی می‌کند و کاربردش را به اندیکاسیون‌های خاص محدود می‌سازد، اما زنجیره‌ی استدلال یا ارجاعی به شواهد منتشرشده ندارد. ارزش بالینی‌اش نمایش یک تکنیک عملی چیرساید است، نه اثبات برتری آن بر روش‌های دیگر."
       }
     ]
+  },
+  "dentai/dentai-33": {
+    "scored_at": "2026-09-06",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Management of Grossly Decayed Mandibular Molar with Different Designs of Split Cast Post and Core",
+          "authors": "Bansal R, Mehrotra N, Chowdhary P, Gurtu A",
+          "year": 2016,
+          "journal": "Case Reports in Dentistry",
+          "doi": "10.1155/2016/2976941"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 30,
+          "anchor": "two case reports of split cast post and core management for grossly decayed mandibular molars, one with 1-year clinical follow-up reported (THERAPY case series/case report row, 30)",
+          "evidence_quote": "This paper presents two case reports on post endodontic management of badly mutilated mandibular molars: one with two-section post and core and one with single post and core with separate auxiliary post."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "این گزارش موردی هیچ تحلیل مقایسه‌ای بین دو کیس یا با گروه دیگری ندارد و هیچ‌جای متن (Case Presentation، Discussion، Conclusion) درباره‌ی مخدوش‌گر یا کنترل آن چیزی نمی‌گوید؛ چون متن کامل مقاله در دسترس است، سکوت کامل یعنی غیاب (high)، نه NR."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "low",
+              "evidence_quote": "male patient reported to the Department of Conservative Dentistry and Endodontics, with the chief complaint of decayed tooth in lower left tooth region."
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "Dovetail to interlock the mesial and distal section was not prepared as final buildup was to be held together by the fixed cast restoration."
+            },
+            {
+              "domain": "missing data",
+              "rating": "some_concerns",
+              "evidence_quote": "At 1-year clinical follow-up, the prosthesis exhibited no evidence of failure and the patient was satisfied with the function and esthetics.",
+              "note": "پیامد کیس ۱ با پیگیری یک‌ساله گزارش شده، اما بخش Case 2 و Discussion و Conclusion هیچ پیامد یا مدت پیگیری‌ای برای کیس ۲ ذکر نمی‌کنند."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "At 1-year clinical follow-up, the prosthesis exhibited no evidence of failure and the patient was satisfied with the function and esthetics.",
+              "note": "پیامد و زمان‌بندی نام برده شده، اما ابزار یا معیار مشخص برای «no evidence of failure» و کورسازی ارزیاب ذکر نشده."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all, or funding by a commercial manufacturer whose own product is among those tested",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors declare that they have no competing interests.",
+            "note": "تعارض منافع صریحاً رد شده است."
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این گزارش موردی است."
+          },
+          {
+            "item": "no sample size justification / power analysis (clinical studies); for in-vitro, specimen count per group <10 with no justification",
+            "base_points": 5,
+            "points": 2,
+            "evidence_quote": "",
+            "note": "هیچ توجیهی برای انتخاب دو کیس یا تعداد کیس‌ها در متن نیست؛ گزارش موردی از SR/MA معاف نیست."
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires (e.g. survival claims with <3y follow-up)",
+            "base_points": 3,
+            "points": 1,
+            "evidence_quote": "At 1-year clinical follow-up, the prosthesis exhibited no evidence of failure and the patient was satisfied with the function and esthetics.",
+            "note": "ادعای بقا/موفقیت پروتز کیس ۱ فقط با یک سال پیگیری گزارش شده؛ برای کیس ۲ اصلاً پیگیری‌ای گزارش نشده."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 14,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "امتیاز شواهد این منبع ۱۴ از ۱۰۰ و باند E است؛ نوع سوال Therapy است.",
+        "interpretation_fa": "این متن گزارش دو کیس بدون گروه کنترل است، نه شاهدی برای برتری یک طراحی بر دیگری. آنچه نشان می‌دهد این است که پست دو تکه در مولر با ریشه‌های واگرا در عمل قابل ساخت است و در کیس اول تا یک سال پایدار مانده. برای کیس دوم پیامدی گزارش نشده. جمع‌بندی درباره‌ی بقای بلندمدت از این داده در نمی‌آید."
+      }
+    ]
   }
 }
