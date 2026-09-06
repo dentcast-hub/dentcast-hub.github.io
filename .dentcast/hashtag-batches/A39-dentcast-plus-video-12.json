@@ -1,0 +1,20 @@
+{
+  "type": "dentcast_plus",
+  "note": "Publish of dentcast-plus/video-12 (روشِ من برای ساختِ پست دو تکه). Mints #پست_دو_تکه — the founder asked for a dedicated tag so a reader searching specifically for a two-piece post finds this video, distinct from the general #پست_و_کور concept it also carries. Every other tag reuses an existing canonical form.",
+  "concepts": [
+    {
+      "tag": "#پست_دو_تکه",
+      "domain": "clinical",
+      "definition": "پست دندانپزشکی‌ای که به‌صورت دو قطعه‌ی جداگانه ساخته می‌شود (پست جدا از کور)، در تقابل با پست یک‌تکه/ریختگی که پست و کور یکپارچه‌اند.",
+      "use_when": "محتوا دربارهٔ اندیکاسیون، طراحی یا روش ساختِ پستِ دوتکه (به‌عنوانِ نوعی مشخص از پست‌وکور) باشد.",
+      "aliases": ["پست دو تیکه", "پست دوتکه", "two-piece post", "پست چندتکه", "دو تکه"]
+    }
+  ],
+  "articles": {
+    "dentcast-plus/video-12": [
+      "#دنتکست_پلاس",
+      "#پست_و_کور",
+      "#پست_دو_تکه"
+    ]
+  }
+}
