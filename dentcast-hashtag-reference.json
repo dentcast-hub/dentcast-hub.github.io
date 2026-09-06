@@ -837,7 +837,7 @@
     "#پست و کور"
    ],
    "co_tags": [],
-   "count": 33,
+   "count": 34,
    "content_ids": [
     "episodes/episode-36",
     "episodes/episode-42",
@@ -871,7 +871,8 @@
     "dentcast-plus/video-10",
     "insight/insight-66",
     "notecast/episode-40",
-    "dentcast-plus/video-12"
+    "dentcast-plus/video-12",
+    "dentai/dentai-33"
    ]
   },
   {
@@ -887,7 +888,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 32,
+   "count": 33,
    "content_ids": [
     "dentai/dentai-1",
     "dentai/dentai-2",
@@ -920,7 +921,8 @@
     "dentai/dentai-29",
     "dentai/dentai-30",
     "dentai/dentai-31",
-    "dentai/dentai-32"
+    "dentai/dentai-32",
+    "dentai/dentai-33"
    ]
   },
   {
@@ -1497,6 +1499,42 @@
    ]
   },
   {
+   "key": "فرول",
+   "tag": "#فرول",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
+   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
+   "aliases": [
+    "ferrule"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 20,
+   "content_ids": [
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-147-7",
+    "insight/insight-4",
+    "insight/insight-7",
+    "insight/insight-13",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19",
+    "insight/insight-58",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "insight/insight-64",
+    "chairside/chairside-30",
+    "sharehub/share-18",
+    "dentai/dentai-33"
+   ]
+  },
+  {
    "key": "متانوت",
    "tag": "#متانوت",
    "domain": "brand",
@@ -1568,41 +1606,6 @@
     "chairside/chairside-28",
     "sharehub/share-12",
     "chairside/chairside-29"
-   ]
-  },
-  {
-   "key": "فرول",
-   "tag": "#فرول",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
-   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
-   "aliases": [
-    "ferrule"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 19,
-   "content_ids": [
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-147-7",
-    "insight/insight-4",
-    "insight/insight-7",
-    "insight/insight-13",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19",
-    "insight/insight-58",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "insight/insight-64",
-    "chairside/chairside-30",
-    "sharehub/share-18"
    ]
   },
   {
@@ -2500,7 +2503,7 @@
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
    "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
    "aliases": [
@@ -2844,6 +2847,34 @@
    ]
   },
   {
+   "key": "دندان_اندوشده",
+   "tag": "#دندان_اندوشده",
+   "domain": null,
+   "words": 2,
+   "definition": "دندانی که درمان ریشه شده و بازسازی می‌خواهد.",
+   "use_when": "مقاله بازسازیِ دندان اندوشده را تعیین کند.",
+   "aliases": [
+    "endodontically treated teeth",
+    "دندان اندو شده",
+    "دندان عصب کشی شده"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-40",
+    "episodes/episode-41",
+    "episodes/episode-47",
+    "episodes/episode-122-3",
+    "insight/insight-4",
+    "insight/insight-39",
+    "dentai/dentai-27",
+    "insight/insight-64",
+    "sharehub/share-18",
+    "dentai/dentai-33"
+   ]
+  },
+  {
    "key": "روکش_موقت",
    "tag": "#روکش_موقت",
    "domain": null,
@@ -3078,33 +3109,6 @@
     "chairside/chairside-13",
     "chairside/chairside-16",
     "chairside/chairside-30"
-   ]
-  },
-  {
-   "key": "دندان_اندوشده",
-   "tag": "#دندان_اندوشده",
-   "domain": null,
-   "words": 2,
-   "definition": "دندانی که درمان ریشه شده و بازسازی می‌خواهد.",
-   "use_when": "مقاله بازسازیِ دندان اندوشده را تعیین کند.",
-   "aliases": [
-    "endodontically treated teeth",
-    "دندان اندو شده",
-    "دندان عصب کشی شده"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-40",
-    "episodes/episode-41",
-    "episodes/episode-47",
-    "episodes/episode-122-3",
-    "insight/insight-4",
-    "insight/insight-39",
-    "dentai/dentai-27",
-    "insight/insight-64",
-    "sharehub/share-18"
    ]
   },
   {
@@ -4184,7 +4188,7 @@
    "key": "رادیوگرافی_تشخیصی",
    "tag": "#رادیوگرافی_تشخیصی",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "انتخاب و تفسیرِ درستِ تصویر — پانورامیک در برابر پری‌اپیکال.",
    "use_when": "مقاله کفایت یا نارساییِ یک تصویر را مسئله بداند.",
    "aliases": [
@@ -7162,7 +7166,7 @@
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
-   "words": 6,
+   "words": 4,
    "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
    "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
    "aliases": [
@@ -7378,6 +7382,28 @@
     "dentcast-plus/video-6",
     "metanotes/meta-12",
     "insight/insight-43"
+   ]
+  },
+  {
+   "key": "ضد_چرخش",
+   "tag": "#ضد_چرخش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "هندسه‌ای در اباتمنت که چرخش روکش روی آن را مهار می‌کند.",
+   "use_when": "مقاله وجود یا نبودِ گیرِ ضدچرخشی را ارزیابی کند.",
+   "aliases": [
+    "آنتی روتیشن",
+    "ضد چرخش اباتمنت"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#anti_rotation"
+   ],
+   "count": 3,
+   "content_ids": [
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5",
+    "dentai/dentai-33"
    ]
   },
   {
@@ -10115,27 +10141,6 @@
    ]
   },
   {
-   "key": "ضد_چرخش",
-   "tag": "#ضد_چرخش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "هندسه‌ای در اباتمنت که چرخش روکش روی آن را مهار می‌کند.",
-   "use_when": "مقاله وجود یا نبودِ گیرِ ضدچرخشی را ارزیابی کند.",
-   "aliases": [
-    "آنتی روتیشن",
-    "ضد چرخش اباتمنت"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#anti_rotation"
-   ],
-   "count": 2,
-   "content_ids": [
-    "dentcast-plus/video-4",
-    "dentcast-plus/video-5"
-   ]
-  },
-  {
    "key": "طراحی_فریم_ورک",
    "tag": "#طراحی_فریم_ورک",
    "domain": null,
@@ -10877,6 +10882,28 @@
    "content_ids": [
     "insight/insight-1",
     "chairside/chairside-15"
+   ]
+  },
+  {
+   "key": "پست_دو_تکه",
+   "tag": "#پست_دو_تکه",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "پست دندانپزشکی‌ای که به‌صورت دو قطعه‌ی جداگانه ساخته می‌شود (پست جدا از کور)، در تقابل با پست یک‌تکه/ریختگی که پست و کور یکپارچه‌اند.",
+   "use_when": "محتوا دربارهٔ اندیکاسیون، طراحی یا روش ساختِ پستِ دوتکه (به‌عنوانِ نوعی مشخص از پست‌وکور) باشد.",
+   "aliases": [
+    "پست دو تیکه",
+    "پست دوتکه",
+    "two-piece post",
+    "پست چندتکه",
+    "دو تکه"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "dentcast-plus/video-12",
+    "dentai/dentai-33"
    ]
   },
   {
@@ -13364,7 +13391,7 @@
    "key": "اینتروژن_ارتودنسی",
    "tag": "#اینتروژن_ارتودنسی",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
    "use_when": "مقاله اینتروژن را راه‌حل بداند.",
    "aliases": [
@@ -14191,7 +14218,7 @@
    "key": "تفسیر_رادیوگرافی",
    "tag": "#تفسیر_رادیوگرافی",
    "domain": "clinical",
-   "words": 4,
+   "words": 2,
    "definition": "خواندنِ الگو — مرزِ صاف در برابر مرزِ منتشر — نه صرفاً دیدنِ لکه.",
    "use_when": "مقاله معیارِ تمایزِ تصویری بدهد.",
    "aliases": [
@@ -15228,7 +15255,7 @@
    "key": "رادیوگرافی_کنترل",
    "tag": "#رادیوگرافی_کنترل",
    "domain": "clinical",
-   "words": 4,
+   "words": 2,
    "definition": "پری‌اپیکالِ صحیح، به‌عنوان تأییدِ قطعیِ نشست.",
    "use_when": "مقاله رادیوگرافی را تأییدِ نهایی بداند، نه حس.",
    "aliases": [
@@ -17824,7 +17851,7 @@
    "key": "هوش_مصنوعی_رادیوگرافی",
    "tag": "#هوش_مصنوعی_رادیوگرافی",
    "domain": "ai",
-   "words": 5,
+   "words": 3,
    "definition": "نرم‌افزاری که روی رادیوگرافی ضایعه یا سطح استخوان را علامت می‌زند — تصویری که اغلب با ChatGPT اشتباه گرفته می‌شود.",
    "use_when": "مقاله همین دسته را موضوع یا نقطه‌ی تمایز قرار دهد.",
    "aliases": [
@@ -18085,27 +18112,6 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-147-9"
-   ]
-  },
-  {
-   "key": "پست_دو_تکه",
-   "tag": "#پست_دو_تکه",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "پست دندانپزشکی‌ای که به‌صورت دو قطعه‌ی جداگانه ساخته می‌شود (پست جدا از کور)، در تقابل با پست یک‌تکه/ریختگی که پست و کور یکپارچه‌اند.",
-   "use_when": "محتوا دربارهٔ اندیکاسیون، طراحی یا روش ساختِ پستِ دوتکه (به‌عنوانِ نوعی مشخص از پست‌وکور) باشد.",
-   "aliases": [
-    "پست دو تیکه",
-    "پست دوتکه",
-    "two-piece post",
-    "پست چندتکه",
-    "دو تکه"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "dentcast-plus/video-12"
    ]
   },
   {
@@ -20356,6 +20362,7 @@
   "هرز شدن گل پیچ": "هرز شدن پیچ",
   "هیبرید فول آرچ": "پروتز هیبرید",
   "implant hybrid": "پروتز هیبرید",
+  "two piece post": "پست دو تکه",
   "post and crown": "پست و روکش",
   "occlusal plane": "پلان اکلوژن",
   "پلن پروتز محور": "پلنینگ پروتز محور",
@@ -20370,7 +20377,6 @@
   "post gutta gap": "گپ پست و گوتا",
   "aphthous ulcer": "آفت دهان",
   "آرام بخشی عمیق": "بیهوشی",
-  "two piece post": "پست دو تکه",
   "prosthodontics": "پروتز",
   "ویزیت کلینیکی": "کیس اینسایت",
   "post and core": "پست و کور",
@@ -20384,9 +20390,9 @@
   "اسکنر دیجیتال": "اسکنر داخل دهانی",
   "کراون لنتنینگ": "افزایش طول تاج",
   "دایمنشن عمودی": "بعد عمودی",
+  "dentcast plus": "دنتکست پلاس",
   "ساییدگی دندان": "سایش دندان",
   "ایمپلنت متحرک": "اوردنچر",
-  "dentcast plus": "دنتکست پلاس",
   "دندان های جلو": "دندان قدامی",
   "فینیشینگ لاین": "فینیش لاین",
   "پری ایمپلنتیت": "پری ایمپلنتیتیس",
@@ -21012,6 +21018,7 @@
   "home bleach": "هوم بلیچ",
   "3d printing": "پرینت سه بعدی",
   "چاپ سه بعدی": "پرینت سه بعدی",
+  "پست دو تیکه": "پست دو تکه",
   "پست و کراون": "پست و روکش",
   "پلن اکلوزال": "پلان اکلوژن",
   "سطح اکلوزال": "پلان اکلوژن",
@@ -21041,7 +21048,6 @@
   "canker sore": "آفت دهان",
   "mouth ulcer": "آفت دهان",
   "semaglutide": "تیرزپاتاید",
-  "پست دو تیکه": "پست دو تکه",
   "بایومیمتیک": "بیومیمتیک",
   "بیو میمتیک": "بیومیمتیک",
   "بیومی متیک": "بیومیمتیک",
@@ -21252,6 +21258,7 @@
   "تیک دولورو": "نورالژی تریژمینال",
   "فشار لترال": "نیروی لترال",
   "protrusion": "پروتروزیو",
+  "پست چندتکه": "پست دو تکه",
   "metal post": "پست فلزی",
   "ژنژیوکتومی": "ژینژیوکتومی",
   "برداشت لثه": "ژینژیوکتومی",
@@ -21263,14 +21270,13 @@
   "light cure": "کیور",
   "سطح راهنما": "گاید پلین",
   "play store": "گوگل پلی",
-  "پست چندتکه": "پست دو تکه",
   "کامپلیکیشن": "عوارض",
   "پلن درمان": "طرح درمان",
   "occlusion": "اکلوژن",
   "chairside": "چیرساید",
   "گزارش کیس": "کیس اینسایت",
-  "دنت ای آی": "dentai",
   "پست دندان": "پست و کور",
+  "دنت ای آی": "dentai",
   "زیرکونیوم": "زیرکونیا",
   "زیرکونیای": "زیرکونیا",
   "aesthetic": "زیبایی",
@@ -21473,6 +21479,7 @@
   "بدون امید": "هپلس",
   "polishing": "پالیش نهایی",
   "porcelain": "پرسلن",
+  "پست دوتکه": "پست دو تکه",
   "پیزوسرجری": "پیزو",
   "follow up": "پیگیری زمانی",
   "کاسپ حامل": "کاسپ فانکشنال",
@@ -21490,7 +21497,6 @@
   "سماگلوتید": "تیرزپاتاید",
   "تیرزپاتید": "داروهای لاغری",
   "تریگر آفت": "محرک آفت",
-  "پست دوتکه": "پست دو تکه",
   "کمپلیکیشن": "عوارض",
   "dentcast": "دنتکست",
   "ایمپلانت": "ایمپلنت",
@@ -21672,8 +21678,8 @@
   "دنت کست": "دنتکست",
   "implant": "ایمپلنت",
   "insight": "اینسایت",
-  "dent ai": "dentai",
   "پست کور": "پست و کور",
+  "dent ai": "dentai",
   "bonding": "باندینگ",
   "ceramic": "سرامیک",
   "ابوتمنت": "اباتمنت",
