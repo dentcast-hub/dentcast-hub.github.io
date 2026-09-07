@@ -224,13 +224,19 @@ describe('GET /notices', () => {
 // 2026-08-14 support ticket (T-MCF-VN2): opening one اطلاعیه marked every
 // unread one seen at once, because the whole inbox shared one watermark.
 // POST /notices/:id/seen acknowledges a single card without moving it.
+//
+// `unread` at the top of the GET /notices response is the BADGE count (see
+// migration 0058) — it moves only via POST /notices/seen, never via a single
+// card's own acknowledgement, so it is asserted unchanged here rather than
+// decremented. The per-row `unread` on each notice is the CARD colour and is
+// exactly what this describe block is about.
 describe('POST /notices/:id/seen', () => {
   it('leaves the other unread notice coloured', async () => {
     await setStreak(7);
     await sync();                     // at least two rows: پیشگام + شعله
     const before = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
     expect(before.notices.length).toBeGreaterThan(1);
-    expect(before.unread).toBe(before.notices.length);
+    expect(before.notices.every((n: { unread: boolean }) => n.unread)).toBe(true);
 
     const opened = before.notices[0];
     const seen = await app.inject({
@@ -244,7 +250,8 @@ describe('POST /notices/:id/seen', () => {
     // every OTHER row is exactly as unread as it was before
     const others = after.notices.filter((n: { id: string }) => n.id !== opened.id);
     expect(others.every((n: { unread: boolean }) => n.unread)).toBe(true);
-    expect(after.unread).toBe(before.unread - 1);
+    // acknowledging one card is not what the badge counts — see the block above
+    expect(after.unread).toBe(before.unread);
   });
 
   it('is idempotent — a repeat call changes nothing further', async () => {
@@ -266,6 +273,51 @@ describe('POST /notices/:id/seen', () => {
   it('requires a session', async () => {
     const res = await app.inject({ method: 'POST', url: '/notices/log:00000000-0000-0000-0000-000000000000/seen' });
     expect(res.statusCode).toBe(401);
+  });
+});
+
+// 2026-09-06 product feedback: after the T-MCF-VN2 fix above, the header dot
+// inherited the opposite problem — it stayed lit until every single card had
+// been individually opened, instead of clearing on view like every other
+// inbox (LinkedIn included). Migration 0058 splits the dot's own watermark
+// (notices_badge_seen_at) from the per-card one (notices_seen_at +
+// notice_reads) so both properties hold at once.
+describe('the header dot clears on view, independent of any single card', () => {
+  it('POST /notices/seen clears the badge without touching any card\'s own colour', async () => {
+    const me = await userId();
+    await setStreak(7);
+    await sync();                     // at least two rows
+    const before = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
+    expect(before.notices.length).toBeGreaterThan(1);
+    expect(before.unread).toBe(before.notices.length);
+    expect((await noticeCounters(me)).unread_notices).toBe(before.notices.length);
+
+    // Just opening the panel — no card inside it was clicked.
+    const seen = await app.inject({ method: 'POST', url: '/notices/seen', headers: { cookie } });
+    expect(seen.statusCode).toBe(200);
+
+    // The badge is gone everywhere it is read from...
+    const after = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
+    expect(after.unread).toBe(0);
+    expect((await noticeCounters(me)).unread_notices).toBe(0);
+    // ...but every card is exactly as unopened as it was, because nobody
+    // opened any of them — the badge and the card colour are independent.
+    expect(after.notices.length).toBe(before.notices.length);
+    expect(after.notices.every((n: { unread: boolean }) => n.unread)).toBe(true);
+  });
+
+  it('a card opened before the badge clears stays open after it does', async () => {
+    await setStreak(7);
+    await sync();
+    const first = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json().notices[0];
+    await app.inject({
+      method: 'POST', url: `/notices/${encodeURIComponent(first.id)}/seen`, headers: { cookie },
+    });
+    await app.inject({ method: 'POST', url: '/notices/seen', headers: { cookie } });
+
+    const after = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
+    const afterOpened = after.notices.find((n: { id: string }) => n.id === first.id)!;
+    expect(afterOpened.unread).toBe(false);
   });
 });
 

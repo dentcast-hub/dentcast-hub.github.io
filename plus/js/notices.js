@@ -1,6 +1,6 @@
-import { el, faNum } from './util.js?v=56';
-import { api } from './api.js?v=56';
-import { sameMirrorUrl } from './config.js?v=56';
+import { el, faNum } from './util.js?v=58';
+import { api } from './api.js?v=58';
+import { sameMirrorUrl } from './config.js?v=58';
 
 /**
  * اطلاعیه — the in-app inbox, opened from the account menu.
@@ -143,11 +143,20 @@ function emptyState() {
 /**
  * Render the inbox into `root` (an overlay body).
  *
- * Each unread card acknowledges itself when opened (see markOneSeen) — the
- * panel no longer moves a blanket watermark on render, which used to mark
- * every unread card seen the instant the list appeared. The celebration queue
- * is untouched by this either way — it has its own acknowledgement, so opening
- * the inbox can never silently spend a badge card the reader was never shown.
+ * Two acknowledgements happen here, on purpose independent of each other.
+ * Each unread CARD acknowledges itself only when opened (see markOneSeen) —
+ * that is what keeps an unopened card coloured next to one that was just
+ * opened. The panel itself, on successfully showing a list that had anything
+ * new in it, acknowledges the BADGE watermark (api.noticesSeen — moves
+ * notices_badge_seen_at) so the header dot clears the moment the reader looks
+ * at the list, whether or not they open any card inside it: a reader who
+ * scans six rows and needed to act on none of them should not have to click
+ * each one just to turn a dot off. Guarded on `data.unread` so a panel with
+ * nothing new writes nothing, the same restraint markOneSeen already has for
+ * a single card. Fire-and-forget, same tolerance as markOneSeen — the dot
+ * corrects on the next /me either way. The celebration queue is untouched by
+ * this either way — it has its own acknowledgement, so opening the inbox can
+ * never silently spend a badge card the reader was never shown.
  */
 export async function renderNotices(root) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
@@ -167,6 +176,12 @@ export async function renderNotices(root) {
       ? el('div', { class: 'dcp-nt-list' }, rows.map(noticeRow))
       : emptyState(),
   );
+
+  if (data && data.unread > 0) {
+    api.noticesSeen()
+      .then(() => { document.dispatchEvent(new CustomEvent(NOTICES_SEEN_EVENT)); })
+      .catch(() => { /* the list is readable either way; the dot corrects on next /me */ });
+  }
 }
 
 /** Fired once the watermark has moved, so the header dot can go out live. */
