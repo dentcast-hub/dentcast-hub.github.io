@@ -34,13 +34,17 @@ export async function noticeRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ notices, unread });
   });
 
-  // POST /notices/seen — move the read watermark to now. Kept as an explicit
-  // "mark everything" write; the panel itself no longer calls this on open
-  // (see /notices/:id/seen below — a support ticket, 2026-08-14, reported that
-  // opening one اطلاعیه was marking every unread one seen at once). Separate
-  // from the achievement celebration's own acknowledgement on purpose: reading
-  // the inbox must not silently spend a celebration the reader has not been
-  // shown yet.
+  // POST /notices/seen — move the BADGE watermark (notices_badge_seen_at) to
+  // now. This is what the panel calls once, on open, so the header dot clears
+  // the moment the reader looks at the list — it does not touch notice_reads
+  // or any card's own colour (see /notices/:id/seen below, and migration
+  // 0058 for why the dot and the per-card colour needed separate watermarks:
+  // a 2026-08-14 support ticket got the per-card fix, and then the dot
+  // inherited the opposite complaint — staying lit until every single card
+  // was opened, instead of clearing on view like every other inbox does).
+  // Separate from the achievement celebration's own acknowledgement on
+  // purpose: reading the inbox must not silently spend a celebration the
+  // reader has not been shown yet.
   app.post('/notices/seen', async (request, reply) => {
     await markNoticesSeen(request.user!.id);
     return reply.send({ ok: true });

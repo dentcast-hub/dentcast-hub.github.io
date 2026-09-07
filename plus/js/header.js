@@ -4,22 +4,22 @@
 //  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
 //    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
 //    an OVERLAY. Clicking the person again closes whatever is open.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=56';
-import { currentUser, api } from './api.js?v=56';
-import { isOrgHost, detectContentId } from './config.js?v=56';
-import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=56';
-import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=56';
-import { renderDashboard } from './dashboard.js?v=56';
-import { renderProfile } from './profile.js?v=56';
-import { maybeShowWelcome } from './welcome.js?v=56';
-import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=56';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=56';
-import { healPushSubscription } from './push.js?v=56';
-import { maybeShowPremiumPopup } from './premium-popup.js?v=56';
-import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=56';
-import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=56';
-import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=56';
-import { installLibraryGate } from './library-gate.js?v=56';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=58';
+import { currentUser, api } from './api.js?v=58';
+import { isOrgHost, detectContentId } from './config.js?v=58';
+import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=58';
+import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=58';
+import { renderDashboard } from './dashboard.js?v=58';
+import { renderProfile } from './profile.js?v=58';
+import { maybeShowWelcome } from './welcome.js?v=58';
+import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=58';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=58';
+import { healPushSubscription } from './push.js?v=58';
+import { maybeShowPremiumPopup } from './premium-popup.js?v=58';
+import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=58';
+import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=58';
+import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=58';
+import { installLibraryGate } from './library-gate.js?v=58';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -102,10 +102,12 @@ function buildUserPerson(user) {
   paintPersonDot(btn, user.unread_notices || 0);
   // The dot updates the moment the inbox or the celebration is acknowledged —
   // both fire their own event so this does not have to poll /me or wait for a
-  // reload to stop claiming there is something unread. NOTICES_SEEN_EVENT now
-  // fires per acknowledged card, not once for the whole inbox, so the count is
-  // re-read from /me rather than forced to zero — other unopened cards may
-  // still be unread.
+  // reload to stop claiming there is something unread. NOTICES_SEEN_EVENT fires
+  // both once, when the panel itself is opened (which is what actually clears
+  // this dot — see notices.js's renderNotices) and again per card the reader
+  // opens inside it (which only ever changes that card's own colour, never
+  // this count) — so the count is always re-read from /me rather than forced
+  // to zero, and stays correct either way.
   document.addEventListener(NOTICES_SEEN_EVENT, () => {
     currentUser({ refresh: true })
       .then((m) => paintPersonDot(btn, (m && m.unread_notices) || 0))

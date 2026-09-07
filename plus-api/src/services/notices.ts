@@ -274,17 +274,30 @@ const VISIBLE_NOTICES = `
 `;
 
 /**
- * A notice is unread only when it is BOTH newer than the watermark AND absent
- * from notice_reads — the watermark still covers everything that predates
- * per-notice tracking (no backfill needed), while a row past the watermark can
- * now be acknowledged individually instead of dragging every other unread row
- * down with it (see markNoticeSeen).
+ * Two independent "unread" questions, on two different surfaces — see the
+ * 0058 migration for why they were ever the same expression and why that was
+ * wrong for both of them.
+ *
+ * CARD_UNREAD_EXPR is the per-row colour inside the open panel: newer than
+ * the frozen `notices_seen_at` floor (so pre-launch history never resurfaces)
+ * AND absent from notice_reads (so a card stays coloured until IT is opened,
+ * unaffected by any other card, or by the panel itself being opened again).
+ *
+ * BADGE_UNREAD_EXPR is the header dot and the account-menu pill: newer than
+ * `notices_badge_seen_at` alone. It does not consult notice_reads at all —
+ * simply opening the panel moves this watermark (markNoticesSeen), so the dot
+ * clears the way every messaging app's does, without requiring every card
+ * inside to be individually clicked first.
  */
-const UNREAD_EXPR = `
+const CARD_UNREAD_EXPR = `
   t.created_at > coalesce(p.notices_seen_at, to_timestamp(0))
   and not exists (
     select 1 from notice_reads r where r.user_id = p.id and r.notice_key = t.id
   )
+`;
+
+const BADGE_UNREAD_EXPR = `
+  t.created_at > coalesce(p.notices_badge_seen_at, to_timestamp(0))
 `;
 
 /**
@@ -300,7 +313,7 @@ const UNREAD_EXPR = `
 export async function listNotices(userId: string): Promise<NoticeRow[]> {
   const res = await query<NoticeRow>(
     `select t.id, t.kind, t.title, t.body, t.url, t.created_at,
-            (${UNREAD_EXPR}) as unread
+            (${CARD_UNREAD_EXPR}) as unread
        from profiles p
        cross join lateral (${VISIBLE_NOTICES}) t
       where p.id = $1
@@ -311,27 +324,38 @@ export async function listNotices(userId: string): Promise<NoticeRow[]> {
   return res.rows;
 }
 
-/** How many notices this user has not looked at yet. Cheap enough for /me. */
+/**
+ * How many notices are new since the reader last opened the panel — the
+ * header dot's own count, not "how many cards have I not clicked yet"
+ * (that is listNotices's per-row `unread`, a different question answered
+ * against a different table; see BADGE_UNREAD_EXPR above).
+ */
 export async function unreadNoticeCount(userId: string): Promise<number> {
   const row = await one<{ n: number }>(
     `select count(*)::int as n
        from profiles p
        cross join lateral (${VISIBLE_NOTICES}) t
       where p.id = $1
-        and (${UNREAD_EXPR})`,
+        and (${BADGE_UNREAD_EXPR})`,
     [userId, String(WINDOW_DAYS)],
   );
   return row?.n ?? 0;
 }
 
 /**
- * Move the watermark to now. Idempotent by construction — there is no per-row
- * state to get half-written, so a retry, a double click and two open tabs all
- * end in the same place. Still available as an explicit "mark everything"
- * write; the panel itself no longer calls this on open (see markNoticeSeen).
+ * Move the BADGE watermark to now — this is what "opening the panel" means
+ * for the header dot, called once per panel open regardless of which cards
+ * inside get clicked. Idempotent by construction, same as before: there is
+ * no per-row state to get half-written, so a retry, a double click and two
+ * open tabs all end in the same place.
+ *
+ * Deliberately does not touch `notices_seen_at` any more (see migration
+ * 0058) — that column stays frozen as the per-card floor `notice_reads` is
+ * measured against, so clearing the dot can never resurrect, or silently
+ * clear, a card's own colour.
  */
 export async function markNoticesSeen(userId: string): Promise<void> {
-  await query('update profiles set notices_seen_at = now() where id = $1', [userId]);
+  await query('update profiles set notices_badge_seen_at = now() where id = $1', [userId]);
 }
 
 /**
@@ -364,7 +388,7 @@ export async function noticeCounters(
     `select
        (select count(*)::int
           from (${VISIBLE_NOTICES}) t
-         where ${UNREAD_EXPR}) as unread,
+         where ${BADGE_UNREAD_EXPR}) as unread,
        (select count(*)::int from achievement_announcements a
          where a.user_id = p.id and a.seen_at is null) as pending
      from profiles p where p.id = $1`,

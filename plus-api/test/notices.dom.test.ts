@@ -109,15 +109,21 @@ describe('the inbox', () => {
   /**
    * 2026-08-14 support ticket (T-MCF-VN2): opening one اطلاعیه used to move a
    * single per-user watermark the instant the panel rendered, marking every
-   * unread card seen at once. Acknowledgement is now per card, on click, so an
-   * unopened card next to an opened one stays coloured.
+   * unread card seen at once. A CARD's own colour is now acknowledged only on
+   * click (markOneSeen, api.noticeSeen), so an unopened card next to an opened
+   * one stays coloured — see the next test.
+   *
+   * 2026-09-06 follow-up: the BADGE (the header dot) is a separate watermark
+   * from the card colour above (migration 0058) and IS acknowledged just from
+   * rendering — that is what lets the dot clear on view, the way every other
+   * inbox's does, without requiring every card inside to be clicked first.
    */
-  it('does not acknowledge anything just from rendering', async () => {
+  it('acknowledges the badge on render, without touching any single card', async () => {
     state.notices = [notice()];
     state.unread = 1;
     await renderNotices(document.createElement('div'));
     await new Promise((r) => setTimeout(r, 0));
-    expect(apiCalls).not.toContain('noticesSeen');
+    expect(apiCalls).toContain('noticesSeen');
     expect(apiCalls.some((c) => c.startsWith('noticeSeen:'))).toBe(false);
   });
 
