@@ -446,6 +446,19 @@ def load_entry(content_id):
     for i, e in enumerate(lite):
         if (e.get("page_url") or "").lstrip("/") == content_id + ".html":
             return e, ("litecast", i, len(lite)), brain
+    # Glossary terms live in glossary/glossary.json, not the brain (README
+    # step 5 note: "sourced from glossary/glossary.json, not from the brain").
+    # Its schema has no `type`/`caption` keys and its Persian display name is
+    # `fa_title` (its own `title` is the English term name) — normalize onto
+    # the shape the checks below already expect so a glossary content_id runs
+    # the same generic checks as everything else, rather than hard-failing at
+    # "no entry" (which a glossary content_id can structurally never satisfy).
+    gloss = json.loads(read("glossary/glossary.json"))["glossary"]
+    for i, e in enumerate(gloss):
+        if (e.get("url") or "").lstrip("/") == content_id + ".html":
+            normalized = dict(e)
+            normalized["title"] = e.get("fa_title", e.get("title", ""))
+            return normalized, ("glossary", i, len(gloss)), brain
     return None, (None, None, None), brain
 
 
@@ -466,13 +479,28 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                  "step 5 — append the entry at the END of the flat array")
         return rep
 
-    etype = entry.get("type") or ("episode" if kind == "brain" else LITECAST)
+    if kind == "brain":
+        etype = entry.get("type") or "episode"
+    elif kind == "litecast":
+        etype = LITECAST
+    else:  # glossary
+        etype = "glossary"
     is_lite = etype == LITECAST
+    is_gloss = kind == "glossary"
     is_flashcard_optional = etype in FLASHCARD_OPTIONAL_TYPES
     page_rel = content_id + ".html"
 
     # ---------------- brain ----------------
-    if sweep and idx != total - 1:
+    if is_gloss:
+        # glossary/glossary.json is not dentcast-brain.json — tail position,
+        # key-set parity against a "previous same-category entry", and a
+        # site-wide `id` field are all brain-specific concepts (Hard Rules
+        # 3/5) that glossary.json's own schema (slug/title/fa_title/…) does
+        # not carry an equivalent of. README step 5 note: glossary terms are
+        # "sourced from glossary/glossary.json, not from the brain".
+        rep.skip("5 brain", "glossary term — recorded in glossary/glossary.json, "
+                             "not dentcast-brain.json (no brain entry to check)")
+    elif sweep and idx != total - 1:
         rep.skip("5 brain", f"position {idx + 1}/{total} — {total - 1 - idx} entries published since")
     else:
         rep.check(idx == total - 1, "5 brain",
@@ -493,18 +521,20 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
     # `id` is unique PER TYPE, not site-wide: notecast and sharehub both number
     # their entries "1", "2", "3"… so a global count collides on every one of
     # them. The real defect this catches is two entries of the SAME type
-    # claiming the same id.
-    ids = [e.get("id") for e in brain
-           if e.get("id") and (e.get("type") or "episode") == etype]
-    rep.check(ids.count(entry.get("id")) <= 1, "5 brain",
-              f"id {entry.get('id')} is unique within {etype}",
-              f"id {entry.get('id')} appears twice within {etype}")
+    # claiming the same id. Glossary entries carry no `id` field at all
+    # (they're keyed by `slug`), so this is meaningless for kind=="glossary".
+    if not is_gloss:
+        ids = [e.get("id") for e in brain
+               if e.get("id") and (e.get("type") or "episode") == etype]
+        rep.check(ids.count(entry.get("id")) <= 1, "5 brain",
+                  f"id {entry.get('id')} is unique within {etype}",
+                  f"id {entry.get('id')} appears twice within {etype}")
 
     # ---------------- pillar ----------------
     pillar = entry.get("pillar") or {}
     if is_lite:
         rep.skip("2.4 pillar", "LiteCast lives outside the specialist taxonomy")
-    elif kind == "brain":
+    elif kind == "brain" or is_gloss:
         PILLARS = live_pillars()
         primary, sub = pillar.get("primary"), pillar.get("subtopic")
         rep.check("subtopic" in pillar, "2.4 pillar", "subtopic key present",
@@ -594,13 +624,28 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                      f"{label} does not contain the brain title verbatim: {got!r}",
                      "Hard Rule 16 — a corrected title must be swept through every surface")
 
-    for node_type, field in (("TechArticle", "headline"), ("Article", "headline"),
-                             ("BlogPosting", "headline")):
-        for node in jsonld_nodes(doc, node_type):
-            rep.check(node.get(field) == title, "16 title",
-                      f"JSON-LD {node_type}.{field} matches",
-                      f"JSON-LD {node_type}.{field} = {node.get(field)!r}, brain title = {title!r}",
+    if is_gloss:
+        # A glossary page's TechArticle.headline is, by deliberate template
+        # convention (confirmed on glossary/treatment-plan and every other
+        # existing term), a fuller SEO sentence — not the short term name —
+        # so it never equals `title` (== fa_title) and checking that would
+        # fail every glossary page that has ever shipped. The invariant that
+        # DOES hold for a glossary page is the DefinedTerm's own
+        # alternateName, which step 2's clone sets to the Persian term.
+        for node in jsonld_nodes(doc, "DefinedTerm"):
+            rep.check(node.get("alternateName") == title, "16 title",
+                      "JSON-LD DefinedTerm.alternateName matches the term",
+                      f"JSON-LD DefinedTerm.alternateName = {node.get('alternateName')!r}, "
+                      f"fa_title = {title!r}",
                       "Hard Rule 16")
+    else:
+        for node_type, field in (("TechArticle", "headline"), ("Article", "headline"),
+                                 ("BlogPosting", "headline")):
+            for node in jsonld_nodes(doc, node_type):
+                rep.check(node.get(field) == title, "16 title",
+                          f"JSON-LD {node_type}.{field} matches",
+                          f"JSON-LD {node_type}.{field} = {node.get(field)!r}, brain title = {title!r}",
+                          "Hard Rule 16")
 
     # 57% of the site keeps meta description == caption; the rest deliberately
     # writes a tighter search snippet. Not a universal convention, so a
@@ -1141,6 +1186,11 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
     n_pulse = pulse.group(1).count(url) if pulse else 0
     if is_lite:
         pass
+    elif is_gloss:
+        # Established convention (glossary/treatment-plan, glossary/dental-implant):
+        # glossary terms are not announced in Pulse — Question 5's "not
+        # customary for this type" branch, applied consistently.
+        rep.skip("6 pulse", "glossary: not customary in Pulse (no prior glossary term has one)")
     elif sweep and n_pulse == 0:
         rep.skip("6 pulse", "Pulse holds only the newest lines — this one has rolled off")
     else:
@@ -1278,11 +1328,19 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
             rep.check(content_id in read("plus/quiz-index.json"), "8 quiz",
                       "in plus/quiz-index.json", "has binary questions but is missing from the quiz bank",
                       "node tools/build_quiz_index.mjs")
-        paths = read("plus/pathways.json")
-        rep.check(f'"{content_id}"' in paths, "5.6 pathway",
-                  "placed in at least one learning pathway",
-                  "in no learning pathway — place it, or state the deliberate exclusion",
-                  f"python3 tools/pathway_place.py {content_id}")
+        if is_gloss:
+            # Step 5.6 is "MANDATORY on every publish that wrote a specialist
+            # brain entry" — a glossary term writes no brain entry (it is a
+            # reference type, not a learning-journey step), and no glossary
+            # content_id appears anywhere in plus/pathways.json today.
+            rep.skip("5.6 pathway", "glossary: reference type, not a specialist brain entry — "
+                                     "excluded from learning pathways")
+        else:
+            paths = read("plus/pathways.json")
+            rep.check(f'"{content_id}"' in paths, "5.6 pathway",
+                      "placed in at least one learning pathway",
+                      "in no learning pathway — place it, or state the deliberate exclusion",
+                      f"python3 tools/pathway_place.py {content_id}")
 
     # ---------------- version stamp (step 7, always last) ----------------
     want = content_version()
