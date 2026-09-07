@@ -290,6 +290,7 @@
   var DC_DRAWER_MENU_ITEMS = [
     ['/notecast/',                 'note',    'NoteCast'],
     ['/dentai/promptologist/',     'message', 'پرامپتولوژیست'],
+    ['/plak-sefr/',                'pin',     'پلاک صفر'],
     ['/dentai/',                   'bot',     'DentAI'],
     ['/dentcast-plus/',            'play',    'DentCast+'],
     ['/sharehub/',                 'link',    'Share Hub'],
@@ -2222,7 +2223,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '152';
+  var V = '153';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now

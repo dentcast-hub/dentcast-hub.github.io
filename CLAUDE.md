@@ -187,7 +187,20 @@ the gate**: `content_id` comes from each page's `<link rel="canonical">`
 `content_votes`, `highlights`, `article_notes`, `support_tickets`,
 `collection_items` and `user_activity` — so a canonical that changed on an
 existing page has silently rewritten that page's identity across nine tables.
-Diff the full canonical set before and after; if one moved, stop.
+Diff the full canonical set before and after; the only legal difference is
+ADDITIONS — the new section's own pages, plus `/pillar/<slug>/` when a pillar
+was created in the same task. If one moved or vanished, stop.
+
+**Three of the build steps reach outside the section you are adding, and the
+2026-09-07 run is the measurement:** `build_pillar.py all` rebuilds
+`glossary/index.html` too; `inject_hub_og.py` runs over every hub, and fixed
+five *unrelated* landing pages (chairside, dentai, dentcast-plus, insight,
+notecast) that had been shipping with no Open Graph tags at all — additive,
+idempotent, no canonical touched, but capture the hashes and report it;
+and `asset_version.py --bump` swept **864 pages and 12 assets**, `dc-nav.js`'s
+`var V` and the shared module-import stamp included. `gen_sitemap.py` is the
+one build step to leave alone from a shallow clone — its `lastmod` fallback
+needs full git history and CI owns it.
 
 **No new section is ever nested.** `/dentai/promptologist/` is the site's one
 two-level content path and is kept only because its canonicals are load-bearing;

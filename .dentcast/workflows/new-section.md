@@ -173,6 +173,11 @@ markup at all; fixing that is its own task.
 first, the deferred GA4 snippet, `<link rel="canonical">`, the three `hreflang`
 lines, an OG block, and JSON-LD with `CollectionPage` + a `BreadcrumbList`.
 
+**Landing pages carry no `robots` meta by convention** — they inherit the
+default `index, follow`. If a decision requires the section to be explicitly
+indexable, add the positive tag deliberately (the same string the content pages
+use) and say so in the report; do not leave it implied.
+
 **The breadcrumb must match the section's own part pages.** پرامپتولوژیست ran
 for months with a 4-level breadcrumb on its landing page (inserting DentAI) and
 a 3-level one on all 19 parts — the page and its own contents disagreeing about
@@ -194,6 +199,31 @@ python3 tools/stamp-version.py             # service-worker CACHE_NAME
 python3 .github/scripts/gen_sitemap.py     # CI regenerates this too
 ```
 
+What these actually touch, measured on the 2026-09-07 run:
+
+* `build_pillar.py all` **also rebuilds `glossary/index.html`** — not obvious
+  from the name, and it will show up in your diff.
+* `inject_hub_og.py` is **site-wide, not scoped to your section**. That run
+  fixed five *unrelated* landing pages (chairside, dentai, dentcast-plus,
+  insight, notecast) that had been shipping with no Open Graph tags at all.
+  The collateral is additive, idempotent and touches no canonical — but it is
+  collateral, so capture the before/after hashes and report it rather than
+  letting it ride in silently.
+* `build_plus_index.mjs` drops a folder whose article count is zero
+  (`.filter(f => f.total > 0)`). A brand-new empty section therefore **cannot
+  be verified in the dashboard tree until its first part ships** — its absence
+  there is correct, not a failed registration.
+* `asset_version.py --bump` swept **864 pages and 12 assets**, including
+  `dc-nav.js`'s `var V` and the one shared module-import stamp. It is
+  mandatory whenever `dc-nav.js`, `global-search.js`, `plus/plus.js` or
+  anything under `plus/js/` is touched.
+* **Do not run `gen_sitemap.py` from a shallow clone.** Its `lastmod` fallback
+  reads git history and the script says so itself: shallow history yields wrong
+  dates, which CI then corrects in a second commit that races the Pages
+  deployment. Check with `git rev-parse --is-shallow-repository`; if true, verify
+  the priority rules by calling `get_priority()` directly and let CI regenerate
+  the file on merge.
+
 **Why `--bump` runs last, and never before the builders:** `build_pillar.py`'s
 `asset_v()` reads `.dentcast/asset-versions.json` and **raises** rather than
 guessing a stamp, and the bump's own HTML pass rewrites every page's `?v=`
@@ -210,7 +240,9 @@ Any shared asset touched here (`dc-nav.js`, `global-search.js`, `plus/plus.js`,
 ## Phase 7 — verify
 
 1. **Canonical diff.** Capture every `<link rel="canonical">` in the tree before
-   and after; the sets must be identical except for the new section's own pages.
+   and after; the sets must be identical except for the new section's own pages
+   — **plus `/pillar/<slug>/` if this task also created a pillar**, which is a
+   second addition and a legitimate one. Nothing may be *removed* or *changed*.
    `content_id` is derived from the canonical (`plus/js/config.js`
    `detectContentId()`) and is the join key for `content_votes`, `highlights`,
    `article_notes`, `support_tickets`, `collection_items` and `user_activity`.
@@ -222,7 +254,10 @@ Any shared asset touched here (`dc-nav.js`, `global-search.js`, `plus/plus.js`,
    *drop* in whatever pillar the content was filed under before.
 4. `python3 tools/asset_version.py --check` clean.
 5. Spot-check one built pillar row: it must carry the new section's own label
-   and icon, not an inherited one.
+   and icon, not an inherited one. Count rows with
+   `grep -c 'pillar-item-kind">LABEL'`, **not** `grep -c 'data-type="key"'` —
+   the latter over-counts, because the search filter chips carry `data-type` too
+   (a 19-item pillar reads as 20).
 
 ---
 
@@ -235,5 +270,8 @@ Any shared asset touched here (`dc-nav.js`, `global-search.js`, `plus/plus.js`,
 * The global-search chip is static markup in **852** files.
 * Amber is reserved for premium; never a pillar accent.
 * `.dc-exa-cats` anchors paid sponsor inventory — add a cell, never move the grid.
+* `build_pillar.py all` rebuilds the glossary index too.
+* `inject_hub_og.py` runs over every hub, not just yours.
+* `gen_sitemap.py` needs full git history; CI owns it.
 * **No new section is ever nested.** `/dentai/promptologist/` is the site's one
   two-level content path and is kept only because its canonicals are load-bearing.
