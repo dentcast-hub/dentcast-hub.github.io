@@ -26,14 +26,21 @@ const hlColorCss = (key) => (PALETTE.find((p) => p.key === key) || {}).css || '#
 // A whole-page item has no highlight color, so its pin/cover tile is colored
 // by content TYPE instead — a fixed, distinguishable palette, one hue per
 // folder. Values are deliberately solid/saturated (white icon/text sits on top).
+// Keyed by the pin's TOP path folder. There is deliberately no `promptologist`
+// entry: its pages are /dentai/promptologist/…, so a پرامپتولوژیست pin resolves
+// through `dentai` and wears DentAI's tile. That is a cosmetic inheritance, not
+// a bug to route around — the one nested section's exception is expressed once,
+// in tools/build_upboard_index.py's folder_of(), and a dead key here plus a
+// second path special-case in the client would be two more places to keep true.
 const TYPE_COVER_COLOR = {
   episodes: '#0b5fff', notecast: '#0e9f6e', insight: '#e0a100', dentai: '#7c5cff',
   chairside: '#16a34a', metanotes: '#db2777', sharehub: '#ea580c', photocast: '#0891b2',
-  'dentcast-plus': '#4f46e5', glossary: '#64748b',
+  'dentcast-plus': '#4f46e5', glossary: '#64748b', 'plak-sefr': '#8e3b7a',
 };
 const TYPE_ICON = {
   episodes: '🎙️', notecast: '📝', insight: '📄', dentai: '🤖', chairside: '🦷',
   metanotes: '🔬', sharehub: '🔗', photocast: '📷', 'dentcast-plus': '🎬', glossary: '📖',
+  'plak-sefr': '📍',
 };
 // A snippet pin (text/reference) has no highlight colour and no content type —
 // its cover tile borrows the same accent its card uses, so a board's collage

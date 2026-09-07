@@ -493,6 +493,11 @@ const SEEN_FOLDERS = new Set([
   // slot on EVERY cell, so every cell must be earnable — a permanently grey
   // tick reads as broken, not as "out of scope".
   'litecast',
+  'plak-sefr',
+  // No 'promptologist' entry, and none is possible: isSeenContent() below tests
+  // parts[0] of the content_id, which for dentai/promptologist/prompt1-1 is
+  // 'dentai'. The section already earns its ticks through its parent folder,
+  // which is correct — a 'promptologist' key here would be dead code.
 ]);
 function isSeenContent(contentId) {
   const parts = (contentId || '').split('/');

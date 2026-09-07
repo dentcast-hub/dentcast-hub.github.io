@@ -149,6 +149,51 @@ mirrors and the glossary's own pages. The **first** unscoped sweep over the
 no brain write, no builder, and **no version bump** (article pages are not in
 `stamp-version.py`'s content hash — confirm it reports *unchanged*).
 
+## New-section protocol (trigger)
+
+A **sixth** workflow. When the user wants to create a **new content section** —
+a new root folder with its own landing page and its own brain `type` («یه بخش
+جدید می‌خوام», «پلاک صفر رو راه بنداز», «یه سکشن تازه بساز») — or a **new
+pillar**, read `.dentcast/workflows/new-section.md` and follow it. Publishing a
+**part into an existing section** is the ordinary router
+(`.dentcast/workflows/README.md`), not this file.
+
+It exists because the list of generators that must learn about a new section was
+written down nowhere and had to be rediscovered by reading the tree — which is
+exactly what **پرامپتولوژیست** paid for. Published under `/dentai/promptologist/`
+and registered in five navigation surfaces, it was never registered in the places
+that decide what a section *is*: no pillar (so its 19 parts were filed
+`digital`/`ai`, where they were **half the entire digital pillar** and 19 of the
+23 items in its هوشِ مصنوعی subtopic); no key in `build_pillar.py`'s two type
+maps (so `detect_type()` fell through to the `/dentai/` URL prefix and every row
+on the topical index rendered as **«دنت‌AI»**); no `FOLDER_META` entry, and a
+`countArticles()` that assumed key == top folder (so 19 pages counted **zero**
+and the section was absent from the Plus dashboard tree); a `get_priority()` 0.9
+rule anchored on one path segment (so its landing page scored **0.7**, alone
+among every section landing page); and no row in `inject_hub_og.py`'s `HUBS` (so
+that landing page carried **zero** Open Graph tags and produced no share card).
+None of it was visible from the section's own folder.
+
+Three rules the checklist rests on. **Register at section creation; surface at
+first publish** — the homepage category cell, the rail card, the Pulse line and
+the desktop tree item all render a section's *content*, so shipping them empty
+announces that there is none; everything inert (type maps, folder maps, colours,
+sitemap rules, `global-search.js`) is safe to land immediately. **`--bump` runs
+last** — `build_pillar.py`'s `asset_v()` reads `.dentcast/asset-versions.json`
+and raises rather than guessing, so the content builders run first and
+`tools/asset_version.py --bump` closes the sequence. And **the canonical set is
+the gate**: `content_id` comes from each page's `<link rel="canonical">`
+(`plus/js/config.js` `detectContentId()`) and is the join key for
+`content_votes`, `highlights`, `article_notes`, `support_tickets`,
+`collection_items` and `user_activity` — so a canonical that changed on an
+existing page has silently rewritten that page's identity across nine tables.
+Diff the full canonical set before and after; if one moved, stop.
+
+**No new section is ever nested.** `/dentai/promptologist/` is the site's one
+two-level content path and is kept only because its canonicals are load-bearing;
+that exception is expressed once, in `tools/build_upboard_index.py`'s
+`folder_of()`, and is never to be copied.
+
 ## Attached paper file (trigger — ANY type, file-driven)
 
 The paper actions are triggered by the **paper file itself**, *not* by the

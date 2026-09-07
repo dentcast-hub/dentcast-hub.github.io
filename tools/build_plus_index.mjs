@@ -34,10 +34,21 @@ const FOLDER_META = [
   ['glossary', 'دانشنامه', '/glossary/'],
   ['photocast', 'فوتوکست', '/photocast/'],
   ['sharehub', 'شیرهاب', '/sharehub/'],
+  // پرامپتولوژیست carries a fourth element because it is the one section whose
+  // key is NOT its top folder: its pages live at /dentai/promptologist/, a
+  // legacy address kept on purpose (content_id comes from <link rel=canonical>,
+  // so moving it would rewrite the identity of every heart, highlight, note and
+  // published thread on those 19 pages). countArticles() assumed key === folder,
+  // which is exactly why 19 pages were counted nowhere and the section was
+  // absent from the dashboard tree entirely.
+  ['promptologist', 'پرامپتولوژیست', '/dentai/promptologist/', 'dentai/promptologist'],
+  // Flat, like every other section. Drops out of `folders` on its own until its
+  // first part ships — see the `total > 0` filter below.
+  ['plak-sefr', 'پلاک صفر', '/plak-sefr/'],
 ];
 
-function countArticles(folderKey) {
-  const dir = resolve(root, folderKey);
+function countArticles(folderKey, dirPath) {
+  const dir = resolve(root, dirPath || folderKey);
   if (!existsSync(dir)) return 0;
   try {
     return readdirSync(dir).filter((f) => /\.html$/i.test(f) && f.toLowerCase() !== 'index.html').length;
@@ -197,7 +208,7 @@ const clusters = clusterOrder.map((c) => {
 });
 
 // Real site folders (dashboard tree top level): landing link + article total.
-const folders = FOLDER_META.map(([key, fa, url]) => ({ key, fa, url, total: countArticles(key) }))
+const folders = FOLDER_META.map(([key, fa, url, dir]) => ({ key, fa, url, total: countArticles(key, dir) }))
   .filter((f) => f.total > 0);
 
 // Most-referenced first, ties broken alphabetically — purely for readability
