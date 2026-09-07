@@ -1,0 +1,20 @@
+{
+  "type": "promptologist",
+  "note": "Publish of dentai/promptologist/prompt6-4 (فصل ۶ قسمت ۴ — قبل از ساختن، مسئله را باز کنید). Mints two concepts the article genuinely resolves: #سؤال_پیش_از_تولید (instructing the model to ask clarifying questions before it starts generating, instead of the user front-loading all the context) and #ماکت_اولیه (requesting a small mockup/outline before the full piece is built, so a misunderstanding is caught cheaply). #ابهام_در_پرامپت is reused directly — the article's opening scene is exactly that concept's anchor case (the model did nothing wrong; the user hadn't yet made their own request precise). #پرامپت_نویسی/#Prompt_Engineering reused since the article teaches two concrete prompting techniques. #ChatGPT omitted — no specific AI product is named in this part, matching the precedent of prompt1-3/prompt2-1.",
+  "concepts": [
+    {
+      "tag": "#سؤال_پیش_از_تولید",
+      "domain": "ai",
+      "definition": "دستور دادن به مدل که پیش از نوشتنِ خروجی، هر آنچه لازم دارد از کاربر بپرسد — به‌جای اینکه کاربر از قبل تمامِ زمینه را حدس بزند و بچیند.",
+      "use_when": "مقاله این تکنیک را معرفی کند که کاربر از مدل می‌خواهد پیش از شروعِ ساختن، سؤالِ لازم را خودش بپرسد.",
+      "aliases": ["پرسیدن سوال قبل از پاسخ", "ask clarifying questions", "سوال شفاف‌ساز", "clarifying questions prompt"]
+    },
+    {
+      "tag": "#ماکت_اولیه",
+      "domain": "ai",
+      "definition": "درخواستِ یک نمونه‌ی کوچک یا تیترواره از خروجی، پیش از ساختنِ کلِ کار — تا فهمِ مدل زود و کم‌هزینه بررسی شود.",
+      "use_when": "مقاله این تکنیک را معرفی کند که پیش از تولیدِ کاملِ خروجی، یک نمونه یا ماکتِ کوچک خواسته می‌شود.",
+      "aliases": ["mockup اول", "prototype قبل از کار کامل", "نمونه‌ی کوچک", "draft outline first"]
+    }
+  ]
+}
