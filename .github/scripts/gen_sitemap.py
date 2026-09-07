@@ -116,8 +116,14 @@ def get_priority(path):
         return "1.0"
     if re.search(
         r"/(glossary|notecast|insight|litecast|chairside|dentai|"
-        r"metanotes|dentcast-plus|photocast|sharehub)/index\.html$", path
+        r"metanotes|dentcast-plus|photocast|sharehub|plak-sefr)/index\.html$", path
     ):
+        return "0.9"
+    # پرامپتولوژیست is a section whose landing page happens to sit one level
+    # deeper (/dentai/promptologist/), so the pattern above — which anchors on a
+    # single path segment — never matched it and the /dentai/ clause below
+    # claimed it at 0.7, alone among every section landing page on the site.
+    if path == "/dentai/promptologist/index.html":
         return "0.9"
     if re.search(r"/notecast/episode-\d+\.html$", path):
         return "0.8"
@@ -126,7 +132,7 @@ def get_priority(path):
     if re.search(r"/glossary/[^/]+\.html$", path) and "index" not in path:
         return "0.8"
     if re.search(
-        r"/(litecast|chairside|dentai|metanotes|dentcast-plus|sharehub|photocast)/", path
+        r"/(litecast|chairside|dentai|metanotes|dentcast-plus|sharehub|photocast|plak-sefr)/", path
     ):
         return "0.7"
     return "0.6"

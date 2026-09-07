@@ -23,7 +23,7 @@
   <meta name="description" content="نقشه‌ی موضوعی طرح درمان در دندان‌پزشکی — از تشخیص جامع و طراحیِ کلِ درمان، تا تصمیمِ حفظ یا کشیدن دندان و جایگزینیِ دندانِ ازدست‌رفته. انضباطِ تصمیم‌گیری که پیش از هر تکنیک می‌نشیند، با لینک به اپیزودها، گلاسری، نوت‌کست‌ها و یادداشت‌های بالینی دنت‌کست.">
   <link rel="canonical" href="https://dentcast.org/pillar/treatment-planning/">
   <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/pillar/treatment-planning/">
-  <link rel="alternate" hreflang="fa" href="https://dentcast.org/pillar/treatment-planning/">
+  <link rel="alternate" hreflang="fa"    href="https://dentcast.org/pillar/treatment-planning/">
   <link rel="alternate" hreflang="x-default" href="https://dentcast.org/pillar/treatment-planning/">
   <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="/logo-v2.png">
@@ -415,6 +415,15 @@
       background: rgba(157, 142, 199, 0.10);
       border-right-color: rgba(157, 142, 199, 0.45);
     }
+    /* practice-infrastructure — plum: #8e3b7a light / #c07fb4 dark */
+    [data-pillar="practice-infrastructure"] .pillar-subtopic-intro {
+      background: rgba(142, 59, 122, 0.07);
+      border-right-color: rgba(142, 59, 122, 0.40);
+    }
+    [data-theme="dark"] [data-pillar="practice-infrastructure"] .pillar-subtopic-intro {
+      background: rgba(192, 127, 180, 0.10);
+      border-right-color: rgba(192, 127, 180, 0.45);
+    }
     /* Pillar header icon — centered above H1, colored with each
        pillar accent via [data-pillar] scope. Stroke icons inherit
        the color through currentColor. Same accent values + light/
@@ -440,6 +449,8 @@
     [data-theme="dark"] [data-pillar="operative"] .pillar-header-icon { color: #86b894; }
     [data-pillar="digital"] .pillar-header-icon { color: #6b5b95; }
     [data-theme="dark"] [data-pillar="digital"] .pillar-header-icon { color: #9d8ec7; }
+    [data-pillar="practice-infrastructure"] .pillar-header-icon { color: #8e3b7a; }
+    [data-theme="dark"] [data-pillar="practice-infrastructure"] .pillar-header-icon { color: #c07fb4; }
     :root { --dcpb-rgb: 74,90,138; --dcpb-rgb-d: 125,140,192; }
     /* ── premium referral banner ──
        Shaped like the site's own cards: --card-bg on --card-border at the
@@ -1038,9 +1049,9 @@
 <!-- تم تاگل -->
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/global-search.js?v=9"></script>
+<script src="/global-search.js?v=10"></script>
 <script src="/global-search-ui.js?v=5"></script>
-<script src="/dc-nav.js?v=155" defer></script>
+<script src="/dc-nav.js?v=156" defer></script>
 <script type="module" src="/pillar/premium-index.js?v=29"></script>
 
 </body>

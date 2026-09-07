@@ -60,7 +60,7 @@ LETTER = re.compile(r'[0-9A-Za-zء-غف-ي٠-٩ٮ-ۓ۰-۹‌]')
 DENSITY_P90 = 12.0
 
 CONTENT_HREF = re.compile(
-    r'href="(/(?:glossary|episodes|notecast|insight|chairside|metanotes|dentai|sharehub|photocast|dentcast-plus)/[^"]+)"'
+    r'href="(/(?:glossary|episodes|notecast|insight|chairside|metanotes|dentai|sharehub|photocast|dentcast-plus|plak-sefr)/[^"]+)"'
 )
 
 

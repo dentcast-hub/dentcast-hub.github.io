@@ -331,6 +331,45 @@ PILLARS = {
             {"slug": "ai",                 "title_fa": "هوشِ مصنوعی",                       "icon": "icon-brain",      "intro_fa": "لایه‌ی تصمیم. مفاهیمِ پایه‌ی <strong>AI، یادگیریِ ماشین و یادگیریِ عمیق</strong>، مسیرِ یادگیریِ آن‌ها، و کاربردهای عملی در تشخیص و درمان — فناوریِ عرضی‌ای که کم‌کم همه‌ی شاخه‌ها را لمس می‌کند."},
         ],
     },
+    # The one pillar whose subject is not the mouth.
+    #
+    # It exists because پرامپتولوژیست had no home and was filed under
+    # digital/ai, where 19 of its parts made up HALF of the digital pillar and
+    # 83% of its هوشِ مصنوعی subtopic — so a reader opening the digital-dentistry
+    # map to read about intraoral scanning waded through a prompt-engineering
+    # course to reach four genuine clinical-AI items.
+    #
+    # The line that decides what belongs here is MECHANISM vs DEVICE, not
+    # "non-clinical": a series about how a tool the reader OPERATES makes its
+    # decisions belongs here; a study on a caries-detection model's diagnostic
+    # accuracy is evidence about a device and stays in digital/ai. That is why
+    # the pillar is named for what it holds rather than for what it is not.
+    #
+    # Two further subtopics — site-ownership / findability — are deliberately
+    # NOT declared yet: an empty subtopic renders a «(۰)» card in the premium
+    # arrangement (structure.json → premium-index.js), and a zero card on a paid
+    # surface is worse than a missing one. They land with پلاک صفر's first part,
+    # together with the third intro paragraph below.
+    "practice-infrastructure": {
+        "title_fa": "ابزار و زیرساخت",
+        "icon":             "icon-node-graph",
+        "subtitle_fa_short": "از مدل‌های زبانی تا سایت و دیده‌شدن",
+        "page_title":       "فهرست موضوعی — ابزار و زیرساخت / دنت‌کست",
+        "meta_description": "نقشه‌ی موضوعی ابزار و زیرساختِ کارِ دندانپزشک — از مبانیِ مدل‌های زبانی و کار با آن‌ها تا مرزِ کاربردِ بالینی، شناختِ ابزارها، و مالکیت و دیده‌شدنِ سایتِ خودتان.",
+        "h1_fa":        "ابزار و زیرساخت",
+        "subtitle_fa":  "نقشه‌ی موضوعی دنت‌کست",
+        "intro_paragraphs": [
+            'بخشی از کارِ دندانپزشکیِ امروز اصلاً داخلِ دهان نیست. مدلی که متن را برایتان می‌نویسد، سایتی که بیمار از راهِ آن پیدایتان می‌کند، و جستجویی که تصمیم می‌گیرد اصلاً <strong>وجود دارید یا نه</strong> — این‌ها ابزارند، و مثلِ هر ابزارِ دیگری منطقِ خودشان را دارند.',
+            'تفاوتِ این‌جا با یک راهنمای کاربری در همین نقطه است: دانستنِ اینکه کدام دکمه را بزنید، تا اولین تغییرِ نسخه دوام می‌آورد. دانستنِ اینکه ابزار <strong>چطور تصمیم می‌گیرد</strong> — چرا مدل مطمئن اشتباه می‌کند، چرا موتورِ جستجو یک صفحه را می‌بیند و دیگری را نه — چیزی است که می‌ماند.',
+            'این صفحه نقشه‌ی همان جهان است. مطالب در <strong>چهار لایه</strong> چیده شده‌اند — از مبانیِ مدل‌های زبانی و کار با آن‌ها، تا مرزی که کاربردِ بالینی پشتِ آن می‌ایستد، و شناختِ خودِ ابزارها. هر مورد به منبعِ کاملش در دنت‌کست لینک شده.',
+        ],
+        "subtopics": [
+            {"slug": "llm-foundations",     "title_fa": "مبانیِ مدل‌های زبانی",         "icon": "icon-book",    "intro_fa": "نقطه‌ی شروع: مدلِ زبانی چه هست و چه نیست. چرا نمی‌شود آن را با <strong>هوش مصنوعیِ تشخیصی</strong> یکی گرفت، چطور تصمیم می‌گیرد، و چرا وقتی اشتباه می‌کند خطایش از جنسِ خرابیِ یک ابزار نیست."},
+            {"slug": "prompt-craft",        "title_fa": "کار با مدل: گفت‌وگو و پرامپت", "icon": "icon-message", "intro_fa": "از فهم به عمل. چطور گفت‌وگو را شروع کنیم، چرا <strong>شکلِ خروجی</strong> را باید خودمان تعیین کنیم، و چرا روشِ کار — نه فقط متنِ درخواست — چیزی است که جواب را عوض می‌کند."},
+            {"slug": "llm-clinical-limits", "title_fa": "مرزِ کاربردِ بالینی",           "icon": "icon-scale",   "intro_fa": "جایی که ابزار می‌ایستد. مدل با <strong>کلمه</strong> کار می‌کند، نه با بیمار. این لایه معیارِ تشخیصِ کاربردهای امن را می‌دهد و نشان می‌دهد وابستگی در قلمروی ندانستن چطور مهارتِ خودِ پزشک را می‌فرساید."},
+            {"slug": "llm-tools",           "title_fa": "شناختِ ابزارها و فضای کار",    "icon": "icon-wrench",  "intro_fa": "مدل یک چیزِ واحد نیست. تفاوت‌های پایدارِ میانِ ابزارها، فضای کارِ ثابت برای منابعِ خودتان — <strong>RAG</strong>، نوت‌بوک و پروجکت — و مسیرِ عملیِ دسترسی به آن‌ها."},
+        ],
+    },
 }
 
 TYPE_META = {
@@ -345,6 +384,14 @@ TYPE_META = {
     "photocast":        ("فوتوکست", "icon-camera"),
     "dentcast_plus":    ("دنت‌کست+",    "icon-film"),
     "sharehub":         ("شِیر هاب",  "icon-link"),
+    # پرامپتولوژیست and پلاک صفر are their own sections, not DentAI articles.
+    # Until this landed, detect_type() found no `promptologist` key here, fell
+    # through to the /dentai/ prefix in URL_TO_TYPE, and every one of the 19
+    # rows rendered as «دنت‌AI» with the robot icon. icon-sparkle is not
+    # arbitrary: global-search.js already draws پرامپتولوژیست with _iSpark, so
+    # the two surfaces now agree.
+    "promptologist":    ("پرامپتولوژیست", "icon-sparkle"),
+    "plak_sefr":        ("پلاک صفر",   "icon-pin"),
     "unknown":          ("",              "icon-bullet"),
 }
 
@@ -467,6 +514,8 @@ JSON_TYPE_TO_KEY = {
     "sharehub":     "sharehub",
     "dentcast":     "podcast",
     "glossary":     "glossary",
+    "promptologist": "promptologist",
+    "plak_sefr":     "plak_sefr",
 }
 
 
@@ -824,6 +873,12 @@ PILLAR_ACCENT_RGB = {
     "removable-pros":     ("156,102,68",  "192,138,99"),
     "operative":          ("94,140,106",  "134,184,148"),
     "digital":            ("107,91,149",  "157,142,199"),
+    # Plum. The ten clinical accents already cover teal→turquoise→bronze→slate→
+    # violet→rose→indigo→terracotta→sage→periwinkle; amber is reserved site-wide
+    # for premium and brand blue would not read as an accent at all, so the
+    # magenta wedge between esthetic's rose (~343°) and occlusion's violet
+    # (~258°) is the one hue left that cannot be mistaken for a neighbour.
+    "practice-infrastructure": ("142,59,122", "192,127,180"),
 }
 
 
@@ -1166,6 +1221,15 @@ def render_page(slug, cfg, intro_html, flat_ordered):
         '      background: rgba(157, 142, 199, 0.10);\n'
         '      border-right-color: rgba(157, 142, 199, 0.45);\n'
         '    }\n'
+        '    /* practice-infrastructure — plum: #8e3b7a light / #c07fb4 dark */\n'
+        '    [data-pillar="practice-infrastructure"] .pillar-subtopic-intro {\n'
+        '      background: rgba(142, 59, 122, 0.07);\n'
+        '      border-right-color: rgba(142, 59, 122, 0.40);\n'
+        '    }\n'
+        '    [data-theme="dark"] [data-pillar="practice-infrastructure"] .pillar-subtopic-intro {\n'
+        '      background: rgba(192, 127, 180, 0.10);\n'
+        '      border-right-color: rgba(192, 127, 180, 0.45);\n'
+        '    }\n'
         '    /* Pillar header icon — centered above H1, colored with each\n'
         '       pillar accent via [data-pillar] scope. Stroke icons inherit\n'
         '       the color through currentColor. Same accent values + light/\n'
@@ -1191,6 +1255,8 @@ def render_page(slug, cfg, intro_html, flat_ordered):
         '    [data-theme="dark"] [data-pillar="operative"] .pillar-header-icon { color: #86b894; }\n'
         '    [data-pillar="digital"] .pillar-header-icon { color: #6b5b95; }\n'
         '    [data-theme="dark"] [data-pillar="digital"] .pillar-header-icon { color: #9d8ec7; }\n'
+        '    [data-pillar="practice-infrastructure"] .pillar-header-icon { color: #8e3b7a; }\n'
+        '    [data-theme="dark"] [data-pillar="practice-infrastructure"] .pillar-header-icon { color: #c07fb4; }\n'
         + accent_vars_css(slug)
         + PREMIUM_SPLIT_CSS
         + FLAT_LIST_CSS +
@@ -1623,6 +1689,23 @@ INDEX_INLINE_STYLE = (
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"digital\"] .pillar-card-name { color: #9d8ec7; }\n"
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"digital\"] .subtopic-chip { background: rgba(157,142,199,.18); color: #9d8ec7; }\n"
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"digital\"] .pillar-card-arrow { background: rgba(157,142,199,.15); border-color: rgba(157,142,199,.35); color: #9d8ec7; }\n"
+    "\n"
+    "/* Per-pillar accent — practice-infrastructure uses plum. Same mechanism,\n"
+    "   same places as the default above.\n"
+    "     light primary plum: #8e3b7a\n"
+    "     dark primary plum:  #c07fb4 */\n"
+    ".pillar-card-row[data-pillar=\"practice-infrastructure\"] { border-color: rgba(142,59,122,.25); }\n"
+    ".pillar-card-row[data-pillar=\"practice-infrastructure\"]:hover { border-color: rgba(142,59,122,.35); }\n"
+    ".pillar-card-row[data-pillar=\"practice-infrastructure\"] .pillar-card-icon { color: #8e3b7a; }\n"
+    ".pillar-card-row[data-pillar=\"practice-infrastructure\"] .pillar-card-name { color: #8e3b7a; }\n"
+    ".pillar-card-row[data-pillar=\"practice-infrastructure\"] .subtopic-chip { background: rgba(142,59,122,.10); color: #8e3b7a; }\n"
+    ".pillar-card-row[data-pillar=\"practice-infrastructure\"] .pillar-card-arrow { background: rgba(142,59,122,.10); border-color: rgba(142,59,122,.25); color: #8e3b7a; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"practice-infrastructure\"] { border-color: rgba(192,127,180,.30); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"practice-infrastructure\"]:hover { border-color: rgba(192,127,180,.45); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"practice-infrastructure\"] .pillar-card-icon { color: #c07fb4; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"practice-infrastructure\"] .pillar-card-name { color: #c07fb4; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"practice-infrastructure\"] .subtopic-chip { background: rgba(192,127,180,.18); color: #c07fb4; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"practice-infrastructure\"] .pillar-card-arrow { background: rgba(192,127,180,.15); border-color: rgba(192,127,180,.35); color: #c07fb4; }\n"
     "\n"
     "/* The article count now sits inside each pillar's <h2>. Muted rather than\n"
     "   accent-coloured so it reads as a quantity, not a second title. */\n"

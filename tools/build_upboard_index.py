@@ -95,7 +95,19 @@ FOLDER_TYPE = {
 
 def folder_of(url: str) -> str:
     """The grouping folder for a root-relative page URL. Two segments only where
-    the second is itself a section (`/dentai/promptologist/`), never deeper."""
+    the second is itself a section (`/dentai/promptologist/`), never deeper.
+
+    Why that one exception exists, and why it is not going away: پرامپتولوژیست
+    is a section in its own right — its own type in the brain, its own entry in
+    the hamburger and the homepage grid, its own pillar — that happens to live
+    at a two-level address. The address is legacy and is kept ON PURPOSE:
+    content_id is derived from each page's <link rel="canonical">
+    (plus/js/config.js detectContentId), and it is the join key for
+    content_votes, highlights, article_notes, support_tickets, collection_items
+    and user_activity. Moving those 19 pages would rewrite the identity of every
+    heart, highlight, note and published thread on them across nine tables, to
+    buy a tidier path. It is the site's ONLY two-level content path; every new
+    section is flat, so nothing else should ever be added here."""
     parts = url.lstrip("/").split("/")
     if len(parts) > 2 and parts[0] == "dentai" and parts[1] == "promptologist":
         return "dentai/promptologist"
@@ -114,6 +126,7 @@ TYPE_FA = {
     "litecast": "لایت‌کست",
     "sharehub": "ShareHub",
     "promptologist": "پرامپتولوژیست",
+    "plak_sefr": "پلاک صفر",
     "photocast": "PhotoCast",
     "dentcast": "اپیزود",
     "dentcast_plus": "دنت‌کست پلاس",

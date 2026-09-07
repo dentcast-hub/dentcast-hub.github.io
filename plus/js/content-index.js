@@ -36,6 +36,8 @@ export const FOLDER_EN = {
   sharehub: 'ShareHub',
   photocast: 'PhotoCast',
   'dentcast-plus': 'DentCast+',
+  promptologist: 'Promptologist',
+  'plak-sefr': 'Plak-e Sefr',
 };
 
 // Detect the folder-landing topic key for the current path, or null. The card
