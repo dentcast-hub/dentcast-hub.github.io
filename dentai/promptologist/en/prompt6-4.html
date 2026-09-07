@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open the Problem Before You Build | Promptologist | DentCast</title>
+  <meta name="description" content="Chapter 6, Part 4: A large share of the bad outputs we get doesn&rsquo;t come from the model&rsquo;s error at all &mdash; it comes from the fact that we ourselves didn&rsquo;t quite know what we wanted, and the model started building on its very first guess. This part lays out two moves to make before you start: asking the model to ask you questions before it answers, and for larger work, asking for a small mockup before the whole thing. Neither one makes the output more correct &mdash; only more relevant.">
+  <link rel="canonical" href="https://dentcast.org/dentai/promptologist/en/prompt6-4.html">
+  <meta name="author" content="Dr. Foad Shahabian">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="Open the Problem Before You Build | DentCast">
+  <meta property="og:description" content="Chapter 6, Part 4: A large share of the bad outputs we get doesn&rsquo;t come from the model&rsquo;s error at all &mdash; it comes from the fact that we ourselves didn&rsquo;t quite know what we wanted, and the model started building on its very first guess. This part lays out two moves to make before you start: asking the model to ask you questions before it answers, and for larger work, asking for a small mockup before the whole thing. Neither one makes the output more correct &mdash; only more relevant.">
+  <meta property="og:url" content="https://dentcast.org/dentai/promptologist/en/prompt6-4.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Open the Problem Before You Build | DentCast">
+  <meta name="twitter:description" content="Chapter 6, Part 4: Two moves to make before the model starts building anything &mdash; asking it to question you first, and asking for a small mockup before the whole job. Neither makes the output more correct, only more relevant.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/promptologist/en/prompt6-4.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/dentai/promptologist/en/prompt6-4.html"
+      },
+      "url": "https://dentcast.org/dentai/promptologist/en/prompt6-4.html",
+      "headline": "Open the Problem Before You Build",
+      "description": "Chapter 6, Part 4: A large share of the bad outputs we get doesn’t come from the model’s error at all — it comes from the fact that we ourselves didn’t quite know what we wanted, and the model started building on its very first guess. This part lays out two moves to make before you start: asking the model to ask you questions before it answers, and for larger work, asking for a small mockup before the whole thing. Neither one makes the output more correct — only more relevant.",
+      "datePublished": "2026-09-07",
+      "dateModified": "2026-09-07",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "Promptologist",
+        "url": "https://dentcast.org/dentai/promptologist"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Promptologist",
+          "item": "https://dentcast.org/dentai/promptologist"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Open the Problem Before You Build",
+          "item": "https://dentcast.org/dentai/promptologist/en/prompt6-4.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css?v=3">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-left:4px solid var(--ac);padding-left:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-fig{display:block;max-width:18.75rem;width:100%;height:auto;margin:1.125rem auto;border:1px solid var(--card-border);border-radius:0.875rem;box-shadow:var(--card-sh);}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+  </style>
+</head>
+<body>
+
+<!-- ── TOP BAR (English chrome, cloned from metanotes/en/meta-1.html) ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT (Promptologist structure, translated, LTR) ── -->
+<main class="article-content-wrap ep-page">
+  <a href="/dentai/promptologist/" class="ep-back">&#8592; Back to Promptologist</a>
+
+  <!-- 🌐 Persian Version (SEO-friendly language toggle) -->
+  <a class="lang-btn" href="../prompt6-4.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">Season 6 · Part 4</div>
+      <h1 class="ep-title">Open the Problem Before You Build</h1>
+      <div class="ep-meta">
+        <span>&#9201; 8 min read</span>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">This Part</h2>
+      <div class="ep-caption"><p>Up to this point in the chapter, we&rsquo;ve been talking about what to work with and how to keep errors out. Now we take one step back, to before the work even starts.</p><p>A familiar scene. You want to write your patients a text about what to expect after implant surgery. You type: &ldquo;Write an educational text about post-surgical care for dental implants,&rdquo; and the model starts right away. Thirty seconds later you have a complete, tidy piece of text.</p><p>Then you read it and realize you can&rsquo;t actually use it. It&rsquo;s longer than a patient would ever read, its tone is written for a colleague rather than a patient, it warns about things your own protocol doesn&rsquo;t even raise, and the one point that mattered to you never showed up at all.</p><p>The question is whose fault that was. The model didn&rsquo;t do anything wrong; it took the most likely reading of what you told it and built from there. The problem was that at the moment you gave the instruction, you yourself hadn&rsquo;t yet made precise what you wanted. The length, the audience, how many points to include and which ones &mdash; all of that was still vague in your own mind, and the model was forced to guess at every one of them.</p><p>And here&rsquo;s the worst part: now that the text is sitting in front of you, it&rsquo;s actually harder to think about what you really wanted. Your mind settles on whatever it just saw and starts editing that, instead of asking from scratch what the problem even was. The same thing we talked about in <a href="prompt5-2.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Chapter 5</a> happens here too.</p><p>Two moves block this, and both do the same thing: they open up the problem before the model starts building anything.</p><p><strong>Move One: Tell It to Ask You First</strong></p><p>Instead of laying out the whole context yourself in advance, you tell the model to ask you whatever it needs before it starts.</p><p>In that same example above: &ldquo;I want to write an educational text about post-implant surgical care. Before you write anything, ask me whatever you need to know.&rdquo;</p><p>What comes back is usually a handful of questions: where will this text be published, will the patient read it before surgery or after, is it a simple surgery or one that includes a bone graft, do you want warning signs included or just instructions, how long should it be.</p><p>The point is that these aren&rsquo;t hard questions. If you had sat down and thought about it yourself from the start, you&rsquo;d have landed on exactly these. What this move does is take the burden of that thinking off your shoulders and hand it to the model &mdash; and, more importantly, it forces you to answer those questions before you see any output at all.</p><p>This is different from what we said in <a href="prompt3-1.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Chapter 3</a>, and it&rsquo;s worth not mixing the two up. There, we said the model doesn&rsquo;t know you, so you have to frame yourself: who you are, what you want, for whom. Here the direction is reversed. Instead of you filling in the model&rsquo;s gap, you&rsquo;re asking it to fill its own gap from you.</p><p>It&rsquo;s also different from the move in <a href="prompt4-4.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Chapter 4</a>. There, the model worked first and reported back, and you inspected the report. Here, nothing has started yet at all.</p><p>One caution. The model also asks plenty of pointless questions &mdash; questions asked purely out of politeness, or ones whose answer wouldn&rsquo;t change the output at all. That&rsquo;s fine; you can leave them unanswered. The real risk is elsewhere: when the model asks a few genuinely on-target questions, it feels like it understood. That feeling isn&rsquo;t reliable. Asking a question isn&rsquo;t evidence of understanding &mdash; it&rsquo;s just as much a probable-text output as answering one is. The model writes the questions that are usually asked in that kind of context.</p><p><strong>Move Two: Ask for a Mockup First, Then the Whole Thing</strong></p><p>The second move is for when the job is bigger than a short piece of text. Something like a multi-part series for your practice&rsquo;s website, an educational presentation, or anything where, if it&rsquo;s built all the way through and comes out wrong, you&rsquo;re left with a lot of rework.</p><p>Instead of saying &ldquo;write the whole thing,&rdquo; you ask for a small sample first. A mockup. For example: give me the overall structure with headings, then write out just one section in full so I can see the tone and depth.</p><p>What you get out of this is two things. First, within a few minutes you learn how the model understood the problem, and if it got it wrong, you fix it right there, cheaply, instead of after ten finished pages. Second &mdash; and this matters more &mdash; seeing a small sample is often what tells you what you actually wanted. Very often a person doesn&rsquo;t know they don&rsquo;t want something until they see it.</p><p>The difference from that opening scene earlier in this part is that there too, you saw something and formed an opinion &mdash; but that something was the entire job, and it locked you into itself. A mockup is small enough that throwing it away costs nothing.</p><p>And let me flag one more thing here for the next chapter. If you work with agentic tools &mdash; the kind we talked about in <a href="prompt6-1.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Part 1</a>, the ones that take several steps in a row &mdash; you&rsquo;ll see the model build its own mockup, catch its own flaw, fix it, and move forward. Watching it is genuinely interesting. But why that behavior shouldn&rsquo;t be generalized to scientific writing is a discussion for the next chapter.</p><p><strong>Why These Two Sit Side by Side</strong></p><p>Because they both do one thing: they stop the model from starting to build on its very first guess.</p><p>One does it with words, the other with a small sample. For short work, the first is usually enough. For bigger work, I use both, one after the other: I first tell the model to ask me anything it needs before starting, then I ask for a mockup, and only after approving the mockup do I finally give it permission for the whole job.</p><p>And notice that none of this is about whether the output is correct. The same thing we said at the end of Chapter 4 holds here too: these moves make the output more relevant, not necessarily more correct. Verification is a separate task, one we talked about in <a href="prompt6-3.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">the last part</a>.</p><p><strong>And Next</strong></p><p>Up to this point we&rsquo;ve assumed the work fits inside a single conversation. For a lot of work, it does.</p><p>But when the job gets bigger, when it takes several sessions or its sources exceed what a single conversation can hold, you run into the same ceiling I mentioned in Part 1 and promised we&rsquo;d fully get to by the end of the chapter. The next part is exactly that.</p></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Keywords</h2>
+      <div class="ep-chips"><span class="ep-chip">The Invisible Ambiguity in the User&rsquo;s Own Request, Not the Model&rsquo;s Error</span><span class="ep-chip">Move One: Asking the Model to Question You Before Any Answer</span><span class="ep-chip">Move Two: Asking for a Small Mockup Before the Whole Job</span><span class="ep-chip">The Mind Locking Onto the First Output It Saw</span><span class="ep-chip">Distinction From Framing Yourself to the Model and Inspecting a Report</span><span class="ep-chip">These Moves Make Output More Relevant, Not More Correct</span><span class="ep-chip">Large Language Model (LLM)</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Tags</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#Promptologist</span><span class="ep-hashtag">#AI</span><span class="ep-hashtag">#AILiteracy</span><span class="ep-hashtag">#LanguageModel</span><span class="ep-hashtag">#LLM</span><span class="ep-hashtag">#PromptEngineering</span><span class="ep-hashtag">#PromptAmbiguity</span><span class="ep-hashtag">#ClarifyingQuestions</span><span class="ep-hashtag">#InitialMockup</span></div>
+    </div>
+  </div>
+  <!-- Series prev/next (en tier). Targets are en counterparts only.
+       Previous part en page (en/prompt6-3.html) exists, so the previous
+       slot links to it; there is no next part yet, so the next slot stays a
+       disabled placeholder. -->
+  <div class="ep-nav">
+    <a href="prompt6-3.html" class="ep-nav-btn">&#8592; Previous Part</a>
+    <span class="ep-nav-btn ep-nav-empty">Next Part &#8594;</span>
+  </div>
+</main>
+
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=155" defer></script>
+</body>
+</html>
