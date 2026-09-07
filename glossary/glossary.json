@@ -1843,6 +1843,25 @@
         "secondary": [],
         "subtopic": "comprehensive-diagnosis"
       }
+    },
+    {
+      "slug": "implant-supported-crown",
+      "title": "Implant-Supported Crown",
+      "fa_title": "روکش ایمپلنت",
+      "synonyms": [
+        "روکش ایمپلنت",
+        "تاج ایمپلنت",
+        "Implant-Supported Crown",
+        "Implant Crown",
+        "implant-supported crown",
+        "implant crown"
+      ],
+      "url": "/glossary/implant-supported-crown.html",
+      "pillar": {
+        "primary": "implantology",
+        "secondary": [],
+        "subtopic": "restoration-design"
+      }
     }
   ]
 }
