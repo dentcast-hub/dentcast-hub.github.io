@@ -345,11 +345,14 @@ PILLARS = {
     # accuracy is evidence about a device and stays in digital/ai. That is why
     # the pillar is named for what it holds rather than for what it is not.
     #
-    # Two further subtopics — site-ownership / findability — are deliberately
-    # NOT declared yet: an empty subtopic renders a «(۰)» card in the premium
-    # arrangement (structure.json → premium-index.js), and a zero card on a paid
-    # surface is worse than a missing one. They land with پلاک صفر's first part,
-    # together with the third intro paragraph below.
+    # `findability` is deliberately NOT declared yet. An empty subtopic renders
+    # a «(۰)» card in the premium arrangement (structure.json →
+    # premium-index.js), and a zero card on a paid surface is worse than a
+    # missing one — so a subtopic is declared only when a part exists to fill
+    # it. `site-ownership` was declared ahead of پلاک صفر part 1 by explicit
+    # founder decision, and carries a (۰) until that part lands; `findability`
+    # waits for a chapter-2 part, and the third intro paragraph below is
+    # updated in the same edit whenever the count changes.
     "practice-infrastructure": {
         "title_fa": "ابزار و زیرساخت",
         "icon":             "icon-node-graph",
@@ -361,13 +364,14 @@ PILLARS = {
         "intro_paragraphs": [
             'بخشی از کارِ دندانپزشکیِ امروز اصلاً داخلِ دهان نیست. مدلی که متن را برایتان می‌نویسد، سایتی که بیمار از راهِ آن پیدایتان می‌کند، و جستجویی که تصمیم می‌گیرد اصلاً <strong>وجود دارید یا نه</strong> — این‌ها ابزارند، و مثلِ هر ابزارِ دیگری منطقِ خودشان را دارند.',
             'تفاوتِ این‌جا با یک راهنمای کاربری در همین نقطه است: دانستنِ اینکه کدام دکمه را بزنید، تا اولین تغییرِ نسخه دوام می‌آورد. دانستنِ اینکه ابزار <strong>چطور تصمیم می‌گیرد</strong> — چرا مدل مطمئن اشتباه می‌کند، چرا موتورِ جستجو یک صفحه را می‌بیند و دیگری را نه — چیزی است که می‌ماند.',
-            'این صفحه نقشه‌ی همان جهان است. مطالب در <strong>چهار لایه</strong> چیده شده‌اند — از مبانیِ مدل‌های زبانی و کار با آن‌ها، تا مرزی که کاربردِ بالینی پشتِ آن می‌ایستد، و شناختِ خودِ ابزارها. هر مورد به منبعِ کاملش در دنت‌کست لینک شده.',
+            'این صفحه نقشه‌ی همان جهان است. مطالب در <strong>پنج لایه</strong> چیده شده‌اند — از مبانیِ مدل‌های زبانی و کار با آن‌ها، تا مرزی که کاربردِ بالینی پشتِ آن می‌ایستد، شناختِ خودِ ابزارها، و مالکیتِ سایتی که رویش می‌ایستید. هر مورد به منبعِ کاملش در دنت‌کست لینک شده.',
         ],
         "subtopics": [
             {"slug": "llm-foundations",     "title_fa": "مبانیِ مدل‌های زبانی",         "icon": "icon-book",    "intro_fa": "نقطه‌ی شروع: مدلِ زبانی چه هست و چه نیست. چرا نمی‌شود آن را با <strong>هوش مصنوعیِ تشخیصی</strong> یکی گرفت، چطور تصمیم می‌گیرد، و چرا وقتی اشتباه می‌کند خطایش از جنسِ خرابیِ یک ابزار نیست."},
             {"slug": "prompt-craft",        "title_fa": "کار با مدل: گفت‌وگو و پرامپت", "icon": "icon-message", "intro_fa": "از فهم به عمل. چطور گفت‌وگو را شروع کنیم، چرا <strong>شکلِ خروجی</strong> را باید خودمان تعیین کنیم، و چرا روشِ کار — نه فقط متنِ درخواست — چیزی است که جواب را عوض می‌کند."},
             {"slug": "llm-clinical-limits", "title_fa": "مرزِ کاربردِ بالینی",           "icon": "icon-scale",   "intro_fa": "جایی که ابزار می‌ایستد. مدل با <strong>کلمه</strong> کار می‌کند، نه با بیمار. این لایه معیارِ تشخیصِ کاربردهای امن را می‌دهد و نشان می‌دهد وابستگی در قلمروی ندانستن چطور مهارتِ خودِ پزشک را می‌فرساید."},
             {"slug": "llm-tools",           "title_fa": "شناختِ ابزارها و فضای کار",    "icon": "icon-wrench",  "intro_fa": "مدل یک چیزِ واحد نیست. تفاوت‌های پایدارِ میانِ ابزارها، فضای کارِ ثابت برای منابعِ خودتان — <strong>RAG</strong>، نوت‌بوک و پروجکت — و مسیرِ عملیِ دسترسی به آن‌ها."},
+            {"slug": "site-ownership",      "title_fa": "مالکیت و نگهداریِ سایت",       "icon": "icon-key",     "intro_fa": "زمینِ خودتان. تفاوتِ <strong>داشتن</strong> و اجاره‌کردن، انتخابِ پلتفرمی که بشود سال‌ها نگهش داشت، و کارهایی که یک‌بار درست انجام می‌شوند و بعد سرِ جایشان می‌مانند."},
         ],
     },
 }

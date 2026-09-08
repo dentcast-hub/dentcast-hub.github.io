@@ -247,6 +247,59 @@ footer{
   h1{ font-size:1.3rem; }
   .wrap{ padding:1rem 0.75rem 6.25rem; }
 }
+
+/* =====================================================
+   فهرست قسمت‌ها — ported verbatim from the پرامپتولوژیست
+   landing page so both series in this pillar render their
+   part lists identically.
+===================================================== */
+.ai-list{
+  display:flex;
+  flex-direction:column;
+  gap:0.5rem;
+}
+
+.ai-item{
+  display:block;
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-right:3px solid rgba(var(--pr-rgb),.28);
+  border-radius:var(--r-lg);
+  box-shadow:var(--card-sh);
+  padding:0.75rem 0.875rem;
+  text-decoration:none;
+  transition:all var(--tr);
+  -webkit-tap-highlight-color:transparent;
+  position:relative;
+  overflow:hidden;
+}
+.ai-item:hover{
+  transform:translateY(-1px);
+  box-shadow:var(--card-sh2);
+  border-right-color:rgba(var(--pr-rgb),.55);
+}
+.ai-item:active{
+  transform:scale(.985);
+  background:var(--surface2);
+}
+
+.ai-title{
+  font-weight:700;
+  font-size:.875rem;
+  color:var(--txt);
+  margin-bottom:0.3125rem;
+  line-height:1.45;
+  transition:color var(--tr);
+}
+.ai-item:hover .ai-title{ color:var(--ac); }
+[data-theme="dark"] .ai-item:hover .ai-title{ color:#8ab4f8; }
+
+.ai-desc{
+  font-size:.80rem;
+  color:var(--txt3);
+  line-height:1.6;
+  transition:color var(--tr2);
+}
   </style>
 
   <script>window.addEventListener('load',function(){!function(t,e,n){t.yektanetAnalyticsObject=n,t[n]=t[n]||function(){t[n].q.push(arguments)},t[n].q=t[n].q||[];var a=new Date,r=a.getFullYear().toString()+"0"+a.getMonth()+"0"+a.getDate()+"0"+a.getHours(),c=e.getElementsByTagName("script")[0],s=e.createElement("script");s.id="ua-script-nzlddHSQ";s.dataset.analyticsobject=n;s.async=1;s.type="text/javascript";s.src="https://cdn.yektanet.com/rg_woebegone/scripts_v3/nzlddHSQ/rg.complete.js?v="+r,c.parentNode.insertBefore(s,c)}(window,document,"yektanet");});</script>
@@ -340,6 +393,15 @@ footer{
 
   <div class="intro">
     <p>هنوز قسمتی منتشر نشده. وقتی اولین قسمت‌ها بیایند، فهرستشان همین‌جا می‌نشیند.</p>
+  </div>
+
+  <h2><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="4.5" r="2.2"/><circle cx="4.5" cy="18.5" r="2.2"/><circle cx="19.5" cy="18.5" r="2.2"/><line x1="10.2" y1="6.2" x2="5.9" y2="16.5"/><line x1="13.8" y1="6.2" x2="18.1" y2="16.5"/><line x1="6.6" y1="18.5" x2="17.4" y2="18.5"/></svg> سریِ هم‌خانواده</h2>
+
+  <div class="ai-list">
+    <a href="/dentai/promptologist/" class="ai-item">
+      <div class="ai-title">پرامپتولوژیست — هوش مصنوعی برای دندانپزشکان</div>
+      <div class="ai-desc">هم‌خانواده‌ی این سری، در همان Pillarِ «ابزار و زیرساخت»: ۱۹ قسمت دربارهٔ اینکه مدلِ زبانی چطور تصمیم می‌گیرد، چطور با آن کار کنیم، و مرزی که کاربردِ بالینی‌اش پشتِ آن می‌ایستد.</div>
+    </a>
   </div>
 
   <div id="dc-list-end"></div>

@@ -1,0 +1,18 @@
+{
+  "type": "plak_sefr",
+  "note": "Section launch of /plak-sefr/ (پلاک صفر). Mints ONE concept: the series/brand tag, on the exact precedent of #پرامپتولوژیست / #اینسایت / #نوت‌کست / #چیرساید — domain 'brand', definition «نام سری …», use_when «روی هر مدخل این سری، و هیچ‌جای دیگر.». It is minted ahead of part 1 because it is grounded in the section, not in any article: every part will carry it, exactly as every پرامپتولوژیست part carries its own. The urgency is measurable — `--simulate 'پلاک صفر'` currently returns #پلاک_پارسیل (a removable-partial clasp) as its top hit, so the series name resolves a reader to a denture article. Aliases cover the ZWNJ form, the ezafe form and both Latin transliterations, since the matcher compares tokens literally. NOTHING ELSE IS MINTED HERE: the chapter-1 vocabulary (site ownership, domains, platform choice, local search, information architecture, schema) is deliberately absent, because every batch in this directory derives its definitions from what a specific published article genuinely resolves, and پلاک صفر part 1 does not exist yet. Minting it now would be inventing permanent vocabulary for unwritten text.",
+  "concepts": [
+    {
+      "tag": "#پلاک_صفر",
+      "domain": "brand",
+      "definition": "نام سری «پلاک صفر» — دربارهٔ داشتن، ساختن و نگه‌داشتنِ سایتِ خودِ دندانپزشک.",
+      "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
+      "aliases": [
+        "plak sefr",
+        "plake sefr",
+        "پلاک‌صفر",
+        "پلاکِ صفر"
+      ]
+    }
+  ]
+}

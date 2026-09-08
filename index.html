@@ -3256,9 +3256,11 @@ a.dc-list-card--pillar {
 #panel-studio .t-ai{ color:#5b21b6; background:rgba(91,33,182,.10); }
 #panel-studio .t-share{ color:#0e7490; background:rgba(14,116,144,.10); }
 #panel-studio .t-plus{ color:#b91c1c; background:rgba(185,28,28,.10); }
+#panel-studio .t-plak{ color:#8e3b7a; background:rgba(142,59,122,.10); }
 [data-theme="dark"] #panel-studio .t-ai{ color:#c4b5fd; background:rgba(139,92,246,.20); }
 [data-theme="dark"] #panel-studio .t-share{ color:#67e8f9; background:rgba(14,116,144,.25); }
 [data-theme="dark"] #panel-studio .t-plus{ color:#fca5a5; background:rgba(185,28,28,.25); }
+[data-theme="dark"] #panel-studio .t-plak{ color:#e0a8d2; background:rgba(192,127,180,.22); }
 #panel-studio .dc-rail-title{
   font-size:.8rem; font-weight:700; line-height:1.7; color:var(--txt); margin:0;
   display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
@@ -4758,6 +4760,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         <a class="dc-exa-cat" href="/litecast/"><span><b>لایت‌کست</b><i><!-- COUNTER:CAT_LITECAST:START -->۳۶<!-- COUNTER:CAT_LITECAST:END --> مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
         <a class="dc-exa-cat" href="/sharehub/"><span><b>ShareHub</b><i><!-- COUNTER:CAT_SHAREHUB:START -->۱۸<!-- COUNTER:CAT_SHAREHUB:END --> مرور</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
         <a class="dc-exa-cat" href="/dentai/promptologist/"><span><b>پرامپتولوژیست</b><i><!-- COUNTER:CAT_PROMPTOLOGIST:START -->۱۹<!-- COUNTER:CAT_PROMPTOLOGIST:END --> مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/plak-sefr/"><span><b>پلاک صفر</b><i><!-- COUNTER:CAT_PLAK_SEFR:START -->۰<!-- COUNTER:CAT_PLAK_SEFR:END --> مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
         <a class="dc-exa-cat" href="/dentcast-plus/"><span><b>دنت‌کست پلاس</b><i><!-- COUNTER:CAT_PLUS:START -->۱۳<!-- COUNTER:CAT_PLUS:END --> ویدیو</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
       </div>
 
@@ -4798,6 +4801,11 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <p class="dc-rail-title">پرامپتولوژیست — قبل از ساختن، مسئله را باز کنید</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
+        <a class="dc-rail-card" data-cat="plak_sefr" href="/plak-sefr/">
+          <span class="dc-type-chip t-plak">پلاک صفر</span>
+          <p class="dc-rail-title">پلاک صفر — سایتِ خودت را داشته باش</p>
+          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
+        </a>
         <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-18.html">
           <span class="dc-type-chip t-share">ShareHub</span>
           <p class="dc-rail-title">فرول در رستوریشن‌های باند شونده: یک کلمه، سه مفهوم متفاوت</p>
@@ -4827,6 +4835,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>بخشِ تازه‌ی <a href="/plak-sefr/">پلاک صفر</a> راه افتاد — دربارهٔ داشتن و نگه‌داشتنِ سایتِ خودتان · ۱۷ شهریور</li>
           <li>یک <a href="/insight/insight-71.html">اینسایت بالینی</a> با عنوانِ «اولین اقدام در کیس ترکیبیِ زیبایی و فانکشنال با سابقه‌ی شکست درمان چیست؟» منتشر شد · ۱۶ شهریور</li>
           <li>یک <a href="/dentai/promptologist/prompt6-4.html">قسمت تازه‌ی پرامپتولوژیست</a> با عنوانِ «قبل از ساختن، مسئله را باز کنید» منتشر شد · ۱۶ شهریور</li>
           <li>یک ویدیوی تازه‌ی دنت‌کست پلاس با عنوانِ «<a href="/dentcast-plus/video-13.html">روشِ من برای سمان‌کردنِ پست دو تکه</a>» منتشر شد · ۱۶ شهریور</li>
@@ -5273,6 +5282,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <button class="dcd-subitem" data-type="dentcast_plus" data-label="DentCast+" data-src="brain"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></span><span class="dcd-subitem-lbl">DentCast+</span></button>
           <button class="dcd-subitem" data-type="dentai" data-label="DentAI" data-src="brain"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 18v2"/><path d="M15 18v2"/></svg></span><span class="dcd-subitem-lbl">DentAI</span></button>
           <button class="dcd-subitem" data-type="promptologist" data-label="پرامپتولوژیست" data-src="brain"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3"/><path d="M13 15h4"/></svg></span><span class="dcd-subitem-lbl">پرامپتولوژیست<small class="dcd-subitem-cap">هوش مصنوعی برای دندانپزشکان</small></span></button>
+          <button class="dcd-subitem" data-type="plak_sefr" data-label="پلاک صفر" data-src="brain"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span class="dcd-subitem-lbl">پلاک صفر<small class="dcd-subitem-cap">سایتِ خودت را داشته باش</small></span></button>
           <button class="dcd-subitem" data-type="sharehub" data-label="Share Hub" data-src="sharehub"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/></svg></span><span class="dcd-subitem-lbl">Share Hub</span></button>
           <button class="dcd-subitem" data-mode="viewer" data-viewer-url="/episodes.html" data-label="اپیزودها"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg></span><span class="dcd-subitem-lbl">اپیزودها</span></button>
         </div>
