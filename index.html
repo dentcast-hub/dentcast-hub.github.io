@@ -893,13 +893,19 @@ body{
 .dc-list-card--insight   { --accent: 30, 124, 138; }   /* teal */
 .dc-list-card--chairside { --accent: 186, 110, 94; }   /* muted coral */
 .dc-list-card--meta      { --accent: 91, 107, 140; }   /* indigo-slate */
+.dc-list-card--prompt    { --accent: 112, 96, 168; }   /* violet — پرامپتولوژیست, muted from its registered #7c5cff */
+.dc-list-card--plak      { --accent: 142, 59, 122; }   /* plum — پلاک صفر's own registered #8e3b7a */
 [data-theme="dark"] .dc-list-card--insight   { --accent: 100, 196, 210; }
 [data-theme="dark"] .dc-list-card--chairside { --accent: 224, 161, 142; }
 [data-theme="dark"] .dc-list-card--meta      { --accent: 150, 169, 200; }
+[data-theme="dark"] .dc-list-card--prompt    { --accent: 176, 164, 224; }
+[data-theme="dark"] .dc-list-card--plak      { --accent: 224, 163, 208; }
 
 .dc-list-card--insight,
 .dc-list-card--chairside,
-.dc-list-card--meta{
+.dc-list-card--meta,
+.dc-list-card--prompt,
+.dc-list-card--plak{
   border-right:5px solid rgba(var(--accent),.55);
   background:
     linear-gradient(to left, rgba(var(--accent),.055), rgba(var(--accent),0) 55%),
@@ -907,7 +913,9 @@ body{
 }
 .dc-list-card--insight   .dc-list-card-title .dc-svg-icon,
 .dc-list-card--chairside .dc-list-card-title .dc-svg-icon,
-.dc-list-card--meta      .dc-list-card-title .dc-svg-icon{
+.dc-list-card--meta      .dc-list-card-title .dc-svg-icon,
+.dc-list-card--prompt    .dc-list-card-title .dc-svg-icon,
+.dc-list-card--plak      .dc-list-card-title .dc-svg-icon{
   color: rgb(var(--accent));
   width: 1.5em;
   height: 1.5em;
@@ -5020,6 +5028,22 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <div class="dc-grid-sub">مطالب با ذکر منبع</div>
         </div>
         
+      </div>
+
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5.5-5.5 2 2-5.5z"/></svg> بیرون از مطب</h2></div>
+
+      <div class="dc-list-card dc-list-card--prompt" onclick="window.location.href='/dentai/promptologist/'">
+        <div class="dc-list-card-main">
+          <div class="dc-list-card-title">پرامپتولوژیست <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3"/><path d="M13 15h4"/></svg></div>
+          <div class="dc-list-card-sub">کار با مدل‌های زبانی، از صفر</div>
+        </div>
+      </div>
+
+      <div class="dc-list-card dc-list-card--plak" onclick="window.location.href='/plak-sefr/'">
+        <div class="dc-list-card-main">
+          <div class="dc-list-card-title">پلاک صفر <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="dc-list-card-sub">سایتِ خودت را داشته باش</div>
+        </div>
       </div>
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">مرجع‌های دنت‌کست</h2></div>
