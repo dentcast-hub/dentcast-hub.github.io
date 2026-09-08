@@ -14458,5 +14458,37 @@
       "secondary": [],
       "subtopic": "site-ownership"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-37",
+    "title": "تاوانِ نشستِ ناقص: از تنظیم اکلوژنِ اشتباه تا دندان Hopeless",
+    "caption": "در این کیس Chairside بیمار با روکشِ افتادهٔ دندان ۶ مراجعه می‌کند؛ تجمعِ سمان در پالاتال و تراشِ شدیدِ اکلوزال نشان می‌دهد روکش در جلسهٔ تحویل کامل ننشسته، و گیرِ غذاییِ باقی‌مانده دندان را تا مرحلهٔ Hopeless برده است.",
+    "hashtags": [
+      "#چیرساید",
+      "#کیس_بالینی",
+      "#دکتر_شهابیان",
+      "#نشست_ناقص",
+      "#تحویل_روکش",
+      "#تنظیم_اکلوژن",
+      "#گیر_غذایی",
+      "#پوسیدگی_عمیق",
+      "#هپلس",
+      "#کشیدن_و_ایمپلنت"
+    ],
+    "keywords": [
+      "incomplete crown seating occlusal adjustment",
+      "excess cement palatal crown delivery",
+      "food impaction plunger cusp",
+      "deep proximal caries under crown",
+      "hopeless abutment extraction implant",
+      "crown delivery marginal seating check"
+    ],
+    "page_url": "/chairside/chairside-37.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "failures"
+    }
   }
 ]
