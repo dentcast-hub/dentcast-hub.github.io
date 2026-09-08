@@ -96,6 +96,7 @@ def compute_content():
 RAIL_CATS = (
     "clinical", "notecast", "meta", "chairside",
     "dentai", "promptologist", "sharehub", "dentcast_plus",
+    "plak_sefr",
 )
 
 # دسته‌های محتوا grid: COUNTER name -> brain `type` to count, or None for a
@@ -112,6 +113,7 @@ CAT_COUNTERS = {
     "CAT_SHAREHUB": "sharehub",
     "CAT_PROMPTOLOGIST": "promptologist",
     "CAT_PLUS": "dentcast_plus",
+    "CAT_PLAK_SEFR": "plak_sefr",
 }
 
 
