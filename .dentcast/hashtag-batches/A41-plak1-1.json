@@ -1,0 +1,52 @@
+{
+  "type": "plak_sefr",
+  "enforce": true,
+  "note": "First publish of the پلاک صفر section (plak-sefr/plak1-1 — قسمت ۱، مستأجر اینستاگرام). Every concept here is newly minted, which is unusual and deliberate: --simulate returned nothing above threshold for مالکیت پلتفرم، اینستاگرام، ماندگاری محتوا، جستجوپذیری، سئو and حضور آنلاین, because the library's 862 concepts are clinical (624) and LLM (61) vocabulary and this domain had no entry at all. #پلاک_صفر is the series tag, same role #پرامپتولوژیست plays for its own series. #اینستاگرام is a named-platform concept on the #ChatGPT precedent. Domain 'web' is introduced here for the four platform/findability concepts: nothing downstream reads the domain field (it is an editorial label — guess_domain only ever runs in cmd_seed, which refuses to run once the file exists), and filing 'مالکیت پلتفرم' as clinical would simply be false. Tagged what the article RESOLVES, not what it mentions: #سایت_شخصی is deliberately absent — the piece ends by saying owning a site solves nothing on its own and hands that to قسمت ۲.",
+  "concepts": [
+    {
+      "tag": "#پلاک_صفر",
+      "domain": "brand",
+      "definition": "نام سری «پلاک صفر».",
+      "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
+      "aliases": ["plak sefr", "پلاک‌صفر", "plak-e sefr"]
+    },
+    {
+      "tag": "#مالکیت_پلتفرم",
+      "domain": "web",
+      "definition": "تفاوتِ داشتنِ خودِ محتوا با داشتنِ چیزی که محتوا روی آن می‌نشیند: آدرس، دسترسی و بایگانی. روی پلتفرمِ کسِ دیگر، این سه مالِ شما نیست و قانونشان را او می‌نویسد.",
+      "use_when": "مقاله به این بپردازد که کار روی پلتفرمی نگهداری می‌شود که مالکش نیستید — بسته‌شدنِ اکانت، تغییرِ الگوریتم، یا از‌دست‌رفتنِ کلِ حضور.",
+      "aliases": ["platform ownership", "اجاره‌نشینی دیجیتال", "وابستگی به پلتفرم", "مالکیت محتوا", "platform dependence", "own your platform"]
+    },
+    {
+      "tag": "#اینستاگرام",
+      "domain": "web",
+      "definition": "شبکه‌ی اجتماعیِ اینستاگرام به‌عنوان محلِ حضورِ حرفه‌ای.",
+      "use_when": "مقاله مشخصاً به این پلتفرم بپردازد، نه به شبکه‌های اجتماعی به‌طور کلی.",
+      "aliases": ["instagram", "اینستا", "insta", "ig"]
+    },
+    {
+      "tag": "#ماندگاری_محتوا",
+      "domain": "web",
+      "definition": "اینکه عمرِ یک مطلب را کیفیتش تعیین نمی‌کند، بلکه جایی که در آن گذاشته شده تعیین می‌کند — و فرمت‌هایی مثل استوری ساختشان پاک‌شدن است.",
+      "use_when": "مقاله به عمرِ محتوا، بایگانی‌شدن، یا از‌بین‌رفتنِ کارِ گذشته بپردازد.",
+      "aliases": ["content longevity", "عمر محتوا", "محتوای ماندگار", "evergreen content", "استوری", "content permanence"]
+    },
+    {
+      "tag": "#جستجوپذیری_محتوا",
+      "domain": "web",
+      "definition": "اینکه یک مطلب اصلاً قابلِ پیداشدن باشد — مخاطبی که اسم شما را نمی‌داند سؤالش را تایپ می‌کند، پس چیزی که در جستجو نیاید عملاً وجود ندارد.",
+      "use_when": "مقاله به پیداشدن از راهِ جستجو، ایندکس‌شدن، یا نبودِ سرچِ درست در یک پلتفرم بپردازد.",
+      "aliases": ["findability", "searchability", "سئو", "SEO", "دیده شدن در گوگل", "جستجوپذیری", "ایندکس شدن"]
+    },
+    {
+      "tag": "#حضور_آنلاین_دندانپزشک",
+      "domain": "web",
+      "definition": "مجموعه‌ی جاهایی که یک دندانپزشک از راهشان پیدا می‌شود، و اینکه کدامشان مالِ خودش است.",
+      "use_when": "مقاله موضوعش خودِ حضورِ حرفه‌ایِ آنلاین باشد — کجا پیدا می‌شوید و روی چه چیزی بنا شده.",
+      "aliases": ["online presence", "حضور آنلاین", "برندینگ شخصی دندانپزشک", "digital presence"]
+    }
+  ],
+  "articles": {
+    "plak-sefr/plak1-1": ["#پلاک_صفر", "#مالکیت_پلتفرم", "#اینستاگرام", "#ماندگاری_محتوا", "#جستجوپذیری_محتوا", "#حضور_آنلاین_دندانپزشک"]
+  }
+}
