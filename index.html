@@ -1504,6 +1504,34 @@ body.dc-desktop-ui #dc-desktop-root{
   display:flex; position:fixed; inset:0; z-index:100;
 }
 
+/* ── WHICH TOKEN FAMILY THE DESKTOP SHELL SPEAKS (2026-09-09) ──────────────
+   The shell's own chrome — the app ground, col-B's frame/header/rows, col-C's
+   ground and scrollbars, the page-viewer, the patients cards — is written in
+   the --x-* family (--x-ground / --x-card / --x-line / --x-band / --x-sh /
+   --x-ink), the same one dcDepthTheme gives the phone's two panels. It used to
+   speak the older --bg / --surface / --card-* / --border* family, which is why
+   the same component wore two different shadows and two different dark grounds
+   depending on which shell drew it.
+
+   Three deliberate exceptions, each because the element is NOT desktop-only:
+
+   · `.dcd-content-area …` — the fetched article's own rules. Their reference is
+     dc-article.css, which styles `.text-box/.glass-box/.content-box` with
+     --card-bg / --card-border / --card-sh. That is what a phone actually shows
+     for an article, so these already match it; moving them to --x-* would make
+     the desktop reader diverge from the phone rather than converge on it.
+     --x-* is the HOMEPAGE's language, not the article's.
+   · The search overlay and the podcast player — body-level, shared by both
+     shells, already consistent with each other (same reasoning as the font
+     rule).
+   · `.dcd-welcome` / `.dcd-latest-*` — those are light-on-dark on purpose,
+     because they sit on the cover photo. They move when the photo does, not
+     before, or the text goes white-on-white.
+
+   Also left behind on the old family: `.dcd-grid*` and `.dcd-radar-pill*`,
+   which appear nowhere in the markup or the JS — dead rules, and the only
+   remaining users of --card-sh2 here. */
+
 /* ── 3-COLUMN APP GRID ── */
 .dcd-app{
   display:grid;
@@ -1513,7 +1541,7 @@ body.dc-desktop-ui #dc-desktop-root{
      graduated per breakpoint so laptops keep a comfortable col-C. */
   grid-template-columns:220px 420px 1fr;
   height:100vh; width:100%; overflow:hidden;
-  background:var(--bg); transition:background var(--tr2);
+  background:var(--x-ground); transition:background var(--tr2);
 }
 @media(min-width:1600px){ .dcd-app{ grid-template-columns:250px 480px 1fr; } }
 @media(max-width:1280px){ .dcd-app{ grid-template-columns:200px 360px 1fr; } }
@@ -1712,45 +1740,45 @@ body.dc-desktop-ui #dc-desktop-root{
 .dcd-col-b{
   display:flex; flex-direction:column;
   height:100vh; overflow:hidden;
-  background:var(--surface);
-  border-left:1px solid var(--border);
+  background:var(--x-card);
+  border-left:1px solid var(--x-line);
   transition:background var(--tr2), border-color var(--tr2);
 }
 
 /* Col-B header */
 .dcd-col-b-hdr{
   padding:0.75rem 0.875rem 0.625rem; flex-shrink:0;
-  border-bottom:1px solid var(--border);
-  background:var(--surface);
+  border-bottom:1px solid var(--x-line);
+  background:var(--x-card);
   transition:background var(--tr2), border-color var(--tr2);
 }
 .dcd-col-b-title{
-  font-size:0.8125rem; font-weight:800; color:var(--txt);
+  font-size:0.8125rem; font-weight:800; color:var(--x-ink);
 }
 .dcd-col-b-count{ font-size:0.625rem; color:var(--txt3); margin-top:0.125rem; }
 
 /* Col-B scrollable list */
 .dcd-col-b-list{
   flex:1; overflow-y:auto;
-  scrollbar-width:thin; scrollbar-color:var(--border) transparent;
+  scrollbar-width:thin; scrollbar-color:var(--x-line) transparent;
 }
 .dcd-col-b-list::-webkit-scrollbar{ width:0.1875rem; }
-.dcd-col-b-list::-webkit-scrollbar-thumb{ background:var(--border); border-radius:62.4375rem; }
+.dcd-col-b-list::-webkit-scrollbar-thumb{ background:var(--x-line); border-radius:62.4375rem; }
 
 /* List item */
 .dcd-item{
   padding:0.625rem 0.875rem; cursor:pointer;
-  border-bottom:1px solid var(--border2);
+  border-bottom:1px solid var(--x-line);
   transition:background var(--tr);
 }
-.dcd-item:hover{ background:var(--surface2); }
+.dcd-item:hover{ background:var(--x-band); }
 .dcd-item.active{
   background:rgba(var(--ac-rgb),.07);
   border-right:3px solid var(--ac);
 }
 .dcd-item-title{
   font-size:0.75rem; font-weight:600;
-  color:var(--txt); line-height:1.45;
+  color:var(--x-ink); line-height:1.45;
 }
 .dcd-item-sub{ font-size:0.65625rem; color:var(--txt3); margin-top:0.125rem; }
 
@@ -1785,16 +1813,16 @@ body.dc-desktop-ui #dc-desktop-root{
   color:var(--ac); margin-bottom:0.5625rem;
 }
 .dcd-pfeed-eyebrow .dc-svg-icon{ width:0.9375rem; height:0.9375rem; }
-.dcd-pfeed-title{ font-size:1.5rem; font-weight:900; color:var(--txt); letter-spacing:-.4px; line-height:1.25; margin:0; }
+.dcd-pfeed-title{ font-size:1.5rem; font-weight:900; color:var(--x-ink); letter-spacing:-.4px; line-height:1.25; margin:0; }
 .dcd-pfeed-sub{ font-size:.9rem; color:var(--txt3); margin:0.4375rem 0 0; line-height:1.7; }
 .dcd-pfeed-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:0.875rem; }
 
 .dcd-pcard{
   display:flex; align-items:flex-start; gap:0.8125rem; text-align:right; width:100%;
   font:inherit; cursor:pointer; position:relative; overflow:hidden;
-  background:var(--card-bg); border:1px solid var(--card-border);
-  border-radius:var(--r-lg); padding:1rem;
-  box-shadow:0 2px 10px rgba(0,0,0,.05);
+  background:var(--x-card); border:1px solid var(--x-line);
+  border-radius:18px; padding:1rem;
+  box-shadow:var(--x-sh);
   transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
 }
 .dcd-pcard::after{
@@ -1819,7 +1847,7 @@ body.dc-desktop-ui #dc-desktop-root{
 
 .dcd-pcard-body{ flex:1; min-width:0; display:flex; flex-direction:column; gap:0.3125rem; }
 .dcd-pcard-title{
-  font-size:1rem; font-weight:800; color:var(--txt); line-height:1.45;
+  font-size:1rem; font-weight:800; color:var(--x-ink); line-height:1.45;
   display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
 }
 .dcd-pcard-cap{
@@ -1858,7 +1886,7 @@ body.dc-desktop-ui #dc-desktop-root{
 .dcd-col-c{
   display:flex; flex-direction:column;
   height:100vh; overflow:hidden;
-  background:var(--bg);
+  background:var(--x-ground);
   transition:background var(--tr2);
 }
 
@@ -1872,10 +1900,10 @@ body.dc-desktop-ui #dc-desktop-root{
 /* Scrollable body of col-c */
 .dcd-col-c-scroll{
   flex:1; overflow-y:auto;
-  scrollbar-width:thin; scrollbar-color:var(--border) transparent;
+  scrollbar-width:thin; scrollbar-color:var(--x-line) transparent;
 }
 .dcd-col-c-scroll::-webkit-scrollbar{ width:0.3125rem; }
-.dcd-col-c-scroll::-webkit-scrollbar-thumb{ background:var(--border); border-radius:62.4375rem; }
+.dcd-col-c-scroll::-webkit-scrollbar-thumb{ background:var(--x-line); border-radius:62.4375rem; }
 
 /* Welcome default state — cover image background + pulse on top */
 .dcd-welcome{
@@ -1925,7 +1953,7 @@ body.dc-desktop-ui #dc-desktop-root{
 /* Full-page viewer iframe (Episodes, Glossary) */
 .dcd-page-viewer{
   display:none; width:100%; border:none; min-height:0;
-  background:var(--surface); flex-shrink:0;
+  background:var(--x-card); flex-shrink:0;
 }
 /* Viewer mode: hide scroll area, show iframe */
 .dcd-col-c.is-viewer .dcd-col-c-scroll{ display:none; }
