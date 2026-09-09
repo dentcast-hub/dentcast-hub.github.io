@@ -6840,8 +6840,13 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     dentcast:'اپیزود', notecast:'NoteCast', clinical:'Clinical Insight',
     insight:'Clinical Insight', dentcast_plus:'ویدیو', dentai:'DentAI',
     promptologist:'پرامپتولوژیست', meta:'Meta Note', chairside:'Chairside',
-    sharehub:'Share Hub', litecast:'LiteCast'
+    sharehub:'Share Hub', litecast:'LiteCast', plak_sefr:'پلاک صفر'
   };
+  /* Every brain type that can reach this card needs a row above. The fallback
+     below is `|| x.type`, which prints the RAW KEY — `plak_sefr` was missing and
+     was doing exactly that on the live homepage, on two of the six newest
+     cards. The name was never in doubt: the sidebar tree has said «پلاک صفر»
+     all along. Adding a section means adding it here too. */
   function renderDesktopLatest(){
     const host = document.getElementById('dcdLatest');
     if(!host || host.dataset.loaded) return;
