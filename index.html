@@ -108,25 +108,39 @@
      from one place. Before 2026-09-09 nine of these were literals typed into
      the rules themselves, which is why the sidebar could not follow the theme:
      changing --sb alone left white text on whatever new ground you picked.
-     The values here are unchanged — this block is the dark palette, and it is
-     what BOTH themes used until the light one was given its own below.
      (--sb-item and --sb2 were declared here and referenced nowhere; dropped.) */
-  --sb:#17212b;
-  --sb-hover:rgba(255,255,255,.10);
-  --sb-active:#2b5278;
-  --sb-txt:#e8f0ff;                    /* strongest text */
-  --sb-txt2:rgba(232,240,255,.55);     /* group arrow, brand sub */
-  --sb-txt-mid:rgba(232,240,255,.82);  /* sub-item labels */
-  --sb-txt-cap:rgba(232,240,255,.6);   /* sub-item captions */
+  /* Light palette. The navy that used to sit here in BOTH themes was the last
+     surface still speaking the pre-Examine language: the phone's bottom nav —
+     the same navigation role — went light on 2026-08-11, so a dark sidebar on a
+     light page was the odd one out rather than a deliberate contrast.
+     #dde8f6 rather than something nearer white on purpose: col-B is --x-card
+     (#ffffff), and a near-white sidebar beside a white list would separate the
+     two columns with a hairline alone — which is exactly the complaint this
+     audit opened with about the DARK theme, arriving in the light one.
+     The active pill is brand blue with white on it (6.25:1), not the dark
+     theme's muted --sb-active, because on a light ground a muted fill reads as
+     disabled. Dark keeps every value it had; see [data-theme="dark"]. */
+  --sb:#dde8f6;
+  --sb-hover:rgba(11,95,255,.07);
+  --sb-active:#1257d6;
+  --sb-txt:#08284a;                    /* strongest text */
+  /* .70, not a rounder .6: at .62 these four faint roles (brand sub, group
+     arrow, caption, footer button) measured 4.07:1 on #dde8f6 — under the 4.5
+     bar, and they are all small text. .70 gives 5.13:1, which is where the DARK
+     theme's own faint role already sits (5.24:1), so the two themes now carry
+     the same contrast for the same job instead of the light one being weaker. */
+  --sb-txt2:rgba(8,40,74,.70);         /* group arrow, brand sub */
+  --sb-txt-mid:#42597a;                /* sub-item labels */
+  --sb-txt-cap:rgba(8,40,74,.70);      /* sub-item captions */
   --sb-on-active:#fff;                 /* text on the active pill */
-  --sb-on-active2:rgba(255,255,255,.82);
-  --sb-div:rgba(255,255,255,.08);
-  --sb-fill-1:rgba(255,255,255,.04);   /* open group header, subscribe rest */
-  --sb-fill-2:rgba(255,255,255,.07);   /* footer button hover */
-  --sb-fill-3:rgba(255,255,255,.10);   /* subscribe hover */
-  --sb-line-1:rgba(255,255,255,.16);   /* subscribe border */
-  --sb-line-2:rgba(255,255,255,.08);   /* footer button border */
-  --sb-scroll:rgba(255,255,255,.10);   /* tree scrollbar thumb */
+  --sb-on-active2:rgba(255,255,255,.85);
+  --sb-div:rgba(2,35,96,.12);
+  --sb-fill-1:rgba(2,35,96,.05);       /* open group header, subscribe rest */
+  --sb-fill-2:rgba(2,35,96,.07);       /* footer button hover */
+  --sb-fill-3:rgba(2,35,96,.10);       /* subscribe hover */
+  --sb-line-1:rgba(2,35,96,.16);       /* subscribe border */
+  --sb-line-2:rgba(2,35,96,.12);       /* footer button border */
+  --sb-scroll:rgba(2,35,96,.18);       /* tree scrollbar thumb */
 
   /* bottom nav — frosted-glass footer in the brand navy family (same hue as
      the episodes/podcast hero card). --bn-bg is the solid fallback (a navy a
@@ -163,6 +177,24 @@
 }
 
 [data-theme="dark"]{
+  /* ── COL-A: the palette this sidebar has always worn ── */
+  --sb:#17212b;
+  --sb-hover:rgba(255,255,255,.10);
+  --sb-active:#2b5278;
+  --sb-txt:#e8f0ff;                    /* strongest text */
+  --sb-txt2:rgba(232,240,255,.55);     /* group arrow, brand sub */
+  --sb-txt-mid:rgba(232,240,255,.82);  /* sub-item labels */
+  --sb-txt-cap:rgba(232,240,255,.6);   /* sub-item captions */
+  --sb-on-active:#fff;                 /* text on the active pill */
+  --sb-on-active2:rgba(255,255,255,.82);
+  --sb-div:rgba(255,255,255,.08);
+  --sb-fill-1:rgba(255,255,255,.04);   /* open group header, subscribe rest */
+  --sb-fill-2:rgba(255,255,255,.07);   /* footer button hover */
+  --sb-fill-3:rgba(255,255,255,.10);   /* subscribe hover */
+  --sb-line-1:rgba(255,255,255,.16);   /* subscribe border */
+  --sb-line-2:rgba(255,255,255,.08);   /* footer button border */
+  --sb-scroll:rgba(255,255,255,.10);   /* tree scrollbar thumb */
+
   --pr:#5b9cf6; --pr-rgb:91,156,246;
   --ac:#5b9cf6; --ac-rgb:91,156,246;
 
