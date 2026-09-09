@@ -707,11 +707,41 @@ mirrored `sources[]` array is byte-for-byte identical to the original record
 except `scored_at`; confirm the credit link target matches the original
 (same DOI/PubMed/other URL, never re-resolved independently).
 
-### 4.6. Promptologist series prev/next navigation (Promptologist only)
+### 4.6. Series prev/next navigation (any type whose pages carry an `ep-nav` bar)
 
-Only when the locked category is **Promptologist**. Skip entirely for every other type.
+**The trigger is the `ep-nav` block on the page, never the type's name.** This
+step was written as "Promptologist only" and that scoping was an accident of
+which series existed when it was written — it cost **پلاک صفر** exactly the bug
+this step exists to prevent. قسمت ۲ was published on 2026-09-09 into a section
+whose pages carry the identical `ep-nav` markup and the identical
+`<stem><season>-<part>` id shape, and because the step named a folder instead of
+describing a mechanism, the series shipped for review with **two dead greyed-out
+buttons** on a two-part series. Read the page, not the folder name.
 
-Promptologist parts are an **ordered series** (id format `prompt<season>-<part>` — e.g. `prompt1-1`, `prompt1-2`; page at `/dentai/promptologist/<id>.html`). Each part's page ends with an **`ep-nav` block** — the very last element inside `<main>`, after the `.ep-box` — exactly like a core episode's prev/next bar:
+**Applies when** the locked category's pages end with an `ep-nav` block. Three
+folders carry one today; every other type has zero, so for them this step is a
+documented skip ("4.6: skipped — this type's pages carry no `ep-nav` bar"):
+
+| Folder | id shape | Active-slot label register |
+|---|---|---|
+| `dentai/promptologist/` | `prompt<season>-<part>` | generic — «&#8592; قسمت قبلی» / «قسمت بعدی &#8594;» |
+| `plak-sefr/` | `plak<season>-<part>` | generic — «&#8592; قسمت قبلی» / «قسمت بعدی &#8594;» |
+| `episodes/` | `episode-<n>` / `episode-<n>-<sub>` | **names the number** — «&#8592; اپیزود 143» / «اپیزود 144 &#8594;» |
+
+**The `episodes/` row documents existing practice; it changes nothing.** All 210
+episode pages are already wired correctly — exactly one unwired «next» slot (the
+newest episode) and exactly one unwired «previous» slot (`episode-1`) — but no
+step in this document ever said to do it, so that chain has been maintained on
+memory alone. Naming it here is what stops the next gap from being found the way
+پلاک صفر's was.
+
+**The table is open, not closed** (unlike the DES carve-out in step 4.13): a new
+section that ships an `ep-nav` bar is in scope the day it ships, and adding its
+row here is a documentation catch-up, not the thing that grants it entry. A
+missed series is the failure mode; a wrongly included one is impossible, because
+a type with no `ep-nav` block has nothing for this step to write into.
+
+Each part's page ends with an **`ep-nav` block** — the very last element inside `<main>`, after the `.ep-box`:
 
 ```html
 <div class="ep-nav">
@@ -720,28 +750,37 @@ Promptologist parts are an **ordered series** (id format `prompt<season>-<part>`
 </div>
 ```
 
-It has two slots, in DOM order: **first = previous part**, **second = next part**. An **active** slot is an anchor — `<a href="/dentai/promptologist/<id>.html" class="ep-nav-btn">…</a>`; an **empty/placeholder** slot is a `<span class="ep-nav-btn ep-nav-empty">…</span>` (the `ep-nav-empty` class greys it out and disables the pointer). This mirrors the core-episode nav, whose active form is e.g. `<a href="/episodes/episode-151.html" class="ep-nav-btn">اپیزود 151 &#8594;</a>`.
+It has two slots, in DOM order: **first = previous part**, **second = next part**. An **active** slot is an anchor — `<a href="/<folder>/<id>.html" class="ep-nav-btn">…</a>` (site-absolute on the fa side; the en tier uses a bare sibling filename — see `en-version.md` step 4.5); an **empty/placeholder** slot is a `<span class="ep-nav-btn ep-nav-empty">…</span>` (the `ep-nav-empty` class greys it out and disables the pointer).
 
 Because step 2 cloned the previous part **verbatim**, the new page arrives with **both** slots still empty (copied straight from the template). **Two pages must be fixed** — the new part's own nav, and the previous part's "next" slot:
 
 **A) On the NEW part's page — wire its «previous» slot.**
-- Convert the **first (previous)** slot from the empty placeholder into a real link to the immediately-preceding part (`prompt<season>-<part − 1>`):
-  `<a href="/dentai/promptologist/<prev-id>.html" class="ep-nav-btn">&#8592; قسمت قبلی</a>`
+- Convert the **first (previous)** slot from the empty placeholder into a real link to the immediately-preceding part:
+  `<a href="/<folder>/<prev-id>.html" class="ep-nav-btn">&#8592; قسمت قبلی</a>` (or the type's own label register — «&#8592; اپیزود N» under `episodes/`).
 - Leave the **second (next)** slot as the empty placeholder `<span class="ep-nav-btn ep-nav-empty">قسمت بعدی &#8594;</span>` — there is no next part yet. (When a later part is published, *that* publish converts this slot per (B).)
 
 **B) On the PREVIOUS part's page — wire its «next» slot to the new part.**
-- Open `/dentai/promptologist/<prev-id>.html` and find its `ep-nav` block. Its **second (next)** slot is currently the empty placeholder `<span class="ep-nav-btn ep-nav-empty">قسمت بعدی &#8594;</span>`.
-- **Replace it in place** with a real link to the new part, keeping the **visible text identical**:
-  `<a href="/dentai/promptologist/<new-id>.html" class="ep-nav-btn">قسمت بعدی &#8594;</a>`
+- Open `/<folder>/<prev-id>.html` and find its `ep-nav` block. Its **second (next)** slot is currently the empty placeholder `<span class="ep-nav-btn ep-nav-empty">قسمت بعدی &#8594;</span>`.
+- **Replace it in place** with a real link to the new part, keeping the **visible text identical** — except under `episodes/`, whose active label names the number, so the placeholder's «قسمت بعدی &#8594;» becomes «اپیزود N &#8594;»:
+  `<a href="/<folder>/<new-id>.html" class="ep-nav-btn">قسمت بعدی &#8594;</a>`
 - Leave the previous part's own **first (previous)** slot untouched.
-- **Hash the previous part's page before and after.** The only allowed diff is that one slot turning from a `<span … ep-nav-empty>` placeholder into an `<a … class="ep-nav-btn">` link (tag swapped, `href` added, `ep-nav-empty` removed; visible text unchanged).
+- **Hash the previous part's page before and after.** The only allowed diff is that one slot turning from a `<span … ep-nav-empty>` placeholder into an `<a … class="ep-nav-btn">` link (tag swapped, `href` added, `ep-nav-empty` removed; visible text unchanged except for the `episodes/` label register above).
 
-Match the label register to whatever the series already uses for these buttons (the placeholders read «قسمت قبلی» / «قسمت بعدی»). If the previous part has **no** `ep-nav` block at all (an older template), **stop and ask the user** before improvising one.
+**This is the one documented exception to step 4's template-hash match.** Step 1 hashes the previous same-category page and step 4 requires that hash to be unchanged at the end — but (B) edits exactly that page, by design, the same way step 4.5 edits a parent episode. The before/after hashes and the one-line diff go in the report; an *unexplained* hash change is still a stop-and-report.
+
+**A first part has no previous sibling**: leave its previous slot as the empty placeholder with **no label** (`<span class="ep-nav-btn ep-nav-empty"></span>`, the `episodes/episode-1` precedent) rather than a greyed-out «قسمت قبلی» pointing nowhere.
+
+Match the label register to whatever the series already uses for these buttons. If the previous part has **no** `ep-nav` block at all (an older template), **stop and ask the user** before improvising one.
+
+**The en tier is wired by the same dance, on the en side** — `en-version.md` step 4.5 owns it, targets are en counterparts only (bare sibling filenames, never cross-language), and Phase D runs it on every publish. Wiring the fa pair and forgetting the en pair leaves the mirror with the dead buttons instead.
+
+**Not enforced by Phase F.** `tools/verify_publish.py` carries no series-nav row for any type, so nothing fails a publish that skips this — which is precisely why it has to be read here. Verify it by eye against the checklist below.
 
 **Verify after write:**
 - The new page's **previous** slot links to `<prev-id>.html`, and its **next** slot is still the empty placeholder.
 - The previous page's **next** slot now links to `<new-id>.html` and no longer carries `ep-nav-empty`.
 - Both pages' `ep-nav` blocks still have **exactly two** slots, and no other diff was introduced on either page.
+- The same two checks pass on the **en** pair after Phase D.
 
 ### 4.7. Semantic glossary back-linking (all content types)
 
@@ -2105,7 +2144,7 @@ fix on its own, never a pattern to copy forward.
 - New brain entry (printed as it now exists at the end of the flat array) — confirmation that it's the last element, that its key set matches the previous same-category entry exactly, and (for episodes) that no `type` field was added
 - Pulse: which line was removed (the bottom one), and where the new line was inserted (one above the new bottom), with before/after diff
 - For NoteCast: parent episode page path; whether the related-content block existed already or was created; before/after hash of the parent episode page; diff of the inserted markup
-- For Promptologist (step 4.6): the new part's `ep-nav` previous slot wired to `<prev-id>.html` (next slot left as the empty placeholder); the previous part's page path with before/after hash, confirming its empty «next» placeholder was converted into a link to `<new-id>.html` (only that slot changed)
+- For any ordered series whose pages carry an `ep-nav` bar (step 4.6 — `dentai/promptologist/`, `plak-sefr/`, `episodes/` today; the trigger is the block, not the folder): the new part's `ep-nav` previous slot wired to `<prev-id>.html` (next slot left as the empty placeholder); the previous part's page path with before/after hash, confirming its empty «next» placeholder was converted into a link to `<new-id>.html` (only that slot changed), and that this is the documented step-4 hash exception rather than unexplained drift; the same pair re-verified on the **en** tier after Phase D. For a type whose pages carry no `ep-nav` bar, the documented skip line instead
 - For any publish with an attached paper file (step 4.10 — triggered by the file, any type) — or the documented "skipped — no attached paper" line otherwise: **Part 1** — the Drive subfolder the paper was filed into (chosen semantically) and its `drive_view` URL; **Part 2** — the new `dentcast_cabinet_full_catalog.json` entry's `id`, `topic`/`topic_path`, `tags` (semantic + article-name), and the Drive link, with confirmation the key set matches the enriched-entry template and the paper surfaces in `dentcast_cabinet_search.html` (opened directly — the on-site route is premium-gated), plus the new `papers` total and whether it crossed a round hundred (if it did, the two paper-count strings in `index.html` were swept together; if not, say so explicitly); **Part 3** (only when a page was published) — the DOI and first author found on the web, the rendered first-author→DOI credit anchor (ShareHub `.author` style) and any `isBasedOn` update, with before/after page hash — or the "Part 3 skipped — paper-only (no page)" note on the paper-only fast path. Explicitly list anything you asked the user about and confirm nothing (subfolder/DOI/author/tags) was guessed
 - **Flashcards (step 4.11)** — or the documented "skipped — LiteCast" line: the `DefinedTermSet` node written into `plus/faq-corpus.json` (term count and their `@id`s); how many came from `source: "faq"` vs `"authored"`; which FAQ entries (if any) were judged comparison/decision-shaped and skipped; confirmation no `name`/`description` is a verbatim FAQ copy; anything you asked the user about; confirmation `node tools/build_flashcards_index.mjs` was re-run in step 8 so `plus/flashcards-index.json` reflects the new page
 - **Quiz (step 4.12)** — or the documented "skipped — LiteCast" line: confirmation every FAQ question `name` is standalone (no article deixis per 4.12(a)); how many of the content's FAQ questions are binary/scored vs open (and that any binary answer opens with an explicit «بله»/«خیر» verdict); confirmation `node tools/build_quiz_index.mjs` was re-run in step 8 and the new content's binary count appears in `plus/quiz-index.json`

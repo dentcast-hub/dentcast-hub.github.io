@@ -200,7 +200,8 @@ unless meta-1 *is* the document being processed.
 
 ### 4.5. Series prev/next navigation (series types only)
 For ordered-series types whose pages carry a bottom `ep-nav` prev/next bar
-(e.g. Promptologist `prompt<season>-<part>.html`), the en page **keeps** that
+(`dentai/promptologist/`, `plak-sefr/` and `episodes/` today — the trigger is
+the block, not the folder name; README 4.6 carries the live table), the en page **keeps** that
 bar — it is part of the type's own structure (Hard rule 4), so it must not be
 dropped even under the Phase B Q2 "clean translation" default (that default
 governs the specialist «کاوش بیشتر» capsules, not the series nav). The bar
