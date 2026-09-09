@@ -3696,6 +3696,46 @@ a.dc-list-card--pillar {
   flex-direction:column; align-items:stretch; gap:0.125rem;
 }
 
+/* ── درِ «طبقه‌بندی مقالات بر اساس قدرت شواهد» ──
+   زیرِ کارتِ up-board، بیرونِ آن — و عمداً شکلِ تب ندارد. دو پیلِ داخلِ کارت
+   فهرست را در جا عوض می‌کنند؛ این یکی صفحه را عوض می‌کند، پس شورون دارد و
+   کارت است، نه پیل. تبِ سومِ هم‌شکل، هم برای خواننده دروغ بود و هم یک
+   `role="tab"` بود که ناوبری می‌کند.
+
+   شکلش تازه نیست: همان `.onetab` است که خودِ /des-board/ برای گیتش می‌پوشد —
+   همان شعاع، همان washِ امبر، همان قفل و شورون. امبر، چون در کل سایت یک معنا
+   دارد: «این چیزی است که اشتراک می‌خرد». کارتِ up-board و «تازه‌ترین» رایگان
+   می‌مانند و آبی؛ فقط این در و تبِ «بالاترین» امبر می‌پوشند.
+
+   عنوان عیناً همان چیزی است که تبِ خودِ /des-board/ می‌گوید، پس در، مقصدش را
+   نام می‌برد. توجه: کپسولِ `.dc-des-cap` در پنلِ توضیحِ DES (‏#panel-studio)
+   «مطالب» می‌گوید نه «مقالات» — دو پنلِ متفاوت‌اند و هم‌زمان دیده نمی‌شوند،
+   ولی اگر روزی یکی‌شان بازنویسی شد، آن یکی هم در همان کامیت. */
+#panel-sharehub .dc-ub-door{
+  display:flex; align-items:center; gap:0.65rem;
+  margin:0.35rem 0 0.5rem; padding:0.7rem 0.85rem;
+  border-radius:var(--r-lg); text-decoration:none;
+  background:var(--x-amber-wash); border:1px solid var(--x-amber-bd);
+  color:var(--txt); box-shadow:var(--card-sh);
+  transition:background var(--tr);
+}
+#panel-sharehub .dc-ub-door:active{ background:var(--x-amber-wash-2); }
+#panel-sharehub .dc-ub-door-l{ flex:none; font-size:0.95rem; line-height:1; }
+/* رنگ صریح، نه ارثی — عنوان داخل یک <a> است و اگر رنگ را از لینک به ارث ببرد،
+   تا رسیدنِ شیوه‌نامه‌های تأخیری آبی دیده می‌شود. */
+#panel-sharehub .dc-ub-door-t{
+  flex:1; min-width:0; font-size:0.86rem; font-weight:800;
+  line-height:1.6; letter-spacing:-0.01em; color:var(--txt);
+}
+#panel-sharehub .dc-ub-door-b{
+  flex:none; font-size:0.62rem; font-weight:800; white-space:nowrap;
+  color:var(--x-amber-ink); background:var(--x-amber-wash-2);
+  border:1px solid var(--x-amber-bd); border-radius:999px; padding:0.05rem 0.5rem;
+}
+#panel-sharehub .dc-ub-door-c{
+  flex:none; font-size:1.05rem; font-weight:900; color:var(--x-amber-ink);
+}
+
 /* ── «تازه‌های دنت‌کست»: horizontal card rail → vertical text rows
       (same links, same order — pure typography like the mockup) ── */
 #panel-studio #dcLatestRail{
@@ -4959,7 +4999,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
            paid sponsor inventory. -->
       <div class="dc-home-sec dc-home-sec-upboard">
         <h2 class="dc-home-sec-label">up-board</h2>
-        <p class="dc-home-sec-sub">همهٔ مطالب سایت، تازه‌ترین یا پربازخوردترین</p>
+        <p class="dc-home-sec-sub">همهٔ مطالب سایت — به ترتیب انتشار، یا به انتخابِ خواننده‌ها</p>
       </div>
 
       <article class="dc-monitor dc-monitor-secondary" aria-label="up-board">
@@ -4972,6 +5012,20 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <ul class="dc-monitor-list" id="dcLast3Updates"></ul>
         </div>
       </article>
+
+      <!-- درِ سومِ up-board — و عمداً یک در، نه یک تب. دو پیلِ بالا دو چیدمانِ
+           یک فهرست‌اند و در جا عوض می‌شوند؛ این یکی می‌بَرَد به /des-board/،
+           که ساختارش قفسه است نه رتبه (از ۴۸۴ مطلبِ کاتالوگ، ۲۸ تا باندِ
+           شواهد دارند و ۱۶۱ تا فقط امتیازِ شفافیت — مقیاسی دیگر). یک فهرستِ
+           مسطحِ سوم داخلِ همین کارت یعنی صفحه‌ای که تقریباً همه‌اش ته است.
+           استاتیک است و هیچ JSی لازم ندارد: /des-board/ و کلِ توضیحش عمومی
+           است و فقط چیدمانِ داخلش پریمیوم، پس این در برای همه باز است. -->
+      <a class="dc-ub-door" href="/des-board/">
+        <span class="dc-ub-door-l" aria-hidden="true">🔒</span>
+        <span class="dc-ub-door-t">طبقه‌بندی مقالات بر اساس قدرت شواهد</span>
+        <span class="dc-ub-door-b">پریمیوم</span>
+        <span class="dc-ub-door-c" aria-hidden="true">›</span>
+      </a>
 
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="4.5" r="2.2"/><circle cx="4.5" cy="18.5" r="2.2"/><circle cx="19.5" cy="18.5" r="2.2"/><line x1="10.2" y1="6.2" x2="5.9" y2="16.5"/><line x1="13.8" y1="6.2" x2="18.1" y2="16.5"/><line x1="6.6" y1="18.5" x2="17.4" y2="18.5"/></svg> تولید اختصاصی دنت‌کست</h2></div>

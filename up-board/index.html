@@ -58,11 +58,13 @@
        the lock on «بالاترین». Keep in sync with index.html. */
     :root{
       --x-amber:#c9922b; --x-amber-ink:#8a6414;
-      --x-amber-wash:rgba(201,146,43,.08); --x-amber-bd:rgba(154,107,21,.22);
+      --x-amber-wash:rgba(201,146,43,.08); --x-amber-wash-2:rgba(201,146,43,.13);
+      --x-amber-bd:rgba(154,107,21,.22);
     }
     [data-theme="dark"]{
       --x-amber:#e3b849; --x-amber-ink:#e3b849;
-      --x-amber-wash:rgba(227,184,73,.09); --x-amber-bd:rgba(227,184,73,.26);
+      --x-amber-wash:rgba(227,184,73,.09); --x-amber-wash-2:rgba(227,184,73,.14);
+      --x-amber-bd:rgba(227,184,73,.26);
     }
 
     .ub-page{
@@ -121,6 +123,47 @@
     .ub-sort button.is-locked[aria-selected="true"]{
       color:var(--x-amber-ink, #8a6414); background:var(--surface);
     }
+
+    /* ── درِ «طبقه‌بندی مقالات بر اساس قدرت شواهد» ──
+       زیرِ نوارِ چیدمان می‌نشیند، نه داخلش — و این تفاوت، خودِ طراحی است. دو
+       دکمهٔ آن نوار دو چیدمانِ همین فهرست‌اند و در جا عوض می‌شوند؛ این یکی
+       می‌بَرَد به /des-board/. یک دکمهٔ سومِ هم‌شکل، هم به خواننده وعده می‌داد
+       فهرستِ زیرش جابه‌جا شود و هم یک `role="tab"` می‌شد که ناوبری می‌کند.
+
+       جایش زیر نوار است چون آنجا جایی است که «چیدمان‌ها» زندگی می‌کنند. پایینِ
+       صفحه گزینهٔ دیگر بود و رد شد: فهرست ۴۸۴ ردیف با اسکرولِ تدریجی است، پس
+       تهِ صفحه عملاً دیده نمی‌شود.
+
+       عیناً همان شکل و همان متنی که صفحهٔ اصلی دارد (‏index.html، ‏.dc-ub-door)
+       — یک در، یک جمله، هر جا که باشد. اگر یکی عوض شد، هر دو در همان کامیت.
+       استاتیک است: /des-board/ و توضیحش عمومی‌اند و فقط چیدمانِ داخلش پریمیوم،
+       پس این در برای همه باز است و چیزی برای گیت‌کردن ندارد. */
+    .ub-door{
+      display:flex; align-items:center; gap:.65rem;
+      margin:0 0 .9rem; padding:.7rem .85rem;
+      border-radius:var(--r-lg, 18px); text-decoration:none;
+      background:var(--x-amber-wash); border:1px solid var(--x-amber-bd);
+      color:var(--txt); box-shadow:var(--card-sh);
+      transition:background .17s cubic-bezier(.4,0,.2,1);
+    }
+    .ub-door:hover{ background:var(--x-amber-wash-2); }
+    .ub-door:focus-visible{ outline:2px solid var(--x-amber); outline-offset:2px; }
+    .ub-door-l{ flex:none; font-size:.95rem; line-height:1; }
+    /* رنگ صریح، نه ارثی. این عنوان داخل یک <a> است و dc-theme.css لینک‌ها را
+       آبی می‌کند؛ تا وقتی رنگ از خودِ لینک به ارث می‌رسید، عنوان تا لحظه‌ای که
+       شیوه‌نامه‌های تأخیری برسند آبی دیده می‌شد. (‏/des-board/ همین را با یک
+       `a{color:inherit}` در صفحهٔ خودش حل کرده؛ اینجا محدودتر عمل می‌کنیم تا
+       لینک‌های دیگرِ صفحه دست‌نخورده بمانند.) */
+    .ub-door-t{
+      flex:1; min-width:0; font-size:.86rem; font-weight:800;
+      line-height:1.6; letter-spacing:-.01em; color:var(--txt);
+    }
+    .ub-door-b{
+      flex:none; font-size:.62rem; font-weight:800; white-space:nowrap;
+      color:var(--x-amber-ink); background:var(--x-amber-wash-2);
+      border:1px solid var(--x-amber-bd); border-radius:999px; padding:.05rem .5rem;
+    }
+    .ub-door-c{ flex:none; font-size:1.05rem; font-weight:900; color:var(--x-amber-ink); }
 
     /* فیلتر نوع */
     .ub-filters{
@@ -273,6 +316,19 @@
     <button type="button" role="tab" data-sort="new" aria-selected="true">تازه‌ترین</button>
     <button type="button" role="tab" data-sort="top" aria-selected="false">بالاترین</button>
   </div>
+
+  <!-- OUTSIDE the tablist above, and that is the point: those two buttons are
+       two arrangements of the list below them, this one is a link to another
+       page. Its target, /des-board/, is grouped into SHELVES rather than ranked
+       — of the 484 items in this catalog only 28 carry an evidence band and 161
+       carry a transparency score on a different scale entirely, so a third flat
+       ordering here would be a list that is almost all tail. -->
+  <a class="ub-door" href="/des-board/">
+    <span class="ub-door-l" aria-hidden="true">🔒</span>
+    <span class="ub-door-t">طبقه‌بندی مقالات بر اساس قدرت شواهد</span>
+    <span class="ub-door-b">پریمیوم</span>
+    <span class="ub-door-c" aria-hidden="true">›</span>
+  </a>
 
   <div class="ub-filters" id="ubFilters" role="group" aria-label="فیلتر بر اساس نوع مطلب"></div>
   <p class="ub-count" id="ubCount">در حال بارگذاری…</p>
