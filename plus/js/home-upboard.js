@@ -15,11 +15,11 @@
 //     to drift — and no race with a script that fills the same <ul> we do.
 //
 // It is only ever the top five. The box is a doorway, not the board.
-import { api } from './api.js?v=59';
-import { el, faNum } from './util.js?v=59';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=59';
-import { premiumCta, guestPremiumExtras } from './premium-cta.js?v=59';
-import { openLoginModal } from './login-modal.js?v=59';
+import { api, currentUser, meStatus } from './api.js?v=60';
+import { el, faNum } from './util.js?v=60';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=60';
+import { premiumCta, guestPremiumExtras } from './premium-cta.js?v=60';
+import { openLoginModal } from './login-modal.js?v=60';
 
 const FROM = 'home-upboard';
 
@@ -76,6 +76,47 @@ export function initHomeUpboard() {
   let freshHtml = null;   // the inline script's own list, captured once
   let topRows = null;     // built once per page view
   let loading = false;
+  // Why this tab cannot be opened, once we know: 'guest' (signed out) or
+  // 'gated' (signed in, not a subscriber). null means we do not know yet, or
+  // we could not ask — and those two must never lock, for the same reason
+  // premium-cta.js's unreachableGate exists.
+  let denied = null;
+
+  const topTab = tabs.find((t) => t.dataset.monitorSort === 'top');
+
+  // ── THE LOCK IS DECIDED AT LOAD, NOT ON THE PRESS ──
+  //
+  // It used to be added inside the click handler's catch, which is the one
+  // place in this file that ran after `api.voteBoard()` answered. So the tab
+  // opened unlocked for EVERY free reader on every page view — not as a race
+  // that a fast connection would win, but structurally — and the order a
+  // reader experienced was backwards: press → the tab turns blue (selected) →
+  // «this is premium» → only THEN does it turn amber and grow a lock. The
+  // reader was told they could not open it, and afterwards the door changed
+  // to look shut.
+  //
+  // Deferring `voteBoard()` to the press is still right — it is the ranking,
+  // and the box does not show one until asked. But the LOCK never needed the
+  // ranking; it needs the reader's tier, and that is already on the page:
+  // currentUser() is a cached shared promise (one /me per page), and
+  // plus.js's `header` step awaits it before this module's step runs. So this
+  // costs ZERO additional requests.
+  //
+  // Three answers, not two — the distinction desboard-page.js and
+  // upboard-page.js both make: signed out and free are both definite and both
+  // lock; anything else means we could not ask, and must never reach a paying
+  // subscriber as a lock on something they own.
+  currentUser().then((user) => {
+    if (!user) {
+      if (meStatus() === 'error') return;   // could not ask — leave it alone
+      denied = 'guest';
+    } else if (user.tier !== 'premium') {
+      denied = 'gated';
+    } else {
+      return;                               // a subscriber sees no lock
+    }
+    if (topTab) topTab.classList.add('is-locked');
+  });
 
   const select = (mode) => tabs.forEach((t) => {
     t.setAttribute('aria-selected', String(t.dataset.monitorSort === mode));
@@ -138,6 +179,12 @@ export function initHomeUpboard() {
       return;
     }
 
+    // Already known to be shut: open the gate and stop. No selection change and
+    // no fetch — flipping the tab to «selected» first is what made it flash
+    // blue on the way to telling the reader it is not theirs. Same shape as
+    // upboard-page.js's own click handler.
+    if (denied) { gateSheet(denied === 'guest'); return; }
+
     if (loading) return;
     if (freshHtml === null) freshHtml = list.innerHTML;
     loading = true;
@@ -154,9 +201,17 @@ export function initHomeUpboard() {
       // gate must not have.
       // 401 (signed out) and 402 (free) are both answers; anything else means
       // we could not ask, and must not become an upsell aimed at a subscriber.
+      // Kept as the backstop the load-time check cannot cover: /me may have
+      // said «premium» and the subscription lapsed during this same page view,
+      // in which case the board is the thing that finds out. Recording it in
+      // `denied` too means a second press goes straight to the gate instead of
+      // flashing blue and asking again.
       const st = err && err.status;
-      if (st === 401 || st === 402) { tab.classList.add('is-locked'); gateSheet(st === 401); }
-      else unreachableSheet();
+      if (st === 401 || st === 402) {
+        denied = st === 401 ? 'guest' : 'gated';
+        tab.classList.add('is-locked');
+        gateSheet(st === 401);
+      } else unreachableSheet();
     } finally {
       loading = false;
     }
