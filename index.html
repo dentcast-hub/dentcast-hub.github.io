@@ -4104,7 +4104,8 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
   box-shadow:var(--x-sh);
 }
 #panel-studio .dc-home-hero,
-#panel-studio .dc-plus-home-inner{
+#panel-studio .dc-plus-home-inner,
+#dcd-welcome-feed .dc-plus-home-inner{
   background:var(--x-card);
   border:1px solid var(--x-line);
   border-radius:22px;
@@ -4194,8 +4195,10 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
    dissolve into the page (founder report, 2026-08-12). A NEUTRAL band
    keeps its "header of the card" identity without ever competing with a
    blue ground — and it stays neutral wherever the aura lands. */
-#panel-studio .dc-plus-connrow{ background:var(--x-band); }
-#panel-studio .dc-plus-connrow .dc-plus-chip{ background:var(--x-card); }
+#panel-studio .dc-plus-connrow,
+#dcd-welcome-feed .dc-plus-connrow{ background:var(--x-band); }
+#panel-studio .dc-plus-connrow .dc-plus-chip,
+#dcd-welcome-feed .dc-plus-connrow .dc-plus-chip{ background:var(--x-card); }
 
 /* ── pulse: the site's own blue, no warm accent ── */
 #panel-studio .dc-pulse{ border-right:1px solid var(--x-line); padding:1rem 1.15rem; }
@@ -5612,7 +5615,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 
       <!-- Welcome: mobile-styled Pulse on top + latest-content cards over the cover -->
       <div class="dcd-welcome" id="dcd-welcome">
-        <div class="dcd-welcome-feed">
+        <div class="dcd-welcome-feed" id="dcd-welcome-feed">
 
           <!-- The reader's own card, the desktop layout's copy of
                #dcPlusHomeCard (plus/js/home-card.js, SLOT_IDS). Empty, unlike
