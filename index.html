@@ -1935,19 +1935,22 @@ body.dc-desktop-ui #dc-desktop-root{
 .dcd-col-c-scroll::-webkit-scrollbar-thumb{ background:var(--x-line); border-radius:62.4375rem; }
 
 /* Welcome default state — cover image background + pulse on top */
+/* No cover photo here (removed 2026-09-09). It was a full-bleed
+   dentcast-cover.webp under a rgba(0,0,0,.45) scrim, which forced everything
+   standing on it to be light-on-dark — so the SAME component rendered in two
+   opposite colour schemes depending on which shell drew it: #dcLatestRail is a
+   white card on the phone, .dcd-latest-card was a dark glass tile here. The
+   phone's home has no cover either; it opens on --x-ground with cards on top,
+   and that is what this column does now. --x-ground comes from .dcd-col-c, so
+   this element states no background of its own.
+   Only this USE of the image goes, never the file: it is the phone's episode
+   hero artwork and the og:image/twitter:image on a large number of pages, so
+   deleting it would blank every share card on the site. */
 .dcd-welcome{
   padding:0;
   position:relative;
   min-height:100%;
-  background:url('/dentcast-cover.webp') center center / cover no-repeat;
   display:flex; flex-direction:column; justify-content:flex-start;
-}
-/* Dark overlay so Pulse text stays readable over the image */
-.dcd-welcome::before{
-  content:"";
-  position:absolute; inset:0;
-  background:rgba(0,0,0,.45);
-  pointer-events:none;
 }
 .dcd-welcome-feed{
   position:relative; z-index:1;
@@ -2117,33 +2120,39 @@ body.dc-desktop-ui #dc-desktop-root{
    for strong contrast in both themes, since they sit over the dark overlay) */
 .dcd-latest-head{
   display:flex; align-items:center; gap:0.4375rem;
-  font-size:.9rem; font-weight:800; color:#fff;
-  margin:0.125rem 0.125rem 0.75rem; text-shadow:0 1px 6px rgba(0,0,0,.55);
+  font-size:.9rem; font-weight:800; color:var(--x-ink);
+  margin:0.125rem 0.125rem 0.75rem;
 }
-.dcd-latest-dot{ width:0.4375rem; height:0.4375rem; border-radius:50%; background:#5b9cf6; flex-shrink:0; }
+.dcd-latest-dot{ width:0.4375rem; height:0.4375rem; border-radius:50%; background:var(--ac); flex-shrink:0; }
 .dcd-latest-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; }
 @media(min-width:1280px){ .dcd-latest-grid{ grid-template-columns:repeat(3,1fr); } }
+/* The phone's card system: --x-card on --x-line at 18px with the tier-1
+   shadow. The backdrop-filter went with the photo — it existed to blur an image
+   that is no longer behind it, and a blur costs the GPU whether or not there is
+   anything to blur. */
 .dcd-latest-card{
   display:flex; flex-direction:column; gap:0.5rem;
-  background:rgba(12,18,28,.60);
-  backdrop-filter:blur(10px) saturate(1.1); -webkit-backdrop-filter:blur(10px) saturate(1.1);
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:var(--r-lg);
+  background:var(--x-card);
+  border:1px solid var(--x-line);
+  border-radius:18px;
   padding:0.8125rem 0.875rem; min-height:5.875rem;
   cursor:pointer; text-decoration:none;
-  box-shadow:0 6px 20px rgba(0,0,0,.28);
-  transition:transform .15s ease, border-color .15s ease, background .15s ease;
+  box-shadow:var(--x-sh);
+  transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
 }
-.dcd-latest-card:hover{ transform:translateY(-2px); border-color:rgba(255,255,255,.30); background:rgba(12,18,28,.72); }
+.dcd-latest-card:hover{ transform:translateY(-2px); border-color:rgba(var(--ac-rgb),.35); box-shadow:var(--x-sh-hero); }
+/* The site's chip vocabulary. The phone tints this per content type
+   (.dc-type-chip.t-insight etc.); matching that here needs the renderer to emit
+   a type class, so it is a change of its own, not a repaint. */
 .dcd-latest-badge{
   align-self:flex-start; font-size:.66rem; font-weight:700;
-  color:#cfe0ff; background:rgba(91,156,246,.20);
-  border:1px solid rgba(91,156,246,.34);
+  color:var(--ac); background:var(--chip-bg);
+  border:1px solid var(--chip-bd);
   padding:0.125rem 0.5625rem; border-radius:62.4375rem;
 }
 .dcd-latest-title{
   font-size:.86rem; font-weight:700; line-height:1.55;
-  color:rgba(245,249,255,.96);
+  color:var(--x-ink);
   display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
 }
 
