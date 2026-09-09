@@ -215,6 +215,11 @@ body{
   display:flex; flex-direction:column;
   min-height:100%;
   min-height:100dvh;
+  /* One number, two users: the panels (below) and the bottom nav's own row.
+     Declared here rather than on :root because it describes this shell, and
+     because .dc-bottom-nav is position:fixed but still a descendant, so it
+     inherits it. */
+  --dc-measure:680px;
 }
 
 /* ── TABLET shell bounding — NON-PORTRAIT only ───────────────────────────
@@ -413,6 +418,14 @@ body{
   /* upward cast lifts the footer off the body; inset hairline gives the
      dark zone a crisp lit top edge so it never dissolves into the page */
   box-shadow:none;
+  /* Same measure as the panels, applied as padding so the BAR still spans the
+     viewport (its background and top hairline must reach both edges) while its
+     three tabs sit in the same column as the content above them. max() makes it
+     inert below the measure, so a phone is untouched.
+     The topbar deliberately does NOT get this: .dc-bottom-nav exists only on
+     this page, but .dc-topbar is on every page of the site, so centring it here
+     alone would make the header jump between the homepage and an article. */
+  padding-inline:max(0px, calc((100% - var(--dc-measure)) / 2));
   padding-bottom:env(safe-area-inset-bottom);
   transition:background var(--tr2),border-color var(--tr2);
 }
@@ -449,7 +462,23 @@ body{
 .dc-bn-item:active .dc-bn-ico{transform:scale(.85);}
 
 /* ── PANELS ── */
+/* Tablet measure. The mobile shell is what a portrait tablet gets (isDesk()
+   needs ≥1024px, or ≥768px WITH a mouse), and nothing capped its width, so at
+   820–834px every card simply stretched: a 40-character list row rendered ~800px
+   wide with the left two thirds empty. 680px is not derived from anything, it
+   was chosen by looking at 834px against 640 (tight) and 720 (loose); below it
+   the rule is inert, so a phone is untouched.
+
+   On .dc-panel rather than on #mobile-body, because #mobile-body carries the
+   brand aura (radial-gradient + --x-ground) and that is a page-level glow:
+   capping the scroller would have painted it as a lit strip down the middle of
+   a flat ground. The panels move, the ground stays edge to edge.
+
+   #panel-patient is excluded and must stay excluded: the scrollytelling film
+   (.pt-wrap) lives inside it and is measured full-bleed, so a max-width here
+   letterboxes it. */
 .dc-panel{ display:none; }
+.dc-panel:not(#panel-patient){ max-width:var(--dc-measure); margin-inline:auto; }
 .dc-panel.active{ display:block; }
 .dc-panel.anim-right{ animation:slideR 0.32s cubic-bezier(0.25,0.46,0.45,0.94) both; }
 .dc-panel.anim-left { animation:slideL 0.32s cubic-bezier(0.25,0.46,0.45,0.94) both; }
