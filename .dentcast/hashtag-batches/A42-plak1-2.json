@@ -1,0 +1,17 @@
+{
+  "type": "plak_sefr",
+  "enforce": true,
+  "note": "پلاک صفر قسمت ۲ (plak-sefr/plak1-2 — دو دندانپزشکی که هر دو سایت دارند). Four of the five tags REUSE canonical concepts minted by A41 — --simulate returned #پلاک_صفر، #جستجوپذیری_محتوا، #حضور_آنلاین_دندانپزشک and #ماندگاری_محتوا at rank-1 with score=1.00, so nothing was re-spelled. One concept is genuinely absent and is minted here: #سایت_مطب. The library had no entry for the practice website as an object at all — 'سایت مطب دندانپزشکی' returned #مدیریت_مطب at score=0.50, i.e. a non-match — and this is the object the whole rest of the series is about, so it earns a concept rather than being folded into #حضور_آنلاین_دندانپزشک (which is the wider question of where you are findable, not the site itself). Domain 'web', continuing A41's introduction of that label. Tagged what the article RESOLVES: #مالکیت_پلتفرم and #اینستاگرام are deliberately absent — قسمت ۲ takes the platform argument as settled by قسمت ۱ and never argues it again.",
+  "concepts": [
+    {
+      "tag": "#سایت_مطب",
+      "domain": "web",
+      "definition": "سایتِ خودِ مطب به‌عنوان یک شیء با کارکردِ مشخص — نه کارتِ ویزیتِ کسی که از قبل تصمیم گرفته بیاید، بلکه جایی که به سؤالِ کسی جواب می‌دهد که هنوز اسمِ شما را نمی‌داند، و چیزی که تمام‌شده نیست و در جریان می‌ماند.",
+      "use_when": "مقاله موضوعش خودِ سایتِ مطب باشد — اینکه برای چه کاری ساخته شده، چه چیزی در آن اتفاق می‌افتد، یا چرا داشتنش به‌تنهایی کافی نیست.",
+      "aliases": ["practice website", "وب‌سایت مطب", "سایت دندانپزشکی", "dental practice website", "سایت شخصی دندانپزشک", "clinic website"]
+    }
+  ],
+  "articles": {
+    "plak-sefr/plak1-2": ["#پلاک_صفر", "#سایت_مطب", "#جستجوپذیری_محتوا", "#حضور_آنلاین_دندانپزشک", "#ماندگاری_محتوا"]
+  }
+}
