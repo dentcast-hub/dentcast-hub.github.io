@@ -1583,56 +1583,44 @@ body.dc-desktop-ui #dc-desktop-root{
 .dcd-group.open .dcd-group-hdr-arr{ transform:rotate(90deg); }
 .dcd-group.open .dcd-group-hdr{ background:rgba(255,255,255,.04); }
 
-/* ── COL-A GROUP HEADERS: mobile bottom-nav "living neon" parity ──────────
-   Each category group carries the SAME --bn-glow RGB triad as its matching
-   mobile tab (gold/teal/coral), driving BOTH the header-icon color and its
-   neon glow. The sidebar bg is the same navy (#17212b) as the mobile footer,
-   so these values are pre-validated. Set on the header element so the reused
-   bnNeonPulse keyframe reads var(--bn-glow). */
-.dcd-group-hdr[data-grp="studio"]   { --bn-glow:196,152,32; }  /* gold  #c49820 */
-.dcd-group-hdr[data-grp="metabase"] { --bn-glow:79,209,197; }  /* teal  #4fd1c5 */
-.dcd-group-hdr[data-grp="patients"] { --bn-glow:245,106,121; } /* coral #f56a79 */
-[data-theme="dark"] .dcd-group-hdr[data-grp="studio"]   { --bn-glow:227,185,74; }  /* gold  #e3b94a */
-[data-theme="dark"] .dcd-group-hdr[data-grp="metabase"] { --bn-glow:95,224,211; }  /* teal  #5fe0d3 */
-[data-theme="dark"] .dcd-group-hdr[data-grp="patients"] { --bn-glow:255,122,138; } /* coral #ff7a8a */
+/* ── COL-A GROUP HEADERS ───────────────────────────────────────────────────
+   This block used to mirror the mobile bottom nav's "living neon": a per-group
+   --bn-glow triad (gold/teal/coral), a tinted icon, a pulsing glow on the open
+   group, and var(--bn-active) on its label. Retired 2026-09-09, for three
+   reasons found together.
 
-/* Icon tinted to its brand color — all three group headers, open or closed */
-.dcd-group-hdr-ico{ color:rgb(var(--bn-glow)); }
+   1. The thing it mirrored no longer exists. Mobile retired the per-tab neon on
+      2026-08-11 with the Examine language — see `.dc-bn-item.active .dc-bn-ico`,
+      which now sets `animation:none; filter:none` and paints the active tab in
+      plain ink. The sidebar was the last surviving copy of a language the site
+      had already dropped.
 
-/* Open group: label tinted like the mobile ACTIVE tab label (var(--bn-active)) */
-.dcd-group.open .dcd-group-hdr-lbl{ color:var(--bn-active); }
+   2. Half of it never ran. `@keyframes bnNeonPulse` went with the mobile neon
+      and exists nowhere in the codebase; both `animation:bnNeonPulse` lines here
+      resolved to a name with no keyframes, so nothing has pulsed for a month,
+      and the two `prefers-reduced-motion` blocks were disabling an animation
+      that could not play.
 
-/* Open group: soft pulsing outer glow on its icon — only the open group pulses,
-   mirroring mobile where only the active tab glows. Reuses the mobile keyframe;
-   only opacity + filter animate, never layout-triggering props. */
-.dcd-group.open .dcd-group-hdr-ico{
-  animation:bnNeonPulse 5s ease-in-out infinite;
-}
-/* Reduced motion: steady static glow, no pulse (mirrors the mobile nav) */
-@media (prefers-reduced-motion: reduce){
-  .dcd-group.open .dcd-group-hdr-ico{
-    animation:none;
-    opacity:1;
-    filter:drop-shadow(0 0 5px rgba(var(--bn-glow),.55));
-  }
-}
+   3. The label rule was an active contrast bug. `--bn-active` is the BOTTOM
+      NAV's ink, and that nav went white in the same 2026-08-11 change, so the
+      token became #0a1a33 in light mode — while this sidebar stayed navy
+      (--sb #17212b). The open group's label was therefore rendering at a
+      measured contrast of 1.07:1, i.e. invisible, in light mode only. Every
+      other label in the tree is 14.23:1. The fix is to stop borrowing a token
+      calibrated for a different ground: the open state is already carried by
+      the header's background tint, the rotated arrow and the expanded list,
+      which is exactly how it has read in dark mode all along.
 
-/* ── PATIENTS direct item: standalone (no accordion) neon ──────────────────
-   Carries the same coral --bn-glow as its mobile tab. At rest: static coral
-   glow (no pulse). While its cinematic viewer is active (col-C has is-patient):
-   the icon pulses — mirroring mobile, where only the active tab pulses. */
-.dcd-patient-item .dcd-group-hdr-ico{
-  filter:drop-shadow(0 0 5px rgba(var(--bn-glow),.55));
-}
+   What replaces it keeps mobile's ROLE structure and drops its palette: icons
+   are muted at rest and go to full ink for the open group (and for بیماران
+   while its film is up), the same inactive/active split the bottom nav makes —
+   but in the sidebar's own tokens, which are calibrated for navy. */
+.dcd-group-hdr-ico{ color:var(--sb-txt2); transition:color var(--tr); }
+.dcd-group.open .dcd-group-hdr-ico{ color:var(--sb-txt); }
+
+/* بیماران has no accordion, so its "active" signal is its viewer, not .open */
 .dcd-app:has(.dcd-col-c.is-patient) .dcd-patient-item .dcd-group-hdr-ico{
-  animation:bnNeonPulse 5s ease-in-out infinite;
-}
-@media (prefers-reduced-motion: reduce){
-  .dcd-app:has(.dcd-col-c.is-patient) .dcd-patient-item .dcd-group-hdr-ico{
-    animation:none;
-    opacity:1;
-    filter:drop-shadow(0 0 5px rgba(var(--bn-glow),.55));
-  }
+  color:var(--sb-txt);
 }
 
 /* Sub-items (collapsed by default) */
