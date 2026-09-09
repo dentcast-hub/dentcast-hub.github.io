@@ -1438,8 +1438,18 @@ body.dc-desktop-ui .dc-search-overlay{ display:none!important; }
 .dcd-app.col-a-hidden{
   grid-template-columns:0px 420px 1fr !important;
 }
+/* visibility:hidden is what makes "collapsed" true for everyone, not just for a
+   mouse. The track goes to 0px and overflow clips it, but the aside still
+   measured 1px wide × full height with visibility:visible — so its eleven tree
+   buttons stayed in the accessibility tree AND in the tab order: tabbing from
+   the top of the document landed on ten consecutive invisible controls inside a
+   1px column. `pointer-events:none` had closed the mouse door and left the
+   keyboard and screen-reader doors open, which also made the hamburger's
+   aria-expanded="false" a claim the DOM did not honour. Nothing inside col-A
+   sets visibility:visible, so this cannot leak back in, and there is no width or
+   opacity transition here for it to cut short. */
 .dcd-app.col-a-hidden .dcd-col-a{
-  overflow:hidden; pointer-events:none;
+  overflow:hidden; pointer-events:none; visibility:hidden;
 }
 @media(max-width:1024px){
   .dcd-app.col-a-hidden{ grid-template-columns:0px 1fr !important; }
@@ -5380,7 +5390,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 <div class="dcd-app">
 
   <!-- ══ COL-A: CATEGORY TREE (rightmost in RTL) ══ -->
-  <aside class="dcd-col-a" aria-label="دسته‌بندی‌های DentCast">
+  <aside class="dcd-col-a" id="dcd-col-a" aria-label="دسته‌بندی‌های DentCast">
 
     <a class="dcd-brand" href="/">
       <img src="/logo-v2.png" alt="DentCast" width="32" height="32">
@@ -5504,7 +5514,16 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
           <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
         </a>
-        <button class="dc-topbar-btn" id="dcd-hdr-hamburger" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+        <!-- Same glyph as the mobile topbar's hamburger, a different job: there it opens
+             the tools drawer (نصب/مشاوره/اشتراک/درباره), here it collapses col-A. It had
+             inherited that button's «ابزارها» label, which named the mobile action on the
+             desktop control. The label now names the REGION it controls and lets
+             aria-expanded carry the state, which is what a disclosure button should do.
+             aria-expanded also starts "true": the sidebar renders visible (col-a-hidden is
+             added by the first click), so shipping "false" told a screen reader the menu
+             was collapsed while it was on screen. The handler has always kept it correct
+             from the first click onward — only the initial value was wrong. -->
+        <button class="dc-topbar-btn" id="dcd-hdr-hamburger" aria-label="منوی دسته‌بندی" aria-controls="dcd-col-a" aria-expanded="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
         <a class="dc-topbar-btn" id="dcd-hdr-cabinet" href="/dentcast_cabinet_search.html" aria-label="کابینت دنت‌کست"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M15 3v4h4"/><path d="M9 9h2"/><path d="M9 13h6"/><path d="M9 17h6"/></svg></a>
         <button class="dc-topbar-btn" id="dcd-hdr-radar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
         <button class="dc-topbar-btn" id="dcd-hdr-search" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
