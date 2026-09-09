@@ -4142,24 +4142,52 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
    premium block wears it: a wash that fades out in the top 45% of
    each locked card, an amber lock chip, an amber section rule. The
    card body stays white and the copy stays ink, so the block reads as
-   "yours once you subscribe", not as a warning. */
-#panel-studio .dcp-hf-label{ border-right:4px solid var(--x-amber); }
-#panel-studio .dcp-hf-more{ color:var(--x-amber-ink); font-weight:800; }
-#panel-studio .dcp-hf-card{
+   "yours once you subscribe", not as a warning.
+
+   SCOPED TO THE BLOCK, NOT TO A SHELL (2026-09-09). These six rules used to
+   carry a `#panel-studio ` prefix, which quietly made a SITE-WIDE rule into a
+   phone-only one: home-features.js renders the same block into two slots
+   (SLOT_IDS = dcPlusFeatures, dcdPlusFeatures), so the desktop shell's copy
+   fell through to plus.css's defaults and the locked cards wore BRAND BLUE —
+   the site's ordinary colour — on the one block whose whole job is to say
+   "this is what a subscription buys".
+
+   The prefix is `.dcp-hf `, the block's own root, and it is NOT decoration:
+   dropping the prefix entirely was tried first and silently un-ambered the
+   PHONE. plus.css declares `.dcp-hf-ico` / `.dcp-hf-state` / `.dcp-hf-label`
+   at (0,1,0) and dc-nav.js appends plus.css to <head> AFTER this inline
+   block, so a bare `.dcp-hf-ico` here ties on specificity and LOSES on source
+   order. `#panel-studio ` had been hiding that by winning on an id. Only
+   `.dcp-hf-card` survived the bare form, because plus.css sets no background
+   or border on it — which is exactly the kind of partial failure that reads
+   as "mostly fine" in a screenshot. Anything added below needs the prefix too.
+
+   Note the second layer of the card background is --x-card, not --card-bg:
+   the wash has to sit on a stated ground, and the stated ground is the one
+   the phone already uses. On desktop that moves the dark card one shade,
+   #1e2c3a → #152238, in the same family and toward the phone. */
+.dcp-hf .dcp-hf-label{ border-right:4px solid var(--x-amber); }
+.dcp-hf .dcp-hf-more{ color:var(--x-amber-ink); font-weight:800; }
+.dcp-hf .dcp-hf-card{
   background:linear-gradient(180deg, var(--x-amber-wash), transparent 45%), var(--x-card);
   border:1px solid var(--x-amber-bd);
   border-right:1px solid var(--x-amber-bd);
 }
-#panel-studio .dcp-hf-ico{
+.dcp-hf .dcp-hf-ico{
   background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd); color:var(--x-amber-ink);
 }
-#panel-studio .dcp-hf-state{
+.dcp-hf .dcp-hf-state{
   background:var(--x-amber-wash-2); color:var(--x-amber-ink);
   border:1px solid var(--x-amber-bd);
 }
 /* a subscriber's card is unlocked: the live chip returns to brand blue,
-   because at that point the feature is simply theirs, not an offer. */
-#panel-studio .dcp-hf-state.is-live{
+   because at that point the feature is simply theirs, not an offer.
+   Carries the `.dcp-hf ` prefix with the rest, and it has to: plus.css's own
+   `.dcp-hf-state.is-live` (0,2,0) out-ranks a bare `.dcp-hf-state` (0,1,0) on
+   background and colour but NOT on the border this block adds, so without a
+   rule of its own at (0,3,0) a subscriber's blue chip would keep an amber
+   outline. Verified: the live chip is brand blue on all three properties. */
+.dcp-hf .dcp-hf-state.is-live{
   background:var(--chip-bg); color:var(--ac); border-color:var(--chip-bd);
 }
 /* the archive's premium library card gets the same wash + badge */
