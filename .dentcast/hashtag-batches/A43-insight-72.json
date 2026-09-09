@@ -1,0 +1,17 @@
+{
+  "type": "clinical",
+  "enforce": true,
+  "note": "اینسایت ۷۲ (insight/insight-72 — مدیریت ظاهر بریج در تحلیل شدید استخوان و دیاستم قبلی). Five of the six tags REUSE canonical concepts: --simulate returned #اینسایت، #تحلیل_استخوان، #دیاستم and #طراحی_لبخند at rank-1 score=1.00, and #ادراک_بصری at rank-1 for «ادراک عرض دندان» — the same concept insight-25 already carries for the perceived size of a crown, so nothing was re-spelled. One concept is genuinely absent and is minted here: #پرسلن_صورتی. The library had no entry for gingival-shade porcelain at all — «پرسلن صورتی» returned #پرسلن (score=1.00 but a different object: bonding to etched porcelain) and «لثه صورتی پروتز» returned #لثه_کراتینیزه at score=0.50, i.e. a non-match — and replacing lost gingiva with pink porcelain instead of extending the white crown IS the decision this article resolves, so it earns its own concept rather than being folded into #پرسلن. Tagged what the article RESOLVES: #پونتیک and #روکش_موقت are deliberately absent — both appear in the case narration but neither is argued.",
+  "concepts": [
+    {
+      "tag": "#پرسلن_صورتی",
+      "domain": "clinical",
+      "definition": "پرسلنِ هم‌رنگِ لثه که فضای سرویکالِ ناشی از تحلیلِ استخوان یا رسِسِ لثه را می‌پوشاند و لثه‌ی از دست رفته را شبیه‌سازی می‌کند، به‌جای اینکه همان فضا با پرسلنِ سفید به طولِ تاج اضافه شود.",
+      "use_when": "مقاله درباره‌ی جبرانِ نسجِ نرمِ از دست رفته با خودِ رستوریشن باشد — تصمیم به استفاده از پرسلن صورتی، مرزِ آن با جراحی، یا اثرش بر پروپورشنِ تاج.",
+      "aliases": ["pink porcelain", "پرسلن لثه‌ای", "پینک پرسلن", "gingival porcelain", "پرسلن هم‌رنگ لثه", "لثه مصنوعی پروتزی", "pink ceramic"]
+    }
+  ],
+  "articles": {
+    "insight/insight-72": ["#اینسایت", "#پرسلن_صورتی", "#تحلیل_استخوان", "#ادراک_بصری", "#دیاستم", "#طراحی_لبخند"]
+  }
+}
