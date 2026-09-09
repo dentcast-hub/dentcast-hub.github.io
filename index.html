@@ -4400,12 +4400,23 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           flex-shrink:0; border:1px solid var(--border); margin-inline-start:.3rem; }
         .dc-des-legend .dc-des-bar-group span{ width:1.15rem; height:1.15rem; display:flex; align-items:center;
           justify-content:center; font-size:.56rem; font-weight:800; color:#fff; }
-        .dc-des-band-E{ background:#78808f; } .dc-des-band-D{ background:#5f8a63; }
-        .dc-des-band-C{ background:#3f9a49; } .dc-des-band-B{ background:#2f8f3f; }
-        .dc-des-band-A{ background:#1f7a34; }
-        [data-theme="dark"] .dc-des-band-E{ background:#8b93a3; } [data-theme="dark"] .dc-des-band-D{ background:#89a68c; }
-        [data-theme="dark"] .dc-des-band-C{ background:#6fae74; } [data-theme="dark"] .dc-des-band-B{ background:#4f9d5c; }
-        [data-theme="dark"] .dc-des-band-A{ background:#2f8f52; }
+        /* SCOPED TO .dc-des-legend ON PURPOSE — never bare.
+           .dc-des-band-* is a SHARED class: plus.css uses it on every DES surface
+           (the article chip, the evaluation card) to set --des-cur, a text/border
+           colour, and nothing else. Here the same class paints a solid background,
+           which is right for this legend's five little blocks and wrong everywhere
+           else. On a phone that never showed, because an article is its own
+           document. On the desktop shell an article is FETCHED INTO this document
+           (openContent → #dcd-content-area), so a bare rule reached the injected
+           article's chip: solid grey block from here, grey text from
+           plus.css's .dc-act-des{color:var(--des-cur)} — same colour, so the
+           label «سطح پایه / دیدگاه» was invisible. Keep the prefix. */
+        .dc-des-legend .dc-des-band-E{ background:#78808f; } .dc-des-legend .dc-des-band-D{ background:#5f8a63; }
+        .dc-des-legend .dc-des-band-C{ background:#3f9a49; } .dc-des-legend .dc-des-band-B{ background:#2f8f3f; }
+        .dc-des-legend .dc-des-band-A{ background:#1f7a34; }
+        [data-theme="dark"] .dc-des-legend .dc-des-band-E{ background:#8b93a3; } [data-theme="dark"] .dc-des-legend .dc-des-band-D{ background:#89a68c; }
+        [data-theme="dark"] .dc-des-legend .dc-des-band-C{ background:#6fae74; } [data-theme="dark"] .dc-des-legend .dc-des-band-B{ background:#4f9d5c; }
+        [data-theme="dark"] .dc-des-legend .dc-des-band-A{ background:#2f8f52; }
 
         /* The explanation is an INLINE disclosure joined to the box, not a floating
            popover. A popover was wrong twice here: this shell scrolls inside
