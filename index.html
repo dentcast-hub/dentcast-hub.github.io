@@ -2056,6 +2056,40 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 .dcd-content-area .term-header h1{ color:var(--pr); margin-bottom:0.375rem; }
 
+/* ── فهرست مطالب (CSS stripped during fetch, restored here) ──
+   The auto ToC is built by plus.js on this shell (dc-nav.js is stripped from
+   the fetched article), but its rules live in dc-article.css, which this shell
+   does not load at all — so without this block the card injects as a bare
+   <details> with a browser-default triangle. These are dc-article.css's own
+   declarations, verbatim, on the same --card-* reference every other
+   .dcd-content-area article rule uses. Keep the two in step. */
+.dcd-content-area .dc-toc{
+  margin:0 0 1.25rem;
+  background:var(--card-bg, #ffffff);
+  border:1px solid var(--card-border, rgba(2,35,96,.09));
+  border-radius:var(--r-lg, 1.125rem);
+  box-shadow:var(--card-sh, 0 1px 3px rgba(2,35,96,.07));
+  padding:0.25rem 1.25rem;
+}
+.dcd-content-area .dc-toc summary{
+  cursor:pointer; font-size:.9rem; font-weight:700;
+  color:var(--txt2, #4a5f85); padding:0.75rem 0;
+}
+.dcd-content-area .dc-toc ol{ margin:0 0 0.875rem; padding-right:1.25rem; }
+.dcd-content-area .dc-toc li{ margin:0.4375rem 0; font-size:.88rem; }
+/* NO colour declaration here, deliberately. dc-article.css writes
+   `.dc-toc a{color:var(--txt2)}`, but on a standalone page that loses to
+   dc-theme.css's `body:has(.dc-topbar) main a{color:var(--ac)}` (0,2,1 beats
+   0,1,1), so what the phone RENDERS is the accent blue. This shell's article
+   is not inside a <main>, so that rule cannot reach it — mirroring the
+   declaration instead of the rendered result would have made the desktop ToC
+   the only place on the site where those links are grey. Left to
+   `.dcd-content-area a`, which is var(--ac): the same colour, measured. */
+.dcd-content-area .dc-toc a{ text-decoration:none; }
+.dcd-content-area .dc-toc a:hover{
+  color:var(--ac, #0b5fff); text-decoration:underline; text-underline-offset:3px;
+}
+
 /* ── DentCast+ video containers (CSS stripped during fetch, restored here) ── */
 .dcd-content-area .r1_iframe_embed{
   position:relative; overflow:hidden; width:100%;
@@ -5915,7 +5949,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=158" defer></script>
+<script src="/dc-nav.js?v=159" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
