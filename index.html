@@ -2843,7 +2843,8 @@ body.dc-desktop-ui #dc-desktop-root{
 /* =====================================================
    EPISODES CARD — redesigned layout
 ===================================================== */
-#card-episodes{
+#card-episodes,
+#dcd-card-episodes{
   flex-direction:column;
   align-items:stretch;
   padding:1rem 1.125rem 0.875rem;
@@ -3224,29 +3225,36 @@ a.dc-list-card--pillar {
 }
 
 /* ── HERO ── */
-#panel-studio .dc-home-hero{
+#panel-studio .dc-home-hero,
+#dcd-welcome-feed .dc-home-hero{
   background:var(--card-bg); border:1px solid var(--card-border);
   border-radius:1.375rem; box-shadow:var(--card-sh);
   padding:1.125rem; margin-bottom:0.75rem; cursor:pointer;
 }
-#panel-studio .dc-home-hero-top{ display:flex; gap:0.875rem; align-items:center; }
-#panel-studio .dc-home-hero-cover{
+#panel-studio .dc-home-hero-top,
+#dcd-welcome-feed .dc-home-hero-top{ display:flex; gap:0.875rem; align-items:center; }
+#panel-studio .dc-home-hero-cover,
+#dcd-welcome-feed .dc-home-hero-cover{
   width:5.25rem; height:5.25rem; border-radius:1rem; object-fit:cover;
   object-position:left center; /* square crop of the cover's brand block (left side) */
   border:1px solid var(--border2); flex-shrink:0;
 }
-#panel-studio .dc-home-hero-info{ flex:1; min-width:0; }
-#panel-studio .dc-home-hero-badge{
+#panel-studio .dc-home-hero-info,
+#dcd-welcome-feed .dc-home-hero-info{ flex:1; min-width:0; }
+#panel-studio .dc-home-hero-badge,
+#dcd-welcome-feed .dc-home-hero-badge{
   display:inline-flex; align-items:center; gap:0.3125rem;
   font-size:.66rem; font-weight:800; color:var(--ac);
   background:var(--chip-bg); border:1px solid var(--chip-bd);
   border-radius:62.4375rem; padding:0.125rem 0.625rem; margin-bottom:0.375rem;
 }
-#panel-studio .dc-home-hero-title{
+#panel-studio .dc-home-hero-title,
+#dcd-welcome-feed .dc-home-hero-title{
   margin:0; font-size:1.04rem; font-weight:800; line-height:1.6; color:var(--txt);
   display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
 }
-#panel-studio .dc-home-hero-row{
+#panel-studio .dc-home-hero-row,
+#dcd-welcome-feed .dc-home-hero-row{
   display:flex; align-items:center; justify-content:space-between;
   gap:0.75rem; margin-top:0.875rem;
   direction:rtl; /* text at reading-start (right), play pinned to the row END (left) */
@@ -3256,20 +3264,27 @@ a.dc-list-card--pillar {
   padding:0.4375rem 0.75rem 0.4375rem 0.4375rem; /* a contained player bar — the play belongs to the card */
   position:relative; overflow:hidden;
 }
-#panel-studio .dc-home-hero-play{ border:none; cursor:pointer; padding:0; }
-#panel-studio .dc-home-hero-prog{
+#panel-studio .dc-home-hero-play,
+#dcd-welcome-feed .dc-home-hero-play{ border:none; cursor:pointer; padding:0; }
+#panel-studio .dc-home-hero-prog,
+#dcd-welcome-feed .dc-home-hero-prog{
   position:absolute; bottom:0; right:0; height:0.1875rem; width:0;
   background:var(--ac); transition:width .3s linear;
 }
-#panel-studio .dc-home-hero-play{ order:1; }
-#panel-studio .dc-home-hero-play{
+#panel-studio .dc-home-hero-play,
+#dcd-welcome-feed .dc-home-hero-play{ order:1; }
+#panel-studio .dc-home-hero-play,
+#dcd-welcome-feed .dc-home-hero-play{
   width:2.75rem; height:2.75rem; border-radius:50%; flex-shrink:0;
   background:var(--pr); display:flex; align-items:center; justify-content:center;
   box-shadow:0 3px 10px rgba(var(--pr-rgb),.25);
 }
-#panel-studio .dc-home-hero-play svg{ width:1.25rem; height:1.25rem; fill:#fff; margin-right:-0.125rem; }
-#panel-studio .dc-home-hero:active .dc-home-hero-play{ transform:scale(.92); }
-#panel-studio .dc-home-hero-cta{ font-size:.78rem; font-weight:700; color:var(--txt2); }
+#panel-studio .dc-home-hero-play svg,
+#dcd-welcome-feed .dc-home-hero-play svg{ width:1.25rem; height:1.25rem; fill:#fff; margin-right:-0.125rem; }
+#panel-studio .dc-home-hero:active .dc-home-hero-play,
+#dcd-welcome-feed .dc-home-hero:active .dc-home-hero-play{ transform:scale(.92); }
+#panel-studio .dc-home-hero-cta,
+#dcd-welcome-feed .dc-home-hero-cta{ font-size:.78rem; font-weight:700; color:var(--txt2); }
 
 /* ── PULSE → Premium Announcement ── */
 #panel-studio .dc-pulse{
@@ -3738,22 +3753,29 @@ a.dc-list-card--pillar {
 }
 
 /* ── hero episode card: flat, hairline, quiet badge ── */
-#panel-studio .dc-home-hero{
+#panel-studio .dc-home-hero,
+#dcd-welcome-feed .dc-home-hero{
   border-radius:0.875rem; box-shadow:none;
   border:1px solid var(--card-border); padding:1rem;
 }
-#panel-studio .dc-home-hero-badge{
+#panel-studio .dc-home-hero-badge,
+#dcd-welcome-feed .dc-home-hero-badge{
   background:none; border:none; padding:0; margin-bottom:0.25rem;
   font-size:.7rem; letter-spacing:.2px;
 }
-#panel-studio .dc-home-hero-title{ font-size:1.02rem; line-height:1.7; }
-#panel-studio .dc-home-hero-cover{ border-radius:0.625rem; }
-#panel-studio .dc-home-hero-row{
+#panel-studio .dc-home-hero-title,
+#dcd-welcome-feed .dc-home-hero-title{ font-size:1.02rem; line-height:1.7; }
+#panel-studio .dc-home-hero-cover,
+#dcd-welcome-feed .dc-home-hero-cover{ border-radius:0.625rem; }
+#panel-studio .dc-home-hero-row,
+#dcd-welcome-feed .dc-home-hero-row{
   background:transparent; border:none; border-top:1px solid var(--border2);
   border-radius:0; padding:0.75rem 0 0; margin-top:0.875rem;
 }
-#panel-studio .dc-home-hero-play{ box-shadow:none; width:2.5rem; height:2.5rem; }
-#panel-studio .dc-home-hero-prog{ bottom:auto; top:-1px; }
+#panel-studio .dc-home-hero-play,
+#dcd-welcome-feed .dc-home-hero-play{ box-shadow:none; width:2.5rem; height:2.5rem; }
+#panel-studio .dc-home-hero-prog,
+#dcd-welcome-feed .dc-home-hero-prog{ bottom:auto; top:-1px; }
 
 /* ── pulse: amber news box → quiet bordered list ── */
 #panel-studio .dc-pulse{
@@ -4105,6 +4127,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 }
 #panel-studio .dc-home-hero,
 #panel-studio .dc-plus-home-inner,
+#dcd-welcome-feed .dc-home-hero,
 #dcd-welcome-feed .dc-plus-home-inner{
   background:var(--x-card);
   border:1px solid var(--x-line);
@@ -4115,20 +4138,27 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 .dc-spot{ border-radius:18px !important; box-shadow:var(--x-sh) !important; }
 
 /* ── hero episode: the jewel — soft gradient wash inside, gradient play ── */
-#panel-studio .dc-home-hero{
+#panel-studio .dc-home-hero,
+#dcd-welcome-feed .dc-home-hero{
   background:var(--x-grad-soft), var(--x-card);
   padding:1.25rem;
 }
-#panel-studio .dc-home-hero-badge{
+#panel-studio .dc-home-hero-badge,
+#dcd-welcome-feed .dc-home-hero-badge{
   background:var(--x-grad); color:#fff; border:none;
   padding:.22rem .75rem; border-radius:999px; margin-bottom:.5rem;
   box-shadow:0 4px 12px -4px rgba(18,87,214,.5);
 }
-#panel-studio .dc-home-hero-badge .dc-svg-icon{ color:#fff; }
-#panel-studio .dc-home-hero-title{ font-size:1.14rem; color:var(--x-ink); line-height:1.75; }
-#panel-studio .dc-home-hero-cover{ border-radius:1rem; box-shadow:0 10px 22px -8px rgba(9,32,74,.45); }
-#panel-studio .dc-home-hero-row{ border-top:1px solid var(--x-line); }
-#panel-studio .dc-home-hero-play{
+#panel-studio .dc-home-hero-badge .dc-svg-icon,
+#dcd-welcome-feed .dc-home-hero-badge .dc-svg-icon{ color:#fff; }
+#panel-studio .dc-home-hero-title,
+#dcd-welcome-feed .dc-home-hero-title{ font-size:1.14rem; color:var(--x-ink); line-height:1.75; }
+#panel-studio .dc-home-hero-cover,
+#dcd-welcome-feed .dc-home-hero-cover{ border-radius:1rem; box-shadow:0 10px 22px -8px rgba(9,32,74,.45); }
+#panel-studio .dc-home-hero-row,
+#dcd-welcome-feed .dc-home-hero-row{ border-top:1px solid var(--x-line); }
+#panel-studio .dc-home-hero-play,
+#dcd-welcome-feed .dc-home-hero-play{
   background:var(--x-grad);
   box-shadow:0 10px 22px -8px rgba(18,87,214,.65);
   width:2.9rem; height:2.9rem;
@@ -5629,6 +5659,38 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
                directly after it. -->
           <div id="dcdPlusHomeCard" class="dc-plus-home-card" aria-label="یادگیری شما" hidden></div>
 
+          <!-- هیروی اپیزود — the desktop layout's copy of #card-episodes.
+               Same classes, so the #panel-studio rules that give it the hero
+               card system reach it through their twin selectors rather than
+               through a second copy of the declarations.
+
+               Its ids differ on purpose (#dcd-card-episodes, no #dcHeroPlay /
+               #dcHeroProg): a duplicate id is invalid, and every one of those
+               three is something else's anchor — the inline player, and
+               tools/update-homepage-counters.py's refresh_hero(). Both now
+               work off the CARD and the CLASSES instead, so each copy carries
+               its own player and both are refreshed on every publish.
+
+               No inline onclick either: the phone's copy sets
+               window.location.href, which on this shell would leave the app
+               and reload the whole homepage. It is wired below to the same
+               openContent/openPageViewer routing every «آخرین مطالب» card
+               uses. -->
+          <div class="dc-home-hero" id="dcd-card-episodes" data-href="/episodes/episode-161.html" role="link" tabindex="0" aria-label="رفتن به صفحه‌ی تازه‌ترین قسمت">
+            <div class="dc-home-hero-top">
+              <img class="dc-home-hero-cover" src="/dentcast-cover.webp" alt="" width="84" height="84" loading="lazy" decoding="async">
+              <div class="dc-home-hero-info">
+                <span class="dc-home-hero-badge"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg> قسمت ۱۶۱ · تازه‌ترین</span>
+                <h2 class="dc-home-hero-title">Cantilever in Implant Dentistry :part1</h2>
+              </div>
+            </div>
+            <div class="dc-home-hero-row">
+              <button class="dc-home-hero-play" type="button" aria-label="پخش تازه‌ترین قسمت" data-src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast161%20.mp3?versionId="><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button>
+              <span class="dc-home-hero-cta">شنیدن این قسمت و آرشیو کامل اپیزودها</span>
+              <span class="dc-home-hero-prog" aria-hidden="true"></span>
+            </div>
+          </div>
+
           <div class="dc-pulse dcd-welcome-pulse" id="dcdPulse">
             <div class="dc-pulse-head">
               <div class="dc-pulse-title"><span class="dc-pulse-dot"></span>پالس · آخرین اخبار دنت‌کست</div>
@@ -5897,17 +5959,21 @@ scrollBody.addEventListener('touchend',e=>{
     /* hero: newest episode (last brain entry with audio) feeds title/badge/audio */
     var ep=null;
     arr.forEach(function(e){ if(e&&e.audio_url&&(e.page_url||e.url)) ep=e; });
-    var hpBtn=document.getElementById('dcHeroPlay');
-    if(ep&&hpBtn){
-      hpBtn.dataset.src=ep.audio_url;
-      var heroCard=document.getElementById('card-episodes');
+    /* Every hero card on the page, not the one with the id: the desktop
+       welcome column carries a second copy (#dcd-card-episodes) and it has to
+       be fed the same newest episode. Each lookup is scoped to its own card. */
+    if(ep){
       var epUrl=ep.page_url||ep.url;
-      if(heroCard&&epUrl) heroCard.dataset.href=epUrl;
-      var ht=document.querySelector('#panel-studio .dc-home-hero-title');
-      if(ht&&ep.title) ht.textContent=ep.title;
-      var hb=document.querySelector('#panel-studio .dc-home-hero-badge');
-      if(hb&&ep.episode&&hb.lastChild&&hb.lastChild.nodeType===3)
-        hb.lastChild.textContent=' قسمت '+ep.episode+' · تازه‌ترین';
+      document.querySelectorAll('.dc-home-hero').forEach(function(card){
+        var hpBtn=card.querySelector('.dc-home-hero-play');
+        if(hpBtn) hpBtn.dataset.src=ep.audio_url;
+        if(epUrl) card.dataset.href=epUrl;
+        var ht=card.querySelector('.dc-home-hero-title');
+        if(ht&&ep.title) ht.textContent=ep.title;
+        var hb=card.querySelector('.dc-home-hero-badge');
+        if(hb&&ep.episode&&hb.lastChild&&hb.lastChild.nodeType===3)
+          hb.lastChild.textContent=' قسمت '+ep.episode+' · تازه‌ترین';
+      });
     }
     if(qb&&pool.length){
       var NAMES={clinical:'Clinical Insight',notecast:'NoteCast',meta:'MetaNote',
@@ -5921,8 +5987,12 @@ scrollBody.addEventListener('touchend',e=>{
   }).catch(function(){});
   /* inline hero player: tap = play/pause right here (audio from the brain),
      progress on the bar; the rest of the card still opens the episodes page */
-  var hp=document.getElementById('dcHeroPlay'), hprog=document.getElementById('dcHeroProg');
-  if(hp){
+  /* One player per hero card, its progress bar found inside its OWN card.
+     Only one shell is ever displayed, so the two can never both be playing —
+     but each closes over its own audio element rather than sharing one, which
+     is what keeps a second copy from rewinding the first. */
+  document.querySelectorAll('.dc-home-hero-play').forEach(function(hp){
+    var hprog=hp.parentNode?hp.parentNode.querySelector('.dc-home-hero-prog'):null;
     var heroAudio=null, P_PLAY='M8 5.5v13l11-6.5z', P_PAUSE='M7 5h4v14H7zM13 5h4v14h-4z';
     hp.addEventListener('click',function(ev){
       ev.stopPropagation(); ev.preventDefault();
@@ -5939,7 +6009,7 @@ scrollBody.addEventListener('touchend',e=>{
       if(heroAudio.paused){ heroAudio.play(); hp.querySelector('path').setAttribute('d',P_PAUSE); }
       else{ heroAudio.pause(); hp.querySelector('path').setAttribute('d',P_PLAY); }
     });
-  }
+  });
   if(qg){
     fetch('/glossary/glossary.json').then(function(r){return r.json();}).then(function(g){
       var L=(g&&g.glossary)||[];
@@ -7049,6 +7119,28 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       });
     }).catch(()=>{});
   }
+
+  /* هیروی اپیزود (#dcd-card-episodes) — the desktop copy of the phone's
+     featured-episode card. The phone's sets window.location.href inline; here
+     that would leave the app shell and reload the homepage, so the card is
+     routed through the SAME openContent/openPageViewer split every «آخرین
+     مطالب» card above uses. The play button is excluded — its own handler
+     stops propagation, but the guard makes that independent of ordering. */
+  (function(){
+    const hero = document.getElementById('dcd-card-episodes');
+    if(!hero) return;
+    const go = (e) => {
+      if(e.target && e.target.closest && e.target.closest('.dc-home-hero-play')) return;
+      const url = hero.dataset.href || '/episodes.html';
+      let path; try{ path = new URL(url, location.origin).pathname; }catch(x){ path = url; }
+      if(path === '/episodes.html' || path === '/episodes/' || path === '/episodes/index.html') openPageViewer('/episodes.html');
+      else openContent(path, hero.querySelector('.dc-home-hero-title')?.textContent.trim() || '');
+    };
+    hero.addEventListener('click', go);
+    hero.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); go(e); }
+    });
+  })();
 
   /* ══════════════════════════════════════════════
      ENABLE / DISABLE DESKTOP MODE
