@@ -2138,6 +2138,48 @@ body.dc-desktop-ui #dc-desktop-root{
   display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
 }
 
+/* ── SECTION HEADERS + up-board, the desktop copies ──
+   `.dc-home-sec`, `.dc-home-sec-label` and `.dc-monitor` are all styled ONLY
+   under #panel-studio / #panel-sharehub. Cloning the phone's markup into this
+   column therefore lands on the BARE base rules, which is a real difference a
+   screenshot flatters: measured on the bare `.dc-monitor-list a` (a blue pill
+   on --surface2) the dark-theme row came out at 4.30:1 and the unselected tab
+   at 4.22:1, against 14.02:1 and 4.73:1 for the identical block on the phone.
+   These are the phone's own declarations, scoped to this column instead of to
+   that panel — no new design, and #mobile-shell is not in the selector. */
+.dcd-welcome-feed .dc-home-sec{
+  display:flex; align-items:center; justify-content:space-between;
+  margin:2.1rem 0 0.5rem;
+}
+.dcd-welcome-feed .dc-home-sec-label{
+  font-size:1.24rem; font-weight:800; color:var(--x-ink); letter-spacing:-.02em;
+  margin:0; line-height:1.4; text-align:right;
+}
+.dcd-welcome-feed .dc-home-more{ font-size:.72rem; font-weight:700; color:var(--ac); text-decoration:none; }
+/* up-board's header carries a second line, so it stacks — the same exception
+   #panel-sharehub .dc-home-sec-upboard makes, and for the same reason: the
+   rule above sets align-items:center. */
+.dcd-welcome-feed .dc-home-sec-upboard{
+  flex-direction:column; align-items:stretch; gap:0.125rem;
+}
+/* The card system this column already speaks (see .dcd-latest-card), which is
+   also what #panel-sharehub gives its copy of this card. */
+.dcd-welcome-feed .dc-monitor{
+  background:var(--x-card);
+  border:1px solid var(--x-line);
+  border-right:1px solid var(--x-line);
+  border-radius:18px;
+  box-shadow:var(--x-sh);
+}
+.dcd-welcome-feed .dc-monitor-secondary{ margin-top:0; }
+/* pill rows → hairline rows, verbatim from #panel-sharehub .dc-monitor-list a */
+.dcd-welcome-feed .dc-monitor-list a{
+  background:none; border:0; border-bottom:1px solid var(--x-line);
+  border-radius:0; color:var(--x-ink); font-weight:600;
+  padding:0.4rem 0.125rem;
+}
+.dcd-welcome-feed .dc-monitor-list a:last-child{ border-bottom:0; }
+
 /* Flash prevention — hide mobile until desktop JS decides */
 @media(min-width:768px) and (hover:hover){
   #mobile-shell,footer{ visibility:hidden; }
@@ -5538,6 +5580,18 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
       <div class="dcd-welcome" id="dcd-welcome">
         <div class="dcd-welcome-feed">
 
+          <!-- The reader's own card, the desktop layout's copy of
+               #dcPlusHomeCard (plus/js/home-card.js, SLOT_IDS). Empty, unlike
+               the phone's: that one ships the signed-out state as static markup
+               to kill a first-paint shift for crawlers and cold visits, and
+               tools/verify_home_card.py --check compares exactly ONE static copy
+               against renderAnon(). First in the feed because that is where it
+               sits on the phone — above the pulse and above the latest rail.
+               It must stay ABOVE #dcdPulse: spot.js anchors the desktop ad at
+               that card's nextSibling, and #dcdPlusFeatures has to remain
+               directly after it. -->
+          <div id="dcdPlusHomeCard" class="dc-plus-home-card" aria-label="یادگیری شما" hidden></div>
+
           <div class="dc-pulse dcd-welcome-pulse" id="dcdPulse">
             <div class="dc-pulse-head">
               <div class="dc-pulse-title"><span class="dc-pulse-dot"></span>پالس · آخرین اخبار دنت‌کست</div>
@@ -5557,6 +5611,30 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 
           <!-- Same slot, the desktop layout's copy — see #dcHomeBundles above. -->
           <div id="dcdHomeBundles" class="dcb-band" aria-label="باندل‌های شروع" hidden></div>
+
+          <!-- up-board doorway, the desktop layout's copy of the block in
+               #panel-sharehub. The TABS and «همه ›» are static here for the
+               same reason they are static there: the doorway has to work even
+               if plus/js/home-upboard.js never loads, in which case the tabs
+               are simply inert and the link still goes to /up-board/.
+               The list id is the second entry of that module's SLOT_IDS, and
+               every selector it runs is scoped to this .dc-monitor — two copies
+               querying the document would drive each other's tabs. -->
+          <div class="dc-home-sec dc-home-sec-upboard">
+            <h2 class="dc-home-sec-label">up-board</h2>
+            <p class="dc-home-sec-sub">همهٔ مطالب سایت — به ترتیب انتشار، یا به انتخابِ خواننده‌ها</p>
+          </div>
+
+          <article class="dc-monitor dc-monitor-secondary" aria-label="up-board">
+            <div class="dc-monitor-inner">
+              <div class="dc-monitor-tabs" role="tablist" aria-label="ترتیب فهرست">
+                <button class="dc-monitor-tab" type="button" role="tab" data-monitor-sort="new" aria-selected="true">تازه‌ترین</button>
+                <button class="dc-monitor-tab" type="button" role="tab" data-monitor-sort="top" aria-selected="false">بالاترین</button>
+                <a class="dc-monitor-all" href="/up-board/">همه ›</a>
+              </div>
+              <ul class="dc-monitor-list" id="dcdLast3Updates"></ul>
+            </div>
+          </article>
 
         </div>
       </div>
@@ -5837,7 +5915,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=157" defer></script>
+<script src="/dc-nav.js?v=158" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -6108,8 +6186,14 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 /* ── LAST 30 UPDATES ── */
 (function(){
   const FEED_URL='/dentcast-brain.json?v=1380532d2e';
-  const el=document.getElementById('dcLast3Updates');
-  if(!el) return;
+  /* Two hosts, one per homepage shell — the same SLOT_IDS split
+     plus/js/home-upboard.js uses for the «بالاترین» arrangement of this same
+     box. This script owns «تازه‌ترین» and is the ONLY renderer of it (the
+     module captures whatever it drew, per slot, and puts it back verbatim on
+     the way home), so it has to fill both copies or the desktop card is an
+     empty box with two tabs on it. */
+  const hosts=['dcLast3Updates','dcdLast3Updates'].map(id=>document.getElementById(id)).filter(Boolean);
+  if(!hosts.length) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
   function parseDate(x){const s=(x?.datePublished||x?.date||x?.updated||x?.time||'').toString().trim();if(!s)return 0;const t=Date.parse(s);return isNaN(t)?0:t;}
   function toItem(x){const title=(x?.title||'').toString().trim();const url=(x?.page_url||x?.url||x?.link||'').toString().trim();if(!title||!url)return null;return{title,url,d:parseDate(x)};}
@@ -6125,6 +6209,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     return null;
   }
   function render(items){
+    hosts.forEach(el=>{
     el.innerHTML='';
     items.forEach(it=>{
       const li=document.createElement('li');
@@ -6144,12 +6229,13 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       li.appendChild(a);
       el.appendChild(li);
     });
+    });
   }
   fetch(FEED_URL,{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject()).then(json=>{
     const arr=extractArray(json).map(toItem).filter(Boolean);
     const hasDates=arr.some(x=>x.d>0);
     render(hasDates?arr.sort((a,b)=>b.d-a.d).slice(0,30):arr.slice(-30).reverse());
-  }).catch(()=>{el.innerHTML='';});
+  }).catch(()=>{hosts.forEach(el=>{el.innerHTML='';});});
 })();
 </script>
 

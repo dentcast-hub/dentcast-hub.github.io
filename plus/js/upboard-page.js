@@ -28,12 +28,12 @@
 //   2. Every filter lives in the URL (?sort=&type=), written with replaceState.
 //      Same rule as the highlight library: a filtered view survives a refresh
 //      and the back button, and is a link somebody can send.
-import { api } from '/plus/js/api.js?v=60';
-import { el, faNum } from '/plus/js/util.js?v=60';
-import { openSheet, closeSheet, gateCard } from '/plus/js/sheet.js?v=60';
-import { premiumCta, guestPremiumExtras } from '/plus/js/premium-cta.js?v=60';
-import { openLoginModal } from '/plus/js/login-modal.js?v=60';
-import { markReturnTrail } from '/plus/js/return-trail.js?v=60';
+import { api } from '/plus/js/api.js?v=61';
+import { el, faNum } from '/plus/js/util.js?v=61';
+import { openSheet, closeSheet, gateCard } from '/plus/js/sheet.js?v=61';
+import { premiumCta, guestPremiumExtras } from '/plus/js/premium-cta.js?v=61';
+import { openLoginModal } from '/plus/js/login-modal.js?v=61';
+import { markReturnTrail } from '/plus/js/return-trail.js?v=61';
 
 /** Which gate sent a buyer, for the pricing page's ?from= report. */
 const FROM = 'upboard';
