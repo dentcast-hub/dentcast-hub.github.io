@@ -3635,7 +3635,24 @@ a.dc-list-card--pillar {
 @media (max-width:1023px){
   html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:#ffffff; }
 }
-#mobile-shell{ font-family:'Vazirmatn',-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+/* Both shells, one typeface. #dc-desktop-root was added 2026-09-09: the desktop
+   shell had been running on the system stack while the mobile shell ran on
+   Vazirmatn, and the seam was INSIDE the desktop layout, not merely between the
+   two designs — dc-nav.css sets Vazirmatn on .dc-topbar, which col-C's header
+   also wears, so that header and the column under it were set in two different
+   faces. No new bytes: the font is preloaded and variable (100–900), and the
+   file was already fetched on this page for the mobile shell.
+   The body-level overlays (search, radar, player) and <footer> are deliberately
+   NOT named here: they sit outside both shells and are on the system stack for
+   mobile and desktop alike, so they are already consistent with each other.
+   Changing them is its own decision, not a side effect of this one. One
+   exception happens at runtime rather than in CSS: hostPlayerInColumn() adopts
+   #dcPlayerOverlay into col-C on the first podcast open, so on desktop the
+   player then inherits from here. That reaches the overlay's own chrome only —
+   the player itself is an iframe, and inheritance does not cross a document
+   boundary. */
+#mobile-shell,
+#dc-desktop-root{ font-family:'Vazirmatn',-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
 #panel-studio,#panel-sharehub{
   --exa-gold:#9a6b15;
   --exa-gold-bg:rgba(154,107,21,.10);
