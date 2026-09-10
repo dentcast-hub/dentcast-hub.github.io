@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="dc-notify" content="true">
+
+<title>DentAI – ایمپلنت واقعاً جویدن را چقدر بهتر می‌کند؟</title>
+
+<meta name="description" content="مروری بر مقاله‌ی Fueki و همکاران، Journal of Prosthetic Dentistry، سال ۲۰۰۷. موضوع مقاله: پروتزهای متکی یا گیرکرده بر ایمپلنت (implant-supported or retained dentures) در برابر پروتزهای معمولی">
+
+
+<link rel="canonical" href="https://dentcast.org/dentai/dentai-34.html">
+<link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/dentai/dentai-34.html">
+<link rel="alternate" hreflang="fa" href="https://dentcast.org/dentai/dentai-34.html">
+<link rel="alternate" hreflang="x-default" href="https://dentcast.org/dentai/dentai-34.html">
+
+
+  <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css?v=4">
+  <style>
+    :root{
+      --blue:#0b5fff;
+      --gold:rgba(255,199,44,0.85);
+      --bg:#0b1220;
+      --bg2:#121a2b;
+      --text:#e7eaf1;
+      --muted:#9aa1b3;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.35);
+    }
+
+    .caption{
+      background:rgba(255, 185, 40, 0.15);
+      border:1px solid rgba(255, 220, 100, 0.4);
+      border-radius:var(--radius);
+      backdrop-filter:blur(10px);
+      padding:1.25rem 1.5rem;
+      margin-bottom:2.1875rem;
+      box-shadow:0 0 30px rgba(255,200,0,0.1);
+    }
+
+    .caption p{
+      color:var(--gold);
+      font-weight:600;
+      font-size:1.1rem;
+      margin:0;
+      text-align:justify;
+      line-height:1.9;
+    }
+
+   .text-box {
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 1.375rem;
+  padding: 1.75rem 2.125rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  color: #111;
+  font-size: 1.05rem;
+  line-height: 2;
+   }
+
+    ul{
+      list-style:none;
+      padding:0;
+      margin:0 0 0.875rem 0;
+    }
+
+    ul li{
+      margin-bottom:0.625rem;
+    }
+
+    ul li::before{
+      content:"• ";
+      color:#0b5fff;
+      font-weight:bold;
+    }
+
+    /* جدول‌های امتیازدهی/سکستانت/ریسک — همرنگ با text-box روشن */
+    .text-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .text-box table th,
+    .text-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:right;
+      vertical-align:top;
+    }
+    .text-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .text-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+
+    /* زیرنویس جدول — جدا از متن اصلی */
+    .text-box table + p:has(em):not(:has(strong)){
+      font-size:0.88rem;
+      color:#5f677a;
+      line-height:1.75;
+      margin-top:-0.65rem;
+      margin-bottom:1.25rem;
+    }
+    .text-box table + p:has(em):not(:has(strong)) em{
+      font-style:normal;
+      color:inherit;
+    }
+    html[data-theme="dark"] .text-box table + p:has(em):not(:has(strong)){
+      color:#9aa3b5;
+    }
+
+    @media (max-width:768px){
+      .caption p{font-size:1rem;}
+      .text-box{padding:1.25rem 1.125rem; font-size:.98rem;}
+      .text-box table{font-size:.9rem;}
+      .text-box table th,.text-box table td{padding:0.45rem 0.5rem;}
+    }
+    .text-box{
+  position: relative;
+}
+
+.text-box { background: #fff !important; }
+
+/* دکمه‌ی نسخه انگلیسی (بالا-چپ) */
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+  </style>
+
+
+
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
+  <meta name="theme-color" content="#0b5fff">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dentcast.org/dentai/dentai-34.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "خانه",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "DentAI",
+          "item": "https://dentcast.org/dentai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "ایمپلنت واقعاً جویدن را چقدر بهتر می‌کند؟",
+          "item": "https://dentcast.org/dentai/dentai-34.html"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/dentai-34.html#article",
+      "headline": "ایمپلنت واقعاً جویدن را چقدر بهتر می‌کند؟",
+      "description": "مروری بر مقاله‌ی Fueki و همکاران، Journal of Prosthetic Dentistry، سال ۲۰۰۷. موضوع مقاله: پروتزهای متکی یا گیرکرده بر ایمپلنت (implant-supported or retained dentures) در برابر پروتزهای معمولی",
+      "datePublished": "2026-09-10T10:00:00+03:30",
+      "dateModified": "2026-09-10T10:00:00+03:30",
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/dentai/dentai-34.html"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "url": "https://doi.org/10.1016/s0022-3913(07)60147-4",
+          "name": "Effect of implant-supported or retained dentures on masticatory performance: A systematic review"
+        }
+      ],
+      "inLanguage": "fa",
+      "articleSection": "Implantology / Restoration Design",
+      "keywords": [
+        "implant-supported denture",
+        "implant-retained denture",
+        "overdenture",
+        "masticatory performance",
+        "systematic review",
+        "mandibular ridge resorption",
+        "complete denture",
+        "removable partial denture",
+        "attachment system",
+        "اوردنچر",
+        "عملکرد جویدن",
+        "پروتز متکی بر ایمپلنت",
+        "تحلیل ریج",
+        "دنچر کامل",
+        "مرور سیستماتیک"
+      ],
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Implant-Supported Overdenture"
+        },
+        {
+          "@type": "Thing",
+          "name": "Masticatory Performance"
+        }
+      ],
+      "mentions": [
+        {
+          "@type": "Thing",
+          "name": "Complete Denture"
+        },
+        {
+          "@type": "Thing",
+          "name": "Removable Partial Denture"
+        },
+        {
+          "@type": "Thing",
+          "name": "Mandibular Ridge Resorption"
+        },
+        {
+          "@type": "Thing",
+          "name": "Attachment System"
+        }
+      ],
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h2",
+          ".text-box"
+        ]
+      }
+    },
+    {
+      "@type": "Dentist",
+      "@id": "https://dentcast.org/#dentist-ahvaz",
+      "name": "دکتر فواد شهابیان",
+      "url": "https://dentcast.org/about.html",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "medicalCode": "114707",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "addressCountry": "IR"
+      },
+      "sameAs": [
+        "https://www.instagram.com/dr.foad_shahabian/",
+        "https://t.me/dentcast",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364"
+      ]
+    }
+  ]
+}
+</script>
+
+    <link rel="stylesheet" href="/dc-theme.css?v=3">
+<link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="DentAI – ایمپلنت واقعاً جویدن را چقدر بهتر می‌کند؟">
+  <meta property="og:description" content="مروری بر مقاله‌ی Fueki و همکاران، Journal of Prosthetic Dentistry، سال ۲۰۰۷. موضوع مقاله: پروتزهای متکی یا گیرکرده بر ایمپلنت (implant-supported or retained dentures) در برابر پروتزهای معمولی">
+  <meta property="og:url" content="https://dentcast.org/dentai/dentai-34.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DentAI – ایمپلنت واقعاً جویدن را چقدر بهتر می‌کند؟">
+  <meta name="twitter:description" content="مروری بر مقاله‌ی Fueki و همکاران، Journal of Prosthetic Dentistry، سال ۲۰۰۷. موضوع مقاله: پروتزهای متکی یا گیرکرده بر ایمپلنت (implant-supported or retained dentures) در برابر پروتزهای معمولی">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<h1><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/></svg> ایمپلنت واقعاً جویدن را چقدر بهتر می‌کند؟</h1>
+
+<a class="lang-btn" href="en/dentai-34.html" rel="noopener">
+  <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> English
+</a>
+
+<div class="caption">
+  <p>
+مروری بر مقاله‌ی Fueki و همکاران، Journal of Prosthetic Dentistry، سال ۲۰۰۷. موضوع مقاله: پروتزهای متکی یا گیرکرده بر ایمپلنت (implant-supported or retained dentures) در برابر پروتزهای معمولی
+  </p>
+</div>
+
+<div class="text-box">
+
+<blockquote>
+<strong>راهنمای خواندن:</strong> در این متن هرجا برداشت و تفسیر آمده، با برچسب <strong>تفسیر</strong> مشخص شده است. بقیه‌ی متن گزارش یافته‌های خود مقاله است.
+</blockquote>
+
+<h2>چرا این مقاله نوشته شد</h2>
+
+<p>
+بیمار وقتی سراغ ایمپلنت می‌آید، معمولاً دلیل اولش این است که می‌خواهد بهتر بجود. فرض رایج، هم بین بیماران و هم بین دندانپزشکان، این است که پروتز متکی بر ایمپلنت تقریباً همیشه جویدن را بهتر می‌کند.
+</p>
+
+<p>
+مشکل اینجاست که رضایت بیمار و عملکرد واقعی جویدن دو چیز جدا هستند و ارتباط‌شان ضعیف است. بیمار می‌تواند از پروتزش کاملاً راضی باشد در حالی که بازده واقعی خرد کردن غذایش تغییر چندانی نکرده، و برعکس. مقاله تأکید می‌کند که این ضعف ارتباط بارها نشان داده شده، هم در بیماران با دنچر معمولی و هم در بیماران با پروتز ایمپلنتی.
+</p>
+
+<p>
+این مرور سیستماتیک فقط سراغ معیارهای <strong>عینی</strong> رفت. منظور از عینی، آزمون‌های استانداردی است که مستقیماً اندازه می‌گیرند غذا چقدر خرد یا مخلوط شده است، نه پرسشنامه‌ی رضایت بیمار. سؤال ساده بود: وقتی واقعاً اندازه می‌گیریم، ایمپلنت چقدر جویدن را بهتر می‌کند؟
+</p>
+
+<p>
+نویسندگان از میان صدها مقاله، ۱۸ مقاله را پیدا کردند که این معیارها را داشتند. این ۱۸ مقاله در مجموع گزارش ۱۴ مطالعه بودند، چون بعضی مطالعات در چند مقاله منتشر شده بودند.
+</p>
+
+<p>
+<strong>یک نکته درباره‌ی قوت شواهد:</strong> تا زمان این مرور، مطالعات کمی در این زمینه انجام شده بود و بخش قابل‌توجهی از آن‌ها هم طراحی محکمی نداشتند. یعنی بیماران به‌صورت تصادفی بین دو درمان تقسیم نشده بودند، یا اصلاً گروه مقایسه‌ای وجود نداشت. نتیجه این است که یافته‌های این مقاله را باید به‌عنوان بهترین چیزی که در دسترس بوده خواند، نه به‌عنوان حرف آخر. هرجا شواهد ضعیف‌تر بوده در متن اشاره می‌شود.
+</p>
+
+<h2>۱. پروتز پارسیل ثابت روی ایمپلنت در برابر پارسیل متحرک</h2>
+
+<p>
+در این زمینه فقط یک مطالعه‌ی تصادفی‌شده وجود دارد که روی بیماران با بی‌دندانی کلاس یک و دو کندی در مندیبل انجام شده است. در این مطالعه بیماران به دو گروه تقسیم شدند: یک گروه پروتز پارسیل ثابت روی ایمپلنت گرفتند و گروه دیگر پارسیل متحرک معمولی.
+</p>
+
+<p>
+نتیجه این بود که هیچ تفاوتی بین دو گروه دیده نشد. عملکرد جویدن در هر دو گروه به یک اندازه بهتر شد و پروتز ثابت روی ایمپلنت هیچ برتری‌ای نسبت به پارسیل متحرک نشان نداد.
+</p>
+
+<p>
+این خلاف انتظار است، ولی توضیح نویسندگان منطقی است. در آن مطالعه عرض باکولینگوال پلتفرم اکلوزال پروتز ثابت را عمداً باریک کرده بودند تا بار روی ایمپلنت‌ها کم شود. در نتیجه سطح جویدن پارسیل متحرک پهن‌تر از پروتز ثابت بود. مطالعه‌ی دیگری نشان داده که پلتفرم اکلوزال پهن‌تر در پارسیل متحرک با توان جویدن بهتر همراه است. نویسندگان احتمال می‌دهند که سطح جویدن بزرگ‌تر پارسیل متحرک، بخشی از مزیت گیر و ساپورت پروتز ثابت را خنثی کرده باشد.
+</p>
+
+<p>
+دو نکته را هم باید کنار این نتیجه گذاشت. اول اینکه ایمپلنت‌های این مطالعه از نوع blade-vent بودند که با ایمپلنت‌های استوانه‌ای رایج امروز تفاوت اساسی دارند، پس تعمیم مستقیم این نتیجه به سیستم‌های امروزی باید با احتیاط انجام شود. دوم اینکه این تنها مطالعه‌ای است که چنین مقایسه‌ای انجام داده، و یک مطالعه به‌تنهایی پایه‌ی محکمی برای نتیجه‌گیری قطعی نیست.
+</p>
+
+<h2>۲. پروتز کامل ثابت روی ایمپلنت در برابر دنچر کامل</h2>
+
+<p>
+سه مطالعه این مقایسه را انجام داده‌اند، ولی هیچ‌کدام تصادفی‌شده نبودند و هیچ‌کدام گروه کنترل نداشتند. در همه‌ی آن‌ها عملکرد جویدن همان بیمار قبل و بعد از درمان سنجیده شده است.
+</p>
+
+<p>
+در مندیبل، پروتز کامل ثابت روی ایمپلنت بهبود بزرگی نسبت به دنچر قبلی بیمار ایجاد کرد و این بهبود تا ده سال هم پایدار ماند. در ماگزیلا هم دو مطالعه بهبود بزرگ نشان دادند. مطالعه‌ی کوچک سومی در ماگزیلا اثر بزرگی دید ولی به آستانه‌ی معناداری آماری نرسید، که به احتمال زیاد به‌خاطر تعداد بسیار کم بیماران بود نه نبود اثر.
+</p>
+
+<p>
+سه قید این تصویر را عوض می‌کند:
+</p>
+
+<p>
+<strong>اول، جمعیت مطالعه از پیش انتخاب‌شده بود.</strong> بیماران این مطالعات کسانی بودند که <strong>به‌خاطر مشکل داشتن با دنچر خود</strong> دنبال پروتز ثابت آمده بودند. یعنی گروهی که با پروتز متحرک کنار نیامده بود. مقاله صراحتاً می‌گوید روشن نیست بیماری که با دنچرش خوب سازگار شده یا از آن راضی است هم همین اندازه سود ببرد.
+</p>
+
+<p>
+<strong>دوم، مقایسه با دنچر قبلی خود بیمار انجام شده، نه با یک دنچر کامل تازه‌ساخته‌شده.</strong> هیچ‌کدام از این مطالعات گروه کنترلی با دنچر نو نداشتند.
+</p>
+
+<blockquote>
+<strong>تفسیر:</strong> وقتی مرجع مقایسه پروتز قبلی بیمار باشد، بخشی از بهبود می‌تواند صرفاً اثر ساخته شدن یک پروتز جدید باشد، نه اثر ایمپلنت. نویسندگان هم می‌گویند شواهد قطعی نیازمند مطالعات تصادفی‌شده‌ای است که پروتز ثابت را با دنچر نو مقایسه کند.
+</blockquote>
+
+<p>
+<strong>سوم، و از نظر بالینی جالب‌تر از همه:</strong> در پیگیری ده‌ساله، بیمارانی که پروتز ثابت در هر دو فک داشتند با بیمارانی که فقط در مندیبل داشتند، تفاوت معناداری در عملکرد جویدن نداشتند. نویسندگان از این نتیجه می‌گیرند که سهم پروتز ثابت ماگزیلا در عملکرد جویدن ممکن است محدود باشد، ولی تأکید می‌کنند این فرضیه نیازمند مطالعات بهتری است.
+</p>
+
+<h2>۳. اوردنچر روی ایمپلنت در برابر دنچر کامل</h2>
+
+<p>
+قوی‌ترین شواهد این مقاله در همین بخش است، و نکته‌ی مهم اینجاست که کل پاسخ به یک متغیر بستگی دارد، یعنی <strong>ارتفاع ریج باقیمانده‌ی مندیبل</strong>. بسته به اینکه ریج بیمار چقدر باقی مانده باشد، جواب کاملاً عوض می‌شود.
+</p>
+
+<h3>بیمار با ریج متوسط یا خوب</h3>
+
+<p>
+در بیمارانی که ارتفاع ریج‌شان در محدوده‌ی طبیعی بود، <a href="/glossary/overdenture.html">اوردنچر</a> نو و دنچر کامل نو نتیجه‌ی مشابهی دادند و هیچ برتری‌ای برای ایمپلنت دیده نشد. در زیرگروه ریج متوسط، میزان بهبود گروه دنچر معمولی حتی کمی بیشتر هم بود، ولی این تفاوت معنادار نبود و نباید آن را برتری دنچر معمولی خواند. حرف درست این است که در این گروه هیچ‌کدام از دو درمان بر دیگری برتری نداشت.
+</p>
+
+<h3>بیمار با ریج تحلیل‌رفته</h3>
+
+<p>
+اینجا تصویر کاملاً برعکس می‌شود. در بیماران با ارتفاع ریج کمتر از حدود ۲۱ میلی‌متر، اوردنچر روی ایمپلنت بهبود بزرگی داد، در حالی که همان بیماران اگر دنچر نو می‌گرفتند نه‌تنها بهتر نمی‌شدند بلکه عملکردشان کمی افت هم می‌کرد. مطالعه‌ی تصادفی‌شده‌ی دیگری روی بیماران با ریج به‌مراتب تحلیل‌رفته‌تر (حدود ۱۴ میلی‌متر) هم همین برتری را در سال اول تأیید کرد.
+</p>
+
+<h3>نکته‌ای که معمولاً نقل نمی‌شود</h3>
+
+<p>
+یکی از مطالعات چند گروه را کنار هم سنجید و نتیجه‌اش این بود که اوردنچر روی ایمپلنت در فک تحلیل‌رفته، از دنچر کامل روی همان فک تحلیل‌رفته بهتر عمل کرد، ولی هنوز از دنچر کامل روی یک ریج بلند و سالم ضعیف‌تر بود.
+</p>
+
+<p>
+یعنی ترتیب عملکرد جویدن این‌طور درآمد:
+</p>
+
+<ol>
+<li>دنچر کامل روی ریج بلند</li>
+<li>اوردنچر روی ایمپلنت در فک تحلیل‌رفته</li>
+<li>دنچر کامل روی ریج تحلیل‌رفته</li>
+</ol>
+
+<p>
+بالاتر از همه‌ی این‌ها هم، جای تعجب ندارد، دندان طبیعی قرار داشت.
+</p>
+
+<blockquote>
+<strong>تفسیر:</strong> این الگو نشان می‌دهد ایمپلنت بیمار با ریج شدیداً تحلیل‌رفته را لزوماً به سطح بیمار با ریج سالم نمی‌رساند، بلکه بخشی از فاصله‌ی عملکردی را جبران می‌کند. این را باید موقع مدیریت انتظار بیمار در ذهن داشت.
+</blockquote>
+
+<h3>مسئله‌ی زمان</h3>
+
+<p>
+در همان مطالعه روی بیماران با ریج شدیداً تحلیل‌رفته، برتری اوردنچر که در سال اول کاملاً واضح بود، در سال چهارم دیگر معنادار نبود.
+</p>
+
+<p>
+توضیحی که نویسندگان برای این موضوع پیشنهاد می‌کنند این است که بیمار با فک تحلیل‌رفته برای سازگاری با دنچر نو به دوره‌ی adaptation خیلی طولانی‌تری نیاز دارد. توجه کنید که این یک توضیح احتمالی از سوی نویسندگان است، نه چیزی که مطالعه مستقیماً اندازه گرفته باشد.
+</p>
+
+<blockquote>
+<strong>تفسیر:</strong> اگر این توضیح درست باشد، بخشی از مزیت ایمپلنت «رسیدن سریع‌تر» است تا «رسیدن به سقف بالاتر». برای بیماری که سن یا شرایطش اجازه‌ی یک دوره‌ی سازگاری طولانی را نمی‌دهد، همین تفاوت زمانی به‌تنهایی می‌تواند تعیین‌کننده باشد.
+</blockquote>
+
+<h2>۴. نوع ایمپلنت و سیستم اتچمنت</h2>
+
+<p>
+سه مطالعه این موضوع را بررسی کردند و هر سه به یک نتیجه رسیدند: هیچ‌کدام از این انتخاب‌ها تفاوت معناداری در عملکرد جویدن ایجاد نکرد.
+</p>
+
+<ul>
+<li>وقتی دو نوع ایمپلنت متفاوت (IMZ و ترنس‌مندیبولار) با هم مقایسه شدند، عملکرد جویدن بیماران تفاوتی نداشت.</li>
+<li>وقتی سه پروتکل مختلف مقایسه شدند، یعنی ایمپلنت کوتاه، ایمپلنت گذاشته‌شده پس از augmentation، و ترنس‌مندیبولار، باز هم عملکرد جویدن در هر سه گروه یکسان بود.</li>
+<li>وقتی سه سیستم اتچمنت مقایسه شدند، یعنی <a href="/episodes/episode-27.html">ball-socket و bar-clip</a> و مگنت، هر سه بهبود قابل‌توجهی دادند ولی هیچ‌کدام بر دیگری برتری نداشت.</li>
+</ul>
+
+<p>
+نتیجه‌گیری خود نویسندگان این است که میزان ساپورت ایمپلنت و سطح گیر اتچمنت، تأثیر محدودی بر عملکرد جویدن دارند. به بیان دیگر، ساپورت یا گیر بیشتر لزوماً به جویدن بهتر ترجمه نمی‌شود.
+</p>
+
+<blockquote>
+<strong>تفسیر:</strong> یعنی انتخاب اتچمنت را باید بر پایه‌ی سهولت نگهداری، هزینه، فضای بین‌فکی و شرایط بافتی گرفت، نه با این استدلال که کدام‌یک بهتر می‌جود.
+</blockquote>
+
+<p>
+یک محدودیت را هم باید در نظر داشت. در همه‌ی این مطالعات، فک بالای بیمار دنچر معمولی داشت. یعنی هیچ‌وقت بررسی نشده که اگر گیر و ثبات به‌طور هم‌زمان در هر دو فک بهتر شود، عملکرد جویدن چه تغییری می‌کند.
+</p>
+
+<h2>۵. بیماران بازسازی فک</h2>
+
+<p>
+در بیماران تحت partial mandibulectomy و بازسازی با fibula free-flap، هم پروتز معمولی و هم پروتز متکی بر ایمپلنت عملکرد جویدن را در سمت defect بهبود دادند، ولی بهبود با پروتز ایمپلنتی به‌مراتب بیشتر بود.
+</p>
+
+<p>
+این برتری <strong>فقط در سمت defect</strong> دیده شد. در سمت سالم دهان، دو نوع پروتز عملاً یکسان عمل کردند.
+</p>
+
+<p>
+نویسندگان یک توصیه‌ی بالینی هم اضافه می‌کنند: در این بیماران درمان ایمپلنتی باید تا یک سال پس از جراحی به تعویق بیفتد. استدلال آن‌ها نرخ بالای عود و متاستاز (حدود یک‌سوم موارد) است که در <strong>منبع دیگری</strong> گزارش شده، نه در همین مطالعه‌ی عملکرد جویدن.
+</p>
+
+<p>
+درباره‌ی بیماران ماگزیلکتومی هم هیچ مطالعه‌ای پیدا نشد که عملکرد جویدن را با پروتز معمولی و ایمپلنتی مقایسه کرده باشد، و نویسندگان این را یک خلأ آشکار می‌دانند.
+</p>
+
+<h2>جمع‌بندی بالینی</h2>
+
+<p>
+نتیجه‌گیری خود مقاله این است: مزایای عینی پروتزهای متکی یا گیرکرده بر ایمپلنت در عملکرد جویدن، نسبت به پروتزهای معمولی، <strong>محدود است به</strong> اوردنچر مندیبولار در بیماران کاملاً بی‌دندان با مندیبل تحلیل‌رفته و یا بیمارانی که در سازگاری با دنچر کامل مشکل دارند.
+</p>
+
+<p>
+به بیان ساده‌تر، دو گروه از بیماران هستند که برای آن‌ها اوردنچر روی ایمپلنت تفاوت واقعی و قابل اندازه‌گیری ایجاد می‌کند: بیمار کاملاً بی‌دندانی که مندیبلش شدیداً تحلیل رفته، و بیماری که هرچه بکنید با دنچر معمولی کنار نمی‌آید.
+</p>
+
+<p>
+برای بقیه‌ی گروه‌هایی که در این مرور بررسی شدند، از بیمار پارسیل کلاس یک و دو کندی گرفته تا بیمار بی‌دندان با ریج خوب، شواهد قوی برای برتری عینی در جویدن وجود نداشت.
+</p>
+
+<blockquote>
+<strong>تفسیر:</strong> این به معنی بی‌ارزش بودن ایمپلنت نیست. راحتی، اعتمادبه‌نفس، حذف قلاب، حفظ استخوان و رضایت کلی بیمار همه دلایل کاملاً موجهی برای انتخاب ایمپلنت هستند. ولی هیچ‌کدام‌شان «بهتر می‌جود» نیستند، و بهتر است در جلسه‌ی مشاوره این دو دسته دلیل با هم قاطی نشوند.
+</blockquote>
+
+<p>
+توصیه‌ی بالینی خود مقاله هم دقیقاً همین است: دندانپزشک باید از محدودیت‌های مزایای عملکردی ایمپلنت آگاه باشد و آن‌ها را برای بیمار شفاف توضیح دهد تا تصمیم درمانی آگاهانه گرفته شود.
+</p>
+
+<h2>قید کلی</h2>
+
+<p>
+جستجوی این مرور تا ژوئن ۲۰۰۷ انجام شده است. طراحی ایمپلنت، پروتکل‌های اکلوزال و مواد از آن زمان تغییر کرده‌اند.
+</p>
+
+<blockquote>
+<strong>تفسیر:</strong> منطق کلی مقاله، یعنی اینکه ارتفاع ریج متغیر تعیین‌کننده است و افزودن گیر بیشتر لزوماً بازده جویدن نمی‌آورد، به احتمال زیاد هنوز پابرجاست. ولی مقایسه‌های خاص را باید تاریخی خواند.
+</blockquote>
+
+<p>
+<strong>منبع اصلی:</strong><br>
+Fueki K, Kimoto K, Ogawa T, Garrett NR. Effect of implant-supported or retained dentures on masticatory performance: a systematic review. J Prosthet Dent. 2007;98(6):470-477.
+</p>
+
+<div style="
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 1.75rem;
+">
+  <div style="
+    background: rgba(255, 220, 80, 0.07);
+    border: 1px solid rgba(255, 220, 80, 0.18);
+    border-radius: 0.5625rem;
+    padding: 0.5rem 0.875rem;
+    text-align: center;
+    font-size: .8rem;
+    color: #0a1638;
+    line-height: 1.55;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.25);
+    backdrop-filter: blur(5px);
+  ">
+    <p style="margin: 0; font-weight: 600; color: #0a1638;">
+      "Effect of implant-supported or retained dentures on masticatory performance: A systematic review"
+    </p>
+    <p style="margin: 0.125rem 0 0 0;">
+      <a href="https://doi.org/10.1016/s0022-3913(07)60147-4" target="_blank" rel="noopener noreferrer">Kenji Fueki</a>, Kimoto K, Ogawa T, Garrett NR — <em>J Prosthet Dent. 2007;98(6):470-477</em>
+    </p>
+    <p style="margin: 0;">DOI: 10.1016/s0022-3913(07)60147-4</p>
+  </div>
+</div>
+
+</div>
+
+<div class="author-note">
+  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
+  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
+</div>
+
+<div class="dc-related-section">
+  <h2 class="dc-related-label">کاوش بیشتر</h2>
+  <div class="dc-related-capsules">
+    <a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+    <a href="/pillar/implantology/" class="dc-related-capsule">فهرست موضوعی</a>
+    <a href="/episodes/episode-147-6.html" class="dc-related-capsule">صفر تا صد اوردنچرها</a>
+    <a href="/notecast/episode-27.html" class="dc-related-capsule">بار یا بال در اوردنچر</a>
+  </div>
+</div>
+
+<footer class="dc-site-footer" style="text-align:center; margin-top:2.8125rem; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+  <div style="margin-bottom:1.375rem;">
+    <a href="index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=153" defer></script>
+</body>
+</html>
