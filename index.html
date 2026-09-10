@@ -4640,7 +4640,8 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
            ran off the bottom with no way to reach its own end. In flow, both are
            gone by construction — it scrolls with the box and is as tall as it needs.
            Type follows the «؟» caption reveal (plus.css .dc-plus-scorecap). */
-        #dcDesPanel{
+        #dcDesPanel,
+        #dcdDesPanel{
           border:1px solid rgba(var(--des-chrome-rgb),.22); border-top:0;
           border-right:3px solid var(--des-chrome);
           border-radius:0 0 .875rem .875rem; background:rgba(var(--des-chrome-rgb),.045);
@@ -4648,13 +4649,16 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           padding:.2rem 1rem .9rem; margin:0;
           font-size:.82rem; color:var(--txt2); line-height:1.8;
         }
-        #dcDesPanel[hidden]{ display:none; }
+        #dcDesPanel[hidden],
+        #dcdDesPanel[hidden]{ display:none; }
         /* open state: the button gives up its bottom rounding so the two read as one card */
         .dc-des-legend[aria-expanded="true"]{ border-radius:.875rem .875rem 0 0; }
         .dc-des-capline{ display:block; }
         .dc-des-capline + .dc-des-capline{ margin-top:.55rem; }
-        #dcDesPanel .dc-des-mini-legend{ display:flex; direction:ltr; gap:.3rem; margin:.7rem 0; }
-        #dcDesPanel .dc-des-mini-legend div{ flex:1; text-align:center; padding:.35rem 0; border-radius:6px;
+        #dcDesPanel .dc-des-mini-legend,
+        #dcdDesPanel .dc-des-mini-legend{ display:flex; direction:ltr; gap:.3rem; margin:.7rem 0; }
+        #dcDesPanel .dc-des-mini-legend div,
+        #dcdDesPanel .dc-des-mini-legend div{ flex:1; text-align:center; padding:.35rem 0; border-radius:6px;
           font-size:.68rem; font-weight:800; color:#fff; }
         /* The capsule — the door to /des-board/. Amber because amber means «this
            is what a subscription buys» site-wide, and this is the one thing in
@@ -4713,14 +4717,31 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 
       <script>
       (function(){
-        var btn = document.getElementById('dcDesLegendBtn');
-        var panel = document.getElementById('dcDesPanel');
-        if (!btn || !panel) return;
-        btn.addEventListener('click', function(){
-          var open = panel.hidden;
-          panel.hidden = !open;
-          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
+        /* One toggle per explainer, paired through the button's OWN
+           aria-controls rather than through a hard-coded id — index.html
+           carries two of these since 2026-09-10 (the phone shell and the
+           desktop welcome column) and a getElementById pair would have wired
+           the phone's button to the phone's panel and left the desktop one
+           inert.
+
+           Armed on DOMContentLoaded, not inline: this <script> sits inside
+           #panel-studio, which the parser reaches BEFORE #dc-desktop-root
+           exists — the same trap that left the desktop stats strip never
+           animating. */
+        function arm(){
+          document.querySelectorAll('.dc-des-legend-wrap').forEach(function(wrap){
+            var btn = wrap.querySelector('.dc-des-legend');
+            var panel = btn && document.getElementById(btn.getAttribute('aria-controls'));
+            if (!btn || !panel) return;
+            btn.addEventListener('click', function(){
+              var open = panel.hidden;
+              panel.hidden = !open;
+              btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+          });
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arm);
+        else arm();
       })();
       </script>
 
@@ -5754,6 +5775,49 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
             <div class="hero-stat" role="listitem">
               <span class="v"><!-- COUNTER:CONTENT:START -->۶۳۱<!-- COUNTER:CONTENT:END --></span>
               <span class="k">مطلب و مدخل آموزشی</span>
+            </div>
+          </div>
+
+          <!-- توضیح DES — the desktop layout's copy of the homepage
+               explainer, so a reader meeting a band badge on an article has
+               already met the scale here too. Its own ids (#dcdDesLegendBtn /
+               #dcdDesPanel) because aria-controls has to name a real, unique
+               element; the toggle script below now pairs each button with the
+               panel its OWN aria-controls names, so neither copy can open the
+               other's. The CSS needs no twin — unlike the rest of the home
+               blocks these rules are written unscoped. -->
+          <div class="dc-des-legend-wrap">
+            <button type="button" class="dc-des-legend" id="dcdDesLegendBtn" aria-expanded="false" aria-controls="dcdDesPanel">
+              <span class="dc-des-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2.5" y="13" width="5.5" height="8.5" rx="1.1" fill="currentColor"/>
+                  <rect x="9.25" y="7" width="5.5" height="14.5" rx="1.1" fill="currentColor"/>
+                  <rect x="16" y="10.5" width="5.5" height="11" rx="1.1" fill="currentColor"/>
+                </svg>
+              </span>
+              <span class="dc-des-body">
+                <span class="dc-des-ttl"><b>DentCast Evidence Score</b> چیست؟</span>
+                <span class="dc-des-sub">روشی که دنت‌کست با آن اعتبار شواهد علمی محتوا را نشان می‌دهد.</span>
+              </span>
+              <span class="dc-des-bar-group" aria-hidden="true">
+                <span class="dc-des-band-E">E</span><span class="dc-des-band-D">D</span><span class="dc-des-band-C">C</span><span class="dc-des-band-B">B</span><span class="dc-des-band-A">A</span>
+              </span>
+            </button>
+
+            <div id="dcdDesPanel" hidden>
+              <span class="dc-des-capline">روشی که دنت‌کست با آن نشان می‌دهد هر مطلب علمی چقدر روی طراحی قوی و اجرای دقیق ایستاده — نه اینکه چقدر برای شما کاربردی است؛ آن قضاوت جای دیگری نوشته می‌شود.</span>
+              <span class="dc-des-capline">نتیجه یک باند است، نه یک عدد ساده:</span>
+              <div class="dc-des-mini-legend" aria-hidden="true">
+                <div style="background:#78808f">E</div><div style="background:#5f8a63">D</div><div style="background:#3f9a49">C</div><div style="background:#2f8f3f">B</div><div style="background:#1f7a34">A</div>
+              </div>
+              <span class="dc-des-capline">از E (پایه‌ترین سطح) تا A (قوی‌ترین شواهد ممکن) — و A فقط از بهترین طراحی‌ها به‌دست می‌آید، مثل مرور نظام‌مند یا کارآزمایی بالینی. طراحی‌های ضعیف‌تر، حتی در بهترین اجرا، هیچ‌وقت به A نمی‌رسند.</span>
+              <span class="dc-des-capline">یک نکته‌ی مهم: A فقط داخل یک نوع سؤال معنی دارد. A در یک مطالعه‌ی آزمایشگاهی یعنی بهترین شواهد ممکن از یک بنچ‌تست، نه اینکه همان ماده در دهان واقعی هم به همین اندازه قابل‌اعتماد است. A در یک مطالعه‌ی بالینی یعنی داده‌ی واقعی از بیمار — این دو با هم برابر نیستند.</span>
+              <span class="dc-des-capline">محتوایی که خودِ دنت‌کست نوشته، نه خلاصه‌ی یک مقاله، میله‌ی باند نمی‌گیرد؛ به‌جایش یک نشان «تجربه‌ی بالینی» با امتیاز شفافیت دارد.</span>
+              <a class="dc-des-cap" href="/des-board/">
+                <span class="dc-des-cap-t">طبقه‌بندی مطالب بر اساس قدرت شواهد</span>
+                <span class="dc-des-cap-b">پریمیوم</span>
+                <span class="dc-des-cap-c" aria-hidden="true">›</span>
+              </a>
             </div>
           </div>
 
