@@ -66,7 +66,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=66';
+import { findProseRoot } from '/plus/js/config.js?v=67';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -160,7 +160,7 @@ function report(kind, slotName, creativeId) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ [key]: name, content_id: contentId }),
   });
-  import('/plus/js/api.js?v=66')
+  import('/plus/js/api.js?v=67')
     .then((m) => m.apiBase())
     .then((base) => {
       if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
@@ -179,7 +179,7 @@ function report(kind, slotName, creativeId) {
       // A network-level failure (not an HTTP error) may mean the cached base is
       // dead — self-heal so the NEXT event, and the next page's /me, re-probe
       // instead of retrying the same unreachable host all session.
-      import('/plus/js/api.js?v=66').then((m) => m.forgetBase()).catch(() => {});
+      import('/plus/js/api.js?v=67').then((m) => m.forgetBase()).catch(() => {});
     });
 }
 
@@ -255,11 +255,33 @@ function nextHouse(cfg, slotName, audience) {
 // comes back for a new session. A step whose creative is missing or not allowed
 // in this slot / for this audience falls back to the other kind; nothing
 // eligible → nothing renders.
-function pickCreative(cfg, slotName, audience) {
-  const seq = (cfg.rotation && Array.isArray(cfg.rotation.sequence) && cfg.rotation.sequence.length)
+function rotationSequence(cfg) {
+  return (cfg.rotation && Array.isArray(cfg.rotation.sequence) && cfg.rotation.sequence.length)
     ? cfg.rotation.sequence
     : ['premium'];
-  const step = seq[lsGet(K_TICK) % seq.length];
+}
+
+/**
+ * The creative a PINNED slot shows: always the FIRST entry of
+ * `rotation.sequence`, whatever the tick is. That is the whole difference from
+ * pickCreative() — same config, same resolution rules, no `% length`.
+ *
+ * A pinned slot is one that is on screen the whole time rather than once per
+ * page view (the desktop sidebar is the first), so a rotating creative there
+ * would be a different campaign every reload while the reader sat on the same
+ * page. Reading sequence[0] rather than naming a creative is what keeps it out
+ * of the code: change the sequence in spot-config.json and this follows.
+ */
+function pinnedCreative(cfg, slotName, audience) {
+  return resolveStep(cfg, rotationSequence(cfg)[0], slotName, audience);
+}
+
+function pickCreative(cfg, slotName, audience) {
+  const seq = rotationSequence(cfg);
+  return resolveStep(cfg, seq[lsGet(K_TICK) % seq.length], slotName, audience);
+}
+
+function resolveStep(cfg, step, slotName, audience) {
   // A `premium` step means "this beat belongs to the house". The house card is
   // audience-split (the anon «شروع رایگان» creative vs. the signed-in «جایزهٔ
   // لیگ» one), so for the audience the premium creative is NOT targeted at, the
@@ -455,6 +477,19 @@ a.dc-spot-link:active { transform: scale(0.99); }
 .dc-spot--search { margin: 0.75rem 0; }
 .dc-spot--search .dc-spot-link { padding: 0.75rem 1rem; }
 .dc-spot--archive { margin: 1.25rem 0 0.75rem; }
+/* The desktop sidebar is 220px wide and its rows are 203px: the card matches
+   «خرید اشتراک پریمیوم» directly below it in width, radius and gutter, so the
+   two read as a pair rather than as an ad dropped into a menu. The 560px cap
+   the art cards carry elsewhere would do nothing here and is cleared for the
+   same reason the Plus views clear it — a max-width wider than the column is
+   just noise. */
+.dc-spot--sidebar { margin: 0; max-width: none; }
+.dc-spot--sidebar .dc-spot-link { padding: 0.4375rem; border-radius: 14px; }
+.dc-spot--sidebar .dc-spot-badge { font-size: 0.58rem; margin: 0 0.125rem 0.3125rem; }
+.dc-spot--sidebar .dc-spot-art-img { border-radius: 9px; }
+.dc-spot--sidebar .dc-spot-title { font-size: 0.72rem; line-height: 1.6; }
+.dc-spot--sidebar .dc-spot-text { font-size: 0.66rem; line-height: 1.7; }
+.dc-spot--sidebar .dc-spot-cta { font-size: 0.66rem; }
 .dc-spot--episodes { margin: 0.875rem 0 2.75rem; }
 @media (min-width: 720px) { .dc-spot--episodes { margin: 1rem 0 4rem; } }
 @media (max-width: 480px) {
@@ -604,6 +639,16 @@ const seenImpressions = new Set();
 function forgetImpression(slotName, creativeId) {
   seenImpressions.delete(slotName + ':' + (creativeId || ''));
 }
+// Slots that are PINNED to sequence[0] instead of rotating (see
+// pinnedCreative). They are on screen for the whole visit rather than once per
+// page view, so they have no beat of their own — and must not spend one. If the
+// desktop sidebar advanced the rotation, every desktop page view would burn a
+// step whether or not the reader ever reached the rotating cards, which is
+// exactly what advanceRotation()'s own rule ("a visit where no slot ever
+// rendered burns no step") exists to prevent. Their impressions are still
+// counted, under their own slot name, so a report can separate them.
+const PINNED_SLOTS = ['sidebar'];
+
 function impression(creative, slotName) {
   const key = slotName + ':' + (creative.id || '');
   if (seenImpressions.has(key)) return;
@@ -612,7 +657,7 @@ function impression(creative, slotName) {
   report('impression', slotName, creative.id);
   // The rotation step belongs to a SEEN ad, not a rendered one: a visit where
   // the visitor never scrolled to the card must not burn the campaign's turn.
-  advanceRotation();
+  if (PINNED_SLOTS.indexOf(slotName) === -1) advanceRotation();
 }
 
 // ── viewability: an impression means SEEN, not rendered ──────────────────────
@@ -1070,6 +1115,28 @@ function setupArchiveSlot(cfg, audienceNow) {
   });
 }
 
+/**
+ * The desktop shell's sidebar (col-A), directly above «خرید اشتراک پریمیوم».
+ *
+ * Unlike every other slot this one is PERMANENT: the sidebar is on screen for
+ * the whole visit, so the card is pinned to sequence[0] rather than rotated
+ * (pinnedCreative), and it spends no rotation beat (PINNED_SLOTS).
+ *
+ * index.html carries an empty #dcdSpotSidebar and nothing else — no page on
+ * this site holds ad markup. The slot is switchable from spot-config.json like
+ * any other (`slots.sidebar.enabled`, plus an optional `audience`), and a
+ * premium visitor never sees it: removeAllAds() takes every `.dc-spot` off the
+ * page the moment /me confirms the tier.
+ */
+function setupSidebarSlot(cfg, audienceNow) {
+  if (!slotAllows(cfg, 'sidebar', audienceNow())) return;
+  const host = document.getElementById('dcdSpotSidebar');
+  if (!host || host.querySelector('.dc-spot')) return;
+  const creative = pinnedCreative(cfg, 'sidebar', audienceNow());
+  if (!creative) return;
+  host.appendChild(buildCard(creative, 'sidebar'));
+}
+
 // ── premium check ────────────────────────────────────────────────────────────
 
 // The three visitor classes, and the ONLY thing that decides them. `premium`
@@ -1085,7 +1152,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=66')
+  return import('/plus/js/api.js?v=67')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
@@ -1219,6 +1286,7 @@ async function main() {
   overlaySlots.forEach(([name, title]) => watchOverlaySlot(cfg, name, title, audienceNow));
   if (searchOn) setupSearchSlot(cfg, audienceNow);
   if (archiveOn) setupArchiveSlot(cfg, audienceNow);
+  setupSidebarSlot(cfg, audienceNow);
   if (shellArticle) setupShellArticleSlot(cfg, audienceNow);
 }
 
