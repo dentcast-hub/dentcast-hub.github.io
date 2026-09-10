@@ -1539,16 +1539,34 @@ body.dc-desktop-ui .dc-search-overlay{ display:none!important; }
 }
 
 /* ── DESKTOP SEARCH OVERLAY ──
-   The search overlay CSS lives inside @media(max-width:1023px)
-   so it has no styles on desktop. Override here to make it
-   show as a full-screen modal when dc-search-mode is active.
+   The search overlay CSS lives inside @media(max-width:1023px) so it has no
+   styles on desktop; this block gives it some.
+
+   It used to say `position:fixed; inset:0; z-index:99998` — a full-screen
+   modal, measured at 1440x900 on a 1440px desktop, covering the tree and the
+   list as well as the reader. Column C is where this shell shows things, so
+   deskOpenSearch() now parks the overlay inside .dcd-col-c (hostOverlayInColumn,
+   the same move the podcast player already made) and this positions it there:
+   under the column's own header, over the reader, nothing else touched.
+   `body.dc-desktop-ui` still gates it, so the same node is untouched while it
+   sits on <body> for the mobile shell.
 ── */
 body.dc-desktop-ui.dc-search-mode .dc-search-overlay,
 body.dc-desktop-ui.dc-search-mode #dcSearchOverlay{
-  display:block !important;
-  position:fixed !important;
-  inset:0 !important;
-  z-index:99998 !important;
+  /* flex, not block. `.dc-overlay` is a flex COLUMN and `.dc-overlay-body` is
+     `flex:1; overflow-y:auto` — that pair is what makes the results scroll.
+     `display:block !important` (here since this block was written, only to beat
+     the `display:none!important` above) killed it, so the body grew to its full
+     content height inside an `overflow:hidden` overlay and the results below the
+     fold could not be reached at all: measured 1686px of results in a 900px
+     overlay, 846px clipped, scrollHeight === clientHeight, nothing to scroll.
+     Pre-dates hosting the overlay in column C — the column only changed the
+     number to 908. */
+  display:flex !important;
+  flex-direction:column !important;
+  position:absolute !important;
+  inset:var(--dcd-topbar-h, 3.5rem) 0 0 0 !important;
+  z-index:40 !important;
   background:var(--bg) !important;
   opacity:1 !important;
   pointer-events:auto !important;
@@ -1567,6 +1585,11 @@ body.dc-desktop-ui.dc-search-mode .dc-search-overlay-bar{
   padding:0.5625rem 0.875rem; border-radius:var(--r-md);
   border:1px solid var(--border); background:var(--surface2);
 }
+/* NOTE: these three `.dc-search-overlay-*` rules match NOTHING. The overlay's
+   real parts are `.dc-overlay-head` / `.dc-overlay-body`; grep finds no markup
+   with these class names anywhere in the repo. Left exactly as found — the live
+   `.dc-overlay-body` measures 720x589 inside the 838-tall column with no
+   overrun, so there is nothing to fix here, only dead CSS to notice. */
 body.dc-desktop-ui.dc-search-mode .dc-search-overlay-body{
   height:calc(100vh - 4.25rem); overflow:auto; padding:0.75rem;
 }
@@ -2056,6 +2079,24 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 .dcd-col-c > .dc-player-overlay .dc-player-overlay-body{
   height:var(--dc-player-h, calc(100vh - var(--dcd-topbar-h, 3.5rem)));
+}
+
+/* ── SEARCH + RADAR, hosted INSIDE column C ──
+   Both are `.dc-overlay { position:fixed; inset:0 }` — measured on a 1440px
+   desktop they were 1440x900 at z-index 99998/99999, i.e. they covered the
+   tree and the list as well as the reader, and closing them dropped the visitor
+   back onto whatever the app had been showing. Column C is where this shell
+   displays things, and the podcast player has been proving it works since it
+   was adopted here: same trick, same anchor (the column's own topbar height,
+   measured in JS), so the header stays put and only the reader is replaced.
+   Scoped to `> `, so the SAME node behaves exactly as before while it is
+   parked on <body> for the mobile shell. */
+.dcd-col-c > .dc-overlay{
+  position:absolute;
+  top:var(--dcd-topbar-h, 3.5rem); left:0; right:0; bottom:0;
+  inset:auto 0 0 0;
+  top:var(--dcd-topbar-h, 3.5rem);
+  z-index:40;                       /* above the scroll area, under the player */
 }
 
 /* Fetched content styling — extracted from article pages */
@@ -6658,7 +6699,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=161" defer></script>
+<script src="/dc-nav.js?v=162" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -7575,7 +7616,12 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
          in col-C instead of letting the browser navigate out of the app.
          `.+\.html` (not `[^/]+`) so sub-folder pages like the English
          versions at /metanotes/en/meta-1.html are also caught. */
-      if(/^\/(notecast|insight|chairside|litecast|metanotes|dentai|dentcast-plus|photocast|sharehub)\/.+\.html$/.test(path)){
+      /* plak-sefr was missing from this list — added 2026-09-10. Every other
+         content folder was here, so a «پلاک صفر» link inside a fetched article
+         was the one that dropped the reader out of the app. A new section has
+         to be added here as well as to the tree (see .dentcast/workflows/
+         new-section.md). */
+      if(/^\/(notecast|insight|chairside|litecast|metanotes|dentai|dentcast-plus|photocast|sharehub|plak-sefr)\/.+\.html$/.test(path)){
         e.preventDefault();
         openContent(path, a.textContent.trim() || path);
         return;
@@ -7603,6 +7649,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   function openRadarOverlay(){
     const overlay = document.getElementById('dcRadarOverlay');
     if(!overlay) return;
+    hostOverlayInColumn('dcRadarOverlay');
     overlay.setAttribute('aria-hidden','false');
     document.body.classList.add('dc-radar-mode');
     setTimeout(() => document.getElementById('dcRadarInput')?.focus(), 100);
@@ -7618,6 +7665,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     const globalBox   = document.getElementById('dcGlobalBox');
     const searchInp   = document.getElementById('dcSearch');
     if(!overlay || !overlayBody || !globalBox) return;
+    hostOverlayInColumn('dcSearchOverlay');
     overlayBody.appendChild(globalBox);
     document.body.classList.add('dc-search-mode');
     overlay.setAttribute('aria-hidden','false');
@@ -7790,11 +7838,37 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   function dcdRouteArchive(url){
     let path; try{ path = new URL(url, location.origin).pathname; }catch(x){ path = url; }
     if(path === '/dentcast_cabinet_search.html') return false;   // the gate's, not ours
+    /* /plus/* is the account app — its own pages, its own scripts, its own
+       payment flow. It is deliberately NOT routed into this column: putting a
+       checkout inside an iframe is a decision, not a detail. Those links keep
+       navigating, exactly as they did before. */
+    if(/^\/plus\//.test(path)) return false;
     if(path.endsWith('/') || !/\.html?$/i.test(path) || path === '/episodes.html'
        || /^\/(glossary|pillar|up-board|des-board)\//.test(path)) openPageViewer(path);
     else openContent(path, '');
     return true;
   }
+  /* ONE router, every card surface in this column.
+     It was written for the archive in step 4, and the welcome column needed it
+     just as much: measured on 2026-09-10, fourteen of its entry points left the
+     app shell outright — «دسته‌های محتوا», the pillar rail and its «همه ←», the
+     up-board rows and «همه ›», the «پرجستجو» chips and the DES-board door were
+     plain links to a directory or an article, so pressing one reloaded the
+     whole site as a standalone page. The phone navigates by design; this shell
+     must not. */
+  function bindCardRouter(host){
+    if(!host) return;
+    host.addEventListener('click', (e) => {
+      if(e.defaultPrevented || e.button !== 0) return;
+      if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const hit = e.target.closest('[data-href], a[href]');
+      if(!hit || !host.contains(hit)) return;
+      const url = hit.dataset.href || hit.getAttribute('href');
+      if(!url || /^(https?:|mailto:|tel:|#)/.test(url)) return;
+      if(dcdRouteArchive(url)) e.preventDefault();
+    });
+  }
+  bindCardRouter(document.getElementById('dcd-welcome-feed'));
   const archiveEl = document.getElementById('dcd-archive');
   const archiveItem = document.getElementById('dcd-archive-item');
   function showArchive(){
@@ -7808,15 +7882,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   }
   if(archiveItem) archiveItem.addEventListener('click', showArchive);
   if(archiveEl){
-    archiveEl.addEventListener('click', (e) => {
-      if(e.defaultPrevented || e.button !== 0) return;
-      if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      const hit = e.target.closest('[data-href], a[href]');
-      if(!hit || !archiveEl.contains(hit)) return;
-      const url = hit.dataset.href || hit.getAttribute('href');
-      if(!url || /^(https?:|mailto:|tel:|#)/.test(url)) return;
-      if(dcdRouteArchive(url)) e.preventDefault();
-    });
+    bindCardRouter(archiveEl);
     /* رادار opens the same overlay the topbar icon does. */
     const r = document.getElementById('dcdBtnOpenRadar');
     if(r) r.addEventListener('click', openRadarOverlay);
@@ -7858,6 +7924,23 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
      the podcast keeps playing while the reader moves between articles — the
      whole point of the mobile design, preserved here.
   ══════════════════════════════════════════════ */
+  /* The search and radar overlays, hosted in column C — the same move
+     hostPlayerInColumn() makes below, generalised. Called on the way OPEN, so
+     an overlay that was released back to <body> for the mobile layout is
+     re-adopted the next time the desktop shell opens it. */
+  function hostOverlayInColumn(id){
+    const ov = document.getElementById(id);
+    if(!ov || !colCEl) return null;
+    const bar = colCEl.querySelector('.dcd-col-c-topbar');
+    if(bar) colCEl.style.setProperty('--dcd-topbar-h', bar.offsetHeight + 'px');
+    if(ov.parentNode !== colCEl) colCEl.appendChild(ov);
+    return ov;
+  }
+  function releaseOverlayFromColumn(id){
+    const ov = document.getElementById(id);
+    if(ov && ov.parentNode !== document.body) document.body.appendChild(ov);
+  }
+
   function hostPlayerInColumn(){
     const ov = document.getElementById('dcPlayerOverlay');
     if(!ov || !colCEl) return null;
@@ -7910,6 +7993,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     document.body.classList.remove('dc-desktop-ui');
     root.setAttribute('aria-hidden', 'true');
     releasePlayerFromColumn();
+    /* …and the two overlays with it: parked inside a column that is now
+       display:none, the mobile shell's own triggers would open something
+       nobody can see. Same reasoning as the player. */
+    releaseOverlayFromColumn('dcSearchOverlay');
+    releaseOverlayFromColumn('dcRadarOverlay');
   }
 
   function sync(){ isDesk() ? enable() : disable(); }
