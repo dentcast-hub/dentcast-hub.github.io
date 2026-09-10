@@ -826,6 +826,57 @@
    ]
   },
   {
+   "key": "dentai",
+   "tag": "#DentAI",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری DentAI — خلاصه‌ی یک مقاله‌ی پژوهشی.",
+   "use_when": "روی هر مدخل DentAI، و هیچ‌جای دیگر.",
+   "aliases": [
+    "دنت ای آی",
+    "dent ai"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 34,
+   "content_ids": [
+    "dentai/dentai-1",
+    "dentai/dentai-2",
+    "dentai/dentai-3",
+    "dentai/dentai-4",
+    "dentai/dentai-5",
+    "dentai/dentai-6",
+    "dentai/dentai-7",
+    "dentai/dentai-8",
+    "dentai/dentai-9",
+    "dentai/dentai-10",
+    "dentai/dentai-11",
+    "dentai/dentai-12",
+    "dentai/dentai-13",
+    "dentai/dentai-14",
+    "dentai/dentai-15",
+    "dentai/dentai-16",
+    "dentai/dentai-17",
+    "dentai/dentai-18",
+    "dentai/dentai-19",
+    "dentai/dentai-20",
+    "dentai/dentai-21",
+    "dentai/dentai-22",
+    "dentai/dentai-23",
+    "dentai/dentai-24",
+    "dentai/dentai-25",
+    "dentai/dentai-26",
+    "dentai/dentai-27",
+    "dentai/dentai-28",
+    "dentai/dentai-29",
+    "dentai/dentai-30",
+    "dentai/dentai-31",
+    "dentai/dentai-32",
+    "dentai/dentai-33",
+    "dentai/dentai-34"
+   ]
+  },
+  {
    "key": "پست_و_کور",
    "tag": "#پست_و_کور",
    "domain": "clinical",
@@ -878,56 +929,6 @@
     "insight/insight-66",
     "notecast/episode-40",
     "dentcast-plus/video-12",
-    "dentai/dentai-33"
-   ]
-  },
-  {
-   "key": "dentai",
-   "tag": "#DentAI",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام سری DentAI — خلاصه‌ی یک مقاله‌ی پژوهشی.",
-   "use_when": "روی هر مدخل DentAI، و هیچ‌جای دیگر.",
-   "aliases": [
-    "دنت ای آی",
-    "dent ai"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 33,
-   "content_ids": [
-    "dentai/dentai-1",
-    "dentai/dentai-2",
-    "dentai/dentai-3",
-    "dentai/dentai-4",
-    "dentai/dentai-5",
-    "dentai/dentai-6",
-    "dentai/dentai-7",
-    "dentai/dentai-8",
-    "dentai/dentai-9",
-    "dentai/dentai-10",
-    "dentai/dentai-11",
-    "dentai/dentai-12",
-    "dentai/dentai-13",
-    "dentai/dentai-14",
-    "dentai/dentai-15",
-    "dentai/dentai-16",
-    "dentai/dentai-17",
-    "dentai/dentai-18",
-    "dentai/dentai-19",
-    "dentai/dentai-20",
-    "dentai/dentai-21",
-    "dentai/dentai-22",
-    "dentai/dentai-23",
-    "dentai/dentai-24",
-    "dentai/dentai-25",
-    "dentai/dentai-26",
-    "dentai/dentai-27",
-    "dentai/dentai-28",
-    "dentai/dentai-29",
-    "dentai/dentai-30",
-    "dentai/dentai-31",
-    "dentai/dentai-32",
     "dentai/dentai-33"
    ]
   },
@@ -2419,6 +2420,38 @@
    ]
   },
   {
+   "key": "اوردنچر",
+   "tag": "#اوردنچر",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "پروتزِ متحرکِ کاملِ متکی بر ایمپلنت یا ریشه با اتچمنت.",
+   "use_when": "مقاله اوردنچر را موضوع داشته باشد.",
+   "aliases": [
+    "overdenture",
+    "اوردنچور",
+    "over denture",
+    "ایمپلنت متحرک",
+    "دنچر متکی بر ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-27",
+    "episodes/episode-50",
+    "episodes/episode-51",
+    "episodes/episode-52",
+    "episodes/episode-144-1",
+    "episodes/episode-147-6",
+    "litecast/lite-CAST2",
+    "litecast/lite-CAST4",
+    "notecast/episode-27",
+    "chairside/chairside-8",
+    "chairside/chairside-11",
+    "dentai/dentai-34"
+   ]
+  },
+  {
    "key": "بعد_عمودی",
    "tag": "#بعد_عمودی",
    "domain": "clinical",
@@ -2545,37 +2578,6 @@
     "chairside/chairside-14",
     "chairside/chairside-21",
     "chairside/chairside-30"
-   ]
-  },
-  {
-   "key": "اوردنچر",
-   "tag": "#اوردنچر",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "پروتزِ متحرکِ کاملِ متکی بر ایمپلنت یا ریشه با اتچمنت.",
-   "use_when": "مقاله اوردنچر را موضوع داشته باشد.",
-   "aliases": [
-    "overdenture",
-    "اوردنچور",
-    "over denture",
-    "ایمپلنت متحرک",
-    "دنچر متکی بر ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-27",
-    "episodes/episode-50",
-    "episodes/episode-51",
-    "episodes/episode-52",
-    "episodes/episode-144-1",
-    "episodes/episode-147-6",
-    "litecast/lite-CAST2",
-    "litecast/lite-CAST4",
-    "notecast/episode-27",
-    "chairside/chairside-8",
-    "chairside/chairside-11"
    ]
   },
   {
@@ -3446,6 +3448,34 @@
    ]
   },
   {
+   "key": "پروتز_متحرک",
+   "tag": "#پروتز_متحرک",
+   "domain": null,
+   "words": 2,
+   "definition": "دنچر و پروتزهای برداشتنی.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [
+    "دنچر",
+    "denture",
+    "پروتز کامل"
+   ],
+   "variants": [
+    "#دنچر"
+   ],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-118-1",
+    "episodes/episode-147-1",
+    "litecast/lite-CAST2",
+    "notecast/episode-32",
+    "chairside/chairside-8",
+    "notecast/episode-33",
+    "episodes/episode-160",
+    "dentai/dentai-34"
+   ]
+  },
+  {
    "key": "پروتکل_باند",
    "tag": "#پروتکل_باند",
    "domain": null,
@@ -3910,33 +3940,6 @@
     "metanotes/meta-9",
     "insight/insight-34",
     "dentai/dentai-20"
-   ]
-  },
-  {
-   "key": "پروتز_متحرک",
-   "tag": "#پروتز_متحرک",
-   "domain": null,
-   "words": 2,
-   "definition": "دنچر و پروتزهای برداشتنی.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "aliases": [
-    "دنچر",
-    "denture",
-    "پروتز کامل"
-   ],
-   "variants": [
-    "#دنچر"
-   ],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-118-1",
-    "episodes/episode-147-1",
-    "litecast/lite-CAST2",
-    "notecast/episode-32",
-    "chairside/chairside-8",
-    "notecast/episode-33",
-    "episodes/episode-160"
    ]
   },
   {
@@ -7100,6 +7103,31 @@
    ]
   },
   {
+   "key": "جستجوپذیری_محتوا",
+   "tag": "#جستجوپذیری_محتوا",
+   "domain": "web",
+   "words": 2,
+   "definition": "اینکه یک مطلب اصلاً قابلِ پیداشدن باشد — مخاطبی که اسم شما را نمی‌داند سؤالش را تایپ می‌کند، پس چیزی که در جستجو نیاید عملاً وجود ندارد.",
+   "use_when": "مقاله به پیداشدن از راهِ جستجو، ایندکس‌شدن، یا نبودِ سرچِ درست در یک پلتفرم بپردازد.",
+   "aliases": [
+    "findability",
+    "searchability",
+    "سئو",
+    "SEO",
+    "دیده شدن در گوگل",
+    "جستجوپذیری",
+    "ایندکس شدن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "plak-sefr/plak1-1",
+    "plak-sefr/plak1-2",
+    "plak-sefr/plak1-3"
+   ]
+  },
+  {
    "key": "جمینای",
    "tag": "#جمینای",
    "domain": "ai",
@@ -7118,6 +7146,28 @@
     "dentai/promptologist/prompt1-append1",
     "dentai/promptologist/prompt6-1",
     "dentai/promptologist/prompt6-2"
+   ]
+  },
+  {
+   "key": "حضور_آنلاین_دندانپزشک",
+   "tag": "#حضور_آنلاین_دندانپزشک",
+   "domain": "web",
+   "words": 3,
+   "definition": "مجموعه‌ی جاهایی که یک دندانپزشک از راهشان پیدا می‌شود، و اینکه کدامشان مالِ خودش است.",
+   "use_when": "مقاله موضوعش خودِ حضورِ حرفه‌ایِ آنلاین باشد — کجا پیدا می‌شوید و روی چه چیزی بنا شده.",
+   "aliases": [
+    "online presence",
+    "حضور آنلاین",
+    "برندینگ شخصی دندانپزشک",
+    "digital presence"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "plak-sefr/plak1-1",
+    "plak-sefr/plak1-2",
+    "plak-sefr/plak1-3"
    ]
   },
   {
@@ -7646,6 +7696,30 @@
    ]
   },
   {
+   "key": "ماندگاری_محتوا",
+   "tag": "#ماندگاری_محتوا",
+   "domain": "web",
+   "words": 2,
+   "definition": "اینکه عمرِ یک مطلب را کیفیتش تعیین نمی‌کند، بلکه جایی که در آن گذاشته شده تعیین می‌کند — و فرمت‌هایی مثل استوری ساختشان پاک‌شدن است.",
+   "use_when": "مقاله به عمرِ محتوا، بایگانی‌شدن، یا از‌بین‌رفتنِ کارِ گذشته بپردازد.",
+   "aliases": [
+    "content longevity",
+    "عمر محتوا",
+    "محتوای ماندگار",
+    "evergreen content",
+    "استوری",
+    "content permanence"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "plak-sefr/plak1-1",
+    "plak-sefr/plak1-2",
+    "plak-sefr/plak1-3"
+   ]
+  },
+  {
    "key": "متریال_پروتزی",
    "tag": "#متریال_پروتزی",
    "domain": "clinical",
@@ -8038,6 +8112,27 @@
     "dentcast-plus/video-12",
     "dentai/dentai-33",
     "dentcast-plus/video-13"
+   ]
+  },
+  {
+   "key": "پلاک_صفر",
+   "tag": "#پلاک_صفر",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سری «پلاک صفر».",
+   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
+   "aliases": [
+    "plak sefr",
+    "پلاک‌صفر",
+    "plak-e sefr"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "plak-sefr/plak1-1",
+    "plak-sefr/plak1-2",
+    "plak-sefr/plak1-3"
    ]
   },
   {
@@ -9644,30 +9739,6 @@
    ]
   },
   {
-   "key": "جستجوپذیری_محتوا",
-   "tag": "#جستجوپذیری_محتوا",
-   "domain": "web",
-   "words": 2,
-   "definition": "اینکه یک مطلب اصلاً قابلِ پیداشدن باشد — مخاطبی که اسم شما را نمی‌داند سؤالش را تایپ می‌کند، پس چیزی که در جستجو نیاید عملاً وجود ندارد.",
-   "use_when": "مقاله به پیداشدن از راهِ جستجو، ایندکس‌شدن، یا نبودِ سرچِ درست در یک پلتفرم بپردازد.",
-   "aliases": [
-    "findability",
-    "searchability",
-    "سئو",
-    "SEO",
-    "دیده شدن در گوگل",
-    "جستجوپذیری",
-    "ایندکس شدن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "plak-sefr/plak1-1",
-    "plak-sefr/plak1-2"
-   ]
-  },
-  {
    "key": "جوان",
    "tag": "#جوان",
    "domain": "brand",
@@ -9725,27 +9796,6 @@
    "content_ids": [
     "insight/insight-56",
     "insight/insight-66"
-   ]
-  },
-  {
-   "key": "حضور_آنلاین_دندانپزشک",
-   "tag": "#حضور_آنلاین_دندانپزشک",
-   "domain": "web",
-   "words": 3,
-   "definition": "مجموعه‌ی جاهایی که یک دندانپزشک از راهشان پیدا می‌شود، و اینکه کدامشان مالِ خودش است.",
-   "use_when": "مقاله موضوعش خودِ حضورِ حرفه‌ایِ آنلاین باشد — کجا پیدا می‌شوید و روی چه چیزی بنا شده.",
-   "aliases": [
-    "online presence",
-    "حضور آنلاین",
-    "برندینگ شخصی دندانپزشک",
-    "digital presence"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "plak-sefr/plak1-1",
-    "plak-sefr/plak1-2"
    ]
   },
   {
@@ -10226,6 +10276,29 @@
    ]
   },
   {
+   "key": "سایت_مطب",
+   "tag": "#سایت_مطب",
+   "domain": "web",
+   "words": 2,
+   "definition": "سایتِ خودِ مطب به‌عنوان یک شیء با کارکردِ مشخص — نه کارتِ ویزیتِ کسی که از قبل تصمیم گرفته بیاید، بلکه جایی که به سؤالِ کسی جواب می‌دهد که هنوز اسمِ شما را نمی‌داند، و چیزی که تمام‌شده نیست و در جریان می‌ماند.",
+   "use_when": "مقاله موضوعش خودِ سایتِ مطب باشد — اینکه برای چه کاری ساخته شده، چه چیزی در آن اتفاق می‌افتد، یا چرا داشتنش به‌تنهایی کافی نیست.",
+   "aliases": [
+    "practice website",
+    "وب‌سایت مطب",
+    "سایت دندانپزشکی",
+    "dental practice website",
+    "سایت شخصی دندانپزشک",
+    "clinic website"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "plak-sefr/plak1-2",
+    "plak-sefr/plak1-3"
+   ]
+  },
+  {
    "key": "سختی_تکیه_گاه",
    "tag": "#سختی_تکیه_گاه",
    "domain": "clinical",
@@ -10513,6 +10586,28 @@
    ]
   },
   {
+   "key": "قدرت_جویدن",
+   "tag": "#قدرت_جویدن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بازده عینی خرد یا مخلوط کردن غذا که با آزمون استاندارد اندازه‌گیری می‌شود، نه با پرسشنامه‌ی رضایت بیمار.",
+   "use_when": "مقاله عملکرد جویدن را به‌عنوان پیامد عینی بسنجد یا پروتزها را از این نظر مقایسه کند.",
+   "aliases": [
+    "masticatory performance",
+    "chewing efficiency",
+    "عملکرد جویدن",
+    "بازده جویدن",
+    "chewing performance"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "litecast/lite-CAST4",
+    "dentai/dentai-34"
+   ]
+  },
+  {
    "key": "لایه_مهار_اکسیژن",
    "tag": "#لایه_مهار_اکسیژن",
    "domain": null,
@@ -10558,26 +10653,26 @@
    ]
   },
   {
-   "key": "ماندگاری_محتوا",
-   "tag": "#ماندگاری_محتوا",
+   "key": "مالکیت_پلتفرم",
+   "tag": "#مالکیت_پلتفرم",
    "domain": "web",
    "words": 2,
-   "definition": "اینکه عمرِ یک مطلب را کیفیتش تعیین نمی‌کند، بلکه جایی که در آن گذاشته شده تعیین می‌کند — و فرمت‌هایی مثل استوری ساختشان پاک‌شدن است.",
-   "use_when": "مقاله به عمرِ محتوا، بایگانی‌شدن، یا از‌بین‌رفتنِ کارِ گذشته بپردازد.",
+   "definition": "تفاوتِ داشتنِ خودِ محتوا با داشتنِ چیزی که محتوا روی آن می‌نشیند: آدرس، دسترسی و بایگانی. روی پلتفرمِ کسِ دیگر، این سه مالِ شما نیست و قانونشان را او می‌نویسد.",
+   "use_when": "مقاله به این بپردازد که کار روی پلتفرمی نگهداری می‌شود که مالکش نیستید — بسته‌شدنِ اکانت، تغییرِ الگوریتم، یا از‌دست‌رفتنِ کلِ حضور.",
    "aliases": [
-    "content longevity",
-    "عمر محتوا",
-    "محتوای ماندگار",
-    "evergreen content",
-    "استوری",
-    "content permanence"
+    "platform ownership",
+    "اجاره‌نشینی دیجیتال",
+    "وابستگی به پلتفرم",
+    "مالکیت محتوا",
+    "platform dependence",
+    "own your platform"
    ],
    "variants": [],
    "co_tags": [],
    "count": 2,
    "content_ids": [
     "plak-sefr/plak1-1",
-    "plak-sefr/plak1-2"
+    "plak-sefr/plak1-3"
    ]
   },
   {
@@ -11013,6 +11108,25 @@
    ]
   },
   {
+   "key": "پروتز_متکی_بر_ایمپلنت",
+   "tag": "#پروتز_متکی_بر_ایمپلنت",
+   "domain": "clinical",
+   "words": 4,
+   "definition": "پروتزی که تکیه‌گاهش ایمپلنت است.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [
+    "implant supported prosthesis",
+    "implant retained"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-1",
+    "dentai/dentai-34"
+   ]
+  },
+  {
    "key": "پروتز_پارسیل",
    "tag": "#پروتز_پارسیل",
    "domain": "clinical",
@@ -11068,26 +11182,6 @@
    "content_ids": [
     "insight/insight-1",
     "chairside/chairside-15"
-   ]
-  },
-  {
-   "key": "پلاک_صفر",
-   "tag": "#پلاک_صفر",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سری «پلاک صفر».",
-   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
-   "aliases": [
-    "plak sefr",
-    "پلاک‌صفر",
-    "plak-e sefr"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "plak-sefr/plak1-1",
-    "plak-sefr/plak1-2"
    ]
   },
   {
@@ -15892,28 +15986,6 @@
    ]
   },
   {
-   "key": "سایت_مطب",
-   "tag": "#سایت_مطب",
-   "domain": "web",
-   "words": 2,
-   "definition": "سایتِ خودِ مطب به‌عنوان یک شیء با کارکردِ مشخص — نه کارتِ ویزیتِ کسی که از قبل تصمیم گرفته بیاید، بلکه جایی که به سؤالِ کسی جواب می‌دهد که هنوز اسمِ شما را نمی‌داند، و چیزی که تمام‌شده نیست و در جریان می‌ماند.",
-   "use_when": "مقاله موضوعش خودِ سایتِ مطب باشد — اینکه برای چه کاری ساخته شده، چه چیزی در آن اتفاق می‌افتد، یا چرا داشتنش به‌تنهایی کافی نیست.",
-   "aliases": [
-    "practice website",
-    "وب‌سایت مطب",
-    "سایت دندانپزشکی",
-    "dental practice website",
-    "سایت شخصی دندانپزشک",
-    "clinic website"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "plak-sefr/plak1-2"
-   ]
-  },
-  {
    "key": "سایز_گل_پیچ",
    "tag": "#سایز_گل_پیچ",
    "domain": "clinical",
@@ -17396,28 +17468,6 @@
    ]
   },
   {
-   "key": "مالکیت_پلتفرم",
-   "tag": "#مالکیت_پلتفرم",
-   "domain": "web",
-   "words": 2,
-   "definition": "تفاوتِ داشتنِ خودِ محتوا با داشتنِ چیزی که محتوا روی آن می‌نشیند: آدرس، دسترسی و بایگانی. روی پلتفرمِ کسِ دیگر، این سه مالِ شما نیست و قانونشان را او می‌نویسد.",
-   "use_when": "مقاله به این بپردازد که کار روی پلتفرمی نگهداری می‌شود که مالکش نیستید — بسته‌شدنِ اکانت، تغییرِ الگوریتم، یا از‌دست‌رفتنِ کلِ حضور.",
-   "aliases": [
-    "platform ownership",
-    "اجاره‌نشینی دیجیتال",
-    "وابستگی به پلتفرم",
-    "مالکیت محتوا",
-    "platform dependence",
-    "own your platform"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "plak-sefr/plak1-1"
-   ]
-  },
-  {
    "key": "ماکت_اولیه",
    "tag": "#ماکت_اولیه",
    "domain": "ai",
@@ -18286,24 +18336,6 @@
    "count": 1,
    "content_ids": [
     "sharehub/share-6"
-   ]
-  },
-  {
-   "key": "پروتز_متکی_بر_ایمپلنت",
-   "tag": "#پروتز_متکی_بر_ایمپلنت",
-   "domain": "clinical",
-   "words": 4,
-   "definition": "پروتزی که تکیه‌گاهش ایمپلنت است.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "aliases": [
-    "implant supported prosthesis",
-    "implant retained"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "sharehub/share-1"
    ]
   },
   {
@@ -19744,6 +19776,7 @@
   "سیستم پایدار بدون علامت": "سیستم پایدار",
   "pit and fissure sealant": "فیشور سیلانت",
   "fractured implant screw": "شکست پیچ ایمپلنت",
+  "masticatory performance": "قدرت جویدن",
   "differential diagnosis": "تشخیص افتراقی",
   "occlusal equilibration": "تنظیم اکلوژن",
   "تحلیل استخوان حاشیه ای": "تحلیل استخوان کرستال",
@@ -19921,6 +19954,7 @@
   "consensus statement": "کنسنسوس iti",
   "preparation quality": "کیفیت تراش",
   "general anaesthesia": "بیهوشی",
+  "chewing performance": "قدرت جویدن",
   "canker sore trigger": "محرک آفت",
   "روکش گذاری ایمپلنت": "پروتز ایمپلنت",
   "material selection": "انتخاب متریال",
@@ -20007,6 +20041,7 @@
   "failure prediction": "پیش بینی شکست",
   "زمان به عنوان داده": "پیگیری زمانی",
   "flowable composite": "کامپوزیت فلو",
+  "chewing efficiency": "قدرت جویدن",
   "آفت بعد دندانپزشکی": "محرک آفت",
   "پروتز روی ایمپلنت": "پروتز ایمپلنت",
   "تصمیم گیری درمانی": "تصمیم درمانی",
@@ -21091,6 +21126,7 @@
   "پلیمریزاسیون": "کیور",
   "friction fit": "گیر مکانیکی",
   "بیهوشی عمومی": "بیهوشی",
+  "عملکرد جویدن": "قدرت جویدن",
   "آرتیکولاسیون": "ارتیکولاسیون",
   "articulation": "ارتیکولاسیون",
   "بایو میمتیک": "بیومیمتیک",
@@ -21332,6 +21368,7 @@
   "canker sore": "آفت دهان",
   "mouth ulcer": "آفت دهان",
   "semaglutide": "تیرزپاتاید",
+  "بازده جویدن": "قدرت جویدن",
   "بایومیمتیک": "بیومیمتیک",
   "بیو میمتیک": "بیومیمتیک",
   "بیومی متیک": "بیومیمتیک",
