@@ -137712,6 +137712,53 @@
         "Priyanka Chowdhary",
         "Anuraag Gurtu"
       ]
+    },
+    {
+      "id": "P2906",
+      "title": "Effect of implant-supported or retained dentures on masticatory performance: A systematic review",
+      "file_name": "Effect-of-implant-supported-or-retained-ficulty adapting to CDs dentures on masticatory performance A systematic review.pdf",
+      "topic": "Treatment plan",
+      "topic_path": "Treatment plan",
+      "type": "systematic review",
+      "local_path": "",
+      "file_size": 235922,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "dentai/dentai-34"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1dNhbYndzcws_H3JIuhxRS34_d8ftiBjS/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1dNhbYndzcws_H3JIuhxRS34_d8ftiBjS",
+      "drive_view": "https://drive.google.com/file/d/1dNhbYndzcws_H3JIuhxRS34_d8ftiBjS/view",
+      "drive_id": "1dNhbYndzcws_H3JIuhxRS34_d8ftiBjS",
+      "tags": [
+        "masticatory-performance",
+        "implant-overdenture",
+        "implant-supported-denture",
+        "complete-denture",
+        "mandibular-overdenture",
+        "removable-partial-denture",
+        "systematic-review",
+        "resorbed-mandible",
+        "topic:treatment-plan",
+        "effect-of-implant-supported-or-retained-dentures-on-masticatory-performance"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Effect of implant-supported or retained dentures on masticatory performance: A systematic review",
+      "doi": "10.1016/s0022-3913(07)60147-4",
+      "journal": "The Journal of Prosthetic Dentistry",
+      "crossref_year": 2007,
+      "subjects": [],
+      "abstract": "STATEMENT OF PROBLEM: While subjective patient-based measures have been increasingly recognized as critical outcomes for prosthodontic treatment, there continues to be a need to validate for patients what changes in masticatory function can be expected with the provision of new implant-supported or retained dentures. PURPOSE: The purpose of this review was to evaluate the critical factors impacting change in masticatory performance following the provision of new implant-supported or retained dentures. MATERIAL AND METHODS: Information retrieval followed a systematic approach using PubMed and the Cochrane Library. English articles published from 1966 to June 2007, in which the masticatory performance of subjects with implant-supported or retained dentures was assessed by objective methods and compared to performance with conventional dentures, were included. Ratings of the evidence provided in each article followed United States Agency for Healthcare Research and Quality recommendations. RESULTS: From 281 articles identified, 18 peer-reviewed articles met prespecified criteria for inclusion. Specific outcomes of significance identified by these articles rated as level II are: (1) fixed implant-supported partial dentures do not provide significant improvement in masticatory performance compared to conventional removable partial dentures for Kennedy Class I and II partially edentulous mandibles; (2) the combination of a mandibular implant-supported or retained overdenture (IOD) and maxillary conventional complete denture (CD) provides significant improvement in masticatory performance compared to CDs in both the mandible and maxilla for a limited population having persistent functional problems with an existing mandibular CD due to severely resorbed mandible; and (3) the type of implant and attachment system for mandibular IODs has a limited impact. Specific outcomes of significance identified by articles rated as having a moderate level of evidence (level III) are: (1) mandibular fixed implant-supported complete dentures provide significant improvement in masticatory performance compared to mandibular CDs in subjects dissatisfied with their CDs; and (2) implant-supported mandibular resection dentures have an advantage over conventional dentures in masticatory performance on the defect side of the mouth. CONCLUSIONS: Objective benefits in masticatory performance of implant-supported or retained dentures compared to conventional dentures are limited to a mandibular IOD in edentulous patients with a resorbed mandible and/or difficulty adapting to CDs.",
+      "display_title": "Effect of implant-supported or retained dentures on masticatory performance: A systematic review",
+      "authors": [
+        "Kenji Fueki",
+        "Katsuhiko Kimoto",
+        "Takahiro Ogawa",
+        "Neal R. Garrett"
+      ]
     }
   ],
   "drive_matched": 2849,
