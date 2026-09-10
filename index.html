@@ -869,9 +869,12 @@ body{
 /* Two hero cards now stack inside «موتور جستجوی دندانپزشکی». The first one
    drops to a tight gap so they read as one pair; the second keeps the section's
    own 1.375rem breathing room below it. */
-#btnOpenRadarMob{ margin-bottom:0.6rem; }
-#card-library .dcp-soon-badge{ font-size:0.66rem; padding:2px 8px; margin-top:0.3rem; }
-#card-library:focus-visible{ outline:2px solid var(--ac); outline-offset:3px; }
+#btnOpenRadarMob,
+#dcdBtnOpenRadar{ margin-bottom:0.6rem; }
+#card-library .dcp-soon-badge,
+#dcd-card-library .dcp-soon-badge{ font-size:0.66rem; padding:2px 8px; margin-top:0.3rem; }
+#card-library:focus-visible,
+#dcd-card-library:focus-visible{ outline:2px solid var(--ac); outline-offset:3px; }
 
 [data-theme="dark"] .dc-radar-hero{
   background:
@@ -1009,14 +1012,16 @@ body{
 .dc-list-card.featured .dc-list-card-title{ font-size:.92rem; font-weight:900; }
 
 /* Glossary featured — یک گام روشن‌تر از hero، margin-bottom هم‌اندازه hero */
-#panel-sharehub .dc-list-card.featured:first-child{
+#panel-sharehub .dc-list-card.featured:first-child,
+#dcd-archive .dc-list-card.featured:first-child{
   background:linear-gradient(135deg,rgba(var(--pr-rgb),.18),rgba(var(--ac-rgb),.10));
   border:1px solid rgba(var(--pr-rgb),.28)!important;
   border-right:3px solid rgba(var(--pr-rgb),.55)!important;
   box-shadow:0 8px 24px rgba(var(--pr-rgb),.18),var(--card-sh)!important;
   margin-bottom:1.25rem;
 }
-[data-theme="dark"] #panel-sharehub .dc-list-card.featured:first-child{
+[data-theme="dark"] #panel-sharehub .dc-list-card.featured:first-child,
+[data-theme="dark"] #dcd-archive .dc-list-card.featured:first-child{
   background:linear-gradient(135deg,rgba(var(--pr-rgb),.22),rgba(var(--ac-rgb),.12));
 }
 
@@ -1992,6 +1997,25 @@ body.dc-desktop-ui #dc-desktop-root{
 /* When content is shown, hide welcome */
 .dcd-col-c-scroll.has-content .dcd-welcome{ display:none; }
 .dcd-col-c-scroll.has-content .dcd-content-area{ display:block; }
+
+/* ── ARCHIVE surface — the third state of column C ──
+   Welcome / archive / article, exactly one at a time. The archive is its own
+   element rather than something injected into .dcd-content-area so that
+   opening an article from inside it does not destroy it, and going back is a
+   class flip rather than a re-render. Same measure and padding as the welcome
+   feed so the two read as one column. */
+.dcd-archive{ display:none; }
+.dcd-col-c-scroll.is-archive .dcd-welcome{ display:none; }
+.dcd-col-c-scroll.is-archive .dcd-content-area{ display:none; }
+.dcd-col-c-scroll.is-archive .dcd-archive{
+  display:flex; flex-direction:column;
+  max-width:48.75rem; margin:0 auto;
+  padding:1.75rem 1.375rem;
+  width:100%; box-sizing:border-box;
+}
+.dcd-archive-item.active{ background:var(--sb-fill-1); }
+.dcd-archive-item.active .dcd-group-hdr-lbl,
+.dcd-archive-item.active .dcd-group-hdr-ico{ color:var(--sb-txt); }
 
 /* Loading spinner */
 .dcd-loading{
@@ -2984,7 +3008,8 @@ body.dc-desktop-ui #dc-desktop-root{
 /* =====================================================
    GLOSSARY CARD — redesigned layout
 ===================================================== */
-#card-glossary{
+#card-glossary,
+#dcd-card-glossary{
   flex-direction:column;
   align-items:stretch;
   padding:1rem 1.125rem 0.875rem;
@@ -3109,24 +3134,29 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 
 /* Glossary stays blue even when no longer :first-child */
-#panel-sharehub .dc-card-pair > #card-glossary {
+#panel-sharehub .dc-card-pair > #card-glossary,
+#dcd-archive .dc-card-pair > #dcd-card-glossary{
   background: linear-gradient(135deg, rgba(var(--pr-rgb),.18), rgba(var(--ac-rgb),.10)) !important;
   border: 1px solid rgba(var(--pr-rgb),.28) !important;
   border-right: 3px solid rgba(var(--pr-rgb),.55) !important;
   box-shadow: 0 8px 24px rgba(var(--pr-rgb),.18), var(--card-sh) !important;
 }
-[data-theme="dark"] #panel-sharehub .dc-card-pair > #card-glossary {
+[data-theme="dark"] #panel-sharehub .dc-card-pair > #card-glossary,
+[data-theme="dark"] #dcd-archive .dc-card-pair > #card-glossary,
+[data-theme="dark"] #dcd-archive .dc-card-pair > #dcd-card-glossary{
   background: linear-gradient(135deg, rgba(var(--pr-rgb),.22), rgba(var(--ac-rgb),.12)) !important;
 }
 
 /* Pillar — teal palette mirroring Glossary's blue treatment */
-#panel-sharehub .dc-list-card.featured.dc-list-card--pillar {
+#panel-sharehub .dc-list-card.featured.dc-list-card--pillar,
+#dcd-archive .dc-list-card.featured.dc-list-card--pillar{
   background: linear-gradient(135deg, rgba(30,90,106,.18), rgba(45,135,148,.10)) !important;
   border: 1px solid rgba(30,90,106,.28) !important;
   border-right: 3px solid rgba(30,90,106,.55) !important;
   box-shadow: 0 8px 24px rgba(30,90,106,.18), var(--card-sh) !important;
 }
-[data-theme="dark"] #panel-sharehub .dc-list-card.featured.dc-list-card--pillar {
+[data-theme="dark"] #panel-sharehub .dc-list-card.featured.dc-list-card--pillar,
+[data-theme="dark"] #dcd-archive .dc-list-card.featured.dc-list-card--pillar{
   background: linear-gradient(135deg, rgba(74,154,171,.22), rgba(106,181,196,.12)) !important;
   border: 1px solid rgba(74,154,171,.28) !important;
   border-right: 3px solid rgba(74,154,171,.55) !important;
@@ -3134,7 +3164,8 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 
 /* Pillar layout — mirror #card-glossary structure */
-#card-pillar {
+#card-pillar,
+#dcd-card-pillar{
   flex-direction: column;
   align-items: stretch;
   padding: 1rem 1.125rem 0.875rem;
@@ -3143,7 +3174,8 @@ body.dc-desktop-ui #dc-desktop-root{
   border-right: 1px solid rgba(30,90,106,.28) !important;
   border-top: 3px solid rgba(30,90,106,.55) !important;
 }
-[data-theme="dark"] #card-pillar {
+[data-theme="dark"] #card-pillar,
+[data-theme="dark"] #dcd-card-pillar{
   border-right: 1px solid rgba(74,154,171,.28) !important;
   border-top: 3px solid rgba(74,154,171,.55) !important;
 }
@@ -3304,12 +3336,14 @@ a.dc-list-card--pillar {
 #panel-studio .dc-pulse-list li strong{ color:var(--txt); font-weight:700; }
 /* ── section label + «همه» (shared by home & archive) ── */
 #panel-studio .dc-home-sec,
-#panel-sharehub .dc-home-sec{
+#panel-sharehub .dc-home-sec,
+#dcd-archive .dc-home-sec{
   display:flex; align-items:center; justify-content:space-between;
   margin:1.625rem 0 0.75rem;
 }
 #panel-studio .dc-home-sec-label,
-#panel-sharehub .dc-home-sec-label{
+#panel-sharehub .dc-home-sec-label,
+#dcd-archive .dc-home-sec-label{
   font-size:.95rem; font-weight:800; color:var(--txt);
   border-right:4px solid var(--ac); padding-right:0.625rem;
   margin:0; line-height:1.4; text-align:right;
@@ -3410,8 +3444,10 @@ a.dc-list-card--pillar {
 #dcd-welcome-feed .hero-stat .k{ margin-top:0.625rem; font-size:.72rem; }
 
 /* ── ARCHIVE panel polish (same language) ── */
-#panel-sharehub .dc-radar-hero{ margin-bottom:0; }
-#panel-sharehub .dc-monitor-secondary{ margin-top:1.625rem; border:1.5px solid var(--pr); }
+#panel-sharehub .dc-radar-hero,
+#dcd-archive .dc-radar-hero{ margin-bottom:0; }
+#panel-sharehub .dc-monitor-secondary,
+#dcd-archive .dc-monitor-secondary{ margin-top:1.625rem; border:1.5px solid var(--pr); }
 
 /* =====================================================
    BOTTOM NAV — clean active state (no neon, no glow)
@@ -3804,16 +3840,19 @@ a.dc-list-card--pillar {
 
 /* ── section labels: bar removed, plain bold ── */
 #panel-studio .dc-home-sec-label,
-#panel-sharehub .dc-home-sec-label{
+#panel-sharehub .dc-home-sec-label,
+#dcd-archive .dc-home-sec-label{
   border-right:0; padding-right:0; font-size:1.02rem;
 }
 #panel-studio .dc-home-sec,
-#panel-sharehub .dc-home-sec{ margin:1.75rem 0 0.5rem; }
+#panel-sharehub .dc-home-sec,
+#dcd-archive .dc-home-sec{ margin:1.75rem 0 0.5rem; }
 /* up-board's header carries a second line, so it stacks — and it has to say so
    HERE: `#panel-sharehub .dc-home-sec` above sets align-items:center, which an
    unqualified class in the shared block cannot out-rank, and the title lands
    centred while every other section on this panel is right-aligned. */
-#panel-sharehub .dc-home-sec-upboard{
+#panel-sharehub .dc-home-sec-upboard,
+#dcd-archive .dc-home-sec-upboard{
   flex-direction:column; align-items:stretch; gap:0.125rem;
 }
 
@@ -3832,7 +3871,8 @@ a.dc-list-card--pillar {
    نام می‌برد. توجه: کپسولِ `.dc-des-cap` در پنلِ توضیحِ DES (‏#panel-studio)
    «مطالب» می‌گوید نه «مقالات» — دو پنلِ متفاوت‌اند و هم‌زمان دیده نمی‌شوند،
    ولی اگر روزی یکی‌شان بازنویسی شد، آن یکی هم در همان کامیت. */
-#panel-sharehub .dc-ub-door{
+#panel-sharehub .dc-ub-door,
+#dcd-archive .dc-ub-door{
   display:flex; align-items:center; gap:0.65rem;
   margin:0.35rem 0 0.5rem; padding:0.7rem 0.85rem;
   border-radius:var(--r-lg); text-decoration:none;
@@ -3840,20 +3880,25 @@ a.dc-list-card--pillar {
   color:var(--txt); box-shadow:var(--card-sh);
   transition:background var(--tr);
 }
-#panel-sharehub .dc-ub-door:active{ background:var(--x-amber-wash-2); }
-#panel-sharehub .dc-ub-door-l{ flex:none; font-size:0.95rem; line-height:1; }
+#panel-sharehub .dc-ub-door:active,
+#dcd-archive .dc-ub-door:active{ background:var(--x-amber-wash-2); }
+#panel-sharehub .dc-ub-door-l,
+#dcd-archive .dc-ub-door-l{ flex:none; font-size:0.95rem; line-height:1; }
 /* رنگ صریح، نه ارثی — عنوان داخل یک <a> است و اگر رنگ را از لینک به ارث ببرد،
    تا رسیدنِ شیوه‌نامه‌های تأخیری آبی دیده می‌شود. */
-#panel-sharehub .dc-ub-door-t{
+#panel-sharehub .dc-ub-door-t,
+#dcd-archive .dc-ub-door-t{
   flex:1; min-width:0; font-size:0.86rem; font-weight:800;
   line-height:1.6; letter-spacing:-0.01em; color:var(--txt);
 }
-#panel-sharehub .dc-ub-door-b{
+#panel-sharehub .dc-ub-door-b,
+#dcd-archive .dc-ub-door-b{
   flex:none; font-size:0.62rem; font-weight:800; white-space:nowrap;
   color:var(--x-amber-ink); background:var(--x-amber-wash-2);
   border:1px solid var(--x-amber-bd); border-radius:999px; padding:0.05rem 0.5rem;
 }
-#panel-sharehub .dc-ub-door-c{
+#panel-sharehub .dc-ub-door-c,
+#dcd-archive .dc-ub-door-c{
   flex:none; font-size:1.05rem; font-weight:900; color:var(--x-amber-ink);
 }
 
@@ -3910,25 +3955,32 @@ a.dc-list-card--pillar {
 }
 
 /* ── archive: search-engine pair (Radar + Library) ── */
-#panel-sharehub .dc-radar-hero{
+#panel-sharehub .dc-radar-hero,
+#dcd-archive .dc-radar-hero{
   background:var(--card-bg);
   border:1px solid var(--card-border); border-top:1px solid var(--card-border);
   border-radius:0.875rem; box-shadow:none;
 }
-#panel-sharehub .radar-shine-card::after{ display:none; }
-#panel-sharehub .dc-radar-hero-ico{
+#panel-sharehub .radar-shine-card::after,
+#dcd-archive .radar-shine-card::after{ display:none; }
+#panel-sharehub .dc-radar-hero-ico,
+#dcd-archive .dc-radar-hero-ico{
   background:var(--surface2); border:1px solid var(--border2); box-shadow:none;
 }
-#panel-sharehub .dc-radar-hero-txt{ color:var(--txt); }
-#panel-sharehub .dc-radar-hero-btn{ box-shadow:none; border:none; border-radius:0.625rem; }
+#panel-sharehub .dc-radar-hero-txt,
+#dcd-archive .dc-radar-hero-txt{ color:var(--txt); }
+#panel-sharehub .dc-radar-hero-btn,
+#dcd-archive .dc-radar-hero-btn{ box-shadow:none; border:none; border-radius:0.625rem; }
 /* premium badge on the library card — gold, like the mockup's Plus chip */
-#panel-sharehub #card-library .dcp-soon-badge{
+#panel-sharehub #card-library .dcp-soon-badge,
+#dcd-archive #dcd-card-library .dcp-soon-badge{
   background:var(--exa-gold-bg); color:var(--exa-gold);
   border:1px solid var(--exa-gold-bd); border-radius:0.375rem; font-weight:800;
 }
 
 /* ── archive: list cards / featured pair / grid — flat ── */
-#panel-sharehub .dc-list-card{
+#panel-sharehub .dc-list-card,
+#dcd-archive .dc-list-card{
   background:var(--card-bg);
   border:1px solid var(--card-border);
   border-right:1px solid var(--card-border);
@@ -3936,60 +3988,86 @@ a.dc-list-card--pillar {
 }
 #panel-sharehub .dc-list-card--insight,
 #panel-sharehub .dc-list-card--chairside,
-#panel-sharehub .dc-list-card--meta{
+#panel-sharehub .dc-list-card--meta,
+#dcd-archive .dc-list-card--insight,
+#dcd-archive .dc-list-card--chairside,
+#dcd-archive .dc-list-card--meta{
   background:var(--card-bg);
   border-right:1px solid var(--card-border);
 }
 #panel-sharehub .dc-list-card.featured,
 #panel-sharehub .dc-list-card.featured:first-child,
 #panel-sharehub .dc-card-pair > #card-glossary,
-#panel-sharehub .dc-list-card.featured.dc-list-card--pillar{
+#panel-sharehub .dc-list-card.featured.dc-list-card--pillar,
+#dcd-archive .dc-list-card.featured,
+#dcd-archive .dc-list-card.featured:first-child,
+#dcd-archive .dc-card-pair > #dcd-card-glossary,
+#dcd-archive .dc-list-card.featured.dc-list-card--pillar{
   background:var(--card-bg) !important;
   border:1px solid var(--card-border) !important;
   border-right:1px solid var(--card-border) !important;
   box-shadow:none !important;
 }
 #panel-sharehub #card-pillar,
-#panel-sharehub #card-glossary{
+#dcd-archive #dcd-card-pillar,
+#panel-sharehub #card-glossary,
+#dcd-archive #dcd-card-glossary{
   border-top:1px solid var(--card-border) !important;
 }
-#panel-sharehub .gls-title{ color:var(--txt); }
-#panel-sharehub .gls-ico{ color:var(--txt2); }
+#panel-sharehub .gls-title,
+#dcd-archive .gls-title{ color:var(--txt); }
+#panel-sharehub .gls-ico,
+#dcd-archive .gls-ico{ color:var(--txt2); }
 #panel-sharehub .dc-list-card--pillar .gls-ico,
-#panel-sharehub .dc-list-card--pillar .gls-title{ color:var(--txt); }
-#panel-sharehub .dc-list-card--pillar .gls-ico{ color:var(--txt2); }
-#panel-sharehub .dc-chip{
+#panel-sharehub .dc-list-card--pillar .gls-title,
+#dcd-archive .dc-list-card--pillar .gls-ico,
+#dcd-archive .dc-list-card--pillar .gls-title{ color:var(--txt); }
+#panel-sharehub .dc-list-card--pillar .gls-ico,
+#dcd-archive .dc-list-card--pillar .gls-ico{ color:var(--txt2); }
+#panel-sharehub .dc-chip,
+#dcd-archive .dc-chip{
   background:var(--surface2); border:1px solid var(--border2); color:var(--txt2);
 }
-#panel-sharehub .dc-grid-card{
+#panel-sharehub .dc-grid-card,
+#dcd-archive .dc-grid-card{
   border:1px solid var(--card-border); border-top:1px solid var(--card-border);
   border-radius:0.75rem; box-shadow:none;
 }
-#panel-sharehub .dc-grid-ico{ background:var(--surface2); border:1px solid var(--border2); }
+#panel-sharehub .dc-grid-ico,
+#dcd-archive .dc-grid-ico{ background:var(--surface2); border:1px solid var(--border2); }
 
 /* ── archive: «تازه‌ترین مطالب» monitor — pill rows → hairline rows ── */
-#panel-sharehub .dc-monitor{
+#panel-sharehub .dc-monitor,
+#dcd-archive .dc-monitor{
   box-shadow:none; border:1px solid var(--card-border);
   border-right:1px solid var(--card-border); border-radius:0.875rem;
 }
-#panel-sharehub .dc-monitor-list a{
+#panel-sharehub .dc-monitor-list a,
+#dcd-archive .dc-monitor-list a{
   background:none; border:0; border-bottom:1px solid var(--border2);
   border-radius:0; color:var(--txt); font-weight:600;
   padding:0.4rem 0.125rem;
 }
-#panel-sharehub .dc-monitor-list a:last-child{ border-bottom:0; }
-#panel-sharehub .dc-monitor-list a:active{ background:var(--surface2); }
+#panel-sharehub .dc-monitor-list a:last-child,
+#dcd-archive .dc-monitor-list a:last-child{ border-bottom:0; }
+#panel-sharehub .dc-monitor-list a:active,
+#dcd-archive .dc-monitor-list a:active{ background:var(--surface2); }
 
 /* ── mockup layout round 2: hero search + popular + category grid ── */
-#panel-sharehub .dc-exa-pagehead{ padding:0.375rem 0.125rem 0; }
-#panel-sharehub .dc-exa-pagetitle{
+#panel-sharehub .dc-exa-pagehead,
+#dcd-archive .dc-exa-pagehead{ padding:0.375rem 0.125rem 0; }
+#panel-sharehub .dc-exa-pagetitle,
+#dcd-archive .dc-exa-pagetitle{
   font-size:1.5rem; font-weight:800; color:var(--txt); line-height:1.5; margin:0;
 }
-#panel-sharehub .dc-exa-pagecount{ font-size:.72rem; color:var(--txt3); margin-top:0.125rem; }
-#panel-sharehub .dc-exa-search{ margin-top:0.875rem; margin-bottom:1.375rem; }
+#panel-sharehub .dc-exa-pagecount,
+#dcd-archive .dc-exa-pagecount{ font-size:.72rem; color:var(--txt3); margin-top:0.125rem; }
+#panel-sharehub .dc-exa-search,
+#dcd-archive .dc-exa-search{ margin-top:0.875rem; margin-bottom:1.375rem; }
 #panel-studio .dc-exa-search,
 #panel-sharehub .dc-exa-search,
-#dcd-welcome-feed .dc-exa-search{
+#dcd-welcome-feed .dc-exa-search,
+#dcd-archive .dc-exa-search{
   display:flex; align-items:center; gap:0.625rem;
   border:1.5px solid var(--txt); border-radius:0.75rem;
   padding:0.75rem 0.875rem; margin:0.25rem 0 0;
@@ -3998,19 +4076,23 @@ a.dc-list-card--pillar {
 }
 #panel-studio .dc-exa-search:active,
 #panel-sharehub .dc-exa-search:active,
-#dcd-welcome-feed .dc-exa-search:active{ background:var(--surface2); }
+#dcd-welcome-feed .dc-exa-search:active,
+#dcd-archive .dc-exa-search:active{ background:var(--surface2); }
 #panel-studio .dc-exa-search .dc-svg-icon,
 #panel-sharehub .dc-exa-search .dc-svg-icon,
-#dcd-welcome-feed .dc-exa-search .dc-svg-icon{ width:1.0625rem; height:1.0625rem; color:var(--txt3); flex-shrink:0; }
+#dcd-welcome-feed .dc-exa-search .dc-svg-icon,
+#dcd-archive .dc-exa-search .dc-svg-icon{ width:1.0625rem; height:1.0625rem; color:var(--txt3); flex-shrink:0; }
 #panel-studio .dc-exa-search-ph,
 #panel-sharehub .dc-exa-search-ph,
-#dcd-welcome-feed .dc-exa-search-ph{
+#dcd-welcome-feed .dc-exa-search-ph,
+#dcd-archive .dc-exa-search-ph{
   flex:1; min-width:0; font-size:.84rem; color:var(--txt3);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 #panel-studio .dc-exa-search-go,
 #panel-sharehub .dc-exa-search-go,
-#dcd-welcome-feed .dc-exa-search-go{
+#dcd-welcome-feed .dc-exa-search-go,
+#dcd-archive .dc-exa-search-go{
   flex-shrink:0; background:var(--txt); color:var(--bg);
   font-size:.78rem; font-weight:700; border-radius:0.5rem; padding:0.3125rem 0.875rem;
 }
@@ -4145,12 +4227,15 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
   -webkit-text-fill-color:transparent; color:transparent; animation:none;
 }
 #panel-studio .dc-home-sec-label,
-#panel-sharehub .dc-home-sec-label{
+#panel-sharehub .dc-home-sec-label,
+#dcd-archive .dc-home-sec-label{
   font-size:1.24rem; font-weight:800; color:var(--x-ink); letter-spacing:-.02em;
 }
 #panel-studio .dc-home-sec,
-#panel-sharehub .dc-home-sec{ margin-top:2.1rem; }
-#panel-sharehub .dc-exa-pagetitle{ font-size:2rem; color:var(--x-ink); letter-spacing:-.03em; }
+#panel-sharehub .dc-home-sec,
+#dcd-archive .dc-home-sec{ margin-top:2.1rem; }
+#panel-sharehub .dc-exa-pagetitle,
+#dcd-archive .dc-exa-pagetitle{ font-size:2rem; color:var(--x-ink); letter-spacing:-.03em; }
 
 /* ── card system: 18px, tier-1 shadow. Heroes: 22px, tier-2. ── */
 #panel-studio .dc-pulse,
@@ -4162,7 +4247,11 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 #panel-sharehub .dc-monitor,
 #panel-sharehub .dc-radar-hero,
 #dcd-welcome-feed .dc-exa-cat,
-#dcd-welcome-feed .dc-pillar-card{
+#dcd-welcome-feed .dc-pillar-card,
+#dcd-archive .dc-list-card,
+#dcd-archive .dc-grid-card,
+#dcd-archive .dc-monitor,
+#dcd-archive .dc-radar-hero{
   background:var(--x-card);
   border:1px solid var(--x-line);
   border-radius:18px;
@@ -4177,7 +4266,8 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
   border-radius:22px;
   box-shadow:var(--x-sh-hero);
 }
-#panel-sharehub #btnOpenRadarMob{ box-shadow:var(--x-sh-hero); border-radius:22px; }
+#panel-sharehub #btnOpenRadarMob,
+#dcd-archive #dcdBtnOpenRadar{ box-shadow:var(--x-sh-hero); border-radius:22px; }
 .dc-spot{ border-radius:18px !important; box-shadow:var(--x-sh) !important; }
 
 /* ── hero episode: the jewel — soft gradient wash inside, gradient play ── */
@@ -4210,13 +4300,15 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 /* ── search: raised pill, gradient go ── */
 #panel-studio .dc-exa-search,
 #panel-sharehub .dc-exa-search,
-#dcd-welcome-feed .dc-exa-search{
+#dcd-welcome-feed .dc-exa-search,
+#dcd-archive .dc-exa-search{
   border:1px solid var(--x-line); border-radius:16px;
   padding:.95rem 1.05rem; background:var(--x-card); box-shadow:var(--x-sh);
 }
 #panel-studio .dc-exa-search-go,
 #panel-sharehub .dc-exa-search-go,
-#dcd-welcome-feed .dc-exa-search-go{
+#dcd-welcome-feed .dc-exa-search-go,
+#dcd-archive .dc-exa-search-go{
   background:var(--x-grad); color:#fff; border-radius:11px; padding:.45rem 1.15rem;
   box-shadow:0 4px 12px -4px rgba(18,87,214,.5);
 }
@@ -4343,11 +4435,13 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
   background:var(--chip-bg); color:var(--ac); border-color:var(--chip-bd);
 }
 /* the archive's premium library card gets the same wash + badge */
-#panel-sharehub #card-library{
+#panel-sharehub #card-library,
+#dcd-archive #dcd-card-library{
   background:linear-gradient(180deg, var(--x-amber-wash), transparent 45%), var(--x-card);
   border:1px solid var(--x-amber-bd);
 }
-#panel-sharehub #card-library .dc-radar-hero-ico{
+#panel-sharehub #card-library .dc-radar-hero-ico,
+#dcd-archive #dcd-card-library .dc-radar-hero-ico{
   background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd); color:var(--x-amber-ink);
 }
 /* «دنت‌کست پلاس» is the FREE video section, not premium — it must not
@@ -4366,25 +4460,36 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 #panel-studio .dc-duo-title{ color:var(--x-ink); }
 
 /* ── archive ── */
-#panel-sharehub .dc-radar-hero-ico{
+#panel-sharehub .dc-radar-hero-ico,
+#dcd-archive .dc-radar-hero-ico{
   background:var(--x-grad-soft); border:1px solid var(--x-line); color:#1257d6;
 }
-[data-theme="dark"] #panel-sharehub .dc-radar-hero-ico{ color:#8ab4f8; }
-#panel-sharehub .dc-radar-hero-txt{ color:var(--x-ink); font-size:1.08rem; }
-#panel-sharehub .dc-radar-hero-btn{
+[data-theme="dark"] #panel-sharehub .dc-radar-hero-ico,
+[data-theme="dark"] #dcd-archive .dc-radar-hero-ico{ color:#8ab4f8; }
+#panel-sharehub .dc-radar-hero-txt,
+#dcd-archive .dc-radar-hero-txt{ color:var(--x-ink); font-size:1.08rem; }
+#panel-sharehub .dc-radar-hero-btn,
+#dcd-archive .dc-radar-hero-btn{
   background:var(--x-grad); border:none; border-radius:12px;
   box-shadow:0 6px 16px -6px rgba(18,87,214,.55);
 }
-#panel-sharehub #card-library .dcp-soon-badge{
+#panel-sharehub #card-library .dcp-soon-badge,
+#dcd-archive #dcd-card-library .dcp-soon-badge{
   background:var(--x-prem-bg); color:var(--x-prem);
   border:1px solid var(--x-prem-bd); border-radius:8px; font-weight:800;
 }
 #panel-sharehub .gls-title,
 #panel-sharehub .dc-list-card-title,
-#panel-sharehub .dc-grid-title{ color:var(--x-ink); }
-#panel-sharehub .dc-grid-ico{ background:var(--x-grad-soft); border:1px solid var(--x-line); }
-#panel-sharehub .dc-monitor-list a{ border-bottom:1px solid var(--x-line); color:var(--x-ink); }
-#panel-sharehub .dc-monitor-title{ color:var(--x-ink); font-size:.95rem; }
+#panel-sharehub .dc-grid-title,
+#dcd-archive .gls-title,
+#dcd-archive .dc-list-card-title,
+#dcd-archive .dc-grid-title{ color:var(--x-ink); }
+#panel-sharehub .dc-grid-ico,
+#dcd-archive .dc-grid-ico{ background:var(--x-grad-soft); border:1px solid var(--x-line); }
+#panel-sharehub .dc-monitor-list a,
+#dcd-archive .dc-monitor-list a{ border-bottom:1px solid var(--x-line); color:var(--x-ink); }
+#panel-sharehub .dc-monitor-title,
+#dcd-archive .dc-monitor-title{ color:var(--x-ink); font-size:.95rem; }
 
 /* ── chrome: header white, bottom nav frosted with a whisper of lift ── */
 .dc-topbar{ background:var(--x-card); border-bottom:1px solid var(--x-line); }
@@ -5656,6 +5761,15 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
       <!-- Patients — direct-click item (no accordion): opens the full-viewer
            cinematic experience (/patients/cinematic.html) in col-C and the
            LiteCast list in col-B -->
+      <!-- آرشیو — a DESTINATION, so it is a tree entry rather than a
+           sub-item: on the phone this surface is one of the three bottom-nav
+           tabs, and the desktop equivalent of a tab is a top-level row in
+           col-A. Same shape as the بیماران row above it. -->
+      <button class="dcd-group-hdr dcd-archive-item" data-grp="archive" id="dcd-archive-item">
+        <span class="dcd-group-hdr-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M10 12h4"/></svg></span>
+        <span class="dcd-group-hdr-lbl">آرشیو</span>
+      </button>
+
       <button class="dcd-group-hdr dcd-patient-item" data-grp="patients" id="dcd-patient-item">
         <span class="dcd-group-hdr-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
         <span class="dcd-group-hdr-lbl">بیماران</span>
@@ -6048,6 +6162,218 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         </div>
       </div>
 
+
+      <!-- ══ ARCHIVE — the desktop home of the phone's #panel-sharehub ══
+           On the phone the archive is a DESTINATION: one of three bottom-nav
+           tabs. The desktop equivalent of a destination is a tree entry, so
+           col-A gains «آرشیو» and it loads this surface into column C, beside
+           the welcome column and the reader rather than inside either.
+
+           The phone's markup and classes verbatim, with two mechanical
+           changes and no design ones:
+             · every id is prefixed, because a duplicate id is invalid and
+               several of these are somebody's anchor (up-board's SLOT_IDS,
+               library-gate.js, the radar);
+             · every `onclick="window.location.href=…"` became `data-href`,
+               routed by the delegated handler in the desktop script. Inline
+               navigation would leave the app shell and reload the homepage —
+               the same reason the episode hero lost its onclick in step 3.
+           رادار and کتابخانه existed on this shell only as topbar icons, which
+           is a shortcut, not a surface. -->
+      <div class="dcd-archive" id="dcd-archive" aria-label="آرشیو دنت‌کست">
+
+    <!-- Examine-style archive head + search (additive; the box opens the
+         same global overlay via the delegated .dcOpenSearch handler) -->
+    <div class="dc-exa-pagehead">
+      <h2 class="dc-exa-pagetitle">آرشیو</h2>
+    </div>
+    <div class="dc-exa-search dcOpenSearch" role="button" tabindex="0" aria-label="جستجو در آرشیو دنت‌کست">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="dc-exa-search-ph">جست‌وجو در همهٔ بخش‌های دنت‌کست…</span>
+      <span class="dc-exa-search-go">جستجو</span>
+    </div>
+
+    <div class="dc-home-sec"><h2 class="dc-home-sec-label">پادکست</h2></div>
+
+    <div class="dc-list-card" data-href="episodes.html?v=1">
+      <div class="dc-list-card-main">
+        <div class="dc-list-card-title">اپیزودهای پادکست <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg></div>
+        <div class="dc-list-card-sub">همه‌ی اپیزودهای اصلی و فرعی دنت‌کست</div>
+      </div>
+    </div>
+
+    <!-- باکس مطالب — منتقل‌شده از تب ابزارها، با فاصله بیشتر.
+         Since up-board it is also the doorway to /up-board/: the list itself
+         had no destination before, and its own hint told the reader to scroll
+         for more. The «همه ›» link and the two tabs ship as STATIC markup so
+         the doorway works even if plus/js/home-upboard.js never loads — the
+         tabs are then simply inert and the reader still gets the page.
+         NOTE the «دسته‌های محتوا» grid below is untouched on purpose:
+         spot.js's renderHome anchors the mobile homepage ad to
+         `.dc-exa-cats` (spot.js:858), so moving or removing it relocates
+         paid sponsor inventory. -->
+    <div class="dc-home-sec dc-home-sec-upboard">
+      <h2 class="dc-home-sec-label">up-board</h2>
+      <p class="dc-home-sec-sub">همهٔ مطالب سایت — به ترتیب انتشار، یا به انتخابِ خواننده‌ها</p>
+    </div>
+
+    <article class="dc-monitor dc-monitor-secondary" aria-label="up-board">
+      <div class="dc-monitor-inner">
+        <div class="dc-monitor-tabs" role="tablist" aria-label="ترتیب فهرست">
+          <button class="dc-monitor-tab" type="button" role="tab" data-monitor-sort="new" aria-selected="true">تازه‌ترین</button>
+          <button class="dc-monitor-tab" type="button" role="tab" data-monitor-sort="top" aria-selected="false">بالاترین</button>
+          <a class="dc-monitor-all" href="/up-board/">همه ›</a>
+        </div>
+        <ul class="dc-monitor-list" id="dcdArchLast3Updates"></ul>
+      </div>
+    </article>
+
+    <!-- درِ سومِ up-board — و عمداً یک در، نه یک تب. دو پیلِ بالا دو چیدمانِ
+         یک فهرست‌اند و در جا عوض می‌شوند؛ این یکی می‌بَرَد به /des-board/،
+         که ساختارش قفسه است نه رتبه (از ۴۸۴ مطلبِ کاتالوگ، ۲۸ تا باندِ
+         شواهد دارند و ۱۶۱ تا فقط امتیازِ شفافیت — مقیاسی دیگر). یک فهرستِ
+         مسطحِ سوم داخلِ همین کارت یعنی صفحه‌ای که تقریباً همه‌اش ته است.
+         استاتیک است و هیچ JSی لازم ندارد: /des-board/ و کلِ توضیحش عمومی
+         است و فقط چیدمانِ داخلش پریمیوم، پس این در برای همه باز است. -->
+    <a class="dc-ub-door" href="/des-board/">
+      <span class="dc-ub-door-l" aria-hidden="true">🔒</span>
+      <span class="dc-ub-door-t">طبقه‌بندی مقالات بر اساس قدرت شواهد</span>
+      <span class="dc-ub-door-b">پریمیوم</span>
+      <span class="dc-ub-door-c" aria-hidden="true">›</span>
+    </a>
+
+
+    <div class="dc-home-sec"><h2 class="dc-home-sec-label"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="4.5" r="2.2"/><circle cx="4.5" cy="18.5" r="2.2"/><circle cx="19.5" cy="18.5" r="2.2"/><line x1="10.2" y1="6.2" x2="5.9" y2="16.5"/><line x1="13.8" y1="6.2" x2="18.1" y2="16.5"/><line x1="6.6" y1="18.5" x2="17.4" y2="18.5"/></svg> تولید اختصاصی دنت‌کست</h2></div>
+
+    <div class="dc-list-card dc-list-card--insight" data-href="/insight/">
+      <div class="dc-list-card-main">
+        <div class="dc-list-card-title">Clinical Insight <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5.2A3.5 3.5 0 0 0 8 19h1"/><path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5.2A3.5 3.5 0 0 1 16 19h-1"/><path d="M12 4v17"/><path d="M8 9h2"/><path d="M14 9h2"/><path d="M8 14h2"/><path d="M14 14h2"/></svg></div>
+        <div class="dc-list-card-sub">بینش کلینیکی</div>
+      </div>
+    </div>
+
+    <div class="dc-list-card dc-list-card--chairside" data-href="/chairside/">
+      <div class="dc-list-card-main">
+        <div class="dc-list-card-title">Chairside <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/></svg></div>
+        <div class="dc-list-card-sub">نکاتی از ویزیت‌های روزانه</div>
+      </div>
+    </div>
+
+    <div class="dc-list-card dc-list-card--meta" data-href="/metanotes/">
+      <div class="dc-list-card-main">
+        <div class="dc-list-card-title">Meta Note <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M8 3h4v4h3a2 2 0 1 1 0 4h-3v3h3a2 2 0 1 1 0 4h-3v3H8v-3H5a2 2 0 1 1 0-4h3v-3H5a2 2 0 1 1 0-4h3z"/></svg></div>
+        <div class="dc-list-card-sub">ایده‌ها و مدل‌های تحلیلی</div>
+      </div>
+    </div>
+
+    <div class="dc-list-card dc-list-card--plus" data-href="/dentcast-plus/">
+      <div class="dc-list-card-main">
+        <div class="dc-list-card-title">DentCast+ <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></div>
+        <div class="dc-list-card-sub">آموزش با ویدیو — تولید دنت‌کست</div>
+      </div>
+    </div>
+
+    <div class="dc-home-sec"><h2 class="dc-home-sec-label"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z"/><path d="M19 10a7 7 0 0 1-14 0"/><path d="M12 17v4"/><path d="M8 21h8"/></svg> مرور منابع علمی</h2></div>
+
+    <div class="dc-list-card" data-href="/notecast/">
+      <div class="dc-list-card-main">
+        <div class="dc-list-card-title">NoteCast <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg></div>
+        <div class="dc-list-card-sub">خلاصه‌نویسی اپیزودها از مقالات علمی</div>
+      </div>
+    </div>
+
+    <!-- Feature cards — 2x2 grid, hierarchy by position (top row = flagship) -->
+    <div class="dc-grid">
+      
+      <div class="dc-grid-card" data-href="/dentai/">
+        <div class="dc-grid-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 18v2"/><path d="M15 18v2"/></svg></div>
+        <div class="dc-grid-title">DentAI</div>
+        <div class="dc-grid-sub">مرور با هوش مصنوعی</div>
+      </div>
+      <div class="dc-grid-card" data-href="/sharehub/">
+        <div class="dc-grid-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/></svg></div>
+        <div class="dc-grid-title">Share Hub</div>
+        <div class="dc-grid-sub">مطالب با ذکر منبع</div>
+      </div>
+      
+    </div>
+
+    <div class="dc-home-sec"><h2 class="dc-home-sec-label"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5.5-5.5 2 2-5.5z"/></svg> بیرونِ درمان</h2></div>
+
+    <div class="dc-list-card dc-list-card--prompt" data-href="/dentai/promptologist/">
+      <div class="dc-list-card-main">
+        <div class="dc-list-card-title">پرامپتولوژیست <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3"/><path d="M13 15h4"/></svg></div>
+        <div class="dc-list-card-sub">کار با مدل‌های زبانی، از صفر</div>
+      </div>
+    </div>
+
+    <div class="dc-list-card dc-list-card--plak" data-href="/plak-sefr/">
+      <div class="dc-list-card-main">
+        <div class="dc-list-card-title">پلاک صفر <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="dc-list-card-sub">سایتِ خودت را داشته باش</div>
+      </div>
+    </div>
+
+    <div class="dc-home-sec"><h2 class="dc-home-sec-label">مرجع‌های دنت‌کست</h2></div>
+
+    <div class="dc-card-pair">
+    <a class="dc-list-card featured dc-list-card--pillar" id="dcd-card-pillar" href="/pillar/">
+      <div class="gls-eyebrow-row">
+        <div class="gls-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block">
+  <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+  <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
+  <circle cx="12" cy="12" r="1.5" style="fill:currentColor" stroke="none"/>
+</svg></div>
+      </div>
+      <div class="gls-title">فهرست موضوعی</div>
+      <div class="gls-footer">
+        <span class="gls-sub">نقشه‌ی موضوعی دنت‌کست</span>
+        <span class="dc-chip">Pillar <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m9 6 6 6-6 6"/></svg></span>
+      </div>
+    </a>
+
+    <div class="dc-list-card featured" id="dcd-card-glossary" data-href="/glossary/">
+      <div class="gls-eyebrow-row">
+        <div class="gls-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg></div>
+      </div>
+      <div class="gls-title">دانشنامه دنت‌کست</div>
+      <div class="gls-footer">
+        <span class="gls-sub">مفاهیم تصمیم‌ساز دندان‌پزشکی</span>
+        <span class="dc-chip">Glossary <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m9 6 6 6-6 6"/></svg></span>
+      </div>
+    </div>
+    </div>
+
+    <div class="dc-home-sec"><h2 class="dc-home-sec-label">موتور جستجوی دندانپزشکی</h2></div>
+
+    <!-- Radar hero — main tool of the site -->
+    <div class="dc-radar-hero radar-shine-card" id="dcdBtnOpenRadar" role="button" aria-label="رادار دنت‌کست">
+      <div class="dc-radar-hero-ico" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></div>
+      <div class="dc-radar-hero-main">
+        <div class="dc-radar-hero-txt">رادار دنت‌کست</div>
+        <div class="dc-radar-hero-sub">جایگزین تخصصی گوگل برای سایت‌های دندانپزشکی</div>
+      </div>
+      <span class="dc-radar-hero-btn">جستجو</span>
+    </div>
+
+    <!-- Library card — the SECOND card of this section, not a section of its
+         own. Radar searches other people's sites; the library searches ours.
+         They are one offer ("two search engines"), which is also the only
+         realistic way the radar gets looked at: the attention that arrives
+         for «۲۲۰۰ مقاله» lands on both. Premium; the gate is on the tap (see
+         the LIBRARY CARD script), never on the door of the page. -->
+    <div class="dc-radar-hero" id="dcd-card-library" role="button" tabindex="0" aria-label="کتابخانهٔ دنت‌کست">
+      <div class="dc-radar-hero-ico" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg></div>
+      <div class="dc-radar-hero-main">
+        <div class="dc-radar-hero-txt">کتابخانهٔ دنت‌کست</div>
+        <div class="dc-radar-hero-sub">بیش از ۲۲۰۰ مقاله، دسته‌بندی‌شده و قابل جستجو</div>
+        <span class="dcp-soon-badge" id="dcd-card-library-lock">🔒 ویژه‌ی پریمیوم</span>
+      </div>
+      <span class="dc-radar-hero-btn">جستجو</span>
+    </div>
+
+      </div>
+
       <!-- Fetched article content area -->
       <div class="dcd-content-area" id="dcd-content-area"></div>
 
@@ -6332,7 +6658,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=160" defer></script>
+<script src="/dc-nav.js?v=161" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -6609,7 +6935,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
      module captures whatever it drew, per slot, and puts it back verbatim on
      the way home), so it has to fill both copies or the desktop card is an
      empty box with two tabs on it. */
-  const hosts=['dcLast3Updates','dcdLast3Updates'].map(id=>document.getElementById(id)).filter(Boolean);
+  const hosts=['dcLast3Updates','dcdLast3Updates','dcdArchLast3Updates'].map(id=>document.getElementById(id)).filter(Boolean);
   if(!hosts.length) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
   function parseDate(x){const s=(x?.datePublished||x?.date||x?.updated||x?.time||'').toString().trim();if(!s)return 0;const t=Date.parse(s);return isNaN(t)?0:t;}
@@ -6875,6 +7201,10 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   function h(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
   async function loadList(type, label, src){
+    /* Picking a section in the tree leaves the archive, the same way it leaves
+       patients mode — one destination at a time. */
+    colCScroll.classList.remove('is-archive');
+    document.getElementById('dcd-archive-item')?.classList.remove('active');
     colBTitle.textContent = label || type;
     colBCount.textContent = '';
     colB.innerHTML = '<div class="dcd-col-b-empty"><div class="dcd-col-b-empty-ico">⏳</div><div>در حال بارگذاری…</div></div>';
@@ -6988,8 +7318,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   ══════════════════════════════════════════════ */
   function openPageViewer(url){
     if(!url || !pageViewer || !colCEl) return;
-    /* Exit article-content mode */
+    /* Exit article-content mode — and the archive, which is the third
+       exclusive state of this column. */
     colCScroll.classList.remove('has-content');
+    colCScroll.classList.remove('is-archive');
+    document.getElementById('dcd-archive-item')?.classList.remove('active');
     contentArea.innerHTML = '';
     /* Enter viewer mode */
     colCEl.classList.add('is-viewer');
@@ -7014,7 +7347,10 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     if(colCEl){ colCEl.classList.remove('is-viewer'); if(!keepPatient) colCEl.classList.remove('is-patient'); }
     if(pageViewer) pageViewer.src = 'about:blank';
 
-    /* Show loading */
+    /* Show loading. Leaving the archive is part of opening anything: the
+       three states of column C are exclusive. */
+    colCScroll.classList.remove('is-archive');
+    document.getElementById('dcd-archive-item')?.classList.remove('active');
     colCScroll.classList.add('has-content');
     contentArea.innerHTML = '<div class="dcd-loading">⏳ در حال بارگذاری…</div>';
 
@@ -7437,6 +7773,53 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         });
       });
     }).catch(()=>{});
+  }
+
+  /* ══════════════════════════════════════════════
+     ARCHIVE — the desktop home of #panel-sharehub
+  ══════════════════════════════════════════════ */
+  /* One router for every card on that surface. The phone navigates away with
+     an inline window.location.href; here that would leave the app shell, so
+     each card carries data-href (or, for the pillar card, a real href that is
+     preventDefault-ed) and lands in the right place:
+       · a directory or a landing page  -> the page viewer, like the tree's own
+         «اپیزودها» and «Glossary» entries and like the welcome column's cards;
+       · an article path                -> column C's reader.
+     The cabinet is deliberately NOT routed — library-gate.js owns that door on
+     every surface of the site and must decide before anything navigates. */
+  function dcdRouteArchive(url){
+    let path; try{ path = new URL(url, location.origin).pathname; }catch(x){ path = url; }
+    if(path === '/dentcast_cabinet_search.html') return false;   // the gate's, not ours
+    if(path.endsWith('/') || !/\.html?$/i.test(path) || path === '/episodes.html'
+       || /^\/(glossary|pillar|up-board|des-board)\//.test(path)) openPageViewer(path);
+    else openContent(path, '');
+    return true;
+  }
+  const archiveEl = document.getElementById('dcd-archive');
+  const archiveItem = document.getElementById('dcd-archive-item');
+  function showArchive(){
+    root.querySelectorAll('.dcd-subitem').forEach(b => b.classList.remove('active'));
+    archiveItem && archiveItem.classList.add('active');
+    if(colCEl){ colCEl.classList.remove('is-viewer'); colCEl.classList.remove('is-patient'); }
+    if(pageViewer) pageViewer.src = 'about:blank';
+    colCScroll.classList.remove('has-content');
+    colCScroll.classList.add('is-archive');
+    colCScroll.scrollTop = 0;
+  }
+  if(archiveItem) archiveItem.addEventListener('click', showArchive);
+  if(archiveEl){
+    archiveEl.addEventListener('click', (e) => {
+      if(e.defaultPrevented || e.button !== 0) return;
+      if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const hit = e.target.closest('[data-href], a[href]');
+      if(!hit || !archiveEl.contains(hit)) return;
+      const url = hit.dataset.href || hit.getAttribute('href');
+      if(!url || /^(https?:|mailto:|tel:|#)/.test(url)) return;
+      if(dcdRouteArchive(url)) e.preventDefault();
+    });
+    /* رادار opens the same overlay the topbar icon does. */
+    const r = document.getElementById('dcdBtnOpenRadar');
+    if(r) r.addEventListener('click', openRadarOverlay);
   }
 
   /* هیروی اپیزود (#dcd-card-episodes) — the desktop copy of the phone's

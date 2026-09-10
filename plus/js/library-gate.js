@@ -41,9 +41,13 @@
 
 const CABINET = '/dentcast_cabinet_search.html';
 
+// EVERY badge, not the one with the id. The homepage carries the card twice
+// since 2026-09-10 — the phone's archive panel and the desktop archive surface
+// — and a duplicate id is invalid, so the two cannot share one.
+const LOCK_SEL = '#card-library-lock, #dcd-card-library-lock';
 function setBadge(isPremium) {
-  const badge = document.getElementById('card-library-lock');
-  if (badge) badge.style.display = isPremium ? 'none' : '';
+  document.querySelectorAll(LOCK_SEL)
+    .forEach((badge) => { badge.style.display = isPremium ? 'none' : ''; });
 }
 
 /**
@@ -51,13 +55,13 @@ function setBadge(isPremium) {
  * because "confirmed anonymous" and "could not ask" must not behave alike.
  */
 function probe() {
-  return import('/plus/js/api.js?v=63')
+  return import('/plus/js/api.js?v=64')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
 
 function openGate(from) {
-  return Promise.all([import('/plus/js/sheet.js?v=63'), import('/plus/js/premium-cta.js?v=63')])
+  return Promise.all([import('/plus/js/sheet.js?v=64'), import('/plus/js/premium-cta.js?v=64')])
     .then(([sheet, cta]) => {
       sheet.openSheet(sheet.gateCard({
         title: 'کتابخانهٔ دنت‌کست ویژه‌ی پریمیوم است',
@@ -112,16 +116,21 @@ export function installLibraryGate() {
   }, true);
 
   // The archive card is a div[role=button], not a link, so it needs its own
-  // binding — and it is the one door that also carries a lock badge.
-  const card = document.getElementById('card-library');
-  if (card && !card.dataset.dcpGated) {
+  // binding — and it is the one door that also carries a lock badge. There are
+  // TWO of them now (the phone's archive panel and the desktop archive
+  // surface), and they are matched on what they ARE rather than on an id: an id
+  // cannot be shared, and this file's whole argument is that a gate belongs to
+  // the destination rather than to one element. `dcpGated` keeps it idempotent
+  // per card, exactly as before.
+  document.querySelectorAll('[role="button"][aria-label="کتابخانهٔ دنت‌کست"]').forEach((card) => {
+    if (card.dataset.dcpGated) return;
     card.dataset.dcpGated = '1';
     const open = () => openLibrary('gate-library-archive');
     card.addEventListener('click', open);
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); open(); }
     });
-  }
+  });
 
   // Badge first from the stored hint (no flash), then settled from /me.
   try { if (localStorage.getItem('dcAds.vc') === 'premium') setBadge(true); } catch (_) { /* no storage */ }

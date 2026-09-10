@@ -15,11 +15,11 @@
 //     to drift — and no race with a script that fills the same <ul> we do.
 //
 // It is only ever the top five. The box is a doorway, not the board.
-import { api, currentUser, meStatus } from './api.js?v=63';
-import { el, faNum } from './util.js?v=63';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=63';
-import { premiumCta, guestPremiumExtras } from './premium-cta.js?v=63';
-import { openLoginModal } from './login-modal.js?v=63';
+import { api, currentUser, meStatus } from './api.js?v=64';
+import { el, faNum } from './util.js?v=64';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=64';
+import { premiumCta, guestPremiumExtras } from './premium-cta.js?v=64';
+import { openLoginModal } from './login-modal.js?v=64';
 
 const FROM = 'home-upboard';
 
@@ -68,10 +68,13 @@ function unreachableSheet() {
   ]));
 }
 
-// The two slots index.html carries — one per homepage layout, the same
-// two-slot pattern home-features.js and home-bundles.js use. Both are filled;
-// only the shell that is displayed can be seen.
-const SLOT_IDS = ['dcLast3Updates', 'dcdLast3Updates'];
+// The slots index.html carries. Three of them since 2026-09-10: the phone's
+// archive panel, the desktop welcome column, and the desktop ARCHIVE surface —
+// which is the desktop home of that same phone panel, so the box belongs there
+// for the same reason it belongs there on the phone. The module never counted
+// them; every selector it runs is scoped to a slot's own .dc-monitor, so the
+// list is the only thing that changes.
+const SLOT_IDS = ['dcLast3Updates', 'dcdLast3Updates', 'dcdArchLast3Updates'];
 
 export function initHomeUpboard() {
   // EVERY querySelectorAll here is scoped to the slot's OWN .dc-monitor.
