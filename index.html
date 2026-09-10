@@ -5707,6 +5707,29 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
             </div>
           </div>
 
+          <!-- مسیریاب — the desktop layout's copy. A different id
+               (#dcdWayfinderHome) because #dcWayfinderHome is spot.js's mobile
+               ad anchor and a duplicate id would be invalid; that anchor is
+               scoped `#panel-studio #dcWayfinderHome` and keeps pointing at the
+               phone's copy. Between the episode hero and «دسته‌های محتوا», the
+               position the phone gives it and for the same reason: it helps a
+               visitor find their way BEFORE they would browse the grid by hand.
+               Amber throughout, like the phone's — only «چیکاره‌ای؟» is free. -->
+          <a class="dc-wf-home-entry" id="dcdWayfinderHome" href="/plus/wayfinder.html" aria-label="مسیریاب یادگیری">
+    <span class="dc-wf-top">
+    <span class="dc-wf-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.2 8.8l-2 5.2-5.2 2 2-5.2 5.2-2z"/></svg></span>
+    <span class="dc-wf-body">
+    <span class="dc-wf-eyebrow">دروازه‌ی دنت‌کست</span>
+    <span class="dc-wf-ttl">مسیریاب یادگیری</span>
+    <span class="dc-wf-sub">بگو چیکاره‌ای، یه مسیر شخصی از محتوای دنت‌کست بگیر</span>
+    </span>
+    </span>
+    <span class="dc-wf-row">
+    <span class="dc-wf-cta">شروع کن <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></span>
+    <span class="dc-wf-amber-pill">۱ قدم رایگان · بقیه پریمیوم</span>
+    </span>
+          </a>
+
           <!-- دسته‌های محتوا — the desktop layout's copy of the phone's grid.
                Same classes and the SAME COUNTER markers: the numbers are
                brain-derived (tools/update-homepage-counters.py) and are never
