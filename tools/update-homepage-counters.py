@@ -233,7 +233,13 @@ def replace_marker(html, name, new_fa):
     if not match:
         raise SystemExit(f"marker COUNTER:{name} not found in {INDEX.name}")
     old = match.group(2)
-    new_html = pattern.sub(lambda m: m.group(1) + new_fa + m.group(3), html, count=1)
+    # EVERY copy. index.html has carried the دسته‌های محتوا grid twice since
+    # 2026-09-09 (the phone shell and the desktop welcome column), so a count=1
+    # rewrite would freeze the second one at whatever it shipped with and let it
+    # drift with every publish while this tool reported success. The reported
+    # old value is the first match, which is the phone's — they are written
+    # together and cannot disagree once both are rewritten.
+    new_html = pattern.sub(lambda m: m.group(1) + new_fa + m.group(3), html)
     return new_html, old
 
 
