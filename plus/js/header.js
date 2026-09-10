@@ -4,22 +4,22 @@
 //  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
 //    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
 //    an OVERLAY. Clicking the person again closes whatever is open.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=62';
-import { currentUser, api } from './api.js?v=62';
-import { isOrgHost, detectContentId } from './config.js?v=62';
-import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=62';
-import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=62';
-import { renderDashboard } from './dashboard.js?v=62';
-import { renderProfile } from './profile.js?v=62';
-import { maybeShowWelcome } from './welcome.js?v=62';
-import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=62';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=62';
-import { healPushSubscription } from './push.js?v=62';
-import { maybeShowPremiumPopup } from './premium-popup.js?v=62';
-import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=62';
-import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=62';
-import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=62';
-import { installLibraryGate } from './library-gate.js?v=62';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=63';
+import { currentUser, api } from './api.js?v=63';
+import { isOrgHost, detectContentId } from './config.js?v=63';
+import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=63';
+import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=63';
+import { renderDashboard } from './dashboard.js?v=63';
+import { renderProfile } from './profile.js?v=63';
+import { maybeShowWelcome } from './welcome.js?v=63';
+import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=63';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=63';
+import { healPushSubscription } from './push.js?v=63';
+import { maybeShowPremiumPopup } from './premium-popup.js?v=63';
+import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=63';
+import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=63';
+import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=63';
+import { installLibraryGate } from './library-gate.js?v=63';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
