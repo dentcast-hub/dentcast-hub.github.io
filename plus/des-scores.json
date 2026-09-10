@@ -15903,7 +15903,7 @@
         "des_version": "2.4",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
-        "text_basis": "ABSTRACT_ONLY",
+        "text_basis": "FULL_TEXT",
         "citation": {
           "title": "Effect of implant-supported or retained dentures on masticatory performance: a systematic review",
           "authors": "Fueki K, Kimoto K, Ogawa T, Garrett NR",
@@ -15918,16 +15918,16 @@
         "s_design": {
           "value": 100,
           "anchor": "systematic review of mixed RCT and non-randomized studies comparing implant-supported or retained dentures with conventional dentures (THERAPY SR/MA row, 100, via Step 2 routing)",
-          "evidence_quote": "18 peer-reviewed articles met prespecified criteria for inclusion"
+          "evidence_quote": "There were no level I meta-analyses, 7 articles (5 studies) were rated as level II"
         },
         "q_method": {
           "tool": "AMSTAR-2",
           "domains": [
             {
               "domain": "protocol registered before commencement",
-              "rating": "NR",
+              "rating": "high",
               "evidence_quote": "",
-              "note": "چکیده به ثبت پروتکل یا PROSPERO اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+              "note": "Absence checked across Abstract; Material and Methods (Search strategy → Article analysis → Estimation of effect size); Results; Discussion; Conclusions; title-page funding block; and corresponding-author/copyright block. No PROSPERO, protocol, or registration wording anywhere. Paper is 2007 (pre-PROSPERO 2011); the instrument gives no era exemption."
             },
             {
               "domain": "adequacy of the literature search",
@@ -15936,37 +15936,36 @@
             },
             {
               "domain": "justification for excluding individual studies",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "چکیده فهرست مطالعات تمام‌متن کنارگذاشته‌شده ندارد؛ تحت ABSTRACT_ONLY قاعدهٔ 3b-iii اعمال نمی‌شود و سکوت NR می‌ماند."
+              "rating": "some_concerns",
+              "evidence_quote": "Two hundred and twenty-five articles were identified by PubMed and 56 articles were identified by the Cochrane Library, 2007 issue 2. Eighteen articles met the inclusion criteria.",
+              "note": "No individually identified excluded full-text list. Screening counts (225 PubMed + 56 Cochrane → 18 included) plus explicit inclusion/exclusion criteria in Search strategy satisfy 3b-iii some_concerns, not low."
             },
             {
               "domain": "risk of bias assessment of included studies",
               "rating": "low",
-              "evidence_quote": "Ratings of the evidence provided in each article followed United States Agency for Healthcare Research and Quality recommendations."
+              "evidence_quote": "Level of evidence was rated by 2 authors following the United States Agency for Healthcare Research and Quality"
             },
             {
               "domain": "appropriateness of meta-analytical methods",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "چکیده pooling یا مدل متاآنالیز را توصیف نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+              "rating": "low",
+              "evidence_quote": "When masticatory performance was assessed with multiple tests, a summarized SRM was synthesized on the fixed effect model."
             },
             {
               "domain": "assessment of publication bias",
-              "rating": "NR",
+              "rating": "high",
               "evidence_quote": "",
-              "note": "چکیده به funnel plot یا آزمون سوگیری انتشار اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+              "note": "Absence checked across Material and Methods (Search strategy → Article analysis → Estimation of effect size), Results, Discussion, and Conclusions. No funnel plot, Egger test, or publication-bias assessment. Discussion only recommends broader search of abstracts and proceedings without language restriction 'to minimize publishing bias' as future work, which is not an assessment of the included set."
             }
           ],
-          "multiplier": 0.55
+          "multiplier": 0.3
         },
         "penalties": [
           {
-            "item": "no conflict-of-interest statement anywhere in the text at all, or funding by a commercial manufacturer whose own product is among those tested",
+            "item": "no conflict-of-interest statement anywhere in the text at all, or funding by a commercial manufacturer whose own product is among those tested, with no independent-analysis statement",
             "base_points": 8,
-            "points": 0,
+            "points": 8,
             "evidence_quote": "",
-            "note": "not assessable in abstract"
+            "note": "No conflict-of-interest or competing-interest declaration anywhere (title-page funding block, Material and Methods, Discussion, Conclusions, corresponding-author block, copyright line; also searched the PDF for conflict/interest/disclosure ligatures). Academic funding is disclosed (Japanese Ministry of Education Overseas Advanced Educational Research Practice Support Program; NIH NCRR facility grant C06 RR-14529-01) — neither is a manufacturer of a tested product, so the manufacturer half does not fire; the row fires on the missing CoI statement."
           },
           {
             "item": "clinical trial not prospectively registered (RCTs only)",
@@ -15987,15 +15986,15 @@
             "base_points": 3,
             "points": 0,
             "evidence_quote": "",
-            "note": "source text does not address follow-up duration"
+            "note": "The SR's stated outcome is masticatory performance, not implant survival/success. It reports 4-year IOD versus CD comparisons and a 10-year FICD follow-up and does not make a longevity claim, so the row does not fire."
           }
         ],
         "commentary_checklist": null,
-        "des_score": 55,
-        "band": "C",
-        "provisional": true,
-        "fact_fa": "امتیاز شواهد این منبع ۵۵ از ۱۰۰ و باند C است؛ نوع سوال Therapy است.",
-        "interpretation_fa": "مرور سیستماتیک با جست‌وجوی PubMed و Cochrane و رتبه‌بندی AHRQ؛ امتیاز از چکیده است پس مقدماتی. سکوت چکیده دربارهٔ پروتکل و سوگیری انتشار ضریب روش را پایین آورده. نتیجهٔ گزارش‌شده این است که مزیت عینی جویدن عمدتاً به اوردنچر مندیبولار در ریج تحلیل‌رفته یا ناسازگاری با دنچر محدود می‌ماند."
+        "des_score": 22,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "امتیاز شواهد این منبع ۲۲ از ۱۰۰ و باند D است؛ نوع سوال Therapy است.",
+        "interpretation_fa": "مرور سیستماتیک ۲۰۰۷ پیش از PROSPERO است و متن کامل نه پروتکل ثبت‌شده دارد نه ارزیابی سوگیری انتشار. جست‌وجوی PubMed و Cochrane و رتبه‌بندی AHRQ با دو نویسنده توصیف شده‌اند. مزیت عینی جویدن عمدتاً به اوردنچر مندیبولار در ریج تحلیل‌رفته یا ناسازگاری با دنچر محدود می‌ماند."
       }
     ]
   }
