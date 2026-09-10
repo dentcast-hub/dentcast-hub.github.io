@@ -172,22 +172,29 @@ def refresh_hero(html, episode):
     num = to_fa(episode.get("episode") or "")
     src = esc_html((episode.get("audio_url") or "").strip())
     page = esc_html((episode.get("page_url") or episode.get("url") or "").strip())
+    # EVERY copy, not the first one. index.html carries the hero twice since
+    # 2026-09-09 — #card-episodes in the phone shell and #dcd-card-episodes in
+    # the desktop welcome column — and a count=1 rewrite here would have left
+    # the desktop card frozen on whatever episode was newest that day, going
+    # further out of date with every publish while this tool reported success.
+    # Anchored on the CLASSES, which both copies share, rather than on the ids,
+    # which they cannot share.
     if page:
         html = re.sub(
-            r'(id="card-episodes"[^>]*\sdata-href=")[^"]*(")',
-            lambda m: m.group(1) + page + m.group(2), html, count=1)
+            r'(id="(?:card-episodes|dcd-card-episodes)"[^>]*\sdata-href=")[^"]*(")',
+            lambda m: m.group(1) + page + m.group(2), html)
     html = re.sub(
         r'(<h2 class="dc-home-hero-title">).*?(</h2>)',
-        lambda m: m.group(1) + title + m.group(2), html, count=1, flags=re.S)
+        lambda m: m.group(1) + title + m.group(2), html, flags=re.S)
     if num:
         html = re.sub(
             r'(<span class="dc-home-hero-badge">.*?</svg>)[^<]*(</span>)',
             lambda m: m.group(1) + " قسمت " + num + " · تازه\u200cترین" + m.group(2),
-            html, count=1, flags=re.S)
+            html, flags=re.S)
     if src:
         html = re.sub(
-            r'(id="dcHeroPlay"[^>]*data-src=")[^"]*(")',
-            lambda m: m.group(1) + src + m.group(2), html, count=1)
+            r'(class="dc-home-hero-play"[^>]*\sdata-src=")[^"]*(")',
+            lambda m: m.group(1) + src + m.group(2), html)
     return html, "hero: episode " + (episode.get("episode") or "?")
 
 
@@ -226,7 +233,13 @@ def replace_marker(html, name, new_fa):
     if not match:
         raise SystemExit(f"marker COUNTER:{name} not found in {INDEX.name}")
     old = match.group(2)
-    new_html = pattern.sub(lambda m: m.group(1) + new_fa + m.group(3), html, count=1)
+    # EVERY copy. index.html has carried the دسته‌های محتوا grid twice since
+    # 2026-09-09 (the phone shell and the desktop welcome column), so a count=1
+    # rewrite would freeze the second one at whatever it shipped with and let it
+    # drift with every publish while this tool reported success. The reported
+    # old value is the first match, which is the phone's — they are written
+    # together and cannot disagree once both are rewritten.
+    new_html = pattern.sub(lambda m: m.group(1) + new_fa + m.group(3), html)
     return new_html, old
 
 

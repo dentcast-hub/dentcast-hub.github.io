@@ -15,11 +15,11 @@
 //     to drift — and no race with a script that fills the same <ul> we do.
 //
 // It is only ever the top five. The box is a doorway, not the board.
-import { api, currentUser, meStatus } from './api.js?v=60';
-import { el, faNum } from './util.js?v=60';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=60';
-import { premiumCta, guestPremiumExtras } from './premium-cta.js?v=60';
-import { openLoginModal } from './login-modal.js?v=60';
+import { api, currentUser, meStatus } from './api.js?v=64';
+import { el, faNum } from './util.js?v=64';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=64';
+import { premiumCta, guestPremiumExtras } from './premium-cta.js?v=64';
+import { openLoginModal } from './login-modal.js?v=64';
 
 const FROM = 'home-upboard';
 
@@ -68,12 +68,34 @@ function unreachableSheet() {
   ]));
 }
 
-export function initHomeUpboard() {
-  const list = document.getElementById('dcLast3Updates');
-  const tabs = Array.from(document.querySelectorAll('[data-monitor-sort]'));
-  if (!list || tabs.length < 2) return;
+// The slots index.html carries. Three of them since 2026-09-10: the phone's
+// archive panel, the desktop welcome column, and the desktop ARCHIVE surface —
+// which is the desktop home of that same phone panel, so the box belongs there
+// for the same reason it belongs there on the phone. The module never counted
+// them; every selector it runs is scoped to a slot's own .dc-monitor, so the
+// list is the only thing that changes.
+const SLOT_IDS = ['dcLast3Updates', 'dcdLast3Updates', 'dcdArchLast3Updates'];
 
-  let freshHtml = null;   // the inline script's own list, captured once
+export function initHomeUpboard() {
+  // EVERY querySelectorAll here is scoped to the slot's OWN .dc-monitor.
+  // Document-wide (what this file did while there was exactly one slot) is a
+  // real bug the moment there are two: both copies would collect all four
+  // tabs, so pressing «بالاترین» in one shell would flip aria-selected on the
+  // other shell's tabs and each copy's click handler would fire twice.
+  const slots = SLOT_IDS
+    .map((id) => document.getElementById(id))
+    .filter(Boolean)
+    .map((list) => {
+      const scope = list.closest('.dc-monitor');
+      const tabs = scope ? Array.from(scope.querySelectorAll('[data-monitor-sort]')) : [];
+      return { list, tabs, freshHtml: null };
+    })
+    .filter((s) => s.tabs.length >= 2);
+  if (!slots.length) return;
+
+  // SHARED across slots, deliberately: the ranking is one fetch and the tier is
+  // one answer. Only `freshHtml` is per-slot, because the list each shell's own
+  // inline renderer drew is that shell's.
   let topRows = null;     // built once per page view
   let loading = false;
   // Why this tab cannot be opened, once we know: 'guest' (signed out) or
@@ -82,7 +104,10 @@ export function initHomeUpboard() {
   // premium-cta.js's unreachableGate exists.
   let denied = null;
 
-  const topTab = tabs.find((t) => t.dataset.monitorSort === 'top');
+  const topTabs = slots
+    .map((s) => s.tabs.find((t) => t.dataset.monitorSort === 'top'))
+    .filter(Boolean);
+  const lockAll = () => topTabs.forEach((t) => t.classList.add('is-locked'));
 
   // ── THE LOCK IS DECIDED AT LOAD, NOT ON THE PRESS ──
   //
@@ -115,10 +140,10 @@ export function initHomeUpboard() {
     } else {
       return;                               // a subscriber sees no lock
     }
-    if (topTab) topTab.classList.add('is-locked');
+    lockAll();
   });
 
-  const select = (mode) => tabs.forEach((t) => {
+  const select = (slot, mode) => slot.tabs.forEach((t) => {
     t.setAttribute('aria-selected', String(t.dataset.monitorSort === mode));
   });
 
@@ -149,7 +174,7 @@ export function initHomeUpboard() {
     return rows;
   }
 
-  function renderTop(rows) {
+  function renderTop(list, rows) {
     list.innerHTML = '';
     rows.forEach((r, i) => {
       const a = el('a', { href: r.item.u }, [
@@ -169,13 +194,13 @@ export function initHomeUpboard() {
     });
   }
 
-  tabs.forEach((tab) => tab.addEventListener('click', async () => {
+  slots.forEach((slot) => slot.tabs.forEach((tab) => tab.addEventListener('click', async () => {
     const mode = tab.dataset.monitorSort;
     if (tab.getAttribute('aria-selected') === 'true') return;
 
     if (mode === 'new') {
-      if (freshHtml !== null) list.innerHTML = freshHtml;
-      select('new');
+      if (slot.freshHtml !== null) slot.list.innerHTML = slot.freshHtml;
+      select(slot, 'new');
       return;
     }
 
@@ -186,34 +211,32 @@ export function initHomeUpboard() {
     if (denied) { gateSheet(denied === 'guest'); return; }
 
     if (loading) return;
-    if (freshHtml === null) freshHtml = list.innerHTML;
+    if (slot.freshHtml === null) slot.freshHtml = slot.list.innerHTML;
     loading = true;
-    select('top');
+    select(slot, 'top');
     try {
-      renderTop(await buildTop());
+      renderTop(slot.list, await buildTop());
     } catch (err) {
       // Put the reader back where they were rather than leaving an empty box —
       // and leave the link, which is the part that always works.
-      if (freshHtml !== null) list.innerHTML = freshHtml;
-      select('new');
-      // 402 is an answer, anything else is "we could not ask". Selling a
-      // subscription to a subscriber whose API blinked is the one failure this
-      // gate must not have.
+      if (slot.freshHtml !== null) slot.list.innerHTML = slot.freshHtml;
+      select(slot, 'new');
       // 401 (signed out) and 402 (free) are both answers; anything else means
       // we could not ask, and must not become an upsell aimed at a subscriber.
       // Kept as the backstop the load-time check cannot cover: /me may have
       // said «premium» and the subscription lapsed during this same page view,
       // in which case the board is the thing that finds out. Recording it in
       // `denied` too means a second press goes straight to the gate instead of
-      // flashing blue and asking again.
+      // flashing blue and asking again — in EVERY slot, which is why the lock
+      // is applied through lockAll() rather than to the tab that was pressed.
       const st = err && err.status;
       if (st === 401 || st === 402) {
         denied = st === 401 ? 'guest' : 'gated';
-        tab.classList.add('is-locked');
+        lockAll();
         gateSheet(st === 401);
       } else unreachableSheet();
     } finally {
       loading = false;
     }
-  }));
+  })));
 }

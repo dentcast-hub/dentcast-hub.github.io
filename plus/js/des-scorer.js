@@ -8,11 +8,11 @@
 // the DES explainer box right above it), so it paints before this module
 // arrives. Everything inside #dcDesToolPanel is built here, lazily, the
 // first time the tab opens.
-import { el, faNum } from './util.js?v=60';
-import { api, currentUser, meStatus } from './api.js?v=60';
-import { openLoginModal } from './login-modal.js?v=60';
-import { premiumCta, unreachableGate } from './premium-cta.js?v=60';
-import { sourceBlock } from './des.js?v=60';
+import { el, faNum } from './util.js?v=64';
+import { api, currentUser, meStatus } from './api.js?v=64';
+import { openLoginModal } from './login-modal.js?v=64';
+import { premiumCta, unreachableGate } from './premium-cta.js?v=64';
+import { sourceBlock } from './des.js?v=64';
 
 const FROM = 'des-tool';
 const TG_URL = 'https://t.me/dentcast_support';
@@ -87,9 +87,21 @@ function looksLikeReference(s) { return /^D-[A-Z0-9]{3}-[A-Z0-9]{3}$/.test(s || 
  * would flip the class a second time and cancel the open outright.
  */
 export function initDesTool() {
-  const tab = document.getElementById('dcDesToolTab');
-  const drawer = document.getElementById('dcDesToolDrawer');
-  const panel = document.getElementById('dcDesToolPanel');
+  // The homepage carries this drawer TWICE since 2026-09-10 — once per shell —
+  // and only one of them is ever displayed. The tool is stateful and spends a
+  // server-side quota, so it is built into the VISIBLE copy rather than into
+  // both: two live instances would show one reader two tick counts for one
+  // allowance. offsetParent is null for anything inside a display:none subtree,
+  // which is exactly what separates the two shells here; the fallback to the
+  // first wrap keeps every other page (and any future single-wrap markup)
+  // working unchanged.
+  const wraps = Array.from(document.querySelectorAll('.dc-destool-wrap'));
+  const wrap = wraps.find((w) => w.offsetParent !== null) || wraps[0];
+  if (!wrap) return;
+  const tab = wrap.querySelector('.dc-destool-tab');
+  const drawer = wrap.querySelector('.dc-destool-drawer');
+  // By aria-controls, never by a hard-coded id: the two copies cannot share one.
+  const panel = tab && document.getElementById(tab.getAttribute('aria-controls'));
   if (!tab || !drawer || !panel) return;
 
   let built = false;

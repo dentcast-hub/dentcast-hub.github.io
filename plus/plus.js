@@ -2,26 +2,26 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=60';
-import { currentUser, api } from './js/api.js?v=60';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=60';
-import { openCollectionPicker } from './js/collections.js?v=60';
-import { el } from './js/util.js?v=60';
-import { initHomeCard } from './js/home-card.js?v=60';
-import { initHomeFeatures } from './js/home-features.js?v=60';
-import { initHomeBundles } from './js/home-bundles.js?v=60';
-import { initHomeUpboard } from './js/home-upboard.js?v=60';
-import { initDesTool } from './js/des-scorer.js?v=60';
-import { initHeader } from './js/header.js?v=60';
-import { initTourAutostart } from './js/tour.js?v=60';
-import { initReadingTracker } from './js/reading.js?v=60';
-import { initListeningTracker } from './js/listening.js?v=60';
-import { initShareScoring, buildShareButton } from './js/share.js?v=60';
-import { initHeart, buildHeartChip } from './js/votes.js?v=60';
-import { mountArticleThreads } from './js/article-threads.js?v=60';
-import { mountChallenge } from './js/challenge.js?v=60';
-import { mountDes } from './js/des.js?v=60';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=60';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=64';
+import { currentUser, api } from './js/api.js?v=64';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=64';
+import { openCollectionPicker } from './js/collections.js?v=64';
+import { el, faNum } from './js/util.js?v=64';
+import { initHomeCard } from './js/home-card.js?v=64';
+import { initHomeFeatures } from './js/home-features.js?v=64';
+import { initHomeBundles } from './js/home-bundles.js?v=64';
+import { initHomeUpboard } from './js/home-upboard.js?v=64';
+import { initDesTool } from './js/des-scorer.js?v=64';
+import { initHeader } from './js/header.js?v=64';
+import { initTourAutostart } from './js/tour.js?v=64';
+import { initReadingTracker } from './js/reading.js?v=64';
+import { initListeningTracker } from './js/listening.js?v=64';
+import { initShareScoring, buildShareButton } from './js/share.js?v=64';
+import { initHeart, buildHeartChip } from './js/votes.js?v=64';
+import { mountArticleThreads } from './js/article-threads.js?v=64';
+import { mountChallenge } from './js/challenge.js?v=64';
+import { mountDes } from './js/des.js?v=64';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=64';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -31,7 +31,7 @@ import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=60';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=60').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=64').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -52,6 +52,65 @@ function injectCollectionButton(contentId) {
     onclick: () => openCollectionPicker({ contentId }),
   }, 'افزودن به کالکشن');
   return { btn, info, cap };
+}
+
+// ── THE AUX GROUP'S OTHER HALF, AND THE ToC ──
+//
+// dc-nav.js phase 7b/7c build these on a standalone page and the desktop shell
+// strips that script, so until now the shell's aux group held only share (+ the
+// DES chip mounted later) and the fetched article had no فهرست مطالب at all.
+//
+// The box list is deliberately NOT config.js's PROSE_SELECTORS. That list
+// carries `.ep-box` for the episode card; dc-nav.js's does not, and its whole
+// phase 7 is gated on `link[href^="/dc-article.css"]` — which is why a
+// standalone episode page shows neither a زمان مطالعه chip nor a ToC (measured
+// on /episodes/episode-161.html, and on /litecast/lite-1.html, which has no box
+// at all). The fetched fragment carries no <link> to test — openContent()
+// injects `extract.innerHTML` only — so the same distinction is drawn through
+// the same three selectors instead of through a URL prefix: no dc-article box,
+// no chip and no ToC.
+const ARTICLE_BOX_SEL = '.text-box, .glass-box, .content-box';
+const articleBoxes = (scope) => Array.from((scope || document).querySelectorAll(ARTICLE_BOX_SEL));
+
+/**
+ * «حدود N دقیقه» over the article's own boxes, at dc-nav.js's 180 wpm, with
+ * its `Math.max(1, …)` floor and Persian digits. Verified against the
+ * standalone pages it mirrors: insight-72 «حدود ۳ دقیقه»,
+ * notecast/episode-30 «حدود ۳ دقیقه», sharehub/share-14 «حدود ۱۱ دقیقه».
+ */
+function buildReadingTime(boxes) {
+  if (!boxes.length) return null;
+  const words = boxes.reduce((n, b) => n + (b.textContent || '').trim().split(/\s+/).length, 0);
+  return el('span', { class: 'dc-act-time' }, 'حدود ' + faNum(Math.max(1, Math.round(words / 180))) + ' دقیقه');
+}
+
+/**
+ * The auto ToC — 4+ headings, same selector and same threshold as phase 7c.
+ *
+ * Anchored on `anchorEl`, which is findProseBox() — the FIRST box, the one the
+ * row itself hangs off. That is the third of config.js's three anchors and the
+ * only correct one here: findProseRoot() is the whole body (on the 26 legacy
+ * multi-box NoteCast pages that is the container, so inserting before it would
+ * put the ToC outside the article shell) and findProseEnd() is the last box
+ * (which would file the contents list after the article). Since ensureActionRow
+ * has already inserted the row before this same element, inserting here lands
+ * the ToC between the two: [action row] › [فهرست مطالب] › [prose], exactly
+ * what dc-nav.js produces.
+ */
+function buildToc(boxes, anchorEl, scope) {
+  const host = scope || document;
+  if (!anchorEl || !anchorEl.parentNode || host.querySelector('#dcToc')) return;
+  const heads = [];
+  boxes.forEach((b) => b.querySelectorAll('h2:not(.dc-related-label), h3, h4')
+    .forEach((h) => heads.push(h)));
+  if (heads.length < 4) return;
+  const items = heads.map((h, i) => {
+    if (!h.id) h.id = 'dc-sec-' + (i + 1);
+    return el('li', {}, [el('a', { href: '#' + h.id }, (h.textContent || '').trim())]);
+  });
+  const toc = el('details', { class: 'dc-toc', id: 'dcToc' },
+    [el('summary', {}, 'فهرست مطالب'), el('ol', {}, items)]);
+  anchorEl.parentNode.insertBefore(toc, anchorEl);
 }
 
 /**
@@ -100,14 +159,24 @@ function mountDesHere(anchor, contentId, scope = document) {
 // The article's action row: میز کار / افزودن به کالکشن / پسندیدم together in
 // the main group, in that order — the thing this page is FOR, the thing you do
 // with it, the thing you say about it.
-function injectActionRow(anchorEl, contentId, shareTarget) {
+function injectActionRow(anchorEl, contentId, shareTarget, scope) {
   const btn = el('button', { class: 'dc-act dc-act-primary', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
   const { btn: collectBtn, info: collectInfo, cap: collectCap } = injectCollectionButton(contentId);
   const { row, main, aux, built } = ensureActionRow(anchorEl);
 
-  // Share belongs to whoever built the row. On a standalone page dc-nav.js has
-  // already put its own chip in the quiet group (`#dcShareBtn`); only when we
-  // built the row ourselves — the desktop shell — is there none to find.
+  // The whole quiet group belongs to whoever built the row. On a standalone
+  // page dc-nav.js filled it (زمان مطالعه, then `#dcShareBtn`) and built the
+  // ToC; only when we built the row ourselves — the desktop shell, where that
+  // script is stripped out of the fetched article — is there none to find.
+  // Order inside the group is زمان مطالعه › اشتراک‌گذاری › DES, which is what
+  // the phone renders, so the chip goes in BEFORE the share button and the DES
+  // chip (mounted later, by mountDesHere) lands after both.
+  if (built) {
+    const boxes = articleBoxes(scope);
+    const timeChip = buildReadingTime(boxes);
+    if (timeChip) aux.appendChild(timeChip);
+    buildToc(boxes, anchorEl, scope);
+  }
   if (built && shareTarget && !document.getElementById('dcShareBtn')) {
     aux.appendChild(buildShareButton(shareTarget));
   }
@@ -196,7 +265,7 @@ function showInvitation(anchorBtn, onProceed) {
 
 // Wire the میز کار button + study mode onto a prose root. Shared by standalone
 // article pages (initArticle) and the desktop 3-column viewer (mountArticleWorkbench).
-async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget }) {
+async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget, scope }) {
   const Workbench = await loadWorkbench();
   // onChange keeps every میز کار button on the page in sync with the mode no
   // matter WHO changed it: the toolbar's own ✕ خروج, the top button, or the
@@ -204,7 +273,7 @@ async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget }
   // bindButton below. Without this the article button kept saying «خروج از
   // میز کار» after the workbench had closed some other way.
   const wb = new Workbench({ contentId, proseRoot, onChange: () => updateBtn() });
-  const btn = injectActionRow(proseAnchor || proseRoot, contentId, shareTarget);
+  const btn = injectActionRow(proseAnchor || proseRoot, contentId, shareTarget, scope);
 
   // Reading-completion signal: started only for a signed-in reader (the /activity
   // endpoint requires auth) and only once. Guarded so a mid-page login does not
@@ -467,6 +536,10 @@ async function mountArticleWorkbench(root, url) {
     proseAnchor: findProseBox(root),
     contentId,
     shareTarget: shellShare,
+    // Scoped to the injected article, like findProseRoot above it: the زمان
+    // مطالعه word count and the ToC's heading scan must not reach out into the
+    // homepage that is still in the DOM around this column.
+    scope: root,
   });
   desktopWb = wb;
   mountChallenge(findProseEnd(root) || proseRoot, contentId, root); // چالش, above the conversation

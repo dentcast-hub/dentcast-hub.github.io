@@ -1,13 +1,13 @@
 // Homepage personal card, in the existing "یادگیری هفتگی" slot (spec 2.4).
 // Two states: anonymous invitation, and logged-in free daily status. NO due-card
 // counter for free users, not even a zero or a locked stub. No minutes target.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=60';
-import { currentUser, api } from './api.js?v=60';
-import { openLoginModal, openOrgNotice } from './login-modal.js?v=60';
-import { getModel, contentInfo } from './content-index.js?v=60';
-import { isOrgHost, detectContentId, baleEnabled, telegramLoginEnabled } from './config.js?v=60';
-import { ensurePushSubscription, removePushSubscription } from './push.js?v=60';
-import { leagueChip, maybeAnnounceOutcome } from './league.js?v=60';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=64';
+import { currentUser, api } from './api.js?v=64';
+import { openLoginModal, openOrgNotice } from './login-modal.js?v=64';
+import { getModel, contentInfo } from './content-index.js?v=64';
+import { isOrgHost, detectContentId, baleEnabled, telegramLoginEnabled } from './config.js?v=64';
+import { ensurePushSubscription, removePushSubscription } from './push.js?v=64';
+import { leagueChip, maybeAnnounceOutcome } from './league.js?v=64';
 
 function flame(active) {
   const s = el('span', { class: 'dc-plus-flame' + (active ? ' is-active' : ''), 'aria-hidden': 'true' });
@@ -108,7 +108,14 @@ function renderAnon(card) {
   ]));
 }
 
-async function renderLoggedIn(card, user) {
+/**
+ * One fetch, N cards. The reader's numbers are the SAME numbers in both shells,
+ * so they are read once and handed to every slot; only the DOM is per-card.
+ * paintCard() returns the handles the live-refresh loop patches, so the loop is
+ * registered once here rather than once per copy — three document listeners per
+ * rendered card is how a two-slot conversion quietly doubles its own work.
+ */
+async function renderLoggedIn(cards, user) {
   const [me, progress, model, recent, league] = await Promise.all([
     api.me().catch(() => user),
     api.progress().catch(() => ({})),
@@ -119,6 +126,41 @@ async function renderLoggedIn(card, user) {
     api.league().catch(() => null),
   ]);
 
+  const painted = cards.map((card) => paintCard(card, me, progress, model, recent, league));
+
+  // Announce a finalized league outcome (promoted / stayed / demoted) once — the
+  // only "reward" of this phase, so never silent. Clears itself server-side.
+  // ONCE for the reader, not once per slot.
+  maybeAnnounceOutcome(league);
+
+  // Live update, no reload: patch the streak flame + streak/score/rank numbers and
+  // the league chip in place when the user earns a qualifying action
+  // (STREAK_ACTIVITY_EVENT, the same signal the header flame uses) or returns to
+  // this page (bfcache restore / tab refocus). Guarded so overlaps coalesce.
+  let refreshing = false;
+  async function refreshStatus() {
+    if (refreshing) return;
+    refreshing = true;
+    try {
+      const [m2, p2, lg2] = await Promise.all([
+        currentUser({ refresh: true }),
+        api.progress().catch(() => null),
+        api.league().catch(() => null),
+      ]);
+      painted.forEach((apply) => apply(m2, p2, lg2));
+    } finally {
+      refreshing = false;
+    }
+  }
+  document.addEventListener(STREAK_ACTIVITY_EVENT, refreshStatus);
+  window.addEventListener('pageshow', (e) => { if (e.persisted) refreshStatus(); });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') refreshStatus();
+  });
+}
+
+/** Build one copy of the signed-in card; return its live-update patcher. */
+function paintCard(card, me, progress, model, recent, league) {
   // Keep handles to the flame + numbers so live updates (below) can patch them in
   // place, without re-rendering the whole card.
   const flameEl = flame(streakIsActiveToday(me.last_active_day));
@@ -267,53 +309,31 @@ async function renderLoggedIn(card, user) {
 
   card.replaceChildren(el('div', { class: 'dc-plus-home-inner' }, rows));
 
-  // Announce a finalized league outcome (promoted / stayed / demoted) once — the
-  // only "reward" of this phase, so never silent. Clears itself server-side.
-  maybeAnnounceOutcome(league);
-
-  // Live update, no reload: patch the streak flame + streak/score/rank numbers and
-  // the league chip in place when the user earns a qualifying action
-  // (STREAK_ACTIVITY_EVENT, the same signal the header flame uses) or returns to
-  // this page (bfcache restore / tab refocus). Guarded so overlaps coalesce.
-  let refreshing = false;
-  async function refreshStatus() {
-    if (refreshing) return;
-    refreshing = true;
-    try {
-      const [m2, p2, lg2] = await Promise.all([
-        currentUser({ refresh: true }),
-        api.progress().catch(() => null),
-        api.league().catch(() => null),
-      ]);
-      if (m2) {
-        flameEl.classList.toggle('is-active', streakIsActiveToday(m2.last_active_day));
-        streakNumEl.textContent = faNum(m2.current_streak || 0);
-      }
-      if (scoreNumEl && p2 && typeof p2.score === 'number') {
-        scoreNumEl.textContent = faNum(p2.score);
-      }
-      if (shieldBadge && p2 && p2.freezes) {
-        const av2 = Math.max(0, p2.freezes.available || 0);
-        paintShields(shieldIconsEl, av2);
-        shieldNumEl.textContent = faNum(av2);
-        shieldBadge.title = shieldTitle(av2, p2.freezes);
-        // Keep the «؟» explanation honest too — «… امتیاز تا سپر بعدی» moves.
-        if (shieldCapEl) shieldCapEl.textContent = shieldCapText(p2.freezes);
-      }
-      if (lg2 && leagueChipEl) {
-        const fresh = leagueChip(lg2);
-        leagueChipEl.replaceWith(fresh);
-        leagueChipEl = fresh;
-      }
-    } finally {
-      refreshing = false;
+  // The patcher, closed over THIS card's own handles. Every element it touches
+  // is one this call created, so two rendered copies never reach into each
+  // other's DOM.
+  return function apply(m2, p2, lg2) {
+    if (m2) {
+      flameEl.classList.toggle('is-active', streakIsActiveToday(m2.last_active_day));
+      streakNumEl.textContent = faNum(m2.current_streak || 0);
     }
-  }
-  document.addEventListener(STREAK_ACTIVITY_EVENT, refreshStatus);
-  window.addEventListener('pageshow', (e) => { if (e.persisted) refreshStatus(); });
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') refreshStatus();
-  });
+    if (scoreNumEl && p2 && typeof p2.score === 'number') {
+      scoreNumEl.textContent = faNum(p2.score);
+    }
+    if (shieldBadge && p2 && p2.freezes) {
+      const av2 = Math.max(0, p2.freezes.available || 0);
+      paintShields(shieldIconsEl, av2);
+      shieldNumEl.textContent = faNum(av2);
+      shieldBadge.title = shieldTitle(av2, p2.freezes);
+      // Keep the «؟» explanation honest too — «… امتیاز تا سپر بعدی» moves.
+      if (shieldCapEl) shieldCapEl.textContent = shieldCapText(p2.freezes);
+    }
+    if (lg2 && leagueChipEl) {
+      const fresh = leagueChip(lg2);
+      leagueChipEl.replaceWith(fresh);
+      leagueChipEl = fresh;
+    }
+  };
 }
 
 // The connection strip: notifications (a light inline on/off toggle) plus Bale /
@@ -368,9 +388,22 @@ function connectionsRow(me) {
   return el('div', { class: 'dc-plus-chips' }, chips);
 }
 
+// The two slots index.html carries — one per homepage layout, the same
+// two-slot pattern home-features.js and home-bundles.js use. Only the shell
+// that is displayed can be seen, but BOTH are filled, so a layout that flips
+// (a tablet gaining a mouse) never finds an empty card.
+//
+// The mobile slot alone ships the signed-out card as static markup: that copy
+// exists to kill a first-paint layout shift for a crawler and for the majority
+// of real visits, and #mobile-shell is what those get. The desktop slot is an
+// empty div like every other #dcd* slot in .dcd-welcome-feed, which also keeps
+// exactly ONE static copy in the page for the markup/renderAnon() comparison
+// and for tools/build_home_critical_css.py's mirrored region.
+const SLOT_IDS = ['dcPlusHomeCard', 'dcdPlusHomeCard'];
+
 export async function initHomeCard() {
-  const card = document.getElementById('dcPlusHomeCard');
-  if (!card) return;
+  const cards = SLOT_IDS.map((id) => document.getElementById(id)).filter(Boolean);
+  if (!cards.length) return;
 
   // Optimistic anonymous render, BEFORE the /me round trip: renderAnon()'s
   // markup is fixed (same title/subtitle/feature chips every time, no server
@@ -388,27 +421,30 @@ export async function initHomeCard() {
   // so for a guest there is nothing to render at all — the browser already
   // painted it, on the first frame, with no shift. All that is left is to give
   // its button the behaviour that lives in this module graph.
-  const staticAnon = card.dataset.dcpStaticAnon === '1' && card.children.length > 0;
-  if (staticAnon) wireAnonCta(card.querySelector('.dc-plus-cta'));
-
-  let shownAnon = staticAnon;
   let hint;
   try { hint = localStorage.getItem('dcp:signed-in'); } catch (_) { hint = null; }
-  if (!shownAnon && hint !== '1') {
-    renderAnon(card);
-    card.hidden = false;
-    shownAnon = true;
-  }
+
+  // Per-card, because only one of them carries the static markup.
+  const shownAnon = cards.map((card) => {
+    const staticAnon = card.dataset.dcpStaticAnon === '1' && card.children.length > 0;
+    if (staticAnon) { wireAnonCta(card.querySelector('.dc-plus-cta')); return true; }
+    if (hint !== '1') {
+      renderAnon(card);
+      card.hidden = false;
+      return true;
+    }
+    return false;
+  });
 
   try {
     const user = await currentUser();
-    card.hidden = false;
-    if (user) await renderLoggedIn(card, user);
-    else if (!shownAnon) renderAnon(card);
+    cards.forEach((card) => { card.hidden = false; });
+    if (user) await renderLoggedIn(cards, user);
+    else cards.forEach((card, i) => { if (!shownAnon[i]) renderAnon(card); });
   } catch (_) {
     // Keep the homepage pristine if anything fails and nothing rendered yet;
     // an already-shown optimistic anon card is a safe, correct fallback, so
     // leave it rather than hiding good content.
-    if (!shownAnon) card.hidden = true;
+    cards.forEach((card, i) => { if (!shownAnon[i]) card.hidden = true; });
   }
 }
