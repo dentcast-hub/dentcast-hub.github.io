@@ -3400,10 +3400,14 @@ a.dc-list-card--pillar {
 #panel-studio .dc-duo-sub{ font-size:.68rem; color:var(--txt3); font-weight:600; }
 
 /* stats — compact, brand-blue accents, bottom of home */
-#panel-studio .hero-stats{ margin-top:1.625rem; margin-bottom:0.5rem; padding:1.375rem 0; }
-#panel-studio .hero-stat::before{ background:var(--ac); }
-#panel-studio .hero-stat .v{ font-size:clamp(2rem,8vw,3.4rem); font-weight:300; }
-#panel-studio .hero-stat .k{ margin-top:0.625rem; font-size:.72rem; }
+#panel-studio .hero-stats,
+#dcd-welcome-feed .hero-stats{ margin-top:1.625rem; margin-bottom:0.5rem; padding:1.375rem 0; }
+#panel-studio .hero-stat::before,
+#dcd-welcome-feed .hero-stat::before{ background:var(--ac); }
+#panel-studio .hero-stat .v,
+#dcd-welcome-feed .hero-stat .v{ font-size:clamp(2rem,8vw,3.4rem); font-weight:300; }
+#panel-studio .hero-stat .k,
+#dcd-welcome-feed .hero-stat .k{ margin-top:0.625rem; font-size:.72rem; }
 
 /* ── ARCHIVE panel polish (same language) ── */
 #panel-sharehub .dc-radar-hero{ margin-bottom:0; }
@@ -4011,10 +4015,14 @@ a.dc-list-card--pillar {
 #panel-studio .dc-exa-pop a{ color:var(--ac); font-weight:700; }
 
 /* stats moved up under the search — compact trust strip */
-#panel-studio .hero-stats{ margin:1.375rem 0 0.25rem; padding:1rem 0; }
-#panel-studio .hero-stat::before{ margin-bottom:0.5rem; }
-#panel-studio .hero-stat .v{ font-size:clamp(1.5rem,5.5vw,2rem); font-weight:450; }
-#panel-studio .hero-stat .k{ margin-top:0.375rem; font-size:.68rem; }
+#panel-studio .hero-stats,
+#dcd-welcome-feed .hero-stats{ margin:1.375rem 0 0.25rem; padding:1rem 0; }
+#panel-studio .hero-stat::before,
+#dcd-welcome-feed .hero-stat::before{ margin-bottom:0.5rem; }
+#panel-studio .hero-stat .v,
+#dcd-welcome-feed .hero-stat .v{ font-size:clamp(1.5rem,5.5vw,2rem); font-weight:450; }
+#panel-studio .hero-stat .k,
+#dcd-welcome-feed .hero-stat .k{ margin-top:0.375rem; font-size:.68rem; }
 
 /* category grid */
 #panel-studio .dc-exa-cats,
@@ -4206,14 +4214,18 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 #panel-studio .dc-exa-pop a{ font-weight:750; }
 
 /* ── stats: gradient display numbers, no rules around them ── */
-#panel-studio .hero-stats{ border:0; padding:1.4rem 0 .4rem; }
-#panel-studio .hero-stat::before{ display:none; }
-#panel-studio .hero-stat .v{
+#panel-studio .hero-stats,
+#dcd-welcome-feed .hero-stats{ border:0; padding:1.4rem 0 .4rem; }
+#panel-studio .hero-stat::before,
+#dcd-welcome-feed .hero-stat::before{ display:none; }
+#panel-studio .hero-stat .v,
+#dcd-welcome-feed .hero-stat .v{
   font-size:clamp(2rem,7.5vw,2.6rem); font-weight:450;
   background:var(--x-grad); -webkit-background-clip:text; background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-#panel-studio .hero-stat .k{ font-size:.72rem; margin-top:.35rem; }
+#panel-studio .hero-stat .k,
+#dcd-welcome-feed .hero-stat .k{ font-size:.72rem; margin-top:.35rem; }
 
 /* ── category grid: roomier cells, ink names ── */
 #panel-studio .dc-exa-cats,
@@ -4505,9 +4517,21 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
   function toFa(n){
     return String(n).replace(/[0-9]/g, function(d){ return FA[+d]; });
   }
-  var statWrap = document.querySelector('.hero-stats');
+  /* One observer per strip. index.html carries two since 2026-09-10 (the phone
+     shell and the desktop welcome column) and querySelector would have animated
+     the first one only — which on a desktop visit is the strip nobody can see,
+     leaving the visible one frozen on its markup values. Each closure keeps its
+     OWN vals/finals/targets/ran, so the two cannot drive each other.
+
+     AND IT WAITS FOR THE DOM. This <script> sits inside #panel-studio, which is
+     parsed BEFORE #dc-desktop-root, so at the moment it runs the desktop copy
+     does not exist yet — querySelectorAll found one strip and the desktop one
+     never animated at all. Measured by sampling every animation frame: it
+     showed exactly ONE distinct value, its markup value, for the whole page
+     life, which is indistinguishable from a finished animation unless you look
+     for it. */
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (statWrap && !reduce && 'IntersectionObserver' in window){
+  function armStats(){ document.querySelectorAll('.hero-stats').forEach(function(statWrap){
     var vals = [].slice.call(statWrap.querySelectorAll('.hero-stat .v'));
     var finals = vals.map(function(el){ return el.textContent; });
     var targets = vals.map(function(el){
@@ -4531,6 +4555,10 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
       entries.forEach(function(e){ if (e.isIntersecting){ animate(); io.disconnect(); } });
     }, { threshold: 0.4 });
     io.observe(statWrap);
+  }); }
+  if (!reduce && 'IntersectionObserver' in window) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', armStats);
+    else armStats();
   }
 })();
       </script>
@@ -5679,6 +5707,26 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
       <!-- Welcome: mobile-styled Pulse on top + latest-content cards over the cover -->
       <div class="dcd-welcome" id="dcd-welcome">
         <div class="dcd-welcome-feed" id="dcd-welcome-feed">
+
+          <!-- آمار — the desktop layout's copy of the phone's trust strip.
+               Same COUNTER markers, so the numbers stay brain-derived and
+               tools/update-homepage-counters.py rewrites both copies. The
+               count-up animation now observes EVERY .hero-stats on the page
+               rather than the first one. -->
+          <div class="hero-stats" role="list" aria-label="آمار دنت‌کست">
+            <div class="hero-stat" role="listitem">
+              <span class="v"><!-- COUNTER:YEARS:START -->۷<!-- COUNTER:YEARS:END --></span>
+              <span class="k">سال فعالیت</span>
+            </div>
+            <div class="hero-stat" role="listitem">
+              <span class="v"><!-- COUNTER:HOURS:START -->۷۱٫۵<!-- COUNTER:HOURS:END --></span>
+              <span class="k">ساعت محتوای صوتی</span>
+            </div>
+            <div class="hero-stat" role="listitem">
+              <span class="v"><!-- COUNTER:CONTENT:START -->۶۳۱<!-- COUNTER:CONTENT:END --></span>
+              <span class="k">مطلب و مدخل آموزشی</span>
+            </div>
+          </div>
 
           <!-- The reader's own card, the desktop layout's copy of
                #dcPlusHomeCard (plus/js/home-card.js, SLOT_IDS). Empty, unlike
