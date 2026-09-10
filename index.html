@@ -3988,7 +3988,8 @@ a.dc-list-card--pillar {
 #panel-sharehub .dc-exa-pagecount{ font-size:.72rem; color:var(--txt3); margin-top:0.125rem; }
 #panel-sharehub .dc-exa-search{ margin-top:0.875rem; margin-bottom:1.375rem; }
 #panel-studio .dc-exa-search,
-#panel-sharehub .dc-exa-search{
+#panel-sharehub .dc-exa-search,
+#dcd-welcome-feed .dc-exa-search{
   display:flex; align-items:center; gap:0.625rem;
   border:1.5px solid var(--txt); border-radius:0.75rem;
   padding:0.75rem 0.875rem; margin:0.25rem 0 0;
@@ -3996,23 +3997,29 @@ a.dc-list-card--pillar {
   background:var(--card-bg);
 }
 #panel-studio .dc-exa-search:active,
-#panel-sharehub .dc-exa-search:active{ background:var(--surface2); }
+#panel-sharehub .dc-exa-search:active,
+#dcd-welcome-feed .dc-exa-search:active{ background:var(--surface2); }
 #panel-studio .dc-exa-search .dc-svg-icon,
-#panel-sharehub .dc-exa-search .dc-svg-icon{ width:1.0625rem; height:1.0625rem; color:var(--txt3); flex-shrink:0; }
+#panel-sharehub .dc-exa-search .dc-svg-icon,
+#dcd-welcome-feed .dc-exa-search .dc-svg-icon{ width:1.0625rem; height:1.0625rem; color:var(--txt3); flex-shrink:0; }
 #panel-studio .dc-exa-search-ph,
-#panel-sharehub .dc-exa-search-ph{
+#panel-sharehub .dc-exa-search-ph,
+#dcd-welcome-feed .dc-exa-search-ph{
   flex:1; min-width:0; font-size:.84rem; color:var(--txt3);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 #panel-studio .dc-exa-search-go,
-#panel-sharehub .dc-exa-search-go{
+#panel-sharehub .dc-exa-search-go,
+#dcd-welcome-feed .dc-exa-search-go{
   flex-shrink:0; background:var(--txt); color:var(--bg);
   font-size:.78rem; font-weight:700; border-radius:0.5rem; padding:0.3125rem 0.875rem;
 }
-#panel-studio .dc-exa-pop{
+#panel-studio .dc-exa-pop,
+#dcd-welcome-feed .dc-exa-pop{
   font-size:.74rem; color:var(--txt3); margin:0.625rem 0.125rem 0;
 }
-#panel-studio .dc-exa-pop a{ color:var(--ac); font-weight:700; }
+#panel-studio .dc-exa-pop a,
+#dcd-welcome-feed .dc-exa-pop a{ color:var(--ac); font-weight:700; }
 
 /* stats moved up under the search — compact trust strip */
 #panel-studio .hero-stats,
@@ -4202,16 +4209,19 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 
 /* ── search: raised pill, gradient go ── */
 #panel-studio .dc-exa-search,
-#panel-sharehub .dc-exa-search{
+#panel-sharehub .dc-exa-search,
+#dcd-welcome-feed .dc-exa-search{
   border:1px solid var(--x-line); border-radius:16px;
   padding:.95rem 1.05rem; background:var(--x-card); box-shadow:var(--x-sh);
 }
 #panel-studio .dc-exa-search-go,
-#panel-sharehub .dc-exa-search-go{
+#panel-sharehub .dc-exa-search-go,
+#dcd-welcome-feed .dc-exa-search-go{
   background:var(--x-grad); color:#fff; border-radius:11px; padding:.45rem 1.15rem;
   box-shadow:0 4px 12px -4px rgba(18,87,214,.5);
 }
-#panel-studio .dc-exa-pop a{ font-weight:750; }
+#panel-studio .dc-exa-pop a,
+#dcd-welcome-feed .dc-exa-pop a{ font-weight:750; }
 
 /* ── stats: gradient display numbers, no rules around them ── */
 #panel-studio .hero-stats,
@@ -5708,6 +5718,25 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
       <div class="dcd-welcome" id="dcd-welcome">
         <div class="dcd-welcome-feed" id="dcd-welcome-feed">
 
+          <!-- باکس جستجو + پرجستجو — the desktop layout's copy. It keeps the
+               .dcOpenSearch class, but that class alone is NOT enough here:
+               index.html's delegated handler calls openS(), which bails the
+               moment body carries .dc-desktop-ui (the desktop shell owns search
+               through its own deskOpenSearch overlay). So a second delegated
+               handler, scoped to #dc-desktop-root, routes this copy there —
+               without it the box would be a search field that does nothing. -->
+          <div class="dc-exa-search dcOpenSearch" role="button" tabindex="0" aria-label="جستجو در دنت‌کست">
+            <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <span class="dc-exa-search-ph">جست‌وجو: فرول، زیرکونیا، SDA…</span>
+            <span class="dc-exa-search-go">جستجو</span>
+          </div>
+          <div class="dc-exa-pop">پرجستجو:
+            <a href="/pillar/bonding/">باندینگ</a> ·
+            <a href="/pillar/implantology/">ایمپلنت</a> ·
+            <a href="/pillar/occlusion/">اکلوژن</a> ·
+            <a href="/pillar/ceramics/">سرامیک‌ها</a>
+          </div>
+
           <!-- آمار — the desktop layout's copy of the phone's trust strip.
                Same COUNTER markers, so the numbers stay brain-derived and
                tools/update-homepage-counters.py rewrites both copies. The
@@ -7178,6 +7207,15 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       history.replaceState(null,'',window.location.pathname+window.location.search);
   }
   document.getElementById('dcd-hdr-search')?.addEventListener('click', ()=>deskOpenSearch());
+  /* Any .dcOpenSearch INSIDE the desktop shell — today the welcome column's
+     copy of the phone's hero search box. Delegated for the same reason the
+     mobile one is (elements here are built and replaced at runtime), and
+     scoped to #dc-desktop-root so it can never double-fire with that handler:
+     openS() already returns early under .dc-desktop-ui, and this one never
+     sees a click inside #mobile-shell. */
+  document.addEventListener('click', (e) => {
+    if(e.target.closest && e.target.closest('#dc-desktop-root .dcOpenSearch')) deskOpenSearch();
+  });
   document.getElementById('dcCloseSearchOverlay')?.addEventListener('click', () => {
     if(document.body.classList.contains('dc-desktop-ui')) deskCloseSearch();
   });
