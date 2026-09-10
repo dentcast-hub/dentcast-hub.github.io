@@ -1,0 +1,28 @@
+{
+  "type": "dentai",
+  "note": "Publish of dentai/dentai-34 (ایمپلنت واقعاً جویدن را چقدر بهتر می‌کند؟). Mints #قدرت_جویدن — masticatory performance as an objective chewing-efficiency outcome, already an orphan brain tag on litecast/lite-CAST4 and the clinical question this SR resolves. Every other tag reuses an existing canonical form. Does not mint residual-ridge height (library has #تحلیل_استخوان and #حفظ_ریج, neither of which is this concept) and does not tag #اتچمنت_اوردنچر (one section, not what the article resolves).",
+  "concepts": [
+    {
+      "tag": "#قدرت_جویدن",
+      "domain": "clinical",
+      "definition": "بازده عینی خرد یا مخلوط کردن غذا که با آزمون استاندارد اندازه‌گیری می‌شود، نه با پرسشنامه‌ی رضایت بیمار.",
+      "use_when": "مقاله عملکرد جویدن را به‌عنوان پیامد عینی بسنجد یا پروتزها را از این نظر مقایسه کند.",
+      "aliases": [
+        "masticatory performance",
+        "chewing efficiency",
+        "عملکرد جویدن",
+        "بازده جویدن",
+        "chewing performance"
+      ]
+    }
+  ],
+  "articles": {
+    "dentai/dentai-34": [
+      "#DentAI",
+      "#اوردنچر",
+      "#قدرت_جویدن",
+      "#پروتز_متکی_بر_ایمپلنت",
+      "#پروتز_متحرک"
+    ]
+  }
+}

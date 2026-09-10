@@ -15475,5 +15475,108 @@
         "interpretation_fa": "این متن گزارش دو کیس بدون گروه کنترل است، نه شاهدی برای برتری یک طراحی بر دیگری. آنچه نشان می‌دهد این است که پست دو تکه در مولر با ریشه‌های واگرا در عمل قابل ساخت است و در کیس اول تا یک سال پایدار مانده. برای کیس دوم پیامدی گزارش نشده. جمع‌بندی درباره‌ی بقای بلندمدت از این داده در نمی‌آید."
       }
     ]
+  },
+  "dentai/dentai-34":   {
+    "scored_at": "2026-09-10",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Effect of implant-supported or retained dentures on masticatory performance: a systematic review",
+          "authors": "Fueki K, Kimoto K, Ogawa T, Garrett NR",
+          "year": 2007,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/s0022-3913(07)60147-4"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review of mixed RCT and non-randomized studies comparing implant-supported or retained dentures with conventional dentures (THERAPY SR/MA row, 100, via Step 2 routing)",
+          "evidence_quote": "18 peer-reviewed articles met prespecified criteria for inclusion"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا PROSPERO اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "Information retrieval followed a systematic approach using PubMed and the Cochrane Library."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده فهرست مطالعات تمام‌متن کنارگذاشته‌شده ندارد؛ تحت ABSTRACT_ONLY قاعدهٔ 3b-iii اعمال نمی‌شود و سکوت NR می‌ماند."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "Ratings of the evidence provided in each article followed United States Agency for Healthcare Research and Quality recommendations."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده pooling یا مدل متاآنالیز را توصیف نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به funnel plot یا آزمون سوگیری انتشار اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all, or funding by a commercial manufacturer whose own product is among those tested",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable — this is an SR, not a primary RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis (clinical studies); for in-vitro, specimen count per group <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires (e.g. survival claims with <3y follow-up)",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "source text does not address follow-up duration"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "امتیاز شواهد این منبع ۵۵ از ۱۰۰ و باند C است؛ نوع سوال Therapy است.",
+        "interpretation_fa": "مرور سیستماتیک با جست‌وجوی PubMed و Cochrane و رتبه‌بندی AHRQ؛ امتیاز از چکیده است پس مقدماتی. سکوت چکیده دربارهٔ پروتکل و سوگیری انتشار ضریب روش را پایین آورده. نتیجهٔ گزارش‌شده این است که مزیت عینی جویدن عمدتاً به اوردنچر مندیبولار در ریج تحلیل‌رفته یا ناسازگاری با دنچر محدود می‌ماند."
+      }
+    ]
   }
 }
