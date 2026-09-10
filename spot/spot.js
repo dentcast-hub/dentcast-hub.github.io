@@ -66,7 +66,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=64';
+import { findProseRoot } from '/plus/js/config.js?v=65';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -160,7 +160,7 @@ function report(kind, slotName, creativeId) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ [key]: name, content_id: contentId }),
   });
-  import('/plus/js/api.js?v=64')
+  import('/plus/js/api.js?v=65')
     .then((m) => m.apiBase())
     .then((base) => {
       if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
@@ -179,7 +179,7 @@ function report(kind, slotName, creativeId) {
       // A network-level failure (not an HTTP error) may mean the cached base is
       // dead — self-heal so the NEXT event, and the next page's /me, re-probe
       // instead of retrying the same unreachable host all session.
-      import('/plus/js/api.js?v=64').then((m) => m.forgetBase()).catch(() => {});
+      import('/plus/js/api.js?v=65').then((m) => m.forgetBase()).catch(() => {});
     });
 }
 
@@ -1021,13 +1021,29 @@ function setupSearchSlot(cfg, audienceNow) {
 // now lives in buildCard/armSeen for all of them.
 function setupArchiveSlot(cfg, audienceNow) {
   if (!slotAllows(cfg, 'archive', audienceNow())) return;
-  const title = Array.from(document.querySelectorAll('.dc-list-card .dc-list-card-title'))
-    .find((el) => el.textContent.trim().indexOf('اپیزودهای پادکست') === 0);
-  const anchor = title && title.closest('.dc-list-card');
-  if (!anchor) return;
+  // EVERY archive surface, not the first one. Since 2026-09-10 the site has
+  // two: the phone's #panel-sharehub and the desktop shell's #dcd-archive,
+  // which is the same destination in the layout that shows a tree instead of a
+  // bottom nav. `find()` returned the phone's (it is earlier in the document),
+  // so the desktop archive was the one surface of the site with no inventory
+  // on it at all.
+  //
+  // ONE pickCreative for all of them, exactly as renderHome does for its own
+  // two shells: the rotation belongs to the SLOT, not to a copy of the card, so
+  // both surfaces show the beat this page view is on and neither can advance it
+  // twice. Only the shell that is displayed ever counts an impression —
+  // armSeen() is an IntersectionObserver, and a card inside a display:none
+  // subtree never intersects — so the hidden copy costs the sponsor nothing.
+  const anchors = Array.from(document.querySelectorAll('.dc-list-card .dc-list-card-title'))
+    .filter((el) => el.textContent.trim().indexOf('اپیزودهای پادکست') === 0)
+    .map((el) => el.closest('.dc-list-card'))
+    .filter(Boolean);
+  if (!anchors.length) return;
   const creative = pickCreative(cfg, 'archive', audienceNow());
   if (!creative) return;
-  anchor.parentNode.insertBefore(buildCard(creative, 'archive'), anchor.nextSibling);
+  anchors.forEach((anchor) => {
+    anchor.parentNode.insertBefore(buildCard(creative, 'archive'), anchor.nextSibling);
+  });
 }
 
 // ── premium check ────────────────────────────────────────────────────────────
@@ -1045,7 +1061,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=64')
+  return import('/plus/js/api.js?v=65')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
