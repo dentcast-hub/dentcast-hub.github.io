@@ -7,19 +7,19 @@
 // opens into a masonry grid of "pins." This module is shared by
 // /plus/collections.html, /plus/collection.html, the workbench's two
 // single-purpose collection buttons, and the dashboard.
-import { el, faNum } from './util.js?v=65';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=65';
-import { premiumCta } from './premium-cta.js?v=65';
-import { api, currentUser, apiBase } from './api.js?v=65';
-import { openLoginModal } from './login-modal.js?v=65';
-import { FOLDER_EN } from './content-index.js?v=65';
-import { markReturnTrail } from './return-trail.js?v=65';
-import { PALETTE } from './config.js?v=65';
+import { el, faNum } from './util.js?v=66';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=66';
+import { premiumCta } from './premium-cta.js?v=66';
+import { api, currentUser, apiBase } from './api.js?v=66';
+import { openLoginModal } from './login-modal.js?v=66';
+import { FOLDER_EN } from './content-index.js?v=66';
+import { markReturnTrail } from './return-trail.js?v=66';
+import { PALETTE } from './config.js?v=66';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
   kindChip, snippetInlineEditor, looksLatin,
-} from './hl-view.js?v=65';
+} from './hl-view.js?v=66';
 
 const hlColorCss = (key) => (PALETTE.find((p) => p.key === key) || {}).css || '#eaecf5';
 

@@ -66,7 +66,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=65';
+import { findProseRoot } from '/plus/js/config.js?v=66';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -160,7 +160,7 @@ function report(kind, slotName, creativeId) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ [key]: name, content_id: contentId }),
   });
-  import('/plus/js/api.js?v=65')
+  import('/plus/js/api.js?v=66')
     .then((m) => m.apiBase())
     .then((base) => {
       if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
@@ -179,7 +179,7 @@ function report(kind, slotName, creativeId) {
       // A network-level failure (not an HTTP error) may mean the cached base is
       // dead — self-heal so the NEXT event, and the next page's /me, re-probe
       // instead of retrying the same unreachable host all session.
-      import('/plus/js/api.js?v=65').then((m) => m.forgetBase()).catch(() => {});
+      import('/plus/js/api.js?v=66').then((m) => m.forgetBase()).catch(() => {});
     });
 }
 
@@ -878,11 +878,35 @@ function renderHome(cfg, creative) {
       placed = true;
     }
   }
-  // Desktop shell: unchanged — right under its own Pulse card.
+  // Desktop shell: the SAME placement the phone uses — directly above مسیریاب,
+  // which puts the card immediately under the featured episode.
+  //
+  // It hung off #dcdPulse.nextSibling until 2026-09-10, and that was a fair
+  // answer while the desktop welcome column held four blocks and the Pulse was
+  // the first of them. Then the column gained the phone's other eight, and the
+  // Pulse ended up NINTH: the paid card was the tenth thing in the feed, about
+  // 2400px down, below stats, the DES explainer, the DES tool, the personal
+  // card, the episode hero, مسیریاب and «دسته‌های محتوا». Sponsor inventory
+  // that nobody scrolls to is inventory that is not being delivered — and the
+  // card only counts an impression once it is actually SEEN (armSeen), so the
+  // position was costing real impressions, not just visibility.
+  //
+  // Same fallback chain as the phone's, one anchor at a time, so the card can
+  // never disappear if a block is removed: مسیریاب → the «دسته‌های محتوا»
+  // heading → the Pulse it used to sit under.
+  const dWf = document.querySelector('#dcd-welcome-feed #dcdWayfinderHome');
+  const dCats = document.querySelector('#dcd-welcome-feed .dc-exa-cats');
   const dPulse = document.querySelector('#dcdPulse');
-  if (dPulse) {
-    const card = buildCard(creative, 'home');
-    dPulse.parentNode.insertBefore(card, dPulse.nextSibling);
+  if (dWf) {
+    dWf.parentNode.insertBefore(buildCard(creative, 'home'), dWf);
+    placed = true;
+  } else if (dCats) {
+    const head = dCats.previousElementSibling;
+    const anchor = (head && head.classList.contains('dc-home-sec')) ? head : dCats;
+    anchor.parentNode.insertBefore(buildCard(creative, 'home'), anchor);
+    placed = true;
+  } else if (dPulse) {
+    dPulse.parentNode.insertBefore(buildCard(creative, 'home'), dPulse.nextSibling);
     placed = true;
   }
   return placed;
@@ -1061,7 +1085,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=65')
+  return import('/plus/js/api.js?v=66')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }

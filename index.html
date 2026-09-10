@@ -6023,9 +6023,9 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
                tools/verify_home_card.py --check compares exactly ONE static copy
                against renderAnon(). First in the feed because that is where it
                sits on the phone — above the pulse and above the latest rail.
-               It must stay ABOVE #dcdPulse: spot.js anchors the desktop ad at
-               that card's nextSibling, and #dcdPlusFeatures has to remain
-               directly after it. -->
+               (It used to have to stay above #dcdPulse because spot.js anchored
+               the desktop ad at that pulse's nextSibling; since 2026-09-10 that
+               ad anchors above #dcdWayfinderHome instead, like the phone's.) -->
           <div id="dcdPlusHomeCard" class="dc-plus-home-card" aria-label="یادگیری شما" hidden></div>
 
           <!-- هیروی اپیزود — the desktop layout's copy of #card-episodes.
@@ -6116,8 +6116,12 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
             <ul class="dc-pulse-list"></ul>
           </div>
 
-          <!-- Same slot, the desktop layout's copy. Same rule: it stays directly
-               after #dcdPulse, which is the desktop anchor spot.js uses. -->
+          <!-- Same slot, the desktop layout's copy.
+               It no longer has to sit adjacent to #dcdPulse: the desktop ad
+               anchored at that pulse's nextSibling until 2026-09-10, and now
+               anchors above #dcdWayfinderHome like the phone's does. This block
+               stays here because it belongs after the Pulse in the READING
+               order, not because anything is inserted between them. -->
           <div id="dcdPlusFeatures" class="dc-plus-features" aria-label="امکانات پریمیوم" hidden></div>
 
           <div class="dcd-latest">
@@ -6699,7 +6703,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=162" defer></script>
+<script src="/dc-nav.js?v=163" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
