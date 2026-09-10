@@ -11,7 +11,10 @@
     "dashboard": { "enabled": true },
     "profile": { "enabled": true },
     "search": { "enabled": true },
-    "archive": { "enabled": true }
+    "archive": { "enabled": true },
+    "sidebar": {
+      "enabled": true
+    }
   },
   "seen": { "ratio": 0.5, "ms": 1000 },
   "rotation": {

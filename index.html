@@ -1798,15 +1798,42 @@ body.dc-desktop-ui #dc-desktop-root{
 
 
 /* Col-A footer */
+/* AMBER INK, RE-TUNED FOR THIS GROUND — same colour, same meaning.
+   --x-amber-ink is #8a6414, chosen against the white/off-white --x-card every
+   other premium surface sits on. The light sidebar is pale blue (--sb: #dde8f6,
+   decided separately), and on that ground the same ink measures 4.33:1 — under
+   AA for the 11px text of «خرید اشتراک پریمیوم». #7a5812 is the same hue (40°
+   against 41°) at the luminance this ground needs: 5.25:1. Scoped to col-A, so
+   anything amber inside the sidebar gets it and nothing outside changes; the
+   dark sidebar needs no help (8.70:1) and keeps the shared value. */
+.dcd-col-a{ --x-amber-ink:#7a5812; }
+[data-theme="dark"] .dcd-col-a{ --x-amber-ink:#e3b849; }
+
+/* Sponsor card, directly above the subscribe row and in the same box
+   language — same 8px gutter, so it is 203px wide like the button under it. It
+   is empty until spot.js fills it, and `:empty` keeps it from leaving a gap in
+   the column when the slot is off, when the config picks no creative, or for a
+   premium visitor whose card was removed. */
+.dcd-a-spot{ padding:0.4375rem 0.5rem 0; flex-shrink:0; }
+.dcd-a-spot:empty{ display:none; }
+
 .dcd-a-subscribe{ padding:0.4375rem 0.5rem 0; flex-shrink:0; }
+/* AMBER, because this is the button that buys the subscription — the site's
+   one meaning for that colour. Built the way every other premium surface here
+   is built (.dcp-hf-card, #card-library, .dc-wf-home-entry): a wash that fades
+   out in the top 45% over the sidebar's own fill, an amber hairline, amber
+   ink. Never a solid amber block — that reads as a warning, not as an offer. */
 .dcd-a-subscribe a{
   display:flex; align-items:center; justify-content:center; gap:0.3125rem;
   padding:0.4375rem 0.3125rem; border-radius:var(--r-md);
-  border:1px solid var(--sb-line-1); background:var(--sb-fill-1);
-  color:var(--sb-txt); font-size:0.6875rem; text-decoration:none;
+  border:1px solid var(--x-amber-bd);
+  background:linear-gradient(180deg, var(--x-amber-wash), transparent 45%), var(--sb-fill-1);
+  color:var(--x-amber-ink); font-size:0.6875rem; font-weight:700; text-decoration:none;
   white-space:nowrap; transition:all var(--tr);
 }
-.dcd-a-subscribe a:hover{ background:var(--sb-fill-3); }
+.dcd-a-subscribe a:hover{
+  background:linear-gradient(180deg, var(--x-amber-wash-2), transparent 45%), var(--sb-fill-3);
+}
 .dcd-col-a-footer{
   padding:0.4375rem 0.5rem; border-top:1px solid var(--sb-div);
   display:flex; gap:0.3125rem; flex-shrink:0;
@@ -5827,6 +5854,15 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
       <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=7173641&Code=1JNpptoXEnQlKFUqawxi6IG65bKVLl9m'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=7173641&Code=1JNpptoXEnQlKFUqawxi6IG65bKVLl9m' alt='نماد اعتماد الکترونیکی دنت‌کست' loading='lazy' style='cursor:pointer' code='1JNpptoXEnQlKFUqawxi6IG65bKVLl9m'></a>
     </div>
 
+    <!-- Sponsor slot, col-A. EMPTY on purpose — no page on this site holds ad
+         markup; spot.js fills it (setupSidebarSlot) and spot-config.json's
+         `slots.sidebar` switches it on and off. Unlike every other slot this
+         one is PERMANENT: the sidebar is on screen for the whole visit, so its
+         card is pinned to `rotation.sequence[0]` rather than rotated, and it
+         spends no rotation beat. A premium visitor never sees it — every
+         `.dc-spot` is removed once /me confirms the tier. -->
+    <div class="dcd-a-spot" id="dcdSpotSidebar"></div>
+
     <!-- Buying a subscription, on the desktop shell. The mobile topbar (and its
          «اشتراک» drawer button) is display:none here, so without this row the
          desktop homepage had no route to the price at all. Its own full-width
@@ -6703,7 +6739,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=163" defer></script>
+<script src="/dc-nav.js?v=164" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
