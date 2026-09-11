@@ -261,6 +261,28 @@ export const config = {
     hour: int('REVIEW_REMINDER_HOUR', 9),
   },
 
+  // Pathway standings — the founder-facing half of the completion certificate.
+  //
+  // A pathway's progress is DERIVED (pathways.ts computeProgress) and the
+  // `user_pathways` cache is only written when the reader opens the pathway
+  // page, so nothing anywhere knows that somebody is three articles from the
+  // end. Without that, the certificate can only be discovered after the fact,
+  // by the reader asking for it. This is the sweep that finds them first.
+  //
+  // `nearRemaining` is a COUNT of unread steps, not a percentage, because the
+  // question it answers is "how long until I must have an exam ready" — and
+  // five articles is roughly the same amount of time whether the pathway has 17
+  // steps or 116. A percentage would fire eleven articles early on the long
+  // ones and two late on the short ones.
+  pathwayAlert: {
+    hour: int('PATHWAY_ALERT_HOUR', 22),
+    nearRemaining: int('PATHWAY_NEAR_REMAINING', 5),
+    // Whose phone. Empty falls back to SUPPORT_ALERT_PHONE in the service: the
+    // founder already configured one number, and making this alert wait for a
+    // second env var is how a feature ships and then never fires.
+    alertPhone: str('PATHWAY_ALERT_PHONE', ''),
+  },
+
   // Subscription renewal reminders: one `daysBefore` days out and one on the
   // last day itself. Sent at reminder hour Tehran — mid-morning, so it lands
   // when someone can act on it rather than at a boundary nobody is awake for.

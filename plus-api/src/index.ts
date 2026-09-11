@@ -6,6 +6,7 @@ import {
   startLeagueScheduler, startHeldNotificationsScheduler, startReviewReminderScheduler,
   startAssistantLearningScheduler, startSubscriptionScheduler,
   startSubscriptionReminderScheduler, startPaymentReconcileScheduler,
+  startPathwayAlertScheduler,
 } from './scheduler.js';
 import { startBalePolling } from './services/bale-updates.js';
 import { startContentRefresh } from './content-refresh.js';
@@ -35,6 +36,12 @@ async function main(): Promise<void> {
   // never came back from. Minutes rather than daily because the row it looks for
   // is somebody already charged, and Zibal reverses an unverified transaction.
   const stopPaymentReconcile = startPaymentReconcileScheduler();
+  // Late evening: who has come within a few steps of finishing a learning
+  // pathway, and who has just finished one. Nothing else in the system knows —
+  // pathway progress is derived, and its cache only moves when the reader opens
+  // the pathway page — so without this the certificate can only ever be asked
+  // for, never offered.
+  const stopPathwayAlerts = startPathwayAlertScheduler();
   // Bale connect worker: long-polls getUpdates and links chat_ids (no-op without
   // a BALE_BOT_TOKEN). Primary path since Bale's webhook delivery is unreliable.
   const stopBalePolling = startBalePolling();
@@ -56,6 +63,7 @@ async function main(): Promise<void> {
     stopSubscriptions();
     stopSubscriptionReminders();
     stopPaymentReconcile();
+    stopPathwayAlerts();
     stopBalePolling();
     stopContentRefresh();
     await app.close();
