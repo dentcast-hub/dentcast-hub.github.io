@@ -51,6 +51,9 @@ import {
 } from '../services/support.js';
 import { normalizeReference } from '../services/reference.js';
 import {
+  pathwayStandings, runPathwayAlerts, levelFor, alertable,
+} from '../services/pathway-standings.js';
+import {
   requestQueue, getRequest, requestByReference, markAnswered, markRejected,
 } from '../services/des-requests.js';
 import {
@@ -646,6 +649,105 @@ function renderHtml(
       load(Number(btn.getAttribute('data-days')), Number(btn.getAttribute('data-offset') || 0));
     });
     load(1, 0);
+  })();
+  </script>
+
+  <h3 style="margin-top:26px">مسیرها — چه کسی نزدیک پایان است <span id="pwWaiting" class="pill"></span></h3>
+  <div class="muted">
+    پیشرفتِ مسیر هیچ‌جا ذخیره نمی‌شود؛ از روی چیزی که هر نفر واقعاً خوانده/شنیده حساب می‌شود.
+    این‌جا همان حساب برای همه اجرا می‌شود تا معلوم شود چه کسی به انتها نزدیک است — یعنی چه وقت
+    باید آزمونِ آن مسیر آماده باشد.
+    <br>
+    <b>باندل‌ها این‌جا نیستند</b> (۵ تا ۸ قدم، اندازهٔ گواهی نیست). معیار، تعدادِ قدمِ
+    <i>نخوانده</i>ست، نه درصد. کاربرِ رایگان در جدول هست ولی برایش نوتیف نمی‌رود —
+    اصلاً صفحهٔ مسیر را نمی‌بیند.
+  </div>
+  <div class="row" style="margin-top:10px">
+    <button id="pwRun" type="button">اجرای دستیِ بررسی</button>
+    <span id="pwOut" class="muted"></span>
+  </div>
+  <div id="pwBox"></div>
+  <script>
+  (function () {
+    var box = document.getElementById('pwBox');
+    var out = document.getElementById('pwOut');
+    var btn = document.getElementById('pwRun');
+    var waiting = document.getElementById('pwWaiting');
+    if (!box || !btn) return;
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    var FA = '۰۱۲۳۴۵۶۷۸۹';
+    function fa(n) { return String(n).replace(/[0-9]/g, function (d) { return FA[+d]; }); }
+
+    // One table shape for all three buckets: the columns answer the same
+    // question, only the urgency differs.
+    function table(rows, opts) {
+      if (!rows.length) return '<div class="muted">—</div>';
+      var body = rows.map(function (r) {
+        var who = esc(r.display_name || r.user_id.slice(0, 8));
+        var tier = r.tier === 'premium'
+          ? '<span class="pill">پریمیوم</span>'
+          : '<span class="pill">رایگان</span>';
+        var mark = r.enrolled ? '<span class="pill">ثبت‌نام کرده</span>' : '';
+        // An already-announced row is the normal state, not an error: it means
+        // the alert did its job and this is the standing record of it.
+        var said = r.alerted
+          ? '<span class="pill">خبر داده شد: ' + (r.alerted === 'done' ? 'پایان' : 'نزدیک') + '</span>'
+          : (r.alertable ? '' : '<span class="pill">بی‌نوتیف</span>');
+        return '<tr><td>' + who + ' ' + tier + '</td><td>' + esc(r.title_fa) + '</td>'
+          + '<td>' + fa(r.completed_steps) + ' از ' + fa(r.total_steps) + '</td>'
+          + '<td><b>' + fa(r.remaining) + '</b></td>'
+          + '<td>' + mark + ' ' + said + '</td></tr>';
+      }).join('');
+      return '<div class="tblwrap"><table><tr><th>' + esc(opts.who) + '</th><th>مسیر</th>'
+        + '<th>خوانده</th><th>مانده</th><th></th></tr>' + body + '</table></div>';
+    }
+
+    function render(d) {
+      if (!d || !d.ok) { box.textContent = 'نیامد.'; return; }
+      var c = d.counts || {};
+      waiting.textContent = (c.done || 0) + (c.near || 0)
+        ? fa((c.done || 0) + (c.near || 0)) : '';
+      var head = '<div class="muted" style="margin-top:10px">'
+        + 'آستانه: ' + fa(d.near_remaining) + ' قدمِ مانده · بررسیِ خودکار هر شب ساعت '
+        + fa(d.alert_hour) + ' · ' + fa(c.readers || 0) + ' نفر روی مسیرها'
+        + (d.alert_phone_set ? '' : ' · <b>شمارهٔ هشدار تنظیم نشده — فقط همین جدول</b>')
+        + '</div>';
+      box.innerHTML = head
+        + '<h4 style="margin-top:14px">تمام کرده‌اند (' + fa(c.done || 0) + ')</h4>'
+        + table(d.done || [], { who: 'کاربر' })
+        + '<h4 style="margin-top:14px">نزدیک پایان (' + fa(c.near || 0) + ')</h4>'
+        + table(d.near || [], { who: 'کاربر' })
+        + '<h4 style="margin-top:14px">در راه (' + fa(c.walking || 0) + ')</h4>'
+        + table(d.walking || [], { who: 'کاربر' });
+    }
+
+    function load() {
+      fetch('/admin/pathways', { credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(render)
+        .catch(function () { box.textContent = 'فهرست نیامد.'; });
+    }
+
+    btn.addEventListener('click', function () {
+      btn.disabled = true; out.textContent = 'در حال بررسی…';
+      fetch('/admin/pathways/run-alerts', { method: 'POST', credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          btn.disabled = false;
+          var n = (j.crossings || []).length;
+          out.textContent = n
+            ? fa(n) + ' مورد تازه' + (j.notified ? ' — نوتیف رفت.' : ' — نوتیف نرفت (شماره؟).')
+            : 'چیز تازه‌ای نبود.';
+          load();
+        })
+        .catch(function () { btn.disabled = false; out.textContent = 'اجرا نشد.'; });
+    });
+
+    load();
   })();
   </script>
 
@@ -3944,5 +4046,68 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     const removed = await removeClosure(id);
     if (!removed) return reply.code(404).send({ error: 'not_found' });
     return reply.send({ ok: true });
+  });
+
+  /**
+   * مسیرها — who is near the end of a learning pathway.
+   *
+   * The read side of services/pathway-standings.ts. Answers the one question
+   * the certificate plan depends on and nothing else could answer: is anybody
+   * close enough that an exam needs writing?
+   *
+   * Rows are bucketed rather than returned flat, because the founder is not
+   * scanning a table — they are asking "is there anything for me to do", and
+   * `done` and `near` are the two answers that mean yes. `walking` is the tail,
+   * capped, and exists only to show the pipeline is not empty.
+   */
+  app.get('/admin/pathways', async (_request, reply) => {
+    const near = config.pathwayAlert.nearRemaining;
+    const standings = await pathwayStandings();
+    const shape = (s: typeof standings[number]) => ({
+      user_id: s.user_id,
+      display_name: s.display_name,
+      tier: s.tier,
+      pathway_id: s.pathway_id,
+      title_fa: s.title_fa,
+      completed_steps: s.completed_steps,
+      total_steps: s.total_steps,
+      remaining: s.remaining,
+      enrolled: s.enrolled,
+      alerted: s.alerted,
+      // Whether this row would wake anybody, so a free reader sitting at two
+      // steps left reads as a deliberate exclusion rather than a missed alert.
+      alertable: alertable(s),
+    });
+
+    const done = standings.filter((s) => levelFor(s, near) === 'done');
+    const nearEnd = standings.filter((s) => levelFor(s, near) === 'near');
+    const walking = standings.filter((s) => levelFor(s, near) === null);
+
+    return reply.send({
+      ok: true,
+      near_remaining: near,
+      alert_hour: config.pathwayAlert.hour,
+      alert_phone_set: Boolean(config.pathwayAlert.alertPhone || config.support.alertPhone),
+      counts: {
+        done: done.length,
+        near: nearEnd.length,
+        walking: walking.length,
+        readers: new Set(standings.map((s) => s.user_id)).size,
+      },
+      done: done.map(shape),
+      near: nearEnd.map(shape),
+      walking: walking.slice(0, 40).map(shape),
+    });
+  });
+
+  /**
+   * POST /admin/pathways/run-alerts — the same sweep the nightly scheduler
+   * runs, on demand. Here for the same reason /admin/streak-reminder/run is:
+   * a nightly job you cannot fire by hand is a nightly job you find out is
+   * broken a day late. Idempotent — a second press announces nothing.
+   */
+  app.post('/admin/pathways/run-alerts', async (_request, reply) => {
+    const run = await runPathwayAlerts(new Date());
+    return reply.send({ ok: true, crossings: run.crossings, notified: run.notified });
   });
 }

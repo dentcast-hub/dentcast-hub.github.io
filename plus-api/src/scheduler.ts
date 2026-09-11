@@ -13,6 +13,7 @@ import { sweepExpiredSubscriptions } from './services/subscription.js';
 import { checkCapacityAlert } from './services/payment-cap-alert.js';
 import { runSubscriptionReminders } from './services/subscription-reminder.js';
 import { reconcilePendingPayments } from './services/payment-reconcile.js';
+import { runPathwayAlerts } from './services/pathway-standings.js';
 
 /**
  * Daily free-digest scheduler. Fires runFreeDigest() at freeDigestHour:00 in the
@@ -444,5 +445,46 @@ export function startAssistantLearningScheduler(): () => void {
   };
 
   tick();
+  return () => clearTimeout(timer);
+}
+
+/**
+ * The nightly pathway sweep: who has come within `nearRemaining` steps of
+ * finishing a learning pathway, and who has just finished one.
+ *
+ * Late evening (22:00 Tehran by default) because the answer only changes as
+ * people read, so the end of the day is when it is most current — and because
+ * this is aimed at the founder, not at a reader, so it does not compete for
+ * room with the 20:00/21:00 nudges.
+ *
+ * Daily and idempotent, so a missed run self-heals: somebody who is five steps
+ * from the end tonight is still five steps from the end tomorrow night, and the
+ * markers make sure they are announced exactly once either way. That is also
+ * why there is no boot pass — unlike the premium-prize expiry or a stranded
+ * payment, nothing here goes wrong by waiting until the next run.
+ */
+export function startPathwayAlertScheduler(): () => void {
+  let timer: NodeJS.Timeout;
+
+  const schedule = () => {
+    const delay = msUntilNextRun(new Date(), config.pathwayAlert.hour, config.streakTimezone);
+    timer = setTimeout(() => {
+      void runPathwayAlerts(new Date())
+        .then((r) => {
+          if (r.crossings.length > 0) {
+            // eslint-disable-next-line no-console
+            console.log(`[pathway-alert] ${r.crossings.length} crossing(s), notified=${r.notified}`);
+          }
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.error('[pathway-alert] run failed', err);
+        })
+        .finally(schedule);
+    }, delay);
+    if (typeof timer.unref === 'function') timer.unref();
+  };
+
+  schedule();
   return () => clearTimeout(timer);
 }
