@@ -12,10 +12,10 @@
 // PREMIUM_FEATURES. `glyph` is a symbol id from the shared icon sprite
 // (assets/icons/icons.svg — the single source of truth for every icon on the
 // site; see assets/icons/README.md), never a raw emoji.
-import { el, faNum, icon } from './util.js?v=67';
-import { currentUser, api } from './api.js?v=67';
-import { pricingHref, premiumCta } from './premium-cta.js?v=67';
-import { openSheet, gateCard } from './sheet.js?v=67';
+import { el, faNum, icon } from './util.js?v=68';
+import { currentUser, api } from './api.js?v=68';
+import { pricingHref, premiumCta } from './premium-cta.js?v=68';
+import { openSheet, gateCard } from './sheet.js?v=68';
 
 const BUNDLES = [
   { id: 'bundle-laminate', glyph: 'icon-tooth', title: 'لمینیت: شروع کن', steps: 6 },
@@ -24,7 +24,7 @@ const BUNDLES = [
   { id: 'bundle-ceramic-cement', glyph: 'icon-flask', title: 'آماده‌سازی سطح و سمان سرامیک: شروع کن', steps: 7 },
   { id: 'bundle-post-core', glyph: 'icon-post', title: 'پست و کور: شروع کن', steps: 8 },
   { id: 'bundle-implant-parts', glyph: 'icon-implant', title: 'اجزای پروتز ایمپلنت: شروع کن', steps: 7 },
-  { id: 'bundle-implant-surgery', glyph: 'icon-scalpel', title: 'تصمیم‌های جراحی ایمپلنت: شروع کن', steps: 7 },
+  { id: 'bundle-implant-surgery', glyph: 'icon-scalpel', title: 'تصمیم‌های جراحی ایمپلنت: شروع کن', steps: 8 },
   { id: 'bundle-occlusion-rehab', glyph: 'icon-occlusion', title: 'اکلوژن در بازسازی: شروع کن', steps: 7 },
   { id: 'bundle-biomimetic', glyph: 'icon-sprout', title: 'بیومیمتیک: شروع کن', steps: 6 },
   { id: 'bundle-crown-prep', glyph: 'icon-tooth-restoration', title: 'تراش و قالب‌گیری: شروع کن', steps: 6 },

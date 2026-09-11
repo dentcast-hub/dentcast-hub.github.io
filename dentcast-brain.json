@@ -14616,5 +14616,35 @@
       "secondary": [],
       "subtopic": "restoration-design"
     }
+  },
+  {
+    "type": "dentcast",
+    "episode": "162",
+    "title": "Cantilever in Implant Dentistry :part2",
+    "caption": "توی این اپیزود از دنت‌کست، ادامهٔ پرونده‌ی استفاده از کانتیلور روی ایمپلنت رو باز می‌کنیم. قراره ببینیم این ترس بیومکانیکی درباره تحلیل استخوان چقدر واقعیت داره، در درازمدت با چه عوارضی روبه‌رو می‌شیم، و خط قرمز حیاتی در انتخاب ایمپلنت چیه. این قسمت ادامهٔ مستقیم قسمت اول است و پرونده‌ی کانتیلور روی ایمپلنت در همین قسمت به اتمام می‌رسه.",
+    "hashtags": [
+      "#دنتکست",
+      "#کانتی_لیور",
+      "#ایمپلنت",
+      "#پروتز_ایمپلنت",
+      "#تحلیل_استخوان_کرستال",
+      "#بیومکانیک",
+      "#طرح_درمان",
+      "#عوارض_ایمپلنت"
+    ],
+    "keywords": [
+      "ICFDP",
+      "Peri-implantitis",
+      "Prosthesis Debonding",
+      "Narrow-Diameter Implant",
+      "قاب بالینی قابل‌تعمیم"
+    ],
+    "audio_url": "https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast162%20.mp3?versionId=",
+    "page_url": "/episodes/episode-162.html",
+    "pillar": {
+      "primary": "implantology",
+      "secondary": [],
+      "subtopic": "peri-implant-health"
+    }
   }
 ]
