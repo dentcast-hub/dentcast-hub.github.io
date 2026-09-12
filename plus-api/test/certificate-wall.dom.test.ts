@@ -33,8 +33,9 @@ const CERT = {
 const DATA = {
   certificates: [CERT],
   pathways: [
-    { id: 'ceramics', title_fa: 'سرامیک دندانی: از انتخاب ماده تا سمان', glyph: 'icon-ceramic', certificate: CERT },
-    { id: 'digital', title_fa: 'دندانپزشکی دیجیتال', glyph: 'icon-scan', certificate: null },
+    { id: 'ceramics', title_fa: 'سرامیک دندانی: از انتخاب ماده تا سمان', short_fa: 'سرامیک دندانی', glyph: 'icon-ceramic', certificate: CERT },
+    { id: 'digital', title_fa: 'دندانپزشکی دیجیتال: اسکن، CAD/CAM و ورک‌فلو', short_fa: 'دیجیتال', glyph: 'icon-scan', certificate: null },
+    // no short_fa: the wall must fall back to the full title rather than blank
     { id: 'esthetic', title_fa: 'زیبایی و طراحی لبخند', glyph: 'icon-smile', certificate: null },
   ],
 };
@@ -63,9 +64,23 @@ describe('the certificate wall', () => {
   it('draws a disc for every full pathway, earned or not', async () => {
     await mountWall(DATA);
     expect(tiles()).toHaveLength(3);
+  });
+
+  it('labels a disc with the SHORT name, and falls back to the full title', async () => {
+    await mountWall(DATA);
     const names = tiles().map((t) => t.querySelector('.dcp-bg-name')!.textContent);
-    expect(names).toContain('سرامیک دندانی: از انتخاب ماده تا سمان');
-    expect(names).toContain('دندانپزشکی دیجیتال');
+    // short where there is one — a full title under a 56px disc wraps to four lines
+    expect(names).toContain('سرامیک دندانی');
+    expect(names).toContain('دیجیتال');
+    expect(names).not.toContain('سرامیک دندانی: از انتخاب ماده تا سمان');
+    // and the full title where there is not, rather than an empty caption
+    expect(names).toContain('زیبایی و طراحی لبخند');
+  });
+
+  it('keeps the FULL title in the aria-label — a screen reader is not short of room', async () => {
+    await mountWall(DATA);
+    const labels = tiles().map((t) => t.getAttribute('aria-label'));
+    expect(labels).toContain('گواهی‌نامهٔ مسیر سرامیک دندانی: از انتخاب ماده تا سمان');
   });
 
   it('ticks only the earned disc, and dims the rest', async () => {

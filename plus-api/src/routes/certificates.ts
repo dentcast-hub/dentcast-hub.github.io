@@ -65,6 +65,7 @@ export async function certificateRoutes(app: FastifyInstance): Promise<void> {
           .map((p) => ({
             id: p.id,
             title_fa: p.title_fa,
+            short_fa: p.short_fa ?? null,
             glyph: p.glyph ?? null,
             certificate: live.has(p.id) ? shape(live.get(p.id)!) : null,
           })),

@@ -16,9 +16,9 @@
 // A revoked certificate does NOT tick its pathway. The wall shows what stands
 // today; the record of a revoked one lives in the API's `certificates` list
 // and on its own verify page, which still answers for the code.
-import { el, faNum, icon } from './util.js?v=71';
-import { openSheet, closeSheet } from './sheet.js?v=71';
-import { downloadCertificate } from './certificate-image.js?v=71';
+import { el, faNum, icon } from './util.js?v=72';
+import { openSheet, closeSheet } from './sheet.js?v=72';
+import { downloadCertificate } from './certificate-image.js?v=72';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' });
 const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } catch (_) { return ''; } };
@@ -162,7 +162,11 @@ function tile(p) {
     onclick: () => openSheet(held ? heldCard(held) : lockedCard(p)),
   }, [
     disc,
-    el('span', { class: 'dcp-bg-name' + (held ? '' : ' is-off') }, p.title_fa),
+    // The SHORT label here, the full title inside the sheet: «دندانپزشکی
+    // بیومیمتیک و ترمیم ادهزیو» under a 56px disc is four wrapped lines and
+    // the grid stops reading as a grid. Falls back to the full title, so a
+    // pathway added without a short_fa still draws.
+    el('span', { class: 'dcp-bg-name' + (held ? '' : ' is-off') }, p.short_fa || p.title_fa),
     el('span', { class: 'dcp-bg-bar-spacer' }),
   ]);
 }

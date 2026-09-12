@@ -27,6 +27,11 @@ export interface Pathway {
    * face for each — see plus/js/certificates.js. */
   glyph?: string;
   title_fa: string;
+  /** The label a tile uses when the full title will not fit — the profile's
+   * certificate wall, where a 56px disc sits under it. Every one is a slice
+   * of `title_fa`'s own words, never a re-wording (added 2026-09-12). Absent
+   * on bundles, which have no wall; callers fall back to `title_fa`. */
+  short_fa?: string;
   description_fa: string;
   premium: boolean;
   /** Bundle-only: another bundle's id to point to as "do this first" (referral, not a lock). */
