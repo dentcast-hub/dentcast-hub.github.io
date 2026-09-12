@@ -10,11 +10,13 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 let examImpl: () => Promise<unknown>;
 let startImpl: (name: string) => Promise<unknown>;
 let submitImpl: (answers: Record<string, unknown>) => Promise<unknown>;
+let enrolled = false;
 class ApiError extends Error { status: number; body: unknown; constructor(s: number, d: unknown) { super('api'); this.status = s; this.body = d; } }
 
 vi.mock('/plus/js/api.js', () => ({
   ApiError,
   api: {
+    enrollPathway: () => { enrolled = true; return Promise.resolve({}); },
     exam: () => examImpl(),
     examStart: (_id: string, name: string) => startImpl(name),
     examSubmit: (_id: string, answers: Record<string, unknown>) => submitImpl(answers),
@@ -31,7 +33,7 @@ vi.mock('/plus/js/login-modal.js', () => ({ openLoginModal: () => Promise.resolv
 const RULES = { question_count: 3, mcq_count: 2, free_count: 1, pass_percent: 70, max_attempts: 2, retry_days: 7, min_answer_chars: 20 };
 const BASE = {
   ok: true, pathway_id: 'digital', pathway_title_fa: 'دندانپزشکی دیجیتال', rules: RULES,
-  attempts_used: 0, is_complete: true, assigned: false, retry_at: null, open: null, history: [], certificate: null,
+  attempts_used: 0, is_complete: true, assigned: false, enrolled: true, retry_at: null, open: null, history: [], certificate: null,
 };
 const OPEN = {
   ...BASE, state: 'open',
@@ -55,7 +57,7 @@ const LONG = 'این یک پاسخ تشریحی به اندازهٔ کافی ب�
 
 async function mount(state: unknown) {
   document.body.innerHTML = '<div id="test-root"></div>';
-  examImpl = () => Promise.resolve(state);
+  if (state !== null) examImpl = () => Promise.resolve(state);
   const mod = await import('/plus/js/exam-page.js');
   await mod.renderExam(document.getElementById('test-root')!, 'digital');
   await settle();
@@ -104,6 +106,17 @@ describe('every state has a face', () => {
     await mount({ ...BASE, state: 'passed', certificate: { verify_code: 'DC-K4M-7QA', verify_url: '/plus/certificate.html?c=DC-K4M-7QA' } });
     expect(stateEl()!.dataset.examState).toBe('passed');
     expect(root().querySelector('a[href="/plus/certificate.html?c=DC-K4M-7QA"]')).not.toBeNull();
+  });
+
+  it('locked because not enrolled offers «شروع این مسیر» right there, and re-reads after it', async () => {
+    enrolled = false;
+    examImpl = () => Promise.resolve(enrolled ? { ...BASE, state: 'ready' } : { ...BASE, state: 'locked', enrolled: false });
+    await mount(null);
+    expect(stateEl()!.dataset.examEnrolled).toBe('no');
+    expect(root().textContent).toContain('همین حالا هم همه‌اش را خوانده‌ای');
+    (document.getElementById('examEnroll') as HTMLButtonElement).click();
+    await settle(); await settle(); await settle();
+    expect(stateEl()!.dataset.examState).toBe('ready');
   });
 
   it('a dead API is its own state, never a verdict', async () => {

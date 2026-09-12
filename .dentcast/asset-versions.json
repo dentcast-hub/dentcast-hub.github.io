@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 169,
-    "hash": "fb7b9954b24c20fb"
+    "v": 170,
+    "hash": "f9d5edb5a053cd51"
   },
   "/dc-theme.css": {
     "v": 3,
@@ -56,28 +56,28 @@
     "hash": "26c119d9ad32d2d6"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 62,
-    "hash": "70898c0707db4dd4"
+    "v": 63,
+    "hash": "d53c0c1d8b136a96"
   },
   "/plus/js/desboard-page.js": {
     "v": 9,
     "hash": "7683306eb3dc2b41"
   },
   "/plus/js/exam-page.js": {
-    "v": 2,
-    "hash": "36c07733fe20691c"
+    "v": 3,
+    "hash": "c4ce82108cef2141"
   },
   "/plus/js/highlights-page.js": {
     "v": 43,
     "hash": "cd22cba431ce4c2c"
   },
   "/plus/js/pathway-page.js": {
-    "v": 42,
-    "hash": "07a1a848a1aa67c0"
+    "v": 43,
+    "hash": "b5e2c74663753747"
   },
   "/plus/js/pathways-page.js": {
-    "v": 42,
-    "hash": "0bf1bda6a2c2aad3"
+    "v": 43,
+    "hash": "64052571012a9eb3"
   },
   "/plus/js/pay-result-page.js": {
     "v": 33,
@@ -120,12 +120,12 @@
     "hash": "221180d89ef64af7"
   },
   "dc-nav.js:V": {
-    "v": 163,
-    "hash": "70c93298e58ced0f"
+    "v": 164,
+    "hash": "a3a8add641441fae"
   },
   "modules:M": {
-    "v": 73,
-    "hash": "686f0eb887719fc3"
+    "v": 74,
+    "hash": "583e94aeaf779c61"
   },
   "spot.js:SPOT_V": {
     "v": 41,

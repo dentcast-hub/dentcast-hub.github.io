@@ -331,6 +331,14 @@ export async function assignExam(
 ): Promise<{ assignment: ExamAssignment; created: boolean }> {
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
+  // Letting somebody in IS putting them on the pathway: enrol them too, so
+  // the assignment is never refused by the enrolment rule it was meant to
+  // open. Idempotent; an existing enrolment is untouched.
+  await query(
+    `insert into user_pathways (user_id, pathway_id, current_step) values ($1, $2, 0)
+     on conflict (user_id, pathway_id) do nothing`,
+    [userId, pathwayId], client,
+  );
   const row = await one<ExamAssignment & { created: boolean }>(
     `insert into pathway_exams (user_id, pathway_id, note) values ($1, $2, $3)
      on conflict (user_id, pathway_id) do update set note = excluded.note
@@ -468,6 +476,8 @@ export interface ExamState {
   attempts_used: number;
   is_complete: boolean;
   assigned: boolean;
+  /** A `user_pathways` row — the reader pressed «شروع این مسیر». Required to sit. */
+  enrolled: boolean;
   retry_at: Date | null;
   /** The open attempt's questions, stripped. */
   open: { id: string; reference: string; holder_name: string | null; questions: PublicQuestion[]; started_at: Date } | null;
@@ -541,13 +551,14 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
   const base: ExamState = {
     state: 'no_form', pathway_id: pathwayId, pathway_title_fa: pathway.title_fa, rules: null,
-    attempts_used: 0, is_complete: false, assigned: false, retry_at: null, open: null, history: [], certificate: null,
+    attempts_used: 0, is_complete: false, assigned: false, enrolled: false, retry_at: null, open: null, history: [], certificate: null,
   };
 
-  const [form, consumed, assigned, cert] = await Promise.all([
+  const [form, consumed, assigned, enrolled, cert] = await Promise.all([
     getForm(pathwayId),
     getConsumedContentIds(userId),
     one<{ id: string }>('select id from pathway_exams where user_id = $1 and pathway_id = $2', [userId, pathwayId]),
+    one<{ pathway_id: string }>('select pathway_id from user_pathways where user_id = $1 and pathway_id = $2', [userId, pathwayId]),
     one<Certificate>(
       'select id, verify_code from certificates where user_id = $1 and pathway_id = $2 and revoked_at is null',
       [userId, pathwayId],
@@ -555,6 +566,7 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
   ]);
   base.is_complete = computeProgress(pathway, consumed).is_complete;
   base.assigned = Boolean(assigned);
+  base.enrolled = Boolean(enrolled);
   if (cert) base.certificate = { verify_code: cert.verify_code, verify_url: `/plus/certificate.html?c=${cert.verify_code}` };
   // A certificate already held is the end of the story whatever the form
   // says — including a form deleted after the pass, or one never written
@@ -580,7 +592,11 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
     return base;
   }
   if (attempts.some((a) => a.status === 'queued')) { base.state = 'queued'; return base; }
-  if (!base.is_complete && !base.assigned) { base.state = 'locked'; return base; }
+  // Enrolment is the deliberate act (founder, 2026-09-12): the exam is for
+  // somebody who is ON the pathway, not somebody whose reading happens to
+  // cover it. It costs one tap on the pathway page and progress is derived,
+  // so nobody who finished loses anything by pressing it late.
+  if (!base.enrolled || (!base.is_complete && !base.assigned)) { base.state = 'locked'; return base; }
   if (counted.length >= form.max_attempts) { base.state = 'exhausted'; return base; }
   const last = counted.reduce<Date | null>((m, a) => (a.submitted_at && (!m || a.submitted_at > m) ? a.submitted_at : m), null);
   if (last && form.retry_days > 0) {
@@ -1110,18 +1126,20 @@ export async function attemptRoster(limit = 200): Promise<RosterRow[]> {
 export async function examStates(userId: string, pathwayIds: string[]): Promise<Map<string, ExamStateKind>> {
   const out = new Map<string, ExamStateKind>();
   if (!pathwayIds.length) return out;
-  const [forms, consumed, assigned, attempts] = await Promise.all([
+  const [forms, consumed, assigned, enrolled, attempts] = await Promise.all([
     query<{ pathway_id: string; max_attempts: number; retry_days: number }>(
       'select pathway_id, max_attempts, retry_days from pathway_exam_forms where pathway_id = any($1)', [pathwayIds],
     ),
     getConsumedContentIds(userId),
     query<{ pathway_id: string }>('select pathway_id from pathway_exams where user_id = $1', [userId]),
+    query<{ pathway_id: string }>('select pathway_id from user_pathways where user_id = $1', [userId]),
     query<{ pathway_id: string; status: AttemptStatus; submitted_at: Date | null }>(
       'select pathway_id, status, submitted_at from pathway_exam_attempts where user_id = $1', [userId],
     ),
   ]);
   const formBy = new Map(forms.rows.map((f) => [f.pathway_id, f]));
   const assignedSet = new Set(assigned.rows.map((a) => a.pathway_id));
+  const enrolledSet = new Set(enrolled.rows.map((a) => a.pathway_id));
   const now = Date.now();
   for (const id of pathwayIds) {
     const form = formBy.get(id);
@@ -1132,7 +1150,7 @@ export async function examStates(userId: string, pathwayIds: string[]): Promise<
     if (mine.some((a) => a.status === 'queued')) { out.set(id, 'queued'); continue; }
     const pathway = getPathwayById(id);
     const complete = pathway ? computeProgress(pathway, consumed).is_complete : false;
-    if (!complete && !assignedSet.has(id)) { out.set(id, 'locked'); continue; }
+    if (!enrolledSet.has(id) || (!complete && !assignedSet.has(id))) { out.set(id, 'locked'); continue; }
     const counted = mine.filter((a) => COUNTED.includes(a.status));
     if (counted.length >= form.max_attempts) { out.set(id, 'exhausted'); continue; }
     const last = counted.reduce<number>((m, a) => Math.max(m, a.submitted_at ? a.submitted_at.getTime() : 0), 0);

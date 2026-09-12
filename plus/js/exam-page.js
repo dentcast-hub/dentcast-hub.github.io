@@ -24,11 +24,11 @@
 // answers were right, how many key points each free answer covered — and
 // never the key itself: the pool is small and the second attempt may draw
 // the same question.
-import { el, faNum, debounce } from './util.js?v=73';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=73';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=73';
-import { openLoginModal } from './login-modal.js?v=73';
-import { registerSW } from './pwa.js?v=73';
+import { el, faNum, debounce } from './util.js?v=74';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=74';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=74';
+import { openLoginModal } from './login-modal.js?v=74';
+import { registerSW } from './pwa.js?v=74';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' });
 const FA_DATETIME = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium', timeStyle: 'short' });
@@ -250,6 +250,31 @@ function simpleCard(state, title, text, actions = []) {
 
 const backBtn = (id) => el('a', { class: 'dcp-btn dcp-btn-ghost', href: pathwayHref(id) }, 'رفتن به مسیر');
 
+/**
+ * Not enrolled: the one door the reader can open themselves, right here.
+ * Progress is derived, so a reader who finished before pressing «شروع این
+ * مسیر» loses nothing — the button is the deliberate act, not a restart.
+ */
+function enrollCard(s, root, id) {
+  const msg = el('p', { class: 'dcp-muted dcp-exam-msg', 'aria-live': 'polite' });
+  const btn = el('button', { id: 'examEnroll', class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'شروع این مسیر');
+  btn.addEventListener('click', async () => {
+    btn.disabled = true; msg.textContent = 'در حال ثبت…';
+    try {
+      await api.enrollPathway(id);
+      await renderExam(root, id);
+    } catch (_) { btn.disabled = false; msg.textContent = 'ثبت نشد. دوباره تلاش کن.'; }
+  });
+  return el('div', { class: 'dcp-card dcp-exam-card', 'data-exam-state': 'locked', 'data-exam-enrolled': 'no' }, [
+    el('b', {}, 'اول مسیر را شروع کن'),
+    el('p', { class: 'dcp-cert-card-lead' },
+      'آزمون برای کسی است که این مسیر را شروع کرده. با یک ضربه شروعش کن؛ هر چه تا حالا خوانده‌ای به حساب می‌آید'
+      + (s.is_complete ? ' — و همین حالا هم همه‌اش را خوانده‌ای.' : '.')),
+    el('div', { class: 'dcp-cert-actions' }, [btn, backBtn(id)]),
+    msg,
+  ]);
+}
+
 /* --------------------------------------------------------------- page -- */
 
 /** Draw one state. Exported for the DOM test. */
@@ -264,9 +289,11 @@ export function renderState(root, id, s) {
         'وقتی سؤال‌ها آماده شود، همین‌جا باز می‌شود و در «اطلاعیه» خبرش را می‌گیری.', [backBtn(id)]));
       break;
     case 'locked':
-      parts.push(simpleCard('locked', 'اول مسیر را تا آخر بخوان',
-        'آزمون پایانی وقتی باز می‌شود که همهٔ قدم‌های مسیر خوانده شده باشد. اگر نزدیک پایانی، ممکن است زودتر برایت باز شود.',
-        [backBtn(id)]));
+      parts.push(s.enrolled
+        ? simpleCard('locked', 'اول مسیر را تا آخر بخوان',
+          'آزمون پایانی وقتی باز می‌شود که همهٔ قدم‌های مسیر خوانده شده باشد. اگر نزدیک پایانی، ممکن است زودتر برایت باز شود.',
+          [backBtn(id)])
+        : enrollCard(s, root, id));
       parts.push(el('div', { class: 'dcp-card dcp-exam-card' }, [el('b', {}, 'آزمون چیست'), contract(s.rules, s)]));
       break;
     case 'ready':
