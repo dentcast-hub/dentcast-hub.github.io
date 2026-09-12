@@ -60,6 +60,16 @@ async function setTier(tier: string, p = phone): Promise<void> {
 }
 
 /** Mark content read, the way the reading tracker does. */
+/** The reader said «بله» to «گواهی می‌خواهی؟» — enrols them too. */
+async function wantCert(p = phone, intent: 'wanted' | 'declined' = 'wanted'): Promise<void> {
+  const id = await userId(p);
+  await pool.query(
+    `insert into user_pathways (user_id, pathway_id, certificate_intent, certificate_intent_at) values ($1, $2, $3, now())
+     on conflict (user_id, pathway_id) do update set certificate_intent = excluded.certificate_intent`,
+    [id, PATHWAY_ID, intent],
+  );
+}
+
 async function consume(contentIds: string[], p = phone): Promise<void> {
   const id = await userId(p);
   for (const contentId of contentIds) {
@@ -132,39 +142,39 @@ describe('pathway standings', () => {
   });
 });
 
-describe('who the alert is for', () => {
-  it('counts a premium reader who never enrolled', async () => {
+describe('who the alert is for — whoever SAID they want the certificate', () => {
+  it('a premium reader who never answered is in the table, not in the alert', async () => {
     await setTier('premium');
-    await consume(STEPS.slice(0, 15));
-    expect(alertable(standingFor(await pathwayStandings())!)).toBe(true);
-  });
-
-  it('leaves a free reader out of the alert but keeps them in the table', async () => {
-    await consume(STEPS.slice(0, 15)); // tier stays free
+    await consume(STEPS.slice(0, STEPS.length - 2));
     const s = standingFor(await pathwayStandings())!;
-    expect(s.tier).toBe('free');
-    expect(s.remaining).toBe(STEPS.length - 15);
+    expect(s.certificate_intent).toBeNull();
     expect(alertable(s)).toBe(false);
-
-    const run = await runPathwayAlerts(new Date());
-    expect(run.crossings).toHaveLength(0);
+    expect((await runPathwayAlerts(new Date())).crossings).toHaveLength(0);
   });
 
-  it('counts a free reader who did enroll', async () => {
-    const id = await userId();
-    await pool.query(
-      `insert into user_pathways (user_id, pathway_id) values ($1, $2)`,
-      [id, PATHWAY_ID],
-    );
+  it('a reader who enrolled but declined stays out — and the answer is on the row', async () => {
+    await setTier('premium');
+    await wantCert(phone, 'declined');
+    await consume(STEPS.slice(0, STEPS.length - 2));
+    const s = standingFor(await pathwayStandings())!;
+    expect(s.enrolled).toBe(true);
+    expect(s.certificate_intent).toBe('declined');
+    expect(alertable(s)).toBe(false);
+  });
+
+  it('«بله» is the whole signal — tier and enrolment add nothing to it', async () => {
+    await wantCert(); // tier stays free: they cannot sit, but they asked, and the founder should see it
     await consume(STEPS.slice(0, 15));
-    expect(alertable(standingFor(await pathwayStandings())!)).toBe(true);
+    const s = standingFor(await pathwayStandings())!;
+    expect(s.certificate_intent).toBe('wanted');
+    expect(alertable(s)).toBe(true);
   });
 });
 
 describe('levelFor', () => {
   const base = {
     user_id: 'u', display_name: 'x', tier: 'premium', pathway_id: 'p', title_fa: 't',
-    total_steps: 20, enrolled: true, started_at: null, alerted: null,
+    total_steps: 20, enrolled: true, started_at: null, certificate_intent: 'wanted', alerted: null,
   } as const;
   const at = (remaining: number) => levelFor(
     { ...base, remaining, completed_steps: 20 - remaining }, 5,
@@ -181,6 +191,7 @@ describe('levelFor', () => {
 describe('runPathwayAlerts', () => {
   it('announces a near-the-end reader once and never again', async () => {
     await setTier('premium');
+    await wantCert();
     const founder = await makeFounder();
     await consume(STEPS.slice(0, STEPS.length - 3)); // 3 remaining
 
@@ -203,6 +214,7 @@ describe('runPathwayAlerts', () => {
 
   it('records the marker on the reader, not the founder', async () => {
     await setTier('premium');
+    await wantCert();
     await makeFounder();
     await consume(STEPS.slice(0, STEPS.length - 2));
     await runPathwayAlerts(new Date());
@@ -219,6 +231,7 @@ describe('runPathwayAlerts', () => {
 
   it('announces a finished pathway as done, without a near first', async () => {
     await setTier('premium');
+    await wantCert();
     await makeFounder();
     await consume(STEPS); // straight to zero
 
@@ -231,6 +244,7 @@ describe('runPathwayAlerts', () => {
 
   it('still announces done for someone already announced as near', async () => {
     await setTier('premium');
+    await wantCert();
     await makeFounder();
     await consume(STEPS.slice(0, STEPS.length - 3));
     expect((await runPathwayAlerts(new Date())).crossings).toHaveLength(1);
@@ -244,6 +258,7 @@ describe('runPathwayAlerts', () => {
 
   it('stays quiet when a publish grows a pathway under a finished reader', async () => {
     await setTier('premium');
+    await wantCert();
     await makeFounder();
     const reader = await userId();
     // Already announced as done.
@@ -264,6 +279,7 @@ describe('runPathwayAlerts', () => {
 
   it('writes the markers even when nobody is configured to be told', async () => {
     await setTier('premium');
+    await wantCert();
     config.pathwayAlert.alertPhone = '';
     config.support.alertPhone = '';
     await consume(STEPS.slice(0, STEPS.length - 1));
@@ -277,6 +293,7 @@ describe('runPathwayAlerts', () => {
 
   it('falls back to the support alert phone', async () => {
     await setTier('premium');
+    await wantCert();
     await loginAs(app, founderPhone);
     config.support.alertPhone = founderPhone;
     await consume(STEPS.slice(0, STEPS.length - 1));
@@ -290,6 +307,7 @@ describe('runPathwayAlerts', () => {
     for (const p of others) {
       await loginAs(app, p);
       await setTier('premium', p);
+      await wantCert(p);
       await consume(STEPS.slice(0, STEPS.length - 2), p);
     }
 
@@ -307,6 +325,7 @@ describe('runPathwayAlerts', () => {
 describe('GET /admin/pathways', () => {
   it('buckets by urgency and reports the settings it used', async () => {
     await setTier('premium');
+    await wantCert();
     await consume(STEPS.slice(0, STEPS.length - 2));
 
     const res = await app.inject({
@@ -343,6 +362,7 @@ describe('GET /admin/pathways', () => {
 
   it('runs the sweep on demand and reports what it found', async () => {
     await setTier('premium');
+    await wantCert();
     await makeFounder();
     await consume(STEPS.slice(0, STEPS.length - 1));
 

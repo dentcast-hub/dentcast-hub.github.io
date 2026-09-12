@@ -4,10 +4,10 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum, icon } from './util.js?v=74';
-import { api } from './api.js?v=74';
-import { FOLDER_EN } from './content-index.js?v=74';
-import { markReturnTrail } from './return-trail.js?v=74';
+import { el, faNum, icon } from './util.js?v=75';
+import { api } from './api.js?v=75';
+import { FOLDER_EN } from './content-index.js?v=75';
+import { markReturnTrail } from './return-trail.js?v=75';
 
 /** A "lightning + label" chip — a leading icon from the shared sprite
  * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
@@ -209,7 +209,7 @@ const EXAM_LINE = {
  * dropped silently when the API cannot answer: a pathway page must never
  * fail to render because the exam service did.
  */
-export function examCard(state) {
+export function examCard(state, onIntent) {
   const line = state.state === 'locked' && state.enrolled === false
     ? ['آزمون پایانی و گواهی‌نامه', 'برای کسی است که مسیر را شروع کرده — دکمهٔ «شروع این مسیر» بالا. خوانده‌هایت به حساب می‌آید.', 'دربارهٔ آزمون']
     : (EXAM_LINE[state.state] || EXAM_LINE.no_form);
@@ -219,14 +219,52 @@ export function examCard(state) {
   return el('div', { class: 'dcp-card dcp-pw-exam ' + state.state, 'data-pw-exam': state.state }, [
     el('div', {}, [el('b', {}, line[0]), el('p', { class: 'dcp-muted' }, line[1])]),
     line[2] ? el('a', { class: 'dcp-btn ' + (state.state === 'ready' || state.state === 'open' ? 'dcp-btn-primary' : 'dcp-btn-ghost'), href }, line[2]) : null,
+    intentRow(state, onIntent),
   ].filter(Boolean));
+}
+
+/**
+ * «گواهی‌نامهٔ این مسیر را می‌خواهی؟» — asked ONCE, here rather than at the
+ * start of the pathway, because a wish declared at step zero is cheap and
+ * one declared at step twelve is real; and here is on every visit, so
+ * nobody who is already mid-pathway has «missed» it. The answer is what the
+ * founder's near-the-end alert is filtered by (services/pathway-standings.ts):
+ * a «بله» from somebody already close is news that goes out at once.
+ */
+export function intentRow(state, onIntent) {
+  if (state.certificate_intent || state.state === 'passed' || state.state === 'open' || state.state === 'queued') return null;
+  const msg = el('span', { class: 'dcp-muted' });
+  const mk = (label, intent, primary) => {
+    const b = el('button', { class: 'dcp-btn dcp-btn-sm' + (primary ? '' : ' dcp-btn-ghost'), type: 'button', 'data-pw-intent': intent }, label);
+    b.addEventListener('click', async () => {
+      row.querySelectorAll('button').forEach((x) => { x.disabled = true; });
+      msg.textContent = 'ثبت…';
+      try {
+        const next = await api.examIntent(state.pathway_id, intent);
+        if (onIntent) onIntent(next);
+      } catch (_) {
+        row.querySelectorAll('button').forEach((x) => { x.disabled = false; });
+        msg.textContent = 'ثبت نشد.';
+      }
+    });
+    return b;
+  };
+  const row = el('div', { class: 'dcp-pw-intent', 'data-pw-intent-row': '' }, [
+    el('span', {}, 'گواهی‌نامهٔ این مسیر را می‌خواهی؟'),
+    mk('بله، می‌خواهم', 'wanted', true),
+    mk('فعلاً نه', 'declined', false),
+    msg,
+  ]);
+  return row;
 }
 
 async function mountExamCard(slot, id) {
   if (typeof api.exam !== 'function') return;
+  const draw = (state) => {
+    if (state && state.state) slot.replaceChildren(examCard(state, draw));
+  };
   try {
-    const state = await api.exam(id);
-    if (state && state.state) slot.replaceChildren(examCard(state));
+    draw(await api.exam(id));
   } catch (_) { /* the page stands without it */ }
 }
 

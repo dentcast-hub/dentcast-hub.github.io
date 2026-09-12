@@ -237,6 +237,39 @@ describe('who may sit it', () => {
     expect((await startAttempt(uid, PATHWAY, 'x')).ok).toBe(true);
   });
 
+  it('«گواهی می‌خواهی؟» — the answer enrols, is reversible, and a «بله» from somebody near the end reaches the founder at once', async () => {
+    const uid = await userId();
+    await loginAs(app, founderPhone);
+    config.support.alertPhone = founderPhone;
+    await finish(uid);
+
+    const yes = await post(`/exams/${PATHWAY}/intent`, { intent: 'wanted' });
+    expect(yes.statusCode).toBe(200);
+    expect(yes.json()).toMatchObject({ enrolled: true, certificate_intent: 'wanted', state: 'no_form' });
+    const founderNotes = await notices(await userId(founderPhone));
+    expect(founderNotes).toHaveLength(1);
+    expect(founderNotes[0].title).toContain('تمام کرد');
+
+    // the nightly sweep has nothing new to say about them
+    const again = await adminPost('/admin/pathways/run-alerts', {});
+    expect(again.json().crossings).toHaveLength(0);
+
+    const no = await post(`/exams/${PATHWAY}/intent`, { intent: 'declined' });
+    expect(no.json().certificate_intent).toBe('declined');
+    expect((await get('/me')).json().active_pathway).toMatchObject({ id: PATHWAY, certificate_intent: 'declined' });
+    expect((await post(`/exams/${PATHWAY}/intent`, { intent: 'maybe' })).statusCode).toBe(400);
+    expect((await post(`/exams/${BUNDLE_ID}/intent`, { intent: 'wanted' })).statusCode).toBe(404);
+  });
+
+  it('starting the exam answers the question by itself', async () => {
+    const uid = await userId();
+    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await assignExam(uid, PATHWAY);
+    expect((await examState(uid, PATHWAY)).certificate_intent).toBeNull();
+    await startAttempt(uid, PATHWAY, 'x');
+    expect((await examState(uid, PATHWAY)).certificate_intent).toBe('wanted');
+  });
+
   it('the wall reads the same rule', async () => {
     const uid = await userId();
     await upsertForm(PATHWAY, { questions: [MCQ(1)] });
