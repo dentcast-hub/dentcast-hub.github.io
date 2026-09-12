@@ -51,6 +51,7 @@ export interface Certificate {
   verify_code: string;
   holder_name: string | null;
   exam_id: string | null;
+  attempt_id: string | null;
   issued_at: Date;
   revoked_at: Date | null;
   discount_grant_id: string | null;
@@ -70,13 +71,21 @@ export interface CertificateVerification {
 const PREFIX = 'DC';
 const MINT_TRIES = 8;
 
-const CERT_SELECT = `select id, user_id, pathway_id, verify_code, holder_name, exam_id,
+const CERT_SELECT = `select id, user_id, pathway_id, verify_code, holder_name, exam_id, attempt_id,
                             issued_at, revoked_at, discount_grant_id
                        from certificates`;
 
 export interface IssueInput {
   holderName: string;
   examId?: string | null;
+  /** The exam attempt that earned it, when one did (services/pathway-exams.ts). */
+  attemptId?: string | null;
+  /**
+   * Run inside a caller's transaction instead of opening one — the exam
+   * service marks an attempt `passed` and issues the certificate as ONE act,
+   * so a reader can never be passed with no certificate or the reverse.
+   */
+  client?: pg.PoolClient;
   /** Override the configured credit; 0 issues with no credit at all. */
   discountPercent?: number;
   /** Send the reader an اطلاعیه about it (default true). */
@@ -110,7 +119,7 @@ export async function issueCertificate(
   if (!holderName) throw new Error('holder_name_required');
   const percent = input.discountPercent ?? config.certificate.discountPercent;
 
-  const result = await withTransaction(async (client) => {
+  const run = async (client: pg.PoolClient) => {
     const live = await one<Certificate>(
       `${CERT_SELECT} where user_id = $1 and pathway_id = $2 and revoked_at is null`,
       [userId, pathwayId], client,
@@ -128,10 +137,11 @@ export async function issueCertificate(
     }
 
     const certificate = await insertWithFreshCode(client, {
-      userId, pathwayId, holderName, examId: input.examId ?? null, grantId,
+      userId, pathwayId, holderName, examId: input.examId ?? null, attemptId: input.attemptId ?? null, grantId,
     });
     return { certificate, created: true };
-  });
+  };
+  const result = input.client ? await run(input.client) : await withTransaction(run);
 
   if (result.created && input.notify !== false) {
     await notifyIssued(userId, result.certificate, pathway.title_fa, percent);
@@ -146,18 +156,21 @@ export async function issueCertificate(
  */
 async function insertWithFreshCode(
   client: pg.PoolClient,
-  row: { userId: string; pathwayId: string; holderName: string; examId: string | null; grantId: string | null },
+  row: {
+    userId: string; pathwayId: string; holderName: string; examId: string | null;
+    attemptId: string | null; grantId: string | null;
+  },
 ): Promise<Certificate> {
   for (let i = 0; i < MINT_TRIES; i += 1) {
     const code = mintReference(PREFIX);
     await client.query('savepoint mint');
     try {
       const inserted = await one<Certificate>(
-        `insert into certificates (user_id, pathway_id, verify_code, holder_name, exam_id, discount_grant_id)
-         values ($1, $2, $3, $4, $5, $6)
-         returning id, user_id, pathway_id, verify_code, holder_name, exam_id,
+        `insert into certificates (user_id, pathway_id, verify_code, holder_name, exam_id, attempt_id, discount_grant_id)
+         values ($1, $2, $3, $4, $5, $6, $7)
+         returning id, user_id, pathway_id, verify_code, holder_name, exam_id, attempt_id,
                    issued_at, revoked_at, discount_grant_id`,
-        [row.userId, row.pathwayId, code, row.holderName, row.examId, row.grantId],
+        [row.userId, row.pathwayId, code, row.holderName, row.examId, row.attemptId, row.grantId],
         client,
       );
       await client.query('release savepoint mint');
@@ -236,7 +249,7 @@ export async function verifyCertificate(
 /** The founder's read: every certificate ever issued, newest first, with who. */
 export async function certificateRoster(limit = 100): Promise<Array<Certificate & { display_name: string }>> {
   const r = await query<Certificate & { display_name: string }>(
-    `select c.id, c.user_id, c.pathway_id, c.verify_code, c.holder_name, c.exam_id,
+    `select c.id, c.user_id, c.pathway_id, c.verify_code, c.holder_name, c.exam_id, c.attempt_id,
             c.issued_at, c.revoked_at, c.discount_grant_id, p.display_name
        from certificates c join profiles p on p.id = c.user_id
       order by c.issued_at desc limit $1`,

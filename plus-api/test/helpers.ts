@@ -30,7 +30,8 @@ export async function resetDb(): Promise<void> {
     truncate table
       profiles, user_activity, highlights, card_state, content_votes,
       collections, collection_items, snippets, user_pathways,
-      subscriptions, payments, gift_redemptions, certificates, pathway_exams, anon_events,
+      subscriptions, payments, gift_redemptions, certificates, pathway_exams,
+      pathway_exam_forms, pathway_exam_attempts, pathway_exam_examples, anon_events,
       push_subscriptions, articles, auth_identities, spot_stats, view_stats,
       notification_log, achievement_announcements, notice_broadcasts, notice_reads,
       discount_grants, discount_redemptions, badge_grants,
