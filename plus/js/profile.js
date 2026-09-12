@@ -1,15 +1,16 @@
 // Reusable profile renderer (spec 2.7). Used by the /plus/profile.html page and
 // the header overlay. Site design language; a clear, readable week strip. Nothing
 // here is mandatory: the pseudonym is editable, no real name is ever required.
-import { el, faNum, tehranDay } from './util.js?v=70';
-import { api, ApiError, currentUser } from './api.js?v=70';
-import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js?v=70';
-import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=70';
-import { baleEnabled, baleDeepLink } from './config.js?v=70';
-import { leagueEntryButton } from './league.js?v=70';
-import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=70';
-import { subscriptionCta } from './premium-cta.js?v=70';
-import { copyToClipboard, confirmStrip } from './hl-view.js?v=70';
+import { el, faNum, tehranDay } from './util.js?v=71';
+import { certificatesBody } from './certificates.js?v=71';
+import { api, ApiError, currentUser } from './api.js?v=71';
+import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js?v=71';
+import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=71';
+import { baleEnabled, baleDeepLink } from './config.js?v=71';
+import { leagueEntryButton } from './league.js?v=71';
+import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=71';
+import { subscriptionCta } from './premium-cta.js?v=71';
+import { copyToClipboard, confirmStrip } from './hl-view.js?v=71';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
   timeZone: 'Asia/Tehran', year: 'numeric', month: 'long', day: 'numeric',
@@ -624,41 +625,6 @@ function phoneBlock(me) {
   return container;
 }
 
-/**
- * گواهی‌ها — services/certificates.ts. Renders ONLY when the reader holds at
- * least one; a heading over «هنوز گواهی‌ای نداری» on every profile would be an
- * advert for the exam, not content. Each row carries the code (the thing a
- * reader copies into LinkedIn's "credential ID") and the verify link (its
- * "credential URL"); a revoked one stays listed and says so, because the
- * row is the record.
- */
-function certificatesBlock(certs) {
-  const rows = (certs && certs.certificates) || [];
-  if (!rows.length) return null;
-  const FA_DATE = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' });
-  const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } catch (_) { return ''; } };
-  return el('div', { class: 'dcp-certs' }, rows.map((c) => {
-    const copyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost dcp-btn-sm', type: 'button' }, 'کپی کد');
-    copyBtn.addEventListener('click', async () => {
-      try { await navigator.clipboard.writeText(c.verify_code); copyBtn.textContent = 'کپی شد ✓'; }
-      catch (_) { copyBtn.textContent = 'کپی نشد'; }
-      setTimeout(() => { copyBtn.textContent = 'کپی کد'; }, 1600);
-    });
-    return el('div', { class: 'dcp-cert' + (c.revoked_at ? ' dcp-cert-revoked' : '') }, [
-      el('div', { class: 'dcp-cert-title' }, [
-        el('b', {}, c.pathway_title_fa),
-        c.revoked_at ? el('span', { class: 'dcp-pill' }, 'باطل‌شده') : null,
-      ].filter(Boolean)),
-      el('div', { class: 'dcp-muted' }, `به نام ${c.holder_name || '—'} · ${when(c.issued_at)}`),
-      el('div', { class: 'dcp-cert-row' }, [
-        el('code', { class: 'dcp-cert-code', dir: 'ltr' }, c.verify_code),
-        copyBtn,
-        el('a', { class: 'dcp-btn dcp-btn-ghost dcp-btn-sm', href: c.verify_url, target: '_blank', rel: 'noopener' }, 'صفحهٔ تأیید ›'),
-      ]),
-    ]);
-  }));
-}
-
 export async function renderProfile(root, { me: preMe } = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
   const [me, stats, league, achievements, referral, certs] = await Promise.all([
@@ -678,7 +644,7 @@ export async function renderProfile(root, { me: preMe } = {}) {
 
   const achBody = achievementsBody(achievements);
   const discBody = discountBody(achievements);
-  const certBody = certificatesBlock(certs);
+  const certBody = certificatesBody(certs);
 
   const logoutBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'خروج از حساب');
   logoutBtn.addEventListener('click', async () => { await api.logout().catch(() => {}); location.href = '/'; });
@@ -698,9 +664,6 @@ export async function renderProfile(root, { me: preMe } = {}) {
     // question it answers, and it renders only when there is a position to
     // report (discountBody returns null otherwise).
     ...(discBody ? [section('تخفیف‌های من', discBody, 'discounts')] : []),
-    // گواهی‌ها sit beside the money they came with; absent until the first
-    // one is issued (certificatesBlock returns null on an empty list).
-    ...(certBody ? [section('گواهی‌ها', certBody, 'certificates')] : []),
     section('هفته شما', stats.week && stats.week.length ? weekStrip(stats.week) : el('div', { class: 'dcp-muted' }, '—')),
     section('رکوردها', el('div', { class: 'dcp-records' }, [
       el('div', {}, [el('b', {}, faNum(stats.records?.current_streak || 0)), el('span', {}, 'استریک فعلی')]),
@@ -709,6 +672,10 @@ export async function renderProfile(root, { me: preMe } = {}) {
     // «افتخارات» sits between رکوردها and لیگ من on purpose: records are the raw
     // numbers it is built from, and the league is where its two medals are won.
     ...(achBody ? [section('افتخارات', achBody)] : []),
+    // Directly under «افتخارات», and drawn in the same wall vocabulary: a
+    // certificate is the other thing this reader has to show for the work,
+    // and the two shelves are read together (founder, 2026-09-12).
+    ...(certBody ? [section('گواهی‌نامه‌ها', certBody, 'certificates')] : []),
     ...(league ? [section('لیگ من', leagueEntryButton(league))] : []),
     section('مقایسه ماه به ماه', stats.month_vs_month ? monthCompare(stats.month_vs_month) : el('div', { class: 'dcp-muted' }, '—')),
     section(me.phone ? 'شماره موبایل' : 'شماره موبایل (اختیاری)', phoneBlock(me)),

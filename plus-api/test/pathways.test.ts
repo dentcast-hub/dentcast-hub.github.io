@@ -75,9 +75,11 @@ describe('GET /pathways', () => {
     expect(occlusion.completed_steps).toBe(0);
     expect(occlusion.is_complete).toBe(false);
 
-    // A full pathway carries no kind/glyph; a bundle carries both.
+    // A full pathway carries no kind; both kinds carry a glyph — full
+    // pathways got one on 1405/06/21 for the profile's certificate wall,
+    // which draws a disc per pathway (plus/js/certificates.js).
     expect(occlusion.kind).toBeNull();
-    expect(occlusion.glyph).toBeNull();
+    expect(occlusion.glyph).toBe('icon-occlusion');
     const bundle = list.find((p) => p.id === BUNDLE_ID)!;
     expect(bundle.kind).toBe('bundle');
     expect(bundle.glyph).toBe('icon-tooth');
@@ -118,7 +120,7 @@ describe('GET /pathways/:id', () => {
 
     // A full pathway resolves kind/glyph/prereq_bundle/continues_pathway to null.
     expect(body.kind).toBeNull();
-    expect(body.glyph).toBeNull();
+    expect(body.glyph).toBe('icon-occlusion');
     expect(body.prereq_bundle).toBeNull();
     expect(body.continues_pathway).toBeNull();
   });

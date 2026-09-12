@@ -20,8 +20,11 @@ export interface Pathway {
   id: string;
   /** Absent = a full pathway (v1 default). 'bundle' = a short, curated starter subset. */
   kind?: 'bundle';
-  /** Bundle-only: a symbol id from the shared sprite (assets/icons/icons.svg,
-   * e.g. 'icon-tooth'), rendered on its cards via plus/js/util.js's icon(). */
+  /** A symbol id from the shared sprite (assets/icons/icons.svg, e.g.
+   * 'icon-ceramic'), rendered via plus/js/util.js's icon(). Bundles have had
+   * one since they shipped; every FULL pathway got one on 2026-09-12, because
+   * the profile's «گواهی‌نامه‌ها» wall draws a disc per pathway and needed a
+   * face for each — see plus/js/certificates.js. */
   glyph?: string;
   title_fa: string;
   description_fa: string;

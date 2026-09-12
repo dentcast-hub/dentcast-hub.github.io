@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
 import { verifyCertificate, listCertificates } from '../services/certificates.js';
-import { getPathwayById } from '../pathways.js';
+import { getPathwayById, getPathways } from '../pathways.js';
 
 /**
  * Certificates — the reader's own list, and the world's verify lookup.
@@ -30,21 +30,44 @@ export async function certificateRoutes(app: FastifyInstance): Promise<void> {
   await app.register(async (scoped) => {
     scoped.addHook('preHandler', requireAuth);
 
-    // GET /certificates — mine. Any plan: a certificate is the reader's own,
-    // and the premium gate belongs to earning one, not to looking at it.
+    /**
+     * GET /certificates — mine, plus the wall to hang them on.
+     *
+     * Any plan: a certificate is the reader's own, and the premium gate
+     * belongs to EARNING one, not to looking at it.
+     *
+     * `pathways` is every full pathway (bundles excluded — 5-8 steps is not
+     * certificate-sized), each with its glyph and the certificate held for
+     * it, or null. The profile's wall draws a disc per pathway and ticks the
+     * ones earned, exactly as the badge wall shows locked badges: a shelf
+     * with only the earned ones on it says nothing about what there is to
+     * earn. A REVOKED certificate leaves its pathway un-ticked — the wall
+     * shows what stands today — while `certificates` still lists it, because
+     * that list is the record.
+     */
     scoped.get('/certificates', async (request, reply) => {
       const rows = await listCertificates(request.user!.id);
+      const shape = (c: typeof rows[number]) => ({
+        id: c.id,
+        pathway_id: c.pathway_id,
+        pathway_title_fa: getPathwayById(c.pathway_id)?.title_fa ?? c.pathway_id,
+        verify_code: c.verify_code,
+        holder_name: c.holder_name,
+        issued_at: c.issued_at,
+        revoked_at: c.revoked_at,
+        verify_url: `/plus/certificate.html?c=${c.verify_code}`,
+      });
+      const live = new Map(rows.filter((c) => !c.revoked_at).map((c) => [c.pathway_id, c]));
       return reply.send({
-        certificates: rows.map((c) => ({
-          id: c.id,
-          pathway_id: c.pathway_id,
-          pathway_title_fa: getPathwayById(c.pathway_id)?.title_fa ?? c.pathway_id,
-          verify_code: c.verify_code,
-          holder_name: c.holder_name,
-          issued_at: c.issued_at,
-          revoked_at: c.revoked_at,
-          verify_url: `/plus/certificate.html?c=${c.verify_code}`,
-        })),
+        certificates: rows.map(shape),
+        pathways: getPathways()
+          .filter((p) => p.kind !== 'bundle')
+          .map((p) => ({
+            id: p.id,
+            title_fa: p.title_fa,
+            glyph: p.glyph ?? null,
+            certificate: live.has(p.id) ? shape(live.get(p.id)!) : null,
+          })),
       });
     });
   });

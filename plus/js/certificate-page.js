@@ -28,9 +28,10 @@
 //                        than guessing.
 //   · anything else    → «نتوانستیم بررسی کنیم» — a dead API is not a forged
 //                        certificate, and must never be printed as one.
-import { el } from './util.js?v=70';
-import { api } from './api.js?v=70';
-import { registerSW } from './pwa.js?v=70';
+import { el } from './util.js?v=71';
+import { api } from './api.js?v=71';
+import { registerSW } from './pwa.js?v=71';
+import { downloadCertificate } from './certificate-image.js?v=71';
 
 const LOGO = '/logo-v2.png';
 const VERIFY_HOST = 'dentcast.ir/plus/certificate.html';
@@ -154,6 +155,38 @@ function intro() {
   ]);
 }
 
+/* ---------------------------------------------------------- downloads -- */
+
+/**
+ * PNG, drawn on a canvas by certificate-image.js — no library, and no server
+ * round trip. Print stays beside it because a PNG is what goes on LinkedIn
+ * and a PDF is what gets attached to an email; neither replaces the other.
+ */
+function downloadBtn(label, v, format, id) {
+  const btn = el('button', {
+    id, class: 'dcp-btn' + (format === 'a4' ? '' : ' dcp-btn-ghost'), type: 'button',
+  }, label);
+  btn.addEventListener('click', async () => {
+    const original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'در حال ساخت…';
+    try {
+      await downloadCertificate(v, format);
+      btn.textContent = 'دانلود شد ✓';
+    } catch (_) {
+      btn.textContent = 'ساخته نشد';
+    }
+    setTimeout(() => { btn.disabled = false; btn.textContent = original; }, 1800);
+  });
+  return btn;
+}
+
+function printBtn() {
+  const btn = el('button', { id: 'certPrint', class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'چاپ / ذخیره به PDF');
+  btn.addEventListener('click', () => window.print());
+  return btn;
+}
+
 /* ------------------------------------------------------------- the page -- */
 
 /**
@@ -190,9 +223,11 @@ export async function renderCertificate(root, code) {
 
   const parts = [intro(), lookupForm(code, go), verdictBlock(verdictFor(state, v))];
   if (v) {
-    const printBtn = el('button', { id: 'certPrint', class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'چاپ / ذخیره به PDF');
-    printBtn.addEventListener('click', () => window.print());
-    parts.push(sheet(v), el('div', { class: 'dc-cert-actions' }, [printBtn]));
+    parts.push(sheet(v), el('div', { class: 'dc-cert-actions' }, [
+      downloadBtn('دانلود گواهی (PNG)', v, 'a4', 'certDownload'),
+      downloadBtn('نسخهٔ مربع برای استوری', v, 'square', 'certDownloadSquare'),
+      printBtn(),
+    ]));
   }
   root.replaceChildren(el('div', { class: 'dc-cert-page' }, parts));
 }
