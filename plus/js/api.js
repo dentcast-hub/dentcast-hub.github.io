@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=68';
+import { API_BASES } from './config.js?v=72';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -256,6 +256,11 @@ export const api = {
   referralGet: () => request('/referral'),
   referralMint: (alias) => request('/referral', { method: 'POST', body: { alias } }),
   referralCheck: (code) => request('/referral/check', { query: { code } }),
+
+  // گواهی — services/certificates.ts. Mine, on any plan: earning one is
+  // premium (the exam sits behind the pathway), looking at one is not.
+  certificates: () => request('/certificates'),
+  certificateVerify: (code) => request('/certificates/verify/' + encodeURIComponent(code)),
 
   // premium: reading compass — coverage report over the user's own reading,
   // cross-referenced against the taxonomy and pathways (no interest guessing)

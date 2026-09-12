@@ -1,15 +1,16 @@
 // Reusable profile renderer (spec 2.7). Used by the /plus/profile.html page and
 // the header overlay. Site design language; a clear, readable week strip. Nothing
 // here is mandatory: the pseudonym is editable, no real name is ever required.
-import { el, faNum, tehranDay } from './util.js?v=68';
-import { api, ApiError, currentUser } from './api.js?v=68';
-import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js?v=68';
-import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=68';
-import { baleEnabled, baleDeepLink } from './config.js?v=68';
-import { leagueEntryButton } from './league.js?v=68';
-import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=68';
-import { subscriptionCta } from './premium-cta.js?v=68';
-import { copyToClipboard, confirmStrip } from './hl-view.js?v=68';
+import { el, faNum, tehranDay } from './util.js?v=72';
+import { certificatesBody } from './certificates.js?v=72';
+import { api, ApiError, currentUser } from './api.js?v=72';
+import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js?v=72';
+import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=72';
+import { baleEnabled, baleDeepLink } from './config.js?v=72';
+import { leagueEntryButton } from './league.js?v=72';
+import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=72';
+import { subscriptionCta } from './premium-cta.js?v=72';
+import { copyToClipboard, confirmStrip } from './hl-view.js?v=72';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
   timeZone: 'Asia/Tehran', year: 'numeric', month: 'long', day: 'numeric',
@@ -626,7 +627,7 @@ function phoneBlock(me) {
 
 export async function renderProfile(root, { me: preMe } = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
-  const [me, stats, league, achievements, referral] = await Promise.all([
+  const [me, stats, league, achievements, referral, certs] = await Promise.all([
     preMe ? Promise.resolve(preMe) : api.me().catch(() => null),
     api.profileStats().catch(() => ({ week: [], month_vs_month: null, records: {} })),
     api.league().catch(() => null),
@@ -636,11 +637,14 @@ export async function renderProfile(root, { me: preMe } = {}) {
     api.achievements().catch(() => null),
     // کد معرف. Same rule: a down /referral must not cost the rest of the page.
     api.referralGet().catch(() => null),
+    // گواهی‌ها. Same rule again; and an empty list renders no section at all.
+    api.certificates().catch(() => null),
   ]);
   if (!me) { root.replaceChildren(el('div', { class: 'dcp-gate' }, 'برای دیدن پروفایل وارد شوید.')); return; }
 
   const achBody = achievementsBody(achievements);
   const discBody = discountBody(achievements);
+  const certBody = certificatesBody(certs);
 
   const logoutBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'خروج از حساب');
   logoutBtn.addEventListener('click', async () => { await api.logout().catch(() => {}); location.href = '/'; });
@@ -668,6 +672,10 @@ export async function renderProfile(root, { me: preMe } = {}) {
     // «افتخارات» sits between رکوردها and لیگ من on purpose: records are the raw
     // numbers it is built from, and the league is where its two medals are won.
     ...(achBody ? [section('افتخارات', achBody)] : []),
+    // Directly under «افتخارات», and drawn in the same wall vocabulary: a
+    // certificate is the other thing this reader has to show for the work,
+    // and the two shelves are read together (founder, 2026-09-12).
+    ...(certBody ? [section('گواهی‌نامه‌ها', certBody, 'certificates')] : []),
     ...(league ? [section('لیگ من', leagueEntryButton(league))] : []),
     section('مقایسه ماه به ماه', stats.month_vs_month ? monthCompare(stats.month_vs_month) : el('div', { class: 'dcp-muted' }, '—')),
     section(me.phone ? 'شماره موبایل' : 'شماره موبایل (اختیاری)', phoneBlock(me)),

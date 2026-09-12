@@ -54,6 +54,13 @@ import {
   pathwayStandings, runPathwayAlerts, levelFor, alertable,
 } from '../services/pathway-standings.js';
 import {
+  issueCertificate, revokeCertificate, listCertificates, certificateRoster, getCertificate,
+} from '../services/certificates.js';
+import {
+  assignExam, deleteExam, listExams, examRoster, getExam,
+} from '../services/pathway-exams.js';
+import { getPathways } from '../pathways.js';
+import {
   requestQueue, getRequest, requestByReference, markAnswered, markRejected,
 } from '../services/des-requests.js';
 import {
@@ -748,6 +755,183 @@ function renderHtml(
     });
 
     load();
+  })();
+  </script>
+
+  <h3 style="margin-top:26px">گواهی و آزمونِ مسیر</h3>
+  <div class="muted">
+    دو تصمیم که این‌جا نوشته می‌شوند: <b>آزمون</b> برای یک نفر روی یک مسیر (سؤال‌ها را از NotebookLM
+    می‌گیری و همین‌جا می‌چسبانی — شکلش هنوز باز است، هر JSON‌ای ذخیره می‌شود) و <b>گواهی</b> که بعد از
+    قبولی صادر می‌کنی. گواهی کد یکتای <span dir="ltr">DC-XXX-XXX</span> می‌گیرد، صفحهٔ تأییدِ عمومی دارد،
+    و ٪۱۰ تخفیف (یک خرید، کامل) همان لحظه برای خواننده نوشته می‌شود. نامِ روی گواهی همان‌جا قفل می‌شود —
+    نه نامِ مستعار. گواهی هرگز حذف نمی‌شود، فقط باطل می‌شود (کدش شاید روی لینکدین کسی باشد).
+  </div>
+
+  <h4 style="margin-top:14px">آزمون بگذار</h4>
+  <form class="bc" id="exForm" onsubmit="return false">
+    <div class="row">
+      <div style="flex:1 1 200px"><label for="exUser">کاربر (موبایل / نام کاربری / شناسه)</label>
+        <input id="exUser" type="text" placeholder="0912…"></div>
+      <div style="flex:1 1 220px"><label for="exPath">مسیر</label><select id="exPath"></select></div>
+      <div style="flex:0 0 120px"><label for="exMax">حداکثر تلاش</label>
+        <input id="exMax" type="number" min="1" max="10" value="2"></div>
+    </div>
+    <div><label for="exQ">سؤال‌ها (JSON آرایه — هر شکلی؛ خروجی NotebookLM را بچسبان)</label>
+      <textarea id="exQ" rows="6" dir="ltr" placeholder='[{"q":"…","a":"…"}]'></textarea></div>
+    <div><label for="exNote">یادداشت (اختیاری)</label><input id="exNote" type="text" maxlength="200"></div>
+    <button id="exSend" type="button">ثبت آزمون</button>
+    <span id="exOut" class="muted"></span>
+  </form>
+  <div id="exList"></div>
+
+  <h4 style="margin-top:18px">گواهی صادر کن</h4>
+  <form class="bc" id="ceForm" onsubmit="return false">
+    <div class="row">
+      <div style="flex:1 1 200px"><label for="ceUser">کاربر</label>
+        <input id="ceUser" type="text" placeholder="0912…"></div>
+      <div style="flex:1 1 220px"><label for="cePath">مسیر</label><select id="cePath"></select></div>
+    </div>
+    <div class="row">
+      <div style="flex:1 1 260px"><label for="ceName">نامِ روی گواهی (همان‌طور که چاپ می‌شود)</label>
+        <input id="ceName" type="text" maxlength="120" placeholder="دکتر …"></div>
+      <div style="flex:0 0 120px"><label for="cePct">تخفیف ٪</label>
+        <input id="cePct" type="number" min="0" max="100" value="10"></div>
+    </div>
+    <button id="ceSend" type="button">صدور گواهی</button>
+    <span id="ceOut" class="muted"></span>
+  </form>
+  <div id="ceList"></div>
+  <script>
+  (function () {
+    var exList = document.getElementById('exList'), exOut = document.getElementById('exOut');
+    var ceList = document.getElementById('ceList'), ceOut = document.getElementById('ceOut');
+    var exBtn = document.getElementById('exSend'), ceBtn = document.getElementById('ceSend');
+    if (!exList || !ceList) return;
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    var FA = '۰۱۲۳۴۵۶۷۸۹';
+    function fa(n) { return String(n).replace(/[0-9]/g, function (d) { return FA[+d]; }); }
+    function val(id) { return document.getElementById(id).value.trim(); }
+    function when(iso) {
+      try { return new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' }).format(new Date(iso)); }
+      catch (e) { return ''; }
+    }
+    function post(url, body) {
+      return fetch(url, {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' }, body: JSON.stringify(body)
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); });
+    }
+    var titles = {};
+
+    // One catalog, two pickers: the same full pathways the standings sweep
+    // reports on (bundles excluded there and here for the same reason).
+    fetch('/admin/pathways/catalog', { credentials: 'include' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var opts = (d.pathways || []).map(function (p) {
+          titles[p.id] = p.title_fa;
+          return '<option value="' + esc(p.id) + '">' + esc(p.title_fa) + ' (' + fa(p.steps) + ')</option>';
+        }).join('');
+        document.getElementById('exPath').innerHTML = opts;
+        document.getElementById('cePath').innerHTML = opts;
+      }).catch(function () {});
+
+    function loadExams() {
+      fetch('/admin/exams', { credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var rows = d.exams || [];
+          if (!rows.length) { exList.innerHTML = '<div class="muted">آزمونی ثبت نشده.</div>'; return; }
+          exList.innerHTML = '<div class="tblwrap"><table><tr><th>کاربر</th><th>مسیر</th><th>سؤال</th>'
+            + '<th>تلاش</th><th>تاریخ</th><th></th></tr>'
+            + rows.map(function (e) {
+              return '<tr><td>' + esc(e.display_name) + '</td><td>' + esc(titles[e.pathway_id] || e.pathway_id)
+                + '</td><td>' + fa(e.question_count) + '</td><td>' + fa(e.max_attempts) + '</td><td>' + when(e.created_at)
+                + '</td><td><button type="button" data-ex-del="' + esc(e.id) + '">حذف</button></td></tr>';
+            }).join('') + '</table></div>';
+        }).catch(function () { exList.textContent = 'فهرست نیامد.'; });
+    }
+
+    function loadCerts() {
+      fetch('/admin/certificates', { credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var rows = d.certificates || [];
+          if (!rows.length) { ceList.innerHTML = '<div class="muted">گواهی‌ای صادر نشده.</div>'; return; }
+          ceList.innerHTML = '<div class="tblwrap"><table><tr><th>کد</th><th>نامِ روی گواهی</th><th>کاربر</th>'
+            + '<th>مسیر</th><th>تاریخ</th><th></th></tr>'
+            + rows.map(function (c) {
+              var state = c.revoked_at ? '<span class="pill">باطل</span>' : '';
+              return '<tr><td dir="ltr"><a href="/plus/certificate.html?c=' + esc(c.verify_code)
+                + '" target="_blank" rel="noopener">' + esc(c.verify_code) + '</a> ' + state + '</td><td>'
+                + esc(c.holder_name) + '</td><td>' + esc(c.display_name) + '</td><td>'
+                + esc(titles[c.pathway_id] || c.pathway_id) + '</td><td>' + when(c.issued_at) + '</td><td>'
+                + (c.revoked_at ? '' : '<button type="button" data-ce-rev="' + esc(c.id) + '">ابطال</button>')
+                + '</td></tr>';
+            }).join('') + '</table></div>';
+        }).catch(function () { ceList.textContent = 'فهرست نیامد.'; });
+    }
+
+    exBtn.addEventListener('click', function () {
+      var qs;
+      try { qs = JSON.parse(val('exQ') || '[]'); } catch (e) { exOut.textContent = 'JSON سؤال‌ها معتبر نیست.'; return; }
+      if (!val('exUser')) { exOut.textContent = 'کاربر را بنویس.'; return; }
+      exBtn.disabled = true; exOut.textContent = 'در حال ثبت…';
+      post('/admin/exams', {
+        user: val('exUser'), pathway_id: val('exPath'), questions: qs,
+        max_attempts: parseInt(val('exMax') || '2', 10), note: val('exNote') || undefined
+      }).then(function (res) {
+        exBtn.disabled = false;
+        if (!res.ok) { exOut.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+        exOut.textContent = (res.j.created ? 'ثبت شد' : 'به‌روز شد') + ' برای ' + (res.j.user && res.j.user.display_name || '');
+        document.getElementById('exQ').value = '';
+        loadExams();
+      }).catch(function () { exBtn.disabled = false; exOut.textContent = 'ارسال نشد.'; });
+    });
+
+    ceBtn.addEventListener('click', function () {
+      if (!val('ceUser')) { ceOut.textContent = 'کاربر را بنویس.'; return; }
+      if (!val('ceName')) { ceOut.textContent = 'نامِ روی گواهی را بنویس.'; return; }
+      if (!confirm('گواهی «' + (titles[val('cePath')] || val('cePath')) + '» به نام «' + val('ceName')
+        + '» صادر شود؟ نام بعداً قابل تغییر نیست.')) return;
+      ceBtn.disabled = true; ceOut.textContent = 'در حال صدور…';
+      post('/admin/certificates/issue', {
+        user: val('ceUser'), pathway_id: val('cePath'), holder_name: val('ceName'),
+        discount_percent: parseInt(val('cePct') || '10', 10)
+      }).then(function (res) {
+        ceBtn.disabled = false;
+        if (!res.ok) { ceOut.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+        var c = res.j.certificate || {};
+        ceOut.textContent = (res.j.created ? 'صادر شد — کد ' : 'از قبل داشت — کد ') + (c.verify_code || '');
+        loadCerts();
+      }).catch(function () { ceBtn.disabled = false; ceOut.textContent = 'ارسال نشد.'; });
+    });
+
+    exList.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-ex-del]') : null;
+      if (!b) return;
+      if (!confirm('این آزمون حذف شود؟')) return;
+      b.disabled = true;
+      post('/admin/exams/delete', { id: b.getAttribute('data-ex-del') })
+        .then(function () { exOut.textContent = 'حذف شد.'; loadExams(); })
+        .catch(function () { b.disabled = false; exOut.textContent = 'حذف نشد.'; });
+    });
+
+    ceList.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-ce-rev]') : null;
+      if (!b) return;
+      if (!confirm('این گواهی باطل شود؟ ردیف می‌ماند و صفحهٔ تأیید «باطل» را نشان می‌دهد.')) return;
+      b.disabled = true;
+      post('/admin/certificates/revoke', { id: b.getAttribute('data-ce-rev') })
+        .then(function () { ceOut.textContent = 'باطل شد.'; loadCerts(); })
+        .catch(function () { b.disabled = false; ceOut.textContent = 'باطل نشد.'; });
+    });
+
+    loadExams(); loadCerts();
   })();
   </script>
 
@@ -4109,5 +4293,124 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.post('/admin/pathways/run-alerts', async (_request, reply) => {
     const run = await runPathwayAlerts(new Date());
     return reply.send({ ok: true, crossings: run.crossings, notified: run.notified });
+  });
+
+  /**
+   * گواهی و آزمون مسیر — the founder issuing a certificate, and assigning the
+   * exam that earns it. Both are DECISIONS written by a person from this
+   * panel (services/certificates.ts, services/pathway-exams.ts); the
+   * standings sweep above is what tells the founder it is time.
+   */
+
+  // GET /admin/pathways/catalog — the full pathways as {id, title_fa}, so the
+  // two forms below offer a picker rather than a free-text id.
+  app.get('/admin/pathways/catalog', async (_request, reply) => {
+    const pathways = getPathways()
+      .filter((p) => p.kind !== 'bundle')
+      .map((p) => ({ id: p.id, title_fa: p.title_fa, steps: p.steps.length }));
+    return reply.send({ ok: true, pathways });
+  });
+
+  // GET /admin/certificates[?user=] — the roster, or one reader's list.
+  app.get('/admin/certificates', {
+    schema: { querystring: { type: 'object', properties: { user: { type: 'string' }, phone: { type: 'string' } } } },
+  }, async (request, reply) => {
+    const q = request.query as { user?: string; phone?: string };
+    if (pick(q)) {
+      const who = await resolveUser(pick(q), reply);
+      if (!who) return reply;
+      return reply.send({ ok: true, user: who, certificates: await listCertificates(who.id) });
+    }
+    return reply.send({ ok: true, certificates: await certificateRoster() });
+  });
+
+  // POST /admin/certificates/issue — { user|phone, pathway_id, holder_name,
+  // exam_id?, discount_percent?, notify? }. Idempotent while a live
+  // certificate exists for that reader+pathway (see issueCertificate).
+  app.post('/admin/certificates/issue', userBody({
+    pathway_id: { type: 'string' },
+    holder_name: { type: 'string' },
+    exam_id: { type: 'string' },
+    discount_percent: { type: 'integer', minimum: 0, maximum: 100 },
+    notify: { type: 'boolean' },
+  }, ['pathway_id', 'holder_name']), async (request, reply) => {
+    const b = request.body as {
+      user?: string; phone?: string; pathway_id: string; holder_name: string;
+      exam_id?: string; discount_percent?: number; notify?: boolean;
+    };
+    const who = await resolveUser(pick(b), reply);
+    if (!who) return reply;
+    try {
+      const result = await issueCertificate(who.id, b.pathway_id, {
+        holderName: b.holder_name,
+        examId: b.exam_id ?? null,
+        discountPercent: b.discount_percent,
+        notify: b.notify,
+      });
+      return reply.send({ ...result, user: who });
+    } catch (err) {
+      const code = (err as Error).message;
+      if (code === 'unknown_pathway') return reply.code(400).send({ error: code, message: 'این مسیر وجود ندارد (باندل‌ها گواهی ندارند).' });
+      if (code === 'holder_name_required') return reply.code(400).send({ error: code, message: 'نامِ روی گواهی را بنویس.' });
+      throw err;
+    }
+  });
+
+  app.post('/admin/certificates/revoke', {
+    schema: { body: { type: 'object', required: ['id'], properties: { id: { type: 'string' } } } },
+  }, async (request, reply) => {
+    const { id } = request.body as { id: string };
+    const cert = await getCertificate(id);
+    if (!cert) return reply.code(404).send({ error: 'not_found' });
+    const revoked = await revokeCertificate(id);
+    return reply.send({ ok: true, revoked, already: !revoked });
+  });
+
+  // GET /admin/exams[?user=] — every open assignment, or one reader's.
+  app.get('/admin/exams', {
+    schema: { querystring: { type: 'object', properties: { user: { type: 'string' }, phone: { type: 'string' } } } },
+  }, async (request, reply) => {
+    const q = request.query as { user?: string; phone?: string };
+    if (pick(q)) {
+      const who = await resolveUser(pick(q), reply);
+      if (!who) return reply;
+      return reply.send({ ok: true, user: who, exams: await listExams(who.id) });
+    }
+    return reply.send({ ok: true, exams: await examRoster() });
+  });
+
+  // POST /admin/exams — { user|phone, pathway_id, questions (array), max_attempts?, note? }.
+  // `questions` is stored verbatim; its shape is the founder's to decide.
+  app.post('/admin/exams', userBody({
+    pathway_id: { type: 'string' },
+    questions: { type: 'array' },
+    max_attempts: { type: 'integer', minimum: 1, maximum: 10 },
+    note: { type: 'string' },
+  }, ['pathway_id', 'questions']), async (request, reply) => {
+    const b = request.body as {
+      user?: string; phone?: string; pathway_id: string; questions: unknown[];
+      max_attempts?: number; note?: string;
+    };
+    const who = await resolveUser(pick(b), reply);
+    if (!who) return reply;
+    try {
+      const r = await assignExam(who.id, b.pathway_id, {
+        questions: b.questions, maxAttempts: b.max_attempts, note: b.note ?? null,
+      });
+      return reply.send({ ok: true, ...r, user: who });
+    } catch (err) {
+      const code = (err as Error).message;
+      if (code === 'unknown_pathway') return reply.code(400).send({ error: code, message: 'این مسیر وجود ندارد (باندل‌ها آزمون ندارند).' });
+      if (code === 'questions_required') return reply.code(400).send({ error: code, message: 'دست‌کم یک سؤال لازم است.' });
+      throw err;
+    }
+  });
+
+  app.post('/admin/exams/delete', {
+    schema: { body: { type: 'object', required: ['id'], properties: { id: { type: 'string' } } } },
+  }, async (request, reply) => {
+    const { id } = request.body as { id: string };
+    if (!(await getExam(id))) return reply.code(404).send({ error: 'not_found' });
+    return reply.send({ ok: true, deleted: await deleteExam(id) });
   });
 }

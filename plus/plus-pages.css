@@ -378,6 +378,58 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-btn-primary { background: var(--ac, #0b5fff); color: #fff; border-color: transparent; }
 .dcp-btn-ghost { background: transparent; }
 
+/* ---- گواهی‌نامه‌ها: the certificate wall, and the sheet a disc opens ----
+   Borrows the badge wall's .dcp-bg-* vocabulary on purpose (see
+   plus/js/certificates.js): same grid, same disc, same caption. What differs
+   is that a certificate has no levels — so the earned disc wears a green
+   tick instead of a metal, and the unearned one is simply dashed. The icon
+   is sized HERE on the svg itself rather than on a class, because icon()'s
+   own class argument is easy to pass wrongly and a 300×150 default would
+   burst the disc. */
+.dcp-cert-tally { font-size: .86rem; color: var(--txt3, #62779a); margin: 0 0 12px; line-height: 1.8; }
+.dcp-cert-disc svg { width: 25px; height: 25px; display: block; }
+.dcp-cert-disc.is-on {
+  border-color: #1f7850;
+  background: radial-gradient(circle at 32% 26%, rgba(31,120,80,.20), transparent 70%), var(--card-bg, #fff);
+  color: var(--txt, #0a1a33);
+}
+.dcp-cert-tick {
+  position: absolute; inset-inline-end: -3px; bottom: -3px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #1f7850; color: #fff; font-size: .72rem; font-weight: 800;
+  display: grid; place-items: center; border: 2px solid var(--card-bg, #fff);
+}
+.dcp-cert-tick.is-lg {
+  position: static; width: 40px; height: 40px; font-size: 1.1rem; border: 0; flex: 0 0 auto;
+}
+
+.dcp-cert-card { display: flex; flex-direction: column; gap: 12px; }
+.dcp-cert-card-hd { display: flex; align-items: center; gap: 12px; }
+.dcp-cert-card-hd b { font-size: 1.02rem; line-height: 1.5; }
+.dcp-cert-card-kicker { font-size: .74rem; color: var(--txt3, #62779a); font-weight: 700; }
+.dcp-cert-card-lead { margin: 0; font-size: .92rem; line-height: 1.85; color: var(--txt2, #4a5f85); }
+.dcp-cert-card .dcp-cert-ico { width: 29px; height: 29px; display: block; }
+.dcp-cert-code-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.dcp-cert-code {
+  padding: 5px 12px; border-radius: 8px; background: var(--surface2, #f4f6fb);
+  letter-spacing: .12em; font-weight: 700;
+}
+.dcp-cert-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.dcp-cert-linkedin {
+  display: flex; flex-direction: column; gap: 6px;
+  border-top: 1px solid var(--border, rgba(2,35,96,.12)); padding-top: 12px;
+}
+.dcp-cert-sub { font-size: .8rem; color: var(--txt3, #62779a); margin-bottom: 2px; }
+.dcp-cert-field { display: grid; grid-template-columns: 8.5rem 1fr auto; gap: 8px; align-items: center; }
+@media (max-width: 460px) { .dcp-cert-field { grid-template-columns: 1fr auto; } .dcp-cert-field-k { grid-column: 1 / -1; } }
+.dcp-cert-field-k { font-size: .76rem; color: var(--txt3, #62779a); }
+.dcp-cert-field-v {
+  font-size: .84rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  background: var(--surface2, #f4f6fb); border-radius: 6px; padding: 4px 8px;
+}
+.dcp-btn-sm { padding: 4px 10px; font-size: .85rem; }
+.dcp-pill { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: .78rem; background: rgba(0,0,0,.06); }
+
 /* ---- header overlay (dashboard / profile open from the person menu) ------- */
 .dcp-overlay { position: fixed; inset: 0; z-index: 10050; display: flex; flex-direction: column; background: var(--bg, #f0f2f5); color: var(--txt); overflow: auto; }
 .dcp-overlay-bar { position: sticky; top: 0; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border, rgba(2,35,96,.1)); background: color-mix(in srgb, var(--surface, #fff) 90%, transparent); backdrop-filter: blur(8px); z-index: 1; }

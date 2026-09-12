@@ -138,13 +138,13 @@
           "tier": "silver",
           "threshold": 30,
           "unlock_fa": "یک ماهِ کامل، بدون یک روزِ جاافتاده.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": 100,
           "unlock_fa": "صد روز. این دیگر اسمش انضباط است.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "unit_fa": "روز"
@@ -202,13 +202,13 @@
           "tier": "silver",
           "threshold": 25,
           "unlock_fa": "بیست‌وپنج اپیزود. دیگر از شنونده‌های همیشگی‌ای.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": 100,
           "unlock_fa": "صد اپیزود. کمتر کسی این‌همه گوش داده.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "unit_fa": "اپیزود"
@@ -234,13 +234,13 @@
           "tier": "silver",
           "threshold": 25,
           "unlock_fa": "بیست‌وپنج مطلبِ تمام‌شده. داری جدی پیش می‌روی.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": 100,
           "unlock_fa": "صد مطلب. این دیگر یک کتابخانه است، نه یک عادت.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "unit_fa": "مطلب"
@@ -266,13 +266,13 @@
           "tier": "silver",
           "threshold": 20,
           "unlock_fa": "بیست تا در هفت روز. سرعتت بالا رفته.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": 40,
           "unlock_fa": "چهل تا در یک هفته. مطمئن نیستیم کِی خوابیدی.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "unit_fa": "در هفته"
@@ -298,13 +298,13 @@
           "tier": "silver",
           "threshold": 50,
           "unlock_fa": "پنجاه هایلایت. کتابخانه‌ات دارد شکل می‌گیرد.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": 300,
           "unlock_fa": "سیصد هایلایت. این دیگر آرشیوِ شخصیِ توست.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "unit_fa": "هایلایت"
@@ -330,13 +330,13 @@
           "tier": "silver",
           "threshold": 25,
           "unlock_fa": "بیست‌وپنج یادداشت. داری با متن حرف می‌زنی، نه فقط می‌خوانی‌اش.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": 100,
           "unlock_fa": "صد یادداشت. این‌ها را دیگر هیچ‌جای دیگری پیدا نمی‌کنی.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "unit_fa": "یادداشت"
@@ -362,13 +362,13 @@
           "tier": "silver",
           "threshold": 6,
           "unlock_fa": "شش بخش از نُه بخش. بیشترِ نقشه را دیده‌ای.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": 9,
           "unlock_fa": "هر نُه بخشِ شمردنیِ دنت‌کست. جایی نمانده که سر نزده باشی.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "_note": "آستانهٔ بالا تعدادِ پوشه‌های واجدِ شمارش است، نه تعدادِ کلِ پوشه‌های سایت. content-index.json ده پوشه دارد، اما لایت‌کست هرگز article_completed نمی‌فرستد (plus.js آن را صریحاً کنار می‌گذارد و صفحاتش هیچ‌کدام از PROSE_SELECTORS را ندارند، پس نه ردیابِ مطالعه روشن می‌شود نه هایلایتی ساخته می‌شود) — یعنی سقفِ واقعیِ این متریک ۹ است. تا ۲۰۲۶-۰۸-۱۱ آستانه ۱۰ بود و سطحِ آخرِ این نشان — و ٪۲ اعتبارِ تخفیفش — برای هیچ‌کس قابل‌کسب نبود. اگر بخشِ تازه‌ای به سایت اضافه شد یا لایت‌کست روزی شمردنی شد، این عدد باید دوباره تنظیم شود.",
@@ -395,13 +395,13 @@
           "tier": "silver",
           "threshold": 3,
           "unlock_fa": "سه بخشِ کامل. این دیگر شانس نیست.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": 5,
           "unlock_fa": "پنج بخشِ کامل. نصفِ دنت‌کست را فتح کرده‌ای.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "unit_fa": "بخشِ کامل"
@@ -442,13 +442,13 @@
           "tier": "silver",
           "threshold": 5,
           "unlock_fa": "پنج بار در ساعتِ اول. این دیگر تصادفی نیست.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": 25,
           "unlock_fa": "بیست‌وپنج بار. تو منتظر نمی‌مانی؛ کمین می‌کنی.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "_caveat": "تنها نشانِ این فایل که گذشته‌نگر نیست: articles.published_at برای ردیف‌های قدیمی مقدارِ پیش‌فرضِ لحظهٔ ثبت را دارد، نه انتشارِ واقعی. باید فقط از تاریخِ راه‌اندازی به بعد محاسبه شود.",
@@ -518,13 +518,13 @@
           "tier": "silver",
           "threshold": 10,
           "unlock_fa": "ده هفته سرِ جایت ماندی یا بالاتر رفتی.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": 26,
           "unlock_fa": "نیم سال، بدون حتی یک سقوط.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "unit_fa": "هفته"
@@ -550,13 +550,13 @@
           "tier": "silver",
           "threshold": 3,
           "unlock_fa": "سه مسیرِ کامل. داری نقشه را می‌سازی.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": "all",
           "unlock_fa": "همهٔ مسیرهای آموزشی. دیگر مسیری نمانده.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "_note": "آستانهٔ طلا عدد ثابت نیست: تعدادِ کلِ pathwayهای فعال در plus/pathways.json است، تا با اضافه‌شدنِ مسیرِ جدید خودبه‌خود جابه‌جا شود.",
@@ -583,13 +583,13 @@
           "tier": "silver",
           "threshold": 10,
           "unlock_fa": "ده روز مرور کرده‌ای. داری روی چیزی که خوانده‌ای کار می‌کنی.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": 30,
           "unlock_fa": "سی روز مرور. حافظه‌ات را ساختی، شانس نیاوردی.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "unit_fa": "روز"
@@ -616,13 +616,13 @@
           "tier": "silver",
           "threshold": 50,
           "unlock_fa": "پنجاه مورد در قفسه‌هایت.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": 200,
           "unlock_fa": "دویست مورد. این دیگر یک کتابخانه‌ی چیده‌شده است.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "_note": "برنز عمداً معیارِ متفاوتی دارد (خودِ ساختنِ اولین بورد)، چون ساختنِ قفسه و پرکردنش دو کارِ جدا هستند.",
@@ -649,13 +649,13 @@
           "tier": "silver",
           "threshold": 15,
           "unlock_fa": "پانزده چالشِ درست. این دیگر عادت است، نه کنجکاوی.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": 50,
           "unlock_fa": "پنجاه چالشِ درست — پیش از هر جوابی، جوابِ خودت را نوشته‌ای.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "unit_fa": "چالش"
@@ -681,13 +681,13 @@
           "tier": "silver",
           "threshold": 4,
           "unlock_fa": "چهار لیگ. هر جا که رفته‌ای، جلو بوده‌ای.",
-          "discount_percent": 1
+          "discount_percent": 2
         },
         {
           "tier": "gold",
           "threshold": 6,
           "unlock_fa": "شش لیگ از هفت‌تا. فقط یکی مانده.",
-          "discount_percent": 2
+          "discount_percent": 4
         }
       ],
       "_caveat": "امروز فقط تیرهای ۱ تا ۳ فعال‌اند (`league_config.max_active_tier_order`)، پس عملاً تا فعال‌شدنِ پله‌های بعدی فقط برنز در دسترس است. این عمداً تغییر داده نشده: آستانه‌ها نردبانِ کاملِ هفت‌پله‌ای را توصیف می‌کنند، و پله‌ها خودشان با رشدِ کاربرها باز می‌شوند (league-finalize.ts، selfTune).",
@@ -730,16 +730,16 @@
           "tier": "silver",
           "threshold": 10,
           "unlock_fa": "ده مطلب. دیگر اتفاقی نیست؛ چیزی را که می‌خوانی به بقیه هم می‌رسانی.",
-          "discount_percent": 3
+          "discount_percent": 6
         },
         {
           "tier": "gold",
           "threshold": 50,
           "unlock_fa": "پنجاه مطلب. بخشی از آدم‌هایی که این‌جا می‌خوانند، از سمتِ تو آمده‌اند.",
-          "discount_percent": 5
+          "discount_percent": 10
         }
       ],
-      "_note": "برنز روی ۱ است، مثل هر نشانِ سطح‌دارِ دیگر: قفسه باید از همان اولین کارِ درست شروع به روشن‌شدن کند. سقفِ طلا عمداً ۵۰ است نه بیشتر — این نشان یک عادتِ جانبی را تصدیق می‌کند، نه یک مسیرِ موازیِ مطالعه. تخفیفِ نقره/طلا عمداً از قرارداد ۱٪/۲٪ سایر نشان‌های سطح‌دار بالاتر است (۳٪/۵٪): فقط این نشان روی «آوردن خواننده‌ی تازه» است، نه یک عادتِ مطالعه‌ی داخلی، و بنیان‌گذار تصمیم گرفته همان ارزشِ بیشتری که XPِ اشتراک‌گذاری گرفت (۱۴۰۵/۰۶/۰۳، برابر با xp_read/xp_listen) این‌جا هم تکرار شود.",
+      "_note": "برنز روی ۱ است، مثل هر نشانِ سطح‌دارِ دیگر: قفسه باید از همان اولین کارِ درست شروع به روشن‌شدن کند. سقفِ طلا عمداً ۵۰ است نه بیشتر — این نشان یک عادتِ جانبی را تصدیق می‌کند، نه یک مسیرِ موازیِ مطالعه. تخفیفِ نقره/طلا عمداً از قرارداد ۲٪/۴٪ سایر نشان‌های سطح‌دار بالاتر است (۶٪/۱۰٪): فقط این نشان روی «آوردن خواننده‌ی تازه» است، نه یک عادتِ مطالعه‌ی داخلی، و بنیان‌گذار تصمیم گرفته همان ارزشِ بیشتری که XPِ اشتراک‌گذاری گرفت (۱۴۰۵/۰۶/۰۳، برابر با xp_read/xp_listen) این‌جا هم تکرار شود. دو برابر شدن همهٔ درصدها (۱۴۰۵/۰۶/۲۱): تصمیم بنیان‌گذار — «یک درصد بی‌معنی است»؛ طلای این نشان حالا دقیقاً برابر سقفِ هر خرید (CREDIT_CAP_PERCENT) است و تنها خرج می‌شود.",
       "unit_fa": "مطلب"
     },
     {
