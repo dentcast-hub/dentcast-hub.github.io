@@ -76,6 +76,13 @@ async function finish(uid: string): Promise<void> {
   }
 }
 
+/** Press «شروع این مسیر». */
+async function enroll(uid: string): Promise<void> {
+  await pool.query(
+    `insert into user_pathways (user_id, pathway_id, current_step) values ($1, $2, 0) on conflict do nothing`, [uid, PATHWAY],
+  );
+}
+
 const adminPost = (url: string, body: unknown) => app.inject({
   method: 'POST', url, headers: { authorization: basic }, payload: body as object,
 });
@@ -193,7 +200,7 @@ describe('the form', () => {
 /* --------------------------------------------------------- eligibility -- */
 
 describe('who may sit it', () => {
-  it('no form → no_form; a form but neither finished nor assigned → locked; finished → ready; assigned → ready', async () => {
+  it('no form → no_form; a form but neither finished nor assigned → locked; assigned → enrolled + ready', async () => {
     const uid = await userId();
     expect((await examState(uid, PATHWAY)).state).toBe('no_form');
 
@@ -202,19 +209,41 @@ describe('who may sit it', () => {
     expect(locked.state).toBe('locked');
     expect(locked.rules).toMatchObject({ question_count: 1, mcq_count: 1, free_count: 0, pass_percent: 70 });
     expect(locked.is_complete).toBe(false);
+    expect(locked.enrolled).toBe(false);
 
+    // letting somebody in puts them on the pathway too
     await assignExam(uid, PATHWAY);
-    expect((await examState(uid, PATHWAY)).state).toBe('ready');
+    const s = await examState(uid, PATHWAY);
+    expect(s.state).toBe('ready');
+    expect(s.enrolled).toBe(true);
+    const up = await pool.query('select count(*)::int as n from user_pathways where user_id = $1 and pathway_id = $2', [uid, PATHWAY]);
+    expect(up.rows[0].n).toBe(1);
   });
 
-  it('finishing the pathway is the other door', async () => {
+  it('finishing the pathway is the other door — but only for a reader who pressed «شروع این مسیر»', async () => {
     const uid = await userId();
     await upsertForm(PATHWAY, { questions: [MCQ(1)] });
     await finish(uid);
+    const before = await examState(uid, PATHWAY);
+    expect(before.state).toBe('locked');
+    expect(before.is_complete).toBe(true);
+    expect(before.enrolled).toBe(false);
+
+    await enroll(uid);
     const s = await examState(uid, PATHWAY);
     expect(s.state).toBe('ready');
-    expect(s.is_complete).toBe(true);
+    expect(s.enrolled).toBe(true);
     expect(s.assigned).toBe(false);
+    expect((await startAttempt(uid, PATHWAY, 'x')).ok).toBe(true);
+  });
+
+  it('the wall reads the same rule', async () => {
+    const uid = await userId();
+    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await finish(uid);
+    expect((await get('/certificates')).json().pathways.find((p: { id: string }) => p.id === PATHWAY).exam.state).toBe('locked');
+    await enroll(uid);
+    expect((await get('/certificates')).json().pathways.find((p: { id: string }) => p.id === PATHWAY).exam.state).toBe('ready');
   });
 
   it('tells a reader let in early when the form finally appears — and only then, once', async () => {
