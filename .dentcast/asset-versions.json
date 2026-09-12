@@ -44,8 +44,8 @@
     "hash": "91749605ca006125"
   },
   "/plus/js/certificate-page.js": {
-    "v": 2,
-    "hash": "645d37e56e88bb56"
+    "v": 3,
+    "hash": "6fdf27f9057c6fd3"
   },
   "/plus/js/collection-page.js": {
     "v": 43,
@@ -120,8 +120,8 @@
     "hash": "e52ef9774d8d9f3f"
   },
   "modules:M": {
-    "v": 69,
-    "hash": "867ce98001861b8f"
+    "v": 70,
+    "hash": "7b703d7ee425c7f9"
   },
   "spot.js:SPOT_V": {
     "v": 40,

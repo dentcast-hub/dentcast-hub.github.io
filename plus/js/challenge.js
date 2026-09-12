@@ -18,9 +18,9 @@
 // inserted until BOTH checks confirm there is something to show — a
 // half-published چالش (page markup + challenges.json entry, but no admin
 // paste yet) must be invisible, never a box that 404s on submit.
-import { api, currentUser, meStatus } from './api.js?v=69';
-import { el, faNum } from './util.js?v=69';
-import { premiumCta } from './premium-cta.js?v=69';
+import { api, currentUser, meStatus } from './api.js?v=70';
+import { el, faNum } from './util.js?v=70';
+import { premiumCta } from './premium-cta.js?v=70';
 
 let filePromise = null;
 

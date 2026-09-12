@@ -25,7 +25,7 @@
        documents in the index; and the link needs no ranking — it is opened
        from a LinkedIn "credential URL" or a printed code, never found. -->
   <meta name="robots" content="noindex, follow">
-  <title>تأیید گواهی تکمیل مسیر | دنت‌کست</title>
+  <title>تأیید گواهی‌نامهٔ تکمیل مسیر یادگیری | دنت‌کست</title>
   <link rel="manifest" href="/plus/manifest.webmanifest">
   <meta name="theme-color" content="#f0f2f5">
   <link rel="stylesheet" href="/dc-theme.css">
@@ -33,20 +33,108 @@
   <link rel="stylesheet" href="/plus/plus-pages.css?v=39">
   <link rel="stylesheet" href="/plus/plus-desktop.css?v=7">
   <style>
-    /* Page-local: a certificate is a document, and reads as one. */
-    .dcp-cert-card { max-width: 640px; margin: 0 auto; padding: 28px 24px; border: 1px solid var(--dcp-line, #e3e6ea); border-radius: 16px; background: var(--dcp-surface, #fff); text-align: center; }
-    .dcp-cert-card .dcp-cert-kicker { font-size: .85rem; letter-spacing: .04em; opacity: .7; margin-bottom: 8px; }
-    .dcp-cert-card .dcp-cert-holder { font-size: 1.6rem; font-weight: 700; margin: 6px 0 2px; }
-    .dcp-cert-card .dcp-cert-pathway { font-size: 1.1rem; margin: 10px 0 14px; }
-    .dcp-cert-card .dcp-cert-meta { font-size: .9rem; opacity: .8; }
-    .dcp-cert-card .dcp-cert-code { display: inline-block; margin-top: 14px; padding: 6px 12px; border-radius: 8px; background: rgba(0,0,0,.05); font-family: ui-monospace, monospace; letter-spacing: .12em; }
-    .dcp-cert-card .dcp-cert-state { display: inline-block; margin-top: 12px; padding: 4px 12px; border-radius: 999px; font-size: .85rem; font-weight: 600; }
-    .dcp-cert-card .dcp-cert-state.ok { background: rgba(31,120,80,.12); color: #1f7850; }
-    .dcp-cert-card .dcp-cert-state.revoked { background: rgba(120,40,40,.10); color: #8a2c2c; }
-    .dcp-cert-card .dcp-cert-note { font-size: .82rem; opacity: .7; margin-top: 18px; line-height: 1.7; }
-    .dcp-cert-lookup { max-width: 640px; margin: 18px auto 0; display: flex; gap: 8px; }
-    .dcp-cert-lookup input { flex: 1; direction: ltr; text-align: center; letter-spacing: .1em; }
-    @media print { .dcp-page-header, .dcp-cert-lookup { display: none !important; } }
+    /* Both faces self-hosted, like Vazirmatn everywhere else on the site.
+       Amiri carries ONE line — the holder's name — the way Coursera sets the
+       name in a serif on an otherwise sans certificate. Arabic subset only:
+       the code and the URL are Vazirmatn. */
+    @font-face { font-family: 'Vazirmatn'; src: url('/fonts/Vazirmatn[wght].woff2') format('woff2'); font-display: swap; }
+    @font-face { font-family: 'Amiri'; font-weight: 700; src: url('/fonts/Amiri-Bold-arabic.woff2') format('woff2'); font-display: swap; }
+
+    /* ── The certificate. Approved design (2026-09-12): white, quiet,
+       start-aligned, no frame, no seal, navy ink and one blue mark. It stays
+       white in the dark theme — it is a document, not a panel — the same rule
+       the E-NAMAD seal chip follows. Every colour is a literal on purpose:
+       the sheet is the one thing on this page the viewer's theme must not
+       repaint. Sized in container units so it scales as one object. */
+    .dc-cert-shell { container-type: inline-size; width: 100%; }
+    .dc-cert {
+      position: relative; aspect-ratio: 297 / 210; width: 100%;
+      background: #ffffff; color: #022360;
+      box-shadow: 0 1px 2px rgba(2,35,96,.10), 0 22px 54px rgba(2,35,96,.14);
+      padding: 6.2cqw 7cqw 4.6cqw;
+      font-family: Vazirmatn, system-ui, sans-serif;
+      font-size: 1.3cqw; line-height: 1.7;
+      display: grid; grid-template-rows: auto 1fr auto auto; row-gap: 1.6em;
+      direction: rtl; text-align: start;
+    }
+    .dc-cert-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1em; }
+    .dc-cert-mark { display: flex; align-items: center; gap: .7em; }
+    .dc-cert-mark img { width: 2.3em; height: auto; display: block; }
+    .dc-cert-mark b { font-size: 1.28em; font-weight: 700; letter-spacing: -.01em; }
+    .dc-cert-kicker {
+      border: 1px solid rgba(2,35,96,.14); border-radius: 4px;
+      padding: .35em .9em; font-size: .78em; font-weight: 500; color: #5b6f92; white-space: nowrap;
+    }
+    .dc-cert-body { display: flex; flex-direction: column; justify-content: center; gap: .1em; }
+    .dc-cert-date { font-size: .86em; color: #5b6f92; margin-bottom: .6em; }
+    .dc-cert-holder {
+      font-family: Amiri, 'Noto Naskh Arabic', serif;
+      font-size: 3.6em; font-weight: 700; line-height: 1.25;
+      margin-bottom: .18em; text-wrap: balance; overflow-wrap: anywhere;
+    }
+    .dc-cert-lead { font-size: 1.06em; color: #1c3560; line-height: 1.9; }
+    .dc-cert-pathway {
+      font-size: 1.85em; font-weight: 700; line-height: 1.45; color: #022360;
+      margin: .12em 0 .1em; max-width: 24em; text-wrap: balance;
+    }
+    .dc-cert-offered { font-size: .9em; color: #5b6f92; margin-top: .35em; }
+    .dc-cert-foot {
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 2em;
+      padding-top: 1.4em; border-top: 1px solid rgba(2,35,96,.14);
+    }
+    .dc-cert-sig { display: flex; flex-direction: column; gap: .05em; }
+    .dc-cert-sig-line { width: 13em; height: 1px; background: #022360; opacity: .55; margin-bottom: .55em; }
+    .dc-cert-sig-name { font-size: 1em; font-weight: 600; }
+    .dc-cert-sig-role { font-size: .8em; color: #5b6f92; }
+    .dc-cert-ver { display: flex; flex-direction: column; align-items: flex-end; gap: .12em; direction: ltr; text-align: left; }
+    .dc-cert-ver-badge { display: flex; align-items: center; gap: .45em; font-size: .82em; font-weight: 600; color: #022360; direction: rtl; }
+    .dc-cert-ver-badge i {
+      width: 1.35em; height: 1.35em; border-radius: 50%; background: #0b5fff; color: #fff;
+      display: inline-grid; place-items: center; font-style: normal; font-size: .85em;
+    }
+    .dc-cert-ver-id { font-size: .9em; font-weight: 600; letter-spacing: .12em; color: #022360; }
+    .dc-cert-ver-url { font-size: .76em; color: #5b6f92; }
+    .dc-cert-fine { font-size: .68em; color: #8a9bb8; line-height: 1.7; }
+
+    /* a revoked certificate is still shown — it is a record — but says so */
+    .dc-cert.is-revoked { filter: grayscale(1); opacity: .72; }
+    .dc-cert.is-revoked .dc-cert-kicker { border-color: #8a2c2c; color: #8a2c2c; font-weight: 700; }
+
+    /* ── Around the sheet: the lookup and the verdict. Theme-aware. ── */
+    .dc-cert-page { display: flex; flex-direction: column; gap: 22px; max-width: 980px; margin: 0 auto; }
+    .dc-cert-lookup { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .dc-cert-lookup input {
+      flex: 1 1 220px; direction: ltr; text-align: center; letter-spacing: .12em;
+      font-weight: 600; text-transform: uppercase;
+    }
+    .dc-cert-verdict {
+      border-radius: 14px; padding: 16px 18px; display: flex; gap: 12px; align-items: flex-start;
+      border: 1px solid var(--dcp-line, rgba(2,35,96,.12));
+    }
+    .dc-cert-verdict i {
+      flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%;
+      display: inline-grid; place-items: center; font-style: normal; font-weight: 700;
+    }
+    .dc-cert-verdict b { display: block; font-size: 1.02rem; margin-bottom: 2px; }
+    .dc-cert-verdict p { margin: 0; font-size: .92rem; line-height: 1.8; }
+    .dc-cert-verdict.ok { background: rgba(31,120,80,.08); border-color: rgba(31,120,80,.25); }
+    .dc-cert-verdict.ok i { background: #1f7850; color: #fff; }
+    .dc-cert-verdict.revoked { background: rgba(138,44,44,.07); border-color: rgba(138,44,44,.25); }
+    .dc-cert-verdict.revoked i { background: #8a2c2c; color: #fff; }
+    .dc-cert-verdict.missing i { background: rgba(0,0,0,.10); }
+    .dc-cert-verdict.unreachable i { background: rgba(0,0,0,.10); }
+    .dc-cert-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    @media print {
+      @page { size: A4 landscape; margin: 0; }
+      body { background: #fff !important; padding: 0 !important; margin: 0 !important; }
+      .dcp-page-header, .dc-cert-lookup, .dc-cert-verdict, .dc-cert-actions, .dc-cert-intro { display: none !important; }
+      .dcp-page-main { padding: 0 !important; margin: 0 !important; max-width: none !important; }
+      .dc-cert-page { max-width: none; gap: 0; }
+      .dc-cert-shell { width: 297mm; }
+      .dc-cert { box-shadow: none; width: 297mm; height: 210mm; font-size: 3.86mm; padding: 18.4mm 20.8mm 13.7mm; }
+      .dc-cert.is-revoked { filter: none; opacity: 1; }
+    }
   </style>
 </head>
 <body class="dcp-page">
@@ -57,6 +145,6 @@
   <main class="dcp-page-main">
     <div id="dcp-root"></div>
   </main>
-  <script type="module" src="/plus/js/certificate-page.js?v=2"></script>
+  <script type="module" src="/plus/js/certificate-page.js?v=3"></script>
 </body>
 </html>
