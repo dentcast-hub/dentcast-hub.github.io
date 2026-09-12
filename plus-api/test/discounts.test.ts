@@ -131,7 +131,7 @@ describe('availableCredits', () => {
     );
     expect((await availableCredits(uid)).some((c) => c.source.startsWith('badge:quill'))).toBe(false);
 
-    // Fifty = «قلم» silver -> one 1% credit, named by the badge.
+    // Fifty = «قلم» silver -> one 2% credit, named by the badge (doubled 1405/06/21).
     for (let i = 1; i < 50; i += 1) {
       await pool.query(
         `insert into highlights (user_id, content_id, exact) values ($1, 'c/x${i}', 'h')`, [uid],
@@ -139,7 +139,7 @@ describe('availableCredits', () => {
     }
     const credits = await availableCredits(uid);
     const quill = credits.find((c) => c.source === 'badge:quill:silver');
-    expect(quill).toMatchObject({ percent: 1, kind: 'badge', label_fa: 'قلم' });
+    expect(quill).toMatchObject({ percent: 2, kind: 'badge', label_fa: 'قلم' });
   });
 
   it('includes unexpired grants and excludes expired ones', async () => {
@@ -278,15 +278,15 @@ describe('GET /achievements — the money layer', () => {
     const res = await app.inject({ method: 'GET', url: '/achievements', headers: { cookie } });
     const body = res.json();
     expect(body.discount).toMatchObject({
-      ready_percent: 1, cap_percent: CREDIT_CAP_PERCENT,
-      pillar_percent: 0, next_purchase_percent: 1,
+      ready_percent: 2, cap_percent: CREDIT_CAP_PERCENT,
+      pillar_percent: 0, next_purchase_percent: 2,
     });
 
     const quill = body.badges.find((b: { key: string }) => b.key === 'quill');
     const [bronze, silver, gold] = quill.levels;
     expect(bronze.discount_percent).toBeNull();          // a bronze never carries money
-    expect(silver).toMatchObject({ discount_percent: 1, discount_state: 'ready' });
-    expect(gold).toMatchObject({ discount_percent: 2, discount_state: 'future' });
+    expect(silver).toMatchObject({ discount_percent: 2, discount_state: 'ready' });
+    expect(gold).toMatchObject({ discount_percent: 4, discount_state: 'future' });
   });
 
   it('marks a consumed level as spent', async () => {

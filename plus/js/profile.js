@@ -1,15 +1,15 @@
 // Reusable profile renderer (spec 2.7). Used by the /plus/profile.html page and
 // the header overlay. Site design language; a clear, readable week strip. Nothing
 // here is mandatory: the pseudonym is editable, no real name is ever required.
-import { el, faNum, tehranDay } from './util.js?v=68';
-import { api, ApiError, currentUser } from './api.js?v=68';
-import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js?v=68';
-import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=68';
-import { baleEnabled, baleDeepLink } from './config.js?v=68';
-import { leagueEntryButton } from './league.js?v=68';
-import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=68';
-import { subscriptionCta } from './premium-cta.js?v=68';
-import { copyToClipboard, confirmStrip } from './hl-view.js?v=68';
+import { el, faNum, tehranDay } from './util.js?v=69';
+import { api, ApiError, currentUser } from './api.js?v=69';
+import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js?v=69';
+import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=69';
+import { baleEnabled, baleDeepLink } from './config.js?v=69';
+import { leagueEntryButton } from './league.js?v=69';
+import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=69';
+import { subscriptionCta } from './premium-cta.js?v=69';
+import { copyToClipboard, confirmStrip } from './hl-view.js?v=69';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
   timeZone: 'Asia/Tehran', year: 'numeric', month: 'long', day: 'numeric',
@@ -624,9 +624,44 @@ function phoneBlock(me) {
   return container;
 }
 
+/**
+ * گواهی‌ها — services/certificates.ts. Renders ONLY when the reader holds at
+ * least one; a heading over «هنوز گواهی‌ای نداری» on every profile would be an
+ * advert for the exam, not content. Each row carries the code (the thing a
+ * reader copies into LinkedIn's "credential ID") and the verify link (its
+ * "credential URL"); a revoked one stays listed and says so, because the
+ * row is the record.
+ */
+function certificatesBlock(certs) {
+  const rows = (certs && certs.certificates) || [];
+  if (!rows.length) return null;
+  const FA_DATE = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' });
+  const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } catch (_) { return ''; } };
+  return el('div', { class: 'dcp-certs' }, rows.map((c) => {
+    const copyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost dcp-btn-sm', type: 'button' }, 'کپی کد');
+    copyBtn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(c.verify_code); copyBtn.textContent = 'کپی شد ✓'; }
+      catch (_) { copyBtn.textContent = 'کپی نشد'; }
+      setTimeout(() => { copyBtn.textContent = 'کپی کد'; }, 1600);
+    });
+    return el('div', { class: 'dcp-cert' + (c.revoked_at ? ' dcp-cert-revoked' : '') }, [
+      el('div', { class: 'dcp-cert-title' }, [
+        el('b', {}, c.pathway_title_fa),
+        c.revoked_at ? el('span', { class: 'dcp-pill' }, 'باطل‌شده') : null,
+      ].filter(Boolean)),
+      el('div', { class: 'dcp-muted' }, `به نام ${c.holder_name || '—'} · ${when(c.issued_at)}`),
+      el('div', { class: 'dcp-cert-row' }, [
+        el('code', { class: 'dcp-cert-code', dir: 'ltr' }, c.verify_code),
+        copyBtn,
+        el('a', { class: 'dcp-btn dcp-btn-ghost dcp-btn-sm', href: c.verify_url, target: '_blank', rel: 'noopener' }, 'صفحهٔ تأیید ›'),
+      ]),
+    ]);
+  }));
+}
+
 export async function renderProfile(root, { me: preMe } = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
-  const [me, stats, league, achievements, referral] = await Promise.all([
+  const [me, stats, league, achievements, referral, certs] = await Promise.all([
     preMe ? Promise.resolve(preMe) : api.me().catch(() => null),
     api.profileStats().catch(() => ({ week: [], month_vs_month: null, records: {} })),
     api.league().catch(() => null),
@@ -636,11 +671,14 @@ export async function renderProfile(root, { me: preMe } = {}) {
     api.achievements().catch(() => null),
     // کد معرف. Same rule: a down /referral must not cost the rest of the page.
     api.referralGet().catch(() => null),
+    // گواهی‌ها. Same rule again; and an empty list renders no section at all.
+    api.certificates().catch(() => null),
   ]);
   if (!me) { root.replaceChildren(el('div', { class: 'dcp-gate' }, 'برای دیدن پروفایل وارد شوید.')); return; }
 
   const achBody = achievementsBody(achievements);
   const discBody = discountBody(achievements);
+  const certBody = certificatesBlock(certs);
 
   const logoutBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'خروج از حساب');
   logoutBtn.addEventListener('click', async () => { await api.logout().catch(() => {}); location.href = '/'; });
@@ -660,6 +698,9 @@ export async function renderProfile(root, { me: preMe } = {}) {
     // question it answers, and it renders only when there is a position to
     // report (discountBody returns null otherwise).
     ...(discBody ? [section('تخفیف‌های من', discBody, 'discounts')] : []),
+    // گواهی‌ها sit beside the money they came with; absent until the first
+    // one is issued (certificatesBlock returns null on an empty list).
+    ...(certBody ? [section('گواهی‌ها', certBody, 'certificates')] : []),
     section('هفته شما', stats.week && stats.week.length ? weekStrip(stats.week) : el('div', { class: 'dcp-muted' }, '—')),
     section('رکوردها', el('div', { class: 'dcp-records' }, [
       el('div', {}, [el('b', {}, faNum(stats.records?.current_streak || 0)), el('span', {}, 'استریک فعلی')]),

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- One page per certificate would be hundreds of thin, near-identical
+       documents in the index; and the link needs no ranking — it is opened
+       from a LinkedIn "credential URL" or a printed code, never found. -->
+  <meta name="robots" content="noindex, follow">
+  <title>تأیید گواهی تکمیل مسیر | دنت‌کست</title>
+  <link rel="manifest" href="/plus/manifest.webmanifest">
+  <meta name="theme-color" content="#f0f2f5">
+  <link rel="stylesheet" href="/dc-theme.css">
+  <link rel="stylesheet" href="/plus/plus.css?v=40">
+  <link rel="stylesheet" href="/plus/plus-pages.css?v=39">
+  <link rel="stylesheet" href="/plus/plus-desktop.css?v=7">
+  <style>
+    /* Page-local: a certificate is a document, and reads as one. */
+    .dcp-cert-card { max-width: 640px; margin: 0 auto; padding: 28px 24px; border: 1px solid var(--dcp-line, #e3e6ea); border-radius: 16px; background: var(--dcp-surface, #fff); text-align: center; }
+    .dcp-cert-card .dcp-cert-kicker { font-size: .85rem; letter-spacing: .04em; opacity: .7; margin-bottom: 8px; }
+    .dcp-cert-card .dcp-cert-holder { font-size: 1.6rem; font-weight: 700; margin: 6px 0 2px; }
+    .dcp-cert-card .dcp-cert-pathway { font-size: 1.1rem; margin: 10px 0 14px; }
+    .dcp-cert-card .dcp-cert-meta { font-size: .9rem; opacity: .8; }
+    .dcp-cert-card .dcp-cert-code { display: inline-block; margin-top: 14px; padding: 6px 12px; border-radius: 8px; background: rgba(0,0,0,.05); font-family: ui-monospace, monospace; letter-spacing: .12em; }
+    .dcp-cert-card .dcp-cert-state { display: inline-block; margin-top: 12px; padding: 4px 12px; border-radius: 999px; font-size: .85rem; font-weight: 600; }
+    .dcp-cert-card .dcp-cert-state.ok { background: rgba(31,120,80,.12); color: #1f7850; }
+    .dcp-cert-card .dcp-cert-state.revoked { background: rgba(120,40,40,.10); color: #8a2c2c; }
+    .dcp-cert-card .dcp-cert-note { font-size: .82rem; opacity: .7; margin-top: 18px; line-height: 1.7; }
+    .dcp-cert-lookup { max-width: 640px; margin: 18px auto 0; display: flex; gap: 8px; }
+    .dcp-cert-lookup input { flex: 1; direction: ltr; text-align: center; letter-spacing: .1em; }
+    @media print { .dcp-page-header, .dcp-cert-lookup { display: none !important; } }
+  </style>
+</head>
+<body class="dcp-page">
+  <header class="dcp-page-header">
+    <a class="dcp-page-brand" href="/">دنت‌کست</a>
+    <a class="dcp-page-back" href="/plus/pathways.html">مسیرهای یادگیری</a>
+  </header>
+  <main class="dcp-page-main">
+    <div id="dcp-root"></div>
+  </main>
+  <script type="module" src="/plus/js/certificate-page.js?v=2"></script>
+</body>
+</html>

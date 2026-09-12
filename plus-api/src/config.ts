@@ -283,6 +283,15 @@ export const config = {
     alertPhone: str('PATHWAY_ALERT_PHONE', ''),
   },
 
+  // The pathway completion certificate (services/certificates.ts). The credit
+  // that rides along with an issued certificate — one ordinary discount_grants
+  // row, WRITTEN at issue, so a pathway growing under the holder can never take
+  // it back. Ten is one purchase's whole cap on purpose: it is spent in a
+  // single purchase, never sliced, and reads in one sentence.
+  certificate: {
+    discountPercent: int('CERTIFICATE_DISCOUNT_PERCENT', 10),
+  },
+
   // Subscription renewal reminders: one `daysBefore` days out and one on the
   // last day itself. Sent at reminder hour Tehran — mid-morning, so it lands
   // when someone can act on it rather than at a boundary nobody is awake for.

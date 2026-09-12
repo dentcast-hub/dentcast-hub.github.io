@@ -624,7 +624,10 @@ describe('«یادآور» — روزهای مرور، نه تعدادِ کار�
     // The reason the metric matters: this level is money.
     const silver = getBadgeCatalog().badges.find((b: Badge) => b.key === 'recaller')!
       .levels!.find((l) => l.tier === 'silver')!;
-    expect(silver.discount_percent).toBe(1);
+    // ٪۲ since 1405/06/21 — every badge percent was doubled at the founder's
+    // decision («یک درصد بی‌معنی است»); the shape (silver pays, bronze does
+    // not) is what this test guards, the figure is catalog policy.
+    expect(silver.discount_percent).toBe(2);
   });
 });
 

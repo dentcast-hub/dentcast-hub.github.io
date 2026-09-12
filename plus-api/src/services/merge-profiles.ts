@@ -37,6 +37,19 @@ export async function mergeProfiles(
   );
   await client.query('update user_pathways set user_id = $2 where user_id = $1', [fromId, toId]);
 
+  // pathway_exams: same composite key as user_pathways (one exam per reader
+  // per pathway). The kept account's assignment wins; a certificate that
+  // pointed at the dropped exam keeps its row — exam_id is `on delete set
+  // null`, and the certificate is the decision, not the exam.
+  await client.query(
+    `delete from pathway_exams pe
+      where pe.user_id = $1
+        and exists (select 1 from pathway_exams k
+                     where k.user_id = $2 and k.pathway_id = pe.pathway_id)`,
+    [fromId, toId],
+  );
+  await client.query('update pathway_exams set user_id = $2 where user_id = $1', [fromId, toId]);
+
   await client.query(
     `delete from article_notes an
       where an.user_id = $1
