@@ -16,9 +16,9 @@
 // A revoked certificate does NOT tick its pathway. The wall shows what stands
 // today; the record of a revoked one lives in the API's `certificates` list
 // and on its own verify page, which still answers for the code.
-import { el, faNum, icon } from './util.js?v=72';
-import { openSheet, closeSheet } from './sheet.js?v=72';
-import { downloadCertificate } from './certificate-image.js?v=72';
+import { el, faNum, icon } from './util.js?v=73';
+import { openSheet, closeSheet } from './sheet.js?v=73';
+import { downloadCertificate } from './certificate-image.js?v=73';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' });
 const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } catch (_) { return ''; } };
@@ -127,19 +127,36 @@ export function heldCard(c) {
   ]);
 }
 
-/** The card an un-earned pathway opens: what it is, and how it is earned. */
+const LOCKED_LINE = {
+  ready: ['آزمون برایت باز است', 'مسیر را تمام کرده‌ای (یا زودتر راه داده شده‌ای). با قبولی در آزمون، گواهی‌نامه به نام خودت صادر می‌شود.', 'رفتن به آزمون'],
+  open: ['یک آزمون نیمه‌کاره داری', 'سؤال‌ها همان‌هایی‌اند که دیده‌ای؛ برگرد و ارسال کن.', 'ادامهٔ آزمون'],
+  queued: ['پاسخ‌هایت در حال بررسی است', 'نتیجهٔ آزمون در «اطلاعیه» می‌آید و گواهی همان لحظه صادر می‌شود.', 'دیدن وضعیت'],
+  wait: ['این بار به نصاب نرسید', 'تلاش بعدی به‌زودی باز می‌شود — تاریخش در صفحهٔ آزمون.', 'دیدن نتیجه'],
+  exhausted: ['تلاش‌های آزمون تمام شد', 'نتیجه در صفحهٔ آزمون است.', 'دیدن نتیجه'],
+};
+
+/**
+ * The card an un-earned pathway opens: what it is, and how it is earned —
+ * or, when an exam is already in play (`p.exam.state` from GET
+ * /certificates), where it stands and the way to it.
+ */
 export function lockedCard(p) {
-  return el('div', { class: 'dcp-cert-card' }, [
+  const ex = p.exam && LOCKED_LINE[p.exam.state];
+  const examHref = (p.exam && p.exam.url) || `/plus/exam.html?id=${encodeURIComponent(p.id)}`;
+  return el('div', { class: 'dcp-cert-card', 'data-cert-exam': (p.exam && p.exam.state) || '' }, [
     el('div', { class: 'dcp-cert-card-hd' }, [
       el('span', { class: 'dcp-bg-disc is-md is-off' }, [icon(p.glyph || 'icon-flag', { class: 'dcp-cert-ico' })]),
       el('div', {}, [
-        el('div', { class: 'dcp-cert-card-kicker' }, 'هنوز صادر نشده'),
+        el('div', { class: 'dcp-cert-card-kicker' }, ex ? ex[0] : 'هنوز صادر نشده'),
         el('b', {}, p.title_fa),
       ]),
     ]),
-    el('p', { class: 'dcp-cert-card-lead' },
-      'این مسیر را تا آخرین قدم بخوان؛ نزدیک پایان، آزمونِ مسیر برایت گذاشته می‌شود و با قبولی در آن، گواهی‌نامه به نام خودت صادر می‌شود.'),
-    el('a', { class: 'dcp-btn', href: `/plus/pathway.html?id=${encodeURIComponent(p.id)}` }, 'رفتن به مسیر'),
+    el('p', { class: 'dcp-cert-card-lead' }, ex ? ex[1]
+      : 'این مسیر را تا آخرین قدم بخوان؛ نزدیک پایان، آزمونِ مسیر برایت گذاشته می‌شود و با قبولی در آن، گواهی‌نامه به نام خودت صادر می‌شود.'),
+    el('div', { class: 'dcp-cert-actions' }, [
+      ex ? el('a', { class: 'dcp-btn', href: examHref }, ex[2]) : null,
+      el('a', { class: 'dcp-btn' + (ex ? ' dcp-btn-ghost' : ''), href: `/plus/pathway.html?id=${encodeURIComponent(p.id)}` }, 'رفتن به مسیر'),
+    ].filter(Boolean)),
     el('button', {
       class: 'dcp-btn dcp-btn-ghost dcp-ach-close', type: 'button', onclick: () => closeSheet(),
     }, 'بستن'),

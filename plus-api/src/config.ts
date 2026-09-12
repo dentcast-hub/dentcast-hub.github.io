@@ -292,6 +292,24 @@ export const config = {
     discountPercent: int('CERTIFICATE_DISCOUNT_PERCENT', 10),
   },
 
+  // آزمون مسیر (services/pathway-exams.ts). The defaults a NEW form is
+  // created with — each form stores its own copy, so retuning these changes
+  // nothing already written. Founder decisions, 2026-09-12: every threshold
+  // 70%, two attempts, a week apart. `supervisedUntil` is how many founder
+  // rulings a form needs before the model may settle a free-text attempt on
+  // its own; multiple-choice needs no supervision.
+  exam: {
+    passPercent: int('EXAM_PASS_PERCENT', 70),
+    maxAttempts: int('EXAM_MAX_ATTEMPTS', 2),
+    retryDays: int('EXAM_RETRY_DAYS', 7),
+    supervisedUntil: int('EXAM_SUPERVISED_UNTIL', 5),
+    minAnswerChars: int('EXAM_MIN_ANSWER_CHARS', 20),
+    maxAnswerChars: int('EXAM_MAX_ANSWER_CHARS', 3000),
+    // Two model calls per free question per submit; this is the third route
+    // on the site that spends model money per call.
+    maxSubmitsPerHour: int('EXAM_MAX_SUBMITS_PER_HOUR', 6),
+  },
+
   // Subscription renewal reminders: one `daysBefore` days out and one on the
   // last day itself. Sent at reminder hour Tehran — mid-morning, so it lands
   // when someone can act on it rather than at a boundary nobody is awake for.

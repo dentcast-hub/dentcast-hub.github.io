@@ -36,6 +36,10 @@ import type { NotificationKind, NotificationMessage } from '../providers/notific
 /** Kinds that ignore the daily cap entirely. */
 const UNCAPPED: ReadonlySet<NotificationKind> = new Set<NotificationKind>([
   'system',
+  // آزمون مسیر: a door opened for one reader, and the result of an exam they
+  // sat. Both are answers to something the reader is waiting on.
+  'exam_assigned',
+  'exam_result',
   // The renewal warning. Everything else the cap governs is a nudge we would
   // rather drop than double up on; this one has a subscription on the other
   // side of it, and a user who misses it because a streak reminder arrived

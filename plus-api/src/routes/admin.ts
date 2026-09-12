@@ -57,7 +57,8 @@ import {
   issueCertificate, revokeCertificate, listCertificates, certificateRoster, getCertificate,
 } from '../services/certificates.js';
 import {
-  assignExam, deleteExam, listExams, examRoster, getExam,
+  assignExam, deleteAssignment, listAssignments, assignmentRoster, getAssignment, notifyAssigned,
+  upsertForm, getForm, deleteForm, formRoster, queueRows, attemptRoster, ruleAttempt, notifyAssigneesOfNewForm,
 } from '../services/pathway-exams.js';
 import { getPathways } from '../pathways.js';
 import {
@@ -758,33 +759,336 @@ function renderHtml(
   })();
   </script>
 
-  <h3 style="margin-top:26px">گواهی و آزمونِ مسیر</h3>
+  <h3 id="exams" style="margin-top:26px">آزمونِ مسیر <span id="exqWaiting" class="pill"></span></h3>
   <div class="muted">
-    دو تصمیم که این‌جا نوشته می‌شوند: <b>آزمون</b> برای یک نفر روی یک مسیر (سؤال‌ها را از NotebookLM
-    می‌گیری و همین‌جا می‌چسبانی — شکلش هنوز باز است، هر JSON‌ای ذخیره می‌شود) و <b>گواهی</b> که بعد از
-    قبولی صادر می‌کنی. گواهی کد یکتای <span dir="ltr">DC-XXX-XXX</span> می‌گیرد، صفحهٔ تأییدِ عمومی دارد،
-    و ٪۱۰ تخفیف (یک خرید، کامل) همان لحظه برای خواننده نوشته می‌شود. نامِ روی گواهی همان‌جا قفل می‌شود —
-    نه نامِ مستعار. گواهی هرگز حذف نمی‌شود، فقط باطل می‌شود (کدش شاید روی لینکدین کسی باشد).
+    سه چیز این‌جا نوشته می‌شود. <b>فرم آزمون</b> برای هر مسیر یک بار: سؤال‌ها را از NotebookLM می‌گیری (الگوی
+    پرامپت پایین همین بخش) و همین‌جا می‌چسبانی — تستی، تشریحی، یا هر دو، به هر تعداد. <b>واگذاری</b> وقتی
+    می‌خواهی کسی را پیش از تمام‌کردن مسیر راه بدهی؛ کسی که مسیر را تمام کرده خودش راه دارد. و <b>حکم</b> روی
+    تلاش‌هایی که در صف‌اند: پاسخ تشریحی را مدل دو بار جداگانه تصحیح می‌کند و فقط اگر هر دو بار یک حکم بدهد مطمئن
+    حساب می‌شود — و تا وقتی روی یک فرم کمتر از «حدِ نظارت» حکم داده باشی، هر تلاشِ تشریحی با حکمِ آمادهٔ مدل به
+    صف تو می‌آید نه این‌که خودش بسته شود. حکم تو نمونهٔ آموزشیِ همان سؤال می‌شود. تستی خودش بسته می‌شود.
+    قبولی یعنی هر بخش (تستی / نکته‌های تشریحی) به نصاب برسد؛ قبولی همان لحظه گواهی صادر می‌کند.
   </div>
 
-  <h4 style="margin-top:14px">آزمون بگذار</h4>
+  <h4 style="margin-top:14px">فرم آزمون هر مسیر</h4>
+  <form class="bc" id="efForm" onsubmit="return false">
+    <div class="row">
+      <div style="flex:1 1 220px"><label for="efPath">مسیر</label><select id="efPath"></select></div>
+      <div style="flex:0 0 90px"><label for="efMcq">قرعهٔ تستی</label><input id="efMcq" type="number" min="0" max="200" value="0" title="۰ = همهٔ سؤال‌های تستیِ مخزن"></div>
+      <div style="flex:0 0 90px"><label for="efFree">قرعهٔ تشریحی</label><input id="efFree" type="number" min="0" max="200" value="0" title="۰ = همهٔ سؤال‌های تشریحیِ مخزن"></div>
+      <div style="flex:0 0 80px"><label for="efPass">نصاب ٪</label><input id="efPass" type="number" min="1" max="100" value="70"></div>
+      <div style="flex:0 0 80px"><label for="efMax">تلاش</label><input id="efMax" type="number" min="1" max="10" value="2"></div>
+      <div style="flex:0 0 90px"><label for="efRetry">فاصله (روز)</label><input id="efRetry" type="number" min="0" max="365" value="7"></div>
+      <div style="flex:0 0 90px"><label for="efSup">حدِ نظارت</label><input id="efSup" type="number" min="0" max="1000" value="5" title="چند حکم تو لازم است تا مدل خودش تشریحی را ببندد"></div>
+    </div>
+    <div><label for="efQ">سؤال‌ها (JSON — خروجی NotebookLM را بچسبان؛ کلیدهای رایج خودش شناخته می‌شود)</label>
+      <textarea id="efQ" rows="8" dir="ltr" placeholder='[{"kind":"mcq","prompt_fa":"…","options":["…","…","…","…"],"correct":1},{"kind":"free","prompt_fa":"…","key_points":["…","…","…"]}]'></textarea></div>
+    <div><label for="efNote">یادداشت (اختیاری)</label><input id="efNote" type="text" maxlength="400"></div>
+    <div class="row">
+      <button id="efSend" type="button">ذخیرهٔ فرم</button>
+      <button id="efPrompt" type="button">الگوی پرامپت NotebookLM</button>
+      <span id="efOut" class="muted"></span>
+    </div>
+    <pre id="efPromptBox" dir="rtl" style="display:none;white-space:pre-wrap;font-family:inherit;font-size:.9em;border:1px solid #ddd;padding:10px;border-radius:8px"></pre>
+  </form>
+  <div id="efList"></div>
+
+  <h4 style="margin-top:18px">واگذاریِ زودهنگام</h4>
   <form class="bc" id="exForm" onsubmit="return false">
     <div class="row">
       <div style="flex:1 1 200px"><label for="exUser">کاربر (موبایل / نام کاربری / شناسه)</label>
         <input id="exUser" type="text" placeholder="0912…"></div>
       <div style="flex:1 1 220px"><label for="exPath">مسیر</label><select id="exPath"></select></div>
-      <div style="flex:0 0 120px"><label for="exMax">حداکثر تلاش</label>
-        <input id="exMax" type="number" min="1" max="10" value="2"></div>
     </div>
-    <div><label for="exQ">سؤال‌ها (JSON آرایه — هر شکلی؛ خروجی NotebookLM را بچسبان)</label>
-      <textarea id="exQ" rows="6" dir="ltr" placeholder='[{"q":"…","a":"…"}]'></textarea></div>
     <div><label for="exNote">یادداشت (اختیاری)</label><input id="exNote" type="text" maxlength="200"></div>
-    <button id="exSend" type="button">ثبت آزمون</button>
+    <button id="exSend" type="button">راه بده و خبر بده</button>
     <span id="exOut" class="muted"></span>
   </form>
   <div id="exList"></div>
 
-  <h4 style="margin-top:18px">گواهی صادر کن</h4>
+  <h4 style="margin-top:18px">صندوق آزمون — منتظر حکم تو</h4>
+  <div id="exqList"></div>
+
+  <h4 style="margin-top:18px">گزارش تلاش‌ها</h4>
+  <div id="exrList"></div>
+  <script>
+  (function () {
+    var efList = document.getElementById('efList'), efOut = document.getElementById('efOut');
+    var exList = document.getElementById('exList'), exOut = document.getElementById('exOut');
+    var exqList = document.getElementById('exqList'), exrList = document.getElementById('exrList');
+    var waiting = document.getElementById('exqWaiting');
+    var efBtn = document.getElementById('efSend'), exBtn = document.getElementById('exSend');
+    if (!efList || !exqList) return;
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+    var FA = '۰۱۲۳۴۵۶۷۸۹';
+    function fa(n) { return String(n == null ? '' : n).replace(/[0-9]/g, function (d) { return FA[+d]; }); }
+    function val(id) { return document.getElementById(id).value.trim(); }
+    function num(id, dflt) { var n = parseInt(val(id).replace(/[۰-۹]/g, function (d) { return FA.indexOf(d); }), 10); return isNaN(n) ? dflt : n; }
+    function when(iso) {
+      if (!iso) return '';
+      try { return new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(iso)); }
+      catch (e) { return ''; }
+    }
+    function post(url, body) {
+      return fetch(url, {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' }, body: JSON.stringify(body)
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); });
+    }
+    function get(url) { return fetch(url, { credentials: 'include', cache: 'no-store' }).then(function (r) { return r.json(); }); }
+    var titles = {};
+    var STATUS = { open: 'باز', queued: 'در صف', passed: 'قبول', failed: 'رد', void: 'باطل' };
+
+    get('/admin/pathways/catalog').then(function (d) {
+      var opts = (d.pathways || []).map(function (p) {
+        titles[p.id] = p.title_fa;
+        return '<option value="' + esc(p.id) + '">' + esc(p.title_fa) + ' (' + fa(p.steps) + ')</option>';
+      }).join('');
+      document.getElementById('efPath').innerHTML = opts;
+      document.getElementById('exPath').innerHTML = opts;
+      var ce = document.getElementById('cePath'); if (ce) ce.innerHTML = opts;
+    }).catch(function () { efOut.textContent = 'فهرست مسیرها نیامد.'; })
+      .then(function () { loadForms(); loadAssign(); loadQueue(); });
+
+    var PROMPT = 'از روی منابعی که در این نوت‌بوک هست، یک آزمون پایان مسیر بساز. خروجی را فقط به شکل یک آرایهٔ JSON بده، بدون هیچ متن دیگری. هر عنصر یکی از این دو شکل است:'
+      + ' (۱) تستی: {"kind":"mcq","prompt_fa":"متن سؤال به فارسی","options":["گزینهٔ ۱","گزینهٔ ۲","گزینهٔ ۳","گزینهٔ ۴"],"correct":<اندیس صفرمبنای گزینهٔ درست>}'
+      + ' (۲) تشریحی: {"kind":"free","prompt_fa":"متن سؤال به فارسی","key_points":["نکتهٔ کلیدی ۱","نکتهٔ کلیدی ۲","نکتهٔ کلیدی ۳"]}.'
+      + ' سؤال‌های تستی باید یک پاسخ درست قطعی داشته باشند و گزینه‌های غلط باورپذیر باشند؛ سؤال‌های تشریحی باید فهم مفهومی و استدلال بالینی را بسنجند و هر کدام ۳ تا ۵ نکتهٔ کلیدیِ قابل‌بررسی داشته باشند که یک پاسخ خوب باید پوشش دهد.'
+      + ' فقط از محتوای منابع استفاده کن و چیزی از خودت اضافه نکن. ۱۵ سؤال تستی و ۵ سؤال تشریحی بساز.';
+    document.getElementById('efPrompt').addEventListener('click', function () {
+      var box = document.getElementById('efPromptBox');
+      box.textContent = PROMPT;
+      box.style.display = box.style.display === 'none' ? 'block' : 'none';
+      if (navigator.clipboard) navigator.clipboard.writeText(PROMPT).then(function () { efOut.textContent = 'پرامپت کپی شد.'; }, function () {});
+    });
+
+    function loadForms() {
+      get('/admin/exam-forms').then(function (d) {
+        var rows = d.forms || [];
+        if (!rows.length) { efList.innerHTML = '<div class="muted">هنوز فرمی ذخیره نشده.</div>'; return; }
+        efList.innerHTML = '<div class="tblwrap"><table><tr><th>مسیر</th><th>مخزن</th><th>قرعه</th><th>نصاب</th>'
+          + '<th>تلاش / فاصله</th><th>حکم‌های تو</th><th>تلاش‌ها</th><th></th></tr>'
+          + rows.map(function (f) {
+            var a = f.attempts || {};
+            var sup = f.rulings >= f.supervised_until
+              ? '<span class="pill">خودکار</span>' : fa(f.rulings) + ' از ' + fa(f.supervised_until);
+            return '<tr><td>' + esc(f.title_fa) + (f.note ? '<div class="muted">' + esc(f.note) + '</div>' : '') + '</td>'
+              + '<td>' + fa(f.mcq_count) + ' تستی · ' + fa(f.free_count) + ' تشریحی</td>'
+              + '<td>' + (f.mcq_draw ? fa(f.mcq_draw) : 'همه') + ' / ' + (f.free_draw ? fa(f.free_draw) : 'همه') + '</td>'
+              + '<td>٪' + fa(f.pass_percent) + '</td>'
+              + '<td>' + fa(f.max_attempts) + ' / ' + fa(f.retry_days) + ' روز</td>'
+              + '<td>' + sup + '</td>'
+              + '<td>' + (a.queued ? '<b>' + fa(a.queued) + ' در صف</b> · ' : '') + fa(a.passed || 0) + ' قبول · ' + fa(a.failed || 0) + ' رد' + (a.open ? ' · ' + fa(a.open) + ' باز' : '') + '</td>'
+              + '<td><button type="button" data-ef-edit="' + esc(f.pathway_id) + '">ویرایش</button> '
+              + '<button type="button" data-ef-del="' + esc(f.pathway_id) + '">حذف</button></td></tr>';
+          }).join('') + '</table></div>';
+      }).catch(function () { efList.textContent = 'فهرست نیامد.'; });
+    }
+
+    efBtn.addEventListener('click', function () {
+      var qs;
+      try { qs = JSON.parse(val('efQ') || '[]'); } catch (e) { efOut.textContent = 'JSON سؤال‌ها معتبر نیست: ' + e.message; return; }
+      efBtn.disabled = true; efOut.textContent = 'در حال ذخیره…';
+      post('/admin/exam-forms', {
+        pathway_id: val('efPath'), questions: qs,
+        mcq_draw: num('efMcq', 0), free_draw: num('efFree', 0), pass_percent: num('efPass', 70),
+        max_attempts: num('efMax', 2), retry_days: num('efRetry', 7), supervised_until: num('efSup', 5),
+        note: val('efNote') || undefined
+      }).then(function (res) {
+        efBtn.disabled = false;
+        if (!res.ok) { efOut.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+        var q = (res.j.form && res.j.form.questions) || [];
+        var m = q.filter(function (x) { return x.kind === 'mcq'; }).length;
+        efOut.textContent = (res.j.created ? 'ذخیره شد' : 'به‌روز شد') + ' — ' + fa(m) + ' تستی، ' + fa(q.length - m) + ' تشریحی.';
+        loadForms();
+      }).catch(function () { efBtn.disabled = false; efOut.textContent = 'ارسال نشد.'; });
+    });
+
+    efList.addEventListener('click', function (ev) {
+      var e = ev.target.closest ? ev.target.closest('[data-ef-edit]') : null;
+      if (e) {
+        get('/admin/exam-forms/' + encodeURIComponent(e.getAttribute('data-ef-edit'))).then(function (d) {
+          var f = d.form; if (!f) return;
+          document.getElementById('efPath').value = f.pathway_id;
+          document.getElementById('efQ').value = JSON.stringify(f.questions, null, 2);
+          document.getElementById('efMcq').value = f.mcq_draw; document.getElementById('efFree').value = f.free_draw;
+          document.getElementById('efPass').value = f.pass_percent; document.getElementById('efMax').value = f.max_attempts;
+          document.getElementById('efRetry').value = f.retry_days; document.getElementById('efSup').value = f.supervised_until;
+          document.getElementById('efNote').value = f.note || '';
+          efOut.textContent = 'فرم «' + (titles[f.pathway_id] || f.pathway_id) + '» بارگذاری شد — ویرایش کن و ذخیره بزن.';
+          document.getElementById('efQ').focus();
+        });
+        return;
+      }
+      var b = ev.target.closest ? ev.target.closest('[data-ef-del]') : null;
+      if (!b) return;
+      if (!confirm('فرم این مسیر حذف شود؟ تلاش‌ها و حکم‌های آن هم می‌روند (گواهی‌های صادرشده می‌مانند).')) return;
+      b.disabled = true;
+      post('/admin/exam-forms/delete', { pathway_id: b.getAttribute('data-ef-del') })
+        .then(function () { efOut.textContent = 'حذف شد.'; loadForms(); loadQueue(); })
+        .catch(function () { b.disabled = false; efOut.textContent = 'حذف نشد.'; });
+    });
+
+    function loadAssign() {
+      get('/admin/exams').then(function (d) {
+        var rows = d.exams || [];
+        if (!rows.length) { exList.innerHTML = '<div class="muted">واگذاریِ زودهنگامی ثبت نشده.</div>'; return; }
+        exList.innerHTML = '<div class="tblwrap"><table><tr><th>کاربر</th><th>مسیر</th><th>یادداشت</th><th>تاریخ</th><th></th></tr>'
+          + rows.map(function (e) {
+            return '<tr><td>' + esc(e.display_name) + '</td><td>' + esc(titles[e.pathway_id] || e.pathway_id)
+              + (e.has_form ? '' : ' <span class="pill">بی‌فرم!</span>') + '</td><td>' + esc(e.note || '') + '</td><td>' + when(e.created_at)
+              + '</td><td><button type="button" data-ex-del="' + esc(e.id) + '">حذف</button></td></tr>';
+          }).join('') + '</table></div>';
+      }).catch(function () { exList.textContent = 'فهرست نیامد.'; });
+    }
+
+    exBtn.addEventListener('click', function () {
+      if (!val('exUser')) { exOut.textContent = 'کاربر را بنویس.'; return; }
+      exBtn.disabled = true; exOut.textContent = 'در حال ثبت…';
+      post('/admin/exams', { user: val('exUser'), pathway_id: val('exPath'), note: val('exNote') || undefined })
+        .then(function (res) {
+          exBtn.disabled = false;
+          if (!res.ok) { exOut.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+          exOut.textContent = (res.j.created ? 'راه داده شد' : 'از قبل راه داشت') + ' — ' + (res.j.user && res.j.user.display_name || '')
+            + (res.j.has_form ? '' : ' — این مسیر هنوز فرم ندارد؛ تا فرم نسازی آزمونی نمی‌بیند.');
+          loadAssign();
+        }).catch(function () { exBtn.disabled = false; exOut.textContent = 'ارسال نشد.'; });
+    });
+
+    exList.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-ex-del]') : null;
+      if (!b) return;
+      if (!confirm('این واگذاری حذف شود؟')) return;
+      b.disabled = true;
+      post('/admin/exams/delete', { id: b.getAttribute('data-ex-del') })
+        .then(function () { exOut.textContent = 'حذف شد.'; loadAssign(); })
+        .catch(function () { b.disabled = false; exOut.textContent = 'حذف نشد.'; });
+    });
+
+    function tallyPill(t) {
+      if (!t) return '<span class="pill">مدل مطمئن نبود</span>';
+      return '<span class="pill">حکم مدل: ' + (t.passed ? 'قبول' : 'رد') + '</span>';
+    }
+    function scoreLine(r) {
+      var parts = [];
+      if (r.mcq_total) parts.push('تستی ' + fa(r.mcq_correct) + ' از ' + fa(r.mcq_total));
+      if (r.free_total) parts.push('تشریحی ' + fa(r.free_covered) + ' نکته از ' + fa(r.free_total));
+      return parts.join(' · ');
+    }
+
+    function work(row) {
+      var answers = row.answers || {};
+      var verdict = row.verdict || [];
+      var html = '';
+      var mcq = row.questions.filter(function (q) { return q.kind === 'mcq'; });
+      if (mcq.length) {
+        var right = 0;
+        var items = mcq.map(function (q) {
+          var chosen = answers[q.id];
+          var ok = chosen === q.correct; if (ok) right += 1;
+          return '<li>' + (ok ? '✅' : '❌') + ' ' + esc(q.prompt_fa) + ' <span class="muted">— انتخاب: '
+            + esc(q.options[chosen] == null ? '—' : q.options[chosen]) + (ok ? '' : ' · درست: ' + esc(q.options[q.correct])) + '</span></li>';
+        }).join('');
+        html += '<div><b>تستی: ' + fa(right) + ' از ' + fa(mcq.length) + '</b><ul style="margin:6px 0 10px">' + items + '</ul></div>';
+      }
+      row.questions.filter(function (q) { return q.kind === 'free'; }).forEach(function (q) {
+        var v = null;
+        for (var i = 0; i < verdict.length; i += 1) if (verdict[i].id === q.id) v = verdict[i];
+        var checks = q.key_points.map(function (kp) {
+          var st = null;
+          if (v && v.points) for (var k = 0; k < v.points.length; k += 1) if (v.points[k].id === kp.id) st = v.points[k].state;
+          var checked = st === 'covered' ? ' checked' : '';
+          return '<label style="display:block"><input type="checkbox" data-q="' + esc(q.id) + '" data-kp="' + esc(kp.id) + '"' + checked + '> ' + esc(kp.text)
+            + (st ? '' : ' <span class="muted">(مدل تصمیم نگرفت)</span>') + '</label>';
+        }).join('');
+        html += '<div style="margin-top:10px"><b>' + esc(q.prompt_fa) + '</b>'
+          + '<div style="white-space:pre-wrap;border:1px solid #ddd;border-radius:8px;padding:8px;margin:6px 0">' + esc(answers[q.id] || '') + '</div>'
+          + '<div class="muted">نکته‌های پوشش‌داده‌شده را تیک بزن:</div>' + checks + '</div>';
+      });
+      html += '<div class="row" style="margin-top:10px;align-items:flex-end">'
+        + '<div style="flex:1 1 220px"><label>نامِ روی گواهی</label><input type="text" data-holder maxlength="120" value="' + esc(row.holder_name || '') + '"></div>'
+        + '<button type="button" data-act="pass">قبول + صدور گواهی</button>'
+        + '<button type="button" data-act="fail">رد</button>'
+        + '<button type="button" data-act="void">باطل (تلاش حساب نشود)</button>'
+        + '</div><div class="ds-msg muted"></div>';
+      return html;
+    }
+
+    function loadQueue() {
+      get('/admin/exam-attempts').then(function (d) {
+        var q = d.queue || [];
+        waiting.textContent = q.length ? fa(q.length) + ' منتظر' : '';
+        if (!q.length) exqList.innerHTML = '<div class="muted">چیزی در صف نیست.</div>';
+        else exqList.innerHTML = q.map(function (row) {
+          return '<div class="tk" data-id="' + esc(row.id) + '">'
+            + '<div class="tk-head"><b dir="ltr">' + esc(row.reference) + '</b> · ' + esc(row.display_name || row.phone || '')
+            + ' · ' + esc(row.title_fa) + ' · تلاش ' + fa(row.attempt_no) + ' · ' + when(row.submitted_at) + ' ' + tallyPill(row.ai_tally)
+            + ' <span class="muted">(حکم‌های تو روی این فرم: ' + fa(row.rulings) + ' از ' + fa(row.supervised_until) + ')</span></div>'
+            + '<div class="tk-body"></div></div>';
+        }).join('');
+        window.__exq = {}; q.forEach(function (row) { window.__exq[row.id] = row; });
+
+        var rows = d.attempts || [];
+        if (!rows.length) { exrList.innerHTML = '<div class="muted">هنوز کسی آزمون نداده.</div>'; return; }
+        exrList.innerHTML = '<div class="tblwrap"><table><tr><th>ارجاع</th><th>کاربر</th><th>مسیر</th><th>تلاش</th><th>وضعیت</th><th>نمره</th><th>تاریخ</th></tr>'
+          + rows.map(function (r) {
+            return '<tr><td dir="ltr">' + esc(r.reference) + '</td><td>' + esc(r.display_name || r.phone || '') + '</td><td>' + esc(r.title_fa)
+              + '</td><td>' + fa(r.attempt_no) + '</td><td>' + (STATUS[r.status] || r.status) + (r.settled_by ? ' <span class="muted">(' + (r.settled_by === 'ai' ? 'مدل' : 'تو') + ')</span>' : '')
+              + '</td><td>' + scoreLine(r) + '</td><td>' + when(r.submitted_at || r.created_at) + '</td></tr>';
+          }).join('') + '</table></div>';
+      }).catch(function () { exqList.innerHTML = '<div class="muted">خوانده نشد.</div>'; });
+    }
+
+    exqList.addEventListener('click', function (ev) {
+      var act = ev.target.closest ? ev.target.closest('[data-act]') : null;
+      if (act) {
+        var wrap = act.closest('.tk'), body = act.closest('.tk-body');
+        var id = wrap.getAttribute('data-id'), msg = body.querySelector('.ds-msg');
+        var decision = act.getAttribute('data-act');
+        var row = window.__exq[id];
+        if (decision === 'void' && !confirm('این تلاش باطل شود؟ در شمار تلاش‌ها نمی‌آید و خواننده می‌تواند دوباره شروع کند.')) return;
+        if (decision === 'pass' && !confirm('قبول شود و گواهی به نام «' + body.querySelector('[data-holder]').value.trim() + '» صادر شود؟ نام بعداً قابل تغییر نیست.')) return;
+        var free = [];
+        (row.questions || []).filter(function (q) { return q.kind === 'free'; }).forEach(function (q) {
+          free.push({ id: q.id, points: q.key_points.map(function (kp) {
+            var cb = body.querySelector('[data-q="' + q.id + '"][data-kp="' + kp.id + '"]');
+            return { id: kp.id, state: cb && cb.checked ? 'covered' : 'missing' };
+          }) });
+        });
+        msg.textContent = 'در حال ثبت…';
+        post('/admin/exam-attempts/' + id + '/rule', {
+          decision: decision, free: decision === 'void' ? undefined : free,
+          holder_name: body.querySelector('[data-holder]').value.trim() || undefined
+        }).then(function (res) {
+          if (!res.ok) { msg.textContent = res.j.message || res.j.error || 'نشد.'; return; }
+          msg.textContent = decision === 'void' ? 'باطل شد.' : (decision === 'pass' ? 'قبول شد؛ گواهی صادر و به کاربر خبر داده شد.' : 'رد شد و به کاربر خبر داده شد.');
+          setTimeout(function () { loadQueue(); if (typeof loadCerts === 'function') loadCerts(); }, 900);
+        }).catch(function () { msg.textContent = 'ارسال نشد.'; });
+        return;
+      }
+      var wrap2 = ev.target.closest ? ev.target.closest('.tk') : null;
+      if (!wrap2) return;
+      if (ev.target.closest && ev.target.closest('.tk-body')) return;
+      var box = wrap2.querySelector('.tk-body');
+      if (box.innerHTML) { box.innerHTML = ''; return; }
+      box.innerHTML = work(window.__exq[wrap2.getAttribute('data-id')]);
+    });
+  })();
+  </script>
+
+  <h3 style="margin-top:26px">گواهی</h3>
+  <div class="muted">
+    گواهی معمولاً با قبولی در آزمون خودش صادر می‌شود؛ این‌جا برای صدور دستی است (یک خوانندهٔ بنیان‌گذار، یک
+    پایلوت). کد یکتای <span dir="ltr">DC-XXX-XXX</span> می‌گیرد، صفحهٔ تأییدِ عمومی دارد، و ٪۱۰ تخفیف (یک خرید،
+    کامل) همان لحظه برای خواننده نوشته می‌شود. نامِ روی گواهی همان‌جا قفل می‌شود — نه نامِ مستعار. گواهی هرگز حذف
+    نمی‌شود، فقط باطل می‌شود (کدش شاید روی لینکدین کسی باشد).
+  </div>
+
+  <h4 style="margin-top:14px">گواهی صادر کن</h4>
   <form class="bc" id="ceForm" onsubmit="return false">
     <div class="row">
       <div style="flex:1 1 200px"><label for="ceUser">کاربر</label>
@@ -803,17 +1107,14 @@ function renderHtml(
   <div id="ceList"></div>
   <script>
   (function () {
-    var exList = document.getElementById('exList'), exOut = document.getElementById('exOut');
     var ceList = document.getElementById('ceList'), ceOut = document.getElementById('ceOut');
-    var exBtn = document.getElementById('exSend'), ceBtn = document.getElementById('ceSend');
-    if (!exList || !ceList) return;
+    var ceBtn = document.getElementById('ceSend');
+    if (!ceList) return;
     function esc(s) {
       return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
         return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
       });
     }
-    var FA = '۰۱۲۳۴۵۶۷۸۹';
-    function fa(n) { return String(n).replace(/[0-9]/g, function (d) { return FA[+d]; }); }
     function val(id) { return document.getElementById(id).value.trim(); }
     function when(iso) {
       try { return new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' }).format(new Date(iso)); }
@@ -826,72 +1127,31 @@ function renderHtml(
       }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); });
     }
     var titles = {};
-
-    // One catalog, two pickers: the same full pathways the standings sweep
-    // reports on (bundles excluded there and here for the same reason).
     fetch('/admin/pathways/catalog', { credentials: 'include' })
       .then(function (r) { return r.json(); })
-      .then(function (d) {
-        var opts = (d.pathways || []).map(function (p) {
-          titles[p.id] = p.title_fa;
-          return '<option value="' + esc(p.id) + '">' + esc(p.title_fa) + ' (' + fa(p.steps) + ')</option>';
-        }).join('');
-        document.getElementById('exPath').innerHTML = opts;
-        document.getElementById('cePath').innerHTML = opts;
-      }).catch(function () {});
-
-    function loadExams() {
-      fetch('/admin/exams', { credentials: 'include' })
-        .then(function (r) { return r.json(); })
-        .then(function (d) {
-          var rows = d.exams || [];
-          if (!rows.length) { exList.innerHTML = '<div class="muted">آزمونی ثبت نشده.</div>'; return; }
-          exList.innerHTML = '<div class="tblwrap"><table><tr><th>کاربر</th><th>مسیر</th><th>سؤال</th>'
-            + '<th>تلاش</th><th>تاریخ</th><th></th></tr>'
-            + rows.map(function (e) {
-              return '<tr><td>' + esc(e.display_name) + '</td><td>' + esc(titles[e.pathway_id] || e.pathway_id)
-                + '</td><td>' + fa(e.question_count) + '</td><td>' + fa(e.max_attempts) + '</td><td>' + when(e.created_at)
-                + '</td><td><button type="button" data-ex-del="' + esc(e.id) + '">حذف</button></td></tr>';
-            }).join('') + '</table></div>';
-        }).catch(function () { exList.textContent = 'فهرست نیامد.'; });
-    }
+      .then(function (d) { (d.pathways || []).forEach(function (p) { titles[p.id] = p.title_fa; }); loadCerts(); })
+      .catch(function () {});
 
     function loadCerts() {
-      fetch('/admin/certificates', { credentials: 'include' })
+      fetch('/admin/certificates', { credentials: 'include', cache: 'no-store' })
         .then(function (r) { return r.json(); })
         .then(function (d) {
           var rows = d.certificates || [];
           if (!rows.length) { ceList.innerHTML = '<div class="muted">گواهی‌ای صادر نشده.</div>'; return; }
           ceList.innerHTML = '<div class="tblwrap"><table><tr><th>کد</th><th>نامِ روی گواهی</th><th>کاربر</th>'
-            + '<th>مسیر</th><th>تاریخ</th><th></th></tr>'
+            + '<th>مسیر</th><th>از راه</th><th>تاریخ</th><th></th></tr>'
             + rows.map(function (c) {
               var state = c.revoked_at ? '<span class="pill">باطل</span>' : '';
               return '<tr><td dir="ltr"><a href="/plus/certificate.html?c=' + esc(c.verify_code)
                 + '" target="_blank" rel="noopener">' + esc(c.verify_code) + '</a> ' + state + '</td><td>'
                 + esc(c.holder_name) + '</td><td>' + esc(c.display_name) + '</td><td>'
-                + esc(titles[c.pathway_id] || c.pathway_id) + '</td><td>' + when(c.issued_at) + '</td><td>'
+                + esc(titles[c.pathway_id] || c.pathway_id) + '</td><td>' + (c.attempt_id ? 'آزمون' : 'دستی') + '</td><td>' + when(c.issued_at) + '</td><td>'
                 + (c.revoked_at ? '' : '<button type="button" data-ce-rev="' + esc(c.id) + '">ابطال</button>')
                 + '</td></tr>';
             }).join('') + '</table></div>';
         }).catch(function () { ceList.textContent = 'فهرست نیامد.'; });
     }
-
-    exBtn.addEventListener('click', function () {
-      var qs;
-      try { qs = JSON.parse(val('exQ') || '[]'); } catch (e) { exOut.textContent = 'JSON سؤال‌ها معتبر نیست.'; return; }
-      if (!val('exUser')) { exOut.textContent = 'کاربر را بنویس.'; return; }
-      exBtn.disabled = true; exOut.textContent = 'در حال ثبت…';
-      post('/admin/exams', {
-        user: val('exUser'), pathway_id: val('exPath'), questions: qs,
-        max_attempts: parseInt(val('exMax') || '2', 10), note: val('exNote') || undefined
-      }).then(function (res) {
-        exBtn.disabled = false;
-        if (!res.ok) { exOut.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
-        exOut.textContent = (res.j.created ? 'ثبت شد' : 'به‌روز شد') + ' برای ' + (res.j.user && res.j.user.display_name || '');
-        document.getElementById('exQ').value = '';
-        loadExams();
-      }).catch(function () { exBtn.disabled = false; exOut.textContent = 'ارسال نشد.'; });
-    });
+    window.loadCerts = loadCerts;
 
     ceBtn.addEventListener('click', function () {
       if (!val('ceUser')) { ceOut.textContent = 'کاربر را بنویس.'; return; }
@@ -911,16 +1171,6 @@ function renderHtml(
       }).catch(function () { ceBtn.disabled = false; ceOut.textContent = 'ارسال نشد.'; });
     });
 
-    exList.addEventListener('click', function (ev) {
-      var b = ev.target.closest ? ev.target.closest('[data-ex-del]') : null;
-      if (!b) return;
-      if (!confirm('این آزمون حذف شود؟')) return;
-      b.disabled = true;
-      post('/admin/exams/delete', { id: b.getAttribute('data-ex-del') })
-        .then(function () { exOut.textContent = 'حذف شد.'; loadExams(); })
-        .catch(function () { b.disabled = false; exOut.textContent = 'حذف نشد.'; });
-    });
-
     ceList.addEventListener('click', function (ev) {
       var b = ev.target.closest ? ev.target.closest('[data-ce-rev]') : null;
       if (!b) return;
@@ -930,8 +1180,6 @@ function renderHtml(
         .then(function () { ceOut.textContent = 'باطل شد.'; loadCerts(); })
         .catch(function () { b.disabled = false; ceOut.textContent = 'باطل نشد.'; });
     });
-
-    loadExams(); loadCerts();
   })();
   </script>
 
@@ -4366,7 +4614,76 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ ok: true, revoked, already: !revoked });
   });
 
-  // GET /admin/exams[?user=] — every open assignment, or one reader's.
+  /**
+   * آزمون مسیر — the founder's side (services/pathway-exams.ts). The FORM
+   * (one per pathway: the question pool + its rules), the ASSIGNMENT (let one
+   * reader in early), the QUEUE (attempts waiting on a human) and the record.
+   */
+
+  // GET /admin/exam-forms — every form with counts; GET /admin/exam-forms/:pathwayId — one, with its questions.
+  app.get('/admin/exam-forms', async (_request, reply) => {
+    return reply.send({ ok: true, forms: await formRoster() });
+  });
+  app.get('/admin/exam-forms/:pathwayId', async (request, reply) => {
+    const { pathwayId } = request.params as { pathwayId: string };
+    const form = await getForm(pathwayId);
+    if (!form) return reply.code(404).send({ error: 'not_found' });
+    return reply.send({ ok: true, form });
+  });
+
+  // POST /admin/exam-forms — { pathway_id, questions, mcq_draw?, free_draw?,
+  // pass_percent?, max_attempts?, retry_days?, supervised_until?, note? }.
+  // `questions` is the founder's paste, normalised leniently; a bad question
+  // is refused by number, and nothing is written.
+  app.post('/admin/exam-forms', {
+    schema: {
+      body: {
+        type: 'object', required: ['pathway_id', 'questions'],
+        properties: {
+          pathway_id: { type: 'string' },
+          questions: {},
+          mcq_draw: { type: 'integer', minimum: 0, maximum: 200 },
+          free_draw: { type: 'integer', minimum: 0, maximum: 200 },
+          pass_percent: { type: 'integer', minimum: 1, maximum: 100 },
+          max_attempts: { type: 'integer', minimum: 1, maximum: 10 },
+          retry_days: { type: 'integer', minimum: 0, maximum: 365 },
+          supervised_until: { type: 'integer', minimum: 0, maximum: 1000 },
+          note: { type: 'string', maxLength: 400 },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as {
+      pathway_id: string; questions: unknown; mcq_draw?: number; free_draw?: number; pass_percent?: number;
+      max_attempts?: number; retry_days?: number; supervised_until?: number; note?: string;
+    };
+    try {
+      const r = await upsertForm(b.pathway_id, {
+        questions: b.questions, mcqDraw: b.mcq_draw, freeDraw: b.free_draw, passPercent: b.pass_percent,
+        maxAttempts: b.max_attempts, retryDays: b.retry_days, supervisedUntil: b.supervised_until, note: b.note,
+      });
+      // Readers let in BEFORE the form existed were told nothing at the
+      // time (there was nothing to sit); the form arriving is their news.
+      const told = r.created ? await notifyAssigneesOfNewForm(b.pathway_id) : 0;
+      return reply.send({ ok: true, ...r, notified: told });
+    } catch (err) {
+      const code = (err as Error).message;
+      if (code === 'unknown_pathway') return reply.code(400).send({ error: code, message: 'این مسیر وجود ندارد (باندل‌ها آزمون ندارند).' });
+      if (code.startsWith('invalid_questions:')) {
+        return reply.code(400).send({ error: 'invalid_questions', message: code.slice('invalid_questions:'.length) });
+      }
+      throw err;
+    }
+  });
+
+  app.post('/admin/exam-forms/delete', {
+    schema: { body: { type: 'object', required: ['pathway_id'], properties: { pathway_id: { type: 'string' } } } },
+  }, async (request, reply) => {
+    const { pathway_id } = request.body as { pathway_id: string };
+    return reply.send({ ok: true, deleted: await deleteForm(pathway_id) });
+  });
+
+  // GET /admin/exams[?user=] — every early assignment, or one reader's.
   app.get('/admin/exams', {
     schema: { querystring: { type: 'object', properties: { user: { type: 'string' }, phone: { type: 'string' } } } },
   }, async (request, reply) => {
@@ -4374,34 +4691,30 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     if (pick(q)) {
       const who = await resolveUser(pick(q), reply);
       if (!who) return reply;
-      return reply.send({ ok: true, user: who, exams: await listExams(who.id) });
+      return reply.send({ ok: true, user: who, exams: await listAssignments(who.id) });
     }
-    return reply.send({ ok: true, exams: await examRoster() });
+    return reply.send({ ok: true, exams: await assignmentRoster() });
   });
 
-  // POST /admin/exams — { user|phone, pathway_id, questions (array), max_attempts?, note? }.
-  // `questions` is stored verbatim; its shape is the founder's to decide.
+  // POST /admin/exams — { user|phone, pathway_id, note?, notify? }: open the
+  // pathway's exam to this reader before they finished it. Tells them, unless
+  // notify:false — a door opened silently is a door nobody walks through.
   app.post('/admin/exams', userBody({
     pathway_id: { type: 'string' },
-    questions: { type: 'array' },
-    max_attempts: { type: 'integer', minimum: 1, maximum: 10 },
-    note: { type: 'string' },
-  }, ['pathway_id', 'questions']), async (request, reply) => {
-    const b = request.body as {
-      user?: string; phone?: string; pathway_id: string; questions: unknown[];
-      max_attempts?: number; note?: string;
-    };
+    note: { type: 'string', maxLength: 200 },
+    notify: { type: 'boolean' },
+  }, ['pathway_id']), async (request, reply) => {
+    const b = request.body as { user?: string; phone?: string; pathway_id: string; note?: string; notify?: boolean };
     const who = await resolveUser(pick(b), reply);
     if (!who) return reply;
     try {
-      const r = await assignExam(who.id, b.pathway_id, {
-        questions: b.questions, maxAttempts: b.max_attempts, note: b.note ?? null,
-      });
-      return reply.send({ ok: true, ...r, user: who });
+      const r = await assignExam(who.id, b.pathway_id, { note: b.note ?? null });
+      const hasForm = Boolean(await getForm(b.pathway_id));
+      if (r.created && b.notify !== false && hasForm) await notifyAssigned(who.id, b.pathway_id);
+      return reply.send({ ok: true, ...r, has_form: hasForm, user: who });
     } catch (err) {
       const code = (err as Error).message;
       if (code === 'unknown_pathway') return reply.code(400).send({ error: code, message: 'این مسیر وجود ندارد (باندل‌ها آزمون ندارند).' });
-      if (code === 'questions_required') return reply.code(400).send({ error: code, message: 'دست‌کم یک سؤال لازم است.' });
       throw err;
     }
   });
@@ -4410,7 +4723,50 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     schema: { body: { type: 'object', required: ['id'], properties: { id: { type: 'string' } } } },
   }, async (request, reply) => {
     const { id } = request.body as { id: string };
-    if (!(await getExam(id))) return reply.code(404).send({ error: 'not_found' });
-    return reply.send({ ok: true, deleted: await deleteExam(id) });
+    if (!(await getAssignment(id))) return reply.code(404).send({ error: 'not_found' });
+    return reply.send({ ok: true, deleted: await deleteAssignment(id) });
+  });
+
+  // GET /admin/exam-attempts — the queue (oldest first, full detail) and the
+  // record (newest first, counts only).
+  app.get('/admin/exam-attempts', async (_request, reply) => {
+    const [queue, attempts] = await Promise.all([queueRows(), attemptRoster()]);
+    return reply.send({ ok: true, queue, count: queue.length, attempts });
+  });
+
+  // POST /admin/exam-attempts/:id/rule — { decision: pass|fail|void,
+  // free?: [{id, points:[{id,state}]}], holder_name? }. The decision is the
+  // founder's; the per-point rulings, when given, become worked examples.
+  app.post('/admin/exam-attempts/:id/rule', {
+    schema: {
+      body: {
+        type: 'object', required: ['decision'],
+        properties: {
+          decision: { type: 'string', enum: ['pass', 'fail', 'void'] },
+          free: { type: 'array' },
+          holder_name: { type: 'string', maxLength: 120 },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const b = request.body as {
+      decision: 'pass' | 'fail' | 'void';
+      free?: { id: string; points: { id: string; state: 'covered' | 'missing' }[] }[];
+      holder_name?: string;
+    };
+    if (b.free && b.free.some((f) => !f || typeof f.id !== 'string' || !Array.isArray(f.points))) {
+      return reply.code(400).send({ error: 'bad_verdict', message: 'شکل حکم درست نیست.' });
+    }
+    const r = await ruleAttempt(id, { decision: b.decision, free: b.free, holder_name: b.holder_name ?? null });
+    if (!r.ok) {
+      const messages: Record<string, string> = {
+        not_found: 'یافت نشد.',
+        not_queued: 'این تلاش در صف نیست (شاید همین حالا حل شد).',
+        bad_verdict: 'حکمِ هر سؤال تشریحی باید دقیقاً نکته‌های همان سؤال باشد، هرکدام covered یا missing.',
+      };
+      return reply.code(r.error === 'not_found' ? 404 : 400).send({ error: r.error, message: messages[r.error] });
+    }
+    return reply.send({ ok: true, attempt: r.attempt });
   });
 }

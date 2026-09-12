@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
 import { verifyCertificate, listCertificates } from '../services/certificates.js';
 import { getPathwayById, getPathways } from '../pathways.js';
+import { examStates, examUrl } from '../services/pathway-exams.js';
 
 /**
  * Certificates — the reader's own list, and the world's verify lookup.
@@ -44,9 +45,16 @@ export async function certificateRoutes(app: FastifyInstance): Promise<void> {
      * earn. A REVOKED certificate leaves its pathway un-ticked — the wall
      * shows what stands today — while `certificates` still lists it, because
      * that list is the record.
+     *
+     * `exam` is one word per pathway on where this reader's exam stands
+     * (services/pathway-exams.ts examStates) plus the exam page's URL, so
+     * the wall's locked card can say «آزمون آماده است» and lead there
+     * rather than always «مسیر را تمام کن».
      */
     scoped.get('/certificates', async (request, reply) => {
       const rows = await listCertificates(request.user!.id);
+      const full = getPathways().filter((p) => p.kind !== 'bundle');
+      const exams = await examStates(request.user!.id, full.map((p) => p.id));
       const shape = (c: typeof rows[number]) => ({
         id: c.id,
         pathway_id: c.pathway_id,
@@ -60,15 +68,14 @@ export async function certificateRoutes(app: FastifyInstance): Promise<void> {
       const live = new Map(rows.filter((c) => !c.revoked_at).map((c) => [c.pathway_id, c]));
       return reply.send({
         certificates: rows.map(shape),
-        pathways: getPathways()
-          .filter((p) => p.kind !== 'bundle')
-          .map((p) => ({
-            id: p.id,
-            title_fa: p.title_fa,
-            short_fa: p.short_fa ?? null,
-            glyph: p.glyph ?? null,
-            certificate: live.has(p.id) ? shape(live.get(p.id)!) : null,
-          })),
+        pathways: full.map((p) => ({
+          id: p.id,
+          title_fa: p.title_fa,
+          short_fa: p.short_fa ?? null,
+          glyph: p.glyph ?? null,
+          certificate: live.has(p.id) ? shape(live.get(p.id)!) : null,
+          exam: { state: exams.get(p.id) ?? 'no_form', url: examUrl(p.id) },
+        })),
       });
     });
   });

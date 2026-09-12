@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=72';
+import { API_BASES } from './config.js?v=73';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -261,6 +261,14 @@ export const api = {
   // premium (the exam sits behind the pathway), looking at one is not.
   certificates: () => request('/certificates'),
   certificateVerify: (code) => request('/certificates/verify/' + encodeURIComponent(code)),
+
+  // آزمون مسیر — services/pathway-exams.ts. Premium, all three: where I
+  // stand, open an attempt (draws and snapshots the questions), submit it.
+  exam: (pathwayId) => request('/exams/' + encodeURIComponent(pathwayId)),
+  examStart: (pathwayId, holder_name) =>
+    request('/exams/' + encodeURIComponent(pathwayId) + '/start', { method: 'POST', body: { holder_name } }),
+  examSubmit: (pathwayId, answers) =>
+    request('/exams/' + encodeURIComponent(pathwayId) + '/submit', { method: 'POST', body: { answers } }),
 
   // premium: reading compass — coverage report over the user's own reading,
   // cross-referenced against the taxonomy and pathways (no interest guessing)

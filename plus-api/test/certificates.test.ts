@@ -7,7 +7,7 @@ import { getPathways } from '../src/pathways.js';
 import {
   issueCertificate, revokeCertificate, verifyCertificate, listCertificates,
 } from '../src/services/certificates.js';
-import { assignExam, listExams, deleteExam } from '../src/services/pathway-exams.js';
+import { assignExam, listAssignments, deleteAssignment } from '../src/services/pathway-exams.js';
 import { availableCredits, CREDIT_CAP_PERCENT } from '../src/services/discount-credits.js';
 
 let app: FastifyInstance;
@@ -173,34 +173,31 @@ describe('GET /certificates — mine', () => {
   });
 });
 
-describe('assigning an exam', () => {
-  it('stores the questions verbatim, defaults to two attempts, one per reader per pathway', async () => {
+describe('assigning an exam early', () => {
+  it('is one row per reader per pathway, upserted, with the id stable', async () => {
     const uid = await userId();
-    const qs = [{ q: 'آیا…؟', a: false }, { q: 'چرا…؟', key_points: ['الف', 'ب'] }];
-    const first = await assignExam(uid, PATHWAY_ID, { questions: qs });
+    const first = await assignExam(uid, PATHWAY_ID, { note: 'نزدیک پایان' });
     expect(first.created).toBe(true);
-    expect(first.exam.max_attempts).toBe(2);
-    expect(first.exam.questions).toEqual(qs);
+    expect(first.assignment.note).toBe('نزدیک پایان');
 
-    const again = await assignExam(uid, PATHWAY_ID, { questions: [{ q: 'x' }], maxAttempts: 3, note: 'n' });
+    const again = await assignExam(uid, PATHWAY_ID, { note: 'دوباره' });
     expect(again.created).toBe(false);
-    expect(again.exam.id).toBe(first.exam.id);
-    expect(again.exam.max_attempts).toBe(3);
-    expect(await listExams(uid)).toHaveLength(1);
+    expect(again.assignment.id).toBe(first.assignment.id);
+    expect(again.assignment.note).toBe('دوباره');
+    expect(await listAssignments(uid)).toHaveLength(1);
   });
 
-  it('refuses a bundle and an empty list', async () => {
+  it('refuses a bundle', async () => {
     const uid = await userId();
-    await expect(assignExam(uid, BUNDLE_ID, { questions: [{ q: 'x' }] })).rejects.toThrow('unknown_pathway');
-    await expect(assignExam(uid, PATHWAY_ID, { questions: [] })).rejects.toThrow('questions_required');
+    await expect(assignExam(uid, BUNDLE_ID)).rejects.toThrow('unknown_pathway');
   });
 
-  it('deleting the exam leaves a certificate that pointed at it', async () => {
+  it('deleting the assignment leaves a certificate that pointed at it', async () => {
     const uid = await userId();
-    const { exam } = await assignExam(uid, PATHWAY_ID, { questions: [{ q: 'x' }] });
-    const cert = await issueCertificate(uid, PATHWAY_ID, { holderName: 'x', examId: exam.id, notify: false });
-    expect(cert.certificate.exam_id).toBe(exam.id);
-    expect(await deleteExam(exam.id)).toBe(true);
+    const { assignment } = await assignExam(uid, PATHWAY_ID);
+    const cert = await issueCertificate(uid, PATHWAY_ID, { holderName: 'x', examId: assignment.id, notify: false });
+    expect(cert.certificate.exam_id).toBe(assignment.id);
+    expect(await deleteAssignment(assignment.id)).toBe(true);
     const after = await listCertificates(uid);
     expect(after[0].exam_id).toBeNull();
     expect(after[0].revoked_at).toBeNull();
@@ -208,16 +205,15 @@ describe('assigning an exam', () => {
 });
 
 describe('the admin panel routes', () => {
-  it('assigns and lists an exam by phone', async () => {
-    const res = await adminPost('/admin/exams', {
-      phone, pathway_id: PATHWAY_ID, questions: [{ q: 'x' }], max_attempts: 2,
-    });
+  it('assigns and lists an early admission by phone, and says when the pathway has no form yet', async () => {
+    const res = await adminPost('/admin/exams', { phone, pathway_id: PATHWAY_ID, note: 'n' });
     expect(res.statusCode).toBe(200);
     expect(res.json().created).toBe(true);
+    expect(res.json().has_form).toBe(false);
 
     const list = await adminGet('/admin/exams');
     expect(list.json().exams).toHaveLength(1);
-    expect(list.json().exams[0].question_count).toBe(1);
+    expect(list.json().exams[0].has_form).toBe(false);
   });
 
   it('issues, lists and revokes a certificate', async () => {

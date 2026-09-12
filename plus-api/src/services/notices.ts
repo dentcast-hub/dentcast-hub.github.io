@@ -51,6 +51,8 @@ const KIND_TITLE_FA: Record<string, string> = {
   support_reply: 'پشتیبانی',
   bank_amount: 'پرداخت',
   payment_result: 'پرداخت',
+  exam_assigned: 'آزمون مسیر',
+  exam_result: 'آزمون مسیر',
 };
 
 /** Who a broadcast is for, resolved against the reader's tier at READ time. */

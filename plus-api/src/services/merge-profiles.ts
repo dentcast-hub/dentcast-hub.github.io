@@ -50,6 +50,21 @@ export async function mergeProfiles(
   );
   await client.query('update pathway_exams set user_id = $2 where user_id = $1', [fromId, toId]);
 
+  // pathway_exam_attempts: unique on (form, reader, attempt_no). Two accounts
+  // that both sat the same exam collide on attempt numbers; the kept
+  // account's rows win and the dropped account's colliding rows go — an
+  // attempt is a record of one sitting, and renumbering it would change what
+  // «تلاش ۲» meant when it was taken. A certificate pointing at a dropped
+  // attempt keeps its row (`attempt_id` is `on delete set null`).
+  await client.query(
+    `delete from pathway_exam_attempts a
+      where a.user_id = $1
+        and exists (select 1 from pathway_exam_attempts k
+                     where k.user_id = $2 and k.form_id = a.form_id and k.attempt_no = a.attempt_no)`,
+    [fromId, toId],
+  );
+  await client.query('update pathway_exam_attempts set user_id = $2 where user_id = $1', [fromId, toId]);
+
   await client.query(
     `delete from article_notes an
       where an.user_id = $1

@@ -99,7 +99,20 @@ export type NotificationKind =
    * answer, spent their one attempt on it, and is waiting on a human for the
    * verdict. UNCAPPED in notify-policy.ts for the same reason.
    */
-  | 'challenge_ruled';
+  | 'challenge_ruled'
+  /**
+   * آزمون مسیر: the founder opened a pathway's exam to this reader early
+   * (services/pathway-exams.ts assignExam). A door opened for one person,
+   * by a person — UNCAPPED, so a streak nudge cannot be why they never
+   * learn the exam they were waiting for is there.
+   */
+  | 'exam_assigned'
+  /**
+   * آزمون مسیر: an attempt was settled — passed (with the certificate code)
+   * or not. The reader sat an exam and is waiting on the result; same
+   * argument as 'challenge_ruled'. UNCAPPED.
+   */
+  | 'exam_result';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.

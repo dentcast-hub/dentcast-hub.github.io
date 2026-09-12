@@ -4,10 +4,10 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum, icon } from './util.js?v=72';
-import { api } from './api.js?v=72';
-import { FOLDER_EN } from './content-index.js?v=72';
-import { markReturnTrail } from './return-trail.js?v=72';
+import { el, faNum, icon } from './util.js?v=73';
+import { api } from './api.js?v=73';
+import { FOLDER_EN } from './content-index.js?v=73';
+import { markReturnTrail } from './return-trail.js?v=73';
 
 /** A "lightning + label" chip — a leading icon from the shared sprite
  * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
@@ -189,6 +189,45 @@ function continueCard(continuesInto) {
   ]);
 }
 
+/* ------------------------------------------------------------ the exam -- */
+
+const EXAM_LINE = {
+  no_form: ['آزمون این مسیر هنوز آماده نشده', 'وقتی سؤال‌ها آماده شود، همین‌جا باز می‌شود و در «اطلاعیه» خبرش را می‌گیری.', null],
+  locked: ['آزمون پایانی و گواهی‌نامه', 'با خواندن همهٔ قدم‌ها، آزمون باز می‌شود؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.', 'دربارهٔ آزمون'],
+  ready: ['آزمون این مسیر برایت باز است', 'هر وقت آماده بودی شروع کن؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.', 'رفتن به آزمون'],
+  open: ['یک آزمون نیمه‌کاره داری', 'سؤال‌ها همان‌هایی‌اند که دیده‌ای؛ برگرد و ارسال کن.', 'ادامهٔ آزمون'],
+  queued: ['پاسخ‌هایت در حال بررسی است', 'نتیجه در «اطلاعیه» می‌آید.', 'دیدن وضعیت'],
+  wait: ['این بار به نصاب نرسید', 'تلاش بعدی به‌زودی باز می‌شود — تاریخش در صفحهٔ آزمون.', 'دیدن نتیجه'],
+  exhausted: ['تلاش‌های آزمون تمام شد', 'نتیجه در صفحهٔ آزمون است.', 'دیدن نتیجه'],
+  passed: ['گواهی‌نامهٔ این مسیر را داری 🎓', 'از پروفایلت قابل دانلود است.', 'دیدن گواهی'],
+};
+
+/**
+ * The exam card under the progress bar — one line on where this reader's
+ * exam stands, from GET /exams/:id, and the way to it. Full pathways only:
+ * a bundle is 5–8 steps and is not certificate-sized. Drawn lazily and
+ * dropped silently when the API cannot answer: a pathway page must never
+ * fail to render because the exam service did.
+ */
+export function examCard(state) {
+  const line = EXAM_LINE[state.state] || EXAM_LINE.no_form;
+  const href = state.state === 'passed' && state.certificate
+    ? state.certificate.verify_url
+    : '/plus/exam.html?id=' + encodeURIComponent(state.pathway_id);
+  return el('div', { class: 'dcp-card dcp-pw-exam ' + state.state, 'data-pw-exam': state.state }, [
+    el('div', {}, [el('b', {}, line[0]), el('p', { class: 'dcp-muted' }, line[1])]),
+    line[2] ? el('a', { class: 'dcp-btn ' + (state.state === 'ready' || state.state === 'open' ? 'dcp-btn-primary' : 'dcp-btn-ghost'), href }, line[2]) : null,
+  ].filter(Boolean));
+}
+
+async function mountExamCard(slot, id) {
+  if (typeof api.exam !== 'function') return;
+  try {
+    const state = await api.exam(id);
+    if (state && state.state) slot.replaceChildren(examCard(state));
+  } catch (_) { /* the page stands without it */ }
+}
+
 /** GET /plus/pathway.html?id=... — one pathway's full step list + progress.
  * Same view for a bundle, plus its type chip, prereq referral, and closing
  * invite into the full pathway it was drawn from. */
@@ -227,8 +266,10 @@ export async function renderPathwayDetail(container, id) {
   const steps = el('div', { class: 'dcp-pw-steps' },
     data.steps.map((s, i) => stepRow(s, i, data.current_step, data)));
 
+  const examSlot = isBundle ? null : el('div', { class: 'dcp-pw-exam-slot' });
   container.replaceChildren(...[
-    head, progressWrap, enrollArea(data.id, data.enrolled), steps,
+    head, progressWrap, enrollArea(data.id, data.enrolled), examSlot, steps,
     isBundle ? continueCard(data.continues_pathway) : null,
   ].filter(Boolean));
+  if (examSlot) mountExamCard(examSlot, data.id);
 }
