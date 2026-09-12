@@ -5,6 +5,7 @@ import { getConsumedContentIds } from './consumption.js';
 import { mintReference } from './reference.js';
 import { issueCertificate, type Certificate } from './certificates.js';
 import { sendCapped } from './notify-policy.js';
+import { runPathwayAlerts, type CertificateIntent } from './pathway-standings.js';
 import { ai } from '../providers/registry.js';
 import type { KeyPoint, PointState } from '../providers/ai/types.js';
 
@@ -478,6 +479,8 @@ export interface ExamState {
   assigned: boolean;
   /** A `user_pathways` row — the reader pressed «شروع این مسیر». Required to sit. */
   enrolled: boolean;
+  /** «گواهی‌نامه می‌خواهی؟» — null until asked and answered. */
+  certificate_intent: CertificateIntent | null;
   retry_at: Date | null;
   /** The open attempt's questions, stripped. */
   open: { id: string; reference: string; holder_name: string | null; questions: PublicQuestion[]; started_at: Date } | null;
@@ -551,14 +554,17 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
   const base: ExamState = {
     state: 'no_form', pathway_id: pathwayId, pathway_title_fa: pathway.title_fa, rules: null,
-    attempts_used: 0, is_complete: false, assigned: false, enrolled: false, retry_at: null, open: null, history: [], certificate: null,
+    attempts_used: 0, is_complete: false, assigned: false, enrolled: false, certificate_intent: null,
+    retry_at: null, open: null, history: [], certificate: null,
   };
 
   const [form, consumed, assigned, enrolled, cert] = await Promise.all([
     getForm(pathwayId),
     getConsumedContentIds(userId),
     one<{ id: string }>('select id from pathway_exams where user_id = $1 and pathway_id = $2', [userId, pathwayId]),
-    one<{ pathway_id: string }>('select pathway_id from user_pathways where user_id = $1 and pathway_id = $2', [userId, pathwayId]),
+    one<{ pathway_id: string; certificate_intent: CertificateIntent | null }>(
+      'select pathway_id, certificate_intent from user_pathways where user_id = $1 and pathway_id = $2', [userId, pathwayId],
+    ),
     one<Certificate>(
       'select id, verify_code from certificates where user_id = $1 and pathway_id = $2 and revoked_at is null',
       [userId, pathwayId],
@@ -567,6 +573,7 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
   base.is_complete = computeProgress(pathway, consumed).is_complete;
   base.assigned = Boolean(assigned);
   base.enrolled = Boolean(enrolled);
+  base.certificate_intent = enrolled?.certificate_intent ?? null;
   if (cert) base.certificate = { verify_code: cert.verify_code, verify_url: `/plus/certificate.html?c=${cert.verify_code}` };
   // A certificate already held is the end of the story whatever the form
   // says — including a form deleted after the pass, or one never written
@@ -640,6 +647,13 @@ export async function startAttempt(userId: string, pathwayId: string, holderName
   // examState renumbers the counted ones for display.
   const attemptNo = prior.reduce((m, a) => Math.max(m, a.attempt_no), 0) + 1;
 
+  // Sitting the exam is the strongest «بله» there is; a reader who never
+  // answered the question is answered by this, and never asked again.
+  await query(
+    `update user_pathways set certificate_intent = 'wanted', certificate_intent_at = now()
+      where user_id = $1 and pathway_id = $2 and certificate_intent is null`,
+    [userId, pathwayId],
+  );
   const attempt = await withTransaction(async (client) => {
     // The unique index on (form, user, attempt_no) is the lock: two starts
     // racing each other cannot both insert attempt N, and an 'open' row that
@@ -968,6 +982,31 @@ export async function ruleAttempt(attemptId: string, input: RuleInput): Promise<
   if (!result) return { ok: false, error: 'not_queued' };
   await notifyReaderSettled(result.row, result.cert);
   return { ok: true, attempt: result.row };
+}
+
+/* -------------------------------------------------------------- intent -- */
+
+/**
+ * The reader answers «گواهی‌نامهٔ این مسیر را می‌خواهی؟». Enrols them if
+ * they were not (a wish about a pathway is being on it), records the answer
+ * on the enrolment row, and — on «بله» — runs the near-the-end sweep for
+ * this one pair at once: a reader who is already three steps from the end
+ * is exactly the news the alert exists for, and it must not wait for 22:00.
+ */
+export async function setCertificateIntent(
+  userId: string, pathwayId: string, intent: CertificateIntent,
+): Promise<ExamState> {
+  const pathway = getPathwayById(pathwayId);
+  if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
+  await query(
+    `insert into user_pathways (user_id, pathway_id, current_step, certificate_intent, certificate_intent_at)
+     values ($1, $2, 0, $3, now())
+     on conflict (user_id, pathway_id) do update
+       set certificate_intent = excluded.certificate_intent, certificate_intent_at = now()`,
+    [userId, pathwayId, intent],
+  );
+  if (intent === 'wanted') await runPathwayAlerts(new Date(), { userId, pathwayId });
+  return examState(userId, pathwayId);
 }
 
 /* ------------------------------------------------------------- notices -- */

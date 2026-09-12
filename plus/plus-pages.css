@@ -464,6 +464,8 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-pw-exam { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 14px; }
 .dcp-pw-exam p { margin: 2px 0 0; font-size: .88rem; }
 .dcp-pw-exam.passed { border-color: rgba(31,120,80,.35); }
+.dcp-pw-intent { flex: 1 1 100%; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: .88rem; padding-top: 8px; border-top: 1px solid var(--dcp-line, rgba(2,35,96,.12)); }
+.dcp-pw-dash .dcp-pw-intent { margin-top: 8px; }
 
 /* ---- header overlay (dashboard / profile open from the person menu) ------- */
 .dcp-overlay { position: fixed; inset: 0; z-index: 10050; display: flex; flex-direction: column; background: var(--bg, #f0f2f5); color: var(--txt); overflow: auto; }

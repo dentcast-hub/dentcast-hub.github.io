@@ -3,7 +3,7 @@ import { requireAuth } from '../middleware/auth.js';
 import { requirePremium } from '../middleware/require-premium.js';
 import { config } from '../config.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
-import { examState, startAttempt, submitAttempt } from '../services/pathway-exams.js';
+import { examState, startAttempt, submitAttempt, setCertificateIntent } from '../services/pathway-exams.js';
 
 /**
  * آزمون مسیر — the reader's side. Three routes, all premium: earning a
@@ -13,6 +13,7 @@ import { examState, startAttempt, submitAttempt } from '../services/pathway-exam
  *   GET  /exams/:pathwayId          where I stand (services/pathway-exams.ts examState)
  *   POST /exams/:pathwayId/start    {holder_name} → draw and open an attempt
  *   POST /exams/:pathwayId/submit   {answers: {qid: …}} → grade
+ *   POST /exams/:pathwayId/intent   {intent: wanted|declined} → «گواهی می‌خواهی؟»
  *
  * `pathwayId` is safe in the path — pathway ids are slugs with no slash
  * (`digital`, `post-and-core`), unlike content ids.
@@ -51,6 +52,24 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
       const r = await startAttempt(request.user!.id, pathwayId, holder_name);
       if (!r.ok) return reply.code(409).send({ ok: false, error: r.error, ...r.state });
       return reply.send({ ok: true, ...r.state });
+    } catch (err) {
+      if ((err as Error).message === 'unknown_pathway') return unknown(reply);
+      throw err;
+    }
+  });
+
+  app.post('/exams/:pathwayId/intent', {
+    schema: {
+      body: {
+        type: 'object', required: ['intent'],
+        properties: { intent: { type: 'string', enum: ['wanted', 'declined'] } },
+      },
+    },
+  }, async (request, reply) => {
+    const { pathwayId } = request.params as { pathwayId: string };
+    const { intent } = request.body as { intent: 'wanted' | 'declined' };
+    try {
+      return reply.send({ ok: true, ...(await setCertificateIntent(request.user!.id, pathwayId, intent)) });
     } catch (err) {
       if ((err as Error).message === 'unknown_pathway') return unknown(reply);
       throw err;

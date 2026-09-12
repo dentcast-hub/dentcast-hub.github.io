@@ -62,9 +62,13 @@ export interface PathwayStanding {
   remaining: number;
   enrolled: boolean;
   started_at: Date | null;
+  /** «گواهی‌نامه می‌خواهی؟» — the reader's own answer on the enrolment row. */
+  certificate_intent: CertificateIntent | null;
   /** Highest level already announced to the founder, or null. */
   alerted: PathwayAlertLevel | null;
 }
+
+export type CertificateIntent = 'wanted' | 'declined';
 
 /** Full pathways only — see the bundle rule above. */
 function fullPathways(): Pathway[] {
@@ -112,11 +116,12 @@ export async function pathwayStandings(): Promise<PathwayStanding[]> {
   );
   const profileOf = new Map(profiles.rows.map((p) => [p.id, p]));
 
-  const enrollments = await query<{ user_id: string; pathway_id: string; started_at: Date }>(
-    `select user_id, pathway_id, started_at from user_pathways where user_id = any($1)`,
+  const enrollments = await query<{ user_id: string; pathway_id: string; started_at: Date; certificate_intent: CertificateIntent | null }>(
+    `select user_id, pathway_id, started_at, certificate_intent from user_pathways where user_id = any($1)`,
     [userIds],
   );
   const enrolledAt = new Map(enrollments.rows.map((e) => [`${e.user_id}:${e.pathway_id}`, e.started_at]));
+  const intentOf = new Map(enrollments.rows.map((e) => [`${e.user_id}:${e.pathway_id}`, e.certificate_intent]));
 
   const markers = await query<{ user_id: string; pathway_id: string; level: string }>(
     `select user_id, meta->>'pathway_id' as pathway_id, meta->>'level' as level
@@ -153,6 +158,7 @@ export async function pathwayStandings(): Promise<PathwayStanding[]> {
         remaining: p.steps.length - completed,
         enrolled: enrolledAt.has(key),
         started_at: enrolledAt.get(key) ?? null,
+        certificate_intent: intentOf.get(key) ?? null,
         alerted: alertedAt.get(key) ?? null,
       });
     }
@@ -175,21 +181,22 @@ export function levelFor(s: PathwayStanding, nearRemaining: number): PathwayAler
 /**
  * Whether this standing is the founder's business.
  *
- * ENROLLMENT is the real signal — the reader pressed a button saying they are
- * doing this pathway. A premium reader who never enrolled still counts once
- * they are this close: consuming 112 of 116 steps is not something that happens
- * by accident, and the certificate is about what they read, not what they
- * clicked.
+ * The reader SAID SO (founder, 2026-09-12): the alert exists so an exam gets
+ * written for somebody close to the end, and an exam written for a reader
+ * who never wanted the certificate is an evening spent for nobody. So the
+ * signal is `certificate_intent = 'wanted'` — the «بله» on the pathway page
+ * or the dashboard — and nothing else: not enrolment (people enrol to track
+ * progress), not tier (premium is the gate on sitting, not a wish), not
+ * closeness (which is what the alert measures, not who it is for).
  *
- * A FREE reader is excluded from the alert and from nothing else. They cannot
- * open a pathway page at all (routes/pathways.ts is requirePremium), so their
- * progress is genuinely incidental and alerting on it would be noise. They stay
- * in the admin table, with their tier on the row, because "a free reader is
- * three steps from finishing" is a fact worth seeing — just not one worth
- * waking somebody for.
+ * Everybody else stays in the admin table with the answer on the row —
+ * «گواهی نمی‌خواهد» is a fact worth seeing, «هنوز نپرسیده» too — just not
+ * one worth waking somebody for. It used to be `enrolled || tier !== 'free'`,
+ * which is exactly how the founder came to write questions for readers who
+ * did not want them.
  */
 export function alertable(s: PathwayStanding): boolean {
-  return s.enrolled || s.tier !== 'free';
+  return s.certificate_intent === 'wanted';
 }
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
@@ -255,12 +262,22 @@ export interface PathwayAlertRun {
  * Never throws: this runs off a scheduler and is called by an admin button, and
  * a notification problem must not look like a data problem.
  */
-export async function runPathwayAlerts(now: Date = new Date()): Promise<PathwayAlertRun> {
+export async function runPathwayAlerts(
+  now: Date = new Date(),
+  /**
+   * Restrict the sweep to one (reader, pathway) — used the moment a reader
+   * answers «بله»: if they are already near the end, that answer IS the
+   * news, and it must not wait for 22:00. Same markers, same message, so
+   * the nightly run then has nothing new to say about them.
+   */
+  only?: { userId: string; pathwayId: string },
+): Promise<PathwayAlertRun> {
   const standings = await pathwayStandings();
   const threshold = config.pathwayAlert.nearRemaining;
   const crossings: PathwayAlertCrossing[] = [];
 
   for (const s of standings) {
+    if (only && (s.user_id !== only.userId || s.pathway_id !== only.pathwayId)) continue;
     if (!alertable(s)) continue;
     const level = levelFor(s, threshold);
     if (!level) continue;

@@ -1,17 +1,17 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, streakIsActiveToday } from './util.js?v=74';
-import { api } from './api.js?v=74';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=74';
-import { leagueEntryButton } from './league.js?v=74';
-import { openCollectionPicker, boardCover } from './collections.js?v=74';
-import { bundleRailCard } from './pathways.js?v=74';
-import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js?v=74';
-import { renewalBanner } from './renewal-banner.js?v=74';
-import { premiumCta } from './premium-cta.js?v=74';
-import { maybeCelebrate } from './achievements.js?v=74';
-import { markReturnTrail } from './return-trail.js?v=74';
+import { el, faNum, streakIsActiveToday } from './util.js?v=75';
+import { api } from './api.js?v=75';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=75';
+import { leagueEntryButton } from './league.js?v=75';
+import { openCollectionPicker, boardCover } from './collections.js?v=75';
+import { bundleRailCard, intentRow } from './pathways.js?v=75';
+import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js?v=75';
+import { renewalBanner } from './renewal-banner.js?v=75';
+import { premiumCta } from './premium-cta.js?v=75';
+import { maybeCelebrate } from './achievements.js?v=75';
+import { markReturnTrail } from './return-trail.js?v=75';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',
@@ -289,6 +289,13 @@ function pathwayBlock(me) {
     ]);
   }
   const pct = p.total_steps > 0 ? Math.round((p.current_step / p.total_steps) * 100) : 0;
+  // The «گواهی می‌خواهی؟» question, for readers already mid-pathway who
+  // may not open the pathway page again soon. Goes away with the answer.
+  const ask = intentRow(
+    { pathway_id: p.id, certificate_intent: p.certificate_intent || null, state: 'locked' },
+    (next) => { if (ask) ask.replaceWith(el('div', { class: 'dcp-muted dcp-pw-intent' },
+      next.certificate_intent === 'wanted' ? 'ثبت شد — نزدیک پایان، آزمون برایت آماده می‌شود.' : 'باشد؛ هر وقت خواستی از صفحهٔ مسیر بگو.')); },
+  );
   return el('div', { class: 'dcp-pw-dash' }, [
     el('a', { class: 'dcp-pw-dash-title', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, p.title_fa),
     el('div', { class: 'dcp-progress-track' }, el('div', { class: 'dcp-progress-fill', style: 'width:' + pct + '%' })),
@@ -296,7 +303,8 @@ function pathwayBlock(me) {
       el('span', {}, p.is_complete ? 'این مسیر را کامل کرده‌اید 🎉' : ('قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps))),
       allLink,
     ]),
-  ]);
+    ask,
+  ].filter(Boolean));
 }
 
 // Premium «از کجا شروع کنم؟» block — the bundles, in their own section so

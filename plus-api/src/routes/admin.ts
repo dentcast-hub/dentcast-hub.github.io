@@ -699,7 +699,9 @@ function renderHtml(
         var tier = r.tier === 'premium'
           ? '<span class="pill">پریمیوم</span>'
           : '<span class="pill">رایگان</span>';
-        var mark = r.enrolled ? '<span class="pill">ثبت‌نام کرده</span>' : '';
+        var mark = (r.enrolled ? '<span class="pill">ثبت‌نام کرده</span> ' : '')
+          + (r.certificate_intent === 'wanted' ? '<span class="pill"><b>گواهی می‌خواهد</b></span>'
+            : r.certificate_intent === 'declined' ? '<span class="pill">گواهی نمی‌خواهد</span>' : '');
         // An already-announced row is the normal state, not an error: it means
         // the alert did its job and this is the standing record of it.
         var said = r.alerted
@@ -722,6 +724,7 @@ function renderHtml(
       var head = '<div class="muted" style="margin-top:10px">'
         + 'آستانه: ' + fa(d.near_remaining) + ' قدمِ مانده · بررسیِ خودکار هر شب ساعت '
         + fa(d.alert_hour) + ' · ' + fa(c.readers || 0) + ' نفر روی مسیرها'
+        + ' · نوتیف فقط برای کسی که گفته <b>گواهی می‌خواهد</b> (بقیه فقط در همین جدول)'
         + (d.alert_phone_set ? '' : ' · <b>شمارهٔ هشدار تنظیم نشده — فقط همین جدول</b>')
         + '</div>';
       box.innerHTML = head
@@ -4505,6 +4508,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       total_steps: s.total_steps,
       remaining: s.remaining,
       enrolled: s.enrolled,
+      certificate_intent: s.certificate_intent,
       alerted: s.alerted,
       // Whether this row would wake anybody, so a free reader sitting at two
       // steps left reads as a deliberate exclusion rather than a missed alert.

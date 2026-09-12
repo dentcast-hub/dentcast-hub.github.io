@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=74';
+import { API_BASES } from './config.js?v=75';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -269,6 +269,9 @@ export const api = {
     request('/exams/' + encodeURIComponent(pathwayId) + '/start', { method: 'POST', body: { holder_name } }),
   examSubmit: (pathwayId, answers) =>
     request('/exams/' + encodeURIComponent(pathwayId) + '/submit', { method: 'POST', body: { answers } }),
+  // «گواهی‌نامهٔ این مسیر را می‌خواهی؟» — wanted | declined; enrols if needed.
+  examIntent: (pathwayId, intent) =>
+    request('/exams/' + encodeURIComponent(pathwayId) + '/intent', { method: 'POST', body: { intent } }),
 
   // premium: reading compass — coverage report over the user's own reading,
   // cross-referenced against the taxonomy and pathways (no interest guessing)

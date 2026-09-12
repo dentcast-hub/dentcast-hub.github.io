@@ -8,6 +8,8 @@ export interface ActivePathwaySummary {
   current_step: number;
   total_steps: number;
   is_complete: boolean;
+  /** «گواهی‌نامه می‌خواهی؟» — null until the reader answered, so the dashboard can ask. */
+  certificate_intent: 'wanted' | 'declined' | null;
 }
 
 /**
@@ -25,8 +27,10 @@ export interface ActivePathwaySummary {
  * of enrollments, so this is cheap.
  */
 export async function getActivePathwaySummary(userId: string): Promise<ActivePathwaySummary | null> {
-  const rows = await pool.query<{ pathway_id: string; started_at: string; completed_at: string | null }>(
-    `select pathway_id, started_at, completed_at from user_pathways where user_id = $1`,
+  const rows = await pool.query<{
+    pathway_id: string; started_at: string; completed_at: string | null; certificate_intent: 'wanted' | 'declined' | null;
+  }>(
+    `select pathway_id, started_at, completed_at, certificate_intent from user_pathways where user_id = $1`,
     [userId],
   );
   const candidates = rows.rows
@@ -44,7 +48,7 @@ export async function getActivePathwaySummary(userId: string): Promise<ActivePat
     return bTime - aTime;
   });
 
-  const { pathway } = candidates[0];
+  const { pathway, certificate_intent } = candidates[0];
   const consumed = await getConsumedContentIds(userId);
   const progress = computeProgress(pathway, consumed);
   return {
@@ -53,5 +57,6 @@ export async function getActivePathwaySummary(userId: string): Promise<ActivePat
     current_step: progress.current_step,
     total_steps: progress.total_steps,
     is_complete: progress.is_complete,
+    certificate_intent: certificate_intent ?? null,
   };
 }
