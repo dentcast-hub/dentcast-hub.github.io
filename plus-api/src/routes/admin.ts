@@ -62,7 +62,7 @@ import {
   upsertForm, getForm, deleteForm, formRoster, queueRows, attemptRoster, ruleAttempt, notifyAssigneesOfNewForm,
   parseQuestions, addQuestion, removeQuestion,
 } from '../services/pathway-exams.js';
-import { getPathways } from '../pathways.js';
+import { isCertifiable, getPathways } from '../pathways.js';
 import {
   requestQueue, getRequest, requestByReference, markAnswered, markRejected,
 } from '../services/des-requests.js';
@@ -4888,8 +4888,11 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // GET /admin/pathways/catalog — the full pathways as {id, title_fa}, so the
   // two forms below offer a picker rather than a free-text id.
   app.get('/admin/pathways/catalog', async (_request, reply) => {
+    // Only pathways a certificate can be earned for: a form or a hand issue
+    // for a pending one is refused by the service anyway, so the picker
+    // should not offer it.
     const pathways = getPathways()
-      .filter((p) => p.kind !== 'bundle')
+      .filter(isCertifiable)
       .map((p) => ({ id: p.id, title_fa: p.title_fa, steps: p.steps.length }));
     return reply.send({ ok: true, pathways });
   });
@@ -4934,6 +4937,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     } catch (err) {
       const code = (err as Error).message;
       if (code === 'unknown_pathway') return reply.code(400).send({ error: code, message: 'این مسیر وجود ندارد (باندل‌ها گواهی ندارند).' });
+      if (code === 'pathway_pending') return reply.code(400).send({ error: code, message: 'این مسیر هنوز کامل نشده (certificate: pending در pathways.json) — تا آمدنِ آخرین قسمت گواهی ندارد.' });
       if (code === 'holder_name_required') return reply.code(400).send({ error: code, message: 'نامِ روی گواهی را بنویس.' });
       throw err;
     }
@@ -5028,6 +5032,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     } catch (err) {
       const code = (err as Error).message;
       if (code === 'unknown_pathway') return reply.code(400).send({ error: code, message: 'این مسیر وجود ندارد (باندل‌ها آزمون ندارند).' });
+      if (code === 'pathway_pending') return reply.code(400).send({ error: code, message: 'این مسیر هنوز کامل نشده (certificate: pending در pathways.json) — تا آمدنِ آخرین قسمت آزمون ندارد.' });
       if (code.startsWith('invalid_questions:')) {
         return reply.code(400).send({ error: 'invalid_questions', message: code.slice('invalid_questions:'.length) });
       }
@@ -5058,6 +5063,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     } catch (err) {
       const code = (err as Error).message;
       if (code === 'unknown_pathway') return reply.code(400).send({ error: code, message: 'این مسیر وجود ندارد (باندل‌ها آزمون ندارند).' });
+      if (code === 'pathway_pending') return reply.code(400).send({ error: code, message: 'این مسیر هنوز کامل نشده (certificate: pending در pathways.json) — تا آمدنِ آخرین قسمت آزمون ندارد.' });
       if (code.startsWith('invalid_questions:')) {
         return reply.code(400).send({ error: 'invalid_questions', message: code.slice('invalid_questions:'.length) });
       }
@@ -5126,6 +5132,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     } catch (err) {
       const code = (err as Error).message;
       if (code === 'unknown_pathway') return reply.code(400).send({ error: code, message: 'این مسیر وجود ندارد (باندل‌ها آزمون ندارند).' });
+      if (code === 'pathway_pending') return reply.code(400).send({ error: code, message: 'این مسیر هنوز کامل نشده (certificate: pending در pathways.json) — تا آمدنِ آخرین قسمت آزمون ندارد.' });
       throw err;
     }
   });

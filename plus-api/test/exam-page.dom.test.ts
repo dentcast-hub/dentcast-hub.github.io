@@ -119,6 +119,14 @@ describe('every state has a face', () => {
     expect(stateEl()!.dataset.examState).toBe('ready');
   });
 
+  it('an unfinished series says so, and offers nothing else', async () => {
+    await mount({ ...BASE, state: 'pending', rules: null });
+    expect(stateEl()!.dataset.examState).toBe('pending');
+    expect(root().textContent).toContain('هنوز کامل نیست');
+    expect(root().querySelector('[data-pw-intent-row]')).toBeNull();
+    expect(root().querySelector('input[name="holder_name"], [data-exam-start]')).toBeNull();
+  });
+
   it('a pass whose certificate was revoked never claims one exists', async () => {
     await mount({ ...BASE, state: 'passed', certificate: null });
     expect(stateEl()!.dataset.examState).toBe('passed');

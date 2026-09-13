@@ -1,6 +1,6 @@
 import { config } from '../config.js';
 import { pool, one, query, withTransaction, type Queryable } from '../db.js';
-import { getPathwayById, computeProgress } from '../pathways.js';
+import { getPathwayById, computeProgress, isCertifiable } from '../pathways.js';
 import { getConsumedContentIds } from './consumption.js';
 import { mintReference } from './reference.js';
 import { issueCertificate, type Certificate } from './certificates.js';
@@ -257,6 +257,7 @@ const intIn = (v: unknown, lo: number, hi: number, dflt: number): number =>
 export async function upsertForm(pathwayId: string, input: FormInput, client: Queryable = pool): Promise<{ form: ExamForm; created: boolean }> {
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
+  if (!isCertifiable(pathway)) throw new Error('pathway_pending');
   const norm = parseQuestions(input.questions);
   if (!norm.ok) throw new Error(`invalid_questions:${norm.error}`);
   const d = config.exam;
@@ -317,6 +318,7 @@ export async function addQuestion(
 ): Promise<{ form: ExamForm; question: ExamQuestion; created: boolean }> {
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
+  if (!isCertifiable(pathway)) throw new Error('pathway_pending');
 
   return withTransaction(async (client) => {
     const form = await one<ExamForm>(`${FORM_SELECT} where pathway_id = $1 for update`, [pathwayId], client);
@@ -457,6 +459,7 @@ export async function assignExam(
 ): Promise<{ assignment: ExamAssignment; created: boolean }> {
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
+  if (!isCertifiable(pathway)) throw new Error('pathway_pending');
   // Letting somebody in IS putting them on the pathway: enrol them too, so
   // the assignment is never refused by the enrolment rule it was meant to
   // open. Idempotent; an existing enrolment is untouched.
@@ -580,6 +583,7 @@ function shuffle<T>(a: T[]): T[] {
 /* ---------------------------------------------------------------- state -- */
 
 export type ExamStateKind =
+  | 'pending'    // the pathway's series is unfinished; no certificate yet (pathways.json `certificate`)
   | 'no_form'    // nothing to sit yet
   | 'locked'     // form exists, reader neither finished nor assigned
   | 'ready'      // may start an attempt now
@@ -705,6 +709,10 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
   // because the founder issued by hand. A form with an EMPTY pool counts as
   // no form: there is nothing to sit, and saying `ready` would offer a sheet
   // with no questions on it.
+  // An unfinished series: no exam and no certificate until its last part
+  // lands, whatever form exists or does not — a certificate already held
+  // (issued before the flag) still reads as passed, because it is the record.
+  if (!isCertifiable(pathway)) { base.state = cert ? 'passed' : 'pending'; return base; }
   if (!form || form.questions.length === 0) { if (cert) base.state = 'passed'; return base; }
 
   base.rules = formRules(form);
@@ -1128,6 +1136,7 @@ export async function setCertificateIntent(
 ): Promise<ExamState> {
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
+  if (!isCertifiable(pathway)) throw new Error('pathway_pending');
   await query(
     `insert into user_pathways (user_id, pathway_id, current_step, certificate_intent, certificate_intent_at)
      values ($1, $2, 0, $3, now())
@@ -1314,6 +1323,7 @@ export async function examStates(userId: string, pathwayIds: string[]): Promise<
   const now = Date.now();
   for (const id of pathwayIds) {
     const form = formBy.get(id);
+    if (!isCertifiable(getPathwayById(id))) { out.set(id, 'pending'); continue; }
     if (!form || form.question_count === 0) { out.set(id, 'no_form'); continue; }
     const mine = attempts.rows.filter((a) => a.pathway_id === id);
     if (mine.some((a) => a.status === 'passed')) { out.set(id, 'passed'); continue; }

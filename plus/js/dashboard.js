@@ -1,17 +1,17 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, streakIsActiveToday } from './util.js?v=77';
-import { api } from './api.js?v=77';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=77';
-import { leagueEntryButton } from './league.js?v=77';
-import { openCollectionPicker, boardCover } from './collections.js?v=77';
-import { bundleRailCard, intentRow } from './pathways.js?v=77';
-import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js?v=77';
-import { renewalBanner } from './renewal-banner.js?v=77';
-import { premiumCta } from './premium-cta.js?v=77';
-import { maybeCelebrate } from './achievements.js?v=77';
-import { markReturnTrail } from './return-trail.js?v=77';
+import { el, faNum, streakIsActiveToday } from './util.js?v=78';
+import { api } from './api.js?v=78';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=78';
+import { leagueEntryButton } from './league.js?v=78';
+import { openCollectionPicker, boardCover } from './collections.js?v=78';
+import { bundleRailCard, intentRow } from './pathways.js?v=78';
+import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js?v=78';
+import { renewalBanner } from './renewal-banner.js?v=78';
+import { premiumCta } from './premium-cta.js?v=78';
+import { maybeCelebrate } from './achievements.js?v=78';
+import { markReturnTrail } from './return-trail.js?v=78';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',
@@ -292,7 +292,7 @@ function pathwayBlock(me) {
   // The «گواهی می‌خواهی؟» question, for readers already mid-pathway who
   // may not open the pathway page again soon. Goes away with the answer.
   const ask = intentRow(
-    { pathway_id: p.id, certificate_intent: p.certificate_intent || null, state: 'locked' },
+    { pathway_id: p.id, certificate_intent: p.certificate_intent || null, certifiable: p.certifiable !== false, state: 'locked' },
     (next) => { if (ask) ask.replaceWith(el('div', { class: 'dcp-muted dcp-pw-intent' },
       next.certificate_intent === 'wanted' ? 'ثبت شد — نزدیک پایان، آزمون برایت آماده می‌شود.' : 'باشد؛ هر وقت خواستی از صفحهٔ مسیر بگو.')); },
   );

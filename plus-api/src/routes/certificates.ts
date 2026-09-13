@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
 import { verifyCertificate, listCertificates } from '../services/certificates.js';
-import { getPathwayById, getPathways } from '../pathways.js';
+import { getPathwayById, getPathways, isCertifiable } from '../pathways.js';
 import { examStates, examUrl } from '../services/pathway-exams.js';
 
 /**
@@ -53,7 +53,9 @@ export async function certificateRoutes(app: FastifyInstance): Promise<void> {
      */
     scoped.get('/certificates', async (request, reply) => {
       const rows = await listCertificates(request.user!.id);
-      const full = getPathways().filter((p) => p.kind !== 'bundle');
+      // No disc for an unfinished series (`certificate: 'pending'`): a
+      // dashed disc says «earn this», and there is nothing to earn yet.
+      const full = getPathways().filter(isCertifiable);
       const exams = await examStates(request.user!.id, full.map((p) => p.id));
       const shape = (c: typeof rows[number]) => ({
         id: c.id,

@@ -24,11 +24,11 @@
 // answers were right, how many key points each free answer covered — and
 // never the key itself: the pool is small and the second attempt may draw
 // the same question.
-import { el, faNum, debounce } from './util.js?v=77';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=77';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=77';
-import { openLoginModal } from './login-modal.js?v=77';
-import { registerSW } from './pwa.js?v=77';
+import { el, faNum, debounce } from './util.js?v=78';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=78';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=78';
+import { openLoginModal } from './login-modal.js?v=78';
+import { registerSW } from './pwa.js?v=78';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' });
 const FA_DATETIME = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium', timeStyle: 'short' });
@@ -293,6 +293,10 @@ export function renderState(root, id, s) {
   const parts = [head(s)];
 
   switch (s.state) {
+    case 'pending':
+      parts.push(simpleCard('pending', 'گواهی‌نامهٔ این مسیر هنوز باز نشده',
+        'این مسیر هنوز کامل نیست — بر سری‌ای ایستاده که هنوز تمام نشده. با آمدنِ آخرین قسمت، آزمون و گواهی‌نامه‌اش همین‌جا باز می‌شود.', [backBtn(id)]));
+      break;
     case 'no_form':
       parts.push(simpleCard('no_form', 'آزمون این مسیر هنوز آماده نشده',
         'وقتی سؤال‌ها آماده شود، همین‌جا باز می‌شود و در «اطلاعیه» خبرش را می‌گیری.', [backBtn(id)]));

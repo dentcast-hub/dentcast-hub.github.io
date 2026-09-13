@@ -1,5 +1,5 @@
 import { pool } from '../db.js';
-import { getPathwayById, computeProgress } from '../pathways.js';
+import { getPathwayById, computeProgress, isCertifiable } from '../pathways.js';
 import { getConsumedContentIds } from './consumption.js';
 
 export interface ActivePathwaySummary {
@@ -10,6 +10,8 @@ export interface ActivePathwaySummary {
   is_complete: boolean;
   /** «گواهی‌نامه می‌خواهی؟» — null until the reader answered, so the dashboard can ask. */
   certificate_intent: 'wanted' | 'declined' | null;
+  /** false while pathways.json flags the pathway `certificate: 'pending'` — the dashboard then asks nothing. */
+  certifiable: boolean;
 }
 
 /**
@@ -58,5 +60,6 @@ export async function getActivePathwaySummary(userId: string): Promise<ActivePat
     total_steps: progress.total_steps,
     is_complete: progress.is_complete,
     certificate_intent: certificate_intent ?? null,
+    certifiable: isCertifiable(pathway),
   };
 }
