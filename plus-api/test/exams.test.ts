@@ -14,6 +14,7 @@ import { ai } from '../src/providers/registry.js';
 import { getPathwayById } from '../src/pathways.js';
 import {
   normalizeQuestions, upsertForm, getForm, deleteForm, formRoster, assignExam,
+  addQuestion, removeQuestion, nextQuestionId,
   examState, startAttempt, submitAttempt, ruleAttempt, queueRows, attemptRoster, getAttempt,
   drawQuestions, tally, type ExamQuestion,
 } from '../src/services/pathway-exams.js';
@@ -232,6 +233,97 @@ describe('the form', () => {
 
     expect((await adminPost('/admin/exam-forms/delete', { pathway_id: PATHWAY })).json().deleted).toBe(true);
     expect(await getForm(PATHWAY)).toBeNull();
+  });
+});
+
+/* ------------------------------------------------------- the builder -- */
+
+describe('the question builder — one written question at a time', () => {
+  it('creates the form on the first question, with the founder\'s own defaults', async () => {
+    const r = await addQuestion(PATHWAY, { kind: 'mcq', prompt_fa: 'کدام؟', options: ['الف', 'ب', 'ج'], correct: 2 });
+    expect(r.created).toBe(true);
+    expect(r.form).toMatchObject({ pass_percent: 70, max_attempts: 2, retry_days: 7, supervised_until: 5, mcq_draw: 0, free_draw: 0 });
+    expect(r.question).toMatchObject({ id: 'q1', kind: 'mcq', correct: 2 });
+    expect((await getForm(PATHWAY))!.questions).toHaveLength(1);
+  });
+
+  it('appends without touching the form\'s own settings', async () => {
+    await upsertForm(PATHWAY, { questions: [MCQ(1)], passPercent: 85, mcqDraw: 4, retryDays: 0, supervisedUntil: 0, note: 'دست‌ساز' });
+    const r = await addQuestion(PATHWAY, { kind: 'free', prompt_fa: 'چرا؟', key_points: ['اول', 'دوم'] });
+    expect(r.created).toBe(false);
+    // the thing upsertForm would have reset:
+    expect(r.form).toMatchObject({ pass_percent: 85, mcq_draw: 4, retry_days: 0, supervised_until: 0, note: 'دست‌ساز' });
+    expect(r.form.questions).toHaveLength(2);
+    expect(r.form.questions[0].id).toBe('m1'); // the existing question keeps its id
+  });
+
+  it('mints an id nothing holds, stamps the key points under it, and never renumbers', async () => {
+    await addQuestion(PATHWAY, { kind: 'mcq', prompt_fa: 'یک؟', options: ['الف', 'ب'], correct: 0 });
+    await addQuestion(PATHWAY, { kind: 'mcq', prompt_fa: 'دو؟', options: ['الف', 'ب'], correct: 1 });
+    expect(await removeQuestion(PATHWAY, 'q1')).toEqual({ removed: true, remaining: 1 });
+
+    const third = await addQuestion(PATHWAY, { kind: 'free', prompt_fa: 'سه؟', key_points: ['الف', 'ب'] });
+    expect(third.question.id).toBe('q3'); // never q1 again, never renumbering q2
+    expect((third.question as { key_points: { id: string }[] }).key_points.map((k) => k.id)).toEqual(['q3-k1', 'q3-k2']);
+    expect(third.form.questions.map((q) => q.id)).toEqual(['q2', 'q3']);
+
+    expect(nextQuestionId([])).toBe('q1');
+    expect(nextQuestionId([{ id: 'q9', kind: 'mcq', prompt_fa: 'x', options: ['a', 'b'], correct: 0 }])).toBe('q10');
+  });
+
+  it('refuses a question that cannot be graded, and writes nothing', async () => {
+    await expect(addQuestion(PATHWAY, { kind: 'mcq', prompt_fa: 'کدام؟', options: ['تنها گزینه'], correct: 0 }))
+      .rejects.toThrow(/^invalid_questions:/);
+    await expect(addQuestion(PATHWAY, { kind: 'mcq', prompt_fa: '  ', options: ['الف', 'ب'], correct: 0 }))
+      .rejects.toThrow(/^invalid_questions:/);
+    await expect(addQuestion(PATHWAY, { kind: 'free', prompt_fa: 'چرا؟', key_points: [] }))
+      .rejects.toThrow(/^invalid_questions:/);
+    await expect(addQuestion(BUNDLE_ID, { kind: 'mcq', prompt_fa: 'x', options: ['a', 'b'], correct: 0 }))
+      .rejects.toThrow('unknown_pathway');
+    expect(await getForm(PATHWAY)).toBeNull();
+  });
+
+  it('deleting a question leaves an attempt that is already open exactly as it was', async () => {
+    const uid = await userId();
+    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2)] });
+    await assignExam(uid, PATHWAY);
+    const started = await startAttempt(uid, PATHWAY, 'x');
+    expect(started.ok && started.attempt.questions).toHaveLength(2);
+
+    expect((await removeQuestion(PATHWAY, 'm2')).remaining).toBe(1);
+    const open = (await examState(uid, PATHWAY)).open!;
+    expect(open.questions).toHaveLength(2); // the snapshot is its own copy
+    const graded = await submitAttempt(uid, PATHWAY, { m1: 1, m2: 1 });
+    expect(graded.ok && graded.attempt.mcq_total).toBe(2);
+  });
+
+  it('the panel routes append, list and delete — and a question that is not there is a 404', async () => {
+    const add = await adminPost('/admin/exam-forms/questions', {
+      pathway_id: PATHWAY,
+      question: { kind: 'mcq', prompt_fa: 'کدام گزینه؟', options: ['الف', 'ب', 'ج', 'د'], correct: 1 },
+    });
+    expect(add.statusCode).toBe(200);
+    expect(add.json()).toMatchObject({ created: true, count: 1 });
+    expect(add.json().question.id).toBe('q1');
+
+    const free = await adminPost('/admin/exam-forms/questions', {
+      pathway_id: PATHWAY, question: { kind: 'free', prompt_fa: 'چرا؟', key_points: ['اول', 'دوم', 'سوم'] },
+    });
+    expect(free.json()).toMatchObject({ created: false, count: 2 });
+
+    const listed = await adminGet(`/admin/exam-forms/${PATHWAY}`);
+    expect(listed.json().form.questions.map((q: { id: string }) => q.id)).toEqual(['q1', 'q2']);
+
+    const gone = await adminPost('/admin/exam-forms/questions/delete', { pathway_id: PATHWAY, question_id: 'q1' });
+    expect(gone.json()).toMatchObject({ removed: true, remaining: 1 });
+    const again = await adminPost('/admin/exam-forms/questions/delete', { pathway_id: PATHWAY, question_id: 'q1' });
+    expect(again.statusCode).toBe(404);
+
+    const bad = await adminPost('/admin/exam-forms/questions', {
+      pathway_id: PATHWAY, question: { kind: 'mcq', prompt_fa: 'کدام؟', options: ['فقط یکی'], correct: 0 },
+    });
+    expect(bad.statusCode).toBe(400);
+    expect(bad.json().error).toBe('invalid_questions');
   });
 });
 
