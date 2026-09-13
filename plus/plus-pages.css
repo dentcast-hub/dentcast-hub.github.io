@@ -1889,3 +1889,38 @@ html:not([data-theme="dark"]) .dcp-overlay {
 .dcp-hlib-chead-links a { color: var(--ac, #0b5fff) !important; font-weight: 600; }
 .dcp-hlib-via { font-size: .68rem; color: var(--txt3, #62779a); border: 1px dashed var(--border, rgba(2,35,96,.18)); padding: 0 7px; border-radius: 999px; align-self: center; }
 \n
+/* ===========================================================================
+   قطعه‌های صوتی in the دفترچه — the clip card (plus/js/clip-view.js). A card,
+   never a link: the play button plays THIS segment right here, the small bar
+   shows where in the episode it sits, the note is the content.
+   ======================================================================== */
+.dcp-clipcard { display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: start; }
+.dcp-clipcard-play {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--ac, #0b5fff); cursor: pointer;
+  background: var(--surface, #fff); color: var(--ac, #0b5fff); display: flex; align-items: center; justify-content: center;
+  transition: background .15s, color .15s, transform .15s;
+}
+.dcp-clipcard-play svg { width: 16px; height: 16px; }
+.dcp-clipcard-play.is-playing, .dcp-clipcard-play:hover { background: var(--ac, #0b5fff); color: #fff; }
+.dcp-clipcard-play:active { transform: scale(.95); }
+.dcp-clipcard-main { min-width: 0; }
+.dcp-clipcard-span { display: flex; align-items: baseline; gap: 8px; justify-content: flex-end; direction: ltr; }
+.dcp-clipcard-times { font-weight: 800; font-size: .92rem; color: var(--txt); font-variant-numeric: tabular-nums; }
+.dcp-clipcard-len { font-size: .72rem; color: var(--txt2, #4a5f85); }
+.dcp-clipcard-bar { position: relative; height: 6px; margin: 7px 0 3px; border-radius: 3px; background: var(--surface3, #eaecf5); direction: ltr; }
+.dcp-clipcard-zone { position: absolute; top: -2px; bottom: -2px; border-radius: 2px; background: var(--hl, #fff3a3); border-inline: 2px solid #d9b800; }
+.dcp-clipcard-prog { position: absolute; top: -2px; bottom: -2px; width: 0; border-radius: 2px; background: var(--ac, #0b5fff); opacity: .85; }
+.dcp-clipcard-ph { position: absolute; top: -5px; bottom: -5px; width: 2px; background: var(--ac, #0b5fff); }
+.dcp-clipcard-ctx { display: flex; justify-content: space-between; gap: 8px; font-size: .64rem; color: var(--txt3, #62779a); direction: ltr; font-variant-numeric: tabular-nums; }
+.dcp-clipcard-status { flex: 1 1 auto; text-align: center; }
+.dcp-clipcard-kind { font-size: .68rem; color: var(--txt3, #62779a); border: 1px dashed var(--border, rgba(2,35,96,.18)); padding: 0 8px; border-radius: 999px; }
+[data-theme="dark"] .dcp-clipcard-zone { background: var(--hl, #5a4d10); border-color: #e6c93a; }
+/* the «نوع» chip row leads with a small label, like «مفهوم» */
+.dcp-hlib-kinds .dcp-hlib-chips-label { font-size: .72rem; color: var(--txt3, #62779a); align-self: center; margin-inline-end: 2px; }
+
+/* a clip pin on a board: the highlight yellow's edge, like its zone on the bar */
+.dcp-cl-pin-clip { border-inline-start: 3px solid #d9b800; }
+.dcp-cl-pin-kind-clip { color: #8a6414; background: rgba(217, 184, 0, .14); }
+[data-theme="dark"] .dcp-cl-pin-clip { border-inline-start-color: #e6c93a; }
+[data-theme="dark"] .dcp-cl-pin-kind-clip { color: #e6c93a; background: rgba(230, 201, 58, .14); }
+.dcp-cl-pin .dcp-clipcard { margin-top: 8px; }

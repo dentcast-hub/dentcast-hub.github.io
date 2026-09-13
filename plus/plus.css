@@ -2123,3 +2123,117 @@ html.dcp-touring #mobile-body { overflow: hidden; }
 .dcp-gn-door p { margin: 3px 0 9px; font-size: .88rem; color: var(--txt2, #4a5f85); line-height: 1.7; }
 .dcp-gn-door b { color: var(--txt, #0a1a33); font-variant-numeric: tabular-nums; }
 
+
+/* ===========================================================================
+   قطعه‌های صوتی — the clip control under a player (plus/js/clips.js).
+   Lives here, not in dc-article.css: dc-nav.js injects plus.css on every page,
+   including /player.html (the shared player) and the desktop shell, and the
+   control has to look the same under all three players.
+   Amber (--dcp-gold) on the idle button because a clip is premium — the one
+   colour that means «this is what a subscription buys» site-wide. Red only
+   while a span is being recorded. The clip itself on a bar is the HIGHLIGHT
+   yellow, because a clip is a highlight in time.
+   ======================================================================== */
+.dcp-clip-row {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px;
+  margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--dcp-line);
+  direction: rtl;
+}
+.dcp-clip-btn {
+  font: inherit; font-weight: 700; font-size: .84rem; line-height: 1;
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 34px; padding: 0 14px; border-radius: 999px; cursor: pointer;
+  color: var(--dcp-gold); background: var(--dcp-gold-bg);
+  border: 1px solid color-mix(in srgb, var(--dcp-gold) 55%, transparent);
+  transition: color .17s, background .17s, border-color .17s, transform .17s;
+  -webkit-tap-highlight-color: transparent;
+}
+.dcp-clip-btn svg { width: 15px; height: 15px; flex: none; }
+.dcp-clip-btn:active { transform: scale(.97); }
+.dcp-clip-btn:focus-visible { outline: 2px solid var(--dcp-gold); outline-offset: 2px; }
+.dcp-clip-btn[disabled] { opacity: .55; cursor: default; }
+.dcp-clip-btn.is-rec {
+  color: var(--dcp-clip-rec, #d64545); background: color-mix(in srgb, var(--dcp-clip-rec, #d64545) 8%, transparent);
+  border-color: var(--dcp-clip-rec, #d64545);
+}
+.dcp-clip-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: var(--dcp-clip-rec, #d64545); flex: none;
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--dcp-clip-rec, #d64545) 50%, transparent);
+  animation: dcp-clip-pulse 1.2s infinite;
+}
+@keyframes dcp-clip-pulse {
+  70% { box-shadow: 0 0 0 7px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+@media (prefers-reduced-motion: reduce) { .dcp-clip-dot { animation: none; } }
+.dcp-clip-hint { font-size: .76rem; color: var(--dcp-muted); }
+.dcp-clip-live { font-size: .78rem; color: var(--dcp-muted); font-variant-numeric: tabular-nums; unicode-bidi: isolate; }
+.dcp-clip-live b { color: var(--dcp-clip-rec, #d64545); font-weight: 700; }
+.dcp-clip-nudge {
+  font: inherit; font-size: .74rem; font-weight: 700; line-height: 1;
+  min-width: 30px; height: 30px; padding: 0 8px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--dcp-line); background: var(--dcp-surface-2, var(--dcp-surface)); color: var(--dcp-muted);
+}
+.dcp-clip-nudge:hover { color: var(--dcp-ink); border-color: var(--dcp-muted); }
+[data-theme="dark"] .dcp-clip-btn.is-rec, [data-theme="dark"] .dcp-clip-live b, [data-theme="dark"] .dcp-clip-dot { --dcp-clip-rec: #ef6b6b; }
+
+/* The strip under the transport's range: the reader's clips on the episode's
+   own timeline. Zones are buttons (tap = play that clip); the live one grows
+   while recording. */
+.dcp-clip-strip { position: relative; height: 6px; margin: -2px 0 6px; direction: ltr; }
+.dcp-clip-strip:empty { display: none; }
+.dcp-clip-zone {
+  position: absolute; top: 0; bottom: 0; min-width: 4px; padding: 0; border: 0; cursor: pointer;
+  background: var(--hl, #fff3a3); border-inline: 2px solid var(--dcp-clip-edge, #d9b800); border-radius: 2px;
+}
+.dcp-clip-zone:hover, .dcp-clip-zone:focus-visible { outline: 2px solid var(--dcp-clip-edge, #d9b800); outline-offset: 1px; }
+.dcp-clip-zone.is-live { border-inline-end-color: var(--dcp-clip-rec, #d64545); cursor: default; }
+[data-theme="dark"] .dcp-clip-zone { background: var(--hl, #5a4d10); --dcp-clip-edge: #e6c93a; }
+
+/* The sheet after «پایان قطعه» (openClipSheet): a zoomed window with two
+   handles, ±۱ nudges, length chips, a note, labels. */
+.dcp-clip-sheet .dcp-clip-sub b { color: var(--dcp-ink); font-variant-numeric: tabular-nums; unicode-bidi: isolate; }
+.dcp-clip-win {
+  position: relative; height: 46px; margin-top: 12px; overflow: hidden; direction: ltr;
+  background: var(--dcp-surface-2, var(--dcp-surface)); border: 1px solid var(--dcp-line); border-radius: 10px;
+  touch-action: none; user-select: none;
+}
+.dcp-clip-ticks { position: absolute; inset: 0; pointer-events: none; }
+.dcp-clip-tick { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--dcp-line); }
+.dcp-clip-tick i { position: absolute; bottom: 2px; left: 3px; font-style: normal; font-size: .58rem; color: var(--dcp-muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.dcp-clip-sel { position: absolute; top: 6px; bottom: 6px; background: var(--hl, #fff3a3); border-radius: 3px; pointer-events: none; }
+.dcp-clip-ph { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--dcp-accent); pointer-events: none; }
+.dcp-clip-h {
+  position: absolute; top: 3px; bottom: 3px; width: 16px; padding: 0; transform: translateX(-50%); cursor: ew-resize;
+  border-radius: 5px; background: var(--dcp-surface); border: 2px solid var(--dcp-clip-edge, #d9b800);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .18);
+}
+.dcp-clip-h::after { content: ""; position: absolute; left: 50%; top: 25%; bottom: 25%; width: 2px; margin-left: -1px; background: var(--dcp-clip-edge, #d9b800); border-radius: 1px; }
+.dcp-clip-h.is-drag, .dcp-clip-h:focus-visible { outline: 2px solid var(--dcp-accent); outline-offset: 1px; }
+[data-theme="dark"] .dcp-clip-sel { background: var(--hl, #5a4d10); }
+[data-theme="dark"] .dcp-clip-h { --dcp-clip-edge: #e6c93a; }
+.dcp-clip-ends { display: flex; justify-content: space-between; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+.dcp-clip-end { display: flex; align-items: center; gap: 5px; }
+.dcp-clip-lab { font-size: .72rem; color: var(--dcp-muted); }
+.dcp-clip-t { font-size: .9rem; font-weight: 700; color: var(--dcp-ink); font-variant-numeric: tabular-nums; unicode-bidi: isolate; min-width: 3.4em; text-align: center; }
+.dcp-clip-len { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.dcp-clip-sheet .dcp-hlib-ta { margin-top: 10px; }
+.dcp-clip-sheet .dcp-hlib-erow { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.dcp-clip-foot { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.dcp-clip-listen svg { width: 14px; height: 14px; margin-inline-end: 4px; vertical-align: -2px; }
+
+/* ?dcclip= landing: one line above the transport — the clip, and one tap to
+   hear it. Highlight yellow: it is the clip, drawn where the page shows it. */
+.dcp-clip-land {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin: 0 0 10px; padding: 9px 12px; border-radius: 10px;
+  background: var(--hl, #fff3a3); color: var(--hl-ink, #3b2f00); font-size: .84rem;
+}
+.dcp-clip-land b { font-weight: 700; font-variant-numeric: tabular-nums; unicode-bidi: isolate; }
+.dcp-clip-land-note { color: inherit; opacity: .8; font-size: .8rem; flex: 1 1 100%; }
+.dcp-clip-land-go {
+  margin-inline-start: auto; display: inline-flex; align-items: center; gap: 5px;
+  font: inherit; font-weight: 700; font-size: .84rem; color: inherit; background: transparent; border: 0; cursor: pointer; padding: 0;
+}
+.dcp-clip-land-go svg { width: 14px; height: 14px; }
+[data-theme="dark"] .dcp-clip-land { background: var(--hl, #5a4d10); color: var(--hl-ink, #fff3c4); }

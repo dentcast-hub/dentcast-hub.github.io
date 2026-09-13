@@ -136,7 +136,7 @@ export async function mergeProfiles(
   //     too; push_subscriptions.endpoint and auth_identities(provider, id) are
   //     GLOBALLY unique, so a value can live on only one of the two accounts.
   const plainTables = [
-    'user_activity', 'highlights', 'card_state', 'collections',
+    'user_activity', 'highlights', 'card_state', 'audio_clips', 'collections',
     'subscriptions', 'payments', 'certificates', 'push_subscriptions',
     'auth_identities',
     // ارزیاب DES: a reader's own submissions. des_papers carries no user

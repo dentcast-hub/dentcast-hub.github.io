@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=80';
+import { API_BASES } from './config.js?v=82';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -196,6 +196,15 @@ export const api = {
   createHighlight: (h) => request('/highlights', { method: 'POST', body: h }),
   updateHighlight: (id, patch) => request('/highlights/' + id, { method: 'PATCH', body: patch }),
   deleteHighlight: (id) => request('/highlights/' + id, { method: 'DELETE' }),
+
+  // قطعه‌های صوتی — audio clips (routes/clips.ts). Creating one is premium;
+  // listing, editing and deleting are any-plan (a lapsed subscriber keeps them).
+  listClips: (content_id) => request('/clips', { query: { content_id } }),
+  getClip: (id) => request('/clips/' + encodeURIComponent(id)),
+  clipLibrary: () => request('/clips/library'),
+  createClip: (c) => request('/clips', { method: 'POST', body: c }),
+  updateClip: (id, patch) => request('/clips/' + encodeURIComponent(id), { method: 'PATCH', body: patch }),
+  deleteClip: (id) => request('/clips/' + encodeURIComponent(id), { method: 'DELETE' }),
 
   // per-article note (independent of highlights)
   getArticleNote: (content_id) => request('/article-note', { query: { content_id } }),

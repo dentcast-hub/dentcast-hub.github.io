@@ -6,9 +6,9 @@
 // things depending on where you found it.
 //
 // Everything here is presentational + one inline editor. No page owns a copy.
-import { el, renderNoteLines } from './util.js?v=80';
-import { api } from './api.js?v=80';
-import { LABELS, PALETTE } from './config.js?v=80';
+import { el, renderNoteLines } from './util.js?v=82';
+import { api } from './api.js?v=82';
+import { LABELS, PALETTE } from './config.js?v=82';
 
 export const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
 
@@ -59,7 +59,7 @@ export function labelChip(label) {
 // A collection pin's kind badge — only for the kinds that carry no other visual
 // tell (a highlight already reads as itself via its coloured mark, a page via
 // its type icon/colour; a text or reference pin has neither, so it needs one).
-const SNIPPET_KIND_LABEL = { text: '✍️ متن خودم', reference: '🔗 رفرنس' };
+const SNIPPET_KIND_LABEL = { text: '✍️ متن خودم', reference: '🔗 رفرنس', clip: '🎧 قطعه‌ی صوتی' };
 export function kindChip(kind) {
   return el('span', { class: 'dcp-cl-pin-kind dcp-cl-pin-kind-' + kind }, SNIPPET_KIND_LABEL[kind] || kind);
 }

@@ -11,6 +11,7 @@ import { activityRoutes } from './routes/activity.js';
 import { playerRoutes } from './routes/player.js';
 import { voteRoutes } from './routes/votes.js';
 import { highlightRoutes } from './routes/highlights.js';
+import { clipRoutes } from './routes/clips.js';
 import { articleNoteRoutes } from './routes/article-note.js';
 import { reviewRoutes } from './routes/review.js';
 import { pathwayRoutes } from './routes/pathways.js';
@@ -93,6 +94,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(anonRoutes);
   await app.register(activityRoutes);
   await app.register(highlightRoutes);
+  await app.register(clipRoutes);
   await app.register(articleNoteRoutes);
   await app.register(reviewRoutes);
   await app.register(pathwayRoutes);

@@ -7,19 +7,22 @@
 // opens into a masonry grid of "pins." This module is shared by
 // /plus/collections.html, /plus/collection.html, the workbench's two
 // single-purpose collection buttons, and the dashboard.
-import { el, faNum } from './util.js?v=80';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=80';
-import { premiumCta } from './premium-cta.js?v=80';
-import { api, currentUser, apiBase } from './api.js?v=80';
-import { openLoginModal } from './login-modal.js?v=80';
-import { FOLDER_EN } from './content-index.js?v=80';
-import { markReturnTrail } from './return-trail.js?v=80';
-import { PALETTE } from './config.js?v=80';
+import { el, faNum } from './util.js?v=82';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=82';
+import { premiumCta } from './premium-cta.js?v=82';
+import { api, currentUser, apiBase } from './api.js?v=82';
+import { openLoginModal } from './login-modal.js?v=82';
+import { FOLDER_EN } from './content-index.js?v=82';
+import { markReturnTrail } from './return-trail.js?v=82';
+import { PALETTE } from './config.js?v=82';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
   kindChip, snippetInlineEditor, looksLatin,
-} from './hl-view.js?v=80';
+} from './hl-view.js?v=82';
+// A قطعه‌ی صوتی pin draws the same playable body the دفترچه draws
+// (clip-view.js) — one vocabulary, so a clip never looks like two things.
+import { clipBody, clipInlineEditor, clipHref, clipAsText, createClipPlayer } from './clip-view.js?v=82';
 
 const hlColorCss = (key) => (PALETTE.find((p) => p.key === key) || {}).css || '#eaecf5';
 
@@ -45,8 +48,10 @@ const TYPE_ICON = {
 // A snippet pin (text/reference) has no highlight colour and no content type —
 // its cover tile borrows the same accent its card uses, so a board's collage
 // stays legible the moment its first «متن خودم»/«رفرنس» pin lands.
-const SNIPPET_COVER_COLOR = { text: 'var(--dcp-gold)', reference: 'var(--dcp-ref)' };
-const SNIPPET_COVER_ICON = { text: '✍️', reference: '🔗' };
+// A clip pin's tile is the highlight yellow's edge colour (a clip is a highlight
+// in time) with the headphones the دفترچه's kind chip wears.
+const SNIPPET_COVER_COLOR = { text: 'var(--dcp-gold)', reference: 'var(--dcp-ref)', clip: '#d9b800' };
+const SNIPPET_COVER_ICON = { text: '✍️', reference: '🔗', clip: '🎧' };
 const coverColorOf = (p) => (
   p.kind === 'highlight' ? hlColorCss(p.color)
     : SNIPPET_COVER_COLOR[p.kind] || TYPE_COVER_COLOR[p.type] || '#8aaac8'
@@ -216,9 +221,10 @@ export function openCollectionMove(item, fromCollectionId, removeFromHere) {
     okText: 'منتقل شد',
     exclude: fromCollectionId,
     onPick: async (c) => {
-      const target = item.snippet_id ? { snippet_id: item.snippet_id }
-        : item.highlight_id ? { highlight_id: item.highlight_id }
-          : { content_id: item.content_id };
+      const target = item.clip_id ? { clip_id: item.clip_id }
+        : item.snippet_id ? { snippet_id: item.snippet_id }
+          : item.highlight_id ? { highlight_id: item.highlight_id }
+            : { content_id: item.content_id };
       await api.addToCollection(c.id, target);
       await removeFromHere(item.id);
     },
@@ -512,12 +518,12 @@ function referenceComposerCard(collectionId, { onAdded }) {
  * so every call site (the two workbench buttons, the dashboard row button)
  * behaves identically without repeating the gate logic.
  */
-export async function openCollectionPicker({ highlightId, contentId } = {}) {
+export async function openCollectionPicker({ highlightId, contentId, clipId } = {}) {
   const user = await currentUser();
   if (!user) {
     const res = await openLoginModal({ returnTo: location.pathname + location.search });
     if (!res || !res.user) return;
-    return openCollectionPicker({ highlightId, contentId });
+    return openCollectionPicker({ highlightId, contentId, clipId });
   }
   if (user.tier !== 'premium') {
     openSheet(gateCard({
@@ -527,7 +533,7 @@ export async function openCollectionPicker({ highlightId, contentId } = {}) {
     }));
     return;
   }
-  openSheet(pickerCard({ highlight_id: highlightId, content_id: contentId }));
+  openSheet(pickerCard(clipId ? { clip_id: clipId } : { highlight_id: highlightId, content_id: contentId }));
 }
 
 // --- masonry "pin" (one saved item inside a board) --------------------------
@@ -541,7 +547,7 @@ export async function openCollectionPicker({ highlightId, contentId } = {}) {
  *
  * @param collectionId  the board it lives in (needed for move + remove)
  */
-function pinCard(item, collectionId, { onRemove, onChanged, arrange = null, collectionTitle = null }) {
+function pinCard(item, collectionId, { onRemove, onChanged, arrange = null, collectionTitle = null, player = null }) {
   const kindLabel = FOLDER_EN[item.type] || item.type;
   const onReturnTrail = () => markReturnTrail({
     url: '/plus/collection.html?id=' + encodeURIComponent(collectionId),
@@ -549,8 +555,14 @@ function pinCard(item, collectionId, { onRemove, onChanged, arrange = null, coll
     title: collectionTitle || 'کالکشن',
     iconId: 'icon-bookmark',
   });
-  const pinKindClass = item.kind === 'text' ? ' dcp-cl-pin-note' : item.kind === 'reference' ? ' dcp-cl-pin-ref' : '';
+  const pinKindClass = item.kind === 'text' ? ' dcp-cl-pin-note' : item.kind === 'reference' ? ' dcp-cl-pin-ref' : item.kind === 'clip' ? ' dcp-cl-pin-clip' : '';
   const pin = el('div', { class: 'dcp-cl-pin' + pinKindClass });
+  // The clip's playable body is built once and kept across repaints, so an
+  // edit of the note never resets a segment that is playing. `clipRef` is the
+  // one object the body reads its span from, so an in-place edit of the ends
+  // repaints the bar without rebuilding the body.
+  const clipRef = item.kind === 'clip' ? { id: item.clip_id, start_s: item.start_s, end_s: item.end_s } : null;
+  const clipPart = clipRef ? clipBody(item.content_id, clipRef, player) : null;
 
   // While the board is being arranged, the pin's own actions step aside for
   // the two that matter — up and down. Position is shown as «۲ از ۷» so the
@@ -668,11 +680,54 @@ function pinCard(item, collectionId, { onRemove, onChanged, arrange = null, coll
     pin.replaceChildren(body, arrange ? arrangeBar() : el('div', { class: 'dcp-hlib-actions dcp-cl-pin-actions' }, actions));
   }
 
+  // A clip pin: the دفترچه's playable body, the note, the episode it is from,
+  // and the board's own actions (edit in place, copy, انتقال, land on the
+  // clip, remove the PIN — the clip itself stays in the دفترچه).
+  function paintClip() {
+    const actions = [
+      actionBtn('✎ ویرایش', {
+        onClick: () => {
+          if (pin.querySelector('.dcp-hlib-editor')) return;
+          pin.appendChild(clipInlineEditor({ id: item.clip_id, start_s: item.start_s, end_s: item.end_s, note: item.note, label: item.label }, {
+            onSaved: (updated) => {
+              Object.assign(item, { note: updated.note, label: updated.label, start_s: updated.start_s, end_s: updated.end_s });
+              clipPart.stop();
+              Object.assign(clipRef, { start_s: updated.start_s, end_s: updated.end_s });
+              paint();
+              if (onChanged) onChanged(item);
+            },
+          }));
+        },
+      }),
+      actionBtn('کپی', {
+        onClick: (e) => copyToClipboard(clipAsText({ start_s: item.start_s, end_s: item.end_s, note: item.note }, { title: item.title }), e.currentTarget),
+      }),
+      moveAction(),
+      actionBtn('شنیدن در اپیزود ›', { href: clipHref(item.url, item.clip_id), onClick: onReturnTrail }),
+      deleteAction(),
+    ];
+    const foot = el('div', { class: 'dcp-cl-pin-foot' }, [
+      el('a', { class: 'dcp-cl-pin-src', href: item.url, onclick: onReturnTrail }, [
+        el('span', { dir: 'ltr', class: 'dcp-hlib-folder' }, kindLabel),
+        el('span', {}, item.title),
+      ]),
+      labelChip(item.label),
+    ].filter(Boolean));
+    clipPart.repaint();
+    pin.replaceChildren(...[
+      el('div', { class: 'dcp-cl-pin-body' }, [kindChip('clip'), clipPart.node]),
+      noteBlock(item.note),
+      foot,
+      arrange ? arrangeBar() : el('div', { class: 'dcp-hlib-actions dcp-cl-pin-actions' }, actions),
+    ].filter(Boolean));
+  }
+
   function paint() {
     // A snippet pin (text/reference) has no content page and no highlight
     // fields — a wholly different shape from the highlight/page pin below.
     if (item.kind === 'text') { paintNote(); return; }
     if (item.kind === 'reference') { paintReference(); return; }
+    if (item.kind === 'clip') { paintClip(); return; }
 
     // A highlight-pin shows the SAME solid pastel the article's own mark.dcp-hl
     // uses (never flattened to plain text); a page-pin gets its type color + icon.
@@ -987,8 +1042,12 @@ export async function renderCollectionDetail(container, id) {
   });
   const KINDS = [
     { key: '', fa: 'همه' }, { key: 'highlight', fa: 'هایلایت‌ها' }, { key: 'page', fa: 'صفحه‌ها' },
-    { key: 'text', fa: 'متن من' }, { key: 'reference', fa: 'رفرنس' },
+    { key: 'text', fa: 'متن من' }, { key: 'reference', fa: 'رفرنس' }, { key: 'clip', fa: '🎧 قطعه‌ی صوتی' },
   ];
+  // One <audio> for every clip pin on the board (clip-view.js), made lazily so
+  // a board with no clip never creates one.
+  let clipPlayer = null;
+  const getClipPlayer = () => { if (!clipPlayer) clipPlayer = createClipPlayer(); return clipPlayer; };
   let kind = '';
   const kindChips = el('div', { class: 'dcp-hlib-chips' });
   // A board that the owner has arranged by hand opens in THAT order, and says
@@ -1137,6 +1196,7 @@ export async function renderCollectionDetail(container, id) {
       onRemove: removeItem,
       onChanged: () => renderItems(),
       collectionTitle: data.title,
+      player: item.kind === 'clip' ? getClipPlayer() : null,
       arrange: arranging
         ? { index: i, total: rows.length, move: (delta) => moveItem(item.id, delta) }
         : null,
