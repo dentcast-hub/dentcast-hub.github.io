@@ -701,3 +701,105 @@ describe('GET /collections preview includes snippet pins', () => {
     expect(preview.every((p: Record<string, unknown>) => !('body' in p))).toBe(true);
   });
 });
+
+// --- قطعه‌های صوتی on a board (migration 0065) ----------------------------------
+async function createClip(contentId = 'episodes/episode-101', start = 447, end = 483, extra: Record<string, unknown> = {}): Promise<string> {
+  const res = await app.inject({
+    method: 'POST', url: '/clips', headers: { cookie },
+    payload: { content_id: contentId, start_s: start, end_s: end, ...extra },
+  });
+  expect(res.statusCode).toBe(201);
+  return res.json().clip.id as string;
+}
+
+describe('clip pins: POST /collections/:id/items { clip_id }', () => {
+  it('pins one of the reader\'s clips, resolved with the episode, the span and the note', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const clipId = await createClip('episodes/episode-101', 447, 483, { note: 'ترتیب EDTA و سایلن', label: 'clinical_pearl' });
+    const res = await app.inject({ method: 'POST', url: `/collections/${id}/items`, headers: { cookie }, payload: { clip_id: clipId } });
+    expect(res.statusCode).toBe(201);
+    const { item } = res.json();
+    expect(item.kind).toBe('clip');
+    expect(item.clip_id).toBe(clipId);
+    expect(item.content_id).toBe('episodes/episode-101');
+    expect(item.url).toBe('/episodes/episode-101.html');
+    expect(item.type).toBe('episodes');
+    expect(item.start_s).toBe(447);
+    expect(item.end_s).toBe(483);
+    expect(item.note).toBe('ترتیب EDTA و سایلن');
+    expect(item.label).toBe('clinical_pearl');
+    expect(item.highlight_id).toBeNull();
+    expect(item.snippet_id).toBeNull();
+
+    const board = await app.inject({ method: 'GET', url: `/collections/${id}`, headers: { cookie } });
+    expect(board.json().items.map((i: any) => i.kind)).toEqual(['clip']);
+    const list = await app.inject({ method: 'GET', url: '/collections', headers: { cookie } });
+    expect(list.json().collections[0].item_count).toBe(1);
+    expect(list.json().collections[0].preview[0]).toEqual({ kind: 'clip', color: null, type: 'episodes' });
+  });
+
+  it('is idempotent, and lets a page pin of the same episode and a second clip of it sit beside it', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const a = await createClip('episodes/episode-101', 10, 20);
+    const b = await createClip('episodes/episode-101', 30, 40);
+    for (const clip of [a, a, b]) {
+      const res = await app.inject({ method: 'POST', url: `/collections/${id}/items`, headers: { cookie }, payload: { clip_id: clip } });
+      expect(res.statusCode).toBe(201);
+    }
+    const page = await app.inject({ method: 'POST', url: `/collections/${id}/items`, headers: { cookie }, payload: { content_id: 'episodes/episode-101' } });
+    expect(page.statusCode).toBe(201);
+    const board = await app.inject({ method: 'GET', url: `/collections/${id}`, headers: { cookie } });
+    expect(board.json().items).toHaveLength(3);
+    expect(board.json().items.map((i: any) => i.kind).sort()).toEqual(['clip', 'clip', 'page']);
+  });
+
+  it('404s a clip that belongs to someone else, and a clip pin never becomes a page pin', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const other = await loginAs(app, '09121200004');
+    await pool.query(`update profiles set tier = 'premium' where phone = $1`, ['09121200004']);
+    const theirs = await app.inject({
+      method: 'POST', url: '/clips', headers: { cookie: other },
+      payload: { content_id: 'episodes/episode-101', start_s: 1, end_s: 5 },
+    });
+    const res = await app.inject({
+      method: 'POST', url: `/collections/${id}/items`, headers: { cookie }, payload: { clip_id: theirs.json().clip.id },
+    });
+    expect(res.statusCode).toBe(404);
+    expect(res.json().error).toBe('clip_not_found');
+    const row = await pool.query(`select count(*)::int as n from collection_items where collection_id = $1`, [id]);
+    expect(row.rows[0].n).toBe(0);
+  });
+
+  it('removing the pin leaves the clip alive; deleting the clip removes its pins everywhere', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const id2 = await createCollection('برد دوم');
+    const clipId = await createClip();
+    const pin = await app.inject({ method: 'POST', url: `/collections/${id}/items`, headers: { cookie }, payload: { clip_id: clipId } });
+    await app.inject({ method: 'POST', url: `/collections/${id2}/items`, headers: { cookie }, payload: { clip_id: clipId } });
+
+    const del = await app.inject({ method: 'DELETE', url: `/collections/${id}/items/${pin.json().item.id}`, headers: { cookie } });
+    expect(del.statusCode).toBe(200);
+    const still = await app.inject({ method: 'GET', url: '/clips/' + clipId, headers: { cookie } });
+    expect(still.statusCode).toBe(200); // no orphan rule for a clip: the دفترچه is its home
+
+    await app.inject({ method: 'DELETE', url: '/clips/' + clipId, headers: { cookie } });
+    const board2 = await app.inject({ method: 'GET', url: `/collections/${id2}`, headers: { cookie } });
+    expect(board2.json().items).toHaveLength(0);
+  });
+
+  it('moves with the board\'s own order like any other pin', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const clipId = await createClip();
+    const hl = await createHighlight();
+    const p1 = (await app.inject({ method: 'POST', url: `/collections/${id}/items`, headers: { cookie }, payload: { clip_id: clipId } })).json().item.id;
+    const p2 = (await app.inject({ method: 'POST', url: `/collections/${id}/items`, headers: { cookie }, payload: { highlight_id: hl } })).json().item.id;
+    const order = await app.inject({ method: 'PUT', url: `/collections/${id}/items/order`, headers: { cookie }, payload: { item_ids: [p2, p1] } });
+    expect(order.statusCode).toBe(200);
+    expect(order.json().items.map((i: any) => i.kind)).toEqual(['highlight', 'clip']);
+  });
+});

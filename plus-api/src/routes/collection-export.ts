@@ -47,6 +47,27 @@ import { getContentInfo } from '../content-index.js';
 
 const SITE_ORIGIN = 'https://dentcast.ir';
 
+// «07:27» — the same reading plus/js/clip-audio.js's fmtClock gives (floor to
+// the second, h:mm:ss past the hour), kept in sync by eye like looksLatin below.
+function fmtClock(s: number | null | undefined): string {
+  const t = Math.max(0, Math.floor(Number(s) || 0));
+  const h = Math.floor(t / 3600);
+  const m = Math.floor((t % 3600) / 60);
+  const sec = t % 60;
+  return (h ? h + ':' : '') + String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+}
+// resolveItem() returns one of four shapes and only the clip one carries these
+// fields; the kind check at the call site is the discriminator, this is the type.
+interface ClipLike { start_s?: number | null; end_s?: number | null; clip_id?: string | null; url?: string | null }
+/** «قطعه‌ی صوتی · 07:27 → 08:03» — a clip pin's one line in a handout. */
+function clipLine(item: ClipLike): string {
+  return 'قطعه‌ی صوتی · ' + fmtClock(item.start_s) + ' → ' + fmtClock(item.end_s);
+}
+/** The episode page, landing ON the clip (plus.js reads ?dcclip=). */
+function clipUrl(item: ClipLike): string {
+  return SITE_ORIGIN + (item.url || '') + '?dcclip=' + encodeURIComponent(item.clip_id || '');
+}
+
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const toFa = (n: number | string): string => String(n).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);
 const JALALI = new Intl.DateTimeFormat('fa-IR-u-ca-persian', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -135,6 +156,19 @@ function buildDocx(board: BoardInfo, items: ResolvedItem[]): Promise<Buffer> {
         })],
         bidirectional: true, alignment: AlignmentType.RIGHT,
       }));
+    } else if (item.kind === 'clip') {
+      // The audio itself cannot go into a document; what can is the exact
+      // place in the episode, as a link that lands on the clip.
+      const info = item.content_id ? getContentInfo(item.content_id) : null;
+      body.push(new Paragraph({
+        children: [new ExternalHyperlink({
+          link: clipUrl(item as ClipLike), children: [new TextRun({ text: clipLine(item as ClipLike), style: 'Hyperlink' })],
+        })],
+        bidirectional: true, alignment: AlignmentType.RIGHT,
+        indent: { start: 720 }, shading: { fill: 'FFF3A3', type: ShadingType.CLEAR },
+      }));
+      if (item.note) body.push(rtlParagraph('یادداشت: ' + item.note));
+      body.push(rtlParagraph('از: ' + (info?.title ?? item.content_id ?? '')));
     } else if (item.kind === 'reference') {
       references.push(item);
     }
@@ -204,6 +238,13 @@ function buildPptx(board: BoardInfo, items: ResolvedItem[]): Promise<Buffer> {
     } else if (item.kind === 'page') {
       heading = item.title || '';
       bullet(SITE_ORIGIN + (item.url || ''), { rtlMode: false, align: 'left' });
+    } else if (item.kind === 'clip') {
+      const info = item.content_id ? getContentInfo(item.content_id) : null;
+      heading = (item.label && LABEL_FA[item.label]) || info?.title || item.content_id || '';
+      bullet(clipLine(item as ClipLike));
+      if (item.note) bullet('یادداشت: ' + item.note);
+      if (info?.title) bullet('از: ' + info.title, { fontSize: 12, color: '8AAAC8' });
+      bullet(clipUrl(item as ClipLike), { rtlMode: false, align: 'left', fontSize: 12 });
     }
 
     slide.addText(heading, rtlText({ x: 0.5, y: 0.4, w: 9, h: 0.9, fontSize: 24, bold: true }));

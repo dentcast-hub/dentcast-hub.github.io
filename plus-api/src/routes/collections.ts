@@ -40,6 +40,14 @@ export interface ItemRow {
   year: number | null;
   doi: string | null;
   snippet_url: string | null;
+  // clip_id set => a قطعه‌ی صوتی pin (migration 0065); its fields come from
+  // the joined `audio_clips` row, and its page from the clip's own content_id.
+  clip_id: string | null;
+  clip_content_id: string | null;
+  start_s: number | null;
+  end_s: number | null;
+  clip_note: string | null;
+  clip_label: string | null;
 }
 
 // Shared by every read path (GET /collections/:id, the order PUT, POST
@@ -50,10 +58,13 @@ export const ITEM_SELECT = `
   select ci.id, ci.highlight_id, ci.content_id, ci.created_at, ci.position,
          h.exact, h.prefix, h.suffix, h.color, h.underline, h.note, h.label,
          ci.snippet_id, s.kind as snippet_kind, s.title as snippet_title, s.body as snippet_body,
-         s.authors, s.venue, s.year, s.doi, s.url as snippet_url
+         s.authors, s.venue, s.year, s.doi, s.url as snippet_url,
+         ci.clip_id, ac.content_id as clip_content_id, ac.start_s, ac.end_s,
+         ac.note as clip_note, ac.label as clip_label
     from collection_items ci
     left join highlights h on h.id = ci.highlight_id
     left join snippets s on s.id = ci.snippet_id
+    left join audio_clips ac on ac.id = ci.clip_id
 `;
 
 // A board's own colour, chosen by its owner. A closed set, because these are
@@ -105,6 +116,35 @@ export function resolveItem(row: ItemRow) {
     };
   }
 
+  // A clip pin: the episode resolves from the clip's own content_id (the pin
+  // row keeps content_id NULL — see migration 0065), the span and the note
+  // from audio_clips, and `clip_id` is what ?dcclip= and «انتقال» carry.
+  if (row.clip_id) {
+    const cinfo = getContentInfo(row.clip_content_id!);
+    return {
+      id: row.id,
+      kind: 'clip',
+      highlight_id: null,
+      content_id: row.clip_content_id,
+      snippet_id: null,
+      clip_id: row.clip_id,
+      position: row.position,
+      title: cinfo?.title ?? row.clip_content_id,
+      url: cinfo?.url ?? `/${row.clip_content_id}.html`,
+      type: cinfo?.type ?? row.clip_content_id!.split('/')[0],
+      exact: null,
+      prefix: null,
+      suffix: null,
+      color: null,
+      underline: false,
+      note: row.clip_note,
+      label: row.clip_label,
+      start_s: row.start_s,
+      end_s: row.end_s,
+      created_at: row.created_at,
+    };
+  }
+
   const info = getContentInfo(row.content_id!);
   return {
     id: row.id,
@@ -145,6 +185,7 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
       items: Array<{
         highlight_id: string | null; content_id: string | null; color: string | null;
         snippet_id: string | null; snippet_kind: 'text' | 'reference' | null;
+        clip_id: string | null; clip_content_id: string | null;
       }>;
     }>(
       // last_item_at is DERIVED (max of the items' created_at), never stored:
@@ -157,7 +198,8 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
                 json_agg(
                   json_build_object(
                     'highlight_id', ci.highlight_id, 'content_id', ci.content_id, 'color', h.color,
-                    'snippet_id', ci.snippet_id, 'snippet_kind', s.kind
+                    'snippet_id', ci.snippet_id, 'snippet_kind', s.kind,
+                    'clip_id', ci.clip_id, 'clip_content_id', ac.content_id
                   )
                   order by ci.created_at desc
                 ) filter (where ci.id is not null),
@@ -167,6 +209,7 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
          left join collection_items ci on ci.collection_id = c.id
          left join highlights h on h.id = ci.highlight_id
          left join snippets s on s.id = ci.snippet_id
+         left join audio_clips ac on ac.id = ci.clip_id
         where c.user_id = $1
         group by c.id
         order by c.created_at desc`,
@@ -181,11 +224,14 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
       created_at: r.created_at,
       last_item_at: r.last_item_at,
       item_count: r.items.length,
-      preview: r.items.slice(0, 3).map((it) => ({
-        kind: it.snippet_id ? it.snippet_kind : (it.highlight_id ? 'highlight' : 'page'),
-        color: it.color,
-        type: it.snippet_id ? null : (getContentInfo(it.content_id!)?.type ?? it.content_id!.split('/')[0]),
-      })),
+      preview: r.items.slice(0, 3).map((it) => {
+        const pageId = it.clip_id ? it.clip_content_id : it.content_id;
+        return {
+          kind: it.clip_id ? 'clip' : it.snippet_id ? it.snippet_kind : (it.highlight_id ? 'highlight' : 'page'),
+          color: it.color,
+          type: it.snippet_id ? null : (getContentInfo(pageId!)?.type ?? pageId!.split('/')[0]),
+        };
+      }),
     }));
     return reply.send({ collections });
   });
@@ -351,7 +397,7 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ ok: true });
   });
 
-  // POST /collections/:id/items { highlight_id } | { content_id } | { snippet_id }
+  // POST /collections/:id/items { highlight_id } | { content_id } | { snippet_id } | { clip_id }
   // - add one of the user's own highlights, a whole page (no highlight_id), or
   // one of the user's own snippets, to the collection. Idempotent: adding the
   // same thing twice just returns the existing row (the partial unique
@@ -365,12 +411,13 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
           highlight_id: { type: 'string' },
           content_id: { type: 'string' },
           snippet_id: { type: 'string' },
+          clip_id: { type: 'string' },
         },
       },
     },
   }, async (request, reply) => {
     const { id } = request.params as { id: string };
-    const b = request.body as { highlight_id?: string; content_id?: string; snippet_id?: string };
+    const b = request.body as { highlight_id?: string; content_id?: string; snippet_id?: string; clip_id?: string };
     const userId = request.user!.id;
 
     const col = await pool.query(`select 1 from collections where id = $1 and user_id = $2`, [id, userId]);
@@ -378,8 +425,19 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
 
     let highlightId: string | null = null;
     let snippetId: string | null = null;
+    let clipId: string | null = null;
     let contentId: string | null = null;
-    if (b.highlight_id) {
+    if (b.clip_id) {
+      // The reader's own clip only; the activity row still names the episode,
+      // while the pin row itself keeps content_id NULL (migration 0065).
+      const cl = await pool.query<{ content_id: string }>(
+        `select content_id from audio_clips where id = $1 and user_id = $2`,
+        [b.clip_id, userId],
+      );
+      if (cl.rowCount === 0) return reply.code(404).send({ error: 'clip_not_found' });
+      clipId = b.clip_id;
+      contentId = cl.rows[0].content_id;
+    } else if (b.highlight_id) {
       const hl = await pool.query<{ content_id: string }>(
         `select content_id from highlights where id = $1 and user_id = $2`,
         [b.highlight_id, userId],
@@ -400,7 +458,16 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
     // ON CONFLICT DO UPDATE (a no-op SET) rather than DO NOTHING purely so
     // RETURNING still yields a row on the idempotent-replay path; the actual
     // item body is re-selected below with the join.
-    const res = snippetId
+    const res = clipId
+      ? await pool.query<{ id: string }>(
+        `insert into collection_items (collection_id, clip_id)
+         values ($1, $2)
+         on conflict (collection_id, clip_id) where clip_id is not null
+         do update set collection_id = excluded.collection_id
+         returning id`,
+        [id, clipId],
+      )
+      : snippetId
       ? await pool.query<{ id: string }>(
         `insert into collection_items (collection_id, snippet_id)
          values ($1, $2)
@@ -420,7 +487,7 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
       );
     const full = await pool.query<ItemRow>(`${ITEM_SELECT} where ci.id = $1`, [res.rows[0].id]);
     await recordActivity(userId, 'collection_item_added', contentId, {
-      collection_id: id, highlight_id: highlightId, snippet_id: snippetId,
+      collection_id: id, highlight_id: highlightId, snippet_id: snippetId, clip_id: clipId,
     });
     scheduleAchievementSync(userId);
     return reply.code(201).send({ item: resolveItem(full.rows[0]) });

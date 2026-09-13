@@ -17,18 +17,18 @@
 //      scrolls to the mark).
 //   4. Every filter lives in the URL, so a filtered view survives a refresh,
 //      the back button, and being sent to yourself.
-import { el, faNum, debounce } from './util.js?v=81';
-import { api } from './api.js?v=81';
-import { FOLDER_EN } from './content-index.js?v=81';
-import { openCollectionPicker } from './collections.js?v=81';
-import { LABELS, PALETTE } from './config.js?v=81';
+import { el, faNum, debounce } from './util.js?v=82';
+import { api } from './api.js?v=82';
+import { FOLDER_EN } from './content-index.js?v=82';
+import { openCollectionPicker } from './collections.js?v=82';
+import { LABELS, PALETTE } from './config.js?v=82';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
-} from './hl-view.js?v=81';
+} from './hl-view.js?v=82';
 // قطعه‌های صوتی ride in the same library: a clip is a highlight in time, so it
 // sits in its episode's group beside the caption highlights (clip-view.js).
-import { clipCard, createClipPlayer, clipAsText } from './clip-view.js?v=81';
+import { clipCard, createClipPlayer, clipAsText } from './clip-view.js?v=82';
 
 // How many article groups (or flat cards) are drawn before the "load more"
 // sentinel takes over. A library of a few thousand highlights must not build a
@@ -90,7 +90,9 @@ function sourceLink(article) {
   ]);
 }
 function itemCard(article, h, ctx) {
-  return isClip(h) ? clipCard(article, h, { ...ctx, source: sourceLink }) : highlightCard(article, h, ctx);
+  return isClip(h)
+    ? clipCard(article, h, { ...ctx, source: sourceLink, onCollect: (clip) => openCollectionPicker({ clipId: clip.id }) })
+    : highlightCard(article, h, ctx);
 }
 
 // --- one highlight ---------------------------------------------------------

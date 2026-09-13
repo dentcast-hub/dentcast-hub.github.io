@@ -6,11 +6,11 @@
 // is the clip itself: a play button that plays THIS segment right here, the
 // span, a small bar showing where in the episode it sits, and the note. Going
 // to the episode is one action among others and lands ON the clip (?dcclip=).
-import { el, faNum } from './util.js?v=81';
-import { api } from './api.js?v=81';
-import { LABELS } from './config.js?v=81';
-import { noteBlock, labelChip, actionBtn, confirmStrip, toast, copyToClipboard } from './hl-view.js?v=81';
-import { fmtClock, fmtLength, episodeNumber, episodeCatalog, playSegment, stopSegment } from './clip-audio.js?v=81';
+import { el, faNum } from './util.js?v=82';
+import { api } from './api.js?v=82';
+import { LABELS } from './config.js?v=82';
+import { noteBlock, labelChip, actionBtn, confirmStrip, toast, copyToClipboard } from './hl-view.js?v=82';
+import { fmtClock, fmtLength, episodeNumber, episodeCatalog, playSegment, stopSegment } from './clip-audio.js?v=82';
 
 const PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
 const PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';
@@ -159,15 +159,17 @@ export function clipInlineEditor(clip, { onSaved, onClose }) {
 }
 
 /**
- * @param article  the episode group (title/url/folder/content_id)
- * @param clip     the clip itself (kind === 'clip')
- * @param ctx      { onDeleted(id), onUpdated(clip, article), showSource, player, source(article) }
+ * The playable part of a clip — play button, span, position bar, status — as
+ * one node with a `stop()` and a `repaint()`. Shared by the دفترچه card and
+ * the collection pin, which differ only in the actions under it.
+ *
+ * @param contentId  the episode
+ * @param clip       { id, start_s, end_s }
+ * @param player     createClipPlayer() for the page (null → the play button is inert)
  */
-export function clipCard(article, clip, ctx) {
-  const card = el('div', { class: 'dcp-hlib-card dcp-clipcard-wrap', 'data-clip': clip.id });
-  const player = ctx.player;
+export function clipBody(contentId, clip, player) {
   let duration = null;
-  if (player) player.durationOf(article.content_id).then((d) => { duration = d; paintBar(); }).catch(() => {});
+  if (player) player.durationOf(contentId).then((d) => { duration = d; paintBar(); }).catch(() => {});
 
   const playBtn = el('button', { class: 'dcp-clipcard-play', type: 'button', 'aria-label': 'پخش قطعه' });
   const bar = el('div', { class: 'dcp-clipcard-bar', dir: 'ltr', 'aria-hidden': 'true' });
@@ -177,6 +179,7 @@ export function clipCard(article, clip, ctx) {
   bar.append(zone, prog, ph);
   const ctxRow = el('div', { class: 'dcp-clipcard-ctx', dir: 'ltr' });
   const status = el('span', { class: 'dcp-clipcard-status' });
+  const span = el('div', { class: 'dcp-clipcard-span', dir: 'ltr' });
 
   let playing = false;
   function paintPlay() {
@@ -194,10 +197,10 @@ export function clipCard(article, clip, ctx) {
     zone.style.left = left + '%';
     zone.style.width = width + '%';
     prog.style.left = left + '%';
-    ctxRow.replaceChildren(
-      el('span', {}, '00:00'),
-      status,
-      el('span', {}, duration ? fmtClock(duration) : ''),
+    ctxRow.replaceChildren(el('span', {}, '00:00'), status, el('span', {}, duration ? fmtClock(duration) : ''));
+    span.replaceChildren(
+      el('span', { class: 'dcp-clipcard-times' }, fmtClock(clip.start_s) + ' → ' + fmtClock(clip.end_s)),
+      el('span', { class: 'dcp-clipcard-len' }, fmtLength(clip.end_s - clip.start_s)),
     );
   }
   function onTick(t) {
@@ -221,7 +224,7 @@ export function clipCard(article, clip, ctx) {
     paintPlay();
     status.textContent = 'در حال بارگذاری…';
     try {
-      await player.play(clip, article.content_id, { onTick, onDone: stopped });
+      await player.play(clip, contentId, { onTick, onDone: stopped });
     } catch (_) {
       stopped();
       toast('فایل این اپیزود پیدا نشد', { icon: '!' });
@@ -230,13 +233,31 @@ export function clipCard(article, clip, ctx) {
   // Another card took the player: this one reads as stopped at once.
   if (player) player.onChange((cur) => { if (playing && (!cur || cur.clip.id !== clip.id)) stopped(); });
   paintPlay();
+  paintBar();
+
+  const node = el('div', { class: 'dcp-clipcard' }, [
+    playBtn,
+    el('div', { class: 'dcp-clipcard-main' }, [span, bar, ctxRow]),
+  ]);
+  return {
+    node,
+    repaint: paintBar,
+    stop: () => { if (playing && player) player.stop(); },
+  };
+}
+
+/**
+ * @param article  the episode group (title/url/folder/content_id)
+ * @param clip     the clip itself (kind === 'clip')
+ * @param ctx      { onDeleted(id), onUpdated(clip, article), showSource, player, source(article), onCollect(clip) }
+ */
+export function clipCard(article, clip, ctx) {
+  const card = el('div', { class: 'dcp-hlib-card dcp-clipcard-wrap', 'data-clip': clip.id });
+  const player = ctx.player;
+  const body = clipBody(article.content_id, clip, player);
 
   function paint() {
-    paintBar();
-    const span = el('div', { class: 'dcp-clipcard-span', dir: 'ltr' }, [
-      el('span', { class: 'dcp-clipcard-times' }, fmtClock(clip.start_s) + ' → ' + fmtClock(clip.end_s)),
-      el('span', { class: 'dcp-clipcard-len' }, fmtLength(clip.end_s - clip.start_s)),
-    ]);
+    body.repaint();
     const note = noteBlock(clip.note);
 
     const edit = actionBtn('✎ ویرایش', {
@@ -248,13 +269,16 @@ export function clipCard(article, clip, ctx) {
       },
     });
     const copy = actionBtn('کپی', { onClick: (e) => copyToClipboard(clipAsText(clip, article), e.currentTarget) });
+    // «🗂 کالکشن» only where the page can open the picker (the دفترچه passes
+    // it in; a board draws its own pin actions instead).
+    const collect = ctx.onCollect ? actionBtn('🗂 کالکشن', { onClick: () => ctx.onCollect(clip, article) }) : null;
     const go = actionBtn('شنیدن در اپیزود ›', { href: clipHref(article.url, clip.id) });
     const del = actionBtn('حذف', {
       danger: true,
       onClick: () => {
         if (card.querySelector('.dcp-recent-confirm')) return;
         card.appendChild(confirmStrip('این قطعه حذف شود؟', async () => {
-          if (playing && player) player.stop();
+          body.stop();
           await api.deleteClip(clip.id);
           ctx.onDeleted(clip.id);
           toast('قطعه حذف شد');
@@ -262,14 +286,10 @@ export function clipCard(article, clip, ctx) {
       },
     });
     const actions = el('div', { class: 'dcp-hlib-actions' },
-      [el('span', { class: 'dcp-clipcard-kind' }, '🎧 قطعه‌ی صوتی'), labelChip(clip.label), edit, copy, go, del].filter(Boolean));
+      [el('span', { class: 'dcp-clipcard-kind' }, '🎧 قطعه‌ی صوتی'), labelChip(clip.label), edit, copy, collect, go, del].filter(Boolean));
 
     const source = ctx.showSource && ctx.source ? ctx.source(article) : null;
-    const body = el('div', { class: 'dcp-clipcard' }, [
-      playBtn,
-      el('div', { class: 'dcp-clipcard-main' }, [span, bar, ctxRow]),
-    ]);
-    card.replaceChildren(...[source, body, note, actions].filter(Boolean));
+    card.replaceChildren(...[source, body.node, note, actions].filter(Boolean));
   }
 
   paint();

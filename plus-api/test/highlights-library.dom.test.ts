@@ -20,6 +20,7 @@ let conceptsResponse: any = null;
 let conceptViewResponse: any = null;
 const conceptCalls: string[] = [];
 let clipLibResponse: any = null;
+const addedToCollection: Array<{ id: string; item: any }> = [];
 const clipDeleted: string[] = [];
 const clipPatched: Array<{ id: string; patch: any }> = [];
 
@@ -33,7 +34,8 @@ vi.mock('/plus/js/api.js', () => ({
       patched.push({ id, patch });
       return Promise.resolve({ highlight: { id, exact: 'x', ...patch } });
     },
-    listCollections: () => Promise.resolve({ collections: [] }),
+    listCollections: () => Promise.resolve({ collections: [{ id: 'c1', title: 'برد اول', item_count: 0, preview: [] }] }),
+    addToCollection: (id: string, item: any) => { addedToCollection.push({ id, item }); return Promise.resolve({ ok: true }); },
     clipLibrary: () => (clipLibResponse ? Promise.resolve(clipLibResponse) : Promise.reject(new Error('none'))),
     deleteClip: (id: string) => { clipDeleted.push(id); return Promise.resolve({ ok: true }); },
     updateClip: (id: string, patch: any) => {
@@ -472,5 +474,30 @@ describe('audio clips in the library', () => {
     await new Promise((r) => setTimeout(r, 0));
     expect(card.querySelector('.dcp-clipcard-play')!.classList.contains('is-playing')).toBe(false);
     expect(document.querySelector('.dcp-cl-toast')!.textContent).toContain('فایل این اپیزود پیدا نشد');
+  });
+});
+
+describe('a clip card files into a collection', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="root"></div>';
+    history.replaceState(null, '', '/plus/highlights.html');
+    libraryResponse = library();
+    clipLibResponse = clipLibrary();
+    conceptsResponse = null;
+    addedToCollection.length = 0;
+    document.querySelectorAll('.dcp-sheet-overlay').forEach((n) => n.remove());
+  });
+
+  it('«🗂 کالکشن» on a clip card opens the picker and adds by clip_id', async () => {
+    await renderHighlightLibrary(document.getElementById('root')!);
+    const card = document.querySelector('.dcp-clipcard-wrap') as HTMLElement;
+    actNamed('کالکشن', card).click();
+    await new Promise((r) => setTimeout(r, 0));
+    await new Promise((r) => setTimeout(r, 0));
+    const row = document.querySelector('.dcp-cl-pick-row') as HTMLElement;
+    expect(row, 'the picker sheet lists the boards').not.toBeNull();
+    row.click();
+    await new Promise((r) => setTimeout(r, 0));
+    expect(addedToCollection).toEqual([{ id: 'c1', item: { clip_id: 'clip-1' } }]);
   });
 });

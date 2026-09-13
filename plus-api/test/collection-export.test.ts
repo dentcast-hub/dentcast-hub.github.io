@@ -253,3 +253,45 @@ describe('GET /collections/:id/export?format=pptx', () => {
     expect(citation, 'the Latin citation paragraph is left-aligned, not RTL').toContain('algn="l"');
   });
 });
+
+describe('clip pins in the export', () => {
+  async function addClip(collectionId: string, note: string | null = null): Promise<string> {
+    const clip = await app.inject({
+      method: 'POST', url: '/clips', headers: { cookie },
+      payload: { content_id: 'episodes/episode-101', start_s: 447, end_s: 483, note },
+    });
+    const clipId = clip.json().clip.id as string;
+    const add = await app.inject({
+      method: 'POST', url: `/collections/${collectionId}/items`, headers: { cookie }, payload: { clip_id: clipId },
+    });
+    expect(add.statusCode).toBe(201);
+    return clipId;
+  }
+
+  it('docx: a clip is one line with its span, its note, its source, linking to the episode ON the clip', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const clipId = await addClip(id, 'ترتیب EDTA و سایلن');
+    const res = await app.inject({ method: 'GET', url: `/collections/${id}/export?format=docx`, headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    const xml = await documentXml(res.rawPayload);
+    expect(xml).toContain('قطعه‌ی صوتی · 07:27 → 08:03');
+    expect(xml).toContain('یادداشت: ترتیب EDTA و سایلن');
+    expect(xml).toContain('از: ');
+    const zip = await JSZip.loadAsync(res.rawPayload);
+    const rels = await zip.file('word/_rels/document.xml.rels')!.async('string');
+    expect(rels).toContain('https://dentcast.ir/episodes/episode-101.html?dcclip=' + clipId);
+  });
+
+  it('pptx: a clip gets its own slide with the span and the landing link', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const clipId = await addClip(id);
+    const res = await app.inject({ method: 'GET', url: `/collections/${id}/export?format=pptx`, headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    const zip = await JSZip.loadAsync(res.rawPayload);
+    const slide2 = await zip.file('ppt/slides/slide2.xml')!.async('string');
+    expect(slide2).toContain('07:27 → 08:03');
+    expect(slide2).toContain('?dcclip=' + clipId);
+  });
+});

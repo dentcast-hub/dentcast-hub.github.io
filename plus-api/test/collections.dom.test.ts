@@ -54,6 +54,10 @@ vi.mock('/plus/js/api.js', () => ({
       return Promise.resolve({ snippet: { id, ...patch } });
     },
     deleteSnippet: (id: string) => { calls.push({ op: 'deleteSnippet', args: [id] }); return Promise.resolve({ ok: true }); },
+    updateClip: (id: string, patch: any) => {
+      calls.push({ op: 'updateClip', args: [id, patch] });
+      return Promise.resolve({ clip: { id, content_id: 'episodes/episode-101', start_s: 447, end_s: 483, note: null, label: null, ...patch } });
+    },
   },
   currentUser: () => Promise.resolve({ tier: 'premium' }),
   apiBase: () => Promise.resolve('https://api.dentcast.test'),
@@ -649,5 +653,80 @@ describe('arrange mode takes the filters off the table', () => {
     expect(document.querySelectorAll('.dcp-cl-pin'), 'the whole board is on screen').toHaveLength(3);
     expect(search.hasAttribute('hidden'), 'the search box steps aside').toBe(true);
     expect((document.querySelector('.dcp-hlib-chips') as HTMLElement).hasAttribute('hidden')).toBe(true);
+  });
+});
+
+// --- قطعه‌ی صوتی pins ---------------------------------------------------------
+const clipItem = (over: any = {}) => ({
+  id: 'i5', kind: 'clip', highlight_id: null, content_id: 'episodes/episode-101', snippet_id: null, clip_id: 'clip-1',
+  title: 'باندینگ به دنتین ریشه', url: '/episodes/episode-101.html', type: 'episodes',
+  exact: null, note: 'ترتیب EDTA و سایلن', label: 'clinical_pearl', color: null, underline: false,
+  start_s: 447, end_s: 483, position: null, created_at: '2026-09-13T10:00:00Z', ...over,
+});
+
+describe('clip pins on a board', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="root"></div>';
+    calls.length = 0;
+    collections = [{ id: 'c1', title: 'برد اول', item_count: 2, preview: [] }, { id: 'c2', title: 'برد دوم', item_count: 0, preview: [] }];
+    board = { id: 'c1', title: 'برد اول', description: null, emoji: null, color: null, items: [clipItem(), hlItem()] };
+    document.querySelectorAll('.dcp-sheet-overlay, .dcp-cl-toast').forEach((n) => n.remove());
+  });
+
+  it('renders a clip pin as its own card: kind chip, playable span, note, episode — and lands ON the clip', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    const pin = document.querySelector('.dcp-cl-pin-clip') as HTMLElement;
+    expect(pin).not.toBeNull();
+    expect(pin.querySelector('.dcp-cl-pin-kind-clip')!.textContent).toContain('قطعه‌ی صوتی');
+    expect(pin.querySelector('.dcp-clipcard-times')!.textContent).toBe('07:27 → 08:03');
+    expect(pin.querySelector('.dcp-clipcard-len')!.textContent).toBe('۳۶ ثانیه');
+    expect(pin.querySelector('.dcp-clipcard-play')).not.toBeNull();
+    expect(pin.textContent).toContain('ترتیب EDTA و سایلن');
+    expect(pin.textContent).toContain('باندینگ به دنتین ریشه');
+    expect(pin.closest('a')).toBeNull();
+    const go = [...pin.querySelectorAll('.dcp-hlib-act')].find((a) => /شنیدن در اپیزود/.test(a.textContent || '')) as HTMLAnchorElement;
+    expect(go.getAttribute('href')).toBe('/episodes/episode-101.html?dcclip=clip-1');
+    expect([...pin.querySelectorAll('.dcp-hlib-act')].some((a) => /متنِ مقاله/.test(a.textContent || ''))).toBe(false);
+    // one shared <audio> for the board, made because a clip is on it
+    expect(document.querySelectorAll('audio[data-dc-clip-player]')).toHaveLength(1);
+  });
+
+  it('moves a clip pin to another board by clip_id, and removing it removes only the pin', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    const pin = document.querySelector('.dcp-cl-pin-clip') as HTMLElement;
+    ([...pin.querySelectorAll('.dcp-hlib-act')].find((a) => a.textContent === 'انتقال') as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+    const row = [...document.querySelectorAll('.dcp-cl-pick-row')].find((r) => (r.textContent || '').includes('برد دوم')) as HTMLElement;
+    row.click();
+    await new Promise((r) => setTimeout(r, 0));
+    await new Promise((r) => setTimeout(r, 0));
+    expect(calls.map((c) => c.op)).toEqual(['add', 'remove']);
+    expect(calls[0].args).toEqual(['c2', { clip_id: 'clip-1' }]);
+    expect(calls[1].args).toEqual(['c1', 'i5']);
+    expect(document.querySelector('.dcp-cl-pin-clip')).toBeNull();
+    expect(calls.some((c) => c.op === 'deleteClip')).toBe(false);
+  });
+
+  it('edits the clip in place through PATCH /clips/:id and repaints the span', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    const pin = document.querySelector('.dcp-cl-pin-clip') as HTMLElement;
+    ([...pin.querySelectorAll('.dcp-hlib-act')].find((a) => /ویرایش/.test(a.textContent || '')) as HTMLElement).click();
+    (pin.querySelector('textarea') as HTMLTextAreaElement).value = 'یادداشت تازه';
+    ([...pin.querySelectorAll('.dcp-clip-nudge')].find((b) => b.getAttribute('aria-label') === 'پایان +۱ ثانیه') as HTMLElement).click();
+    (pin.querySelector('.dcp-btn-primary') as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+    const patch = calls.find((c) => c.op === 'updateClip')!;
+    expect(patch.args).toEqual(['clip-1', { note: 'یادداشت تازه', label: 'clinical_pearl', end_s: 484 }]);
+    expect(document.querySelector('.dcp-cl-pin-clip .dcp-clipcard-times')!.textContent).toBe('07:27 → 08:04');
+    expect(document.querySelector('.dcp-cl-pin-clip')!.textContent).toContain('یادداشت تازه');
+  });
+
+  it('the «قطعه‌ی صوتی» filter chip narrows the board to clip pins', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    expect(document.querySelectorAll('.dcp-cl-pin')).toHaveLength(2);
+    const chip = [...document.querySelectorAll('.dcp-hlib-chip')].find((c) => (c.textContent || '').includes('قطعه‌ی صوتی')) as HTMLElement;
+    chip.click();
+    expect(document.querySelectorAll('.dcp-cl-pin')).toHaveLength(1);
+    expect(document.querySelector('.dcp-cl-pin-clip')).not.toBeNull();
   });
 });
