@@ -8,6 +8,7 @@ import { sendCapped } from './notify-policy.js';
 import { runPathwayAlerts, type CertificateIntent } from './pathway-standings.js';
 import { ai } from '../providers/registry.js';
 import type { KeyPoint, PointState } from '../providers/ai/types.js';
+import { parseQuestionText, looksLikeJson } from './exam-text.js';
 
 /**
  * آزمونِ مسیر — the exam in front of the pathway certificate, end to end.
@@ -175,6 +176,32 @@ export function normalizeQuestions(raw: unknown): NormalizeResult {
   return { ok: true, questions: out };
 }
 
+/**
+ * The ONE door every paste goes through, prose or JSON.
+ *
+ * NotebookLM answers in prose, so the founder's paste is usually text (see
+ * services/exam-text.ts); a JSON array still works, because an earlier form
+ * may be re-pasted and because another agent may produce one. Both end in
+ * `normalizeQuestions`, so there is exactly one validator and one set of
+ * error messages.
+ */
+export function parseQuestions(input: unknown): NormalizeResult {
+  if (typeof input === 'string') {
+    const raw = input.trim();
+    if (!raw) return { ok: false, error: 'دست‌کم یک سؤال لازم است.' };
+    if (looksLikeJson(raw)) {
+      try { return normalizeQuestions(JSON.parse(raw)); } catch (err) {
+        return { ok: false, error: `JSON معتبر نیست: ${(err as Error).message}` };
+      }
+    }
+    const text = parseQuestionText(raw);
+    // Straight into the same validator every paste goes through, so the
+    // option/key-point limits and the id rules are stated exactly once.
+    return text.ok ? normalizeQuestions(text.questions) : text;
+  }
+  return normalizeQuestions(input);
+}
+
 function resolveCorrect(v: unknown, options: string[]): number | null {
   if (typeof v === 'number' && Number.isInteger(v) && v >= 0 && v < options.length) return v;
   const s = str(v);
@@ -211,6 +238,7 @@ const FORM_SELECT = `select id, pathway_id, questions, mcq_draw, free_draw, pass
                        from pathway_exam_forms`;
 
 export interface FormInput {
+  /** The founder's paste: plain text (the usual case) or a JSON array. */
   questions: unknown;
   /** 0 = every question in the pool, every time. */
   mcqDraw?: number;
@@ -229,7 +257,7 @@ const intIn = (v: unknown, lo: number, hi: number, dflt: number): number =>
 export async function upsertForm(pathwayId: string, input: FormInput, client: Queryable = pool): Promise<{ form: ExamForm; created: boolean }> {
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
-  const norm = normalizeQuestions(input.questions);
+  const norm = parseQuestions(input.questions);
   if (!norm.ok) throw new Error(`invalid_questions:${norm.error}`);
   const d = config.exam;
   const row = await one<ExamForm & { created: boolean }>(

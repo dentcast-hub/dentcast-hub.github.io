@@ -163,6 +163,44 @@ describe('the form', () => {
     expect(again.form.questions).toHaveLength(1);
   });
 
+  it('takes the founder\'s prose straight, previews it first, and stores what was previewed', async () => {
+    const paste = [
+      '۱. در اسکن داخل‌دهانی، بیشترین سهم خطا از کدام است؟',
+      'الف) رنگ اسکن‌بادی',
+      'ب) طول مسیر اسکن ✓',
+      'ج) ضخامت پودر',
+      '',
+      '۲. چرا trueness و precision یکی نیستند؟',
+      'نکته‌ها:',
+      '- خطای سیستماتیک در برابر تصادفی',
+      '- نبودِ مرجع برای دهان واقعی',
+    ].join('\n');
+
+    // the dry run: what did it read?
+    const pre = await adminPost('/admin/exam-forms/parse', { questions: paste });
+    expect(pre.statusCode).toBe(200);
+    expect(pre.json()).toMatchObject({ mcq_count: 1, free_count: 1 });
+    const questions = pre.json().questions;
+    expect(questions[0]).toMatchObject({ kind: 'mcq', correct: 1 });
+    // the founder's own words, ZWNJ included — never re-typed
+    expect(questions[0].prompt_fa).toBe('در اسکن داخل‌دهانی، بیشترین سهم خطا از کدام است؟');
+    expect(questions[1].key_points).toHaveLength(2);
+
+    // saving sends the REVIEWED array, and prose saved directly lands the same way
+    const saved = await adminPost('/admin/exam-forms', { pathway_id: PATHWAY, questions });
+    expect(saved.json().form.questions).toEqual(questions);
+    const direct = await adminPost('/admin/exam-forms', { pathway_id: PATHWAY, questions: paste });
+    expect(direct.json().form.questions).toEqual(questions);
+
+    // and a paste it cannot read is refused by question number, writing nothing
+    const bad = await adminPost('/admin/exam-forms/parse', { questions: '۱. کدام؟\nالف) یک\nب) دو' });
+    expect(bad.statusCode).toBe(400);
+    expect(bad.json().message).toContain('سؤال 1');
+    const badSave = await adminPost('/admin/exam-forms', { pathway_id: 'ceramics', questions: '۱. کدام؟\nالف) یک\nب) دو' });
+    expect(badSave.statusCode).toBe(400);
+    expect(await getForm('ceramics')).toBeNull();
+  });
+
   it('refuses a bundle and a bad paste, writing nothing', async () => {
     await expect(upsertForm(BUNDLE_ID, { questions: [MCQ(1)] })).rejects.toThrow('unknown_pathway');
     await expect(upsertForm(PATHWAY, { questions: [{ q: 'x' }] })).rejects.toThrow(/^invalid_questions:/);
