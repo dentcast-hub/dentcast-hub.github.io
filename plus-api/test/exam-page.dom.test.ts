@@ -119,6 +119,14 @@ describe('every state has a face', () => {
     expect(stateEl()!.dataset.examState).toBe('ready');
   });
 
+  it('a pass whose certificate was revoked never claims one exists', async () => {
+    await mount({ ...BASE, state: 'passed', certificate: null });
+    expect(stateEl()!.dataset.examState).toBe('passed');
+    expect(root().textContent).toContain('آزمون این مسیر را گذرانده‌ای');
+    expect(root().textContent).not.toContain('صادر شده');
+    expect(root().querySelector('a[href="/plus/support.html"]')).not.toBeNull();
+  });
+
   it('a dead API is its own state, never a verdict', async () => {
     document.body.innerHTML = '<div id="test-root"></div>';
     examImpl = () => Promise.reject(new TypeError('Failed to fetch'));

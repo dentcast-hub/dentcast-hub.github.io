@@ -24,11 +24,11 @@
 // answers were right, how many key points each free answer covered — and
 // never the key itself: the pool is small and the second attempt may draw
 // the same question.
-import { el, faNum, debounce } from './util.js?v=76';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=76';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=76';
-import { openLoginModal } from './login-modal.js?v=76';
-import { registerSW } from './pwa.js?v=76';
+import { el, faNum, debounce } from './util.js?v=77';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=77';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=77';
+import { openLoginModal } from './login-modal.js?v=77';
+import { registerSW } from './pwa.js?v=77';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' });
 const FA_DATETIME = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium', timeStyle: 'short' });
@@ -330,11 +330,19 @@ export function renderState(root, id, s) {
       break;
     case 'passed': {
       const c = s.certificate;
-      parts.push(simpleCard('passed', 'قبول شدی 🎓',
-        'گواهی‌نامهٔ تکمیل این مسیر به نامت صادر شده' + (c ? ' — کد ' + c.verify_code : '') + '. از پروفایلت هم قابل دانلود است.',
+      // A certificate the founder revoked leaves a passed attempt behind, so
+      // this card must not assert one exists: the pass is the reader's either
+      // way, and telling them they hold a certificate they cannot open would
+      // send them to the profile to look for nothing.
+      parts.push(simpleCard('passed', 'قبول شدی 🎓', c
+        ? 'گواهی‌نامهٔ تکمیل این مسیر به نامت صادر شده — کد ' + c.verify_code + '. از پروفایلت هم قابل دانلود است.'
+        : 'آزمون این مسیر را گذرانده‌ای. گواهی‌نامه‌ای همین حالا به نامت فعال نیست؛ اگر باید باشد، از پشتیبانی بپرس.',
         [
           c ? el('a', { class: 'dcp-btn dcp-btn-primary', href: c.verify_url }, 'دیدن گواهی') : null,
-          el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/profile.html#certificates' }, 'گواهی‌نامه‌ها در پروفایل'),
+          el('a', {
+            class: 'dcp-btn' + (c ? ' dcp-btn-ghost' : ''),
+            href: c ? '/plus/profile.html#certificates' : '/plus/support.html',
+          }, c ? 'گواهی‌نامه‌ها در پروفایل' : 'پشتیبانی'),
         ].filter(Boolean)));
       break;
     }
