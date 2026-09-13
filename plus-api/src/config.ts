@@ -690,6 +690,14 @@ export const config = {
   // the container.
   flashcardsPath: process.env.FLASHCARDS_PATH || '',
 
+  // Path to glossary/glossary.json (the دانشنامه catalog) and to the root
+  // dentcast-hashtag-reference.json (the canonical hashtag library). Both are
+  // read by services/highlight-concepts.ts — the glossary for the name join
+  // that turns a term into its concepts, the reference for a concept's domain
+  // and other names. Repo default in dev, explicit in the container.
+  glossaryPath: process.env.GLOSSARY_PATH || '',
+  hashtagRefPath: process.env.HASHTAG_REF_PATH || '',
+
   // Where to re-fetch those files from at runtime (content-refresh.ts).
   // The paths above are the boot value and the permanent fallback; these URLs
   // are what stop every publish from needing an image rebuild. Comma-separated

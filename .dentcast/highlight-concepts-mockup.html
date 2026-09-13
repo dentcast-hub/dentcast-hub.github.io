@@ -1,0 +1,262 @@
+<title>نمای موضوعی هایلایت‌ها</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10); --line-strong:rgba(2,35,96,.18);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --x-amber:#c9922b; --x-amber-ink:#8a6414; --x-amber-wash:rgba(201,146,43,.075); --x-amber-bd:rgba(154,107,21,.22);
+    --hl:#fff3a3; --hl-ink:#3b2f00;
+    --mock-ink:#3b2f7a; --mock-bg:#efeaff; --mock-bd:rgba(59,47,122,.22);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --x-amber:#e3b849; --x-amber-ink:#e3b849; --x-amber-wash:rgba(227,184,73,.085); --x-amber-bd:rgba(227,184,73,.26);
+    --hl:#5a4d10; --hl-ink:#fff3c4;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --x-amber:#e3b849; --x-amber-ink:#e3b849; --x-amber-wash:rgba(227,184,73,.085); --x-amber-bd:rgba(227,184,73,.26);
+    --hl:#5a4d10; --hl-ink:#fff3c4;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }
+  body{ background:var(--bg); color:var(--txt); font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif; direction:rtl; padding-inline:16px; padding-block:0 4rem; line-height:1.75; font-size:15px; }
+  *{ box-sizing:border-box; } a{ color:inherit; text-decoration:none; }
+  :focus-visible{ outline:2px solid var(--ac); outline-offset:2px; border-radius:4px; }
+  .num{ font-variant-numeric:tabular-nums; }
+
+  .mk-head{ max-width:920px; margin:0 auto; padding-block:1.6rem .4rem; }
+  .mk-head h1{ font-size:1.55rem; font-weight:800; color:var(--pr); margin:0 0 .3rem; text-wrap:balance; }
+  .mk-head p{ margin:0; color:var(--txt2); max-width:66ch; }
+  .mk-tabs{ max-width:920px; margin:1rem auto 0; display:flex; flex-wrap:wrap; gap:.4rem; }
+  .mk-tabs a{ font-size:.82rem; font-weight:600; padding:.3rem .75rem; border-radius:999px; background:var(--mock-bg); color:var(--mock-ink); border:1px solid var(--mock-bd); }
+  .mk-where{ max-width:920px; margin:1.2rem auto 0; overflow-x:auto; }
+  .mk-where table{ border-collapse:collapse; width:100%; font-size:.86rem; min-width:560px; }
+  .mk-where th,.mk-where td{ text-align:right; padding:.5rem .6rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  .mk-where th{ color:var(--txt3); font-weight:600; font-size:.76rem; }
+  code{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.82em; direction:ltr; unicode-bidi:isolate; color:var(--txt2); }
+  .mk-sec{ max-width:920px; margin:2.6rem auto 0; }
+  .mk-sec-h{ display:flex; align-items:baseline; gap:.7rem; flex-wrap:wrap; margin-bottom:.8rem; }
+  .mk-sec-h h2{ margin:0; font-size:1.1rem; font-weight:800; color:var(--mock-ink); }
+  .mk-sec-h span{ color:var(--txt3); font-size:.84rem; }
+  .mk-row{ display:flex; gap:1.2rem; flex-wrap:wrap; align-items:flex-start; }
+  .phone{ width:100%; max-width:430px; background:var(--bg); border:1px solid var(--line-strong); border-radius:22px; padding:14px 14px 20px; box-shadow:var(--card-sh); }
+  .cap{ font-size:.78rem; color:var(--txt3); margin:.5rem .4rem 0; }
+  .mk-note{ font-size:.84rem; color:var(--txt2); max-width:66ch; margin:.6rem 0 0; }
+
+  /* plus vocabulary */
+  .dcp-page-header{ display:flex; justify-content:space-between; align-items:center; padding:.4rem .2rem .9rem; }
+  .dcp-page-brand{ font-weight:800; color:var(--pr); font-size:.95rem; }
+  .dcp-page-back{ font-size:.8rem; color:var(--txt2); }
+  .h2{ margin:0 0 .2rem; font-size:1.25rem; font-weight:800; color:var(--pr); }
+  .hint{ margin:0 0 .8rem; font-size:.82rem; color:var(--txt3); }
+  .inp{ width:100%; padding:.55rem .8rem; border:1px solid var(--border); border-radius:10px; background:var(--surface); color:var(--txt); font:inherit; font-size:.88rem; }
+  .row{ display:flex; gap:.4rem; margin-bottom:.5rem; flex-wrap:wrap; }
+  .sel{ flex:1; padding:.5rem .6rem; border:1px solid var(--border); border-radius:10px; background:var(--surface); font-size:.84rem; color:var(--txt2); }
+  .chips{ display:flex; gap:.35rem; flex-wrap:wrap; margin-bottom:.6rem; }
+  .chip{ font-size:.78rem; padding:.2rem .65rem; border-radius:999px; background:var(--surface); border:1px solid var(--border); color:var(--txt2); display:inline-flex; gap:.35rem; align-items:center; }
+  .chip b{ font-weight:600; color:var(--txt); }
+  .chip .n{ font-size:.7rem; color:var(--txt3); background:var(--surface3); padding:0 .4rem; border-radius:999px; }
+  .chip.on{ background:var(--ac); border-color:var(--ac); color:#fff; } .chip.on b,.chip.on .n{ color:#fff; background:rgba(255,255,255,.2); }
+  .chip.more{ border-style:dashed; }
+  .chips-label{ font-size:.72rem; color:var(--txt3); align-self:center; margin-inline-end:.2rem; }
+  .cnt{ font-size:.78rem; color:var(--txt3); margin:.2rem 0 .8rem; }
+
+  .concept-head{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:.9rem 1rem; margin-bottom:.8rem; }
+  .concept-head .t{ font-size:1.1rem; font-weight:800; color:var(--pr); display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+  .concept-head .m{ font-size:.82rem; color:var(--txt2); margin-top:.2rem; }
+  .concept-head .links{ display:flex; gap:.9rem; margin-top:.55rem; font-size:.82rem; }
+  .concept-head .links a{ color:var(--ac); font-weight:600; }
+  .x{ font-size:.72rem; padding:.05rem .5rem; border-radius:999px; background:var(--surface3); color:var(--txt3); font-weight:500; }
+
+  .group{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:.75rem .9rem .5rem; margin-bottom:.7rem; }
+  .ghead{ display:flex; justify-content:space-between; align-items:baseline; gap:.6rem; margin-bottom:.4rem; }
+  .gtitle{ font-weight:700; font-size:.92rem; line-height:1.45; }
+  .gsub{ font-size:.7rem; color:var(--txt3); direction:ltr; text-align:left; white-space:nowrap; }
+  .card{ padding:.55rem 0; border-top:1px solid var(--border); }
+  .card:first-of-type{ border-top:0; }
+  .mark{ background:var(--hl); color:var(--hl-ink); padding:.05rem .2rem; border-radius:3px; line-height:1.9; font-size:.9rem; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .note{ margin:.35rem 0 0; font-size:.82rem; color:var(--txt2); border-inline-start:2px solid var(--border); padding-inline-start:.6rem; }
+  .acts{ display:flex; gap:.6rem; margin-top:.4rem; font-size:.74rem; color:var(--txt3); flex-wrap:wrap; align-items:center; }
+  .acts a{ color:var(--ac); font-weight:600; }
+  .via{ font-size:.68rem; color:var(--txt3); border:1px dashed var(--border); padding:0 .45rem; border-radius:999px; }
+
+  /* glossary page */
+  .g-title{ font-size:1.5rem; font-weight:800; color:var(--pr); margin:.2rem 0 0; }
+  .g-en{ font-size:.86rem; color:var(--txt3); direction:ltr; text-align:right; }
+  .g-sec{ margin-top:.8rem; }
+  .g-sec h2{ font-size:1rem; margin:0 0 .2rem; color:var(--txt); }
+  .g-sec p{ margin:0; font-size:.88rem; color:var(--txt2); }
+  .g-fade{ height:36px; background:linear-gradient(180deg,transparent,var(--bg)); margin:-30px 0 0; position:relative; }
+  .notes{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:.8rem .9rem .6rem; margin-top:.9rem; }
+  .notes .nh{ display:flex; justify-content:space-between; align-items:baseline; gap:.6rem; margin-bottom:.15rem; }
+  .notes h3{ margin:0; font-size:.98rem; font-weight:700; }
+  .notes .nm{ font-size:.76rem; color:var(--txt3); white-space:nowrap; }
+  .notes .nhint{ margin:0 0 .5rem; font-size:.78rem; color:var(--txt3); }
+  .notes .src{ font-size:.74rem; color:var(--txt3); margin:.5rem 0 .1rem; display:flex; gap:.4rem; align-items:center; }
+  .notes .src b{ color:var(--txt2); font-weight:600; }
+  .notes .all{ display:block; margin-top:.5rem; font-size:.82rem; color:var(--ac); font-weight:600; }
+  .related{ margin-top:1rem; }
+  .related h2{ font-size:.95rem; margin:0 0 .4rem; }
+  .caps{ display:flex; gap:.4rem; flex-wrap:wrap; }
+  .caps a{ font-size:.78rem; padding:.25rem .7rem; border-radius:999px; background:var(--surface); border:1px solid var(--border); color:var(--txt2); }
+  .door{ border:1px solid var(--x-amber-bd); border-radius:14px; padding:.8rem .9rem; margin-top:.9rem; background:linear-gradient(180deg,var(--x-amber-wash) 0,transparent 45%),var(--surface); }
+  .door .lk{ font-size:.72rem; color:var(--x-amber-ink); font-weight:700; }
+  .door p{ margin:.15rem 0 .55rem; font-size:.86rem; color:var(--txt2); }
+  .btn{ display:inline-flex; align-items:center; border-radius:999px; padding:.45rem .95rem; font-weight:600; font-size:.86rem; background:var(--ac); color:#fff; }
+  .btn.ghost{ background:transparent; color:var(--txt2); border:1px solid var(--border); }
+  .empty{ font-size:.82rem; color:var(--txt3); padding:.6rem .2rem; }
+</style>
+
+<header class="mk-head">
+  <h1>نمای موضوعی هایلایت‌ها — ماکاپ</h1>
+  <p>«همه‌ی هایلایت‌هام درباره‌ی سمان رزینی، از هر مقاله‌ای که بوده.» هیچ‌کس چیزی را تگ نمی‌کند: هایلایت روی صفحه‌ای است که هشتگ دارد، و هشتگ یک مفهوم است. دو سیگنال، جدا از هم: <b>صفحه‌ی تگ‌شده</b> (پیش‌فرض، بی‌نشان) و <b>متن خودِ هایلایت</b> (با نشان «در متن»). دانشنامه با نام و مترادف به مفاهیم وصل می‌شود؛ ۷۳ از ۱۰۹ واژه همین حالا می‌رسند، بقیه از متن.</p>
+  <nav class="mk-tabs" aria-label="سطح‌ها">
+    <a href="#s1">۱ · فیلتر مفهوم در دفترچه</a>
+    <a href="#s2">۲ · نمای یک مفهوم</a>
+    <a href="#s3">۳ · بلوک دانشنامه</a>
+  </nav>
+  <div class="mk-where">
+    <table>
+      <thead><tr><th>کجا</th><th>چه کسی می‌بیند</th><th>داده</th><th>روت</th></tr></thead>
+      <tbody>
+        <tr><td>ردیف «مفهوم» در دفترچه‌ی هایلایت‌ها</td><td>پریمیوم (صفحه از قبل پریمیوم است)</td><td>مفاهیمی که هایلایت‌های خودت به آن‌ها می‌رسند، با شمارنده</td><td><code>GET /highlights/concepts</code></td></tr>
+        <tr><td>نمای یک مفهوم <code>?concept=…</code> در همان صفحه</td><td>پریمیوم</td><td>همه‌ی هایلایت‌های آن مفهوم، گروه‌بندی‌شده به مقاله، با «چطور رسید»</td><td><code>GET /highlights/concepts/:key</code></td></tr>
+        <tr><td>بلوک «یادداشت‌های خودت» زیر هر واژه‌ی دانشنامه</td><td>پریمیوم: کارت‌ها · رایگانِ صاحبِ یادداشت: درِ قفل با شمارنده · بقیه: هیچ</td><td>هایلایت‌های صفحه‌های تگ‌شده + هر هایلایتی که واژه یا مترادفش را نام برده</td><td><code>GET /glossary/:slug/notes</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="mk-note">قاعده‌ی گیت همان قاعده‌ی آپ‌بورد و دفترچه است: داده مال کاربر است و هیچ‌جا قفل نمی‌شود؛ چیزی که پریمیوم می‌خرد <em>چیدمان</em> است. و یک قاعده‌ی سکوت: بلوک دانشنامه وقتی چیزی برای گفتن ندارد اصلاً کشیده نمی‌شود — نه برای پریمیوم، نه قفل برای رایگان — چون یک تبلیغ زیر ۱۰۹ واژه، تبلیغ است نه محتوا.</p>
+</header>
+
+<!-- ───────── 1 ───────── -->
+<section class="mk-sec" id="s1">
+  <div class="mk-sec-h"><h2>۱ · ردیف «مفهوم» در دفترچه</h2><span>زیر پوشه/ترتیب، بالای لیبل‌ها — همان صفحه‌ی موجود</span></div>
+  <div class="mk-row">
+    <div class="phone">
+      <header class="dcp-page-header"><a class="dcp-page-brand" href="#">دنت‌کست پریمیوم</a><a class="dcp-page-back" href="#">بازگشت به پیشخوان</a></header>
+      <h1 class="h2">دفترچه‌ی هایلایت‌ها</h1>
+      <p class="hint">هرچه تا حالا هایلایت کرده‌ای، یکجا و کامل — با یادداشت‌های خودت.</p>
+      <input class="inp" placeholder="جستجو در هایلایت‌ها و یادداشت‌ها  ( / )">
+      <div class="row" style="margin-top:.5rem"><span class="sel">همه‌ی پوشه‌ها ▾</span><span class="sel">تازه‌ترین ▾</span></div>
+      <div class="chips">
+        <span class="chips-label">مفهوم</span>
+        <span class="chip on"><b>همه</b></span>
+        <span class="chip"><b>سمان رزینی</b><span class="n num">۱۲</span></span>
+        <span class="chip"><b>اکلوژن</b><span class="n num">۹</span></span>
+        <span class="chip"><b>زیرکونیا</b><span class="n num">۷</span></span>
+        <span class="chip"><b>باندینگ</b><span class="n num">۵</span></span>
+        <span class="chip"><b>کاغذ آرتیکولاسیون</b><span class="n num">۳</span></span>
+        <span class="chip"><b>فرول</b><span class="n num">۳</span></span>
+        <span class="chip more">+۱۴ مفهوم دیگر</span>
+      </div>
+      <div class="chips" style="margin-top:-.2rem">
+        <span class="chips-label">لیبل</span>
+        <span class="chip"><b>برای کیس</b><span class="n num">۴</span></span>
+        <span class="chip"><b>امتحان</b><span class="n num">۲</span></span>
+      </div>
+      <div class="cnt num">۲۱۴ هایلایت در ۴۱ مقاله</div>
+      <div class="group">
+        <div class="ghead"><div class="gtitle">وقتی سمانِ خوب کافی نیست</div><div class="gsub">Chairside · ۳</div></div>
+        <div class="card"><span class="mark">سمان رزینی وقتی نجات می‌دهد که آماده‌سازی سطح درست باشد؛ خودش به‌تنهایی معجزه نمی‌کند.</span><p class="note">برای کیس فردا</p><div class="acts"><span>✎ ویرایش</span><span>کپی</span><span>🗂 کالکشن</span><a href="#">متنِ مقاله ›</a></div></div>
+        <div class="card"><span class="mark">گیر مکانیکی را با گیر شیمیایی اشتباه نگیریم.</span><div class="acts"><span>✎ ویرایش</span><span>کپی</span><span>🗂 کالکشن</span><a href="#">متنِ مقاله ›</a></div></div>
+      </div>
+      <div class="cap">چیپ‌های مفهوم فقط آن‌هایی‌اند که هایلایت‌های خودت به آن‌ها می‌رسند (نه ۸۷۸ تگ سایت)، با شمارنده، مثل لیبل‌ها. تگ‌های برند و سری («اینسایت»، «نوت‌کست») هیچ‌وقت نمی‌آیند. انتخاب یک چیپ = نمای شماره‌ی ۲.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── 2 ───────── -->
+<section class="mk-sec" id="s2">
+  <div class="mk-sec-h"><h2>۲ · نمای یک مفهوم</h2><span><code>/plus/highlights.html?concept=سمان رزینی</code></span></div>
+  <div class="mk-row">
+    <div class="phone">
+      <header class="dcp-page-header"><a class="dcp-page-brand" href="#">دنت‌کست پریمیوم</a><a class="dcp-page-back" href="#">همه‌ی هایلایت‌ها</a></header>
+      <div class="chips">
+        <span class="chips-label">مفهوم</span>
+        <span class="chip"><b>همه</b></span>
+        <span class="chip on"><b>سمان رزینی</b><span class="n num">۱۲</span></span>
+        <span class="chip"><b>اکلوژن</b><span class="n num">۹</span></span>
+        <span class="chip"><b>زیرکونیا</b><span class="n num">۷</span></span>
+        <span class="chip more">+۱۷</span>
+      </div>
+      <div class="concept-head">
+        <div class="t">سمان رزینی <span class="x">مفهوم</span></div>
+        <div class="m num">۱۲ هایلایت در ۴ مقاله · ۱۸ صفحه از سایت این تگ را دارد</div>
+        <div class="links"><a href="#s3">مدخل دانشنامه: سمان‌های رزینی ›</a><a href="#">مطالب سایت با این تگ ›</a></div>
+      </div>
+
+      <div class="group">
+        <div class="ghead"><div class="gtitle">راهنمای انتخاب سمان رزینی</div><div class="gsub">Podcast · ۵</div></div>
+        <div class="card"><span class="mark">برای زیرکونیا، سمان رزینی با MDP و بدون اچ اسید؛ سندبلاست کافی است.</span><div class="acts"><span>✎ ویرایش</span><span>کپی</span><span>🗂 کالکشن</span><a href="#">متنِ مقاله ›</a></div></div>
+        <div class="card"><span class="mark">دوال‌کیور زیر رستوریشن ضخیم؛ لایت‌کیور فقط جایی که نور واقعاً می‌رسد.</span><p class="note">جدول ضخامت را از اپیزود ۱۱ بگذار کنارش</p><div class="acts"><span>✎ ویرایش</span><span>کپی</span><span>🗂 کالکشن</span><a href="#">متنِ مقاله ›</a></div></div>
+        <div class="card"><span class="mark">سلف‌ادهزیو یعنی کمتر حساس به تکنیک، نه یعنی قوی‌تر.</span><div class="acts"><span>✎ ویرایش</span><span>کپی</span><span>🗂 کالکشن</span><a href="#">متنِ مقاله ›</a></div></div>
+      </div>
+      <div class="group">
+        <div class="ghead"><div class="gtitle">جایگاه سمان رزینی در ترتیب سمان‌کردن</div><div class="gsub">Clinical Insight · ۳</div></div>
+        <div class="card"><span class="mark">ترتیب مهم است: اول آماده‌سازی سطح رستوریشن، بعد دندان، بعد سمان.</span><div class="acts"><span>✎ ویرایش</span><span>کپی</span><span>🗂 کالکشن</span><a href="#">متنِ مقاله ›</a></div></div>
+      </div>
+      <div class="group">
+        <div class="ghead"><div class="gtitle">ضخامت کاغذ آرتیکولاسیون مهم‌تر از چیزیه که فکر می‌کنی</div><div class="gsub">Clinical Insight · ۱</div></div>
+        <div class="card"><span class="mark">بعد از سمان رزینی، اضافه‌ی سمان زیر کانتکت را قبل از چک اکلوژن بردار.</span><div class="acts"><span class="via">در متن هایلایت</span><span>✎ ویرایش</span><span>کپی</span><a href="#">متنِ مقاله ›</a></div></div>
+      </div>
+      <div class="cap">گروه‌بندی همان دفترچه است (مقاله‌ی تازه‌هایلایت‌شده اول). کارت سوم از صفحه‌ای است که تگ «سمان رزینی» ندارد ولی خودِ جمله آن را نام برده — تنها جایی که نشان «در متن هایلایت» می‌آید. بقیه پیش‌فرض‌اند و نشان نمی‌گیرند؛ نشان برای استثناست نه قاعده.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── 3 ───────── -->
+<section class="mk-sec" id="s3">
+  <div class="mk-sec-h"><h2>۳ · بلوک دانشنامه</h2><span>زیر متن واژه، بالای «کاوش بیشتر» — همان لنگرِ گفت‌وگوی زیر مطلب</span></div>
+  <div class="mk-row">
+    <div class="phone">
+      <div class="g-en">Resin Cements</div>
+      <h1 class="g-title">سمان‌های رزینی</h1>
+      <div class="g-sec"><h2>تعریف</h2><p>سمان‌های رزینی، سمان‌های بر پایه‌ی رزین کامپوزیت با فیلر معدنی‌اند که به‌جای گیر مکانیکی صرف، با باند ادهزیو به دندان و رستوریشن می‌چسبند …</p></div>
+      <div class="g-sec"><h2>مرز مفهوم و سوءبرداشت‌ها</h2><p>«سمان رزینی» یک دسته است، نه یک ماده؛ سلف‌ادهزیو و ادهزیوِ کامل رفتار متفاوتی در …</p></div>
+      <div class="g-fade"></div>
+
+      <div class="notes">
+        <div class="nh"><h3>یادداشت‌های خودت درباره‌ی این مفهوم</h3><span class="nm num">۱۲ هایلایت · ۴ مقاله</span></div>
+        <p class="nhint">آنچه پیش‌تر در مطالب دیگر درباره‌ی سمان رزینی هایلایت کرده‌اید.</p>
+        <div class="src"><b>راهنمای انتخاب سمان رزینی</b><span>· Podcast</span></div>
+        <div class="card"><span class="mark">برای زیرکونیا، سمان رزینی با MDP و بدون اچ اسید؛ سندبلاست کافی است.</span><div class="acts"><a href="#">متنِ مقاله ›</a></div></div>
+        <div class="card"><span class="mark">دوال‌کیور زیر رستوریشن ضخیم؛ لایت‌کیور فقط جایی که نور واقعاً می‌رسد.</span><p class="note">جدول ضخامت را از اپیزود ۱۱ بگذار کنارش</p><div class="acts"><a href="#">متنِ مقاله ›</a></div></div>
+        <div class="src"><b>جایگاه سمان رزینی در ترتیب سمان‌کردن</b><span>· Clinical Insight</span></div>
+        <div class="card"><span class="mark">ترتیب مهم است: اول آماده‌سازی سطح رستوریشن، بعد دندان، بعد سمان.</span><div class="acts"><a href="#">متنِ مقاله ›</a></div></div>
+        <a class="all" href="#s2">همه‌ی ۱۲ هایلایت این مفهوم در دفترچه ›</a>
+      </div>
+
+      <div class="related"><h2>کاوش بیشتر</h2><div class="caps"><a href="#">فهرست موضوعی</a><a href="#">راهنمای انتخاب سمان رزینی</a><a href="#">جایگاه سمان رزینی در ترتیب سمان‌کردن</a><a href="#">وقتی سمانِ خوب کافی نیست</a></div></div>
+      <div class="cap">پریمیوم: سه کارت اول (تازه‌ترین) با لینک به همه. کارت‌ها فقط‌خواندنی‌اند؛ ویرایش در دفترچه. رنگ بلوک همان آبیِ صفحه است، نه امبر — این‌جا گیت نیست.</div>
+    </div>
+
+    <div class="phone" style="max-width:360px">
+      <div class="g-en">Resin Cements</div>
+      <h1 class="g-title">سمان‌های رزینی</h1>
+      <div class="g-sec"><h2>نقش در تصمیم‌گیری درمانی</h2><p>… انتخاب بین سلف‌ادهزیو و ادهزیو کامل، تابع نوع رستوریشن و کیفیت باند به دندان است.</p></div>
+      <div class="g-fade"></div>
+      <div class="door">
+        <div class="lk">🔒 ویژه‌ی پریمیوم</div>
+        <p><b class="num">۳ هایلایت</b> در <b class="num">۲ مطلب</b> درباره‌ی همین مفهوم دارید. با پریمیوم همین‌جا زیر واژه جمع می‌شوند — و در دفترچه، برای هر مفهوم دیگری هم.</p>
+        <span class="btn">دنت‌کست پریمیوم</span>
+      </div>
+      <div class="related"><h2>کاوش بیشتر</h2><div class="caps"><a href="#">فهرست موضوعی</a><a href="#">راهنمای انتخاب سمان رزینی</a></div></div>
+      <div class="cap">رایگانِ صاحبِ یادداشت: فقط شمارنده (API برای رایگان بدنه نمی‌فرستد). عدد مال خودش است، پس درِ قفل صادقانه است. رایگان یا پریمیومِ بدون یادداشت: هیچ‌چیز کشیده نمی‌شود.</div>
+    </div>
+  </div>
+</section>
