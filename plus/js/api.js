@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=78';
+import { API_BASES } from './config.js?v=79';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -276,6 +276,12 @@ export const api = {
   // premium: reading compass — coverage report over the user's own reading,
   // cross-referenced against the taxonomy and pathways (no interest guessing)
   readingCompass: () => request('/reading-compass'),
+
+  // premium: «گزارش ماهانه» — one Jalali month of the reader's own activity,
+  // derived on request (plus-api services/monthly-report.ts). No month =
+  // the last completed one, which is the one the اطلاعیه announced.
+  report: (month) => request('/report/monthly' + (month ? '?month=' + encodeURIComponent(month) : '')),
+  reportMonths: () => request('/report/months'),
 
   // premium: «دستیار هوشمند» — stateless narrowing wizard, not a chat. The
   // caller resends the whole history every call; nothing is stored server-side.

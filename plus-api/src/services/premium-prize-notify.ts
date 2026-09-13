@@ -36,6 +36,7 @@ export const PREMIUM_FEATURE_TITLES = [
   'قطب‌نمای مطالعه',
   'دستیار هوشمند',
   'دفترچه‌ی هایلایت‌ها',
+  'گزارش ماهانه',
 ];
 
 /** "الف، ب و ج" — a Persian list, with the final item joined by "و". */

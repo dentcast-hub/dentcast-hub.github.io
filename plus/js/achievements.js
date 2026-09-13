@@ -1,6 +1,6 @@
-import { el, faNum } from './util.js?v=78';
-import { api } from './api.js?v=78';
-import { openSheet, closeSheet } from './sheet.js?v=78';
+import { el, faNum } from './util.js?v=79';
+import { api } from './api.js?v=79';
+import { openSheet, closeSheet } from './sheet.js?v=79';
 
 /**
  * The profile's «افتخارات» section: two league medals and the badge wall.
@@ -92,6 +92,11 @@ const ICONS = {
 };
 
 const METAL_PIP = { bronze: 'b', silver: 's', gold: 'g' };
+
+/** The badge's own face, from the wall's private sprite. Exported for the
+ *  monthly report (report.js), which shows the month's badges and must draw
+ *  the same icon the wall does rather than a second, drifting copy. */
+export function badgeIcon(name, cls) { return icon(name, cls); }
 
 function icon(name, cls) {
   const svg = el('span', { class: cls, 'aria-hidden': 'true' });

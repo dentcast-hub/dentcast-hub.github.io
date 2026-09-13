@@ -16,7 +16,7 @@
 // «بریز», «بخون». That voice is right beside a button someone already paid for
 // and wrong on the page asking them for a million toman. Same features,
 // register to match the moment.
-import { PREMIUM_FEATURES } from './config.js?v=78';
+import { PREMIUM_FEATURES } from './config.js?v=79';
 
 /**
  * Keyed by title with a fallback to the shared hint, so a feature added to the
@@ -30,6 +30,7 @@ const PITCH = {
   'قطب‌نمای مطالعه': 'نشان می‌دهد در هر حوزه کجا ایستاده‌اید و کدام بخش هنوز از دیدتان دور مانده است.',
   'دستیار هوشمند': 'شرح کیس را می‌نویسید و با چند پرسش کوتاه به مرتبط‌ترین مطالب همین‌جا می‌رسید.',
   'دفترچه‌ی هایلایت‌ها': 'همه‌ی هایلایت‌هایتان یکجا، با یادداشت‌ها و جستجو — نه فقط داخل تک‌تک مقاله‌ها.',
+  'گزارش ماهانه': 'اول هر ماه یک گزارش شخصی: چه خواندید، پوشش هر پیلار قبل و بعد، و کدام حوزه یک ماه است دست‌نخورده مانده.',
 };
 
 /**

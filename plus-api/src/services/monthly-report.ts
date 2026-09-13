@@ -5,7 +5,7 @@ import { getPathways, computeProgress } from '../pathways.js';
 import { getBadgeCatalog } from '../badges.js';
 import { getConsumedContentTimes } from './consumption.js';
 import { dayInTz, jalaliMonth, startOfDayInstant, previousDay, dayDiff } from './time.js';
-import { dayToJalali, jalaliToDay, faDigits } from './jalali.js';
+import { dayToJalali, jalaliToDay, faDigits, formatJalaliShort } from './jalali.js';
 import { sendCapped } from './notify-policy.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
@@ -153,6 +153,8 @@ export interface ReportPathway {
 
 export interface ReportLeagueWeek {
   week_start: string;
+  /** «۷ شهریور» — the Saturday, said the way the page says it. */
+  week_start_fa: string;
   tier_fa: string;
   weekly_xp: number;
   final_rank: number | null;
@@ -177,10 +179,22 @@ export interface ReportContentItem {
   type: string;
 }
 
+export interface ReportCalendar {
+  /** Weekday of the 1st, Saturday = 0 … Friday = 6 (the Iranian week). */
+  first_weekday: number;
+  /** Jalali day-of-month numbers on which the streak counted. */
+  active: number[];
+  /** Days a shield bridged (streak_freeze_used → meta.frozen_day), as day numbers. */
+  shielded: number[];
+  /** Today's day-of-month while the month is in progress; equals `days` otherwise. */
+  today: number;
+}
+
 export interface MonthlyReport {
   month: Omit<MonthWindow, 'start' | 'end'>;
   /** True while the month is the current one — the numbers are still moving. */
   in_progress: boolean;
+  calendar: ReportCalendar;
   counts: ReportCounts;
   /** The same six numbers for the month before, for the deltas. */
   previous: ReportCounts;
@@ -280,15 +294,28 @@ export function longestRun(days: string[]): number {
   return best;
 }
 
-async function shieldsUsedIn(userId: string, w: MonthWindow, db: Queryable): Promise<number> {
-  const res = await query<{ n: number }>(
-    `select count(*)::int as n from user_activity
+/**
+ * The days a shield bridged, as 'YYYY-MM-DD'. A shield spent inside the month
+ * may bridge the last day of the previous one; the day list is filtered to the
+ * window and the COUNT is not, because «۱ سپر خرج شد» is about the spend.
+ */
+async function shieldsIn(userId: string, w: MonthWindow, db: Queryable): Promise<{ used: number; days: string[] }> {
+  const res = await query<{ day: string | null }>(
+    `select meta->>'frozen_day' as day from user_activity
       where user_id = $1 and action = 'streak_freeze_used'
         and created_at >= $2 and created_at < $3`,
     [userId, w.start, w.end],
     db,
   );
-  return res.rows[0]?.n ?? 0;
+  return {
+    used: res.rows.length,
+    days: res.rows.map((r) => r.day).filter((d): d is string => typeof d === 'string' && d >= w.from_day && d <= w.to_day),
+  };
+}
+
+/** Saturday = 0 … Friday = 6. getUTCDay(): 0 = Sunday … 6 = Saturday. */
+function iranWeekday(day: string): number {
+  return (new Date(`${day}T12:00:00Z`).getUTCDay() + 1) % 7;
 }
 
 async function leagueWeeksIn(userId: string, w: MonthWindow, db: Queryable): Promise<ReportLeagueWeek[]> {
@@ -299,6 +326,7 @@ async function leagueWeeksIn(userId: string, w: MonthWindow, db: Queryable): Pro
     group_size: number; outcome: ReportLeagueWeek['outcome'];
   }>(
     `select to_char(m.week_start, 'YYYY-MM-DD') as week_start,
+            '' as week_start_fa,
             t.name_fa as tier_fa,
             m.weekly_xp, m.final_rank, m.outcome,
             (select count(*)::int from league_members x where x.league_id = m.league_id) as group_size
@@ -311,7 +339,7 @@ async function leagueWeeksIn(userId: string, w: MonthWindow, db: Queryable): Pro
     [userId, w.from_day, w.to_day],
     db,
   );
-  return res.rows;
+  return res.rows.map((r) => ({ ...r, week_start_fa: formatJalaliShort(r.week_start) }));
 }
 
 async function badgesIn(userId: string, w: MonthWindow, db: Queryable): Promise<ReportBadge[]> {
@@ -366,11 +394,11 @@ export async function computeMonthlyReport(
   const prevKey = shiftMonthKey(w.key, -1);
   const prevWindow = monthWindow(prevKey);
 
-  const [counts, previous, activeDays, shieldsUsed, leagueWeeks, badges, times, profile] = await Promise.all([
+  const [counts, previous, activeDays, shields, leagueWeeks, badges, times, profile] = await Promise.all([
     countsFor(userId, w, db),
     prevWindow ? countsFor(userId, prevWindow, db) : Promise.resolve(EMPTY_COUNTS),
     activeDaysIn(userId, w, db),
-    shieldsUsedIn(userId, w, db),
+    shieldsIn(userId, w, db),
     leagueWeeksIn(userId, w, db),
     badgesIn(userId, w, db),
     getConsumedContentTimes(userId, db),
@@ -449,15 +477,23 @@ export async function computeMonthlyReport(
   const createdAt = profile.rows[0]?.created_at ?? now;
   const { start, end, ...month } = w;
   void start; void end;
+  const inProgress = now >= w.start && now < w.end;
+  const dayNo = (day: string): number => dayDiff(day, w.from_day) + 1;
   return {
     month,
-    in_progress: now >= w.start && now < w.end,
+    in_progress: inProgress,
+    calendar: {
+      first_weekday: iranWeekday(w.from_day),
+      active: Array.from(new Set(activeDays)).sort().map(dayNo),
+      shielded: Array.from(new Set(shields.days)).sort().map(dayNo),
+      today: inProgress ? dayNo(dayInTz(now, config.streakTimezone)) : w.days,
+    },
     counts,
     previous,
     pillars,
     dormant,
     longest_run: longestRun(activeDays),
-    shields_used: shieldsUsed,
+    shields_used: shields.used,
     pathways,
     league: {
       weeks: leagueWeeks,

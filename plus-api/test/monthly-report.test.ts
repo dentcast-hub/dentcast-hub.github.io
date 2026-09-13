@@ -6,7 +6,7 @@ import { config } from '../src/config.js';
 import { getClusters } from '../src/content-index.js';
 import { getPathways } from '../src/pathways.js';
 import { getBadgeCatalog } from '../src/badges.js';
-import { jalaliMonth, startOfDayInstant, addDays } from '../src/services/time.js';
+import { jalaliMonth, startOfDayInstant, addDays, dayInTz } from '../src/services/time.js';
 import { dayToJalali } from '../src/services/jalali.js';
 import {
   monthWindow, shiftMonthKey, longestRun, computeMonthlyReport, runMonthlyReports,
@@ -177,6 +177,8 @@ describe('GET /report/monthly', () => {
     const res = await get(`/report/monthly?month=${CURRENT}`);
     expect(res.statusCode).toBe(200);
     expect(res.json().in_progress).toBe(true);
+    const today = dayToJalali(dayInTz(new Date(), config.streakTimezone)).jd;
+    expect(res.json().calendar.today).toBe(today);
   });
 
   it('records one usage row, like the compass', async () => {
@@ -201,7 +203,7 @@ describe('GET /report/monthly', () => {
     await act('episode_listened', 'episodes/ep-1', inside(W, 4));
     await act('review_finished', idA, inside(W, 5), { result: 'remembered' });
     await act('review_finished', idA, inside(W, 6), { result: 'forgot' });
-    await act('streak_freeze_used', null, inside(W, 7), {});
+    await act('streak_freeze_used', null, inside(W, 7), { frozen_day: addDays(W.from_day, 6), day: addDays(W.from_day, 7) });
     await highlight(idA, inside(W, 2), 'یادداشت');
     await highlight(idA, inside(W, 3));
     await kept(addDays(W.from_day, 2));
@@ -228,6 +230,10 @@ describe('GET /report/monthly', () => {
     });
     expect(body.longest_run).toBe(3);
     expect(body.shields_used).toBe(1);
+    expect(body.calendar.active).toEqual([3, 4, 5, 10]);
+    expect(body.calendar.shielded).toEqual([7]);
+    expect(body.calendar.today).toBe(W.days);
+    expect(body.calendar.first_weekday).toBe((new Date(`${W.from_day}T12:00:00Z`).getUTCDay() + 1) % 7);
     expect(body.first_month).toBe(jalaliMonth(new Date(W2.start.getTime() - 40 * 86_400_000), config.streakTimezone));
   });
 
@@ -326,6 +332,7 @@ describe('GET /report/monthly', () => {
     const body = (await get(`/report/monthly?month=${PREV}`)).json();
     expect(body.league.weeks).toHaveLength(2);
     expect(body.league.weeks[0]).toMatchObject({ tier_fa: 'آکریل', final_rank: 2, outcome: 'promoted', weekly_xp: 40, group_size: 1 });
+    expect(body.league.weeks[0].week_start_fa).toMatch(/^[۰-۹]+ /);
     expect(body.league.best_rank).toBe(2);
     expect(body.league.promotions).toBe(1);
     expect(body.league.total_xp).toBe(52);

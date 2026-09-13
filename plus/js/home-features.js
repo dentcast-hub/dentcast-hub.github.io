@@ -31,10 +31,11 @@
 // with no coordination between the modules. When there is no ad — a premium
 // visitor, or the slot switched off — the section simply moves up under the
 // Pulse and nothing else changes.
-import { el, faNum } from './util.js?v=78';
-import { currentUser, api } from './api.js?v=78';
-import { PREMIUM_FEATURES } from './config.js?v=78';
-import { pricingHref } from './premium-cta.js?v=78';
+import { el, faNum } from './util.js?v=79';
+import { currentUser, api } from './api.js?v=79';
+import { PREMIUM_FEATURES } from './config.js?v=79';
+import { pricingHref } from './premium-cta.js?v=79';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=79';
 
 // Crafted inline icons, one per feature (same reasoning as home-card.js's promo
 // chips: emoji would sit at a different weight than the site's own stroke icons).
@@ -45,6 +46,7 @@ const IC = {
   collections: '<path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
   compass: '<circle cx="12" cy="12" r="9"/><path d="m15 9-2 5-4 1 2-5z"/>',
   library: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>',
+  report: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M7 15h3M12 15h5"/>',
 };
 
 // The NAMES come from PREMIUM_FEATURES — the canonical list the dashboard, the
@@ -64,6 +66,7 @@ const CARDS = [
   { f: F[2], ico: IC.collections, href: '/plus/collections.html',     sub: 'هایلایت‌ها و مقاله‌ها در پوشه‌های خودتان' },
   { f: F[3], ico: IC.compass,     href: '/plus/reading-compass.html', sub: 'چقدر از هر پیلار را خوانده‌اید، کجا جا مانده' },
   { f: F[5], ico: IC.library,     href: '/plus/highlights.html',      sub: 'همه‌ی هایلایت‌هایتان یکجا، با یادداشت و جستجو' },
+  { f: F[6], ico: IC.report,      href: '/plus/report.html',          sub: 'هر ماه، آنچه خواندید و کجا ایستادید' },
 ];
 
 // The two slots index.html carries — one per homepage layout. Both are filled:
@@ -146,6 +149,9 @@ function fillLive(me) {
       : 'قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps));
   }
   if (me.due_card_count > 0) paint(F[0].title, faNum(me.due_card_count) + ' کارت');
+  // «گزارش ماهانه»: the last completed month is a calendar fact, not a request —
+  // its name comes from ICU, so this costs nothing and never says «باز کردن».
+  paint(F[6].title, monthName(shiftMonth(currentMonthKey(), -1)) + ' آماده');
 
   api.recentHighlights(1)
     .then((d) => { if (d && d.total) paint(F[5].title, faNum(d.total) + ' هایلایت'); })
