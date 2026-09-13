@@ -469,6 +469,58 @@ describe('submitting', () => {
     expect((await examState(uid, PATHWAY)).state).toBe('exhausted');
   });
 
+  it('does not depend on the mix — an all-multiple-choice pool goes end to end', async () => {
+    const uid = await userId();
+    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2), MCQ(3), MCQ(4)] });
+    await assignExam(uid, PATHWAY);
+    const s = await examState(uid, PATHWAY);
+    expect(s.rules).toMatchObject({ question_count: 4, mcq_count: 4, free_count: 0 });
+
+    await startAttempt(uid, PATHWAY, 'x');
+    const r = await submitAttempt(uid, PATHWAY, { m1: 1, m2: 1, m3: 1, m4: 0 }); // 3/4 = 75%
+    expect(r.ok && r.attempt.status).toBe('passed');
+    // no free half, so nothing waits on the founder however new the form is
+    expect(r.ok && r.attempt.settled_by).toBe('ai');
+    expect(await queueRows()).toHaveLength(0);
+    expect(r.ok && r.attempt.free_total).toBe(0);
+    expect(await listCertificates(uid)).toHaveLength(1);
+  });
+
+  it('does not depend on the mix — an all-free-text pool goes end to end', async () => {
+    const uid = await userId();
+    await upsertForm(PATHWAY, { questions: [FREE(1), FREE(2)], supervisedUntil: 0 });
+    await assignExam(uid, PATHWAY);
+    const s = await examState(uid, PATHWAY);
+    expect(s.rules).toMatchObject({ question_count: 2, mcq_count: 0, free_count: 2 });
+
+    await startAttempt(uid, PATHWAY, 'x');
+    agree([]);
+    const r = await submitAttempt(uid, PATHWAY, { f1: LONG, f2: LONG });
+    expect(r.ok && r.attempt.status).toBe('passed');
+    expect(r.ok && r.attempt.mcq_total).toBe(0);
+    expect(await listCertificates(uid)).toHaveLength(1);
+  });
+
+  it('a one-question form is a form, and a lopsided pool draws what it has', async () => {
+    const uid = await userId();
+    // 1 free + 9 mcq, drawing 4 mcq and every free question
+    await upsertForm(PATHWAY, {
+      questions: [FREE(1), ...Array.from({ length: 9 }, (_, i) => MCQ(i + 1))],
+      mcqDraw: 4, supervisedUntil: 0,
+    });
+    await assignExam(uid, PATHWAY);
+    const started = await startAttempt(uid, PATHWAY, 'x');
+    expect(started.ok).toBe(true);
+    const drawn = started.ok ? started.attempt.questions : [];
+    expect(drawn.filter((q) => q.kind === 'mcq')).toHaveLength(4);
+    expect(drawn.filter((q) => q.kind === 'free')).toHaveLength(1);
+
+    // asking for more of a kind than the pool holds draws the pool, never zero
+    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2)], mcqDraw: 20, freeDraw: 20 });
+    const other = await userId();
+    expect((await examState(other, PATHWAY)).rules!.question_count).toBe(2);
+  });
+
   it('is rate limited per reader', async () => {
     await upsertForm(PATHWAY, { questions: [MCQ(1)] });
     for (let i = 0; i < config.exam.maxSubmitsPerHour; i += 1) await post(`/exams/${PATHWAY}/submit`, { answers: {} });
