@@ -24,11 +24,11 @@
 // answers were right, how many key points each free answer covered — and
 // never the key itself: the pool is small and the second attempt may draw
 // the same question.
-import { el, faNum, debounce } from './util.js?v=78';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=78';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=78';
-import { openLoginModal } from './login-modal.js?v=78';
-import { registerSW } from './pwa.js?v=78';
+import { el, faNum, debounce } from './util.js?v=79';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=79';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=79';
+import { openLoginModal } from './login-modal.js?v=79';
+import { registerSW } from './pwa.js?v=79';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' });
 const FA_DATETIME = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium', timeStyle: 'short' });

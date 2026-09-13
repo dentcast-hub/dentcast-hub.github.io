@@ -1,17 +1,18 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, streakIsActiveToday } from './util.js?v=78';
-import { api } from './api.js?v=78';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=78';
-import { leagueEntryButton } from './league.js?v=78';
-import { openCollectionPicker, boardCover } from './collections.js?v=78';
-import { bundleRailCard, intentRow } from './pathways.js?v=78';
-import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js?v=78';
-import { renewalBanner } from './renewal-banner.js?v=78';
-import { premiumCta } from './premium-cta.js?v=78';
-import { maybeCelebrate } from './achievements.js?v=78';
-import { markReturnTrail } from './return-trail.js?v=78';
+import { el, faNum, streakIsActiveToday } from './util.js?v=79';
+import { api } from './api.js?v=79';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=79';
+import { leagueEntryButton } from './league.js?v=79';
+import { openCollectionPicker, boardCover } from './collections.js?v=79';
+import { bundleRailCard, intentRow } from './pathways.js?v=79';
+import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js?v=79';
+import { currentMonthKey } from './jalali-month.js?v=79';
+import { renewalBanner } from './renewal-banner.js?v=79';
+import { premiumCta } from './premium-cta.js?v=79';
+import { maybeCelebrate } from './achievements.js?v=79';
+import { markReturnTrail } from './return-trail.js?v=79';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',
@@ -376,6 +377,52 @@ async function compassBlock() {
   ].filter(Boolean));
 }
 
+// Premium «گزارش ماهانه»: the last completed month's headline, the same line
+// the اطلاعیه carried, with the one or two things that moved. The whole
+// report is one request; the card shows the top of it and links to the rest.
+async function reportBlock() {
+  const allLink = el('a', { class: 'dcp-pw-alllink', href: '/plus/report.html' }, 'دیدن گزارش کامل ›');
+  let data = null;
+  try { data = await api.report(); } catch (e) {
+    // A month before the account existed (the default is LAST month): the
+    // first report arrives with the first full month, and saying so is the
+    // honest card — not an empty one.
+    if (e && e.body && e.body.error === 'before_account') {
+      return el('div', { class: 'dcp-pw-dash' }, [
+        el('div', { class: 'dcp-muted' }, 'اولین گزارش، اول ماه آینده می‌رسد — ماه جاری را از همین حالا می‌توانید ببینید.'),
+        el('a', { class: 'dcp-pw-alllink', href: '/plus/report.html?month=' + currentMonthKey() }, 'ماه جاری تا امروز ›'),
+      ]);
+    }
+  }
+  if (!data) return el('div', { class: 'dcp-pw-dash' }, [el('div', { class: 'dcp-muted' }, 'گزارش در دسترس نیست.'), allLink]);
+  const c = data.counts;
+  const any = c.articles + c.episodes + c.highlights + c.cards_reviewed + c.active_days > 0;
+  if (!any) {
+    return el('div', { class: 'dcp-pw-dash' }, [
+      el('div', {}, [el('b', {}, data.month.title_fa), el('span', { class: 'dcp-muted' }, ' — چیزی ثبت نشده.')]),
+      allLink,
+    ]);
+  }
+  const parts = [];
+  if (c.articles) parts.push(faNum(c.articles) + ' مقاله');
+  if (c.episodes) parts.push(faNum(c.episodes) + ' اپیزود');
+  if (c.highlights) parts.push(faNum(c.highlights) + ' هایلایت');
+  if (c.cards_reviewed) parts.push(faNum(c.cards_reviewed) + ' کارت مرور');
+  const line = parts.slice(0, 3).join('، ') + (c.active_days ? ' در ' + faNum(c.active_days) + ' روزِ فعال' : '') + '.';
+  const chips = [];
+  const d = c.articles - data.previous.articles;
+  if (d > 0) chips.push(el('span', { class: 'dcp-rp-chip is-up' }, '+' + faNum(d) + ' مقاله نسبت به ماه قبل'));
+  const top = data.pillars[0];
+  if (top) chips.push(el('span', { class: 'dcp-rp-chip' }, top.fa + ' ٪' + faNum(top.coverage_before_pct) + ' ← ٪' + faNum(top.coverage_after_pct)));
+  const done = data.pathways.find((p) => p.completed_this_month);
+  if (done) chips.push(el('span', { class: 'dcp-rp-chip is-up' }, '🏁 ' + done.title_fa));
+  return el('div', { class: 'dcp-pw-dash' }, [
+    el('div', {}, [el('b', {}, data.month.title_fa), el('div', { class: 'dcp-muted' }, line)]),
+    chips.length ? el('div', { class: 'dcp-rp-chips' }, chips) : null,
+    allLink,
+  ].filter(Boolean));
+}
+
 // Premium «دستیار هوشمند» entry point. The wizard itself is multi-step, so the
 // dashboard only carries a CTA into its own page — see case-assistant.js.
 function assistantBlock() {
@@ -403,6 +450,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   const recentWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
   const collectionsWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
   const compassWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
+  const reportWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
   const bundlesWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
   const children = [];
   // Unmissable, above even the hello line — see premiumGrantBanner().
@@ -476,6 +524,12 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     'نه حدسِ سلیقه، بلکه آمارِ واقعیِ خواندن‌ها: چند درصد از هر پیلار را پوشش داده‌اید و بیشترین مطالعه‌تان کجا بوده. بر همین اساس دو دسته پیشنهاد می‌دهد: مطالبِ نخوانده‌ی همان حیطه برای ادامه، و حوزه‌هایی که هنوز اصلاً سراغشان نرفته‌اید برای کاوش.',
   ));
   children.push(section(
+    PREMIUM_FEATURES[6].title,
+    PREMIUM_FEATURES[6].hint,
+    isPremium ? reportWrap : lockedFeatureCard('/plus/report.html', 'dash-report'),
+    'اول هر ماه یک گزارش شخصی می‌گیرید: چند مقاله و اپیزود، پوشش هر پیلار قبل و بعد، کدام حوزه یک ماه است دست‌نخورده مانده، مسیرها، لیگ و نشان‌ها — از همان رویدادهایی که امتیاز می‌گیرند، نه از زمانِ خواندن.',
+  ));
+  children.push(section(
     PREMIUM_FEATURES[4].title,
     PREMIUM_FEATURES[4].hint,
     isPremium ? assistantBlock() : lockedFeatureCard('/plus/assistant.html', 'dash-assistant'),
@@ -500,5 +554,6 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   recentWrap.replaceChildren(await recentBlock(model, isPremium));
   if (isPremium) collectionsWrap.replaceChildren(await collectionsBlock());
   if (isPremium) compassWrap.replaceChildren(await compassBlock());
+  if (isPremium) reportWrap.replaceChildren(await reportBlock());
   if (isPremium) bundlesWrap.replaceChildren(await bundlesBlock());
 }

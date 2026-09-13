@@ -1,6 +1,6 @@
-import { el, faNum } from './util.js?v=78';
-import { api } from './api.js?v=78';
-import { sameMirrorUrl } from './config.js?v=78';
+import { el, faNum } from './util.js?v=79';
+import { api } from './api.js?v=79';
+import { sameMirrorUrl } from './config.js?v=79';
 
 /**
  * اطلاعیه — the in-app inbox, opened from the account menu.
@@ -38,6 +38,7 @@ const KIND_ICON = {
   subscription_expiry: '⏳',
   bank_amount: '🏦',
   payment_result: '💳',
+  monthly_report: '📆',
   system: '📣',
 };
 
@@ -56,6 +57,7 @@ const KIND_FA = {
   subscription_expiry: 'اشتراک',
   bank_amount: 'پرداخت',
   payment_result: 'پرداخت',
+  monthly_report: 'گزارش ماهانه',
   system: 'دنت‌کست',
 };
 

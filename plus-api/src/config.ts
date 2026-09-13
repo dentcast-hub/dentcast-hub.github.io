@@ -283,6 +283,17 @@ export const config = {
     alertPhone: str('PATHWAY_ALERT_PHONE', ''),
   },
 
+  // گزارش ماهانه (services/monthly-report.ts). The daily sweep that announces
+  // last month's report runs at this Tehran hour, and only while the Jalali
+  // day-of-month is <= graceDays — a container down on the 1st still catches
+  // up, and a sweep on the 20th does not announce three-week-old news as
+  // fresh. Ten, not nine: 09:00 already carries the review reminder and the
+  // morning release of everything the awake window held overnight.
+  monthlyReport: {
+    hour: int('MONTHLY_REPORT_HOUR', 10),
+    graceDays: int('MONTHLY_REPORT_GRACE_DAYS', 5),
+  },
+
   // The pathway completion certificate (services/certificates.ts). The credit
   // that rides along with an issued certificate — one ordinary discount_grants
   // row, WRITTEN at issue, so a pathway growing under the holder can never take

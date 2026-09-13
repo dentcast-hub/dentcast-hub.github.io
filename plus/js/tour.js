@@ -12,9 +12,9 @@
 //     the account, not localStorage).
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
-import { el, faNum } from './util.js?v=78';
-import { api, currentUser } from './api.js?v=78';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=78';
+import { el, faNum } from './util.js?v=79';
+import { api, currentUser } from './api.js?v=79';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=79';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 
@@ -79,7 +79,7 @@ const STOPS = [
   },
   {
     key: 'plus_features', panel: 'panel-studio', title: 'امکانات دنت‌کست پلاس',
-    text: 'شش ابزار حرفه‌ایِ اشتراک پریمیوم، هر کدام با یک کارت: «مسیر یادگیری»، «دستیار هوشمند» کیس، «برای مرور امروز» (مرور هایلایت‌ها با فلش‌کارت)، «کالکشن‌ها»، «قطب‌نمای مطالعه» و «دفترچه‌ی هایلایت‌ها». برای مشترکان همین کارت‌ها زنده می‌شوند و وضعیت خودِ شما را نشان می‌دهند.',
+    text: 'هفت ابزار حرفه‌ایِ اشتراک پریمیوم، هر کدام با یک کارت: «مسیر یادگیری»، «دستیار هوشمند» کیس، «برای مرور امروز» (مرور هایلایت‌ها با فلش‌کارت)، «کالکشن‌ها»، «قطب‌نمای مطالعه»، «دفترچه‌ی هایلایت‌ها» و «گزارش ماهانه». برای مشترکان همین کارت‌ها زنده می‌شوند و وضعیت خودِ شما را نشان می‌دهند.',
     targets: () => [byId('dcPlusFeatures')],
   },
   {

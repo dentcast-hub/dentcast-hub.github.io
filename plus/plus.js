@@ -2,26 +2,26 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=78';
-import { currentUser, api } from './js/api.js?v=78';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=78';
-import { openCollectionPicker } from './js/collections.js?v=78';
-import { el, faNum } from './js/util.js?v=78';
-import { initHomeCard } from './js/home-card.js?v=78';
-import { initHomeFeatures } from './js/home-features.js?v=78';
-import { initHomeBundles } from './js/home-bundles.js?v=78';
-import { initHomeUpboard } from './js/home-upboard.js?v=78';
-import { initDesTool } from './js/des-scorer.js?v=78';
-import { initHeader } from './js/header.js?v=78';
-import { initTourAutostart } from './js/tour.js?v=78';
-import { initReadingTracker } from './js/reading.js?v=78';
-import { initListeningTracker } from './js/listening.js?v=78';
-import { initShareScoring, buildShareButton } from './js/share.js?v=78';
-import { initHeart, buildHeartChip } from './js/votes.js?v=78';
-import { mountArticleThreads } from './js/article-threads.js?v=78';
-import { mountChallenge } from './js/challenge.js?v=78';
-import { mountDes } from './js/des.js?v=78';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=78';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=79';
+import { currentUser, api } from './js/api.js?v=79';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=79';
+import { openCollectionPicker } from './js/collections.js?v=79';
+import { el, faNum } from './js/util.js?v=79';
+import { initHomeCard } from './js/home-card.js?v=79';
+import { initHomeFeatures } from './js/home-features.js?v=79';
+import { initHomeBundles } from './js/home-bundles.js?v=79';
+import { initHomeUpboard } from './js/home-upboard.js?v=79';
+import { initDesTool } from './js/des-scorer.js?v=79';
+import { initHeader } from './js/header.js?v=79';
+import { initTourAutostart } from './js/tour.js?v=79';
+import { initReadingTracker } from './js/reading.js?v=79';
+import { initListeningTracker } from './js/listening.js?v=79';
+import { initShareScoring, buildShareButton } from './js/share.js?v=79';
+import { initHeart, buildHeartChip } from './js/votes.js?v=79';
+import { mountArticleThreads } from './js/article-threads.js?v=79';
+import { mountChallenge } from './js/challenge.js?v=79';
+import { mountDes } from './js/des.js?v=79';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=79';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -31,7 +31,7 @@ import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=78';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=78').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=79').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is

@@ -112,7 +112,15 @@ export type NotificationKind =
    * or not. The reader sat an exam and is waiting on the result; same
    * argument as 'challenge_ruled'. UNCAPPED.
    */
-  | 'exam_result';
+  | 'exam_result'
+  /**
+   * گزارش ماهانه: last month's report is ready (services/monthly-report.ts
+   * runMonthlyReports). CAPPED — a report we chose to send, not a reply the
+   * reader is owed; on a crowded morning the push is dropped and the row still
+   * lands in اطلاعیه, which is the surface the report was built for anyway.
+   * Once per reader per month by construction (the sweep dedups on this row).
+   */
+  | 'monthly_report';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.

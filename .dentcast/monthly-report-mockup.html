@@ -1,0 +1,522 @@
+<title>گزارش ماهانه دنت‌کست</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
+<style>
+  /* ── DentCast tokens (index.html's dcDepthTheme + plus.css), light first ── */
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10); --line-strong:rgba(2,35,96,.18);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --x-amber:#c9922b; --x-amber-ink:#8a6414;
+    --x-amber-wash:rgba(201,146,43,.075); --x-amber-bd:rgba(154,107,21,.22);
+    --up:#1f7a34; --up-bg:rgba(31,122,52,.09);
+    --gold:#b7791f; --silver:#7d8797; --bronze:#a2643a;
+    --mock-ink:#3b2f7a; --mock-bg:#efeaff; --mock-bd:rgba(59,47,122,.22);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --x-amber:#e3b849; --x-amber-ink:#e3b849;
+    --x-amber-wash:rgba(227,184,73,.085); --x-amber-bd:rgba(227,184,73,.26);
+    --up:#6fae74; --up-bg:rgba(111,174,116,.12);
+    --gold:#e2b366; --silver:#aab4c4; --bronze:#d29b6f;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --x-amber:#e3b849; --x-amber-ink:#e3b849;
+    --x-amber-wash:rgba(227,184,73,.085); --x-amber-bd:rgba(227,184,73,.26);
+    --up:#6fae74; --up-bg:rgba(111,174,116,.12);
+    --gold:#e2b366; --silver:#aab4c4; --bronze:#d29b6f;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }
+
+  body{ background:var(--bg); color:var(--txt); font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif;
+    direction:rtl; padding-inline:16px; padding-block:0 4rem; line-height:1.7; font-size:15px; }
+  *{ box-sizing:border-box; }
+  a{ color:inherit; text-decoration:none; }
+  :focus-visible{ outline:2px solid var(--ac); outline-offset:2px; border-radius:4px; }
+  .num{ font-variant-numeric:tabular-nums; }
+
+  /* ── mockup chrome (violet = "this is the studio's note, not the product") ── */
+  .mk-head{ max-width:920px; margin:0 auto; padding-block:1.6rem .4rem; }
+  .mk-head h1{ font-size:1.55rem; font-weight:800; color:var(--pr); margin:0 0 .3rem; text-wrap:balance; }
+  .mk-head p{ margin:0; color:var(--txt2); max-width:62ch; }
+  .mk-tabs{ max-width:920px; margin:1rem auto 0; display:flex; flex-wrap:wrap; gap:.4rem; }
+  .mk-tabs a{ font-size:.82rem; font-weight:600; padding:.3rem .75rem; border-radius:999px;
+    background:var(--mock-bg); color:var(--mock-ink); border:1px solid var(--mock-bd); }
+  .mk-where{ max-width:920px; margin:1.2rem auto 0; overflow-x:auto; }
+  .mk-where table{ border-collapse:collapse; width:100%; font-size:.86rem; min-width:560px; }
+  .mk-where th,.mk-where td{ text-align:right; padding:.5rem .6rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  .mk-where th{ color:var(--txt3); font-weight:600; font-size:.76rem; letter-spacing:.02em; }
+  .mk-where code{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.8em; direction:ltr; unicode-bidi:isolate; color:var(--txt2); }
+
+  .mk-sec{ max-width:920px; margin:2.6rem auto 0; }
+  .mk-sec-h{ display:flex; align-items:baseline; gap:.7rem; flex-wrap:wrap; margin-bottom:.8rem; }
+  .mk-sec-h h2{ margin:0; font-size:1.1rem; font-weight:800; color:var(--mock-ink); }
+  .mk-sec-h span{ color:var(--txt3); font-size:.84rem; }
+  .mk-note{ font-size:.84rem; color:var(--txt2); max-width:66ch; margin:.6rem 0 0; }
+  .mk-row{ display:flex; gap:1.2rem; flex-wrap:wrap; align-items:flex-start; }
+
+  /* the phone frame every surface sits in */
+  .phone{ width:100%; max-width:430px; background:var(--bg); border:1px solid var(--line-strong); border-radius:22px;
+    padding:14px 14px 20px; box-shadow:var(--card-sh); }
+  .phone.wide{ max-width:430px; }
+  .cap{ font-size:.78rem; color:var(--txt3); margin:.5rem .4rem 0; }
+
+  /* ── plus.css vocabulary, copied where the mockup needs it ── */
+  .dcp-page-header{ display:flex; justify-content:space-between; align-items:center; padding:.4rem .2rem .9rem; }
+  .dcp-page-brand{ font-weight:800; color:var(--pr); font-size:.95rem; }
+  .dcp-page-back{ font-size:.8rem; color:var(--txt2); }
+  .dcp-dash-sec{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:.9rem 1rem 1rem; margin-top:.8rem; }
+  .dcp-dash-h2{ margin:0 0 .25rem; font-size:.98rem; font-weight:700; color:var(--txt); }
+  .dcp-sec-hint{ margin:0 0 .7rem; font-size:.8rem; color:var(--txt3); }
+  .dcp-muted{ color:var(--txt3); font-size:.85rem; }
+  .dcp-btn{ display:inline-flex; align-items:center; justify-content:center; gap:.4rem; border-radius:999px;
+    padding:.5rem 1rem; font-weight:600; font-size:.88rem; border:1px solid transparent; cursor:pointer; }
+  .dcp-btn-primary{ background:var(--ac); color:#fff; }
+  .dcp-btn-ghost{ background:transparent; color:var(--txt2); border-color:var(--border); }
+  .dcp-pw-alllink{ display:block; margin-top:.6rem; font-size:.84rem; color:var(--ac); font-weight:600; }
+
+  /* premium lock card — amber, one meaning only */
+  .dcp-locked{ position:relative; border:1px solid var(--x-amber-bd); border-radius:12px; padding:.8rem .9rem;
+    background:linear-gradient(180deg,var(--x-amber-wash) 0,transparent 45%),var(--surface); }
+  .dcp-locked .lk{ font-size:.72rem; color:var(--x-amber-ink); font-weight:700; letter-spacing:.02em; }
+  .dcp-locked p{ margin:.2rem 0 .5rem; font-size:.86rem; color:var(--txt2); }
+
+  /* ── 1. اطلاعیه ── */
+  .nt-panel{ background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+  .nt-h{ display:flex; justify-content:space-between; align-items:center; padding:.75rem 1rem; border-bottom:1px solid var(--border); font-weight:700; }
+  .nt-h small{ font-weight:500; color:var(--txt3); font-size:.78rem; }
+  .nt{ display:grid; grid-template-columns:auto 1fr; gap:.7rem; padding:.8rem 1rem; border-bottom:1px solid var(--border); position:relative; }
+  .nt:last-child{ border-bottom:0; }
+  .nt.unread{ background:rgba(var(--ac-rgb),.05); }
+  .nt.unread::before{ content:""; position:absolute; inset-inline-start:0; top:0; bottom:0; width:3px; background:var(--ac); }
+  .nt-ico{ width:34px; height:34px; border-radius:10px; background:var(--surface3); display:grid; place-items:center; font-size:1rem; }
+  .nt-t{ font-weight:700; font-size:.92rem; }
+  .nt-b{ font-size:.84rem; color:var(--txt2); }
+  .nt-m{ display:flex; gap:.7rem; align-items:center; margin-top:.3rem; font-size:.76rem; color:var(--txt3); }
+  .nt-go{ color:var(--ac); font-weight:600; }
+
+  /* ── 2. dashboard block ── */
+  .rp-card{ display:grid; grid-template-columns:1fr auto; gap:.6rem; align-items:center; }
+  .rp-card b{ font-size:.95rem; }
+  .rp-card .rp-line{ font-size:.84rem; color:var(--txt2); margin-top:.1rem; }
+  .rp-mini{ display:flex; gap:.35rem; margin-top:.5rem; flex-wrap:wrap; }
+  .chip{ font-size:.74rem; padding:.15rem .55rem; border-radius:999px; background:var(--surface3); color:var(--txt2); white-space:nowrap; }
+  .chip.up{ background:var(--up-bg); color:var(--up); font-weight:600; }
+  .chip.live{ background:rgba(var(--ac-rgb),.09); color:var(--ac); font-weight:600; }
+
+  /* ── 3. home rail ── */
+  .hf{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:.8rem .9rem; }
+  .hf-label{ font-size:.86rem; font-weight:800; color:var(--pr); margin:0 0 .5rem; display:flex; justify-content:space-between; align-items:baseline; }
+  .hf-label a{ font-size:.76rem; font-weight:600; color:var(--x-amber-ink); }
+  .hf-card{ display:grid; grid-template-columns:auto 1fr auto; gap:.7rem; align-items:center; padding:.6rem .4rem; border-top:1px solid var(--border); }
+  .hf-card:first-of-type{ border-top:0; }
+  .hf-ico{ width:34px; height:34px; border-radius:10px; display:grid; place-items:center; background:rgba(var(--ac-rgb),.08); color:var(--ac); }
+  .hf-ico svg{ width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .hf-t{ font-weight:700; font-size:.9rem; }
+  .hf-s{ font-size:.78rem; color:var(--txt3); }
+  .hf-st{ font-size:.74rem; color:var(--txt3); }
+  .hf-st.live{ color:var(--ac); font-weight:700; }
+  .hf-new{ outline:2px dashed var(--mock-bd); outline-offset:3px; border-radius:8px; }
+
+  /* ── 4. the page ── */
+  .rp-eyebrow{ font-size:.76rem; font-weight:700; color:var(--txt3); letter-spacing:.03em; }
+  .rp-title{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; margin:.1rem 0 .2rem; }
+  .rp-title h1{ margin:0; font-size:1.7rem; font-weight:800; color:var(--pr); line-height:1.25; }
+  .rp-nav{ display:flex; gap:.25rem; }
+  .rp-nav a{ width:32px; height:32px; border-radius:10px; border:1px solid var(--border); background:var(--surface); display:grid; place-items:center; color:var(--txt2); font-weight:700; }
+  .rp-nav a.dis{ opacity:.35; }
+  .rp-sub{ font-size:.84rem; color:var(--txt2); margin:0 0 .9rem; }
+
+  .hero{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1rem 1rem .9rem; }
+  .hero-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:.4rem; }
+  .kpi{ display:flex; flex-direction:column; align-items:flex-start; gap:.05rem; padding:.2rem .3rem; }
+  .kpi .v{ font-size:2.05rem; font-weight:800; color:var(--pr); line-height:1.1; letter-spacing:-.01em; }
+  .kpi .l{ font-size:.8rem; color:var(--txt2); }
+  .kpi .d{ font-size:.72rem; margin-top:.15rem; padding:.05rem .45rem; border-radius:999px; background:var(--surface3); color:var(--txt3); }
+  .kpi .d.up{ background:var(--up-bg); color:var(--up); font-weight:600; }
+  .hero-sec{ display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.7rem; padding-top:.7rem; border-top:1px solid var(--border); }
+  .hero-sec .chip b{ color:var(--txt); }
+
+  .sec{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:.9rem 1rem 1rem; margin-top:.8rem; }
+  .sec h2{ margin:0 0 .15rem; font-size:.98rem; font-weight:700; }
+  .sec .hint{ margin:0 0 .7rem; font-size:.8rem; color:var(--txt3); }
+
+  /* days grid */
+  .days{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+  .days .wd{ font-size:.66rem; color:var(--txt3); text-align:center; }
+  .day{ aspect-ratio:1; border-radius:8px; background:var(--surface3); display:grid; place-items:center; font-size:.7rem; color:var(--txt3); }
+  .day.on{ background:var(--ac); color:#fff; font-weight:700; }
+  .day.shield{ background:transparent; border:1.5px dashed var(--ac); color:var(--ac); }
+  .day.empty{ background:transparent; }
+  .day.future{ background:transparent; border:1px dashed var(--border); }
+  .days-legend{ display:flex; gap:.8rem; margin-top:.6rem; font-size:.76rem; color:var(--txt3); flex-wrap:wrap; }
+  .days-legend i{ display:inline-block; width:10px; height:10px; border-radius:3px; vertical-align:-1px; margin-inline-end:.3rem; background:var(--ac); }
+  .days-legend i.s{ background:transparent; border:1.5px dashed var(--ac); }
+
+  /* pillar rows: before + this month, one bar */
+  .pr-row{ display:grid; grid-template-columns:1fr auto; gap:.2rem .6rem; align-items:center; padding:.45rem 0; border-top:1px solid var(--border); }
+  .pr-row:first-of-type{ border-top:0; padding-top:0; }
+  .pr-name{ font-size:.88rem; font-weight:600; }
+  .pr-val{ font-size:.8rem; color:var(--txt2); white-space:nowrap; }
+  .pr-val b{ color:var(--txt); }
+  .pr-track{ grid-column:1 / -1; height:8px; border-radius:999px; background:var(--surface3); overflow:hidden; display:flex; }
+  .pr-before{ height:100%; background:rgba(var(--ac-rgb),.35); }
+  .pr-new{ height:100%; background:var(--ac); }
+  .pr-add{ font-size:.74rem; color:var(--ac); font-weight:700; }
+
+  .dorm{ display:flex; justify-content:space-between; gap:.6rem; padding:.4rem 0; border-top:1px solid var(--border); font-size:.86rem; }
+  .dorm:first-of-type{ border-top:0; }
+  .dorm span{ color:var(--txt3); font-size:.8rem; }
+
+  .pw{ display:grid; grid-template-columns:1fr auto; gap:.15rem .6rem; align-items:center; padding:.45rem 0; border-top:1px solid var(--border); }
+  .pw:first-of-type{ border-top:0; padding-top:0; }
+  .pw .n{ font-weight:600; font-size:.88rem; }
+  .pw .m{ font-size:.78rem; color:var(--txt2); white-space:nowrap; }
+  .pw .t{ grid-column:1 / -1; height:6px; border-radius:999px; background:var(--surface3); overflow:hidden; }
+  .pw .f{ height:100%; background:var(--ac); }
+  .pw.done .f{ background:var(--up); }
+  .flag{ font-size:.74rem; color:var(--up); font-weight:700; }
+
+  .weeks{ display:grid; grid-template-columns:repeat(4,1fr); gap:.4rem; }
+  .wk{ background:var(--surface2); border-radius:10px; padding:.5rem .4rem; text-align:center; }
+  .wk .r{ font-size:1.25rem; font-weight:800; color:var(--pr); line-height:1.2; }
+  .wk .r small{ font-size:.7rem; font-weight:500; color:var(--txt3); }
+  .wk .tier{ font-size:.7rem; color:var(--txt2); }
+  .wk .o{ font-size:.7rem; font-weight:700; color:var(--up); }
+  .wk .o.st{ color:var(--txt3); font-weight:500; }
+  .wk .ws{ font-size:.66rem; color:var(--txt3); }
+
+  .badges{ display:flex; gap:.9rem; flex-wrap:wrap; }
+  .bg{ display:flex; flex-direction:column; align-items:center; gap:.25rem; width:64px; text-align:center; }
+  .bg .disc{ width:52px; height:52px; border-radius:50%; display:grid; place-items:center; font-size:1.3rem; background:var(--surface2); border:3px solid var(--silver); }
+  .bg .disc.bronze{ border-color:var(--bronze); }
+  .bg .disc.gold{ border-color:var(--gold); }
+  .bg .disc.one{ border-color:var(--ac); }
+  .bg .n{ font-size:.74rem; font-weight:600; line-height:1.3; }
+
+  .items{ display:flex; flex-direction:column; }
+  .it{ display:grid; grid-template-columns:auto 1fr; gap:.6rem; align-items:start; padding:.45rem 0; border-top:1px solid var(--border); }
+  .it:first-of-type{ border-top:0; padding-top:0; }
+  .it .k{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.66rem; direction:ltr; color:var(--txt3); padding:.15rem .4rem; border-radius:6px; background:var(--surface3); margin-top:.25rem; }
+  .it .t{ font-size:.86rem; line-height:1.5; }
+  .more{ margin-top:.5rem; font-size:.82rem; color:var(--ac); font-weight:600; }
+
+  .prov{ margin-top:1rem; font-size:.76rem; color:var(--txt3); line-height:1.6; padding:.7rem .9rem; border:1px dashed var(--border); border-radius:10px; }
+
+  @media (max-width:520px){ .hero-grid{ gap:.2rem; } .kpi .v{ font-size:1.7rem; } .weeks{ grid-template-columns:repeat(2,1fr); } }
+  @media (prefers-reduced-motion:no-preference){ .day.on{ transition:transform .15s; } }
+</style>
+
+<header class="mk-head">
+  <h1>گزارش ماهانه — ماکاپ</h1>
+  <p>یک ماه (تقویم جلالی، روزهای تهران) از زبان همان رویدادهایی که امتیاز می‌گیرند. هیچ عددی ذخیره نمی‌شود؛ همه‌چیز از لاگ مشتق است. داده‌ی این ماکاپ نمونه است، ولی عنوان‌ها و پیلارها از خود سایت‌اند.</p>
+  <nav class="mk-tabs" aria-label="سطح‌ها">
+    <a href="#s1">۱ · اطلاعیه</a>
+    <a href="#s2">۲ · پیشخوان</a>
+    <a href="#s3">۳ · صفحه‌ی اصلی</a>
+    <a href="#s4">۴ · صفحه‌ی گزارش</a>
+  </nav>
+  <div class="mk-where">
+    <table>
+      <thead><tr><th>کجا</th><th>چه کسی می‌بیند</th><th>کِی</th><th>فایل</th></tr></thead>
+      <tbody>
+        <tr><td>ردیف اطلاعیه + نقطه روی آیکون حساب</td><td>پریمیومی که در آن ماه کاری کرده</td><td>روز ۱ تا ۵ هر ماه، ساعت ۱۰ تهران، یک بار</td><td><code>runMonthlyReports</code> · <code>kind: monthly_report</code></td></tr>
+        <tr><td>بلوک «گزارش ماهانه» در پیشخوان <code>/plus/</code></td><td>پریمیوم: کارت زنده · رایگان: کارت قفل</td><td>همیشه</td><td><code>dashboard.js</code> · <code>PREMIUM_FEATURES[6]</code></td></tr>
+        <tr><td>ریل «دنت‌کست پریمیوم» در صفحه‌ی اصلی</td><td>همه (قفل برای غیرپریمیوم)</td><td>همیشه</td><td><code>home-features.js</code> (کارت هفتم)</td></tr>
+        <tr><td>صفحه‌ی گزارش <code>/plus/report.html?month=1405-06</code></td><td>پریمیوم · گیت مثل قطب‌نما</td><td>هر ماه از اولین ماه حساب تا امروز</td><td><code>report-page.js</code> · <code>GET /report/monthly</code></td></tr>
+        <tr><td>پیچ فروش (صفحه‌ی قیمت، بنر جایزه)</td><td>همه</td><td>خودکار از آرایه‌ی <code>PREMIUM_FEATURES</code></td><td><code>premium-benefits.js</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+<!-- ─────────────────────────── 1. اطلاعیه ─────────────────────────── -->
+<section class="mk-sec" id="s1">
+  <div class="mk-sec-h"><h2>۱ · ردیف اطلاعیه</h2><span>صبح روز اول ماه، همان پنل موجود</span></div>
+  <div class="mk-row">
+    <div class="phone">
+      <div class="nt-panel">
+        <div class="nt-h">اطلاعیه <small>۲ خوانده‌نشده</small></div>
+        <div class="nt unread">
+          <div class="nt-ico">📆</div>
+          <div>
+            <div class="nt-t">گزارش شهریور آماده است</div>
+            <div class="nt-b">۷ مقاله، ۲۱ هایلایت، ۴۸ کارت مرور در ۱۴ روزِ فعال.</div>
+            <div class="nt-m"><span>گزارش ماهانه</span><span>۱ مهر</span><a class="nt-go" href="#s4">باز کن ›</a></div>
+          </div>
+        </div>
+        <div class="nt unread">
+          <div class="nt-ico">📝</div>
+          <div>
+            <div class="nt-t">مطلب جدید در چیرساید</div>
+            <div class="nt-b">وقتی فرول وجود ندارد؛ محدودیت‌های واقعی طرح درمان</div>
+            <div class="nt-m"><span>محتوای تازه</span><span>۳۱ شهریور</span><a class="nt-go" href="#">باز کن ›</a></div>
+          </div>
+        </div>
+        <div class="nt">
+          <div class="nt-ico">🃏</div>
+          <div>
+            <div class="nt-t">کارت‌های مرورت آماده‌اند</div>
+            <div class="nt-b">۶ کارت به فاصله‌ی درستشان رسیده‌اند.</div>
+            <div class="nt-m"><span>مرور</span><span>۳۰ شهریور</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="cap">عنوان همیشه «گزارش {ماه} آماده است»؛ بدنه حداکثر سه چیزِ پرتعداد + روزهای فعال. ماه خالی هیچ‌وقت اعلان نمی‌گیرد.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── 2. پیشخوان ─────────────────────────── -->
+<section class="mk-sec" id="s2">
+  <div class="mk-sec-h"><h2>۲ · بلوک پیشخوان</h2><span>بعد از «قطب‌نمای مطالعه»، قبل از «دستیار هوشمند»</span></div>
+  <div class="mk-row">
+    <div class="phone">
+      <div class="dcp-dash-sec">
+        <h3 class="dcp-dash-h2">گزارش ماهانه</h3>
+        <p class="dcp-sec-hint">هر ماه، آنچه خواندید و کجا ایستادید — از همان رویدادهایی که امتیاز می‌گیرند.</p>
+        <div class="rp-card">
+          <div>
+            <b>شهریور ۱۴۰۵</b>
+            <div class="rp-line">۷ مقاله، ۲۱ هایلایت، ۴۸ کارت مرور در ۱۴ روزِ فعال.</div>
+            <div class="rp-mini"><span class="chip up">+۳ مقاله نسبت به مرداد</span><span class="chip">سرامیک ٪۱۲ ← ٪۱۸</span></div>
+          </div>
+        </div>
+        <a class="dcp-pw-alllink" href="#s4">دیدن گزارش کامل ›</a>
+      </div>
+      <div class="cap">پریمیوم: کارت زنده‌ی آخرین ماهِ کامل. اگر امروز روز ۱ تا ۵ ماه باشد همین است؛ بعد از آن هم همین، فقط اعلان نمی‌زند.</div>
+    </div>
+    <div class="phone">
+      <div class="dcp-dash-sec">
+        <h3 class="dcp-dash-h2">گزارش ماهانه</h3>
+        <p class="dcp-sec-hint">هر ماه، آنچه خواندید و کجا ایستادید — از همان رویدادهایی که امتیاز می‌گیرند.</p>
+        <div class="dcp-locked">
+          <div class="lk">🔒 ویژه‌ی پریمیوم</div>
+          <p>اول هر ماه یک گزارش شخصی می‌گیرید: چند مقاله و اپیزود، پوشش هر پیلار قبل و بعد، کدام حوزه یک ماه است دست‌نخورده مانده، مسیرها، لیگ و نشان‌ها.</p>
+          <a class="dcp-btn dcp-btn-primary" href="#">دنت‌کست پریمیوم</a>
+        </div>
+      </div>
+      <div class="cap">رایگان: همان <code>lockedFeatureCard</code> که بقیه‌ی بلوک‌ها دارند. امبر فقط این‌جا، چون فقط این‌جا «چیزی است که اشتراک می‌خرد».</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── 3. صفحه‌ی اصلی ─────────────────────────── -->
+<section class="mk-sec" id="s3">
+  <div class="mk-sec-h"><h2>۳ · ریل «دنت‌کست پریمیوم» در صفحه‌ی اصلی</h2><span>کارت هفتم، انتهای ریل</span></div>
+  <div class="mk-row">
+    <div class="phone">
+      <div class="hf">
+        <p class="hf-label">دنت‌کست پریمیوم <a href="#">پریمیوم چیست؟ ›</a></p>
+        <div class="hf-card">
+          <span class="hf-ico"><svg viewBox="0 0 24 24"><path d="M4 18h5l3-6 3 9 2-3h3"/><circle cx="4" cy="18" r="1.2"/></svg></span>
+          <div><div class="hf-t">مسیر یادگیری</div><div class="hf-s">از پیش‌نیاز تا پیشرفته، به ترتیبِ درست</div></div>
+          <span class="hf-st live">قدم ۲۳ از ۶۱</span>
+        </div>
+        <div class="hf-card">
+          <span class="hf-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 5-4 1 2-5z"/></svg></span>
+          <div><div class="hf-t">قطب‌نمای مطالعه</div><div class="hf-s">چقدر از هر پیلار را خوانده‌اید، کجا جا مانده</div></div>
+          <span class="hf-st live">باز کردن</span>
+        </div>
+        <div class="hf-card">
+          <span class="hf-ico"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg></span>
+          <div><div class="hf-t">دفترچه‌ی هایلایت‌ها</div><div class="hf-s">همه‌ی هایلایت‌هایتان یکجا، با یادداشت و جستجو</div></div>
+          <span class="hf-st live">۲۱۴ هایلایت</span>
+        </div>
+        <div class="hf-card hf-new">
+          <span class="hf-ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M7 15h3M12 15h5" stroke-width="2.4"/></svg></span>
+          <div><div class="hf-t">گزارش ماهانه</div><div class="hf-s">هر ماه، آنچه خواندید و کجا ایستادید</div></div>
+          <span class="hf-st live">شهریور آماده</span>
+        </div>
+      </div>
+      <div class="cap">برای پریمیوم وضعیت زنده («شهریور آماده»)، برای بقیه «🔒» مثل شش کارت دیگر. سه کارت اول برای زمینه‌اند.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── 4. صفحه‌ی گزارش ─────────────────────────── -->
+<section class="mk-sec" id="s4">
+  <div class="mk-sec-h"><h2>۴ · صفحه‌ی گزارش</h2><span><code>/plus/report.html?month=1405-06</code></span></div>
+  <div class="mk-row">
+    <div class="phone">
+      <header class="dcp-page-header">
+        <a class="dcp-page-brand" href="#">دنت‌کست پریمیوم</a>
+        <a class="dcp-page-back" href="#">بازگشت به پیشخوان</a>
+      </header>
+
+      <div class="rp-eyebrow">گزارش ماهانه</div>
+      <div class="rp-title">
+        <h1>شهریور ۱۴۰۵</h1>
+        <nav class="rp-nav" aria-label="ماه"><a href="#" title="مرداد">›</a><a href="#" class="dis" title="مهر (در جریان)">‹</a></nav>
+      </div>
+      <p class="rp-sub">۱ تا ۳۱ شهریور · ۳۱ روز</p>
+
+      <div class="hero">
+        <div class="hero-grid">
+          <div class="kpi"><span class="v num">۷</span><span class="l">مقاله</span><span class="d up">+۳ از مرداد</span></div>
+          <div class="kpi"><span class="v num">۳</span><span class="l">اپیزود</span><span class="d">−۲ از مرداد</span></div>
+          <div class="kpi"><span class="v num">۲۱</span><span class="l">هایلایت</span><span class="d up">+۱۲ از مرداد</span></div>
+        </div>
+        <div class="hero-sec">
+          <span class="chip"><b>۴۸</b> کارت مرور</span>
+          <span class="chip"><b>۵</b> یادداشت</span>
+          <span class="chip"><b>۱۴</b> روز فعال</span>
+        </div>
+      </div>
+
+      <div class="sec">
+        <h2>روزهای فعال</h2>
+        <p class="hint">هر روزی که خواندید، هایلایت کردید یا مرور کردید. بلندترین زنجیره‌ی این ماه: ۶ روز · ۱ سپر خرج شد.</p>
+        <div class="days" id="days"></div>
+        <div class="days-legend"><span><i></i>روز فعال</span><span><i class="s"></i>با سپر پل زده شد</span></div>
+      </div>
+
+      <div class="sec">
+        <h2>پیلارها</h2>
+        <p class="hint">پوشش هر پیلار در آغاز و پایان ماه. رنگِ پررنگ سهم همین ماه است.</p>
+        <div class="pr-row">
+          <span class="pr-name">سرامیک <span class="pr-add">+۴ مطلب</span></span>
+          <span class="pr-val num">٪۱۲ ← <b>٪۱۸</b></span>
+          <div class="pr-track"><div class="pr-before" style="width:12%"></div><div class="pr-new" style="width:6%"></div></div>
+        </div>
+        <div class="pr-row">
+          <span class="pr-name">اکلوژن <span class="pr-add">+۲ مطلب</span></span>
+          <span class="pr-val num">٪۳۰ ← <b>٪۳۳</b></span>
+          <div class="pr-track"><div class="pr-before" style="width:30%"></div><div class="pr-new" style="width:3%"></div></div>
+        </div>
+        <div class="pr-row">
+          <span class="pr-name">پروتز ثابت <span class="pr-add">+۲ مطلب</span></span>
+          <span class="pr-val num">٪۲۱ ← <b>٪۲۳</b></span>
+          <div class="pr-track"><div class="pr-before" style="width:21%"></div><div class="pr-new" style="width:2%"></div></div>
+        </div>
+        <div class="pr-row">
+          <span class="pr-name">ایمپلنتولوژی <span class="pr-add">+۱ مطلب</span></span>
+          <span class="pr-val num">٪۸ ← <b>٪۹</b></span>
+          <div class="pr-track"><div class="pr-before" style="width:8%"></div><div class="pr-new" style="width:1%"></div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <h2>این ماه دست‌نخورده ماند</h2>
+        <p class="hint">حوزه‌هایی که قبلاً در آن‌ها خوانده بودید و این ماه سراغشان نرفتید. حوزه‌هایی که هیچ‌وقت نرفته‌اید این‌جا نیست؛ آن کارِ قطب‌نماست.</p>
+        <div class="dorm"><b>پروتز متحرک</b><span>۷ مطلب تا پیش از این ماه</span></div>
+        <div class="dorm"><b>باندینگ</b><span>۵ مطلب تا پیش از این ماه</span></div>
+        <div class="dorm"><b>دندانپزشکی دیجیتال</b><span>۳ مطلب تا پیش از این ماه</span></div>
+      </div>
+
+      <div class="sec">
+        <h2>مسیرها</h2>
+        <p class="hint">قدم‌هایی که این ماه در هر مسیر برداشتید.</p>
+        <div class="pw done">
+          <span class="n">اکلوژن <span class="flag">🏁 این ماه تمام شد</span></span>
+          <span class="m num">۱۷ از ۱۷ · +۳ این ماه</span>
+          <div class="t"><div class="f" style="width:100%"></div></div>
+        </div>
+        <div class="pw">
+          <span class="n">پروتز ثابت</span>
+          <span class="m num">۲۳ از ۶۱ · +۴ این ماه</span>
+          <div class="t"><div class="f" style="width:38%"></div></div>
+        </div>
+        <div class="pw">
+          <span class="n">سرامیک و ادهزیو</span>
+          <span class="m num">۹ از ۴۴ · +۲ این ماه</span>
+          <div class="t"><div class="f" style="width:20%"></div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <h2>لیگ</h2>
+        <p class="hint">چهار هفته‌ای که شنبه‌شان در شهریور بود. بهترین رتبه: ۲ · یک صعود · ۱۴۲ XP.</p>
+        <div class="weeks">
+          <div class="wk"><div class="ws">۷ شهریور</div><div class="r num">۲<small> از ۸</small></div><div class="tier">کامپوزیت</div><div class="o">↑ صعود</div></div>
+          <div class="wk"><div class="ws">۱۴ شهریور</div><div class="r num">۴<small> از ۸</small></div><div class="tier">متال‌سرامیک</div><div class="o st">ماند</div></div>
+          <div class="wk"><div class="ws">۲۱ شهریور</div><div class="r num">۳<small> از ۷</small></div><div class="tier">متال‌سرامیک</div><div class="o st">ماند</div></div>
+          <div class="wk"><div class="ws">۲۸ شهریور</div><div class="r num">۶<small> از ۸</small></div><div class="tier">متال‌سرامیک</div><div class="o st">ماند</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <h2>نشان‌های این ماه</h2>
+        <p class="hint">همان دیسک‌های دیوار افتخارات؛ حلقه رنگ سطح است، نه کلمه.</p>
+        <div class="badges">
+          <div class="bg"><div class="disc">🔁</div><div class="n">مرورگر</div></div>
+          <div class="bg"><div class="disc bronze">📖</div><div class="n">خواننده</div></div>
+          <div class="bg"><div class="disc one">🧭</div><div class="n">جهت‌یاب</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <h2>این ماه خواندید</h2>
+        <p class="hint">به ترتیبِ تازه‌ترین. هر ردیف با <code style="font-size:.85em">?dcphl</code> به همان جای مقاله می‌رود.</p>
+        <div class="items">
+          <div class="it"><span class="k">chairside</span><span class="t">وقتی فرول وجود ندارد؛ محدودیت‌های واقعی طرح درمان</span></div>
+          <div class="it"><span class="k">episodes</span><span class="t">آماده‌سازی سطح زیرکونیا</span></div>
+          <div class="it"><span class="k">insight</span><span class="t">ضخامت کاغذ آرتیکولاسیون مهم‌تر از چیزیه که فکر می‌کنی</span></div>
+          <div class="it"><span class="k">notecast</span><span class="t">سرامیک‌های دندانی — دسته‌بندی و کاربرد</span></div>
+          <div class="it"><span class="k">glossary</span><span class="t">سمان‌های رزینی</span></div>
+          <div class="it"><span class="k">episodes</span><span class="t">نقش سایلان در آماده‌سازی سرامیک‌ها</span></div>
+        </div>
+        <a class="more" href="#">و ۴ مورد دیگر ›</a>
+      </div>
+
+      <div class="prov">همه‌ی اعداد از همان رویدادهایی حساب می‌شوند که امتیاز می‌گیرند: مقاله‌ی تمام‌شده، اپیزود شنیده‌شده، هایلایت، کارت مرور‌شده، روزِ فعال. زمانِ خواندن اندازه‌گیری نمی‌شود و این‌جا هم نیست.</div>
+    </div>
+
+    <div class="phone" style="max-width:360px">
+      <div class="rp-eyebrow">گزارش ماهانه</div>
+      <div class="rp-title">
+        <h1>مهر ۱۴۰۵</h1>
+        <nav class="rp-nav" aria-label="ماه"><a href="#" title="شهریور">›</a><a href="#" class="dis">‹</a></nav>
+      </div>
+      <p class="rp-sub">۱ تا ۲۲ مهر · <span class="chip live">تا امروز</span></p>
+      <div class="hero">
+        <div class="hero-grid">
+          <div class="kpi"><span class="v num">۲</span><span class="l">مقاله</span></div>
+          <div class="kpi"><span class="v num">۰</span><span class="l">اپیزود</span></div>
+          <div class="kpi"><span class="v num">۹</span><span class="l">هایلایت</span></div>
+        </div>
+        <div class="hero-sec">
+          <span class="chip"><b>۱۷</b> کارت مرور</span>
+          <span class="chip"><b>۱۱</b> روز فعال</span>
+        </div>
+      </div>
+      <div class="cap">ماه جاری: همان صفحه با نشان «تا امروز» و بدون مقایسه با ماه قبل (مقایسه‌ی ۲۲ روز با ۳۱ روز دروغ است). اعلان هم ندارد.</div>
+      <p class="mk-note" style="margin-top:1rem">ماه‌ها با «‹ ›» ورق می‌خورند؛ از اولین ماهِ حساب تا امروز. ماه قبل از حساب وجود ندارد، نه این‌که خالی باشد.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // شهریور ۱۴۰۵ = 2026-08-23 (Sunday) … 2026-09-22. Week starts Saturday.
+  (function () {
+    var grid = document.getElementById('days');
+    if (!grid) return;
+    var fa = function (n) { return String(n).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); };
+    var wd = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+    wd.forEach(function (w) { var e = document.createElement('div'); e.className = 'wd'; e.textContent = w; grid.appendChild(e); });
+    var on = [1, 2, 3, 4, 5, 6, 9, 10, 13, 17, 18, 19, 25, 30];
+    var shield = [16];
+    var offset = 1; // 1 Shahrivar 1405 is a Sunday
+    for (var i = 0; i < offset; i++) { var b = document.createElement('div'); b.className = 'day empty'; grid.appendChild(b); }
+    for (var d = 1; d <= 31; d++) {
+      var c = document.createElement('div');
+      c.className = 'day' + (on.indexOf(d) >= 0 ? ' on' : '') + (shield.indexOf(d) >= 0 ? ' shield' : '');
+      c.textContent = fa(d);
+      grid.appendChild(c);
+    }
+  })();
+</script>

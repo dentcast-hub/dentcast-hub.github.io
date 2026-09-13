@@ -416,4 +416,7 @@ export const PREMIUM_FEATURES = [
   // «هایلایت‌های اخیر» footer — but it belongs in every "what premium gives
   // you" list (the prize banner reads the whole array).
   { title: 'دفترچه‌ی هایلایت‌ها', hint: 'همه‌ی هایلایت‌هایت یکجا، با یادداشت‌ها و جستجو.' },
+  // Index 6 — «گزارش ماهانه» (/plus/report.html). Appended last for the same
+  // reason as the entry above.
+  { title: 'گزارش ماهانه', hint: 'اول هر ماه: چی خوندی، کجای هر پیلار ایستادی، کدوم حوزه یک ماهه دست‌نخورده مونده.' },
 ];

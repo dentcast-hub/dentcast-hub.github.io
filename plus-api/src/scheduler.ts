@@ -14,6 +14,7 @@ import { checkCapacityAlert } from './services/payment-cap-alert.js';
 import { runSubscriptionReminders } from './services/subscription-reminder.js';
 import { reconcilePendingPayments } from './services/payment-reconcile.js';
 import { runPathwayAlerts } from './services/pathway-standings.js';
+import { runMonthlyReports } from './services/monthly-report.js';
 
 /**
  * Daily free-digest scheduler. Fires runFreeDigest() at freeDigestHour:00 in the
@@ -479,6 +480,40 @@ export function startPathwayAlertScheduler(): () => void {
         .catch((err) => {
           // eslint-disable-next-line no-console
           console.error('[pathway-alert] run failed', err);
+        })
+        .finally(schedule);
+    }, delay);
+    if (typeof timer.unref === 'function') timer.unref();
+  };
+
+  schedule();
+  return () => clearTimeout(timer);
+}
+
+/**
+ * گزارش ماهانه — the daily sweep that announces last month's report in the
+ * first days of a new Jalali month (services/monthly-report.ts
+ * runMonthlyReports). Daily, not "on the first", for the reason every other
+ * sweep here is daily: a container down on the 1st self-heals the next
+ * morning, and the sweep itself is a no-op outside the grace window and
+ * idempotent inside it. Same wall-clock + unref pattern as the others.
+ */
+export function startMonthlyReportScheduler(): () => void {
+  let timer: NodeJS.Timeout;
+
+  const schedule = () => {
+    const delay = msUntilNextRun(new Date(), config.monthlyReport.hour, config.streakTimezone);
+    timer = setTimeout(() => {
+      void runMonthlyReports(new Date())
+        .then((r) => {
+          if (r.announced > 0) {
+            // eslint-disable-next-line no-console
+            console.log(`[monthly-report] announced ${r.announced} report(s), skipped ${r.skipped} empty`);
+          }
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.error('[monthly-report] run failed', err);
         })
         .finally(schedule);
     }, delay);
