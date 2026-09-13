@@ -17,6 +17,7 @@ import {
   addQuestion, removeQuestion, nextQuestionId,
   examState, startAttempt, submitAttempt, ruleAttempt, queueRows, attemptRoster, getAttempt,
   drawQuestions, tally, setCertificateIntent, type ExamQuestion,
+  addContentQuestion, removeContentQuestion, listContentQuestions, pathwaysContaining, normalizeContentId, poolFor,
 } from '../src/services/pathway-exams.js';
 import { issueCertificate, listCertificates } from '../src/services/certificates.js';
 import { availableCredits } from '../src/services/discount-credits.js';
@@ -1016,5 +1017,99 @@ describe('an unfinished series has no certificate (`certificate: pending`)', () 
     const form = await adminPost('/admin/exam-forms', { pathway_id: PENDING, questions: [MCQ(1), MCQ(2)] });
     expect(form.statusCode).toBe(400);
     expect(form.json().error).toBe('pathway_pending');
+  });
+});
+
+/**
+ * Questions written for ONE ARTICLE, drawn by EVERY pathway that carries it
+ * (founder, 2026-09-13: «هر مقاله‌ای که خواستم جداگونه براش سؤال طرح کنم …
+ * به هر مسیری که توش هست اضافه بشه»). Never copied into a form — the pool
+ * is derived at draw time — so a pathway that adopts the article later
+ * draws it too.
+ */
+describe('article questions — written once, drawn by every pathway the article is in', () => {
+  // A step of `digital` that at least one other full pathway also carries.
+  const SHARED = 'insight/insight-63';
+
+  it('takes an id or a pasted URL, refuses an article the site does not have, and names where it lands', async () => {
+    expect(normalizeContentId('https://dentcast.ir/insight/insight-63.html')).toBe(SHARED);
+    expect(normalizeContentId('/insight/insight-63/')).toBe(SHARED);
+    const where = pathwaysContaining(SHARED).map((p) => p.id);
+    expect(where).toContain(PATHWAY);
+    expect(where.length).toBeGreaterThanOrEqual(2);
+
+    const r = await addContentQuestion('https://dentcast.ir/insight/insight-63.html', MCQ(1));
+    expect(r.row.content_id).toBe(SHARED);
+    expect(r.row.question.id).toMatch(/^c-[0-9a-f]{8}$/);      // its own id class, never a form's qN
+    expect(r.pathways.map((p) => p.id)).toEqual(where);
+    await expect(addContentQuestion('nope/nothing', MCQ(1))).rejects.toThrow('unknown_content');
+    await expect(addContentQuestion(SHARED, { kind: 'mcq', prompt_fa: 'x', options: ['a'], correct: 0 })).rejects.toThrow('invalid_questions');
+    expect(await listContentQuestions(SHARED)).toHaveLength(1);
+  });
+
+  it('joins the pool of every pathway that carries the article: rules, the draw, the roster, the wall', async () => {
+    const uid = await userId();
+    await upsertForm(PATHWAY, { questions: [MCQ(1)], draw: 0 });
+    const free = await addContentQuestion(SHARED, { kind: 'free', prompt_fa: 'چرا؟', key_points: ['اول', 'دوم'] });
+    expect((free.row.question as { key_points: { id: string }[] }).key_points.map((k) => k.id))
+      .toEqual([`${free.row.question.id}-k1`, `${free.row.question.id}-k2`]);
+
+    // the pathway's pool is its own question plus the article's
+    const pathway = getPathwayById(PATHWAY)!;
+    const poolQs = await poolFor(pathway, (await getForm(PATHWAY))!);
+    expect(poolQs.map((q) => q.id).sort()).toEqual(['m1', free.row.question.id].sort());
+    expect((await examState(uid, PATHWAY)).rules).toMatchObject({ question_count: 2, mcq_count: 1, free_count: 1 });
+
+    // the draw hands the reader both
+    await assignExam(uid, PATHWAY);
+    const started = await startAttempt(uid, PATHWAY, 'x');
+    expect(started.ok).toBe(true);
+    const drawnIds = started.ok ? started.attempt.questions.map((q) => q.id).sort() : [];
+    expect(drawnIds).toEqual(['m1', free.row.question.id].sort());
+
+    // the roster counts it beside the form's own
+    const roster = await formRoster();
+    expect(roster.find((f) => f.pathway_id === PATHWAY)).toMatchObject({ mcq_count: 1, free_count: 0, content_count: 1 });
+
+    // another pathway carrying the article sees it in its pool — and a form
+    // that is nothing BUT article questions still reads as an exam
+    const other = pathwaysContaining(SHARED).find((p) => p.id !== PATHWAY)!;
+    await upsertForm(other.id, { questions: [MCQ(9)] });
+    await removeQuestion(other.id, 'm9');               // last own question may go: the article keeps the pool alive
+    expect((await getForm(other.id))!.questions).toHaveLength(0);
+    const otherUser = await userId();
+    expect((await examState(otherUser, other.id)).rules).toMatchObject({ question_count: 1, free_count: 1 });
+
+    // and the wall agrees the exam exists for both
+    const wall = await get('/certificates');
+    const byId = new Map((wall.json().pathways as { id: string; exam: { state: string } }[]).map((p) => [p.id, p.exam.state]));
+    expect(byId.get(other.id)).not.toBe('no_form');
+  });
+
+  it('is the form row that opens an exam — article questions alone do not', async () => {
+    const uid = await userId();
+    await addContentQuestion(SHARED, MCQ(2));
+    expect((await examState(uid, PATHWAY)).state).toBe('no_form');   // no form for `digital` in this case
+  });
+
+  it('the panel routes: resolve, add, list, delete', async () => {
+    const found = await adminGet(`/admin/content-questions?content=${encodeURIComponent('/insight/insight-63.html')}`);
+    expect(found.statusCode).toBe(200);
+    expect(found.json().content.id).toBe(SHARED);
+    expect(found.json().pathways.map((p: { id: string }) => p.id)).toContain(PATHWAY);
+    expect((await adminGet('/admin/content-questions?content=nope/nothing')).statusCode).toBe(404);
+
+    const added = await adminPost('/admin/content-questions', { content_id: SHARED, question: MCQ(1) });
+    expect(added.statusCode).toBe(200);
+    expect(added.json()).toMatchObject({ ok: true, content_id: SHARED, count: 1 });
+    expect(added.json().pathways.length).toBeGreaterThanOrEqual(2);
+    expect((await adminPost('/admin/content-questions', { content_id: 'nope/x', question: MCQ(1) })).statusCode).toBe(400);
+
+    const listed = await adminGet(`/admin/content-questions?content=${SHARED}`);
+    expect(listed.json().questions).toHaveLength(1);
+    const del = await adminPost('/admin/content-questions/delete', { id: added.json().id });
+    expect(del.statusCode).toBe(200);
+    expect(await removeContentQuestion(added.json().id)).toBe(false);
+    expect(await listContentQuestions(SHARED)).toHaveLength(0);
   });
 });
