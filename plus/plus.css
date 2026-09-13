@@ -2237,3 +2237,5 @@ html.dcp-touring #mobile-body { overflow: hidden; }
 }
 .dcp-clip-land-go svg { width: 14px; height: 14px; }
 [data-theme="dark"] .dcp-clip-land { background: var(--hl, #5a4d10); color: var(--hl-ink, #fff3c4); }
+/* the «؟» caption under the clip row: full width, below the button line */
+.dcp-clip-cap { flex: 1 1 100%; margin: 2px 0 0; }

@@ -677,7 +677,7 @@ describe('clip pins on a board', () => {
     await renderCollectionDetail(document.getElementById('root')!, 'c1');
     const pin = document.querySelector('.dcp-cl-pin-clip') as HTMLElement;
     expect(pin).not.toBeNull();
-    expect(pin.querySelector('.dcp-cl-pin-kind-clip')!.textContent).toContain('قطعه‌ی صوتی');
+    expect(pin.querySelector('.dcp-cl-pin-kind-clip')!.textContent).toContain('هایلایت صوتی');
     expect(pin.querySelector('.dcp-clipcard-times')!.textContent).toBe('07:27 → 08:03');
     expect(pin.querySelector('.dcp-clipcard-len')!.textContent).toBe('۳۶ ثانیه');
     expect(pin.querySelector('.dcp-clipcard-play')).not.toBeNull();
@@ -724,7 +724,7 @@ describe('clip pins on a board', () => {
   it('the «قطعه‌ی صوتی» filter chip narrows the board to clip pins', async () => {
     await renderCollectionDetail(document.getElementById('root')!, 'c1');
     expect(document.querySelectorAll('.dcp-cl-pin')).toHaveLength(2);
-    const chip = [...document.querySelectorAll('.dcp-hlib-chip')].find((c) => (c.textContent || '').includes('قطعه‌ی صوتی')) as HTMLElement;
+    const chip = [...document.querySelectorAll('.dcp-hlib-chip')].find((c) => (c.textContent || '').includes('هایلایت صوتی')) as HTMLElement;
     chip.click();
     expect(document.querySelectorAll('.dcp-cl-pin')).toHaveLength(1);
     expect(document.querySelector('.dcp-cl-pin-clip')).not.toBeNull();

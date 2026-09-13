@@ -87,8 +87,14 @@ describe('the button and its gate', () => {
     const { audio, host, seek } = player();
     mountClipControl({ audioEl: audio, contentId: EP, host, seekEl: seek });
     await settle();
-    expect(btn().textContent).toContain('شروع قطعه');
-    expect(document.querySelector('.dcp-clip-hint')!.textContent).toBe('هر جای پخش که رسیدی بزن');
+    expect(btn().textContent).toContain('هایلایت صوتی');
+    expect(document.querySelector('.dcp-clip-hint')!.textContent).toBe('مثل هایلایت متن، برای صدا: اول بزن، آخرِ تکه دوباره بزن');
+    // the «؟» beside it explains the rest on demand
+    const cap = document.querySelector('.dcp-clip-cap') as HTMLElement;
+    expect(cap.hidden).toBe(true);
+    (document.querySelector('.dcp-clip-row .dcp-wb-info') as HTMLElement).click();
+    expect(cap.hidden).toBe(false);
+    expect(cap.textContent).toContain('دفترچه‌ی هایلایت‌ها');
     expect(listCalls, 'no clips are asked for without an account').toEqual([]);
     btn().click();
     await settle();
@@ -104,7 +110,7 @@ describe('the button and its gate', () => {
     btn().click();
     await settle();
     expect(sheet()).not.toBeNull();
-    expect(sheet().textContent).toContain('قطعه‌ی صوتی ویژه‌ی پریمیوم است');
+    expect(sheet().textContent).toContain('هایلایت صوتی ویژه‌ی پریمیوم است');
     expect(ctaCalls).toEqual(['gate-clip']);
     expect(btn().classList.contains('is-rec')).toBe(false);
   });
@@ -132,7 +138,7 @@ describe('recording a span', () => {
     btn().click();
     await settle();
     expect(btn().classList.contains('is-rec')).toBe(true);
-    expect(btn().textContent).toContain('پایان قطعه');
+    expect(btn().textContent).toContain('پایان هایلایت');
     expect(btn().disabled, 'the end press waits for a second of audio').toBe(true);
     expect(document.querySelector('.dcp-clip-live')!.textContent).toContain('07:27');
     expect(document.querySelector('.dcp-clip-strip .dcp-clip-zone.is-live'), 'the live zone is on the bar').not.toBeNull();
@@ -155,7 +161,7 @@ describe('recording a span', () => {
     await settle(); await settle();
     expect(created).toEqual([{ content_id: EP, start_s: 447, end_s: 483.5, note: 'ترتیب EDTA و سایلن', label: 'clinical_pearl' }]);
     expect(document.querySelector('.dcp-sheet-overlay.is-open')).toBeNull();
-    expect(document.querySelector('.dcp-clip-hint')!.textContent).toBe('۱ قطعه روی این اپیزود داری');
+    expect(document.querySelector('.dcp-clip-hint')!.textContent).toBe('۱ هایلایت صوتی روی این اپیزود داری');
     expect(document.querySelectorAll('.dcp-clip-strip .dcp-clip-zone')).toHaveLength(1);
   });
 
@@ -207,7 +213,7 @@ describe('recording a span', () => {
     (audio as any).currentTime = 200;
     audio.dispatchEvent(new Event('seeking'));
     expect(btn().classList.contains('is-rec')).toBe(false);
-    expect(document.querySelector('.dcp-cl-toast')!.textContent).toContain('ضبط قطعه لغو شد');
+    expect(document.querySelector('.dcp-cl-toast')!.textContent).toContain('هایلایت صوتی لغو شد');
   });
 });
 
@@ -227,7 +233,7 @@ describe('the reader\'s clips on the bar', () => {
     expect((zones[0] as HTMLElement).style.width).toBe('5%');
     expect((zones[1] as HTMLElement).style.left).toBe('0%');
     expect(document.querySelector('.dcp-clip-strip')!.previousElementSibling!.id, 'the strip sits right under the range').toBe('ep-seek');
-    expect(document.querySelector('.dcp-clip-hint')!.textContent).toBe('۲ قطعه روی این اپیزود داری');
+    expect(document.querySelector('.dcp-clip-hint')!.textContent).toBe('۲ هایلایت صوتی روی این اپیزود داری');
   });
 
   it('the shared player re-targets the one control on an episode switch, cancelling a recording in flight', async () => {

@@ -6,11 +6,11 @@
 // is the clip itself: a play button that plays THIS segment right here, the
 // span, a small bar showing where in the episode it sits, and the note. Going
 // to the episode is one action among others and lands ON the clip (?dcclip=).
-import { el, faNum } from './util.js?v=82';
-import { api } from './api.js?v=82';
-import { LABELS } from './config.js?v=82';
-import { noteBlock, labelChip, actionBtn, confirmStrip, toast, copyToClipboard } from './hl-view.js?v=82';
-import { fmtClock, fmtLength, episodeNumber, episodeCatalog, playSegment, stopSegment } from './clip-audio.js?v=82';
+import { el, faNum } from './util.js?v=83';
+import { api } from './api.js?v=83';
+import { LABELS } from './config.js?v=83';
+import { noteBlock, labelChip, actionBtn, confirmStrip, toast, copyToClipboard } from './hl-view.js?v=83';
+import { fmtClock, fmtLength, episodeNumber, episodeCatalog, playSegment, stopSegment } from './clip-audio.js?v=83';
 
 const PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
 const PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';
@@ -171,7 +171,7 @@ export function clipBody(contentId, clip, player) {
   let duration = null;
   if (player) player.durationOf(contentId).then((d) => { duration = d; paintBar(); }).catch(() => {});
 
-  const playBtn = el('button', { class: 'dcp-clipcard-play', type: 'button', 'aria-label': 'پخش قطعه' });
+  const playBtn = el('button', { class: 'dcp-clipcard-play', type: 'button', 'aria-label': 'پخش هایلایت صوتی' });
   const bar = el('div', { class: 'dcp-clipcard-bar', dir: 'ltr', 'aria-hidden': 'true' });
   const zone = el('span', { class: 'dcp-clipcard-zone' });
   const prog = el('span', { class: 'dcp-clipcard-prog' });
@@ -185,7 +185,7 @@ export function clipBody(contentId, clip, player) {
   function paintPlay() {
     playBtn.innerHTML = playing ? PAUSE : PLAY;
     playBtn.classList.toggle('is-playing', playing);
-    playBtn.setAttribute('aria-label', playing ? 'توقف' : 'پخش قطعه');
+    playBtn.setAttribute('aria-label', playing ? 'توقف' : 'پخش هایلایت صوتی');
   }
   function pct(t) {
     const d = duration || Math.max(clip.end_s * 1.05, 1);
@@ -277,16 +277,16 @@ export function clipCard(article, clip, ctx) {
       danger: true,
       onClick: () => {
         if (card.querySelector('.dcp-recent-confirm')) return;
-        card.appendChild(confirmStrip('این قطعه حذف شود؟', async () => {
+        card.appendChild(confirmStrip('این هایلایت صوتی حذف شود؟', async () => {
           body.stop();
           await api.deleteClip(clip.id);
           ctx.onDeleted(clip.id);
-          toast('قطعه حذف شد');
+          toast('هایلایت صوتی حذف شد');
         }));
       },
     });
     const actions = el('div', { class: 'dcp-hlib-actions' },
-      [el('span', { class: 'dcp-clipcard-kind' }, '🎧 قطعه‌ی صوتی'), labelChip(clip.label), edit, copy, collect, go, del].filter(Boolean));
+      [el('span', { class: 'dcp-clipcard-kind' }, '🎧 هایلایت صوتی'), labelChip(clip.label), edit, copy, collect, go, del].filter(Boolean));
 
     const source = ctx.showSource && ctx.source ? ctx.source(article) : null;
     card.replaceChildren(...[source, body.node, note, actions].filter(Boolean));

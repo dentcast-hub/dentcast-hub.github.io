@@ -275,7 +275,7 @@ describe('clip pins in the export', () => {
     const res = await app.inject({ method: 'GET', url: `/collections/${id}/export?format=docx`, headers: { cookie } });
     expect(res.statusCode).toBe(200);
     const xml = await documentXml(res.rawPayload);
-    expect(xml).toContain('قطعه‌ی صوتی · 07:27 → 08:03');
+    expect(xml).toContain('هایلایت صوتی · 07:27 → 08:03');
     expect(xml).toContain('یادداشت: ترتیب EDTA و سایلن');
     expect(xml).toContain('از: ');
     const zip = await JSZip.loadAsync(res.rawPayload);

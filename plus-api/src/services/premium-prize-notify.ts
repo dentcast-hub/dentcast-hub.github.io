@@ -37,7 +37,7 @@ export const PREMIUM_FEATURE_TITLES = [
   'دستیار هوشمند',
   'دفترچه‌ی هایلایت‌ها',
   'گزارش ماهانه',
-  'قطعه‌های صوتی',
+  'هایلایت‌های صوتی',
 ];
 
 /** "الف، ب و ج" — a Persian list, with the final item joined by "و". */

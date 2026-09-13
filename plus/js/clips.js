@@ -19,16 +19,16 @@
 // the premium card; premium → recording starts. Founder decision 2026-09-13,
 // argued in routes/clips.ts: audio is the one place where the value of a single
 // mark is felt in full the moment it is made, so this is gated at creation.
-import { el, faNum } from './util.js?v=82';
-import { api, currentUser } from './api.js?v=82';
-import { openLoginModal } from './login-modal.js?v=82';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=82';
-import { premiumCta } from './premium-cta.js?v=82';
-import { LABELS } from './config.js?v=82';
-import { toast } from './hl-view.js?v=82';
+import { el, faNum } from './util.js?v=83';
+import { api, currentUser } from './api.js?v=83';
+import { openLoginModal } from './login-modal.js?v=83';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=83';
+import { premiumCta } from './premium-cta.js?v=83';
+import { LABELS } from './config.js?v=83';
+import { toast } from './hl-view.js?v=83';
 import {
   fmtClock, fmtLength, episodeNumber, episodeCatalog, playSegment, stopSegment, seekWhenReady,
-} from './clip-audio.js?v=82';
+} from './clip-audio.js?v=83';
 
 /** A clip shorter than this is a mis-tap; the end press waits for it. */
 export const MIN_CLIP_S = 1;
@@ -39,6 +39,7 @@ const NUDGE_BACK_S = 15;
 const LENGTH_CHIPS = [15, 30, 60, 90];
 const SNAP_S = 0.5;
 
+const HEADPHONES = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg>';
 const SCISSORS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/></svg>';
 const PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
 const STOP = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg>';
@@ -84,7 +85,11 @@ function buildControl({ audioEl, contentId, host, seekEl, episodeLabel }) {
   const hint = el('span', { class: 'dcp-clip-hint' });
   const live = el('span', { class: 'dcp-clip-live', dir: 'ltr', hidden: true });
   const back = el('button', { class: 'dcp-clip-nudge', type: 'button', hidden: true, title: 'شروع را ' + faNum(NUDGE_BACK_S) + ' ثانیه عقب ببر' }, 'شروع −' + faNum(NUDGE_BACK_S));
-  const row = el('div', { class: 'dcp-clip-row', 'data-dc-clip-row': '' }, [btn, live, back, hint]);
+  const cap = el('p', { class: 'dcp-sheet-cap dcp-clip-cap', hidden: true },
+    'تکه‌ای از پادکست را با یادداشتت نگه می‌داری — همان‌طور که یک جمله را در مقاله هایلایت می‌کنی. از دفترچه‌ی هایلایت‌ها همان تکه دوباره پخش می‌شود، و می‌توانی آن را در کالکشن بگذاری.');
+  const info = el('button', { class: 'dcp-wb-info', type: 'button', title: 'هایلایت صوتی یعنی چی؟', 'aria-label': 'هایلایت صوتی یعنی چی؟' }, '؟');
+  info.addEventListener('click', () => { cap.hidden = !cap.hidden; });
+  const row = el('div', { class: 'dcp-clip-row', 'data-dc-clip-row': '' }, [btn, live, back, hint, info, cap]);
   host.appendChild(row);
 
   // --- the strip under the transport's range: the reader's clips on this bar --
@@ -94,24 +99,30 @@ function buildControl({ audioEl, contentId, host, seekEl, episodeLabel }) {
 
   function paintIdle() {
     btn.className = 'dcp-clip-btn';
-    btn.innerHTML = SCISSORS + '<span>شروع قطعه</span>';
+    btn.innerHTML = HEADPHONES + '<span>هایلایت صوتی</span>';
     btn.setAttribute('aria-pressed', 'false');
     btn.disabled = false;
     live.hidden = true;
     back.hidden = true;
     hint.hidden = false;
+    info.hidden = false;
+    // The hint says what the button DOES — «شروع قطعه» alone told nobody
+    // anything (founder, 2026-09-13): the mechanism in one line, the reader's
+    // own count once they have some, and the «؟» beside it for the rest.
     hint.textContent = state.clips.length
-      ? faNum(state.clips.length) + (state.clips.length === 1 ? ' قطعه روی این اپیزود داری' : ' قطعه روی این اپیزود داری')
-      : 'هر جای پخش که رسیدی بزن';
+      ? faNum(state.clips.length) + ' هایلایت صوتی روی این اپیزود داری'
+      : 'مثل هایلایت متن، برای صدا: اول بزن، آخرِ تکه دوباره بزن';
   }
 
   function paintRecording() {
     btn.className = 'dcp-clip-btn is-rec';
-    btn.innerHTML = '<span class="dcp-clip-dot" aria-hidden="true"></span><span>پایان قطعه</span>';
+    btn.innerHTML = '<span class="dcp-clip-dot" aria-hidden="true"></span><span>پایان هایلایت</span>';
     btn.setAttribute('aria-pressed', 'true');
     live.hidden = false;
     back.hidden = false;
     hint.hidden = true;
+    info.hidden = true;
+    cap.hidden = true;
     tick();
   }
 
@@ -136,7 +147,7 @@ function buildControl({ audioEl, contentId, host, seekEl, episodeLabel }) {
         class: 'dcp-clip-zone', type: 'button',
         style: `left:${pct(clip.start_s)}%;width:${Math.max(0.6, pct(clip.end_s) - pct(clip.start_s))}%`,
         title: fmtClock(clip.start_s) + ' → ' + fmtClock(clip.end_s) + (clip.note ? ' · ' + clip.note : ''),
-        'aria-label': 'پخش قطعه‌ی ' + fmtClock(clip.start_s) + ' تا ' + fmtClock(clip.end_s),
+        'aria-label': 'پخش هایلایت صوتی ' + fmtClock(clip.start_s) + ' تا ' + fmtClock(clip.end_s),
       });
       zone.addEventListener('click', () => { playSegment(audioEl, { start: clip.start_s, end: clip.end_s }); });
       strip.appendChild(zone);
@@ -178,7 +189,7 @@ function buildControl({ audioEl, contentId, host, seekEl, episodeLabel }) {
     }
     if (user.tier !== 'premium') {
       openSheet(gateCard({
-        title: 'قطعه‌ی صوتی ویژه‌ی پریمیوم است',
+        title: 'هایلایت صوتی ویژه‌ی پریمیوم است',
         sub: 'با پریمیوم هر تکه از پادکست را که به کارت آمد نگه می‌داری — شروع را بزن، پایان را بزن — و همان تکه بعداً از دفترچه‌ی هایلایت‌هایت پخش می‌شود.',
         cta: premiumCta('gate-clip'),
       }));
@@ -234,7 +245,7 @@ function buildControl({ audioEl, contentId, host, seekEl, episodeLabel }) {
   // Starting over from the top (the shared player's own «episode ended, next»)
   // or a seek back BEFORE the start makes the recorded start meaningless.
   audioEl.addEventListener('seeking', () => {
-    if (state.rec && (audioEl.currentTime || 0) < state.rec.start - 0.5) cancelRecording('ضبط قطعه لغو شد — به قبل از شروع برگشتی');
+    if (state.rec && (audioEl.currentTime || 0) < state.rec.start - 0.5) cancelRecording('هایلایت صوتی لغو شد — به قبل از شروع برگشتی');
   });
 
   paintIdle();
@@ -244,7 +255,7 @@ function buildControl({ audioEl, contentId, host, seekEl, episodeLabel }) {
   return {
     retarget(newContentId, newLabel) {
       if (newContentId === state.contentId) { if (newLabel) state.episodeLabel = newLabel; return; }
-      if (state.rec) cancelRecording('ضبط قطعه لغو شد — اپیزود عوض شد');
+      if (state.rec) cancelRecording('هایلایت صوتی لغو شد — اپیزود عوض شد');
       state.contentId = newContentId;
       state.episodeLabel = newLabel || null;
       state.catalogRow = null;
@@ -295,7 +306,7 @@ export function openClipSheet({ audioEl, contentId, episodeLabel = null, start, 
   let w1 = Math.min(maxT, Math.max(span.end + 30, w0 + 120));
   if (w1 - w0 < 60 && dur) w0 = Math.max(0, w1 - 60);
 
-  const title = el('h2', { class: 'dcp-sheet-title' }, existing ? 'ویرایش قطعه' : 'قطعه‌ی جدید');
+  const title = el('h2', { class: 'dcp-sheet-title' }, existing ? 'ویرایش هایلایت صوتی' : 'هایلایت صوتی جدید');
   const sub = el('p', { class: 'dcp-sheet-sub dcp-clip-sub' });
   const win = el('div', { class: 'dcp-clip-win', dir: 'ltr', role: 'group', 'aria-label': 'ریزتنظیم شروع و پایان' });
   const sel = el('div', { class: 'dcp-clip-sel' });
@@ -337,7 +348,7 @@ export function openClipSheet({ audioEl, contentId, episodeLabel = null, start, 
   });
 
   const msg = el('span', { class: 'dcp-hlib-msg', role: 'status' });
-  const save = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, existing ? 'ذخیره' : 'ذخیره‌ی قطعه');
+  const save = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, existing ? 'ذخیره' : 'ذخیره‌ی هایلایت');
   const listen = el('button', { class: 'dcp-btn dcp-btn-ghost dcp-clip-listen', type: 'button' });
   const cancel = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'انصراف');
   const foot = el('div', { class: 'dcp-clip-foot' }, [save, listen, cancel, msg]);
@@ -444,12 +455,12 @@ export function openClipSheet({ audioEl, contentId, episodeLabel = null, start, 
         : await api.createClip({ content_id: contentId, ...body });
       stopSegment(audioEl);
       closeSheet();
-      toast(existing ? 'قطعه ذخیره شد' : 'قطعه ذخیره شد · در دفترچه‌ی هایلایت‌ها');
+      toast(existing ? 'هایلایت صوتی ذخیره شد' : 'هایلایت صوتی ذخیره شد · در دفترچه‌ی هایلایت‌ها');
       if (onSaved) onSaved(res.clip);
     } catch (e) {
       save.disabled = false;
       msg.textContent = e && e.status === 402
-        ? 'ساختن قطعه ویژه‌ی پریمیوم است.'
+        ? 'هایلایت صوتی ویژه‌ی پریمیوم است.'
         : 'ذخیره نشد؛ دوباره تلاش کن.';
     }
   });
@@ -495,7 +506,7 @@ export async function landOnClip({ audioEl, contentId, host, clipId = deepLinkCl
   if (old) old.remove();
   const play = el('button', { class: 'dcp-clip-land-go', type: 'button' });
   let playing = false;
-  const paint = () => { play.innerHTML = (playing ? STOP : PLAY) + '<span>' + (playing ? 'توقف' : 'پخش قطعه') + '</span>'; };
+  const paint = () => { play.innerHTML = (playing ? STOP : PLAY) + '<span>' + (playing ? 'توقف' : 'پخش هایلایت') + '</span>'; };
   play.addEventListener('click', () => {
     if (playing) { stopSegment(audioEl); return; }
     playing = true; paint();
@@ -503,7 +514,7 @@ export async function landOnClip({ audioEl, contentId, host, clipId = deepLinkCl
   });
   paint();
   const land = el('div', { class: 'dcp-clip-land', role: 'note' }, [
-    el('span', {}, ['قطعه‌ی تو · ', el('b', { dir: 'ltr' }, fmtClock(clip.start_s) + ' → ' + fmtClock(clip.end_s))]),
+    el('span', {}, ['هایلایت صوتیِ تو · ', el('b', { dir: 'ltr' }, fmtClock(clip.start_s) + ' → ' + fmtClock(clip.end_s))]),
     clip.note ? el('span', { class: 'dcp-clip-land-note' }, clip.note) : null,
     play,
   ].filter(Boolean));
