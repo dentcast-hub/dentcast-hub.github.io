@@ -21,6 +21,8 @@ import {
 } from '../src/services/pathway-exams.js';
 import { issueCertificate, listCertificates } from '../src/services/certificates.js';
 import { availableCredits } from '../src/services/discount-credits.js';
+import { getCardsFor } from '../src/flashcards.js';
+import { readFileSync } from 'node:fs';
 import { mergeProfiles } from '../src/services/merge-profiles.js';
 import { resetRateLimits } from '../src/services/rate-limit.js';
 
@@ -1111,5 +1113,37 @@ describe('article questions — written once, drawn by every pathway the article
     expect(del.statusCode).toBe(200);
     expect(await removeContentQuestion(added.json().id)).toBe(false);
     expect(await listContentQuestions(SHARED)).toHaveLength(0);
+  });
+});
+
+/**
+ * Two question systems, and they never touch (founder, 2026-09-13: «کوییز
+ * هوش مصنوعی … نمی‌خوام قاطی بشه»). Every article ships with AI-generated
+ * review cards and quiz items (plus/flashcards-index.json,
+ * plus/quiz-index.json, faq-corpus.json — src/flashcards.ts, routes/review.ts).
+ * The exam draws from exactly two places, both founder-written:
+ * pathway_exam_forms.questions and content_exam_questions. Nothing else.
+ */
+describe('the exam never draws from the AI quiz/flashcard system', () => {
+  it('the exam service imports nothing from it, by name', () => {
+    const src = readFileSync(new URL('../src/services/pathway-exams.ts', import.meta.url), 'utf8');
+    const imports = src.split('\n').filter((l) => l.startsWith('import '));
+    for (const bad of ['flashcards', 'review', 'quiz', 'faq']) {
+      expect(imports.some((l) => l.toLowerCase().includes(bad)), `imports ${bad}`).toBe(false);
+    }
+  });
+
+  it('a pathway whose steps carry AI cards still has an EMPTY pool until the founder writes a question', async () => {
+    const withCards = STEPS.find((cid) => getCardsFor(cid).length > 0)!;
+    expect(withCards, 'the fixture needs a digital step that has AI cards').toBeTruthy();
+    const pathway = getPathwayById(PATHWAY)!;
+    // Only content questions the founder wrote count — and there are none.
+    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    const poolQs = await poolFor(pathway, (await getForm(PATHWAY))!);
+    expect(poolQs.map((q) => q.id)).toEqual(['m1']);
+    await removeQuestion(PATHWAY, 'm1').catch(() => {});
+    // The wall reads the same two sources: no founder question → no exam,
+    // however many AI cards the articles carry.
+    expect((await examState(await userId(), PATHWAY)).rules!.question_count).toBe(1);
   });
 });
