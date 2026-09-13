@@ -4,10 +4,10 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum, icon } from './util.js?v=77';
-import { api } from './api.js?v=77';
-import { FOLDER_EN } from './content-index.js?v=77';
-import { markReturnTrail } from './return-trail.js?v=77';
+import { el, faNum, icon } from './util.js?v=78';
+import { api } from './api.js?v=78';
+import { FOLDER_EN } from './content-index.js?v=78';
+import { markReturnTrail } from './return-trail.js?v=78';
 
 /** A "lightning + label" chip — a leading icon from the shared sprite
  * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
@@ -192,6 +192,7 @@ function continueCard(continuesInto) {
 /* ------------------------------------------------------------ the exam -- */
 
 const EXAM_LINE = {
+  pending: ['گواهی‌نامهٔ این مسیر هنوز باز نشده', 'این مسیر هنوز کامل نیست؛ با آمدنِ آخرین قسمت، آزمون و گواهی‌نامه‌اش باز می‌شود.', null],
   no_form: ['آزمون این مسیر هنوز آماده نشده', 'وقتی سؤال‌ها آماده شود، همین‌جا باز می‌شود و در «اطلاعیه» خبرش را می‌گیری.', null],
   locked: ['آزمون پایانی و گواهی‌نامه', 'با خواندن همهٔ قدم‌ها، آزمون باز می‌شود؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.', 'دربارهٔ آزمون'],
   ready: ['آزمون این مسیر برایت باز است', 'هر وقت آماده بودی شروع کن؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.', 'رفتن به آزمون'],
@@ -232,6 +233,9 @@ export function examCard(state, onIntent) {
  * a «بله» from somebody already close is news that goes out at once.
  */
 export function intentRow(state, onIntent) {
+  // Nothing to wish for while the pathway's series is unfinished
+  // (`certificate: 'pending'` — the API refuses the answer anyway).
+  if (state.state === 'pending' || state.certifiable === false) return null;
   if (state.certificate_intent || state.state === 'passed' || state.state === 'open' || state.state === 'queued') return null;
   const msg = el('span', { class: 'dcp-muted' });
   const mk = (label, intent, primary) => {

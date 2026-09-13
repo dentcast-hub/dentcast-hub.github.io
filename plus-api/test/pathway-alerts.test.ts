@@ -379,3 +379,13 @@ describe('GET /admin/pathways', () => {
     expect(again.json().crossings).toHaveLength(0);
   });
 });
+
+describe('a pathway flagged `certificate: pending` is not in the standings at all', () => {
+  it('has no row, however far anybody is along it — there is no exam to prepare', async () => {
+    const PENDING = 'ai-dentistry';
+    const uid = await userId();
+    await pool.query(`insert into user_pathways (user_id, pathway_id, current_step, certificate_intent) values ($1, $2, 0, 'wanted')`, [uid, PENDING]);
+    const rows = await pathwayStandings();
+    expect(rows.some((r) => r.pathway_id === PENDING)).toBe(false);
+  });
+});

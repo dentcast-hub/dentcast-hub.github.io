@@ -24,6 +24,10 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
 
   const unknown = (reply: import('fastify').FastifyReply) =>
     reply.code(404).send({ error: 'unknown_pathway', message: 'این مسیر آزمون ندارد.' });
+  // `certificate: 'pending'` in pathways.json: the series is unfinished, so
+  // nothing may be started, assigned or wished for until its last part lands.
+  const pending = (reply: import('fastify').FastifyReply) =>
+    reply.code(409).send({ ok: false, error: 'pathway_pending', state: 'pending', message: 'این مسیر هنوز کامل نشده؛ آزمون و گواهی‌نامه با آمدنِ آخرین قسمت باز می‌شود.' });
 
   app.get('/exams/:pathwayId', async (request, reply) => {
     const { pathwayId } = request.params as { pathwayId: string };
@@ -31,6 +35,7 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
       return reply.send({ ok: true, ...(await examState(request.user!.id, pathwayId)) });
     } catch (err) {
       if ((err as Error).message === 'unknown_pathway') return unknown(reply);
+      if ((err as Error).message === 'pathway_pending') return pending(reply);
       throw err;
     }
   });
@@ -54,6 +59,7 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
       return reply.send({ ok: true, ...r.state });
     } catch (err) {
       if ((err as Error).message === 'unknown_pathway') return unknown(reply);
+      if ((err as Error).message === 'pathway_pending') return pending(reply);
       throw err;
     }
   });
@@ -72,6 +78,7 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
       return reply.send({ ok: true, ...(await setCertificateIntent(request.user!.id, pathwayId, intent)) });
     } catch (err) {
       if ((err as Error).message === 'unknown_pathway') return unknown(reply);
+      if ((err as Error).message === 'pathway_pending') return pending(reply);
       throw err;
     }
   });
@@ -107,6 +114,7 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
       return reply.send({ ok: true, ...r.state });
     } catch (err) {
       if ((err as Error).message === 'unknown_pathway') return unknown(reply);
+      if ((err as Error).message === 'pathway_pending') return pending(reply);
       throw err;
     }
   });

@@ -1,6 +1,6 @@
 import { config } from '../config.js';
 import { one, query } from '../db.js';
-import { getPathways, type Pathway } from '../pathways.js';
+import { getPathways, isCertifiable, type Pathway } from '../pathways.js';
 import { sendCapped } from './notify-policy.js';
 
 /**
@@ -70,9 +70,14 @@ export interface PathwayStanding {
 
 export type CertificateIntent = 'wanted' | 'declined';
 
-/** Full pathways only — see the bundle rule above. */
+/**
+ * Full pathways only — see the bundle rule above — and only those whose
+ * certificate is open: the sweep exists to say «prepare an exam», and a
+ * pathway flagged `certificate: 'pending'` has no exam to prepare until its
+ * series ends.
+ */
 function fullPathways(): Pathway[] {
-  return getPathways().filter((p) => p.kind !== 'bundle');
+  return getPathways().filter(isCertifiable);
 }
 
 /**

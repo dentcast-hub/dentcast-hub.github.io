@@ -26,6 +26,16 @@ export interface Pathway {
    * the profile's «گواهی‌نامه‌ها» wall draws a disc per pathway and needed a
    * face for each — see plus/js/certificates.js. */
   glyph?: string;
+  /**
+   * 'pending' = the pathway is built on a series that is still being
+   * published, so a certificate for it would attest to finishing something
+   * that has no end yet (founder, 2026-09-13: «سوادِ هوش مصنوعی» stands on
+   * the Promptologist series, which is ongoing). Absent = a certificate can
+   * be earned. Everything downstream — the wall, the exam, the intent
+   * question, the standings sweep, hand issue — reads isCertifiable(), so
+   * removing the flag when the last part lands is the whole release.
+   */
+  certificate?: 'pending';
   title_fa: string;
   /** The label a tile uses when the full title will not fit — the profile's
    * certificate wall, where a 56px disc sits under it. Every one is a slice
@@ -97,6 +107,11 @@ export function getPathways(): Pathway[] {
     cached = [];
   }
   return cached;
+}
+
+/** A full pathway whose certificate is open to be earned (see `certificate`). */
+export function isCertifiable(p: Pathway | null | undefined): p is Pathway {
+  return Boolean(p) && p!.kind !== 'bundle' && p!.certificate !== 'pending';
 }
 
 export function getPathwayById(id: string): Pathway | null {

@@ -11,12 +11,12 @@ import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool, withTransaction } from '../src/db.js';
 import { config } from '../src/config.js';
 import { ai } from '../src/providers/registry.js';
-import { getPathwayById } from '../src/pathways.js';
+import { getPathwayById, isCertifiable } from '../src/pathways.js';
 import {
   normalizeQuestions, upsertForm, getForm, deleteForm, formRoster, assignExam,
   addQuestion, removeQuestion, nextQuestionId,
   examState, startAttempt, submitAttempt, ruleAttempt, queueRows, attemptRoster, getAttempt,
-  drawQuestions, tally, type ExamQuestion,
+  drawQuestions, tally, setCertificateIntent, type ExamQuestion,
 } from '../src/services/pathway-exams.js';
 import { issueCertificate, listCertificates } from '../src/services/certificates.js';
 import { availableCredits } from '../src/services/discount-credits.js';
@@ -949,5 +949,66 @@ describe('edges', () => {
     const r = await submitAttempt(uid, PATHWAY, { f1: LONG });
     expect(r.ok && r.attempt.status).toBe('failed');
     expect(await listCertificates(uid)).toHaveLength(0);
+  });
+});
+
+/**
+ * An unfinished series has no certificate — founder, 2026-09-13: «سوادِ
+ * هوش مصنوعی» stands on the Promptologist series, which is still being
+ * published, so a certificate for it would attest to finishing something
+ * that has no end yet. `certificate: 'pending'` in pathways.json closes
+ * EVERY door at once: the wall, the exam, the wish, the founder's hand.
+ * Removing the flag when the last part lands is the whole release.
+ */
+describe('an unfinished series has no certificate (`certificate: pending`)', () => {
+  const PENDING = 'ai-dentistry';
+
+  it('is flagged in the shipped catalog, and the flag is what isCertifiable() reads', () => {
+    expect(getPathwayById(PENDING)?.certificate).toBe('pending');
+    expect(isCertifiable(getPathwayById(PENDING))).toBe(false);
+    expect(isCertifiable(getPathwayById(PATHWAY))).toBe(true);
+    expect(isCertifiable(getPathwayById(BUNDLE_ID))).toBe(false);
+  });
+
+  it('refuses a form, a question, an assignment, a wish and a hand-issued certificate — each by name', async () => {
+    const uid = await userId();
+    await expect(upsertForm(PENDING, { questions: [MCQ(1), MCQ(2)] })).rejects.toThrow('pathway_pending');
+    await expect(addQuestion(PENDING, MCQ(1))).rejects.toThrow('pathway_pending');
+    await expect(assignExam(uid, PENDING)).rejects.toThrow('pathway_pending');
+    await expect(setCertificateIntent(uid, PENDING, 'wanted')).rejects.toThrow('pathway_pending');
+    await expect(issueCertificate(uid, PENDING, { holderName: 'x', notify: false })).rejects.toThrow('pathway_pending');
+    expect(await getForm(PENDING)).toBeNull();
+    expect(await listCertificates(uid)).toHaveLength(0);
+  });
+
+  it('reads as its own state to the reader, and the routes say so rather than 404', async () => {
+    const uid = await userId();
+    await pool.query(`insert into user_pathways (user_id, pathway_id, current_step) values ($1, $2, 0)`, [uid, PENDING]);
+    expect((await examState(uid, PENDING)).state).toBe('pending');
+    const r = await get(`/exams/${PENDING}`);
+    expect(r.statusCode).toBe(200);
+    expect(r.json().state).toBe('pending');
+    const w = await post(`/exams/${PENDING}/intent`, { intent: 'wanted' });
+    expect(w.statusCode).toBe(409);
+    expect(w.json()).toMatchObject({ error: 'pathway_pending', state: 'pending' });
+    const st = await post(`/exams/${PENDING}/start`, { holder_name: 'x' });
+    expect(st.statusCode).toBe(409);
+    expect(st.json().state).toBe('pending');
+  });
+
+  it('has no disc on the wall and no row in the founder\'s pickers', async () => {
+    const wall = await get('/certificates');
+    expect(wall.statusCode).toBe(200);
+    const ids = (wall.json().pathways as { id: string }[]).map((p) => p.id);
+    expect(ids).toContain(PATHWAY);
+    expect(ids).not.toContain(PENDING);
+    const cat = await adminGet('/admin/pathways/catalog');
+    expect((cat.json().pathways as { id: string }[]).map((p) => p.id)).not.toContain(PENDING);
+    const issue = await adminPost('/admin/certificates/issue', { phone, pathway_id: PENDING, holder_name: 'x', notify: false });
+    expect(issue.statusCode).toBe(400);
+    expect(issue.json().error).toBe('pathway_pending');
+    const form = await adminPost('/admin/exam-forms', { pathway_id: PENDING, questions: [MCQ(1), MCQ(2)] });
+    expect(form.statusCode).toBe(400);
+    expect(form.json().error).toBe('pathway_pending');
   });
 });

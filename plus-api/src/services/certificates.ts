@@ -1,7 +1,7 @@
 import type pg from 'pg';
 import { config } from '../config.js';
 import { pool, one, query, withTransaction, type Queryable } from '../db.js';
-import { getPathwayById } from '../pathways.js';
+import { isCertifiable, getPathwayById } from '../pathways.js';
 import { mintReference, normalizeReference } from './reference.js';
 import { insertGrant } from './discount-credits.js';
 import { sendCapped } from './notify-policy.js';
@@ -115,6 +115,7 @@ export async function issueCertificate(
 ): Promise<IssueResult> {
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
+  if (!isCertifiable(pathway)) throw new Error('pathway_pending');
   const holderName = input.holderName.trim();
   if (!holderName) throw new Error('holder_name_required');
   const percent = input.discountPercent ?? config.certificate.discountPercent;

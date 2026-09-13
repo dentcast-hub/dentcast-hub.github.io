@@ -454,6 +454,7 @@
         },
         {
                 "id": "ai-dentistry",
+                "certificate": "pending",
                 "glyph": "icon-bot",
                 "title_fa": "سوادِ هوش مصنوعی برای دندانپزشک",
                 "short_fa": "هوش مصنوعی",
