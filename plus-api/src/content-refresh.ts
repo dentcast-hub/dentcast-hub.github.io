@@ -61,7 +61,9 @@ function bustUrl(url: string, stamp: number): string {
  * mirrors fail independently — Arvan (.ir) and Cloudflare (.org) serve the same
  * file, so an outage on one is not an outage on the taxonomy.
  */
-async function fetchJson(urls: string[], label: string): Promise<unknown | null> {
+async function fetchJson(
+  urls: string[], label: string,
+): Promise<{ raw: unknown; lastModified: number | null } | null> {
   const stamp = Date.now();
   const errors: string[] = [];
   for (const url of urls) {
@@ -71,7 +73,8 @@ async function fetchJson(urls: string[], label: string): Promise<unknown | null>
         signal: AbortSignal.timeout(TIMEOUT_MS),
       });
       if (!res.ok) { errors.push(`${url} → ${res.status}`); continue; }
-      return await res.json();
+      const lm = Date.parse(res.headers?.get?.('last-modified') ?? '');
+      return { raw: await res.json(), lastModified: Number.isFinite(lm) ? lm : null };
     } catch (err) {
       // Try the next mirror; a total failure is reported by the caller once.
       errors.push(`${url} → ${(err as Error).message}`);
@@ -109,6 +112,8 @@ export interface ContentFileStatus {
   /** When a payload was last ADOPTED — not merely fetched. */
   last_ok_at: string | null;
   last_error: string | null;
+  /** The Last-Modified of the copy in service, when the site reported one. */
+  published_at: string | null;
 }
 
 const FILES: Array<{
@@ -124,24 +129,62 @@ const FILES: Array<{
   { key: 'flashcards', env: 'FLASHCARDS_URL', urls: () => config.content.flashcardsUrls, apply: applyRemoteFlashcards, source: flashcardsSource },
 ];
 
-const state = new Map<string, { last_try_at: string | null; last_ok_at: string | null; last_error: string | null }>();
+type FileState = {
+  last_try_at: string | null; last_ok_at: string | null; last_error: string | null;
+  /** Last-Modified (ms) of the copy adopted, or null while the baked copy serves. */
+  adopted_lm: number | null;
+};
+const EMPTY: FileState = { last_try_at: null, last_ok_at: null, last_error: null, adopted_lm: null };
+const state = new Map<string, FileState>();
 
-function note(key: string, patch: { ok?: true; error?: string | null }): void {
+function note(key: string, patch: { ok?: true; error?: string | null; lm?: number | null }): void {
   const now = new Date().toISOString();
-  const cur = state.get(key) ?? { last_try_at: null, last_ok_at: null, last_error: null };
+  const cur = state.get(key) ?? EMPTY;
   state.set(key, {
     last_try_at: now,
     last_ok_at: patch.ok ? now : cur.last_ok_at,
     last_error: patch.ok ? null : (patch.error ?? cur.last_error),
+    adopted_lm: patch.ok ? (patch.lm ?? cur.adopted_lm) : cur.adopted_lm,
   });
+}
+
+/**
+ * THE IMAGE IS A FLOOR, NOT A FALLBACK.
+ *
+ * `getPathways()` and its siblings serve the remote copy whenever one has been
+ * adopted, and until now "adopted" meant only "parsed and well-formed". So a
+ * freshly built image — carrying the file exactly as the repo has it — would,
+ * at boot, fetch whatever the edge chose to hand back and let THAT override
+ * the copy it was built with. A stale edge did not merely delay a rename; it
+ * undid a deploy (founder, 2026-09-13: image rebuilt, cache purged, the old
+ * name still on the profile).
+ *
+ * The site's object storage reports `Last-Modified` for every file, and a
+ * cached edge response carries the ORIGINAL object's header, so a stale copy
+ * declares its own age. The image knows when it was built (`BUILT_AT`, which
+ * deploy.sh stamps from the same commit that baked the file). A published copy
+ * that predates the image cannot be newer than what the image already holds,
+ * and is refused. Once a newer copy is adopted, its own timestamp becomes the
+ * floor, so a later stale answer cannot roll it back either.
+ *
+ * Both timestamps are optional and the guard only fires when both parse — a
+ * dev build (`BUILT_AT=unknown`) and a mirror that sends no header both keep
+ * the old behaviour, which is documented in the status as such.
+ */
+function ageFloor(key: string): number | null {
+  const built = Date.parse(config.build.builtAt);
+  const adopted = state.get(key)?.adopted_lm ?? null;
+  const floor = Math.max(Number.isFinite(built) ? built : -Infinity, adopted ?? -Infinity);
+  return Number.isFinite(floor) ? floor : null;
 }
 
 export function contentStatus(): ContentFileStatus[] {
   return FILES.map((f) => {
-    const s = state.get(f.key) ?? { last_try_at: null, last_ok_at: null, last_error: null };
+    const s = state.get(f.key) ?? EMPTY;
     return {
       key: f.key, env: f.env, configured: f.urls().length > 0, source: f.source(),
       last_try_at: s.last_try_at, last_ok_at: s.last_ok_at, last_error: s.last_error,
+      published_at: s.adopted_lm === null ? null : new Date(s.adopted_lm).toISOString(),
     };
   });
 }
@@ -162,10 +205,22 @@ const lastLogged = new Map<string, string>();
 export async function refreshOnce(): Promise<void> {
   for (const f of FILES) {
     if (!f.urls().length) continue;
-    const raw = await fetchJson(f.urls(), f.key);
-    if (raw !== null) {
-      if (f.apply(raw)) {
-        note(f.key, { ok: true });
+    const got = await fetchJson(f.urls(), f.key);
+    if (got !== null) {
+      const floor = ageFloor(f.key);
+      if (got.lastModified !== null && floor !== null && got.lastModified < floor) {
+        // Older than what is already in service: a stale edge, or a site
+        // sync that has not run yet. The baked (or previously adopted) copy
+        // stands; the status names the two timestamps so the founder can see
+        // which side is behind.
+        note(f.key, {
+          error: `published copy is older than the one in service (Last-Modified `
+            + `${new Date(got.lastModified).toISOString()} < ${new Date(floor).toISOString()}); not adopted`,
+        });
+        // eslint-disable-next-line no-console
+        console.warn(`[content-refresh] ${f.key}: published copy predates the image; keeping the current copy`);
+      } else if (f.apply(got.raw)) {
+        note(f.key, { ok: true, lm: got.lastModified });
       } else {
         note(f.key, { error: 'payload rejected by shape check' });
         // eslint-disable-next-line no-console
