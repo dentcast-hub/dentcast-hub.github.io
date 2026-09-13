@@ -17,15 +17,18 @@
 //      scrolls to the mark).
 //   4. Every filter lives in the URL, so a filtered view survives a refresh,
 //      the back button, and being sent to yourself.
-import { el, faNum, debounce } from './util.js?v=80';
-import { api } from './api.js?v=80';
-import { FOLDER_EN } from './content-index.js?v=80';
-import { openCollectionPicker } from './collections.js?v=80';
-import { LABELS, PALETTE } from './config.js?v=80';
+import { el, faNum, debounce } from './util.js?v=81';
+import { api } from './api.js?v=81';
+import { FOLDER_EN } from './content-index.js?v=81';
+import { openCollectionPicker } from './collections.js?v=81';
+import { LABELS, PALETTE } from './config.js?v=81';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
-} from './hl-view.js?v=80';
+} from './hl-view.js?v=81';
+// قطعه‌های صوتی ride in the same library: a clip is a highlight in time, so it
+// sits in its episode's group beside the caption highlights (clip-view.js).
+import { clipCard, createClipPlayer, clipAsText } from './clip-view.js?v=81';
 
 // How many article groups (or flat cards) are drawn before the "load more"
 // sentinel takes over. A library of a few thousand highlights must not build a
@@ -52,6 +55,8 @@ function readState() {
     color: p.get('color') || '',
     folder: p.get('folder') || '',
     concept: p.get('concept') || '',
+    // «نوع»: text highlights, audio clips, or both (the default).
+    kind: p.get('kind') === 'clip' || p.get('kind') === 'text' ? p.get('kind') : '',
     sort: SORTS.some((s) => s.key === sort) ? sort : 'recent',
     view: p.get('view') === 'flat' ? 'flat' : 'grouped',
   };
@@ -64,12 +69,28 @@ function writeState(state) {
   if (state.color) p.set('color', state.color);
   if (state.folder) p.set('folder', state.folder);
   if (state.concept) p.set('concept', state.concept);
+  if (state.kind) p.set('kind', state.kind);
   if (state.sort !== 'recent') p.set('sort', state.sort);
   if (state.view !== 'grouped') p.set('view', state.view);
   const qs = p.toString();
   // replaceState, not pushState: typing in a search box must not bury the page
   // under a hundred history entries.
   history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
+}
+
+// --- one item (a text highlight or an audio clip) ---------------------------
+const isClip = (h) => h && h.kind === 'clip';
+/** Plain text of either kind, for the copy actions. */
+const itemText = (h, article = null) => (isClip(h) ? clipAsText(h, article) : asText(h));
+/** «where it came from», for the flat view — one line, both kinds. */
+function sourceLink(article) {
+  return el('a', { class: 'dcp-hlib-src', href: article.url }, [
+    el('span', { class: 'dcp-hlib-folder', dir: 'ltr' }, FOLDER_EN[article.folder] || article.folder),
+    el('span', {}, article.title),
+  ]);
+}
+function itemCard(article, h, ctx) {
+  return isClip(h) ? clipCard(article, h, { ...ctx, source: sourceLink }) : highlightCard(article, h, ctx);
 }
 
 // --- one highlight ---------------------------------------------------------
@@ -117,12 +138,7 @@ function highlightCard(article, h, ctx) {
 
     // In the flat (timeline) view a card has to say where it came from; in the
     // grouped view the group header above it already does.
-    const source = ctx.showSource
-      ? el('a', { class: 'dcp-hlib-src', href: article.url }, [
-        el('span', { class: 'dcp-hlib-folder', dir: 'ltr' }, FOLDER_EN[article.folder] || article.folder),
-        el('span', {}, article.title),
-      ])
-      : null;
+    const source = ctx.showSource ? sourceLink(article) : null;
 
     card.replaceChildren(...[source, body, note, actions].filter(Boolean));
   }
@@ -134,7 +150,7 @@ function highlightCard(article, h, ctx) {
 // --- one article group -----------------------------------------------------
 function articleGroup(article, ctx) {
   const cards = el('div', { class: 'dcp-hlib-cards' },
-    article.highlights.map((h) => highlightCard(article, h, ctx)));
+    article.highlights.map((h) => itemCard(article, h, ctx)));
 
   const toggle = el('button', {
     class: 'dcp-hlib-toggle', type: 'button', 'aria-expanded': 'true', title: 'باز/بسته کردن',
@@ -148,9 +164,13 @@ function articleGroup(article, ctx) {
 
   const copyAll = actionBtn('کپیِ همه', {
     onClick: (e) => copyToClipboard(
-      article.title + '\n\n' + article.highlights.map(asText).join('\n\n'), e.currentTarget,
+      article.title + '\n\n' + article.highlights.map((h) => itemText(h)).join('\n\n'), e.currentTarget,
     ),
   });
+  // «۲ هایلایت · ۱ قطعه» — each kind counted by its own name.
+  const nText = article.highlights.filter((h) => !isClip(h)).length;
+  const nClip = article.highlights.length - nText;
+  const countText = [nText ? faNum(nText) + ' هایلایت' : null, nClip ? faNum(nClip) + ' قطعه' : null].filter(Boolean).join(' · ');
 
   const head = el('div', { class: 'dcp-hlib-ghead' }, [
     toggle,
@@ -160,13 +180,44 @@ function articleGroup(article, ctx) {
       el('a', { class: 'dcp-hlib-gtitle', href: article.url }, article.title),
       el('div', { class: 'dcp-hlib-gsub' }, [
         el('span', { dir: 'ltr', class: 'dcp-hlib-folder' }, FOLDER_EN[article.folder] || article.folder_fa || article.folder),
-        el('span', {}, faNum(article.highlights.length) + ' هایلایت'),
+        el('span', {}, countText),
       ]),
     ]),
     copyAll,
   ]);
 
   return el('section', { class: 'dcp-hlib-group', id: anchorId(article.content_id) }, [head, cards]);
+}
+
+/**
+ * Fold the clip library (GET /clips/library) into the highlight library's own
+ * shape: a clip joins its episode's group as an item with kind 'clip', a new
+ * group is made for an episode that has clips but no caption highlight, and
+ * the groups are re-ordered by whichever kind was touched last. `clip_total`
+ * is kept beside `total` so the headline can name each kind.
+ */
+function mergeClips(data, clipLib) {
+  const byId = new Map(data.articles.map((a) => [a.content_id, a]));
+  let added = 0;
+  for (const g of clipLib.articles || []) {
+    let a = byId.get(g.content_id);
+    if (!a) {
+      a = { ...g, highlights: [], last_highlight_at: g.last_clip_at, count: 0 };
+      delete a.clips;
+      byId.set(g.content_id, a);
+      data.articles.push(a);
+    }
+    for (const c of g.clips || []) {
+      a.highlights.push({ ...c, kind: 'clip' });
+      added += 1;
+    }
+    if (g.last_clip_at > (a.last_highlight_at || '')) a.last_highlight_at = g.last_clip_at;
+    a.count = a.highlights.length;
+  }
+  data.articles.sort((x, y) => String(y.last_highlight_at || '').localeCompare(String(x.last_highlight_at || '')));
+  data.total = (data.total || 0) + added;
+  data.clip_total = added;
+  data.article_count = data.articles.length;
 }
 
 /** GET /plus/highlights.html — the whole library. */
@@ -176,10 +227,12 @@ export async function renderHighlightLibrary(container) {
   // The concept catalog rides beside the library: every concept the reader's
   // highlights reach, with counts (plus-api services/highlight-concepts.ts).
   // Optional — a library with no concept row is still the library.
-  const [data, conceptCatalog] = await Promise.all([
+  const [data, conceptCatalog, clipLib] = await Promise.all([
     api.highlightLibrary().catch(() => null),
     api.highlightConcepts().catch(() => null),
+    api.clipLibrary().catch(() => null),
   ]);
+  if (data && clipLib) mergeClips(data, clipLib);
   if (!data) {
     container.replaceChildren(el('div', { class: 'dcp-empty' }, [
       el('p', {}, 'هایلایت‌ها در دسترس نیست.'),
@@ -239,6 +292,11 @@ export async function renderHighlightLibrary(container) {
   const conceptChips = el('div', { class: 'dcp-hlib-chips dcp-hlib-concepts' });
   const conceptHead = el('div', { class: 'dcp-hlib-chead' });
   conceptHead.hidden = true;
+  // «نوع» — drawn only once the reader owns at least one clip; a row with one
+  // choice is not a filter.
+  const kindChips = el('div', { class: 'dcp-hlib-chips dcp-hlib-kinds' });
+  // One <audio> for every clip card on the page (clip-view.js).
+  const player = createClipPlayer();
 
   const viewBtn = el('button', { class: 'dcp-hlib-act', type: 'button' });
   const copyAllBtn = el('button', { class: 'dcp-hlib-act', type: 'button' }, 'کپیِ نتایج');
@@ -248,6 +306,7 @@ export async function renderHighlightLibrary(container) {
   const controls = el('div', { class: 'dcp-hlib-controls' }, [
     el('div', { class: 'dcp-hlib-row' }, [search, folderSel, sortSel]),
     el('div', { class: 'dcp-hlib-row' }, [conceptChips]),
+    el('div', { class: 'dcp-hlib-row' }, [kindChips]),
     el('div', { class: 'dcp-hlib-row' }, [labelChips, colorRow]),
     el('div', { class: 'dcp-hlib-row dcp-hlib-row-tools' }, [countLine, jumpBtn, viewBtn, foldBtn, copyAllBtn]),
   ]);
@@ -267,8 +326,11 @@ export async function renderHighlightLibrary(container) {
 
   function matches(a, h) {
     if (state.folder && a.folder !== state.folder) return false;
+    if (state.kind === 'clip' && !isClip(h)) return false;
+    if (state.kind === 'text' && isClip(h)) return false;
     if (state.label && h.label !== state.label) return false;
-    if (state.color && (h.color || '') !== state.color) return false;
+    // A clip has no colour, so a colour filter is a text filter by definition.
+    if (state.color && (isClip(h) || (h.color || '') !== state.color)) return false;
     if (!state.q) return true;
     const q = foldFa(state.q);
     return foldFa(h.exact).includes(q) || foldFa(h.note).includes(q) || foldFa(a.title).includes(q);
@@ -291,6 +353,7 @@ export async function renderHighlightLibrary(container) {
       for (const a of m.articles) a.highlights = a.highlights.filter((h) => h.id !== id);
       m.articles = m.articles.filter((a) => a.highlights.length);
       m.total = m.articles.reduce((n, a) => n + a.highlights.length, 0);
+      m.clip_total = m.articles.reduce((n, a) => n + a.highlights.filter(isClip).length, 0);
       m.article_count = m.articles.length;
     }
     render();
@@ -367,6 +430,7 @@ export async function renderHighlightLibrary(container) {
     onDeleted: removeFromModel,
     onUpdated: (h, article) => { if (matches(article, h)) buildChips(); else render(); },
     showSource: false,
+    player,
   };
 
   // --- chips ---------------------------------------------------------------
@@ -413,6 +477,27 @@ export async function renderHighlightLibrary(container) {
     ].filter(Boolean) : []));
   }
 
+  // --- «نوع» chips ---------------------------------------------------------
+  function buildKindChips() {
+    const all = allHighlights();
+    const nClip = all.filter(({ h }) => isClip(h)).length;
+    if (!nClip || conceptView) { kindChips.replaceChildren(); kindChips.hidden = true; return; }
+    kindChips.hidden = false;
+    const nText = all.length - nClip;
+    const defs = [
+      { key: '', fa: 'همه', n: all.length },
+      { key: 'text', fa: 'متن', n: nText },
+      { key: 'clip', fa: '🎧 قطعه‌ی صوتی', n: nClip },
+    ];
+    kindChips.replaceChildren(el('span', { class: 'dcp-hlib-chips-label' }, 'نوع'), ...defs.map((d) => {
+      const b = el('button', {
+        class: 'dcp-hlib-chip' + (d.key === state.kind ? ' is-on' : ''), type: 'button', 'data-kind': d.key,
+      }, [d.fa, el('span', { class: 'dcp-hlib-chip-n' }, faNum(d.n))]);
+      b.addEventListener('click', () => { state.kind = d.key; render(); });
+      return b;
+    }));
+  }
+
   // --- incremental rendering ----------------------------------------------
   let pending = [];      // not-yet-drawn groups (or flat items)
   let observer = null;
@@ -422,7 +507,7 @@ export async function renderHighlightLibrary(container) {
     const batch = pending.splice(0, state.view === 'flat' ? PAGE_CARDS : PAGE_GROUPS);
     for (const item of batch) {
       list.appendChild(state.view === 'flat'
-        ? highlightCard(item.a, item.h, { ...ctx, showSource: true })
+        ? itemCard(item.a, item.h, { ...ctx, showSource: true })
         : articleGroup(item, ctx));
     }
     sentinel.hidden = !pending.length;
@@ -467,17 +552,25 @@ export async function renderHighlightLibrary(container) {
     jumpBtn.hidden = state.view === 'flat';
     buildConceptChips();
     buildConceptHead();
+    buildKindChips();
     buildChips();
 
     const groups = filteredGroups();
     const shown = groups.reduce((n, g) => n + g.highlights.length, 0);
     const src = source();
-    countLine.replaceChildren(
-      el('b', {}, faNum(shown)),
-      document.createTextNode(shown === src.total
-        ? ' هایلایت در ' + faNum(src.article_count) + ' مطلب'
-        : ' از ' + faNum(src.total) + ' هایلایت، در ' + faNum(groups.length) + ' مطلب'),
-    );
+    // With clips in the library the headline counts each kind by its name:
+    // «۱۳۲ هایلایت · ۹ قطعه‌ی صوتی در ۴۱ مطلب».
+    const clipTotal = src.clip_total || 0;
+    const textTotal = src.total - clipTotal;
+    const kinds = clipTotal
+      ? faNum(textTotal) + ' هایلایت · ' + faNum(clipTotal) + ' قطعه‌ی صوتی'
+      : faNum(src.total) + ' هایلایت';
+    // Filtered, with both kinds in the library, «۳ از ۴ مورد» — «۳ از ۱ هایلایت
+    // · ۳ قطعه» reads as a sum that does not add up.
+    const of = clipTotal ? faNum(src.total) + ' مورد' : faNum(src.total) + ' هایلایت';
+    countLine.replaceChildren(...(shown === src.total
+      ? [document.createTextNode(kinds + ' در ' + faNum(src.article_count) + ' مطلب')]
+      : [el('b', {}, faNum(shown)), document.createTextNode(' از ' + of + '، در ' + faNum(groups.length) + ' مطلب')]));
 
     buildJump(groups);
     list.replaceChildren();
@@ -489,7 +582,7 @@ export async function renderHighlightLibrary(container) {
       sentinel.hidden = true;
       const clear = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'پاک‌کردنِ فیلترها');
       clear.addEventListener('click', () => {
-        state.q = ''; state.label = ''; state.color = ''; state.folder = '';
+        state.q = ''; state.label = ''; state.color = ''; state.folder = ''; state.kind = '';
         if (state.concept) { void setConcept(''); return; }
         render();
       });
@@ -534,7 +627,7 @@ export async function renderHighlightLibrary(container) {
 
   copyAllBtn.addEventListener('click', (e) => {
     const groups = filteredGroups();
-    const text = groups.map((g) => g.title + '\n\n' + g.highlights.map(asText).join('\n\n')).join('\n\n———\n\n');
+    const text = groups.map((g) => g.title + '\n\n' + g.highlights.map((h) => itemText(h)).join('\n\n')).join('\n\n———\n\n');
     copyToClipboard(text, e.currentTarget, 'کپی شد ✓');
   });
 

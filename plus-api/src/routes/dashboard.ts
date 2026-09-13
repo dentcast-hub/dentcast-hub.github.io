@@ -254,6 +254,14 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
         order by created_at asc`,
       [request.user!.id],
     );
+    // قطعه‌های صوتی (audio_clips): premium to CREATE, but the reader's own
+    // data once it exists — a lapsed subscriber takes their clips with them.
+    const clips = await pool.query(
+      `select content_id, start_s, end_s, note, label, created_at, updated_at
+         from audio_clips where user_id = $1
+        order by content_id asc, start_s asc`,
+      [request.user!.id],
+    );
     reply.header('content-disposition', 'attachment; filename="dentcast-highlights.json"');
     return reply.send({
       exported_at: new Date().toISOString(),
@@ -261,6 +269,7 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
       count: rows.rowCount,
       highlights: rows.rows,
       snippets: snippets.rows,
+      clips: clips.rows,
     });
   });
 }

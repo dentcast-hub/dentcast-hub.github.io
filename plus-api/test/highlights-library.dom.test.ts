@@ -19,6 +19,9 @@ let libraryResponse: any = null;
 let conceptsResponse: any = null;
 let conceptViewResponse: any = null;
 const conceptCalls: string[] = [];
+let clipLibResponse: any = null;
+const clipDeleted: string[] = [];
+const clipPatched: Array<{ id: string; patch: any }> = [];
 
 vi.mock('/plus/js/api.js', () => ({
   api: {
@@ -31,6 +34,12 @@ vi.mock('/plus/js/api.js', () => ({
       return Promise.resolve({ highlight: { id, exact: 'x', ...patch } });
     },
     listCollections: () => Promise.resolve({ collections: [] }),
+    clipLibrary: () => (clipLibResponse ? Promise.resolve(clipLibResponse) : Promise.reject(new Error('none'))),
+    deleteClip: (id: string) => { clipDeleted.push(id); return Promise.resolve({ ok: true }); },
+    updateClip: (id: string, patch: any) => {
+      clipPatched.push({ id, patch });
+      return Promise.resolve({ clip: { id, content_id: 'episodes/episode-101', start_s: 447, end_s: 483, note: null, label: null, ...patch } });
+    },
   },
   currentUser: () => Promise.resolve({ tier: 'premium' }),
 }));
@@ -93,6 +102,9 @@ describe('premium highlight library', () => {
     libraryResponse = library();
     conceptsResponse = null;
     conceptViewResponse = null;
+    clipLibResponse = null;
+    clipDeleted.length = 0;
+    clipPatched.length = 0;
   });
 
   it('renders every highlight in full, with its note, without opening the article', async () => {
@@ -337,3 +349,128 @@ describe('concept view', () => {
   });
 });
 
+
+// --- قطعه‌های صوتی in the same library ------------------------------------------
+function clipLibrary() {
+  return {
+    total: 2, article_count: 1,
+    articles: [{
+      content_id: 'episodes/episode-101',
+      title: 'باندینگ به دنتین ریشه', url: '/episodes/episode-101.html',
+      type: 'episodes', folder: 'episodes', folder_fa: 'پادکست',
+      last_clip_at: '2026-09-13T10:00:00Z', count: 2,
+      clips: [
+        { id: 'clip-1', content_id: 'episodes/episode-101', start_s: 447, end_s: 483, note: 'ترتیب EDTA و سایلن', label: 'clinical_pearl', created_at: '2026-09-13T10:00:00Z' },
+        { id: 'clip-2', content_id: 'episodes/episode-101', start_s: 910, end_s: 962, note: null, label: null, created_at: '2026-09-12T10:00:00Z' },
+      ],
+    }],
+  };
+}
+
+describe('audio clips in the library', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="root"></div>';
+    history.replaceState(null, '', '/plus/highlights.html');
+    libraryResponse = library();
+    clipLibResponse = clipLibrary();
+    conceptsResponse = null;
+    clipDeleted.length = 0;
+    clipPatched.length = 0;
+  });
+
+  it('a clip is a card in its episode\'s group: the span, the length, the note — and the headline names both kinds', async () => {
+    await renderHighlightLibrary(document.getElementById('root')!);
+    expect(document.querySelectorAll('.dcp-hlib-group')).toHaveLength(3);
+    // the episode's clips were touched last, so its group leads
+    expect(document.querySelector('.dcp-hlib-group .dcp-hlib-gtitle')!.textContent).toBe('باندینگ به دنتین ریشه');
+    const cards = document.querySelectorAll('.dcp-clipcard-wrap');
+    expect(cards).toHaveLength(2);
+    const first = cards[0] as HTMLElement;
+    expect(first.querySelector('.dcp-clipcard-times')!.textContent).toBe('07:27 → 08:03');
+    expect(first.querySelector('.dcp-clipcard-len')!.textContent).toBe('۳۶ ثانیه');
+    expect(first.textContent).toContain('ترتیب EDTA و سایلن');
+    expect(first.querySelector('.dcp-card-label')!.textContent).toBe('نکته بالینی');
+    expect(first.closest('a')).toBeNull(); // a card, never a link
+    expect(document.querySelector('.dcp-hlib-count')!.textContent).toContain('۳ هایلایت · ۲ قطعه‌ی صوتی در ۳ مطلب');
+    expect(document.querySelector('.dcp-hlib-gsub')!.textContent).toContain('۲ قطعه');
+  });
+
+  it('the episode link lands ON the clip (?dcclip=) and the kind filter lives in the URL', async () => {
+    await renderHighlightLibrary(document.getElementById('root')!);
+    const card = document.querySelector('.dcp-clipcard-wrap') as HTMLElement;
+    expect(actNamed('شنیدن در اپیزود', card).getAttribute('href')).toBe('/episodes/episode-101.html?dcclip=clip-1');
+
+    const kinds = document.querySelector('.dcp-hlib-kinds') as HTMLElement;
+    expect(kinds.hidden).toBe(false);
+    (kinds.querySelector('[data-kind="clip"]') as HTMLElement).click();
+    expect(document.querySelectorAll('.dcp-hlib-card')).toHaveLength(2);
+    expect(document.querySelectorAll('.dcp-clipcard-wrap')).toHaveLength(2);
+    expect(location.search).toBe('?kind=clip');
+    (kinds.querySelector('[data-kind="text"]') as HTMLElement).click();
+    expect(document.querySelectorAll('.dcp-clipcard-wrap')).toHaveLength(0);
+    expect(document.querySelectorAll('.dcp-hlib-card')).toHaveLength(3);
+    expect(location.search).toBe('?kind=text');
+  });
+
+  it('opens ON ?kind=clip, and a colour filter never matches a clip', async () => {
+    history.replaceState(null, '', '/plus/highlights.html?kind=clip');
+    await renderHighlightLibrary(document.getElementById('root')!);
+    expect(document.querySelectorAll('.dcp-hlib-card')).toHaveLength(2);
+    expect(document.querySelectorAll('.dcp-clipcard-wrap')).toHaveLength(2);
+
+    (document.querySelector('.dcp-hlib-kinds [data-kind=""]') as HTMLElement).click();
+    (document.querySelector('.dcp-hlib-sw') as HTMLElement).click(); // first colour swatch
+    expect(document.querySelectorAll('.dcp-clipcard-wrap')).toHaveLength(0);
+  });
+
+  it('the «نوع» row is absent when the reader owns no clip', async () => {
+    clipLibResponse = { total: 0, article_count: 0, articles: [] };
+    await renderHighlightLibrary(document.getElementById('root')!);
+    expect((document.querySelector('.dcp-hlib-kinds') as HTMLElement).hidden).toBe(true);
+    expect(document.querySelector('.dcp-hlib-count')!.textContent).toContain('۳ هایلایت در ۲ مطلب');
+  });
+
+  it('a clip library that fails to load leaves the text library intact', async () => {
+    clipLibResponse = null;
+    await renderHighlightLibrary(document.getElementById('root')!);
+    expect(document.querySelectorAll('.dcp-hlib-card')).toHaveLength(3);
+    expect(document.querySelectorAll('.dcp-clipcard-wrap')).toHaveLength(0);
+  });
+
+  it('search finds a clip by its note; delete and edit go to the clip routes', async () => {
+    await renderHighlightLibrary(document.getElementById('root')!);
+    const search = document.querySelector('input[type="search"]') as HTMLInputElement;
+    search.value = 'سایلن';
+    search.dispatchEvent(new Event('input'));
+    await new Promise((r) => setTimeout(r, 280));
+    expect(document.querySelectorAll('.dcp-hlib-card')).toHaveLength(1);
+    expect(document.querySelector('.dcp-clipcard-wrap')).not.toBeNull();
+
+    const card = document.querySelector('.dcp-clipcard-wrap') as HTMLElement;
+    actNamed('ویرایش', card).click();
+    const ta = card.querySelector('textarea') as HTMLTextAreaElement;
+    ta.value = 'اصلاح‌شده';
+    // nudge the end by a second, then save
+    ([...card.querySelectorAll('.dcp-clip-nudge')].find((b) => (b as HTMLElement).getAttribute('aria-label') === 'پایان +۱ ثانیه') as HTMLElement).click();
+    (card.querySelector('.dcp-btn-primary') as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+    expect(clipPatched).toEqual([{ id: 'clip-1', patch: { note: 'اصلاح‌شده', label: 'clinical_pearl', end_s: 484 } }]);
+    expect(card.querySelector('.dcp-clipcard-times')!.textContent).toBe('07:27 → 08:04');
+
+    actNamed('حذف', card).click();
+    (card.querySelector('.dcp-btn-danger') as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+    expect(clipDeleted).toEqual(['clip-1']);
+    expect(document.querySelectorAll('.dcp-clipcard-wrap')).toHaveLength(0);
+  });
+
+  it('a clip whose episode file cannot be resolved says so instead of spinning', async () => {
+    await renderHighlightLibrary(document.getElementById('root')!);
+    const card = document.querySelector('.dcp-clipcard-wrap') as HTMLElement;
+    (card.querySelector('.dcp-clipcard-play') as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+    await new Promise((r) => setTimeout(r, 0));
+    expect(card.querySelector('.dcp-clipcard-play')!.classList.contains('is-playing')).toBe(false);
+    expect(document.querySelector('.dcp-cl-toast')!.textContent).toContain('فایل این اپیزود پیدا نشد');
+  });
+});

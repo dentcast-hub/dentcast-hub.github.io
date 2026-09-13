@@ -2,27 +2,28 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=80';
-import { currentUser, api } from './js/api.js?v=80';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=80';
-import { openCollectionPicker } from './js/collections.js?v=80';
-import { el, faNum } from './js/util.js?v=80';
-import { initHomeCard } from './js/home-card.js?v=80';
-import { initHomeFeatures } from './js/home-features.js?v=80';
-import { initHomeBundles } from './js/home-bundles.js?v=80';
-import { initHomeUpboard } from './js/home-upboard.js?v=80';
-import { initDesTool } from './js/des-scorer.js?v=80';
-import { initHeader } from './js/header.js?v=80';
-import { initTourAutostart } from './js/tour.js?v=80';
-import { initReadingTracker } from './js/reading.js?v=80';
-import { initListeningTracker } from './js/listening.js?v=80';
-import { initShareScoring, buildShareButton } from './js/share.js?v=80';
-import { initHeart, buildHeartChip } from './js/votes.js?v=80';
-import { mountArticleThreads } from './js/article-threads.js?v=80';
-import { mountChallenge } from './js/challenge.js?v=80';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=80';
-import { mountDes } from './js/des.js?v=80';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=80';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=81';
+import { currentUser, api } from './js/api.js?v=81';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=81';
+import { openCollectionPicker } from './js/collections.js?v=81';
+import { el, faNum } from './js/util.js?v=81';
+import { initHomeCard } from './js/home-card.js?v=81';
+import { initHomeFeatures } from './js/home-features.js?v=81';
+import { initHomeBundles } from './js/home-bundles.js?v=81';
+import { initHomeUpboard } from './js/home-upboard.js?v=81';
+import { initDesTool } from './js/des-scorer.js?v=81';
+import { initHeader } from './js/header.js?v=81';
+import { initTourAutostart } from './js/tour.js?v=81';
+import { initReadingTracker } from './js/reading.js?v=81';
+import { initListeningTracker } from './js/listening.js?v=81';
+import { initShareScoring, buildShareButton } from './js/share.js?v=81';
+import { initHeart, buildHeartChip } from './js/votes.js?v=81';
+import { mountClipControl, landOnClip } from './js/clips.js?v=81';
+import { mountArticleThreads } from './js/article-threads.js?v=81';
+import { mountChallenge } from './js/challenge.js?v=81';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=81';
+import { mountDes } from './js/des.js?v=81';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=81';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -32,7 +33,7 @@ import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=80';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=80').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=81').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -421,6 +422,26 @@ async function initEpisodeActions() {
   // same reasoning as initArticle()'s own call below, and bindButton keeps this
   // second میز کار toggling the SAME workbench instance as the top one.
   mountBottomActions(findProseEnd() || box, contentId, { bindButton });
+  // قطعه‌های صوتی: the «شروع قطعه» row under the page's own transport, the
+  // reader's clips on its bar, and the ?dcclip= landing — clips.js.
+  mountEpisodeClips(document, contentId);
+}
+
+// The clip control for an episode page's own player (standalone page or the
+// desktop shell's injected copy). `scope` is the document or the injected
+// root; the player is found inside it so the shell's second article never
+// picks up the first one's <audio>.
+function mountEpisodeClips(scope, contentId) {
+  const audioEl = scope.querySelector('#ep-audio');
+  if (!audioEl) return;
+  const host = audioEl.closest('.ep-player-wrap') || audioEl.parentNode;
+  const seekEl = scope.querySelector('#ep-seek');
+  const badge = scope.querySelector('.ep-badge');
+  mountClipControl({
+    audioEl, contentId, host, seekEl,
+    episodeLabel: badge ? badge.textContent.trim() : null,
+  });
+  landOnClip({ audioEl, contentId, host }).catch(() => {});
 }
 
 async function initArticle() {
@@ -554,6 +575,7 @@ async function mountArticleWorkbench(root, url) {
   mountArticleThreads(findProseEnd(root) || proseRoot, contentId); // under the article, not after its first box
   mountDesHere(findProseEnd(root) || proseRoot, contentId, root);  // the score, under that conversation
   mountBottomActions(findProseEnd(root) || proseRoot, contentId, { bindButton });  // the end-of-article میز کار/پسندیدم/کالکشن trio
+  mountEpisodeClips(root, contentId); // an injected episode: its own player gets the clip row too
   const hlId = query ? new URLSearchParams(query).get('dcphl') : null;
   if (hlId && await currentUser()) await openDeepLinkedHighlight(wb, updateBtn, hlId);
 }
@@ -676,6 +698,20 @@ let sharedListen = null;
 function trackListening(contentId, audioEl) {
   if (sharedListen && sharedListen.stop) { try { sharedListen.stop(); } catch (_) { /* ignore */ } }
   sharedListen = initListeningTracker({ contentId, audioEl });
+  // The same hook carries the clip control onto the shared player: one row
+  // under its transport, re-targeted on every episode switch (clips.js keeps
+  // one control per <audio> and updates it rather than stacking a second).
+  try {
+    const doc = audioEl.ownerDocument || document;
+    const host = audioEl.closest('.dc-main-player');
+    const num = doc.getElementById('dc-current-epnum');
+    if (host) {
+      mountClipControl({
+        audioEl, contentId, host, seekEl: doc.getElementById('dc-seek'),
+        episodeLabel: num && num.textContent.trim() ? 'اپیزود ' + num.textContent.trim() : null,
+      });
+    }
+  } catch (e) { if (window.console) console.warn('[plus] clip control failed', e); }
 }
 if (typeof window !== 'undefined') {
   window.dcpTrackListening = trackListening;

@@ -96,7 +96,7 @@
   .clip-row{ display:flex; align-items:center; gap:.5rem; margin-top:.7rem; padding-top:.65rem; border-top:1px dashed var(--border); flex-wrap:wrap; }
   .act{ display:inline-flex; align-items:center; gap:.4rem; height:2rem; padding:0 .8rem; border-radius:999px; border:1px solid var(--border); background:var(--surface); color:var(--txt2); font-size:.8rem; font-weight:600; white-space:nowrap; }
   .act svg{ width:.95rem; height:.95rem; }
-  .act.outline{ color:var(--ac); border-color:var(--ac); font-weight:700; }
+  .act.outline{ color:var(--x-amber-ink); border-color:var(--x-amber-bd); background:var(--x-amber-wash); font-weight:700; }
   .act.rec{ color:var(--rec); border-color:var(--rec); font-weight:700; }
   .act.quiet{ font-size:.74rem; }
   .dot{ width:.55rem; height:.55rem; border-radius:50%; background:var(--rec); box-shadow:0 0 0 0 rgba(var(--rec-rgb),.5); animation:pulse 1.2s infinite; }
@@ -207,8 +207,8 @@
     <table>
       <thead><tr><th>کجا</th><th>چه کسی</th><th>چه می‌کند</th><th>مکانیزم</th></tr></thead>
       <tbody>
-        <tr><td>زیر نوار پخش، روی کارت «پخش اپیزود»</td><td>هر حساب واردشده</td><td>ساختن قطعه با شروع/پایان، ریزتنظیم در شیت</td><td><code>#ep-audio</code> · <code>currentTime</code></td></tr>
-        <tr><td>همان دکمه در پلیر داخلی و کشوی هدفون هدر</td><td>هر حساب واردشده</td><td>همان کار، از هر صفحه‌ای که پادکست در پس‌زمینه پخش می‌شود</td><td><code>player.html</code> · <code>#dc-audio</code></td></tr>
+        <tr><td>زیر نوار پخش، روی کارت «پخش اپیزود»</td><td>دکمه برای همه (کهربایی)؛ ساختن: پریمیوم — لمسِ مهمان به ورود می‌رود، لمسِ رایگان کارت پریمیوم را باز می‌کند</td><td>ساختن قطعه با شروع/پایان، ریزتنظیم در شیت</td><td><code>#ep-audio</code> · <code>currentTime</code></td></tr>
+        <tr><td>همان دکمه در پلیر داخلی و کشوی هدفون هدر</td><td>همان گیت</td><td>همان کار، از هر صفحه‌ای که پادکست در پس‌زمینه پخش می‌شود</td><td><code>player.html</code> · <code>#dc-audio</code></td></tr>
         <tr><td>کارت قطعه در دفترچه‌ی هایلایت‌ها</td><td>پریمیوم (صفحه از قبل پریمیوم است)</td><td>پخش همان تکه در جا، ویرایش یادداشت، رفتن به اپیزود</td><td><code>audio_url</code> از <code>dentcast.json</code></td></tr>
         <tr><td>فرود روی صفحه‌ی اپیزود</td><td>صاحب قطعه</td><td>نوار پخش تکه را نشان می‌دهد و از شروعش پخش می‌کند</td><td><code>?dcclip=&lt;id&gt;</code> مثل <code>?dcphl=</code></td></tr>
         <tr><td>امبد Acast</td><td>—</td><td>غایب؛ به زمان آن پلیر دسترسی نداریم</td><td>iframe خارجی</td></tr>
@@ -247,7 +247,7 @@
           </div>
         </div>
       </div>
-      <p class="cap"><b>حالت آرام.</b> نوار و کنترل‌ها همان پلیر فعلی‌اند؛ تنها اضافه، ردیف نقطه‌چین زیر زمان است.</p>
+      <p class="cap"><b>حالت آرام.</b> نوار و کنترل‌ها همان پلیر فعلی‌اند؛ تنها اضافه، ردیف نقطه‌چین زیر زمان است. دکمه کهربایی است چون ساختنِ قطعه پریمیوم است (تصمیم ۱۴۰۵/۰۶/۲۲): همه می‌بینند، لمسِ رایگان کارت پریمیوم را باز می‌کند.</p>
     </div>
 
     <div class="phone">
@@ -492,7 +492,7 @@
     <dt>سه روش، یک شیت</dt><dd>شروع/پایان حین پخش راه اصلی است و دکمه‌اش زیر نوار می‌نشیند؛ دستگیره‌ها و چیپ‌های طول، دو راه دیگر، داخل شیتِ بعد از آن‌اند. کسی مجبور نیست بین سه UI انتخاب کند.</dd>
     <dt>دقت</dt><dd>ثانیه. دستگیره‌ها روی پنجره‌ی زوم‌شده نیم‌ثانیه دقت می‌دهند و پایانِ پخش با <code>timeupdate</code> در حدود یک‌چهارم ثانیه می‌ایستد؛ برای گفتار کافی است.</dd>
     <dt>چه ذخیره می‌شود</dt><dd>جدول جدا (کاربر، <code>content_id</code>، شروع، پایان، یادداشت، لیبل). نه در <code>highlights</code>، که متن‌محور است. <code>/export/highlights</code> آن را هم می‌دهد.</dd>
-    <dt>چه کسی</dt><dd>ساختن قطعه: هر حساب واردشده. دفترچه و پخشِ داخل آن: پریمیوم — همان مرزی که هایلایت متنی الان دارد؛ داده مال کاربر است، چیدمان چیزی است که خریده می‌شود.</dd>
+    <dt>چه کسی</dt><dd>ساختن قطعه: پریمیوم، از روز اول — اولین کار سایت که روی «ساختن» گیت دارد نه روی «چیدمان»، چون ارزش یک قطعه‌ی صوتی همان لحظه کامل حس می‌شود و رایگان دادنش یعنی بخشیدن قابلیت و فروختن یک فهرست. دکمه برای همه هست و کهربایی؛ گیت روی لمس. دیدن، ویرایش، حذف و خروجی‌گرفتن از قطعه‌های خودت: هر پلنی — مشترکِ منقضی‌شده چیزی را که ساخته از دست نمی‌دهد.</dd>
     <dt>غایب</dt><dd>امبد Acast، و پلیر روی اپیزودهای NoteCast (صوتِ کنار متن — این ماکاپ فقط اپیزودهای پادکست است).</dd>
   </dl>
 </section>

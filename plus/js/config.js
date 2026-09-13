@@ -419,4 +419,7 @@ export const PREMIUM_FEATURES = [
   // Index 6 — «گزارش ماهانه» (/plus/report.html). Appended last for the same
   // reason as the entry above.
   { title: 'گزارش ماهانه', hint: 'اول هر ماه: چی خوندی، کجای هر پیلار ایستادی، کدوم حوزه یک ماهه دست‌نخورده مونده.' },
+  // Index 7 — «قطعه‌های صوتی» (the clip button under every episode player,
+  // played back from the دفترچه). Appended last, same reason as above.
+  { title: 'قطعه‌های صوتی', hint: 'هر تکه از پادکست که به کارت اومد نگه دار؛ همون تکه بعداً از دفترچه پخش می‌شه.' },
 ];

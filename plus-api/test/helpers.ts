@@ -28,7 +28,7 @@ export async function resetDb(): Promise<void> {
   await drainAchievementSyncs();
   await pool.query(`
     truncate table
-      profiles, user_activity, highlights, card_state, content_votes,
+      profiles, user_activity, highlights, card_state, audio_clips, content_votes,
       collections, collection_items, snippets, user_pathways,
       subscriptions, payments, gift_redemptions, certificates, pathway_exams,
       pathway_exam_forms, pathway_exam_attempts, pathway_exam_examples, content_exam_questions, anon_events,
