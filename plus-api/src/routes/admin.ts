@@ -1,5 +1,6 @@
 import type { FastifyInstance, FastifyReply } from 'fastify';
 import { requireAdmin } from '../middleware/basic-auth.js';
+import { refreshOnce, contentStatus } from '../content-refresh.js';
 import { computeKpis, type Kpis } from '../services/kpis.js';
 import {
   onArticlePublished, runFreeDigest, runPremiumBacklog, backfillExistingContent,
@@ -658,6 +659,81 @@ function renderHtml(
       load(Number(btn.getAttribute('data-days')), Number(btn.getAttribute('data-offset') || 0));
     });
     load(1, 0);
+  })();
+  </script>
+
+  <h3 style="margin-top:26px">محتوا — نسخهٔ زندهٔ فایل‌ها <span id="cnWaiting" class="pill"></span></h3>
+  <div class="muted">
+    چهار فایلِ JSON در ریپو ویرایش می‌شوند و API همان‌ها را در زمان اجرا از سایت می‌خوانَد — به همین
+    دلیل عوض‌کردنِ نامِ یک مسیر یا آستانهٔ یک نشان کامیت است نه دیپلوی. اگر تغییری را روی سایت
+    می‌بینی ولی در محصول نه، جواب همین جدول است: <b>image/disk</b> یعنی نسخهٔ پخت‌شده در ایمیج
+    سرو می‌شود (آدرس تنظیم نشده، یا هنوز چیزی پذیرفته نشده) و <b>published</b> یعنی نسخهٔ سایت.
+    «الان بخوان» همین حالا اجرا می‌کند تا منتظرِ دورهٔ بعدی نمانی.
+  </div>
+  <div class="row" style="margin-top:10px">
+    <button id="cnRun" type="button">الان بخوان</button>
+    <span id="cnOut" class="muted"></span>
+  </div>
+  <div id="cnBox"></div>
+  <script>
+  (function () {
+    var box = document.getElementById('cnBox');
+    var btn = document.getElementById('cnRun');
+    var out = document.getElementById('cnOut');
+    var waiting = document.getElementById('cnWaiting');
+    if (!box || !btn) return;
+    // Each block on this page carries its own esc/fa: the scripts are separate
+    // IIFEs, so a helper defined in one is not in scope in another.
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    var FA = '۰۱۲۳۴۵۶۷۸۹';
+    function fa(n) { return String(n == null ? '' : n).replace(/[0-9]/g, function (d) { return FA[+d]; }); }
+    function when(t) {
+      if (!t) return '—';
+      try { return new Date(t).toLocaleString('fa-IR'); } catch (e) { return t; }
+    }
+    function render(d) {
+      if (!d || !d.ok) { box.textContent = 'نیامد.'; return; }
+      var files = d.files || [];
+      var stale = files.filter(function (f) { return f.configured && f.source.indexOf('published') !== 0; });
+      waiting.textContent = stale.length ? fa(stale.length) : '';
+      var body = files.map(function (f) {
+        var live = f.source.indexOf('published') === 0
+          ? '<span class="pill"><b>' + esc(f.source) + '</b></span>'
+          : '<span class="pill">' + esc(f.source) + '</span>';
+        var cfg = f.configured
+          ? '<span class="pill">' + esc(f.env) + '</span>'
+          : '<span class="pill"><b>' + esc(f.env) + ' تنظیم نشده</b></span>';
+        return '<tr><td>' + esc(f.key) + '</td><td>' + live + '</td><td>' + cfg + '</td>'
+          + '<td>' + esc(when(f.last_ok_at)) + '</td>'
+          + '<td class="muted">' + (f.last_error ? esc(f.last_error) : '') + '</td></tr>';
+      }).join('');
+      box.innerHTML = '<div class="muted" style="margin-top:10px">دورهٔ خواندن: هر '
+        + fa(d.refresh_seconds || 0) + ' ثانیه</div>'
+        + '<div class="tblwrap"><table><tr><th>فایل</th><th>نسخهٔ در سرویس</th><th>آدرس</th>'
+        + '<th>آخرین پذیرش</th><th>آخرین خطا</th></tr>' + body + '</table></div>';
+    }
+    function load() {
+      fetch('/admin/content', { credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(render)
+        .catch(function () { box.textContent = 'وضعیت نیامد.'; });
+    }
+    btn.addEventListener('click', function () {
+      btn.disabled = true; out.textContent = 'در حال خواندن…';
+      fetch('/admin/content/refresh', { method: 'POST', credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          btn.disabled = false;
+          out.textContent = 'خوانده شد.';
+          render(j);
+        })
+        .catch(function () { btn.disabled = false; out.textContent = 'اجرا نشد.'; });
+    });
+    load();
   })();
   </script>
 
@@ -4773,6 +4849,29 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.post('/admin/pathways/run-alerts', async (_request, reply) => {
     const run = await runPathwayAlerts(new Date());
     return reply.send({ ok: true, crossings: run.crossings, notified: run.notified });
+  });
+
+  /**
+   * محتوا — which copy of each versioned JSON file the API is actually serving.
+   *
+   * `pathways.json`, `content-index.json`, `badges.json` and
+   * `flashcards-index.json` are edited in the site repo and re-fetched at
+   * runtime (content-refresh.ts), which is what makes renaming a pathway or
+   * retuning a badge a commit rather than a deploy. The failure mode is that it
+   * silently does not happen — an env var never set in this deployment, an edge
+   * holding an old copy, a payload the validator refuses — and until now the
+   * only witness was a line in the container log. So: what is live, when it
+   * last arrived, and a button to fetch now rather than wait out the interval.
+   */
+  app.get('/admin/content', async (_request, reply) => reply.send({
+    ok: true, refresh_seconds: config.content.refreshSeconds, files: contentStatus(),
+  }));
+
+  app.post('/admin/content/refresh', async (_request, reply) => {
+    await refreshOnce();
+    return reply.send({
+      ok: true, refresh_seconds: config.content.refreshSeconds, files: contentStatus(),
+    });
   });
 
   /**
