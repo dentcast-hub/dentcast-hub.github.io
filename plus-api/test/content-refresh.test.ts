@@ -143,4 +143,65 @@ describe('the poller itself', () => {
     stop();
     expect(fetchSpy, 'an unconfigured deployment must not reach the network').not.toHaveBeenCalled();
   });
+
+  /**
+   * The staleness this module exists to remove came back through its own fetch:
+   * `cache-control: no-cache` is a REQUEST header, which an edge may ignore and
+   * Cloudflare ignores by default, so a published rename could sit behind a CDN
+   * copy while every poll reported success. A query parameter is not ignorable —
+   * it is a different URL.
+   */
+  it('asks for a URL no cache can already hold, and still sends the header', async () => {
+    const { config } = await import('../src/config.js');
+    const { refreshOnce, contentStatus, resetContentStatus } = await import('../src/content-refresh.js');
+    const seen: Array<{ url: string; init: RequestInit }> = [];
+    vi.stubGlobal('fetch', vi.fn(async (url: string, init: RequestInit) => {
+      seen.push({ url, init });
+      return { ok: true, status: 200, json: async () => GOOD_PATHWAYS } as unknown as Response;
+    }));
+    const saved = config.content.pathwaysUrls;
+    config.content.pathwaysUrls = ['https://example.test/plus/pathways.json?x=1'];
+    resetContentStatus();
+    try {
+      await refreshOnce();
+      expect(seen).toHaveLength(1);
+      // The configured query string survives; ours is appended to it.
+      expect(seen[0].url).toMatch(/\?x=1&_dc=\d+$/);
+      expect((seen[0].init.headers as Record<string, string>)['cache-control']).toBe('no-cache');
+
+      // And the fetch that was adopted is visible from outside the container:
+      // 'image/disk' vs 'published' is what tells an unset env var apart from a
+      // rejected payload apart from a cache — one symptom, three fixes.
+      const pw = contentStatus().find((f) => f.key === 'pathways')!;
+      expect(pw).toMatchObject({ env: 'PATHWAYS_URL', configured: true, last_error: null });
+      expect(pw.source).toBe('published (1 pathway(s))');
+      expect(pw.last_ok_at).toBeTruthy();
+    } finally {
+      config.content.pathwaysUrls = saved;
+      resetContentStatus();
+    }
+  });
+
+  it('records WHY a file is still the baked one, per file', async () => {
+    const { config } = await import('../src/config.js');
+    const { refreshOnce, contentStatus, resetContentStatus } = await import('../src/content-refresh.js');
+    vi.stubGlobal('fetch', vi.fn(async () => ({ ok: false, status: 504, json: async () => ({}) } as unknown as Response)));
+    const saved = config.content.pathwaysUrls;
+    config.content.pathwaysUrls = ['https://example.test/plus/pathways.json'];
+    resetContentStatus();
+    try {
+      await refreshOnce();
+      const files = contentStatus();
+      const pw = files.find((f) => f.key === 'pathways')!;
+      expect(pw.source, 'a failed fetch leaves the baked copy in service').toBe('image/disk');
+      expect(pw.last_error).toContain('504');
+      expect(pw.last_ok_at).toBeNull();
+      // An unconfigured file says so rather than looking like a failure.
+      const badges = files.find((f) => f.key === 'badges')!;
+      expect(badges).toMatchObject({ configured: false, env: 'BADGES_URL', last_try_at: null, last_error: null });
+    } finally {
+      config.content.pathwaysUrls = saved;
+      resetContentStatus();
+    }
+  });
 });

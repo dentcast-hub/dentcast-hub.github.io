@@ -37,4 +37,24 @@ describe('the panel it actually ships', () => {
       expect(() => new Function(src)).not.toThrow();
     }
   });
+
+  /**
+   * Parsing is not scope. Every block is its own IIFE, so `esc`/`fa` defined in
+   * one are NOT in scope in the next — and a block that calls one it never
+   * defined parses perfectly and then throws on the first render, which is the
+   * same silent-loss failure this file exists for. (2026-09-13: the «محتوا» block
+   * was first written exactly that way, and the parse check above passed it.)
+   */
+  it('never calls esc/fa in a block that does not define them', async () => {
+    const page = await app.inject({ method: 'GET', url: '/admin', headers: { authorization: basic } });
+    const blocks = Array.from(page.body.matchAll(/<script>([\s\S]*?)<\/script>/g)).map((m) => m[1]);
+    for (const helper of ['esc', 'fa']) {
+      const calls = new RegExp(`(^|[^\\w.])${helper}\\(`);
+      const defines = new RegExp(`function\\s+${helper}\\s*\\(|(var|let|const)\\s+${helper}\\s*=`);
+      for (const src of blocks) {
+        if (!calls.test(src)) continue;
+        expect(defines.test(src), `a block calls ${helper}() without defining it`).toBe(true);
+      }
+    }
+  });
 });
