@@ -222,8 +222,8 @@ export interface ExamForm {
   id: string;
   pathway_id: string;
   questions: ExamQuestion[];
-  mcq_draw: number;
-  free_draw: number;
+  /** Questions per attempt, drawn from the whole pool at random; 0 = all of it. */
+  draw: number;
   pass_percent: number;
   max_attempts: number;
   retry_days: number;
@@ -233,16 +233,15 @@ export interface ExamForm {
   updated_at: Date;
 }
 
-const FORM_SELECT = `select id, pathway_id, questions, mcq_draw, free_draw, pass_percent, max_attempts,
+const FORM_SELECT = `select id, pathway_id, questions, draw, pass_percent, max_attempts,
                             retry_days, supervised_until, note, created_at, updated_at
                        from pathway_exam_forms`;
 
 export interface FormInput {
   /** The founder's paste: plain text (the usual case) or a JSON array. */
   questions: unknown;
-  /** 0 = every question in the pool, every time. */
-  mcqDraw?: number;
-  freeDraw?: number;
+  /** Questions per attempt, from the whole pool, whatever their kinds. 0 = every question, every time. */
+  draw?: number;
   passPercent?: number;
   maxAttempts?: number;
   retryDays?: number;
@@ -263,18 +262,18 @@ export async function upsertForm(pathwayId: string, input: FormInput, client: Qu
   const d = config.exam;
   const row = await one<ExamForm & { created: boolean }>(
     `insert into pathway_exam_forms
-       (pathway_id, questions, mcq_draw, free_draw, pass_percent, max_attempts, retry_days, supervised_until, note)
-     values ($1, $2::jsonb, $3, $4, $5, $6, $7, $8, $9)
+       (pathway_id, questions, draw, pass_percent, max_attempts, retry_days, supervised_until, note)
+     values ($1, $2::jsonb, $3, $4, $5, $6, $7, $8)
      on conflict (pathway_id) do update
-       set questions = excluded.questions, mcq_draw = excluded.mcq_draw, free_draw = excluded.free_draw,
+       set questions = excluded.questions, draw = excluded.draw,
            pass_percent = excluded.pass_percent, max_attempts = excluded.max_attempts,
            retry_days = excluded.retry_days, supervised_until = excluded.supervised_until,
            note = excluded.note, updated_at = now()
-     returning id, pathway_id, questions, mcq_draw, free_draw, pass_percent, max_attempts,
+     returning id, pathway_id, questions, draw, pass_percent, max_attempts,
                retry_days, supervised_until, note, created_at, updated_at, (xmax = 0) as created`,
     [
       pathwayId, JSON.stringify(norm.questions),
-      intIn(input.mcqDraw, 0, 200, 0), intIn(input.freeDraw, 0, 200, 0),
+      intIn(input.draw, 0, 200, d.draw),
       intIn(input.passPercent, 1, 100, d.passPercent), intIn(input.maxAttempts, 1, 10, d.maxAttempts),
       intIn(input.retryDays, 0, 365, d.retryDays), intIn(input.supervisedUntil, 0, 1000, d.supervisedUntil),
       input.note?.trim() || null,
@@ -339,7 +338,7 @@ export async function addQuestion(
     const row = form
       ? await one<ExamForm>(
         `update pathway_exam_forms set questions = $2::jsonb, updated_at = now()
-          where pathway_id = $1 returning id, pathway_id, questions, mcq_draw, free_draw, pass_percent,
+          where pathway_id = $1 returning id, pathway_id, questions, draw, pass_percent,
                 max_attempts, retry_days, supervised_until, note, created_at, updated_at`,
         [pathwayId, JSON.stringify(questions)], client,
       )
@@ -347,7 +346,7 @@ export async function addQuestion(
       // builder-created form is identical to a pasted one.
       : await one<ExamForm>(
         `insert into pathway_exam_forms (pathway_id, questions) values ($1, $2::jsonb)
-         returning id, pathway_id, questions, mcq_draw, free_draw, pass_percent,
+         returning id, pathway_id, questions, draw, pass_percent,
                    max_attempts, retry_days, supervised_until, note, created_at, updated_at`,
         [pathwayId, JSON.stringify(questions)], client,
       );
@@ -398,8 +397,7 @@ export interface FormSummary {
   title_fa: string;
   mcq_count: number;
   free_count: number;
-  mcq_draw: number;
-  free_draw: number;
+  draw: number;
   pass_percent: number;
   max_attempts: number;
   retry_days: number;
@@ -417,7 +415,7 @@ export async function formRoster(client: Queryable = pool): Promise<FormSummary[
   const r = await query<Omit<FormSummary, 'title_fa' | 'attempts'> & {
     n_open: number; n_queued: number; n_passed: number; n_failed: number;
   }>(
-    `select f.id, f.pathway_id, f.mcq_draw, f.free_draw, f.pass_percent, f.max_attempts, f.retry_days,
+    `select f.id, f.pathway_id, f.draw, f.pass_percent, f.max_attempts, f.retry_days,
             f.supervised_until, f.note, f.updated_at,
             (select count(*)::int from jsonb_array_elements(f.questions) q where q->>'kind' = 'mcq') as mcq_count,
             (select count(*)::int from jsonb_array_elements(f.questions) q where q->>'kind' = 'free') as free_count,
@@ -666,12 +664,16 @@ export function attemptResult(a: ExamAttempt): AttemptResult {
 }
 
 function formRules(form: ExamForm): ExamState['rules'] {
+  // question_count is what an attempt will hold; mcq_count/free_count are
+  // the POOL's composition — the draw is over the whole pool, so which kinds
+  // a given sheet carries is not known until it is drawn. The reader copy
+  // uses them only to decide whether «هر بخش جداگانه» and the model
+  // sentence apply at all.
   const mcq = form.questions.filter((q) => q.kind === 'mcq').length;
   const free = form.questions.filter((q) => q.kind === 'free').length;
-  const mcqN = form.mcq_draw > 0 ? Math.min(form.mcq_draw, mcq) : mcq;
-  const freeN = form.free_draw > 0 ? Math.min(form.free_draw, free) : free;
+  const total = form.questions.length;
   return {
-    question_count: mcqN + freeN, mcq_count: mcqN, free_count: freeN,
+    question_count: form.draw > 0 ? Math.min(form.draw, total) : total, mcq_count: mcq, free_count: free,
     pass_percent: form.pass_percent, max_attempts: form.max_attempts, retry_days: form.retry_days,
     min_answer_chars: config.exam.minAnswerChars,
   };
@@ -773,10 +775,10 @@ export async function startAttempt(userId: string, pathwayId: string, holderName
   const prior = await listAttempts(userId, pathwayId);
   const seen = new Set<string>();
   for (const a of prior) for (const q of a.questions) seen.add(q.id);
-  const drawn = [
-    ...drawQuestions(form.questions.filter((q) => q.kind === 'mcq'), form.mcq_draw, seen),
-    ...drawQuestions(form.questions.filter((q) => q.kind === 'free'), form.free_draw, seen),
-  ];
+  // One draw over the whole pool, whatever the kinds — the founder keeps
+  // adding questions and every attempt takes `draw` of them at random,
+  // unseen ones first. The mix of a sheet is whatever the draw produced.
+  const drawn = drawQuestions(form.questions, form.draw, seen);
   // Unique per (form, reader), NOT the reader-facing ordinal: a voided
   // attempt keeps its number so the unique index never collides, and
   // examState renumbers the counted ones for display.
