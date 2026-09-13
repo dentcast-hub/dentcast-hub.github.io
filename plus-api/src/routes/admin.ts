@@ -59,6 +59,7 @@ import {
 import {
   assignExam, deleteAssignment, listAssignments, assignmentRoster, getAssignment, notifyAssigned,
   upsertForm, getForm, deleteForm, formRoster, queueRows, attemptRoster, ruleAttempt, notifyAssigneesOfNewForm,
+  parseQuestions,
 } from '../services/pathway-exams.js';
 import { getPathways } from '../pathways.js';
 import {
@@ -784,15 +785,22 @@ function renderHtml(
       <div style="flex:0 0 90px"><label for="efRetry">فاصله (روز)</label><input id="efRetry" type="number" min="0" max="365" value="7"></div>
       <div style="flex:0 0 90px"><label for="efSup">حدِ نظارت</label><input id="efSup" type="number" min="0" max="1000" value="5" title="چند حکم تو لازم است تا مدل خودش تشریحی را ببندد"></div>
     </div>
-    <div><label for="efQ">سؤال‌ها (JSON — خروجی NotebookLM را بچسبان؛ کلیدهای رایج خودش شناخته می‌شود)</label>
-      <textarea id="efQ" rows="8" dir="ltr" placeholder='[{"kind":"mcq","prompt_fa":"…","options":["…","…","…","…"],"correct":1},{"kind":"free","prompt_fa":"…","key_points":["…","…","…"]}]'></textarea></div>
+    <div><label for="efQ">سؤال‌ها — همان‌طور که نوشته‌ای بچسبان (متن ساده؛ JSON هم قبول است)</label>
+      <textarea id="efQ" rows="9" dir="auto" placeholder="۱. متن سؤال تستی … / الف) گزینه / ب) گزینه ✓ …"></textarea>
+      <div class="muted">
+        هر سؤال با <b>شمارهٔ خودش</b> شروع شود؛ گزینه‌ها با <b>الف/ب/ج/د</b> (یا a/b/c/d یا خط تیره)؛
+        گزینهٔ درست را با <b>✓</b> علامت بزن یا زیرش بنویس «پاسخ: ب». سؤال تشریحی گزینه ندارد و زیرش
+        «<b>نکته‌ها:</b>» و نکته‌های کلیدی می‌آید. اول «بررسی متن» را بزن تا ببینی چه خوانده شد.
+      </div></div>
     <div><label for="efNote">یادداشت (اختیاری)</label><input id="efNote" type="text" maxlength="400"></div>
     <div class="row">
+      <button id="efCheck" type="button">بررسی متن</button>
       <button id="efSend" type="button">ذخیرهٔ فرم</button>
       <button id="efPrompt" type="button">الگوی پرامپت NotebookLM</button>
       <span id="efOut" class="muted"></span>
     </div>
-    <pre id="efPromptBox" dir="rtl" style="display:none;white-space:pre-wrap;font-family:inherit;font-size:.9em;border:1px solid #ddd;padding:10px;border-radius:8px"></pre>
+    <div id="efPreview"></div>
+    <pre id="efPromptBox" dir="rtl" style="display:none;white-space:pre-wrap;font-family:inherit;font-size:.9em;border:1px solid rgba(2,35,96,.14);padding:10px;border-radius:8px"></pre>
   </form>
   <div id="efList"></div>
 
@@ -857,11 +865,31 @@ function renderHtml(
     }).catch(function () { efOut.textContent = 'فهرست مسیرها نیامد.'; })
       .then(function () { loadForms(); loadAssign(); loadQueue(); });
 
-    var PROMPT = 'از روی منابعی که در این نوت‌بوک هست، یک آزمون پایان مسیر بساز. خروجی را فقط به شکل یک آرایهٔ JSON بده، بدون هیچ متن دیگری. هر عنصر یکی از این دو شکل است:'
-      + ' (۱) تستی: {"kind":"mcq","prompt_fa":"متن سؤال به فارسی","options":["گزینهٔ ۱","گزینهٔ ۲","گزینهٔ ۳","گزینهٔ ۴"],"correct":<اندیس صفرمبنای گزینهٔ درست>}'
-      + ' (۲) تشریحی: {"kind":"free","prompt_fa":"متن سؤال به فارسی","key_points":["نکتهٔ کلیدی ۱","نکتهٔ کلیدی ۲","نکتهٔ کلیدی ۳"]}.'
-      + ' سؤال‌های تستی باید یک پاسخ درست قطعی داشته باشند و گزینه‌های غلط باورپذیر باشند؛ سؤال‌های تشریحی باید فهم مفهومی و استدلال بالینی را بسنجند و هر کدام ۳ تا ۵ نکتهٔ کلیدیِ قابل‌بررسی داشته باشند که یک پاسخ خوب باید پوشش دهد.'
-      + ' فقط از محتوای منابع استفاده کن و چیزی از خودت اضافه نکن. ۱۵ سؤال تستی و ۵ سؤال تشریحی بساز.';
+    // NotebookLM answers in prose, so the prompt asks for the shape the panel
+    // itself reads (services/exam-text.ts) rather than for JSON it will not
+    // produce. Built with String.fromCharCode(10): a backslash-n here would be
+    // a raw newline inside a browser string literal and take the block down.
+    var NL = String.fromCharCode(10);
+    var PROMPT = [
+      'از روی منابع همین نوت‌بوک یک آزمون پایانِ مسیر بساز. خروجی را فقط به شکل زیر بنویس و هیچ توضیح دیگری اضافه نکن:',
+      '',
+      '۱. متن سؤال تستی',
+      'الف) گزینهٔ اول',
+      'ب) گزینهٔ دوم ✓',
+      'ج) گزینهٔ سوم',
+      'د) گزینهٔ چهارم',
+      '',
+      '۲. متن سؤال تشریحی',
+      'نکته‌ها:',
+      '- نکتهٔ کلیدی اول',
+      '- نکتهٔ کلیدی دوم',
+      '- نکتهٔ کلیدی سوم',
+      '',
+      'قواعد: هر سؤال با شمارهٔ خودش شروع شود. گزینه‌ها با الف/ب/ج/د و گزینهٔ درست با ✓ علامت بخورد (فقط یکی).',
+      'سؤالِ تشریحی گزینه ندارد؛ زیرش «نکته‌ها:» بنویس و ۳ تا ۵ نکتهٔ کلیدیِ قابل‌بررسی بگذار که یک پاسخ خوب باید پوشش بدهد.',
+      'سؤال تستی باید یک پاسخ درستِ قطعی داشته باشد و گزینه‌های غلط باورپذیر باشند؛ سؤال تشریحی فهم مفهومی و استدلال بالینی را بسنجد.',
+      'فقط از محتوای منابع استفاده کن و چیزی از خودت اضافه نکن.'
+    ].join(NL);
     document.getElementById('efPrompt').addEventListener('click', function () {
       var box = document.getElementById('efPromptBox');
       box.textContent = PROMPT;
@@ -892,9 +920,52 @@ function renderHtml(
       }).catch(function () { efList.textContent = 'فهرست نیامد.'; });
     }
 
+    // What the parser read, once «بررسی متن» has confirmed it. Saving sends
+    // THIS rather than the text, so what was reviewed is what is stored; any
+    // edit to the box clears it and the review has to happen again.
+    var parsed = null;
+    var efPreview = document.getElementById('efPreview');
+    var efCheck = document.getElementById('efCheck');
+    document.getElementById('efQ').addEventListener('input', function () {
+      parsed = null; efPreview.innerHTML = '';
+    });
+
+    function drawPreview(d) {
+      var qs = d.questions || [];
+      var rows = qs.map(function (q, i) {
+        var body;
+        if (q.kind === 'mcq') {
+          body = '<ul style="margin:4px 0 0;padding-inline-start:1.3em">' + q.options.map(function (o, k) {
+            return '<li>' + esc(o) + (k === q.correct ? ' <b>✓ درست</b>' : '') + '</li>';
+          }).join('') + '</ul>';
+        } else {
+          body = '<div class="muted" style="margin-top:2px">نکته‌های کلیدی:</div><ul style="margin:2px 0 0;padding-inline-start:1.3em">'
+            + q.key_points.map(function (kp) { return '<li>' + esc(kp.text) + '</li>'; }).join('') + '</ul>';
+        }
+        return '<div style="padding:8px 0;border-top:1px solid rgba(2,35,96,.08)">'
+          + '<b>' + fa(i + 1) + '.</b> <span class="pill">' + (q.kind === 'mcq' ? 'تستی' : 'تشریحی') + '</span> '
+          + esc(q.prompt_fa) + body + '</div>';
+      }).join('');
+      efPreview.innerHTML = '<div class="tk"><div class="tk-head"><b>' + fa(qs.length) + ' سؤال خوانده شد</b> — '
+        + fa(d.mcq_count) + ' تستی، ' + fa(d.free_count) + ' تشریحی. اگر درست است «ذخیرهٔ فرم» را بزن.</div>'
+        + rows + '</div>';
+    }
+
+    efCheck.addEventListener('click', function () {
+      if (!val('efQ')) { efOut.textContent = 'اول سؤال‌ها را بچسبان.'; return; }
+      efCheck.disabled = true; efOut.textContent = 'در حال خواندن…';
+      post('/admin/exam-forms/parse', { questions: val('efQ') }).then(function (res) {
+        efCheck.disabled = false;
+        if (!res.ok) { parsed = null; efPreview.innerHTML = ''; efOut.textContent = 'خوانده نشد: ' + (res.j.message || 'خطا'); return; }
+        parsed = res.j.questions;
+        efOut.textContent = '';
+        drawPreview(res.j);
+      }).catch(function () { efCheck.disabled = false; efOut.textContent = 'ارسال نشد.'; });
+    });
+
     efBtn.addEventListener('click', function () {
-      var qs;
-      try { qs = JSON.parse(val('efQ') || '[]'); } catch (e) { efOut.textContent = 'JSON سؤال‌ها معتبر نیست: ' + e.message; return; }
+      var qs = parsed || val('efQ');
+      if (!qs || (typeof qs === 'string' && !qs.trim())) { efOut.textContent = 'اول سؤال‌ها را بچسبان.'; return; }
       efBtn.disabled = true; efOut.textContent = 'در حال ذخیره…';
       post('/admin/exam-forms', {
         pathway_id: val('efPath'), questions: qs,
@@ -906,7 +977,9 @@ function renderHtml(
         if (!res.ok) { efOut.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
         var q = (res.j.form && res.j.form.questions) || [];
         var m = q.filter(function (x) { return x.kind === 'mcq'; }).length;
-        efOut.textContent = (res.j.created ? 'ذخیره شد' : 'به‌روز شد') + ' — ' + fa(m) + ' تستی، ' + fa(q.length - m) + ' تشریحی.';
+        efOut.textContent = (res.j.created ? 'ذخیره شد' : 'به‌روز شد') + ' — ' + fa(m) + ' تستی، ' + fa(q.length - m) + ' تشریحی.'
+          + (res.j.notified ? ' به ' + fa(res.j.notified) + ' نفر که منتظر بودند خبر رفت.' : '');
+        parsed = null; efPreview.innerHTML = '';
         loadForms();
       }).catch(function () { efBtn.disabled = false; efOut.textContent = 'ارسال نشد.'; });
     });
@@ -4635,6 +4708,29 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ ok: true, form });
   });
 
+  /**
+   * POST /admin/exam-forms/parse — { questions } → what we read, or why not.
+   *
+   * A DRY RUN, and the reason it exists: the founder's paste is prose from
+   * NotebookLM, and a parser reading prose must show its work before anything
+   * is written. The panel previews what came back, and then saves THAT — the
+   * reviewed array, not the text — so what he approved is exactly what is
+   * stored, with no second parse in between.
+   */
+  app.post('/admin/exam-forms/parse', {
+    schema: { body: { type: 'object', required: ['questions'], properties: { questions: {} } } },
+  }, async (request, reply) => {
+    const { questions } = request.body as { questions: unknown };
+    const r = parseQuestions(questions);
+    if (!r.ok) return reply.code(400).send({ error: 'invalid_questions', message: r.error });
+    return reply.send({
+      ok: true,
+      questions: r.questions,
+      mcq_count: r.questions.filter((q) => q.kind === 'mcq').length,
+      free_count: r.questions.filter((q) => q.kind === 'free').length,
+    });
+  });
+
   // POST /admin/exam-forms — { pathway_id, questions, mcq_draw?, free_draw?,
   // pass_percent?, max_attempts?, retry_days?, supervised_until?, note? }.
   // `questions` is the founder's paste, normalised leniently; a bad question
@@ -4645,6 +4741,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
         type: 'object', required: ['pathway_id', 'questions'],
         properties: {
           pathway_id: { type: 'string' },
+          // Anything: the founder's prose, or an array. parseQuestions decides.
           questions: {},
           mcq_draw: { type: 'integer', minimum: 0, maximum: 200 },
           free_draw: { type: 'integer', minimum: 0, maximum: 200 },
