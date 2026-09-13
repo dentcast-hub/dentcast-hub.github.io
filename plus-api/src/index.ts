@@ -6,7 +6,7 @@ import {
   startLeagueScheduler, startHeldNotificationsScheduler, startReviewReminderScheduler,
   startAssistantLearningScheduler, startSubscriptionScheduler,
   startSubscriptionReminderScheduler, startPaymentReconcileScheduler,
-  startPathwayAlertScheduler,
+  startPathwayAlertScheduler, startMonthlyReportScheduler,
 } from './scheduler.js';
 import { startBalePolling } from './services/bale-updates.js';
 import { startContentRefresh } from './content-refresh.js';
@@ -42,6 +42,10 @@ async function main(): Promise<void> {
   // the pathway page — so without this the certificate can only ever be asked
   // for, never offered.
   const stopPathwayAlerts = startPathwayAlertScheduler();
+  // گزارش ماهانه: announce last month's report to premium readers in the first
+  // days of each Jalali month. The report itself is derived on request; this
+  // only writes the اطلاعیه row that says it exists.
+  const stopMonthlyReports = startMonthlyReportScheduler();
   // Bale connect worker: long-polls getUpdates and links chat_ids (no-op without
   // a BALE_BOT_TOKEN). Primary path since Bale's webhook delivery is unreliable.
   const stopBalePolling = startBalePolling();
@@ -64,6 +68,7 @@ async function main(): Promise<void> {
     stopSubscriptionReminders();
     stopPaymentReconcile();
     stopPathwayAlerts();
+    stopMonthlyReports();
     stopBalePolling();
     stopContentRefresh();
     await app.close();
