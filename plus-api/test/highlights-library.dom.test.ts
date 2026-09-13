@@ -393,8 +393,8 @@ describe('audio clips in the library', () => {
     expect(first.textContent).toContain('ترتیب EDTA و سایلن');
     expect(first.querySelector('.dcp-card-label')!.textContent).toBe('نکته بالینی');
     expect(first.closest('a')).toBeNull(); // a card, never a link
-    expect(document.querySelector('.dcp-hlib-count')!.textContent).toContain('۳ هایلایت · ۲ قطعه‌ی صوتی در ۳ مطلب');
-    expect(document.querySelector('.dcp-hlib-gsub')!.textContent).toContain('۲ قطعه');
+    expect(document.querySelector('.dcp-hlib-count')!.textContent).toContain('۳ هایلایت · ۲ هایلایت صوتی در ۳ مطلب');
+    expect(document.querySelector('.dcp-hlib-gsub')!.textContent).toContain('۲ هایلایت صوتی');
   });
 
   it('the episode link lands ON the clip (?dcclip=) and the kind filter lives in the URL', async () => {

@@ -7,22 +7,22 @@
 // opens into a masonry grid of "pins." This module is shared by
 // /plus/collections.html, /plus/collection.html, the workbench's two
 // single-purpose collection buttons, and the dashboard.
-import { el, faNum } from './util.js?v=82';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=82';
-import { premiumCta } from './premium-cta.js?v=82';
-import { api, currentUser, apiBase } from './api.js?v=82';
-import { openLoginModal } from './login-modal.js?v=82';
-import { FOLDER_EN } from './content-index.js?v=82';
-import { markReturnTrail } from './return-trail.js?v=82';
-import { PALETTE } from './config.js?v=82';
+import { el, faNum } from './util.js?v=83';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=83';
+import { premiumCta } from './premium-cta.js?v=83';
+import { api, currentUser, apiBase } from './api.js?v=83';
+import { openLoginModal } from './login-modal.js?v=83';
+import { FOLDER_EN } from './content-index.js?v=83';
+import { markReturnTrail } from './return-trail.js?v=83';
+import { PALETTE } from './config.js?v=83';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
   kindChip, snippetInlineEditor, looksLatin,
-} from './hl-view.js?v=82';
+} from './hl-view.js?v=83';
 // A قطعه‌ی صوتی pin draws the same playable body the دفترچه draws
 // (clip-view.js) — one vocabulary, so a clip never looks like two things.
-import { clipBody, clipInlineEditor, clipHref, clipAsText, createClipPlayer } from './clip-view.js?v=82';
+import { clipBody, clipInlineEditor, clipHref, clipAsText, createClipPlayer } from './clip-view.js?v=83';
 
 const hlColorCss = (key) => (PALETTE.find((p) => p.key === key) || {}).css || '#eaecf5';
 
@@ -1042,7 +1042,7 @@ export async function renderCollectionDetail(container, id) {
   });
   const KINDS = [
     { key: '', fa: 'همه' }, { key: 'highlight', fa: 'هایلایت‌ها' }, { key: 'page', fa: 'صفحه‌ها' },
-    { key: 'text', fa: 'متن من' }, { key: 'reference', fa: 'رفرنس' }, { key: 'clip', fa: '🎧 قطعه‌ی صوتی' },
+    { key: 'text', fa: 'متن من' }, { key: 'reference', fa: 'رفرنس' }, { key: 'clip', fa: '🎧 هایلایت صوتی' },
   ];
   // One <audio> for every clip pin on the board (clip-view.js), made lazily so
   // a board with no clip never creates one.

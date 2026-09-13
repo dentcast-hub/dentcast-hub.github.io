@@ -1,11 +1,11 @@
 // Controller for the standalone /plus/profile.html page. Renders the same
 // profile the header overlay uses. Requires login.
-import { currentUser, meStatus } from './api.js?v=82';
-import { unreachableGate } from './premium-cta.js?v=82';
-import { openLoginModal } from './login-modal.js?v=82';
-import { renderProfile } from './profile.js?v=82';
-import { el } from './util.js?v=82';
-import { registerSW } from './pwa.js?v=82';
+import { currentUser, meStatus } from './api.js?v=83';
+import { unreachableGate } from './premium-cta.js?v=83';
+import { openLoginModal } from './login-modal.js?v=83';
+import { renderProfile } from './profile.js?v=83';
+import { el } from './util.js?v=83';
+import { registerSW } from './pwa.js?v=83';
 
 async function main() {
   registerSW();

@@ -17,18 +17,18 @@
 //      scrolls to the mark).
 //   4. Every filter lives in the URL, so a filtered view survives a refresh,
 //      the back button, and being sent to yourself.
-import { el, faNum, debounce } from './util.js?v=82';
-import { api } from './api.js?v=82';
-import { FOLDER_EN } from './content-index.js?v=82';
-import { openCollectionPicker } from './collections.js?v=82';
-import { LABELS, PALETTE } from './config.js?v=82';
+import { el, faNum, debounce } from './util.js?v=83';
+import { api } from './api.js?v=83';
+import { FOLDER_EN } from './content-index.js?v=83';
+import { openCollectionPicker } from './collections.js?v=83';
+import { LABELS, PALETTE } from './config.js?v=83';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
-} from './hl-view.js?v=82';
+} from './hl-view.js?v=83';
 // قطعه‌های صوتی ride in the same library: a clip is a highlight in time, so it
 // sits in its episode's group beside the caption highlights (clip-view.js).
-import { clipCard, createClipPlayer, clipAsText } from './clip-view.js?v=82';
+import { clipCard, createClipPlayer, clipAsText } from './clip-view.js?v=83';
 
 // How many article groups (or flat cards) are drawn before the "load more"
 // sentinel takes over. A library of a few thousand highlights must not build a
@@ -169,10 +169,10 @@ function articleGroup(article, ctx) {
       article.title + '\n\n' + article.highlights.map((h) => itemText(h)).join('\n\n'), e.currentTarget,
     ),
   });
-  // «۲ هایلایت · ۱ قطعه» — each kind counted by its own name.
+  // «۲ هایلایت · ۱ هایلایت صوتی» — each kind counted by its own name.
   const nText = article.highlights.filter((h) => !isClip(h)).length;
   const nClip = article.highlights.length - nText;
-  const countText = [nText ? faNum(nText) + ' هایلایت' : null, nClip ? faNum(nClip) + ' قطعه' : null].filter(Boolean).join(' · ');
+  const countText = [nText ? faNum(nText) + ' هایلایت' : null, nClip ? faNum(nClip) + ' هایلایت صوتی' : null].filter(Boolean).join(' · ');
 
   const head = el('div', { class: 'dcp-hlib-ghead' }, [
     toggle,
@@ -489,7 +489,7 @@ export async function renderHighlightLibrary(container) {
     const defs = [
       { key: '', fa: 'همه', n: all.length },
       { key: 'text', fa: 'متن', n: nText },
-      { key: 'clip', fa: '🎧 قطعه‌ی صوتی', n: nClip },
+      { key: 'clip', fa: '🎧 هایلایت صوتی', n: nClip },
     ];
     kindChips.replaceChildren(el('span', { class: 'dcp-hlib-chips-label' }, 'نوع'), ...defs.map((d) => {
       const b = el('button', {
@@ -561,14 +561,14 @@ export async function renderHighlightLibrary(container) {
     const shown = groups.reduce((n, g) => n + g.highlights.length, 0);
     const src = source();
     // With clips in the library the headline counts each kind by its name:
-    // «۱۳۲ هایلایت · ۹ قطعه‌ی صوتی در ۴۱ مطلب».
+    // «۱۳۲ هایلایت · ۹ هایلایت صوتی در ۴۱ مطلب».
     const clipTotal = src.clip_total || 0;
     const textTotal = src.total - clipTotal;
     const kinds = clipTotal
-      ? faNum(textTotal) + ' هایلایت · ' + faNum(clipTotal) + ' قطعه‌ی صوتی'
+      ? faNum(textTotal) + ' هایلایت · ' + faNum(clipTotal) + ' هایلایت صوتی'
       : faNum(src.total) + ' هایلایت';
     // Filtered, with both kinds in the library, «۳ از ۴ مورد» — «۳ از ۱ هایلایت
-    // · ۳ قطعه» reads as a sum that does not add up.
+    // · ۳ هایلایت صوتی» reads as a sum that does not add up.
     const of = clipTotal ? faNum(src.total) + ' مورد' : faNum(src.total) + ' هایلایت';
     countLine.replaceChildren(...(shown === src.total
       ? [document.createTextNode(kinds + ' در ' + faNum(src.article_count) + ' مطلب')]

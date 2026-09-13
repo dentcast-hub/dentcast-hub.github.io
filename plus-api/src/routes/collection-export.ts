@@ -59,9 +59,9 @@ function fmtClock(s: number | null | undefined): string {
 // resolveItem() returns one of four shapes and only the clip one carries these
 // fields; the kind check at the call site is the discriminator, this is the type.
 interface ClipLike { start_s?: number | null; end_s?: number | null; clip_id?: string | null; url?: string | null }
-/** «قطعه‌ی صوتی · 07:27 → 08:03» — a clip pin's one line in a handout. */
+/** «هایلایت صوتی · 07:27 → 08:03» — a clip pin's one line in a handout. */
 function clipLine(item: ClipLike): string {
-  return 'قطعه‌ی صوتی · ' + fmtClock(item.start_s) + ' → ' + fmtClock(item.end_s);
+  return 'هایلایت صوتی · ' + fmtClock(item.start_s) + ' → ' + fmtClock(item.end_s);
 }
 /** The episode page, landing ON the clip (plus.js reads ?dcclip=). */
 function clipUrl(item: ClipLike): string {

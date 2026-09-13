@@ -31,11 +31,11 @@
 // with no coordination between the modules. When there is no ad — a premium
 // visitor, or the slot switched off — the section simply moves up under the
 // Pulse and nothing else changes.
-import { el, faNum } from './util.js?v=82';
-import { currentUser, api } from './api.js?v=82';
-import { PREMIUM_FEATURES } from './config.js?v=82';
-import { pricingHref } from './premium-cta.js?v=82';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=82';
+import { el, faNum } from './util.js?v=83';
+import { currentUser, api } from './api.js?v=83';
+import { PREMIUM_FEATURES } from './config.js?v=83';
+import { pricingHref } from './premium-cta.js?v=83';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=83';
 
 // Crafted inline icons, one per feature (same reasoning as home-card.js's promo
 // chips: emoji would sit at a different weight than the site's own stroke icons).
@@ -68,7 +68,7 @@ const CARDS = [
   { f: F[3], ico: IC.compass,     href: '/plus/reading-compass.html', sub: 'چقدر از هر پیلار را خوانده‌اید، کجا جا مانده' },
   { f: F[5], ico: IC.library,     href: '/plus/highlights.html',      sub: 'همه‌ی هایلایت‌هایتان یکجا، با یادداشت و جستجو' },
   { f: F[6], ico: IC.report,      href: '/plus/report.html',          sub: 'هر ماه، آنچه خواندید و کجا ایستادید' },
-  { f: F[7], ico: IC.clip,        href: '/plus/highlights.html?kind=clip', sub: 'یک تکه از پادکست را نگه دارید و همان را دوباره بشنوید' },
+  { f: F[7], ico: IC.clip,        href: '/plus/highlights.html?kind=clip', sub: 'مثل هایلایت متن، روی پادکست: تکه را نگه دارید و دوباره بشنوید' },
 ];
 
 // The two slots index.html carries — one per homepage layout. Both are filled:
