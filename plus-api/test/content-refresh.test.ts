@@ -182,6 +182,80 @@ describe('the poller itself', () => {
     }
   });
 
+  /**
+   * The image is a floor, not a fallback. A freshly built image carries the
+   * file as the repo has it; a stale edge copy — which carries the ORIGINAL
+   * object's Last-Modified — must not override it at boot. This is the exact
+   * 2026-09-13 failure: image rebuilt, cache purged, old name still served.
+   */
+  it('refuses a published copy older than the image, and keeps the newer floor afterwards', async () => {
+    const { config } = await import('../src/config.js');
+    const { refreshOnce, contentStatus, resetContentStatus } = await import('../src/content-refresh.js');
+    const BUILT = '2026-09-13T06:40:00Z';
+    let lastModified = 'Sun, 13 Sep 2026 05:57:00 GMT'; // the edge's copy: before the build
+    let payload: unknown = [{ ...GOOD_PATHWAYS[0], title_fa: 'قدیمی' }];
+    vi.stubGlobal('fetch', vi.fn(async () => ({
+      ok: true, status: 200,
+      headers: { get: (k: string) => (k === 'last-modified' ? lastModified : null) },
+      json: async () => payload,
+    } as unknown as Response)));
+    const savedUrls = config.content.pathwaysUrls;
+    const savedBuilt = config.build.builtAt;
+    config.content.pathwaysUrls = ['https://example.test/plus/pathways.json'];
+    config.build.builtAt = BUILT;
+    resetContentStatus();
+    try {
+      await refreshOnce();
+      let pw = contentStatus().find((f) => f.key === 'pathways')!;
+      expect(pw.source, 'the baked copy must keep serving').toBe('image/disk');
+      expect(pw.last_error).toContain('older than the one in service');
+      expect(getPathways().find((p) => p.id === 'implant-surgical')?.title_fa).not.toBe('قدیمی');
+
+      // The site sync for a later commit lands: newer than the build → adopted.
+      lastModified = 'Sun, 13 Sep 2026 07:00:00 GMT';
+      payload = [{ ...GOOD_PATHWAYS[0], title_fa: 'تازه' }];
+      await refreshOnce();
+      pw = contentStatus().find((f) => f.key === 'pathways')!;
+      expect(pw.source).toBe('published (1 pathway(s))');
+      expect(pw.published_at).toBe('2026-09-13T07:00:00.000Z');
+      expect(getPathways()[0].title_fa).toBe('تازه');
+
+      // A stale answer AFTER that (another edge node) cannot roll it back.
+      lastModified = 'Sun, 13 Sep 2026 06:50:00 GMT';
+      payload = [{ ...GOOD_PATHWAYS[0], title_fa: 'قدیمی' }];
+      await refreshOnce();
+      expect(getPathways()[0].title_fa, 'the adopted copy is the new floor').toBe('تازه');
+      expect(contentStatus().find((f) => f.key === 'pathways')!.last_error).toContain('older');
+    } finally {
+      config.content.pathwaysUrls = savedUrls;
+      config.build.builtAt = savedBuilt;
+      resetContentStatus();
+    }
+  });
+
+  it('keeps the old behaviour when either timestamp is missing', async () => {
+    const { config } = await import('../src/config.js');
+    const { refreshOnce, contentStatus, resetContentStatus } = await import('../src/content-refresh.js');
+    vi.stubGlobal('fetch', vi.fn(async () => ({
+      ok: true, status: 200, headers: { get: () => null }, json: async () => GOOD_PATHWAYS,
+    } as unknown as Response)));
+    const savedUrls = config.content.pathwaysUrls;
+    const savedBuilt = config.build.builtAt;
+    config.content.pathwaysUrls = ['https://example.test/plus/pathways.json'];
+    config.build.builtAt = '2026-09-13T06:40:00Z';
+    resetContentStatus();
+    try {
+      await refreshOnce(); // no Last-Modified from the mirror → adopted as before
+      const pw = contentStatus().find((f) => f.key === 'pathways')!;
+      expect(pw.source).toBe('published (1 pathway(s))');
+      expect(pw.published_at).toBeNull();
+    } finally {
+      config.content.pathwaysUrls = savedUrls;
+      config.build.builtAt = savedBuilt;
+      resetContentStatus();
+    }
+  });
+
   it('records WHY a file is still the baked one, per file', async () => {
     const { config } = await import('../src/config.js');
     const { refreshOnce, contentStatus, resetContentStatus } = await import('../src/content-refresh.js');

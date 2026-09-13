@@ -708,13 +708,15 @@ function renderHtml(
           ? '<span class="pill">' + esc(f.env) + '</span>'
           : '<span class="pill"><b>' + esc(f.env) + ' تنظیم نشده</b></span>';
         return '<tr><td>' + esc(f.key) + '</td><td>' + live + '</td><td>' + cfg + '</td>'
+          + '<td>' + esc(when(f.published_at)) + '</td>'
           + '<td>' + esc(when(f.last_ok_at)) + '</td>'
           + '<td class="muted">' + (f.last_error ? esc(f.last_error) : '') + '</td></tr>';
       }).join('');
       box.innerHTML = '<div class="muted" style="margin-top:10px">دورهٔ خواندن: هر '
-        + fa(d.refresh_seconds || 0) + ' ثانیه</div>'
+        + fa(d.refresh_seconds || 0) + ' ثانیه · ایمیج ساخته‌شده در ' + esc(when(d.built_at))
+        + ' (' + esc(d.commit || '') + ') — نسخهٔ سایت فقط وقتی پذیرفته می‌شود که از ایمیج تازه‌تر باشد</div>'
         + '<div class="tblwrap"><table><tr><th>فایل</th><th>نسخهٔ در سرویس</th><th>آدرس</th>'
-        + '<th>آخرین پذیرش</th><th>آخرین خطا</th></tr>' + body + '</table></div>';
+        + '<th>تاریخِ فایلِ سایت</th><th>آخرین پذیرش</th><th>آخرین خطا</th></tr>' + body + '</table></div>';
     }
     function load() {
       fetch('/admin/content', { credentials: 'include' })
@@ -4863,15 +4865,17 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
    * only witness was a line in the container log. So: what is live, when it
    * last arrived, and a button to fetch now rather than wait out the interval.
    */
-  app.get('/admin/content', async (_request, reply) => reply.send({
-    ok: true, refresh_seconds: config.content.refreshSeconds, files: contentStatus(),
-  }));
-
+  const contentReport = () => ({
+    ok: true,
+    refresh_seconds: config.content.refreshSeconds,
+    built_at: config.build.builtAt,
+    commit: config.build.commit,
+    files: contentStatus(),
+  });
+  app.get('/admin/content', async (_request, reply) => reply.send(contentReport()));
   app.post('/admin/content/refresh', async (_request, reply) => {
     await refreshOnce();
-    return reply.send({
-      ok: true, refresh_seconds: config.content.refreshSeconds, files: contentStatus(),
-    });
+    return reply.send(contentReport());
   });
 
   /**
