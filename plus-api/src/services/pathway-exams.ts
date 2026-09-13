@@ -284,6 +284,96 @@ export async function upsertForm(pathwayId: string, input: FormInput, client: Qu
   return { form, created };
 }
 
+/**
+ * The next free question id for a pool — `q7` when `q6` is the highest.
+ *
+ * Ids are LOAD-BEARING and an existing one is never re-minted: an attempt's
+ * snapshot and every `pathway_exam_examples` row reference them, so a question
+ * added today must not renumber a question somebody was graded on yesterday.
+ */
+export function nextQuestionId(existing: ExamQuestion[]): string {
+  const taken = new Set(existing.map((q) => q.id));
+  let n = existing.reduce((m, q) => {
+    const hit = /^q(\d+)$/.exec(q.id);
+    return hit ? Math.max(m, Number(hit[1])) : m;
+  }, existing.length);
+  let id = `q${n + 1}`;
+  while (taken.has(id)) { n += 1; id = `q${n + 1}`; }
+  return id;
+}
+
+/**
+ * Append ONE question to a pathway's pool, creating the form if there is none.
+ *
+ * The panel's question builder writes here rather than through `upsertForm`,
+ * for two reasons. `upsertForm` replaces the whole array, so two people (or
+ * two tabs) building questions would silently overwrite each other; and it
+ * re-reads every setting from its input, so an append through it would reset
+ * a form's draw sizes and thresholds to the defaults. This touches
+ * `questions` and nothing else, under `for update`.
+ */
+export async function addQuestion(
+  pathwayId: string, raw: unknown,
+): Promise<{ form: ExamForm; question: ExamQuestion; created: boolean }> {
+  const pathway = getPathwayById(pathwayId);
+  if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
+
+  return withTransaction(async (client) => {
+    const form = await one<ExamForm>(`${FORM_SELECT} where pathway_id = $1 for update`, [pathwayId], client);
+    const existing = form ? form.questions : [];
+    const id = nextQuestionId(existing);
+
+    // Validated through the same door as a paste, then stamped with an id the
+    // pool does not already hold (and matching key-point ids under it).
+    const norm = parseQuestions(Array.isArray(raw) ? raw : [raw]);
+    if (!norm.ok) throw new Error(`invalid_questions:${norm.error}`);
+    if (norm.questions.length !== 1) throw new Error('invalid_questions:هر بار یک سؤال.');
+    const q = norm.questions[0];
+    const question: ExamQuestion = q.kind === 'mcq'
+      ? { ...q, id }
+      : { ...q, id, key_points: q.key_points.map((kp, i) => ({ id: `${id}-k${i + 1}`, text: kp.text })) };
+
+    const questions = [...existing, question];
+    const row = form
+      ? await one<ExamForm>(
+        `update pathway_exam_forms set questions = $2::jsonb, updated_at = now()
+          where pathway_id = $1 returning id, pathway_id, questions, mcq_draw, free_draw, pass_percent,
+                max_attempts, retry_days, supervised_until, note, created_at, updated_at`,
+        [pathwayId, JSON.stringify(questions)], client,
+      )
+      // No form yet: the COLUMN defaults are the founder's defaults, so a
+      // builder-created form is identical to a pasted one.
+      : await one<ExamForm>(
+        `insert into pathway_exam_forms (pathway_id, questions) values ($1, $2::jsonb)
+         returning id, pathway_id, questions, mcq_draw, free_draw, pass_percent,
+                   max_attempts, retry_days, supervised_until, note, created_at, updated_at`,
+        [pathwayId, JSON.stringify(questions)], client,
+      );
+    return { form: row!, question, created: !form };
+  });
+}
+
+/**
+ * Drop one question from the pool. An attempt already open keeps it — the
+ * snapshot is its own copy — and no other question is renumbered, so a
+ * ruling and its worked examples keep pointing at the right question.
+ */
+export async function removeQuestion(
+  pathwayId: string, questionId: string,
+): Promise<{ removed: boolean; remaining: number }> {
+  return withTransaction(async (client) => {
+    const form = await one<ExamForm>(`${FORM_SELECT} where pathway_id = $1 for update`, [pathwayId], client);
+    if (!form) return { removed: false, remaining: 0 };
+    const questions = form.questions.filter((q) => q.id !== questionId);
+    if (questions.length === form.questions.length) return { removed: false, remaining: questions.length };
+    await query(
+      'update pathway_exam_forms set questions = $2::jsonb, updated_at = now() where pathway_id = $1',
+      [pathwayId, JSON.stringify(questions)], client,
+    );
+    return { removed: true, remaining: questions.length };
+  });
+}
+
 export async function getForm(pathwayId: string, client: Queryable = pool): Promise<ExamForm | null> {
   return one<ExamForm>(`${FORM_SELECT} where pathway_id = $1`, [pathwayId], client);
 }

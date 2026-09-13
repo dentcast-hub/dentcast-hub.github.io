@@ -59,7 +59,7 @@ import {
 import {
   assignExam, deleteAssignment, listAssignments, assignmentRoster, getAssignment, notifyAssigned,
   upsertForm, getForm, deleteForm, formRoster, queueRows, attemptRoster, ruleAttempt, notifyAssigneesOfNewForm,
-  parseQuestions,
+  parseQuestions, addQuestion, removeQuestion,
 } from '../services/pathway-exams.js';
 import { getPathways } from '../pathways.js';
 import {
@@ -804,6 +804,32 @@ function renderHtml(
   </form>
   <div id="efList"></div>
 
+  <h4 style="margin-top:18px">سؤال‌ها را یکی‌یکی بنویس — مسیر: <b id="qbPath">…</b></h4>
+  <div class="muted">
+    دو قالب، هر کدام جدا. هر سؤالی که «افزودن» بزنی همان لحظه به مخزنِ <b>همین مسیرِ بالا</b>
+    اضافه می‌شود (تنظیماتِ فرم — نصاب، قرعه، تلاش — دست‌نخورده می‌ماند). در تستی لازم نیست
+    تعداد گزینه‌ها را از قبل بگویی: تا در آخرین کادر بنویسی، کادر بعدی خودش باز می‌شود و
+    هرجا ننویسی همان‌جا تمام است.
+  </div>
+  <div class="row" style="align-items:flex-start">
+    <form class="bc" id="qbMcqForm" style="flex:1 1 330px" onsubmit="return false">
+      <b>۱) سؤال تستی</b>
+      <div><label for="qbMcqStem">صورت سؤال</label><textarea id="qbMcqStem" rows="2" style="min-height:52px"></textarea></div>
+      <div><label>گزینه‌ها — تیکِ جلوی گزینهٔ درست</label><div id="qbOpts"></div></div>
+      <button id="qbMcqAdd" type="button">افزودن سؤال تستی</button>
+      <span id="qbMcqOut" class="muted"></span>
+    </form>
+    <form class="bc" id="qbFreeForm" style="flex:1 1 330px" onsubmit="return false">
+      <b>۲) سؤال تشریحی</b>
+      <div><label for="qbFreeStem">صورت سؤال</label><textarea id="qbFreeStem" rows="2" style="min-height:52px"></textarea></div>
+      <div><label>پاسخ درست — هر نکتهٔ کلیدی در یک خط</label><div id="qbPoints"></div></div>
+      <div class="muted">همین نکته‌هاست که هوش مصنوعی پاسخِ خواننده را با آن‌ها می‌سنجد.</div>
+      <button id="qbFreeAdd" type="button">افزودن سؤال تشریحی</button>
+      <span id="qbFreeOut" class="muted"></span>
+    </form>
+  </div>
+  <div id="qbList"></div>
+
   <h4 style="margin-top:18px">واگذاریِ زودهنگام</h4>
   <form class="bc" id="exForm" onsubmit="return false">
     <div class="row">
@@ -863,7 +889,7 @@ function renderHtml(
       document.getElementById('exPath').innerHTML = opts;
       var ce = document.getElementById('cePath'); if (ce) ce.innerHTML = opts;
     }).catch(function () { efOut.textContent = 'فهرست مسیرها نیامد.'; })
-      .then(function () { loadForms(); loadAssign(); loadQueue(); });
+      .then(function () { loadForms(); loadAssign(); loadQueue(); loadPool(); });
 
     // NotebookLM answers in prose, so the prompt asks for the shape the panel
     // itself reads (services/exam-text.ts) rather than for JSON it will not
@@ -1008,6 +1034,130 @@ function renderHtml(
         .then(function () { efOut.textContent = 'حذف شد.'; loadForms(); loadQueue(); })
         .catch(function () { b.disabled = false; efOut.textContent = 'حذف نشد.'; });
     });
+
+    /* ── سؤال‌ساز: two composers, growing rows, one question at a time ── */
+    var MAX_ROWS = 6;
+    var qbOpts = document.getElementById('qbOpts');
+    var qbPoints = document.getElementById('qbPoints');
+    var qbList = document.getElementById('qbList');
+    var qbMcqOut = document.getElementById('qbMcqOut');
+    var qbFreeOut = document.getElementById('qbFreeOut');
+
+    // A row grows the list the moment the LAST one is written in, and nothing
+    // is ever removed while typing: a box that empties again would take the
+    // box after it with it, and with it whatever was typed there.
+    function growRow(host, withRadio) {
+      var i = host.children.length;
+      var row = document.createElement('label');
+      row.className = 'kp';
+      var mark = '';
+      if (withRadio) mark = '<input type="radio" name="qbCorrect" value="' + i + '">';
+      row.innerHTML = mark + '<input type="text" data-qb="1" placeholder="'
+        + (withRadio ? 'گزینهٔ ' : 'نکتهٔ ') + fa(i + 1) + '">';
+      host.appendChild(row);
+      row.querySelector('input[data-qb]').addEventListener('input', function () {
+        var boxes = host.querySelectorAll('input[data-qb]');
+        var last = boxes[boxes.length - 1];
+        if (this === last && this.value.trim() && boxes.length < MAX_ROWS) growRow(host, withRadio);
+      });
+      return row;
+    }
+    function resetRows(host, withRadio, n) {
+      host.innerHTML = '';
+      for (var i = 0; i < n; i += 1) growRow(host, withRadio);
+    }
+    // Trailing empties are the founder stopping; an empty box BEFORE a filled
+    // one is a mistake and is named, never quietly closed up — compacting
+    // would move the correct answer to a different option.
+    function readRows(host) {
+      var vals = Array.prototype.map.call(host.querySelectorAll('input[data-qb]'), function (b) { return b.value.trim(); });
+      while (vals.length && !vals[vals.length - 1]) vals.pop();
+      for (var i = 0; i < vals.length; i += 1) if (!vals[i]) return { gap: i + 1 };
+      return { vals: vals };
+    }
+
+    resetRows(qbOpts, true, 2);
+    resetRows(qbPoints, false, 2);
+
+    function addQuestion(question, out, done) {
+      out.textContent = 'در حال افزودن…';
+      post('/admin/exam-forms/questions', { pathway_id: val('efPath'), question: question })
+        .then(function (res) {
+          if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || 'خطا'); return; }
+          out.textContent = 'اضافه شد — مخزن ' + fa(res.j.count) + ' سؤال دارد.';
+          done();
+          loadPool(); loadForms();
+        }).catch(function () { out.textContent = 'ارسال نشد.'; });
+    }
+
+    document.getElementById('qbMcqAdd').addEventListener('click', function () {
+      var stem = document.getElementById('qbMcqStem').value.trim();
+      if (!stem) { qbMcqOut.textContent = 'صورت سؤال را بنویس.'; return; }
+      var r = readRows(qbOpts);
+      if (r.gap) { qbMcqOut.textContent = 'گزینهٔ ' + fa(r.gap) + ' خالی است.'; return; }
+      if (r.vals.length < 2) { qbMcqOut.textContent = 'دست‌کم دو گزینه لازم است.'; return; }
+      var picked = qbOpts.querySelector('input[name="qbCorrect"]:checked');
+      if (!picked) { qbMcqOut.textContent = 'تیکِ گزینهٔ درست را بزن.'; return; }
+      var correct = parseInt(picked.value, 10);
+      if (correct >= r.vals.length) { qbMcqOut.textContent = 'گزینه‌ای که تیک خورده خالی است.'; return; }
+      addQuestion({ kind: 'mcq', prompt_fa: stem, options: r.vals, correct: correct }, qbMcqOut, function () {
+        document.getElementById('qbMcqStem').value = '';
+        resetRows(qbOpts, true, 2);
+      });
+    });
+
+    document.getElementById('qbFreeAdd').addEventListener('click', function () {
+      var stem = document.getElementById('qbFreeStem').value.trim();
+      if (!stem) { qbFreeOut.textContent = 'صورت سؤال را بنویس.'; return; }
+      var r = readRows(qbPoints);
+      if (r.gap) { qbFreeOut.textContent = 'نکتهٔ ' + fa(r.gap) + ' خالی است.'; return; }
+      if (!r.vals.length) { qbFreeOut.textContent = 'دست‌کم یک نکتهٔ کلیدی لازم است.'; return; }
+      addQuestion({ kind: 'free', prompt_fa: stem, key_points: r.vals }, qbFreeOut, function () {
+        document.getElementById('qbFreeStem').value = '';
+        resetRows(qbPoints, false, 2);
+      });
+    });
+
+    // The pool of the pathway the picker is on — the answer to «برای کدام مسیر؟»
+    function loadPool() {
+      var id = val('efPath');
+      document.getElementById('qbPath').textContent = titles[id] || id || '—';
+      if (!id) { qbList.innerHTML = ''; return; }
+      get('/admin/exam-forms/' + encodeURIComponent(id)).then(function (d) {
+        var qs = (d.form && d.form.questions) || [];
+        if (!qs.length) { qbList.innerHTML = '<div class="muted">مخزنِ این مسیر خالی است.</div>'; return; }
+        qbList.innerHTML = '<div class="tk"><div class="tk-head"><b>مخزنِ ' + esc(titles[id] || id) + '</b> — '
+          + fa(qs.length) + ' سؤال</div>' + qs.map(function (q, i) {
+            var body;
+            if (q.kind === 'mcq') {
+              body = '<ul style="margin:4px 0 0;padding-inline-start:1.3em">' + q.options.map(function (o, k) {
+                return '<li>' + esc(o) + (k === q.correct ? ' <b>✓</b>' : '') + '</li>';
+              }).join('') + '</ul>';
+            } else {
+              body = '<ul style="margin:4px 0 0;padding-inline-start:1.3em">' + q.key_points.map(function (kp) {
+                return '<li>' + esc(kp.text) + '</li>';
+              }).join('') + '</ul>';
+            }
+            return '<div style="padding:8px 0;border-top:1px solid rgba(2,35,96,.08);font-size:.88rem">'
+              + '<b>' + fa(i + 1) + '.</b> <span class="pill">' + (q.kind === 'mcq' ? 'تستی' : 'تشریحی') + '</span> '
+              + esc(q.prompt_fa)
+              + ' <button type="button" data-qb-del="' + esc(q.id) + '" style="float:left">حذف</button>'
+              + body + '</div>';
+          }).join('') + '</div>';
+      }).catch(function () { qbList.innerHTML = '<div class="muted">مخزنِ این مسیر خالی است.</div>'; });
+    }
+
+    qbList.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-qb-del]') : null;
+      if (!b) return;
+      if (!confirm('این سؤال از مخزن حذف شود؟ آزمون‌هایی که همین حالا بازند دست‌نخورده می‌مانند.')) return;
+      b.disabled = true;
+      post('/admin/exam-forms/questions/delete', { pathway_id: val('efPath'), question_id: b.getAttribute('data-qb-del') })
+        .then(function () { loadPool(); loadForms(); })
+        .catch(function () { b.disabled = false; });
+    });
+
+    document.getElementById('efPath').addEventListener('change', loadPool);
 
     function loadAssign() {
       get('/admin/exams').then(function (d) {
@@ -4775,6 +4925,52 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       }
       throw err;
     }
+  });
+
+  /**
+   * POST /admin/exam-forms/questions — { pathway_id, question } — the panel's
+   * question BUILDER: one written question appended to the pathway's pool,
+   * creating the form if there is none. Deliberately not `upsertForm`, which
+   * would replace the whole array and reset the form's own settings.
+   */
+  app.post('/admin/exam-forms/questions', {
+    schema: {
+      body: {
+        type: 'object', required: ['pathway_id', 'question'],
+        properties: { pathway_id: { type: 'string' }, question: { type: 'object' } },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as { pathway_id: string; question: unknown };
+    try {
+      const r = await addQuestion(b.pathway_id, b.question);
+      return reply.send({
+        ok: true, created: r.created, question: r.question, count: r.form.questions.length,
+      });
+    } catch (err) {
+      const code = (err as Error).message;
+      if (code === 'unknown_pathway') return reply.code(400).send({ error: code, message: 'این مسیر وجود ندارد (باندل‌ها آزمون ندارند).' });
+      if (code.startsWith('invalid_questions:')) {
+        return reply.code(400).send({ error: 'invalid_questions', message: code.slice('invalid_questions:'.length) });
+      }
+      throw err;
+    }
+  });
+
+  // POST /admin/exam-forms/questions/delete — { pathway_id, question_id }.
+  // An attempt already open keeps the question: its snapshot is its own copy.
+  app.post('/admin/exam-forms/questions/delete', {
+    schema: {
+      body: {
+        type: 'object', required: ['pathway_id', 'question_id'],
+        properties: { pathway_id: { type: 'string' }, question_id: { type: 'string' } },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as { pathway_id: string; question_id: string };
+    const r = await removeQuestion(b.pathway_id, b.question_id);
+    if (!r.removed) return reply.code(404).send({ error: 'not_found', message: 'این سؤال در مخزن نبود.' });
+    return reply.send({ ok: true, ...r });
   });
 
   app.post('/admin/exam-forms/delete', {
