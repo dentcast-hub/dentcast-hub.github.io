@@ -38,6 +38,8 @@ ENV FLASHCARDS_PATH=/app/flashcards-index.json
 ENV CONTENT_INDEX_URL=https://dentcast.ir/plus/content-index.json,https://dentcast.org/plus/content-index.json
 ENV PATHWAYS_URL=https://dentcast.ir/plus/pathways.json,https://dentcast.org/plus/pathways.json
 ENV BADGES_URL=https://dentcast.ir/plus/badges.json,https://dentcast.org/plus/badges.json
+ENV GLOSSARY_URL=https://dentcast.ir/glossary/glossary.json,https://dentcast.org/glossary/glossary.json
+ENV HASHTAG_REF_URL=https://dentcast.ir/dentcast-hashtag-reference.json,https://dentcast.org/dentcast-hashtag-reference.json
 ENV FLASHCARDS_URL=https://dentcast.ir/plus/flashcards-index.json,https://dentcast.org/plus/flashcards-index.json
 WORKDIR /app
 

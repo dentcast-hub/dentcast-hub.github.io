@@ -3,7 +3,7 @@ import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import { getIndex, getTags } from '../src/content-index.js';
-import { getGlossaryTerm } from '../src/glossary.js';
+import { getGlossaryTerm, getGlossaryTerms, applyRemoteGlossary, resetRemoteGlossary } from '../src/glossary.js';
 import { foldName, conceptDomain } from '../src/hashtag-ref.js';
 import { conceptsFor, conceptHighlights, glossaryNotes } from '../src/services/highlight-concepts.js';
 
@@ -228,6 +228,27 @@ describe('the text signal', () => {
       const v = await conceptHighlights(id, 'اچ');
       expect(v!.total).toBe(0);
     }
+  });
+});
+
+describe('a term published after boot', () => {
+  it('answers its notes block once the published glossary is adopted — no restart, no rebuild', async () => {
+    await setTier('premium');
+    await hl(UNTAGGED_PAGE, 'در مورد سیلان‌سازی زیرکونیا شک دارم');
+    expect((await get('/glossary/zirconia-silanization/notes')).statusCode).toBe(404);
+    try {
+      expect(applyRemoteGlossary({ glossary: [...getGlossaryTerms(), {
+        slug: 'zirconia-silanization', title: 'Zirconia Silanization', fa_title: 'سیلان‌سازی زیرکونیا',
+        synonyms: ['سیلان زیرکونیا'], url: '/glossary/zirconia-silanization.html',
+      }] })).toBe(true);
+      const res = await get('/glossary/zirconia-silanization/notes');
+      expect(res.statusCode).toBe(200);
+      expect(res.json().total).toBe(1);
+      expect(res.json().articles[0].highlights[0].match).toBe('text');
+    } finally {
+      resetRemoteGlossary();
+    }
+    expect((await get('/glossary/zirconia-silanization/notes')).statusCode).toBe(404);
   });
 });
 

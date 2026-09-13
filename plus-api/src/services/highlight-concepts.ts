@@ -1,7 +1,7 @@
 import { pool, query, type Queryable } from '../db.js';
 import { getIndex, getContentInfo, folderOf, folderLabel, type Tag } from '../content-index.js';
 import { getGlossaryTerms, getGlossaryTerm, type GlossaryTerm } from '../glossary.js';
-import { foldName, conceptDomain, conceptNames } from '../hashtag-ref.js';
+import { foldName, conceptDomain, conceptNames, hashtagRefVersion } from '../hashtag-ref.js';
 
 /**
  * «نمای موضوعی هایلایت‌ها» — the reader's own highlights, aggregated by
@@ -126,6 +126,7 @@ interface Catalog {
 
 let catalogFor: object | null = null;
 let catalogTerms: object | null = null;
+let catalogRefVersion = -1;
 let catalog: Catalog | null = null;
 
 /** «سمان‌های رزینی» → also «سمان رزینی»: the one plural the glossary titles use. */
@@ -145,7 +146,8 @@ function nameForms(name: string): string[] {
 function getCatalog(): Catalog {
   const idx = getIndex();
   const terms = getGlossaryTerms();
-  if (catalog && catalogFor === idx && catalogTerms === terms) return catalog;
+  const refVersion = hashtagRefVersion();
+  if (catalog && catalogFor === idx && catalogTerms === terms && catalogRefVersion === refVersion) return catalog;
 
   const tagsByContent = new Map<string, string[]>();
   const tagByFolded = new Map<string, Tag>();
@@ -187,6 +189,7 @@ function getCatalog(): Catalog {
   catalog = { tagsByContent, tagByFolded, glossaryByTag, tagsByGlossary };
   catalogFor = idx;
   catalogTerms = terms;
+  catalogRefVersion = refVersion;
   return catalog;
 }
 

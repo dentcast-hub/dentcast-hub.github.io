@@ -3,6 +3,8 @@ import { applyRemoteIndex, indexSource } from './content-index.js';
 import { applyRemotePathways, pathwaysSource } from './pathways.js';
 import { applyRemoteBadges, badgesSource } from './badges.js';
 import { applyRemoteFlashcards, flashcardsSource } from './flashcards.js';
+import { applyRemoteGlossary, glossarySource } from './glossary.js';
+import { applyRemoteHashtagRef, hashtagRefSource } from './hashtag-ref.js';
 
 /**
  * Keeps the taxonomy index and the pathway definitions current WITHOUT a
@@ -102,7 +104,7 @@ async function fetchJson(
  * instead of waiting out the interval.
  */
 export interface ContentFileStatus {
-  key: 'content-index' | 'pathways' | 'badges' | 'flashcards';
+  key: 'content-index' | 'pathways' | 'badges' | 'flashcards' | 'glossary' | 'hashtag-ref';
   /** The env var that turns the refresh on for this file. */
   env: string;
   configured: boolean;
@@ -127,6 +129,12 @@ const FILES: Array<{
   { key: 'pathways', env: 'PATHWAYS_URL', urls: () => config.content.pathwaysUrls, apply: applyRemotePathways, source: pathwaysSource },
   { key: 'badges', env: 'BADGES_URL', urls: () => config.content.badgesUrls, apply: applyRemoteBadges, source: badgesSource },
   { key: 'flashcards', env: 'FLASHCARDS_URL', urls: () => config.content.flashcardsUrls, apply: applyRemoteFlashcards, source: flashcardsSource },
+  // The دانشنامه catalog and the hashtag library, for the concept views
+  // (services/highlight-concepts.ts). A term published this afternoon has to
+  // answer its own «یادداشت‌های خودت» block this afternoon: the founder
+  // publishes and builds nothing.
+  { key: 'glossary', env: 'GLOSSARY_URL', urls: () => config.content.glossaryUrls, apply: applyRemoteGlossary, source: glossarySource },
+  { key: 'hashtag-ref', env: 'HASHTAG_REF_URL', urls: () => config.content.hashtagRefUrls, apply: applyRemoteHashtagRef, source: hashtagRefSource },
 ];
 
 type FileState = {

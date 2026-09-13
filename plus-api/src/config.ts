@@ -708,6 +708,8 @@ export const config = {
     pathwaysUrls: list('PATHWAYS_URL', []),
     badgesUrls: list('BADGES_URL', []),
     flashcardsUrls: list('FLASHCARDS_URL', []),
+    glossaryUrls: list('GLOSSARY_URL', []),
+    hashtagRefUrls: list('HASHTAG_REF_URL', []),
     refreshSeconds: int('CONTENT_REFRESH_SECONDS', 300),
   },
 };

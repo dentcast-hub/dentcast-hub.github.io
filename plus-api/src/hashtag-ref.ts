@@ -38,6 +38,47 @@ let cached: RefFile | null = null;
 let cachedMtimeMs = 0;
 let byFolded: Map<string, HashtagConcept> | null = null;
 let aliasToCanonical: Map<string, string> | null = null;
+/** Set by content-refresh.ts once a published copy has been fetched and validated. */
+let remote: RefFile | null = null;
+/** Bumped whenever the copy in service changes, so a derived catalog can tell. */
+let version = 0;
+
+/**
+ * Adopt a freshly published reference (content-refresh.ts). A hashtag minted
+ * at publish (Hard Rule 15) lands here with its domain and aliases; without
+ * this the API would keep the reference it was built with and a new concept
+ * would carry no domain (kept, harmless) and no aliases (found only by its
+ * own name) until the next image. The gate: a non-empty `concepts` array of
+ * objects with a string key.
+ */
+export function applyRemoteHashtagRef(raw: unknown): boolean {
+  const ref = raw as RefFile | null;
+  if (!ref || typeof ref !== 'object' || !Array.isArray(ref.concepts) || ref.concepts.length === 0) return false;
+  if (!ref.concepts.every((c) => c && typeof c.key === 'string')) return false;
+  remote = ref;
+  byFolded = null;
+  aliasToCanonical = null;
+  version += 1;
+  return true;
+}
+
+export function hashtagRefSource(): string {
+  return remote ? `published (${remote.concepts?.length ?? 0} concepts)` : 'image/disk';
+}
+
+/** A number that changes whenever the copy in service does (disk reload or adoption). */
+export function hashtagRefVersion(): number {
+  load();
+  return version;
+}
+
+/** Test-only. */
+export function resetRemoteHashtagRef(): void {
+  remote = null;
+  byFolded = null;
+  aliasToCanonical = null;
+  version += 1;
+}
 
 /**
  * One folding rule for a tag/concept/glossary NAME: lowercase, Arabic ی/ک →
@@ -63,6 +104,7 @@ function defaultPath(): string {
 }
 
 function load(): RefFile {
+  if (remote) return remote;
   const path = config.hashtagRefPath || defaultPath();
   try {
     const mtime = statSync(path).mtimeMs;
@@ -71,6 +113,7 @@ function load(): RefFile {
     cachedMtimeMs = mtime;
     byFolded = null;
     aliasToCanonical = null;
+    version += 1;
   } catch {
     if (!cached) cached = {};
   }

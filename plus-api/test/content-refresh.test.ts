@@ -9,6 +9,8 @@ import {
   applyRemoteFlashcards, flashcardsSource, resetRemoteFlashcards,
   getCardsFor, getCard, contentIdsWithCards,
 } from '../src/flashcards.js';
+import { applyRemoteGlossary, glossarySource, resetRemoteGlossary, getGlossaryTerm, getGlossaryTerms } from '../src/glossary.js';
+import { applyRemoteHashtagRef, hashtagRefSource, resetRemoteHashtagRef, conceptDomain, conceptNames, hashtagRefVersion } from '../src/hashtag-ref.js';
 
 const GOOD_INDEX = {
   version: 42,
@@ -28,8 +30,8 @@ const GOOD_FLASHCARDS = {
   },
 };
 
-beforeEach(() => { resetRemoteIndex(); resetRemotePathways(); resetRemoteFlashcards(); });
-afterEach(() => { resetRemoteIndex(); resetRemotePathways(); resetRemoteFlashcards(); vi.restoreAllMocks(); });
+beforeEach(() => { resetRemoteIndex(); resetRemotePathways(); resetRemoteFlashcards(); resetRemoteGlossary(); resetRemoteHashtagRef(); });
+afterEach(() => { resetRemoteIndex(); resetRemotePathways(); resetRemoteFlashcards(); resetRemoteGlossary(); resetRemoteHashtagRef(); vi.restoreAllMocks(); });
 
 describe('a published index replaces the baked one', () => {
   it('adopts a well-formed payload and serves it', () => {
@@ -131,6 +133,50 @@ describe('flashcards follow the same rules', () => {
     expect(getCard('does/not-exist', 'nope')).toBeNull();
     const known = contentIdsWithCards()[0];
     expect(getCard(known, 'nope')).toBeNull();
+  });
+});
+
+describe('the glossary follows the same rules — a term published today answers today', () => {
+  it('adopts a well-formed catalog and serves the new term', () => {
+    expect(glossarySource()).toBe('image/disk');
+    expect(getGlossaryTerm('term-published-this-afternoon')).toBeNull();
+    const published = { glossary: [...getGlossaryTerms(), { slug: 'term-published-this-afternoon', title: 'New', fa_title: 'واژهٔ تازه', synonyms: [], url: '/glossary/term-published-this-afternoon.html' }] };
+    expect(applyRemoteGlossary(published)).toBe(true);
+    expect(glossarySource()).toMatch(/^published \(\d+ terms\)$/);
+    expect(getGlossaryTerm('term-published-this-afternoon')!.fa_title).toBe('واژهٔ تازه');
+  });
+
+  it('refuses junk, an empty list, and a list with no usable term', () => {
+    for (const bad of [null, 'x', {}, { glossary: [] }, [], [{ nope: 1 }], { glossary: [{ slug: 3 }] }]) {
+      expect(applyRemoteGlossary(bad)).toBe(false);
+    }
+    expect(glossarySource()).toBe('image/disk');
+    expect(getGlossaryTerms().length).toBeGreaterThan(0); // the baked copy still stands
+  });
+});
+
+describe('the hashtag reference follows the same rules', () => {
+  it('adopts a well-formed reference and its domains/aliases take effect at once', () => {
+    expect(hashtagRefSource()).toBe('image/disk');
+    const before = hashtagRefVersion();
+    const ok = applyRemoteHashtagRef({ concepts: [
+      { key: 'اینسایت', domain: 'brand', aliases: [] },
+      { key: 'مفهوم_تازه', domain: 'clinical', aliases: ['نام دوم'] },
+    ], aliases: {} });
+    expect(ok).toBe(true);
+    expect(hashtagRefSource()).toBe('published (2 concepts)');
+    expect(hashtagRefVersion()).toBeGreaterThan(before);
+    expect(conceptDomain('اینسایت')).toBe('brand');
+    expect(conceptDomain('مفهوم تازه')).toBe('clinical'); // the index's spelling resolves too
+    expect(conceptNames('مفهوم_تازه')).toContain('نام دوم');
+    expect(conceptDomain('اکلوژن')).toBeNull(); // not in the published copy any more
+  });
+
+  it('refuses junk and an empty reference', () => {
+    for (const bad of [null, 'x', {}, { concepts: [] }, { concepts: [{ nokey: 1 }] }]) {
+      expect(applyRemoteHashtagRef(bad)).toBe(false);
+    }
+    expect(hashtagRefSource()).toBe('image/disk');
   });
 });
 
