@@ -1,0 +1,498 @@
+<title>قطعه‌های صوتی</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10); --line-strong:rgba(2,35,96,.18);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --x-amber:#c9922b; --x-amber-ink:#8a6414; --x-amber-wash:rgba(201,146,43,.075); --x-amber-bd:rgba(154,107,21,.22);
+    --hl:#fff3a3; --hl-ink:#3b2f00; --hl-edge:#d9b800;
+    --rec:#d64545; --rec-rgb:214,69,69;
+    --mock-ink:#3b2f7a; --mock-bg:#efeaff; --mock-bd:rgba(59,47,122,.22);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --x-amber:#e3b849; --x-amber-ink:#e3b849; --x-amber-wash:rgba(227,184,73,.085); --x-amber-bd:rgba(227,184,73,.26);
+    --hl:#5a4d10; --hl-ink:#fff3c4; --hl-edge:#e6c93a;
+    --rec:#ef6b6b; --rec-rgb:239,107,107;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --x-amber:#e3b849; --x-amber-ink:#e3b849; --x-amber-wash:rgba(227,184,73,.085); --x-amber-bd:rgba(227,184,73,.26);
+    --hl:#5a4d10; --hl-ink:#fff3c4; --hl-edge:#e6c93a;
+    --rec:#ef6b6b; --rec-rgb:239,107,107;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }
+  body{ background:var(--bg); color:var(--txt); font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif; direction:rtl; padding-inline:16px; padding-block:0 4rem; line-height:1.75; font-size:15px; }
+  *{ box-sizing:border-box; } a{ color:inherit; text-decoration:none; } button{ font:inherit; }
+  :focus-visible{ outline:2px solid var(--ac); outline-offset:2px; border-radius:4px; }
+  .num{ font-variant-numeric:tabular-nums; }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; } }
+
+  .mk-head{ max-width:920px; margin:0 auto; padding-block:1.6rem .4rem; }
+  .mk-head h1{ font-size:1.55rem; font-weight:800; color:var(--pr); margin:0 0 .3rem; text-wrap:balance; }
+  .mk-head p{ margin:0; color:var(--txt2); max-width:66ch; }
+  .mk-tabs{ max-width:920px; margin:1rem auto 0; display:flex; flex-wrap:wrap; gap:.4rem; }
+  .mk-tabs a{ font-size:.82rem; font-weight:600; padding:.3rem .75rem; border-radius:999px; background:var(--mock-bg); color:var(--mock-ink); border:1px solid var(--mock-bd); }
+  .mk-where{ max-width:920px; margin:1.2rem auto 0; overflow-x:auto; }
+  .mk-where table{ border-collapse:collapse; width:100%; font-size:.86rem; min-width:600px; }
+  .mk-where th,.mk-where td{ text-align:right; padding:.5rem .6rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  .mk-where th{ color:var(--txt3); font-weight:600; font-size:.76rem; }
+  code{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.82em; direction:ltr; unicode-bidi:isolate; color:var(--txt2); }
+  .mk-sec{ max-width:920px; margin:2.6rem auto 0; }
+  .mk-sec-h{ display:flex; align-items:baseline; gap:.7rem; flex-wrap:wrap; margin-bottom:.8rem; }
+  .mk-sec-h h2{ margin:0; font-size:1.1rem; font-weight:800; color:var(--mock-ink); }
+  .mk-sec-h span{ color:var(--txt3); font-size:.84rem; }
+  .mk-row{ display:flex; gap:1.2rem; flex-wrap:wrap; align-items:flex-start; }
+  .phone{ width:100%; max-width:400px; background:var(--bg); border:1px solid var(--line-strong); border-radius:22px; padding:14px 14px 20px; box-shadow:var(--card-sh); position:relative; overflow:hidden; }
+  .cap{ font-size:.78rem; color:var(--txt3); margin:.5rem .4rem 0; }
+  .cap b{ color:var(--txt2); font-weight:600; }
+  .mk-note{ font-size:.84rem; color:var(--txt2); max-width:66ch; margin:.6rem 0 0; }
+  .mk-notes{ max-width:920px; margin:2.6rem auto 0; font-size:.88rem; color:var(--txt2); }
+  .mk-notes h2{ font-size:1.1rem; font-weight:800; color:var(--mock-ink); margin:0 0 .5rem; }
+  .mk-notes dl{ margin:0; display:grid; grid-template-columns:max-content 1fr; gap:.45rem 1rem; }
+  .mk-notes dt{ font-weight:700; color:var(--txt); }
+  .mk-notes dd{ margin:0; max-width:66ch; }
+  @media (max-width:560px){ .mk-notes dl{ grid-template-columns:1fr; } .mk-notes dd{ margin-bottom:.4rem; } }
+
+  /* ── episode page vocabulary (episodes_template) ── */
+  .ep-box{ background:var(--surface); border:1px solid var(--border); border-radius:1.125rem; box-shadow:var(--card-sh); overflow:hidden; }
+  .ep-box-head{ padding:1.1rem 1.1rem .9rem; border-bottom:1px solid var(--border); }
+  .ep-badge{ display:inline-flex; align-items:center; background:var(--surface2); border:1px solid var(--border); color:var(--txt2); font-size:.7rem; font-weight:700; padding:.15rem .7rem; border-radius:3rem; margin-bottom:.5rem; letter-spacing:.03em; }
+  .ep-title{ font-size:1.12rem; font-weight:800; color:var(--txt); line-height:1.45; margin:0 0 .35rem; text-wrap:balance; }
+  .ep-meta{ display:flex; gap:.8rem; font-size:.72rem; color:var(--txt3); }
+  .ep-section{ padding:.9rem 1.1rem; }
+  .ep-section-label{ font-size:.92rem; font-weight:700; color:var(--ac); border-right:4px solid var(--ac); padding-right:.6rem; margin:0 0 .65rem; }
+  .ep-caption{ font-size:.88rem; color:var(--txt2); line-height:1.9; margin:0; }
+  .ep-player-wrap{ background:var(--surface); border:1px solid var(--border); border-radius:.875rem; padding:.9rem 1rem; }
+  .ep-player-controls{ display:flex; align-items:center; gap:.6rem; margin-bottom:.6rem; direction:ltr; }
+  .ep-play-btn{ width:2.7rem; height:2.7rem; border-radius:50%; background:var(--ac); border:none; color:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .ep-play-btn svg{ width:1.05rem; height:1.05rem; fill:currentColor; }
+  .ep-jump-btn{ min-width:2.1rem; padding:0 .4rem; white-space:nowrap; height:2.1rem; border:none; background:var(--surface2); border-radius:.5rem; color:var(--txt2); font-size:.66rem; font-weight:600; display:flex; align-items:center; justify-content:center; }
+  .ep-speed-btn{ padding:.3rem .55rem; border:1px solid var(--border); background:var(--surface2); color:var(--txt2); border-radius:.5rem; font-size:.66rem; font-weight:700; margin-right:auto; }
+  .bar{ position:relative; height:.28rem; background:var(--border); border-radius:.14rem; direction:ltr; margin:0 0 .35rem; }
+  .bar .played{ position:absolute; inset:0 auto 0 0; background:var(--ac); border-radius:inherit; }
+  .bar .clip{ position:absolute; top:-.2rem; bottom:-.2rem; background:var(--hl); border-inline:2px solid var(--hl-edge); border-radius:2px; }
+  .bar .clip.live{ border-inline-end-color:var(--rec); animation:grow 1.6s ease-in-out infinite alternate; }
+  @keyframes grow{ from{ width:6%; } to{ width:9%; } }
+  .bar .thumb{ position:absolute; top:50%; width:.8rem; height:.8rem; border-radius:50%; background:var(--ac); transform:translate(-50%,-50%); box-shadow:0 0 0 2px var(--surface); }
+  .ep-time-row{ display:flex; justify-content:space-between; font-size:.62rem; color:var(--txt3); direction:ltr; }
+
+  /* the one row this feature adds under the transport */
+  .clip-row{ display:flex; align-items:center; gap:.5rem; margin-top:.7rem; padding-top:.65rem; border-top:1px dashed var(--border); flex-wrap:wrap; }
+  .act{ display:inline-flex; align-items:center; gap:.4rem; height:2rem; padding:0 .8rem; border-radius:999px; border:1px solid var(--border); background:var(--surface); color:var(--txt2); font-size:.8rem; font-weight:600; white-space:nowrap; }
+  .act svg{ width:.95rem; height:.95rem; }
+  .act.outline{ color:var(--ac); border-color:var(--ac); font-weight:700; }
+  .act.rec{ color:var(--rec); border-color:var(--rec); font-weight:700; }
+  .act.quiet{ font-size:.74rem; }
+  .dot{ width:.55rem; height:.55rem; border-radius:50%; background:var(--rec); box-shadow:0 0 0 0 rgba(var(--rec-rgb),.5); animation:pulse 1.2s infinite; }
+  @keyframes pulse{ 70%{ box-shadow:0 0 0 .45rem rgba(var(--rec-rgb),0); } 100%{ box-shadow:0 0 0 0 rgba(var(--rec-rgb),0); } }
+  .clip-hint{ font-size:.72rem; color:var(--txt3); }
+  .clip-live{ font-size:.72rem; color:var(--txt2); direction:ltr; unicode-bidi:isolate; }
+  .clip-live b{ color:var(--rec); font-weight:700; }
+
+  /* bottom sheet (sheet.js) */
+  .dim{ position:absolute; inset:0; background:rgba(2,35,96,.35); border-radius:22px; }
+  .sheet{ position:absolute; inset:auto 0 0 0; background:var(--surface); border-radius:18px 18px 22px 22px; padding:.6rem 1rem 1rem; box-shadow:0 -6px 30px rgba(0,0,0,.18); }
+  .grab{ width:2.4rem; height:.28rem; border-radius:999px; background:var(--border); margin:0 auto .7rem; }
+  .sheet h3{ margin:0; font-size:.98rem; font-weight:800; color:var(--pr); }
+  .sheet .sub{ font-size:.76rem; color:var(--txt3); margin:.1rem 0 .7rem; }
+  .sheet .sub b{ color:var(--txt2); font-weight:600; }
+  .win{ position:relative; height:2.6rem; background:var(--surface2); border:1px solid var(--border); border-radius:.6rem; direction:ltr; overflow:hidden; }
+  .win .tick{ position:absolute; top:0; bottom:0; width:1px; background:var(--border); }
+  .win .tick i{ position:absolute; bottom:.1rem; left:.2rem; font-style:normal; font-size:.58rem; color:var(--txt3); }
+  .win .sel{ position:absolute; top:.35rem; bottom:.35rem; background:var(--hl); border-radius:3px; }
+  .win .h{ position:absolute; top:.15rem; bottom:.15rem; width:.9rem; border-radius:.3rem; background:var(--surface); border:2px solid var(--hl-edge); box-shadow:0 1px 3px rgba(0,0,0,.18); transform:translateX(-50%); }
+  .win .h::after{ content:""; position:absolute; left:50%; top:25%; bottom:25%; width:2px; margin-left:-1px; background:var(--hl-edge); border-radius:1px; }
+  .win .ph{ position:absolute; top:0; bottom:0; width:2px; background:var(--ac); }
+  .ends{ display:flex; justify-content:space-between; gap:.6rem; margin-top:.5rem; }
+  .end{ display:flex; align-items:center; gap:.3rem; }
+  .end .lab{ font-size:.7rem; color:var(--txt3); }
+  .end .t{ font-size:.86rem; font-weight:700; color:var(--txt); direction:ltr; }
+  .nudge{ width:1.6rem; height:1.6rem; border-radius:.45rem; border:1px solid var(--border); background:var(--surface2); color:var(--txt2); font-size:.7rem; font-weight:700; display:inline-flex; align-items:center; justify-content:center; }
+  .len{ display:flex; gap:.35rem; align-items:center; margin-top:.7rem; flex-wrap:wrap; }
+  .len .lab{ font-size:.72rem; color:var(--txt3); margin-inline-end:.2rem; }
+  .pill{ font-size:.74rem; padding:.18rem .6rem; border-radius:999px; border:1px solid var(--border); background:var(--surface); color:var(--txt2); }
+  .pill.on{ background:var(--ac); border-color:var(--ac); color:#fff; }
+  .sheet .inp{ width:100%; padding:.5rem .75rem; border:1px solid var(--border); border-radius:10px; background:var(--surface2); color:var(--txt); font-size:.84rem; margin-top:.7rem; }
+  .sheet .inp.ph{ color:var(--txt3); }
+  .sheet .foot{ display:flex; gap:.5rem; margin-top:.75rem; align-items:center; }
+  .btn{ display:inline-flex; align-items:center; gap:.35rem; border-radius:999px; padding:.45rem .95rem; font-weight:700; font-size:.84rem; background:var(--ac); color:#fff; border:0; }
+  .btn.ghost{ background:transparent; color:var(--txt2); border:1px solid var(--border); font-weight:600; }
+  .btn.ghost svg{ width:.85rem; height:.85rem; fill:currentColor; }
+
+  /* header + drawer (dc-nav) */
+  .hdr{ display:flex; align-items:center; justify-content:space-between; padding:.3rem .2rem .7rem; }
+  .hdr .brand{ font-weight:800; color:var(--pr); font-size:.95rem; }
+  .hdr .ico{ display:flex; gap:.6rem; }
+  .hdr .ico span{ width:1.7rem; height:1.7rem; border-radius:50%; background:var(--surface); border:1px solid var(--border); display:inline-flex; align-items:center; justify-content:center; font-size:.8rem; }
+  .hdr .ico span.on{ border-color:var(--ac); color:var(--ac); }
+  .drawer{ background:var(--surface); border:1px solid var(--line-strong); border-radius:16px; padding:.9rem 1rem; box-shadow:var(--card-sh); }
+  .dr-now{ font-size:.7rem; color:var(--txt3); }
+  .dr-title{ font-size:.92rem; font-weight:700; margin:.1rem 0 .6rem; line-height:1.45; }
+  .dr-list{ margin-top:.8rem; border-top:1px solid var(--border); padding-top:.5rem; }
+  .dr-item{ display:flex; justify-content:space-between; font-size:.78rem; color:var(--txt2); padding:.3rem 0; }
+  .dr-item.on{ color:var(--ac); font-weight:700; }
+  .dr-item .d{ color:var(--txt3); direction:ltr; font-size:.7rem; }
+  .under{ opacity:.45; filter:blur(.6px); pointer-events:none; }
+
+  /* دفترچه vocabulary (plus-pages) */
+  .lib-h{ display:flex; justify-content:space-between; align-items:center; padding:.4rem .2rem .7rem; }
+  .lib-h .brand{ font-weight:800; color:var(--pr); font-size:.95rem; }
+  .lib-h .back{ font-size:.8rem; color:var(--txt2); }
+  .h2{ margin:0 0 .15rem; font-size:1.2rem; font-weight:800; color:var(--pr); }
+  .hint{ margin:0 0 .7rem; font-size:.8rem; color:var(--txt3); }
+  .chips{ display:flex; gap:.35rem; flex-wrap:wrap; margin-bottom:.7rem; }
+  .chip{ font-size:.76rem; padding:.18rem .62rem; border-radius:999px; background:var(--surface); border:1px solid var(--border); color:var(--txt2); display:inline-flex; gap:.3rem; align-items:center; }
+  .chip .n{ font-size:.68rem; color:var(--txt3); background:var(--surface3); padding:0 .4rem; border-radius:999px; }
+  .chip.on{ background:var(--ac); border-color:var(--ac); color:#fff; } .chip.on .n{ color:#fff; background:rgba(255,255,255,.2); }
+  .chips-label{ font-size:.7rem; color:var(--txt3); align-self:center; margin-inline-end:.15rem; }
+  .group{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:.75rem .9rem .5rem; margin-bottom:.7rem; }
+  .ghead{ display:flex; justify-content:space-between; align-items:baseline; gap:.6rem; margin-bottom:.3rem; }
+  .gtitle{ font-weight:700; font-size:.9rem; line-height:1.45; }
+  .gsub{ font-size:.68rem; color:var(--txt3); white-space:nowrap; }
+  .card{ padding:.6rem 0; border-top:1px solid var(--border); }
+  .card:first-of-type{ border-top:0; }
+  .mark{ background:var(--hl); color:var(--hl-ink); padding:.05rem .2rem; border-radius:3px; line-height:1.9; font-size:.88rem; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .note{ margin:.35rem 0 0; font-size:.8rem; color:var(--txt2); border-inline-start:2px solid var(--border); padding-inline-start:.6rem; }
+  .acts{ display:flex; gap:.6rem; margin-top:.45rem; font-size:.72rem; color:var(--txt3); flex-wrap:wrap; align-items:center; }
+  .acts a{ color:var(--ac); font-weight:600; }
+  .lbl{ font-size:.66rem; padding:0 .45rem; border-radius:999px; background:var(--surface3); color:var(--txt2); }
+
+  /* the clip card — a card, never a link (library rule) */
+  .clipcard{ display:grid; grid-template-columns:2.4rem 1fr; gap:.6rem; align-items:start; }
+  .cplay{ width:2.4rem; height:2.4rem; border-radius:50%; border:0; background:var(--ac); color:#fff; display:flex; align-items:center; justify-content:center; }
+  .cplay.paused{ background:var(--surface2); color:var(--ac); border:1px solid var(--ac); }
+  .cplay svg{ width:1rem; height:1rem; fill:currentColor; }
+  .cspan{ display:flex; align-items:baseline; gap:.5rem; font-size:.84rem; font-weight:700; color:var(--txt); direction:ltr; justify-content:flex-end; }
+  .cspan .dur{ font-size:.7rem; color:var(--txt3); font-weight:500; }
+  .cbar{ position:relative; height:.32rem; background:var(--surface3); border-radius:.16rem; direction:ltr; margin:.35rem 0 .15rem; }
+  .cbar .zone{ position:absolute; top:-.14rem; bottom:-.14rem; background:var(--hl); border-inline:2px solid var(--hl-edge); border-radius:2px; }
+  .cbar .prog{ position:absolute; top:-.14rem; bottom:-.14rem; background:var(--ac); border-radius:2px; opacity:.85; }
+  .cbar .ph{ position:absolute; top:-.3rem; bottom:-.3rem; width:2px; background:var(--ac); }
+  .cctx{ font-size:.64rem; color:var(--txt3); direction:ltr; display:flex; justify-content:space-between; }
+  .clip-tag{ font-size:.64rem; color:var(--txt3); border:1px dashed var(--border); padding:0 .45rem; border-radius:999px; }
+
+  /* landing strip (?dcclip=) */
+  .strip{ display:flex; align-items:center; gap:.6rem; margin:-.1rem 0 .7rem; padding:.55rem .75rem; border-radius:.7rem; background:var(--hl); color:var(--hl-ink); font-size:.8rem; }
+  .strip b{ font-weight:700; direction:ltr; unicode-bidi:isolate; }
+  .strip .go{ margin-inline-start:auto; display:inline-flex; align-items:center; gap:.3rem; font-weight:700; color:var(--hl-ink); white-space:nowrap; }
+  .strip .go svg{ width:.8rem; height:.8rem; fill:currentColor; }
+</style>
+
+<header class="mk-head">
+  <h1>قطعه‌های صوتی — ماکاپ</h1>
+  <p>یک هایلایت در زمان به‌جای متن: شنونده وسط اپیزود «شروع قطعه» را می‌زند، وقتی تمام شد «پایان قطعه» را، و همان تکه با یادداشتش می‌رود توی دفترچه و از همان‌جا پخش می‌شود. هیچ فایلی بریده نمی‌شود؛ آنچه ذخیره می‌شود دو عدد است، شروع و پایان، روی همان فایل اصلی.</p>
+  <nav class="mk-tabs" aria-label="سطح‌ها">
+    <a href="#s1">۱ · پلیر صفحه‌ی اپیزود</a>
+    <a href="#s2">۲ · پلیر داخلی و کشوی سراسری</a>
+    <a href="#s3">۳ · دفترچه</a>
+    <a href="#s4">۴ · فرود روی قطعه</a>
+  </nav>
+  <div class="mk-where">
+    <table>
+      <thead><tr><th>کجا</th><th>چه کسی</th><th>چه می‌کند</th><th>مکانیزم</th></tr></thead>
+      <tbody>
+        <tr><td>زیر نوار پخش، روی کارت «پخش اپیزود»</td><td>هر حساب واردشده</td><td>ساختن قطعه با شروع/پایان، ریزتنظیم در شیت</td><td><code>#ep-audio</code> · <code>currentTime</code></td></tr>
+        <tr><td>همان دکمه در پلیر داخلی و کشوی هدفون هدر</td><td>هر حساب واردشده</td><td>همان کار، از هر صفحه‌ای که پادکست در پس‌زمینه پخش می‌شود</td><td><code>player.html</code> · <code>#dc-audio</code></td></tr>
+        <tr><td>کارت قطعه در دفترچه‌ی هایلایت‌ها</td><td>پریمیوم (صفحه از قبل پریمیوم است)</td><td>پخش همان تکه در جا، ویرایش یادداشت، رفتن به اپیزود</td><td><code>audio_url</code> از <code>dentcast.json</code></td></tr>
+        <tr><td>فرود روی صفحه‌ی اپیزود</td><td>صاحب قطعه</td><td>نوار پخش تکه را نشان می‌دهد و از شروعش پخش می‌کند</td><td><code>?dcclip=&lt;id&gt;</code> مثل <code>?dcphl=</code></td></tr>
+        <tr><td>امبد Acast</td><td>—</td><td>غایب؛ به زمان آن پلیر دسترسی نداریم</td><td>iframe خارجی</td></tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+<!-- ───────────── ۱ · پلیر صفحه‌ی اپیزود ───────────── -->
+<section class="mk-sec" id="s1">
+  <div class="mk-sec-h"><h2>۱ · پلیر صفحه‌ی اپیزود</h2><span>یک ردیف زیر نوار پخش، سه حالت — هیچ صفحه‌ای مارک‌آپ ندارد، ماژول مشترک می‌سازد</span></div>
+  <div class="mk-row">
+
+    <div class="phone">
+      <div class="ep-box">
+        <div class="ep-box-head">
+          <span class="ep-badge">اپیزود ۱۰۱</span>
+          <h1 class="ep-title">باندینگ به دنتین ریشه — پروتکل‌های موثر</h1>
+          <div class="ep-meta"><span>🎙 دنت‌کست</span><span class="num">⏱ ۲۱:۴۶</span></div>
+        </div>
+        <div class="ep-section">
+          <h2 class="ep-section-label">پخش اپیزود</h2>
+          <div class="ep-player-wrap">
+            <div class="ep-player-controls">
+              <button class="ep-play-btn" aria-label="مکث"><svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+              <button class="ep-jump-btn">↺ 15</button>
+              <button class="ep-jump-btn">15 ↻</button>
+              <button class="ep-speed-btn">1.25×</button>
+            </div>
+            <div class="bar"><div class="played" style="width:34%"></div><div class="thumb" style="left:34%"></div></div>
+            <div class="ep-time-row num"><span>07:24</span><span>21:46</span></div>
+            <div class="clip-row">
+              <button class="act outline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/></svg>شروع قطعه</button>
+              <span class="clip-hint">هر جای پخش که رسیدی بزن</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="cap"><b>حالت آرام.</b> نوار و کنترل‌ها همان پلیر فعلی‌اند؛ تنها اضافه، ردیف نقطه‌چین زیر زمان است.</p>
+    </div>
+
+    <div class="phone">
+      <div class="ep-box">
+        <div class="ep-box-head">
+          <span class="ep-badge">اپیزود ۱۰۱</span>
+          <h1 class="ep-title">باندینگ به دنتین ریشه — پروتکل‌های موثر</h1>
+          <div class="ep-meta"><span>🎙 دنت‌کست</span><span class="num">⏱ ۲۱:۴۶</span></div>
+        </div>
+        <div class="ep-section">
+          <h2 class="ep-section-label">پخش اپیزود</h2>
+          <div class="ep-player-wrap">
+            <div class="ep-player-controls">
+              <button class="ep-play-btn" aria-label="مکث"><svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+              <button class="ep-jump-btn">↺ 15</button>
+              <button class="ep-jump-btn">15 ↻</button>
+              <button class="ep-speed-btn">1.25×</button>
+            </div>
+            <div class="bar"><div class="played" style="width:36%"></div><div class="clip live" style="left:34%;width:8%"></div><div class="thumb" style="left:36%"></div></div>
+            <div class="ep-time-row num"><span>07:52</span><span>21:46</span></div>
+            <div class="clip-row">
+              <button class="act rec"><span class="dot"></span>پایان قطعه</button>
+              <span class="clip-live num">از <b>07:24</b> · 00:28</span>
+              <button class="act quiet" title="شروع را ۱۵ ثانیه عقب ببر">شروع −۱۵</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="cap"><b>در حال ضبطِ بازه.</b> نوار از نقطه‌ی شروع تا الان زرد می‌شود و با پخش جلو می‌رود. «شروع −۱۵» برای وقتی که چند ثانیه دیر فهمیدی این تکه مهم است — همیشه دیر می‌فهمی.</p>
+    </div>
+
+    <div class="phone">
+      <div class="under">
+        <div class="ep-box">
+          <div class="ep-box-head">
+            <span class="ep-badge">اپیزود ۱۰۱</span>
+            <h1 class="ep-title">باندینگ به دنتین ریشه — پروتکل‌های موثر</h1>
+            <div class="ep-meta"><span>🎙 دنت‌کست</span><span class="num">⏱ ۲۱:۴۶</span></div>
+          </div>
+          <div class="ep-section">
+            <h2 class="ep-section-label">پخش اپیزود</h2>
+            <div class="ep-player-wrap">
+              <div class="ep-player-controls">
+                <button class="ep-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+                <button class="ep-jump-btn">↺ 15</button><button class="ep-jump-btn">15 ↻</button><button class="ep-speed-btn">1.25×</button>
+              </div>
+              <div class="bar"><div class="played" style="width:37%"></div><div class="clip" style="left:34%;width:3%"></div></div>
+              <div class="ep-time-row num"><span>08:03</span><span>21:46</span></div>
+              <div class="clip-row"><span class="act outline">شروع قطعه</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="height:9rem"></div>
+      </div>
+      <div class="dim"></div>
+      <div class="sheet" role="dialog" aria-label="قطعه‌ی جدید">
+        <div class="grab"></div>
+        <h3>قطعه‌ی جدید</h3>
+        <p class="sub">اپیزود ۱۰۱ · <b class="num">۰۷:۲۷ تا ۰۸:۰۳</b> · ۳۶ ثانیه</p>
+        <div class="win" aria-label="ریزتنظیم شروع و پایان">
+          <div class="tick" style="left:0"><i>07:00</i></div>
+          <div class="tick" style="left:25%"><i>07:30</i></div>
+          <div class="tick" style="left:50%"><i>08:00</i></div>
+          <div class="tick" style="left:75%"><i>08:30</i></div>
+          <div class="sel" style="left:22.5%;width:30%"></div>
+          <div class="ph" style="left:31%"></div>
+          <div class="h" style="left:22.5%" title="شروع"></div>
+          <div class="h" style="left:52.5%" title="پایان"></div>
+        </div>
+        <div class="ends">
+          <div class="end"><span class="lab">شروع</span><button class="nudge">−۱</button><span class="t num">07:27</span><button class="nudge">+۱</button></div>
+          <div class="end"><span class="lab">پایان</span><button class="nudge">−۱</button><span class="t num">08:03</span><button class="nudge">+۱</button></div>
+        </div>
+        <div class="len">
+          <span class="lab">یا طولش را بگو:</span>
+          <span class="pill">۱۵ ث</span><span class="pill on">۳۰ ث</span><span class="pill">۶۰ ث</span><span class="pill">۹۰ ث</span>
+        </div>
+        <div class="inp ph">یادداشت (اختیاری) — چرا این تکه مهم است؟</div>
+        <div class="foot">
+          <button class="btn">ذخیره‌ی قطعه</button>
+          <button class="btn ghost"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>گوش بده</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="cap"><b>شیت بعد از «پایان قطعه».</b> پنجره‌ی زوم‌شده فقط دو دقیقه‌ی دور قطعه را نشان می‌دهد (نه کل اپیزود)، پس هر پیکسل نیم ثانیه است و دستگیره‌ها با انگشت قابل‌گرفتن‌اند. کشیدنِ هر دستگیره صدا را همان‌جا پیش‌نمایش می‌دهد. چیپ‌های «۱۵/۳۰/۶۰» راه سوم‌اند: شروع را نگه می‌دارند و پایان را حساب می‌کنند. هر سه روش، یک شیت. همان <code>sheet.js</code> که کالکشن‌ها و دیوار نشان‌ها استفاده می‌کنند.</p>
+</section>
+
+<!-- ───────────── ۲ · پلیر داخلی / کشو ───────────── -->
+<section class="mk-sec" id="s2">
+  <div class="mk-sec-h"><h2>۲ · پلیر داخلی و کشوی سراسری</h2><span><code>player.html</code> در هر دو جا یکی است؛ دکمه یک‌بار آن‌جا می‌نشیند و دو جا دیده می‌شود</span></div>
+  <div class="mk-row">
+    <div class="phone">
+      <div class="hdr"><span class="brand">دنت‌کست</span><div class="ico"><span>☰</span><span>🔍</span><span class="on">🎧</span><span>👤</span></div></div>
+      <div class="drawer">
+        <div class="dr-now">در حال پخش · اپیزود ۱۴۶</div>
+        <div class="dr-title">Full-Arch ایمپلنت: کانتور بافت نرم و پروفایل اِمرجنس</div>
+        <div class="ep-player-controls">
+          <button class="ep-play-btn" aria-label="مکث"><svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+          <button class="ep-jump-btn">↺ 15</button>
+          <button class="ep-jump-btn">15 ↻</button>
+          <button class="ep-speed-btn">1.5×</button>
+        </div>
+        <div class="bar"><div class="played" style="width:58%"></div><div class="clip live" style="left:52%;width:6%"></div><div class="thumb" style="left:58%"></div></div>
+        <div class="ep-time-row num"><span>18:11</span><span>31:20</span></div>
+        <div class="clip-row">
+          <button class="act rec"><span class="dot"></span>پایان قطعه</button>
+          <span class="clip-live num">از <b>16:20</b> · 01:51</span>
+        </div>
+        <div class="dr-list">
+          <div class="dr-item on"><span>۱۴۶ · Full-Arch ایمپلنت</span><span class="d">31:20</span></div>
+          <div class="dr-item"><span>۱۴۵ · اکلوژن در پروتز ایمپلنت</span><span class="d">24:05</span></div>
+          <div class="dr-item"><span>۱۴۴ · تیتانیوم یا زیرکونیا؟</span><span class="d">27:48</span></div>
+        </div>
+      </div>
+      <p class="cap"><b>کشوی هدفونِ هدر، روی یک مقاله‌ی دیگر.</b> شنونده دارد مقاله می‌خواند و پادکست در پس‌زمینه است؛ همان دکمه، همان رفتار. قطعه به <code>content_id</code> اپیزودِ در حال پخش ثبت می‌شود، نه صفحه‌ای که رویش هستی — همان کاری که <code>episode_listened</code> از راه <code>dcpTrackListening</code> می‌کند.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── ۳ · دفترچه ───────────── -->
+<section class="mk-sec" id="s3">
+  <div class="mk-sec-h"><h2>۳ · دفترچه‌ی هایلایت‌ها</h2><span>قطعه یک کارت است در همان گروهِ اپیزود، کنار هایلایت متنیِ کپشن — و از همان‌جا پخش می‌شود</span></div>
+  <div class="mk-row">
+    <div class="phone">
+      <div class="lib-h"><span class="brand">دفترچه‌ی هایلایت‌ها</span><a class="back" href="#">پیشخوان ›</a></div>
+      <h2 class="h2">همه‌ی هایلایت‌هات</h2>
+      <p class="hint">۱۳۲ هایلایت · ۹ قطعه‌ی صوتی · ۴۱ مطلب</p>
+      <div class="chips">
+        <span class="chips-label">نوع</span>
+        <span class="chip">همه</span>
+        <span class="chip">متن <span class="n">۱۲۳</span></span>
+        <span class="chip on">🎧 قطعه‌ی صوتی <span class="n">۹</span></span>
+      </div>
+
+      <div class="group">
+        <div class="ghead"><div class="gtitle">اپیزود ۱۰۱ · باندینگ به دنتین ریشه — پروتکل‌های موثر</div><span class="gsub">پادکست · ۲ قطعه</span></div>
+
+        <div class="card">
+          <div class="clipcard">
+            <button class="cplay" aria-label="مکث"><svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+            <div>
+              <div class="cspan num"><span>07:27 → 08:03</span><span class="dur">۳۶ ثانیه</span></div>
+              <div class="cbar"><div class="zone" style="left:34%;width:3%"></div><div class="prog" style="left:34%;width:1.4%"></div><div class="ph" style="left:35.4%"></div></div>
+              <div class="cctx num"><span>00:00</span><span>در حال پخش · 07:44</span><span>21:46</span></div>
+              <p class="note">پروتکلِ سه‌مرحله‌ای برای ریشه: EDTA بعد از هیپوکلریت، بعد سایلن روی پست — ترتیبش را همیشه قاطی می‌کنم.</p>
+              <div class="acts"><span class="lbl">اندو-پروتز</span><a href="#">شنیدن در اپیزود ›</a><a href="#">ویرایش</a><a href="#">کالکشن</a><a href="#">حذف</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="clipcard">
+            <button class="cplay paused" aria-label="پخش"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+            <div>
+              <div class="cspan num"><span>15:10 → 16:02</span><span class="dur">۵۲ ثانیه</span></div>
+              <div class="cbar"><div class="zone" style="left:69.7%;width:4%"></div></div>
+              <div class="cctx num"><span>00:00</span><span>21:46</span></div>
+              <p class="note">اینکه چرا فیبرپست با سمان سلف‌ادهزیو در یک‌سوم اپیکال ضعیف می‌ماند.</p>
+              <div class="acts"><a href="#">شنیدن در اپیزود ›</a><a href="#">ویرایش</a><a href="#">کالکشن</a><a href="#">حذف</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="mark">افزایش استحکام باند به دنتین ریشه در درمان‌های ادهزیو</span>
+          <div class="acts"><span class="clip-tag">متنِ معرفی</span><a href="#">متنِ مقاله ›</a><a href="#">ویرایش</a></div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="ghead"><div class="gtitle">اپیزود ۱۴۶ · Full-Arch ایمپلنت: کانتور بافت نرم</div><span class="gsub">پادکست · ۱ قطعه</span></div>
+        <div class="card">
+          <div class="clipcard">
+            <button class="cplay paused" aria-label="پخش"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+            <div>
+              <div class="cspan num"><span>16:20 → 18:11</span><span class="dur">۱ دقیقه و ۵۱ ثانیه</span></div>
+              <div class="cbar"><div class="zone" style="left:52%;width:6%"></div></div>
+              <div class="cctx num"><span>00:00</span><span>31:20</span></div>
+              <div class="acts"><a href="#">شنیدن در اپیزود ›</a><a href="#">ویرایش</a><a href="#">کالکشن</a><a href="#">حذف</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex:1;min-width:260px">
+      <p class="mk-note"><b>کارت، نه لینک</b> — همان قاعده‌ی دفترچه. محتوای ردیف خودِ قطعه است: دکمه‌ی پخش، بازه، و یادداشت. نوارِ کوچک کل اپیزود را نشان می‌دهد و تکه‌ی زرد جای قطعه را در آن؛ موقع پخش، آبی فقط داخل همان تکه پیش می‌رود و به پایان که رسید می‌ایستد. یک <code>&lt;audio&gt;</code> برای کل صفحه، هر بار روی فایل اپیزودِ همان کارت؛ زدنِ پخشِ یک کارت، کارت قبلی را مکث می‌کند.</p>
+      <p class="mk-note"><b>یادداشت و لیبل درجا ویرایش می‌شوند</b> با همان <code>inlineEditor</code>ِ <code>hl-view.js</code>. «شنیدن در اپیزود» با <code>?dcclip=</code> می‌رود — بخش ۴.</p>
+      <p class="mk-note"><b>فیلتر «نوع»</b> کنار پوشه و لیبل و مفهوم، در URL مثل بقیه (<code>?kind=clip</code>). هایلایت متنیِ کپشنِ همان اپیزود در همان گروه می‌ماند؛ گروه به مطلب است، نه به نوع.</p>
+      <p class="mk-note"><b>موج صوتی نداریم</b>، عمداً: کشیدن waveform یعنی دانلود و دیکود کل فایل در مرورگر و CORS روی باکت‌های آروان. دو عدد و یک نوار، همان کار را با صفر هزینه می‌کند.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── ۴ · فرود ───────────── -->
+<section class="mk-sec" id="s4">
+  <div class="mk-sec-h"><h2>۴ · فرود روی قطعه</h2><span><code>/episodes/episode-101.html?dcclip=…</code> — همان کاری که <code>?dcphl=</code> برای هایلایت متنی می‌کند</span></div>
+  <div class="mk-row">
+    <div class="phone">
+      <div class="ep-box">
+        <div class="ep-box-head">
+          <span class="ep-badge">اپیزود ۱۰۱</span>
+          <h1 class="ep-title">باندینگ به دنتین ریشه — پروتکل‌های موثر</h1>
+          <div class="ep-meta"><span>🎙 دنت‌کست</span><span class="num">⏱ ۲۱:۴۶</span></div>
+        </div>
+        <div class="ep-section">
+          <h2 class="ep-section-label">درباره این اپیزود</h2>
+          <p class="ep-caption">بررسی روش‌ها و پروتکل‌های موثر برای افزایش استحکام باند به دنتین ریشه در درمان‌های ادهزیو.</p>
+        </div>
+        <div class="ep-section">
+          <h2 class="ep-section-label">پخش اپیزود</h2>
+          <div class="strip">
+            <span>قطعه‌ی تو · <b class="num">07:27 → 08:03</b></span>
+            <a class="go" href="#"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>پخش قطعه</a>
+          </div>
+          <div class="ep-player-wrap">
+            <div class="ep-player-controls">
+              <button class="ep-play-btn" aria-label="پخش"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+              <button class="ep-jump-btn">↺ 15</button>
+              <button class="ep-jump-btn">15 ↻</button>
+              <button class="ep-speed-btn">1×</button>
+            </div>
+            <div class="bar"><div class="played" style="width:34%"></div><div class="clip" style="left:34%;width:3%"></div><div class="thumb" style="left:34%"></div></div>
+            <div class="ep-time-row num"><span>07:27</span><span>21:46</span></div>
+            <div class="clip-row">
+              <button class="act outline">شروع قطعه</button>
+              <span class="clip-hint">۲ قطعه روی این اپیزود داری</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="cap"><b>پلیر روی شروع قطعه ایستاده</b> (seek بعد از <code>canplay</code>، همان احتیاطی که <code>player.html</code> ثبت کرده)، تکه روی نوار زرد است، و نوارِ بالای پلیر یک لمس تا پخش است — روی iOS اولین پخش باید از لمس کاربر بیاید، پس خودکار شروع نمی‌کنیم. بدون <code>?dcclip=</code> نوار زرد باز هم هست: قطعه‌های خودت همیشه روی نوار دیده می‌شوند، مثل هایلایت متنی که با «میز کار» روی صفحه می‌نشیند.</p>
+    </div>
+  </div>
+</section>
+
+<section class="mk-notes">
+  <h2>تصمیم‌های داخل ماکاپ</h2>
+  <dl>
+    <dt>رنگ</dt><dd>زردِ هایلایت (<code>--hl</code>) برای قطعه روی نوار و کارت، چون یک قطعه همان هایلایت است در زمان؛ قرمز فقط برای لحظه‌ی ضبطِ بازه؛ هیچ‌جا کهربایی نیست، چون هیچ‌جای این کار در پیش نیست.</dd>
+    <dt>سه روش، یک شیت</dt><dd>شروع/پایان حین پخش راه اصلی است و دکمه‌اش زیر نوار می‌نشیند؛ دستگیره‌ها و چیپ‌های طول، دو راه دیگر، داخل شیتِ بعد از آن‌اند. کسی مجبور نیست بین سه UI انتخاب کند.</dd>
+    <dt>دقت</dt><dd>ثانیه. دستگیره‌ها روی پنجره‌ی زوم‌شده نیم‌ثانیه دقت می‌دهند و پایانِ پخش با <code>timeupdate</code> در حدود یک‌چهارم ثانیه می‌ایستد؛ برای گفتار کافی است.</dd>
+    <dt>چه ذخیره می‌شود</dt><dd>جدول جدا (کاربر، <code>content_id</code>، شروع، پایان، یادداشت، لیبل). نه در <code>highlights</code>، که متن‌محور است. <code>/export/highlights</code> آن را هم می‌دهد.</dd>
+    <dt>چه کسی</dt><dd>ساختن قطعه: هر حساب واردشده. دفترچه و پخشِ داخل آن: پریمیوم — همان مرزی که هایلایت متنی الان دارد؛ داده مال کاربر است، چیدمان چیزی است که خریده می‌شود.</dd>
+    <dt>غایب</dt><dd>امبد Acast، و پلیر روی اپیزودهای NoteCast (صوتِ کنار متن — این ماکاپ فقط اپیزودهای پادکست است).</dd>
+  </dl>
+</section>
