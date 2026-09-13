@@ -299,6 +299,9 @@ export const config = {
   // rulings a form needs before the model may settle a free-text attempt on
   // its own; multiple-choice needs no supervision.
   exam: {
+    // Questions per attempt, drawn at random from the pathway's whole pool
+    // (0 = the whole pool). Founder, 2026-09-13: «۱۵ تا سؤال رندوم».
+    draw: int('EXAM_DRAW', 15),
     passPercent: int('EXAM_PASS_PERCENT', 70),
     maxAttempts: int('EXAM_MAX_ATTEMPTS', 2),
     retryDays: int('EXAM_RETRY_DAYS', 7),

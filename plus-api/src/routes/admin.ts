@@ -856,8 +856,7 @@ function renderHtml(
   <form class="bc" id="efForm" onsubmit="return false">
     <div class="row">
       <div style="flex:1 1 220px"><label for="efPath">مسیر</label><select id="efPath"></select></div>
-      <div style="flex:0 0 90px"><label for="efMcq">قرعهٔ تستی</label><input id="efMcq" type="number" min="0" max="200" value="0" title="۰ = همهٔ سؤال‌های تستیِ مخزن"></div>
-      <div style="flex:0 0 90px"><label for="efFree">قرعهٔ تشریحی</label><input id="efFree" type="number" min="0" max="200" value="0" title="۰ = همهٔ سؤال‌های تشریحیِ مخزن"></div>
+      <div style="flex:0 0 120px"><label for="efDraw">سؤال در هر آزمون</label><input id="efDraw" type="number" min="0" max="200" value="15" title="از کلِ مخزن، تصادفی، هر بار؛ ۰ = همهٔ مخزن"></div>
       <div style="flex:0 0 80px"><label for="efPass">نصاب ٪</label><input id="efPass" type="number" min="1" max="100" value="70"></div>
       <div style="flex:0 0 80px"><label for="efMax">تلاش</label><input id="efMax" type="number" min="1" max="10" value="2"></div>
       <div style="flex:0 0 90px"><label for="efRetry">فاصله (روز)</label><input id="efRetry" type="number" min="0" max="365" value="7"></div>
@@ -1013,7 +1012,7 @@ function renderHtml(
               ? '<span class="pill">خودکار</span>' : fa(f.rulings) + ' از ' + fa(f.supervised_until);
             return '<tr><td>' + esc(f.title_fa) + (f.note ? '<div class="muted">' + esc(f.note) + '</div>' : '') + '</td>'
               + '<td>' + fa(f.mcq_count) + ' تستی · ' + fa(f.free_count) + ' تشریحی</td>'
-              + '<td>' + (f.mcq_draw ? fa(f.mcq_draw) : 'همه') + ' / ' + (f.free_draw ? fa(f.free_draw) : 'همه') + '</td>'
+              + '<td>' + (f.draw ? fa(f.draw) + ' تصادفی' : 'همه') + '</td>'
               + '<td>٪' + fa(f.pass_percent) + '</td>'
               + '<td>' + fa(f.max_attempts) + ' / ' + fa(f.retry_days) + ' روز</td>'
               + '<td>' + sup + '</td>'
@@ -1073,7 +1072,7 @@ function renderHtml(
       efBtn.disabled = true; efOut.textContent = 'در حال ذخیره…';
       post('/admin/exam-forms', {
         pathway_id: val('efPath'), questions: qs,
-        mcq_draw: num('efMcq', 0), free_draw: num('efFree', 0), pass_percent: num('efPass', 70),
+        draw: num('efDraw', 15), pass_percent: num('efPass', 70),
         max_attempts: num('efMax', 2), retry_days: num('efRetry', 7), supervised_until: num('efSup', 5),
         note: val('efNote') || undefined
       }).then(function (res) {
@@ -1095,7 +1094,7 @@ function renderHtml(
           var f = d.form; if (!f) return;
           document.getElementById('efPath').value = f.pathway_id;
           document.getElementById('efQ').value = JSON.stringify(f.questions, null, 2);
-          document.getElementById('efMcq').value = f.mcq_draw; document.getElementById('efFree').value = f.free_draw;
+          document.getElementById('efDraw').value = f.draw;
           document.getElementById('efPass').value = f.pass_percent; document.getElementById('efMax').value = f.max_attempts;
           document.getElementById('efRetry').value = f.retry_days; document.getElementById('efSup').value = f.supervised_until;
           document.getElementById('efNote').value = f.note || '';
@@ -4993,7 +4992,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     });
   });
 
-  // POST /admin/exam-forms — { pathway_id, questions, mcq_draw?, free_draw?,
+  // POST /admin/exam-forms — { pathway_id, questions, draw?,
   // pass_percent?, max_attempts?, retry_days?, supervised_until?, note? }.
   // `questions` is the founder's paste, normalised leniently; a bad question
   // is refused by number, and nothing is written.
@@ -5005,8 +5004,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
           pathway_id: { type: 'string' },
           // Anything: the founder's prose, or an array. parseQuestions decides.
           questions: {},
-          mcq_draw: { type: 'integer', minimum: 0, maximum: 200 },
-          free_draw: { type: 'integer', minimum: 0, maximum: 200 },
+          draw: { type: 'integer', minimum: 0, maximum: 200 },
           pass_percent: { type: 'integer', minimum: 1, maximum: 100 },
           max_attempts: { type: 'integer', minimum: 1, maximum: 10 },
           retry_days: { type: 'integer', minimum: 0, maximum: 365 },
@@ -5017,12 +5015,12 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     },
   }, async (request, reply) => {
     const b = request.body as {
-      pathway_id: string; questions: unknown; mcq_draw?: number; free_draw?: number; pass_percent?: number;
+      pathway_id: string; questions: unknown; draw?: number; pass_percent?: number;
       max_attempts?: number; retry_days?: number; supervised_until?: number; note?: string;
     };
     try {
       const r = await upsertForm(b.pathway_id, {
-        questions: b.questions, mcqDraw: b.mcq_draw, freeDraw: b.free_draw, passPercent: b.pass_percent,
+        questions: b.questions, draw: b.draw, passPercent: b.pass_percent,
         maxAttempts: b.max_attempts, retryDays: b.retry_days, supervisedUntil: b.supervised_until, note: b.note,
       });
       // Readers let in BEFORE the form existed were told nothing at the

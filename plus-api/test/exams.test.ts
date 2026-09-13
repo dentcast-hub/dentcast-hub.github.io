@@ -155,12 +155,12 @@ describe('the form', () => {
   it('is created with the founder\'s defaults — 70%, two attempts, a week, five rulings — and upserts in place', async () => {
     const { form, created } = await upsertForm(PATHWAY, { questions: [MCQ(1), FREE(1)] });
     expect(created).toBe(true);
-    expect(form).toMatchObject({ pass_percent: 70, max_attempts: 2, retry_days: 7, supervised_until: 5, mcq_draw: 0, free_draw: 0 });
+    expect(form).toMatchObject({ pass_percent: 70, max_attempts: 2, retry_days: 7, supervised_until: 5, draw: 15 });
 
-    const again = await upsertForm(PATHWAY, { questions: [MCQ(1)], mcqDraw: 1, passPercent: 80, note: ' n ' });
+    const again = await upsertForm(PATHWAY, { questions: [MCQ(1)], draw: 1, passPercent: 80, note: ' n ' });
     expect(again.created).toBe(false);
     expect(again.form.id).toBe(form.id);
-    expect(again.form).toMatchObject({ pass_percent: 80, mcq_draw: 1, note: 'n' });
+    expect(again.form).toMatchObject({ pass_percent: 80, draw: 1, note: 'n' });
     expect(again.form.questions).toHaveLength(1);
   });
 
@@ -210,7 +210,7 @@ describe('the form', () => {
 
   it('is listed with its counts, and the panel route round-trips the founder\'s numbers', async () => {
     const res = await adminPost('/admin/exam-forms', {
-      pathway_id: PATHWAY, questions: [MCQ(1), MCQ(2), FREE(1)], mcq_draw: 1, retry_days: 0, supervised_until: 0,
+      pathway_id: PATHWAY, questions: [MCQ(1), MCQ(2), FREE(1)], draw: 1, retry_days: 0, supervised_until: 0,
     });
     expect(res.statusCode).toBe(200);
     expect(res.json().form.questions).toHaveLength(3);
@@ -218,7 +218,7 @@ describe('the form', () => {
     const list = await adminGet('/admin/exam-forms');
     expect(list.json().forms).toHaveLength(1);
     expect(list.json().forms[0]).toMatchObject({
-      pathway_id: PATHWAY, mcq_count: 2, free_count: 1, mcq_draw: 1, rulings: 0, retry_days: 0,
+      pathway_id: PATHWAY, mcq_count: 2, free_count: 1, draw: 1, rulings: 0, retry_days: 0,
       attempts: { open: 0, queued: 0, passed: 0, failed: 0 },
     });
     const roster = await formRoster();
@@ -242,17 +242,17 @@ describe('the question builder — one written question at a time', () => {
   it('creates the form on the first question, with the founder\'s own defaults', async () => {
     const r = await addQuestion(PATHWAY, { kind: 'mcq', prompt_fa: 'کدام؟', options: ['الف', 'ب', 'ج'], correct: 2 });
     expect(r.created).toBe(true);
-    expect(r.form).toMatchObject({ pass_percent: 70, max_attempts: 2, retry_days: 7, supervised_until: 5, mcq_draw: 0, free_draw: 0 });
+    expect(r.form).toMatchObject({ pass_percent: 70, max_attempts: 2, retry_days: 7, supervised_until: 5, draw: 15 });
     expect(r.question).toMatchObject({ id: 'q1', kind: 'mcq', correct: 2 });
     expect((await getForm(PATHWAY))!.questions).toHaveLength(1);
   });
 
   it('appends without touching the form\'s own settings', async () => {
-    await upsertForm(PATHWAY, { questions: [MCQ(1)], passPercent: 85, mcqDraw: 4, retryDays: 0, supervisedUntil: 0, note: 'دست‌ساز' });
+    await upsertForm(PATHWAY, { questions: [MCQ(1)], passPercent: 85, draw: 4, retryDays: 0, supervisedUntil: 0, note: 'دست‌ساز' });
     const r = await addQuestion(PATHWAY, { kind: 'free', prompt_fa: 'چرا؟', key_points: ['اول', 'دوم'] });
     expect(r.created).toBe(false);
     // the thing upsertForm would have reset:
-    expect(r.form).toMatchObject({ pass_percent: 85, mcq_draw: 4, retry_days: 0, supervised_until: 0, note: 'دست‌ساز' });
+    expect(r.form).toMatchObject({ pass_percent: 85, draw: 4, retry_days: 0, supervised_until: 0, note: 'دست‌ساز' });
     expect(r.form.questions).toHaveLength(2);
     expect(r.form.questions[0].id).toBe('m1'); // the existing question keeps its id
   });
@@ -467,7 +467,7 @@ describe('the draw', () => {
 
   it('starting opens an attempt with the key stripped, and a second start hands back the same attempt', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2), MCQ(3), FREE(1), FREE(2)], mcqDraw: 2, freeDraw: 1 });
+    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2), MCQ(3), FREE(1), FREE(2)], draw: 3 });
     await assignExam(uid, PATHWAY);
 
     const locked = await post(`/exams/${PATHWAY}/start`, { holder_name: '   ' });
@@ -565,7 +565,7 @@ describe('submitting', () => {
 
   it('a fail below 70% waits a week, a second attempt draws the unseen questions, and the third is refused', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2), MCQ(3), MCQ(4)], mcqDraw: 2 });
+    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2), MCQ(3), MCQ(4)], draw: 2 });
     await assignExam(uid, PATHWAY);
     const first = await startAttempt(uid, PATHWAY, 'x');
     const drawn1 = first.ok ? first.attempt.questions.map((q) => q.id) : [];
@@ -633,20 +633,23 @@ describe('submitting', () => {
 
   it('a one-question form is a form, and a lopsided pool draws what it has', async () => {
     const uid = await userId();
-    // 1 free + 9 mcq, drawing 4 mcq and every free question
+    // 1 free + 9 mcq, drawing 5 from the WHOLE pool — the sheet's mix is
+    // whatever the draw produced, never a count per kind (founder: «۱۵ تا
+    // سؤال رندوم» over a pool he keeps adding to).
     await upsertForm(PATHWAY, {
       questions: [FREE(1), ...Array.from({ length: 9 }, (_, i) => MCQ(i + 1))],
-      mcqDraw: 4, supervisedUntil: 0,
+      draw: 5, supervisedUntil: 0,
     });
     await assignExam(uid, PATHWAY);
     const started = await startAttempt(uid, PATHWAY, 'x');
     expect(started.ok).toBe(true);
     const drawn = started.ok ? started.attempt.questions : [];
-    expect(drawn.filter((q) => q.kind === 'mcq')).toHaveLength(4);
-    expect(drawn.filter((q) => q.kind === 'free')).toHaveLength(1);
+    expect(drawn).toHaveLength(5);
+    expect(new Set(drawn.map((q) => q.id)).size).toBe(5);
+    expect((await examState(uid, PATHWAY)).rules!.question_count).toBe(5);
 
-    // asking for more of a kind than the pool holds draws the pool, never zero
-    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2)], mcqDraw: 20, freeDraw: 20 });
+    // asking for more than the pool holds draws the pool, never zero
+    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2)], draw: 20 });
     const other = await userId();
     expect((await examState(other, PATHWAY)).rules!.question_count).toBe(2);
   });
@@ -866,7 +869,10 @@ describe('the founder\'s ruling', () => {
     const res = await adminGet('/admin/exam-attempts');
     expect(res.json().count).toBe(1);
     expect(res.json().queue[0].id).toBe(id);
-    expect(res.json().queue[0].questions[0].correct).toBe(1);   // the founder sees the key…
+    // The founder sees the key… (the sheet is a random draw over the whole
+    // pool now, so the MCQ is found by kind, not by position.)
+    const mcq = (res.json().queue[0].questions as { kind: string; correct?: number }[]).find((q) => q.kind === 'mcq')!;
+    expect(mcq.correct).toBe(1);
     expect(res.json().queue[0].answers.f1).toBe(LONG);           // …and the reader's words
     expect(res.json().attempts[0]).toMatchObject({ id, status: 'queued', attempt_no: 1 });
   });

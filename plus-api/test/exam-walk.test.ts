@@ -135,8 +135,11 @@ describe('the whole road: a mixed exam, queued, ruled by the founder, certificat
     expect(JSON.stringify(s.open.questions)).not.toContain('key_points');
 
     // ── 7. a skipped question costs nothing
+    // The sheet is a random draw over the whole pool, so the one answered
+    // question is picked by kind, not by position.
     const ids = s.open.questions.map((q: { id: string }) => q.id);
-    const short = await post(`/exams/${PATHWAY}/submit`, { answers: { [ids[0]]: 1 } });
+    const firstMcq = (s.open.questions as { id: string; kind: string }[]).find((q) => q.kind === 'mcq')!.id;
+    const short = await post(`/exams/${PATHWAY}/submit`, { answers: { [firstMcq]: 1 } });
     expect(short.statusCode).toBe(400);
     expect(short.json().missing).toHaveLength(2);
     expect((await examState()).state).toBe('open');
@@ -304,11 +307,11 @@ describe('the founder editing the pool under a reader', () => {
     await build([MCQ(1)]);
     await readEverything();
     await post(`/pathways/${PATHWAY}/enroll`);
-    // a draw that asks only for a kind the pool does not have
+    // a draw smaller than the pool still opens a sheet
     await adminPost('/admin/exam-forms', {
       pathway_id: PATHWAY,
       questions: (await adminGet(`/admin/exam-forms/${PATHWAY}`)).json().form.questions,
-      free_draw: 3, mcq_draw: 0,
+      draw: 3,
     });
     const r = await post(`/exams/${PATHWAY}/start`, { holder_name: 'x' });
     expect(r.statusCode).toBe(200);
