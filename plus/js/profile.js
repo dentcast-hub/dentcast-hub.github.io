@@ -1,16 +1,16 @@
 // Reusable profile renderer (spec 2.7). Used by the /plus/profile.html page and
 // the header overlay. Site design language; a clear, readable week strip. Nothing
 // here is mandatory: the pseudonym is editable, no real name is ever required.
-import { el, faNum, tehranDay } from './util.js?v=76';
-import { certificatesBody } from './certificates.js?v=76';
-import { api, ApiError, currentUser } from './api.js?v=76';
-import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js?v=76';
-import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=76';
-import { baleEnabled, baleDeepLink } from './config.js?v=76';
-import { leagueEntryButton } from './league.js?v=76';
-import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=76';
-import { subscriptionCta } from './premium-cta.js?v=76';
-import { copyToClipboard, confirmStrip } from './hl-view.js?v=76';
+import { el, faNum, tehranDay } from './util.js?v=77';
+import { certificatesBody } from './certificates.js?v=77';
+import { api, ApiError, currentUser } from './api.js?v=77';
+import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js?v=77';
+import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=77';
+import { baleEnabled, baleDeepLink } from './config.js?v=77';
+import { leagueEntryButton } from './league.js?v=77';
+import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=77';
+import { subscriptionCta } from './premium-cta.js?v=77';
+import { copyToClipboard, confirmStrip } from './hl-view.js?v=77';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
   timeZone: 'Asia/Tehran', year: 'numeric', month: 'long', day: 'numeric',

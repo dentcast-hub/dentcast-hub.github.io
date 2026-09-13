@@ -360,12 +360,19 @@ export async function addQuestion(
  */
 export async function removeQuestion(
   pathwayId: string, questionId: string,
-): Promise<{ removed: boolean; remaining: number }> {
+): Promise<{ removed: boolean; remaining: number; last?: true }> {
   return withTransaction(async (client) => {
     const form = await one<ExamForm>(`${FORM_SELECT} where pathway_id = $1 for update`, [pathwayId], client);
     if (!form) return { removed: false, remaining: 0 };
     const questions = form.questions.filter((q) => q.id !== questionId);
     if (questions.length === form.questions.length) return { removed: false, remaining: questions.length };
+    // THE LAST QUESTION STAYS. An empty pool draws an empty sheet, and an
+    // empty sheet has no part to fall short of its threshold — `tally([])`
+    // passes, so the next reader to press «شروع» would be handed a
+    // certificate for answering nothing. `upsertForm` has always required a
+    // question; this is the same rule on the other door. Deleting the whole
+    // form is the way to take an exam out of service.
+    if (questions.length === 0) return { removed: false, remaining: 1, last: true };
     await query(
       'update pathway_exam_forms set questions = $2::jsonb, updated_at = now() where pathway_id = $1',
       [pathwayId, JSON.stringify(questions)], client,
@@ -695,8 +702,10 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
   if (cert) base.certificate = { verify_code: cert.verify_code, verify_url: `/plus/certificate.html?c=${cert.verify_code}` };
   // A certificate already held is the end of the story whatever the form
   // says — including a form deleted after the pass, or one never written
-  // because the founder issued by hand.
-  if (!form) { if (cert) base.state = 'passed'; return base; }
+  // because the founder issued by hand. A form with an EMPTY pool counts as
+  // no form: there is nothing to sit, and saying `ready` would offer a sheet
+  // with no questions on it.
+  if (!form || form.questions.length === 0) { if (cert) base.state = 'passed'; return base; }
 
   base.rules = formRules(form);
   const attempts = await listAttempts(userId, pathwayId);
@@ -763,6 +772,9 @@ export async function startAttempt(userId: string, pathwayId: string, holderName
   // Unique per (form, reader), NOT the reader-facing ordinal: a voided
   // attempt keeps its number so the unique index never collides, and
   // examState renumbers the counted ones for display.
+  // Never open an empty sheet, whatever put the pool in that state — an
+  // attempt with no questions passes itself (see removeQuestion).
+  if (!drawn.length) return { ok: false, error: 'not_ready', state };
   const attemptNo = prior.reduce((m, a) => Math.max(m, a.attempt_no), 0) + 1;
 
   // Sitting the exam is the strongest «بله» there is; a reader who never
@@ -1284,8 +1296,10 @@ export async function examStates(userId: string, pathwayIds: string[]): Promise<
   const out = new Map<string, ExamStateKind>();
   if (!pathwayIds.length) return out;
   const [forms, consumed, assigned, enrolled, attempts] = await Promise.all([
-    query<{ pathway_id: string; max_attempts: number; retry_days: number }>(
-      'select pathway_id, max_attempts, retry_days from pathway_exam_forms where pathway_id = any($1)', [pathwayIds],
+    query<{ pathway_id: string; max_attempts: number; retry_days: number; question_count: number }>(
+      `select pathway_id, max_attempts, retry_days,
+              case when jsonb_typeof(questions) = 'array' then jsonb_array_length(questions) else 0 end as question_count
+         from pathway_exam_forms where pathway_id = any($1)`, [pathwayIds],
     ),
     getConsumedContentIds(userId),
     query<{ pathway_id: string }>('select pathway_id from pathway_exams where user_id = $1', [userId]),
@@ -1300,7 +1314,7 @@ export async function examStates(userId: string, pathwayIds: string[]): Promise<
   const now = Date.now();
   for (const id of pathwayIds) {
     const form = formBy.get(id);
-    if (!form) { out.set(id, 'no_form'); continue; }
+    if (!form || form.question_count === 0) { out.set(id, 'no_form'); continue; }
     const mine = attempts.rows.filter((a) => a.pathway_id === id);
     if (mine.some((a) => a.status === 'passed')) { out.set(id, 'passed'); continue; }
     if (mine.some((a) => a.status === 'open')) { out.set(id, 'open'); continue; }

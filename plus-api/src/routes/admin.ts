@@ -2737,7 +2737,12 @@ function renderHtml(
 }
 
 export async function adminRoutes(app: FastifyInstance): Promise<void> {
-  app.addHook('preHandler', requireAdmin);
+  // onRequest, not preHandler: Fastify validates a body BEFORE preHandler
+  // runs, so with the hook one step later an anonymous caller sending a
+  // malformed body got a 400 that names the fields the route wants — and had
+  // the body parsed and validated on the way. At onRequest nothing about an
+  // unauthenticated request is read but its Authorization header.
+  app.addHook('onRequest', requireAdmin);
 
   app.get('/admin/kpis', async (_request, reply) => {
     const kpis = await computeKpis();
@@ -4969,6 +4974,12 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   }, async (request, reply) => {
     const b = request.body as { pathway_id: string; question_id: string };
     const r = await removeQuestion(b.pathway_id, b.question_id);
+    if (r.last) {
+      return reply.code(400).send({
+        error: 'last_question',
+        message: 'آخرین سؤال را نمی‌توان برداشت — آزمونِ بی‌سؤال خودش قبول می‌شود. اگر می‌خواهی این آزمون از کار بیفتد، کلِ فرم را حذف کن.',
+      });
+    }
     if (!r.removed) return reply.code(404).send({ error: 'not_found', message: 'این سؤال در مخزن نبود.' });
     return reply.send({ ok: true, ...r });
   });
