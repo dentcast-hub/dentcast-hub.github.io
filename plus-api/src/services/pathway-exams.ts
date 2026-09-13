@@ -1,6 +1,8 @@
 import { config } from '../config.js';
 import { pool, one, query, withTransaction, type Queryable } from '../db.js';
-import { getPathwayById, computeProgress, isCertifiable } from '../pathways.js';
+import { getPathwayById, getPathways, computeProgress, isCertifiable, type Pathway } from '../pathways.js';
+import { getContentInfo } from '../content-index.js';
+import { randomUUID } from 'node:crypto';
 import { getConsumedContentIds } from './consumption.js';
 import { mintReference } from './reference.js';
 import { issueCertificate, type Certificate } from './certificates.js';
@@ -216,6 +218,86 @@ function resolveCorrect(v: unknown, options: string[]): number | null {
   return ti >= 0 ? ti : null;
 }
 
+/* ---------------------------------------------------- article questions -- */
+
+/**
+ * Questions written for ONE ARTICLE, drawn by EVERY pathway that carries it
+ * (founder, 2026-09-13). Keyed by content_id and never copied into a form:
+ * an article sits in several pathways and a pathway that adopts it later
+ * must draw the question too, so a pathway's pool is DERIVED — `poolFor()`
+ * — as its own form questions plus the article questions of its steps.
+ * The form row stays the switch that opens a pathway's exam; article
+ * questions only ever enlarge a pool that exists.
+ */
+export interface ContentQuestionRow {
+  id: string;
+  content_id: string;
+  question: ExamQuestion;
+  created_at: Date;
+}
+
+const CQ_SELECT = 'select id, content_id, question, created_at from content_exam_questions';
+
+/** A pasted URL or a bare id → the site's content_id (`insight/insight-63`). */
+export function normalizeContentId(raw: string): string {
+  let s = String(raw ?? '').trim();
+  if (/^https?:\/\//i.test(s)) { try { s = new URL(s).pathname; } catch { /* keep as typed */ } }
+  return s.replace(/^\/+/, '').replace(/\/+$/, '').replace(/\.html$/i, '');
+}
+
+/** Every full pathway with this article among its steps. */
+export function pathwaysContaining(contentId: string): Pathway[] {
+  return getPathways().filter((p) => p.kind !== 'bundle' && p.steps.some((st) => st.content_id === contentId));
+}
+
+export async function addContentQuestion(
+  contentRaw: string, raw: unknown, client: Queryable = pool,
+): Promise<{ row: ContentQuestionRow; pathways: Pathway[] }> {
+  const contentId = normalizeContentId(contentRaw);
+  if (!contentId || !getContentInfo(contentId)) throw new Error('unknown_content');
+  const norm = normalizeQuestions([raw]);
+  if (!norm.ok) throw new Error(`invalid_questions:${norm.error}`);
+  // An id of its own class: never a form's `qN`, so a snapshot holding both
+  // can never carry two questions under one key.
+  const uuid = randomUUID();
+  const id = `c-${uuid.slice(0, 8)}`;
+  const q = norm.questions[0];
+  const question: ExamQuestion = q.kind === 'mcq'
+    ? { ...q, id }
+    : { ...q, id, key_points: q.key_points.map((kp, i) => ({ id: `${id}-k${i + 1}`, text: kp.text })) };
+  const row = await one<ContentQuestionRow>(
+    `insert into content_exam_questions (id, content_id, question) values ($1, $2, $3::jsonb)
+     returning id, content_id, question, created_at`,
+    [uuid, contentId, JSON.stringify(question)], client,
+  );
+  return { row: row!, pathways: pathwaysContaining(contentId) };
+}
+
+export async function removeContentQuestion(id: string, client: Queryable = pool): Promise<boolean> {
+  const r = await query('delete from content_exam_questions where id = $1', [id], client);
+  return (r.rowCount ?? 0) > 0;
+}
+
+export async function listContentQuestions(contentRaw: string, client: Queryable = pool): Promise<ContentQuestionRow[]> {
+  const r = await query<ContentQuestionRow>(`${CQ_SELECT} where content_id = $1 order by created_at, id`, [normalizeContentId(contentRaw)], client);
+  return r.rows;
+}
+
+/** The article questions a pathway draws from — every step's, in writing order. */
+export async function contentQuestionsFor(pathway: Pathway, client: Queryable = pool): Promise<ExamQuestion[]> {
+  const ids = pathway.steps.map((st) => st.content_id);
+  if (!ids.length) return [];
+  const r = await query<{ question: ExamQuestion }>(
+    'select question from content_exam_questions where content_id = any($1) order by created_at, id', [ids], client,
+  );
+  return r.rows.map((row) => row.question);
+}
+
+/** The whole pool an attempt draws from: the form's own questions, then the articles'. */
+export async function poolFor(pathway: Pathway, form: ExamForm, client: Queryable = pool): Promise<ExamQuestion[]> {
+  return [...form.questions, ...await contentQuestionsFor(pathway, client)];
+}
+
 /* ----------------------------------------------------------------- form -- */
 
 export interface ExamForm {
@@ -373,7 +455,11 @@ export async function removeQuestion(
     // certificate for answering nothing. `upsertForm` has always required a
     // question; this is the same rule on the other door. Deleting the whole
     // form is the way to take an exam out of service.
-    if (questions.length === 0) return { removed: false, remaining: 1, last: true };
+    if (questions.length === 0) {
+      const pathway = getPathwayById(pathwayId);
+      const fromArticles = pathway ? (await contentQuestionsFor(pathway, client)).length : 0;
+      if (fromArticles === 0) return { removed: false, remaining: 1, last: true };
+    }
     await query(
       'update pathway_exam_forms set questions = $2::jsonb, updated_at = now() where pathway_id = $1',
       [pathwayId, JSON.stringify(questions)], client,
@@ -397,6 +483,8 @@ export interface FormSummary {
   title_fa: string;
   mcq_count: number;
   free_count: number;
+  /** Article questions the pathway draws in on top of its own (content_exam_questions). */
+  content_count: number;
   draw: number;
   pass_percent: number;
   max_attempts: number;
@@ -412,7 +500,7 @@ export interface FormSummary {
 
 /** Every form with its counts — the panel's list. */
 export async function formRoster(client: Queryable = pool): Promise<FormSummary[]> {
-  const r = await query<Omit<FormSummary, 'title_fa' | 'attempts'> & {
+  const r = await query<Omit<FormSummary, 'title_fa' | 'attempts' | 'content_count'> & {
     n_open: number; n_queued: number; n_passed: number; n_failed: number;
   }>(
     `select f.id, f.pathway_id, f.draw, f.pass_percent, f.max_attempts, f.retry_days,
@@ -428,11 +516,17 @@ export async function formRoster(client: Queryable = pool): Promise<FormSummary[
       order by f.updated_at desc`,
     [], client,
   );
-  return r.rows.map(({ n_open, n_queued, n_passed, n_failed, ...row }) => ({
-    ...row,
-    title_fa: getPathwayById(row.pathway_id)?.title_fa ?? row.pathway_id,
-    attempts: { open: n_open, queued: n_queued, passed: n_passed, failed: n_failed },
-  }));
+  const out: FormSummary[] = [];
+  for (const { n_open, n_queued, n_passed, n_failed, ...row } of r.rows) {
+    const pathway = getPathwayById(row.pathway_id);
+    out.push({
+      ...row,
+      title_fa: pathway?.title_fa ?? row.pathway_id,
+      content_count: pathway ? (await contentQuestionsFor(pathway, client)).length : 0,
+      attempts: { open: n_open, queued: n_queued, passed: n_passed, failed: n_failed },
+    });
+  }
+  return out;
 }
 
 /* ----------------------------------------------------------- assignment -- */
@@ -663,15 +757,15 @@ export function attemptResult(a: ExamAttempt): AttemptResult {
   };
 }
 
-function formRules(form: ExamForm): ExamState['rules'] {
+function formRules(form: ExamForm, poolQs: ExamQuestion[]): ExamState['rules'] {
   // question_count is what an attempt will hold; mcq_count/free_count are
-  // the POOL's composition — the draw is over the whole pool, so which kinds
-  // a given sheet carries is not known until it is drawn. The reader copy
-  // uses them only to decide whether «هر بخش جداگانه» and the model
-  // sentence apply at all.
-  const mcq = form.questions.filter((q) => q.kind === 'mcq').length;
-  const free = form.questions.filter((q) => q.kind === 'free').length;
-  const total = form.questions.length;
+  // the POOL's composition — the draw is over the whole pool (the form's
+  // own questions plus its articles'), so which kinds a given sheet carries
+  // is not known until it is drawn. The reader copy uses them only to decide
+  // whether «هر بخش جداگانه» and the model sentence apply at all.
+  const mcq = poolQs.filter((q) => q.kind === 'mcq').length;
+  const free = poolQs.filter((q) => q.kind === 'free').length;
+  const total = poolQs.length;
   return {
     question_count: form.draw > 0 ? Math.min(form.draw, total) : total, mcq_count: mcq, free_count: free,
     pass_percent: form.pass_percent, max_attempts: form.max_attempts, retry_days: form.retry_days,
@@ -715,9 +809,11 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
   // lands, whatever form exists or does not — a certificate already held
   // (issued before the flag) still reads as passed, because it is the record.
   if (!isCertifiable(pathway)) { base.state = cert ? 'passed' : 'pending'; return base; }
-  if (!form || form.questions.length === 0) { if (cert) base.state = 'passed'; return base; }
+  if (!form) { if (cert) base.state = 'passed'; return base; }
+  const poolQs = await poolFor(pathway, form);
+  if (poolQs.length === 0) { if (cert) base.state = 'passed'; return base; }
 
-  base.rules = formRules(form);
+  base.rules = formRules(form, poolQs);
   const attempts = await listAttempts(userId, pathwayId);
   const counted = attempts.filter((a) => COUNTED.includes(a.status));
   base.attempts_used = counted.length;
@@ -778,7 +874,7 @@ export async function startAttempt(userId: string, pathwayId: string, holderName
   // One draw over the whole pool, whatever the kinds — the founder keeps
   // adding questions and every attempt takes `draw` of them at random,
   // unseen ones first. The mix of a sheet is whatever the draw produced.
-  const drawn = drawQuestions(form.questions, form.draw, seen);
+  const drawn = drawQuestions(await poolFor(getPathwayById(pathwayId)!, form), form.draw, seen);
   // Unique per (form, reader), NOT the reader-facing ordinal: a voided
   // attempt keeps its number so the unique index never collides, and
   // examState renumbers the counted ones for display.
@@ -1320,13 +1416,23 @@ export async function examStates(userId: string, pathwayIds: string[]): Promise<
     ),
   ]);
   const formBy = new Map(forms.rows.map((f) => [f.pathway_id, f]));
+  // Article questions count toward a pathway's pool too — one query over
+  // every step of every pathway asked about, summed per pathway.
+  const stepIds = Array.from(new Set(pathwayIds.flatMap((id) => getPathwayById(id)?.steps.map((st) => st.content_id) ?? [])));
+  const cq = stepIds.length
+    ? await query<{ content_id: string; n: number }>(
+      'select content_id, count(*)::int as n from content_exam_questions where content_id = any($1) group by content_id', [stepIds],
+    )
+    : { rows: [] as { content_id: string; n: number }[] };
+  const cqBy = new Map(cq.rows.map((r) => [r.content_id, r.n]));
+  const articleCount = (id: string) => (getPathwayById(id)?.steps ?? []).reduce((m, st) => m + (cqBy.get(st.content_id) ?? 0), 0);
   const assignedSet = new Set(assigned.rows.map((a) => a.pathway_id));
   const enrolledSet = new Set(enrolled.rows.map((a) => a.pathway_id));
   const now = Date.now();
   for (const id of pathwayIds) {
     const form = formBy.get(id);
     if (!isCertifiable(getPathwayById(id))) { out.set(id, 'pending'); continue; }
-    if (!form || form.question_count === 0) { out.set(id, 'no_form'); continue; }
+    if (!form || form.question_count + articleCount(id) === 0) { out.set(id, 'no_form'); continue; }
     const mine = attempts.rows.filter((a) => a.pathway_id === id);
     if (mine.some((a) => a.status === 'passed')) { out.set(id, 'passed'); continue; }
     if (mine.some((a) => a.status === 'open')) { out.set(id, 'open'); continue; }

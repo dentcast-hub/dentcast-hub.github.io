@@ -61,7 +61,9 @@ import {
   assignExam, deleteAssignment, listAssignments, assignmentRoster, getAssignment, notifyAssigned,
   upsertForm, getForm, deleteForm, formRoster, queueRows, attemptRoster, ruleAttempt, notifyAssigneesOfNewForm,
   parseQuestions, addQuestion, removeQuestion,
+  addContentQuestion, removeContentQuestion, listContentQuestions, normalizeContentId, pathwaysContaining,
 } from '../services/pathway-exams.js';
+import { getContentInfo } from '../content-index.js';
 import { isCertifiable, getPathways } from '../pathways.js';
 import {
   requestQueue, getRequest, requestByReference, markAnswered, markRejected,
@@ -881,12 +883,20 @@ function renderHtml(
   </form>
   <div id="efList"></div>
 
-  <h4 style="margin-top:18px">سؤال‌ها را یکی‌یکی بنویس — مسیر: <b id="qbPath">…</b></h4>
+  <h4 style="margin-top:18px">سؤال‌ها را یکی‌یکی بنویس — برای: <b id="qbPath">…</b></h4>
   <div class="muted">
-    دو قالب، هر کدام جدا. هر سؤالی که «افزودن» بزنی همان لحظه به مخزنِ <b>همین مسیرِ بالا</b>
-    اضافه می‌شود (تنظیماتِ فرم — نصاب، قرعه، تلاش — دست‌نخورده می‌ماند). در تستی لازم نیست
-    تعداد گزینه‌ها را از قبل بگویی: تا در آخرین کادر بنویسی، کادر بعدی خودش باز می‌شود و
-    هرجا ننویسی همان‌جا تمام است.
+    دو قالب، هر کدام جدا، و دو مقصد. <b>برای کلِ مسیر</b>: سؤال به مخزنِ همین مسیرِ بالا می‌رود
+    (تنظیماتِ فرم — نصاب، قرعه، تلاش — دست‌نخورده می‌ماند). <b>برای یک مقاله</b>: سؤال به نامِ
+    همان مقاله ثبت می‌شود و هر مسیری که آن مقاله را دارد — امروز یا بعداً — در قرعه‌اش می‌آورد؛
+    جایی کپی نمی‌شود. در تستی لازم نیست تعداد گزینه‌ها را از قبل بگویی: تا در آخرین کادر
+    بنویسی، کادر بعدی خودش باز می‌شود و هرجا ننویسی همان‌جا تمام است.
+  </div>
+  <div class="row" style="margin-top:8px;align-items:center">
+    <label><input type="radio" name="qbTarget" value="pathway" checked> برای کلِ مسیرِ بالا</label>
+    <label><input type="radio" name="qbTarget" value="content"> برای یک مقاله:</label>
+    <input id="qbContent" type="text" dir="ltr" placeholder="آدرس یا شناسهٔ مقاله — insight/insight-63" style="flex:1 1 260px">
+    <button id="qbContentFind" type="button">پیدا کن</button>
+    <span id="qbContentOut" class="muted"></span>
   </div>
   <div class="row" style="align-items:flex-start">
     <form class="bc" id="qbMcqForm" style="flex:1 1 330px" onsubmit="return false">
@@ -1011,7 +1021,7 @@ function renderHtml(
             var sup = f.rulings >= f.supervised_until
               ? '<span class="pill">خودکار</span>' : fa(f.rulings) + ' از ' + fa(f.supervised_until);
             return '<tr><td>' + esc(f.title_fa) + (f.note ? '<div class="muted">' + esc(f.note) + '</div>' : '') + '</td>'
-              + '<td>' + fa(f.mcq_count) + ' تستی · ' + fa(f.free_count) + ' تشریحی</td>'
+              + '<td>' + fa(f.mcq_count) + ' تستی · ' + fa(f.free_count) + ' تشریحی' + (f.content_count ? ' · ' + fa(f.content_count) + ' از مقاله‌ها' : '') + '</td>'
               + '<td>' + (f.draw ? fa(f.draw) + ' تصادفی' : 'همه') + '</td>'
               + '<td>٪' + fa(f.pass_percent) + '</td>'
               + '<td>' + fa(f.max_attempts) + ' / ' + fa(f.retry_days) + ' روز</td>'
@@ -1156,12 +1166,47 @@ function renderHtml(
     resetRows(qbOpts, true, 2);
     resetRows(qbPoints, false, 2);
 
+    // Where a written question goes: the pathway on the picker, or ONE
+    // article — resolved first, so a typo never files a question under an
+    // id no pathway carries.
+    var qbContentId = '';
+    var qbContentOut = document.getElementById('qbContentOut');
+    function qbTarget() {
+      var r = document.querySelector('input[name="qbTarget"]:checked');
+      return r ? r.value : 'pathway';
+    }
+    function resolveContent(done) {
+      var raw = val('qbContent');
+      if (!raw) { qbContentOut.textContent = 'آدرس یا شناسهٔ مقاله را بنویس.'; qbContentId = ''; return; }
+      qbContentOut.textContent = 'در حال جست‌وجو…';
+      get('/admin/content-questions?content=' + encodeURIComponent(raw)).then(function (d) {
+        if (!d || !d.ok) { qbContentId = ''; qbContentOut.textContent = (d && d.message) || 'پیدا نشد.'; loadPool(); return; }
+        qbContentId = d.content.id;
+        var where = (d.pathways || []).map(function (p) { return p.title_fa; });
+        qbContentOut.innerHTML = '<b>' + esc(d.content.title) + '</b> — در '
+          + (where.length ? fa(where.length) + ' مسیر: ' + esc(where.join('، ')) : '<b>هیچ مسیری نیست</b> (سؤالش جایی کشیده نمی‌شود)');
+        if (done) done(d);
+        loadPool();
+      }).catch(function () { qbContentId = ''; qbContentOut.textContent = 'پیدا نشد.'; });
+    }
+    document.getElementById('qbContentFind').addEventListener('click', function () { resolveContent(); });
+    document.getElementById('qbContent').addEventListener('keydown', function (ev) { if (ev.key === 'Enter') { ev.preventDefault(); resolveContent(); } });
+    Array.prototype.forEach.call(document.querySelectorAll('input[name="qbTarget"]'), function (r) {
+      r.addEventListener('change', loadPool);
+    });
+
     function addQuestion(question, out, done) {
       out.textContent = 'در حال افزودن…';
-      post('/admin/exam-forms/questions', { pathway_id: val('efPath'), question: question })
-        .then(function (res) {
+      var toContent = qbTarget() === 'content';
+      if (toContent && !qbContentId) { out.textContent = 'اول مقاله را با «پیدا کن» مشخص کن.'; return; }
+      var req = toContent
+        ? post('/admin/content-questions', { content_id: qbContentId, question: question })
+        : post('/admin/exam-forms/questions', { pathway_id: val('efPath'), question: question });
+      req.then(function (res) {
           if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || 'خطا'); return; }
-          out.textContent = 'اضافه شد — مخزن ' + fa(res.j.count) + ' سؤال دارد.';
+          out.textContent = toContent
+            ? 'اضافه شد — این مقاله ' + fa(res.j.count) + ' سؤال دارد و در ' + fa((res.j.pathways || []).length) + ' مسیر کشیده می‌شود.'
+            : 'اضافه شد — مخزن ' + fa(res.j.count) + ' سؤال دارد.';
           done();
           loadPool(); loadForms();
         }).catch(function () { out.textContent = 'ارسال نشد.'; });
@@ -1196,15 +1241,8 @@ function renderHtml(
     });
 
     // The pool of the pathway the picker is on — the answer to «برای کدام مسیر؟»
-    function loadPool() {
-      var id = val('efPath');
-      document.getElementById('qbPath').textContent = titles[id] || id || '—';
-      if (!id) { qbList.innerHTML = ''; return; }
-      get('/admin/exam-forms/' + encodeURIComponent(id)).then(function (d) {
-        var qs = (d.form && d.form.questions) || [];
-        if (!qs.length) { qbList.innerHTML = '<div class="muted">مخزنِ این مسیر خالی است.</div>'; return; }
-        qbList.innerHTML = '<div class="tk"><div class="tk-head"><b>مخزنِ ' + esc(titles[id] || id) + '</b> — '
-          + fa(qs.length) + ' سؤال</div>' + qs.map(function (q, i) {
+    function questionRows(qs, delAttr) {
+      return qs.map(function (q, i) {
             var body;
             if (q.kind === 'mcq') {
               body = '<ul style="margin:4px 0 0;padding-inline-start:1.3em">' + q.options.map(function (o, k) {
@@ -1217,20 +1255,48 @@ function renderHtml(
             }
             return '<div style="padding:8px 0;border-top:1px solid rgba(2,35,96,.08);font-size:.88rem">'
               + '<b>' + fa(i + 1) + '.</b> <span class="pill">' + (q.kind === 'mcq' ? 'تستی' : 'تشریحی') + '</span> '
+              + (q.from ? '<span class="pill">' + esc(q.from) + '</span> ' : '')
               + esc(q.prompt_fa)
-              + ' <button type="button" data-qb-del="' + esc(q.id) + '" style="float:left">حذف</button>'
+              + ' <button type="button" ' + delAttr + '="' + esc(q.delId || q.id) + '" style="float:left">حذف</button>'
               + body + '</div>';
-          }).join('') + '</div>';
+          }).join('');
+    }
+
+    // What the builder is writing INTO: the pathway's pool (its own questions
+    // plus every article question its steps bring in), or one article's list.
+    function loadPool() {
+      if (qbTarget() === 'content') {
+        document.getElementById('qbPath').textContent = qbContentId ? 'مقالهٔ ' + qbContentId : 'یک مقاله (هنوز پیدا نشده)';
+        if (!qbContentId) { qbList.innerHTML = ''; return; }
+        get('/admin/content-questions?content=' + encodeURIComponent(qbContentId)).then(function (d) {
+          var qs = (d.questions || []).map(function (r) { var q = r.question; q.delId = r.id; return q; });
+          if (!qs.length) { qbList.innerHTML = '<div class="muted">این مقاله هنوز سؤالی ندارد.</div>'; return; }
+          qbList.innerHTML = '<div class="tk"><div class="tk-head"><b>سؤال‌های مقالهٔ ' + esc(d.content.title) + '</b> — '
+            + fa(qs.length) + ' سؤال · در ' + fa((d.pathways || []).length) + ' مسیر</div>' + questionRows(qs, 'data-cq-del') + '</div>';
+        }).catch(function () { qbList.innerHTML = '<div class="muted">فهرست نیامد.</div>'; });
+        return;
+      }
+      var id = val('efPath');
+      document.getElementById('qbPath').textContent = titles[id] || id || '—';
+      if (!id) { qbList.innerHTML = ''; return; }
+      get('/admin/exam-forms/' + encodeURIComponent(id)).then(function (d) {
+        var qs = (d.form && d.form.questions) || [];
+        if (!qs.length) { qbList.innerHTML = '<div class="muted">مخزنِ این مسیر خالی است.</div>'; return; }
+        qbList.innerHTML = '<div class="tk"><div class="tk-head"><b>مخزنِ ' + esc(titles[id] || id) + '</b> — '
+          + fa(qs.length) + ' سؤالِ خودِ مسیر (سؤال‌های مقاله‌ها جدا شمرده می‌شوند و در قرعه هستند)</div>'
+          + questionRows(qs, 'data-qb-del') + '</div>';
       }).catch(function () { qbList.innerHTML = '<div class="muted">مخزنِ این مسیر خالی است.</div>'; });
     }
 
     qbList.addEventListener('click', function (ev) {
-      var b = ev.target.closest ? ev.target.closest('[data-qb-del]') : null;
+      var b = ev.target.closest ? ev.target.closest('[data-qb-del],[data-cq-del]') : null;
       if (!b) return;
-      if (!confirm('این سؤال از مخزن حذف شود؟ آزمون‌هایی که همین حالا بازند دست‌نخورده می‌مانند.')) return;
+      if (!confirm('این سؤال حذف شود؟ آزمون‌هایی که همین حالا بازند دست‌نخورده می‌مانند.')) return;
       b.disabled = true;
-      post('/admin/exam-forms/questions/delete', { pathway_id: val('efPath'), question_id: b.getAttribute('data-qb-del') })
-        .then(function () { loadPool(); loadForms(); })
+      var req = b.hasAttribute('data-cq-del')
+        ? post('/admin/content-questions/delete', { id: b.getAttribute('data-cq-del') })
+        : post('/admin/exam-forms/questions/delete', { pathway_id: val('efPath'), question_id: b.getAttribute('data-qb-del') });
+      req.then(function () { loadPool(); loadForms(); })
         .catch(function () { b.disabled = false; });
     });
 
@@ -5067,6 +5133,64 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       }
       throw err;
     }
+  });
+
+  /**
+   * Article questions — written for ONE content_id, drawn by every pathway
+   * that carries it (services/pathway-exams.ts, «article questions»). The
+   * panel's builder posts here when its target is «برای یک مقاله».
+   */
+
+  // GET /admin/content-questions?content=<id or URL> — resolve the article,
+  // name the pathways it sits in, list its questions.
+  app.get('/admin/content-questions', {
+    schema: { querystring: { type: 'object', required: ['content'], properties: { content: { type: 'string', maxLength: 300 } } } },
+  }, async (request, reply) => {
+    const id = normalizeContentId((request.query as { content: string }).content);
+    const info = id ? getContentInfo(id) : null;
+    if (!info) return reply.code(404).send({ error: 'unknown_content', message: 'این مقاله در فهرست سایت نیست — آدرس یا شناسه را چک کن (مثل insight/insight-63).' });
+    return reply.send({
+      ok: true,
+      content: { id, title: info.title, url: info.url, type: info.type },
+      pathways: pathwaysContaining(id).map((p) => ({ id: p.id, title_fa: p.title_fa, certifiable: isCertifiable(p) })),
+      questions: await listContentQuestions(id),
+    });
+  });
+
+  // POST /admin/content-questions — { content_id, question }.
+  app.post('/admin/content-questions', {
+    schema: {
+      body: {
+        type: 'object', required: ['content_id', 'question'],
+        properties: { content_id: { type: 'string', maxLength: 300 }, question: { type: 'object' } },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as { content_id: string; question: unknown };
+    try {
+      const r = await addContentQuestion(b.content_id, b.question);
+      return reply.send({
+        ok: true, question: r.row.question, id: r.row.id, content_id: r.row.content_id,
+        pathways: r.pathways.map((p) => ({ id: p.id, title_fa: p.title_fa })),
+        count: (await listContentQuestions(r.row.content_id)).length,
+      });
+    } catch (err) {
+      const code = (err as Error).message;
+      if (code === 'unknown_content') return reply.code(400).send({ error: code, message: 'این مقاله در فهرست سایت نیست — آدرس یا شناسه را چک کن.' });
+      if (code.startsWith('invalid_questions:')) {
+        return reply.code(400).send({ error: 'invalid_questions', message: code.slice('invalid_questions:'.length) });
+      }
+      throw err;
+    }
+  });
+
+  // POST /admin/content-questions/delete — { id }. Open attempts keep their snapshot.
+  app.post('/admin/content-questions/delete', {
+    schema: { body: { type: 'object', required: ['id'], properties: { id: { type: 'string', maxLength: 64 } } } },
+  }, async (request, reply) => {
+    const ok = await removeContentQuestion((request.body as { id: string }).id);
+    if (!ok) return reply.code(404).send({ error: 'not_found', message: 'این سؤال پیدا نشد.' });
+    return reply.send({ ok: true });
   });
 
   // POST /admin/exam-forms/questions/delete — { pathway_id, question_id }.
