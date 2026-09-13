@@ -24,11 +24,11 @@
 // answers were right, how many key points each free answer covered — and
 // never the key itself: the pool is small and the second attempt may draw
 // the same question.
-import { el, faNum, debounce } from './util.js?v=75';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=75';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=75';
-import { openLoginModal } from './login-modal.js?v=75';
-import { registerSW } from './pwa.js?v=75';
+import { el, faNum, debounce } from './util.js?v=76';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=76';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=76';
+import { openLoginModal } from './login-modal.js?v=76';
+import { registerSW } from './pwa.js?v=76';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' });
 const FA_DATETIME = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium', timeStyle: 'short' });
@@ -57,15 +57,24 @@ function head(s, kicker) {
   ]);
 }
 
-/** What the exam IS — said before the reader commits to it. */
+/**
+ * What the exam IS — said before the reader commits to it.
+ *
+ * It names the TOTAL and never the mix (founder, 2026-09-13): the pool is
+ * whatever he pasted, in whatever proportion, and a sentence like «۱۲ تستی و
+ * ۳ تشریحی» is a promise about a shape he has not committed to — one that
+ * would have to be re-read every time he changes how he asks. The threshold
+ * sentence says «هر بخش جداگانه» without naming which parts exist, so it stays
+ * true for an all-multiple-choice form, an all-free-text one, and anything
+ * added later.
+ */
 export function contract(rules, s) {
   const items = [];
-  const parts = [];
-  if (rules.mcq_count) parts.push(faNum(rules.mcq_count) + ' سؤال تستی');
-  if (rules.free_count) parts.push(faNum(rules.free_count) + ' سؤال تشریحی');
-  items.push(parts.join(' و ') + ' — همه روی یک صفحه، یک بار ارسال.');
+  const total = rules.question_count || (rules.mcq_count + rules.free_count);
+  const parts = (rules.mcq_count ? 1 : 0) + (rules.free_count ? 1 : 0);
+  items.push(faNum(total) + ' سؤال — همه روی یک صفحه، یک بار ارسال.');
   items.push('نصاب قبولی ٪' + faNum(rules.pass_percent)
-    + (rules.mcq_count && rules.free_count ? ' در هر بخش (تستی و تشریحی جداگانه).' : '.'));
+    + (parts > 1 ? ' — و هر بخش جداگانه حساب می‌شود.' : '.'));
   if (rules.free_count) {
     items.push('پاسخ تشریحی را هوش مصنوعی روی نکته‌های کلیدی می‌سنجد و در موارد مبهم، دکتر شهابیان خودش می‌خواند؛ نتیجه در «اطلاعیه» می‌آید.');
   }

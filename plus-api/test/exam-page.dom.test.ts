@@ -84,7 +84,7 @@ describe('every state has a face', () => {
     await mount({ ...BASE, state: 'locked', is_complete: false });
     expect(stateEl()!.dataset.examState).toBe('locked');
     expect(root().querySelector('[data-exam-contract]')!.textContent).toContain('٪۷۰');
-    expect(root().querySelector('[data-exam-contract]')!.textContent).toContain('۲ سؤال تستی و ۱ سؤال تشریحی');
+    expect(root().querySelector('[data-exam-contract]')!.textContent).toContain('۳ سؤال —');
 
     await mount({ ...BASE, state: 'queued', history: [{ ...FAILED, status: 'queued', passed: null, per_question: null, mcq_correct: null }] });
     expect(stateEl()!.dataset.examState).toBe('queued');
@@ -126,6 +126,37 @@ describe('every state has a face', () => {
     await mod.renderExam(root(), 'digital');
     await settle();
     expect(stateEl()!.dataset.examState).toBe('unreachable');
+  });
+});
+
+describe('the contract names the total, never the mix', () => {
+  const rulesOf = async (rules: Record<string, number>) => {
+    await mount({ ...BASE, state: 'locked', rules: { ...RULES, ...rules } });
+    return root().querySelector('[data-exam-contract]')!.textContent || '';
+  };
+
+  it('never prints a per-kind count, whatever the pool is made of', async () => {
+    for (const r of [
+      { question_count: 15, mcq_count: 12, free_count: 3 },
+      { question_count: 9, mcq_count: 9, free_count: 0 },
+      { question_count: 4, mcq_count: 0, free_count: 4 },
+      { question_count: 1, mcq_count: 1, free_count: 0 },
+    ]) {
+      const text = await rulesOf(r);
+      expect(text).toContain(`سؤال —`);
+      expect(text).not.toMatch(/سؤال تستی|سؤال تشریحی/);
+    }
+  });
+
+  it('says «هر بخش جداگانه» only when there is more than one part', async () => {
+    expect(await rulesOf({ question_count: 15, mcq_count: 12, free_count: 3 })).toContain('هر بخش جداگانه');
+    expect(await rulesOf({ question_count: 9, mcq_count: 9, free_count: 0 })).not.toContain('هر بخش');
+    expect(await rulesOf({ question_count: 4, mcq_count: 0, free_count: 4 })).not.toContain('هر بخش');
+  });
+
+  it('explains the model only when a free answer can actually be graded by it', async () => {
+    expect(await rulesOf({ question_count: 4, mcq_count: 0, free_count: 4 })).toContain('هوش مصنوعی');
+    expect(await rulesOf({ question_count: 9, mcq_count: 9, free_count: 0 })).not.toContain('هوش مصنوعی');
   });
 });
 
