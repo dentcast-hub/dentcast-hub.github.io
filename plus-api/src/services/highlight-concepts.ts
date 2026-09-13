@@ -215,10 +215,27 @@ async function highlightsOf(userId: string, db: Queryable): Promise<HighlightRow
   return res.rows;
 }
 
+/**
+ * The reader's own words, folded for matching. Beyond foldName, a Persian
+ * plural suffix attached with a ZWNJ («سمان‌های») is dropped, so «سمان‌های
+ * رزینی» matches the name «سمان رزینی». Applied to the TEXT side only — a
+ * name never carries the suffix.
+ */
+function foldText(s: string): string {
+  return foldName(String(s || '').replace(/\u200c(ها|های|هایی)(?=[\s.,،;:!?)»"']|$)/g, ''));
+}
+
+const escapeRe = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/**
+ * A name matches only as a WHOLE WORD (a run of letters/digits on either side
+ * breaks it): «اچ» must not be found inside «اچینگ», nor «پست» inside
+ * «پستی». Names shorter than MIN_NAME_LEN were already dropped upstream.
+ */
 function textMatches(h: HighlightRow, names: string[]): boolean {
   if (!names.length) return false;
-  const hay = foldName(h.exact) + ' ' + foldName(h.note || '');
-  return names.some((n) => hay.includes(n));
+  const hay = foldText(h.exact) + ' ' + foldText(h.note || '');
+  return names.some((n) => new RegExp(`(?:^|[^\\p{L}\\p{N}])${escapeRe(n)}(?:$|[^\\p{L}\\p{N}])`, 'u').test(hay));
 }
 
 /** Group matched highlights by article, most recently highlighted article first. */

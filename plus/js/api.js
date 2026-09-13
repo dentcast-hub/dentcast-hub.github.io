@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=79';
+import { API_BASES } from './config.js?v=80';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -282,6 +282,13 @@ export const api = {
   // the last completed one, which is the one the اطلاعیه announced.
   report: (month) => request('/report/monthly' + (month ? '?month=' + encodeURIComponent(month) : '')),
   reportMonths: () => request('/report/months'),
+
+  // premium: «نمای موضوعی هایلایت‌ها» — the reader's own highlights gathered by
+  // concept across articles (plus-api services/highlight-concepts.ts). The
+  // glossary door is signed-in only: a free reader gets counts, `locked: true`.
+  highlightConcepts: () => request('/highlights/concepts'),
+  highlightConcept: (key) => request('/highlights/concepts/' + encodeURIComponent(key)),
+  glossaryNotes: (slug) => request('/glossary/' + encodeURIComponent(slug) + '/notes'),
 
   // premium: «دستیار هوشمند» — stateless narrowing wizard, not a chat. The
   // caller resends the whole history every call; nothing is stored server-side.

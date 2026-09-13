@@ -213,6 +213,24 @@ describe('GET /glossary/:slug/notes', () => {
   });
 });
 
+describe('the text signal', () => {
+  it('matches whole words only, and reads a ZWNJ plural as the singular', async () => {
+    await setTier('premium');
+    const id = await userId();
+    await hl(UNTAGGED_PAGE, 'اچینگ سلکتیو مینا'); // contains «اچ» as a fragment only
+    await hl(UNTAGGED_PAGE, 'سمان‌های رزینی نسل جدید'); // the plural, ZWNJ-attached
+    await hl(UNTAGGED_PAGE, 'سمان‌رزینی‌ها'); // glued with ZWNJ: not the two words
+    const view = await conceptHighlights(id, 'سمان رزینی');
+    expect(view!.total).toBe(1);
+    expect(view!.articles[0].highlights[0].exact).toContain('نسل جدید');
+    const etch = getTags().find((t) => foldName(t.key) === 'اچ');
+    if (etch) {
+      const v = await conceptHighlights(id, 'اچ');
+      expect(v!.total).toBe(0);
+    }
+  });
+});
+
 describe('the services directly', () => {
   it('agree with the routes on the same rows', async () => {
     await hl(CEMENT_PAGE, 'الف');
