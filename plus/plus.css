@@ -2094,3 +2094,32 @@ html.dcp-touring #mobile-body { overflow: hidden; }
 
 .dc-destool-spent { display: flex; gap: .6rem; align-items: flex-start; font-size: .76rem; color: var(--dcp-muted); line-height: 1.95; }
 .dc-destool-spent b { color: var(--destool-amber-ink); }
+
+/* ---- «یادداشت‌های خودت درباره‌ی این مفهوم» (glossary-notes.js) ---------------
+   Lives here, not in plus-pages.css, for the same reason گفت‌وگوی زیر مطلب's
+   styles do: dc-nav.js injects plus.css on every page and a دانشنامه term loads
+   no other shared stylesheet. Cards reuse mark.dcp-hl above; the block is the
+   site's blue and never amber except the free reader's door, which IS a gate. */
+.dcp-gn { margin: 18px 0 0; background: var(--card-bg, #fff); border: 1px solid var(--card-border, rgba(2,35,96,.09)); border-radius: 14px; padding: 12px 14px 10px; min-height: 8px; }
+.dcp-gn:empty { padding: 0; border: 0; min-height: 0; margin: 0; }
+.dcp-gn-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.dcp-gn-title { margin: 0; font-size: .98rem; font-weight: 700; color: var(--txt, #0a1a33); }
+.dcp-gn-meta { font-size: .76rem; color: var(--txt3, #62779a); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.dcp-gn-hint { margin: 2px 0 6px; font-size: .78rem; color: var(--txt3, #62779a); }
+.dcp-gn-src { display: flex; gap: 6px; align-items: baseline; font-size: .76rem; color: var(--txt3, #62779a); margin: 8px 0 2px; flex-wrap: wrap; }
+.dcp-gn-src a { color: var(--txt2, #4a5f85); font-weight: 600; text-decoration: none; }
+.dcp-gn-src a:hover { color: var(--ac, #0b5fff); }
+.dcp-gn-card { padding: 7px 0; border-top: 1px solid var(--border, rgba(2,35,96,.1)); }
+.dcp-gn-src + .dcp-gn-card { border-top: 0; padding-top: 2px; }
+.dcp-gn-body { font-size: .92rem; line-height: 1.9; }
+.dcp-gn-body mark.dcp-hl { cursor: text; }
+.dcp-gn .dcp-hlib-note { margin: 5px 0 0; font-size: .82rem; color: var(--txt2, #4a5f85); border-inline-start: 2px solid var(--border, rgba(2,35,96,.1)); padding-inline-start: 9px; }
+.dcp-gn-acts { display: flex; gap: 10px; align-items: center; margin-top: 5px; font-size: .76rem; flex-wrap: wrap; }
+.dcp-gn-go { color: var(--ac, #0b5fff); font-weight: 600; text-decoration: none; }
+.dcp-gn-via { font-size: .68rem; color: var(--txt3, #62779a); border: 1px dashed var(--border, rgba(2,35,96,.18)); padding: 0 7px; border-radius: 999px; }
+.dcp-gn-all { display: block; margin-top: 10px; font-size: .84rem; color: var(--ac, #0b5fff); font-weight: 600; text-decoration: none; }
+.dcp-gn-door { border: 1px solid color-mix(in srgb, var(--dcp-gold) 35%, transparent); border-radius: 12px; padding: 12px 14px; background: linear-gradient(180deg, var(--dcp-gold-bg) 0, transparent 45%); margin: -2px -4px; }
+.dcp-gn-lock { font-size: .72rem; color: var(--dcp-gold); font-weight: 700; letter-spacing: .02em; }
+.dcp-gn-door p { margin: 3px 0 9px; font-size: .88rem; color: var(--txt2, #4a5f85); line-height: 1.7; }
+.dcp-gn-door b { color: var(--txt, #0a1a33); font-variant-numeric: tabular-nums; }
+

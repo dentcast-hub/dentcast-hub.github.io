@@ -28,6 +28,8 @@ ENV NODE_ENV=production
 ENV CONTENT_INDEX_PATH=/app/content-index.json
 ENV PATHWAYS_PATH=/app/pathways.json
 ENV BADGES_PATH=/app/badges.json
+ENV GLOSSARY_PATH=/app/glossary.json
+ENV HASHTAG_REF_PATH=/app/dentcast-hashtag-reference.json
 ENV FLASHCARDS_PATH=/app/flashcards-index.json
 # ...and where to refresh them from while the container runs, so publishing an
 # article no longer means building an image. The baked copies above stay the
@@ -55,6 +57,8 @@ COPY plus/content-index.json ./content-index.json
 COPY plus/pathways.json ./pathways.json
 COPY plus/badges.json ./badges.json
 COPY plus/flashcards-index.json ./flashcards-index.json
+COPY glossary/glossary.json ./glossary.json
+COPY dentcast-hashtag-reference.json ./dentcast-hashtag-reference.json
 
 # Build stamp — what GET /health reports back.
 #

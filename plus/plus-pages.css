@@ -1873,3 +1873,19 @@ html:not([data-theme="dark"]) .dcp-overlay {
 
 .dcp-rp-more { margin: 8px 0 0; font-size: .82rem; }
 .dcp-rp-prov { margin: 14px 0 0; font-size: .76rem; color: var(--txt3, #62779a); line-height: 1.6; padding: 10px 14px; border: 1px dashed var(--border, rgba(2,35,96,.12)); border-radius: 10px; }
+
+
+/* ---- «نمای موضوعی» in the دفترچه (highlights.js concept mode) ----------------
+   A third chip row above the labels: the concepts the reader's own highlights
+   reach, with counts, in the same chip vocabulary. A chosen concept swaps the
+   list's source for the concept view and opens a head card that names it. */
+.dcp-hlib-chips-label { font-size: .72rem; color: var(--txt3, #62779a); align-self: center; margin-inline-end: 2px; }
+.dcp-hlib-chip.is-more { border-style: dashed; }
+.dcp-hlib-chead { background: var(--card-bg, #fff); border: 1px solid var(--card-border, rgba(2,35,96,.09)); border-radius: 14px; padding: 12px 16px; margin-bottom: 10px; }
+.dcp-hlib-chead-t { font-size: 1.1rem; font-weight: 800; color: var(--pr, #022360); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.dcp-hlib-chead-x { font-size: .72rem; padding: 1px 8px; border-radius: 999px; background: var(--surface3, #eaecf5); color: var(--txt3, #62779a); font-weight: 500; }
+.dcp-hlib-chead-m { font-size: .82rem; color: var(--txt2, #4a5f85); margin-top: 2px; font-variant-numeric: tabular-nums; }
+.dcp-hlib-chead-links { display: flex; gap: 14px; margin-top: 8px; font-size: .82rem; flex-wrap: wrap; }
+.dcp-hlib-chead-links a { color: var(--ac, #0b5fff) !important; font-weight: 600; }
+.dcp-hlib-via { font-size: .68rem; color: var(--txt3, #62779a); border: 1px dashed var(--border, rgba(2,35,96,.18)); padding: 0 7px; border-radius: 999px; align-self: center; }
+\n

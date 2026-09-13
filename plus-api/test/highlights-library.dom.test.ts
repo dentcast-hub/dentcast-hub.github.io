@@ -16,10 +16,15 @@ globalThis.fetch = vi.fn(() => Promise.reject(new Error('no network'))) as any;
 const deleted: string[] = [];
 const patched: Array<{ id: string; patch: any }> = [];
 let libraryResponse: any = null;
+let conceptsResponse: any = null;
+let conceptViewResponse: any = null;
+const conceptCalls: string[] = [];
 
 vi.mock('/plus/js/api.js', () => ({
   api: {
     highlightLibrary: () => Promise.resolve(libraryResponse),
+    highlightConcepts: () => (conceptsResponse ? Promise.resolve(conceptsResponse) : Promise.reject(new Error('none'))),
+    highlightConcept: (key: string) => { conceptCalls.push(key); return conceptViewResponse ? Promise.resolve(conceptViewResponse) : Promise.reject(new Error('none')); },
     deleteHighlight: (id: string) => { deleted.push(id); return Promise.resolve({ ok: true }); },
     updateHighlight: (id: string, patch: any) => {
       patched.push({ id, patch });
@@ -84,7 +89,10 @@ describe('premium highlight library', () => {
     history.replaceState(null, '', '/plus/highlights.html');
     deleted.length = 0;
     patched.length = 0;
+    conceptCalls.length = 0;
     libraryResponse = library();
+    conceptsResponse = null;
+    conceptViewResponse = null;
   });
 
   it('renders every highlight in full, with its note, without opening the article', async () => {
@@ -214,3 +222,118 @@ describe('premium highlight library', () => {
     expect(document.body.textContent).toContain('هنوز هایلایتی نداری');
   });
 });
+
+// ---------------------------------------------------------------- concepts ---
+// «نمای موضوعی»: the reader's own highlights gathered by concept. The chips
+// are the concepts THEIR highlights reach (with counts), a chosen one swaps the
+// list for the concept view, and the URL carries it like every other filter.
+function concepts() {
+  return {
+    concepts: [
+      { key: 'سمان رزینی', fa: 'سمان رزینی', highlights: 2, articles: 2, pages_total: 18, glossary: { slug: 'resin-cements', url: '/glossary/resin-cements.html', fa_title: 'سمان‌های رزینی' } },
+      { key: 'اکلوژن', fa: 'اکلوژن', highlights: 1, articles: 1, pages_total: 40, glossary: null },
+    ],
+    total_highlights: 3, reached_highlights: 3,
+  };
+}
+function conceptView() {
+  const lib = library();
+  return {
+    concept: { key: 'سمان رزینی', fa: 'سمان رزینی', pages_total: 18, glossary: { slug: 'resin-cements', url: '/glossary/resin-cements.html', fa_title: 'سمان‌های رزینی' } },
+    total: 2, article_count: 2,
+    articles: [
+      { ...lib.articles[0], count: 1, highlights: [{ ...lib.articles[0].highlights[0], match: 'text' }] },
+      { ...lib.articles[1], count: 1, highlights: [{ ...lib.articles[1].highlights[0], match: 'tag' }] },
+    ],
+  };
+}
+
+describe('concept view', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="root"></div>';
+    history.replaceState(null, '', '/plus/highlights.html');
+    libraryResponse = library();
+    conceptsResponse = concepts();
+    conceptViewResponse = conceptView();
+    conceptCalls.length = 0;
+  });
+
+  it('shows the concepts the reader\'s highlights reach, with counts, and nothing when the catalog is absent', async () => {
+    await renderHighlightLibrary(document.getElementById('root')!);
+    const row = document.querySelector('.dcp-hlib-concepts') as HTMLElement;
+    expect(row.hidden).toBe(false);
+    const chips = Array.from(row.querySelectorAll('.dcp-hlib-chip')).map((c) => c.textContent);
+    expect(chips).toEqual(['همه', 'سمان رزینی۲', 'اکلوژن۱']);
+    expect(document.querySelector('.dcp-hlib-chead')!.hasAttribute('hidden')).toBe(true);
+
+    conceptsResponse = null;
+    document.body.innerHTML = '<div id="root"></div>';
+    await renderHighlightLibrary(document.getElementById('root')!);
+    expect((document.querySelector('.dcp-hlib-concepts') as HTMLElement).hidden).toBe(true);
+    expect(document.querySelectorAll('.dcp-hlib-card')).toHaveLength(3); // the library is still the library
+  });
+
+  it('a chosen concept swaps the list for its view, names it, links the glossary and marks text matches', async () => {
+    await renderHighlightLibrary(document.getElementById('root')!);
+    chipNamed('سمان رزینی').click();
+    await new Promise((r) => setTimeout(r, 0));
+    expect(conceptCalls).toEqual(['سمان رزینی']);
+    expect(location.search).toContain('concept=');
+    expect(new URLSearchParams(location.search).get('concept')).toBe('سمان رزینی');
+    const head = document.querySelector('.dcp-hlib-chead') as HTMLElement;
+    expect(head.hidden).toBe(false);
+    expect(head.querySelector('.dcp-hlib-chead-t')!.textContent).toContain('سمان رزینی');
+    expect(head.querySelector('.dcp-hlib-chead-m')!.textContent).toContain('۲ هایلایت در ۲ مطلب');
+    expect(head.querySelector('.dcp-hlib-chead-links a')!.getAttribute('href')).toBe('/glossary/resin-cements.html');
+    expect(document.querySelectorAll('.dcp-hlib-card')).toHaveLength(2);
+    expect(document.querySelectorAll('.dcp-hlib-via')).toHaveLength(1); // only the text match wears the mark
+    expect(document.querySelector('.dcp-hlib-count')!.textContent).toContain('۲ هایلایت در ۲ مطلب');
+    expect(chipNamed('سمان رزینی').classList.contains('is-on')).toBe(true);
+
+    // «همه» is the way back: the full library, the URL cleared.
+    chipNamed('همه').click();
+    await new Promise((r) => setTimeout(r, 0));
+    expect(document.querySelectorAll('.dcp-hlib-card')).toHaveLength(3);
+    expect(location.search).not.toContain('concept=');
+    expect((document.querySelector('.dcp-hlib-chead') as HTMLElement).hidden).toBe(true);
+  });
+
+  it('opens ON a deep-linked concept before the first paint', async () => {
+    history.replaceState(null, '', '/plus/highlights.html?concept=' + encodeURIComponent('سمان رزینی'));
+    await renderHighlightLibrary(document.getElementById('root')!);
+    expect(conceptCalls).toEqual(['سمان رزینی']);
+    expect(document.querySelectorAll('.dcp-hlib-card')).toHaveLength(2);
+    expect((document.querySelector('.dcp-hlib-chead') as HTMLElement).hidden).toBe(false);
+  });
+
+  it('shows eight chips, folds the rest, and keeps a deep-linked concept beyond the cap lit — with no stray text', async () => {
+    const many = { concepts: Array.from({ length: 12 }, (_, i) => ({ key: 'c' + i, fa: 'مفهوم ' + i, highlights: 12 - i, articles: 1, pages_total: 3, glossary: null })), total_highlights: 3, reached_highlights: 3 };
+    conceptsResponse = many;
+    await renderHighlightLibrary(document.getElementById('root')!);
+    let row = document.querySelector('.dcp-hlib-concepts') as HTMLElement;
+    expect(row.querySelectorAll('.dcp-hlib-chip:not(.is-more)')).toHaveLength(1 + 8);
+    expect(row.querySelector('.dcp-hlib-chip.is-more')!.textContent).toBe('+۴ مفهوم دیگر');
+    expect(row.textContent).not.toContain('null');
+    (row.querySelector('.dcp-hlib-chip.is-more') as HTMLElement).click();
+    expect(row.querySelectorAll('.dcp-hlib-chip:not(.is-more)')).toHaveLength(1 + 12);
+
+    conceptViewResponse = { ...conceptView(), concept: { key: 'c11', fa: 'مفهوم 11', pages_total: 3, glossary: null } };
+    history.replaceState(null, '', '/plus/highlights.html?concept=c11');
+    document.body.innerHTML = '<div id="root"></div>';
+    await renderHighlightLibrary(document.getElementById('root')!);
+    row = document.querySelector('.dcp-hlib-concepts') as HTMLElement;
+    const lit = row.querySelector('.dcp-hlib-chip.is-on')!;
+    expect(lit.textContent).toContain('مفهوم 11');
+    expect(row.querySelectorAll('.dcp-hlib-chip:not(.is-more)')).toHaveLength(1 + 8 + 1);
+    expect((document.querySelector('.dcp-hlib-chead') as HTMLElement).textContent).not.toContain('null');
+  });
+
+  it('an unknown deep-linked concept falls back to the whole library rather than an empty page', async () => {
+    conceptViewResponse = null;
+    history.replaceState(null, '', '/plus/highlights.html?concept=nope');
+    await renderHighlightLibrary(document.getElementById('root')!);
+    expect(document.querySelectorAll('.dcp-hlib-card')).toHaveLength(3);
+    expect(location.search).not.toContain('concept=');
+  });
+});
+

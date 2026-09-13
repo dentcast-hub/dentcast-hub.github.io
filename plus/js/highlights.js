@@ -17,15 +17,15 @@
 //      scrolls to the mark).
 //   4. Every filter lives in the URL, so a filtered view survives a refresh,
 //      the back button, and being sent to yourself.
-import { el, faNum, debounce } from './util.js?v=79';
-import { api } from './api.js?v=79';
-import { FOLDER_EN } from './content-index.js?v=79';
-import { openCollectionPicker } from './collections.js?v=79';
-import { LABELS, PALETTE } from './config.js?v=79';
+import { el, faNum, debounce } from './util.js?v=80';
+import { api } from './api.js?v=80';
+import { FOLDER_EN } from './content-index.js?v=80';
+import { openCollectionPicker } from './collections.js?v=80';
+import { LABELS, PALETTE } from './config.js?v=80';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
-} from './hl-view.js?v=79';
+} from './hl-view.js?v=80';
 
 // How many article groups (or flat cards) are drawn before the "load more"
 // sentinel takes over. A library of a few thousand highlights must not build a
@@ -51,6 +51,7 @@ function readState() {
     label: p.get('label') || '',
     color: p.get('color') || '',
     folder: p.get('folder') || '',
+    concept: p.get('concept') || '',
     sort: SORTS.some((s) => s.key === sort) ? sort : 'recent',
     view: p.get('view') === 'flat' ? 'flat' : 'grouped',
   };
@@ -62,6 +63,7 @@ function writeState(state) {
   if (state.label) p.set('label', state.label);
   if (state.color) p.set('color', state.color);
   if (state.folder) p.set('folder', state.folder);
+  if (state.concept) p.set('concept', state.concept);
   if (state.sort !== 'recent') p.set('sort', state.sort);
   if (state.view !== 'grouped') p.set('view', state.view);
   const qs = p.toString();
@@ -106,8 +108,12 @@ function highlightCard(article, h, ctx) {
       },
     });
 
+    // In a concept view a card says HOW it got there only when that is the
+    // exception: a page carrying the concept's tag is the default and wears
+    // nothing; a highlight found through its own words is marked.
+    const via = h.match === 'text' ? el('span', { class: 'dcp-hlib-via' }, 'در متن هایلایت') : null;
     const actions = el('div', { class: 'dcp-hlib-actions' },
-      [labelChip(h.label), edit, copy, collect, go, del].filter(Boolean));
+      [labelChip(h.label), via, edit, copy, collect, go, del].filter(Boolean));
 
     // In the flat (timeline) view a card has to say where it came from; in the
     // grouped view the group header above it already does.
@@ -167,7 +173,13 @@ function articleGroup(article, ctx) {
 export async function renderHighlightLibrary(container) {
   container.replaceChildren(skeleton(3));
 
-  const data = await api.highlightLibrary().catch(() => null);
+  // The concept catalog rides beside the library: every concept the reader's
+  // highlights reach, with counts (plus-api services/highlight-concepts.ts).
+  // Optional — a library with no concept row is still the library.
+  const [data, conceptCatalog] = await Promise.all([
+    api.highlightLibrary().catch(() => null),
+    api.highlightConcepts().catch(() => null),
+  ]);
   if (!data) {
     container.replaceChildren(el('div', { class: 'dcp-empty' }, [
       el('p', {}, 'هایلایت‌ها در دسترس نیست.'),
@@ -222,6 +234,11 @@ export async function renderHighlightLibrary(container) {
   // a filter you should be able to see is empty before you press it.
   const labelChips = el('div', { class: 'dcp-hlib-chips' });
   const colorRow = el('div', { class: 'dcp-hlib-chips' });
+  // «مفهوم» — the third chip row and the head card a chosen concept opens;
+  // filled by buildConceptChips()/buildConceptHead() below.
+  const conceptChips = el('div', { class: 'dcp-hlib-chips dcp-hlib-concepts' });
+  const conceptHead = el('div', { class: 'dcp-hlib-chead' });
+  conceptHead.hidden = true;
 
   const viewBtn = el('button', { class: 'dcp-hlib-act', type: 'button' });
   const copyAllBtn = el('button', { class: 'dcp-hlib-act', type: 'button' }, 'کپیِ نتایج');
@@ -230,6 +247,7 @@ export async function renderHighlightLibrary(container) {
 
   const controls = el('div', { class: 'dcp-hlib-controls' }, [
     el('div', { class: 'dcp-hlib-row' }, [search, folderSel, sortSel]),
+    el('div', { class: 'dcp-hlib-row' }, [conceptChips]),
     el('div', { class: 'dcp-hlib-row' }, [labelChips, colorRow]),
     el('div', { class: 'dcp-hlib-row dcp-hlib-row-tools' }, [countLine, jumpBtn, viewBtn, foldBtn, copyAllBtn]),
   ]);
@@ -239,7 +257,13 @@ export async function renderHighlightLibrary(container) {
   const sentinel = el('div', { class: 'dcp-hlib-sentinel' });
 
   // --- model helpers -------------------------------------------------------
-  const allHighlights = () => data.articles.flatMap((a) => a.highlights.map((h) => ({ a, h })));
+  // «نمای موضوعی»: when a concept is chosen the groups come from the concept
+  // view (GET /highlights/concepts/:key — the same article/highlight shape,
+  // each highlight carrying `match`), and every filter, chip and count below
+  // reads through source() so they all agree on what is on screen.
+  let conceptView = null;
+  const source = () => conceptView || data;
+  const allHighlights = () => source().articles.flatMap((a) => a.highlights.map((h) => ({ a, h })));
 
   function matches(a, h) {
     if (state.folder && a.folder !== state.folder) return false;
@@ -252,7 +276,7 @@ export async function renderHighlightLibrary(container) {
 
   function filteredGroups() {
     const groups = [];
-    for (const a of data.articles) {
+    for (const a of source().articles) {
       const hs = a.highlights.filter((h) => matches(a, h));
       if (hs.length) groups.push({ ...a, highlights: hs });
     }
@@ -263,11 +287,76 @@ export async function renderHighlightLibrary(container) {
   }
 
   function removeFromModel(id) {
-    for (const a of data.articles) a.highlights = a.highlights.filter((h) => h.id !== id);
-    data.articles = data.articles.filter((a) => a.highlights.length);
-    data.total = data.articles.reduce((n, a) => n + a.highlights.length, 0);
-    data.article_count = data.articles.length;
+    for (const m of [data, conceptView].filter(Boolean)) {
+      for (const a of m.articles) a.highlights = a.highlights.filter((h) => h.id !== id);
+      m.articles = m.articles.filter((a) => a.highlights.length);
+      m.total = m.articles.reduce((n, a) => n + a.highlights.length, 0);
+      m.article_count = m.articles.length;
+    }
     render();
+  }
+
+  // --- concepts ------------------------------------------------------------
+  let conceptsOpen = false;
+  const CONCEPTS_SHOWN = 8;
+
+  async function setConcept(key) {
+    state.concept = key;
+    state.label = ''; state.color = '';
+    if (!key) { conceptView = null; render(); return; }
+    list.replaceChildren(skeleton(2));
+    const view = await api.highlightConcept(key).catch(() => null);
+    if (state.concept !== key) return; // the reader moved on while this loaded
+    if (!view) { state.concept = ''; conceptView = null; toast('این مفهوم در دسترس نیست', { icon: '!' }); }
+    else conceptView = view;
+    render();
+  }
+
+  function buildConceptChips() {
+    const concepts = (conceptCatalog && conceptCatalog.concepts) || [];
+    if (!concepts.length) { conceptChips.hidden = true; return; }
+    conceptChips.hidden = false;
+    // Eight by default; the chosen one always among them, so a deep link to
+    // the twentieth concept still shows its own chip lit.
+    let shown = conceptsOpen ? concepts : concepts.slice(0, CONCEPTS_SHOWN);
+    if (state.concept && !shown.some((c) => c.key === state.concept)) {
+      const active = concepts.find((c) => c.key === state.concept);
+      if (active) shown = [...shown, active];
+    }
+    const chip = (key, fa, n) => {
+      const b = el('button', {
+        class: 'dcp-hlib-chip' + (key === state.concept ? ' is-on' : ''), type: 'button',
+      }, [fa, n === null ? null : el('span', { class: 'dcp-hlib-chipn' }, faNum(n))].filter(Boolean));
+      b.addEventListener('click', () => { if (key !== state.concept) void setConcept(key); });
+      return b;
+    };
+    const rest = concepts.length - shown.length;
+    const more = rest > 0 ? (() => {
+      const b = el('button', { class: 'dcp-hlib-chip is-more', type: 'button' }, '+' + faNum(rest) + ' مفهوم دیگر');
+      b.addEventListener('click', () => { conceptsOpen = true; buildConceptChips(); });
+      return b;
+    })() : null;
+    conceptChips.replaceChildren(...[
+      el('span', { class: 'dcp-hlib-chips-label' }, 'مفهوم'),
+      chip('', 'همه', null),
+      ...shown.map((c) => chip(c.key, c.fa, c.highlights)),
+      more,
+    ].filter(Boolean));
+  }
+
+  function buildConceptHead() {
+    if (!conceptView) { conceptHead.hidden = true; conceptHead.replaceChildren(); return; }
+    const c = conceptView.concept;
+    conceptHead.hidden = false;
+    conceptHead.replaceChildren(...[
+      el('div', { class: 'dcp-hlib-chead-t' }, [c.fa, el('span', { class: 'dcp-hlib-chead-x' }, 'مفهوم')]),
+      el('div', { class: 'dcp-hlib-chead-m' },
+        faNum(conceptView.total) + ' هایلایت در ' + faNum(conceptView.article_count) + ' مطلب · '
+        + faNum(c.pages_total) + ' صفحه از سایت این تگ را دارد'),
+      c.glossary ? el('div', { class: 'dcp-hlib-chead-links' }, [
+        el('a', { href: c.glossary.url }, 'مدخل دانشنامه: ' + c.glossary.fa_title + ' ›'),
+      ]) : null,
+    ].filter(Boolean));
   }
 
   // An edit can push a highlight OUT of the active filter (you just changed the
@@ -376,15 +465,18 @@ export async function renderHighlightLibrary(container) {
     viewBtn.textContent = state.view === 'flat' ? '▤ گروه‌بندیِ مقاله' : '☰ فهرستِ زمانی';
     foldBtn.hidden = state.view === 'flat';
     jumpBtn.hidden = state.view === 'flat';
+    buildConceptChips();
+    buildConceptHead();
     buildChips();
 
     const groups = filteredGroups();
     const shown = groups.reduce((n, g) => n + g.highlights.length, 0);
+    const src = source();
     countLine.replaceChildren(
       el('b', {}, faNum(shown)),
-      document.createTextNode(shown === data.total
-        ? ' هایلایت در ' + faNum(data.article_count) + ' مطلب'
-        : ' از ' + faNum(data.total) + ' هایلایت، در ' + faNum(groups.length) + ' مطلب'),
+      document.createTextNode(shown === src.total
+        ? ' هایلایت در ' + faNum(src.article_count) + ' مطلب'
+        : ' از ' + faNum(src.total) + ' هایلایت، در ' + faNum(groups.length) + ' مطلب'),
     );
 
     buildJump(groups);
@@ -398,6 +490,7 @@ export async function renderHighlightLibrary(container) {
       const clear = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'پاک‌کردنِ فیلترها');
       clear.addEventListener('click', () => {
         state.q = ''; state.label = ''; state.color = ''; state.folder = '';
+        if (state.concept) { void setConcept(''); return; }
         render();
       });
       list.replaceChildren(el('div', { class: 'dcp-empty' }, [
@@ -455,6 +548,11 @@ export async function renderHighlightLibrary(container) {
 
   // Mount BEFORE the first render: the infinite-scroll sentinel has to be in
   // the document when the observer starts watching it.
-  container.replaceChildren(top, controls, jumpPanel, list, sentinel);
-  render();
+  container.replaceChildren(top, controls, conceptHead, jumpPanel, list, sentinel);
+  if (state.concept) {
+    // ?concept= is a deep link (the glossary block, a shared URL): open ON it.
+    await setConcept(state.concept);
+  } else {
+    render();
+  }
 }
