@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dentcast.org/</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3152,7 +3152,7 @@
   </url>
   <url>
     <loc>https://dentcast.org/notecast/</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -3361,6 +3361,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/notecast/episode-41.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/notecast/episode-5.html</loc>
     <lastmod>2025-02-25</lastmod>
     <changefreq>monthly</changefreq>
@@ -3416,7 +3422,7 @@
   </url>
   <url>
     <loc>https://dentcast.org/pillar/</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3446,7 +3452,7 @@
   </url>
   <url>
     <loc>https://dentcast.org/pillar/fixed-pros/</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

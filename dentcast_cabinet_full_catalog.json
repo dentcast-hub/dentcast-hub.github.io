@@ -2,7 +2,7 @@
   "schema_version": "2.0",
   "source": "local hard drive — E:\\Paper farzad (recursive)",
   "total_files_scanned": 3313,
-  "unique_papers": 2885,
+  "unique_papers": 2886,
   "duplicates_collapsed": 435,
   "fields_generated": [
     "topic",
@@ -137759,6 +137759,58 @@
         "Takahiro Ogawa",
         "Neal R. Garrett"
       ]
+    },
+    {
+      "id": "P2907",
+      "title": "Endocrowns: A systematic review",
+      "file_name": "Endocrowns-A-systematic-review.pdf",
+      "topic": "endocrown",
+      "topic_path": "endocrown",
+      "type": "systematic review",
+      "local_path": "",
+      "file_size": 798422,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "notecast/episode-41",
+        "episodes/episode-41"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1F7E0-k0jdLusgDioJhJfzkNPMRTdbkfF/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1F7E0-k0jdLusgDioJhJfzkNPMRTdbkfF",
+      "drive_view": "https://drive.google.com/file/d/1F7E0-k0jdLusgDioJhJfzkNPMRTdbkfF/view",
+      "drive_id": "1F7E0-k0jdLusgDioJhJfzkNPMRTdbkfF",
+      "tags": [
+        "endocrown",
+        "systematic-review",
+        "post-retained-restoration",
+        "endodontically-treated-tooth",
+        "molar-restoration",
+        "premolar-restoration",
+        "survival-rate",
+        "debonding",
+        "fracture-resistance",
+        "lithium-disilicate",
+        "nanofilled-composite-resin",
+        "ferrule",
+        "pulp-chamber-retention",
+        "adhesive-bonding",
+        "topic:endocrown",
+        "endocrowns-a-systematic-review"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Endocrowns: A systematic review",
+      "doi": "10.1016/j.prosdent.2019.04.009",
+      "journal": "The Journal of Prosthetic Dentistry",
+      "crossref_year": 2020,
+      "subjects": [],
+      "abstract": "The restoration of extensively damaged endodontically treated teeth remains a challenge. The use of post-retained restorations has been questioned because of potential tooth weakening. The purpose of this systematic review was to determine whether endocrowns are a reliable alternative to post-retained restorations for extensively damaged endodontically treated teeth and to determine which preparation design is most appropriate and which materials are best adapted for fabricating endocrowns. The literature that was analyzed covered endocrowns from 1995 to June 2018. A search was conducted for in vitro and clinical studies in English in 3 research databases (PubMed, Cochrane, and Scopus), and this was complemented by a manual search in the bibliographies of the studies found. Case reports were excluded. A total of 41 publications consisting of 8 clinical studies and 33 in vitro studies were included in this systematic review. Several analysis parameters were identified: for the clinical studies, survival rate, failure modes, and clinical criteria; for the in vitro studies, fracture resistance, stress distribution, preparation criteria, and materials used. Endocrowns are a reliable alternative to post-retained restorations for molars and seem promising for premolars. A certain preparation design and a rigorous adhesion protocol must be respected. Among the available materials, lithium disilicate glass-ceramic and nanofilled composite resin stand out.",
+      "display_title": "Endocrowns: A systematic review",
+      "authors": [
+        "Nicolas Govare",
+        "Mathieu Contrepois"
+      ]
     }
   ],
   "drive_matched": 2849,
@@ -138283,5 +138335,5 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2211
+  "total_papers": 2212
 }
