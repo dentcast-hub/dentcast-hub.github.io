@@ -370,7 +370,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 91,
+   "count": 92,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -462,7 +462,8 @@
     "insight/insight-69",
     "insight/insight-70",
     "insight/insight-71",
-    "insight/insight-72"
+    "insight/insight-72",
+    "insight/insight-73"
    ]
   },
   {
@@ -2563,10 +2564,42 @@
    ]
   },
   {
+   "key": "فینیش_لاین",
+   "tag": "#فینیش_لاین",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "خط ختم تراش — مرزی که مارجین رستوریشن روی آن می‌نشیند.",
+   "use_when": "مقاله شکل، موقعیت، یا کیفیت خط ختم را تعیین کند.",
+   "aliases": [
+    "فینیشینگ لاین",
+    "فینیش‌لاین",
+    "خط ختم"
+   ],
+   "variants": [
+    "#فینیشینگ_لاین"
+   ],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-95",
+    "episodes/episode-114",
+    "dentcast-plus/video-1",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "insight/insight-18",
+    "chairside/chairside-12",
+    "insight/insight-40",
+    "notecast/episode-37",
+    "insight/insight-67",
+    "dentcast-plus/video-11",
+    "insight/insight-73"
+   ]
+  },
+  {
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
    "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
    "aliases": [
@@ -2685,37 +2718,6 @@
     "chairside/chairside-19",
     "chairside/chairside-22",
     "insight/insight-66"
-   ]
-  },
-  {
-   "key": "فینیش_لاین",
-   "tag": "#فینیش_لاین",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "خط ختم تراش — مرزی که مارجین رستوریشن روی آن می‌نشیند.",
-   "use_when": "مقاله شکل، موقعیت، یا کیفیت خط ختم را تعیین کند.",
-   "aliases": [
-    "فینیشینگ لاین",
-    "فینیش‌لاین",
-    "خط ختم"
-   ],
-   "variants": [
-    "#فینیشینگ_لاین"
-   ],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-95",
-    "episodes/episode-114",
-    "dentcast-plus/video-1",
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "insight/insight-18",
-    "chairside/chairside-12",
-    "insight/insight-40",
-    "notecast/episode-37",
-    "insight/insight-67",
-    "dentcast-plus/video-11"
    ]
   },
   {
@@ -3961,6 +3963,35 @@
    ]
   },
   {
+   "key": "مدیریت_بافت_نرم",
+   "tag": "#مدیریت_بافت_نرم",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "حفظ و شکل‌دهی بافت نرم اطراف ایمپلنت.",
+   "use_when": "مقاله بافت نرم را هدفِ تصمیم بداند، نه صرفاً ذکرش کند.",
+   "aliases": [
+    "مدیریت لثه",
+    "فرم دهی بافت نرم",
+    "soft tissue"
+   ],
+   "variants": [
+    "#بافت_نرم"
+   ],
+   "co_tags": [
+    "#Soft_Tissue_Management"
+   ],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-111",
+    "episodes/episode-122-6",
+    "episodes/episode-140",
+    "episodes/episode-158",
+    "insight/insight-50",
+    "insight/insight-63",
+    "insight/insight-73"
+   ]
+  },
+  {
    "key": "کانتی_لیور",
    "tag": "#کانتی_لیور",
    "domain": "clinical",
@@ -4306,7 +4337,7 @@
    "key": "رادیوگرافی_تشخیصی",
    "tag": "#رادیوگرافی_تشخیصی",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "انتخاب و تفسیرِ درستِ تصویر — پانورامیک در برابر پری‌اپیکال.",
    "use_when": "مقاله کفایت یا نارساییِ یک تصویر را مسئله بداند.",
    "aliases": [
@@ -4457,34 +4488,6 @@
    ]
   },
   {
-   "key": "مدیریت_بافت_نرم",
-   "tag": "#مدیریت_بافت_نرم",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "حفظ و شکل‌دهی بافت نرم اطراف ایمپلنت.",
-   "use_when": "مقاله بافت نرم را هدفِ تصمیم بداند، نه صرفاً ذکرش کند.",
-   "aliases": [
-    "مدیریت لثه",
-    "فرم دهی بافت نرم",
-    "soft tissue"
-   ],
-   "variants": [
-    "#بافت_نرم"
-   ],
-   "co_tags": [
-    "#Soft_Tissue_Management"
-   ],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-111",
-    "episodes/episode-122-6",
-    "episodes/episode-140",
-    "episodes/episode-158",
-    "insight/insight-50",
-    "insight/insight-63"
-   ]
-  },
-  {
    "key": "هوش_مصنوعی_دندانپزشکی",
    "tag": "#هوش_مصنوعی_دندانپزشکی",
    "domain": "ai",
@@ -4583,6 +4586,38 @@
     "episodes/episode-127",
     "episodes/episode-134",
     "episodes/episode-135"
+   ]
+  },
+  {
+   "key": "گیر_غذایی",
+   "tag": "#گیر_غذایی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "گیر کردنِ غذا در فضای بین‌دندانی.",
+   "use_when": "مقاله گیر غذایی را نشانه یا پیامدِ یک تصمیم بداند.",
+   "aliases": [
+    "food impaction",
+    "گیر کردن غذا",
+    "ایمپکشن غذا",
+    "فود ایمپکشن",
+    "ایمپکشن غذایی",
+    "گیر مواد غذایی",
+    "food trapping"
+   ],
+   "variants": [
+    "#Food_Impaction"
+   ],
+   "co_tags": [
+    "#Food_Impaction"
+   ],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-121-1",
+    "insight/insight-7",
+    "episodes/episode-159",
+    "chairside/chairside-28",
+    "chairside/chairside-37",
+    "insight/insight-73"
    ]
   },
   {
@@ -5460,33 +5495,6 @@
    ]
   },
   {
-   "key": "گیر_غذایی",
-   "tag": "#گیر_غذایی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "گیر کردنِ غذا در فضای بین‌دندانی.",
-   "use_when": "مقاله گیر غذایی را نشانه یا پیامدِ یک تصمیم بداند.",
-   "aliases": [
-    "food impaction",
-    "گیر کردن غذا",
-    "ایمپکشن غذا"
-   ],
-   "variants": [
-    "#Food_Impaction"
-   ],
-   "co_tags": [
-    "#Food_Impaction"
-   ],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-121-1",
-    "insight/insight-7",
-    "episodes/episode-159",
-    "chairside/chairside-28",
-    "chairside/chairside-37"
-   ]
-  },
-  {
    "key": "dahl_concept",
    "tag": "#Dahl_Concept",
    "domain": "clinical",
@@ -6152,6 +6160,30 @@
    ]
   },
   {
+   "key": "نخ_زیرلثه",
+   "tag": "#نخ_زیرلثه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نخِ ریترکشن، تنها یا آغشته به هموستاتیک.",
+   "use_when": "مقاله نخ را ابزارِ کنارزدنِ لثه یا کنترلِ خون بداند.",
+   "aliases": [
+    "retraction cord",
+    "نخ رترکشن",
+    "نخ زیر لثه",
+    "دابل کورد",
+    "double cord"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-40",
+    "insight/insight-63",
+    "insight/insight-67",
+    "insight/insight-73"
+   ]
+  },
+  {
    "key": "نشست_روکش",
    "tag": "#نشست_روکش",
    "domain": "clinical",
@@ -6664,6 +6696,27 @@
    ]
   },
   {
+   "key": "اورهنگ",
+   "tag": "#اورهنگ",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "لبه‌ی اضافیِ ترمیمِ قدیمی نزدیک لثه.",
+   "use_when": "مقاله برداشتنِ اورهنگ را علتِ تماس با لثه بداند.",
+   "aliases": [
+    "overhang",
+    "اورهنگ",
+    "لبه اضافه"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-40",
+    "chairside/chairside-28",
+    "insight/insight-73"
+   ]
+  },
+  {
    "key": "اچ_اند_رینس",
    "tag": "#اچ_اند_رینس",
    "domain": null,
@@ -7061,6 +7114,28 @@
    ]
   },
   {
+   "key": "تعویض_روکش",
+   "tag": "#تعویض_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "برداشتن و ساختِ دوباره‌ی روکشِ موجود.",
+   "use_when": "مقاله ضرورتِ تعویض را در برابر نگه داشتن بسنجد.",
+   "aliases": [
+    "تعویض روکش",
+    "crown replacement",
+    "تعویض پروتز",
+    "عوض کردن روکش"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-58",
+    "chairside/chairside-34",
+    "insight/insight-73"
+   ]
+  },
+  {
    "key": "تماس_باز",
    "tag": "#تماس_باز",
    "domain": "clinical",
@@ -7328,7 +7403,7 @@
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
-   "words": 4,
+   "words": 6,
    "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
    "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
    "aliases": [
@@ -7899,29 +7974,6 @@
    ]
   },
   {
-   "key": "نخ_زیرلثه",
-   "tag": "#نخ_زیرلثه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نخِ ریترکشن، تنها یا آغشته به هموستاتیک.",
-   "use_when": "مقاله نخ را ابزارِ کنارزدنِ لثه یا کنترلِ خون بداند.",
-   "aliases": [
-    "retraction cord",
-    "نخ رترکشن",
-    "نخ زیر لثه",
-    "دابل کورد",
-    "double cord"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-40",
-    "insight/insight-63",
-    "insight/insight-67"
-   ]
-  },
-  {
    "key": "نشست_ناقص",
    "tag": "#نشست_ناقص",
    "domain": "clinical",
@@ -8331,6 +8383,26 @@
    ]
   },
   {
+   "key": "کانتکت_پروگزیمال",
+   "tag": "#کانتکت_پروگزیمال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "خودِ تماس بین دو دندان مجاور، به‌عنوان یک ساختار.",
+   "use_when": "مقاله درباره‌ی شکل، محل یا شدتِ کانتکت پروگزیمال باشد.",
+   "aliases": [
+    "تماس پروگزیمالی",
+    "کنتاکت مجاور"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "metanotes/meta-12",
+    "episodes/episode-159",
+    "insight/insight-73"
+   ]
+  },
+  {
    "key": "کانکشن_ایمپلنت",
    "tag": "#کانکشن_ایمپلنت",
    "domain": "clinical",
@@ -8412,6 +8484,28 @@
     "dentai/promptologist/prompt1-append1",
     "dentai/promptologist/prompt6-1",
     "dentai/promptologist/prompt6-2"
+   ]
+  },
+  {
+   "key": "کنترل_خونریزی",
+   "tag": "#کنترل_خونریزی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پایدارسازیِ میدان پیش از ثبت — شرطِ دیده شدنِ مارجین.",
+   "use_when": "مقاله خونریزی را مانعِ ثبتِ دقیق بداند.",
+   "aliases": [
+    "hemostasis",
+    "کنترل خونریزی",
+    "هموستاتیک",
+    "بند آوردن خون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-40",
+    "insight/insight-63",
+    "insight/insight-73"
    ]
   },
   {
@@ -9286,26 +9380,6 @@
    ]
   },
   {
-   "key": "اورهنگ",
-   "tag": "#اورهنگ",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "لبه‌ی اضافیِ ترمیمِ قدیمی نزدیک لثه.",
-   "use_when": "مقاله برداشتنِ اورهنگ را علتِ تماس با لثه بداند.",
-   "aliases": [
-    "overhang",
-    "اورهنگ",
-    "لبه اضافه"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-40",
-    "chairside/chairside-28"
-   ]
-  },
-  {
    "key": "اوکیسون",
    "tag": "#اوکیسون",
    "domain": "clinical",
@@ -9722,27 +9796,6 @@
    "content_ids": [
     "notecast/episode-14",
     "episodes/episode-155"
-   ]
-  },
-  {
-   "key": "تعویض_روکش",
-   "tag": "#تعویض_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "برداشتن و ساختِ دوباره‌ی روکشِ موجود.",
-   "use_when": "مقاله ضرورتِ تعویض را در برابر نگه داشتن بسنجد.",
-   "aliases": [
-    "تعویض روکش",
-    "crown replacement",
-    "تعویض پروتز",
-    "عوض کردن روکش"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-58",
-    "chairside/chairside-34"
    ]
   },
   {
@@ -11410,25 +11463,6 @@
    ]
   },
   {
-   "key": "کانتکت_پروگزیمال",
-   "tag": "#کانتکت_پروگزیمال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "خودِ تماس بین دو دندان مجاور، به‌عنوان یک ساختار.",
-   "use_when": "مقاله درباره‌ی شکل، محل یا شدتِ کانتکت پروگزیمال باشد.",
-   "aliases": [
-    "تماس پروگزیمالی",
-    "کنتاکت مجاور"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "metanotes/meta-12",
-    "episodes/episode-159"
-   ]
-  },
-  {
    "key": "کست_پرینتی",
    "tag": "#کست_پرینتی",
    "domain": "clinical",
@@ -11447,27 +11481,6 @@
    "content_ids": [
     "insight/insight-32",
     "insight/insight-35"
-   ]
-  },
-  {
-   "key": "کنترل_خونریزی",
-   "tag": "#کنترل_خونریزی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پایدارسازیِ میدان پیش از ثبت — شرطِ دیده شدنِ مارجین.",
-   "use_when": "مقاله خونریزی را مانعِ ثبتِ دقیق بداند.",
-   "aliases": [
-    "hemostasis",
-    "کنترل خونریزی",
-    "هموستاتیک",
-    "بند آوردن خون"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-40",
-    "insight/insight-63"
    ]
   },
   {
@@ -13716,7 +13729,7 @@
    "key": "اینتروژن_ارتودنسی",
    "tag": "#اینتروژن_ارتودنسی",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
    "use_when": "مقاله اینتروژن را راه‌حل بداند.",
    "aliases": [
@@ -14563,7 +14576,7 @@
    "key": "تفسیر_رادیوگرافی",
    "tag": "#تفسیر_رادیوگرافی",
    "domain": "clinical",
-   "words": 2,
+   "words": 4,
    "definition": "خواندنِ الگو — مرزِ صاف در برابر مرزِ منتشر — نه صرفاً دیدنِ لکه.",
    "use_when": "مقاله معیارِ تمایزِ تصویری بدهد.",
    "aliases": [
@@ -15577,7 +15590,7 @@
    "key": "رادیوگرافی_کنترل",
    "tag": "#رادیوگرافی_کنترل",
    "domain": "clinical",
-   "words": 2,
+   "words": 4,
    "definition": "پری‌اپیکالِ صحیح، به‌عنوان تأییدِ قطعیِ نشست.",
    "use_when": "مقاله رادیوگرافی را تأییدِ نهایی بداند، نه حس.",
    "aliases": [
@@ -18236,7 +18249,7 @@
    "key": "هوش_مصنوعی_رادیوگرافی",
    "tag": "#هوش_مصنوعی_رادیوگرافی",
    "domain": "ai",
-   "words": 3,
+   "words": 5,
    "definition": "نرم‌افزاری که روی رادیوگرافی ضایعه یا سطح استخوان را علامت می‌زند — تصویری که اغلب با ChatGPT اشتباه گرفته می‌شود.",
    "use_when": "مقاله همین دسته را موضوع یا نقطه‌ی تمایز قرار دهد.",
    "aliases": [
@@ -20642,6 +20655,7 @@
   "مشکلات ایمپلنت": "عوارض ایمپلنت",
   "زیرکونیای شفاف": "نسل زیرکونیا",
   "food impaction": "گیر غذایی",
+  "گیر مواد غذایی": "گیر غذایی",
   "اسنپ آن اسمایل": "snap on smile",
   "باز شدن کانتکت": "از دست رفتن کانتکت",
   "posterior stop": "استاپ خلفی",
@@ -20834,6 +20848,8 @@
   "پوسیدگی دندان": "پوسیدگی",
   "implant screw": "پیچ ایمپلنت",
   "اسکرو ایمپلنت": "پیچ ایمپلنت",
+  "ایمپکشن غذایی": "گیر غذایی",
+  "food trapping": "گیر غذایی",
   "ضایعه سرویکال": "nccl",
   "screwmentable": "اسکرو سمنتد",
   "فضای امبراژور": "امبراژور",
@@ -21282,6 +21298,7 @@
   "پلن ایمپلنت": "پلنینگ ایمپلنت",
   "deep caries": "پوسیدگی عمیق",
   "ایمپکشن غذا": "گیر غذایی",
+  "فود ایمپکشن": "گیر غذایی",
   "ساپورت خلفی": "استاپ خلفی",
   "overcontour": "کانتور ترمیم",
   "اورال هایژن": "بهداشت دهان",

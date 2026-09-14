@@ -14741,5 +14741,44 @@
       "secondary": [],
       "subtopic": "llm-tools"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-73",
+    "title": "تعویض روکش و مدیریت بافت نرم در حضور التهاب ناشی از فودایمپکشن",
+    "caption": "روکش قبلی به دلیل کانتکت پروگزیمال نادرست، فود ایمپکشن و التهاب لثه ساخته بود. تراش به دلیل ایرادِ خودش اصلاح شد نه به دلیل شکایت بیمار، و نخ ریترکشن فقط در لینگوال قرار گرفت — تنها ناحیه‌ای که سالکوس قابل ریترکت داشت؛ خونریزی با ژل هموستاتیک کنترل شد و اسکن گرفته شد.",
+    "hashtags": [
+      "#اینسایت",
+      "#تعویض_روکش",
+      "#گیر_غذایی",
+      "#کانتکت_پروگزیمال",
+      "#نخ_زیرلثه",
+      "#کنترل_خونریزی",
+      "#مدیریت_بافت_نرم",
+      "#فینیش_لاین",
+      "#اورهنگ"
+    ],
+    "keywords": [
+      "crown replacement food impaction",
+      "defective proximal contact food impaction",
+      "gingival inflammation under crown",
+      "retraction cord selective placement",
+      "no retractable sulcus attached tissue",
+      "aluminum hemostatic gel bleeding control",
+      "amalgam overhang finish line correction",
+      "soft tissue management before intraoral scan",
+      "تعویض روکش و فود ایمپکشن",
+      "کانتکت پروگزیمال نادرست",
+      "نخ ریترکشن ناحیه‌به‌ناحیه",
+      "سالکوس غیرقابل ریترکت",
+      "ژل هموستاتیک آلومینیومی",
+      "اصلاح فینیش لاین و اورهنگ آمالگام"
+    ],
+    "page_url": "/insight/insight-73.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "impression"
+    }
   }
 ]
