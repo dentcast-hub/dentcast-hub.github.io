@@ -1,0 +1,30 @@
+{
+  "type": "plak_sefr",
+  "note": "Publish of plak-sefr/plak1-4 (پلاک صفر — گوگل چطور تصمیم می‌گیرد). Mints #رتبه_بندی_گوگل — the ordering decision itself (crawl → index → rank, and the four criteria Google publishes), which the library had no concept for: --simulate «رتبه‌بندی گوگل» returned only #گوگل_پلی (an app store). Deliberately distinct from #جستجوپذیری_محتوا, which is about a page being findable at all; this one is about which of the findable pages goes first. Every other tag on this part reuses an existing canonical form. Does not carry #مالکیت_پلتفرم or #ماندگاری_محتوا — the part mentions neither and the rule is to tag what a page resolves.",
+  "concepts": [
+    {
+      "tag": "#رتبه_بندی_گوگل",
+      "domain": "web",
+      "definition": "تصمیمی که موتور جستجو درباره‌ی ترتیبِ نتایج می‌گیرد — اینکه بین صفحه‌هایی که به یک پرسش جواب داده‌اند کدام جلوتر بیاید، و بر چه معیارهایی.",
+      "use_when": "مطلب درباره‌ی این باشد که چه چیزی جایگاهِ یک صفحه را در نتایج جستجو تعیین می‌کند — نه صرفاً درباره‌ی دیده‌شدن یا ایندکس‌شدنِ آن.",
+      "aliases": [
+        "google ranking",
+        "search ranking",
+        "seo",
+        "سئو",
+        "رتبه در گوگل",
+        "رتبه‌بندی جستجو",
+        "الگوریتم رتبه‌بندی"
+      ]
+    }
+  ],
+  "articles": {
+    "plak-sefr/plak1-4": [
+      "#پلاک_صفر",
+      "#سایت_مطب",
+      "#جستجوپذیری_محتوا",
+      "#رتبه_بندی_گوگل",
+      "#حضور_آنلاین_دندانپزشک"
+    ]
+  }
+}
