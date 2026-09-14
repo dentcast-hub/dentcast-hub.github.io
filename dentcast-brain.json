@@ -14646,5 +14646,37 @@
       "secondary": [],
       "subtopic": "peri-implant-health"
     }
+  },
+  {
+    "type": "notecast",
+    "id": "41",
+    "title": "مرور سیستماتیک اندوکراون (Endocrown)",
+    "caption": "خلاصه‌ای از دنت‌کست بر اساس مرور سیستماتیک Govare و Contrepois (۲۰۱۹)؛ بقای بالای اندوکراون روی مولرها، الگوی شکست‌ها و سهم دیس‌باند شدن، وضعیت پرمولرها و اینسایزورها، انتخاب بین کامپوزیت نانوفیل و لیتیوم دی‌سیلیکات، و نقش ارتفاع دیوارهٔ پالپ چمبر و فرول در طراحی حفره.",
+    "hashtags": [
+      "#نوت_کست",
+      "#اندوکراون",
+      "#دندان_اندوشده",
+      "#باندینگ",
+      "#انتخاب_متریال",
+      "#دوام_ترمیم"
+    ],
+    "keywords": [
+      "endocrown systematic review",
+      "molar survival rate",
+      "endocrown debonding",
+      "loss of adhesion",
+      "premolar endocrown",
+      "incisor endocrown",
+      "nanofilled composite resin",
+      "lithium disilicate glass-ceramic",
+      "pulp chamber wall height",
+      "ferrule effect"
+    ],
+    "url": "/notecast/episode-41.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "crowns-onlays"
+    }
   }
 ]

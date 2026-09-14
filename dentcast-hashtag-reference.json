@@ -671,7 +671,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 39,
+   "count": 40,
    "content_ids": [
     "notecast/episode-2",
     "notecast/episode-3",
@@ -711,7 +711,8 @@
     "notecast/episode-37",
     "notecast/episode-38",
     "notecast/episode-39",
-    "notecast/episode-40"
+    "notecast/episode-40",
+    "notecast/episode-41"
    ]
   },
   {
@@ -1127,6 +1128,49 @@
    ]
   },
   {
+   "key": "باندینگ",
+   "tag": "#باندینگ",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "bonding"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 27,
+   "content_ids": [
+    "episodes/episode-4",
+    "episodes/episode-5",
+    "episodes/episode-6",
+    "episodes/episode-11",
+    "episodes/episode-16",
+    "episodes/episode-36",
+    "episodes/episode-42",
+    "episodes/episode-43",
+    "episodes/episode-44",
+    "episodes/episode-101",
+    "dentai/dentai-4",
+    "dentai/dentai-5",
+    "notecast/episode-4",
+    "notecast/episode-5",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-16",
+    "notecast/episode-18",
+    "dentai/dentai-8",
+    "dentai/dentai-9",
+    "dentai/dentai-16",
+    "insight/insight-36",
+    "dentai/dentai-17",
+    "dentai/dentai-18",
+    "dentai/dentai-19",
+    "notecast/episode-36",
+    "notecast/episode-41"
+   ]
+  },
+  {
    "key": "زیرکونیا",
    "tag": "#زیرکونیا",
    "domain": "clinical",
@@ -1170,48 +1214,6 @@
     "dentai/dentai-26",
     "insight/insight-62",
     "sharehub/share-17"
-   ]
-  },
-  {
-   "key": "باندینگ",
-   "tag": "#باندینگ",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "bonding"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 26,
-   "content_ids": [
-    "episodes/episode-4",
-    "episodes/episode-5",
-    "episodes/episode-6",
-    "episodes/episode-11",
-    "episodes/episode-16",
-    "episodes/episode-36",
-    "episodes/episode-42",
-    "episodes/episode-43",
-    "episodes/episode-44",
-    "episodes/episode-101",
-    "dentai/dentai-4",
-    "dentai/dentai-5",
-    "notecast/episode-4",
-    "notecast/episode-5",
-    "notecast/episode-6",
-    "notecast/episode-7",
-    "notecast/episode-16",
-    "notecast/episode-18",
-    "dentai/dentai-8",
-    "dentai/dentai-9",
-    "dentai/dentai-16",
-    "insight/insight-36",
-    "dentai/dentai-17",
-    "dentai/dentai-18",
-    "dentai/dentai-19",
-    "notecast/episode-36"
    ]
   },
   {
@@ -1841,6 +1843,42 @@
    ]
   },
   {
+   "key": "انتخاب_متریال",
+   "tag": "#انتخاب_متریال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخاب جنس رستوریشن بر اساس شرایط کیس.",
+   "use_when": "مقاله بین متریال‌ها انتخاب کند.",
+   "aliases": [
+    "material selection",
+    "انتخاب ماده",
+    "انتخاب جنس رستوریشن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 18,
+   "content_ids": [
+    "episodes/episode-15",
+    "episodes/episode-18",
+    "episodes/episode-41",
+    "episodes/episode-69",
+    "episodes/episode-89",
+    "episodes/episode-98",
+    "episodes/episode-141",
+    "dentai/dentai-6",
+    "insight/insight-10",
+    "notecast/episode-8",
+    "notecast/episode-29",
+    "notecast/episode-30",
+    "insight/insight-27",
+    "insight/insight-42",
+    "episodes/episode-158",
+    "episodes/episode-159-1",
+    "insight/insight-57",
+    "notecast/episode-41"
+   ]
+  },
+  {
    "key": "سمان_رزینی",
    "tag": "#سمان_رزینی",
    "domain": "clinical",
@@ -1915,41 +1953,6 @@
     "notecast/episode-38",
     "chairside/chairside-32",
     "chairside/chairside-35"
-   ]
-  },
-  {
-   "key": "انتخاب_متریال",
-   "tag": "#انتخاب_متریال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخاب جنس رستوریشن بر اساس شرایط کیس.",
-   "use_when": "مقاله بین متریال‌ها انتخاب کند.",
-   "aliases": [
-    "material selection",
-    "انتخاب ماده",
-    "انتخاب جنس رستوریشن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 17,
-   "content_ids": [
-    "episodes/episode-15",
-    "episodes/episode-18",
-    "episodes/episode-41",
-    "episodes/episode-69",
-    "episodes/episode-89",
-    "episodes/episode-98",
-    "episodes/episode-141",
-    "dentai/dentai-6",
-    "insight/insight-10",
-    "notecast/episode-8",
-    "notecast/episode-29",
-    "notecast/episode-30",
-    "insight/insight-27",
-    "insight/insight-42",
-    "episodes/episode-158",
-    "episodes/episode-159-1",
-    "insight/insight-57"
    ]
   },
   {
@@ -2359,6 +2362,39 @@
    ]
   },
   {
+   "key": "دوام_ترمیم",
+   "tag": "#دوام_ترمیم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "دوامِ بلندمدتِ ترمیم و عواملی که آن را تعیین می‌کنند.",
+   "use_when": "مقاله بقا یا طولِ عمرِ ترمیم را بسنجد.",
+   "aliases": [
+    "دوام ترمیم",
+    "طول عمر سرامیک",
+    "دوام بلندمدت"
+   ],
+   "variants": [
+    "#بقای_ترمیم"
+   ],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-15",
+    "episodes/episode-41",
+    "episodes/episode-55",
+    "episodes/episode-56",
+    "episodes/episode-74",
+    "episodes/episode-89",
+    "dentai/dentai-5",
+    "notecast/episode-15",
+    "dentai/dentai-22",
+    "dentai/dentai-25",
+    "episodes/episode-159-1",
+    "metanotes/meta-14",
+    "notecast/episode-41"
+   ]
+  },
+  {
    "key": "اسکنر_داخل_دهانی",
    "tag": "#اسکنر_داخل_دهانی",
    "domain": "clinical",
@@ -2490,38 +2526,6 @@
    ]
   },
   {
-   "key": "دوام_ترمیم",
-   "tag": "#دوام_ترمیم",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "دوامِ بلندمدتِ ترمیم و عواملی که آن را تعیین می‌کنند.",
-   "use_when": "مقاله بقا یا طولِ عمرِ ترمیم را بسنجد.",
-   "aliases": [
-    "دوام ترمیم",
-    "طول عمر سرامیک",
-    "دوام بلندمدت"
-   ],
-   "variants": [
-    "#بقای_ترمیم"
-   ],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-15",
-    "episodes/episode-41",
-    "episodes/episode-55",
-    "episodes/episode-56",
-    "episodes/episode-74",
-    "episodes/episode-89",
-    "dentai/dentai-5",
-    "notecast/episode-15",
-    "dentai/dentai-22",
-    "dentai/dentai-25",
-    "episodes/episode-159-1",
-    "metanotes/meta-14"
-   ]
-  },
-  {
    "key": "سایش_دندان",
    "tag": "#سایش_دندان",
    "domain": "clinical",
@@ -2617,6 +2621,35 @@
     "insight/insight-54",
     "insight/insight-56",
     "chairside/chairside-37"
+   ]
+  },
+  {
+   "key": "دندان_اندوشده",
+   "tag": "#دندان_اندوشده",
+   "domain": null,
+   "words": 2,
+   "definition": "دندانی که درمان ریشه شده و بازسازی می‌خواهد.",
+   "use_when": "مقاله بازسازیِ دندان اندوشده را تعیین کند.",
+   "aliases": [
+    "endodontically treated teeth",
+    "دندان اندو شده",
+    "دندان عصب کشی شده"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-40",
+    "episodes/episode-41",
+    "episodes/episode-47",
+    "episodes/episode-122-3",
+    "insight/insight-4",
+    "insight/insight-39",
+    "dentai/dentai-27",
+    "insight/insight-64",
+    "sharehub/share-18",
+    "dentai/dentai-33",
+    "notecast/episode-41"
    ]
   },
   {
@@ -2867,34 +2900,6 @@
     "dentai/dentai-15",
     "chairside/chairside-9",
     "insight/insight-49"
-   ]
-  },
-  {
-   "key": "دندان_اندوشده",
-   "tag": "#دندان_اندوشده",
-   "domain": null,
-   "words": 2,
-   "definition": "دندانی که درمان ریشه شده و بازسازی می‌خواهد.",
-   "use_when": "مقاله بازسازیِ دندان اندوشده را تعیین کند.",
-   "aliases": [
-    "endodontically treated teeth",
-    "دندان اندو شده",
-    "دندان عصب کشی شده"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-40",
-    "episodes/episode-41",
-    "episodes/episode-47",
-    "episodes/episode-122-3",
-    "insight/insight-4",
-    "insight/insight-39",
-    "dentai/dentai-27",
-    "insight/insight-64",
-    "sharehub/share-18",
-    "dentai/dentai-33"
    ]
   },
   {
@@ -3341,6 +3346,31 @@
    ]
   },
   {
+   "key": "اندوکراون",
+   "tag": "#اندوکراون",
+   "domain": null,
+   "words": 1,
+   "definition": "روکشی که گیرش را از اتاقک پالپ می‌گیرد.",
+   "use_when": "مقاله اندوکراون را انتخاب یا مقایسه کند.",
+   "aliases": [
+    "endocrown",
+    "اندوکران"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-40",
+    "episodes/episode-41",
+    "insight/insight-39",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "sharehub/share-18",
+    "notecast/episode-40",
+    "notecast/episode-41"
+   ]
+  },
+  {
    "key": "اورلی",
    "tag": "#اورلی",
    "domain": null,
@@ -3584,30 +3614,6 @@
     "notecast/episode-33",
     "metanotes/meta-18",
     "sharehub/share-17"
-   ]
-  },
-  {
-   "key": "اندوکراون",
-   "tag": "#اندوکراون",
-   "domain": null,
-   "words": 1,
-   "definition": "روکشی که گیرش را از اتاقک پالپ می‌گیرد.",
-   "use_when": "مقاله اندوکراون را انتخاب یا مقایسه کند.",
-   "aliases": [
-    "endocrown",
-    "اندوکران"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-40",
-    "episodes/episode-41",
-    "insight/insight-39",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "sharehub/share-18",
-    "notecast/episode-40"
    ]
   },
   {
@@ -19970,18 +19976,18 @@
   "رستوریشن غیرمستقیم": "ترمیم غیرمستقیم",
   "digital impression": "قالبگیری دیجیتال",
   "بدون تحلیل استخوان": "zero تحلیل استخوان",
+  "marginal bone loss": "تحلیل استخوان کرستال",
   "tooth preservation": "حفظ دندان",
   "lithium disilicate": "لیتیوم دی سیلیکات",
   "اختلال گیجگاهی فکی": "tmd",
-  "marginal bone loss": "تحلیل استخوان کرستال",
   "occlusal appliance": "اسپلینت",
   "veneer preparation": "تراش لمینیت",
   "abutment selection": "انتخاب پایه",
   "minimally invasive": "حداقل تهاجم",
   "سلامت دهان و دندان": "سلامت دهان",
+  "کامپلیکیشن ایمپلنت": "عوارض ایمپلنت",
   "زیرکونیا ترنسلوسنت": "نسل زیرکونیا",
   "ثبات اولیه ایمپلنت": "ثبات اولیه",
-  "کامپلیکیشن ایمپلنت": "عوارض ایمپلنت",
   "critical appraisal": "تحلیل مطالعه",
   "تماس باز پروگزیمال": "تماس باز",
   "force distribution": "توزیع نیرو",
@@ -20181,8 +20187,8 @@
   "سلکتیو گرایندینگ": "تنظیم اکلوژن",
   "peri implantitis": "پری ایمپلنتیتیس",
   "افزایش بعد عمودی": "افزایش vd",
-  "لیتیوم دیسیلیکات": "لیتیوم دی سیلیکات",
   "استخوان مارژینال": "تحلیل استخوان کرستال",
+  "لیتیوم دیسیلیکات": "لیتیوم دی سیلیکات",
   "bonding protocol": "پروتکل باند",
   "بیومیمتیک ترمیمی": "ترمیم بیومیمتیک",
   "درمان با ایمپلنت": "درمان ایمپلنت",
@@ -20548,6 +20554,7 @@
   "طرز فکر بالینی": "تفکر اینسایت",
   "تورک بیش از حد": "تورک پیچ",
   "immediate load": "زمان بارگذاری ایمپلنت",
+  "مشکلات ایمپلنت": "عوارض ایمپلنت",
   "زیرکونیای شفاف": "نسل زیرکونیا",
   "food impaction": "گیر غذایی",
   "اسنپ آن اسمایل": "snap on smile",
@@ -20555,7 +20562,6 @@
   "posterior stop": "استاپ خلفی",
   "angled implant": "ایمپلنت زاویه دار",
   "تغییرات اسکلتی": "رشد فک",
-  "مشکلات ایمپلنت": "عوارض ایمپلنت",
   "ceramic veneer": "ونیر سرامیکی",
   "veneer removal": "debonding",
   "خارج کردن ونیر": "debonding",
@@ -20734,6 +20740,7 @@
   "ترمیم زیر لثه": "ترمیم ساب جینجیوال",
   "fact checking": "راستی آزمایی",
   "فیلور ایمپلنت": "شکست ایمپلنت",
+  "عارضه ایمپلنت": "عوارض ایمپلنت",
   "زیرکونیا شفاف": "نسل زیرکونیا",
   "پوسیدگی دندان": "پوسیدگی",
   "implant screw": "پیچ ایمپلنت",
@@ -20745,7 +20752,6 @@
   "resin coating": "رزین کوتینگ",
   "ceramic crown": "روکش سرامیکی",
   "کراون سرامیکی": "روکش سرامیکی",
-  "عارضه ایمپلنت": "عوارض ایمپلنت",
   "crown seating": "نشست روکش",
   "دی سمانتاسیون": "debonding",
   "نوت بوک ال ام": "notebooklm",
@@ -20936,12 +20942,12 @@
   "آنله سرامیکی": "آنله",
   "جدا شدن روکش": "افتادن روکش",
   "استتیک قدامی": "زیبایی قدامی",
+  "تحلیل کرستال": "تحلیل استخوان کرستال",
   "فضای بازسازی": "فضای رستوریتیو",
   "اینگات ایمکس": "لیتیوم دی سیلیکات",
   "پروفایل ظهور": "پروفایل امرجنس",
   "پروفایل خروج": "پروفایل امرجنس",
   "hydrofluoric": "اچ سرامیک",
-  "تحلیل کرستال": "تحلیل استخوان کرستال",
   "smile design": "طراحی لبخند",
   "دیزاین لبخند": "طراحی لبخند",
   "آنالیز لبخند": "طراحی لبخند",
@@ -21631,9 +21637,9 @@
   "پرپ لمینت": "تراش لمینیت",
   "بدون تراش": "درمان غیرتهاجمی",
   "قالب گیری": "قالبگیری",
+  "کانتیلیور": "کانتی لیور",
   "کدام سمان": "انتخاب سمان",
   "پانورامیک": "رادیوگرافی تشخیصی",
-  "کانتیلیور": "کانتی لیور",
   "guideline": "گایدلاین",
   "سیل محیطی": "psz",
   "اینتگریشن": "استئواینتگریشن",
@@ -21858,6 +21864,7 @@
   "all on 4": "ایمپلنت بیمار بی دندان",
   "all on 6": "ایمپلنت بیمار بی دندان",
   "پرپ روکش": "تراش روکش",
+  "کانتیلور": "کانتی لیور",
   "دی ام ای": "dme",
   "فول ماوس": "بازسازی کامل دهان",
   "بروکسیسم": "براکسیسم",
@@ -21868,7 +21875,6 @@
   "فیت روکش": "فیت پروتز",
   "عدم نشست": "نشست ناقص",
   "لبه روکش": "مارجین روکش",
-  "کانتیلور": "کانتی لیور",
   "وی دی او": "vdo",
   "بار کلیپ": "اتچمنت اوردنچر",
   "bar clip": "اتچمنت اوردنچر",

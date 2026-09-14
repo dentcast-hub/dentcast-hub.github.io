@@ -16275,5 +16275,215 @@
         "interpretation_fa": "با گروه کنترل و تعدیل رگرسیونی عوامل مخدوش‌کننده نشان می‌دهد کانتی‌لور به‌تنهایی تحلیل استخوان را به‌طور معنادار زیاد نمی‌کند. ریزش نمونه کامل توضیح داده شده و توان آماری هم گزارش شده است. در مقابل هیچ اظهارنظری دربارهٔ تعارض منافع یا منبع مالی ندارد، در حالی که همهٔ ایمپلنت‌ها از یک سازنده بوده‌اند."
       }
     ]
+  },
+  "notecast/episode-41": {
+    "scored_at": "2026-09-14",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Endocrowns: A systematic review",
+          "authors": "Govare N, Contrepois M",
+          "year": 2020,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/j.prosdent.2019.04.009"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR of 8 clinical studies and 33 in vitro studies, no meta-analysis (THERAPY SR/MA row, 100, via Step 2 routing for an SR of non-randomized studies)",
+          "evidence_quote": "The review was established in accordance with the Preferred Reporting Items for Systematic Reviews and Meta-analyses (PRISMA) guidelines."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "کل متن از عنوان تا فهرست منابع خوانده شد: Abstract، مقدمه، MATERIAL AND METHODS (PRISMA، استراتژی جست‌وجو، معیارهای ورود، غربالگری مستقل دو داور، استخراج داده)، RESULTS، DISCUSSION، CONCLUSIONS و بلوک نویسنده‌ی مسئول/کپی‌رایت. هیچ اشاره‌ای به PROSPERO، protocol یا registration وجود ندارد."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "An electronic search in PubMed, Scopus, and the Cochrane Library of articles published from January 1995 to June 2018 was conducted",
+              "note": "سه دیتابیس مجزا (PubMed، Scopus، Cochrane Library) به‌علاوه‌ی جست‌وجوی دستی در منابع مقالات انتخاب‌شده؛ آستانه‌ی ۳b-i (کمتر از دو دیتابیس) فعال نمی‌شود."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "low",
+              "evidence_quote": "The 15 articles excluded after reading the abstracts or the full text",
+              "note": "Table 3 (Exclusions) هر مطالعه‌ی کنارگذاشته‌شده را با نام نویسنده و سال نام می‌برد و برای هرکدام دلیل مشخص و قابل‌بررسی می‌آورد (مثلاً Nonmonolithic endocrown)، که مطابق ۳b-iii بند ۱ رتبه‌ی low است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "بخش MATERIAL AND METHODS کامل خوانده شد و مراحل آن فقط این‌هاست: PRISMA، استراتژی جست‌وجو، معیارهای ورود (Table 1)، غربالگری مستقل عنوان و چکیده توسط دو داور، بررسی متن کامل، حل اختلاف با بحث، و استخراج داده با reading grid (نوع مطالعه، تعداد دندان، نوع دندان، نوع پروتز، پارامترها). هیچ مرحله‌ی ارزیابی کیفیت یا ریسک سوگیری وجود ندارد؛ در RESULTS و DISCUSSION هم هیچ مطالعه‌ای از نظر کیفیت رتبه‌بندی نشده و واژه‌های quality، bias، risk of bias یا appraisal در هیچ‌جای متن نیامده."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "A high level of heterogeneity was observed in the methods adopted, the prostheses, the materials used, and the parameters studied.",
+              "note": "متن تصمیم سنتز خود را صریح بیان می‌کند: به دلیل ناهمگنی بالا سنتز کمّی انجام نشده و مطالعات بر اساس پارامترهای مشترک گروه‌بندی شده‌اند؛ یعنی دامنه به‌صورت ایجابی توصیف شده است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "کل متن از Abstract تا CONCLUSIONS خوانده شد؛ هیچ اشاره‌ای به سوگیری انتشار، فانل‌پلات یا آزمون Egger نیست. چون سنتز کمّی انجام نشده چنین ارزیابی‌ای موضوعیت هم ندارد، ولی طبق ۳a دامنه حذف نمی‌شود و تحت FULL_TEXT سکوت رتبه‌ی high می‌گیرد."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع در کل متن وجود ندارد",
+            "base_points": 8,
+            "points": 8,
+            "evidence_quote": "",
+            "note": "طبق پروتکل غیاب (۳b-ii) بلوک‌هایی که چنین بیانیه‌ای در آن‌ها می‌نشیند مستقیماً خوانده شد: پانویس وابستگی نویسندگان در پای صفحه‌ی اول (aPrivate practice, Bordeaux, France / bLecturer, Department of Prosthodontics…)، انتهای متن پس از CONCLUSIONS، و بلوک Corresponding author به‌همراه خط کپی‌رایت و DOI. هیچ بیانیه‌ی تعارض منافع یا منبع مالی در هیچ‌کدام نیست. جست‌وجو با درنظرگرفتن لیگاتورهای استخراج PDF (ﬂ/ﬁ) هم انجام شد و نتیجه‌ی صفر داد."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مرور نظام‌مند است، نه کارآزمایی."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study (مرور نظام‌مند نمونه‌ی اولیه‌ی خودش را ندارد)."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 3,
+            "evidence_quote": "only 4 of them exceeded 3 years. More long-term prospective studies are necessary",
+            "note": "مقاله ادعای بقا (survival) مطرح می‌کند و در بحث خود می‌گوید از میان مطالعات کلینیکی واردشده تنها ۴ مطالعه بیش از ۳ سال پیگیری داشته‌اند؛ طبق دامنه‌ی v2.3 مرور نظام‌مند از این ردیف معاف نیست."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۱۹ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "مرور نظام‌مندی با جست‌وجوی سه دیتابیس، غربالگری مستقل دو داور و فهرست نام‌به‌نام مطالعات کنارگذاشته‌شده است، اما روی ۴۱ مطالعه‌ی واردشده هیچ ارزیابی ریسک سوگیری انجام نداده و پروتکلش از پیش ثبت نشده. بیانیه‌ی تعارض منافع هم در متن نیست. ارزش بالینی آن در جمع‌بندی توصیفی الگوی شکست و معیارهای تراش است، نه در اعتبارسنجی کیفیت شواهد زیرین."
+      }
+    ]
+  },
+  "episodes/episode-41": {
+    "scored_at": "2026-09-14",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Endocrowns: A systematic review",
+          "authors": "Govare N, Contrepois M",
+          "year": 2020,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/j.prosdent.2019.04.009"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR of 8 clinical studies and 33 in vitro studies, no meta-analysis (THERAPY SR/MA row, 100, via Step 2 routing for an SR of non-randomized studies)",
+          "evidence_quote": "The review was established in accordance with the Preferred Reporting Items for Systematic Reviews and Meta-analyses (PRISMA) guidelines."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "کل متن از عنوان تا فهرست منابع خوانده شد: Abstract، مقدمه، MATERIAL AND METHODS (PRISMA، استراتژی جست‌وجو، معیارهای ورود، غربالگری مستقل دو داور، استخراج داده)، RESULTS، DISCUSSION، CONCLUSIONS و بلوک نویسنده‌ی مسئول/کپی‌رایت. هیچ اشاره‌ای به PROSPERO، protocol یا registration وجود ندارد."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "An electronic search in PubMed, Scopus, and the Cochrane Library of articles published from January 1995 to June 2018 was conducted",
+              "note": "سه دیتابیس مجزا (PubMed، Scopus، Cochrane Library) به‌علاوه‌ی جست‌وجوی دستی در منابع مقالات انتخاب‌شده؛ آستانه‌ی ۳b-i (کمتر از دو دیتابیس) فعال نمی‌شود."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "low",
+              "evidence_quote": "The 15 articles excluded after reading the abstracts or the full text",
+              "note": "Table 3 (Exclusions) هر مطالعه‌ی کنارگذاشته‌شده را با نام نویسنده و سال نام می‌برد و برای هرکدام دلیل مشخص و قابل‌بررسی می‌آورد (مثلاً Nonmonolithic endocrown)، که مطابق ۳b-iii بند ۱ رتبه‌ی low است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "بخش MATERIAL AND METHODS کامل خوانده شد و مراحل آن فقط این‌هاست: PRISMA، استراتژی جست‌وجو، معیارهای ورود (Table 1)، غربالگری مستقل عنوان و چکیده توسط دو داور، بررسی متن کامل، حل اختلاف با بحث، و استخراج داده با reading grid (نوع مطالعه، تعداد دندان، نوع دندان، نوع پروتز، پارامترها). هیچ مرحله‌ی ارزیابی کیفیت یا ریسک سوگیری وجود ندارد؛ در RESULTS و DISCUSSION هم هیچ مطالعه‌ای از نظر کیفیت رتبه‌بندی نشده و واژه‌های quality، bias، risk of bias یا appraisal در هیچ‌جای متن نیامده."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "A high level of heterogeneity was observed in the methods adopted, the prostheses, the materials used, and the parameters studied.",
+              "note": "متن تصمیم سنتز خود را صریح بیان می‌کند: به دلیل ناهمگنی بالا سنتز کمّی انجام نشده و مطالعات بر اساس پارامترهای مشترک گروه‌بندی شده‌اند؛ یعنی دامنه به‌صورت ایجابی توصیف شده است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "کل متن از Abstract تا CONCLUSIONS خوانده شد؛ هیچ اشاره‌ای به سوگیری انتشار، فانل‌پلات یا آزمون Egger نیست. چون سنتز کمّی انجام نشده چنین ارزیابی‌ای موضوعیت هم ندارد، ولی طبق ۳a دامنه حذف نمی‌شود و تحت FULL_TEXT سکوت رتبه‌ی high می‌گیرد."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع در کل متن وجود ندارد",
+            "base_points": 8,
+            "points": 8,
+            "evidence_quote": "",
+            "note": "طبق پروتکل غیاب (۳b-ii) بلوک‌هایی که چنین بیانیه‌ای در آن‌ها می‌نشیند مستقیماً خوانده شد: پانویس وابستگی نویسندگان در پای صفحه‌ی اول (aPrivate practice, Bordeaux, France / bLecturer, Department of Prosthodontics…)، انتهای متن پس از CONCLUSIONS، و بلوک Corresponding author به‌همراه خط کپی‌رایت و DOI. هیچ بیانیه‌ی تعارض منافع یا منبع مالی در هیچ‌کدام نیست. جست‌وجو با درنظرگرفتن لیگاتورهای استخراج PDF (ﬂ/ﬁ) هم انجام شد و نتیجه‌ی صفر داد."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مرور نظام‌مند است، نه کارآزمایی."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study (مرور نظام‌مند نمونه‌ی اولیه‌ی خودش را ندارد)."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 3,
+            "evidence_quote": "only 4 of them exceeded 3 years. More long-term prospective studies are necessary",
+            "note": "مقاله ادعای بقا (survival) مطرح می‌کند و در بحث خود می‌گوید از میان مطالعات کلینیکی واردشده تنها ۴ مطالعه بیش از ۳ سال پیگیری داشته‌اند؛ طبق دامنه‌ی v2.3 مرور نظام‌مند از این ردیف معاف نیست."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۱۹ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "مرور نظام‌مندی با جست‌وجوی سه دیتابیس، غربالگری مستقل دو داور و فهرست نام‌به‌نام مطالعات کنارگذاشته‌شده است، اما روی ۴۱ مطالعه‌ی واردشده هیچ ارزیابی ریسک سوگیری انجام نداده و پروتکلش از پیش ثبت نشده. بیانیه‌ی تعارض منافع هم در متن نیست. ارزش بالینی آن در جمع‌بندی توصیفی الگوی شکست و معیارهای تراش است، نه در اعتبارسنجی کیفیت شواهد زیرین."
+      }
+    ]
   }
 }
