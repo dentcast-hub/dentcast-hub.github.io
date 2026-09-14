@@ -14780,5 +14780,39 @@
       "secondary": [],
       "subtopic": "impression"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-74",
+    "title": "محیط خشک برای اسکن: نقش رول پنبه در حذف رطوبت، نه فقط کنترل بزاق",
+    "caption": "برای اسکن داخل‌دهانی، رطوبت بعد از پوار زدن دوباره از زیر زبان و اطراف دندان به سطح برمی‌گردد و ساکشن هم آن را کامل جمع نمی‌کند. رول پنبه اینجا نه برای کنترل زبان و بزاق، بلکه به‌عنوان مقصدِ رطوبت به کار می‌رود: پوار رطوبت را به سمت رول می‌راند و رول جذبش می‌کند، پس رطوبت از محیط حذف می‌شود نه جابه‌جا. رول بلافاصله قبل از اسکن برداشته می‌شود تا سطح دندان و مارجین‌ها هنگام اسکن واقعاً خشک باشند.",
+    "hashtags": [
+      "#اینسایت",
+      "#کنترل_رطوبت",
+      "#رول_پنبه",
+      "#دقت_اسکن",
+      "#اسکنر_داخل_دهانی",
+      "#ایزولاسیون"
+    ],
+    "keywords": [
+      "dry field intraoral scanning",
+      "cotton roll moisture removal",
+      "air drying tooth surface before scan",
+      "moisture recurrence sublingual saliva",
+      "suction limitation moisture control",
+      "remove cotton roll before scanning",
+      "margin capture accuracy dry surface",
+      "محیط خشک برای اسکن",
+      "رول پنبه و حذف رطوبت",
+      "پوار زدن قبل از اسکن",
+      "بازگشت رطوبت از زیر زبان",
+      "دقت ثبت مارجین در اسکن"
+    ],
+    "page_url": "/insight/insight-74.html",
+    "pillar": {
+      "primary": "digital",
+      "secondary": [],
+      "subtopic": "intraoral-scanning"
+    }
   }
 ]
