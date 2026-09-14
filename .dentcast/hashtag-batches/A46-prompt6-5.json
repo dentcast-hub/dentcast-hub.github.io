@@ -1,0 +1,49 @@
+{
+  "type": "promptologist",
+  "note": "Publish of dentai/promptologist/prompt6-5 (پرامپتولوژیست فصل ۶ قسمت ۵ — کارِ بزرگ‌تر از یک گفت‌وگو). Mints two concepts the library genuinely lacked. #سند_هندآف is the part's own subject: the short document written at the end of one conversation so the next one — or a cheaper model — can continue without re-pasting everything; --simulate «سند تحویل کار» returned only #تحویل_روکش and #روکش, i.e. nothing in this domain. #پنجره_کانتکست is the ceiling that makes the whole problem exist; --simulate «پنجره کانتکست» cleared nothing at all, even though قسمت ۱ of this chapter already discussed it. Every other tag reuses an existing canonical form — notably #شکستن_کار (minted for prompt4-4, aliases already carry «تقسیم کار») and #Markdown (minted for prompt6-2). No #انتخاب_مدل was minted: model routing is one section of this part, not what the part resolves.",
+  "concepts": [
+    {
+      "tag": "#سند_هندآف",
+      "domain": "ai",
+      "definition": "سندِ کوتاهی که آخرِ یک گفت‌وگو نوشته می‌شود تا گفت‌وگوی بعدی (یا مدلی دیگر) بتواند کار را ادامه بدهد — هدف، تصمیم‌های گرفته‌شده با دلیلشان، قواعدِ تثبیت‌شده، وضعِ فعلی، و آنچه نباید دوباره انجام شود.",
+      "use_when": "مطلب درباره‌ی رد کردنِ وضعیتِ یک کار از گفت‌وگویی به گفت‌وگوی بعد یا از مدلی به مدلِ دیگر باشد، نه صرفاً درباره‌ی خلاصه‌کردنِ یک گفت‌وگو.",
+      "aliases": [
+        "handoff",
+        "handoff document",
+        "هندآف",
+        "سند تحویل",
+        "تحویل کار به گفتگوی بعدی",
+        "سند ادامه کار"
+      ]
+    },
+    {
+      "tag": "#پنجره_کانتکست",
+      "domain": "ai",
+      "definition": "مقدار اطلاعاتی که یک مدل زبانی می‌تواند در یک گفت‌وگو هم‌زمان جلوی چشم داشته باشد؛ سقفی که با پر شدنش مدل بی‌هیچ هشداری قاعده‌ها و تصمیم‌های قبلی را از دست می‌دهد.",
+      "use_when": "مطلب درباره‌ی محدودیتِ حافظه‌ی یک گفت‌وگو و نشانه‌های رسیدن به آن سقف باشد.",
+      "aliases": [
+        "context window",
+        "پنجره کانتکست",
+        "پنجره متن",
+        "سقف گفتگو",
+        "محدودیت حافظه مدل",
+        "context length"
+      ]
+    }
+  ],
+  "articles": {
+    "dentai/promptologist/prompt6-5": [
+      "#پرامپتولوژیست",
+      "#هوش_مصنوعی",
+      "#سواد_هوش_مصنوعی",
+      "#AI_Literacy",
+      "#مدل_زبانی",
+      "#LLM",
+      "#شکستن_کار",
+      "#پنجره_کانتکست",
+      "#سند_هندآف",
+      "#Markdown",
+      "#گفتگو_با_هوش_مصنوعی"
+    ]
+  }
+}

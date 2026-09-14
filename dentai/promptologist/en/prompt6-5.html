@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work Bigger Than One Conversation | Promptologist | DentCast</title>
+  <meta name="description" content="Chapter 6, Part 5: Every conversation has a ceiling, and at that ceiling quality drops with no warning at all &mdash; a rule the model forgets, a decision it contradicts, one paper&rsquo;s finding written under another paper&rsquo;s name. This part breaks large work into finished pieces, explains why papers should be handed over one at a time rather than all at once, and introduces the handoff document: the thing that passes from one conversation to the next &mdash; and even from an expensive model to a cheap one. The chapter&rsquo;s summary is here too.">
+  <link rel="canonical" href="https://dentcast.org/dentai/promptologist/en/prompt6-5.html">
+  <meta name="author" content="Dr. Foad Shahabian">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="Work Bigger Than One Conversation | DentCast">
+  <meta property="og:description" content="Chapter 6, Part 5: Every conversation has a ceiling, and at that ceiling quality drops with no warning at all &mdash; a rule the model forgets, a decision it contradicts, one paper&rsquo;s finding written under another paper&rsquo;s name. This part breaks large work into finished pieces, explains why papers should be handed over one at a time rather than all at once, and introduces the handoff document: the thing that passes from one conversation to the next &mdash; and even from an expensive model to a cheap one. The chapter&rsquo;s summary is here too.">
+  <meta property="og:url" content="https://dentcast.org/dentai/promptologist/en/prompt6-5.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Work Bigger Than One Conversation | DentCast">
+  <meta name="twitter:description" content="Chapter 6, Part 5: Every conversation has a ceiling, and quality drops there with no warning. How to break large work into finished pieces, why papers go in one at a time, and the handoff document that carries the work to the next conversation.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/promptologist/en/prompt6-5.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/dentai/promptologist/en/prompt6-5.html"
+      },
+      "url": "https://dentcast.org/dentai/promptologist/en/prompt6-5.html",
+      "headline": "Work Bigger Than One Conversation",
+      "description": "Chapter 6, Part 5: Every conversation has a ceiling, and at that ceiling quality drops with no warning at all — a rule the model forgets, a decision it contradicts, one paper’s finding written under another paper’s name. This part breaks large work into finished pieces, explains why papers should be handed over one at a time rather than all at once, and introduces the handoff document: the thing that passes from one conversation to the next — and even from an expensive model to a cheap one. The chapter’s summary is here too.",
+      "datePublished": "2026-09-14",
+      "dateModified": "2026-09-14",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "Promptologist",
+        "url": "https://dentcast.org/dentai/promptologist"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Promptologist",
+          "item": "https://dentcast.org/dentai/promptologist"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Work Bigger Than One Conversation",
+          "item": "https://dentcast.org/dentai/promptologist/en/prompt6-5.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css?v=3">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-left:4px solid var(--ac);padding-left:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-fig{display:block;max-width:18.75rem;width:100%;height:auto;margin:1.125rem auto;border:1px solid var(--card-border);border-radius:0.875rem;box-shadow:var(--card-sh);}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+  </style>
+</head>
+<body>
+
+<!-- ── TOP BAR (English chrome, cloned from metanotes/en/meta-1.html) ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT (Promptologist structure, translated, LTR) ── -->
+<main class="article-content-wrap ep-page">
+  <a href="/dentai/promptologist/" class="ep-back">&#8592; Back to Promptologist</a>
+
+  <!-- 🌐 Persian Version (SEO-friendly language toggle) -->
+  <a class="lang-btn" href="../prompt6-5.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">Season 6 · Part 5</div>
+      <h1 class="ep-title">Work Bigger Than One Conversation</h1>
+      <div class="ep-meta">
+        <span>&#9201; 13 min read</span>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">This Part</h2>
+      <div class="ep-caption"><p>In <a href="prompt6-1.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Part 1</a> I said that every conversation has a ceiling, and I promised we would come back to it properly at the end of the chapter. Here we are.</p><p>Everything we have said so far was about work that finishes inside a single conversation: summarize one paper, write one text for a patient, check one claim against its source. But a lot of real work is not shaped like that. Say you want to write ten educational texts for your practice&rsquo;s website, or prepare an hour-long presentation, or review thirty papers. That work takes several days, and several days means several separate conversations.</p><p><strong>First, what actually happens at the ceiling</strong></p><p>You start the conversation and it goes well. You hand over papers, you make decisions, you revise. And then somewhere, with no signal at all, the quality drops.</p><p>These are the signs: the model forgets a rule you set at the start. It contradicts a decision the two of you made an hour ago, as if nothing had happened. It rewrites something it had already written. Or worse, it writes one paper&rsquo;s finding under another paper&rsquo;s name.</p><p>And none of it arrives with a warning. The tone is the same confident tone as the first hour. You are the one who has to notice that this conversation is no longer the conversation you started.</p><p>The practical rule is simple: one conversation, one job. When the job changes, change the conversation too. And if a job is so large that it does not fit in one conversation at all, break it into pieces.</p><p><strong>How to break it up</strong></p><p>Each piece has to be a finished thing in itself, not half a job. That means it has a beginning, a body and an ending, and that something comes out of it that is usable on its own. A ten-part series means ten conversations, each one a complete part you could publish that same day. A review of thirty papers means, say, five conversations, six papers each with its own summary, plus one final conversation that puts those five summaries side by side.</p><p>The order matters too. First, in one conversation, lay out the plan for the whole job and build one piece all the way through so you have a pattern to work from &mdash; the same thing we called a mockup in <a href="prompt6-4.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">the previous part</a>. Then build each following piece in its own conversation.</p><p><strong>Lengthwise, not crosswise</strong></p><p>Let me add one small thing in parentheses before explaining how to break the work up, because it is an important idea and method, and then I will go on with how the work is divided.</p><p>Suppose you have ten papers and you want each of them summarized in one conversation. There are two ways to say it. The first: &ldquo;Read these ten papers and summarize each one.&rdquo; The second: &ldquo;Read the first paper, write its summary and save it, then move on to the second.&rdquo; I always say the second.</p><p>The reason is that when ten papers sit in front of the model at once, it does not give all of them the same attention. The ones in the middle get seen less, and worse, the outputs stick to each other: the third paper&rsquo;s finding gets written under the seventh paper&rsquo;s name. The same mixing I mentioned above, except from the very beginning.</p><p>With the second method each paper gets the model&rsquo;s full attention, not a tenth of it. After each paper a finished output is saved that no longer depends on the model&rsquo;s memory; if things fall apart at the eighth paper, the previous seven are intact. And if there is an error somewhere, you know which paper it belongs to.</p><p>You lose exactly one thing: comparison. When the model reads the fourth paper, it no longer has the first one in front of it. The answer to that is not to go back to the first method. The answer is one final pass &mdash; not over the papers themselves, but over the summaries: hand over the ten short summaries at once and ask it to compare them now. Ten summaries fit comfortably in one conversation; ten papers do not.</p><p>So whether you break a job across several conversations or hand the papers over one at a time inside a single conversation, the logic is the same: every piece separate, every piece with a saved output, and one final pass to put them side by side.</p><p>Another way of breaking the discussion up is into separate conversations, so that we do not hit the ceiling inside one of them.</p><p>But this very separation creates a new problem, and that problem is bigger than the ceiling problem.</p><p><strong>The new problem: the next conversation knows nothing</strong></p><p>When you start the third part in a fresh conversation, the model does not know what the first and second parts were. It does not know which tone you chose, how you write the terminology, which paper you set aside and why. It starts from zero.</p><p>The bad solution is to paste in the text of all the previous parts again. Which means you have filled half the ceiling from the very start and you reach the same problem sooner.</p><p>The solution I use myself is something else, and I took its name from a familiar job. When your shift ends and you hand a patient over to the next colleague, you do not recount the entire history; you tell them what they need in order to continue. In English this handing over is called a handoff. It is the same thing here, except the next colleague is the next conversation.</p><p><strong>What a handoff document is</strong></p><p>At the end of every conversation, before closing it, I ask the model to write a document for the next conversation. Not a summary of what was said, but the things the next person needs in order to continue. Usually these five:</p><p>The goal of the whole job in one paragraph. The decisions that were made, along with their reasons, because a decision without a reason gets reopened in the next conversation. The style rules and terminology that have been settled. The current state: what is done and what is left. And the things that explicitly must not be done again.</p><p>Then I read it myself. Do not skip this step. The document was written by the model, and as we saw in <a href="prompt6-2.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Part 2</a> and Part 3, it may have dropped a decision. But its more common error is this: it records something that was only its own suggestion as if it were your decision. If you do not catch it, in the next conversation it gets carried out as a rule of yours.</p><p>I ask the model to hand the document over in Markdown, the format we talked about in Part 2. A simple file you can put wherever you want.</p><p><strong>Where the document lives</strong></p><p>You have a few options here and you choose depending on the job.</p><p>The simplest: paste the document at the start of the next conversation and say continue from here. For a job that runs three or four conversations, that is enough.</p><p>If the job is longer: put the document in the project knowledge you built in Part 2, so every new conversation has it on its own. This is where the first two parts of the chapter connect to each other.</p><p>And if the job lives somewhere outside the chat &mdash; the files of your practice&rsquo;s website, say, or the folder where all your educational texts are &mdash; put the document right there beside the work itself. That is what I do for my own site; the handoff document stays next to the site&rsquo;s files, and every tool that works on those files reads it first.</p><p><strong>Another use that lowers your cost</strong></p><p>The handoff document is not only for passing work from one conversation to the next. It also works for passing work from one model to another.</p><p>The more expensive, slower models are better at thinking and deciding, and the cheaper, faster ones are better at carrying out work that has already been made clear. So I do the job in two stages: with the more expensive model I lay out the plan, make the decisions, and at the end ask it to write a precise handoff document. Then I give that document to the cheaper model and tell it to execute. The expensive model writes the structure of the ten educational texts and the rules for all of them, say, and the cheap model builds the ten one by one.</p><p>This works because the hard part of the job &mdash; the thinking and the deciding &mdash; has been done once and now sits in the document. What is left is following instructions, and you do not need the expensive model for that.</p><p><strong>A real example: this book</strong></p><p>This book was written exactly this way. Each chapter was several conversations, and at the end of each one a handoff document was written: what we decided, what we set aside for later chapters, how we write the terminology. The next chapter started from that document.</p><p>And the same error I mentioned above happened here too. Several times the document recorded something I had not said and the model had concluded on its own. Because I read the document, I caught them. If I had not read it, they would have turned into rules of the book.</p><p><strong>The chapter in summary</strong></p><p>It was five parts, and if you put them one after another, a way of working comes out:</p><p>Know which tool you are working with and why. Tie the model to your own sources. Run the output through the <a href="prompt6-3.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">sieve</a> so your judgement collects on a few specific points. Before building, open the problem. And break large work so that each piece fits in one conversation, and from each piece to the next, a document passes from hand to hand.</p><p>None of this makes the model more correct. All of it makes its errors less able to stay hidden, and lets you see them sooner. The same first principle of the book: a companion to thought, not a substitute for judgement.</p><p><strong>What the next chapter is</strong></p><p>So far the book has left one thing out, and left it out deliberately: the patient.</p><p>In every example in this chapter there was a paper, a file, an educational text. But when you put a patient&rsquo;s record into the project knowledge, or show the model a radiograph, or send a case summary out for a consultation, that information leaves your practice and reaches the server of a company you do not know. And if one day a text you wrote with a model carries an error that harms a patient, the model does not answer for it. You do.</p><p>The final chapter is about exactly those two things: what you must not give the model, and who is responsible when the model&rsquo;s output reaches a patient. And there we come back to something I pointed at several times in this chapter and passed over: imaginary guarantees. A model that corrects itself and leaves you feeling its work has been checked; two models that agree and leave you feeling it must therefore be right; and a number the model gives you about its own confidence. For instance, when you tell the model to answer only if it is 80 percent sure, and it says it is 92 percent sure. All three do the same thing: they create the feeling that someone other than you is responsible. There we will see that no one is.</p></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Keywords</h2>
+      <div class="ep-chips"><span class="ep-chip">The Ceiling of a Conversation and the Unannounced Drop in Quality</span><span class="ep-chip">The Rule of One Conversation, One Job</span><span class="ep-chip">Breaking Large Work Into Finished Pieces</span><span class="ep-chip">Lengthwise Not Crosswise: Hand the Papers Over One at a Time</span><span class="ep-chip">The Handoff Document for the Next Conversation</span><span class="ep-chip">Passing Work From an Expensive Model to a Cheap One</span><span class="ep-chip">Chapter 6 in Summary</span><span class="ep-chip">Large Language Model (LLM)</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Tags</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#Promptologist</span><span class="ep-hashtag">#AI</span><span class="ep-hashtag">#AILiteracy</span><span class="ep-hashtag">#LanguageModel</span><span class="ep-hashtag">#LLM</span><span class="ep-hashtag">#TaskDecomposition</span><span class="ep-hashtag">#ContextWindow</span><span class="ep-hashtag">#HandoffDocument</span><span class="ep-hashtag">#Markdown</span><span class="ep-hashtag">#AIConversation</span></div>
+    </div>
+  </div>
+  <!-- Series prev/next (en tier). Targets are en counterparts only.
+       Previous part en page (en/prompt6-4.html) exists, so the previous
+       slot links to it; there is no next part yet, so the next slot stays a
+       disabled placeholder. -->
+  <div class="ep-nav">
+    <a href="prompt6-4.html" class="ep-nav-btn">&#8592; Previous Part</a>
+    <span class="ep-nav-btn ep-nav-empty">Next Part &#8594;</span>
+  </div>
+</main>
+
+<script src="/global-search.js?v=10" defer></script>
+<script src="/dc-nav.js?v=177" defer></script>
+</body>
+</html>
