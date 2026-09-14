@@ -290,14 +290,28 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ highlight: res.rows[0] });
   });
 
-  // DELETE /highlights/:id -> delete (card_state cascades) + log (owner only)
+  // DELETE /highlights/:id -> SOFT delete + log (owner only).
+  //
+  // A soft delete since migration 0066: the row stays in `highlights_all`
+  // with `deleted_at` set and simply leaves the `highlights` view. Nothing
+  // cascades — the Leitner card keeps its box, every collection pin stays
+  // (hidden while the highlight is hidden), and the id survives — which is
+  // what lets the workbench's undo put the SAME highlight back rather than a
+  // fresh copy of it. Written against `highlights_all` on purpose: the view
+  // only shows live rows, and the row must be found to be marked.
+  //
+  // `and deleted_at is null` makes a repeat delete a 404 rather than a second
+  // timestamp, so an undo stack that replays «delete» twice cannot move the
+  // deletion time — and cannot log the event twice either.
   app.delete('/highlights/:id', async (request, reply) => {
     const { id } = request.params as { id: string };
     const userId = request.user!.id;
 
     const deleted = await withTransaction(async (client) => {
       const res = await client.query<{ content_id: string }>(
-        `delete from highlights where id = $1 and user_id = $2 returning content_id`,
+        `update highlights_all set deleted_at = now()
+          where id = $1 and user_id = $2 and deleted_at is null
+          returning content_id`,
         [id, userId],
       );
       if (res.rowCount === 0) return null;
@@ -307,5 +321,41 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
 
     if (!deleted) return reply.code(404).send({ error: 'not_found' });
     return reply.send({ ok: true });
+  });
+
+  // POST /highlights/:id/restore -> undo a delete (owner only).
+  //
+  // The inverse of the route above and the reason it is soft: clears
+  // `deleted_at` and returns the row in the same shape POST/PATCH return it,
+  // so the workbench re-anchors it exactly as it draws any other highlight.
+  // Card and pins were never touched, so nothing here has to put them back.
+  //
+  // Deliberately NOT a `highlight_created` event: the highlight was created
+  // once, and that row is still in `user_activity`. Re-logging it would pay
+  // XP and a streak day for pressing ↶, which is the loop score.ts rules out
+  // for every one-second act. `highlight_restored` is logged so the audit
+  // trail says what happened, and no scorer reads it.
+  //
+  // A live highlight (nothing to restore) is a 404, not a no-op 200: the
+  // client's undo stack advances only on success, and "restored" for a row
+  // that was never deleted would let the stack drift from the server.
+  app.post('/highlights/:id/restore', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const userId = request.user!.id;
+
+    const restored = await withTransaction(async (client) => {
+      const res = await client.query<HighlightRow>(
+        `update highlights_all set deleted_at = null
+          where id = $1 and user_id = $2 and deleted_at is not null
+          returning ${SELECT_COLS}`,
+        [id, userId],
+      );
+      if (res.rowCount === 0) return null;
+      await recordActivity(userId, 'highlight_restored', res.rows[0].content_id, { highlight_id: id }, client);
+      return res.rows[0];
+    });
+
+    if (!restored) return reply.code(404).send({ error: 'not_found' });
+    return reply.send({ highlight: restored });
   });
 }

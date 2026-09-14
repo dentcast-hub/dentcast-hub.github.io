@@ -28,7 +28,7 @@ const Pptxgen = (
 import { requireAuth } from '../middleware/auth.js';
 import { requirePremium } from '../middleware/require-premium.js';
 import { pool } from '../db.js';
-import { ITEM_SELECT, resolveItem, type ItemRow } from './collections.js';
+import { ITEM_SELECT, PIN_VISIBLE, resolveItem, type ItemRow } from './collections.js';
 import { getContentInfo } from '../content-index.js';
 
 // Board export: a Word handout (docx) or a slide skeleton (pptx) built
@@ -291,7 +291,7 @@ export async function collectionExportRoutes(app: FastifyInstance): Promise<void
     const board = col.rows[0];
 
     const itemsRes = await pool.query<ItemRow>(
-      `${ITEM_SELECT} where ci.collection_id = $1
+      `${ITEM_SELECT} where ci.collection_id = $1 and ${PIN_VISIBLE}
        order by ci.position asc nulls last, ci.created_at desc`,
       [id],
     );

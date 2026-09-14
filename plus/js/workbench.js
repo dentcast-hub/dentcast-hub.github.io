@@ -1,11 +1,57 @@
 // Study mode controller. A mode of the article page, not a separate page. It
 // inherits the site's typography (styles live in plus.css and reference the
 // site's own CSS variables). Never auto-enters; the caller decides when.
-import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=83';
-import { api } from './api.js?v=83';
-import { PALETTE, LABELS, SS_MODE } from './config.js?v=83';
-import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=83';
-import { openCollectionPicker } from './collections.js?v=83';
+import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=84';
+import { api } from './api.js?v=84';
+import { PALETTE, LABELS, SS_MODE } from './config.js?v=84';
+import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=84';
+import { openCollectionPicker } from './collections.js?v=84';
+
+/**
+ * The workbench's history — undo/redo over SERVER writes.
+ *
+ * Every act in میز کار is a request the moment it happens (POST / PATCH /
+ * DELETE), so this is not a DOM stack: each entry carries the two inverse
+ * calls, `undo` and `redo`, and the entry moves from `done` to `undone`
+ * only AFTER the call it ran has resolved. A refused call leaves the pointer
+ * where it was — otherwise the stack would drift from the server and every
+ * later undo would run against a state the server never had. `busy` makes a
+ * double tap on ↶ wait for the first to settle rather than race it.
+ *
+ * Any new act empties `undone`: history does not branch, and the mockup
+ * that led here (.dentcast/highlight-undo-redo-mockup.html, §1) explains
+ * that rule to the reader before anything else.
+ *
+ * Per article, per session: it is cleared on exit() and never persisted —
+ * a stack in sessionStorage would hold ids the server may have moved on
+ * from, and an id-shaped promise that fails on the first press is worse
+ * than an empty stack.
+ */
+export class History {
+  constructor() { this.done = []; this.undone = []; this.busy = false; }
+  canUndo() { return this.done.length > 0 && !this.busy; }
+  canRedo() { return this.undone.length > 0 && !this.busy; }
+  push(entry) { this.done.push(entry); this.undone.length = 0; }
+  clear() { this.done.length = 0; this.undone.length = 0; }
+  async undo() {
+    if (!this.canUndo()) return null;
+    const entry = this.done[this.done.length - 1];
+    this.busy = true;
+    try { await entry.undo(); } finally { this.busy = false; }
+    this.done.pop(); this.undone.push(entry);
+    return entry;
+  }
+  async redo() {
+    if (!this.canRedo()) return null;
+    const entry = this.undone[this.undone.length - 1];
+    this.busy = true;
+    try { await entry.redo(); } finally { this.busy = false; }
+    this.undone.pop(); this.done.push(entry);
+    return entry;
+  }
+}
+
+const UNDO_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 7H7.5a4.5 4.5 0 100 9H12"/><path d="M10 4l-3 3 3 3"/></svg>';
 
 export class Workbench {
   // onChange fires on EVERY enter/exit, including the toolbar's own ✕ خروج. The
@@ -30,6 +76,16 @@ export class Workbench {
     this.failed = []; // highlights whose anchor could not be found
     this.ui = {};
     this.loaded = false;
+    this.history = new History();
+    // The selected highlight (`_currentHl`) is what یادداشت / کالکشن / حذف act
+    // on, and it is set two ways: a mark just CREATED becomes current (so
+    // «highlight, then press یادداشت» keeps working), or a mark is TAPPED.
+    // `_currentBy` remembers which, because the two mean different things to
+    // the colour and label controls: after a tap they EDIT the selected mark
+    // (a change the stack can undo); after a create they keep their old job
+    // of setting the default for the NEXT mark — otherwise «highlight A, then
+    // press green meaning the next one» would silently repaint A.
+    this._currentBy = null;
   }
 
   isActive() { return this.active; }
@@ -71,15 +127,35 @@ export class Workbench {
     this.ui = {};
     if (this._onSelect) document.removeEventListener('mouseup', this._onSelect);
     if (this._onSelectTouch) document.removeEventListener('touchend', this._onSelectTouch);
+    if (this._onKey) { document.removeEventListener('keydown', this._onKey); this._onKey = null; }
+    if (this._onRootClick) { this.root.removeEventListener('click', this._onRootClick); this._onRootClick = null; }
     if (this._onResize) { window.removeEventListener('resize', this._onResize); this._onResize = null; }
     this._unbindViewport();
     document.body.style.removeProperty('--dcp-editor-dock');
+    this.history.clear();
+    this._currentHl = null;
+    this._currentBy = null;
   }
 
   // --- toolbar --------------------------------------------------------------
   _buildToolbar() {
-    // Static instruction line (top of the toolbar); the text never changes.
-    const hint = el('div', { class: 'dcp-wb-hint' }, 'بعد از انتخاب متن، ابزار را مشخص کنید');
+    // Top row: ↶ ↷ at the start, the instruction line centred, an empty cell
+    // at the end to keep it centred. The line's text follows the selection
+    // state (see _refreshToolbar) so the reader is told what the selected-
+    // highlight buttons will act on.
+    const hint = el('div', { class: 'dcp-wb-hint', 'aria-live': 'polite' }, 'بعد از انتخاب متن، ابزار را مشخص کنید');
+    const undoBtn = el('button', { class: 'dcp-ubtn dcp-ubtn-undo', type: 'button', title: 'بازگردانی (Ctrl+Z)', 'aria-label': 'بازگردانی', onclick: () => this.undo() });
+    undoBtn.innerHTML = UNDO_SVG;
+    const redoBtn = el('button', { class: 'dcp-ubtn dcp-ubtn-redo', type: 'button', title: 'ازنو (Ctrl+Shift+Z)', 'aria-label': 'ازنو', onclick: () => this.redo() });
+    redoBtn.innerHTML = UNDO_SVG;
+    const undoCount = el('span', { class: 'dcp-ubtn-count' }, '');
+    const redoCount = el('span', { class: 'dcp-ubtn-count' }, '');
+    undoBtn.appendChild(undoCount); redoBtn.appendChild(redoCount);
+    const top = el('div', { class: 'dcp-wb-top' }, [
+      el('span', { class: 'dcp-hist' }, [undoBtn, redoBtn]),
+      hint,
+      el('span'),
+    ]);
 
     // Fire the action on pointerdown (not click) with preventDefault, so ONE tap
     // applies even while text is selected: mobile otherwise spends the first tap
@@ -107,14 +183,22 @@ export class Workbench {
         onclick: () => this._toggleLabel(l.key),
       }, l.fa));
 
+    // The three buttons that act on the SELECTED highlight, together, and
+    // disabled until one is selected — the disabled state is what says «pick
+    // one first», which is why the old «افزودنِ هایلایت به کالکشن» (a whole
+    // toolbar row on a phone) can be just «کالکشن» now.
     const notesToggle = el('button', { class: 'dcp-tool', type: 'button', title: 'یادداشت روی هایلایت انتخاب‌شده', onclick: () => this._noteButton() }, '📝 یادداشت');
-    const collectionBtn = el('button', { class: 'dcp-tool', type: 'button', onclick: () => this._collectionButton() }, '🗂 افزودنِ هایلایت به کالکشن');
+    const collectionBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'افزودنِ هایلایتِ انتخاب‌شده به کالکشن', onclick: () => this._collectionButton() }, '🗂 کالکشن');
     const collectionCap = el('p', { class: 'dcp-wb-cap' }, 'هایلایتِ انتخاب‌شده (آخرین موردی که ساختی یا رویش کلیک کردی) به یکی از کالکشن‌های خودت اضافه می‌شود.');
     collectionCap.hidden = true;
     const collectionInfo = el('button', {
       class: 'dcp-wb-info', type: 'button', 'aria-label': 'کالکشن یعنی چی؟', title: 'کالکشن یعنی چی؟',
       onclick: () => { collectionCap.hidden = !collectionCap.hidden; this._syncDock(); },
     }, '؟');
+    // No confirm dialog on purpose: the دفترچه confirms because it has no undo;
+    // here ↶ (and the toast's own «بازگردانی») IS the confirmation, and a
+    // better one, because it comes after the act instead of in front of it.
+    const deleteBtn = el('button', { class: 'dcp-tool dcp-tool-danger', type: 'button', title: 'حذف هایلایت انتخاب‌شده', onclick: () => this._deleteButton() }, '🗑 حذف');
     const exitBtn = el('button', { class: 'dcp-tool dcp-exit', type: 'button', onclick: () => this.exit() }, '✕ خروج');
 
     const group = (label, items) => el('span', { class: 'dcp-tool-group' }, [
@@ -123,18 +207,22 @@ export class Workbench {
     ]);
 
     const bar = el('div', { class: 'dcp-toolbar', role: 'toolbar', 'aria-label': 'ابزار میز کار' }, [
-      hint,
-      group('رنگ هایلایت', swatches),
+      top,
+      group('رنگ', swatches),
       group('ابزار', [highlightBtn, underlineBtn, clozeBtn]),
       group('برچسب', labelChips),
-      el('span', { class: 'dcp-tool-group' }, [notesToggle]),
-      el('span', { class: 'dcp-tool-group' }, [collectionBtn, collectionInfo]),
+      el('span', { class: 'dcp-tool-group' }, [notesToggle, collectionBtn, collectionInfo, deleteBtn]),
       exitBtn,
       collectionCap,
     ]);
     document.body.appendChild(bar);
     this.ui.toolbar = bar;
+    this.ui.hint = hint;
+    this.ui.undoBtn = undoBtn; this.ui.redoBtn = redoBtn;
+    this.ui.undoCount = undoCount; this.ui.redoCount = redoCount;
+    this.ui.selectedBtns = [notesToggle, collectionBtn, deleteBtn];
     this._refreshToolbar();
+    this._bindKeys();
     // The editor docks just above this toolbar; its height changes as the toolbar
     // wraps to more rows on narrow screens, so keep the dock offset in sync.
     this._syncDock();
@@ -144,10 +232,44 @@ export class Workbench {
 
   // Set the active colour (persistent). Pressing a colour also applies a
   // highlight in it to the held selection — "select, then press a colour".
+  // With a TAPPED highlight selected and no text held, it recolours that
+  // highlight instead (see `_currentBy` in the constructor for why a tap and
+  // a create differ here).
   _setColor(color) {
+    const target = this._editTarget();
+    if (target && !this._pendingQuote) {
+      if ((target.color || 'yellow') !== color) this._patch(target, { color }, { record: true });
+      this.color = color;
+      this._refreshToolbar();
+      return;
+    }
     this.color = color;
     this._refreshToolbar();
     this._apply('highlight');
+  }
+
+  // The highlight the colour/label controls edit: the selected one, and only
+  // when it was selected by a tap.
+  _editTarget() {
+    if (this._currentBy !== 'tap' || this._currentHl == null) return null;
+    const item = this.items.get(this._currentHl);
+    return item ? item.data : null;
+  }
+
+  // Select a highlight (or clear the selection with null). Draws the ring on
+  // its marks and syncs the toolbar's colour/label to it after a tap, so the
+  // toolbar describes the mark the reader is looking at.
+  _setCurrent(id, by = null) {
+    this._currentHl = id;
+    this._currentBy = id == null ? null : by;
+    for (const [hid, { marks }] of this.items) {
+      for (const m of marks) m.classList.toggle('is-current', hid === id);
+    }
+    if (id != null && by === 'tap') {
+      const item = this.items.get(id);
+      if (item && item.data) { this.color = item.data.color || this.color; this.label = item.data.label || null; }
+    }
+    this._refreshToolbar();
   }
 
   // Apply a tool (highlight / underline / cloze) to the held selection in the
@@ -160,7 +282,13 @@ export class Workbench {
     this._createHighlight(quote, kind);
   }
 
-  _toggleLabel(key) { this.label = this.label === key ? null : key; this._refreshToolbar(); }
+  _toggleLabel(key) {
+    const next = this.label === key ? null : key;
+    const target = this._editTarget();
+    if (target) this._patch(target, { label: next }, { record: true });
+    this.label = next;
+    this._refreshToolbar();
+  }
 
   _refreshToolbar() {
     const bar = this.ui.toolbar;
@@ -173,6 +301,93 @@ export class Workbench {
     bar.querySelectorAll('.dcp-chip').forEach((c) => {
       c.classList.toggle('is-active', this.label === c.dataset.label);
     });
+    const h = this.history;
+    if (this.ui.undoBtn) {
+      this.ui.undoBtn.disabled = !h.canUndo();
+      this.ui.redoBtn.disabled = !h.canRedo();
+      this.ui.undoCount.textContent = h.done.length ? faNum(h.done.length) : '';
+      this.ui.redoCount.textContent = h.undone.length ? faNum(h.undone.length) : '';
+    }
+    const selected = this._currentHl != null && this.items.has(this._currentHl);
+    if (this.ui.selectedBtns) for (const b of this.ui.selectedBtns) b.disabled = !selected;
+    if (this.ui.hint) {
+      this.ui.hint.textContent = !selected
+        ? 'بعد از انتخاب متن، ابزار را مشخص کنید'
+        : this._currentBy === 'tap'
+          ? 'یک هایلایت انتخاب شده — رنگ، برچسب، یادداشت و حذف روی همین اعمال می‌شود'
+          : 'هایلایت ثبت شد — می‌توانی یادداشت بگذاری یا حذفش کنی';
+    }
+  }
+
+  // Ctrl/⌘+Z and Ctrl/⌘+Shift+Z (or Ctrl+Y) while in study mode — never while
+  // typing in a field, where the browser's own undo owns those keys.
+  _bindKeys() {
+    if (this._onKey) return;
+    this._onKey = (e) => {
+      if (!this.active || !(e.ctrlKey || e.metaKey)) return;
+      const t = e.target;
+      if (t && (t.tagName === 'TEXTAREA' || t.tagName === 'INPUT' || t.isContentEditable)) return;
+      const k = (e.key || '').toLowerCase();
+      if (k === 'z' && !e.shiftKey) { e.preventDefault(); this.undo(); }
+      else if ((k === 'z' && e.shiftKey) || k === 'y') { e.preventDefault(); this.redo(); }
+    };
+    document.addEventListener('keydown', this._onKey);
+  }
+
+  // --- history ---------------------------------------------------------------
+  async undo() {
+    if (!this.history.canUndo()) return false;
+    this._closeEditor();
+    this._refreshToolbar(); // buttons go quiet while the call is in flight
+    try {
+      const e = await this.history.undo();
+      this._toast('بازگردانده شد — ' + e.label);
+      return true;
+    } catch (_) {
+      this._toast('بازگردانی انجام نشد. اتصال به سرور را بررسی کنید.');
+      return false;
+    } finally { this._refreshToolbar(); }
+  }
+
+  async redo() {
+    if (!this.history.canRedo()) return false;
+    this._closeEditor();
+    this._refreshToolbar();
+    try {
+      const e = await this.history.redo();
+      this._toast('دوباره اعمال شد — ' + e.label);
+      return true;
+    } catch (_) {
+      this._toast('اعمالِ دوباره انجام نشد. اتصال به سرور را بررسی کنید.');
+      return false;
+    } finally { this._refreshToolbar(); }
+  }
+
+  // Remove a highlight from the page and from `items` (the DOM half of a
+  // delete; the server half is the caller's).
+  _dropLocal(id) {
+    const item = this.items.get(id);
+    if (item) unwrapMarks(item.marks);
+    this.items.delete(id);
+    this.failed = this.failed.filter((f) => f.id !== id);
+    if (this._currentHl === id) this._setCurrent(null);
+    this._recountToc();
+    this._renderNotes();
+  }
+
+  // Put a highlight back on the page from the server's row (the DOM half of a
+  // restore) and select it, flashing it so the reader sees where it landed.
+  _restoreLocal(highlight) {
+    this._renderOne(highlight);
+    this._setCurrent(highlight.id, 'tap');
+    const item = this.items.get(highlight.id);
+    if (item && item.marks.length) {
+      item.marks[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      item.marks.forEach((m) => m.classList.add('dcp-hl-focus'));
+      setTimeout(() => item.marks.forEach((m) => m.classList.remove('dcp-hl-focus')), 2600);
+    }
+    this._recountToc();
+    this._renderNotes();
   }
 
   // --- selection -> highlight ----------------------------------------------
@@ -182,6 +397,18 @@ export class Workbench {
     this._onSelectTouch = handler;
     document.addEventListener('mouseup', handler);
     document.addEventListener('touchend', handler);
+    // A click on plain prose deselects (marks stop propagation of their own
+    // click, so this never fires for a tap on a highlight). Without a way to
+    // deselect, the ring — and the colour/label edit it enables — would stick
+    // to the last tapped mark for the rest of the session.
+    this._onRootClick = (e) => {
+      if (this._currentHl == null) return;
+      if (e.target && e.target.closest && e.target.closest('mark.dcp-hl')) return;
+      const sel = window.getSelection();
+      if (sel && !sel.isCollapsed) return; // a drag-select is not a deselect click
+      this._setCurrent(null);
+    };
+    this.root.addEventListener('click', this._onRootClick);
   }
 
   _captureSelection() {
@@ -213,9 +440,18 @@ export class Workbench {
       const { highlight } = await api.createHighlight(payload);
       signalStreakActivity(); // highlight_created counts for today's streak
       this._renderOne(highlight);
-      this._currentHl = highlight.id; // becomes the current mark; the یادداشت button writes on it
+      this._setCurrent(highlight.id, 'create'); // the یادداشت button writes on it
       this._recountToc();
       this._renderNotes();
+      // The inverse of a create is a (soft) delete, and its redo a restore of
+      // the SAME id — the card and any pins made in between survive.
+      const id = highlight.id;
+      this.history.push({
+        label: (kind === 'underline' ? 'خط ممتد' : kind === 'cloze' ? 'نقطه‌چین' : 'هایلایت'),
+        undo: async () => { await api.deleteHighlight(id); this._dropLocal(id); },
+        redo: async () => { const r = await api.restoreHighlight(id); this._restoreLocal(r.highlight); },
+      });
+      this._refreshToolbar();
       // Applying highlight / underline / cloze just marks the text — it does NOT pop
       // the note editor open. The editor is opened only by the یادداشت button.
     } catch (e) {
@@ -250,56 +486,18 @@ export class Workbench {
       className: cls,
       dataset: { hlId: h.id, color: h.color || '' },
     });
-    // Tapping a highlight only SELECTS it (makes it current); it never opens the
-    // editor. The note editor is opened solely by the یادداشت button.
-    for (const m of marks) m.addEventListener('click', (e) => { e.stopPropagation(); this._currentHl = h.id; });
+    // Tapping a highlight only SELECTS it (ring + toolbar follow it); it never
+    // opens the editor. The note editor is opened solely by the یادداشت button.
+    for (const m of marks) m.addEventListener('click', (e) => { e.stopPropagation(); this._setCurrent(h.id, 'tap'); });
+    if (this._currentHl === h.id) for (const m of marks) m.classList.add('is-current');
     this.items.set(h.id, { data: h, marks });
   }
 
-  // --- editor popover (note / label / color / delete) ----------------------
-  _openEditor(h, anchorEl, { focusNote = false } = {}) {
-    this._closeEditor();
-    const noteInput = el('textarea', { class: 'dcp-note-input', rows: '3', placeholder: 'یادداشت خود را اینجا بنویسید...' });
-    noteInput.value = h.note || '';
-
-    const colorRow = PALETTE.map((p) => el('button', {
-      class: 'dcp-swatch' + (h.color === p.key ? ' is-active' : ''), type: 'button',
-      style: '--sw:' + p.css, 'aria-label': p.fa,
-      onclick: () => this._patch(h, { color: p.key }),
-    }));
-    const labelRow = LABELS.map((l) => el('button', {
-      class: 'dcp-chip' + (h.label === l.key ? ' is-active' : ''), type: 'button',
-      onclick: () => this._patch(h, { label: h.label === l.key ? null : l.key }),
-    }, l.fa));
-
-    const save = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button', onclick: async () => {
-      await this._patch(h, { note: noteInput.value.trim() || null });
-      this._closeEditor();
-    } }, 'ذخیره');
-    const del = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', onclick: () => this._delete(h) }, 'حذف');
-
-    const pop = el('div', { class: 'dcp-editor', role: 'dialog', 'aria-label': 'ویرایش هایلایت' }, [
-      el('label', { class: 'dcp-editor-label' }, 'یادداشت'),
-      noteInput,
-      el('label', { class: 'dcp-editor-label' }, 'رنگ'),
-      el('div', { class: 'dcp-editor-row' }, colorRow),
-      el('label', { class: 'dcp-editor-label' }, 'برچسب'),
-      el('div', { class: 'dcp-editor-row' }, labelRow),
-      el('div', { class: 'dcp-editor-actions' }, [save, del]),
-    ]);
-    document.body.appendChild(pop);
-    this.ui.editor = pop;
-    this._placeEditor();
-    // The note is the user's own space: focus the empty field so they can type at
-    // once. On mobile the keyboard then opens BELOW the docked editor (see _syncDock).
-    setTimeout(() => noteInput.focus(), 30);
-    noteInput.addEventListener('focus', () => this._syncDock());
-    noteInput.addEventListener('blur', () => setTimeout(() => this._syncDock(), 50));
-    setTimeout(() => {
-      const off = (e) => { if (!pop.contains(e.target) && e.target !== anchorEl) { this._closeEditor(); document.removeEventListener('mousedown', off); } };
-      document.addEventListener('mousedown', off);
-    }, 0);
-  }
+  // (The old `_openEditor` popover — note + colour + label + delete in one
+  // dialog — lived here until 2026-09-14. Nothing had called it since tapping
+  // a mark became «select only», which is exactly how میز کار came to have a
+  // working `_delete()` and no way to reach it. Delete is a toolbar button
+  // now, and colour/label edit the tapped highlight from the toolbar.)
 
   // The editor's placement is owned by CSS (.dcp-editor: fixed, docked just above
   // the toolbar via the --dcp-editor-dock offset). JS only keeps that offset in
@@ -342,29 +540,57 @@ export class Workbench {
     if (this.active) this._syncDock(); // reset the dock back to the toolbar height
   }
 
-  async _patch(h, patch) {
+  // Apply a server-side edit and redraw the mark. `record` pushes the inverse
+  // onto the history (the fields the patch names, as they were before it).
+  async _patch(h, patch, { record = true } = {}) {
+    const before = {};
+    for (const k of Object.keys(patch)) before[k] = h[k] === undefined ? null : h[k];
     try {
-      const { highlight } = await api.updateHighlight(h.id, patch);
-      // re-render this highlight in place
-      const item = this.items.get(h.id);
-      if (item) unwrapMarks(item.marks);
-      this._renderOne(highlight);
-      this._recountToc();
-      this._renderNotes();
-    } catch (e) { this._toast('به‌روزرسانی ناموفق بود.'); }
+      const { highlight } = await this._applyPatch(h.id, patch);
+      if (record) {
+        const id = highlight.id;
+        this.history.push({
+          label: 'note' in patch ? 'یادداشت' : 'color' in patch ? 'رنگ' : 'label' in patch ? 'برچسب' : 'ویرایش',
+          undo: async () => { const r = await this._applyPatch(id, before); this._setCurrent(id, 'tap'); return r; },
+          redo: async () => { const r = await this._applyPatch(id, patch); this._setCurrent(id, 'tap'); return r; },
+        });
+        this._refreshToolbar();
+      }
+      return highlight;
+    } catch (e) { this._toast('به‌روزرسانی ناموفق بود.'); return null; }
+  }
+
+  async _applyPatch(id, patch) {
+    const res = await api.updateHighlight(id, patch);
+    const item = this.items.get(id);
+    if (item) unwrapMarks(item.marks);
+    this._renderOne(res.highlight);
+    this._recountToc();
+    this._renderNotes();
+    return res;
+  }
+
+  // «حذف» on the toolbar: the selected highlight, at once, undoable. Soft on
+  // the server (migration 0066), so the undo is a restore of the same row.
+  _deleteButton() {
+    const item = this._currentHl != null ? this.items.get(this._currentHl) : null;
+    if (!item || !item.data) { this._toast('اول روی یکی از هایلایت‌هایت کلیک کن.'); return; }
+    this._delete(item.data);
   }
 
   async _delete(h) {
+    const id = h.id;
     try {
-      await api.deleteHighlight(h.id);
-      const item = this.items.get(h.id);
-      if (item) unwrapMarks(item.marks);
-      this.items.delete(h.id);
-      if (this._currentHl === h.id) this._currentHl = null;
-      this.failed = this.failed.filter((f) => f.id !== h.id);
+      await api.deleteHighlight(id);
+      this._dropLocal(id);
       this._closeEditor();
-      this._recountToc();
-      this._renderNotes();
+      this.history.push({
+        label: 'حذف',
+        undo: async () => { const r = await api.restoreHighlight(id); this._restoreLocal(r.highlight); },
+        redo: async () => { await api.deleteHighlight(id); this._dropLocal(id); },
+      });
+      this._refreshToolbar();
+      this._toast('هایلایت حذف شد.', { action: { label: 'بازگردانی', run: () => this.undo() } });
     } catch (e) { this._toast('حذف ناموفق بود.'); }
   }
 
@@ -466,7 +692,7 @@ export class Workbench {
     const item = this.items.get(id);
     if (!item || !item.marks || !item.marks.length) return false;
     const mark = item.marks[0];
-    this._currentHl = id; // it becomes the selected highlight, as if tapped
+    this._setCurrent(id, 'tap'); // it becomes the selected highlight, as if tapped
     mark.scrollIntoView({ behavior: 'smooth', block: 'center' });
     item.marks.forEach((m) => m.classList.add('dcp-hl-focus'));
     setTimeout(() => item.marks.forEach((m) => m.classList.remove('dcp-hl-focus')), 2600);
@@ -517,7 +743,8 @@ export class Workbench {
     const ta = el('textarea', { class: 'dcp-note-input', rows: '4', placeholder: 'یادداشت خود را اینجا بنویسید…' });
     ta.value = h.note || '';
     const save = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button', onclick: async () => {
-      await this._patch(h, { note: ta.value.trim() || null });
+      const note = ta.value.trim() || null;
+      if (note !== (h.note || null)) await this._patch(h, { note });
       this._closeEditor();
     } }, 'ذخیره');
     const close = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', onclick: () => this._closeEditor() }, 'بستن');
@@ -546,11 +773,18 @@ export class Workbench {
     ta.value = this.articleNote || '';
     const save = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button', onclick: async () => {
       const val = ta.value.trim() || null;
+      const prev = this.articleNote || null;
       try {
         const r = await api.saveArticleNote(this.contentId, val);
         this.articleNote = (r && r.note) || null;
         signalStreakActivity();
         this._closeEditor();
+        if (val !== prev) {
+          const cid = this.contentId;
+          const saveAs = async (v) => { const rr = await api.saveArticleNote(cid, v); this.articleNote = (rr && rr.note) || null; };
+          this.history.push({ label: 'یادداشت مقاله', undo: () => saveAs(prev), redo: () => saveAs(val) });
+          this._refreshToolbar();
+        }
       } catch (e) { this._toast('ذخیره‌ی یادداشت ناموفق بود.'); }
     } }, 'ذخیره');
     const close = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', onclick: () => this._closeEditor() }, 'بستن');
@@ -579,10 +813,17 @@ export class Workbench {
     this.ui.notes && this.ui.notes.classList.remove('is-open');
   }
 
-  _toast(text) {
-    const t = el('div', { class: 'dcp-toast' }, text);
+  // One toast at a time; an optional action («بازگردانی» after a delete) is
+  // the only control a toast carries.
+  _toast(text, { action = null } = {}) {
+    if (this.ui.toast) { this.ui.toast.remove(); this.ui.toast = null; }
+    const kids = [document.createTextNode(text)];
+    if (action) kids.push(el('button', { class: 'dcp-toast-act', type: 'button', onclick: () => { hide(); action.run(); } }, action.label));
+    const t = el('div', { class: 'dcp-toast', role: 'status' }, kids);
+    this.ui.toast = t;
     document.body.appendChild(t);
+    const hide = () => { if (this.ui.toast === t) this.ui.toast = null; t.classList.remove('is-in'); setTimeout(() => t.remove(), 300); };
     setTimeout(() => t.classList.add('is-in'), 10);
-    setTimeout(() => { t.classList.remove('is-in'); setTimeout(() => t.remove(), 300); }, 2600);
+    setTimeout(hide, action ? 5000 : 2600);
   }
 }

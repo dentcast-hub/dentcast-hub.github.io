@@ -31,6 +31,8 @@ export async function runReviewReminders(now: Date = new Date()): Promise<{ remi
        from profiles p
        join card_state cs on cs.user_id = p.id
         and (cs.next_review_at is null or cs.next_review_at <= $1)
+       -- the highlights VIEW (migration 0066): a soft-deleted highlight's card is not due
+       join highlights h on h.id = cs.highlight_id
       where p.tier = 'premium'
         -- Opt-OUT, reusing the switch the profile page already writes.
         and coalesce((p.settings->'reminders'->>'streak')::boolean, true) = true

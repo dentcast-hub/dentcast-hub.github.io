@@ -1,0 +1,667 @@
+<title>undo / redo در میز کار</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10); --line-strong:rgba(2,35,96,.18);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --danger:#c2384a; --danger-bg:rgba(194,56,74,.08); --danger-bd:rgba(194,56,74,.28);
+    --ok:#1a7f4b; --ok-bg:rgba(26,127,75,.08); --ok-bd:rgba(26,127,75,.28);
+    --mock-ink:#3b2f7a; --mock-bg:#efeaff; --mock-bd:rgba(59,47,122,.22);
+    --sw-yellow:#ffe08a; --sw-green:#b7e4b0; --sw-blue:#a9d3f5; --sw-pink:#f6b8cf; --sw-red:#ff8080;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --danger:#ff8095; --danger-bg:rgba(255,128,149,.12); --danger-bd:rgba(255,128,149,.30);
+    --ok:#5fd39a; --ok-bg:rgba(95,211,154,.10); --ok-bd:rgba(95,211,154,.30);
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --danger:#ff8095; --danger-bg:rgba(255,128,149,.12); --danger-bd:rgba(255,128,149,.30);
+    --ok:#5fd39a; --ok-bg:rgba(95,211,154,.10); --ok-bd:rgba(95,211,154,.30);
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }
+  body{ background:var(--bg); color:var(--txt); font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif;
+        direction:rtl; margin:0; padding-inline:16px; padding-block:0 10rem; line-height:1.8; font-size:15px; }
+  *{ box-sizing:border-box; } button{ font:inherit; }
+  :focus-visible{ outline:2px solid var(--ac); outline-offset:2px; border-radius:4px; }
+  .num{ font-variant-numeric:tabular-nums; }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+  code{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.84em; direction:ltr; unicode-bidi:isolate; color:var(--txt2); }
+
+  .wrap{ max-width:960px; margin:0 auto; }
+  .mk-head{ padding-block:1.8rem .4rem; }
+  .kick{ font-size:.74rem; font-weight:700; letter-spacing:.04em; color:var(--mock-ink); background:var(--mock-bg);
+         border:1px solid var(--mock-bd); border-radius:999px; padding:.2rem .7rem; display:inline-block; margin-bottom:.7rem; }
+  .mk-head h1{ font-size:1.6rem; font-weight:800; color:var(--pr); margin:0 0 .45rem; text-wrap:balance; }
+  .mk-head p{ margin:0; color:var(--txt2); max-width:68ch; }
+
+  .mk-sec{ margin-top:3rem; }
+  .mk-sec-h{ display:flex; align-items:baseline; gap:.7rem; flex-wrap:wrap; margin-bottom:.9rem; padding-bottom:.5rem; border-bottom:1px solid var(--border); }
+  .mk-sec-h h2{ margin:0; font-size:1.08rem; font-weight:800; color:var(--mock-ink); }
+  .mk-sec-h span{ color:var(--txt3); font-size:.82rem; }
+  .note{ color:var(--txt2); max-width:70ch; margin:.2rem 0 1rem; }
+  .note strong{ color:var(--txt); font-weight:700; }
+  .note em{ color:var(--txt); font-style:normal; font-weight:600; }
+
+  table.g{ border-collapse:collapse; width:100%; font-size:.87rem; }
+  table.g th,table.g td{ text-align:right; padding:.55rem .65rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  table.g th{ color:var(--txt3); font-weight:600; font-size:.76rem; }
+  .yes{ color:var(--ok); font-weight:700; } .no{ color:var(--danger); font-weight:700; }
+
+  /* ---------- §1 : what a history stack is ---------- */
+  .teach{ background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--card-sh); padding:1.2rem 1.3rem; }
+  .teach-ctl{ display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; margin-bottom:1.1rem; }
+  .tb-btn{ font-size:.88rem; padding:.4rem .9rem; border-radius:999px; border:1px solid var(--border); background:var(--surface2); color:var(--txt); cursor:pointer; }
+  .tb-btn:hover:not(:disabled){ border-color:var(--line-strong); }
+  .tb-btn:disabled{ opacity:.35; cursor:not-allowed; }
+  .tb-btn.pri{ background:var(--ac); color:#fff; border-color:transparent; }
+  .teach-cols{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  @media (max-width:560px){ .teach-cols{ grid-template-columns:1fr; } }
+  .tcol h4{ margin:0 0 .5rem; font-size:.8rem; font-weight:700; color:var(--txt3); display:flex; justify-content:space-between; align-items:baseline; gap:.5rem; }
+  .tcol h4 b{ font-weight:800; color:var(--txt2); font-size:.74rem; }
+  .tlist{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column-reverse; gap:.32rem; min-height:150px;
+          border:1px dashed var(--border); border-radius:12px; padding:.55rem; background:var(--surface2); justify-content:flex-end; }
+  .tlist li{ font-size:.84rem; padding:.35rem .7rem; border-radius:8px; background:var(--surface); border:1px solid var(--border);
+             display:flex; justify-content:space-between; gap:.6rem; animation:pop .22s ease-out; }
+  @keyframes pop{ from{ opacity:0; transform:translateY(5px);} to{ opacity:1; transform:none;} }
+  .tlist li .k{ color:var(--txt3); font-size:.73rem; }
+  .tcol.undone .tlist li{ opacity:.5; }
+  .tempty{ font-size:.8rem; color:var(--txt3); text-align:center; padding:.5rem 0; }
+  .teach-say{ margin-top:1rem; font-size:.88rem; color:var(--txt2); background:var(--mock-bg); border:1px solid var(--mock-bd);
+              color:var(--mock-ink); border-radius:10px; padding:.55rem .85rem; min-height:2.6em; }
+
+  /* ---------- toolbar vocabulary ---------- */
+  .tb{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:center;
+       padding:10px 12px; background:var(--surface); border-top:1px solid var(--border); }
+  .tb.docked{ position:fixed; inset-inline:0; bottom:0; z-index:60; box-shadow:0 -6px 24px rgba(0,0,0,.10); padding-bottom:calc(10px + env(safe-area-inset-bottom)); }
+  .tb-top{ flex:0 0 100%; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:.4rem; margin-bottom:2px; }
+  .tb-hint{ text-align:center; font-size:.8rem; font-weight:800; color:var(--txt3); }
+  .grp{ display:inline-flex; gap:6px; align-items:center; padding-inline-end:8px; border-inline-end:1px solid var(--border); }
+  .grp:last-of-type{ border-inline-end:none; }
+  .glabel{ font-size:.71rem; color:var(--txt3); font-weight:700; margin-inline-end:2px; white-space:nowrap; }
+  .sw{ width:26px;height:26px;border-radius:50%;border:2px solid var(--border);background:var(--c,#ccc);cursor:pointer;padding:0; }
+  .sw.is-active{ border-color:var(--txt); box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--ac); }
+  .tool,.chip{ font-size:.88rem; padding:6px 12px; border-radius:999px; cursor:pointer; background:transparent;
+               border:1px solid var(--border); color:var(--txt); white-space:nowrap; }
+  .tool:hover:not(:disabled),.chip:hover:not(:disabled){ border-color:var(--line-strong); }
+  .chip.is-active{ background:var(--ac); color:#fff; border-color:transparent; }
+  .tool.exit{ margin-inline-start:6px; border-color:var(--ac); color:var(--ac); }
+  .tool.danger{ border-color:var(--danger-bd); color:var(--danger); }
+  .tool.danger:hover:not(:disabled){ background:var(--danger-bg); }
+  .tool:disabled{ opacity:.34; cursor:not-allowed; }
+  .wbinfo{ width:22px;height:22px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--txt3);
+           font-size:.72rem;line-height:1;cursor:pointer;padding:0; }
+
+  .hist{ display:inline-flex; gap:4px; justify-self:start; }
+  .ubtn{ width:34px;height:30px; display:inline-flex; align-items:center; justify-content:center; padding:0;
+         border-radius:999px; border:1px solid var(--border); background:transparent; color:var(--txt); cursor:pointer; position:relative; }
+  .ubtn:hover:not(:disabled){ border-color:var(--line-strong); background:var(--surface2); }
+  .ubtn:disabled{ opacity:.3; cursor:not-allowed; }
+  .ubtn svg{ width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round; }
+  .ubtn .cnt{ position:absolute; top:-5px; inset-inline-start:-4px; min-width:15px; height:15px; padding:0 3px;
+              border-radius:999px; background:var(--ac); color:#fff; font-size:.6rem; font-weight:700; line-height:15px; text-align:center; }
+  .ubtn:disabled .cnt{ display:none; }
+
+  /* ---------- §2 : the measurement ---------- */
+  .specs{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.1rem; align-items:start; }
+  .spec{ background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--card-sh); overflow:hidden; }
+  .spec-h{ padding:.7rem .9rem; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:baseline; gap:.6rem; flex-wrap:wrap; }
+  .spec-h b{ font-size:.92rem; font-weight:800; }
+  .spec-h .h{ font-size:.8rem; font-weight:700; color:var(--txt3); }
+  .spec-h .h .v{ font-size:1.05rem; color:var(--txt); font-weight:800; }
+  .spec-frame{ width:100%; overflow-x:auto; background:var(--surface2); padding:12px; }
+  .spec-frame > .tb{ width:390px; margin:0 auto; border:1px solid var(--border); border-radius:12px; box-shadow:var(--card-sh); }
+  .spec-note{ padding:.65rem .9rem .9rem; font-size:.84rem; color:var(--txt2); border-top:1px solid var(--border); }
+  .verdict{ display:inline-block; font-size:.72rem; font-weight:700; border-radius:999px; padding:.1rem .6rem; border:1px solid; }
+  .verdict.win{ color:var(--ok); border-color:var(--ok-bd); background:var(--ok-bg); }
+  .verdict.bad{ color:var(--danger); border-color:var(--danger-bd); background:var(--danger-bg); }
+  .verdict.base{ color:var(--txt3); border-color:var(--border); background:var(--surface2); }
+
+  /* ---------- §3 : the live demo ---------- */
+  .stage{ background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--card-sh); overflow:hidden; }
+  .stage-bar{ display:flex; align-items:center; gap:.5rem; padding:.55rem .9rem; background:var(--surface2); border-bottom:1px solid var(--border); font-size:.78rem; color:var(--txt3); font-weight:600; }
+  .stage-bar .dot{ width:9px;height:9px;border-radius:50%;background:var(--border); }
+  .prose{ padding:1.3rem 1.4rem 1.6rem; }
+  .prose h3{ font-size:1.05rem; font-weight:800; color:var(--pr); margin:0 0 .7rem; }
+  .prose p{ margin:0 0 1rem; } .prose p:last-child{ margin-bottom:0; }
+  .selhint{ font-size:.8rem; color:var(--txt3); background:var(--surface2); border:1px dashed var(--border); border-radius:10px; padding:.5rem .8rem; margin-bottom:1rem; }
+
+  mark.hl{ background:transparent; color:inherit; border-radius:3px; padding:0 1px; cursor:pointer; }
+  mark.hl[data-color="yellow"]{ background:var(--sw-yellow); }
+  mark.hl[data-color="green"]{ background:var(--sw-green); }
+  mark.hl[data-color="blue"]{ background:var(--sw-blue); }
+  mark.hl[data-color="pink"]{ background:var(--sw-pink); }
+  mark.hl[data-color="red"]{ background:var(--sw-red); }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) mark.hl[data-color]:not(.u):not(.c){ color:#0a1a33; } }
+  :root[data-theme="dark"] mark.hl[data-color]:not(.u):not(.c){ color:#0a1a33; }
+  mark.hl.u{ background:transparent!important; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:3px; }
+  mark.hl.c{ background:transparent!important; border-bottom:2px dotted currentColor; }
+  mark.hl.u[data-color="yellow"]{ text-decoration-color:var(--sw-yellow);} mark.hl.c[data-color="yellow"]{ border-bottom-color:var(--sw-yellow);}
+  mark.hl.u[data-color="green"]{ text-decoration-color:var(--sw-green);} mark.hl.c[data-color="green"]{ border-bottom-color:var(--sw-green);}
+  mark.hl.u[data-color="blue"]{ text-decoration-color:var(--sw-blue);} mark.hl.c[data-color="blue"]{ border-bottom-color:var(--sw-blue);}
+  mark.hl.u[data-color="pink"]{ text-decoration-color:var(--sw-pink);} mark.hl.c[data-color="pink"]{ border-bottom-color:var(--sw-pink);}
+  mark.hl.u[data-color="red"]{ text-decoration-color:var(--sw-red);} mark.hl.c[data-color="red"]{ border-bottom-color:var(--sw-red);}
+  mark.hl.is-current{ box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px var(--ac); border-radius:4px; }
+  @keyframes flashIn{ 0%{box-shadow:0 0 0 0 rgba(var(--ac-rgb),0);} 45%{box-shadow:0 0 0 5px rgba(var(--ac-rgb),.34);} 100%{box-shadow:0 0 0 0 rgba(var(--ac-rgb),0);} }
+  mark.hl.is-back{ animation:flashIn 1s ease-in-out 2; border-radius:4px; }
+
+  .toastwrap{ position:fixed; inset-inline:0; bottom:var(--dock,110px); z-index:70; display:flex; justify-content:center; pointer-events:none; }
+  .toast{ background:var(--txt); color:var(--surface); border-radius:999px; padding:.45rem 1rem; font-size:.84rem; font-weight:600;
+          box-shadow:0 6px 22px rgba(0,0,0,.25); opacity:0; transform:translateY(8px); transition:opacity .18s,transform .18s;
+          pointer-events:auto; display:flex; gap:.7rem; align-items:center; }
+  .toast.in{ opacity:1; transform:none; }
+  .toast button{ background:none;border:none;color:#7fb3ff;font-weight:800;cursor:pointer;padding:0;font-size:.84rem; }
+
+  .opt{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1rem 1.1rem; box-shadow:var(--card-sh); margin-bottom:.9rem; }
+  .opt h4{ margin:0 0 .4rem; font-size:.96rem; font-weight:800; color:var(--txt); display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+  .tag{ font-size:.68rem; font-weight:700; border-radius:999px; padding:.12rem .55rem; border:1px solid; }
+  .tag.pick{ color:var(--ok); border-color:var(--ok-bd); background:var(--ok-bg); }
+  .tag.warn{ color:var(--danger); border-color:var(--danger-bd); background:var(--danger-bg); }
+  .opt p{ margin:.35rem 0; color:var(--txt2); font-size:.9rem; }
+  .opt ul{ margin:.4rem 0 0; padding-inline-start:1.1rem; color:var(--txt2); font-size:.89rem; }
+  .opt li{ margin-bottom:.22rem; }
+</style>
+
+<div class="wrap">
+
+<div class="mk-head">
+  <span class="kick">ماکاپ · میز کار · نسخهٔ ۲</span>
+  <h1>undo / redo برای هایلایت‌ها</h1>
+  <p>امروز در میز کار هیچ راهی برای پاک کردن یک هایلایت نیست. این نسخه دو چیز را درست می‌کند: «تاریخچه» را از اول توضیح می‌دهد، و ادعای قبلی‌ام دربارهٔ یک ردیفِ اضافه را اندازه می‌گیرد — که غلط از آب درآمد.</p>
+</div>
+
+<!-- ============ ۱ ============ -->
+<section class="mk-sec">
+  <div class="mk-sec-h"><h2>۱. «تاریخچه» یعنی چه</h2><span>با دست امتحان کن</span></div>
+  <p class="note">
+    تاریخچه یعنی <em>سیاههٔ کارهایی که کرده‌ای، به ترتیب</em>. هر بار یک هایلایت می‌زنی یا رنگی را عوض می‌کنی، یک برگه به این سیاهه اضافه می‌شود.
+    وقتی ↶ را می‌زنی، آخرین برگه از سیاهه برداشته می‌شود، اثرش برگردانده می‌شود، و آن برگه می‌رود توی یک سیاههٔ دوم: «برگردانده‌شده».
+    ↷ دقیقاً برعکس است — برگه را از سیاههٔ دوم برمی‌دارد و دوباره اعمالش می‌کند.
+  </p>
+  <p class="note">
+    یک قاعدهٔ سوم هم هست که همه‌جا یکی است و تنها جای غافلگیریِ این سازوکار است:
+    <strong>به‌محض اینکه کارِ تازه‌ای بکنی، سیاههٔ «برگردانده‌شده» خالی می‌شود.</strong>
+    چون تاریخچه شاخه نمی‌زند — اگر پنج قدم برگردی و بعد چیزِ تازه‌ای بزنی، آن پنج قدم دیگر راهی برای برگشتن ندارند.
+    پایین را بزن و ببین.
+  </p>
+
+  <div class="teach">
+    <div class="teach-ctl">
+      <button class="tb-btn pri" id="tDo">یک کار تازه بکن</button>
+      <button class="tb-btn" id="tUndo">↶ بازگردانی</button>
+      <button class="tb-btn" id="tRedo">↷ ازنو</button>
+      <button class="tb-btn" id="tReset" style="margin-inline-start:auto">از نو شروع کن</button>
+    </div>
+    <div class="teach-cols">
+      <div class="tcol">
+        <h4><span>سیاههٔ انجام‌شده</span><b>↶ از این‌جا برمی‌دارد</b></h4>
+        <ul class="tlist" id="tDone"></ul>
+      </div>
+      <div class="tcol undone">
+        <h4><span>سیاههٔ برگردانده‌شده</span><b>↷ از این‌جا برمی‌دارد</b></h4>
+        <ul class="tlist" id="tUndoneList"></ul>
+      </div>
+    </div>
+    <div class="teach-say" id="tSay">هنوز کاری نکرده‌ای. «یک کار تازه بکن» را چند بار بزن.</div>
+  </div>
+
+  <p class="note" style="margin-top:1.1rem">
+    این دو ستون فقط برای همین توضیح‌اند. <strong>در محصول هیچ‌کدام دیده نمی‌شوند</strong> — کاربر فقط دو دکمهٔ ↶ و ↷ را می‌بیند،
+    دقیقاً مثل وُرد و فتوشاپ و هر جای دیگری که این را دارد. عددِ کوچک روی هر دکمه تنها چیزی است که از سیاهه بیرون می‌زند:
+    می‌گوید چند قدم عقب می‌توانی بروی.
+  </p>
+</section>
+
+<!-- ============ ۲ ============ -->
+<section class="mk-sec">
+  <div class="mk-sec-h"><h2>۲. ارتفاع نوار</h2><span>حق با تو بود — اندازه‌گیریِ زنده روی عرض ۳۹۰</span></div>
+  <p class="note">
+    بار قبل نوشتم این طرح یک ردیف به نوار اضافه می‌کند. حق با تو بود که شک کردی — <strong>اندازه گرفتم و ادعای من غلط بود.</strong>
+    سه نوار پایین واقعی‌اند و همین حالا در همین صفحه رندر شده‌اند؛ عددِ کنار هر کدام <strong>ارتفاعِ اندازه‌گیری‌شدهٔ همان نوار روی عرض ۳۹۰ پیکسل</strong> است،
+    نه عددی که من تایپ کرده باشم — می‌توانی خودت بشماری.
+  </p>
+  <p class="note">
+    هر سه در محدودهٔ <strong>۷ پیکسل</strong> همدیگرند. نه ردیفی اضافه می‌شود، نه چیزی جابه‌جا می‌شود.
+    دلیلش ساده است: ارتفاعِ این نوار را گروه‌های رنگ و ابزار و برچسب تعیین می‌کنند، و دو دکمهٔ ۳۴ پیکسلی در آن حساب اصلاً دیده نمی‌شوند.
+    <em>پس انتخاب بین این سه، انتخابِ ارتفاع نیست — انتخابِ معناست.</em>
+  </p>
+
+  <div class="specs" id="specs"></div>
+
+  <p class="note" style="margin-top:1.2rem">
+    <strong>پس چرا طرح ۲؟</strong> نه برای پیکسل — برای اینکه ↶ و ↷ از جنسِ بقیهٔ نوار نیستند.
+    رنگ و ابزار و برچسب و حذف همه روی <em>یک تکه از متن</em> کار می‌کنند؛ ↶ و ↷ روی <em>کلِ کاری که کرده‌ای</em> کار می‌کنند.
+    نشاندنشان روی ردیفِ راهنما — که از قبل بود و نیمه‌خالی — همین تفاوت را بی‌آنکه حرفی بزنی نشان می‌دهد.
+    و برچسبِ گروهی هم نمی‌خواهند: این دو فلش را کسی لازم ندارد برایش توضیح بنویسی.
+  </p>
+  <p class="note">
+    یک صرفه‌جویی جداگانه هم در هر دو طرح هست که ربطی به undo ندارد و به‌هرحال ارزشش را دارد:
+    «🗂 افزودنِ هایلایت به کالکشن» تقریباً یک ردیفِ کامل را می‌خورَد و «🗂 کالکشن» دقیقاً همان کار را می‌کند —
+    مخصوصاً حالا که دکمه فقط وقتی فعال است که هایلایتی انتخاب شده باشد و خودِ حالتش جمله را می‌گوید.
+  </p>
+</section>
+
+<!-- ============ ۳ ============ -->
+<section class="mk-sec">
+  <div class="mk-sec-h"><h2>۳. دموی زنده</h2><span>نوارِ چسبیده به کفِ صفحه، طرح ۲</span></div>
+  <p class="note">
+    متن را انتخاب کن و یک رنگ یا ابزار بزن. روی یک مارک کلیک کن تا <strong>انتخاب</strong> شود (حلقهٔ آبی)، بعد «حذف».
+    بعد ↶ و ↷ بالا سمت راستِ نوار — یا <code>Ctrl+Z</code> و <code>Ctrl+Shift+Z</code>.
+  </p>
+
+  <div class="stage">
+    <div class="stage-bar"><span class="dot"></span><span>insight/insight-64 · حالت میز کار</span></div>
+    <div class="prose" id="prose">
+      <div class="selhint">↑ فقط در ماکاپ: متن پایین را با ماوس یا انگشت انتخاب کن.</div>
+      <h3>چرا ضخامتِ باقی‌ماندهٔ عاج تصمیم را عوض می‌کند</h3>
+      <p>در ترمیم‌های ادهزیو، آن‌چه استحکام باقی‌ماندهٔ دندان را تعیین می‌کند نه نوع مادهٔ ترمیمی که <mark class="hl" data-color="yellow" data-id="h1">ضخامت و پیوستگیِ عاجِ باقی‌مانده روی سقف اتاقک پالپ</mark> است. این نکته در عمل یعنی تراش‌های محافظه‌کارانه‌ای که ظاهراً کوچک‌اند، اگر در ناحیهٔ اشتباهی باشند می‌توانند بیش از یک تراش بزرگ‌ترِ درست‌جانمایی‌شده آسیب بزنند.</p>
+      <p>مطالعات آزمایشگاهی نشان داده‌اند که با کاهش ضخامت عاج، الگوی توزیع تنش از حالت پیوسته به تمرکز موضعی تغییر می‌کند. اما تعمیم این یافته به شرایط بالینی محتاطانه است: بارگذاری در دهان چرخه‌ای، مرطوب و چندجهته است، در حالی که بیشتر این آزمون‌ها بار استاتیک تک‌محوری اعمال می‌کنند.</p>
+      <p>نتیجهٔ تصمیم‌گیری این است: پیش از انتخاب بین اُنله و روکش، به‌جای شمردن دیواره‌ها، ضخامتِ باقی‌مانده را در ناحیهٔ بحرانی بسنج. <mark class="hl u" data-color="blue" data-id="h2">شمارشِ دیواره یک نماینده است، نه خودِ متغیر</mark> — و نماینده‌ها وقتی خطرناک می‌شوند که فراموش کنیم نماینده‌اند.</p>
+    </div>
+  </div>
+
+  <p class="note" style="margin-top:1rem">
+    <strong>سه تغییر عمدی در این دمو:</strong>
+    مارکِ انتخاب‌شده حلقهٔ آبی گرفته — تا امروز «انتخاب‌شده» هیچ نشانهٔ دیداری نداشت و دکمه‌های یادداشت و کالکشن روی چیزی کار می‌کردند که کاربر نمی‌دید کدام است.
+    سه دکمه‌ای که روی هایلایتِ انتخاب‌شده کار می‌کنند کنار هم آمده‌اند.
+    و حذف <strong>دیالوگِ تأیید ندارد</strong> — تأیید در دفترچه لازم است چون آن‌جا بازگردانی نیست؛ این‌جا undo خودش تأیید است، و بهتر هم هست چون بعد از عمل می‌آید نه قبلش.
+  </p>
+</section>
+
+<!-- ============ ۴ ============ -->
+<section class="mk-sec">
+  <div class="mk-sec-h"><h2>۴. گرهِ واقعی: بازگرداندنِ یک حذف</h2><span>تصمیمی که باید بگیری</span></div>
+  <p class="note">
+    بقیهٔ کنش‌ها وارونهٔ تمیز دارند: وارونهٔ «ساخت» یک حذف است، وارونهٔ «تغییر رنگ» رنگِ قبلی، وارونهٔ «یادداشت» متنِ قبلی.
+    فقط وارونهٔ <em>حذف</em> مسئله‌دار است. امروز <code>DELETE /highlights/:id</code> سطر را واقعاً پاک می‌کند و دو چیز با
+    <code>on delete cascade</code> همراهش می‌روند: <strong>کارتِ مرورِ لایتنر</strong> (<code>card_state</code>) و
+    <strong>هر پینی که در کالکشن‌ها به آن هایلایت اشاره می‌کند</strong> (<code>collection_items</code>).
+    ساختِ دوباره یک <code>id</code> تازه می‌سازد — یعنی آن‌ها برنمی‌گردند.
+  </p>
+
+  <div class="opt">
+    <h4>الف) فقط سمت کلاینت <span class="tag warn">توصیه نمی‌شود</span></h4>
+    <p>پشته در مرورگر؛ undo یک حذف = <code>POST</code> دوباره. بدون تغییر در API.</p>
+    <ul>
+      <li>پینِ کالکشن و تاریخچهٔ کارتِ لایتنر برای همیشه رفته‌اند — undo چیزی را برمی‌گرداند که <em>شبیهِ</em> قبلی است، نه خودش.</li>
+      <li>لینک‌های <code>?dcphl=&lt;id&gt;</code> که قبلاً جایی ثبت شده‌اند می‌شکنند.</li>
+    </ul>
+  </div>
+  <div class="opt">
+    <h4>ب) حذفِ نرم روی سرور <span class="tag pick">پیشنهاد</span></h4>
+    <p>یک ستون <code>deleted_at</code> روی <code>highlights</code> و یک مسیر <code>POST /highlights/:id/restore</code>. حذف یعنی مخفی‌کردن، نه نابودکردن.</p>
+    <ul>
+      <li><code>id</code> زنده می‌ماند ⇒ پینِ کالکشن، کارتِ لایتنر و لینک‌های <code>?dcphl=</code> دست‌نخورده‌اند.</li>
+      <li>undo و redo هر دو یک PATCH ساده می‌شوند؛ هیچ چیزی واقعاً حذف نمی‌شود، پس هیچ چیزی واقعاً از دست نمی‌رود.</li>
+      <li>هم‌جنسِ کاری است که این کدبیس قبلاً کرده: گواهی‌نامه «باطل می‌شود، پاک نمی‌شود» (<code>revoked_at</code>).</li>
+      <li>هزینه: یک مهاجرت، و <code>and deleted_at is null</code> روی هر کوئریِ خواندنِ هایلایت.</li>
+    </ul>
+  </div>
+  <div class="opt">
+    <h4>ج) پنجرهٔ مهلت <span class="tag warn">پاسخِ سؤالِ دیگری است</span></h4>
+    <p>حذف تا چند ثانیه به سرور نمی‌رود؛ در آن بازه undo محلی است. با بستنِ تب می‌میرد و فقط «آخرین کار» را برمی‌گرداند — یعنی اصلاً پشته نیست.</p>
+  </div>
+</section>
+
+<!-- ============ ۵ ============ -->
+<section class="mk-sec">
+  <div class="mk-sec-h"><h2>۵. چه چیزهایی وارد تاریخچه می‌شوند</h2><span>دامنه</span></div>
+  <table class="g">
+    <thead><tr><th>کنش</th><th>وارونه</th><th>در تاریخچه؟</th></tr></thead>
+    <tbody>
+      <tr><td>ساخت هایلایت / خط ممتد / نقطه‌چین</td><td>حذف (نرم)</td><td class="yes">بله</td></tr>
+      <tr><td>حذف هایلایت</td><td>بازگردانی</td><td class="yes">بله</td></tr>
+      <tr><td>تغییر رنگِ یک هایلایتِ موجود</td><td>رنگِ پیشین</td><td class="yes">بله</td></tr>
+      <tr><td>تغییر برچسبِ یک هایلایتِ موجود</td><td>برچسبِ پیشین</td><td class="yes">بله</td></tr>
+      <tr><td>ذخیرهٔ یادداشت (هایلایت یا مقاله)</td><td>متنِ پیشین</td><td class="yes">بله</td></tr>
+      <tr><td>انتخابِ رنگ یا برچسبِ پیش‌فرض در نوار</td><td>—</td><td class="no">خیر — تنظیم است، نه تغییرِ داده</td></tr>
+      <tr><td>افزودن به کالکشن</td><td>—</td><td class="no">خیر — کنشِ صفحهٔ دیگری است</td></tr>
+    </tbody>
+  </table>
+  <p class="note" style="margin-top:1rem">
+    <strong>سه قاعده‌ای که کد به آن‌ها تکیه می‌کند:</strong>
+    تاریخچه <em>به‌ازای هر مقاله و هر نشست</em> است و با خروج از میز کار پاک می‌شود (نگه‌داشتنش یعنی نگه‌داشتنِ idهایی که شاید دیگر معتبر نباشند)؛
+    هر کنشِ تازه سیاههٔ «برگردانده‌شده» را خالی می‌کند؛
+    و اگر سرور یک undo را رد کرد، <strong>اشاره‌گر حرکت نمی‌کند</strong> — یک پیام می‌گوید نشد و همان‌جا می‌ماند،
+    وگرنه تاریخچه با واقعیت اختلاف پیدا می‌کند و هر undo بعدی روی دادهٔ اشتباه اجرا می‌شود.
+  </p>
+</section>
+
+</div>
+
+<div class="tb docked" id="toolbar"></div>
+<div class="toastwrap"><div class="toast" id="toast"></div></div>
+
+<script>
+(function(){
+  var FA='۰۱۲۳۴۵۶۷۸۹';
+  function faNum(n){ return String(n).replace(/\d/g,function(d){return FA[+d];}); }
+  function el(t,a,c){ var n=document.createElement(t); a=a||{};
+    for(var k in a){ if(k==='class')n.className=a[k]; else if(k==='html')n.innerHTML=a[k]; else if(k.slice(0,2)==='on')n[k]=a[k]; else n.setAttribute(k,a[k]); }
+    (c||[]).forEach(function(x){ n.appendChild(typeof x==='string'?document.createTextNode(x):x); }); return n; }
+
+  var UND='<svg viewBox="0 0 24 24"><path d="M13 7H7.5a4.5 4.5 0 100 9H12"/><path d="M10 4l-3 3 3 3"/></svg>';
+  var RED='<svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><path d="M13 7H7.5a4.5 4.5 0 100 9H12"/><path d="M10 4l-3 3 3 3"/></svg>';
+  var PALETTE=[{k:'yellow',fa:'زرد'},{k:'green',fa:'سبز'},{k:'blue',fa:'آبی'},{k:'pink',fa:'صورتی'},{k:'red',fa:'قرمز'}];
+  var LABELS=[{k:'important',fa:'مهم'},{k:'unclear',fa:'مبهم'},{k:'clinical_pearl',fa:'نکته بالینی'}];
+
+  /* ================= §1 — teaching the stack ================= */
+  (function(){
+    var ACTS=['هایلایت زرد','خط ممتد آبی','یادداشت','رنگ → سبز','نقطه‌چین','حذف هایلایت','برچسب: مهم'];
+    var done=[], undone=[], n=0;
+    var dEl=document.getElementById('tDone'), uEl=document.getElementById('tUndoneList'), say=document.getElementById('tSay');
+    var bDo=document.getElementById('tDo'), bU=document.getElementById('tUndo'), bR=document.getElementById('tRedo'), bX=document.getElementById('tReset');
+
+    function paint(list,host,empty){
+      host.innerHTML='';
+      if(!list.length){ host.appendChild(el('li',{class:'tempty',style:'background:none;border:none;justify-content:center'},[empty])); return; }
+      list.forEach(function(it,i){
+        host.appendChild(el('li',{},[el('span',{},[it.name]),el('span',{class:'k num'},['#'+faNum(it.n)])]));
+      });
+    }
+    function render(msg){
+      paint(done,dEl,'خالی'); paint(undone,uEl,'خالی');
+      bU.disabled=!done.length; bR.disabled=!undone.length;
+      if(msg) say.textContent=msg;
+    }
+    bDo.onclick=function(){
+      n++; done.push({name:ACTS[(n-1)%ACTS.length], n:n});
+      var had=undone.length; undone=[];
+      render(had
+        ? 'کارِ تازه‌ای کردی — و ببین سیاههٔ «برگردانده‌شده» همین حالا خالی شد. آن '+faNum(had)+' قدم دیگر راهی برای برگشتن ندارند.'
+        : 'یک برگه به سیاههٔ انجام‌شده اضافه شد. حالا ↶ می‌تواند برش دارد.');
+    };
+    bU.onclick=function(){ var it=done.pop(); if(!it) return; undone.push(it);
+      render('برگهٔ «'+it.name+'» از سیاههٔ انجام‌شده برداشته شد و رفت سمت چپ. ↷ می‌تواند برش گرداند.'); };
+    bR.onclick=function(){ var it=undone.pop(); if(!it) return; done.push(it);
+      render('برگهٔ «'+it.name+'» دوباره اعمال شد و برگشت سمت راست.'); };
+    bX.onclick=function(){ done=[]; undone=[]; n=0; render('از نو. «یک کار تازه بکن» را چند بار بزن، بعد ↶، بعد یک کارِ تازه.'); };
+    render('هنوز کاری نکرده‌ای. «یک کار تازه بکن» را چند بار بزن.');
+  })();
+
+  /* ================= shared toolbar builders ================= */
+  function swatches(active){
+    return PALETTE.map(function(p){
+      var b=el('button',{class:'sw'+(p.k===(active||'yellow')?' is-active':''),type:'button','aria-label':'رنگ '+p.fa,style:'--c:var(--sw-'+p.k+')'});
+      b.dataset.color=p.k; return b; });
+  }
+  function chips(active){
+    return LABELS.map(function(l){ var b=el('button',{class:'chip'+(l.k===active?' is-active':''),type:'button'},[l.fa]); b.dataset.label=l.k; return b; });
+  }
+  function grp(label,items){ return el('span',{class:'grp'},(label?[el('span',{class:'glabel'},[label])]:[]).concat(items)); }
+  function hist(uOn,rOn,uN,rN){
+    function b(on,svg,t,cnt){
+      var x=el('button',{class:'ubtn',type:'button',title:t,'aria-label':t,html:svg});
+      if(!on) x.disabled=true; else if(cnt) x.appendChild(el('span',{class:'cnt num'},[faNum(cnt)]));
+      return x;
+    }
+    return el('span',{class:'hist'},[b(uOn,UND,'بازگردانی',uN),b(rOn,RED,'ازنو',rN)]);
+  }
+
+  /* variant A — exactly what ships today */
+  function buildToday(){
+    var bar=el('div',{class:'tb'});
+    bar.appendChild(el('div',{class:'tb-top'},[el('span',{}),el('span',{class:'tb-hint'},['بعد از انتخاب متن، ابزار را مشخص کنید']),el('span',{})]));
+    bar.appendChild(grp('رنگ هایلایت',swatches()));
+    bar.appendChild(grp('ابزار',[el('button',{class:'tool'},['🖍 هایلایت']),el('button',{class:'tool'},['─ خط ممتد']),el('button',{class:'tool'},['⋯ نقطه‌چین'])]));
+    bar.appendChild(grp('برچسب',chips('important')));
+    bar.appendChild(grp(null,[el('button',{class:'tool'},['📝 یادداشت'])]));
+    bar.appendChild(grp(null,[el('button',{class:'tool'},['🗂 افزودنِ هایلایت به کالکشن']),el('button',{class:'wbinfo'},['؟'])]));
+    bar.appendChild(el('button',{class:'tool exit'},['✕ خروج']));
+    return bar;
+  }
+  /* variant B — my first proposal: a labelled history group + a labelled selected group */
+  function buildV1(){
+    var bar=el('div',{class:'tb'});
+    bar.appendChild(el('div',{class:'tb-top'},[el('span',{}),el('span',{class:'tb-hint'},['بعد از انتخاب متن، ابزار را مشخص کنید']),el('span',{})]));
+    bar.appendChild(grp('تاریخچه',[hist(true,true,4,2)]));
+    bar.appendChild(grp('رنگ',swatches()));
+    bar.appendChild(grp('ابزار',[el('button',{class:'tool'},['🖍 هایلایت']),el('button',{class:'tool'},['─ خط ممتد']),el('button',{class:'tool'},['⋯ نقطه‌چین'])]));
+    bar.appendChild(grp('برچسب',chips('important')));
+    bar.appendChild(grp('هایلایتِ انتخاب‌شده',[el('button',{class:'tool'},['📝 یادداشت']),el('button',{class:'tool'},['🗂 کالکشن']),el('button',{class:'tool danger'},['🗑 حذف'])]));
+    bar.appendChild(el('button',{class:'tool exit'},['✕ خروج']));
+    return bar;
+  }
+  /* variant C — the arrows ride the hint row; no new group label; the long collection label is shortened */
+  function buildV2(){
+    var bar=el('div',{class:'tb'});
+    bar.appendChild(el('div',{class:'tb-top'},[hist(true,true,4,2),el('span',{class:'tb-hint'},['بعد از انتخاب متن، ابزار را مشخص کنید']),el('span',{})]));
+    bar.appendChild(grp('رنگ',swatches()));
+    bar.appendChild(grp('ابزار',[el('button',{class:'tool'},['🖍 هایلایت']),el('button',{class:'tool'},['─ خط ممتد']),el('button',{class:'tool'},['⋯ نقطه‌چین'])]));
+    bar.appendChild(grp('برچسب',chips('important')));
+    bar.appendChild(grp(null,[el('button',{class:'tool'},['📝 یادداشت']),el('button',{class:'tool'},['🗂 کالکشن']),el('button',{class:'tool danger'},['🗑 حذف'])]));
+    bar.appendChild(el('button',{class:'tool exit'},['✕ خروج']));
+    return bar;
+  }
+
+  /* ================= §2 — measured specimens ================= */
+  (function(){
+    var host=document.getElementById('specs');
+    var defs=[
+      {name:'امروز', build:buildToday, cls:'base', tag:'مبنا',
+       note:'نوارِ فعلی. نه ↶ دارد، نه ↷، نه هیچ راهی برای حذف.'},
+      {name:'طرح ۱ — پیشنهادِ قبلی‌ام', build:buildV1, cls:'bad', tag:'رد',
+       note:'کار می‌کند و ارتفاعش هم مسئله‌ساز نیست. ایرادش این است که ↶ و ↷ را مثل یک ابزارِ دیگر در صف می‌نشانَد، در حالی که از جنسِ بقیه نیستند — و برچسبِ «تاریخچه» چیزی را توضیح می‌دهد که خودش گویاست.'},
+      {name:'طرح ۲ — اصلاح‌شده', build:buildV2, cls:'win', tag:'پیشنهاد',
+       note:'↶ و ↷ روی ردیفِ راهنما، جدا از ابزارهایی که روی متن کار می‌کنند. بدون برچسبِ گروهی. و «افزودنِ هایلایت به کالکشن» شده «کالکشن».'}
+    ];
+    var bars=[];
+    defs.forEach(function(d){
+      var frame=el('div',{class:'spec-frame'});
+      var bar=d.build(); frame.appendChild(bar);
+      var hEl=el('span',{class:'v num'},['—']);
+      host.appendChild(el('div',{class:'spec'},[
+        el('div',{class:'spec-h'},[
+          el('b',{},[d.name]),
+          el('span',{class:'verdict '+d.cls},[d.tag]),
+          el('span',{class:'h'},[hEl,document.createTextNode(' پیکسل ارتفاع')])
+        ]),
+        frame,
+        el('div',{class:'spec-note'},[d.note])
+      ]));
+      bars.push({bar:bar,out:hEl});
+    });
+    function measure(){ bars.forEach(function(b){ b.out.textContent=faNum(b.bar.offsetHeight); }); }
+    measure(); window.addEventListener('resize',measure);
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(measure);
+    setTimeout(measure,600);
+  })();
+
+  /* ================= §3 — the live demo ================= */
+  var prose=document.getElementById('prose');
+  var state={ color:'yellow', label:'important', current:null, pending:null, seq:3 };
+  var undoStack=[], redoStack=[], parked={};
+
+  function marksOf(id){ return Array.prototype.slice.call(prose.querySelectorAll('mark.hl[data-id="'+id+'"]')); }
+  function bindMark(m){ m.addEventListener('click',function(e){ e.stopPropagation(); setCurrent(m.dataset.id); }); }
+  Array.prototype.forEach.call(prose.querySelectorAll('mark.hl'),bindMark);
+
+  function setCurrent(id){
+    state.current=id;
+    Array.prototype.forEach.call(prose.querySelectorAll('mark.hl'),function(m){ m.classList.toggle('is-current', m.dataset.id===id); });
+    if(id){ var m=marksOf(id)[0]; if(m){ state.color=m.dataset.color||state.color; state.label=m.dataset.label||null; } }
+    render();
+  }
+
+  function capture(){
+    var sel=window.getSelection();
+    if(!sel||sel.isCollapsed||!sel.rangeCount) return;
+    var r=sel.getRangeAt(0);
+    if(!prose.contains(r.commonAncestorContainer)) return;
+    if(r.toString().trim().length<2) return;
+    state.pending=r.cloneRange();
+  }
+  document.addEventListener('mouseup',function(){ setTimeout(capture,0); });
+  document.addEventListener('touchend',function(){ setTimeout(capture,0); });
+
+  function wrapRange(range,id,color,kind){
+    var nodes=[], w=document.createTreeWalker(prose,NodeFilter.SHOW_TEXT,null), n;
+    while((n=w.nextNode())){ if(range.intersectsNode(n)&&n.nodeValue.trim()) nodes.push(n); }
+    var made=[];
+    nodes.forEach(function(tn){
+      var s=(tn===range.startContainer)?range.startOffset:0;
+      var e=(tn===range.endContainer)?range.endOffset:tn.nodeValue.length;
+      if(e<=s) return;
+      var r2=document.createRange(); r2.setStart(tn,s); r2.setEnd(tn,e);
+      var mk=document.createElement('mark');
+      mk.className='hl'+(kind==='underline'?' u':kind==='cloze'?' c':'');
+      mk.dataset.color=color; mk.dataset.id=id;
+      try{ r2.surroundContents(mk); made.push(mk); bindMark(mk); }catch(_){}
+    });
+    return made;
+  }
+  function softDelete(id){
+    var ms=marksOf(id); if(!ms.length) return;
+    parked[id]=ms.map(function(m){ return {node:m,parent:m.parentNode}; });
+    ms.forEach(function(m){ var p=m.parentNode; while(m.firstChild) p.insertBefore(m.firstChild,m); p.removeChild(m); p.normalize(); });
+  }
+  function restore(id){
+    var rec=parked[id]; if(!rec) return; delete parked[id];
+    rec.forEach(function(r){
+      var m=r.node, text=m.textContent, w=document.createTreeWalker(r.parent,NodeFilter.SHOW_TEXT,null), tn;
+      while((tn=w.nextNode())){
+        var i=tn.nodeValue.indexOf(text);
+        if(i>=0){
+          var rr=document.createRange(); rr.setStart(tn,i); rr.setEnd(tn,i+text.length);
+          var f=document.createElement('mark');
+          f.className=m.className.replace(' is-current','');
+          f.dataset.color=m.dataset.color; f.dataset.id=m.dataset.id;
+          if(m.dataset.label) f.dataset.label=m.dataset.label;
+          try{ rr.surroundContents(f); bindMark(f); f.classList.add('is-back');
+               setTimeout(function(){ f.classList.remove('is-back'); },2200); }catch(_){}
+          break;
+        }
+      }
+    });
+  }
+
+  function push(e){ undoStack.push(e); redoStack.length=0; render(); }
+  function faOf(c){ for(var i=0;i<PALETTE.length;i++) if(PALETTE[i].k===c) return PALETTE[i].fa; return c; }
+  function faL(k){ for(var i=0;i<LABELS.length;i++) if(LABELS[i].k===k) return LABELS[i].fa; return null; }
+  function kindFa(k){ return k==='underline'?'خط ممتد':k==='cloze'?'نقطه‌چین':'هایلایت'; }
+
+  function doCreate(kind){
+    if(!state.pending){ toast('اول یک تکه از متن را انتخاب کن.'); return; }
+    var range=state.pending, color=state.color; state.pending=null;
+    var id='n'+(++state.seq), made=wrapRange(range,id,color,kind);
+    var sel=window.getSelection(); if(sel) sel.removeAllRanges();
+    if(!made.length){ toast('این انتخاب قابل هایلایت نیست.'); return; }
+    setCurrent(id);
+    push({ kind:kindFa(kind)+' '+faOf(color),
+      undo:function(){ softDelete(id); setCurrent(null); },
+      redo:function(){ restore(id); setCurrent(id); } });
+  }
+  function doDelete(){
+    var id=state.current;
+    if(!id||!marksOf(id).length){ toast('اول روی یکی از هایلایت‌هایت کلیک کن.'); return; }
+    softDelete(id); setCurrent(null);
+    push({ kind:'حذف',
+      undo:function(){ restore(id); setCurrent(id); },
+      redo:function(){ softDelete(id); setCurrent(null); } });
+    toastUndo('هایلایت حذف شد.');
+  }
+  function doColor(c){
+    state.color=c;
+    if(state.pending){ doCreate('highlight'); return; }
+    var id=state.current; if(!id||!marksOf(id).length){ render(); return; }
+    var was=marksOf(id)[0].dataset.color;
+    if(was===c){ render(); return; }
+    var apply=function(v){ marksOf(id).forEach(function(m){ m.dataset.color=v; }); };
+    apply(c); render();
+    push({ kind:'رنگ: '+faOf(was)+' ← '+faOf(c),
+      undo:function(){ apply(was); setCurrent(id); }, redo:function(){ apply(c); setCurrent(id); } });
+  }
+  function doLabel(k){
+    var id=state.current;
+    if(id&&marksOf(id).length){
+      var was=marksOf(id)[0].dataset.label||null, now=(was===k?null:k);
+      var apply=function(v){ marksOf(id).forEach(function(m){ if(v) m.dataset.label=v; else delete m.dataset.label; }); };
+      apply(now); state.label=now; render();
+      push({ kind:'برچسب: '+(faL(was)||'—')+' ← '+(faL(now)||'—'),
+        undo:function(){ apply(was); state.label=was; setCurrent(id); },
+        redo:function(){ apply(now); state.label=now; setCurrent(id); } });
+      return;
+    }
+    state.label=(state.label===k?null:k); render();
+  }
+  function undo(){ var e=undoStack.pop(); if(!e) return; e.undo(); redoStack.push(e); render(); toast('بازگردانده شد — '+e.kind); }
+  function redoAct(){ var e=redoStack.pop(); if(!e) return; e.redo(); undoStack.push(e); render(); toast('دوباره اعمال شد — '+e.kind); }
+
+  document.addEventListener('keydown',function(e){
+    if(!(e.ctrlKey||e.metaKey)) return;
+    var k=e.key.toLowerCase();
+    if(k==='z'&&!e.shiftKey){ e.preventDefault(); undo(); }
+    else if((k==='z'&&e.shiftKey)||k==='y'){ e.preventDefault(); redoAct(); }
+  });
+
+  var tEl=document.getElementById('toast'), tTimer;
+  function showToast(kids){ tEl.innerHTML=''; kids.forEach(function(k){ tEl.appendChild(typeof k==='string'?document.createTextNode(k):k); });
+    tEl.classList.add('in'); clearTimeout(tTimer); tTimer=setTimeout(function(){ tEl.classList.remove('in'); },3400); }
+  function toast(t){ showToast([t]); }
+  function toastUndo(t){ showToast([t,el('button',{onclick:function(){ undo(); tEl.classList.remove('in'); }},['بازگردانی'])]); }
+
+  /* the docked, working variant-C toolbar */
+  var bar=document.getElementById('toolbar'), ui={};
+  function armApply(b,fn){ b.addEventListener('pointerdown',function(e){ e.preventDefault(); capture(); fn(); }); return b; }
+  function buildBar(){
+    bar.innerHTML='';
+    ui.undo=el('button',{class:'ubtn',type:'button',title:'بازگردانی (Ctrl+Z)','aria-label':'بازگردانی',html:UND,onclick:undo});
+    ui.redo=el('button',{class:'ubtn',type:'button',title:'ازنو (Ctrl+Shift+Z)','aria-label':'ازنو',html:RED,onclick:redoAct});
+    ui.uc=el('span',{class:'cnt num'}); ui.rc=el('span',{class:'cnt num'});
+    ui.undo.appendChild(ui.uc); ui.redo.appendChild(ui.rc);
+    ui.hint=el('span',{class:'tb-hint'},['بعد از انتخاب متن، ابزار را مشخص کنید']);
+    bar.appendChild(el('div',{class:'tb-top'},[el('span',{class:'hist'},[ui.undo,ui.redo]),ui.hint,el('span',{})]));
+
+    ui.sw=PALETTE.map(function(p){
+      var b=el('button',{class:'sw',type:'button',title:p.fa,'aria-label':'رنگ '+p.fa,style:'--c:var(--sw-'+p.k+')'});
+      b.dataset.color=p.k; return armApply(b,function(){ doColor(p.k); }); });
+    bar.appendChild(grp('رنگ',ui.sw));
+
+    function tool(txt,fn){ return armApply(el('button',{class:'tool',type:'button'},[txt]),fn); }
+    bar.appendChild(grp('ابزار',[
+      tool('🖍 هایلایت',function(){ doCreate('highlight'); }),
+      tool('─ خط ممتد',function(){ doCreate('underline'); }),
+      tool('⋯ نقطه‌چین',function(){ doCreate('cloze'); })]));
+
+    ui.chips=LABELS.map(function(l){
+      var b=el('button',{class:'chip',type:'button',onclick:function(){ doLabel(l.k); }},[l.fa]); b.dataset.label=l.k; return b; });
+    bar.appendChild(grp('برچسب',ui.chips));
+
+    ui.note=el('button',{class:'tool',type:'button',onclick:function(){ toast('در ماکاپ غیرفعال است.'); }},['📝 یادداشت']);
+    ui.coll=el('button',{class:'tool',type:'button',onclick:function(){ toast('در ماکاپ غیرفعال است.'); }},['🗂 کالکشن']);
+    ui.del =el('button',{class:'tool danger',type:'button',onclick:doDelete},['🗑 حذف']);
+    bar.appendChild(grp(null,[ui.note,ui.coll,ui.del]));
+    bar.appendChild(el('button',{class:'tool exit',type:'button',onclick:function(){ toast('در ماکاپ غیرفعال است.'); }},['✕ خروج']));
+  }
+  function render(){
+    ui.sw.forEach(function(s){ s.classList.toggle('is-active', s.dataset.color===state.color); });
+    ui.chips.forEach(function(c){ c.classList.toggle('is-active', c.dataset.label===state.label); });
+    ui.undo.disabled=!undoStack.length; ui.redo.disabled=!redoStack.length;
+    ui.uc.textContent=undoStack.length?faNum(undoStack.length):'';
+    ui.rc.textContent=redoStack.length?faNum(redoStack.length):'';
+    var has=!!(state.current&&marksOf(state.current).length);
+    ui.del.disabled=!has; ui.note.disabled=!has; ui.coll.disabled=!has;
+    ui.hint.textContent = has ? 'یک هایلایت انتخاب شده — یادداشت بگذار یا حذفش کن' : 'بعد از انتخاب متن، ابزار را مشخص کنید';
+    syncDock();
+  }
+  function syncDock(){ document.documentElement.style.setProperty('--dock',(bar.offsetHeight+8)+'px'); }
+  window.addEventListener('resize',syncDock);
+
+  buildBar(); render(); syncDock();
+})();
+</script>
