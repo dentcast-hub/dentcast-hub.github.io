@@ -64,10 +64,6 @@
         "milestone": false
       },
       {
-        "content_id": "chairside/chairside-36",
-        "milestone": false
-      },
-      {
         "content_id": "episodes/episode-14",
         "milestone": false
       },
@@ -141,10 +137,6 @@
       },
       {
         "content_id": "episodes/episode-86",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-12",
         "milestone": false
       },
       {
@@ -235,10 +227,6 @@
         "milestone": false
       },
       {
-        "content_id": "chairside/chairside-36",
-        "milestone": false
-      },
-      {
         "content_id": "episodes/episode-60",
         "milestone": false
       },
@@ -248,10 +236,6 @@
       },
       {
         "content_id": "episodes/episode-122-6",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-63",
         "milestone": false
       },
       {
@@ -648,7 +632,7 @@
     "glyph": "icon-scale",
     "title_fa": "سواد نقد شواهد و تصمیم‌گیری علمی",
     "short_fa": "سواد نقد شواهد",
-    "description_fa": "مسیر خواندن نقادانه‌ی مقاله و شواهد — متانوت‌ها به‌عنوان مرورِ نقادانه‌ی مطالعات: از متد تصمیم و مفهوم Success/Survival تا نقدِ ادعاهای بقا و طراحی مطالعه.",
+    "description_fa": "مسیر قضاوت درباره‌ی شواهد و تصمیم بالینی — از متد تصمیم و سندرم بیمار آشنا تا مفهوم Success/Survival، توهم بقا در دندانپزشکی ادهزیو، معیار قضاوت ایمپلنت در برابر دندان، و اینکه یک قاعده تا کجا به موقعیت دیگری منتقل می‌شود.",
     "premium": true,
     "steps": [
       {
@@ -676,19 +660,7 @@
         "milestone": false
       },
       {
-        "content_id": "sharehub/share-13",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-16",
-        "milestone": false
-      },
-      {
         "content_id": "metanotes/meta-4",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-11",
         "milestone": false
       },
       {
@@ -696,51 +668,7 @@
         "milestone": true
       },
       {
-        "content_id": "metanotes/meta-7",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-9",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-11",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-12",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-15",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-40",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-41",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-18",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-19",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-20",
-        "milestone": false
-      },
-      {
         "content_id": "metanotes/meta-17",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-18",
         "milestone": true
       }
     ],
@@ -819,10 +747,6 @@
         "milestone": true
       },
       {
-        "content_id": "dentai/dentai-30",
-        "milestone": false
-      },
-      {
         "content_id": "dentai/dentai-13",
         "milestone": false
       },
@@ -862,22 +786,6 @@
         "milestone": false
       },
       {
-        "content_id": "dentcast-plus/video-10",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-12",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-13",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-33",
-        "milestone": false
-      },
-      {
         "content_id": "episodes/episode-42",
         "milestone": false
       },
@@ -887,6 +795,22 @@
       },
       {
         "content_id": "episodes/episode-125-3",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-33",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-10",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-12",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-13",
         "milestone": false
       },
       {
@@ -991,7 +915,7 @@
       },
       {
         "content_id": "metanotes/meta-20",
-        "milestone": false
+        "milestone": true
       }
     ],
     "reserved": {}
@@ -1025,10 +949,6 @@
         "milestone": false
       },
       {
-        "content_id": "insight/insight-60",
-        "milestone": false
-      },
-      {
         "content_id": "episodes/episode-102",
         "milestone": false
       },
@@ -1054,6 +974,10 @@
       },
       {
         "content_id": "dentai/dentai-31",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-60",
         "milestone": false
       },
       {
@@ -1127,10 +1051,6 @@
       {
         "content_id": "chairside/chairside-23",
         "milestone": true
-      },
-      {
-        "content_id": "chairside/chairside-28",
-        "milestone": false
       },
       {
         "content_id": "chairside/chairside-31",
@@ -1305,10 +1225,6 @@
         "milestone": false
       },
       {
-        "content_id": "insight/insight-59",
-        "milestone": false
-      },
-      {
         "content_id": "metanotes/meta-17",
         "milestone": true
       }
@@ -1329,18 +1245,6 @@
       },
       {
         "content_id": "episodes/episode-114",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-29",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-30",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-35",
         "milestone": false
       },
       {
@@ -1369,6 +1273,10 @@
       },
       {
         "content_id": "notecast/episode-38",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-35",
         "milestone": false
       },
       {
@@ -1424,6 +1332,10 @@
         "milestone": true
       },
       {
+        "content_id": "dentai/dentai-29",
+        "milestone": false
+      },
+      {
         "content_id": "episodes/episode-4",
         "milestone": false
       },
@@ -1445,6 +1357,10 @@
       },
       {
         "content_id": "dentai/dentai-16",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-30",
         "milestone": false
       },
       {
@@ -1509,6 +1425,14 @@
       },
       {
         "content_id": "dentcast-plus/video-11",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-8",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-9",
         "milestone": false
       },
       {
@@ -1584,7 +1508,15 @@
         "milestone": false
       },
       {
+        "content_id": "notecast/episode-40",
+        "milestone": false
+      },
+      {
         "content_id": "episodes/episode-41",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-41",
         "milestone": false
       },
       {
@@ -1732,58 +1664,6 @@
         "milestone": false
       },
       {
-        "content_id": "dentai/dentai-33",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-40",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-41",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-18",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-7",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-10",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-12",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-13",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-66",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-9",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-8",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-64",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-19",
-        "milestone": false
-      },
-      {
         "content_id": "insight/insight-54",
         "milestone": false
       },
@@ -1856,10 +1736,6 @@
       },
       {
         "content_id": "dentai/dentai-2",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-40",
         "milestone": false
       },
       {
@@ -1947,10 +1823,6 @@
         "milestone": false
       },
       {
-        "content_id": "dentai/dentai-29",
-        "milestone": false
-      },
-      {
         "content_id": "episodes/episode-38",
         "milestone": false
       },
@@ -1988,10 +1860,6 @@
       },
       {
         "content_id": "chairside/chairside-33",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-36",
         "milestone": false
       },
       {
@@ -2050,15 +1918,15 @@
         "milestone": false
       },
       {
-        "content_id": "sharehub/share-14",
-        "milestone": false
-      },
-      {
         "content_id": "episodes/episode-119",
         "milestone": false
       },
       {
         "content_id": "episodes/episode-120",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-14",
         "milestone": false
       },
       {
@@ -2380,14 +2248,6 @@
         "milestone": false
       },
       {
-        "content_id": "sharehub/share-17",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-62",
-        "milestone": false
-      },
-      {
         "content_id": "episodes/episode-29",
         "milestone": false
       },
@@ -2476,6 +2336,10 @@
         "milestone": false
       },
       {
+        "content_id": "sharehub/share-17",
+        "milestone": false
+      },
+      {
         "content_id": "dentai/dentai-26",
         "milestone": true
       },
@@ -2513,10 +2377,6 @@
       },
       {
         "content_id": "dentai/dentai-30",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-35",
         "milestone": false
       },
       {
@@ -2589,6 +2449,10 @@
       },
       {
         "content_id": "notecast/episode-19",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-62",
         "milestone": false
       },
       {
@@ -2695,23 +2559,15 @@
         "milestone": false
       },
       {
+        "content_id": "episodes/episode-76",
+        "milestone": false
+      },
+      {
         "content_id": "chairside/chairside-27",
         "milestone": false
       },
       {
-        "content_id": "chairside/chairside-32",
-        "milestone": false
-      },
-      {
         "content_id": "chairside/chairside-29",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-35",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-76",
         "milestone": false
       },
       {
@@ -2935,6 +2791,14 @@
         "milestone": true
       },
       {
+        "content_id": "chairside/chairside-32",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-35",
+        "milestone": false
+      },
+      {
         "content_id": "episodes/episode-47",
         "milestone": false
       },
@@ -2988,7 +2852,7 @@
       },
       {
         "content_id": "sharehub/share-18",
-        "milestone": false
+        "milestone": true
       }
     ],
     "reserved": {}
