@@ -33,9 +33,13 @@ alwaysApply: false
   **معنایی** است؛ مرزی بود، بپرس.
   ```bash
   python3 tools/pathway_place.py <content_id>              # کاندیدها + anchor پیشنهادی
-  python3 tools/pathway_place.py --insert <content_id> --pathway <id> --after <anchor> [--milestone]
-  python3 tools/pathway_place.py --coverage                # تأیید
+  python3 tools/pathway_place.py --insert <content_id> --pathway <id> --after <anchor> [--milestone] [--confirmed]
+  python3 tools/pathway_place.py --coverage                # تأیید + شاخصِ «per item» (خط پایه ۱٫۳۸)
   ```
+  سه گارد (۱۴۰۵/۰۶/۲۳): STRONG فقط از **هسته‌ی منجمد** (`.dentcast/pathway-core.json`)
+  می‌آید نه لیستِ زنده؛ **مسیرِ سوم همیشه سوال** است و `--insert` بدون
+  `--confirmed` ردش می‌کند؛ لنگر **هرگز وسطِ یک سری** نمی‌نشیند (اپیزود + نوت‌کستش
+  یک واحدند). `--freeze-core` فقط بعد از بازچینیِ بنیان‌گذار.
   ویرایش `plus/pathways.json` دیگر redeploy API نمی‌خواهد — `content-refresh.ts`
   فایل منتشرشده را هر چند دقیقه در حال اجرا دوباره می‌گیرد (validated، فقط
   upgrade، و در هر خطا آخرین نسخهٔ سالم). ولی «بدون redeploy» یعنی **زنده**، نه
