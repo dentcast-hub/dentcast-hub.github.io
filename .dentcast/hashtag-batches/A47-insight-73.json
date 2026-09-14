@@ -1,0 +1,22 @@
+{
+  "type": "clinical",
+  "enforce": true,
+  "note": "اینسایت ۷۳ (insight/insight-73 — تعویض روکش و مدیریت بافت نرم در حضور التهاب ناشی از فودایمپکشن). All nine tags REUSE existing canonical concepts; nothing was minted. #کنترل_خونریزی، #تعویض_روکش، #مدیریت_بافت_نرم، #کانتکت_پروگزیمال، #فینیش_لاین and #اورهنگ each came back rank-1 score=1.00, and «نخ ریترکشن» resolved to #نخ_زیرلثه through its existing alias «نخ رترکشن». The one correction recorded here: a first pass simulated «فود ایمپکشن» and, getting nothing above the 0.5 threshold, was about to mint #فود_ایمپکشن as a new concept — but #گیر_غذایی has covered exactly this since five earlier articles (episode-121-1, insight-7, episode-159, chairside-28, chairside-37), and the query missed it only because the two spellings share no word. That is a discoverability hole in the library, not a missing concept, so this batch fixes the hole instead: the transliterated forms a dentist actually types are added to #گیر_غذایی's aliases and the article carries the canonical #گیر_غذایی. Tagged what the article RESOLVES: #سالکوس and #ژل_هموستاتیک are deliberately absent — the sulcus assessment is carried by #نخ_زیرلثه + #مدیریت_بافت_نرم, and the gel is the means of #کنترل_خونریزی, not a separate argument.",
+  "concepts": [
+    {
+      "tag": "#گیر_غذایی",
+      "aliases": [
+        "food impaction",
+        "گیر کردن غذا",
+        "ایمپکشن غذا",
+        "فود ایمپکشن",
+        "ایمپکشن غذایی",
+        "گیر مواد غذایی",
+        "food trapping"
+      ]
+    }
+  ],
+  "articles": {
+    "insight/insight-73": ["#اینسایت", "#تعویض_روکش", "#گیر_غذایی", "#کانتکت_پروگزیمال", "#نخ_زیرلثه", "#کنترل_خونریزی", "#مدیریت_بافت_نرم", "#فینیش_لاین", "#اورهنگ"]
+  }
+}
