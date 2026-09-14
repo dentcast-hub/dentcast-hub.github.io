@@ -1748,6 +1748,42 @@ new content's actual subject against what a learner of each pathway needs.
    content** (it ignores pillar). It marks a pathway **STRONG** only when a real
    conceptual **cluster** exists there (several related steps + a close
    neighbour); everything thinner is **ASK**.
+
+   **Three guards decide what the tool may call STRONG and where it may
+   anchor — none of them is yours to relax** (added after the 2026-09-14
+   re-curation, when the 64 items published since the July curation had
+   averaged 2.64 pathways each against 1.38 for the curated set, `fixed-pros`
+   had re-grown the post-and-core block it was deliberately split from, and
+   eight series had a stranger between part 1 and part 2):
+   - **STRONG is measured against the pathway's frozen CORE**
+     (`.dentcast/pathway-core.json` — its steps as the founder last curated
+     them), never its live list. The live list ranks and supplies the anchor,
+     but cannot promote: scoring against the live list is how every placement
+     raised the score of the next similar item until `evidence-literacy`
+     ranked a post-and-core article first. A pathway with no frozen core is
+     never STRONG. `--freeze-core` re-freezes every full pathway from the live
+     file and is run **only after a founder curation pass** — never after a
+     publish, which would re-admit exactly the drift the core measures against.
+   - **A third pathway is always a question.** An item already in two full
+     pathways gets ASK for every further candidate, and `--insert` refuses to
+     make it a member of a third without `--confirmed` — pass that flag only
+     after the founder said yes to *that* placement; it is the record of the
+     answer, not a way around the question. Bundles are outside this count
+     (they have their own gate, 5.6-ب).
+   - **The anchor never splits a series.** Consecutive podcast episodes (an
+     episode and its NoteCast are one unit), chapter-style ids
+     (`prompt6-1 → prompt6-4`) and consecutive «قسمت/بخش N» titles with one
+     stem are one run; the suggested anchor is the run's **last** step, and
+     `--insert --after` a step inside a run is refused without `--confirmed`.
+     The nearest neighbour of a new item is, in a series, part N — which is
+     how Biological Width part 1 came to be followed by four chairside cases
+     and then part 2.
+   The scorer also ignores brand/series hashtags (`domain: brand|web` in the
+   hashtag reference) and corpus-generic words (`دندان`, `ایمپلنت`, `روکش`… —
+   measured, anything in >10% of entries): «Share_Hub» made every ShareHub
+   item a neighbour of every other, and the title word «دندان» inside the
+   keyword «اسپارتینا و دندانپزشکی» made a tirzepatide note STRONG for Goodacre's
+   prep principles.
 2. Decide membership **semantically**, per **Hard Rule 14** — judged on the
    content's actual subject vs. what each pathway's learner needs, **never** on
    the item's pillar:
@@ -1767,9 +1803,11 @@ new content's actual subject against what a learner of each pathway needs.
      conceptual, not pillar-bound (bonding basics reach esthetics/ceramics;
      occlusion reaches the implant and prosthetics pathways).
 3. Apply each confirmed placement mechanically (this is the only writer of
-   `plus/pathways.json`; it refuses duplicates and refuses LiteCast):
+   `plus/pathways.json`; it refuses duplicates, refuses LiteCast, refuses a
+   third full pathway and refuses an anchor inside a series — the last two
+   only without `--confirmed`, which you pass after the founder's yes):
    ```bash
-   python3 tools/pathway_place.py --insert <content_id> --pathway <id> --after <anchor_id> [--milestone]
+   python3 tools/pathway_place.py --insert <content_id> --pathway <id> --after <anchor_id> [--milestone] [--confirmed]
    # or --at-end instead of --after <anchor_id>
    ```
    Set `--milestone` only if the item becomes the new end of its conceptual
@@ -1780,7 +1818,9 @@ new content's actual subject against what a learner of each pathway needs.
    ```
    Confirm the new `content_id` is now in **≥1** pathway (or, if you and the
    user deliberately left it out — a meta/equipment/orphan piece — state that
-   explicitly, never silently). Report every pathway it joined and where.
+   explicitly, never silently). Report every pathway it joined and where, and
+   the `full pathways: … per item` line — the curated baseline is **1.38**;
+   if it moves, say so in the report rather than letting it creep.
 
 **Scope / non-effects.** This step edits **only** `plus/pathways.json` — no
 builder, no rebuild, no version bump. It does **not** touch the brain, the page,
