@@ -499,9 +499,13 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     };
     // due_card_count is premium-only and intentionally absent for free users.
     if (user.tier === 'premium') {
+      // Joined to the `highlights` VIEW (migration 0066) so a soft-deleted
+      // highlight's card — which still exists, box intact, waiting for an
+      // undo — is not counted as due for a review page that cannot show it.
       const due = await pool.query<{ n: number }>(
-        `select count(*)::int as n from card_state
-          where user_id = $1 and (next_review_at is null or next_review_at <= now())`,
+        `select count(*)::int as n from card_state cs
+           join highlights h on h.id = cs.highlight_id
+          where cs.user_id = $1 and (cs.next_review_at is null or cs.next_review_at <= now())`,
         [user.id],
       );
       me.due_card_count = due.rows[0]?.n ?? 0;

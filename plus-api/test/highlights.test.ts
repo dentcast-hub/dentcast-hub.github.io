@@ -111,8 +111,12 @@ describe('highlights CRUD + anchoring round-trip', () => {
 
     const del = await app.inject({ method: 'DELETE', url: `/highlights/${id}`, headers: { cookie } });
     expect(del.statusCode).toBe(200);
+    // SOFT since migration 0066: the card is NOT cascaded away. It waits, box
+    // intact, for the undo that the workbench can now offer.
     const cs = await pool.query('select count(*)::int as n from card_state where highlight_id = $1', [id]);
-    expect(cs.rows[0].n).toBe(0); // cascaded
+    expect(cs.rows[0].n).toBe(1);
+    const gone = await app.inject({ method: 'GET', url: '/highlights?content_id=resin-cements-overview', headers: { cookie } });
+    expect(gone.json().highlights).toHaveLength(0);
   });
 
   it('accepts a highlight with null optional fields (workbench with no label)', async () => {
@@ -266,5 +270,119 @@ describe('GET /highlights/recent', () => {
     expect(body.highlights).toHaveLength(2); // the page
     expect(body.total).toBe(3);              // ...but the truth about the library
     expect(body.article_count).toBe(2);
+  });
+});
+
+describe('soft delete + restore (migration 0066 — the inverse of «حذف» for undo)', () => {
+  async function create(payload = sampleHighlight): Promise<string> {
+    const res = await app.inject({ method: 'POST', url: '/highlights', headers: { cookie }, payload });
+    expect(res.statusCode).toBe(201);
+    return res.json().highlight.id as string;
+  }
+  const list = async () =>
+    (await app.inject({ method: 'GET', url: '/highlights?content_id=resin-cements-overview', headers: { cookie } })).json().highlights;
+
+  it('restore brings back the SAME id with its card box untouched', async () => {
+    const id = await create();
+    // climb the card to box 3 so the restore has something to preserve
+    await pool.query('update card_state set box = 3 where highlight_id = $1', [id]);
+
+    expect((await app.inject({ method: 'DELETE', url: `/highlights/${id}`, headers: { cookie } })).statusCode).toBe(200);
+    expect(await list()).toHaveLength(0);
+
+    const res = await app.inject({ method: 'POST', url: `/highlights/${id}/restore`, headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().highlight.id).toBe(id);
+    expect(res.json().highlight.exact).toBe(sampleHighlight.exact);
+    expect(res.json().highlight.note).toBe(sampleHighlight.note);
+
+    const back = await list();
+    expect(back).toHaveLength(1);
+    expect(back[0].id).toBe(id);
+    const cs = await pool.query<{ box: number }>('select box from card_state where highlight_id = $1', [id]);
+    expect(cs.rows[0].box).toBe(3);
+  });
+
+  it('logs highlight_restored and never a second highlight_created (no XP for pressing ↶)', async () => {
+    const id = await create();
+    await app.inject({ method: 'DELETE', url: `/highlights/${id}`, headers: { cookie } });
+    await app.inject({ method: 'POST', url: `/highlights/${id}/restore`, headers: { cookie } });
+    const acts = await pool.query<{ action: string; n: number }>(
+      `select action, count(*)::int as n from user_activity group by action order by action`,
+    );
+    const byAction = Object.fromEntries(acts.rows.map((r) => [r.action, r.n]));
+    expect(byAction.highlight_created).toBe(1);
+    expect(byAction.highlight_deleted).toBe(1);
+    expect(byAction.highlight_restored).toBe(1);
+  });
+
+  it('a repeat delete and a restore of a live row are both 404 — the client stack advances only on success', async () => {
+    const id = await create();
+    expect((await app.inject({ method: 'POST', url: `/highlights/${id}/restore`, headers: { cookie } })).statusCode).toBe(404);
+    expect((await app.inject({ method: 'DELETE', url: `/highlights/${id}`, headers: { cookie } })).statusCode).toBe(200);
+    expect((await app.inject({ method: 'DELETE', url: `/highlights/${id}`, headers: { cookie } })).statusCode).toBe(404);
+    // still exactly one deleted event
+    const n = await pool.query(`select count(*)::int as n from user_activity where action = 'highlight_deleted'`);
+    expect(n.rows[0].n).toBe(1);
+  });
+
+  it('a deleted highlight cannot be patched, restored by someone else, or pinned', async () => {
+    const id = await create();
+    await app.inject({ method: 'DELETE', url: `/highlights/${id}`, headers: { cookie } });
+    const patch = await app.inject({ method: 'PATCH', url: `/highlights/${id}`, headers: { cookie }, payload: { note: 'x' } });
+    expect(patch.statusCode).toBe(404);
+    const other = await loginAs(app, '09121200002');
+    const theirs = await app.inject({ method: 'POST', url: `/highlights/${id}/restore`, headers: { cookie: other } });
+    expect(theirs.statusCode).toBe(404);
+    // still deleted for the owner
+    expect(await list()).toHaveLength(0);
+  });
+
+  it('is invisible to every count while deleted: recent totals and the due-card bell', async () => {
+    const id = await create();
+    await pool.query(`update profiles set tier = 'premium'`);
+    await pool.query('update card_state set next_review_at = now() - interval \'1 hour\' where highlight_id = $1', [id]);
+
+    const before = await app.inject({ method: 'GET', url: '/me', headers: { cookie } });
+    expect(before.json().due_card_count).toBe(1);
+    expect((await app.inject({ method: 'GET', url: '/highlights/recent', headers: { cookie } })).json().total).toBe(1);
+
+    await app.inject({ method: 'DELETE', url: `/highlights/${id}`, headers: { cookie } });
+    const during = await app.inject({ method: 'GET', url: '/me', headers: { cookie } });
+    expect(during.json().due_card_count).toBe(0);
+    expect((await app.inject({ method: 'GET', url: '/highlights/recent', headers: { cookie } })).json().total).toBe(0);
+
+    await app.inject({ method: 'POST', url: `/highlights/${id}/restore`, headers: { cookie } });
+    const after = await app.inject({ method: 'GET', url: '/me', headers: { cookie } });
+    expect(after.json().due_card_count).toBe(1);
+  });
+
+  it('a collection pin hides with its highlight and comes back with it', async () => {
+    await pool.query(`update profiles set tier = 'premium'`);
+    const id = await create();
+    const col = await app.inject({ method: 'POST', url: '/collections', headers: { cookie }, payload: { title: 'بورد' } });
+    expect(col.statusCode).toBe(201);
+    const colId = col.json().collection.id;
+    const pin = await app.inject({ method: 'POST', url: `/collections/${colId}/items`, headers: { cookie }, payload: { highlight_id: id } });
+    expect(pin.statusCode).toBe(201);
+
+    const board = async () => (await app.inject({ method: 'GET', url: `/collections/${colId}`, headers: { cookie } })).json().items;
+    const shelf = async () => (await app.inject({ method: 'GET', url: '/collections', headers: { cookie } })).json().collections[0];
+    expect(await board()).toHaveLength(1);
+    expect((await shelf()).item_count).toBe(1);
+
+    await app.inject({ method: 'DELETE', url: `/highlights/${id}`, headers: { cookie } });
+    expect(await board()).toHaveLength(0);
+    expect((await shelf()).item_count).toBe(0);
+    // the pin row itself was never touched
+    const rows = await pool.query('select count(*)::int as n from collection_items where highlight_id = $1', [id]);
+    expect(rows.rows[0].n).toBe(1);
+    // and a deleted highlight cannot be pinned afresh
+    const again = await app.inject({ method: 'POST', url: `/collections/${colId}/items`, headers: { cookie }, payload: { highlight_id: id } });
+    expect(again.statusCode).toBe(404);
+
+    await app.inject({ method: 'POST', url: `/highlights/${id}/restore`, headers: { cookie } });
+    expect(await board()).toHaveLength(1);
+    expect((await shelf()).item_count).toBe(1);
   });
 });

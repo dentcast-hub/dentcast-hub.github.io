@@ -136,7 +136,11 @@ export async function mergeProfiles(
   //     too; push_subscriptions.endpoint and auth_identities(provider, id) are
   //     GLOBALLY unique, so a value can live on only one of the two accounts.
   const plainTables = [
-    'user_activity', 'highlights', 'card_state', 'audio_clips', 'collections',
+    // highlights_all, not the `highlights` view (migration 0066): a merge
+    // moves the account's deleted highlights too, or they would stay on the
+    // old profile and be cascade-deleted with it — and a restore after the
+    // merge would find nothing.
+    'user_activity', 'highlights_all', 'card_state', 'audio_clips', 'collections',
     'subscriptions', 'payments', 'certificates', 'push_subscriptions',
     'auth_identities',
     // ارزیاب DES: a reader's own submissions. des_papers carries no user

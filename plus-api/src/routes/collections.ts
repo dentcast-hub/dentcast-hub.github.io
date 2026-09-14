@@ -67,6 +67,15 @@ export const ITEM_SELECT = `
     left join audio_clips ac on ac.id = ci.clip_id
 `;
 
+// A pin whose highlight is SOFT-DELETED (migration 0066) is hidden with it,
+// not orphaned and not shown as an empty card: `highlights` is a view over
+// live rows, so `h` is null for exactly those pins, and this predicate is
+// what every board read appends. The pin row itself is untouched — restoring
+// the highlight brings the pin back with it, which is the whole point of
+// deleting softly. Every caller of ITEM_SELECT carries it; the aggregate in
+// GET /collections carries the same predicate on its own aliases.
+export const PIN_VISIBLE = `(ci.highlight_id is null or h.id is not null)`;
+
 // A board's own colour, chosen by its owner. A closed set, because these are
 // rendered as real surfaces on the client and a free-text colour would let a
 // board make its own title unreadable.
@@ -193,7 +202,7 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
       // to answer, and deriving it costs nothing over the join that is already
       // here — a column would cost a migration and a write path to keep true.
       `select c.id, c.title, c.description, c.emoji, c.color, c.created_at,
-              max(ci.created_at) as last_item_at,
+              max(ci.created_at) filter (where ${PIN_VISIBLE}) as last_item_at,
               coalesce(
                 json_agg(
                   json_build_object(
@@ -202,7 +211,7 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
                     'clip_id', ci.clip_id, 'clip_content_id', ac.content_id
                   )
                   order by ci.created_at desc
-                ) filter (where ci.id is not null),
+                ) filter (where ci.id is not null and ${PIN_VISIBLE}),
                 '[]'
               ) as items
          from collections c
@@ -274,7 +283,7 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
     // never placed, newest-first (`nulls last` is what keeps an unarranged
     // board behaving exactly as it always did).
     const items = await pool.query<ItemRow>(
-      `${ITEM_SELECT} where ci.collection_id = $1
+      `${ITEM_SELECT} where ci.collection_id = $1 and ${PIN_VISIBLE}
        order by ci.position asc nulls last, ci.created_at desc`,
       [id],
     );
@@ -376,7 +385,7 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
         );
       }
       const res = await client.query<ItemRow>(
-        `${ITEM_SELECT} where ci.collection_id = $1
+        `${ITEM_SELECT} where ci.collection_id = $1 and ${PIN_VISIBLE}
          order by ci.position asc nulls last, ci.created_at desc`,
         [id],
       );
