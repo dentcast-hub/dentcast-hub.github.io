@@ -1,0 +1,503 @@
+<!doctype html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Treatment Planning Phases: Where Do You Start When a Patient Needs Several Different Procedures? | Share Hub – DentCast</title>
+
+<meta name="description" content="The order of the treatment planning phases is not optional: each phase creates the conditions the next one needs — emergency, then surgery and periodontal therapy, then restorative, then fixed prosthodontics, and removable prosthodontics last. Get the order wrong and the crown margin is set against inflamed gingiva and the partial denture framework no longer seats on the crown that follows; orthodontics has a defined place too: after phase two and before phase three.">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/en/share-19.html">
+
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="DentCast">
+<meta property="og:title" content="Treatment Planning Phases: Where Do You Start When a Patient Needs Several Different Procedures? | Share Hub – DentCast">
+<meta property="og:description" content="The order of the treatment planning phases is not optional: each phase creates the conditions the next one needs — emergency, then surgery and periodontal therapy, then restorative, then fixed prosthodontics, and removable prosthodontics last. Get the order wrong and the crown margin is set against inflamed gingiva and the partial denture framework no longer seats on the crown that follows; orthodontics has a defined place too: after phase two and before phase three.">
+<meta property="og:url" content="https://dentcast.org/sharehub/en/share-19.html">
+<meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Treatment Planning Phases: Where Do You Start When a Patient Needs Several Different Procedures? | Share Hub – DentCast">
+<meta name="twitter:description" content="The order of the treatment planning phases is not optional: each phase creates the conditions the next one needs — emergency, then surgery and periodontal therapy, then restorative, then fixed prosthodontics, and removable prosthodontics last. Get the order wrong and the crown margin is set against inflamed gingiva and the partial denture framework no longer seats on the crown that follows; orthodontics has a defined place too: after phase two and before phase three.">
+<meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css?v=3">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+
+  <!-- Theme init — no flash -->
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --radius:18px;
+    }
+
+    html,body { margin:0; padding:0; }
+
+    body {
+      font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+      direction: ltr;
+      background: #f0f2f5;
+      color: #0a1a33;
+      max-width: 47.5rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 6.25rem;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0a1020;
+      font-weight: 800;
+      font-size: 1.7rem;
+      line-height: 1.35;
+      margin: 0 0 1.875rem;
+    }
+
+    .glass-box {
+      background: #fff;
+      border: 1px solid rgba(2,35,96,.09);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.875rem;
+      box-shadow: 0 10px 30px rgba(2,35,96,.06);
+    }
+
+    p { margin: 0.875rem 0; font-size: 1.02rem; text-align: left; }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 1.5rem 0 0.625rem;
+      border-left: 4px solid #0b5fff;
+      padding-left: 0.75rem;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    strong { color: var(--blue); }
+
+    /* summary tables — LTR counterpart of the .text-box table pattern used elsewhere on the site */
+    .glass-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .glass-box table th,
+    .glass-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:left;
+      vertical-align:top;
+    }
+    .glass-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .glass-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+    @media (max-width:768px){
+      .glass-box table{font-size:.9rem;}
+      .glass-box table th,.glass-box table td{padding:0.45rem 0.5rem;}
+    }
+
+    .text-divider {
+      margin: 1.75rem 0;
+      border: 0;
+      height: 0.0625rem;
+      background-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0),
+        rgba(11,95,255,0.4),
+        rgba(0,0,0,0)
+      );
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: #4a5568;
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* Persian-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 0 1.125rem auto;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      h1 { font-size: 1.4rem; }
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { font-size: .98rem; line-height: 1.9;}
+    }
+  </style>
+
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/en/share-19.html",
+      "url": "https://dentcast.org/sharehub/en/share-19.html",
+      "name": "Treatment Planning Phases: Where Do You Start When a Patient Needs Several Different Procedures?",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/en/share-19.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/en/share-19.html#creativework",
+      "name": "Treatment Planning Phases: Where Do You Start When a Patient Needs Several Different Procedures?",
+      "headline": "Treatment Planning Phases: Where Do You Start When a Patient Needs Several Different Procedures?",
+      "description": "The order of the treatment planning phases is not optional: each phase creates the conditions the next one needs — emergency, then surgery and periodontal therapy, then restorative, then fixed prosthodontics, and removable prosthodontics last. Get the order wrong and the crown margin is set against inflamed gingiva and the partial denture framework no longer seats on the crown that follows; orthodontics has a defined place too: after phase two and before phase three.",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "creator": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/en/share-19.html"
+      },
+      "datePublished": "2026-09-15",
+      "dateModified": "2026-09-15",
+      "genre": "Dental Education",
+      "keywords": [
+        "treatment planning phases",
+        "sequencing of dental treatment",
+        "comprehensive treatment planning",
+        "orthodontics in treatment planning",
+        "emergency phase dentistry",
+        "when to fabricate a removable partial denture",
+        "crown margin on inflamed gingiva",
+        "recall and maintenance phase",
+        "phase one periodontal therapy",
+        "fixed prosthodontics timing"
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "DentCast", "item": "https://dentcast.org/" },
+    { "@type": "ListItem", "position": 2, "name": "Share Hub", "item": "https://dentcast.org/sharehub/" },
+    { "@type": "ListItem", "position": 3, "name": "Treatment Planning Phases: Where Do You Start When a Patient Needs Several Different Procedures? | Share Hub – DentCast", "item": "https://dentcast.org/sharehub/en/share-19.html" }
+  ]
+}
+</script>
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<div class="sh-kicker"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Share Hub</div>
+<h1>Treatment Planning Phases: Where Do You Start When a Patient Needs Several Different Procedures?</h1>
+
+<div class="glass-box">
+
+  <a class="lang-btn" href="../share-19.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+  <p>
+  Many patients coming to the office for the first time do not have just one problem. A full examination may turn up, all at once, several carious lesions, one or two teeth needing root canal treatment, calculus and gingival inflammation, a retained root, several extracted teeth that have left edentulous spaces, and crowding of the anterior teeth. Diagnosing each of these on its own is not difficult. What may be unclear is the order in which this work should be carried out, and what happens if that order is not respected.
+  </p>
+
+  <p>
+  In the treatment planning literature, the order of treatment is defined as a series of consecutive phases. Each phase provides the conditions required by the next one. If a phase is skipped or moved, the work of the following phase is usually either ruined or has to be repeated. The general rule is this: first resolve the acute problem, then carry out the surgery and periodontal therapy, then the restorative work, then build the fixed prosthesis, and finally the removable prosthesis.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ Emergency phase</h3>
+
+  <p>
+  If the patient has come in with pain, swelling, or acute infection, that problem must be dealt with before any planning. At this stage only what controls the pain or the infection is done: opening the canal of the painful tooth, draining an abscess, or extracting a tooth that is both painful and unsalvageable. If the patient has acute joint or masticatory muscle pain, an interim splint can also be made at this stage. None of these is treated to completion in the emergency phase; a tooth whose canal has been opened, for instance, has its root canal treatment completed in the restorative phase.
+  </p>
+
+  <p>
+  If the patient has no acute problem at all, we go straight to phase one.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ Phase one: surgery and periodontal therapy</h3>
+
+  <p>
+  In this phase everything requiring extraction or surgery is carried out:
+  </p>
+
+  <ul>
+    <li>Extraction of unsalvageable teeth and retained roots</li>
+    <li>Scaling and root planing</li>
+    <li>Periodontal surgery where needed, such as a flap, crown lengthening, or a gingival graft</li>
+    <li>Implant placement, provided the final space is defined and the patient has no orthodontics planned</li>
+  </ul>
+
+  <p>
+  The reason this work comes before restorative and prosthetic treatment is simple. The margin of every crown and every restoration is set relative to the gingival level. If a crown is made against inflamed gingiva, then once the periodontal therapy is done and the inflammation subsides, the gingival level drops and the crown margin ends up exposed. By the same logic, until it is settled which teeth stay and which come out, the prosthetic plan cannot be finalized.
+  </p>
+
+  <p>
+  After this phase ends, leave a few weeks and reassess the gingiva. If active pockets or bleeding are still present, do not move into the next phase — continue the periodontal therapy.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ Phase two: restorative</h3>
+
+  <p>
+  In this phase the remaining teeth are made sound:
+  </p>
+
+  <ul>
+    <li>Completion of root canal treatments</li>
+    <li>Removal of all caries and placement of direct restorations</li>
+    <li>Build-up of posts and cores for the teeth that are to be crowned</li>
+  </ul>
+
+  <p>
+  By the end of this phase there should be no active caries and no unfinished root canal treatment left in the mouth. Only then can prosthetic work begin without concern.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ Phase three: fixed prosthodontics</h3>
+
+  <p>
+  In this phase the crowns and bridges are made. If an implant was placed in phase one, the implant prosthesis is also done at this stage.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ Phase four: removable prosthodontics</h3>
+
+  <p>
+  Removable partial dentures and complete dentures are always the last stage. The reason is that the design of a partial denture — rest seats, guide planes, and the contours of the abutment teeth — has to be worked out on the final shape of the teeth. If the partial is made first and a crown is then placed on one of the abutment teeth, the framework no longer seats on that crown and has to be remade.
+  </p>
+
+  <p>
+  The definitive occlusal splint is also made at this stage, that is, after the patient's occlusion has reached its final form.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ Where does orthodontics fit?</h3>
+
+  <p>
+  Orthodontics is carried out after phase two and before phase three. That is, it starts once the periodontal therapy is finished, all caries have been restored, and no unfinished root canal treatment remains, and it finishes before any crown, bridge, or partial denture is made. Orthodontics is not started on a tooth with caries or on gingiva that is inflamed.
+  </p>
+
+  <p>
+  There is one exception. Sometimes a tooth is so broken down that it cannot be rebuilt with a direct restoration and needs a crown before orthodontics. In that case the crown is made before orthodontics, but three points must be observed. First, the choice of crown material should be coordinated with the orthodontist beforehand, because a bracket will later have to be bonded to this crown and the bonding protocol depends on the crown surface. Second, this crown is in effect an interim crown and may need to be replaced after orthodontics is finished, because of the change in tooth position and occlusion. Third, this possibility of replacement should be explained to the patient from the outset and recorded in the chart. The reason is that the final position of the teeth determines the space available for a bridge, an implant, and a partial denture. If the patient needs orthodontics and accepts it, the prosthesis and the implant must wait until orthodontics is complete. If the patient declines orthodontics, that decision is recorded in the chart and the prosthesis is designed around the current position of the teeth.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ After treatment ends</h3>
+
+  <p>
+  Treatment does not end with the delivery of the last prosthesis. The patient has to come back for recall: periodontal examination every three to six months depending on the patient's condition, review of the restorations and prostheses once a year, and periodic radiographs. Without recall, periodontal disease and caries return and everything achieved in the earlier phases is put at risk.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ References</h3>
+
+  <ul class="sh-refs">
+    <li>Stefanac SJ, Nesbit SP. Diagnosis and Treatment Planning in Dentistry. 4th ed. Elsevier; 2024.</li>
+    <li>Newman MG, et al. Carranza's Clinical Periodontology.</li>
+    <li>Carr AB, Brown DT. McCracken's Removable Partial Prosthodontics.</li>
+    <li>Rosenstiel SF, et al. Contemporary Fixed Prosthodontics.</li>
+  </ul>
+
+</div>
+
+  <footer class="dc-site-footer">
+  <div style="margin-bottom:1.375rem;">
+    <a href="/"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Back to DentCast
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=10" defer></script>
+<script src="/dc-nav.js?v=179" defer></script>
+</body>
+</html>
