@@ -132,7 +132,14 @@ describe('History (the stack itself)', () => {
 
 describe('the toolbar', () => {
   it('carries ↶ ↷ on the top row, a «حذف» button, and «کالکشن» short', () => {
-    expect(document.querySelector('.dcp-toolbar .dcp-wb-top .dcp-hist')).toBeTruthy();
+    const hist = document.querySelector('.dcp-toolbar .dcp-wb-top .dcp-hist') as HTMLElement;
+    expect(hist).toBeTruthy();
+    // undo FIRST in DOM order and the pair laid out ltr, so undo sits on the
+    // LEFT in the RTL toolbar — the pair is never mirrored (founder, 2026-09-15).
+    expect(hist.children[0]).toBe(undoBtn());
+    expect(hist.children[1]).toBe(redoBtn());
+    // two distinct glyphs, neither a CSS mirror of the other
+    expect(undoBtn().querySelector('path')!.getAttribute('d')).not.toBe(redoBtn().querySelector('path')!.getAttribute('d'));
     expect(undoBtn().disabled).toBe(true);
     expect(redoBtn().disabled).toBe(true);
     expect(tool('حذف')).toBeTruthy();
