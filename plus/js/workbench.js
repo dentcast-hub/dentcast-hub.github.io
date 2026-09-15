@@ -1,11 +1,11 @@
 // Study mode controller. A mode of the article page, not a separate page. It
 // inherits the site's typography (styles live in plus.css and reference the
 // site's own CSS variables). Never auto-enters; the caller decides when.
-import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=84';
-import { api } from './api.js?v=84';
-import { PALETTE, LABELS, SS_MODE } from './config.js?v=84';
-import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=84';
-import { openCollectionPicker } from './collections.js?v=84';
+import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=85';
+import { api } from './api.js?v=85';
+import { PALETTE, LABELS, SS_MODE } from './config.js?v=85';
+import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=85';
+import { openCollectionPicker } from './collections.js?v=85';
 
 /**
  * The workbench's history — undo/redo over SERVER writes.
@@ -51,7 +51,13 @@ export class History {
   }
 }
 
-const UNDO_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 7H7.5a4.5 4.5 0 100 9H12"/><path d="M10 4l-3 3 3 3"/></svg>';
+// The two glyphs everybody recognises (the Material «undo»/«redo» shapes): a
+// full arrowhead on a short curl. The first version was a hand-drawn half
+// circle with a three-unit head, which at 16px read as a hook. They are two
+// separate drawings, never one mirrored from the other, and they are NOT
+// mirrored for RTL either — see .dcp-hist in plus.css.
+const UNDO_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>';
+const REDO_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z"/></svg>';
 
 export class Workbench {
   // onChange fires on EVERY enter/exit, including the toolbar's own ✕ خروج. The
@@ -147,7 +153,7 @@ export class Workbench {
     const undoBtn = el('button', { class: 'dcp-ubtn dcp-ubtn-undo', type: 'button', title: 'بازگردانی (Ctrl+Z)', 'aria-label': 'بازگردانی', onclick: () => this.undo() });
     undoBtn.innerHTML = UNDO_SVG;
     const redoBtn = el('button', { class: 'dcp-ubtn dcp-ubtn-redo', type: 'button', title: 'ازنو (Ctrl+Shift+Z)', 'aria-label': 'ازنو', onclick: () => this.redo() });
-    redoBtn.innerHTML = UNDO_SVG;
+    redoBtn.innerHTML = REDO_SVG;
     const undoCount = el('span', { class: 'dcp-ubtn-count' }, '');
     const redoCount = el('span', { class: 'dcp-ubtn-count' }, '');
     undoBtn.appendChild(undoCount); redoBtn.appendChild(redoCount);
