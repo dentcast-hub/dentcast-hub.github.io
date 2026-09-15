@@ -14815,5 +14815,41 @@
       "secondary": [],
       "subtopic": "intraoral-scanning"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-75",
+    "title": "کش اومدن قالب دندان یعنی چی؟ چرا لابراتوار می‌گه واش کش اومده و باید دوباره قالب بگیرید؟",
+    "caption": "وقتی لابراتوار می‌گوید قالب یا واش «کش آمده»، منظورش این است که ماده پیش از ست شدن کامل از دهان خارج شده و هنگام بیرون آوردن دفرمه شده؛ پس قالب شکل واقعی دندان را ثبت نکرده و هر چیزی که روی آن ساخته شود روی دندان نمی‌نشیند. قالب‌گیری دستی روش دقیقی است به شرط رعایت اصولش، و یکی از آن اصول فرصت دادن به ماده برای ست شدن کامل است: تست ناخن روی پوتی نباید ردی باقی بگذارد، و واش نباید به دست یا دستکش بچسبد.",
+    "hashtags": [
+      "#اینسایت",
+      "#قالبگیری",
+      "#قالبگیری_دو_مرحله_ای",
+      "#زمان_ست_شدن",
+      "#تست_ناخن",
+      "#کشیدگی_قالب",
+      "#خطای_قالبگیری"
+    ],
+    "keywords": [
+      "impression material setting time",
+      "distorted impression premature removal",
+      "putty wash two step impression",
+      "elastomeric impression distortion",
+      "fingernail test putty set",
+      "wash not sticking to glove",
+      "laboratory remake impression request",
+      "کش آمدن قالب",
+      "ست شدن ماده قالب‌گیری",
+      "تست ناخن روی پوتی",
+      "خروج زودهنگام قالب از دهان",
+      "دفرمه شدن واش",
+      "درخواست قالب‌گیری مجدد لابراتوار"
+    ],
+    "page_url": "/insight/insight-75.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "impression"
+    }
   }
 ]
