@@ -1,4 +1,4 @@
-name: Generate site indexes (sitemap + plus content index)
+name: Generate site indexes (sitemap + plus index + version stamp)
 
 on:
   # اجرای دستی. این ورک‌فلو sitemap.xml و plus/content-index.json را تولید و
@@ -6,6 +6,15 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
+
+# دو مرجِ پشت‌سرهم نباید هم‌زمان روی main پوش کنند: رانِ دوم صف می‌کشد تا رانِ
+# اول تمام شود. cancel-in-progress عمداً false است — کنسل کردنِ رانِ در جریان
+# دقیقاً همان «بی‌صدا عقب ماندن» بالاست، و برای مرحلهٔ ۲c بدتر هم هست: استمپِ
+# نسخه‌ای که هیچ‌وقت کامیت نشود، یعنی سرویس‌ورکر به محتوایی اشاره می‌کند که
+# دیگر همان نیست.
+concurrency:
+  group: site-indexes-main
+  cancel-in-progress: false
 
 jobs:
   sitemap_job:
@@ -29,12 +38,43 @@ jobs:
         # the freshest articles (a stale index silently drops new pages).
         run: node tools/build_plus_index.mjs
 
+      - name: 2c. Re-stamp the site content version
+        # A SAFETY NET, not a replacement for step 7 of the publishing workflow —
+        # every publish still stamps before it commits, and verify_publish.py
+        # still fails a branch whose stamp does not match its own content.
+        #
+        # What this catches is the one case no single branch can: TWO publishes
+        # merged in sequence. The stamp is a hash over dentcast-brain.json, the
+        # two glossaries, dentcast-music.json and eight shared assets. Branch A
+        # stamps correctly at its own head; branch B (cut earlier) stamps
+        # correctly at ITS head; whichever merges second brings A's dc-nav.js —
+        # or brain, or CSS — alongside B's older stamp, and main ends up with a
+        # CACHE_NAME pointing at content that is no longer what it hashed.
+        # Nothing errors: the version still CHANGED, so caches still bust. It is
+        # simply no longer derived from what the site serves, and the drift
+        # compounds on every later publish.
+        #
+        # Found in production on 2026-09-15: PR #695 changed dc-nav.js after
+        # PR #696's branch had already stamped 93d26c6b4f; the merge shipped the
+        # stale stamp against a tree whose true hash was 45759b6606.
+        #
+        # It runs LAST among the generators on purpose (the stamper's own rule:
+        # "last" is wall-clock order, not list order) — though neither step above
+        # writes a hashed input, so the ordering is a guarantee rather than a
+        # dependency. Re-running when already current is free and writes nothing.
+        run: python3 tools/stamp-version.py
+
       - name: 3. Commit and Push generated files
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "github-actions[bot]"
-          git add sitemap.xml sitemap-ir.xml plus/content-index.json
-          git commit -m "chore: auto-generate sitemap + plus index [skip ci]" || echo "No changes to commit"
+          git add sitemap.xml sitemap-ir.xml plus/content-index.json service-worker.js
+          # The stamper rewrites every `dentcast-brain.json?v=` URL in the HTML
+          # (today index.html + player.html). Staging tracked+modified HTML by
+          # pattern rather than by name means a future page that fetches the
+          # brain is picked up on its own — nothing here has to remember it.
+          git add -u -- '*.html'
+          git commit -m "chore: auto-generate sitemap + plus index + version stamp [skip ci]" || echo "No changes to commit"
           git push origin main
 
       - name: 4. Ping Google Search Console
