@@ -14890,5 +14890,42 @@
       "secondary": [],
       "subtopic": "comprehensive-diagnosis"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-76",
+    "title": "روکش دندان عصب‌کشی‌شده بدون پست: کِی پست لازم است و کِی نه؟",
+    "caption": "پست ریشه را تقویت نمی‌کند و مقاومت دندان در برابر شکست را بالا نمی‌برد؛ تنها وظیفه‌اش تأمین گیر برای کور است. پس سوال درست این نیست که «پست لازم است یا نه»، بلکه این است که «کور بدون پست گیر کافی دارد یا نه». اگر دیواره‌های کافی از تاج و فرول مناسب باقی مانده باشد، کور روی همان ساختار ساخته می‌شود و پست نه فقط ضروری نیست، بلکه زیان‌بار است؛ چون آماده‌سازی فضای پست عاج ریشه را برمی‌دارد و ریشه را در برابر شکست آسیب‌پذیرتر می‌کند. در مولرها اتاقک پالپ حجیم و چند میلی‌متر ابتدای کانال‌ها اغلب همین گیر را فراهم می‌کند.",
+    "hashtags": [
+      "#اینسایت",
+      "#پست_و_کور",
+      "#فرول",
+      "#دندان_اندوشده",
+      "#کور_بیلدآپ",
+      "#روکش",
+      "#حفظ_دندان"
+    ],
+    "keywords": [
+      "post and core indication",
+      "crown without post endodontically treated tooth",
+      "post does not reinforce root",
+      "core retention remaining coronal structure",
+      "ferrule endodontically treated molar",
+      "post space preparation removes radicular dentin",
+      "pulp chamber retention molar core",
+      "روکش دندان عصب‌کشی‌شده بدون پست",
+      "وظیفه پست تأمین گیر کور",
+      "پست ریشه را تقویت نمی‌کند",
+      "اندیکاسیون پست در مولر",
+      "فرول و دیواره‌ی باقی‌مانده‌ی تاج",
+      "برداشت عاج ریشه در آماده‌سازی فضای پست",
+      "اتاقک پالپ به‌عنوان گیر کور"
+    ],
+    "page_url": "/insight/insight-76.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "post-and-core"
+    }
   }
 ]
