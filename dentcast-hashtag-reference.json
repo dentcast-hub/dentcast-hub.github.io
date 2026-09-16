@@ -258,7 +258,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 94,
+   "count": 95,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -353,7 +353,8 @@
     "insight/insight-72",
     "insight/insight-73",
     "insight/insight-74",
-    "insight/insight-75"
+    "insight/insight-75",
+    "insight/insight-76"
    ]
   },
   {
@@ -834,6 +835,63 @@
    ]
   },
   {
+   "key": "پست_و_کور",
+   "tag": "#پست_و_کور",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پست و کور — بازسازیِ ساختارِ ازدست‌رفته‌ی دندانِ اندوشده برای نگه‌داریِ روکش.",
+   "use_when": "مقاله پست/کور را موضوع داشته باشد.",
+   "aliases": [
+    "post and core",
+    "پست اند کور",
+    "پست کور",
+    "پست دندان",
+    "پست داخل کانال"
+   ],
+   "variants": [
+    "#پست و کور"
+   ],
+   "co_tags": [],
+   "count": 35,
+   "content_ids": [
+    "episodes/episode-36",
+    "episodes/episode-42",
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-79",
+    "episodes/episode-125-3",
+    "episodes/episode-128",
+    "episodes/episode-129",
+    "episodes/episode-147-7",
+    "insight/insight-12",
+    "insight/insight-15",
+    "insight/insight-17",
+    "insight/insight-20",
+    "metanotes/meta-7",
+    "insight/insight-21",
+    "metanotes/meta-9",
+    "insight/insight-28",
+    "metanotes/meta-11",
+    "chairside/chairside-5",
+    "insight/insight-39",
+    "insight/insight-41",
+    "notecast/episode-36",
+    "chairside/chairside-20",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19",
+    "metanotes/meta-20",
+    "dentcast-plus/video-7",
+    "dentcast-plus/video-10",
+    "insight/insight-66",
+    "notecast/episode-40",
+    "dentcast-plus/video-12",
+    "dentai/dentai-33",
+    "insight/insight-76"
+   ]
+  },
+  {
    "key": "dentai",
    "tag": "#DentAI",
    "domain": "brand",
@@ -882,62 +940,6 @@
     "dentai/dentai-32",
     "dentai/dentai-33",
     "dentai/dentai-34"
-   ]
-  },
-  {
-   "key": "پست_و_کور",
-   "tag": "#پست_و_کور",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پست و کور — بازسازیِ ساختارِ ازدست‌رفته‌ی دندانِ اندوشده برای نگه‌داریِ روکش.",
-   "use_when": "مقاله پست/کور را موضوع داشته باشد.",
-   "aliases": [
-    "post and core",
-    "پست اند کور",
-    "پست کور",
-    "پست دندان",
-    "پست داخل کانال"
-   ],
-   "variants": [
-    "#پست و کور"
-   ],
-   "co_tags": [],
-   "count": 34,
-   "content_ids": [
-    "episodes/episode-36",
-    "episodes/episode-42",
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-79",
-    "episodes/episode-125-3",
-    "episodes/episode-128",
-    "episodes/episode-129",
-    "episodes/episode-147-7",
-    "insight/insight-12",
-    "insight/insight-15",
-    "insight/insight-17",
-    "insight/insight-20",
-    "metanotes/meta-7",
-    "insight/insight-21",
-    "metanotes/meta-9",
-    "insight/insight-28",
-    "metanotes/meta-11",
-    "chairside/chairside-5",
-    "insight/insight-39",
-    "insight/insight-41",
-    "notecast/episode-36",
-    "chairside/chairside-20",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19",
-    "metanotes/meta-20",
-    "dentcast-plus/video-7",
-    "dentcast-plus/video-10",
-    "insight/insight-66",
-    "notecast/episode-40",
-    "dentcast-plus/video-12",
-    "dentai/dentai-33"
    ]
   },
   {
@@ -1483,6 +1485,43 @@
    ]
   },
   {
+   "key": "فرول",
+   "tag": "#فرول",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
+   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
+   "aliases": [
+    "ferrule"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 21,
+   "content_ids": [
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-147-7",
+    "insight/insight-4",
+    "insight/insight-7",
+    "insight/insight-13",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19",
+    "insight/insight-58",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "insight/insight-64",
+    "chairside/chairside-30",
+    "sharehub/share-18",
+    "dentai/dentai-33",
+    "insight/insight-76"
+   ]
+  },
+  {
    "key": "llm",
    "tag": "#LLM",
    "domain": "ai",
@@ -1556,42 +1595,6 @@
     "chairside/chairside-23",
     "insight/insight-60",
     "insight/insight-62"
-   ]
-  },
-  {
-   "key": "فرول",
-   "tag": "#فرول",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
-   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
-   "aliases": [
-    "ferrule"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 20,
-   "content_ids": [
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-147-7",
-    "insight/insight-4",
-    "insight/insight-7",
-    "insight/insight-13",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19",
-    "insight/insight-58",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "insight/insight-64",
-    "chairside/chairside-30",
-    "sharehub/share-18",
-    "dentai/dentai-33"
    ]
   },
   {
@@ -2151,6 +2154,38 @@
    ]
   },
   {
+   "key": "روکش",
+   "tag": "#روکش",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "چترِ عامِ روکش.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "crown",
+    "کراون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-2",
+    "episodes/episode-8",
+    "dentcast-plus/video-6",
+    "metanotes/meta-12",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "chairside/chairside-15",
+    "insight/insight-49",
+    "chairside/chairside-22",
+    "chairside/chairside-27",
+    "chairside/chairside-29",
+    "insight/insight-61",
+    "sharehub/share-15",
+    "dentcast-plus/video-9",
+    "insight/insight-76"
+   ]
+  },
+  {
    "key": "کامپوزیت",
    "tag": "#کامپوزیت",
    "domain": "clinical",
@@ -2245,37 +2280,6 @@
     "dentai/dentai-29",
     "dentai/dentai-32",
     "insight/insight-74"
-   ]
-  },
-  {
-   "key": "روکش",
-   "tag": "#روکش",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "چترِ عامِ روکش.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "crown",
-    "کراون"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "episodes/episode-2",
-    "episodes/episode-8",
-    "dentcast-plus/video-6",
-    "metanotes/meta-12",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "chairside/chairside-15",
-    "insight/insight-49",
-    "chairside/chairside-22",
-    "chairside/chairside-27",
-    "chairside/chairside-29",
-    "insight/insight-61",
-    "sharehub/share-15",
-    "dentcast-plus/video-9"
    ]
   },
   {
@@ -2541,6 +2545,36 @@
    ]
   },
   {
+   "key": "دندان_اندوشده",
+   "tag": "#دندان_اندوشده",
+   "domain": null,
+   "words": 2,
+   "definition": "دندانی که درمان ریشه شده و بازسازی می‌خواهد.",
+   "use_when": "مقاله بازسازیِ دندان اندوشده را تعیین کند.",
+   "aliases": [
+    "endodontically treated teeth",
+    "دندان اندو شده",
+    "دندان عصب کشی شده"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-40",
+    "episodes/episode-41",
+    "episodes/episode-47",
+    "episodes/episode-122-3",
+    "insight/insight-4",
+    "insight/insight-39",
+    "dentai/dentai-27",
+    "insight/insight-64",
+    "sharehub/share-18",
+    "dentai/dentai-33",
+    "notecast/episode-41",
+    "insight/insight-76"
+   ]
+  },
+  {
    "key": "سایش_دندان",
    "tag": "#سایش_دندان",
    "domain": "clinical",
@@ -2668,35 +2702,6 @@
     "insight/insight-54",
     "insight/insight-56",
     "chairside/chairside-37"
-   ]
-  },
-  {
-   "key": "دندان_اندوشده",
-   "tag": "#دندان_اندوشده",
-   "domain": null,
-   "words": 2,
-   "definition": "دندانی که درمان ریشه شده و بازسازی می‌خواهد.",
-   "use_when": "مقاله بازسازیِ دندان اندوشده را تعیین کند.",
-   "aliases": [
-    "endodontically treated teeth",
-    "دندان اندو شده",
-    "دندان عصب کشی شده"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-40",
-    "episodes/episode-41",
-    "episodes/episode-47",
-    "episodes/episode-122-3",
-    "insight/insight-4",
-    "insight/insight-39",
-    "dentai/dentai-27",
-    "insight/insight-64",
-    "sharehub/share-18",
-    "dentai/dentai-33",
-    "notecast/episode-41"
    ]
   },
   {
@@ -2951,6 +2956,36 @@
    ]
   },
   {
+   "key": "حفظ_دندان",
+   "tag": "#حفظ_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نگه داشتنِ دندانِ questionable در برابر کشیدن و جایگزینی.",
+   "use_when": "مقاله بین حفظ و کشیدن تصمیم بگیرد.",
+   "aliases": [
+    "tooth preservation",
+    "نگه داشتن دندان",
+    "tooth retention"
+   ],
+   "variants": [
+    "#نگهداری_دندان"
+   ],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "metanotes/meta-6",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-13",
+    "chairside/chairside-16",
+    "chairside/chairside-30",
+    "insight/insight-76"
+   ]
+  },
+  {
    "key": "روکش_موقت",
    "tag": "#روکش_موقت",
    "domain": null,
@@ -3184,35 +3219,6 @@
     "sharehub/share-13",
     "episodes/episode-161",
     "episodes/episode-162"
-   ]
-  },
-  {
-   "key": "حفظ_دندان",
-   "tag": "#حفظ_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نگه داشتنِ دندانِ questionable در برابر کشیدن و جایگزینی.",
-   "use_when": "مقاله بین حفظ و کشیدن تصمیم بگیرد.",
-   "aliases": [
-    "tooth preservation",
-    "نگه داشتن دندان",
-    "tooth retention"
-   ],
-   "variants": [
-    "#نگهداری_دندان"
-   ],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-150-2",
-    "episodes/episode-151",
-    "metanotes/meta-6",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-4",
-    "chairside/chairside-13",
-    "chairside/chairside-16",
-    "chairside/chairside-30"
    ]
   },
   {
@@ -6334,6 +6340,29 @@
    ]
   },
   {
+   "key": "کور_بیلدآپ",
+   "tag": "#کور_بیلدآپ",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بازسازیِ تاجی بدون تکیه بر کانال.",
+   "use_when": "مقاله بیلدآپ را جایگزینِ پست بداند.",
+   "aliases": [
+    "core buildup",
+    "بیلدآپ",
+    "کور بیلد آپ",
+    "build up"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-39",
+    "insight/insight-41",
+    "insight/insight-49",
+    "insight/insight-76"
+   ]
+  },
+  {
    "key": "bio_restorative_concept",
    "tag": "#Bio_Restorative_Concept",
    "domain": "clinical",
@@ -8544,28 +8573,6 @@
     "insight/insight-32",
     "insight/insight-46",
     "insight/insight-53"
-   ]
-  },
-  {
-   "key": "کور_بیلدآپ",
-   "tag": "#کور_بیلدآپ",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "بازسازیِ تاجی بدون تکیه بر کانال.",
-   "use_when": "مقاله بیلدآپ را جایگزینِ پست بداند.",
-   "aliases": [
-    "core buildup",
-    "بیلدآپ",
-    "کور بیلد آپ",
-    "build up"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-39",
-    "insight/insight-41",
-    "insight/insight-49"
    ]
   },
   {
