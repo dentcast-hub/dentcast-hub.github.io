@@ -14927,5 +14927,42 @@
       "secondary": [],
       "subtopic": "post-and-core"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-77",
+    "title": "وقتی راه میانه به نفع بیمار است",
+    "caption": "وقتی تعویض لابراتوار در میانه‌ی درمان، ساخت روکش نهایی از روی اسکن قبلی را غیرممکن می‌کند، انتخاب فقط بین «گران و امن» و «ارزان و پرریسک» نیست. اجرای نیم‌فک به نیم‌فک، اباتمنتِ موجود را حفظ می‌کند و ساپورت خلفی و VD در هیچ مرحله‌ای از دست نمی‌رود.",
+    "hashtags": [
+      "#اینسایت",
+      "#افزایش_VD",
+      "#استاپ_خلفی",
+      "#اباتمنت",
+      "#روکش_موقت",
+      "#توالی_درمان",
+      "#پروتز_ایمپلنت"
+    ],
+    "keywords": [
+      "half-arch sequencing implant final crown",
+      "preserving vertical dimension during implant restoration",
+      "posterior support loss occlusal overload anterior",
+      "scanning existing implant abutment lab merge",
+      "fixture level scan versus abutment level scan",
+      "provisional implant crown maintains VD",
+      "changing dental laboratory mid treatment",
+      "ترتیب اجرای نیم‌فک به نیم‌فک در پروتز ایمپلنت",
+      "حفظ ساپورت خلفی هنگام ساخت روکش نهایی",
+      "اسکن از اباتمنت موجود به جای ساخت اباتمنت جدید",
+      "از دست رفتن VD و انتقال بار اکلوزالی به قدام",
+      "تعویض لابراتوار در میانه‌ی درمان",
+      "محافظت از رستوریشن‌های فک بالا",
+      "محدودیت مالی بیمار و تغییر ترتیب درمان"
+    ],
+    "page_url": "/insight/insight-77.html",
+    "pillar": {
+      "primary": "occlusion",
+      "secondary": [],
+      "subtopic": "vertical-dimension"
+    }
   }
 ]
