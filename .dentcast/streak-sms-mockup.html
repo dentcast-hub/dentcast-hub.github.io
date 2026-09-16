@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>یادآوری استریک با پیامک — ماکاپ تأییدشده</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10); --line-strong:rgba(2,35,96,.18);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --danger:#c2384a; --danger-bg:rgba(194,56,74,.08); --danger-bd:rgba(194,56,74,.28);
+    --ok:#1a7f4b; --ok-bg:rgba(26,127,75,.08); --ok-bd:rgba(26,127,75,.28);
+    --warn:#a56a12; --warn-bg:rgba(165,106,18,.09); --warn-bd:rgba(165,106,18,.28);
+    --amber:#c9922b; --amber-bg:rgba(201,146,43,.10); --amber-bd:rgba(201,146,43,.32);
+    --mock-ink:#3b2f7a; --mock-bg:#efeaff; --mock-bd:rgba(59,47,122,.22);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --danger:#ff8095; --danger-bg:rgba(255,128,149,.12); --danger-bd:rgba(255,128,149,.30);
+    --ok:#5fd39a; --ok-bg:rgba(95,211,154,.10); --ok-bd:rgba(95,211,154,.30);
+    --warn:#e0a94a; --warn-bg:rgba(224,169,74,.12); --warn-bd:rgba(224,169,74,.30);
+    --amber:#e3b849; --amber-bg:rgba(227,184,73,.12); --amber-bd:rgba(227,184,73,.34);
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --danger:#ff8095; --danger-bg:rgba(255,128,149,.12); --danger-bd:rgba(255,128,149,.30);
+    --ok:#5fd39a; --ok-bg:rgba(95,211,154,.10); --ok-bd:rgba(95,211,154,.30);
+    --warn:#e0a94a; --warn-bg:rgba(224,169,74,.12); --warn-bd:rgba(224,169,74,.30);
+    --amber:#e3b849; --amber-bg:rgba(227,184,73,.12); --amber-bd:rgba(227,184,73,.34);
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }
+  body{ background:var(--bg); color:var(--txt);
+        font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif;
+        direction:rtl; margin:0; padding-inline:16px; padding-block:0 6rem;
+        line-height:1.85; font-size:15px; }
+  *{ box-sizing:border-box; } button,input,select{ font:inherit; color:inherit; }
+  :focus-visible{ outline:2px solid var(--ac); outline-offset:2px; border-radius:6px; }
+  .num{ font-variant-numeric:tabular-nums; }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+  code{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.83em;
+        direction:ltr; unicode-bidi:isolate; color:var(--txt2); }
+
+  .wrap{ max-width:900px; margin:0 auto; }
+  header.hd{ padding-block:2rem .6rem; }
+  .kick{ font-size:.73rem; font-weight:700; letter-spacing:.04em; color:var(--mock-ink);
+         background:var(--mock-bg); border:1px solid var(--mock-bd); border-radius:999px;
+         padding:.2rem .75rem; display:inline-block; margin-bottom:.8rem; }
+  header.hd h1{ font-size:1.7rem; font-weight:800; color:var(--pr); margin:0 0 .5rem; text-wrap:balance; }
+  header.hd p{ margin:0; color:var(--txt2); max-width:68ch; }
+
+  section{ margin-top:3.2rem; }
+  .sh{ display:flex; align-items:baseline; gap:.7rem; flex-wrap:wrap;
+       margin-bottom:.9rem; padding-bottom:.5rem; border-bottom:1px solid var(--border); }
+  .sh h2{ margin:0; font-size:1.06rem; font-weight:800; color:var(--mock-ink); }
+  .sh span{ color:var(--txt3); font-size:.81rem; }
+  .note{ color:var(--txt2); max-width:72ch; margin:.2rem 0 1.1rem; }
+  .note strong{ color:var(--txt); font-weight:700; }
+  .note em{ color:var(--txt); font-style:normal; font-weight:600; }
+
+  .card{ background:var(--surface); border:1px solid var(--border); border-radius:16px;
+         box-shadow:var(--card-sh); padding:1.15rem 1.25rem; }
+  .cols{ display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); }
+
+  table.g{ border-collapse:collapse; width:100%; font-size:.87rem; }
+  table.g th,table.g td{ text-align:right; padding:.6rem .65rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  table.g th{ color:var(--txt3); font-weight:600; font-size:.76rem; }
+  .scroll{ overflow-x:auto; }
+
+  .tag{ display:inline-block; font-size:.7rem; font-weight:700; border-radius:999px;
+        padding:.1rem .55rem; border:1px solid; white-space:nowrap; }
+  .tag-ok{ color:var(--ok); background:var(--ok-bg); border-color:var(--ok-bd); }
+  .tag-amber{ color:var(--amber); background:var(--amber-bg); border-color:var(--amber-bd); }
+  .tag-bad{ color:var(--danger); background:var(--danger-bg); border-color:var(--danger-bd); }
+
+  /* ── phone ── */
+  .phone{ width:100%; max-width:320px; margin-inline:auto; background:var(--surface2);
+          border:1px solid var(--line-strong); border-radius:22px; padding:.75rem; box-shadow:var(--card-sh); }
+  .pbar{ display:flex; justify-content:space-between; font-size:.68rem; color:var(--txt3); padding:0 .35rem .5rem; }
+  .pnote{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:.62rem .72rem; }
+  .pnote-h{ display:flex; gap:.4rem; align-items:center; font-size:.68rem; color:var(--txt3); margin-bottom:.3rem; }
+  .pico{ inline-size:18px; block-size:18px; border-radius:5px; display:grid; place-items:center;
+         font-size:.6rem; font-weight:800; color:#fff; flex:none; }
+  .pnote b{ display:block; font-size:.83rem; font-weight:700; }
+  .pnote p{ margin:.1rem 0 0; font-size:.79rem; color:var(--txt2); line-height:1.7; }
+
+  /* ── settings ── */
+  .set{ background:var(--surface); border:1px solid var(--border); border-radius:16px;
+        box-shadow:var(--card-sh); overflow:hidden; }
+  .set-h{ padding:.85rem 1.05rem; border-bottom:1px solid var(--border); font-weight:800; font-size:.93rem; }
+  .set-b{ padding:1rem 1.05rem; }
+  .master{ display:flex; align-items:center; gap:.65rem; padding-bottom:.85rem;
+           border-bottom:1px solid var(--border); margin-bottom:.9rem; }
+  .sw{ inline-size:42px; block-size:24px; border-radius:999px; background:var(--surface3);
+       border:1px solid var(--line-strong); position:relative; cursor:pointer; flex:none;
+       transition:background .15s; }
+  .sw::after{ content:''; position:absolute; inset-block-start:2px; inset-inline-end:2px;
+              inline-size:18px; block-size:18px; border-radius:50%; background:var(--surface);
+              box-shadow:0 1px 3px rgba(0,0,0,.25); transition:inset-inline-end .15s; }
+  .sw[aria-checked="true"]{ background:var(--ac); border-color:var(--ac); }
+  .sw[aria-checked="true"]::after{ inset-inline-end:calc(100% - 20px); }
+  .master b{ font-size:.92rem; } .master small{ display:block; color:var(--txt3); font-weight:400; font-size:.76rem; }
+
+  .mx{ width:100%; border-collapse:collapse; font-size:.85rem; min-width:290px; }
+  .mx th{ font-size:.71rem; color:var(--txt3); font-weight:600; padding:.35rem .4rem; text-align:center; }
+  .mx th:first-child{ text-align:right; }
+  .mx td{ padding:.6rem .4rem; border-top:1px solid var(--border); text-align:center; }
+  .mx td:first-child{ text-align:right; }
+  .ch{ display:flex; align-items:center; gap:.5rem; }
+  .ch-ico{ inline-size:26px; block-size:26px; border-radius:8px; display:grid; place-items:center;
+           font-size:.72rem; font-weight:800; color:#fff; flex:none; }
+  .ch b{ font-weight:700; font-size:.86rem; display:block; }
+  .ch small{ color:var(--txt3); font-size:.72rem; }
+  .box{ inline-size:20px; block-size:20px; border-radius:6px; border:1.5px solid var(--line-strong);
+        background:var(--surface2); display:inline-grid; place-items:center; cursor:pointer;
+        color:transparent; font-size:.7rem; font-weight:800; }
+  .box[aria-checked="true"]{ background:var(--ac); border-color:var(--ac); color:#fff; }
+  .box.amber[aria-checked="true"]{ background:var(--amber); border-color:var(--amber); }
+  .dash{ color:var(--txt3); font-size:.78rem; }
+  tr.amber-row{ background:linear-gradient(to bottom,var(--amber-bg),transparent 65%); }
+  tr.amber-row td:first-child{ box-shadow:inset 3px 0 0 -1px var(--amber); }
+
+  /* ── template ── */
+  .tpl{ background:var(--surface2); border:1px solid var(--border); border-radius:12px;
+        padding:.8rem .9rem; font-size:.88rem; line-height:2; }
+  .tpl .p{ color:var(--ac); font-weight:700; background:rgba(var(--ac-rgb),.10);
+           border-radius:5px; padding:.05rem .3rem; }
+
+  /* ── gate simulator ── */
+  .gates{ display:grid; gap:.45rem; }
+  .gate{ display:flex; gap:.7rem; align-items:flex-start; background:var(--surface2);
+         border:1px solid var(--border); border-radius:11px; padding:.6rem .75rem;
+         cursor:pointer; text-align:right; width:100%; transition:border-color .12s; }
+  .gate:hover{ border-color:var(--line-strong); }
+  .gate .dot{ inline-size:20px; block-size:20px; border-radius:50%; flex:none; margin-top:.2rem;
+              display:grid; place-items:center; font-size:.68rem; font-weight:800;
+              background:var(--danger-bg); border:1.5px solid var(--danger-bd); color:var(--danger); }
+  .gate[aria-pressed="true"] .dot{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok); }
+  .gate b{ display:block; font-weight:700; font-size:.85rem; }
+  .gate p{ margin:.05rem 0 0; font-size:.78rem; color:var(--txt3); line-height:1.65; }
+  .verdict{ margin-top:.9rem; border-radius:12px; padding:.8rem .95rem; font-size:.88rem;
+            border:1px solid var(--ok-bd); background:var(--ok-bg); color:var(--ok); font-weight:700; }
+  .verdict.no{ border-color:var(--danger-bd); background:var(--danger-bg); color:var(--danger); }
+  .verdict small{ display:block; font-weight:400; color:var(--txt2); font-size:.79rem; margin-top:.2rem; }
+
+  /* ── calc ── */
+  .cf{ display:grid; grid-template-columns:1fr auto; gap:.6rem; align-items:center;
+       font-size:.85rem; margin-bottom:.7rem; }
+  .cf input{ inline-size:100px; padding:.35rem .5rem; border-radius:8px;
+             border:1px solid var(--line-strong); background:var(--surface2); text-align:center; }
+  .cf small{ display:block; color:var(--txt3); font-size:.72rem; font-weight:400; }
+  .out{ padding:.9rem 1rem; border-radius:12px; background:var(--surface3); border:1px solid var(--line-strong); }
+  .out .lbl{ font-size:.75rem; color:var(--txt3); }
+  .out .big{ font-size:1.55rem; font-weight:800; color:var(--pr); }
+  .out .sub{ margin-top:.45rem; font-size:.8rem; color:var(--txt2);
+             border-top:1px solid var(--border); padding-top:.4rem; }
+
+  ol.dec{ padding-inline-start:1.15rem; margin:0; }
+  ol.dec li{ margin-bottom:.9rem; }
+  ol.dec b{ color:var(--txt); }
+  .rec{ display:block; font-size:.82rem; color:var(--ok); margin-top:.1rem; }
+  .rec::before{ content:'پیشنهاد — '; font-weight:700; }
+  .quote{ border-inline-start:3px solid var(--mock-ink); padding-inline-start:1rem; margin:1.2rem 0; }
+</style>
+<body>
+<div class="wrap">
+
+<header class="hd">
+  <span class="kick">تصمیم گرفته‌شده · فقط استریک · ۱۴۰۵/۰۶/۲۵</span>
+  <h1>یادآوری استریک با پیامک</h1>
+  <p>
+    کاربر پریمیوم، اگر خودش خواست، یادآوریِ استریک را روی پیامک بگیرد.
+    «مطلب جدید» از دامنه بیرون است — نه چون سخت بود، چون روی پیامک هم گران است و هم لال.
+  </p>
+</header>
+
+<!-- ═══ ۱ ═══ -->
+<section>
+  <div class="sh"><h2>۱. چرا فقط استریک</h2><span>دو نوتیف، دو رفتارِ هزینه‌ای</span></div>
+  <p class="note">
+    این دو نوتیف شبیه هم به نظر می‌رسند و روی یک کانالِ پولی <em>دقیقاً برعکسِ هم</em> رفتار می‌کنند.
+    تفاوت را هزینه نمی‌سازد؛ تفاوت در این است که هرکدام با <strong>چه چیزی</strong> ضرب می‌شوند.
+  </p>
+  <div class="cols">
+    <div class="card" style="border-color:var(--danger-bd)">
+      <span class="tag tag-bad">بیرون از دامنه</span>
+      <h3 style="margin:.65rem 0 .5rem;font-size:.97rem;">مطلب جدید</h3>
+      <p style="margin:0;color:var(--txt2);font-size:.85rem;">
+        ضرب می‌شود در <em>تعداد انتشار</em>. روزی سه مطلب یعنی روزی سه پیامک به هر مشترک —
+        و هرچه سایت پرکارتر، قبض سنگین‌تر. یک کانال که هزینه‌اش با <strong>موفقیت</strong> بالا می‌رود.
+      </p>
+      <p style="margin:.65rem 0 0;color:var(--txt2);font-size:.85rem;">
+        و ارزشش هم نمی‌رسد: ارزشِ این نوتیف در جمله‌ی پالس است، و قالبِ ثبت‌شده‌ی پیامکی
+        متنِ آزادِ متغیر نمی‌پذیرد. می‌ماند «مطلب تازه‌ای منتشر شد» — گران، و بی‌خبر.
+      </p>
+    </div>
+    <div class="card" style="border-color:var(--ok-bd)">
+      <span class="tag tag-ok">فاز اول</span>
+      <h3 style="margin:.65rem 0 .5rem;font-size:.97rem;">استریک</h3>
+      <p style="margin:0;color:var(--txt2);font-size:.85rem;">
+        ضرب می‌شود در <em>بی‌فعالیتی</em>. سقفش ذاتاً یکی در روز است، و کسی که فعال باشد
+        <strong>اصلاً نمی‌گیرد</strong>. هرچه خواننده درگیرتر، این کانال ارزان‌تر.
+      </p>
+      <p style="margin:.65rem 0 0;color:var(--txt2);font-size:.85rem;">
+        و قالبش جا می‌شود: یک اسم، یک عدد — هم‌شکلِ قالب ۵۳۰۴۶۰ که از قبل تأیید شده.
+        هیچ چیزی از پیام گم نمی‌شود.
+      </p>
+    </div>
+  </div>
+  <div class="quote">
+    <p class="note" style="margin:0">
+      نکته‌ای که ارزش گفتن دارد: <strong>این تنها کانالی است که وقتی خوب کار می‌کند، خودش را خاموش می‌کند.</strong>
+      پیامکِ استریک موفق یعنی خواننده برگشته، و خواننده‌ی برگشته دیگر پیامک نمی‌گیرد.
+      هزینه و اثر در یک جهت حرکت نمی‌کنند — کم می‌شوند با هم.
+    </p>
+  </div>
+</section>
+
+<!-- ═══ ۲ ═══ -->
+<section>
+  <div class="sh"><h2>۲. تنظیمات</h2><span>پروفایل ← یادآوری‌ها</span></div>
+  <p class="note">
+    کلید اصلی سر جایش می‌ماند. زیرش یک ماتریسِ <em>کانال × نوع</em> باز می‌شود.
+    ردیفِ پیامک <strong>کهربایی</strong> است، چون قانون رنگِ سایت می‌گوید کهربایی یعنی
+    «این چیزی است که اشتراک می‌خرد» — و همین یک ردیف است که پول لازم دارد.
+    ستونِ «مطلب جدید» برای پیامک اصلاً خانه ندارد: خطِ تیره، نه تیکِ خاموش.
+    یک تیکِ خاموش یعنی «می‌شود، روشنش کن»؛ اینجا نمی‌شود.
+  </p>
+  <div class="cols" style="grid-template-columns:minmax(290px,1.15fr) minmax(250px,.85fr);">
+    <div class="set">
+      <div class="set-h">یادآوری‌ها</div>
+      <div class="set-b">
+        <div class="master">
+          <span class="sw" id="master" role="switch" aria-checked="true" tabindex="0"></span>
+          <span><b>نوتیف‌ها</b><small>خبرِ مطلبِ جدید + یادآوریِ استریک</small></span>
+        </div>
+        <div id="matrix" class="scroll">
+          <table class="mx">
+            <thead><tr><th>از کجا برسد</th><th>مطلب جدید</th><th>استریک</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><div class="ch"><span class="ch-ico" style="background:#4b6ea9">و</span>
+                  <span><b>مرورگر</b><small>وب‌پوش · فعال</small></span></div></td>
+                <td><span class="box" role="checkbox" aria-checked="true" tabindex="0">✓</span></td>
+                <td><span class="box" role="checkbox" aria-checked="true" tabindex="0">✓</span></td>
+              </tr>
+              <tr>
+                <td><div class="ch"><span class="ch-ico" style="background:#1c8b6a">ب</span>
+                  <span><b>بله</b><small>متصل است</small></span></div></td>
+                <td><span class="box" role="checkbox" aria-checked="true" tabindex="0">✓</span></td>
+                <td><span class="box" role="checkbox" aria-checked="false" tabindex="0">✓</span></td>
+              </tr>
+              <tr class="amber-row">
+                <td><div class="ch"><span class="ch-ico" style="background:#c9922b">پ</span>
+                  <span><b>پیامک <span class="tag tag-amber">پریمیوم</span></b><small>۰۹۱۲···۴۵۶۱</small></span></div></td>
+                <td><span class="dash" title="پیامک قالبِ متنِ آزاد ندارد">—</span></td>
+                <td><span class="box amber" role="checkbox" aria-checked="true" tabindex="0">✓</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:.76rem;color:var(--txt3);margin:.8rem 0 0;">
+          پیامک فقط برای یادآوریِ استریک فرستاده می‌شود و شب‌ها بعد از ساعت ۲۲ هرگز.
+        </p>
+      </div>
+    </div>
+    <div>
+      <div class="phone">
+        <div class="pbar"><span>۲۱:۰۴</span><span>امروز</span></div>
+        <div class="pnote" style="border-color:var(--amber-bd);background:var(--amber-bg)">
+          <div class="pnote-h"><span class="pico" style="background:#c9922b">پ</span><span>پیامک · ۱۰۰۰۵۵۵۵</span></div>
+          <b>فؤاد عزیز،</b>
+          <p>استریک ۲۳ روزه‌ات امروز ثبت نشده. یادت نره!<br>
+             <span style="color:var(--txt3)">dentcast.ir</span></p>
+        </div>
+      </div>
+      <p class="note" style="font-size:.79rem;margin:.85rem 0 0;text-align:center;">
+        یک اسم، یک عدد، یک جمله. چیزی که قالبِ خدماتی اجازه می‌دهد
+        دقیقاً همان چیزی است که این پیام لازم دارد.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ۳ ═══ -->
+<section>
+  <div class="sh"><h2>۳. قالب</h2><span>باید در پنل sms.ir ثبت و تأیید شود</span></div>
+  <p class="note">
+    خطوط خدماتی فقط قالبِ از پیش ثبت‌شده با پارامترهای نام‌دار می‌فرستند، نه متن آزاد —
+    خودِ مخزن دو جا این را نوشته. پس <strong>این تنها قدمِ خارج از کد است</strong>،
+    و روی مسیرِ بحرانی می‌نشیند: تا تأیید نشود، هیچ‌چیزِ دیگری قابل تحویل نیست.
+  </p>
+  <div class="cols">
+    <div class="card">
+      <div style="font-size:.76rem;color:var(--txt3);margin-bottom:.5rem;">قالبِ پیشنهادی — استریک</div>
+      <div class="tpl">
+        <span class="p">#name#</span> عزیز، استریک <span class="p">#days#</span> روزه‌ات
+        امروز ثبت نشده. یادت نره!
+      </div>
+      <p style="margin:.75rem 0 0;font-size:.82rem;color:var(--txt2);">
+        دو پارامتر، هر دو کوتاه و قابل‌پیش‌بینی — عیناً شکلِ قالبی که برای یادآوریِ تمدید
+        تأیید شده است.
+      </p>
+    </div>
+    <div class="card">
+      <div style="font-size:.76rem;color:var(--txt3);margin-bottom:.5rem;">قالبِ موجود ۵۳۰۴۶۰ — تمدید</div>
+      <div class="tpl" style="opacity:.8">
+        <span class="p">#name#</span> عزیز، خواستم بهت یادآوری کنم فقط
+        <span class="p">#days#</span> روز از اشتراک پرمیومت باقی مونده یادت نره تمدید کنیا
+      </div>
+      <p style="margin:.75rem 0 0;font-size:.82rem;color:var(--txt2);">
+        تأییدشده در ۱۴۰۵/۰۵/۲۶. نکته‌ی تاریخی که به‌درد می‌خورد: نسخه‌ی
+        <em>بدونِ متغیر</em> همین قالب <strong>رد شد</strong> — sms.ir قالبِ بی‌پارامتر نمی‌پذیرد.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ۴ ═══ -->
+<section>
+  <div class="sh"><h2>۴. کِی واقعاً می‌رود</h2><span>شش شرط — همه باید برقرار باشند</span></div>
+  <p class="note">
+    این بخش مهم‌ترین کنترلِ هزینه است و <strong>از قبل نوشته شده</strong>:
+    منطقِ انتخابِ گیرنده در <code>streak-reminder.ts</code> همین حالا شش شرط را با هم می‌خواهد.
+    کانالِ پیامک چیزی به این اضافه نمی‌کند جز «شماره دارد» و «پریمیوم است».
+    روی هر شرط بزن تا ببینی کِی پیامک قطع می‌شود.
+  </p>
+  <div class="cols" style="grid-template-columns:minmax(280px,1.2fr) minmax(230px,.8fr);">
+    <div class="card">
+      <div class="gates" id="gates">
+        <button class="gate" type="button" aria-pressed="true" data-off="کلیدِ یادآوری خاموش است.">
+          <span class="dot">✓</span>
+          <span><b>خودش انتخاب کرده</b><p><code>settings.reminders.streak</code> روشن است</p></span>
+        </button>
+        <button class="gate" type="button" aria-pressed="true" data-off="استریکی در کار نیست که از دستش بدهد.">
+          <span class="dot">✓</span>
+          <span><b>استریک زنده دارد</b><p>حداقل ۱ روز، و با سپرهایش هنوز قابل نجات</p></span>
+        </button>
+        <button class="gate" type="button" aria-pressed="true" data-off="امروز فعالیت داشته — یادآوری بی‌معنی است.">
+          <span class="dot">✓</span>
+          <span><b>امروز هنوز فعالیتی ثبت نکرده</b><p>روزِ تهران، نه ۲۴ ساعتِ شناور</p></span>
+        </button>
+        <button class="gate" type="button" aria-pressed="true" data-off="امروز یک‌بار فرستاده شده؛ دومی نمی‌رود.">
+          <span class="dot">✓</span>
+          <span><b>امروز قبلاً یادآوری نگرفته</b><p>نشانِ <code>streak_reminder_sent</code> در همان روز</p></span>
+        </button>
+        <button class="gate" type="button" aria-pressed="true" data-off="حسابِ بدون شماره — مثلاً حسابِ تلگرام‌اول.">
+          <span class="dot">✓</span>
+          <span><b>شماره‌ی موبایل دارد</b><p>حسابِ تلگرام‌اول اصلاً <code>phone</code> ندارد</p></span>
+        </button>
+        <button class="gate" type="button" aria-pressed="true" data-off="اشتراکش تمام شده — پیامک پریمیوم است.">
+          <span class="dot">✓</span>
+          <span><b>پریمیومِ فعال است</b><p>تنها شرطی که کانالِ پیامک اضافه می‌کند</p></span>
+        </button>
+      </div>
+      <div class="verdict" id="verdict" role="status">پیامک امشب می‌رود.</div>
+    </div>
+    <div class="card" style="align-self:start">
+      <h3 style="margin:0 0 .6rem;font-size:.93rem;">چرا این ارزان است</h3>
+      <p style="margin:0 0 .7rem;color:var(--txt2);font-size:.84rem;">
+        شرط سوم تمام ماجراست: <strong>خواننده‌ی فعال اصلاً در فهرست نیست.</strong>
+        این یعنی هزینه روی کسانی خرج می‌شود که دارند از دست می‌روند — دقیقاً همان‌جایی
+        که یک یادآوری ارزشِ پول دارد.
+      </p>
+      <p style="margin:0;color:var(--txt2);font-size:.84rem;">
+        و شرطِ دوم جلوی بدترین حالت را می‌گیرد: استریکِ مُرده پیامک نمی‌گیرد، چون
+        «استریک ۱۰ روزه‌ات را از دست نده» وقتی ۱۰ روز از بین رفته باشد، یک دروغِ پولی است.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ۵ ═══ -->
+<section>
+  <div class="sh"><h2>۵. هزینه</h2><span>اعداد را خودت بگذار</span></div>
+  <p class="note">
+    <strong>نرخِ پیامک را از پنل sms.ir بردار</strong> — عددِ پیش‌فرضِ اینجا فقط یک جای‌نگه‌دار است
+    و نباید مبنای تصمیم شود.
+  </p>
+  <div class="cols" style="grid-template-columns:minmax(270px,1fr) minmax(230px,.8fr);">
+    <div class="card">
+      <label class="cf"><span>مشترک پریمیومی که پیامک را روشن کرده
+        <small>نه کلِ پریمیوم‌ها — فقط opt-in‌ها</small></span>
+        <input type="number" id="c-users" value="40" min="0" step="1"></label>
+      <label class="cf"><span>یادآوری در ماه، برای هر نفر
+        <small>سقفِ نظری ۳۰؛ واقعیت خیلی کمتر</small></span>
+        <input type="number" id="c-days" value="8" min="0" max="30" step="1"></label>
+      <label class="cf"><span>هزینه‌ی هر پیامک (تومان)
+        <small>جای‌نگه‌دار — با نرخ واقعی عوض کن</small></span>
+        <input type="number" id="c-cost" value="250" min="0" step="10"></label>
+      <div class="out">
+        <div class="lbl">ماهانه</div>
+        <div class="big num" id="o-month">—</div>
+        <div class="sub">سالانه: <span class="num" id="o-year">—</span>
+          · هر نفر در ماه: <span class="num" id="o-each">—</span></div>
+      </div>
+    </div>
+    <div class="card" style="align-self:start">
+      <h3 style="margin:0 0 .6rem;font-size:.93rem;">یک مقایسه‌ی سالم</h3>
+      <p style="margin:0;color:var(--txt2);font-size:.84rem;">
+        عددِ بالا را کنارِ <em>درآمدِ همان مشترک‌ها</em> بگذار، نه کنارِ صفر.
+        اگر هزینه‌ی ماهانه‌ی پیامک برای یک مشترک از کسری از قیمتِ اشتراکش بیشتر شد،
+        سؤالِ درست «کانال را ببندیم؟» نیست — «یادآوری چند روز یک‌بار برود؟» است.
+      </p>
+      <p style="margin:.7rem 0 0;color:var(--txt2);font-size:.84rem;">
+        و یک اهرمِ آماده: می‌شود پیامک را فقط برای استریک‌های <em>بلند</em> فرستاد
+        (مثلاً از ۷ روز به بالا). کسی که دو روزه است چیز زیادی برای از دست دادن ندارد؛
+        کسی که ۴۰ روزه است دارد.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ۶ ═══ -->
+<section>
+  <div class="sh"><h2>۶. چه چیزی باید ساخته شود</h2><span>هیچ migration‌ای لازم نیست</span></div>
+  <div class="card scroll">
+    <table class="g">
+      <thead><tr><th>تکه</th><th>اندازه</th><th>توضیح</th></tr></thead>
+      <tbody>
+        <tr><td>ثبت قالب در پنل sms.ir</td><td><span class="tag tag-bad">خارج از کد</span></td>
+            <td>مسیرِ بحرانی. نه ما تعیینش می‌کنیم، نه تضمینی است.</td></tr>
+        <tr><td>ترجیحِ کانال در <code>settings.reminders.channels</code></td><td>کوچک</td>
+            <td><code>settings</code> یک jsonb است. نبودِ کلید = روشن، تا حسابِ موجود چیزی از دست ندهد.</td></tr>
+        <tr><td>فیلدِ اختیاری <code>sms</code> روی <code>NotificationMessage</code></td><td>کوچک</td>
+            <td>شماره‌ی قالب + پارامترها. نبودنش یعنی «این نوع پیامک ندارد» — سازگارِ عقب‌رو.</td></tr>
+        <tr><td><code>SmsNotificationSender</code></td><td>متوسط</td>
+            <td>کنارِ بله و وب‌پوش. پریمیوم + شماره + ترجیح را چک می‌کند و در غیر این صورت ساکت رد می‌شود.</td></tr>
+        <tr><td><code>NOTIFY_PROVIDER=webpush,bale,sms</code></td><td>یک خط</td>
+            <td>متغیر محیطی. <code>MultiNotificationSender</code> دست نمی‌خورد.</td></tr>
+        <tr><td>ماتریسِ تنظیمات در پروفایل</td><td>متوسط</td>
+            <td>+ <code>asset_version.py --bump</code> در همان کامیت.</td></tr>
+        <tr><td>سقفِ ماهانه + گزارشش در <code>/admin</code></td><td>متوسط</td>
+            <td>تنها کانالِ پول‌دارِ روزمره؛ باید یک ترمز داشته باشد.</td></tr>
+        <tr><td>تست‌ها</td><td>متوسط</td>
+            <td>کنارِ <code>notify.test.ts</code> و <code>streak.test.ts</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ ۷ ═══ -->
+<section>
+  <div class="sh"><h2>۷. تصمیم‌های باقی‌مانده</h2><span>اینها را کد نمی‌تواند حدس بزند</span></div>
+  <div class="card">
+    <ol class="dec">
+      <li><b>حداقلِ استریک برای پیامک؟</b>
+        امروز شرط «۱ روز به بالا» است — یعنی کسی که دیروز شروع کرده هم پیامک می‌گیرد.
+        <span class="rec">یک آستانه بگذار (مثلاً ۷). کسی که چیزِ ارزشمندی برای از دست دادن ندارد، پیامک لازم ندارد.</span></li>
+
+      <li><b>سقفِ ماهانه‌ی پیامک؟</b>
+        هیچ ترمزی الان وجود ندارد.
+        <span class="rec">یک سقف در <code>config</code>؛ پر که شد، پیامک خاموش شود و بله و وب‌پوش سرِ جایشان بمانند. خاموشی گزارش شود، نه بی‌صدا.</span></li>
+
+      <li><b>حسابِ بدونِ شماره چه ببیند؟</b>
+        <span class="rec">ردیفِ خاکستری با یک خطِ «شماره ثبت نشده» — نه غایب. چیزی که نیست را باید دید تا بخواهی.</span></li>
+
+      <li><b>سقفِ روزانه‌ی نوتیف شاملِ پیامک هم بشود؟</b>
+        <span class="rec">بله، یک سقف بماند. سقف برای محافظت از <em>خواننده</em> است، نه از کانال — و دو بودجه یعنی دو جای اشتباه.</span></li>
+    </ol>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function () {
+  var FA = '۰۱۲۳۴۵۶۷۸۹';
+  function fa(n) { return String(n).replace(/\d/g, function (d) { return FA[+d]; }); }
+  function money(n) { return fa(Math.round(n).toLocaleString('en-US')) + ' تومان'; }
+
+  /* toggles */
+  function flip(el) {
+    el.setAttribute('aria-checked', el.getAttribute('aria-checked') === 'true' ? 'false' : 'true');
+  }
+  document.querySelectorAll('.box, .sw').forEach(function (el) {
+    el.addEventListener('click', function () { flip(el); sync(); });
+    el.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flip(el); sync(); }
+    });
+  });
+  var master = document.getElementById('master');
+  var matrix = document.getElementById('matrix');
+  function sync() {
+    var on = master.getAttribute('aria-checked') === 'true';
+    matrix.style.opacity = on ? '1' : '.35';
+    matrix.style.pointerEvents = on ? '' : 'none';
+  }
+  sync();
+
+  /* gate simulator */
+  var gates = Array.prototype.slice.call(document.querySelectorAll('#gates .gate'));
+  var verdict = document.getElementById('verdict');
+  function judge() {
+    var failed = gates.filter(function (g) { return g.getAttribute('aria-pressed') !== 'true'; });
+    if (!failed.length) {
+      verdict.className = 'verdict';
+      verdict.textContent = 'پیامک امشب می‌رود.';
+      return;
+    }
+    verdict.className = 'verdict no';
+    verdict.textContent = 'پیامکی فرستاده نمی‌شود.';
+    var why = document.createElement('small');
+    why.textContent = failed.length === 1
+      ? failed[0].dataset.off
+      : fa(failed.length) + ' شرط برقرار نیست — اولی: ' + failed[0].dataset.off;
+    verdict.appendChild(why);
+  }
+  gates.forEach(function (g) {
+    g.addEventListener('click', function () {
+      g.setAttribute('aria-pressed', g.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      g.querySelector('.dot').textContent = g.getAttribute('aria-pressed') === 'true' ? '✓' : '✕';
+      judge();
+    });
+  });
+  judge();
+
+  /* calculator */
+  var fields = ['c-users', 'c-days', 'c-cost'];
+  function calc() {
+    var v = {};
+    fields.forEach(function (id) { v[id] = Math.max(0, Number(document.getElementById(id).value) || 0); });
+    var month = v['c-users'] * v['c-days'] * v['c-cost'];
+    document.getElementById('o-month').textContent = money(month);
+    document.getElementById('o-year').textContent = money(month * 12);
+    document.getElementById('o-each').textContent = money(v['c-days'] * v['c-cost']);
+  }
+  fields.forEach(function (id) {
+    var el = document.getElementById(id);
+    el.addEventListener('input', calc);
+    el.addEventListener('change', calc);
+  });
+  calc();
+})();
+</script>
+</body>
+</html>
