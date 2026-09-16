@@ -258,7 +258,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 95,
+   "count": 96,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -354,7 +354,8 @@
     "insight/insight-73",
     "insight/insight-74",
     "insight/insight-75",
-    "insight/insight-76"
+    "insight/insight-76",
+    "insight/insight-77"
    ]
   },
   {
@@ -956,7 +957,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 32,
+   "count": 33,
    "content_ids": [
     "episodes/episode-31",
     "episodes/episode-83",
@@ -989,7 +990,8 @@
     "chairside/chairside-24",
     "chairside/chairside-25",
     "episodes/episode-161",
-    "episodes/episode-162"
+    "episodes/episode-162",
+    "insight/insight-77"
    ]
   },
   {
@@ -1485,6 +1487,45 @@
    ]
   },
   {
+   "key": "اباتمنت",
+   "tag": "#اباتمنت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "قطعه‌ی واسط بین ایمپلنت و روکش.",
+   "use_when": "مقاله طراحی، انتخاب یا مشکلی از اباتمنت را تعیین تکلیف کند.",
+   "aliases": [
+    "abutment",
+    "ابوتمنت",
+    "آباتمنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 21,
+   "content_ids": [
+    "episodes/episode-80",
+    "episodes/episode-81",
+    "episodes/episode-102",
+    "episodes/episode-103",
+    "episodes/episode-104",
+    "episodes/episode-105",
+    "episodes/episode-106",
+    "episodes/episode-115",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "metanotes/meta-8",
+    "dentcast-plus/video-5",
+    "insight/insight-35",
+    "episodes/episode-157",
+    "insight/insight-44",
+    "insight/insight-52",
+    "chairside/chairside-23",
+    "insight/insight-60",
+    "insight/insight-62",
+    "insight/insight-77"
+   ]
+  },
+  {
    "key": "فرول",
    "tag": "#فرول",
    "domain": "clinical",
@@ -1557,44 +1598,6 @@
     "dentai/promptologist/prompt6-3",
     "dentai/promptologist/prompt6-4",
     "dentai/promptologist/prompt6-5"
-   ]
-  },
-  {
-   "key": "اباتمنت",
-   "tag": "#اباتمنت",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "قطعه‌ی واسط بین ایمپلنت و روکش.",
-   "use_when": "مقاله طراحی، انتخاب یا مشکلی از اباتمنت را تعیین تکلیف کند.",
-   "aliases": [
-    "abutment",
-    "ابوتمنت",
-    "آباتمنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 20,
-   "content_ids": [
-    "episodes/episode-80",
-    "episodes/episode-81",
-    "episodes/episode-102",
-    "episodes/episode-103",
-    "episodes/episode-104",
-    "episodes/episode-105",
-    "episodes/episode-106",
-    "episodes/episode-115",
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST18",
-    "dentcast-plus/video-4",
-    "metanotes/meta-8",
-    "dentcast-plus/video-5",
-    "insight/insight-35",
-    "episodes/episode-157",
-    "insight/insight-44",
-    "insight/insight-52",
-    "chairside/chairside-23",
-    "insight/insight-60",
-    "insight/insight-62"
    ]
   },
   {
@@ -2734,6 +2737,38 @@
    ]
   },
   {
+   "key": "روکش_موقت",
+   "tag": "#روکش_موقت",
+   "domain": null,
+   "words": 2,
+   "definition": "پروویژنالی که فقط یک مرحله‌ی گذرا نیست، بلکه مرجعِ طراحیِ نهایی است.",
+   "use_when": "مقاله نقشِ موقتی را در تعیینِ کارِ نهایی جدی بگیرد.",
+   "aliases": [
+    "provisional",
+    "موقتی",
+    "temporary crown",
+    "پروویژنال",
+    "تمپ",
+    "موقت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-125-2",
+    "insight/insight-2",
+    "insight/insight-12",
+    "insight/insight-19",
+    "insight/insight-21",
+    "chairside/chairside-2",
+    "insight/insight-42",
+    "insight/insight-55",
+    "insight/insight-63",
+    "dentcast-plus/video-8",
+    "insight/insight-77"
+   ]
+  },
+  {
    "key": "قالب_گیری_دیجیتال",
    "tag": "#قالب‌گیری_دیجیتال",
    "domain": "clinical",
@@ -2928,6 +2963,34 @@
    ]
   },
   {
+   "key": "افزایش_vd",
+   "tag": "#افزایش_VD",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بالا بردن بعد عمودی — تصمیمی که فضا می‌سازد و همزمان ریسک می‌آورد.",
+   "use_when": "مقاله درباره‌ی خودِ افزایش VD تصمیم بگیرد: اندیکاسیون، مقدار، یا ریسک.",
+   "aliases": [
+    "بالا بردن بعد عمودی",
+    "افزایش بعد عمودی",
+    "افزایش دایمنشن عمودی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-34",
+    "episodes/episode-35",
+    "insight/insight-12",
+    "notecast/episode-14",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "insight/insight-43",
+    "notecast/episode-35",
+    "insight/insight-77"
+   ]
+  },
+  {
    "key": "برداشت_پوسیدگی",
    "tag": "#برداشت_پوسیدگی",
    "domain": "clinical",
@@ -2983,37 +3046,6 @@
     "chairside/chairside-16",
     "chairside/chairside-30",
     "insight/insight-76"
-   ]
-  },
-  {
-   "key": "روکش_موقت",
-   "tag": "#روکش_موقت",
-   "domain": null,
-   "words": 2,
-   "definition": "پروویژنالی که فقط یک مرحله‌ی گذرا نیست، بلکه مرجعِ طراحیِ نهایی است.",
-   "use_when": "مقاله نقشِ موقتی را در تعیینِ کارِ نهایی جدی بگیرد.",
-   "aliases": [
-    "provisional",
-    "موقتی",
-    "temporary crown",
-    "پروویژنال",
-    "تمپ",
-    "موقت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-125-2",
-    "insight/insight-2",
-    "insight/insight-12",
-    "insight/insight-19",
-    "insight/insight-21",
-    "chairside/chairside-2",
-    "insight/insight-42",
-    "insight/insight-55",
-    "insight/insight-63",
-    "dentcast-plus/video-8"
    ]
   },
   {
@@ -3162,33 +3194,6 @@
     "litecast/lite-CAST17",
     "litecast/lite-CAST18",
     "litecast/lite-CAST19"
-   ]
-  },
-  {
-   "key": "افزایش_vd",
-   "tag": "#افزایش_VD",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "بالا بردن بعد عمودی — تصمیمی که فضا می‌سازد و همزمان ریسک می‌آورد.",
-   "use_when": "مقاله درباره‌ی خودِ افزایش VD تصمیم بگیرد: اندیکاسیون، مقدار، یا ریسک.",
-   "aliases": [
-    "بالا بردن بعد عمودی",
-    "افزایش بعد عمودی",
-    "افزایش دایمنشن عمودی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-14",
-    "episodes/episode-34",
-    "episodes/episode-35",
-    "insight/insight-12",
-    "notecast/episode-14",
-    "episodes/episode-154",
-    "episodes/episode-155",
-    "insight/insight-43",
-    "notecast/episode-35"
    ]
   },
   {
@@ -4833,6 +4838,30 @@
    ]
   },
   {
+   "key": "استاپ_خلفی",
+   "tag": "#استاپ_خلفی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "تکیه‌گاهِ اکلوزالیِ خلفی؛ نبودش بارِ فانکشنال را روی قدام می‌اندازد.",
+   "use_when": "مقاله نبودِ استاپ خلفی را عاملِ شکستِ قدام بداند.",
+   "aliases": [
+    "posterior stop",
+    "استاپ عقبی",
+    "ساپورت خلفی",
+    "تماس خلفی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-6",
+    "insight/insight-12",
+    "insight/insight-21",
+    "insight/insight-43",
+    "insight/insight-77"
+   ]
+  },
+  {
    "key": "اسکن_بادی",
    "tag": "#اسکن_بادی",
    "domain": "clinical",
@@ -5710,29 +5739,6 @@
     "insight/insight-29",
     "metanotes/meta-12",
     "episodes/episode-159"
-   ]
-  },
-  {
-   "key": "استاپ_خلفی",
-   "tag": "#استاپ_خلفی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "تکیه‌گاهِ اکلوزالیِ خلفی؛ نبودش بارِ فانکشنال را روی قدام می‌اندازد.",
-   "use_when": "مقاله نبودِ استاپ خلفی را عاملِ شکستِ قدام بداند.",
-   "aliases": [
-    "posterior stop",
-    "استاپ عقبی",
-    "ساپورت خلفی",
-    "تماس خلفی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-6",
-    "insight/insight-12",
-    "insight/insight-21",
-    "insight/insight-43"
    ]
   },
   {
@@ -9880,6 +9886,30 @@
    "content_ids": [
     "insight/insight-1",
     "photocast/episode-2"
+   ]
+  },
+  {
+   "key": "توالی_درمان",
+   "tag": "#توالی_درمان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ترتیبی که مراحل درمان یک بیمار چندمشکلی در آن انجام می‌شوند؛ هر فاز شرایط فنیِ لازم برای فاز بعد را می‌سازد، پس جابه‌جا شدنشان کار فاز بعدی را باطل یا تکراری می‌کند.",
+   "use_when": "مقاله خودِ ترتیب یا زمان‌بندیِ مراحل را موضوع قرار دهد — کدام کار پیش از کدام، و اگر رعایت نشود چه از دست می‌رود — نه فقط محتوای یکی از مراحل.",
+   "aliases": [
+    "treatment sequencing",
+    "sequence of treatment",
+    "ترتیب درمان",
+    "فازبندی درمان",
+    "فازهای درمان",
+    "توالی فازها",
+    "مراحل درمان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-19",
+    "insight/insight-77"
    ]
   },
   {
@@ -14757,29 +14787,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-36"
-   ]
-  },
-  {
-   "key": "توالی_درمان",
-   "tag": "#توالی_درمان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ترتیبی که مراحل درمان یک بیمار چندمشکلی در آن انجام می‌شوند؛ هر فاز شرایط فنیِ لازم برای فاز بعد را می‌سازد، پس جابه‌جا شدنشان کار فاز بعدی را باطل یا تکراری می‌کند.",
-   "use_when": "مقاله خودِ ترتیب یا زمان‌بندیِ مراحل را موضوع قرار دهد — کدام کار پیش از کدام، و اگر رعایت نشود چه از دست می‌رود — نه فقط محتوای یکی از مراحل.",
-   "aliases": [
-    "treatment sequencing",
-    "sequence of treatment",
-    "ترتیب درمان",
-    "فازبندی درمان",
-    "فازهای درمان",
-    "توالی فازها",
-    "مراحل درمان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "sharehub/share-19"
    ]
   },
   {
@@ -20205,8 +20212,8 @@
   "رستوریشن غیرمستقیم": "ترمیم غیرمستقیم",
   "digital impression": "قالبگیری دیجیتال",
   "بدون تحلیل استخوان": "zero تحلیل استخوان",
-  "marginal bone loss": "تحلیل استخوان کرستال",
   "tooth preservation": "حفظ دندان",
+  "marginal bone loss": "تحلیل استخوان کرستال",
   "lithium disilicate": "لیتیوم دی سیلیکات",
   "اختلال گیجگاهی فکی": "tmd",
   "occlusal appliance": "اسپلینت",
@@ -20296,8 +20303,8 @@
   "scanning accuracy": "دقت اسکن",
   "intraoral scanner": "اسکنر داخل دهانی",
   "crown lengthening": "افزایش طول تاج",
-  "میزان کردن اکلوژن": "تنظیم اکلوژن",
   "دندان عصب کشی شده": "دندان اندوشده",
+  "میزان کردن اکلوژن": "تنظیم اکلوژن",
   "پری ایمپلنت دیزیز": "پری ایمپلنتیتیس",
   "patient awareness": "آگاهی درمانی",
   "سواد درمانی بیمار": "آگاهی درمانی",
@@ -20578,10 +20585,10 @@
   "تغییرات استخوان": "تحلیل استخوان",
   "پری ایمپلنتایتس": "پری ایمپلنتیتیس",
   "برداشتن پوسیدگی": "برداشت پوسیدگی",
-  "temporary crown": "روکش موقت",
-  "خارج کردن دندان": "کشیدن دندان",
   "نگه داشتن دندان": "حفظ دندان",
   "tooth retention": "حفظ دندان",
+  "temporary crown": "روکش موقت",
+  "خارج کردن دندان": "کشیدن دندان",
   "اختلال مفصل فکی": "tmd",
   "ceramic etching": "اچ سرامیک",
   "اپلاینس اکلوزال": "اسپلینت",
@@ -20768,8 +20775,8 @@
   "تحلیل استخوانی": "تحلیل استخوان",
   "طول عمر سرامیک": "دوام ترمیم",
   "بعد عمودی صورت": "بعد عمودی",
-  "پیش آگهی دندان": "پروگنوز دندان",
   "دندان اندو شده": "دندان اندوشده",
+  "پیش آگهی دندان": "پروگنوز دندان",
   "anterior teeth": "دندان قدامی",
   "caries removal": "برداشت پوسیدگی",
   "مرور سیستماتیک": "متاآنالیز",
@@ -21229,6 +21236,7 @@
   "متال پالاتال": "روکش pfm",
   "شل شدن اسکرو": "شل شدن پیچ",
   "کانتکت پوینت": "کانتکت",
+  "core buildup": "کور بیلدآپ",
   "دیسمانتاسیون": "debonding",
   "نوتبوک ال ام": "notebooklm",
   "ابهام پرامپت": "ابهام در پرامپت",
@@ -21259,7 +21267,6 @@
   "دیجیتال دنچر": "پروتز دیجیتال",
   "پروتز استتیک": "پروتز زیبایی",
   "کنتاکت مجاور": "کانتکت پروگزیمال",
-  "core buildup": "کور بیلدآپ",
   "کریز دیتکتور": "پوسیدگی detector",
   "عدم قطعیت vd": "vd تخمینی",
   "uncertain vd": "vd تخمینی",
@@ -21454,6 +21461,7 @@
   "double cord": "نخ زیرلثه",
   "ونیر سرامیک": "ونیر سرامیکی",
   "plak e sefr": "پلاک صفر",
+  "کور بیلد آپ": "کور بیلدآپ",
   "ریموال ونیر": "debonding",
   "notebook lm": "notebooklm",
   "پرامپت مبهم": "ابهام در پرامپت",
@@ -21482,7 +21490,6 @@
   "پست دو تیکه": "پست دو تکه",
   "buccal cusp": "کاسپ باکال",
   "ارتفاع کاسپ": "کاسپ باکال",
-  "کور بیلد آپ": "کور بیلدآپ",
   "implant kit": "ابزار ایمپلنت",
   "کیت ایمپلنت": "ابزار ایمپلنت",
   "آمبرلا افکت": "اثر چتر",
@@ -21871,8 +21878,8 @@
   "occlusion": "اکلوژن",
   "chairside": "چیرساید",
   "گزارش کیس": "کیس اینسایت",
-  "دنت ای آی": "dentai",
   "پست دندان": "پست و کور",
+  "دنت ای آی": "dentai",
   "زیرکونیوم": "زیرکونیا",
   "زیرکونیای": "زیرکونیا",
   "aesthetic": "زیبایی",
@@ -22155,6 +22162,7 @@
   "two step": "قالبگیری دو مرحله ای",
   "پوتی واش": "قالبگیری دو مرحله ای",
   "سیت روکش": "نشست روکش",
+  "build up": "بازسازی دیواره",
   "دباندینگ": "debonding",
   "پی دی ال": "pdl",
   "خطای دید": "ادراک بصری",
@@ -22178,7 +22186,6 @@
   "بار برشی": "نیروی برشی",
   "پره مولر": "پرمولر",
   "premolar": "پرمولر",
-  "build up": "بازسازی دیواره",
   "ال تی دی": "ltd",
   "مارکداون": "markdown",
   "ام دی پی": "mdp",
@@ -22286,13 +22293,13 @@
   "دنت کست": "دنتکست",
   "insight": "اینسایت",
   "implant": "ایمپلنت",
-  "dent ai": "dentai",
   "پست کور": "پست و کور",
+  "dent ai": "dentai",
   "bonding": "باندینگ",
   "ceramic": "سرامیک",
+  "ferrule": "فرول",
   "ابوتمنت": "اباتمنت",
   "آباتمنت": "اباتمنت",
-  "ferrule": "فرول",
   "متا نوت": "متانوت",
   "کیوریتد": "curated content",
   "لامینیت": "لمینیت سرامیکی",
