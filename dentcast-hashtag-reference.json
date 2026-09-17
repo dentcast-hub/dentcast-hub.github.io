@@ -853,7 +853,7 @@
     "#پست و کور"
    ],
    "co_tags": [],
-   "count": 35,
+   "count": 36,
    "content_ids": [
     "episodes/episode-36",
     "episodes/episode-42",
@@ -889,7 +889,8 @@
     "notecast/episode-40",
     "dentcast-plus/video-12",
     "dentai/dentai-33",
-    "insight/insight-76"
+    "insight/insight-76",
+    "sharehub/share-20"
    ]
   },
   {
@@ -1136,6 +1137,53 @@
    ]
   },
   {
+   "key": "زیرکونیا",
+   "tag": "#زیرکونیا",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "زیرکونیای دندانی به‌عنوان متریال رستوریشن.",
+   "use_when": "مقاله انتخاب، آماده‌سازی یا رفتار بالینی زیرکونیا را تعیین کند.",
+   "aliases": [
+    "زیرکونیوم",
+    "زیرکونیم",
+    "zirconia",
+    "زیرکونیای"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 28,
+   "content_ids": [
+    "episodes/episode-11",
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "episodes/episode-87",
+    "episodes/episode-88",
+    "episodes/episode-89",
+    "episodes/episode-107",
+    "episodes/episode-122-5",
+    "episodes/episode-136",
+    "episodes/episode-139",
+    "episodes/episode-140",
+    "episodes/episode-146",
+    "insight/insight-5",
+    "photocast/episode-3",
+    "notecast/episode-2",
+    "notecast/episode-3",
+    "notecast/episode-5",
+    "notecast/episode-8",
+    "notecast/episode-11",
+    "notecast/episode-13",
+    "notecast/episode-17",
+    "notecast/episode-18",
+    "notecast/episode-30",
+    "insight/insight-27",
+    "dentai/dentai-26",
+    "insight/insight-62",
+    "sharehub/share-17",
+    "sharehub/share-20"
+   ]
+  },
+  {
    "key": "باندینگ",
    "tag": "#باندینگ",
    "domain": "clinical",
@@ -1176,52 +1224,6 @@
     "dentai/dentai-19",
     "notecast/episode-36",
     "notecast/episode-41"
-   ]
-  },
-  {
-   "key": "زیرکونیا",
-   "tag": "#زیرکونیا",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "زیرکونیای دندانی به‌عنوان متریال رستوریشن.",
-   "use_when": "مقاله انتخاب، آماده‌سازی یا رفتار بالینی زیرکونیا را تعیین کند.",
-   "aliases": [
-    "زیرکونیوم",
-    "زیرکونیم",
-    "zirconia",
-    "زیرکونیای"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 27,
-   "content_ids": [
-    "episodes/episode-11",
-    "episodes/episode-17",
-    "episodes/episode-18",
-    "episodes/episode-87",
-    "episodes/episode-88",
-    "episodes/episode-89",
-    "episodes/episode-107",
-    "episodes/episode-122-5",
-    "episodes/episode-136",
-    "episodes/episode-139",
-    "episodes/episode-140",
-    "episodes/episode-146",
-    "insight/insight-5",
-    "photocast/episode-3",
-    "notecast/episode-2",
-    "notecast/episode-3",
-    "notecast/episode-5",
-    "notecast/episode-8",
-    "notecast/episode-11",
-    "notecast/episode-13",
-    "notecast/episode-17",
-    "notecast/episode-18",
-    "notecast/episode-30",
-    "insight/insight-27",
-    "dentai/dentai-26",
-    "insight/insight-62",
-    "sharehub/share-17"
    ]
   },
   {
@@ -1487,6 +1489,44 @@
    ]
   },
   {
+   "key": "فرول",
+   "tag": "#فرول",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
+   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
+   "aliases": [
+    "ferrule"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 22,
+   "content_ids": [
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-147-7",
+    "insight/insight-4",
+    "insight/insight-7",
+    "insight/insight-13",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19",
+    "insight/insight-58",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "insight/insight-64",
+    "chairside/chairside-30",
+    "sharehub/share-18",
+    "dentai/dentai-33",
+    "insight/insight-76",
+    "sharehub/share-20"
+   ]
+  },
+  {
    "key": "اباتمنت",
    "tag": "#اباتمنت",
    "domain": "clinical",
@@ -1526,40 +1566,41 @@
    ]
   },
   {
-   "key": "فرول",
-   "tag": "#فرول",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
-   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
+   "key": "curated_content",
+   "tag": "#Curated_Content",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
+   "use_when": "روی مدخل‌های بازنشر.",
    "aliases": [
-    "ferrule"
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
    ],
    "variants": [],
    "co_tags": [],
-   "count": 21,
+   "count": 20,
    "content_ids": [
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-147-7",
-    "insight/insight-4",
-    "insight/insight-7",
-    "insight/insight-13",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19",
-    "insight/insight-58",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "insight/insight-64",
-    "chairside/chairside-30",
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
     "sharehub/share-18",
-    "dentai/dentai-33",
-    "insight/insight-76"
+    "sharehub/share-19",
+    "sharehub/share-20"
    ]
   },
   {
@@ -1598,6 +1639,43 @@
     "dentai/promptologist/prompt6-3",
     "dentai/promptologist/prompt6-4",
     "dentai/promptologist/prompt6-5"
+   ]
+  },
+  {
+   "key": "share_hub",
+   "tag": "#Share_Hub",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
+   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
+   "aliases": [
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 20,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20"
    ]
   },
   {
@@ -1752,79 +1830,6 @@
    ]
   },
   {
-   "key": "curated_content",
-   "tag": "#Curated_Content",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
-   "use_when": "روی مدخل‌های بازنشر.",
-   "aliases": [
-    "محتوای گلچین شده",
-    "کیوریتد",
-    "بازنشر محتوا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 19,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19"
-   ]
-  },
-  {
-   "key": "share_hub",
-   "tag": "#Share_Hub",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
-   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
-   "aliases": [
-    "شیرهاب",
-    "شر هاب"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 19,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19"
-   ]
-  },
-  {
    "key": "تشخیص_افتراقی",
    "tag": "#تشخیص_افتراقی",
    "domain": "clinical",
@@ -1861,6 +1866,42 @@
    ]
   },
   {
+   "key": "سمان_رزینی",
+   "tag": "#سمان_رزینی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "resin cement",
+    "سمان رزین"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 19,
+   "content_ids": [
+    "episodes/episode-3",
+    "episodes/episode-11",
+    "episodes/episode-19",
+    "episodes/episode-43",
+    "episodes/episode-129",
+    "episodes/episode-148",
+    "episodes/episode-149",
+    "insight/insight-5",
+    "notecast/episode-3",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-11",
+    "notecast/episode-16",
+    "notecast/episode-19",
+    "insight/insight-36",
+    "dentai/dentai-27",
+    "insight/insight-59",
+    "notecast/episode-40",
+    "sharehub/share-20"
+   ]
+  },
+  {
    "key": "انتخاب_متریال",
    "tag": "#انتخاب_متریال",
    "domain": "clinical",
@@ -1894,41 +1935,6 @@
     "episodes/episode-159-1",
     "insight/insight-57",
     "notecast/episode-41"
-   ]
-  },
-  {
-   "key": "سمان_رزینی",
-   "tag": "#سمان_رزینی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "resin cement",
-    "سمان رزین"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 18,
-   "content_ids": [
-    "episodes/episode-3",
-    "episodes/episode-11",
-    "episodes/episode-19",
-    "episodes/episode-43",
-    "episodes/episode-129",
-    "episodes/episode-148",
-    "episodes/episode-149",
-    "insight/insight-5",
-    "notecast/episode-3",
-    "notecast/episode-6",
-    "notecast/episode-7",
-    "notecast/episode-11",
-    "notecast/episode-16",
-    "notecast/episode-19",
-    "insight/insight-36",
-    "dentai/dentai-27",
-    "insight/insight-59",
-    "notecast/episode-40"
    ]
   },
   {
@@ -2644,7 +2650,7 @@
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
    "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
    "aliases": [
@@ -2766,6 +2772,38 @@
     "insight/insight-63",
     "dentcast-plus/video-8",
     "insight/insight-77"
+   ]
+  },
+  {
+   "key": "فایبر_پست",
+   "tag": "#فایبر_پست",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پستِ فایبری هم‌مدولِ عاج برای بازسازیِ دندانِ اندوشده.",
+   "use_when": "مقاله فایبرپست را انتخاب، آماده‌سازی یا ارزیابی کند.",
+   "aliases": [
+    "fiber post",
+    "فایبرپست",
+    "فایبر پست",
+    "پست فایبر"
+   ],
+   "variants": [
+    "#فایبرپست"
+   ],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-42",
+    "episodes/episode-43",
+    "episodes/episode-79",
+    "episodes/episode-125-3",
+    "episodes/episode-128",
+    "episodes/episode-129",
+    "episodes/episode-147-7",
+    "metanotes/meta-7",
+    "insight/insight-28",
+    "notecast/episode-36",
+    "sharehub/share-20"
    ]
   },
   {
@@ -3073,37 +3111,6 @@
     "insight/insight-61",
     "insight/insight-62",
     "chairside/chairside-33"
-   ]
-  },
-  {
-   "key": "فایبر_پست",
-   "tag": "#فایبر_پست",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پستِ فایبری هم‌مدولِ عاج برای بازسازیِ دندانِ اندوشده.",
-   "use_when": "مقاله فایبرپست را انتخاب، آماده‌سازی یا ارزیابی کند.",
-   "aliases": [
-    "fiber post",
-    "فایبرپست",
-    "فایبر پست",
-    "پست فایبر"
-   ],
-   "variants": [
-    "#فایبرپست"
-   ],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-42",
-    "episodes/episode-43",
-    "episodes/episode-79",
-    "episodes/episode-125-3",
-    "episodes/episode-128",
-    "episodes/episode-129",
-    "episodes/episode-147-7",
-    "metanotes/meta-7",
-    "insight/insight-28",
-    "notecast/episode-36"
    ]
   },
   {
@@ -4387,7 +4394,7 @@
    "key": "رادیوگرافی_تشخیصی",
    "tag": "#رادیوگرافی_تشخیصی",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "انتخاب و تفسیرِ درستِ تصویر — پانورامیک در برابر پری‌اپیکال.",
    "use_when": "مقاله کفایت یا نارساییِ یک تصویر را مسئله بداند.",
    "aliases": [
@@ -4612,6 +4619,31 @@
     "insight/insight-37",
     "chairside/chairside-15",
     "sharehub/share-6"
+   ]
+  },
+  {
+   "key": "کور_ریختگی",
+   "tag": "#کور_ریختگی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پست و کورِ ریختگیِ یکپارچه.",
+   "use_when": "مقاله طراحی یا ساختِ کور ریختگی را تعیین کند.",
+   "aliases": [
+    "cast core",
+    "کست کور",
+    "کور ریختگی فلزی",
+    "پست ریختگی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "insight/insight-15",
+    "metanotes/meta-9",
+    "insight/insight-28",
+    "metanotes/meta-19",
+    "metanotes/meta-20",
+    "sharehub/share-20"
    ]
   },
   {
@@ -5568,30 +5600,6 @@
    ]
   },
   {
-   "key": "کور_ریختگی",
-   "tag": "#کور_ریختگی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پست و کورِ ریختگیِ یکپارچه.",
-   "use_when": "مقاله طراحی یا ساختِ کور ریختگی را تعیین کند.",
-   "aliases": [
-    "cast core",
-    "کست کور",
-    "کور ریختگی فلزی",
-    "پست ریختگی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "insight/insight-15",
-    "metanotes/meta-9",
-    "insight/insight-28",
-    "metanotes/meta-19",
-    "metanotes/meta-20"
-   ]
-  },
-  {
    "key": "dahl_concept",
    "tag": "#Dahl_Concept",
    "domain": "clinical",
@@ -6369,6 +6377,29 @@
    ]
   },
   {
+   "key": "گلاس_آینومر",
+   "tag": "#گلاس_آینومر",
+   "domain": null,
+   "words": 2,
+   "definition": "سمان و ترمیم گلاس‌آینومر.",
+   "use_when": "مقاله GI را گزینه یا مقایسه کند.",
+   "aliases": [
+    "glass ionomer",
+    "گلس آینومر",
+    "GI",
+    "آینومر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "notecast/episode-2",
+    "insight/insight-23",
+    "insight/insight-59",
+    "sharehub/share-20"
+   ]
+  },
+  {
    "key": "bio_restorative_concept",
    "tag": "#Bio_Restorative_Concept",
    "domain": "clinical",
@@ -6512,6 +6543,26 @@
     "episodes/episode-156",
     "episodes/episode-157",
     "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "mdp",
+   "tag": "#MDP",
+   "domain": null,
+   "words": 1,
+   "definition": "مونومر عاملیِ اتصال شیمیایی به زیرکونیا و فلز.",
+   "use_when": "مقاله نقش MDP را در باند بررسی کند.",
+   "aliases": [
+    "10-MDP",
+    "ام دی پی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-5",
+    "notecast/episode-11",
+    "sharehub/share-20"
    ]
   },
   {
@@ -7476,7 +7527,7 @@
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
-   "words": 4,
+   "words": 6,
    "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
    "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
    "aliases": [
@@ -7538,6 +7589,27 @@
     "episodes/episode-122-4",
     "insight/insight-3",
     "insight/insight-56"
+   ]
+  },
+  {
+   "key": "زینک_فسفات",
+   "tag": "#زینک_فسفات",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "سمانِ کانونشنالی که گیرِ جدی می‌دهد، رادیواپک است و درآوردنِ روکش را غیرممکن نمی‌کند.",
+   "use_when": "مقاله زینک فسفات را انتخاب یا رد کند.",
+   "aliases": [
+    "zinc phosphate",
+    "زینک فسفات سمان",
+    "فسفات روی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-5",
+    "insight/insight-59",
+    "sharehub/share-20"
    ]
   },
   {
@@ -7672,6 +7744,27 @@
     "insight/insight-54",
     "chairside/chairside-32",
     "insight/insight-65"
+   ]
+  },
+  {
+   "key": "سندبلاست",
+   "tag": "#سندبلاست",
+   "domain": null,
+   "words": 1,
+   "definition": "زبر کردنِ سطح با ذرات آلومینا.",
+   "use_when": "مقاله سندبلاست را مرحله‌ای از آماده‌سازی بداند.",
+   "aliases": [
+    "sandblast",
+    "airborne particle abrasion",
+    "ایربورن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-11",
+    "notecast/episode-18",
+    "sharehub/share-20"
    ]
   },
   {
@@ -8582,28 +8675,6 @@
    ]
   },
   {
-   "key": "گلاس_آینومر",
-   "tag": "#گلاس_آینومر",
-   "domain": null,
-   "words": 2,
-   "definition": "سمان و ترمیم گلاس‌آینومر.",
-   "use_when": "مقاله GI را گزینه یا مقایسه کند.",
-   "aliases": [
-    "glass ionomer",
-    "گلس آینومر",
-    "GI",
-    "آینومر"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "notecast/episode-2",
-    "insight/insight-23",
-    "insight/insight-59"
-   ]
-  },
-  {
    "key": "گلاس_سرامیک",
    "tag": "#گلاس_سرامیک",
    "domain": null,
@@ -8865,25 +8936,6 @@
    "content_ids": [
     "dentai/promptologist/prompt6-2",
     "dentai/promptologist/prompt6-5"
-   ]
-  },
-  {
-   "key": "mdp",
-   "tag": "#MDP",
-   "domain": null,
-   "words": 1,
-   "definition": "مونومر عاملیِ اتصال شیمیایی به زیرکونیا و فلز.",
-   "use_when": "مقاله نقش MDP را در باند بررسی کند.",
-   "aliases": [
-    "10-MDP",
-    "ام دی پی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "notecast/episode-5",
-    "notecast/episode-11"
    ]
   },
   {
@@ -10426,26 +10478,6 @@
    ]
   },
   {
-   "key": "زینک_فسفات",
-   "tag": "#زینک_فسفات",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "سمانِ کانونشنالی که گیرِ جدی می‌دهد، رادیواپک است و درآوردنِ روکش را غیرممکن نمی‌کند.",
-   "use_when": "مقاله زینک فسفات را انتخاب یا رد کند.",
-   "aliases": [
-    "zinc phosphate",
-    "زینک فسفات سمان",
-    "فسفات روی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-5",
-    "insight/insight-59"
-   ]
-  },
-  {
    "key": "سازگاری_برند",
    "tag": "#سازگاری_برند",
    "domain": "clinical",
@@ -10525,26 +10557,6 @@
    "content_ids": [
     "episodes/episode-43",
     "notecast/episode-3"
-   ]
-  },
-  {
-   "key": "سندبلاست",
-   "tag": "#سندبلاست",
-   "domain": null,
-   "words": 1,
-   "definition": "زبر کردنِ سطح با ذرات آلومینا.",
-   "use_when": "مقاله سندبلاست را مرحله‌ای از آماده‌سازی بداند.",
-   "aliases": [
-    "sandblast",
-    "airborne particle abrasion",
-    "ایربورن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "notecast/episode-11",
-    "notecast/episode-18"
    ]
   },
   {
@@ -13863,7 +13875,7 @@
    "key": "اینتروژن_ارتودنسی",
    "tag": "#اینتروژن_ارتودنسی",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
    "use_when": "مقاله اینتروژن را راه‌حل بداند.",
    "aliases": [
@@ -14730,7 +14742,7 @@
    "key": "تفسیر_رادیوگرافی",
    "tag": "#تفسیر_رادیوگرافی",
    "domain": "clinical",
-   "words": 2,
+   "words": 4,
    "definition": "خواندنِ الگو — مرزِ صاف در برابر مرزِ منتشر — نه صرفاً دیدنِ لکه.",
    "use_when": "مقاله معیارِ تمایزِ تصویری بدهد.",
    "aliases": [
@@ -15726,7 +15738,7 @@
    "key": "رادیوگرافی_کنترل",
    "tag": "#رادیوگرافی_کنترل",
    "domain": "clinical",
-   "words": 2,
+   "words": 4,
    "definition": "پری‌اپیکالِ صحیح، به‌عنوان تأییدِ قطعیِ نشست.",
    "use_when": "مقاله رادیوگرافی را تأییدِ نهایی بداند، نه حس.",
    "aliases": [
@@ -18407,7 +18419,7 @@
    "key": "هوش_مصنوعی_رادیوگرافی",
    "tag": "#هوش_مصنوعی_رادیوگرافی",
    "domain": "ai",
-   "words": 3,
+   "words": 5,
    "definition": "نرم‌افزاری که روی رادیوگرافی ضایعه یا سطح استخوان را علامت می‌زند — تصویری که اغلب با ChatGPT اشتباه گرفته می‌شود.",
    "use_when": "مقاله همین دسته را موضوع یا نقطه‌ی تمایز قرار دهد.",
    "aliases": [
@@ -18653,6 +18665,28 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-147-9"
+   ]
+  },
+  {
+   "key": "پست_زیرکونیا",
+   "tag": "#پست_زیرکونیا",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پست داخل کانالِ ساخته‌شده از زیرکونیا، پیش‌ساخته یا یک‌تکه‌ی CAD/CAM؛ سفید و مقاوم به کروژن، ولی با مدول الاستیسیته‌ی نزدیک به آلیاژ بیس متال و رفتار شکننده، و پس از شکست در کانال عملا غیرقابل خارج کردن.",
+   "use_when": "مقاله درباره‌ی خودِ پست زیرکونیا باشد — انتخابش، سمان کردنش، شکستش، یا مقایسه‌اش با فایبر پست و پست ریختگی — نه صرفاً درباره‌ی زیرکونیا به‌عنوان ماده یا روکش زیرکونیا.",
+   "aliases": [
+    "zirconia post",
+    "zirconium dioxide post",
+    "پست زیرکونیایی",
+    "پست سرامیکی",
+    "پست و کور زیرکونیا",
+    "CosmoPost"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-20"
    ]
   },
   {
@@ -20050,6 +20084,7 @@
   "peri implant mucositis": "موکوزیت پری ایمپلنت",
   "additive manufacturing": "پرینت سه بعدی",
   "پیچ شکسته داخل ایمپلنت": "شکست پیچ ایمپلنت",
+  "zirconium dioxide post": "پست زیرکونیا",
   "deep margin elevation": "dme",
   "آماده سازی سطح سرامیک": "آماده سازی سرامیک",
   "posterior restoration": "ترمیم خلفی",
@@ -20295,6 +20330,7 @@
   "زمان به عنوان داده": "پیگیری زمانی",
   "flowable composite": "کامپوزیت فلو",
   "آفت بعد دندانپزشکی": "محرک آفت",
+  "پست و کور زیرکونیا": "پست زیرکونیا",
   "پروتز روی ایمپلنت": "پروتز ایمپلنت",
   "تصمیم گیری درمانی": "تصمیم درمانی",
   "تصمیم گیری بالینی": "تصمیم درمانی",
@@ -20949,6 +20985,7 @@
   "post gutta gap": "گپ پست و گوتا",
   "aphthous ulcer": "آفت دهان",
   "آرام بخشی عمیق": "بیهوشی",
+  "پست زیرکونیایی": "پست زیرکونیا",
   "prosthodontics": "پروتز",
   "ویزیت کلینیکی": "کیس اینسایت",
   "post and core": "پست و کور",
@@ -21173,6 +21210,7 @@
   "آرامبخشی عمیق": "بیهوشی",
   "deep sedation": "بیهوشی",
   "عامل شروع آفت": "محرک آفت",
+  "zirconia post": "پست زیرکونیا",
   "تصمیم بالینی": "تصمیم درمانی",
   "تصمیم پروتزی": "تصمیم درمانی",
   "ماشین هوشمند": "هوش مصنوعی",
@@ -21648,6 +21686,7 @@
   "canker sore": "آفت دهان",
   "mouth ulcer": "آفت دهان",
   "semaglutide": "تیرزپاتاید",
+  "پست سرامیکی": "پست زیرکونیا",
   "بایومیمتیک": "بیومیمتیک",
   "بیو میمتیک": "بیومیمتیک",
   "بیومی متیک": "بیومیمتیک",
@@ -21984,6 +22023,7 @@
   "عدم درمان": "عدم مداخله",
   "فاز مکعبی": "فاز زیرکونیا",
   "furcation": "فورکا",
+  "interview": "مصاحبه",
   "تست موقتی": "روکش موقت به عنوان مرجع",
   "بدون فرول": "نبود فرول",
   "c i ratio": "نسبت تاج به ایمپلنت",
@@ -22079,7 +22119,6 @@
   "محور چرخش": "محور لولایی",
   "اداره مطب": "مدیریت مطب",
   "نقطه مرجع": "مرجع ثابت",
-  "interview": "مصاحبه",
   "mucositis": "موکوزیت پری ایمپلنت",
   "میکرو کرک": "میکروترک",
   "ترتیب کار": "نظم کلینیکی",
@@ -22109,6 +22148,7 @@
   "سماگلوتید": "تیرزپاتاید",
   "تیرزپاتید": "داروهای لاغری",
   "تریگر آفت": "محرک آفت",
+  "cosmopost": "پست زیرکونیا",
   "کمپلیکیشن": "عوارض",
   "dentcast": "دنتکست",
   "ایمپلانت": "ایمپلنت",
@@ -22210,6 +22250,7 @@
   "chipping": "شکست سرامیک",
   "fremitus": "فرمیتوس",
   "فرمایتوس": "فرمیتوس",
+  "گفت و گو": "مصاحبه",
   "عدم فرول": "نبود فرول",
   "بار مایل": "نیروی مایل",
   "hopeless": "هپلس",
@@ -22272,7 +22313,6 @@
   "فضای کار": "مدیریت دسترسی",
   "مرجع فرم": "مرجع آناتومیک",
   "کار تیمی": "مشاوره تیمی",
-  "گفت و گو": "مصاحبه",
   "شش سالگی": "مولر اول دائمی",
   "ترک سطحی": "میکروترک",
   "نظم کاری": "نظم کلینیکی",
@@ -22530,6 +22570,7 @@
   "اطفال": "دندانپزشکی کودکان",
   "لیکیج": "ریز نشت",
   "اروژن": "فرسایش دندان",
+  "گفتگو": "مصاحبه",
   "هوپلس": "هپلس",
   "hba1c": "کنترل قند خون",
   "دمینگ": "posterior damming",
@@ -22548,7 +22589,6 @@
   "liner": "لاینر",
   "لیزری": "لیزر دندانپزشکی",
   "gpt 4": "مدل زبانی بزرگ",
-  "گفتگو": "مصاحبه",
   "piezo": "پیزو",
   "glp 1": "داروهای لاغری",
   "پارشل": "پارشیال",
