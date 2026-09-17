@@ -482,7 +482,7 @@ def audit() -> tuple[list[str], dict]:
         elif known.get('v') != live:
             problems.append(
                 f'{asset}: manifest says v={known.get("v")}, pages stamp v={live}')
-        state[asset] = {'v': live, 'hash': fp, 'stale': known is None
+        state[asset] = {'v': live, 'hash': fp, 'drift': drift, 'stale': known is None
                         or known.get('hash') != fp or known.get('v') != live}
     return problems, state
 
@@ -557,6 +557,21 @@ def bump() -> int:
     for asset, s in state.items():
         known = manifest.get(asset)
         if known is not None and known.get('hash') == s['hash'] and known.get('v') == s['v']:
+            # The content has not moved, but the PAGES may still disagree about
+            # it, and until now --bump could not repair that: it only ever
+            # rewrote pages while raising a version, so `--check` reported a
+            # drift and the fix it named did nothing. A merge is how this
+            # happens — a publish stamps its new pages at the version main was
+            # on while a branch raises that version underneath it, and git
+            # merges both without reconciling (2026-09-17: sharehub/share-20
+            # and its en mirror arrived on v=182 against 888 pages on v=184).
+            #
+            # Normalising the stragglers UP to the live number is not reusing a
+            # number for different bytes, which is the rule below: the manifest
+            # has just confirmed that this version already points at exactly
+            # these bytes. It is the laggards that are serving something else.
+            if s.get('drift'):
+                new_version[asset] = s['v']
             continue
         # Never reuse a number: a stamp that has ever been served must not come
         # back pointing at different bytes.
