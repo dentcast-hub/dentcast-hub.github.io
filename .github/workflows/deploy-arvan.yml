@@ -29,6 +29,36 @@ jobs:
           python3 -m pip install --upgrade pip
           pip install awscli
 
+      # The cache-sensitive files go up FIRST, carrying their Cache-Control in
+      # the same PUT. The stamping step further down re-applies it to every
+      # object afterwards, but "afterwards" is the problem: between a plain
+      # sync landing a new plus/js/header.js with no cache header at all and
+      # the recursive metadata pass reaching it, the edge (and any browser)
+      # fetches the new file under its default TTL and keeps it — half the
+      # module graph fresh, half stale, and a login button that never appears.
+      # Uploading with the header closes that window. HTML is included so an
+      # article page (which had no Cache-Control on .ir at all, hence
+      # heuristic caching for days) revalidates the way Cloudflare already
+      # makes it on .org. No --delete here: the full sync below owns removals.
+      - name: Upload cache-sensitive files with no-cache already on them
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_KEY }}
+          AWS_EC2_METADATA_DISABLED: "true"
+          ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}
+          ARVAN_ENDPOINT: ${{ secrets.ARVAN_ENDPOINT }}
+        run: |
+          aws s3 sync . "s3://$ARVAN_BUCKET" \
+            --endpoint-url "$ARVAN_ENDPOINT" \
+            --cache-control "no-cache" \
+            --exclude "*" \
+            --include "dc-nav.js" \
+            --include "spot/*" \
+            --include "plus/*" \
+            --include "*.html" \
+            --exclude ".git/*" \
+            --exclude ".github/*"
+
       - name: Sync site to Arvan S3
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}

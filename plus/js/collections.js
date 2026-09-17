@@ -7,22 +7,22 @@
 // opens into a masonry grid of "pins." This module is shared by
 // /plus/collections.html, /plus/collection.html, the workbench's two
 // single-purpose collection buttons, and the dashboard.
-import { el, faNum } from './util.js?v=85';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=85';
-import { premiumCta } from './premium-cta.js?v=85';
-import { api, currentUser, apiBase } from './api.js?v=85';
-import { openLoginModal } from './login-modal.js?v=85';
-import { FOLDER_EN } from './content-index.js?v=85';
-import { markReturnTrail } from './return-trail.js?v=85';
-import { PALETTE } from './config.js?v=85';
+import { el, faNum } from './util.js?v=87';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=87';
+import { premiumCta } from './premium-cta.js?v=87';
+import { api, currentUser, apiBase } from './api.js?v=87';
+import { openLoginModal } from './login-modal.js?v=87';
+import { FOLDER_EN } from './content-index.js?v=87';
+import { markReturnTrail } from './return-trail.js?v=87';
+import { PALETTE } from './config.js?v=87';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
   kindChip, snippetInlineEditor, looksLatin,
-} from './hl-view.js?v=85';
+} from './hl-view.js?v=87';
 // A قطعه‌ی صوتی pin draws the same playable body the دفترچه draws
 // (clip-view.js) — one vocabulary, so a clip never looks like two things.
-import { clipBody, clipInlineEditor, clipHref, clipAsText, createClipPlayer } from './clip-view.js?v=85';
+import { clipBody, clipInlineEditor, clipHref, clipAsText, createClipPlayer } from './clip-view.js?v=87';
 
 const hlColorCss = (key) => (PALETTE.find((p) => p.key === key) || {}).css || '#eaecf5';
 

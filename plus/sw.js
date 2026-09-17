@@ -3,7 +3,7 @@
 // installed app opens instantly. It deliberately does NOT cache article content
 // or API responses, so there is no false "works offline" claim: user data always
 // comes fresh from the API, and the shell shows a normal error when offline.
-const CACHE = 'dcp-shell-v22';
+const CACHE = 'dcp-shell-v23';
 const SHELL = [
   '/plus/',
   '/plus/index.html',
@@ -105,13 +105,27 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== self.location.origin || !url.pathname.startsWith('/plus/')) return;
 
   // Network-first so a fresh shell wins when online; fall back to cache offline.
+  //
+  // Two rules the fallback depends on. Only a GOOD answer is stored: an edge's
+  // 503 page or a 404 put in the cache would be served as the shell on the next
+  // offline open. And the app-shell fallback ('/plus/') is for NAVIGATIONS
+  // ONLY: a module script, a stylesheet or the content index whose fetch fails
+  // must fail, never be answered with the dashboard's HTML — a module handed
+  // HTML throws a SyntaxError and takes the whole graph down with it, login
+  // modal included, on nothing more than one dropped request.
   event.respondWith(
     fetch(req)
       .then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
+        if (res.ok) {
+          const copy = res.clone();
+          caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
+        }
         return res;
       })
-      .catch(() => caches.match(req).then((hit) => hit || caches.match('/plus/'))),
+      .catch(() => caches.match(req).then((hit) => {
+        if (hit) return hit;
+        if (req.mode === 'navigate') return caches.match('/plus/');
+        return Response.error();
+      })),
   );
 });
