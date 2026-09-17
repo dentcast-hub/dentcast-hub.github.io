@@ -47,6 +47,7 @@ const KIND_TITLE_FA: Record<string, string> = {
   review: 'مرور',
   premium_prize: 'جایزه',
   subscription_expiry: 'اشتراک',
+  subscription_lapsed: 'اشتراک',
   achievement: 'نشانِ تازه',
   support_reply: 'پشتیبانی',
   bank_amount: 'پرداخت',

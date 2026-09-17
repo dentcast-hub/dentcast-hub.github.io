@@ -382,6 +382,53 @@ export const config = {
     smsTemplateId: int('SUBSCRIPTION_REMINDER_SMS_TEMPLATE_ID', 530460),
     smsNameParam: str('SUBSCRIPTION_REMINDER_SMS_NAME_PARAM', 'name'),
     smsDaysParam: str('SUBSCRIPTION_REMINDER_SMS_DAYS_PARAM', 'days'),
+
+    // THE WIN-BACK, `daysAfter` days past the last day. Zero disables it.
+    //
+    // ONE WEEK (founder, 2026-09-17). Aimed at the reader who meant to renew
+    // and did not: a week is long enough that they have noticed the site is
+    // gone from their week and short enough that they have not yet arranged
+    // that week around its absence. A reader who genuinely decided against it
+    // is not moved by any number here, so the cadence is tuned entirely for
+    // the first kind.
+    //
+    // ONE message, not a sequence. A second is where a win-back becomes the
+    // nagging this file's own comment warns about, and the founder can still
+    // reach a cohort deliberately with `POST /admin/notices/broadcast`.
+    daysAfter: int('SUBSCRIPTION_WINBACK_DAYS_AFTER', 7),
+
+    // ITS OWN HOUR, and not `hour` above (10:00). Evening, because the reader
+    // is no longer being asked to act before a deadline — they are being asked
+    // to decide, and a dentist decides that with their phone in hand after the
+    // clinic rather than between two patients.
+    //
+    // 21:30 rather than a round hour, and the half hour is load-bearing:
+    // `articleNotify.freeDigestHour` is 21:00 and a lapsed reader is a FREE
+    // reader, so on exactly the evening this goes out it would have landed in
+    // the same minute as «۳ مطلب تازه». The win-back is uncapped and would have
+    // won that collision on delivery and lost it on attention. 22:00 was the
+    // other candidate and is worse: `notify.awakeEndHour` is 22 and half-open,
+    // so it is the first minute the site itself calls too late to knock.
+    winbackHour: int('SUBSCRIPTION_WINBACK_HOUR', 21),
+    winbackMinute: int('SUBSCRIPTION_WINBACK_MINUTE', 30),
+
+    // Its own registered template, and 0 until SMS.ir approves one — the
+    // renewal template (530460) says «N روز تا پایان اشتراک», which is the
+    // wrong tense for a subscription that has already ended, and an Iranian
+    // service line sends registered templates, never free text. The in-app and
+    // messenger paths do not wait for it; this is the same «skip the paid
+    // channel until a template exists» shape the streak SMS uses.
+    //
+    // Two parameters, the same shape as 530460: `name`, and `saved` — which
+    // carries a PHRASE and not a number (see savedPhrase in
+    // subscription-reminder.ts), which is what lets one template serve a reader
+    // with 132 saved items, one with 3, and one with none.
+    //
+    // Template 882525 is registered and approved (1405/06/26). Set to 0 to
+    // switch the paid channel off: the win-back then travels by اطلاعیه,
+    // Telegram/Bale and push alone and nothing else changes.
+    winbackSmsTemplateId: int('SUBSCRIPTION_WINBACK_SMS_TEMPLATE_ID', 882525),
+    winbackSmsSavedParam: str('SUBSCRIPTION_WINBACK_SMS_SAVED_PARAM', 'saved'),
   },
 
   // Reactivation nudge for users with NO live streak: a gentle once-a-day

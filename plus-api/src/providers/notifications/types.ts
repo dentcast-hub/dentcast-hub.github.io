@@ -26,6 +26,24 @@ export type NotificationKind =
    */
   | 'subscription_expiry'
   /**
+   * The subscription ENDED, and a few days have passed with no renewal.
+   *
+   * The one message this system never had. Two warnings go out before the last
+   * day and then the site falls silent forever, on the reasoning written into
+   * subscription-reminder.ts: a reminder about something the reader can no
+   * longer prevent is nagging. That is right about the LAST DAY and wrong a few
+   * days later — by then it is not a reminder at all, it is the offer made
+   * again, and for the reader who simply forgot it is the only message that can
+   * still work. Every warning before it was addressed to somebody who still had
+   * a subscription; this is the first one addressed to somebody who does not.
+   *
+   * UNCAPPED in notify-policy.ts, on `pillar_seat`'s argument rather than
+   * `subscription_expiry`'s: it is claimed once per expiry date, so it cannot
+   * pester by construction, and the one day it would be dropped is a day the
+   * reader was busy enough to make it worth sending.
+   */
+  | 'subscription_lapsed'
+  /**
    * A badge or medal just lit up. IN-APP ONLY — written straight to the inbox by
    * services/achievement-sync.ts and never handed to a sender. A badge lights
    * while the reader is almost always already on the page, so a push would

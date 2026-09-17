@@ -2,9 +2,10 @@ import { describe, it, expect, beforeEach, afterAll, vi } from 'vitest';
 import { resetDb } from './helpers.js';
 import { pool, closePool } from '../src/db.js';
 import { config } from '../src/config.js';
-import { runSubscriptionReminders } from '../src/services/subscription-reminder.js';
+import { runSubscriptionReminders, runWinbackReminders } from '../src/services/subscription-reminder.js';
 import { activateMonths, grantLifetime } from '../src/services/subscription.js';
 import { notifications, sms } from '../src/providers/registry.js';
+import { msUntilNextRun } from '../src/scheduler.js';
 import type { NotificationMessage } from '../src/providers/notifications/types.js';
 import type { TemplateParam } from '../src/providers/sms/types.js';
 
@@ -20,10 +21,22 @@ let seq = 0;
 let sent: Array<{ userId: string; kind: string; msg: NotificationMessage }> = [];
 let texted: Array<{ phone: string; templateId: number; params: TemplateParam[] }> = [];
 
+/**
+ * The SHIPPED template ids, captured at import — beforeEach below replaces both
+ * with throwaways so the sends can be asserted without depending on the real
+ * numbers, and by then these are gone.
+ */
+const SHIPPED = {
+  reminder: config.subscriptionReminder.smsTemplateId,
+  winback: config.subscriptionReminder.winbackSmsTemplateId,
+};
+
 /** 10:00 Tehran on the day the reminder job runs. */
 const RUN = (day: string) => new Date(`${day}T10:00:00+03:30`);
 
-async function subscriber(opts: { expiresOn: string; messenger?: boolean }): Promise<string> {
+async function subscriber(
+  opts: { expiresOn: string; messenger?: boolean; saved?: number; claimPending?: boolean },
+): Promise<string> {
   seq += 1;
   const phone = `0912440${String(seq).padStart(4, '0')}`;
   const r = await pool.query<{ id: string }>(
@@ -39,6 +52,20 @@ async function subscriber(opts: { expiresOn: string; messenger?: boolean }): Pro
   if (opts.messenger) {
     await pool.query('update profiles set telegram_id = $2 where id = $1', [id, 900000 + seq]);
   }
+  for (let i = 0; i < (opts.saved ?? 0); i += 1) {
+    await pool.query(
+      `insert into highlights_all (user_id, content_id, exact, color)
+       values ($1, $2, $3, 'yellow')`,
+      [id, `insight/insight-${i + 1}`, `متنِ هایلایت ${i + 1}`],
+    );
+  }
+  if (opts.claimPending) {
+    await pool.query(
+      `insert into gift_redemptions (user_id, code, reference, kind, months, status)
+       values ($1, $2, $3, 'bank_transfer', 6, 'pending')`,
+      [id, `CODE-${seq}`, `G-TST-${String(seq).padStart(3, '0')}`],
+    );
+  }
   return id;
 }
 
@@ -51,6 +78,10 @@ beforeEach(async () => {
   texted = [];
   config.subscriptionReminder.smsTemplateId = 77;
   config.subscriptionReminder.daysBefore = 3;
+  config.subscriptionReminder.daysAfter = 3;
+  config.subscriptionReminder.winbackHour = 21;
+  config.subscriptionReminder.winbackMinute = 30;
+  config.subscriptionReminder.winbackSmsTemplateId = 88;
   vi.spyOn(notifications, 'send').mockImplementation(async (userId, msg, kind) => {
     sent.push({ userId, kind, msg: msg as NotificationMessage });
   });
@@ -250,5 +281,275 @@ describe('runSubscriptionReminders', () => {
     const r = await runSubscriptionReminders(RUN('2026-09-03'));
     expect(r.soon).toBe(1);
     expect(titles()[0]).toContain('۷ روز');
+  });
+});
+
+/**
+ * The win-back: one message `daysAfter` days after the subscription ended.
+ *
+ * What is worth protecting is that it reaches somebody the site had stopped
+ * talking to, exactly once, and that it does NOT reach the two people it would
+ * be an insult to — the reader who already came back, and the reader whose
+ * money is sitting in the founder's approval queue.
+ */
+describe('runSubscriptionReminders — the win-back', () => {
+  it('writes three days after the last day, to somebody who did not renew', async () => {
+    await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 4 });
+
+    const r = await runWinbackReminders(RUN('2026-09-13'));
+
+    expect(r).toEqual({ lapsed: 1 });
+    expect(sent[0].kind).toBe('subscription_lapsed');
+    expect(sent[0].msg.url).toContain('from=winback');
+  });
+
+  it('leads with what they still have, not with what ended', async () => {
+    await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 132 });
+
+    await runWinbackReminders(RUN('2026-09-13'));
+
+    // «تمام شد» as a headline is an obituary for the thing we are asking them
+    // to buy again. The title is the part that survives a lock screen.
+    expect(titles()[0]).toContain('هایلایت');
+    expect(titles()[0]).not.toContain('تمام شد');
+    expect(sent[0].msg.body).toContain('۱۳۲');
+  });
+
+  it('says nothing on the last day itself, or the day after', async () => {
+    await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 2 });
+
+    for (const day of ['2026-09-11', '2026-09-12', '2026-09-14']) {
+      expect((await runWinbackReminders(RUN(day))).lapsed).toBe(0);
+    }
+    // 09-10 is the day-of warning, which is a different message entirely.
+    expect((await runWinbackReminders(RUN('2026-09-10'))).lapsed).toBe(0);
+  });
+
+  it('says it once, however many times the job runs', async () => {
+    await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 2 });
+
+    await runWinbackReminders(RUN('2026-09-13'));
+    await runWinbackReminders(RUN('2026-09-13'));
+    await runWinbackReminders(RUN('2026-09-13'));
+
+    expect(sent).toHaveLength(1);
+  });
+
+  it('never reaches somebody who already came back', async () => {
+    const id = await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 2 });
+
+    // They renewed on the 12th. activateMonths restarts a lapsed subscription
+    // from today, so the expiry is a month away and the cohort query — which
+    // asks for an expiry exactly three days old — cannot find them. Nothing is
+    // cancelled and no flag is cleared; the date test does all of it.
+    await activateMonths(id, 1, { source: 'payment', now: new Date('2026-09-12T09:00:00+03:30') });
+
+    expect((await runWinbackReminders(RUN('2026-09-13'))).lapsed).toBe(0);
+    expect(sent).toHaveLength(0);
+  });
+
+  it('never reaches somebody whose transfer is sitting in the queue', async () => {
+    // They have paid. The founder has not got to the row yet. «اشتراکت تمام
+    // شد، دوباره بخر» is the worst message the site could send them.
+    await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 5, claimPending: true });
+
+    expect((await runWinbackReminders(RUN('2026-09-13'))).lapsed).toBe(0);
+    expect(sent).toHaveLength(0);
+  });
+
+  it('never reaches a founder — there is no date to run out', async () => {
+    const r = await pool.query<{ id: string }>(
+      'insert into profiles (phone, display_name) values ($1, $2) returning id',
+      ['09124408888', 'بنیان‌گذار'],
+    );
+    await grantLifetime(r.rows[0].id, { source: 'admin' });
+
+    for (const day of ['2026-09-13', '2026-10-13', '2027-01-01']) {
+      expect((await runWinbackReminders(RUN(day))).lapsed).toBe(0);
+    }
+  });
+
+  it('is exempt from the daily notification cap', async () => {
+    const id = await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 2 });
+    for (let i = 0; i < config.notify.maxPerDay + 2; i += 1) {
+      await pool.query(
+        "insert into notification_log (user_id, kind, day) values ($1, 'streak', $2::date)",
+        [id, '2026-09-13'],
+      );
+    }
+
+    await runWinbackReminders(RUN('2026-09-13'));
+
+    expect(sent).toHaveLength(1);
+  });
+
+  it('texts its OWN registered template, never the renewal one', async () => {
+    // 530460 says «N روز تا پایان اشتراک» — the wrong tense for a subscription
+    // that has already ended, and an Iranian service line sends the registered
+    // text, not ours. Two templates or none.
+    await subscriber({ expiresOn: '2026-09-10', saved: 9 });
+
+    await runWinbackReminders(RUN('2026-09-13'));
+
+    expect(texted).toHaveLength(1);
+    expect(texted[0].templateId).toBe(88);
+    expect(texted[0].params).toEqual([
+      { name: 'name', value: 'کاربر 1' },
+      { name: 'saved', value: '۹ هایلایت و یادداشتِ شما' },
+    ]);
+  });
+
+  it('still lands in the inbox before any template is registered', async () => {
+    config.subscriptionReminder.winbackSmsTemplateId = 0;
+    await subscriber({ expiresOn: '2026-09-10', saved: 9 });
+
+    await runWinbackReminders(RUN('2026-09-13'));
+
+    // The free channels do not wait on SMS.ir's approval queue.
+    expect(sent).toHaveLength(1);
+    expect(texted).toHaveLength(0);
+  });
+
+  /**
+   * `#saved#` carries a PHRASE, which is what lets one registered template
+   * serve every reader — and is why the text is no longer withheld from an
+   * account with nothing saved. Three branches, and the middle one is the point
+   * of the whole design: a reader with three highlights is told their work is
+   * safe without being told how little of it there is.
+   */
+  it('says the count only when it is worth saying', async () => {
+    await subscriber({ expiresOn: '2026-09-10', saved: 12 });
+
+    await runWinbackReminders(RUN('2026-09-13'));
+
+    expect(texted[0].params[1].value).toBe('۱۲ هایلایت و یادداشتِ شما');
+    expect(sent[0].msg.body).toContain('۱۲ هایلایت');
+  });
+
+  it('goes plural and countless below the threshold, never «۳ هایلایت»', async () => {
+    await subscriber({ expiresOn: '2026-09-10', saved: 3 });
+
+    await runWinbackReminders(RUN('2026-09-13'));
+
+    expect(texted[0].params[1].value).toBe('هایلایت‌ها و یادداشت‌های شما');
+    expect(sent[0].msg.body).not.toContain('۳ هایلایت');
+    expect(sent[0].msg.body).toContain('هایلایت‌ها و یادداشت‌های شما');
+  });
+
+  it('still texts an account that saved nothing, and promises nothing false', async () => {
+    // The old rule sent no text at all here, which was a parameter with nothing
+    // to say deciding who got a message. «هایلایت‌های شما محفوظ است» would be
+    // vacuous to somebody with none, so the zero case gets its own phrase — and
+    // its own title, since the default one is addressed to a different person.
+    await subscriber({ expiresOn: '2026-09-10', saved: 0 });
+
+    await runWinbackReminders(RUN('2026-09-13'));
+
+    expect(texted).toHaveLength(1);
+    expect(texted[0].params[1].value).toBe('هر چه ذخیره کرده‌اید');
+    expect(sent[0].msg.body).not.toContain('هایلایت');
+    expect(titles()[0]).not.toContain('هایلایت');
+  });
+
+  it('counts a deleted highlight as gone', async () => {
+    // `highlights` is a VIEW over the live rows (migration 0066). Promising
+    // «۹ هایلایتت سرِ جایش است» about something the reader deleted themselves
+    // is the one way this message could be a lie.
+    const id = await subscriber({ expiresOn: '2026-09-10', saved: 9 });
+    await pool.query(
+      "update highlights_all set deleted_at = now() where user_id = $1 and content_id = 'insight/insight-1'",
+      [id],
+    );
+
+    await runWinbackReminders(RUN('2026-09-13'));
+
+    expect(texted[0].params[1]).toEqual({ name: 'saved', value: '۸ هایلایت و یادداشتِ شما' });
+  });
+
+  it('is not sent by the morning job — the two jobs are separate', async () => {
+    // The hour is the difference between the two messages, so the win-back has
+    // its own timer. If it ever rode along on the 10:00 run again, this fails.
+    await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 6 });
+
+    const morning = await runSubscriptionReminders(RUN('2026-09-13'));
+
+    expect(morning).toEqual({ soon: 0, today: 0 });
+    expect(sent).toHaveLength(0);
+    expect((await runWinbackReminders(RUN('2026-09-13'))).lapsed).toBe(1);
+  });
+
+  it('is a WEEK out on the shipped default', async () => {
+    config.subscriptionReminder.daysAfter = 7;
+    await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 6 });
+
+    expect((await runWinbackReminders(RUN('2026-09-13'))).lapsed).toBe(0);
+    expect((await runWinbackReminders(RUN('2026-09-17'))).lapsed).toBe(1);
+  });
+
+  it('follows a retuned distance, and 0 switches it off entirely', async () => {
+    config.subscriptionReminder.daysAfter = 7;
+    await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 2 });
+
+    expect((await runWinbackReminders(RUN('2026-09-13'))).lapsed).toBe(0);
+    expect((await runWinbackReminders(RUN('2026-09-17'))).lapsed).toBe(1);
+
+    config.subscriptionReminder.daysAfter = 0;
+    await subscriber({ expiresOn: '2026-09-20', messenger: true, saved: 2 });
+    expect((await runWinbackReminders(RUN('2026-09-23'))).lapsed).toBe(0);
+  });
+});
+
+/**
+ * The half hour is not cosmetic: `articleNotify.freeDigestHour` is 21:00 and a
+ * lapsed reader is a FREE reader, so a win-back on the hour would land in the
+ * same minute as «۳ مطلب تازه» on exactly the evening it goes out.
+ */
+describe('the win-back runs at 21:30 Tehran, not on the hour', () => {
+  it('computes ms until the next 21:30, minute included', () => {
+    // 21:00 Tehran (17:30Z) — the free digest's own minute — is 30 min early.
+    const half = msUntilNextRun(new Date('2026-03-10T17:30:00.000Z'), 21, 'Asia/Tehran', 30);
+    expect(Math.round(half / 60000)).toBe(30);
+    // 21:31 Tehran: today's slot is gone, so it waits out the day.
+    const tomorrow = msUntilNextRun(new Date('2026-03-10T18:01:00.000Z'), 21, 'Asia/Tehran', 30);
+    expect(Math.round(tomorrow / 60000)).toBe(24 * 60 - 1);
+  });
+
+  it('is unchanged for every caller that passes no minute', () => {
+    const onTheHour = msUntilNextRun(new Date('2026-03-10T16:30:00.000Z'), 21, 'Asia/Tehran');
+    expect(Math.round(onTheHour / 60000)).toBe(60);
+  });
+
+  it('lands inside the site\'s own awake window', () => {
+    // notify.awakeEndHour is 22 and half-open, so 22:00 is the first minute the
+    // site itself calls too late to knock. 21:30 is deliberately before it.
+    const { winbackHour, winbackMinute } = config.subscriptionReminder;
+    expect(winbackHour * 60 + winbackMinute).toBeLessThan(config.notify.awakeEndHour * 60);
+    expect(winbackHour).toBeGreaterThanOrEqual(config.notify.awakeStartHour);
+    // And not in the digest's minute.
+    expect(winbackHour * 60 + winbackMinute)
+      .not.toBe(config.articleNotify.freeDigestHour * 60);
+  });
+});
+
+/**
+ * The two registered templates, as shipped. Nothing here exercises SMS.ir; what
+ * it protects is that the win-back HAS a paid channel and that it is not the
+ * renewal one — both of which are silent when wrong.
+ */
+describe('the shipped SMS templates', () => {
+  it('gives the win-back a live template of its own', () => {
+    // 0 is the «not registered yet» state this feature shipped in, and it is
+    // indistinguishable at runtime from a working deployment: the اطلاعیه row
+    // and the pushes still land, so nobody notices the texts stopped.
+    expect(SHIPPED.winback).toBeGreaterThan(0);
+    expect(SHIPPED.winback).toBe(882525);
+  });
+
+  it('never reuses the renewal template', () => {
+    // 530460 reads «N روز تا پایان اشتراک». Sent to somebody whose subscription
+    // ended a week ago it is not merely odd, it is the opposite of true — and
+    // SMS.ir delivers the registered text, so the mistake would be invisible
+    // from inside this codebase.
+    expect(SHIPPED.winback).not.toBe(SHIPPED.reminder);
   });
 });

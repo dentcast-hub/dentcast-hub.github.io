@@ -3,18 +3,37 @@ import { query, one } from '../db.js';
 import { sendCapped } from './notify-policy.js';
 import { dayInTz, dayDiff } from './time.js';
 import { sms } from '../providers/registry.js';
+import type { NotificationKind } from '../providers/notifications/types.js';
+import type { TemplateParam } from '../providers/sms/types.js';
 
 /**
- * "Your subscription is ending" — the two messages the whole payment system
- * exists to make unnecessary to chase.
+ * "Your subscription is ending" — the messages the whole payment system exists
+ * to make unnecessary to chase.
  *
- * TWO, AND ONLY TWO. One three days out, while there is still time to act
- * without any interruption to their reading, and one on the last day itself. A
- * third ("it has now ended") is deliberately NOT pushed: by then the news is
- * something they will see the moment they open the site, and the in-site banner
- * says it — with the part that actually matters, that none of their highlights
- * or notes have gone anywhere. Sending a push about a thing the user can no
- * longer prevent is how a reminder becomes nagging.
+ * TWO BEFORE, ONE AFTER, ON TWO TIMERS. One three days out, while there is
+ * still time to act without any interruption to their reading, and one on the
+ * last day itself — both at `hour` (10:00), when a deadline can be acted on.
+ * Then one a week past the last day, at `winbackHour:winbackMinute` (21:30),
+ * because that message is not a deadline but an offer and an evening is when
+ * somebody decides. Two exported jobs, `runSubscriptionReminders` and
+ * `runWinbackReminders`, over one `runPass`.
+ *
+ * THAT THIRD MESSAGE WAS MISSING UNTIL 2026-09-17, and this comment used to
+ * argue against it: by then the news is something they will see the moment they
+ * open the site, and sending a push about a thing the user can no longer
+ * prevent is how a reminder becomes nagging. Both halves turned out to be
+ * wrong, in the same place. «They will see it when they open the site» assumes
+ * they open the site, and the reader this is for is precisely the one who
+ * stopped — the in-site banner is a message delivered only to people who did
+ * not need it. And «can no longer prevent» is true of the lapse and false of
+ * the thing that matters: the subscription is a purchase, not an event, and it
+ * is available again at any hour. Three days after the fact this is not a
+ * reminder at all; it is the offer, made once more, to somebody who never
+ * decided against it.
+ *
+ * 70 signups, 50 in month two (founder, 2026-09-17). Some of those twenty chose
+ * to go and some of them forgot, and until this message existed the site
+ * treated both the same way — by saying nothing.
  *
  * WHAT "THE LAST DAY" MEANS. Premium is settled at the Tehran day boundary by
  * the nightly sweep, so a subscription whose timestamp falls at 14:00 still
@@ -37,7 +56,7 @@ import { sms } from '../providers/registry.js';
 
 const ACTION = 'subscription_reminder_sent';
 
-export type ReminderKind = 'expiry_soon' | 'expiry_today';
+export type ReminderKind = 'expiry_soon' | 'expiry_today' | 'lapsed';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const toFa = (n: number | string): string => String(n).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);
@@ -51,10 +70,79 @@ interface DueRow {
   phone: string | null;
   display_name: string;
   expires_at: Date;
+  /**
+   * Highlights + notes still sitting in the account. Only the lapsed message
+   * reads it, and the reason it is in the message at all is that «your
+   * subscription ended» is news about us and «your 132 highlights are still
+   * there» is news about them — the second is the one with a reason to come
+   * back inside it. It is also the honest thing to say: none of it was deleted.
+   */
+  saved: number;
+  /**
+   * They have an unreviewed واریز/کارت‌هدیه claim in the founder's queue —
+   * they HAVE renewed and are waiting on a person. «اشتراکت تمام شد، دوباره
+   * بخر» is the worst message the site could send them, so the lapsed pass
+   * skips them entirely (they are not in the pre-expiry passes' way: those say
+   * something still true while a claim is pending).
+   */
+  claim_pending: boolean;
+}
+
+/**
+ * Below this many saved items the count is not said out loud.
+ *
+ * The number is the whole reason `saved` exists — «۱۳۲ هایلایت شما محفوظ است»
+ * is a reason to come back. But the same sentence at 3 is an inventory of how
+ * little the reader used what they paid for, which is worse than saying nothing
+ * specific, so under the threshold the phrase goes plural and countless. Five
+ * is a judgement, not a measurement; it is a constant here rather than an env
+ * var because retuning it is a commit either way and one more knob in the
+ * config is one more thing to keep true.
+ */
+const SAVED_NUMBER_MIN = 5;
+
+/**
+ * The subject of «… محفوظ است», as a NOUN PHRASE rather than a number.
+ *
+ * This is what lets ONE registered SMS template serve every reader. SMS.ir
+ * substitutes a string, so the decision about whether a count is worth stating
+ * lives here instead of in the template — otherwise the alternative was two
+ * templates (two approvals, two ids, and a second text to keep in step with
+ * this one) or the cheaper and worse answer, which is what shipped first: send
+ * no text at all to an account with nothing saved, so a parameter with nothing
+ * honest to put in it silently decided who got a message.
+ *
+ * Three cases, because the zero case is not the small case. «هایلایت‌ها و
+ * یادداشت‌های شما محفوظ است» is vacuous to somebody who has none, and the
+ * promise they actually need is about anything they save from here on.
+ */
+function savedPhrase(saved: number): string {
+  if (saved >= SAVED_NUMBER_MIN) return `${toFa(saved)} هایلایت و یادداشتِ شما`;
+  if (saved > 0) return 'هایلایت‌ها و یادداشت‌های شما';
+  return 'هر چه ذخیره کرده‌اید';
 }
 
 function message(kind: ReminderKind, row: DueRow, daysBefore: number) {
   const day = JALALI.format(row.expires_at);
+  if (kind === 'lapsed') {
+    // What it does NOT say is the design. Not «تمام شد» as a headline — they
+    // know, and an obituary for a thing they are being asked to buy again is a
+    // strange way to ask. Not a discount either: this goes to everybody who
+    // lapsed, including the ones who were three days late, and a standing ٪N
+    // for being late teaches every subscriber to be late. The offer is exactly
+    // the offer; what changes is that somebody said it out loud.
+    return {
+      // The title branches on HAVING something, not on how much: a row that
+      // promises somebody their highlights are safe when they have none reads
+      // as a message meant for a different person.
+      title: row.saved > 0
+        ? 'هایلایت‌ها و یادداشت‌هایت همان‌جا هستند'
+        : 'هر وقت خواستی، از همان‌جا ادامه بده',
+      body: `${savedPhrase(row.saved)} دست‌نخورده باقی مانده — هیچ‌کدام پاک نمی‌شود. اشتراک پریمیوم از ${day} تمام شده؛ هر وقت خواستی از همان‌جا ادامه بده.`,
+      url: '/plus/pricing.html?from=winback',
+      tag: 'subscription_lapsed',
+    };
+  }
   if (kind === 'expiry_today') {
     return {
       title: 'امروز آخرین روز اشتراک شماست',
@@ -81,14 +169,22 @@ function message(kind: ReminderKind, row: DueRow, daysBefore: number) {
  */
 async function due(offset: number, today: string): Promise<DueRow[]> {
   const res = await query<DueRow>(
-    `select s.user_id, nullif(p.phone, '') as phone, p.display_name, s.expires_at
+    `select s.user_id, nullif(p.phone, '') as phone, p.display_name, s.expires_at,
+            (select count(*) from highlights h where h.user_id = s.user_id)
+              + (select count(*) from article_notes n
+                  where n.user_id = s.user_id and coalesce(n.note, '') <> '')
+              as saved,
+            exists (select 1 from gift_redemptions g
+                     where g.user_id = s.user_id and g.status = 'pending')
+              as claim_pending
        from subscriptions s
        join profiles p on p.id = s.user_id
       where s.expires_at is not null
         and ((s.expires_at at time zone $1)::date - $2::date) = $3`,
     [config.streakTimezone, today, offset],
   );
-  return res.rows;
+  // `count(*)` arrives as a bigint, i.e. a string on this driver.
+  return res.rows.map((r) => ({ ...r, saved: Number(r.saved) }));
 }
 
 async function alreadySent(userId: string, kind: ReminderKind, expiresOn: string): Promise<boolean> {
@@ -134,6 +230,57 @@ function daysLabel(kind: ReminderKind, daysBefore: number): string {
   return toFa(kind === 'expiry_today' ? 1 : daysBefore);
 }
 
+/**
+ * Which inbox/notification kind a reminder travels as. The two warnings are
+ * `subscription_expiry`; the win-back is its own kind so the inbox can label it
+ * separately and so a later decision about one cannot silently move the other.
+ */
+function noticeKind(kind: ReminderKind): NotificationKind {
+  return kind === 'lapsed' ? 'subscription_lapsed' : 'subscription_expiry';
+}
+
+/**
+ * The registered template and its parameters, or null when this message has no
+ * paid channel today.
+ *
+ * TWO TEMPLATES, NOT ONE. An Iranian service line sends templates registered in
+ * advance, so the tense is baked into the text at SMS.ir and 530460's «N روز تا
+ * پایان اشتراک» cannot be reused for a subscription that has already ended.
+ * Until the second one is approved its id is 0 and the win-back simply travels
+ * by the free channels — the same shape the streak SMS uses, and the reason
+ * this can ship before the registration comes back.
+ *
+ * `#saved#` CARRIES A PHRASE, NOT A NUMBER — see savedPhrase. That is what
+ * makes one template enough, and it is also what removed a rule this shipped
+ * with: the win-back SMS used to be withheld from an account with nothing
+ * saved, which was dressed up as «that reader decided against this» and was
+ * really the parameter having nothing honest to put in it deciding who got a
+ * message. Every lapsed reader with a phone gets the text now.
+ */
+function smsFor(
+  row: DueRow, kind: ReminderKind, daysBefore: number,
+): { templateId: number; params: TemplateParam[] } | null {
+  const c = config.subscriptionReminder;
+  if (kind === 'lapsed') {
+    if (c.winbackSmsTemplateId <= 0) return null;
+    return {
+      templateId: c.winbackSmsTemplateId,
+      params: [
+        { name: c.smsNameParam, value: row.display_name },
+        { name: c.winbackSmsSavedParam, value: savedPhrase(row.saved) },
+      ],
+    };
+  }
+  if (c.smsTemplateId <= 0) return null;
+  return {
+    templateId: c.smsTemplateId,
+    params: [
+      { name: c.smsNameParam, value: row.display_name },
+      { name: c.smsDaysParam, value: daysLabel(kind, daysBefore) },
+    ],
+  };
+}
+
 async function sendOne(
   row: DueRow, kind: ReminderKind, expiresOn: string, now: Date, daysBefore: number,
 ): Promise<boolean> {
@@ -146,15 +293,13 @@ async function sendOne(
   );
 
   const msg = message(kind, row, daysBefore);
-  await sendCapped(row.user_id, msg, 'subscription_expiry', now);
+  await sendCapped(row.user_id, msg, noticeKind(kind), now);
 
-  if (needsSms(row) && config.subscriptionReminder.smsTemplateId > 0) {
+  const text = smsFor(row, kind, daysBefore);
+  if (needsSms(row) && text) {
     // Never fails the run: an SMS that does not go out is bad, a reminder batch
     // that stops halfway because of it is worse.
-    await sms.sendTemplate(row.phone as string, config.subscriptionReminder.smsTemplateId, [
-      { name: config.subscriptionReminder.smsNameParam, value: row.display_name },
-      { name: config.subscriptionReminder.smsDaysParam, value: daysLabel(kind, daysBefore) },
-    ]).catch((err: unknown) => {
+    await sms.sendTemplate(row.phone as string, text.templateId, text.params).catch((err: unknown) => {
       // eslint-disable-next-line no-console
       console.error(`[subscription-reminder] sms to ${row.phone} failed: ${(err as Error).message}`);
     });
@@ -162,24 +307,65 @@ async function sendOne(
   return true;
 }
 
+/**
+ * One pass: everybody whose last day is exactly `offset` days from today, told
+ * `kind`, at most once per expiry date.
+ *
+ * Every pass in this file goes through here, which is what keeps the claim, the
+ * skip and the ordering identical whichever job called it.
+ */
+async function runPass(offset: number, kind: ReminderKind, now: Date): Promise<number> {
+  const { daysBefore } = config.subscriptionReminder;
+  const todayStr = dayInTz(now, config.streakTimezone);
+  let n = 0;
+  for (const row of await due(offset, todayStr)) {
+    // Renewing needs no cancellation: activateMonths restarts a lapsed
+    // subscription from today, so a reader who came back has an expiry months
+    // away and never matches this pass at all.
+    if (kind === 'lapsed' && row.claim_pending) continue;
+    const expiresOn = dayInTz(row.expires_at, config.streakTimezone);
+    if (await alreadySent(row.user_id, kind, expiresOn)) continue;
+    await sendOne(row, kind, expiresOn, now, daysBefore);
+    n += 1;
+  }
+  return n;
+}
+
+/**
+ * The two warnings sent while somebody is still a subscriber — mid-morning, so
+ * «three days left» arrives when it can be acted on.
+ *
+ * The win-back is NOT here, and the split is the point: it is a different
+ * message to a different person at a different hour, and folding it in would
+ * have meant either moving these two into the evening — where the streak nudge
+ * and the free digest already are, and where «you have three days» is a thing
+ * to do tomorrow — or running the whole job twice a day and having each run
+ * skip two thirds of itself.
+ */
 export async function runSubscriptionReminders(now: Date = new Date()): Promise<{
   soon: number; today: number;
 }> {
-  const daysBefore = config.subscriptionReminder.daysBefore;
-  const todayStr = dayInTz(now, config.streakTimezone);
-  let soon = 0;
-  let today = 0;
+  const { daysBefore } = config.subscriptionReminder;
+  return {
+    soon: await runPass(daysBefore, 'expiry_soon', now),
+    today: await runPass(0, 'expiry_today', now),
+  };
+}
 
-  for (const [offset, kind] of [[daysBefore, 'expiry_soon'], [0, 'expiry_today']] as const) {
-    for (const row of await due(offset, todayStr)) {
-      const expiresOn = dayInTz(row.expires_at, config.streakTimezone);
-      if (await alreadySent(row.user_id, kind, expiresOn)) continue;
-      await sendOne(row, kind, expiresOn, now, daysBefore);
-      if (kind === 'expiry_soon') soon += 1; else today += 1;
-    }
-  }
-
-  return { soon, today };
+/**
+ * The win-back, `daysAfter` days after the subscription ended — the offset is
+ * NEGATIVE because the expiry is in the past, and the same `due` query finds it.
+ *
+ * `daysAfter: 0` switches the whole thing off rather than colliding with the
+ * day-of warning, which is the one offset this pass must never take: that
+ * reader still has the day.
+ */
+export async function runWinbackReminders(now: Date = new Date()): Promise<{
+  lapsed: number;
+}> {
+  const { daysAfter } = config.subscriptionReminder;
+  if (daysAfter <= 0) return { lapsed: 0 };
+  return { lapsed: await runPass(-daysAfter, 'lapsed', now) };
 }
 
 /** Exported for the banner test's sake: how many whole Tehran days are left. */
