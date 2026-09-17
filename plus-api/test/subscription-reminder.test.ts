@@ -21,6 +21,16 @@ let seq = 0;
 let sent: Array<{ userId: string; kind: string; msg: NotificationMessage }> = [];
 let texted: Array<{ phone: string; templateId: number; params: TemplateParam[] }> = [];
 
+/**
+ * The SHIPPED template ids, captured at import — beforeEach below replaces both
+ * with throwaways so the sends can be asserted without depending on the real
+ * numbers, and by then these are gone.
+ */
+const SHIPPED = {
+  reminder: config.subscriptionReminder.smsTemplateId,
+  winback: config.subscriptionReminder.winbackSmsTemplateId,
+};
+
 /** 10:00 Tehran on the day the reminder job runs. */
 const RUN = (day: string) => new Date(`${day}T10:00:00+03:30`);
 
@@ -518,5 +528,28 @@ describe('the win-back runs at 21:30 Tehran, not on the hour', () => {
     // And not in the digest's minute.
     expect(winbackHour * 60 + winbackMinute)
       .not.toBe(config.articleNotify.freeDigestHour * 60);
+  });
+});
+
+/**
+ * The two registered templates, as shipped. Nothing here exercises SMS.ir; what
+ * it protects is that the win-back HAS a paid channel and that it is not the
+ * renewal one — both of which are silent when wrong.
+ */
+describe('the shipped SMS templates', () => {
+  it('gives the win-back a live template of its own', () => {
+    // 0 is the «not registered yet» state this feature shipped in, and it is
+    // indistinguishable at runtime from a working deployment: the اطلاعیه row
+    // and the pushes still land, so nobody notices the texts stopped.
+    expect(SHIPPED.winback).toBeGreaterThan(0);
+    expect(SHIPPED.winback).toBe(882525);
+  });
+
+  it('never reuses the renewal template', () => {
+    // 530460 reads «N روز تا پایان اشتراک». Sent to somebody whose subscription
+    // ended a week ago it is not merely odd, it is the opposite of true — and
+    // SMS.ir delivers the registered text, so the mistake would be invisible
+    // from inside this codebase.
+    expect(SHIPPED.winback).not.toBe(SHIPPED.reminder);
   });
 });

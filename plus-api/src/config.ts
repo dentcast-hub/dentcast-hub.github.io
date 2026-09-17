@@ -419,10 +419,15 @@ export const config = {
     // messenger paths do not wait for it; this is the same «skip the paid
     // channel until a template exists» shape the streak SMS uses.
     //
-    // Two parameters, the same shape as 530460: `name`, and `saved` — how many
-    // highlights and notes are still sitting in the account. See
-    // subscription-reminder.ts for why the count is in the message at all.
-    winbackSmsTemplateId: int('SUBSCRIPTION_WINBACK_SMS_TEMPLATE_ID', 0),
+    // Two parameters, the same shape as 530460: `name`, and `saved` — which
+    // carries a PHRASE and not a number (see savedPhrase in
+    // subscription-reminder.ts), which is what lets one template serve a reader
+    // with 132 saved items, one with 3, and one with none.
+    //
+    // Template 882525 is registered and approved (1405/06/26). Set to 0 to
+    // switch the paid channel off: the win-back then travels by اطلاعیه,
+    // Telegram/Bale and push alone and nothing else changes.
+    winbackSmsTemplateId: int('SUBSCRIPTION_WINBACK_SMS_TEMPLATE_ID', 882525),
     winbackSmsSavedParam: str('SUBSCRIPTION_WINBACK_SMS_SAVED_PARAM', 'saved'),
   },
 

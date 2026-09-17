@@ -210,7 +210,7 @@ a 503 from `POST /pay/start`, which checks the same flag.)
 | `GIFTCARD_RECIPIENT_EMAIL` | inbox the US Apple gift card is emailed to |
 | `GIFTCARD_ALERT_PHONE` | founder's number, told when a claim opens |
 | `SUBSCRIPTION_REMINDER_SMS_TEMPLATE_ID` | sms.ir template for the renewal reminder (SMS is the fallback when a user has no messenger) |
-| `SUBSCRIPTION_WINBACK_SMS_TEMPLATE_ID` | sms.ir template for the win-back, a few days AFTER a lapse. **0 until you register one** — the renewal template's tense is wrong for it, so the message ships by اطلاعیه/messenger/push until this is set. |
+| `SUBSCRIPTION_WINBACK_SMS_TEMPLATE_ID` | sms.ir template for the win-back, a week AFTER a lapse (882525, approved 1405/06/26). Its own template because the renewal one's tense is wrong for a subscription that has already ended. 0 switches the paid channel off. |
 | `SUBSCRIPTION_WINBACK_DAYS_AFTER` | how many days after the last day the win-back goes out (default 7; 0 switches it off) |
 | `SUBSCRIPTION_WINBACK_HOUR` / `_MINUTE` | when it goes out, Tehran (default 21:30 — off the free digest's 21:00, inside the awake window) |
 
