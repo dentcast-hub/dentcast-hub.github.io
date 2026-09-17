@@ -1,11 +1,11 @@
 // Login is a MODAL, never a page (spec 2.5). Two steps: phone -> OTP code.
 // Resolves with { user, return_to } on success, or null if the user cancels.
-import { el, faNum } from './util.js?v=88';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=88';
+import { el, faNum } from './util.js?v=89';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=89';
 import {
   isOrgHost, irMirrorUrl,
   telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername,
-} from './config.js?v=88';
+} from './config.js?v=89';
 
 let overlay = null;
 // While the mandatory nickname step is showing, every dismissal path (×,
