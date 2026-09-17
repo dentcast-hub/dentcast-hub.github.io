@@ -2,28 +2,28 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=89';
-import { currentUser, api } from './js/api.js?v=89';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=89';
-import { openCollectionPicker } from './js/collections.js?v=89';
-import { el, faNum } from './js/util.js?v=89';
-import { initHomeCard } from './js/home-card.js?v=89';
-import { initHomeFeatures } from './js/home-features.js?v=89';
-import { initHomeBundles } from './js/home-bundles.js?v=89';
-import { initHomeUpboard } from './js/home-upboard.js?v=89';
-import { initDesTool } from './js/des-scorer.js?v=89';
-import { initHeader } from './js/header.js?v=89';
-import { initTourAutostart } from './js/tour.js?v=89';
-import { initReadingTracker } from './js/reading.js?v=89';
-import { initListeningTracker } from './js/listening.js?v=89';
-import { initShareScoring, buildShareButton } from './js/share.js?v=89';
-import { initHeart, buildHeartChip } from './js/votes.js?v=89';
-import { mountClipControl, landOnClip } from './js/clips.js?v=89';
-import { mountArticleThreads } from './js/article-threads.js?v=89';
-import { mountChallenge } from './js/challenge.js?v=89';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=89';
-import { mountDes } from './js/des.js?v=89';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=89';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=90';
+import { currentUser, api } from './js/api.js?v=90';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=90';
+import { openCollectionPicker } from './js/collections.js?v=90';
+import { el, faNum } from './js/util.js?v=90';
+import { initHomeCard } from './js/home-card.js?v=90';
+import { initHomeFeatures } from './js/home-features.js?v=90';
+import { initHomeBundles } from './js/home-bundles.js?v=90';
+import { initHomeUpboard } from './js/home-upboard.js?v=90';
+import { initDesTool } from './js/des-scorer.js?v=90';
+import { initHeader } from './js/header.js?v=90';
+import { initTourAutostart } from './js/tour.js?v=90';
+import { initReadingTracker } from './js/reading.js?v=90';
+import { initListeningTracker } from './js/listening.js?v=90';
+import { initShareScoring, buildShareButton } from './js/share.js?v=90';
+import { initHeart, buildHeartChip } from './js/votes.js?v=90';
+import { mountClipControl, landOnClip } from './js/clips.js?v=90';
+import { mountArticleThreads } from './js/article-threads.js?v=90';
+import { mountChallenge } from './js/challenge.js?v=90';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=90';
+import { mountDes } from './js/des.js?v=90';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=90';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -33,7 +33,7 @@ import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=89';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=89').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=90').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -605,6 +605,14 @@ const SEEN_FOLDERS = new Set([
 function isSeenContent(contentId) {
   const parts = (contentId || '').split('/');
   if (!SEEN_FOLDERS.has(parts[0])) return false;
+  // An /en/ mirror is not content this system knows about. It has no brain
+  // entry, no Pulse line and no row in the content index — it is a reader-only
+  // surface (CLAUDE.md, en-version protocol), and the fa page it mirrors is the
+  // thing that gets seen. Without this, `metanotes/en/meta-1` passed the
+  // folder test on parts[0] and picked up BOTH halves of this system: a ✓ tick
+  // drawn onto the «English» language toggle, and an `article_viewed` row
+  // written for an id no catalog contains (found 2026-09-17).
+  if (parts[1] === 'en') return false;
   // a real article (folder/slug), a section index (trailing slash → ['x','']),
   // or an archive page whose id IS the bare folder name (episodes.html →
   // 'episodes') — that last one is what lets the اپیزودها grid cell earn its
@@ -628,6 +636,13 @@ async function initSeenTicks() {
   const here = detectContentId();
   const links = [];
   document.querySelectorAll('a[href]').forEach((a) => {
+    // The fa↔en toggle is chrome, not a link into the catalog: it points at the
+    // SAME document in the other language. A ✓ on it answers a question nobody
+    // asked and reads as a checkbox on a control — «✓ English» / «✓ فارسی».
+    // The en side of it is already excluded by isSeenContent; this is what
+    // keeps the tick off the en page's «فارسی» button, whose target really is
+    // an article the reader may have seen.
+    if (a.closest('.lang-btn')) return;
     let cid;
     try {
       const u = new URL(a.getAttribute('href'), location.href);
