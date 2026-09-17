@@ -84,6 +84,40 @@ interface DueRow {
   claim_pending: boolean;
 }
 
+/**
+ * Below this many saved items the count is not said out loud.
+ *
+ * The number is the whole reason `saved` exists — «۱۳۲ هایلایت شما محفوظ است»
+ * is a reason to come back. But the same sentence at 3 is an inventory of how
+ * little the reader used what they paid for, which is worse than saying nothing
+ * specific, so under the threshold the phrase goes plural and countless. Five
+ * is a judgement, not a measurement; it is a constant here rather than an env
+ * var because retuning it is a commit either way and one more knob in the
+ * config is one more thing to keep true.
+ */
+const SAVED_NUMBER_MIN = 5;
+
+/**
+ * The subject of «… محفوظ است», as a NOUN PHRASE rather than a number.
+ *
+ * This is what lets ONE registered SMS template serve every reader. SMS.ir
+ * substitutes a string, so the decision about whether a count is worth stating
+ * lives here instead of in the template — otherwise the alternative was two
+ * templates (two approvals, two ids, and a second text to keep in step with
+ * this one) or the cheaper and worse answer, which is what shipped first: send
+ * no text at all to an account with nothing saved, so a parameter with nothing
+ * honest to put in it silently decided who got a message.
+ *
+ * Three cases, because the zero case is not the small case. «هایلایت‌ها و
+ * یادداشت‌های شما محفوظ است» is vacuous to somebody who has none, and the
+ * promise they actually need is about anything they save from here on.
+ */
+function savedPhrase(saved: number): string {
+  if (saved >= SAVED_NUMBER_MIN) return `${toFa(saved)} هایلایت و یادداشتِ شما`;
+  if (saved > 0) return 'هایلایت‌ها و یادداشت‌های شما';
+  return 'هر چه ذخیره کرده‌اید';
+}
+
 function message(kind: ReminderKind, row: DueRow, daysBefore: number) {
   const day = JALALI.format(row.expires_at);
   if (kind === 'lapsed') {
@@ -94,10 +128,13 @@ function message(kind: ReminderKind, row: DueRow, daysBefore: number) {
     // for being late teaches every subscriber to be late. The offer is exactly
     // the offer; what changes is that somebody said it out loud.
     return {
-      title: 'هایلایت‌ها و یادداشت‌هایت همان‌جا هستند',
-      body: row.saved > 0
-        ? `${toFa(row.saved)} هایلایت و یادداشتِ شما دست‌نخورده باقی مانده — هیچ‌کدام پاک نمی‌شود. اشتراک پریمیوم از ${day} تمام شده؛ هر وقت خواستی از همان‌جا ادامه بده.`
-        : `اشتراک پریمیوم شما از ${day} تمام شده. هر چه ذخیره کرده‌ای سرِ جایش است و هر وقت بخواهی از همان‌جا ادامه می‌دهی.`,
+      // The title branches on HAVING something, not on how much: a row that
+      // promises somebody their highlights are safe when they have none reads
+      // as a message meant for a different person.
+      title: row.saved > 0
+        ? 'هایلایت‌ها و یادداشت‌هایت همان‌جا هستند'
+        : 'هر وقت خواستی، از همان‌جا ادامه بده',
+      body: `${savedPhrase(row.saved)} دست‌نخورده باقی مانده — هیچ‌کدام پاک نمی‌شود. اشتراک پریمیوم از ${day} تمام شده؛ هر وقت خواستی از همان‌جا ادامه بده.`,
       url: '/plus/pricing.html?from=winback',
       tag: 'subscription_lapsed',
     };
@@ -209,24 +246,24 @@ function noticeKind(kind: ReminderKind): NotificationKind {
  * by the free channels — the same shape the streak SMS uses, and the reason
  * this can ship before the registration comes back.
  *
- * THE WIN-BACK SMS IS NOT SENT TO AN EMPTY ACCOUNT, and that is not only about
- * the `saved` parameter having nothing honest to put in it. A reader who
- * subscribed and saved nothing at all is the one who decided against this, not
- * the one who forgot — the earlier passes already reached them twice, and a
- * paid message is the wrong thing to spend on the least likely renewal. They
- * still get the inbox row and the messenger push.
+ * `#saved#` CARRIES A PHRASE, NOT A NUMBER — see savedPhrase. That is what
+ * makes one template enough, and it is also what removed a rule this shipped
+ * with: the win-back SMS used to be withheld from an account with nothing
+ * saved, which was dressed up as «that reader decided against this» and was
+ * really the parameter having nothing honest to put in it deciding who got a
+ * message. Every lapsed reader with a phone gets the text now.
  */
 function smsFor(
   row: DueRow, kind: ReminderKind, daysBefore: number,
 ): { templateId: number; params: TemplateParam[] } | null {
   const c = config.subscriptionReminder;
   if (kind === 'lapsed') {
-    if (c.winbackSmsTemplateId <= 0 || row.saved <= 0) return null;
+    if (c.winbackSmsTemplateId <= 0) return null;
     return {
       templateId: c.winbackSmsTemplateId,
       params: [
         { name: c.smsNameParam, value: row.display_name },
-        { name: c.winbackSmsSavedParam, value: toFa(row.saved) },
+        { name: c.winbackSmsSavedParam, value: savedPhrase(row.saved) },
       ],
     };
   }

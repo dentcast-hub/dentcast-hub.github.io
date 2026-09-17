@@ -382,7 +382,7 @@ describe('runSubscriptionReminders — the win-back', () => {
     expect(texted[0].templateId).toBe(88);
     expect(texted[0].params).toEqual([
       { name: 'name', value: 'کاربر 1' },
-      { name: 'saved', value: '۹' },
+      { name: 'saved', value: '۹ هایلایت و یادداشتِ شما' },
     ]);
   });
 
@@ -397,24 +397,52 @@ describe('runSubscriptionReminders — the win-back', () => {
     expect(texted).toHaveLength(0);
   });
 
-  it('does not spend an SMS on an account that saved nothing', async () => {
-    // They subscribed and highlighted nothing at all: this is the reader who
-    // decided against it, not the one who forgot. Two warnings already reached
-    // them. They still get the inbox row.
-    await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 0 });
+  /**
+   * `#saved#` carries a PHRASE, which is what lets one registered template
+   * serve every reader — and is why the text is no longer withheld from an
+   * account with nothing saved. Three branches, and the middle one is the point
+   * of the whole design: a reader with three highlights is told their work is
+   * safe without being told how little of it there is.
+   */
+  it('says the count only when it is worth saying', async () => {
+    await subscriber({ expiresOn: '2026-09-10', saved: 12 });
 
     await runSubscriptionReminders(RUN('2026-09-13'));
 
-    expect(sent).toHaveLength(1);
-    expect(sent[0].msg.body).not.toContain('۰ هایلایت');
-    expect(texted).toHaveLength(0);
+    expect(texted[0].params[1].value).toBe('۱۲ هایلایت و یادداشتِ شما');
+    expect(sent[0].msg.body).toContain('۱۲ هایلایت');
+  });
+
+  it('goes plural and countless below the threshold, never «۳ هایلایت»', async () => {
+    await subscriber({ expiresOn: '2026-09-10', saved: 3 });
+
+    await runSubscriptionReminders(RUN('2026-09-13'));
+
+    expect(texted[0].params[1].value).toBe('هایلایت‌ها و یادداشت‌های شما');
+    expect(sent[0].msg.body).not.toContain('۳ هایلایت');
+    expect(sent[0].msg.body).toContain('هایلایت‌ها و یادداشت‌های شما');
+  });
+
+  it('still texts an account that saved nothing, and promises nothing false', async () => {
+    // The old rule sent no text at all here, which was a parameter with nothing
+    // to say deciding who got a message. «هایلایت‌های شما محفوظ است» would be
+    // vacuous to somebody with none, so the zero case gets its own phrase — and
+    // its own title, since the default one is addressed to a different person.
+    await subscriber({ expiresOn: '2026-09-10', saved: 0 });
+
+    await runSubscriptionReminders(RUN('2026-09-13'));
+
+    expect(texted).toHaveLength(1);
+    expect(texted[0].params[1].value).toBe('هر چه ذخیره کرده‌اید');
+    expect(sent[0].msg.body).not.toContain('هایلایت');
+    expect(titles()[0]).not.toContain('هایلایت');
   });
 
   it('counts a deleted highlight as gone', async () => {
     // `highlights` is a VIEW over the live rows (migration 0066). Promising
-    // «۴ هایلایتت سرِ جایش است» about something the reader deleted themselves
+    // «۹ هایلایتت سرِ جایش است» about something the reader deleted themselves
     // is the one way this message could be a lie.
-    const id = await subscriber({ expiresOn: '2026-09-10', saved: 4 });
+    const id = await subscriber({ expiresOn: '2026-09-10', saved: 9 });
     await pool.query(
       "update highlights_all set deleted_at = now() where user_id = $1 and content_id = 'insight/insight-1'",
       [id],
@@ -422,7 +450,7 @@ describe('runSubscriptionReminders — the win-back', () => {
 
     await runSubscriptionReminders(RUN('2026-09-13'));
 
-    expect(texted[0].params[1]).toEqual({ name: 'saved', value: '۳' });
+    expect(texted[0].params[1]).toEqual({ name: 'saved', value: '۸ هایلایت و یادداشتِ شما' });
   });
 
   it('follows a retuned distance, and 0 switches it off entirely', async () => {
