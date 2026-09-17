@@ -247,9 +247,7 @@ main.about-page {
   transition: color var(--tr2), border-color var(--tr2);
 }
 
-.content-box p {
-  font-size: .925rem;
-  line-height: 1.85;
+.content-box p {line-height:1.9;
   color: var(--txt);
   margin: 0 0 0.75rem;
   transition: color var(--tr2);
@@ -258,7 +256,6 @@ main.about-page {
 .content-box p:last-child { margin-bottom: 0; }
 
 .content-box strong {
-  color: var(--txt);
   font-weight: 700;
 }
 
@@ -333,7 +330,11 @@ main.about-page {
   .about-hero-name { font-size: 1.15rem; }
   .content-box { padding: 1.25rem 1.125rem; }
 }
-  </style>
+  
+/* Body prose — canonical measure, shared with every article page.
+   This page does not load /dc-article.css, so the rule lives here. */
+p{ margin:0.875rem 0; font-size:1.02rem; }
+</style>
 </head>
 
 <body>

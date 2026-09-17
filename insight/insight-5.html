@@ -33,7 +33,7 @@
 
 
     <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
-  <link rel="stylesheet" href="/dc-article.css?v=4">
+  <link rel="stylesheet" href="/dc-article.css?v=5">
   <style>
     :root {
       --blue:#0b5fff;
@@ -48,17 +48,11 @@
 
     p {
       margin: 0.875rem 0;
-      font-size: 1.05rem;
-      text-align: justify;
     }
 
     ul { list-style:none; padding-right:0; margin:0.875rem 0; }
     ul li::before { content:"✦ "; color:var(--blue); font-weight:bold; }
-    strong { color:var(--blue); }
 
-    @media (max-width:768px){
-      p {font-size:.98rem;}
-    }
 
     /* English-version toggle button (aligned with the en chrome) */
     .lang-btn{

@@ -84,7 +84,6 @@ The solution is to use a Quietron, which removes the post-and-core very quickly.
     .text-box p {
       color: #cbd2e6;
       margin: 0 0 0.875rem;
-      font-size: 1rem;
     }
 
     .lang-btn{
@@ -146,7 +145,11 @@ The solution is to use a Quietron, which removes the post-and-core very quickly.
       text-decoration: none;
       font-size: 0.85rem;
     }
-  </style>
+  
+/* Body prose — canonical measure, shared with every article page.
+   This page does not load /dc-article.css, so the rule lives here. */
+p{ margin:0.875rem 0; font-size:1.02rem; }
+</style>
 
 <script type="application/ld+json">
 {
