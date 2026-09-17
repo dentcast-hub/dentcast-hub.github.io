@@ -89,7 +89,6 @@ export const SERVER_MINTED_ACTIONS: ReadonlySet<string> = new Set([
   'reactivation_sent',
   'report_viewed',
   'review_finished',
-  'streak_day_forgiven',
   'streak_freeze_used',
   'streak_kept',
   'streak_reminder_sent',
