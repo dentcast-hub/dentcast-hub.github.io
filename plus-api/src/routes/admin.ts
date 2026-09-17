@@ -6,7 +6,7 @@ import {
   onArticlePublished, runFreeDigest, runPremiumBacklog, backfillExistingContent,
 } from '../services/article-notify.js';
 import { runReactivationNudges } from '../services/reactivation.js';
-import { runStreakReminders } from '../services/streak-reminder.js';
+import { runStreakReminders, smsSentInMonth, smsOptedInCount } from '../services/streak-reminder.js';
 import { one, query } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import {
@@ -3332,10 +3332,34 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     }
     if (names.length === 0) problems.push('NOTIFY_PROVIDER خالی است — هیچ کانالی فعال نیست.');
 
+    // The streak SMS lane is not a NotificationSender (it is a registered
+    // template, not a message — services/streak-reminder.ts), so it is reported
+    // beside the fan-out rather than inside it. The one silent failure it can
+    // have is readers switching it on while no template is configured: the
+    // profile shows a tick, the run skips the text, and nothing anywhere says
+    // why. That is exactly what `problems` is for.
+    const smsStreak = {
+      template_configured: config.streakReminder.smsTemplateId > 0,
+      template_id: config.streakReminder.smsTemplateId,
+      monthly_cap: config.streakReminder.smsMonthlyCap,
+      sent_this_month: await smsSentInMonth(dayInTz(new Date(), config.streakTimezone)),
+      opted_in: await smsOptedInCount(),
+    };
+    if (smsStreak.opted_in > 0 && !smsStreak.template_configured) {
+      problems.push(
+        `پیامکِ استریک: ${smsStreak.opted_in} خوانندهٔ پریمیوم آن را روشن کرده‌اند ولی`
+        + ' STREAK_REMINDER_SMS_TEMPLATE_ID تنظیم نشده — پیامکی نمی‌رود.',
+      );
+    }
+    if (smsStreak.monthly_cap > 0 && smsStreak.sent_this_month >= smsStreak.monthly_cap) {
+      problems.push(`پیامکِ استریک: سقف ماهانه (${smsStreak.monthly_cap}) پر شده — تا ماه بعد پیامکی نمی‌رود.`);
+    }
+
     return reply.send({
       ok: problems.length === 0,
       channel: notifications.name, // the fan-out actually in use, e.g. multi(webpush+telegram+bale)
       provider: config.notify.provider,
+      sms_streak: smsStreak,
       // Every channel states its OWN route. Without this the report could show a
       // single global proxy while three channels took three different paths, and
       // "which of them is even using it?" was left to the reader — which is how a

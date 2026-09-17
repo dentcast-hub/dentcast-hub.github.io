@@ -2,6 +2,7 @@ import webpush from 'web-push';
 import { config } from '../../config.js';
 import { query } from '../../db.js';
 import { webPushOptions, describeError } from '../outbound.js';
+import { channelWantedFor } from '../../services/notify-channels.js';
 import { type NotificationSender, type NotificationKind, type NotificationMessage, messageText } from './types.js';
 
 /**
@@ -51,6 +52,11 @@ export class WebPushNotificationSender implements NotificationSender {
   readonly name = 'webpush';
 
   async send(userId: string, message: string | NotificationMessage, kind: NotificationKind): Promise<void> {
+    // «از کجا برسد»: the reader may have kept this kind off the browser while
+    // keeping it on Bale. Only the two matrix kinds ever ask; the rest skip
+    // the lookup entirely (services/notify-channels.ts).
+    if (!(await channelWantedFor(userId, 'webpush', kind))) return;
+
     const subs = await query<SubRow>(
       'select id, endpoint, p256dh, auth from push_subscriptions where user_id = $1',
       [userId],

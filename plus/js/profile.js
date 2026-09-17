@@ -1,16 +1,16 @@
 // Reusable profile renderer (spec 2.7). Used by the /plus/profile.html page and
 // the header overlay. Site design language; a clear, readable week strip. Nothing
 // here is mandatory: the pseudonym is editable, no real name is ever required.
-import { el, faNum, tehranDay } from './util.js?v=90';
-import { certificatesBody } from './certificates.js?v=90';
-import { api, ApiError, currentUser } from './api.js?v=90';
-import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js?v=90';
-import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=90';
-import { baleEnabled, baleDeepLink } from './config.js?v=90';
-import { leagueEntryButton } from './league.js?v=90';
-import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=90';
-import { subscriptionCta } from './premium-cta.js?v=90';
-import { copyToClipboard, confirmStrip } from './hl-view.js?v=90';
+import { el, faNum, tehranDay } from './util.js?v=91';
+import { certificatesBody } from './certificates.js?v=91';
+import { api, ApiError, currentUser } from './api.js?v=91';
+import { remindersBlock } from './reminders.js?v=91';
+import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=91';
+import { baleEnabled, baleDeepLink } from './config.js?v=91';
+import { leagueEntryButton } from './league.js?v=91';
+import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=91';
+import { subscriptionCta } from './premium-cta.js?v=91';
+import { copyToClipboard, confirmStrip } from './hl-view.js?v=91';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
   timeZone: 'Asia/Tehran', year: 'numeric', month: 'long', day: 'numeric',
@@ -154,69 +154,6 @@ function planBlock(me) {
     until,
     cta,
   ].filter(Boolean));
-}
-
-function remindersBlock(me) {
-  const r = (me.settings && me.settings.reminders) || {};
-  const msg = el('span', { class: 'dcp-inline-msg' });
-  const state = { new_content: !!r.new_content, streak: !!r.streak };
-  // Send the WHOLE reminders state (not just the toggled key): the server
-  // shallow-merges `settings || {reminders:{...}}`, so a single-key patch would
-  // replace the reminders object and wipe the sibling toggle.
-  const patch = () => api.updateMe({ settings: { reminders: { ...state } } }).catch(() => {});
-
-  // The stored preference is INDEPENDENT of the browser push permission: turning
-  // a reminder on always saves, even when the browser has notifications blocked.
-  // We still try to (re)create the push subscription so delivery works; if that
-  // fails we KEEP the switch on and just explain how to unblock. That is what
-  // lets the switch be flipped on/off freely without ever getting stuck when a
-  // browser (e.g. Opera) has blocked notifications for the site.
-  const guidanceText = (res) => res === 'denied'
-    ? 'اعلان‌ها در مرورگر بلاک شده. ترجیح ذخیره شد؛ برای دریافت نوتیف، از تنظیمات سایتِ مرورگر آن را Allow کن.'
-    : res === 'unsupported'
-      ? 'مرورگر شما از اعلان پشتیبانی نمی‌کند. ترجیح ذخیره شد ولی نوتیف ارسال نمی‌شود.'
-      : 'ترجیح ذخیره شد؛ فعال‌سازی اعلان فعلاً ناموفق بود و بعداً دوباره تلاش می‌شود.';
-
-  // ONE switch for both. The two preferences stay separate columns in the data
-  // (article-notify.ts and streak-reminder.ts read them independently), but the
-  // UI never splits them: the card that asks for the browser permission promises
-  // both, and a half-on account is a worse product than either end of it.
-  const cb = el('input', { type: 'checkbox' });
-  cb.checked = state.new_content || state.streak;
-  cb.addEventListener('change', async () => {
-    const on = cb.checked;
-    state.new_content = on; // the switch reflects the user's intent no matter what
-    state.streak = on;
-    if (on) {
-      // Call ensurePushSubscription FIRST so the click gesture is still active
-      // for the permission prompt (any earlier await would consume it). The
-      // switch stays on regardless of the outcome; we only annotate delivery.
-      msg.textContent = 'در حال فعال‌سازی اعلان‌ها...';
-      const res = await ensurePushSubscription();
-      msg.textContent = res === 'ok' ? '' : guidanceText(res);
-    } else {
-      msg.textContent = '';
-    }
-    await patch();
-    // Off -> drop the browser subscription so none lingers.
-    if (!on) await removePushSubscription();
-  });
-
-  const block = el('div', { class: 'dcp-toggle-list' }, [
-    el('label', { class: 'dcp-switch' }, [cb, el('span', {}, 'نوتیف‌ها')]),
-    el('div', { class: 'dcp-muted dcp-toggle-note' }, 'خبرِ مطلبِ جدید + یادآوریِ مرورِ روزانه'),
-    msg,
-  ]);
-
-  // Self-heal: if a reminder is on and the browser already grants notifications,
-  // make sure a live subscription exists (the user may have unblocked in browser
-  // settings, or turned a toggle on earlier while blocked and has since allowed).
-  // Only when permission is already 'granted' so we never prompt without a gesture.
-  if ((state.new_content || state.streak) && pushSupported() && Notification.permission === 'granted') {
-    ensurePushSubscription().catch(() => {});
-  }
-
-  return block;
 }
 
 // Messenger connection (spec 2.7). These feed the API's provider-agnostic
@@ -678,7 +615,7 @@ export async function renderProfile(root, { me: preMe } = {}) {
     ...(certBody ? [section('گواهی‌نامه‌ها', certBody, 'certificates')] : []),
     ...(league ? [section('لیگ من', leagueEntryButton(league))] : []),
     section('مقایسه ماه به ماه', stats.month_vs_month ? monthCompare(stats.month_vs_month) : el('div', { class: 'dcp-muted' }, '—')),
-    section(me.phone ? 'شماره موبایل' : 'شماره موبایل (اختیاری)', phoneBlock(me)),
+    section(me.phone ? 'شماره موبایل' : 'شماره موبایل (اختیاری)', phoneBlock(me), 'phone'),
     // Telegram (login + notifications) + Bale (notifications only). `connect` is the
     // deep-link anchor the homepage Bale/Telegram chips scroll to.
     section('اتصال به پیام‌رسان‌ها', messengerBlock(me), 'connect'),

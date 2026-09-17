@@ -11,11 +11,11 @@
 // a highlight — an AI card's back genuinely starts hidden: there is no "the
 // user already read this" to fall back on, so grading before reveal would be
 // grading a guess. The highlight card's own rule (never hidden) stands.
-import { el, faNum, signalStreakActivity, renderNoteLines } from './util.js?v=90';
-import { api } from './api.js?v=90';
-import { getModel, contentInfo } from './content-index.js?v=90';
-import { flashcard, sourceHref } from './archive.js?v=90';
-import { LABELS } from './config.js?v=90';
+import { el, faNum, signalStreakActivity, renderNoteLines } from './util.js?v=91';
+import { api } from './api.js?v=91';
+import { getModel, contentInfo } from './content-index.js?v=91';
+import { flashcard, sourceHref } from './archive.js?v=91';
+import { LABELS } from './config.js?v=91';
 
 const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
 

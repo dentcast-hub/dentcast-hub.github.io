@@ -1,5 +1,6 @@
 import { one } from '../../db.js';
 import { baleSendMessage } from '../../services/bale-api.js';
+import { channelWanted } from '../../services/notify-channels.js';
 import { type NotificationSender, type NotificationKind, type NotificationMessage, messageText } from './types.js';
 
 /**
@@ -12,17 +13,22 @@ import { type NotificationSender, type NotificationKind, type NotificationMessag
  *
  * Selected by including `bale` in NOTIFY_PROVIDER (e.g. `webpush,telegram,bale`);
  * MultiNotificationSender then fans a message out to every channel a user has.
+ *
+ * Since 2026-09-16 the same row also answers «از کجا برسد»: the two matrix kinds
+ * (new article, streak) are skipped when the reader switched Bale off for them
+ * in the profile (services/notify-channels.ts). One query serves both questions.
  */
 export class BaleNotificationSender implements NotificationSender {
   readonly name = 'bale';
 
-  async send(userId: string, message: string | NotificationMessage, _kind: NotificationKind): Promise<void> {
-    const row = await one<{ bale_id: number | null }>(
-      'select bale_id from profiles where id = $1',
+  async send(userId: string, message: string | NotificationMessage, kind: NotificationKind): Promise<void> {
+    const row = await one<{ bale_id: number | null; settings: unknown }>(
+      'select bale_id, settings from profiles where id = $1',
       [userId],
     );
     const baleId = row?.bale_id ?? null;
     if (!baleId) return; // user has not connected Bale; in-site indicator still shows
+    if (!channelWanted(row?.settings ?? {}, 'bale', kind)) return;
 
     await baleSendMessage(baleId, messageText(message));
   }

@@ -91,7 +91,7 @@ export function startStreakReminderScheduler(): () => void {
         .then((r) => {
           if (r.reminded > 0) {
             // eslint-disable-next-line no-console
-            console.log(`[streak-reminder] reminded ${r.reminded} user(s)`);
+            console.log(`[streak-reminder] reminded ${r.reminded} user(s), ${r.sms} by sms`);
           }
         })
         .catch((err) => {

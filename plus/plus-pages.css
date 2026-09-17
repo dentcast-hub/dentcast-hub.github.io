@@ -346,6 +346,73 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-phone { font-weight: 700; }
 .dcp-switch { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
 
+/* «یادآوری‌ها» — master switch + the «از کجا برسد» matrix (plus/js/reminders.js;
+   mockup .dentcast/streak-sms-mockup.html). The پیامک row wears --dcp-gold
+   because it is premium — the site's one meaning for amber. */
+.dcp-rem { display: flex; flex-direction: column; gap: 12px; }
+.dcp-rem-master { display: flex; align-items: center; gap: 10px; cursor: pointer; padding-bottom: 12px; border-bottom: 1px solid var(--border, rgba(2,35,96,.12)); }
+.dcp-rem-master b { font-size: .95rem; }
+.dcp-rem-master small { display: block; color: var(--txt2, #4a5f85); font-size: .78rem; line-height: 1.6; }
+.dcp-rem-sw {
+  appearance: none; -webkit-appearance: none; margin: 0; flex: none; cursor: pointer;
+  inline-size: 42px; block-size: 24px; border-radius: 999px;
+  background: var(--surface2, #f4f6fb); border: 1px solid var(--border, rgba(2,35,96,.18));
+  position: relative; transition: background .15s, border-color .15s;
+}
+.dcp-rem-sw::after {
+  content: ''; position: absolute; inset-block-start: 2px; inset-inline-end: 2px;
+  inline-size: 18px; block-size: 18px; border-radius: 50%;
+  background: var(--surface, #fff); box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  transition: inset-inline-end .15s;
+}
+.dcp-rem-sw:checked { background: var(--ac, #0b5fff); border-color: var(--ac, #0b5fff); }
+.dcp-rem-sw:checked::after { inset-inline-end: calc(100% - 20px); }
+.dcp-rem-sw:focus-visible { outline: 2px solid var(--ac, #0b5fff); outline-offset: 2px; }
+.dcp-rem-matrix { transition: opacity .15s; }
+.dcp-rem-matrix.is-off { opacity: .35; pointer-events: none; }
+.dcp-rem-scroll { overflow-x: auto; }
+.dcp-rem-mx { width: 100%; border-collapse: collapse; font-size: .86rem; min-width: 280px; }
+.dcp-rem-mx th { font-size: .72rem; font-weight: 600; color: var(--txt2, #4a5f85); padding: 4px 6px; text-align: center; }
+.dcp-rem-mx th:first-child { text-align: start; }
+.dcp-rem-mx td { padding: 10px 6px; border-top: 1px solid var(--border, rgba(2,35,96,.12)); text-align: center; vertical-align: middle; }
+.dcp-rem-mx td:first-child { text-align: start; }
+.dcp-rem-mx tr.is-muted .dcp-rem-ch { opacity: .55; }
+.dcp-rem-mx tr.is-premium { background: linear-gradient(to bottom, var(--dcp-gold-bg, rgba(183,121,31,.10)), transparent 65%); }
+.dcp-rem-mx tr.is-premium td:first-child { box-shadow: inset 3px 0 0 -1px var(--dcp-gold, #b7791f); }
+.dcp-rem-ch { display: flex; align-items: center; gap: 8px; }
+.dcp-rem-ch b { display: block; font-weight: 700; font-size: .88rem; }
+.dcp-rem-ch small { display: block; color: var(--txt2, #4a5f85); font-size: .74rem; line-height: 1.5; }
+.dcp-rem-ico {
+  inline-size: 26px; block-size: 26px; border-radius: 8px; flex: none; color: #fff;
+  display: grid; place-items: center; font-size: .74rem; font-weight: 800;
+}
+.dcp-rem-ico.is-web { background: #4b6ea9; }
+.dcp-rem-ico.is-bale { background: #1c8b6a; }
+.dcp-rem-ico.is-sms { background: var(--dcp-gold, #b7791f); }
+.dcp-rem-tag {
+  display: inline-block; font-size: .68rem; font-weight: 800; vertical-align: middle;
+  color: var(--dcp-gold, #b7791f); background: var(--dcp-gold-bg, rgba(183,121,31,.10));
+  border: 1px solid color-mix(in srgb, var(--dcp-gold, #b7791f) 35%, transparent);
+  border-radius: 999px; padding: 0 8px; margin-inline-start: 4px; line-height: 1.6;
+}
+.dcp-rem-box {
+  appearance: none; -webkit-appearance: none; margin: 0; cursor: pointer;
+  inline-size: 20px; block-size: 20px; border-radius: 6px;
+  border: 1.5px solid var(--border, rgba(2,35,96,.18)); background: var(--surface2, #f4f6fb);
+  display: inline-grid; place-items: center; vertical-align: middle; position: relative;
+}
+.dcp-rem-box::after { content: '✓'; color: transparent; font-size: .7rem; font-weight: 800; line-height: 1; }
+.dcp-rem-box:checked { background: var(--ac, #0b5fff); border-color: var(--ac, #0b5fff); }
+.dcp-rem-box:checked::after { color: #fff; }
+.dcp-rem-box.is-amber:checked { background: var(--dcp-gold, #b7791f); border-color: var(--dcp-gold, #b7791f); }
+.dcp-rem-box:disabled { cursor: not-allowed; opacity: .4; }
+.dcp-rem-box:focus-visible { outline: 2px solid var(--ac, #0b5fff); outline-offset: 2px; }
+.dcp-rem-num { direction: ltr; unicode-bidi: isolate; display: inline-block; }
+.dcp-rem-dash { color: var(--txt2, #4a5f85); opacity: .7; font-size: .8rem; }
+.dcp-rem-link { color: var(--ac, #0b5fff); text-decoration: none; }
+.dcp-rem-link:hover { text-decoration: underline; }
+.dcp-rem-foot { margin: 8px 0 0; font-size: .76rem; color: var(--txt2, #4a5f85); line-height: 1.7; }
+
 /* «کد معرف» — what it is and what it pays, above both states of the section.
    Padded-inline-start on the list rather than default markers so the numbers
    line up under an RTL bullet instead of hanging off the edge. */

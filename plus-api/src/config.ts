@@ -255,8 +255,32 @@ export const config = {
   // Streak reminder: fired once a day at this Tehran hour to users who opted in
   // and have not kept their streak yet today (see services/streak-reminder.ts).
   // Evening default leaves time to act before Tehran midnight.
+  //
+  // The SMS lane (founder decision, 2026-09-16 — see services/streak-reminder.ts):
+  // a PREMIUM reader who turned «پیامک» on in the profile's «از کجا برسد» matrix
+  // gets the same reminder as a text message, on top of whatever else went out.
+  // Streak only — never the new-article notice, whose value is the Pulse
+  // sentence and which no registered template can carry. Iranian service
+  // lines send REGISTERED templates, not free text, so this needs its own
+  // template in the SMS.ir panel: two parameters, the reader's name and the
+  // streak length, the same shape as the renewal template (530460).
+  //
+  // TEMPLATE 704863 (registered + approved 1405/06/26), TWO parameters:
+  // #name# and #days#. Set to 0 the SMS step is skipped entirely and
+  // GET /admin/notify/health says so, with the count of readers waiting on it. The parameter NAMES are part of the registered template
+  // and cannot drift from it; env-overridable only for the day a template is
+  // re-registered.
+  //
+  // smsMonthlyCap is the one brake on the only notification the site pays for
+  // every day: a ceiling on streak texts per Jalali month across all readers,
+  // 0 = none. When it is reached the SMS stays home and web push / Bale go out
+  // exactly as before — and the skip is logged, never silent.
   streakReminder: {
     hour: int('STREAK_REMINDER_HOUR', 20),
+    smsTemplateId: int('STREAK_REMINDER_SMS_TEMPLATE_ID', 704863),
+    smsNameParam: str('STREAK_REMINDER_SMS_NAME_PARAM', 'name'),
+    smsDaysParam: str('STREAK_REMINDER_SMS_DAYS_PARAM', 'days'),
+    smsMonthlyCap: int('STREAK_REMINDER_SMS_MONTHLY_CAP', 0),
   },
 
   // Review (Leitner) reminder — PREMIUM ONLY, because the review schedule itself
