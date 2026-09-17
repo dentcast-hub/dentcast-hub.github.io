@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=87';
+import { API_BASES } from './config.js?v=88';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -433,6 +433,13 @@ export const api = {
   notices: () => request('/notices'),
   noticesSeen: () => request('/notices/seen', { method: 'POST' }),
   noticeSeen: (id) => request('/notices/' + encodeURIComponent(id) + '/seen', { method: 'POST' }),
+
+  // ارزیاب DES — the reader asks for a paper to be scored (routes/des.ts).
+  // Premium, and deliberately human-answered: desSubmit either comes back with
+  // a score the library already held (`answered: true`) or with a reference
+  // code for a request the founder will read. No AI provider on either side.
+  desState: () => request('/des/state'),
+  desSubmit: (payload) => request('/des/submit', { method: 'POST', body: payload }),
 
   league: () => request('/league'),
   leagueOutcomeSeen: () => request('/league/outcome/seen', { method: 'POST' }),
