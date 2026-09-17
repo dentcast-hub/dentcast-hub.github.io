@@ -382,6 +382,32 @@ export const config = {
     smsTemplateId: int('SUBSCRIPTION_REMINDER_SMS_TEMPLATE_ID', 530460),
     smsNameParam: str('SUBSCRIPTION_REMINDER_SMS_NAME_PARAM', 'name'),
     smsDaysParam: str('SUBSCRIPTION_REMINDER_SMS_DAYS_PARAM', 'days'),
+
+    // THE WIN-BACK, `daysAfter` days past the last day. Zero disables it.
+    //
+    // Three rather than seven or thirty: this message is aimed at the reader
+    // who meant to renew and did not, and that reader stops being findable
+    // quickly — at thirty days they have arranged their week around not having
+    // the site. A reader who genuinely decided against it is not moved by any
+    // of these numbers, so the cadence is tuned entirely for the first kind.
+    //
+    // ONE message, not a sequence. A second is where a win-back becomes the
+    // nagging this file's own comment warns about, and the founder can still
+    // reach a cohort deliberately with `POST /admin/notices/broadcast`.
+    daysAfter: int('SUBSCRIPTION_WINBACK_DAYS_AFTER', 3),
+
+    // Its own registered template, and 0 until SMS.ir approves one — the
+    // renewal template (530460) says «N روز تا پایان اشتراک», which is the
+    // wrong tense for a subscription that has already ended, and an Iranian
+    // service line sends registered templates, never free text. The in-app and
+    // messenger paths do not wait for it; this is the same «skip the paid
+    // channel until a template exists» shape the streak SMS uses.
+    //
+    // Two parameters, the same shape as 530460: `name`, and `saved` — how many
+    // highlights and notes are still sitting in the account. See
+    // subscription-reminder.ts for why the count is in the message at all.
+    winbackSmsTemplateId: int('SUBSCRIPTION_WINBACK_SMS_TEMPLATE_ID', 0),
+    winbackSmsSavedParam: str('SUBSCRIPTION_WINBACK_SMS_SAVED_PARAM', 'saved'),
   },
 
   // Reactivation nudge for users with NO live streak: a gentle once-a-day

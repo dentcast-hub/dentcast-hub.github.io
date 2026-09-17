@@ -355,9 +355,10 @@ export function startSubscriptionReminderScheduler(): () => void {
     timer = setTimeout(() => {
       void runSubscriptionReminders(new Date())
         .then((r) => {
-          if (r.soon > 0 || r.today > 0) {
+          if (r.soon > 0 || r.today > 0 || r.lapsed > 0) {
             // eslint-disable-next-line no-console
-            console.log(`[subscription-reminder] ${r.soon} ending soon, ${r.today} ending today`);
+            console.log(`[subscription-reminder] ${r.soon} ending soon, ${r.today} ending today, `
+              + `${r.lapsed} lapsed`);
           }
         })
         .catch((err) => {

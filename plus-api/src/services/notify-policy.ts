@@ -45,6 +45,12 @@ const UNCAPPED: ReadonlySet<NotificationKind> = new Set<NotificationKind>([
   // side of it, and a user who misses it because a streak reminder arrived
   // first simply lapses.
   'subscription_expiry',
+  // The win-back, a few days after the subscription ended. Claimed once per
+  // expiry date, so it cannot repeat however often the job runs — and the
+  // reader it is addressed to is no longer premium, so the league, review and
+  // premium-article notifications that fill a budget have all stopped for them
+  // anyway. Capping it could only ever silence it on the one busy day.
+  'subscription_lapsed',
   // The «ستون» welcome. Once per lifetime by construction (see the kind's own
   // doc), so it cannot pester — and it is the founder's one thank-you to a
   // person who just paid, which must not be the message a streak nudge from
