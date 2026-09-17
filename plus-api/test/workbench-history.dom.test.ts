@@ -145,9 +145,43 @@ describe('the toolbar', () => {
     expect(tool('حذف')).toBeTruthy();
     expect(tool('کالکشن')).toBeTruthy();
     expect(tool('افزودنِ هایلایت به کالکشن')).toBeUndefined();
-    // nothing selected → the three selected-highlight buttons are off
+    // nothing selected → the selected-highlight buttons are off
     expect(tool('حذف').disabled).toBe(true);
-    expect(tool('یادداشت').disabled).toBe(true);
+    expect(tool('کالکشن').disabled).toBe(true);
+  });
+
+  // یادداشت is NOT a selected-highlight button, and this is the assertion that
+  // says so. It was written the other way round when undo/redo landed
+  // (2026-09-14), which disabled the button whenever nothing was selected and
+  // so cut off _noteButton()'s second branch — the whole-article note, whose
+  // only door on any page is this button. Found 2026-09-17.
+  it('leaves «یادداشت» live with nothing selected — that is the article note', async () => {
+    expect(tool('یادداشت').disabled).toBe(false);
+    expect(tool('یادداشت').title).toBe('یادداشت این مقاله');
+
+    tool('یادداشت').click();
+    await tick();
+    const editor = document.querySelector('.dcp-editor') as HTMLElement;
+    expect(editor).toBeTruthy();
+    expect(editor.querySelector('.dcp-editor-label')!.textContent).toBe('یادداشت مقاله');
+
+    const ta = editor.querySelector('textarea') as HTMLTextAreaElement;
+    ta.value = 'یادداشت کلی';
+    (Array.from(editor.querySelectorAll('button')).find((b) => b.textContent === 'ذخیره') as HTMLButtonElement).click();
+    await tick(); await tick();
+    expect(wb.articleNote).toBe('یادداشت کلی');
+    // and it is undoable like every other act
+    expect(undoBtn().disabled).toBe(false);
+  });
+
+  it('switches «یادداشت» to the highlight once one is selected', async () => {
+    await wb._createHighlight(quote('پیوند به مینا'), 'highlight');
+    expect(tool('یادداشت').disabled).toBe(false);
+    expect(tool('یادداشت').title).toBe('یادداشت روی هایلایت انتخاب‌شده');
+
+    tool('یادداشت').click();
+    await tick();
+    expect(document.querySelector('.dcp-editor .dcp-editor-label')!.textContent).toBe('یادداشت');
   });
 });
 

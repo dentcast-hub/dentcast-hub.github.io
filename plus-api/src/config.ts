@@ -113,10 +113,17 @@ export const config = {
 
   otp: {
     provider: str('SMS_PROVIDER', 'console'),
-    ttlSeconds: int('OTP_TTL_SECONDS', 120),
+    // Five minutes, not two: a service-line SMS in Iran routinely takes three or
+    // four minutes at busy hours, and a code that expires before it arrives is
+    // refused for being late through no act of the reader's.
+    ttlSeconds: int('OTP_TTL_SECONDS', 300),
     length: int('OTP_LENGTH', 5),
     maxPerPhonePerHour: int('OTP_MAX_PER_PHONE_PER_HOUR', 5),
-    maxPerIpPerHour: int('OTP_MAX_PER_IP_PER_HOUR', 15),
+    // Per IP, not per person: Iranian mobile carriers put hundreds of readers
+    // behind one CGNAT address, so a ceiling of 15 an hour was a ceiling on a
+    // neighbourhood. The per-phone limit above is what bounds the SMS spend
+    // for one target; this one only has to stop a script cycling numbers.
+    maxPerIpPerHour: int('OTP_MAX_PER_IP_PER_HOUR', 60),
     // SMS.ir template-based OTP (used only when SMS_PROVIDER=smsir). The template
     // is created in the SMS.ir panel; its numeric id and single parameter name
     // live here. Empty in dev (console provider ignores them).

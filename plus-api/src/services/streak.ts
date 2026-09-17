@@ -155,13 +155,17 @@ export async function applyStreak(client: pg.PoolClient, userId: string, day: st
  * script). current_streak is the length of the consecutive run ending at the
  * most recent active day, matching the live engine.
  */
-export function streakFromDays(days: string[], frozenDays: string[] = []): StreakState {
-  if (!days.length) return { current_streak: 0, longest_streak: 0, last_active_day: null };
-  const sorted = Array.from(new Set(days)).sort(); // 'YYYY-MM-DD' sorts chronologically
+/**
+ * Two active days stay in one run when they are consecutive OR every day in the
+ * gap between them was frozen by a shield (replaying the live decision).
+ *
+ * Extracted so the rebuild can reconstruct the per-day running streak with the
+ * SAME predicate streakFromDays uses. Two copies of this would be two answers
+ * to "was the streak alive on that day".
+ */
+function connectedWith(frozenDays: string[]): (laterDay: string, earlierDay: string) => boolean {
   const frozen = new Set(frozenDays);
-  // Two active days stay in one run when they are consecutive OR every day in
-  // the gap between them was frozen by a shield (replaying the live decision).
-  const connected = (laterDay: string, earlierDay: string): boolean => {
+  return (laterDay: string, earlierDay: string): boolean => {
     const diff = dayDiff(laterDay, earlierDay);
     if (diff === 1) return true;
     if (diff < 1) return false;
@@ -170,6 +174,32 @@ export function streakFromDays(days: string[], frozenDays: string[] = []): Strea
     }
     return true;
   };
+}
+
+/**
+ * Every counted day with the streak length AS IT STOOD on that day — exactly
+ * what applyStreak stamps into a `streak_kept` row's meta as it goes.
+ *
+ * The rebuild uses this to restore rows the live path would have written; the
+ * monthly report is their only reader.
+ */
+export function countedDayRuns(
+  days: string[],
+  frozenDays: string[] = [],
+): Array<{ day: string; streak: number }> {
+  const sorted = Array.from(new Set(days)).sort();
+  const connected = connectedWith(frozenDays);
+  let run = 0;
+  return sorted.map((day, i) => {
+    run = i > 0 && connected(day, sorted[i - 1]) ? run + 1 : 1;
+    return { day, streak: run };
+  });
+}
+
+export function streakFromDays(days: string[], frozenDays: string[] = []): StreakState {
+  if (!days.length) return { current_streak: 0, longest_streak: 0, last_active_day: null };
+  const sorted = Array.from(new Set(days)).sort(); // 'YYYY-MM-DD' sorts chronologically
+  const connected = connectedWith(frozenDays);
   let longest = 1;
   let run = 1;
   for (let i = 1; i < sorted.length; i += 1) {

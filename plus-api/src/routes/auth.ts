@@ -3,7 +3,7 @@ import { config } from '../config.js';
 import { one, query, pool, withTransaction } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import { issueCode, verifyCode } from '../services/otp.js';
-import { consume, HOUR_MS } from '../services/rate-limit.js';
+import { consume, refund, HOUR_MS } from '../services/rate-limit.js';
 import { setSessionCookie, clearSessionCookie, readSession } from '../services/session.js';
 import { sanitizeReturnTo } from '../services/return-to.js';
 import { generatePseudonym } from '../services/pseudonym.js';
@@ -27,6 +27,36 @@ const TELEGRAM_FIELDS = [
 
 function clientIp(request: FastifyRequest): string {
   return request.ip || 'unknown';
+}
+
+// The registrable domain of an origin: https://www.dentcast.org -> dentcast.org.
+function siteOf(origin: string): string | null {
+  try {
+    const parts = new URL(origin).hostname.split('.');
+    return parts.length >= 2 ? parts.slice(-2).join('.') : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Where the Telegram callback sends the browser back to. Exactly one of the
+ * configured origins — never an attacker-supplied host — chosen in this order:
+ * the origin the widget was served on, if configured; else the configured
+ * origin on the SAME SITE (a reader on www.dentcast.org whose CORS list names
+ * only the apex must land on dentcast.org, not on the first entry of the list,
+ * which may be the OTHER mirror — where the cookie just set on api.dentcast.org
+ * does not exist and the reader arrives signed out); else the first configured
+ * origin (dev).
+ */
+function siteOriginFor(requested: string | undefined): string {
+  if (requested && config.corsOrigins.includes(requested)) return requested;
+  const site = requested ? siteOf(requested) : null;
+  if (site) {
+    const sameSite = config.corsOrigins.find((o) => siteOf(o) === site);
+    if (sameSite) return sameSite;
+  }
+  return config.corsOrigins[0] ?? '';
 }
 
 function publicUser(u: {
@@ -75,7 +105,23 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     }
 
     const code = issueCode(phone);
-    await sms.sendOtp(phone, code);
+    try {
+      await sms.sendOtp(phone, code);
+    } catch (err) {
+      // The provider refused or timed out. Two things follow. The slots taken
+      // above are handed back — the reader received nothing, so this attempt
+      // must not count toward the hourly limits (five failed sends used to
+      // lock a phone out for an hour). And the reader gets a Persian sentence,
+      // never the provider's own message: the default 5xx body carried
+      // «SMS.ir send failed: …» verbatim into the login modal.
+      refund(`otp:phone:${phone}`);
+      refund(`otp:ip:${clientIp(request)}`);
+      request.log.error({ err }, 'otp sms send failed');
+      return reply.code(502).send({
+        error: 'sms_failed',
+        message: 'ارسال پیامک انجام نشد. چند لحظه بعد دوباره تلاش کنید.',
+      });
+    }
 
     const body: Record<string, unknown> = { ok: true, ttl_seconds: config.otp.ttlSeconds };
     // Dev convenience: expose the code only when using the console provider.
@@ -135,7 +181,7 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       [phone, generatePseudonym()],
     );
 
-    setSessionCookie(reply, user!.id);
+    setSessionCookie(reply, user!.id, request);
     return reply.send({
       user: publicUser(user!),
       is_new: user!.is_new === true, // first login -> client shows onboarding
@@ -208,7 +254,7 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       return { userId: current.id, merged: false };
     });
 
-    setSessionCookie(reply, outcome.userId);
+    setSessionCookie(reply, outcome.userId, request);
     const u = await one<{
       id: string; display_name: string; tier: string; current_streak: number; longest_streak: number;
     }>(
@@ -268,9 +314,7 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     // Decide where to send the browser afterward. `origin` must be one of the
     // configured site origins (never an attacker-supplied host); `return_to` a
     // same-site path. In dev, fall back to the first configured origin.
-    const origin = config.corsOrigins.includes(q.origin)
-      ? q.origin
-      : (config.corsOrigins[0] ?? '');
+    const origin = siteOriginFor(q.origin);
     const returnTo = sanitizeReturnTo(q.return_to);
     const fail = (reason: string) =>
       reply.redirect(`${origin}/plus/auth-error.html?reason=${encodeURIComponent(reason)}`);
@@ -403,7 +447,7 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     });
 
     if (outcome.rejected) return fail(outcome.rejected);
-    setSessionCookie(reply, outcome.userId!);
+    setSessionCookie(reply, outcome.userId!, request);
     return reply.redirect(`${origin}${returnTo}`);
   });
 
@@ -450,6 +494,14 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       .catch(() => { /* telemetry never breaks auth */ });
 
     if (!user) return reply.code(401).send({ error: 'unauthorized' });
+
+    // Sliding expiry. The cookie used to run out exactly SESSION_TTL_DAYS after
+    // the login that set it, however active the reader was, so every regular
+    // reader was signed out once a month for no reason they could see. /me is
+    // the one call every page makes, so re-issuing the cookie here keeps a
+    // reader signed in for as long as they keep coming back. Cheap: one header
+    // on a response that is already no-store.
+    setSessionCookie(reply, user.id, request);
 
     // Show the streak only while it is still alive. The cache resets lazily (on
     // the next qualifying action), so after an unbridgeable gap the cached

@@ -76,8 +76,7 @@
       color: var(--text);
       max-width: 56.25rem;
       margin: 0 auto;
-      padding: 3.75rem 1.625rem 6.25rem;
-      line-height: 2;
+      padding: 3.75rem 1.625rem 6.25rem;line-height:1.9;
       direction: ltr;
       text-align: left;
       -webkit-font-smoothing: antialiased;
@@ -104,7 +103,6 @@
     .caption p{
       color:#9a6b00;
       font-weight:600;
-      font-size:1.1rem;
       margin:0;
       text-align:left;
       line-height:1.9;
@@ -117,9 +115,7 @@
       padding: 1.75rem 2.25rem;
       margin: 1.5rem 0;
       box-shadow: var(--shadow);
-      color: #111;
-      font-size: 1.05rem;
-      line-height: 2;
+      color: #111;line-height:1.9;
     }
 
     .text-box h2 {
@@ -204,10 +200,13 @@
     }
 
     @media (max-width:768px){
-      .caption p{font-size:1rem;}
-      .text-box{padding:1.25rem 1.125rem; font-size:.98rem;}
+      .text-box{padding:1.25rem 1.125rem;}
     }
-  </style>
+  
+/* Body prose — canonical measure, shared with every article page.
+   This page does not load /dc-article.css, so the rule lives here. */
+p{ margin:0.875rem 0; font-size:1.02rem; }
+</style>
 
 <script type="application/ld+json">
 {
@@ -545,6 +544,6 @@ Cementing the restoration
   <div class="dc-results-box" id="dcResults"></div>
 </div>
 <script src="/global-search.js?v=10" defer></script>
-<script src="/dc-nav.js?v=181" defer></script>
+<script src="/dc-nav.js?v=185" defer></script>
 </body>
 </html>

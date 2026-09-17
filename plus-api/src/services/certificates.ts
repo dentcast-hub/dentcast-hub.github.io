@@ -97,6 +97,11 @@ export interface IssueResult {
   certificate: Certificate;
   /** False when this reader already held a live certificate for the pathway. */
   created: boolean;
+  /**
+   * What this call actually MINTED — 0 when nothing was written, which covers
+   * both an idempotent repeat and a re-issue after a revoke (that one carries
+   * the credit the first certificate already minted; see issueCertificate).
+   */
   discount_percent: number;
 }
 
@@ -125,29 +130,52 @@ export async function issueCertificate(
       `${CERT_SELECT} where user_id = $1 and pathway_id = $2 and revoked_at is null`,
       [userId, pathwayId], client,
     );
-    if (live) return { certificate: live, created: false };
+    if (live) return { certificate: live, created: false, minted: 0 };
 
-    let grantId: string | null = null;
-    if (percent > 0) {
+    // ONE certificate credit per (reader, pathway), ever — including across a
+    // revoke. Revoking does not claw the ٪۱۰ back (revokeBadgeGrant's rule:
+    // money already promised, possibly already spent, is the founder's to
+    // withdraw by hand), so minting a second one here would pay twice for one
+    // pathway on the most ordinary repair there is: issue, notice the holder
+    // name is wrong, revoke, issue again. The new certificate carries the
+    // grant the old one minted.
+    const prior = await one<{ discount_grant_id: string | null }>(
+      `select discount_grant_id from certificates
+        where user_id = $1 and pathway_id = $2 and discount_grant_id is not null
+        order by issued_at limit 1`,
+      [userId, pathwayId], client,
+    );
+    let grantId: string | null = prior?.discount_grant_id ?? null;
+    let minted = 0;
+    if (!grantId && percent > 0) {
       const rows = await insertGrant(userId, {
         percent,
         kind: 'certificate',
         label_fa: `گواهی «${pathway.title_fa}»`,
       }, client);
       grantId = rows[0]?.id ?? null;
+      minted = percent;
     }
 
     const certificate = await insertWithFreshCode(client, {
       userId, pathwayId, holderName, examId: input.examId ?? null, attemptId: input.attemptId ?? null, grantId,
     });
-    return { certificate, created: true };
+    return { certificate, created: true, minted };
   };
   const result = input.client ? await run(input.client) : await withTransaction(run);
 
   if (result.created && input.notify !== false) {
-    await notifyIssued(userId, result.certificate, pathway.title_fa, percent);
+    // `minted`, never `percent`: a re-issue carries the credit it already had,
+    // and telling the reader a discount «was just recorded» for the second time
+    // would promise them a second one.
+    await notifyIssued(userId, result.certificate, pathway.title_fa, result.minted);
   }
-  return { ok: true, ...result, discount_percent: result.created ? percent : 0 };
+  return {
+    ok: true,
+    certificate: result.certificate,
+    created: result.created,
+    discount_percent: result.minted,
+  };
 }
 
 /**

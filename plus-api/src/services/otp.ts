@@ -1,8 +1,9 @@
 import crypto from 'node:crypto';
 import { config } from '../config.js';
+import { toLatinDigits } from './phone.js';
 
 /**
- * In-process OTP store. Codes live ~2 minutes (config.otp.ttlSeconds). Kept out
+ * In-process OTP store. Codes live ~5 minutes (config.otp.ttlSeconds). Kept out
  * of the DB because the schema is fixed to spec section 4; fine for the single
  * Phase 1 container. Verification is attempt-limited to blunt brute force.
  */
@@ -24,8 +25,34 @@ function randomCode(length: number): string {
   return out;
 }
 
-/** Create and store a fresh code for a phone, replacing any previous one. */
+/**
+ * The code as the reader typed it, in the form the store holds it: Persian and
+ * Arabic-Indic digits folded to ASCII (a Persian keyboard on Android emits
+ * «۱۲۳۴۵» for a code the SMS printed as 12345), and whitespace stripped (an
+ * SMS autofill or a paste can carry a space). The phone number has always been
+ * folded this way (normalizePhone); the code was compared byte-for-byte, so a
+ * correct code from a Persian keyboard was refused every time.
+ */
+export function normalizeCode(raw: string | null | undefined): string {
+  return toLatinDigits(String(raw ?? '')).replace(/[\s‌]/g, '');
+}
+
+/**
+ * Create and store a fresh code for a phone.
+ *
+ * A second request while the first code is still valid RE-SENDS THE SAME CODE
+ * (with a fresh expiry) rather than minting a new one. The old behaviour
+ * replaced the code, so a reader whose SMS was slow pressed «دریافت کد» again,
+ * received two messages, typed the first one to arrive — and was told it was
+ * wrong. The attempt counter is deliberately kept, so re-requesting is never a
+ * way around the five-guess limit.
+ */
 export function issueCode(phone: string, now = Date.now()): string {
+  const existing = store.get(phone);
+  if (existing && now <= existing.expiresAt && existing.attempts < MAX_VERIFY_ATTEMPTS) {
+    existing.expiresAt = now + config.otp.ttlSeconds * 1000;
+    return existing.code;
+  }
   const code = randomCode(config.otp.length);
   store.set(phone, { code, expiresAt: now + config.otp.ttlSeconds * 1000, attempts: 0 });
   return code;
@@ -48,7 +75,7 @@ export function verifyCode(phone: string, code: string, now = Date.now()): Verif
   entry.attempts += 1;
   // constant-time compare to avoid leaking match progress
   const a = Buffer.from(entry.code);
-  const b = Buffer.from(code ?? '');
+  const b = Buffer.from(normalizeCode(code));
   const match = a.length === b.length && crypto.timingSafeEqual(a, b);
   if (!match) return 'mismatch';
   store.delete(phone);

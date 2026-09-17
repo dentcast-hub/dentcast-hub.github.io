@@ -1,11 +1,11 @@
 // Login is a MODAL, never a page (spec 2.5). Two steps: phone -> OTP code.
 // Resolves with { user, return_to } on success, or null if the user cancels.
-import { el, faNum } from './util.js?v=87';
-import { api, ApiError, currentUser } from './api.js?v=87';
+import { el, faNum } from './util.js?v=91';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=91';
 import {
   isOrgHost, irMirrorUrl,
   telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername,
-} from './config.js?v=87';
+} from './config.js?v=91';
 
 let overlay = null;
 // While the mandatory nickname step is showing, every dismissal path (×,
@@ -21,6 +21,45 @@ function close(resolve, value) {
 
 let onKey = () => {};
 
+// The code as the SMS printed it. A Persian keyboard on Android emits «۱۲۳۴۵»
+// for a code the server holds as 12345, and an autofill or a paste can carry a
+// space; the server folds these too, but folding here keeps the field honest
+// as the reader looks at it. Never applied to anything but the code.
+const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
+const AR_DIGITS = '٠١٢٣٤٥٦٧٨٩';
+function normalizeCode(raw) {
+  return String(raw || '')
+    .replace(/[۰-۹٠-٩]/g, (ch) => {
+      const p = FA_DIGITS.indexOf(ch);
+      if (p >= 0) return String(p);
+      const a = AR_DIGITS.indexOf(ch);
+      return a >= 0 ? String(a) : ch;
+    })
+    .replace(/[\s\u200c]/g, '');
+}
+
+// The sentence for a login the server accepted and the browser then threw
+// away: no cookie came back on /me. Blocked cookies, an in-app browser with
+// ephemeral storage, or a private window — all of which used to end in a
+// silent reload back to the guest header, with nothing on screen to explain it.
+const SESSION_NOT_KEPT =
+  'ورود انجام شد، ولی مرورگر شما نشست را نگه نداشت. اگر کوکی‌ها را مسدود کرده‌اید یا در حالت ناشناس هستید، آن را غیرفعال کنید و دوباره وارد شوید.';
+
+// After the server says «logged in», confirm the browser agrees before the
+// page is reloaded into it. Returns true when a session is visible, false
+// when the API definitely sees no session, and true (benefit of the doubt)
+// when the API could not be asked at all — a reload then shows whatever the
+// next page can see, which is the old behaviour for that one case.
+async function sessionStuck() {
+  const me = await currentUser({ refresh: true });
+  if (me) return true;
+  return meStatus() !== 'anon';
+}
+
+// Seconds before «ارسال دوباره» is offered on the code step. Long enough that a
+// normal SMS has arrived; short enough that a slow one is not a dead end.
+const RESEND_AFTER_S = 30;
+
 // A chosen pseudonym is what the leaderboard shows. The backend either leaves
 // display_name empty/null until the user picks one, or (later) sends
 // name_chosen:false. Either way this is the single source of truth.
@@ -33,7 +72,7 @@ export function nameIsChosen(user) {
 // The nickname step, shared by first-login onboarding and the standalone gate.
 // Returns { node, focus }. onSaved(updatedUser) fires only after a valid name
 // is persisted. There is no skip — a name is required.
-function buildNameStep({ user, onSaved }) {
+function buildNameStep({ user, onSaved, onSessionLost }) {
   // Never pre-fill an auto-generated name; make the user type a real pseudonym.
   const nameInput = el('input', {
     type: 'text', class: 'dcp-input', maxlength: '40',
@@ -51,6 +90,14 @@ function buildNameStep({ user, onSaved }) {
       const u = await api.updateMe({ display_name: name });
       onSaved({ ...user, display_name: (u && u.display_name) || name, name_chosen: true });
     } catch (e) {
+      if (e instanceof ApiError && e.status === 401 && onSessionLost) {
+        // The name cannot be saved because there is no session to save it to:
+        // the cookie set a moment ago never reached the browser. Hand the
+        // reader out of the (deliberately non-dismissable) name step instead
+        // of showing «ورود لازم است» inside a box they cannot close.
+        onSessionLost();
+        return;
+      }
       msg.textContent = e instanceof ApiError ? e.message : 'ذخیره نشد؛ دوباره تلاش کنید.';
       saveBtn.disabled = false;
     }
@@ -83,6 +130,14 @@ export function openNameGate({ user } = {}) {
     const step = buildNameStep({
       user: user || {},
       onSaved: (u) => { locked = false; if (overlay) { overlay.remove(); overlay = null; } document.removeEventListener('keydown', onKey); resolve(u); },
+      onSessionLost: () => {
+        // No session behind this gate any more: let go of the page. The header
+        // re-reads /me on the next load and shows the guest icon honestly.
+        locked = false;
+        if (overlay) { overlay.remove(); overlay = null; }
+        document.removeEventListener('keydown', onKey);
+        resolve(user || {});
+      },
     });
     card.appendChild(step.node);
 
@@ -241,6 +296,45 @@ export function openLoginModal({ returnTo = location.pathname } = {}) {
       const codeMsg = el('div', { class: 'dcp-modal-msg', role: 'status' });
       const verifyBtn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
       const backBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'اصلاح شماره');
+      // «ارسال دوباره»: the same code goes out again (the server re-sends a
+      // still-valid code rather than minting a second one), so whichever SMS
+      // arrives first is the right one. Counted down so a reader whose SMS is
+      // merely slow is not sent to the phone step and back to get it.
+      const resendBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', disabled: 'disabled' }, '');
+      let resendLeft = RESEND_AFTER_S;
+      let resendTimer = null;
+      const paintResend = () => {
+        if (resendLeft > 0) {
+          resendBtn.textContent = 'ارسال دوباره‌ی کد (' + faNum(resendLeft) + ')';
+          resendBtn.disabled = true;
+        } else {
+          resendBtn.textContent = 'ارسال دوباره‌ی کد';
+          resendBtn.disabled = false;
+        }
+      };
+      const startResendClock = () => {
+        resendLeft = RESEND_AFTER_S;
+        paintResend();
+        if (resendTimer) clearInterval(resendTimer);
+        resendTimer = setInterval(() => {
+          resendLeft -= 1;
+          paintResend();
+          if (resendLeft <= 0) { clearInterval(resendTimer); resendTimer = null; }
+        }, 1000);
+      };
+      resendBtn.onclick = async () => {
+        resendBtn.disabled = true;
+        codeMsg.textContent = 'در حال ارسال دوباره...';
+        try {
+          await api.requestOtp(phone);
+          codeMsg.textContent = 'کد دوباره فرستاده شد.';
+          startResendClock();
+        } catch (e) {
+          codeMsg.textContent = e instanceof ApiError ? e.message : 'ارسال کد ناموفق بود.';
+          resendLeft = 0;
+          paintResend();
+        }
+      };
 
       const hint = devCode
         ? el('div', { class: 'dcp-modal-devhint' }, 'کد تست: ' + faNum(devCode))
@@ -252,21 +346,36 @@ export function openLoginModal({ returnTo = location.pathname } = {}) {
         hint,
         codeMsg,
         verifyBtn,
+        resendBtn,
         backBtn,
       ]);
       card.replaceChild(stepCode, stepPhone.isConnected ? stepPhone : stepCode);
       setTimeout(() => codeInput.focus(), 30);
+      startResendClock();
 
-      backBtn.onclick = () => { card.replaceChild(stepPhone, stepCode); primaryBtn.disabled = false; msg.textContent = ''; };
+      const stopResendClock = () => { if (resendTimer) { clearInterval(resendTimer); resendTimer = null; } };
+      backBtn.onclick = () => {
+        stopResendClock();
+        card.replaceChild(stepPhone, stepCode); primaryBtn.disabled = false; msg.textContent = '';
+      };
 
       async function submitCode() {
-        const code = codeInput.value.trim();
+        const code = normalizeCode(codeInput.value);
         if (!code) { codeMsg.textContent = 'کد را وارد کنید.'; return; }
+        codeInput.value = code;
         verifyBtn.disabled = true;
         codeMsg.textContent = 'در حال بررسی...';
         try {
           const res = await api.verifyOtp(phone, code, returnTo);
-          currentUser({ refresh: true }); // invalidate cached /me
+          // The server said yes. Before the page is reloaded into that answer,
+          // make sure the browser kept the cookie — otherwise the reload lands
+          // on the guest header with nothing to say why.
+          if (!(await sessionStuck())) {
+            codeMsg.textContent = SESSION_NOT_KEPT;
+            verifyBtn.disabled = false;
+            return;
+          }
+          stopResendClock();
           if (res.is_new) showOnboardingStep(stepCode, res);
           else close(resolve, { user: res.user, return_to: res.return_to });
         } catch (e) {
@@ -284,6 +393,16 @@ export function openLoginModal({ returnTo = location.pathname } = {}) {
         const step = buildNameStep({
           user: res.user,
           onSaved: (user) => { locked = false; close(resolve, { user, return_to: res.return_to }); },
+          onSessionLost: () => {
+            // The session vanished between «ورود» and «ذخیره». Unlock the modal
+            // and put the reader back at the code step with the reason on it,
+            // instead of a locked box that says «ورود لازم است».
+            locked = false;
+            card.querySelector('.dcp-modal-close')?.classList.remove('is-hidden');
+            card.replaceChild(prevStep, step.node);
+            codeMsg.textContent = SESSION_NOT_KEPT;
+            verifyBtn.disabled = false;
+          },
         });
         card.replaceChild(step.node, prevStep);
         card.querySelector('.dcp-modal-close')?.classList.add('is-hidden');

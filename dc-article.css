@@ -97,6 +97,21 @@ ul{
 
 li{ margin-bottom:0.625rem; }
 
+/* ── Body prose — ONE canonical measure for every article page.
+
+   This lived in each page's own inline <style> until 2026-09-17, which is
+   exactly why it drifted: a clone carries the size the page it was cloned
+   from happened to have, and nothing reconciles the copies afterwards. The
+   corpus had ended up with four body sizes (1rem where no page rule existed,
+   1.02rem, 1.05rem, 1.1rem) and 88 pages set `text-align:justify`, which in
+   Persian — no hyphenation, no kashida in the web stack — opens rivers of
+   whitespace between words rather than tidying the column.
+
+   It is one rule in one file now. A page that re-declares `p` beats this
+   (the inline <style> loads after), so a future clone that reintroduces a
+   font-size here is the drift starting over: strip it, don't match it. ── */
+p{ margin:0.875rem 0; font-size:1.02rem; }
+
 /* ── Content boxes — one card, three legacy class names ── */
 .text-box,
 .glass-box,

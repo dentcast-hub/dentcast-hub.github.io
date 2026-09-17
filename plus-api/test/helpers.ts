@@ -10,6 +10,7 @@ import { drainPillarWelcomes } from '../src/services/pillar-notify.js';
 import { drainReferralNotifies } from '../src/services/referral-notify.js';
 import { drainBroadcasts } from '../src/services/broadcast.js';
 import { resetBoardCache } from '../src/services/votes.js';
+import { recordActivity, SERVER_MINTED_ACTIONS } from '../src/services/activity.js';
 
 /** Truncate all data tables and reset in-process stores. Call in beforeEach. */
 export async function resetDb(): Promise<void> {
@@ -124,6 +125,35 @@ export function sessionCookieFrom(res: { headers: Record<string, unknown> }): st
   const arr = Array.isArray(raw) ? raw : raw ? [String(raw)] : [];
   const c = arr.find((s) => s.startsWith('dcp_session='));
   return c ? c.split(';')[0] : null;
+}
+
+/** The account a session cookie belongs to (the cookie is `<uuid>.<signature>`). */
+export function userIdFromCookie(cookie: string): string {
+  const value = cookie.replace(/^dcp_session=/, '');
+  const id = value.split('.')[0];
+  if (!/^[0-9a-f-]{36}$/i.test(id)) throw new Error(`not a session cookie: ${cookie}`);
+  return id;
+}
+
+/**
+ * Write a SERVER-minted activity row the way a service does.
+ *
+ * POST /activity refuses every action in SERVER_MINTED_ACTIONS — a client that
+ * could post `highlight_created` or `review_finished` could buy its own league
+ * XP — so a test needing one as SETUP goes through the same door the service
+ * uses. Anything else is a real client signal and stays on the route, which is
+ * the distinction the guard exists to draw.
+ */
+export async function mintActivity(
+  cookie: string,
+  action: string,
+  contentId: string | null = null,
+  meta: Record<string, unknown> = {},
+): Promise<void> {
+  if (!SERVER_MINTED_ACTIONS.has(action)) {
+    throw new Error(`mintActivity is for server-minted actions; "${action}" is not one`);
+  }
+  await recordActivity(userIdFromCookie(cookie), action, contentId, meta);
 }
 
 /** Full OTP login round-trip; returns the session cookie header value. */

@@ -16854,5 +16854,262 @@
         "interpretation_fa": "قوّتِ متن در جایی است که سوال را عوض می‌کند: به‌جای «پست لازم است یا نه» می‌پرسد «کور بدون پست گیر کافی دارد یا نه» — و همین جابه‌جایی، تصمیم را از یک عادت به یک استدلال تبدیل می‌کند. زنجیره تا انتها دنبال می‌شود: وظیفه‌ی پست فقط تأمین گیر است، پس معیار کفایتِ ساختارِ باقی‌مانده است، و چون باز کردن فضای پست عاج ریشه را برمی‌دارد، پستِ بی‌مورد هزینه دارد بی‌آنکه چیزی به مقاومت اضافه کند. دامنه‌ی ادعا هم مشروط بیان شده است. آنچه ندارد نسبتش با شواهد منتشرشده است: هم «پست ریشه را تقویت نمی‌کند» و هم کمتر بودنِ اندیکاسیونِ پست در مولرها ادعاهایی‌اند که ادبیاتِ پژوهشی درباره‌شان حرف دارد، و متن به هیچ‌کدام ارجاع نمی‌دهد."
       }
     ]
+  },
+  "insight/insight-77": {
+    "scored_at": "2026-09-16",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "وقتی راه میانه به نفع بیمار است",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "زنجیره‌ی استدلال صریح است",
+            "points": 4,
+            "evidence_quote": "با از دست رفتن ساپورت خلفی، VD نگه داشته نمی‌شود و بار اکلوزالی به قدام منتقل می‌شود، که مستقیماً رستوریشن‌های فک بالا را در معرض آسیب قرار می‌دهد."
+          },
+          {
+            "item": "نسبتش با شواهد منتشرشده بیان شده است",
+            "points": 0,
+            "evidence_quote": ""
+          },
+          {
+            "item": "دامنه‌ی ادعا محدود شده است",
+            "points": 3,
+            "evidence_quote": "لزوماً به معنای انتخاب بین «گران و امن» و «ارزان و پرریسک» نیست. گاهی با تغییر ترتیب اجرا می‌شود مزیت هر دو را نگه داشت."
+          },
+          {
+            "item": "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد",
+            "points": 3,
+            "evidence_quote": "نکته‌ی این تجربه این است که محدودیت‌های مالی بیمار، حتی وقتی وسط درمان پیش می‌آیند، لزوماً به معنای انتخاب بین «گران و امن» و «ارزان و پرریسک» نیست."
+          }
+        ],
+        "des_score": 15,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این اینسایت امتیاز شفافیت ۱۵ از ۱۹ گرفت و مثل هر محتوای تألیفی دنت‌کست در باند E است.",
+        "interpretation_fa": "ارزشِ متن در ترجمه‌ی یک قید بالینی به یک تصمیم ترتیبی است: وقتی VD فقط روی ساپورت خلفی ایستاده، پرسش این نیست که کدام مسیر ارزان‌تر است، بلکه این است که بیمار در کدام لحظه بدون استاپ خلفی می‌ماند. زنجیره تا انتها دنبال می‌شود و دامنه‌ی ادعا محدود شده است. نسبتش با شواهد منتشرشده بیان نشده است."
+      }
+    ]
+  },
+  "sharehub/share-20": {
+    "scored_at": "2026-09-17",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "In vitro evaluation of the retention of zirconia-based ceramic posts luted with glass ionomer and resin cements.",
+          "authors": "Marchan S, Coldero L, Whiting R, Barclay S",
+          "year": 2005,
+          "journal": "Brazilian Dental Journal",
+          "doi": "10.1590/s0103-64402005000300008"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 65,
+          "anchor": "in-vitro tensile pull-out test of prefabricated zirconia posts luted with two cements; the protocol is fully described (post space depth, post diameter, embedding, tensile testing, statistics) but no ISO reference, no load rate and no aging step are reported, so it lands on the MATERIAL row for an in-vitro study with a non-standard but fully described protocol (65) rather than the validated-protocol row (85)",
+          "evidence_quote": "The post/teeth specimens were embedded in resin blocks and subjected to tensile testing."
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "The retention of zirconia-based ceramic posts (CosmoPost system) luted with glass ionomer and resin cements was evaluated.",
+              "note": ""
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ محاسبه یا توجیه حجم نمونه‌ای گزارش نمی‌کند. text_basis برابر ABSTRACT_ONLY است، پس سکوت اینجا NR است نه high (Step 3b بند ۵)."
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "low",
+              "evidence_quote": "The teeth were endodontically treated and randomly assigned to two groups (n=16).",
+              "note": ""
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده چیزی درباره‌ی کور بودن اپراتور یا ارزیاب نمی‌گوید. زیر ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "The mean stress values of both groups were analyzed for statistical differences using ANOVA and Student's t-test. Significance level was set at 5%.",
+              "note": ""
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده بیانیه‌ی تعارض منافع یا تأمین مالی ندارد؛ زیر ABSTRACT_ONLY این غیاب اطلاعات نیست و NR رتبه‌بندی می‌شود."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مطالعه‌ی in-vitro است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "The teeth were endodontically treated and randomly assigned to two groups (n=16).",
+            "note": "برای in-vitro این ردیف وقتی فعال می‌شود که تعداد نمونه در هر گروه کمتر از ۱۰ و بدون توجیه باشد؛ اینجا n=16 در هر گروه است، پس فعال نمی‌شود."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "مطالعه‌ی in-vitro تک‌مرحله‌ای است و هیچ ادعای بقا یا موفقیت مبتنی بر پیگیری ندارد، پس این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 36,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "این مطالعه در نوع پرسش MATERIAL امتیاز ۳۶ و باند D گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "تست کشش روی ۳۲ دندان نشان می‌دهد گیر پست زیرکونیا با سمان رزینی حدود دو برابر گلاس آینومر است (۲۲۸ در برابر ۱۲۲ نیوتن). نکته‌ی کاربردی‌ترش این است که شکست مستقل از نوع سمان در سطح مشترک سمان و پست رخ داد. بدون ترموسایکلینگ و بدون گزارش کور بودن، پس عدد را نباید بقای بالینی خواند."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Influence of Conventional Polymer, Hybrid Polymer and Zinc Phosphate Luting Agents on the Bond Strength of Customized Zirconia Post in Premolars-An In-Vitro Evaluation.",
+          "authors": "AlAali KA, AlHelal A, Almahri JR, Albakri AA, Albani RM, Alhaizan YA, Alhamdan MM, Alaql NA, Binhasan M, Alhamdan EM, Albaqawi AH, Vohra F, Abduljabbar T",
+          "year": 2022,
+          "journal": "Polymers",
+          "doi": "10.3390/polym14040758"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "in-vitro pull-out bond strength study of CAD/CAM customized zirconia posts in sixty premolars, using an established universal-testing-machine protocol with a stated crosshead rate, twenty specimens per cement group and an explicitly defined thermocycling aging regimen, which is the MATERIAL row for an in-vitro study with a validated protocol, adequate specimen count and defined aging/loading (85)",
+          "evidence_quote": "Ten specimens in each group were thermocycled (TC) at 5 and 55 °C in distilled water baths (40,000 cycles). Pull out bond strength was assessed using a universal testing machine at 0.5 mm/min."
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "The aim was to identify the influence of conventional polymeric resin based cement (RC), hybrid polymer modified glass ionomer (RMGIC) and Zinc phosphate cement (ZPC) on the pull out strength of the customized zirconia post in premolars.",
+              "note": ""
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده تعداد نمونه را اعلام می‌کند ولی هیچ محاسبه یا توجیهی برایش نمی‌آورد. زیر ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "some_concerns",
+              "evidence_quote": "All prepared specimens were divided equally in three groups based on the cement type employed for luting as follows:",
+              "note": "تخصیص نمونه‌ها توصیف شده ولی تصادفی بودنش گفته نشده. این روش «آشکارا غیرتصادفی» هم اعلام نشده، پس آستانه‌ی 3b-i فعال نمی‌شود و رتبه some_concerns است نه high."
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده چیزی درباره‌ی کور بودن اپراتور یا ارزیاب نمی‌گوید. زیر ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "The means and standard deviations were compared using ANOVA and Tukey Kramer multiple comparisons tests.",
+              "note": ""
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده بیانیه‌ی تعارض منافع یا تأمین مالی ندارد؛ زیر ABSTRACT_ONLY این غیاب اطلاعات نیست و NR رتبه‌بندی می‌شود."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مطالعه‌ی in-vitro است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "Access cavity and root canals were performed in sixty premolar teeth with the standardized crown down technique (ProTaper Universal, Dentsply).",
+            "note": "برای in-vitro این ردیف وقتی فعال می‌شود که تعداد نمونه در هر گروه کمتر از ۱۰ و بدون توجیه باشد؛ ۶۰ دندان در سه گروه یعنی ۲۰ نمونه در هر گروه، پس فعال نمی‌شود."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "مطالعه‌ی in-vitro است و ادعای بقا یا موفقیت مبتنی بر پیگیری بالینی ندارد؛ ترموسایکلینگ به‌جای پیگیری در s_design لحاظ شده است."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 47,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مطالعه در نوع پرسش MATERIAL امتیاز ۴۷ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "روی پست اختصاصی CAD/CAM، سمان رزینی دوال‌کیور بیشترین گیر و زینک فسفات کمترین را داد و RMGI میان این دو ایستاد. ترموسایکلینگ گیر را در هر سه گروه پایین آورد. طراحی‌اش از مطالعه‌ی قدیمی‌تر محکم‌تر است: شصت دندان، سه گروه و پیرسازی تعریف‌شده."
+      }
+    ]
   }
 }

@@ -156,6 +156,27 @@ export AWS_ACCESS_KEY_ID="$ARVAN_ACCESS_KEY"
 export AWS_SECRET_ACCESS_KEY="$ARVAN_SECRET_KEY"
 export AWS_EC2_METADATA_DISABLED=true
 
+# The cache-sensitive files go up FIRST, carrying their Cache-Control in the
+# same PUT (same reasoning as deploy-arvan.yml: the metadata pass below runs
+# AFTER the upload, and in that gap the edge takes the new module under its
+# default TTL — half the graph fresh, half stale, no login button). No --delete
+# here; the full sync owns removals.
+PRE_ARGS=(
+  "$TMPDIR/" "s3://$ARVAN_BUCKET"
+  --endpoint-url "$ARVAN_ENDPOINT"
+  --cache-control "no-cache"
+  --exclude "*"
+  --include "dc-nav.js"
+  --include "spot/*"
+  --include "plus/*"
+  --include "*.html"
+  --exclude ".git/*"
+  --exclude ".github/*"
+)
+[ "$DRY_RUN" = 1 ] && PRE_ARGS+=(--dryrun)
+
+say "uploading cache-sensitive files with no-cache already on them $( [ "$DRY_RUN" = 1 ] && echo '(dry run)' )"
+aws s3 sync "${PRE_ARGS[@]}"
 say "syncing to s3://$ARVAN_BUCKET $( [ "$DRY_RUN" = 1 ] && echo '(dry run)' )"
 aws s3 sync "${SYNC_ARGS[@]}"
 ok "sync done"

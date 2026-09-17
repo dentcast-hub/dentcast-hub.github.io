@@ -232,7 +232,7 @@ DB not publicly reachable. Set every provider-specific value via env:
 
 - `DATABASE_URL` (managed Postgres, private network only)
 - `SESSION_SECRET` (long random), `SESSION_COOKIE_SECURE=true` (HTTPS)
-- `CORS_ORIGINS=https://dentcast.org,https://dentcast.ir`
+- `CORS_ORIGINS=https://dentcast.org,https://www.dentcast.org,https://dentcast.ir,https://www.dentcast.ir` (both mirrors, apex and www — the list DEPLOY.md gives)
 - `SMS_PROVIDER` (swap the console sender for an Iranian provider),
   `NOTIFY_PROVIDER=webpush` (live channel) + `VAPID_PUBLIC_KEY` /
   `VAPID_PRIVATE_KEY` / `VAPID_SUBJECT` (generate once with

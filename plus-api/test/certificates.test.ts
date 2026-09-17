@@ -86,6 +86,45 @@ describe('issuing a certificate', () => {
     expect(all.find((c) => c.id === first.certificate.id)!.revoked_at).not.toBeNull();
   });
 
+  // The ordinary repair: issue, notice the holder name is wrong, revoke, issue
+  // again. Until 2026-09-17 the second issue minted a SECOND ٪۱۰ — the revoke
+  // does not claw the first one back (revokeBadgeGrant's rule: money already
+  // promised is the founder's to withdraw by hand), so the reader quietly ended
+  // up with ٪۲۰ off for one pathway.
+  it('re-issuing after a revoke carries the first credit — it never mints a second', async () => {
+    const uid = await userId();
+    const first = await issueCertificate(uid, PATHWAY_ID, { holderName: 'نام غلط', notify: false });
+    expect(first.discount_percent).toBe(config.certificate.discountPercent);
+    await revokeCertificate(first.certificate.id);
+
+    const second = await issueCertificate(uid, PATHWAY_ID, { holderName: 'نام درست', notify: false });
+    expect(second.created).toBe(true);
+    // A new certificate, but nothing minted: it carries the grant the first made.
+    expect(second.discount_percent).toBe(0);
+    expect(second.certificate.discount_grant_id).toBe(first.certificate.discount_grant_id);
+
+    const grants = await pool.query('select count(*)::int as n from discount_grants where user_id = $1', [uid]);
+    expect(grants.rows[0].n).toBe(1);
+    const credits = await availableCredits(uid);
+    expect(credits).toHaveLength(1);
+    expect(credits[0].percent).toBe(config.certificate.discountPercent);
+  });
+
+  it('does not tell the reader a discount was recorded on a re-issue', async () => {
+    const uid = await userId();
+    const first = await issueCertificate(uid, PATHWAY_ID, { holderName: 'الف' });
+    await revokeCertificate(first.certificate.id);
+    const second = await issueCertificate(uid, PATHWAY_ID, { holderName: 'ب' });
+
+    const n = await pool.query<{ body: string }>(
+      'select body from notification_log where user_id = $1 and body is not null', [uid],
+    );
+    const firstNotice = n.rows.find((r) => r.body.includes(first.certificate.verify_code));
+    const secondNotice = n.rows.find((r) => r.body.includes(second.certificate.verify_code));
+    expect(firstNotice!.body).toContain('تخفیف'); // the ٪۱۰ really was minted then
+    expect(secondNotice!.body).not.toContain('تخفیف'); // and not again now
+  });
+
   it('refuses a bundle and an empty name', async () => {
     const uid = await userId();
     await expect(issueCertificate(uid, BUNDLE_ID, { holderName: 'x', notify: false })).rejects.toThrow('unknown_pathway');
