@@ -38,3 +38,54 @@ describe('api.js query building', () => {
     expect(reviewCall).toContain('limit=5');
   });
 });
+
+/**
+ * Every `api.X(...)` the site calls must exist on the real client.
+ *
+ * This is the guard the DES tool went without (2026-09-17): des-scorer.js called
+ * `api.desSubmit()` and `api.desState()`, neither of which api.js ever defined,
+ * so the drawer's quota line never loaded and «بفرست» answered «ارسال نشد» on
+ * every press — live, from the day it shipped. Its own DOM suite could not see
+ * it, and no other suite could either, for a structural reason that applies to
+ * ALL of them: a browser-module test mocks `/plus/js/api.js` wholesale, so the
+ * mock happily supplies whatever method the module under test asks for. The
+ * mock is right to do that — the point of those suites is the module, not the
+ * transport — which is exactly why the join between the two needs checking
+ * once, here, against the real object.
+ *
+ * Deliberately a source scan rather than a type: these are plain browser
+ * modules with no build step and no type checker between them and the CDN.
+ */
+describe('the client covers every method the site calls', () => {
+  it('defines every api.* referenced by a module that imports it', async () => {
+    const fs = await import('node:fs');
+    const path = await import('node:path');
+    const jsDir = path.resolve(__dirname, '../../plus/js');
+    const roots = [jsDir, path.resolve(__dirname, '../../plus')];
+
+    const files: string[] = [];
+    for (const dir of roots) {
+      for (const name of fs.readdirSync(dir)) {
+        if (!name.endsWith('.js') || name === 'api.js') continue;
+        files.push(path.join(dir, name));
+      }
+    }
+    files.push(path.resolve(__dirname, '../../spot/spot.js'));
+
+    const missing: string[] = [];
+    for (const file of files) {
+      const src = fs.readFileSync(file, 'utf8');
+      // Only files that actually import the client: anything else calling a
+      // local variable named `api` is somebody else's object, not this one.
+      if (!/from\s+'[^']*\/?api\.js(\?[^']*)?'/.test(src)) continue;
+      for (const m of src.matchAll(/\bapi\.([A-Za-z_]\w*)\s*\(/g)) {
+        const name = m[1];
+        if (typeof (api as Record<string, unknown>)[name] !== 'function') {
+          missing.push(`${path.basename(file)} → api.${name}()`);
+        }
+      }
+    }
+
+    expect(missing).toEqual([]);
+  });
+});

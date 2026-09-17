@@ -1,12 +1,12 @@
 // /plus/pathways.html — the learning-pathways catalog (Phase 3). Free/anonymous
 // visitors see the same premium upsell shape the review page (cards.html) uses;
 // signed-in premium users get the real catalog (pathways.js).
-import { el } from './util.js?v=87';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=87';
-import { currentUser, meStatus } from './api.js?v=87';
-import { openLoginModal } from './login-modal.js?v=87';
-import { renderPathwaysList } from './pathways.js?v=87';
-import { registerSW } from './pwa.js?v=87';
+import { el } from './util.js?v=88';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=88';
+import { currentUser, meStatus } from './api.js?v=88';
+import { openLoginModal } from './login-modal.js?v=88';
+import { renderPathwaysList } from './pathways.js?v=88';
+import { registerSW } from './pwa.js?v=88';
 
 function comingSoonGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [

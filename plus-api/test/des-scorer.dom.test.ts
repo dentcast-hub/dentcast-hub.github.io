@@ -32,8 +32,8 @@ const settle = () => new Promise((r) => setTimeout(r, 0));
 function shell(): void {
   document.body.innerHTML = `
     <div class="dc-destool-wrap">
-      <button type="button" id="dcDesToolTab" aria-expanded="false" aria-controls="dcDesToolPanel">tab</button>
-      <div id="dcDesToolDrawer"><div><div id="dcDesToolPanel"></div></div></div>
+      <button type="button" class="dc-destool-tab" id="dcDesToolTab" aria-expanded="false" aria-controls="dcDesToolPanel">tab</button>
+      <div class="dc-destool-drawer" id="dcDesToolDrawer"><div><div id="dcDesToolPanel"></div></div></div>
     </div>`;
 
   const tab = document.getElementById('dcDesToolTab')!;
