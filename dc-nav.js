@@ -2223,7 +2223,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '173';
+  var V = '175';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
@@ -2262,7 +2262,7 @@
 (function () {
   if (window.__dcSpotLoaded) return;
   window.__dcSpotLoaded = true;
-  var SPOT_V = '47';
+  var SPOT_V = '49';
   var js = document.createElement('script');
   js.type = 'module';
   js.src = '/spot/spot.js?v=' + SPOT_V;

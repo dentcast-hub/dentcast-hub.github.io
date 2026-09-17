@@ -4,22 +4,23 @@
 //  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
 //    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
 //    an OVERLAY. Clicking the person again closes whatever is open.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=85';
-import { currentUser, api } from './api.js?v=85';
-import { isOrgHost, detectContentId } from './config.js?v=85';
-import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=85';
-import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=85';
-import { renderDashboard } from './dashboard.js?v=85';
-import { renderProfile } from './profile.js?v=85';
-import { maybeShowWelcome } from './welcome.js?v=85';
-import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=85';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=85';
-import { healPushSubscription } from './push.js?v=85';
-import { maybeShowPremiumPopup } from './premium-popup.js?v=85';
-import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=85';
-import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=85';
-import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=85';
-import { installLibraryGate } from './library-gate.js?v=85';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=87';
+import { currentUser, api, meStatus } from './api.js?v=87';
+import { isOrgHost, detectContentId } from './config.js?v=87';
+import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=87';
+import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=87';
+import { renderDashboard } from './dashboard.js?v=87';
+import { renderProfile } from './profile.js?v=87';
+import { maybeShowWelcome } from './welcome.js?v=87';
+import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=87';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=87';
+import { healPushSubscription } from './push.js?v=87';
+import { maybeShowPremiumPopup } from './premium-popup.js?v=87';
+import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=87';
+import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=87';
+import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=87';
+import { installLibraryGate } from './library-gate.js?v=87';
+import { toast } from './hl-view.js?v=87';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -89,6 +90,19 @@ function buildGuestPerson() {
     // .org gate (temporary): show the dentcast.ir notice instead of OTP; the
     // anon demand signal is logged inside openOrgNotice (marked org:header).
     if (isOrgHost()) { openOrgNotice({ source: 'header', contentId: detectContentId() }); return; }
+    // A grey icon because the API could not be ASKED is not a signed-out
+    // reader. Ask again on the tap: a session that was there all along means
+    // the page simply redraws signed in, and a host that still cannot answer
+    // is said out loud — an OTP round trip against an unreachable API would
+    // end in the same grey icon and a reader convinced that login is broken.
+    if (meStatus() === 'error') {
+      const again = await currentUser({ refresh: true });
+      if (again) { location.reload(); return; }
+      if (meStatus() === 'error') {
+        toast('ارتباط با سرور برقرار نشد؛ کمی بعد دوباره تلاش کنید.', { icon: '⚠️' });
+        return;
+      }
+    }
     const res = await openLoginModal({ returnTo: location.pathname + location.search });
     if (res && res.user) location.reload();
   });
@@ -219,6 +233,11 @@ export async function initHeader() {
   let user = null;
   try { user = await currentUser(); } catch (_) { user = null; }
   if (!user) {
+    // «We could not ask» is not «guest»: a reader whose API call timed out is
+    // shown the plain header and nothing more. Inviting them to sign up, or
+    // selling them premium, while they may well be a subscriber with a
+    // perfectly good session, is how «login is broken» reports are made.
+    if (meStatus() === 'error') return;
     // Confirmed guest: invite them in with the first-visit welcome box (capped
     // per device), pulsing the person icon toward the login entry point.
     try { maybeShowWelcome({ personBtn: guestPerson }); } catch (_) { /* non-fatal */ }

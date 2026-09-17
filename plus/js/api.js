@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=85';
+import { API_BASES } from './config.js?v=87';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -40,16 +40,26 @@ let resolvedBase = null;
 // we want to spend the visit on — fail over now, not in twenty seconds.
 const PROBE_TIMEOUT_MS = 1500;
 
+// One deadline for an ordinary request. Reads and the login calls carry it; a
+// POST that may legitimately take long (a model grading an exam, an export)
+// passes none. Before this, /me had no timeout at all — on a stalled host the
+// header simply stayed «guest» for as long as the browser cared to wait.
+const REQUEST_TIMEOUT_MS = 30000;
+
+function signalFor(ms) {
+  try {
+    if (ms && typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function') {
+      return AbortSignal.timeout(ms);
+    }
+  } catch (_) { /* fall through */ }
+  return undefined;
+}
+
 function probeSignal() {
   // AbortSignal.timeout is not in older WebViews (Telegram's in-app browser on
   // an old Android). Falling back to no signal keeps the old behaviour there
   // rather than throwing — slow beats broken.
-  try {
-    if (typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function') {
-      return AbortSignal.timeout(PROBE_TIMEOUT_MS);
-    }
-  } catch (_) { /* fall through */ }
-  return undefined;
+  return signalFor(PROBE_TIMEOUT_MS);
 }
 
 async function pickBase() {
@@ -80,7 +90,13 @@ async function pickBase() {
     const res = await settled[i];
     if (res && res.ok) {
       resolvedBase = API_BASES[i];
-      ssSet(SS_BASE, resolvedBase);
+      // Only the PRIMARY is remembered across pages. The session cookie lives
+      // on the primary host alone (it is same-site there and nowhere else), so
+      // a failover is a read-only detour for THIS page, never a choice the tab
+      // should carry for weeks: remembered, one slow probe at the first page
+      // of a visit pinned the whole tab to the mirror where the reader's
+      // session does not exist — «signed in on one tab, a guest on the next».
+      if (i === 0) ssSet(SS_BASE, resolvedBase);
       return resolvedBase;
     }
   }
@@ -113,8 +129,17 @@ export class ApiError extends Error {
   }
 }
 
-async function request(path, { method = 'GET', body, query } = {}) {
-  const base = await pickBase();
+// The host the session cookie belongs to. Everything that SETS or CLEARS the
+// cookie goes here and nowhere else: a login answered by the other mirror sets
+// a cookie that is cross-site for this page — Safari, Firefox strict mode and
+// any «block third-party cookies» setting drop it on the floor, the server
+// says 200, and the reader is a guest on the very next request.
+function primaryBase() {
+  return API_BASES[0];
+}
+
+async function request(path, { method = 'GET', body, query, pinned = false, timeoutMs } = {}) {
+  const base = pinned ? primaryBase() : await pickBase();
   let url = base + path;
   if (query) {
     // `new URLSearchParams({a: undefined})` stringifies to the literal text
@@ -135,12 +160,27 @@ async function request(path, { method = 'GET', body, query } = {}) {
     opts.headers['content-type'] = 'application/json';
     opts.body = JSON.stringify(body);
   }
+  const deadline = timeoutMs !== undefined ? timeoutMs : (method === 'GET' ? REQUEST_TIMEOUT_MS : 0);
+  const signal = signalFor(deadline);
+  if (signal) opts.signal = signal;
   let res;
   try {
     res = await fetch(url, opts);
   } catch (e) {
     forgetBase(); // network-level failure (not an HTTP error) — the cached base may be dead
     throw e;
+  }
+  // A 401 from the FALLBACK mirror is not an answer about the reader — the
+  // session cookie is on the primary, which that mirror cannot see. Ask the
+  // primary once before believing it. If the primary answers, this tab moves
+  // back to it for good; if it cannot be reached, that is what is reported
+  // (a network error, «could not ask»), never a false «signed out».
+  if (res.status === 401 && !pinned && base !== primaryBase()) {
+    forgetBase();
+    const retry = await fetch(primaryBase() + url.slice(base.length), opts);
+    resolvedBase = primaryBase();
+    ssSet(SS_BASE, resolvedBase);
+    res = retry;
   }
   if (res.status === 204) return null;
   const data = await res.json().catch(() => null);
@@ -153,20 +193,23 @@ export const api = {
   me: () => request('/me'),
   updateMe: (patch) => request('/me', { method: 'PATCH', body: patch }),
   profileStats: () => request('/profile/stats'),
-  requestOtp: (phone) => request('/auth/otp/request', { method: 'POST', body: { phone } }),
+  // The login calls are PINNED to the primary host (see primaryBase) and
+  // bounded, so a stalled SMS provider ends in a message rather than a spinner.
+  requestOtp: (phone) =>
+    request('/auth/otp/request', { method: 'POST', body: { phone }, pinned: true, timeoutMs: REQUEST_TIMEOUT_MS }),
   verifyOtp: (phone, code, return_to) =>
-    request('/auth/otp/verify', { method: 'POST', body: { phone, code, return_to } }),
+    request('/auth/otp/verify', { method: 'POST', body: { phone, code, return_to }, pinned: true, timeoutMs: REQUEST_TIMEOUT_MS }),
   // Prove a phone via OTP while logged in (e.g. a Telegram-only account), to
   // recover/merge an older phone account. Call requestOtp(phone) first.
   linkPhone: (phone, code) =>
-    request('/auth/phone/link', { method: 'POST', body: { phone, code } }),
+    request('/auth/phone/link', { method: 'POST', body: { phone, code }, pinned: true, timeoutMs: REQUEST_TIMEOUT_MS }),
   // Disconnect Telegram from the current account (needs a phone fallback).
   unlinkTelegram: () => request('/auth/telegram/unlink', { method: 'POST' }),
   // Bale (بله) notification channel (no login flow): mint a one-time connect
   // token (the client builds the deep link from it) / disconnect.
   connectBale: () => request('/auth/bale/connect', { method: 'POST' }),
   unlinkBale: () => request('/auth/bale/unlink', { method: 'POST' }),
-  logout: () => request('/auth/logout', { method: 'POST' }),
+  logout: () => request('/auth/logout', { method: 'POST', pinned: true, timeoutMs: REQUEST_TIMEOUT_MS }),
 
   // activity + anon
   activity: (action, content_id, meta) =>

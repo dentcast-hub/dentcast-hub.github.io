@@ -34,6 +34,19 @@ export function consume(key: string, max: number, windowMs: number, now = Date.n
   return { allowed: true, remaining: max - hits.length, retryAfterMs: 0 };
 }
 
+/**
+ * Give back the most recent slot taken on `key`. For an attempt that was
+ * counted but never happened — an OTP whose SMS the provider refused to send.
+ * Without this, five provider failures in a row locked the reader out for an
+ * hour for messages they never received.
+ */
+export function refund(key: string): void {
+  const hits = buckets.get(key);
+  if (!hits || hits.length === 0) return;
+  hits.pop();
+  if (hits.length === 0) buckets.delete(key);
+}
+
 /** Test/maintenance helper: forget all counters. */
 export function resetRateLimits(): void {
   buckets.clear();

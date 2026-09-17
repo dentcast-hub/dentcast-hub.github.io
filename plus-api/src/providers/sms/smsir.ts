@@ -16,6 +16,8 @@ import { config } from '../../config.js';
  * SMSIR_TEMPLATE_ID and (if the parameter isn't named CODE) SMSIR_PARAM_NAME.
  * Selected by SMS_PROVIDER=smsir; nothing else in the auth flow changes.
  */
+const SMS_TIMEOUT_MS = 15_000;
+
 export class SmsIrSender implements SmsSender {
   readonly name = 'smsir';
 
@@ -57,6 +59,11 @@ export class SmsIrSender implements SmsSender {
           'x-api-key': this.apiKey,
         },
         body: JSON.stringify({ mobile: phone, templateId, parameters }),
+        // Bounded: a provider that hangs must not hold the login request open
+        // for Node's own (minutes-long) socket timeout while the reader stares
+        // at «در حال ارسال کد...». Past this the route refunds the rate-limit
+        // slot and tells the reader to try again.
+        signal: AbortSignal.timeout(SMS_TIMEOUT_MS),
       });
     } catch (err) {
       // Never leak a one-time code into logs; surface only the transport failure.
