@@ -2,9 +2,10 @@ import { describe, it, expect, beforeEach, afterAll, vi } from 'vitest';
 import { resetDb } from './helpers.js';
 import { pool, closePool } from '../src/db.js';
 import { config } from '../src/config.js';
-import { runSubscriptionReminders } from '../src/services/subscription-reminder.js';
+import { runSubscriptionReminders, runWinbackReminders } from '../src/services/subscription-reminder.js';
 import { activateMonths, grantLifetime } from '../src/services/subscription.js';
 import { notifications, sms } from '../src/providers/registry.js';
+import { msUntilNextRun } from '../src/scheduler.js';
 import type { NotificationMessage } from '../src/providers/notifications/types.js';
 import type { TemplateParam } from '../src/providers/sms/types.js';
 
@@ -68,6 +69,8 @@ beforeEach(async () => {
   config.subscriptionReminder.smsTemplateId = 77;
   config.subscriptionReminder.daysBefore = 3;
   config.subscriptionReminder.daysAfter = 3;
+  config.subscriptionReminder.winbackHour = 21;
+  config.subscriptionReminder.winbackMinute = 30;
   config.subscriptionReminder.winbackSmsTemplateId = 88;
   vi.spyOn(notifications, 'send').mockImplementation(async (userId, msg, kind) => {
     sent.push({ userId, kind, msg: msg as NotificationMessage });
@@ -84,7 +87,7 @@ describe('runSubscriptionReminders', () => {
 
     const r = await runSubscriptionReminders(RUN('2026-09-07'));
 
-    expect(r).toEqual({ soon: 1, today: 0, lapsed: 0 });
+    expect(r).toEqual({ soon: 1, today: 0 });
     expect(titles()[0]).toContain('۳ روز');
     // It sends people somewhere they can act, not to a dead end.
     expect(sent[0].msg.url).toContain('/plus/pricing.html');
@@ -96,7 +99,7 @@ describe('runSubscriptionReminders', () => {
 
     const r = await runSubscriptionReminders(RUN('2026-09-10'));
 
-    expect(r).toEqual({ soon: 0, today: 1, lapsed: 0 });
+    expect(r).toEqual({ soon: 0, today: 1 });
     // The sweep settles premium at midnight, so at 10:00 on the last day the
     // subscription is very much alive — saying otherwise would be a lie told
     // fourteen hours early.
@@ -108,7 +111,7 @@ describe('runSubscriptionReminders', () => {
     await subscriber({ expiresOn: '2026-09-10', messenger: true });
 
     for (const day of ['2026-09-05', '2026-09-06', '2026-09-08', '2026-09-09']) {
-      expect(await runSubscriptionReminders(RUN(day))).toEqual({ soon: 0, today: 0, lapsed: 0 });
+      expect(await runSubscriptionReminders(RUN(day))).toEqual({ soon: 0, today: 0 });
     }
     expect(sent).toHaveLength(0);
   });
@@ -145,7 +148,7 @@ describe('runSubscriptionReminders', () => {
     await grantLifetime(r.rows[0].id, { source: 'admin' });
 
     for (const day of ['2026-09-07', '2026-09-10', '2027-01-01']) {
-      expect(await runSubscriptionReminders(RUN(day))).toEqual({ soon: 0, today: 0, lapsed: 0 });
+      expect(await runSubscriptionReminders(RUN(day))).toEqual({ soon: 0, today: 0 });
     }
   });
 
@@ -257,14 +260,14 @@ describe('runSubscriptionReminders', () => {
 
     const r = await runSubscriptionReminders(RUN('2026-09-07'));
 
-    expect(r).toEqual({ soon: 1, today: 1, lapsed: 0 });
+    expect(r).toEqual({ soon: 1, today: 1 });
   });
 
   it('follows a retuned warning distance', async () => {
     config.subscriptionReminder.daysBefore = 7;
     await subscriber({ expiresOn: '2026-09-10', messenger: true });
 
-    expect(await runSubscriptionReminders(RUN('2026-09-07'))).toEqual({ soon: 0, today: 0, lapsed: 0 });
+    expect(await runSubscriptionReminders(RUN('2026-09-07'))).toEqual({ soon: 0, today: 0 });
     const r = await runSubscriptionReminders(RUN('2026-09-03'));
     expect(r.soon).toBe(1);
     expect(titles()[0]).toContain('۷ روز');
@@ -283,9 +286,9 @@ describe('runSubscriptionReminders — the win-back', () => {
   it('writes three days after the last day, to somebody who did not renew', async () => {
     await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 4 });
 
-    const r = await runSubscriptionReminders(RUN('2026-09-13'));
+    const r = await runWinbackReminders(RUN('2026-09-13'));
 
-    expect(r).toEqual({ soon: 0, today: 0, lapsed: 1 });
+    expect(r).toEqual({ lapsed: 1 });
     expect(sent[0].kind).toBe('subscription_lapsed');
     expect(sent[0].msg.url).toContain('from=winback');
   });
@@ -293,7 +296,7 @@ describe('runSubscriptionReminders — the win-back', () => {
   it('leads with what they still have, not with what ended', async () => {
     await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 132 });
 
-    await runSubscriptionReminders(RUN('2026-09-13'));
+    await runWinbackReminders(RUN('2026-09-13'));
 
     // «تمام شد» as a headline is an obituary for the thing we are asking them
     // to buy again. The title is the part that survives a lock screen.
@@ -306,18 +309,18 @@ describe('runSubscriptionReminders — the win-back', () => {
     await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 2 });
 
     for (const day of ['2026-09-11', '2026-09-12', '2026-09-14']) {
-      expect((await runSubscriptionReminders(RUN(day))).lapsed).toBe(0);
+      expect((await runWinbackReminders(RUN(day))).lapsed).toBe(0);
     }
     // 09-10 is the day-of warning, which is a different message entirely.
-    expect((await runSubscriptionReminders(RUN('2026-09-10'))).lapsed).toBe(0);
+    expect((await runWinbackReminders(RUN('2026-09-10'))).lapsed).toBe(0);
   });
 
   it('says it once, however many times the job runs', async () => {
     await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 2 });
 
-    await runSubscriptionReminders(RUN('2026-09-13'));
-    await runSubscriptionReminders(RUN('2026-09-13'));
-    await runSubscriptionReminders(RUN('2026-09-13'));
+    await runWinbackReminders(RUN('2026-09-13'));
+    await runWinbackReminders(RUN('2026-09-13'));
+    await runWinbackReminders(RUN('2026-09-13'));
 
     expect(sent).toHaveLength(1);
   });
@@ -331,7 +334,7 @@ describe('runSubscriptionReminders — the win-back', () => {
     // cancelled and no flag is cleared; the date test does all of it.
     await activateMonths(id, 1, { source: 'payment', now: new Date('2026-09-12T09:00:00+03:30') });
 
-    expect((await runSubscriptionReminders(RUN('2026-09-13'))).lapsed).toBe(0);
+    expect((await runWinbackReminders(RUN('2026-09-13'))).lapsed).toBe(0);
     expect(sent).toHaveLength(0);
   });
 
@@ -340,7 +343,7 @@ describe('runSubscriptionReminders — the win-back', () => {
     // شد، دوباره بخر» is the worst message the site could send them.
     await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 5, claimPending: true });
 
-    expect((await runSubscriptionReminders(RUN('2026-09-13'))).lapsed).toBe(0);
+    expect((await runWinbackReminders(RUN('2026-09-13'))).lapsed).toBe(0);
     expect(sent).toHaveLength(0);
   });
 
@@ -352,7 +355,7 @@ describe('runSubscriptionReminders — the win-back', () => {
     await grantLifetime(r.rows[0].id, { source: 'admin' });
 
     for (const day of ['2026-09-13', '2026-10-13', '2027-01-01']) {
-      expect((await runSubscriptionReminders(RUN(day))).lapsed).toBe(0);
+      expect((await runWinbackReminders(RUN(day))).lapsed).toBe(0);
     }
   });
 
@@ -365,7 +368,7 @@ describe('runSubscriptionReminders — the win-back', () => {
       );
     }
 
-    await runSubscriptionReminders(RUN('2026-09-13'));
+    await runWinbackReminders(RUN('2026-09-13'));
 
     expect(sent).toHaveLength(1);
   });
@@ -376,7 +379,7 @@ describe('runSubscriptionReminders — the win-back', () => {
     // text, not ours. Two templates or none.
     await subscriber({ expiresOn: '2026-09-10', saved: 9 });
 
-    await runSubscriptionReminders(RUN('2026-09-13'));
+    await runWinbackReminders(RUN('2026-09-13'));
 
     expect(texted).toHaveLength(1);
     expect(texted[0].templateId).toBe(88);
@@ -390,7 +393,7 @@ describe('runSubscriptionReminders — the win-back', () => {
     config.subscriptionReminder.winbackSmsTemplateId = 0;
     await subscriber({ expiresOn: '2026-09-10', saved: 9 });
 
-    await runSubscriptionReminders(RUN('2026-09-13'));
+    await runWinbackReminders(RUN('2026-09-13'));
 
     // The free channels do not wait on SMS.ir's approval queue.
     expect(sent).toHaveLength(1);
@@ -407,7 +410,7 @@ describe('runSubscriptionReminders — the win-back', () => {
   it('says the count only when it is worth saying', async () => {
     await subscriber({ expiresOn: '2026-09-10', saved: 12 });
 
-    await runSubscriptionReminders(RUN('2026-09-13'));
+    await runWinbackReminders(RUN('2026-09-13'));
 
     expect(texted[0].params[1].value).toBe('۱۲ هایلایت و یادداشتِ شما');
     expect(sent[0].msg.body).toContain('۱۲ هایلایت');
@@ -416,7 +419,7 @@ describe('runSubscriptionReminders — the win-back', () => {
   it('goes plural and countless below the threshold, never «۳ هایلایت»', async () => {
     await subscriber({ expiresOn: '2026-09-10', saved: 3 });
 
-    await runSubscriptionReminders(RUN('2026-09-13'));
+    await runWinbackReminders(RUN('2026-09-13'));
 
     expect(texted[0].params[1].value).toBe('هایلایت‌ها و یادداشت‌های شما');
     expect(sent[0].msg.body).not.toContain('۳ هایلایت');
@@ -430,7 +433,7 @@ describe('runSubscriptionReminders — the win-back', () => {
     // its own title, since the default one is addressed to a different person.
     await subscriber({ expiresOn: '2026-09-10', saved: 0 });
 
-    await runSubscriptionReminders(RUN('2026-09-13'));
+    await runWinbackReminders(RUN('2026-09-13'));
 
     expect(texted).toHaveLength(1);
     expect(texted[0].params[1].value).toBe('هر چه ذخیره کرده‌اید');
@@ -448,20 +451,72 @@ describe('runSubscriptionReminders — the win-back', () => {
       [id],
     );
 
-    await runSubscriptionReminders(RUN('2026-09-13'));
+    await runWinbackReminders(RUN('2026-09-13'));
 
     expect(texted[0].params[1]).toEqual({ name: 'saved', value: '۸ هایلایت و یادداشتِ شما' });
+  });
+
+  it('is not sent by the morning job — the two jobs are separate', async () => {
+    // The hour is the difference between the two messages, so the win-back has
+    // its own timer. If it ever rode along on the 10:00 run again, this fails.
+    await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 6 });
+
+    const morning = await runSubscriptionReminders(RUN('2026-09-13'));
+
+    expect(morning).toEqual({ soon: 0, today: 0 });
+    expect(sent).toHaveLength(0);
+    expect((await runWinbackReminders(RUN('2026-09-13'))).lapsed).toBe(1);
+  });
+
+  it('is a WEEK out on the shipped default', async () => {
+    config.subscriptionReminder.daysAfter = 7;
+    await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 6 });
+
+    expect((await runWinbackReminders(RUN('2026-09-13'))).lapsed).toBe(0);
+    expect((await runWinbackReminders(RUN('2026-09-17'))).lapsed).toBe(1);
   });
 
   it('follows a retuned distance, and 0 switches it off entirely', async () => {
     config.subscriptionReminder.daysAfter = 7;
     await subscriber({ expiresOn: '2026-09-10', messenger: true, saved: 2 });
 
-    expect((await runSubscriptionReminders(RUN('2026-09-13'))).lapsed).toBe(0);
-    expect((await runSubscriptionReminders(RUN('2026-09-17'))).lapsed).toBe(1);
+    expect((await runWinbackReminders(RUN('2026-09-13'))).lapsed).toBe(0);
+    expect((await runWinbackReminders(RUN('2026-09-17'))).lapsed).toBe(1);
 
     config.subscriptionReminder.daysAfter = 0;
     await subscriber({ expiresOn: '2026-09-20', messenger: true, saved: 2 });
-    expect((await runSubscriptionReminders(RUN('2026-09-23'))).lapsed).toBe(0);
+    expect((await runWinbackReminders(RUN('2026-09-23'))).lapsed).toBe(0);
+  });
+});
+
+/**
+ * The half hour is not cosmetic: `articleNotify.freeDigestHour` is 21:00 and a
+ * lapsed reader is a FREE reader, so a win-back on the hour would land in the
+ * same minute as «۳ مطلب تازه» on exactly the evening it goes out.
+ */
+describe('the win-back runs at 21:30 Tehran, not on the hour', () => {
+  it('computes ms until the next 21:30, minute included', () => {
+    // 21:00 Tehran (17:30Z) — the free digest's own minute — is 30 min early.
+    const half = msUntilNextRun(new Date('2026-03-10T17:30:00.000Z'), 21, 'Asia/Tehran', 30);
+    expect(Math.round(half / 60000)).toBe(30);
+    // 21:31 Tehran: today's slot is gone, so it waits out the day.
+    const tomorrow = msUntilNextRun(new Date('2026-03-10T18:01:00.000Z'), 21, 'Asia/Tehran', 30);
+    expect(Math.round(tomorrow / 60000)).toBe(24 * 60 - 1);
+  });
+
+  it('is unchanged for every caller that passes no minute', () => {
+    const onTheHour = msUntilNextRun(new Date('2026-03-10T16:30:00.000Z'), 21, 'Asia/Tehran');
+    expect(Math.round(onTheHour / 60000)).toBe(60);
+  });
+
+  it('lands inside the site\'s own awake window', () => {
+    // notify.awakeEndHour is 22 and half-open, so 22:00 is the first minute the
+    // site itself calls too late to knock. 21:30 is deliberately before it.
+    const { winbackHour, winbackMinute } = config.subscriptionReminder;
+    expect(winbackHour * 60 + winbackMinute).toBeLessThan(config.notify.awakeEndHour * 60);
+    expect(winbackHour).toBeGreaterThanOrEqual(config.notify.awakeStartHour);
+    // And not in the digest's minute.
+    expect(winbackHour * 60 + winbackMinute)
+      .not.toBe(config.articleNotify.freeDigestHour * 60);
   });
 });

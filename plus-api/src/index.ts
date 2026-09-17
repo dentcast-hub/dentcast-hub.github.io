@@ -5,7 +5,7 @@ import {
   startArticleScheduler, startStreakReminderScheduler, startReactivationScheduler,
   startLeagueScheduler, startHeldNotificationsScheduler, startReviewReminderScheduler,
   startAssistantLearningScheduler, startSubscriptionScheduler,
-  startSubscriptionReminderScheduler, startPaymentReconcileScheduler,
+  startSubscriptionReminderScheduler, startWinbackScheduler, startPaymentReconcileScheduler,
   startPathwayAlertScheduler, startMonthlyReportScheduler,
 } from './scheduler.js';
 import { startBalePolling } from './services/bale-updates.js';
@@ -32,6 +32,11 @@ async function main(): Promise<void> {
   const stopSubscriptions = startSubscriptionScheduler();
   // Mid-morning, so "three days left" arrives when it can be acted on.
   const stopSubscriptionReminders = startSubscriptionReminderScheduler();
+  // 21:30: the win-back, a week after a subscription ended with no renewal. Its
+  // own timer because the hour is the message — a deadline wants a morning, an
+  // offer wants an evening — and 21:30 rather than 21:00 because the free
+  // digest owns that minute and a lapsed reader is a free reader.
+  const stopWinback = startWinbackScheduler();
   // Every 15 minutes, plus once at boot: finish or close payments the customer
   // never came back from. Minutes rather than daily because the row it looks for
   // is somebody already charged, and Zibal reverses an unverified transaction.
@@ -66,6 +71,7 @@ async function main(): Promise<void> {
     stopAssistantLearning();
     stopSubscriptions();
     stopSubscriptionReminders();
+    stopWinback();
     stopPaymentReconcile();
     stopPathwayAlerts();
     stopMonthlyReports();

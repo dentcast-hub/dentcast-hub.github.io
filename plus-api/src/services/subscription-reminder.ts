@@ -10,9 +10,13 @@ import type { TemplateParam } from '../providers/sms/types.js';
  * "Your subscription is ending" — the messages the whole payment system exists
  * to make unnecessary to chase.
  *
- * TWO BEFORE, ONE AFTER. One three days out, while there is still time to act
- * without any interruption to their reading; one on the last day itself; and
- * one `daysAfter` days past it.
+ * TWO BEFORE, ONE AFTER, ON TWO TIMERS. One three days out, while there is
+ * still time to act without any interruption to their reading, and one on the
+ * last day itself — both at `hour` (10:00), when a deadline can be acted on.
+ * Then one a week past the last day, at `winbackHour:winbackMinute` (21:30),
+ * because that message is not a deadline but an offer and an evening is when
+ * somebody decides. Two exported jobs, `runSubscriptionReminders` and
+ * `runWinbackReminders`, over one `runPass`.
  *
  * THAT THIRD MESSAGE WAS MISSING UNTIL 2026-09-17, and this comment used to
  * argue against it: by then the news is something they will see the moment they
@@ -303,39 +307,65 @@ async function sendOne(
   return true;
 }
 
-export async function runSubscriptionReminders(now: Date = new Date()): Promise<{
-  soon: number; today: number; lapsed: number;
-}> {
-  const { daysBefore, daysAfter } = config.subscriptionReminder;
+/**
+ * One pass: everybody whose last day is exactly `offset` days from today, told
+ * `kind`, at most once per expiry date.
+ *
+ * Every pass in this file goes through here, which is what keeps the claim, the
+ * skip and the ordering identical whichever job called it.
+ */
+async function runPass(offset: number, kind: ReminderKind, now: Date): Promise<number> {
+  const { daysBefore } = config.subscriptionReminder;
   const todayStr = dayInTz(now, config.streakTimezone);
-  const counts = { soon: 0, today: 0, lapsed: 0 };
-
-  // A day OFFSET each, all three read by the same query: +daysBefore for the
-  // early warning, 0 for the last day, and -daysAfter for the win-back, whose
-  // expiry is that many days in the past. `daysAfter: 0` drops the third pass
-  // rather than colliding with the second.
-  const passes: Array<[number, ReminderKind]> = [
-    [daysBefore, 'expiry_soon'],
-    [0, 'expiry_today'],
-  ];
-  if (daysAfter > 0) passes.push([-daysAfter, 'lapsed']);
-
-  for (const [offset, kind] of passes) {
-    for (const row of await due(offset, todayStr)) {
-      // Renewing needs no cancellation here either: activateMonths restarts a
-      // lapsed subscription from today, so a reader who came back yesterday has
-      // an expiry months away and never matches this pass at all.
-      if (kind === 'lapsed' && row.claim_pending) continue;
-      const expiresOn = dayInTz(row.expires_at, config.streakTimezone);
-      if (await alreadySent(row.user_id, kind, expiresOn)) continue;
-      await sendOne(row, kind, expiresOn, now, daysBefore);
-      if (kind === 'expiry_soon') counts.soon += 1;
-      else if (kind === 'expiry_today') counts.today += 1;
-      else counts.lapsed += 1;
-    }
+  let n = 0;
+  for (const row of await due(offset, todayStr)) {
+    // Renewing needs no cancellation: activateMonths restarts a lapsed
+    // subscription from today, so a reader who came back has an expiry months
+    // away and never matches this pass at all.
+    if (kind === 'lapsed' && row.claim_pending) continue;
+    const expiresOn = dayInTz(row.expires_at, config.streakTimezone);
+    if (await alreadySent(row.user_id, kind, expiresOn)) continue;
+    await sendOne(row, kind, expiresOn, now, daysBefore);
+    n += 1;
   }
+  return n;
+}
 
-  return counts;
+/**
+ * The two warnings sent while somebody is still a subscriber — mid-morning, so
+ * «three days left» arrives when it can be acted on.
+ *
+ * The win-back is NOT here, and the split is the point: it is a different
+ * message to a different person at a different hour, and folding it in would
+ * have meant either moving these two into the evening — where the streak nudge
+ * and the free digest already are, and where «you have three days» is a thing
+ * to do tomorrow — or running the whole job twice a day and having each run
+ * skip two thirds of itself.
+ */
+export async function runSubscriptionReminders(now: Date = new Date()): Promise<{
+  soon: number; today: number;
+}> {
+  const { daysBefore } = config.subscriptionReminder;
+  return {
+    soon: await runPass(daysBefore, 'expiry_soon', now),
+    today: await runPass(0, 'expiry_today', now),
+  };
+}
+
+/**
+ * The win-back, `daysAfter` days after the subscription ended — the offset is
+ * NEGATIVE because the expiry is in the past, and the same `due` query finds it.
+ *
+ * `daysAfter: 0` switches the whole thing off rather than colliding with the
+ * day-of warning, which is the one offset this pass must never take: that
+ * reader still has the day.
+ */
+export async function runWinbackReminders(now: Date = new Date()): Promise<{
+  lapsed: number;
+}> {
+  const { daysAfter } = config.subscriptionReminder;
+  if (daysAfter <= 0) return { lapsed: 0 };
+  return { lapsed: await runPass(-daysAfter, 'lapsed', now) };
 }
 
 /** Exported for the banner test's sake: how many whole Tehran days are left. */

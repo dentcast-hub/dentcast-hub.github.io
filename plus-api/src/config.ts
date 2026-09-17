@@ -385,16 +385,32 @@ export const config = {
 
     // THE WIN-BACK, `daysAfter` days past the last day. Zero disables it.
     //
-    // Three rather than seven or thirty: this message is aimed at the reader
-    // who meant to renew and did not, and that reader stops being findable
-    // quickly — at thirty days they have arranged their week around not having
-    // the site. A reader who genuinely decided against it is not moved by any
-    // of these numbers, so the cadence is tuned entirely for the first kind.
+    // ONE WEEK (founder, 2026-09-17). Aimed at the reader who meant to renew
+    // and did not: a week is long enough that they have noticed the site is
+    // gone from their week and short enough that they have not yet arranged
+    // that week around its absence. A reader who genuinely decided against it
+    // is not moved by any number here, so the cadence is tuned entirely for
+    // the first kind.
     //
     // ONE message, not a sequence. A second is where a win-back becomes the
     // nagging this file's own comment warns about, and the founder can still
     // reach a cohort deliberately with `POST /admin/notices/broadcast`.
-    daysAfter: int('SUBSCRIPTION_WINBACK_DAYS_AFTER', 3),
+    daysAfter: int('SUBSCRIPTION_WINBACK_DAYS_AFTER', 7),
+
+    // ITS OWN HOUR, and not `hour` above (10:00). Evening, because the reader
+    // is no longer being asked to act before a deadline — they are being asked
+    // to decide, and a dentist decides that with their phone in hand after the
+    // clinic rather than between two patients.
+    //
+    // 21:30 rather than a round hour, and the half hour is load-bearing:
+    // `articleNotify.freeDigestHour` is 21:00 and a lapsed reader is a FREE
+    // reader, so on exactly the evening this goes out it would have landed in
+    // the same minute as «۳ مطلب تازه». The win-back is uncapped and would have
+    // won that collision on delivery and lost it on attention. 22:00 was the
+    // other candidate and is worse: `notify.awakeEndHour` is 22 and half-open,
+    // so it is the first minute the site itself calls too late to knock.
+    winbackHour: int('SUBSCRIPTION_WINBACK_HOUR', 21),
+    winbackMinute: int('SUBSCRIPTION_WINBACK_MINUTE', 30),
 
     // Its own registered template, and 0 until SMS.ir approves one — the
     // renewal template (530460) says «N روز تا پایان اشتراک», which is the

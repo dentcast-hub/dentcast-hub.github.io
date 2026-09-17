@@ -11,7 +11,7 @@ import { runReviewReminders } from './services/review-notify.js';
 import { attributeStrongSignals } from './services/assistant-learning.js';
 import { sweepExpiredSubscriptions } from './services/subscription.js';
 import { checkCapacityAlert } from './services/payment-cap-alert.js';
-import { runSubscriptionReminders } from './services/subscription-reminder.js';
+import { runSubscriptionReminders, runWinbackReminders } from './services/subscription-reminder.js';
 import { reconcilePendingPayments } from './services/payment-reconcile.js';
 import { runPathwayAlerts } from './services/pathway-standings.js';
 import { runMonthlyReports } from './services/monthly-report.js';
@@ -40,9 +40,9 @@ function secondsIntoDayInTz(now: Date, tz: string): number {
 }
 
 /** Milliseconds from `now` until the next occurrence of `hour`:00:00 in `tz`. */
-export function msUntilNextRun(now: Date, hour: number, tz: string): number {
+export function msUntilNextRun(now: Date, hour: number, tz: string, minute = 0): number {
   const nowSec = secondsIntoDayInTz(now, tz);
-  const targetSec = hour * 3600;
+  const targetSec = hour * 3600 + minute * 60;
   let deltaSec = targetSec - nowSec;
   if (deltaSec <= 0) deltaSec += 86_400; // already past today -> tomorrow
   return deltaSec * 1000 - now.getMilliseconds();
@@ -355,15 +355,55 @@ export function startSubscriptionReminderScheduler(): () => void {
     timer = setTimeout(() => {
       void runSubscriptionReminders(new Date())
         .then((r) => {
-          if (r.soon > 0 || r.today > 0 || r.lapsed > 0) {
+          if (r.soon > 0 || r.today > 0) {
             // eslint-disable-next-line no-console
-            console.log(`[subscription-reminder] ${r.soon} ending soon, ${r.today} ending today, `
-              + `${r.lapsed} lapsed`);
+            console.log(`[subscription-reminder] ${r.soon} ending soon, ${r.today} ending today`);
           }
         })
         .catch((err) => {
           // eslint-disable-next-line no-console
           console.error('[subscription-reminder] run failed', err);
+        })
+        .finally(schedule);
+    }, delay);
+    if (typeof timer.unref === 'function') timer.unref();
+  };
+
+  schedule();
+  return () => clearTimeout(timer);
+}
+
+/**
+ * The win-back, at winbackHour:winbackMinute Tehran (21:30 by default).
+ *
+ * Its own timer rather than a third pass on the 10:00 job, because the hour is
+ * the difference between the two messages: the warnings above are a deadline
+ * and want a morning, this one is an offer and wants an evening. See
+ * `config.subscriptionReminder.winbackHour` for why 21:30 and not 21:00 — the
+ * free digest owns that minute, and a lapsed reader is a free reader.
+ *
+ * Daily and idempotent like its neighbour, so a container that was down at
+ * 21:30 sends the same message at 21:30 tomorrow — the claim is keyed on the
+ * expiry date, not on the run, so nobody is told twice and nobody is skipped
+ * because the day was missed.
+ */
+export function startWinbackScheduler(): () => void {
+  let timer: NodeJS.Timeout;
+
+  const schedule = () => {
+    const { winbackHour, winbackMinute } = config.subscriptionReminder;
+    const delay = msUntilNextRun(new Date(), winbackHour, config.streakTimezone, winbackMinute);
+    timer = setTimeout(() => {
+      void runWinbackReminders(new Date())
+        .then((r) => {
+          if (r.lapsed > 0) {
+            // eslint-disable-next-line no-console
+            console.log(`[subscription-winback] ${r.lapsed} lapsed reader(s) told`);
+          }
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.error('[subscription-winback] run failed', err);
         })
         .finally(schedule);
     }, delay);

@@ -53,7 +53,8 @@ describe('channelWanted (pure)', () => {
 
   it('never governs a kind outside the matrix', () => {
     const s = { notify_channels: { webpush: { streak: false, new_content: false }, bale: { streak: false, new_content: false } } };
-    for (const kind of ['system', 'league', 'review', 'support_reply', 'subscription_expiry', 'exam_result'] as const) {
+    for (const kind of ['system', 'league', 'review', 'support_reply', 'subscription_expiry',
+      'subscription_lapsed', 'exam_result'] as const) {
       expect(channelWanted(s, 'webpush', kind)).toBe(true);
       expect(channelWanted(s, 'bale', kind)).toBe(true);
     }
