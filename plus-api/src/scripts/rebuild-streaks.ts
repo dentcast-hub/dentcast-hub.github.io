@@ -1,26 +1,51 @@
 /**
- * Rebuild every profile's streak caches from `user_activity` alone. The log is
- * the source of truth; this proves the caches are reconstructable (spec section
- * 4). Safe to run any time; it is a pure recompute.
+ * Rebuild every profile's streak state from its qualifying activity alone. The
+ * log is the source of truth; this proves the derived state is reconstructable
+ * (spec section 4). Safe to run any time and idempotent.
  *
  *   npm run rebuild-streaks
+ *
+ * TWO things are derived from that activity, not one, and this used to restore
+ * only the first:
+ *
+ *   · the caches on `profiles` (current/longest streak, last active day);
+ *   · the `streak_kept` rows the live engine appends as it goes — one per
+ *     counted Tehran day, carrying that day and the streak as it stood.
+ *
+ * Nothing but گزارش ماهانه reads the second kind, which is why the gap was
+ * quiet: after a rebuild the dashboard would say «۱ روز پیاپی» while the month
+ * report said «۰ روز فعال», from the same account on the same day. The seeded
+ * dev database shows it outright, because seed.ts inserts activity directly and
+ * then calls this — profiles came out right and not one `streak_kept` row
+ * existed.
+ *
+ * Restoring them means writing into the append-only log, and that is only
+ * legitimate because of what these rows are: not something a reader did, but
+ * the engine's own note about a day, derived entirely from the reader's real
+ * activity. A row is added only for a counted day that has none, and removed
+ * only when its day is no longer counted at all. A row that is still right is
+ * never touched, so nothing is ever rewritten and a second run is a no-op.
  */
 import { pool, withTransaction } from '../db.js';
 import { config } from '../config.js';
-import { QUALIFYING_ACTIONS, streakFromDays } from '../services/streak.js';
+import { QUALIFYING_ACTIONS, streakFromDays, countedDayRuns } from '../services/streak.js';
 
 export async function rebuildAllStreaks(): Promise<number> {
   const actions = Array.from(QUALIFYING_ACTIONS);
   const profiles = await pool.query<{ id: string }>('select id from profiles');
   let updated = 0;
+  let restored = 0;
 
   for (const { id } of profiles.rows) {
-    // Distinct Tehran calendar days on which this user did a qualifying action.
-    const days = await pool.query<{ d: string }>(
-      `select distinct (created_at at time zone $2)::date as d
+    // Distinct Tehran calendar days on which this user did a qualifying action,
+    // each with the earliest instant of that day's activity — which is when the
+    // live engine would have appended the `streak_kept` row.
+    const days = await pool.query<{ d: string; at: Date }>(
+      `select (created_at at time zone $2)::date as d, min(created_at) as at
          from user_activity
         where user_id = $1 and action = any($3)
-        order by d`,
+        group by 1
+        order by 1`,
       [id, config.streakTimezone, actions],
     );
     // Days a shield bridged, so a rebuilt streak survives the same gaps the live
@@ -30,17 +55,50 @@ export async function rebuildAllStreaks(): Promise<number> {
         where user_id = $1 and action = 'streak_freeze_used' and meta ? 'frozen_day'`,
       [id],
     );
-    const state = streakFromDays(days.rows.map((r) => r.d), frozen.rows.map((r) => r.d).filter(Boolean));
-    await withTransaction((client) =>
-      client.query(
+    const dayList = days.rows.map((r) => r.d);
+    const frozenDays = frozen.rows.map((r) => r.d).filter(Boolean);
+    const state = streakFromDays(dayList, frozenDays);
+    const runs = countedDayRuns(dayList, frozenDays);
+    const firstSeen = new Map(days.rows.map((r) => [r.d, r.at]));
+
+    await withTransaction(async (client) => {
+      await client.query(
         `update profiles
             set current_streak = $2, longest_streak = $3, last_active_day = $4
           where id = $1`,
         [id, state.current_streak, state.longest_streak, state.last_active_day],
-      ),
-    );
+      );
+
+      // A `streak_kept` row whose day is not a counted day any more (activity
+      // removed since it was written) no longer describes anything.
+      await client.query(
+        `delete from user_activity
+          where user_id = $1 and action = 'streak_kept'
+            and coalesce(meta->>'day', '') <> all($2::text[])`,
+        [id, dayList],
+      );
+
+      // ... and one is appended for every counted day that has none. Both
+      // halves are keyed on meta.day, so running this twice changes nothing.
+      const have = await client.query<{ day: string }>(
+        `select meta->>'day' as day from user_activity
+          where user_id = $1 and action = 'streak_kept'`,
+        [id],
+      );
+      const known = new Set(have.rows.map((r) => r.day));
+      for (const { day, streak } of runs) {
+        if (known.has(day)) continue;
+        await client.query(
+          `insert into user_activity (user_id, action, meta, created_at)
+           values ($1, 'streak_kept', $2::jsonb, $3)`,
+          [id, JSON.stringify({ day, streak }), firstSeen.get(day) ?? null],
+        );
+        restored += 1;
+      }
+    });
     updated += 1;
   }
+  if (restored) console.log(`Restored ${restored} missing streak_kept row(s).`);
   return updated;
 }
 

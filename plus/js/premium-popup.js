@@ -31,9 +31,9 @@
 // backdrop deliberately does NOT close it: on a phone the first thing a thumb
 // does to an unexpected card is try to scroll the page behind it, and dismissing
 // on that gesture means the offer is never actually read once.
-import { el, tehranDay } from './util.js?v=88';
-import { premiumBenefits } from './premium-benefits.js?v=88';
-import { premiumCta } from './premium-cta.js?v=88';
+import { el, tehranDay } from './util.js?v=90';
+import { premiumBenefits } from './premium-benefits.js?v=90';
+import { premiumCta } from './premium-cta.js?v=90';
 
 const LS_COUNT = 'dcp:prempopup:count'; // total appearances on this device
 const LS_LAST = 'dcp:prempopup:last';   // Tehran day of the last appearance

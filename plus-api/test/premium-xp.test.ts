@@ -1,8 +1,9 @@
 import { describe, it, expect, beforeEach, afterAll } from 'vitest';
 import type { FastifyInstance } from 'fastify';
-import { makeApp, resetDb, loginAs } from './helpers.js';
+import { makeApp, resetDb, loginAs, mintActivity } from './helpers.js';
 import { pool } from '../src/db.js';
 import { getPathways } from '../src/pathways.js';
+import { SERVER_MINTED_ACTIONS } from '../src/services/activity.js';
 
 /**
  * The premium earning paths (migration 0030): MORE WAYS to earn league XP, never
@@ -44,9 +45,12 @@ async function reader(phone: string, { premium = false } = {}): Promise<string> 
   return cookie;
 }
 
-const act = (cookie: string, action: string, content_id?: string) => app.inject({
-  method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id },
-});
+// Server-minted actions bypass the route on purpose; see mintActivity.
+const act = (cookie: string, action: string, content_id?: string) => (SERVER_MINTED_ACTIONS.has(action)
+  ? mintActivity(cookie, action, content_id ?? null)
+  : app.inject({
+    method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id },
+  }));
 
 const myXp = async (cookie: string): Promise<number> => (
   await app.inject({ method: 'GET', url: '/league', headers: { cookie } })

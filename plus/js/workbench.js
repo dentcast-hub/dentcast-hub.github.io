@@ -1,11 +1,11 @@
 // Study mode controller. A mode of the article page, not a separate page. It
 // inherits the site's typography (styles live in plus.css and reference the
 // site's own CSS variables). Never auto-enters; the caller decides when.
-import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=88';
-import { api } from './api.js?v=88';
-import { PALETTE, LABELS, SS_MODE } from './config.js?v=88';
-import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=88';
-import { openCollectionPicker } from './collections.js?v=88';
+import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=90';
+import { api } from './api.js?v=90';
+import { PALETTE, LABELS, SS_MODE } from './config.js?v=90';
+import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=90';
+import { openCollectionPicker } from './collections.js?v=90';
 
 /**
  * The workbench's history — undo/redo over SERVER writes.
@@ -189,11 +189,18 @@ export class Workbench {
         onclick: () => this._toggleLabel(l.key),
       }, l.fa));
 
-    // The three buttons that act on the SELECTED highlight, together, and
-    // disabled until one is selected — the disabled state is what says «pick
-    // one first», which is why the old «افزودنِ هایلایت به کالکشن» (a whole
-    // toolbar row on a phone) can be just «کالکشن» now.
-    const notesToggle = el('button', { class: 'dcp-tool', type: 'button', title: 'یادداشت روی هایلایت انتخاب‌شده', onclick: () => this._noteButton() }, '📝 یادداشت');
+    // کالکشن and حذف act on the SELECTED highlight and are disabled until one
+    // is selected — the disabled state is what says «pick one first», which is
+    // why the old «افزودنِ هایلایت به کالکشن» (a whole toolbar row on a phone)
+    // can be just «کالکشن» now.
+    //
+    // یادداشت is NOT one of them, and that is the whole point of it: with a
+    // highlight selected it writes that highlight's note, with none it writes
+    // the note for the WHOLE article (_noteButton's two branches). Disabling it
+    // alongside the other two made that second branch unreachable and left the
+    // article note with no door at all on any page — the only way in there has
+    // ever been this button.
+    const notesToggle = el('button', { class: 'dcp-tool', type: 'button', onclick: () => this._noteButton() }, '📝 یادداشت');
     const collectionBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'افزودنِ هایلایتِ انتخاب‌شده به کالکشن', onclick: () => this._collectionButton() }, '🗂 کالکشن');
     const collectionCap = el('p', { class: 'dcp-wb-cap' }, 'هایلایتِ انتخاب‌شده (آخرین موردی که ساختی یا رویش کلیک کردی) به یکی از کالکشن‌های خودت اضافه می‌شود.');
     collectionCap.hidden = true;
@@ -226,7 +233,8 @@ export class Workbench {
     this.ui.hint = hint;
     this.ui.undoBtn = undoBtn; this.ui.redoBtn = redoBtn;
     this.ui.undoCount = undoCount; this.ui.redoCount = redoCount;
-    this.ui.selectedBtns = [notesToggle, collectionBtn, deleteBtn];
+    this.ui.noteBtn = notesToggle;
+    this.ui.selectedBtns = [collectionBtn, deleteBtn];
     this._refreshToolbar();
     this._bindKeys();
     // The editor docks just above this toolbar; its height changes as the toolbar
@@ -316,6 +324,14 @@ export class Workbench {
     }
     const selected = this._currentHl != null && this.items.has(this._currentHl);
     if (this.ui.selectedBtns) for (const b of this.ui.selectedBtns) b.disabled = !selected;
+    // یادداشت stays enabled either way; only WHICH note it opens changes, and
+    // the label cannot say so without resizing the button every time a mark is
+    // tapped (this toolbar already wraps on a phone). So the title carries it.
+    if (this.ui.noteBtn) {
+      const t = selected ? 'یادداشت روی هایلایت انتخاب‌شده' : 'یادداشت این مقاله';
+      this.ui.noteBtn.title = t;
+      this.ui.noteBtn.setAttribute('aria-label', t);
+    }
     if (this.ui.hint) {
       this.ui.hint.textContent = !selected
         ? 'بعد از انتخاب متن، ابزار را مشخص کنید'

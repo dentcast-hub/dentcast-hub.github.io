@@ -77,6 +77,48 @@ export async function buildServer(): Promise<FastifyInstance> {
     return payload;
   });
 
+  // Nothing internal goes back to the caller. Fastify's default handler puts an
+  // unhandled error's own `message` and `code` in the response body, so every
+  // route that took an id straight from the URL into a query answered a typo
+  // with `{"statusCode":500,"code":"22P02","message":"invalid input syntax for
+  // type uuid: \"xyz\""}` — seventeen reader routes and eight admin ones, found
+  // 2026-09-17. Only clips.ts had thought to guard its own id, which is the
+  // shape of the problem: a per-route guard is a thing the NEXT route forgets,
+  // and the leak was never really about ids.
+  //
+  // So it is answered once, here, where no future route can drift past it.
+  // Deliberately NOT a blanket "bad id -> 404": a handler cannot know that the
+  // value came from a path segment rather than a body field, and several routes
+  // legitimately take a non-uuid `:id` (/pathways/:id, /notices/:id). 400 is
+  // what is actually true of all of them — the request carried a value the
+  // database could not read — while clips.ts keeps its own explicit 404 because
+  // there the id IS the resource and «not found» is the better answer.
+  const CALLER_DATA_ERRORS = new Set([
+    '22P02', // invalid text representation — a malformed uuid, enum or integer
+    '22001', // string too long for the column
+    '22003', // numeric value out of range
+    '22007', // invalid datetime format
+    '22008', // datetime field overflow
+  ]);
+  app.setErrorHandler((err, request, reply) => {
+    // Fastify's own schema validation, and anything a route threw deliberately
+    // with a status, already carry the right answer and a message written for
+    // the caller. Those pass through untouched — tests and clients read them.
+    const status = (err as { statusCode?: number }).statusCode;
+    if (typeof status === 'number' && status < 500) return reply.code(status).send(err);
+
+    const pgCode = (err as { code?: string }).code;
+    if (typeof pgCode === 'string' && CALLER_DATA_ERRORS.has(pgCode)) {
+      request.log.info({ err: (err as Error).message, pgCode, url: request.url }, 'rejected a malformed value');
+      return reply.code(400).send({ error: 'invalid_input' });
+    }
+
+    // Everything else is ours. It goes to the log in full and to the caller as
+    // nothing at all.
+    request.log.error({ err }, 'unhandled error');
+    return reply.code(500).send({ error: 'server_error' });
+  });
+
   // Public, unauthenticated, and cheap: a load balancer probes it, and a human
   // uses it to confirm WHICH build is actually serving. The repo is public, so
   // the commit sha reveals nothing; no secret or config value goes in here.

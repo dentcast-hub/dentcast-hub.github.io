@@ -316,4 +316,55 @@ describe('rebuild script recomputes caches from the log alone', () => {
     expect(after.rows[0].longest_streak).toBe(2);
     expect(after.rows[0].last_active_day).toBe('2026-03-21');
   });
+
+  // The caches are not the only thing derived from that activity. `streak_kept`
+  // — one row per counted Tehran day — is derived too, and until 2026-09-17 the
+  // rebuild left it alone, so a rebuilt account had a streak on the dashboard
+  // and «۰ روز فعال» in گزارش ماهانه, which reads nothing else. The seeded dev
+  // database showed it outright: profiles right, not one row.
+  it('restores the streak_kept rows the live engine would have appended', async () => {
+    const cookie = await loginAs(app, '09121500009');
+    const me = await (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
+    const userId = me.id;
+
+    // Three consecutive Tehran days, inserted the way a backfill does: straight
+    // into the log, so applyStreak never ran and no streak_kept row exists.
+    await pool.query(
+      `insert into user_activity (user_id, action, content_id, created_at) values
+       ($1,'article_completed','a','2026-03-10T09:00:00Z'),
+       ($1,'article_completed','b','2026-03-10T15:00:00Z'),
+       ($1,'article_completed','c','2026-03-11T09:00:00Z'),
+       ($1,'highlight_created','d','2026-03-12T09:00:00Z')`,
+      [userId],
+    );
+    const kept = async () => (await pool.query<{ day: string; streak: string }>(
+      `select meta->>'day' as day, meta->>'streak' as streak
+         from user_activity where user_id = $1 and action = 'streak_kept' order by 1`,
+      [userId],
+    )).rows;
+    expect(await kept()).toHaveLength(0);
+
+    await rebuildAllStreaks();
+
+    // One per counted DAY, not per activity row — 10th was two articles.
+    expect(await kept()).toEqual([
+      { day: '2026-03-10', streak: '1' },
+      { day: '2026-03-11', streak: '2' },
+      { day: '2026-03-12', streak: '3' },
+    ]);
+
+    // Idempotent: a second run neither duplicates nor rewrites.
+    await rebuildAllStreaks();
+    expect(await kept()).toHaveLength(3);
+
+    // And a row whose day stopped being a counted day goes: it describes
+    // nothing any more.
+    await pool.query(
+      `delete from user_activity where user_id = $1 and action <> 'streak_kept'
+         and (created_at at time zone 'Asia/Tehran')::date = '2026-03-11'`,
+      [userId],
+    );
+    await rebuildAllStreaks();
+    expect((await kept()).map((r) => r.day)).toEqual(['2026-03-10', '2026-03-12']);
+  });
 });
