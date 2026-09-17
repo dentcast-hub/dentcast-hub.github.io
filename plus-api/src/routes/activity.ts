@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { config } from '../config.js';
 import { requireAuth } from '../middleware/auth.js';
-import { recordActivity } from '../services/activity.js';
+import { recordActivity, SERVER_MINTED_ACTIONS } from '../services/activity.js';
 import { scheduleAchievementSync } from '../services/achievement-sync.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
 import {
@@ -38,10 +38,15 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
       return reply.code(400).send({ error: 'invalid_action' });
     }
 
-    // Server-minted: only services/challenge.ts writes this, and only on a
-    // `full` verdict. An open vocabulary here would let a client buy shield
-    // score + league XP + the badge without answering anything.
-    if (action === 'challenge_answered') {
+    // Server-minted. `challenge_answered` was the first one guarded here, with
+    // the reasoning that an open vocabulary would otherwise let a client buy
+    // shield score + league XP + the badge without answering anything — and
+    // that sentence is just as true of `highlight_created` and
+    // `review_finished` beside it in SCORING_ACTIONS, and of `streak_kept`,
+    // which IS the streak. So the guard is the whole set (see
+    // SERVER_MINTED_ACTIONS); the vocabulary stays open for everything else,
+    // which is inert by construction.
+    if (SERVER_MINTED_ACTIONS.has(action)) {
       return reply.code(400).send({ error: 'invalid_action' });
     }
 

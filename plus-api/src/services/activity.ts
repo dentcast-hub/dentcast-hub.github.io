@@ -52,6 +52,67 @@ async function insertAndScore(
   return { id: row.id };
 }
 
+/**
+ * Actions only the SERVER may write — POST /activity refuses every one of them.
+ *
+ * The action vocabulary stays deliberately open (routes/activity.ts): an
+ * unknown token is an inert row nothing reads, and keeping it open is what lets
+ * a new client-side signal ship without an API deploy. These are the tokens
+ * that are NOT inert — each is minted by a service as the record of something
+ * that actually happened, and several are read by score.ts, league.ts,
+ * streak.ts and achievements.ts.
+ *
+ * `challenge_answered` was guarded alone, with the right reasoning ("an open
+ * vocabulary here would let a client buy shield score + league XP + the badge
+ * without answering anything") — but the same sentence is true of
+ * `highlight_created` and `review_finished`, which are in SCORING_ACTIONS
+ * beside it, and of `streak_kept`, which IS the streak. Measured 2026-09-17:
+ * six posts of two forged actions, with no highlight and no review behind
+ * them, moved weekly league XP from 23 to 32.
+ *
+ * The client's own vocabulary is the short list in CLIENT_ACTIONS below;
+ * test/activity-vocabulary.test.ts reads this file's siblings and fails if a
+ * service starts minting an action that appears in neither set.
+ */
+export const SERVER_MINTED_ACTIONS: ReadonlySet<string> = new Set([
+  'assistant_step',
+  'challenge_answered',
+  'collection_created',
+  'collection_item_added',
+  'compass_viewed',
+  'highlight_created',
+  'highlight_deleted',
+  'highlight_restored',
+  'pathway_enrolled',
+  'pathway_milestone',
+  'payment_cap_alert',
+  'reactivation_sent',
+  'report_viewed',
+  'review_finished',
+  'streak_freeze_used',
+  'streak_kept',
+  'streak_reminder_sent',
+  'subscription_activated',
+  'subscription_reminder_sent',
+]);
+
+/**
+ * What a browser legitimately posts to POST /activity — the five signals only
+ * the page can know: that a reader reached the end of an article, listened to
+ * an episode, opened a page, pressed «بلد بودم» on a card outside the premium
+ * engine, or shared something.
+ *
+ * Not a whitelist the route enforces (the vocabulary stays open); it is the
+ * other half of the classification the vocabulary test checks.
+ */
+export const CLIENT_ACTIONS: ReadonlySet<string> = new Set([
+  'article_completed',
+  'article_viewed',
+  'card_reviewed_manual',
+  'content_shared',
+  'episode_listened',
+]);
+
 export async function recordActivity(
   userId: string,
   action: string,

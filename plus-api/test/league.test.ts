@@ -1,11 +1,12 @@
 import { describe, it, expect, beforeEach, afterAll } from 'vitest';
 import type { FastifyInstance } from 'fastify';
-import { makeApp, resetDb, loginAs } from './helpers.js';
+import { makeApp, resetDb, loginAs, mintActivity } from './helpers.js';
 import { pool } from '../src/db.js';
 import { finalizeWeek } from '../src/services/league-finalize.js';
 import { getLeagueConfig } from '../src/services/league-config.js';
 import { config } from '../src/config.js';
 import { resetRateLimits } from '../src/services/rate-limit.js';
+import { SERVER_MINTED_ACTIONS } from '../src/services/activity.js';
 import { tierCapacity, leagueWeek } from '../src/services/league.js';
 import { dayInTz } from '../src/services/time.js';
 
@@ -300,9 +301,15 @@ describe('GET /league — placement on first XP', () => {
     expect(res.json().joined).toBe(false);
   });
 
-  const act = (cookie, action, content_id) => app.inject({
-    method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id },
-  });
+  // A server-minted action (highlight_created, review_finished, …) is refused
+  // by POST /activity — see SERVER_MINTED_ACTIONS — so it is written here the
+  // way its own service writes it. Everything else is a real client signal and
+  // goes through the route, which is the point of the split.
+  const act = (cookie, action, content_id) => (SERVER_MINTED_ACTIONS.has(action)
+    ? mintActivity(cookie, action, content_id ?? null)
+    : app.inject({
+      method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id },
+    }));
   const myXp = async (cookie) => (await app.inject({ method: 'GET', url: '/league', headers: { cookie } })).json().my_weekly_xp;
 
   it('per-action XP: read once = +active(5) +read(5); re-reading the same article adds nothing', async () => {
@@ -326,7 +333,12 @@ describe('GET /league — placement on first XP', () => {
 
   it('POST /activity refuses challenge_answered — only a full چالش mints that row', async () => {
     const cookie = await loginAs(app, '09120000055');
-    const r = await act(cookie, 'challenge_answered', 'insight/insight-68');
+    // The ROUTE, never act(): this is the guard itself under test, and act()
+    // deliberately diverts a server-minted action past it.
+    const r = await app.inject({
+      method: 'POST', url: '/activity', headers: { cookie },
+      payload: { action: 'challenge_answered', content_id: 'insight/insight-68' },
+    });
     expect(r.statusCode).toBe(400);
     expect(r.json().error).toBe('invalid_action');
     const body = (await app.inject({ method: 'GET', url: '/league', headers: { cookie } })).json();
@@ -553,9 +565,11 @@ describe('review XP cannot be farmed', () => {
   let app: FastifyInstance;
   beforeEach(async () => { await resetDb(); app = await makeApp(); resetRateLimits(); });
 
-  const act = (cookie: string, action: string, content_id?: string) => app.inject({
-    method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id },
-  });
+  const act = (cookie: string, action: string, content_id?: string) => (SERVER_MINTED_ACTIONS.has(action)
+    ? mintActivity(cookie, action, content_id ?? null)
+    : app.inject({
+      method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id },
+    }));
   const myXp = async (cookie: string) => (await app.inject({
     method: 'GET', url: '/league', headers: { cookie },
   })).json().my_weekly_xp;
