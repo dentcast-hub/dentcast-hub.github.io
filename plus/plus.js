@@ -2,28 +2,28 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=100';
-import { currentUser, api } from './js/api.js?v=100';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=100';
-import { openCollectionPicker } from './js/collections.js?v=100';
-import { el, faNum } from './js/util.js?v=100';
-import { initHomeCard } from './js/home-card.js?v=100';
-import { initHomeFeatures } from './js/home-features.js?v=100';
-import { initHomeBundles } from './js/home-bundles.js?v=100';
-import { initHomeUpboard } from './js/home-upboard.js?v=100';
-import { initDesTool } from './js/des-scorer.js?v=100';
-import { initHeader } from './js/header.js?v=100';
-import { initTourAutostart } from './js/tour.js?v=100';
-import { initReadingTracker } from './js/reading.js?v=100';
-import { initListeningTracker } from './js/listening.js?v=100';
-import { initShareScoring, buildShareButton } from './js/share.js?v=100';
-import { initHeart, buildHeartChip } from './js/votes.js?v=100';
-import { mountClipControl, landOnClip } from './js/clips.js?v=100';
-import { mountArticleThreads } from './js/article-threads.js?v=100';
-import { mountChallenge } from './js/challenge.js?v=100';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=100';
-import { mountDes } from './js/des.js?v=100';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=100';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=101';
+import { currentUser, api } from './js/api.js?v=101';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=101';
+import { openCollectionPicker } from './js/collections.js?v=101';
+import { el, faNum } from './js/util.js?v=101';
+import { initHomeCard } from './js/home-card.js?v=101';
+import { initHomeFeatures } from './js/home-features.js?v=101';
+import { initHomeBundles } from './js/home-bundles.js?v=101';
+import { initHomeUpboard } from './js/home-upboard.js?v=101';
+import { initDesTool } from './js/des-scorer.js?v=101';
+import { initHeader } from './js/header.js?v=101';
+import { initTourAutostart } from './js/tour.js?v=101';
+import { initReadingTracker } from './js/reading.js?v=101';
+import { initListeningTracker } from './js/listening.js?v=101';
+import { initShareScoring, buildShareButton } from './js/share.js?v=101';
+import { initHeart, buildHeartChip } from './js/votes.js?v=101';
+import { mountClipControl, landOnClip } from './js/clips.js?v=101';
+import { mountArticleThreads } from './js/article-threads.js?v=101';
+import { mountChallenge } from './js/challenge.js?v=101';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=101';
+import { mountDes } from './js/des.js?v=101';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=101';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -33,7 +33,7 @@ import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=100';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=100').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=101').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -715,7 +715,7 @@ function folderForPath(folders) {
 }
 
 function openSeenGate() {
-  Promise.all([import('./js/sheet.js?v=100'), import('./js/premium-cta.js?v=100')])
+  Promise.all([import('./js/sheet.js?v=101'), import('./js/premium-cta.js?v=101')])
     .then(([sheet, cta]) => sheet.openSheet(sheet.gateCard({
       title: 'کدام‌ها را خوانده‌ای',
       sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '
@@ -747,6 +747,47 @@ function seenLockBar(folder) {
   ]);
   bar.addEventListener('click', openSeenGate);
   return bar;
+}
+
+// «فقط نخوانده‌ها» — the other half of what the tick sells, and the reason the
+// gate card may promise it. Premium only: a free reader has no per-item state to
+// filter by, so the control would be a button that can do nothing.
+//
+// It hides ITEMS, not links: each link's ancestor that is a direct child of the
+// list container is the row, whatever the page calls it (<li> on most listings,
+// a card <div> on /dentai/ and /episodes.html). Nothing is fetched and nothing
+// is remembered — it is a view of the page in front of you, and a persisted
+// filter is how somebody comes back tomorrow to a list that looks half empty.
+function seenUnreadFilter(container, links, folder) {
+  const items = [];
+  for (const { a, cid } of links) {
+    if (!container.contains(a)) continue;
+    let n = a;
+    while (n.parentElement && n.parentElement !== container) n = n.parentElement;
+    if (n.parentElement === container) items.push({ node: n, cid });
+  }
+  if (!items.length) return null;
+
+  const unread = folder.total - folder.read;
+  let on = false;
+  const label = el('span', {}, '');
+  const btn = el('button', { class: 'dcp-seen-filter', type: 'button', 'aria-pressed': 'false' }, [
+    el('span', { class: 'dcp-seen-filter-ico', 'aria-hidden': 'true' }, '◔'),
+    label,
+  ]);
+  const paint = () => {
+    label.textContent = on
+      ? 'همه‌ی ' + faNum(folder.total) + ' مطلب'
+      : 'فقط نخوانده‌ها' + (unread > 0 ? ' (' + faNum(unread) + ')' : '');
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.classList.toggle('is-on', on);
+    for (const { node } of items) {
+      node.hidden = on && !!node.querySelector('.dcp-seen-tick.is-read');
+    }
+  };
+  btn.addEventListener('click', () => { on = !on; paint(); });
+  paint();
+  return btn;
 }
 
 async function initSeenTicks() {
@@ -808,6 +849,13 @@ async function initSeenTicks() {
       class: 'dcp-seen-tick' + state, 'aria-hidden': 'true',
       title: completed.has(cid) ? 'تا آخر خوانده‌اید' : viewed.has(cid) ? 'بازش کرده‌اید' : 'هنوز ندیده‌اید',
     }, '✓'), a.firstChild);
+  }
+
+  const folder = folderForPath(data.folders);
+  if (isFolderRoot(folder) && !document.querySelector('.dcp-seen-filter')) {
+    const list = seenListContainer(links);
+    const btn = list && seenUnreadFilter(list, links, folder);
+    if (btn) list.parentElement.insertBefore(btn, list);
   }
 }
 

@@ -860,6 +860,23 @@ html.dcp-pp-open, html.dcp-pp-open body { overflow: hidden; }
 [data-theme="dark"] .dcp-seen-lock { background: rgba(227, 184, 73, .12); border-color: rgba(227, 184, 73, .34); }
 [data-theme="dark"] .dcp-seen-lock-ico { border-color: rgba(227, 184, 73, .34); color: #e3b849; }
 
+/* «فقط نخوانده‌ها» — a quiet toggle, never amber: it is what a subscriber HAS,
+   not what one buys. Sits where the locked bar sits for a free reader, so the
+   two tiers see one element in one place rather than two layouts. */
+.dcp-seen-filter {
+  display: inline-flex; align-items: center; gap: .4rem;
+  margin: 0 0 .9rem; padding: .35rem .7rem;
+  font: inherit; font-size: .78rem; line-height: 1.6; color: var(--dcp-muted, #62779a);
+  background: transparent; border: 1px solid var(--dcp-line, rgba(2, 35, 96, .18));
+  border-radius: 999px; cursor: pointer;
+}
+.dcp-seen-filter:hover { color: var(--dcp-text, inherit); }
+.dcp-seen-filter.is-on {
+  color: #22a06b; border-color: #22a06b; background: rgba(34, 160, 107, .08);
+}
+.dcp-seen-filter-ico { font-size: .9em; }
+[data-theme="dark"] .dcp-seen-filter.is-on { color: #3fc78c; border-color: #3fc78c; background: rgba(63, 199, 140, .12); }
+
 /* ---- highlight marks (in the prose) -------------------------------------- */
 mark.dcp-hl { background: transparent; color: inherit; border-radius: 3px; padding: 0 1px; cursor: pointer; }
 mark.dcp-hl[data-color="yellow"] { background: #ffe08a; }
