@@ -148,6 +148,20 @@
   .sheet .btn2{ display:block; text-align:center; font-size:.79rem; color:var(--txt3);
                 padding:.5rem; margin-top:.15rem; }
 
+  /* locked column: identical in every row, so it cannot read as per-item status */
+  .tk-off{ border-color:var(--line-strong); color:var(--txt3); opacity:.34; }
+  .lockbar{ display:flex; align-items:center; gap:.55rem; padding:.6rem .95rem;
+            border-bottom:1px solid var(--amber-bd); background:var(--amber-bg);
+            font-size:.79rem; color:var(--txt); cursor:pointer; }
+  .lockbar .ico{ inline-size:19px; block-size:19px; border-radius:50%; flex:none;
+                 display:grid; place-items:center; font-size:.63rem;
+                 border:1.5px solid var(--amber-bd); color:var(--amber); }
+  .lockbar b{ font-weight:800; }
+  .lockbar .go{ margin-inline-start:auto; color:var(--amber); font-weight:700; font-size:.72rem; flex:none; }
+  .oncebar{ display:flex; align-items:flex-start; gap:.55rem; padding:.62rem .95rem;
+            border-bottom:1px solid var(--border); background:var(--surface2);
+            font-size:.77rem; color:var(--txt2); }
+  .oncebar .x{ margin-inline-start:auto; color:var(--txt3); font-weight:700; flex:none; }
   .warnbox{ border:1px solid var(--danger-bd); background:var(--danger-bg); border-radius:14px;
             padding:.85rem 1rem; margin-top:.9rem; font-size:.85rem; }
   .warnbox b{ color:var(--danger); }
@@ -159,124 +173,155 @@
 
 <header class="hd">
   <span class="kick">ماکاپ · برای تصمیم، هنوز پیاده نشده</span>
-  <h1>تیکِ سه‌حالته، و اینکه کاربرِ رایگان چطور می‌فهمد</h1>
-  <p>سه چیز در یک صفحه: <em>امکان‌سنجی</em> (چه داده‌ای داریم و چه‌قدر کار است)، <em>طرح</em> (سه حالت،
-     و نمای رایگان در برابر پریمیوم)، و <em>ایده‌ی قفلِ امبر</em> که خودت هم بهش شک داشتی — اینجا
-     کشیده شده تا دیده شود، نه توصیف.</p>
+  <h1>تیک می‌رود به پریمیوم — و کاربرِ رایگان باید بفهمد که قفل است، نه خراب</h1>
+  <p>تصمیم گرفته شده: نشانِ خوانده‌شده‌ها از لایه‌ی رایگان برداشته می‌شود. تمامِ مسئله‌ی این ماکاپ
+     یک چیز است — <em>جای خالی پیام ندارد</em>. تیکی که کشیده نشود هیچ ردی نمی‌گذارد، و ذهن برای
+     «چیزی که بود و نیست» اول سراغِ باگ می‌رود. پس چیزی که جایش می‌نشیند باید <em>عدد</em> داشته
+     باشد؛ باگ عددِ درست تولید نمی‌کند.</p>
 </header>
 
 <!-- ─────────────────────────────────────────────────────────── 1 -->
 <section>
   <div class="sh"><h2>۱ · امروز چه داریم</h2><span>چیزی که همین حالا زنده است</span></div>
   <p class="note">
-    <code>GET /seen</code> یک فهرستِ تخت برمی‌گرداند: هر <code>content_id</code> که کاربر با آن
-    <em>هر نوع</em> برخوردی داشته — باز کردن (<code>article_viewed</code>)، تا آخر خواندن، گوش دادن،
-    هایلایت کردن. <code>plus.js</code> (تابع <code>initSeenTicks</code>) روی هر صفحه‌ای که دستِ‌کم دو
-    لینکِ محتوایی دارد یک <code>✓</code> می‌گذارد: خاکستریِ کم‌رنگ، یا سبزِ <code>#22a06b</code>.
-    دو حالت، و هر دو برای هر کاربرِ واردشده.
+    <code>GET /seen</code> یک فهرستِ تخت برمی‌گرداند و <code>plus.js</code> (تابع
+    <code>initSeenTicks</code>) روی هر صفحه‌ای که دستِ‌کم دو لینکِ محتوایی دارد یک <code>✓</code>
+    می‌گذارد: خاکستریِ کم‌رنگ، یا سبزِ <code>#22a06b</code>. دو حالت، برای هر کاربرِ واردشده.
   </p>
   <p class="note">
-    <strong>ایرادِ امروز:</strong> تیک می‌گوید «باز کرده‌ای»، نه «خوانده‌ای». صفحه‌ای که سه ثانیه باز
-    و بسته شده برای همیشه سبز است. یعنی همان چیزی که می‌خواهی بفروشی، الان دقیق هم نیست.
+    <strong>و یک ایرادِ امروز:</strong> تیک می‌گوید «باز کرده‌ای»، نه «خوانده‌ای»
+    (<code>article_viewed</code> همان لحظه‌ی باز شدنِ صفحه شلیک می‌شود). صفحه‌ای که سه ثانیه باز و
+    بسته شده برای همیشه سبز است. چیزی که به پریمیوم می‌رود باید از این دقیق‌تر باشد، وگرنه
+    داری نسخه‌ی معیوب را می‌فروشی.
   </p>
 </section>
 
 <!-- ─────────────────────────────────────────────────────────── 2 -->
 <section>
-  <div class="sh"><h2>۲ · سه حالت</h2><span>یک شکل، سه پُری</span></div>
+  <div class="sh"><h2>۲ · پریمیوم: سه حالت</h2><span>یک شکل، سه پُری</span></div>
   <p class="note">
-    یک دایره‌ی ۱۷ پیکسلی در هر سه حالت، و آنچه فرق می‌کند <em>پُری</em> است نه فقط رنگ — خالی،
-    تو‌خالیِ سبز، پُرِ سبز. عمداً: در اندازه‌ی ۱۷ پیکسل تفاوتِ <em>رنگ</em> به‌تنهایی برای بخشی از
-    خواننده‌ها اصلاً خوانده نمی‌شود (کوررنگیِ قرمز-سبز)، ولی تفاوتِ پُر و خالی همیشه خوانده می‌شود.
+    یک دایره‌ی ۱۷ پیکسلی، و آنچه فرق می‌کند <em>پُری</em> است نه فقط رنگ. عمداً: در این اندازه
+    تفاوتِ سبز و خاکستری برای کوررنگیِ قرمز-سبز خوانده نمی‌شود، ولی تفاوتِ پُر و خالی همیشه
+    خوانده می‌شود.
   </p>
   <div class="card">
     <ul class="legend">
-      <li><span class="tk tk-none">✓</span> <b>ندیده‌ای</b> — جای ثابت، خالی</li>
+      <li><span class="tk tk-none">✓</span> <b>ندیده‌ای</b></li>
       <li><span class="tk tk-seen">✓</span> <b>بازش کرده‌ای</b> — تو‌خالی</li>
       <li><span class="tk tk-read">✓</span> <b>تا آخر خوانده‌ای</b> — پُر</li>
     </ul>
   </div>
-  <div class="okbox">
-    <b>یک نکته‌ی مهاجرت:</b> امروز سبزِ پُر یعنی «باز کرده‌ای». اگر پُر را به «خوانده‌ای» بدهی، سبزهای
-    فعلیِ همه از پُر به تو‌خالی برمی‌گردند. این <em>دیده می‌شود</em> ولی مثل ازدست‌رفتن خوانده نمی‌شود،
-    چون علامت سرِ جایش می‌ماند و فقط دقیق‌تر می‌شود. اگر برعکس طراحی کنی (پُر بماند برای باز کردن)،
-    دیگر جایی برای حالتِ سوم نمی‌ماند.
+  <div class="lst" style="margin-top:1rem">
+    <div class="lst-h"><span>کلینیکال اینسایت · ۱۲ از ۷۷</span><span class="who who-prem">پریمیوم</span></div>
+    <div class="row"><span class="tk tk-read">✓</span><span class="ttl">چرا مارجینِ زیرلثه‌ای همیشه یک تصمیم است</span><span class="mt">۱۴ شهریور</span></div>
+    <div class="row"><span class="tk tk-seen">✓</span><span class="ttl">شکستِ چسبندگی، از نگاهِ سطحِ دنتین</span><span class="mt">۹ شهریور</span></div>
+    <div class="row"><span class="tk tk-read">✓</span><span class="ttl">ایمپرشنِ دیجیتال و مرزِ خطای بالینی</span><span class="mt">۲ شهریور</span></div>
+    <div class="row"><span class="tk tk-none">✓</span><span class="ttl">بازسازیِ اندوشده: پست یا بدون پست</span><span class="mt">۲۷ مرداد</span></div>
+    <div class="row"><span class="tk tk-none">✓</span><span class="ttl">تمام‌سرامیک در مولرِ دوم</span><span class="mt">۲۱ مرداد</span></div>
   </div>
 </section>
 
 <!-- ─────────────────────────────────────────────────────────── 3 -->
 <section>
-  <div class="sh"><h2>۳ · رایگان در برابر پریمیوم</h2><span>یک فهرستِ واقعی، دو بار</span></div>
+  <div class="sh"><h2>۳ · رایگان: عدد می‌ماند، تفصیل می‌رود</h2><span>هسته‌ی طرح</span></div>
+  <p class="note">
+    <strong>ستون خالی می‌گوید «اینجا چیزی نیست». عدد می‌گوید «اینجا چیزی هست، مالِ توست، و
+    نمی‌بینی‌اش».</strong> دومی هم قفل بودن را ثابت می‌کند (باگ، «۱۲ از ۷۷» تولید نمی‌کند) و هم
+    تنها چیزی است که میل می‌سازد — کسی برای کسریِ نامعلوم پول نمی‌دهد.
+  </p>
   <div class="cols">
     <div>
       <div class="lst">
-        <div class="lst-h"><span>کلینیکال اینسایت</span><span class="who who-prem">پریمیوم</span></div>
-        <div class="row"><span class="tk tk-read">✓</span><span class="ttl">چرا مارجینِ زیرلثه‌ای همیشه یک تصمیم است</span><span class="mt">۱۴ شهریور</span></div>
-        <div class="row"><span class="tk tk-seen">✓</span><span class="ttl">شکستِ چسبندگی، از نگاهِ سطحِ دنتین</span><span class="mt">۹ شهریور</span></div>
-        <div class="row"><span class="tk tk-read">✓</span><span class="ttl">ایمپرشنِ دیجیتال و مرزِ خطای بالینی</span><span class="mt">۲ شهریور</span></div>
-        <div class="row"><span class="tk tk-none">✓</span><span class="ttl">بازسازیِ اندوشده: پست یا بدون پست</span><span class="mt">۲۷ مرداد</span></div>
-        <div class="row"><span class="tk tk-none">✓</span><span class="ttl">تمام‌سرامیک در مولرِ دوم</span><span class="mt">۲۱ مرداد</span></div>
-      </div>
-      <p class="cap">پریمیوم: هر سه حالت. «خوانده‌ام» از همان منبعی می‌آید که نوارِ پیشرفت
-        می‌آید، پس این دو هیچ‌وقت با هم اختلاف پیدا نمی‌کنند.</p>
-    </div>
-    <div>
-      <div class="lst">
         <div class="lst-h"><span>کلینیکال اینسایت</span><span class="who who-free">رایگان</span></div>
-        <div class="hint">
-          <span class="tk tk-read">✓</span>
-          <span>تیکِ <b>پُر</b> یعنی تا آخر خوانده‌ای — و فهرستِ نخوانده‌ها</span>
-          <span class="go">ببین ›</span>
+        <div class="lockbar">
+          <span class="ico">✓</span>
+          <span><b>۱۲ از ۷۷</b> مطلبِ این بخش را خوانده‌ای — دیدنِ اینکه <b>کدام‌ها</b>، با پریمیوم</span>
+          <span class="go">🔒 ببین ›</span>
         </div>
-        <div class="row"><span class="tk tk-seen">✓</span><span class="ttl">چرا مارجینِ زیرلثه‌ای همیشه یک تصمیم است</span><span class="mt">۱۴ شهریور</span></div>
-        <div class="row"><span class="tk tk-seen">✓</span><span class="ttl">شکستِ چسبندگی، از نگاهِ سطحِ دنتین</span><span class="mt">۹ شهریور</span></div>
-        <div class="row"><span class="tk tk-seen">✓</span><span class="ttl">ایمپرشنِ دیجیتال و مرزِ خطای بالینی</span><span class="mt">۲ شهریور</span></div>
-        <div class="row"><span class="tk tk-none">✓</span><span class="ttl">بازسازیِ اندوشده: پست یا بدون پست</span><span class="mt">۲۷ مرداد</span></div>
-        <div class="row"><span class="tk tk-none">✓</span><span class="ttl">تمام‌سرامیک در مولرِ دوم</span><span class="mt">۲۱ مرداد</span></div>
+        <div class="row"><span class="tk tk-off">✓</span><span class="ttl">چرا مارجینِ زیرلثه‌ای همیشه یک تصمیم است</span><span class="mt">۱۴ شهریور</span></div>
+        <div class="row"><span class="tk tk-off">✓</span><span class="ttl">شکستِ چسبندگی، از نگاهِ سطحِ دنتین</span><span class="mt">۹ شهریور</span></div>
+        <div class="row"><span class="tk tk-off">✓</span><span class="ttl">ایمپرشنِ دیجیتال و مرزِ خطای بالینی</span><span class="mt">۲ شهریور</span></div>
+        <div class="row"><span class="tk tk-off">✓</span><span class="ttl">بازسازیِ اندوشده: پست یا بدون پست</span><span class="mt">۲۷ مرداد</span></div>
+        <div class="row"><span class="tk tk-off">✓</span><span class="ttl">تمام‌سرامیک در مولرِ دوم</span><span class="mt">۲۱ مرداد</span></div>
       </div>
-      <p class="cap">رایگان: دو حالتی که امروز هم دارد — <strong>چیزی گرفته نمی‌شود</strong>. حالتِ سوم
-        هیچ‌وقت ظاهر نمی‌شود، و همان یک خطِ بالای فهرست می‌گوید چیست. یک خط در هر صفحه،
-        نه یک قفل در هر ردیف.</p>
-    </div>
-  </div>
-
-  <div class="cols" style="margin-top:1.6rem">
-    <div>
-      <div class="sheet">
-        <div class="grab"></div>
-        <h3>تیکِ پُر چیست</h3>
-        <p>تیکِ تو‌خالی یعنی این صفحه را باز کرده‌ای. تیکِ پُر یعنی تا آخرش رفته‌ای — و با آن،
-           «نخوانده‌های این پوشه» یک فهرستِ واقعی می‌شود، نه یک حدس.</p>
-        <p>روی هر دستگاهی، و حتی بعد از پاک‌کردنِ تاریخچه‌ی مرورگر؛ این حافظه به حسابِ توست،
-           نه به مرورگر.</p>
-        <span class="btn">دیدنِ اشتراک پریمیوم</span>
-        <span class="btn2">فعلاً نه</span>
-      </div>
-      <p class="cap">شیتی که با تپ روی آن خط باز می‌شود. اول می‌گوید <em>چه هست</em>، بعد
-        <em>چند است</em> — همان ترتیبی که گیت‌کاردِ up-board دارد.</p>
     </div>
     <div>
-      <div class="card">
-        <div style="font-size:.8rem;color:var(--txt3);margin-bottom:.6rem">صفحه‌ی اصلی — ریلِ «تازه‌ترین»</div>
-        <div class="rail">
-          <div class="rcard"><b>پلاک صفر ۵: بیمار چه تایپ می‌کند</b><small>پلاک صفر</small><span class="tk tk-read">✓</span></div>
-          <div class="rcard"><b>اندوشده‌ها و انتخابِ رستوریشن</b><small>کلینیکال اینسایت</small><span class="tk tk-seen">✓</span></div>
-          <div class="rcard"><b>پرامپتولوژیست ۷: محدودیت‌ها</b><small>پرامپتولوژیست</small><span class="tk tk-none">✓</span></div>
-        </div>
-      </div>
-      <p class="cap">در صفحه‌ی اصلی تیک در یک جایگاهِ ثابتِ انتهای کارت می‌نشیند (همین حالا هم
-        همین‌طور است) و <strong>خطِ توضیح آنجا نمی‌آید</strong> — درِ ورودیِ سایت جای پیامِ پی‌وال نیست.</p>
+      <p class="note" style="margin-top:0">
+        <strong>سه قرارداد در همین یک تصویر:</strong>
+      </p>
+      <p class="note">
+        <em>یک — ستون یکدست است.</em> هر پنج ردیف دقیقاً یک شکل‌اند. چیزی که همه‌جا یکسان است
+        نمی‌تواند دربارهٔ ردیف‌ها باشد؛ ذهن آن را یک <strong>کنترلِ غیرفعال</strong> می‌خواند، نه
+        وضعیتِ مطلب. این همان چیزی است که جلوی «پس این مقاله‌ها قفل‌اند؟» را می‌گیرد.
+      </p>
+      <p class="note">
+        <em>دو — امبر فقط در نوار است، نه در ردیف.</em> امبر در سایتِ تو یک معنیِ ثبت‌شده دارد
+        («این چیزی است که اشتراک می‌خرد») و تیک چسبیده به عنوان کشیده می‌شود
+        (<code>insertBefore(a.firstChild)</code>)، پس امبرِ ردیفی عنوان را برچسب می‌زند. یک نوار،
+        بالای فهرست، جایی که چیزی را برچسب نمی‌زند.
+      </p>
+      <p class="note">
+        <em>سه — خودِ ستون هم تپ‌پذیر است.</em> هر تیکِ خاموش همان شیت را باز می‌کند. کسی که نوار
+        را ندید، با کنجکاوی پیدایش می‌کند. (یعنی تیک دیگر <code>aria-hidden</code> تزئینی نیست و
+        باید <code>aria-label</code> بگیرد.)
+      </p>
     </div>
   </div>
 </section>
 
 <!-- ─────────────────────────────────────────────────────────── 4 -->
 <section>
-  <div class="sh"><h2>۴ · ایده‌ی قفلِ امبر</h2><span>همان چیزی که پیشنهاد دادی، کشیده‌شده</span></div>
-  <p class="note">
-    پیشنهادت: برای کاربرِ رایگان روی <em>همه‌ی</em> مطالب یک تیک به رنگِ پریمیوم با قفلِ کوچک.
-    خودت گفتی ممکن است طرف فکر کند مطالب قفل‌اند. این است:
-  </p>
+  <div class="sh"><h2>۴ · اینکه «باگ» خوانده نشود</h2><span>چهار قطعه، و هر چهارتا لازم است</span></div>
+  <div class="cols">
+    <div>
+      <div class="lst">
+        <div class="lst-h"><span>روزِ اولِ تغییر — کسی که قبلاً داشت</span><span class="who who-free">رایگان</span></div>
+        <div class="oncebar">
+          <span>ℹ️</span>
+          <span>نشانِ خوانده‌شده‌ها از این هفته بخشی از پریمیوم شد. آنچه خوانده‌ای ثبت است و
+                سرِ جایش می‌ماند — فقط نمایشِ تک‌به‌تکش پریمیوم است.</span>
+          <span class="x">✕</span>
+        </div>
+        <div class="lockbar">
+          <span class="ico">✓</span>
+          <span><b>۱۲ از ۷۷</b> مطلبِ این بخش را خوانده‌ای — دیدنِ اینکه <b>کدام‌ها</b>، با پریمیوم</span>
+          <span class="go">🔒 ببین ›</span>
+        </div>
+        <div class="row"><span class="tk tk-off">✓</span><span class="ttl">چرا مارجینِ زیرلثه‌ای همیشه یک تصمیم است</span><span class="mt">۱۴ شهریور</span></div>
+        <div class="row"><span class="tk tk-off">✓</span><span class="ttl">شکستِ چسبندگی، از نگاهِ سطحِ دنتین</span><span class="mt">۹ شهریور</span></div>
+        <div class="row"><span class="tk tk-off">✓</span><span class="ttl">ایمپرشنِ دیجیتال و مرزِ خطای بالینی</span><span class="mt">۲ شهریور</span></div>
+      </div>
+      <p class="cap">نوارِ اطلاع‌رسانی فقط برای کسی که قبلاً تیک داشته، یک بار، و بسته‌شدنی. کاربرِ
+        تازه هیچ‌وقت نمی‌بیندش — چون او چیزی از دست نداده.</p>
+    </div>
+    <div>
+      <div class="sheet">
+        <div class="grab"></div>
+        <h3>کدام‌ها را خوانده‌ای</h3>
+        <p>تو ۱۲ مطلب از ۷۷ مطلبِ کلینیکال اینسایت را تا آخر خوانده‌ای. این عدد مالِ توست و
+           همیشه می‌بینی‌اش. آنچه پریمیوم نشان می‌دهد <b>کدام</b> دوازده‌تاست — یک نشان کنارِ
+           هر مطلب، و فهرستِ نخوانده‌ها.</p>
+        <p>روی هر دستگاهی، و حتی بعد از پاک‌کردنِ تاریخچه‌ی مرورگر؛ این حافظه به حسابِ توست
+           نه به مرورگر.</p>
+        <p style="font-size:.78rem;color:var(--txt3)">این قابلیت تا شهریور ۱۴۰۵ رایگان بود و حالا
+           بخشی از پریمیوم است. آنچه خوانده‌ای پاک نشده.</p>
+        <span class="btn">دیدنِ اشتراک پریمیوم</span>
+        <span class="btn2">فعلاً نه</span>
+      </div>
+      <p class="cap">شیت اول می‌گوید <em>چه هست</em>، بعد <em>چند است</em> — ترتیبِ گیت‌کاردِ
+        up-board. و صریح می‌گوید که تغییر کرده؛ همین جمله است که نظریه‌ی «خراب شده» را می‌کشد.</p>
+    </div>
+  </div>
+  <div class="okbox">
+    <b>قطعه‌ی چهارم، و بی آن بقیه کم می‌آورند:</b> یک <code>POST /admin/notices/broadcast</code> با
+    مخاطبِ «رایگان»، <em>قبل</em> از انتشار. کسی که خبر را در اطلاعیه خوانده و بعد نوار را می‌بیند،
+    تیکتِ پشتیبانی نمی‌زند. برداشتنِ بی‌صدا دقیقاً همان چیزی است که «سایت خراب شده» تولید می‌کند.
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── 5 -->
+<section>
+  <div class="sh"><h2>۵ · چرا قفل در هر ردیف نه</h2><span>ایده‌ی اولیه، کشیده‌شده</span></div>
   <div class="cols">
     <div>
       <div class="lst">
@@ -287,114 +332,142 @@
         <div class="row"><span class="tk tk-lock">🔒</span><span class="ttl">بازسازیِ اندوشده: پست یا بدون پست</span><span class="mt">۲۷ مرداد</span></div>
         <div class="row"><span class="tk tk-lock">🔒</span><span class="ttl">تمام‌سرامیک در مولرِ دوم</span><span class="mt">۲۱ مرداد</span></div>
       </div>
+      <p class="cap">قفلِ امبر روی هر ردیف — همان نگرانیِ خودت، کشیده‌شده.</p>
     </div>
     <div>
       <div class="warnbox">
-        <b>سه دلیل که این کار نمی‌کند</b>
+        <b>سه دلیل</b>
         <p style="margin:.5rem 0 0;color:var(--txt2)">
-          <strong>یک:</strong> امبر در کلِ سایت یک معنی دارد و نوشته‌ای‌اش — «این چیزی است که اشتراک
-          می‌خرد». تیک دقیقاً <em>چسبیده به عنوان</em> کشیده می‌شود (<code>insertBefore(a.firstChild)</code>)،
-          پس نشانِ امبر عنوان را برچسب می‌زند، نه وضعیت را.
+          <strong>یک:</strong> نشان چسبیده به عنوان است، پس امبر <em>عنوان</em> را برچسب می‌زند نه
+          وضعیت را — و امبر در کلِ سایت یعنی «این چیزی است که اشتراک می‌خرد».
         </p>
         <p style="margin:.5rem 0 0;color:var(--txt2)">
-          <strong>دو:</strong> روی <em>همه</em>ی ردیف‌ها یعنی پوششِ ۱۰۰٪ — سایتی که هیچ مطلبِ پولی
-          ندارد، تماماً پولی به‌نظر می‌رسد. و این روی صفحه‌ی اصلی هم اجرا می‌شود.
+          <strong>دو:</strong> روی همه‌ی ردیف‌ها یعنی پوششِ ۱۰۰٪: سایتی که هیچ مطلبِ پولی ندارد،
+          تماماً پولی به‌نظر می‌رسد. و این روی صفحه‌ی اصلی هم اجرا می‌شود.
         </p>
         <p style="margin:.5rem 0 0;color:var(--txt2)">
-          <strong>سه:</strong> ۵۰۰ قفلِ تکراری، همان «تبلیغ در هر صفحه» است که قانونِ خودت درباره‌ی
-          گفت‌وگوی زیر مطلب ردش می‌کند.
+          <strong>سه:</strong> ۵۰۰ قفلِ تکراری همان «تبلیغ در هر صفحه» است که قانونِ خودت
+          درباره‌ی گفت‌وگوی زیر مطلب ردش می‌کند.
+        </p>
+        <p style="margin:.6rem 0 0;color:var(--txt2)">
+          قفل حذف نمی‌شود — <strong>جابه‌جا می‌شود</strong>: از ردیف به نوار، جایی که پیام را
+          یک بار و بدونِ برچسب‌زدنِ هیچ مطلبی می‌رساند.
         </p>
       </div>
-      <p class="cap">شهودت درست بود؛ فقط علتش از چیزی که فکر می‌کردی جدی‌تر است — مشکل ابهام نیست،
-        این است که نشانه <em>معنیِ دیگری دارد</em> و آن معنی از قبل ثبت شده.</p>
     </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────────────────────────────────────── 5 -->
-<section>
-  <div class="sh"><h2>۵ · امکان‌سنجی</h2><span>چه چیزی لازم است</span></div>
-  <div class="card scroll">
-    <table class="g">
-      <tr><th>تکه</th><th>کار</th><th>اندازه</th></tr>
-      <tr>
-        <td>دیتابیس</td>
-        <td>هیچ. هر دو سیگنال از قبل نوشته می‌شوند: <code>article_viewed</code> در
-            <code>user_activity</code>، و «خوانده» همان <code>getConsumedContentIds</code> است
-            (هایلایت ∪ <code>article_completed</code> ∪ <code>episode_listened</code>).</td>
-        <td><span class="tag tag-ok">صفر</span></td>
-      </tr>
-      <tr>
-        <td><code>GET /seen</code></td>
-        <td>به‌جای یک آرایه، دو تا: <code>viewed</code> و <code>completed</code>. برای کاربرِ رایگان
-            <code>completed</code> <em>غایب</em> باشد، نه خالی — همان الگوی <code>due_card_count</code>
-            در <code>/me</code>. کلیدِ قدیمیِ <code>seen</code> یک نسخه بماند تا کلاینتِ کش‌شده نشکند.</td>
-        <td><span class="tag tag-ok">~۱۵ خط</span></td>
-      </tr>
-      <tr>
-        <td><code>initSeenTicks</code></td>
-        <td>انتخابِ کلاس از دو مجموعه به‌جای یکی. همان حلقه.</td>
-        <td><span class="tag tag-ok">~۱۵ خط</span></td>
-      </tr>
-      <tr>
-        <td>CSS</td>
-        <td>سه قانون در <code>plus.css</code>، به‌علاوه‌ی نسخه‌ی تکراریِ صفحه‌ی اصلی در
-            <code>index.html</code> (جایگاهِ ثابت و placeholderِ <code>::after</code> باید با هم
-            هماهنگ بمانند — <code>index.html</code> هیچ CSS مشترکی بار نمی‌کند).</td>
-        <td><span class="tag tag-ok">کوچک</span></td>
-      </tr>
-      <tr>
-        <td>خطِ توضیح</td>
-        <td><strong>تنها تکه‌ی غیرپیش‌پاافتاده.</strong> <code>initSeenTicks</code> فقط لینک‌ها را
-            تزئین می‌کند و هیچ لنگری برای «سرِ فهرست» ندارد. باید تصمیم بگیری کجا بنشیند
-            (مثلاً قبل از والدِ مشترکِ لینک‌ها) و صفحه‌ی اصلی را از آن مستثنا کنی.</td>
-        <td><span class="tag tag-amber">نیاز به تصمیم</span></td>
-      </tr>
-      <tr>
-        <td>دسترس‌پذیری</td>
-        <td>تیک الان <code>aria-hidden</code> است (تزئینی). با سه حالت باید
-            <code>aria-label</code> بگیرد وگرنه اسکرین‌ریدر تفاوت را نمی‌گوید.</td>
-        <td><span class="tag tag-ok">۳ خط</span></td>
-      </tr>
-      <tr>
-        <td>مهاجرت / اطلاعیه</td>
-        <td>چون چیزی <em>گرفته</em> نمی‌شود، اطلاعیه خبرِ اضافه‌شدن است نه کم‌شدن.
-            <code>POST /admin/notices/broadcast</code>، مخاطب: همه.</td>
-        <td><span class="tag tag-ok">یک پیام</span></td>
-      </tr>
-      <tr>
-        <td>بعدش</td>
-        <td><code>asset_version.py --bump</code> و یک تستِ DOM برای سه حالت.</td>
-        <td><span class="tag tag-ok">معمول</span></td>
-      </tr>
-    </table>
-  </div>
-  <div class="okbox">
-    <b>مهم‌ترین قیدِ فنی:</b> «خوانده‌شده» باید <em>دقیقاً</em> همان
-    <code>getConsumedContentIds</code> باشد که نوارهای پیشرفت و مسیرها از آن می‌خوانند. اگر تعریفِ
-    دومی بسازی، یک روز پوشه‌ای ۱۰۰٪ نشان می‌دهد در حالی که یک مطلبش تیکِ پُر ندارد — و آن باگ
-    را کسی گزارش نمی‌کند، فقط اعتماد را می‌خورد.
   </div>
 </section>
 
 <!-- ─────────────────────────────────────────────────────────── 6 -->
 <section>
-  <div class="sh"><h2>۶ · تصمیم‌های باز</h2><span>چیزهایی که ماکاپ جواب‌شان را ندارد</span></div>
+  <div class="sh"><h2>۶ · صفحه‌ی اصلی</h2><span>استثنا، و بی‌صدا</span></div>
+  <div class="cols">
+    <div>
+      <div class="card">
+        <div style="font-size:.8rem;color:var(--txt3);margin-bottom:.6rem">ریلِ «تازه‌ترین» — نمای رایگان</div>
+        <div class="rail">
+          <div class="rcard"><b>پلاک صفر ۵: بیمار چه تایپ می‌کند</b><small>پلاک صفر</small><span class="tk tk-off">✓</span></div>
+          <div class="rcard"><b>اندوشده‌ها و انتخابِ رستوریشن</b><small>کلینیکال اینسایت</small><span class="tk tk-off">✓</span></div>
+          <div class="rcard"><b>پرامپتولوژیست ۷: محدودیت‌ها</b><small>پرامپتولوژیست</small><span class="tk tk-off">✓</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="note" style="margin-top:0">
+        در صفحه‌ی اصلی <strong>نه نوار، نه قفل، نه عدد</strong>. درِ ورودیِ سایت جای پیامِ پی‌وال
+        نیست، و آنجا از قبل هم برای بازدیدکننده‌ی ناشناس یک placeholderِ خاکستری کشیده می‌شود
+        (<code>::after</code> در <code>index.html</code>). یعنی کاربرِ رایگان دقیقاً همان چیزی را
+        می‌بیند که قبل از ورودش می‌دید — تغییرِ محسوسی رخ نمی‌دهد و توضیحی هم لازم ندارد.
+      </p>
+      <p class="note">
+        پیام جایی می‌رسد که به کار می‌آید: صفحه‌ی فهرستِ یک بخش، جایی که آدم واقعاً دارد تصمیم
+        می‌گیرد چه بخواند.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── 7 -->
+<section>
+  <div class="sh"><h2>۷ · امکان‌سنجی</h2><span>چه چیزی لازم است</span></div>
+  <div class="okbox" style="margin-top:0;margin-bottom:1rem">
+    <b>این شکل از قبل در کدت هست.</b> <code>GET /glossary/:slug/notes</code> دقیقاً همین کار را
+    می‌کند: <code>requireAuth</code> است، به پریمیوم خودِ هایلایت‌ها را می‌دهد و به رایگان
+    <code>{ locked: true }</code> به‌علاوه‌ی <em>شمارش‌ها</em> — «تا صفحه بتواند در را فقط به کسی
+    نشان دهد که پشتش چیزی دارد». <code>/seen</code> همان الگو را می‌گیرد، یک لایه بالاتر.
+  </div>
+  <div class="card scroll">
+    <table class="g">
+      <tr><th>تکه</th><th>کار</th><th>اندازه</th></tr>
+      <tr><td>دیتابیس</td>
+          <td>هیچ. «خوانده» همان <code>getConsumedContentIds</code> است (هایلایت ∪
+              <code>article_completed</code> ∪ <code>episode_listened</code>) و «باز کرده»
+              <code>article_viewed</code> — هر دو از قبل نوشته می‌شوند.</td>
+          <td><span class="tag tag-ok">صفر</span></td></tr>
+      <tr><td><code>GET /seen</code></td>
+          <td>پریمیوم: <code>{ locked:false, viewed:[…], completed:[…] }</code>. رایگان:
+              <code>{ locked:true, per_folder:{ insight:{read:12,total:77}, … } }</code> — هیچ
+              <code>content_id</code> ای. کلیدِ قدیمیِ <code>seen</code> یک نسخه بماند تا
+              کلاینتِ کش‌شده نشکند.</td>
+          <td><span class="tag tag-ok">~۲۵ خط</span></td></tr>
+      <tr><td><code>initSeenTicks</code></td>
+          <td>سه مسیر: پریمیوم سه‌حالته، رایگان ستونِ خاموش + نوار، ناشناس هیچ. و
+              <code>402</code>/خطا نباید یکی خوانده شوند — خطا یعنی هیچی نکش، هرگز آپسل.</td>
+          <td><span class="tag tag-amber">~۴۰ خط</span></td></tr>
+      <tr><td>نوار و لنگرش</td>
+          <td><strong>تنها تکه‌ی غیرپیش‌پاافتاده.</strong> <code>initSeenTicks</code> فقط لینک‌ها را
+              تزئین می‌کند و لنگری برای «سرِ فهرست» ندارد؛ باید والدِ مشترکِ لینک‌ها پیدا شود، و
+              صفحه‌ی اصلی مستثنا.</td>
+          <td><span class="tag tag-amber">نیاز به تصمیم</span></td></tr>
+      <tr><td>عددِ «۱۲ از ۷۷»</td>
+          <td>پوشه‌ی صفحه از روی مسیرِ صفحه تشخیص داده می‌شود؛ <code>total</code> از
+              <code>content-index.json</code> که کلاینت از قبل دارد. پس فقط <code>read</code> از
+              API می‌آید.</td>
+          <td><span class="tag tag-ok">کوچک</span></td></tr>
+      <tr><td>نوارِ یک‌بارهٔ مهاجرت</td>
+          <td>فقط برای کسی که قبلاً فعالیت داشته، بسته‌شدنی، در <code>localStorage</code>
+              یک کلید. چند هفته بماند و بعد برداشته شود.</td>
+          <td><span class="tag tag-ok">کوچک</span></td></tr>
+      <tr><td>دسترس‌پذیری</td>
+          <td>تیکِ خاموش یک کنترل است، نه تزئین: <code>aria-hidden</code> برداشته شود و
+              <code>aria-label</code> بگیرد.</td>
+          <td><span class="tag tag-ok">۳ خط</span></td></tr>
+      <tr><td>اطلاعیه</td>
+          <td><code>POST /admin/notices/broadcast</code>، مخاطب رایگان، <em>قبل</em> از انتشار.</td>
+          <td><span class="tag tag-ok">یک پیام</span></td></tr>
+      <tr><td>بعدش</td>
+          <td><code>asset_version.py --bump</code> و یک تستِ DOM برای سه مسیرِ کاربر.</td>
+          <td><span class="tag tag-ok">معمول</span></td></tr>
+    </table>
+  </div>
+  <div class="okbox">
+    <b>قیدی که نباید بشکند:</b> «خوانده‌شده» باید <em>دقیقاً</em> همان
+    <code>getConsumedContentIds</code> باشد که نوارهای پیشرفت و مسیرها از آن می‌خوانند — وگرنه یک
+    روز پوشه‌ای ۱۰۰٪ نشان می‌دهد و مطلبی در آن تیکِ پُر ندارد. آن باگ را کسی گزارش نمی‌کند، فقط
+    اعتماد را می‌خورد.
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── 8 -->
+<section>
+  <div class="sh"><h2>۸ · تصمیم‌های باز</h2><span>چیزهایی که ماکاپ جواب‌شان را ندارد</span></div>
   <div class="card">
     <table class="g">
       <tr><td style="width:34%"><b>فیلترِ نخوانده‌ها</b></td>
-          <td>شیت وعده‌اش را می‌دهد. خودش یک قابلیتِ جدا است (یک دکمه در سرِ فهرست که
-              خوانده‌شده‌ها را پنهان می‌کند). با تیک بیاید یا بعد از آن؟</td></tr>
+          <td>شیت وعده‌اش را می‌دهد. یک دکمه در سرِ فهرست که خوانده‌شده‌ها را پنهان کند. با تیک
+              بیاید یا بعد؟ اگر وعده داده شود و نباشد، شیت دروغ می‌گوید.</td></tr>
+      <tr><td><b>ستونِ خاموش یا ستونِ غایب؟</b></td>
+          <td>ماکاپ ستونِ خاموش را نشان می‌دهد (تیکِ کم‌رنگِ یکدست). گزینه‌ی دیگر: هیچ تیکی، فقط
+              نوار. خاموش گران‌تر است ولی «قفل» را بهتر می‌رساند؛ غایب تمیزتر است ولی
+              دوباره همان «جای خالی پیام ندارد».</td></tr>
       <tr><td><b>هایلایت = خواندن؟</b></td>
-          <td><code>getConsumedContentIds</code> هایلایت را «خوانده» حساب می‌کند. درست است، ولی یعنی
-              یک هایلایت در پاراگرافِ اول، مطلب را پُر می‌کند. اگر بخواهی سخت‌گیرتر باشی، از
-              نوارِ پیشرفت جدا می‌افتی — که قیدِ بالا منعش می‌کند. پیشنهادم: دست نزن.</td></tr>
+          <td>یک هایلایت در پاراگرافِ اول، مطلب را «خوانده» می‌کند. اگر سخت‌گیرتر شوی از نوارِ
+              پیشرفت جدا می‌افتی، که قیدِ بالا منعش می‌کند. پیشنهاد: دست نزن.</td></tr>
       <tr><td><b>اپیزودها</b></td>
-          <td>«تا آخر» برای پادکست یعنی <code>episode_listened</code> (یک‌پنجمِ اپیزود). آستانه‌اش با
-              مقاله یکی نیست و شاید در شیت باید گفته شود.</td></tr>
+          <td>«تا آخر» برای پادکست یعنی <code>episode_listened</code> (یک‌پنجمِ اپیزود). آستانه‌اش
+              با مقاله یکی نیست.</td></tr>
       <tr><td><b>کاربرِ ناشناس</b></td>
-          <td>الان هیچ تیکی نمی‌گیرد و placeholderِ خاکستری می‌بیند. همان بماند — خطِ توضیح هم
-              برایش کشیده نشود؛ کسی که حساب ندارد اول باید حساب بخواهد، نه اشتراک.</td></tr>
+          <td>هیچ نوار و هیچ عددی — کسی که حساب ندارد اول باید حساب بخواهد، نه اشتراک.</td></tr>
     </table>
   </div>
 </section>
