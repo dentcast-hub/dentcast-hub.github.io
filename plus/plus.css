@@ -822,10 +822,43 @@ html.dcp-pp-open, html.dcp-pp-open body { overflow: hidden; }
 }
 
 /* ---- "seen" ticks on landing-page links (Plus, logged-in only) ----------- */
-/* The unseen tick is deliberately very faint — the green "seen" state must read
-   as an obvious change at a glance, so the grey sits far below it in contrast. */
-.dcp-seen-tick { display: inline-block; margin-inline-end: 6px; font-weight: 800; color: var(--dcp-muted, #9aa4b2); opacity: .28; }
-.dcp-seen-tick.is-seen { color: #22a06b; opacity: 1; }
+/* THREE states, one shape: what changes is the FILL, not only the colour. At
+   17px a green-vs-grey difference is not readable for red-green colour blindness
+   (~8% of men), while empty-vs-outline-vs-solid always is. */
+.dcp-seen-tick {
+  display: inline-grid; place-items: center; vertical-align: middle;
+  inline-size: 17px; block-size: 17px; border-radius: 50%; flex: none;
+  margin-inline-end: 6px; font-weight: 800; font-size: .62rem; line-height: 1;
+  border: 1.5px solid var(--dcp-line, rgba(2, 35, 96, .18)); color: transparent;
+}
+.dcp-seen-tick.is-seen { border-color: #22a06b; color: #22a06b; }          /* باز کرده‌ای */
+.dcp-seen-tick.is-read { border-color: #22a06b; background: #22a06b; color: #fff; } /* تا آخر خوانده‌ای */
+/* The locked column. Identical in EVERY row on purpose: a mark that is the same
+   everywhere cannot be read as per-item status, which is what keeps it from
+   saying «this article is locked». */
+.dcp-seen-tick.is-off { opacity: .34; cursor: pointer; }
+[data-theme="dark"] .dcp-seen-tick.is-seen { border-color: #3fc78c; color: #3fc78c; }
+[data-theme="dark"] .dcp-seen-tick.is-read { border-color: #3fc78c; background: #3fc78c; color: #10202c; }
+
+/* The one amber thing on the page, and it sits where it labels nothing — above
+   the list, never against a title. */
+.dcp-seen-lock {
+  display: flex; align-items: center; gap: .55rem; width: 100%;
+  margin: 0 0 .9rem; padding: .6rem .8rem; text-align: start;
+  font: inherit; font-size: .79rem; line-height: 1.7; color: var(--dcp-text, inherit);
+  background: rgba(201, 146, 43, .10); border: 1px solid rgba(201, 146, 43, .32);
+  border-radius: 12px; cursor: pointer;
+}
+.dcp-seen-lock-ico {
+  inline-size: 19px; block-size: 19px; border-radius: 50%; flex: none;
+  display: grid; place-items: center; font-size: .63rem; font-weight: 800;
+  border: 1.5px solid rgba(201, 146, 43, .32); color: #c9922b;
+}
+.dcp-seen-lock-txt { flex: 1 1 auto; }
+.dcp-seen-lock-txt b { font-weight: 800; }
+.dcp-seen-lock-go { flex: none; font-size: .8rem; }
+[data-theme="dark"] .dcp-seen-lock { background: rgba(227, 184, 73, .12); border-color: rgba(227, 184, 73, .34); }
+[data-theme="dark"] .dcp-seen-lock-ico { border-color: rgba(227, 184, 73, .34); color: #e3b849; }
 
 /* ---- highlight marks (in the prose) -------------------------------------- */
 mark.dcp-hl { background: transparent; color: inherit; border-radius: 3px; padding: 0 1px; cursor: pointer; }

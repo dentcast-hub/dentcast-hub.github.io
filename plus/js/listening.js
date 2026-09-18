@@ -14,11 +14,11 @@
 // Real play only: we accumulate the forward delta of `currentTime` between
 // timeupdate ticks, ignoring pauses and seeks (a jump to the end is a large or
 // negative delta and is discarded), so seeking to the finish cannot fake it.
-import { api } from './api.js?v=97';
-import { signalStreakActivity } from './util.js?v=97';
+import { api } from './api.js?v=99';
+import { signalStreakActivity } from './util.js?v=99';
 import {
   LISTEN_FRACTION, LISTEN_MIN_S, LISTEN_MAX_S, LS_LISTEN_AT, LISTEN_REPEAT_MS,
-} from './config.js?v=97';
+} from './config.js?v=99';
 
 // Headroom on the wall-clock ceiling below, for tick jitter and for a playback
 // rate that changes part-way through a tick.

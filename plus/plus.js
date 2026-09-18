@@ -2,28 +2,28 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=97';
-import { currentUser, api } from './js/api.js?v=97';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=97';
-import { openCollectionPicker } from './js/collections.js?v=97';
-import { el, faNum } from './js/util.js?v=97';
-import { initHomeCard } from './js/home-card.js?v=97';
-import { initHomeFeatures } from './js/home-features.js?v=97';
-import { initHomeBundles } from './js/home-bundles.js?v=97';
-import { initHomeUpboard } from './js/home-upboard.js?v=97';
-import { initDesTool } from './js/des-scorer.js?v=97';
-import { initHeader } from './js/header.js?v=97';
-import { initTourAutostart } from './js/tour.js?v=97';
-import { initReadingTracker } from './js/reading.js?v=97';
-import { initListeningTracker } from './js/listening.js?v=97';
-import { initShareScoring, buildShareButton } from './js/share.js?v=97';
-import { initHeart, buildHeartChip } from './js/votes.js?v=97';
-import { mountClipControl, landOnClip } from './js/clips.js?v=97';
-import { mountArticleThreads } from './js/article-threads.js?v=97';
-import { mountChallenge } from './js/challenge.js?v=97';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=97';
-import { mountDes } from './js/des.js?v=97';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=97';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=99';
+import { currentUser, api } from './js/api.js?v=99';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=99';
+import { openCollectionPicker } from './js/collections.js?v=99';
+import { el, faNum } from './js/util.js?v=99';
+import { initHomeCard } from './js/home-card.js?v=99';
+import { initHomeFeatures } from './js/home-features.js?v=99';
+import { initHomeBundles } from './js/home-bundles.js?v=99';
+import { initHomeUpboard } from './js/home-upboard.js?v=99';
+import { initDesTool } from './js/des-scorer.js?v=99';
+import { initHeader } from './js/header.js?v=99';
+import { initTourAutostart } from './js/tour.js?v=99';
+import { initReadingTracker } from './js/reading.js?v=99';
+import { initListeningTracker } from './js/listening.js?v=99';
+import { initShareScoring, buildShareButton } from './js/share.js?v=99';
+import { initHeart, buildHeartChip } from './js/votes.js?v=99';
+import { mountClipControl, landOnClip } from './js/clips.js?v=99';
+import { mountArticleThreads } from './js/article-threads.js?v=99';
+import { mountChallenge } from './js/challenge.js?v=99';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=99';
+import { mountDes } from './js/des.js?v=99';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=99';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -33,7 +33,7 @@ import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=97';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=97').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=99').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -630,6 +630,123 @@ async function markViewed(contentId) {
   api.activity('article_viewed', contentId).catch(() => {});
 }
 
+// The homepage is deliberately exempt from the locked state below: it is the
+// front door, it already draws a grey placeholder tick for anonymous visitors,
+// and a paywall notice among the category cells would announce that the site is
+// paid when none of the content is.
+function isHomePage() {
+  const p = location.pathname.replace(/\/+$/, '');
+  return p === '' || /^\/index\.html$/i.test(p);
+}
+
+// The bar belongs on a section's own landing page and nowhere else — that is the
+// one page where «۱۲ از ۷۷ مطلبِ این بخش» is a true sentence. Counting links
+// was the first rule here and it was the wrong one in both directions: an
+// article with a few cross-links could reach the threshold, while /photocast/
+// (three items) is a real listing that never could. The folder's own root path
+// answers it exactly.
+const SEEN_BAR_MIN_LINKS = 2;
+
+function isFolderRoot(folder) {
+  if (!folder) return false;
+  const pre = folder.prefix || folder.key;
+  const path = location.pathname.replace(/^\/+/, '').replace(/\.html$/i, '');
+  return path === pre || path === pre + '/' || path === pre + '/index';
+}
+
+// Links that belong to the page's chrome rather than to its list. The ticks
+// themselves are drawn on these too (they always have been — the nav's
+// «نوت‌کست» earns one like any other), but they must not drag the bar's anchor
+// up to <body>: every listing page here is a plain <ul> inside .wrap with the
+// topbar and footer as siblings, so without this the common ancestor is the
+// document itself and the bar lands above the header.
+const SEEN_CHROME = 'header, footer, nav, .dc-topbar, .dc-toolbar-drawer, .dc-toolbar-drawer-inner, .radar-overlay, #dcGlobalBox, #dcResults, .dc-actions';
+
+// Where the bar goes: immediately BEFORE the list, never inside it — a list is a
+// <ul> on most of these pages and a grid of cards on others, and prepending
+// would make the bar an item of it.
+//
+// Finding the list is two steps, because the tightest element containing every
+// content link is sometimes the list (<ul> on insight/, notecast/, sharehub/)
+// and sometimes the whole page wrapper (.wrap on episodes.html and
+// /dentai/promptologist/, where the links sit in more than one block). The tell
+// is how many of that element's own children carry a link: a list is made of
+// its items, a wrapper is mostly other things. In the wrapper case we step down
+// to the child that holds the most links, so the bar still lands on the list
+// rather than above the page's intro.
+function seenListContainer(links) {
+  const body = links.filter(({ a }) => !a.closest(SEEN_CHROME));
+  if (body.length < SEEN_BAR_MIN_LINKS) return null;
+  let node = body[0].a.parentElement;
+  while (node && node !== document.body && !body.every(({ a }) => node.contains(a))) node = node.parentElement;
+  if (!node || node === document.body || !node.parentElement) return null;
+
+  const kids = [...node.children];
+  const holds = (k) => body.filter(({ a }) => k.contains(a)).length;
+  // A direct child of <body> is the page wrapper however list-like it looks;
+  // inserting before it would put the bar outside the page's own width. There we
+  // step INTO it, to the first block that actually carries items — which is also
+  // the right answer for a section listed in several groups (/dentai/promptologist/).
+  if (node.parentElement === document.body) {
+    return kids.find((k) => holds(k) >= SEEN_BAR_MIN_LINKS) || null;
+  }
+  const listy = kids.length && kids.filter((k) => holds(k) > 0).length / kids.length >= 0.6;
+  if (listy) return node;
+  const best = kids.reduce((a, b) => (holds(b) > holds(a) ? b : a), kids[0]);
+  return best && holds(best) >= SEEN_BAR_MIN_LINKS ? best : node;
+}
+
+// Which folder's numbers the bar should show. The server sends each folder's
+// content_id prefix (dentai/promptologist is the one that is not its own key),
+// so the path resolves without a second fetch. No match — a pillar page, a
+// search result — falls back to the site-wide pair, which is true either way.
+function folderForPath(folders) {
+  const path = location.pathname.replace(/^\/+/, '').replace(/\.html$/i, '');
+  let best = null;
+  for (const f of folders || []) {
+    const pre = f.prefix || f.key;
+    if (path === pre || path.startsWith(pre + '/')) {
+      if (!best || pre.length > (best.prefix || best.key).length) best = f;
+    }
+  }
+  return best;
+}
+
+function openSeenGate() {
+  Promise.all([import('./js/sheet.js?v=99'), import('./js/premium-cta.js?v=99')])
+    .then(([sheet, cta]) => sheet.openSheet(sheet.gateCard({
+      title: 'کدام‌ها را خوانده‌ای',
+      sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '
+        + 'روی هر دستگاهی، و حتی بعد از پاک‌کردنِ تاریخچه‌ی مرورگر — این حافظه به حسابِ توست، نه به مرورگر.',
+      cta: cta.premiumCta('gate-seen'),
+    })));
+}
+
+// The locked bar: ONE per list, carrying the reader's own number. That number is
+// the whole design — an empty column reads as something broken, and «۱۲ از ۷۷»
+// cannot, because nothing broken produces a correct count. It is also the only
+// amber on the page: the tick is drawn inside the <a>, right against the title,
+// so an amber mark there would label the ARTICLE as premium rather than the
+// state. Amber goes where it labels nothing.
+function seenLockBar(folder) {
+  const read = folder.read || 0;
+  const total = folder.total || 0;
+  if (!total) return null;
+  const bar = el('button', {
+    class: 'dcp-seen-lock', type: 'button',
+    'aria-label': 'نشانِ خوانده‌شده‌ها ویژه‌ی پریمیوم است',
+  }, [
+    el('span', { class: 'dcp-seen-lock-ico', 'aria-hidden': 'true' }, '✓'),
+    el('span', { class: 'dcp-seen-lock-txt' }, [
+      el('b', {}, faNum(read) + ' از ' + faNum(total)),
+      el('span', {}, ' مطلبِ این بخش را خوانده‌ای — دیدنِ اینکه کدام‌ها، با پریمیوم'),
+    ]),
+    el('span', { class: 'dcp-seen-lock-go', 'aria-hidden': 'true' }, '🔒'),
+  ]);
+  bar.addEventListener('click', openSeenGate);
+  return bar;
+}
+
 async function initSeenTicks() {
   const user = await currentUser();
   if (!user) return; // Plus-only: no ticks for anonymous visitors
@@ -652,15 +769,42 @@ async function initSeenTicks() {
     if (cid !== here && isSeenContent(cid)) links.push({ a, cid });
   });
   if (links.length < 2) return; // not a list/landing page → skip
-  let seen;
-  try { const r = await api.seen(); seen = new Set(r.seen || []); }
-  catch (_) { return; }
+  let data;
+  try { data = await api.seen(); } catch (_) { return; }
+  // An unanswerable /me or /seen must draw nothing at all — never the locked
+  // state, which is an upsell, and never to a subscriber whose network blinked.
+  if (!data) return;
+
+  if (data.locked) {
+    if (isHomePage()) return;
+    for (const { a } of links) {
+      if (a.querySelector('.dcp-seen-tick')) continue;
+      const tick = el('span', {
+        class: 'dcp-seen-tick is-off', 'aria-hidden': 'true',
+        title: 'نشانِ خوانده‌شده‌ها ویژه‌ی پریمیوم است',
+      }, '✓');
+      // A control inside a link: the click is a pointer affordance only (the
+      // tick is aria-hidden, and the bar below is the real, focusable door).
+      tick.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openSeenGate(); });
+      a.insertBefore(tick, a.firstChild);
+    }
+    const folder = folderForPath(data.folders);
+    if (isFolderRoot(folder) && !document.querySelector('.dcp-seen-lock')) {
+      const list = seenListContainer(links);
+      const bar = list && seenLockBar(folder);
+      if (bar) list.parentElement.insertBefore(bar, list);
+    }
+    return;
+  }
+
+  const completed = new Set(data.completed || []);
+  const viewed = new Set(data.viewed || data.seen || []);
   for (const { a, cid } of links) {
     if (a.querySelector('.dcp-seen-tick')) continue; // already decorated
-    const on = seen.has(cid);
+    const state = completed.has(cid) ? ' is-read' : viewed.has(cid) ? ' is-seen' : '';
     a.insertBefore(el('span', {
-      class: 'dcp-seen-tick' + (on ? ' is-seen' : ''), 'aria-hidden': 'true',
-      title: on ? 'دیده‌اید' : 'هنوز ندیده‌اید',
+      class: 'dcp-seen-tick' + state, 'aria-hidden': 'true',
+      title: completed.has(cid) ? 'تا آخر خوانده‌اید' : viewed.has(cid) ? 'بازش کرده‌اید' : 'هنوز ندیده‌اید',
     }, '✓'), a.firstChild);
   }
 }

@@ -190,6 +190,30 @@ export function resolveTopic(topic: string): { fa: string; contentIds: string[] 
   return null;
 }
 
+/**
+ * Per-folder «how many of this folder has the reader consumed», capped at the
+ * folder's own total.
+ *
+ * ONE definition, two callers: the dashboard's «پیشرفت هر پوشه» bars and the
+ * seen-tick bar's «۱۲ از ۷۷». If they ever computed it separately, a folder
+ * could read ۱۰۰٪ on the dashboard while a page in it carried no filled tick —
+ * the same disagreement services/achievements.ts already refuses to allow
+ * between «فاتح» and the bars.
+ */
+export function folderProgress(consumed: Iterable<string>): { key: string; prefix: string; total: number; read: number }[] {
+  const byFolder = new Map<string, number>();
+  for (const cid of consumed) {
+    const f = folderOf(cid);
+    byFolder.set(f, (byFolder.get(f) || 0) + 1);
+  }
+  return getFolders().map((f) => ({
+    key: f.key,
+    prefix: f.prefix || f.key,
+    total: f.total,
+    read: Math.min(byFolder.get(f.key) || 0, f.total),
+  }));
+}
+
 /** Persian label for a folder key, or the key itself if unknown. */
 export function folderLabel(key: string): string {
   return getFolders().find((f) => f.key === key)?.fa || key;

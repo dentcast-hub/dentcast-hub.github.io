@@ -3995,17 +3995,20 @@ a.dc-list-card--pillar {
 }
 #panel-studio #dcLatestRail .t-plus{ color:var(--exa-gold); background:none; }
 /* Fixed seen-tick slot (same protocol as the category grid): every row shows
-   a tick at the SAME spot — the row's far end, vertically centered. Grey CSS
-   placeholder by default; when plus.js lands its real .dcp-seen-tick, the
-   placeholder hides and only the COLOR tells seen (green) from unseen. */
+   a tick at the SAME spot — the row's far end, vertically centered. The CSS
+   placeholder is an EMPTY RING, the same shape plus.css draws, so the slot looks
+   the same before plus.js answers and for a visitor who gets no tick at all;
+   only the fill changes. Size and colour live in plus.css (dc-nav.js appends it
+   on every page, this one included) — only the position is set here. */
 #panel-studio #dcLatestRail .dc-rail-card{ position:relative; padding-inline-end:1.75rem; }
 #panel-studio #dcLatestRail .dc-rail-card .dcp-seen-tick{
   position:absolute; inset-inline-end:0.25rem; top:50%; transform:translateY(-50%);
-  margin:0; font-size:1rem; line-height:1;
+  margin:0;
 }
 #panel-studio #dcLatestRail .dc-rail-card::after{
-  content:"✓"; position:absolute; inset-inline-end:0.25rem; top:50%; transform:translateY(-50%);
-  font-weight:800; font-size:1rem; line-height:1; color:var(--txt3); opacity:.28;
+  content:""; position:absolute; inset-inline-end:0.25rem; top:50%; transform:translateY(-50%);
+  inline-size:17px; block-size:17px; border-radius:50%;
+  border:1.5px solid var(--card-border); opacity:.6;
 }
 #panel-studio #dcLatestRail .dc-rail-card:has(.dcp-seen-tick)::after{ display:none; }
 
@@ -4213,18 +4216,20 @@ a.dc-list-card--pillar {
   width:0.9375rem; height:0.9375rem; color:var(--txt3);
 }
 /* Plus injects a per-folder seen-tick (.dcp-seen-tick) into SOME of these
-   cells; every cell reserves the same slot with a grey placeholder tick,
-   hidden when the real one arrives — position constant, only color varies. */
+   cells; every cell reserves the same slot with an empty ring, hidden when the
+   real one arrives — position constant, only the fill varies. Size and colour
+   of the real tick belong to plus.css; only the position is set here. */
 #panel-studio .dc-exa-cat .dcp-seen-tick,
 #panel-studio .dc-exa-cat::before,
 #dcd-welcome-feed .dc-exa-cat .dcp-seen-tick,
 #dcd-welcome-feed .dc-exa-cat::before{
   position:absolute; inset-inline-end:2.125rem; top:50%; transform:translateY(-50%);
-  margin:0; font-size:.95rem; line-height:1; font-weight:800;
+  margin:0; line-height:1;
 }
 #panel-studio .dc-exa-cat::before,
 #dcd-welcome-feed .dc-exa-cat::before{
-  content:"✓"; color:var(--txt3); opacity:.28;
+  content:""; inline-size:17px; block-size:17px; border-radius:50%;
+  border:1.5px solid var(--card-border); opacity:.6;
 }
 #panel-studio .dc-exa-cat:has(.dcp-seen-tick)::before,
 #dcd-welcome-feed .dc-exa-cat:has(.dcp-seen-tick)::before{ display:none; }
@@ -6741,7 +6746,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=189" defer></script>
+<script src="/dc-nav.js?v=191" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

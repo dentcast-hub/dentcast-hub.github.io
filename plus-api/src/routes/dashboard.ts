@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
 import { pool } from '../db.js';
-import { buildFolderTree, getFolders, folderOf } from '../content-index.js';
+import { buildFolderTree, getFolders, folderProgress } from '../content-index.js';
 import { config } from '../config.js';
 import { QUALIFYING_ACTIONS, streakIsAlive, displayStreak } from '../services/streak.js';
 import { getConsumedContentIds } from '../services/consumption.js';
@@ -138,14 +138,10 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     // content index the dashboard tree uses; totals reflect currently published
     // content, so new items lower a folder's percent until consumed.
     const consumed = await getConsumedContentIds(userId);
-    const readByFolder = new Map<string, number>();
-    for (const contentId of consumed) {
-      const f = folderOf(contentId);
-      readByFolder.set(f, (readByFolder.get(f) || 0) + 1);
-    }
+    const readByKey = new Map(folderProgress(consumed).map((f) => [f.key, f.read]));
     const folder_progress = getFolders().map((f) => ({
       key: f.key, fa: f.fa, url: f.url, total: f.total,
-      read: Math.min(readByFolder.get(f.key) || 0, f.total),
+      read: readByKey.get(f.key) ?? 0,
     }));
 
     // Score: a concrete, activity-log-derived metric, ready for a future
@@ -221,19 +217,53 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     });
   });
 
-  // GET /seen - content_ids the user has seen, for the landing-page "seen" ticks
-  // (a Plus benefit; cross-device because it's account-scoped). "Seen" = ANY
-  // engagement with a page: opening it (article_viewed), reading it through
-  // (article_completed), listening (episode_listened), or highlighting.
+  // GET /seen - the landing-page ticks. Cross-device, because it is account-scoped
+  // rather than a browser's own visited-link memory — which is the whole of what
+  // this sells.
+  //
+  // TWO states where there used to be one. «باز کرده‌ای» (article_viewed, which
+  // fires the moment a page opens) is not «خوانده‌ای», and the old flat list
+  // conflated them: three seconds on a page left it marked for good.
+  // `completed` is deliberately getConsumedContentIds — the SAME predicate the
+  // dashboard's progress bars and pathway steps read, so a folder can never
+  // report ۱۰۰٪ while a page inside it carries no filled tick.
+  //
+  // And the free reader gets COUNTS, never ids — the shape
+  // GET /glossary/:slug/notes already uses: a door is only shown to somebody who
+  // has something behind it. The number is not a consolation prize, it is what
+  // makes the lock legible: an empty column reads as a fault, «۱۲ از ۷۷» cannot.
   app.get('/seen', async (request, reply) => {
+    const userId = request.user!.id;
+    const completed = await getConsumedContentIds(userId);
+    const folders = folderProgress(completed);
+
+    if (request.user!.tier !== 'premium') {
+      return reply.send({
+        locked: true,
+        folders,
+        read: folders.reduce((a, f) => a + f.read, 0),
+        total: folders.reduce((a, f) => a + f.total, 0),
+      });
+    }
+
     const res = await pool.query<{ content_id: string }>(
       `select distinct content_id from user_activity
         where user_id = $1 and content_id is not null
-          and action in ('article_viewed','article_completed','episode_listened',
-                          'highlight_created','card_reviewed_manual','review_finished')`,
-      [request.user!.id],
+          and action in ('article_viewed','card_reviewed_manual','review_finished')`,
+      [userId],
     );
-    return reply.send({ seen: res.rows.map((r) => r.content_id) });
+    const viewed = res.rows.map((r) => r.content_id).filter((id) => !completed.has(id));
+    const completedIds = [...completed];
+    return reply.send({
+      locked: false,
+      folders,
+      viewed,
+      completed: completedIds,
+      // The pre-2026-09-18 key, for one release only: a browser holding a cached
+      // plus.js still asks for this shape, and a premium reader must not lose
+      // their ticks for as long as that copy lives.
+      seen: [...completedIds, ...viewed],
+    });
   });
 
   // GET /export/highlights - full dump of the user's own data. Any plan, any
