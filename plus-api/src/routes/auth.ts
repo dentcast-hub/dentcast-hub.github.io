@@ -503,10 +503,29 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     // on a response that is already no-store.
     setSessionCookie(reply, user.id, request);
 
-    // Show the streak only while it is still alive. The cache resets lazily (on
-    // the next qualifying action), so after an unbridgeable gap the cached
-    // number is stale — the client must see 0, not last week's run.
-    const shownStreak = await displayStreak(pool, user.id, user, dayInTz(new Date()));
+    // ── ONE ROUND TRIP, NOT SIX ──
+    //
+    // Everything below reads a different table and none of it depends on any
+    // other, but they used to be six awaits in a row — five of them inside the
+    // object literal, where a sequential chain does not look like one. On a
+    // database that answers in microseconds that is invisible; across a real
+    // network it is six round trips on the ONE call every page view makes and
+    // waits on, signed in or not: the header, the ad card's tier check, and
+    // the first thing a reader sees after logging in or out.
+    //
+    // The due-card count stays out of it — it is premium-only, and issuing a
+    // query for accounts that will not read the answer is the opposite of the
+    // point. The streak reads `user`, which is already in hand.
+    const [shownStreak, activePathway, pendingGrant, subscription, counters] = await Promise.all([
+      // Show the streak only while it is still alive. The cache resets lazily
+      // (on the next qualifying action), so after an unbridgeable gap the
+      // cached number is stale — the client must see 0, not last week's run.
+      displayStreak(pool, user.id, user, dayInTz(new Date())),
+      getActivePathwaySummary(user.id),
+      getPendingPremiumGrant(user.id),
+      getSubscriptionSummary(user.id),
+      noticeCounters(user.id),
+    ]);
 
     const me: Record<string, unknown> = {
       id: user.id,
@@ -522,12 +541,12 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       // toggle state. Without this the reminder checkboxes always render empty
       // after a reload even though PATCH /me persisted them.
       settings: user.settings ?? {},
-      active_pathway: await getActivePathwaySummary(user.id),
+      active_pathway: activePathway,
       // The one-time "you won a week of premium" banner (dashboard.js). Present
       // for every tier (a free user's grant already flipped their tier by the
       // time they see this, but the field is computed independent of tier so
       // there is no ordering assumption between the two).
-      pending_premium_grant: await getPendingPremiumGrant(user.id),
+      pending_premium_grant: pendingGrant,
       // Where this account stands: expiry, days of access left, and whether it
       // is a lifetime account. Null for anyone who has never subscribed, and
       // null for a league-prize premium too — the prize is not a subscription
@@ -537,7 +556,7 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       // someone whose days are running out, i.e. while they are still premium,
       // and the "your subscription ended" message has to appear once they are
       // not. A field that only existed for premium users could say neither.
-      subscription: await getSubscriptionSummary(user.id),
+      subscription,
       // The two numbers behind the account icon. `unread_notices` paints the dot
       // — a silent mark that never covers anything, so it is the one signal that
       // is safe to show while somebody is mid-paragraph. `pending_achievements`
@@ -547,7 +566,7 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       // Both are indexed counts on purpose: /me is called once per page view by
       // every visitor, and it is the call the sponsor card waits on before it can
       // render, so nothing expensive may be added to it.
-      ...(await noticeCounters(user.id)),
+      ...counters,
     };
     // due_card_count is premium-only and intentionally absent for free users.
     if (user.tier === 'premium') {

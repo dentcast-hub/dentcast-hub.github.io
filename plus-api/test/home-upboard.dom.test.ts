@@ -9,14 +9,33 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 let boardImpl: () => Promise<unknown>;
 let indexOk = true;
+// The reader's tier, as /me answers it. The module reads THIS, not the board,
+// to decide the lock — the lock is set at load, and a mock without these two
+// left the module throwing on import (every ranking case failed for a reason
+// that had nothing to do with ranking).
+let meImpl: () => Promise<{ tier: string } | null>;
+let meStatusImpl: () => string;
 
 vi.mock('/plus/js/api.js', () => ({
   api: { voteBoard: () => boardImpl() },
+  currentUser: () => meImpl(),
+  meStatus: () => meStatusImpl(),
 }));
 
 let ctaFrom: string | null = null;
+let guestExtrasFrom: string | null = null;
+// BOTH exports the module imports. A mocked module that is missing one throws
+// at import, which does not read as a failure here — the three cases that
+// assert the box is left ALONE then pass for the wrong reason, while every
+// case that needs the module to do something fails.
 vi.mock('/plus/js/premium-cta.js', () => ({
   premiumCta: (from: string) => { ctaFrom = from; return document.createElement('a'); },
+  guestPremiumExtras: (from: string) => {
+    guestExtrasFrom = from;
+    const p = document.createElement('p');
+    p.textContent = 'اگر اشتراک دارید وارد شوید.';
+    return [p];
+  },
 }));
 
 const premiumRequired = () => Object.assign(new Error('premium_required'), { status: 402 });
@@ -43,8 +62,12 @@ const BOARD = {
 // What the inline script leaves behind — captured and restored verbatim.
 const FRESH = '<li><a href="/x.html"><span class="dc-mlist-title">تازه</span></a></li>';
 
+// The wrapper carries .dc-monitor because the module scopes every selector to
+// it (one page has three of these boxes since 2026-09-10, and a document-wide
+// query would make each shell drive the others). Without the class the module
+// finds no slot at all and returns before doing anything.
 const SKELETON = `
-  <article>
+  <article class="dc-monitor">
     <a class="dc-monitor-all" href="/up-board/">همه ›</a>
     <button type="button" data-monitor-sort="new" aria-selected="true">تازه‌ترین</button>
     <button type="button" data-monitor-sort="top" aria-selected="false">بالاترین</button>
@@ -65,6 +88,8 @@ beforeEach(() => {
   vi.resetModules();
   indexOk = true;
   boardImpl = () => Promise.resolve(BOARD);
+  meImpl = () => Promise.resolve({ tier: 'premium' });
+  meStatusImpl = () => 'user';
   globalThis.fetch = vi.fn(() => Promise.resolve({
     ok: indexOk,
     status: indexOk ? 200 : 404,

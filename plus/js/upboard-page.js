@@ -28,12 +28,12 @@
 //   2. Every filter lives in the URL (?sort=&type=), written with replaceState.
 //      Same rule as the highlight library: a filtered view survives a refresh
 //      and the back button, and is a link somebody can send.
-import { api } from '/plus/js/api.js?v=93';
-import { el, faNum } from '/plus/js/util.js?v=93';
-import { openSheet, closeSheet, gateCard } from '/plus/js/sheet.js?v=93';
-import { premiumCta, guestPremiumExtras } from '/plus/js/premium-cta.js?v=93';
-import { openLoginModal } from '/plus/js/login-modal.js?v=93';
-import { markReturnTrail } from '/plus/js/return-trail.js?v=93';
+import { api, currentUser, meStatus } from '/plus/js/api.js?v=95';
+import { el, faNum } from '/plus/js/util.js?v=95';
+import { openSheet, closeSheet, gateCard } from '/plus/js/sheet.js?v=95';
+import { premiumCta, guestPremiumExtras } from '/plus/js/premium-cta.js?v=95';
+import { openLoginModal } from '/plus/js/login-modal.js?v=95';
+import { markReturnTrail } from '/plus/js/return-trail.js?v=95';
 
 /** Which gate sent a buyer, for the pricing page's ?from= report. */
 const FROM = 'upboard';
@@ -363,9 +363,18 @@ export function initUpBoard(root) {
     if (!catalog.types.some((t) => t.key === filter)) filter = 'all';
   }
 
-  sortBtns.forEach((b) => b.addEventListener('click', () => {
+  sortBtns.forEach((b) => b.addEventListener('click', async () => {
     // «تازه‌ترین» is never gated — it is the list this page has always been.
-    if (b.dataset.sort === 'top' && denied) {
+    if (b.dataset.sort !== 'top') { mode = b.dataset.sort; render(); return; }
+    // A press that lands before the tier is known must WAIT for it, never
+    // fall through. Falling through is what showed the date order twice: with
+    // no ranking loaded, «بالاترین» draws the same list with rank numbers on
+    // it, which is a worse answer than the gate AND than the honest list.
+    // The promise is currentUser()'s cached one — usually already resolved,
+    // and on a slow first load this is a moment of nothing happening instead
+    // of an arrangement that does not exist.
+    if (!denied) await tierKnown;
+    if (denied) {
       if (denied === 'unreachable') unreachableSheet();
       else gateSheet(denied === 'guest');
       return;
@@ -379,6 +388,45 @@ export function initUpBoard(root) {
       if (entries.some((e) => e.isIntersecting)) drawMore();
     }, { rootMargin: '600px' });
   }
+
+  // ── THE LOCK IS DECIDED AT LOAD, NOT ON THE BOARD'S ANSWER ──
+  //
+  // It used to be set in `voteBoard()`'s catch — the only place in this file
+  // that knew why the board was missing. So between first paint and that
+  // answer the tab was unlocked AND pressable, and pressing it switched to
+  // «بالاترین» with no ranking behind it: `compute()` found nothing in `rank`,
+  // put every item in the unranked tail, and drew the date order again with
+  // rank numbers beside it. A reader saw the free list twice and no gate.
+  //
+  // That window is not a race a fast connection wins. `voteBoard()` goes
+  // through pickBase()'s /health probe on the first page of a tab (up to
+  // 1.5s per mirror) and then has a 30s deadline of its own, so on a slow
+  // network it is seconds to tens of seconds wide, and a reader who leaves
+  // before it closes never sees the correction.
+  //
+  // The lock never needed the board. It needs the reader's tier, which /me
+  // already carries and currentUser() caches per page — so this costs ZERO
+  // extra requests, and it is the same fix home-upboard.js already made.
+  //
+  // Three answers, not two, exactly as the board's own catch has always
+  // distinguished them: signed out and free are both definite and both lock;
+  // «we could not ask» locks nothing and must never reach a paying reader as
+  // an upsell.
+  const tierKnown = currentUser().then((user) => {
+    if (denied) return;                     // the board already answered
+    if (user) {
+      if (user.tier === 'premium') return;  // a subscriber sees no lock
+      denied = 'gated';
+    } else {
+      if (meStatus() === 'error') return;   // could not ask — leave it open
+      denied = 'guest';
+    }
+    // Same fallback the board's catch makes: a ?sort=top deep link must not
+    // leave a gated reader looking at an empty ranking, and the sheet still
+    // does not open unasked.
+    if (mode === 'top') mode = 'new';
+    if (catalog) render();
+  }).catch(() => { /* never lock on a failure to ask */ });
 
   // The catalog is required; the board is not. Fetched together, but the page
   // is drawn the moment the catalog lands rather than waiting on the API — a
@@ -425,7 +473,11 @@ export function initUpBoard(root) {
     // behind the gate. Everything else means we could not ask, which must never
     // reach a paying reader as an upsell.
     const st = err && err.status;
-    denied = st === 401 ? 'guest' : st === 402 ? 'gated' : 'unreachable';
+    const answer = st === 401 ? 'guest' : st === 402 ? 'gated' : 'unreachable';
+    // A definite answer is never downgraded to «we could not ask». /me may
+    // have already said «free» while this request died on the network, and
+    // overwriting that would unlock the tab for a reader we know is gated.
+    if (!(answer === 'unreachable' && denied)) denied = answer;
     // A ?sort=top deep link from a subscriber's shared page lands a free reader
     // here. Fall back to the list rather than an empty ranking — and do NOT pop
     // the sheet unasked; the locked tab is the invitation, and a paywall that

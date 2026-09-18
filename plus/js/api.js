@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=93';
+import { API_BASES } from './config.js?v=95';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -39,6 +39,11 @@ let resolvedBase = null;
 // there", so a base that cannot manage that in PROBE_TIMEOUT_MS is not the base
 // we want to spend the visit on — fail over now, not in twenty seconds.
 const PROBE_TIMEOUT_MS = 1500;
+
+// Logout's own deadline — see api.logout. Short because the server side is a
+// cookie header and nothing else, and because the reader is waiting on it with
+// the page in front of them.
+const LOGOUT_TIMEOUT_MS = 8000;
 
 // One deadline for an ordinary request. Reads and the login calls carry it; a
 // POST that may legitimately take long (a model grading an exam, an export)
@@ -209,7 +214,14 @@ export const api = {
   // token (the client builds the deep link from it) / disconnect.
   connectBale: () => request('/auth/bale/connect', { method: 'POST' }),
   unlinkBale: () => request('/auth/bale/unlink', { method: 'POST' }),
-  logout: () => request('/auth/logout', { method: 'POST', pinned: true, timeoutMs: REQUEST_TIMEOUT_MS }),
+  // Its own, shorter deadline. Logout does no work beyond clearing a cookie —
+  // measured at a fraction of a millisecond on the server — so a request still
+  // open after LOGOUT_TIMEOUT_MS is not slow, it is a host that is not going to
+  // answer. The 30s general deadline meant the reader pressed «خروج» and then
+  // watched an unchanged page for half a minute. PINNED because the session
+  // cookie lives on the primary host and nowhere else: clearing it on a mirror
+  // clears nothing.
+  logout: () => request('/auth/logout', { method: 'POST', pinned: true, timeoutMs: LOGOUT_TIMEOUT_MS }),
 
   // activity + anon
   activity: (action, content_id, meta) =>

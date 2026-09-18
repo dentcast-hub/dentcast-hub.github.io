@@ -4,23 +4,23 @@
 //  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
 //    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
 //    an OVERLAY. Clicking the person again closes whatever is open.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=93';
-import { currentUser, api, meStatus } from './api.js?v=93';
-import { isOrgHost, detectContentId } from './config.js?v=93';
-import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=93';
-import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=93';
-import { renderDashboard } from './dashboard.js?v=93';
-import { renderProfile } from './profile.js?v=93';
-import { maybeShowWelcome } from './welcome.js?v=93';
-import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=93';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=93';
-import { healPushSubscription } from './push.js?v=93';
-import { maybeShowPremiumPopup } from './premium-popup.js?v=93';
-import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=93';
-import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=93';
-import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=93';
-import { installLibraryGate } from './library-gate.js?v=93';
-import { toast } from './hl-view.js?v=93';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=95';
+import { currentUser, api, meStatus } from './api.js?v=95';
+import { isOrgHost, detectContentId } from './config.js?v=95';
+import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=95';
+import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=95';
+import { renderDashboard } from './dashboard.js?v=95';
+import { renderProfile } from './profile.js?v=95';
+import { maybeShowWelcome } from './welcome.js?v=95';
+import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=95';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=95';
+import { healPushSubscription } from './push.js?v=95';
+import { maybeShowPremiumPopup } from './premium-popup.js?v=95';
+import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=95';
+import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=95';
+import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=95';
+import { installLibraryGate } from './library-gate.js?v=95';
+import { toast } from './hl-view.js?v=95';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -169,8 +169,31 @@ function buildUserPerson(user) {
           href: pricingHref('header-menu'), onclick: () => closeMenu() },
         subscriptionMenuLabel(user))
         : null,
+      // ── «خروج» SAYS SOMETHING WHILE IT WORKS, AND TELLS THE TRUTH IF IT
+      //    FAILS ──
+      //
+      // It used to close the menu and then await the request with the page
+      // untouched, so a slow host read as a dead button and the reader pressed
+      // it again. Worse, the catch swallowed the failure and reloaded anyway —
+      // the session cookie is httpOnly, so a logout that never reached the
+      // server clears nothing, and the reader was handed back the same
+      // signed-in header with no idea why. Now the menu stays open with the
+      // item disabled while it runs, and a failure is said out loud.
       el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
-        onclick: async () => { closeMenu(); await api.logout().catch(() => {}); location.reload(); } }, 'خروج'),
+        onclick: async (e) => {
+          const item = e.currentTarget;
+          if (item.disabled) return;
+          item.disabled = true;
+          item.textContent = 'در حال خروج…';
+          try {
+            await api.logout();
+          } catch (_) {
+            closeMenu();
+            toast('خروج انجام نشد؛ ارتباط با سرور برقرار نشد.', { icon: '⚠️' });
+            return;
+          }
+          location.reload();
+        } }, 'خروج'),
     ]);
     const wrap = btn.closest('.dcp-person-wrap') || btn.parentNode;
     wrap.appendChild(menu);

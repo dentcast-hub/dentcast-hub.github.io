@@ -1,16 +1,16 @@
 // Reusable profile renderer (spec 2.7). Used by the /plus/profile.html page and
 // the header overlay. Site design language; a clear, readable week strip. Nothing
 // here is mandatory: the pseudonym is editable, no real name is ever required.
-import { el, faNum, tehranDay } from './util.js?v=93';
-import { certificatesBody } from './certificates.js?v=93';
-import { api, ApiError, currentUser } from './api.js?v=93';
-import { remindersBlock } from './reminders.js?v=93';
-import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=93';
-import { baleEnabled, baleDeepLink } from './config.js?v=93';
-import { leagueEntryButton } from './league.js?v=93';
-import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=93';
-import { subscriptionCta } from './premium-cta.js?v=93';
-import { copyToClipboard, confirmStrip } from './hl-view.js?v=93';
+import { el, faNum, tehranDay } from './util.js?v=95';
+import { certificatesBody } from './certificates.js?v=95';
+import { api, ApiError, currentUser } from './api.js?v=95';
+import { remindersBlock } from './reminders.js?v=95';
+import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=95';
+import { baleEnabled, baleDeepLink } from './config.js?v=95';
+import { leagueEntryButton } from './league.js?v=95';
+import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=95';
+import { subscriptionCta } from './premium-cta.js?v=95';
+import { copyToClipboard, confirmStrip, toast } from './hl-view.js?v=95';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
   timeZone: 'Asia/Tehran', year: 'numeric', month: 'long', day: 'numeric',
@@ -583,8 +583,26 @@ export async function renderProfile(root, { me: preMe } = {}) {
   const discBody = discountBody(achievements);
   const certBody = certificatesBody(certs);
 
+  // Same contract as the account menu's «خروج» (header.js): say something while
+  // it runs, and never navigate away on a failure — the session cookie is
+  // httpOnly, so a logout that did not reach the server has cleared nothing and
+  // the homepage would simply show the reader signed in again.
   const logoutBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'خروج از حساب');
-  logoutBtn.addEventListener('click', async () => { await api.logout().catch(() => {}); location.href = '/'; });
+  logoutBtn.addEventListener('click', async () => {
+    if (logoutBtn.disabled) return;
+    logoutBtn.disabled = true;
+    const label = logoutBtn.textContent;
+    logoutBtn.textContent = 'در حال خروج…';
+    try {
+      await api.logout();
+    } catch (_) {
+      logoutBtn.disabled = false;
+      logoutBtn.textContent = label;
+      toast('خروج انجام نشد؛ ارتباط با سرور برقرار نشد.', { icon: '⚠️' });
+      return;
+    }
+    location.href = '/';
+  });
 
   root.replaceChildren(
     el('div', { class: 'dcp-dash-hello' }, 'پروفایل'),
