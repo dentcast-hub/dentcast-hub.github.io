@@ -1,0 +1,66 @@
+{
+  "type": "promptologist",
+  "note": "Publish of dentai/promptologist/prompt7-1 (پرامپتولوژیست فصل ۷ قسمت ۱ — چه چیزی را نباید به مدل بدهید؟). Eight tags reuse existing canonical forms: the series/brand tags (#پرامپتولوژیست, #هوش_مصنوعی, #سواد_هوش_مصنوعی, #AI_Literacy, #مدل_زبانی, #LLM), #ChatGPT (the part names the service and its اکانت اشتراکی/واسطه ecosystem), and #مسئولیت_حرفه_ای — reused rather than re-minted because its use_when is «مقاله جنبه‌ی قانونی یا اخلاقیِ تصمیم را مسئله بداند» and its aliases already carry «مسئولیت حقوقی»/«جنبه قانونی», which is exactly the متن's «حفظِ اسرارِ بیمار … از نظرِ قانونی هم به آن ملزم هستیم». Three concepts were genuinely absent and are minted here. --simulate «حریم خصوصی بیمار» and «محرمانگی اطلاعات بیمار» both returned only #راحتی_بیمار/#معاینه_بیمار at score 0.50 — i.e. the library had nothing about confidentiality at all; --simulate «بی‌نام‌سازی داده» and «امنیت داده» returned only #خطای_داده (a lab-data-error tag, an unrelated sense of «داده»); --simulate «اکانت اشتراکی هوش مصنوعی» and «انتقال داده به سرور بیرونی» cleared nothing in this domain. The three are the part's own subject: what leaves the مطب, what «اسمش را حذف کردم» does and does not cover, and the Iranian access path that makes both worse. No #پزشکی_قانونی was minted — forensic identification is one paragraph's argument for why a dental radiograph IS an identifier, not what the part resolves.",
+  "concepts": [
+    {
+      "tag": "#حریم_بیمار",
+      "domain": "clinical",
+      "definition": "محرمانه‌ماندنِ اطلاعاتِ قابلِ انتسابِ یک بیمارِ مشخص — اسم، تصویر، پرونده و هر ترکیبی از جزئیات که او را قابلِ شناسایی کند — وقتی آن اطلاعات از کنترلِ مطب خارج می‌شود.",
+      "use_when": "مطلب درباره‌ی خروجِ اطلاعاتِ بیمار از مطب و کنترل‌نداشتن بر مقصدِ آن باشد — سپردنِ پرونده یا تصویر به یک سرویسِ بیرونی، رضایتِ بیمار برای نمایشِ کیس — نه صرفاً درباره‌ی رابطه یا ارتباط با بیمار.",
+      "aliases": [
+        "patient privacy",
+        "patient confidentiality",
+        "حریم خصوصی بیمار",
+        "محرمانگی اطلاعات بیمار",
+        "رازداری پزشکی",
+        "اسرار بیمار",
+        "confidentiality"
+      ]
+    },
+    {
+      "tag": "#بی‌نام‌سازی",
+      "domain": "clinical",
+      "definition": "برداشتنِ شناسه‌های یک بیمار از متن و فایل پیش از بیرون‌فرستادنِ آن‌ها. فراتر از حذفِ اسم است، چون ترکیبِ جزئیات، متادیتای فایل (DICOM، سی‌بی‌سی‌تی) و خودِ رادیوگرافیِ دندانی هم شناسه‌اند.",
+      "use_when": "مطلب درباره‌ی این باشد که یک متن یا تصویرِ بالینی چقدر واقعاً بی‌نام است و چه چیزی بعد از حذفِ اسم باقی می‌ماند — آماده‌کردنِ کیس برای ارائه، سمینار یا ابزارِ بیرونی.",
+      "aliases": [
+        "de-identification",
+        "deidentification",
+        "anonymization",
+        "بی نام کردن",
+        "ناشناس سازی",
+        "حذف شناسه",
+        "گمنام سازی"
+      ]
+    },
+    {
+      "tag": "#اکانت_اشتراکی",
+      "domain": "ai",
+      "definition": "دسترسیِ غیرمستقیم به سرویسِ هوش مصنوعی از راهِ حسابی که بینِ چند نفر مشترک است یا از راهِ سایت و باتِ واسطه‌ای که پیام را به‌جای کاربر می‌فرستد؛ در هر دو حالت تاریخچه‌ی گفت‌وگو در دسترسِ کسانی است که کاربر نمی‌شناسدشان.",
+      "use_when": "مطلب به نحوه‌ی دسترسیِ کاربرِ ایرانی به سرویسِ هوش مصنوعی و پیامدهای آن بپردازد — حسابِ مشترک، سرویسِ واسطه، یا طرفِ سومی که وسطِ گفت‌وگو می‌نشیند.",
+      "aliases": [
+        "shared account",
+        "proxy service",
+        "اکانت مشترک",
+        "حساب اشتراکی",
+        "سرویس واسطه",
+        "بات تلگرامی هوش مصنوعی",
+        "واسطه هوش مصنوعی"
+      ]
+    }
+  ],
+  "articles": {
+    "dentai/promptologist/prompt7-1": [
+      "#پرامپتولوژیست",
+      "#هوش_مصنوعی",
+      "#سواد_هوش_مصنوعی",
+      "#AI_Literacy",
+      "#مدل_زبانی",
+      "#LLM",
+      "#ChatGPT",
+      "#مسئولیت_حرفه_ای",
+      "#حریم_بیمار",
+      "#بی‌نام‌سازی",
+      "#اکانت_اشتراکی"
+    ]
+  }
+}
