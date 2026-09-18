@@ -73,6 +73,15 @@ async function insertAndScore(
  * The client's own vocabulary is the short list in CLIENT_ACTIONS below;
  * test/activity-vocabulary.test.ts reads this file's siblings and fails if a
  * service starts minting an action that appears in neither set.
+ *
+ * `streak_sms_sent` was missing here for exactly as long as it existed, because
+ * streak-reminder.ts bound its action as `$2` instead of writing it into the
+ * SQL, and a token behind a bind parameter is invisible to that scan. It is not
+ * inert: smsSentInMonth() counts these rows as the streak SMS's monthly
+ * ceiling, so a browser could post them and — with a ceiling configured — close
+ * the lane for every reader on the site. The action is a literal in the SQL now,
+ * and the test resolves a bound one against its own module const before asking
+ * which side of the line it is on.
  */
 export const SERVER_MINTED_ACTIONS: ReadonlySet<string> = new Set([
   'assistant_step',
@@ -92,6 +101,7 @@ export const SERVER_MINTED_ACTIONS: ReadonlySet<string> = new Set([
   'streak_freeze_used',
   'streak_kept',
   'streak_reminder_sent',
+  'streak_sms_sent',
   'subscription_activated',
   'subscription_reminder_sent',
 ]);

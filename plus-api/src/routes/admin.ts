@@ -6,7 +6,9 @@ import {
   onArticlePublished, runFreeDigest, runPremiumBacklog, backfillExistingContent,
 } from '../services/article-notify.js';
 import { runReactivationNudges } from '../services/reactivation.js';
-import { runStreakReminders, smsSentInMonth, smsOptedInCount } from '../services/streak-reminder.js';
+import {
+  runStreakReminders, smsSentInMonth, smsOptedInCount, smsOptInBreakdown, diagnoseStreakSms,
+} from '../services/streak-reminder.js';
 import { one, query } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import {
@@ -3220,6 +3222,31 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ ok: true, ...result });
   });
 
+  // GET /admin/streak-reminder/why?phone=|user_id= - «چرا برای این نفر پیامک
+  // نرفت؟», walked one condition at a time in the order runStreakReminders()
+  // applies them. Read-only: it sends nothing and writes nothing, so it is safe
+  // at any hour and costs nobody a text.
+  //
+  // /admin/notify/health answers «is the lane open»; this answers «is THIS
+  // reader in it», which is the question an actual complaint arrives as. The
+  // rules live in the service, never copied here — a second copy of an
+  // eligibility rule drifts from the first the day one of them changes.
+  app.get('/admin/streak-reminder/why', async (request, reply) => {
+    const q = request.query as { phone?: string; user_id?: string };
+    let userId = q.user_id ?? null;
+    if (!userId && q.phone) {
+      const phone = normalizePhone(q.phone);
+      const row = phone ? await one<{ id: string }>('select id from profiles where phone = $1', [phone]) : null;
+      userId = row?.id ?? null;
+    }
+    if (!userId) {
+      return reply.code(400).send({ error: 'no_target', message: 'phone یا user_id لازم است.' });
+    }
+    const diagnosis = await diagnoseStreakSms(userId, new Date());
+    if (!diagnosis) return reply.code(404).send({ error: 'no_profile' });
+    return reply.send({ ok: true, ...diagnosis });
+  });
+
   // GET /admin/notify/health - is the notification pipeline actually able to
   // deliver, RIGHT NOW? Read-only: it sends no message to anyone. It answers the
   // two questions that cost a night on 2026-07-26 — is each channel configured
@@ -3338,12 +3365,23 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     // have is readers switching it on while no template is configured: the
     // profile shows a tick, the run skips the text, and nothing anywhere says
     // why. That is exactly what `problems` is for.
+    //
+    // `opted_in` alone could not answer the question it was built for. On
+    // 2026-09-18 two readers ticked پیامک and no text arrived, and every number
+    // in this block was healthy: the template is configured, the ceiling is
+    // off, nothing was sent. The tick and the send are governed by two
+    // different keys — `notify_channels.sms.streak` (the matrix) and
+    // `reminders.streak` (the master switch above it) — and only the first is
+    // what a reader touches in the profile's matrix. `by_reason` is that split,
+    // so a reader ticked into silence is a number here instead of a mystery.
+    const smsOptIn = await smsOptInBreakdown();
     const smsStreak = {
       template_configured: config.streakReminder.smsTemplateId > 0,
       template_id: config.streakReminder.smsTemplateId,
       monthly_cap: config.streakReminder.smsMonthlyCap,
       sent_this_month: await smsSentInMonth(dayInTz(new Date(), config.streakTimezone)),
       opted_in: await smsOptedInCount(),
+      by_reason: smsOptIn,
     };
     if (smsStreak.opted_in > 0 && !smsStreak.template_configured) {
       problems.push(
@@ -3353,6 +3391,17 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     }
     if (smsStreak.monthly_cap > 0 && smsStreak.sent_this_month >= smsStreak.monthly_cap) {
       problems.push(`پیامکِ استریک: سقف ماهانه (${smsStreak.monthly_cap}) پر شده — تا ماه بعد پیامکی نمی‌رود.`);
+    }
+    if (smsOptIn.blocked_by_master > 0) {
+      problems.push(
+        `پیامکِ استریک: ${smsOptIn.blocked_by_master} نفر تیکِ پیامک را زده‌اند ولی`
+        + ' settings.reminders.streak روی حسابشان روشن نیست — ماتریس فقط کانال را انتخاب می‌کند،'
+        + ' و کلیدِ اصلیِ «نوتیف‌ها» است که تصمیم می‌گیرد اصلاً یادآوری برود یا نه. برایشان هیچ'
+        + ' یادآوریِ استریکی نمی‌رود، نه پیامک نه پوش.',
+      );
+    }
+    if (smsOptIn.no_phone > 0) {
+      problems.push(`پیامکِ استریک: ${smsOptIn.no_phone} نفر تیک را زده‌اند ولی شماره‌ای روی حساب ندارند.`);
     }
 
     return reply.send({

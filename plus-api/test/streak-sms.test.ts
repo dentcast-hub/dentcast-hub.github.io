@@ -4,7 +4,9 @@ import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import { dayInTz, previousDay } from '../src/services/time.js';
-import { runStreakReminders, smsSentInMonth, smsOptedInCount } from '../src/services/streak-reminder.js';
+import {
+  runStreakReminders, smsSentInMonth, smsOptedInCount, smsOptInBreakdown, diagnoseStreakSms,
+} from '../src/services/streak-reminder.js';
 import { activateMonths } from '../src/services/subscription.js';
 import { notifications, sms } from '../src/providers/registry.js';
 import type { TemplateParam } from '../src/providers/sms/types.js';
@@ -27,6 +29,8 @@ let pushed: string[] = [];
 
 const SMS_ON = '{"reminders":{"streak":true},"notify_channels":{"sms":{"streak":true}}}';
 const SMS_OFF = '{"reminders":{"streak":true}}';
+/** The tick saved, the master switch off — what two readers actually had on 2026-09-18. */
+const SMS_TICKED_MASTER_OFF = '{"reminders":{"new_content":true},"notify_channels":{"sms":{"streak":true}}}';
 
 /** A reader with a savable streak (active yesterday), opted into the reminder. */
 async function reader(phone: string, opts: { premium?: boolean; settings?: string; push?: boolean } = {}) {
@@ -170,5 +174,67 @@ describe('streak reminder — the SMS lane', () => {
     await reader('09121600014', { premium: false });      // free, on
     await reader('09121600015', { settings: SMS_OFF });   // premium, off
     expect(await smsOptedInCount()).toBe(1);
+  });
+});
+
+/**
+ * The failure that has no symptom: two keys govern a streak reminder and the
+ * profile's matrix writes only one of them.
+ *
+ * `notify_channels.sms.streak` picks the channel; `reminders.streak` decides
+ * whether the reminder is sent at all — and this service is the one of five
+ * reading that key whose coalesce default is FALSE. So a saved amber tick above
+ * a master switch that is off is a preference nothing reads, and every number
+ * in /admin/notify/health stays healthy while it happens.
+ */
+describe('ticked into silence — the two keys', () => {
+  it('sends nothing at all, by any channel, when the master switch is off', async () => {
+    await reader('09121600016', { push: true, settings: SMS_TICKED_MASTER_OFF });
+    const r = await runStreakReminders(new Date());
+    expect(r).toEqual({ reminded: 0, sms: 0 });
+    expect(texted).toHaveLength(0);
+    expect(pushed).toHaveLength(0);
+  });
+
+  it('counts that reader under blocked_by_master, where opted_in alone cannot see them', async () => {
+    await reader('09121600017', { settings: SMS_TICKED_MASTER_OFF });   // ticked, master off
+    await reader('09121600018');                                        // ticked, master on
+    await reader('09121600019', { premium: false });                    // ticked, free
+    expect(await smsOptInBreakdown()).toEqual({
+      ready: 1, blocked_by_master: 1, no_phone: 0, not_premium: 1,
+    });
+    // The old number says «۲ opted in» and both of them look identical in it.
+    expect(await smsOptedInCount()).toBe(2);
+  });
+
+  it('names the master switch as the verdict for one reader', async () => {
+    const id = await reader('09121600020', { push: true, settings: SMS_TICKED_MASTER_OFF });
+    const d = await diagnoseStreakSms(id, new Date());
+    expect(d?.reminder.master_switch.ok).toBe(false);
+    expect(d?.verdict).toContain('master_switch');
+    // Everything the reader could see IS in order — which is the whole problem.
+    expect(d?.sms.sms_tick.ok).toBe(true);
+    expect(d?.sms.has_phone.ok).toBe(true);
+    expect(d?.sms.premium.ok).toBe(true);
+  });
+
+  it('clears the reader once the master is on, and says so', async () => {
+    const id = await reader('09121600021', { push: true });
+    const d = await diagnoseStreakSms(id, new Date());
+    expect(d?.verdict).toContain('همه‌ی شرط‌ها');
+    expect(Object.values(d!.reminder).every((c) => c.ok)).toBe(true);
+    expect(Object.values(d!.sms).every((c) => c.ok)).toBe(true);
+  });
+
+  it('after a run it reports the day already spent, rather than a fresh green', async () => {
+    const id = await reader('09121600022', { push: true });
+    await runStreakReminders(new Date());
+    const d = await diagnoseStreakSms(id, new Date());
+    expect(d?.reminder.not_reminded_yet.ok).toBe(false);
+    expect(d?.sms.not_texted_yet.ok).toBe(false);
+  });
+
+  it('is null for an account that does not exist', async () => {
+    expect(await diagnoseStreakSms('00000000-0000-0000-0000-000000000000')).toBeNull();
   });
 });

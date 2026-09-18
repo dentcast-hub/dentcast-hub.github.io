@@ -132,4 +132,63 @@ describe('the classification does not rot', () => {
       .map(([a, where]) => `${a} (minted in ${where})`);
     expect(unclassified).toEqual([]);
   });
+
+  // The scan above can only see an action it can READ, and that is the hole
+  // this one closes. streak-reminder.ts wrote `values ($1, $2, $3::jsonb)` with
+  // the token in a bind parameter, so `streak_sms_sent` was minted by a service,
+  // absent from both sets, and postable by any browser through POST /activity —
+  // while this file stayed green the whole time, because there was no string in
+  // the SQL for it to find. Counting rows of it is the streak SMS's monthly
+  // ceiling, so a forged one is not inert.
+  //
+  // Binding the action is a fine habit (three services pass a module `ACTION`
+  // const), so the rule is not "write a literal" — it is that the token must be
+  // RESOLVABLE from the source: either quoted in the SQL, or a const in the same
+  // file. An action that is neither is one nobody can classify, which is how the
+  // set above quietly stops being the whole truth.
+  it('resolves every bound action, so the scan cannot be bypassed', () => {
+    const srcDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../src');
+    const unresolved: string[] = [];
+    const bound = new Map<string, string>(); // action -> where
+    const walk = (dir: string): void => {
+      for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+        const full = path.join(dir, e.name);
+        if (e.isDirectory()) { if (e.name !== 'scripts') walk(full); continue; }
+        if (!e.name.endsWith('.ts')) continue;
+        // The two generic doors: routes/activity.ts records whatever the client
+        // sent, services/activity.ts is the writer every caller goes through.
+        // Neither mints a token of its own.
+        if (full.endsWith(path.join('routes', 'activity.ts'))) continue;
+        if (full.endsWith(path.join('services', 'activity.ts'))) continue;
+        const src = fs.readFileSync(full, 'utf8');
+        const consts = new Map<string, string>();
+        for (const c of src.matchAll(/const\s+([A-Za-z_$][\w$]*)\s*(?::[^=]+)?=\s*'([a-z][a-z_]+)'/g)) {
+          consts.set(c[1], c[2]);
+        }
+        for (const m of src.matchAll(/insert into user_activity[^`']*?values\s*\(([^)]*)\)/gis)) {
+          const action = (m[1].split(',')[1] ?? '').trim();
+          if (action.startsWith("'")) continue; // already visible to the scan above
+          // The params array follows the SQL; the action is whichever identifier
+          // in it names a token this file declares.
+          const tail = src.slice(m.index! + m[0].length, m.index! + m[0].length + 400);
+          const named = [...tail.matchAll(/[A-Za-z_$][\w$]*/g)]
+            .map((i) => consts.get(i[0]))
+            .find(Boolean);
+          if (named) bound.set(named, path.basename(full));
+          else unresolved.push(`${path.basename(full)}: values (${m[1].trim()})`);
+        }
+      }
+    };
+    walk(srcDir);
+
+    // The real guard: a bound action nobody can trace back to a token. No floor
+    // on `bound.size` — converting the last bound insert to a literal is a fine
+    // thing to do, and moves those actions under the scan above rather than
+    // leaving this one to fail for having nothing left to read.
+    expect(unresolved).toEqual([]);
+    const unclassified = [...bound]
+      .filter(([a]) => !SERVER_MINTED_ACTIONS.has(a) && !CLIENT_ACTIONS.has(a))
+      .map(([a, where]) => `${a} (minted in ${where})`);
+    expect(unclassified).toEqual([]);
+  });
 });

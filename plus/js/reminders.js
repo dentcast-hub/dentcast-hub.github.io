@@ -12,6 +12,17 @@
 //     matrix. A SIBLING of `reminders`, never nested inside it, or the three
 //     writers above would erase it on their next toggle. Also written whole.
 //
+// The matrix picks the CHANNEL; the master decides whether the reminder is sent
+// at all. Which means a tick here is worth nothing on its own — and on
+// 2026-09-18 two readers ticked پیامک, the tick saved, survived every reload,
+// and no text arrived, because `reminders.streak` was off on their accounts and
+// nothing on this screen says the column depends on it. (streak-reminder.ts is
+// the one service of five reading that key whose coalesce default is FALSE, so
+// an account that never touched the master is opted out of it alone.) So
+// ticking a cell now carries the master key for that kind — see implyMaster.
+// The master switch is NOT repaired on render: a reader who never asked for
+// «مطلب جدید» must not be signed up for it by opening their profile.
+//
 // Defaults (mirrored server-side in services/notify-channels.ts): an absent
 // webpush/bale flag is ON — nobody who receives today may be switched off by
 // the arrival of a preference; an absent sms flag is OFF — it costs money, and
@@ -25,12 +36,12 @@
 // Pulse sentence, which no template can carry. The gate is on the TAP
 // (sheet.js gateCard, the clips pattern): a free reader sees the row, taps the
 // box, and is told what it is before what it costs.
-import { el } from './util.js?v=102';
-import { api, currentUser } from './api.js?v=102';
-import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js?v=102';
-import { baleEnabled } from './config.js?v=102';
-import { openSheet, gateCard } from './sheet.js?v=102';
-import { premiumCta } from './premium-cta.js?v=102';
+import { el } from './util.js?v=103';
+import { api, currentUser } from './api.js?v=103';
+import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js?v=103';
+import { baleEnabled } from './config.js?v=103';
+import { openSheet, gateCard } from './sheet.js?v=103';
+import { premiumCta } from './premium-cta.js?v=103';
 
 const FA = '۰۱۲۳۴۵۶۷۸۹';
 const fa = (s) => String(s).replace(/\d/g, (d) => FA[Number(d)]);
@@ -109,6 +120,24 @@ export function remindersBlock(me) {
     .then(() => currentUser({ refresh: true }))
     .catch(() => { msg.textContent = 'ذخیره نشد؛ دوباره تلاش کن.'; });
 
+  // TWO keys decide whether a streak reminder happens, and the matrix writes
+  // only one of them. `notify_channels.<ch>.streak` picks the CHANNEL;
+  // `reminders.streak` decides whether the reminder is sent at all — and
+  // streak-reminder.ts is the one service of five reading that key whose
+  // default is OFF, so an account where it is false gets nothing by any
+  // channel. Ticking «استریک» in this table is a reader saying «send me the
+  // streak reminder, here», so the tick carries the master key with it.
+  // Without this, an amber tick sat in the profile, survived every reload, and
+  // delivered nothing — with no surface anywhere saying why (two readers,
+  // 2026-09-18).
+  const implyMaster = (kind) => {
+    if (state[kind]) return null;
+    state[kind] = true;
+    master.checked = true;
+    syncMaster();
+    return patchMaster();
+  };
+
   // ---- master --------------------------------------------------------------
   const master = el('input', { type: 'checkbox', role: 'switch', class: 'dcp-rem-sw', id: 'dcp-rem-master' });
   master.checked = state.new_content || state.streak;
@@ -152,6 +181,7 @@ export function remindersBlock(me) {
           const res = await ensurePushSubscription();
           msg.textContent = res === 'ok' ? '' : guidanceText(res);
         }
+        if (input.checked) await implyMaster(k);
         await patchPrefs();
       },
     })),
@@ -167,7 +197,11 @@ export function remindersBlock(me) {
     ...['new_content', 'streak'].map((k) => cell({
       checked: prefs.bale[k], disabled: !baleLinked, amber: false,
       label: (k === 'streak' ? 'استریک' : 'مطلب جدید') + ' از بله',
-      onChange: async (input) => { prefs.bale[k] = input.checked; await patchPrefs(); },
+      onChange: async (input) => {
+        prefs.bale[k] = input.checked;
+        if (input.checked) await implyMaster(k);
+        await patchPrefs();
+      },
     })),
   ]) : null;
 
@@ -195,7 +229,11 @@ export function remindersBlock(me) {
     smsSub = phoneNode(me.phone);
     smsCell = cell({
       checked: prefs.sms.streak, amber: true, label: smsLabel,
-      onChange: async (input) => { prefs.sms.streak = input.checked; await patchPrefs(); },
+      onChange: async (input) => {
+        prefs.sms.streak = input.checked;
+        if (input.checked) await implyMaster('streak');
+        await patchPrefs();
+      },
     });
   }
   const smsRow = el('tr', { class: 'is-premium' + (hasPhone || !isPremium ? '' : ' is-muted') }, [

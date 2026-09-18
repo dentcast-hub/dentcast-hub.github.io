@@ -21,12 +21,12 @@
 //     you did; the compass is where what you have never done belongs.
 //   · Zero is never printed as a section. A month with no league weeks has no
 //     league section, not a «۰ هفته» one — same rule as the heart count.
-import { el, faNum } from './util.js?v=102';
-import { api } from './api.js?v=102';
-import { FOLDER_EN } from './content-index.js?v=102';
-import { markReturnTrail } from './return-trail.js?v=102';
-import { monthName, shiftMonth } from './jalali-month.js?v=102';
-import { badgeIcon } from './achievements.js?v=102';
+import { el, faNum } from './util.js?v=103';
+import { api } from './api.js?v=103';
+import { FOLDER_EN } from './content-index.js?v=103';
+import { markReturnTrail } from './return-trail.js?v=103';
+import { monthName, shiftMonth } from './jalali-month.js?v=103';
+import { badgeIcon } from './achievements.js?v=103';
 
 const RETURN = { url: '/plus/report.html', eyebrow: 'گزارش ماهانه', title: 'گزارش ماهانه', iconId: 'icon-chart-bar' };
 

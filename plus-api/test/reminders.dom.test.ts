@@ -10,8 +10,12 @@
 //   · a premium reader without a phone sees the row greyed with the reason,
 //     not a missing row;
 //   · every write sends the WHOLE `notify_channels` object (PATCH /me merges
-//     `settings` one level deep), and never touches `reminders`;
-//   · the master switch still writes `reminders` whole, both keys together.
+//     `settings` one level deep);
+//   · the master switch still writes `reminders` whole, both keys together;
+//   · and a tick CARRIES the master key for its kind when that key is off —
+//     the matrix picks a channel, the master decides whether the reminder
+//     happens at all, and a tick that saves into silence is what two readers
+//     hit on 2026-09-18.
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 const calls: Array<Record<string, unknown>> = [];
@@ -114,6 +118,43 @@ describe('the matrix', () => {
       },
     });
     expect((calls[0].settings as Record<string, unknown>).reminders).toBeUndefined();
+  });
+
+  it('a tick carries the master key when that key is off — the matrix alone cannot deliver', async () => {
+    // The state the profile draws as fully live while the streak column is dead:
+    // the master renders on `new_content || streak`, so new_content alone lights
+    // it. Ticking پیامک here used to write a preference that nothing would read.
+    const root = remindersBlock(me({ settings: { reminders: { new_content: true, streak: false } } }));
+    document.body.appendChild(root);
+    const master = root.querySelector('#dcp-rem-master') as HTMLInputElement;
+    expect(master.checked).toBe(true); // lit by new_content — this is the trap
+
+    boxes(row(root, 2))[0].click();
+    await tick();
+
+    // Both halves, and the master one FIRST: the channel is worthless without it.
+    expect(calls).toHaveLength(2);
+    expect(calls[0]).toEqual({ settings: { reminders: { new_content: true, streak: true } } });
+    const written = (calls[1].settings as { notify_channels: Record<string, Record<string, boolean>> }).notify_channels;
+    expect(written.sms).toEqual({ streak: true });
+  });
+
+  it('a tick does NOT touch the master when it is already on', async () => {
+    const root = remindersBlock(me());
+    document.body.appendChild(root);
+    boxes(row(root, 2))[0].click();
+    await tick();
+    expect(calls).toHaveLength(1);
+    expect((calls[0].settings as Record<string, unknown>).reminders).toBeUndefined();
+  });
+
+  it('opening the profile never signs a reader up for a kind they did not ask for', async () => {
+    // The repair is on the TICK, never on render: `{new_content:false}` is a
+    // reader who declined article notices, not a state to quietly fix for them.
+    const root = remindersBlock(me({ settings: { reminders: { new_content: false, streak: true } } }));
+    document.body.appendChild(root);
+    await tick();
+    expect(calls).toHaveLength(0);
   });
 
   it('a free reader tapping پیامک gets the gate and nothing is written', async () => {
