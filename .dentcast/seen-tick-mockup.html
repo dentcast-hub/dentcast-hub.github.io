@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>تیکِ سه‌حالته — ماکاپ برای تصمیم</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10); --line-strong:rgba(2,35,96,.18);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --danger:#c2384a; --danger-bg:rgba(194,56,74,.08); --danger-bd:rgba(194,56,74,.28);
+    --ok:#1a7f4b; --ok-bg:rgba(26,127,75,.08); --ok-bd:rgba(26,127,75,.28);
+    --warn:#a56a12; --warn-bg:rgba(165,106,18,.09); --warn-bd:rgba(165,106,18,.28);
+    --amber:#c9922b; --amber-bg:rgba(201,146,43,.10); --amber-bd:rgba(201,146,43,.32);
+    --seen:#22a06b;            /* the green already in plus.css today */
+    --mock-ink:#3b2f7a; --mock-bg:#efeaff; --mock-bd:rgba(59,47,122,.22);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --danger:#ff8095; --danger-bg:rgba(255,128,149,.12); --danger-bd:rgba(255,128,149,.30);
+    --ok:#5fd39a; --ok-bg:rgba(95,211,154,.10); --ok-bd:rgba(95,211,154,.30);
+    --warn:#e0a94a; --warn-bg:rgba(224,169,74,.12); --warn-bd:rgba(224,169,74,.30);
+    --amber:#e3b849; --amber-bg:rgba(227,184,73,.12); --amber-bd:rgba(227,184,73,.34);
+    --seen:#3fc78c;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --danger:#ff8095; --danger-bg:rgba(255,128,149,.12); --danger-bd:rgba(255,128,149,.30);
+    --ok:#5fd39a; --ok-bg:rgba(95,211,154,.10); --ok-bd:rgba(95,211,154,.30);
+    --warn:#e0a94a; --warn-bg:rgba(224,169,74,.12); --warn-bd:rgba(224,169,74,.30);
+    --amber:#e3b849; --amber-bg:rgba(227,184,73,.12); --amber-bd:rgba(227,184,73,.34);
+    --seen:#3fc78c;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }
+  body{ background:var(--bg); color:var(--txt);
+        font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif;
+        direction:rtl; margin:0; padding-inline:16px; padding-block:0 6rem;
+        line-height:1.85; font-size:15px; }
+  *{ box-sizing:border-box; }
+  :focus-visible{ outline:2px solid var(--ac); outline-offset:2px; border-radius:6px; }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+  code{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.83em;
+        direction:ltr; unicode-bidi:isolate; color:var(--txt2); }
+
+  .wrap{ max-width:940px; margin:0 auto; }
+  header.hd{ padding-block:2rem .6rem; }
+  .kick{ font-size:.73rem; font-weight:700; letter-spacing:.04em; color:var(--mock-ink);
+         background:var(--mock-bg); border:1px solid var(--mock-bd); border-radius:999px;
+         padding:.2rem .75rem; display:inline-block; margin-bottom:.8rem; }
+  header.hd h1{ font-size:1.7rem; font-weight:800; color:var(--pr); margin:0 0 .5rem; text-wrap:balance; }
+  header.hd p{ margin:0 0 .5rem; color:var(--txt2); max-width:70ch; }
+
+  section{ margin-top:3.2rem; }
+  .sh{ display:flex; align-items:baseline; gap:.7rem; flex-wrap:wrap;
+       margin-bottom:.9rem; padding-bottom:.5rem; border-bottom:1px solid var(--border); }
+  .sh h2{ margin:0; font-size:1.06rem; font-weight:800; color:var(--mock-ink); }
+  .sh span{ color:var(--txt3); font-size:.81rem; }
+  .note{ color:var(--txt2); max-width:74ch; margin:.2rem 0 1.1rem; }
+  .note strong{ color:var(--txt); font-weight:700; }
+  .note em{ color:var(--txt); font-style:normal; font-weight:600; }
+
+  .card{ background:var(--surface); border:1px solid var(--border); border-radius:16px;
+         box-shadow:var(--card-sh); padding:1.15rem 1.25rem; }
+  .cols{ display:grid; gap:1.1rem; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); align-items:start; }
+  .cap{ font-size:.78rem; color:var(--txt3); margin:.55rem .15rem 0; }
+
+  table.g{ border-collapse:collapse; width:100%; font-size:.86rem; }
+  table.g th,table.g td{ text-align:right; padding:.6rem .65rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  table.g th{ color:var(--txt3); font-weight:600; font-size:.76rem; }
+  .scroll{ overflow-x:auto; }
+
+  .tag{ display:inline-block; font-size:.7rem; font-weight:700; border-radius:999px;
+        padding:.1rem .55rem; border:1px solid; white-space:nowrap; }
+  .tag-ok{ color:var(--ok); background:var(--ok-bg); border-color:var(--ok-bd); }
+  .tag-amber{ color:var(--amber); background:var(--amber-bg); border-color:var(--amber-bd); }
+  .tag-bad{ color:var(--danger); background:var(--danger-bg); border-color:var(--danger-bd); }
+
+  /* ══ the tick itself — one shape, three fills ══════════════════════════ */
+  .tk{ inline-size:17px; block-size:17px; border-radius:50%; flex:none;
+       display:inline-grid; place-items:center; font-size:.62rem; font-weight:800;
+       line-height:1; border:1.5px solid transparent; }
+  .tk-none{ border-color:var(--line-strong); color:transparent; }
+  .tk-seen{ border-color:var(--seen); color:var(--seen); }
+  .tk-read{ border-color:var(--seen); background:var(--seen); color:#fff; }
+  .tk-lock{ border-color:var(--amber-bd); background:var(--amber-bg); color:var(--amber); font-size:.58rem; }
+
+  /* ══ a list of articles, the way a folder landing page reads ═══════════ */
+  .lst{ background:var(--surface); border:1px solid var(--border); border-radius:16px;
+        box-shadow:var(--card-sh); overflow:hidden; }
+  .lst-h{ padding:.7rem .95rem; border-bottom:1px solid var(--border);
+          font-size:.8rem; font-weight:700; color:var(--txt2);
+          display:flex; align-items:center; justify-content:space-between; gap:.6rem; }
+  .lst-h .who{ font-size:.68rem; font-weight:700; border-radius:999px; padding:.1rem .5rem; border:1px solid; }
+  .who-free{ color:var(--txt3); border-color:var(--line-strong); background:var(--surface2); }
+  .who-prem{ color:var(--amber); border-color:var(--amber-bd); background:var(--amber-bg); }
+  .row{ display:flex; align-items:center; gap:.6rem; padding:.62rem .95rem;
+        border-bottom:1px solid var(--border); }
+  .row:last-child{ border-bottom:0; }
+  .row .ttl{ font-size:.87rem; color:var(--txt); flex:1 1 auto; min-width:0;
+             overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .row .mt{ font-size:.71rem; color:var(--txt3); flex:none; }
+
+  /* the one explanatory line a free reader gets, once per list */
+  .hint{ display:flex; align-items:center; gap:.5rem; padding:.55rem .95rem;
+         border-bottom:1px solid var(--border); background:var(--surface2);
+         font-size:.76rem; color:var(--txt2); cursor:pointer; }
+  .hint b{ color:var(--txt); font-weight:700; }
+  .hint .go{ margin-inline-start:auto; color:var(--amber); font-weight:700; font-size:.72rem; flex:none; }
+
+  /* homepage rail cell — the tick sits in a fixed end-slot, not before the title */
+  .rail{ display:grid; gap:.5rem; }
+  .rcard{ position:relative; background:var(--surface); border:1px solid var(--border);
+          border-radius:12px; padding:.6rem .8rem; padding-inline-end:2rem; }
+  .rcard b{ display:block; font-size:.85rem; font-weight:700; }
+  .rcard small{ color:var(--txt3); font-size:.72rem; }
+  .rcard .tk{ position:absolute; inset-inline-end:.55rem; top:50%; transform:translateY(-50%); }
+
+  .legend{ display:flex; flex-wrap:wrap; gap:1.1rem; margin:0; padding:0; list-style:none; }
+  .legend li{ display:flex; align-items:center; gap:.5rem; font-size:.82rem; color:var(--txt2); }
+  .legend b{ color:var(--txt); font-weight:700; }
+
+  .sheet{ background:var(--surface); border:1px solid var(--border); border-radius:18px 18px 0 0;
+          box-shadow:var(--card-sh); padding:1.1rem 1.15rem 1.3rem; max-width:340px; margin-inline:auto;
+          border-bottom:0; }
+  .sheet .grab{ inline-size:38px; block-size:4px; border-radius:99px; background:var(--line-strong);
+                margin:0 auto .9rem; }
+  .sheet h3{ margin:0 0 .5rem; font-size:.98rem; font-weight:800; }
+  .sheet p{ margin:0 0 .7rem; font-size:.83rem; color:var(--txt2); }
+  .sheet .btn{ display:block; text-align:center; font-size:.83rem; font-weight:700;
+               border-radius:11px; padding:.55rem; border:1px solid var(--amber-bd);
+               background:var(--amber-bg); color:var(--amber); }
+  .sheet .btn2{ display:block; text-align:center; font-size:.79rem; color:var(--txt3);
+                padding:.5rem; margin-top:.15rem; }
+
+  .warnbox{ border:1px solid var(--danger-bd); background:var(--danger-bg); border-radius:14px;
+            padding:.85rem 1rem; margin-top:.9rem; font-size:.85rem; }
+  .warnbox b{ color:var(--danger); }
+  .okbox{ border:1px solid var(--ok-bd); background:var(--ok-bg); border-radius:14px;
+          padding:.85rem 1rem; margin-top:.9rem; font-size:.85rem; }
+  .okbox b{ color:var(--ok); }
+</style>
+<div class="wrap">
+
+<header class="hd">
+  <span class="kick">ماکاپ · برای تصمیم، هنوز پیاده نشده</span>
+  <h1>تیکِ سه‌حالته، و اینکه کاربرِ رایگان چطور می‌فهمد</h1>
+  <p>سه چیز در یک صفحه: <em>امکان‌سنجی</em> (چه داده‌ای داریم و چه‌قدر کار است)، <em>طرح</em> (سه حالت،
+     و نمای رایگان در برابر پریمیوم)، و <em>ایده‌ی قفلِ امبر</em> که خودت هم بهش شک داشتی — اینجا
+     کشیده شده تا دیده شود، نه توصیف.</p>
+</header>
+
+<!-- ─────────────────────────────────────────────────────────── 1 -->
+<section>
+  <div class="sh"><h2>۱ · امروز چه داریم</h2><span>چیزی که همین حالا زنده است</span></div>
+  <p class="note">
+    <code>GET /seen</code> یک فهرستِ تخت برمی‌گرداند: هر <code>content_id</code> که کاربر با آن
+    <em>هر نوع</em> برخوردی داشته — باز کردن (<code>article_viewed</code>)، تا آخر خواندن، گوش دادن،
+    هایلایت کردن. <code>plus.js</code> (تابع <code>initSeenTicks</code>) روی هر صفحه‌ای که دستِ‌کم دو
+    لینکِ محتوایی دارد یک <code>✓</code> می‌گذارد: خاکستریِ کم‌رنگ، یا سبزِ <code>#22a06b</code>.
+    دو حالت، و هر دو برای هر کاربرِ واردشده.
+  </p>
+  <p class="note">
+    <strong>ایرادِ امروز:</strong> تیک می‌گوید «باز کرده‌ای»، نه «خوانده‌ای». صفحه‌ای که سه ثانیه باز
+    و بسته شده برای همیشه سبز است. یعنی همان چیزی که می‌خواهی بفروشی، الان دقیق هم نیست.
+  </p>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── 2 -->
+<section>
+  <div class="sh"><h2>۲ · سه حالت</h2><span>یک شکل، سه پُری</span></div>
+  <p class="note">
+    یک دایره‌ی ۱۷ پیکسلی در هر سه حالت، و آنچه فرق می‌کند <em>پُری</em> است نه فقط رنگ — خالی،
+    تو‌خالیِ سبز، پُرِ سبز. عمداً: در اندازه‌ی ۱۷ پیکسل تفاوتِ <em>رنگ</em> به‌تنهایی برای بخشی از
+    خواننده‌ها اصلاً خوانده نمی‌شود (کوررنگیِ قرمز-سبز)، ولی تفاوتِ پُر و خالی همیشه خوانده می‌شود.
+  </p>
+  <div class="card">
+    <ul class="legend">
+      <li><span class="tk tk-none">✓</span> <b>ندیده‌ای</b> — جای ثابت، خالی</li>
+      <li><span class="tk tk-seen">✓</span> <b>بازش کرده‌ای</b> — تو‌خالی</li>
+      <li><span class="tk tk-read">✓</span> <b>تا آخر خوانده‌ای</b> — پُر</li>
+    </ul>
+  </div>
+  <div class="okbox">
+    <b>یک نکته‌ی مهاجرت:</b> امروز سبزِ پُر یعنی «باز کرده‌ای». اگر پُر را به «خوانده‌ای» بدهی، سبزهای
+    فعلیِ همه از پُر به تو‌خالی برمی‌گردند. این <em>دیده می‌شود</em> ولی مثل ازدست‌رفتن خوانده نمی‌شود،
+    چون علامت سرِ جایش می‌ماند و فقط دقیق‌تر می‌شود. اگر برعکس طراحی کنی (پُر بماند برای باز کردن)،
+    دیگر جایی برای حالتِ سوم نمی‌ماند.
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── 3 -->
+<section>
+  <div class="sh"><h2>۳ · رایگان در برابر پریمیوم</h2><span>یک فهرستِ واقعی، دو بار</span></div>
+  <div class="cols">
+    <div>
+      <div class="lst">
+        <div class="lst-h"><span>کلینیکال اینسایت</span><span class="who who-prem">پریمیوم</span></div>
+        <div class="row"><span class="tk tk-read">✓</span><span class="ttl">چرا مارجینِ زیرلثه‌ای همیشه یک تصمیم است</span><span class="mt">۱۴ شهریور</span></div>
+        <div class="row"><span class="tk tk-seen">✓</span><span class="ttl">شکستِ چسبندگی، از نگاهِ سطحِ دنتین</span><span class="mt">۹ شهریور</span></div>
+        <div class="row"><span class="tk tk-read">✓</span><span class="ttl">ایمپرشنِ دیجیتال و مرزِ خطای بالینی</span><span class="mt">۲ شهریور</span></div>
+        <div class="row"><span class="tk tk-none">✓</span><span class="ttl">بازسازیِ اندوشده: پست یا بدون پست</span><span class="mt">۲۷ مرداد</span></div>
+        <div class="row"><span class="tk tk-none">✓</span><span class="ttl">تمام‌سرامیک در مولرِ دوم</span><span class="mt">۲۱ مرداد</span></div>
+      </div>
+      <p class="cap">پریمیوم: هر سه حالت. «خوانده‌ام» از همان منبعی می‌آید که نوارِ پیشرفت
+        می‌آید، پس این دو هیچ‌وقت با هم اختلاف پیدا نمی‌کنند.</p>
+    </div>
+    <div>
+      <div class="lst">
+        <div class="lst-h"><span>کلینیکال اینسایت</span><span class="who who-free">رایگان</span></div>
+        <div class="hint">
+          <span class="tk tk-read">✓</span>
+          <span>تیکِ <b>پُر</b> یعنی تا آخر خوانده‌ای — و فهرستِ نخوانده‌ها</span>
+          <span class="go">ببین ›</span>
+        </div>
+        <div class="row"><span class="tk tk-seen">✓</span><span class="ttl">چرا مارجینِ زیرلثه‌ای همیشه یک تصمیم است</span><span class="mt">۱۴ شهریور</span></div>
+        <div class="row"><span class="tk tk-seen">✓</span><span class="ttl">شکستِ چسبندگی، از نگاهِ سطحِ دنتین</span><span class="mt">۹ شهریور</span></div>
+        <div class="row"><span class="tk tk-seen">✓</span><span class="ttl">ایمپرشنِ دیجیتال و مرزِ خطای بالینی</span><span class="mt">۲ شهریور</span></div>
+        <div class="row"><span class="tk tk-none">✓</span><span class="ttl">بازسازیِ اندوشده: پست یا بدون پست</span><span class="mt">۲۷ مرداد</span></div>
+        <div class="row"><span class="tk tk-none">✓</span><span class="ttl">تمام‌سرامیک در مولرِ دوم</span><span class="mt">۲۱ مرداد</span></div>
+      </div>
+      <p class="cap">رایگان: دو حالتی که امروز هم دارد — <strong>چیزی گرفته نمی‌شود</strong>. حالتِ سوم
+        هیچ‌وقت ظاهر نمی‌شود، و همان یک خطِ بالای فهرست می‌گوید چیست. یک خط در هر صفحه،
+        نه یک قفل در هر ردیف.</p>
+    </div>
+  </div>
+
+  <div class="cols" style="margin-top:1.6rem">
+    <div>
+      <div class="sheet">
+        <div class="grab"></div>
+        <h3>تیکِ پُر چیست</h3>
+        <p>تیکِ تو‌خالی یعنی این صفحه را باز کرده‌ای. تیکِ پُر یعنی تا آخرش رفته‌ای — و با آن،
+           «نخوانده‌های این پوشه» یک فهرستِ واقعی می‌شود، نه یک حدس.</p>
+        <p>روی هر دستگاهی، و حتی بعد از پاک‌کردنِ تاریخچه‌ی مرورگر؛ این حافظه به حسابِ توست،
+           نه به مرورگر.</p>
+        <span class="btn">دیدنِ اشتراک پریمیوم</span>
+        <span class="btn2">فعلاً نه</span>
+      </div>
+      <p class="cap">شیتی که با تپ روی آن خط باز می‌شود. اول می‌گوید <em>چه هست</em>، بعد
+        <em>چند است</em> — همان ترتیبی که گیت‌کاردِ up-board دارد.</p>
+    </div>
+    <div>
+      <div class="card">
+        <div style="font-size:.8rem;color:var(--txt3);margin-bottom:.6rem">صفحه‌ی اصلی — ریلِ «تازه‌ترین»</div>
+        <div class="rail">
+          <div class="rcard"><b>پلاک صفر ۵: بیمار چه تایپ می‌کند</b><small>پلاک صفر</small><span class="tk tk-read">✓</span></div>
+          <div class="rcard"><b>اندوشده‌ها و انتخابِ رستوریشن</b><small>کلینیکال اینسایت</small><span class="tk tk-seen">✓</span></div>
+          <div class="rcard"><b>پرامپتولوژیست ۷: محدودیت‌ها</b><small>پرامپتولوژیست</small><span class="tk tk-none">✓</span></div>
+        </div>
+      </div>
+      <p class="cap">در صفحه‌ی اصلی تیک در یک جایگاهِ ثابتِ انتهای کارت می‌نشیند (همین حالا هم
+        همین‌طور است) و <strong>خطِ توضیح آنجا نمی‌آید</strong> — درِ ورودیِ سایت جای پیامِ پی‌وال نیست.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── 4 -->
+<section>
+  <div class="sh"><h2>۴ · ایده‌ی قفلِ امبر</h2><span>همان چیزی که پیشنهاد دادی، کشیده‌شده</span></div>
+  <p class="note">
+    پیشنهادت: برای کاربرِ رایگان روی <em>همه‌ی</em> مطالب یک تیک به رنگِ پریمیوم با قفلِ کوچک.
+    خودت گفتی ممکن است طرف فکر کند مطالب قفل‌اند. این است:
+  </p>
+  <div class="cols">
+    <div>
+      <div class="lst">
+        <div class="lst-h"><span>کلینیکال اینسایت</span><span class="who who-free">رایگان</span></div>
+        <div class="row"><span class="tk tk-lock">🔒</span><span class="ttl">چرا مارجینِ زیرلثه‌ای همیشه یک تصمیم است</span><span class="mt">۱۴ شهریور</span></div>
+        <div class="row"><span class="tk tk-lock">🔒</span><span class="ttl">شکستِ چسبندگی، از نگاهِ سطحِ دنتین</span><span class="mt">۹ شهریور</span></div>
+        <div class="row"><span class="tk tk-lock">🔒</span><span class="ttl">ایمپرشنِ دیجیتال و مرزِ خطای بالینی</span><span class="mt">۲ شهریور</span></div>
+        <div class="row"><span class="tk tk-lock">🔒</span><span class="ttl">بازسازیِ اندوشده: پست یا بدون پست</span><span class="mt">۲۷ مرداد</span></div>
+        <div class="row"><span class="tk tk-lock">🔒</span><span class="ttl">تمام‌سرامیک در مولرِ دوم</span><span class="mt">۲۱ مرداد</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="warnbox">
+        <b>سه دلیل که این کار نمی‌کند</b>
+        <p style="margin:.5rem 0 0;color:var(--txt2)">
+          <strong>یک:</strong> امبر در کلِ سایت یک معنی دارد و نوشته‌ای‌اش — «این چیزی است که اشتراک
+          می‌خرد». تیک دقیقاً <em>چسبیده به عنوان</em> کشیده می‌شود (<code>insertBefore(a.firstChild)</code>)،
+          پس نشانِ امبر عنوان را برچسب می‌زند، نه وضعیت را.
+        </p>
+        <p style="margin:.5rem 0 0;color:var(--txt2)">
+          <strong>دو:</strong> روی <em>همه</em>ی ردیف‌ها یعنی پوششِ ۱۰۰٪ — سایتی که هیچ مطلبِ پولی
+          ندارد، تماماً پولی به‌نظر می‌رسد. و این روی صفحه‌ی اصلی هم اجرا می‌شود.
+        </p>
+        <p style="margin:.5rem 0 0;color:var(--txt2)">
+          <strong>سه:</strong> ۵۰۰ قفلِ تکراری، همان «تبلیغ در هر صفحه» است که قانونِ خودت درباره‌ی
+          گفت‌وگوی زیر مطلب ردش می‌کند.
+        </p>
+      </div>
+      <p class="cap">شهودت درست بود؛ فقط علتش از چیزی که فکر می‌کردی جدی‌تر است — مشکل ابهام نیست،
+        این است که نشانه <em>معنیِ دیگری دارد</em> و آن معنی از قبل ثبت شده.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── 5 -->
+<section>
+  <div class="sh"><h2>۵ · امکان‌سنجی</h2><span>چه چیزی لازم است</span></div>
+  <div class="card scroll">
+    <table class="g">
+      <tr><th>تکه</th><th>کار</th><th>اندازه</th></tr>
+      <tr>
+        <td>دیتابیس</td>
+        <td>هیچ. هر دو سیگنال از قبل نوشته می‌شوند: <code>article_viewed</code> در
+            <code>user_activity</code>، و «خوانده» همان <code>getConsumedContentIds</code> است
+            (هایلایت ∪ <code>article_completed</code> ∪ <code>episode_listened</code>).</td>
+        <td><span class="tag tag-ok">صفر</span></td>
+      </tr>
+      <tr>
+        <td><code>GET /seen</code></td>
+        <td>به‌جای یک آرایه، دو تا: <code>viewed</code> و <code>completed</code>. برای کاربرِ رایگان
+            <code>completed</code> <em>غایب</em> باشد، نه خالی — همان الگوی <code>due_card_count</code>
+            در <code>/me</code>. کلیدِ قدیمیِ <code>seen</code> یک نسخه بماند تا کلاینتِ کش‌شده نشکند.</td>
+        <td><span class="tag tag-ok">~۱۵ خط</span></td>
+      </tr>
+      <tr>
+        <td><code>initSeenTicks</code></td>
+        <td>انتخابِ کلاس از دو مجموعه به‌جای یکی. همان حلقه.</td>
+        <td><span class="tag tag-ok">~۱۵ خط</span></td>
+      </tr>
+      <tr>
+        <td>CSS</td>
+        <td>سه قانون در <code>plus.css</code>، به‌علاوه‌ی نسخه‌ی تکراریِ صفحه‌ی اصلی در
+            <code>index.html</code> (جایگاهِ ثابت و placeholderِ <code>::after</code> باید با هم
+            هماهنگ بمانند — <code>index.html</code> هیچ CSS مشترکی بار نمی‌کند).</td>
+        <td><span class="tag tag-ok">کوچک</span></td>
+      </tr>
+      <tr>
+        <td>خطِ توضیح</td>
+        <td><strong>تنها تکه‌ی غیرپیش‌پاافتاده.</strong> <code>initSeenTicks</code> فقط لینک‌ها را
+            تزئین می‌کند و هیچ لنگری برای «سرِ فهرست» ندارد. باید تصمیم بگیری کجا بنشیند
+            (مثلاً قبل از والدِ مشترکِ لینک‌ها) و صفحه‌ی اصلی را از آن مستثنا کنی.</td>
+        <td><span class="tag tag-amber">نیاز به تصمیم</span></td>
+      </tr>
+      <tr>
+        <td>دسترس‌پذیری</td>
+        <td>تیک الان <code>aria-hidden</code> است (تزئینی). با سه حالت باید
+            <code>aria-label</code> بگیرد وگرنه اسکرین‌ریدر تفاوت را نمی‌گوید.</td>
+        <td><span class="tag tag-ok">۳ خط</span></td>
+      </tr>
+      <tr>
+        <td>مهاجرت / اطلاعیه</td>
+        <td>چون چیزی <em>گرفته</em> نمی‌شود، اطلاعیه خبرِ اضافه‌شدن است نه کم‌شدن.
+            <code>POST /admin/notices/broadcast</code>، مخاطب: همه.</td>
+        <td><span class="tag tag-ok">یک پیام</span></td>
+      </tr>
+      <tr>
+        <td>بعدش</td>
+        <td><code>asset_version.py --bump</code> و یک تستِ DOM برای سه حالت.</td>
+        <td><span class="tag tag-ok">معمول</span></td>
+      </tr>
+    </table>
+  </div>
+  <div class="okbox">
+    <b>مهم‌ترین قیدِ فنی:</b> «خوانده‌شده» باید <em>دقیقاً</em> همان
+    <code>getConsumedContentIds</code> باشد که نوارهای پیشرفت و مسیرها از آن می‌خوانند. اگر تعریفِ
+    دومی بسازی، یک روز پوشه‌ای ۱۰۰٪ نشان می‌دهد در حالی که یک مطلبش تیکِ پُر ندارد — و آن باگ
+    را کسی گزارش نمی‌کند، فقط اعتماد را می‌خورد.
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── 6 -->
+<section>
+  <div class="sh"><h2>۶ · تصمیم‌های باز</h2><span>چیزهایی که ماکاپ جواب‌شان را ندارد</span></div>
+  <div class="card">
+    <table class="g">
+      <tr><td style="width:34%"><b>فیلترِ نخوانده‌ها</b></td>
+          <td>شیت وعده‌اش را می‌دهد. خودش یک قابلیتِ جدا است (یک دکمه در سرِ فهرست که
+              خوانده‌شده‌ها را پنهان می‌کند). با تیک بیاید یا بعد از آن؟</td></tr>
+      <tr><td><b>هایلایت = خواندن؟</b></td>
+          <td><code>getConsumedContentIds</code> هایلایت را «خوانده» حساب می‌کند. درست است، ولی یعنی
+              یک هایلایت در پاراگرافِ اول، مطلب را پُر می‌کند. اگر بخواهی سخت‌گیرتر باشی، از
+              نوارِ پیشرفت جدا می‌افتی — که قیدِ بالا منعش می‌کند. پیشنهادم: دست نزن.</td></tr>
+      <tr><td><b>اپیزودها</b></td>
+          <td>«تا آخر» برای پادکست یعنی <code>episode_listened</code> (یک‌پنجمِ اپیزود). آستانه‌اش با
+              مقاله یکی نیست و شاید در شیت باید گفته شود.</td></tr>
+      <tr><td><b>کاربرِ ناشناس</b></td>
+          <td>الان هیچ تیکی نمی‌گیرد و placeholderِ خاکستری می‌بیند. همان بماند — خطِ توضیح هم
+              برایش کشیده نشود؛ کسی که حساب ندارد اول باید حساب بخواهد، نه اشتراک.</td></tr>
+    </table>
+  </div>
+</section>
+
+</div>
