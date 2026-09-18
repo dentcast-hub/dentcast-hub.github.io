@@ -18,8 +18,14 @@ let boardImpl: () => Promise<unknown>;
 let indexImpl: () => Promise<{ ok: boolean; json: () => Promise<unknown> }>;
 
 let countsImpl: () => Promise<unknown>;
+// The reader's tier, as /me answers it. The page reads this — not the board —
+// to decide the lock, so it is what most of the gate cases below drive.
+let meImpl: () => Promise<{ tier: string } | null>;
+let meStatusImpl: () => string;
 vi.mock('/plus/js/api.js', () => ({
   api: { voteBoard: () => boardImpl(), voteCounts: () => countsImpl() },
+  currentUser: () => meImpl(),
+  meStatus: () => meStatusImpl(),
 }));
 
 let ctaFrom: string | null = null;
@@ -117,6 +123,8 @@ const click = (sel: string) => (document.querySelector(sel) as HTMLElement).clic
 beforeEach(() => {
   vi.resetModules();
   boardImpl = () => Promise.resolve(BOARD);
+  meImpl = () => Promise.resolve({ tier: 'premium' });
+  meStatusImpl = () => 'user';
   // PUBLIC — every reader gets these, gate or no gate.
   countsImpl = () => Promise.resolve({ hearts: { 'notecast/n-2': 9, 'chairside/c-1': 4 } });
   indexImpl = () => Promise.resolve({ ok: true, json: async () => CATALOG });
@@ -311,6 +319,96 @@ describe('/up-board/', () => {
       (sheet.querySelector('.dcp-btn-primary') as HTMLElement).click();
       await settle();
       expect(loginOpened).toBe(1);
+    });
+
+    // ── THE WINDOW BEFORE THE BOARD ANSWERS ──
+    //
+    // The lock used to be set only in voteBoard()'s catch, so until that
+    // request came back the tab was unlocked AND pressable — and pressing it
+    // drew the date order a second time with rank numbers on it, because
+    // `rank` was still empty. Not a race a fast connection wins: the request
+    // sits behind a /health probe and a 30s deadline. The tier is what the
+    // lock needs, and /me already carries it.
+    const hangs = () => new Promise<never>(() => {});
+
+    it('locks the ranked tab from /me, without waiting for the board', async () => {
+      boardImpl = hangs;
+      meImpl = () => Promise.resolve({ tier: 'free' });
+      await mount();
+      expect(document.querySelector('[data-sort="top"]')!.classList.contains('is-locked')).toBe(true);
+    });
+
+    it('never draws the date order as a ranking while the board is in flight', async () => {
+      boardImpl = hangs;
+      meImpl = () => Promise.resolve({ tier: 'free' });
+      await mount();
+      click('[data-sort="top"]');
+      await settle();
+      // The gate, not a second copy of «تازه‌ترین» wearing rank numbers.
+      expect(document.querySelector('.dcp-sheet')).not.toBeNull();
+      expect(document.querySelectorAll('.ub-rank').length).toBe(0);
+      expect(document.querySelector('[data-sort="new"]')!.getAttribute('aria-selected')).toBe('true');
+      expect(titles()).toEqual(['پنجم', 'چهارم', 'سوم', 'دوم', 'اول']);
+    });
+
+    // A press can land before /me has answered either. It must WAIT for the
+    // answer rather than fall through into an arrangement that does not exist.
+    it('waits for the tier when pressed before /me answers', async () => {
+      boardImpl = hangs;
+      let release: (v: { tier: string }) => void = () => {};
+      const pending = new Promise<{ tier: string }>((r) => { release = r; });
+      meImpl = () => pending;
+      await mount();
+      click('[data-sort="top"]');
+      await settle();
+      expect(document.querySelectorAll('.ub-rank').length).toBe(0);   // nothing yet
+      release({ tier: 'free' });
+      await settle();
+      await settle();
+      expect(document.querySelector('.dcp-sheet')).not.toBeNull();     // the gate
+      expect(document.querySelectorAll('.ub-rank').length).toBe(0);
+    });
+
+    it('locks a signed-out reader from /me too', async () => {
+      boardImpl = hangs;
+      meImpl = () => Promise.resolve(null);
+      meStatusImpl = () => 'anon';
+      await mount();
+      expect(document.querySelector('[data-sort="top"]')!.classList.contains('is-locked')).toBe(true);
+      click('[data-sort="top"]');
+      await settle();
+      expect(document.querySelector('.dcp-sheet')!.querySelector('.dcp-btn-primary')!.textContent).toBe('ورود');
+    });
+
+    // «We could not ask» is not «you are not a subscriber», on this path either.
+    it('leaves the tab alone when /me could not be reached', async () => {
+      boardImpl = hangs;
+      meImpl = () => Promise.resolve(null);
+      meStatusImpl = () => 'error';
+      await mount();
+      expect(document.querySelector('[data-sort="top"]')!.classList.contains('is-locked')).toBe(false);
+    });
+
+    // A definite tier is never downgraded by a board request that died on the
+    // network — that would unlock the tab for a reader we know is gated.
+    it('keeps the lock when /me said free and the board request then failed', async () => {
+      meImpl = () => Promise.resolve({ tier: 'free' });
+      boardImpl = () => Promise.reject(new Error('offline'));
+      await mount();
+      expect(document.querySelector('[data-sort="top"]')!.classList.contains('is-locked')).toBe(true);
+      click('[data-sort="top"]');
+      await settle();
+      expect(document.querySelector('.dcp-sheet')!.textContent).toContain('ویژه‌ی پریمیوم');
+    });
+
+    // A subscriber is never made to wait on /me: the board answers and the
+    // ranking is drawn, lock or no lock.
+    it('lets a subscriber straight into the ranking', async () => {
+      await mount();
+      click('[data-sort="top"]');
+      await settle();
+      expect(document.querySelector('.dcp-sheet')).toBeNull();
+      expect(document.querySelectorAll('.ub-rank').length).toBeGreaterThan(0);
     });
 
     // The one failure this gate must not have: telling a paying reader to buy
