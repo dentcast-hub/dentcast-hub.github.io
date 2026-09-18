@@ -11,7 +11,7 @@
 // pricing page can report WHICH gate sends people who actually buy. That is the
 // only way to learn whether the review cards or the collections are what people
 // are really paying for.
-import { el } from './util.js?v=95';
+import { el } from './util.js?v=97';
 
 export const PRICING_URL = '/plus/pricing.html';
 
@@ -34,15 +34,20 @@ export const PRICING_URL = '/plus/pricing.html';
  * Deliberately NOT an upsell and NOT a login prompt: it names the real cause, and
  * offers the only thing that helps — trying again.
  */
-export function unreachableGate(root) {
+export function unreachableCard({ dashboardLink = true } = {}) {
   const retry = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'تلاش دوباره');
   retry.addEventListener('click', () => location.reload());
-  root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+  return el('div', { class: 'dcp-gate' }, [
     el('p', {}, 'ارتباط با سرور برقرار نشد.'),
     el('p', { class: 'dcp-muted' }, 'این یعنی نتوانستیم حسابت را بخوانیم — نه این‌که اشتراک نداری. اگر مشترکی، اشتراکت سرِ جایش است؛ چند لحظه بعد دوباره تلاش کن.'),
     retry,
-    el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/' }, 'رفتن به پیشخوان'),
-  ]));
+    dashboardLink ? el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/' }, 'رفتن به پیشخوان') : null,
+  ].filter(Boolean));
+}
+
+/** The same thing as the WHOLE of a page whose every part needed the answer. */
+export function unreachableGate(root) {
+  root.replaceChildren(unreachableCard());
 }
 
 /** Where a premium CTA points, remembering which surface it was pressed on. */

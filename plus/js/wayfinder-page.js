@@ -3,9 +3,9 @@
 // tool, so unlike pathways.html this page never gates itself outright.
 // Only how FAR the resulting flowchart goes depends on tier — handled inside
 // wayfinder.js, not here.
-import { currentUser, meStatus } from './api.js?v=95';
-import { renderWayfinder } from './wayfinder.js?v=95';
-import { registerSW } from './pwa.js?v=95';
+import { currentUser, meStatus } from './api.js?v=97';
+import { renderWayfinder } from './wayfinder.js?v=97';
+import { registerSW } from './pwa.js?v=97';
 
 async function main() {
   registerSW();
@@ -13,13 +13,22 @@ async function main() {
   if (!root) return;
 
   const user = await currentUser();
-  // An unreachable API must not silently cap a paying subscriber's session —
-  // treat it as "can't tell", not "not premium" (same reasoning premium-cta.js
-  // documents for unreachableGate, applied here as fail-open instead of a
-  // blocking retry screen, since the wizard itself needs no account at all).
-  const meForGating = user || (meStatus() === 'error' ? { tier: 'premium' } : null);
+  // «We could not ask» is its own answer, and it is NOT «premium» (founder
+  // decision, 2026-09-18). This page used to assume premium when /me failed,
+  // borrowing premium-cta.js's reasoning that an outage must not cap a paying
+  // subscriber. That reasoning is right where the server still guards the data
+  // — every other premium surface fetches from a `requirePremium` route, so a
+  // wrong guess in the browser costs a subscriber a few minutes and gives a
+  // stranger nothing. مسیریاب is the one premium feature computed ENTIRELY in
+  // the browser, from three public JSON files, with no server call to refuse
+  // it. Here the same guess hands the whole flowchart to anyone whose /me does
+  // not get a clean answer — an unreachable API, a filtered network, an
+  // adblocker, a 5xx — signed out included. So this page fails CLOSED, and the
+  // gate says which of the two happened rather than selling a subscription to
+  // someone who may already own one.
+  const unreachable = !user && meStatus() === 'error';
 
-  await renderWayfinder(root, meForGating);
+  await renderWayfinder(root, user, { unreachable });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', main);

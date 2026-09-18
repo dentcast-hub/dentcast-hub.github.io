@@ -6,12 +6,12 @@
 // (mode, حوزه, زیرموضوع, سطح, and the whole flowchart) is premium — see
 // renderPersonaGate(). Because of that, the flow itself is only ever reached
 // by a premium visitor, so it carries no tier cap of its own any more.
-import { el, icon, faNum } from './util.js?v=95';
-import { api } from './api.js?v=95';
-import { premiumCta, guestPremiumExtras, lapsedNote } from './premium-cta.js?v=95';
-import { openLoginModal } from './login-modal.js?v=95';
-import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=95';
-import { markReturnTrail } from './return-trail.js?v=95';
+import { el, icon, faNum } from './util.js?v=97';
+import { api } from './api.js?v=97';
+import { premiumCta, guestPremiumExtras, lapsedNote, unreachableCard } from './premium-cta.js?v=97';
+import { openLoginModal } from './login-modal.js?v=97';
+import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=97';
+import { markReturnTrail } from './return-trail.js?v=97';
 
 const returnToWayfinder = () => markReturnTrail({
   url: '/plus/wayfinder.html', eyebrow: 'مسیریاب', title: 'مسیریاب یادگیری', iconId: 'icon-radar',
@@ -109,7 +109,11 @@ function folderFa(model, typeKey) {
   return f ? f.fa : typeKey;
 }
 
-export async function renderWayfinder(root, me) {
+// `unreachable`: /me never got a clean answer (wayfinder-page.js). The wizard's
+// free first step still runs — it needs no account at all — but every gate past
+// it says so instead of asking a possible subscriber to sign in or to buy what
+// they may already own.
+export async function renderWayfinder(root, me, { unreachable = false } = {}) {
   root.replaceChildren(el('p', { class: 'dcp-loading' }, 'در حال آماده‌سازی مسیریاب…'));
 
   const engine = await loadEngine();
@@ -190,6 +194,10 @@ export async function renderWayfinder(root, me) {
   // modeStep's own grid, reusing its «چطور شروع کنیم؟» heading, the same way
   // renderCompassStep reuses compassStep's heading for its own gate.
   function renderPersonaGate() {
+    if (unreachable) {
+      modeGrid.replaceChildren(unreachableCard({ dashboardLink: false }));
+      return;
+    }
     if (!me) {
       const signIn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
       signIn.addEventListener('click', async () => {
