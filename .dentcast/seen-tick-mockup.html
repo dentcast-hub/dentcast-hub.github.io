@@ -158,10 +158,6 @@
                  border:1.5px solid var(--amber-bd); color:var(--amber); }
   .lockbar b{ font-weight:800; }
   .lockbar .go{ margin-inline-start:auto; color:var(--amber); font-weight:700; font-size:.72rem; flex:none; }
-  .oncebar{ display:flex; align-items:flex-start; gap:.55rem; padding:.62rem .95rem;
-            border-bottom:1px solid var(--border); background:var(--surface2);
-            font-size:.77rem; color:var(--txt2); }
-  .oncebar .x{ margin-inline-start:auto; color:var(--txt3); font-weight:700; flex:none; }
   .warnbox{ border:1px solid var(--danger-bd); background:var(--danger-bg); border-radius:14px;
             padding:.85rem 1rem; margin-top:.9rem; font-size:.85rem; }
   .warnbox b{ color:var(--danger); }
@@ -271,51 +267,44 @@
 
 <!-- ─────────────────────────────────────────────────────────── 4 -->
 <section>
-  <div class="sh"><h2>۴ · اینکه «باگ» خوانده نشود</h2><span>چهار قطعه، و هر چهارتا لازم است</span></div>
+  <div class="sh"><h2>۴ · لحن</h2><span>دو تا کافی است، و سومی خرابش می‌کند</span></div>
+  <p class="note">
+    خواستهٔ اولیه این بود که خواننده نفهمد چیزی خراب شده. جوابش <strong>یک نوار و یک اطلاعیه</strong>
+    است، نه یک دفاعیه. «۱۲ از ۷۷ خوانده‌ای» خودش مدرکِ سالم بودنِ داده است؛ اضافه کردنِ «نگران نباش
+    چیزی پاک نشده» روی آن، جمله‌ی کسی است که دارد عذرخواهی می‌کند — و آدم‌ها از لحنِ عذرخواهی
+    نتیجه می‌گیرند که واقعاً اتفاقِ بدی افتاده.
+  </p>
   <div class="cols">
     <div>
-      <div class="lst">
-        <div class="lst-h"><span>روزِ اولِ تغییر — کسی که قبلاً داشت</span><span class="who who-free">رایگان</span></div>
-        <div class="oncebar">
-          <span>ℹ️</span>
-          <span>نشانِ خوانده‌شده‌ها از این هفته بخشی از پریمیوم شد. آنچه خوانده‌ای ثبت است و
-                سرِ جایش می‌ماند — فقط نمایشِ تک‌به‌تکش پریمیوم است.</span>
-          <span class="x">✕</span>
+      <div class="card">
+        <div style="font-size:.8rem;color:var(--txt3);margin-bottom:.55rem">۱ — اطلاعیه، یک بار، قبل از انتشار</div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:.7rem .8rem">
+          <b style="display:block;font-size:.85rem">نشانِ خوانده‌شده‌ها</b>
+          <p style="margin:.2rem 0 0;font-size:.81rem;color:var(--txt2);line-height:1.75">
+            از هفته‌ی آینده، نشانی که کنارِ مطالب می‌گوید کدام‌ها را خوانده‌ای بخشی از پریمیوم می‌شود.
+            شمارشِ خواندن‌هایت مثل قبل برای همه می‌ماند.
+          </p>
         </div>
-        <div class="lockbar">
+      </div>
+      <p class="cap"><code>POST /admin/notices/broadcast</code>، مخاطب رایگان. همین. بدونِ توجیه،
+        بدونِ «به دلیلِ…» — یک تصمیمِ اعلام‌شده.</p>
+    </div>
+    <div>
+      <div class="card">
+        <div style="font-size:.8rem;color:var(--txt3);margin-bottom:.55rem">۲ — نوار، همیشه، خودش گویا</div>
+        <div class="lockbar" style="border-radius:10px;border:1px solid var(--amber-bd)">
           <span class="ico">✓</span>
           <span><b>۱۲ از ۷۷</b> مطلبِ این بخش را خوانده‌ای — دیدنِ اینکه <b>کدام‌ها</b>، با پریمیوم</span>
           <span class="go">🔒 ببین ›</span>
         </div>
-        <div class="row"><span class="tk tk-off">✓</span><span class="ttl">چرا مارجینِ زیرلثه‌ای همیشه یک تصمیم است</span><span class="mt">۱۴ شهریور</span></div>
-        <div class="row"><span class="tk tk-off">✓</span><span class="ttl">شکستِ چسبندگی، از نگاهِ سطحِ دنتین</span><span class="mt">۹ شهریور</span></div>
-        <div class="row"><span class="tk tk-off">✓</span><span class="ttl">ایمپرشنِ دیجیتال و مرزِ خطای بالینی</span><span class="mt">۲ شهریور</span></div>
       </div>
-      <p class="cap">نوارِ اطلاع‌رسانی فقط برای کسی که قبلاً تیک داشته، یک بار، و بسته‌شدنی. کاربرِ
-        تازه هیچ‌وقت نمی‌بیندش — چون او چیزی از دست نداده.</p>
-    </div>
-    <div>
-      <div class="sheet">
-        <div class="grab"></div>
-        <h3>کدام‌ها را خوانده‌ای</h3>
-        <p>تو ۱۲ مطلب از ۷۷ مطلبِ کلینیکال اینسایت را تا آخر خوانده‌ای. این عدد مالِ توست و
-           همیشه می‌بینی‌اش. آنچه پریمیوم نشان می‌دهد <b>کدام</b> دوازده‌تاست — یک نشان کنارِ
-           هر مطلب، و فهرستِ نخوانده‌ها.</p>
-        <p>روی هر دستگاهی، و حتی بعد از پاک‌کردنِ تاریخچه‌ی مرورگر؛ این حافظه به حسابِ توست
-           نه به مرورگر.</p>
-        <p style="font-size:.78rem;color:var(--txt3)">این قابلیت تا شهریور ۱۴۰۵ رایگان بود و حالا
-           بخشی از پریمیوم است. آنچه خوانده‌ای پاک نشده.</p>
-        <span class="btn">دیدنِ اشتراک پریمیوم</span>
-        <span class="btn2">فعلاً نه</span>
-      </div>
-      <p class="cap">شیت اول می‌گوید <em>چه هست</em>، بعد <em>چند است</em> — ترتیبِ گیت‌کاردِ
-        up-board. و صریح می‌گوید که تغییر کرده؛ همین جمله است که نظریه‌ی «خراب شده» را می‌کشد.</p>
+      <p class="cap">کسی که این جمله را می‌خواند فکر نمی‌کند سایت خراب است. نه نوارِ یک‌باره‌ی
+        اضافه لازم است، نه جمله‌ی تاریخچه در شیت — هر دو حذف شدند.</p>
     </div>
   </div>
   <div class="okbox">
-    <b>قطعه‌ی چهارم، و بی آن بقیه کم می‌آورند:</b> یک <code>POST /admin/notices/broadcast</code> با
-    مخاطبِ «رایگان»، <em>قبل</em> از انتشار. کسی که خبر را در اطلاعیه خوانده و بعد نوار را می‌بیند،
-    تیکتِ پشتیبانی نمی‌زند. برداشتنِ بی‌صدا دقیقاً همان چیزی است که «سایت خراب شده» تولید می‌کند.
+    <b>قاعده:</b> تغییر را یک بار اعلام کن، حالتِ جدید را بی‌حاشیه نشان بده، و دیگر به آن اشاره نکن.
+    هرچه بیشتر توضیح بدهی، بیشتر شبیهِ پس‌گرفتن به‌نظر می‌رسد تا شبیهِ یک قابلیتِ پریمیوم.
   </div>
 </section>
 
