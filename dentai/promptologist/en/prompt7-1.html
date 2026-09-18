@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Should You Not Give the Model? | Promptologist | DentCast</title>
+  <meta name="description" content="Chapter 7, Part 1: The six chapters before this were about what comes out of the model; this part asks where what you give the model goes &mdash; and why &ldquo;I removed the name&rdquo; is not enough.">
+  <link rel="canonical" href="https://dentcast.org/dentai/promptologist/en/prompt7-1.html">
+  <meta name="author" content="Dr. Foad Shahabian">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="What Should You Not Give the Model? | DentCast">
+  <meta property="og:description" content="Chapter 7, Part 1: The six chapters before this were about what comes out of the model; this part asks where what you give the model goes &mdash; and why &ldquo;I removed the name&rdquo; is not enough.">
+  <meta property="og:url" content="https://dentcast.org/dentai/promptologist/en/prompt7-1.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What Should You Not Give the Model? | DentCast">
+  <meta name="twitter:description" content="Chapter 7, Part 1: The six chapters before this were about what comes out of the model; this part asks where what you give the model goes &mdash; and why &ldquo;I removed the name&rdquo; is not enough.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/promptologist/en/prompt7-1.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/dentai/promptologist/en/prompt7-1.html"
+      },
+      "url": "https://dentcast.org/dentai/promptologist/en/prompt7-1.html",
+      "headline": "What Should You Not Give the Model?",
+      "description": "Chapter 7, Part 1: The six chapters before this were about what comes out of the model; this part asks where what you give the model goes — and why “I removed the name” is not enough.",
+      "datePublished": "2026-09-18",
+      "dateModified": "2026-09-18",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "Promptologist",
+        "url": "https://dentcast.org/dentai/promptologist"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Promptologist",
+          "item": "https://dentcast.org/dentai/promptologist"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "What Should You Not Give the Model?",
+          "item": "https://dentcast.org/dentai/promptologist/en/prompt7-1.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css?v=3">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-left:4px solid var(--ac);padding-left:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-fig{display:block;max-width:18.75rem;width:100%;height:auto;margin:1.125rem auto;border:1px solid var(--card-border);border-radius:0.875rem;box-shadow:var(--card-sh);}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+  </style>
+</head>
+<body>
+
+<!-- ── TOP BAR (English chrome, cloned from metanotes/en/meta-1.html) ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT (Promptologist structure, translated, LTR) ── -->
+<main class="article-content-wrap ep-page">
+  <a href="/dentai/promptologist/" class="ep-back">&#8592; Back to Promptologist</a>
+
+  <!-- 🌐 Persian Version (SEO-friendly language toggle) -->
+  <a class="lang-btn" href="../prompt7-1.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">Season 7 · Part 1</div>
+      <h1 class="ep-title">What Should You Not Give the Model?</h1>
+      <div class="ep-meta">
+        <span>&#9201; 10 min read</span>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">This Part</h2>
+      <div class="ep-caption"><p>The six chapters before this, for all their differences, were about one direction: what comes out of the model. Whether its answer is right or not, whether its source is real or invented, and how you are supposed to judge it. There is one question we did not ask in all that time, because its place was here: where does what you give the model go?</p><p>What sets this part apart from the rest of the book is that here, even if the model answers flawlessly, something wrong may still have been done.</p><p><strong>An Ordinary Night, an Ordinary Job</strong></p><p>It is late at night and you have to write a letter to the cardiologist of one of your patients. You copy the record and paste it into the chat box: first and last name, 62 years old, prosthetic mitral valve, warfarin, a plan to extract several teeth and fit an immediate denture, the date of the visit, the file number. You attach the panoramic as well and write: &ldquo;Write a formal consultation letter for the treating physician.&rdquo;</p><p>The letter is ready in a few seconds, and it is a good one. By the criterion of <a href="prompt5-1.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Chapter 5</a> it is on the right side of the line too: you hold the information, the treating physician makes the decision, and the model has only tidied up the text. From the output&rsquo;s side there is nothing wrong with it.</p><p>The problem is on the input side. The medical information of one specific person, with a name and an image, left your practice for the server of a company in another country. The patient does not know about it and nobody asked them. And keeping a patient&rsquo;s secrets is not merely professional ethics for us; we are legally bound to it as well.</p><p><strong>The Chat Box Is Not Your Notebook</strong></p><p>A chat window feels like a private space, the way writing something in your phone&rsquo;s notes does. But everything you send is stored on the servers of the company that built it. On personal accounts it may be used to train later versions of the model, unless you have switched that option off in the settings yourself. Some of the conversations are read by human reviewers, and you will never find out whether yours was among them. Deleting a conversation from your own list does not mean it is immediately deleted from the server either. And in this respect a paid personal subscription is not much different from a free account: the money you pay buys a stronger model, not a confidentiality agreement. Those commitments belong to the enterprise versions, which are effectively out of reach for an ordinary practice in Iran.</p><p>The real danger is not that tomorrow the model will write out your patient&rsquo;s record for somebody else. That is highly improbable. The danger is simpler: the patient&rsquo;s information is stored somewhere you have no control over, and people may see it whom the patient never gave permission to.</p><p><strong>A Problem That Is Specifically Ours: Shared Accounts and Middlemen</strong></p><p>A large share of Iranian users did not get their subscription directly from the company that makes it. There are two common arrangements, and from the standpoint of a patient&rsquo;s privacy both are worse than the ordinary case.</p><p>The first is the shared account: one account a seller has handed to several people so the cost is split. In these accounts the conversation history is shared. That is, the letter you wrote for that patient, with their name and their panoramic, is also visible in the conversation list of several strangers &mdash; plus the seller, who has the password.</p><p>The second is intermediary services: websites and Telegram bots that say &ldquo;the same ChatGPT, without a VPN.&rdquo; They take your message, send it to the model themselves and hand the answer back. That is, a third party is sitting in the middle of the conversation, seeing everything you send and able to store it.</p><p>If you use the model in either of these two ways, this part&rsquo;s rule is stricter for you: nothing that traces back to one specific patient.</p><p><strong>Why &ldquo;I Removed the Name&rdquo; Is Not Enough</strong></p><p>The first solution that occurs to everyone is removing the name. It is the right thing to do, but it protects less than it appears to.</p><p>The first problem is the combination of details. Consider this text: &ldquo;47-year-old man, sports teacher, congenital absence of both upper laterals, history of a motorcycle accident and a mandibular fracture in 1398.&rdquo; There is no name in it. But in a mid-sized city, anyone who knows this person will know who it is about from reading that one sentence. None of these details is an identifier on its own; their combination is. And the more unusual the case &mdash; which is usually the very reason you went to the model &mdash; the harder it becomes to anonymize.</p><p>The second problem is the file itself. On most panoramics and cephalograms the patient&rsquo;s name, date of birth and the name of the radiology center are printed in the corner of the image. The file name is very often the patient&rsquo;s name as well. DICOM and CBCT files carry the patient&rsquo;s full details in their accompanying data, even when nothing is visible on the image. And the portrait you take for a smile design is the face itself.</p><p>The third problem is specific to our field. In forensic medicine, when a body cannot be identified, one of the most reliable ways of establishing identity is comparing dental radiographs against dental records, because the combination of restorations, root canal treatments, missing teeth and root shapes is unique in every person. That is, a dental radiograph &mdash; even when you have cropped the name out of its corner &mdash; is itself an identifier, something close to a fingerprint. The claim that &ldquo;this image is anonymous&rdquo; is fundamentally untrue of a dental radiograph.</p><p><strong>A Patient Record Does Not Belong in the Knowledge Base</strong></p><p>In <a href="prompt6-2.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Chapter 6</a> I said to build a fixed workspace, with a fixed prompt and a few files in the knowledge base. Anyone who learns this sooner or later thinks of putting their patients&rsquo; records in the knowledge base too and having a practice assistant. This is worse than pasting them into a chat once, because the file stays there, is processed again in every later conversation, and if you one day share that workspace with a receptionist or a colleague, the records go with it. The knowledge base is for papers, protocols and your letter templates.</p><p><strong>So How Do You Get Help Without Handing the Patient to the Model?</strong></p><p>Almost everything this book recommends can be done without the patient&rsquo;s identity. You only need to change one habit: separate the question from the patient.</p><p>It does not matter to the model who the patient is. What it needs in order to answer is the clinical situation, and the clinical situation can be written without a specific person. Instead of the record text, write: &ldquo;A patient with a prosthetic heart valve who takes warfarin is due to have several teeth extracted. Write a consultation letter for a cardiologist asking about the following.&rdquo; Age, if it is needed, comes as a decade rather than an exact number. Occupation, city, date, file number and every detail irrelevant to the question are removed. The model writes the same letter, with blanks for the name and the date and the details, and you fill those blanks in on your practice&rsquo;s own system. If you write this kind of letter often, that same template goes into the knowledge base and next time you do not need to type anything about the patient at all.</p><p>To work out whether your text is anonymous enough, you have a simple test: if a colleague in your own city read this text, might they work out who it is about? If the answer is &ldquo;maybe,&rdquo; it still carries excess detail.</p><p>For radiographs the cost-benefit arithmetic is clear. In <a href="prompt5-2.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Chapter 5</a> we saw that language models read radiographs badly. That is, what you gain by sending the patient&rsquo;s image is small, and what you lose is a permanent identifier of that patient, which cannot be taken back.</p><p>Get the settings right as well: switch off the option to use conversations for training the model, and for more sensitive work use temporary chat mode. These reduce the risk but are not a substitute for anonymizing, because the data has still left the practice. And if a case comes up where you genuinely cannot work without the image or the patient&rsquo;s details &mdash; preparing a case presentation, for instance &mdash; the rule is the same one you apply to showing a patient&rsquo;s photograph at a seminar: the patient&rsquo;s own consent.</p><p><strong>What Is the Next Part About?</strong></p><p>This part was about the information you give the model. The next part is about the text you get from the model and want to hand to a patient or a colleague. The model has several behaviors that make you think that text has been checked, when it has not. The simplest example: you ask &ldquo;are you sure?&rdquo; and it answers &ldquo;yes, I am 92 percent sure.&rdquo; That number puts your mind at ease, but there is no calculation behind it. You saw three more of the same kind in Chapter 6 and I deferred explaining them. The next part goes after exactly these.</p></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Keywords</h2>
+      <div class="ep-chips"><span class="ep-chip">The Model&rsquo;s Input Versus the Model&rsquo;s Output</span><span class="ep-chip">Conversations Stored on the Provider&rsquo;s Server</span><span class="ep-chip">Personal Subscription Versus the Enterprise Version</span><span class="ep-chip">Shared Accounts and Intermediary Services</span><span class="ep-chip">The Combined Identifier: Why Removing the Name Is Not Enough</span><span class="ep-chip">Identifiers Hidden in the File (DICOM, CBCT)</span><span class="ep-chip">The Dental Radiograph as an Identifier</span><span class="ep-chip">Separating the Question From the Patient</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Tags</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#Promptologist</span><span class="ep-hashtag">#AI</span><span class="ep-hashtag">#AILiteracy</span><span class="ep-hashtag">#LanguageModel</span><span class="ep-hashtag">#LLM</span><span class="ep-hashtag">#ChatGPT</span><span class="ep-hashtag">#ProfessionalResponsibility</span><span class="ep-hashtag">#PatientPrivacy</span><span class="ep-hashtag">#Deidentification</span><span class="ep-hashtag">#SharedAccount</span></div>
+    </div>
+  </div>
+  <!-- Series prev/next (en tier). Targets are en counterparts only.
+       Previous part en page (en/prompt6-5.html) exists, so the previous
+       slot links to it; there is no next part yet, so the next slot stays a
+       disabled placeholder. -->
+  <div class="ep-nav">
+    <a href="prompt6-5.html" class="ep-nav-btn">&#8592; Previous Part</a>
+    <span class="ep-nav-btn ep-nav-empty">Next Part &#8594;</span>
+  </div>
+</main>
+
+<script src="/global-search.js?v=10" defer></script>
+<script src="/dc-nav.js?v=187" defer></script>
+</body>
+</html>
