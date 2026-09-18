@@ -348,6 +348,19 @@ export const LABELS = [
 ];
 
 // --- reading completion -----------------------------------------------------
+// Folders whose content cannot earn a completion, so no surface may show them a
+// progress number. LiteCast is excluded from `article_completed` by name in
+// plus.js (it has its own streak signal) and has no audio for
+// `episode_listened`; PhotoCast has no article body at all. For both, the only
+// route into «خوانده‌شده» is a highlight, so a percentage over them measures
+// nothing and reads as broken — «۰ از ۳۶» on the LiteCast landing page for
+// everybody, forever.
+//
+// Lived in dashboard.js as PROGRESS_EXCLUDE until the seen-tick bar needed the
+// same answer. One list, because two would drift and only one of them would be
+// noticed.
+export const PROGRESS_EXCLUDE = new Set(['photocast', 'litecast']);
+
 // The client emits `article_completed` (a qualifying streak + scoring action)
 // only when BOTH hold: the reader reached the end of the prose AND spent enough
 // *visible* time on the page. This is what makes plain reading — not just

@@ -1,18 +1,18 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, streakIsActiveToday } from './util.js?v=99';
-import { api } from './api.js?v=99';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=99';
-import { leagueEntryButton } from './league.js?v=99';
-import { openCollectionPicker, boardCover } from './collections.js?v=99';
-import { bundleRailCard, intentRow } from './pathways.js?v=99';
-import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js?v=99';
-import { currentMonthKey } from './jalali-month.js?v=99';
-import { renewalBanner } from './renewal-banner.js?v=99';
-import { premiumCta } from './premium-cta.js?v=99';
-import { maybeCelebrate } from './achievements.js?v=99';
-import { markReturnTrail } from './return-trail.js?v=99';
+import { el, faNum, streakIsActiveToday } from './util.js?v=100';
+import { api } from './api.js?v=100';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=100';
+import { leagueEntryButton } from './league.js?v=100';
+import { openCollectionPicker, boardCover } from './collections.js?v=100';
+import { bundleRailCard, intentRow } from './pathways.js?v=100';
+import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=100';
+import { currentMonthKey } from './jalali-month.js?v=100';
+import { renewalBanner } from './renewal-banner.js?v=100';
+import { premiumCta } from './premium-cta.js?v=100';
+import { maybeCelebrate } from './achievements.js?v=100';
+import { markReturnTrail } from './return-trail.js?v=100';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',
@@ -20,11 +20,6 @@ const returnToDashboard = () => markReturnTrail({
 
 const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
 const colorCss = (k) => (PALETTE.find((p) => p.key === k) || {}).css || 'transparent';
-
-// Folders intentionally left out of the per-folder reading-progress widget
-// (not article-style reading content). The folder list itself is still derived
-// dynamically from the content index; this only hides these specific keys.
-const PROGRESS_EXCLUDE = new Set(['photocast', 'litecast']);
 
 // `more`: an optional longer explanation, tucked behind a «؟» beside the hint —
 // same hidden-by-default reveal the homepage promo card already uses for its
