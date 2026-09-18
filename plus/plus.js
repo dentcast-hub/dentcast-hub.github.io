@@ -2,28 +2,28 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=101';
-import { currentUser, api } from './js/api.js?v=101';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=101';
-import { openCollectionPicker } from './js/collections.js?v=101';
-import { el, faNum } from './js/util.js?v=101';
-import { initHomeCard } from './js/home-card.js?v=101';
-import { initHomeFeatures } from './js/home-features.js?v=101';
-import { initHomeBundles } from './js/home-bundles.js?v=101';
-import { initHomeUpboard } from './js/home-upboard.js?v=101';
-import { initDesTool } from './js/des-scorer.js?v=101';
-import { initHeader } from './js/header.js?v=101';
-import { initTourAutostart } from './js/tour.js?v=101';
-import { initReadingTracker } from './js/reading.js?v=101';
-import { initListeningTracker } from './js/listening.js?v=101';
-import { initShareScoring, buildShareButton } from './js/share.js?v=101';
-import { initHeart, buildHeartChip } from './js/votes.js?v=101';
-import { mountClipControl, landOnClip } from './js/clips.js?v=101';
-import { mountArticleThreads } from './js/article-threads.js?v=101';
-import { mountChallenge } from './js/challenge.js?v=101';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=101';
-import { mountDes } from './js/des.js?v=101';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=101';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=102';
+import { currentUser, api } from './js/api.js?v=102';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=102';
+import { openCollectionPicker } from './js/collections.js?v=102';
+import { el, faNum } from './js/util.js?v=102';
+import { initHomeCard } from './js/home-card.js?v=102';
+import { initHomeFeatures } from './js/home-features.js?v=102';
+import { initHomeBundles } from './js/home-bundles.js?v=102';
+import { initHomeUpboard } from './js/home-upboard.js?v=102';
+import { initDesTool } from './js/des-scorer.js?v=102';
+import { initHeader } from './js/header.js?v=102';
+import { initTourAutostart } from './js/tour.js?v=102';
+import { initReadingTracker } from './js/reading.js?v=102';
+import { initListeningTracker } from './js/listening.js?v=102';
+import { initShareScoring, buildShareButton } from './js/share.js?v=102';
+import { initHeart, buildHeartChip } from './js/votes.js?v=102';
+import { mountClipControl, landOnClip } from './js/clips.js?v=102';
+import { mountArticleThreads } from './js/article-threads.js?v=102';
+import { mountChallenge } from './js/challenge.js?v=102';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=102';
+import { mountDes } from './js/des.js?v=102';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=102';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -33,7 +33,7 @@ import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=101';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=101').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=102').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -715,7 +715,7 @@ function folderForPath(folders) {
 }
 
 function openSeenGate() {
-  Promise.all([import('./js/sheet.js?v=101'), import('./js/premium-cta.js?v=101')])
+  Promise.all([import('./js/sheet.js?v=102'), import('./js/premium-cta.js?v=102')])
     .then(([sheet, cta]) => sheet.openSheet(sheet.gateCard({
       title: 'کدام‌ها را خوانده‌ای',
       sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '
@@ -819,7 +819,15 @@ async function initSeenTicks() {
   if (!data) return;
 
   if (data.locked) {
-    if (isHomePage()) return;
+    // The locked column and its bar are ONE thing, and the column may never
+    // appear without it. A uniform grey tick is only legible as «قفل است» while
+    // the bar above says so; on an article, a pillar page or a section nothing
+    // can complete, the same column reads in the premium vocabulary instead —
+    // grey means «ندیده‌ای» — so it would be a statement, and a false one.
+    // Where the bar cannot go, a free reader gets exactly what an anonymous
+    // visitor gets: nothing.
+    const folder = folderForPath(data.folders);
+    if (isHomePage() || !isFolderRoot(folder)) return;
     for (const { a } of links) {
       if (a.querySelector('.dcp-seen-tick')) continue;
       const tick = el('span', {
@@ -831,8 +839,7 @@ async function initSeenTicks() {
       tick.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openSeenGate(); });
       a.insertBefore(tick, a.firstChild);
     }
-    const folder = folderForPath(data.folders);
-    if (isFolderRoot(folder) && !document.querySelector('.dcp-seen-lock')) {
+    if (!document.querySelector('.dcp-seen-lock')) {
       const list = seenListContainer(links);
       const bar = list && seenLockBar(folder);
       if (bar) list.parentElement.insertBefore(bar, list);
