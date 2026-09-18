@@ -293,6 +293,10 @@ export function startReactivationScheduler(): () => void {
  * day of grace and always in the user's favour. See sweepExpiredSubscriptions()
  * for why precision here would make the product worse rather than better.
  *
+ * Plus one run at boot: see the note on `void run()` below — a timer only fires
+ * in a process that was alive at the minute, and the sweep is the one job whose
+ * whole purpose is that it must not be skipped.
+ *
  * A SEPARATE timer from the league scheduler even though both fire at 00:00.
  * They share an hour, not a purpose: the sweep is the last word on who is
  * premium, and it must keep running unchanged on a night when league
@@ -303,28 +307,41 @@ export function startReactivationScheduler(): () => void {
 export function startSubscriptionScheduler(): () => void {
   let timer: NodeJS.Timeout;
 
+  const run = () =>
+    sweepExpiredSubscriptions(new Date())
+      .then(async (r) => {
+        // Also the nightly safety net for the gateway ceiling. The alert
+        // normally fires the moment a payment pushes usage over the line;
+        // this catches a month that crept up on us while nothing was selling
+        // (a ceiling can also be reached by lowering it).
+        await checkCapacityAlert(new Date()).catch(() => {});
+        if (r.expired > 0 || r.demoted > 0 || r.promoted > 0) {
+          // eslint-disable-next-line no-console
+          console.log(
+            `[subscriptions] ${r.expired} expired, ${r.demoted} demoted, ${r.promoted} repaired`,
+          );
+        }
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error('[subscriptions] sweep failed', err);
+      });
+
+  // Once at boot as well, the same way the payment reconciler runs — because a
+  // timer is the only thing that has ever fired this, and a timer only fires in
+  // a process that was alive at 00:00. A container down or restarting across
+  // that minute (a deploy, an Arvan restart) skipped that night's demotion
+  // entirely and left it to the NEXT midnight, so someone whose subscription
+  // had ended kept premium for another day with nothing on record saying why.
+  // The sweep is idempotent and reads the clock itself, so an extra run can
+  // only ever bring `profiles.tier` closer to what people have actually paid
+  // for — in both directions.
+  void run();
+
   const schedule = () => {
     const delay = msUntilNextRun(new Date(), 0, config.streakTimezone); // 00:00 Tehran
     timer = setTimeout(() => {
-      void sweepExpiredSubscriptions(new Date())
-        .then(async (r) => {
-          // Also the nightly safety net for the gateway ceiling. The alert
-          // normally fires the moment a payment pushes usage over the line;
-          // this catches a month that crept up on us while nothing was selling
-          // (a ceiling can also be reached by lowering it).
-          await checkCapacityAlert(new Date()).catch(() => {});
-          if (r.expired > 0 || r.demoted > 0 || r.promoted > 0) {
-            // eslint-disable-next-line no-console
-            console.log(
-              `[subscriptions] ${r.expired} expired, ${r.demoted} demoted, ${r.promoted} repaired`,
-            );
-          }
-        })
-        .catch((err) => {
-          // eslint-disable-next-line no-console
-          console.error('[subscriptions] sweep failed', err);
-        })
-        .finally(schedule);
+      void run().finally(schedule);
     }, delay);
     if (typeof timer.unref === 'function') timer.unref();
   };

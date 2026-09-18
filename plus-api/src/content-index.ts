@@ -12,7 +12,7 @@ import { config } from './config.js';
 
 interface Subtopic { key: string; fa: string; contentCount: number; contentIds: string[]; }
 interface Cluster { key: string; fa: string; contentCount: number; contentIds: string[]; subtopics: Subtopic[]; }
-interface Folder { key: string; fa: string; url: string; total: number; }
+interface Folder { key: string; fa: string; url: string; total: number; prefix?: string; }
 interface ContentInfo { cluster: string | null; subtopic: string | null; type: string; title: string; url: string; secondary: string[]; }
 /** One real site #hashtag, with every content_id that carries it. */
 export interface Tag { key: string; fa: string; contentCount: number; contentIds: string[]; }
@@ -117,8 +117,45 @@ export function getContentInfo(contentId: string): ContentInfo | null {
   return getIndex().byContent[contentId] || null;
 }
 
-/** The folder ("پادکست"، "نوت‌کست"، ...) a content_id belongs to. */
+/**
+ * The nested sections — the ones whose content_id prefix is not their key.
+ * Longest prefix first, memoised per loaded index (folderOf runs once per
+ * consumed page, and in production the index object changes only on a refresh).
+ */
+let nestedCache: { idx: IndexFile; list: { prefix: string; key: string }[] } | null = null;
+function nestedFolders(idx: IndexFile): { prefix: string; key: string }[] {
+  if (nestedCache && nestedCache.idx === idx) return nestedCache.list;
+  const list = (idx.folders || [])
+    .map((f) => ({ prefix: f.prefix || f.key, key: f.key }))
+    .filter((f) => f.prefix.includes('/'))
+    .sort((a, b) => b.prefix.length - a.prefix.length);
+  nestedCache = { idx, list };
+  return list;
+}
+
+/**
+ * The folder ("پادکست"، "نوت‌کست"، ...) a content_id belongs to.
+ *
+ * The first path segment is the answer for every flat section, and it was the
+ * whole function until 2026-09-18. It is the WRONG answer for a section that
+ * lives at a two-level address: `dentai/promptologist/prompt1-1` folded into
+ * `dentai`, so پرامپتولوژیست — a folder of its own in the index, with its own
+ * key, label and total — could never be credited a single page. The dashboard's
+ * «پیشرفت هر پوشه» read ٪۰ for a reader who had finished all 21 of them (and
+ * dentai read high for pages that were not its own); the same fold reached the
+ * folder tree's highlight counts, «فاتح», the publish notice's section name and
+ * the library's folder chip.
+ *
+ * So the prefix is read from the index rather than assumed from the key. The
+ * exception stays where it is expressed — one row of FOLDER_META in
+ * tools/build_plus_index.mjs — instead of being copied into a condition here.
+ * An older index with no `prefix` field simply falls back to the split, which
+ * is the behaviour it was written under.
+ */
 export function folderOf(contentId: string): string {
+  for (const f of nestedFolders(getIndex())) {
+    if (contentId.startsWith(f.prefix + '/')) return f.key;
+  }
   return contentId.split('/')[0];
 }
 
