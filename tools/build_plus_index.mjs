@@ -208,7 +208,16 @@ const clusters = clusterOrder.map((c) => {
 });
 
 // Real site folders (dashboard tree top level): landing link + article total.
-const folders = FOLDER_META.map(([key, fa, url, dir]) => ({ key, fa, url, total: countArticles(key, dir) }))
+// `prefix` is the content_id prefix the folder's pages carry — normally the key
+// itself, but the fourth FOLDER_META element where the two differ. It is
+// published rather than left implicit because the API has to answer «which
+// folder is this content_id in» too (content-index.ts folderOf), and the
+// first path segment is the WRONG answer for a section that lives at a
+// two-level address: every پرامپتولوژیست page was folded into dentai, so its
+// progress bar read ٪۰ however much of it had been read. Deriving it from the
+// key there would be the same assumption in a second place; deriving it from
+// this field is the exception staying data.
+const folders = FOLDER_META.map(([key, fa, url, dir]) => ({ key, fa, url, prefix: dir || key, total: countArticles(key, dir) }))
   .filter((f) => f.total > 0);
 
 // Most-referenced first, ties broken alphabetically — purely for readability
