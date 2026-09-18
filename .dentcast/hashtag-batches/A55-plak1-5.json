@@ -1,0 +1,39 @@
+{
+  "type": "plak_sefr",
+  "note": "Publish of plak-sefr/plak1-5 (پلاک صفر — بیمار چه تایپ می‌کند). Mints #سؤال_بیمار — the patient's real question, in the patient's own words, as the unit a practice page is written to answer. The library had no concept for it: --simulate «سؤال بیمار» / «زبان بیمار» / «کلمات بیمار» returned only #راحتی_بیمار and #معاینه_بیمار (clinical), and «تحقیق کلیدواژه» / «پیشنهاد گوگل» / search intent returned nothing. Deliberately distinct from #جستجوپذیری_محتوا (whether a page can be found at all) and #رتبه_بندی_گوگل (which findable page goes first): this one is about what is being searched for and in whose vocabulary — the two sources the part names (the clinic's own unit/phone/DMs, and Google's own suggestions) are the ways of collecting it. Every other tag reuses an existing canonical form; #مالکیت_پلتفرم and #ماندگاری_محتوا are not carried (the part resolves neither).",
+  "concepts": [
+    {
+      "tag": "#سؤال_بیمار",
+      "domain": "web",
+      "definition": "پرسشِ واقعی‌ای که بیمار با کلمه‌های خودش می‌پرسد یا تایپ می‌کند — نه نامِ درمان از زبانِ دندانپزشک — به‌عنوان واحدی که یک متنِ سایتِ مطب برای جواب دادن به آن نوشته می‌شود؛ شاملِ فاصله‌ی واژگانی (عصب‌کشی در برابر درمان ریشه)، نوعِ پرسش (درد، هزینه، مقایسه، وضعیتِ بعد از درمان) و منابعِ گردآوری‌اش (مطب و پیشنهادهای خودِ گوگل).",
+      "use_when": "مطلب درباره‌ی این باشد که بیمار چه می‌پرسد و با چه کلمه‌هایی، یا چطور آن پرسش‌ها را باید پیدا و ثبت کرد — نه صرفاً درباره‌ی پیدا شدن یا رتبه‌ی یک صفحه.",
+      "aliases": [
+        "patient question",
+        "patient questions",
+        "patient language",
+        "patient vocabulary",
+        "search intent",
+        "keyword research",
+        "google autocomplete",
+        "people also ask",
+        "زبان بیمار",
+        "کلمات بیمار",
+        "سؤال‌های بیمار",
+        "سوال بیمار",
+        "سوالات بیمار",
+        "تحقیق کلیدواژه",
+        "پیشنهاد گوگل",
+        "قصد جستجو"
+      ]
+    }
+  ],
+  "articles": {
+    "plak-sefr/plak1-5": [
+      "#پلاک_صفر",
+      "#سایت_مطب",
+      "#جستجوپذیری_محتوا",
+      "#سؤال_بیمار",
+      "#حضور_آنلاین_دندانپزشک"
+    ]
+  }
+}

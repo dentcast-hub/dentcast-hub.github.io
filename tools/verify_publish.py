@@ -221,6 +221,22 @@ def content_version():
     return h.hexdigest()[:10]
 
 
+# A numbered series may label its own landing rows «قسمت N — <title>»: the
+# series name that the brain title carries as a prefix is dropped, because the
+# landing page IS that series and repeating it on every row costs the reader
+# the one thing they came for — where the series begins and ends (founder
+# decision, 2026-09-18; workflow step 2.6). Accepted only in that exact shape:
+# a «قسمت N» marker AND the brain title's own tail, verbatim, after it.
+SERIES_PART = re.compile(r"قسمت\s*[۰-۹0-9]+")
+
+
+def numbered_series_label(brain_title, label):
+    head, sep, tail = brain_title.partition(" — ")
+    if not sep or not tail:
+        return False
+    return bool(SERIES_PART.search(label)) and tail in label
+
+
 def episode_landing_title(content_id):
     """The title episodes.html actually renders for this episode, or None.
 
@@ -1174,11 +1190,29 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                     else:
                         want, want_src = ep_title, "dentcast.json's title"
                 if want is not None:
-                    rep.check(want in html.unescape(li.group(0)), "17 sweep",
-                              "landing-page label carries the exact title",
-                              f"landing-page label does not match {want_src} "
-                              f"({want!r}): {normalize(text_of(li.group(0)))!r}",
-                              "Hard Rule 17 — a title change is swept through every surface")
+                    label = html.unescape(li.group(0))
+                    if want in label:
+                        rep.ok("17 sweep", "landing-page label carries the exact title")
+                    elif numbered_series_label(want, label):
+                        # A numbered series labels its own landing rows
+                        # «قسمت N — <title>» and drops the series name that the
+                        # brain title carries as a prefix: a reader on
+                        # /plak-sefr/ already knows which series they are in,
+                        # and what they cannot see without the number is where
+                        # the series starts and ends (founder, 2026-09-18 —
+                        # workflow step 2.6). This is the same shape as the
+                        # episodes.html case above: a second legitimate label,
+                        # not a drift. The check does not weaken — the title's
+                        # own words must still appear verbatim after the
+                        # number, so a corrected title that missed this surface
+                        # still fails.
+                        rep.ok("17 sweep", "landing-page label is the numbered-series form "
+                                           "(قسمت N + the title without its series prefix)")
+                    else:
+                        rep.fail("17 sweep",
+                                 f"landing-page label does not match {want_src} "
+                                 f"({want!r}): {normalize(text_of(label))!r}",
+                                 "Hard Rule 17 — a title change is swept through every surface")
 
     home = read("index.html")
     url = "/" + page_rel
