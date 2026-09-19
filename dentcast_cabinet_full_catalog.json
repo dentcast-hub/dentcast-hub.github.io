@@ -137811,6 +137811,60 @@
         "Nicolas Govare",
         "Mathieu Contrepois"
       ]
+    },
+    {
+      "id": "P2908",
+      "title": "An investigation into the prevalence of combination syndrome",
+      "file_name": "combination syndrome.pdf",
+      "topic": "compelete denture",
+      "topic_path": "compelete denture",
+      "type": "primary/other",
+      "local_path": "",
+      "file_size": 487230,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "dentai/dentai-35"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1JRykLi1VKwAu0epBl70s-K-fGtu_AGUz/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1JRykLi1VKwAu0epBl70s-K-fGtu_AGUz",
+      "drive_view": "https://drive.google.com/file/d/1JRykLi1VKwAu0epBl70s-K-fGtu_AGUz/view",
+      "drive_id": "1JRykLi1VKwAu0epBl70s-K-fGtu_AGUz",
+      "tags": [
+        "combination-syndrome",
+        "kelly-syndrome",
+        "edentulous-maxilla",
+        "mandibular-anterior-teeth",
+        "complete-denture",
+        "removable-partial-denture",
+        "anterior-maxillary-resorption",
+        "flabby-ridge",
+        "fibrous-replacement",
+        "residual-ridge-resorption",
+        "papillary-hyperplasia",
+        "tuberosity-enlargement",
+        "cawood-howell-index",
+        "cross-sectional-study",
+        "prevalence",
+        "periodontitis",
+        "topic:compelete-denture",
+        "an-investigation-into-the-prevalence-of-combination-syndrome"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "An investigation into the prevalence of combination syndrome",
+      "doi": "10.1016/j.jdent.2019.01.016",
+      "journal": "Journal of Dentistry",
+      "crossref_year": 2019,
+      "subjects": [],
+      "abstract": "Objectives: To investigate the prevalence of Combination Syndrome, and to investigate if provision of a mandibular removable partial denture has any influence on the prevalence of Combination Syndrome. Method: Patients attending Kings College London Dental Institute, Guys Hospital who wore maxillary conventional complete dentures opposing mandibular anterior teeth only, with or without mandibular partial dentures were examined by one examiner. Oral health, residual alveolar ridge and denture quality were assessed. Features putatively associated with Combination Syndrome were recorded. Patient ratings of dentures were recorded. Results: 99 patients were recruited who were wearing maxillary removable complete dentures opposing only mandibular anterior teeth. Of these, 64 patients wore mandibular removable partial dentures and 35 patients did not. Only 8 patients displayed two features of Combination Syndrome and 38 patients displayed one feature of Combination Syndrome, excessive resorption of the anterior maxillary sextant. These findings are not compatible with previous research which suggested that the five features of Combination Syndrome were prevalent in patients wearing maxillary complete dentures opposing mandibular anterior teeth. Conclusions: Evidence supporting the existence of Combination Syndrome was not discovered in this research. Prevalence of Combination Syndrome appeared to be low or non-existent. Patient treatment modalities and teaching in relation to Combination Syndrome may need to be modified.",
+      "display_title": "An investigation into the prevalence of combination syndrome",
+      "authors": [
+        "Rita Bagga",
+        "Nigel D Robb",
+        "Michael R Fenlon"
+      ]
     }
   ],
   "drive_matched": 2849,

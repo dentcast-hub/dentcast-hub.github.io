@@ -1,0 +1,47 @@
+{
+  "type": "dentai",
+  "note": "Publish of dentai/dentai-35 (کامبینیشن سندروم: چیزی که پنجاه سال تدریس شد و بعد پیدا نشد), on Bagga 2019 J Dent 82:66-70. Mints two concepts the library genuinely lacked. #کامبینیشن_سندروم: --simulate «کامبینیشن سندروم» / «combination syndrome» / «سندروم کلی» / «سندروم» all returned nothing above threshold, and this is the subject of the page, not a passing mention. #فلبی_ریج: the ridge that has lost its bone to mobile fibrous tissue, which is the one feature the study actually found (38 of 99). Deliberately distinct from the three neighbours the search surfaced: #حفظ_ریج is about keeping ridge volume by retaining a root, #تحلیل_استخوان is bone around a tooth or implant, and #نمای_ریج is the esthetic problem of ridge display. None of them is a displaceable fibrous ridge under a denture base. Every other tag reuses an existing canonical form; #اوردنچر is not carried because the page resolves nothing about implant overdentures.",
+  "concepts": [
+    {
+      "tag": "#کامبینیشن_سندروم",
+      "domain": "clinical",
+      "definition": "الگوی پنج‌جزئی‌ای که Kelly برای ماگزیلای کاملاً بی‌دندانِ مقابلِ دندان‌های قدامیِ مندیبل توصیف کرد — تحلیلِ استخوانِ قدامِ ماگزیلا، بزرگ‌شدنِ توبروزیتی‌ها، پاپیلاری هایپرپلازیِ کامِ سخت، اکستروژنِ قدامی‌های مندیبل و تحلیلِ زیرِ بیسِ دنچر در خلفِ مندیبل — همراه با این پرسش که آیا این اجزا واقعاً با هم می‌آیند و آیا اصلاً یک سندروم‌اند.",
+      "use_when": "مطلب خودِ این الگو، اجزایش، یا اعتبارِ آن به‌عنوان یک سندروم را موضوع قرار دهد؛ نه هر بیمارِ ماگزیلای بی‌دندان.",
+      "aliases": [
+        "combination syndrome",
+        "Kelly syndrome",
+        "Kellys syndrome",
+        "سندروم کلی",
+        "سندرم کلی",
+        "کامبینیشن سندرم",
+        "سندروم کامبینیشن",
+        "سندروم ترکیبی"
+      ]
+    },
+    {
+      "tag": "#فلبی_ریج",
+      "domain": "clinical",
+      "definition": "ریجِ باقیمانده‌ای که استخوانش تحلیل رفته و جایش را بافتِ فیبروزِ جابه‌جاشونده گرفته است، معمولاً در سکستانتِ قدامیِ ماگزیلا، طوری که زیرِ فشارِ قالب‌گیری و زیرِ بیسِ دنچر حرکت می‌کند و ساپورت نمی‌دهد.",
+      "use_when": "مطلب ریجِ متحرکِ فیبروزی را موضوع، یافته، یا مشکلِ قالب‌گیری قرار دهد.",
+      "aliases": [
+        "flabby ridge",
+        "displaceable ridge",
+        "fibrous ridge",
+        "ریج فلبی",
+        "ریج جابه‌جاشونده",
+        "ریج فیبروزی",
+        "بافت فیبروز ریج"
+      ]
+    }
+  ],
+  "articles": {
+    "dentai/dentai-35": [
+      "#DentAI",
+      "#کامبینیشن_سندروم",
+      "#فلبی_ریج",
+      "#بیمار_بی_دندان",
+      "#پروتز_متحرک",
+      "#پروتز_پارسیل"
+    ]
+  }
+}
