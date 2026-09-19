@@ -88,6 +88,11 @@ FOLDER_TYPE = {
     "metanotes": "meta",
     "dentai/promptologist": "promptologist",
     "dentcast-plus": "dentcast_plus",
+    # The folder is `plak-sefr`, the brain's own type key is `plak_sefr`, and
+    # TYPE_FA below is keyed by the latter — so without this row the fallback
+    # printed the raw slug «plak-sefr» under every one of those rows AND on the
+    # filter chip. Same shape as `dentcast-plus` directly above.
+    "plak-sefr": "plak_sefr",
     # Everything else names its own type: notecast, chairside, dentai, litecast,
     # sharehub, photocast.
 }
