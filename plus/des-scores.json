@@ -17472,5 +17472,110 @@
         "interpretation_fa": "سایلان تنها متغیری بود که استحکام باند را معنادار بالا برد: ۱۶٫۸ مگاپاسکال در کنترل در برابر ۲۳٫۷ با سایلان. پراکسید هیدروژن و اسید فسفریک در هر دو زمان چیزی اضافه نکردند. نمونه‌ها بدون ترموسایکلینگ و بلافاصله پس از کوربیلدآپ تست شدند، پس عدد، باندِ لحظه‌ی صفر است نه دوام. تخصیص تصادفی، کور بودن و توجیه حجم نمونه گزارش نشده."
       }
     ]
+  },
+  "notecast/episode-42": {
+    "scored_at": "2026-09-19",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Effect of different fiber post surface treatments on microtensile bond strength to composite resin.",
+          "authors": "Daneshkazemi A, Davari A, Askari N, Kaveh M",
+          "year": 2016,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/j.prosdent.2016.03.029"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "in-vitro microtensile bond strength test of glass fiber post to composite resin core, 10 groups with n=14; the method is an established one anchored to a published strength formula (Bouillaguet et al), specimen count per group is adequate, and the loading regimen is fully defined (crosshead 0.5 mm/minute to failure) with the timing of testing stated deliberately as immediate after core build-up, so it lands on the MATERIAL validated-protocol row (85) rather than the non-standard-protocol row (65). No thermocycling or water storage was performed, which is a stated design choice rather than an unreported one.",
+          "evidence_quote": "The microtensile bond strength test used in this study is regarded as a reliable method of bond strength"
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "The purpose of this in vitro study was to evaluate the effect on the bond strength to composite resin of pretreating glass fiber post surfaces with hydrogen peroxide, phosphoric acid, and a silane coupling agent.",
+              "note": "هدف در چکیده و در انتهای مقدمه دوبار صریح آمده و فرضیه‌ی صفر هم جداگانه اعلام شده است."
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "طبق پروتکل غیاب (۳b-ii) کل MATERIAL AND METHODS خوانده شد: تعداد و مشخصات پست‌ها، آماده‌سازی سطحی و کدگذاری گروه‌ها، کاربرد سایلان، باندینگ کامپوزیت و پخت نوری، برش بیم‌ها، تست میکروتنسایل، فرمول محاسبه‌ی استحکام، و بلوک آنالیز آماری؛ سپس RESULTS و DISCUSSION هم خوانده شد. متن فقط تعداد را اعلام می‌کند («A total of 140 glass fiber posts» و «(n=14)») و هیچ محاسبه‌ی توان، هیچ ارجاع به مطالعه‌ی پیشین برای تعیین حجم نمونه، و هیچ توجیه دیگری نمی‌آورد. چون متن کامل است، سکوت طبق ۳b بند ۱ غیاب است نه NR."
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "بخش MATERIAL AND METHODS از جمله‌ی تحویل ۱۴۰ پست تا ارجاع به Table 1 برای ده گروه کامل خوانده شد و هیچ جمله‌ای درباره‌ی نحوه‌ی تخصیص نمونه‌ها به گروه‌ها ندارد؛ واژه‌ی random یا allocation و هیچ روش جایگزینی در کل متن نیامده. این رتبه از شاخه‌ی اولِ ۳b (غیاب) می‌آید نه از آستانه‌ی ۳b-i، چون اصلاً روشی اعلام نشده که بتوان آن را آشکارا غیرتصادفی نامید."
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هر سه جایی که کور بودن در آن می‌نشیند مستقیماً خوانده شد: آماده‌سازی و باندینگ نمونه‌ها، اجرای تست میکروتنسایل و اندازه‌گیری ابعاد بیم با کولیس دیجیتال، و ارزیابی نوع شکست با استریومیکروسکوپ و بررسی SEM. در هیچ‌کدام اشاره‌ای به کور بودن اپراتور یا ارزیاب نیست و تعداد اپراتورها هم گزارش نشده."
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "some_concerns",
+              "evidence_quote": "t test was used for pairwise comparison between groups (a=.05).",
+              "note": "طرح عاملی با ANOVA سه‌طرفه و دوطرفه تحلیل شده که با ساختار مطالعه می‌خواند، اما مقایسه‌های زوجی میان ده گروه با t تست استیودنت و بدون هیچ تصحیحی برای مقایسه‌های چندگانه انجام شده. دامنه توصیف شده ولی ناقص است، پس طبق ۳b بند ۴ some_concerns می‌گیرد نه low."
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "طبق پروتکل غیاب (۳b-ii) بلوک‌هایی که چنین بیانیه‌ای در آن‌ها می‌نشیند مستقیماً خوانده شد: پانویس صفحه‌ی اول (اعلام اینکه کار بر پایه‌ی پایان‌نامه‌ی کارشناسی ارشد است، به‌علاوه‌ی وابستگی چهار نویسنده)، انتهای متن پس از CONCLUSIONS، و بلوک Corresponding author به‌همراه خط کپی‌رایت. نه بیانیه‌ی تعارض منافع هست و نه اعلام منبع مالی. سه موردی که واژه‌ی conflict یا interest در متن دارند همگی در بحث علمی‌اند («in conflict with those of previous studies»، «would be of interest»)، نه افشاگری؛ جست‌وجو با درنظرگرفتن لیگاتورهای استخراج PDF هم انجام شد. اعلام پایه‌ی پایان‌نامه‌ای بیان منشأ کار است، نه بیانیه‌ی تأمین مالی."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع در کل متن وجود ندارد",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "covered in Q_method — همین غیاب در دامنه‌ی ششم QUIN رتبه‌ی high گرفته است و طبق قاعده‌ی عدم جریمه‌ی مضاعف دوباره کسر نمی‌شود. شاخه‌ی دوم این ردیف (تأمین مالی توسط سازنده‌ی محصول تحت آزمون) هم فعال نیست، چون هیچ تأمین مالی اعلام نشده و تنها منشأ اعلام‌شده پایان‌نامه‌ای دانشگاهی است؛ دانشگاه سازنده نیست."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مطالعه‌ی in-vitro است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "Control groups included no treatment or treatment with silanization alone (total of 10 groups; n=14).",
+            "note": "برای in-vitro این ردیف تنها وقتی فعال می‌شود که تعداد نمونه در هر گروه کمتر از ۱۰ و بدون توجیه باشد؛ اینجا n=14 در هر گروه است، پس ردیف فعال نمی‌شود. نبودِ توجیه حجم نمونه جداگانه در دامنه‌ی دوم QUIN رتبه‌بندی شده است."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "مطالعه‌ی in-vitro تک‌مرحله‌ای است و هیچ ادعای بقا یا موفقیت مبتنی بر پیگیری ندارد؛ پیامد، استحکام باند در همان جلسه است. نبودِ ترموسایکلینگ و کهنه‌سازی در تفسیر آمده، نه به‌صورت فعال‌شدن این ردیف."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 26,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این مطالعه در نوع پرسش MATERIAL امتیاز ۲۶ و باند D گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "سایلان تنها متغیری بود که استحکام باند را معنادار بالا برد: ۱۶٫۸ مگاپاسکال در کنترل در برابر ۲۳٫۷ با سایلان. پراکسید هیدروژن و اسید فسفریک در هر دو زمان چیزی اضافه نکردند. نمونه‌ها بدون ترموسایکلینگ و بلافاصله پس از کوربیلدآپ تست شدند، پس عدد، باندِ لحظه‌ی صفر است نه دوام. تخصیص تصادفی، کور بودن و توجیه حجم نمونه گزارش نشده."
+      }
+    ]
   }
 }

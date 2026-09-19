@@ -15149,5 +15149,37 @@
       "secondary": [],
       "subtopic": "complete-dentures"
     }
+  },
+  {
+    "type": "notecast",
+    "id": "42",
+    "title": "بررسی اثر انواع روش‌های آماده‌سازی سطح (Surface Preparation) بر میزان استحکام باند فایبرپست به کور کامپوزیت رزینی",
+    "caption": "خلاصه‌ای از دنت‌کست بر اساس مطالعهٔ Daneshkazemi و همکاران (۲۰۱۶) در JPD؛ اثر سایلان بر استحکام باند فایبرپست به کور کامپوزیتی، ناکارآمدی پراکسید هیدروژن و اسید فسفریک در یک و پنج دقیقه، و نقش خصوصیات سطحی خودِ فایبرپست در این نتیجه.",
+    "hashtags": [
+      "#نوت_کست",
+      "#فایبر_پست",
+      "#پست_و_کور",
+      "#سایلان",
+      "#قدرت_باند",
+      "#باندینگ"
+    ],
+    "keywords": [
+      "fiber post surface treatment",
+      "microtensile bond strength",
+      "silane coupling agent",
+      "hydrogen peroxide etching",
+      "phosphoric acid etching",
+      "composite resin core",
+      "post and core",
+      "epoxy resin matrix",
+      "glass fiber exposure",
+      "chairside surface preparation"
+    ],
+    "url": "/notecast/episode-42.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "post-and-core"
+    }
   }
 ]
