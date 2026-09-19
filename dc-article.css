@@ -60,6 +60,20 @@ h1{
   margin:0 0 0.625rem;
 }
 
+/* ── Breathing room under the fixed topbar ──
+   `body` above asks for 2.5rem of top padding, but dc-nav.css wins it with
+   `body:has(.dc-topbar){padding-top:3.5625rem !important}` — which is EXACTLY
+   the bar's own height, so it reserves space and adds no gap. Pages that open
+   with a kicker <h2> above the H1 (chairside / notecast / metanotes) never
+   showed this: that H2's own margin was doing the job. The ones whose H1 is
+   the first thing in the wrapper (insight, dentai, dentcast-plus, sharehub,
+   photocast) rendered the title flush against the bar.
+   3.5rem matches the glossary's own `main.page` top padding, so every section
+   now opens at the same distance from the bar. */
+.article-content-wrap > h1:first-child{
+  margin-top:3.5rem;
+}
+
 /* Subtitle line right under the H1 (notecast/meta/chairside).
    In-box section H2s are restyled by the box-scoped rule below. */
 h2{
