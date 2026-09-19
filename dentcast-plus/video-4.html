@@ -92,6 +92,10 @@
       color: var(--blue);
       font-size: 1.7rem;
       font-weight: 800;
+      /* Clear the fixed topbar: dc-nav.css forces body padding-top to the
+         bar's exact height, so without this the title sits flush against it.
+         3.5rem is the same opening distance every other section uses. */
+      margin-top: 3.5rem;
       margin-bottom: 1rem;
       text-shadow: 0 0 25px var(--blue-glow);
     }
