@@ -17270,5 +17270,102 @@
         "interpretation_fa": "متن فاصله‌ی زبانِ دندانپزشک و بیمار را با مثال‌های مشخص نشان می‌دهد و هر توصیه را به دلیلش وصل می‌کند. دامنه‌اش را هم محدود می‌کند: بحث املای عامیانه نیست، حضورِ واژه‌ی بیمار کنار نامِ درست است. ارزشش عملی است، یک روشِ رایگان برای فهرست کردنِ سؤال‌های واقعیِ بیماران. پایه‌اش تجربه و استدلالِ نویسنده است، نه مطالعه."
       }
     ]
+  },
+  "dentai/dentai-35": {
+    "scored_at": "2026-09-19",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "An investigation into the prevalence of combination syndrome",
+          "authors": "Bagga R, Robb ND, Fenlon MR",
+          "year": 2019,
+          "journal": "Journal of Dentistry",
+          "doi": "10.1016/j.jdent.2019.01.016"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 45,
+          "anchor": "cross-sectional observational prevalence study of a defined patient sample examined at one visit (ETIOLOGY cross-sectional row, 45)",
+          "evidence_quote": "Oral health, residual alveolar ridge and denture quality were assessed. Features putatively associated with Combination Syndrome were recorded."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "high",
+              "evidence_quote": "Because all the remaining tests of data involved categorical data, Pearson's X2 test was used in all cases.",
+              "note": "3b-i threshold (present but inadequate): the mandibular-partial-denture comparisons (displaceable ridge, periodontitis, denture fit, chewing ability) are unadjusted bivariate categorical tests with no adjustment, matching, restriction or stratification for any confounder anywhere in Statistical Methods or Results. The paper itself reports that the two groups differ on denture age and on gender and still does not adjust for either."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "A total of 100 patients consented to participate in the study and were examined.",
+              "note": "Inclusion and exclusion criteria are explicit and recruitment ran over a defined one-year period, but no denominator is reported: the number of eligible patients approached, and the number who declined, are absent, so the completeness of the sample cannot be checked."
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "Of these, 64 patients wore mandibular removable partial dentures and 35 patients did not."
+            },
+            {
+              "domain": "missing data",
+              "rating": "low",
+              "evidence_quote": "One patient withdrew from the study after the closing date for data collection so that patient's data were withdrawn, leaving data of 99 participants to be analysed."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "All patients were recruited and examined by one researcher (MF).",
+              "note": "The domain is described rather than absent: every feature carries an operational definition, ridge form uses the Cawood and Howell index, and the examiner's own intra-operator reliability with that index is cited. One recognised element is missing, namely blinding of the single examiner to partial-denture status, and there is no second assessor or inter-examiner agreement. A described domain with one element absent is some_concerns, not high (3b-ii)."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all, or funding by a commercial manufacturer whose own product is among those tested, with no independent-analysis statement",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "The row does not fire. A declaration of interest block is present and reads None. The Acknowledgements name Guy's and St Thomas' Hospitals Trust for research and development approval and the South London Research Ethics Committee; a hospital trust and an ethics committee are not manufacturers, and no commercial product is under test in a prevalence survey."
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable - RCTs only; this is a cross-sectional observational study."
+          },
+          {
+            "item": "no sample size justification / power analysis (clinical studies); for in-vitro, specimen count per group <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "The row does not fire. The paper carries an explicit sample size justification: it states that a calculation was not possible because of the small numbers in previous studies and that a target of 100 was chosen pragmatically on throughput and recruitment potential. A justification is present even though a power analysis is not, and Step 4 scores transparency rather than suspicion."
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires (e.g. survival claims with <3y follow-up)",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "The row does not fire. The stated outcome is the prevalence of features at a single examination, and the paper makes no survival or success claim, so there is no follow-up duration to judge against a claim. The absence of longitudinal observation is a property of the design and is already priced in s_design (no double jeopardy)."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 25,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "امتیاز شواهد این منبع ۲۵ از ۱۰۰ و باند D است؛ نوع سوال Etiology است.",
+        "interpretation_fa": "طراحی cross sectional سقف امتیاز را روی ۴۵ می‌بندد و مقایسه‌ی دو گروه بدون تعدیل برای متغیرهای مخدوش‌کننده انجام شده است. سنجش هم با یک معاینه‌کننده و بدون بلایند بوده است. ارزش عملی مقاله جای دیگری است: جمعیتش به سمت یافتن سندروم سوگیری داشت و سندروم باز هم پیدا نشد."
+      }
+    ]
   }
 }
