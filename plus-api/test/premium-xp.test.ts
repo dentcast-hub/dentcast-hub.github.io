@@ -3,6 +3,7 @@ import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs, mintActivity } from './helpers.js';
 import { pool } from '../src/db.js';
 import { getPathways } from '../src/pathways.js';
+import { getIndex } from '../src/content-index.js';
 import { SERVER_MINTED_ACTIONS } from '../src/services/activity.js';
 
 /**
@@ -20,9 +21,28 @@ let app: FastifyInstance;
 
 const PATHWAY_ID = 'occlusion';
 const STEPS = getPathways().find((p) => p.id === PATHWAY_ID)!.steps;
-/** A page inside the pathway, and one deliberately outside it. */
+/**
+ * A page inside the pathway, and one outside EVERY pathway.
+ *
+ * The second one is DERIVED, never named. It was hardcoded as
+ * `insight/insight-77` — true when it was written, and then publishing
+ * workflow step 5.6 filed that very article into the occlusion pathway, so
+ * this file spent some time asserting that reading a pathway step pays
+ * nothing. A fixture pinned to live editorial content is one an ordinary
+ * publish can move under you, which is the same lesson the pending-pathway
+ * block in exams.test.ts learned.
+ *
+ * An article rather than an episode: `article_completed` is the act these
+ * cases perform, and an episode earns through `episode_listened`.
+ */
 const IN_PATH = STEPS[0].content_id;
-const OFF_PATH = 'insight/insight-77';
+const IN_SOME_PATHWAY = new Set(getPathways().flatMap((p) => p.steps.map((s) => s.content_id)));
+const OFF_PATH = (() => {
+  const outside = Object.keys(getIndex().byContent).filter((id) => !IN_SOME_PATHWAY.has(id));
+  const article = outside.find((id) => !id.startsWith('episodes/'));
+  if (!article) throw new Error('no article sits outside every pathway — this fixture needs rethinking');
+  return article;
+})();
 
 beforeEach(async () => {
   await resetDb();
