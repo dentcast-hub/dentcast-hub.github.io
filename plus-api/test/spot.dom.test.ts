@@ -7,10 +7,10 @@
 //      not even for the moment a slow /me takes to answer. anon and plus: yes,
 //      each with their own targeting.
 //   2. An impression means SEEN, not rendered: `seen.ratio` of the card on screen
-//      for `seen.ms` continuously, in a foreground tab. CONFIG below pins its own
-//      thresholds (0.5 / 1000ms) so these tests keep asserting the MECHANISM and
-//      never have to be retuned when the shipped config's numbers change — they
-//      did on 1405/06/29, from the IAB rule to 20% for 500ms.
+//      for `seen.ms` continuously, in a foreground tab — `seen.large_ratio` once
+//      the card's own box passes `seen.large_px`. CONFIG below pins its own
+//      thresholds so these tests keep asserting the MECHANISM rather than this
+//      week's numbers.
 //
 // Rule 1 is the regression net for the production row
 // `article / premium-creative / plus-viewer`: /me answered late, the client had
@@ -40,8 +40,18 @@ class FakeIO {
 }
 
 const live = () => observers.filter((o) => !o.disconnected);
-const enterView = (ratio = 1) => live().forEach((o) => o.cb([{ isIntersecting: ratio > 0, intersectionRatio: ratio }]));
-const leaveView = () => live().forEach((o) => o.cb([{ isIntersecting: false, intersectionRatio: 0 }]));
+// jsdom lays nothing out, so the card's box — which is what decides whether the
+// large-ad threshold applies — is supplied by the test. SMALL is the ordinary
+// 560px-capped card (~162k px²); LARGE is the dashboard/profile banner (~293k),
+// the only shape on this site that crosses the IAB large-ad line.
+const SMALL = { width: 560, height: 290 };
+const LARGE = { width: 760, height: 385 };
+const enterView = (ratio = 1, box = SMALL) => live().forEach((o) => o.cb([
+  { isIntersecting: ratio > 0, intersectionRatio: ratio, boundingClientRect: box },
+]));
+const leaveView = () => live().forEach((o) => o.cb([
+  { isIntersecting: false, intersectionRatio: 0, boundingClientRect: SMALL },
+]));
 /** Scroll the card into view and hold it there long enough to count. */
 async function seen(dwellMs = 1000) { enterView(); await vi.advanceTimersByTimeAsync(dwellMs); }
 
@@ -54,7 +64,7 @@ function setVisibility(state: 'visible' | 'hidden') {
 const CONFIG = {
   enabled: true,
   premium_hides_ads: true,
-  seen: { ratio: 0.5, ms: 1000 },
+  seen: { ratio: 0.5, ms: 1000, large_ratio: 0.3, large_px: 242500 },
   slots: { home: { enabled: true } },
   rotation: { advance: 'view', sequence: ['premium'] },
   creatives: {
@@ -265,6 +275,35 @@ describe('an impression means seen, not rendered', () => {
     enterView();
     await tick(5000);
     expect(posts).toHaveLength(1);
+  });
+
+  // The IAB's own large-ad allowance, and the reason it exists: an observer can
+  // never report a ratio above viewport-area ÷ element-area, so past a certain
+  // size a 50% rule measures the visitor's monitor rather than their attention.
+  // On this site the dashboard/profile banner (~760×385) is the only card that
+  // crosses the line — it is the one shape exempt from the 560px cap.
+  it('holds an ordinary card to 50%', async () => {
+    await boot();
+    enterView(0.35, SMALL);
+    await tick(5000);
+    expect(posts, '35% of a normal card is not a viewable impression').toHaveLength(0);
+    enterView(0.5, SMALL);
+    await tick(1000);
+    expect(posts).toHaveLength(1);
+  });
+
+  it('holds a large card to 30% — measured from its own box, not its slot', async () => {
+    await boot();
+    enterView(0.35, LARGE);
+    await tick(1000);
+    expect(posts, 'past the large-ad size, 35% IS the standard').toHaveLength(1);
+  });
+
+  it('still refuses a large card below 30%', async () => {
+    await boot();
+    enterView(0.25, LARGE);
+    await tick(5000);
+    expect(posts).toHaveLength(0);
   });
 });
 

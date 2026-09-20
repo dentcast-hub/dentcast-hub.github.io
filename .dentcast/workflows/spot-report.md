@@ -64,13 +64,14 @@ engine); week buckets start **Saturday**.
    Never carry GA's heavy-undercount disclaimer over to server numbers — that
    would understate real inventory in a sponsor report.
 4. **ایمپرشن یعنی «دیده شد»، نه «رندر شد».** A card counts only after it has
-   been at least **۲۰٪ روی صفحه، نیم‌ثانیهٔ پیوسته، در تبِ فعال** (thresholds
-   live in `spot-config.json` → `seen`; this was the IAB display rule, 50% for
-   1s, until 2026-09-20 — see the discontinuity note below). So a card the
-   visitor never scrolled to and a background/prerendered tab still count
-   **nothing** — the number you report is delivered inventory. Since the change
-   it is no longer the IAB-viewable figure, so never present it to a sponsor as
-   one. It is still **lower** than the number of pages that carried an ad; never
+   been at least **۵۰٪ روی صفحه، یک ثانیهٔ پیوسته، در تبِ فعال** — **۳۰٪ برای
+   کارتِ بزرگ** (past 242,500 px², which on this site is the `dashboard` and
+   `profile` banner alone), that pair being the IAB/MRC display rule rather than
+   an exception to it. Thresholds live in `spot-config.json` → `seen`. So a card
+   the visitor never scrolled to, a background/prerendered tab, and a fast scroll
+   past the card all count **nothing** — the number you report is delivered
+   inventory, and it is defensible to a sponsor's own measurement. It is
+   therefore **lower** than the number of pages that carried an ad; never
    present the two as the same thing.
 5. **دو دستهٔ بیننده، و پریمیوم هرگز.** Only `anon` (signed-out) and `plus`
    (signed-in, free) can generate ad events at all. `premium` never renders an
@@ -260,12 +261,15 @@ building cards for some time, but `sidebar` was missing from the API's closed
 and counted nowhere. In the report that reads as no demand rather than as a
 dropped pipeline. Same lesson as the two below, third occurrence.
 
-**The viewability threshold itself changed on 2026-09-20** (founder decision):
-`seen` went from **50% for 1000ms** (the IAB display rule) to **20% for 500ms**.
-Every slot is affected. A rise in impressions across that date is a LOOSER GATE,
-not more traffic — say so explicitly in any report whose window spans it, never
-compare an impression total before/after without the caveat, and do not describe
-the post-change number as an IAB-viewable impression to a sponsor.
+**The large-ad allowance landed on 2026-09-20 and affects two slots only.**
+The gate was, and remains, the IAB display rule; what was missing was that
+rule's own carve-out for a large creative (30% instead of 50% past 242,500 px²),
+without which a card bigger than half the visitor's screen was being held to a
+bar its own size put out of reach. On this site that is `dashboard` and
+`profile` — the only slots exempt from the 560px cap on artwork — so a step up
+in THOSE two rows across that date is under-counting being corrected, not a
+change in demand. Every other slot's numbers are continuous across it, and the
+figure remains the IAB-viewable one for every slot.
 
 Two slots shipped on **2026-07-28** and have no data before that day:
 

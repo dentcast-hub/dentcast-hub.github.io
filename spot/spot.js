@@ -48,10 +48,10 @@
 // "audience": ["anon"|"plus"] (who sees it). No field = everyone, everywhere —
 // so by default signed-out and signed-in visitors see the same campaign.
 //
-// Measurement counts a SEEN ad, not a rendered one: a card must be at least 20%
-// on screen for half a continuous second in a foreground tab before it counts
-// (tunable via `seen` in the config — it was the IAB rule, 50% for 1s, until
-// 1405/06/29; see the armSeen block). Only the two classes
+// Measurement counts a SEEN ad, not a rendered one: a card must be at least 50%
+// on screen for one continuous second in a foreground tab before it counts —
+// 30% for a creative past the IAB's large-ad size, which is part of that same
+// standard (see the armSeen block; tunable via `seen` in the config). Only the two classes
 // that get ads can generate events at all — premium never renders one — so the
 // report is exactly "how often anon and plus visitors actually saw each
 // campaign". Every seen impression and click is reported TWICE — to GA4
@@ -67,7 +67,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=107';
+import { findProseRoot } from '/plus/js/config.js?v=108';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -161,7 +161,7 @@ function report(kind, slotName, creativeId) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ [key]: name, content_id: contentId }),
   });
-  import('/plus/js/api.js?v=107')
+  import('/plus/js/api.js?v=108')
     .then((m) => m.apiBase())
     .then((base) => {
       if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
@@ -180,7 +180,7 @@ function report(kind, slotName, creativeId) {
       // A network-level failure (not an HTTP error) may mean the cached base is
       // dead — self-heal so the NEXT event, and the next page's /me, re-probe
       // instead of retrying the same unreachable host all session.
-      import('/plus/js/api.js?v=107').then((m) => m.forgetBase()).catch(() => {});
+      import('/plus/js/api.js?v=108').then((m) => m.forgetBase()).catch(() => {});
     });
 }
 
@@ -666,17 +666,27 @@ function impression(creative, slotName) {
 // A card that is inserted but never scrolled to was never delivered, and a
 // sponsor report that counts it is selling air. So nothing is counted until the
 // card is actually on screen: at least `seenRatio` of it visible, continuously,
-// for `seenMs`, in a foreground tab.
+// for `seenMs`, in a foreground tab — the IAB/MRC display rule, 50% of the
+// pixels for one continuous second, which is what a sponsor's own agency will
+// measure against. Being the SAME definition the buyer uses is the whole value
+// of it: an impression count only settles an argument if both sides compute it
+// the same way.
 //
-// The threshold was the IAB display rule (50% for one continuous second) until
-// 1405/06/29, when the founder loosened it to 20% for half a second. Both halves
-// of that trade are worth stating, because only one of them is a gain: the gate
-// now fires for a card that is only clipped into view, and on a fast scroll past
-// it — deliveries that were real and went uncounted — but it is no longer the
-// number a sponsor's own agency measures against, so it may not be presented as
-// an IAB-viewable impression. It is also a REPORTING DISCONTINUITY: a rise in
-// impressions across that date is a looser gate, not more traffic, and any
-// window spanning it has to say so (see .dentcast/workflows/spot-report.md).
+// THE LARGE-AD CARVE-OUT is part of that standard, not a softening of it. A
+// creative at or above `seenLargePx` (242,500 px², the IAB threshold for a
+// "large" display ad) is held to `seenLargeRatio` (30%) instead, because 50% of
+// a very large ad can be more screen than the visitor has: the ratio an
+// observer can report is capped at viewport-area ÷ element-area, so past a
+// certain size a 50% rule stops measuring attention and starts measuring
+// monitor height. On this site exactly two slots cross that line — `dashboard`
+// and `profile`, the only ones exempt from `.dc-spot--art`'s 560px cap, whose
+// banner renders about 760×385 — and they were the two being under-counted for
+// a reason that had nothing to do with whether anybody looked at them.
+//
+// The size is read from the card's OWN box at observation time (the entry's
+// boundingClientRect), never from the slot name: the same creative is narrow in
+// a sidebar and wide in a dashboard, and a table of slot names would go stale
+// the first time a container's width changed.
 //
 // Consequences worth knowing when reading a report:
 //   - an article card below the fold counts only if the visitor scrolls to it,
@@ -686,11 +696,13 @@ function impression(creative, slotName) {
 //   - a premium answer that lands during the dwell removes the card before the
 //     timer fires, so a premium visitor cannot leave an impression behind.
 //
-// These two are the FALLBACKS, for a config that carries no `seen` block; the
+// These four are the FALLBACKS, for a config that carries no `seen` block; the
 // live numbers are spot-config.json's, and they are kept identical here so the
 // two can never answer differently.
-let seenRatio = 0.2;
-let seenMs = 500;
+let seenRatio = 0.5;
+let seenMs = 1000;
+let seenLargeRatio = 0.3;
+let seenLargePx = 242500;
 // The /me answer, once main() has asked for it. An impression is held until it
 // settles (see done()); CLASS_WAIT_MS caps that hold so a hung request can never
 // swallow a visit's telemetry outright.
@@ -731,16 +743,26 @@ function armSeen(el, creative, slotName) {
   const onVisibility = () => { if (document.visibilityState === 'hidden') stop(); else start(); };
   // The callback fires ON the threshold, and the ratio it reports is computed
   // from fractional layout rectangles — so the very observation that says "this
-  // card just reached 20%" can carry 0.19999998, fail `>= seenRatio` by a
+  // card just reached 50%" can carry 0.49999998, fail `>= seenRatio` by a
   // rounding error, and then never fire again until the card crosses the line a
   // second time. A card parked exactly at the threshold (a permanent slot in a
   // fixed column is the likely one) would sit there counting nothing. EPS is
   // small enough to change no real judgement and large enough to absorb that.
   const EPS = 0.001;
+  // Both thresholds are observed, because which one applies is not known until
+  // the card has been laid out: a banner's height follows its image, which
+  // arrives after the card does. Each entry then carries its own box, so the
+  // rule is chosen from the size the visitor is actually looking at.
+  const thresholds = seenLargeRatio < seenRatio ? [seenLargeRatio, seenRatio] : [seenRatio];
   const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { inView = e.isIntersecting && e.intersectionRatio >= seenRatio - EPS; });
+    entries.forEach((e) => {
+      const box = e.boundingClientRect;
+      const area = box ? box.width * box.height : 0;
+      const need = area >= seenLargePx ? seenLargeRatio : seenRatio;
+      inView = e.isIntersecting && e.intersectionRatio >= need - EPS;
+    });
     if (inView) start(); else stop();
-  }, { threshold: [seenRatio] });
+  }, { threshold: thresholds });
   io.observe(el);
   document.addEventListener('visibilitychange', onVisibility);
 }
@@ -1174,7 +1196,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=107')
+  return import('/plus/js/api.js?v=108')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
@@ -1227,12 +1249,14 @@ async function main() {
   openRotationWindow(cfg);
 
   // Viewability thresholds are config, not code (a sponsor contract may specify
-  // its own, and a contract written to IAB terms would set 0.5/1000 back here
-  // for that campaign). Defaults mirror the shipped config: 20% of the card,
-  // for 0.5s — see the armSeen block above for what that costs.
+  // its own). Defaults mirror the shipped config and the shipped config is the
+  // IAB display rule — see the armSeen block above, including why the large-ad
+  // pair is the standard rather than an exception to it.
   const seenCfg = cfg.seen || {};
   if (Number(seenCfg.ratio) > 0 && Number(seenCfg.ratio) <= 1) seenRatio = Number(seenCfg.ratio);
   if (Number(seenCfg.ms) >= 0) seenMs = Number(seenCfg.ms);
+  if (Number(seenCfg.large_ratio) > 0 && Number(seenCfg.large_ratio) <= 1) seenLargeRatio = Number(seenCfg.large_ratio);
+  if (Number(seenCfg.large_px) > 0) seenLargePx = Number(seenCfg.large_px);
 
   const slots = cfg.slots || {};
   const slotOn = (name) => slots[name] && slots[name].enabled;
