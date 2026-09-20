@@ -113,7 +113,9 @@ describe('every state has a face', () => {
     examImpl = () => Promise.resolve(enrolled ? { ...BASE, state: 'ready' } : { ...BASE, state: 'locked', enrolled: false });
     await mount(null);
     expect(stateEl()!.dataset.examEnrolled).toBe('no');
-    expect(root().textContent).toContain('همین حالا هم همه‌اش را خوانده‌ای');
+    // The is_complete tail — its own sentence since the copy pass of
+    // 1405/06/29, not a dash hung off the end of the previous one.
+    expect(root().textContent).toContain('همهٔ قدم‌های مسیر را هم خوانده‌ای');
     (document.getElementById('examEnroll') as HTMLButtonElement).click();
     await settle(); await settle(); await settle();
     expect(stateEl()!.dataset.examState).toBe('ready');

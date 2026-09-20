@@ -1,6 +1,6 @@
-import { el, faNum } from './util.js?v=108';
-import { api } from './api.js?v=108';
-import { sameMirrorUrl } from './config.js?v=108';
+import { el, faNum } from './util.js?v=109';
+import { api } from './api.js?v=109';
+import { sameMirrorUrl } from './config.js?v=109';
 
 /**
  * اطلاعیه — the in-app inbox, opened from the account menu.
@@ -23,9 +23,31 @@ import { sameMirrorUrl } from './config.js?v=108';
  * action, the same rule the highlight library and the collection boards follow.
  */
 
+/*
+ * TWO MAPS, AND THEY MUST COVER EVERY KIND THAT CAN REACH THE INBOX.
+ *
+ * `noticeRow` falls back to '•' and to the raw `n.kind`, so a kind missing
+ * from these maps does not fail — it renders the machine word in the middle of
+ * a Persian list. That is how «exam_result» came to be the label on the one
+ * notification that carries a reader's certificate code: seven kinds had been
+ * added to the API's union over time and none of them here.
+ *
+ * Two members of that union are deliberately NOT here, and a test knows both:
+ *   · `pillar_seat` is always sent with `inbox: false` (services/pillar-notify.ts)
+ *     because achievement-sync writes the badge's own row — it can never be a
+ *     row here, and a label for it would be a label for nothing.
+ *   · `article` is not a NotificationKind at all: it is the broadcast kind
+ *     services/article-notify.ts writes (the publish pushes themselves go out
+ *     with `inbox: false`), so it lives only in `notice_broadcasts`.
+ *
+ * The Persian names match the API's own `KIND_TITLE_FA` (services/notices.ts)
+ * wherever it has one, so a row composed server-side and a row labelled here
+ * cannot call the same thing two different things.
+ */
+
 /* Kind -> the small glyph on the row. Deliberately not per-kind colour: a wall
    of coloured chips reads as a status board, and none of these are statuses. */
-const KIND_ICON = {
+export const KIND_ICON = {
   achievement: '🏅',
   article: '📄',
   league: '🏆',
@@ -40,12 +62,18 @@ const KIND_ICON = {
   bank_amount: '🏦',
   payment_result: '💳',
   monthly_report: '📆',
+  exam_assigned: '📝',
+  exam_result: '🎓',
+  support_reply: '💬',
+  challenge_ruled: '🧩',
+  des_result: '🔬',
+  referral_bonus: '🤝',
   system: '📣',
 };
 
 /* Kind -> what to call it under the row. The kind is a machine word; this is
    what a reader would call the thing that just arrived. */
-const KIND_FA = {
+export const KIND_FA = {
   achievement: 'افتخارات',
   article: 'محتوای تازه',
   league: 'لیگ',
@@ -60,6 +88,12 @@ const KIND_FA = {
   bank_amount: 'پرداخت',
   payment_result: 'پرداخت',
   monthly_report: 'گزارش ماهانه',
+  exam_assigned: 'آزمون مسیر',
+  exam_result: 'آزمون مسیر',
+  support_reply: 'پشتیبانی',
+  challenge_ruled: 'چالش',
+  des_result: 'ارزیابی مقاله',
+  referral_bonus: 'کد معرف',
   system: 'دنت‌کست',
 };
 

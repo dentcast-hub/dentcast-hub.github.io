@@ -24,14 +24,14 @@
 // answers were right, how many key points each free answer covered — and
 // never the key itself: the pool is small and the second attempt may draw
 // the same question.
-import { el, faNum, debounce } from './util.js?v=108';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=108';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=108';
-import { openLoginModal } from './login-modal.js?v=108';
-import { registerSW } from './pwa.js?v=108';
-import { intentRow } from './pathways.js?v=108';
-import { certificateTerms } from './certificate-terms.js?v=108';
-import { openSheet } from './sheet.js?v=108';
+import { el, faNum, debounce } from './util.js?v=109';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=109';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=109';
+import { openLoginModal } from './login-modal.js?v=109';
+import { registerSW } from './pwa.js?v=109';
+import { intentRow } from './pathways.js?v=109';
+import { certificateTerms } from './certificate-terms.js?v=109';
+import { openSheet } from './sheet.js?v=109';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' });
 const FA_DATETIME = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium', timeStyle: 'short' });
@@ -279,9 +279,13 @@ function enrollCard(s, root, id) {
   });
   return el('div', { class: 'dcp-card dcp-exam-card', 'data-exam-state': 'locked', 'data-exam-enrolled': 'no' }, [
     el('b', {}, 'اول مسیر را شروع کن'),
+    // Same sentence the pathway page's NOT_ENROLLED strip makes, in the same
+    // voice — whole sentences, no dash, the reassurance last. The button is
+    // on this card, so it says «همین دکمه» where the strip says «بالای صفحه».
     el('p', { class: 'dcp-cert-card-lead' },
-      'آزمون برای کسی است که این مسیر را شروع کرده. با یک ضربه شروعش کن؛ هر چه تا حالا خوانده‌ای به حساب می‌آید'
-      + (s.is_complete ? ' — و همین حالا هم همه‌اش را خوانده‌ای.' : '.')),
+      'آزمون این مسیر برای کسانی است که مسیر را شروع کرده‌اند. با همین دکمه شروعش کن؛ '
+      + 'هر چه تا حالا از این مسیر خوانده‌ای، از همان لحظه در پیشرفتت حساب می‌شود.'
+      + (s.is_complete ? ' همهٔ قدم‌های مسیر را هم خوانده‌ای، پس بعد از ثبت‌نام آزمون همین‌جا باز می‌شود.' : '')),
     el('div', { class: 'dcp-cert-actions' }, [btn, backBtn(id)]),
     msg,
   ]);

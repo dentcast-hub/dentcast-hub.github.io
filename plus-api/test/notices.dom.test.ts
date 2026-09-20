@@ -15,6 +15,8 @@
 //   · a level is a RING COLOUR, never the word «طلا». The celebration card is a
 //     new surface and is exactly where that rule gets broken by accident.
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
 
 const apiCalls: string[] = [];
 const state = {
@@ -35,7 +37,7 @@ vi.mock('/plus/js/api.js', () => ({
   ApiError: class extends Error {},
 }));
 
-const { renderNotices } = await import('/plus/js/notices.js');
+const { renderNotices, KIND_FA, KIND_ICON } = await import('/plus/js/notices.js');
 const { maybeCelebrate } = await import('/plus/js/achievements.js');
 
 const notice = (over: Record<string, unknown> = {}) => ({
@@ -234,5 +236,85 @@ describe('the badge celebration', () => {
     const card = document.querySelector('.dcp-cel')!;
     expect(card.querySelector('.dcp-md-shield')).toBeTruthy();
     expect(card.querySelector('.dcp-bg-disc')).toBeNull();
+  });
+});
+
+// ------------------------------------------------------- the kind labels ---
+
+/**
+ * THE LABEL UNDER A ROW IS A TRANSLATION TABLE, AND IT DRIFTED.
+ *
+ * `noticeRow` falls back to the raw kind, so a kind the client does not know
+ * renders the machine word — «exam_result» under the very notification that
+ * carries a reader's certificate code. Seven kinds had been added to the API's
+ * union over time and none of them to notices.js; nothing failed, because
+ * nothing could.
+ *
+ * So the list is read from the API's own union rather than restated here: a
+ * kind added tomorrow fails this test on the day it is added, which is the
+ * only moment the fix is cheap.
+ */
+// Resolved from the run's root (plus-api), not from `import.meta.url`: this
+// file runs under jsdom, where that is an http:// URL and readFileSync refuses
+// it. A wrong path throws here rather than passing quietly.
+const src = (rel: string) => readFileSync(path.resolve(process.cwd(), rel), 'utf8');
+
+/**
+ * Every member of `export type NotificationKind = | 'a' | 'b' …`.
+ *
+ * The comments come OUT first. Each member of that union is documented with a
+ * block comment above it, and slicing to the first `;` reads the declaration as
+ * ending inside the first comment that contains one — which is a parser that
+ * silently checks a third of the list and passes. Hence the floor below: a
+ * parse that suddenly finds far fewer kinds is a broken parse, not a shrunken
+ * union, and must fail loudly rather than quietly stop guarding.
+ */
+function apiKinds(): string[] {
+  const text = src('src/providers/notifications/types.ts')
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\/\/[^\n]*/g, '');
+  const start = text.indexOf('export type NotificationKind =');
+  expect(start).toBeGreaterThan(-1);
+  const body = text.slice(start, text.indexOf(';', start));
+  const kinds = [...new Set([...body.matchAll(/\|\s*'([a-z_]+)'/g)].map((m) => m[1]))];
+  expect(kinds.length).toBeGreaterThanOrEqual(15);
+  return kinds;
+}
+
+/**
+ * The two members that cannot be inbox rows, each for a reason the code states:
+ *   · pillar_seat — always sent `inbox: false`; achievement-sync writes the
+ *     badge's own row, and the same news must not sit in the inbox twice.
+ * (`article` is the other absence, but it is a broadcast kind, not a member of
+ * this union, so it never reaches this list.)
+ */
+const NEVER_IN_INBOX = ['pillar_seat'];
+
+describe('the inbox kind labels', () => {
+  it('names every kind that can land in the inbox', () => {
+    const missing = apiKinds()
+      .filter((k) => !NEVER_IN_INBOX.includes(k))
+      .filter((k) => !KIND_FA[k] || !KIND_ICON[k]);
+    expect(missing).toEqual([]);
+  });
+
+  it('keeps the exemption honest — pillar_seat is still inbox:false', () => {
+    expect(src('src/services/pillar-notify.ts')).toMatch(/'pillar_seat'[\s\S]{0,60}inbox:\s*false/);
+  });
+
+  /**
+   * The one a reader actually meets: a passed exam. Its row must read «آزمون
+   * مسیر», never the English word the API calls it internally.
+   */
+  it('labels an exam result in Persian, not with the machine word', async () => {
+    state.notices = [notice({
+      id: 'x', kind: 'exam_result', title: 'گواهی‌ات صادر شد',
+      body: 'کد: DC-K4M-7QA', url: '/plus/certificate.html?c=DC-K4M-7QA',
+    })];
+    const root = document.createElement('div');
+    await renderNotices(root);
+    const label = root.querySelector('.dcp-nt-kind')!.textContent;
+    expect(label).toBe('آزمون مسیر');
+    expect(label).not.toMatch(/[a-z_]{4,}/);
   });
 });
