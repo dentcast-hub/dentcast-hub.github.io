@@ -69,12 +69,18 @@ async function readEverything(): Promise<void> {
     await pool.query(`insert into user_activity (user_id, action, content_id) values ($1, 'article_completed', $2)`, [id, cid]);
   }
 }
-/** The founder builds the pool the way the panel does: one question at a time. */
-async function build(questions: object[]): Promise<void> {
+/**
+ * The founder builds the pool the way the panel does: one question at a time,
+ * then presses «اعلام آمادگی». Both halves, because since migration 0067 a
+ * pool without the press is a DRAFT — invisible to every reader — and the
+ * walk is about what a reader actually meets.
+ */
+async function build(questions: object[], open = true): Promise<void> {
   for (const q of questions) {
     const r = await adminPost('/admin/exam-forms/questions', { pathway_id: PATHWAY, question: q });
     expect(r.statusCode).toBe(200);
   }
+  if (open) expect((await adminPost('/admin/exam-forms/publish', { pathway_id: PATHWAY })).statusCode).toBe(200);
 }
 const MCQ = (n: number, correct = 1) => ({
   kind: 'mcq', prompt_fa: `سؤال تستی ${n}؟`, options: ['الف', 'ب', 'ج', 'د'], correct,

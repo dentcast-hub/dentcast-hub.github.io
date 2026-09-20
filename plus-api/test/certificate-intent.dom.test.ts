@@ -83,6 +83,15 @@ describe('the certificate strip — three moments', () => {
     await mount({ ...BASE, state: 'ready', is_complete: true });
     expect(txt()).toContain('آزمون این مسیر برایت باز است');
     expect(document.querySelector('[data-pw-intent-row]')).toBeNull();
+    // At `ready` the CTA asks before it travels, so it is a button; the link
+    // to the exam page lives inside the sheet it opens.
+    expect(document.querySelector('[data-exam-cta]')).toBeTruthy();
+    expect(document.querySelector('a.dcp-btn-primary')).toBeNull();
+  });
+
+  it('«ادامهٔ آزمون» travels straight through — there is nothing left to ask', async () => {
+    await mount({ ...BASE, state: 'open', is_complete: true });
+    expect(document.querySelector('[data-exam-cta]')).toBeNull();
     expect(document.querySelector('a.dcp-btn-primary')!.getAttribute('href'))
       .toBe('/plus/exam.html?id=post-and-core');
   });
@@ -191,6 +200,15 @@ describe('no numbers, anywhere', () => {
     }
   });
 
+  it('nor the «الان آزمون بدهیم؟» sheet — the numbers belong to the exam page', async () => {
+    await mount({ ...BASE, state: 'ready', is_complete: true });
+    (document.querySelector('[data-exam-cta]') as HTMLButtonElement).click();
+    await settle();
+    const body = sheet()!.textContent!;
+    expect(body).not.toMatch(DIGITS);
+    expect(body).toContain('چیزی را شروع نمی‌کند');
+  });
+
   it('nor the terms sheet — it says WHERE the numbers are, never what they are', async () => {
     await mount(BASE, { started: true });
     btn('شرایط ›')!.click();
@@ -203,5 +221,44 @@ describe('no numbers, anywhere', () => {
     expect(body).not.toMatch(DIGITS);
     expect(body).toContain('در صفحهٔ آزمونِ همان مسیر');
     expect(body).not.toContain('٪');
+  });
+});
+
+/**
+ * The door asks, and «الان نه» is a whole answer (founder, 2026-09-20).
+ *
+ * The CTA was a bare link: tapping it to see what was there landed the reader
+ * on a page whose first button draws the questions. Nothing was lost by
+ * looking — the attempt opens on «شروع آزمون», not on arrival — but from this
+ * side that was unknowable, so the safest move was not to tap.
+ */
+describe('«الان آزمون بدهیم؟»', () => {
+  const openAsk = async () => {
+    await mount({ ...BASE, state: 'ready', is_complete: true });
+    (document.querySelector('[data-exam-cta]') as HTMLButtonElement).click();
+    await settle();
+  };
+
+  it('asks before it travels, and says that travelling starts nothing', async () => {
+    await openAsk();
+    const card = document.querySelector('[data-exam-ask]')!;
+    expect(card.textContent).toContain('پست و کور');
+    expect(card.textContent).toContain('رفتن به صفحهٔ آزمون چیزی را شروع نمی‌کند');
+    expect(card.querySelector('[data-exam-go]')!.getAttribute('href'))
+      .toBe('/plus/exam.html?id=post-and-core');
+  });
+
+  it('«الان نه» closes the sheet and leaves the card exactly as it was', async () => {
+    await openAsk();
+    (document.querySelector('[data-exam-stay]') as HTMLButtonElement).click();
+    await settle();
+    // sheet.js takes the node out only after its exit transition (300ms), so
+    // «closed» is asserted on the node being gone rather than on a class the
+    // opening rAF may still be about to set.
+    await new Promise((r) => setTimeout(r, 350));
+    expect(sheet()).toBeNull();
+    expect(intentCalls).toEqual([]);                       // nothing recorded
+    expect(document.querySelector('[data-exam-cta]')).toBeTruthy(); // same button, same place
+    expect(txt()).toContain('آزمون این مسیر برایت باز است');
   });
 });

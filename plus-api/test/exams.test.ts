@@ -17,6 +17,7 @@ import {
 } from '../src/pathways.js';
 import {
   normalizeQuestions, upsertForm, getForm, deleteForm, formRoster, assignExam,
+  publishForm, unpublishForm, announceOpenExams,
   addQuestion, removeQuestion, nextQuestionId,
   examState, startAttempt, submitAttempt, ruleAttempt, queueRows, attemptRoster, getAttempt,
   drawQuestions, tally, setCertificateIntent, type ExamQuestion,
@@ -81,6 +82,18 @@ async function finish(uid: string): Promise<void> {
   for (const cid of STEPS) {
     await pool.query(`insert into user_activity (user_id, action, content_id) values ($1, 'article_completed', $2)`, [uid, cid]);
   }
+}
+
+/**
+ * A form plus the founder's «اعلام آمادگی» — which is what an exam a reader
+ * can sit actually is since migration 0067. Every test below that is not
+ * ABOUT publishing says so through this helper, so the gate is exercised on
+ * every one of them rather than mocked away.
+ */
+async function openForm(pathwayId: string, input: Parameters<typeof upsertForm>[1]) {
+  const r = await upsertForm(pathwayId, input);
+  await publishForm(pathwayId);
+  return r;
 }
 
 /** Press «شروع این مسیر». */
@@ -159,11 +172,11 @@ describe('normalizeQuestions — the founder\'s paste, leniently', () => {
 
 describe('the form', () => {
   it('is created with the founder\'s defaults — 70%, two attempts, a week, five rulings — and upserts in place', async () => {
-    const { form, created } = await upsertForm(PATHWAY, { questions: [MCQ(1), FREE(1)] });
+    const { form, created } = await openForm(PATHWAY, { questions: [MCQ(1), FREE(1)] });
     expect(created).toBe(true);
     expect(form).toMatchObject({ pass_percent: 70, max_attempts: 2, retry_days: 7, supervised_until: 5, draw: 15 });
 
-    const again = await upsertForm(PATHWAY, { questions: [MCQ(1)], draw: 1, passPercent: 80, note: ' n ' });
+    const again = await openForm(PATHWAY, { questions: [MCQ(1)], draw: 1, passPercent: 80, note: ' n ' });
     expect(again.created).toBe(false);
     expect(again.form.id).toBe(form.id);
     expect(again.form).toMatchObject({ pass_percent: 80, draw: 1, note: 'n' });
@@ -254,7 +267,7 @@ describe('the question builder — one written question at a time', () => {
   });
 
   it('appends without touching the form\'s own settings', async () => {
-    await upsertForm(PATHWAY, { questions: [MCQ(1)], passPercent: 85, draw: 4, retryDays: 0, supervisedUntil: 0, note: 'دست‌ساز' });
+    await openForm(PATHWAY, { questions: [MCQ(1)], passPercent: 85, draw: 4, retryDays: 0, supervisedUntil: 0, note: 'دست‌ساز' });
     const r = await addQuestion(PATHWAY, { kind: 'free', prompt_fa: 'چرا؟', key_points: ['اول', 'دوم'] });
     expect(r.created).toBe(false);
     // the thing upsertForm would have reset:
@@ -291,7 +304,7 @@ describe('the question builder — one written question at a time', () => {
 
   it('deleting a question leaves an attempt that is already open exactly as it was', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2)] });
+    await openForm(PATHWAY, { questions: [MCQ(1), MCQ(2)] });
     await assignExam(uid, PATHWAY);
     const started = await startAttempt(uid, PATHWAY, 'مهسا رضایی');
     expect(started.ok && started.attempt.questions).toHaveLength(2);
@@ -340,7 +353,7 @@ describe('who may sit it', () => {
     const uid = await userId();
     expect((await examState(uid, PATHWAY)).state).toBe('no_form');
 
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     const locked = await examState(uid, PATHWAY);
     expect(locked.state).toBe('locked');
     expect(locked.rules).toMatchObject({ question_count: 1, mcq_count: 1, free_count: 0, pass_percent: 70 });
@@ -358,7 +371,7 @@ describe('who may sit it', () => {
 
   it('finishing the pathway is the other door — but only for a reader who pressed «شروع این مسیر»', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     await finish(uid);
     const before = await examState(uid, PATHWAY);
     expect(before.state).toBe('locked');
@@ -373,7 +386,7 @@ describe('who may sit it', () => {
     expect((await startAttempt(uid, PATHWAY, 'مهسا رضایی')).ok).toBe(true);
   });
 
-  it('a «بله» from a reader nowhere near the end still reaches the founder, and says whether a form exists', async () => {
+  it('a «بله» from a reader nowhere near the end still reaches the founder, and says whether the exam is OPEN', async () => {
     const uid = await userId();
     await loginAs(app, founderPhone);
     config.support.alertPhone = founderPhone;
@@ -388,7 +401,7 @@ describe('who may sit it', () => {
     const notes = await notices(fid);
     expect(notes).toHaveLength(1);
     expect(notes[0].title).toContain('گواهی‌نامه می‌خواهد');
-    expect(notes[0].body).toContain('فرم آزمون ندارد');
+    expect(notes[0].body).toContain('هنوز باز نشده');
 
     // The same wish, said again or taken back and repeated, is one wish.
     await post(`/exams/${PATHWAY}/intent`, { intent: 'declined' });
@@ -396,11 +409,11 @@ describe('who may sit it', () => {
     expect(await notices(fid)).toHaveLength(1);
   });
 
-  it('a wish for a pathway whose exam is already written says there is nothing to do', async () => {
+  it('a wish for a pathway whose exam is already OPEN says there is nothing to do', async () => {
     const uid = await userId();
     await loginAs(app, founderPhone);
     config.support.alertPhone = founderPhone;
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     await pool.query(
       `insert into user_activity (user_id, action, content_id) values ($1, 'article_completed', $2)`, [uid, STEPS[0]],
     );
@@ -408,7 +421,7 @@ describe('who may sit it', () => {
     await post(`/exams/${PATHWAY}/intent`, { intent: 'wanted' });
     const notes = await notices(await userId(founderPhone));
     expect(notes).toHaveLength(1);
-    expect(notes[0].body).toContain('آماده است');
+    expect(notes[0].body).toContain('باز است');
   });
 
   it('the founder wishing on their own account pings nobody', async () => {
@@ -418,28 +431,83 @@ describe('who may sit it', () => {
     expect(await notices(uid)).toHaveLength(0);
   });
 
-  it('writing the form tells everyone who ASKED for the certificate, not only the hand-assigned', async () => {
-    const wisher = await userId();
-    const both = await userId(await (async () => { await loginAs(app, '09121200095'); return '09121200095'; })());
-    await loginAs(app, '09121200096');
-    const assignee = await userId('09121200096');
+  it('writing the form tells NOBODY — «اعلام آمادگی» tells whoever can actually sit it', async () => {
+    const ready = await userId();                       // asked + finished the pathway
+    await finish(ready); await enroll(ready);
+    await setCertificateIntent(ready, PATHWAY, 'wanted');
 
-    await setCertificateIntent(wisher, PATHWAY, 'wanted');
-    await setCertificateIntent(both, PATHWAY, 'wanted');
-    await assignExam(both, PATHWAY);       // in BOTH populations — told once
+    await loginAs(app, '09121200095');
+    const reading = await userId('09121200095');         // asked, still reading
+    await setCertificateIntent(reading, PATHWAY, 'wanted');
+
+    await loginAs(app, '09121200096');
+    const assignee = await userId('09121200096');        // let in by hand, reads nothing
     await assignExam(assignee, PATHWAY);
-    // «فعلاً نه» is not a subscription to the news
+
     await loginAs(app, '09121200097');
-    const declined = await userId('09121200097');
+    const declined = await userId('09121200097');        // «فعلاً نه» is not a subscription
     await setCertificateIntent(declined, PATHWAY, 'declined');
 
-    const r = await adminPost('/admin/exam-forms', { pathway_id: PATHWAY, questions: [MCQ(1)] });
-    expect(r.json()).toMatchObject({ ok: true, created: true, notified: 3 });
-    for (const uid of [wisher, both, assignee]) {
-      const told = (await notices(uid)).filter((n) => n.title.includes('آزمون مسیر برایت باز شد'));
+    // Saving questions is not an announcement — and the reader sees nothing.
+    const saved = await adminPost('/admin/exam-forms', { pathway_id: PATHWAY, questions: [MCQ(1)] });
+    expect(saved.json()).toMatchObject({ ok: true, created: true, published: false });
+    for (const uid of [ready, reading, assignee, declined]) expect(await notices(uid)).toHaveLength(0);
+    expect((await examState(ready, PATHWAY)).state).toBe('no_form');
+
+    // The press. Only the two who can sit it are told; the one still reading
+    // is counted as waiting and told by the nightly sweep instead.
+    const opened = await adminPost('/admin/exam-forms/publish', { pathway_id: PATHWAY });
+    expect(opened.json()).toMatchObject({ ok: true, already: false, told: 2, waiting: 1 });
+    for (const uid of [ready, assignee]) {
+      const told = (await notices(uid)).filter((n) => n.title.includes('باز شد'));
       expect(told).toHaveLength(1);
+      expect(told[0].kind).toBe('exam_assigned');
     }
+    expect(await notices(reading)).toHaveLength(0);
     expect(await notices(declined)).toHaveLength(0);
+    expect((await examState(ready, PATHWAY)).state).toBe('ready');
+
+    // Pressing again, or adding a question, tells nobody a second time.
+    const again = await adminPost('/admin/exam-forms/publish', { pathway_id: PATHWAY });
+    expect(again.json()).toMatchObject({ already: true, told: 0 });
+    expect(await notices(ready)).toHaveLength(1);
+  });
+
+  it('the one still reading is told the night they reach the end — once, ever', async () => {
+    const uid = await userId();
+    await enroll(uid);
+    await setCertificateIntent(uid, PATHWAY, 'wanted');
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    expect(await notices(uid)).toHaveLength(0);          // nothing yet: still reading
+
+    // The sweep finds nobody while a step is missing…
+    expect((await announceOpenExams()).told).toHaveLength(0);
+    await finish(uid);
+    // …and finds them the first night after they finish.
+    const run = await announceOpenExams();
+    expect(run.told).toEqual([{ user_id: uid, pathway_id: PATHWAY }]);
+    const n = await notices(uid);
+    expect(n).toHaveLength(1);
+    expect(n[0].body).toContain('تمام کرده‌ای');
+
+    // Every later night is silent — the marker is a high-water mark, so a
+    // pathway that GROWS under them (progress goes backwards) never
+    // re-announces.
+    expect((await announceOpenExams()).told).toHaveLength(0);
+    expect(await notices(uid)).toHaveLength(1);
+  });
+
+  it('a lapsed subscriber is told too, and the message says what it costs', async () => {
+    const uid = await userId();
+    await finish(uid); await enroll(uid);
+    await setCertificateIntent(uid, PATHWAY, 'wanted');
+    await pool.query(`update profiles set tier = 'free' where id = $1`, [uid]);
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    expect((await announceOpenExams()).told).toHaveLength(1);
+    const n = await notices(uid);
+    expect(n).toHaveLength(1);
+    expect(n[0].body).toContain('اشتراک پریمیوم');
+    expect(n[0].body).not.toContain('هر وقت خواستی شروع کن');
   });
 
   it('«گواهی می‌خواهی؟» — the answer enrols, is reversible, and a «بله» from somebody near the end reaches the founder at once', async () => {
@@ -468,7 +536,7 @@ describe('who may sit it', () => {
 
   it('starting the exam answers the question by itself', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     await assignExam(uid, PATHWAY);
     expect((await examState(uid, PATHWAY)).certificate_intent).toBeNull();
     await startAttempt(uid, PATHWAY, 'مهسا رضایی');
@@ -477,34 +545,63 @@ describe('who may sit it', () => {
 
   it('the wall reads the same rule', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     await finish(uid);
     expect((await get('/certificates')).json().pathways.find((p: { id: string }) => p.id === PATHWAY).exam.state).toBe('locked');
     await enroll(uid);
     expect((await get('/certificates')).json().pathways.find((p: { id: string }) => p.id === PATHWAY).exam.state).toBe('ready');
   });
 
-  it('tells a reader let in early when the form finally appears — and only then, once', async () => {
+  it('tells a reader let in early when the exam OPENS — and only then, once', async () => {
     const uid = await userId();
     const early = await adminPost('/admin/exams', { phone, pathway_id: PATHWAY });
-    expect(early.json().has_form).toBe(false);
+    expect(early.json().exam_open).toBe(false);
     expect(await notices(uid)).toHaveLength(0); // nothing to sit yet — no notice
 
-    const created = await adminPost('/admin/exam-forms', { pathway_id: PATHWAY, questions: [MCQ(1)] });
-    expect(created.json().notified).toBe(1);
+    await adminPost('/admin/exam-forms', { pathway_id: PATHWAY, questions: [MCQ(1)] });
+    expect(await notices(uid)).toHaveLength(0); // a draft is still nothing to sit
+    expect((await adminPost('/admin/exam-forms/publish', { pathway_id: PATHWAY })).json().told).toBe(1);
     const n = await notices(uid);
     expect(n).toHaveLength(1);
     expect(n[0].kind).toBe('exam_assigned');
     expect(n[0].body).toContain(getPathwayById(PATHWAY)!.title_fa);
 
-    // editing the form is not news; assigning AFTER the form is, once
+    // editing the form is not news; assigning AFTER it is open is, once
     const edited = await adminPost('/admin/exam-forms', { pathway_id: PATHWAY, questions: [MCQ(1), MCQ(2)] });
-    expect(edited.json().notified).toBe(0);
+    expect(edited.json().published).toBe(true);
     await loginAs(app, '09121200097');
     const late = await adminPost('/admin/exams', { phone: '09121200097', pathway_id: PATHWAY });
-    expect(late.json().has_form).toBe(true);
+    expect(late.json().exam_open).toBe(true);
     expect(await notices(await userId('09121200097'))).toHaveLength(1);
     expect(await notices(uid)).toHaveLength(1);
+  });
+
+  it('a draft is invisible, an un-publish closes the door, and an attempt in flight survives it', async () => {
+    const uid = await userId();
+    await finish(uid); await enroll(uid);
+    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2)] });
+    // A form with questions, unpublished: the reader sees what they saw
+    // before any question existed — no rules, nothing to start.
+    const draft = await examState(uid, PATHWAY);
+    expect(draft).toMatchObject({ state: 'no_form', rules: null });
+    expect((await startAttempt(uid, PATHWAY, 'مهسا رضایی')).ok).toBe(false);
+
+    await publishForm(PATHWAY);
+    expect((await examState(uid, PATHWAY)).state).toBe('ready');
+    expect((await startAttempt(uid, PATHWAY, 'مهسا رضایی')).ok).toBe(true);
+
+    // Closing it stops NEW attempts only: the open one keeps its own snapshot
+    // and is still submittable.
+    expect(await unpublishForm(PATHWAY)).toBe(true);
+    expect((await examState(uid, PATHWAY)).state).toBe('open');
+    expect((await post(`/exams/${PATHWAY}/submit`, { answers: { m1: 1, m2: 1 } })).statusCode).toBe(200);
+  });
+
+  it('publishing refuses a pathway with no form and a pool that is empty', async () => {
+    const empty = await adminPost('/admin/exam-forms/publish', { pathway_id: PATHWAY });
+    expect(empty.statusCode).toBe(400);
+    expect(empty.json().error).toBe('no_form');
+    expect((await adminPost('/admin/exam-forms/publish', { pathway_id: BUNDLE_ID })).statusCode).toBe(400);
   });
 
   it('is premium: 401 signed out, 402 free, and a bundle is 404', async () => {
@@ -518,7 +615,7 @@ describe('who may sit it', () => {
 
   it('a certificate already held (issued by hand) reads as passed', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     await issueCertificate(uid, PATHWAY, { holderName: 'مهسا رضایی', notify: false });
     const s = await examState(uid, PATHWAY);
     expect(s.state).toBe('passed');
@@ -542,7 +639,7 @@ describe('the draw', () => {
 
   it('starting opens an attempt with the key stripped, and a second start hands back the same attempt', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2), MCQ(3), FREE(1), FREE(2)], draw: 3 });
+    await openForm(PATHWAY, { questions: [MCQ(1), MCQ(2), MCQ(3), FREE(1), FREE(2)], draw: 3 });
     await assignExam(uid, PATHWAY);
 
     const locked = await post(`/exams/${PATHWAY}/start`, { holder_name: '   ' });
@@ -572,7 +669,7 @@ describe('the draw', () => {
 
   it('refuses to start when locked', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     const r = await startAttempt(uid, PATHWAY, 'مهسا رضایی');
     expect(r.ok).toBe(false);
     expect(r.state.state).toBe('locked');
@@ -584,7 +681,7 @@ describe('the draw', () => {
 describe('submitting', () => {
   it('refuses an incomplete sheet by question id and keeps the attempt open', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1), FREE(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1), FREE(1)] });
     await assignExam(uid, PATHWAY);
     await startAttempt(uid, PATHWAY, 'مهسا رضایی');
 
@@ -597,7 +694,7 @@ describe('submitting', () => {
   });
 
   it('with no open attempt is 409', async () => {
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     const r = await post(`/exams/${PATHWAY}/submit`, { answers: {} });
     expect(r.statusCode).toBe(409);
     expect(r.json().error).toBe('no_open_attempt');
@@ -605,7 +702,7 @@ describe('submitting', () => {
 
   it('multiple choice settles on its own: a pass issues the certificate, the credit and the notice in one act', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2), MCQ(3)] }); // 2/3 = 67 < 70 fails; 3/3 passes
+    await openForm(PATHWAY, { questions: [MCQ(1), MCQ(2), MCQ(3)] }); // 2/3 = 67 < 70 fails; 3/3 passes
     await assignExam(uid, PATHWAY);
     await startAttempt(uid, PATHWAY, 'دکتر نگار حسینی');
 
@@ -640,7 +737,7 @@ describe('submitting', () => {
 
   it('a fail below 70% waits a week, a second attempt draws the unseen questions, and the third is refused', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2), MCQ(3), MCQ(4)], draw: 2 });
+    await openForm(PATHWAY, { questions: [MCQ(1), MCQ(2), MCQ(3), MCQ(4)], draw: 2 });
     await assignExam(uid, PATHWAY);
     const first = await startAttempt(uid, PATHWAY, 'مهسا رضایی');
     const drawn1 = first.ok ? first.attempt.questions.map((q) => q.id) : [];
@@ -676,7 +773,7 @@ describe('submitting', () => {
 
   it('does not depend on the mix — an all-multiple-choice pool goes end to end', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2), MCQ(3), MCQ(4)] });
+    await openForm(PATHWAY, { questions: [MCQ(1), MCQ(2), MCQ(3), MCQ(4)] });
     await assignExam(uid, PATHWAY);
     const s = await examState(uid, PATHWAY);
     expect(s.rules).toMatchObject({ question_count: 4, mcq_count: 4, free_count: 0 });
@@ -693,7 +790,7 @@ describe('submitting', () => {
 
   it('does not depend on the mix — an all-free-text pool goes end to end', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [FREE(1), FREE(2)], supervisedUntil: 0 });
+    await openForm(PATHWAY, { questions: [FREE(1), FREE(2)], supervisedUntil: 0 });
     await assignExam(uid, PATHWAY);
     const s = await examState(uid, PATHWAY);
     expect(s.rules).toMatchObject({ question_count: 2, mcq_count: 0, free_count: 2 });
@@ -711,7 +808,7 @@ describe('submitting', () => {
     // 1 free + 9 mcq, drawing 5 from the WHOLE pool — the sheet's mix is
     // whatever the draw produced, never a count per kind (founder: «۱۵ تا
     // سؤال رندوم» over a pool he keeps adding to).
-    await upsertForm(PATHWAY, {
+    await openForm(PATHWAY, {
       questions: [FREE(1), ...Array.from({ length: 9 }, (_, i) => MCQ(i + 1))],
       draw: 5, supervisedUntil: 0,
     });
@@ -724,13 +821,13 @@ describe('submitting', () => {
     expect((await examState(uid, PATHWAY)).rules!.question_count).toBe(5);
 
     // asking for more than the pool holds draws the pool, never zero
-    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2)], draw: 20 });
+    await openForm(PATHWAY, { questions: [MCQ(1), MCQ(2)], draw: 20 });
     const other = await userId();
     expect((await examState(other, PATHWAY)).rules!.question_count).toBe(2);
   });
 
   it('is rate limited per reader', async () => {
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     for (let i = 0; i < config.exam.maxSubmitsPerHour; i += 1) await post(`/exams/${PATHWAY}/submit`, { answers: {} });
     expect((await post(`/exams/${PATHWAY}/submit`, { answers: {} })).statusCode).toBe(429);
   });
@@ -744,7 +841,7 @@ describe('free text and the model', () => {
     expect(founderCookie).toBeTruthy();
     config.support.alertPhone = founderPhone;
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1), FREE(1)], supervisedUntil: 0 });
+    await openForm(PATHWAY, { questions: [MCQ(1), FREE(1)], supervisedUntil: 0 });
     await assignExam(uid, PATHWAY);
     await startAttempt(uid, PATHWAY, 'مهسا رضایی');
 
@@ -764,7 +861,7 @@ describe('free text and the model', () => {
 
   it('two agreeing runs settle on their own once the form has left its supervised period', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [FREE(1), FREE(2)], supervisedUntil: 0 });
+    await openForm(PATHWAY, { questions: [FREE(1), FREE(2)], supervisedUntil: 0 });
     await assignExam(uid, PATHWAY);
     await startAttempt(uid, PATHWAY, 'دکتر نگار حسینی');
     const spy = agree([]);
@@ -782,7 +879,7 @@ describe('free text and the model', () => {
 
   it('two runs that disagree are not a verdict — the attempt queues', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [FREE(1)], supervisedUntil: 0 });
+    await openForm(PATHWAY, { questions: [FREE(1)], supervisedUntil: 0 });
     await assignExam(uid, PATHWAY);
     await startAttempt(uid, PATHWAY, 'مهسا رضایی');
     vi.spyOn(ai, 'matchKeyPoints')
@@ -796,7 +893,7 @@ describe('free text and the model', () => {
 
   it('a confident fail below 70% settles as failed, with the reader told how many points landed', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [FREE(1)], supervisedUntil: 0 });
+    await openForm(PATHWAY, { questions: [FREE(1)], supervisedUntil: 0 });
     await assignExam(uid, PATHWAY);
     await startAttempt(uid, PATHWAY, 'مهسا رضایی');
     vi.spyOn(ai, 'matchKeyPoints').mockResolvedValue([
@@ -811,7 +908,7 @@ describe('free text and the model', () => {
 
   it('while supervised, a confident verdict still waits for the founder — pre-filled', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1), FREE(1)] }); // supervised_until 5
+    await openForm(PATHWAY, { questions: [MCQ(1), FREE(1)] }); // supervised_until 5
     await assignExam(uid, PATHWAY);
     await startAttempt(uid, PATHWAY, 'مهسا رضایی');
     agree([]);
@@ -843,7 +940,7 @@ describe('free text and the model', () => {
 describe('the founder\'s ruling', () => {
   async function queued(): Promise<{ uid: string; id: string }> {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1), FREE(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1), FREE(1)] });
     await assignExam(uid, PATHWAY);
     await startAttempt(uid, PATHWAY, 'نام اولیه');
     agree([]);
@@ -963,7 +1060,7 @@ describe('the founder\'s ruling', () => {
 describe('edges', () => {
   it('a pass on a pathway whose certificate was already issued by hand mints no second code', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     await assignExam(uid, PATHWAY);
     await startAttempt(uid, PATHWAY, 'مهسا رضایی');
     const manual = await issueCertificate(uid, PATHWAY, { holderName: 'نیما مرادی', notify: false });
@@ -975,7 +1072,7 @@ describe('edges', () => {
 
   it('deleting the form takes its attempts and examples, leaves the certificate (attempt_id nulled)', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     await assignExam(uid, PATHWAY);
     await startAttempt(uid, PATHWAY, 'مهسا رضایی');
     await submitAttempt(uid, PATHWAY, { m1: 1 });
@@ -989,7 +1086,7 @@ describe('edges', () => {
 
   it('GET /certificates carries one word per pathway on the exam', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     await assignExam(uid, PATHWAY);
     const res = await get('/certificates');
     const mine = res.json().pathways.find((p: { id: string }) => p.id === PATHWAY);
@@ -1002,7 +1099,7 @@ describe('edges', () => {
     const a = await userId();
     await loginAs(app, '09121200096');
     const b = await userId('09121200096');
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     await assignExam(a, PATHWAY);
     await assignExam(b, PATHWAY);
     await startAttempt(a, PATHWAY, 'آرش نوری'); await submitAttempt(a, PATHWAY, { m1: 0 });
@@ -1015,7 +1112,7 @@ describe('edges', () => {
 
   it('a submit that lands while the founder is ruling does not double-settle', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [FREE(1)], supervisedUntil: 0 });
+    await openForm(PATHWAY, { questions: [FREE(1)], supervisedUntil: 0 });
     await assignExam(uid, PATHWAY);
     await startAttempt(uid, PATHWAY, 'مهسا رضایی');
     let ruled = false;
@@ -1157,7 +1254,7 @@ describe('article questions — written once, drawn by every pathway the article
 
   it('joins the pool of every pathway that carries the article: rules, the draw, the roster, the wall', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1)], draw: 0 });
+    await openForm(PATHWAY, { questions: [MCQ(1)], draw: 0 });
     const free = await addContentQuestion(SHARED, { kind: 'free', prompt_fa: 'چرا؟', key_points: ['اول', 'دوم'] });
     expect((free.row.question as { key_points: { id: string }[] }).key_points.map((k) => k.id))
       .toEqual([`${free.row.question.id}-k1`, `${free.row.question.id}-k2`]);
@@ -1182,7 +1279,7 @@ describe('article questions — written once, drawn by every pathway the article
     // another pathway carrying the article sees it in its pool — and a form
     // that is nothing BUT article questions still reads as an exam
     const other = pathwaysContaining(SHARED).find((p) => p.id !== PATHWAY)!;
-    await upsertForm(other.id, { questions: [MCQ(9)] });
+    await openForm(other.id, { questions: [MCQ(9)] });
     await removeQuestion(other.id, 'm9');               // last own question may go: the article keeps the pool alive
     expect((await getForm(other.id))!.questions).toHaveLength(0);
     const otherUser = await userId();
@@ -1244,7 +1341,7 @@ describe('the exam never draws from the AI quiz/flashcard system', () => {
     expect(withCards, 'the fixture needs a digital step that has AI cards').toBeTruthy();
     const pathway = getPathwayById(PATHWAY)!;
     // Only content questions the founder wrote count — and there are none.
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     const poolQs = await poolFor(pathway, (await getForm(PATHWAY))!);
     expect(poolQs.map((q) => q.id)).toEqual(['m1']);
     await removeQuestion(PATHWAY, 'm1').catch(() => {});
@@ -1269,7 +1366,7 @@ describe('the exam never draws from the AI quiz/flashcard system', () => {
 describe('the certificate carries a real name', () => {
   it('starting takes the first name and the family name as two fields', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     await assignExam(uid, PATHWAY);
     const r = await post(`/exams/${PATHWAY}/start`, { holder_first_name: 'مهسا', holder_last_name: 'رضایی' });
     expect(r.statusCode).toBe(200);
@@ -1278,7 +1375,7 @@ describe('the certificate carries a real name', () => {
 
   it('refuses a given name alone, a half-filled pair, and the account pseudonym — each by its own code', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     await assignExam(uid, PATHWAY);
 
     const alone = await post(`/exams/${PATHWAY}/start`, { holder_name: 'مهسا' });
@@ -1301,7 +1398,7 @@ describe('the certificate carries a real name', () => {
 
   it('never mints a certificate from a name a document cannot carry — it waits for the founder instead', async () => {
     const uid = await userId();
-    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
     await assignExam(uid, PATHWAY);
     await loginAs(app, founderPhone);
     config.support.alertPhone = founderPhone;

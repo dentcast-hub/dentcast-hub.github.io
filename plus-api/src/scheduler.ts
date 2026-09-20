@@ -14,6 +14,7 @@ import { checkCapacityAlert } from './services/payment-cap-alert.js';
 import { runSubscriptionReminders, runWinbackReminders } from './services/subscription-reminder.js';
 import { reconcilePendingPayments } from './services/payment-reconcile.js';
 import { runPathwayAlerts } from './services/pathway-standings.js';
+import { announceOpenExams } from './services/pathway-exams.js';
 import { runMonthlyReports } from './services/monthly-report.js';
 
 /**
@@ -529,10 +530,20 @@ export function startPathwayAlertScheduler(): () => void {
     const delay = msUntilNextRun(new Date(), config.pathwayAlert.hour, config.streakTimezone);
     timer = setTimeout(() => {
       void runPathwayAlerts(new Date())
-        .then((r) => {
+        .then(async (r) => {
           if (r.crossings.length > 0) {
             // eslint-disable-next-line no-console
             console.log(`[pathway-alert] ${r.crossings.length} crossing(s), notified=${r.notified}`);
+          }
+          // The reader's half of the same sweep: whoever reached the last
+          // step of a pathway whose exam is OPEN, and asked for its
+          // certificate, is told tonight — once, ever (migration 0067).
+          // Finishing a pathway is derived, so no row changes at the moment
+          // it happens and nothing else is watching for it.
+          const open = await announceOpenExams({ now: new Date() });
+          if (open.told.length > 0) {
+            // eslint-disable-next-line no-console
+            console.log(`[exam-open] told ${open.told.length} reader(s), ${open.waiting} still reading`);
           }
         })
         .catch((err) => {

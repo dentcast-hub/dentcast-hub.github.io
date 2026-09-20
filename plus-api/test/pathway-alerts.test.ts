@@ -7,7 +7,7 @@ import { getPathways, applyRemotePathways, resetRemotePathways } from '../src/pa
 import {
   pathwayStandings, runPathwayAlerts, levelFor, alertable, certificateWishes,
 } from '../src/services/pathway-standings.js';
-import { upsertForm } from '../src/services/pathway-exams.js';
+import { upsertForm, publishForm } from '../src/services/pathway-exams.js';
 import { issueCertificate, revokeCertificate } from '../src/services/certificates.js';
 
 let app: FastifyInstance;
@@ -431,7 +431,7 @@ describe('تقاضای گواهی‌نامه — who asked', () => {
     expect(wishes[0].pathway_id).toBe(PATHWAY_ID);
     expect(wishes[0].completed_steps).toBe(0);
     expect(wishes[0].total_steps).toBe(STEPS.length);
-    expect(wishes[0].has_form).toBe(false);
+    expect(wishes[0].exam_open).toBe(false);
     expect(wishes[0].certificate_code).toBeNull();
     expect(wishes[0].asked_at).toBeTruthy();
   });
@@ -452,11 +452,15 @@ describe('تقاضای گواهی‌نامه — who asked', () => {
     expect(await certificateWishes()).toHaveLength(0);
   });
 
-  it('flips to has_form the moment the pathway gets a form', async () => {
+  it('flips the moment the founder OPENS the exam', async () => {
     await wantCert();
-    expect((await certificateWishes())[0].has_form).toBe(false);
+    expect((await certificateWishes())[0].exam_open).toBe(false);
+    // Writing the questions is not opening the exam: a draft leaves the row
+    // exactly where it was, because the work is not done (migration 0067).
     await upsertForm(PATHWAY_ID, { questions: '۱. سؤال؟\nالف) یک ✓\nب) دو' });
-    expect((await certificateWishes())[0].has_form).toBe(true);
+    expect((await certificateWishes())[0].exam_open).toBe(false);
+    await publishForm(PATHWAY_ID);
+    expect((await certificateWishes())[0].exam_open).toBe(true);
   });
 
   it('shows the issued certificate, and a revoked one is not one', async () => {
@@ -522,9 +526,10 @@ describe('GET /admin/certificate-wishes', () => {
     // One form serves both, so the to-do list is one line, not two.
     expect(d.counts.needs_form).toBe(2);
     expect(d.pathways).toHaveLength(1);
-    expect(d.pathways[0]).toMatchObject({ pathway_id: PATHWAY_ID, wanted: 2, has_form: false });
+    expect(d.pathways[0]).toMatchObject({ pathway_id: PATHWAY_ID, wanted: 2, exam_open: false });
 
     await upsertForm(PATHWAY_ID, { questions: '۱. سؤال؟\nالف) یک ✓\nب) دو' });
+    await publishForm(PATHWAY_ID);
     const after = (await app.inject({
       method: 'GET', url: '/admin/certificate-wishes', headers: { authorization: basic },
     })).json();

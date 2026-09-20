@@ -360,7 +360,7 @@ export async function runPathwayAlerts(
  * nothing from the founder, and one for a pathway that does not is a job.
  */
 export async function notifyCertificateWish(
-  userId: string, pathwayId: string, hasForm: boolean,
+  userId: string, pathwayId: string, examOpen: boolean,
   /**
    * `silent` claims the marker and sends nothing. It is passed when
    * `runPathwayAlerts` has just named this same (reader, pathway) to the
@@ -394,13 +394,13 @@ export async function notifyCertificateWish(
     );
     const title = 'یک نفر گواهی‌نامه می‌خواهد';
     const body = `${who?.display_name ?? 'یک خواننده'} — «${pathway.title_fa}»`
-      + (hasForm
-        ? '\nآزمون این مسیر آماده است؛ کاری لازم نیست.'
-        : '\nاین مسیر هنوز فرم آزمون ندارد. سؤال‌هایش را در /admin بگذار تا برایش باز شود.')
+      + (examOpen
+        ? '\nآزمون این مسیر باز است؛ کاری لازم نیست.'
+        : '\nآزمون این مسیر هنوز باز نشده. سؤال‌هایش را در /admin بنویس و «اعلام آمادگی» را بزن.')
       + '\nفهرست کامل در /admin، بخش «مسیرها».';
 
     // eslint-disable-next-line no-console
-    console.log(`[certificate-wish] ${pathwayId} — form=${hasForm ? 'yes' : 'no'}`);
+    console.log(`[certificate-wish] ${pathwayId} — exam=${examOpen ? 'open' : 'closed'}`);
 
     const target = await alertTarget();
     if (!target || target === userId) return false;
@@ -436,11 +436,11 @@ export async function notifyCertificateWish(
  * `setCertificateIntent` enrols the reader on the spot. So the wish is the
  * row, and progress is looked up beside it — zero when there is none.
  *
- * **It carries `has_form`**, because that is the entire actionable half, the
- * same half `notifyCertificateWish`'s body names: a wish for a pathway that
- * already has an exam needs nothing, and one for a pathway that does not is
- * the job. (Read here as a plain `exists` rather than through
- * pathway-exams.ts, which imports this module.)
+ * **It carries `exam_open`**, because that is the entire actionable half, the
+ * same half `notifyCertificateWish`'s body names: a wish for a pathway whose
+ * exam is already open needs nothing, and one for a pathway whose exam is
+ * still a draft is the job. (Read here as a plain `exists` rather than
+ * through pathway-exams.ts, which imports this module.)
  *
  * **It carries the certificate, when one was issued**, so a fulfilled wish
  * reads as closed instead of sitting in the box forever. A revoked one is not
@@ -457,8 +457,13 @@ export interface CertificateWish {
   total_steps: number;
   completed_steps: number;
   remaining: number;
-  /** The pathway has an exam form — nothing is owed for this row. */
-  has_form: boolean;
+  /**
+   * The pathway's exam is OPEN to readers — nothing is owed for this row.
+   * Deliberately not «a form row exists» (migration 0067): a draft with forty
+   * questions in it is still a job to finish, and a count that goes quiet
+   * when the first question is written measures typing rather than work done.
+   */
+  exam_open: boolean;
   /** A LIVE certificate for this (reader, pathway), or null. */
   certificate_code: string | null;
   /** The wish was announced (or deliberately suppressed by a crossing alert). */
@@ -468,12 +473,13 @@ export interface CertificateWish {
 export async function certificateWishes(): Promise<CertificateWish[]> {
   const rows = await query<{
     user_id: string; pathway_id: string; asked_at: Date | null;
-    display_name: string; tier: string; has_form: boolean;
+    display_name: string; tier: string; exam_open: boolean;
     certificate_code: string | null; alerted: boolean;
   }>(
     `select u.user_id, u.pathway_id, u.certificate_intent_at as asked_at,
             p.display_name, p.tier,
-            exists (select 1 from pathway_exam_forms f where f.pathway_id = u.pathway_id) as has_form,
+            exists (select 1 from pathway_exam_forms f
+                     where f.pathway_id = u.pathway_id and f.published_at is not null) as exam_open,
             (select c.verify_code from certificates c
               where c.user_id = u.user_id and c.pathway_id = u.pathway_id and c.revoked_at is null
               order by c.issued_at desc limit 1) as certificate_code,
@@ -511,7 +517,7 @@ export async function certificateWishes(): Promise<CertificateWish[]> {
       total_steps: total,
       completed_steps: done,
       remaining: Math.max(0, total - done),
-      has_form: r.has_form,
+      exam_open: r.exam_open,
       certificate_code: r.certificate_code,
       alerted: r.alerted,
     });
@@ -521,7 +527,7 @@ export async function certificateWishes(): Promise<CertificateWish[]> {
   // (no form yet), closest to the end first inside that, and the longest
   // wait first when even that ties. A wish already answered with a
   // certificate is a record, not a job, so it sorts to the bottom.
-  const rank = (w: CertificateWish) => (w.certificate_code ? 2 : w.has_form ? 1 : 0);
+  const rank = (w: CertificateWish) => (w.certificate_code ? 2 : w.exam_open ? 1 : 0);
   out.sort((a, b) => rank(a) - rank(b)
     || a.remaining - b.remaining
     || (a.asked_at?.getTime() ?? 0) - (b.asked_at?.getTime() ?? 0));

@@ -4,12 +4,12 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum, icon } from './util.js?v=110';
-import { api } from './api.js?v=110';
-import { FOLDER_EN } from './content-index.js?v=110';
-import { markReturnTrail } from './return-trail.js?v=110';
-import { openSheet } from './sheet.js?v=110';
-import { certificateTerms } from './certificate-terms.js?v=110';
+import { el, faNum, icon } from './util.js?v=111';
+import { api } from './api.js?v=111';
+import { FOLDER_EN } from './content-index.js?v=111';
+import { markReturnTrail } from './return-trail.js?v=111';
+import { openSheet, closeSheet } from './sheet.js?v=111';
+import { certificateTerms } from './certificate-terms.js?v=111';
 
 /** A "lightning + label" chip — a leading icon from the shared sprite
  * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
@@ -293,6 +293,42 @@ const NOT_ENROLLED = ['آزمون پایانی و گواهی‌نامه',
 /** Once an attempt exists, acting has answered the question. */
 const ANSWERED_BY_ACTING = ['ready', 'open', 'queued', 'wait', 'exhausted', 'passed'];
 
+/**
+ * «الان آزمون بدهیم؟» — the one question in front of the exam door
+ * (founder, 2026-09-20).
+ *
+ * The CTA used to be a bare link, and a reader who tapped it to see what was
+ * behind it landed on a page whose first button draws the questions. Nothing
+ * was actually lost by looking — the attempt opens on «شروع آزمون», not on
+ * arrival — but nobody could know that from this side, so the tap read as
+ * irreversible and the safest move was not to tap at all.
+ *
+ * So the sheet's job is NOT to warn. It is to say the one thing that makes
+ * «بله» safe and «الان نه» free: going there starts nothing, and nothing is
+ * recorded either way. «الان نه» closes the sheet and leaves the reader
+ * exactly where they were, with the same card and the same button.
+ *
+ * NO NUMBERS, deliberately, like everything else on this page: «۱۵ سؤال ·
+ * نصاب ۷۰٪» belongs to the form and is printed by the exam page, which reads
+ * it from the form the reader is about to sit. A count quoted here would be
+ * a promise this page cannot keep.
+ */
+function examAskCard(titleFa, href) {
+  const go = el('a', { class: 'dcp-btn dcp-btn-primary', href, 'data-exam-go': '' }, 'بله، برویم');
+  const stay = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', 'data-exam-stay': '' }, 'الان نه');
+  stay.addEventListener('click', () => closeSheet());
+  return el('div', { class: 'dcp-cert-card', 'data-exam-ask': '' }, [
+    el('div', { class: 'dcp-cert-card-kicker' }, 'آزمون پایانی مسیر'),
+    el('b', {}, titleFa ? `الان آزمون «${titleFa}» را بدهیم؟` : 'الان آزمون بدهیم؟'),
+    el('p', { class: 'dcp-muted' },
+      'سؤال‌ها روی یک صفحه‌اند و یک بار ارسال می‌شوند، پس بهتر است وقتِ بی‌وقفه داشته باشی.'),
+    el('p', { class: 'dcp-muted' },
+      'رفتن به صفحهٔ آزمون چیزی را شروع نمی‌کند — قرعهٔ سؤال‌ها و شمارشِ تلاش با دکمهٔ «شروع آزمون» '
+      + 'در همان صفحه اتفاق می‌افتد، و قواعدِ کاملِ این آزمون هم آن‌جا نوشته است.'),
+    el('div', { class: 'dcp-exam-ask-acts' }, [go, stay]),
+  ]);
+}
+
 function termsBtn(titleFa) {
   const b = el('button', { class: 'dcp-cs-terms', type: 'button', 'data-cert-terms-btn': '' }, 'شرایط ›');
   b.addEventListener('click', () => openSheet(certificateTerms(titleFa)));
@@ -407,14 +443,24 @@ export function certificateStrip(state, onIntent, opts = {}) {
       el('span', { class: 'dcp-cs-h' }, [el('b', {}, line[0]), el('p', { class: 'dcp-muted' }, line[1])]),
       held ? null : termsBtn(state.pathway_title_fa),
     ].filter(Boolean)),
-    line[2] ? el('div', { class: 'dcp-cs-cta' }, [
-      el('a', {
-        class: 'dcp-btn ' + (state.state === 'ready' || state.state === 'open' ? 'dcp-btn-primary' : 'dcp-btn-ghost'),
-        href,
-      }, line[2]),
-    ]) : null,
+    line[2] ? el('div', { class: 'dcp-cs-cta' }, [cta(state, href, line[2])]) : null,
     intentRow(state, onIntent, { started }),
   ].filter(Boolean));
+}
+
+/**
+ * The strip's one button. At `ready` — and only there — it asks first: that
+ * is the single state where the next page can begin something. «ادامهٔ آزمون»
+ * goes straight through (the attempt is already open, the questions already
+ * drawn), and so does every state that only shows a result.
+ */
+function cta(state, href, label) {
+  const primary = state.state === 'ready' || state.state === 'open';
+  const cls = 'dcp-btn ' + (primary ? 'dcp-btn-primary' : 'dcp-btn-ghost');
+  if (state.state !== 'ready') return el('a', { class: cls, href }, label);
+  const b = el('button', { class: cls, type: 'button', 'data-exam-cta': '' }, label);
+  b.addEventListener('click', () => openSheet(examAskCard(state.pathway_title_fa, href)));
+  return b;
 }
 
 /** Kept for callers that still say «exam card»; it is the same strip. */

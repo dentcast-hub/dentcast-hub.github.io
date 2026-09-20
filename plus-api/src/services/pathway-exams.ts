@@ -7,7 +7,9 @@ import { getConsumedContentIds } from './consumption.js';
 import { mintReference } from './reference.js';
 import { issueCertificate, type Certificate } from './certificates.js';
 import { sendCapped } from './notify-policy.js';
-import { runPathwayAlerts, notifyCertificateWish, type CertificateIntent } from './pathway-standings.js';
+import {
+  runPathwayAlerts, notifyCertificateWish, pathwayStandings, type CertificateIntent,
+} from './pathway-standings.js';
 import { ai } from '../providers/registry.js';
 import type { KeyPoint, PointState } from '../providers/ai/types.js';
 import { parseQuestionText, looksLikeJson } from './exam-text.js';
@@ -312,12 +314,19 @@ export interface ExamForm {
   retry_days: number;
   supervised_until: number;
   note: string | null;
+  /**
+   * When the founder opened this exam to readers; null while it is a DRAFT
+   * (migration 0067). A draft's pool can grow for weeks and no reader can
+   * start it — before this column existed, the exam went live with its FIRST
+   * question and a half-written pool issued real certificates.
+   */
+  published_at: Date | null;
   created_at: Date;
   updated_at: Date;
 }
 
 const FORM_SELECT = `select id, pathway_id, questions, draw, pass_percent, max_attempts,
-                            retry_days, supervised_until, note, created_at, updated_at
+                            retry_days, supervised_until, note, published_at, created_at, updated_at
                        from pathway_exam_forms`;
 
 export interface FormInput {
@@ -353,7 +362,7 @@ export async function upsertForm(pathwayId: string, input: FormInput, client: Qu
            retry_days = excluded.retry_days, supervised_until = excluded.supervised_until,
            note = excluded.note, updated_at = now()
      returning id, pathway_id, questions, draw, pass_percent, max_attempts,
-               retry_days, supervised_until, note, created_at, updated_at, (xmax = 0) as created`,
+               retry_days, supervised_until, note, published_at, created_at, updated_at, (xmax = 0) as created`,
     [
       pathwayId, JSON.stringify(norm.questions),
       intIn(input.draw, 0, 200, d.draw),
@@ -422,7 +431,7 @@ export async function addQuestion(
       ? await one<ExamForm>(
         `update pathway_exam_forms set questions = $2::jsonb, updated_at = now()
           where pathway_id = $1 returning id, pathway_id, questions, draw, pass_percent,
-                max_attempts, retry_days, supervised_until, note, created_at, updated_at`,
+                max_attempts, retry_days, supervised_until, note, published_at, created_at, updated_at`,
         [pathwayId, JSON.stringify(questions)], client,
       )
       // No form yet: the COLUMN defaults are the founder's defaults, so a
@@ -430,7 +439,7 @@ export async function addQuestion(
       : await one<ExamForm>(
         `insert into pathway_exam_forms (pathway_id, questions) values ($1, $2::jsonb)
          returning id, pathway_id, questions, draw, pass_percent,
-                   max_attempts, retry_days, supervised_until, note, created_at, updated_at`,
+                   max_attempts, retry_days, supervised_until, note, published_at, created_at, updated_at`,
         [pathwayId, JSON.stringify(questions)], client,
       );
     return { form: row!, question, created: !form };
@@ -495,6 +504,8 @@ export interface FormSummary {
   rulings: number;
   /** Attempts by status, for the panel's one-line health read. */
   attempts: { open: number; queued: number; passed: number; failed: number };
+  /** Open to readers since — null while it is a draft (migration 0067). */
+  published_at: Date | null;
   note: string | null;
   updated_at: Date;
 }
@@ -505,7 +516,7 @@ export async function formRoster(client: Queryable = pool): Promise<FormSummary[
     n_open: number; n_queued: number; n_passed: number; n_failed: number;
   }>(
     `select f.id, f.pathway_id, f.draw, f.pass_percent, f.max_attempts, f.retry_days,
-            f.supervised_until, f.note, f.updated_at,
+            f.supervised_until, f.note, f.updated_at, f.published_at,
             (select count(*)::int from jsonb_array_elements(f.questions) q where q->>'kind' = 'mcq') as mcq_count,
             (select count(*)::int from jsonb_array_elements(f.questions) q where q->>'kind' = 'free') as free_count,
             (select count(*)::int from pathway_exam_attempts a where a.form_id = f.id and a.settled_by = 'founder') as rulings,
@@ -528,6 +539,182 @@ export async function formRoster(client: Queryable = pool): Promise<FormSummary[
     });
   }
   return out;
+}
+
+/* ------------------------------------------------------------- publish -- */
+
+/**
+ * ANNOUNCING AN EXAM — one door, two moments.
+ *
+ * A form is a draft until the founder presses «اعلام آمادگی», and that press
+ * is the only thing on the site that can tell a reader an exam exists. It has
+ * to answer two different questions at once, which is why it is one function
+ * and not two:
+ *
+ *   — somebody who has already finished the pathway and asked for its
+ *     certificate is told THE SAME MOMENT, because for them there is nothing
+ *     left to wait for;
+ *   — somebody still reading is told the night they reach the last step,
+ *     by the sweep below, which runs on the standings this API already
+ *     computes for the founder's own nightly alert.
+ *
+ * Before this existed the second group was told NOTHING, ever: finishing a
+ * pathway is DERIVED from what the reader has read, so no row changes at the
+ * moment they finish and nothing was watching. On a forty-six-step pathway
+ * that is not an edge case, it is almost everybody.
+ *
+ * `exam_open_told` is a HIGH-WATER MARK, not a state — the same shape
+ * `achievement-sync` and `pathway_milestone` use, and for the same reason.
+ * Pathway progress goes BACKWARDS every time publish step 5.6 files new
+ * content into a pathway, so «is this reader complete?» flips back and forth
+ * through no act of theirs; a reader who has been told once is never told
+ * again, including after an un-publish and a re-publish. The action is a
+ * LITERAL in the SQL, never a bound parameter, or `activity-vocabulary`'s
+ * scan cannot see it.
+ */
+
+export interface ExamOpenRun {
+  /** Readers told in this run, with the pathway each was told about. */
+  told: { user_id: string; pathway_id: string }[];
+  /** Candidates who are not eligible yet — the sweep will find them later. */
+  waiting: number;
+}
+
+type Candidate = {
+  user_id: string; pathway_id: string; tier: string;
+  assigned: boolean; enrolled: boolean;
+};
+
+/**
+ * Open a pathway's exam. Idempotent: a form already open keeps the date it
+ * was opened, so «since when» on the panel never drifts.
+ */
+export async function publishForm(pathwayId: string): Promise<{ form: ExamForm; already: boolean }> {
+  const pathway = getPathwayById(pathwayId);
+  if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
+  if (!isCertifiable(pathway)) throw new Error('pathway_pending');
+  const form = await getForm(pathwayId);
+  if (!form) throw new Error('no_form');
+  // An empty pool passes every part of `tally()` vacuously, which would mint
+  // a certificate for answering nothing — the one failure this feature must
+  // never have. The same guard `startAttempt` keeps, one step earlier.
+  if ((await poolFor(pathway, form)).length === 0) throw new Error('empty_pool');
+  if (form.published_at) return { form, already: true };
+  const row = await one<ExamForm>(
+    `update pathway_exam_forms set published_at = now(), updated_at = now()
+      where pathway_id = $1 and published_at is null
+      returning id, pathway_id, questions, draw, pass_percent, max_attempts,
+                retry_days, supervised_until, note, published_at, created_at, updated_at`,
+    [pathwayId],
+  );
+  return row ? { form: row, already: false } : { form: (await getForm(pathwayId))!, already: true };
+}
+
+/**
+ * Close it again — the founder's tool for «one of these questions is wrong».
+ *
+ * It stops NEW attempts and nothing else: an attempt already open keeps its
+ * own snapshot of the questions and can still be submitted and graded, and
+ * every certificate issued from it stands. Re-opening announces nobody: the
+ * markers are already claimed, and a reader told twice about one exam is how
+ * a channel gets muted.
+ */
+export async function unpublishForm(pathwayId: string): Promise<boolean> {
+  const r = await query(
+    `update pathway_exam_forms set published_at = null, updated_at = now()
+      where pathway_id = $1 and published_at is not null`, [pathwayId],
+  );
+  return (r.rowCount ?? 0) > 0;
+}
+
+/**
+ * Tell everyone who is waiting for an OPEN exam and has not been told.
+ *
+ * Called two ways and the code is identical: with a `pathwayId` the moment
+ * the founder opens that exam, and with nothing from the nightly sweep. The
+ * candidate is somebody who asked for the certificate or was let in by hand,
+ * with no attempt and no live certificate on that pathway; the eligible
+ * candidate is one who is also enrolled and has finished it (or was let in by
+ * hand, which is what «let in early» means).
+ *
+ * A reader whose subscription has lapsed IS told, with one extra clause
+ * (founder decision, 2026-09-20): sitting the exam is premium, so the message
+ * must not promise a door that will not open — but somebody who read a whole
+ * pathway and asked for its certificate has earned the news, and silence is
+ * the one answer that helps nobody.
+ *
+ * Never throws: it sits on the founder's publish button and on a nightly
+ * timer, and a notification problem must fail neither.
+ */
+export async function announceOpenExams(
+  opts: { pathwayId?: string; now?: Date } = {},
+): Promise<ExamOpenRun> {
+  const out: ExamOpenRun = { told: [], waiting: 0 };
+  try {
+    const open = await query<{ pathway_id: string }>(
+      `select pathway_id from pathway_exam_forms
+        where published_at is not null
+          and ($1::text is null or pathway_id = $1)`,
+      [opts.pathwayId ?? null],
+    );
+    const ids = open.rows.map((r) => r.pathway_id).filter((id) => isCertifiable(getPathwayById(id)));
+    if (!ids.length) return out;
+
+    // Everybody with a claim on one of those exams, minus everybody who has
+    // already acted on it or already heard about it.
+    const cands = await query<Candidate>(
+      `select w.user_id, w.pathway_id, p.tier,
+              bool_or(w.assigned) as assigned, bool_or(w.enrolled) as enrolled
+         from (
+           select e.user_id, e.pathway_id, true as assigned, false as enrolled
+             from pathway_exams e where e.pathway_id = any($1)
+           union all
+           select u.user_id, u.pathway_id, false, true
+             from user_pathways u
+            where u.pathway_id = any($1) and u.certificate_intent = 'wanted'
+         ) w
+         join profiles p on p.id = w.user_id
+        where not exists (select 1 from pathway_exam_attempts a
+                           where a.user_id = w.user_id and a.pathway_id = w.pathway_id)
+          and not exists (select 1 from certificates c
+                           where c.user_id = w.user_id and c.pathway_id = w.pathway_id and c.revoked_at is null)
+          and not exists (select 1 from user_activity a
+                           where a.user_id = w.user_id and a.action = 'exam_open_told'
+                             and a.meta->>'pathway_id' = w.pathway_id)
+        group by w.user_id, w.pathway_id, p.tier`,
+      [ids],
+    );
+    if (!cands.rows.length) return out;
+
+    // Progress for the ones who need it. One sweep, reused — the same one the
+    // founder's nightly alert runs on.
+    const standings = new Map<string, number>();
+    for (const st of await pathwayStandings()) standings.set(`${st.user_id}:${st.pathway_id}`, st.remaining);
+
+    for (const c of cands.rows) {
+      const ready = c.assigned || (c.enrolled && standings.get(`${c.user_id}:${c.pathway_id}`) === 0);
+      if (!ready) { out.waiting += 1; continue; }
+      // Claim first: a failed notification must not queue the same reader up
+      // for a second announcement tomorrow night.
+      const claimed = await query(
+        `insert into user_activity (user_id, action, meta)
+         select $1, 'exam_open_told', $2::jsonb
+          where not exists (
+            select 1 from user_activity
+             where user_id = $1 and action = 'exam_open_told'
+               and meta->>'pathway_id' = $3)`,
+        [c.user_id, JSON.stringify({ pathway_id: c.pathway_id }), c.pathway_id],
+      );
+      if (claimed.rowCount === 0) continue;
+      await notifyExamOpen(c.user_id, c.pathway_id, c.tier !== 'free', opts.now);
+      out.told.push({ user_id: c.user_id, pathway_id: c.pathway_id });
+    }
+    return out;
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('[exam-open] announce failed', err);
+    return out;
+  }
 }
 
 /* ----------------------------------------------------------- assignment -- */
@@ -584,10 +771,13 @@ export async function deleteAssignment(id: string, client: Queryable = pool): Pr
   return (r.rowCount ?? 0) > 0;
 }
 
-export async function assignmentRoster(limit = 100): Promise<Array<ExamAssignment & { display_name: string; has_form: boolean }>> {
-  const r = await query<ExamAssignment & { display_name: string; has_form: boolean }>(
+export async function assignmentRoster(limit = 100): Promise<Array<ExamAssignment & { display_name: string; exam_open: boolean }>> {
+  const r = await query<ExamAssignment & { display_name: string; exam_open: boolean }>(
+    // «Is there a form» is not the question a let-in reader's row asks — a
+    // draft form shows them nothing either (migration 0067).
     `select e.id, e.user_id, e.pathway_id, e.note, e.created_at, p.display_name,
-            exists (select 1 from pathway_exam_forms f where f.pathway_id = e.pathway_id) as has_form
+            exists (select 1 from pathway_exam_forms f
+                     where f.pathway_id = e.pathway_id and f.published_at is not null) as exam_open
        from pathway_exams e join profiles p on p.id = e.user_id
       order by e.created_at desc limit $1`,
     [limit],
@@ -833,6 +1023,13 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
     return base;
   }
   if (attempts.some((a) => a.status === 'queued')) { base.state = 'queued'; return base; }
+  // A DRAFT form is not an exam (migration 0067). The gate sits HERE, below
+  // the three states above, and not at the top with `!form`: un-publishing
+  // must stop new attempts without stranding an attempt already open — its
+  // questions are its own snapshot and it is still gradable. For everybody
+  // else a draft reads exactly like no form at all, rules included, because
+  // that is what it is: nothing they can sit.
+  if (!form.published_at) { base.state = 'no_form'; base.rules = null; return base; }
   // Enrolment is the deliberate act (founder, 2026-09-12): the exam is for
   // somebody who is ON the pathway, not somebody whose reading happens to
   // cover it. It costs one tap on the pathway page and progress is derived,
@@ -1292,7 +1489,10 @@ export async function setCertificateIntent(
     // Order matters: the crossing sweep runs first so the wish alert can see
     // whether the founder has just been told about this reader anyway.
     const run = await runPathwayAlerts(new Date(), { userId, pathwayId });
-    await notifyCertificateWish(userId, pathwayId, Boolean(await getForm(pathwayId)),
+    // What the founder needs to know is not «a row exists» but «can this
+    // reader actually sit it» — a draft with forty questions in it is still
+    // a job to finish (migration 0067).
+    await notifyCertificateWish(userId, pathwayId, Boolean((await getForm(pathwayId))?.published_at),
       { silent: run.crossings.length > 0 });
   }
   return examState(userId, pathwayId);
@@ -1342,32 +1542,41 @@ export async function notifyAssigned(userId: string, pathwayId: string): Promise
 }
 
 /**
- * A form just appeared — tell everyone who was waiting for it.
+ * «آزمون این مسیر باز شد» — the reader's own news.
  *
- * TWO populations, and for a long time only one of them was here: readers the
- * founder had hand-assigned (`pathway_exams`). The other is everybody who
- * pressed «بله، می‌خواهم» on the pathway page, and they were told nothing —
- * although the card they pressed it on said, in as many words, «در اطلاعیه
- * خبرش را می‌گیری». So the wish was a signal for the founder's nightly alert
- * and nothing at all for the reader who gave it. A union, not a second sweep,
- * so somebody who is both is told once (skipping anyone who already sat or
- * holds it). Returns how many were told.
+ * Separate from `notifyAssigned` because it is a different event with a
+ * different audience: that one is «a door was opened FOR YOU, early», this
+ * one is «the thing you asked for exists now, and you have finished the
+ * reading it needed». The lapsed-subscriber clause is the whole reason it is
+ * not one message with a flag — a reader who is told to «start whenever you
+ * like» and then meets a paywall has been lied to, and leaving them out
+ * entirely was the other way to get it wrong.
  */
-export async function notifyAssigneesOfNewForm(pathwayId: string): Promise<number> {
-  const r = await query<{ user_id: string }>(
-    `select user_id from (
-        select e.user_id from pathway_exams e where e.pathway_id = $1
-        union
-        select u.user_id from user_pathways u
-         where u.pathway_id = $1 and u.certificate_intent = 'wanted'
-      ) w
-      where not exists (select 1 from pathway_exam_attempts a where a.user_id = w.user_id and a.pathway_id = $1)
-        and not exists (select 1 from certificates c where c.user_id = w.user_id and c.pathway_id = $1 and c.revoked_at is null)`,
-    [pathwayId],
-  );
-  for (const row of r.rows) await notifyAssigned(row.user_id, pathwayId);
-  return r.rows.length;
+async function notifyExamOpen(
+  userId: string, pathwayId: string, premium: boolean, now?: Date,
+): Promise<void> {
+  const title = getPathwayById(pathwayId)?.title_fa ?? pathwayId;
+  await sendCapped(userId, {
+    title: 'آزمون این مسیر برایت باز شد 🎓',
+    body: `مسیر «${title}» را تمام کرده‌ای و آزمون پایانی‌اش باز است. `
+      + (premium
+        ? 'هر وقت خواستی شروع کن؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.'
+        : 'برای شرکت در آزمون، اشتراک پریمیوم فعال لازم است؛ خودِ آزمون منتظرت می‌ماند.'),
+    url: examUrl(pathwayId),
+    tag: 'exam',
+  }, 'exam_assigned', now);
 }
+
+/*
+ * `notifyAssigneesOfNewForm` used to live here: writing a form told everyone
+ * who had asked for that certificate, whether or not they had read a word of
+ * the pathway. It is gone, not renamed — `announceOpenExams` above is the one
+ * road now, and it differs in the two ways that were wrong: the news goes out
+ * when the founder OPENS the exam rather than when a row happens to be
+ * created (three of the four ways of writing a question created one silently),
+ * and it goes only to readers who can actually sit it, with the rest told the
+ * night they reach the end.
+ */
 
 /** One line to the founder's own account when an attempt needs a human. */
 type QueueReason = 'unsure' | 'supervised' | 'holder_name';
@@ -1470,8 +1679,11 @@ export async function examStates(userId: string, pathwayIds: string[]): Promise<
   const out = new Map<string, ExamStateKind>();
   if (!pathwayIds.length) return out;
   const [forms, consumed, assigned, enrolled, attempts] = await Promise.all([
-    query<{ pathway_id: string; max_attempts: number; retry_days: number; question_count: number }>(
-      `select pathway_id, max_attempts, retry_days,
+    query<{
+      pathway_id: string; max_attempts: number; retry_days: number;
+      question_count: number; published_at: Date | null;
+    }>(
+      `select pathway_id, max_attempts, retry_days, published_at,
               case when jsonb_typeof(questions) = 'array' then jsonb_array_length(questions) else 0 end as question_count
          from pathway_exam_forms where pathway_id = any($1)`, [pathwayIds],
     ),
@@ -1504,6 +1716,9 @@ export async function examStates(userId: string, pathwayIds: string[]): Promise<
     if (mine.some((a) => a.status === 'passed')) { out.set(id, 'passed'); continue; }
     if (mine.some((a) => a.status === 'open')) { out.set(id, 'open'); continue; }
     if (mine.some((a) => a.status === 'queued')) { out.set(id, 'queued'); continue; }
+    // Draft — same gate as examState, in the same place and for the same
+    // reason: an attempt in flight survives an un-publish.
+    if (!form.published_at) { out.set(id, 'no_form'); continue; }
     const pathway = getPathwayById(id);
     const complete = pathway ? computeProgress(pathway, consumed).is_complete : false;
     if (!enrolledSet.has(id) || (!complete && !assignedSet.has(id))) { out.set(id, 'locked'); continue; }

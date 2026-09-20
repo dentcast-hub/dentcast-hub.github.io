@@ -62,7 +62,8 @@ import {
 } from '../services/certificates.js';
 import {
   assignExam, deleteAssignment, listAssignments, assignmentRoster, getAssignment, notifyAssigned,
-  upsertForm, getForm, deleteForm, formRoster, queueRows, attemptRoster, ruleAttempt, notifyAssigneesOfNewForm,
+  upsertForm, getForm, deleteForm, formRoster, queueRows, attemptRoster, ruleAttempt,
+  publishForm, unpublishForm, announceOpenExams,
   parseQuestions, addQuestion, removeQuestion,
   addContentQuestion, removeContentQuestion, listContentQuestions, normalizeContentId, pathwaysContaining,
 } from '../services/pathway-exams.js';
@@ -748,10 +749,11 @@ function renderHtml(
   <div class="muted">
     هر کس روی صفحهٔ مسیر گفته «گواهی‌نامهٔ این مسیر را می‌خواهم»، این‌جاست — با مسیرش. همان لحظه یک
     اطلاعیه هم برایت می‌رود، ولی نوتیف تنها کانالی است که ممکن است از دستت برود؛ این فهرست نمی‌رود.
-    کارِ تو همیشه یک <b>مسیر</b> است نه یک نفر: یک فرم آزمون همهٔ کسانی را که آن مسیر را می‌خواهند
-    راه می‌اندازد، و فرم را در «<a href="#exams">آزمونِ مسیر</a>» می‌نویسی — نوشتنش خودش به همین‌ها
-    خبر می‌دهد. ردیفی که گواهی‌اش صادر شده حذف نمی‌شود؛ می‌رود ته فهرست، به‌عنوان سند.
-    عددِ کنارِ تیتر فقط تقاضاهایی را می‌شمارد که هنوز فرم ندارند.
+    کارِ تو همیشه یک <b>مسیر</b> است نه یک نفر: یک آزمون همهٔ کسانی را که آن مسیر را می‌خواهند
+    راه می‌اندازد. سؤال‌ها را در «<a href="#exams">آزمونِ مسیر</a>» می‌نویسی و هر وقت آماده بود
+    «اعلام آمادگی» را می‌زنی — همان دکمه به کسانی که مسیر را تمام کرده‌اند همان لحظه خبر می‌دهد و
+    بقیه را شبِ رسیدنشان به قدم آخر. ردیفی که گواهی‌اش صادر شده حذف نمی‌شود؛ می‌رود ته فهرست، به‌عنوان سند.
+    عددِ کنارِ تیتر فقط تقاضاهایی را می‌شمارد که آزمونشان هنوز باز نشده.
   </div>
   <div id="cwBox"></div>
   <script>
@@ -785,22 +787,22 @@ function renderHtml(
       }
       var head = '<div class="muted" style="margin-top:10px">'
         + fa(c.total) + ' تقاضا از ' + fa(c.readers) + ' نفر · '
-        + '<b>' + fa(c.needs_form || 0) + '</b> منتظر فرم آزمون · '
-        + fa(c.ready || 0) + ' فرمش آماده است · ' + fa(c.issued || 0) + ' گواهی صادر شده'
+        + '<b>' + fa(c.needs_form || 0) + '</b> منتظر بازشدنِ آزمون · '
+        + fa(c.ready || 0) + ' آزمونش باز است · ' + fa(c.issued || 0) + ' گواهی صادر شده'
         + '</div>';
 
       // The unit of work, said once: a pathway owing a form serves everybody
       // on it at the same time, so this is the whole to-do list.
-      var owed = (d.pathways || []).filter(function (p) { return !p.has_form; });
+      var owed = (d.pathways || []).filter(function (p) { return !p.exam_open; });
       var todo = owed.length
-        ? '<div class="sp-c"><h4>مسیرهایی که فرم آزمون ندارند</h4>'
+        ? '<div class="sp-c"><h4>مسیرهایی که آزمونشان باز نشده</h4>'
           + owed.map(function (p) {
             return '<div class="sp-row">' + esc(p.title_fa)
               + '<span class="pill hot">' + fa(p.wanted) + ' نفر منتظرند</span></div>';
           }).join('')
           + '<div class="muted" style="margin-top:8px">سؤال‌هایشان را در '
-          + '<a href="#exams">آزمونِ مسیر</a> بگذار.</div></div>'
-        : '<div class="muted" style="margin-top:10px">هر مسیری که تقاضا دارد فرم آزمون هم دارد — کاری نمانده.</div>';
+          + '<a href="#exams">آزمونِ مسیر</a> بنویس و «اعلام آمادگی» را بزن.</div></div>'
+        : '<div class="muted" style="margin-top:10px">هر مسیری که تقاضا دارد، آزمونش هم باز است — کاری نمانده.</div>';
 
       var body = (d.wishes || []).map(function (w) {
         var who = esc(w.display_name || w.user_id.slice(0, 8));
@@ -809,9 +811,9 @@ function renderHtml(
           : '<span class="pill">رایگان</span>';
         var state = w.certificate_code
           ? '<span class="pill ok">گواهی صادر شد · ' + esc(w.certificate_code) + '</span>'
-          : w.has_form
-            ? '<span class="pill">فرم آزمون دارد</span>'
-            : '<span class="pill hot"><b>فرم آزمون ندارد</b></span>';
+          : w.exam_open
+            ? '<span class="pill">آزمونش باز است</span>'
+            : '<span class="pill hot"><b>آزمونش باز نشده</b></span>';
         // The marker the wish notification claims. Absent means the news of
         // this one never went anywhere — which is exactly why this box exists.
         var said = w.alerted ? '' : '<span class="pill hot">خبرش نرفته</span>';
@@ -1106,20 +1108,34 @@ function renderHtml(
       get('/admin/exam-forms').then(function (d) {
         var rows = d.forms || [];
         if (!rows.length) { efList.innerHTML = '<div class="muted">هنوز فرمی ذخیره نشده.</div>'; return; }
-        efList.innerHTML = '<div class="tblwrap"><table><tr><th>مسیر</th><th>مخزن</th><th>قرعه</th><th>نصاب</th>'
+        efList.innerHTML = '<div class="tblwrap"><table><tr><th>مسیر</th><th>حالت</th><th>مخزن</th><th>قرعه</th><th>نصاب</th>'
           + '<th>تلاش / فاصله</th><th>حکم‌های تو</th><th>تلاش‌ها</th><th></th></tr>'
           + rows.map(function (f) {
             var a = f.attempts || {};
             var sup = f.rulings >= f.supervised_until
               ? '<span class="pill">خودکار</span>' : fa(f.rulings) + ' از ' + fa(f.supervised_until);
+            // A draft is invisible to every reader — the pool can grow for
+            // weeks and nobody can sit it. «اعلام آمادگی» is the only thing
+            // that opens it, and the only thing that tells anyone.
+            var pool = (f.mcq_count || 0) + (f.free_count || 0) + (f.content_count || 0);
+            var thin = f.draw > 0 && pool < f.draw;
+            var state = f.published_at
+              ? '<span class="pill ok">باز است</span><div class="muted">از ' + esc(when(f.published_at)) + '</div>'
+              : '<span class="pill hot">پیش‌نویس</span>'
+                + (thin ? '<div class="muted">مخزن از قرعه کمتر است</div>' : '');
             return '<tr><td>' + esc(f.title_fa) + (f.note ? '<div class="muted">' + esc(f.note) + '</div>' : '') + '</td>'
+              + '<td>' + state + '</td>'
               + '<td>' + fa(f.mcq_count) + ' تستی · ' + fa(f.free_count) + ' تشریحی' + (f.content_count ? ' · ' + fa(f.content_count) + ' از مقاله‌ها' : '') + '</td>'
               + '<td>' + (f.draw ? fa(f.draw) + ' تصادفی' : 'همه') + '</td>'
               + '<td>٪' + fa(f.pass_percent) + '</td>'
               + '<td>' + fa(f.max_attempts) + ' / ' + fa(f.retry_days) + ' روز</td>'
               + '<td>' + sup + '</td>'
               + '<td>' + (a.queued ? '<b>' + fa(a.queued) + ' در صف</b> · ' : '') + fa(a.passed || 0) + ' قبول · ' + fa(a.failed || 0) + ' رد' + (a.open ? ' · ' + fa(a.open) + ' باز' : '') + '</td>'
-              + '<td><button type="button" data-ef-edit="' + esc(f.pathway_id) + '">ویرایش</button> '
+              + '<td>'
+              + (f.published_at
+                ? '<button type="button" data-ef-close="' + esc(f.pathway_id) + '">بستنِ موقت</button> '
+                : '<button type="button" data-ef-pub="' + esc(f.pathway_id) + '">اعلام آمادگی</button> ')
+              + '<button type="button" data-ef-edit="' + esc(f.pathway_id) + '">ویرایش</button> '
               + '<button type="button" data-ef-del="' + esc(f.pathway_id) + '">حذف</button></td></tr>';
           }).join('') + '</table></div>';
       }).catch(function () { efList.textContent = 'فهرست نیامد.'; });
@@ -1183,7 +1199,7 @@ function renderHtml(
         var q = (res.j.form && res.j.form.questions) || [];
         var m = q.filter(function (x) { return x.kind === 'mcq'; }).length;
         efOut.textContent = (res.j.created ? 'ذخیره شد' : 'به‌روز شد') + ' — ' + fa(m) + ' تستی، ' + fa(q.length - m) + ' تشریحی.'
-          + (res.j.notified ? ' به ' + fa(res.j.notified) + ' نفر که منتظر بودند خبر رفت.' : '');
+          + (res.j.published ? '' : ' هنوز پیش‌نویس است؛ با «اعلام آمادگی» باز می‌شود و همان لحظه خبر می‌رود.');
         parsed = null; efPreview.innerHTML = '';
         loadForms();
       }).catch(function () { efBtn.disabled = false; efOut.textContent = 'ارسال نشد.'; });
@@ -1203,6 +1219,32 @@ function renderHtml(
           efOut.textContent = 'فرم «' + (titles[f.pathway_id] || f.pathway_id) + '» بارگذاری شد — ویرایش کن و ذخیره بزن.';
           document.getElementById('efQ').focus();
         });
+        return;
+      }
+      var pb = ev.target.closest ? ev.target.closest('[data-ef-pub]') : null;
+      if (pb) {
+        var pid = pb.getAttribute('data-ef-pub');
+        if (!confirm('آزمونِ «' + (titles[pid] || pid) + '» باز شود؟\\n\\n'
+          + 'از این لحظه هر کس مسیر را تمام کرده و گواهی‌اش را خواسته می‌تواند شروع کند، و همین حالا '
+          + 'خبردار می‌شود؛ بقیه شبِ روزی که به قدم آخر برسند. سؤال اضافه‌کردن بعدش آزاد است و '
+          + 'کسی دوبار خبردار نمی‌شود.')) return;
+        pb.disabled = true;
+        post('/admin/exam-forms/publish', { pathway_id: pid }).then(function (res) {
+          if (!res.ok) { pb.disabled = false; efOut.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+          efOut.textContent = (res.j.already ? 'از قبل باز بود' : 'باز شد')
+            + ' — به ' + fa(res.j.told) + ' نفر که آماده بودند همین حالا خبر رفت'
+            + (res.j.waiting ? ' · ' + fa(res.j.waiting) + ' نفر هنوز مسیر را تمام نکرده‌اند؛ هرکدام روزِ رسیدنش خبردار می‌شود.' : '.');
+          loadForms();
+        }).catch(function () { pb.disabled = false; efOut.textContent = 'ارسال نشد.'; });
+        return;
+      }
+      var cb = ev.target.closest ? ev.target.closest('[data-ef-close]') : null;
+      if (cb) {
+        if (!confirm('آزمون این مسیر بسته شود؟ تلاش‌های در جریان دست‌نخورده می‌مانند و فقط شروعِ تازه بسته می‌شود.')) return;
+        cb.disabled = true;
+        post('/admin/exam-forms/unpublish', { pathway_id: cb.getAttribute('data-ef-close') })
+          .then(function () { efOut.textContent = 'بسته شد. بازکردنِ دوباره خبری نمی‌فرستد.'; loadForms(); })
+          .catch(function () { cb.disabled = false; efOut.textContent = 'ارسال نشد.'; });
         return;
       }
       var b = ev.target.closest ? ev.target.closest('[data-ef-del]') : null;
@@ -1401,7 +1443,7 @@ function renderHtml(
         exList.innerHTML = '<div class="tblwrap"><table><tr><th>کاربر</th><th>مسیر</th><th>یادداشت</th><th>تاریخ</th><th></th></tr>'
           + rows.map(function (e) {
             return '<tr><td>' + esc(e.display_name) + '</td><td>' + esc(titles[e.pathway_id] || e.pathway_id)
-              + (e.has_form ? '' : ' <span class="pill">بی‌فرم!</span>') + '</td><td>' + esc(e.note || '') + '</td><td>' + when(e.created_at)
+              + (e.exam_open ? '' : ' <span class="pill">آزمونش باز نیست!</span>') + '</td><td>' + esc(e.note || '') + '</td><td>' + when(e.created_at)
               + '</td><td><button type="button" data-ex-del="' + esc(e.id) + '">حذف</button></td></tr>';
           }).join('') + '</table></div>';
       }).catch(function () { exList.textContent = 'فهرست نیامد.'; });
@@ -1415,7 +1457,7 @@ function renderHtml(
           exBtn.disabled = false;
           if (!res.ok) { exOut.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
           exOut.textContent = (res.j.created ? 'راه داده شد' : 'از قبل راه داشت') + ' — ' + (res.j.user && res.j.user.display_name || '')
-            + (res.j.has_form ? '' : ' — این مسیر هنوز فرم ندارد؛ تا فرم نسازی آزمونی نمی‌بیند.');
+            + (res.j.exam_open ? '' : ' — آزمون این مسیر هنوز باز نشده؛ تا «اعلام آمادگی» را نزنی چیزی نمی‌بیند.');
           loadAssign();
         }).catch(function () { exBtn.disabled = false; exOut.textContent = 'ارسال نشد.'; });
     });
@@ -5106,10 +5148,10 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
    */
   app.get('/admin/certificate-wishes', async (_request, reply) => {
     const wishes = await certificateWishes();
-    const byPathway = new Map<string, { pathway_id: string; title_fa: string; wanted: number; has_form: boolean }>();
+    const byPathway = new Map<string, { pathway_id: string; title_fa: string; wanted: number; exam_open: boolean }>();
     for (const w of wishes) {
       const row = byPathway.get(w.pathway_id)
-        ?? { pathway_id: w.pathway_id, title_fa: w.title_fa, wanted: 0, has_form: w.has_form };
+        ?? { pathway_id: w.pathway_id, title_fa: w.title_fa, wanted: 0, exam_open: w.exam_open };
       row.wanted += 1;
       byPathway.set(w.pathway_id, row);
     }
@@ -5118,14 +5160,14 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       counts: {
         total: wishes.length,
         // The one number that means "there is something for you to do".
-        needs_form: wishes.filter((w) => !w.has_form && !w.certificate_code).length,
-        ready: wishes.filter((w) => w.has_form && !w.certificate_code).length,
+        needs_form: wishes.filter((w) => !w.exam_open && !w.certificate_code).length,
+        ready: wishes.filter((w) => w.exam_open && !w.certificate_code).length,
         issued: wishes.filter((w) => Boolean(w.certificate_code)).length,
         readers: new Set(wishes.map((w) => w.user_id)).size,
       },
       // Pathways owing a form first, then the busiest.
       pathways: [...byPathway.values()].sort(
-        (a, b) => Number(a.has_form) - Number(b.has_form) || b.wanted - a.wanted,
+        (a, b) => Number(a.exam_open) - Number(b.exam_open) || b.wanted - a.wanted,
       ),
       wishes,
     });
@@ -5318,10 +5360,11 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
         questions: b.questions, draw: b.draw, passPercent: b.pass_percent,
         maxAttempts: b.max_attempts, retryDays: b.retry_days, supervisedUntil: b.supervised_until, note: b.note,
       });
-      // Readers let in BEFORE the form existed were told nothing at the
-      // time (there was nothing to sit); the form arriving is their news.
-      const told = r.created ? await notifyAssigneesOfNewForm(b.pathway_id) : 0;
-      return reply.send({ ok: true, ...r, notified: told });
+      // Saving questions tells NOBODY (migration 0067). A form is born a
+      // draft and «اعلام آمادگی» is the one act that opens it and announces
+      // it — which is what makes «the exam went live with its first question»
+      // impossible and what gives the founder a place to stop.
+      return reply.send({ ok: true, ...r, published: Boolean(r.form.published_at) });
     } catch (err) {
       const code = (err as Error).message;
       if (code === 'unknown_pathway') return reply.code(400).send({ error: code, message: 'این مسیر وجود ندارد (باندل‌ها آزمون ندارند).' });
@@ -5362,6 +5405,48 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       }
       throw err;
     }
+  });
+
+  /**
+   * POST /admin/exam-forms/publish — { pathway_id } — «اعلام آمادگی».
+   *
+   * The one act that opens an exam to readers, and the one place an
+   * announcement comes from. It answers with both halves the panel prints:
+   * who was told this second (finished + asked, or let in by hand) and how
+   * many are still reading and will be told the night they reach the end.
+   */
+  app.post('/admin/exam-forms/publish', {
+    schema: { body: { type: 'object', required: ['pathway_id'], properties: { pathway_id: { type: 'string' } } } },
+  }, async (request, reply) => {
+    const { pathway_id: pathwayId } = request.body as { pathway_id: string };
+    try {
+      const r = await publishForm(pathwayId);
+      const run = await announceOpenExams({ pathwayId });
+      return reply.send({
+        ok: true, already: r.already, published_at: r.form.published_at,
+        told: run.told.length, waiting: run.waiting,
+      });
+    } catch (err) {
+      const code = (err as Error).message;
+      const messages: Record<string, string> = {
+        unknown_pathway: 'این مسیر وجود ندارد (باندل‌ها آزمون ندارند).',
+        pathway_pending: 'این مسیر هنوز کامل نشده — تا آمدنِ آخرین قسمت آزمون ندارد.',
+        no_form: 'هنوز برای این مسیر سؤالی نوشته نشده.',
+        empty_pool: 'مخزنِ این مسیر خالی است؛ آزمونی که سؤال ندارد، خودبه‌خود قبول می‌کند.',
+      };
+      if (messages[code]) return reply.code(400).send({ error: code, message: messages[code] });
+      throw err;
+    }
+  });
+
+  // POST /admin/exam-forms/unpublish — { pathway_id }. Stops NEW attempts;
+  // an attempt already open keeps its own snapshot and stays gradable, and
+  // re-opening later announces nobody (the markers are already claimed).
+  app.post('/admin/exam-forms/unpublish', {
+    schema: { body: { type: 'object', required: ['pathway_id'], properties: { pathway_id: { type: 'string' } } } },
+  }, async (request, reply) => {
+    const { pathway_id: pathwayId } = request.body as { pathway_id: string };
+    return reply.send({ ok: true, closed: await unpublishForm(pathwayId) });
   });
 
   /**
@@ -5477,9 +5562,11 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     if (!who) return reply;
     try {
       const r = await assignExam(who.id, b.pathway_id, { note: b.note ?? null });
-      const hasForm = Boolean(await getForm(b.pathway_id));
-      if (r.created && b.notify !== false && hasForm) await notifyAssigned(who.id, b.pathway_id);
-      return reply.send({ ok: true, ...r, has_form: hasForm, user: who });
+      // Telling somebody a door is open for them, while the exam behind it
+      // is still a draft, is the promise this whole change exists to stop.
+      const examOpen = Boolean((await getForm(b.pathway_id))?.published_at);
+      if (r.created && b.notify !== false && examOpen) await notifyAssigned(who.id, b.pathway_id);
+      return reply.send({ ok: true, ...r, exam_open: examOpen, user: who });
     } catch (err) {
       const code = (err as Error).message;
       if (code === 'unknown_pathway') return reply.code(400).send({ error: code, message: 'این مسیر وجود ندارد (باندل‌ها آزمون ندارند).' });

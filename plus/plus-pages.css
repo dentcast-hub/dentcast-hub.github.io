@@ -489,6 +489,11 @@ a.dcp-progress-row:hover { text-decoration: none; }
 }
 
 .dcp-cert-card { display: flex; flex-direction: column; gap: 12px; }
+/* «الان آزمون بدهیم؟» — the two answers sit side by side and both are whole
+   answers, so «الان نه» is a button of the same size, never a link tucked
+   under the other one. */
+.dcp-exam-ask-acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.dcp-exam-ask-acts > * { flex: 1 1 auto; justify-content: center; text-align: center; }
 .dcp-cert-card-hd { display: flex; align-items: center; gap: 12px; }
 .dcp-cert-card-hd b { font-size: 1.02rem; line-height: 1.5; }
 .dcp-cert-card-kicker { font-size: .74rem; color: var(--txt3, #62779a); font-weight: 700; }

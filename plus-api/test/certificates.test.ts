@@ -248,11 +248,11 @@ describe('the admin panel routes', () => {
     const res = await adminPost('/admin/exams', { phone, pathway_id: PATHWAY_ID, note: 'n' });
     expect(res.statusCode).toBe(200);
     expect(res.json().created).toBe(true);
-    expect(res.json().has_form).toBe(false);
+    expect(res.json().exam_open).toBe(false);
 
     const list = await adminGet('/admin/exams');
     expect(list.json().exams).toHaveLength(1);
-    expect(list.json().exams[0].has_form).toBe(false);
+    expect(list.json().exams[0].exam_open).toBe(false);
   });
 
   it('issues, lists and revokes a certificate', async () => {
