@@ -4,12 +4,12 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum, icon } from './util.js?v=107';
-import { api } from './api.js?v=107';
-import { FOLDER_EN } from './content-index.js?v=107';
-import { markReturnTrail } from './return-trail.js?v=107';
-import { openSheet } from './sheet.js?v=107';
-import { certificateTerms } from './certificate-terms.js?v=107';
+import { el, faNum, icon } from './util.js?v=108';
+import { api } from './api.js?v=108';
+import { FOLDER_EN } from './content-index.js?v=108';
+import { markReturnTrail } from './return-trail.js?v=108';
+import { openSheet } from './sheet.js?v=108';
+import { certificateTerms } from './certificate-terms.js?v=108';
 
 /** A "lightning + label" chip — a leading icon from the shared sprite
  * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
@@ -273,9 +273,22 @@ const STRIP = {
 const NOT_STARTED = ['این مسیر گواهی‌نامه دارد',
   'با خواندن همهٔ قدم‌ها، آزمون پایانی باز می‌شود و با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.', null];
 
-/** Enrolment is the one door the reader opens themselves. */
+/**
+ * Enrolment is the one door the reader opens themselves.
+ *
+ * Written as two whole sentences, deliberately: the first draft was three
+ * subjectless fragments joined by a dash («برای کسی است که مسیر را شروع
+ * کرده — دکمهٔ «شروع این مسیر» بالا. خوانده‌هایت به حساب می‌آید.»), which
+ * reads like a machine listing conditions rather than a person explaining
+ * one (founder, 1405/06/29). The order is the argument: who the exam is
+ * for, what to press, and then the reassurance that starting late costs
+ * nothing — that last one is the actual worry, so it ends the sentence
+ * instead of trailing off it.
+ */
 const NOT_ENROLLED = ['آزمون پایانی و گواهی‌نامه',
-  'برای کسی است که مسیر را شروع کرده — دکمهٔ «شروع این مسیر» بالا. خوانده‌هایت به حساب می‌آید.', null];
+  'آزمون پایانی و گواهی‌نامهٔ این مسیر برای کسانی است که مسیر را شروع کرده‌اند. '
+  + 'با دکمهٔ «شروع این مسیر» در بالای صفحه ثبت‌نام کن؛ هر چه تا حالا از این مسیر '
+  + 'خوانده‌ای، از همان لحظه در پیشرفتت حساب می‌شود.', null];
 
 /** Once an attempt exists, acting has answered the question. */
 const ANSWERED_BY_ACTING = ['ready', 'open', 'queued', 'wait', 'exhausted', 'passed'];
