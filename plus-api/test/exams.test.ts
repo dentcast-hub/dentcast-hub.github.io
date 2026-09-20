@@ -12,7 +12,8 @@ import { pool, withTransaction } from '../src/db.js';
 import { config } from '../src/config.js';
 import { ai } from '../src/providers/registry.js';
 import {
-  getPathways, getPathwayById, isCertifiable, applyRemotePathways, resetRemotePathways,
+  getPathwayById, getPathways, isCertifiable,
+  applyRemotePathways, resetRemotePathways,
 } from '../src/pathways.js';
 import {
   normalizeQuestions, upsertForm, getForm, deleteForm, formRoster, assignExam,
@@ -1037,30 +1038,37 @@ describe('edges', () => {
  * standing on a series still being published would attest to finishing
  * something that has no end yet. `certificate: 'pending'` in pathways.json
  * closes EVERY door at once: the wall, the exam, the wish, the founder's hand.
- * Removing the flag when the last part lands is the whole release — which is
- * exactly what happened to «سوادِ هوش مصنوعی» on 1405/06/29.
+ * Removing the flag when the last part lands is the whole release.
  *
- * So no SHIPPED pathway carries the flag today, and this block flags one
- * itself through `applyRemotePathways` — the same door content-refresh.ts uses
- * to adopt a published copy. Pinning the case to whichever pathway happens to
- * be unfinished this month is what made it break the day one shipped; the
- * mechanism is what has to stay guarded, because the next series will need it.
+ * That release happened on 2026-09-20, when Chapter 7 Part 2 landed and the
+ * flag came off `ai-dentistry`. The MECHANISM is still live and still has to
+ * be tested, so these cases stop reading the flag out of the shipped catalog
+ * and supply it themselves through `applyRemotePathways` — the module's own
+ * test hook, and the same door content-refresh.ts adopts a published copy
+ * with. Nothing guarantees a real pathway is ever flagged again, and a suite
+ * that needs one to be is a suite that breaks on an ordinary editorial commit.
  */
 describe('an unfinished series has no certificate (`certificate: pending`)', () => {
   const PENDING = 'ai-dentistry';
 
   beforeEach(() => {
-    const flagged = getPathways().map((p) => (p.id === PENDING ? { ...p, certificate: 'pending' } : p));
-    expect(applyRemotePathways(flagged)).toBe(true);
+    // A deep copy: the fixture must not reach into the module's own cached
+    // objects, which every other case in this file reads.
+    const raw = JSON.parse(JSON.stringify(getPathways())) as { id: string; certificate?: string }[];
+    const p = raw.find((x) => x.id === PENDING);
+    expect(p).toBeTruthy();
+    p!.certificate = 'pending';
+    expect(applyRemotePathways(raw)).toBe(true);
   });
+
   afterEach(() => { resetRemotePathways(); });
 
-  it('nothing in the shipped catalog is pending — the flag is set, not the norm', () => {
+  it('nothing in the shipped catalog is pending — the flag is set here, not the norm', () => {
     resetRemotePathways();
-    expect(getPathways().filter((p) => p.certificate === 'pending')).toHaveLength(0);
+    expect(getPathways().filter((x) => x.certificate === 'pending')).toHaveLength(0);
   });
 
-  it('the flag is what isCertifiable() reads', () => {
+  it('is what isCertifiable() reads, and it closes the pathway to every door', () => {
     expect(getPathwayById(PENDING)?.certificate).toBe('pending');
     expect(isCertifiable(getPathwayById(PENDING))).toBe(false);
     expect(isCertifiable(getPathwayById(PATHWAY))).toBe(true);
