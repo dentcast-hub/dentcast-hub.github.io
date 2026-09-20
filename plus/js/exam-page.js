@@ -24,14 +24,14 @@
 // answers were right, how many key points each free answer covered — and
 // never the key itself: the pool is small and the second attempt may draw
 // the same question.
-import { el, faNum, debounce } from './util.js?v=109';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=109';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=109';
-import { openLoginModal } from './login-modal.js?v=109';
-import { registerSW } from './pwa.js?v=109';
-import { intentRow } from './pathways.js?v=109';
-import { certificateTerms } from './certificate-terms.js?v=109';
-import { openSheet } from './sheet.js?v=109';
+import { el, faNum, debounce } from './util.js?v=111';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=111';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=111';
+import { openLoginModal } from './login-modal.js?v=111';
+import { registerSW } from './pwa.js?v=111';
+import { intentRow } from './pathways.js?v=111';
+import { certificateTerms } from './certificate-terms.js?v=111';
+import { openSheet } from './sheet.js?v=111';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' });
 const FA_DATETIME = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium', timeStyle: 'short' });
@@ -88,20 +88,39 @@ export function contract(rules, s) {
   return el('ul', { class: 'dcp-exam-contract', 'data-exam-contract': '' }, items.map((t) => el('li', {}, t)));
 }
 
+/**
+ * The name on the certificate — asked in TWO boxes, and asked for the
+ * REAL one (founder, 2026-09-20).
+ *
+ * A certificate is a document a stranger reads: its code goes on a LinkedIn
+ * profile and the public verify page asserts that the person NAMED on it
+ * finished the pathway — which a generated alias asserts about nobody. One
+ * free-text line invited exactly that, so the family name is its own box
+ * (an empty box cannot be talked past) and the note says plainly that the
+ * account's pseudonym is not accepted. The server judges it again.
+ */
 function startCard(s, root, id) {
-  const input = el('input', {
+  const first = el('input', {
     id: 'examHolder', class: 'dcp-input', type: 'text', maxlength: '120',
-    placeholder: 'مثلاً دکتر مهسا رضایی', autocomplete: 'name', 'aria-label': 'نام روی گواهی',
+    placeholder: 'مهسا', autocomplete: 'given-name', 'aria-label': 'نام واقعی',
+  });
+  const last = el('input', {
+    id: 'examHolderLast', class: 'dcp-input', type: 'text', maxlength: '120',
+    placeholder: 'رضایی', autocomplete: 'family-name', 'aria-label': 'نام خانوادگی واقعی',
   });
   const msg = el('p', { class: 'dcp-muted dcp-exam-msg', 'aria-live': 'polite' });
   const btn = el('button', { id: 'examStart', class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'شروع آزمون');
   btn.addEventListener('click', async () => {
-    const name = input.value.trim();
-    if (!name) { msg.textContent = 'نامی که روی گواهی چاپ می‌شود را بنویس.'; input.focus(); return; }
+    const f = first.value.trim(), l = last.value.trim();
+    if (!f || !l) {
+      msg.textContent = 'هم نام و هم نام خانوادگی واقعی‌ات را بنویس — گواهی به همین نام صادر می‌شود.';
+      (f ? last : first).focus();
+      return;
+    }
     if (!confirm('آزمون شروع شود؟ سؤال‌ها همین حالا برایت قرعه می‌خورند و تا ارسال، همین‌ها می‌مانند.')) return;
     btn.disabled = true; msg.textContent = 'در حال آماده‌سازی…';
     try {
-      const next = await api.examStart(id, name);
+      const next = await api.examStart(id, f, l);
       renderState(root, id, next);
     } catch (e) {
       btn.disabled = false;
@@ -113,9 +132,11 @@ function startCard(s, root, id) {
   return el('div', { class: 'dcp-card dcp-exam-card', 'data-exam-state': 'ready' }, [
     el('b', {}, 'پیش از شروع'),
     contract(s.rules, s),
-    el('label', { class: 'dcp-exam-label', for: 'examHolder' }, 'نامی که روی گواهی چاپ می‌شود'),
-    input,
-    el('p', { class: 'dcp-muted' }, 'همان‌طور که می‌خواهی روی گواهی و در صفحهٔ تأیید دیده شود. بعد از صدور تغییر نمی‌کند.'),
+    el('label', { class: 'dcp-exam-label', for: 'examHolder' }, 'نام و نام خانوادگی واقعی‌ات'),
+    el('div', { class: 'dcp-exam-name' }, [first, last]),
+    el('p', { class: 'dcp-muted' },
+      'همین نام روی گواهی و در صفحهٔ تأیید عمومی چاپ می‌شود، پس باید نام واقعی خودت باشد؛'
+      + ' نام مستعارِ حسابت روی گواهی نمی‌آید و با آن گواهی صادر نمی‌شود. بعد از صدور تغییر نمی‌کند.'),
     btn, msg,
   ]);
 }

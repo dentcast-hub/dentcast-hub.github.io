@@ -18,7 +18,7 @@ vi.mock('/plus/js/api.js', () => ({
   api: {
     enrollPathway: () => { enrolled = true; return Promise.resolve({}); },
     exam: () => examImpl(),
-    examStart: (_id: string, name: string) => startImpl(name),
+    examStart: (_id: string, first: string, last: string) => startImpl(first + ' ' + last),
     examSubmit: (_id: string, answers: Record<string, unknown>) => submitImpl(answers),
   },
   currentUser: () => Promise.resolve(null),
@@ -38,7 +38,7 @@ const BASE = {
 const OPEN = {
   ...BASE, state: 'open',
   open: {
-    id: 'att-1', reference: 'E-ABC-DEF', holder_name: 'دکتر ن.', started_at: '2026-09-12T10:00:00Z',
+    id: 'att-1', reference: 'E-ABC-DEF', holder_name: 'دکتر نگار حسینی', started_at: '2026-09-12T10:00:00Z',
     questions: [
       { id: 'm1', kind: 'mcq', prompt_fa: 'سؤال یک؟', options: ['الف', 'ب', 'ج', 'د'] },
       { id: 'm2', kind: 'mcq', prompt_fa: 'سؤال دو؟', options: ['الف', 'ب'] },
@@ -179,19 +179,31 @@ describe('the contract names the total, never the mix', () => {
 });
 
 describe('starting', () => {
-  it('needs the holder name, confirms, then draws the open sheet', async () => {
+  // The name is asked in TWO boxes and it is the REAL one: a certificate is
+  // never issued to the account's pseudonym (founder, 2026-09-20), so a given
+  // name on its own cannot start an attempt.
+  it('needs both the first name and the family name, confirms, then draws the open sheet', async () => {
     await mount({ ...BASE, state: 'ready' });
     const seen: string[] = [];
     startImpl = (name) => { seen.push(name); return Promise.resolve(OPEN); };
     (document.getElementById('examStart') as HTMLButtonElement).click();
     await settle();
     expect(seen).toEqual([]);
-    expect(root().textContent).toContain('نامی که روی گواهی');
+    expect(root().textContent).toContain('نام و نام خانوادگی واقعی');
+    expect(root().textContent).toContain('نام مستعار');
 
-    (document.getElementById('examHolder') as HTMLInputElement).value = 'دکتر ن.';
+    // A first name with no family name beside it is refused on the page, with
+    // the empty box focused rather than a toast.
+    (document.getElementById('examHolder') as HTMLInputElement).value = 'نگار';
+    (document.getElementById('examStart') as HTMLButtonElement).click();
+    await settle();
+    expect(seen).toEqual([]);
+    expect(document.activeElement).toBe(document.getElementById('examHolderLast'));
+
+    (document.getElementById('examHolderLast') as HTMLInputElement).value = 'حسینی';
     (document.getElementById('examStart') as HTMLButtonElement).click();
     await settle(); await settle();
-    expect(seen).toEqual(['دکتر ن.']);
+    expect(seen).toEqual(['نگار حسینی']);
     expect(stateEl()!.dataset.examState).toBe('open');
     expect(root().querySelectorAll('[data-exam-q]')).toHaveLength(3);
   });
@@ -199,7 +211,8 @@ describe('starting', () => {
   it('a 409 from start draws the state the server handed back', async () => {
     await mount({ ...BASE, state: 'ready' });
     startImpl = () => Promise.reject(new ApiError(409, { ...BASE, state: 'wait', retry_at: '2026-09-19T10:00:00Z' }));
-    (document.getElementById('examHolder') as HTMLInputElement).value = 'x';
+    (document.getElementById('examHolder') as HTMLInputElement).value = 'نگار';
+    (document.getElementById('examHolderLast') as HTMLInputElement).value = 'حسینی';
     (document.getElementById('examStart') as HTMLButtonElement).click();
     await settle(); await settle();
     expect(stateEl()!.dataset.examState).toBe('wait');

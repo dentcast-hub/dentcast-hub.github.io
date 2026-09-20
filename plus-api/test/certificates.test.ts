@@ -45,10 +45,10 @@ const adminGet = (url: string) => app.inject({ method: 'GET', url, headers: { au
 describe('issuing a certificate', () => {
   it('writes the row, mints a DC- code, and writes the ٪۱۰ credit in the same act', async () => {
     const uid = await userId();
-    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'دکتر آزمایشی', notify: false });
+    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'دکتر مهسا رضایی', notify: false });
     expect(r.created).toBe(true);
     expect(r.certificate.verify_code).toMatch(/^DC-[ACDEFGHJKMNPQRTUVWXY2346789]{3}-[ACDEFGHJKMNPQRTUVWXY2346789]{3}$/);
-    expect(r.certificate.holder_name).toBe('دکتر آزمایشی');
+    expect(r.certificate.holder_name).toBe('دکتر مهسا رضایی');
     expect(r.discount_percent).toBe(config.certificate.discountPercent);
 
     const credits = await availableCredits(uid);
@@ -61,11 +61,11 @@ describe('issuing a certificate', () => {
 
   it('is idempotent while a live certificate exists — no second code, no second credit', async () => {
     const uid = await userId();
-    const first = await issueCertificate(uid, PATHWAY_ID, { holderName: 'الف', notify: false });
-    const again = await issueCertificate(uid, PATHWAY_ID, { holderName: 'ب', notify: false });
+    const first = await issueCertificate(uid, PATHWAY_ID, { holderName: 'مهسا رضایی', notify: false });
+    const again = await issueCertificate(uid, PATHWAY_ID, { holderName: 'سارا کریمی', notify: false });
     expect(again.created).toBe(false);
     expect(again.certificate.id).toBe(first.certificate.id);
-    expect(again.certificate.holder_name).toBe('الف'); // the name is frozen at issue
+    expect(again.certificate.holder_name).toBe('مهسا رضایی'); // the name is frozen at issue
     expect(again.discount_percent).toBe(0);
     const grants = await pool.query('select count(*)::int as n from discount_grants where user_id = $1', [uid]);
     expect(grants.rows[0].n).toBe(1);
@@ -73,11 +73,11 @@ describe('issuing a certificate', () => {
 
   it('mints a fresh code after a revoke, and keeps the revoked row', async () => {
     const uid = await userId();
-    const first = await issueCertificate(uid, PATHWAY_ID, { holderName: 'الف', notify: false });
+    const first = await issueCertificate(uid, PATHWAY_ID, { holderName: 'مهسا رضایی', notify: false });
     expect(await revokeCertificate(first.certificate.id)).toBe(true);
     expect(await revokeCertificate(first.certificate.id)).toBe(false); // already
 
-    const second = await issueCertificate(uid, PATHWAY_ID, { holderName: 'الف', notify: false });
+    const second = await issueCertificate(uid, PATHWAY_ID, { holderName: 'مهسا رضایی', notify: false });
     expect(second.created).toBe(true);
     expect(second.certificate.verify_code).not.toBe(first.certificate.verify_code);
 
@@ -112,9 +112,9 @@ describe('issuing a certificate', () => {
 
   it('does not tell the reader a discount was recorded on a re-issue', async () => {
     const uid = await userId();
-    const first = await issueCertificate(uid, PATHWAY_ID, { holderName: 'الف' });
+    const first = await issueCertificate(uid, PATHWAY_ID, { holderName: 'مهسا رضایی' });
     await revokeCertificate(first.certificate.id);
-    const second = await issueCertificate(uid, PATHWAY_ID, { holderName: 'ب' });
+    const second = await issueCertificate(uid, PATHWAY_ID, { holderName: 'سارا کریمی' });
 
     const n = await pool.query<{ body: string }>(
       'select body from notification_log where user_id = $1 and body is not null', [uid],
@@ -127,20 +127,20 @@ describe('issuing a certificate', () => {
 
   it('refuses a bundle and an empty name', async () => {
     const uid = await userId();
-    await expect(issueCertificate(uid, BUNDLE_ID, { holderName: 'x', notify: false })).rejects.toThrow('unknown_pathway');
+    await expect(issueCertificate(uid, BUNDLE_ID, { holderName: 'مهسا رضایی', notify: false })).rejects.toThrow('unknown_pathway');
     await expect(issueCertificate(uid, PATHWAY_ID, { holderName: '  ', notify: false })).rejects.toThrow('holder_name_required');
   });
 
   it('can issue with no credit at all', async () => {
     const uid = await userId();
-    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'x', discountPercent: 0, notify: false });
+    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'مهسا رضایی', discountPercent: 0, notify: false });
     expect(r.certificate.discount_grant_id).toBeNull();
     expect(await availableCredits(uid)).toHaveLength(0);
   });
 
   it('tells the reader in اطلاعیه, with the code in it', async () => {
     const uid = await userId();
-    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'دکتر ن.' });
+    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'دکتر نگار حسینی' });
     const n = await pool.query<{ title: string; body: string }>(
       'select title, body from notification_log where user_id = $1 order by id desc limit 1', [uid],
     );
@@ -152,10 +152,10 @@ describe('issuing a certificate', () => {
 describe('verifying a certificate', () => {
   it('answers about the document and nothing about the account', async () => {
     const uid = await userId();
-    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'دکتر ن.', notify: false });
+    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'دکتر نگار حسینی', notify: false });
     const v = await verifyCertificate(r.certificate.verify_code);
     expect(v).toMatchObject({
-      holder_name: 'دکتر ن.', pathway_id: PATHWAY_ID, pathway_title_fa: PATHWAY_TITLE, revoked: false,
+      holder_name: 'دکتر نگار حسینی', pathway_id: PATHWAY_ID, pathway_title_fa: PATHWAY_TITLE, revoked: false,
     });
     expect(JSON.stringify(v)).not.toContain(uid);
     expect(JSON.stringify(v)).not.toContain(phone);
@@ -163,14 +163,14 @@ describe('verifying a certificate', () => {
 
   it('forgives the human — lowercase and spaces', async () => {
     const uid = await userId();
-    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'x', notify: false });
+    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'مهسا رضایی', notify: false });
     const sloppy = ` ${r.certificate.verify_code.toLowerCase()} `;
     expect(await verifyCertificate(sloppy)).not.toBeNull();
   });
 
   it('says revoked rather than pretending it never existed', async () => {
     const uid = await userId();
-    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'x', notify: false });
+    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'مهسا رضایی', notify: false });
     await revokeCertificate(r.certificate.id);
     const v = await verifyCertificate(r.certificate.verify_code);
     expect(v!.revoked).toBe(true);
@@ -184,10 +184,10 @@ describe('verifying a certificate', () => {
 
   it('is public: GET /certificates/verify/:code needs no session', async () => {
     const uid = await userId();
-    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'دکتر ن.', notify: false });
+    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'دکتر نگار حسینی', notify: false });
     const ok = await app.inject({ method: 'GET', url: `/certificates/verify/${r.certificate.verify_code}` });
     expect(ok.statusCode).toBe(200);
-    expect(ok.json().certificate.holder_name).toBe('دکتر ن.');
+    expect(ok.json().certificate.holder_name).toBe('دکتر نگار حسینی');
 
     const miss = await app.inject({ method: 'GET', url: '/certificates/verify/DC-AAA-AAA' });
     expect(miss.statusCode).toBe(404);
@@ -198,7 +198,7 @@ describe('verifying a certificate', () => {
 describe('GET /certificates — mine', () => {
   it('lists the reader\'s own with a verify url, on any plan', async () => {
     const uid = await userId();
-    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'x', notify: false });
+    const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'مهسا رضایی', notify: false });
     const res = await app.inject({ method: 'GET', url: '/certificates', headers: { cookie } });
     expect(res.statusCode).toBe(200);
     const row = res.json().certificates[0];
@@ -234,7 +234,7 @@ describe('assigning an exam early', () => {
   it('deleting the assignment leaves a certificate that pointed at it', async () => {
     const uid = await userId();
     const { assignment } = await assignExam(uid, PATHWAY_ID);
-    const cert = await issueCertificate(uid, PATHWAY_ID, { holderName: 'x', examId: assignment.id, notify: false });
+    const cert = await issueCertificate(uid, PATHWAY_ID, { holderName: 'مهسا رضایی', examId: assignment.id, notify: false });
     expect(cert.certificate.exam_id).toBe(assignment.id);
     expect(await deleteAssignment(assignment.id)).toBe(true);
     const after = await listCertificates(uid);
@@ -248,16 +248,16 @@ describe('the admin panel routes', () => {
     const res = await adminPost('/admin/exams', { phone, pathway_id: PATHWAY_ID, note: 'n' });
     expect(res.statusCode).toBe(200);
     expect(res.json().created).toBe(true);
-    expect(res.json().has_form).toBe(false);
+    expect(res.json().exam_open).toBe(false);
 
     const list = await adminGet('/admin/exams');
     expect(list.json().exams).toHaveLength(1);
-    expect(list.json().exams[0].has_form).toBe(false);
+    expect(list.json().exams[0].exam_open).toBe(false);
   });
 
   it('issues, lists and revokes a certificate', async () => {
     const issued = await adminPost('/admin/certificates/issue', {
-      phone, pathway_id: PATHWAY_ID, holder_name: 'دکتر ن.', discount_percent: 10, notify: false,
+      phone, pathway_id: PATHWAY_ID, holder_name: 'دکتر نگار حسینی', discount_percent: 10, notify: false,
     });
     expect(issued.statusCode).toBe(200);
     expect(issued.json().created).toBe(true);
@@ -274,7 +274,7 @@ describe('the admin panel routes', () => {
 
   it('refuses a bundle with a message', async () => {
     const res = await adminPost('/admin/certificates/issue', {
-      phone, pathway_id: BUNDLE_ID, holder_name: 'x',
+      phone, pathway_id: BUNDLE_ID, holder_name: 'مهسا رضایی',
     });
     expect(res.statusCode).toBe(400);
     expect(res.json().error).toBe('unknown_pathway');

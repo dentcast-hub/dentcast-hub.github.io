@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=109';
+import { API_BASES } from './config.js?v=111';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -333,8 +333,12 @@ export const api = {
   // آزمون مسیر — services/pathway-exams.ts. Premium, all three: where I
   // stand, open an attempt (draws and snapshots the questions), submit it.
   exam: (pathwayId) => request('/exams/' + encodeURIComponent(pathwayId)),
-  examStart: (pathwayId, holder_name) =>
-    request('/exams/' + encodeURIComponent(pathwayId) + '/start', { method: 'POST', body: { holder_name } }),
+  // The real first name and family name, two fields: a certificate is never
+  // issued to a pseudonym (services/holder-name.ts).
+  examStart: (pathwayId, holder_first_name, holder_last_name) =>
+    request('/exams/' + encodeURIComponent(pathwayId) + '/start', {
+      method: 'POST', body: { holder_first_name, holder_last_name },
+    }),
   examSubmit: (pathwayId, answers) =>
     request('/exams/' + encodeURIComponent(pathwayId) + '/submit', { method: 'POST', body: { answers } }),
   // «گواهی‌نامهٔ این مسیر را می‌خواهی؟» — wanted | declined; enrols if needed.

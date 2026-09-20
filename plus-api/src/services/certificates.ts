@@ -5,6 +5,7 @@ import { isCertifiable, getPathwayById } from '../pathways.js';
 import { mintReference, normalizeReference } from './reference.js';
 import { insertGrant } from './discount-credits.js';
 import { sendCapped } from './notify-policy.js';
+import { assertHolderName } from './holder-name.js';
 
 /**
  * THE PATHWAY COMPLETION CERTIFICATE.
@@ -24,9 +25,14 @@ import { sendCapped } from './notify-policy.js';
  * Minted with a retry on the unique index rather than a bigger alphabet: six
  * characters is what a human will actually retype.
  *
- * **`holder_name` is frozen at issue.** Not a join to `profiles.display_name`,
- * which defaults to a generated pseudonym and can be renamed at will — the
- * verify page must always agree with the paper it is verifying.
+ * **`holder_name` is frozen at issue, and it is a REAL name.** Not a join to
+ * `profiles.display_name`, which defaults to a generated pseudonym and can be
+ * renamed at will — the verify page must always agree with the paper it is
+ * verifying. And never a pseudonym in the first place (founder, 2026-09-20):
+ * the one thing the verify page asserts is that the person NAMED on the
+ * certificate finished the pathway, which a generated alias asserts about
+ * nobody. Every surface asks for the first name and the family name, and
+ * `services/holder-name.ts` is the single judge of what may be printed.
  *
  * **Revoked, never deleted.** The code may already be on somebody's profile.
  * A missing row would read as "never existed"; a revoked one says what
@@ -121,8 +127,10 @@ export async function issueCertificate(
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
   if (!isCertifiable(pathway)) throw new Error('pathway_pending');
-  const holderName = input.holderName.trim();
-  if (!holderName) throw new Error('holder_name_required');
+  // The LAST door. Whatever called — the exam settling itself, the panel's
+  // hand issue, a script — a certificate is never written to a pseudonym or
+  // to a given name with no family name beside it (services/holder-name.ts).
+  const holderName = assertHolderName(input.holderName);
   const percent = input.discountPercent ?? config.certificate.discountPercent;
 
   const run = async (client: pg.PoolClient) => {

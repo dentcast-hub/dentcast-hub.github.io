@@ -489,6 +489,11 @@ a.dcp-progress-row:hover { text-decoration: none; }
 }
 
 .dcp-cert-card { display: flex; flex-direction: column; gap: 12px; }
+/* «الان آزمون بدهیم؟» — the two answers sit side by side and both are whole
+   answers, so «الان نه» is a button of the same size, never a link tucked
+   under the other one. */
+.dcp-exam-ask-acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.dcp-exam-ask-acts > * { flex: 1 1 auto; justify-content: center; text-align: center; }
 .dcp-cert-card-hd { display: flex; align-items: center; gap: 12px; }
 .dcp-cert-card-hd b { font-size: 1.02rem; line-height: 1.5; }
 .dcp-cert-card-kicker { font-size: .74rem; color: var(--txt3, #62779a); font-weight: 700; }
@@ -526,6 +531,11 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-exam-contract { margin: 0; padding-inline-start: 1.2em; display: flex; flex-direction: column; gap: 6px; font-size: .92rem; line-height: 1.8; color: var(--txt2, #4a5f85); }
 .dcp-exam-label { font-size: .86rem; font-weight: 700; margin-top: 4px; }
 .dcp-exam-msg { margin: 0; min-height: 1.2em; }
+/* Name + family name: two boxes, because a certificate carries a real name
+   and an empty box cannot be talked past. They wrap to one column on a
+   phone rather than shrinking to two unusable halves. */
+.dcp-exam-name { display: flex; gap: 8px; flex-wrap: wrap; }
+.dcp-exam-name > .dcp-input { flex: 1 1 160px; min-width: 0; }
 .dcp-exam-meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: .86rem; color: var(--txt3, #62779a); }
 .dcp-exam-sheet { display: flex; flex-direction: column; gap: 14px; }
 .dcp-exam-q { position: relative; background: var(--dcp-surface, #fff); border: 1px solid var(--dcp-line, rgba(2,35,96,.12)); border-radius: var(--dcp-radius, 14px); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
