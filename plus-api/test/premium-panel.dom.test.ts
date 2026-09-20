@@ -123,7 +123,7 @@ describe('a signed-out visitor', () => {
     expect(mobile().hidden).toBe(false);
     expect(mobile().querySelector('.dcp-pp')!.getAttribute('data-dcp-state')).toBe('locked');
     const all = cards();
-    expect(all.length).toBeGreaterThanOrEqual(20);
+    expect(all.length).toBe(20);
     for (const c of all) expect(c.querySelector('.dcp-hf-state')!.textContent).toBe('🔒');
     const buy = pricingLinks();
     expect(buy).toHaveLength(1);
@@ -212,7 +212,7 @@ describe('a subscriber', () => {
     const head = document.querySelector('#panel-premium .dc-exa-pagehead')!;
     expect(head.querySelector('a.dcp-pp-dash')!.getAttribute('href')).toBe('/plus/');
     expect(mobile().querySelector('.dcp-pp-top a')).toBeNull(); // not twice
-    expect(mobile().querySelector('.dcp-pp-lead')!.textContent).toMatch(/^اشتراک شما تا پایان روز .+ فعال است\. /);
+    expect(mobile().querySelector('.dcp-pp-lead')!.textContent).toMatch(/^اشتراک شما تا پایان روز .+ فعال است\.$/);
     // a second render adds no second link
     await initPremiumPanel();
     await settle();
@@ -240,20 +240,28 @@ describe('when the API cannot be asked', () => {
 });
 
 describe('destinations', () => {
-  it('turns the چالش card into a link to the newest challenge once the catalog answers', async () => {
+  it('sends the چالش card to the landing page, never to one challenge', async () => {
     await mount();
     const c = mobile().querySelector('[data-dcp-key="challenge"]')!;
     expect(c.tagName).toBe('A');
-    expect(c.getAttribute('href')).toBe('/insight/insight-70.html');
-    expect(c.classList.contains('is-static')).toBe(false);
+    expect(c.getAttribute('href')).toBe('/challenges/');
+    expect((globalThis.fetch as any).mock.calls.length).toBe(0); // no lookup, nothing to fetch
   });
 
-  it('keeps the چالش card static when the catalog cannot be read', async () => {
-    globalThis.fetch = vi.fn(() => Promise.resolve({ ok: false, status: 404, json: async () => ({}) })) as any;
+  it('shows گفت‌وگوی زیر مطلب as a static showcase to a guest — never a link to پشتیبانی', async () => {
     await mount();
-    const c = mobile().querySelector('[data-dcp-key="challenge"]')!;
-    expect(c.tagName).toBe('DIV');
-    expect(c.classList.contains('is-static')).toBe(true);
+    const t = mobile().querySelector('[data-dcp-key="threads"]')!;
+    expect(t.tagName).toBe('DIV');
+    expect(t.classList.contains('is-static')).toBe(true);
+    expect(mobile().querySelector('a[href*="support"]')).toBeNull();
+  });
+
+  it('leaves گفت‌وگوی زیر مطلب out for a subscriber — it is under every article already', async () => {
+    meImpl = () => Promise.resolve({ tier: 'premium' });
+    meStatusImpl = () => 'user';
+    await mount();
+    expect(mobile().querySelector('[data-dcp-key="threads"]')).toBeNull();
+    expect(cards().length).toBe(19);
   });
 
   it('switches panels for a card whose target lives on خانه', async () => {
