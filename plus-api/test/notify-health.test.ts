@@ -136,6 +136,30 @@ async function subCount(userId: string): Promise<number> {
 }
 
 describe('WebPushNotificationSender failure reporting', () => {
+  /**
+   * The sender needs VAPID keys to get as far as a delivery.
+   *
+   * `ensureVapid()` returns false when either key is empty and `send()` bails
+   * before it ever touches web-push — so these three cases were asserting
+   * against a sender that had done nothing at all, and failed with «expected
+   * warn to be called once, got 0». The keys are in neither vitest.config.ts
+   * nor CI, so the suite was red on every machine without a .env carrying real
+   * ones, and green on the founder's because dotenv loaded his.
+   *
+   * A test that needs configuration supplies it rather than inheriting it.
+   * `setVapidDetails` is part of the web-push mock above, so a placeholder
+   * pair is enough to open the door; the transport is still never reached.
+   */
+  const originalKeys = { pub: config.push.vapidPublicKey, priv: config.push.vapidPrivateKey };
+  beforeEach(() => {
+    config.push.vapidPublicKey = originalKeys.pub || 'test-vapid-public-key';
+    config.push.vapidPrivateKey = originalKeys.priv || 'test-vapid-private-key';
+  });
+  afterAll(() => {
+    config.push.vapidPublicKey = originalKeys.pub;
+    config.push.vapidPrivateKey = originalKeys.priv;
+  });
+
   it('logs a delivery failure instead of swallowing it (the 2026-07-26 blind spot)', async () => {
     const userId = await userWithSubs(['https://fcm.googleapis.com/fcm/send/abc']);
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
