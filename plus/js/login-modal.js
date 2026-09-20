@@ -1,11 +1,11 @@
 // Login is a MODAL, never a page (spec 2.5). Two steps: phone -> OTP code.
 // Resolves with { user, return_to } on success, or null if the user cancels.
-import { el, faNum } from './util.js?v=105';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=105';
+import { el, faNum } from './util.js?v=106';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=106';
 import {
   isOrgHost, irMirrorUrl,
   telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername,
-} from './config.js?v=105';
+} from './config.js?v=106';
 
 let overlay = null;
 // While the mandatory nickname step is showing, every dismissal path (×,
@@ -224,7 +224,11 @@ function buildTelegramBlock(returnTo) {
   ]);
 }
 
-export function openLoginModal({ returnTo = location.pathname } = {}) {
+// The default carries the FRAGMENT too. `returnTo` travels as an encoded
+// query value and the API's sanitizeReturnTo() accepts any root-relative
+// path, so a deep link like /plus/profile.html#certificates survives the
+// Telegram round trip instead of landing the reader at the top of the page.
+export function openLoginModal({ returnTo = location.pathname + location.hash } = {}) {
   // .org backstop: the OTP modal must never open on the .org hosts (no phone
   // entry, no SMS spend). Any caller that reaches here on .org -- including the
   // /plus dashboard/profile pages -- gets the notice instead. The three primary

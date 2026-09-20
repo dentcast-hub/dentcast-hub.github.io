@@ -33,6 +33,24 @@ body.dcp-page a.dcp-btn-danger { color: #fff; }
 
 .dcp-loading, .dcp-empty, .dcp-gate { padding: 30px 6px; color: var(--txt2, #4a5f85); text-align: center; }
 .dcp-gate { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+/* ---- a gate that names its destination (plus/js/profile-page.js GATE) ------
+   Four surfaces deep-link into a profile section; for a signed-out visitor all
+   four used to arrive at one sentence naming none of them. The named card says
+   what is behind the door first — up-board's gate-card argument — and carries
+   NO purchase link: these sections open on a free account, and a signed-out
+   visitor may be a subscriber who is simply not logged in on this device. */
+.dcp-gate.is-named { align-items: stretch; text-align: start; gap: 0;
+  background: var(--card-bg, #fff); border: 1px solid var(--dcp-line, rgba(2,35,96,.12));
+  border-radius: 16px; padding: 20px 18px; max-width: 420px; margin-inline: auto; }
+.dcp-gn-hd { display: flex; align-items: flex-start; gap: 11px; margin-bottom: 10px; }
+.dcp-gn-hd b { display: block; font-size: 1.02rem; font-weight: 800; line-height: 1.6; }
+.dcp-gn-ico { flex: none; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 1.1rem; border: 1.5px solid var(--dcp-cert-bd, rgba(31,120,80,.26)); background: var(--dcp-cert-bg, rgba(31,120,80,.09)); }
+.dcp-gn-kick { font-size: .73rem; font-weight: 700; letter-spacing: .02em; color: var(--dcp-cert, #1f7850); }
+.dcp-gn-lead { margin: 0 0 16px; font-size: .89rem; color: var(--txt2, #4a5f85); }
+.dcp-gn-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.dcp-gn-foot { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--dcp-line, rgba(2,35,96,.12));
+  font-size: .8rem; color: var(--txt3, #62779a); }
 .dcp-muted { color: var(--txt2, #4a5f85); }
 
 /* ---- section cards ------------------------------------------------------- */
