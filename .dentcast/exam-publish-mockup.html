@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>انتشار آزمون: یک دکمه، و دری که می‌پرسد</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10); --line-strong:rgba(2,35,96,.18);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --danger:#c2384a; --danger-bg:rgba(194,56,74,.08); --danger-bd:rgba(194,56,74,.28);
+    --ok:#1a7f4b;
+    --cert:#1f7850; --cert-bg:rgba(31,120,80,.09); --cert-bd:rgba(31,120,80,.26);
+    --gold:#8a6414; --gold-bg:rgba(201,146,43,.10); --gold-bd:rgba(154,107,21,.30);
+    --mock-ink:#3b2f7a; --mock-bg:#efeaff; --mock-bd:rgba(59,47,122,.22);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --danger:#ff8095; --danger-bg:rgba(255,128,149,.12); --danger-bd:rgba(255,128,149,.30);
+    --ok:#5fd39a;
+    --cert:#5fd39b; --cert-bg:rgba(95,211,155,.11); --cert-bd:rgba(95,211,155,.30);
+    --gold:#e2b366; --gold-bg:rgba(226,179,102,.12); --gold-bd:rgba(226,179,102,.30);
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --danger:#ff8095; --danger-bg:rgba(255,128,149,.12); --danger-bd:rgba(255,128,149,.30);
+    --ok:#5fd39a;
+    --cert:#5fd39b; --cert-bg:rgba(95,211,155,.11); --cert-bd:rgba(95,211,155,.30);
+    --gold:#e2b366; --gold-bg:rgba(226,179,102,.12); --gold-bd:rgba(226,179,102,.30);
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }
+  body{ background:var(--bg); color:var(--txt); font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif;
+        direction:rtl; margin:0; padding-inline:16px; padding-block:0 6rem; line-height:1.85; font-size:15px; }
+  *{ box-sizing:border-box; } button{ font:inherit; }
+  :focus-visible{ outline:2px solid var(--ac); outline-offset:2px; border-radius:6px; }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+  code{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.84em; direction:ltr; unicode-bidi:isolate; color:var(--txt2); }
+
+  .wrap{ max-width:980px; margin:0 auto; }
+  .mk-head{ padding-block:1.8rem .4rem; }
+  .kick{ font-size:.74rem; font-weight:700; letter-spacing:.04em; color:var(--mock-ink); background:var(--mock-bg);
+         border:1px solid var(--mock-bd); border-radius:999px; padding:.2rem .7rem; display:inline-block; margin-bottom:.7rem; }
+  .mk-head h1{ font-size:1.65rem; font-weight:800; color:var(--pr); margin:0 0 .5rem; text-wrap:balance; }
+  .mk-head p{ margin:0 0 .6rem; color:var(--txt2); max-width:72ch; }
+  .mk-head p strong{ color:var(--txt); }
+
+  .mk-sec{ margin-top:3.2rem; }
+  .sh{ display:flex; align-items:baseline; gap:.7rem; flex-wrap:wrap; margin-bottom:.9rem; padding-bottom:.5rem; border-bottom:1px solid var(--border); }
+  .sh h2{ margin:0; font-size:1.08rem; font-weight:800; color:var(--mock-ink); }
+  .sh span{ color:var(--txt3); font-size:.82rem; }
+  .note{ color:var(--txt2); max-width:74ch; margin:.2rem 0 1.1rem; }
+  .note strong{ color:var(--txt); font-weight:700; }
+
+  table.g{ border-collapse:collapse; width:100%; font-size:.87rem; margin:.4rem 0 1rem; }
+  table.g th,table.g td{ text-align:right; padding:.55rem .65rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  table.g th{ color:var(--txt3); font-weight:600; font-size:.76rem; }
+  .yes{ color:var(--ok); font-weight:700; } .no{ color:var(--danger); font-weight:700; }
+
+  /* ---------------------------------------------------- the admin stage -- */
+  .stage{ background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:1.1rem; }
+  .stage-lbl{ font-size:.72rem; color:var(--txt3); text-align:center; margin-bottom:.8rem; }
+  .panel{ background:#fff; color:#0a1a33; border-radius:14px; padding:14px 16px; border:1px solid rgba(2,35,96,.10);
+          box-shadow:0 1px 3px rgba(2,35,96,.07); font-family:system-ui,'Segoe UI',Tahoma,sans-serif; }
+  .panel h4{ margin:0 0 4px; font-size:1rem; }
+  .panel .muted{ color:#62779a; font-size:.85rem; }
+  .pill{ display:inline-block; background:#f4f6fb; border:1px solid rgba(2,35,96,.10); border-radius:999px;
+         padding:1px 9px; font-size:.74rem; color:#62779a; margin-inline-start:6px; vertical-align:middle; }
+  .pill.hot{ background:rgba(201,146,43,.10); border-color:rgba(154,107,21,.30); color:#8a6414; }
+  .pill.ok{ background:rgba(15,122,74,.09); border-color:rgba(15,122,74,.25); color:#0f7a4a; }
+  .efrow{ border:1px solid rgba(2,35,96,.10); border-radius:12px; padding:10px 12px; margin-top:10px; background:#fff; }
+  .efrow.draft{ border-color:rgba(154,107,21,.40); background:rgba(201,146,43,.05); }
+  .efrow .t{ font-weight:700; font-size:.92rem; }
+  .efrow .s{ color:#62779a; font-size:.82rem; margin-top:2px; }
+  .efacts{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; align-items:center; }
+  .pbtn{ background:#0b5fff; color:#fff; border:0; border-radius:999px; padding:7px 16px; font-weight:800; font-size:.86rem; cursor:pointer; }
+  .pbtn.q{ background:#f4f6fb; color:#4a5f85; border:1px solid rgba(2,35,96,.10); font-weight:700; }
+  .pbtn.go{ background:#0f7a4a; }
+  .pbtn:disabled{ opacity:.5; cursor:default; }
+  .confirm{ margin-top:10px; border:1px solid rgba(154,107,21,.35); background:rgba(201,146,43,.08);
+            border-radius:10px; padding:10px 12px; font-size:.86rem; color:#4a5f85; }
+  .confirm b{ color:#0a1a33; }
+  .outline{ margin-top:8px; font-size:.85rem; color:#0f7a4a; min-height:1.4em; }
+
+  /* --------------------------------------------------- the phone stage -- */
+  .phone{ width:100%; max-width:372px; margin-inline:auto; }
+  .cols{ display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); }
+  .cs{ border:1px solid var(--cert-bd); border-radius:14px;
+       background:linear-gradient(to bottom, var(--cert-bg), transparent 62%), var(--surface);
+       box-shadow:var(--card-sh); padding:.85rem .95rem; }
+  .cs-top{ display:flex; align-items:flex-start; gap:.6rem; }
+  .cs-ico{ flex:none; width:32px; height:32px; border-radius:50%; display:grid; place-items:center;
+           border:1.5px solid var(--cert-bd); background:var(--surface); font-size:1rem; }
+  .cs-h{ flex:1 1 auto; min-width:0; }
+  .cs-h b{ display:block; font-size:.93rem; font-weight:800; line-height:1.6; }
+  .cs-h p{ margin:.1rem 0 0; font-size:.82rem; color:var(--txt2); }
+  .cs-cta{ margin-top:.7rem; display:flex; gap:.5rem; flex-wrap:wrap; }
+  .cs-echo{ margin:.55rem 0 0; font-size:.78rem; color:var(--txt3); }
+  .btn{ display:inline-flex; align-items:center; gap:.35rem; border-radius:999px; border:1px solid var(--border);
+        background:var(--surface2); color:var(--txt); padding:.4rem 1rem; font-size:.86rem; cursor:pointer; }
+  .btn-primary{ background:var(--ac); border-color:var(--ac); color:#fff; font-weight:700; }
+  .btn-ghost{ background:none; }
+  .terms{ flex:none; background:none; border:0; color:var(--txt3); font-size:.78rem; cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+
+  .notice{ background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:var(--card-sh);
+           padding:.7rem .85rem; display:flex; gap:.6rem; align-items:flex-start; position:relative; }
+  .notice.unread{ background:linear-gradient(to left, rgba(var(--ac-rgb),.07), transparent 70%), var(--surface); }
+  .notice .i{ flex:none; font-size:1.05rem; }
+  .notice b{ display:block; font-size:.88rem; font-weight:800; }
+  .notice p{ margin:.15rem 0 0; font-size:.82rem; color:var(--txt2); }
+  .notice time{ font-size:.72rem; color:var(--txt3); }
+
+  /* the sheet */
+  .sheetwrap{ position:relative; border:1px dashed var(--line-strong); border-radius:18px; background:var(--surface2);
+              padding:1rem; min-height:240px; display:flex; align-items:flex-end; }
+  .sheet{ background:var(--surface); border:1px solid var(--border); border-radius:18px; box-shadow:var(--card-sh);
+          padding:1.05rem 1.1rem; width:100%; }
+  .sheet-grip{ width:38px; height:4px; border-radius:99px; background:var(--line-strong); margin:0 auto .85rem; }
+  .sheet .kickr{ font-size:.73rem; font-weight:700; color:var(--cert); }
+  .sheet h3{ margin:.1rem 0 .4rem; font-size:1.02rem; font-weight:800; }
+  .sheet p{ margin:0 0 .7rem; font-size:.85rem; color:var(--txt2); }
+  .sheet .acts{ display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.9rem; }
+  .hidden{ display:none !important; }
+
+  .cmp{ display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); }
+  .cmp-box{ border:1px solid var(--border); border-radius:14px; padding:.9rem 1rem; background:var(--surface); }
+  .cmp-box.bad{ border-color:var(--danger-bd); background:var(--danger-bg); }
+  .cmp-box.good{ border-color:var(--cert-bd); background:var(--cert-bg); }
+  .cmp-box h4{ margin:0 0 .5rem; font-size:.85rem; font-weight:800; }
+  .cmp-box.bad h4{ color:var(--danger); } .cmp-box.good h4{ color:var(--cert); }
+  .cmp-box p{ margin:0; font-size:.85rem; color:var(--txt2); }
+
+  .q{ border-inline-start:3px solid var(--mock-bd); padding-inline-start:.9rem; margin:1.1rem 0; }
+  .q b{ display:block; color:var(--mock-ink); font-size:.9rem; }
+  .q p{ margin:.2rem 0 0; color:var(--txt2); font-size:.86rem; }
+  .q .rec{ display:inline-block; margin-top:.3rem; font-size:.8rem; color:var(--cert); font-weight:700; }
+
+  .todo{ list-style:none; padding:0; margin:0; }
+  .todo li{ padding:.6rem 0; border-bottom:1px solid var(--border); font-size:.88rem; }
+  .todo li:last-child{ border-bottom:none; }
+  .todo b{ display:block; }
+  .todo span{ color:var(--txt2); font-size:.83rem; }
+  .tag{ font-size:.7rem; font-weight:700; border-radius:6px; padding:.05rem .45rem; margin-inline-start:.4rem; vertical-align:middle;
+        border:1px solid var(--border); background:var(--surface2); color:var(--txt3); }
+  .tag.api{ color:var(--ac); border-color:rgba(var(--ac-rgb),.3); background:rgba(var(--ac-rgb),.08); }
+  .tag.db{ color:var(--danger); border-color:var(--danger-bd); background:var(--danger-bg); }
+  .tag.front{ color:var(--mock-ink); background:var(--mock-bg); border-color:var(--mock-bd); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mk-head">
+  <span class="kick">ماکاپ · برای تأیید · هیچ‌کدام هنوز ساخته نشده</span>
+  <h1>انتشار آزمون: یک دکمه، و دری که می‌پرسد</h1>
+  <p><strong>امروز:</strong> آزمونِ یک مسیر لحظه‌ای زنده می‌شود که اولین سؤالش نوشته شود — نه وقتی تو بگویی آماده است.
+     خبر دادن به کسانی که گواهی خواسته‌اند فقط روی یکی از چهار راهِ نوشتنِ سؤال اتفاق می‌افتد، و کسی که هنوز
+     مسیر را تمام نکرده هیچ‌وقت خبردار نمی‌شود — چون هیچ‌جا حساب نمی‌شود که او کِی به انتها رسید.</p>
+  <p><strong>پیشنهاد:</strong> فرم تا وقتی تو نگویی، <em>پیش‌نویس</em> است. دکمهٔ «اعلام آمادگی» دو کار می‌کند:
+     همان لحظه به هر کس آماده است خبر می‌دهد، و برای بقیه یک تریگر مسلح می‌گذارد که روزِ رسیدنشان به انتها آزاد شود.
+     سمت خواننده هم، ورود به آزمون یک سؤال جلویش می‌گیرد که «نه» هم جوابِ درستی برایش هست.</p>
+</header>
+
+<!-- ─────────────────────────────────────────────────────── the diagnosis -- -->
+<section class="mk-sec">
+  <div class="sh"><h2>امروز خبر به چه کسی می‌رسد</h2><span>چهار راهِ نوشتنِ سؤال، سه‌تایش ساکت</span></div>
+  <table class="g">
+    <tr><th>سؤال را چطور نوشتی</th><th>فرم ساخته می‌شود؟</th><th>به منتظرها خبر می‌رود؟</th></tr>
+    <tr><td>چسباندن متن، روی مسیری که هیچ فرمی نداشت</td><td class="yes">بله</td><td class="yes">بله</td></tr>
+    <tr><td>چسباندن متن، روی فرمی که از قبل هست</td><td>—</td><td class="no">نه</td></tr>
+    <tr><td>سازندهٔ سؤال، «برای کلِ مسیر»</td><td class="yes">بله</td><td class="no">نه</td></tr>
+    <tr><td>سازندهٔ سؤال، «برای یک مقاله»</td><td class="no">نه</td><td class="no">نه</td></tr>
+  </table>
+  <p class="note">و در هیچ‌کدام، کسی که <strong>بعداً</strong> مسیر را تمام می‌کند خبردار نمی‌شود. روی مسیری با ۴۶ قدم،
+     این همان حالتِ غالب است نه استثنا.</p>
+</section>
+
+<!-- ───────────────────────────────────────────────────────────── the panel -- -->
+<section class="mk-sec">
+  <div class="sh"><h2>۱ — پنل: فرم آزمون هر مسیر</h2><span>دکمه را بزن، کار می‌کند</span></div>
+  <p class="note">همان فهرستِ فعلیِ فرم‌ها، با یک <strong>حالت</strong> روی هر ردیف. تا وقتی «پیش‌نویس» است،
+     خوانندهٔ این مسیر دقیقاً همان چیزی را می‌بیند که وقتی هیچ سؤالی ننوشته بودی — پس می‌توانی چهار ماه
+     سؤال بنویسی و هیچ‌کس وسطِ کار وارد آزمونِ نیمه‌ساخته نشود.</p>
+
+  <div class="stage">
+    <div class="stage-lbl">پنل مدیریت · بخش «آزمونِ مسیر»</div>
+    <div class="panel">
+      <h4>فرم آزمون هر مسیر</h4>
+      <div class="muted">حالتِ هر فرم این‌جاست. «اعلام آمادگی» تنها کاری است که آزمون را برای خواننده‌ها باز می‌کند.</div>
+
+      <div class="efrow draft" id="rowDraft">
+        <div class="t">ایمپلنت: بیومکانیک، بیولوژی و بقای بلندمدت <span class="pill hot" id="stBadge">پیش‌نویس</span></div>
+        <div class="s" id="stLine">۱۵ سؤال در مخزن (۱۲ تستی · ۳ تشریحی) · ۴ سؤال هم از مقاله‌های همین مسیر می‌آید
+          · قرعه: ۱۵ · نصاب ۷۰٪ · ۲ تلاش با فاصلهٔ ۷ روز</div>
+        <div class="s" id="stWho">۴ نفر گواهیِ این مسیر را خواسته‌اند — ۱ نفرشان مسیر را تمام کرده است.</div>
+        <div class="efacts" id="actDraft">
+          <button class="pbtn" id="btnPublish">اعلام آمادگی — آزمون را باز کن</button>
+          <button class="pbtn q">ویرایش سؤال‌ها</button>
+          <button class="pbtn q">پیش‌نمایشِ یک قرعه</button>
+        </div>
+        <div class="confirm hidden" id="confirmBox">
+          <b>آزمونِ این مسیر باز شود؟</b> از این لحظه هر کس مسیر را تمام کرده باشد می‌تواند شروع کند و
+          قبولی‌اش گواهی صادر می‌کند. سؤال اضافه‌کردن بعدش آزاد است؛ این دکمه فقط یک‌بار خبر می‌دهد.
+          <div class="efacts">
+            <button class="pbtn go" id="btnYes">بله، باز کن</button>
+            <button class="pbtn q" id="btnNo">بی‌خیال</button>
+          </div>
+        </div>
+        <div class="efacts hidden" id="actLive">
+          <button class="pbtn q" id="btnUnpublish">بستنِ موقت</button>
+          <button class="pbtn q">ویرایش سؤال‌ها</button>
+        </div>
+        <div class="outline" id="outLine"></div>
+      </div>
+
+      <div class="efrow">
+        <div class="t">اکلوژن <span class="pill ok">باز است</span></div>
+        <div class="s">از ۱۴۰۵/۰۵/۱۲ · ۲۲ سؤال · ۳ تلاش در جریان · ۲ گواهی صادر شده</div>
+        <div class="efacts"><button class="pbtn q">بستنِ موقت</button><button class="pbtn q">ویرایش سؤال‌ها</button></div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:12px">
+      <h4>تقاضای گواهی‌نامه <span class="pill hot" id="cwPill">۱</span></h4>
+      <div class="muted" id="cwLine">۴ تقاضا از ۴ نفر · <b>۱</b> منتظر بازشدنِ آزمون · ۳ نفر هنوز مسیر را تمام نکرده‌اند</div>
+      <div class="s" style="margin-top:8px;color:#62779a;font-size:.85rem" id="cwTodo">
+        <b>مسیرهایی که آزمونشان باز نشده:</b> ایمپلنت: بیومکانیک… <span class="pill hot">۴ نفر منتظرند</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="note" style="margin-top:1rem">عددِ کنارِ «تقاضای گواهی‌نامه» امروز می‌شمارد «فرم دارد یا نه» — یعنی با
+     نوشتنِ اولین سؤال خاموش می‌شود، در حالی که هنوز هیچ‌کس نمی‌تواند آزمون بدهد. پیشنهاد: همان عدد را به
+     <strong>«آزمونش باز شده یا نه»</strong> ببندیم، تا دقیقاً وقتی خاموش شود که کاری واقعاً تمام شده است.</p>
+</section>
+
+<!-- ────────────────────────────────────────────────────────── the trigger -- -->
+<section class="mk-sec">
+  <div class="sh"><h2>۲ — تریگر: چه کسی، چه وقت خبردار می‌شود</h2><span>یک دکمه، دو زمان</span></div>
+  <p class="note">«اعلام آمادگی» برای همه یک خبر نمی‌فرستد. برای کسی که آماده است <strong>همان لحظه</strong>،
+     و برای بقیه <strong>روزی که به انتهای مسیر برسند</strong> — که همان جارویِ شبانه‌ای پیدایش می‌کند که
+     الان هم هر شب پیشرفتِ همه را حساب می‌کند. هر کس فقط یک‌بار، برای همیشه.</p>
+  <table class="g">
+    <tr><th>خواننده</th><th>وضعش موقع فشردنِ دکمه</th><th>کِی خبردار می‌شود</th></tr>
+    <tr><td>مهسا</td><td>گواهی خواسته · مسیر را تمام کرده · پریمیوم</td><td class="yes">همان لحظه</td></tr>
+    <tr><td>نگار</td><td>گواهی خواسته · ۴۱ قدم از ۴۶</td><td>شبِ روزی که قدم آخر را بخواند</td></tr>
+    <tr><td>آرش</td><td>گواهی خواسته · اشتراکش تمام شده</td><td>تصمیمِ تو — سؤال ۱ پایین</td></tr>
+    <tr><td>سارا</td><td>دستی راهش داده بودی</td><td class="yes">همان لحظه</td></tr>
+    <tr><td>بهار</td><td>در مسیر هست، ولی گواهی نخواسته</td><td>هرگز — و درست است؛ خودش گفته نمی‌خواهد</td></tr>
+  </table>
+  <p class="note"><strong>چیزی که عمداً تکرار نمی‌شود:</strong> پیشرفتِ مسیر عقب‌گرد دارد — هر بار محتوای تازه‌ای
+     داخل مسیر می‌گذاری، کسی که دیروز «تمام‌شده» بود امروز «۱ قدم مانده» است. پس علامتِ «خبر داده شد» یک
+     <strong>سقفِ ثابت</strong> است، نه یک وضعیت: کسی که یک‌بار خبردار شد، با رشدِ مسیر دوباره خبردار نمی‌شود.</p>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── the reader -- -->
+<section class="mk-sec">
+  <div class="sh"><h2>۳ — خواننده</h2><span>اطلاعیه، بعد در، بعد سؤال</span></div>
+
+  <div class="cols">
+    <div>
+      <div class="stage">
+        <div class="stage-lbl">الف) اطلاعیه — شبِ رسیدن به قدم آخر</div>
+        <div class="phone">
+          <div class="notice unread">
+            <span class="i">🎓</span>
+            <div>
+              <b>آزمون این مسیر برایت باز شد</b>
+              <p>مسیر «ایمپلنت: بیومکانیک، بیولوژی و بقای بلندمدت» را تمام کرده‌ای و آزمون پایانی‌اش باز است.
+                 هر وقت خواستی شروع کن؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.</p>
+              <time>امشب، ۲۲:۰۰</time>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="stage">
+        <div class="stage-lbl">ب) صفحهٔ مسیر — همان نوارِ فعلی</div>
+        <div class="phone">
+          <div class="cs">
+            <div class="cs-top">
+              <span class="cs-ico">🎓</span>
+              <span class="cs-h">
+                <b>آزمون این مسیر برایت باز است</b>
+                <p>هر وقت آماده بودی شروع کن؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.</p>
+              </span>
+              <button class="terms">شرایط ›</button>
+            </div>
+            <div class="cs-cta"><button class="btn btn-primary" id="ctaGo">رفتن به آزمون</button></div>
+            <p class="cs-echo hidden" id="stayEcho">باشد برای بعد — هر وقت خواستی، از همین‌جا.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage" style="margin-top:1rem">
+    <div class="stage-lbl">ج) دکمه را که زد — شیتِ پایین صفحه</div>
+    <div class="phone">
+      <div class="sheetwrap" id="sheetWrap">
+        <div class="sheet hidden" id="sheet">
+          <div class="sheet-grip"></div>
+          <div class="kickr">آزمون پایانی مسیر</div>
+          <h3>الان آزمون بدهیم؟</h3>
+          <p>سؤال‌ها روی یک صفحه‌اند و یک بار ارسال می‌شوند، پس بهتر است وقتِ بی‌وقفه داشته باشی.</p>
+          <p><strong>رفتن به صفحهٔ آزمون چیزی را شروع نمی‌کند</strong> — قرعهٔ سؤال‌ها و شمارشِ تلاش، با
+             دکمهٔ «شروع آزمون» در همان صفحه اتفاق می‌افتد. قواعدِ کاملِ این آزمون هم همان‌جا نوشته است.</p>
+          <div class="acts">
+            <button class="btn btn-primary" id="sheetYes">بله، برویم</button>
+            <button class="btn btn-ghost" id="sheetNo">الان نه</button>
+          </div>
+        </div>
+        <div style="margin:auto;color:var(--txt3);font-size:.82rem" id="sheetIdle">
+          دکمهٔ «رفتن به آزمون» را در کارتِ بالا بزن ↑
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cmp" style="margin-top:1.4rem">
+    <div class="cmp-box bad">
+      <h4>چیزی که در این شیت نمی‌آید</h4>
+      <p>«۱۵ سؤال · نصاب ۷۰٪ · ۲ تلاش». هیچ عددی روی صفحهٔ مسیر چاپ نمی‌شود — چون با هر انتشارِ محتوای تازه،
+         عددها کهنه می‌شوند و یک تست هم همین را نگه می‌دارد. عددها جای خودشان را دارند: صفحهٔ آزمون،
+         که آن‌ها را از فرمِ همان لحظه می‌خواند و همیشه راست می‌گوید.</p>
+    </div>
+    <div class="cmp-box good">
+      <h4>و «الان نه» یعنی هیچ</h4>
+      <p>شیت بسته می‌شود، خواننده دقیقاً همان‌جای صفحهٔ مسیر می‌ماند، هیچ چیزی ثبت نمی‌شود و دفعهٔ بعد
+         همین کارت با همین دکمه سر جایش است. نه تلاشی خرج شده، نه سؤالی قرعه خورده.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────────────── your decisions -- -->
+<section class="mk-sec">
+  <div class="sh"><h2>۴ — سه تصمیمی که با توست</h2><span>پیشنهادم را نوشته‌ام</span></div>
+
+  <div class="q">
+    <b>۱) خواننده‌ای که مسیر را تمام کرده و گواهی خواسته، ولی اشتراکش تمام شده — خبر برود؟</b>
+    <p>شرکت در آزمون پریمیوم است. اگر خبر برود و او پریمیوم نباشد، به دری می‌رسد که باز نمی‌شود.
+       اگر نرود، کسی که ماه‌ها خوانده در سکوت می‌ماند.</p>
+    <span class="rec">پیشنهاد: برود، با یک جملهٔ صادق در همان پیام («برای شرکت، اشتراک فعال لازم است») — نه با متنی که وعدهٔ باز بودن بدهد.</span>
+  </div>
+
+  <div class="q">
+    <b>۲) «بستنِ موقت» لازم است؟</b>
+    <p>برای وقتی که وسطِ کار فهمیدی یک سؤال غلط است. بستن، آزمون‌های نیمه‌کاره را خراب نمی‌کند
+       (هر تلاش نسخهٔ خودش از سؤال‌ها را دارد) ولی شروعِ تازه را می‌بندد.</p>
+    <span class="rec">پیشنهاد: باشد — و بازکردنِ دوباره هیچ خبری نفرستد؛ کسی که یک‌بار خبردار شد، دوبار نمی‌شود.</span>
+  </div>
+
+  <div class="q">
+    <b>۳) حداقل تعداد سؤال برای انتشار بگذاریم؟</b>
+    <p>امروز خطرِ واقعی برعکسِ این است: آزمون با سؤالِ <em>اول</em> زنده می‌شود، پس مسیری که داری سؤال دومش
+       را تایپ می‌کنی، برای خواننده یک آزمونِ یک‌سؤالیِ معتبر است که گواهی صادر می‌کند. خودِ این دکمه آن را می‌بندد.</p>
+    <span class="rec">پیشنهاد: نه. دکمه خودش نصاب است؛ عددِ قرعه (مثلاً ۱۵) را هم همان‌جا می‌بینی و اگر مخزن کمتر باشد، پنل کنارش هشدار بدهد.</span>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────────────────── the cost -- -->
+<section class="mk-sec">
+  <div class="sh"><h2>۵ — ساختنش چقدر است</h2><span>هیچ‌کدام هنوز نوشته نشده</span></div>
+  <ul class="todo">
+    <li><b>یک ستون <code>published_at</code> روی فرمِ آزمون<span class="tag db">مهاجرت</span></b>
+      <span>خالی = پیش‌نویس. آنچه نوشته می‌شود، تصمیمِ توست — همان الگوی نشان‌های اهدایی و صندلی «ستون».</span></li>
+    <li><b>دو مسیرِ تازه: باز کن / ببند<span class="tag api">API</span></b>
+      <span>«باز کن» همان لحظه به آماده‌ها خبر می‌دهد و تعدادِ هر دو گروه را برمی‌گرداند تا پنل بنویسدشان.</span></li>
+    <li><b>سه خط در جاروی شبانه<span class="tag api">API</span></b>
+      <span>همان جارویی که هر شب پیشرفتِ همه را حساب می‌کند؛ حالا هر کس تازه به انتها رسیده و خبر نگرفته را هم صدا می‌زند، یک‌بار برای همیشه.</span></li>
+    <li><b>حالت روی ردیف‌های پنل + معنی تازهٔ عددِ «تقاضای گواهی‌نامه»<span class="tag front">پنل</span></b>
+      <span>از «فرم دارد» به «آزمونش باز است» — تا آن عدد وقتی خاموش شود که کاری تمام شده باشد.</span></li>
+    <li><b>یک شیت جلوی دکمهٔ «رفتن به آزمون»<span class="tag front">فرانت</span></b>
+      <span>همان شیتِ مشترکِ سایت؛ بدون هیچ عددی، و «الان نه» هیچ چیزی ثبت نمی‌کند.</span></li>
+  </ul>
+</section>
+
+</div>
+<script>
+  (function () {
+    var pub = document.getElementById('btnPublish'), box = document.getElementById('confirmBox');
+    var actD = document.getElementById('actDraft'), actL = document.getElementById('actLive');
+    var badge = document.getElementById('stBadge'), out = document.getElementById('outLine');
+    var row = document.getElementById('rowDraft'), who = document.getElementById('stWho');
+    var pill = document.getElementById('cwPill'), cwl = document.getElementById('cwLine'), cwt = document.getElementById('cwTodo');
+
+    pub.addEventListener('click', function () { box.classList.remove('hidden'); pub.disabled = true; });
+    document.getElementById('btnNo').addEventListener('click', function () {
+      box.classList.add('hidden'); pub.disabled = false;
+    });
+    document.getElementById('btnYes').addEventListener('click', function () {
+      box.classList.add('hidden'); actD.classList.add('hidden'); actL.classList.remove('hidden');
+      row.classList.remove('draft');
+      badge.className = 'pill ok'; badge.textContent = 'باز است';
+      who.textContent = 'از امروز باز است — ۱۴۰۵/۰۶/۳۰';
+      out.textContent = 'باز شد. به ۱ نفر که آماده بود همین حالا خبر رفت · ۳ نفرِ دیگر هنوز مسیر را تمام نکرده‌اند؛ هرکدام روزِ رسیدنش خبردار می‌شود.';
+      pill.className = 'pill ok'; pill.textContent = '۰';
+      cwl.innerHTML = '۴ تقاضا از ۴ نفر · <b>۰</b> منتظر بازشدنِ آزمون · ۴ نفر آزمونشان باز است';
+      cwt.textContent = 'هر مسیری که تقاضا دارد، آزمونش هم باز است — کاری نمانده.';
+    });
+    document.getElementById('btnUnpublish').addEventListener('click', function () {
+      actL.classList.add('hidden'); actD.classList.remove('hidden'); pub.disabled = false;
+      row.classList.add('draft');
+      badge.className = 'pill hot'; badge.textContent = 'بسته (موقت)';
+      who.textContent = 'شروعِ تازه بسته است؛ تلاش‌های در جریان دست‌نخورده‌اند. بازکردنِ دوباره خبری نمی‌فرستد.';
+      out.textContent = '';
+    });
+
+    var sheet = document.getElementById('sheet'), idle = document.getElementById('sheetIdle');
+    var echo = document.getElementById('stayEcho');
+    document.getElementById('ctaGo').addEventListener('click', function () {
+      sheet.classList.remove('hidden'); idle.classList.add('hidden'); echo.classList.add('hidden');
+      sheet.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    });
+    document.getElementById('sheetNo').addEventListener('click', function () {
+      sheet.classList.add('hidden'); idle.classList.remove('hidden'); echo.classList.remove('hidden');
+    });
+    document.getElementById('sheetYes').addEventListener('click', function () {
+      sheet.classList.add('hidden'); idle.classList.remove('hidden');
+      idle.textContent = '→ صفحهٔ آزمون باز می‌شود (/plus/exam.html) — و آن‌جا هنوز دکمهٔ «شروع آزمون» جلوی اوست.';
+    });
+  })();
+</script>
+</body>
+</html>
