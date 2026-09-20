@@ -1,16 +1,16 @@
 // Reusable profile renderer (spec 2.7). Used by the /plus/profile.html page and
 // the header overlay. Site design language; a clear, readable week strip. Nothing
 // here is mandatory: the pseudonym is editable, no real name is ever required.
-import { el, faNum, tehranDay } from './util.js?v=111';
-import { certificatesBody } from './certificates.js?v=111';
-import { api, ApiError, currentUser } from './api.js?v=111';
-import { remindersBlock } from './reminders.js?v=111';
-import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=111';
-import { baleEnabled, baleDeepLink } from './config.js?v=111';
-import { leagueEntryButton } from './league.js?v=111';
-import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=111';
-import { subscriptionCta } from './premium-cta.js?v=111';
-import { copyToClipboard, confirmStrip, toast } from './hl-view.js?v=111';
+import { el, faNum, tehranDay } from './util.js?v=113';
+import { certificatesBody } from './certificates.js?v=113';
+import { api, ApiError, currentUser } from './api.js?v=113';
+import { remindersBlock } from './reminders.js?v=113';
+import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=113';
+import { baleEnabled, baleDeepLink } from './config.js?v=113';
+import { leagueEntryButton } from './league.js?v=113';
+import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=113';
+import { subscriptionCta } from './premium-cta.js?v=113';
+import { copyToClipboard, confirmStrip, toast } from './hl-view.js?v=113';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
   timeZone: 'Asia/Tehran', year: 'numeric', month: 'long', day: 'numeric',
@@ -637,7 +637,7 @@ export async function renderProfile(root, { me: preMe } = {}) {
     // Telegram (login + notifications) + Bale (notifications only). `connect` is the
     // deep-link anchor the homepage Bale/Telegram chips scroll to.
     section('اتصال به پیام‌رسان‌ها', messengerBlock(me), 'connect'),
-    section('یادآوری‌ها', remindersBlock(me)),
+    section('یادآوری‌ها', remindersBlock(me), 'reminders'), // #reminders: the پریمیوم tab's پیامک card lands here
     el('div', { class: 'dcp-dash-sec' }, [logoutBtn]),
   );
 

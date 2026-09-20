@@ -1,0 +1,283 @@
+// @vitest-environment jsdom
+// Drives the REAL shipped «پریمیوم» tab renderer (/plus/js/premium-panel.js)
+// and its catalog (/plus/js/premium-catalog.js).
+//
+// What is pinned here is the contract the tab makes, not its looks: one panel
+// with THREE states (locked / live / unknown) that are never conflated, exactly
+// one buy link on the locked page and none on the live one, a catalog that can
+// never silently miss a canonical feature, and the one founder-worded claim
+// («بدون تبلیغ در مقالات», never wider) kept as written.
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
+
+let meImpl: () => Promise<Record<string, unknown> | null>;
+let meStatusImpl: () => string;
+let highlightsImpl: () => Promise<unknown>;
+let collectionsImpl: () => Promise<unknown>;
+
+vi.mock('/plus/js/api.js', () => ({
+  api: {
+    recentHighlights: () => highlightsImpl(),
+    listCollections: () => collectionsImpl(),
+  },
+  currentUser: () => meImpl(),
+  meStatus: () => meStatusImpl(),
+}));
+
+let loginOpened = 0;
+vi.mock('/plus/js/login-modal.js', () => ({
+  openLoginModal: () => { loginOpened += 1; },
+}));
+
+const CHALLENGES = {
+  version: 1,
+  byContent: {
+    'insight/insight-68': { question: 'q1', image: '/insight/insight68.webp' },
+    'insight/insight-70': { question: 'q2', image: '/insight/insight70.webp' },
+  },
+};
+
+// Both slots, the way index.html carries them, plus the home panel's DES tool
+// tab and the real bottom-nav item that switches to it.
+const SKELETON = `
+  <section class="dc-panel active" id="panel-studio"><button id="dcDesToolTab" type="button">DES</button></section>
+  <section class="dc-panel" id="panel-premium"><div id="dcPremiumPanel" hidden></div></section>
+  <div id="dcdPremiumPanel" hidden></div>
+  <nav><div class="dc-bn-item" data-panel="panel-studio"></div><div class="dc-bn-item active" data-panel="panel-premium"></div></nav>`;
+
+const settle = () => new Promise((r) => setTimeout(r, 0));
+const mobile = () => document.getElementById('dcPremiumPanel')!;
+const cards = (root: Element = mobile()) => Array.from(root.querySelectorAll('.dcp-hf-card'));
+const chip = (key: string, root: Element = mobile()) =>
+  root.querySelector(`[data-dcp-key="${key}"] .dcp-hf-state`)?.textContent ?? null;
+const pricingLinks = (root: Element = mobile()) =>
+  Array.from(root.querySelectorAll('a[href^="/plus/pricing.html"]'));
+
+async function mount() {
+  document.body.innerHTML = SKELETON;
+  const { initPremiumPanel } = await import('/plus/js/premium-panel.js');
+  await initPremiumPanel();
+  await settle();
+  await settle();
+}
+
+beforeEach(() => {
+  vi.resetModules();
+  loginOpened = 0;
+  meImpl = () => Promise.resolve(null);
+  meStatusImpl = () => 'anon';
+  highlightsImpl = () => Promise.resolve({ total: 132 });
+  collectionsImpl = () => Promise.resolve({ collections: [{}, {}, {}] });
+  globalThis.fetch = vi.fn(() => Promise.resolve({ ok: true, status: 200, json: async () => CHALLENGES })) as any;
+  (Element.prototype as any).scrollIntoView = vi.fn();
+});
+
+describe('the catalog', () => {
+  it('carries every canonical PREMIUM_FEATURES title — a tenth entry cannot go missing', async () => {
+    const { PREMIUM_FEATURES } = await import('/plus/js/config.js');
+    const { PREMIUM_ENTRIES } = await import('/plus/js/premium-catalog.js');
+    const titles = PREMIUM_ENTRIES.filter((e: any) => e.feature).map((e: any) => e.title);
+    for (const f of PREMIUM_FEATURES as any[]) expect(titles).toContain(f.title);
+    // and the reference is by object, never a re-typed string
+    for (const e of PREMIUM_ENTRIES as any[]) {
+      if (e.feature) expect((PREMIUM_FEATURES as any[]).includes(e.feature)).toBe(true);
+    }
+  });
+
+  it('names more than the nine — the eleven that were on no pitch anywhere', async () => {
+    const { PREMIUM_ENTRIES } = await import('/plus/js/premium-catalog.js');
+    const extra = (PREMIUM_ENTRIES as any[]).filter((e) => !e.feature).map((e) => e.key);
+    expect(extra).toEqual(expect.arrayContaining([
+      'concepts', 'pillar', 'upboard', 'desboard', 'wayfinder', 'cabinet', 'des-scorer',
+      'threads', 'challenge', 'no-ads', 'sms',
+    ]));
+    const keys = (PREMIUM_ENTRIES as any[]).map((e) => e.key);
+    expect(new Set(keys).size).toBe(keys.length);
+  });
+
+  it('promises «بدون تبلیغ در مقالات» and never anything wider', async () => {
+    const { PREMIUM_ENTRIES } = await import('/plus/js/premium-catalog.js');
+    const noAds = (PREMIUM_ENTRIES as any[]).find((e) => e.key === 'no-ads');
+    expect(noAds.title).toBe('بدون تبلیغ در مقالات');
+    expect(noAds.sub).not.toContain('هیچ‌جا');
+    // and the source itself carries no wider claim (the mockup's first draft did)
+    const src = fs.readFileSync(path.join(repoRoot, 'plus/js/premium-catalog.js'), 'utf8');
+    expect(src).not.toMatch(/هیچ کارت اسپانسری، هیچ‌جا/);
+  });
+
+  it('gives every card that leads somewhere a site-absolute href', async () => {
+    const { PREMIUM_ENTRIES } = await import('/plus/js/premium-catalog.js');
+    for (const e of PREMIUM_ENTRIES as any[]) {
+      if (e.href !== null) expect(e.href).toMatch(/^\//);
+    }
+  });
+});
+
+describe('a signed-out visitor', () => {
+  it('sees every card locked, ONE buy link, and a sign-in line first', async () => {
+    await mount();
+    expect(mobile().hidden).toBe(false);
+    expect(mobile().querySelector('.dcp-pp')!.getAttribute('data-dcp-state')).toBe('locked');
+    const all = cards();
+    expect(all.length).toBeGreaterThanOrEqual(20);
+    for (const c of all) expect(c.querySelector('.dcp-hf-state')!.textContent).toBe('🔒');
+    const buy = pricingLinks();
+    expect(buy).toHaveLength(1);
+    expect(buy[0].getAttribute('href')).toBe('/plus/pricing.html?from=premium-tab');
+    expect(mobile().textContent).not.toContain('پیشخوان ›');
+    const signIn = mobile().querySelector('.dcp-pp-signin') as HTMLElement;
+    expect(signIn).not.toBeNull();
+    signIn.click();
+    expect(loginOpened).toBe(1);
+  });
+
+  it('fills the desktop slot with the same panel', async () => {
+    await mount();
+    const desk = document.getElementById('dcdPremiumPanel')!;
+    expect(desk.hidden).toBe(false);
+    expect(cards(desk).length).toBe(cards().length);
+    expect(pricingLinks(desk)).toHaveLength(1);
+  });
+});
+
+describe('a free reader', () => {
+  it('sees the locked catalog without the sign-in line', async () => {
+    meImpl = () => Promise.resolve({ tier: 'free' });
+    meStatusImpl = () => 'user';
+    await mount();
+    expect(mobile().querySelector('.dcp-pp')!.getAttribute('data-dcp-state')).toBe('locked');
+    expect(pricingLinks()).toHaveLength(1);
+    expect(mobile().querySelector('.dcp-pp-signin')).toBeNull();
+  });
+});
+
+describe('a subscriber', () => {
+  beforeEach(() => {
+    meImpl = () => Promise.resolve({
+      tier: 'premium',
+      due_card_count: 4,
+      active_pathway: { current_step: 3, total_steps: 12, is_complete: false },
+    });
+    meStatusImpl = () => 'user';
+  });
+
+  it('gets the same cards live, no buy link, and the dashboard as the header link', async () => {
+    await mount();
+    expect(mobile().querySelector('.dcp-pp')!.getAttribute('data-dcp-state')).toBe('live');
+    expect(pricingLinks()).toHaveLength(0);
+    expect(mobile().querySelector('a[href="/plus/"]')!.textContent).toBe('پیشخوان ›');
+    expect(mobile().querySelector('.dcp-pp-signin')).toBeNull();
+    for (const c of cards()) expect(c.querySelector('.dcp-hf-state')!.classList.contains('is-live')).toBe(true);
+  });
+
+  it('paints what /me carries at once and the counted ones after they answer', async () => {
+    await mount();
+    expect(chip('pathways')).toBe('قدم ۳ از ۱۲');
+    expect(chip('cards')).toBe('۴ کارت');
+    expect(chip('report')).toMatch(/ آماده$/);
+    expect(chip('no-ads')).toBe('فعال');
+    expect(chip('highlights')).toBe('۱۳۲ هایلایت');
+    expect(chip('collections')).toBe('۳ کالکشن');
+    expect(chip('compass')).toBe('باز کردن'); // no honest number for it
+    // the desktop copy is painted too
+    expect(chip('highlights', document.getElementById('dcdPremiumPanel')!)).toBe('۱۳۲ هایلایت');
+  });
+
+  it('leaves «باز کردن» rather than guess when a count fails', async () => {
+    highlightsImpl = () => Promise.reject(new Error('down'));
+    collectionsImpl = () => Promise.resolve({ collections: [] });
+    await mount();
+    expect(chip('highlights')).toBe('باز کردن');
+    expect(chip('collections')).toBe('باز کردن');
+  });
+
+  it('says «کامل شد» for a finished pathway', async () => {
+    meImpl = () => Promise.resolve({ tier: 'premium', active_pathway: { current_step: 5, total_steps: 5, is_complete: true } });
+    await mount();
+    expect(chip('pathways')).toBe('کامل شد');
+  });
+});
+
+describe('when the API cannot be asked', () => {
+  it('draws the catalog with no locks and no offer — never an upsell', async () => {
+    meImpl = () => Promise.resolve(null);
+    meStatusImpl = () => 'error';
+    await mount();
+    expect(mobile().querySelector('.dcp-pp')!.getAttribute('data-dcp-state')).toBe('unknown');
+    expect(mobile().querySelectorAll('.dcp-hf-state')).toHaveLength(0);
+    expect(pricingLinks()).toHaveLength(0);
+    expect(mobile().querySelector('.dcp-pp-signin')).toBeNull();
+    expect(mobile().querySelector('.dcp-pp-lead')!.textContent).toContain('ارتباط با سرور');
+  });
+});
+
+describe('destinations', () => {
+  it('turns the چالش card into a link to the newest challenge once the catalog answers', async () => {
+    await mount();
+    const c = mobile().querySelector('[data-dcp-key="challenge"]')!;
+    expect(c.tagName).toBe('A');
+    expect(c.getAttribute('href')).toBe('/insight/insight-70.html');
+    expect(c.classList.contains('is-static')).toBe(false);
+  });
+
+  it('keeps the چالش card static when the catalog cannot be read', async () => {
+    globalThis.fetch = vi.fn(() => Promise.resolve({ ok: false, status: 404, json: async () => ({}) })) as any;
+    await mount();
+    const c = mobile().querySelector('[data-dcp-key="challenge"]')!;
+    expect(c.tagName).toBe('DIV');
+    expect(c.classList.contains('is-static')).toBe(true);
+  });
+
+  it('switches panels for a card whose target lives on خانه', async () => {
+    await mount();
+    let switched = 0;
+    document.querySelector('.dc-bn-item[data-panel="panel-studio"]')!.addEventListener('click', () => { switched += 1; });
+    document.getElementById('panel-studio')!.classList.remove('active');
+    const des = mobile().querySelector('[data-dcp-key="des-scorer"]') as HTMLAnchorElement;
+    expect(des.getAttribute('href')).toBe('/#dcDesToolTab');
+    const ev = new MouseEvent('click', { bubbles: true, cancelable: true });
+    des.dispatchEvent(ev);
+    expect(ev.defaultPrevented).toBe(true);
+    expect(switched).toBe(1);
+  });
+
+  it('on the desktop shell, leaves the premium surface and scrolls to the column-C copy', async () => {
+    await mount();
+    document.body.classList.add('dc-desktop-ui');
+    document.body.insertAdjacentHTML('beforeend',
+      '<div class="dcd-col-c is-viewer"><div class="dcd-col-c-scroll is-premium"><button id="dcdDesToolTab" type="button">DES</button></div></div>'
+      + '<button id="dcd-premium-item" class="active"></button>');
+    const des = document.querySelector('#dcdPremiumPanel [data-dcp-key="des-scorer"]') as HTMLAnchorElement;
+    const ev = new MouseEvent('click', { bubbles: true, cancelable: true });
+    des.dispatchEvent(ev);
+    expect(ev.defaultPrevented).toBe(true);
+    const scroll = document.querySelector('.dcd-col-c-scroll')!;
+    expect(scroll.classList.contains('is-premium')).toBe(false);
+    expect(document.querySelector('.dcd-col-c')!.classList.contains('is-viewer')).toBe(false);
+    expect(document.getElementById('dcd-premium-item')!.classList.contains('active')).toBe(false);
+    document.body.classList.remove('dc-desktop-ui');
+  });
+
+  it('is wired on the homepage as the fourth panel, in the tab bar and the desktop tree', () => {
+    const html = fs.readFileSync(path.join(repoRoot, 'index.html'), 'utf8');
+    expect(html).toContain('id="panel-premium"');
+    expect(html).toContain('id="dcPremiumPanel"');
+    expect(html).toContain('id="dcdPremiumPanel"');
+    expect(html).toContain('data-panel="panel-premium"');
+    expect(html).toContain("const panelOrder = ['panel-studio','panel-sharehub','panel-premium','panel-patient'];");
+    expect(html).toContain('id="dcd-premium-item"');
+    expect(html).toMatch(/grid-template-columns:repeat\(4,1fr\);\s*\n\s*background:var\(--bn-bg\)/);
+    const plus = fs.readFileSync(path.join(repoRoot, 'plus/plus.js'), 'utf8');
+    expect(plus).toContain("step('premium-panel', () => initPremiumPanel())");
+    // the profile anchor the پیامک card lands on exists
+    const profile = fs.readFileSync(path.join(repoRoot, 'plus/js/profile.js'), 'utf8');
+    expect(profile).toContain("section('یادآوری‌ها', remindersBlock(me), 'reminders')");
+    // and the tour's tab stop names four tabs
+    const tour = fs.readFileSync(path.join(repoRoot, 'plus/js/tour.js'), 'utf8');
+    expect(tour).toMatch(/«خانه».*«آرشیو».*«پریمیوم».*«بیماران»/);
+  });
+});
