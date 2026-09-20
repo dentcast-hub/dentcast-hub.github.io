@@ -6,8 +6,11 @@
 //   1. Visitor class decides whether an ad may exist AT ALL. premium: never —
 //      not even for the moment a slow /me takes to answer. anon and plus: yes,
 //      each with their own targeting.
-//   2. An impression means SEEN, not rendered: 50% of the card on screen for one
-//      continuous second, in a foreground tab.
+//   2. An impression means SEEN, not rendered: `seen.ratio` of the card on screen
+//      for `seen.ms` continuously, in a foreground tab — `seen.large_ratio` once
+//      the card's own box passes `seen.large_px`. CONFIG below pins its own
+//      thresholds so these tests keep asserting the MECHANISM rather than this
+//      week's numbers.
 //
 // Rule 1 is the regression net for the production row
 // `article / premium-creative / plus-viewer`: /me answered late, the client had
@@ -37,8 +40,18 @@ class FakeIO {
 }
 
 const live = () => observers.filter((o) => !o.disconnected);
-const enterView = (ratio = 1) => live().forEach((o) => o.cb([{ isIntersecting: ratio > 0, intersectionRatio: ratio }]));
-const leaveView = () => live().forEach((o) => o.cb([{ isIntersecting: false, intersectionRatio: 0 }]));
+// jsdom lays nothing out, so the card's box — which is what decides whether the
+// large-ad threshold applies — is supplied by the test. SMALL is the ordinary
+// 560px-capped card (~162k px²); LARGE is the dashboard/profile banner (~293k),
+// the only shape on this site that crosses the IAB large-ad line.
+const SMALL = { width: 560, height: 290 };
+const LARGE = { width: 760, height: 385 };
+const enterView = (ratio = 1, box = SMALL) => live().forEach((o) => o.cb([
+  { isIntersecting: ratio > 0, intersectionRatio: ratio, boundingClientRect: box },
+]));
+const leaveView = () => live().forEach((o) => o.cb([
+  { isIntersecting: false, intersectionRatio: 0, boundingClientRect: SMALL },
+]));
 /** Scroll the card into view and hold it there long enough to count. */
 async function seen(dwellMs = 1000) { enterView(); await vi.advanceTimersByTimeAsync(dwellMs); }
 
@@ -51,7 +64,7 @@ function setVisibility(state: 'visible' | 'hidden') {
 const CONFIG = {
   enabled: true,
   premium_hides_ads: true,
-  seen: { ratio: 0.5, ms: 1000 },
+  seen: { ratio: 0.5, ms: 1000, large_ratio: 0.3, large_px: 242500 },
   slots: { home: { enabled: true } },
   rotation: { advance: 'view', sequence: ['premium'] },
   creatives: {
@@ -263,6 +276,35 @@ describe('an impression means seen, not rendered', () => {
     await tick(5000);
     expect(posts).toHaveLength(1);
   });
+
+  // The IAB's own large-ad allowance, and the reason it exists: an observer can
+  // never report a ratio above viewport-area ÷ element-area, so past a certain
+  // size a 50% rule measures the visitor's monitor rather than their attention.
+  // On this site the dashboard/profile banner (~760×385) is the only card that
+  // crosses the line — it is the one shape exempt from the 560px cap.
+  it('holds an ordinary card to 50%', async () => {
+    await boot();
+    enterView(0.35, SMALL);
+    await tick(5000);
+    expect(posts, '35% of a normal card is not a viewable impression').toHaveLength(0);
+    enterView(0.5, SMALL);
+    await tick(1000);
+    expect(posts).toHaveLength(1);
+  });
+
+  it('holds a large card to 30% — measured from its own box, not its slot', async () => {
+    await boot();
+    enterView(0.35, LARGE);
+    await tick(1000);
+    expect(posts, 'past the large-ad size, 35% IS the standard').toHaveLength(1);
+  });
+
+  it('still refuses a large card below 30%', async () => {
+    await boot();
+    enterView(0.25, LARGE);
+    await tick(5000);
+    expect(posts).toHaveLength(0);
+  });
 });
 
 // A campaign can be pure artwork with nowhere to go: the offer, the brand and
@@ -334,5 +376,63 @@ describe('an image-only campaign renders as artwork, not as a link', () => {
     CONFIG.rotation.sequence = ['premium'];
     await boot();
     expect(creativeShown()).toBe('premium');
+  });
+});
+
+// The desktop sidebar (col-A of index.html's shell). It is the one slot that
+// belongs to no page type: its host is a permanent, empty #dcdSpotSidebar rather
+// than an anchor found from pageType(), and its card is PINNED to sequence[0]
+// because it sits on screen for the whole visit instead of once per page view.
+//
+// Both properties are what these tests hold. The second `it` is the regression
+// net for a slot switched ON in the config being silenced by an unrelated slot
+// being switched OFF: setupSidebarSlot() sat after an early return that listed
+// every slot but this one, so `home: false` took the permanent card down with it.
+describe('the desktop sidebar', () => {
+  const slots = JSON.parse(JSON.stringify(CONFIG.slots));
+  const sequence = [...CONFIG.rotation.sequence];
+  afterEach(() => {
+    (CONFIG as any).slots = JSON.parse(JSON.stringify(slots));
+    CONFIG.rotation.sequence = [...sequence];
+  });
+
+  /** index.html's desktop shell: the empty col-A host and nothing else. */
+  async function bootDesk(ms = 10_000): Promise<void> {
+    document.body.innerHTML = '<div id="mobile-body"><div id="dcPulseCard">pulse</div></div>'
+      + '<section id="dc-desktop-root"><div class="dcd-a-spot" id="dcdSpotSidebar"></div></section>';
+    vi.resetModules();
+    await import('/spot/spot.js');
+    await vi.advanceTimersByTimeAsync(ms);
+  }
+  const sidebarCard = () => document.querySelector('#dcdSpotSidebar .dc-spot--sidebar');
+
+  it('seats a card in col-A and counts it under its own slot name', async () => {
+    (CONFIG as any).slots = { home: { enabled: true }, sidebar: { enabled: true } };
+    await bootDesk();
+    expect(sidebarCard()).not.toBeNull();
+    await seen();
+    expect(posts.map((p) => p.body.content_id)).toContain('sidebar:premium');
+  });
+
+  it('renders even when the page own slot is off', async () => {
+    (CONFIG as any).slots = { home: { enabled: false }, sidebar: { enabled: true } };
+    await bootDesk();
+    expect(document.querySelector('#mobile-body .dc-spot'), 'home is off').toBeNull();
+    expect(sidebarCard(), 'sidebar is on, and nothing else decides that').not.toBeNull();
+    await seen();
+    expect(posts.map((p) => p.body.content_id)).toEqual(['sidebar:premium']);
+  });
+
+  it('spends no rotation beat — it is on screen for the whole visit', async () => {
+    (CONFIG as any).slots = { home: { enabled: false }, sidebar: { enabled: true } };
+    await bootDesk();
+    await seen();
+    expect(localStorage.getItem('dcAds.tick'), 'a permanent card must not burn a beat').toBeNull();
+  });
+
+  it('stays off when the config switches the slot off', async () => {
+    (CONFIG as any).slots = { home: { enabled: true }, sidebar: { enabled: false } };
+    await bootDesk();
+    expect(sidebarCard()).toBeNull();
   });
 });

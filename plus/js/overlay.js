@@ -9,7 +9,7 @@
 //    the article viewer) BELOW its own header — same sheet behaviour as mobile
 //    but scoped to that column instead of covering the whole desktop UI, so the
 //    sidebar and list columns stay usable.
-import { el } from './util.js?v=108';
+import { el } from './util.js?v=109';
 
 let current = null; // { type, node, reposition }
 

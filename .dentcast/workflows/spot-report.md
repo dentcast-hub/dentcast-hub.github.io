@@ -64,9 +64,11 @@ engine); week buckets start **Saturday**.
    Never carry GA's heavy-undercount disclaimer over to server numbers — that
    would understate real inventory in a sponsor report.
 4. **ایمپرشن یعنی «دیده شد»، نه «رندر شد».** A card counts only after it has
-   been at least **۵۰٪ روی صفحه، یک ثانیهٔ پیوسته، در تبِ فعال** (the IAB
-   display rule; thresholds live in `spot-config.json` → `seen`). So a card the
-   visitor never scrolled to, a background/prerendered tab, and a fast scroll
+   been at least **۵۰٪ روی صفحه، یک ثانیهٔ پیوسته، در تبِ فعال** — **۳۰٪ برای
+   کارتِ بزرگ** (past 242,500 px², which on this site is the `dashboard` and
+   `profile` banner alone), that pair being the IAB/MRC display rule rather than
+   an exception to it. Thresholds live in `spot-config.json` → `seen`. So a card
+   the visitor never scrolled to, a background/prerendered tab, and a fast scroll
    past the card all count **nothing** — the number you report is delivered
    inventory, and it is defensible to a sponsor's own measurement. It is
    therefore **lower** than the number of pages that carried an ad; never
@@ -236,11 +238,38 @@ interesting number for the business, and worth surfacing when both are in hand.
 Translate slot ids to Persian for the user («صفحهٔ اصلی» = `home`, «مقاله» =
 `article`, «ستون موضوعی» = `pillar`, «جستجوی سراسری» = `search`, «تب آرشیو» =
 `archive`, «پلیر» = `player`, «صفحهٔ اپیزود» = `episode`, «آرشیو اپیزودها» =
-`episodes`, «پیشخوان» = `dashboard`, «پروفایل» = `profile`).
+`episodes`, «پیشخوان» = `dashboard`, «پروفایل» = `profile`, «ستونِ کنارِ
+دسکتاپ» = `sidebar`).
 
 **`episode` و `episodes` را هرگز در یک سطر ادغام نکن** — اولی صفحهٔ تکِ اپیزود
 است و دومی صفحهٔ آرشیو `episodes.html`. اسمشان یک حرف فرق دارد و معنایشان کاملاً
 جداست.
+
+**`sidebar` is not comparable with the other slots, and it is the one row to
+caveat by construction.** It is the desktop shell's col-A card: pinned to
+`rotation.sequence[0]` rather than rotated, on screen for the whole visit rather
+than once per page view, and therefore counted ONCE per page load — while the
+desktop shell opens ten articles inside that one load, each of which counts its
+own `article` impression. A low `sidebar` number against `article` is that
+arithmetic, never weaker placement. It also spends no rotation beat, so the
+"share of impressions vs. share of زمان‌ها" comparison below does not apply to it.
+
+**A third slot, `sidebar`, shipped counting on 2026-09-20 and has no data before
+that day** — and not because the placement was new. It had been enabled and
+building cards for some time, but `sidebar` was missing from the API's closed
+`SPOT_SLOTS` vocabulary, so every impression and click it sent was answered 400
+and counted nowhere. In the report that reads as no demand rather than as a
+dropped pipeline. Same lesson as the two below, third occurrence.
+
+**The large-ad allowance landed on 2026-09-20 and affects two slots only.**
+The gate was, and remains, the IAB display rule; what was missing was that
+rule's own carve-out for a large creative (30% instead of 50% past 242,500 px²),
+without which a card bigger than half the visitor's screen was being held to a
+bar its own size put out of reach. On this site that is `dashboard` and
+`profile` — the only slots exempt from the 560px cap on artwork — so a step up
+in THOSE two rows across that date is under-counting being corrected, not a
+change in demand. Every other slot's numbers are continuous across it, and the
+figure remains the IAB-viewable one for every slot.
 
 Two slots shipped on **2026-07-28** and have no data before that day:
 
