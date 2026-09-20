@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>درِ بسته باید بگوید پشتش چیست</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10); --line-strong:rgba(2,35,96,.18);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --danger:#c2384a; --danger-bg:rgba(194,56,74,.08); --danger-bd:rgba(194,56,74,.28);
+    --cert:#1f7850; --cert-bg:rgba(31,120,80,.09); --cert-bd:rgba(31,120,80,.26);
+    --gold:#b7791f; --gold-bg:rgba(183,121,31,.10);
+    --mock-ink:#3b2f7a; --mock-bg:#efeaff; --mock-bd:rgba(59,47,122,.22);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --danger:#ff8095; --danger-bg:rgba(255,128,149,.12); --danger-bd:rgba(255,128,149,.30);
+    --cert:#5fd39b; --cert-bg:rgba(95,211,155,.11); --cert-bd:rgba(95,211,155,.30);
+    --gold:#e2b366; --gold-bg:rgba(226,179,102,.12);
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --danger:#ff8095; --danger-bg:rgba(255,128,149,.12); --danger-bd:rgba(255,128,149,.30);
+    --cert:#5fd39b; --cert-bg:rgba(95,211,155,.11); --cert-bd:rgba(95,211,155,.30);
+    --gold:#e2b366; --gold-bg:rgba(226,179,102,.12);
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }
+  body{ background:var(--bg); color:var(--txt); font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif;
+        direction:rtl; margin:0; padding-inline:16px; padding-block:0 8rem; line-height:1.85; font-size:15px; }
+  *{ box-sizing:border-box; } button{ font:inherit; }
+  :focus-visible{ outline:2px solid var(--ac); outline-offset:2px; border-radius:6px; }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+  code{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.84em; direction:ltr; unicode-bidi:isolate; color:var(--txt2); }
+
+  .wrap{ max-width:980px; margin:0 auto; }
+  .mk-head{ padding-block:1.8rem .4rem; }
+  .kick{ font-size:.74rem; font-weight:700; letter-spacing:.04em; color:var(--mock-ink); background:var(--mock-bg);
+         border:1px solid var(--mock-bd); border-radius:999px; padding:.2rem .7rem; display:inline-block; margin-bottom:.7rem; }
+  .mk-head h1{ font-size:1.6rem; font-weight:800; color:var(--pr); margin:0 0 .5rem; text-wrap:balance; }
+  .mk-head p{ margin:0 0 .5rem; color:var(--txt2); max-width:70ch; }
+
+  .mk-sec{ margin-top:3rem; }
+  .sh{ display:flex; align-items:baseline; gap:.7rem; flex-wrap:wrap; margin-bottom:.9rem; padding-bottom:.5rem; border-bottom:1px solid var(--border); }
+  .sh h2{ margin:0; font-size:1.06rem; font-weight:800; color:var(--mock-ink); }
+  .sh span{ color:var(--txt3); font-size:.82rem; }
+  .note{ color:var(--txt2); max-width:72ch; margin:.2rem 0 1.1rem; }
+  .note strong{ color:var(--txt); font-weight:700; }
+  .note em{ color:var(--txt); font-style:normal; font-weight:600; }
+
+  table.g{ border-collapse:collapse; width:100%; font-size:.86rem; margin-bottom:1rem; }
+  table.g th,table.g td{ text-align:right; padding:.55rem .65rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  table.g th{ color:var(--txt3); font-weight:600; font-size:.76rem; }
+  .no{ color:var(--danger); font-weight:700; } .yes{ color:var(--cert); font-weight:700; }
+
+  /* the journey strip */
+  .path{ display:flex; align-items:stretch; gap:.5rem; flex-wrap:wrap; margin-bottom:1.2rem; }
+  .step{ flex:1 1 180px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:.7rem .8rem; box-shadow:var(--card-sh); }
+  .step b{ display:block; font-size:.86rem; }
+  .step span{ font-size:.78rem; color:var(--txt2); }
+  .step.is-bad{ border-color:var(--danger-bd); background:var(--danger-bg); }
+
+  .stage{ background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:1.1rem; }
+  .stage-in{ width:100%; max-width:360px; margin-inline:auto; }
+  .stage-lbl{ font-size:.72rem; color:var(--txt3); text-align:center; margin-bottom:.7rem; }
+  .cols{ display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); }
+
+  /* product vocabulary */
+  .dcp-gate{ background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--card-sh);
+             padding:1.4rem 1.2rem; text-align:center; }
+  .dcp-gate p{ margin:0 0 .9rem; }
+  .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.35rem; border-radius:999px;
+        border:1px solid var(--border); background:var(--surface2); color:var(--txt);
+        padding:.42rem 1.1rem; font-size:.88rem; cursor:pointer; white-space:nowrap; text-decoration:none; }
+  .btn-primary{ background:var(--ac); border-color:var(--ac); color:#fff; font-weight:700; }
+  .btn-ghost{ background:transparent; }
+  .btn-link{ background:none; border:none; color:var(--ac); padding:0; font-size:.83rem; cursor:pointer;
+             text-decoration:underline; text-underline-offset:3px; }
+
+  /* the proposed gate */
+  .g2{ text-align:start; }
+  .g2-hd{ display:flex; align-items:flex-start; gap:.7rem; margin-bottom:.6rem; }
+  .g2-ico{ flex:none; width:38px; height:38px; border-radius:50%; display:grid; place-items:center; font-size:1.1rem;
+           border:1.5px solid var(--cert-bd); background:var(--cert-bg); }
+  .g2-hd b{ display:block; font-size:1rem; font-weight:800; line-height:1.6; }
+  .g2-hd .k{ font-size:.73rem; font-weight:700; color:var(--cert); letter-spacing:.02em; }
+  .g2 p.lead{ margin:0 0 1rem; font-size:.88rem; color:var(--txt2); }
+  .g2-row{ display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; }
+  .g2-foot{ margin:.9rem 0 0; padding-top:.75rem; border-top:1px solid var(--border); font-size:.8rem; color:var(--txt3); }
+  .g2-foot a{ color:var(--txt2); }
+
+  .cmp{ display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); }
+  .cmp-box h4{ margin:0 0 .6rem; font-size:.84rem; font-weight:800; }
+  .cmp-box.bad h4{ color:var(--danger); } .cmp-box.good h4{ color:var(--cert); }
+
+  .switch{ display:flex; gap:.4rem; flex-wrap:wrap; justify-content:center; margin-bottom:1rem; }
+  .switch button{ border-radius:999px; border:1px solid var(--border); background:var(--surface); color:var(--txt2);
+                  padding:.3rem .85rem; font-size:.8rem; cursor:pointer; }
+  .switch button[aria-pressed="true"]{ background:var(--ac); border-color:var(--ac); color:#fff; font-weight:700; }
+
+  .todo{ list-style:none; padding:0; margin:0; }
+  .todo li{ padding:.6rem 0; border-bottom:1px solid var(--border); font-size:.88rem; }
+  .todo li:last-child{ border-bottom:none; }
+  .todo b{ display:block; }
+  .todo span{ color:var(--txt2); font-size:.83rem; }
+  .tag{ font-size:.7rem; font-weight:700; border-radius:6px; padding:.05rem .45rem; margin-inline-start:.4rem; vertical-align:middle;
+        border:1px solid var(--border); background:var(--surface2); color:var(--txt3); }
+  .tag.front{ color:var(--mock-ink); background:var(--mock-bg); border-color:var(--mock-bd); }
+  .tag.copy{ color:var(--cert); background:var(--cert-bg); border-color:var(--cert-bd); }
+
+  .q{ border-inline-start:3px solid var(--mock-bd); padding-inline-start:.9rem; margin:1rem 0; }
+  .q b{ display:block; color:var(--mock-ink); font-size:.89rem; }
+  .q p{ margin:.2rem 0 0; color:var(--txt2); font-size:.85rem; }
+
+  .theme{ position:fixed; inset-block-end:14px; inset-inline-end:14px; z-index:9; }
+  .theme button{ border-radius:999px; border:1px solid var(--line-strong); background:var(--surface); color:var(--txt);
+                 padding:.4rem .9rem; font-size:.8rem; cursor:pointer; box-shadow:var(--card-sh); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mk-head">
+  <span class="kick">پیشنهاد — تصمیم‌نگرفته · ۱۴۰۵/۰۶/۲۹</span>
+  <h1>درِ بسته باید بگوید پشتش چیست</h1>
+  <p>چهار جای سایت به بخش‌های پروفایل دیپ‌لینک می‌دهند. برای کسی که وارد نشده، هر چهارتا به یک جملهٔ واحد می‌رسند که هیچ‌کدامشان را نام نمی‌برد — و بعد از ورود هم لزوماً به همان بخش برنمی‌گردند. پیشنهاد است؛ کدی عوض نشده.</p>
+</header>
+
+<!-- ================================================== §0 مسیرِ کاربر -->
+<section class="mk-sec">
+  <div class="sh"><h2>۰. مسیری که این را ساخت</h2><span>بازدیدکنندهٔ ناشناس، صفحهٔ اصلی</span></div>
+  <div class="path">
+    <div class="step"><b>۱. صفحهٔ اصلی</b><span>ریلِ «دنت‌کست پریمیوم» — کارتِ «گواهی‌نامهٔ تکمیل مسیر» با چیپ 🔒</span></div>
+    <div class="step"><b>۲. ضربه می‌زند</b><span><code>/plus/profile.html#certificates</code></span></div>
+    <div class="step is-bad"><b>۳. چه می‌بیند</b><span>«برای دیدن پروفایل وارد شوید.» — هیچ اسمی از گواهی</span></div>
+  </div>
+  <p class="note">کارت یک وعده داد، در آن را که باز کرد جملهٔ دیگری در جواب آمد. همان اشکالی که گیتِ مسیرها داشت («مسیرهای یادگیری ویژهٔ پریمیوم است» بدون هیچ حرفی از گواهی)، یک لایه پایین‌تر — و این‌بار در دری که <em>اصلاً پریمیوم نمی‌خواهد</em>: دیوارِ گواهی‌نامه‌ها با ورودِ ساده باز می‌شود.</p>
+</section>
+
+<!-- ========================================== §1 چهار در، یک جواب -->
+<section class="mk-sec">
+  <div class="sh"><h2>۱. چهار دیپ‌لینک، یک جملهٔ واحد</h2><span>هش را هیچ‌کس نمی‌خواند مگر بعد از ورود</span></div>
+  <table class="g">
+    <thead><tr><th>از کجا</th><th>به کجا</th><th>وارد نشده، الان چه می‌بیند</th></tr></thead>
+    <tbody>
+      <tr><td>ریلِ صفحهٔ اصلی (کارت گواهی)</td><td><code>#certificates</code></td><td class="no">«برای دیدن پروفایل وارد شوید.»</td></tr>
+      <tr><td>صفحهٔ آزمون، بعد از قبولی</td><td><code>#certificates</code></td><td class="no">همان</td></tr>
+      <tr><td>چیپ‌های بله/تلگرامِ صفحهٔ اصلی</td><td><code>#connect</code></td><td class="no">همان</td></tr>
+      <tr><td>گزارش ماهانه</td><td><code>#achievements</code></td><td class="no">همان</td></tr>
+      <tr><td>ردیفِ پیامکِ یادآوری‌ها</td><td><code>#phone</code></td><td>—<span style="color:var(--txt3)"> (داخل خودِ پروفایل، پس همیشه وارد شده)</span></td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>مکانیزم از قبل هست و فقط دیر اجرا می‌شود.</strong> <code>profile-page.js</code> هش را می‌خواند، اسکرول می‌کند و بخش را یک لحظه هایلایت می‌کند — ولی آن کد <em>بعد از</em> گیت است، پس برای کسی که وارد نشده هش دور ریخته می‌شود. پیشنهاد: همان هش، یک قدم زودتر خوانده شود تا گیت بداند کجا را می‌خواست.</p>
+</section>
+
+<!-- ================================================ §2 گیتِ پیشنهادی -->
+<section class="mk-sec">
+  <div class="sh"><h2>۲. گیت</h2><span>اول می‌گوید پشتِ در چیست، بعد در می‌زند</span></div>
+
+  <div class="switch" id="sw">
+    <button data-k="certificates" aria-pressed="true">#certificates</button>
+    <button data-k="connect" aria-pressed="false">#connect</button>
+    <button data-k="achievements" aria-pressed="false">#achievements</button>
+    <button data-k="none" aria-pressed="false">بدون هش</button>
+  </div>
+
+  <div class="cmp">
+    <div class="cmp-box bad">
+      <h4>امروز — برای هر چهار در</h4>
+      <div class="stage"><div class="stage-in">
+        <div class="stage-lbl">‏/plus/profile.html#certificates</div>
+        <div class="dcp-gate">
+          <p>برای دیدن پروفایل وارد شوید.</p>
+          <span class="btn btn-primary">ورود</span>
+        </div>
+      </div></div>
+    </div>
+    <div class="cmp-box good">
+      <h4>پیشنهاد — همان صفحه، با خواندنِ هش</h4>
+      <div class="stage"><div class="stage-in">
+        <div class="stage-lbl" id="gUrl">‏/plus/profile.html#certificates</div>
+        <div class="dcp-gate g2" id="gCard"></div>
+      </div></div>
+    </div>
+  </div>
+
+  <p class="note" style="margin-top:1rem"><strong>سه قاعده‌ای که این کارت رویشان ایستاده.</strong>
+  <em>اول چیستی، بعد در</em> — همان کاری که کارتِ گیتِ up-board می‌کند: «هیچ‌کس ترتیبی را که ندیده نمی‌خرد.»
+  <em>این یک آگهی نیست</em> — دکمهٔ اصلی «ورود» است نه «خرید»؛ کسی که وارد نشده ممکن است همین حالا مشترک باشد و فقط روی این دستگاه لاگین نکرده باشد (همان تفکیکِ ۴۰۱ از ۴۰۲ که up-board و <code>premium-cta.js</code> از قبل رعایت می‌کنند).
+  و <em>دکمهٔ دوم بدونِ حساب هم کار می‌کند</em> — شیتِ شرایط تماماً سمتِ کلاینت است و هیچ فراخوانِ API ندارد، پس ناشناس هم می‌تواند کلِ شرایط را بخواند بی‌آنکه چیزی امضا کند.</p>
+</section>
+
+<!-- ============================================ §3 هشِ گم‌شده -->
+<section class="mk-sec">
+  <div class="sh"><h2>۳. و هش بعد از ورود گم می‌شود</h2><span>یک باگِ دوم روی همین مسیر</span></div>
+  <p class="note"><code>openLoginModal({ returnTo })</code> پیش‌فرضش <code>location.pathname</code> است و <code>profile-page.js</code> هم صریحاً <code>'/plus/profile.html'</code> می‌دهد — <strong>در هر دو حالت هش نیست</strong>. نتیجه بستگی به راهِ ورود دارد:</p>
+  <table class="g">
+    <thead><tr><th>راهِ ورود</th><th>چه اتفاقی می‌افتد</th><th>نتیجه</th></tr></thead>
+    <tbody>
+      <tr><td>کد پیامکی، داخل مودال</td><td><code>location.reload()</code> — همان URL با هش دوباره بار می‌شود</td><td class="yes">اتفاقی درست کار می‌کند</td></tr>
+      <tr><td>تلگرام (ریدایرکت واقعی)</td><td>به <code>returnTo</code> برمی‌گردد که هش ندارد</td><td class="no">بالای پروفایل، نه بخشی که زده بود</td></tr>
+    </tbody>
+  </table>
+  <p class="note">«اتفاقی درست کار می‌کند» جای خوبی برای ماندن نیست: یکی از دو راهِ ورود سالم است و هیچ‌چیز در کد نمی‌گوید کدام. اصلاحش یک آرگومان است — <code>returnTo: location.pathname + location.hash</code> — و چون <code>returnTo</code> پیش‌فرضِ خودِ <code>openLoginModal</code> هم همین شکل را دارد، هر صفحهٔ دیگری که فردا دیپ‌لینک بگیرد از همین درست‌بودن ارث می‌برد.</p>
+</section>
+
+<!-- ============================================ §4 چه باید ساخته شود -->
+<section class="mk-sec">
+  <div class="sh"><h2>۴. چه چیزی باید ساخته شود</h2><span>یک فایل، دو تابع، بدون API</span></div>
+  <ul class="todo">
+    <li><b><code>plus/js/profile-page.js</code> — گیت هش را بخواند <span class="tag front">فرانت</span></b><span>یک نگاشتِ کوچک <code>{certificates, connect, achievements}</code> → (آیکن، تیتر، یک جمله، دکمهٔ دوم). هشِ ناشناخته یا نبودنِ هش ⟵ دقیقاً همان کارتِ امروزی، دست‌نخورده.</span></li>
+    <li><b>دکمهٔ دومِ <code>#certificates</code> همان شیتِ موجود است <span class="tag front">فرانت</span></b><span><code>certificateTerms(null)</code> از <code>certificate-terms.js</code> — چیزی تازه ساخته نمی‌شود و برای ناشناس هم باز می‌شود.</span></li>
+    <li><b><code>returnTo</code> هش را ببرد <span class="tag front">فرانت</span></b><span>در <code>profile-page.js</code> و در پیش‌فرضِ <code>openLoginModal</code>.</span></li>
+    <li><b>تست <span class="tag front">فرانت</span></b><span>یک <code>profile-gate.dom.test.ts</code>: هر هش جملهٔ خودش را می‌آورد، هشِ ناشناخته به کارتِ عمومی برمی‌گردد، دکمهٔ اصلی «ورود» است نه «خرید»، و شیتِ شرایط بدون حساب باز می‌شود.</span></li>
+    <li><b><code>asset_version.py --bump</code></b><span>در همان کامیت.</span></li>
+  </ul>
+  <p class="note">هیچ روتی، هیچ مهاجرتی، هیچ متنی در سمتِ سرور. کلِ تغییر در یک گیتِ کلاینتی است که تا امروز یک جمله بیشتر نداشت.</p>
+</section>
+
+<!-- ============================================ §5 تصمیم‌های تو -->
+<section class="mk-sec">
+  <div class="sh"><h2>۵. چیزهایی که کد نمی‌تواند حدس بزند</h2><span>سه تا</span></div>
+  <div class="q"><b>۱. لینکِ خرید در این کارت باشد یا نه؟</b><p>پیشنهادم: نه. این در با ورودِ ساده باز می‌شود و دیوارِ گواهی برای کاربر رایگان هم هست؛ گذاشتنِ دکمهٔ خرید این‌جا یعنی فروختنِ چیزی که همین حالا رایگان در دسترسش است. برای <code>#certificates</code> «شرایط» دکمهٔ دوم است، و در همان شیت نوشته که <em>شرکت در آزمون</em> پریمیوم می‌خواهد.</p></div>
+  <div class="q"><b>۲. همین کار را برای گیتِ مسیرها هم بکنیم؟</b><p>آن‌جا در واقعاً پریمیوم می‌خواهد، پس کارتش فرق دارد و ۴۰۲ است نه ۴۰۱. جدا نگهش داشتم تا این یکی کوچک بماند؛ اگر بخواهی همان الگو را آن‌جا هم می‌برم.</p></div>
+  <div class="q"><b>۳. متنِ هر سه هش را همین‌طور می‌پسندی؟</b><p>هر سه را در §۲ می‌شود عوض کرد و دید.</p></div>
+</section>
+
+</div>
+
+<div class="theme"><button id="themeBtn" type="button">تم تیره/روشن</button></div>
+
+<script>
+(function(){
+  document.getElementById('themeBtn').addEventListener('click', function(){
+    var cur = document.documentElement.getAttribute('data-theme');
+    var dark = cur ? cur === 'dark' : matchMedia('(prefers-color-scheme:dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'light' : 'dark');
+  });
+
+  var COPY = {
+    certificates: {
+      url: '/plus/profile.html#certificates',
+      ico: '🎓', kick: 'در پروفایلِ تو',
+      title: 'گواهی‌نامهٔ تکمیل مسیر',
+      lead: 'یک مسیر یادگیری را تا آخرین قدم بخوان و آزمون پایانی‌اش را بده؛ گواهی به نام خودت صادر می‌شود، با کد یکتا و صفحهٔ تأیید عمومی.',
+      second: 'شرایط گواهی‌نامه',
+      foot: 'گواهی‌نامه‌هایت در پروفایل می‌نشیند — با حساب رایگان هم دیده می‌شود.'
+    },
+    connect: {
+      url: '/plus/profile.html#connect',
+      ico: '💬', kick: 'در پروفایلِ تو',
+      title: 'اتصال به بله و تلگرام',
+      lead: 'وصل کن تا خبرِ مطلب تازه و یادآوری‌ها همان‌جا برسد — بی‌آنکه لازم باشد سایت را باز کنی.',
+      second: '', foot: 'وصل‌کردن و قطع‌کردن هر وقت خواستی، از همان بخش.'
+    },
+    achievements: {
+      url: '/plus/profile.html#achievements',
+      ico: '🏅', kick: 'در پروفایلِ تو',
+      title: 'افتخارها و نشان‌ها',
+      lead: 'نشان‌هایت از روی همان کاری که کرده‌ای ساخته می‌شوند — چیزی جداگانه ثبت نمی‌شود، پس از همان لحظه‌ای که حساب بسازی تاریخت هم حساب شده است.',
+      second: '', foot: 'با حساب رایگان هم دیده می‌شود.'
+    },
+    none: {
+      url: '/plus/profile.html',
+      ico: '', kick: '', title: '', lead: '', second: '', foot: ''
+    }
+  };
+
+  var gUrl = document.getElementById('gUrl');
+  var card = document.getElementById('gCard');
+
+  function el(tag, cls, txt){ var n=document.createElement(tag); if(cls) n.className=cls; if(txt!=null) n.textContent=txt; return n; }
+
+  /**
+   * The whole point of the proposal in one function: the gate is built FROM
+   * the hash. An unknown hash and no hash take the same road — the card that
+   * ships today, untouched — which is what keeps this change additive.
+   */
+  function draw(k){
+    var c = COPY[k];
+    gUrl.textContent = '\u200f' + c.url;
+    card.replaceChildren();
+
+    if (!c.title) {
+      card.classList.remove('g2');
+      card.append(el('p', null, 'برای دیدن پروفایل وارد شوید.'), el('span', 'btn btn-primary', 'ورود'));
+      return;
+    }
+
+    card.classList.add('g2');
+    var head = el('span');
+    head.append(el('span', 'k', c.kick), el('b', null, c.title));
+    var hd = el('div', 'g2-hd');
+    hd.append(el('span', 'g2-ico', c.ico), head);
+
+    var row = el('div', 'g2-row');
+    // «ورود» leads, never «خرید»: somebody signed out may already be a
+    // subscriber on another device — the 401/402 split up-board makes.
+    row.append(el('span', 'btn btn-primary', 'ورود'));
+    if (c.second) row.append(el('button', 'btn btn-ghost', c.second));
+
+    card.append(hd, el('p', 'lead', c.lead), row, el('p', 'g2-foot', c.foot));
+  }
+
+  document.getElementById('sw').addEventListener('click', function(e){
+    var b = e.target.closest('button[data-k]'); if(!b) return;
+    [].forEach.call(this.querySelectorAll('button'), function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+    draw(b.dataset.k);
+  });
+
+  draw('certificates');
+})();
+</script>
+</body>
+</html>
