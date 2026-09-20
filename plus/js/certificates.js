@@ -16,9 +16,10 @@
 // A revoked certificate does NOT tick its pathway. The wall shows what stands
 // today; the record of a revoked one lives in the API's `certificates` list
 // and on its own verify page, which still answers for the code.
-import { el, faNum, icon } from './util.js?v=103';
-import { openSheet, closeSheet } from './sheet.js?v=103';
-import { downloadCertificate } from './certificate-image.js?v=103';
+import { el, faNum, icon } from './util.js?v=104';
+import { openSheet, closeSheet } from './sheet.js?v=104';
+import { certificateTerms } from './certificate-terms.js?v=104';
+import { downloadCertificate } from './certificate-image.js?v=104';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' });
 const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } catch (_) { return ''; } };
@@ -151,11 +152,20 @@ export function lockedCard(p) {
         el('b', {}, p.title_fa),
       ]),
     ]),
+    // This wall is `requireAuth`, not `requirePremium` — a free reader sees it
+    // and used to be told only «مسیر را تا آخر بخوان», then walked into a
+    // premium gate that never mentions a certificate. Premium is one of the
+    // conditions, so it is said here as a condition rather than as a wall.
     el('p', { class: 'dcp-cert-card-lead' }, ex ? ex[1]
-      : 'این مسیر را تا آخرین قدم بخوان؛ نزدیک پایان، آزمونِ مسیر برایت گذاشته می‌شود و با قبولی در آن، گواهی‌نامه به نام خودت صادر می‌شود.'),
+      : 'این مسیر را تا آخرین قدم بخوان؛ نزدیک پایان، آزمونِ مسیر برایت گذاشته می‌شود و با قبولی در آن، گواهی‌نامه به نام خودت صادر می‌شود. شرکت در آزمون نیاز به اشتراک پریمیوم دارد.'),
     el('div', { class: 'dcp-cert-actions' }, [
       ex ? el('a', { class: 'dcp-btn', href: examHref }, ex[2]) : null,
       el('a', { class: 'dcp-btn' + (ex ? ' dcp-btn-ghost' : ''), href: `/plus/pathway.html?id=${encodeURIComponent(p.id)}` }, 'رفتن به مسیر'),
+      (() => {
+        const b = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', 'data-cert-terms-btn': '' }, 'شرایط');
+        b.addEventListener('click', () => openSheet(certificateTerms(p.title_fa, () => openSheet(lockedCard(p)))));
+        return b;
+      })(),
     ].filter(Boolean)),
     el('button', {
       class: 'dcp-btn dcp-btn-ghost dcp-ach-close', type: 'button', onclick: () => closeSheet(),

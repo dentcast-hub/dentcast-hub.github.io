@@ -14,7 +14,9 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 vi.mock('/plus/js/certificate-image.js', () => ({
   downloadCertificate: (...args: unknown[]) => { downloads.push(args); return Promise.resolve(new Blob()); },
-  CERT_TEXT: {},
+  // The wall now reaches CERT_TEXT through certificate-terms.js (the «شرایط»
+  // button on a locked card), so the mock carries the one string it prints.
+  CERT_TEXT: { fine: 'دنت‌کست تکمیل این مسیر و قبولی در آزمون پایانی آن را تأیید می‌کند.' },
 }));
 
 let downloads: unknown[][] = [];

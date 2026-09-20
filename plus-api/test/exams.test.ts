@@ -370,6 +370,75 @@ describe('who may sit it', () => {
     expect((await startAttempt(uid, PATHWAY, 'x')).ok).toBe(true);
   });
 
+  it('a «بله» from a reader nowhere near the end still reaches the founder, and says whether a form exists', async () => {
+    const uid = await userId();
+    await loginAs(app, founderPhone);
+    config.support.alertPhone = founderPhone;
+    const fid = await userId(founderPhone);
+    // One step of nineteen: runPathwayAlerts has nothing to say about them,
+    // which is exactly the case that used to be announced to nobody.
+    await pool.query(
+      `insert into user_activity (user_id, action, content_id) values ($1, 'article_completed', $2)`, [uid, STEPS[0]],
+    );
+
+    expect((await post(`/exams/${PATHWAY}/intent`, { intent: 'wanted' })).statusCode).toBe(200);
+    const notes = await notices(fid);
+    expect(notes).toHaveLength(1);
+    expect(notes[0].title).toContain('گواهی‌نامه می‌خواهد');
+    expect(notes[0].body).toContain('فرم آزمون ندارد');
+
+    // The same wish, said again or taken back and repeated, is one wish.
+    await post(`/exams/${PATHWAY}/intent`, { intent: 'declined' });
+    await post(`/exams/${PATHWAY}/intent`, { intent: 'wanted' });
+    expect(await notices(fid)).toHaveLength(1);
+  });
+
+  it('a wish for a pathway whose exam is already written says there is nothing to do', async () => {
+    const uid = await userId();
+    await loginAs(app, founderPhone);
+    config.support.alertPhone = founderPhone;
+    await upsertForm(PATHWAY, { questions: [MCQ(1)] });
+    await pool.query(
+      `insert into user_activity (user_id, action, content_id) values ($1, 'article_completed', $2)`, [uid, STEPS[0]],
+    );
+
+    await post(`/exams/${PATHWAY}/intent`, { intent: 'wanted' });
+    const notes = await notices(await userId(founderPhone));
+    expect(notes).toHaveLength(1);
+    expect(notes[0].body).toContain('آماده است');
+  });
+
+  it('the founder wishing on their own account pings nobody', async () => {
+    config.support.alertPhone = phone;
+    const uid = await userId();
+    await post(`/exams/${PATHWAY}/intent`, { intent: 'wanted' });
+    expect(await notices(uid)).toHaveLength(0);
+  });
+
+  it('writing the form tells everyone who ASKED for the certificate, not only the hand-assigned', async () => {
+    const wisher = await userId();
+    const both = await userId(await (async () => { await loginAs(app, '09121200095'); return '09121200095'; })());
+    await loginAs(app, '09121200096');
+    const assignee = await userId('09121200096');
+
+    await setCertificateIntent(wisher, PATHWAY, 'wanted');
+    await setCertificateIntent(both, PATHWAY, 'wanted');
+    await assignExam(both, PATHWAY);       // in BOTH populations — told once
+    await assignExam(assignee, PATHWAY);
+    // «فعلاً نه» is not a subscription to the news
+    await loginAs(app, '09121200097');
+    const declined = await userId('09121200097');
+    await setCertificateIntent(declined, PATHWAY, 'declined');
+
+    const r = await adminPost('/admin/exam-forms', { pathway_id: PATHWAY, questions: [MCQ(1)] });
+    expect(r.json()).toMatchObject({ ok: true, created: true, notified: 3 });
+    for (const uid of [wisher, both, assignee]) {
+      const told = (await notices(uid)).filter((n) => n.title.includes('آزمون مسیر برایت باز شد'));
+      expect(told).toHaveLength(1);
+    }
+    expect(await notices(declined)).toHaveLength(0);
+  });
+
   it('«گواهی می‌خواهی؟» — the answer enrols, is reversible, and a «بله» from somebody near the end reaches the founder at once', async () => {
     const uid = await userId();
     await loginAs(app, founderPhone);

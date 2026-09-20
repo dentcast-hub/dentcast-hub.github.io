@@ -28,16 +28,15 @@
 //                        than guessing.
 //   · anything else    → «نتوانستیم بررسی کنیم» — a dead API is not a forged
 //                        certificate, and must never be printed as one.
-import { el } from './util.js?v=103';
-import { api } from './api.js?v=103';
-import { registerSW } from './pwa.js?v=103';
-import { downloadCertificate } from './certificate-image.js?v=103';
+import { el } from './util.js?v=104';
+import { api } from './api.js?v=104';
+import { registerSW } from './pwa.js?v=104';
+import { downloadCertificate, CERT_TEXT } from './certificate-image.js?v=104';
 
 const LOGO = '/logo-v2.png';
 const VERIFY_HOST = 'dentcast.ir/plus/certificate.html';
 const SIGNER = { name: 'دکتر فواد شهابیان', role: 'بنیان‌گذار دنت‌کست' };
 const OFFERED = 'یک مسیر یادگیری در دنت‌کست — جامع‌ترین منبع فارسی پروتز';
-const FINE = 'دنت‌کست تکمیل این مسیر و قبولی در آزمون پایانی آن را تأیید می‌کند. این گواهی امتیاز بازآموزی یا مدرک رسمی محسوب نمی‌شود.';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' });
 export const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } catch (_) { return ''; } };
@@ -88,7 +87,7 @@ export function sheet(v) {
           el('div', { class: 'dc-cert-ver-url' }, VERIFY_HOST),
         ]),
       ]),
-      el('div', { class: 'dc-cert-fine' }, FINE),
+      el('div', { class: 'dc-cert-fine' }, CERT_TEXT.fine),
     ]),
   ]);
 }

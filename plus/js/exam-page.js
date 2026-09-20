@@ -24,11 +24,14 @@
 // answers were right, how many key points each free answer covered — and
 // never the key itself: the pool is small and the second attempt may draw
 // the same question.
-import { el, faNum, debounce } from './util.js?v=103';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=103';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=103';
-import { openLoginModal } from './login-modal.js?v=103';
-import { registerSW } from './pwa.js?v=103';
+import { el, faNum, debounce } from './util.js?v=104';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=104';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=104';
+import { openLoginModal } from './login-modal.js?v=104';
+import { registerSW } from './pwa.js?v=104';
+import { intentRow } from './pathways.js?v=104';
+import { certificateTerms } from './certificate-terms.js?v=104';
+import { openSheet } from './sheet.js?v=104';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' });
 const FA_DATETIME = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium', timeStyle: 'short' });
@@ -284,6 +287,32 @@ function enrollCard(s, root, id) {
   ]);
 }
 
+/** «شرایط ›» — the same sheet the pathway page and the catalog open. */
+function termsBtn(s) {
+  const b = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', 'data-cert-terms-btn': '' }, 'شرایط گواهی‌نامه');
+  b.addEventListener('click', () => openSheet(certificateTerms(s.pathway_title_fa)));
+  return b;
+}
+
+/**
+ * The wish, on the exam page too.
+ *
+ * Somebody who lands here straight from a link — or from the profile wall's
+ * locked card — had no way to say they want the certificate, and no way to
+ * take back a «فعلاً نه» they pressed elsewhere: intentRow lived on the
+ * pathway page and the dashboard only. One component, three surfaces.
+ */
+function intentBlock(s) {
+  const slot = el('div', { class: 'dcp-card dcp-exam-card dcp-cs' });
+  const paint = (next) => {
+    const row = intentRow(next, paint);
+    if (!row) { slot.remove(); return; }
+    slot.replaceChildren(row);
+  };
+  paint(s);
+  return slot.firstChild ? slot : null;
+}
+
 /* --------------------------------------------------------------- page -- */
 
 /** Draw one state. Exported for the DOM test. */
@@ -298,8 +327,12 @@ export function renderState(root, id, s) {
         'این مسیر هنوز کامل نیست — بر سری‌ای ایستاده که هنوز تمام نشده. با آمدنِ آخرین قسمت، آزمون و گواهی‌نامه‌اش همین‌جا باز می‌شود.', [backBtn(id)]));
       break;
     case 'no_form':
+      // The card used to promise an اطلاعیه that nothing sent, and carried no
+      // way to ask for one. Now saying «بله» is what subscribes the reader to
+      // it (services/pathway-exams.ts notifyAssigneesOfNewForm).
       parts.push(simpleCard('no_form', 'آزمون این مسیر هنوز آماده نشده',
-        'وقتی سؤال‌ها آماده شود، همین‌جا باز می‌شود و در «اطلاعیه» خبرش را می‌گیری.', [backBtn(id)]));
+        'وقتی سؤال‌ها آماده شود، همین‌جا باز می‌شود؛ اگر گواهی‌اش را بخواهی، همان روز در «اطلاعیه» خبرت می‌کنیم.',
+        [backBtn(id), termsBtn(s)]));
       break;
     case 'locked':
       parts.push(s.enrolled
@@ -307,7 +340,10 @@ export function renderState(root, id, s) {
           'آزمون پایانی وقتی باز می‌شود که همهٔ قدم‌های مسیر خوانده شده باشد. اگر نزدیک پایانی، ممکن است زودتر برایت باز شود.',
           [backBtn(id)])
         : enrollCard(s, root, id));
-      parts.push(el('div', { class: 'dcp-card dcp-exam-card' }, [el('b', {}, 'آزمون چیست'), contract(s.rules, s)]));
+      parts.push(el('div', { class: 'dcp-card dcp-exam-card' }, [
+        el('b', {}, 'آزمون چیست'), contract(s.rules, s),
+        el('div', { class: 'dcp-cert-actions' }, [termsBtn(s)]),
+      ]));
       break;
     case 'ready':
       parts.push(startCard(s, root, id));
@@ -353,6 +389,8 @@ export function renderState(root, id, s) {
     default:
       parts.push(simpleCard('unknown', 'وضعیت نامشخص', 'صفحه را دوباره باز کن.', [backBtn(id)]));
   }
+  const wish = intentBlock(s);
+  if (wish) parts.push(wish);
   const hist = history(s);
   if (hist && s.state !== 'open') parts.push(hist);
   root.replaceChildren(el('div', { class: 'dcp-exam-page' }, parts));

@@ -85,6 +85,7 @@ async function insertAndScore(
  */
 export const SERVER_MINTED_ACTIONS: ReadonlySet<string> = new Set([
   'assistant_step',
+  'certificate_wish_alerted',
   'challenge_answered',
   'collection_created',
   'collection_item_added',

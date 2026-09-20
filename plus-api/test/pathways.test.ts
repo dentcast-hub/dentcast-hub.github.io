@@ -36,6 +36,11 @@ async function makePremium(): Promise<void> {
   await pool.query(`update profiles set tier = 'premium' where phone = $1`, [phone]);
 }
 
+async function userId(): Promise<string> {
+  const r = await pool.query<{ id: string }>('select id from profiles where phone = $1', [phone]);
+  return r.rows[0].id;
+}
+
 async function createHighlight(contentId: string): Promise<void> {
   const res = await app.inject({
     method: 'POST',
@@ -59,6 +64,43 @@ describe('requirePremium gate', () => {
   it('blocks an unauthenticated request with 401', async () => {
     const res = await app.inject({ method: 'GET', url: '/pathways' });
     expect(res.statusCode).toBe(401);
+  });
+});
+
+describe('GET /pathways — the certificate chip\'s four states', () => {
+  it('says whether a pathway certifies, whether this reader asked for it, and whether they hold it', async () => {
+    await makePremium();
+    const uid = await userId();
+
+    const plain = (await app.inject({ method: 'GET', url: '/pathways', headers: { cookie } })).json()
+      .pathways as Array<Record<string, unknown>>;
+    const occlusion = plain.find((p) => p.id === PATHWAY_ID)!;
+    expect(occlusion).toMatchObject({ certifiable: true, certificate_intent: null, certificate_held: false });
+    // `certificate: 'pending'` in pathways.json — the chip reads «به‌زودی»
+    expect(plain.find((p) => p.id === 'ai-dentistry')).toMatchObject({ certifiable: false });
+    // A bundle is never certificate-sized, and draws no chip either way.
+    expect(plain.find((p) => p.id === BUNDLE_ID)).toMatchObject({ certifiable: false });
+
+    await pool.query(
+      `insert into user_pathways (user_id, pathway_id, current_step, certificate_intent)
+       values ($1, $2, 0, 'wanted')`, [uid, PATHWAY_ID],
+    );
+    await pool.query(
+      `insert into certificates (user_id, pathway_id, verify_code, holder_name)
+       values ($1, $2, 'DC-T3S-T01', 'آزمون')`, [uid, PATHWAY_ID],
+    );
+    const after = (await app.inject({ method: 'GET', url: '/pathways', headers: { cookie } })).json()
+      .pathways as Array<Record<string, unknown>>;
+    expect(after.find((p) => p.id === PATHWAY_ID)).toMatchObject({
+      certificate_intent: 'wanted', certificate_held: true,
+    });
+
+    // A revoked certificate leaves the pathway un-ticked — the chip shows
+    // what stands today, exactly as the profile wall's disc does.
+    await pool.query(`update certificates set revoked_at = now() where user_id = $1`, [uid]);
+    const revoked = (await app.inject({ method: 'GET', url: '/pathways', headers: { cookie } })).json()
+      .pathways as Array<Record<string, unknown>>;
+    expect(revoked.find((p) => p.id === PATHWAY_ID)).toMatchObject({ certificate_held: false });
   });
 });
 

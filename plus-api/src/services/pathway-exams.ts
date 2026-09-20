@@ -7,7 +7,7 @@ import { getConsumedContentIds } from './consumption.js';
 import { mintReference } from './reference.js';
 import { issueCertificate, type Certificate } from './certificates.js';
 import { sendCapped } from './notify-policy.js';
-import { runPathwayAlerts, type CertificateIntent } from './pathway-standings.js';
+import { runPathwayAlerts, notifyCertificateWish, type CertificateIntent } from './pathway-standings.js';
 import { ai } from '../providers/registry.js';
 import type { KeyPoint, PointState } from '../providers/ai/types.js';
 import { parseQuestionText, looksLikeJson } from './exam-text.js';
@@ -1242,7 +1242,20 @@ export async function setCertificateIntent(
        set certificate_intent = excluded.certificate_intent, certificate_intent_at = now()`,
     [userId, pathwayId, intent],
   );
-  if (intent === 'wanted') await runPathwayAlerts(new Date(), { userId, pathwayId });
+  if (intent === 'wanted') {
+    // Two different pieces of news, and only one of them existed before.
+    // runPathwayAlerts says «somebody is about to FINISH» — it fires only for
+    // a reader already within PATHWAY_NEAR_REMAINING of the end, so a wish
+    // declared at step three was recorded and announced to nobody. But a wish
+    // is exactly when the founder can still go and write the questions
+    // (founder, 1405/06/29), which is earlier and more useful than the
+    // crossing, so it gets its own alert, once per (reader, pathway).
+    // Order matters: the crossing sweep runs first so the wish alert can see
+    // whether the founder has just been told about this reader anyway.
+    const run = await runPathwayAlerts(new Date(), { userId, pathwayId });
+    await notifyCertificateWish(userId, pathwayId, Boolean(await getForm(pathwayId)),
+      { silent: run.crossings.length > 0 });
+  }
   return examState(userId, pathwayId);
 }
 
@@ -1290,16 +1303,27 @@ export async function notifyAssigned(userId: string, pathwayId: string): Promise
 }
 
 /**
- * A form just appeared for a pathway some readers were already let into —
- * tell each of them (skipping anyone who already sat or holds it). Returns
- * how many were told.
+ * A form just appeared — tell everyone who was waiting for it.
+ *
+ * TWO populations, and for a long time only one of them was here: readers the
+ * founder had hand-assigned (`pathway_exams`). The other is everybody who
+ * pressed «بله، می‌خواهم» on the pathway page, and they were told nothing —
+ * although the card they pressed it on said, in as many words, «در اطلاعیه
+ * خبرش را می‌گیری». So the wish was a signal for the founder's nightly alert
+ * and nothing at all for the reader who gave it. A union, not a second sweep,
+ * so somebody who is both is told once (skipping anyone who already sat or
+ * holds it). Returns how many were told.
  */
 export async function notifyAssigneesOfNewForm(pathwayId: string): Promise<number> {
   const r = await query<{ user_id: string }>(
-    `select e.user_id from pathway_exams e
-      where e.pathway_id = $1
-        and not exists (select 1 from pathway_exam_attempts a where a.user_id = e.user_id and a.pathway_id = e.pathway_id)
-        and not exists (select 1 from certificates c where c.user_id = e.user_id and c.pathway_id = e.pathway_id and c.revoked_at is null)`,
+    `select user_id from (
+        select e.user_id from pathway_exams e where e.pathway_id = $1
+        union
+        select u.user_id from user_pathways u
+         where u.pathway_id = $1 and u.certificate_intent = 'wanted'
+      ) w
+      where not exists (select 1 from pathway_exam_attempts a where a.user_id = w.user_id and a.pathway_id = $1)
+        and not exists (select 1 from certificates c where c.user_id = w.user_id and c.pathway_id = $1 and c.revoked_at is null)`,
     [pathwayId],
   );
   for (const row of r.rows) await notifyAssigned(row.user_id, pathwayId);

@@ -1,18 +1,18 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, streakIsActiveToday } from './util.js?v=103';
-import { api } from './api.js?v=103';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=103';
-import { leagueEntryButton } from './league.js?v=103';
-import { openCollectionPicker, boardCover } from './collections.js?v=103';
-import { bundleRailCard, intentRow } from './pathways.js?v=103';
-import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=103';
-import { currentMonthKey } from './jalali-month.js?v=103';
-import { renewalBanner } from './renewal-banner.js?v=103';
-import { premiumCta } from './premium-cta.js?v=103';
-import { maybeCelebrate } from './achievements.js?v=103';
-import { markReturnTrail } from './return-trail.js?v=103';
+import { el, faNum, streakIsActiveToday } from './util.js?v=104';
+import { api } from './api.js?v=104';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=104';
+import { leagueEntryButton } from './league.js?v=104';
+import { openCollectionPicker, boardCover } from './collections.js?v=104';
+import { bundleRailCard, intentRow } from './pathways.js?v=104';
+import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=104';
+import { currentMonthKey } from './jalali-month.js?v=104';
+import { renewalBanner } from './renewal-banner.js?v=104';
+import { premiumCta } from './premium-cta.js?v=104';
+import { maybeCelebrate } from './achievements.js?v=104';
+import { markReturnTrail } from './return-trail.js?v=104';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',
@@ -285,13 +285,24 @@ function pathwayBlock(me) {
     ]);
   }
   const pct = p.total_steps > 0 ? Math.round((p.current_step / p.total_steps) * 100) : 0;
-  // The «گواهی می‌خواهی؟» question, for readers already mid-pathway who
-  // may not open the pathway page again soon. Goes away with the answer.
-  const ask = intentRow(
-    { pathway_id: p.id, certificate_intent: p.certificate_intent || null, certifiable: p.certifiable !== false, state: 'locked' },
-    (next) => { if (ask) ask.replaceWith(el('div', { class: 'dcp-muted dcp-pw-intent' },
-      next.certificate_intent === 'wanted' ? 'ثبت شد — نزدیک پایان، آزمون برایت آماده می‌شود.' : 'باشد؛ هر وقت خواستی از صفحهٔ مسیر بگو.')); },
-  );
+  // The «گواهی می‌خواهی؟» question, for readers already mid-pathway who may
+  // not open the pathway page again soon. It no longer goes away with the
+  // answer and no longer needs its own confirmation copy: intentRow itself
+  // now draws the answer, the echo and the way to change it, so the two
+  // surfaces cannot say different things about the same decision — which is
+  // how this block ended up promising «هر وقت خواستی از صفحهٔ مسیر بگو» about
+  // a page that would never ask again.
+  const state = {
+    pathway_id: p.id,
+    certificate_intent: p.certificate_intent || null,
+    certifiable: p.certifiable !== false,
+    state: 'locked',
+    rules: null,
+  };
+  const slot = el('div');
+  const paint = (s) => slot.replaceChildren(...[intentRow(s, paint, { started: p.current_step > 0 })].filter(Boolean));
+  paint(state);
+  const ask = slot.firstChild ? slot : null;
   return el('div', { class: 'dcp-pw-dash' }, [
     el('a', { class: 'dcp-pw-dash-title', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, p.title_fa),
     el('div', { class: 'dcp-progress-track' }, el('div', { class: 'dcp-progress-fill', style: 'width:' + pct + '%' })),

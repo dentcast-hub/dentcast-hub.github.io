@@ -528,10 +528,52 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-exam-per { margin: 0; padding-inline-start: 1.2em; font-size: .86rem; line-height: 1.9; color: var(--txt2, #4a5f85); }
 .dcp-exam-result.passed { border-color: rgba(31,120,80,.35); }
 .dcp-exam-result.failed { border-color: rgba(178,58,58,.25); }
+/* ---- the certificate strip (plus/js/pathways.js certificateStrip) --------
+   One block under the progress bar: what a certificate is, where this reader
+   stands, and their own answer — which STAYS, and can be changed. It wears the
+   certificate green (the tick on the profile wall), never amber: amber means
+   «this is what a subscription buys» and the pathway pages are already behind
+   the subscription, so a gold strip would say nothing there while colliding
+   with the badge wall's metals. No number is ever printed in here — publishing
+   step 5.6 grows pathways under their readers, so a step count is stale by the
+   next publish (founder, 1405/06/29). */
+.dcp-cs { margin: 0 0 14px; border-color: var(--dcp-cert-bd, rgba(31,120,80,.26));
+  background: linear-gradient(to bottom, var(--dcp-cert-bg, rgba(31,120,80,.09)), transparent 62%), var(--card-bg, #fff); }
+.dcp-cs-top { display: flex; align-items: flex-start; gap: 10px; }
+.dcp-cs-ico { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+  border: 1.5px solid var(--dcp-cert-bd, rgba(31,120,80,.26)); background: var(--card-bg, #fff); font-size: 1rem; }
+.dcp-cs.is-held .dcp-cs-ico { border-color: var(--dcp-cert, #1f7850); box-shadow: 0 0 0 3px var(--dcp-cert-bg, rgba(31,120,80,.09)); }
+.dcp-cs-h { flex: 1 1 auto; min-width: 0; }
+.dcp-cs-h b { display: block; font-size: .95rem; font-weight: 800; line-height: 1.6; }
+.dcp-cs-h p { margin: 2px 0 0; font-size: .85rem; }
+.dcp-cs-terms { flex: none; background: none; border: none; padding: 0; cursor: pointer;
+  font: inherit; font-size: .84rem; color: var(--ac, #0b5fff); text-decoration: underline; text-underline-offset: 3px; }
+.dcp-cs-cta { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+.dcp-cs-grow { flex: 1 1 auto; }
+.dcp-cs-state.is-on { color: var(--dcp-cert, #1f7850); font-weight: 700; }
+.dcp-cs-state.is-off { color: var(--txt2, #4a5f85); }
+.dcp-cs-echo { flex: 1 1 100%; font-size: .78rem; color: var(--txt3, #62779a); }
+.dcp-btn-cert { background: var(--dcp-cert-bg, rgba(31,120,80,.09)); border-color: var(--dcp-cert-bd, rgba(31,120,80,.26)); color: var(--dcp-cert, #1f7850); font-weight: 700; }
+/* The catalog card's own line — its own row, never a third chip in the foot. */
+.dcp-pw-chip { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: .74rem; font-weight: 700;
+  border-radius: 999px; padding: 1px 9px; color: var(--dcp-cert, #1f7850); background: var(--dcp-cert-bg, rgba(31,120,80,.09)); border: 1px solid var(--dcp-cert-bd, rgba(31,120,80,.26)); }
+.dcp-pw-chip.is-soon { color: var(--txt3, #62779a); background: var(--dcp-surface2, rgba(2,35,96,.04)); border-color: var(--dcp-line, rgba(2,35,96,.12)); }
+/* The terms sheet (plus/js/certificate-terms.js). */
+.dcp-terms { list-style: none; padding: 0; margin: 8px 0 0; }
+.dcp-terms li { display: flex; gap: 9px; padding: 7px 0; border-bottom: 1px solid var(--dcp-line, rgba(2,35,96,.10)); font-size: .86rem; line-height: 1.8; }
+.dcp-terms li:last-child { border-bottom: none; }
+.dcp-terms i { flex: none; font-style: normal; color: var(--dcp-cert, #1f7850); width: 1.2em; text-align: center; }
+.dcp-terms-h { margin: 14px 0 0; font-size: .76rem; font-weight: 700; color: var(--txt3, #62779a); }
+.dcp-terms-pend { margin: 10px 0 0; font-size: .8rem; color: var(--txt2, #4a5f85);
+  background: var(--dcp-surface2, rgba(2,35,96,.04)); border: 1px solid var(--dcp-line, rgba(2,35,96,.10)); border-radius: 10px; padding: 8px 10px; }
+.dcp-terms-fine { margin: 12px 0 0; padding-top: 10px; border-top: 1px solid var(--dcp-line, rgba(2,35,96,.10));
+  font-size: .76rem; color: var(--txt3, #62779a); line-height: 1.8; }
+
+/* Kept: the old exam card's class is still the strip's outer shape. */
 .dcp-pw-exam { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 14px; }
 .dcp-pw-exam p { margin: 2px 0 0; font-size: .88rem; }
 .dcp-pw-exam.passed { border-color: rgba(31,120,80,.35); }
-.dcp-pw-intent { flex: 1 1 100%; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: .88rem; padding-top: 8px; border-top: 1px solid var(--dcp-line, rgba(2,35,96,.12)); }
+.dcp-pw-intent { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: .88rem; margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--dcp-line, rgba(2,35,96,.12)); }
 .dcp-pw-dash .dcp-pw-intent { margin-top: 8px; }
 
 /* ---- header overlay (dashboard / profile open from the person menu) ------- */

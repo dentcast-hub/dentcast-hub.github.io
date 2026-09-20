@@ -32,6 +32,17 @@
      site-wide token. */
   --dcp-gold: #b7791f;
   --dcp-gold-bg: rgba(183, 121, 31, .10);
+  /* گواهی‌نامه — the certificate hue, the green already on the profile wall's
+     tick (#1f7850). It is deliberately NOT --dcp-gold: amber means «this is
+     what a subscription buys», and every surface that names a certificate
+     (the pathway strip, the catalog chip, the terms sheet) is already behind
+     the subscription, so gold there would say nothing while colliding with
+     the badge wall's metals. The tick itself keeps its literal #1f7850 — it
+     is white-on-green and needs no lightening in the dark theme, while these
+     are text and borders and do. */
+  --dcp-cert: #1f7850;
+  --dcp-cert-bg: rgba(31, 120, 80, .09);
+  --dcp-cert-bd: rgba(31, 120, 80, .26);
   /* Reference-pin accent (Collections «رفرنس» pins) — a second hue beside
      --dcp-gold so a reference pin reads as its own kind of thing next to a
      text pin, never confused with it. */
@@ -51,6 +62,9 @@
 [data-theme="dark"] {
   --dcp-gold: #e2b366;
   --dcp-gold-bg: rgba(226, 179, 102, .12);
+  --dcp-cert: #5fd39b;
+  --dcp-cert-bg: rgba(95, 211, 155, .11);
+  --dcp-cert-bd: rgba(95, 211, 155, .30);
   --dcp-ref: #b79df5;
   --dcp-ref-bg: rgba(183, 157, 245, .10);
   --dcp-heart-idle: var(--heart-idle, #ff9585);

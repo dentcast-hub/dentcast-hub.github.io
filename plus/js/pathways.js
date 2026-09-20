@@ -4,10 +4,12 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum, icon } from './util.js?v=103';
-import { api } from './api.js?v=103';
-import { FOLDER_EN } from './content-index.js?v=103';
-import { markReturnTrail } from './return-trail.js?v=103';
+import { el, faNum, icon } from './util.js?v=104';
+import { api } from './api.js?v=104';
+import { FOLDER_EN } from './content-index.js?v=104';
+import { markReturnTrail } from './return-trail.js?v=104';
+import { openSheet } from './sheet.js?v=104';
+import { certificateTerms } from './certificate-terms.js?v=104';
 
 /** A "lightning + label" chip — a leading icon from the shared sprite
  * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
@@ -19,6 +21,28 @@ function boltChip(label) {
 function progressBar(completed, total) {
   const pct = total > 0 ? Math.max(0, Math.min(100, Math.round((completed / total) * 100))) : 0;
   return el('div', { class: 'dcp-progress-track' }, el('div', { class: 'dcp-progress-fill', style: 'width:' + pct + '%' }));
+}
+
+/**
+ * A full pathway's certificate chip, in the catalog card's foot.
+ *
+ * The catalog was the top of the funnel and said neither «گواهی» nor «آزمون»
+ * anywhere, so a reader who never opened a pathway page had no way to learn
+ * that finishing one is worth anything. Four states and no numbers — a count
+ * of remaining steps here would be stale by the next publish.
+ *
+ * Certificate GREEN, never amber: amber means «this is what a subscription
+ * buys» and this whole page is already behind the subscription, so a gold chip
+ * would say nothing here while colliding with the badge wall's metals. Where a
+ * free reader can see a certificate (the profile wall), premium is said in
+ * words instead.
+ */
+function certChip(p) {
+  if (p.kind === 'bundle') return null;
+  if (p.certifiable === false) return el('span', { class: 'dcp-pw-chip is-soon' }, '🎓 گواهی‌نامه: به‌زودی');
+  if (p.certificate_held) return el('span', { class: 'dcp-pw-chip is-held' }, '🎓 گواهی‌نامه‌اش را داری ✓');
+  if (p.certificate_intent === 'wanted') return el('span', { class: 'dcp-pw-chip' }, '🎓 می‌خواهمش ✓');
+  return el('span', { class: 'dcp-pw-chip' }, '🎓 گواهی‌نامه');
 }
 
 function pathwayCard(p) {
@@ -39,6 +63,9 @@ function pathwayCard(p) {
       el('span', {}, faNum(p.completed_steps) + ' از ' + faNum(p.total_steps) + ' مرحله'),
       p.milestone_count ? el('span', { class: 'dcp-pw-card-ms' }, '🏁 ' + faNum(p.milestone_count) + ' نقطه‌عطف') : null,
     ]),
+    // Its own line rather than a third item in the foot: three chips in a
+    // ~300px card is exactly the crowding the action row was tidied out of.
+    certChip(p),
   ]);
 }
 
@@ -80,10 +107,16 @@ export async function renderPathwaysList(container) {
   const bundles = pathways.filter((p) => p.kind === 'bundle');
   const full = pathways.filter((p) => p.kind !== 'bundle');
 
+  const termsLink = el('button', { class: 'dcp-cs-terms', type: 'button', 'data-cert-terms-btn': '' }, 'شرایط گواهی‌نامه');
+  termsLink.addEventListener('click', () => openSheet(certificateTerms(null)));
+
   const top = el('div', { class: 'dcp-pw-top' }, [
     el('h2', { class: 'dcp-pw-heading' }, 'مسیرهای یادگیری'),
-    el('p', { class: 'dcp-sec-hint' },
-      'هر مسیر مجموعه‌ای از مقاله‌ها، اپیزودها و ویدیوهاست که به ترتیبِ منطقیِ یادگیری چیده شده؛ یک مطلب می‌تواند در چند مسیر مختلف هم باشد. با خواندن، گوش‌دادن یا هایلایت‌کردن، پیشرفتِ هر مسیر خودش جلو می‌رود.'),
+    el('p', { class: 'dcp-sec-hint' }, [
+      'هر مسیر مجموعه‌ای از مقاله‌ها، اپیزودها و ویدیوهاست که به ترتیبِ منطقیِ یادگیری چیده شده؛ یک مطلب می‌تواند در چند مسیر مختلف هم باشد. با خواندن، گوش‌دادن یا هایلایت‌کردن، پیشرفتِ هر مسیر خودش جلو می‌رود. ',
+      el('b', {}, 'مسیرهای کامل در پایان، آزمون و گواهی‌نامه دارند'),
+      ' — ', termsLink,
+    ]),
   ]);
 
   const sections = [top];
@@ -189,13 +222,46 @@ function continueCard(continuesInto) {
   ]);
 }
 
-/* ------------------------------------------------------------ the exam -- */
+/* ---------------------------------------------- the certificate strip -- */
 
-const EXAM_LINE = {
-  pending: ['گواهی‌نامهٔ این مسیر هنوز باز نشده', 'این مسیر هنوز کامل نیست؛ با آمدنِ آخرین قسمت، آزمون و گواهی‌نامه‌اش باز می‌شود.', null],
-  no_form: ['آزمون این مسیر هنوز آماده نشده', 'وقتی سؤال‌ها آماده شود، همین‌جا باز می‌شود و در «اطلاعیه» خبرش را می‌گیری.', null],
-  locked: ['آزمون پایانی و گواهی‌نامه', 'با خواندن همهٔ قدم‌ها، آزمون باز می‌شود؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.', 'دربارهٔ آزمون'],
-  ready: ['آزمون این مسیر برایت باز است', 'هر وقت آماده بودی شروع کن؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.', 'رفتن به آزمون'],
+/**
+ * One strip under the progress bar, and it never leaves.
+ *
+ * Until 1405/06/29 this area was two independent things: `examCard`, which
+ * said where the exam stood, and `intentRow`, the «گواهی می‌خواهی؟» question,
+ * which returned null the moment it had an answer — including «فعلاً نه». So
+ * the answer was final in the UI although `setCertificateIntent` would
+ * happily rewrite it, the pathway page acknowledged nothing (the dashboard's
+ * copy of the same component did), and the terms of the thing being wished
+ * for were unreachable on any pathway whose exam form had not been written.
+ *
+ * Now: one component, three tones, and the answer is a STATE rather than a
+ * spent question — always shown, always changeable.
+ *
+ *   قدم صفر  → news, not a question. A wish declared before reading anything
+ *              is cheap, so the strip tells the reader a certificate exists
+ *              and offers «می‌خواهمش»; it does not interrogate them.
+ *   وسط مسیر → the question, plainly.
+ *   آزمون باز → the CTA takes over and the question disappears: starting an
+ *              attempt records the intent by itself (services/pathway-exams.ts
+ *              startAttempt), so asking there would be asking for something
+ *              the next tap already says.
+ *
+ * NO NUMBERS anywhere in here (founder, 1405/06/29). Publishing step 5.6 files
+ * new content into existing pathways, so «۳۹ قدم» and «۲۲ قدم مانده» are both
+ * true only until the next publish. The strip says where you are in words; the
+ * exam page states its own form's rules, which are true by construction.
+ */
+
+const STRIP = {
+  pending: ['گواهی‌نامهٔ این مسیر هنوز باز نشده',
+    'این مسیر هنوز کامل نیست؛ با آمدنِ آخرین قسمت، آزمون و گواهی‌نامه‌اش باز می‌شود.', null],
+  no_form: ['آزمون پایانی و گواهی‌نامه',
+    'سؤال‌های این مسیر هنوز آماده نشده‌اند. اگر گواهی‌اش را بخواهی، همان روزی که باز شود در «اطلاعیه» خبرت می‌کنیم.', null],
+  locked: ['آزمون پایانی و گواهی‌نامه',
+    'وقتی همهٔ قدم‌های مسیر خوانده شد، آزمون این‌جا باز می‌شود؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.', null],
+  ready: ['آزمون این مسیر برایت باز است',
+    'هر وقت آماده بودی شروع کن؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.', 'رفتن به آزمون'],
   open: ['یک آزمون نیمه‌کاره داری', 'سؤال‌ها همان‌هایی‌اند که دیده‌ای؛ برگرد و ارسال کن.', 'ادامهٔ آزمون'],
   queued: ['پاسخ‌هایت در حال بررسی است', 'نتیجه در «اطلاعیه» می‌آید.', 'دیدن وضعیت'],
   wait: ['این بار به نصاب نرسید', 'تلاش بعدی به‌زودی باز می‌شود — تاریخش در صفحهٔ آزمون.', 'دیدن نتیجه'],
@@ -203,69 +269,148 @@ const EXAM_LINE = {
   passed: ['گواهی‌نامهٔ این مسیر را داری 🎓', 'از پروفایلت قابل دانلود است.', 'دیدن گواهی'],
 };
 
-/**
- * The exam card under the progress bar — one line on where this reader's
- * exam stands, from GET /exams/:id, and the way to it. Full pathways only:
- * a bundle is 5–8 steps and is not certificate-sized. Drawn lazily and
- * dropped silently when the API cannot answer: a pathway page must never
- * fail to render because the exam service did.
- */
-export function examCard(state, onIntent) {
-  const line = state.state === 'locked' && state.enrolled === false
-    ? ['آزمون پایانی و گواهی‌نامه', 'برای کسی است که مسیر را شروع کرده — دکمهٔ «شروع این مسیر» بالا. خوانده‌هایت به حساب می‌آید.', 'دربارهٔ آزمون']
-    : (EXAM_LINE[state.state] || EXAM_LINE.no_form);
-  const href = state.state === 'passed' && state.certificate
-    ? state.certificate.verify_url
-    : '/plus/exam.html?id=' + encodeURIComponent(state.pathway_id);
-  return el('div', { class: 'dcp-card dcp-pw-exam ' + state.state, 'data-pw-exam': state.state }, [
-    el('div', {}, [el('b', {}, line[0]), el('p', { class: 'dcp-muted' }, line[1])]),
-    line[2] ? el('a', { class: 'dcp-btn ' + (state.state === 'ready' || state.state === 'open' ? 'dcp-btn-primary' : 'dcp-btn-ghost'), href }, line[2]) : null,
-    intentRow(state, onIntent),
-  ].filter(Boolean));
+/** Nothing has been read yet — the strip informs instead of asking. */
+const NOT_STARTED = ['این مسیر گواهی‌نامه دارد',
+  'با خواندن همهٔ قدم‌ها، آزمون پایانی باز می‌شود و با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.', null];
+
+/** Enrolment is the one door the reader opens themselves. */
+const NOT_ENROLLED = ['آزمون پایانی و گواهی‌نامه',
+  'برای کسی است که مسیر را شروع کرده — دکمهٔ «شروع این مسیر» بالا. خوانده‌هایت به حساب می‌آید.', null];
+
+/** Once an attempt exists, acting has answered the question. */
+const ANSWERED_BY_ACTING = ['ready', 'open', 'queued', 'wait', 'exhausted', 'passed'];
+
+function termsBtn(titleFa) {
+  const b = el('button', { class: 'dcp-cs-terms', type: 'button', 'data-cert-terms-btn': '' }, 'شرایط ›');
+  b.addEventListener('click', () => openSheet(certificateTerms(titleFa)));
+  return b;
 }
 
 /**
- * «گواهی‌نامهٔ این مسیر را می‌خواهی؟» — asked ONCE, here rather than at the
- * start of the pathway, because a wish declared at step zero is cheap and
- * one declared at step twelve is real; and here is on every visit, so
- * nobody who is already mid-pathway has «missed» it. The answer is what the
- * founder's near-the-end alert is filtered by (services/pathway-standings.ts):
- * a «بله» from somebody already close is news that goes out at once.
+ * The reader's own answer, as a row that is always present once there is
+ * something to show. Three shapes: the question, «می‌خواهی» + تغییر, and
+ * «نمی‌خواهی» + نظرم عوض شد.
  */
-export function intentRow(state, onIntent) {
+export function intentRow(state, onIntent, opts = {}) {
   // Nothing to wish for while the pathway's series is unfinished
-  // (`certificate: 'pending'` — the API refuses the answer anyway).
+  // (`certificate: 'pending'` — the API refuses the answer anyway), and
+  // nothing to ask once the exam itself is the next step.
   if (state.state === 'pending' || state.certifiable === false) return null;
-  if (state.certificate_intent || state.state === 'passed' || state.state === 'open' || state.state === 'queued') return null;
+  if (ANSWERED_BY_ACTING.includes(state.state)) return null;
+
+  const started = opts.started !== false;
+  const row = el('div', { class: 'dcp-pw-intent', 'data-pw-intent-row': '' });
   const msg = el('span', { class: 'dcp-muted' });
-  const mk = (label, intent, primary) => {
-    const b = el('button', { class: 'dcp-btn dcp-btn-sm' + (primary ? '' : ' dcp-btn-ghost'), type: 'button', 'data-pw-intent': intent }, label);
-    b.addEventListener('click', async () => {
-      row.querySelectorAll('button').forEach((x) => { x.disabled = true; });
-      msg.textContent = 'ثبت…';
-      try {
-        const next = await api.examIntent(state.pathway_id, intent);
-        if (onIntent) onIntent(next);
-      } catch (_) {
-        row.querySelectorAll('button').forEach((x) => { x.disabled = false; });
-        msg.textContent = 'ثبت نشد.';
-      }
-    });
-    return b;
+  let editing = false;
+
+  const send = async (intent, buttons) => {
+    buttons.forEach((b) => { b.disabled = true; });
+    msg.textContent = 'ثبت…';
+    try {
+      const next = await api.examIntent(state.pathway_id, intent);
+      editing = false;
+      if (onIntent) onIntent(next);
+      else draw({ ...state, certificate_intent: intent });
+    } catch (_) {
+      buttons.forEach((b) => { b.disabled = false; });
+      msg.textContent = 'ثبت نشد.';
+    }
   };
-  const row = el('div', { class: 'dcp-pw-intent', 'data-pw-intent-row': '' }, [
-    el('span', {}, 'گواهی‌نامهٔ این مسیر را می‌خواهی؟'),
-    mk('بله، می‌خواهم', 'wanted', true),
-    mk('فعلاً نه', 'declined', false),
-    msg,
-  ]);
+
+  function ask() {
+    const yes = el('button', { class: 'dcp-btn dcp-btn-sm dcp-btn-cert', type: 'button', 'data-pw-intent': 'wanted' },
+      started ? 'بله، می‌خواهم' : 'می‌خواهمش');
+    const no = el('button', { class: 'dcp-btn dcp-btn-sm dcp-btn-ghost', type: 'button', 'data-pw-intent': 'declined' }, 'فعلاً نه');
+    yes.addEventListener('click', () => send('wanted', [yes, no]));
+    no.addEventListener('click', () => send('declined', [yes, no]));
+    const parts = [
+      started ? el('span', { class: 'dcp-cs-grow' }, 'گواهی‌نامهٔ این مسیر را می‌خواهی؟') : el('span', { class: 'dcp-cs-grow' }),
+      yes, no,
+    ];
+    if (editing) {
+      const cancel = el('button', { class: 'dcp-cs-terms', type: 'button' }, 'بی‌خیال');
+      cancel.addEventListener('click', () => { editing = false; draw(state); });
+      parts.push(cancel);
+    }
+    parts.push(msg);
+    return parts;
+  }
+
+  function answered(intent, s) {
+    const wanted = intent === 'wanted';
+    const chg = el('button', { class: 'dcp-btn dcp-btn-sm dcp-btn-ghost', type: 'button', 'data-pw-intent-change': '' },
+      wanted ? 'تغییر' : 'نظرم عوض شد');
+    chg.addEventListener('click', () => { editing = true; draw(s); });
+    const parts = [
+      el('span', { class: 'dcp-cs-state dcp-cs-grow ' + (wanted ? 'is-on' : 'is-off') },
+        wanted ? '✓ گواهی‌نامه را می‌خواهی' : 'فعلاً گواهی نمی‌خواهی'),
+      chg,
+    ];
+    if (wanted) {
+      // What the «بله» actually buys the reader — and it is now true: a form
+      // written for this pathway notifies everyone who asked for it
+      // (services/pathway-exams.ts notifyAssigneesOfNewForm).
+      parts.push(el('span', { class: 'dcp-cs-echo' }, s.rules
+        ? 'ثبت شد — نزدیک پایانِ مسیر، آزمون برایت باز می‌شود.'
+        : 'ثبت شد — همان روزی که آزمونِ این مسیر باز شود، در «اطلاعیه» خبرت می‌کنیم.'));
+    }
+    return parts;
+  }
+
+  function draw(s) {
+    msg.textContent = '';
+    row.replaceChildren(...((s.certificate_intent && !editing) ? answered(s.certificate_intent, s) : ask()));
+  }
+
+  draw(state);
   return row;
 }
 
-async function mountExamCard(slot, id) {
+/**
+ * The strip: what a certificate is, where this reader stands, and their own
+ * answer. Full pathways only — a bundle is 5–8 steps and is not
+ * certificate-sized. Drawn lazily and dropped silently when the API cannot
+ * answer: a pathway page must never fail to render because the exam service
+ * did.
+ */
+export function certificateStrip(state, onIntent, opts = {}) {
+  const started = opts.started !== false;
+  let line = STRIP[state.state] || STRIP.no_form;
+  if (state.state === 'locked' || state.state === 'no_form') {
+    if (state.enrolled === false) line = NOT_ENROLLED;
+    else if (!started) line = NOT_STARTED;
+  }
+  const held = state.state === 'passed';
+  const href = held && state.certificate
+    ? state.certificate.verify_url
+    : '/plus/exam.html?id=' + encodeURIComponent(state.pathway_id);
+
+  return el('div', {
+    class: 'dcp-card dcp-cs ' + state.state + (held ? ' is-held' : ''),
+    'data-pw-exam': state.state,
+  }, [
+    el('div', { class: 'dcp-cs-top' }, [
+      el('span', { class: 'dcp-cs-ico', 'aria-hidden': 'true' }, held ? '✓' : '🎓'),
+      el('span', { class: 'dcp-cs-h' }, [el('b', {}, line[0]), el('p', { class: 'dcp-muted' }, line[1])]),
+      held ? null : termsBtn(state.pathway_title_fa),
+    ].filter(Boolean)),
+    line[2] ? el('div', { class: 'dcp-cs-cta' }, [
+      el('a', {
+        class: 'dcp-btn ' + (state.state === 'ready' || state.state === 'open' ? 'dcp-btn-primary' : 'dcp-btn-ghost'),
+        href,
+      }, line[2]),
+    ]) : null,
+    intentRow(state, onIntent, { started }),
+  ].filter(Boolean));
+}
+
+/** Kept for callers that still say «exam card»; it is the same strip. */
+export const examCard = certificateStrip;
+
+async function mountExamCard(slot, id, started) {
   if (typeof api.exam !== 'function') return;
   const draw = (state) => {
-    if (state && state.state) slot.replaceChildren(examCard(state, draw));
+    if (state && state.state) slot.replaceChildren(certificateStrip(state, draw, { started }));
   };
   try {
     draw(await api.exam(id));
@@ -315,5 +460,5 @@ export async function renderPathwayDetail(container, id) {
     head, progressWrap, enrollArea(data.id, data.enrolled), examSlot, steps,
     isBundle ? continueCard(data.continues_pathway) : null,
   ].filter(Boolean));
-  if (examSlot) mountExamCard(examSlot, data.id);
+  if (examSlot) mountExamCard(examSlot, data.id, data.completed_steps > 0);
 }

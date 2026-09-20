@@ -5,7 +5,7 @@ import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
 import { getConsumedContentIds } from '../services/consumption.js';
 import {
-  getPathways, getPathwayById, resolveSteps, computeProgress, type PathwayProgress,
+  getPathways, getPathwayById, resolveSteps, computeProgress, isCertifiable, type PathwayProgress,
 } from '../pathways.js';
 
 // Phase 3: curated learning pathways (spec sections 5 + 8). Definitions live in
@@ -36,11 +36,27 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
   app.get('/pathways', async (request, reply) => {
     const userId = request.user!.id;
     const consumed = await getConsumedContentIds(userId);
-    const enrolled = await pool.query<{ pathway_id: string; started_at: string }>(
-      `select pathway_id, started_at from user_pathways where user_id = $1`,
+    // `certificate_intent` rides along on the enrollment row the catalog
+    // already reads, and the held certificates are one more small query — so
+    // the catalog can say, per pathway, that it HAS a certificate, that this
+    // reader asked for it, or that they hold it. Before this the word
+    // «گواهی» appeared nowhere on the page, and the whole feature was
+    // invisible to anyone who never opened a pathway.
+    //
+    // Deliberately NOT examStates(): the chip has four states and none of
+    // them is the exam's, and that helper resolves every step of every
+    // pathway — too much work for a card foot.
+    const enrolled = await pool.query<{ pathway_id: string; started_at: string; certificate_intent: string | null }>(
+      `select pathway_id, started_at, certificate_intent from user_pathways where user_id = $1`,
+      [userId],
+    );
+    const held = await pool.query<{ pathway_id: string }>(
+      `select pathway_id from certificates where user_id = $1 and revoked_at is null`,
       [userId],
     );
     const startedAt = new Map(enrolled.rows.map((r) => [r.pathway_id, r.started_at]));
+    const intentBy = new Map(enrolled.rows.map((r) => [r.pathway_id, r.certificate_intent]));
+    const heldSet = new Set(held.rows.map((r) => r.pathway_id));
 
     const pathways = getPathways().map((p) => {
       const progress = computeProgress(p, consumed);
@@ -53,6 +69,11 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
         milestone_count: p.steps.filter((s) => s.milestone).length,
         enrolled: startedAt.has(p.id),
         started_at: startedAt.get(p.id) ?? null,
+        // A bundle is never certifiable (5–8 steps is not certificate-sized),
+        // and the client draws no chip for one either way.
+        certifiable: p.kind === 'bundle' ? false : isCertifiable(p),
+        certificate_intent: intentBy.get(p.id) ?? null,
+        certificate_held: heldSet.has(p.id),
         ...progress,
       };
     });

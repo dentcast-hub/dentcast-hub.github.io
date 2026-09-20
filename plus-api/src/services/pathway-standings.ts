@@ -1,6 +1,6 @@
 import { config } from '../config.js';
 import { one, query } from '../db.js';
-import { getPathways, isCertifiable, type Pathway } from '../pathways.js';
+import { getPathways, getPathwayById, isCertifiable, type Pathway } from '../pathways.js';
 import { sendCapped } from './notify-policy.js';
 
 /**
@@ -327,4 +327,89 @@ export async function runPathwayAlerts(
     userId, { title, body, url: '/admin', tag: 'pathway_alert' }, 'system', now,
   );
   return { crossings, notified };
+}
+
+/* ------------------------------------------------- «کسی گواهی می‌خواهد» -- */
+
+/* One marker per (reader, pathway); the wish is announced once, never again.
+   The action is a LITERAL in the SQL below, not a bound parameter: a token
+   hidden behind `$n` is invisible to test/activity-vocabulary.test.ts's scan,
+   which is exactly how `streak_sms_sent` went unguarded for its whole life. */
+
+/**
+ * Tell the founder the moment a reader says they want a pathway's certificate.
+ *
+ * `runPathwayAlerts` above answers a different question — «who is about to
+ * FINISH» — and fires only inside `PATHWAY_NEAR_REMAINING` steps of the end.
+ * That is the right trigger for «an exam had better be ready», and the wrong
+ * one for «somebody wants this», which is the news the founder asked for
+ * (1405/06/29): it arrives while there is still time to write the questions,
+ * and it arrives for a reader at step three who will not cross any line for
+ * months.
+ *
+ * Three properties it borrows from the alert beside it, for the same reasons:
+ * the marker is written even when nobody can be notified (an unconfigured
+ * alert phone must not turn every later call into a duplicate announcement);
+ * the console line is the channel that always exists; and it NEVER THROWS —
+ * this sits on the reader's own `POST /exams/:id/intent`, and a notification
+ * problem must not fail their answer.
+ *
+ * `hasForm` is passed in rather than looked up, because the form lives in
+ * pathway-exams.ts, which imports this module. It is the whole actionable
+ * half of the message: a wish for a pathway that already has an exam needs
+ * nothing from the founder, and one for a pathway that does not is a job.
+ */
+export async function notifyCertificateWish(
+  userId: string, pathwayId: string, hasForm: boolean,
+  /**
+   * `silent` claims the marker and sends nothing. It is passed when
+   * `runPathwayAlerts` has just named this same (reader, pathway) to the
+   * founder: somebody who says «بله» while already near the end produces one
+   * event, and two notifications about it is how a channel gets muted. The
+   * crossing is the more informative of the two, so it wins — and the marker
+   * is still claimed, because this wish HAS been announced.
+   */
+  opts: { now?: Date; silent?: boolean } = {},
+): Promise<boolean> {
+  const now = opts.now ?? new Date();
+  try {
+    const pathway = getPathwayById(pathwayId);
+    if (!pathway) return false;
+
+    // Idempotent per (reader, pathway): pressing «بله» again, or «نه» and then
+    // «بله» a week later, is the same wish and must not ping twice.
+    const claimed = await query(
+      `insert into user_activity (user_id, action, meta)
+       select $1, 'certificate_wish_alerted', $2::jsonb
+        where not exists (
+          select 1 from user_activity
+           where user_id = $1 and action = 'certificate_wish_alerted'
+             and meta->>'pathway_id' = $3)`,
+      [userId, JSON.stringify({ pathway_id: pathwayId }), pathwayId],
+    );
+    if (claimed.rowCount === 0 || opts.silent) return false;
+
+    const who = await one<{ display_name: string }>(
+      'select display_name from profiles where id = $1', [userId],
+    );
+    const title = 'یک نفر گواهی‌نامه می‌خواهد';
+    const body = `${who?.display_name ?? 'یک خواننده'} — «${pathway.title_fa}»`
+      + (hasForm
+        ? '\nآزمون این مسیر آماده است؛ کاری لازم نیست.'
+        : '\nاین مسیر هنوز فرم آزمون ندارد. سؤال‌هایش را در /admin بگذار تا برایش باز شود.')
+      + '\nفهرست کامل در /admin، بخش «مسیرها».';
+
+    // eslint-disable-next-line no-console
+    console.log(`[certificate-wish] ${pathwayId} — form=${hasForm ? 'yes' : 'no'}`);
+
+    const target = await alertTarget();
+    if (!target || target === userId) return false;
+    // 'system' — the founder-broadcast kind, exempt from the reader-facing
+    // daily cap. This is aimed at us.
+    return await sendCapped(target, { title, body, url: '/admin', tag: 'certificate_wish' }, 'system', now);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('[certificate-wish] failed', err);
+    return false;
+  }
 }
