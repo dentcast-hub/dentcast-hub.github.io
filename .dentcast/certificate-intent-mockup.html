@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>گواهی‌نامه: دیده‌شدن، خواستن، برگشتن</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10); --line-strong:rgba(2,35,96,.18);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --danger:#c2384a; --danger-bg:rgba(194,56,74,.08); --danger-bd:rgba(194,56,74,.28);
+    --ok:#1a7f4b;
+    --cert:#1f7850; --cert-bg:rgba(31,120,80,.09); --cert-bd:rgba(31,120,80,.26);
+    --gold:#b7791f; --gold-bg:rgba(183,121,31,.10);
+    --mock-ink:#3b2f7a; --mock-bg:#efeaff; --mock-bd:rgba(59,47,122,.22);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --danger:#ff8095; --danger-bg:rgba(255,128,149,.12); --danger-bd:rgba(255,128,149,.30);
+    --ok:#5fd39a;
+    --cert:#5fd39b; --cert-bg:rgba(95,211,155,.11); --cert-bd:rgba(95,211,155,.30);
+    --gold:#e2b366; --gold-bg:rgba(226,179,102,.12);
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --danger:#ff8095; --danger-bg:rgba(255,128,149,.12); --danger-bd:rgba(255,128,149,.30);
+    --ok:#5fd39a;
+    --cert:#5fd39b; --cert-bg:rgba(95,211,155,.11); --cert-bd:rgba(95,211,155,.30);
+    --gold:#e2b366; --gold-bg:rgba(226,179,102,.12);
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }
+  body{ background:var(--bg); color:var(--txt); font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif;
+        direction:rtl; margin:0; padding-inline:16px; padding-block:0 8rem; line-height:1.85; font-size:15px; }
+  *{ box-sizing:border-box; } button{ font:inherit; }
+  :focus-visible{ outline:2px solid var(--ac); outline-offset:2px; border-radius:6px; }
+  .num{ font-variant-numeric:tabular-nums; }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+  code{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.84em; direction:ltr; unicode-bidi:isolate; color:var(--txt2); }
+
+  .wrap{ max-width:980px; margin:0 auto; }
+  .mk-head{ padding-block:1.8rem .4rem; }
+  .kick{ font-size:.74rem; font-weight:700; letter-spacing:.04em; color:var(--mock-ink); background:var(--mock-bg);
+         border:1px solid var(--mock-bd); border-radius:999px; padding:.2rem .7rem; display:inline-block; margin-bottom:.7rem; }
+  .mk-head h1{ font-size:1.65rem; font-weight:800; color:var(--pr); margin:0 0 .5rem; text-wrap:balance; }
+  .mk-head p{ margin:0 0 .5rem; color:var(--txt2); max-width:70ch; }
+
+  .mk-sec{ margin-top:3.2rem; }
+  .sh{ display:flex; align-items:baseline; gap:.7rem; flex-wrap:wrap; margin-bottom:.9rem; padding-bottom:.5rem; border-bottom:1px solid var(--border); }
+  .sh h2{ margin:0; font-size:1.08rem; font-weight:800; color:var(--mock-ink); }
+  .sh span{ color:var(--txt3); font-size:.82rem; }
+  .note{ color:var(--txt2); max-width:72ch; margin:.2rem 0 1.1rem; }
+  .note strong{ color:var(--txt); font-weight:700; }
+  .note em{ color:var(--txt); font-style:normal; font-weight:600; }
+
+  table.g{ border-collapse:collapse; width:100%; font-size:.87rem; margin-bottom:1rem; }
+  table.g th,table.g td{ text-align:right; padding:.55rem .65rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  table.g th{ color:var(--txt3); font-weight:600; font-size:.76rem; }
+  .yes{ color:var(--ok); font-weight:700; } .no{ color:var(--danger); font-weight:700; }
+
+  /* ------------------------------------------------ a phone-width stage -- */
+  .stage{ background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:1.1rem; }
+  .stage-in{ width:100%; max-width:360px; margin-inline:auto; }
+  .stage-lbl{ font-size:.72rem; color:var(--txt3); text-align:center; margin-bottom:.7rem; }
+  .cols{ display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); }
+
+  /* product vocabulary (mirrors plus.css / plus-pages.css) */
+  .dcp-card{ background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:var(--card-sh); padding:.9rem 1rem; }
+  .pw-title{ font-weight:800; font-size:1.05rem; margin:0 0 .25rem; }
+  .pw-desc{ color:var(--txt2); font-size:.84rem; margin:0 0 .8rem; }
+  .track{ height:8px; border-radius:99px; background:var(--surface3); overflow:hidden; }
+  .fill{ height:100%; background:var(--ac); border-radius:99px; transition:width .35s ease; }
+  .pw-meta{ display:flex; justify-content:space-between; font-size:.8rem; color:var(--txt2); margin-top:.45rem; }
+  .enroll-tag{ display:inline-block; font-size:.8rem; color:var(--ok); margin:.7rem 0; }
+
+  .btn{ display:inline-flex; align-items:center; gap:.35rem; border-radius:999px; border:1px solid var(--border);
+        background:var(--surface2); color:var(--txt); padding:.35rem .9rem; font-size:.85rem; cursor:pointer; white-space:nowrap; }
+  .btn:hover{ border-color:var(--line-strong); }
+  .btn-primary{ background:var(--ac); border-color:var(--ac); color:#fff; font-weight:700; }
+  .btn-cert{ background:var(--cert-bg); border-color:var(--cert-bd); color:var(--cert); font-weight:700; }
+  .btn-sm{ font-size:.79rem; padding:.22rem .7rem; }
+  .btn-link{ background:none; border:none; color:var(--ac); padding:0; font-size:.82rem; cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+
+  /* ---- THE STRIP ---- */
+  .cs{ border:1px solid var(--cert-bd); border-radius:14px; background:
+        linear-gradient(to bottom, var(--cert-bg), transparent 62%), var(--surface);
+       box-shadow:var(--card-sh); padding:.85rem .95rem; margin:.9rem 0; }
+  .cs-top{ display:flex; align-items:flex-start; gap:.6rem; }
+  .cs-ico{ flex:none; width:32px; height:32px; border-radius:50%; display:grid; place-items:center;
+           border:1.5px solid var(--cert-bd); background:var(--surface); font-size:1rem; }
+  .cs.is-held .cs-ico{ border-color:var(--cert); box-shadow:0 0 0 3px var(--cert-bg); }
+  .cs-h{ flex:1 1 auto; min-width:0; }
+  .cs-h b{ display:block; font-size:.93rem; font-weight:800; line-height:1.6; }
+  .cs-h p{ margin:.1rem 0 0; font-size:.82rem; color:var(--txt2); }
+  .cs-terms{ flex:none; }
+  .cs-cta{ margin-top:.7rem; display:flex; gap:.5rem; flex-wrap:wrap; }
+  .cs-ask{ margin-top:.75rem; padding-top:.65rem; border-top:1px solid var(--border);
+           display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; font-size:.86rem; }
+  .cs-ask .grow{ flex:1 1 auto; }
+  .cs-state{ display:inline-flex; align-items:center; gap:.4rem; font-size:.85rem; }
+  .cs-state.on{ color:var(--cert); font-weight:700; }
+  .cs-state.off{ color:var(--txt2); }
+  .cs-echo{ font-size:.78rem; color:var(--txt3); }
+  .cs-num{ font-size:.78rem; color:var(--txt3); margin-top:.3rem; }
+
+  /* ---- stage switcher ---- */
+  .switch{ display:flex; gap:.4rem; flex-wrap:wrap; justify-content:center; margin-bottom:1rem; }
+  .switch button{ border-radius:999px; border:1px solid var(--border); background:var(--surface); color:var(--txt2);
+                  padding:.3rem .85rem; font-size:.82rem; cursor:pointer; }
+  .switch button[aria-pressed="true"]{ background:var(--ac); border-color:var(--ac); color:#fff; font-weight:700; }
+
+  /* ---- catalog cards ---- */
+  .cat-card{ background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:var(--card-sh); padding:.9rem 1rem; }
+  .cat-foot{ display:flex; justify-content:space-between; align-items:center; gap:.5rem; font-size:.8rem; color:var(--txt2); margin-top:.5rem; flex-wrap:wrap; }
+  .chip{ display:inline-flex; align-items:center; gap:.3rem; font-size:.74rem; font-weight:700; border-radius:999px;
+         padding:.1rem .6rem; border:1px solid var(--border); background:var(--surface2); color:var(--txt2); }
+  .chip.cert{ color:var(--cert); background:var(--cert-bg); border-color:var(--cert-bd); }
+  .chip.soon{ color:var(--txt3); }
+
+  /* ---- sheet ---- */
+  .sheet-demo{ border:1px dashed var(--line-strong); border-radius:18px; padding:1rem; background:var(--surface2); }
+  .sheet{ background:var(--surface); border:1px solid var(--border); border-radius:18px; box-shadow:var(--card-sh); padding:1.1rem 1.15rem; max-width:390px; margin-inline:auto; }
+  .sheet-grip{ width:38px; height:4px; border-radius:99px; background:var(--line-strong); margin:0 auto .9rem; }
+  .sheet h3{ margin:0 0 .15rem; font-size:1rem; font-weight:800; }
+  .sheet .kickr{ font-size:.73rem; font-weight:700; color:var(--cert); letter-spacing:.02em; }
+  .terms{ list-style:none; padding:0; margin:.9rem 0 0; }
+  .terms li{ display:flex; gap:.55rem; padding:.42rem 0; border-bottom:1px solid var(--border); font-size:.85rem; line-height:1.75; }
+  .terms li:last-child{ border-bottom:none; }
+  .terms i{ flex:none; font-style:normal; color:var(--cert); font-size:.9rem; width:1.1em; text-align:center; }
+  .terms .k{ color:var(--txt2); }
+  .terms-h{ margin:1rem 0 .1rem; font-size:.76rem; font-weight:700; color:var(--txt3); }
+  .fine{ margin:.9rem 0 0; font-size:.76rem; color:var(--txt3); line-height:1.8; padding-top:.7rem; border-top:1px solid var(--border); }
+  .pend{ background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:.55rem .7rem; font-size:.8rem; color:var(--txt2); margin-top:.6rem; }
+
+  .flags{ display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:1rem; }
+  .flag{ font-size:.78rem; border-radius:8px; padding:.35rem .7rem; border:1px solid var(--border); background:var(--surface); color:var(--txt2); }
+  .flag b{ color:var(--txt); }
+
+  .cmp{ display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); }
+  .cmp-box{ border:1px solid var(--border); border-radius:14px; padding:.9rem 1rem; background:var(--surface); }
+  .cmp-box.bad{ border-color:var(--danger-bd); background:var(--danger-bg); }
+  .cmp-box h4{ margin:0 0 .6rem; font-size:.85rem; font-weight:800; }
+  .cmp-box.bad h4{ color:var(--danger); }
+  .cmp-box.good h4{ color:var(--cert); }
+
+  .todo{ list-style:none; padding:0; margin:0; }
+  .todo li{ padding:.6rem 0; border-bottom:1px solid var(--border); font-size:.88rem; }
+  .todo li:last-child{ border-bottom:none; }
+  .todo b{ display:block; }
+  .todo span{ color:var(--txt2); font-size:.83rem; }
+  .tag{ font-size:.7rem; font-weight:700; border-radius:6px; padding:.05rem .45rem; margin-inline-start:.4rem; vertical-align:middle;
+        border:1px solid var(--border); background:var(--surface2); color:var(--txt3); }
+  .tag.api{ color:var(--ac); border-color:rgba(var(--ac-rgb),.3); background:rgba(var(--ac-rgb),.08); }
+  .tag.front{ color:var(--mock-ink); background:var(--mock-bg); border-color:var(--mock-bd); }
+  .tag.copy{ color:var(--cert); background:var(--cert-bg); border-color:var(--cert-bd); }
+
+  .q{ border-inline-start:3px solid var(--mock-bd); padding:.15rem 0 .15rem .9rem; padding-inline-start:.9rem; margin:1rem 0; }
+  .q b{ display:block; color:var(--mock-ink); font-size:.9rem; }
+  .q p{ margin:.2rem 0 0; color:var(--txt2); font-size:.86rem; }
+
+  .theme{ position:fixed; inset-block-end:14px; inset-inline-end:14px; z-index:9; }
+  .theme button{ border-radius:999px; border:1px solid var(--line-strong); background:var(--surface); color:var(--txt);
+                 padding:.4rem .9rem; font-size:.8rem; cursor:pointer; box-shadow:var(--card-sh); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mk-head">
+  <span class="kick">پیشنهاد — تصمیم‌نگرفته · ۱۴۰۵/۰۶/۲۹</span>
+  <h1>گواهی‌نامه: دیده‌شدن، خواستن، برگشتن</h1>
+  <p>یک کامپوننت به‌جای دو تا، یک شیتِ شرایط که همیشه باز می‌شود، و جوابی که ماندگار و برگشت‌پذیر است. هرچه این‌جاست <em>پیشنهاد</em> است؛ هیچ کدی عوض نشده.</p>
+</header>
+
+<!-- ======================================================= §0 وضعیت امروز -->
+<section class="mk-sec">
+  <div class="sh"><h2>۰. امروز کاربر چه می‌بیند</h2><span>خروجی رندرِ واقعیِ همین ماژول‌ها</span></div>
+  <table class="g">
+    <thead><tr><th>سطح</th><th>از گواهی خبر می‌دهد؟</th><th>شرایط را نشان می‌دهد؟</th><th>می‌شود خواست؟</th></tr></thead>
+    <tbody>
+      <tr><td>کاتالوگ مسیرها</td><td class="no">نه — کلمهٔ «گواهی» در کل صفحه نیست</td><td class="no">نه</td><td class="no">نه</td></tr>
+      <tr><td>صفحهٔ مسیر — فرم آزمون ندارد</td><td class="yes">بله، یک جمله</td><td class="no">نه — کارت هیچ دکمه‌ای ندارد</td><td class="yes">بله، ولی بی‌هیچ تأییدی</td></tr>
+      <tr><td>صفحهٔ مسیر — فرم دارد</td><td class="yes">بله</td><td class="yes">بله، از راه «دربارهٔ آزمون»</td><td class="yes">بله</td></tr>
+      <tr><td>پیشخوان</td><td class="yes">بله (فقط اگر مسیرِ فعال داشته باشد)</td><td class="no">نه</td><td class="yes">بله، با تأیید</td></tr>
+      <tr><td>دیوارِ پروفایل</td><td class="yes">بله، جملهٔ عمومی</td><td class="no">نه</td><td class="no">نه</td></tr>
+      <tr><td>بعد از یک بار جواب دادن</td><td colspan="3" class="no">هیچ‌جا — سؤال برای همیشه ناپدید می‌شود، حتی «فعلاً نه»</td></tr>
+    </tbody>
+  </table>
+  <p class="note">و یک قولِ بی‌پشتوانه: کارتِ «هنوز آماده نشده» می‌گوید <em>«در اطلاعیه خبرش را می‌گیری»</em>، ولی وقتی فرمِ یک مسیر ساخته می‌شود فقط به کسانی که <code>pathway_exams</code> دارند (assignment دستی) خبر می‌رود — به کسی که «بله، می‌خواهم» زده، هیچ.</p>
+</section>
+
+<!-- ================================================== §1 نوار گواهی‌نامه -->
+<section class="mk-sec">
+  <div class="sh"><h2>۱. «نوار گواهی‌نامه» — یک کامپوننت، سه لحظه</h2><span>زیر نوار پیشرفتِ صفحهٔ مسیر</span></div>
+  <p class="note">امروز دو چیز جدا آن‌جاست: کارتِ آزمون (<code>examCard</code>) و ردیفِ سؤال (<code>intentRow</code>) که وقتی جواب بگیری می‌رود. پیشنهاد: <strong>یکی</strong> شوند و همیشه بمانند. نوار سه سطر ثابت دارد — <em>این چیست</em> · <em>کجا ایستاده‌ای</em> · <em>جوابِ تو</em> — و فقط لحن و دکمه‌اش با پیشرفت عوض می‌شود. دکمهٔ «شرایط» در هر سه لحظه هست، حتی وقتی هنوز فرمِ آزمونی نوشته نشده.</p>
+
+  <div class="switch" id="sw">
+    <button data-st="0" aria-pressed="true">اول مسیر · ۰ از ۳۹</button>
+    <button data-st="1" aria-pressed="false">وسط مسیر · ۱۷ از ۳۹</button>
+    <button data-st="2" aria-pressed="false">نزدیک پایان · ۳۵ از ۳۹</button>
+    <button data-st="3" aria-pressed="false">آزمون باز</button>
+    <button data-st="4" aria-pressed="false">قبول‌شده</button>
+  </div>
+
+  <div class="stage"><div class="stage-in">
+    <div class="stage-lbl">صفحهٔ مسیر · «پست و کور»</div>
+    <h3 class="pw-title">پست و کور</h3>
+    <p class="pw-desc">از تصمیمِ حفظ یا کشیدن تا انتخاب پست و ساخت کور.</p>
+    <div class="track"><div class="fill" id="fill" style="width:0%"></div></div>
+    <div class="pw-meta"><span id="metaL">۰ از ۳۹ مرحله</span><span>🏁 ۴ نقطه‌عطف</span></div>
+    <div class="enroll-tag" id="enrollTag">✓ این مسیر را شروع کرده‌اید</div>
+
+    <!-- the strip -->
+    <div class="cs" id="cs">
+      <div class="cs-top">
+        <span class="cs-ico" id="csIco">🎓</span>
+        <span class="cs-h">
+          <b id="csTitle">این مسیر گواهی‌نامه دارد</b>
+          <p id="csLead">با خواندن هر ۳۹ قدم، آزمون پایانی باز می‌شود و با قبولی، گواهی به نام خودت صادر می‌شود.</p>
+          <div class="cs-num" id="csNum"></div>
+        </span>
+        <span class="cs-terms"><button class="btn-link" id="csTerms">شرایط ›</button></span>
+      </div>
+      <div class="cs-cta" id="csCta"></div>
+      <div class="cs-ask" id="csAsk"></div>
+    </div>
+
+    <div style="font-size:.82rem;color:var(--txt3);text-align:center">— قدم‌های مسیر از این‌جا به پایین —</div>
+  </div></div>
+
+  <div class="flags" style="margin-top:1rem">
+    <span class="flag"><b>لحنِ اول مسیر</b> خبر است، نه سؤال: «این مسیر گواهی‌نامه دارد» + دکمهٔ آرامِ «می‌خواهمش».</span>
+    <span class="flag"><b>لحنِ وسط</b> سؤال است: «گواهی‌نامهٔ این مسیر را می‌خواهی؟»</span>
+    <span class="flag"><b>لحنِ پایان</b> دعوت است و سؤال حذف می‌شود — شروعِ آزمون خودش جوابِ «می‌خواهم» است (همان کاری که <code>startAttempt</code> الان هم می‌کند).</span>
+  </div>
+  <p class="note">دکترینِ «هیچ‌وقت در قدمِ صفر» این‌طور حفظ می‌شود: در قدمِ صفر <em>سؤالی پرسیده نمی‌شود</em> — فقط خبر داده می‌شود و اگر خودش خواست، در می‌زند. سؤالِ مستقیم از وسط مسیر شروع می‌شود، دقیقاً همان‌جا که یک خواستن واقعی است.</p>
+</section>
+
+<!-- ====================================================== §2 برگشت‌پذیری -->
+<section class="mk-sec">
+  <div class="sh"><h2>۲. جواب باید بماند و برگردد</h2><span>یک خط شرط در <code>intentRow</code></span></div>
+  <div class="cmp">
+    <div class="cmp-box bad">
+      <h4>امروز</h4>
+      <p style="font-size:.86rem;margin:0 0 .6rem;color:var(--txt2)">کلیک روی «بله، می‌خواهم» ⟵ ردیف بی‌صدا محو می‌شود. «فعلاً نه» هم همین. و هیچ سطحی دیگر <code>examIntent</code> را صدا نمی‌زند، پس جواب برای همیشه قفل است.</p>
+      <div class="dcp-card" style="font-size:.85rem">
+        <b>آزمون پایانی و گواهی‌نامه</b>
+        <p style="margin:.2rem 0 0;color:var(--txt2)">با خواندن همهٔ قدم‌ها، آزمون باز می‌شود…</p>
+        <div style="margin-top:.5rem"><span class="btn btn-sm">دربارهٔ آزمون</span></div>
+      </div>
+      <p style="font-size:.78rem;color:var(--danger);margin:.55rem 0 0">↑ بعد از کلیک، هیچ ردی نمانده. متنِ پیشخوان هم می‌گوید «هر وقت خواستی از صفحهٔ مسیر بگو» — صفحه‌ای که دیگر هرگز نمی‌پرسد.</p>
+    </div>
+    <div class="cmp-box good">
+      <h4>پیشنهاد</h4>
+      <p style="font-size:.86rem;margin:0 0 .6rem;color:var(--txt2)">جواب یک <em>وضعیتِ ماندگار</em> است، نه یک پرسشِ مصرف‌شدنی. سه حالت: نپرسیده / می‌خواهم / فعلاً نه — و هر سه از خودِ نوار قابل تغییرند.</p>
+      <div class="cs" style="margin:0">
+        <div class="cs-ask" style="margin:0;padding:0;border:none">
+          <span class="cs-state on grow">✓ گواهی‌نامه را می‌خواهی</span>
+          <button class="btn btn-sm">تغییر</button>
+        </div>
+        <div class="cs-echo" style="margin-top:.35rem">ثبت شد — وقتی آزمونِ این مسیر باز شود، در «اطلاعیه» خبرت می‌کنیم.</div>
+      </div>
+      <div class="cs" style="margin:.7rem 0 0">
+        <div class="cs-ask" style="margin:0;padding:0;border:none">
+          <span class="cs-state off grow">فعلاً گواهی نمی‌خواهی</span>
+          <button class="btn btn-sm">نظرم عوض شد</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note">سمت سرور چیزی لازم نیست: <code>setCertificateIntent</code> همین حالا هم بازنویسی را قبول می‌کند. این کاملاً یک بن‌بستِ UI است — <code>if (state.certificate_intent) return null</code>.</p>
+</section>
+
+<!-- ========================================================= §3 شیت شرایط -->
+<section class="mk-sec">
+  <div class="sh"><h2>۳. شیتِ «شرایط گواهی‌نامه»</h2><span>یک کامپوننت، چهار در ورودی</span></div>
+  <p class="note">امروز شرایط فقط داخل <code>contract()</code> زندگی می‌کند و <code>contract()</code> فقط وقتی رندر می‌شود که <code>rules</code> وجود داشته باشد — یعنی فقط وقتی فرمِ آزمون نوشته شده باشد. برای هر ۱۴ مسیرِ فعلی که فرم ندارند، شرایط <strong>هیچ‌جا</strong> قابل دیدن نیست. پیشنهاد: شیت از <em>دو نیمه</em> ساخته شود — نیمهٔ ثابت همیشه هست، نیمهٔ عددی وقتی فرم بیاید.</p>
+  <div class="cols">
+    <div>
+      <div class="stage-lbl">وقتی فرمِ آزمون هنوز نیست (وضعیت امروزِ همهٔ مسیرها)</div>
+      <div class="sheet-demo"><div class="sheet">
+        <div class="sheet-grip"></div>
+        <div class="kickr">گواهی‌نامهٔ تکمیل مسیر یادگیری</div>
+        <h3>پست و کور</h3>
+        <div class="terms-h">شرایط — برای همهٔ مسیرها یکی است</div>
+        <ul class="terms">
+          <li><i>۱</i><span>در مسیر <span class="k">ثبت‌نام</span> کرده باشی («شروع این مسیر»).</span></li>
+          <li><i>۲</i><span>همهٔ قدم‌های مسیر را خوانده یا شنیده باشی. پیشرفت خودش از روی مطالعه‌ات حساب می‌شود.</span></li>
+          <li><i>۳</i><span>آزمون پایانی مسیر را بدهی و قبول شوی.</span></li>
+          <li><i>۴</i><span>در زمانِ آزمون، اشتراک <span class="k">پریمیوم</span> فعال داشته باشی.</span></li>
+        </ul>
+        <div class="terms-h">چه چیزی به دست می‌آید</div>
+        <ul class="terms">
+          <li><i>◆</i><span>گواهی به <span class="k">نامی که خودت می‌نویسی</span> — بعد از صدور تغییر نمی‌کند.</span></li>
+          <li><i>◆</i><span>کد یکتا + صفحهٔ تأیید عمومی (قابل گذاشتن روی لینکدین).</span></li>
+          <li><i>◆</i><span>فایل دانلودیِ A4 و نسخهٔ استوری.</span></li>
+          <li><i>◆</i><span>٪۱۰ تخفیف یک خریدِ بعدی.</span></li>
+        </ul>
+        <div class="pend">تعداد سؤال، نصاب قبولی و تعداد تلاش‌های این مسیر وقتی آزمونش باز شود همین‌جا نوشته می‌شود.</div>
+        <p class="fine">دنت‌کست تکمیل این مسیر و قبولی در آزمون پایانی آن را تأیید می‌کند. این گواهی امتیاز بازآموزی یا مدرک رسمی محسوب نمی‌شود.</p>
+      </div></div>
+    </div>
+    <div>
+      <div class="stage-lbl">وقتی فرم هست — نیمهٔ عددی اضافه می‌شود</div>
+      <div class="sheet-demo"><div class="sheet">
+        <div class="sheet-grip"></div>
+        <div class="kickr">گواهی‌نامهٔ تکمیل مسیر یادگیری</div>
+        <h3>پست و کور</h3>
+        <div class="terms-h">آزمونِ این مسیر</div>
+        <ul class="terms">
+          <li><i>◆</i><span><span class="num">۱۵</span> سؤال — همه روی یک صفحه، یک بار ارسال.</span></li>
+          <li><i>◆</i><span>نصاب قبولی <span class="num">٪۷۰</span> — و هر بخش جداگانه حساب می‌شود.</span></li>
+          <li><i>◆</i><span><span class="num">۲</span> تلاش، با فاصلهٔ دست‌کم <span class="num">۷</span> روز.</span></li>
+          <li><i>◆</i><span>پاسخ تشریحی را هوش مصنوعی روی نکته‌های کلیدی می‌سنجد و در موارد مبهم، دکتر شهابیان خودش می‌خواند.</span></li>
+        </ul>
+        <div class="terms-h">شرایط — برای همهٔ مسیرها یکی است</div>
+        <ul class="terms">
+          <li><i>۱</i><span>ثبت‌نام در مسیر.</span></li>
+          <li><i>۲</i><span>خواندن همهٔ قدم‌ها.</span></li>
+          <li><i>۳</i><span>قبولی در آزمون.</span></li>
+          <li><i>۴</i><span>اشتراک پریمیوم فعال در زمان آزمون.</span></li>
+        </ul>
+        <p class="fine">… همان متنِ پایینیِ صفحهٔ تأیید.</p>
+      </div></div>
+    </div>
+  </div>
+  <div class="q">
+    <b>تصمیمِ تو: عددها را وقتی فرم نیست چه کنیم؟</b>
+    <p>پیشنهادِ من همین بالاست — <em>عددی چاپ نشود</em>. گزینهٔ دیگر این است که پیش‌فرض‌های <code>config.exam</code> (۱۵ سؤال، ٪۷۰، ۲ تلاش، ۷ روز) با برچسبِ «معمولاً» نشان داده شود. نمی‌پسندم: فرم نسخهٔ خودش را ذخیره می‌کند و می‌تواند فرق کند، و آن وقت عددی را وعده داده‌ایم که ممکن است در آزمون عوض شده باشد — دقیقاً همان دلیلی که متنِ آزمون هیچ‌وقت ترکیبِ تستی/تشریحی را نمی‌گوید.</p>
+  </div>
+</section>
+
+<!-- ======================================================= §4 کاتالوگ -->
+<section class="mk-sec">
+  <div class="sh"><h2>۴. صفحهٔ مسیرها</h2><span>یک جمله در مقدمه + یک چیپ روی هر کارت</span></div>
+  <p class="note">این بالاترین نقطهٔ قیف است و الان کاملاً ساکت است. دو تغییرِ کوچک: یک بندِ اضافه در متنِ مقدمه با لینکِ همان شیتِ §۳، و یک چیپ در پای هر کارتِ <em>مسیر کامل</em> (باندل‌ها نه — باندل گواهی ندارد).</p>
+  <div class="stage"><div style="max-width:620px;margin-inline:auto">
+    <h3 style="margin:0 0 .3rem;font-size:1.1rem;font-weight:800">مسیرهای یادگیری</h3>
+    <p style="font-size:.85rem;color:var(--txt2);margin:0 0 1rem">هر مسیر مجموعه‌ای از مقاله‌ها، اپیزودها و ویدیوهاست که به ترتیبِ منطقیِ یادگیری چیده شده… با خواندن، گوش‌دادن یا هایلایت‌کردن، پیشرفتِ هر مسیر خودش جلو می‌رود. <b style="color:var(--txt)">مسیرهای کامل در پایان آزمون و گواهی‌نامه دارند</b> — <button class="btn-link">شرایط گواهی‌نامه</button></p>
+    <div class="cols">
+      <div class="cat-card">
+        <div style="font-weight:800;font-size:.95rem">اکلوژن: از تحلیل تا بازسازی</div>
+        <div class="track" style="margin-top:.6rem"><div class="fill" style="width:12%"></div></div>
+        <div class="cat-foot"><span>۵ از ۴۰ مرحله</span><span class="chip cert">🎓 گواهی‌نامه</span></div>
+      </div>
+      <div class="cat-card">
+        <div style="font-weight:800;font-size:.95rem">پست و کور</div>
+        <div class="track" style="margin-top:.6rem"><div class="fill" style="width:44%"></div></div>
+        <div class="cat-foot"><span>۱۷ از ۳۹ مرحله</span><span class="chip cert">🎓 می‌خواهمش ✓</span></div>
+      </div>
+      <div class="cat-card">
+        <div style="font-weight:800;font-size:.95rem">سوادِ شواهد</div>
+        <div class="track" style="margin-top:.6rem"><div class="fill" style="width:100%"></div></div>
+        <div class="cat-foot"><span>۹ از ۹ مرحله</span><span class="chip cert">🎓 گواهی‌اش را داری ✓</span></div>
+      </div>
+      <div class="cat-card">
+        <div style="font-weight:800;font-size:.95rem">سوادِ هوش مصنوعی</div>
+        <div class="track" style="margin-top:.6rem"><div class="fill" style="width:8%"></div></div>
+        <div class="cat-foot"><span>۲ از ۲۵ مرحله</span><span class="chip soon">🎓 گواهی‌نامه: به‌زودی</span></div>
+      </div>
+    </div>
+  </div></div>
+  <p class="note" style="margin-top:1rem"><strong>رنگ:</strong> سبزِ گواهی (<code>#1f7850</code>، همان تیکِ دیوارِ پروفایل)، نه کهربایی. کهربایی یعنی «این چیزی است که اشتراک می‌خرد» و این صفحه خودش پشتِ اشتراک است؛ یک چیپِ طلایی این‌جا چیزی نمی‌گوید و با متال‌های دیوارِ نشان‌ها هم قاطی می‌شود. در سطوحی که کاربر رایگان می‌بیند (دیوارِ پروفایل، پیچ)، پریمیوم‌بودن را <em>با کلمه</em> می‌گوییم نه با رنگ.</p>
+</section>
+
+<!-- ====================================================== §5 جاهای دیگر -->
+<section class="mk-sec">
+  <div class="sh"><h2>۵. جاهای دیگر که خودم پیشنهاد می‌کنم</h2><span>خارج از چیزی که خواستی</span></div>
+  <ul class="todo">
+    <li>
+      <b>اطلاعیه وقتی آزمونِ یک مسیر باز می‌شود <span class="tag api">API</span></b>
+      <span>الان <code>notifyAssigneesOfNewForm</code> فقط به assignment‌های دستی خبر می‌دهد. کسی که «بله» زده هیچ خبری نمی‌گیرد — در حالی که کارت همان لحظه به او قول اطلاعیه داده. پیشنهاد: کوئری را به <code>user_pathways.certificate_intent = 'wanted'</code> هم گسترش بده (همان فیلترِ هشدارِ شبانه‌ات). این تنها چیزی است که «بله» را برای <em>خودِ کاربر</em> معنادار می‌کند؛ بدون آن، خواستن فقط یک سیگنال برای توست.</span>
+    </li>
+    <li>
+      <b>کارتِ قفلِ دیوارِ پروفایل، پریمیوم را نمی‌گوید <span class="tag copy">متن</span></b>
+      <span><code>GET /certificates</code> روی هر پلنی جواب می‌دهد، پس کاربر رایگان دیوار را می‌بیند و کارتش می‌گوید «این مسیر را تا آخر بخوان…» — بعد «رفتن به مسیر» می‌زند و به گیتِ پریمیوم می‌خورد که اصلاً اسمی از گواهی نمی‌برد. یک جمله + همان لینکِ شرایط.</span>
+    </li>
+    <li>
+      <b>گواهی در پیچِ پریمیوم نیست <span class="tag copy">متن</span></b>
+      <span><code>PREMIUM_FEATURES</code> هشت قابلیت دارد و گواهی جزوشان نیست؛ صفحهٔ قیمت هم ساکت است. این تنها چیزی است که محصول تولید می‌کند و <em>بیرون از سایت</em> دیده می‌شود (لینکدین، رزومه). به‌نظرم باید در فهرست باشد — ولی این تصمیمِ توست، چون یعنی گواهی را بخشی از فروش کرده‌ای.</span>
+    </li>
+    <li>
+      <b>کارتِ <code>no_form</code> هیچ دکمه‌ای ندارد <span class="tag front">فرانت</span></b>
+      <span><code>EXAM_LINE.no_form[2] === null</code>. با شیتِ §۳ خودبه‌خود حل می‌شود: «شرایط» همیشه هست.</span>
+    </li>
+    <li>
+      <b>متنِ پیشخوان بعد از «فعلاً نه» <span class="tag copy">متن</span></b>
+      <span>«باشد؛ هر وقت خواستی از صفحهٔ مسیر بگو» — با §۲ راست می‌شود. ولی همان‌جا هم دکمهٔ «تغییر» بگذار، نه فقط جمله.</span>
+    </li>
+    <li>
+      <b>صفحهٔ آزمون هم باید همان نوار را داشته باشد <span class="tag front">فرانت</span></b>
+      <span>کسی که مستقیم روی <code>/plus/exam.html</code> می‌نشیند هیچ راهی برای عوض‌کردنِ جوابش ندارد. یک کامپوننت، سه جا: صفحهٔ مسیر، پیشخوان، صفحهٔ آزمون.</span>
+    </li>
+  </ul>
+</section>
+
+<!-- ================================================ §6 چه باید ساخته شود -->
+<section class="mk-sec">
+  <div class="sh"><h2>۶. چه چیزی باید ساخته شود</h2><span>هیچ migration‌ای لازم نیست</span></div>
+  <ul class="todo">
+    <li><b><code>plus/js/certificate-terms.js</code> — تازه <span class="tag front">فرانت</span></b><span>یک تابع: <code>certificateTerms(pathwayTitle, rules|null)</code> ← بدنهٔ شیت. از <code>sheet.js</code> باز می‌شود، مثل دیوارِ نشان‌ها. متنِ <code>FINE</code> از <code>certificate-page.js</code> به این‌جا منتقل و از هر دو جا import شود.</span></li>
+    <li><b><code>plus/js/pathways.js</code> — <code>examCard</code> + <code>intentRow</code> ادغام <span class="tag front">فرانت</span></b><span><code>certificateStrip(state, onIntent)</code>: سه لحظه از روی <code>completed_steps/total_steps</code>، جواب همیشه دیده می‌شود و «تغییر» دارد، «شرایط» بی‌قید و شرط.</span></li>
+    <li><b><code>plus/js/pathways.js</code> — <code>renderPathwaysList</code> <span class="tag front">فرانت</span></b><span>بندِ مقدمه + چیپ روی کارتِ مسیرهای کامل.</span></li>
+    <li><b><code>GET /pathways</code> — دو فیلد <span class="tag api">API</span></b><span>به ازای هر مسیرِ کامل: <code>certificate_intent</code> (از همان <code>user_pathways</code> که الان هم خوانده می‌شود) و <code>certificate_held: bool</code>. حالتِ آزمون لازم نیست — کاتالوگ فقط چهار چیپ دارد و <code>examStates</code> برای کاتالوگ گران است.</span></li>
+    <li><b><code>notifyAssigneesOfNewForm</code> — گسترشِ کوئری <span class="tag api">API</span></b><span>union با <code>user_pathways where certificate_intent='wanted'</code>، همان دو <code>not exists</code>. کیندِ <code>exam_assigned</code> همان می‌ماند.</span></li>
+    <li><b>تست‌ها <span class="tag front">فرانت</span></b><span><code>pathway-intent.dom.test.ts</code> (سه لحظه، برگشت‌پذیری، شیت در حالتِ بدون فرم) + یک کیس در <code>exams.test.ts</code> برای خبردادن به wanter‌ها.</span></li>
+    <li><b><code>asset_version.py --bump</code></b><span>ماژول تازه در گرافِ import، پس در همان کامیت.</span></li>
+  </ul>
+</section>
+
+<!-- ================================================== §7 تصمیم‌های تو -->
+<section class="mk-sec">
+  <div class="sh"><h2>۷. چیزهایی که کد نمی‌تواند حدس بزند</h2><span>چهار تا</span></div>
+  <div class="q"><b>۱. در قدمِ صفر سؤال بپرسیم یا فقط خبر بدهیم؟</b><p>پیشنهادم: فقط خبر + دکمهٔ «می‌خواهمش». اگر بخواهی همان‌جا هم سؤالِ دوگزینه‌ای باشد، یک خط است.</p></div>
+  <div class="q"><b>۲. عددهای آزمون وقتی فرم نیست، چاپ شوند یا نه؟</b><p>پیشنهادم: نه (§۳).</p></div>
+  <div class="q"><b>۳. گواهی جزو فهرستِ مزایای پریمیوم بشود؟</b><p>یعنی وارد فروش می‌شود و بعد نمی‌شود بی‌سروصدا عقب کشید.</p></div>
+  <div class="q"><b>۴. کسی که «فعلاً نه» گفته، سالِ بعد دوباره پرسیده شود؟</b><p>پیشنهادم نه — جواب می‌ماند و «نظرم عوض شد» همیشه هست. ولی اگر مسیری بعداً گواهی‌دار شد (مثل سوادِ هوش مصنوعی)، آن یکی بار ارزشِ پرسیدن دارد.</p></div>
+</section>
+
+</div>
+
+<div class="theme"><button id="themeBtn" type="button">تم تیره/روشن</button></div>
+
+<script>
+(function(){
+  var btn = document.getElementById('themeBtn');
+  btn.addEventListener('click', function(){
+    var cur = document.documentElement.getAttribute('data-theme');
+    var dark = cur ? cur === 'dark' : matchMedia('(prefers-color-scheme:dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'light' : 'dark');
+  });
+
+  // ---- the strip demo -------------------------------------------------
+  var TOTAL = 39;
+  var STAGES = [
+    { done:0,  kind:'start' },
+    { done:17, kind:'mid'   },
+    { done:35, kind:'mid'   },
+    { done:39, kind:'ready' },
+    { done:39, kind:'passed'}
+  ];
+  var st = 0;                 // stage index
+  var intent = null;          // null | 'wanted' | 'declined'
+  var editing = false;
+
+  var fill=document.getElementById('fill'), metaL=document.getElementById('metaL');
+  var cs=document.getElementById('cs'), csIco=document.getElementById('csIco');
+  var csTitle=document.getElementById('csTitle'), csLead=document.getElementById('csLead');
+  var csNum=document.getElementById('csNum'), csCta=document.getElementById('csCta'), csAsk=document.getElementById('csAsk');
+  var csTerms=document.getElementById('csTerms');
+
+  var FA='۰۱۲۳۴۵۶۷۸۹';
+  function fa(n){ return String(n).replace(/\d/g, function(d){ return FA[+d]; }); }
+
+  function mk(tag, cls, txt){ var e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
+
+  function askRow(){
+    csAsk.replaceChildren();
+    var s = STAGES[st];
+    // At «آزمون باز» the question is moot and the server agrees: starting an
+    // attempt answers the intent by itself. So the CTA takes its place, and
+    // the wish is only ever asked while the exam is still out of reach.
+    if (s.kind === 'passed' || s.kind === 'ready') {
+      csAsk.style.display='none';
+      return;
+    }
+    csAsk.style.display='';
+
+    if (intent === null || editing) {
+      var q = mk('span','grow', s.kind==='start' ? '' : 'گواهی‌نامهٔ این مسیر را می‌خواهی؟');
+      var yes = mk('button','btn btn-sm btn-cert', s.kind==='start' ? 'می‌خواهمش' : 'بله، می‌خواهم');
+      var no  = mk('button','btn btn-sm', 'فعلاً نه');
+      yes.onclick=function(){ intent='wanted'; editing=false; draw(); };
+      no.onclick =function(){ intent='declined'; editing=false; draw(); };
+      csAsk.append(q, yes, no);
+      if (editing) {
+        var cancel = mk('button','btn-link','بی‌خیال');
+        cancel.onclick=function(){ editing=false; draw(); };
+        csAsk.append(cancel);
+      }
+      return;
+    }
+
+    var state = mk('span','cs-state grow ' + (intent==='wanted'?'on':'off'),
+      intent==='wanted' ? '✓ گواهی‌نامه را می‌خواهی' : 'فعلاً گواهی نمی‌خواهی');
+    var chg = mk('button','btn btn-sm', intent==='wanted' ? 'تغییر' : 'نظرم عوض شد');
+    chg.onclick=function(){ editing=true; draw(); };
+    csAsk.append(state, chg);
+    if (intent==='wanted' && STAGES[st].kind!=='ready') {
+      var echo = mk('div','cs-echo','ثبت شد — وقتی آزمونِ این مسیر باز شود، در «اطلاعیه» خبرت می‌کنیم.');
+      echo.style.flex='1 1 100%';
+      csAsk.append(echo);
+    }
+  }
+
+  function draw(){
+    var s = STAGES[st];
+    fill.style.width = Math.round(s.done/TOTAL*100) + '%';
+    metaL.textContent = s.done===TOTAL ? 'این مسیر را کامل کرده‌اید 🎉' : (fa(s.done) + ' از ' + fa(TOTAL) + ' مرحله');
+    cs.classList.toggle('is-held', s.kind==='passed');
+    csCta.replaceChildren();
+    csNum.textContent='';
+    csIco.textContent = s.kind==='passed' ? '✓' : '🎓';
+    csTerms.style.display = s.kind==='passed' ? 'none' : '';
+
+    if (s.kind==='start'){
+      csTitle.textContent='این مسیر گواهی‌نامه دارد';
+      csLead.textContent='با خواندن هر ' + fa(TOTAL) + ' قدم، آزمون پایانی باز می‌شود و با قبولی، گواهی به نام خودت صادر می‌شود.';
+    } else if (s.kind==='mid'){
+      csTitle.textContent='آزمون پایانی و گواهی‌نامه';
+      csLead.textContent='وقتی همهٔ قدم‌ها خوانده شد، آزمون این‌جا باز می‌شود.';
+      csNum.textContent = fa(TOTAL - s.done) + ' قدم دیگر تا باز شدن آزمون';
+    } else if (s.kind==='ready'){
+      csTitle.textContent='آزمون این مسیر برایت باز است';
+      csLead.textContent='هر وقت آماده بودی شروع کن؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.';
+      csNum.textContent = '۱۵ سؤال · نصاب ٪۷۰ · ۲ تلاش';
+      csCta.append(mk('a','btn btn-primary','رفتن به آزمون'));
+    } else {
+      csTitle.textContent='گواهی‌نامهٔ این مسیر را داری';
+      csLead.textContent='کد DC-K4M-7QA · به نام دکتر مهسا رضایی';
+      csCta.append(mk('a','btn btn-cert','دیدن گواهی'), mk('a','btn btn-sm','دانلود'));
+    }
+    askRow();
+  }
+
+  document.getElementById('sw').addEventListener('click', function(e){
+    var b = e.target.closest('button[data-st]'); if(!b) return;
+    st = +b.dataset.st; editing=false;
+    if (STAGES[st].kind==='passed') intent='wanted';
+    [].forEach.call(this.querySelectorAll('button'), function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+    draw();
+  });
+
+  csTerms.addEventListener('click', function(){
+    document.querySelector('.sheet-demo').scrollIntoView({ behavior:'smooth', block:'center' });
+  });
+
+  draw();
+})();
+</script>
+</body>
+</html>
