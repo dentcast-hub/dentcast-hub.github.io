@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach, afterAll } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, afterAll } from 'vitest';
 import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
-import { getPathways } from '../src/pathways.js';
+import { getPathways, applyRemotePathways, resetRemotePathways } from '../src/pathways.js';
 import {
   pathwayStandings, runPathwayAlerts, levelFor, alertable,
 } from '../src/services/pathway-standings.js';
@@ -380,9 +380,24 @@ describe('GET /admin/pathways', () => {
   });
 });
 
+// `ai-dentistry` carried this flag until the Promptologist series reached its
+// last part (2026-09-20) and the flag came off — that removal IS the release.
+// The mechanism is still live, so the case supplies the flag itself rather
+// than depending on the shipped catalog still containing a pending pathway.
 describe('a pathway flagged `certificate: pending` is not in the standings at all', () => {
+  const PENDING = 'ai-dentistry';
+
+  beforeEach(() => {
+    const raw = JSON.parse(JSON.stringify(getPathways())) as { id: string; certificate?: string }[];
+    const p = raw.find((x) => x.id === PENDING);
+    expect(p).toBeTruthy();
+    p!.certificate = 'pending';
+    expect(applyRemotePathways(raw)).toBe(true);
+  });
+
+  afterEach(() => { resetRemotePathways(); });
+
   it('has no row, however far anybody is along it — there is no exam to prepare', async () => {
-    const PENDING = 'ai-dentistry';
     const uid = await userId();
     await pool.query(`insert into user_pathways (user_id, pathway_id, current_step, certificate_intent) values ($1, $2, 0, 'wanted')`, [uid, PENDING]);
     const rows = await pathwayStandings();

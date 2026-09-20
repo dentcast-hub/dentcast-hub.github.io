@@ -454,7 +454,6 @@
   },
   {
     "id": "ai-dentistry",
-    "certificate": "pending",
     "glyph": "icon-bot",
     "title_fa": "سوادِ هوش مصنوعی برای دندانپزشک",
     "short_fa": "هوش مصنوعی",
@@ -559,6 +558,10 @@
       },
       {
         "content_id": "dentai/promptologist/prompt7-1",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/promptologist/prompt7-2",
         "milestone": false
       }
     ],

@@ -11,7 +11,10 @@ import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool, withTransaction } from '../src/db.js';
 import { config } from '../src/config.js';
 import { ai } from '../src/providers/registry.js';
-import { getPathwayById, isCertifiable } from '../src/pathways.js';
+import {
+  getPathwayById, getPathways, isCertifiable,
+  applyRemotePathways, resetRemotePathways,
+} from '../src/pathways.js';
 import {
   normalizeQuestions, upsertForm, getForm, deleteForm, formRoster, assignExam,
   addQuestion, removeQuestion, nextQuestionId,
@@ -968,11 +971,28 @@ describe('edges', () => {
  * that has no end yet. `certificate: 'pending'` in pathways.json closes
  * EVERY door at once: the wall, the exam, the wish, the founder's hand.
  * Removing the flag when the last part lands is the whole release.
+ *
+ * That release happened on 2026-09-20, when Chapter 7 Part 2 landed and the
+ * flag came off `ai-dentistry`. The MECHANISM is still live and still has to
+ * be tested, so these cases stop reading the flag out of the shipped catalog
+ * and supply it themselves through the module's own test hook — nothing
+ * guarantees a real pathway is ever flagged again, and a suite that needs one
+ * to be is a suite that breaks on an ordinary editorial commit.
  */
 describe('an unfinished series has no certificate (`certificate: pending`)', () => {
   const PENDING = 'ai-dentistry';
 
-  it('is flagged in the shipped catalog, and the flag is what isCertifiable() reads', () => {
+  beforeEach(() => {
+    const raw = JSON.parse(JSON.stringify(getPathways())) as { id: string; certificate?: string }[];
+    const p = raw.find((x) => x.id === PENDING);
+    expect(p).toBeTruthy();
+    p!.certificate = 'pending';
+    expect(applyRemotePathways(raw)).toBe(true);
+  });
+
+  afterEach(() => { resetRemotePathways(); });
+
+  it('is what isCertifiable() reads, and it closes the pathway to every door', () => {
     expect(getPathwayById(PENDING)?.certificate).toBe('pending');
     expect(isCertifiable(getPathwayById(PENDING))).toBe(false);
     expect(isCertifiable(getPathwayById(PATHWAY))).toBe(true);
