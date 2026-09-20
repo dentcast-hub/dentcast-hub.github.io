@@ -5,8 +5,10 @@ import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import { getPathways, applyRemotePathways, resetRemotePathways } from '../src/pathways.js';
 import {
-  pathwayStandings, runPathwayAlerts, levelFor, alertable,
+  pathwayStandings, runPathwayAlerts, levelFor, alertable, certificateWishes,
 } from '../src/services/pathway-standings.js';
+import { upsertForm } from '../src/services/pathway-exams.js';
+import { issueCertificate, revokeCertificate } from '../src/services/certificates.js';
 
 let app: FastifyInstance;
 let cookie: string;
@@ -402,5 +404,145 @@ describe('a pathway flagged `certificate: pending` is not in the standings at al
     await pool.query(`insert into user_pathways (user_id, pathway_id, current_step, certificate_intent) values ($1, $2, 0, 'wanted')`, [uid, PENDING]);
     const rows = await pathwayStandings();
     expect(rows.some((r) => r.pathway_id === PENDING)).toBe(false);
+  });
+});
+
+/**
+ * The panel box behind a notification that can be missed.
+ *
+ * `notifyCertificateWish` fires once, at the moment of the «بله». If the push
+ * never landed — no alert phone, a muted channel, a phone in another room —
+ * the only trace was a pill on a standings row sorted by distance from the
+ * END, inside a `walking` list cut at forty. This list is the founder's
+ * answer to «did anybody ask while I wasn't looking».
+ */
+describe('تقاضای گواهی‌نامه — who asked', () => {
+  const other = '09121200079';
+
+  it('lists a wish with no progress at all — the row the standings cannot hold', async () => {
+    await setTier('premium');
+    await wantCert();
+
+    // Nothing consumed, so the sweep has nothing to say about this reader.
+    expect(await pathwayStandings()).toHaveLength(0);
+
+    const wishes = await certificateWishes();
+    expect(wishes).toHaveLength(1);
+    expect(wishes[0].pathway_id).toBe(PATHWAY_ID);
+    expect(wishes[0].completed_steps).toBe(0);
+    expect(wishes[0].total_steps).toBe(STEPS.length);
+    expect(wishes[0].has_form).toBe(false);
+    expect(wishes[0].certificate_code).toBeNull();
+    expect(wishes[0].asked_at).toBeTruthy();
+  });
+
+  it('carries progress where there is some', async () => {
+    await setTier('premium');
+    await wantCert();
+    await consume(STEPS.slice(0, 6));
+    const w = (await certificateWishes())[0];
+    expect(w.completed_steps).toBe(6);
+    expect(w.remaining).toBe(STEPS.length - 6);
+  });
+
+  it('ignores «فعلاً نه» and a reader who was never asked', async () => {
+    await setTier('premium');
+    await wantCert(phone, 'declined');
+    await consume(STEPS);
+    expect(await certificateWishes()).toHaveLength(0);
+  });
+
+  it('flips to has_form the moment the pathway gets a form', async () => {
+    await wantCert();
+    expect((await certificateWishes())[0].has_form).toBe(false);
+    await upsertForm(PATHWAY_ID, { questions: '۱. سؤال؟\nالف) یک ✓\nب) دو' });
+    expect((await certificateWishes())[0].has_form).toBe(true);
+  });
+
+  it('shows the issued certificate, and a revoked one is not one', async () => {
+    await setTier('premium');
+    await wantCert();
+    const uid = await userId();
+    const issued = await issueCertificate(uid, PATHWAY_ID, { holderName: 'دکتر آزمون' });
+
+    expect((await certificateWishes())[0].certificate_code).toBe(issued.certificate.verify_code);
+
+    await revokeCertificate(issued.certificate.id);
+    expect((await certificateWishes())[0].certificate_code).toBeNull();
+  });
+
+  it('records whether the wish was ever announced', async () => {
+    await setTier('premium');
+    await wantCert();
+    expect((await certificateWishes())[0].alerted).toBe(false);
+
+    const uid = await userId();
+    await pool.query(
+      `insert into user_activity (user_id, action, meta)
+       values ($1, 'certificate_wish_alerted', $2::jsonb)`,
+      [uid, JSON.stringify({ pathway_id: PATHWAY_ID })],
+    );
+    expect((await certificateWishes())[0].alerted).toBe(true);
+  });
+
+  it('puts what is owed first and a finished one last', async () => {
+    await setTier('premium');
+    await wantCert();
+    await consume(STEPS.slice(0, 3)); // far from the end, nothing written for it yet
+
+    await loginAs(app, other);
+    await setTier('premium', other);
+    await wantCert(other);
+    const uid = await userId(other);
+    await issueCertificate(uid, PATHWAY_ID, { holderName: 'تمام‌شده' });
+
+    const wishes = await certificateWishes();
+    expect(wishes).toHaveLength(2);
+    expect(wishes[0].certificate_code).toBeNull();
+    expect(wishes[1].certificate_code).toBeTruthy();
+  });
+});
+
+describe('GET /admin/certificate-wishes', () => {
+  const other = '09121200079';
+
+  it('counts the work and rolls it up to the pathway', async () => {
+    await setTier('premium');
+    await wantCert();
+    await loginAs(app, other);
+    await wantCert(other);
+
+    const res = await app.inject({
+      method: 'GET', url: '/admin/certificate-wishes', headers: { authorization: basic },
+    });
+    expect(res.statusCode).toBe(200);
+    const d = res.json();
+    expect(d.counts.total).toBe(2);
+    expect(d.counts.readers).toBe(2);
+    // One form serves both, so the to-do list is one line, not two.
+    expect(d.counts.needs_form).toBe(2);
+    expect(d.pathways).toHaveLength(1);
+    expect(d.pathways[0]).toMatchObject({ pathway_id: PATHWAY_ID, wanted: 2, has_form: false });
+
+    await upsertForm(PATHWAY_ID, { questions: '۱. سؤال؟\nالف) یک ✓\nب) دو' });
+    const after = (await app.inject({
+      method: 'GET', url: '/admin/certificate-wishes', headers: { authorization: basic },
+    })).json();
+    expect(after.counts.needs_form).toBe(0);
+    expect(after.counts.ready).toBe(2);
+  });
+
+  it('answers an empty box rather than an error when nobody has asked', async () => {
+    const d = (await app.inject({
+      method: 'GET', url: '/admin/certificate-wishes', headers: { authorization: basic },
+    })).json();
+    expect(d.ok).toBe(true);
+    expect(d.counts.total).toBe(0);
+    expect(d.wishes).toEqual([]);
+  });
+
+  it('refuses without admin credentials', async () => {
+    const res = await app.inject({ method: 'GET', url: '/admin/certificate-wishes' });
+    expect(res.statusCode).toBe(401);
   });
 });

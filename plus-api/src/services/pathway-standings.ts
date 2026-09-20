@@ -413,3 +413,117 @@ export async function notifyCertificateWish(
     return false;
   }
 }
+
+/* ------------------------------------------- «کی گواهی خواسته» — the box -- */
+
+/**
+ * Every reader who said «بله», with their pathway — the standing list behind
+ * the panel's «تقاضای گواهی‌نامه» box.
+ *
+ * `notifyCertificateWish` above is a moment; this is the record. The
+ * notification is the only thing that arrives on its own, so a missed push,
+ * an unset `PATHWAY_ALERT_PHONE`, or simply a phone left in another room and
+ * the news is gone — and until this list existed, the only trace of a wish
+ * was a bold pill on a row of the standings table, sorted by how close the
+ * reader is to the end, with `walking` cut at forty. A reader who asked at
+ * step three of thirty-nine was, in practice, invisible.
+ *
+ * Three things it does NOT borrow from `pathwayStandings()`.
+ *
+ * **It reads `user_pathways`, not the standings.** A standing exists only for
+ * somebody who has consumed at least one step, and a wish does not need one:
+ * `certificateStrip()` offers «می‌خواهمش» at `completed_steps === 0`, and
+ * `setCertificateIntent` enrols the reader on the spot. So the wish is the
+ * row, and progress is looked up beside it — zero when there is none.
+ *
+ * **It carries `has_form`**, because that is the entire actionable half, the
+ * same half `notifyCertificateWish`'s body names: a wish for a pathway that
+ * already has an exam needs nothing, and one for a pathway that does not is
+ * the job. (Read here as a plain `exists` rather than through
+ * pathway-exams.ts, which imports this module.)
+ *
+ * **It carries the certificate, when one was issued**, so a fulfilled wish
+ * reads as closed instead of sitting in the box forever. A revoked one is not
+ * a certificate: `revoked_at is null`, the same live-row rule the wall uses.
+ */
+export interface CertificateWish {
+  user_id: string;
+  display_name: string;
+  tier: string;
+  pathway_id: string;
+  title_fa: string;
+  /** When they answered «بله». Null for a row written before migration 0061. */
+  asked_at: Date | null;
+  total_steps: number;
+  completed_steps: number;
+  remaining: number;
+  /** The pathway has an exam form — nothing is owed for this row. */
+  has_form: boolean;
+  /** A LIVE certificate for this (reader, pathway), or null. */
+  certificate_code: string | null;
+  /** The wish was announced (or deliberately suppressed by a crossing alert). */
+  alerted: boolean;
+}
+
+export async function certificateWishes(): Promise<CertificateWish[]> {
+  const rows = await query<{
+    user_id: string; pathway_id: string; asked_at: Date | null;
+    display_name: string; tier: string; has_form: boolean;
+    certificate_code: string | null; alerted: boolean;
+  }>(
+    `select u.user_id, u.pathway_id, u.certificate_intent_at as asked_at,
+            p.display_name, p.tier,
+            exists (select 1 from pathway_exam_forms f where f.pathway_id = u.pathway_id) as has_form,
+            (select c.verify_code from certificates c
+              where c.user_id = u.user_id and c.pathway_id = u.pathway_id and c.revoked_at is null
+              order by c.issued_at desc limit 1) as certificate_code,
+            exists (select 1 from user_activity a
+                     where a.user_id = u.user_id and a.action = 'certificate_wish_alerted'
+                       and a.meta->>'pathway_id' = u.pathway_id) as alerted
+       from user_pathways u join profiles p on p.id = u.user_id
+      where u.certificate_intent = 'wanted'`,
+    [],
+  );
+  if (rows.rows.length === 0) return [];
+
+  // Progress for the ones who have any. One sweep, reused.
+  const progress = new Map<string, PathwayStanding>();
+  for (const s of await pathwayStandings()) progress.set(`${s.user_id}:${s.pathway_id}`, s);
+
+  const out: CertificateWish[] = [];
+  for (const r of rows.rows) {
+    const pathway = getPathwayById(r.pathway_id);
+    // Same gate the sweep uses, and for the same reason: a bundle, a pathway
+    // held at `certificate: 'pending'` and one whose id no longer resolves all
+    // have no exam to prepare, so listing them would be a job that cannot be
+    // done. The reader routes refuse such a wish anyway; this is about the
+    // rows already written when a pathway's state changes under them.
+    if (!isCertifiable(pathway)) continue;
+    const total = pathway.steps.length;
+    const done = progress.get(`${r.user_id}:${r.pathway_id}`)?.completed_steps ?? 0;
+    out.push({
+      user_id: r.user_id,
+      display_name: r.display_name,
+      tier: r.tier,
+      pathway_id: r.pathway_id,
+      title_fa: pathway.title_fa,
+      asked_at: r.asked_at,
+      total_steps: total,
+      completed_steps: done,
+      remaining: Math.max(0, total - done),
+      has_form: r.has_form,
+      certificate_code: r.certificate_code,
+      alerted: r.alerted,
+    });
+  }
+
+  // The order is the order of the founder's own work: what is owed first
+  // (no form yet), closest to the end first inside that, and the longest
+  // wait first when even that ties. A wish already answered with a
+  // certificate is a record, not a job, so it sorts to the bottom.
+  const rank = (w: CertificateWish) => (w.certificate_code ? 2 : w.has_form ? 1 : 0);
+  out.sort((a, b) => rank(a) - rank(b)
+    || a.remaining - b.remaining
+    || (a.asked_at?.getTime() ?? 0) - (b.asked_at?.getTime() ?? 0));
+  return out;
+}

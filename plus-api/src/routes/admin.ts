@@ -54,7 +54,7 @@ import {
 } from '../services/support.js';
 import { normalizeReference } from '../services/reference.js';
 import {
-  pathwayStandings, runPathwayAlerts, levelFor, alertable,
+  pathwayStandings, runPathwayAlerts, levelFor, alertable, certificateWishes,
 } from '../services/pathway-standings.js';
 import {
   issueCertificate, revokeCertificate, listCertificates, certificateRoster, getCertificate,
@@ -740,6 +740,95 @@ function renderHtml(
         .catch(function () { btn.disabled = false; out.textContent = 'اجرا نشد.'; });
     });
     load();
+  })();
+  </script>
+
+  <h3 id="cert-wishes" style="margin-top:26px">تقاضای گواهی‌نامه <span id="cwWaiting" class="pill"></span></h3>
+  <div class="muted">
+    هر کس روی صفحهٔ مسیر گفته «گواهی‌نامهٔ این مسیر را می‌خواهم»، این‌جاست — با مسیرش. همان لحظه یک
+    اطلاعیه هم برایت می‌رود، ولی نوتیف تنها کانالی است که ممکن است از دستت برود؛ این فهرست نمی‌رود.
+    کارِ تو همیشه یک <b>مسیر</b> است نه یک نفر: یک فرم آزمون همهٔ کسانی را که آن مسیر را می‌خواهند
+    راه می‌اندازد، و فرم را در «<a href="#exams">آزمونِ مسیر</a>» می‌نویسی — نوشتنش خودش به همین‌ها
+    خبر می‌دهد. ردیفی که گواهی‌اش صادر شده حذف نمی‌شود؛ می‌رود ته فهرست، به‌عنوان سند.
+    عددِ کنارِ تیتر فقط تقاضاهایی را می‌شمارد که هنوز فرم ندارند.
+  </div>
+  <div id="cwBox"></div>
+  <script>
+  (function () {
+    var box = document.getElementById('cwBox');
+    var waiting = document.getElementById('cwWaiting');
+    if (!box) return;
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    var FA = '۰۱۲۳۴۵۶۷۸۹';
+    function fa(n) { return String(n == null ? '' : n).replace(/[0-9]/g, function (d) { return FA[+d]; }); }
+    // Date + hour, no seconds: this column answers «how long has this been
+    // sitting here», and a second-precise stamp only makes it harder to read.
+    function when(t) {
+      if (!t) return '—';
+      try {
+        return new Date(t).toLocaleString('fa-IR', { dateStyle: 'short', timeStyle: 'short' });
+      } catch (e) { return t; }
+    }
+
+    function render(d) {
+      if (!d || !d.ok) { box.textContent = 'نیامد.'; return; }
+      var c = d.counts || {};
+      waiting.textContent = c.needs_form ? fa(c.needs_form) : '';
+      if (!c.total) {
+        box.innerHTML = '<div class="muted" style="margin-top:10px">هنوز کسی تقاضای گواهی نکرده.</div>';
+        return;
+      }
+      var head = '<div class="muted" style="margin-top:10px">'
+        + fa(c.total) + ' تقاضا از ' + fa(c.readers) + ' نفر · '
+        + '<b>' + fa(c.needs_form || 0) + '</b> منتظر فرم آزمون · '
+        + fa(c.ready || 0) + ' فرمش آماده است · ' + fa(c.issued || 0) + ' گواهی صادر شده'
+        + '</div>';
+
+      // The unit of work, said once: a pathway owing a form serves everybody
+      // on it at the same time, so this is the whole to-do list.
+      var owed = (d.pathways || []).filter(function (p) { return !p.has_form; });
+      var todo = owed.length
+        ? '<div class="sp-c"><h4>مسیرهایی که فرم آزمون ندارند</h4>'
+          + owed.map(function (p) {
+            return '<div class="sp-row">' + esc(p.title_fa)
+              + '<span class="pill hot">' + fa(p.wanted) + ' نفر منتظرند</span></div>';
+          }).join('')
+          + '<div class="muted" style="margin-top:8px">سؤال‌هایشان را در '
+          + '<a href="#exams">آزمونِ مسیر</a> بگذار.</div></div>'
+        : '<div class="muted" style="margin-top:10px">هر مسیری که تقاضا دارد فرم آزمون هم دارد — کاری نمانده.</div>';
+
+      var body = (d.wishes || []).map(function (w) {
+        var who = esc(w.display_name || w.user_id.slice(0, 8));
+        var tier = w.tier === 'premium'
+          ? '<span class="pill">پریمیوم</span>'
+          : '<span class="pill">رایگان</span>';
+        var state = w.certificate_code
+          ? '<span class="pill ok">گواهی صادر شد · ' + esc(w.certificate_code) + '</span>'
+          : w.has_form
+            ? '<span class="pill">فرم آزمون دارد</span>'
+            : '<span class="pill hot"><b>فرم آزمون ندارد</b></span>';
+        // The marker the wish notification claims. Absent means the news of
+        // this one never went anywhere — which is exactly why this box exists.
+        var said = w.alerted ? '' : '<span class="pill hot">خبرش نرفته</span>';
+        return '<tr><td>' + who + ' ' + tier + '</td><td>' + esc(w.title_fa) + '</td>'
+          + '<td>' + fa(w.completed_steps) + ' از ' + fa(w.total_steps) + '</td>'
+          + '<td>' + esc(when(w.asked_at)) + '</td>'
+          + '<td>' + state + ' ' + said + '</td></tr>';
+      }).join('');
+
+      box.innerHTML = head + todo
+        + '<div class="tblwrap"><table><tr><th>کاربر</th><th>مسیر</th><th>خوانده</th>'
+        + '<th>کِی گفت</th><th></th></tr>' + body + '</table></div>';
+    }
+
+    fetch('/admin/certificate-wishes', { credentials: 'include' })
+      .then(function (r) { return r.json(); })
+      .then(render)
+      .catch(function () { box.textContent = 'فهرست نیامد.'; });
   })();
   </script>
 
@@ -4989,6 +5078,47 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.post('/admin/pathways/run-alerts', async (_request, reply) => {
     const run = await runPathwayAlerts(new Date());
     return reply.send({ ok: true, crossings: run.crossings, notified: run.notified });
+  });
+
+  /**
+   * تقاضای گواهی‌نامه — everybody who said «بله», with their pathway.
+   *
+   * The read side of services/pathway-standings.ts `certificateWishes()`. It
+   * exists because the wish arrives exactly once, as a notification, and a
+   * notification is the one channel that can be missed: this is where the
+   * founder finds out anyway. The panel block above it is sorted by how close
+   * a reader is to the END, which is a different question — somebody who asks
+   * at step three sits at the bottom of a list that is itself cut at forty.
+   *
+   * `pathways` is the same list rolled up to the unit of work: one exam form
+   * serves everybody who wants that pathway's certificate, so the founder's
+   * job is a pathway, never a person.
+   */
+  app.get('/admin/certificate-wishes', async (_request, reply) => {
+    const wishes = await certificateWishes();
+    const byPathway = new Map<string, { pathway_id: string; title_fa: string; wanted: number; has_form: boolean }>();
+    for (const w of wishes) {
+      const row = byPathway.get(w.pathway_id)
+        ?? { pathway_id: w.pathway_id, title_fa: w.title_fa, wanted: 0, has_form: w.has_form };
+      row.wanted += 1;
+      byPathway.set(w.pathway_id, row);
+    }
+    return reply.send({
+      ok: true,
+      counts: {
+        total: wishes.length,
+        // The one number that means "there is something for you to do".
+        needs_form: wishes.filter((w) => !w.has_form && !w.certificate_code).length,
+        ready: wishes.filter((w) => w.has_form && !w.certificate_code).length,
+        issued: wishes.filter((w) => Boolean(w.certificate_code)).length,
+        readers: new Set(wishes.map((w) => w.user_id)).size,
+      },
+      // Pathways owing a form first, then the busiest.
+      pathways: [...byPathway.values()].sort(
+        (a, b) => Number(a.has_form) - Number(b.has_form) || b.wanted - a.wanted,
+      ),
+      wishes,
+    });
   });
 
   /**
