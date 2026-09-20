@@ -48,9 +48,10 @@
 // "audience": ["anon"|"plus"] (who sees it). No field = everyone, everywhere —
 // so by default signed-out and signed-in visitors see the same campaign.
 //
-// Measurement counts a SEEN ad, not a rendered one: a card must be at least 50%
-// on screen for one continuous second in a foreground tab before it counts
-// (the IAB display rule; tunable via `seen` in the config). Only the two classes
+// Measurement counts a SEEN ad, not a rendered one: a card must be at least 20%
+// on screen for half a continuous second in a foreground tab before it counts
+// (tunable via `seen` in the config — it was the IAB rule, 50% for 1s, until
+// 1405/06/29; see the armSeen block). Only the two classes
 // that get ads can generate events at all — premium never renders one — so the
 // report is exactly "how often anon and plus visitors actually saw each
 // campaign". Every seen impression and click is reported TWICE — to GA4
@@ -66,7 +67,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=106';
+import { findProseRoot } from '/plus/js/config.js?v=107';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -160,7 +161,7 @@ function report(kind, slotName, creativeId) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ [key]: name, content_id: contentId }),
   });
-  import('/plus/js/api.js?v=106')
+  import('/plus/js/api.js?v=107')
     .then((m) => m.apiBase())
     .then((base) => {
       if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
@@ -179,7 +180,7 @@ function report(kind, slotName, creativeId) {
       // A network-level failure (not an HTTP error) may mean the cached base is
       // dead — self-heal so the NEXT event, and the next page's /me, re-probe
       // instead of retrying the same unreachable host all session.
-      import('/plus/js/api.js?v=106').then((m) => m.forgetBase()).catch(() => {});
+      import('/plus/js/api.js?v=107').then((m) => m.forgetBase()).catch(() => {});
     });
 }
 
@@ -665,8 +666,17 @@ function impression(creative, slotName) {
 // A card that is inserted but never scrolled to was never delivered, and a
 // sponsor report that counts it is selling air. So nothing is counted until the
 // card is actually on screen: at least `seenRatio` of it visible, continuously,
-// for `seenMs`, in a foreground tab (the IAB display rule — 50% for one second —
-// which is what a sponsor's own agency will measure against).
+// for `seenMs`, in a foreground tab.
+//
+// The threshold was the IAB display rule (50% for one continuous second) until
+// 1405/06/29, when the founder loosened it to 20% for half a second. Both halves
+// of that trade are worth stating, because only one of them is a gain: the gate
+// now fires for a card that is only clipped into view, and on a fast scroll past
+// it — deliveries that were real and went uncounted — but it is no longer the
+// number a sponsor's own agency measures against, so it may not be presented as
+// an IAB-viewable impression. It is also a REPORTING DISCONTINUITY: a rise in
+// impressions across that date is a looser gate, not more traffic, and any
+// window spanning it has to say so (see .dentcast/workflows/spot-report.md).
 //
 // Consequences worth knowing when reading a report:
 //   - an article card below the fold counts only if the visitor scrolls to it,
@@ -675,8 +685,12 @@ function impression(creative, slotName) {
 //     only the displayed one can ever become visible, so it counts once,
 //   - a premium answer that lands during the dwell removes the card before the
 //     timer fires, so a premium visitor cannot leave an impression behind.
-let seenRatio = 0.5;
-let seenMs = 1000;
+//
+// These two are the FALLBACKS, for a config that carries no `seen` block; the
+// live numbers are spot-config.json's, and they are kept identical here so the
+// two can never answer differently.
+let seenRatio = 0.2;
+let seenMs = 500;
 // The /me answer, once main() has asked for it. An impression is held until it
 // settles (see done()); CLASS_WAIT_MS caps that hold so a hung request can never
 // swallow a visit's telemetry outright.
@@ -715,8 +729,16 @@ function armSeen(el, creative, slotName) {
     timer = setTimeout(done, seenMs);
   };
   const onVisibility = () => { if (document.visibilityState === 'hidden') stop(); else start(); };
+  // The callback fires ON the threshold, and the ratio it reports is computed
+  // from fractional layout rectangles — so the very observation that says "this
+  // card just reached 20%" can carry 0.19999998, fail `>= seenRatio` by a
+  // rounding error, and then never fire again until the card crosses the line a
+  // second time. A card parked exactly at the threshold (a permanent slot in a
+  // fixed column is the likely one) would sit there counting nothing. EPS is
+  // small enough to change no real judgement and large enough to absorb that.
+  const EPS = 0.001;
   const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { inView = e.isIntersecting && e.intersectionRatio >= seenRatio; });
+    entries.forEach((e) => { inView = e.isIntersecting && e.intersectionRatio >= seenRatio - EPS; });
     if (inView) start(); else stop();
   }, { threshold: [seenRatio] });
   io.observe(el);
@@ -1152,7 +1174,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=106')
+  return import('/plus/js/api.js?v=107')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
@@ -1205,7 +1227,9 @@ async function main() {
   openRotationWindow(cfg);
 
   // Viewability thresholds are config, not code (a sponsor contract may specify
-  // its own). Defaults are the IAB display rule: 50% of the card, for 1s.
+  // its own, and a contract written to IAB terms would set 0.5/1000 back here
+  // for that campaign). Defaults mirror the shipped config: 20% of the card,
+  // for 0.5s — see the armSeen block above for what that costs.
   const seenCfg = cfg.seen || {};
   if (Number(seenCfg.ratio) > 0 && Number(seenCfg.ratio) <= 1) seenRatio = Number(seenCfg.ratio);
   if (Number(seenCfg.ms) >= 0) seenMs = Number(seenCfg.ms);
@@ -1224,7 +1248,16 @@ async function main() {
   // whose own type is `home`. Gated on the shell's container so no other page
   // pays for a hook it can never use.
   const shellArticle = slotOn('article') && !!document.getElementById('dcd-content-area');
-  if (!pageSlot && !overlaySlots.length && !searchOn && !archiveOn && !shellArticle) return;
+  // The desktop sidebar is the one slot that belongs to no page type: it lives in
+  // index.html's col-A and is reached through its own host, not through
+  // pageType(). It was missing from the guard below, which is a slot switched on
+  // in the config being silenced by an UNRELATED slot being switched off —
+  // masked today only because the homepage's own `home` slot happens to be on.
+  // Turning `home` off (or a future page whose type carries no slot) would have
+  // taken the permanent sidebar card down with it, with nothing in the config
+  // saying so.
+  const sidebarOn = slotOn('sidebar') && !!document.getElementById('dcdSpotSidebar');
+  if (!pageSlot && !overlaySlots.length && !searchOn && !archiveOn && !shellArticle && !sidebarOn) return;
 
   // Resolve the viewer class ONCE, before anything renders. It decides two
   // things: whether an ad may exist at all (premium: never), and which campaign
@@ -1286,7 +1319,7 @@ async function main() {
   overlaySlots.forEach(([name, title]) => watchOverlaySlot(cfg, name, title, audienceNow));
   if (searchOn) setupSearchSlot(cfg, audienceNow);
   if (archiveOn) setupArchiveSlot(cfg, audienceNow);
-  setupSidebarSlot(cfg, audienceNow);
+  if (sidebarOn) setupSidebarSlot(cfg, audienceNow);
   if (shellArticle) setupShellArticleSlot(cfg, audienceNow);
 }
 

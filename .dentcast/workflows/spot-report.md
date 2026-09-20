@@ -64,12 +64,13 @@ engine); week buckets start **Saturday**.
    Never carry GA's heavy-undercount disclaimer over to server numbers — that
    would understate real inventory in a sponsor report.
 4. **ایمپرشن یعنی «دیده شد»، نه «رندر شد».** A card counts only after it has
-   been at least **۵۰٪ روی صفحه، یک ثانیهٔ پیوسته، در تبِ فعال** (the IAB
-   display rule; thresholds live in `spot-config.json` → `seen`). So a card the
-   visitor never scrolled to, a background/prerendered tab, and a fast scroll
-   past the card all count **nothing** — the number you report is delivered
-   inventory, and it is defensible to a sponsor's own measurement. It is
-   therefore **lower** than the number of pages that carried an ad; never
+   been at least **۲۰٪ روی صفحه، نیم‌ثانیهٔ پیوسته، در تبِ فعال** (thresholds
+   live in `spot-config.json` → `seen`; this was the IAB display rule, 50% for
+   1s, until 2026-09-20 — see the discontinuity note below). So a card the
+   visitor never scrolled to and a background/prerendered tab still count
+   **nothing** — the number you report is delivered inventory. Since the change
+   it is no longer the IAB-viewable figure, so never present it to a sponsor as
+   one. It is still **lower** than the number of pages that carried an ad; never
    present the two as the same thing.
 5. **دو دستهٔ بیننده، و پریمیوم هرگز.** Only `anon` (signed-out) and `plus`
    (signed-in, free) can generate ad events at all. `premium` never renders an
@@ -236,11 +237,35 @@ interesting number for the business, and worth surfacing when both are in hand.
 Translate slot ids to Persian for the user («صفحهٔ اصلی» = `home`, «مقاله» =
 `article`, «ستون موضوعی» = `pillar`, «جستجوی سراسری» = `search`, «تب آرشیو» =
 `archive`, «پلیر» = `player`, «صفحهٔ اپیزود» = `episode`, «آرشیو اپیزودها» =
-`episodes`, «پیشخوان» = `dashboard`, «پروفایل» = `profile`).
+`episodes`, «پیشخوان» = `dashboard`, «پروفایل» = `profile`, «ستونِ کنارِ
+دسکتاپ» = `sidebar`).
 
 **`episode` و `episodes` را هرگز در یک سطر ادغام نکن** — اولی صفحهٔ تکِ اپیزود
 است و دومی صفحهٔ آرشیو `episodes.html`. اسمشان یک حرف فرق دارد و معنایشان کاملاً
 جداست.
+
+**`sidebar` is not comparable with the other slots, and it is the one row to
+caveat by construction.** It is the desktop shell's col-A card: pinned to
+`rotation.sequence[0]` rather than rotated, on screen for the whole visit rather
+than once per page view, and therefore counted ONCE per page load — while the
+desktop shell opens ten articles inside that one load, each of which counts its
+own `article` impression. A low `sidebar` number against `article` is that
+arithmetic, never weaker placement. It also spends no rotation beat, so the
+"share of impressions vs. share of زمان‌ها" comparison below does not apply to it.
+
+**A third slot, `sidebar`, shipped counting on 2026-09-20 and has no data before
+that day** — and not because the placement was new. It had been enabled and
+building cards for some time, but `sidebar` was missing from the API's closed
+`SPOT_SLOTS` vocabulary, so every impression and click it sent was answered 400
+and counted nowhere. In the report that reads as no demand rather than as a
+dropped pipeline. Same lesson as the two below, third occurrence.
+
+**The viewability threshold itself changed on 2026-09-20** (founder decision):
+`seen` went from **50% for 1000ms** (the IAB display rule) to **20% for 500ms**.
+Every slot is affected. A rise in impressions across that date is a LOOSER GATE,
+not more traffic — say so explicitly in any report whose window spans it, never
+compare an impression total before/after without the caveat, and do not describe
+the post-change number as an IAB-viewable impression to a sponsor.
 
 Two slots shipped on **2026-07-28** and have no data before that day:
 

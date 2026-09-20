@@ -6,8 +6,11 @@
 //   1. Visitor class decides whether an ad may exist AT ALL. premium: never —
 //      not even for the moment a slow /me takes to answer. anon and plus: yes,
 //      each with their own targeting.
-//   2. An impression means SEEN, not rendered: 50% of the card on screen for one
-//      continuous second, in a foreground tab.
+//   2. An impression means SEEN, not rendered: `seen.ratio` of the card on screen
+//      for `seen.ms` continuously, in a foreground tab. CONFIG below pins its own
+//      thresholds (0.5 / 1000ms) so these tests keep asserting the MECHANISM and
+//      never have to be retuned when the shipped config's numbers change — they
+//      did on 1405/06/29, from the IAB rule to 20% for 500ms.
 //
 // Rule 1 is the regression net for the production row
 // `article / premium-creative / plus-viewer`: /me answered late, the client had
@@ -334,5 +337,63 @@ describe('an image-only campaign renders as artwork, not as a link', () => {
     CONFIG.rotation.sequence = ['premium'];
     await boot();
     expect(creativeShown()).toBe('premium');
+  });
+});
+
+// The desktop sidebar (col-A of index.html's shell). It is the one slot that
+// belongs to no page type: its host is a permanent, empty #dcdSpotSidebar rather
+// than an anchor found from pageType(), and its card is PINNED to sequence[0]
+// because it sits on screen for the whole visit instead of once per page view.
+//
+// Both properties are what these tests hold. The second `it` is the regression
+// net for a slot switched ON in the config being silenced by an unrelated slot
+// being switched OFF: setupSidebarSlot() sat after an early return that listed
+// every slot but this one, so `home: false` took the permanent card down with it.
+describe('the desktop sidebar', () => {
+  const slots = JSON.parse(JSON.stringify(CONFIG.slots));
+  const sequence = [...CONFIG.rotation.sequence];
+  afterEach(() => {
+    (CONFIG as any).slots = JSON.parse(JSON.stringify(slots));
+    CONFIG.rotation.sequence = [...sequence];
+  });
+
+  /** index.html's desktop shell: the empty col-A host and nothing else. */
+  async function bootDesk(ms = 10_000): Promise<void> {
+    document.body.innerHTML = '<div id="mobile-body"><div id="dcPulseCard">pulse</div></div>'
+      + '<section id="dc-desktop-root"><div class="dcd-a-spot" id="dcdSpotSidebar"></div></section>';
+    vi.resetModules();
+    await import('/spot/spot.js');
+    await vi.advanceTimersByTimeAsync(ms);
+  }
+  const sidebarCard = () => document.querySelector('#dcdSpotSidebar .dc-spot--sidebar');
+
+  it('seats a card in col-A and counts it under its own slot name', async () => {
+    (CONFIG as any).slots = { home: { enabled: true }, sidebar: { enabled: true } };
+    await bootDesk();
+    expect(sidebarCard()).not.toBeNull();
+    await seen();
+    expect(posts.map((p) => p.body.content_id)).toContain('sidebar:premium');
+  });
+
+  it('renders even when the page own slot is off', async () => {
+    (CONFIG as any).slots = { home: { enabled: false }, sidebar: { enabled: true } };
+    await bootDesk();
+    expect(document.querySelector('#mobile-body .dc-spot'), 'home is off').toBeNull();
+    expect(sidebarCard(), 'sidebar is on, and nothing else decides that').not.toBeNull();
+    await seen();
+    expect(posts.map((p) => p.body.content_id)).toEqual(['sidebar:premium']);
+  });
+
+  it('spends no rotation beat — it is on screen for the whole visit', async () => {
+    (CONFIG as any).slots = { home: { enabled: false }, sidebar: { enabled: true } };
+    await bootDesk();
+    await seen();
+    expect(localStorage.getItem('dcAds.tick'), 'a permanent card must not burn a beat').toBeNull();
+  });
+
+  it('stays off when the config switches the slot off', async () => {
+    (CONFIG as any).slots = { home: { enabled: true }, sidebar: { enabled: false } };
+    await bootDesk();
+    expect(sidebarCard()).toBeNull();
   });
 });
