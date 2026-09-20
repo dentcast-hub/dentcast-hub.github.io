@@ -195,6 +195,30 @@ describe('a subscriber', () => {
     expect(chip('collections')).toBe('باز کردن');
   });
 
+  it('shows the three numbers above the catalog and puts «پیشخوان ›» beside the page title', async () => {
+    meImpl = () => Promise.resolve({
+      tier: 'premium', due_card_count: 4, current_streak: 17,
+      subscription: { expires_at: '2026-11-15T00:00:00Z' },
+    });
+    document.body.innerHTML = SKELETON;
+    // a page head, as index.html carries it
+    document.getElementById('panel-premium')!.insertAdjacentHTML('afterbegin',
+      '<div class="dc-exa-pagehead"><h2 class="dc-exa-pagetitle">پریمیوم</h2></div>');
+    const { initPremiumPanel } = await import('/plus/js/premium-panel.js');
+    await initPremiumPanel();
+    await settle(); await settle();
+    const tiles = Array.from(mobile().querySelectorAll('.dcp-pp-mine b')).map((b) => b.textContent);
+    expect(tiles).toEqual(['۴', '۱۳۲', '۱۷']);
+    const head = document.querySelector('#panel-premium .dc-exa-pagehead')!;
+    expect(head.querySelector('a.dcp-pp-dash')!.getAttribute('href')).toBe('/plus/');
+    expect(mobile().querySelector('.dcp-pp-top a')).toBeNull(); // not twice
+    expect(mobile().querySelector('.dcp-pp-lead')!.textContent).toMatch(/^اشتراک شما تا پایان روز .+ فعال است\. /);
+    // a second render adds no second link
+    await initPremiumPanel();
+    await settle();
+    expect(head.querySelectorAll('a.dcp-pp-dash')).toHaveLength(1);
+  });
+
   it('says «کامل شد» for a finished pathway', async () => {
     meImpl = () => Promise.resolve({ tier: 'premium', active_pathway: { current_step: 5, total_steps: 5, is_complete: true } });
     await mount();

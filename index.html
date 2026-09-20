@@ -4539,6 +4539,57 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 .dcp-hf .dcp-hf-state.is-live{
   background:var(--chip-bg); color:var(--ac); border-color:var(--chip-bd);
 }
+/* ── «پریمیوم» tab (#panel-premium / #dcd-premium) — the approved mockup's
+   grammar (.dentcast/premium-tab-mockup.html). Everything amber here comes
+   from the .dcp-hf block above; these rules only set the shapes the mockup
+   draws differently from the homepage rail: a lead line under the title, ONE
+   offer card, the subscriber's three numbers, group headers with a sub-line,
+   and slightly tighter cards with round icon discs. Prefixed .dcp-pp so the
+   rail on خانه is untouched. */
+#panel-premium .dc-exa-pagehead,
+#dcd-premium .dc-exa-pagehead{ display:flex; align-items:baseline; justify-content:space-between; gap:.6rem; }
+#panel-premium .dc-exa-pagehead .dcp-pp-dash,
+#dcd-premium .dc-exa-pagehead .dcp-pp-dash{ color:var(--ac); font-size:.74rem; font-weight:800; white-space:nowrap; text-decoration:none; }
+.dcp-pp{ margin-top:.1rem; }
+.dcp-pp .dcp-pp-top{ margin:0 .1rem .7rem; }
+.dcp-pp .dcp-pp-lead{ font-size:.8rem; color:var(--txt3); line-height:1.7; margin:0; }
+.dcp-pp .dcp-pp-top .dcp-hf-more{ display:inline-block; margin-top:.3rem; }
+.dcp-pp .dcp-pp-offer{
+  display:flex; align-items:center; gap:.7rem; padding:.7rem .85rem; margin:0 0 .9rem;
+  background:linear-gradient(180deg, var(--x-amber-wash), transparent 45%), var(--x-card);
+  border:1px solid var(--x-amber-bd); border-radius:1.1rem; box-shadow:var(--card-sh);
+  text-decoration:none; color:inherit; -webkit-tap-highlight-color:transparent;
+}
+.dcp-pp .dcp-pp-offer:active{ transform:scale(.985); }
+.dcp-pp .dcp-pp-offer .dcp-hf-ico{ width:2.1rem; height:2.1rem; border-radius:50%; }
+.dcp-pp .dcp-pp-offer .dcp-hf-ico svg{ width:1.05rem; height:1.05rem; }
+.dcp-pp .dcp-pp-offer-main{ flex:1; min-width:0; }
+.dcp-pp .dcp-pp-offer-main b{ display:block; font-size:.86rem; font-weight:800; color:var(--txt); }
+.dcp-pp .dcp-pp-offer-main span{ display:block; font-size:.72rem; color:var(--txt3); line-height:1.65; }
+.dcp-pp .dcp-pp-offer-go{ flex:none; font-size:.74rem; font-weight:800; color:var(--x-amber-ink); white-space:nowrap; }
+.dcp-pp .dcp-pp-guest{ font-size:.76rem; color:var(--txt3); margin:-.3rem .1rem .9rem; }
+.dcp-pp .dcp-pp-guest a{ color:var(--ac); font-weight:800; text-decoration:none; }
+.dcp-pp .dcp-pp-mine{ display:grid; grid-template-columns:repeat(3,1fr); gap:.45rem; margin:0 0 .9rem; }
+.dcp-pp .dcp-pp-mine > div{
+  background:var(--x-card); border:1px solid var(--card-border); border-radius:.9rem;
+  padding:.5rem .55rem; box-shadow:var(--card-sh);
+}
+.dcp-pp .dcp-pp-mine b{ display:block; font-size:1.05rem; font-weight:900; color:var(--pr); line-height:1.3; font-variant-numeric:tabular-nums; }
+.dcp-pp .dcp-pp-mine span{ display:block; font-size:.66rem; color:var(--txt3); }
+.dcp-pp .dcp-pp-group{ margin:0; }
+.dcp-pp .dcp-pp-group .dcp-hf-sec{ margin:.9rem .1rem .45rem; }
+.dcp-pp .dcp-pp-group .dcp-hf-label{ font-size:.86rem; font-weight:900; padding-right:.55rem; line-height:1.35; }
+.dcp-pp .dcp-pp-group .dcp-hf-label small{ display:block; font-size:.68rem; font-weight:500; color:var(--txt3); }
+.dcp-pp .dcp-hf-card{ gap:.65rem; padding:.62rem .7rem; margin-bottom:.45rem; border-radius:1rem; }
+.dcp-pp .dcp-hf-card.is-static{ cursor:default; }
+.dcp-pp .dcp-hf-card.is-static:active{ transform:none; background:linear-gradient(180deg, var(--x-amber-wash), transparent 45%), var(--x-card); }
+.dcp-pp .dcp-hf-ico{ width:2.05rem; height:2.05rem; border-radius:50%; }
+.dcp-pp .dc-list-card-title{ font-size:.84rem; font-weight:800; line-height:1.4; }
+.dcp-pp .dc-list-card-sub{ font-size:.7rem; color:var(--txt3); line-height:1.6; }
+.dcp-pp .dcp-hf-state{ font-size:.66rem; padding:.12rem .55rem; line-height:1.7; }
+/* the desktop copy: same measure and padding the archive surface uses */
+#dcd-premium .dcp-pp{ margin-top:.2rem; }
+
 /* the archive's premium library card gets the same wash + badge */
 #panel-sharehub #card-library,
 #dcd-archive #dcd-card-library{
@@ -6814,7 +6865,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=205" defer></script>
+<script src="/dc-nav.js?v=206" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

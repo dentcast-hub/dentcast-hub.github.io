@@ -27,12 +27,12 @@
 // the newest چالش wait behind an IntersectionObserver — the pattern
 // article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum } from './util.js?v=113';
-import { currentUser, meStatus, api } from './api.js?v=113';
-import { pricingHref } from './premium-cta.js?v=113';
-import { openLoginModal } from './login-modal.js?v=113';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=113';
-import { PREMIUM_GROUPS } from './premium-catalog.js?v=113';
+import { el, faNum } from './util.js?v=114';
+import { currentUser, meStatus, api } from './api.js?v=114';
+import { pricingHref } from './premium-cta.js?v=114';
+import { openLoginModal } from './login-modal.js?v=114';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=114';
+import { PREMIUM_GROUPS } from './premium-catalog.js?v=114';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -56,8 +56,23 @@ function stateChip(text, live) {
  * about money (the up-board gate-card argument), and for a subscriber it
  * points at the one thing that is NOT here — their own material.
  */
-function lead(state) {
-  if (state === 'live') return 'همه‌ی ابزارهای اشتراک شما، یک‌جا. چیزهای خودتان — هایلایت‌های اخیر، استریک، لیگ — در پیشخوان است.';
+const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
+  day: 'numeric', month: 'long', timeZone: 'Asia/Tehran',
+});
+
+function lead(state, me) {
+  if (state === 'live') {
+    // The subscription's end, when there is one to name: a league-prize week
+    // and a founder account carry no expiry, and the sentence then simply
+    // starts at the second clause (profile.js makes the same distinction).
+    const sub = me && me.subscription;
+    let until = '';
+    if (sub && sub.expires_at) {
+      try { until = 'اشتراک شما تا پایان روز ' + JALALI_DAY.format(new Date(sub.expires_at)) + ' فعال است. '; }
+      catch (_) { until = ''; }
+    }
+    return until + 'این‌جا همه‌ی ابزارهایتان است؛ پیشخوان جای «چیزهای خودتان» است — هایلایت‌های اخیر، استریک، لیگ.';
+  }
   if (state === 'unknown') return 'ارتباط با سرور برقرار نشد؛ فهرست بدون وضعیتِ حساب شما نمایش داده می‌شود.';
   return 'هر چیزی که اشتراک به دنت‌کست اضافه می‌کند، یک‌جا. خواندن مقاله‌ها و شنیدن پادکست همیشه رایگان می‌ماند.';
 }
@@ -125,20 +140,59 @@ export function stateOf(me) {
   return 'locked';
 }
 
-function build(me) {
+/**
+ * The subscriber's three numbers above the catalog — a bridge to the dashboard,
+ * never a copy of it: today's cards and the streak come free with /me, the
+ * highlight total is painted when its request answers (see fillLazily).
+ */
+function mine(me) {
+  const tile = (key, value, label) => el('div', { 'data-dcp-mine': key }, [
+    el('b', { class: 'num' }, value),
+    el('span', {}, label),
+  ]);
+  return el('div', { class: 'dcp-pp-mine' }, [
+    tile('cards', faNum(me.due_card_count || 0), 'کارت برای امروز'),
+    tile('highlights', '–', 'هایلایت'),
+    tile('streak', faNum(me.current_streak || 0), 'روز استریک'),
+  ]);
+}
+
+/** The dashboard link, the header's own right-hand slot when the page has one. */
+function dashboardLink() {
+  return el('a', { class: 'dcp-hf-more dcp-pp-dash', href: '/plus/' }, 'پیشخوان ›');
+}
+
+function build(me, { hasHead = false } = {}) {
   const state = stateOf(me);
   const anon = !me && state === 'locked';
   const top = el('div', { class: 'dcp-pp-top' }, [
-    el('p', { class: 'dcp-pp-lead' }, lead(state)),
-    state === 'live' ? el('a', { class: 'dcp-hf-more', href: '/plus/' }, 'پیشخوان ›') : null,
+    el('p', { class: 'dcp-pp-lead' }, lead(state, me)),
+    // Without a page head to sit in (a bare slot), the link keeps its old place.
+    state === 'live' && !hasHead ? dashboardLink() : null,
   ].filter(Boolean));
   const wrap = el('div', { class: 'dcp-hf dcp-pp', 'data-dcp-state': state }, [
     top,
     state === 'locked' ? offer() : null,
     anon ? guestLine() : null,
+    state === 'live' ? mine(me) : null,
     ...PREMIUM_GROUPS.map((g) => group(g, state)),
   ].filter(Boolean));
   return wrap;
+}
+
+/**
+ * The panel's own title row (index.html's `.dc-exa-pagehead`, the archive's
+ * shape), when the slot sits under one: «پیشخوان ›» goes beside the title, as
+ * the approved mockup draws it. Idempotent — a re-render adds no second link.
+ */
+function pageHeadOf(slot) {
+  const host = slot.closest('#panel-premium, #dcd-premium');
+  return host ? host.querySelector('.dc-exa-pagehead') : null;
+}
+function placeDashboardLink(head, state) {
+  const old = head.querySelector('.dcp-pp-dash');
+  if (old) old.remove();
+  if (state === 'live') head.appendChild(dashboardLink());
 }
 
 /* ------------------------------------------------------------ live state -- */
@@ -167,7 +221,12 @@ function fillFromMe(me) {
 /** The two counts that cost a request each — fired once the panel is seen. */
 function fillLazily() {
   api.recentHighlights(1)
-    .then((d) => { if (d && d.total) paint('highlights', faNum(d.total) + ' هایلایت'); })
+    .then((d) => {
+      if (!d || !d.total) return;
+      paint('highlights', faNum(d.total) + ' هایلایت');
+      document.querySelectorAll('.dcp-pp [data-dcp-mine="highlights"] b')
+        .forEach((n) => { n.textContent = faNum(d.total); });
+    })
     .catch(() => { /* leave «باز کردن» rather than guess */ });
   api.listCollections()
     .then((d) => {
@@ -275,10 +334,12 @@ export async function initPremiumPanel() {
   try { me = await currentUser(); } catch (_) { me = null; }
   const state = stateOf(me);
   slots.forEach((slot) => {
-    const wrap = build(me);
+    const head = pageHeadOf(slot);
+    const wrap = build(me, { hasHead: !!head });
     wireCrossPanelLinks(wrap);
     slot.replaceChildren(wrap);
     slot.hidden = false;
+    if (head) placeDashboardLink(head, state);
   });
   if (state === 'live') fillFromMe(me);
   // Lazy half: only when a copy of the panel is actually on screen.
