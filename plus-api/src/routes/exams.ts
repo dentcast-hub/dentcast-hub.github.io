@@ -4,6 +4,7 @@ import { requirePremium } from '../middleware/require-premium.js';
 import { config } from '../config.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
 import { examState, startAttempt, submitAttempt, setCertificateIntent } from '../services/pathway-exams.js';
+import { holderNameFrom, holderNameMessageFa } from '../services/holder-name.js';
 
 /**
  * آزمون مسیر — the reader's side. Three routes, all premium: earning a
@@ -11,7 +12,7 @@ import { examState, startAttempt, submitAttempt, setCertificateIntent } from '..
  * `requirePremium`, and an exam on a pathway you cannot open is nothing).
  *
  *   GET  /exams/:pathwayId          where I stand (services/pathway-exams.ts examState)
- *   POST /exams/:pathwayId/start    {holder_name} → draw and open an attempt
+ *   POST /exams/:pathwayId/start    {holder_first_name, holder_last_name} → draw and open an attempt
  *   POST /exams/:pathwayId/submit   {answers: {qid: …}} → grade
  *   POST /exams/:pathwayId/intent   {intent: wanted|declined} → «گواهی می‌خواهی؟»
  *
@@ -40,21 +41,35 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
     }
   });
 
+  // The name is asked in TWO boxes — first name and family name — because a
+  // certificate is never issued to a pseudonym (services/holder-name.ts), and
+  // an empty family-name box cannot be talked past the way one free-text line
+  // could. `holder_name` is still read as one string for anything that sends
+  // it that way; both roads end at the same judge.
   app.post('/exams/:pathwayId/start', {
     schema: {
       body: {
-        type: 'object', required: ['holder_name'],
-        properties: { holder_name: { type: 'string', minLength: 1, maxLength: 120 } },
+        type: 'object',
+        properties: {
+          holder_first_name: { type: 'string', maxLength: 120 },
+          holder_last_name: { type: 'string', maxLength: 120 },
+          holder_name: { type: 'string', maxLength: 120 },
+        },
       },
     },
   }, async (request, reply) => {
     const { pathwayId } = request.params as { pathwayId: string };
-    const { holder_name } = request.body as { holder_name: string };
-    if (!holder_name.trim()) {
-      return reply.code(400).send({ error: 'holder_name_required', message: 'نامی که روی گواهی چاپ می‌شود را بنویس.' });
+    let holderName: string;
+    try {
+      holderName = holderNameFrom(request.body as Record<string, unknown>);
+    } catch (err) {
+      const code = (err as Error).message;
+      const message = holderNameMessageFa(code);
+      if (message) return reply.code(400).send({ error: code, message });
+      throw err;
     }
     try {
-      const r = await startAttempt(request.user!.id, pathwayId, holder_name);
+      const r = await startAttempt(request.user!.id, pathwayId, holderName);
       if (!r.ok) return reply.code(409).send({ ok: false, error: r.error, ...r.state });
       return reply.send({ ok: true, ...r.state });
     } catch (err) {

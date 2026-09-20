@@ -11,6 +11,7 @@ import { runPathwayAlerts, notifyCertificateWish, type CertificateIntent } from 
 import { ai } from '../providers/registry.js';
 import type { KeyPoint, PointState } from '../providers/ai/types.js';
 import { parseQuestionText, looksLikeJson } from './exam-text.js';
+import { assertHolderName, isRealHolderName } from './holder-name.js';
 
 /**
  * آزمونِ مسیر — the exam in front of the pathway certificate, end to end.
@@ -860,10 +861,15 @@ export type StartResult =
  * second draw. `holderName` is what the certificate will print; asked here,
  * before the questions, because a reader who has just passed should not be
  * stopped by a form.
+ *
+ * It is the reader's REAL first name and family name — the page asks in two
+ * boxes and this throws on anything `services/holder-name.ts` would not print
+ * on a document a stranger verifies (founder, 2026-09-20). Asking at the top
+ * of the exam rather than at the end is what keeps that from ever becoming a
+ * reader who passed and cannot be given the certificate they passed for.
  */
 export async function startAttempt(userId: string, pathwayId: string, holderName: string): Promise<StartResult> {
-  const name = holderName.trim().slice(0, 120);
-  if (!name) throw new Error('holder_name_required');
+  const name = assertHolderName(holderName);
   const state = await examState(userId, pathwayId);
   if (state.state !== 'ready') return { ok: false, error: 'not_ready', state };
   const form = (await getForm(pathwayId))!;
@@ -1068,17 +1074,25 @@ export async function gradeAttempt(attempt: ExamAttempt): Promise<ExamAttempt> {
   const unsure = verdict.some((v) => v.kind === 'free' && v.unsure);
   const supervised = hasFree && (form ? (await founderRulings(form.id)) < form.supervised_until : true);
 
-  if (unsure || supervised) {
-    const kept = await one<ExamAttempt>(
-      `update pathway_exam_attempts set verdict = $2::jsonb where id = $1 and status = 'queued' returning ${ATTEMPT_COLS}`,
-      [attempt.id, JSON.stringify(verdict)],
-    );
-    if (kept) await notifyFounderQueued(kept, unsure ? 'unsure' : 'supervised');
-    // `kept` is null when the founder settled it first, or the form (and the
-    // attempt with it) was deleted mid-grade; hand back whatever stands.
-    return kept ?? (await getAttempt(attempt.id)) ?? attempt;
-  }
-  return settle(attempt.id, verdict, 'ai', passPercent, null);
+  if (unsure || supervised) return queueForFounder(attempt, verdict, unsure ? 'unsure' : 'supervised');
+  return settle(attempt, verdict, 'ai', passPercent, null);
+}
+
+/**
+ * Store the verdict, leave the attempt queued, and tell the founder why.
+ * The verdict is always stored — that is what his queue pre-fills from.
+ */
+async function queueForFounder(
+  attempt: ExamAttempt, verdict: VerdictEntry[], why: QueueReason,
+): Promise<ExamAttempt> {
+  const kept = await one<ExamAttempt>(
+    `update pathway_exam_attempts set verdict = $2::jsonb where id = $1 and status = 'queued' returning ${ATTEMPT_COLS}`,
+    [attempt.id, JSON.stringify(verdict)],
+  );
+  if (kept) await notifyFounderQueued(kept, why);
+  // `kept` is null when the founder settled it first, or the form (and the
+  // attempt with it) was deleted mid-grade; hand back whatever stands.
+  return kept ?? (await getAttempt(attempt.id)) ?? attempt;
 }
 
 /**
@@ -1088,10 +1102,20 @@ export async function gradeAttempt(attempt: ExamAttempt): Promise<ExamAttempt> {
  * Passing issues the certificate in the same transaction.
  */
 async function settle(
-  attemptId: string, verdict: VerdictEntry[], by: 'ai' | 'founder', passPercent: number,
+  attempt: ExamAttempt, verdict: VerdictEntry[], by: 'ai' | 'founder', passPercent: number,
   holderName: string | null,
 ): Promise<ExamAttempt> {
+  const attemptId = attempt.id;
   const t = tally(verdict, passPercent);
+  // Passing and issuing are ONE act, and a certificate is never issued to a
+  // pseudonym — so an attempt that would pass with a name we cannot print is
+  // not settled at all: it waits for the founder, who types the name on the
+  // queue row. Unreachable for anything started after startAttempt began
+  // enforcing it; the road that must not exist is an auto-pass printing
+  // «بدون نام» on a document a stranger verifies.
+  if (t.passed && !isRealHolderName(holderName ?? attempt.holder_name)) {
+    return queueForFounder(attempt, verdict, 'holder_name');
+  }
   const result = await withTransaction(async (client) => {
     const row = await one<ExamAttempt>(
       `update pathway_exam_attempts
@@ -1108,7 +1132,7 @@ async function settle(
     let cert: Certificate | null = null;
     if (t.passed) {
       const issued = await issueCertificate(row.user_id, row.pathway_id, {
-        holderName: row.holder_name || 'بدون نام', attemptId: row.id, client, notify: false,
+        holderName: row.holder_name ?? '', attemptId: row.id, client, notify: false,
       });
       cert = issued.certificate;
     }
@@ -1130,7 +1154,7 @@ export type RuleInput = {
 
 export type RuleResult =
   | { ok: true; attempt: ExamAttempt }
-  | { ok: false; error: 'not_found' | 'not_queued' | 'bad_verdict' };
+  | { ok: false; error: 'not_found' | 'not_queued' | 'bad_verdict' | 'holder_name_invalid' };
 
 /**
  * The founder rules on a queued attempt.
@@ -1146,6 +1170,12 @@ export type RuleResult =
  * `void` strikes the attempt: it spends no attempt and starts no retry
  * clock — the founder's tool for a paste that was wrong, or a reader who
  * had a real problem mid-exam.
+ *
+ * `holder_name` is his own correction of what the reader typed, and it goes
+ * through the same judge as every other door: a `pass` whose name is not a
+ * real first-name-plus-family-name is refused (`holder_name_invalid`) rather
+ * than settled, because passing and issuing commit together and the
+ * certificate would carry the pseudonym.
  */
 export async function ruleAttempt(attemptId: string, input: RuleInput): Promise<RuleResult> {
   const attempt = await getAttempt(attemptId);
@@ -1186,7 +1216,16 @@ export async function ruleAttempt(attemptId: string, input: RuleInput): Promise<
 
   const t = tally(base, passPercent);
   const passed = input.decision === 'pass';
-  const holder = input.holder_name?.trim() || null;
+  // The founder's field overrides what the reader typed; either way, a pass
+  // is refused outright rather than issued to a name that cannot go on a
+  // document a stranger verifies. Refused, not quietly downgraded to a fail:
+  // the reader passed, and what is missing is a name the founder can type
+  // into the field already in front of him.
+  const typed = input.holder_name?.trim() || null;
+  const holder = typed ? (isRealHolderName(typed) ? typed : null) : null;
+  if (passed && !isRealHolderName(holder ?? attempt.holder_name)) {
+    return { ok: false, error: 'holder_name_invalid' };
+  }
   const result = await withTransaction(async (client) => {
     const row = await one<ExamAttempt>(
       `update pathway_exam_attempts
@@ -1209,7 +1248,7 @@ export async function ruleAttempt(attemptId: string, input: RuleInput): Promise<
     let cert: Certificate | null = null;
     if (passed) {
       const issued = await issueCertificate(row.user_id, row.pathway_id, {
-        holderName: row.holder_name || 'بدون نام', attemptId: row.id, client, notify: false,
+        holderName: row.holder_name ?? '', attemptId: row.id, client, notify: false,
       });
       cert = issued.certificate;
     }
@@ -1331,7 +1370,9 @@ export async function notifyAssigneesOfNewForm(pathwayId: string): Promise<numbe
 }
 
 /** One line to the founder's own account when an attempt needs a human. */
-async function notifyFounderQueued(a: ExamAttempt, why: 'unsure' | 'supervised'): Promise<void> {
+type QueueReason = 'unsure' | 'supervised' | 'holder_name';
+
+async function notifyFounderQueued(a: ExamAttempt, why: QueueReason): Promise<void> {
   const phone = config.pathwayAlert.alertPhone || config.support.alertPhone;
   if (!phone) return;
   const target = await one<{ id: string }>('select id from profiles where phone = $1', [phone]);
@@ -1340,7 +1381,9 @@ async function notifyFounderQueued(a: ExamAttempt, why: 'unsure' | 'supervised')
   await sendCapped(target.id, {
     title: 'یک آزمون منتظر توست',
     body: `${a.reference} — «${title}»، تلاش ${fa(a.attempt_no)}. `
-      + (why === 'unsure' ? 'مدل روی یک پاسخ تشریحی مطمئن نبود.' : 'فرم هنوز زیر نظر توست؛ حکم مدل آماده است.'),
+      + (why === 'unsure' ? 'مدل روی یک پاسخ تشریحی مطمئن نبود.'
+        : why === 'holder_name' ? 'قبول شده، اما نامِ روی گواهی کامل نیست؛ نام و نام خانوادگی واقعی را بنویس و حکم بده.'
+        : 'فرم هنوز زیر نظر توست؛ حکم مدل آماده است.'),
     url: '/admin#exams',
     tag: 'exam-queue',
   }, 'system');

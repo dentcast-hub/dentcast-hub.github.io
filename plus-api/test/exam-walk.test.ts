@@ -113,7 +113,7 @@ describe('the whole road: a mixed exam, queued, ruled by the founder, certificat
     // ── 4. reading the whole pathway is not enough — enrolment is the act
     await readEverything();
     expect((await examState()).state).toBe('locked');
-    expect((await post(`/exams/${PATHWAY}/start`, { holder_name: 'x' })).statusCode).toBe(409);
+    expect((await post(`/exams/${PATHWAY}/start`, { holder_name: 'مهسا رضایی' })).statusCode).toBe(409);
 
     // ── 5. «شروع این مسیر», then «بله» to the certificate question. The reader
     //       is already finished, so that answer is news the founder gets NOW
@@ -205,7 +205,7 @@ describe('the whole road: a mixed exam, queued, ruled by the founder, certificat
     expect(v).toMatchObject({ holder_name: 'دکتر مهسا رضایی', pathway_id: PATHWAY, revoked: false });
 
     // ── 13. and it is over: no second attempt, no second certificate
-    expect((await post(`/exams/${PATHWAY}/start`, { holder_name: 'y' })).statusCode).toBe(409);
+    expect((await post(`/exams/${PATHWAY}/start`, { holder_name: 'سارا کریمی' })).statusCode).toBe(409);
     const certs = await pool.query('select count(*)::int as n from certificates where user_id = $1', [await uid()]);
     expect(certs.rows[0].n).toBe(1);
   });
@@ -218,7 +218,7 @@ describe('the road not taken: failing, waiting, and the second attempt', () => {
     await post(`/pathways/${PATHWAY}/enroll`);
 
     // an all-multiple-choice form settles on its own, whatever «حدِ نظارت» says
-    const first = await post(`/exams/${PATHWAY}/start`, { holder_name: 'دکتر ن.' });
+    const first = await post(`/exams/${PATHWAY}/start`, { holder_name: 'دکتر نگار حسینی' });
     const ids = first.json().open.questions.map((q: { id: string }) => q.id);
     const wrong: Record<string, number> = {};
     for (const id of ids) wrong[id] = 0;
@@ -228,7 +228,7 @@ describe('the road not taken: failing, waiting, and the second attempt', () => {
     expect((await adminGet('/admin/exam-attempts')).json().count).toBe(0);
 
     // the week is real, and the reader is told what happened without a key
-    expect((await post(`/exams/${PATHWAY}/start`, { holder_name: 'x' })).statusCode).toBe(409);
+    expect((await post(`/exams/${PATHWAY}/start`, { holder_name: 'مهسا رضایی' })).statusCode).toBe(409);
     const note = await pool.query<{ body: string }>('select body from notification_log where user_id = $1', [await uid()]);
     expect(note.rows[0].body).toContain('به حد نصاب نرسید');
     expect(note.rows[0].body).not.toContain('الف');
@@ -236,7 +236,7 @@ describe('the road not taken: failing, waiting, and the second attempt', () => {
     // a week later, and this time right
     await pool.query("update pathway_exam_attempts set submitted_at = submitted_at - interval '8 days'");
     expect((await examState()).state).toBe('ready');
-    const second = await post(`/exams/${PATHWAY}/start`, { holder_name: 'دکتر ن.' });
+    const second = await post(`/exams/${PATHWAY}/start`, { holder_name: 'دکتر نگار حسینی' });
     expect(second.json().open.questions).toHaveLength(4);
     const right: Record<string, number> = {};
     for (const q of second.json().open.questions) right[q.id] = 1;
@@ -245,14 +245,14 @@ describe('the road not taken: failing, waiting, and the second attempt', () => {
     expect(passed.json().history.map((h: { attempt_no: number }) => h.attempt_no)).toEqual([1, 2]);
 
     // a third is refused even though a certificate now exists
-    expect((await post(`/exams/${PATHWAY}/start`, { holder_name: 'x' })).statusCode).toBe(409);
+    expect((await post(`/exams/${PATHWAY}/start`, { holder_name: 'مهسا رضایی' })).statusCode).toBe(409);
   });
 
   it('the founder can strike an attempt, and it costs the reader nothing', async () => {
     await build([MCQ(1), FREE(1)]);
     await readEverything();
     await post(`/pathways/${PATHWAY}/enroll`);
-    const opened = await post(`/exams/${PATHWAY}/start`, { holder_name: 'x' });
+    const opened = await post(`/exams/${PATHWAY}/start`, { holder_name: 'مهسا رضایی' });
     const answers: Record<string, unknown> = {};
     for (const q of opened.json().open.questions) answers[q.id] = q.kind === 'mcq' ? 1 : LONG;
     await post(`/exams/${PATHWAY}/submit`, { answers });
@@ -264,7 +264,7 @@ describe('the road not taken: failing, waiting, and the second attempt', () => {
     expect(s).toMatchObject({ state: 'ready', attempts_used: 0 });
     expect(s.history).toHaveLength(0);
     // and the numbering the reader sees still starts at one
-    await post(`/exams/${PATHWAY}/start`, { holder_name: 'x' });
+    await post(`/exams/${PATHWAY}/start`, { holder_name: 'مهسا رضایی' });
     const again: Record<string, unknown> = {};
     for (const q of (await examState()).open.questions) again[q.id] = q.kind === 'mcq' ? 0 : LONG;
     const r = await post(`/exams/${PATHWAY}/submit`, { answers: again });
@@ -278,7 +278,7 @@ describe('the founder editing the pool under a reader', () => {
     await build([MCQ(1), MCQ(2)]);
     await readEverything();
     await post(`/pathways/${PATHWAY}/enroll`);
-    const opened = await post(`/exams/${PATHWAY}/start`, { holder_name: 'x' });
+    const opened = await post(`/exams/${PATHWAY}/start`, { holder_name: 'مهسا رضایی' });
     expect(opened.json().open.questions).toHaveLength(2);
 
     // the founder adds one and deletes another mid-exam
@@ -313,7 +313,7 @@ describe('the founder editing the pool under a reader', () => {
       questions: (await adminGet(`/admin/exam-forms/${PATHWAY}`)).json().form.questions,
       draw: 3,
     });
-    const r = await post(`/exams/${PATHWAY}/start`, { holder_name: 'x' });
+    const r = await post(`/exams/${PATHWAY}/start`, { holder_name: 'مهسا رضایی' });
     expect(r.statusCode).toBe(200);
     expect(r.json().open.questions.length).toBeGreaterThan(0);
   });
@@ -326,14 +326,14 @@ describe('who may not sit it at all', () => {
     await post(`/pathways/${PATHWAY}/enroll`);
     await pool.query(`update profiles set tier = 'free' where phone = $1`, [readerPhone]);
     expect((await get(`/exams/${PATHWAY}`)).statusCode).toBe(402);
-    expect((await post(`/exams/${PATHWAY}/start`, { holder_name: 'x' })).statusCode).toBe(402);
+    expect((await post(`/exams/${PATHWAY}/start`, { holder_name: 'مهسا رضایی' })).statusCode).toBe(402);
     expect((await post(`/exams/${PATHWAY}/submit`, { answers: {} })).statusCode).toBe(402);
     expect((await post(`/exams/${PATHWAY}/intent`, { intent: 'wanted' })).statusCode).toBe(402);
   });
 
   it('a signed-out visitor gets 401 everywhere, and the panel needs its own auth', async () => {
     expect((await app.inject({ method: 'GET', url: `/exams/${PATHWAY}` })).statusCode).toBe(401);
-    expect((await app.inject({ method: 'POST', url: `/exams/${PATHWAY}/start`, payload: { holder_name: 'x' } })).statusCode).toBe(401);
+    expect((await app.inject({ method: 'POST', url: `/exams/${PATHWAY}/start`, payload: { holder_name: 'مهسا رضایی' } })).statusCode).toBe(401);
     expect((await app.inject({ method: 'GET', url: '/admin/exam-attempts' })).statusCode).toBe(401);
     expect((await app.inject({ method: 'POST', url: '/admin/exam-forms/questions', payload: {} })).statusCode).toBe(401);
   });

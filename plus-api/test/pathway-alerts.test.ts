@@ -463,7 +463,7 @@ describe('تقاضای گواهی‌نامه — who asked', () => {
     await setTier('premium');
     await wantCert();
     const uid = await userId();
-    const issued = await issueCertificate(uid, PATHWAY_ID, { holderName: 'دکتر آزمون' });
+    const issued = await issueCertificate(uid, PATHWAY_ID, { holderName: 'دکتر مهسا رضایی' });
 
     expect((await certificateWishes())[0].certificate_code).toBe(issued.certificate.verify_code);
 
@@ -494,7 +494,7 @@ describe('تقاضای گواهی‌نامه — who asked', () => {
     await setTier('premium', other);
     await wantCert(other);
     const uid = await userId(other);
-    await issueCertificate(uid, PATHWAY_ID, { holderName: 'تمام‌شده' });
+    await issueCertificate(uid, PATHWAY_ID, { holderName: 'نیما مرادی' });
 
     const wishes = await certificateWishes();
     expect(wishes).toHaveLength(2);

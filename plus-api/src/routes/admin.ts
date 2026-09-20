@@ -2,6 +2,7 @@ import type { FastifyInstance, FastifyReply } from 'fastify';
 import { requireAdmin } from '../middleware/basic-auth.js';
 import { refreshOnce, contentStatus } from '../content-refresh.js';
 import { computeKpis, type Kpis } from '../services/kpis.js';
+import { holderNameFrom, holderNameMessageFa } from '../services/holder-name.js';
 import {
   onArticlePublished, runFreeDigest, runPremiumBacklog, backfillExistingContent,
 } from '../services/article-notify.js';
@@ -1470,7 +1471,8 @@ function renderHtml(
           + '<div class="muted">نکته‌های پوشش‌داده‌شده را تیک بزن:</div>' + checks + '</div>';
       });
       html += '<div class="row" style="margin-top:10px;align-items:flex-end">'
-        + '<div style="flex:1 1 220px"><label>نامِ روی گواهی</label><input type="text" data-holder maxlength="120" value="' + esc(row.holder_name || '') + '"></div>'
+        + '<div style="flex:1 1 260px"><label>نامِ روی گواهی (نام و نام خانوادگی واقعی)</label>'
+        + '<input type="text" data-holder maxlength="120" placeholder="مهسا رضایی" value="' + esc(row.holder_name || '') + '"></div>'
         + '<button type="button" data-act="pass">قبول + صدور گواهی</button>'
         + '<button type="button" data-act="fail">رد</button>'
         + '<button type="button" data-act="void">باطل (تلاش حساب نشود)</button>'
@@ -1544,7 +1546,8 @@ function renderHtml(
   <div class="muted">
     گواهی معمولاً با قبولی در آزمون خودش صادر می‌شود؛ این‌جا برای صدور دستی است (یک خوانندهٔ بنیان‌گذار، یک
     پایلوت). کد یکتای <span dir="ltr">DC-XXX-XXX</span> می‌گیرد، صفحهٔ تأییدِ عمومی دارد، و ٪۱۰ تخفیف (یک خرید،
-    کامل) همان لحظه برای خواننده نوشته می‌شود. نامِ روی گواهی همان‌جا قفل می‌شود — نه نامِ مستعار. گواهی هرگز حذف
+    کامل) همان لحظه برای خواننده نوشته می‌شود. نامِ روی گواهی همان‌جا قفل می‌شود و باید <b>نام و نام خانوادگی
+    واقعی</b> باشد — نامِ مستعارِ حساب پذیرفته نمی‌شود و سرور هم آن را رد می‌کند. گواهی هرگز حذف
     نمی‌شود، فقط باطل می‌شود (کدش شاید روی لینکدین کسی باشد).
   </div>
 
@@ -1556,8 +1559,10 @@ function renderHtml(
       <div style="flex:1 1 220px"><label for="cePath">مسیر</label><select id="cePath"></select></div>
     </div>
     <div class="row">
-      <div style="flex:1 1 260px"><label for="ceName">نامِ روی گواهی (همان‌طور که چاپ می‌شود)</label>
-        <input id="ceName" type="text" maxlength="120" placeholder="دکتر …"></div>
+      <div style="flex:1 1 180px"><label for="ceFirst">نام واقعی</label>
+        <input id="ceFirst" type="text" maxlength="120" placeholder="مهسا"></div>
+      <div style="flex:1 1 180px"><label for="ceLast">نام خانوادگی واقعی</label>
+        <input id="ceLast" type="text" maxlength="120" placeholder="رضایی"></div>
       <div style="flex:0 0 120px"><label for="cePct">تخفیف ٪</label>
         <input id="cePct" type="number" min="0" max="100" value="10"></div>
     </div>
@@ -1615,12 +1620,17 @@ function renderHtml(
 
     ceBtn.addEventListener('click', function () {
       if (!val('ceUser')) { ceOut.textContent = 'کاربر را بنویس.'; return; }
-      if (!val('ceName')) { ceOut.textContent = 'نامِ روی گواهی را بنویس.'; return; }
-      if (!confirm('گواهی «' + (titles[val('cePath')] || val('cePath')) + '» به نام «' + val('ceName')
+      // Two boxes, both required: the certificate carries the person's real
+      // name, never the account's pseudonym (services/holder-name.ts judges
+      // it server-side as well).
+      if (!val('ceFirst') || !val('ceLast')) { ceOut.textContent = 'نام و نام خانوادگی واقعی را بنویس.'; return; }
+      var ceFull = val('ceFirst') + ' ' + val('ceLast');
+      if (!confirm('گواهی «' + (titles[val('cePath')] || val('cePath')) + '» به نام «' + ceFull
         + '» صادر شود؟ نام بعداً قابل تغییر نیست.')) return;
       ceBtn.disabled = true; ceOut.textContent = 'در حال صدور…';
       post('/admin/certificates/issue', {
-        user: val('ceUser'), pathway_id: val('cePath'), holder_name: val('ceName'),
+        user: val('ceUser'), pathway_id: val('cePath'),
+        holder_first_name: val('ceFirst'), holder_last_name: val('ceLast'),
         discount_percent: parseInt(val('cePct') || '10', 10)
       }).then(function (res) {
         ceBtn.disabled = false;
@@ -5178,25 +5188,40 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ ok: true, certificates: await certificateRoster() });
   });
 
-  // POST /admin/certificates/issue — { user|phone, pathway_id, holder_name,
+  // POST /admin/certificates/issue — { user|phone, pathway_id,
+  // holder_first_name + holder_last_name (or holder_name as one string),
   // exam_id?, discount_percent?, notify? }. Idempotent while a live
   // certificate exists for that reader+pathway (see issueCertificate).
+  // The name is the person's REAL one; a pseudonym is refused here and again
+  // inside issueCertificate (services/holder-name.ts).
   app.post('/admin/certificates/issue', userBody({
     pathway_id: { type: 'string' },
-    holder_name: { type: 'string' },
+    holder_name: { type: 'string', maxLength: 120 },
+    holder_first_name: { type: 'string', maxLength: 120 },
+    holder_last_name: { type: 'string', maxLength: 120 },
     exam_id: { type: 'string' },
     discount_percent: { type: 'integer', minimum: 0, maximum: 100 },
     notify: { type: 'boolean' },
-  }, ['pathway_id', 'holder_name']), async (request, reply) => {
+  }, ['pathway_id']), async (request, reply) => {
     const b = request.body as {
-      user?: string; phone?: string; pathway_id: string; holder_name: string;
+      user?: string; phone?: string; pathway_id: string; holder_name?: string;
+      holder_first_name?: string; holder_last_name?: string;
       exam_id?: string; discount_percent?: number; notify?: boolean;
     };
     const who = await resolveUser(pick(b), reply);
     if (!who) return reply;
+    let holderName: string;
+    try {
+      holderName = holderNameFrom(b);
+    } catch (err) {
+      const code = (err as Error).message;
+      const message = holderNameMessageFa(code);
+      if (message) return reply.code(400).send({ error: code, message });
+      throw err;
+    }
     try {
       const result = await issueCertificate(who.id, b.pathway_id, {
-        holderName: b.holder_name,
+        holderName,
         examId: b.exam_id ?? null,
         discountPercent: b.discount_percent,
         notify: b.notify,
@@ -5206,7 +5231,8 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       const code = (err as Error).message;
       if (code === 'unknown_pathway') return reply.code(400).send({ error: code, message: 'این مسیر وجود ندارد (باندل‌ها گواهی ندارند).' });
       if (code === 'pathway_pending') return reply.code(400).send({ error: code, message: 'این مسیر هنوز کامل نشده (certificate: pending در pathways.json) — تا آمدنِ آخرین قسمت گواهی ندارد.' });
-      if (code === 'holder_name_required') return reply.code(400).send({ error: code, message: 'نامِ روی گواهی را بنویس.' });
+      const nameMessage = holderNameMessageFa(code);
+      if (nameMessage) return reply.code(400).send({ error: code, message: nameMessage });
       throw err;
     }
   });
@@ -5506,6 +5532,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       const messages: Record<string, string> = {
         not_found: 'یافت نشد.',
         not_queued: 'این تلاش در صف نیست (شاید همین حالا حل شد).',
+        holder_name_invalid: 'نامِ روی گواهی باید نام و نام خانوادگی واقعی باشد — با نام مستعار گواهی صادر نمی‌شود.',
         bad_verdict: 'حکمِ هر سؤال تشریحی باید دقیقاً نکته‌های همان سؤال باشد، هرکدام covered یا missing.',
       };
       return reply.code(r.error === 'not_found' ? 404 : 400).send({ error: r.error, message: messages[r.error] });
