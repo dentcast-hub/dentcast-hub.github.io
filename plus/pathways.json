@@ -560,6 +560,10 @@
       {
         "content_id": "dentai/promptologist/prompt7-1",
         "milestone": false
+      },
+      {
+        "content_id": "dentai/promptologist/prompt7-2",
+        "milestone": false
       }
     ],
     "reserved": {}
