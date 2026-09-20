@@ -536,7 +536,7 @@ function renderHtml(
     var SLOT_FA = {
       home: 'صفحهٔ اصلی', article: 'مقاله', pillar: 'ستون موضوعی', search: 'جستجوی سراسری',
       archive: 'تب آرشیو', player: 'پلیر', episode: 'صفحهٔ اپیزود', episodes: 'آرشیو اپیزودها',
-      dashboard: 'پیشخوان', profile: 'پروفایل'
+      dashboard: 'پیشخوان', profile: 'پروفایل', sidebar: 'ستونِ کنارِ دسکتاپ'
     };
     var FIRST_DAY = '2026-07-26';    // nothing exists before the emitter shipped
     var SLOT_SPLIT_DAY = '2026-07-28'; // pillar + episode arrived; article was relabelled

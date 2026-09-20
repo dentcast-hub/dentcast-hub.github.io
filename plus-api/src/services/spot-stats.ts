@@ -35,6 +35,17 @@ export const SPOT_SLOTS = new Set([
   // vocabulary only stays safe if it is widened in the SAME change that widens
   // spot-config.json; the test below fails if the two ever drift again.
   'pillar', 'episode',
+  // Added 2026-09-20, and the SECOND time this exact drift shipped. The desktop
+  // sidebar slot (`setupSidebarSlot`, rendering into index.html's empty
+  // #dcdSpotSidebar) has been enabled in spot-config.json and building cards,
+  // while every impression and click it reported was answered 400 and counted
+  // nowhere — so the report read as no demand rather than as a dropped
+  // pipeline, exactly as `pillar` and `episode` did. spot.js does raise its own
+  // alarm for this (a `spot_report_failed` GA event, once per page), which is
+  // where the evidence was sitting. The rule the comment above states is the
+  // fix: a closed vocabulary is only safe if it is widened in the SAME change
+  // that widens spot-config.json.
+  'sidebar',
 ]);
 
 // Creative ids come from spot-config.json (`premium`, sponsor ids). Open-ended by

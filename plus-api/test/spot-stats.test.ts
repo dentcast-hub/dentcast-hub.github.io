@@ -75,7 +75,10 @@ describe('spot telemetry — guest path', () => {
   });
 
   it('rejects an unknown slot and a malformed content_id', async () => {
-    for (const bad of [undefined, 'home', ':premium', 'sidebar:premium', 'home:', 'home:بد']) {
+    // 'sidebar' was the forged-slot example here until 2026-09-20, when it
+    // turned out to be a REAL slot the API had never been told about — so the
+    // example is now a name no config has ever carried.
+    for (const bad of [undefined, 'home', ':premium', 'footer:premium', 'home:', 'home:بد']) {
       const res = await anonSpot('spot_impression', bad);
       expect(res.statusCode, String(bad)).toBe(400);
       expect(res.json().error).toBe('invalid_content_id');
