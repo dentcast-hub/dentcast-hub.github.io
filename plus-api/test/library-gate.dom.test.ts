@@ -102,10 +102,29 @@ async function install(): Promise<void> {
   await new Promise((r) => setTimeout(r, 0));
 }
 
+/**
+ * Wait for the gate to FINISH, not for a fixed number of ticks.
+ *
+ * One tap runs a long asynchronous chain — the delegated listener calls
+ * openLibrary, which dynamically imports api.js, awaits /me, and then
+ * dynamically imports sheet.js and premium-cta.js together before it can draw
+ * anything. Two `setTimeout(0)`s do not cover that, and how many DO depends on
+ * whether vitest already has those modules in its cache, which changes with
+ * the order the cases run in. That is why this file's failures moved around:
+ * the topbar case (first, cold cache) failed every run, the drawer case (later,
+ * warm) passed, and the premium ones flickered. The gate itself was never open
+ * — measured 2026-09-20, the same tap resolves correctly given enough ticks.
+ */
+async function settle(done: () => boolean, ticks = 60): Promise<void> {
+  for (let i = 0; i < ticks; i++) {
+    if (done()) return;
+    await new Promise((r) => setTimeout(r, 0));
+  }
+}
+
 async function clickAndSettle(el: HTMLElement): Promise<void> {
   el.dispatchEvent(new window.MouseEvent('click', { bubbles: true, cancelable: true, button: 0 }));
-  await new Promise((r) => setTimeout(r, 0));
-  await new Promise((r) => setTimeout(r, 0));
+  await settle(() => navigatedTo !== null || gateOpened !== null);
 }
 
 /** Each of the three doors, built the way the site actually builds it. */
@@ -121,9 +140,15 @@ const DOORS: Array<{ name: string; html: string; id: string }> = [
     html: `<div class="dc-toolbar-drawer-inner"><a id="btn-cabinet" href="${CABINET}">کتابخانه</a></div>`,
   },
   {
+    // Copied from index.html: the card is matched on what it IS
+    // (role=button + its aria-label), never on its id — the homepage carries
+    // the card TWICE since 2026-09-10 (the phone's archive panel and the
+    // desktop archive surface) and an id cannot be shared. A fixture without
+    // that label stopped matching the shipped selector and the case failed
+    // while the real card was gated the whole time.
     name: 'the archive card',
     id: 'card-library',
-    html: `<div id="card-library" role="button" tabindex="0">کتابخانه</div>
+    html: `<div class="dc-radar-hero" id="card-library" role="button" tabindex="0" aria-label="کتابخانهٔ دنت‌کست">کتابخانه</div>
            <span id="card-library-lock">🔒</span>`,
   },
 ];
@@ -168,6 +193,9 @@ describe('the rules the original card script carried', () => {
     meResult = { ok: true, status: 200, body: { id: 'u1', tier: 'premium' } };
     document.body.innerHTML = DOORS[2].html;
     await install();
+    // install() settles /me too — same chain, same reason to wait for the
+    // OUTCOME rather than a tick count.
+    await settle(() => document.getElementById('card-library-lock')!.style.display === 'none');
 
     expect(document.getElementById('card-library-lock')!.style.display).toBe('none');
   });
@@ -177,6 +205,20 @@ describe('the rules the original card script carried', () => {
     await install();
 
     expect(document.getElementById('card-library-lock')!.style.display).not.toBe('none');
+  });
+
+  it('gates a SECOND archive card with no id — the match is what it is, not who it is', async () => {
+    // The homepage carries the card twice (#card-library on the phone panel,
+    // #dcd-card-library on the desktop surface) and an id cannot be shared, so
+    // the selector keys on role + aria-label. A card with no id at all must be
+    // gated exactly the same, or the 2026-08-09 bug has room to come back the
+    // moment somebody adds a third copy.
+    document.body.innerHTML = '<div class="dc-radar-hero" role="button" tabindex="0" aria-label="کتابخانهٔ دنت‌کست">کتابخانه</div>';
+    await install();
+    await clickAndSettle(document.querySelector('[role="button"]') as HTMLElement);
+
+    expect(navigatedTo, 'a free reader must not reach the cabinet').toBeNull();
+    expect(gateOpened).toBe('gate-library-archive');
   });
 
   it('tags the gate with the door it came from, so ?from= still means something', async () => {
