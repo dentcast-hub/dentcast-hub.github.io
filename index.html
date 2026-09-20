@@ -461,7 +461,7 @@ body{
 .dc-bottom-nav{
   position:fixed; bottom:0; left:0; right:0;
   z-index:300;
-  display:grid; grid-template-columns:repeat(3,1fr);
+  display:grid; grid-template-columns:repeat(4,1fr);
   background:var(--bn-bg);
   border-top:1px solid var(--bn-border);
   /* upward cast lifts the footer off the body; inset hairline gives the
@@ -2071,6 +2071,21 @@ body.dc-desktop-ui #dc-desktop-root{
 .dcd-archive-item.active .dcd-group-hdr-lbl,
 .dcd-archive-item.active .dcd-group-hdr-ico{ color:var(--sb-txt); }
 
+/* ── PREMIUM surface — the FOURTH state of column C, the archive's twin ── */
+.dcd-premium{ display:none; }
+.dcd-col-c-scroll.is-premium .dcd-welcome{ display:none; }
+.dcd-col-c-scroll.is-premium .dcd-content-area{ display:none; }
+.dcd-col-c-scroll.is-premium .dcd-archive{ display:none; }
+.dcd-col-c-scroll.is-premium .dcd-premium{
+  display:flex; flex-direction:column;
+  max-width:48.75rem; margin:0 auto;
+  padding:1.75rem 1.375rem;
+  width:100%; box-sizing:border-box;
+}
+.dcd-premium-item.active{ background:var(--sb-fill-1); }
+.dcd-premium-item.active .dcd-group-hdr-lbl,
+.dcd-premium-item.active .dcd-group-hdr-ico{ color:var(--sb-txt); }
+
 /* Loading spinner */
 .dcd-loading{
   display:flex; align-items:center; justify-content:center;
@@ -3549,6 +3564,15 @@ a.dc-list-card--pillar {
 .dc-bottom-nav .dc-bn-item.active .dc-bn-lbl{ color:var(--pr); font-weight:900; }
 .dc-bottom-nav .dc-bn-item.active{ background:none; border-radius:0.875rem; }
 .dc-bottom-nav .dc-bn-item.active::after{ background:var(--ac); box-shadow:none; }
+/* «پریمیوم» tab: the ICON wears amber — the site's one meaning for that colour,
+   «this is what a subscription buys» — and nothing else on the tab does. The
+   label and the active underline stay in the nav's own vocabulary so the bar
+   still reads as one object (mockup .dentcast/premium-tab-mockup.html, founder
+   1405/06/30: «فقط آیکون امبر»). Specificity (0,4,0) beats the (0,3,0) rules
+   above on purpose; the colour holds in both states. */
+.dc-bottom-nav .dc-bn-item[data-panel="panel-premium"] .dc-bn-ico,
+.dc-bottom-nav .dc-bn-item[data-panel="panel-premium"].active .dc-bn-ico{ color:var(--x-amber); }
+.dc-bottom-nav .dc-bn-item[data-panel="panel-premium"].active::after{ background:var(--x-amber); }
   </style>
 
 
@@ -3739,6 +3763,17 @@ a.dc-list-card--pillar {
      site-wide token. */
   --dcp-gold: #b7791f;
   --dcp-gold-bg: rgba(183, 121, 31, .10);
+  /* گواهی‌نامه — the certificate hue, the green already on the profile wall's
+     tick (#1f7850). It is deliberately NOT --dcp-gold: amber means «this is
+     what a subscription buys», and every surface that names a certificate
+     (the pathway strip, the catalog chip, the terms sheet) is already behind
+     the subscription, so gold there would say nothing while colliding with
+     the badge wall's metals. The tick itself keeps its literal #1f7850 — it
+     is white-on-green and needs no lightening in the dark theme, while these
+     are text and borders and do. */
+  --dcp-cert: #1f7850;
+  --dcp-cert-bg: rgba(31, 120, 80, .09);
+  --dcp-cert-bd: rgba(31, 120, 80, .26);
   /* Reference-pin accent (Collections «رفرنس» pins) — a second hue beside
      --dcp-gold so a reference pin reads as its own kind of thing next to a
      text pin, never confused with it. */
@@ -4130,9 +4165,13 @@ a.dc-list-card--pillar {
 
 /* ── mockup layout round 2: hero search + popular + category grid ── */
 #panel-sharehub .dc-exa-pagehead,
-#dcd-archive .dc-exa-pagehead{ padding:0.375rem 0.125rem 0; }
+#dcd-archive .dc-exa-pagehead,
+#panel-premium .dc-exa-pagehead,
+#dcd-premium .dc-exa-pagehead{ padding:0.375rem 0.125rem 0; }
 #panel-sharehub .dc-exa-pagetitle,
-#dcd-archive .dc-exa-pagetitle{
+#dcd-archive .dc-exa-pagetitle,
+#panel-premium .dc-exa-pagetitle,
+#dcd-premium .dc-exa-pagetitle{
   font-size:1.5rem; font-weight:800; color:var(--txt); line-height:1.5; margin:0;
 }
 #panel-sharehub .dc-exa-pagecount,
@@ -4511,6 +4550,57 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 .dcp-hf .dcp-hf-state.is-live{
   background:var(--chip-bg); color:var(--ac); border-color:var(--chip-bd);
 }
+/* ── «پریمیوم» tab (#panel-premium / #dcd-premium) — the approved mockup's
+   grammar (.dentcast/premium-tab-mockup.html). Everything amber here comes
+   from the .dcp-hf block above; these rules only set the shapes the mockup
+   draws differently from the homepage rail: a lead line under the title, ONE
+   offer card, the subscriber's three numbers, group headers with a sub-line,
+   and slightly tighter cards with round icon discs. Prefixed .dcp-pp so the
+   rail on خانه is untouched. */
+#panel-premium .dc-exa-pagehead,
+#dcd-premium .dc-exa-pagehead{ display:flex; align-items:baseline; justify-content:space-between; gap:.6rem; }
+#panel-premium .dc-exa-pagehead .dcp-pp-dash,
+#dcd-premium .dc-exa-pagehead .dcp-pp-dash{ color:var(--ac); font-size:.74rem; font-weight:800; white-space:nowrap; text-decoration:none; }
+.dcp-pp{ margin-top:.1rem; }
+.dcp-pp .dcp-pp-top{ margin:0 .1rem .7rem; }
+.dcp-pp .dcp-pp-lead{ font-size:.8rem; color:var(--txt3); line-height:1.7; margin:0; }
+.dcp-pp .dcp-pp-top .dcp-hf-more{ display:inline-block; margin-top:.3rem; }
+.dcp-pp .dcp-pp-offer{
+  display:flex; align-items:center; gap:.7rem; padding:.7rem .85rem; margin:0 0 .9rem;
+  background:linear-gradient(180deg, var(--x-amber-wash), transparent 45%), var(--x-card);
+  border:1px solid var(--x-amber-bd); border-radius:1.1rem; box-shadow:var(--card-sh);
+  text-decoration:none; color:inherit; -webkit-tap-highlight-color:transparent;
+}
+.dcp-pp .dcp-pp-offer:active{ transform:scale(.985); }
+.dcp-pp .dcp-pp-offer .dcp-hf-ico{ width:2.1rem; height:2.1rem; border-radius:50%; }
+.dcp-pp .dcp-pp-offer .dcp-hf-ico svg{ width:1.05rem; height:1.05rem; }
+.dcp-pp .dcp-pp-offer-main{ flex:1; min-width:0; }
+.dcp-pp .dcp-pp-offer-main b{ display:block; font-size:.86rem; font-weight:800; color:var(--txt); }
+.dcp-pp .dcp-pp-offer-main span{ display:block; font-size:.72rem; color:var(--txt3); line-height:1.65; }
+.dcp-pp .dcp-pp-offer-go{ flex:none; font-size:.74rem; font-weight:800; color:var(--x-amber-ink); white-space:nowrap; }
+.dcp-pp .dcp-pp-guest{ font-size:.76rem; color:var(--txt3); margin:-.3rem .1rem .9rem; }
+.dcp-pp .dcp-pp-guest a{ color:var(--ac); font-weight:800; text-decoration:none; }
+.dcp-pp .dcp-pp-mine{ display:grid; grid-template-columns:repeat(3,1fr); gap:.45rem; margin:0 0 .9rem; }
+.dcp-pp .dcp-pp-mine > div{
+  background:var(--x-card); border:1px solid var(--card-border); border-radius:.9rem;
+  padding:.5rem .55rem; box-shadow:var(--card-sh);
+}
+.dcp-pp .dcp-pp-mine b{ display:block; font-size:1.05rem; font-weight:900; color:var(--pr); line-height:1.3; font-variant-numeric:tabular-nums; }
+.dcp-pp .dcp-pp-mine span{ display:block; font-size:.66rem; color:var(--txt3); }
+.dcp-pp .dcp-pp-group{ margin:0; }
+.dcp-pp .dcp-pp-group .dcp-hf-sec{ margin:.9rem .1rem .45rem; }
+.dcp-pp .dcp-pp-group .dcp-hf-label{ font-size:.86rem; font-weight:900; padding-right:.55rem; line-height:1.35; }
+.dcp-pp .dcp-pp-group .dcp-hf-label small{ display:block; font-size:.68rem; font-weight:500; color:var(--txt3); }
+.dcp-pp .dcp-hf-card{ gap:.65rem; padding:.62rem .7rem; margin-bottom:.45rem; border-radius:1rem; }
+.dcp-pp .dcp-hf-card.is-static{ cursor:default; }
+.dcp-pp .dcp-hf-card.is-static:active{ transform:none; background:linear-gradient(180deg, var(--x-amber-wash), transparent 45%), var(--x-card); }
+.dcp-pp .dcp-hf-ico{ width:2.05rem; height:2.05rem; border-radius:50%; }
+.dcp-pp .dc-list-card-title{ font-size:.84rem; font-weight:800; line-height:1.4; }
+.dcp-pp .dc-list-card-sub{ font-size:.7rem; color:var(--txt3); line-height:1.6; }
+.dcp-pp .dcp-hf-state{ font-size:.66rem; padding:.12rem .55rem; line-height:1.7; }
+/* the desktop copy: same measure and padding the archive surface uses */
+#dcd-premium .dcp-pp{ margin-top:.2rem; }
+
 /* the archive's premium library card gets the same wash + badge */
 #panel-sharehub #card-library,
 #dcd-archive #dcd-card-library{
@@ -5602,6 +5692,20 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 
     </section>
 
+    <!-- ── PANEL: پریمیوم ──
+         The fourth bottom-nav destination. A PANEL like the three beside it,
+         never a page: switching is instant, swipe reaches it, and no new URL
+         means no new canonical. The slot is empty until
+         /plus/js/premium-panel.js fills it — one panel, two states (the locked
+         catalog for a guest or free reader, the same cards live for a
+         subscriber). Mockup: .dentcast/premium-tab-mockup.html. -->
+    <section class="dc-panel" id="panel-premium">
+      <div class="dc-exa-pagehead">
+        <h2 class="dc-exa-pagetitle">پریمیوم</h2>
+      </div>
+      <div id="dcPremiumPanel" class="dc-premium-panel" aria-label="امکانات پریمیوم" hidden></div>
+    </section>
+
     <!-- ── PANEL: بیماران ── -->
     <section class="dc-panel" id="panel-patient">
 
@@ -5745,7 +5849,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 
   </main>
 
-  <!-- BOTTOM NAV — سه‌تایی -->
+  <!-- BOTTOM NAV — چهارتایی -->
   <nav class="dc-bottom-nav" id="dcBottomNav" aria-label="ناوبری اصلی">
     <div class="dc-bn-item active" data-panel="panel-studio">
       <span class="dc-bn-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
@@ -5763,6 +5867,10 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         </svg>
       </span>
       <span class="dc-bn-lbl">آرشیو</span>
+    </div>
+    <div class="dc-bn-item" data-panel="panel-premium">
+      <span class="dc-bn-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/></svg></span>
+      <span class="dc-bn-lbl">پریمیوم</span>
     </div>
     <div class="dc-bn-item" data-panel="panel-patient">
       <span class="dc-bn-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
@@ -5847,6 +5955,13 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
       <button class="dcd-group-hdr dcd-archive-item" data-grp="archive" id="dcd-archive-item">
         <span class="dcd-group-hdr-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M10 12h4"/></svg></span>
         <span class="dcd-group-hdr-lbl">آرشیو</span>
+      </button>
+
+      <!-- پریمیوم — the phone's fourth tab, so the same shape as آرشیو above:
+           a top-level destination row that loads #dcd-premium into column C. -->
+      <button class="dcd-group-hdr dcd-premium-item" data-grp="premium" id="dcd-premium-item">
+        <span class="dcd-group-hdr-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/></svg></span>
+        <span class="dcd-group-hdr-lbl">پریمیوم</span>
       </button>
 
       <button class="dcd-group-hdr dcd-patient-item" data-grp="patients" id="dcd-patient-item">
@@ -6466,6 +6581,17 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 
       </div>
 
+      <!-- ══ PREMIUM — the desktop home of the phone's #panel-premium ══
+           Same shape as #dcd-archive: its own element, shown by a class flip
+           on the column (.is-premium), so opening a card from inside it does
+           not destroy it. Filled by /plus/js/premium-panel.js (second slot). -->
+      <div class="dcd-premium" id="dcd-premium" aria-label="امکانات پریمیوم">
+        <div class="dc-exa-pagehead">
+          <h2 class="dc-exa-pagetitle">پریمیوم</h2>
+        </div>
+        <div id="dcdPremiumPanel" class="dc-premium-panel" aria-label="امکانات پریمیوم" hidden></div>
+      </div>
+
       <!-- Fetched article content area -->
       <div class="dcd-content-area" id="dcd-content-area"></div>
 
@@ -6586,7 +6712,7 @@ const panels   = Array.from(document.querySelectorAll('.dc-panel'));
 const bnItems  = Array.from(document.querySelectorAll('.dc-bn-item'));
 let curIdx = 0;
 
-const panelOrder = ['panel-studio','panel-sharehub','panel-patient'];
+const panelOrder = ['panel-studio','panel-sharehub','panel-premium','panel-patient'];
 
 function showPanel(targetId, dir){
   const newIdx = panelOrder.indexOf(targetId);
@@ -6750,7 +6876,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=203" defer></script>
+<script src="/dc-nav.js?v=206" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -7308,6 +7434,8 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
        patients mode — one destination at a time. */
     colCScroll.classList.remove('is-archive');
     document.getElementById('dcd-archive-item')?.classList.remove('active');
+    colCScroll.classList.remove('is-premium');
+    document.getElementById('dcd-premium-item')?.classList.remove('active');
     colBTitle.textContent = label || type;
     colBCount.textContent = '';
     colB.innerHTML = '<div class="dcd-col-b-empty"><div class="dcd-col-b-empty-ico">⏳</div><div>در حال بارگذاری…</div></div>';
@@ -7426,6 +7554,8 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     colCScroll.classList.remove('has-content');
     colCScroll.classList.remove('is-archive');
     document.getElementById('dcd-archive-item')?.classList.remove('active');
+    colCScroll.classList.remove('is-premium');
+    document.getElementById('dcd-premium-item')?.classList.remove('active');
     contentArea.innerHTML = '';
     /* Enter viewer mode */
     colCEl.classList.add('is-viewer');
@@ -7454,6 +7584,8 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
        three states of column C are exclusive. */
     colCScroll.classList.remove('is-archive');
     document.getElementById('dcd-archive-item')?.classList.remove('active');
+    colCScroll.classList.remove('is-premium');
+    document.getElementById('dcd-premium-item')?.classList.remove('active');
     colCScroll.classList.add('has-content');
     contentArea.innerHTML = '<div class="dcd-loading">⏳ در حال بارگذاری…</div>';
 
@@ -7936,13 +8068,31 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   function showArchive(){
     root.querySelectorAll('.dcd-subitem').forEach(b => b.classList.remove('active'));
     archiveItem && archiveItem.classList.add('active');
+    premiumItem && premiumItem.classList.remove('active');
     if(colCEl){ colCEl.classList.remove('is-viewer'); colCEl.classList.remove('is-patient'); }
     if(pageViewer) pageViewer.src = 'about:blank';
     colCScroll.classList.remove('has-content');
+    colCScroll.classList.remove('is-premium');
     colCScroll.classList.add('is-archive');
     colCScroll.scrollTop = 0;
   }
   if(archiveItem) archiveItem.addEventListener('click', showArchive);
+  /* پریمیوم — the fourth exclusive state of column C, the archive's twin. */
+  const premiumEl = document.getElementById('dcd-premium');
+  const premiumItem = document.getElementById('dcd-premium-item');
+  function showPremium(){
+    root.querySelectorAll('.dcd-subitem').forEach(b => b.classList.remove('active'));
+    archiveItem && archiveItem.classList.remove('active');
+    premiumItem && premiumItem.classList.add('active');
+    if(colCEl){ colCEl.classList.remove('is-viewer'); colCEl.classList.remove('is-patient'); }
+    if(pageViewer) pageViewer.src = 'about:blank';
+    colCScroll.classList.remove('has-content');
+    colCScroll.classList.remove('is-archive');
+    colCScroll.classList.add('is-premium');
+    colCScroll.scrollTop = 0;
+  }
+  if(premiumItem) premiumItem.addEventListener('click', showPremium);
+  if(premiumEl) bindCardRouter(premiumEl);
   if(archiveEl){
     bindCardRouter(archiveEl);
     /* رادار opens the same overlay the topbar icon does. */

@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>تب پریمیوم</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap">
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10); --border2:rgba(2,35,96,.06); --line-strong:rgba(2,35,96,.18);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --chip-bg:rgba(11,95,255,.08); --chip-bd:rgba(11,95,255,.22);
+    --amber:#c9922b; --amber-ink:#8a6414;
+    --amber-wash:rgba(201,146,43,.08); --amber-wash-2:rgba(201,146,43,.13);
+    --amber-bd:rgba(154,107,21,.22);
+    --bn-bg:rgba(255,255,255,.92); --bn-border:rgba(2,35,96,.10); --bn-txt:#62779a; --bn-active:#0a1a33;
+    --phone-bezel:#0a1a33;
+    --mock-ink:#3b2f7a; --mock-bg:#efeaff; --mock-bd:rgba(59,47,122,.22);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --chip-bg:rgba(91,156,246,.12); --chip-bd:rgba(91,156,246,.28);
+    --amber:#e3b849; --amber-ink:#e3b849;
+    --amber-wash:rgba(227,184,73,.09); --amber-wash-2:rgba(227,184,73,.14);
+    --amber-bd:rgba(227,184,73,.26);
+    --bn-bg:rgba(23,33,43,.92); --bn-border:rgba(255,255,255,.09); --bn-txt:#6f8fb0; --bn-active:#e8f0ff;
+    --phone-bezel:#2a3543;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --chip-bg:rgba(91,156,246,.12); --chip-bd:rgba(91,156,246,.28);
+    --amber:#e3b849; --amber-ink:#e3b849;
+    --amber-wash:rgba(227,184,73,.09); --amber-wash-2:rgba(227,184,73,.14);
+    --amber-bd:rgba(227,184,73,.26);
+    --bn-bg:rgba(23,33,43,.92); --bn-border:rgba(255,255,255,.09); --bn-txt:#6f8fb0; --bn-active:#e8f0ff;
+    --phone-bezel:#2a3543;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }
+  *{ box-sizing:border-box; }
+  body{ background:var(--bg); color:var(--txt);
+        font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif;
+        direction:rtl; margin:0; padding-inline:16px; padding-block:0 5rem;
+        line-height:1.85; font-size:15px; }
+  button{ font:inherit; color:inherit; }
+  :focus-visible{ outline:2px solid var(--ac); outline-offset:2px; border-radius:6px; }
+  .num{ font-variant-numeric:tabular-nums; }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+  svg.i{ width:1em; height:1em; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; display:inline-block; vertical-align:-.15em; }
+
+  .wrap{ max-width:1040px; margin:0 auto; }
+  header.hd{ padding-block:2rem .4rem; max-width:60ch; }
+  header.hd .kicker{ display:inline-block; font-size:.72rem; font-weight:800; letter-spacing:.02em;
+    color:var(--mock-ink); background:var(--mock-bg); border:1px solid var(--mock-bd);
+    border-radius:999px; padding:.1rem .7rem; margin-bottom:.6rem; }
+  header.hd h1{ font-size:1.55rem; font-weight:900; margin:0 0 .4rem; line-height:1.4; text-wrap:balance; }
+  header.hd p{ margin:.2rem 0; color:var(--txt2); }
+
+  /* ── phones ── */
+  .stage{ display:grid; grid-template-columns:repeat(auto-fit, minmax(330px, 1fr)); gap:1.6rem; align-items:start; margin-top:1.4rem; }
+  .cap{ font-size:.8rem; color:var(--txt3); margin:0 0 .5rem; display:flex; align-items:center; gap:.5rem; }
+  .cap b{ color:var(--txt); font-weight:800; }
+  .cap .st{ font-size:.68rem; font-weight:800; border-radius:999px; padding:.05rem .55rem; border:1px solid; }
+  .cap .st-free{ color:var(--amber-ink); background:var(--amber-wash-2); border-color:var(--amber-bd); }
+  .cap .st-prem{ color:var(--ac); background:var(--chip-bg); border-color:var(--chip-bd); }
+  .phone{ width:100%; max-width:390px; margin:0 auto; height:780px;
+    background:var(--bg); border:8px solid var(--phone-bezel); border-radius:2.4rem;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,.45); position:relative; overflow:hidden;
+    display:flex; flex-direction:column; }
+  .topbar{ flex:none; display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+    padding:.7rem .9rem .5rem; background:var(--surface); border-bottom:1px solid var(--border2); }
+  .topbar .brand{ display:flex; align-items:center; gap:.45rem; font-weight:900; font-size:.9rem; color:var(--pr); }
+  .topbar .brand i{ width:1.55rem; height:1.55rem; border-radius:50%; background:var(--pr); display:inline-block; }
+  .topbar .tb{ display:flex; gap:.35rem; color:var(--txt3); font-size:1.05rem; }
+  .topbar .tb span{ width:1.9rem; height:1.9rem; border-radius:50%; display:grid; place-items:center; background:var(--surface2); }
+  .body{ flex:1; overflow-y:auto; padding:.75rem .75rem 5.2rem; scrollbar-width:thin; }
+
+  /* panel content — the site's own card grammar */
+  .pagehead{ display:flex; align-items:baseline; justify-content:space-between; gap:.6rem; margin:.2rem .1rem .1rem; }
+  .pagetitle{ font-size:1.35rem; font-weight:900; margin:0; letter-spacing:-.01em; }
+  .pagesub{ font-size:.8rem; color:var(--txt3); margin:0 .1rem .7rem; line-height:1.7; }
+
+  .offer{ display:flex; align-items:center; gap:.7rem; padding:.7rem .85rem; margin:0 0 .9rem;
+    background:linear-gradient(180deg, var(--amber-wash), transparent 45%), var(--surface);
+    border:1px solid var(--amber-bd); border-radius:1.1rem; box-shadow:var(--card-sh); text-decoration:none; color:inherit; }
+  .offer .oi{ flex:none; width:2.1rem; height:2.1rem; border-radius:50%; display:grid; place-items:center;
+    background:var(--amber-wash-2); border:1px solid var(--amber-bd); color:var(--amber-ink); font-size:1.05rem; }
+  .offer .ot{ flex:1; min-width:0; }
+  .offer .ot b{ display:block; font-size:.86rem; font-weight:800; }
+  .offer .ot span{ display:block; font-size:.72rem; color:var(--txt3); line-height:1.65; }
+  .offer .go{ flex:none; font-size:.74rem; font-weight:800; color:var(--amber-ink); white-space:nowrap; }
+
+  .mine{ display:grid; grid-template-columns:repeat(3,1fr); gap:.45rem; margin:0 0 .9rem; }
+  .mine > div{ background:var(--surface); border:1px solid var(--border); border-radius:.9rem; padding:.5rem .55rem; box-shadow:var(--card-sh); }
+  .mine b{ display:block; font-size:1.05rem; font-weight:900; color:var(--pr); line-height:1.3; }
+  .mine span{ display:block; font-size:.66rem; color:var(--txt3); }
+
+  .sec{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin:.9rem .1rem .45rem; }
+  .sec h2{ font-size:.86rem; font-weight:900; margin:0; padding-right:.55rem; border-right:4px solid var(--amber); line-height:1.35; }
+  .sec h2 small{ display:block; font-size:.68rem; font-weight:500; color:var(--txt3); }
+  .sec .more{ font-size:.74rem; font-weight:800; color:var(--amber-ink); white-space:nowrap; }
+  .sec .more.blue{ color:var(--ac); }
+
+  .card{ display:flex; align-items:center; gap:.65rem; padding:.62rem .7rem; margin-bottom:.45rem;
+    background:linear-gradient(180deg, var(--amber-wash), transparent 45%), var(--surface);
+    border:1px solid var(--amber-bd); border-radius:1rem; box-shadow:var(--card-sh); }
+  .card .ico{ flex:none; width:2.05rem; height:2.05rem; border-radius:50%; display:grid; place-items:center;
+    background:var(--amber-wash-2); border:1px solid var(--amber-bd); color:var(--amber-ink); font-size:1rem; }
+  .card .main{ flex:1; min-width:0; }
+  .card .t{ font-size:.84rem; font-weight:800; line-height:1.4; }
+  .card .s{ font-size:.7rem; color:var(--txt3); line-height:1.6; }
+  .card .state{ flex:none; font-size:.66rem; font-weight:800; border-radius:999px; padding:.12rem .55rem; white-space:nowrap;
+    background:var(--amber-wash-2); color:var(--amber-ink); border:1px solid var(--amber-bd); }
+  .card .state.live{ background:var(--chip-bg); color:var(--ac); border-color:var(--chip-bd); }
+  .card.hint .t::after{ content:' ·  تازه'; font-size:.66rem; color:var(--ac); font-weight:800; }
+
+  /* bottom nav — four tabs */
+  .bn{ position:absolute; bottom:0; left:0; right:0; z-index:3;
+    display:grid; grid-template-columns:repeat(4,1fr);
+    background:var(--bn-bg); backdrop-filter:blur(14px) saturate(1.4); -webkit-backdrop-filter:blur(14px) saturate(1.4);
+    border-top:1px solid var(--bn-border); box-shadow:0 -2px 14px rgba(2,35,96,.06);
+    padding-bottom:.4rem; border-radius:0 0 2rem 2rem; }
+  .bn .it{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.19rem;
+    padding:.56rem .25rem .44rem; position:relative; color:var(--bn-txt); }
+  .bn .it .ic{ font-size:1.375rem; line-height:1; }
+  .bn .it .lb{ font-size:.66rem; font-weight:700; letter-spacing:.01em; }
+  .bn .it.home .ic{ font-size:1.6875rem; }
+  .bn .it.home .lb{ font-size:.72rem; font-weight:900; }
+  .bn .it.premium .ic{ color:var(--amber); }
+  .bn .it.active .ic{ color:var(--pr); transform:translateY(-1px); }
+  .bn .it.active.premium .ic{ color:var(--amber); }
+  .bn .it.active .lb{ color:var(--pr); font-weight:900; }
+  .bn .it.active::after{ content:""; position:absolute; top:0; left:25%; right:25%; height:.125rem; border-radius:999px; background:var(--ac); }
+  .bn .it.active.premium::after{ background:var(--amber); }
+
+  /* ── notes ── */
+  .notes{ margin-top:2.2rem; display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1rem; }
+  .note{ background:var(--mock-bg); border:1px solid var(--mock-bd); color:var(--mock-ink); border-radius:1rem; padding:.9rem 1.05rem; font-size:.86rem; line-height:1.9; }
+  .note h3{ margin:0 0 .3rem; font-size:.92rem; font-weight:900; }
+  .note p{ margin:.25rem 0; }
+  .note ul{ margin:.25rem 0 0; padding-right:1.1rem; }
+  .note li{ margin:.15rem 0; }
+  .note b{ font-weight:800; }
+
+  /* tab colour options strip */
+  .opts{ margin-top:2rem; }
+  .opts h2{ font-size:1.05rem; font-weight:900; margin:0 0 .3rem; }
+  .opts p{ color:var(--txt2); margin:0 0 .8rem; max-width:60ch; }
+  .optrow{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:.8rem; }
+  .opt{ background:var(--surface); border:1px solid var(--border); border-radius:1rem; box-shadow:var(--card-sh); overflow:hidden; }
+  .opt .lab{ padding:.5rem .8rem; font-size:.78rem; font-weight:800; border-bottom:1px solid var(--border2); display:flex; justify-content:space-between; align-items:center; }
+  .opt .lab span{ font-weight:500; color:var(--txt3); }
+  .opt .lab .pick{ color:var(--mock-ink); background:var(--mock-bg); border:1px solid var(--mock-bd); border-radius:999px; padding:0 .5rem; font-size:.66rem; font-weight:800; }
+  .opt .bn{ position:static; border-radius:0; padding-bottom:.2rem; box-shadow:none; }
+  .opt .bn.o-blue .it.premium .ic{ color:var(--bn-txt); }
+  .opt .bn.o-blue .it.active.premium .ic{ color:var(--pr); }
+  .opt .bn.o-blue .it.active.premium::after{ background:var(--ac); }
+  .opt .bn.o-full .it.premium .ic, .opt .bn.o-full .it.premium .lb{ color:var(--amber-ink); }
+  .opt .bn.o-full .it.premium{ background:var(--amber-wash-2); border-radius:.75rem; margin:.2rem; }
+</style>
+
+<div class="wrap">
+  <header class="hd">
+    <span class="kicker">ماکاپ · تأییدشده ۱۴۰۵/۰۶/۳۰ (با اصلاح «بدون تبلیغ در مقالات»)</span>
+    <h1>تب چهارم «پریمیوم» در نوبار پایین صفحهٔ اصلی</h1>
+    <p>یک پنل داخل خودِ صفحهٔ اصلی، کنار خانه و آرشیو و بیماران؛ نه یک صفحهٔ جدا، نه پاپ‌آپ. یک صفحه با دو حالت: برای خوانندهٔ رایگان یا مهمان، کاتالوگِ کاملِ آنچه اشتراک می‌خرد؛ برای مشترک، همان کارت‌ها زنده، با وضعیت خودش.</p>
+    <p>هر دو گوشی زیر قابل اسکرول‌اند. کارت‌ها همان دستورِ کارتِ ریل «دنت‌کست پریمیوم» روی خانه هستند، فقط این‌بار همه‌شان، نه نُه‌تا.</p>
+  </header>
+
+  <div class="stage">
+
+    <!-- ══════════ PHONE A: free / guest ══════════ -->
+    <div>
+      <p class="cap"><b>گوشی ۱</b> · مهمان یا کاربر رایگان <span class="st st-free">کاتالوگ قفل</span></p>
+      <div class="phone">
+        <div class="topbar">
+          <div class="brand"><i></i>DentCast</div>
+          <div class="tb"><span>☰</span><span>👤</span></div>
+        </div>
+        <div class="body">
+          <div class="pagehead">
+            <h2 class="pagetitle">پریمیوم</h2>
+          </div>
+          <p class="pagesub">هر چیزی که اشتراک به دنت‌کست اضافه می‌کند، یک‌جا. خواندن مقاله‌ها و شنیدن پادکست همیشه رایگان می‌ماند.</p>
+
+          <a class="offer" href="#">
+            <span class="oi"><svg class="i" viewBox="0 0 24 24"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/></svg></span>
+            <span class="ot"><b>اشتراک پریمیوم</b><span>یک‌ماهه، سه‌ماهه، شش‌ماهه · کارت هدیه و واریز به شبا هم هست</span></span>
+            <span class="go">دیدن پلان‌ها ›</span>
+          </a>
+
+          <div class="sec"><h2>خواندن و مرور<small>هایلایت‌هایت تبدیل به چیزی می‌شوند که برمی‌گردد</small></h2></div>
+          <div class="card"><span class="ico">🗂</span><div class="main"><div class="t">برای مرور امروز</div><div class="s">هایلایت‌ها درست پیش از فراموش‌شدن برمی‌گردند</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">📒</span><div class="main"><div class="t">دفترچه‌ی هایلایت‌ها</div><div class="s">همه‌ی هایلایت‌هایتان یکجا، با یادداشت و جستجو</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">🔭</span><div class="main"><div class="t">نمای موضوعی هایلایت‌ها</div><div class="s">همه‌ی یادداشت‌هایت دربارهٔ یک مفهوم، از هر مقاله‌ای که بوده</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">🎧</span><div class="main"><div class="t">هایلایت‌های صوتی</div><div class="s">مثل هایلایت متن، روی پادکست: تکه را نگه دارید و دوباره بشنوید</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">📁</span><div class="main"><div class="t">کالکشن‌ها</div><div class="s">پوشه‌های خودتان، با پینِ متن و رفرنس، و خروجی Word و PowerPoint</div></div><span class="state">🔒</span></div>
+
+          <div class="sec"><h2>مسیر و گواهی<small>از «چی بخونم» تا گواهی به نام خودت</small></h2></div>
+          <div class="card"><span class="ico">🧭</span><div class="main"><div class="t">مسیر یادگیری</div><div class="s">از پیش‌نیاز تا پیشرفته، به ترتیبِ درست</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">🎓</span><div class="main"><div class="t">گواهی‌نامهٔ تکمیل مسیر</div><div class="s">مسیر را تمام کنید، آزمونش را بدهید، گواهی با کد یکتا و صفحهٔ تأیید</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">🧿</span><div class="main"><div class="t">قطب‌نمای مطالعه</div><div class="s">چقدر از هر پیلار را خوانده‌اید، کجا جا مانده</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">📆</span><div class="main"><div class="t">گزارش ماهانه</div><div class="s">هر ماه، آنچه خواندید و کجا ایستادید</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">🗺</span><div class="main"><div class="t">چیدمان موضوعی سری‌ها</div><div class="s">هر پیلار با زیرموضوع و زنجیرهٔ خواندن، نه فقط فهرستِ تاریخی</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">❤</span><div class="main"><div class="t">«بالاترین» در up-board</div><div class="s">همان ۴۴۴ مطلب، به ترتیبی که خواننده‌ها ساخته‌اند</div></div><span class="state">🔒</span></div>
+
+          <div class="sec"><h2>ابزار<small>چیزهایی که به‌جای شما می‌گردند</small></h2></div>
+          <div class="card"><span class="ico">✳</span><div class="main"><div class="t">دستیار هوشمند</div><div class="s">شرح کیس را بنویسید، به مرتبط‌ترین مطلب برسید</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">🧩</span><div class="main"><div class="t">مسیریاب</div><div class="s">بگویید چه‌کاره‌اید، نقشهٔ خواندنِ خودتان را می‌سازد</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">📚</span><div class="main"><div class="t">کتابخانهٔ دنت‌کست</div><div class="s">بیش از ۲۲۰۰ مقاله‌ی علمی، دسته‌بندی‌شده و قابل جستجو</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">⚗</span><div class="main"><div class="t">امتیاز DES برای مقاله‌ی خودت</div><div class="s">چکیده را بفرست، با همان DentCast Evidence Score ارزیابی می‌شود</div></div><span class="state">🔒</span></div>
+
+          <div class="sec"><h2>گفت‌وگو و همراهی<small>چیزهایی که بی‌سروصدا فرق می‌کنند</small></h2></div>
+          <div class="card"><span class="ico">💬</span><div class="main"><div class="t">گفت‌وگوی زیر مطلب</div><div class="s">زیر هر مقاله سؤالتان را بنویسید؛ جواب می‌گیرید، به اسم خودتان</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">❓</span><div class="main"><div class="t">پاسخ به چالش‌ها</div><div class="s">به کیس‌های سؤال‌شکل جواب بدهید و نکته‌های کلیدی را ببینید</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">📵</span><div class="main"><div class="t">بدون تبلیغ در مقالات</div><div class="s">هیچ کارت اسپانسری لای مقاله‌ها و اپیزودها</div></div><span class="state">🔒</span></div>
+          <div class="card"><span class="ico">📲</span><div class="main"><div class="t">یادآوری استریک با پیامک</div><div class="s">فقط روزی که استریک در خطر است، فقط اگر خودتان بخواهید</div></div><span class="state">🔒</span></div>
+        </div>
+
+        <nav class="bn" aria-label="ناوبری اصلی">
+          <div class="it home"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span><span class="lb">خانه</span></div>
+          <div class="it"><span class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2.2"/><circle cx="4.5" cy="18.5" r="2.2"/><circle cx="19.5" cy="18.5" r="2.2"/><line x1="10.2" y1="6.2" x2="5.9" y2="16.5"/><line x1="13.8" y1="6.2" x2="18.1" y2="16.5"/><line x1="6.6" y1="18.5" x2="17.4" y2="18.5"/></svg></span><span class="lb">آرشیو</span></div>
+          <div class="it premium active"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/></svg></span><span class="lb">پریمیوم</span></div>
+          <div class="it"><span class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="lb">بیماران</span></div>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ══════════ PHONE B: subscriber ══════════ -->
+    <div>
+      <p class="cap"><b>گوشی ۲</b> · مشترک پریمیوم <span class="st st-prem">همان صفحه، زنده</span></p>
+      <div class="phone">
+        <div class="topbar">
+          <div class="brand"><i></i>DentCast</div>
+          <div class="tb"><span>☰</span><span style="color:var(--ac)">👤</span></div>
+        </div>
+        <div class="body">
+          <div class="pagehead">
+            <h2 class="pagetitle">پریمیوم</h2>
+            <span class="sec" style="margin:0"><span class="more blue">پیشخوان ›</span></span>
+          </div>
+          <p class="pagesub">اشتراک شما تا ۲۴ آبان فعال است. این‌جا همهٔ ابزارهایتان است؛ پیشخوان جای «چیزهای خودتان» است.</p>
+
+          <div class="mine">
+            <div><b class="num">۴</b><span>کارت برای امروز</span></div>
+            <div><b class="num">۱۳۲</b><span>هایلایت</span></div>
+            <div><b class="num">۱۷</b><span>روز استریک</span></div>
+          </div>
+
+          <div class="sec"><h2>خواندن و مرور</h2></div>
+          <div class="card"><span class="ico">🗂</span><div class="main"><div class="t">برای مرور امروز</div><div class="s">هایلایت‌ها درست پیش از فراموش‌شدن برمی‌گردند</div></div><span class="state live num">۴ کارت</span></div>
+          <div class="card"><span class="ico">📒</span><div class="main"><div class="t">دفترچه‌ی هایلایت‌ها</div><div class="s">همه‌ی هایلایت‌هایتان یکجا، با یادداشت و جستجو</div></div><span class="state live num">۱۳۲ هایلایت</span></div>
+          <div class="card"><span class="ico">🔭</span><div class="main"><div class="t">نمای موضوعی هایلایت‌ها</div><div class="s">همه‌ی یادداشت‌هایت دربارهٔ یک مفهوم، از هر مقاله‌ای که بوده</div></div><span class="state live num">۲۳ مفهوم</span></div>
+          <div class="card"><span class="ico">🎧</span><div class="main"><div class="t">هایلایت‌های صوتی</div><div class="s">مثل هایلایت متن، روی پادکست</div></div><span class="state live num">۹ قطعه</span></div>
+          <div class="card"><span class="ico">📁</span><div class="main"><div class="t">کالکشن‌ها</div><div class="s">پوشه‌های خودتان، با خروجی Word و PowerPoint</div></div><span class="state live num">۳ کالکشن</span></div>
+
+          <div class="sec"><h2>مسیر و گواهی</h2></div>
+          <div class="card"><span class="ico">🧭</span><div class="main"><div class="t">مسیر یادگیری</div><div class="s">دندانپزشکی بیومیمتیک و ترمیم ادهزیو</div></div><span class="state live num">قدم ۱۲ از ۳۹</span></div>
+          <div class="card"><span class="ico">🎓</span><div class="main"><div class="t">گواهی‌نامهٔ تکمیل مسیر</div><div class="s">یک مسیر تا آخر، بعد آزمونش</div></div><span class="state live">دیوار گواهی‌ها</span></div>
+          <div class="card"><span class="ico">🧿</span><div class="main"><div class="t">قطب‌نمای مطالعه</div><div class="s">چقدر از هر پیلار را خوانده‌اید، کجا جا مانده</div></div><span class="state live">باز کردن</span></div>
+          <div class="card hint"><span class="ico">📆</span><div class="main"><div class="t">گزارش ماهانه</div><div class="s">هر ماه، آنچه خواندید و کجا ایستادید</div></div><span class="state live">شهریور آماده</span></div>
+          <div class="card"><span class="ico">🗺</span><div class="main"><div class="t">چیدمان موضوعی سری‌ها</div><div class="s">هر پیلار با زیرموضوع و زنجیرهٔ خواندن</div></div><span class="state live">باز کردن</span></div>
+          <div class="card"><span class="ico">❤</span><div class="main"><div class="t">«بالاترین» در up-board</div><div class="s">به ترتیبی که خواننده‌ها ساخته‌اند</div></div><span class="state live">باز کردن</span></div>
+
+          <div class="sec"><h2>ابزار</h2></div>
+          <div class="card"><span class="ico">✳</span><div class="main"><div class="t">دستیار هوشمند</div><div class="s">شرح کیس را بنویسید، به مرتبط‌ترین مطلب برسید</div></div><span class="state live">شروع</span></div>
+          <div class="card"><span class="ico">🧩</span><div class="main"><div class="t">مسیریاب</div><div class="s">نقشهٔ خواندنِ خودتان</div></div><span class="state live">باز کردن</span></div>
+          <div class="card"><span class="ico">📚</span><div class="main"><div class="t">کتابخانهٔ دنت‌کست</div><div class="s">بیش از ۲۲۰۰ مقاله‌ی علمی، قابل جستجو</div></div><span class="state live">جستجو</span></div>
+          <div class="card"><span class="ico">⚗</span><div class="main"><div class="t">امتیاز DES برای مقاله‌ی خودت</div><div class="s">چکیده را بفرست</div></div><span class="state live">شروع</span></div>
+
+          <div class="sec"><h2>گفت‌وگو و همراهی</h2></div>
+          <div class="card"><span class="ico">💬</span><div class="main"><div class="t">گفت‌وگوی زیر مطلب</div><div class="s">زیر هر مقاله، به اسم خودتان</div></div><span class="state live num">۲ گفت‌وگو</span></div>
+          <div class="card"><span class="ico">❓</span><div class="main"><div class="t">پاسخ به چالش‌ها</div><div class="s">کیس‌های سؤال‌شکل</div></div><span class="state live">باز کردن</span></div>
+          <div class="card"><span class="ico">📵</span><div class="main"><div class="t">بدون تبلیغ در مقالات</div><div class="s">هیچ کارت اسپانسری لای مقاله‌ها و اپیزودها</div></div><span class="state live">فعال</span></div>
+          <div class="card"><span class="ico">📲</span><div class="main"><div class="t">یادآوری استریک با پیامک</div><div class="s">فقط روزی که استریک در خطر است</div></div><span class="state live">خاموش · روشن کن</span></div>
+        </div>
+
+        <nav class="bn" aria-label="ناوبری اصلی">
+          <div class="it home"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span><span class="lb">خانه</span></div>
+          <div class="it"><span class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2.2"/><circle cx="4.5" cy="18.5" r="2.2"/><circle cx="19.5" cy="18.5" r="2.2"/><line x1="10.2" y1="6.2" x2="5.9" y2="16.5"/><line x1="13.8" y1="6.2" x2="18.1" y2="16.5"/><line x1="6.6" y1="18.5" x2="17.4" y2="18.5"/></svg></span><span class="lb">آرشیو</span></div>
+          <div class="it premium active"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/></svg></span><span class="lb">پریمیوم</span></div>
+          <div class="it"><span class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="lb">بیماران</span></div>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ tab colour ══════════ -->
+  <section class="opts">
+    <h2>رنگ تب: سه راه، یکی انتخاب من</h2>
+    <p>قانون سایت: امبر یعنی «چیزی که اشتراک می‌خرد». تب‌های نوبار همه آبی‌اند. سه حالت زیر همان نوبار در حالت غیرفعال و فعالِ تب پریمیوم را نشان می‌دهد.</p>
+    <div class="optrow">
+      <div class="opt">
+        <div class="lab">آبی مثل بقیه <span>قانون امبر نقض می‌شود</span></div>
+        <nav class="bn o-blue">
+          <div class="it home"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span><span class="lb">خانه</span></div>
+          <div class="it"><span class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2.2"/><circle cx="4.5" cy="18.5" r="2.2"/><circle cx="19.5" cy="18.5" r="2.2"/><line x1="10.2" y1="6.2" x2="5.9" y2="16.5"/><line x1="13.8" y1="6.2" x2="18.1" y2="16.5"/><line x1="6.6" y1="18.5" x2="17.4" y2="18.5"/></svg></span><span class="lb">آرشیو</span></div>
+          <div class="it premium active"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/></svg></span><span class="lb">پریمیوم</span></div>
+          <div class="it"><span class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="lb">بیماران</span></div>
+        </nav>
+      </div>
+      <div class="opt">
+        <div class="lab">فقط آیکون امبر <span class="pick">انتخاب من</span></div>
+        <nav class="bn">
+          <div class="it home active"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span><span class="lb">خانه</span></div>
+          <div class="it"><span class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2.2"/><circle cx="4.5" cy="18.5" r="2.2"/><circle cx="19.5" cy="18.5" r="2.2"/><line x1="10.2" y1="6.2" x2="5.9" y2="16.5"/><line x1="13.8" y1="6.2" x2="18.1" y2="16.5"/><line x1="6.6" y1="18.5" x2="17.4" y2="18.5"/></svg></span><span class="lb">آرشیو</span></div>
+          <div class="it premium"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/></svg></span><span class="lb">پریمیوم</span></div>
+          <div class="it"><span class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="lb">بیماران</span></div>
+        </nav>
+      </div>
+      <div class="opt">
+        <div class="lab">کل تب امبر <span>همیشه داد می‌زند</span></div>
+        <nav class="bn o-full">
+          <div class="it home active"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span><span class="lb">خانه</span></div>
+          <div class="it"><span class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2.2"/><circle cx="4.5" cy="18.5" r="2.2"/><circle cx="19.5" cy="18.5" r="2.2"/><line x1="10.2" y1="6.2" x2="5.9" y2="16.5"/><line x1="13.8" y1="6.2" x2="18.1" y2="16.5"/><line x1="6.6" y1="18.5" x2="17.4" y2="18.5"/></svg></span><span class="lb">آرشیو</span></div>
+          <div class="it premium"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/></svg></span><span class="lb">پریمیوم</span></div>
+          <div class="it"><span class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="lb">بیماران</span></div>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ decisions embodied ══════════ -->
+  <div class="notes">
+    <div class="note">
+      <h3>چی توی این ماکاپ تصمیم گرفته شده</h3>
+      <ul>
+        <li><b>پنل، نه صفحه.</b> مثل سه تب دیگر داخل خودِ صفحهٔ اصلی است: سوییچ آنی، swipe، حالت فعال. ترتیب: خانه · آرشیو · پریمیوم · بیماران.</li>
+        <li><b>یک صفحه، دو حالت.</b> همان دکترین «یک URL، دو چیدمان» پیلار و up-board. مهمان و رایگان: کاتالوگ قفل با یک دکمهٔ خرید در بالا و فقط همان یکی. مشترک: همان کارت‌ها زنده، بدون هیچ دکمهٔ خرید، لینک سرصفحه به پیشخوان.</li>
+        <li><b>لیست کامل است، نه نُه‌تا.</b> نوزده کارت در چهار گروه (در پیاده‌سازی بیست‌تا: قفسهٔ شواهد DES هم اضافه شد). یازده‌تای آن‌ها امروز هیچ‌جای پیچ نیستند (بدون تبلیغ در مقالات، کتابخانه، مسیریاب، چیدمان پیلار، بالاترین، نمای موضوعی، گفت‌وگو، چالش، DES، پیامک، خروجی کالکشن).</li>
+        <li><b>مرز با پیشخوان.</b> پیشخوان = چیزهای خودت (هایلایت‌های اخیر، لیگ، استریک، اطلاعیه). تب پریمیوم = فهرست ابزارها با وضعیت‌شان. سه عدد بالای گوشی ۲ فقط پل است، نه کپی پیشخوان.</li>
+      </ul>
+    </div>
+    <div class="note">
+      <h3>چی توی این ماکاپ حل نشده</h3>
+      <ul>
+        <li><b>گروه‌بندی و ترتیب کارت‌ها</b> پیشنهاد من است. متن زیر کارت‌ها تا حد امکان از کپی موجود سایت برداشته شده؛ کارت‌های تازه (بدون تبلیغ، پیامک، …) متن نو دارند و باید تأیید شوند.</li>
+        <li><b>کاتالوگ در کد.</b> <code>PREMIUM_FEATURES</code> نُه‌تاست، با ایندکس آدرس‌دهی می‌شود و به کپی API چسبیده. یا آن آرایه بزرگ می‌شود (و ریل خانه و pricing هم بلند می‌شوند) یا این صفحه کاتالوگ خودش را دارد و باید با آن sync بماند. تصمیم لازم دارد.</li>
+        <li><b>دسکتاپ.</b> تب در گوشی یعنی یک ردیف در ستون راست دسکتاپ و یک سطح در ستون وسط، همان کاری که آرشیو کرد. این‌جا نکشیده‌ام.</li>
+        <li><b>به چه کسی می‌رسد.</b> نوبار پایین فقط روی صفحهٔ اصلی است. کسی که از گوگل روی مقاله فرود می‌آید این تب را نمی‌بیند؛ این پیشنهاد برای خواننده‌های برگشتی و PWA است.</li>
+        <li><b>تور سایت</b> یک استاپ دارد که سه تب را با اسم توضیح می‌دهد؛ باید چهارتایی شود.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</html>

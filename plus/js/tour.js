@@ -12,9 +12,9 @@
 //     the account, not localStorage).
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
-import { el, faNum } from './util.js?v=111';
-import { api, currentUser } from './api.js?v=111';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=111';
+import { el, faNum } from './util.js?v=114';
+import { api, currentUser } from './api.js?v=114';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=114';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 
@@ -104,7 +104,7 @@ const STOPS = [
   },
   {
     key: 'bottom_nav', panel: 'panel-studio', title: 'ناوبری اصلی',
-    text: '«خانه» همین صفحه است، «آرشیو» درگاه همه‌ی بخش‌ها و مرجع‌های دنت‌کست است و «بیماران» صفحه‌ی ویژه‌ی مراجعان و غیردندانپزشکان (معرفی کلینیک و مطالب آموزشی ساده). حالا برویم سراغ آرشیو.',
+    text: '«خانه» همین صفحه است، «آرشیو» درگاه همه‌ی بخش‌ها و مرجع‌های دنت‌کست، «پریمیوم» فهرست همه‌ی چیزهایی که اشتراک اضافه می‌کند، و «بیماران» صفحه‌ی ویژه‌ی مراجعان و غیردندانپزشکان (معرفی کلینیک و مطالب آموزشی ساده). حالا برویم سراغ آرشیو.',
     targets: () => [byId('dcBottomNav')],
   },
   {
