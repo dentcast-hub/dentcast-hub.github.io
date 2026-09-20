@@ -11,7 +11,9 @@ import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool, withTransaction } from '../src/db.js';
 import { config } from '../src/config.js';
 import { ai } from '../src/providers/registry.js';
-import { getPathwayById, isCertifiable } from '../src/pathways.js';
+import {
+  getPathways, getPathwayById, isCertifiable, applyRemotePathways, resetRemotePathways,
+} from '../src/pathways.js';
 import {
   normalizeQuestions, upsertForm, getForm, deleteForm, formRoster, assignExam,
   addQuestion, removeQuestion, nextQuestionId,
@@ -1031,17 +1033,34 @@ describe('edges', () => {
 });
 
 /**
- * An unfinished series has no certificate — founder, 2026-09-13: «سوادِ
- * هوش مصنوعی» stands on the Promptologist series, which is still being
- * published, so a certificate for it would attest to finishing something
- * that has no end yet. `certificate: 'pending'` in pathways.json closes
- * EVERY door at once: the wall, the exam, the wish, the founder's hand.
- * Removing the flag when the last part lands is the whole release.
+ * An unfinished series has no certificate — founder, 2026-09-13: a pathway
+ * standing on a series still being published would attest to finishing
+ * something that has no end yet. `certificate: 'pending'` in pathways.json
+ * closes EVERY door at once: the wall, the exam, the wish, the founder's hand.
+ * Removing the flag when the last part lands is the whole release — which is
+ * exactly what happened to «سوادِ هوش مصنوعی» on 1405/06/29.
+ *
+ * So no SHIPPED pathway carries the flag today, and this block flags one
+ * itself through `applyRemotePathways` — the same door content-refresh.ts uses
+ * to adopt a published copy. Pinning the case to whichever pathway happens to
+ * be unfinished this month is what made it break the day one shipped; the
+ * mechanism is what has to stay guarded, because the next series will need it.
  */
 describe('an unfinished series has no certificate (`certificate: pending`)', () => {
   const PENDING = 'ai-dentistry';
 
-  it('is flagged in the shipped catalog, and the flag is what isCertifiable() reads', () => {
+  beforeEach(() => {
+    const flagged = getPathways().map((p) => (p.id === PENDING ? { ...p, certificate: 'pending' } : p));
+    expect(applyRemotePathways(flagged)).toBe(true);
+  });
+  afterEach(() => { resetRemotePathways(); });
+
+  it('nothing in the shipped catalog is pending — the flag is set, not the norm', () => {
+    resetRemotePathways();
+    expect(getPathways().filter((p) => p.certificate === 'pending')).toHaveLength(0);
+  });
+
+  it('the flag is what isCertifiable() reads', () => {
     expect(getPathwayById(PENDING)?.certificate).toBe('pending');
     expect(isCertifiable(getPathwayById(PENDING))).toBe(false);
     expect(isCertifiable(getPathwayById(PATHWAY))).toBe(true);
@@ -1088,6 +1107,16 @@ describe('an unfinished series has no certificate (`certificate: pending`)', () 
     const form = await adminPost('/admin/exam-forms', { pathway_id: PENDING, questions: [MCQ(1), MCQ(2)] });
     expect(form.statusCode).toBe(400);
     expect(form.json().error).toBe('pathway_pending');
+  });
+
+  it('and once the flag comes off, every one of those doors opens', async () => {
+    resetRemotePathways();
+    const uid = await userId();
+    expect(isCertifiable(getPathwayById(PENDING))).toBe(true);
+    await expect(upsertForm(PENDING, { questions: [MCQ(1), MCQ(2)] })).resolves.toBeTruthy();
+    await expect(setCertificateIntent(uid, PENDING, 'wanted')).resolves.toBeTruthy();
+    const ids = ((await get('/certificates')).json().pathways as { id: string }[]).map((p) => p.id);
+    expect(ids).toContain(PENDING);
   });
 });
 

@@ -76,8 +76,12 @@ describe('GET /pathways — the certificate chip\'s four states', () => {
       .pathways as Array<Record<string, unknown>>;
     const occlusion = plain.find((p) => p.id === PATHWAY_ID)!;
     expect(occlusion).toMatchObject({ certifiable: true, certificate_intent: null, certificate_held: false });
-    // `certificate: 'pending'` in pathways.json — the chip reads «به‌زودی»
-    expect(plain.find((p) => p.id === 'ai-dentistry')).toMatchObject({ certifiable: false });
+    // No shipped pathway is `certificate: 'pending'` any more (the flag came
+    // off «سوادِ هوش مصنوعی» on 1405/06/29), so every full pathway certifies;
+    // the «به‌زودی» chip is exercised where the flag itself is — the pending
+    // block in exams.test.ts, which sets it rather than borrowing whichever
+    // pathway happens to be unfinished this month.
+    expect(plain.filter((p) => p.kind !== 'bundle').every((p) => p.certifiable)).toBe(true);
     // A bundle is never certificate-sized, and draws no chip either way.
     expect(plain.find((p) => p.id === BUNDLE_ID)).toMatchObject({ certifiable: false });
 

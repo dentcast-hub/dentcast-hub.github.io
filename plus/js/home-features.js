@@ -31,11 +31,11 @@
 // with no coordination between the modules. When there is no ad — a premium
 // visitor, or the slot switched off — the section simply moves up under the
 // Pulse and nothing else changes.
-import { el, faNum } from './util.js?v=104';
-import { currentUser, api } from './api.js?v=104';
-import { PREMIUM_FEATURES } from './config.js?v=104';
-import { pricingHref } from './premium-cta.js?v=104';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=104';
+import { el, faNum } from './util.js?v=105';
+import { currentUser, api } from './api.js?v=105';
+import { PREMIUM_FEATURES } from './config.js?v=105';
+import { pricingHref } from './premium-cta.js?v=105';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=105';
 
 // Crafted inline icons, one per feature (same reasoning as home-card.js's promo
 // chips: emoji would sit at a different weight than the site's own stroke icons).
@@ -48,6 +48,7 @@ const IC = {
   library: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>',
   report: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M7 15h3M12 15h5"/>',
   clip: '<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/>',
+  certificate: '<circle cx="12" cy="9" r="5"/><path d="M9 13.5 8 21l4-2 4 2-1-7.5"/>',
 };
 
 // The NAMES come from PREMIUM_FEATURES — the canonical list the dashboard, the
@@ -69,6 +70,11 @@ const CARDS = [
   { f: F[5], ico: IC.library,     href: '/plus/highlights.html',      sub: 'همه‌ی هایلایت‌هایتان یکجا، با یادداشت و جستجو' },
   { f: F[6], ico: IC.report,      href: '/plus/report.html',          sub: 'هر ماه، آنچه خواندید و کجا ایستادید' },
   { f: F[7], ico: IC.clip,        href: '/plus/highlights.html?kind=clip', sub: 'مثل هایلایت متن، روی پادکست: تکه را نگه دارید و دوباره بشنوید' },
+  // The wall lives in the profile, so that is where this card goes — it is
+  // the only feature here whose home is not a page of its own, and sending a
+  // reader to the pathway catalog instead would show them everything except
+  // the thing the card names.
+  { f: F[8], ico: IC.certificate, href: '/plus/profile.html#certificates', sub: 'مسیر را تمام کنید، آزمونش را بدهید، گواهی به نام خودتان بگیرید' },
 ];
 
 // The two slots index.html carries — one per homepage layout. Both are filled:
