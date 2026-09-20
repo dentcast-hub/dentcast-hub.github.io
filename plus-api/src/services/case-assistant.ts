@@ -129,13 +129,41 @@ const ZERO_WIDTH = /[\u200c\u200e\u200f]/g;
  * content-index.json by tools/build_plus_index.mjs, so it reloads with the
  * index rather than needing a code change per new spelling.
  */
-let aliasCacheKey: unknown = null;
-let aliasCache: Array<[string, string]> = [];
+interface AliasRule {
+  /** The variant, already split — never re-split inside the matching loop. */
+  parts: string[];
+  /** The canonical form, already split — spread straight into the output. */
+  canonical: string[];
+}
 
-function aliases(): Array<[string, string]> {
+let aliasCacheKey: unknown = null;
+/**
+ * Keyed by the variant's FIRST token, longest pattern first inside each bucket.
+ *
+ * The match is `parts.every((p, k) => toks[i + k] === p)`, which can only
+ * succeed when `parts[0] === toks[i]` — so bucketing by that first token is
+ * exact, not a heuristic, and it turns the per-token scan from "every alias in
+ * the table" into "the handful that begin with this word". Longest-first is
+ * preserved WITHIN a bucket, which is where it matters: two candidates can
+ * only compete when they share a first token.
+ *
+ * Measured 2026-09-20, and this is why it is a Map rather than a list: the
+ * table carries 2772 aliases, tagLookup() normalises 1792 strings to build its
+ * index, and the old shape re-split every variant inside the inner loop — so
+ * the first assistant round after a deploy spent ~4.9s of pure CPU (4097 of
+ * 4542 profile samples inside normalizeFa), synchronously, blocking every
+ * other request on the event loop with it. It is not once per deploy either:
+ * content-refresh.ts reloads the index every few minutes, and the cache is
+ * keyed on the Tag[]/alias-table reference, so each reload bought another
+ * five-second stall for whoever asked next.
+ */
+let aliasCache = new Map<string, AliasRule[]>();
+
+function aliases(): Map<string, AliasRule[]> {
   const table = getAliases();
   if (aliasCacheKey !== table) {
-    aliasCache = Object.entries(table)
+    const next = new Map<string, AliasRule[]>();
+    Object.entries(table)
       // A pattern contained in its own replacement grows without bound
       // ("پروگنوز" -> "پروگنوز دندان"). tools/hashtag_ref.py rejects these when
       // it compiles the table; this is the same rule enforced at the point of
@@ -145,7 +173,16 @@ function aliases(): Array<[string, string]> {
         const c = canonical.split(' ');
         return !c.some((_x, i) => v.every((p, k) => c[i + k] === p));
       })
-      .sort((a, b) => b[0].length - a[0].length);
+      .sort((a, b) => b[0].length - a[0].length)
+      .forEach(([variant, canonical]) => {
+        const parts = variant.split(' ');
+        const head = parts[0];
+        if (!head) return;
+        const bucket = next.get(head);
+        const rule: AliasRule = { parts, canonical: canonical.split(' ') };
+        if (bucket) bucket.push(rule); else next.set(head, [rule]);
+      });
+    aliasCache = next;
     aliasCacheKey = table;
   }
   return aliasCache;
@@ -169,15 +206,19 @@ function normalizeFa(s: string): string {
   // alias replaces a complete word or a complete phrase - never cutting into a
   // word, which is what would maul "peri implantitis" or "اندوکراون".
   const toks = base.split(' ');
+  const table = aliases();
   const out: string[] = [];
   for (let i = 0; i < toks.length;) {
     let matched = 0;
-    for (const [variant, canonical] of aliases()) { // longest pattern first
-      const parts = variant.split(' ');
-      if (parts.every((p, k) => toks[i + k] === p)) {
-        out.push(...canonical.split(' '));
-        matched = parts.length;
-        break;
+    // Only the rules that START with this token can match at all.
+    const candidates = table.get(toks[i]);
+    if (candidates) {
+      for (const rule of candidates) { // longest pattern first
+        if (rule.parts.every((p, k) => toks[i + k] === p)) {
+          out.push(...rule.canonical);
+          matched = rule.parts.length;
+          break;
+        }
       }
     }
     if (matched) { i += matched; } else { out.push(toks[i]); i += 1; }

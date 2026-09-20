@@ -21,6 +21,23 @@ beforeEach(async () => {
   if (!app) app = await makeApp();
   phone = '09121200004';
   cookie = await loginAs(app, phone);
+  // NO LIVE MODEL CALL, EVER.
+  //
+  // `ai.selectTags` is the service's one call to a provider, and the tag-round
+  // block below stubs it in every case. The pillar/subtopic rounds did not —
+  // so the first of them reached for the real provider, waited out a network
+  // timeout in a container with no egress to it, and blew the 5s case budget
+  // (measured 5336ms against 200-300ms for every case after it, because the
+  // provider then answers instantly for the rest of the run). It looked like
+  // order-dependence and was not: it is a cold first call, and it fails in
+  // isolation too once the machine is cold.
+  //
+  // Those cases are ABOUT the no-model path — they assert the options come
+  // from real cluster/subtopic keys, which the service builds itself — so the
+  // honest fixture is an empty answer, deterministic and instant, rather than
+  // a live call nobody meant to make. A case that wants a model still stubs
+  // its own, and `vi.restoreAllMocks()` in afterEach hands it back.
+  vi.spyOn(ai, 'selectTags').mockResolvedValue([]);
 });
 
 afterEach(() => {
@@ -49,6 +66,34 @@ async function createHighlight(contentId: string): Promise<void> {
 function next(body: unknown) {
   return app.inject({ method: 'POST', url: '/assistant/next', headers: { cookie }, payload: body });
 }
+
+/**
+ * THE FIRST ROUND AFTER A DEPLOY MUST NOT STALL THE API.
+ *
+ * `tagLookup()` normalises all 896 tag keys and labels to build its index, and
+ * `normalizeFa` used to scan the whole 2772-entry alias table for every token,
+ * re-splitting each variant inside the inner loop. So the first assistant
+ * round cost ~4.9 seconds of SYNCHRONOUS cpu — 4097 of 4542 profile samples
+ * inside normalizeFa — which on one event loop is every other request waiting
+ * too. And not once per deploy: content-refresh.ts reloads the index every few
+ * minutes and the caches key on that reference, so each reload bought the next
+ * reader another stall.
+ *
+ * The budget here is deliberately loose (a second, against 4.9 measured before
+ * and ~50ms after): this pins the ORDER OF MAGNITUDE on whatever machine runs
+ * it, not a millisecond count that would flake on a busy CI box.
+ */
+describe('the first round is not a stall', () => {
+  it('builds its tag index in well under a second', async () => {
+    await makePremium();
+    const started = Date.now();
+    const res = await next({ description: 'یک بیمار با شکستگی لبه‌ی دندان قدامی' });
+    const elapsed = Date.now() - started;
+
+    expect(res.statusCode).toBe(200);
+    expect(elapsed, `first assistant round took ${elapsed}ms`).toBeLessThan(1000);
+  });
+});
 
 describe('requirePremium gate', () => {
   it('blocks a free user with 402', async () => {
