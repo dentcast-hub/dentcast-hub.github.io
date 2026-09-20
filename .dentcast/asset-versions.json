@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 206,
-    "hash": "c1d6c6a34e7df7ae"
+    "v": 207,
+    "hash": "4e1b4e342f125adb"
   },
   "/dc-theme.css": {
     "v": 3,
@@ -46,6 +46,10 @@
   "/plus/js/certificate-page.js": {
     "v": 19,
     "hash": "3c06f597d2ca8917"
+  },
+  "/plus/js/challenges-page.js": {
+    "v": 2,
+    "hash": "5a997384f151704f"
   },
   "/plus/js/collection-page.js": {
     "v": 60,
@@ -124,12 +128,12 @@
     "hash": "48af5313149e0149"
   },
   "dc-nav.js:V": {
-    "v": 199,
-    "hash": "d1162ad6fb12e39a"
+    "v": 200,
+    "hash": "a7934a06c4d3beee"
   },
   "modules:M": {
-    "v": 114,
-    "hash": "017a136c4dc7ffaa"
+    "v": 115,
+    "hash": "384eecfe02a731d5"
   },
   "spot.js:SPOT_V": {
     "v": 56,

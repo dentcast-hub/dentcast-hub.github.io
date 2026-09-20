@@ -23,16 +23,15 @@
 //
 // THE HOMEPAGE PAYS NOTHING FOR A TAB NOBODY OPENED. The mobile panel is
 // display:none until tapped, so the two count requests a subscriber's live
-// chips need (highlight total, collection count) and the one fetch that finds
-// the newest چالش wait behind an IntersectionObserver — the pattern
-// article-threads.js uses. Everything /me already carries (active pathway, due
+// chips need (highlight total, collection count) wait behind an
+// IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum } from './util.js?v=114';
-import { currentUser, meStatus, api } from './api.js?v=114';
-import { pricingHref } from './premium-cta.js?v=114';
-import { openLoginModal } from './login-modal.js?v=114';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=114';
-import { PREMIUM_GROUPS } from './premium-catalog.js?v=114';
+import { el, faNum } from './util.js?v=115';
+import { currentUser, meStatus, api } from './api.js?v=115';
+import { pricingHref } from './premium-cta.js?v=115';
+import { openLoginModal } from './login-modal.js?v=115';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=115';
+import { PREMIUM_GROUPS } from './premium-catalog.js?v=115';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -68,13 +67,13 @@ function lead(state, me) {
     const sub = me && me.subscription;
     let until = '';
     if (sub && sub.expires_at) {
-      try { until = 'اشتراک شما تا پایان روز ' + JALALI_DAY.format(new Date(sub.expires_at)) + ' فعال است. '; }
+      try { until = 'اشتراک شما تا پایان روز ' + JALALI_DAY.format(new Date(sub.expires_at)) + ' فعال است.'; }
       catch (_) { until = ''; }
     }
-    return until + 'این‌جا همه‌ی ابزارهایتان است؛ پیشخوان جای «چیزهای خودتان» است — هایلایت‌های اخیر، استریک، لیگ.';
+    return until || 'همه‌ی امکانات اشتراک شما، یک‌جا.';
   }
-  if (state === 'unknown') return 'ارتباط با سرور برقرار نشد؛ فهرست بدون وضعیتِ حساب شما نمایش داده می‌شود.';
-  return 'هر چیزی که اشتراک به دنت‌کست اضافه می‌کند، یک‌جا. خواندن مقاله‌ها و شنیدن پادکست همیشه رایگان می‌ماند.';
+  if (state === 'unknown') return 'ارتباط با سرور برقرار نشد؛ وضعیت حساب شما مشخص نیست.';
+  return 'همه‌ی امکاناتی که با اشتراک باز می‌شود، یک‌جا.';
 }
 
 /** The ONE buy link on the page (locked state only). */
@@ -83,7 +82,7 @@ function offer() {
     icon('<path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/>'),
     el('span', { class: 'dcp-pp-offer-main' }, [
       el('b', {}, 'اشتراک پریمیوم'),
-      el('span', {}, 'یک‌ماهه، سه‌ماهه، شش‌ماهه · کارت هدیه و واریز به شبا هم هست'),
+      el('span', {}, 'یک‌ماهه، سه‌ماهه و شش‌ماهه'),
     ]),
     el('span', { class: 'dcp-pp-offer-go' }, 'دیدن پلان‌ها ›'),
   ]);
@@ -129,7 +128,7 @@ function group(g, state) {
   const h = el('h2', { class: 'dcp-hf-label' }, [g.title, el('small', {}, g.sub)]);
   return el('section', { class: 'dcp-pp-group', 'data-dcp-group': g.key }, [
     el('div', { class: 'dcp-hf-sec' }, [h]),
-    ...g.entries.map((e) => card(e, state)),
+    ...g.entries.filter((e) => !(state === 'live' && e.hideWhenLive)).map((e) => card(e, state)),
   ]);
 }
 
@@ -215,7 +214,7 @@ function fillFromMe(me) {
   // The last completed month is a calendar fact from ICU, not a request.
   paint('report', monthName(shiftMonth(currentMonthKey(), -1)) + ' آماده');
   paint('no-ads', 'فعال');
-  paint('sms', 'در پروفایل');
+  paint('sms', 'تنظیم');
 }
 
 /** The two counts that cost a request each — fired once the panel is seen. */
@@ -233,31 +232,6 @@ function fillLazily() {
       if (d && d.collections && d.collections.length) paint('collections', faNum(d.collections.length) + ' کالکشن');
     })
     .catch(() => { /* leave «باز کردن» */ });
-}
-
-/**
- * The newest چالش, so the card leads somewhere real. plus/challenges.json is
- * the public half every challenge is generated into (workflow step 4.14), keyed
- * by content id in publish order; the last key is the newest. Until it answers
- * the card is a static row — never a dead link.
- */
-function resolveChallengeHref() {
-  return fetch('/plus/challenges.json', { credentials: 'omit', cache: 'no-cache' })
-    .then((r) => (r.ok ? r.json() : null))
-    .then((j) => {
-      const ids = j && j.byContent ? Object.keys(j.byContent) : [];
-      if (!ids.length) return;
-      const href = '/' + ids[ids.length - 1] + '.html';
-      document.querySelectorAll('.dcp-pp [data-dcp-key="challenge"]').forEach((node) => {
-        if (node.tagName === 'A') { node.setAttribute('href', href); return; }
-        const a = el('a', { href }, []);
-        for (const attr of Array.from(node.attributes)) a.setAttribute(attr.name, attr.value);
-        a.classList.remove('is-static');
-        a.replaceChildren(...Array.from(node.childNodes));
-        node.replaceWith(a);
-      });
-    })
-    .catch(() => { /* static row stays */ });
 }
 
 /* ------------------------------------------------------ cross-panel links -- */
@@ -347,7 +321,6 @@ export async function initPremiumPanel() {
   const lazy = () => {
     if (armed) return;
     armed = true;
-    resolveChallengeHref();
     if (state === 'live') fillLazily();
   };
   slots.forEach((slot) => whenSeen(slot, lazy));

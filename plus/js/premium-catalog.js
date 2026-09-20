@@ -26,7 +26,7 @@
 // GROUPS ARE INFORMATION, not decoration: they answer «what kind of thing is
 // this» for a reader who has never used any of it. Order inside a group is the
 // order a new subscriber meets them, the everyday ones first.
-import { PREMIUM_FEATURES } from './config.js?v=114';
+import { PREMIUM_FEATURES } from './config.js?v=115';
 
 const F = PREMIUM_FEATURES;
 
@@ -61,66 +61,78 @@ const IC = {
  * `title` (from the canonical row where one exists), `sub` (one line for a
  * reader who has never used it), `href` (where a subscriber goes — null for a
  * benefit that has no page, like the absence of ads), `ico`, and `feature` —
- * the canonical row, so the tab and the rail can never disagree on a name.
+ * the canonical row, so the tab and the rail can never disagree on a name —
+ * plus `hideWhenLive` for a benefit that has no page and no state to show.
  */
 function entry(key, ico, href, sub, opts = {}) {
   const feature = opts.feature || null;
-  return { key, ico, href, sub, feature, title: feature ? feature.title : opts.title };
+  return {
+    key, ico, href, sub, feature,
+    title: feature ? feature.title : opts.title,
+    // A benefit a subscriber meets in place (under every article) rather than
+    // on a page: shown to a reader who does not have it, omitted for one who does.
+    hideWhenLive: !!opts.hideWhenLive,
+  };
 }
 
 export const PREMIUM_GROUPS = [
   {
     key: 'reading',
     title: 'خواندن و مرور',
-    sub: 'هایلایت‌هایت تبدیل به چیزی می‌شوند که برمی‌گردد',
+    sub: 'هایلایت، مرور، کالکشن',
     entries: [
-      entry('cards', IC.cards, '/plus/cards.html', 'هایلایت‌ها درست پیش از فراموش‌شدن برمی‌گردند', { feature: F[0] }),
-      entry('highlights', IC.library, '/plus/highlights.html', 'همه‌ی هایلایت‌هایتان یکجا، با یادداشت و جستجو', { feature: F[5] }),
-      entry('concepts', IC.concepts, '/plus/highlights.html', 'همه‌ی یادداشت‌هایت دربارهٔ یک مفهوم، از هر مقاله‌ای که بوده', { title: 'نمای موضوعی هایلایت‌ها' }),
-      entry('clips', IC.clip, '/plus/highlights.html?kind=clip', 'مثل هایلایت متن، روی پادکست: تکه را نگه دارید و دوباره بشنوید', { feature: F[7] }),
-      entry('collections', IC.collections, '/plus/collections.html', 'پوشه‌های خودتان، با پینِ متن و رفرنس، و خروجی Word و PowerPoint', { feature: F[2] }),
+      entry('cards', IC.cards, '/plus/cards.html', 'مرور فاصله‌دار هایلایت‌ها، پیش از فراموشی', { feature: F[0] }),
+      entry('highlights', IC.library, '/plus/highlights.html', 'همه‌ی هایلایت‌ها یک‌جا، با یادداشت و جستجو', { feature: F[5] }),
+      entry('concepts', IC.concepts, '/plus/highlights.html', 'هایلایت‌ها دسته‌بندی‌شده بر اساس مفهوم، فارغ از مقاله', { title: 'نمای موضوعی هایلایت‌ها' }),
+      entry('clips', IC.clip, '/plus/highlights.html?kind=clip', 'یک تکه از پادکست را نگه دارید و بعداً بشنوید', { feature: F[7] }),
+      entry('collections', IC.collections, '/plus/collections.html', 'پوشه‌های شخصی از هایلایت‌ها و مقاله‌ها، با خروجی Word و PowerPoint', { feature: F[2] }),
     ],
   },
   {
     key: 'path',
     title: 'مسیر و گواهی',
-    sub: 'از «چی بخونم» تا گواهی به نام خودت',
+    sub: 'مسیر یادگیری، پیشرفت، گواهی',
     entries: [
-      entry('pathways', IC.pathway, '/plus/pathways.html', 'از پیش‌نیاز تا پیشرفته، به ترتیبِ درست', { feature: F[1] }),
-      entry('certificate', IC.certificate, '/plus/profile.html#certificates', 'مسیر را تمام کنید، آزمونش را بدهید، گواهی با کد یکتا و صفحهٔ تأیید', { feature: F[8] }),
-      entry('compass', IC.compass, '/plus/reading-compass.html', 'چقدر از هر پیلار را خوانده‌اید، کجا جا مانده', { feature: F[3] }),
-      entry('report', IC.report, '/plus/report.html', 'هر ماه، آنچه خواندید و کجا ایستادید', { feature: F[6] }),
-      entry('pillar', IC.pillar, '/pillar/', 'هر سری با زیرموضوع و زنجیرهٔ خواندن، نه فقط فهرستِ تاریخی', { title: 'چیدمان موضوعی سری‌ها' }),
-      entry('upboard', IC.heart, '/up-board/?sort=top', 'همه‌ی مطلب‌ها، به ترتیبی که خواننده‌ها ساخته‌اند', { title: '«بالاترین» در up-board' }),
-      entry('desboard', IC.desboard, '/des-board/', 'مطلب‌ها روی قفسه‌ی شواهد: کدام مقاله روی کدام سطح ایستاده', { title: 'قفسه‌ی شواهد (DES)' }),
+      entry('pathways', IC.pathway, '/plus/pathways.html', 'از پیش‌نیاز تا پیشرفته، به ترتیب درست', { feature: F[1] }),
+      entry('certificate', IC.certificate, '/plus/profile.html#certificates', 'بعد از تمام کردن مسیر و آزمون، گواهی با کد قابل استعلام', { feature: F[8] }),
+      entry('compass', IC.compass, '/plus/reading-compass.html', 'چقدر از هر پیلار را خوانده‌اید و کجا جا مانده', { feature: F[3] }),
+      entry('report', IC.report, '/plus/report.html', 'گزارش ماهانه‌ی مطالعه و پیشرفت شما', { feature: F[6] }),
+      entry('pillar', IC.pillar, '/pillar/', 'سری‌های موضوعی با زیرموضوع و ترتیب خواندن', { title: 'چیدمان موضوعی سری‌ها' }),
+      entry('upboard', IC.heart, '/up-board/?sort=top', 'مطلب‌ها به ترتیب رأی خواننده‌ها', { title: '«بالاترین» در up-board' }),
+      entry('desboard', IC.desboard, '/des-board/', 'مطلب‌ها مرتب‌شده بر اساس سطح شواهد', { title: 'قفسه‌ی شواهد (DES)' }),
     ],
   },
   {
     key: 'tools',
     title: 'ابزار',
-    sub: 'چیزهایی که به‌جای شما می‌گردند',
+    sub: 'جستجو و ارزیابی',
     entries: [
-      entry('assistant', IC.assistant, '/plus/assistant.html', 'شرح کیس را بنویسید، به مرتبط‌ترین مطلب برسید', { feature: F[4] }),
-      entry('wayfinder', IC.wayfinder, '/plus/wayfinder.html', 'بگویید چه‌کاره‌اید، نقشهٔ خواندنِ خودتان را می‌سازد', { title: 'مسیریاب' }),
-      entry('cabinet', IC.cabinet, '/dentcast_cabinet_search.html', 'بیش از ۲۲۰۰ مقاله‌ی علمی، دسته‌بندی‌شده و قابل جستجو', { title: 'کتابخانهٔ دنت‌کست' }),
+      entry('assistant', IC.assistant, '/plus/assistant.html', 'شرح کیس را بنویسید و به مرتبط‌ترین مطلب برسید', { feature: F[4] }),
+      entry('wayfinder', IC.wayfinder, '/plus/wayfinder.html', 'نقشه‌ی خواندن متناسب با تخصص و هدف شما', { title: 'مسیریاب' }),
+      entry('cabinet', IC.cabinet, '/dentcast_cabinet_search.html', 'بیش از ۲۲۰۰ مقاله‌ی علمی، دسته‌بندی‌شده و قابل جستجو', { title: 'کتابخانه‌ی دنت‌کست' }),
       // The scorer lives on the home panel of this same page. A hash link to
       // another panel's element is switched to by premium-panel.js (it clicks
       // the right bottom-nav item first), so this is a real destination.
-      entry('des-scorer', IC.flask, '/#dcDesToolTab', 'چکیده را بفرست، با همان DentCast Evidence Score ارزیابی می‌شود', { title: 'امتیاز DES برای مقاله‌ی خودت' }),
+      entry('des-scorer', IC.flask, '/#dcDesToolTab', 'چکیده‌ی مقاله‌ی خودتان را با DES ارزیابی کنید', { title: 'امتیاز DES برای مقاله‌ی خودتان' }),
     ],
   },
   {
     key: 'together',
     title: 'گفت‌وگو و همراهی',
-    sub: 'چیزهایی که بی‌سروصدا فرق می‌کنند',
+    sub: 'گفت‌وگو، چالش، یادآوری',
     entries: [
-      entry('threads', IC.threads, '/plus/support.html', 'زیر هر مقاله سؤالتان را بنویسید؛ جواب می‌گیرید، به اسم خودتان', { title: 'گفت‌وگوی زیر مطلب' }),
-      entry('challenge', IC.challenge, null, 'به کیس‌های سؤال‌شکل جواب بدهید و نکته‌های کلیدی را ببینید', { title: 'پاسخ به چالش‌ها' }),
+      // No page of its own: the thread lives under every article, so the card
+      // is a showcase for a reader who does not have it (static, no link) and
+      // is left out entirely for a subscriber, who meets it under each مطلب
+      // (founder, 1405/06/30). It must never point at پشتیبانی — the support
+      // page is not premium and not this feature.
+      entry('threads', IC.threads, null, 'زیر هر مطلب سؤال بپرسید و جواب بگیرید', { title: 'گفت‌وگوی زیر مطلب', hideWhenLive: true }),
+      entry('challenge', IC.challenge, '/challenges/', 'به کیس‌های چالشی جواب بدهید و نکته‌های کلیدی را ببینید', { title: 'پاسخ به چالش‌ها' }),
       // «در مقالات», deliberately narrow (founder, 1405/06/30): the homepage may
       // one day carry a hand-placed gold-sponsor card that premium sees too, so
       // the promise covers the reading surfaces and nothing wider.
       entry('no-ads', IC.noads, null, 'هیچ کارت اسپانسری لای مقاله‌ها و اپیزودها', { title: 'بدون تبلیغ در مقالات' }),
-      entry('sms', IC.sms, '/plus/profile.html#reminders', 'فقط روزی که استریک در خطر است، فقط اگر خودتان بخواهید', { title: 'یادآوری استریک با پیامک' }),
+      entry('sms', IC.sms, '/plus/profile.html#reminders', 'پیامک فقط روزی که استریک در خطر است', { title: 'یادآوری استریک با پیامک' }),
     ],
   },
 ];
