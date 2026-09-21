@@ -15216,5 +15216,42 @@
       "secondary": [],
       "subtopic": "llm-clinical-limits"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-78",
+    "title": "کاهش فضای اینتراکلوزال در ناحیه‌ی خلفی فک بالا: قبل از ایمپلنت چه باید کرد؟",
+    "caption": "وقتی فضای اینتراکلوزالِ خلفِ فک بالا کم شده، پیش از هر تصمیمی باید پلن اکلوزال سنجیده شود: اگر دندان‌های مقابل در پلن‌اند، ریداکشنشان راه‌حل نیست و فضا باید از سمت فک بالا ساخته شود — با استئوپلاستی و قرار دادنِ کمی عمیق‌ترِ ایمپلنت. پروتز پیچ‌شونده آخرین حلقه‌ی این زنجیره است، نه جایگزینِ اصلاح فضا.",
+    "hashtags": [
+      "#اینسایت",
+      "#فضای_رستوریتیو",
+      "#پلان_اکلوژن",
+      "#استئوپلاستی",
+      "#جایگذاری_ایمپلنت",
+      "#اتصال_پیچ_شونده",
+      "#پروتز_ایمپلنت"
+    ],
+    "keywords": [
+      "reduced interocclusal space posterior maxilla implant",
+      "prosthetic space for implant restoration",
+      "osteoplasty ridge reduction before implant placement",
+      "implant placement depth for restorative space",
+      "screw retained crown limited interocclusal space",
+      "occlusal plane assessment before implant treatment",
+      "opposing tooth reduction versus ridge reduction",
+      "کاهش فضای اینتراکلوزال در خلف فک بالا",
+      "ایجاد فضای پروتزی پیش از ایمپلنت",
+      "استئوپلاستی و کاهش ارتفاع ریج",
+      "عمق قرارگیری ایمپلنت و فضای پروتزی",
+      "پروتز پیچ شونده در فضای کم",
+      "ارزیابی پلن اکلوزال قبل از درمان ایمپلنت",
+      "ریداکشن دندان مقابل یا اصلاح ریج"
+    ],
+    "page_url": "/insight/insight-78.html",
+    "pillar": {
+      "primary": "implantology",
+      "secondary": [],
+      "subtopic": "surgical-planning"
+    }
   }
 ]
