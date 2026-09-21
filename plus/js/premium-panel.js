@@ -40,12 +40,12 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=122';
-import { currentUser, meStatus, api } from './api.js?v=122';
-import { pricingHref } from './premium-cta.js?v=122';
-import { openLoginModal } from './login-modal.js?v=122';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=122';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=122';
+import { el, faNum, streakIsActiveToday } from './util.js?v=123';
+import { currentUser, meStatus, api } from './api.js?v=123';
+import { pricingHref } from './premium-cta.js?v=123';
+import { openLoginModal } from './login-modal.js?v=123';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=123';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=123';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -186,20 +186,22 @@ function hero(me) {
     meta = 'قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps);
     cta = 'ادامهٔ مسیر ›';
     pct = p.total_steps ? Math.max(3, Math.min(100, Math.round((p.current_step / p.total_steps) * 100))) : 0;
-    glyph = byKey('pathways').ico;
+    glyph = '🧭';
   } else if (due > 0) {
     href = '/plus/cards.html'; kicker = 'برای امروز';
     title = faNum(due) + ' کارت برای مرور';
     meta = 'مرور فاصله‌دار هایلایت‌ها، پیش از فراموشی';
-    cta = 'شروع مرور ›'; glyph = byKey('cards').ico;
+    cta = 'شروع مرور ›'; glyph = '🗂';
   } else {
     href = '/plus/highlights.html'; kicker = 'ادامه بده';
     title = 'دفترچه‌ی هایلایت‌ها';
     meta = 'آخرین هایلایت‌هایت را مرور کن';
-    cta = 'باز کردن ›'; glyph = byKey('highlights').ico;
+    cta = 'باز کردن ›'; glyph = '📒';
   }
-  const g = el('span', { class: 'dcp-pp-hero-glyph', 'aria-hidden': 'true' });
-  g.innerHTML = '<svg viewBox="0 0 24 24">' + glyph + '</svg>'; // static, trusted markup
+  // The big faint glyph in the corner is the mockup's emoji, not the row
+  // icon: a 5rem outline stroke reads as a scribble, the emoji reads as a
+  // compass (founder, 1405/06/31 — «اون قشنگ بود»).
+  const g = el('span', { class: 'dcp-pp-hero-glyph', 'aria-hidden': 'true' }, glyph);
   return el('a', { class: 'dcp-pp-hero', href, 'data-dcp-hero': pct >= 0 ? 'pathway' : (due > 0 ? 'cards' : 'highlights') }, [
     g,
     el('div', { class: 'dcp-pp-hero-k' }, kicker),
