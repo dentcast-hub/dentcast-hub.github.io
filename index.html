@@ -7737,8 +7737,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     colCEl.classList.add('is-viewer');
     /* Append ?view=content so dc-nav.js hides the page's own header
        preventing a double-header inside the iframe */
-    var sep = url.includes('?') ? '&' : '?';
-    pageViewer.src = url + sep + 'view=content';
+    var hashAt = url.indexOf('#');
+    var hash = hashAt >= 0 ? url.slice(hashAt) : '';
+    var base = hashAt >= 0 ? url.slice(0, hashAt) : url;
+    var sep = base.includes('?') ? '&' : '?';
+    pageViewer.src = base + sep + 'view=content' + hash;
   }
 
   /* ══════════════════════════════════════════════
@@ -8206,15 +8209,20 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
      The cabinet is deliberately NOT routed — library-gate.js owns that door on
      every surface of the site and must decide before anything navigates. */
   function dcdRouteArchive(url){
-    let path; try{ path = new URL(url, location.origin).pathname; }catch(x){ path = url; }
+    let u; try{ u = new URL(url, location.origin); }catch(x){ return false; }
+    const path = u.pathname;
     if(path === '/dentcast_cabinet_search.html') return false;   // the gate's, not ours
     /* /plus/* is the account app — its own pages, its own scripts, its own
        payment flow. It is deliberately NOT routed into this column: putting a
        checkout inside an iframe is a decision, not a detail. Those links keep
        navigating, exactly as they did before. */
     if(/^\/plus\//.test(path)) return false;
+    /* The viewer gets the WHOLE url — query and hash included. It used to get
+       the pathname alone, which is how the پریمیوم tab's «بالاترین» row
+       (/up-board/?sort=top) opened the board on «تازه‌ترین» in this column
+       while the phone landed on the ranked list (2026-09-21). */
     if(path.endsWith('/') || !/\.html?$/i.test(path) || path === '/episodes.html'
-       || /^\/(glossary|pillar|up-board|des-board)\//.test(path)) openPageViewer(path);
+       || /^\/(glossary|pillar|up-board|des-board)\//.test(path)) openPageViewer(path + u.search + u.hash);
     else openContent(path, '');
     return true;
   }
