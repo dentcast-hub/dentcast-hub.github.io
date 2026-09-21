@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>پس‌زمینه‌ی تم تیره — گزینه‌ها</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&display=swap">
+<style>
+  :root{
+    --bg:#0e1621; --surface:#17212b; --border:rgba(255,255,255,.08);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0; --ac:#5b9cf6; --pr:#5b9cf6;
+    --amber:#e3b849; --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    color-scheme:dark;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:#080d15; color:var(--txt); font-family:'Vazirmatn',Tahoma,system-ui,sans-serif; direction:rtl; padding:0 16px 5rem; line-height:1.85; font-size:15px; }
+  .wrap{ max-width:1280px; margin:0 auto; }
+  header.hd{ padding:2rem 0 .4rem; max-width:66ch; }
+  .kicker{ display:inline-block; font-size:.72rem; font-weight:800; color:var(--mock-ink); background:var(--mock-bg); border:1px solid var(--mock-bd); border-radius:999px; padding:.1rem .7rem; margin-bottom:.6rem; }
+  h1{ font-size:1.5rem; font-weight:900; margin:0 0 .4rem; line-height:1.4; }
+  header p{ margin:.2rem 0; color:var(--txt2); }
+  .stage{ display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.4rem; margin-top:1.4rem; align-items:start; }
+  .cap{ font-size:.8rem; color:var(--txt3); margin:0 0 .5rem; display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+  .cap b{ color:var(--txt); font-weight:800; }
+  .cap .st{ font-size:.66rem; font-weight:800; border-radius:999px; padding:.05rem .55rem; border:1px solid var(--mock-bd); color:var(--mock-ink); background:var(--mock-bg); }
+  .cap .now{ color:var(--txt3); background:#17212b; border-color:var(--border); }
+  .note{ font-size:.76rem; color:var(--txt3); margin:.4rem .2rem 0; line-height:1.7; }
+
+  .phone{ width:100%; max-width:360px; margin:0 auto; height:700px; border:8px solid #2a3543; border-radius:2.3rem; overflow:hidden; position:relative; background:var(--bg); display:flex; flex-direction:column; }
+  .top{ flex:none; display:flex; align-items:center; justify-content:space-between; padding:.7rem .9rem .5rem; background:var(--surface); border-bottom:1px solid var(--border); position:relative; z-index:2; }
+  .top b{ font-size:.9rem; color:#fff; }
+  .top span{ font-size:.66rem; color:var(--txt3); display:block; }
+  .top i{ width:1.6rem; height:1.6rem; border-radius:.35rem; background:#fff; display:inline-block; }
+  .body{ flex:1; padding:.8rem .75rem 5rem; position:relative; z-index:1; }
+  .h{ font-size:1.3rem; font-weight:900; margin:.2rem .1rem .5rem; }
+  .pill{ display:inline-flex; align-items:center; gap:.3rem; font-size:.66rem; font-weight:800; color:var(--amber); border:1px solid rgba(227,184,73,.26); background:rgba(227,184,73,.14); border-radius:999px; padding:.05rem .55rem; margin:0 .1rem .7rem; }
+  .pill::before{ content:''; width:.42rem; height:.42rem; border-radius:50%; background:var(--amber); }
+  .hero{ height:150px; border-radius:1.2rem; background:linear-gradient(135deg,#022360,#0b3d9e 60%,#0b5fff); margin-bottom:.7rem; padding:.85rem .95rem; color:#fff; font-weight:900; font-size:.95rem; }
+  .hero small{ display:block; font-weight:800; font-size:.66rem; opacity:.78; }
+  .three{ display:grid; grid-template-columns:repeat(3,1fr); gap:.45rem; margin-bottom:.95rem; }
+  .three div{ height:76px; background:var(--surface); border:1px solid var(--border); border-radius:.95rem; box-shadow:var(--card-sh); padding:.5rem .6rem; font-weight:900; color:var(--pr); }
+  .three div em{ display:block; font-style:normal; font-size:.62rem; color:var(--txt3); font-weight:500; }
+  .quick{ display:grid; grid-template-columns:repeat(4,1fr); gap:.5rem; margin-bottom:1rem; }
+  .quick div{ height:3.1rem; border-radius:1rem; background:rgba(91,156,246,.16); }
+  .quick div:nth-child(2){ background:rgba(78,194,127,.14); } .quick div:nth-child(3){ background:rgba(165,150,240,.16); } .quick div:nth-child(4){ background:rgba(79,195,207,.14); }
+  .inset{ background:var(--surface); border:1px solid var(--border); border-radius:1.05rem; height:160px; }
+  .nav{ position:absolute; bottom:0; left:0; right:0; height:64px; background:rgba(23,33,43,.85); border-top:1px solid var(--border); z-index:2; }
+
+  /* ── the layer under the boxes: one background per option (the same technique that ships — background layers, no element) ── */
+  /* A — هاله (آنچه الان روی سایت است) */
+  .a .body{ background:
+    radial-gradient(72rem 38rem at 88% -6rem, rgba(91,156,246,.34), transparent 64%),
+    radial-gradient(48rem 32rem at 2% 44rem, rgba(91,156,246,.14), transparent 66%); }
+
+  /* B — شعاع‌ها: خطوط نازک که از گوشه‌ی بالا-راست پخش می‌شوند و محو می‌شوند */
+  .b .body{ background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 700'><defs><radialGradient id='g' cx='400' cy='0' r='560' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='%23a7c8ff' stop-opacity='.42'/><stop offset='.55' stop-color='%23a7c8ff' stop-opacity='.10'/><stop offset='1' stop-color='%23a7c8ff' stop-opacity='0'/></radialGradient></defs><g stroke='url(%23g)' stroke-width='1' fill='none'><line x1='400' y1='0' x2='-80' y2='140'/><line x1='400' y1='0' x2='-40' y2='300'/><line x1='400' y1='0' x2='20' y2='470'/><line x1='400' y1='0' x2='110' y2='620'/><line x1='400' y1='0' x2='230' y2='720'/><line x1='400' y1='0' x2='330' y2='760'/><line x1='400' y1='0' x2='-90' y2='60'/><line x1='400' y1='0' x2='-70' y2='215'/><line x1='400' y1='0' x2='-10' y2='385'/><line x1='400' y1='0' x2='60' y2='545'/><line x1='400' y1='0' x2='170' y2='680'/></g></svg>") right top / 100% 100% no-repeat,
+    radial-gradient(40rem 26rem at 90% -4rem, rgba(91,156,246,.22), transparent 62%); }
+
+  /* C — کمان‌ها: حلقه‌های هم‌مرکز از همان گوشه (رادار) */
+  .c .body{ background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 700'><defs><radialGradient id='g' cx='420' cy='-20' r='640' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='%23a7c8ff' stop-opacity='.40'/><stop offset='.6' stop-color='%23a7c8ff' stop-opacity='.09'/><stop offset='1' stop-color='%23a7c8ff' stop-opacity='0'/></radialGradient></defs><g stroke='url(%23g)' stroke-width='1' fill='none'><circle cx='420' cy='-20' r='90'/><circle cx='420' cy='-20' r='170'/><circle cx='420' cy='-20' r='250'/><circle cx='420' cy='-20' r='330'/><circle cx='420' cy='-20' r='410'/><circle cx='420' cy='-20' r='490'/><circle cx='420' cy='-20' r='570'/><circle cx='420' cy='-20' r='650'/></g></svg>") right top / 100% 100% no-repeat,
+    radial-gradient(40rem 26rem at 90% -4rem, rgba(91,156,246,.20), transparent 62%); }
+
+  /* D — شبکه: خطوط شطرنجی ریز که از بالا به پایین محو می‌شوند */
+  .d .body{ background:
+    linear-gradient(180deg, transparent 0%, rgba(14,22,33,.35) 45%, #0e1621 100%),
+    linear-gradient(90deg, rgba(167,200,255,.10) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(180deg, rgba(167,200,255,.10) 1px, transparent 1px) 0 0 / 28px 28px,
+    radial-gradient(36rem 22rem at 88% -4rem, rgba(91,156,246,.22), transparent 62%); }
+
+  /* E — شعاع + کمان: هر دو با هم، آرام‌تر */
+  .e .body{ background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 700'><defs><radialGradient id='g' cx='420' cy='-20' r='620' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='%23a7c8ff' stop-opacity='.34'/><stop offset='.6' stop-color='%23a7c8ff' stop-opacity='.07'/><stop offset='1' stop-color='%23a7c8ff' stop-opacity='0'/></radialGradient></defs><g stroke='url(%23g)' stroke-width='1' fill='none'><circle cx='420' cy='-20' r='150'/><circle cx='420' cy='-20' r='300'/><circle cx='420' cy='-20' r='450'/><circle cx='420' cy='-20' r='600'/><line x1='420' y1='-20' x2='-80' y2='150'/><line x1='420' y1='-20' x2='-20' y2='330'/><line x1='420' y1='-20' x2='80' y2='520'/><line x1='420' y1='-20' x2='210' y2='690'/></g></svg>") right top / 100% 100% no-repeat,
+    radial-gradient(40rem 26rem at 90% -4rem, rgba(91,156,246,.20), transparent 62%); }
+</style>
+<div class="wrap">
+  <header class="hd">
+    <span class="kicker">ماکاپ · پس‌زمینه‌ی تم تیره · ۱۴۰۵/۰۶/۳۱</span>
+    <h1>زیر باکس‌ها، روی پس‌زمینه‌ی تیره: پنج گزینه</h1>
+    <p>گوشی A همان چیزی است که الان روی سایت است — یک هاله‌ی آبی محو، بدون خط. چیزی که تو گفتی («خطوط و شعاع مدرن») گزینه‌های B تا E است. همه‌شان فقط در تم تیره‌اند، فقط بیرون کارت‌ها دیده می‌شوند، از گوشه‌ی بالا-راست (جای برند در RTL) شروع می‌شوند و به پایین محو می‌شوند تا زیر فهرست‌ها ساکت باشد. هیچ‌کدام عکس نیست؛ همه با همان تکنیکی کشیده شده‌اند که روی سایت می‌رود (لایه‌ی background، بدون المان، بدون درخواست شبکه).</p>
+    <p>پیشنهاد من: <b>B</b> (شعاع‌ها) یا <b>E</b> (شعاع + کمان). C اگر بخواهی به رادار سایت اشاره کند. D بیشتر شبیه ابزارِ توسعه است تا مجله.</p>
+  </header>
+  <div class="stage">
+    <div class="a"><p class="cap"><b>A</b> <span class="st now">الان روی سایت</span> هاله‌ی آبی</p>
+      <div class="phone"><div class="top"><div><b>DentCast</b><span>دکتر فواد شهابیان</span></div><i></i></div><div class="body"><div class="h">پریمیوم</div><span class="pill">اشتراک فعال</span><div class="hero"><small>ادامه بده</small>پروتز ثابت: از تراش تا سمان</div><div class="three"><div>۴<em>کارت امروز</em></div><div>۱۷<em>روز استریک</em></div><div>۱۳۲<em>هایلایت</em></div></div><div class="quick"><div></div><div></div><div></div><div></div></div><div class="inset"></div></div><div class="nav"></div></div>
+      <p class="note">فقط نور، بدون شکل. روی گوشی کم دیده می‌شود.</p></div>
+    <div class="b"><p class="cap"><b>B</b> <span class="st">پیشنهاد</span> شعاع‌ها</p>
+      <div class="phone"><div class="top"><div><b>DentCast</b><span>دکتر فواد شهابیان</span></div><i></i></div><div class="body"><div class="h">پریمیوم</div><span class="pill">اشتراک فعال</span><div class="hero"><small>ادامه بده</small>پروتز ثابت: از تراش تا سمان</div><div class="three"><div>۴<em>کارت امروز</em></div><div>۱۷<em>روز استریک</em></div><div>۱۳۲<em>هایلایت</em></div></div><div class="quick"><div></div><div></div><div></div><div></div></div><div class="inset"></div></div><div class="nav"></div></div>
+      <p class="note">یازده خط نازک از گوشه‌ی برند، پررنگ نزدیک مبدأ، محو تا پایین. ساکت زیر فهرست‌ها.</p></div>
+    <div class="c"><p class="cap"><b>C</b> کمان‌ها (رادار)</p>
+      <div class="phone"><div class="top"><div><b>DentCast</b><span>دکتر فواد شهابیان</span></div><i></i></div><div class="body"><div class="h">پریمیوم</div><span class="pill">اشتراک فعال</span><div class="hero"><small>ادامه بده</small>پروتز ثابت: از تراش تا سمان</div><div class="three"><div>۴<em>کارت امروز</em></div><div>۱۷<em>روز استریک</em></div><div>۱۳۲<em>هایلایت</em></div></div><div class="quick"><div></div><div></div><div></div><div></div></div><div class="inset"></div></div><div class="nav"></div></div>
+      <p class="note">حلقه‌های هم‌مرکز از همان گوشه — همان استعاره‌ی «رادار دنت‌کست».</p></div>
+    <div class="d"><p class="cap"><b>D</b> شبکه</p>
+      <div class="phone"><div class="top"><div><b>DentCast</b><span>دکتر فواد شهابیان</span></div><i></i></div><div class="body"><div class="h">پریمیوم</div><span class="pill">اشتراک فعال</span><div class="hero"><small>ادامه بده</small>پروتز ثابت: از تراش تا سمان</div><div class="three"><div>۴<em>کارت امروز</em></div><div>۱۷<em>روز استریک</em></div><div>۱۳۲<em>هایلایت</em></div></div><div class="quick"><div></div><div></div><div></div><div></div></div><div class="inset"></div></div><div class="nav"></div></div>
+      <p class="note">شطرنجی ۲۸ پیکسلی که به پایین محو می‌شود. حس Linear/Vercel، ولی سردتر.</p></div>
+    <div class="e"><p class="cap"><b>E</b> <span class="st">پیشنهاد</span> شعاع + کمان</p>
+      <div class="phone"><div class="top"><div><b>DentCast</b><span>دکتر فواد شهابیان</span></div><i></i></div><div class="body"><div class="h">پریمیوم</div><span class="pill">اشتراک فعال</span><div class="hero"><small>ادامه بده</small>پروتز ثابت: از تراش تا سمان</div><div class="three"><div>۴<em>کارت امروز</em></div><div>۱۷<em>روز استریک</em></div><div>۱۳۲<em>هایلایت</em></div></div><div class="quick"><div></div><div></div><div></div><div></div></div><div class="inset"></div></div><div class="nav"></div></div>
+      <p class="note">چهار کمان و چهار شعاع، آرام‌تر از B و C — یک «نقشه»ی محو زیر صفحه.</p></div>
+  </div>
+</div>
+</html>
