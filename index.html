@@ -3572,6 +3572,13 @@ a.dc-list-card--pillar {
    above on purpose; the colour holds in both states. */
 .dc-bottom-nav .dc-bn-item[data-panel="panel-premium"] .dc-bn-ico,
 .dc-bottom-nav .dc-bn-item[data-panel="panel-premium"].active .dc-bn-ico{ color:var(--x-amber); }
+/* …but a full-strength amber icon on an UNSELECTED tab read as «this tab is
+   open» (founder, 1405/06/31): amber was doing two jobs at once — naming the
+   tab and marking the active one. So the resting icon is amber at half
+   strength (still the one coloured icon on the bar, still unmistakably
+   premium) and only the selected tab carries the full colour, the lift and
+   the amber underline — the same three signals every other tab uses. */
+.dc-bottom-nav .dc-bn-item[data-panel="panel-premium"]:not(.active) .dc-bn-ico{ opacity:.55; }
 .dc-bottom-nav .dc-bn-item[data-panel="panel-premium"].active::after{ background:var(--x-amber); }
   </style>
 
@@ -4704,18 +4711,18 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
    subscription buys». */
 [data-theme="dark"] body{
   background-image:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-opacity='.06' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'><g transform='rotate(-12 12 12)'><path d='M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z'/><path d='M19 10a7 7 0 0 1-14 0'/><path d='M12 17v4'/><path d='M8 21h8'/></g></svg>"),
-    radial-gradient(70rem 34rem at 88% -10rem, rgba(91,156,246,.16), transparent 62%),
-    radial-gradient(46rem 30rem at 4% 46rem, rgba(91,156,246,.07), transparent 65%);
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-opacity='.085' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'><g transform='rotate(-12 12 12)'><path d='M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z'/><path d='M19 10a7 7 0 0 1-14 0'/><path d='M12 17v4'/><path d='M8 21h8'/></g></svg>"),
+    radial-gradient(72rem 38rem at 88% -6rem, rgba(91,156,246,.34), transparent 64%),
+    radial-gradient(48rem 32rem at 2% 44rem, rgba(91,156,246,.14), transparent 66%);
   background-repeat:no-repeat;
   background-size:300px 300px, auto, auto;
   background-position:left -70px bottom 130px, 0 0, 0 0; /* above the bottom nav */
 }
 [data-theme="dark"] .dcd-col-c{
   background-image:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-opacity='.06' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'><g transform='rotate(-12 12 12)'><path d='M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z'/><path d='M19 10a7 7 0 0 1-14 0'/><path d='M12 17v4'/><path d='M8 21h8'/></g></svg>"),
-    radial-gradient(70rem 34rem at 88% -10rem, rgba(91,156,246,.16), transparent 62%),
-    radial-gradient(46rem 30rem at 4% 46rem, rgba(91,156,246,.07), transparent 65%);
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-opacity='.085' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'><g transform='rotate(-12 12 12)'><path d='M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z'/><path d='M19 10a7 7 0 0 1-14 0'/><path d='M12 17v4'/><path d='M8 21h8'/></g></svg>"),
+    radial-gradient(72rem 38rem at 88% -6rem, rgba(91,156,246,.34), transparent 64%),
+    radial-gradient(48rem 32rem at 2% 44rem, rgba(91,156,246,.14), transparent 66%);
   background-repeat:no-repeat;
   background-size:420px 420px, auto, auto;
   background-position:left -110px bottom -40px, 0 0, 0 0;
