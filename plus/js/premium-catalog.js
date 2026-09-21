@@ -26,7 +26,7 @@
 // GROUPS ARE INFORMATION, not decoration: they answer «what kind of thing is
 // this» for a reader who has never used any of it. Order inside a group is the
 // order a new subscriber meets them, the everyday ones first.
-import { PREMIUM_FEATURES } from './config.js?v=116';
+import { PREMIUM_FEATURES } from './config.js?v=118';
 
 const F = PREMIUM_FEATURES;
 
@@ -83,7 +83,7 @@ export const PREMIUM_GROUPS = [
     entries: [
       entry('cards', IC.cards, '/plus/cards.html', 'مرور فاصله‌دار هایلایت‌ها، پیش از فراموشی', { feature: F[0] }),
       entry('highlights', IC.library, '/plus/highlights.html', 'همه‌ی هایلایت‌ها یک‌جا، با یادداشت و جستجو', { feature: F[5] }),
-      entry('concepts', IC.concepts, '/plus/highlights.html', 'هایلایت‌ها دسته‌بندی‌شده بر اساس مفهوم، فارغ از مقاله', { title: 'نمای موضوعی هایلایت‌ها' }),
+      entry('concepts', IC.concepts, '/plus/highlights.html#concepts', 'هایلایت‌ها دسته‌بندی‌شده بر اساس مفهوم، فارغ از مقاله', { title: 'نمای موضوعی هایلایت‌ها' }),
       entry('clips', IC.clip, '/plus/highlights.html?kind=clip', 'یک تکه از پادکست را نگه دارید و بعداً بشنوید', { feature: F[7] }),
       entry('collections', IC.collections, '/plus/collections.html', 'پوشه‌های شخصی از هایلایت‌ها و مقاله‌ها، با خروجی Word و PowerPoint', { feature: F[2] }),
     ],
