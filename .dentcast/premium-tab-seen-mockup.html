@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ماکاپ — «کدام‌ها را خوانده‌ای» در تب پریمیوم</title>
+<meta name="robots" content="noindex">
+<!--
+  PROPOSAL, UNAPPROVED (1405/06/31). The seen-ticks («کدام‌ها را خوانده‌ای»,
+  plus.js initSeenTicks: a ✓ beside every item on a section list — hollow when
+  opened, filled when read to the end — plus the «فقط نخوانده‌ها» filter, kept on
+  the account so it follows the reader across devices) are premium, and a
+  free reader meets them only as a grey column on a section page. The premium
+  tab names them nowhere, so a reader who never opens a section list cannot
+  know the feature exists. Proposal: one card in «خواندن و مرور», right after
+  the دفترچه — locked, it CARRIES A MINI DEMO of the three tick states and the
+  filter chip so it explains itself without a page, and for a signed-in free
+  reader it prints their own number («۱۲ از ۷۷ خوانده‌ای», the lock bar's own
+  figure, which is what makes the lock legible); the tap opens the existing
+  gate sheet (openSeenGate). Live, it is a row like the others with the
+  reader's site-wide count and a chevron into the archive tab, where the
+  section lists live.
+-->
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255; --bg:#f3f5f9; --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card:#fff; --hair:rgba(2,35,96,.08); --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --amber:#c9922b; --amber-ink:#8a5f10; --amber-bg:rgba(201,146,43,.10);
+    --blue:#0b5fff; --blue-bg:rgba(11,95,255,.10); --green:#1f7850; --green-bg:rgba(31,120,80,.11);
+    --tick:#22a06b; --chip:rgba(2,35,96,.05);
+  }
+  [data-theme="dark"]{
+    --pr:#8db8ff; --ac:#5b9cf6; --ac-rgb:91,156,246; --bg:#0b1119; --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card:#141d28; --hair:rgba(255,255,255,.08); --card-sh:0 1px 3px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
+    --amber:#e3b849; --amber-ink:#f1d27a; --amber-bg:rgba(227,184,73,.14);
+    --blue:#5b9cf6; --blue-bg:rgba(91,156,246,.16); --green:#4cc08a; --green-bg:rgba(76,192,138,.14);
+    --tick:#3fc78c; --chip:rgba(255,255,255,.06);
+  }
+  *{box-sizing:border-box} a{text-decoration:none;color:inherit}
+  html,body{margin:0}
+  body{font-family:Vazirmatn,"Segoe UI",Tahoma,sans-serif;background:var(--bg);color:var(--txt);line-height:1.75;padding:26px 18px 70px;-webkit-font-smoothing:antialiased}
+  h1{font-size:1.4rem;margin:0 0 .25rem;letter-spacing:-.01em}
+  .lead{color:var(--txt2);font-size:.92rem;max-width:66rem;margin:0 0 1.1rem}
+  .bar{display:flex;gap:.5rem;align-items:center;margin:0 0 1.6rem}
+  .tg{border:1px solid var(--hair);background:var(--card);color:var(--txt);border-radius:999px;padding:.35rem .95rem;font:inherit;font-size:.85rem;cursor:pointer}
+  .tg.is-on{background:var(--ac);color:#fff;border-color:var(--ac)}
+  .row3{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:26px;align-items:start;margin:0 0 2.4rem}
+  .cap{font-size:.78rem;font-weight:800;color:var(--txt3);margin:0 0 .5rem;display:flex;gap:.4rem;align-items:center}
+  .cap i{display:inline-block;width:.55rem;height:.55rem;border-radius:50%;background:var(--txt3)}
+  .cap.is-new{color:var(--ac)} .cap.is-new i{background:var(--ac)}
+  .ph{width:390px;max-width:100%;height:900px;border-radius:44px;overflow:hidden;position:relative;background:var(--bg);box-shadow:0 0 0 1px var(--hair),0 30px 60px -30px rgba(2,35,96,.35)}
+  [data-theme="dark"] .ph::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3Cpattern id='g' width='28' height='28' patternUnits='userSpaceOnUse'%3E%3Cpath d='M28 0H0V28' fill='none' stroke='%235b9cf6' stroke-opacity='.14' stroke-width='1'/%3E%3C/pattern%3E%3ClinearGradient id='f' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff'/%3E%3Cstop offset='1' stop-color='%23000'/%3E%3C/linearGradient%3E%3Cmask id='m'%3E%3Crect width='100%25' height='100%25' fill='url(%23f)'/%3E%3C/mask%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23g)' mask='url(%23m)'/%3E%3C/svg%3E") 0 0/100% 40rem no-repeat}
+  .scr{position:absolute;inset:0;overflow:hidden;z-index:1;padding:14px 14px 30px}
+  .ph-t{font-size:1.35rem;font-weight:900;letter-spacing:-.01em;margin:4px 2px 2px;display:flex;justify-content:space-between;align-items:baseline}
+  .ph-t a{font-size:.78rem;font-weight:800;color:var(--ac)}
+  .sub{font-size:.78rem;margin:0 2px 12px;color:var(--txt3)}
+  .status{display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--txt3);margin:0 2px 12px}
+  .pill{display:inline-flex;align-items:center;gap:.3rem;font-size:.66rem;font-weight:800;color:var(--amber-ink);background:var(--amber-bg);border-radius:999px;padding:.1rem .55rem}
+  .pill::before{content:"";width:.4rem;height:.4rem;border-radius:50%;background:var(--amber)}
+  .offer{display:flex;align-items:center;gap:.6rem;padding:.7rem .8rem;border-radius:1rem;margin:0 0 .6rem;background:linear-gradient(180deg,color-mix(in srgb,var(--amber) 12%,var(--card)),var(--card) 55%);border:1px solid color-mix(in srgb,var(--amber) 30%,transparent)}
+  .offer .ic{width:2.1rem;height:2.1rem;border-radius:50%;display:grid;place-items:center;color:var(--amber);background:var(--amber-bg)}
+  .offer b{display:block;font-size:.86rem;font-weight:800} .offer span{display:block;font-size:.72rem;color:var(--txt3)} .offer .go{margin-inline-start:auto;font-size:.74rem;font-weight:800;color:var(--amber-ink);white-space:nowrap}
+  .guest{font-size:.78rem;color:var(--txt3);margin:0 2px 12px} .guest a{color:var(--ac);font-weight:800}
+  .gh{display:flex;align-items:baseline;justify-content:space-between;margin:.4rem .3rem .35rem} .gh h2{font-size:.86rem;font-weight:900;margin:0;display:flex;align-items:center;gap:.4rem} .gh h2 i{width:.5rem;height:.5rem;border-radius:50%;background:var(--blue)} .gh small{font-size:.66rem;color:var(--txt3);font-weight:700}
+  .lc{display:flex;align-items:center;gap:.6rem;padding:.7rem .75rem;border-radius:1rem;margin:0 0 .5rem;position:relative;overflow:hidden;
+      background:linear-gradient(180deg,color-mix(in srgb,var(--amber) 9%,var(--card)) 0%,var(--card) 45%);border:1px solid color-mix(in srgb,var(--amber) 28%,transparent);box-shadow:var(--card-sh)}
+  .lc .ic{width:2.1rem;height:2.1rem;border-radius:50%;display:grid;place-items:center;color:var(--blue);background:var(--blue-bg);flex:none} .lc .ic svg{width:1.05rem;height:1.05rem;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .lc .m{flex:1;min-width:0} .lc b{display:block;font-size:.84rem;font-weight:800} .lc span{display:block;font-size:.7rem;color:var(--txt3);line-height:1.6}
+  .lc .lk{font-size:.64rem;font-weight:800;color:var(--amber-ink);background:var(--amber-bg);border-radius:999px;padding:.1rem .5rem;white-space:nowrap;flex:none}
+  /* the new card: the same locked card, but it carries a demo */
+  .lc.demo{flex-direction:column;align-items:stretch;gap:.5rem;outline:2px dashed var(--amber);outline-offset:2px}
+  .lc.demo .hd{display:flex;align-items:center;gap:.6rem}
+  .mini{background:var(--card);border:1px solid var(--hair);border-radius:.75rem;padding:.35rem .6rem .45rem;margin-top:.1rem}
+  .mini .fchip{display:inline-flex;align-items:center;gap:.3rem;font-size:.64rem;font-weight:800;color:var(--tick);border:1px solid color-mix(in srgb,var(--tick) 40%,transparent);border-radius:999px;padding:.05rem .5rem;margin:.1rem 0 .3rem}
+  .mini .r{display:flex;align-items:center;gap:.5rem;padding:.28rem 0;border-bottom:1px solid var(--hair);font-size:.74rem;font-weight:600}
+  .mini .r:last-child{border-bottom:0}
+  .mini .r .tx{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mini .r small{font-size:.6rem;color:var(--txt3);font-weight:600;white-space:nowrap}
+  .tick{display:inline-grid;place-items:center;width:17px;height:17px;border-radius:50%;border:1.5px solid var(--hair);font-size:.6rem;font-weight:800;color:transparent;flex:none}
+  .tick.seen{border-color:var(--tick);color:var(--tick)} .tick.read{border-color:var(--tick);background:var(--tick);color:#fff}
+  .lc.demo .num{font-size:.72rem;color:var(--txt2);margin:0;display:flex;align-items:center;gap:.4rem} .lc.demo .num b{display:inline;font-size:.8rem;color:var(--pr)}
+  .inset{background:var(--card);border:1px solid var(--hair);border-radius:1rem;box-shadow:var(--card-sh);overflow:hidden;margin:0 0 .95rem}
+  .rw{display:flex;align-items:center;gap:.6rem;padding:.6rem .7rem;border-bottom:1px solid var(--hair)} .rw:last-child{border-bottom:0}
+  .rw .ic{width:2rem;height:2rem;border-radius:.65rem;display:grid;place-items:center;color:var(--blue);background:var(--blue-bg);flex:none} .rw .ic svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .rw .m{flex:1;min-width:0} .rw .t{font-size:.82rem;font-weight:800} .rw .s{font-size:.68rem;color:var(--txt3);line-height:1.5}
+  .rw .st{font-size:.68rem;color:var(--txt3);display:flex;align-items:center;gap:.25rem;white-space:nowrap} .rw .st.live{color:var(--ac);font-weight:800}
+  .rw.is-new{background:color-mix(in srgb,var(--amber) 6%,transparent)}
+  .rw .ticks{display:inline-flex;gap:2px;margin-inline-start:.2rem}
+  .note{position:absolute;background:var(--pr);color:#fff;font-size:.62rem;font-weight:800;border-radius:999px;padding:.1rem .5rem;z-index:3;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+  [data-theme="dark"] .note{color:#061a3a}
+  .sheet{position:absolute;left:14px;right:14px;bottom:0;background:var(--card);border-radius:22px 22px 0 0;padding:18px 18px 22px;box-shadow:0 -12px 40px -16px rgba(2,35,96,.35);z-index:4;border:1px solid var(--hair);border-bottom:0}
+  .sheet .k{font-size:.66rem;font-weight:800;color:var(--amber-ink);background:var(--amber-bg);border-radius:999px;padding:.1rem .55rem;display:inline-block;margin-bottom:.5rem}
+  .sheet h3{margin:0 0 .3rem;font-size:1rem;font-weight:900} .sheet p{margin:0 0 .8rem;font-size:.8rem;color:var(--txt2);line-height:1.75}
+  .sheet .cta{display:block;text-align:center;background:linear-gradient(180deg,#3b84ff,#0b5fff);color:#fff;border-radius:999px;padding:.6rem;font-weight:800;font-size:.86rem}
+  .dim{position:absolute;inset:0;background:rgba(2,35,96,.28);z-index:3}
+  .legend{background:var(--card);border:1px solid var(--hair);border-radius:24px;padding:18px 20px;box-shadow:var(--card-sh);max-width:66rem}
+  .legend h2{font-size:1rem;margin:0 0 .4rem} .legend ol{margin:0;padding-inline-start:1.2rem;font-size:.9rem;color:var(--txt2)} .legend li{margin:.3rem 0} .legend b{color:var(--txt)}
+</style>
+</head>
+<body>
+<h1>«کدام‌ها را خوانده‌ای» در تب پریمیوم — ماکاپ برای تأیید</h1>
+<p class="lead">نشان‌های خوانده‌شده (✓ کنار هر مطلب در فهرست بخش‌ها: توخالی = بازش کرده‌ای، پُر = تا آخر خوانده‌ای، به‌علاوه‌ی فیلتر «فقط نخوانده‌ها»، روی حساب و نه مرورگر) پریمیوم‌اند و در تب پریمیوم هیچ اسمی از آن‌ها نیست. کسی که فهرست یک بخش را باز نکند، نمی‌فهمد چنین چیزی هست. پیشنهاد: یک کارت که خودش نشان می‌دهد داستان چیست.</p>
+<div class="bar"><button class="tg is-on" data-t="light" type="button">روشن</button><button class="tg" data-t="dark" type="button">تاریک</button></div>
+
+<section class="row3">
+  <!-- ===== locked, with the demo card ===== -->
+  <div>
+    <div class="cap is-new"><i></i>مهمان / رایگان — کارتِ جدید در «خواندن و مرور»</div>
+    <div class="ph"><div class="scr">
+      <div class="ph-t"><span>پریمیوم</span></div>
+      <p class="sub">همه‌ی چیزهایی که اشتراک می‌خرد، یک‌جا. با یک اشتراک همه‌شان باز می‌شوند.</p>
+      <div class="offer"><span class="ic">★</span><div><b>اشتراک پریمیوم</b><span>یک‌ماهه، سه‌ماهه و شش‌ماهه</span></div><span class="go">دیدن پلان‌ها ›</span></div>
+      <p class="guest">اگر اشتراک دارید، <a href="#">وارد شوید</a>.</p>
+      <div class="gh"><h2><i></i>خواندن و مرور</h2><small>۶ ابزار</small></div>
+      <div class="lc"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="12" rx="3"/><path d="M7 4h14v12"/></svg></span><div class="m"><b>برای مرور امروز</b><span>مرور فاصله‌دار هایلایت‌ها، پیش از فراموشی</span></div><span class="lk">🔒 پریمیوم</span></div>
+      <div class="lc"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/></svg></span><div class="m"><b>دفترچه‌ی هایلایت‌ها</b><span>همه‌ی هایلایت‌ها یک‌جا، با یادداشت و جستجو</span></div><span class="lk">🔒 پریمیوم</span></div>
+
+      <div style="position:relative"><span class="note" style="top:-8px;inset-inline-start:14px">جدید</span></div>
+      <div class="lc demo">
+        <div class="hd"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><div class="m"><b>کدام‌ها را خوانده‌ای</b><span>کنار هر مطلبِ فهرست: بازش کرده‌ای یا تا آخر خوانده‌ای — روی هر دستگاهی</span></div><span class="lk">🔒 پریمیوم</span></div>
+        <div class="mini">
+          <span class="fchip">◔ فقط نخوانده‌ها (۶۵)</span>
+          <div class="r"><span class="tick read">✓</span><span class="tx">ادهزیو یونیورسال و اچینگ سلکتیو</span><small>تا آخر خوانده‌ای</small></div>
+          <div class="r"><span class="tick seen">✓</span><span class="tx">لایه‌گذاری کامپوزیت خلفی</span><small>بازش کرده‌ای</small></div>
+          <div class="r"><span class="tick">✓</span><span class="tx">کنترل خونریزی در جراحی پریو</span><small>هنوز ندیده‌ای</small></div>
+        </div>
+        <p class="num"><b>۱۲ از ۷۷</b> مطلبِ اینسایت را خوانده‌ای — دیدنِ اینکه کدام‌ها، با پریمیوم</p>
+      </div>
+
+      <div class="lc"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg></span><div class="m"><b>کالکشن‌ها</b><span>پوشه‌های شخصی از هایلایت‌ها و مقاله‌ها</span></div><span class="lk">🔒 پریمیوم</span></div>
+    </div></div>
+  </div>
+
+  <!-- ===== the tap: the existing gate sheet ===== -->
+  <div>
+    <div class="cap"><i></i>لمس کارت — همان شیتِ دروازه‌ای که امروز روی فهرست بخش باز می‌شود</div>
+    <div class="ph"><div class="scr">
+      <div class="ph-t"><span>پریمیوم</span></div>
+      <p class="sub">همه‌ی چیزهایی که اشتراک می‌خرد، یک‌جا.</p>
+      <div class="offer"><span class="ic">★</span><div><b>اشتراک پریمیوم</b><span>یک‌ماهه، سه‌ماهه و شش‌ماهه</span></div><span class="go">دیدن پلان‌ها ›</span></div>
+      <div class="gh"><h2><i></i>خواندن و مرور</h2><small>۶ ابزار</small></div>
+      <div class="lc"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="12" rx="3"/><path d="M7 4h14v12"/></svg></span><div class="m"><b>برای مرور امروز</b><span>مرور فاصله‌دار هایلایت‌ها، پیش از فراموشی</span></div><span class="lk">🔒 پریمیوم</span></div>
+      <div class="lc demo" style="outline:0"><div class="hd"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><div class="m"><b>کدام‌ها را خوانده‌ای</b><span>کنار هر مطلبِ فهرست: بازش کرده‌ای یا تا آخر خوانده‌ای — روی هر دستگاهی</span></div><span class="lk">🔒 پریمیوم</span></div></div>
+      <div class="dim"></div>
+      <div class="sheet">
+        <span class="k">ویژه‌ی پریمیوم</span>
+        <h3>کدام‌ها را خوانده‌ای</h3>
+        <p>کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. روی هر دستگاهی، و حتی بعد از پاک‌کردنِ تاریخچه‌ی مرورگر — این حافظه به حسابِ توست، نه به مرورگر.</p>
+        <a class="cta" href="#">دیدن پلان‌های پریمیوم ›</a>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ===== live ===== -->
+  <div>
+    <div class="cap is-new"><i></i>مشترک — همان ردیف، با عددِ خودش</div>
+    <div class="ph"><div class="scr">
+      <div class="ph-t"><span>پریمیوم</span><a href="#">پیشخوان ›</a></div>
+      <div class="status"><span class="pill">اشتراک فعال</span><span>تا ۲۴ آبان</span></div>
+      <div class="gh"><h2><i></i>خواندن و مرور</h2><small>۶ ابزار</small></div>
+      <div class="inset">
+        <div class="rw"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="12" rx="3"/><path d="M7 4h14v12"/></svg></span><div class="m"><div class="t">برای مرور امروز</div><div class="s">مرور فاصله‌دار هایلایت‌ها، پیش از فراموشی</div></div><span class="st live">۴ کارت ›</span></div>
+        <div class="rw"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/></svg></span><div class="m"><div class="t">دفترچه‌ی هایلایت‌ها</div><div class="s">همه‌ی هایلایت‌ها یک‌جا، با یادداشت و جستجو</div></div><span class="st">۱۳۲ ›</span></div>
+        <div class="rw is-new" style="position:relative"><span class="note" style="top:-4px;inset-inline-start:10px">جدید</span><span class="ic" style="color:var(--tick);background:var(--green-bg)"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><div class="m"><div class="t">کدام‌ها را خوانده‌ای <span class="ticks"><span class="tick read">✓</span><span class="tick seen">✓</span><span class="tick">✓</span></span></div><div class="s">نشانِ کنار هر مطلب در فهرست بخش‌ها، و فیلتر «فقط نخوانده‌ها»</div></div><span class="st live">۵۱ از ۴۴۴ ›</span></div>
+        <div class="rw"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg></span><div class="m"><div class="t">کالکشن‌ها</div><div class="s">پوشه‌های شخصی از هایلایت‌ها و مقاله‌ها</div></div><span class="st">۲ ›</span></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<section class="legend">
+  <h2>پیشنهاد</h2>
+  <ol>
+    <li><b>یک ورودی تازه در کاتالوگ، گروه «خواندن و مرور»، بعد از دفترچه:</b> «کدام‌ها را خوانده‌ای» — همان اسمی که شیتِ دروازه‌اش امروز دارد. گروه از ۵ به ۶ ابزار می‌رسد؛ `PREMIUM_FEATURES` دست نمی‌خورد (ورودیِ خودِ کاتالوگ است، مثل «نمای موضوعی»).</li>
+    <li><b>کارتِ قفل خودش داستان را می‌گوید:</b> زیر عنوان، یک فهرستِ کوچکِ سه‌ردیفی با هر سه حالتِ نشان (توخالی = بازش کرده‌ای، پُر = تا آخر خوانده‌ای، خاکستری = هنوز ندیده‌ای) و چیپِ «فقط نخوانده‌ها». برای مهمان همین دمو کافی است؛ برای خواننده‌ی رایگانِ واردشده یک خط پایین کارت عددِ خودش را می‌گوید («۱۲ از ۷۷») — همان عددی که نوارِ قفلِ فهرستِ بخش امروز می‌گوید، و همان قاعده‌ی سایت که عدد است که قفل را خوانا می‌کند.</li>
+    <li><b>لمس کارت</b> همان شیتِ دروازه‌ای را باز می‌کند که امروز روی فهرست بخش باز می‌شود (`openSeenGate`، همان متن، همان دکمه). این ویژگی صفحه‌ای ندارد؛ لینک به یک صفحه، به جای این شیت، آدم را جایی می‌برد که چیزی برای دیدن نیست.</li>
+    <li><b>مشترک:</b> یک ردیف مثل بقیه، با سه نشان کوچک کنار نام، عددِ سراسری‌اش («۵۱ از ۴۴۴ ›» از همان `GET /seen`) و شورون به تب آرشیو، جایی که فهرست بخش‌ها هست.</li>
+    <li><b>عوض نمی‌شود:</b> نشان‌ها روی فهرست‌ها، فیلتر، نوارِ قفل، شیت — هیچ‌کدام. فقط تب پریمیوم بلد می‌شود این ویژگی هست.</li>
+  </ol>
+</section>
+
+<script>
+  document.querySelectorAll('.tg').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.documentElement.setAttribute('data-theme', b.dataset.t);
+      document.querySelectorAll('.tg').forEach(function (x) { x.classList.toggle('is-on', x === b); });
+    });
+  });
+</script>
+</body>
+</html>
