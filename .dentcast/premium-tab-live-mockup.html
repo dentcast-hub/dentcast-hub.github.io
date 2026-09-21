@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>تب پریمیوم — حالت مشترک</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap">
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10); --border2:rgba(2,35,96,.06); --line-strong:rgba(2,35,96,.18);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --chip-bg:rgba(11,95,255,.08); --chip-bd:rgba(11,95,255,.22);
+    --amber:#c9922b; --amber-ink:#8a6414;
+    --amber-wash:rgba(201,146,43,.08); --amber-wash-2:rgba(201,146,43,.13);
+    --amber-bd:rgba(154,107,21,.22);
+    /* the site's other semantic colours, reused as GROUP tints */
+    --t-blue:#0b5fff;  --t-blue-bg:rgba(11,95,255,.10);
+    --t-green:#1f8a4c; --t-green-bg:rgba(31,138,76,.12);
+    --t-violet:#5b4bc7; --t-violet-bg:rgba(91,75,199,.12);
+    --t-teal:#0e7f8c;  --t-teal-bg:rgba(14,127,140,.12);
+    --t-heart:#d6456a;
+    --bn-bg:rgba(255,255,255,.92); --bn-border:rgba(2,35,96,.10); --bn-txt:#62779a; --bn-active:#0a1a33;
+    --phone-bezel:#0a1a33;
+    --mock-ink:#3b2f7a; --mock-bg:#efeaff; --mock-bd:rgba(59,47,122,.22);
+    --ok:#1f8a4c;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --chip-bg:rgba(91,156,246,.12); --chip-bd:rgba(91,156,246,.28);
+    --amber:#e3b849; --amber-ink:#e3b849;
+    --amber-wash:rgba(227,184,73,.09); --amber-wash-2:rgba(227,184,73,.14);
+    --amber-bd:rgba(227,184,73,.26);
+    --t-blue:#5b9cf6;  --t-blue-bg:rgba(91,156,246,.16);
+    --t-green:#4ec27f; --t-green-bg:rgba(78,194,127,.14);
+    --t-violet:#a596f0; --t-violet-bg:rgba(165,150,240,.16);
+    --t-teal:#4fc3cf;  --t-teal-bg:rgba(79,195,207,.14);
+    --t-heart:#f07b98;
+    --bn-bg:rgba(23,33,43,.92); --bn-border:rgba(255,255,255,.09); --bn-txt:#6f8fb0; --bn-active:#e8f0ff;
+    --phone-bezel:#2a3543;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    --ok:#4ec27f;
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --chip-bg:rgba(91,156,246,.12); --chip-bd:rgba(91,156,246,.28);
+    --amber:#e3b849; --amber-ink:#e3b849;
+    --amber-wash:rgba(227,184,73,.09); --amber-wash-2:rgba(227,184,73,.14);
+    --amber-bd:rgba(227,184,73,.26);
+    --t-blue:#5b9cf6;  --t-blue-bg:rgba(91,156,246,.16);
+    --t-green:#4ec27f; --t-green-bg:rgba(78,194,127,.14);
+    --t-violet:#a596f0; --t-violet-bg:rgba(165,150,240,.16);
+    --t-teal:#4fc3cf;  --t-teal-bg:rgba(79,195,207,.14);
+    --t-heart:#f07b98;
+    --bn-bg:rgba(23,33,43,.92); --bn-border:rgba(255,255,255,.09); --bn-txt:#6f8fb0; --bn-active:#e8f0ff;
+    --phone-bezel:#2a3543;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    --ok:#4ec27f;
+    color-scheme:dark;
+  }
+  *{ box-sizing:border-box; }
+  body{ background:var(--bg); color:var(--txt);
+        font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif;
+        direction:rtl; margin:0; padding-inline:16px; padding-block:0 5rem; line-height:1.85; font-size:15px; }
+  button{ font:inherit; color:inherit; }
+  :focus-visible{ outline:2px solid var(--ac); outline-offset:2px; border-radius:6px; }
+  .num{ font-variant-numeric:tabular-nums; }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+  svg.i{ width:1em; height:1em; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; display:inline-block; vertical-align:-.15em; }
+
+  .wrap{ max-width:1100px; margin:0 auto; }
+  header.hd{ padding-block:2rem .4rem; max-width:64ch; }
+  header.hd .kicker{ display:inline-block; font-size:.72rem; font-weight:800; letter-spacing:.02em;
+    color:var(--mock-ink); background:var(--mock-bg); border:1px solid var(--mock-bd);
+    border-radius:999px; padding:.1rem .7rem; margin-bottom:.6rem; }
+  header.hd h1{ font-size:1.55rem; font-weight:900; margin:0 0 .4rem; line-height:1.4; text-wrap:balance; }
+  header.hd p{ margin:.2rem 0; color:var(--txt2); }
+  .tools{ display:flex; gap:.5rem; align-items:center; margin:.6rem 0 0; }
+  .tools button{ border:1px solid var(--border); background:var(--surface); border-radius:999px; padding:.15rem .8rem; font-size:.78rem; font-weight:700; cursor:pointer; }
+
+  /* ── phones ── */
+  .stage{ display:grid; grid-template-columns:repeat(auto-fit, minmax(330px, 1fr)); gap:1.6rem; align-items:start; margin-top:1.4rem; }
+  .cap{ font-size:.8rem; color:var(--txt3); margin:0 0 .5rem; display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+  .cap b{ color:var(--txt); font-weight:800; }
+  .cap .st{ font-size:.68rem; font-weight:800; border-radius:999px; padding:.05rem .55rem; border:1px solid; }
+  .cap .st-now{ color:var(--txt3); background:var(--surface2); border-color:var(--border); }
+  .cap .st-new{ color:var(--mock-ink); background:var(--mock-bg); border-color:var(--mock-bd); }
+  .phone{ width:100%; max-width:390px; margin:0 auto; height:800px;
+    background:var(--bg); border:8px solid var(--phone-bezel); border-radius:2.4rem;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,.45); position:relative; overflow:hidden;
+    display:flex; flex-direction:column; }
+  .topbar{ flex:none; display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+    padding:.7rem .9rem .5rem; background:var(--surface); border-bottom:1px solid var(--border2); }
+  .topbar .brand{ display:flex; align-items:center; gap:.45rem; font-weight:900; font-size:.9rem; color:var(--pr); }
+  .topbar .brand i{ width:1.55rem; height:1.55rem; border-radius:50%; background:var(--pr); display:inline-block; }
+  .topbar .tb{ display:flex; gap:.35rem; color:var(--txt3); font-size:1.05rem; }
+  .topbar .tb span{ width:1.9rem; height:1.9rem; border-radius:50%; display:grid; place-items:center; background:var(--surface2); }
+  .body{ flex:1; overflow-y:auto; padding:.75rem .75rem 5.2rem; scrollbar-width:thin; }
+
+  .pagehead{ display:flex; align-items:baseline; justify-content:space-between; gap:.6rem; margin:.2rem .1rem .1rem; }
+  .pagetitle{ font-size:1.35rem; font-weight:900; margin:0; letter-spacing:-.01em; }
+  .pagesub{ font-size:.8rem; color:var(--txt3); margin:0 .1rem .7rem; line-height:1.7; }
+  .more{ font-size:.74rem; font-weight:800; color:var(--ac); white-space:nowrap; text-decoration:none; }
+
+  /* ═══ A: TODAY (the shipped live state, reconstructed) ═══ */
+  .a .mine{ display:grid; grid-template-columns:repeat(3,1fr); gap:.45rem; margin:0 0 .9rem; }
+  .a .mine > div{ background:var(--surface); border:1px solid var(--border); border-radius:.9rem; padding:.5rem .55rem; box-shadow:var(--card-sh); }
+  .a .mine b{ display:block; font-size:1.05rem; font-weight:900; color:var(--pr); line-height:1.3; }
+  .a .mine span{ display:block; font-size:.66rem; color:var(--txt3); }
+  .a .sec{ margin:.9rem .1rem .45rem; }
+  .a .sec h2{ font-size:.86rem; font-weight:900; margin:0; padding-right:.55rem; border-right:4px solid var(--amber); line-height:1.35; }
+  .a .sec h2 small{ display:block; font-size:.68rem; font-weight:500; color:var(--txt3); }
+  .a .card{ display:flex; align-items:center; gap:.65rem; padding:.62rem .7rem; margin-bottom:.45rem;
+    background:linear-gradient(180deg, var(--amber-wash), transparent 45%), var(--surface);
+    border:1px solid var(--amber-bd); border-radius:1rem; box-shadow:var(--card-sh); }
+  .a .card .ico{ flex:none; width:2.05rem; height:2.05rem; border-radius:50%; display:grid; place-items:center;
+    background:var(--amber-wash-2); border:1px solid var(--amber-bd); color:var(--amber-ink); font-size:1rem; }
+  .a .card .main{ flex:1; min-width:0; }
+  .a .card .t{ font-size:.84rem; font-weight:800; line-height:1.4; }
+  .a .card .s{ font-size:.7rem; color:var(--txt3); line-height:1.6; }
+  .a .card .state{ flex:none; font-size:.66rem; font-weight:800; border-radius:999px; padding:.12rem .55rem; white-space:nowrap;
+    background:var(--chip-bg); color:var(--ac); border:1px solid var(--chip-bd); }
+
+  /* ═══ B: PROPOSAL — the subscriber's home ═══ */
+  .b .status{ display:flex; align-items:center; gap:.45rem; margin:0 .1rem .75rem; font-size:.74rem; color:var(--txt3); }
+  .b .status .pill{ display:inline-flex; align-items:center; gap:.3rem; font-size:.66rem; font-weight:800; color:var(--amber-ink);
+    background:var(--amber-wash-2); border:1px solid var(--amber-bd); border-radius:999px; padding:.05rem .55rem; }
+  .b .status .pill::before{ content:''; width:.42rem; height:.42rem; border-radius:50%; background:var(--amber); }
+
+  /* the one primary card: continue where you left off */
+  .b .hero{ display:block; text-decoration:none; position:relative; overflow:hidden; padding:.85rem .95rem .8rem; margin:0 0 .7rem; border-radius:1.2rem;
+    background:linear-gradient(135deg, var(--pr) 0%, #0b3d9e 60%, #0b5fff 100%); color:#fff; box-shadow:0 10px 26px -12px rgba(2,35,96,.55); }
+  :root[data-theme="dark"] .b .hero, :root:not([data-theme="light"]) .b .hero{ }
+  .b .hero .k{ font-size:.66rem; font-weight:800; opacity:.78; letter-spacing:.02em; }
+  .b .hero .t{ font-size:.98rem; font-weight:900; line-height:1.4; margin:.1rem 0 .15rem; }
+  .b .hero .m{ font-size:.72rem; opacity:.85; }
+  .b .hero .bar{ height:.38rem; border-radius:999px; background:rgba(255,255,255,.22); margin:.55rem 0 .5rem; overflow:hidden; }
+  .b .hero .bar i{ display:block; height:100%; width:31%; background:#fff; border-radius:999px; }
+  .b .hero .row{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
+  .b .hero .cta{ font-size:.74rem; font-weight:800; background:#fff; color:var(--pr); border-radius:999px; padding:.22rem .8rem; }
+  .b .hero .glyph{ position:absolute; left:-.6rem; top:-.7rem; font-size:5.2rem; opacity:.10; transform:rotate(-12deg); }
+
+  /* today strip — three facts, each a door */
+  .b .today{ display:grid; grid-template-columns:repeat(3,1fr); gap:.45rem; margin:0 0 .95rem; }
+  .b .today a{ display:flex; flex-direction:column; gap:.05rem; padding:.5rem .6rem; text-decoration:none; color:inherit;
+    background:var(--surface); border:1px solid var(--border); border-radius:.95rem; box-shadow:var(--card-sh); }
+  .b .today b{ font-size:1.02rem; font-weight:900; color:var(--pr); line-height:1.3; display:flex; align-items:baseline; gap:.25rem; }
+  .b .today b em{ font-style:normal; font-size:.66rem; font-weight:700; color:var(--txt3); }
+  .b .today span{ font-size:.64rem; color:var(--txt3); white-space:nowrap; }
+  .b .today .go{ display:block; color:var(--ac); font-weight:800; font-size:.64rem; margin-top:.05rem; }
+
+  /* quick actions — 4 tiles */
+  .b .quick{ display:grid; grid-template-columns:repeat(4,1fr); gap:.5rem; margin:0 0 1rem; }
+  .b .quick a{ display:flex; flex-direction:column; align-items:center; gap:.3rem; text-decoration:none; color:inherit; }
+  .b .quick .d{ width:3.1rem; height:3.1rem; border-radius:1rem; display:grid; place-items:center; font-size:1.25rem;
+    background:var(--surface); border:1px solid var(--border); box-shadow:var(--card-sh); }
+  .b .quick .d.blue{ color:var(--t-blue); background:var(--t-blue-bg); border-color:transparent; }
+  .b .quick .d.green{ color:var(--t-green); background:var(--t-green-bg); border-color:transparent; }
+  .b .quick .d.violet{ color:var(--t-violet); background:var(--t-violet-bg); border-color:transparent; }
+  .b .quick .d.teal{ color:var(--t-teal); background:var(--t-teal-bg); border-color:transparent; }
+  .b .quick span{ font-size:.66rem; font-weight:700; color:var(--txt2); text-align:center; line-height:1.3; }
+
+  /* inset grouped lists — one surface per group */
+  .b .grp{ margin:0 0 .95rem; }
+  .b .grp .gh{ display:flex; align-items:baseline; justify-content:space-between; margin:0 .3rem .35rem; }
+  .b .grp .gh h2{ margin:0; font-size:.8rem; font-weight:900; display:flex; align-items:center; gap:.4rem; }
+  .b .grp .gh h2 i{ width:.5rem; height:.5rem; border-radius:50%; display:inline-block; }
+  .b .grp .gh small{ font-size:.66rem; color:var(--txt3); font-weight:500; }
+  .b .list{ background:var(--surface); border:1px solid var(--border); border-radius:1.05rem; box-shadow:var(--card-sh); overflow:hidden; }
+  .b .row{ display:flex; align-items:center; gap:.6rem; padding:.55rem .7rem; text-decoration:none; color:inherit; border-bottom:1px solid var(--border2); }
+  .b .row:last-child{ border-bottom:0; }
+  .b .row .ico{ flex:none; width:1.9rem; height:1.9rem; border-radius:.6rem; display:grid; place-items:center; font-size:.95rem; }
+  .b .row .main{ flex:1; min-width:0; }
+  .b .row .t{ font-size:.82rem; font-weight:800; line-height:1.35; }
+  .b .row .s{ font-size:.68rem; color:var(--txt3); line-height:1.5; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .b .row .st{ flex:none; font-size:.68rem; color:var(--txt3); display:flex; align-items:center; gap:.2rem; white-space:nowrap; }
+  .b .row .st.live{ color:var(--ac); font-weight:800; }
+  .b .row .st.ok{ color:var(--ok); font-weight:800; }
+  .b .row .st .chev{ color:var(--txt3); opacity:.55; font-size:.8rem; }
+  .b .g-blue .ico{ color:var(--t-blue); background:var(--t-blue-bg); }     .b .g-blue .gh i{ background:var(--t-blue); }
+  .b .g-green .ico{ color:var(--t-green); background:var(--t-green-bg); }  .b .g-green .gh i{ background:var(--t-green); }
+  .b .g-violet .ico{ color:var(--t-violet); background:var(--t-violet-bg); } .b .g-violet .gh i{ background:var(--t-violet); }
+  .b .g-teal .ico{ color:var(--t-teal); background:var(--t-teal-bg); }     .b .g-teal .gh i{ background:var(--t-teal); }
+
+  /* bottom nav */
+  .bn{ position:absolute; bottom:0; left:0; right:0; z-index:3; display:grid; grid-template-columns:repeat(4,1fr);
+    background:var(--bn-bg); backdrop-filter:blur(14px) saturate(1.4); -webkit-backdrop-filter:blur(14px) saturate(1.4);
+    border-top:1px solid var(--bn-border); box-shadow:0 -2px 14px rgba(2,35,96,.06); padding-bottom:.4rem; border-radius:0 0 2rem 2rem; }
+  .bn .it{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.19rem; padding:.56rem .25rem .44rem; position:relative; color:var(--bn-txt); }
+  .bn .it .ic{ font-size:1.375rem; line-height:1; }
+  .bn .it .lb{ font-size:.66rem; font-weight:700; }
+  .bn .it.premium .ic{ color:var(--amber); }
+  .bn .it.active .lb{ color:var(--pr); font-weight:900; }
+  .bn .it.active::after{ content:''; position:absolute; top:0; width:1.6rem; height:3px; border-radius:0 0 3px 3px; background:var(--amber); }
+
+  /* ── notes ── */
+  .notes{ margin-top:2.2rem; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1rem; }
+  .note{ background:var(--surface); border:1px solid var(--border); border-radius:1rem; padding:.9rem 1rem; box-shadow:var(--card-sh); }
+  .note h3{ margin:0 0 .35rem; font-size:.95rem; font-weight:900; }
+  .note p{ margin:.2rem 0; font-size:.86rem; color:var(--txt2); }
+  .note .sw{ display:inline-block; width:.8rem; height:.8rem; border-radius:.25rem; vertical-align:-.1em; margin-left:.25rem; }
+
+  /* variant strip: icon tint options */
+  .opts{ margin-top:2rem; }
+  .opts h2{ font-size:1.05rem; font-weight:900; margin:0 0 .3rem; }
+  .opts p{ color:var(--txt2); margin:0 0 .8rem; max-width:64ch; }
+  .optrow{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:.8rem; }
+  .opt{ background:var(--surface); border:1px solid var(--border); border-radius:1rem; box-shadow:var(--card-sh); overflow:hidden; }
+  .opt .lab{ padding:.5rem .8rem; font-size:.78rem; font-weight:800; border-bottom:1px solid var(--border2); display:flex; justify-content:space-between; align-items:center; }
+  .opt .lab .pick{ color:var(--mock-ink); background:var(--mock-bg); border:1px solid var(--mock-bd); border-radius:999px; padding:0 .5rem; font-size:.66rem; font-weight:800; }
+  .opt .demo{ padding:.6rem .7rem; }
+  .opt .demo .row{ display:flex; align-items:center; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border2); font-size:.8rem; font-weight:800; }
+  .opt .demo .row:last-child{ border-bottom:0; }
+  .opt .demo .ico{ width:1.9rem; height:1.9rem; border-radius:.6rem; display:grid; place-items:center; font-size:.95rem; flex:none; }
+  .opt .demo small{ margin-right:auto; font-size:.66rem; color:var(--txt3); font-weight:500; }
+  .o-mono .ico{ color:var(--t-blue); background:var(--t-blue-bg); }
+  .o-neutral .ico{ color:var(--txt2); background:var(--surface2); border:1px solid var(--border); }
+</style>
+<div class="wrap">
+  <header class="hd">
+    <span class="kicker">ماکاپ · تأییدشده ۱۴۰۵/۰۶/۳۱ («عالی، اجراش کن عین ماکاپ»)</span>
+    <h1>تب «پریمیوم» برای مشترک: از کاتالوگ به خانهٔ کار</h1>
+    <p>حالت رایگان/مهمان دست نمی‌خورد: آن‌جا یک کاتالوگ است و کهربایی بودنش درست است، چون کهربایی در این سایت یک معنی دارد — «چیزی که اشتراک می‌خرد». مشکل حالت مشترک همین است: همان کاتالوگ با همان رنگ، برای کسی که همه‌اش را دارد. هفده کارت کهربایی با یک چیپ آبی تکراری، همه هم‌وزن، هیچ‌کدام مهم‌تر از دیگری.</p>
+    <p>پیشنهاد: برای مشترک، تب به الگوی «خانهٔ اپ» می‌رود (همان‌که Duolingo، Coursera، Notion و تنظیمات iOS استفاده می‌کنند): <b>یک کارت اصلی «ادامه بده»</b>، <b>سه عدد امروز</b> که هرکدام دری هستند، <b>چهار میان‌بر</b> پُرمصرف، و بقیه در <b>فهرست‌های گروهیِ فشرده</b> (inset grouped list) با تینت رنگی هر گروه از پالت خودِ سایت. کهربایی فقط در یک نشان کوچک می‌ماند: «اشتراک فعال».</p>
+    <div class="tools"><button type="button" onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme==='dark' ? 'light' : 'dark'">☾ تم تیره / روشن</button><span style="font-size:.76rem;color:var(--txt3)">هر دو گوشی قابل اسکرول‌اند.</span></div>
+  </header>
+
+  <div class="stage">
+    <!-- ═══ PHONE A: today ═══ -->
+    <div class="a">
+      <p class="cap"><b>گوشی A</b> <span class="st st-now">امروز</span> همان چیزی که الان مشترک می‌بیند</p>
+      <div class="phone">
+        <div class="topbar"><div class="brand"><i></i> DentCast</div><div class="tb"><span>☰</span><span>⌕</span><span>◐</span></div></div>
+        <div class="body">
+          <div class="pagehead"><h1 class="pagetitle">پریمیوم</h1><a class="more" href="#">پیشخوان ›</a></div>
+          <p class="pagesub">اشتراک شما تا پایان روز ۲۴ آبان فعال است.</p>
+          <div class="mine"><div><b class="num">۴</b><span>کارت برای امروز</span></div><div><b class="num">۱۳۲</b><span>هایلایت</span></div><div><b class="num">۱۷</b><span>روز استریک</span></div></div>
+          <div class="sec"><h2>خواندن و مرور<small>هایلایت، مرور، کالکشن</small></h2></div>
+          <div class="card"><span class="ico">🗂</span><div class="main"><div class="t">برای مرور امروز</div><div class="s">مرور فاصله‌دار هایلایت‌ها، پیش از فراموشی</div></div><span class="state">۴ کارت</span></div>
+          <div class="card"><span class="ico">📒</span><div class="main"><div class="t">دفترچه‌ی هایلایت‌ها</div><div class="s">همه‌ی هایلایت‌ها یک‌جا، با یادداشت و جستجو</div></div><span class="state">۱۳۲ هایلایت</span></div>
+          <div class="card"><span class="ico">⋔</span><div class="main"><div class="t">نمای موضوعی هایلایت‌ها</div><div class="s">هایلایت‌ها دسته‌بندی‌شده بر اساس مفهوم، فارغ از مقاله</div></div><span class="state">باز کردن</span></div>
+          <div class="card"><span class="ico">🎧</span><div class="main"><div class="t">هایلایت صوتی</div><div class="s">یک تکه از پادکست را نگه دارید و بعداً بشنوید</div></div><span class="state">باز کردن</span></div>
+          <div class="card"><span class="ico">📁</span><div class="main"><div class="t">کالکشن‌ها</div><div class="s">پوشه‌های شخصی از هایلایت‌ها و مقاله‌ها</div></div><span class="state">۳ کالکشن</span></div>
+          <div class="sec"><h2>مسیر و گواهی<small>مسیر یادگیری، پیشرفت، گواهی</small></h2></div>
+          <div class="card"><span class="ico">🧭</span><div class="main"><div class="t">مسیرهای یادگیری</div><div class="s">از پیش‌نیاز تا پیشرفته، به ترتیب درست</div></div><span class="state">قدم ۱۲ از ۳۹</span></div>
+          <div class="card"><span class="ico">🎓</span><div class="main"><div class="t">گواهی تکمیل مسیر</div><div class="s">بعد از تمام کردن مسیر و آزمون، گواهی با کد قابل استعلام</div></div><span class="state">باز کردن</span></div>
+          <div class="card"><span class="ico">◎</span><div class="main"><div class="t">قطب‌نمای مطالعه</div><div class="s">چقدر از هر پیلار را خوانده‌اید و کجا جا مانده</div></div><span class="state">باز کردن</span></div>
+          <div class="card"><span class="ico">📆</span><div class="main"><div class="t">گزارش ماهانه</div><div class="s">گزارش ماهانه‌ی مطالعه و پیشرفت شما</div></div><span class="state">شهریور آماده</span></div>
+          <div class="card"><span class="ico">▤</span><div class="main"><div class="t">چیدمان موضوعی سری‌ها</div><div class="s">سری‌های موضوعی با زیرموضوع و ترتیب خواندن</div></div><span class="state">باز کردن</span></div>
+          <div class="card"><span class="ico">♥</span><div class="main"><div class="t">«بالاترین» در up-board</div><div class="s">مطلب‌ها به ترتیب رأی خواننده‌ها</div></div><span class="state">باز کردن</span></div>
+          <div class="card"><span class="ico">⚗</span><div class="main"><div class="t">قفسه‌ی شواهد (DES)</div><div class="s">مطلب‌ها مرتب‌شده بر اساس سطح شواهد</div></div><span class="state">باز کردن</span></div>
+          <div class="sec"><h2>ابزار<small>جستجو و ارزیابی</small></h2></div>
+          <div class="card"><span class="ico">✦</span><div class="main"><div class="t">دستیار هوشمند کیس</div><div class="s">شرح کیس را بنویسید و به مرتبط‌ترین مطلب برسید</div></div><span class="state">باز کردن</span></div>
+          <div class="card"><span class="ico">🧭</span><div class="main"><div class="t">مسیریاب</div><div class="s">نقشه‌ی خواندن متناسب با تخصص و هدف شما</div></div><span class="state">باز کردن</span></div>
+          <div class="card"><span class="ico">📚</span><div class="main"><div class="t">کتابخانهٔ دنت‌کست</div><div class="s">بیش از ۲۲۰۰ مقاله‌ی علمی، دسته‌بندی‌شده و قابل جستجو</div></div><span class="state">باز کردن</span></div>
+          <div class="card"><span class="ico">⚗</span><div class="main"><div class="t">امتیاز DES برای مقاله‌ی خودتان</div><div class="s">چکیده‌ی مقاله‌ی خودتان را با DES ارزیابی کنید</div></div><span class="state">باز کردن</span></div>
+          <div class="sec"><h2>گفت‌وگو و همراهی<small>گفت‌وگو، چالش، یادآوری</small></h2></div>
+          <div class="card"><span class="ico">❓</span><div class="main"><div class="t">پاسخ به چالش‌ها</div><div class="s">به کیس‌های چالشی جواب بدهید و نکته‌های کلیدی را ببینید</div></div><span class="state">باز کردن</span></div>
+          <div class="card"><span class="ico">⊘</span><div class="main"><div class="t">بدون تبلیغ در مقالات</div><div class="s">هیچ کارت اسپانسری لای مقاله‌ها و اپیزودها</div></div><span class="state">فعال</span></div>
+          <div class="card"><span class="ico">💬</span><div class="main"><div class="t">یادآوری استریک با پیامک</div><div class="s">پیامک فقط روزی که استریک در خطر است</div></div><span class="state">تنظیم</span></div>
+        </div>
+        <nav class="bn"><div class="it"><span class="ic">⌂</span><span class="lb">خانه</span></div><div class="it"><span class="ic">▤</span><span class="lb">آرشیو</span></div><div class="it premium active"><span class="ic">♛</span><span class="lb">پریمیوم</span></div><div class="it"><span class="ic">☺</span><span class="lb">بیماران</span></div></nav>
+      </div>
+    </div>
+
+    <!-- ═══ PHONE B: proposal ═══ -->
+    <div class="b">
+      <p class="cap"><b>گوشی B</b> <span class="st st-new">پیشنهاد</span> خانهٔ کارِ مشترک</p>
+      <div class="phone">
+        <div class="topbar"><div class="brand"><i></i> DentCast</div><div class="tb"><span>☰</span><span>⌕</span><span>◐</span></div></div>
+        <div class="body">
+          <div class="pagehead"><h1 class="pagetitle">پریمیوم</h1><a class="more" href="#">پیشخوان ›</a></div>
+          <div class="status"><span class="pill">اشتراک فعال</span><span>تا ۲۴ آبان</span></div>
+
+          <!-- 1. the one primary card -->
+          <a class="hero" href="#">
+            <span class="glyph">🧭</span>
+            <div class="k">ادامه بده</div>
+            <div class="t">پروتز ثابت: از تراش تا سمان</div>
+            <div class="m">قدم ۱۲ از ۳۹ · قدم بعدی: «مارجین و فینیش‌لاین»</div>
+            <div class="bar"><i></i></div>
+            <div class="row"><span class="m">از همان‌جایی که بودی</span><span class="cta">ادامهٔ مسیر ›</span></div>
+          </a>
+
+          <!-- 2. today: three facts, each a door -->
+          <div class="today">
+            <a href="#"><b class="num">۴</b><span>کارت امروز</span><span class="go">مرور ›</span></a>
+            <a href="#"><b class="num">۱۷ <em>روز</em></b><span>🔥 استریک</span><span class="go" style="color:var(--txt3)">حفظ شده</span></a>
+            <a href="#"><b class="num">۱۳۲</b><span>هایلایت</span><span class="go">دفترچه ›</span></a>
+          </div>
+
+          <!-- 3. quick actions -->
+          <div class="quick">
+            <a href="#"><span class="d blue">📒</span><span>دفترچه</span></a>
+            <a href="#"><span class="d green">🧭</span><span>مسیرها</span></a>
+            <a href="#"><span class="d violet">✦</span><span>دستیار کیس</span></a>
+            <a href="#"><span class="d teal">📁</span><span>کالکشن‌ها</span></a>
+          </div>
+
+          <!-- 4. grouped inset lists -->
+          <section class="grp g-blue">
+            <div class="gh"><h2><i></i>خواندن و مرور</h2><small>۵ ابزار</small></div>
+            <div class="list">
+              <a class="row" href="#"><span class="ico">🗂</span><div class="main"><div class="t">برای مرور امروز</div><div class="s">مرور فاصله‌دار هایلایت‌ها، پیش از فراموشی</div></div><span class="st live">۴ کارت <span class="chev">›</span></span></a>
+              <a class="row" href="#"><span class="ico">📒</span><div class="main"><div class="t">دفترچه‌ی هایلایت‌ها</div><div class="s">همه‌ی هایلایت‌ها یک‌جا، با یادداشت و جستجو</div></div><span class="st">۱۳۲ <span class="chev">›</span></span></a>
+              <a class="row" href="#"><span class="ico">⋔</span><div class="main"><div class="t">نمای موضوعی</div><div class="s">هایلایت‌ها بر اساس مفهوم، فارغ از مقاله</div></div><span class="st"><span class="chev">›</span></span></a>
+              <a class="row" href="#"><span class="ico">🎧</span><div class="main"><div class="t">هایلایت صوتی</div><div class="s">یک تکه از پادکست را نگه دارید</div></div><span class="st">۹ <span class="chev">›</span></span></a>
+              <a class="row" href="#"><span class="ico">📁</span><div class="main"><div class="t">کالکشن‌ها</div><div class="s">پوشه‌های شخصی، با خروجی Word و PowerPoint</div></div><span class="st">۳ <span class="chev">›</span></span></a>
+            </div>
+          </section>
+
+          <section class="grp g-green">
+            <div class="gh"><h2><i></i>مسیر و گواهی</h2><small>۷ ابزار</small></div>
+            <div class="list">
+              <a class="row" href="#"><span class="ico">🧭</span><div class="main"><div class="t">مسیرهای یادگیری</div><div class="s">از پیش‌نیاز تا پیشرفته، به ترتیب درست</div></div><span class="st live">قدم ۱۲ از ۳۹ <span class="chev">›</span></span></a>
+              <a class="row" href="#"><span class="ico">🎓</span><div class="main"><div class="t">گواهی تکمیل مسیر</div><div class="s">گواهی با کد قابل استعلام</div></div><span class="st">۱ گواهی <span class="chev">›</span></span></a>
+              <a class="row" href="#"><span class="ico">◎</span><div class="main"><div class="t">قطب‌نمای مطالعه</div><div class="s">چقدر از هر پیلار را خوانده‌اید</div></div><span class="st"><span class="chev">›</span></span></a>
+              <a class="row" href="#"><span class="ico">📆</span><div class="main"><div class="t">گزارش ماهانه</div><div class="s">مطالعه و پیشرفت هر ماه</div></div><span class="st live">شهریور آماده <span class="chev">›</span></span></a>
+              <a class="row" href="#"><span class="ico">▤</span><div class="main"><div class="t">چیدمان موضوعی سری‌ها</div><div class="s">زیرموضوع و ترتیب خواندن</div></div><span class="st"><span class="chev">›</span></span></a>
+              <a class="row" href="#"><span class="ico" style="color:var(--t-heart)">♥</span><div class="main"><div class="t">«بالاترین» در up-board</div><div class="s">به ترتیب رأی خواننده‌ها</div></div><span class="st"><span class="chev">›</span></span></a>
+              <a class="row" href="#"><span class="ico">⚗</span><div class="main"><div class="t">قفسه‌ی شواهد (DES)</div><div class="s">مرتب‌شده بر اساس سطح شواهد</div></div><span class="st"><span class="chev">›</span></span></a>
+            </div>
+          </section>
+
+          <section class="grp g-violet">
+            <div class="gh"><h2><i></i>ابزار</h2><small>۴ ابزار</small></div>
+            <div class="list">
+              <a class="row" href="#"><span class="ico">✦</span><div class="main"><div class="t">دستیار هوشمند کیس</div><div class="s">شرح کیس را بنویسید و به مطلب برسید</div></div><span class="st"><span class="chev">›</span></span></a>
+              <a class="row" href="#"><span class="ico">🧭</span><div class="main"><div class="t">مسیریاب</div><div class="s">نقشه‌ی خواندن متناسب با تخصص شما</div></div><span class="st"><span class="chev">›</span></span></a>
+              <a class="row" href="#"><span class="ico">📚</span><div class="main"><div class="t">کتابخانهٔ دنت‌کست</div><div class="s">بیش از ۲۲۰۰ مقاله‌ی علمی</div></div><span class="st"><span class="chev">›</span></span></a>
+              <a class="row" href="#"><span class="ico">⚗</span><div class="main"><div class="t">امتیاز DES برای مقاله‌ی خودتان</div><div class="s">چکیده را با DES ارزیابی کنید</div></div><span class="st"><span class="chev">›</span></span></a>
+            </div>
+          </section>
+
+          <section class="grp g-teal">
+            <div class="gh"><h2><i></i>گفت‌وگو و همراهی</h2><small></small></div>
+            <div class="list">
+              <a class="row" href="#"><span class="ico">❓</span><div class="main"><div class="t">پاسخ به چالش‌ها</div><div class="s">به کیس‌های چالشی جواب بدهید</div></div><span class="st live">۱ چالش تازه <span class="chev">›</span></span></a>
+              <a class="row" href="#"><span class="ico">💬</span><div class="main"><div class="t">یادآوری استریک با پیامک</div><div class="s">فقط روزی که استریک در خطر است</div></div><span class="st">خاموش <span class="chev">›</span></span></a>
+              <div class="row"><span class="ico">⊘</span><div class="main"><div class="t">بدون تبلیغ در مقالات</div><div class="s">هیچ کارت اسپانسری لای مقاله‌ها</div></div><span class="st ok">✓ فعال</span></div>
+            </div>
+          </section>
+        </div>
+        <nav class="bn"><div class="it"><span class="ic">⌂</span><span class="lb">خانه</span></div><div class="it"><span class="ic">▤</span><span class="lb">آرشیو</span></div><div class="it premium active"><span class="ic">♛</span><span class="lb">پریمیوم</span></div><div class="it"><span class="ic">☺</span><span class="lb">بیماران</span></div></nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <div class="note"><h3>۱ · سلسله‌مراتب، نه فهرست</h3><p>در A هفده کارت هم‌وزن‌اند و چشم جایی نمی‌ایستد. در B یک کارت اصلی هست («ادامه بده» — مسیر فعال، و اگر مسیری نباشد، کارت‌های امروز، و اگر آن هم نباشد، آخرین هایلایت)، بعد سه عدد، بعد میان‌برها، بعد بقیه. الگوی خانهٔ اپ در Duolingo/Coursera همین است: اول چیزی که نیمه‌کاره است.</p></div>
+    <div class="note"><h3>۲ · کهربایی برای کسی که خریده، بی‌معناست</h3><p>قاعدهٔ سایت: کهربایی = «چیزی که اشتراک می‌خرد». برای مشترک این معنا تمام شده. در B کهربایی فقط در نشانِ «اشتراک فعال» و آیکون تب می‌ماند. تینت گروه‌ها از پالت خودِ سایت است: <span class="sw" style="background:var(--t-blue)"></span>آبی برند (خواندن)، <span class="sw" style="background:var(--t-green)"></span>سبزِ گواهی (مسیر)، <span class="sw" style="background:var(--t-violet)"></span>بنفشِ DES (ابزار)، <span class="sw" style="background:var(--t-teal)"></span>فیروزه‌ای (گفت‌وگو). قلب هم قرمز خودش را نگه می‌دارد.</p></div>
+    <div class="note"><h3>۳ · یک سطح، نه بیست کارت</h3><p>فهرست گروهیِ فشرده (inset grouped list — تنظیمات iOS، Notion، Linear): هر گروه یک سطح سفید با خط‌های نازک بین ردیف‌ها. ارتفاع هر ردیف ~۵۶px به‌جای ~۷۴px؛ کل تب حدود ۳۵٪ کوتاه‌تر می‌شود بدون حذف چیزی.</p></div>
+    <div class="note"><h3>۴ · چیپ «باز کردن» حذف</h3><p>در A روی ۱۲ کارت چیپ «باز کردن» است که هیچ اطلاعی ندارد و همان یکنواختی را می‌سازد. در B ردیفی که وضعیت دارد، وضعیتش را می‌گوید (آبی پررنگ = چیزی منتظر توست)، ردیفی که ندارد فقط یک › دارد. «بدون تبلیغ» که لینک نیست، ✓ سبز می‌گیرد و شبیه لینک‌ها نیست.</p></div>
+    <div class="note"><h3>۵ · چه چیزی عوض نمی‌شود</h3><p>حالت رایگان/مهمان (کاتالوگ کهربایی، یک لینک خرید)، قاعدهٔ سه‌جوابیِ /me، کاتالوگ به‌عنوان سوپرست PREMIUM_FEATURES، سوایپ، و نسخهٔ دسکتاپ که همین ساختار را در ستون C می‌گیرد. داده‌ها همان‌هاست که الان می‌آید (/me، شمار هایلایت، کالکشن‌ها) به‌علاوهٔ عنوان مسیر فعال که /me همین حالا هم می‌دهد.</p></div>
+    <div class="note"><h3>۶ · تاریک</h3><p>دکمهٔ بالای صفحه تم تیره را نشان می‌دهد؛ کارت اصلی در تیره هم آبیِ برند می‌ماند (تنها سطح پُررنگ صفحه) و تینت‌ها کمی روشن‌تر می‌شوند تا روی سطح تیره بخوانند.</p></div>
+  </div>
+
+  <div class="opts">
+    <h2>یک تصمیم باز: تینت آیکون‌ها</h2>
+    <p>پیشنهاد من تینت گروهی است (گوشی B). دو گزینهٔ دیگر برای مقایسه — همه‌چیز دیگر یکسان.</p>
+    <div class="optrow">
+      <div class="opt"><div class="lab">تینت گروهی <span class="pick">پیشنهاد</span></div><div class="demo">
+        <div class="row"><span class="ico" style="color:var(--t-blue);background:var(--t-blue-bg)">📒</span>دفترچه<small>خواندن</small></div>
+        <div class="row"><span class="ico" style="color:var(--t-green);background:var(--t-green-bg)">🧭</span>مسیرها<small>مسیر</small></div>
+        <div class="row"><span class="ico" style="color:var(--t-violet);background:var(--t-violet-bg)">✦</span>دستیار کیس<small>ابزار</small></div>
+      </div></div>
+      <div class="opt o-mono"><div class="lab">تک‌رنگ آبی برند</div><div class="demo">
+        <div class="row"><span class="ico">📒</span>دفترچه<small>آرام‌تر، ولی گروه‌ها از هم جدا نمی‌شوند</small></div>
+        <div class="row"><span class="ico">🧭</span>مسیرها</div>
+        <div class="row"><span class="ico">✦</span>دستیار کیس</div>
+      </div></div>
+      <div class="opt o-neutral"><div class="lab">خنثی (خاکستری)</div><div class="demo">
+        <div class="row"><span class="ico">📒</span>دفترچه<small>شبیه تنظیمات؛ زیادی سرد برای صفحه‌ای که باید «مال من» حس شود</small></div>
+        <div class="row"><span class="ico">🧭</span>مسیرها</div>
+        <div class="row"><span class="ico">✦</span>دستیار کیس</div>
+      </div></div>
+    </div>
+  </div>
+</div>
+</html>
