@@ -926,3 +926,27 @@ body:has(.dc-topbar) .back:hover {
 .dc-no-seal .dc-trustseal-box {
   display: none !important;
 }
+
+/* =====================================================
+   DARK-MODE DEPTH — a brand-blue glow, never on a reading page
+   (founder, 1405/06/31)
+   In the light theme the cards' shadows carry the depth of the page. In the
+   dark theme --bg (#0e1621) and a card (#17212b) sit so close in value that
+   the shadow disappears and the page reads flat — which is why the sites
+   that do this only do it in the dark. What goes in is a GLOW (the
+   Linear/Vercel move), not a photo: a photo competes with text on a site
+   people read at night. And NEVER under a column of prose: every article,
+   episode, glossary term, LiteCast page and en mirror is a
+   `main.article-content-wrap`, and that one marker is the exclusion. The
+   homepage loads no shared CSS and mirrors this in index.html, where it also
+   carries the brand mark. A browser without :has() drops the whole rule —
+   no glow, no harm. Specificity (0,2,2) beats body:has(.dc-topbar) (0,1,1)
+   and plus-pages.css's body.dcp-page (0,1,1) on background-image alone;
+   their shorthand keeps the colour.
+===================================================== */
+[data-theme="dark"] body:not(:has(main.article-content-wrap)) {
+  background-image:
+    radial-gradient(70rem 34rem at 88% -10rem, rgba(91,156,246,.16), transparent 62%),
+    radial-gradient(46rem 30rem at 4% 46rem, rgba(91,156,246,.07), transparent 65%);
+  background-repeat: no-repeat;
+}
