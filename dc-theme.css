@@ -946,7 +946,7 @@ body:has(.dc-topbar) .back:hover {
 ===================================================== */
 [data-theme="dark"] body:not(:has(main.article-content-wrap)) {
   background-image:
-    radial-gradient(70rem 34rem at 88% -10rem, rgba(91,156,246,.16), transparent 62%),
-    radial-gradient(46rem 30rem at 4% 46rem, rgba(91,156,246,.07), transparent 65%);
+    radial-gradient(72rem 38rem at 88% -6rem, rgba(91,156,246,.34), transparent 64%),
+    radial-gradient(48rem 32rem at 2% 44rem, rgba(91,156,246,.14), transparent 66%);
   background-repeat: no-repeat;
 }
