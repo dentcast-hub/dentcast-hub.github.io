@@ -4693,6 +4693,33 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 .dcp-pp .g-green .dcp-pp-ico{ color:var(--pp-green); background:var(--pp-green-bg); }  .dcp-pp .g-green .dcp-pp-gh i{ background:var(--pp-green); }
 .dcp-pp .g-violet .dcp-pp-ico{ color:var(--pp-violet); background:var(--pp-violet-bg); } .dcp-pp .g-violet .dcp-pp-gh i{ background:var(--pp-violet); }
 .dcp-pp .g-teal .dcp-pp-ico{ color:var(--pp-teal); background:var(--pp-teal-bg); }     .dcp-pp .g-teal .dcp-pp-gh i{ background:var(--pp-teal); }
+/* ── Dark-mode depth (mirrors dc-theme.css's rule — index.html loads no shared
+   CSS — plus the brand mark, homepage only). The phone shell never scrolls the
+   body and column C never scrolls itself, so a background on either is, in
+   effect, fixed: the glow stays at the top and the mark in the bottom-left
+   corner while the panels scroll over them. Painted as BACKGROUND layers,
+   never as an element, so nothing sits above a card and no stacking context
+   is created. The mark is the topbar's own microphone at 6% white, tilted
+   like the hero card's compass. Amber is never used here — it means «what a
+   subscription buys». */
+[data-theme="dark"] body{
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-opacity='.06' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'><g transform='rotate(-12 12 12)'><path d='M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z'/><path d='M19 10a7 7 0 0 1-14 0'/><path d='M12 17v4'/><path d='M8 21h8'/></g></svg>"),
+    radial-gradient(70rem 34rem at 88% -10rem, rgba(91,156,246,.16), transparent 62%),
+    radial-gradient(46rem 30rem at 4% 46rem, rgba(91,156,246,.07), transparent 65%);
+  background-repeat:no-repeat;
+  background-size:300px 300px, auto, auto;
+  background-position:left -70px bottom 130px, 0 0, 0 0; /* above the bottom nav */
+}
+[data-theme="dark"] .dcd-col-c{
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-opacity='.06' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'><g transform='rotate(-12 12 12)'><path d='M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z'/><path d='M19 10a7 7 0 0 1-14 0'/><path d='M12 17v4'/><path d='M8 21h8'/></g></svg>"),
+    radial-gradient(70rem 34rem at 88% -10rem, rgba(91,156,246,.16), transparent 62%),
+    radial-gradient(46rem 30rem at 4% 46rem, rgba(91,156,246,.07), transparent 65%);
+  background-repeat:no-repeat;
+  background-size:420px 420px, auto, auto;
+  background-position:left -110px bottom -40px, 0 0, 0 0;
+}
 /* the desktop copy: same measure and padding the archive surface uses */
 #dcd-premium .dcp-pp{ margin-top:.2rem; }
 
