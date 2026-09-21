@@ -74,6 +74,9 @@
     }
 
     .ub-head{ margin:0 0 1.25rem; }
+    .ub-back{display:inline-flex;align-items:center;gap:.25rem;font-size:.8rem;font-weight:600;color:var(--txt3);text-decoration:none;margin-bottom:.4rem}
+    .ub-back::before{ content:"\2190 \00A0"; }
+    .ub-back:hover{ color:var(--ac); }
     .ub-title{
       display:flex; align-items:baseline; flex-wrap:wrap; gap:.5rem;
       margin:0 0 .4rem;
@@ -305,6 +308,7 @@
 
 <main class="ub-page" id="ubRoot">
   <div class="ub-head">
+    <a class="ub-back" data-dc-back href="/">بازگشت به صفحهٔ اصلی</a>
     <div class="ub-title">
       <h1>up-board</h1>
       <span class="ub-fa">برگزیدهٔ خواننده‌ها</span>
@@ -339,7 +343,7 @@
 
 <script src="/global-search.js?v=10"></script>
 <script src="/global-search-ui.js?v=5"></script>
-<script src="/dc-nav.js?v=210" defer></script>
+<script src="/dc-nav.js?v=211" defer></script>
 <!-- The ?v= is not decoration: the module carries its own stamp onto the
      up-board/index.json fetch (ASSET_V in upboard-page.js), so one bump
      invalidates both the code and the 443-item catalog it draws. Managed by

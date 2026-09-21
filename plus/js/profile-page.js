@@ -1,13 +1,14 @@
 // Controller for the standalone /plus/profile.html page. Renders the same
 // profile the header overlay uses. Requires login.
-import { currentUser, meStatus } from './api.js?v=118';
-import { unreachableGate } from './premium-cta.js?v=118';
-import { openLoginModal } from './login-modal.js?v=118';
-import { renderProfile } from './profile.js?v=118';
-import { el } from './util.js?v=118';
-import { openSheet } from './sheet.js?v=118';
-import { certificateTerms } from './certificate-terms.js?v=118';
-import { registerSW } from './pwa.js?v=118';
+import { currentUser, meStatus } from './api.js?v=120';
+import { unreachableGate } from './premium-cta.js?v=120';
+import { openLoginModal } from './login-modal.js?v=120';
+import { renderProfile } from './profile.js?v=120';
+import { el } from './util.js?v=120';
+import { openSheet } from './sheet.js?v=120';
+import { certificateTerms } from './certificate-terms.js?v=120';
+import { registerSW } from './pwa.js?v=120';
+import { wirePageBack } from './page-back.js?v=120';
 
 /**
  * A GATE THAT SAYS WHAT IS BEHIND THE DOOR.
@@ -102,6 +103,7 @@ export function gateCard(key, onLogin) {
 
 async function main() {
   registerSW();
+  wirePageBack();
   const root = document.getElementById('dcp-root');
   if (!root) return;
   const user = await currentUser();

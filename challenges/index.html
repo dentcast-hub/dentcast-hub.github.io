@@ -51,6 +51,9 @@
 a{color:inherit}
 .ch-page{max-width:46rem;margin:0 auto;padding:1.15rem .85rem 5rem}
 .ch-hero{margin:.2rem 0 1.1rem}
+.ch-back{display:inline-flex;align-items:center;gap:.25rem;font-size:.8rem;font-weight:600;color:var(--txt3);text-decoration:none;margin-bottom:.4rem}
+.ch-back::before{content:"\2190 \00A0"}
+.ch-back:hover{color:var(--ac)}
 .ch-eyebrow{display:block;font-size:.68rem;font-weight:800;letter-spacing:.04em;color:var(--ac);text-transform:uppercase}
 .ch-hero h1{margin:.15rem 0 .3rem;font-size:2rem;font-weight:900;letter-spacing:-.04em;line-height:1.25;text-wrap:balance}
 .ch-lead{margin:0 0 .4rem;font-size:.86rem;line-height:1.95;color:var(--txt2);text-wrap:pretty}
@@ -128,6 +131,7 @@ a{color:inherit}
 
 <main class="ch-page" id="chRoot">
   <header class="ch-hero">
+    <a class="ch-back" data-dc-back href="/">بازگشت به صفحهٔ اصلی</a>
     <span class="ch-eyebrow">چالش</span>
     <h1>چالش‌های دنت‌کست</h1>
     <p class="ch-lead">یک کیس، یک سؤال. جواب خودتان را بنویسید؛ با نکته‌های کلیدی مقایسه می‌شود و بعد از آن پاسخ دنت‌کست را می‌بینید.</p>
@@ -136,7 +140,7 @@ a{color:inherit}
 </main>
 <script src="/global-search.js?v=10"></script>
 <script src="/global-search-ui.js?v=5"></script>
-<script src="/dc-nav.js?v=210" defer></script>
+<script src="/dc-nav.js?v=211" defer></script>
 <!-- The ?v= is not decoration: the module carries its own stamp onto the two
      catalogs it fetches (ASSET_V in challenges-page.js). Managed by
      tools/asset_version.py, which reads stamped paths out of the page text. -->
