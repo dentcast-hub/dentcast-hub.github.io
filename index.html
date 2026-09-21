@@ -4701,31 +4701,27 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 .dcp-pp .g-violet .dcp-pp-ico{ color:var(--pp-violet); background:var(--pp-violet-bg); } .dcp-pp .g-violet .dcp-pp-gh i{ background:var(--pp-violet); }
 .dcp-pp .g-teal .dcp-pp-ico{ color:var(--pp-teal); background:var(--pp-teal-bg); }     .dcp-pp .g-teal .dcp-pp-gh i{ background:var(--pp-teal); }
 /* ── Dark-mode depth (mirrors dc-theme.css's rule — index.html loads no shared
-   CSS — plus the brand mark, homepage only). The phone shell never scrolls the
-   body and column C never scrolls itself, so a background on either is, in
-   effect, fixed: the glow stays at the top and the mark in the bottom-left
-   corner while the panels scroll over them. Painted as BACKGROUND layers,
-   never as an element, so nothing sits above a card and no stacking context
-   is created. The mark is the topbar's own microphone at 6% white, tilted
-   like the hero card's compass. Amber is never used here — it means «what a
-   subscription buys». */
-[data-theme="dark"] body{
-  background-image:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-opacity='.085' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'><g transform='rotate(-12 12 12)'><path d='M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z'/><path d='M19 10a7 7 0 0 1-14 0'/><path d='M12 17v4'/><path d='M8 21h8'/></g></svg>"),
-    radial-gradient(72rem 38rem at 88% -6rem, rgba(91,156,246,.34), transparent 64%),
-    radial-gradient(48rem 32rem at 2% 44rem, rgba(91,156,246,.14), transparent 66%);
-  background-repeat:no-repeat;
-  background-size:300px 300px, auto, auto;
-  background-position:left -70px bottom 130px, 0 0, 0 0; /* above the bottom nav */
-}
+   CSS). The Vercel/Linear grid: a 28px hairline mesh in the dark brand blue,
+   full at the top, faded out over 56rem (the fade is a mask inside the SVG,
+   so it is right on every dark ground), plus one soft glow at the brand
+   corner. NOT on body: on the phone `#mobile-body` is the scroll container
+   and paints its own opaque ground (the aura rule above), so a body layer is
+   never seen — which is exactly how the first two versions of this shipped
+   invisible (founder, 1405/06/31: «هنوز نمی‌بینمشون»). The aura is kept as the
+   third layer so nothing that was there is lost. `#mobile-body` and column C
+   are the scroll containers, and a background on a scroll container does not
+   scroll with its content, so on both the grid is fixed in effect. Painted as
+   BACKGROUND layers, never as an element, so nothing sits above a card and no
+   stacking context is created. Amber is never used here. */
+[data-theme="dark"] #mobile-body,
 [data-theme="dark"] .dcd-col-c{
   background-image:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-opacity='.085' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'><g transform='rotate(-12 12 12)'><path d='M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z'/><path d='M19 10a7 7 0 0 1-14 0'/><path d='M12 17v4'/><path d='M8 21h8'/></g></svg>"),
-    radial-gradient(72rem 38rem at 88% -6rem, rgba(91,156,246,.34), transparent 64%),
-    radial-gradient(48rem 32rem at 2% 44rem, rgba(91,156,246,.14), transparent 66%);
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'><defs><pattern id='p' width='28' height='28' patternUnits='userSpaceOnUse'><path d='M28 0H0V28' fill='none' stroke='%23a7c8ff' stroke-opacity='.13' stroke-width='1'/></pattern><linearGradient id='f' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23fff'/><stop offset='.45' stop-color='%23fff' stop-opacity='.55'/><stop offset='1' stop-color='%23fff' stop-opacity='0'/></linearGradient><mask id='m'><rect width='100%' height='100%' fill='url(%23f)'/></mask></defs><rect width='100%' height='100%' fill='url(%23p)' mask='url(%23m)'/></svg>"),
+    radial-gradient(36rem 22rem at 88% -4rem, rgba(91,156,246,.22), transparent 62%),
+    radial-gradient(120% 30rem at 50% -6rem, rgba(18,87,214,.10), transparent 60%);
+  background-size:100% 56rem, auto, auto;
+  background-position:top, 0 0, 0 0;
   background-repeat:no-repeat;
-  background-size:420px 420px, auto, auto;
-  background-position:left -110px bottom -40px, 0 0, 0 0;
 }
 /* the desktop copy: same measure and padding the archive surface uses */
 #dcd-premium .dcp-pp{ margin-top:.2rem; }
@@ -7024,7 +7020,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=214" defer></script>
+<script src="/dc-nav.js?v=215" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

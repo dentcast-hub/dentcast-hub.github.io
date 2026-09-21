@@ -40,12 +40,12 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=123';
-import { currentUser, meStatus, api } from './api.js?v=123';
-import { pricingHref } from './premium-cta.js?v=123';
-import { openLoginModal } from './login-modal.js?v=123';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=123';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=123';
+import { el, faNum, streakIsActiveToday } from './util.js?v=124';
+import { currentUser, meStatus, api } from './api.js?v=124';
+import { pricingHref } from './premium-cta.js?v=124';
+import { openLoginModal } from './login-modal.js?v=124';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=124';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=124';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -182,11 +182,19 @@ function hero(me) {
   let href; let kicker; let title; let meta; let cta; let pct = -1; let glyph;
   if (p && !p.is_complete && p.id) {
     href = '/plus/pathway.html?id=' + encodeURIComponent(p.id);
-    kicker = 'ادامه بده'; title = p.title_fa || 'مسیر یادگیری';
-    meta = 'قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps);
-    cta = 'ادامهٔ مسیر ›';
-    pct = p.total_steps ? Math.max(3, Math.min(100, Math.round((p.current_step / p.total_steps) * 100))) : 0;
+    title = p.title_fa || 'مسیر یادگیری';
     glyph = '🧭';
+    if (!(p.current_step > 0)) {
+      // Enrolled, nothing read yet: «continue from where you were» is a
+      // sentence about a place that does not exist (founder's screenshot,
+      // 1405/06/31 — «قدم ۰ از ۹۷ · از همان‌جایی که بودی»).
+      kicker = 'شروع کن'; meta = 'هنوز شروع نشده'; cta = 'شروع مسیر ›'; pct = 0;
+    } else {
+      kicker = 'ادامه بده';
+      meta = 'قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps);
+      cta = 'ادامهٔ مسیر ›';
+      pct = p.total_steps ? Math.max(3, Math.min(100, Math.round((p.current_step / p.total_steps) * 100))) : 0;
+    }
   } else if (due > 0) {
     href = '/plus/cards.html'; kicker = 'برای امروز';
     title = faNum(due) + ' کارت برای مرور';
@@ -211,7 +219,7 @@ function hero(me) {
       el('i', { style: 'width:' + pct + '%' }),
     ]) : null,
     el('div', { class: 'dcp-pp-hero-row' }, [
-      el('span', { class: 'dcp-pp-hero-m' }, pct >= 0 ? 'از همان‌جایی که بودی' : ''),
+      el('span', { class: 'dcp-pp-hero-m' }, pct > 0 ? 'از همان‌جایی که بودی' : ''),
       el('span', { class: 'dcp-pp-hero-cta' }, cta),
     ]),
   ].filter(Boolean));
