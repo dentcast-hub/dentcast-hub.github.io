@@ -17,18 +17,18 @@
 //      scrolls to the mark).
 //   4. Every filter lives in the URL, so a filtered view survives a refresh,
 //      the back button, and being sent to yourself.
-import { el, faNum, debounce } from './util.js?v=115';
-import { api } from './api.js?v=115';
-import { FOLDER_EN } from './content-index.js?v=115';
-import { openCollectionPicker } from './collections.js?v=115';
-import { LABELS, PALETTE } from './config.js?v=115';
+import { el, faNum, debounce } from './util.js?v=116';
+import { api } from './api.js?v=116';
+import { FOLDER_EN } from './content-index.js?v=116';
+import { openCollectionPicker } from './collections.js?v=116';
+import { LABELS, PALETTE } from './config.js?v=116';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
-} from './hl-view.js?v=115';
+} from './hl-view.js?v=116';
 // قطعه‌های صوتی ride in the same library: a clip is a highlight in time, so it
 // sits in its episode's group beside the caption highlights (clip-view.js).
-import { clipCard, createClipPlayer, clipAsText } from './clip-view.js?v=115';
+import { clipCard, createClipPlayer, clipAsText } from './clip-view.js?v=116';
 
 // How many article groups (or flat cards) are drawn before the "load more"
 // sentinel takes over. A library of a few thousand highlights must not build a
@@ -379,7 +379,9 @@ export async function renderHighlightLibrary(container) {
 
   function buildConceptChips() {
     const concepts = (conceptCatalog && conceptCatalog.concepts) || [];
-    if (!concepts.length) { conceptChips.hidden = true; return; }
+    // A concept view carries no clips (server-side, text only), so under the
+    // «هایلایت صوتی» filter the row could only ever lead out of it.
+    if (!concepts.length || state.kind === 'clip') { conceptChips.hidden = true; return; }
     conceptChips.hidden = false;
     // Eight by default; the chosen one always among them, so a deep link to
     // the twentieth concept still shows its own chip lit.
@@ -441,6 +443,10 @@ export async function renderHighlightLibrary(container) {
     let total = 0;
     for (const { a, h } of allHighlights()) {
       if (state.folder && a.folder !== state.folder) continue;
+      // Counts follow the «نوع» filter, or the label chips under «هایلایت
+      // صوتی» would advertise text highlights the list cannot show.
+      if (state.kind === 'clip' && !isClip(h)) continue;
+      if (state.kind === 'text' && isClip(h)) continue;
       total += 1;
       counts.set('l:' + (h.label || ''), (counts.get('l:' + (h.label || '')) || 0) + 1);
       counts.set('c:' + (h.color || ''), (counts.get('c:' + (h.color || '')) || 0) + 1);
@@ -459,8 +465,9 @@ export async function renderHighlightLibrary(container) {
     }));
 
     // Colour is how a reader actually files things while reading, so it is a
-    // first-class filter, shown as the swatches themselves.
-    const swatches = PALETTE.filter((p) => (counts.get('c:' + p.key) || 0) > 0);
+    // first-class filter, shown as the swatches themselves. A clip has no
+    // colour, so the row is empty under the «هایلایت صوتی» filter.
+    const swatches = state.kind === 'clip' ? [] : PALETTE.filter((p) => (counts.get('c:' + p.key) || 0) > 0);
     colorRow.replaceChildren(...(swatches.length ? [
       ...swatches.map((p) => {
         const b = el('button', {

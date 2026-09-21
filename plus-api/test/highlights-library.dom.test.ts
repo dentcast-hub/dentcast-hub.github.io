@@ -397,6 +397,26 @@ describe('audio clips in the library', () => {
     expect(document.querySelector('.dcp-hlib-gsub')!.textContent).toContain('۲ هایلایت صوتی');
   });
 
+  it('under «هایلایت صوتی» the rows a clip cannot use are gone and the label counts follow', async () => {
+    conceptsResponse = concepts();
+    history.replaceState(null, '', '/plus/highlights.html?kind=clip');
+    await renderHighlightLibrary(document.getElementById('root')!);
+    // concept views carry no clips, so the concept row would only lead out of the filter
+    expect((document.querySelector('.dcp-hlib-concepts') as HTMLElement).hidden).toBe(true);
+    // a clip has no colour: no swatches
+    expect(document.querySelectorAll('.dcp-hlib-sw')).toHaveLength(0);
+    // label chips count clips only (one carries «نکته بالینی», one none) — the
+    // label row's «همه» is the LAST such chip; the kind row's comes first
+    const allChips = [...document.querySelectorAll('.dcp-hlib-chip')].filter((c) => (c.textContent || '').startsWith('همه'));
+    expect(allChips[allChips.length - 1].textContent).toBe('همه۲');
+    expect(chipNamed('نکته بالینی').textContent).toBe('نکته بالینی۱');
+    expect((chipNamed('مهم') as HTMLButtonElement).disabled).toBe(true);
+    // back to «همه» on the kind row: the rows return
+    (document.querySelector('.dcp-hlib-kinds .dcp-hlib-chip') as HTMLElement).click();
+    expect((document.querySelector('.dcp-hlib-concepts') as HTMLElement).hidden).toBe(false);
+    expect(document.querySelectorAll('.dcp-hlib-sw').length).toBeGreaterThan(0);
+  });
+
   it('the episode link lands ON the clip (?dcclip=) and the kind filter lives in the URL', async () => {
     await renderHighlightLibrary(document.getElementById('root')!);
     const card = document.querySelector('.dcp-clipcard-wrap') as HTMLElement;

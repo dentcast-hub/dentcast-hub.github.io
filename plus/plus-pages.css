@@ -678,10 +678,17 @@ a.dcp-progress-row:hover { text-decoration: none; }
 @media (prefers-reduced-motion: reduce) { .dcp-skel-line { animation: none; } }
 
 /* The filter bar sticks: on a library of hundreds you must be able to change
-   the filter without scrolling back to the top to find it. */
+   the filter without scrolling back to the top to find it.
+   ON A PHONE IT DOES NOT (founder, 1405/06/31): the same five rows wrap to
+   446–479px on an iPhone against a 664px viewport, and a sticky block that
+   tall left 129–162px for the list itself — a 239px هایلایت صوتی card could
+   never be seen whole, only a sliver sliding under the bar. So below 640px the
+   bar scrolls away like any content, and each chip row becomes ONE swipeable
+   line instead of wrapping to three (see the media block at the end). `top`
+   matches .dcp-page-header's real height (62px), not a guess. */
 .dcp-hlib-controls {
   display: flex; flex-direction: column; gap: 10px; margin: 6px 0 16px;
-  position: sticky; top: 56px; z-index: 5; padding: 10px 0 8px;
+  position: sticky; top: 62px; z-index: 5; padding: 10px 0 8px;
   background: color-mix(in srgb, var(--bg, #f0f2f5) 92%, transparent);
   backdrop-filter: blur(8px);
 }
@@ -715,6 +722,22 @@ a.dcp-progress-row:hover { text-decoration: none; }
   border: 2px solid transparent; box-shadow: 0 0 0 1px var(--border, rgba(2,35,96,.18)) inset;
 }
 .dcp-hlib-sw.is-on { border-color: var(--ac, #0b5fff); transform: scale(1.08); }
+
+/* Phone: the filter block is ordinary content and every chip row is one
+   horizontally scrollable line (the scrollbar hidden — the row's own overflow
+   is the affordance, the same as every chip rail on the homepage). */
+@media (max-width: 640px) {
+  .dcp-hlib-controls { position: static; padding: 0; background: none; backdrop-filter: none; gap: 8px; }
+  .dcp-hlib-row:has(.dcp-hlib-chips), .dcp-hlib-row-tools {
+    flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; padding-bottom: 2px; max-width: 100%;
+  }
+  .dcp-hlib-row:has(.dcp-hlib-chips)::-webkit-scrollbar, .dcp-hlib-row-tools::-webkit-scrollbar { display: none; }
+  .dcp-hlib-chips { flex-wrap: nowrap; flex: 0 0 auto; }
+  .dcp-hlib-chip, .dcp-hlib-chips-label, .dcp-hlib-act, .dcp-hlib-sw { flex: 0 0 auto; white-space: nowrap; }
+  .dcp-hlib-count { flex: 0 0 auto; white-space: nowrap; }
+  .dcp-hlib-group { scroll-margin-top: 70px; }
+}
 
 /* Jump list: with dozens of articles, "which article was that in" needs an
    index, not scrolling. */
