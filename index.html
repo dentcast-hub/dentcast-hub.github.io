@@ -6732,6 +6732,13 @@ function showPanel(targetId, dir){
   const bnItem = document.querySelector(`.dc-bn-item[data-panel="${targetId}"]`);
   if(bnItem) bnItem.classList.add('active');
 
+  /* The tab you were on is remembered for THIS browser tab (founder,
+     1405/06/31): every card on the پریمیوم panel leaves the page, and a
+     «back» that reloads the homepage used to land on خانه — the panel lives
+     in no URL, so nothing could bring it back unless bfcache happened to.
+     sessionStorage, not localStorage: a new visit still opens on خانه. */
+  try{ sessionStorage.setItem('dc:panel', targetId); }catch(e){}
+
   curIdx = newIdx;
   const body = document.getElementById('mobile-body');
   if(body){
@@ -6740,6 +6747,18 @@ function showPanel(targetId, dir){
     body.classList.toggle('pt-mode', targetId === 'panel-patient');
   }
 }
+
+/* Restore the remembered tab on a reload of this same browser tab (a «back»
+   from a پریمیوم card, a refresh). A hash (#search, #patient, a tour handoff)
+   or a ?tour= / ?patient link owns the landing and wins; خانه needs no
+   restoring. */
+try{
+  const _remembered = sessionStorage.getItem('dc:panel');
+  if(_remembered && _remembered !== 'panel-studio' && panelOrder.indexOf(_remembered) !== -1
+     && !location.hash && !/[?&](tour=|patient\b)/.test(location.search)){
+    showPanel(_remembered, 'fade');
+  }
+}catch(e){}
 
 bnItems.forEach((item,i)=>{
   item.addEventListener('click',()=>{
