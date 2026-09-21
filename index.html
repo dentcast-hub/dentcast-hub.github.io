@@ -7052,7 +7052,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=221" defer></script>
+<script src="/dc-nav.js?v=225" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -7732,13 +7732,17 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     document.getElementById('dcd-archive-item')?.classList.remove('active');
     colCScroll.classList.remove('is-premium');
     document.getElementById('dcd-premium-item')?.classList.remove('active');
+    try{ sessionStorage.removeItem('dc:panel'); }catch(x){}
     contentArea.innerHTML = '';
     /* Enter viewer mode */
     colCEl.classList.add('is-viewer');
     /* Append ?view=content so dc-nav.js hides the page's own header
        preventing a double-header inside the iframe */
-    var sep = url.includes('?') ? '&' : '?';
-    pageViewer.src = url + sep + 'view=content';
+    var hashAt = url.indexOf('#');
+    var hash = hashAt >= 0 ? url.slice(hashAt) : '';
+    var base = hashAt >= 0 ? url.slice(0, hashAt) : url;
+    var sep = base.includes('?') ? '&' : '?';
+    pageViewer.src = base + sep + 'view=content' + hash;
   }
 
   /* ══════════════════════════════════════════════
@@ -7762,6 +7766,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     document.getElementById('dcd-archive-item')?.classList.remove('active');
     colCScroll.classList.remove('is-premium');
     document.getElementById('dcd-premium-item')?.classList.remove('active');
+    try{ sessionStorage.removeItem('dc:panel'); }catch(x){}
     colCScroll.classList.add('has-content');
     contentArea.innerHTML = '<div class="dcd-loading">⏳ در حال بارگذاری…</div>';
 
@@ -8206,15 +8211,20 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
      The cabinet is deliberately NOT routed — library-gate.js owns that door on
      every surface of the site and must decide before anything navigates. */
   function dcdRouteArchive(url){
-    let path; try{ path = new URL(url, location.origin).pathname; }catch(x){ path = url; }
+    let u; try{ u = new URL(url, location.origin); }catch(x){ return false; }
+    const path = u.pathname;
     if(path === '/dentcast_cabinet_search.html') return false;   // the gate's, not ours
     /* /plus/* is the account app — its own pages, its own scripts, its own
        payment flow. It is deliberately NOT routed into this column: putting a
        checkout inside an iframe is a decision, not a detail. Those links keep
        navigating, exactly as they did before. */
     if(/^\/plus\//.test(path)) return false;
+    /* The viewer gets the WHOLE url — query and hash included. It used to get
+       the pathname alone, which is how the پریمیوم tab's «بالاترین» row
+       (/up-board/?sort=top) opened the board on «تازه‌ترین» in this column
+       while the phone landed on the ranked list (2026-09-21). */
     if(path.endsWith('/') || !/\.html?$/i.test(path) || path === '/episodes.html'
-       || /^\/(glossary|pillar|up-board|des-board)\//.test(path)) openPageViewer(path);
+       || /^\/(glossary|pillar|up-board|des-board)\//.test(path)) openPageViewer(path + u.search + u.hash);
     else openContent(path, '');
     return true;
   }
@@ -8241,6 +8251,16 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   bindCardRouter(document.getElementById('dcd-welcome-feed'));
   const archiveEl = document.getElementById('dcd-archive');
   const archiveItem = document.getElementById('dcd-archive-item');
+  /* Column C's آرشیو / پریمیوم states are remembered under the SAME key the
+     phone's showPanel() writes (`dc:panel`), for the same reason: every card on
+     the پریمیوم surface leaves the page, and a «بازگشت» that reloads the
+     homepage landed on the welcome column here while the phone landed back on
+     the tab (2026-09-21). page-back.js reads the key for its label, enable()
+     reads it to restore the column, and opening anything else in the column
+     clears it — a reader who left from an article did not leave from the tab. */
+  function rememberColC(id){
+    try{ if(id) sessionStorage.setItem('dc:panel', id); else sessionStorage.removeItem('dc:panel'); }catch(e){}
+  }
   function showArchive(){
     root.querySelectorAll('.dcd-subitem').forEach(b => b.classList.remove('active'));
     archiveItem && archiveItem.classList.add('active');
@@ -8251,6 +8271,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     colCScroll.classList.remove('is-premium');
     colCScroll.classList.add('is-archive');
     colCScroll.scrollTop = 0;
+    rememberColC('panel-sharehub');
   }
   if(archiveItem) archiveItem.addEventListener('click', showArchive);
   /* پریمیوم — the fourth exclusive state of column C, the archive's twin. */
@@ -8266,6 +8287,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     colCScroll.classList.remove('is-archive');
     colCScroll.classList.add('is-premium');
     colCScroll.scrollTop = 0;
+    rememberColC('panel-premium');
   }
   if(premiumItem) premiumItem.addEventListener('click', showPremium);
   if(premiumEl) bindCardRouter(premiumEl);
@@ -8372,6 +8394,19 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     if(first && !first.dataset.autoloaded){
       first.dataset.autoloaded = '1';
       first.click();
+    }
+    /* Restore the column the reader left from (a «بازگشت» off a پریمیوم or
+       آرشیو card, a refresh) — the phone's own restore, one shell over. Same
+       guards: a hash or a ?tour= / ?patient link owns the landing. */
+    if(!root.dataset.restored){
+      root.dataset.restored = '1';
+      try{
+        const remembered = sessionStorage.getItem('dc:panel');
+        if(remembered && !location.hash && !/[?&](tour=|patient\b)/.test(location.search)){
+          if(remembered === 'panel-premium') showPremium();
+          else if(remembered === 'panel-sharehub') showArchive();
+        }
+      }catch(e){}
     }
   }
 

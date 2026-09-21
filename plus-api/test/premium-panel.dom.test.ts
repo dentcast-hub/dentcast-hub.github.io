@@ -56,6 +56,7 @@ const SKELETON = `
   <section class="dc-panel active" id="panel-studio"><button id="dcDesToolTab" type="button">DES</button></section>
   <section class="dc-panel" id="panel-premium"><div id="dcPremiumPanel" hidden></div></section>
   <div id="dcdPremiumPanel" hidden></div>
+  <div class="dcd-a-subscribe"><a href="/plus/pricing.html?from=desk-sidebar">خرید اشتراک پریمیوم</a></div>
   <nav><div class="dc-bn-item" data-panel="panel-studio"></div><div class="dc-bn-item active" data-panel="panel-premium"></div></nav>`;
 
 const settle = () => new Promise((r) => setTimeout(r, 0));
@@ -179,6 +180,19 @@ describe('a subscriber', () => {
   const st = (key: string, root: Element = mobile()) =>
     root.querySelector(`[data-dcp-key="${key}"] .dcp-pp-st-text`)?.textContent ?? null;
   const stLive = (key: string) => !!mobile().querySelector(`[data-dcp-key="${key}"] .dcp-pp-st.is-live`);
+
+  it('hides the desktop sidebar\'s «خرید اشتراک پریمیوم» for a subscriber — the shell carries no buy link beside the tab', async () => {
+    await mount();
+    expect((document.querySelector('.dcd-a-subscribe') as HTMLElement).hidden).toBe(true);
+    // A free reader keeps it, and «could not ask» keeps what shipped.
+    meImpl = () => Promise.resolve({ tier: 'free' });
+    await mount();
+    expect((document.querySelector('.dcd-a-subscribe') as HTMLElement).hidden).toBe(false);
+    meImpl = () => Promise.resolve(null);
+    meStatusImpl = () => 'error';
+    await mount();
+    expect((document.querySelector('.dcd-a-subscribe') as HTMLElement).hidden).toBe(false);
+  });
 
   it('gets a HOME, not the catalog: no buy link, no amber card, no «باز کردن», the dashboard as the header link', async () => {
     await mount();
