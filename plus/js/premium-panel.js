@@ -40,15 +40,15 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=130';
-import { currentUser, meStatus, api } from './api.js?v=130';
-import { pricingHref, premiumCta } from './premium-cta.js?v=130';
-import { openSheet, gateCard } from './sheet.js?v=130';
-import { openLoginModal } from './login-modal.js?v=130';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=130';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=130';
-import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=130';
-import { armDesTool } from './des-scorer.js?v=130';
+import { el, faNum, streakIsActiveToday } from './util.js?v=131';
+import { currentUser, meStatus, api } from './api.js?v=131';
+import { pricingHref, premiumCta } from './premium-cta.js?v=131';
+import { openSheet, gateCard } from './sheet.js?v=131';
+import { openLoginModal } from './login-modal.js?v=131';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=131';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=131';
+import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=131';
+import { armDesTool } from './des-scorer.js?v=131';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -608,6 +608,9 @@ function wireCrossPanelLinks(wrap) {
       if (col) col.classList.remove('is-viewer');
       const item = document.getElementById('dcd-premium-item');
       if (item) item.classList.remove('active');
+      // The shell remembers its column under the phone's `dc:panel` key; the
+      // welcome column is the one state with no name, so forget it here.
+      try { sessionStorage.removeItem('dc:panel'); } catch (_) { /* ignore */ }
     }
     setTimeout(() => {
       target.scrollIntoView({ behavior: 'smooth', block: 'center' });
