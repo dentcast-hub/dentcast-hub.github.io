@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ماکاپ — نوسازی ظاهر صفحه‌های /plus</title>
+<meta name="robots" content="noindex">
+<!--
+  PROPOSAL, UNAPPROVED (1405/06/30). Visual-only modernisation of the old
+  /plus pages (پیشخوان، پروفایل، مسیرها، کارت‌ها، …) so they sit level with the
+  premium tab and the rest of the site. Every string on the «پیشنهاد» side is the
+  string the page prints today; no control moves, nothing is added or removed.
+  Everything shown is reachable from plus-pages.css alone — the same class
+  names, restyled — which is what makes «فقط ظاهر» a promise the implementation
+  can keep. Toggle the theme with the switch at the top.
+-->
+<style>
+  /* ---- site tokens, copied from dc-theme.css so this file stands alone ---- */
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5; --surface:#fff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10); --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-bg:#fff; --card-border:rgba(2,35,96,.09);
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --chip-bg:rgba(11,95,255,.08); --chip-bd:rgba(11,95,255,.20);
+    --gold:#c9922b; --cert:#1f7850; --violet:#5b4bd6; --teal:#0f8a8a; --heart:#d63a4a;
+    --pp-blue:#0b5fff; --pp-blue-bg:rgba(11,95,255,.10);
+    --pp-green:#1f7850; --pp-green-bg:rgba(31,120,80,.11);
+    --pp-violet:#5b4bd6; --pp-violet-bg:rgba(91,75,214,.11);
+    --pp-teal:#0f8a8a; --pp-teal-bg:rgba(15,138,138,.11);
+    --sh-soft:0 1px 2px rgba(2,35,96,.05),0 8px 24px -10px rgba(2,35,96,.12);
+    --hair:rgba(2,35,96,.08);
+  }
+  [data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --chip-bg:rgba(91,156,246,.12); --chip-bd:rgba(91,156,246,.24);
+    --gold:#e3b849; --cert:#4cc08a; --violet:#a79bff; --teal:#4fc3c3;
+    --pp-blue:#5b9cf6; --pp-blue-bg:rgba(91,156,246,.16);
+    --pp-green:#4cc08a; --pp-green-bg:rgba(76,192,138,.14);
+    --pp-violet:#a79bff; --pp-violet-bg:rgba(167,155,255,.14);
+    --pp-teal:#4fc3c3; --pp-teal-bg:rgba(79,195,195,.14);
+    --sh-soft:0 1px 2px rgba(0,0,0,.3),0 10px 28px -12px rgba(0,0,0,.6);
+    --hair:rgba(255,255,255,.08);
+  }
+  *{box-sizing:border-box}
+  a{text-decoration:none;color:inherit}
+  html,body{margin:0}
+  body{font-family:Vazirmatn,"Segoe UI",Tahoma,sans-serif;background:var(--bg);color:var(--txt);line-height:1.8;padding:24px 16px 60px}
+  [data-theme="dark"] body{
+    background-color:var(--bg);
+    background-image:
+      radial-gradient(60rem 30rem at 100% 0, rgba(91,156,246,.10), transparent 60%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3Cpattern id='g' width='28' height='28' patternUnits='userSpaceOnUse'%3E%3Cpath d='M28 0H0V28' fill='none' stroke='%235b9cf6' stroke-opacity='.16' stroke-width='1'/%3E%3C/pattern%3E%3ClinearGradient id='f' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff'/%3E%3Cstop offset='1' stop-color='%23000'/%3E%3C/linearGradient%3E%3Cmask id='m'%3E%3Crect width='100%25' height='100%25' fill='url(%23f)'/%3E%3C/mask%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23g)' mask='url(%23m)'/%3E%3C/svg%3E");
+    background-size:100% 56rem,100% 56rem;background-repeat:no-repeat;
+  }
+  h1{font-size:1.35rem;margin:0 0 .3rem}
+  .lead{color:var(--txt2);font-size:.92rem;max-width:64rem;margin:0 0 1.2rem}
+  .bar{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin:0 0 1.4rem}
+  .tg{border:1px solid var(--border);background:var(--surface);color:var(--txt);border-radius:999px;padding:.35rem .9rem;font:inherit;font-size:.85rem;cursor:pointer}
+  .tg.is-on{background:var(--ac);color:#fff;border-color:var(--ac)}
+  .pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:22px;align-items:start;margin:0 0 2.6rem}
+  .pair h2{grid-column:1/-1;font-size:1.05rem;margin:0}
+  .pair h2 small{font-weight:500;color:var(--txt3);font-size:.82rem;margin-inline-start:.5rem}
+  .col{display:flex;flex-direction:column;gap:.5rem}
+  .cap{font-size:.8rem;font-weight:800;color:var(--txt3);display:flex;align-items:center;gap:.5rem}
+  .cap i{display:inline-block;width:.55rem;height:.55rem;border-radius:50%;background:var(--txt3)}
+  .cap.is-new{color:var(--ac)} .cap.is-new i{background:var(--ac)}
+
+  /* ---- the phone ---- */
+  .ph{width:390px;max-width:100%;margin:0;border:1px solid var(--border);border-radius:28px;overflow:hidden;background:var(--bg);box-shadow:var(--card-sh);position:relative}
+  [data-theme="dark"] .ph{
+    background-color:var(--bg);
+    background-image:radial-gradient(40rem 20rem at 100% 0, rgba(91,156,246,.10), transparent 60%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3Cpattern id='g' width='28' height='28' patternUnits='userSpaceOnUse'%3E%3Cpath d='M28 0H0V28' fill='none' stroke='%235b9cf6' stroke-opacity='.16' stroke-width='1'/%3E%3C/pattern%3E%3ClinearGradient id='f' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff'/%3E%3Cstop offset='1' stop-color='%23000'/%3E%3C/linearGradient%3E%3Cmask id='m'%3E%3Crect width='100%25' height='100%25' fill='url(%23f)'/%3E%3C/mask%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23g)' mask='url(%23m)'/%3E%3C/svg%3E");
+    background-size:100% 40rem,100% 40rem;background-repeat:no-repeat;
+  }
+  .ph .body{padding:14px 14px 22px}
+
+  /* =================== TODAY (a faithful copy of plus-pages.css) =================== */
+  .old .hd{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--surface) 88%,transparent)}
+  .old .hd b{font-size:1.1rem;font-weight:800}
+  .old .hd a{color:var(--txt2);font-size:.9rem;text-decoration:none}
+  .old .hello{font-size:1.5rem;font-weight:800;margin:4px 2px 16px}
+  .old .sec{background:var(--card-bg);border:1px solid var(--card-border);border-radius:18px;padding:16px 18px;margin-bottom:14px;box-shadow:var(--card-sh)}
+  .old .h2{font-size:1rem;font-weight:800;margin:0 0 4px}
+  .old .hint{color:var(--txt2);font-size:.9rem;margin:0 0 12px}
+  .old .streak{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .old .flame{font-size:2.4rem}
+  .old .num{font-size:2rem;font-weight:900;line-height:1.1}
+  .old .unit{color:var(--txt2)}
+  .old .rec{margin-inline-start:auto;text-align:center;background:var(--surface2);border-radius:14px;padding:8px 16px}
+  .old .rec b{font-size:1.3rem;display:block}.old .rec span{color:var(--txt2);font-size:.85rem}
+  .old .folder{display:flex;align-items:center;justify-content:space-between;padding:12px 6px;border-bottom:1px solid var(--border);font-weight:600}
+  .old .folder:last-child{border-bottom:none}
+  .old .folder span:first-child::before{content:"📁";margin-inline-end:8px;opacity:.7}
+  .old .cnt{font-size:.85rem;font-weight:700;color:var(--ac);background:var(--chip-bg);border-radius:999px;padding:2px 12px}
+  .old .cnt.z{color:var(--txt3);background:transparent;font-weight:400}
+  .old .btn{display:inline-block;background:var(--ac);color:#fff;border-radius:12px;padding:8px 18px;font-weight:800;font-size:.9rem}
+  .old .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--border)}
+  .old .track{height:7px;background:var(--surface3);border-radius:999px;overflow:hidden;margin:8px 0}
+  .old .fill{height:100%;border-radius:999px;background:linear-gradient(90deg,color-mix(in srgb,var(--ac) 55%,var(--surface)),var(--ac))}
+  .old .foot{display:flex;justify-content:space-between;color:var(--txt2);font-size:.9rem}
+  .old .foot a{color:var(--ac);font-weight:700}
+  .old .field{display:flex;gap:8px;align-items:stretch}
+  .old .inp{flex:1;border:1px solid var(--border);border-radius:12px;padding:10px 12px;background:var(--surface);color:var(--txt);font:inherit}
+  .old .save{background:var(--ac);color:#fff;border-radius:12px;padding:0 20px;font-weight:800;display:grid;place-items:center}
+  .old .note{color:var(--txt2);font-size:.9rem;margin:8px 0 0}
+  .old .week{display:flex;gap:6px;justify-content:space-between;margin:8px 0}
+  .old .wd{flex:1;text-align:center;border:1px solid var(--border);border-radius:10px;padding:6px 0;font-size:.8rem;background:var(--surface)}
+  .old .wd.on{background:var(--chip-bg);border-color:var(--chip-bd)}
+  .old .wall{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px}
+  .old .bd{text-align:center;font-size:.72rem;color:var(--txt2)}
+  .old .disc{width:52px;height:52px;border-radius:50%;margin:0 auto 4px;display:grid;place-items:center;border:2px solid var(--border);color:var(--txt3);font-size:1.2rem}
+  .old .disc.on{border-color:#b08d57;color:#b08d57;background:rgba(176,141,87,.12)}
+  .old .disc.gold{border-color:var(--gold);color:var(--gold);background:rgba(201,146,43,.12)}
+  .old .step{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);font-size:.92rem}
+  .old .step:last-child{border-bottom:none}
+  .old .step .n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--surface2);display:grid;place-items:center;font-size:.8rem;font-weight:800;color:var(--txt2)}
+  .old .step .n.done{background:var(--ac);color:#fff}
+  .old .step small{display:block;color:var(--txt3);font-size:.78rem}
+  .old .title{font-size:1.3rem;font-weight:800;margin:6px 2px 4px}
+  .old .desc{color:var(--txt2);font-size:.92rem;margin:0 0 14px}
+  .old .pill{display:inline-block;font-size:.78rem;font-weight:700;color:var(--ac);background:var(--chip-bg);border-radius:999px;padding:2px 10px}
+
+  /* =================== PROPOSAL (same classes, new skin) =================== */
+  .new .hd{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 10px 10px;border-bottom:1px solid var(--hair);background:color-mix(in srgb,var(--surface) 78%,transparent);backdrop-filter:blur(10px)}
+  .new .hd b{font-size:.98rem;font-weight:900;letter-spacing:-.01em;display:flex;align-items:center;gap:.45rem}
+  .new .hd b::before{content:"";width:.6rem;height:.6rem;border-radius:50%;background:linear-gradient(135deg,#0b5fff,#022360);box-shadow:0 0 0 3px rgba(var(--ac-rgb),.16)}
+  .new .hd a{color:var(--txt2);font-size:.78rem;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem;padding:.28rem .6rem .28rem .75rem;border-radius:999px;background:var(--surface2);border:1px solid var(--hair)}
+  .new .hd a::before{content:"›";font-size:1.05rem;line-height:1;opacity:.7;margin-inline-end:.05rem}
+  .new .hello{font-size:1.45rem;font-weight:900;letter-spacing:-.01em;margin:6px 4px 14px;line-height:1.35}
+  .new .hello small{display:block;font-size:.72rem;font-weight:700;color:var(--txt3);letter-spacing:.02em;margin-bottom:.1rem}
+  .new .sec{background:var(--card-bg);border:1px solid var(--hair);border-radius:20px;padding:14px 16px 15px;margin-bottom:12px;box-shadow:var(--sh-soft)}
+  .new .h2{font-size:.95rem;font-weight:900;margin:0 0 2px;display:flex;align-items:center;gap:.5rem}
+  .new .h2::before{content:"";flex:none;width:.28rem;height:1.05rem;border-radius:999px;background:var(--ac)}
+  .new .h2.g::before{background:var(--pp-green)} .new .h2.v::before{background:var(--pp-violet)} .new .h2.t::before{background:var(--pp-teal)} .new .h2.h::before{background:var(--heart)}
+  .new .hint{color:var(--txt3);font-size:.8rem;margin:0 0 12px;line-height:1.7}
+  /* stat: number leads, words follow */
+  .new .streak{display:flex;align-items:center;gap:12px}
+  .new .flame{font-size:1.6rem;width:3rem;height:3rem;border-radius:1rem;display:grid;place-items:center;background:rgba(214,58,74,.10)}
+  .new .num{font-size:1.9rem;font-weight:900;line-height:1;color:var(--pr);font-variant-numeric:tabular-nums}
+  .new .unit{color:var(--txt3);font-size:.78rem;display:block;margin-top:.2rem}
+  .new .rec{margin-inline-start:auto;text-align:center;background:var(--surface2);border:1px solid var(--hair);border-radius:14px;padding:6px 14px;min-width:4.6rem}
+  .new .rec b{font-size:1.15rem;display:block;color:var(--pr);font-variant-numeric:tabular-nums;line-height:1.3}
+  .new .rec span{color:var(--txt3);font-size:.68rem}
+  /* inset grouped list — one surface, hairlines between rows */
+  .new .inset{background:var(--surface2);border:1px solid var(--hair);border-radius:14px;overflow:hidden}
+  .new .folder{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid var(--hair);font-weight:700;font-size:.86rem}
+  .new .folder:last-child{border-bottom:none}
+  .new .folder span:first-child{flex:1;display:flex;align-items:center;gap:.6rem}
+  .new .folder span:first-child::before{content:"📁";width:1.9rem;height:1.9rem;border-radius:.6rem;display:grid;place-items:center;background:var(--pp-blue-bg);font-size:.85rem}
+  .new .cnt{font-size:.74rem;font-weight:800;color:var(--ac);background:var(--chip-bg);border-radius:999px;padding:1px 9px;font-variant-numeric:tabular-nums}
+  .new .cnt.z{color:var(--txt3);background:transparent;font-weight:600}
+  .new .folder::after{content:"‹";color:var(--txt3);font-size:1.1rem;line-height:1;opacity:.6;margin-inline-start:.1rem}
+  .new .btn{display:inline-block;background:linear-gradient(180deg,#2b78ff,#0b5fff);color:#fff;border-radius:999px;padding:8px 20px;font-weight:800;font-size:.86rem;box-shadow:0 6px 16px -8px rgba(11,95,255,.7)}
+  [data-theme="dark"] .new .btn{background:linear-gradient(180deg,#6aa6f8,#4a8ef0);color:#061a3a;box-shadow:0 6px 16px -8px rgba(91,156,246,.6)}
+  .new .btn.ghost{background:transparent;color:var(--txt2);border:1px solid var(--hair);box-shadow:none}
+  .new .track{height:6px;background:var(--surface3);border-radius:999px;overflow:hidden;margin:10px 0 8px}
+  .new .fill{height:100%;border-radius:999px;background:linear-gradient(90deg,color-mix(in srgb,var(--ac) 55%,var(--surface)),var(--ac))}
+  .new .foot{display:flex;justify-content:space-between;align-items:center;color:var(--txt3);font-size:.8rem}
+  .new .foot a{color:var(--ac);font-weight:800;font-size:.8rem}
+  .new .field{display:flex;gap:8px;align-items:stretch;background:var(--surface2);border:1px solid var(--hair);border-radius:14px;padding:4px 4px 4px 6px}
+  .new .inp{flex:1;border:0;border-radius:10px;padding:8px 10px;background:transparent;color:var(--txt);font:inherit}
+  .new .save{background:var(--ac);color:#fff;border-radius:10px;padding:0 16px;font-weight:800;font-size:.84rem;display:grid;place-items:center}
+  [data-theme="dark"] .new .save{color:#061a3a}
+  .new .note{color:var(--txt3);font-size:.78rem;margin:8px 2px 0;line-height:1.7}
+  .new .week{display:flex;gap:5px;justify-content:space-between;margin:8px 0;background:var(--surface2);border:1px solid var(--hair);border-radius:14px;padding:6px}
+  .new .wd{flex:1;text-align:center;border-radius:10px;padding:5px 0;font-size:.72rem;color:var(--txt3);background:transparent}
+  .new .wd.on{background:var(--surface);color:var(--pr);font-weight:800;box-shadow:var(--card-sh)}
+  .new .wall{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:6px}
+  .new .bd{text-align:center;font-size:.7rem;color:var(--txt3);font-weight:700}
+  .new .disc{width:52px;height:52px;border-radius:50%;margin:0 auto 5px;display:grid;place-items:center;border:1.5px dashed var(--hair);color:var(--txt3);font-size:1.15rem;background:var(--surface2)}
+  .new .disc.on{border:2px solid #b08d57;color:#b08d57;background:rgba(176,141,87,.10);box-shadow:0 4px 12px -6px rgba(176,141,87,.6)}
+  .new .disc.gold{border:2px solid var(--gold);color:var(--gold);background:rgba(201,146,43,.10);box-shadow:0 4px 12px -6px rgba(201,146,43,.7)}
+  .new .step{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-bottom:1px solid var(--hair);font-size:.86rem;font-weight:600}
+  .new .step:last-child{border-bottom:none}
+  .new .step .n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--surface);border:1.5px solid var(--hair);display:grid;place-items:center;font-size:.74rem;font-weight:800;color:var(--txt3);margin-top:2px}
+  .new .step .n.done{background:var(--pp-green);border-color:var(--pp-green);color:#fff}
+  .new .step .n.next{border-color:var(--ac);color:var(--ac);box-shadow:0 0 0 3px rgba(var(--ac-rgb),.14)}
+  .new .step small{display:block;color:var(--txt3);font-size:.72rem;font-weight:500}
+  .new .title{font-size:1.25rem;font-weight:900;margin:6px 2px 2px;letter-spacing:-.01em;line-height:1.4}
+  .new .desc{color:var(--txt3);font-size:.84rem;margin:0 0 14px}
+  .new .pill{display:inline-block;font-size:.72rem;font-weight:800;color:var(--ac);background:var(--chip-bg);border-radius:999px;padding:1px 9px}
+  /* the one hero: a pathway's own progress card wears the premium-tab hero */
+  .new .hero{position:relative;overflow:hidden;padding:14px 16px 13px;margin-bottom:12px;border-radius:20px;background:linear-gradient(135deg,#022360 0%,#0b3d9e 60%,#0b5fff 100%);color:#fff;box-shadow:0 10px 26px -12px rgba(2,35,96,.55)}
+  .new .hero .g{position:absolute;left:-.6rem;top:-.7rem;font-size:5.2rem;line-height:1;opacity:.10;transform:rotate(-12deg)}
+  .new .hero .k{font-size:.66rem;font-weight:800;opacity:.78}
+  .new .hero .t{font-size:.98rem;font-weight:900;margin:.1rem 0 .1rem}
+  .new .hero .m{font-size:.72rem;opacity:.85}
+  .new .hero .bar{height:.38rem;border-radius:999px;background:rgba(255,255,255,.22);margin:.55rem 0 .5rem;overflow:hidden}
+  .new .hero .bar i{display:block;height:100%;background:#fff;border-radius:999px}
+  .new .hero .row{display:flex;align-items:center;justify-content:space-between;gap:.5rem;font-size:.72rem;opacity:.9}
+  .new .hero .cta{font-size:.74rem;font-weight:800;background:#fff;color:#022360;border-radius:999px;padding:.22rem .8rem;opacity:1}
+  .new .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem;margin:0 0 12px}
+  .new .st{background:var(--card-bg);border:1px solid var(--hair);border-radius:.95rem;padding:.5rem .6rem;box-shadow:var(--card-sh)}
+  .new .st b{display:block;font-size:1.05rem;font-weight:900;color:var(--pr);line-height:1.3;font-variant-numeric:tabular-nums}
+  .new .st span{font-size:.64rem;color:var(--txt3);white-space:nowrap}
+  .new .empty{text-align:center;padding:26px 10px 8px;color:var(--txt2)}
+  .new .empty .ic{width:3.4rem;height:3.4rem;border-radius:1.1rem;margin:0 auto 10px;display:grid;place-items:center;background:var(--pp-violet-bg);color:var(--pp-violet);font-size:1.4rem}
+  .new .empty b{display:block;color:var(--txt);font-size:.95rem;margin-bottom:4px}
+  .new .empty p{font-size:.84rem;margin:0 0 14px;color:var(--txt3)}
+  .old .empty{text-align:center;padding:30px 6px;color:var(--txt2)}
+  .old .empty p{margin:14px 0}
+
+  /* ---- legend ---- */
+  .legend{background:var(--card-bg);border:1px solid var(--hair);border-radius:20px;padding:16px 18px;box-shadow:var(--sh-soft);max-width:64rem}
+  .legend h2{font-size:1rem;margin:0 0 .4rem}
+  .legend ol{margin:0;padding-inline-start:1.2rem;font-size:.9rem;color:var(--txt2)}
+  .legend li{margin:.3rem 0}
+  .legend b{color:var(--txt)}
+</style>
+</head>
+<body>
+<h1>نوسازی ظاهر صفحه‌های /plus — ماکاپ برای تأیید</h1>
+<p class="lead">سه صفحه‌ی نمونه (پیشخوان، پروفایل، صفحه‌ی مسیر) با همان متن‌ها، همان دکمه‌ها و همان ترتیبِ امروز. فقط پوسته عوض می‌شود تا با تب پریمیوم و بقیه‌ی سایت هم‌تراز شود. سمت راست «امروز»، سمت چپ «پیشنهاد». هر دو تم را ببینید.</p>
+<div class="bar">
+  <button class="tg is-on" data-t="light" type="button">روشن</button>
+  <button class="tg" data-t="dark" type="button">تاریک</button>
+</div>
+
+<!-- ====================== 1. پیشخوان ====================== -->
+<section class="pair">
+  <h2>۱ · پیشخوان <small>/plus/</small></h2>
+  <div class="col">
+    <div class="cap"><i></i>امروز</div>
+    <div class="ph old">
+      <div class="hd"><b>دنت‌کست پلاس</b><a href="#">بازگشت به سایت</a></div>
+      <div class="body">
+        <div class="hello">سلام، فواد</div>
+        <div class="sec">
+          <div class="h2">استریک</div>
+          <p class="hint">هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.</p>
+          <div class="streak"><span class="flame">🔥</span><div><div class="num">۱۷</div><span class="unit">روز پیاپی، امروز فعال بودید</span></div><div class="rec"><b>۳۱</b><span>رکورد شما</span></div></div>
+        </div>
+        <div class="sec">
+          <div class="h2">پیشرفت هر پوشه</div>
+          <p class="hint">در هر پوشه، چند درصد از کل مطالب آن را خوانده‌اید (۰ تا ۱۰۰). هر بار پیشخوان را باز شود به‌روز می‌شود.</p>
+          <div class="folder"><span>Podcast</span><span class="cnt">۳۰</span></div>
+          <div class="folder"><span>NoteCast</span><span class="cnt">۹</span></div>
+          <div class="folder"><span>Clinical Insight</span><span class="cnt">۱۲</span></div>
+          <div class="folder"><span>DentAI</span><span class="cnt z">۰</span></div>
+        </div>
+        <div class="sec">
+          <div class="h2">برای مرور امروز</div>
+          <p class="hint">هایلایت‌هایی که امروز نوبت مرورشان است.</p>
+          <a class="btn" href="#">۴ کارت برای مرور</a>
+        </div>
+        <div class="sec">
+          <div class="h2">مسیر یادگیری</div>
+          <p class="hint">مسیرهای آماده، از پایه تا پیشرفته؛ فقط بخون.</p>
+          <div style="font-weight:800">دندانپزشکی بیومیمتیک و ترمیم ادهزیو</div>
+          <div class="track"><div class="fill" style="width:25%"></div></div>
+          <div class="foot"><span>قدم ۳ از ۱۲</span><a href="#">همه مسیرها</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="cap is-new"><i></i>پیشنهاد</div>
+    <div class="ph new">
+      <div class="hd"><b>دنت‌کست پلاس</b><a href="#">بازگشت به سایت</a></div>
+      <div class="body">
+        <div class="hello">سلام، فواد</div>
+        <div class="sec">
+          <div class="h2 h">استریک</div>
+          <p class="hint">هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.</p>
+          <div class="streak"><span class="flame">🔥</span><div><div class="num">۱۷</div><span class="unit">روز پیاپی، امروز فعال بودید</span></div><div class="rec"><b>۳۱</b><span>رکورد شما</span></div></div>
+        </div>
+        <div class="sec">
+          <div class="h2">پیشرفت هر پوشه</div>
+          <p class="hint">در هر پوشه، چند درصد از کل مطالب آن را خوانده‌اید (۰ تا ۱۰۰). هر بار پیشخوان را باز شود به‌روز می‌شود.</p>
+          <div class="inset">
+            <div class="folder"><span>Podcast</span><span class="cnt">۳۰</span></div>
+            <div class="folder"><span>NoteCast</span><span class="cnt">۹</span></div>
+            <div class="folder"><span>Clinical Insight</span><span class="cnt">۱۲</span></div>
+            <div class="folder"><span>DentAI</span><span class="cnt z">۰</span></div>
+          </div>
+        </div>
+        <div class="sec">
+          <div class="h2 v">برای مرور امروز</div>
+          <p class="hint">هایلایت‌هایی که امروز نوبت مرورشان است.</p>
+          <a class="btn" href="#">۴ کارت برای مرور</a>
+        </div>
+        <div class="sec">
+          <div class="h2 g">مسیر یادگیری</div>
+          <p class="hint">مسیرهای آماده، از پایه تا پیشرفته؛ فقط بخون.</p>
+          <div style="font-weight:800;font-size:.9rem">دندانپزشکی بیومیمتیک و ترمیم ادهزیو</div>
+          <div class="track"><div class="fill" style="width:25%"></div></div>
+          <div class="foot"><span>قدم ۳ از ۱۲</span><a href="#">همه مسیرها</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== 2. پروفایل ====================== -->
+<section class="pair">
+  <h2>۲ · پروفایل <small>/plus/profile.html</small></h2>
+  <div class="col">
+    <div class="cap"><i></i>امروز</div>
+    <div class="ph old">
+      <div class="hd"><b>دنت‌کست پلاس</b><a href="#">بازگشت به سایت</a></div>
+      <div class="body">
+        <div class="hello">پروفایل</div>
+        <div class="sec">
+          <div class="h2">نام مستعار</div>
+          <div class="field"><input class="inp" value="فواد"><span class="save">ذخیره</span></div>
+          <p class="note">نام واقعی لازم نیست. همین اسم مستعار در پروفایل و لیدربورد نمایش داده می‌شود.</p>
+        </div>
+        <div class="sec">
+          <div class="h2">این هفته</div>
+          <p class="hint">روزهایی که فعال بوده‌اید.</p>
+          <div class="week"><div class="wd on">ش<br>۲۹</div><div class="wd on">ی<br>۳۰</div><div class="wd on">د<br>۳۱</div><div class="wd">س<br>۱</div><div class="wd">چ<br>۲</div><div class="wd">پ<br>۳</div><div class="wd">ج<br>۴</div></div>
+        </div>
+        <div class="sec">
+          <div class="h2">افتخارات</div>
+          <p class="hint">۲ از ۲۵ نشان</p>
+          <div class="wall">
+            <div class="bd"><div class="disc on">📖</div>خواننده</div>
+            <div class="bd"><div class="disc gold">🔥</div>شعله</div>
+            <div class="bd"><div class="disc">🗂</div>گنجینه</div>
+            <div class="bd"><div class="disc">؟</div>؟</div>
+          </div>
+        </div>
+        <div class="sec">
+          <div class="h2">یادآوری‌ها</div>
+          <p class="hint">از کجا برسد و چه چیزی.</p>
+          <a class="btn ghost" href="#">تنظیم یادآوری‌ها</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="cap is-new"><i></i>پیشنهاد</div>
+    <div class="ph new">
+      <div class="hd"><b>دنت‌کست پلاس</b><a href="#">بازگشت به سایت</a></div>
+      <div class="body">
+        <div class="hello">پروفایل</div>
+        <div class="sec">
+          <div class="h2">نام مستعار</div>
+          <div class="field"><input class="inp" value="فواد"><span class="save">ذخیره</span></div>
+          <p class="note">نام واقعی لازم نیست. همین اسم مستعار در پروفایل و لیدربورد نمایش داده می‌شود.</p>
+        </div>
+        <div class="sec">
+          <div class="h2 t">این هفته</div>
+          <p class="hint">روزهایی که فعال بوده‌اید.</p>
+          <div class="week"><div class="wd on">ش<br>۲۹</div><div class="wd on">ی<br>۳۰</div><div class="wd on">د<br>۳۱</div><div class="wd">س<br>۱</div><div class="wd">چ<br>۲</div><div class="wd">پ<br>۳</div><div class="wd">ج<br>۴</div></div>
+        </div>
+        <div class="sec">
+          <div class="h2">افتخارات</div>
+          <p class="hint">۲ از ۲۵ نشان</p>
+          <div class="wall">
+            <div class="bd"><div class="disc on">📖</div>خواننده</div>
+            <div class="bd"><div class="disc gold">🔥</div>شعله</div>
+            <div class="bd"><div class="disc">🗂</div>گنجینه</div>
+            <div class="bd"><div class="disc">؟</div>؟</div>
+          </div>
+        </div>
+        <div class="sec">
+          <div class="h2 v">یادآوری‌ها</div>
+          <p class="hint">از کجا برسد و چه چیزی.</p>
+          <a class="btn ghost" href="#">تنظیم یادآوری‌ها</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== 3. صفحه‌ی مسیر + کارت‌ها ====================== -->
+<section class="pair">
+  <h2>۳ · صفحه‌ی مسیر و حالت خالیِ کارت‌ها <small>/plus/pathway.html · /plus/cards.html</small></h2>
+  <div class="col">
+    <div class="cap"><i></i>امروز</div>
+    <div class="ph old">
+      <div class="hd"><b>دنت‌کست پریمیوم</b><a href="#">بازگشت به پیشخوان</a></div>
+      <div class="body">
+        <div class="title">دندانپزشکی بیومیمتیک و ترمیم ادهزیو</div>
+        <p class="desc">از اصول ادهزیو تا لایه‌گذاری و سمان‌کردن — ترتیبی که پیش‌نیازها اول می‌آیند.</p>
+        <div class="sec">
+          <div class="h2">پیشرفت</div>
+          <div class="track"><div class="fill" style="width:25%"></div></div>
+          <div class="foot"><span>قدم ۳ از ۱۲</span><span class="pill">در حال خواندن</span></div>
+        </div>
+        <div class="sec">
+          <div class="h2">قدم‌ها</div>
+          <div class="step"><span class="n done">۱</span><div>مقدمه‌ای بر ادهزیو<small>Insight</small></div></div>
+          <div class="step"><span class="n done">۲</span><div>اچینگ سلکتیو<small>Insight</small></div></div>
+          <div class="step"><span class="n done">۳</span><div>نوت‌کست ۳ — باندینگ<small>NoteCast</small></div></div>
+          <div class="step"><span class="n">۴</span><div>لایه‌گذاری<small>Insight · 🏁</small></div></div>
+        </div>
+        <div class="sec">
+          <div class="empty"><div>هنوز چیزی برای مرور نداری.</div><p>هایلایت کردن رو شروع کن؛ نکات مهم هر مطلب رو هایلایت کن، بعد با زمان‌بندی لایتنر همین‌جا می‌بینیش.</p><a class="btn" href="#">رفتن به مطالب</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="cap is-new"><i></i>پیشنهاد</div>
+    <div class="ph new">
+      <div class="hd"><b>دنت‌کست پریمیوم</b><a href="#">بازگشت به پیشخوان</a></div>
+      <div class="body">
+        <div class="title">دندانپزشکی بیومیمتیک و ترمیم ادهزیو</div>
+        <p class="desc">از اصول ادهزیو تا لایه‌گذاری و سمان‌کردن — ترتیبی که پیش‌نیازها اول می‌آیند.</p>
+        <div class="hero"><span class="g">🧭</span><div class="k">پیشرفت</div><div class="t">قدم ۳ از ۱۲</div><div class="bar"><i style="width:25%"></i></div><div class="row"><span>در حال خواندن</span></div></div>
+        <div class="sec">
+          <div class="h2 g">قدم‌ها</div>
+          <div class="inset">
+            <div class="step"><span class="n done">✓</span><div>مقدمه‌ای بر ادهزیو<small>Insight</small></div></div>
+            <div class="step"><span class="n done">✓</span><div>اچینگ سلکتیو<small>Insight</small></div></div>
+            <div class="step"><span class="n done">✓</span><div>نوت‌کست ۳ — باندینگ<small>NoteCast</small></div></div>
+            <div class="step"><span class="n next">۴</span><div>لایه‌گذاری<small>Insight · 🏁</small></div></div>
+          </div>
+        </div>
+        <div class="sec">
+          <div class="empty"><div class="ic">🗂</div><b>هنوز چیزی برای مرور نداری.</b><p>هایلایت کردن رو شروع کن؛ نکات مهم هر مطلب رو هایلایت کن، بعد با زمان‌بندی لایتنر همین‌جا می‌بینیش.</p><a class="btn" href="#">رفتن به مطالب</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="legend">
+  <h2>چه چیزی عوض می‌شود — و چه چیزی نه</h2>
+  <ol>
+    <li><b>سربرگ:</b> فشرده‌تر، برند با یک نقطه‌ی برند، لینک بازگشت به شکل چیپ با فلش. متن همان است.</li>
+    <li><b>کارت‌ها:</b> گوشه‌ی ۲۰px، خط‌مرز خیلی کم‌رنگ به‌جای حاشیه‌ی پررنگ، سایه‌ی نرمِ لایه‌ای (همان دستور تب پریمیوم).</li>
+    <li><b>عنوان بخش‌ها:</b> یک تیرک رنگی کوچک کنار عنوان (آبی پیش‌فرض؛ سبز/بنفش/فیروزه‌ای/قرمزِ قلب طبق پالت خودِ سایت — کهربایی هرگز، چون فقط یعنی «چیزی که اشتراک می‌خرد»). توضیح زیر عنوان یک درجه کوچک‌تر و کم‌رنگ‌تر.</li>
+    <li><b>عددها:</b> عدد بزرگ و تیره (رنگ --pr)، واحد کوچک زیرش — همان «تایل امروز» تب پریمیوم. رکورد در یک تایل کوچک.</li>
+    <li><b>لیست‌ها:</b> «اینست» — یک سطح روشن‌تر با خط‌مو بین ردیف‌ها، آیکون داخل دیسک رنگی، شمارنده به شکل پیل، فلشِ ادامه در انتهای هر ردیف.</li>
+    <li><b>دکمه‌ها و فیلدها:</b> دکمه‌ی اصلی پیل‌شکل با گرادیان آبی و سایه‌ی نرم؛ دکمه‌ی خنثی خط‌مو؛ فیلد ورودی داخل یک ظرف روشن با دکمه‌ی ذخیره در همان ظرف.</li>
+    <li><b>یک قهرمان، فقط یک‌جا:</b> کارت پیشرفتِ صفحه‌ی مسیر همان گرادیان و قطب‌نمای تب پریمیوم را می‌پوشد. جای دیگری قهرمان نداریم.</li>
+    <li><b>حالت خالی:</b> یک دیسک رنگی، جمله‌ی اصلی پررنگ، توضیح کم‌رنگ — همان متن امروز.</li>
+    <li><b>تم تاریک:</b> همه‌چیز از توکن‌های خودِ سایت رنگ می‌گیرد؛ شبکه‌ی محو پس‌زمینه که تازه اضافه شد زیر کارت‌ها می‌ماند.</li>
+    <li><b>عوض نمی‌شود:</b> هیچ متنی، هیچ دکمه‌ای، هیچ ترتیبی، هیچ رفتاری. اجرا کاملاً در CSS (plus-pages.css + plus.css) است؛ کهربایی همچنان فقط برای «چیزی که اشتراک می‌خرد».</li>
+  </ol>
+</section>
+
+<script>
+  document.querySelectorAll('.tg').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.documentElement.setAttribute('data-theme', b.dataset.t);
+      document.querySelectorAll('.tg').forEach(function (x) { x.classList.toggle('is-on', x === b); });
+    });
+  });
+  try { if (location.hash === '#dark') document.querySelector('[data-t="dark"]').click(); } catch (e) {}
+</script>
+</body>
+</html>
