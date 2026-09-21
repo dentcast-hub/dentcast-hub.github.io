@@ -1419,7 +1419,12 @@ a.dcp-cl-board {
 .dcp-modal-sub { margin: 0 0 16px; opacity: .8; line-height: 1.8; font-size: .92rem; }
 .dcp-modal-step { display: flex; flex-direction: column; gap: 10px; }
 .dcp-label { font-size: .9rem; font-weight: 600; }
-.dcp-input { font: inherit; padding: 10px 12px; border: 1px solid var(--dcp-line); border-radius: 10px; }
+.dcp-input { font: inherit; padding: 10px 12px; border: 1px solid var(--dcp-line); border-radius: 10px;
+  /* Painted from the tokens, never left to the UA: a bare <input> is white
+     with black text in every theme, which is exactly the white box the dark
+     collections page and the certificate code field showed (1405/06/31). */
+  background: var(--dcp-surface); color: var(--txt, inherit); }
+.dcp-input::placeholder { color: var(--txt3, #62779a); }
 .dcp-input-code { letter-spacing: .4em; text-align: center; font-size: 1.3rem; }
 .dcp-modal-msg { min-height: 1.2em; font-size: .88rem; color: var(--dcp-accent); }
 .dcp-modal-devhint { font-size: .82rem; opacity: .7; }
