@@ -1,18 +1,18 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=132';
-import { api } from './api.js?v=132';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=132';
-import { leagueEntryButton } from './league.js?v=132';
-import { openCollectionPicker, boardCover } from './collections.js?v=132';
-import { bundleRailCard, intentRow } from './pathways.js?v=132';
-import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=132';
-import { currentMonthKey } from './jalali-month.js?v=132';
-import { renewalBanner } from './renewal-banner.js?v=132';
-import { premiumCta } from './premium-cta.js?v=132';
-import { maybeCelebrate } from './achievements.js?v=132';
-import { markReturnTrail } from './return-trail.js?v=132';
+import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=133';
+import { api } from './api.js?v=133';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=133';
+import { leagueEntryButton } from './league.js?v=133';
+import { openCollectionPicker, boardCover } from './collections.js?v=133';
+import { bundleRailCard, intentRow } from './pathways.js?v=133';
+import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=133';
+import { currentMonthKey } from './jalali-month.js?v=133';
+import { renewalBanner } from './renewal-banner.js?v=133';
+import { premiumCta } from './premium-cta.js?v=133';
+import { maybeCelebrate } from './achievements.js?v=133';
+import { markReturnTrail } from './return-trail.js?v=133';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',

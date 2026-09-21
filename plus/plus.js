@@ -2,29 +2,29 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=132';
-import { currentUser, api } from './js/api.js?v=132';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=132';
-import { openCollectionPicker } from './js/collections.js?v=132';
-import { el, faNum } from './js/util.js?v=132';
-import { initHomeCard } from './js/home-card.js?v=132';
-import { initHomeFeatures } from './js/home-features.js?v=132';
-import { initPremiumPanel } from './js/premium-panel.js?v=132';
-import { initHomeBundles } from './js/home-bundles.js?v=132';
-import { initHomeUpboard } from './js/home-upboard.js?v=132';
-import { initDesTool } from './js/des-scorer.js?v=132';
-import { initHeader } from './js/header.js?v=132';
-import { initTourAutostart } from './js/tour.js?v=132';
-import { initReadingTracker } from './js/reading.js?v=132';
-import { initListeningTracker } from './js/listening.js?v=132';
-import { initShareScoring, buildShareButton } from './js/share.js?v=132';
-import { initHeart, buildHeartChip } from './js/votes.js?v=132';
-import { mountClipControl, landOnClip } from './js/clips.js?v=132';
-import { mountArticleThreads } from './js/article-threads.js?v=132';
-import { mountChallenge } from './js/challenge.js?v=132';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=132';
-import { mountDes } from './js/des.js?v=132';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=132';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=133';
+import { currentUser, api } from './js/api.js?v=133';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=133';
+import { openCollectionPicker } from './js/collections.js?v=133';
+import { el, faNum } from './js/util.js?v=133';
+import { initHomeCard } from './js/home-card.js?v=133';
+import { initHomeFeatures } from './js/home-features.js?v=133';
+import { initPremiumPanel } from './js/premium-panel.js?v=133';
+import { initHomeBundles } from './js/home-bundles.js?v=133';
+import { initHomeUpboard } from './js/home-upboard.js?v=133';
+import { initDesTool } from './js/des-scorer.js?v=133';
+import { initHeader } from './js/header.js?v=133';
+import { initTourAutostart } from './js/tour.js?v=133';
+import { initReadingTracker } from './js/reading.js?v=133';
+import { initListeningTracker } from './js/listening.js?v=133';
+import { initShareScoring, buildShareButton } from './js/share.js?v=133';
+import { initHeart, buildHeartChip } from './js/votes.js?v=133';
+import { mountClipControl, landOnClip } from './js/clips.js?v=133';
+import { mountArticleThreads } from './js/article-threads.js?v=133';
+import { mountChallenge } from './js/challenge.js?v=133';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=133';
+import { mountDes } from './js/des.js?v=133';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=133';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -34,7 +34,7 @@ import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=132';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=132').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=133').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -716,7 +716,7 @@ function folderForPath(folders) {
 }
 
 function openSeenGate() {
-  Promise.all([import('./js/sheet.js?v=132'), import('./js/premium-cta.js?v=132')])
+  Promise.all([import('./js/sheet.js?v=133'), import('./js/premium-cta.js?v=133')])
     .then(([sheet, cta]) => sheet.openSheet(sheet.gateCard({
       title: 'کدام‌ها را خوانده‌ای',
       sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '
@@ -850,14 +850,16 @@ async function initSeenTicks() {
 
   const completed = new Set(data.completed || []);
   const viewed = new Set(data.viewed || data.seen || []);
+  const tickFor = (cid) => el('span', {
+    class: 'dcp-seen-tick' + (completed.has(cid) ? ' is-read' : viewed.has(cid) ? ' is-seen' : ''),
+    'aria-hidden': 'true',
+    title: completed.has(cid) ? 'تا آخر خوانده‌اید' : viewed.has(cid) ? 'بازش کرده‌اید' : 'هنوز ندیده‌اید',
+  }, '✓');
   for (const { a, cid } of links) {
     if (a.querySelector('.dcp-seen-tick')) continue; // already decorated
-    const state = completed.has(cid) ? ' is-read' : viewed.has(cid) ? ' is-seen' : '';
-    a.insertBefore(el('span', {
-      class: 'dcp-seen-tick' + state, 'aria-hidden': 'true',
-      title: completed.has(cid) ? 'تا آخر خوانده‌اید' : viewed.has(cid) ? 'بازش کرده‌اید' : 'هنوز ندیده‌اید',
-    }, '✓'), a.firstChild);
+    a.insertBefore(tickFor(cid), a.firstChild);
   }
+  paintDesktopList(tickFor);
 
   const folder = folderForPath(data.folders);
   if (isFolderRoot(folder) && !document.querySelector('.dcp-seen-filter')) {
@@ -865,6 +867,32 @@ async function initSeenTicks() {
     const btn = list && seenUnreadFilter(list, links, folder);
     if (btn) list.parentElement.insertBefore(btn, list);
   }
+}
+
+// The desktop shell's column B (index.html `#dcd-b-list`) is the section list a
+// desktop reader actually browses — NoteCast, Insight, … as `.dcd-item` rows
+// with a `data-url`, rebuilt by the shell on every sidebar click. They are not
+// links, so the scan above never saw them, and a subscriber met the ticks on
+// the phone's section pages and in the iframe but not on the list in front of
+// them (2026-09-21). Painted from the same /seen answer, and re-painted on
+// every rebuild through a MutationObserver rather than a hook in the shell —
+// the shell renders content and knows nothing about accounts. The locked
+// column stays off here for the reason the branch above gives: its bar has
+// nowhere to go, so a free reader gets what an anonymous one gets.
+function paintDesktopList(tickFor) {
+  const colB = document.getElementById('dcd-b-list');
+  if (!colB || typeof MutationObserver !== 'function') return;
+  const paint = () => {
+    colB.querySelectorAll('.dcd-item[data-url]').forEach((row) => {
+      if (row.querySelector('.dcp-seen-tick')) return;
+      const cid = (row.dataset.url || '').replace(/^\/+/, '').replace(/\.html$/i, '');
+      if (!isSeenContent(cid)) return;
+      const title = row.querySelector('.dcd-item-title') || row;
+      title.insertBefore(tickFor(cid), title.firstChild);
+    });
+  };
+  paint();
+  new MutationObserver(paint).observe(colB, { childList: true });
 }
 
 // The per-folder flashcard section on landing pages was removed for the free

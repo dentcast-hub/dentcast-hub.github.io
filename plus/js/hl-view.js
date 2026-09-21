@@ -6,9 +6,9 @@
 // things depending on where you found it.
 //
 // Everything here is presentational + one inline editor. No page owns a copy.
-import { el, renderNoteLines } from './util.js?v=132';
-import { api } from './api.js?v=132';
-import { LABELS, PALETTE } from './config.js?v=132';
+import { el, renderNoteLines } from './util.js?v=133';
+import { api } from './api.js?v=133';
+import { LABELS, PALETTE } from './config.js?v=133';
 
 export const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
 
