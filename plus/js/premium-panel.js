@@ -8,6 +8,20 @@
 // the buy link is gone: their header link is the dashboard, because selling a
 // subscription to its owner is worse than saying nothing.
 //
+// THE SUBSCRIBER'S STATE IS A HOME, NOT A CATALOG (approved mockup
+// .dentcast/premium-tab-live-mockup.html, founder 1405/06/31). The locked
+// page's grammar — seventeen equal amber cards with one repeated chip — is right
+// for a shop window and wrong for its owner: amber means «what a subscription
+// buys» and this reader has bought it, and seventeen cards of equal weight give
+// the eye nowhere to stop. So a subscriber gets the app-home pattern instead:
+// ONE primary «ادامه بده» card (the active pathway; failing that today's cards;
+// failing that the دفترچه), three today numbers that are each a door, four
+// quick actions, and the rest as inset grouped lists — one surface per group,
+// hairlines between rows, tinted from the site's own palette (brand blue,
+// certificate green, DES violet, teal). Amber survives in exactly one place,
+// the «اشتراک فعال» pill. No «باز کردن» chip anywhere: a row with a state says
+// it (blue when something waits), a row without one carries only a chevron.
+//
 // WHAT THE TAB IS NOT. It is not the dashboard: پیشخوان is the reader's OWN
 // material (recent highlights, streak, league, notices); this is the list of
 // tools with their state. And it is not a page: it is a `.dc-panel` inside
@@ -26,12 +40,12 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum } from './util.js?v=120';
-import { currentUser, meStatus, api } from './api.js?v=120';
-import { pricingHref } from './premium-cta.js?v=120';
-import { openLoginModal } from './login-modal.js?v=120';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=120';
-import { PREMIUM_GROUPS } from './premium-catalog.js?v=120';
+import { el, faNum, streakIsActiveToday } from './util.js?v=122';
+import { currentUser, meStatus, api } from './api.js?v=122';
+import { pricingHref } from './premium-cta.js?v=122';
+import { openLoginModal } from './login-modal.js?v=122';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=122';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=122';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -139,20 +153,139 @@ export function stateOf(me) {
   return 'locked';
 }
 
+/* ----------------------------------------------------- the live state -- */
+
+const TINT = { reading: 'blue', path: 'green', tools: 'violet', together: 'teal' };
+const byKey = (key) => PREMIUM_ENTRIES.find((e) => e.key === key);
+
+/** «اشتراک فعال · تا ۲۴ آبان» — the one amber mark on a subscriber's page. */
+function statusLine(me) {
+  const sub = me && me.subscription;
+  let until = '';
+  if (sub && sub.expires_at) {
+    try { until = 'تا ' + JALALI_DAY.format(new Date(sub.expires_at)); } catch (_) { until = ''; }
+  }
+  return el('div', { class: 'dcp-pp-status' }, [
+    el('span', { class: 'dcp-pp-pill' }, 'اشتراک فعال'),
+    until ? el('span', {}, until) : null,
+  ].filter(Boolean));
+}
+
 /**
- * The subscriber's three numbers above the catalog — a bridge to the dashboard,
- * never a copy of it: today's cards and the streak come free with /me, the
- * highlight total is painted when its request answers (see fillLazily).
+ * The ONE primary card: what is half-done. The active pathway when there is
+ * one in progress; failing that, today's due cards; failing that, the
+ * دفترچه. A finished pathway is not «continue» — it falls through.
  */
-function mine(me) {
-  const tile = (key, value, label) => el('div', { 'data-dcp-mine': key }, [
+function hero(me) {
+  const p = me.active_pathway;
+  const due = me.due_card_count || 0;
+  let href; let kicker; let title; let meta; let cta; let pct = -1; let glyph;
+  if (p && !p.is_complete && p.id) {
+    href = '/plus/pathway.html?id=' + encodeURIComponent(p.id);
+    kicker = 'ادامه بده'; title = p.title_fa || 'مسیر یادگیری';
+    meta = 'قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps);
+    cta = 'ادامهٔ مسیر ›';
+    pct = p.total_steps ? Math.max(3, Math.min(100, Math.round((p.current_step / p.total_steps) * 100))) : 0;
+    glyph = byKey('pathways').ico;
+  } else if (due > 0) {
+    href = '/plus/cards.html'; kicker = 'برای امروز';
+    title = faNum(due) + ' کارت برای مرور';
+    meta = 'مرور فاصله‌دار هایلایت‌ها، پیش از فراموشی';
+    cta = 'شروع مرور ›'; glyph = byKey('cards').ico;
+  } else {
+    href = '/plus/highlights.html'; kicker = 'ادامه بده';
+    title = 'دفترچه‌ی هایلایت‌ها';
+    meta = 'آخرین هایلایت‌هایت را مرور کن';
+    cta = 'باز کردن ›'; glyph = byKey('highlights').ico;
+  }
+  const g = el('span', { class: 'dcp-pp-hero-glyph', 'aria-hidden': 'true' });
+  g.innerHTML = '<svg viewBox="0 0 24 24">' + glyph + '</svg>'; // static, trusted markup
+  return el('a', { class: 'dcp-pp-hero', href, 'data-dcp-hero': pct >= 0 ? 'pathway' : (due > 0 ? 'cards' : 'highlights') }, [
+    g,
+    el('div', { class: 'dcp-pp-hero-k' }, kicker),
+    el('div', { class: 'dcp-pp-hero-t' }, title),
+    el('div', { class: 'dcp-pp-hero-m' }, meta),
+    pct >= 0 ? el('div', { class: 'dcp-pp-hero-bar', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(pct) }, [
+      el('i', { style: 'width:' + pct + '%' }),
+    ]) : null,
+    el('div', { class: 'dcp-pp-hero-row' }, [
+      el('span', { class: 'dcp-pp-hero-m' }, pct >= 0 ? 'از همان‌جایی که بودی' : ''),
+      el('span', { class: 'dcp-pp-hero-cta' }, cta),
+    ]),
+  ].filter(Boolean));
+}
+
+/**
+ * The three today numbers, each a door: today's cards and the streak come
+ * free with /me, the highlight total is painted when its request answers
+ * (see fillLazily). `data-dcp-mine` keeps the painter's vocabulary.
+ */
+function today(me) {
+  const tile = (key, href, value, label, go, quiet) => el('a', { class: 'dcp-pp-today-tile', href, 'data-dcp-mine': key }, [
     el('b', { class: 'num' }, value),
     el('span', {}, label),
+    el('span', { class: 'dcp-pp-go' + (quiet ? ' is-quiet' : '') }, go),
   ]);
-  return el('div', { class: 'dcp-pp-mine' }, [
-    tile('cards', faNum(me.due_card_count || 0), 'کارت برای امروز'),
-    tile('highlights', '–', 'هایلایت'),
-    tile('streak', faNum(me.current_streak || 0), 'روز استریک'),
+  const kept = streakIsActiveToday(me.last_active_day);
+  return el('div', { class: 'dcp-pp-today' }, [
+    tile('cards', '/plus/cards.html', faNum(me.due_card_count || 0), 'کارت امروز', 'مرور ›'),
+    tile('streak', '/plus/profile.html', [faNum(me.current_streak || 0) + ' ', el('em', {}, 'روز')], '🔥 استریک',
+      kept ? 'حفظ شده' : 'امروز هنوز نه', true),
+    tile('highlights', '/plus/highlights.html', '–', 'هایلایت', 'دفترچه ›'),
+  ]);
+}
+
+/** Four quick actions — the tools a subscriber opens most. */
+function quick() {
+  const tiles = [
+    ['highlights', 'دفترچه', 'blue'], ['pathways', 'مسیرها', 'green'],
+    ['assistant', 'دستیار کیس', 'violet'], ['collections', 'کالکشن‌ها', 'teal'],
+  ];
+  return el('div', { class: 'dcp-pp-quick' }, tiles.map(([key, label, tint]) => {
+    const e = byKey(key);
+    const d = el('span', { class: 'dcp-pp-quick-d is-' + tint, 'aria-hidden': 'true' });
+    d.innerHTML = '<svg viewBox="0 0 24 24">' + e.ico + '</svg>'; // static, trusted markup
+    return el('a', { class: 'dcp-pp-quick-a', href: e.href, 'data-dcp-quick': key }, [d, el('span', {}, label)]);
+  }));
+}
+
+/** One row of an inset grouped list. */
+function liveRow(entry, me) {
+  const tag = entry.href ? 'a' : 'div';
+  const attrs = { class: 'dcp-pp-row' + (entry.href ? '' : ' is-static'), 'data-dcp-key': entry.key };
+  if (entry.href) attrs.href = entry.href;
+  const ico = el('span', { class: 'dcp-pp-ico' + (entry.key === 'upboard' ? ' is-heart' : ''), 'aria-hidden': 'true' });
+  ico.innerHTML = '<svg viewBox="0 0 24 24">' + entry.ico + '</svg>'; // static, trusted markup
+  let text = ''; let cls = '';
+  if (entry.key === 'no-ads') { text = '✓ فعال'; cls = ' is-ok'; }
+  if (entry.key === 'sms') {
+    const nc = me && me.settings && me.settings.notify_channels;
+    text = nc && nc.sms && nc.sms.streak ? 'روشن' : 'خاموش';
+  }
+  const st = el('span', { class: 'dcp-pp-st' + cls }, [
+    el('span', { class: 'dcp-pp-st-text' }, text),
+    entry.href ? el('span', { class: 'dcp-pp-chev', 'aria-hidden': 'true' }, '›') : null,
+  ].filter(Boolean));
+  const node = el(tag, attrs, [
+    ico,
+    el('div', { class: 'dcp-pp-row-main' }, [
+      el('div', { class: 'dcp-pp-row-t' }, entry.title),
+      el('div', { class: 'dcp-pp-row-s' }, entry.sub),
+    ]),
+    st,
+  ]);
+  if (entry.feature) node.dataset.dcpFeature = entry.feature.title;
+  return node;
+}
+
+function liveGroup(g, me) {
+  const rows = g.entries.filter((e) => !e.hideWhenLive);
+  return el('section', { class: 'dcp-pp-group is-live g-' + (TINT[g.key] || 'blue'), 'data-dcp-group': g.key }, [
+    el('div', { class: 'dcp-pp-gh' }, [
+      el('h2', {}, [el('i', { 'aria-hidden': 'true' }), g.title]),
+      el('small', {}, faNum(rows.length) + ' ابزار'),
+    ]),
+    el('div', { class: 'dcp-pp-inset' }, rows.map((e) => liveRow(e, me))),
   ]);
 }
 
@@ -164,17 +297,20 @@ function dashboardLink() {
 function build(me, { hasHead = false } = {}) {
   const state = stateOf(me);
   const anon = !me && state === 'locked';
+  const live = state === 'live';
   const top = el('div', { class: 'dcp-pp-top' }, [
-    el('p', { class: 'dcp-pp-lead' }, lead(state, me)),
+    live ? statusLine(me) : el('p', { class: 'dcp-pp-lead' }, lead(state, me)),
     // Without a page head to sit in (a bare slot), the link keeps its old place.
-    state === 'live' && !hasHead ? dashboardLink() : null,
+    live && !hasHead ? dashboardLink() : null,
   ].filter(Boolean));
   const wrap = el('div', { class: 'dcp-hf dcp-pp', 'data-dcp-state': state }, [
     top,
     state === 'locked' ? offer() : null,
     anon ? guestLine() : null,
-    state === 'live' ? mine(me) : null,
-    ...PREMIUM_GROUPS.map((g) => group(g, state)),
+    live ? hero(me) : null,
+    live ? today(me) : null,
+    live ? quick() : null,
+    ...PREMIUM_GROUPS.map((g) => (live ? liveGroup(g, me) : group(g, state))),
   ].filter(Boolean));
   return wrap;
 }
@@ -197,9 +333,13 @@ function placeDashboardLink(head, state) {
 /* ------------------------------------------------------------ live state -- */
 
 /** Write one card's chip into every rendered copy of the panel. */
-function paint(key, text) {
-  document.querySelectorAll('.dcp-pp [data-dcp-key="' + key + '"] .dcp-hf-state')
-    .forEach((n) => { n.textContent = text; });
+function paint(key, text, { live = false } = {}) {
+  document.querySelectorAll('.dcp-pp [data-dcp-key="' + key + '"] .dcp-pp-st')
+    .forEach((n) => {
+      const t = n.querySelector('.dcp-pp-st-text');
+      if (t) t.textContent = text;
+      n.classList.toggle('is-live', live);
+    });
 }
 
 /** Everything /me already carries — free, painted at render. */
@@ -208,13 +348,11 @@ function fillFromMe(me) {
   if (p) {
     paint('pathways', p.is_complete
       ? 'کامل شد'
-      : 'قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps));
+      : 'قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps), { live: !p.is_complete });
   }
-  if (me.due_card_count > 0) paint('cards', faNum(me.due_card_count) + ' کارت');
+  if (me.due_card_count > 0) paint('cards', faNum(me.due_card_count) + ' کارت', { live: true });
   // The last completed month is a calendar fact from ICU, not a request.
-  paint('report', monthName(shiftMonth(currentMonthKey(), -1)) + ' آماده');
-  paint('no-ads', 'فعال');
-  paint('sms', 'تنظیم');
+  paint('report', monthName(shiftMonth(currentMonthKey(), -1)) + ' آماده', { live: true });
 }
 
 /** The two counts that cost a request each — fired once the panel is seen. */
@@ -222,16 +360,25 @@ function fillLazily() {
   api.recentHighlights(1)
     .then((d) => {
       if (!d || !d.total) return;
-      paint('highlights', faNum(d.total) + ' هایلایت');
+      paint('highlights', faNum(d.total));
       document.querySelectorAll('.dcp-pp [data-dcp-mine="highlights"] b')
         .forEach((n) => { n.textContent = faNum(d.total); });
     })
-    .catch(() => { /* leave «باز کردن» rather than guess */ });
+    .catch(() => { /* leave the chevron alone rather than guess */ });
   api.listCollections()
     .then((d) => {
-      if (d && d.collections && d.collections.length) paint('collections', faNum(d.collections.length) + ' کالکشن');
+      if (d && d.collections && d.collections.length) paint('collections', faNum(d.collections.length));
     })
-    .catch(() => { /* leave «باز کردن» */ });
+    .catch(() => { /* leave the chevron alone */ });
+  // Certificates held — any plan may ask; only a live one counts (the wall's rule).
+  if (typeof api.certificates === 'function') {
+    api.certificates()
+      .then((d) => {
+        const live = (d && d.certificates || []).filter((c) => !c.revoked_at).length;
+        if (live) paint('certificate', faNum(live) + ' گواهی');
+      })
+      .catch(() => { /* leave the chevron alone */ });
+  }
 }
 
 /* ------------------------------------------------------ cross-panel links -- */

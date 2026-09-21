@@ -4598,6 +4598,102 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 .dcp-pp .dc-list-card-title{ font-size:.84rem; font-weight:800; line-height:1.4; }
 .dcp-pp .dc-list-card-sub{ font-size:.7rem; color:var(--txt3); line-height:1.6; }
 .dcp-pp .dcp-hf-state{ font-size:.66rem; padding:.12rem .55rem; line-height:1.7; }
+/* ── the SUBSCRIBER's state of the same tab (approved mockup
+   .dentcast/premium-tab-live-mockup.html, 1405/06/31): a home, not a catalog.
+   Amber is «what a subscription buys» and this reader has bought it, so it
+   survives only in the «اشتراک فعال» pill; the group tints are the site's own
+   other semantic colours (brand blue, certificate green, DES violet, teal).
+   Scoped to [data-dcp-state="live"] so the locked page keeps the rail's
+   amber grammar untouched. */
+.dcp-pp{
+  --pp-blue:#0b5fff;  --pp-blue-bg:rgba(11,95,255,.10);
+  --pp-green:#1f8a4c; --pp-green-bg:rgba(31,138,76,.12);
+  --pp-violet:#5b4bc7; --pp-violet-bg:rgba(91,75,199,.12);
+  --pp-teal:#0e7f8c;  --pp-teal-bg:rgba(14,127,140,.12);
+  --pp-heart:#d6456a; --pp-ok:#1f8a4c;
+}
+[data-theme="dark"] .dcp-pp{
+  --pp-blue:#5b9cf6;  --pp-blue-bg:rgba(91,156,246,.16);
+  --pp-green:#4ec27f; --pp-green-bg:rgba(78,194,127,.14);
+  --pp-violet:#a596f0; --pp-violet-bg:rgba(165,150,240,.16);
+  --pp-teal:#4fc3cf;  --pp-teal-bg:rgba(79,195,207,.14);
+  --pp-heart:#f07b98; --pp-ok:#4ec27f;
+}
+.dcp-pp .dcp-pp-status{ display:flex; align-items:center; gap:.45rem; margin:0 0 .1rem; font-size:.74rem; color:var(--txt3); }
+.dcp-pp .dcp-pp-pill{
+  display:inline-flex; align-items:center; gap:.3rem; font-size:.66rem; font-weight:800; color:var(--x-amber-ink);
+  background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd); border-radius:999px; padding:.05rem .55rem;
+}
+.dcp-pp .dcp-pp-pill::before{ content:''; width:.42rem; height:.42rem; border-radius:50%; background:var(--x-amber); }
+/* the one primary card */
+.dcp-pp .dcp-pp-hero{
+  display:block; position:relative; overflow:hidden; padding:.85rem .95rem .8rem; margin:0 0 .7rem; border-radius:1.2rem;
+  background:linear-gradient(135deg, #022360 0%, #0b3d9e 60%, #0b5fff 100%); color:#fff;
+  box-shadow:0 10px 26px -12px rgba(2,35,96,.55); text-decoration:none; -webkit-tap-highlight-color:transparent;
+}
+.dcp-pp .dcp-pp-hero:active{ transform:scale(.99); }
+.dcp-pp .dcp-pp-hero-glyph{ position:absolute; left:-.4rem; top:-.5rem; width:5.6rem; height:5.6rem; opacity:.12; transform:rotate(-12deg); }
+.dcp-pp .dcp-pp-hero-glyph svg{ width:100%; height:100%; fill:none; stroke:#fff; stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; }
+.dcp-pp .dcp-pp-hero-k{ font-size:.66rem; font-weight:800; opacity:.78; letter-spacing:.02em; }
+.dcp-pp .dcp-pp-hero-t{ font-size:.98rem; font-weight:900; line-height:1.4; margin:.1rem 0 .15rem; color:#fff; }
+.dcp-pp .dcp-pp-hero-m{ font-size:.72rem; opacity:.85; }
+.dcp-pp .dcp-pp-hero-bar{ height:.38rem; border-radius:999px; background:rgba(255,255,255,.22); margin:.55rem 0 .5rem; overflow:hidden; }
+.dcp-pp .dcp-pp-hero-bar i{ display:block; height:100%; background:#fff; border-radius:999px; }
+.dcp-pp .dcp-pp-hero-row{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-top:.35rem; }
+.dcp-pp .dcp-pp-hero-cta{ font-size:.74rem; font-weight:800; background:#fff; color:#022360; border-radius:999px; padding:.22rem .8rem; white-space:nowrap; }
+/* today — three facts, each a door */
+.dcp-pp .dcp-pp-today{ display:grid; grid-template-columns:repeat(3,1fr); gap:.45rem; margin:0 0 .95rem; }
+.dcp-pp .dcp-pp-today-tile{
+  display:flex; flex-direction:column; gap:.05rem; padding:.5rem .6rem; text-decoration:none; color:inherit;
+  background:var(--x-card); border:1px solid var(--card-border); border-radius:.95rem; box-shadow:var(--card-sh);
+  -webkit-tap-highlight-color:transparent;
+}
+.dcp-pp .dcp-pp-today-tile:active{ transform:scale(.985); }
+.dcp-pp .dcp-pp-today-tile b{ font-size:1.02rem; font-weight:900; color:var(--pr); line-height:1.3; font-variant-numeric:tabular-nums; }
+.dcp-pp .dcp-pp-today-tile b em{ font-style:normal; font-size:.66rem; font-weight:700; color:var(--txt3); }
+.dcp-pp .dcp-pp-today-tile > span{ font-size:.64rem; color:var(--txt3); white-space:nowrap; }
+.dcp-pp .dcp-pp-go{ display:block; color:var(--ac); font-weight:800; font-size:.64rem; margin-top:.05rem; }
+.dcp-pp .dcp-pp-go.is-quiet{ color:var(--txt3); font-weight:600; }
+/* quick actions */
+.dcp-pp .dcp-pp-quick{ display:grid; grid-template-columns:repeat(4,1fr); gap:.5rem; margin:0 0 1rem; }
+.dcp-pp .dcp-pp-quick-a{ display:flex; flex-direction:column; align-items:center; gap:.3rem; text-decoration:none; color:inherit; -webkit-tap-highlight-color:transparent; }
+.dcp-pp .dcp-pp-quick-a:active .dcp-pp-quick-d{ transform:scale(.95); }
+.dcp-pp .dcp-pp-quick-d{ width:3.1rem; height:3.1rem; border-radius:1rem; display:grid; place-items:center; }
+.dcp-pp .dcp-pp-quick-d svg{ width:1.35rem; height:1.35rem; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.dcp-pp .dcp-pp-quick-d.is-blue{ color:var(--pp-blue); background:var(--pp-blue-bg); }
+.dcp-pp .dcp-pp-quick-d.is-green{ color:var(--pp-green); background:var(--pp-green-bg); }
+.dcp-pp .dcp-pp-quick-d.is-violet{ color:var(--pp-violet); background:var(--pp-violet-bg); }
+.dcp-pp .dcp-pp-quick-d.is-teal{ color:var(--pp-teal); background:var(--pp-teal-bg); }
+.dcp-pp .dcp-pp-quick-a > span:last-child{ font-size:.66rem; font-weight:700; color:var(--txt2); text-align:center; line-height:1.3; }
+/* inset grouped lists — one surface per group */
+.dcp-pp .dcp-pp-group.is-live{ margin:0 0 .95rem; }
+.dcp-pp .dcp-pp-gh{ display:flex; align-items:baseline; justify-content:space-between; margin:0 .3rem .35rem; }
+.dcp-pp .dcp-pp-gh h2{ margin:0; padding:0; border:0; font-size:.8rem; font-weight:900; display:flex; align-items:center; gap:.4rem; color:var(--txt); }
+.dcp-pp .dcp-pp-gh h2 i{ width:.5rem; height:.5rem; border-radius:50%; display:inline-block; }
+.dcp-pp .dcp-pp-gh small{ font-size:.66rem; color:var(--txt3); font-weight:500; }
+.dcp-pp .dcp-pp-inset{ background:var(--x-card); border:1px solid var(--card-border); border-radius:1.05rem; box-shadow:var(--card-sh); overflow:hidden; }
+.dcp-pp .dcp-pp-row{
+  display:flex; align-items:center; gap:.6rem; padding:.55rem .7rem; text-decoration:none; color:inherit;
+  border-bottom:1px solid var(--card-border); -webkit-tap-highlight-color:transparent;
+}
+.dcp-pp .dcp-pp-row:last-child{ border-bottom:0; }
+.dcp-pp a.dcp-pp-row:active{ background:var(--pp-blue-bg); }
+.dcp-pp .dcp-pp-row.is-static{ cursor:default; }
+.dcp-pp .dcp-pp-ico{ flex:none; width:1.9rem; height:1.9rem; border-radius:.6rem; display:grid; place-items:center; }
+.dcp-pp .dcp-pp-ico svg{ width:1rem; height:1rem; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.dcp-pp .dcp-pp-ico.is-heart{ color:var(--pp-heart) !important; }
+.dcp-pp .dcp-pp-row-main{ flex:1; min-width:0; }
+.dcp-pp .dcp-pp-row-t{ font-size:.82rem; font-weight:800; line-height:1.35; color:var(--txt); }
+.dcp-pp .dcp-pp-row-s{ font-size:.68rem; color:var(--txt3); line-height:1.5; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.dcp-pp .dcp-pp-st{ flex:none; font-size:.68rem; color:var(--txt3); display:flex; align-items:center; gap:.2rem; white-space:nowrap; }
+.dcp-pp .dcp-pp-st.is-live{ color:var(--ac); font-weight:800; }
+.dcp-pp .dcp-pp-st.is-ok{ color:var(--pp-ok); font-weight:800; }
+.dcp-pp .dcp-pp-st-text:empty{ display:none; }
+.dcp-pp .dcp-pp-chev{ color:var(--txt3); opacity:.55; font-size:.8rem; }
+.dcp-pp .g-blue .dcp-pp-ico{ color:var(--pp-blue); background:var(--pp-blue-bg); }     .dcp-pp .g-blue .dcp-pp-gh i{ background:var(--pp-blue); }
+.dcp-pp .g-green .dcp-pp-ico{ color:var(--pp-green); background:var(--pp-green-bg); }  .dcp-pp .g-green .dcp-pp-gh i{ background:var(--pp-green); }
+.dcp-pp .g-violet .dcp-pp-ico{ color:var(--pp-violet); background:var(--pp-violet-bg); } .dcp-pp .g-violet .dcp-pp-gh i{ background:var(--pp-violet); }
+.dcp-pp .g-teal .dcp-pp-ico{ color:var(--pp-teal); background:var(--pp-teal-bg); }     .dcp-pp .g-teal .dcp-pp-gh i{ background:var(--pp-teal); }
 /* the desktop copy: same measure and padding the archive surface uses */
 #dcd-premium .dcp-pp{ margin-top:.2rem; }
 
@@ -6895,7 +6991,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=211" defer></script>
+<script src="/dc-nav.js?v=213" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

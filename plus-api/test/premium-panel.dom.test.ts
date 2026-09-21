@@ -160,69 +160,121 @@ describe('a subscriber', () => {
     meImpl = () => Promise.resolve({
       tier: 'premium',
       due_card_count: 4,
-      active_pathway: { current_step: 3, total_steps: 12, is_complete: false },
+      active_pathway: { id: 'fixed-pros', title_fa: 'پروتز ثابت', current_step: 3, total_steps: 12, is_complete: false },
     });
     meStatusImpl = () => 'user';
   });
+  const rows = (root: Element = mobile()) => Array.from(root.querySelectorAll('.dcp-pp-row'));
+  const st = (key: string, root: Element = mobile()) =>
+    root.querySelector(`[data-dcp-key="${key}"] .dcp-pp-st-text`)?.textContent ?? null;
+  const stLive = (key: string) => !!mobile().querySelector(`[data-dcp-key="${key}"] .dcp-pp-st.is-live`);
 
-  it('gets the same cards live, no buy link, and the dashboard as the header link', async () => {
+  it('gets a HOME, not the catalog: no buy link, no amber card, no «باز کردن», the dashboard as the header link', async () => {
     await mount();
     expect(mobile().querySelector('.dcp-pp')!.getAttribute('data-dcp-state')).toBe('live');
     expect(pricingLinks()).toHaveLength(0);
     expect(mobile().querySelector('a[href="/plus/"]')!.textContent).toBe('پیشخوان ›');
     expect(mobile().querySelector('.dcp-pp-signin')).toBeNull();
-    for (const c of cards()) expect(c.querySelector('.dcp-hf-state')!.classList.contains('is-live')).toBe(true);
+    expect(cards()).toHaveLength(0);                       // the amber card grammar is the locked page's
+    expect(mobile().querySelectorAll('.dcp-hf-state')).toHaveLength(0);
+    expect(mobile().textContent).not.toContain('باز کردن');
+    // every catalog entry but the hidden one is a row, in one surface per group
+    expect(rows()).toHaveLength(19);
+    expect(mobile().querySelectorAll('.dcp-pp-group.is-live .dcp-pp-inset')).toHaveLength(4);
+    const tints = Array.from(mobile().querySelectorAll('.dcp-pp-group.is-live')).map((g) => g.className);
+    expect(tints[0]).toContain('g-blue'); expect(tints[1]).toContain('g-green');
+    expect(tints[2]).toContain('g-violet'); expect(tints[3]).toContain('g-teal');
+    // the one amber mark
+    expect(mobile().querySelector('.dcp-pp-pill')!.textContent).toBe('اشتراک فعال');
+    // a row that leads somewhere carries a chevron; the static one does not
+    expect(mobile().querySelector('[data-dcp-key="cards"] .dcp-pp-chev')).not.toBeNull();
+    expect(mobile().querySelector('[data-dcp-key="no-ads"]')!.tagName).toBe('DIV');
+    expect(mobile().querySelector('[data-dcp-key="no-ads"] .dcp-pp-chev')).toBeNull();
+    expect(st('no-ads')).toBe('✓ فعال');
   });
 
-  it('paints what /me carries at once and the counted ones after they answer', async () => {
+  it('leads with the active pathway as the one primary card, with its progress', async () => {
     await mount();
-    expect(chip('pathways')).toBe('قدم ۳ از ۱۲');
-    expect(chip('cards')).toBe('۴ کارت');
-    expect(chip('report')).toMatch(/ آماده$/);
-    expect(chip('no-ads')).toBe('فعال');
-    expect(chip('highlights')).toBe('۱۳۲ هایلایت');
-    expect(chip('collections')).toBe('۳ کالکشن');
-    expect(chip('compass')).toBe('باز کردن'); // no honest number for it
-    // the desktop copy is painted too
-    expect(chip('highlights', document.getElementById('dcdPremiumPanel')!)).toBe('۱۳۲ هایلایت');
+    const hero = mobile().querySelector('.dcp-pp-hero') as HTMLAnchorElement;
+    expect(hero.getAttribute('href')).toBe('/plus/pathway.html?id=fixed-pros');
+    expect(hero.getAttribute('data-dcp-hero')).toBe('pathway');
+    expect(hero.querySelector('.dcp-pp-hero-t')!.textContent).toBe('پروتز ثابت');
+    expect(hero.querySelector('.dcp-pp-hero-m')!.textContent).toBe('قدم ۳ از ۱۲');
+    expect(hero.querySelector('.dcp-pp-hero-bar')!.getAttribute('aria-valuenow')).toBe('25');
+    expect(hero.querySelector('.dcp-pp-hero-cta')!.textContent).toBe('ادامهٔ مسیر ›');
+    expect(mobile().querySelectorAll('.dcp-pp-hero')).toHaveLength(1);
   });
 
-  it('leaves «باز کردن» rather than guess when a count fails', async () => {
+  it('falls through: a finished pathway → today\'s cards → the دفترچه', async () => {
+    meImpl = () => Promise.resolve({ tier: 'premium', due_card_count: 4, active_pathway: { id: 'p', title_fa: 'x', current_step: 5, total_steps: 5, is_complete: true } });
+    await mount();
+    let hero = mobile().querySelector('.dcp-pp-hero')!;
+    expect(hero.getAttribute('data-dcp-hero')).toBe('cards');
+    expect(hero.getAttribute('href')).toBe('/plus/cards.html');
+    expect(hero.querySelector('.dcp-pp-hero-t')!.textContent).toBe('۴ کارت برای مرور');
+    expect(hero.querySelector('.dcp-pp-hero-bar')).toBeNull();
+    expect(st('pathways')).toBe('کامل شد');
+    expect(stLive('pathways')).toBe(false);
+
+    meImpl = () => Promise.resolve({ tier: 'premium', due_card_count: 0 });
+    await mount();
+    hero = mobile().querySelector('.dcp-pp-hero')!;
+    expect(hero.getAttribute('data-dcp-hero')).toBe('highlights');
+    expect(hero.getAttribute('href')).toBe('/plus/highlights.html');
+  });
+
+  it('paints what /me carries at once and the counted ones after they answer — blue only where something waits', async () => {
+    await mount();
+    expect(st('pathways')).toBe('قدم ۳ از ۱۲');
+    expect(stLive('pathways')).toBe(true);
+    expect(st('cards')).toBe('۴ کارت');
+    expect(stLive('cards')).toBe(true);
+    expect(st('report')).toMatch(/ آماده$/);
+    expect(stLive('report')).toBe(true);
+    expect(st('highlights')).toBe('۱۳۲');
+    expect(stLive('highlights')).toBe(false);
+    expect(st('collections')).toBe('۳');
+    expect(st('compass')).toBe('');                          // no honest number for it: chevron only
+    expect(st('sms')).toBe('خاموش');
+    // the desktop copy is painted too
+    expect(st('highlights', document.getElementById('dcdPremiumPanel')!)).toBe('۱۳۲');
+  });
+
+  it('leaves the chevron alone rather than guess when a count fails', async () => {
     highlightsImpl = () => Promise.reject(new Error('down'));
     collectionsImpl = () => Promise.resolve({ collections: [] });
     await mount();
-    expect(chip('highlights')).toBe('باز کردن');
-    expect(chip('collections')).toBe('باز کردن');
+    expect(st('highlights')).toBe('');
+    expect(st('collections')).toBe('');
+    expect(mobile().querySelector('[data-dcp-mine="highlights"] b')!.textContent).toBe('–');
   });
 
-  it('shows the three numbers above the catalog and puts «پیشخوان ›» beside the page title', async () => {
+  it('shows the three today numbers as doors, four quick actions, and puts «پیشخوان ›» beside the page title', async () => {
     meImpl = () => Promise.resolve({
-      tier: 'premium', due_card_count: 4, current_streak: 17,
+      tier: 'premium', due_card_count: 4, current_streak: 17, last_active_day: '2000-01-01',
       subscription: { expires_at: '2026-11-15T00:00:00Z' },
+      settings: { notify_channels: { sms: { streak: true } } },
     });
     document.body.innerHTML = SKELETON;
-    // a page head, as index.html carries it
     document.getElementById('panel-premium')!.insertAdjacentHTML('afterbegin',
       '<div class="dc-exa-pagehead"><h2 class="dc-exa-pagetitle">پریمیوم</h2></div>');
     const { initPremiumPanel } = await import('/plus/js/premium-panel.js');
     await initPremiumPanel();
     await settle(); await settle();
-    const tiles = Array.from(mobile().querySelectorAll('.dcp-pp-mine b')).map((b) => b.textContent);
-    expect(tiles).toEqual(['۴', '۱۳۲', '۱۷']);
+    const tiles = Array.from(mobile().querySelectorAll('.dcp-pp-today-tile'));
+    expect(tiles.map((t) => t.getAttribute('href'))).toEqual(['/plus/cards.html', '/plus/profile.html', '/plus/highlights.html']);
+    expect(tiles.map((t) => t.querySelector('b')!.textContent)).toEqual(['۴', '۱۷ روز', '۱۳۲']);
+    expect(tiles[1].querySelector('.dcp-pp-go')!.textContent).toBe('امروز هنوز نه');
+    const quick = Array.from(mobile().querySelectorAll('.dcp-pp-quick-a')).map((a) => a.getAttribute('data-dcp-quick'));
+    expect(quick).toEqual(['highlights', 'pathways', 'assistant', 'collections']);
+    expect(st('sms')).toBe('روشن');
     const head = document.querySelector('#panel-premium .dc-exa-pagehead')!;
     expect(head.querySelector('a.dcp-pp-dash')!.getAttribute('href')).toBe('/plus/');
     expect(mobile().querySelector('.dcp-pp-top a')).toBeNull(); // not twice
-    expect(mobile().querySelector('.dcp-pp-lead')!.textContent).toMatch(/^اشتراک شما تا پایان روز .+ فعال است\.$/);
-    // a second render adds no second link
+    expect(mobile().querySelector('.dcp-pp-status')!.textContent).toMatch(/^اشتراک فعالتا .+$/);
     await initPremiumPanel();
     await settle();
     expect(head.querySelectorAll('a.dcp-pp-dash')).toHaveLength(1);
-  });
-
-  it('says «کامل شد» for a finished pathway', async () => {
-    meImpl = () => Promise.resolve({ tier: 'premium', active_pathway: { current_step: 5, total_steps: 5, is_complete: true } });
-    await mount();
-    expect(chip('pathways')).toBe('کامل شد');
   });
 });
 
@@ -261,7 +313,7 @@ describe('destinations', () => {
     meStatusImpl = () => 'user';
     await mount();
     expect(mobile().querySelector('[data-dcp-key="threads"]')).toBeNull();
-    expect(cards().length).toBe(19);
+    expect(mobile().querySelectorAll('.dcp-pp-row').length).toBe(19);
   });
 
   it('switches panels for a card whose target lives on خانه — and OPENS the tool it lands on', async () => {
