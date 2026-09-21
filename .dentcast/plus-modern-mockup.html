@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ماکاپ — دنت‌کست پلاس ۲.۰</title>
+<meta name="robots" content="noindex">
+<!--
+  PROPOSAL, UNAPPROVED (1405/06/30, second draft). Visual-only modernisation of
+  the /plus pages, drawn at the level of the best product UIs of the moment
+  (Linear / Vercel / Arc / Apple Fitness): ambient mesh gradient, glass panels
+  with an inner highlight, bento tiles, ring progress, a timeline for steps,
+  monoline icons in tinted tiles, an identity header on the profile.
+  Every string and every control is what the page prints today. The
+  implementation is plus-pages.css / plus.css plus a handful of class hooks in
+  the renderers (a ring needs its percent as a CSS variable; an icon tile needs
+  one <span>) — no behaviour, no copy, no order changes.
+-->
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f3f5f9; --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --glass:rgba(255,255,255,.72); --glass-bd:rgba(255,255,255,.9); --hair:rgba(2,35,96,.08);
+    --card:#fff; --card-sh:0 1px 2px rgba(2,35,96,.04),0 12px 32px -14px rgba(2,35,96,.16);
+    --inner:inset 0 1px 0 rgba(255,255,255,.85);
+    --ring-track:rgba(2,35,96,.08);
+    --blue:#0b5fff; --blue-bg:rgba(11,95,255,.10);
+    --green:#1f7850; --green-bg:rgba(31,120,80,.11);
+    --violet:#5b4bd6; --violet-bg:rgba(91,75,214,.11);
+    --teal:#0f8a8a; --teal-bg:rgba(15,138,138,.11);
+    --heart:#d63a4a; --heart-bg:rgba(214,58,74,.10);
+    --gold:#c9922b; --gold-bg:rgba(201,146,43,.12);
+    --mesh1:rgba(11,95,255,.18); --mesh2:rgba(91,75,214,.14); --mesh3:rgba(15,138,138,.10);
+    --chip:rgba(2,35,96,.05);
+  }
+  [data-theme="dark"]{
+    --pr:#8db8ff; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0b1119; --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --glass:rgba(23,33,43,.62); --glass-bd:rgba(255,255,255,.10); --hair:rgba(255,255,255,.08);
+    --card:#141d28; --card-sh:0 1px 2px rgba(0,0,0,.4),0 18px 40px -18px rgba(0,0,0,.7);
+    --inner:inset 0 1px 0 rgba(255,255,255,.06);
+    --ring-track:rgba(255,255,255,.10);
+    --blue:#5b9cf6; --blue-bg:rgba(91,156,246,.16);
+    --green:#4cc08a; --green-bg:rgba(76,192,138,.14);
+    --violet:#a79bff; --violet-bg:rgba(167,155,255,.14);
+    --teal:#4fc3c3; --teal-bg:rgba(79,195,195,.14);
+    --heart:#ff6b7a; --heart-bg:rgba(255,107,122,.14);
+    --gold:#e3b849; --gold-bg:rgba(227,184,73,.14);
+    --mesh1:rgba(91,156,246,.22); --mesh2:rgba(167,155,255,.16); --mesh3:rgba(79,195,195,.12);
+    --chip:rgba(255,255,255,.06);
+  }
+  *{box-sizing:border-box} a{text-decoration:none;color:inherit}
+  html,body{margin:0}
+  body{font-family:Vazirmatn,"Segoe UI",Tahoma,sans-serif;background:var(--bg);color:var(--txt);line-height:1.75;padding:26px 18px 70px;-webkit-font-smoothing:antialiased}
+  h1{font-size:1.4rem;margin:0 0 .25rem;letter-spacing:-.01em}
+  .lead{color:var(--txt2);font-size:.92rem;max-width:66rem;margin:0 0 1.1rem}
+  .bar{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin:0 0 1.6rem}
+  .tg{border:1px solid var(--hair);background:var(--card);color:var(--txt);border-radius:999px;padding:.35rem .95rem;font:inherit;font-size:.85rem;cursor:pointer}
+  .tg.is-on{background:var(--ac);color:#fff;border-color:var(--ac)}
+  .row3{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:26px;align-items:start;margin:0 0 2.4rem}
+  .row3 h2{grid-column:1/-1;font-size:1rem;margin:0;color:var(--txt2);font-weight:700}
+  .cap{font-size:.78rem;font-weight:800;color:var(--txt3);margin:0 0 .5rem;display:flex;gap:.4rem;align-items:center}
+  .cap code{font-weight:500;background:var(--chip);border-radius:6px;padding:0 .4rem;font-size:.72rem}
+
+  /* ============================== the phone ============================== */
+  .ph{width:390px;max-width:100%;height:1000px;border-radius:44px;overflow:hidden;position:relative;background:var(--bg);
+      box-shadow:0 0 0 1px var(--hair),0 30px 60px -30px rgba(2,35,96,.35);}
+  [data-theme="dark"] .ph{box-shadow:0 0 0 1px rgba(255,255,255,.08),0 30px 60px -30px rgba(0,0,0,.9)}
+  /* ambient: a mesh at the top that dissolves into the page ground; dark adds the site's grid */
+  .ph::before{content:"";position:absolute;inset:0 0 auto 0;height:420px;pointer-events:none;
+    background:
+      radial-gradient(38rem 16rem at 90% -6%, var(--mesh1), transparent 62%),
+      radial-gradient(26rem 14rem at 10% 4%, var(--mesh2), transparent 60%),
+      radial-gradient(22rem 12rem at 60% 18%, var(--mesh3), transparent 60%);
+    -webkit-mask:linear-gradient(#000 40%, transparent);mask:linear-gradient(#000 40%, transparent)}
+  [data-theme="dark"] .ph::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3Cpattern id='g' width='28' height='28' patternUnits='userSpaceOnUse'%3E%3Cpath d='M28 0H0V28' fill='none' stroke='%235b9cf6' stroke-opacity='.14' stroke-width='1'/%3E%3C/pattern%3E%3ClinearGradient id='f' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff'/%3E%3Cstop offset='1' stop-color='%23000'/%3E%3C/linearGradient%3E%3Cmask id='m'%3E%3Crect width='100%25' height='100%25' fill='url(%23f)'/%3E%3C/mask%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23g)' mask='url(%23m)'/%3E%3C/svg%3E") 0 0/100% 40rem no-repeat}
+  .scr{position:absolute;inset:0;overflow:hidden;z-index:1;padding:0 14px 30px}
+
+  /* floating glass header */
+  .hd{position:sticky;top:0;z-index:5;margin:12px 0 6px;display:flex;align-items:center;justify-content:space-between;gap:.5rem;
+      padding:8px 8px 8px 10px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-bd);
+      backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);box-shadow:var(--card-sh),var(--inner)}
+  .brand{display:flex;align-items:center;gap:.5rem;font-weight:900;font-size:.9rem;letter-spacing:-.01em}
+  .mark{width:1.7rem;height:1.7rem;border-radius:.6rem;background:linear-gradient(140deg,#2b78ff,#022360);display:grid;place-items:center;color:#fff;font-weight:900;font-size:1rem;box-shadow:0 6px 14px -6px rgba(11,95,255,.8),inset 0 1px 0 rgba(255,255,255,.35)}
+  .back{display:inline-flex;align-items:center;gap:.35rem;font-size:.76rem;font-weight:700;color:var(--txt2);padding:.32rem .55rem .32rem .8rem;border-radius:999px;background:var(--chip)}
+  .back svg{width:.9rem;height:.9rem;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+  .hello{font-size:1.7rem;font-weight:900;letter-spacing:-.02em;line-height:1.25;margin:22px 6px 16px}
+  .hello.sm{font-size:1.45rem;margin-top:18px}
+
+  /* panels */
+  .card{background:var(--card);border:1px solid var(--hair);border-radius:24px;padding:16px 16px 15px;margin:0 0 12px;box-shadow:var(--card-sh),var(--inner);position:relative}
+  .card.glass{background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--glass-bd)}
+  .ttl{display:flex;align-items:center;gap:.55rem;margin:0 0 4px}
+  .ttl b{font-size:.92rem;font-weight:900;letter-spacing:-.01em}
+  .ico{flex:none;width:1.8rem;height:1.8rem;border-radius:.65rem;display:grid;place-items:center}
+  .ico svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .ico.blue{color:var(--blue);background:var(--blue-bg)} .ico.green{color:var(--green);background:var(--green-bg)}
+  .ico.violet{color:var(--violet);background:var(--violet-bg)} .ico.teal{color:var(--teal);background:var(--teal-bg)}
+  .ico.heart{color:var(--heart);background:var(--heart-bg)} .ico.gold{color:var(--gold);background:var(--gold-bg)}
+  .hint{color:var(--txt3);font-size:.76rem;line-height:1.7;margin:0 0 12px}
+  .hint.ft{margin:12px 0 0;padding-top:10px;border-top:1px solid var(--hair)}
+
+  /* bento */
+  .bento{display:grid;grid-template-columns:1.55fr 1fr;gap:10px;margin:0 0 12px}
+  .tile{background:var(--card);border:1px solid var(--hair);border-radius:22px;padding:14px 14px 12px;box-shadow:var(--card-sh),var(--inner);position:relative;overflow:hidden}
+  .tile .kick{font-size:.68rem;font-weight:800;color:var(--txt3);letter-spacing:.02em;display:flex;align-items:center;gap:.35rem}
+  .tile .big{font-size:2.35rem;font-weight:900;letter-spacing:-.03em;line-height:1;margin:.35rem 0 .15rem;font-variant-numeric:tabular-nums;
+             background:linear-gradient(180deg,var(--txt) 20%,var(--txt2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tile .sub{font-size:.72rem;color:var(--txt3)}
+  .tile.rec .big{font-size:1.9rem}
+  /* ring */
+  .ring{--p:55;position:absolute;left:12px;top:12px;width:64px;height:64px;border-radius:50%;
+        background:conic-gradient(var(--heart) calc(var(--p)*1%), var(--ring-track) 0);display:grid;place-items:center}
+  .ring::before{content:"";width:50px;height:50px;border-radius:50%;background:var(--card)}
+  .ring span{position:absolute;font-size:1.3rem}
+  .ring.blue{background:conic-gradient(var(--ac) calc(var(--p)*1%), var(--ring-track) 0)}
+  .ring.blue b{position:absolute;font-size:.78rem;font-weight:900;color:var(--pr);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+
+  /* list rows */
+  .rows{margin:2px -4px 0}
+  .rw{display:flex;align-items:center;gap:.7rem;padding:9px 6px;border-bottom:1px solid var(--hair);font-size:.86rem;font-weight:700}
+  .rw:last-child{border-bottom:0}
+  .rw .ico{width:2rem;height:2rem;border-radius:.7rem}
+  .rw .nm{flex:1;min-width:0;display:flex;flex-direction:column;gap:.05rem}
+  .rw .nm small{font-size:.68rem;color:var(--txt3);font-weight:600}
+  .rw .bar{height:4px;border-radius:999px;background:var(--ring-track);width:100%;margin-top:.3rem;overflow:hidden}
+  .rw .bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 45%,transparent))}
+  .cnt{font-size:.78rem;font-weight:900;color:var(--pr);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .cnt.z{color:var(--txt3);font-weight:600}
+  .chev{width:.9rem;height:.9rem;color:var(--txt3);opacity:.6;flex:none}
+  .chev svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;gap:.4rem;background:linear-gradient(180deg,#3b84ff,#0b5fff);color:#fff;border-radius:999px;padding:9px 20px;font-weight:800;font-size:.86rem;
+       box-shadow:0 10px 22px -10px rgba(11,95,255,.85),inset 0 1px 0 rgba(255,255,255,.35)}
+  [data-theme="dark"] .btn{background:linear-gradient(180deg,#7fb0ff,#4a8ef0);color:#061a3a;box-shadow:0 10px 22px -10px rgba(91,156,246,.7),inset 0 1px 0 rgba(255,255,255,.45)}
+  .btn.ghost{background:var(--chip);color:var(--txt);box-shadow:none;border:1px solid var(--hair)}
+  .btn svg{width:.95rem;height:.95rem;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* hero (pathway) */
+  .hero{position:relative;overflow:hidden;border-radius:24px;padding:16px 16px 14px;margin:0 0 12px;color:#fff;
+        background:radial-gradient(30rem 14rem at 100% 0, rgba(255,255,255,.22), transparent 55%),linear-gradient(135deg,#022360 0%,#0b3d9e 55%,#2b78ff 100%);
+        box-shadow:0 22px 40px -22px rgba(2,35,96,.75),inset 0 1px 0 rgba(255,255,255,.25)}
+  .hero .g{position:absolute;left:-1rem;top:-1.2rem;font-size:6.2rem;line-height:1;opacity:.12;transform:rotate(-12deg);filter:saturate(0)}
+  .hero .k{font-size:.66rem;font-weight:800;opacity:.75;letter-spacing:.03em}
+  .hero .t{font-size:1.02rem;font-weight:900;margin:.15rem 0 .1rem;letter-spacing:-.01em}
+  .hero .m{font-size:.72rem;opacity:.85}
+  .hero .hb{height:.42rem;border-radius:999px;background:rgba(255,255,255,.2);margin:.65rem 0 .55rem;overflow:hidden}
+  .hero .hb i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#fff,rgba(255,255,255,.75));box-shadow:0 0 12px rgba(255,255,255,.6)}
+  .hero .hr{display:flex;align-items:center;justify-content:space-between;gap:.5rem;font-size:.72rem;opacity:.92}
+  .hero .pill{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:.12rem .6rem;font-weight:700;backdrop-filter:blur(6px)}
+  .hero .ring{position:static;width:58px;height:58px;background:conic-gradient(#fff calc(var(--p)*1%), rgba(255,255,255,.22) 0)}
+  .hero .ring::before{width:46px;height:46px;background:#0a3a92}
+  .hero .ring b{position:absolute;font-size:.7rem;font-weight:900;color:#fff}
+  .hero .top{display:flex;align-items:center;gap:.8rem}
+
+  /* timeline */
+  .tl{position:relative;margin:4px 0 0;padding:0}
+  .tl::before{content:"";position:absolute;top:14px;bottom:14px;right:15px;width:2px;background:var(--hair);border-radius:2px}
+  .st{position:relative;display:flex;gap:.8rem;align-items:flex-start;padding:8px 0}
+  .st .n{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:.76rem;font-weight:900;position:relative;z-index:1;
+         background:var(--card);border:2px dashed var(--hair);color:var(--txt3)}
+  .st .n svg{width:.9rem;height:.9rem;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+  .st .n.done{background:var(--green);border:2px solid var(--green);color:#fff;box-shadow:0 6px 14px -8px var(--green)}
+  .st .n.now{border:2px solid var(--ac);color:var(--ac);box-shadow:0 0 0 5px rgba(var(--ac-rgb),.14)}
+  .st .tx{flex:1;padding-top:.15rem;font-size:.86rem;font-weight:700;line-height:1.5}
+  .st .tx small{display:block;font-size:.68rem;color:var(--txt3);font-weight:600}
+  .st .tag{font-size:.64rem;font-weight:800;color:var(--ac);background:var(--blue-bg);border-radius:999px;padding:.05rem .5rem;margin-inline-start:.35rem;vertical-align:middle}
+
+  /* profile identity */
+  .id{display:flex;align-items:center;gap:.9rem;margin:20px 4px 16px}
+  .av{width:64px;height:64px;border-radius:50%;padding:3px;background:conic-gradient(from 210deg,#2b78ff,#5b4bd6,#0f8a8a,#2b78ff);box-shadow:0 12px 24px -12px rgba(11,95,255,.7)}
+  .av i{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:var(--card);font-style:normal;font-weight:900;font-size:1.5rem;color:var(--pr);border:3px solid var(--bg)}
+  .id .nm{font-size:1.35rem;font-weight:900;letter-spacing:-.02em;line-height:1.2}
+  .id .chips{display:flex;gap:.35rem;margin-top:.35rem;flex-wrap:wrap}
+  .chip{font-size:.66rem;font-weight:800;border-radius:999px;padding:.12rem .55rem;background:var(--chip);color:var(--txt2)}
+  .chip.gold{color:var(--gold);background:var(--gold-bg)}
+  .stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 12px}
+  .stat3 .tile{padding:10px 12px;border-radius:18px}
+  .stat3 .big{font-size:1.45rem;margin:.15rem 0 0}
+
+  /* floating field */
+  .field{position:relative;display:flex;align-items:center;gap:6px;background:var(--chip);border:1px solid var(--hair);border-radius:16px;padding:5px 6px 5px 5px}
+  .field:focus-within{border-color:var(--ac);box-shadow:0 0 0 4px rgba(var(--ac-rgb),.14)}
+  .field input{flex:1;border:0;background:transparent;color:var(--txt);font:inherit;font-weight:700;padding:6px 8px;outline:0}
+  .field .save{background:linear-gradient(180deg,#3b84ff,#0b5fff);color:#fff;border-radius:11px;padding:6px 14px;font-size:.8rem;font-weight:800;box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+  [data-theme="dark"] .field .save{background:linear-gradient(180deg,#7fb0ff,#4a8ef0);color:#061a3a}
+  .note{color:var(--txt3);font-size:.74rem;margin:9px 4px 0;line-height:1.7}
+
+  /* week heat */
+  .week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:6px 0 2px}
+  .wd{aspect-ratio:1/1.25;border-radius:12px;background:var(--chip);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.1rem;font-size:.68rem;color:var(--txt3);border:1px solid transparent}
+  .wd b{font-size:.78rem;color:var(--txt2);font-variant-numeric:tabular-nums}
+  .wd.on{background:linear-gradient(180deg,rgba(var(--ac-rgb),.22),rgba(var(--ac-rgb),.10));border-color:rgba(var(--ac-rgb),.35);color:var(--ac)}
+  .wd.on b{color:var(--pr)}
+  .wd.on::after{content:"";width:.35rem;height:.35rem;border-radius:50%;background:var(--ac);margin-top:.15rem;box-shadow:0 0 8px var(--ac)}
+  .wd.today{outline:2px solid var(--ac);outline-offset:1px}
+
+  /* badges */
+  .wall{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 6px;margin-top:8px}
+  .bd{display:flex;flex-direction:column;align-items:center;gap:.35rem;font-size:.68rem;font-weight:700;color:var(--txt3);text-align:center}
+  .disc{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-size:1.25rem;position:relative;
+        background:var(--chip);border:1.5px dashed var(--hair);color:var(--txt3)}
+  .disc.on{border:0;padding:3px;background:conic-gradient(from 0deg,#c0c7d4,#f2f5fa,#9aa6b8,#e8edf5,#c0c7d4)}
+  .disc.gold{border:0;padding:3px;background:conic-gradient(from 0deg,#c9922b,#f6d98a,#a86f14,#f1cf7a,#c9922b)}
+  .disc.on::before,.disc.gold::before{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--card)}
+  .disc.on::after,.disc.gold::after{content:"";position:absolute;inset:-6px;border-radius:50%;z-index:-1;filter:blur(10px);opacity:.55}
+  .disc.on::after{background:rgba(160,175,200,.6)} .disc.gold::after{background:rgba(201,146,43,.6)}
+  .disc span{position:relative;z-index:1}
+  .disc.myst span{filter:blur(2px);opacity:.6}
+  .bd.on{color:var(--txt)}
+
+  /* empty state */
+  .empty{text-align:center;padding:16px 6px 6px}
+  .stack{position:relative;width:96px;height:70px;margin:0 auto 14px}
+  .stack i{position:absolute;inset:0;border-radius:14px;background:var(--card);border:1px solid var(--hair);box-shadow:var(--card-sh)}
+  .stack i:nth-child(1){transform:rotate(-8deg) translate(-8px,6px);background:var(--violet-bg)} .stack i:nth-child(2){transform:rotate(5deg) translate(8px,2px);background:var(--teal-bg)}
+  .stack i:nth-child(3){display:grid;place-items:center;font-size:1.5rem}
+  .empty b{display:block;font-size:.98rem;font-weight:900;letter-spacing:-.01em;margin-bottom:4px}
+  .empty p{font-size:.8rem;color:var(--txt3);margin:0 auto 14px;max-width:26ch;line-height:1.7}
+
+  /* legend */
+  .legend{background:var(--card);border:1px solid var(--hair);border-radius:24px;padding:18px 20px;box-shadow:var(--card-sh);max-width:66rem}
+  .legend h2{font-size:1rem;margin:0 0 .4rem}
+  .legend ol{margin:0;padding-inline-start:1.2rem;font-size:.9rem;color:var(--txt2)} .legend li{margin:.3rem 0} .legend b{color:var(--txt)}
+</style>
+</head>
+<body>
+<h1>دنت‌کست پلاس ۲.۰ — ماکاپ برای تأیید</h1>
+<p class="lead">سه صفحه (پیشخوان، پروفایل، صفحه‌ی مسیر) با همان متن‌ها و همان دکمه‌های امروز، در زبان بصریِ سطح بالا: هاله‌ی مِش رنگی که در پس‌زمینه حل می‌شود، پنل‌های شیشه‌ای با هایلایت داخلی، کاشی‌های بِنتو، حلقه‌ی پیشرفت، تایم‌لاین قدم‌ها، آیکون‌های تک‌خطی در کاشی رنگی، و هدر شناور. تم را عوض کنید.</p>
+<div class="bar"><button class="tg is-on" data-t="light" type="button">روشن</button><button class="tg" data-t="dark" type="button">تاریک</button></div>
+
+<section class="row3">
+  <!-- ====================== پیشخوان ====================== -->
+  <div>
+    <div class="cap">پیشخوان <code>/plus/</code></div>
+    <div class="ph"><div class="scr">
+      <div class="hd"><span class="brand"><span class="mark">+</span>دنت‌کست پلاس</span><a class="back" href="#"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>بازگشت به سایت</a></div>
+      <div class="hello">سلام، فواد</div>
+
+      <div class="bento">
+        <div class="tile">
+          <div class="kick"><span class="ico heart" style="width:1.35rem;height:1.35rem;border-radius:.45rem"><svg viewBox="0 0 24 24"><path d="M12 3c1 3 4 4 4 8a4 4 0 0 1-8 0c0-1 .5-2 1-3 0 2 1 3 2 3 0-3-1-5 1-8z"/></svg></span>استریک</div>
+          <div class="big">۱۷</div>
+          <div class="sub">روز پیاپی، امروز فعال بودید</div>
+          <div class="ring" style="--p:55"><span>🔥</span></div>
+        </div>
+        <div class="tile rec"><div class="kick">رکورد شما</div><div class="big">۳۱</div><div class="sub">روز</div></div>
+      </div>
+      <p class="hint" style="margin:-4px 6px 14px">هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.</p>
+
+      <div class="card">
+        <div class="ttl"><span class="ico blue"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><b>پیشرفت هر پوشه</b></div>
+        <p class="hint">در هر پوشه، چند درصد از کل مطالب آن را خوانده‌اید (۰ تا ۱۰۰). هر بار پیشخوان را باز شود به‌روز می‌شود.</p>
+        <div class="rows">
+          <div class="rw"><span class="ico blue"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></span><span class="nm">Podcast<span class="bar"><i style="width:30%"></i></span></span><span class="cnt">۳۰</span><span class="chev"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></span></div>
+          <div class="rw"><span class="ico violet"><svg viewBox="0 0 24 24"><path d="M6 4h9l4 4v12H6z"/><path d="M9 12h6M9 16h6"/></svg></span><span class="nm">NoteCast<span class="bar"><i style="width:22%"></i></span></span><span class="cnt">۹</span><span class="chev"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></span></div>
+          <div class="rw"><span class="ico teal"><svg viewBox="0 0 24 24"><path d="M12 4l8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4M4 16l8 4 8-4"/></svg></span><span class="nm">Clinical Insight<span class="bar"><i style="width:18%"></i></span></span><span class="cnt">۱۲</span><span class="chev"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></span></div>
+          <div class="rw"><span class="ico green"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 4v4M9 14h.01M15 14h.01"/></svg></span><span class="nm">DentAI<span class="bar"><i style="width:0"></i></span></span><span class="cnt z">۰</span><span class="chev"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ttl"><span class="ico violet"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="12" rx="3"/><path d="M7 4h14v12"/></svg></span><b>برای مرور امروز</b></div>
+        <p class="hint">هایلایت‌هایی که امروز نوبت مرورشان است.</p>
+        <a class="btn" href="#">۴ کارت برای مرور<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></a>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ====================== پروفایل ====================== -->
+  <div>
+    <div class="cap">پروفایل <code>/plus/profile.html</code></div>
+    <div class="ph"><div class="scr">
+      <div class="hd"><span class="brand"><span class="mark">+</span>دنت‌کست پلاس</span><a class="back" href="#"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>بازگشت به سایت</a></div>
+      <div class="id"><div class="av"><i>ف</i></div><div><div class="nm">فواد</div></div></div>
+
+      <div class="card">
+        <div class="ttl"><span class="ico blue"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><b>نام مستعار</b></div>
+        <div class="field"><input value="فواد"><span class="save">ذخیره</span></div>
+        <p class="note">نام واقعی لازم نیست. همین اسم مستعار در پروفایل و لیدربورد نمایش داده می‌شود.</p>
+      </div>
+
+      <div class="card">
+        <div class="ttl"><span class="ico teal"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><b>این هفته</b></div>
+        <p class="hint">روزهایی که فعال بوده‌اید.</p>
+        <div class="week"><div class="wd on">ش<b>۲۹</b></div><div class="wd on">ی<b>۳۰</b></div><div class="wd on today">د<b>۳۱</b></div><div class="wd">س<b>۱</b></div><div class="wd">چ<b>۲</b></div><div class="wd">پ<b>۳</b></div><div class="wd">ج<b>۴</b></div></div>
+      </div>
+
+      <div class="card">
+        <div class="ttl"><span class="ico violet"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.3 6.8 19l1-5.8L3.5 9.2l5.9-.9z"/></svg></span><b>افتخارات</b></div>
+        <p class="hint">۲ از ۲۵ نشان</p>
+        <div class="wall">
+          <div class="bd on"><div class="disc on"><span>📖</span></div>خواننده</div>
+          <div class="bd on"><div class="disc gold"><span>🔥</span></div>شعله</div>
+          <div class="bd"><div class="disc"><span>🗂</span></div>گنجینه</div>
+          <div class="bd"><div class="disc myst"><span>؟</span></div>؟</div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ====================== صفحه‌ی مسیر ====================== -->
+  <div>
+    <div class="cap">صفحه‌ی مسیر <code>/plus/pathway.html</code> · حالت خالیِ کارت‌ها</div>
+    <div class="ph"><div class="scr">
+      <div class="hd"><span class="brand"><span class="mark">+</span>دنت‌کست پریمیوم</span><a class="back" href="#"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>بازگشت به پیشخوان</a></div>
+      <div class="hello sm">دندانپزشکی بیومیمتیک و ترمیم ادهزیو</div>
+      <p class="hint" style="margin:-8px 6px 14px">از اصول ادهزیو تا لایه‌گذاری و سمان‌کردن — ترتیبی که پیش‌نیازها اول می‌آیند.</p>
+
+      <div class="hero"><span class="g">🧭</span>
+        <div class="top"><div class="ring" style="--p:25"><b>٪۲۵</b></div><div><div class="k">پیشرفت</div><div class="t">قدم ۳ از ۱۲</div><div class="m">در حال خواندن</div></div></div>
+        <div class="hb"><i style="width:25%"></i></div>
+        
+      </div>
+
+      <div class="card">
+        <div class="ttl"><span class="ico green"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span><b>قدم‌ها</b></div>
+        <div class="tl">
+          <div class="st"><span class="n done"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><div class="tx">مقدمه‌ای بر ادهزیو<small>Insight</small></div></div>
+          <div class="st"><span class="n done"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><div class="tx">اچینگ سلکتیو<small>Insight</small></div></div>
+          <div class="st"><span class="n done"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><div class="tx">نوت‌کست ۳ — باندینگ<small>NoteCast</small></div></div>
+          <div class="st"><span class="n now">۴</span><div class="tx">لایه‌گذاری<small>Insight · 🏁</small></div></div>
+          <div class="st"><span class="n">۵</span><div class="tx">سمان‌کردن ترمیم غیرمستقیم<small>NoteCast</small></div></div>
+        </div>
+      </div>
+
+      <div class="card glass">
+        <div class="empty">
+          <div class="stack"><i></i><i></i><i>🗂</i></div>
+          <b>هنوز چیزی برای مرور نداری.</b>
+          <p>هایلایت کردن رو شروع کن؛ نکات مهم هر مطلب رو هایلایت کن، بعد با زمان‌بندی لایتنر همین‌جا می‌بینیش.</p>
+          <a class="btn" href="#">رفتن به مطالب<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></a>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<section class="legend">
+  <h2>زبان بصری ۲.۰ — چه چیزی عوض می‌شود</h2>
+  <ol>
+    <li><b>هاله‌ی مِش:</b> سه لکه‌ی رنگی نرم (آبی، بنفش، فیروزه‌ای) بالای صفحه که در زمینه حل می‌شوند. در تم تاریک روی همان شبکه‌ی محو. هیچ تصویری، فقط گرادیان.</li>
+    <li><b>هدر شناور شیشه‌ای:</b> قرص شناور با بلور، مارک برند (مربع گرادیانی با «+»)، و چیپ بازگشت با فلش. متن همان.</li>
+    <li><b>پنل‌ها:</b> گوشه‌ی ۲۴px، خط‌موی کم‌رنگ، هایلایت یک‌پیکسلی داخلی بالا (حس جسم)، سایه‌ی بلند و محو. بعضی پنل‌ها شیشه‌ای (بلور) روی هاله.</li>
+    <li><b>کاشی‌های بِنتو:</b> استریک و رکورد دو کاشی با نسبت ۱.۵:۱؛ عدد بزرگ با گرادیان متن، واحد کوچک، حلقه‌ی پیشرفت (conic) با شعله در مرکز.</li>
+    <li><b>ردیف‌ها:</b> آیکون تک‌خطی داخل کاشی رنگی، اسم + یک نوارِ نازک پیشرفت زیر آن، عدد با ارقام هم‌عرض، شورون. خط‌مو بین ردیف‌ها، بدون جعبه‌ی دوم.</li>
+    <li><b>دکمه:</b> پیل با گرادیان عمودی، هایلایت داخلی، سایه‌ی رنگی بلند، فلش جهت. دکمه‌ی خنثی چیپ کم‌رنگ.</li>
+    <li><b>پروفایل:</b> سرِ هویت — آواتار با حرف اول نام مستعار و حلقه‌ی گرادیانی، نام بزرگ (همان نامی که امروز در فیلد است؛ چیزی اضافه نمی‌شود). فیلد شناور با دکمه‌ی ذخیره داخلش و رینگ فوکوس. هفته به شکل هیت‌مپ: سلول‌های روشن با نقطه‌ی نورانی، امروز با حاشیه. نشان‌ها: دیسک با حلقه‌ی فلزی (نقره/طلا) و هاله، مجهول‌ها بلور.</li>
+    <li><b>صفحه‌ی مسیر:</b> قهرمان با گرادیان آبی عمیق و قطب‌نمای بزرگ، حلقه‌ی درصد، نوار نورانی؛ قدم‌ها روی تایم‌لاین با خط عمودی: انجام‌شده سبز با تیک، قدمِ بعدی با رینگ آبی، آینده خط‌چین.</li>
+    <li><b>حالت خالی:</b> سه کارت کج روی هم (CSS، بدون تصویر)، جمله‌ی اصلی، توضیح، دکمه.</li>
+    <li><b>عوض نمی‌شود:</b> هیچ متن، دکمه، ترتیب یا رفتاری. اجرا: CSS به‌علاوه‌ی چند قلاب کلاس در رندررها (درصد حلقه به‌صورت متغیر CSS، یک span برای آیکون). کهربایی فقط برای «چیزی که اشتراک می‌خرد».</li>
+  </ol>
+</section>
+
+<script>
+  document.querySelectorAll('.tg').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.documentElement.setAttribute('data-theme', b.dataset.t);
+      document.querySelectorAll('.tg').forEach(function (x) { x.classList.toggle('is-on', x === b); });
+    });
+  });
+  try { if (location.hash === '#dark') document.querySelector('[data-t="dark"]').click(); } catch (e) {}
+</script>
+</body>
+</html>

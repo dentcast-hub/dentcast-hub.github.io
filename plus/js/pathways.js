@@ -4,12 +4,12 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum, icon } from './util.js?v=124';
-import { api } from './api.js?v=124';
-import { FOLDER_EN } from './content-index.js?v=124';
-import { markReturnTrail } from './return-trail.js?v=124';
-import { openSheet, closeSheet } from './sheet.js?v=124';
-import { certificateTerms } from './certificate-terms.js?v=124';
+import { el, faNum, icon } from './util.js?v=125';
+import { api } from './api.js?v=125';
+import { FOLDER_EN } from './content-index.js?v=125';
+import { markReturnTrail } from './return-trail.js?v=125';
+import { openSheet, closeSheet } from './sheet.js?v=125';
+import { certificateTerms } from './certificate-terms.js?v=125';
 
 /** A "lightning + label" chip — a leading icon from the shared sprite
  * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
@@ -501,7 +501,8 @@ export async function renderPathwayDetail(container, id) {
     isBundle ? prereqCard(data.prereq_bundle) : null,
   ]);
 
-  const progressWrap = el('div', { class: 'dcp-pw-detail-progress' }, [
+  // Plus 2.0 skin: the hero's ring reads the same percent as the meta line.
+  const progressWrap = el('div', { class: 'dcp-pw-detail-progress', style: '--p:' + pct }, [
     progressBar(data.completed_steps, data.total_steps),
     el('div', { class: 'dcp-pw-detail-meta' }, [
       el('span', {}, data.is_complete

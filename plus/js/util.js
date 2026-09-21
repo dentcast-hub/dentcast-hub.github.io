@@ -100,3 +100,41 @@ export function escapeHtml(s) {
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
   ));
 }
+
+// Plus 2.0 skin (approved 1405/06/30): every section heading wears a tinted
+// icon tile, drawn by CSS from the `data-ico` key its section() helper stamps.
+// A PRESENTATION hook and nothing else — the key never changes what a section
+// says or does, and an unknown title falls back to the generic tile.
+const SECTION_ICONS = [
+  ['streak', ['استریک']],
+  ['league', ['لیگ من', 'لیگ']],
+  ['resume', ['آخرین جایی که بودی']],
+  ['folders', ['پیشرفت هر پوشه']],
+  ['score', ['امتیاز شما']],
+  ['highlights', ['هایلایت‌های اخیر', 'دفترچه‌ی هایلایت‌ها']],
+  ['review', ['برای مرور امروز']],
+  ['pathway', ['مسیر یادگیری', 'مسیرها', 'پیشرفت در مسیرهای یادگیری', 'از کجا شروع کنم؟']],
+  ['collections', ['کالکشن‌ها']],
+  ['compass', ['قطب‌نمای مطالعه', 'پوشش هر پیلار', 'پیلارها']],
+  ['assistant', ['دستیار هوشمند']],
+  ['report', ['گزارش ماهانه', 'این ماه خواندید', 'روزهای فعال', 'مقایسه ماه به ماه']],
+  ['clips', ['هایلایت‌های صوتی']],
+  ['certificate', ['گواهی‌نامهٔ تکمیل مسیر', 'گواهی‌نامه‌ها']],
+  ['user', ['نام مستعار']],
+  ['referral', ['کد معرف']],
+  ['plan', ['پلن']],
+  ['discount', ['تخفیف‌های من']],
+  ['week', ['هفته شما']],
+  ['records', ['رکوردها']],
+  ['badges', ['افتخارات', 'نشان‌های این ماه']],
+  ['phone', ['شماره موبایل', 'شماره موبایل (اختیاری)']],
+  ['messenger', ['اتصال به پیام‌رسان‌ها']],
+  ['reminders', ['یادآوری‌ها']],
+  ['unexplored', ['حوزه‌هایی که از دیدتان دور مانده', 'این ماه دست‌نخورده ماند']],
+];
+export function sectionIcon(title) {
+  const t = String(title || '').trim();
+  for (const [key, titles] of SECTION_ICONS) if (titles.includes(t)) return key;
+  if (t.startsWith('ادامه در')) return 'spotlight';
+  return 'default';
+}

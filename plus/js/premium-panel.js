@@ -40,12 +40,12 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=124';
-import { currentUser, meStatus, api } from './api.js?v=124';
-import { pricingHref } from './premium-cta.js?v=124';
-import { openLoginModal } from './login-modal.js?v=124';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=124';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=124';
+import { el, faNum, streakIsActiveToday } from './util.js?v=125';
+import { currentUser, meStatus, api } from './api.js?v=125';
+import { pricingHref } from './premium-cta.js?v=125';
+import { openLoginModal } from './login-modal.js?v=125';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=125';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=125';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.

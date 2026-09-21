@@ -2084,3 +2084,379 @@ html:not([data-theme="dark"]) .dcp-overlay {
 [data-theme="dark"] .dcp-cl-pin-clip { border-inline-start-color: #e6c93a; }
 [data-theme="dark"] .dcp-cl-pin-kind-clip { color: #e6c93a; background: rgba(230, 201, 58, .14); }
 .dcp-cl-pin .dcp-clipcard { margin-top: 8px; }
+
+
+/* =============================================================================
+   PLUS 2.0 SKIN — the /plus pages brought level with the rest of the site
+   (approved mockup: .dentcast/plus-modern-mockup.html, founder 1405/06/30).
+   Appearance ONLY. Every rule below restyles markup that already existed; the
+   renderers gained four presentation hooks and nothing else — a `data-ico` key
+   on each section (util.js sectionIcon), the streak split into two bento tiles
+   (dashboard.js streakBento), two data attributes on the profile heading, and
+   a `--p` percent on the pathway hero. Scoped to body.dcp-page on purpose: the
+   same classes also draw the dashboard/profile OVERLAY on article pages, which
+   keeps the look it had. Tokens are --p2-*; icons are stroke masks in --i-*,
+   coloured with background-color so one file serves both themes.
+   ========================================================================== */
+body.dcp-page {
+  --p2-pr: #022360; --p2-bg: #f3f5f9;
+  --p2-hair: rgba(2,35,96,.08); --p2-card: #fff;
+  --p2-sh: 0 1px 2px rgba(2,35,96,.04), 0 12px 32px -14px rgba(2,35,96,.16);
+  --p2-inner: inset 0 1px 0 rgba(255,255,255,.85);
+  --p2-glass: rgba(255,255,255,.72); --p2-glass-bd: rgba(255,255,255,.9);
+  --p2-track: rgba(2,35,96,.08); --p2-chip: rgba(2,35,96,.05);
+  --p2-blue: #0b5fff; --p2-blue-bg: rgba(11,95,255,.10);
+  --p2-green: #1f7850; --p2-green-bg: rgba(31,120,80,.11);
+  --p2-violet: #5b4bd6; --p2-violet-bg: rgba(91,75,214,.11);
+  --p2-teal: #0f8a8a; --p2-teal-bg: rgba(15,138,138,.11);
+  --p2-heart: #d63a4a; --p2-heart-bg: rgba(214,58,74,.10);
+  --p2-gold: #c9922b; --p2-gold-bg: rgba(201,146,43,.12);
+  --p2-mesh1: rgba(11,95,255,.18); --p2-mesh2: rgba(91,75,214,.14); --p2-mesh3: rgba(15,138,138,.10);
+  --p2-btn: linear-gradient(180deg, #3b84ff, #0b5fff); --p2-btn-ink: #fff;
+  --p2-btn-sh: 0 10px 22px -10px rgba(11,95,255,.85), inset 0 1px 0 rgba(255,255,255,.35);
+  --p2-hero-sh: 0 22px 40px -22px rgba(2,35,96,.75), inset 0 1px 0 rgba(255,255,255,.25);
+  --p2-ring-glow: rgba(11,95,255,.14);
+  --i-default: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 8v4l3 2'/%3E%3C/svg%3E");
+  --i-flame: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3c1 3 4 4 4 8a4 4 0 0 1-8 0c0-1 .5-2 1-3 0 2 1 3 2 3 0-3-1-5 1-8z'/%3E%3C/svg%3E");
+  --i-trophy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 4h8v5a4 4 0 0 1-8 0z'/%3E%3Cpath d='M6 5H4a3 3 0 0 0 3 4'/%3E%3Cpath d='M18 5h2a3 3 0 0 1-3 4'/%3E%3Cpath d='M12 13v4M9 20h6'/%3E%3C/svg%3E");
+  --i-bookmark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 4h12v16l-6-4-6 4z'/%3E%3C/svg%3E");
+  --i-folder: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/%3E%3C/svg%3E");
+  --i-bolt: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 2L4 14h7l-1 8 9-12h-7z'/%3E%3C/svg%3E");
+  --i-marker: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20l4-1 10-10-3-3L5 16z'/%3E%3Cpath d='M14 6l3 3'/%3E%3C/svg%3E");
+  --i-cards: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='6' width='14' height='12' rx='3'/%3E%3Cpath d='M7 4h14v12'/%3E%3C/svg%3E");
+  --i-route: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6h16M4 12h16M4 18h10'/%3E%3C/svg%3E");
+  --i-grid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z'/%3E%3C/svg%3E");
+  --i-compass: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M15 9l-2 5-4 1 2-5z'/%3E%3C/svg%3E");
+  --i-sparkle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5z'/%3E%3C/svg%3E");
+  --i-book: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z'/%3E%3Cpath d='M4 19a2 2 0 0 1 2-2h13'/%3E%3C/svg%3E");
+  --i-chart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20V10M10 20V4M16 20v-8M22 20H2'/%3E%3C/svg%3E");
+  --i-headphones: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 14v-2a8 8 0 0 1 16 0v2'/%3E%3Cpath d='M4 14h3v6H4zM17 14h3v6h-3z'/%3E%3C/svg%3E");
+  --i-award: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='9' r='5'/%3E%3Cpath d='M9 13l-1 8 4-2 4 2-1-8'/%3E%3C/svg%3E");
+  --i-user: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21a8 8 0 0 1 16 0'/%3E%3C/svg%3E");
+  --i-tag: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12l9-9h9v9l-9 9z'/%3E%3Cpath d='M16 8h.01'/%3E%3C/svg%3E");
+  --i-card: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='6' width='18' height='12' rx='2'/%3E%3Cpath d='M3 10h18'/%3E%3C/svg%3E");
+  --i-percent: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 18L18 6M7 7h.01M17 17h.01'/%3E%3C/svg%3E");
+  --i-calendar: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='3'/%3E%3Cpath d='M3 10h18M8 3v4M16 3v4'/%3E%3C/svg%3E");
+  --i-flag: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 21V4h11l-1 3 1 3H5'/%3E%3C/svg%3E");
+  --i-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.3 6.8 19l1-5.8L3.5 9.2l5.9-.9z'/%3E%3C/svg%3E");
+  --i-phone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='7' y='2' width='10' height='20' rx='2'/%3E%3Cpath d='M11 18h2'/%3E%3C/svg%3E");
+  --i-send: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 3L10 14M21 3l-7 18-4-7-7-4z'/%3E%3C/svg%3E");
+  --i-bell: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z'/%3E%3Cpath d='M10 21h4'/%3E%3C/svg%3E");
+  --i-eyeoff: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 3l18 18M10 10a3 3 0 0 0 4 4M6 6C3 8 2 12 2 12s4 7 10 7c2 0 3.5-.5 5-1.3M12 5c6 0 10 7 10 7s-1 2-3 4'/%3E%3C/svg%3E");
+  --i-layers: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4l8 4-8 4-8-4z'/%3E%3Cpath d='M4 12l8 4 8-4M4 16l8 4 8-4'/%3E%3C/svg%3E");
+  --i-doc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 4h9l4 4v12H6z'/%3E%3Cpath d='M9 12h6M9 16h6'/%3E%3C/svg%3E");
+  --i-robot: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='8' width='16' height='12' rx='3'/%3E%3Cpath d='M12 4v4M9 14h.01M15 14h.01'/%3E%3C/svg%3E");
+  --i-tooth: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 3c-3 0-4 3-4 5 0 4 2 5 2 9 0 2 1 4 2 4s1-5 4-5 3 5 4 5 2-2 2-4c0-4 2-5 2-9 0-2-1-5-4-5-2 0-3 1-4 1s-2-1-4-1z'/%3E%3C/svg%3E");
+  --i-chev: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 6l-6 6 6 6'/%3E%3C/svg%3E");
+  --i-chevr: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E");
+  --i-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l4 4 10-10'/%3E%3C/svg%3E");
+  background-color: var(--p2-bg);
+  position: relative; isolation: isolate;
+  -webkit-font-smoothing: antialiased;
+}
+[data-theme="dark"] body.dcp-page {
+  --p2-pr: #8db8ff; --p2-bg: #0b1119;
+  --p2-hair: rgba(255,255,255,.08); --p2-card: #141d28;
+  --p2-sh: 0 1px 2px rgba(0,0,0,.4), 0 18px 40px -18px rgba(0,0,0,.7);
+  --p2-inner: inset 0 1px 0 rgba(255,255,255,.06);
+  --p2-glass: rgba(23,33,43,.62); --p2-glass-bd: rgba(255,255,255,.10);
+  --p2-track: rgba(255,255,255,.10); --p2-chip: rgba(255,255,255,.06);
+  --p2-blue: #5b9cf6; --p2-blue-bg: rgba(91,156,246,.16);
+  --p2-green: #4cc08a; --p2-green-bg: rgba(76,192,138,.14);
+  --p2-violet: #a79bff; --p2-violet-bg: rgba(167,155,255,.14);
+  --p2-teal: #4fc3c3; --p2-teal-bg: rgba(79,195,195,.14);
+  --p2-heart: #ff6b7a; --p2-heart-bg: rgba(255,107,122,.14);
+  --p2-gold: #e3b849; --p2-gold-bg: rgba(227,184,73,.14);
+  --p2-mesh1: rgba(91,156,246,.22); --p2-mesh2: rgba(167,155,255,.16); --p2-mesh3: rgba(79,195,195,.12);
+  --p2-btn: linear-gradient(180deg, #7fb0ff, #4a8ef0); --p2-btn-ink: #061a3a;
+  --p2-btn-sh: 0 10px 22px -10px rgba(91,156,246,.7), inset 0 1px 0 rgba(255,255,255,.45);
+  --p2-ring-glow: rgba(91,156,246,.16);
+}
+/* ambient mesh — three soft blobs that dissolve into the ground; paints under
+   the content (z -1 inside body's own stacking context) and over the dark
+   theme's grid, which dc-theme.css keeps drawing on the body itself. */
+body.dcp-page::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 420px; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(38rem 16rem at 90% -6%, var(--p2-mesh1), transparent 62%),
+    radial-gradient(26rem 14rem at 10% 4%, var(--p2-mesh2), transparent 60%),
+    radial-gradient(22rem 12rem at 60% 18%, var(--p2-mesh3), transparent 60%);
+  -webkit-mask: linear-gradient(#000 40%, transparent); mask: linear-gradient(#000 40%, transparent);
+}
+
+/* ---- floating glass header ------------------------------------------------ */
+body.dcp-page .dcp-page-header {
+  position: sticky; top: 10px; z-index: 20; margin: 12px 14px 6px; gap: .5rem;
+  padding: 8px 8px 8px 10px; border-radius: 999px; border: 1px solid var(--p2-glass-bd); border-bottom-color: var(--p2-glass-bd);
+  background: var(--p2-glass); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  box-shadow: var(--p2-sh), var(--p2-inner);
+}
+body.dcp-page .dcp-page-brand { display: flex; align-items: center; gap: .5rem; font-size: .9rem; font-weight: 900; letter-spacing: -.01em; }
+body.dcp-page .dcp-page-brand::before {
+  content: "+"; width: 1.7rem; height: 1.7rem; border-radius: .6rem; display: grid; place-items: center; flex: none;
+  background: linear-gradient(140deg, #2b78ff, #022360); color: #fff; font-weight: 900; font-size: 1rem; line-height: 1;
+  box-shadow: 0 6px 14px -6px rgba(11,95,255,.8), inset 0 1px 0 rgba(255,255,255,.35);
+}
+body.dcp-page .dcp-page-back {
+  display: inline-flex; align-items: center; gap: .35rem; font-size: .76rem; font-weight: 700;
+  padding: .32rem .55rem .32rem .8rem; border-radius: 999px; background: var(--p2-chip);
+}
+body.dcp-page .dcp-page-back::before {
+  content: ""; width: .9rem; height: .9rem; flex: none; background: currentColor;
+  -webkit-mask: var(--i-chevr) center / contain no-repeat; mask: var(--i-chevr) center / contain no-repeat;
+}
+@media (min-width: 768px) {
+  body.dcp-page .dcp-page-header { max-width: var(--dcp-col, 760px); margin: 14px auto 6px; padding: 8px 8px 8px 10px; }
+  body.dcp-page .dcp-page-brand { font-size: .95rem; }
+}
+
+/* ---- page titles ---------------------------------------------------------- */
+body.dcp-page .dcp-dash-hello { font-size: 1.7rem; font-weight: 900; letter-spacing: -.02em; line-height: 1.25; margin: 22px 6px 16px; }
+body.dcp-page .dcp-pw-heading, body.dcp-page .dcp-price-h2 { font-weight: 900; letter-spacing: -.02em; }
+body.dcp-page .dcp-pw-heading { font-size: 1.45rem; }
+
+/* ---- panels --------------------------------------------------------------- */
+body.dcp-page .dcp-dash-sec {
+  background: var(--p2-card); border: 1px solid var(--p2-hair); border-radius: 24px;
+  padding: 16px 16px 15px; margin-bottom: 12px; box-shadow: var(--p2-sh), var(--p2-inner); position: relative;
+}
+body.dcp-page .dcp-dash-sec.is-spotlight { background: color-mix(in srgb, var(--p2-blue) 6%, var(--p2-card)); border-color: color-mix(in srgb, var(--p2-blue) 22%, transparent); }
+body.dcp-page .dcp-dash-sec.is-unexplored { background: transparent; box-shadow: none; border-style: dashed; border-color: color-mix(in srgb, var(--txt3, #62779a) 45%, transparent); }
+body.dcp-page .dcp-prize-banner { border-radius: 24px; box-shadow: var(--p2-sh), var(--p2-inner); }
+body.dcp-page .dcp-sec-hint { color: var(--txt3, #62779a); font-size: .76rem; line-height: 1.7; margin: 0 0 12px; }
+
+/* section heading: a tinted icon tile before the words. Two pseudos because a
+   masked element cannot also paint its own tinted box — ::before is the tile,
+   ::after the stroke icon laid over it. Keyed by the section's data-ico. */
+body.dcp-page .dcp-dash-h2 {
+  display: flex; align-items: center; gap: .55rem; position: relative;
+  font-size: .92rem; font-weight: 900; letter-spacing: -.01em; margin: 0 0 4px;
+}
+/* defaults live on the SECTION (the keyed rules below override them there);
+   putting them on the heading itself would shadow the inherited key */
+body.dcp-page .dcp-dash-sec { --p2-ico: var(--i-default); --p2-tile: var(--p2-blue); --p2-tile-bg: var(--p2-blue-bg); }
+body.dcp-page .dcp-dash-h2::before { content: ""; flex: none; width: 1.8rem; height: 1.8rem; border-radius: .65rem; background: var(--p2-tile-bg); }
+body.dcp-page .dcp-dash-h2::after {
+  content: ""; position: absolute; inset-inline-start: 0; top: 50%; width: 1.8rem; height: 1.8rem; transform: translateY(-50%);
+  background: var(--p2-tile); -webkit-mask: var(--p2-ico) center / 1rem 1rem no-repeat; mask: var(--p2-ico) center / 1rem 1rem no-repeat;
+}
+body.dcp-page .dcp-dash-h2 > * { position: relative; z-index: 1; }
+body.dcp-page .dcp-dash-sec[data-ico="streak"] { --p2-ico: var(--i-flame); --p2-tile: var(--p2-heart); --p2-tile-bg: var(--p2-heart-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="league"] { --p2-ico: var(--i-trophy); --p2-tile: var(--p2-violet); --p2-tile-bg: var(--p2-violet-bg); } /* never amber: the league is not what a subscription buys */
+body.dcp-page .dcp-dash-sec[data-ico="resume"] { --p2-ico: var(--i-bookmark); --p2-tile: var(--p2-blue); --p2-tile-bg: var(--p2-blue-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] { --p2-ico: var(--i-folder); --p2-tile: var(--p2-blue); --p2-tile-bg: var(--p2-blue-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="score"] { --p2-ico: var(--i-bolt); --p2-tile: var(--p2-violet); --p2-tile-bg: var(--p2-violet-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="highlights"] { --p2-ico: var(--i-marker); --p2-tile: var(--p2-violet); --p2-tile-bg: var(--p2-violet-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="review"] { --p2-ico: var(--i-cards); --p2-tile: var(--p2-violet); --p2-tile-bg: var(--p2-violet-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="pathway"] { --p2-ico: var(--i-route); --p2-tile: var(--p2-green); --p2-tile-bg: var(--p2-green-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="collections"] { --p2-ico: var(--i-grid); --p2-tile: var(--p2-teal); --p2-tile-bg: var(--p2-teal-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="compass"] { --p2-ico: var(--i-compass); --p2-tile: var(--p2-blue); --p2-tile-bg: var(--p2-blue-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="assistant"] { --p2-ico: var(--i-sparkle); --p2-tile: var(--p2-violet); --p2-tile-bg: var(--p2-violet-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="report"] { --p2-ico: var(--i-chart); --p2-tile: var(--p2-teal); --p2-tile-bg: var(--p2-teal-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="clips"] { --p2-ico: var(--i-headphones); --p2-tile: var(--p2-violet); --p2-tile-bg: var(--p2-violet-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="certificate"] { --p2-ico: var(--i-award); --p2-tile: var(--p2-green); --p2-tile-bg: var(--p2-green-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="user"] { --p2-ico: var(--i-user); --p2-tile: var(--p2-blue); --p2-tile-bg: var(--p2-blue-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="referral"] { --p2-ico: var(--i-tag); --p2-tile: var(--p2-teal); --p2-tile-bg: var(--p2-teal-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="plan"] { --p2-ico: var(--i-card); --p2-tile: var(--p2-blue); --p2-tile-bg: var(--p2-blue-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="discount"] { --p2-ico: var(--i-percent); --p2-tile: var(--p2-green); --p2-tile-bg: var(--p2-green-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="week"] { --p2-ico: var(--i-calendar); --p2-tile: var(--p2-teal); --p2-tile-bg: var(--p2-teal-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="records"] { --p2-ico: var(--i-flag); --p2-tile: var(--p2-blue); --p2-tile-bg: var(--p2-blue-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="badges"] { --p2-ico: var(--i-star); --p2-tile: var(--p2-violet); --p2-tile-bg: var(--p2-violet-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="phone"] { --p2-ico: var(--i-phone); --p2-tile: var(--p2-blue); --p2-tile-bg: var(--p2-blue-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="messenger"] { --p2-ico: var(--i-send); --p2-tile: var(--p2-teal); --p2-tile-bg: var(--p2-teal-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="reminders"] { --p2-ico: var(--i-bell); --p2-tile: var(--p2-violet); --p2-tile-bg: var(--p2-violet-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="unexplored"] { --p2-ico: var(--i-eyeoff); --p2-tile: var(--p2-teal); --p2-tile-bg: var(--p2-teal-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="spotlight"] { --p2-ico: var(--i-compass); --p2-tile: var(--p2-blue); --p2-tile-bg: var(--p2-blue-bg); }
+
+/* ---- bento: streak + record -------------------------------------------------- */
+body.dcp-page .dcp-bento { display: grid; grid-template-columns: 1.55fr 1fr; gap: 10px; margin: 0 0 12px; }
+body.dcp-page .dcp-bento .dcp-dash-sec { margin: 0; border-radius: 22px; padding: 14px 14px 12px; overflow: hidden; }
+body.dcp-page .dcp-bento-hint { margin: -4px 6px 14px; }
+body.dcp-page .dcp-tile .dcp-dash-h2 { font-size: .68rem; font-weight: 800; color: var(--txt3, #62779a); letter-spacing: .02em; gap: .35rem; margin: 0; }
+body.dcp-page .dcp-tile .dcp-dash-h2::before { width: 1.35rem; height: 1.35rem; border-radius: .45rem; }
+body.dcp-page .dcp-tile .dcp-dash-h2::after { width: 1.35rem; height: 1.35rem; -webkit-mask-size: .8rem .8rem; mask-size: .8rem .8rem; }
+body.dcp-page .dcp-tile.is-streak { padding-inline-end: 84px; }
+body.dcp-page .dcp-streak-detail { display: block; }
+body.dcp-page .dcp-streak-nums { display: flex; flex-direction: column; }
+body.dcp-page .dcp-streak-num, body.dcp-page .dcp-streak-record b {
+  font-size: 2.35rem; font-weight: 900; letter-spacing: -.03em; line-height: 1; margin: .35rem 0 .15rem; font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, var(--txt, #0a1a33) 20%, var(--txt2, #4a5f85)); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+body.dcp-page .dcp-streak-unit { font-size: .72rem; color: var(--txt3, #62779a); }
+/* the ring: conic share of the record behind the flame; ::after is the ring,
+   ::before the hole, the emoji (the span's own text) sits above both */
+body.dcp-page .dcp-streak-flamebig {
+  position: absolute; left: 12px; top: 12px; width: 64px; height: 64px; border-radius: 50%; isolation: isolate;
+  display: grid; place-items: center; font-size: 1.3rem; line-height: 1; filter: none; opacity: 1; --p2-ring: var(--p2-heart);
+}
+body.dcp-page .dcp-streak-flamebig:not(.is-active) { --p2-ring: var(--txt3, #62779a); }
+body.dcp-page .dcp-streak-flamebig:not(.is-active)::before { filter: none; }
+body.dcp-page .dcp-streak-flamebig::after { content: ""; position: absolute; inset: 0; border-radius: 50%; z-index: -2; background: conic-gradient(var(--p2-ring) calc(var(--p, 0) * 1%), var(--p2-track) 0); }
+body.dcp-page .dcp-streak-flamebig::before { content: ""; position: absolute; inset: 7px; border-radius: 50%; z-index: -1; background: var(--p2-card); }
+body.dcp-page .dcp-tile.is-rec .dcp-streak-record { margin: 0; padding: 0; background: transparent; text-align: start; display: flex; flex-direction: column; }
+body.dcp-page .dcp-tile.is-rec .dcp-streak-record b { order: 2; font-size: 1.9rem; display: block; }
+body.dcp-page .dcp-tile.is-rec .dcp-streak-record span { order: 1; font-size: .68rem; font-weight: 800; color: var(--txt3, #62779a); letter-spacing: .02em; }
+
+/* ---- rows: the per-folder list ---------------------------------------------- */
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-list { gap: 0; margin: 2px -4px 0; }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-row {
+  display: grid; grid-template-columns: 2rem 1fr auto 1rem; grid-template-areas: "ico name val chev" "ico track val chev";
+  align-items: center; column-gap: .7rem; row-gap: .3rem; padding: 9px 6px; border-bottom: 1px solid var(--p2-hair); position: relative;
+  --p2-ico: var(--i-folder); --p2-tile: var(--p2-blue); --p2-tile-bg: var(--p2-blue-bg);
+}
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-row:last-child { border-bottom: 0; }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-row::before { content: ""; grid-area: ico; width: 2rem; height: 2rem; border-radius: .7rem; background: var(--p2-tile-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-name { grid-area: name; font-size: .86rem; font-weight: 700; min-width: 0; text-align: end; color: var(--txt, #0a1a33); }
+/* the name is dir=ltr, so its pseudo would resolve inset-inline-start to the LEFT; the page is RTL, so the tile is physically on the right */
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-name::before {
+  content: ""; position: absolute; right: 6px; top: 50%; width: 2rem; height: 2rem; transform: translateY(-50%);
+  background: var(--p2-tile); -webkit-mask: var(--p2-ico) center / 1.05rem 1.05rem no-repeat; mask: var(--p2-ico) center / 1.05rem 1.05rem no-repeat;
+}
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-track { grid-area: track; height: 4px; margin: 0; background: var(--p2-track); }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-fill { background: linear-gradient(90deg, var(--p2-blue), color-mix(in srgb, var(--p2-blue) 45%, transparent)); min-width: 0; }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-val { grid-area: val; font-size: .78rem; font-weight: 900; color: var(--p2-pr); letter-spacing: -.01em; }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-row::after {
+  content: ""; grid-area: chev; width: .9rem; height: .9rem; opacity: .6; background: var(--txt3, #62779a);
+  -webkit-mask: var(--i-chev) center / contain no-repeat; mask: var(--i-chev) center / contain no-repeat;
+}
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-row:has(.dcp-progress-name[href^="/episodes"]) { --p2-ico: var(--i-default); --p2-tile: var(--p2-blue); --p2-tile-bg: var(--p2-blue-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-row:has(.dcp-progress-name[href^="/notecast"]) { --p2-ico: var(--i-doc); --p2-tile: var(--p2-violet); --p2-tile-bg: var(--p2-violet-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-row:has(.dcp-progress-name[href^="/insight"]) { --p2-ico: var(--i-layers); --p2-tile: var(--p2-teal); --p2-tile-bg: var(--p2-teal-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-row:has(.dcp-progress-name[href^="/dentai"]) { --p2-ico: var(--i-robot); --p2-tile: var(--p2-green); --p2-tile-bg: var(--p2-green-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-row:has(.dcp-progress-name[href^="/chairside"]) { --p2-ico: var(--i-tooth); --p2-tile: var(--p2-heart); --p2-tile-bg: var(--p2-heart-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-row:has(.dcp-progress-name[href^="/metanotes"]) { --p2-ico: var(--i-doc); --p2-tile: var(--p2-blue); --p2-tile-bg: var(--p2-blue-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-row:has(.dcp-progress-name[href^="/sharehub"]) { --p2-ico: var(--i-send); --p2-tile: var(--p2-teal); --p2-tile-bg: var(--p2-teal-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-row:has(.dcp-progress-name[href^="/glossary"]) { --p2-ico: var(--i-book); --p2-tile: var(--p2-violet); --p2-tile-bg: var(--p2-violet-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-row:has(.dcp-progress-name[href^="/promptologist"]) { --p2-ico: var(--i-sparkle); --p2-tile: var(--p2-violet); --p2-tile-bg: var(--p2-violet-bg); }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-row:has(.dcp-progress-name[href^="/litecast"]) { --p2-ico: var(--i-headphones); --p2-tile: var(--p2-green); --p2-tile-bg: var(--p2-green-bg); }
+
+/* ---- buttons, fields ----------------------------------------------------------- */
+body.dcp-page .dcp-btn { border-radius: 999px; font-weight: 800; font-size: .86rem; padding: 9px 20px; border: 1px solid var(--p2-hair); background: var(--p2-chip); }
+body.dcp-page .dcp-btn-primary, body.dcp-page a.dcp-btn-primary, body.dcp-page .dcp-btn.dc-plus-cta {
+  background: var(--p2-btn); color: var(--p2-btn-ink); border-color: transparent; box-shadow: var(--p2-btn-sh);
+}
+body.dcp-page .dcp-btn-ghost { background: var(--p2-chip); color: var(--txt, #0a1a33); box-shadow: none; }
+body.dcp-page .dcp-btn-danger { border-radius: 999px; }
+body.dcp-page .dcp-btn:disabled { opacity: .55; }
+body.dcp-page .dcp-input {
+  border-radius: 14px; background: var(--p2-chip); border: 1px solid var(--p2-hair); padding: 9px 12px; font-weight: 700;
+}
+body.dcp-page .dcp-input:focus { outline: 0; border-color: var(--p2-blue); box-shadow: 0 0 0 4px var(--p2-ring-glow); }
+/* the one-line field with its button inside the same pill (نام مستعار) */
+body.dcp-page .dcp-field-row {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px; background: var(--p2-chip); border: 1px solid var(--p2-hair);
+  border-radius: 16px; padding: 5px 6px 5px 5px; margin: 0;
+}
+body.dcp-page .dcp-field-row:focus-within { border-color: var(--p2-blue); box-shadow: 0 0 0 4px var(--p2-ring-glow); }
+body.dcp-page .dcp-field-row .dcp-input { flex: 1 1 8rem; border: 0; background: transparent; box-shadow: none; padding: 6px 8px; min-width: 0; }
+body.dcp-page .dcp-field-row .dcp-btn { border-radius: 11px; padding: 6px 14px; font-size: .8rem; }
+body.dcp-page .dcp-field-row .dcp-inline-msg { flex: 1 0 100%; font-size: .74rem; color: var(--txt3, #62779a); padding: 0 6px; }
+body.dcp-page .dcp-field-row .dcp-inline-msg:empty { display: none; }
+body.dcp-page .dcp-field-row + .dcp-sec-hint { margin-top: 9px; }
+
+/* ---- profile: identity heading ---------------------------------------------------- */
+body.dcp-page .dcp-dash-hello[data-initial] { display: flex; align-items: center; gap: .9rem; margin: 20px 4px 16px; font-size: 0; line-height: 0; }
+body.dcp-page .dcp-dash-hello[data-initial]::before {
+  content: attr(data-initial); width: 64px; height: 64px; border-radius: 50%; flex: none; display: grid; place-items: center;
+  font-size: 1.5rem; line-height: 1; font-weight: 900; color: var(--p2-pr); border: 3px solid transparent;
+  background: linear-gradient(var(--p2-card), var(--p2-card)) padding-box, conic-gradient(from 210deg, #2b78ff, #5b4bd6, #0f8a8a, #2b78ff) border-box;
+  box-shadow: inset 0 0 0 3px var(--p2-bg), 0 12px 24px -12px rgba(11,95,255,.7);
+}
+body.dcp-page .dcp-dash-hello[data-initial]::after { content: attr(data-name); font-size: 1.35rem; line-height: 1.2; font-weight: 900; letter-spacing: -.02em; color: var(--txt, #0a1a33); }
+
+/* ---- profile: week as a heat strip --------------------------------------------------- */
+body.dcp-page .dcp-week-strip { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; margin: 6px 0 2px; }
+body.dcp-page .dcp-week-cell {
+  min-width: 0; padding: 7px 0 6px; gap: .1rem; justify-content: center; border-radius: 12px;
+  background: var(--p2-chip); border: 1px solid transparent;
+}
+body.dcp-page .dcp-week-day { font-size: .68rem; font-weight: 700; color: var(--txt3, #62779a); }
+body.dcp-page .dcp-week-date { font-size: .78rem; font-weight: 800; color: var(--txt2, #4a5f85); opacity: 1; font-variant-numeric: tabular-nums; }
+body.dcp-page .dcp-week-flame { font-size: .7rem; height: auto; line-height: 1; }
+body.dcp-page .dcp-week-cell:has(.dcp-week-flame:not(:empty)) {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--p2-blue) 22%, transparent), color-mix(in srgb, var(--p2-blue) 10%, transparent));
+  border-color: color-mix(in srgb, var(--p2-blue) 35%, transparent);
+}
+body.dcp-page .dcp-week-cell:has(.dcp-week-flame:not(:empty)) .dcp-week-date { color: var(--p2-pr); }
+body.dcp-page .dcp-week-cell.is-today { outline: 2px solid var(--p2-blue); outline-offset: 1px; }
+body.dcp-page .dcp-records { gap: 8px; }
+body.dcp-page .dcp-records > div { flex: 1 1 0; background: var(--p2-chip); border: 1px solid var(--p2-hair); border-radius: 18px; padding: 10px 12px; }
+body.dcp-page .dcp-records b { font-size: 1.45rem; font-weight: 900; letter-spacing: -.03em; color: var(--p2-pr); font-variant-numeric: tabular-nums; }
+body.dcp-page .dcp-records span { font-size: .68rem; color: var(--txt3, #62779a); }
+
+/* ---- profile: the badge wall --------------------------------------------------------- */
+body.dcp-page .dcp-bg-wall { gap: 8px 6px; }
+body.dcp-page .dcp-bg-disc { border: 1.5px dashed var(--p2-hair); background: var(--p2-chip); isolation: isolate; }
+body.dcp-page .dcp-bg-disc.is-off { opacity: 1; color: var(--txt3, #62779a); }
+body.dcp-page .dcp-bg-disc.is-on { border: 0; padding: 3px; box-shadow: none; }
+body.dcp-page .dcp-bg-disc.is-on::before { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--p2-card); z-index: -1; }
+body.dcp-page .dcp-bg-disc.is-on::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; z-index: -2; filter: blur(10px); opacity: .55; }
+body.dcp-page .dcp-bg-disc.is-on.is-gold { background: conic-gradient(from 0deg, #c9922b, #f6d98a, #a86f14, #f1cf7a, #c9922b); }
+body.dcp-page .dcp-bg-disc.is-on.is-gold::after { background: rgba(201,146,43,.6); }
+body.dcp-page .dcp-bg-disc.is-on.is-silver { background: conic-gradient(from 0deg, #c0c7d4, #f2f5fa, #9aa6b8, #e8edf5, #c0c7d4); }
+body.dcp-page .dcp-bg-disc.is-on.is-silver::after { background: rgba(160,175,200,.6); }
+body.dcp-page .dcp-bg-disc.is-on.is-bronze { background: conic-gradient(from 0deg, #b97a43, #e9b98a, #8a5426, #dca87a, #b97a43); }
+body.dcp-page .dcp-bg-disc.is-on.is-bronze::after { background: rgba(185,122,67,.55); }
+body.dcp-page .dcp-bg-disc.is-on.is-plain { background: conic-gradient(from 0deg, #2b78ff, #9cc2ff, #022360, #7fb0ff, #2b78ff); }
+body.dcp-page .dcp-bg-disc.is-on.is-plain::after { background: rgba(11,95,255,.5); }
+body.dcp-page .dcp-bg-disc.is-mystery { opacity: 1; color: transparent; text-shadow: 0 0 6px var(--txt3, #62779a); }
+body.dcp-page .dcp-bg-name { font-size: .7rem; }
+
+/* ---- the pathway page: hero + timeline ------------------------------------------------ */
+body.dcp-page .dcp-pw-detail-title { font-size: 1.45rem; font-weight: 900; letter-spacing: -.02em; line-height: 1.35; margin: 18px 6px 2px; }
+body.dcp-page .dcp-pw-detail-head .dcp-sec-hint { margin: 0 6px 14px; }
+body.dcp-page .dcp-pw-detail-progress {
+  position: relative; overflow: hidden; border-radius: 24px; padding: 16px 16px 14px 92px; margin: 0 0 12px; gap: 0; color: #fff;
+  background: radial-gradient(30rem 14rem at 100% 0, rgba(255,255,255,.22), transparent 55%), linear-gradient(135deg, #022360 0%, #0b3d9e 55%, #2b78ff 100%);
+  box-shadow: var(--p2-hero-sh);
+}
+body.dcp-page .dcp-pw-detail-progress::before { content: "🧭"; position: absolute; left: -1rem; top: -1.2rem; font-size: 6.2rem; line-height: 1; opacity: .12; transform: rotate(-12deg); filter: saturate(0); pointer-events: none; }
+body.dcp-page .dcp-pw-detail-progress::after {
+  content: ""; position: absolute; left: 18px; top: 50%; width: 58px; height: 58px; margin-top: -29px; border-radius: 50%;
+  background: conic-gradient(#fff calc(var(--p, 0) * 1%), rgba(255,255,255,.22) 0);
+  -webkit-mask: radial-gradient(circle, transparent 22px, #000 23px); mask: radial-gradient(circle, transparent 22px, #000 23px);
+}
+body.dcp-page .dcp-pw-detail-progress .dcp-progress-track { order: 2; flex: 0 0 auto; height: .42rem; background: rgba(255,255,255,.2); margin: .65rem 0 0; }
+body.dcp-page .dcp-pw-detail-progress .dcp-progress-fill { background: linear-gradient(90deg, #fff, rgba(255,255,255,.75)); box-shadow: 0 0 12px rgba(255,255,255,.6); }
+body.dcp-page .dcp-pw-detail-meta { order: 1; flex-direction: column; align-items: flex-start; gap: .2rem; color: #fff; }
+body.dcp-page .dcp-pw-detail-meta > span:first-child { font-size: 1.02rem; font-weight: 900; letter-spacing: -.01em; }
+body.dcp-page .dcp-pw-detail-meta > span:nth-child(2) { font-size: .68rem; font-weight: 700; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28); border-radius: 999px; padding: .08rem .6rem; }
+body.dcp-page .dcp-pw-enroll { margin: 4px 0 14px; }
+body.dcp-page .dcp-pw-enrolled-tag { font-size: .78rem; font-weight: 800; color: var(--p2-green); background: var(--p2-green-bg); border-radius: 999px; padding: .2rem .7rem; }
+body.dcp-page .dcp-pw-steps {
+  position: relative; border: 1px solid var(--p2-hair); border-top: 1px solid var(--p2-hair); border-radius: 24px; padding: 10px 16px;
+  background: var(--p2-card); box-shadow: var(--p2-sh), var(--p2-inner);
+}
+body.dcp-page .dcp-pw-steps::before { content: ""; position: absolute; top: 34px; bottom: 34px; inset-inline-start: 31px; width: 2px; border-radius: 2px; background: var(--p2-hair); }
+body.dcp-page .dcp-pw-step { display: flex; gap: .8rem; align-items: flex-start; padding: 8px 0; border: 0; background: transparent; border-radius: 0; }
+body.dcp-page .dcp-pw-step:hover, body.dcp-page .dcp-pw-step.is-current { background: transparent; }
+body.dcp-page .dcp-pw-step-marker {
+  flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; position: relative; z-index: 1;
+  font-size: .76rem; font-weight: 900; background: var(--p2-card); border: 2px dashed var(--p2-hair); color: var(--txt3, #62779a);
+}
+body.dcp-page .dcp-pw-step.is-done .dcp-pw-step-marker { background: var(--p2-green); border: 2px solid var(--p2-green); color: #fff; box-shadow: 0 6px 14px -8px var(--p2-green); }
+body.dcp-page .dcp-pw-step.is-current .dcp-pw-step-marker { background: var(--p2-card); border: 2px solid var(--p2-blue); color: var(--p2-blue); box-shadow: 0 0 0 5px var(--p2-ring-glow); }
+body.dcp-page .dcp-pw-step-body { padding-top: .15rem; gap: .05rem; }
+body.dcp-page .dcp-pw-step-title { font-size: .86rem; font-weight: 700; line-height: 1.5; color: var(--txt, #0a1a33); }
+body.dcp-page .dcp-pw-step.is-done .dcp-pw-step-title { color: var(--txt, #0a1a33); }
+body.dcp-page .dcp-pw-step-top { order: 2; }
+body.dcp-page .dcp-pw-step-kind { font-size: .68rem; font-weight: 600; color: var(--txt3, #62779a); letter-spacing: 0; }
+body.dcp-page .dcp-pw-step-here { font-size: .64rem; font-weight: 800; color: var(--p2-blue); background: var(--p2-blue-bg); border-radius: 999px; padding: .05rem .5rem; align-self: center; }
+
+/* ---- empty states ---------------------------------------------------------------------- */
+body.dcp-page .dcp-empty, body.dcp-page .dcp-gate:not(.is-named) {
+  text-align: center; padding: 18px 12px 14px; gap: 4px; color: var(--txt2, #4a5f85);
+  background: var(--p2-glass); border: 1px solid var(--p2-glass-bd); border-radius: 24px; box-shadow: var(--p2-sh), var(--p2-inner);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+body.dcp-page .dcp-empty::before, body.dcp-page .dcp-gate:not(.is-named)::before {
+  content: "🗂"; display: grid; place-items: center; width: 96px; height: 70px; margin: 0 auto 14px; border-radius: 14px; font-size: 1.5rem;
+  background: var(--p2-card); border: 1px solid var(--p2-hair);
+  box-shadow: -8px 6px 0 -1px var(--p2-violet-bg), 8px 2px 0 -1px var(--p2-teal-bg), var(--p2-sh);
+}
+/* a bare gate («وارد شوید») keeps the stack but no glyph; an empty state with its own paragraphs wears the folder */
+body.dcp-page .dcp-gate:not(.is-named):not(:has(> p))::before { content: ""; }
+body.dcp-page .dcp-empty > p, body.dcp-page .dcp-gate:not(.is-named) > p { margin: 0 0 4px; font-size: .98rem; font-weight: 900; letter-spacing: -.01em; color: var(--txt, #0a1a33); }
+body.dcp-page .dcp-empty > p.dcp-muted, body.dcp-page .dcp-gate:not(.is-named) > p.dcp-muted { font-size: .8rem; font-weight: 500; color: var(--txt3, #62779a); margin: 0 auto 14px; max-width: 26ch; line-height: 1.7; }
+body.dcp-page .dcp-loading { color: var(--txt3, #62779a); }
+/* =========================================================== end Plus 2.0 skin */

@@ -1,16 +1,16 @@
 // Reusable profile renderer (spec 2.7). Used by the /plus/profile.html page and
 // the header overlay. Site design language; a clear, readable week strip. Nothing
 // here is mandatory: the pseudonym is editable, no real name is ever required.
-import { el, faNum, tehranDay } from './util.js?v=124';
-import { certificatesBody } from './certificates.js?v=124';
-import { api, ApiError, currentUser } from './api.js?v=124';
-import { remindersBlock } from './reminders.js?v=124';
-import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=124';
-import { baleEnabled, baleDeepLink } from './config.js?v=124';
-import { leagueEntryButton } from './league.js?v=124';
-import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=124';
-import { subscriptionCta } from './premium-cta.js?v=124';
-import { copyToClipboard, confirmStrip, toast } from './hl-view.js?v=124';
+import { el, faNum, tehranDay, sectionIcon } from './util.js?v=125';
+import { certificatesBody } from './certificates.js?v=125';
+import { api, ApiError, currentUser } from './api.js?v=125';
+import { remindersBlock } from './reminders.js?v=125';
+import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=125';
+import { baleEnabled, baleDeepLink } from './config.js?v=125';
+import { leagueEntryButton } from './league.js?v=125';
+import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=125';
+import { subscriptionCta } from './premium-cta.js?v=125';
+import { copyToClipboard, confirmStrip, toast } from './hl-view.js?v=125';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
   timeZone: 'Asia/Tehran', year: 'numeric', month: 'long', day: 'numeric',
@@ -35,7 +35,7 @@ function dayOfMonth(dayStr) {
 }
 
 function section(title, body, id) {
-  const attrs = { class: 'dcp-dash-sec' };
+  const attrs = { class: 'dcp-dash-sec', 'data-ico': sectionIcon(title) };
   if (id) attrs.id = id; // anchor target for deep links (e.g. #connect from the homepage chips)
   return el('section', attrs, [el('h2', { class: 'dcp-dash-h2' }, title), body]);
 }
@@ -605,7 +605,10 @@ export async function renderProfile(root, { me: preMe } = {}) {
   });
 
   root.replaceChildren(
-    el('div', { class: 'dcp-dash-hello' }, 'پروفایل'),
+    // Plus 2.0 skin: the heading wears the reader's avatar (first letter of
+    // the display name) and the name itself, both drawn by CSS from these two
+    // attributes; the word «پروفایل» stays the element's text.
+    el('div', { class: 'dcp-dash-hello', 'data-initial': (me.display_name || '').trim().slice(0, 1), 'data-name': me.display_name || '' }, 'پروفایل'),
     section('نام مستعار', pseudonymBlock(me)),
     // Directly under the pseudonym (founder's call, 2026-08-13): the code is
     // built FROM a name the reader chooses, so it reads as the second half of
