@@ -20,10 +20,10 @@
 // tools/build_upboard_index.py on every publish). There is no endpoint, no
 // migration, and no third copy of a page's title that could drift from the other
 // two — the API is asked exactly one question, «is this reader premium».
-import { el, faNum } from './util.js?v=118';
-import { currentUser, meStatus } from './api.js?v=118';
-import { premiumCta, guestPremiumExtras, lapsedNote, unreachableGate } from './premium-cta.js?v=118';
-import { openLoginModal } from './login-modal.js?v=118';
+import { el, faNum } from './util.js?v=120';
+import { currentUser, meStatus } from './api.js?v=120';
+import { premiumCta, guestPremiumExtras, lapsedNote, unreachableGate } from './premium-cta.js?v=120';
+import { openLoginModal } from './login-modal.js?v=120';
 
 /** Which gate sent a buyer, for the pricing page's ?from= report. */
 const FROM = 'gate-desboard';
@@ -412,7 +412,7 @@ export async function initDesBoard(root) {
   }
 
   let built = false;
-  const open = () => {
+  const open = ({ scroll = true } = {}) => {
     if (!built) {
       body.replaceChildren(premium ? buildArrangement(pages) : gateView(pages, user, guest));
       built = true;
@@ -422,7 +422,7 @@ export async function initDesBoard(root) {
       tab.setAttribute('aria-expanded', 'true');
       chev.style.transform = 'rotate(90deg)';
     }
-    body.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (scroll) body.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
   tab.addEventListener('click', open);
 
@@ -430,5 +430,8 @@ export async function initDesBoard(root) {
   // see the thing they pay for is a toll booth, not a disclosure. A free reader
   // keeps the tap, so the gate is something they opened rather than something
   // that was put in front of them.
-  if (premium) open();
+  // Opened IN PLACE, not scrolled to: the reader has just arrived and is at
+  // the top, where the «بازگشت» link and the explanation are; scrolling past
+  // them on load hid the one way back (1405/06/31). The tap still scrolls.
+  if (premium) open({ scroll: false });
 }

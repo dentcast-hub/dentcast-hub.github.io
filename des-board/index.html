@@ -121,6 +121,9 @@ a{color:inherit}
    the arrangement, not on an essay about it — the explanation lives in the box
    on the homepage that this page is reached from. ── */
 .db-hero{margin:.2rem 0 1.1rem}
+.db-back{display:inline-flex;align-items:center;gap:.25rem;font-size:.8rem;font-weight:600;color:var(--txt3);text-decoration:none;margin-bottom:.4rem}
+.db-back::before{content:"\2190 \00A0"}
+.db-back:hover{color:var(--des-chrome)}
 .db-eyebrow{display:block;font-size:.68rem;font-weight:800;letter-spacing:.04em;
   color:var(--des-chrome);text-transform:uppercase}
 .db-hero h1{margin:.15rem 0 .3rem;font-size:2rem;font-weight:900;letter-spacing:-.04em;
@@ -313,6 +316,7 @@ a{color:inherit}
        answering, or on the reader's tier. Only the arrangement below is built by
        JS. This is the text that used to expand under the homepage box. -->
   <header class="db-hero">
+    <a class="db-back" data-dc-back href="/">بازگشت به صفحهٔ اصلی</a>
     <span class="db-eyebrow">DentCast Evidence Score</span>
     <h1>بر اساس قدرت شواهد</h1>
     <p class="db-sub" id="dbSub">&nbsp;</p>
@@ -335,13 +339,13 @@ a{color:inherit}
 
 <script src="/global-search.js?v=10"></script>
 <script src="/global-search-ui.js?v=5"></script>
-<script src="/dc-nav.js?v=210" defer></script>
+<script src="/dc-nav.js?v=211" defer></script>
 <!-- The ?v= is not decoration: the module carries its own stamp onto the two
      catalogs it fetches (ASSET_V in desboard-page.js), so one bump invalidates
      the code and the data together. Managed by tools/asset_version.py, which
      reads stamped paths out of the page text — an inline import counts. -->
 <script type="module">
-  import { initDesBoard } from '/plus/js/desboard-page.js?v=24';
+  import { initDesBoard } from '/plus/js/desboard-page.js?v=25';
   initDesBoard(document.getElementById('dbRoot'));
 </script>
 
