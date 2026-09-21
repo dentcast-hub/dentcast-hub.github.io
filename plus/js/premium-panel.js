@@ -40,14 +40,15 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=127';
-import { currentUser, meStatus, api } from './api.js?v=127';
-import { pricingHref, premiumCta } from './premium-cta.js?v=127';
-import { openSheet, gateCard } from './sheet.js?v=127';
-import { openLoginModal } from './login-modal.js?v=127';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=127';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=127';
-import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=127';
+import { el, faNum, streakIsActiveToday } from './util.js?v=129';
+import { currentUser, meStatus, api } from './api.js?v=129';
+import { pricingHref, premiumCta } from './premium-cta.js?v=129';
+import { openSheet, gateCard } from './sheet.js?v=129';
+import { openLoginModal } from './login-modal.js?v=129';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=129';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=129';
+import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=129';
+import { armDesTool } from './des-scorer.js?v=129';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -366,6 +367,56 @@ function bundlesBand(state) {
   ]);
 }
 
+/* ── ارزیاب DES, at the very end of the tab (founder, 1405/06/31 — «عین همونو
+   می‌خوام توی صفحه پریمیوم ولی آخر آخر») ──
+   The SAME box the home panel carries (index.html's .dc-destool-wrap: the amber
+   tab, the drawer, the flask), built here because this panel is built here.
+   Three things differ from the static copy, each because of where it sits.
+   The toggle is this module's (the static copy's is inline so it works with no
+   module at all; a box that a module drew has no such state to protect). The
+   «پریمیوم» pill is left off for a subscriber — amber on this tab means «what a
+   subscription buys», and the live state keeps it for the «اشتراک فعال» pill
+   alone. And the TOOL inside is not a second instance: des-scorer.js keeps one
+   built subtree and moves it into whichever drawer opens (armDesTool), so a
+   reader who typed half a paper on خانه finds it here, with the same quota. */
+let desToolSeq = 0;
+function desToolBand(state) {
+  desToolSeq += 1;
+  const suffix = desToolSeq > 1 ? '-' + desToolSeq : '';
+  const panelId = 'dcpDesToolPanel' + suffix;
+  const ico = el('span', { class: 'dc-destool-ico', 'aria-hidden': 'true' });
+  ico.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'
+    + '<path d="M9.5 3v5.2L4.8 17.4A2.4 2.4 0 0 0 6.9 21h10.2a2.4 2.4 0 0 0 2.1-3.6L14.5 8.2V3"/>'
+    + '<path d="M8.2 3h7.6"/><path d="M7.4 14.2h9.2"/></svg>'; // static, trusted markup
+  const tab = el('button', {
+    type: 'button', class: 'dc-destool-tab', id: 'dcpDesToolTab' + suffix,
+    'aria-expanded': 'false', 'aria-controls': panelId,
+  }, [
+    ico,
+    el('span', { class: 'dc-destool-body' }, [
+      el('span', { class: 'dc-destool-ttl' }, [el('b', {}, 'مقاله‌ی خودت'), ' را بگذار، امتیاز DES بگیر']),
+      el('span', { class: 'dc-destool-sub' }, 'متن یا چکیده را بفرست تا ببینی چقدر شواهد پشتش هست — با همان DentCast Evidence Score.'),
+    ]),
+    state === 'live' ? null : el('span', { class: 'dc-destool-pill' }, 'پریمیوم'),
+    el('span', { class: 'dc-destool-chev', 'aria-hidden': 'true' }, '›'),
+  ].filter(Boolean));
+  const panel = el('div', { id: panelId });
+  const drawer = el('div', { class: 'dc-destool-drawer' }, [el('div', {}, [panel])]);
+  const wrap = el('section', { class: 'dc-destool-wrap dcp-pp-destool', 'data-dcp-destool': state }, [tab, drawer]);
+  const setOpen = (open) => {
+    drawer.classList.toggle('is-open', open);
+    tab.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+  // The toggle is registered BEFORE armDesTool's listener, so the module reads
+  // the state this click produced — the same order the inline copy relies on.
+  tab.addEventListener('click', () => setOpen(!drawer.classList.contains('is-open')));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer.classList.contains('is-open')) setOpen(false);
+  });
+  armDesTool(wrap);
+  return wrap;
+}
+
 /** The dashboard link, the header's own right-hand slot when the page has one. */
 function dashboardLink() {
   return el('a', { class: 'dcp-hf-more dcp-pp-dash', href: '/plus/' }, 'پیشخوان ›');
@@ -390,6 +441,7 @@ function build(me, { hasHead = false } = {}) {
     live ? quick() : null,
     live ? bundlesBand(state) : null,
     ...PREMIUM_GROUPS.map((g) => (live ? liveGroup(g, me) : group(g, state))),
+    desToolBand(state), // last, in every state
   ].filter(Boolean));
   return wrap;
 }
@@ -512,6 +564,19 @@ function wireCrossPanelLinks(wrap) {
     if (!a || !wrap.contains(a)) return;
     if (!onHomePage()) return;
     const id = a.getAttribute('href').split('#')[1];
+    // The DES scorer's drawer is on THIS tab, at the end — never a panel
+    // switch. Resolved inside the panel rather than by id because both slots
+    // build one (the desktop shell keeps the phone's copy, hidden).
+    if (id === 'dcpDesToolTab') {
+      const t = wrap.querySelector('.dc-destool-tab');
+      if (!t) return;
+      e.preventDefault();
+      t.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (typeof t.focus === 'function') t.focus({ preventScroll: true });
+      // Opened, not merely reached (the same rule the home copy had).
+      if (t.getAttribute('aria-expanded') === 'false') t.click();
+      return;
+    }
     let target = id && document.getElementById(id);
     // The desktop shell carries its own copy of every homepage block under a
     // `dcd` id (dcDesToolTab → dcdDesToolTab) in the welcome column; the

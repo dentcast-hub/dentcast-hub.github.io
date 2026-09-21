@@ -30,6 +30,13 @@ vi.mock('/plus/js/api.js', () => ({
   meStatus: () => meStatusImpl(),
 }));
 
+// The DES scorer's own module is not under test here: what the tab owes it is
+// one armDesTool(wrap) per drawer it draws, and that is what is recorded.
+let desArmed: Element[] = [];
+vi.mock('/plus/js/des-scorer.js', () => ({
+  armDesTool: (wrap: Element) => { desArmed.push(wrap); },
+}));
+
 let loginOpened = 0;
 vi.mock('/plus/js/login-modal.js', () => ({
   openLoginModal: () => { loginOpened += 1; },
@@ -68,6 +75,7 @@ async function mount() {
 }
 
 beforeEach(() => {
+  desArmed = [];
   vi.resetModules();
   loginOpened = 0;
   meImpl = () => Promise.resolve(null);
@@ -412,6 +420,68 @@ describe('«کدام‌ها را خوانده‌ای» — the seen-ticks card',
   });
 });
 
+describe('ارزیاب DES — the home panel\'s box, last on the tab', () => {
+  const band = (root: Element = mobile()) => root.querySelector('.dc-destool-wrap') as HTMLElement | null;
+  const lastOf = (root: Element = mobile()) => root.querySelector('.dcp-pp')!.lastElementChild;
+
+  it('a guest gets the same box as خانه — tab, drawer, flask, «پریمیوم» pill — as the LAST thing on the tab', async () => {
+    await mount();
+    const w = band()!;
+    expect(w).not.toBeNull();
+    expect(lastOf()).toBe(w);
+    expect(w.querySelector('.dc-destool-ttl')!.textContent).toBe('مقاله‌ی خودت را بگذار، امتیاز DES بگیر');
+    expect(w.querySelector('.dc-destool-sub')!.textContent).toContain('DentCast Evidence Score');
+    expect(w.querySelector('.dc-destool-pill')!.textContent).toBe('پریمیوم');
+    expect(w.querySelector('.dc-destool-ico svg')).not.toBeNull();
+    expect(w.querySelector('.dc-destool-drawer > div > div')!.id).toBe(w.querySelector('.dc-destool-tab')!.getAttribute('aria-controls'));
+    expect(pricingLinks()).toHaveLength(1);                    // the drawer at rest adds no buy link
+  });
+
+  it('a free reader gets it too, with the pill', async () => {
+    meImpl = () => Promise.resolve({ tier: 'free' });
+    meStatusImpl = () => 'user';
+    await mount();
+    expect(lastOf()).toBe(band());
+    expect(band()!.querySelector('.dc-destool-pill')).not.toBeNull();
+  });
+
+  it('a subscriber gets it last as well, WITHOUT the amber pill', async () => {
+    meImpl = () => Promise.resolve({ tier: 'premium' });
+    meStatusImpl = () => 'user';
+    await mount();
+    expect(lastOf()).toBe(band());
+    expect(band()!.querySelector('.dc-destool-pill')).toBeNull();
+    expect(band()!.getAttribute('data-dcp-destool')).toBe('live');
+  });
+
+  it('when the API cannot be asked, the box is still there — a tool, not an offer', async () => {
+    meImpl = () => Promise.resolve(null);
+    meStatusImpl = () => 'error';
+    await mount();
+    expect(lastOf()).toBe(band());
+  });
+
+  it('toggles itself (open on tap, Escape closes) and hands every drawer to des-scorer.js exactly once', async () => {
+    await mount();
+    const tab = band()!.querySelector('.dc-destool-tab')!;
+    const drawer = band()!.querySelector('.dc-destool-drawer')!;
+    tab.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(drawer.classList.contains('is-open')).toBe(true);
+    expect(tab.getAttribute('aria-expanded')).toBe('true');
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    expect(drawer.classList.contains('is-open')).toBe(false);
+    expect(tab.getAttribute('aria-expanded')).toBe('false');
+    // one per slot (the phone's and the desktop's), never twice for one
+    const mine = desArmed.filter((w) => document.contains(w));
+    expect(mine).toHaveLength(2);
+    expect(new Set(mine).size).toBe(2);
+    expect(mine.every((w) => w.classList.contains('dc-destool-wrap'))).toBe(true);
+    // the two copies never share an id (aria-controls must resolve to its own panel)
+    const ids = mine.map((w) => w.querySelector('.dc-destool-tab')!.getAttribute('aria-controls'));
+    expect(new Set(ids).size).toBe(2);
+  });
+});
+
 describe('destinations', () => {
   it('sends the چالش card to the landing page, never to one challenge', async () => {
     await mount();
@@ -437,45 +507,45 @@ describe('destinations', () => {
     expect(mobile().querySelectorAll('.dcp-pp-row').length).toBe(20);
   });
 
-  it('switches panels for a card whose target lives on خانه — and OPENS the tool it lands on', async () => {
-    const later = () => new Promise((r) => setTimeout(r, 420)); // past the 350ms switch delay
-    {
-      await mount();
-      let switched = 0;
-      document.querySelector('.dc-bn-item[data-panel="panel-studio"]')!.addEventListener('click', () => { switched += 1; });
-      document.getElementById('panel-studio')!.classList.remove('active');
-      const tab = document.getElementById('dcDesToolTab')!;
-      tab.setAttribute('aria-expanded', 'false');
-      tab.addEventListener('click', () => tab.setAttribute('aria-expanded', String(tab.getAttribute('aria-expanded') !== 'true')));
-      const des = mobile().querySelector('[data-dcp-key="des-scorer"]') as HTMLAnchorElement;
-      expect(des.getAttribute('href')).toBe('/#dcDesToolTab');
-      const ev = new MouseEvent('click', { bubbles: true, cancelable: true });
-      des.dispatchEvent(ev);
-      expect(ev.defaultPrevented).toBe(true);
-      expect(switched).toBe(1);
-      await later();
-      expect(tab.getAttribute('aria-expanded')).toBe('true'); // opened, not merely scrolled to
-      // a tab already open is left open
-      des.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-      await later();
-      expect(tab.getAttribute('aria-expanded')).toBe('true');
-    }
+  it('sends the DES scorer row to the drawer at the END of this tab — opened, never a panel switch', async () => {
+    await mount();
+    let switched = 0;
+    document.querySelector('.dc-bn-item[data-panel="panel-studio"]')!.addEventListener('click', () => { switched += 1; });
+    const des = mobile().querySelector('[data-dcp-key="des-scorer"]') as HTMLAnchorElement;
+    expect(des.getAttribute('href')).toBe('/#dcpDesToolTab');
+    const tab = mobile().querySelector('.dc-destool-tab')!;
+    expect(tab.getAttribute('aria-expanded')).toBe('false');
+    const ev = new MouseEvent('click', { bubbles: true, cancelable: true });
+    des.dispatchEvent(ev);
+    expect(ev.defaultPrevented).toBe(true);
+    expect(switched).toBe(0);                                   // خانه is never left
+    expect(tab.getAttribute('aria-expanded')).toBe('true');     // opened, not merely scrolled to
+    // a drawer already open is left open
+    des.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    expect(tab.getAttribute('aria-expanded')).toBe('true');
+    // the home panel's own copy is untouched
+    expect(document.getElementById('dcDesToolTab')!.getAttribute('aria-expanded')).toBeNull();
   });
 
-  it('on the desktop shell, leaves the premium surface and scrolls to the column-C copy', async () => {
+  it('on the desktop shell, stays on the premium surface — the drawer is in this column', async () => {
     await mount();
     document.body.classList.add('dc-desktop-ui');
-    document.body.insertAdjacentHTML('beforeend',
-      '<div class="dcd-col-c is-viewer"><div class="dcd-col-c-scroll is-premium"><button id="dcdDesToolTab" type="button">DES</button></div></div>'
-      + '<button id="dcd-premium-item" class="active"></button>');
+    const scroll = document.createElement('div');
+    scroll.className = 'dcd-col-c-scroll is-premium';
+    const col = document.createElement('div');
+    col.className = 'dcd-col-c is-viewer';
+    col.appendChild(scroll);
+    scroll.appendChild(document.getElementById('dcdPremiumPanel')!);
+    document.body.appendChild(col);
+    document.body.insertAdjacentHTML('beforeend', '<button id="dcd-premium-item" class="active"></button>');
     const des = document.querySelector('#dcdPremiumPanel [data-dcp-key="des-scorer"]') as HTMLAnchorElement;
     const ev = new MouseEvent('click', { bubbles: true, cancelable: true });
     des.dispatchEvent(ev);
     expect(ev.defaultPrevented).toBe(true);
-    const scroll = document.querySelector('.dcd-col-c-scroll')!;
-    expect(scroll.classList.contains('is-premium')).toBe(false);
-    expect(document.querySelector('.dcd-col-c')!.classList.contains('is-viewer')).toBe(false);
-    expect(document.getElementById('dcd-premium-item')!.classList.contains('active')).toBe(false);
+    expect(scroll.classList.contains('is-premium')).toBe(true);
+    expect(col.classList.contains('is-viewer')).toBe(true);
+    expect(document.getElementById('dcd-premium-item')!.classList.contains('active')).toBe(true);
+    expect(document.querySelector('#dcdPremiumPanel .dc-destool-tab')!.getAttribute('aria-expanded')).toBe('true');
     document.body.classList.remove('dc-desktop-ui');
   });
 

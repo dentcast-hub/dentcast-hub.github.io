@@ -26,7 +26,7 @@
 // GROUPS ARE INFORMATION, not decoration: they answer «what kind of thing is
 // this» for a reader who has never used any of it. Order inside a group is the
 // order a new subscriber meets them, the everyday ones first.
-import { PREMIUM_FEATURES } from './config.js?v=127';
+import { PREMIUM_FEATURES } from './config.js?v=129';
 
 const F = PREMIUM_FEATURES;
 
@@ -122,10 +122,11 @@ export const PREMIUM_GROUPS = [
       entry('assistant', IC.assistant, '/plus/assistant.html', 'شرح کیس را بنویسید و به مرتبط‌ترین مطلب برسید', { feature: F[4] }),
       entry('wayfinder', IC.wayfinder, '/plus/wayfinder.html', 'نقشه‌ی خواندن متناسب با تخصص و هدف شما', { title: 'مسیریاب' }),
       entry('cabinet', IC.cabinet, '/dentcast_cabinet_search.html', 'بیش از ۲۲۰۰ مقاله‌ی علمی، دسته‌بندی‌شده و قابل جستجو', { title: 'کتابخانه‌ی دنت‌کست' }),
-      // The scorer lives on the home panel of this same page. A hash link to
-      // another panel's element is switched to by premium-panel.js (it clicks
-      // the right bottom-nav item first), so this is a real destination.
-      entry('des-scorer', IC.flask, '/#dcDesToolTab', 'چکیده‌ی مقاله‌ی خودتان را با DES ارزیابی کنید', { title: 'امتیاز DES برای مقاله‌ی خودتان' }),
+      // The scorer's drawer sits at the very END of this tab (premium-panel.js
+      // desToolBand — the same box the home panel carries). The href names
+      // that copy; premium-panel.js resolves it inside the panel, scrolls to
+      // it and opens it, so this row is a real destination on the same tab.
+      entry('des-scorer', IC.flask, '/#dcpDesToolTab', 'چکیده‌ی مقاله‌ی خودتان را با DES ارزیابی کنید', { title: 'امتیاز DES برای مقاله‌ی خودتان' }),
     ],
   },
   {
