@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ماکاپ — باندل‌های شروع در تب پریمیوم</title>
+<meta name="robots" content="noindex">
+<!--
+  PROPOSAL, UNAPPROVED (1405/06/31). The premium tab's catalog lists twenty
+  entries in four groups and «از کجا شروع کنم؟» — the starter bundles, a premium
+  feature with its own homepage rail and dashboard block — is in none of them;
+  there is no direct link to the bundles from the tab in either state, and the
+  catalog page's «باندل‌های شروع» band has no anchor a link could land on.
+  Proposal: (1) subscriber — a «از کجا شروع کنم؟» rail between the quick actions
+  and the first group, the homepage's own amber bundle cards with live progress
+  where a bundle has been started, and «همه‌ی باندل‌ها ›»; (2) everyone — a
+  «باندل‌های شروع» row in the «مسیر و گواهی» group (locked card for a guest or
+  free reader, live row with state for a subscriber); (3) the destination:
+  /plus/pathways.html#bundles, an id on the catalog's band.
+-->
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255; --bg:#f3f5f9; --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card:#fff; --hair:rgba(2,35,96,.08); --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --amber:#c9922b; --amber-ink:#8a5f10; --amber-bg:rgba(201,146,43,.10);
+    --blue:#0b5fff; --blue-bg:rgba(11,95,255,.10); --green:#1f7850; --green-bg:rgba(31,120,80,.11);
+    --violet:#5b4bd6; --violet-bg:rgba(91,75,214,.11); --teal:#0f8a8a; --teal-bg:rgba(15,138,138,.11);
+    --chip:rgba(2,35,96,.05); --mesh1:rgba(11,95,255,.18); --mesh2:rgba(91,75,214,.14);
+  }
+  [data-theme="dark"]{
+    --pr:#8db8ff; --ac:#5b9cf6; --ac-rgb:91,156,246; --bg:#0b1119; --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card:#141d28; --hair:rgba(255,255,255,.08); --card-sh:0 1px 3px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
+    --amber:#e3b849; --amber-ink:#f1d27a; --amber-bg:rgba(227,184,73,.14);
+    --blue:#5b9cf6; --blue-bg:rgba(91,156,246,.16); --green:#4cc08a; --green-bg:rgba(76,192,138,.14);
+    --violet:#a79bff; --violet-bg:rgba(167,155,255,.14); --teal:#4fc3c3; --teal-bg:rgba(79,195,195,.14);
+    --chip:rgba(255,255,255,.06); --mesh1:rgba(91,156,246,.22); --mesh2:rgba(167,155,255,.16);
+  }
+  *{box-sizing:border-box} a{text-decoration:none;color:inherit}
+  html,body{margin:0}
+  body{font-family:Vazirmatn,"Segoe UI",Tahoma,sans-serif;background:var(--bg);color:var(--txt);line-height:1.75;padding:26px 18px 70px;-webkit-font-smoothing:antialiased}
+  h1{font-size:1.4rem;margin:0 0 .25rem;letter-spacing:-.01em}
+  .lead{color:var(--txt2);font-size:.92rem;max-width:66rem;margin:0 0 1.1rem}
+  .bar{display:flex;gap:.5rem;align-items:center;margin:0 0 1.6rem}
+  .tg{border:1px solid var(--hair);background:var(--card);color:var(--txt);border-radius:999px;padding:.35rem .95rem;font:inherit;font-size:.85rem;cursor:pointer}
+  .tg.is-on{background:var(--ac);color:#fff;border-color:var(--ac)}
+  .row3{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:26px;align-items:start;margin:0 0 2.4rem}
+  .cap{font-size:.78rem;font-weight:800;color:var(--txt3);margin:0 0 .5rem;display:flex;gap:.4rem;align-items:center}
+  .cap i{display:inline-block;width:.55rem;height:.55rem;border-radius:50%;background:var(--txt3)}
+  .cap.is-new{color:var(--ac)} .cap.is-new i{background:var(--ac)}
+
+  .ph{width:390px;max-width:100%;height:1040px;border-radius:44px;overflow:hidden;position:relative;background:var(--bg);box-shadow:0 0 0 1px var(--hair),0 30px 60px -30px rgba(2,35,96,.35)}
+  [data-theme="dark"] .ph::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3Cpattern id='g' width='28' height='28' patternUnits='userSpaceOnUse'%3E%3Cpath d='M28 0H0V28' fill='none' stroke='%235b9cf6' stroke-opacity='.14' stroke-width='1'/%3E%3C/pattern%3E%3ClinearGradient id='f' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff'/%3E%3Cstop offset='1' stop-color='%23000'/%3E%3C/linearGradient%3E%3Cmask id='m'%3E%3Crect width='100%25' height='100%25' fill='url(%23f)'/%3E%3C/mask%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23g)' mask='url(%23m)'/%3E%3C/svg%3E") 0 0/100% 40rem no-repeat}
+  .scr{position:absolute;inset:0;overflow:hidden;z-index:1;padding:14px 14px 30px}
+
+  /* ---- the tab's own grammar (index.html .dcp-pp), copied ---- */
+  .ph-t{font-size:1.35rem;font-weight:900;letter-spacing:-.01em;margin:4px 2px 2px;display:flex;justify-content:space-between;align-items:baseline}
+  .ph-t a{font-size:.78rem;font-weight:800;color:var(--ac)}
+  .status{display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--txt3);margin:0 2px 12px}
+  .pill{display:inline-flex;align-items:center;gap:.3rem;font-size:.66rem;font-weight:800;color:var(--amber-ink);background:var(--amber-bg);border-radius:999px;padding:.1rem .55rem}
+  .pill::before{content:"";width:.4rem;height:.4rem;border-radius:50%;background:var(--amber)}
+  .hero{display:block;position:relative;overflow:hidden;padding:.85rem .95rem .8rem;margin:0 0 .7rem;border-radius:1.2rem;background:linear-gradient(135deg,#022360 0%,#0b3d9e 60%,#0b5fff 100%);color:#fff;box-shadow:0 10px 26px -12px rgba(2,35,96,.55)}
+  .hero .g{position:absolute;left:-.6rem;top:-.7rem;font-size:5.2rem;line-height:1;opacity:.1;transform:rotate(-12deg)}
+  .hero .k{font-size:.66rem;font-weight:800;opacity:.78} .hero .t{font-size:.98rem;font-weight:900;margin:.1rem 0 .15rem} .hero .m{font-size:.72rem;opacity:.85}
+  .hero .bar2{height:.38rem;border-radius:999px;background:rgba(255,255,255,.22);margin:.55rem 0 .5rem;overflow:hidden} .hero .bar2 i{display:block;height:100%;background:#fff;border-radius:999px}
+  .hero .row{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;opacity:.9} .hero .cta{font-size:.74rem;font-weight:800;background:#fff;color:#022360;border-radius:999px;padding:.22rem .8rem;opacity:1}
+  .today{display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem;margin:0 0 .95rem}
+  .tile{display:flex;flex-direction:column;gap:.05rem;padding:.5rem .6rem;background:var(--card);border:1px solid var(--hair);border-radius:.95rem;box-shadow:var(--card-sh)}
+  .tile b{font-size:1.02rem;font-weight:900;color:var(--pr);line-height:1.3} .tile b em{font-style:normal;font-size:.66rem;font-weight:700;color:var(--txt3)} .tile span{font-size:.64rem;color:var(--txt3)} .tile .go{color:var(--ac);font-weight:800}
+  .quick{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin:0 0 1rem}
+  .qa{display:flex;flex-direction:column;align-items:center;gap:.3rem} .qd{width:3.1rem;height:3.1rem;border-radius:1rem;display:grid;place-items:center}
+  .qd svg{width:1.35rem;height:1.35rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .qd.b{color:var(--blue);background:var(--blue-bg)} .qd.g{color:var(--green);background:var(--green-bg)} .qd.v{color:var(--violet);background:var(--violet-bg)} .qd.t{color:var(--teal);background:var(--teal-bg)}
+  .qa span:last-child{font-size:.66rem;font-weight:700;color:var(--txt2)}
+  .gh{display:flex;align-items:baseline;justify-content:space-between;margin:0 .3rem .35rem} .gh h2{font-size:.86rem;font-weight:900;margin:0;display:flex;align-items:center;gap:.4rem} .gh h2 i{width:.5rem;height:.5rem;border-radius:50%;background:var(--green)} .gh small{font-size:.66rem;color:var(--txt3);font-weight:700}
+  .gh.b h2 i{background:var(--blue)} .gh.g h2 i{background:var(--green)}
+  .gh a{font-size:.7rem;font-weight:800;color:var(--ac)}
+  .inset{background:var(--card);border:1px solid var(--hair);border-radius:1rem;box-shadow:var(--card-sh);overflow:hidden;margin:0 0 .95rem}
+  .rw{display:flex;align-items:center;gap:.6rem;padding:.6rem .7rem;border-bottom:1px solid var(--hair)} .rw:last-child{border-bottom:0}
+  .rw .ic{width:2rem;height:2rem;border-radius:.65rem;display:grid;place-items:center;color:var(--green);background:var(--green-bg);flex:none} .rw .ic svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .rw .ic.amber{color:var(--amber);background:var(--amber-bg)}
+  .rw .m{flex:1;min-width:0} .rw .t{font-size:.82rem;font-weight:800} .rw .s{font-size:.68rem;color:var(--txt3);line-height:1.5}
+  .rw .st{font-size:.68rem;color:var(--txt3);display:flex;align-items:center;gap:.25rem;white-space:nowrap} .rw .st.live{color:var(--ac);font-weight:800}
+  .rw.is-new{background:color-mix(in srgb,var(--amber) 6%,transparent)}
+  /* ---- the new rail ---- */
+  .rail-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 .3rem .1rem} .rail-h h2{font-size:.86rem;font-weight:900;margin:0;display:flex;align-items:center;gap:.4rem} .rail-h h2 i{width:.5rem;height:.5rem;border-radius:50%;background:var(--amber)} .rail-h a{font-size:.7rem;font-weight:800;color:var(--amber-ink)}
+  .rail-s{font-size:.68rem;color:var(--txt3);margin:0 .3rem .1rem}
+  .rail{display:flex;gap:10px;overflow-x:auto;padding:10px 2px 14px;scrollbar-width:none;margin-bottom:.4rem} .rail::-webkit-scrollbar{display:none}
+  .rc{flex:0 0 150px;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:6px;border:1px solid transparent;
+      background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(165deg,var(--amber) 0%,color-mix(in srgb,var(--amber) 25%,transparent) 45%,var(--ac) 100%) border-box;
+      box-shadow:0 8px 22px color-mix(in srgb,var(--amber) 14%,transparent)}
+  .rc .gl{color:var(--amber)} .rc .gl svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .rc .tt{font-size:.84rem;font-weight:800;line-height:1.55;margin:0;min-height:2.7em}
+  .rc .ft{display:flex;align-items:center;justify-content:space-between;margin-top:auto;font-size:.68rem;color:var(--txt3);font-weight:600}
+  .rc .prog{height:.28rem;border-radius:999px;background:var(--chip);overflow:hidden} .rc .prog i{display:block;height:100%;border-radius:999px;background:var(--amber)}
+  .rc .tag{font-size:.66rem;font-weight:800;color:var(--amber-ink)}
+  .rc.is-on{box-shadow:0 10px 26px color-mix(in srgb,var(--amber) 24%,transparent)}
+  /* locked catalog card */
+  .lc{display:flex;align-items:center;gap:.6rem;padding:.7rem .75rem;border-radius:1rem;margin:0 0 .5rem;position:relative;overflow:hidden;
+      background:linear-gradient(180deg,color-mix(in srgb,var(--amber) 9%,var(--card)) 0%,var(--card) 45%);border:1px solid color-mix(in srgb,var(--amber) 28%,transparent);box-shadow:var(--card-sh)}
+  .lc .ic{width:2.1rem;height:2.1rem;border-radius:50%;display:grid;place-items:center;color:var(--amber);background:var(--amber-bg);flex:none} .lc .ic svg{width:1.05rem;height:1.05rem;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .lc .m{flex:1;min-width:0} .lc b{display:block;font-size:.84rem;font-weight:800} .lc span{display:block;font-size:.7rem;color:var(--txt3);line-height:1.6}
+  .lc .lk{font-size:.64rem;font-weight:800;color:var(--amber-ink);background:var(--amber-bg);border-radius:999px;padding:.1rem .5rem;white-space:nowrap}
+  .lc.is-new{outline:2px dashed var(--amber);outline-offset:2px}
+  .offer{display:flex;align-items:center;gap:.6rem;padding:.7rem .8rem;border-radius:1rem;margin:0 0 .8rem;background:linear-gradient(180deg,color-mix(in srgb,var(--amber) 12%,var(--card)),var(--card) 55%);border:1px solid color-mix(in srgb,var(--amber) 30%,transparent)}
+  .offer b{display:block;font-size:.86rem;font-weight:800} .offer span{display:block;font-size:.72rem;color:var(--txt3)} .offer .go{margin-inline-start:auto;font-size:.74rem;font-weight:800;color:var(--amber-ink);white-space:nowrap}
+  .note{position:absolute;inset-inline-end:14px;background:var(--pr);color:#fff;font-size:.62rem;font-weight:800;border-radius:999px;padding:.1rem .5rem;z-index:3;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+  [data-theme="dark"] .note{color:#061a3a}
+  .legend{background:var(--card);border:1px solid var(--hair);border-radius:24px;padding:18px 20px;box-shadow:var(--card-sh);max-width:66rem}
+  .legend h2{font-size:1rem;margin:0 0 .4rem} .legend ol{margin:0;padding-inline-start:1.2rem;font-size:.9rem;color:var(--txt2)} .legend li{margin:.3rem 0} .legend b{color:var(--txt)}
+</style>
+</head>
+<body>
+<h1>باندل‌های شروع در تب پریمیوم — ماکاپ برای تأیید</h1>
+<p class="lead">یافته: کاتالوگ تب پریمیوم بیست ورودی در چهار گروه دارد و «از کجا شروع کنم؟» در هیچ‌کدام نیست؛ نه برای مشترک لینکی به باندل‌ها هست، نه برای غیرمشترک کارتی که بگوید چنین چیزی وجود دارد؛ و بندِ «باندل‌های شروع» در صفحه‌ی مسیرها لنگری ندارد که لینک مستقیم به آن برسد. پیشنهاد در سه تکه، پایین.</p>
+<div class="bar"><button class="tg is-on" data-t="light" type="button">روشن</button><button class="tg" data-t="dark" type="button">تاریک</button></div>
+
+<section class="row3">
+  <!-- ============ امروز ============ -->
+  <div>
+    <div class="cap"><i></i>امروز — مشترک</div>
+    <div class="ph"><div class="scr">
+      <div class="ph-t"><span>پریمیوم</span><a href="#">پیشخوان ›</a></div>
+      <div class="status"><span class="pill">اشتراک فعال</span><span>تا ۲۴ آبان</span></div>
+      <a class="hero" href="#"><span class="g">🧭</span><div class="k">ادامه بده</div><div class="t">پروتز ثابت: از تراش تا سمان</div><div class="m">قدم ۱۲ از ۳۹</div><div class="bar2"><i style="width:31%"></i></div><div class="row"><span>از همان‌جایی که بودی</span><span class="cta">ادامهٔ مسیر ›</span></div></a>
+      <div class="today"><div class="tile"><b>۴</b><span>کارت امروز</span><span class="go">مرور ›</span></div><div class="tile"><b>۱۷ <em>روز</em></b><span>🔥 استریک</span><span>حفظ شده</span></div><div class="tile"><b>۱۳۲</b><span>هایلایت</span><span class="go">دفترچه ›</span></div></div>
+      <div class="quick">
+        <a class="qa" href="#"><span class="qd b"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19a2 2 0 0 1 2-2h13"/></svg></span><span>دفترچه</span></a>
+        <a class="qa" href="#"><span class="qd g"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></span><span>مسیرها</span></a>
+        <a class="qa" href="#"><span class="qd v"><svg viewBox="0 0 24 24"><path d="M12 3l1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5z"/></svg></span><span>دستیار کیس</span></a>
+        <a class="qa" href="#"><span class="qd t"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><span>کالکشن‌ها</span></a>
+      </div>
+      <div class="gh b"><h2><i></i>خواندن و مرور</h2><small>۵ ابزار</small></div>
+      <div class="inset">
+        <div class="rw"><span class="ic" style="color:var(--blue);background:var(--blue-bg)"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="12" rx="3"/><path d="M7 4h14v12"/></svg></span><div class="m"><div class="t">برای مرور امروز</div><div class="s">مرور فاصله‌دار هایلایت‌ها، پیش از فراموشی</div></div><span class="st live">۴ کارت ›</span></div>
+        <div class="rw"><span class="ic" style="color:var(--blue);background:var(--blue-bg)"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/></svg></span><div class="m"><div class="t">دفترچه‌ی هایلایت‌ها</div><div class="s">همه‌ی هایلایت‌ها یک‌جا، با یادداشت و جستجو</div></div><span class="st">۱۳۲ ›</span></div>
+      </div>
+      <div class="gh g"><h2><i></i>مسیر و گواهی</h2><small>۷ ابزار</small></div>
+      <div class="inset">
+        <div class="rw"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></span><div class="m"><div class="t">مسیر یادگیری</div><div class="s">از پیش‌نیاز تا پیشرفته، به ترتیب درست</div></div><span class="st live">قدم ۱۲ ›</span></div>
+        <div class="rw"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13l-1 8 4-2 4 2-1-8"/></svg></span><div class="m"><div class="t">گواهی‌نامهٔ تکمیل مسیر</div><div class="s">بعد از تمام کردن مسیر و آزمون، گواهی با کد قابل استعلام</div></div><span class="st">۱ گواهی ›</span></div>
+        <div class="rw"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9l-2 5-4 1 2-5z"/></svg></span><div class="m"><div class="t">قطب‌نمای مطالعه</div><div class="s">چقدر از هر پیلار را خوانده‌اید و کجا جا مانده</div></div><span class="st">›</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ============ پیشنهاد — مشترک ============ -->
+  <div>
+    <div class="cap is-new"><i></i>پیشنهاد — مشترک</div>
+    <div class="ph"><div class="scr">
+      <div class="ph-t"><span>پریمیوم</span><a href="#">پیشخوان ›</a></div>
+      <div class="status"><span class="pill">اشتراک فعال</span><span>تا ۲۴ آبان</span></div>
+      <a class="hero" href="#"><span class="g">🧭</span><div class="k">ادامه بده</div><div class="t">پروتز ثابت: از تراش تا سمان</div><div class="m">قدم ۱۲ از ۳۹</div><div class="bar2"><i style="width:31%"></i></div><div class="row"><span>از همان‌جایی که بودی</span><span class="cta">ادامهٔ مسیر ›</span></div></a>
+      <div class="today"><div class="tile"><b>۴</b><span>کارت امروز</span><span class="go">مرور ›</span></div><div class="tile"><b>۱۷ <em>روز</em></b><span>🔥 استریک</span><span>حفظ شده</span></div><div class="tile"><b>۱۳۲</b><span>هایلایت</span><span class="go">دفترچه ›</span></div></div>
+      <div class="quick">
+        <a class="qa" href="#"><span class="qd b"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19a2 2 0 0 1 2-2h13"/></svg></span><span>دفترچه</span></a>
+        <a class="qa" href="#"><span class="qd g"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></span><span>مسیرها</span></a>
+        <a class="qa" href="#"><span class="qd v"><svg viewBox="0 0 24 24"><path d="M12 3l1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5z"/></svg></span><span>دستیار کیس</span></a>
+        <a class="qa" href="#"><span class="qd t"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><span>کالکشن‌ها</span></a>
+      </div>
+
+      <div style="position:relative"><span class="note" style="top:-6px;inset-inline-end:auto;inset-inline-start:14px">جدید ①</span></div>
+      <div class="rail-h"><h2><i></i>از کجا شروع کنم؟</h2><a href="#">همه‌ی باندل‌ها ›</a></div>
+      <p class="rail-s">هسته‌ی هر موضوع در چند قدم — بدون نکته‌های حاشیه‌ای.</p>
+      <div class="rail">
+        <a class="rc is-on" href="#"><span class="gl"><svg viewBox="0 0 24 24"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg></span><p class="tt">باندینگ و ادهزیو: شروع کن</p><div class="prog"><i style="width:40%"></i></div><div class="ft"><span>۲ از ۵ قدم</span><span class="tag">ادامه ›</span></div></a>
+        <a class="rc" href="#"><span class="gl"><svg viewBox="0 0 24 24"><path d="M8 3c-3 0-4 3-4 5 0 4 2 5 2 9 0 2 1 4 2 4s1-5 4-5 3 5 4 5 2-2 2-4c0-4 2-5 2-9 0-2-1-5-4-5-2 0-3 1-4 1s-2-1-4-1z"/></svg></span><p class="tt">لمینیت: شروع کن</p><div class="ft"><span>۶ قدم</span></div></a>
+        <a class="rc" href="#"><span class="gl"><svg viewBox="0 0 24 24"><path d="M9 3h6v5l4 9a3 3 0 0 1-3 4H8a3 3 0 0 1-3-4l4-9z"/></svg></span><p class="tt">آماده‌سازی سطح و سمان سرامیک: شروع کن</p><div class="ft"><span>۷ قدم</span></div></a>
+        <a class="rc" href="#"><span class="gl"><svg viewBox="0 0 24 24"><path d="M12 3v18M7 8h10M9 21h6"/></svg></span><p class="tt">پست و کور: شروع کن</p><div class="ft"><span>۸ قدم</span></div></a>
+      </div>
+
+      <div class="gh b"><h2><i></i>خواندن و مرور</h2><small>۵ ابزار</small></div>
+      <div class="inset">
+        <div class="rw"><span class="ic" style="color:var(--blue);background:var(--blue-bg)"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="12" rx="3"/><path d="M7 4h14v12"/></svg></span><div class="m"><div class="t">برای مرور امروز</div><div class="s">مرور فاصله‌دار هایلایت‌ها، پیش از فراموشی</div></div><span class="st live">۴ کارت ›</span></div>
+      </div>
+      <div class="gh g"><h2><i></i>مسیر و گواهی</h2><small>۸ ابزار</small></div>
+      <div class="inset">
+        <div class="rw"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></span><div class="m"><div class="t">مسیر یادگیری</div><div class="s">از پیش‌نیاز تا پیشرفته، به ترتیب درست</div></div><span class="st live">قدم ۱۲ ›</span></div>
+        <div class="rw is-new" style="position:relative"><span class="note" style="top:-4px;inset-inline-end:auto;inset-inline-start:10px">جدید ②</span><span class="ic amber"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span><div class="m"><div class="t">باندل‌های شروع</div><div class="s">هسته‌ی هر موضوع در ۵ تا ۸ قدم، بدون حاشیه</div></div><span class="st live">۱ در جریان ›</span></div>
+        <div class="rw"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13l-1 8 4-2 4 2-1-8"/></svg></span><div class="m"><div class="t">گواهی‌نامهٔ تکمیل مسیر</div><div class="s">بعد از تمام کردن مسیر و آزمون، گواهی با کد قابل استعلام</div></div><span class="st">۱ گواهی ›</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ============ پیشنهاد — غیرمشترک ============ -->
+  <div>
+    <div class="cap is-new"><i></i>پیشنهاد — مهمان / رایگان</div>
+    <div class="ph"><div class="scr">
+      <div class="ph-t"><span>پریمیوم</span></div>
+      <p class="rail-s" style="font-size:.78rem;margin:0 2px 12px;color:var(--txt3)">همه‌ی چیزهایی که اشتراک می‌خرد، یک‌جا. با یک اشتراک همه‌شان باز می‌شوند.</p>
+      <div class="offer"><span class="ic" style="width:2.1rem;height:2.1rem;border-radius:50%;display:grid;place-items:center;color:var(--amber);background:var(--amber-bg)">★</span><div><b>اشتراک پریمیوم</b><span>از ماهی ۳۹۰ هزار تومان · بدون تعهد</span></div><span class="go">دیدن پلن‌ها ›</span></div>
+      <div class="gh b"><h2><i></i>خواندن و مرور</h2><small>۵ ابزار</small></div>
+      <div class="lc"><span class="ic" style="color:var(--blue);background:var(--blue-bg)"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="12" rx="3"/><path d="M7 4h14v12"/></svg></span><div class="m"><b>برای مرور امروز</b><span>مرور فاصله‌دار هایلایت‌ها، پیش از فراموشی</span></div><span class="lk">🔒 پریمیوم</span></div>
+      <div class="lc"><span class="ic" style="color:var(--blue);background:var(--blue-bg)"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/></svg></span><div class="m"><b>دفترچه‌ی هایلایت‌ها</b><span>همه‌ی هایلایت‌ها یک‌جا، با یادداشت و جستجو</span></div><span class="lk">🔒 پریمیوم</span></div>
+      <div class="gh g" style="margin-top:.6rem"><h2><i></i>مسیر و گواهی</h2><small>۸ ابزار</small></div>
+      <div class="lc"><span class="ic" style="color:var(--green);background:var(--green-bg)"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></span><div class="m"><b>مسیر یادگیری</b><span>از پیش‌نیاز تا پیشرفته، به ترتیب درست</span></div><span class="lk">🔒 پریمیوم</span></div>
+      <div style="position:relative"><span class="note" style="top:-8px;inset-inline-end:auto;inset-inline-start:14px">جدید ②</span></div>
+      <div class="lc is-new"><span class="ic"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span><div class="m"><b>باندل‌های شروع</b><span>هسته‌ی هر موضوع در ۵ تا ۸ قدم، بدون حاشیه — ۱۰ باندل</span></div><span class="lk">🔒 پریمیوم</span></div>
+      <div class="lc"><span class="ic" style="color:var(--green);background:var(--green-bg)"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13l-1 8 4-2 4 2-1-8"/></svg></span><div class="m"><b>گواهی‌نامهٔ تکمیل مسیر</b><span>بعد از تمام کردن مسیر و آزمون، گواهی با کد قابل استعلام</span></div><span class="lk">🔒 پریمیوم</span></div>
+      <div class="lc"><span class="ic" style="color:var(--green);background:var(--green-bg)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9l-2 5-4 1 2-5z"/></svg></span><div class="m"><b>قطب‌نمای مطالعه</b><span>چقدر از هر پیلار را خوانده‌اید و کجا جا مانده</span></div><span class="lk">🔒 پریمیوم</span></div>
+    </div></div>
+  </div>
+</section>
+
+<section class="legend">
+  <h2>سه تکه‌ی پیشنهاد</h2>
+  <ol>
+    <li><b>① ریلِ «از کجا شروع کنم؟» برای مشترک</b> — بین میان‌برها و اولین گروه: همان کارت‌های کهرباییِ ریل صفحه‌ی اصلی (کهربایی این‌جا درست است؛ باندل پریمیوم است)، با پیشرفتِ زنده روی باندلی که شروع شده («۲ از ۵ قدم» + نوار + «ادامه ›»)، اول شروع‌شده‌ها بعد بقیه، و «همه‌ی باندل‌ها ›». داده از همان `GET /pathways` که تب و پیشخوان می‌خوانند؛ یک درخواست اضافه نیست.</li>
+    <li><b>② ردیفِ «باندل‌های شروع» در گروه «مسیر و گواهی»</b> — برای همه: مهمان و رایگان کارت قفل‌شده می‌بینند (مثل بقیه‌ی گروه)، مشترک ردیف زنده با وضعیت («۱ در جریان ›» یا «۱۰ باندل ›»). گروه از ۷ به ۸ ابزار می‌رسد. تعداد ورودی‌های `PREMIUM_FEATURES` عوض نمی‌شود (این ورودی مثل «نمای موضوعی» یک ورودیِ خودِ کاتالوگ است).</li>
+    <li><b>③ مقصدِ لینک مستقیم: `/plus/pathways.html#bundles`</b> — بندِ «باندل‌های شروع» در صفحه‌ی مسیرها یک `id="bundles"` می‌گیرد و صفحه با این هش روی آن می‌ایستد. «همه‌ی باندل‌ها ›» ریل صفحه‌ی اصلی و پیشخوان هم می‌توانند به همین لنگر بروند، به‌جای بالای کاتالوگ.</li>
+    <li><b>عوض نمی‌شود:</b> میان‌برها چهارتا می‌مانند، قهرمان و اعداد امروز دست نمی‌خورند، ترتیب گروه‌ها همان است. تست `premium-panel.dom.test.ts` یک مورد برای ردیف و ریل می‌گیرد.</li>
+  </ol>
+</section>
+
+<script>
+  document.querySelectorAll('.tg').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.documentElement.setAttribute('data-theme', b.dataset.t);
+      document.querySelectorAll('.tg').forEach(function (x) { x.classList.toggle('is-on', x === b); });
+    });
+  });
+</script>
+</body>
+</html>
