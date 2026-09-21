@@ -205,6 +205,18 @@ describe('a subscriber', () => {
     expect(mobile().querySelectorAll('.dcp-pp-hero')).toHaveLength(1);
   });
 
+  it('a pathway enrolled but not started says «شروع کن», never «ادامه از جایی که بودی»', async () => {
+    meImpl = () => Promise.resolve({ tier: 'premium', due_card_count: 0, active_pathway: { id: 'bio', title_fa: 'بیومیمتیک', current_step: 0, total_steps: 97, is_complete: false } });
+    await mount();
+    const hero = mobile().querySelector('.dcp-pp-hero')!;
+    expect(hero.getAttribute('data-dcp-hero')).toBe('pathway');
+    expect(hero.querySelector('.dcp-pp-hero-k')!.textContent).toBe('شروع کن');
+    expect(hero.querySelector('.dcp-pp-hero-m')!.textContent).toBe('هنوز شروع نشده');
+    expect(hero.querySelector('.dcp-pp-hero-cta')!.textContent).toBe('شروع مسیر ›');
+    expect(hero.textContent).not.toContain('از همان‌جایی که بودی');
+    expect(hero.textContent).not.toContain('قدم ۰');
+  });
+
   it('falls through: a finished pathway → today\'s cards → the دفترچه', async () => {
     meImpl = () => Promise.resolve({ tier: 'premium', due_card_count: 4, active_pathway: { id: 'p', title_fa: 'x', current_step: 5, total_steps: 5, is_complete: true } });
     await mount();

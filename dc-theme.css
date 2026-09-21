@@ -928,25 +928,30 @@ body:has(.dc-topbar) .back:hover {
 }
 
 /* =====================================================
-   DARK-MODE DEPTH — a brand-blue glow, never on a reading page
-   (founder, 1405/06/31)
+   DARK-MODE DEPTH — a fading grid under the boxes, never on a reading page
+   (founder, 1405/06/31: «خطوط و شعاع مدرن … مثل ورسل»)
    In the light theme the cards' shadows carry the depth of the page. In the
    dark theme --bg (#0e1621) and a card (#17212b) sit so close in value that
-   the shadow disappears and the page reads flat — which is why the sites
-   that do this only do it in the dark. What goes in is a GLOW (the
-   Linear/Vercel move), not a photo: a photo competes with text on a site
-   people read at night. And NEVER under a column of prose: every article,
-   episode, glossary term, LiteCast page and en mirror is a
-   `main.article-content-wrap`, and that one marker is the exclusion. The
-   homepage loads no shared CSS and mirrors this in index.html, where it also
-   carries the brand mark. A browser without :has() drops the whole rule —
-   no glow, no harm. Specificity (0,2,2) beats body:has(.dc-topbar) (0,1,1)
-   and plus-pages.css's body.dcp-page (0,1,1) on background-image alone;
-   their shorthand keeps the colour.
+   the shadow disappears and the page reads flat. What goes in is the
+   Vercel/Linear grid: a 28px hairline mesh in the dark brand blue that is
+   full at the top and fades out over the first 56rem (a page's first
+   screen and a bit), plus one soft glow at the brand corner. Bounded on
+   purpose — a 5000px page must not carry a grid down its whole length. The
+   fade lives INSIDE the SVG as a mask, so no overlay of the page colour is
+   needed and the same layer is right on every dark ground. Never a photo,
+   and NEVER under a column of prose: every article, episode, glossary term,
+   LiteCast page and en mirror is a `main.article-content-wrap`, and that
+   one marker is the exclusion. The homepage loads no shared CSS and mirrors
+   this in index.html. A browser without :has() drops the whole rule — no
+   grid, no harm. Specificity (0,2,2) beats body:has(.dc-topbar) (0,1,1) and
+   plus-pages.css's body.dcp-page (0,1,1) on background-image alone; their
+   shorthand keeps the colour.
 ===================================================== */
 [data-theme="dark"] body:not(:has(main.article-content-wrap)) {
   background-image:
-    radial-gradient(72rem 38rem at 88% -6rem, rgba(91,156,246,.34), transparent 64%),
-    radial-gradient(48rem 32rem at 2% 44rem, rgba(91,156,246,.14), transparent 66%);
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'><defs><pattern id='p' width='28' height='28' patternUnits='userSpaceOnUse'><path d='M28 0H0V28' fill='none' stroke='%23a7c8ff' stroke-opacity='.13' stroke-width='1'/></pattern><linearGradient id='f' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23fff'/><stop offset='.45' stop-color='%23fff' stop-opacity='.55'/><stop offset='1' stop-color='%23fff' stop-opacity='0'/></linearGradient><mask id='m'><rect width='100%' height='100%' fill='url(%23f)'/></mask></defs><rect width='100%' height='100%' fill='url(%23p)' mask='url(%23m)'/></svg>"),
+    radial-gradient(36rem 22rem at 88% -4rem, rgba(91,156,246,.22), transparent 62%);
+  background-size: 100% 56rem, auto;
+  background-position: top, 0 0;
   background-repeat: no-repeat;
 }

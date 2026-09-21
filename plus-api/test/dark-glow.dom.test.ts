@@ -18,18 +18,21 @@ describe('dark-mode depth glow', () => {
     const rule = css.match(/\[data-theme="dark"\] body:not\(:has\(main\.article-content-wrap\)\) \{([^}]*)\}/);
     expect(rule).not.toBeNull();
     expect(rule![1]).toContain('radial-gradient');
-    expect(rule![1]).not.toMatch(/url\(/);           // a glow, never a picture, on the shared rule
+    expect(rule![1]).toMatch(/data:image\/svg\+xml[^"]*<pattern id='p' width='28' height='28'/); // the grid
+    expect(rule![1]).toMatch(/background-size:\s*100% 56rem/);   // bounded — never down a 5000px page
+    expect(rule![1]).not.toMatch(/\.(png|jpe?g|webp|gif)/i);       // lines, never a picture
     expect(rule![1]).not.toMatch(/201,146,43|227,184,73|c9922b|e3b849/i); // never amber
     expect(css.match(/\[data-theme="dark"\] body:not\(:has\(main\.article-content-wrap\)\)/g)).toHaveLength(1);
   });
 
-  it('the homepage mirrors it (it loads no shared CSS) on the phone body and the desktop column', () => {
+  it('the homepage mirrors it (it loads no shared CSS) on the phone scroll container and the desktop column', () => {
     const html = read('index.html');
-    expect(html).toMatch(/\[data-theme="dark"\] body\{\s*background-image:/);
-    expect(html).toMatch(/\[data-theme="dark"\] \.dcd-col-c\{\s*background-image:/);
-    // the mark is the brand microphone, as a background layer, and only in the dark
-    const marks = html.match(/data:image\/svg\+xml[^"]*M12 14a4 4 0 0 0 4-4V6/g) || [];
-    expect(marks.length).toBe(2);
+        // the same grid, once, on a rule shared by the phone body and column C
+    const grids = html.match(/data:image\/svg\+xml[^"]*<pattern id='p' width='28' height='28'/g) || [];
+    expect(grids.length).toBe(1);
+    expect(html).toMatch(/\[data-theme="dark"\] #mobile-body,\s*\n\s*\[data-theme="dark"\] \.dcd-col-c\{/);
+    // never on body: #mobile-body paints its own opaque ground over it
+    expect(html).not.toMatch(/\[data-theme="dark"\] body[,{]/);
     expect(html).not.toMatch(/\[data-theme="light"\][^{]*\{[^}]*svg\+xml/);
   });
 
