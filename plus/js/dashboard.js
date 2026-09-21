@@ -1,18 +1,18 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, streakIsActiveToday } from './util.js?v=124';
-import { api } from './api.js?v=124';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=124';
-import { leagueEntryButton } from './league.js?v=124';
-import { openCollectionPicker, boardCover } from './collections.js?v=124';
-import { bundleRailCard, intentRow } from './pathways.js?v=124';
-import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=124';
-import { currentMonthKey } from './jalali-month.js?v=124';
-import { renewalBanner } from './renewal-banner.js?v=124';
-import { premiumCta } from './premium-cta.js?v=124';
-import { maybeCelebrate } from './achievements.js?v=124';
-import { markReturnTrail } from './return-trail.js?v=124';
+import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=125';
+import { api } from './api.js?v=125';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=125';
+import { leagueEntryButton } from './league.js?v=125';
+import { openCollectionPicker, boardCover } from './collections.js?v=125';
+import { bundleRailCard, intentRow } from './pathways.js?v=125';
+import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=125';
+import { currentMonthKey } from './jalali-month.js?v=125';
+import { renewalBanner } from './renewal-banner.js?v=125';
+import { premiumCta } from './premium-cta.js?v=125';
+import { maybeCelebrate } from './achievements.js?v=125';
+import { markReturnTrail } from './return-trail.js?v=125';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',
@@ -37,7 +37,7 @@ function section(title, hint, body, more) {
     }
   }
   children.push(body);
-  return el('section', { class: 'dcp-dash-sec' }, children);
+  return el('section', { class: 'dcp-dash-sec', 'data-ico': sectionIcon(title) }, children);
 }
 
 function streakDetail(me) {
@@ -48,10 +48,33 @@ function streakDetail(me) {
       el('span', { class: 'dcp-streak-num' }, faNum(me.current_streak || 0)),
       el('span', { class: 'dcp-streak-unit' }, active ? 'روز پیاپی، امروز فعال بودید' : 'روز پیاپی، امروز هنوز فعالیتی ثبت نشده'),
     ]),
-    el('div', { class: 'dcp-streak-record' }, [
-      el('b', {}, faNum(me.longest_streak || 0)),
-      el('span', {}, 'رکورد شما'),
+  ]);
+}
+
+// Plus 2.0 skin: the streak is two bento tiles (the streak with its ring, the
+// record beside it) and the explanation under both. Same three strings as the
+// single card before it, same order inside each tile; the ring is the streak
+// as a share of the record (`--p`), drawn by CSS, and nothing here is a control.
+function streakBento(me, hint) {
+  const streak = me.current_streak || 0;
+  const record = Math.max(me.longest_streak || 0, streak);
+  const pct = record > 0 ? Math.round((streak / record) * 100) : 0;
+  const detail = streakDetail(me);
+  detail.style.setProperty('--p', String(pct));
+  return el('div', { class: 'dcp-bento-wrap' }, [
+    el('div', { class: 'dcp-bento' }, [
+      el('section', { class: 'dcp-dash-sec dcp-tile is-streak', 'data-ico': 'streak' }, [
+        el('h2', { class: 'dcp-dash-h2' }, 'استریک'),
+        detail,
+      ]),
+      el('section', { class: 'dcp-dash-sec dcp-tile is-rec' }, [
+        el('div', { class: 'dcp-streak-record' }, [
+          el('b', {}, faNum(me.longest_streak || 0)),
+          el('span', {}, 'رکورد شما'),
+        ]),
+      ]),
     ]),
+    el('p', { class: 'dcp-sec-hint dcp-bento-hint' }, hint),
   ]);
 }
 
@@ -481,7 +504,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   // nothing for premium (their content further down is still live) and keeps
   // this simple.
   children.push(
-    section('استریک', 'هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.', streakDetail(me)),
+    streakBento(me, 'هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.'),
     league ? section('لیگ من', 'رتبه‌ات در گروهِ رقابتیِ این هفته؛ برای صعود به لیگِ بالاتر تلاش کن.', leagueEntryButton(league)) : null,
     section('آخرین جایی که بودی', null, continueBlock(progress, model)),
     section('پیشرفت هر پوشه', 'برای هر پوشه، چند درصد از کل مطالب آن را خوانده‌اید (۰ تا ۱۰۰). هر بار پیشخوان باز شود به‌روز می‌شود.', progressBars(progress, model)),

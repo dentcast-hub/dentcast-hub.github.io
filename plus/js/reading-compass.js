@@ -4,10 +4,10 @@
 // dcp-pw-step for suggestion rows); is-spotlight/is-unexplored/
 // dcp-progress-badge/dcp-compass-ico are the only additions, in
 // plus-pages.css.
-import { el, faNum } from './util.js?v=124';
-import { api } from './api.js?v=124';
-import { FOLDER_EN } from './content-index.js?v=124';
-import { markReturnTrail } from './return-trail.js?v=124';
+import { el, faNum, sectionIcon } from './util.js?v=125';
+import { api } from './api.js?v=125';
+import { FOLDER_EN } from './content-index.js?v=125';
+import { markReturnTrail } from './return-trail.js?v=125';
 
 // The badge and the percent next to it answer two DIFFERENT questions: the
 // badge ranks pillars by the raw NUMBER of items read (service's sort on
@@ -60,7 +60,7 @@ function itemRow(item) {
 }
 
 function section(title, hint, body, extraClass) {
-  return el('div', { class: 'dcp-dash-sec' + (extraClass ? ' ' + extraClass : '') }, [
+  return el('div', { class: 'dcp-dash-sec' + (extraClass ? ' ' + extraClass : ''), 'data-ico': sectionIcon(title) }, [
     el('h3', { class: 'dcp-dash-h2' }, title),
     hint ? el('p', { class: 'dcp-sec-hint' }, hint) : null,
     body,

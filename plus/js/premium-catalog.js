@@ -26,7 +26,7 @@
 // GROUPS ARE INFORMATION, not decoration: they answer «what kind of thing is
 // this» for a reader who has never used any of it. Order inside a group is the
 // order a new subscriber meets them, the everyday ones first.
-import { PREMIUM_FEATURES } from './config.js?v=124';
+import { PREMIUM_FEATURES } from './config.js?v=125';
 
 const F = PREMIUM_FEATURES;
 
