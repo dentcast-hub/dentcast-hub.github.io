@@ -17,18 +17,18 @@
 //      scrolls to the mark).
 //   4. Every filter lives in the URL, so a filtered view survives a refresh,
 //      the back button, and being sent to yourself.
-import { el, faNum, debounce } from './util.js?v=117';
-import { api } from './api.js?v=117';
-import { FOLDER_EN } from './content-index.js?v=117';
-import { openCollectionPicker } from './collections.js?v=117';
-import { LABELS, PALETTE } from './config.js?v=117';
+import { el, faNum, debounce } from './util.js?v=118';
+import { api } from './api.js?v=118';
+import { FOLDER_EN } from './content-index.js?v=118';
+import { openCollectionPicker } from './collections.js?v=118';
+import { LABELS, PALETTE } from './config.js?v=118';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
-} from './hl-view.js?v=117';
+} from './hl-view.js?v=118';
 // قطعه‌های صوتی ride in the same library: a clip is a highlight in time, so it
 // sits in its episode's group beside the caption highlights (clip-view.js).
-import { clipCard, createClipPlayer, clipAsText } from './clip-view.js?v=117';
+import { clipCard, createClipPlayer, clipAsText } from './clip-view.js?v=118';
 
 // How many article groups (or flat cards) are drawn before the "load more"
 // sentinel takes over. A library of a few thousand highlights must not build a
@@ -362,7 +362,12 @@ export async function renderHighlightLibrary(container) {
   }
 
   // --- concepts ------------------------------------------------------------
-  let conceptsOpen = false;
+  // «#concepts» is the premium tab's «نمای موضوعی» card: it names the concept
+  // row, so the row opens in full (no «+N مفهوم دیگر» to tap first) and is
+  // scrolled to once the library has drawn — the card promised THAT view, and
+  // landing at the top of the دفترچه with the row folded is landing short.
+  const wantsConcepts = location.hash === '#concepts';
+  let conceptsOpen = wantsConcepts;
   const CONCEPTS_SHOWN = 8;
 
   async function setConcept(key) {
@@ -656,5 +661,16 @@ export async function renderHighlightLibrary(container) {
     await setConcept(state.concept);
   } else {
     render();
+  }
+  if (wantsConcepts && !conceptChips.hidden) {
+    requestAnimationFrame(() => {
+      // Not scrollIntoView: on a phone the row is its own horizontal scroller,
+      // and Chrome then ignores the row's scroll-margin for the page — the
+      // chips landed exactly under the 62px fixed header (measured 1405/06/31).
+      const y = conceptChips.getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+      conceptChips.classList.add('dcp-flash');
+      setTimeout(() => conceptChips.classList.remove('dcp-flash'), 1800);
+    });
   }
 }

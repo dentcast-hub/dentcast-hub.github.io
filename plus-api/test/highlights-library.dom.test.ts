@@ -342,6 +342,36 @@ describe('concept view', () => {
     expect((document.querySelector('.dcp-hlib-chead') as HTMLElement).textContent).not.toContain('null');
   });
 
+  it('«#concepts» (the premium tab\'s card) opens the concept row in full and scrolls to it', async () => {
+    const many = { concepts: Array.from({ length: 12 }, (_, i) => ({ key: 'c' + i, fa: 'مفهوم ' + i, highlights: 12 - i, articles: 1, pages_total: 3, glossary: null })), total_highlights: 3, reached_highlights: 3 };
+    conceptsResponse = many;
+    const scrolled: any[] = [];
+    (window as any).scrollTo = (o: any) => { scrolled.push(o); };
+    history.replaceState(null, '', '/plus/highlights.html#concepts');
+    await renderHighlightLibrary(document.getElementById('root')!);
+    const row = document.querySelector('.dcp-hlib-concepts') as HTMLElement;
+    expect(row.hidden).toBe(false);
+    // Every concept, no «+N مفهوم دیگر» to tap first — the card named this row.
+    expect(row.querySelector('.dcp-hlib-chip.is-more')).toBeNull();
+    expect(row.querySelectorAll('.dcp-hlib-chip')).toHaveLength(1 + 12);
+    await new Promise((r) => requestAnimationFrame(() => r(null)));
+    expect(scrolled).toHaveLength(1);
+    expect(scrolled[0].behavior).toBe('smooth');
+    expect(row.classList.contains('dcp-flash')).toBe(true);
+    // The whole library is still the list: the hash picks a row, not a concept.
+    expect(document.querySelectorAll('.dcp-hlib-card')).toHaveLength(3);
+    expect(conceptCalls).toEqual([]);
+
+    // Under the audio filter the row does not exist, so nothing is scrolled to.
+    scrolled.length = 0;
+    history.replaceState(null, '', '/plus/highlights.html?kind=clip#concepts');
+    document.body.innerHTML = '<div id="root"></div>';
+    await renderHighlightLibrary(document.getElementById('root')!);
+    await new Promise((r) => requestAnimationFrame(() => r(null)));
+    expect(scrolled).toHaveLength(0);
+    history.replaceState(null, '', '/plus/highlights.html');
+  });
+
   it('an unknown deep-linked concept falls back to the whole library rather than an empty page', async () => {
     conceptViewResponse = null;
     history.replaceState(null, '', '/plus/highlights.html?concept=nope');
