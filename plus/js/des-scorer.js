@@ -8,11 +8,11 @@
 // the DES explainer box right above it), so it paints before this module
 // arrives. Everything inside #dcDesToolPanel is built here, lazily, the
 // first time the tab opens.
-import { el, faNum } from './util.js?v=125';
-import { api, currentUser, meStatus } from './api.js?v=125';
-import { openLoginModal } from './login-modal.js?v=125';
-import { premiumCta, unreachableGate } from './premium-cta.js?v=125';
-import { sourceBlock } from './des.js?v=125';
+import { el, faNum } from './util.js?v=127';
+import { api, currentUser, meStatus } from './api.js?v=127';
+import { openLoginModal } from './login-modal.js?v=127';
+import { premiumCta, unreachableGate } from './premium-cta.js?v=127';
+import { sourceBlock } from './des.js?v=127';
 
 const FROM = 'des-tool';
 const TG_URL = 'https://t.me/dentcast_support';

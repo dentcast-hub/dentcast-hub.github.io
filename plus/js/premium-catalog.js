@@ -26,7 +26,7 @@
 // GROUPS ARE INFORMATION, not decoration: they answer «what kind of thing is
 // this» for a reader who has never used any of it. Order inside a group is the
 // order a new subscriber meets them, the everyday ones first.
-import { PREMIUM_FEATURES } from './config.js?v=125';
+import { PREMIUM_FEATURES } from './config.js?v=127';
 
 const F = PREMIUM_FEATURES;
 
@@ -35,6 +35,7 @@ const F = PREMIUM_FEATURES;
 // the rail's paths so the same feature wears the same face on both surfaces.
 const IC = {
   cards: '<rect x="3" y="6" width="13" height="13" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v11"/>',
+  seen: '<path d="M4 12l5 5L20 6"/>',
   library: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>',
   concepts: '<circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 7l3 3M17 7l-3 3M7 17l3-3M17 17l-3-3"/>',
   clip: '<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/>',
@@ -69,6 +70,9 @@ function entry(key, ico, href, sub, opts = {}) {
   return {
     key, ico, href, sub, feature,
     title: feature ? feature.title : opts.title,
+    // A second line for the subscriber's row where the locked card's line
+    // would be selling something the reader already has.
+    subLive: opts.subLive || null,
     // A benefit a subscriber meets in place (under every article) rather than
     // on a page: shown to a reader who does not have it, omitted for one who does.
     hideWhenLive: !!opts.hideWhenLive,
@@ -83,6 +87,14 @@ export const PREMIUM_GROUPS = [
     entries: [
       entry('cards', IC.cards, '/plus/cards.html', 'مرور فاصله‌دار هایلایت‌ها، پیش از فراموشی', { feature: F[0] }),
       entry('highlights', IC.library, '/plus/highlights.html', 'همه‌ی هایلایت‌ها یک‌جا، با یادداشت و جستجو', { feature: F[5] }),
+      // The seen-ticks (plus.js initSeenTicks): a ✓ beside every item on a
+      // section list, hollow when opened, filled when read to the end, plus
+      // «فقط نخوانده‌ها». No page of its own — the locked card carries a demo
+      // and its tap opens the same gate sheet the section list opens; the live
+      // row leads to the archive tab, where the section lists live.
+      entry('seen', IC.seen, '/#panel-sharehub', 'کنار هر مطلبِ فهرست: بازش کرده‌ای یا تا آخر خوانده‌ای — روی هر دستگاهی', {
+        title: 'کدام‌ها را خوانده‌ای', subLive: 'نشانِ کنار هر مطلب در فهرست بخش‌ها، و فیلتر «فقط نخوانده‌ها»',
+      }),
       entry('concepts', IC.concepts, '/plus/highlights.html#concepts', 'هایلایت‌ها دسته‌بندی‌شده بر اساس مفهوم، فارغ از مقاله', { title: 'نمای موضوعی هایلایت‌ها' }),
       entry('clips', IC.clip, '/plus/highlights.html?kind=clip', 'یک تکه از پادکست را نگه دارید و بعداً بشنوید', { feature: F[7] }),
       entry('collections', IC.collections, '/plus/collections.html', 'پوشه‌های شخصی از هایلایت‌ها و مقاله‌ها، با خروجی Word و PowerPoint', { feature: F[2] }),

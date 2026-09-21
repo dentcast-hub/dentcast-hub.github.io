@@ -4,12 +4,12 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum, icon } from './util.js?v=125';
-import { api } from './api.js?v=125';
-import { FOLDER_EN } from './content-index.js?v=125';
-import { markReturnTrail } from './return-trail.js?v=125';
-import { openSheet, closeSheet } from './sheet.js?v=125';
-import { certificateTerms } from './certificate-terms.js?v=125';
+import { el, faNum, icon } from './util.js?v=127';
+import { api } from './api.js?v=127';
+import { FOLDER_EN } from './content-index.js?v=127';
+import { markReturnTrail } from './return-trail.js?v=127';
+import { openSheet, closeSheet } from './sheet.js?v=127';
+import { certificateTerms } from './certificate-terms.js?v=127';
 
 /** A "lightning + label" chip — a leading icon from the shared sprite
  * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
@@ -126,7 +126,8 @@ export async function renderPathwaysList(container) {
   // full-width cards pushing the real catalog below the fold («یه جای مشخص
   // کوچیک، نه وسط بازار» — founder, 2026-08-09).
   if (bundles.length) {
-    sections.push(el('div', { class: 'dcb-band' }, [
+    // id: the direct link's landing («همه‌ی باندل‌ها ›» on the premium tab and the homepage).
+    sections.push(el('div', { class: 'dcb-band', id: 'bundles' }, [
       el('div', { class: 'dcb-band-row' }, [
         el('h3', { class: 'dcb-band-title' }, [
           icon('icon-lightning'),
@@ -146,6 +147,18 @@ export async function renderPathwaysList(container) {
   }
 
   container.replaceChildren(...sections);
+
+  // A #bundles arrival: the band renders after load, so the browser's own hash
+
+  // scroll has already missed it.
+
+  if (location.hash === '#bundles') {
+
+    const band = container.querySelector('#bundles');
+
+    if (band && band.scrollIntoView) band.scrollIntoView({ block: 'start' });
+
+  }
 }
 
 function stepRow(step, idx, currentStep, pathway) {

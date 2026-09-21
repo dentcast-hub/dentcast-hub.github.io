@@ -2,29 +2,29 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=125';
-import { currentUser, api } from './js/api.js?v=125';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=125';
-import { openCollectionPicker } from './js/collections.js?v=125';
-import { el, faNum } from './js/util.js?v=125';
-import { initHomeCard } from './js/home-card.js?v=125';
-import { initHomeFeatures } from './js/home-features.js?v=125';
-import { initPremiumPanel } from './js/premium-panel.js?v=125';
-import { initHomeBundles } from './js/home-bundles.js?v=125';
-import { initHomeUpboard } from './js/home-upboard.js?v=125';
-import { initDesTool } from './js/des-scorer.js?v=125';
-import { initHeader } from './js/header.js?v=125';
-import { initTourAutostart } from './js/tour.js?v=125';
-import { initReadingTracker } from './js/reading.js?v=125';
-import { initListeningTracker } from './js/listening.js?v=125';
-import { initShareScoring, buildShareButton } from './js/share.js?v=125';
-import { initHeart, buildHeartChip } from './js/votes.js?v=125';
-import { mountClipControl, landOnClip } from './js/clips.js?v=125';
-import { mountArticleThreads } from './js/article-threads.js?v=125';
-import { mountChallenge } from './js/challenge.js?v=125';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=125';
-import { mountDes } from './js/des.js?v=125';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=125';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=127';
+import { currentUser, api } from './js/api.js?v=127';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=127';
+import { openCollectionPicker } from './js/collections.js?v=127';
+import { el, faNum } from './js/util.js?v=127';
+import { initHomeCard } from './js/home-card.js?v=127';
+import { initHomeFeatures } from './js/home-features.js?v=127';
+import { initPremiumPanel } from './js/premium-panel.js?v=127';
+import { initHomeBundles } from './js/home-bundles.js?v=127';
+import { initHomeUpboard } from './js/home-upboard.js?v=127';
+import { initDesTool } from './js/des-scorer.js?v=127';
+import { initHeader } from './js/header.js?v=127';
+import { initTourAutostart } from './js/tour.js?v=127';
+import { initReadingTracker } from './js/reading.js?v=127';
+import { initListeningTracker } from './js/listening.js?v=127';
+import { initShareScoring, buildShareButton } from './js/share.js?v=127';
+import { initHeart, buildHeartChip } from './js/votes.js?v=127';
+import { mountClipControl, landOnClip } from './js/clips.js?v=127';
+import { mountArticleThreads } from './js/article-threads.js?v=127';
+import { mountChallenge } from './js/challenge.js?v=127';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=127';
+import { mountDes } from './js/des.js?v=127';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=127';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -34,7 +34,7 @@ import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=125';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=125').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=127').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -716,7 +716,7 @@ function folderForPath(folders) {
 }
 
 function openSeenGate() {
-  Promise.all([import('./js/sheet.js?v=125'), import('./js/premium-cta.js?v=125')])
+  Promise.all([import('./js/sheet.js?v=127'), import('./js/premium-cta.js?v=127')])
     .then(([sheet, cta]) => sheet.openSheet(sheet.gateCard({
       title: 'کدام‌ها را خوانده‌ای',
       sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '

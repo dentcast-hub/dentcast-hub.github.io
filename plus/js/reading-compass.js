@@ -4,10 +4,10 @@
 // dcp-pw-step for suggestion rows); is-spotlight/is-unexplored/
 // dcp-progress-badge/dcp-compass-ico are the only additions, in
 // plus-pages.css.
-import { el, faNum, sectionIcon } from './util.js?v=125';
-import { api } from './api.js?v=125';
-import { FOLDER_EN } from './content-index.js?v=125';
-import { markReturnTrail } from './return-trail.js?v=125';
+import { el, faNum, sectionIcon } from './util.js?v=127';
+import { api } from './api.js?v=127';
+import { FOLDER_EN } from './content-index.js?v=127';
+import { markReturnTrail } from './return-trail.js?v=127';
 
 // The badge and the percent next to it answer two DIFFERENT questions: the
 // badge ranks pillars by the raw NUMBER of items read (service's sort on

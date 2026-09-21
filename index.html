@@ -4662,6 +4662,36 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 .dcp-pp .dcp-pp-go.is-quiet{ color:var(--txt3); font-weight:600; }
 /* quick actions */
 .dcp-pp .dcp-pp-quick{ display:grid; grid-template-columns:repeat(4,1fr); gap:.5rem; margin:0 0 1rem; }
+/* the starter-bundle rail (home-bundles.js) hosted in the tab: the band's own
+   amber grammar, the tab's rhythm */
+.dcp-pp .dcp-pp-bundles{ margin:0 0 .95rem; }
+.dcp-pp .dcp-pp-bundles .dcb-band-title{ font-size:.92rem; }
+.dcp-pp .dcp-pp-bundles .dcb-railcard-lock{ color:var(--x-amber-ink); }
+/* «کدام‌ها را خوانده‌ای» — the seen-ticks card: a demo inside the locked card
+   (three rows, one per tick state, and the filter chip), the reader's own number
+   under it, and three small ticks beside the live row's title. Tick green is the
+   list's own (#22a06b / #3fc78c in plus.css), never amber. */
+.dcp-pp .is-seen-card{ flex-wrap:wrap; cursor:pointer; }
+.dcp-pp .is-seen-card.is-static{ cursor:pointer; }
+.dcp-pp .dcp-pp-tick{ display:inline-grid; place-items:center; inline-size:17px; block-size:17px; border-radius:50%; flex:none;
+  border:1.5px solid var(--card-border); color:transparent; font-size:.6rem; font-weight:800; line-height:1; }
+.dcp-pp .dcp-pp-tick.is-seen{ border-color:#22a06b; color:#22a06b; }
+.dcp-pp .dcp-pp-tick.is-read{ border-color:#22a06b; background:#22a06b; color:#fff; }
+[data-theme="dark"] .dcp-pp .dcp-pp-tick.is-seen{ border-color:#3fc78c; color:#3fc78c; }
+[data-theme="dark"] .dcp-pp .dcp-pp-tick.is-read{ border-color:#3fc78c; background:#3fc78c; color:#10202c; }
+.dcp-pp .dcp-pp-seen-demo{ flex:1 0 100%; background:var(--x-card); border:1px solid var(--card-border); border-radius:.75rem; padding:.35rem .6rem .45rem; margin-top:.35rem; }
+.dcp-pp .dcp-pp-seen-chip{ display:inline-flex; align-items:center; gap:.3rem; font-size:.64rem; font-weight:800; color:#22a06b;
+  border:1px solid rgba(34,160,107,.4); border-radius:999px; padding:.05rem .5rem; margin:.1rem 0 .3rem; }
+[data-theme="dark"] .dcp-pp .dcp-pp-seen-chip{ color:#3fc78c; border-color:rgba(63,199,140,.45); }
+.dcp-pp .dcp-pp-seen-row{ display:flex; align-items:center; gap:.5rem; padding:.28rem 0; border-bottom:1px solid var(--card-border); font-size:.74rem; font-weight:600; color:var(--txt); }
+.dcp-pp .dcp-pp-seen-row:last-child{ border-bottom:0; }
+.dcp-pp .dcp-pp-seen-t{ flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.dcp-pp .dcp-pp-seen-row small{ font-size:.6rem; color:var(--txt3); font-weight:600; white-space:nowrap; }
+.dcp-pp .dcp-pp-seen-num{ flex:1 0 100%; font-size:.72rem; color:var(--txt2); margin:.4rem 0 0; }
+.dcp-pp .dcp-pp-seen-num b{ font-size:.8rem; color:var(--pr); }
+.dcp-pp .dcp-pp-seen-ticks{ display:inline-flex; gap:2px; margin-inline-start:.3rem; vertical-align:middle; }
+.dcp-pp [data-dcp-key="seen"] .dcp-pp-row-s{ white-space:normal; } /* the mockup's row shows its whole sentence — the ticks already make this row two lines tall */
+.dcp-pp .dcp-pp-seen-ticks .dcp-pp-tick{ inline-size:14px; block-size:14px; font-size:.5rem; }
 .dcp-pp .dcp-pp-quick-a{ display:flex; flex-direction:column; align-items:center; gap:.3rem; text-decoration:none; color:inherit; -webkit-tap-highlight-color:transparent; }
 .dcp-pp .dcp-pp-quick-a:active .dcp-pp-quick-d{ transform:scale(.95); }
 .dcp-pp .dcp-pp-quick-d{ width:3.1rem; height:3.1rem; border-radius:1rem; display:grid; place-items:center; }
@@ -7020,7 +7050,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=217" defer></script>
+<script src="/dc-nav.js?v=219" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

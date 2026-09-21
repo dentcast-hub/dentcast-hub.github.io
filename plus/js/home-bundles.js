@@ -12,10 +12,10 @@
 // PREMIUM_FEATURES. `glyph` is a symbol id from the shared icon sprite
 // (assets/icons/icons.svg — the single source of truth for every icon on the
 // site; see assets/icons/README.md), never a raw emoji.
-import { el, faNum, icon } from './util.js?v=125';
-import { currentUser, api } from './api.js?v=125';
-import { pricingHref, premiumCta } from './premium-cta.js?v=125';
-import { openSheet, gateCard } from './sheet.js?v=125';
+import { el, faNum, icon } from './util.js?v=127';
+import { currentUser, api } from './api.js?v=127';
+import { pricingHref, premiumCta } from './premium-cta.js?v=127';
+import { openSheet, gateCard } from './sheet.js?v=127';
 
 const BUNDLES = [
   { id: 'bundle-laminate', glyph: 'icon-tooth', title: 'لمینیت: شروع کن', steps: 6 },
@@ -34,24 +34,34 @@ const SLOT_IDS = ['dcHomeBundles', 'dcdHomeBundles'];
 
 function bundleHref(id) { return '/plus/pathway.html?id=' + encodeURIComponent(id); }
 
-function bundleRailCard(b) {
+function bundleRailCard(b, lock = false) {
   const card = el('a', { class: 'dcb-railcard', href: bundleHref(b.id) }, [
     el('span', { class: 'dcb-railcard-glyph' }, icon(b.glyph)),
     el('p', { class: 'dcb-railcard-title' }, b.title),
     el('div', { class: 'dcb-railcard-foot' }, [
       el('span', { class: 'dcb-railcard-meta' }, faNum(b.steps) + ' قدم'),
-    ]),
+      // The premium tab's locked copy says so on every card (the homepage
+      // rail keeps the tap gate alone, as it always did).
+      lock ? el('span', { class: 'dcb-railcard-tag dcb-railcard-lock' }, '🔒 پریمیوم') : null,
+    ].filter(Boolean)),
   ]);
   card.dataset.dcbBundle = b.id;
   return card;
 }
 
-function section(isPremium) {
-  const more = isPremium
-    ? el('a', { class: 'dcb-band-more', href: '/plus/pathways.html' }, 'همه‌ی باندل‌ها ›')
+/** The catalog's own bundle band — the direct link lands ON the bundles. */
+export const BUNDLES_HREF = '/plus/pathways.html#bundles';
+
+// `opts.moreHref` — where «همه‌ی باندل‌ها ›» goes for a reader who cannot buy
+// from the link (the premium tab keeps exactly ONE buy link, its offer card,
+// so its locked rail points at the catalog, which gates itself); `opts.lock`
+// stamps «🔒 پریمیوم» on every card.
+function section(isPremium, opts = {}) {
+  const more = isPremium || opts.moreHref
+    ? el('a', { class: 'dcb-band-more', href: opts.moreHref || BUNDLES_HREF }, 'همه‌ی باندل‌ها ›')
     : el('a', { class: 'dcb-band-more', href: pricingHref('home-bundles') }, 'پریمیوم چیست؟ ›');
 
-  const rail = el('div', { class: 'dcb-railwrap' }, BUNDLES.map(bundleRailCard));
+  const rail = el('div', { class: 'dcb-railwrap' }, BUNDLES.map((b) => bundleRailCard(b, !!opts.lock)));
 
   // The homepage's tab-swipe state machine lives on #mobile-body
   // (touchstart records the start point, touchend decides and switches
@@ -102,7 +112,9 @@ function paint(id, metaText, tagText) {
  * is on screen and never awaited, same "never block the homepage on a count"
  * rule as home-features.js's fillLive. Left at the static step count on
  * failure. */
+export function fillBundlesLive() { return fillLive(); }
 function fillLive() {
+  if (typeof api.pathways !== 'function') return;
   api.pathways()
     .then((d) => {
       const byId = new Map(((d && d.pathways) || []).map((p) => [p.id, p]));
@@ -143,7 +155,7 @@ function openGate() {
   }));
 }
 
-function installTapGate() {
+export function installTapGate() {
   if (window.__dcHomeBundleGate) return;
   window.__dcHomeBundleGate = true;
 
@@ -161,6 +173,16 @@ function installTapGate() {
       })
       .catch(() => { window.location.href = dest; }); // fail open — see library-gate.js
   }, true);
+}
+
+/**
+ * The same rail for another host — the premium tab (premium-panel.js) draws it
+ * at the top of both its states: live for a subscriber (progress painted by
+ * fillBundlesLive), locked with a «🔒 پریمیوم» tag on every card for everyone
+ * else, the tap gate answering the tap. Same cards, same copy, same gestures.
+ */
+export function bundleRail({ isPremium = false, lock = false, moreHref = null } = {}) {
+  return section(isPremium, { lock, moreHref });
 }
 
 export async function initHomeBundles() {
