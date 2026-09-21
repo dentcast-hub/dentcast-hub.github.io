@@ -26,12 +26,12 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum } from './util.js?v=116';
-import { currentUser, meStatus, api } from './api.js?v=116';
-import { pricingHref } from './premium-cta.js?v=116';
-import { openLoginModal } from './login-modal.js?v=116';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=116';
-import { PREMIUM_GROUPS } from './premium-catalog.js?v=116';
+import { el, faNum } from './util.js?v=117';
+import { currentUser, meStatus, api } from './api.js?v=117';
+import { pricingHref } from './premium-cta.js?v=117';
+import { openLoginModal } from './login-modal.js?v=117';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=117';
+import { PREMIUM_GROUPS } from './premium-catalog.js?v=117';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -287,6 +287,10 @@ function wireCrossPanelLinks(wrap) {
     setTimeout(() => {
       target.scrollIntoView({ behavior: 'smooth', block: 'center' });
       if (typeof target.focus === 'function') target.focus({ preventScroll: true });
+      // A collapsed disclosure (the DES scorer tab) is OPENED, not merely
+      // reached: the card promised the tool, and landing on a closed tab that
+      // needs a second tap is landing short (founder, 1405/06/31).
+      if (target.getAttribute('aria-expanded') === 'false') target.click();
     }, 350);
   });
 }

@@ -264,17 +264,29 @@ describe('destinations', () => {
     expect(cards().length).toBe(19);
   });
 
-  it('switches panels for a card whose target lives on خانه', async () => {
-    await mount();
-    let switched = 0;
-    document.querySelector('.dc-bn-item[data-panel="panel-studio"]')!.addEventListener('click', () => { switched += 1; });
-    document.getElementById('panel-studio')!.classList.remove('active');
-    const des = mobile().querySelector('[data-dcp-key="des-scorer"]') as HTMLAnchorElement;
-    expect(des.getAttribute('href')).toBe('/#dcDesToolTab');
-    const ev = new MouseEvent('click', { bubbles: true, cancelable: true });
-    des.dispatchEvent(ev);
-    expect(ev.defaultPrevented).toBe(true);
-    expect(switched).toBe(1);
+  it('switches panels for a card whose target lives on خانه — and OPENS the tool it lands on', async () => {
+    const later = () => new Promise((r) => setTimeout(r, 420)); // past the 350ms switch delay
+    {
+      await mount();
+      let switched = 0;
+      document.querySelector('.dc-bn-item[data-panel="panel-studio"]')!.addEventListener('click', () => { switched += 1; });
+      document.getElementById('panel-studio')!.classList.remove('active');
+      const tab = document.getElementById('dcDesToolTab')!;
+      tab.setAttribute('aria-expanded', 'false');
+      tab.addEventListener('click', () => tab.setAttribute('aria-expanded', String(tab.getAttribute('aria-expanded') !== 'true')));
+      const des = mobile().querySelector('[data-dcp-key="des-scorer"]') as HTMLAnchorElement;
+      expect(des.getAttribute('href')).toBe('/#dcDesToolTab');
+      const ev = new MouseEvent('click', { bubbles: true, cancelable: true });
+      des.dispatchEvent(ev);
+      expect(ev.defaultPrevented).toBe(true);
+      expect(switched).toBe(1);
+      await later();
+      expect(tab.getAttribute('aria-expanded')).toBe('true'); // opened, not merely scrolled to
+      // a tab already open is left open
+      des.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+      await later();
+      expect(tab.getAttribute('aria-expanded')).toBe('true');
+    }
   });
 
   it('on the desktop shell, leaves the premium surface and scrolls to the column-C copy', async () => {
