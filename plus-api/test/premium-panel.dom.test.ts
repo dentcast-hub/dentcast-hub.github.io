@@ -18,11 +18,13 @@ let meImpl: () => Promise<Record<string, unknown> | null>;
 let meStatusImpl: () => string;
 let highlightsImpl: () => Promise<unknown>;
 let collectionsImpl: () => Promise<unknown>;
+let seenImpl: () => Promise<unknown>;
 
 vi.mock('/plus/js/api.js', () => ({
   api: {
     recentHighlights: () => highlightsImpl(),
     listCollections: () => collectionsImpl(),
+    seen: () => seenImpl(),
   },
   currentUser: () => meImpl(),
   meStatus: () => meStatusImpl(),
@@ -72,6 +74,7 @@ beforeEach(() => {
   meStatusImpl = () => 'anon';
   highlightsImpl = () => Promise.resolve({ total: 132 });
   collectionsImpl = () => Promise.resolve({ collections: [{}, {}, {}] });
+  seenImpl = () => Promise.reject(new Error('401'));
   globalThis.fetch = vi.fn(() => Promise.resolve({ ok: true, status: 200, json: async () => CHALLENGES })) as any;
   (Element.prototype as any).scrollIntoView = vi.fn();
 });
@@ -123,7 +126,7 @@ describe('a signed-out visitor', () => {
     expect(mobile().hidden).toBe(false);
     expect(mobile().querySelector('.dcp-pp')!.getAttribute('data-dcp-state')).toBe('locked');
     const all = cards();
-    expect(all.length).toBe(20);
+    expect(all.length).toBe(21);
     for (const c of all) expect(c.querySelector('.dcp-hf-state')!.textContent).toBe('🔒');
     const buy = pricingLinks();
     expect(buy).toHaveLength(1);
@@ -179,7 +182,7 @@ describe('a subscriber', () => {
     expect(mobile().querySelectorAll('.dcp-hf-state')).toHaveLength(0);
     expect(mobile().textContent).not.toContain('باز کردن');
     // every catalog entry but the hidden one is a row, in one surface per group
-    expect(rows()).toHaveLength(19);
+    expect(rows()).toHaveLength(20);
     expect(mobile().querySelectorAll('.dcp-pp-group.is-live .dcp-pp-inset')).toHaveLength(4);
     const tints = Array.from(mobile().querySelectorAll('.dcp-pp-group.is-live')).map((g) => g.className);
     expect(tints[0]).toContain('g-blue'); expect(tints[1]).toContain('g-green');
@@ -351,6 +354,64 @@ describe('the starter bundles («از کجا شروع کنم؟»)', () => {
   });
 });
 
+describe('«کدام‌ها را خوانده‌ای» — the seen-ticks card', () => {
+  const card = (root: Element = mobile()) => root.querySelector('[data-dcp-key="seen"]') as HTMLElement | null;
+
+  it('a guest sees the card in «خواندن و مرور» after the دفترچه, with the three-state demo and the chip, no number, and the tap opens the gate sheet', async () => {
+    await mount();
+    const c = card()!;
+    expect(c).toBeTruthy();
+    expect(c.closest('[data-dcp-group]')!.getAttribute('data-dcp-group')).toBe('reading');
+    const keys = Array.from(mobile().querySelectorAll('[data-dcp-group="reading"] [data-dcp-key]')).map((n) => n.getAttribute('data-dcp-key'));
+    expect(keys.indexOf('seen')).toBe(keys.indexOf('highlights') + 1);
+    expect(c.tagName).toBe('DIV'); // locked: no destination but the sheet
+    expect(c.querySelectorAll('.dcp-pp-seen-row').length).toBe(3);
+    expect(c.querySelector('.dcp-pp-seen-row .dcp-pp-tick.is-read')).toBeTruthy();
+    expect(c.querySelector('.dcp-pp-seen-row .dcp-pp-tick.is-seen')).toBeTruthy();
+    expect(c.querySelector('.dcp-pp-seen-chip')!.textContent).toContain('فقط نخوانده‌ها');
+    expect((c.querySelector('.dcp-pp-seen-num') as HTMLElement).hidden).toBe(true);
+    c.click();
+    await settle();
+    const sheetText = document.body.textContent || '';
+    expect(sheetText).toContain('این حافظه به حسابِ توست، نه به مرورگر');
+    expect(pricingLinks().length).toBe(1); // the offer stays the tab's one buy link (the sheet lives outside the panel)
+  });
+
+  it('a free reader gets their own number under the demo — the lock bar\'s sentence', async () => {
+    meImpl = () => Promise.resolve({ tier: 'free' });
+    meStatusImpl = () => 'ok';
+    seenImpl = () => Promise.resolve({ locked: true, folders: [{ key: 'insight', read: 12, total: 77 }, { key: 'notecast', read: 2, total: 40 }], read: 14, total: 117 });
+    await mount();
+    const num = card()!.querySelector('.dcp-pp-seen-num') as HTMLElement;
+    expect(num.hidden).toBe(false);
+    expect(num.textContent).toContain('۱۴ از ۱۱۷');
+    expect(num.textContent).toContain('دیدنِ اینکه کدام‌ها، با پریمیوم');
+  });
+
+  it('a subscriber gets a row with the three ticks beside the title, the site-wide count, and the archive tab as its door', async () => {
+    meImpl = () => Promise.resolve({ tier: 'premium', display_name: 'x' });
+    meStatusImpl = () => 'ok';
+    seenImpl = () => Promise.resolve({ locked: false, folders: [{ key: 'insight', read: 51, total: 444 }], viewed: [], completed: [] });
+    await mount();
+    const row = card()!;
+    expect(row.tagName).toBe('A');
+    expect(row.getAttribute('href')).toBe('/#panel-sharehub');
+    expect(row.querySelectorAll('.dcp-pp-seen-ticks .dcp-pp-tick').length).toBe(3);
+    expect(row.querySelector('.dcp-pp-row-s')!.textContent).toContain('فقط نخوانده‌ها');
+    expect(row.querySelector('.dcp-pp-seen-demo')).toBeNull();
+    expect(row.querySelector('.dcp-pp-st-text')!.textContent).toBe('۵۱ از ۴۴۴');
+  });
+
+  it('the gate copy is plus.js\'s own openSeenGate, word for word', async () => {
+    const { SEEN_GATE } = await import('/plus/js/premium-panel.js');
+    const src = fs.readFileSync(path.join(repoRoot, 'plus/plus.js'), 'utf8');
+    const m = src.match(/function openSeenGate\(\) \{[\s\S]*?title: '([^']+)',\s*sub: '([^']+)'\s*\+ '([^']+)'/);
+    expect(m).toBeTruthy();
+    expect(SEEN_GATE.title).toBe(m![1]);
+    expect(SEEN_GATE.sub).toBe(m![2] + m![3]);
+  });
+});
+
 describe('destinations', () => {
   it('sends the چالش card to the landing page, never to one challenge', async () => {
     await mount();
@@ -373,7 +434,7 @@ describe('destinations', () => {
     meStatusImpl = () => 'user';
     await mount();
     expect(mobile().querySelector('[data-dcp-key="threads"]')).toBeNull();
-    expect(mobile().querySelectorAll('.dcp-pp-row').length).toBe(19);
+    expect(mobile().querySelectorAll('.dcp-pp-row').length).toBe(20);
   });
 
   it('switches panels for a card whose target lives on خانه — and OPENS the tool it lands on', async () => {

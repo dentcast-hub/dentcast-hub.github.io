@@ -40,13 +40,14 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=126';
-import { currentUser, meStatus, api } from './api.js?v=126';
-import { pricingHref } from './premium-cta.js?v=126';
-import { openLoginModal } from './login-modal.js?v=126';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=126';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=126';
-import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=126';
+import { el, faNum, streakIsActiveToday } from './util.js?v=127';
+import { currentUser, meStatus, api } from './api.js?v=127';
+import { pricingHref, premiumCta } from './premium-cta.js?v=127';
+import { openSheet, gateCard } from './sheet.js?v=127';
+import { openLoginModal } from './login-modal.js?v=127';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=127';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=127';
+import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=127';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -117,10 +118,51 @@ function guestLine() {
   return el('p', { class: 'dcp-muted dcp-pp-guest' }, ['اگر اشتراک دارید، ', a, '.']);
 }
 
+/**
+ * «کدام‌ها را خوانده‌ای» — the seen-ticks' gate, word for word plus.js's
+ * openSeenGate (a test keeps the two in step): the feature has no page, so the
+ * card's tap says what it is and what it costs, exactly as a section list does.
+ */
+export const SEEN_GATE = {
+  title: 'کدام‌ها را خوانده‌ای',
+  sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '
+    + 'روی هر دستگاهی، و حتی بعد از پاک‌کردنِ تاریخچه‌ی مرورگر — این حافظه به حسابِ توست، نه به مرورگر.',
+};
+function openSeenGate() {
+  openSheet(gateCard({ title: SEEN_GATE.title, sub: SEEN_GATE.sub, cta: premiumCta('gate-seen') }));
+}
+
+/** One tick in the tab's own vocabulary — the same three states the list draws. */
+function seenTick(state) {
+  return el('span', { class: 'dcp-pp-tick' + (state ? ' is-' + state : ''), 'aria-hidden': 'true' }, '✓');
+}
+
+/**
+ * The locked card's demo: three rows, one per tick state, and the filter chip —
+ * so a reader who never opens a section list still sees what the feature IS.
+ * The number line under it is painted later from GET /seen for a signed-in
+ * free reader (fillSeen); a guest, whom /seen refuses, gets the demo alone.
+ */
+function seenDemo() {
+  const row = (state, title, note) => el('div', { class: 'dcp-pp-seen-row' }, [
+    seenTick(state), el('span', { class: 'dcp-pp-seen-t' }, title), el('small', {}, note),
+  ]);
+  return el('div', { class: 'dcp-pp-seen-demo', 'aria-hidden': 'true' }, [
+    el('span', { class: 'dcp-pp-seen-chip' }, '◔ فقط نخوانده‌ها'),
+    row('read', 'ادهزیو یونیورسال و اچینگ سلکتیو', 'تا آخر خوانده‌ای'),
+    row('seen', 'لایه‌گذاری کامپوزیت خلفی', 'بازش کرده‌ای'),
+    row('', 'کنترل خونریزی در جراحی پریو', 'هنوز ندیده‌ای'),
+  ]);
+}
+
 function card(entry, state) {
-  const tag = entry.href ? 'a' : 'div';
-  const attrs = { class: 'dc-list-card dcp-hf-card' + (entry.href ? '' : ' is-static'), 'data-dcp-key': entry.key };
-  if (entry.href) attrs.href = entry.href;
+  // The seen card leads nowhere while locked: its destination is a sheet.
+  const seen = entry.key === 'seen';
+  const href = seen ? null : entry.href;
+  const tag = href ? 'a' : 'div';
+  const attrs = { class: 'dc-list-card dcp-hf-card' + (href ? '' : ' is-static') + (seen ? ' is-seen-card' : ''), 'data-dcp-key': entry.key };
+  if (href) attrs.href = href;
+  if (seen && state === 'locked') { attrs.role = 'button'; attrs.tabindex = '0'; }
   const chip = state === 'locked' ? stateChip('🔒', false)
     : state === 'live' ? stateChip('باز کردن', true)
     : null;
@@ -131,7 +173,13 @@ function card(entry, state) {
       el('div', { class: 'dc-list-card-sub' }, entry.sub),
     ]),
     chip,
+    seen ? seenDemo() : null,
+    seen && state === 'locked' ? el('p', { class: 'dcp-pp-seen-num', hidden: true }) : null,
   ].filter(Boolean));
+  if (seen && state === 'locked') {
+    node.addEventListener('click', openSeenGate);
+    node.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openSeenGate(); } });
+  }
   // Kept for the rail's painter vocabulary: a feature is addressed by its
   // canonical title, so a test (or a future shared painter) finds it the same
   // way on both surfaces.
@@ -280,8 +328,10 @@ function liveRow(entry, me) {
   const node = el(tag, attrs, [
     ico,
     el('div', { class: 'dcp-pp-row-main' }, [
-      el('div', { class: 'dcp-pp-row-t' }, entry.title),
-      el('div', { class: 'dcp-pp-row-s' }, entry.sub),
+      el('div', { class: 'dcp-pp-row-t' }, entry.key === 'seen'
+        ? [entry.title, el('span', { class: 'dcp-pp-seen-ticks', 'aria-hidden': 'true' }, [seenTick('read'), seenTick('seen'), seenTick('')])]
+        : entry.title),
+      el('div', { class: 'dcp-pp-row-s' }, entry.subLive || entry.sub),
     ]),
     st,
   ]);
@@ -385,8 +435,35 @@ function fillFromMe(me) {
 }
 
 /** The two counts that cost a request each — fired once the panel is seen. */
+/** «۵۱ از ۴۴۴» — the reader's site-wide pair from GET /seen; the same numbers
+ * the section list's lock bar prints, summed over the folders it names. */
+function seenPair(d) {
+  const folders = (d && d.folders) || [];
+  const read = typeof d.read === 'number' ? d.read : folders.reduce((a, f) => a + (f.read || 0), 0);
+  const total = typeof d.total === 'number' ? d.total : folders.reduce((a, f) => a + (f.total || 0), 0);
+  return { read, total };
+}
+function fillSeen(state) {
+  if (typeof api.seen !== 'function') return;
+  api.seen()
+    .then((d) => {
+      if (!d) return;
+      const { read, total } = seenPair(d);
+      if (!total) return;
+      if (state === 'live') { paint('seen', faNum(read) + ' از ' + faNum(total), { live: true }); return; }
+      // A signed-in free reader: the lock bar's own sentence, with their number —
+      // the number is what makes the lock legible (plus.js seenLockBar).
+      document.querySelectorAll('.dcp-pp .is-seen-card .dcp-pp-seen-num').forEach((n) => {
+        n.replaceChildren(el('b', {}, faNum(read) + ' از ' + faNum(total)), ' مطلب را خوانده‌ای — دیدنِ اینکه کدام‌ها، با پریمیوم');
+        n.hidden = false;
+      });
+    })
+    .catch(() => { /* the demo stands on its own */ });
+}
+
 function fillLazily() {
   fillBundlesLive();
+  fillSeen('live');
   api.recentHighlights(1)
     .then((d) => {
       if (!d || !d.total) return;
@@ -442,6 +519,12 @@ function wireCrossPanelLinks(wrap) {
     if (desktopShell() && id) {
       const alt = document.getElementById(id.replace(/^dc(?!d)/, 'dcd'));
       if (alt) target = alt;
+      // The archive is a column-C state on the desktop shell, opened by its own
+      // sidebar item; the phone panel it names is display:none there.
+      if (id === 'panel-sharehub') {
+        const item = document.getElementById('dcd-archive-item');
+        if (item) { e.preventDefault(); item.click(); return; }
+      }
     }
     if (!target) return;
     const panel = target.closest('.dc-panel');
@@ -503,6 +586,9 @@ export async function initPremiumPanel() {
     if (armed) return;
     armed = true;
     if (state === 'live') fillLazily();
+    // A signed-in FREE reader gets the seen card's own number (a guest is
+    // refused by /seen and keeps the demo alone).
+    else if (state === 'locked' && me) fillSeen('locked');
   };
   slots.forEach((slot) => whenSeen(slot, lazy));
 }
