@@ -21,7 +21,12 @@ body.dc-content-only .dc-site-footer,
 body.dc-content-only #dc-theme-toggle,
 body.dc-content-only .dc-bottom-nav,
 body.dc-content-only #dcSearchOverlay,
-body.dc-content-only .ep-back {
+body.dc-content-only .ep-back,
+/* The destination pages' own «بازگشت» (/up-board/, /des-board/, /challenges/):
+   inside the desktop column the reader IS on the homepage, and the link's
+   history.back() stepped the iframe to about:blank, leaving column C empty
+   (2026-09-21). The shell's sidebar is the way back there. */
+body.dc-content-only [data-dc-back] {
   display: none !important;
 }
 body.dc-content-only {
