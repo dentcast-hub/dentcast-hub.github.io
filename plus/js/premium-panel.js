@@ -40,15 +40,15 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=131';
-import { currentUser, meStatus, api } from './api.js?v=131';
-import { pricingHref, premiumCta } from './premium-cta.js?v=131';
-import { openSheet, gateCard } from './sheet.js?v=131';
-import { openLoginModal } from './login-modal.js?v=131';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=131';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=131';
-import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=131';
-import { armDesTool } from './des-scorer.js?v=131';
+import { el, faNum, streakIsActiveToday } from './util.js?v=132';
+import { currentUser, meStatus, api } from './api.js?v=132';
+import { pricingHref, premiumCta } from './premium-cta.js?v=132';
+import { openSheet, gateCard } from './sheet.js?v=132';
+import { openLoginModal } from './login-modal.js?v=132';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=132';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=132';
+import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=132';
+import { armDesTool } from './des-scorer.js?v=132';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -633,12 +633,25 @@ function whenSeen(node, fn) {
   io.observe(node);
 }
 
+/**
+ * The desktop shell's own buy row (index.html `.dcd-a-subscribe`, «خرید اشتراک
+ * پریمیوم» in the col-A sidebar) is static HTML that no script read the tier
+ * for, so it stood beside a subscriber's tab — the one surface whose rule is
+ * zero buy links for its owner (2026-09-21). Hidden for 'live' ONLY: a free
+ * reader keeps it, and 'unknown' (we could not ask) keeps what shipped rather
+ * than deciding anything.
+ */
+function syncShellOffer(state) {
+  document.querySelectorAll('.dcd-a-subscribe').forEach((n) => { n.hidden = state === 'live'; });
+}
+
 export async function initPremiumPanel() {
   const slots = SLOT_IDS.map((id) => document.getElementById(id)).filter(Boolean);
   if (!slots.length) return;
   let me = null;
   try { me = await currentUser(); } catch (_) { me = null; }
   const state = stateOf(me);
+  syncShellOffer(state);
   slots.forEach((slot) => {
     const head = pageHeadOf(slot);
     const wrap = build(me, { hasHead: !!head });
