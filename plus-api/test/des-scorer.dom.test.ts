@@ -19,7 +19,7 @@ vi.mock('/plus/js/api.js', () => ({
   },
 }));
 
-const { initDesTool } = await import('/plus/js/des-scorer.js');
+const { initDesTool, armDesTool } = await import('/plus/js/des-scorer.js');
 
 const settle = () => new Promise((r) => setTimeout(r, 0));
 
@@ -292,5 +292,99 @@ describe('reopening the tab', () => {
     expect(document.querySelector('.dc-destool-view[data-view="pending"]')?.classList.contains('is-on')).toBe(true);
     expect(document.querySelector('.dc-destool-ftitle')?.textContent).toBe('مقاله‌ی من');
     expect(document.querySelector('.dc-destool-fmeta code')?.textContent).toBe('D-ONE-TWO3');
+  });
+});
+
+/**
+ * Two drawers on one page — the home panel's and the premium tab's. Each has
+ * the inline-style toggle of its own; the module is what makes them ONE tool.
+ */
+function twoShells(): void {
+  document.body.innerHTML = ['a', 'b'].map((k) => `
+    <div class="dc-destool-wrap" id="wrap-${k}">
+      <button type="button" class="dc-destool-tab" id="tab-${k}" aria-expanded="false" aria-controls="panel-${k}">tab</button>
+      <div class="dc-destool-drawer" id="drawer-${k}"><div><div id="panel-${k}"></div></div></div>
+    </div>`).join('');
+  for (const k of ['a', 'b']) {
+    const tab = document.getElementById('tab-' + k)!;
+    const drawer = document.getElementById('drawer-' + k)!;
+    tab.addEventListener('click', () => {
+      const open = !drawer.classList.contains('is-open');
+      drawer.classList.toggle('is-open', open);
+      tab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+}
+const tap = (k: string) => document.getElementById('tab-' + k)!.dispatchEvent(new Event('click', { bubbles: true }));
+const isOpen = (k: string) => document.getElementById('drawer-' + k)!.classList.contains('is-open');
+const panelOf = (k: string) => document.getElementById('panel-' + k)!;
+
+describe('one tool, however many drawers', () => {
+  beforeEach(() => { twoShells(); initDesTool(); });
+
+  it('builds ONCE and moves the same subtree into whichever drawer opens, closing the one it left', async () => {
+    tap('a');
+    await settle();
+    const host = panelOf('a').firstElementChild!;
+    expect(host.querySelector('textarea')).not.toBeNull();       // the real form, built here
+    expect(panelOf('b').firstElementChild).toBeNull();
+
+    tap('b');
+    await settle();
+    expect(panelOf('b').firstElementChild).toBe(host);           // the SAME node, re-parented
+    expect(panelOf('a').firstElementChild).toBeNull();
+    expect(panelOf('a').getAttribute('data-filled')).toBe('1');  // the watchdog stays stood down
+    expect(panelOf('b').getAttribute('data-filled')).toBe('1');
+    expect(isOpen('a')).toBe(false);                             // never open on nothing
+    expect(document.getElementById('tab-a')!.getAttribute('aria-expanded')).toBe('false');
+    expect(isOpen('b')).toBe(true);
+    expect(document.querySelectorAll('textarea')).toHaveLength(1); // one instance, one quota
+  });
+
+  it('carries a half-typed paper across — and back', async () => {
+    tap('a');
+    await settle();
+    const ta = document.querySelector('textarea') as HTMLTextAreaElement;
+    ta.value = 'نیمه‌کاره';
+    tap('b');
+    await settle();
+    expect((panelOf('b').querySelector('textarea') as HTMLTextAreaElement).value).toBe('نیمه‌کاره');
+    tap('a');                                                    // reopen the first: adopts it back
+    await settle();
+    expect((panelOf('a').querySelector('textarea') as HTMLTextAreaElement).value).toBe('نیمه‌کاره');
+    expect(isOpen('b')).toBe(false);
+  });
+
+  it('closing the drawer that does NOT hold the tool never resets the form', async () => {
+    tap('a');
+    await settle();
+    const ta = document.querySelector('textarea') as HTMLTextAreaElement;
+    ta.value = 'متن';
+    tap('b'); await settle();                                    // tool is now in b
+    // Drawer a was closed by the adoption; open and close it again without the tool moving.
+    // (a reopen would adopt — so instead press Escape with b holding the tool.)
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    expect((panelOf('b').querySelector('textarea') as HTMLTextAreaElement).value).toBe('متن'); // b is still open; nothing reset
+  });
+
+  it('armDesTool is idempotent per wrap and arms a drawer added after boot', async () => {
+    const wrap = document.getElementById('wrap-a')!;
+    armDesTool(wrap); armDesTool(wrap);                          // no second listener
+    tap('a'); await settle();
+    expect(document.querySelectorAll('textarea')).toHaveLength(1);
+    // a third drawer drawn later (the premium tab's) joins the same instance
+    document.body.insertAdjacentHTML('beforeend', `
+      <div class="dc-destool-wrap" id="wrap-c">
+        <button type="button" class="dc-destool-tab" id="tab-c" aria-expanded="false" aria-controls="panel-c">tab</button>
+        <div class="dc-destool-drawer" id="drawer-c"><div><div id="panel-c"></div></div></div>
+      </div>`);
+    const tab = document.getElementById('tab-c')!;
+    const drawer = document.getElementById('drawer-c')!;
+    tab.addEventListener('click', () => { const o = !drawer.classList.contains('is-open'); drawer.classList.toggle('is-open', o); tab.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+    armDesTool(document.getElementById('wrap-c')!);
+    tap('c'); await settle();
+    expect(panelOf('c').querySelector('textarea')).not.toBeNull();
+    expect(document.querySelectorAll('textarea')).toHaveLength(1);
+    expect(isOpen('a')).toBe(false);
   });
 });

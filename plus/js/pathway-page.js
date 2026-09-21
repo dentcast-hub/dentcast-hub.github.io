@@ -1,12 +1,12 @@
 // /plus/pathway.html?id=... — one pathway's detail view (Phase 3). Same
 // premium gate shape as pathways.html/cards.html.
-import { el } from './util.js?v=127';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=127';
-import { currentUser, meStatus } from './api.js?v=127';
-import { openLoginModal } from './login-modal.js?v=127';
-import { renderPathwayDetail } from './pathways.js?v=127';
-import { registerSW } from './pwa.js?v=127';
-import { wirePageBack } from './page-back.js?v=127';
+import { el } from './util.js?v=129';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=129';
+import { currentUser, meStatus } from './api.js?v=129';
+import { openLoginModal } from './login-modal.js?v=129';
+import { renderPathwayDetail } from './pathways.js?v=129';
+import { registerSW } from './pwa.js?v=129';
+import { wirePageBack } from './page-back.js?v=129';
 
 function comingSoonGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [

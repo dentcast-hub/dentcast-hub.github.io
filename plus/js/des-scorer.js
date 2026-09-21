@@ -8,11 +8,11 @@
 // the DES explainer box right above it), so it paints before this module
 // arrives. Everything inside #dcDesToolPanel is built here, lazily, the
 // first time the tab opens.
-import { el, faNum } from './util.js?v=127';
-import { api, currentUser, meStatus } from './api.js?v=127';
-import { openLoginModal } from './login-modal.js?v=127';
-import { premiumCta, unreachableGate } from './premium-cta.js?v=127';
-import { sourceBlock } from './des.js?v=127';
+import { el, faNum } from './util.js?v=129';
+import { api, currentUser, meStatus } from './api.js?v=129';
+import { openLoginModal } from './login-modal.js?v=129';
+import { premiumCta, unreachableGate } from './premium-cta.js?v=129';
+import { sourceBlock } from './des.js?v=129';
 
 const FROM = 'des-tool';
 const TG_URL = 'https://t.me/dentcast_support';
@@ -86,30 +86,63 @@ function looksLikeReference(s) { return /^D-[A-Z0-9]{3}-[A-Z0-9]{3}$/.test(s || 
  * time), reads the resulting state, and builds or notifies. Toggling here too
  * would flip the class a second time and cancel the open outright.
  */
-export function initDesTool() {
-  // The homepage carries this drawer TWICE since 2026-09-10 — once per shell —
-  // and only one of them is ever displayed. The tool is stateful and spends a
-  // server-side quota, so it is built into the VISIBLE copy rather than into
-  // both: two live instances would show one reader two tick counts for one
-  // allowance. offsetParent is null for anything inside a display:none subtree,
-  // which is exactly what separates the two shells here; the fallback to the
-  // first wrap keeps every other page (and any future single-wrap markup)
-  // working unchanged.
-  const wraps = Array.from(document.querySelectorAll('.dc-destool-wrap'));
-  const wrap = wraps.find((w) => w.offsetParent !== null) || wraps[0];
-  if (!wrap) return;
+/* ── one tool, however many drawers ──
+   The homepage carries this drawer twice (one per shell) and the premium tab
+   carries it a third and fourth time (one per slot) since 1405/06/31. The
+   tool is stateful and spends a server-side quota, so there is exactly ONE
+   built instance — a DOM subtree — and whichever drawer opens ADOPTS it: the
+   subtree is re-parented into that drawer's panel and the drawer it left is
+   closed. Two live instances would show one reader two tick counts for one
+   allowance (which is why this used to build into the visible copy only);
+   one instance that moves cannot, and a half-typed form travels with it. */
+const shared = { host: null, ctl: null };
+const armed = [];            // every drawer this module has wired, in order
+const armedWraps = new WeakSet();
+
+/**
+ * Wire ONE .dc-destool-wrap: fill on open, adopt the shared tool if it was
+ * built elsewhere, hand the controller its close/reopen side effects. The
+ * drawer's toggle is not this module's job (see initDesTool below); the
+ * premium tab's copy toggles itself before calling this. Idempotent per wrap.
+ */
+export function armDesTool(wrap) {
+  if (!wrap || armedWraps.has(wrap)) return;
   const tab = wrap.querySelector('.dc-destool-tab');
   const drawer = wrap.querySelector('.dc-destool-drawer');
-  // By aria-controls, never by a hard-coded id: the two copies cannot share one.
-  const panel = tab && document.getElementById(tab.getAttribute('aria-controls'));
+  // By aria-controls, never by a hard-coded id: the copies cannot share one.
+  // Looked up inside the wrap as well, because the premium tab arms its copy
+  // before the panel it was built into is attached to the document.
+  const pid = tab && tab.getAttribute('aria-controls');
+  const panel = pid && (document.getElementById(pid) || wrap.querySelector('[id="' + pid + '"]'));
   if (!tab || !drawer || !panel) return;
+  armedWraps.add(wrap);
+  const me = { tab, drawer, panel };
+  armed.push(me);
 
-  let built = false;
-  let ctl = null; // the controller returned by buildPanel(), once built
+  const mine = () => !!(shared.host && panel.contains(shared.host));
 
   function fill() {
-    if (!built) { built = true; ctl = buildPanel(panel); }
-    else if (ctl && ctl.onReopen) ctl.onReopen();
+    // A built tool whose drawer has since been torn out of the document (a
+    // re-rendered panel) is gone with it; the next open builds afresh.
+    if (shared.host && !document.contains(shared.host)) { shared.host = null; shared.ctl = null; }
+    if (!shared.host) {
+      const built = buildPanel(panel);
+      shared.host = built.host;
+      shared.ctl = built.ctl;
+      return;
+    }
+    if (!mine()) {
+      // Adopt: the drawer the tool is leaving must not stay open on nothing.
+      armed.forEach((o) => {
+        if (o !== me && document.contains(o.drawer) && o.drawer.classList.contains('is-open')) {
+          o.drawer.classList.remove('is-open');
+          o.tab.setAttribute('aria-expanded', 'false');
+        }
+      });
+      panel.setAttribute('data-filled', '1');
+      panel.replaceChildren(shared.host);
+    }
+    if (shared.ctl && shared.ctl.onReopen) shared.ctl.onReopen();
   }
 
   // The reader may have opened it before this module arrived — the inline
@@ -118,15 +151,20 @@ export function initDesTool() {
 
   tab.addEventListener('click', () => {
     if (drawer.classList.contains('is-open')) fill();
-    else if (ctl && ctl.onClose) ctl.onClose();
+    else if (mine() && shared.ctl && shared.ctl.onClose) shared.ctl.onClose();
   });
 
-  // Escape is closed by the inline script; we only need the side effect.
+  // Escape is closed by the drawer's own toggle; we only need the side effect.
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !drawer.classList.contains('is-open') && ctl && ctl.onClose) {
-      ctl.onClose();
+    if (e.key === 'Escape' && !drawer.classList.contains('is-open') && mine() && shared.ctl && shared.ctl.onClose) {
+      shared.ctl.onClose();
     }
   });
+}
+
+/** Arm every drawer on the page. Safe to call again: a wrap is armed once. */
+export function initDesTool() {
+  document.querySelectorAll('.dc-destool-wrap').forEach(armDesTool);
 }
 
 /**
@@ -152,7 +190,7 @@ function buildPanel(panel) {
     renderTool(gateHost, ctl);
   });
 
-  return ctl;
+  return { host: gateHost, ctl };
 }
 
 function renderSignedOut(host) {
