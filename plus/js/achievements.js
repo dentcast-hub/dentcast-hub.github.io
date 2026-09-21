@@ -1,6 +1,6 @@
-import { el, faNum } from './util.js?v=127';
-import { api } from './api.js?v=127';
-import { openSheet, closeSheet } from './sheet.js?v=127';
+import { el, faNum } from './util.js?v=129';
+import { api } from './api.js?v=129';
+import { openSheet, closeSheet } from './sheet.js?v=129';
 
 /**
  * The profile's «افتخارات» section: two league medals and the badge wall.

@@ -4665,6 +4665,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 /* the starter-bundle rail (home-bundles.js) hosted in the tab: the band's own
    amber grammar, the tab's rhythm */
 .dcp-pp .dcp-pp-bundles{ margin:0 0 .95rem; }
+.dcp-pp .dcp-pp-destool{ margin:1.1rem 0 .3rem; } /* ارزیاب DES — the home panel's box, last on the tab; its own look is .dc-destool-* above */
 .dcp-pp .dcp-pp-bundles .dcb-band-title{ font-size:.92rem; }
 .dcp-pp .dcp-pp-bundles .dcb-railcard-lock{ color:var(--x-amber-ink); }
 /* «کدام‌ها را خوانده‌ای» — the seen-ticks card: a demo inside the locked card
@@ -5182,8 +5183,9 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
            plus/plus.css because the panel only renders after a click, by
            which time plus.css is already on the page. Behaviour (the
            disclosure toggle + everything inside the panel) is
-           plus/js/des-scorer.js — mobile-shell only, matching the box above:
-           #mobile-shell has no desktop equivalent to mirror this into yet. -->
+           plus/js/des-scorer.js. The premium tab draws this same box at its
+           end (premium-panel.js desToolBand) and the module keeps ONE tool
+           instance that moves into whichever drawer opens. -->
       <style>
         .dc-destool-wrap{
           margin:.7rem 0 1.1rem;
@@ -6965,7 +6967,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=ff4676bc36',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=6eebca2b9a',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -7050,7 +7052,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=219" defer></script>
+<script src="/dc-nav.js?v=221" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -7320,7 +7322,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=ff4676bc36';
+  const FEED_URL='/dentcast-brain.json?v=6eebca2b9a';
   /* Two hosts, one per homepage shell — the same SLOT_IDS split
      plus/js/home-upboard.js uses for the «بالاترین» arrangement of this same
      box. This script owns «تازه‌ترین» and is the ONLY renderer of it (the
@@ -7595,7 +7597,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=ff4676bc36', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=6eebca2b9a', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
