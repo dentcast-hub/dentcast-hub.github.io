@@ -303,6 +303,54 @@ describe('when the API cannot be asked', () => {
   });
 });
 
+describe('the starter bundles («از کجا شروع کنم؟»)', () => {
+  const band = (root: Element = mobile()) => root.querySelector('.dcp-pp-bundles');
+  const railCards = (root: Element = mobile()) => Array.from(root.querySelectorAll('.dcp-pp-bundles .dcb-railcard'));
+  const more = (root: Element = mobile()) => root.querySelector('.dcp-pp-bundles .dcb-band-more') as HTMLAnchorElement | null;
+
+  it('a guest sees the rail at the TOP, every card locked, and the link landing on the catalog band — the offer stays the one buy link', async () => {
+    await mount();
+    const b = band()!;
+    expect(b).toBeTruthy();
+    expect(b.getAttribute('data-dcp-bundles')).toBe('locked');
+    const firstGroup = mobile().querySelector('.dcp-pp-group')!;
+    expect(b.compareDocumentPosition(firstGroup) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(railCards().length).toBe(10);
+    expect(railCards().every((c) => c.querySelector('.dcb-railcard-lock')?.textContent?.includes('🔒'))).toBe(true);
+    expect(more()!.getAttribute('href')).toBe('/plus/pathways.html#bundles');
+    expect(pricingLinks().length).toBe(1);
+  });
+
+  it('a free reader sees the same locked rail', async () => {
+    meImpl = () => Promise.resolve({ tier: 'free' });
+    meStatusImpl = () => 'ok';
+    await mount();
+    expect(band()!.getAttribute('data-dcp-bundles')).toBe('locked');
+    expect(railCards().length).toBe(10);
+    expect(pricingLinks().length).toBe(1);
+  });
+
+  it('a subscriber gets it live, under the quick actions, with no lock and the same catalog link', async () => {
+    meImpl = () => Promise.resolve({ tier: 'premium', display_name: 'x', current_streak: 3 });
+    meStatusImpl = () => 'ok';
+    await mount();
+    const b = band()!;
+    expect(b.getAttribute('data-dcp-bundles')).toBe('live');
+    const quick = mobile().querySelector('.dcp-pp-quick')!;
+    expect(quick.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    const firstGroup = mobile().querySelector('.dcp-pp-group')!;
+    expect(b.compareDocumentPosition(firstGroup) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(railCards().length).toBe(10);
+    expect(mobile().querySelectorAll('.dcb-railcard-lock').length).toBe(0);
+    expect(more()!.getAttribute('href')).toBe('/plus/pathways.html#bundles');
+  });
+
+  it('the catalog band carries the anchor the link lands on', () => {
+    const src = fs.readFileSync(path.join(repoRoot, 'plus/js/pathways.js'), 'utf8');
+    expect(src).toMatch(/class: 'dcb-band', id: 'bundles'/);
+  });
+});
+
 describe('destinations', () => {
   it('sends the چالش card to the landing page, never to one challenge', async () => {
     await mount();

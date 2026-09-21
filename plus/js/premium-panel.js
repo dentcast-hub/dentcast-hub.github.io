@@ -40,12 +40,13 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=125';
-import { currentUser, meStatus, api } from './api.js?v=125';
-import { pricingHref } from './premium-cta.js?v=125';
-import { openLoginModal } from './login-modal.js?v=125';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=125';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=125';
+import { el, faNum, streakIsActiveToday } from './util.js?v=126';
+import { currentUser, meStatus, api } from './api.js?v=126';
+import { pricingHref } from './premium-cta.js?v=126';
+import { openLoginModal } from './login-modal.js?v=126';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=126';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=126';
+import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=126';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -299,6 +300,22 @@ function liveGroup(g, me) {
   ]);
 }
 
+/**
+ * «از کجا شروع کنم؟» — the starter bundles, at the top of the tab in BOTH
+ * states (founder, 1405/06/31): a subscriber gets the live rail under the quick
+ * actions, everyone else gets the same rail right under the offer, every card
+ * wearing «🔒 پریمیوم» and the tap gate answering the tap. The «همه‌ی باندل‌ها ›»
+ * link goes to the catalog's own band (#bundles) in every state — the tab keeps
+ * exactly one buy link, the offer card, and the catalog gates itself.
+ */
+function bundlesBand(state) {
+  const locked = state === 'locked';
+  if (locked) installTapGate();
+  return el('section', { class: 'dcb-band dcp-pp-bundles', 'data-dcp-bundles': state }, [
+    bundleRail({ isPremium: state === 'live', lock: locked, moreHref: BUNDLES_HREF }),
+  ]);
+}
+
 /** The dashboard link, the header's own right-hand slot when the page has one. */
 function dashboardLink() {
   return el('a', { class: 'dcp-hf-more dcp-pp-dash', href: '/plus/' }, 'پیشخوان ›');
@@ -317,9 +334,11 @@ function build(me, { hasHead = false } = {}) {
     top,
     state === 'locked' ? offer() : null,
     anon ? guestLine() : null,
+    live ? null : bundlesBand(state),
     live ? hero(me) : null,
     live ? today(me) : null,
     live ? quick() : null,
+    live ? bundlesBand(state) : null,
     ...PREMIUM_GROUPS.map((g) => (live ? liveGroup(g, me) : group(g, state))),
   ].filter(Boolean));
   return wrap;
@@ -367,6 +386,7 @@ function fillFromMe(me) {
 
 /** The two counts that cost a request each — fired once the panel is seen. */
 function fillLazily() {
+  fillBundlesLive();
   api.recentHighlights(1)
     .then((d) => {
       if (!d || !d.total) return;
