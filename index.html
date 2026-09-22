@@ -5521,7 +5521,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         </a>
         <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-38.html">
           <span class="dc-type-chip t-chair">Chairside</span>
-          <p class="dc-rail-title">شرح ویزیت: شکستگی پیچ اباتمنت و سرامیک در بریج ایمپلنتی فک بالا، در بیماری با اوردنچر فک پایین</p>
+          <p class="dc-rail-title">شکستگی پیچ اباتمنت و سرامیک در بریج ایمپلنتی فک بالا، در بیماری با اوردنچر فک پایین</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="dentai" href="/dentai/dentai-35.html">
@@ -5573,7 +5573,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           </div>
         </div>
         <ul class="dc-pulse-list">
-          <li>یک <a href="/chairside/chairside-38.html">کیس تازه‌ی Chairside</a> با عنوانِ «شرح ویزیت: شکستگی پیچ اباتمنت و سرامیک در بریج ایمپلنتی فک بالا، در بیماری با اوردنچر فک پایین» منتشر شد · ۳۱ شهریور</li>
+          <li>یک <a href="/chairside/chairside-38.html">کیس تازه‌ی Chairside</a> با عنوانِ «شکستگی پیچ اباتمنت و سرامیک در بریج ایمپلنتی فک بالا، در بیماری با اوردنچر فک پایین» منتشر شد · ۳۱ شهریور</li>
           <li>یک <a href="/insight/insight-79.html">اینسایت بالینی</a> با عنوانِ «روی دیگر وینگ (wing): نکته‌ای که به آن توجه نمی‌شود» منتشر شد · ۳۱ شهریور</li>
           <li>یک <a href="/sharehub/share-22.html">مطلب تازه در Share Hub</a> با عنوانِ «رابردم برای سمان کردن لمینیت: الزامی یا اختیاری؟» منتشر شد · ۳۰ شهریور</li>
           <li>یک <a href="/insight/insight-78.html">اینسایت بالینی</a> با عنوانِ «کاهش فضای اینتراکلوزال در ناحیه‌ی خلفی فک بالا: قبل از ایمپلنت چه باید کرد؟» منتشر شد · ۳۰ شهریور</li>
@@ -6967,7 +6967,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=cb383876f2',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=942fc168b5',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -7322,7 +7322,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=cb383876f2';
+  const FEED_URL='/dentcast-brain.json?v=942fc168b5';
   /* Two hosts, one per homepage shell — the same SLOT_IDS split
      plus/js/home-upboard.js uses for the «بالاترین» arrangement of this same
      box. This script owns «تازه‌ترین» and is the ONLY renderer of it (the
@@ -7597,7 +7597,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=cb383876f2', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=942fc168b5', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
