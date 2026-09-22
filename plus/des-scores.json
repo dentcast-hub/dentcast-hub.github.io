@@ -17684,5 +17684,568 @@
         "interpretation_fa": "ارزشِ متن در این است که یک پرسشِ پروتزی را به یک ترتیبِ تصمیم تبدیل می‌کند: پیش از انتخابِ نوعِ روکش، وضعیتِ دندان‌های مقابل نسبت به پلنِ اکلوزال سنجیده می‌شود و فضا در همان مرحله‌ی جراحی ساخته می‌شود. هر ادعا به دلیلش وصل است و دامنه‌اش محدود شده. نسبتش با شواهد منتشرشده بیان نشده است."
       }
     ]
+  },
+  "sharehub/share-22": {
+    "scored_at": "2026-09-21",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Rubber dam isolation for restorative treatment in dental patients",
+          "authors": "Miao C, Yang X, Wong MCM, Zou J, Zhou X, Li C, Wang Y",
+          "year": 2021,
+          "journal": "Cochrane Database of Systematic Reviews",
+          "doi": "10.1002/14651858.CD009858.pub3"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR/meta-analysis of RCTs",
+          "evidence_quote": "We included randomised controlled trials (including split-mouth trials) over one month in length assessing the effects of rubber dam compared with alternative isolation methods for dental restorative treatments."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "low",
+              "evidence_quote": "Protocol first published: Issue 5, 2012 Review first published: Issue 9, 2016"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "Cochrane Oral Health's Information Specialist conducted systematic searches in the following databases for randomised controlled trials and controlled clinical trials."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "low",
+              "evidence_quote": "Six studies were controlled clinical trials (CCT) (Ganss 1999; Huth 2004; Sabbagh 2011; Smales 1993; Straffon 1985; van Dijken 1987)."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "The review authors assessed the risk of bias for each included study in each of seven domains using RoB 1 as described in the Cochrane Handbook for Systematic Reviews of Interventions (Higgins 2011)."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "We combined data using a fixed-effect model if there were only two or three studies, or a random-effects model if there were four or more studies."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "some_concerns",
+              "evidence_quote": "We planned to report bias using a funnel plot if the number of included studies had exceeded 10.",
+              "note": "the assessment was pre-specified but not carried out, because fewer than 10 studies were included"
+            }
+          ],
+          "multiplier": 0.8
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "Cheng Miao: none known.",
+            "note": "a declarations-of-interest section is present for every author"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT; this is a systematic review"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 3,
+            "evidence_quote": "Compared to traditional cotton rolls, rubber dam isolation may favour a higher survival rate or a lower loss rate of dental direct restorations at 6 months after surgery (low-certainty evidence) and at 24 months after surgery but the evidence is very uncertain for this longer follow-up.",
+            "note": "the review's own survival claims rest on follow-up of 6 to 24 months, short for a restoration survival outcome"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 77,
+        "band": "B",
+        "provisional": false,
+        "fact_fa": "امتیاز ۷۷ از ۱۰۰، باند B، نوع سوال THERAPY.",
+        "interpretation_fa": "مرور سیستماتیک کاکرین با پروتکل ثبت‌شده، جستجوی چنددیتابیسی و ارزیابی ریسک سوگیری. سقف طراحی را تقریبا کامل برمی‌دارد و افت امتیاز فقط از کوتاهی پیگیری مطالعات واردشده می‌آید. برای سوال اثر رابردم بر بقای ترمیم، معتبرترین منبع موجود است. درباره رستوریشن غیرمستقیم داده‌ای ندارد."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Performance of ceramic laminate veneers with immediate dentine sealing: An 11 year prospective clinical trial",
+          "authors": "Gresnigt MMM, Cune MS, Schuitemaker J, van der Made SAM, Meisberger EW, Magne P, Ozcan M",
+          "year": 2019,
+          "journal": "Dental Materials",
+          "doi": "10.1016/j.dental.2019.04.008"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 65,
+          "anchor": "prospective cohort / non-randomized trial",
+          "evidence_quote": "In this prospective clinical trial the survival, success rate and patient satisfaction of ceramic laminate veneers"
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "high",
+              "evidence_quote": "Cumulative survival analyses were performed with statisti- cal software program (SPSS 25.0; SPSS Inc, Chicago, IL, USA) using Kaplan–Meier and Log Rank (Mantel–Cox) tests to obtain the overall survival rate in relation to observation time and compare several subpopulations.",
+              "note": "3b-i threshold: the IDS versus no-IDS comparison is analysed with Kaplan-Meier and log-rank only, with no adjustment, matching, restriction or stratification for any confounder"
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "low",
+              "evidence_quote": "Between July-2007 and July-2018, a total of 118 patients with an age range between 18 and 78 years (80 female, 38 male, mean age: 42.1 years) received 444 indirect ceramic laminate veneers."
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "Immedi- ate dentin sealing (IDS) was applied when more than 50% of dentin was exposed during preparation."
+            },
+            {
+              "domain": "missing data",
+              "rating": "some_concerns",
+              "evidence_quote": "After baseline measurements 14 patients were not able to attend further follow-up evaluations (Fig. 1, none of these participants reported failures)",
+              "note": "attrition is counted and its outcome status stated, but no censoring rule or sensitivity analysis is described"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "low",
+              "evidence_quote": "Restorations were evaluated at baseline, 3 months, one year and final follow-up by two calibrated observers who were unaware of the variables of this study."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all",
+            "base_points": 8,
+            "points": 5,
+            "evidence_quote": "",
+            "note": "no conflict-of-interest or funding declaration anywhere in the supplied text; read the end matter after the Conclusion, the acknowledgements position and the reference list, and searched for interest / conflict / declaration / funding / acknowledgement wording including ligature variants. The supplied file is the in-press proof"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT; the study is a non-randomized prospective trial"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 3,
+            "evidence_quote": "",
+            "note": "no power analysis or sample size justification anywhere in the Materials and methods or the Statistical analysis section"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "follow-up runs to 11 years, well beyond what a survival claim requires"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 28,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "امتیاز ۲۸ از ۱۰۰، باند D، نوع سوال THERAPY.",
+        "interpretation_fa": "کارآزمایی پروسپکتیو با ارزیابان کالیبره و بی‌اطلاع، ولی مقایسه IDS با بدون IDS تعدیل آماری ندارد و با دوره‌ی زمانی و تجربه‌ی اپراتور درهم است. نبود بیانیه‌ی تعارض منافع هم امتیاز را پایین می‌آورد. یافته‌ی بقای بلندمدت لمینیت ارزش بالینی دارد، ولی برتری IDS از این داده به تنهایی اثبات نمی‌شود."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Influence of enamel preservation on failure rates of porcelain laminate veneers",
+          "authors": "Gurel G, Sesma N, Calamita MA, Coachman C, Morimoto S",
+          "year": 2013,
+          "journal": "The International Journal of Periodontics & Restorative Dentistry",
+          "doi": "10.11607/prd.1488"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 50,
+          "anchor": "retrospective cohort",
+          "evidence_quote": "in a retrospective survey of up to 12 years"
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "low",
+              "evidence_quote": "Cox regression modeling was used to determine which factors would predict PLV failure."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "Survival was analyzed using the Kaplan-Meier method.",
+              "note": "the cohort is one operator's private-practice case series over 12 years; no consecutive-inclusion statement and no eligibility criteria are given"
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "The following data were ana- lyzed from clinical forms: depth of preparation (intraenamel or den- tin exposure), preparation margin (enamel or dentin)"
+            },
+            {
+              "domain": "missing data",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no account of losses to follow-up, withdrawals or missing records anywhere; read Method and materials, the statistical paragraph, Results and the Discussion, and searched for lost to follow-up / dropout / withdraw / missing wording. The only occurrence of attrition in the text is the clinical parameter tooth attrition"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "low",
+              "evidence_quote": "Three blinded examiners in- plotted to analyze PLV failure, and dependently assessed veneer fail-"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors reported no conflicts of interest related to this study.",
+            "note": "disclosure is present"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT; this is a retrospective survey"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 3,
+            "evidence_quote": "",
+            "note": "no power analysis or sample size justification anywhere in Method and materials or the statistical paragraph"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "survival is followed to 12 years, adequate for the claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 25,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "امتیاز ۲۵ از ۱۰۰، باند D، نوع سوال THERAPY.",
+        "interpretation_fa": "بررسی گذشته‌نگر ۵۸۰ لمینیت با رگرسیون کاکس و ارزیابان بلایند. ضعف اصلی نبود هرگونه گزارش از ریزش نمونه و نبود معیار ورود روشن است. عدد ده برابر شدن خطر شکست روی مارجین عاجی از همین داده می‌آید و برای تصمیم درباره محل مارجین کاربردی است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "What is the influence of the operator on the long-term survival of posterior partial lithium disilicate restorations in an undergraduate setting?",
+          "authors": "Vosmeijer FB, Gresnigt MMM, Doeve AJ, Packer A, Cune MS, de Kuijper MCFM",
+          "year": 2025,
+          "journal": "Journal of Dentistry",
+          "doi": "10.1016/j.jdent.2024.105522"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 50,
+          "anchor": "retrospective cohort",
+          "evidence_quote": "Patients who received at least one posterior partial lithium disilicate restoration between 2009 and 2019 by undergraduates at the Center for Dentistry and Oral Hygiene in Groningen were included."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "low",
+              "evidence_quote": "A multilevel Cox regression analysis was performed aiming to identify the effect of clinical parameters on the time to failure using a frailty model to account for the clustering of restorations within the same patient."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "low",
+              "evidence_quote": "Patients who received at least one posterior partial lithium disilicate restoration between 2009 and 2019 by undergraduates at the Center for Dentistry and Oral Hygiene in Groningen were included."
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "use of a rubber dam; IDS; and type of cement (dual-cure or light-cure)."
+            },
+            {
+              "domain": "missing data",
+              "rating": "low",
+              "evidence_quote": "For the variable caries risk, 22 values were missing completely at random (Little's MCAR test). These values were imputed five times, creating five datasets."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "Two calibrated researchers (A.D. & F.",
+              "note": "outcomes were read from the patient charts by two calibrated researchers with a third for disagreements, but no blinding of the assessors is described"
+            }
+          ],
+          "multiplier": 0.8
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.",
+            "note": "disclosure is present"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT; this is a retrospective cohort"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 3,
+            "evidence_quote": "",
+            "note": "no power analysis or sample size justification anywhere in Materials and methods or section 2.4 Statistical analysis"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "median follow-up: 70 months, interquartile range 48–99 months",
+            "note": "median follow-up of about six years supports the survival claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 37,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "امتیاز ۳۷ از ۱۰۰، باند D، نوع سوال THERAPY.",
+        "interpretation_fa": "کوهورت گذشته‌نگر ۶۳۷ ترمیم با مدل کاکس چندسطحی و فریلتی برای کلاسترینگ، و مدیریت داده‌ی گمشده. تنها مطالعه‌ای است که رابردم را به عنوان متغیر در ترمیم غیرمستقیم باندشونده سنجیده. گروه بدون رابردم کوچک و انتخابی است، پس نبود معناداری نفی اثر نیست."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Influence of intraoral temperature and relative humidity on the dentin bond strength: an in situ study",
+          "authors": "Saraiva LO, Aguiar TR, Costa L, Cavalcanti AN, Giannini M, Mathias P",
+          "year": 2014,
+          "journal": "Journal of Esthetic and Restorative Dentistry",
+          "doi": "10.1111/jerd.12098"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 65,
+          "anchor": "in-vitro with non-standard but fully described protocol (in situ microtensile bond strength)",
+          "evidence_quote": "Sixty human molars were assigned to six groups according to the adhesive systems"
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "Objective: To evaluate the temperature and relative humidity (RH) at anterior and posterior intraoral sites and their effects on the dentin bond strength of two-step etch-and-rinse adhesive systems."
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no power analysis or justification of the ten specimens per group anywhere; read the Materials and methods (Specimen Preparation, Experimental Groups, the in situ procedure and the microtensile test) and the statistics paragraph, and searched for sample size / power wording"
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "low",
+              "evidence_quote": "Specimens were randomly divided into six groups"
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "blinding of the operator or of the assessor is not mentioned anywhere; read the Materials and methods, the failure-mode analysis and the SEM paragraph, and searched for blind / masked wording"
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "the statistical analysis was"
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "low",
+              "evidence_quote": "The authors do not have any financial interest in the"
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors do not have any financial interest in the",
+            "note": "disclosure is present and the stated support is CAPES, a public agency, not a manufacturer of a tested product"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT; this is a laboratory in situ study"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "covered in Q_method"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "no survival or longevity claim is made; the outcome is immediate bond strength"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 20,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "امتیاز ۲۰ از ۱۰۰، باند D، نوع سوال MATERIAL.",
+        "interpretation_fa": "مطالعه in situ با تخصیص تصادفی نمونه‌ها و آنالیز آماری مناسب، ولی بدون توجیه حجم نمونه و بدون هیچ بلایندینگی. فقط استحکام باند فوری را می‌سنجد و شرایط رطوبتی را در یک داوطلب ثبت می‌کند، پس درباره‌ی دوام باند یا آلودگی واقعی با بزاق و خون چیزی نمی‌گوید."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Clinical in-situ evaluation of the effect of rubber dam isolation on bond strength to enamel",
+          "authors": "Falacho RI, Melo EA, Marques JA, Ramos JC, Guerra F, Blatz MB",
+          "year": 2022,
+          "journal": "Journal of Esthetic and Restorative Dentistry",
+          "doi": "10.1111/jerd.12979"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 45,
+          "anchor": "in-vitro with incomplete protocol description (shear bond strength, rated from the abstract only)",
+          "evidence_quote": "The mesial, distal, lingual, and vestibular enamel surfaces of thirty human third molars were prepared (total n = 120)."
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "To evaluate the effect of rubber dam isolation on shear bond strength of two different adhesive systems to enamel."
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "NR",
+              "evidence_quote": ""
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "NR",
+              "evidence_quote": ""
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "NR",
+              "evidence_quote": ""
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "some_concerns",
+              "evidence_quote": "Significance level for statistical analyses was set at 5%.",
+              "note": "a significance level is stated but the tests used are not named in the abstract"
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "NR",
+              "evidence_quote": ""
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT; this is a laboratory in situ study"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "no survival or longevity claim is made; the outcome is immediate bond strength"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 25,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز مقدماتی ۲۵ از ۱۰۰، باند D، نوع سوال MATERIAL.",
+        "interpretation_fa": "فقط ابسترکت در دسترس بود، پس بیشتر دامنه‌های روش‌شناسی گزارش‌نشده مانده و امتیاز مقدماتی است. نتیجه‌اش برتری باند به مینا زیر رابردم است، ولی در جهت مخالف مطالعه‌ی Saraiva قرار می‌گیرد و هر دو فقط باند کوتاه‌مدت را می‌سنجند."
+      }
+    ]
   }
 }
