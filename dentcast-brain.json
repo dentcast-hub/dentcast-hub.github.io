@@ -15331,5 +15331,39 @@
       "secondary": [],
       "subtopic": "veneers-laminates"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-38",
+    "title": "شرح ویزیت: شکستگی پیچ اباتمنت و سرامیک در بریج ایمپلنتی فک بالا، در بیماری با اوردنچر فک پایین",
+    "caption": "در این کیس Chairside بیمار با شکستگیِ پیچِ اباتمنت و جدا شدنِ روکش از بریجِ ایمپلنتیِ فک بالا مراجعه می‌کند و ضربه را قاطعانه رد می‌کند؛ الگوی شکستِ سرامیک اما نشان می‌دهد منبعِ ضربه بارِ متکی بر ایمپلنتِ فک پایین است که شب‌ها با درآوردنِ اوردنچر مستقیماً به پروتزِ بالا می‌خورد.",
+    "hashtags": [
+      "#چیرساید",
+      "#کیس_بالینی",
+      "#دکتر_شهابیان",
+      "#شکست_پیچ",
+      "#پیچ_اباتمنت",
+      "#شکست_سرامیک",
+      "#اوردنچر",
+      "#اتچمنت_اوردنچر",
+      "#ترومای_اکلوزال",
+      "#بریج",
+      "#ایمپلنت",
+      "#طرح_درمان"
+    ],
+    "keywords": [
+      "abutment screw fracture implant bridge",
+      "implant bar opposing ceramic prosthesis",
+      "ceramic fracture impact pattern",
+      "overdenture removed at night occlusal trauma",
+      "screw fatigue fracture after loosening",
+      "staged treatment plan fractured implant bridge"
+    ],
+    "page_url": "/chairside/chairside-38.html",
+    "pillar": {
+      "primary": "implantology",
+      "secondary": [],
+      "subtopic": "prosthetic-components"
+    }
   }
 ]
