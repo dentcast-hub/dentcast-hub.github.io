@@ -258,7 +258,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 96,
+   "count": 98,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -355,7 +355,9 @@
     "insight/insight-74",
     "insight/insight-75",
     "insight/insight-76",
-    "insight/insight-77"
+    "insight/insight-77",
+    "insight/insight-78",
+    "insight/insight-79"
    ]
   },
   {
@@ -962,7 +964,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 33,
+   "count": 34,
    "content_ids": [
     "episodes/episode-31",
     "episodes/episode-83",
@@ -996,7 +998,8 @@
     "chairside/chairside-25",
     "episodes/episode-161",
     "episodes/episode-162",
-    "insight/insight-77"
+    "insight/insight-77",
+    "insight/insight-78"
    ]
   },
   {
@@ -1498,6 +1501,46 @@
    ]
   },
   {
+   "key": "curated_content",
+   "tag": "#Curated_Content",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
+   "use_when": "روی مدخل‌های بازنشر.",
+   "aliases": [
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 22,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22"
+   ]
+  },
+  {
    "key": "llm",
    "tag": "#LLM",
    "domain": "ai",
@@ -1535,6 +1578,45 @@
     "dentai/promptologist/prompt6-5",
     "dentai/promptologist/prompt7-1",
     "dentai/promptologist/prompt7-2"
+   ]
+  },
+  {
+   "key": "share_hub",
+   "tag": "#Share_Hub",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
+   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
+   "aliases": [
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 22,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22"
    ]
   },
   {
@@ -1695,83 +1777,6 @@
    ]
   },
   {
-   "key": "curated_content",
-   "tag": "#Curated_Content",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
-   "use_when": "روی مدخل‌های بازنشر.",
-   "aliases": [
-    "محتوای گلچین شده",
-    "کیوریتد",
-    "بازنشر محتوا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 21,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21"
-   ]
-  },
-  {
-   "key": "share_hub",
-   "tag": "#Share_Hub",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
-   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
-   "aliases": [
-    "شیرهاب",
-    "شر هاب"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 21,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21"
-   ]
-  },
-  {
    "key": "اباتمنت",
    "tag": "#اباتمنت",
    "domain": "clinical",
@@ -1808,6 +1813,87 @@
     "insight/insight-60",
     "insight/insight-62",
     "insight/insight-77"
+   ]
+  },
+  {
+   "key": "سمان_رزینی",
+   "tag": "#سمان_رزینی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "resin cement",
+    "سمان رزین"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 20,
+   "content_ids": [
+    "episodes/episode-3",
+    "episodes/episode-11",
+    "episodes/episode-19",
+    "episodes/episode-43",
+    "episodes/episode-129",
+    "episodes/episode-148",
+    "episodes/episode-149",
+    "insight/insight-5",
+    "notecast/episode-3",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-11",
+    "notecast/episode-16",
+    "notecast/episode-19",
+    "insight/insight-36",
+    "dentai/dentai-27",
+    "insight/insight-59",
+    "notecast/episode-40",
+    "sharehub/share-20",
+    "sharehub/share-22"
+   ]
+  },
+  {
+   "key": "لمینیت_سرامیکی",
+   "tag": "#لمینیت_سرامیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ونیر/لمینیتِ سرامیکی — رستوریشنِ نازکِ باندشونده‌ی زیبایی.",
+   "use_when": "مقاله لمینیتِ سرامیکی را موضوع داشته باشد.",
+   "aliases": [
+    "ceramic laminate",
+    "لامینیت",
+    "لمینت",
+    "لامینیت سرامیکی",
+    "veneer laminate"
+   ],
+   "variants": [
+    "#لمینیت"
+   ],
+   "co_tags": [
+    "#Laminate_Veneer"
+   ],
+   "count": 20,
+   "content_ids": [
+    "episodes/episode-9",
+    "episodes/episode-19",
+    "episodes/episode-37",
+    "episodes/episode-38",
+    "episodes/episode-39",
+    "episodes/episode-148",
+    "notecast/episode-19",
+    "metanotes/meta-1",
+    "dentai/dentai-10",
+    "chairside/chairside-1",
+    "insight/insight-36",
+    "insight/insight-37",
+    "sharehub/share-6",
+    "sharehub/share-8",
+    "notecast/episode-37",
+    "notecast/episode-38",
+    "chairside/chairside-32",
+    "chairside/chairside-35",
+    "sharehub/share-22",
+    "insight/insight-79"
    ]
   },
   {
@@ -1885,42 +1971,6 @@
    ]
   },
   {
-   "key": "سمان_رزینی",
-   "tag": "#سمان_رزینی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "resin cement",
-    "سمان رزین"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 19,
-   "content_ids": [
-    "episodes/episode-3",
-    "episodes/episode-11",
-    "episodes/episode-19",
-    "episodes/episode-43",
-    "episodes/episode-129",
-    "episodes/episode-148",
-    "episodes/episode-149",
-    "insight/insight-5",
-    "notecast/episode-3",
-    "notecast/episode-6",
-    "notecast/episode-7",
-    "notecast/episode-11",
-    "notecast/episode-16",
-    "notecast/episode-19",
-    "insight/insight-36",
-    "dentai/dentai-27",
-    "insight/insight-59",
-    "notecast/episode-40",
-    "sharehub/share-20"
-   ]
-  },
-  {
    "key": "انتخاب_متریال",
    "tag": "#انتخاب_متریال",
    "domain": "clinical",
@@ -1954,48 +2004,6 @@
     "episodes/episode-159-1",
     "insight/insight-57",
     "notecast/episode-41"
-   ]
-  },
-  {
-   "key": "لمینیت_سرامیکی",
-   "tag": "#لمینیت_سرامیکی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ونیر/لمینیتِ سرامیکی — رستوریشنِ نازکِ باندشونده‌ی زیبایی.",
-   "use_when": "مقاله لمینیتِ سرامیکی را موضوع داشته باشد.",
-   "aliases": [
-    "ceramic laminate",
-    "لامینیت",
-    "لمینت",
-    "لامینیت سرامیکی",
-    "veneer laminate"
-   ],
-   "variants": [
-    "#لمینیت"
-   ],
-   "co_tags": [
-    "#Laminate_Veneer"
-   ],
-   "count": 18,
-   "content_ids": [
-    "episodes/episode-9",
-    "episodes/episode-19",
-    "episodes/episode-37",
-    "episodes/episode-38",
-    "episodes/episode-39",
-    "episodes/episode-148",
-    "notecast/episode-19",
-    "metanotes/meta-1",
-    "dentai/dentai-10",
-    "chairside/chairside-1",
-    "insight/insight-36",
-    "insight/insight-37",
-    "sharehub/share-6",
-    "sharehub/share-8",
-    "notecast/episode-37",
-    "notecast/episode-38",
-    "chairside/chairside-32",
-    "chairside/chairside-35"
    ]
   },
   {
@@ -2737,7 +2745,7 @@
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
    "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
    "aliases": [
@@ -3137,6 +3145,34 @@
    ]
   },
   {
+   "key": "فضای_رستوریتیو",
+   "tag": "#فضای_رستوریتیو",
+   "domain": null,
+   "words": 2,
+   "definition": "فضای عمودیِ لازم برای بازسازی.",
+   "use_when": "مقاله کمبود یا اشغالِ این فضا را مسئله بداند.",
+   "aliases": [
+    "فضای بازسازی",
+    "restorative space",
+    "فضای پروتزی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "insight/insight-6",
+    "insight/insight-10",
+    "insight/insight-19",
+    "insight/insight-43",
+    "notecast/episode-34",
+    "insight/insight-46",
+    "chairside/chairside-19",
+    "insight/insight-57",
+    "chairside/chairside-31",
+    "insight/insight-78"
+   ]
+  },
+  {
    "key": "پروتز_متحرک",
    "tag": "#پروتز_متحرک",
    "domain": null,
@@ -3164,6 +3200,40 @@
     "dentai/dentai-34",
     "sharehub/share-19",
     "dentai/dentai-35"
+   ]
+  },
+  {
+   "key": "پروفایل_امرجنس",
+   "tag": "#پروفایل_امرجنس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Emergence Profile — کانتورِ خروجِ رستوریشن از زیرِ لثه که فرمِ بافتِ نرم و سلامتِ آن را تعیین می‌کند.",
+   "use_when": "مقاله پروفایلِ امرجنس را متغیرِ طراحی یا سلامتِ بافت بداند.",
+   "aliases": [
+    "emergence profile",
+    "پروفایل ظهور",
+    "پروفایل خروج",
+    "کانتور امرجنس"
+   ],
+   "variants": [
+    "#EmergenceProfile",
+    "#Emergence_Profile"
+   ],
+   "co_tags": [
+    "#Emergence_Profile"
+   ],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-112",
+    "episodes/episode-125-2",
+    "episodes/episode-130",
+    "chairside/chairside-10",
+    "episodes/episode-158",
+    "insight/insight-50",
+    "chairside/chairside-36",
+    "insight/insight-69",
+    "insight/insight-70",
+    "insight/insight-79"
    ]
   },
   {
@@ -3287,33 +3357,6 @@
    ]
   },
   {
-   "key": "فضای_رستوریتیو",
-   "tag": "#فضای_رستوریتیو",
-   "domain": null,
-   "words": 2,
-   "definition": "فضای عمودیِ لازم برای بازسازی.",
-   "use_when": "مقاله کمبود یا اشغالِ این فضا را مسئله بداند.",
-   "aliases": [
-    "فضای بازسازی",
-    "restorative space",
-    "فضای پروتزی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "insight/insight-6",
-    "insight/insight-10",
-    "insight/insight-19",
-    "insight/insight-43",
-    "notecast/episode-34",
-    "insight/insight-46",
-    "chairside/chairside-19",
-    "insight/insight-57",
-    "chairside/chairside-31"
-   ]
-  },
-  {
    "key": "قدرت_باند",
    "tag": "#قدرت_باند",
    "domain": null,
@@ -3402,36 +3445,31 @@
    ]
   },
   {
-   "key": "پروفایل_امرجنس",
-   "tag": "#پروفایل_امرجنس",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "Emergence Profile — کانتورِ خروجِ رستوریشن از زیرِ لثه که فرمِ بافتِ نرم و سلامتِ آن را تعیین می‌کند.",
-   "use_when": "مقاله پروفایلِ امرجنس را متغیرِ طراحی یا سلامتِ بافت بداند.",
+   "key": "ids",
+   "tag": "#IDS",
+   "domain": null,
+   "words": 1,
+   "definition": "Immediate Dentin Sealing — باند زدنِ عاج بلافاصله پس از تراش.",
+   "use_when": "مقاله IDS را تجویز یا ارزیابی کند.",
    "aliases": [
-    "emergence profile",
-    "پروفایل ظهور",
-    "پروفایل خروج",
-    "کانتور امرجنس"
+    "immediate dentin sealing",
+    "سیل فوری عاج",
+    "آی دی اس"
    ],
    "variants": [
-    "#EmergenceProfile",
-    "#Emergence_Profile"
+    "#Immediate_Dentin_Sealing"
    ],
-   "co_tags": [
-    "#Emergence_Profile"
-   ],
-   "count": 9,
+   "co_tags": [],
+   "count": 8,
    "content_ids": [
-    "episodes/episode-112",
-    "episodes/episode-125-2",
-    "episodes/episode-130",
-    "chairside/chairside-10",
-    "episodes/episode-158",
-    "insight/insight-50",
-    "chairside/chairside-36",
-    "insight/insight-69",
-    "insight/insight-70"
+    "episodes/episode-6",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "dentai/dentai-17",
+    "dentai/dentai-19",
+    "dentai/dentai-20",
+    "dentai/dentai-30",
+    "sharehub/share-22"
    ]
   },
   {
@@ -3652,33 +3690,6 @@
    ]
   },
   {
-   "key": "ids",
-   "tag": "#IDS",
-   "domain": null,
-   "words": 1,
-   "definition": "Immediate Dentin Sealing — باند زدنِ عاج بلافاصله پس از تراش.",
-   "use_when": "مقاله IDS را تجویز یا ارزیابی کند.",
-   "aliases": [
-    "immediate dentin sealing",
-    "سیل فوری عاج",
-    "آی دی اس"
-   ],
-   "variants": [
-    "#Immediate_Dentin_Sealing"
-   ],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-6",
-    "notecast/episode-6",
-    "notecast/episode-7",
-    "dentai/dentai-17",
-    "dentai/dentai-19",
-    "dentai/dentai-20",
-    "dentai/dentai-30"
-   ]
-  },
-  {
    "key": "prompt_engineering",
    "tag": "#Prompt_Engineering",
    "domain": "ai",
@@ -3728,6 +3739,34 @@
     "notecast/episode-33",
     "metanotes/meta-18",
     "sharehub/share-17"
+   ]
+  },
+  {
+   "key": "ایزولاسیون",
+   "tag": "#ایزولاسیون",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "خشک و ایزوله نگه داشتنِ میدانِ کار برای باندِ قابل‌اعتماد.",
+   "use_when": "مقاله ایزولاسیون را شرط یا مانع درمان بداند.",
+   "aliases": [
+    "isolation",
+    "رابردم",
+    "ایزوله کردن",
+    "ایزولیشن",
+    "rubber dam",
+    "رابر دم"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-7",
+    "notecast/episode-7",
+    "insight/insight-36",
+    "insight/insight-54",
+    "chairside/chairside-32",
+    "insight/insight-74",
+    "sharehub/share-22"
    ]
   },
   {
@@ -4229,33 +4268,6 @@
    ]
   },
   {
-   "key": "ایزولاسیون",
-   "tag": "#ایزولاسیون",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "خشک و ایزوله نگه داشتنِ میدانِ کار برای باندِ قابل‌اعتماد.",
-   "use_when": "مقاله ایزولاسیون را شرط یا مانع درمان بداند.",
-   "aliases": [
-    "isolation",
-    "رابردم",
-    "ایزوله کردن",
-    "ایزولیشن",
-    "rubber dam",
-    "رابر دم"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-7",
-    "notecast/episode-7",
-    "insight/insight-36",
-    "insight/insight-54",
-    "chairside/chairside-32",
-    "insight/insight-74"
-   ]
-  },
-  {
    "key": "بازسازی_کامل_دهان",
    "tag": "#بازسازی_کامل_دهان",
    "domain": "clinical",
@@ -4362,6 +4374,31 @@
    ]
   },
   {
+   "key": "ترمیم_ساب_جینجیوال",
+   "tag": "#ترمیم_ساب_جینجیوال",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "ترمیمِ قدیمی که تا زیر لثه امتداد یافته و تعریفِ خط را ناممکن می‌کند.",
+   "use_when": "مقاله همین وضعیت را محدودیت بداند.",
+   "aliases": [
+    "subgingival",
+    "زیر لثه",
+    "ساب جینجیوال",
+    "ترمیم زیر لثه"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-77",
+    "episodes/episode-78",
+    "episodes/episode-141",
+    "insight/insight-18",
+    "insight/insight-40",
+    "sharehub/share-22"
+   ]
+  },
+  {
    "key": "تیتانیوم_بیس",
    "tag": "#تیتانیوم_بیس",
    "domain": "clinical",
@@ -4420,7 +4457,7 @@
    "key": "رادیوگرافی_تشخیصی",
    "tag": "#رادیوگرافی_تشخیصی",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "انتخاب و تفسیرِ درستِ تصویر — پانورامیک در برابر پری‌اپیکال.",
    "use_when": "مقاله کفایت یا نارساییِ یک تصویر را مسئله بداند.",
    "aliases": [
@@ -4971,6 +5008,29 @@
    ]
   },
   {
+   "key": "امبراژور",
+   "tag": "#امبراژور",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "فضای مثلثیِ زیر کانتکت، که جراحی بازترش می‌کند.",
+   "use_when": "مقاله امبراژور را عاملِ بهداشت یا گیر غذایی بداند.",
+   "aliases": [
+    "embrasure",
+    "امبرژور",
+    "فضای امبراژور"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-7",
+    "insight/insight-16",
+    "insight/insight-32",
+    "insight/insight-61",
+    "insight/insight-79"
+   ]
+  },
+  {
    "key": "ایمپلنت_دیجیتال",
    "tag": "#ایمپلنت_دیجیتال",
    "domain": "clinical",
@@ -5084,30 +5144,6 @@
     "episodes/episode-123",
     "episodes/episode-124",
     "episodes/episode-147-3"
-   ]
-  },
-  {
-   "key": "ترمیم_ساب_جینجیوال",
-   "tag": "#ترمیم_ساب_جینجیوال",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "ترمیمِ قدیمی که تا زیر لثه امتداد یافته و تعریفِ خط را ناممکن می‌کند.",
-   "use_when": "مقاله همین وضعیت را محدودیت بداند.",
-   "aliases": [
-    "subgingival",
-    "زیر لثه",
-    "ساب جینجیوال",
-    "ترمیم زیر لثه"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-77",
-    "episodes/episode-78",
-    "episodes/episode-141",
-    "insight/insight-18",
-    "insight/insight-40"
    ]
   },
   {
@@ -5822,6 +5858,28 @@
    ]
   },
   {
+   "key": "اتصال_پیچ_شونده",
+   "tag": "#اتصال_پیچ_شونده",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "رستوریشنِ اسکرو-ریتین، در برابر سمان‌شونده.",
+   "use_when": "مقاله پیچ‌شونده بودن را انتخابِ آگاهانه بداند.",
+   "aliases": [
+    "screw retained",
+    "پیچ شونده",
+    "اسکرو ریتین"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-108",
+    "episodes/episode-122-1",
+    "insight/insight-10",
+    "insight/insight-78"
+   ]
+  },
+  {
    "key": "از_دست_رفتن_کانتکت",
    "tag": "#از_دست_رفتن_کانتکت",
    "domain": "clinical",
@@ -5896,28 +5954,6 @@
     "dentai/promptologist/prompt4-3",
     "dentai/promptologist/prompt5-3",
     "dentai/promptologist/prompt7-2"
-   ]
-  },
-  {
-   "key": "امبراژور",
-   "tag": "#امبراژور",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "فضای مثلثیِ زیر کانتکت، که جراحی بازترش می‌کند.",
-   "use_when": "مقاله امبراژور را عاملِ بهداشت یا گیر غذایی بداند.",
-   "aliases": [
-    "embrasure",
-    "امبرژور",
-    "فضای امبراژور"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-7",
-    "insight/insight-16",
-    "insight/insight-32",
-    "insight/insight-61"
    ]
   },
   {
@@ -6100,6 +6136,28 @@
     "notecast/episode-25",
     "notecast/episode-26",
     "dentai/dentai-31"
+   ]
+  },
+  {
+   "key": "حفظ_مینا",
+   "tag": "#حفظ_مینا",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "باقی گذاشتنِ حداکثریِ مینا برای باندِ پایدار.",
+   "use_when": "مقاله حفظ مینا را اصلِ حاکم بداند.",
+   "aliases": [
+    "enamel preservation",
+    "حفظ انامل",
+    "نگه داشتن مینا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "sharehub/share-8",
+    "notecast/episode-38",
+    "chairside/chairside-35",
+    "insight/insight-79"
    ]
   },
   {
@@ -6290,6 +6348,27 @@
     "insight/insight-22",
     "insight/insight-47",
     "insight/insight-68"
+   ]
+  },
+  {
+   "key": "عاج",
+   "tag": "#عاج",
+   "domain": null,
+   "words": 1,
+   "definition": "عاج دندان به‌عنوان بستر باند.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [
+    "dentin",
+    "عاج دندان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "dentai/dentai-4",
+    "notecast/episode-6",
+    "dentai/dentai-17",
+    "sharehub/share-22"
    ]
   },
   {
@@ -6812,27 +6891,6 @@
    ]
   },
   {
-   "key": "اتصال_پیچ_شونده",
-   "tag": "#اتصال_پیچ_شونده",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "رستوریشنِ اسکرو-ریتین، در برابر سمان‌شونده.",
-   "use_when": "مقاله پیچ‌شونده بودن را انتخابِ آگاهانه بداند.",
-   "aliases": [
-    "screw retained",
-    "پیچ شونده",
-    "اسکرو ریتین"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-108",
-    "episodes/episode-122-1",
-    "insight/insight-10"
-   ]
-  },
-  {
    "key": "اتچمنت",
    "tag": "#اتچمنت",
    "domain": "clinical",
@@ -6985,6 +7043,27 @@
    ]
   },
   {
+   "key": "باز_کردن_کانتکت",
+   "tag": "#باز_کردن_کانتکت",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "جدا کردنِ عمدیِ کانتکت پروگزیمال در تراش، برخلافِ #بستن_کانتکت که مفهوم معکوس است.",
+   "use_when": "مقاله اندیکاسیونِ باز کردن کانتکت را تعیین کند.",
+   "aliases": [
+    "بازکردن کانتکت",
+    "جدا کردن کانتکت",
+    "break contact"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-37",
+    "notecast/episode-37",
+    "insight/insight-79"
+   ]
+  },
+  {
    "key": "باند_به_عاج_ریشه",
    "tag": "#باند_به_عاج_ریشه",
    "domain": "clinical",
@@ -7093,6 +7172,30 @@
     "episodes/episode-119-1",
     "chairside/chairside-34",
     "sharehub/share-17"
+   ]
+  },
+  {
+   "key": "بلک_تراینگل",
+   "tag": "#بلک_تراینگل",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Black Triangle — فضای بازِ مثلثیِ زیرِ کانتکت که پاپیلا آن را پر نمی‌کند و در زیبایی مشکل‌ساز می‌شود.",
+   "use_when": "مقاله بلک تراینگل را تعریف یا اصلاح کند.",
+   "aliases": [
+    "black triangle",
+    "بلک تراینگل",
+    "مثلث سیاه",
+    "فاصله لثه ای",
+    "open gingival embrasure",
+    "امبراژور باز"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-39",
+    "notecast/episode-39",
+    "insight/insight-79"
    ]
   },
   {
@@ -7515,27 +7618,6 @@
    ]
   },
   {
-   "key": "حفظ_مینا",
-   "tag": "#حفظ_مینا",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "باقی گذاشتنِ حداکثریِ مینا برای باندِ پایدار.",
-   "use_when": "مقاله حفظ مینا را اصلِ حاکم بداند.",
-   "aliases": [
-    "enamel preservation",
-    "حفظ انامل",
-    "نگه داشتن مینا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "sharehub/share-8",
-    "notecast/episode-38",
-    "chairside/chairside-35"
-   ]
-  },
-  {
    "key": "خطای_اسکن",
    "tag": "#خطای_اسکن",
    "domain": "clinical",
@@ -7628,7 +7710,7 @@
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
-   "words": 4,
+   "words": 6,
    "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
    "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
    "aliases": [
@@ -7933,26 +8015,6 @@
    ]
   },
   {
-   "key": "عاج",
-   "tag": "#عاج",
-   "domain": null,
-   "words": 1,
-   "definition": "عاج دندان به‌عنوان بستر باند.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "aliases": [
-    "dentin",
-    "عاج دندان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "dentai/dentai-4",
-    "notecast/episode-6",
-    "dentai/dentai-17"
-   ]
-  },
-  {
    "key": "فالوآپ_ایمپلنت",
    "tag": "#فالوآپ_ایمپلنت",
    "domain": "clinical",
@@ -8194,6 +8256,26 @@
     "episodes/episode-38",
     "notecast/episode-38",
     "insight/insight-71"
+   ]
+  },
+  {
+   "key": "مینای_دندان",
+   "tag": "#مینای_دندان",
+   "domain": null,
+   "words": 2,
+   "definition": "مینا و آسیب‌های ساختاری‌اش.",
+   "use_when": "مقاله درباره‌ی خودِ مینا تصمیم بگیرد.",
+   "aliases": [
+    "enamel",
+    "مینا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/dentai-1",
+    "dentai/dentai-2",
+    "sharehub/share-22"
    ]
   },
   {
@@ -8774,6 +8856,27 @@
     "insight/insight-40",
     "insight/insight-63",
     "insight/insight-73"
+   ]
+  },
+  {
+   "key": "کنترل_رطوبت",
+   "tag": "#کنترل_رطوبت",
+   "domain": null,
+   "words": 2,
+   "definition": "خشک نگه داشتنِ سطح، به‌عنوان شرطِ دقت یا باند.",
+   "use_when": "مقاله رطوبت را عاملِ خطا بداند.",
+   "aliases": [
+    "moisture control",
+    "خشک کردن",
+    "blow drying"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/dentai-21",
+    "insight/insight-74",
+    "sharehub/share-22"
    ]
   },
   {
@@ -9408,6 +9511,26 @@
    ]
   },
   {
+   "key": "استئوپلاستی",
+   "tag": "#استئوپلاستی",
+   "domain": null,
+   "words": 1,
+   "definition": "برداشتِ کنترل‌شده‌ی استخوان برای اصلاح فرمِ ریج.",
+   "use_when": "مقاله این جراحی را در طرح بگنجاند.",
+   "aliases": [
+    "osteoplasty",
+    "کاهش ریج",
+    "اصلاح ریج"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-8",
+    "insight/insight-78"
+   ]
+  },
+  {
    "key": "استیج_بندی_درمان",
    "tag": "#استیج_بندی_درمان",
    "domain": null,
@@ -9707,26 +9830,6 @@
    ]
   },
   {
-   "key": "باز_کردن_کانتکت",
-   "tag": "#باز_کردن_کانتکت",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "جدا کردنِ عمدیِ کانتکت پروگزیمال در تراش، برخلافِ #بستن_کانتکت که مفهوم معکوس است.",
-   "use_when": "مقاله اندیکاسیونِ باز کردن کانتکت را تعیین کند.",
-   "aliases": [
-    "بازکردن کانتکت",
-    "جدا کردن کانتکت",
-    "break contact"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-37",
-    "notecast/episode-37"
-   ]
-  },
-  {
    "key": "باند",
    "tag": "#باند",
    "domain": "clinical",
@@ -9832,26 +9935,23 @@
    ]
   },
   {
-   "key": "بلک_تراینگل",
-   "tag": "#بلک_تراینگل",
-   "domain": "clinical",
+   "key": "بقای_رستوریشن",
+   "tag": "#بقای_رستوریشن",
+   "domain": null,
    "words": 2,
-   "definition": "Black Triangle — فضای بازِ مثلثیِ زیرِ کانتکت که پاپیلا آن را پر نمی‌کند و در زیبایی مشکل‌ساز می‌شود.",
-   "use_when": "مقاله بلک تراینگل را تعریف یا اصلاح کند.",
+   "definition": "نرخِ ماندگاریِ ترمیم در طول زمان.",
+   "use_when": "مقاله بقا را کمّی گزارش کند.",
    "aliases": [
-    "black triangle",
-    "بلک تراینگل",
-    "مثلث سیاه",
-    "فاصله لثه ای",
-    "open gingival embrasure",
-    "امبراژور باز"
+    "survival rate",
+    "بقا",
+    "طول عمر ترمیم"
    ],
    "variants": [],
    "co_tags": [],
    "count": 2,
    "content_ids": [
-    "episodes/episode-39",
-    "notecast/episode-39"
+    "notecast/episode-15",
+    "sharehub/share-22"
    ]
   },
   {
@@ -10147,6 +10247,26 @@
    "content_ids": [
     "dentcast-plus/video-4",
     "dentcast-plus/video-5"
+   ]
+  },
+  {
+   "key": "جایگذاری_ایمپلنت",
+   "tag": "#جایگذاری_ایمپلنت",
+   "domain": null,
+   "words": 2,
+   "definition": "عمق، زاویه و موقعیتِ قرار دادن فیکسچر.",
+   "use_when": "مقاله خطای جایگذاری را عاملِ مشکلِ پروتزی بداند.",
+   "aliases": [
+    "قرارگیری ایمپلنت",
+    "پوزیشن فیکسچر",
+    "عمق ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-10",
+    "insight/insight-78"
    ]
   },
   {
@@ -10498,6 +10618,22 @@
    "content_ids": [
     "insight/insight-10",
     "insight/insight-66"
+   ]
+  },
+  {
+   "key": "رابردم",
+   "tag": "#رابردم",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "ایزولاسیون با رابردم.",
+   "use_when": "مقاله رابردم را ابزارِ حلِ مسئله بداند.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-4",
+    "sharehub/share-22"
    ]
   },
   {
@@ -11186,25 +11322,6 @@
    ]
   },
   {
-   "key": "مینای_دندان",
-   "tag": "#مینای_دندان",
-   "domain": null,
-   "words": 2,
-   "definition": "مینا و آسیب‌های ساختاری‌اش.",
-   "use_when": "مقاله درباره‌ی خودِ مینا تصمیم بگیرد.",
-   "aliases": [
-    "enamel",
-    "مینا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "dentai/dentai-1",
-    "dentai/dentai-2"
-   ]
-  },
-  {
    "key": "نایف_اج",
    "tag": "#نایف_اج",
    "domain": "clinical",
@@ -11551,6 +11668,27 @@
    ]
   },
   {
+   "key": "پلان_اکلوژن",
+   "tag": "#پلان_اکلوژن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "صفحه‌ی اکلوزال و جهت‌گیری‌اش در کل قوس.",
+   "use_when": "مقاله به‌هم‌ریختن یا اصلاحِ پلن اکلوزال را موضوع کند.",
+   "aliases": [
+    "occlusal plane",
+    "صفحه اکلوزال",
+    "پلن اکلوزال",
+    "سطح اکلوزال"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-6",
+    "insight/insight-78"
+   ]
+  },
+  {
    "key": "پلتفرم_سویچ",
    "tag": "#پلتفرم_سویچ",
    "domain": "clinical",
@@ -11747,26 +11885,6 @@
    "content_ids": [
     "insight/insight-34",
     "insight/insight-75"
-   ]
-  },
-  {
-   "key": "کنترل_رطوبت",
-   "tag": "#کنترل_رطوبت",
-   "domain": null,
-   "words": 2,
-   "definition": "خشک نگه داشتنِ سطح، به‌عنوان شرطِ دقت یا باند.",
-   "use_when": "مقاله رطوبت را عاملِ خطا بداند.",
-   "aliases": [
-    "moisture control",
-    "خشک کردن",
-    "blow drying"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "dentai/dentai-21",
-    "insight/insight-74"
    ]
   },
   {
@@ -13307,25 +13425,6 @@
    ]
   },
   {
-   "key": "استئوپلاستی",
-   "tag": "#استئوپلاستی",
-   "domain": null,
-   "words": 1,
-   "definition": "برداشتِ کنترل‌شده‌ی استخوان برای اصلاح فرمِ ریج.",
-   "use_when": "مقاله این جراحی را در طرح بگنجاند.",
-   "aliases": [
-    "osteoplasty",
-    "کاهش ریج",
-    "اصلاح ریج"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "chairside/chairside-8"
-   ]
-  },
-  {
    "key": "استاپ_عمودی",
    "tag": "#استاپ_عمودی",
    "domain": "clinical",
@@ -14067,7 +14166,7 @@
    "key": "اینتروژن_ارتودنسی",
    "tag": "#اینتروژن_ارتودنسی",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
    "use_when": "مقاله اینتروژن را راه‌حل بداند.",
    "aliases": [
@@ -14396,25 +14495,6 @@
    "count": 1,
    "content_ids": [
     "photocast/episode-1"
-   ]
-  },
-  {
-   "key": "بقای_رستوریشن",
-   "tag": "#بقای_رستوریشن",
-   "domain": null,
-   "words": 2,
-   "definition": "نرخِ ماندگاریِ ترمیم در طول زمان.",
-   "use_when": "مقاله بقا را کمّی گزارش کند.",
-   "aliases": [
-    "survival rate",
-    "بقا",
-    "طول عمر ترمیم"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "notecast/episode-15"
    ]
   },
   {
@@ -14936,7 +15016,7 @@
    "key": "تفسیر_رادیوگرافی",
    "tag": "#تفسیر_رادیوگرافی",
    "domain": "clinical",
-   "words": 2,
+   "words": 4,
    "definition": "خواندنِ الگو — مرزِ صاف در برابر مرزِ منتشر — نه صرفاً دیدنِ لکه.",
    "use_when": "مقاله معیارِ تمایزِ تصویری بدهد.",
    "aliases": [
@@ -15156,25 +15236,6 @@
    "count": 1,
    "content_ids": [
     "sharehub/share-16"
-   ]
-  },
-  {
-   "key": "جایگذاری_ایمپلنت",
-   "tag": "#جایگذاری_ایمپلنت",
-   "domain": null,
-   "words": 2,
-   "definition": "عمق، زاویه و موقعیتِ قرار دادن فیکسچر.",
-   "use_when": "مقاله خطای جایگذاری را عاملِ مشکلِ پروتزی بداند.",
-   "aliases": [
-    "قرارگیری ایمپلنت",
-    "پوزیشن فیکسچر",
-    "عمق ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "chairside/chairside-10"
    ]
   },
   {
@@ -15859,21 +15920,6 @@
    ]
   },
   {
-   "key": "رابردم",
-   "tag": "#رابردم",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "ایزولاسیون با رابردم.",
-   "use_when": "مقاله رابردم را ابزارِ حلِ مسئله بداند.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "sharehub/share-4"
-   ]
-  },
-  {
    "key": "رابطه_کانینی",
    "tag": "#رابطه_کانینی",
    "domain": "clinical",
@@ -15955,7 +16001,7 @@
    "key": "رادیوگرافی_کنترل",
    "tag": "#رادیوگرافی_کنترل",
    "domain": "clinical",
-   "words": 2,
+   "words": 4,
    "definition": "پری‌اپیکالِ صحیح، به‌عنوان تأییدِ قطعیِ نشست.",
    "use_when": "مقاله رادیوگرافی را تأییدِ نهایی بداند، نه حس.",
    "aliases": [
@@ -18673,7 +18719,7 @@
    "key": "هوش_مصنوعی_رادیوگرافی",
    "tag": "#هوش_مصنوعی_رادیوگرافی",
    "domain": "ai",
-   "words": 3,
+   "words": 5,
    "definition": "نرم‌افزاری که روی رادیوگرافی ضایعه یا سطح استخوان را علامت می‌زند — تصویری که اغلب با ChatGPT اشتباه گرفته می‌شود.",
    "use_when": "مقاله همین دسته را موضوع یا نقطه‌ی تمایز قرار دهد.",
    "aliases": [
@@ -18763,6 +18809,31 @@
    "count": 1,
    "content_ids": [
     "chairside/chairside-14"
+   ]
+  },
+  {
+   "key": "وینگ_لمینیت",
+   "tag": "#وینگ_لمینیت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "امتدادِ سرامیکِ لمینیت در ناحیه‌ی سرویکال و پروگزیمال به سمتِ لثه و دندانِ مجاور، که امبراژورِ ژینجیوال را تنگ‌تر می‌کند تا مثلثِ تیره کوچک‌تر دیده شود؛ ساختاری که از باکال دیده می‌شود ولی یک سمتِ لینگوال هم دارد و قابلِ تمیز شدنِ آن سمت به باز بودنِ کانتکت و ادامه‌ی تراش تا لینگوالِ آن بستگی دارد.",
+   "use_when": "مطلب خودِ این بالچه، طراحی‌اش، شرطِ تراشش یا عارضه‌ی سمتِ لینگوالش را موضوع قرار دهد؛ نه هر لمینیتی که امبراژور دارد.",
+   "aliases": [
+    "wing",
+    "veneer wing",
+    "laminate wing",
+    "ceramic wing",
+    "وینگ",
+    "بالچه",
+    "بالچه لمینیت",
+    "وینگ سرامیکی",
+    "وینگ ونیر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "insight/insight-79"
    ]
   },
   {
@@ -18978,26 +19049,6 @@
    "count": 1,
    "content_ids": [
     "dentai/dentai-27"
-   ]
-  },
-  {
-   "key": "پلان_اکلوژن",
-   "tag": "#پلان_اکلوژن",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "صفحه‌ی اکلوزال و جهت‌گیری‌اش در کل قوس.",
-   "use_when": "مقاله به‌هم‌ریختن یا اصلاحِ پلن اکلوزال را موضوع کند.",
-   "aliases": [
-    "occlusal plane",
-    "صفحه اکلوزال",
-    "پلن اکلوزال",
-    "سطح اکلوزال"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-6"
    ]
   },
   {
@@ -20257,8 +20308,8 @@
   "previous dentist restoration": "رستوریشن همکار قبلی",
   "ceramic surface preparation": "آماده سازی سرامیک",
   "non carious cervical lesion": "nccl",
-  "low temperature degradation": "ltd",
   "american dental association": "ada",
+  "low temperature degradation": "ltd",
   "internal staining chairside": "اصلاح رنگ چیرساید",
   "constricted chewing pattern": "انولوپ آو فانکشن",
   "radiographic interpretation": "تفسیر رادیوگرافی",
@@ -20304,12 +20355,12 @@
   "dental practice website": "سایت مطب",
   "temporomandibular joint": "مفصل فکی",
   "بازگرداندن به لابراتوار": "کنترل کار لابراتوار",
+  "انجمن دندانپزشکی آمریکا": "ada",
   "peripheral rim fracture": "prf",
   "restorative endodontics": "اندودنتیکس ترمیمی",
   "open gingival embrasure": "بلک تراینگل",
   "masticatory performance": "قدرت جویدن",
   "oxygen inhibition layer": "لایه مهار اکسیژن",
-  "انجمن دندانپزشکی آمریکا": "ada",
   "caries removal endpoint": "cre",
   "finite element analysis": "fea",
   "functional interference": "تداخل فانکشنال",
@@ -20613,9 +20664,9 @@
   "دندان عصب کشی شده": "دندان اندوشده",
   "میزان کردن اکلوژن": "تنظیم اکلوژن",
   "پری ایمپلنت دیزیز": "پری ایمپلنتیتیس",
+  "restorative space": "فضای رستوریتیو",
   "patient awareness": "آگاهی درمانی",
   "سواد درمانی بیمار": "آگاهی درمانی",
-  "restorative space": "فضای رستوریتیو",
   "systematic review": "متاآنالیز",
   "emergence profile": "پروفایل امرجنس",
   "implant treatment": "درمان ایمپلنت",
@@ -20758,13 +20809,13 @@
   "proximal contact": "کانتکت باز",
   "کاهش تنش با زمان": "dwt",
   "از دست رفتن تماس": "از دست رفتن کانتکت",
+  "false confidence": "اطمینان کاذب",
   "dental equipment": "تجهیزات دندانپزشکی",
   "insertion torque": "ثبات اولیه",
   "practice website": "سایت مطب",
   "تراش لبه انسیزال": "لبه اینسایزال",
   "پلی اتر اتر کتون": "peek",
   "ambiguous prompt": "ابهام در پرامپت",
-  "false confidence": "اطمینان کاذب",
   "drug interaction": "تداخل دارویی",
   "caries detection": "تشخیص پوسیدگی",
   "هذیان هوش مصنوعی": "توهم هوش مصنوعی",
@@ -20795,6 +20846,7 @@
   "concept analysis": "تحلیل مفهومی",
   "اینترفیرنس کارگر": "تداخل سمت کارگر",
   "کوتاه کردن مقابل": "تراش آنتاگونیست",
+  "قرارگیری ایمپلنت": "جایگذاری ایمپلنت",
   "دندانپزشکی اطفال": "دندانپزشکی کودکان",
   "centric relation": "رابطه مرکزی",
   "dental esthetics": "زیبایی دندان",
@@ -20851,7 +20903,6 @@
   "midline symmetry": "تقارن قدامی",
   "bonding sequence": "توالی باند",
   "تکنیک گورل ماکاپ": "تکنیک گورل",
-  "قرارگیری ایمپلنت": "جایگذاری ایمپلنت",
   "پرکردگی رتروگراد": "جراحی اپیکال",
   "حریم خصوصی بیمار": "حریم بیمار",
   "tactile feedback": "حس لامسه",
@@ -20911,6 +20962,7 @@
   "خارج کردن دندان": "کشیدن دندان",
   "اختلال مفصل فکی": "tmd",
   "ceramic etching": "اچ سرامیک",
+  "silane coupling": "سایلان",
   "اپلاینس اکلوزال": "اسپلینت",
   "اکلوزال اسپلینت": "اسپلینت",
   "ایمپلنت تمام فک": "ایمپلنت بیمار بی دندان",
@@ -20918,7 +20970,6 @@
   "جلسه تحویل روکش": "تحویل روکش",
   "آماده سازی روکش": "تراش روکش",
   "تراش برای لمینت": "تراش لمینیت",
-  "silane coupling": "سایلان",
   "عدم پذیرش بیمار": "شروع نکردن درمان",
   "global analysis": "global diagnosis",
   "بیولوژیکال ویدث": "بیولوژیک ویدث",
@@ -21130,6 +21181,7 @@
   "مشکلات ایمپلنت": "عوارض ایمپلنت",
   "زیرکونیای شفاف": "نسل زیرکونیا",
   "اسنپ آن اسمایل": "snap on smile",
+  "screw retained": "اتصال پیچ شونده",
   "باز شدن کانتکت": "از دست رفتن کانتکت",
   "angled implant": "ایمپلنت زاویه دار",
   "تغییرات اسکلتی": "رشد فک",
@@ -21139,7 +21191,6 @@
   "خارج کردن ونیر": "debonding",
   "لیزر دیباندینگ": "debonding",
   "dental amalgam": "آمالگام",
-  "screw retained": "اتصال پیچ شونده",
   "etch and rinse": "اچ اند رینس",
   "خارج کردن روکش": "برداشت ترمیم",
   "باز کردن ترمیم": "برداشت ترمیم",
@@ -21183,6 +21234,7 @@
   "میدلاین پروتزی": "میدلاین",
   "لثه بین دندانی": "پاپیلا",
   "proprioception": "پروپریوسپشن",
+  "occlusal plane": "پلان اکلوژن",
   "buccal contour": "کانتور باکال",
   "کشیده شدن قالب": "کشیدگی قالب",
   "تراش روکش کامل": "روکش preparation",
@@ -21266,7 +21318,6 @@
   "implant hybrid": "پروتز هیبرید",
   "پست زیرکونیایی": "پست زیرکونیا",
   "post and crown": "پست و روکش",
-  "occlusal plane": "پلان اکلوژن",
   "پلن پروتز محور": "پلنینگ پروتز محور",
   "context window": "پنجره کانتکست",
   "context length": "پنجره کانتکست",
@@ -21282,8 +21333,8 @@
   "aphthous ulcer": "آفت دهان",
   "آرام بخشی عمیق": "بیهوشی",
   "prosthodontics": "پروتز",
-  "ویزیت کلینیکی": "کیس اینسایت",
   "post and core": "پست و کور",
+  "ویزیت کلینیکی": "کیس اینسایت",
   "implant crown": "روکش ایمپلنت",
   "روکش ایمپلنتی": "روکش ایمپلنت",
   "کراون ایمپلنت": "روکش ایمپلنت",
@@ -21302,14 +21353,15 @@
   "دندان های جلو": "دندان قدامی",
   "پری ایمپلنتیت": "پری ایمپلنتیتیس",
   "periodontitis": "پریودنتال",
+  "bond strength": "قدرت باند",
   "meta analysis": "متاآنالیز",
   "کانتور امرجنس": "پروفایل امرجنس",
-  "bond strength": "قدرت باند",
   "پروتکل ادهزیو": "پروتکل باند",
   "اسپلینت تراپی": "اسپلینت",
   "ایمپلنت تراپی": "درمان ایمپلنت",
   "titanium base": "تیتانیوم لاینر",
   "سرجری ایمپلنت": "جراحی ایمپلنت",
+  "fact checking": "راستی آزمایی",
   "excess cement": "سمان باقیمانده",
   "supraeruption": "سوپرااراپشن",
   "قضاوت کلینیکی": "قضاوت اینسایت",
@@ -21321,7 +21373,6 @@
   "رستوریشن خلفی": "ترمیم خلفی",
   "ترمیم زیر لثه": "ترمیم ساب جینجیوال",
   "searchability": "جستجوپذیری محتوا",
-  "fact checking": "راستی آزمایی",
   "فیلور ایمپلنت": "شکست ایمپلنت",
   "عارضه ایمپلنت": "عوارض ایمپلنت",
   "زیرکونیا شفاف": "نسل زیرکونیا",
@@ -21357,6 +21408,8 @@
   "recementation": "سمان مجدد",
   "قوس کوتاه شده": "قوس دندانی کوتاه شده",
   "کوتاه شدن قوس": "قوس دندانی کوتاه شده",
+  "مسئولیت حقوقی": "مسئولیت حرفه ای",
+  "مسئولیت پزشکی": "مسئولیت حرفه ای",
   "esthetic zone": "ناحیه زیبایی",
   "اسکرو یا سمان": "نوع ریتنشن",
   "ترمیم پارشیال": "پارشیال کاوریج",
@@ -21380,6 +21433,7 @@
   "ریشه یابی خطا": "تفکیک منشأ خطا",
   "تماس زودهنگام": "تماس زودرس",
   "فازبندی درمان": "توالی درمان",
+  "پوزیشن فیکسچر": "جایگذاری ایمپلنت",
   "کمترین مداخله": "حداقل مداخله",
   "pulp vitality": "حفظ پالپ",
   "tooth display": "خط لب",
@@ -21391,9 +21445,8 @@
   "سفتی تکیه گاه": "سختی تکیه گاه",
   "پریدگی سرامیک": "شکست سرامیک",
   "شکستن درخواست": "شکستن کار",
+  "چک کردن خروجی": "صحت سنجی",
   "فاز تتراگونال": "فاز زیرکونیا",
-  "مسئولیت حقوقی": "مسئولیت حرفه ای",
-  "مسئولیت پزشکی": "مسئولیت حرفه ای",
   "نسبت تاج ریشه": "نسبت تاج به ریشه",
   "آلودگی سرامیک": "پاکسازی سرامیک",
   "دیکانتامینیشن": "پاکسازی سرامیک",
@@ -21448,7 +21501,6 @@
   "روش سمان کردن": "تکنیک سمان",
   "glp 1 agonist": "تیرزپاتاید",
   "آگونیست glp 1": "تیرزپاتاید",
-  "پوزیشن فیکسچر": "جایگذاری ایمپلنت",
   "stela automix": "جایگزین آمالگام",
   "حرکت پیشگرایی": "حرکت پروتروزیو",
   "رازداری پزشکی": "حریم بیمار",
@@ -21472,7 +21524,6 @@
   "نارضایتی اصلی": "شکایت اصلی",
   "دکتر شیخ فرشی": "شیخ فرشی",
   "نوار ۸ میکرون": "شیم استاک",
-  "چک کردن خروجی": "صحت سنجی",
   "دیزاین دفنسیو": "طراحی خودمحافظ",
   "بدون علت واضح": "علت نامشخص",
   "عارضه مکانیکی": "عوارض مکانیکی",
@@ -21514,6 +21565,7 @@
   "آرامبخشی عمیق": "بیهوشی",
   "deep sedation": "بیهوشی",
   "عامل شروع آفت": "محرک آفت",
+  "laminate wing": "وینگ لمینیت",
   "ماشین هوشمند": "هوش مصنوعی",
   "تصمیم بالینی": "تصمیم درمانی",
   "تصمیم پروتزی": "تصمیم درمانی",
@@ -21535,8 +21587,9 @@
   "آنله سرامیکی": "آنله",
   "جدا شدن روکش": "افتادن روکش",
   "استتیک قدامی": "زیبایی قدامی",
-  "تحلیل کرستال": "تحلیل استخوان کرستال",
   "فضای بازسازی": "فضای رستوریتیو",
+  "تحلیل کرستال": "تحلیل استخوان کرستال",
+  "استحکام باند": "قدرت باند",
   "اینگات ایمکس": "لیتیوم دی سیلیکات",
   "پروفایل ظهور": "پروفایل امرجنس",
   "پروفایل خروج": "پروفایل امرجنس",
@@ -21544,7 +21597,6 @@
   "smile design": "طراحی لبخند",
   "دیزاین لبخند": "طراحی لبخند",
   "آنالیز لبخند": "طراحی لبخند",
-  "استحکام باند": "قدرت باند",
   "سیل فوری عاج": "ids",
   "non invasive": "درمان غیرتهاجمی",
   "چسباندن روکش": "سمان کردن",
@@ -21602,6 +21654,7 @@
   "چسباندن مجدد": "سمان مجدد",
   "crown design": "طراحی روکش",
   "متریال پروتز": "متریال پروتزی",
+  "medico legal": "مسئولیت حرفه ای",
   "wisdom tooth": "مولر سوم",
   "ناحیه استتیک": "ناحیه زیبایی",
   "ای آی تشخیصی": "هوش مصنوعی تشخیصی",
@@ -21639,12 +21692,12 @@
   "عملکرد جویدن": "قدرت جویدن",
   "مالکیت محتوا": "مالکیت پلتفرم",
   "مدیریت ضایعه": "مدیریت پوسیدگی",
-  "medico legal": "مسئولیت حرفه ای",
   "استحکام شکست": "مقاومت به شکست",
   "prescription": "نسخه نویسی",
   "oblique load": "نیروی مایل",
   "hybrid layer": "هیبرید لیر",
   "لایه هیبریدی": "هیبرید لیر",
+  "صفحه اکلوزال": "پلان اکلوژن",
   "پلتفرم سوئیچ": "پلتفرم سویچ",
   "کاغذ اکلوزال": "کاغذ ارتیکولاسیون",
   "printed cast": "کست پرینتی",
@@ -21728,7 +21781,6 @@
   "ونت هول روکش": "ونت",
   "پرسلن لثه ای": "پرسلن صورتی",
   "pink ceramic": "پرسلن صورتی",
-  "صفحه اکلوزال": "پلان اکلوژن",
   "design check": "چک قبل از ساخت",
   "gingivectomy": "ژینژیوکتومی",
   "missed canal": "کانال میس شده",
@@ -21745,12 +21797,15 @@
   "پلیمریزاسیون": "کیور",
   "friction fit": "گیر مکانیکی",
   "بیهوشی عمومی": "بیهوشی",
+  "ceramic wing": "وینگ لمینیت",
+  "بالچه لمینیت": "وینگ لمینیت",
+  "وینگ سرامیکی": "وینگ لمینیت",
   "آرتیکولاسیون": "ارتیکولاسیون",
   "articulation": "ارتیکولاسیون",
   "بایو میمتیک": "بیومیمتیک",
   "تریتمنت پلن": "طرح درمان",
-  "case report": "کیس اینسایت",
   "پست اند کور": "پست و کور",
+  "case report": "کیس اینسایت",
   "بایو مکانیک": "بیومکانیک",
   "ai research": "سواد هوش مصنوعی",
   "پرامپتولوژی": "پرامپتولوژیست",
@@ -21763,11 +21818,11 @@
   "loose crown": "افتادن روکش",
   "حذف پوسیدگی": "برداشت پوسیدگی",
   "زیبایی قدام": "زیبایی قدامی",
+  "فضای پروتزی": "فضای رستوریتیو",
   "سی ای دی کم": "cad cam",
   "آگاهی بیمار": "آگاهی درمانی",
-  "فضای پروتزی": "فضای رستوریتیو",
-  "هیدروفلوریک": "اچ سرامیک",
   "تنسایل باند": "قدرت باند",
+  "هیدروفلوریک": "اچ سرامیک",
   "all on four": "ایمپلنت بیمار بی دندان",
   "باند سرامیک": "باندینگ سرامیک",
   "دلیوری روکش": "تحویل روکش",
@@ -21799,6 +21854,8 @@
   "plak e sefr": "پلاک صفر",
   "پلن ایمپلنت": "پلنینگ ایمپلنت",
   "deep caries": "پوسیدگی عمیق",
+  "اسکرو ریتین": "اتصال پیچ شونده",
+  "اعتماد کاذب": "اطمینان کاذب",
   "overcontour": "کانتور ترمیم",
   "اورال هایژن": "بهداشت دهان",
   "تجهیزات مطب": "تجهیزات دندانپزشکی",
@@ -21814,9 +21871,7 @@
   "ریموال ونیر": "debonding",
   "notebook lm": "notebooklm",
   "پرامپت مبهم": "ابهام در پرامپت",
-  "اسکرو ریتین": "اتصال پیچ شونده",
   "ارجاع بیمار": "ارجاع تخصصی",
-  "اعتماد کاذب": "اطمینان کاذب",
   "root dentin": "باند به عاج ریشه",
   "برداشت روکش": "برداشت ترمیم",
   "بریج دندانی": "بریج",
@@ -21830,6 +21885,7 @@
   "آنتی روتیشن": "ضد چرخش",
   "دیزاین روکش": "طراحی روکش",
   "مواد پروتزی": "متریال پروتزی",
+  "جنبه قانونی": "مسئولیت حرفه ای",
   "third molar": "مولر سوم",
   "ناحیه لبخند": "ناحیه زیبایی",
   "shear force": "نیروی برشی",
@@ -21842,6 +21898,7 @@
   "کیت ایمپلنت": "ابزار ایمپلنت",
   "آمبرلا افکت": "اثر چتر",
   "امبرلا افکت": "اثر چتر",
+  "osteoplasty": "استئوپلاستی",
   "اندودانتیکس": "اندودنتیکس",
   "اندودونتیکس": "اندودنتیکس",
   "اندو ترمیمی": "اندودنتیکس ترمیمی",
@@ -21855,6 +21912,7 @@
   "ترتیب درمان": "توالی درمان",
   "توالی فازها": "توالی درمان",
   "مراحل درمان": "توالی درمان",
+  "عمق ایمپلنت": "جایگذاری ایمپلنت",
   "mehdi javan": "جوان",
   "حداقل دخالت": "حداقل مداخله",
   "نمایش دندان": "خط لب",
@@ -21868,10 +21926,11 @@
   "mclaren law": "قانون مکلارن",
   "بازده جویدن": "قدرت جویدن",
   "ضایعات سفید": "لکه سفید",
-  "جنبه قانونی": "مسئولیت حرفه ای",
   "لایه هیبرید": "هیبرید لیر",
   "پاپیلای لثه": "پاپیلا",
   "الگوی رزینی": "پترن رزین",
+  "پلن اکلوزال": "پلان اکلوژن",
+  "سطح اکلوزال": "پلان اکلوژن",
   "blow drying": "کنترل رطوبت",
   "قند سه ماهه": "کنترل قند خون",
   "هدایت قدامی": "گایدنس قدامی",
@@ -21888,7 +21947,6 @@
   "خمش سرویکال": "ابفرکشن",
   "ترمیم همرنگ": "اثر آفتاب پرست",
   "wall height": "ارتفاع دیواره",
-  "osteoplasty": "استئوپلاستی",
   "ساپورت موقت": "استاپ موقت",
   "بالشتک موقت": "استاپ موقت",
   "اسثتیک ویدث": "زیبایی ویدث",
@@ -21911,7 +21969,6 @@
   "گپ مارجینال": "تطابق مارجینال",
   "ساخت دوباره": "تکرار کار",
   "tirzepatide": "داروهای لاغری",
-  "عمق ایمپلنت": "جایگذاری ایمپلنت",
   "apicoectomy": "جراحی اپیکال",
   "رد کردن علل": "حذف گام به گام",
   "اسرار بیمار": "حریم بیمار",
@@ -21976,8 +22033,6 @@
   "چاپ سه بعدی": "پرینت سه بعدی",
   "پست سرامیکی": "پست زیرکونیا",
   "پست و کراون": "پست و روکش",
-  "پلن اکلوزال": "پلان اکلوژن",
-  "سطح اکلوزال": "پلان اکلوژن",
   "air syringe": "پوآر",
   "عود پوسیدگی": "پوسیدگی عودکننده",
   "اولتراسونیک": "پیزو",
@@ -22003,6 +22058,7 @@
   "canker sore": "آفت دهان",
   "mouth ulcer": "آفت دهان",
   "semaglutide": "تیرزپاتاید",
+  "veneer wing": "وینگ لمینیت",
   "بایومیمتیک": "بیومیمتیک",
   "بیو میمتیک": "بیومیمتیک",
   "بیومی متیک": "بیومیمتیک",
@@ -22047,6 +22103,7 @@
   "دال کانسپت": "dahl concept",
   "decoupling": "dwt",
   "اسکرو سمنت": "اسکرو سمنتد",
+  "قطعیت کاذب": "اطمینان کاذب",
   "انتخاب رنگ": "انتخاب shade",
   "ایمپلنت کج": "ایمپلنت زاویه دار",
   "تداخل تماس": "تداخل اکلوزال",
@@ -22061,7 +22118,6 @@
   "پلیمر peek": "peek",
   "attachment": "اتچمنت",
   "گیره پروتز": "اتچمنت",
-  "قطعیت کاذب": "اطمینان کاذب",
   "etch rinse": "اچ اند رینس",
   "total etch": "اچ اند رینس",
   "دنتین ریشه": "باند به عاج ریشه",
@@ -22078,6 +22134,7 @@
   "ماده پروتز": "متریال پروتزی",
   "کنترل ریسک": "مدیریت ریسک",
   "مدیریت خطر": "مدیریت ریسک",
+  "مدیکو لگال": "مسئولیت حرفه ای",
   "زون استتیک": "ناحیه زیبایی",
   "پست چندتکه": "پست دو تکه",
   "کلود ای آی": "کلود",
@@ -22103,13 +22160,14 @@
   "سمیت سلولی": "زیست سازگاری",
   "sinus lift": "سینوس لیفت",
   "لیفت سینوس": "سینوس لیفت",
+  "fact check": "صحت سنجی",
+  "راستی سنجی": "صحت سنجی",
   "tetragonal": "فاز زیرکونیا",
   "سایش اسیدی": "فرسایش دندان",
   "لرزش دندان": "فرمیتوس",
   "white spot": "لکه سفید",
   "وایت اسپات": "لکه سفید",
   "ضایعه سفید": "لکه سفید",
-  "مدیکو لگال": "مسئولیت حرفه ای",
   "موقتی مرجع": "روکش موقت به عنوان مرجع",
   "multi unit": "مولتی یونیت اباتمنت",
   "knife edge": "نایف اج",
@@ -22194,8 +22252,6 @@
   "علت مراجعه": "شکایت اصلی",
   "شکست ثانوی": "شکست ثانویه",
   "خم شدن پست": "شکست پست",
-  "fact check": "صحت سنجی",
-  "راستی سنجی": "صحت سنجی",
   "توان بافری": "ظرفیت بافری",
   "فرز الماسی": "فرز الماسه",
   "deskilling": "فرسایش مهارت",
@@ -22239,8 +22295,8 @@
   "پلن درمان": "طرح درمان",
   "occlusion": "اکلوژن",
   "chairside": "چیرساید",
-  "گزارش کیس": "کیس اینسایت",
   "پست دندان": "پست و کور",
+  "گزارش کیس": "کیس اینسایت",
   "دنت ای آی": "dentai",
   "زیرکونیوم": "زیرکونیا",
   "زیرکونیای": "زیرکونیا",
@@ -22252,8 +22308,8 @@
   "bone loss": "تحلیل استخوان",
   "attrition": "سایش دندان",
   "پروویژنال": "روکش موقت",
-  "prognosis": "پروگنوز دندان",
   "پست فایبر": "فایبر پست",
+  "prognosis": "پروگنوز دندان",
   "پریودنتیت": "پریودنتال",
   "اکستراکشن": "کشیدن دندان",
   "endocrown": "اندوکراون",
@@ -22268,6 +22324,8 @@
   "کدام سمان": "انتخاب سمان",
   "isolation": "ایزولاسیون",
   "پانورامیک": "رادیوگرافی تشخیصی",
+  "وریفیکیشن": "راستی آزمایی",
+  "بررسی صحت": "راستی آزمایی",
   "cast core": "کور ریختگی",
   "guideline": "گایدلاین",
   "سیل محیطی": "psz",
@@ -22278,8 +22336,6 @@
   "پرپ دندان": "تراش دندان",
   "lab error": "خطای لابراتوار",
   "روت کانال": "درمان ریشه",
-  "وریفیکیشن": "راستی آزمایی",
-  "بررسی صحت": "راستی آزمایی",
   "plak sefr": "پلاک صفر",
   "پیچ پروتز": "پیچ ایمپلنت",
   "دیکاپلینگ": "dwt",
@@ -22323,6 +22379,7 @@
   "قوس کوتاه": "sda",
   "vent hole": "smart ونت روکش",
   "تیرگی لثه": "اثر چتر",
+  "اصلاح ریج": "استئوپلاستی",
   "slidecast": "اسلایدکست",
   "oral scan": "اسکن دهانی",
   "اسکن دهان": "اسکن دهانی",
@@ -22371,7 +22428,6 @@
   "بدون حرکت": "آنکیلوز",
   "بررسی فضا": "فضای ارتودنسی",
   "کنترل فضا": "فضای ارتودنسی",
-  "اصلاح ریج": "استئوپلاستی",
   "استاپ کور": "استاپ عمودی",
   "ریورس جیگ": "اسپرو",
   "splinting": "اسپلینت پروتزی",
@@ -22476,6 +22532,7 @@
   "سماگلوتید": "تیرزپاتاید",
   "تیرزپاتید": "داروهای لاغری",
   "تریگر آفت": "محرک آفت",
+  "وینگ ونیر": "وینگ لمینیت",
   "کمپلیکیشن": "عوارض",
   "dentcast": "دنتکست",
   "ایمپلانت": "ایمپلنت",
@@ -22563,6 +22620,7 @@
   "اس پی تی": "spt",
   "سروایوال": "survival",
   "تخمین vd": "vd تخمینی",
+  "کاهش ریج": "استئوپلاستی",
   "استیجینگ": "استیج بندی درمان",
   "بستن فضا": "اصلاح فضا",
   "ریشیپینگ": "اناملوپلاستی",
@@ -22600,7 +22658,6 @@
   "اس اس سی": "ssc",
   "آنکیلوزه": "آنکیلوز",
   "ابفراکشن": "ابفرکشن",
-  "کاهش ریج": "استئوپلاستی",
   "کوتر لثه": "الکتروسرجری",
   "رد بیمار": "انتخاب بیمار",
   "apple id": "اپل آیدی",
@@ -22792,9 +22849,9 @@
   "میلینگ": "cad cam",
   "cadcam": "cad cam",
   "اورلای": "اورلی",
+  "silane": "سایلان",
   "splint": "اسپلینت",
   "allon4": "ایمپلنت بیمار بی دندان",
-  "silane": "سایلان",
   "رابردم": "ایزولاسیون",
   "tibase": "تیتانیوم لاینر",
   "misfit": "فیت پروتز",
@@ -22920,6 +22977,7 @@
   "gpt 4": "مدل زبانی بزرگ",
   "piezo": "پیزو",
   "glp 1": "داروهای لاغری",
+  "بالچه": "وینگ لمینیت",
   "پارشل": "پارشیال",
   "پریو": "پریودنتال",
   "آنلی": "آنله",
@@ -22959,6 +23017,7 @@
   "پوار": "پوآر",
   "آنگل": "کدگذاری توربین",
   "glp1": "داروهای لاغری",
+  "wing": "وینگ لمینیت",
   "gpt": "chatgpt",
   "ios": "اسکنر داخل دهانی",
   "تمپ": "روکش موقت",

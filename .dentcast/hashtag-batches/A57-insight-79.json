@@ -1,0 +1,35 @@
+{
+  "type": "clinical",
+  "note": "Publish of insight/insight-79 (روی دیگر وینگ (wing): نکته‌ای که به آن توجه نمی‌شود). Mints ONE concept the library genuinely lacked. #وینگ_لمینیت: --simulate «وینگ لمینیت» returned only #لمینیت_سرامیکی at 0.50 (the word «وینگ» matched nothing at all), yet the wing is the entire subject of this page and a dentist typing «وینگ» or «بالچه» today reaches nothing on the site. Deliberately distinct from the three neighbours the search surfaced: #لمینیت_سرامیکی is the restoration itself, #امبراژور is the space the wing narrows, and #بلک_تراینگل is the esthetic problem the wing is built to hide — none of them is the ceramic extension that does the narrowing, which is what has a buccal AND a lingual side. Every other tag on this article reuses an existing canonical form.",
+  "concepts": [
+    {
+      "tag": "#وینگ_لمینیت",
+      "domain": "clinical",
+      "definition": "امتدادِ سرامیکِ لمینیت در ناحیه‌ی سرویکال و پروگزیمال به سمتِ لثه و دندانِ مجاور، که امبراژورِ ژینجیوال را تنگ‌تر می‌کند تا مثلثِ تیره کوچک‌تر دیده شود؛ ساختاری که از باکال دیده می‌شود ولی یک سمتِ لینگوال هم دارد و قابلِ تمیز شدنِ آن سمت به باز بودنِ کانتکت و ادامه‌ی تراش تا لینگوالِ آن بستگی دارد.",
+      "use_when": "مطلب خودِ این بالچه، طراحی‌اش، شرطِ تراشش یا عارضه‌ی سمتِ لینگوالش را موضوع قرار دهد؛ نه هر لمینیتی که امبراژور دارد.",
+      "aliases": [
+        "wing",
+        "veneer wing",
+        "laminate wing",
+        "ceramic wing",
+        "وینگ",
+        "بالچه",
+        "بالچه لمینیت",
+        "وینگ سرامیکی",
+        "وینگ ونیر"
+      ]
+    }
+  ],
+  "articles": {
+    "insight/insight-79": [
+      "#اینسایت",
+      "#وینگ_لمینیت",
+      "#لمینیت_سرامیکی",
+      "#باز_کردن_کانتکت",
+      "#بلک_تراینگل",
+      "#امبراژور",
+      "#پروفایل_امرجنس",
+      "#حفظ_مینا"
+    ]
+  }
+}

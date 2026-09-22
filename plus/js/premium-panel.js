@@ -40,15 +40,15 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=130';
-import { currentUser, meStatus, api } from './api.js?v=130';
-import { pricingHref, premiumCta } from './premium-cta.js?v=130';
-import { openSheet, gateCard } from './sheet.js?v=130';
-import { openLoginModal } from './login-modal.js?v=130';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=130';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=130';
-import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=130';
-import { armDesTool } from './des-scorer.js?v=130';
+import { el, faNum, streakIsActiveToday } from './util.js?v=134';
+import { currentUser, meStatus, api } from './api.js?v=134';
+import { pricingHref, premiumCta } from './premium-cta.js?v=134';
+import { openSheet, gateCard } from './sheet.js?v=134';
+import { openLoginModal } from './login-modal.js?v=134';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=134';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=134';
+import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=134';
+import { armDesTool } from './des-scorer.js?v=134';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -612,6 +612,9 @@ function wireCrossPanelLinks(wrap) {
       if (col) col.classList.remove('is-viewer');
       const item = document.getElementById('dcd-premium-item');
       if (item) item.classList.remove('active');
+      // The shell remembers its column under the phone's `dc:panel` key; the
+      // welcome column is the one state with no name, so forget it here.
+      try { sessionStorage.removeItem('dc:panel'); } catch (_) { /* ignore */ }
     }
     setTimeout(() => {
       target.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -632,6 +635,18 @@ function whenSeen(node, fn) {
     if (entries.some((x) => x.isIntersecting)) { io.disconnect(); fn(); }
   });
   io.observe(node);
+}
+
+/**
+ * The desktop shell's own buy row (index.html `.dcd-a-subscribe`, «خرید اشتراک
+ * پریمیوم» in the col-A sidebar) is static HTML that no script read the tier
+ * for, so it stood beside a subscriber's tab — the one surface whose rule is
+ * zero buy links for its owner (2026-09-21). Hidden for 'live' ONLY: a free
+ * reader keeps it, and 'unknown' (we could not ask) keeps what shipped rather
+ * than deciding anything.
+ */
+function syncShellOffer(state) {
+  document.querySelectorAll('.dcd-a-subscribe').forEach((n) => { n.hidden = state === 'live'; });
 }
 
 /* ── staying LIVE ──
@@ -668,6 +683,7 @@ export async function initPremiumPanel() {
   };
 
   function render() {
+    syncShellOffer(state);
     slots.forEach((slot) => {
       const head = pageHeadOf(slot);
       const wrap = build(me, { hasHead: !!head });

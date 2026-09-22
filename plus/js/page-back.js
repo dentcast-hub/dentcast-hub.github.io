@@ -51,6 +51,12 @@ export function backTarget({ referrer = document.referrer, here = location, pane
 
 /** Rewrite every back link on the page. Idempotent; a no-op without one. */
 export function wirePageBack(root = document) {
+  // Hosted inside the desktop shell's column-C viewer (?view=content, marked
+  // by dc-nav.js before any module runs): the reader is already on the
+  // homepage and the shell's sidebar is the way back. dc-theme.css hides the
+  // link there; nothing is wired so a hidden link can never step the iframe
+  // back to about:blank, which is what emptied column C (2026-09-21).
+  if (document.body && document.body.classList.contains('dc-content-only')) return;
   const links = root.querySelectorAll('.dcp-page-back, [data-dc-back]');
   if (!links.length) return;
   const target = backTarget();

@@ -116,6 +116,20 @@ describe('wirePageBack', () => {
     expect(a.getAttribute('href')).toBe('/plus/');
   });
 
+  it('leaves the link untouched inside the desktop column (body.dc-content-only) — the shell is the way back', () => {
+    document.body.classList.add('dc-content-only');
+    setReferrer(location.origin + '/');
+    sessionStorage.setItem('dc:panel', 'panel-premium');
+    const back = vi.spyOn(history, 'back').mockImplementation(() => {});
+    wirePageBack();
+    const a = document.querySelector('[data-dc-back]') as HTMLAnchorElement;
+    expect(a.textContent).toBe('بازگشت به صفحهٔ اصلی');
+    expect(a.dataset.dcBackWired).toBeUndefined();
+    a.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    expect(back).not.toHaveBeenCalled();
+    document.body.classList.remove('dc-content-only');
+  });
+
   it('is a no-op on a page without a back link', () => {
     document.body.innerHTML = '<main><h1>x</h1></main>';
     setReferrer(location.origin + '/');
