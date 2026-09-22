@@ -21,7 +21,7 @@ beforeEach(() => {
   }) as any;
 });
 
-const { api } = await import('../../plus/js/api.js');
+const { api, currentUser } = await import('../../plus/js/api.js');
 
 describe('api.js query building', () => {
   it('omits an undefined optional query param instead of sending it as "undefined"', async () => {
@@ -87,5 +87,19 @@ describe('the client covers every method the site calls', () => {
     }
 
     expect(missing).toEqual([]);
+  });
+});
+
+describe('currentUser announces a REFRESHED /me', () => {
+  it('dispatches dcp:me with the profile on refresh, and nothing on the first, un-refreshed load', async () => {
+    const seen: unknown[] = [];
+    document.addEventListener('dcp:me', (e) => { seen.push((e as CustomEvent).detail); });
+    await currentUser();
+    expect(seen).toHaveLength(0);
+    await currentUser();                      // cached: still nothing
+    expect(seen).toHaveLength(0);
+    const u = await currentUser({ refresh: true });
+    expect(seen).toHaveLength(1);
+    expect(seen[0]).toEqual(u);
   });
 });

@@ -40,15 +40,15 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=129';
-import { currentUser, meStatus, api } from './api.js?v=129';
-import { pricingHref, premiumCta } from './premium-cta.js?v=129';
-import { openSheet, gateCard } from './sheet.js?v=129';
-import { openLoginModal } from './login-modal.js?v=129';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=129';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=129';
-import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=129';
-import { armDesTool } from './des-scorer.js?v=129';
+import { el, faNum, streakIsActiveToday } from './util.js?v=130';
+import { currentUser, meStatus, api } from './api.js?v=130';
+import { pricingHref, premiumCta } from './premium-cta.js?v=130';
+import { openSheet, gateCard } from './sheet.js?v=130';
+import { openLoginModal } from './login-modal.js?v=130';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=130';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=130';
+import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=130';
+import { armDesTool } from './des-scorer.js?v=130';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -309,6 +309,12 @@ function quick() {
   }));
 }
 
+/** «روشن» / «خاموش» — the SMS streak reminder, read from /me's own matrix. */
+function smsText(me) {
+  const nc = me && me.settings && me.settings.notify_channels;
+  return nc && nc.sms && nc.sms.streak ? 'روشن' : 'خاموش';
+}
+
 /** One row of an inset grouped list. */
 function liveRow(entry, me) {
   const tag = entry.href ? 'a' : 'div';
@@ -318,10 +324,7 @@ function liveRow(entry, me) {
   ico.innerHTML = '<svg viewBox="0 0 24 24">' + entry.ico + '</svg>'; // static, trusted markup
   let text = ''; let cls = '';
   if (entry.key === 'no-ads') { text = '✓ فعال'; cls = ' is-ok'; }
-  if (entry.key === 'sms') {
-    const nc = me && me.settings && me.settings.notify_channels;
-    text = nc && nc.sms && nc.sms.streak ? 'روشن' : 'خاموش';
-  }
+  if (entry.key === 'sms') text = smsText(me);
   const st = el('span', { class: 'dcp-pp-st' + cls }, [
     el('span', { class: 'dcp-pp-st-text' }, text),
     entry.href ? el('span', { class: 'dcp-pp-chev', 'aria-hidden': 'true' }, '›') : null,
@@ -481,7 +484,8 @@ function fillFromMe(me) {
       ? 'کامل شد'
       : 'قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps), { live: !p.is_complete });
   }
-  if (me.due_card_count > 0) paint('cards', faNum(me.due_card_count) + ' کارت', { live: true });
+  paint('cards', me.due_card_count > 0 ? faNum(me.due_card_count) + ' کارت' : '', { live: me.due_card_count > 0 });
+  paint('sms', smsText(me));
   // The last completed month is a calendar fact from ICU, not a request.
   paint('report', monthName(shiftMonth(currentMonthKey(), -1)) + ' آماده', { live: true });
 }
@@ -630,23 +634,30 @@ function whenSeen(node, fn) {
   io.observe(node);
 }
 
+/* ── staying LIVE ──
+   The panel is painted from the /me snapshot and the counts it asked for at
+   mount, and until 1405/06/31 that was the last time it looked: the SMS row
+   said «روشن» after the profile had switched it off — on the same page through
+   the header's profile overlay, or on /plus/profile.html with a «back» that the
+   browser served from its back-forward cache, so nothing re-ran. Three roads
+   back into the truth, one painter: any refreshed /me (`dcp:me`, announced by
+   api.js's currentUser({ refresh: true }), which every settings writer already
+   calls), a page restored from that cache (`pageshow` + `persisted`), and the
+   tab becoming visible again (throttled — a tab flip is not a reason to ask
+   twice a second). A changed TIER re-renders the whole panel (a subscription
+   bought in another tab); the same tier repaints /me's rows and re-asks the
+   counts the reader may have moved. */
+const REFRESH_MIN_MS = 15000;
+
 export async function initPremiumPanel() {
   const slots = SLOT_IDS.map((id) => document.getElementById(id)).filter(Boolean);
   if (!slots.length) return;
   let me = null;
   try { me = await currentUser(); } catch (_) { me = null; }
-  const state = stateOf(me);
-  slots.forEach((slot) => {
-    const head = pageHeadOf(slot);
-    const wrap = build(me, { hasHead: !!head });
-    wireCrossPanelLinks(wrap);
-    slot.replaceChildren(wrap);
-    slot.hidden = false;
-    if (head) placeDashboardLink(head, state);
-  });
-  if (state === 'live') fillFromMe(me);
-  // Lazy half: only when a copy of the panel is actually on screen.
+  let state = stateOf(me);
   let armed = false;
+  let lastAsk = Date.now();
+
   const lazy = () => {
     if (armed) return;
     armed = true;
@@ -655,5 +666,44 @@ export async function initPremiumPanel() {
     // refused by /seen and keeps the demo alone).
     else if (state === 'locked' && me) fillSeen('locked');
   };
-  slots.forEach((slot) => whenSeen(slot, lazy));
+
+  function render() {
+    slots.forEach((slot) => {
+      const head = pageHeadOf(slot);
+      const wrap = build(me, { hasHead: !!head });
+      wireCrossPanelLinks(wrap);
+      slot.replaceChildren(wrap);
+      slot.hidden = false;
+      if (head) placeDashboardLink(head, state);
+    });
+    if (state === 'live') fillFromMe(me);
+    // Lazy half: only when a copy of the panel is actually on screen.
+    armed = false;
+    slots.forEach((slot) => whenSeen(slot, lazy));
+  }
+
+  // A panel whose slots left the document (a test's next mount, a re-rendered
+  // shell) must go inert rather than keep asking on every listener it wired.
+  const alive = () => slots.some((slot) => document.contains(slot));
+
+  function refreshFrom(u) {
+    if (!alive()) return;
+    lastAsk = Date.now();
+    const next = stateOf(u);
+    me = u;
+    if (next !== state) { state = next; render(); return; }
+    if (state === 'live') { fillFromMe(me); if (armed) fillLazily(); }
+    else if (state === 'locked' && me && armed) fillSeen('locked');
+  }
+
+  render();
+
+  document.addEventListener('dcp:me', (e) => refreshFrom(e.detail == null ? null : e.detail));
+  const reask = () => { if (alive()) currentUser({ refresh: true }).catch(() => null); };
+  window.addEventListener('pageshow', (e) => { if (e.persisted) reask(); });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible') return;
+    if (Date.now() - lastAsk < REFRESH_MIN_MS) return;
+    reask();
+  });
 }

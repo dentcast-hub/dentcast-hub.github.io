@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=129';
+import { API_BASES } from './config.js?v=130';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -490,14 +490,28 @@ function rememberSignedIn(status) {
   } catch (_) { /* private mode */ }
 }
 
+// A REFRESHED /me is announced on the document as `dcp:me` (detail: the
+// profile, or null) so a surface painted from the snapshot can repaint without
+// knowing who changed it. The writers already call currentUser({ refresh: true })
+// after every PATCH (reminders.js, profile.js, home-card.js, notif-prompt.js…);
+// before this, the premium tab kept saying «روشن» after the profile overlay
+// had switched the SMS reminder off on the same page (founder, 1405/06/31).
+// The first, un-refreshed load announces nothing — nobody painted before it.
 export function currentUser({ refresh = false } = {}) {
   if (refresh) mePromise = undefined;
   if (!mePromise) {
+    const announce = refresh;
     // Any failure (401, or the API being unreachable) means "treat as anonymous"
     // so the static site stays pristine as pure progressive enhancement.
     mePromise = api.me()
       .then((u) => { lastMeStatus = u ? 'user' : 'anon'; rememberSignedIn(lastMeStatus); return u; })
-      .catch((e) => { lastMeStatus = (e && e.status === 401) ? 'anon' : 'error'; rememberSignedIn(lastMeStatus); return null; });
+      .catch((e) => { lastMeStatus = (e && e.status === 401) ? 'anon' : 'error'; rememberSignedIn(lastMeStatus); return null; })
+      .then((u) => {
+        if (announce) {
+          try { document.dispatchEvent(new CustomEvent('dcp:me', { detail: u })); } catch (_) { /* no document */ }
+        }
+        return u;
+      });
   }
   return mePromise;
 }
