@@ -26,7 +26,11 @@ vi.mock('/plus/js/api.js', () => ({
     listCollections: () => collectionsImpl(),
     seen: () => seenImpl(),
   },
-  currentUser: () => meImpl(),
+  // Mirrors api.js: a REFRESHED /me is announced as `dcp:me` on the document.
+  currentUser: ({ refresh = false } = {}) => meImpl().then((u: unknown) => {
+    if (refresh) document.dispatchEvent(new CustomEvent('dcp:me', { detail: u }));
+    return u;
+  }),
   meStatus: () => meStatusImpl(),
 }));
 
@@ -493,6 +497,93 @@ describe('ارزیاب DES — the home panel\'s box, last on the tab', () => {
     // the two copies never share an id (aria-controls must resolve to its own panel)
     const ids = mine.map((w) => w.querySelector('.dc-destool-tab')!.getAttribute('aria-controls'));
     expect(new Set(ids).size).toBe(2);
+  });
+});
+
+describe('the panel stays LIVE after it is painted', () => {
+  const PREM = (sms: boolean) => ({
+    tier: 'premium', display_name: 'x', due_card_count: 0,
+    settings: { notify_channels: { sms: { streak: sms } } },
+  });
+  const smsText = () => mobile().querySelector('[data-dcp-key="sms"] .dcp-pp-st-text')!.textContent;
+  const seenText = () => mobile().querySelector('[data-dcp-key="seen"] .dcp-pp-st-text')!.textContent;
+  const pageshow = (persisted: boolean) => {
+    const ev = new Event('pageshow');
+    Object.defineProperty(ev, 'persisted', { value: persisted });
+    window.dispatchEvent(ev);
+  };
+
+  it('repaints the SMS row the moment /me is refreshed by any writer on the same page (the profile overlay)', async () => {
+    meImpl = () => Promise.resolve(PREM(true));
+    meStatusImpl = () => 'user';
+    await mount();
+    expect(smsText()).toBe('روشن');
+    // reminders.js switches it off and calls currentUser({ refresh: true }) — the event is what reaches us
+    meImpl = () => Promise.resolve(PREM(false));
+    const { currentUser } = await import('/plus/js/api.js');
+    await currentUser({ refresh: true });
+    await settle();
+    expect(smsText()).toBe('خاموش');
+  });
+
+  it('re-asks /me and the counts when the page comes back from the back-forward cache', async () => {
+    meImpl = () => Promise.resolve(PREM(true));
+    meStatusImpl = () => 'user';
+    seenImpl = () => Promise.resolve({ locked: false, folders: [{ key: 'insight', read: 51, total: 444 }], viewed: [], completed: [] });
+    await mount();
+    expect(smsText()).toBe('روشن');
+    expect(seenText()).toBe('۵۱ از ۴۴۴');
+    let meCalls = 0;
+    meImpl = () => { meCalls += 1; return Promise.resolve(PREM(false)); };
+    seenImpl = () => Promise.resolve({ locked: false, folders: [{ key: 'insight', read: 53, total: 444 }], viewed: [], completed: [] });
+    pageshow(false);                       // an ordinary load: nothing to do, the page just ran
+    await settle();
+    expect(meCalls).toBe(0);
+    pageshow(true);                        // restored from bfcache: the world may have moved
+    await settle(); await settle();
+    expect(meCalls).toBe(1);
+    expect(smsText()).toBe('خاموش');
+    expect(seenText()).toBe('۵۳ از ۴۴۴');
+  });
+
+  it('re-asks when the tab becomes visible again — but not twice a second', async () => {
+    meImpl = () => Promise.resolve(PREM(true));
+    meStatusImpl = () => 'user';
+    await mount();
+    let meCalls = 0;
+    meImpl = () => { meCalls += 1; return Promise.resolve(PREM(false)); };
+    Object.defineProperty(document, 'visibilityState', { value: 'visible', configurable: true });
+    document.dispatchEvent(new Event('visibilitychange'));
+    await settle();
+    expect(meCalls).toBe(0);               // just painted — throttled
+    expect(smsText()).toBe('روشن');
+    // a free reader's own number goes the same road
+  });
+
+  it('a changed TIER re-renders the whole panel — a subscription bought in another tab', async () => {
+    meImpl = () => Promise.resolve({ tier: 'free' });
+    meStatusImpl = () => 'user';
+    await mount();
+    expect(mobile().querySelector('.dcp-pp')!.getAttribute('data-dcp-state')).toBe('locked');
+    expect(pricingLinks()).toHaveLength(1);
+    document.dispatchEvent(new CustomEvent('dcp:me', { detail: PREM(true) }));
+    await settle(); await settle();
+    expect(mobile().querySelector('.dcp-pp')!.getAttribute('data-dcp-state')).toBe('live');
+    expect(pricingLinks()).toHaveLength(0);
+    expect(smsText()).toBe('روشن');
+  });
+
+  it('a free reader\'s own seen number is re-asked too', async () => {
+    meImpl = () => Promise.resolve({ tier: 'free' });
+    meStatusImpl = () => 'user';
+    seenImpl = () => Promise.resolve({ locked: true, folders: [], read: 14, total: 117 });
+    await mount();
+    const num = () => mobile().querySelector('[data-dcp-key="seen"] .dcp-pp-seen-num')!.textContent;
+    expect(num()).toContain('۱۴ از ۱۱۷');
+    seenImpl = () => Promise.resolve({ locked: true, folders: [], read: 15, total: 117 });
+    pageshow(true);
+    await settle(); await settle();
+    expect(num()).toContain('۱۵ از ۱۱۷');
   });
 });
 
