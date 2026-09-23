@@ -28,12 +28,12 @@
 //   2. Every filter lives in the URL (?sort=&type=), written with replaceState.
 //      Same rule as the highlight library: a filtered view survives a refresh
 //      and the back button, and is a link somebody can send.
-import { api, currentUser, meStatus } from '/plus/js/api.js?v=141';
-import { el, faNum } from '/plus/js/util.js?v=141';
-import { openSheet, closeSheet, gateCard } from '/plus/js/sheet.js?v=141';
-import { premiumCta, guestPremiumExtras } from '/plus/js/premium-cta.js?v=141';
-import { openLoginModal } from '/plus/js/login-modal.js?v=141';
-import { markReturnTrail } from '/plus/js/return-trail.js?v=141';
+import { api, currentUser, meStatus } from '/plus/js/api.js?v=142';
+import { el, faNum } from '/plus/js/util.js?v=142';
+import { openSheet, closeSheet, gateCard } from '/plus/js/sheet.js?v=142';
+import { premiumCta, guestPremiumExtras } from '/plus/js/premium-cta.js?v=142';
+import { openLoginModal } from '/plus/js/login-modal.js?v=142';
+import { markReturnTrail } from '/plus/js/return-trail.js?v=142';
 
 /** Which gate sent a buyer, for the pricing page's ?from= report. */
 const FROM = 'upboard';
@@ -209,6 +209,13 @@ export function initUpBoard(root) {
   let hearts = new Map();
   let engagement = new Map(); // content_id → percentile, only where there is one
   let rank = new Map();       // content_id → position on the board
+  // The reader's own خوانده‌شده ticks (GET /seen), or null when there are none
+  // to draw. Held HERE and drawn by row() because plus.js's initSeenTicks()
+  // cannot reach this list: it scans the links present at boot, once, and
+  // these rows arrive later from a fetch, are rebuilt by every render() (tab,
+  // filter, hearts, board) and are paged in on scroll — so its ticks never
+  // landed, and any that had would have been wiped by the next render.
+  let seen = null;            // { completed: Set, viewed: Set }
 
   const params = new URLSearchParams(location.search);
   let mode = params.get('sort') === 'top' ? 'top' : 'new';
@@ -264,7 +271,7 @@ export function initUpBoard(root) {
       iconId: 'icon-heart',
     });
     const main = el('div', { class: 'ub-main' }, [
-      el('a', { class: 'ub-row-title', href: item.u, onclick }, item.ti),
+      el('a', { class: 'ub-row-title', href: item.u, onclick }, [seenTick(item.id), item.ti]),
       el('div', { class: 'ub-meta' }, [
         el('span', { class: 'ub-type' }, item.tf),
         item.d ? el('span', { class: 'ub-date' }, item.d) : null,
@@ -306,6 +313,24 @@ export function initUpBoard(root) {
     }
     if (signals.children.length) li.appendChild(signals);
     return li;
+  }
+
+  /**
+   * The same ✓ the section lists draw (plus.js tickFor — same class, same three
+   * states, same titles), so a reader meets one vocabulary on both pages.
+   * Premium only: a free reader's /seen answer is `locked`, and the locked
+   * column may only appear under its own bar, which belongs on a section's
+   * landing page — here a free reader gets what an anonymous one gets, nothing.
+   */
+  function seenTick(id) {
+    if (!seen) return null;
+    const read = seen.completed.has(id);
+    const opened = !read && seen.viewed.has(id);
+    return el('span', {
+      class: 'dcp-seen-tick' + (read ? ' is-read' : opened ? ' is-seen' : ''),
+      'aria-hidden': 'true',
+      title: read ? 'تا آخر خوانده‌اید' : opened ? 'بازش کرده‌اید' : 'هنوز ندیده‌اید',
+    }, '✓');
   }
 
   function drawMore() {
@@ -491,7 +516,22 @@ export function initUpBoard(root) {
     if (mode === 'top') mode = 'new';
     if (catalog) render();
   });
+  // Asked only of a signed-in reader, and drawn only from a real answer: an
+  // unanswerable /seen draws nothing rather than a column of grey ticks that
+  // would read as «you have read none of this».
+  const loadSeen = () => Promise.resolve().then(() => api.seen()).then((d) => {
+    if (!d || d.locked) return;
+    seen = {
+      completed: new Set(d.completed || []),
+      viewed: new Set(d.viewed || d.seen || []),
+    };
+    if (catalog) render();
+  }).catch(() => { /* rows simply carry no tick */ });
+
   currentUser()
-    .then((user) => { if (user ? user.tier === 'premium' : meStatus() === 'error') loadBoard(); })
+    .then((user) => {
+      if (user) loadSeen();
+      if (user ? user.tier === 'premium' : meStatus() === 'error') loadBoard();
+    })
     .catch(() => loadBoard());
 }
