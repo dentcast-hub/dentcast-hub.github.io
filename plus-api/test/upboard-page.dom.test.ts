@@ -18,12 +18,19 @@ let boardImpl: () => Promise<unknown>;
 let indexImpl: () => Promise<{ ok: boolean; json: () => Promise<unknown> }>;
 
 let countsImpl: () => Promise<unknown>;
+// GET /seen — the reader's own خوانده‌شده ticks. Absent by default, so every
+// case above the seen-ticks block runs with rows that carry no tick at all.
+let seenImpl: (() => Promise<unknown>) | null;
 // The reader's tier, as /me answers it. The page reads this — not the board —
 // to decide the lock, so it is what most of the gate cases below drive.
 let meImpl: () => Promise<{ tier: string } | null>;
 let meStatusImpl: () => string;
 vi.mock('/plus/js/api.js', () => ({
-  api: { voteBoard: () => boardImpl(), voteCounts: () => countsImpl() },
+  api: {
+    voteBoard: () => boardImpl(),
+    voteCounts: () => countsImpl(),
+    seen: () => (seenImpl ? seenImpl() : Promise.reject(new Error('no /seen in this case'))),
+  },
   currentUser: () => meImpl(),
   meStatus: () => meStatusImpl(),
 }));
@@ -127,6 +134,7 @@ beforeEach(() => {
   meStatusImpl = () => 'user';
   // PUBLIC — every reader gets these, gate or no gate.
   countsImpl = () => Promise.resolve({ hearts: { 'notecast/n-2': 9, 'chairside/c-1': 4 } });
+  seenImpl = null;
   indexImpl = () => Promise.resolve({ ok: true, json: async () => CATALOG });
   globalThis.fetch = vi.fn(() => indexImpl()) as any;
   // jsdom has no IntersectionObserver; the module guards for it, but the whole
@@ -424,6 +432,67 @@ describe('/up-board/', () => {
       expect(text).toContain('ارتباط با سرور برقرار نشد');
       expect(text).toContain('نه اینکه اشتراک نداری');
       expect(ctaFrom).toBeNull();
+    });
+  });
+
+  // The ticks are drawn by the page's own row(), not by plus.js's boot-time
+  // scan: these rows arrive after boot and every render() rebuilds them, which
+  // is exactly why they never carried a tick before (1405/07/01).
+  describe('the seen ticks', () => {
+    const SEEN = { completed: ['notecast/n-4'], viewed: ['notecast/n-4', 'chairside/c-3'] };
+    const tickOf = (title: string) => {
+      const a = Array.from(document.querySelectorAll('.ub-row-title'))
+        .find((x) => x.lastChild!.textContent === title)!;
+      return a.querySelector('.dcp-seen-tick');
+    };
+
+    it('ticks every row in both arrangements, in the section lists\' three states', async () => {
+      seenImpl = () => Promise.resolve(SEEN);
+      await mount();
+      expect(document.querySelectorAll('.ub-row-title .dcp-seen-tick').length).toBe(5);
+      expect(tickOf('چهارم')!.className).toBe('dcp-seen-tick is-read');
+      expect(tickOf('سوم')!.className).toBe('dcp-seen-tick is-seen');
+      expect(tickOf('پنجم')!.className).toBe('dcp-seen-tick');
+
+      // Every render() rebuilds the list; the ticks must come back with it.
+      click('[data-sort="top"]');
+      await settle();
+      expect(document.querySelectorAll('.ub-rank').length).toBeGreaterThan(0);
+      expect(document.querySelectorAll('.ub-row-title .dcp-seen-tick').length).toBe(5);
+      expect(tickOf('چهارم')!.className).toBe('dcp-seen-tick is-read');
+    });
+
+    it('keeps them through a filter', async () => {
+      seenImpl = () => Promise.resolve(SEEN);
+      await mount();
+      click('#ubFilters [data-type="notecast"]');
+      await settle();
+      expect(document.querySelectorAll('.ub-row-title .dcp-seen-tick').length).toBe(2);
+    });
+
+    it('draws nothing for a free reader, whose answer is the locked one', async () => {
+      meImpl = () => Promise.resolve({ tier: 'free' });
+      boardImpl = () => Promise.reject(premiumRequired());
+      seenImpl = () => Promise.resolve({ locked: true, total: 5, completed_count: 1 });
+      await mount();
+      expect(document.querySelector('.dcp-seen-tick')).toBeNull();
+    });
+
+    it('never asks for a signed-out reader', async () => {
+      meImpl = () => Promise.resolve(null);
+      boardImpl = () => Promise.reject(signedOut());
+      let asked = 0;
+      seenImpl = () => { asked += 1; return Promise.resolve(SEEN); };
+      await mount();
+      expect(asked).toBe(0);
+      expect(document.querySelector('.dcp-seen-tick')).toBeNull();
+    });
+
+    it('draws no grey column when /seen cannot answer', async () => {
+      seenImpl = () => Promise.reject(new Error('offline'));
+      await mount();
+      expect(document.querySelector('.dcp-seen-tick')).toBeNull();
+      expect(titles()).toEqual(['پنجم', 'چهارم', 'سوم', 'دوم', 'اول']);
     });
   });
 
