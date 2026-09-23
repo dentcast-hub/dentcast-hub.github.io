@@ -1,13 +1,13 @@
 // /plus/highlights.html — the premium highlight library. Same gate shape as
 // collections.html / cards.html / pathways.html: anonymous -> login, free ->
 // premium upsell, premium -> the real view.
-import { el } from './util.js?v=139';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=139';
-import { currentUser, meStatus } from './api.js?v=139';
-import { openLoginModal } from './login-modal.js?v=139';
-import { renderHighlightLibrary } from './highlights.js?v=139';
-import { registerSW } from './pwa.js?v=139';
-import { wirePageBack } from './page-back.js?v=139';
+import { el } from './util.js?v=140';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=140';
+import { currentUser, meStatus } from './api.js?v=140';
+import { openLoginModal } from './login-modal.js?v=140';
+import { renderHighlightLibrary } from './highlights.js?v=140';
+import { registerSW } from './pwa.js?v=140';
+import { wirePageBack } from './page-back.js?v=140';
 
 function upsellGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [

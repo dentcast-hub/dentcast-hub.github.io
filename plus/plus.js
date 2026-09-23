@@ -2,30 +2,30 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=139';
-import { currentUser, api } from './js/api.js?v=139';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=139';
-import { openCollectionPicker } from './js/collections.js?v=139';
-import { el, faNum } from './js/util.js?v=139';
-import { initHomeCard } from './js/home-card.js?v=139';
-import { initHomeFeatures } from './js/home-features.js?v=139';
-import { initPremiumPanel } from './js/premium-panel.js?v=139';
-import { initHomeBundles } from './js/home-bundles.js?v=139';
-import { initHomeUpboard } from './js/home-upboard.js?v=139';
-import { initDesTool } from './js/des-scorer.js?v=139';
-import { initHeader } from './js/header.js?v=139';
-import { initTourAutostart } from './js/tour.js?v=139';
-import { initReadingTracker } from './js/reading.js?v=139';
-import { initListeningTracker } from './js/listening.js?v=139';
-import { initShareScoring, buildShareButton } from './js/share.js?v=139';
-import { initHeart, buildHeartChip } from './js/votes.js?v=139';
-import { mountClipControl, landOnClip } from './js/clips.js?v=139';
-import { mountArticleThreads } from './js/article-threads.js?v=139';
-import { mountChallenge } from './js/challenge.js?v=139';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=139';
-import { mountDes } from './js/des.js?v=139';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=139';
-import { initAudioHub } from './js/audio-hub.js?v=139';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=140';
+import { currentUser, api } from './js/api.js?v=140';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=140';
+import { openCollectionPicker } from './js/collections.js?v=140';
+import { el, faNum } from './js/util.js?v=140';
+import { initHomeCard } from './js/home-card.js?v=140';
+import { initHomeFeatures } from './js/home-features.js?v=140';
+import { initPremiumPanel } from './js/premium-panel.js?v=140';
+import { initHomeBundles } from './js/home-bundles.js?v=140';
+import { initHomeUpboard } from './js/home-upboard.js?v=140';
+import { initDesTool } from './js/des-scorer.js?v=140';
+import { initHeader } from './js/header.js?v=140';
+import { initTourAutostart } from './js/tour.js?v=140';
+import { initReadingTracker } from './js/reading.js?v=140';
+import { initListeningTracker } from './js/listening.js?v=140';
+import { initShareScoring, buildShareButton } from './js/share.js?v=140';
+import { initHeart, buildHeartChip } from './js/votes.js?v=140';
+import { mountClipControl, landOnClip } from './js/clips.js?v=140';
+import { mountArticleThreads } from './js/article-threads.js?v=140';
+import { mountChallenge } from './js/challenge.js?v=140';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=140';
+import { mountDes } from './js/des.js?v=140';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=140';
+import { initAudioHub } from './js/audio-hub.js?v=140';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -35,7 +35,7 @@ import { initAudioHub } from './js/audio-hub.js?v=139';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=139').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=140').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -269,8 +269,13 @@ function showInvitation(anchorBtn, onProceed) {
 
 // Wire the میز کار button + study mode onto a prose root. Shared by standalone
 // article pages (initArticle) and the desktop 3-column viewer (mountArticleWorkbench).
-async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget, scope }) {
+async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget, scope, alive = null }) {
   const Workbench = await loadWorkbench();
+  // The desktop shell can replace column C while the module above loads (a
+  // second open before the first finished). Building on the old column would
+  // hang a row off an element that is no longer in the document — the caller
+  // says whether it is still the one on screen, and an overtaken mount stops.
+  if (alive && !alive()) return null;
   // onChange keeps every میز کار button on the page in sync with the mode no
   // matter WHO changed it: the toolbar's own ✕ خروج, the top button, or the
   // second one mountBottomActions may add at the end of the article via
@@ -532,7 +537,10 @@ async function initArticle() {
 // content_id comes from the article URL (the address bar still shows the
 // homepage). Re-mounting first tears down the previous in-place workbench.
 let desktopWb = null;
+let desktopMountGen = 0; // bumped per shell mount; an older, slower mount sees it moved and stops
 async function mountArticleWorkbench(root, url) {
+  const gen = ++desktopMountGen;
+  const alive = () => gen === desktopMountGen;
   if (desktopWb) { try { desktopWb.exit(); } catch (_) { /* ignore */ } desktopWb = null; }
   if (!root || !url) return;
   // Scoped to the injected article: the homepage around it has boxes of its own,
@@ -562,7 +570,7 @@ async function mountArticleWorkbench(root, url) {
   // episode's own .ep-box (findProseRoot() above), so میز کار + یادداشت +
   // highlighting on the caption/references work here too, in step with the
   // standalone episode page (initEpisodeActions(), same fix, same reasoning).
-  const { wb, updateBtn, bindButton } = await setupWorkbench({
+  const mounted = await setupWorkbench({
     proseRoot,
     proseAnchor: findProseBox(root),
     contentId,
@@ -571,7 +579,10 @@ async function mountArticleWorkbench(root, url) {
     // مطالعه word count and the ToC's heading scan must not reach out into the
     // homepage that is still in the DOM around this column.
     scope: root,
+    alive,
   });
+  if (!mounted || !alive()) return; // a newer article took the column meanwhile; it mounts itself
+  const { wb, updateBtn, bindButton } = mounted;
   desktopWb = wb;
   mountChallenge(findProseEnd(root) || proseRoot, contentId, root); // چالش, above the conversation
   mountArticleThreads(findProseEnd(root) || proseRoot, contentId); // under the article, not after its first box
@@ -717,7 +728,7 @@ function folderForPath(folders) {
 }
 
 function openSeenGate() {
-  Promise.all([import('./js/sheet.js?v=139'), import('./js/premium-cta.js?v=139')])
+  Promise.all([import('./js/sheet.js?v=140'), import('./js/premium-cta.js?v=140')])
     .then(([sheet, cta]) => sheet.openSheet(sheet.gateCard({
       title: 'کدام‌ها را خوانده‌ای',
       sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '

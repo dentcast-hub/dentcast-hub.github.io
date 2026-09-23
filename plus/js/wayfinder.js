@@ -6,12 +6,12 @@
 // (mode, حوزه, زیرموضوع, سطح, and the whole flowchart) is premium — see
 // renderPersonaGate(). Because of that, the flow itself is only ever reached
 // by a premium visitor, so it carries no tier cap of its own any more.
-import { el, icon, faNum } from './util.js?v=139';
-import { api } from './api.js?v=139';
-import { premiumCta, guestPremiumExtras, lapsedNote, unreachableCard } from './premium-cta.js?v=139';
-import { openLoginModal } from './login-modal.js?v=139';
-import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=139';
-import { markReturnTrail } from './return-trail.js?v=139';
+import { el, icon, faNum } from './util.js?v=140';
+import { api } from './api.js?v=140';
+import { premiumCta, guestPremiumExtras, lapsedNote, unreachableCard } from './premium-cta.js?v=140';
+import { openLoginModal } from './login-modal.js?v=140';
+import { loadEngine, catalog, rootsFor, optionsFor, nodeInfo, accentFor, bundles, pathwayById, sequenceNextId } from './wayfinder-engine.js?v=140';
+import { markReturnTrail } from './return-trail.js?v=140';
 
 const returnToWayfinder = () => markReturnTrail({
   url: '/plus/wayfinder.html', eyebrow: 'مسیریاب', title: 'مسیریاب یادگیری', iconId: 'icon-radar',

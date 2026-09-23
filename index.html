@@ -7068,7 +7068,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=232" defer></script>
+<script src="/dc-nav.js?v=233" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -8325,6 +8325,12 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     if(!hero) return;
     const go = (e) => {
       if(e.target && e.target.closest && e.target.closest('.dc-home-hero-play')) return;
+      /* This card sits inside #dcd-welcome-feed, whose bindCardRouter() opens
+         every [data-href] it sees unless the click is already handled — so
+         without this one line a single click opened the episode TWICE, 7ms
+         apart, and the second render replaced column C under the first one's
+         still-mounting workbench («insertBefore of null», found 1405/07/01). */
+      e.preventDefault();
       const url = hero.dataset.href || '/episodes.html';
       let path; try{ path = new URL(url, location.origin).pathname; }catch(x){ path = url; }
       if(path === '/episodes.html' || path === '/episodes/' || path === '/episodes/index.html') openPageViewer('/episodes.html');
