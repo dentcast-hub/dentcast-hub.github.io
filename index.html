@@ -7032,12 +7032,28 @@ scrollBody.addEventListener('touchend',e=>{
         heroAudio.addEventListener('timeupdate',function(){
           if(heroAudio.duration&&hprog) hprog.style.width=(heroAudio.currentTime/heroAudio.duration*100)+'%';
         });
+        /* The icon follows the ELEMENT, not the tap: the audio hub pauses this
+           player when another one starts, and a tap-driven icon would keep
+           saying «playing» over silence. */
+        heroAudio.addEventListener('play',function(){ hp.querySelector('path').setAttribute('d',P_PAUSE); });
+        heroAudio.addEventListener('pause',function(){ hp.querySelector('path').setAttribute('d',P_PLAY); });
         heroAudio.addEventListener('ended',function(){
           hp.querySelector('path').setAttribute('d',P_PLAY);
         });
+        /* Hand the player to the audio hub (plus/js/audio-hub.js): the shared
+           resume record, the lock-screen card, exclusivity. This Audio lives
+           in no document, so the hub cannot find it by itself; if plus.js has
+           not booted yet it drains window.dcAudioPending on arrival. */
+        var card=hp.closest('.dc-home-hero');
+        var href=(card&&card.dataset.href)||'';
+        var num=/episode-(\d+)/.exec(href);
+        var ttl=card&&card.querySelector('.dc-home-hero-title');
+        var meta=num?{episode:+num[1],title:ttl?ttl.textContent.trim():'',page:href,src:hp.dataset.src}:null;
+        if(window.dcAudioHub) window.dcAudioHub.adopt(heroAudio,meta);
+        else (window.dcAudioPending=window.dcAudioPending||[]).push([heroAudio,meta]);
       }
-      if(heroAudio.paused){ heroAudio.play(); hp.querySelector('path').setAttribute('d',P_PAUSE); }
-      else{ heroAudio.pause(); hp.querySelector('path').setAttribute('d',P_PLAY); }
+      if(heroAudio.paused){ var pp=heroAudio.play(); if(pp&&pp.catch) pp.catch(function(){}); }
+      else{ heroAudio.pause(); }
     });
   });
   if(qg){
@@ -7052,7 +7068,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=226" defer></script>
+<script src="/dc-nav.js?v=233" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -8309,6 +8325,12 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     if(!hero) return;
     const go = (e) => {
       if(e.target && e.target.closest && e.target.closest('.dc-home-hero-play')) return;
+      /* This card sits inside #dcd-welcome-feed, whose bindCardRouter() opens
+         every [data-href] it sees unless the click is already handled — so
+         without this one line a single click opened the episode TWICE, 7ms
+         apart, and the second render replaced column C under the first one's
+         still-mounting workbench («insertBefore of null», found 1405/07/01). */
+      e.preventDefault();
       const url = hero.dataset.href || '/episodes.html';
       let path; try{ path = new URL(url, location.origin).pathname; }catch(x){ path = url; }
       if(path === '/episodes.html' || path === '/episodes/' || path === '/episodes/index.html') openPageViewer('/episodes.html');

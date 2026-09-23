@@ -1435,6 +1435,15 @@
       /* Exclusivity: only one audio source plays. When the music starts, the
          podcast yields — stop it (unmount + close). Safe no-op if not mounted. */
       dcStopPodcast();
+      /* …and so does any episode the audio hub (plus/js/audio-hub.js) is
+         playing: the episode page's player, the homepage hero, its resume bar. */
+      try { if (window.dcAudioHub) window.dcAudioHub.pauseOwn(); } catch (e) {}
+    });
+    /* The other direction: an episode started through the hub → the music
+       yields. The hub cannot reach dcAudio (it lives in this closure), so it
+       announces itself with one event instead. */
+    document.addEventListener('dc:audio-exclusive', function () {
+      if (dcAudio && !dcAudio.paused) dcAudio.pause();
     });
     dcAudio.addEventListener('pause', syncMusicPlayPauseIcon);
     /* Final save on navigation away (resume-on-reload). */
@@ -1529,6 +1538,7 @@
   function dcPodOnPlay() {
     dcSetPodcastPlaying(true);
     if (dcAudio && !dcAudio.paused) dcAudio.pause();
+    try { if (window.dcAudioHub) window.dcAudioHub.pauseOwn(); } catch (e) {}
     if (typeof window.dcEpisodesInlinePause === 'function') {
       try { window.dcEpisodesInlinePause(); } catch (e) {}
     }
@@ -2223,7 +2233,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '219';
+  var V = '226';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
