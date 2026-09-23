@@ -1,0 +1,33 @@
+{
+  "type": "clinical",
+  "note": "Publish of insight/insight-80 (قالب پیک‌آپ چیه؟ کاربردهاش چیه؟). Mints ONE concept the library lacked. #قالب_پیک_آپ: --simulate «قالب پیک آپ» returned #PEEK and #موک_آپ (the word «پیک» matched a material, «آپ» a mock-up) and «pick-up impression» fell through to generic #قالبگیری — nothing on the site answered a dentist typing «پیک‌آپ». Distinct from #قالبگیری (any impression) and #قالبگیری_دو_مرحله_ای (a specific two-step technique; a pick-up is usually taken single-step): what defines this concept is that the restoration or prosthesis rides out inside the impression. Every other tag reuses an existing canonical form.",
+  "concepts": [
+    {
+      "tag": "#قالب_پیک_آپ",
+      "domain": "clinical",
+      "definition": "قالب‌گیری‌ای که در آن رستوریشن یا پروتز (روکش، موقت، پارسیل، روکش اولیه‌ی تلسکوپیک یا فریم‌ورک) در دهان نشانده می‌شود و داخل قالب می‌ماند و همراه آن خارج می‌شود، تا رابطه‌ی واقعی آن با دندان‌های مجاور و بافت نرم به کست منتقل شود.",
+      "use_when": "مطلب خودِ تکنیک پیک‌آپ یا کاربردی از آن (اصلاح کانتکت، انتقال فرم بافت از موقت، روکش زیر پارسیل موجود، تلسکوپیک، فریم‌ورک ایمپلنت) را موضوع قرار دهد.",
+      "aliases": [
+        "pick-up impression",
+        "pickup impression",
+        "pick up impression",
+        "پیک آپ",
+        "پیک‌آپ",
+        "قالب پیک‌آپ",
+        "قالب برداشت روکش",
+        "پیکاپ"
+      ]
+    }
+  ],
+  "articles": {
+    "insight/insight-80": [
+      "#اینسایت",
+      "#قالب_پیک_آپ",
+      "#قالبگیری",
+      "#کانتکت_باز",
+      "#پروفایل_امرجنس",
+      "#دندان_پایه",
+      "#ایمپلنت_فول_آرچ"
+    ]
+  }
+}
