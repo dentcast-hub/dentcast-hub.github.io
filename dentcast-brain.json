@@ -15402,5 +15402,40 @@
       "secondary": [],
       "subtopic": "impression"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-81",
+    "title": "وقتی روکش قدیمی بیمار، خودش روکش موقت میشه",
+    "caption": "وقتی تراش دندانی که روکش قبلی دارد اصلاح می‌شود، اگر روکش قبلی سالم خارج شده باشد، می‌توان همان را با رزین ریلاین کرد و به عنوان روکش موقت به بیمار تحویل داد: سطح داخلی با رزین پر می‌شود، روکش روی تراش جدید می‌نشیند تا فرم آن را ثبت کند، و بعد از ست شدن رزین، اضافه‌ها برداشته و مارجین‌ها تمیز می‌شوند. بیمار با روکشی می‌رود که فرم و اکلوژنش برایش آشناست و ساخت موقت به چند دقیقه ریلاین خلاصه می‌شود.",
+    "hashtags": [
+      "#اینسایت",
+      "#روکش_موقت",
+      "#ریلاین_روکش",
+      "#خارج_کردن_روکش",
+      "#تراش_دندان"
+    ],
+    "keywords": [
+      "relining old crown as provisional crown",
+      "using patient's existing crown as temporary",
+      "chairside resin reline of existing crown",
+      "provisional crown after preparation modification",
+      "crown removal without sectioning",
+      "avoiding tooth fracture during crown removal",
+      "provisional crown with familiar contour and occlusion",
+      "استفاده از روکش قدیمی بیمار به عنوان روکش موقت",
+      "ریلاین روکش قدیمی با رزین",
+      "روکش موقت بعد از اصلاح تراش",
+      "خارج کردن روکش بدون بریدن",
+      "شکستن دندان هنگام درآوردن روکش",
+      "ثبت فرم تراش جدید با ریلاین",
+      "روکش موقت با فرم و اکلوژن آشنا"
+    ],
+    "page_url": "/insight/insight-81.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "crowns-onlays"
+    }
   }
 ]

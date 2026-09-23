@@ -1,0 +1,28 @@
+{
+  "type": "clinical",
+  "note": "Publish of insight/insight-81 (وقتی روکش قدیمی بیمار، خودش روکش موقت میشه). Mints ONE concept the library lacked. #ریلاین_روکش: --simulate «ریلاین», «reline», «relining» all returned nothing and «ریلاین روکش» fell through to generic #روکش — nothing on the site answered a dentist typing «ریلاین». Bare «ریلاین»/«reline» are deliberately NOT aliases so a future denture-reline concept is not swallowed by this one. Every other tag reuses an existing canonical form.",
+  "concepts": [
+    {
+      "tag": "#ریلاین_روکش",
+      "domain": "clinical",
+      "definition": "پر کردن سطح داخلی یک روکش موجود با رزین و نشاندن آن روی تراش تا فرم جدید تراش ثبت شود؛ معمولاً برای تبدیل روکش قبلی به روکش موقت.",
+      "use_when": "مطلب ریلاین کردن روکش (روکش قبلی بیمار یا روکش موقت) با رزین را موضوع قرار دهد.",
+      "aliases": [
+        "crown reline",
+        "crown relining",
+        "ریلاین روکش",
+        "ریلاین موقت",
+        "ریلاین کردن روکش"
+      ]
+    }
+  ],
+  "articles": {
+    "insight/insight-81": [
+      "#اینسایت",
+      "#روکش_موقت",
+      "#ریلاین_روکش",
+      "#خارج_کردن_روکش",
+      "#تراش_دندان"
+    ]
+  }
+}
