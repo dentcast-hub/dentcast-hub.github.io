@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+@font-face{font-family:Vazirmatn;src:url("../fonts/Vazirmatn[wght].woff2") format("woff2");font-weight:100 900;font-display:swap}
 :root{
   --bg:#f0f2f5; --surface:#fff; --card:#fff; --line:rgba(10,26,51,.10); --line2:rgba(10,26,51,.06);
   --txt:#0a1a33; --txt2:#4a5f85; --txt3:#7b8aa6;
@@ -40,7 +41,7 @@ b,strong{font-weight:700}
 .mk-row{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
 
 /* ── desktop shell ─────────────────────────────── */
-.shell{width:100%;max-width:1200px;margin:0 auto;background:var(--bg);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.shell{width:1200px;margin:0;background:var(--bg);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
 .shell-bar{height:44px;display:flex;align-items:center;gap:12px;padding:0 16px;background:var(--surface);border-bottom:1px solid var(--line);font-size:13px}
 .shell-bar .logo{font-weight:800;color:var(--link);font-size:15px}
 .shell-bar .sp{flex:1}
@@ -62,6 +63,10 @@ b,strong{font-weight:700}
 .pw-k{font-size:11px;color:var(--txt3);line-height:1.3}
 .pw-t{font-size:13.5px;font-weight:700;line-height:1.4;color:var(--txt)}
 .pw-t a:hover{color:var(--link)}
+.pw-tabs{display:flex;gap:6px;padding:0 14px 10px;flex-wrap:wrap}
+.pw-tabs span{font-size:11.5px;padding:2px 10px;border-radius:999px;border:1px solid var(--line);color:var(--txt3)}
+.pw-tabs span.on{border-color:var(--link);color:var(--link);background:rgba(var(--brand-rgb),.08);font-weight:600}
+.pw-more{font-size:11px;color:var(--txt3);font-weight:500;margin-inline-start:4px}
 .pw ol{list-style:none;margin:0;padding:2px 8px 6px;border-top:1px solid var(--line2)}
 .pw li{position:relative}
 .pw li a{display:grid;grid-template-columns:20px 1fr;gap:9px;align-items:start;padding:7px 6px;border-radius:9px;font-size:12.8px;line-height:1.5;color:var(--txt2)}
@@ -187,11 +192,12 @@ b,strong{font-weight:700}
         <div class="pw">
           <div class="pw-h">
             <div class="pw-glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19c4-1 6-5 8-9s4-6 8-6"/><circle cx="4" cy="19" r="1.5"/><circle cx="20" cy="4" r="1.5"/><circle cx="12" cy="10" r="1.5"/></svg></div>
-            <div>
+            <div style="min-width:0">
               <div class="pw-k">این مطلب قدمی از مسیرِ</div>
               <div class="pw-t"><a href="#">سواد نقد شواهد و تصمیم‌گیری علمی</a></div>
             </div>
           </div>
+          <div class="pw-tabs"><span class="on">سواد نقد شواهد</span><span>بیومیمتیک</span></div>
           <ol>
             <li class="done"><a href="#"><span class="tk done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span>Meta Decision Method — چطور تصمیم بگیریم؟</span></a></li>
             <li class="opened"><a href="#"><span class="tk opened"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span>سندرم بیمار آشنا</span></a></li>
@@ -245,8 +251,8 @@ b,strong{font-weight:700}
 
 <!-- ═══════════════ 2. phone + quiet variant ═══════════════ -->
 <section class="mk-sec">
-  <h2>۲ · موبایل، و حالت خواننده‌ای که در مسیر نیست</h2>
-  <p class="why">روی گوشی همان کارت به یک نوار جمع‌شونده زیر ردیف اقدام‌ها تبدیل می‌شود. خواننده‌ای که در مسیر ثبت‌نام نکرده (یا اشتراک ندارد) فقط یک خط آرام می‌بیند: نه قفل، نه رنگ کهربایی، نه فهرست.</p>
+  <h2>۲ · موبایل، و خواننده‌ای که در مسیر نیست</h2>
+  <p class="why">روی گوشی همان کارت به یک نوار جمع‌شونده زیر ردیف اقدام‌ها تبدیل می‌شود. برای هر کس دیگری (رایگان، یا پریمیومی که ثبت‌نام نکرده) هیچ چیزی کشیده نمی‌شود.</p>
 
   <div class="mk-row">
 
@@ -268,7 +274,7 @@ b,strong{font-weight:700}
           <div class="strip-h" onclick="this.parentNode.classList.toggle('collapsed')">
             <div class="pw-glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19c4-1 6-5 8-9s4-6 8-6"/><circle cx="4" cy="19" r="1.5"/><circle cx="20" cy="4" r="1.5"/><circle cx="12" cy="10" r="1.5"/></svg></div>
             <div style="min-width:0">
-              <div class="pw-t">در مسیرِ سواد نقد شواهد</div>
+              <div class="pw-t">در مسیرِ سواد نقد شواهد <span class="pw-more">+۱</span></div>
               <div class="sub">قدم بعدی: چرا پیش‌آگهی‌های مقالات پریو برای تصمیم‌گیری زیبایی قابل اتکا نیستند؟</div>
             </div>
             <span class="chev">▾</span>
@@ -281,6 +287,7 @@ b,strong{font-weight:700}
             <li class="todo"><a href="#"><span class="tk todo"></span><span>نقش رفتار بیمار در درمان پریو و ایمپلنت</span></a></li>
             <li class="todo"><a href="#"><span class="tk todo"></span><span>…</span></a></li>
           </ol>
+          <div class="pw-tabs" style="padding:8px 12px 0"><span class="on">سواد نقد شواهد</span><span>بیومیمتیک</span></div>
           <div class="pw-f"><span style="color:var(--txt3);font-size:12px">لمس عنوان: بستن</span><a class="go" href="#">صفحهٔ مسیر ›</a></div>
         </div>
 
@@ -288,28 +295,10 @@ b,strong{font-weight:700}
       </div>
     </div>
 
-    <div class="phone">
-      <div class="ph-bar"><span>‹</span><span style="font-weight:700;color:var(--link)">دنت‌کست</span><span style="flex:1"></span><span>⌕</span></div>
-      <div class="ph-body">
-        <div class="crumb">متانوت · ۳ مرداد ۱۴۰۵</div>
-        <h1 class="ttl">توهم و واقعیتِ بقا در دندانپزشکی ادهزیو</h1>
-        <div class="meta"><span class="chip"><i></i>نظر و تجربه · E</span></div>
-        <div class="acts" style="gap:6px">
-          <span class="act p" style="height:32px;padding:0 12px">میز کار</span>
-          <span class="act o" style="height:32px;padding:0 12px">کالکشن</span>
-          <span class="act h" style="height:32px;padding:0 10px">♡</span>
-          <span class="sp"></span>
-          <span class="act q" style="height:32px;padding:0 10px">↗</span>
-        </div>
-
-        <div class="quiet">
-          <div class="pw-glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19c4-1 6-5 8-9s4-6 8-6"/><circle cx="4" cy="19" r="1.5"/><circle cx="20" cy="4" r="1.5"/><circle cx="12" cy="10" r="1.5"/></svg></div>
-          <div class="tx">این مطلب یکی از قدم‌های مسیرِ <b>سواد نقد شواهد</b> است.</div>
-          <a class="go" href="#">دیدن مسیر ›</a>
-        </div>
-
-        <div class="box" style="font-size:14.5px"><h2>یک عدد که دو چیز را می‌شمارد</h2><p>در بیشتر مقالات ادهزیو، «بقا» یعنی ترمیم هنوز در دهان است. اما ترمیمی که هنوز در دهان است می‌تواند لبه‌ی باز داشته باشد…</p></div>
-        <p style="font-size:12px;color:var(--txt3);margin:0">↑ خوانندهٔ ثبت‌نام‌نکرده / رایگان — همین یک خط، بدون قفل.</p>
+    <div class="phone" style="display:grid;place-items:center;min-height:420px;padding:24px;text-align:center">
+      <div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px">خوانندهٔ رایگان، یا پریمیومِ ثبت‌نام‌نکرده</div>
+        <p style="font-size:13px;color:var(--txt2);margin:0;line-height:1.9">هیچ چیز. نه کارت، نه خط، نه قفل.<br>مسیرها پشت اشتراک‌اند و صفحه‌ی مقاله جای معرفی‌شان نیست — همان قاعده‌ی گفت‌وگوی زیر مطلب و یادداشت‌های دانشنامه: چیزی که نتواند برای این خواننده کار کند، خودش را حذف می‌کند.</p>
       </div>
     </div>
 
@@ -322,11 +311,23 @@ b,strong{font-weight:700}
     <li><b>هیچ عددی نیست.</b> نه «قدم ۳ از ۹»، نه درصد، نه نوار پیشرفت. همان قانونی که نوار گواهی‌نامه دارد: هر publish می‌تواند مسیر را بلندتر کند و عدد را دروغ کند. جای عدد، «قدم بعدی» نشسته که همیشه درست است.</li>
     <li><b>سه حالت تیک، همان زبان فهرست بخش‌ها:</b> پُر = تا آخر خوانده، توخالی = باز شده، خالی = نخوانده. مقاله‌ی باز یک حلقه دارد، همان حلقه‌ای که هایلایت انتخاب‌شده در میز کار دارد.</li>
     <li><b>⚑ نقطه‌های عطف مسیر</b> (milestone) با یک نشان ریز، بدون رنگ.</li>
-    <li><b>آبی برند، نه کهربایی.</b> کارت برای کسی کشیده می‌شود که از قبل اشتراک دارد؛ پس چیزی برای فروختن روی آن نیست. خوانندهٔ رایگان قفل نمی‌بیند، فقط یک خط و یک لینک به صفحهٔ مسیر (که خودش دروازه را دارد).</li>
-    <li><b>یک مقاله در چند مسیر:</b> کارت مسیری را نشان می‌دهد که خواننده در آن ثبت‌نام کرده؛ اگر در دو مسیر بود، مسیر فعال (active_pathway) می‌آید و بقیه در پایین یک خط «در مسیرِ … هم هست».</li>
+    <li><b>فقط برای ثبت‌نام‌شده‌ها.</b> شرطش یک ردیف <code>user_pathways</code> است برای مسیری که این مقاله قدمی از آن است. برای هر کس دیگری هیچ چیزی کشیده نمی‌شود — نه قفل، نه معرفی. پس هیچ اطلاعی از مسیرها به خواننده‌ی رایگان نمی‌رسد.</li>
+    <li><b>یک مقاله در چند مسیر:</b> فقط مسیرهای ثبت‌نام‌شده شمرده می‌شوند. یکی باشد، همان کارت. بیش از یکی، یک ردیف چیپ زیر عنوان (meta-14 واقعاً هم در «سواد نقد شواهد» است هم در «بیومیمتیک»)؛ مسیر فعال پیش‌فرض است و لمس چیپ فهرست را عوض می‌کند. روی گوشی همان چیپ‌ها داخل نوار باز‌شده می‌آیند و سرِ نوار فقط «+۱» می‌گوید.</li>
     <li>ستون C دست‌نخورده است: ردیف اقدام‌ها، فهرست، جعبه‌ها همان است.</li>
   </ul>
 </section>
 
+<script>
+(function(){
+  var sh=document.querySelector('.shell'),sec=sh.parentNode;
+  function fit(){
+    var w=sec.clientWidth,base=1200,k=Math.min(1,w/base);
+    sh.style.width=base+'px';sh.style.transformOrigin='top right';sh.style.transform='scale('+k+')';
+    sec.style.height=(sh.offsetHeight*k)+'px';
+  }
+  sh.parentNode.style.position='relative';
+  fit();addEventListener('resize',fit);setTimeout(fit,600);
+})();
+</script>
 </body>
 </html>
