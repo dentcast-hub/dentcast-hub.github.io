@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ماکاپ — هیروی اپیزود با پلیر</title>
+<style>
+@font-face{font-family:Vazirmatn;src:url("../fonts/Vazirmatn[wght].woff2") format("woff2");font-weight:100 900;font-display:swap}
+:root{
+  --bg:#f0f2f5; --card:#fff; --surface2:#f6f8fb; --line:rgba(10,26,51,.10); --line2:rgba(10,26,51,.07);
+  --txt:#0a1a33; --txt2:#4a5f85; --txt3:#7b8aa6;
+  --ac:#0b5fff; --ac-rgb:11,95,255; --chip-bg:rgba(11,95,255,.08); --chip-bd:rgba(11,95,255,.22);
+  --shadow:0 1px 2px rgba(10,26,51,.05),0 6px 20px rgba(10,26,51,.06);
+}
+:root[data-theme="dark"]{
+  --bg:#0e1621; --card:#1e2c3a; --surface2:#17212b; --line:rgba(232,240,255,.10); --line2:rgba(232,240,255,.07);
+  --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6a83a3;
+  --ac:#7ab4ff; --ac-rgb:122,180,255; --chip-bg:rgba(122,180,255,.10); --chip-bd:rgba(122,180,255,.26);
+  --shadow:0 1px 2px rgba(0,0,0,.25),0 6px 20px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--txt);font-family:Vazirmatn,system-ui,sans-serif;font-size:15px;line-height:1.75}
+a{color:inherit;text-decoration:none}
+.mk-top{position:sticky;top:0;z-index:9;background:var(--card);border-bottom:1px solid var(--line);padding:10px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.mk-top h1{font-size:15px;margin:0;font-weight:700}
+.mk-top p{margin:0;color:var(--txt2);font-size:13px}
+.mk-top button{margin-inline-start:auto;font:inherit;font-size:13px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer}
+.mk-sec{padding:26px 20px 8px;max-width:1300px;margin:0 auto}
+.mk-sec h2{font-size:14px;color:var(--txt2);font-weight:600;margin:0 0 4px}
+.mk-sec .why{font-size:13px;color:var(--txt3);margin:0 0 16px;max-width:75ch}
+.mk-row{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.frame{width:390px;flex:none}
+.frame > .lab{font-size:12px;color:var(--txt3);margin:0 0 8px;font-weight:600}
+.phone{background:var(--bg);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);overflow:hidden;padding:14px 14px 18px}
+.pulse{font-size:12px;color:var(--txt3);border:1px dashed var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;text-align:center}
+
+/* ── the card, cloned from index.html's .dc-home-hero ── */
+.hero{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px;margin-bottom:12px}
+.top{display:flex;gap:14px;align-items:center}
+.cover{width:84px;height:84px;border-radius:16px;flex:none;border:1px solid var(--line2);background:linear-gradient(135deg,#1f3a66,#0b5fff 60%,#7ab4ff);display:grid;place-items:center;color:#fff;font-weight:900;font-size:13px;letter-spacing:.02em}
+.info{flex:1;min-width:0}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:800;color:var(--ac);background:var(--chip-bg);border:1px solid var(--chip-bd);border-radius:999px;padding:2px 10px;margin-bottom:6px}
+.ttl{margin:0;font-size:16.5px;font-weight:800;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;background:var(--surface2);border:1px solid var(--line2);border-radius:16px;padding:7px 12px 7px 7px;position:relative;overflow:hidden}
+.play{width:44px;height:44px;border-radius:50%;flex:none;background:var(--ac);display:grid;place-items:center;box-shadow:0 3px 10px rgba(var(--ac-rgb),.25);order:1}
+.play svg{width:20px;height:20px;fill:#fff}
+.cta{font-size:12.5px;font-weight:700;color:var(--txt2)}
+.prog{position:absolute;bottom:0;right:0;height:3px;width:0;background:var(--ac)}
+
+/* ── proposed additions ── */
+.lead{margin:10px 0 0;font-size:13.5px;line-height:1.85;color:var(--txt2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.meta{display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--txt3);margin-top:6px}
+.meta i{width:3px;height:3px;border-radius:50%;background:var(--txt3);display:inline-block}
+/* player, idle */
+.pl{margin-top:12px;background:var(--surface2);border:1px solid var(--line2);border-radius:16px;padding:8px 12px 8px 8px;display:flex;align-items:center;gap:10px}
+.pl .play{order:0}
+.pl .t{flex:1;min-width:0}
+.pl .t b{display:block;font-size:12.5px;font-weight:700;color:var(--txt)}
+.pl .t span{display:block;font-size:11.5px;color:var(--txt3);line-height:1.4}
+/* player, playing */
+.pl.on{flex-direction:column;align-items:stretch;gap:8px;padding:10px 12px}
+.pl.on .tr{display:flex;align-items:center;gap:10px}
+.pl.on .play{width:40px;height:40px}
+.pl.on .play svg{width:16px;height:16px}
+.skip{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:10px;color:var(--txt2);font-weight:700;flex:none;line-height:1}
+.skip small{font-size:8.5px;font-weight:500;color:var(--txt3)}
+.tm{font-size:12px;color:var(--txt2);font-variant-numeric:tabular-nums;direction:ltr;display:inline-flex;gap:4px;margin-inline-start:auto}
+.tm b{color:var(--txt);font-weight:700}
+.bar{position:relative;height:18px;display:flex;align-items:center;cursor:pointer}
+.bar::before{content:"";position:absolute;inset-inline:0;height:4px;border-radius:999px;background:var(--line)}
+.bar i{position:absolute;inset-inline-start:0;height:4px;border-radius:999px;background:var(--ac);width:38%}
+.bar u{position:absolute;inset-inline-start:calc(38% - 7px);width:14px;height:14px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 3px var(--surface2)}
+.ep-hint{font-size:11px;color:var(--txt3);margin-top:2px}
+/* second row: two doors */
+.doors{display:flex;gap:8px;margin-top:10px}
+.door{flex:1;height:36px;border-radius:999px;border:1.5px solid var(--line);display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--txt2)}
+.door.nc{border-color:var(--ac);color:var(--ac)}
+.door svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.door.ghost{opacity:.35;border-style:dashed;position:relative}
+.door.ghost::after{content:"فقط اگر نوت‌کست داشته باشد";position:absolute;top:-16px;inset-inline-end:8px;font-size:10px;color:var(--txt3);opacity:1;font-weight:500}
+
+.below{height:56px;border:1px dashed var(--line);border-radius:16px;display:grid;place-items:center;font-size:12px;color:var(--txt3)}
+
+/* desktop */
+.desk{width:100%;max-width:1200px;background:var(--bg);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:grid;grid-template-columns:200px 1fr 320px;min-height:420px}
+.desk .colA,.desk .colC{background:var(--card);border-inline-end:1px solid var(--line);padding:14px;font-size:13px;color:var(--txt3)}
+.desk .colC{border-inline-end:0;border-inline-start:1px solid var(--line)}
+.desk .colB{padding:18px 20px}
+.desk .hero{margin:0}
+.desk .top{gap:18px}
+.desk .cover{width:96px;height:96px}
+.desk .ttl{font-size:18px}
+.desk .lead{-webkit-line-clamp:3}
+
+.notes{font-size:13px;color:var(--txt2);max-width:75ch;padding:0 20px 40px;margin:0 auto;line-height:1.9}
+.notes li{margin-bottom:6px}
+.notes code{font-size:12px;background:var(--surface2);padding:1px 5px;border-radius:5px}
+</style>
+</head>
+<body>
+
+<div class="mk-top">
+  <div>
+    <h1>ماکاپ — هیروی اپیزود با پلیر</h1>
+    <p>کارت «تازه‌ترین قسمت» روی صفحه‌ی اصلی: دربارهٔ اپیزود می‌گوید، از همان‌جا پخش می‌کند، و دوگانه‌ی اپیزود / نوت‌کست را کنار هم می‌گذارد.</p>
+  </div>
+  <button onclick="var h=document.documentElement;h.dataset.theme=h.dataset.theme==='dark'?'light':'dark'">تم روشن / تیره</button>
+</div>
+
+<section class="mk-sec">
+  <h2>۱ · موبایل — سه حالت</h2>
+  <p class="why">اولی همان چیزی است که امروز روی سایت است (بازسازی‌شده از <code>.dc-home-hero</code> در index.html)، دومی پیشنهاد در حالت ساکن، سومی همان کارت وقتی دکمه‌ی پخش زده شده. جای کارت عوض نمی‌شود: بالای مسیریاب، همان‌جا که تبلیغ موبایل هم به آن لنگر انداخته.</p>
+
+  <div class="mk-row">
+
+    <!-- A: current -->
+    <div class="frame"><p class="lab">الان</p>
+      <div class="phone">
+        <div class="pulse">پالس</div>
+        <div class="hero">
+          <div class="top">
+            <div class="cover">DC</div>
+            <div class="info">
+              <span class="badge">🎧 قسمت ۱۶۲ · تازه‌ترین</span>
+              <h2 class="ttl">Cantilever in Implant Dentistry :part2</h2>
+            </div>
+          </div>
+          <div class="row">
+            <span class="play"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+            <span class="cta">شنیدن این قسمت و آرشیو کامل اپیزودها</span>
+            <span class="prog" style="width:0"></span>
+          </div>
+        </div>
+        <div class="below">مسیریاب یادگیری</div>
+      </div>
+    </div>
+
+    <!-- B: proposed idle -->
+    <div class="frame"><p class="lab">پیشنهاد — ساکن</p>
+      <div class="phone">
+        <div class="pulse">پالس</div>
+        <div class="hero">
+          <div class="top">
+            <div class="cover">DC</div>
+            <div class="info">
+              <span class="badge">🎧 قسمت ۱۶۲ · تازه‌ترین</span>
+              <h2 class="ttl">Cantilever in Implant Dentistry :part2</h2>
+            </div>
+          </div>
+          <p class="lead">در قسمت اول این پرونده، به‌سراغ ترس بیومکانیکیِ رایج درباره‌ی کانتیلور روی ایمپلنت رفتیم و پرسیدیم که آیا این بازوی اهرمی در بلندمدت به تحلیل استخوان مارجینال و شکست درمان منجر می‌شود یا نه. در این قسمت، که ادامه و پایان‌بخش همان پرونده است، سراغ نتیجه‌ی نهایی می‌رویم.</p>
+          <div class="meta"><span>۲۲ دقیقه</span><i></i><span>۲۰ شهریور ۱۴۰۵</span></div>
+          <div class="pl">
+            <span class="play"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+            <div class="t"><b>پخش از همین‌جا</b><span>بدون رفتن به صفحه‌ی اپیزود</span></div>
+          </div>
+          <div class="doors">
+            <a class="door" href="#"><svg viewBox="0 0 24 24"><path d="M4 12h14M12 5l7 7-7 7"/></svg>صفحه‌ی اپیزود</a>
+            <a class="door nc ghost" href="#"><svg viewBox="0 0 24 24"><path d="M5 4h10l4 4v12H5z"/><path d="M9 12h6M9 16h6"/></svg>خواندن نوت‌کست</a>
+          </div>
+        </div>
+        <div class="below">مسیریاب یادگیری</div>
+      </div>
+    </div>
+
+    <!-- C: proposed playing -->
+    <div class="frame"><p class="lab">پیشنهاد — در حال پخش</p>
+      <div class="phone">
+        <div class="pulse">پالس</div>
+        <div class="hero">
+          <div class="top">
+            <div class="cover">DC</div>
+            <div class="info">
+              <span class="badge">🎧 قسمت ۱۶۲ · تازه‌ترین</span>
+              <h2 class="ttl">Cantilever in Implant Dentistry :part2</h2>
+            </div>
+          </div>
+          <p class="lead">در قسمت اول این پرونده، به‌سراغ ترس بیومکانیکیِ رایج درباره‌ی کانتیلور روی ایمپلنت رفتیم و پرسیدیم که آیا این بازوی اهرمی در بلندمدت به تحلیل استخوان مارجینال و شکست درمان منجر می‌شود یا نه. در این قسمت، که ادامه و پایان‌بخش همان پرونده است، سراغ نتیجه‌ی نهایی می‌رویم.</p>
+          <div class="meta"><span>۲۲ دقیقه</span><i></i><span>۲۰ شهریور ۱۴۰۵</span></div>
+          <div class="pl on">
+            <div class="tr">
+              <span class="play"><svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></span>
+              <span class="skip">۱۵<small>−</small></span>
+              <span class="skip">۱۵<small>+</small></span>
+              <span class="tm"><b>08:24</b><span>/</span><span>22:08</span></span>
+            </div>
+            <div class="bar"><i></i><u></u></div>
+            <div class="ep-hint">ادامه‌ی پخش در صفحه‌ی اپیزود، از همین ثانیه</div>
+          </div>
+          <div class="doors">
+            <a class="door" href="#"><svg viewBox="0 0 24 24"><path d="M4 12h14M12 5l7 7-7 7"/></svg>صفحه‌ی اپیزود</a>
+            <a class="door nc" href="#"><svg viewBox="0 0 24 24"><path d="M5 4h10l4 4v12H5z"/><path d="M9 12h6M9 16h6"/></svg>خواندن نوت‌کست</a>
+          </div>
+        </div>
+        <div class="below">مسیریاب یادگیری</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="mk-sec">
+  <h2>۲ · دسکتاپ — همان کارت در ستون خوش‌آمد</h2>
+  <p class="why">نسخه‌ی دسکتاپ (<code>#dcd-card-episodes</code>) همین است با کاور کمی بزرگ‌تر؛ هیچ چیدمان جدیدی ندارد.</p>
+  <div class="desk">
+    <aside class="colA">ستون A · بخش‌ها</aside>
+    <div class="colB">
+      <div class="hero">
+        <div class="top">
+          <div class="cover">DC</div>
+          <div class="info">
+            <span class="badge">🎧 قسمت ۱۶۲ · تازه‌ترین</span>
+            <h2 class="ttl">Cantilever in Implant Dentistry :part2</h2>
+            <div class="meta" style="margin-top:2px"><span>۲۲ دقیقه</span><i></i><span>۲۰ شهریور ۱۴۰۵</span></div>
+          </div>
+        </div>
+        <p class="lead">در قسمت اول این پرونده، به‌سراغ ترس بیومکانیکیِ رایج درباره‌ی کانتیلور روی ایمپلنت رفتیم و پرسیدیم که آیا این بازوی اهرمی در بلندمدت به تحلیل استخوان مارجینال و شکست درمان منجر می‌شود یا نه. در این قسمت، که ادامه و پایان‌بخش همان پرونده است، سراغ نتیجه‌ی نهایی می‌رویم. قرار است بشنوید که بعد از میانگین سیزده سال کارکرد، بقا و سطح استخوان چه سرنوشتی پیدا می‌کنند.</p>
+        <div class="pl on">
+          <div class="tr">
+            <span class="play"><svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></span>
+            <span class="skip">۱۵<small>−</small></span>
+            <span class="skip">۱۵<small>+</small></span>
+            <span class="tm"><b>08:24</b><span>/</span><span>22:08</span></span>
+          </div>
+          <div class="bar"><i></i><u></u></div>
+        </div>
+        <div class="doors" style="max-width:420px">
+          <a class="door" href="#"><svg viewBox="0 0 24 24"><path d="M4 12h14M12 5l7 7-7 7"/></svg>صفحه‌ی اپیزود</a>
+          <a class="door nc ghost" href="#"><svg viewBox="0 0 24 24"><path d="M5 4h10l4 4v12H5z"/><path d="M9 12h6M9 16h6"/></svg>خواندن نوت‌کست</a>
+        </div>
+      </div>
+    </div>
+    <aside class="colC">ستون C · پالس / آخرین مطالب</aside>
+  </div>
+</section>
+
+<section class="notes">
+  <h2 style="font-size:14px;color:var(--txt2)">چه چیزی تغییر می‌کند، چه چیزی نه</h2>
+  <ul>
+    <li><b>سه چیز اضافه می‌شود:</b> لید اپیزود (سه خط از <code>description</code> همان ردیف <code>dentcast.json</code> که هیرو الان از آن ساخته می‌شود)، مدت و تاریخ، و دو در زیر کارت.</li>
+    <li><b>پلیر جدید نیست، همان است که هست.</b> <code>#dcHeroPlay</code> امروز هم اپیزود را همین‌جا پخش می‌کند و نوار سه‌پیکسلی زیر ردیف پیشرفتش را می‌کشد. چیزی که کم دارد: زمان، اسکراب، و ±۱۵. حالت ساکن همان یک دکمه می‌ماند؛ فقط وقتی پخش شروع شد ردیف باز می‌شود.</li>
+    <li><b>«خواندن نوت‌کست» فقط وقتی هست که نوت‌کستی باشد.</b> قسمت ۱۶۲ ندارد، برای همین در ماکاپ خط‌چین کشیده شده تا جایش دیده شود. جفتِ اپیزود/نوت‌کست همان واحدی است که مسیرها یک قدم حساب می‌کنند؛ اینجا همان جفت روی کارت دیده می‌شود. اپیزودی که نوت‌کست ندارد یک در دارد، تمام‌عرض.</li>
+    <li><b>هیچ waveform تزئینی.</b> همان دلیل هایلایت صوتی: کشیدنش یعنی دانلود و دیکود کل فایل در مرورگر.</li>
+    <li><b>هیچ کهربایی.</b> کارت آبی برند می‌ماند؛ اپیزود رایگان است.</li>
+    <li><b>هیچ جابه‌جایی.</b> کارت همان‌جا می‌ماند — بالای مسیریاب، که تبلیغ موبایل به آن لنگر انداخته و شبکه‌ی «دسته‌های محتوا» پایین‌ترش.</li>
+    <li><b>باز:</b> «ادامه‌ی پخش در صفحه‌ی اپیزود، از همین ثانیه» یعنی ثانیه‌ی جاری با لینک برود (<code>?t=</code>). مکانیزمش شبیه <code>?dcclip=</code> است ولی امروز وجود ندارد؛ بدون آن، «صفحه‌ی اپیزود» از صفر شروع می‌کند.</li>
+  </ul>
+</section>
+
+</body>
+</html>
