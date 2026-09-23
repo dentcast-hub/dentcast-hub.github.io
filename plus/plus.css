@@ -2351,3 +2351,45 @@ html.dcp-touring #mobile-body { overflow: hidden; }
 [data-theme="dark"] .dcp-clip-land { background: var(--hl, #5a4d10); color: var(--hl-ink, #fff3c4); }
 /* the «؟» caption under the clip row: full width, below the button line */
 .dcp-clip-cap { flex: 1 1 100%; margin: 2px 0 0; }
+
+/* ---- «ادامه‌ی شنیدن» — the audio hub's resume bar (plus/js/audio-hub.js) ----
+   One quiet strip at the bottom of any page where an episode can be carried
+   on. Brand blue, never amber: listening is free. On the homepage it sits on
+   top of the bottom nav (--dcp-abar-lift, measured), and the two floating
+   corner buttons step up above it (--dcp-abar-top) rather than hide under it.
+   It gives way to the workbench toolbar, which owns the same edge. */
+.dcp-abar {
+  position: fixed; z-index: 8500;
+  inset-inline: 10px; bottom: calc(10px + var(--dcp-abar-lift, 0px) + env(safe-area-inset-bottom));
+  display: flex; align-items: center; gap: 8px;
+  min-height: 56px; box-sizing: border-box; padding: 8px 10px 8px 8px;
+  background: var(--dcp-surface); color: var(--dcp-ink);
+  border: 1px solid var(--dcp-line); border-radius: 16px; box-shadow: var(--dcp-shadow);
+  overflow: hidden; font-size: .84rem; line-height: 1.4;
+}
+.dcp-abar-prog { position: absolute; inset-inline: 0; top: 0; height: 3px; background: transparent; }
+.dcp-abar-prog i { display: block; height: 100%; width: 0; background: var(--dcp-accent); transition: width .3s linear; }
+.dcp-abar-play {
+  flex: none; width: 40px; height: 40px; border-radius: 50%; border: 0; cursor: pointer; padding: 0;
+  background: var(--dcp-accent); display: grid; place-items: center;
+}
+.dcp-abar-play svg { width: 18px; height: 18px; fill: #fff; }
+.dcp-abar-info { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; color: inherit; text-decoration: none; }
+.dcp-abar-kick { font-size: .72rem; color: var(--dcp-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dcp-abar-ttl { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; unicode-bidi: plaintext; text-align: start; }
+.dcp-abar-time { flex: none; font-size: .78rem; color: var(--dcp-muted); font-variant-numeric: tabular-nums; unicode-bidi: isolate; direction: ltr; }
+.dcp-abar-skip, .dcp-abar-x {
+  flex: none; height: 32px; min-width: 32px; padding: 0 6px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--dcp-line); background: transparent; color: var(--dcp-muted);
+  font: inherit; font-size: .74rem; font-weight: 700;
+}
+.dcp-abar-x { border-color: transparent; font-size: 1.15rem; font-weight: 400; }
+.dcp-abar-skip { direction: ltr; unicode-bidi: isolate; } /* «−۱۵», never «۱۵-» */
+.dcp-abar:not(.is-playing) .dcp-abar-skip { display: none; }
+@media (max-width: 380px) { .dcp-abar-time { display: none; } }
+@media (min-width: 900px) {
+  .dcp-abar { left: 16px; right: auto; width: 400px; bottom: 16px; }
+}
+body.dcp-study .dcp-abar { display: none; }
+body.dcp-has-abar #dc-float-search,
+body.dcp-has-abar #dc-theme-toggle { bottom: max(76px, calc(var(--dcp-abar-top, 0px) + 8px)); }
