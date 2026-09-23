@@ -16,7 +16,10 @@
 //   · the homepage hero's detached Audio is handed over through dcAudioPending.
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-vi.mock('/plus/js/api.js', () => ({ apiBase: () => 'https://api.test' }));
+// apiBase() is ASYNC in the real module (it probes the mirrors). The mock
+// used to answer with a plain string, which is exactly how the sync writer
+// shipped building «[object Promise]/player/state» with every test green.
+vi.mock('/plus/js/api.js', () => ({ apiBase: () => Promise.resolve('https://api.test') }));
 
 const fetchMock = vi.fn((..._args: any[]): Promise<any> => Promise.reject(new Error('no network')));
 globalThis.fetch = fetchMock as any;
@@ -119,8 +122,10 @@ describe('one record for every player', () => {
     await settle();
     a._t = 90;
     a.pause();
+    await settle();
     const call = fetchMock.mock.calls.find((c) => String(c[0]).endsWith('/player/state'));
     expect(call).toBeTruthy();
+    expect(call![0]).toBe('https://api.test/player/state');
     expect(call![1]).toMatchObject({ method: 'PUT', credentials: 'include' });
     expect(JSON.parse(call![1].body)).toMatchObject({ episode: 162, position: 90 });
   });

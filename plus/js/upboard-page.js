@@ -28,12 +28,12 @@
 //   2. Every filter lives in the URL (?sort=&type=), written with replaceState.
 //      Same rule as the highlight library: a filtered view survives a refresh
 //      and the back button, and is a link somebody can send.
-import { api, currentUser, meStatus } from '/plus/js/api.js?v=140';
-import { el, faNum } from '/plus/js/util.js?v=140';
-import { openSheet, closeSheet, gateCard } from '/plus/js/sheet.js?v=140';
-import { premiumCta, guestPremiumExtras } from '/plus/js/premium-cta.js?v=140';
-import { openLoginModal } from '/plus/js/login-modal.js?v=140';
-import { markReturnTrail } from '/plus/js/return-trail.js?v=140';
+import { api, currentUser, meStatus } from '/plus/js/api.js?v=141';
+import { el, faNum } from '/plus/js/util.js?v=141';
+import { openSheet, closeSheet, gateCard } from '/plus/js/sheet.js?v=141';
+import { premiumCta, guestPremiumExtras } from '/plus/js/premium-cta.js?v=141';
+import { openLoginModal } from '/plus/js/login-modal.js?v=141';
+import { markReturnTrail } from '/plus/js/return-trail.js?v=141';
 
 /** Which gate sent a buyer, for the pricing page's ?from= report. */
 const FROM = 'upboard';
@@ -453,7 +453,13 @@ export function initUpBoard(root) {
     if (catalog) render();
   }).catch(() => { /* rows simply carry no count */ });
 
-  api.voteBoard().then((b) => {
+  // Asked only of a reader who can be given it. /me already told the lock
+  // above who is signed out or free, and asking the board anyway cost every
+  // one of those visits a refused request (401/402) and a red console line for
+  // nothing (found walking the site, 1405/07/01). A subscriber is asked, and so
+  // is a reader /me could not answer for — for them the board's own reply is
+  // still the only way to learn which of the three answers is true.
+  const loadBoard = () => api.voteBoard().then((b) => {
     board = b;
     // The board's own counts are the same numbers, a minute fresher — take them
     // when we have them so a subscriber never sees two different totals.
@@ -485,4 +491,7 @@ export function initUpBoard(root) {
     if (mode === 'top') mode = 'new';
     if (catalog) render();
   });
+  currentUser()
+    .then((user) => { if (user ? user.tier === 'premium' : meStatus() === 'error') loadBoard(); })
+    .catch(() => loadBoard());
 }

@@ -877,6 +877,11 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-cl-note-count { margin: 4px 2px 12px; font-size: .74rem; color: var(--txt2, #4a5f85); font-variant-numeric: tabular-nums; }
 .dcp-sheet-card > .dcp-input,
 .dcp-hlib-editor > .dcp-input { display: block; width: 100%; box-sizing: border-box; }
+/* …but never over `hidden`. The chooser's filter box (collections.js) is a
+   `.dcp-sheet-card > .dcp-input` that stays hidden until a reader has six
+   boards, and the display above beat the UA's `[hidden]`, so the box sat in
+   the sheet from the very first board, and with none at all (1405/07/01). */
+.dcp-sheet-card > .dcp-input[hidden] { display: none; }
 
 /* ---- reference pin («رفرنس») card -------------------------------------- */
 .dcp-cl-pin-ref { border-inline-start: 3px solid var(--dcp-ref); }
