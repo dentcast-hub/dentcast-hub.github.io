@@ -6967,7 +6967,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=942fc168b5',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=38e6935e04',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -7338,7 +7338,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=942fc168b5';
+  const FEED_URL='/dentcast-brain.json?v=38e6935e04';
   /* Two hosts, one per homepage shell — the same SLOT_IDS split
      plus/js/home-upboard.js uses for the «بالاترین» arrangement of this same
      box. This script owns «تازه‌ترین» and is the ONLY renderer of it (the
@@ -7613,7 +7613,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=942fc168b5', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=38e6935e04', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
