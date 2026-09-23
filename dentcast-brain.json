@@ -15365,5 +15365,42 @@
       "secondary": [],
       "subtopic": "prosthetic-components"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-80",
+    "title": "قالب پیک‌آپ چیه؟ کاربردهاش چیه؟",
+    "caption": "قالب پیک‌آپ یعنی رستوریشن یا پروتز را در دهان بنشانیم و از آن قالب بگیریم تا داخل قالب بماند و همراهش بیرون بیاید؛ به این ترتیب لابراتوار علاوه بر فرم بافت‌ها، رابطه‌ی واقعی پروتز با دندان‌های مجاور و بافت نرم را هم دریافت می‌کند. کاربرد رایجش اصلاح کانتکت باز روکش است، و در انتقال فرم بافتِ شکل‌گرفته با موقت، ساخت روکش برای دندان پایه‌ی پارسیل موجود، پروتز تلسکوپیک و فریم‌ورک فول‌آرچ ایمپلنت هم به کار می‌رود.",
+    "hashtags": [
+      "#اینسایت",
+      "#قالب_پیک_آپ",
+      "#قالبگیری",
+      "#کانتکت_باز",
+      "#پروفایل_امرجنس",
+      "#دندان_پایه",
+      "#ایمپلنت_فول_آرچ"
+    ],
+    "keywords": [
+      "pick-up impression technique",
+      "pick-up impression for open proximal contact",
+      "crown seated in single-step putty and wash impression",
+      "transferring soft tissue contour from provisional restoration",
+      "crown fabrication under existing removable partial denture clasp",
+      "telescopic crown primary coping pick-up",
+      "full-arch implant framework try-in pick-up impression",
+      "قالب پیک‌آپ چیست",
+      "اصلاح کانتکت باز روکش با قالب پیک‌آپ",
+      "قالب پیک‌آپ با پوتی و واش همزمان",
+      "بررسی واش زیر روکش در قالب پیک‌آپ",
+      "انتقال فرم بافت شکل‌گرفته با پروتز موقت",
+      "ساخت روکش دندان پایه‌ی پارسیل با پیک‌آپ",
+      "پیک‌آپ روکش اولیه در پروتز تلسکوپیک و فریم‌ورک ایمپلنت"
+    ],
+    "page_url": "/insight/insight-80.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "impression"
+    }
   }
 ]
