@@ -11,6 +11,7 @@ import { pool, withTransaction, query } from '../db.js';
 import { generatePseudonym } from '../services/pseudonym.js';
 import { getIndex } from '../content-index.js';
 import { rebuildAllStreaks } from './rebuild-streaks.js';
+import { activateMonths } from '../services/subscription.js';
 
 const SEED_PHONES = ['09120000001', '09120000002'];
 
@@ -144,6 +145,11 @@ async function main(): Promise<void> {
   );
 
   const premiumId = await upsertUser(SEED_PHONES[1], 'premium', 2);
+  // `tier` alone is not premium: the tier is DERIVED from a live subscription
+  // row, so the API's first subscription sweep demoted this account to free
+  // the moment it booted. Give it the row the tier is derived from — through
+  // the same door the admin panel's «هدیهٔ ماه» uses.
+  await activateMonths(premiumId, 12, { source: 'admin', meta: { via: 'seed' } });
   for (const h of PREMIUM_HIGHLIGHTS) await insertHighlight(premiumId, h);
 
   await rebuildAllStreaks(); // compute streak caches from the seeded activity

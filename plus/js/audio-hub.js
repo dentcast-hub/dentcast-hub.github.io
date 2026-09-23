@@ -32,9 +32,9 @@
 // window.dcAudioHub / window.dcAudioPending (the dcpPendingListen shape).
 // player.html keeps its own record-keeping (#dc-audio is never adopted); the
 // hub only asks it to stop when something else starts.
-import { apiBase } from './api.js?v=140';
-import { el, faNum } from './util.js?v=140';
-import { fmtClock, segmentActive } from './clip-audio.js?v=140';
+import { apiBase } from './api.js?v=141';
+import { el, faNum } from './util.js?v=141';
+import { fmtClock, segmentActive } from './clip-audio.js?v=141';
 
 export const RESUME_KEY = 'dc-resume-state';   // player.html's own record — same key, same shape
 export const META_KEY = 'dc-resume-meta';      // what the bar needs to draw it without the 500 KB catalog
@@ -167,15 +167,18 @@ function pushServer(rec, force) {
   const now = Date.now();
   if (!force && now - lastServerSave < SERVER_EVERY_MS) return;
   lastServerSave = now;
-  try {
-    fetch(apiBase() + '/player/state', {
-      method: 'PUT',
-      credentials: 'include',
-      keepalive: !!force,
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ episode: rec.episode, position: rec.position, anchor: rec.anchor, speed: rec.speed }),
-    }).catch(() => {});
-  } catch (_) { /* the local record is there either way */ }
+  const body = JSON.stringify({ episode: rec.episode, position: rec.position, anchor: rec.anchor, speed: rec.speed });
+  // apiBase() answers with a PROMISE (it may still be probing the mirrors).
+  // Concatenated as a string it became «[object Promise]/player/state», a
+  // relative URL on the page's own host, so no position ever reached the
+  // account from these players (found walking the site, 1405/07/01).
+  Promise.resolve(apiBase()).then((base) => fetch(base + '/player/state', {
+    method: 'PUT',
+    credentials: 'include',
+    keepalive: !!force,
+    headers: { 'content-type': 'application/json' },
+    body,
+  })).catch(() => { /* the local record is there either way */ });
 }
 
 function save(audioEl, force) {
