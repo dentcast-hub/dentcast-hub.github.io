@@ -18565,5 +18565,206 @@
         "interpretation_fa": "متن هر ادعایش را به دلیلی روشن وصل می‌کند، مثلاً اینکه بدون گروه کنترل نمی‌شود اثر درمان را از بهبود خودبه‌خودی جدا کرد، و دامنه‌ی بحث را صریحاً به سؤال اثر درمان محدود می‌کند. نسبتش با ادبیات منتشرشده بیان نشده و خودش را تجربه یا دیدگاه نمی‌نامد؛ ارزشش آموزش مفاهیم پایه‌ی طراحی مطالعه است، نه گزارش یک یافته."
       }
     ]
+  },
+  "sharehub/share-23": {
+    "scored_at": "2026-09-24",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Effect of blood decontamination methods on dentin bond strength across adhesive systems: a systematic review",
+          "authors": "Katebi K, Kimyai S, Salehnia F, Azizi H",
+          "year": 2026,
+          "journal": "BMC Oral Health",
+          "doi": "10.1186/s12903-026-08876-5"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review of in-vitro bond-strength studies; qualitative synthesis only, no meta-analysis (MATERIAL SR/MA row, 100)",
+          "evidence_quote": "Fifteen in vitro studies comprising 1,015 teeth met the inclusion criteria."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "low",
+              "evidence_quote": "This systematic review was conducted in accordance with PRISMA 2020 guidelines and registered in PROSPERO (CRD42022381287).",
+              "note": "Methods also state the protocol was prospectively registered in PROSPERO (CRD42022381287)"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "A comprehensive and systematic literature search was conducted in Medline/PubMed, Web of Science, Scopus, and Embase."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "low",
+              "evidence_quote": "were excluded at the full-text stage for reasons including deciduous teeth substrate",
+              "note": "all seven full-text exclusions are identified by reference number with a specific reason: refs 16, 20 deciduous teeth substrate; refs 4, 10, 21, 22 contaminants other than blood alone; ref 17 no specific decontamination procedure (22 assessed, 15 included). The paper's own bracket after 'Seven studies' lists only [4, 10, 16, 20-22] while ref 17 appears in the reason clause; all seven are nonetheless individually cited, so v2.4 3b-iii item 1 applies"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "The methodological quality and risk of bias of the included studies were assessed independently by two reviewers (K.K and S.K) using the Quality Assessment Tool for In Vitro Studies (QUIN)"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "substantial methodological heterogeneity precluded quantitative meta-analysis and necessitated a qualitative synthesis",
+              "note": "no pooling was performed; the authors explicitly declined to combine data because of heterogeneity and stratified a qualitative synthesis by decontamination method and adhesive system, rated as in the sharehub/share-18 Mostafavi 2022 precedent"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "no funnel plot, Egger's test, small-study or any other publication-bias assessment is mentioned anywhere in the full text; read Methods (registration, search strategy, eligibility, study selection, risk of bias, data extraction, outcome measures, data synthesis), Results, Discussion and Limitations; searched for 'publication bias', 'funnel', 'Egger', 'small-study' — none found"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding of tested product",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors declare no competing interests.",
+            "note": "competing interests declared as none and funding stated as none; not applicable"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis; in-vitro specimen count <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "reports in-vitro dentin bond-strength outcomes (mostly 24-48 h water storage), not a survival/success claim requiring a follow-up duration; the Limitations' mention of missing long-term aging concerns laboratory aging of the included studies, not a clinical follow-up claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": false,
+        "fact_fa": "این مرور سیستماتیک اثر روش‌های پاک‌سازی خون بر استحکام باند به عاج را با ابزار AMSTAR-2 ارزیابی کرد و در پرسش نوع متریال امتیاز ۵۵ از ۱۰۰، باند C گرفت.",
+        "interpretation_fa": "ثبت پیشینی پروتکل در PROSPERO، جست‌وجوی چهار پایگاه داده و ارزیابی مستقل کیفیت با QUIN به‌خوبی گزارش شده‌اند و تنها نبود ارزیابی سوگیری انتشار امتیاز را پایین آورده. یافته‌ی اصلی، یعنی کاهش استحکام باند با آلودگی خونی و بهبود نسبی با ری‌اپلیکیشن ادهزیو یا NaOCl همراه آنتی‌اکسیدان، بر پایه‌ی مطالعات in-vitro است و ترجمه‌ی بالینی آن محدود است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Effect of contamination and decontamination methods on the bond strength of adhesive systems to dentin: A systematic review",
+          "authors": "Bourgi R, Cuevas-Suarez CE, Devoto W, Monjarás-Ávila AJ, Monteiro P, Kharma K, Lukomska-Szymanska M, Hardan L",
+          "year": 2023,
+          "journal": "Journal of Esthetic and Restorative Dentistry",
+          "doi": "10.1111/jerd.13078"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review of in-vitro studies, qualitative synthesis only (MATERIAL SR/MA row, 100)",
+          "evidence_quote": "The following PICOS strategy was used: population, human dentin; intervention, contamination with blood, saliva, or hemostatic agents; control, uncontaminated dentin; outcome, bond strength; and study design, in vitro studies."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "absent. Read Abstract, 1 Introduction, 2 Materials and Methods (2.1 Literature search, 2.2 Study selection, 2.3 Data extraction, 2.4 Quality assessment), 3 Results, 4 Discussion, 5 Conclusion, Author contributions, Conflict of interest and Data availability statements; no PROSPERO, registration number or a priori protocol is mentioned anywhere. The only 'protocol' wording refers to the contamination/decontamination protocols of the included studies; the text states only that it followed the PRISMA 2020 guidelines, which is a reporting guideline, not a registration."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "The following databases were screened: Embase, PubMed, Scielo, Scopus, and Web of Science."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "some_concerns",
+              "evidence_quote": "After eliminating the duplicates, 2250 documents were examined by reading the title and abstract. After title and abstract screening, 78 studies remained for full text inspection. From the 78 studies, 16 studies were excluded because (1) the full-text of the manuscript could not be retrieved",
+              "note": "not the low tier: the text states 16 full-text exclusions but identifies only 14 by citation (refs 20-31, full text not retrieved; refs 32-33, did not evaluate bond strength), so two excluded studies are not individually identified (78 - 62 = 16). Both halves of the some_concerns tier are present: a screening account with counts (3750 retrieved, 2250 screened, 78 full texts, 62 included, plus a PRISMA flowchart) and explicit inclusion/exclusion criteria in 2.2 Study selection."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "The risk of bias of the manuscripts included in this review was independently assessed by two participants of the review (L.H. and R.B.) according to the evaluation of the domains determined by the RoBDEMAT tool"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "a high heterogenicity within the contamination procedures and the step of the bonding procedure were the contamination occurred was detected, and therefore, a meta-analysis could not be performed.",
+              "note": "no pooling was performed; the authors explicitly declined to combine data because of heterogeneity in contamination protocols and bonding step, the decision described and justified in Results and restated in Discussion (same treatment as the share-18 precedent)"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "absent. Read Methods (2.1-2.4), Results, Discussion (including its limitations paragraph) and Conclusion; no funnel plot, Egger test or any 'publication bias' / small-study wording appears anywhere. Every occurrence of 'bias' in the text refers to the RoBDEMAT risk-of-bias appraisal of individual studies. No quantitative synthesis was performed, but per 3a the domain is still rated and under FULL_TEXT silence is high."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding of tested product",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors declare that they do not have any financial interest in the companies whose materials are included in this article.",
+            "note": "a conflict-of-interest statement is present; no funding source is named anywhere in the text and no manufacturer funding is disclosed, so the row does not fire"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis; in-vitro specimen count <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "the review makes an in-vitro bond-strength claim (immediate and, in some included studies, aged bond strength), not a clinical survival/success claim requiring a follow-up duration"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 30,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این مرور سیستماتیک مطالعات آزمایشگاهی درباره‌ی اثر آلودگی دنتین با خون، بزاق و عوامل هموستاتیک و روش‌های پاک‌سازی بر bond strength، با ابزار AMSTAR-2 ارزیابی شد و در پرسش نوع متریال امتیاز ۳۰ از ۱۰۰، باند D گرفت.",
+        "interpretation_fa": "نبود ثبت پروتکل پیشینی و نبود ارزیابی سوگیری انتشار، امتیاز این مرور را با وجود جست‌وجوی پنج پایگاه داده و ارزیابی مستقل risk of bias پایین آورده. به دلیل ناهمگنی پروتکل‌ها سنتز فقط کیفی است. افت bond strength پس از آلودگی و جبران نسبی آن با شست‌وشو و re-bonding، در سطح شواهد in vitro قابل استناد است."
+      }
+    ]
   }
 }
