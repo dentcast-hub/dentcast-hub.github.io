@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=144';
+import { API_BASES } from './config.js?v=147';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -143,7 +143,7 @@ function primaryBase() {
   return API_BASES[0];
 }
 
-async function request(path, { method = 'GET', body, query, pinned = false, timeoutMs } = {}) {
+async function request(path, { method = 'GET', body, query, pinned = false, timeoutMs, keepalive = false } = {}) {
   const base = pinned ? primaryBase() : await pickBase();
   let url = base + path;
   if (query) {
@@ -161,6 +161,10 @@ async function request(path, { method = 'GET', body, query, pinned = false, time
   // stale /profile/stats showed empty week/records. Always hitting the network
   // fixes both and keeps auth state truthful.
   const opts = { method, credentials: 'include', cache: 'no-store', headers: {} };
+  // keepalive: the request outlives the page that sent it (a tap on «قسمت
+  // بعدی» would otherwise cancel it mid-flight). Only for small fire-and-forget
+  // writes sent while the page is going away — see reading.js.
+  if (keepalive) opts.keepalive = true;
   if (body !== undefined) {
     opts.headers['content-type'] = 'application/json';
     opts.body = JSON.stringify(body);
@@ -224,8 +228,8 @@ export const api = {
   logout: () => request('/auth/logout', { method: 'POST', pinned: true, timeoutMs: LOGOUT_TIMEOUT_MS }),
 
   // activity + anon
-  activity: (action, content_id, meta) =>
-    request('/activity', { method: 'POST', body: { action, content_id, meta } }),
+  activity: (action, content_id, meta, { keepalive = false } = {}) =>
+    request('/activity', { method: 'POST', body: { action, content_id, meta }, keepalive }),
   anonEvent: (event, content_id) =>
     request('/anon/event', { method: 'POST', body: { event, content_id } }),
 

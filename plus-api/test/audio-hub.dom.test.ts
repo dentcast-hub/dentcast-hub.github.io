@@ -458,4 +458,21 @@ describe('the homepage hero', () => {
     expect(rec()).toMatchObject({ episode: 162, position: 77 });
     expect((window as any).dcAudioPending).toBeNull();
   });
+
+  it('a hero listen is tracked toward «اپیزودها» once it plays, and a pause/resume does not restart it', async () => {
+    at('/');
+    const tracked: Array<[string, unknown]> = [];
+    (window as any).dcpTrackListening = (id: string, el: unknown) => { tracked.push([id, el]); };
+    initAudioHub();
+    const hero = new Audio(SRC) as any;
+    (window as any).dcAudioHub.adopt(hero, { episode: 162, title: TITLE, page: '/episodes/episode-162.html', src: SRC });
+    expect(tracked).toHaveLength(0); // handed over, not yet played
+    hero.play();
+    await settle();
+    hero.pause();
+    hero.play();
+    await settle();
+    expect(tracked).toEqual([['episodes/episode-162', hero]]);
+    delete (window as any).dcpTrackListening;
+  });
 });

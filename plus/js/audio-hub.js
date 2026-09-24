@@ -32,9 +32,9 @@
 // window.dcAudioHub / window.dcAudioPending (the dcpPendingListen shape).
 // player.html keeps its own record-keeping (#dc-audio is never adopted); the
 // hub only asks it to stop when something else starts.
-import { apiBase } from './api.js?v=144';
-import { el, faNum } from './util.js?v=144';
-import { fmtClock, segmentActive } from './clip-audio.js?v=144';
+import { apiBase } from './api.js?v=147';
+import { el, faNum } from './util.js?v=147';
+import { fmtClock, segmentActive } from './clip-audio.js?v=147';
 
 export const RESUME_KEY = 'dc-resume-state';   // player.html's own record — same key, same shape
 export const META_KEY = 'dc-resume-meta';      // what the bar needs to draw it without the 500 KB catalog
@@ -272,6 +272,29 @@ export function pauseOwn() {
 
 // ── adoption ───────────────────────────────────────────────────────────────
 
+// The listening signal (episode_listened, via plus.js's shared-player hook) for
+// the hub's players that live in NO page: its own bar and the homepage hero.
+// The hero used to have none — a whole episode heard from the homepage's play
+// button counted for nothing in «اپیزودها»'s progress (1405/07/02). One
+// tracker at a time, handed over only when a different element takes the air,
+// so pausing and resuming the same player does not reset what it has heard.
+let listenFor = null;
+function trackListen(audioEl, episode) {
+  if (!audioEl || !episode || listenFor === audioEl) return;
+  listenFor = audioEl;
+  try { if (window.dcpTrackListening) window.dcpTrackListening('episodes/episode-' + episode, audioEl); } catch (_) { /* ignore */ }
+}
+
+/** adopt() for a player handed over from outside (the homepage hero). */
+function adoptHanded(audioEl, meta) {
+  const st = adopt(audioEl, meta);
+  if (audioEl && meta && meta.episode && !audioEl.isConnected) {
+    audioEl.addEventListener('play', () => trackListen(audioEl, meta.episode));
+    if (!audioEl.paused) trackListen(audioEl, meta.episode);
+  }
+  return st;
+}
+
 /**
  * Take `audioEl` under the hub. `meta` ({episode, title, page, src, d}) is
  * optional — without it the element is identified by its page or its file.
@@ -471,7 +494,7 @@ function showBar(meta, pos, speed, tryAuto) {
   bar = { root, audio, start };
   // The shared-player hook: listening from the bar counts toward
   // episode_listened exactly as listening from player.html does.
-  try { if (window.dcpTrackListening) window.dcpTrackListening('episodes/episode-' + meta.episode, audio); } catch (_) { /* ignore */ }
+  trackListen(audio, meta.episode);
   document.body.appendChild(root);
   document.body.classList.add('dcp-has-abar');
   placeBar();
@@ -542,14 +565,14 @@ export function initAudioHub() {
     return;
   }
   if (window.dcAudioHub) return;
-  window.dcAudioHub = { adopt, pauseOwn };
+  window.dcAudioHub = { adopt: adoptHanded, pauseOwn };
   document.addEventListener('play', onDocPlay, true);
   const pageEl = document.getElementById('ep-audio');
   if (pageEl) adopt(pageEl);
   const pending = window.dcAudioPending;
   if (Array.isArray(pending)) {
     window.dcAudioPending = null;
-    pending.forEach(([a, m]) => { const st = adopt(a, m); if (a && !a.paused) onPlay(a); return st; });
+    pending.forEach(([a, m]) => { const st = adoptHanded(a, m); if (a && !a.paused) onPlay(a); return st; });
   }
   window.addEventListener('pagehide', onPageHide);
   document.addEventListener('visibilitychange', () => {
@@ -564,6 +587,7 @@ export function _resetAudioHubForTests() {
   if (bar) closeBar(false);
   adopted.clear();
   active = null;
+  listenFor = null;
   catalogP = null;
   lastServerSave = 0;
   msWired = false;

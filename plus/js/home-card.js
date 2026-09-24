@@ -1,13 +1,14 @@
 // Homepage personal card, in the existing "یادگیری هفتگی" slot (spec 2.4).
 // Two states: anonymous invitation, and logged-in free daily status. NO due-card
 // counter for free users, not even a zero or a locked stub. No minutes target.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=144';
-import { currentUser, api } from './api.js?v=144';
-import { openLoginModal, openOrgNotice } from './login-modal.js?v=144';
-import { getModel, contentInfo } from './content-index.js?v=144';
-import { isOrgHost, detectContentId, baleEnabled, telegramLoginEnabled } from './config.js?v=144';
-import { ensurePushSubscription, removePushSubscription } from './push.js?v=144';
-import { leagueChip, maybeAnnounceOutcome } from './league.js?v=144';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=147';
+import { currentUser, api } from './api.js?v=147';
+import { openLoginModal, openOrgNotice } from './login-modal.js?v=147';
+import { getModel, contentInfo } from './content-index.js?v=147';
+import { isOrgHost, detectContentId, baleEnabled, telegramLoginEnabled } from './config.js?v=147';
+import { ensurePushSubscription, removePushSubscription } from './push.js?v=147';
+import { leagueChip, maybeAnnounceOutcome } from './league.js?v=147';
+import { flushOutbox } from './outbox.js?v=147';
 
 function flame(active) {
   const s = el('span', { class: 'dc-plus-flame' + (active ? ' is-active' : ''), 'aria-hidden': 'true' });
@@ -116,6 +117,9 @@ function renderAnon(card) {
  * rendered card is how a two-slot conversion quietly doubles its own work.
  */
 async function renderLoggedIn(cards, user) {
+  // A completion the previous page could not deliver lands before the card
+  // reads progress (outbox.js).
+  await flushOutbox();
   const [me, progress, model, recent, league] = await Promise.all([
     api.me().catch(() => user),
     api.progress().catch(() => ({})),
