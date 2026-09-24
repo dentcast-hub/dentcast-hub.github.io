@@ -56,6 +56,7 @@ export const FOLDER_EN = {
   'dentcast-plus': 'DentCast+',
   promptologist: 'Promptologist',
   'plak-sefr': 'Plak-e Sefr',
+  taraz: 'Taraz-e Shavahed',
 };
 
 // Detect the folder-landing topic key for the current path, or null. The card

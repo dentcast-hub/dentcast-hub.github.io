@@ -18,6 +18,7 @@ Usage:
   python3 tools/pathway_place.py CONTENT_ID          proposal (which pathways / where)
   python3 tools/pathway_place.py --insert CONTENT_ID --pathway PID --after ANCHOR_ID [--milestone]
   python3 tools/pathway_place.py --insert CONTENT_ID --pathway PID --at-end [--milestone]
+  python3 tools/pathway_place.py --insert CONTENT_ID --pathway PID --at-start
   python3 tools/pathway_place.py --coverage          audit 0 / 1 / many membership
   python3 tools/pathway_place.py --freeze-core       re-freeze the curated core after a founder pass
 
@@ -333,7 +334,7 @@ def propose(cid):
           'first).\nPlacement is conceptual only — the item\'s pillar is '
           'irrelevant here.')
 
-def insert(cid, pid, after=None, at_end=False, milestone=False, confirmed=False):
+def insert(cid, pid, after=None, at_end=False, milestone=False, confirmed=False, at_start=False):
     d, by_id, pw = load()
     if cid.startswith('litecast/'):
         sys.exit('refuse: LiteCast is excluded from professional pathways.')
@@ -354,6 +355,12 @@ def insert(cid, pid, after=None, at_end=False, milestone=False, confirmed=False)
     if at_end:
         target['steps'].append(new)
         pos = 'end'
+    elif at_start:
+        # The new first step of a pathway: a foundation the rest builds on
+        # (تراز شواهد قسمت ۱ opening evidence-literacy, 1405/07/02). Never
+        # --after, which can only ever place something behind step one.
+        target['steps'].insert(0, new)
+        pos = 'start (index 0)'
     else:
         if after not in ids:
             sys.exit(f'refuse: anchor {after} not in {pid}')
@@ -424,7 +431,7 @@ def main(argv):
         cid = opt('--insert')
         insert(cid, opt('--pathway'), after=opt('--after'),
                at_end='--at-end' in argv, milestone='--milestone' in argv,
-               confirmed='--confirmed' in argv)
+               confirmed='--confirmed' in argv, at_start='--at-start' in argv)
         return
     args = [a for a in argv if not a.startswith('--')]
     if not args:

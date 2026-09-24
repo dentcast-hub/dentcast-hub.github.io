@@ -664,6 +664,10 @@
     "premium": true,
     "steps": [
       {
+        "content_id": "taraz/taraz1-1",
+        "milestone": false
+      },
+      {
         "content_id": "metanotes/meta-6",
         "milestone": false
       },

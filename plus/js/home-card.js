@@ -1,13 +1,13 @@
 // Homepage personal card, in the existing "یادگیری هفتگی" slot (spec 2.4).
 // Two states: anonymous invitation, and logged-in free daily status. NO due-card
 // counter for free users, not even a zero or a locked stub. No minutes target.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=143';
-import { currentUser, api } from './api.js?v=143';
-import { openLoginModal, openOrgNotice } from './login-modal.js?v=143';
-import { getModel, contentInfo } from './content-index.js?v=143';
-import { isOrgHost, detectContentId, baleEnabled, telegramLoginEnabled } from './config.js?v=143';
-import { ensurePushSubscription, removePushSubscription } from './push.js?v=143';
-import { leagueChip, maybeAnnounceOutcome } from './league.js?v=143';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=144';
+import { currentUser, api } from './api.js?v=144';
+import { openLoginModal, openOrgNotice } from './login-modal.js?v=144';
+import { getModel, contentInfo } from './content-index.js?v=144';
+import { isOrgHost, detectContentId, baleEnabled, telegramLoginEnabled } from './config.js?v=144';
+import { ensurePushSubscription, removePushSubscription } from './push.js?v=144';
+import { leagueChip, maybeAnnounceOutcome } from './league.js?v=144';
 
 function flame(active) {
   const s = el('span', { class: 'dc-plus-flame' + (active ? ' is-active' : ''), 'aria-hidden': 'true' });
