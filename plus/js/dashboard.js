@@ -1,18 +1,18 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=142';
-import { api } from './api.js?v=142';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=142';
-import { leagueEntryButton } from './league.js?v=142';
-import { openCollectionPicker, boardCover } from './collections.js?v=142';
-import { bundleRailCard, intentRow } from './pathways.js?v=142';
-import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=142';
-import { currentMonthKey } from './jalali-month.js?v=142';
-import { renewalBanner } from './renewal-banner.js?v=142';
-import { premiumCta } from './premium-cta.js?v=142';
-import { maybeCelebrate } from './achievements.js?v=142';
-import { markReturnTrail } from './return-trail.js?v=142';
+import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=143';
+import { api } from './api.js?v=143';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=143';
+import { leagueEntryButton } from './league.js?v=143';
+import { openCollectionPicker, boardCover } from './collections.js?v=143';
+import { bundleRailCard, intentRow } from './pathways.js?v=143';
+import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=143';
+import { currentMonthKey } from './jalali-month.js?v=143';
+import { renewalBanner } from './renewal-banner.js?v=143';
+import { premiumCta } from './premium-cta.js?v=143';
+import { maybeCelebrate } from './achievements.js?v=143';
+import { markReturnTrail } from './return-trail.js?v=143';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',
@@ -100,7 +100,10 @@ function progressBars(progress, model) {
   // drops until they are read.
   const folders = (model.folders || []).filter((f) => f.total > 0 && !PROGRESS_EXCLUDE.has(f.key));
   if (!folders.length) return el('div', { class: 'dcp-muted' }, 'هنوز پوشه‌ای برای نمایش نیست.');
-  const readByKey = new Map((progress.folder_progress || []).map((f) => [f.key, f.read || 0]));
+  // `consumed` is the uncapped count (a current API); the cap is applied below
+  // against the PUBLISHED total, which the API's own copy of the index can lag.
+  const readByKey = new Map((progress.folder_progress || []).map((f) => [f.key,
+    typeof f.consumed === 'number' ? f.consumed : (f.read || 0)]));
   const list = el('div', { class: 'dcp-progress-list' });
   for (const f of folders) {
     const read = Math.min(readByKey.get(f.key) || 0, f.total);

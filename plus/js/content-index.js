@@ -16,6 +16,24 @@ export function getModel({ refresh = false } = {}) {
   return modelPromise;
 }
 
+// The API's folder numbers, re-based on the PUBLISHED index this browser just
+// read. The API keeps its own copy of the index and that copy can lag the site
+// by a publish (plak1-6, 1405/07/02: the site said six parts, the API said
+// five, so a reader who had read all six saw «۵ از ۵» on the section page and
+// ٪۸۳ on the dashboard). The total is therefore the larger of the two — a
+// folder only ever grows between rebuilds — and the reader's count is the
+// API's UNCAPPED `consumed`, capped here against that total. An older API that
+// sends no `consumed` keeps its own capped `read`, and a model that failed to
+// load changes nothing.
+export function freshFolders(apiFolders, model) {
+  const staticTotal = new Map(((model && model.folders) || []).map((f) => [f.key, f.total || 0]));
+  return (apiFolders || []).map((f) => {
+    const total = Math.max(f.total || 0, staticTotal.get(f.key) || 0);
+    const n = typeof f.consumed === 'number' ? f.consumed : (f.read || 0);
+    return { ...f, total, read: Math.min(n, total) };
+  });
+}
+
 // content_id -> { cluster, subtopic, type, title, url } or null.
 export function contentInfo(model, contentId) {
   return (model.byContent && model.byContent[contentId]) || null;

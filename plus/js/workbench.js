@@ -1,11 +1,11 @@
 // Study mode controller. A mode of the article page, not a separate page. It
 // inherits the site's typography (styles live in plus.css and reference the
 // site's own CSS variables). Never auto-enters; the caller decides when.
-import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=142';
-import { api } from './api.js?v=142';
-import { PALETTE, LABELS, SS_MODE } from './config.js?v=142';
-import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=142';
-import { openCollectionPicker } from './collections.js?v=142';
+import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=143';
+import { api } from './api.js?v=143';
+import { PALETTE, LABELS, SS_MODE } from './config.js?v=143';
+import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=143';
+import { openCollectionPicker } from './collections.js?v=143';
 
 /**
  * The workbench's history — undo/redo over SERVER writes.
