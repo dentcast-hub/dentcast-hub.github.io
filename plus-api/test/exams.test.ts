@@ -12,7 +12,7 @@ import { pool, withTransaction } from '../src/db.js';
 import { config } from '../src/config.js';
 import { ai } from '../src/providers/registry.js';
 import {
-  getPathwayById, getPathways, isCertifiable,
+  getPathwayById, getPathways, isCertifiable, MIN_CERTIFICATE_STEPS,
   applyRemotePathways, resetRemotePathways,
 } from '../src/pathways.js';
 import {
@@ -1160,9 +1160,9 @@ describe('an unfinished series has no certificate (`certificate: pending`)', () 
 
   afterEach(() => { resetRemotePathways(); });
 
-  it('nothing in the shipped catalog is pending — the flag is set here, not the norm', () => {
+  it('the flag is set here, not borrowed from the shipped catalog', () => {
     resetRemotePathways();
-    expect(getPathways().filter((x) => x.certificate === 'pending')).toHaveLength(0);
+    expect(getPathwayById(PENDING)?.certificate).toBeUndefined();
   });
 
   it('is what isCertifiable() reads, and it closes the pathway to every door', () => {
@@ -1232,6 +1232,48 @@ describe('an unfinished series has no certificate (`certificate: pending`)', () 
  * is derived at draw time — so a pathway that adopts the article later
  * draws it too.
  */
+
+/**
+ * A certificate needs a pathway big enough to mean something (founder,
+ * 1405/07/02): «سواد نقد شواهد» is nine short metanotes, and a certificate
+ * for it would sit on the wall beside one for 115 steps of fixed pros. The
+ * floor lives in isCertifiable(), so it closes every door the pending flag
+ * closes, with no flag to remember — and it opens again by itself once
+ * publish step 5.6 has grown the pathway past it.
+ */
+describe('a certificate needs at least MIN_CERTIFICATE_STEPS steps', () => {
+  afterEach(() => { resetRemotePathways(); });
+
+  const withSteps = (n: number) => {
+    resetRemotePathways(); // slice the shipped pathway, never a copy already cut
+    const raw = JSON.parse(JSON.stringify(getPathways())) as { id: string; steps: unknown[] }[];
+    const p = raw.find((x) => x.id === PATHWAY)!;
+    expect(p.steps.length).toBeGreaterThanOrEqual(MIN_CERTIFICATE_STEPS);
+    p.steps = p.steps.slice(0, n);
+    expect(applyRemotePathways(raw)).toBe(true);
+  };
+
+  it('one step short of the floor is not certifiable; the floor itself is', () => {
+    withSteps(MIN_CERTIFICATE_STEPS - 1);
+    expect(isCertifiable(getPathwayById(PATHWAY))).toBe(false);
+    withSteps(MIN_CERTIFICATE_STEPS);
+    expect(isCertifiable(getPathwayById(PATHWAY))).toBe(true);
+  });
+
+  it('a short pathway reads as pending to the reader and refuses a form by name', async () => {
+    withSteps(MIN_CERTIFICATE_STEPS - 1);
+    const uid = await userId();
+    await pool.query(`insert into user_pathways (user_id, pathway_id, current_step) values ($1, $2, 0)`, [uid, PATHWAY]);
+    expect((await examState(uid, PATHWAY)).state).toBe('pending');
+    await expect(upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2)] })).rejects.toThrow('pathway_pending');
+    await expect(setCertificateIntent(uid, PATHWAY, 'wanted')).rejects.toThrow('pathway_pending');
+  });
+
+  it('every shipped full pathway below the floor is also flagged pending — the file says what the rule does', () => {
+    const short = getPathways().filter((p) => p.kind !== 'bundle' && p.steps.length < MIN_CERTIFICATE_STEPS);
+    for (const p of short) expect(p.certificate).toBe('pending');
+  });
+});
 describe('article questions — written once, drawn by every pathway the article is in', () => {
   // A step of `digital` that at least one other full pathway also carries.
   const SHARED = 'insight/insight-63';
