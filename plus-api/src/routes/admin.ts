@@ -62,7 +62,7 @@ import {
 } from '../services/certificates.js';
 import {
   assignExam, deleteAssignment, listAssignments, assignmentRoster, getAssignment, notifyAssigned,
-  upsertForm, getForm, deleteForm, formRoster, queueRows, attemptRoster, ruleAttempt,
+  upsertForm, appendQuestions, getForm, deleteForm, formRoster, queueRows, attemptRoster, ruleAttempt,
   publishForm, unpublishForm, announceOpenExams,
   parseQuestions, addQuestion, removeQuestion,
   addContentQuestion, removeContentQuestion, listContentQuestions, normalizeContentId, pathwaysContaining,
@@ -939,8 +939,9 @@ function renderHtml(
 
   <h3 id="exams" style="margin-top:26px">آزمونِ مسیر <span id="exqWaiting" class="pill"></span></h3>
   <div class="muted">
-    سه چیز این‌جا نوشته می‌شود. <b>فرم آزمون</b> برای هر مسیر یک بار: سؤال‌ها را از NotebookLM می‌گیری (الگوی
-    پرامپت پایین همین بخش) و همین‌جا می‌چسبانی — تستی، تشریحی، یا هر دو، به هر تعداد. <b>واگذاری</b> وقتی
+    سه چیز این‌جا نوشته می‌شود. <b>فرم آزمون</b> هر مسیر یک بانک سؤال است: سؤال‌ها را از NotebookLM می‌گیری (الگوی
+    پرامپت پایین همین بخش) و همین‌جا می‌چسبانی — تستی، تشریحی، یا هر دو، به هر تعداد — و هر دستهٔ تازه به
+    سؤال‌های قبلی <b>اضافه</b> می‌شود، جایشان را نمی‌گیرد. <b>واگذاری</b> وقتی
     می‌خواهی کسی را پیش از تمام‌کردن مسیر راه بدهی؛ کسی که مسیر را تمام کرده خودش راه دارد. و <b>حکم</b> روی
     تلاش‌هایی که در صف‌اند: پاسخ تشریحی را مدل دو بار جداگانه تصحیح می‌کند و فقط اگر هر دو بار یک حکم بدهد مطمئن
     حساب می‌شود — و تا وقتی روی یک فرم کمتر از «حدِ نظارت» حکم داده باشی، هر تلاشِ تشریحی با حکمِ آمادهٔ مدل به
@@ -964,11 +965,14 @@ function renderHtml(
         هر سؤال با <b>شمارهٔ خودش</b> شروع شود؛ گزینه‌ها با <b>الف/ب/ج/د</b> (یا a/b/c/d یا خط تیره)؛
         گزینهٔ درست را با <b>✓</b> علامت بزن یا زیرش بنویس «پاسخ: ب». سؤال تشریحی گزینه ندارد و زیرش
         «<b>نکته‌ها:</b>» و نکته‌های کلیدی می‌آید. اول «بررسی متن» را بزن تا ببینی چه خوانده شد.
+        سؤال‌ها به بانکِ این مسیر <b>اضافه</b> می‌شوند؛ سؤالی که عینِ متنش از قبل در بانک هست کنار گذاشته
+        می‌شود. تنظیماتِ بالا فقط برای مسیری که هنوز فرم ندارد خوانده می‌شود — برای عوض‌کردنِ تنظیمات یا
+        اصلاحِ سؤال‌های قبلی، «ویرایش» را در جدولِ پایین بزن.
       </div></div>
     <div><label for="efNote">یادداشت (اختیاری)</label><input id="efNote" type="text" maxlength="400"></div>
     <div class="row">
       <button id="efCheck" type="button">بررسی متن</button>
-      <button id="efSend" type="button">ذخیرهٔ فرم</button>
+      <button id="efSend" type="button">افزودن به بانک سؤال</button>
       <button id="efPrompt" type="button">الگوی پرامپت NotebookLM</button>
       <span id="efOut" class="muted"></span>
     </div>
@@ -1149,6 +1153,8 @@ function renderHtml(
     var efCheck = document.getElementById('efCheck');
     document.getElementById('efQ').addEventListener('input', function () {
       parsed = null; efPreview.innerHTML = '';
+      // Emptying the box is how edit mode ends: what comes next is a batch.
+      if (editing && !val('efQ')) { setEditing(null); efOut.textContent = ''; }
     });
 
     function drawPreview(d) {
@@ -1168,7 +1174,7 @@ function renderHtml(
           + esc(q.prompt_fa) + body + '</div>';
       }).join('');
       efPreview.innerHTML = '<div class="tk"><div class="tk-head"><b>' + fa(qs.length) + ' سؤال خوانده شد</b> — '
-        + fa(d.mcq_count) + ' تستی، ' + fa(d.free_count) + ' تشریحی. اگر درست است «ذخیرهٔ فرم» را بزن.</div>'
+        + fa(d.mcq_count) + ' تستی، ' + fa(d.free_count) + ' تشریحی. اگر درست است «' + efBtn.textContent + '» را بزن.</div>'
         + rows + '</div>';
     }
 
@@ -1184,12 +1190,24 @@ function renderHtml(
       }).catch(function () { efCheck.disabled = false; efOut.textContent = 'ارسال نشد.'; });
     });
 
+    // A paste ADDS to the pathway's bank; only a pool loaded through
+    // «ویرایش» — the whole of it, in the box — is saved back as a
+    // replacement. Switching the pathway leaves edit mode, so a pool loaded
+    // for one pathway can never overwrite another's.
+    var editing = null;
+    var EF_ADD = 'افزودن به بانک سؤال', EF_EDIT = 'ذخیرهٔ ویرایش (جایگزینیِ کلِ بانک)';
+    function setEditing(pid) { editing = pid; efBtn.textContent = pid ? EF_EDIT : EF_ADD; }
+    document.getElementById('efPath').addEventListener('change', function () {
+      if (editing && editing !== val('efPath')) { setEditing(null); efOut.textContent = ''; }
+    });
+
     efBtn.addEventListener('click', function () {
       var qs = parsed || val('efQ');
       if (!qs || (typeof qs === 'string' && !qs.trim())) { efOut.textContent = 'اول سؤال‌ها را بچسبان.'; return; }
+      var replacing = editing === val('efPath');
       efBtn.disabled = true; efOut.textContent = 'در حال ذخیره…';
       post('/admin/exam-forms', {
-        pathway_id: val('efPath'), questions: qs,
+        pathway_id: val('efPath'), questions: qs, mode: replacing ? 'replace' : 'append',
         draw: num('efDraw', 15), pass_percent: num('efPass', 70),
         max_attempts: num('efMax', 2), retry_days: num('efRetry', 7), supervised_until: num('efSup', 5),
         note: val('efNote') || undefined
@@ -1198,9 +1216,15 @@ function renderHtml(
         if (!res.ok) { efOut.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
         var q = (res.j.form && res.j.form.questions) || [];
         var m = q.filter(function (x) { return x.kind === 'mcq'; }).length;
-        efOut.textContent = (res.j.created ? 'ذخیره شد' : 'به‌روز شد') + ' — ' + fa(m) + ' تستی، ' + fa(q.length - m) + ' تشریحی.'
+        var head = res.j.mode === 'append'
+          ? fa(res.j.added) + ' سؤال به بانک اضافه شد'
+            + (res.j.skipped ? ' · ' + fa(res.j.skipped) + ' سؤال تکراری بود و کنار گذاشته شد' : '')
+          : (res.j.created ? 'ذخیره شد' : 'بانک جایگزین شد');
+        efOut.textContent = head + ' — حالا در بانک: ' + fa(m) + ' تستی، ' + fa(q.length - m) + ' تشریحی.'
           + (res.j.published ? '' : ' هنوز پیش‌نویس است؛ با «اعلام آمادگی» باز می‌شود و همان لحظه خبر می‌رود.');
         parsed = null; efPreview.innerHTML = '';
+        if (res.j.mode === 'append') document.getElementById('efQ').value = '';
+        setEditing(null);
         loadForms();
       }).catch(function () { efBtn.disabled = false; efOut.textContent = 'ارسال نشد.'; });
     });
@@ -1216,7 +1240,10 @@ function renderHtml(
           document.getElementById('efPass').value = f.pass_percent; document.getElementById('efMax').value = f.max_attempts;
           document.getElementById('efRetry').value = f.retry_days; document.getElementById('efSup').value = f.supervised_until;
           document.getElementById('efNote').value = f.note || '';
-          efOut.textContent = 'فرم «' + (titles[f.pathway_id] || f.pathway_id) + '» بارگذاری شد — ویرایش کن و ذخیره بزن.';
+          parsed = null; efPreview.innerHTML = '';
+          setEditing(f.pathway_id);
+          efOut.textContent = 'کلِ بانکِ «' + (titles[f.pathway_id] || f.pathway_id) + '» بارگذاری شد — ویرایش کن و ذخیره بزن؛ '
+            + 'آنچه در کادر است جای بانک را می‌گیرد. برای افزودنِ دستهٔ تازه، کادر را خالی کن.';
           document.getElementById('efQ').focus();
         });
         return;
@@ -5329,10 +5356,13 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     });
   });
 
-  // POST /admin/exam-forms — { pathway_id, questions, draw?,
+  // POST /admin/exam-forms — { pathway_id, questions, mode?, draw?,
   // pass_percent?, max_attempts?, retry_days?, supervised_until?, note? }.
   // `questions` is the founder's paste, normalised leniently; a bad question
-  // is refused by number, and nothing is written.
+  // is refused by number, and nothing is written. `mode: 'append'` (what the
+  // paste box sends) ADDS the batch to the pool — a question bank — and
+  // leaves an existing form's settings alone; `mode: 'replace'` (the default,
+  // and what «ویرایش» sends) writes the pool and the settings as given.
   app.post('/admin/exam-forms', {
     schema: {
       body: {
@@ -5341,6 +5371,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
           pathway_id: { type: 'string' },
           // Anything: the founder's prose, or an array. parseQuestions decides.
           questions: {},
+          mode: { type: 'string', enum: ['append', 'replace'] },
           draw: { type: 'integer', minimum: 0, maximum: 200 },
           pass_percent: { type: 'integer', minimum: 1, maximum: 100 },
           max_attempts: { type: 'integer', minimum: 1, maximum: 10 },
@@ -5352,14 +5383,22 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     },
   }, async (request, reply) => {
     const b = request.body as {
-      pathway_id: string; questions: unknown; draw?: number; pass_percent?: number;
+      pathway_id: string; questions: unknown; mode?: 'append' | 'replace'; draw?: number; pass_percent?: number;
       max_attempts?: number; retry_days?: number; supervised_until?: number; note?: string;
     };
     try {
-      const r = await upsertForm(b.pathway_id, {
+      const input = {
         questions: b.questions, draw: b.draw, passPercent: b.pass_percent,
         maxAttempts: b.max_attempts, retryDays: b.retry_days, supervisedUntil: b.supervised_until, note: b.note,
-      });
+      };
+      if (b.mode === 'append') {
+        const a = await appendQuestions(b.pathway_id, input);
+        return reply.send({
+          ok: true, mode: 'append', form: a.form, created: a.created,
+          added: a.added.length, skipped: a.skipped, published: Boolean(a.form.published_at),
+        });
+      }
+      const r = await upsertForm(b.pathway_id, input);
       // Saving questions tells NOBODY (migration 0067). A form is born a
       // draft and «اعلام آمادگی» is the one act that opens it and announces
       // it — which is what makes «the exam went live with its first question»

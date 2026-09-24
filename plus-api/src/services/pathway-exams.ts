@@ -344,7 +344,12 @@ export interface FormInput {
 const intIn = (v: unknown, lo: number, hi: number, dflt: number): number =>
   (typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi ? v : dflt);
 
-/** Create or replace the pathway's form. Errors are Persian, meant for the panel. */
+/**
+ * Create or REPLACE the pathway's form — questions and settings together.
+ * Only the panel's «ویرایش» flow calls this: it loads the whole pool, the
+ * founder edits it, and what comes back IS the pool. A new batch of questions
+ * goes through `appendQuestions` instead. Errors are Persian, meant for the panel.
+ */
 export async function upsertForm(pathwayId: string, input: FormInput, client: Queryable = pool): Promise<{ form: ExamForm; created: boolean }> {
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
@@ -443,6 +448,82 @@ export async function addQuestion(
         [pathwayId, JSON.stringify(questions)], client,
       );
     return { form: row!, question, created: !form };
+  });
+}
+
+/** Two prompts are the same question when they read the same — whitespace aside, never a ZWNJ (Hard Rule 16). */
+const samePrompt = (s: string): string => s.normalize('NFC').replace(/[ \t\r\n ]+/g, ' ').trim();
+
+/**
+ * Add a PASTED batch to a pathway's pool — the question BANK (founder,
+ * 1405/07/02: «نباید جایگزین شه، باید اضافه شه، مثل یه بانک سؤال»).
+ *
+ * The paste box used to go through `upsertForm`, which replaces the whole
+ * array: pasting the second batch of a pathway's questions silently deleted
+ * the first. This is `addQuestion` for many at once, and inherits its rules:
+ * `questions` is the only column it touches on an existing form (a batch must
+ * not reset the draw or the thresholds), a form is created with the input's
+ * settings only when there is none, and every question gets an id the pool
+ * does not already hold — the ids in a paste are the PASTE's (a bare paste
+ * mints `q1…` for every batch), so trusting them would collide batch two with
+ * batch one. A question whose prompt the pool already carries is skipped and
+ * counted, so pasting the same batch twice cannot double it.
+ */
+export async function appendQuestions(
+  pathwayId: string, input: FormInput,
+): Promise<{ form: ExamForm; created: boolean; added: ExamQuestion[]; skipped: number }> {
+  const pathway = getPathwayById(pathwayId);
+  if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
+  if (!isCertifiable(pathway)) throw new Error('pathway_pending');
+  const norm = parseQuestions(input.questions);
+  if (!norm.ok) throw new Error(`invalid_questions:${norm.error}`);
+
+  return withTransaction(async (client) => {
+    const form = await one<ExamForm>(`${FORM_SELECT} where pathway_id = $1 for update`, [pathwayId], client);
+    const questions = form ? [...form.questions] : [];
+    const seen = new Set(questions.map((q) => samePrompt(q.prompt_fa)));
+    const added: ExamQuestion[] = [];
+    let skipped = 0;
+    for (const q of norm.questions) {
+      const key = samePrompt(q.prompt_fa);
+      if (seen.has(key)) { skipped += 1; continue; }
+      seen.add(key);
+      const id = nextQuestionId(questions);
+      const stamped: ExamQuestion = q.kind === 'mcq'
+        ? { ...q, id }
+        : { ...q, id, key_points: q.key_points.map((kp, i) => ({ id: `${id}-k${i + 1}`, text: kp.text })) };
+      questions.push(stamped);
+      added.push(stamped);
+    }
+
+    const cols = `id, pathway_id, questions, draw, pass_percent, max_attempts,
+                  retry_days, supervised_until, note, published_at, created_at, updated_at`;
+    if (form) {
+      const row = added.length
+        ? await one<ExamForm>(
+          `update pathway_exam_forms set questions = $2::jsonb, updated_at = now()
+            where pathway_id = $1 returning ${cols}`,
+          [pathwayId, JSON.stringify(questions)], client,
+        )
+        : form;
+      return { form: row!, created: false, added, skipped };
+    }
+    const d = config.exam;
+    const row = await one<ExamForm>(
+      `insert into pathway_exam_forms
+         (pathway_id, questions, draw, pass_percent, max_attempts, retry_days, supervised_until, note)
+       values ($1, $2::jsonb, $3, $4, $5, $6, $7, $8)
+       returning ${cols}`,
+      [
+        pathwayId, JSON.stringify(questions),
+        intIn(input.draw, 0, 200, d.draw),
+        intIn(input.passPercent, 1, 100, d.passPercent), intIn(input.maxAttempts, 1, 10, d.maxAttempts),
+        intIn(input.retryDays, 0, 365, d.retryDays), intIn(input.supervisedUntil, 0, 1000, d.supervisedUntil),
+        input.note?.trim() || null,
+      ],
+      client,
+    );
+    return { form: row!, created: true, added, skipped };
   });
 }
 
