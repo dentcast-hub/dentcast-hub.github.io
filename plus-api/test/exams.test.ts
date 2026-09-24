@@ -18,7 +18,7 @@ import {
 import {
   normalizeQuestions, upsertForm, getForm, deleteForm, formRoster, assignExam,
   publishForm, unpublishForm, announceOpenExams,
-  addQuestion, removeQuestion, nextQuestionId,
+  addQuestion, appendQuestions, removeQuestion, nextQuestionId,
   examState, startAttempt, submitAttempt, ruleAttempt, queueRows, attemptRoster, getAttempt,
   drawQuestions, tally, setCertificateIntent, type ExamQuestion,
   addContentQuestion, removeContentQuestion, listContentQuestions, pathwaysContaining, normalizeContentId, poolFor,
@@ -256,6 +256,56 @@ describe('the form', () => {
 });
 
 /* ------------------------------------------------------- the builder -- */
+
+describe('the paste box is a question BANK — a batch adds, never replaces', () => {
+  const BATCH_1 = '۱. اول؟\nالف) یک ✓\nب) دو\n\n۲. دوم؟\nالف) یک\nب) دو ✓';
+  const BATCH_2 = '۱. سوم؟\nالف) یک ✓\nب) دو\n\n۲. چرا؟\nنکته‌ها:\n- اول\n- دوم';
+
+  it('a second batch lands beside the first, with ids the pool does not hold', async () => {
+    const one = await adminPost('/admin/exam-forms', { pathway_id: PATHWAY, questions: BATCH_1, mode: 'append' });
+    expect(one.json()).toMatchObject({ mode: 'append', created: true, added: 2, skipped: 0 });
+    // both batches were parsed as q1, q2 — the bank must not trust that
+    const two = await adminPost('/admin/exam-forms', { pathway_id: PATHWAY, questions: BATCH_2, mode: 'append' });
+    expect(two.json()).toMatchObject({ created: false, added: 2, skipped: 0 });
+    const qs = (await getForm(PATHWAY))!.questions;
+    expect(qs.map((q) => q.prompt_fa)).toEqual(['اول؟', 'دوم؟', 'سوم؟', 'چرا؟']);
+    expect(qs.map((q) => q.id)).toEqual(['q1', 'q2', 'q3', 'q4']);
+    const free = qs[3];
+    expect(free.kind === 'free' && free.key_points.map((k) => k.id)).toEqual(['q4-k1', 'q4-k2']);
+  });
+
+  it('the same batch pasted twice does not double, and the settings stay the founder\'s', async () => {
+    await openForm(PATHWAY, { questions: [MCQ(1)], passPercent: 85, draw: 4, note: 'دست‌ساز' });
+    const r1 = await appendQuestions(PATHWAY, { questions: BATCH_1, passPercent: 70, draw: 15 });
+    expect(r1.added.map((q) => q.id)).toEqual(['q2', 'q3']); // after m1
+    const r2 = await appendQuestions(PATHWAY, { questions: BATCH_1 + '\n\n۳. تازه؟\nالف) یک\nب) دو ✓' });
+    expect(r2).toMatchObject({ skipped: 2 });
+    expect(r2.added.map((q) => q.prompt_fa)).toEqual(['تازه؟']);
+    expect(r2.form).toMatchObject({ pass_percent: 85, draw: 4, note: 'دست‌ساز', published_at: expect.any(Date) });
+    expect(r2.form.questions).toHaveLength(4);
+    // a batch that is ALL repeats writes nothing and says so
+    const r3 = await appendQuestions(PATHWAY, { questions: BATCH_1 });
+    expect(r3).toMatchObject({ added: [], skipped: 2 });
+    expect(r3.form.questions).toHaveLength(4);
+  });
+
+  it('a ZWNJ is not a space — «اسکن‌شده» and «اسکن شده» are two different prompts', async () => {
+    await appendQuestions(PATHWAY, { questions: [{ question: 'اسکن‌شده؟', options: ['الف', 'ب'], correct: 0 }] });
+    const r = await appendQuestions(PATHWAY, { questions: [{ question: 'اسکن شده؟', options: ['الف', 'ب'], correct: 0 }] });
+    expect(r).toMatchObject({ skipped: 0 });
+    expect(r.added).toHaveLength(1);
+  });
+
+  it('«ویرایش» still replaces, and a bad batch writes nothing', async () => {
+    await appendQuestions(PATHWAY, { questions: BATCH_1 });
+    const bad = await adminPost('/admin/exam-forms', { pathway_id: PATHWAY, questions: '۱. کدام؟\nالف) یک\nب) دو', mode: 'append' });
+    expect(bad.statusCode).toBe(400);
+    expect((await getForm(PATHWAY))!.questions).toHaveLength(2);
+    const edited = await adminPost('/admin/exam-forms', { pathway_id: PATHWAY, questions: [MCQ(9)], mode: 'replace' });
+    expect(edited.json().form.questions).toHaveLength(1);
+    await expect(appendQuestions(BUNDLE_ID, { questions: BATCH_1 })).rejects.toThrow('unknown_pathway');
+  });
+});
 
 describe('the question builder — one written question at a time', () => {
   it('creates the form on the first question, with the founder\'s own defaults', async () => {
