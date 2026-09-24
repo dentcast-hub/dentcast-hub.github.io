@@ -656,6 +656,7 @@
   },
   {
     "id": "evidence-literacy",
+    "certificate": "pending",
     "glyph": "icon-scale",
     "title_fa": "سواد نقد شواهد و تصمیم‌گیری علمی",
     "short_fa": "سواد نقد شواهد",

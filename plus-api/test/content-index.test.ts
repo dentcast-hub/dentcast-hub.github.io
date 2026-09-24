@@ -1,5 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { folderOf, getFolders, getIndex } from '../src/content-index.js';
+import { describe, it, expect, afterEach } from 'vitest';
+import { folderOf, getFolders, getIndex, folderProgress, applyRemoteIndex, resetRemoteIndex } from '../src/content-index.js';
+// @ts-expect-error — a browser module, driven as-is
+import { freshFolders } from '/plus/js/content-index.js';
 
 // The folder a content_id belongs to. Flat sections are the first path segment;
 // a section that lives at a two-level address (/dentai/promptologist/) is the
@@ -38,5 +40,50 @@ describe('folderOf', () => {
 
   it('falls back to the split for a content_id no folder claims', () => {
     expect(folderOf('nowhere/page-1')).toBe('nowhere');
+  });
+});
+
+// plak1-6, 1405/07/02: the site published a sixth part, the API's copy of the
+// index still said five, and a reader who had read all six saw «۵ از ۵» on the
+// section page and ٪۸۳ on the dashboard. The API's copy can lag; the count it
+// sends must not be capped by the lag, and the browser re-bases it on the
+// published total it reads itself.
+describe('folder progress when the API copy of the index lags a publish', () => {
+  afterEach(() => resetRemoteIndex());
+
+  function staleIndex() {
+    const idx = JSON.parse(JSON.stringify(getIndex()));
+    delete idx.byContent['plak-sefr/plak1-6'];
+    for (const f of idx.folders) if (f.key === 'plak-sefr') f.total = 5;
+    return idx;
+  }
+  const readAll = ['plak1-1', 'plak1-2', 'plak1-3', 'plak1-4', 'plak1-5', 'plak1-6'].map((s) => 'plak-sefr/' + s);
+
+  it('counts the part the stale copy has never heard of, uncapped', () => {
+    expect(applyRemoteIndex(staleIndex())).toBe(true);
+    const f = folderProgress(readAll).find((x) => x.key === 'plak-sefr')!;
+    expect(f.total).toBe(5);
+    expect(f.read).toBe(5); // older clients keep the capped number
+    expect(f.consumed).toBe(6);
+  });
+
+  it('never credits a landing page or an en mirror as a part read', () => {
+    const f = folderProgress([...readAll.slice(0, 2), 'plak-sefr/index', 'plak-sefr/en/plak1-3'])
+      .find((x) => x.key === 'plak-sefr')!;
+    expect(f.consumed).toBe(2);
+  });
+
+  it('the browser re-bases on the published total: ۶ از ۶, not ۵ از ۵', () => {
+    applyRemoteIndex(staleIndex());
+    const api = folderProgress(readAll);
+    const published = { folders: getFolders().map((f) => ({ ...f, total: f.key === 'plak-sefr' ? 6 : f.total })) };
+    const f = freshFolders(api, published).find((x: any) => x.key === 'plak-sefr');
+    expect([f.read, f.total]).toEqual([6, 6]);
+  });
+
+  it('an older API (no `consumed`) and a failed model load change nothing', () => {
+    const old = [{ key: 'plak-sefr', total: 5, read: 5 }];
+    expect(freshFolders(old, null)[0]).toMatchObject({ read: 5, total: 5 });
+    expect(freshFolders(old, { folders: [{ key: 'plak-sefr', total: 6 }] })[0]).toMatchObject({ read: 5, total: 6 });
   });
 });
