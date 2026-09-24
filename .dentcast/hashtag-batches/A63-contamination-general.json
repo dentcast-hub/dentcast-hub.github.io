@@ -1,0 +1,67 @@
+{
+  "type": "sharehub",
+  "enforce": true,
+  "note": "Founder request (share-23 follow-up): a bare «آلودگی» query in the case assistant matched nothing, because every concept carrying the word has it as one word of three. #آلودگی is minted as the GENERAL concept — contamination of any surface about to be bonded — and sits beside the specific one on each article: #آلودگی_حین_باندینگ (tooth surface: blood, saliva, hemostatic), #پاکسازی_سرامیک (ceramic surface), #اچ_ناخواسته (acid reaching a surface out of sequence). The specific concepts keep their own aliases; the English 'contamination' is deliberately NOT an alias here, since #پاکسازی_سرامیک already owns 'decontamination' and a plain-substring alias would rewrite inside it.",
+  "concepts": [
+    {
+      "tag": "#آلودگی",
+      "domain": "clinical",
+      "definition": "آلوده شدنِ سطحی که قرار است باند شود — عاج، مینا یا رستوریشن — با بزاق، خون، مایع شیار لثه، ماده‌ی هموستاتیک، اسید یا هر ماده‌ی دیگری که باند را ضعیف می‌کند.",
+      "use_when": "مقاله آلودگیِ سطحِ باند یا جلوگیری و رفعِ آن را، روی هر سوبسترایی، موضوع داشته باشد؛ همیشه کنارِ مفهومِ دقیق‌ترِ همان سوبسترا (#آلودگی_حین_باندینگ، #پاکسازی_سرامیک، #اچ_ناخواسته).",
+      "aliases": [
+        "آلوده شدن",
+        "آلوده شدن سطح",
+        "آلودگی سطح"
+      ]
+    }
+  ],
+  "articles": {
+    "episodes/episode-12": [
+      "#دنتکست",
+      "#سرامیک",
+      "#آلودگی",
+      "#پاکسازی_سرامیک",
+      "#باندینگ_سرامیک"
+    ],
+    "notecast/episode-12": [
+      "#نوت_کست",
+      "#سرامیک",
+      "#گلاس_سرامیک",
+      "#اچ_سرامیک",
+      "#سایلان",
+      "#آلودگی",
+      "#پاکسازی_سرامیک",
+      "#بیومیمتیک",
+      "#پروتکل_باند"
+    ],
+    "insight/insight-36": [
+      "#اینسایت",
+      "#ایزولاسیون",
+      "#نوار_تفلون",
+      "#توالی_باند",
+      "#آلودگی",
+      "#اچ_ناخواسته",
+      "#لمینیت_سرامیکی",
+      "#پروتکل_باند",
+      "#سمان_رزینی",
+      "#باندینگ"
+    ],
+    "sharehub/share-23": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#آلودگی",
+      "#آلودگی_حین_باندینگ",
+      "#باندینگ",
+      "#عاج",
+      "#قدرت_باند",
+      "#اچ_اند_رینس",
+      "#سلف_اچ",
+      "#یونیورسال_باند",
+      "#ایزولاسیون",
+      "#کنترل_خونریزی",
+      "#بزاق",
+      "#هیبرید_لیر",
+      "#ترمیم_ساب_جینجیوال"
+    ]
+  }
+}
