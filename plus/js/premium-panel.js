@@ -40,15 +40,16 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=142';
-import { currentUser, meStatus, api } from './api.js?v=142';
-import { pricingHref, premiumCta } from './premium-cta.js?v=142';
-import { openSheet, gateCard } from './sheet.js?v=142';
-import { openLoginModal } from './login-modal.js?v=142';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=142';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=142';
-import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=142';
-import { armDesTool } from './des-scorer.js?v=142';
+import { el, faNum, streakIsActiveToday } from './util.js?v=143';
+import { currentUser, meStatus, api } from './api.js?v=143';
+import { pricingHref, premiumCta } from './premium-cta.js?v=143';
+import { openSheet, gateCard } from './sheet.js?v=143';
+import { openLoginModal } from './login-modal.js?v=143';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=143';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=143';
+import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=143';
+import { armDesTool } from './des-scorer.js?v=143';
+import { getModel, freshFolders } from './content-index.js?v=143';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -493,18 +494,26 @@ function fillFromMe(me) {
 /** The two counts that cost a request each — fired once the panel is seen. */
 /** «۵۱ از ۴۴۴» — the reader's site-wide pair from GET /seen; the same numbers
  * the section list's lock bar prints, summed over the folders it names. */
-function seenPair(d) {
-  const folders = (d && d.folders) || [];
-  const read = typeof d.read === 'number' ? d.read : folders.reduce((a, f) => a + (f.read || 0), 0);
-  const total = typeof d.total === 'number' ? d.total : folders.reduce((a, f) => a + (f.total || 0), 0);
-  return { read, total };
+function seenPair(d, model) {
+  const raw = (d && d.folders) || [];
+  // With per-folder numbers in hand, sum them re-based on the published index
+  // (freshFolders) — the top-level pair is the API's own copy summed, which can
+  // lag a publish. Only an answer with no folders falls back to that pair.
+  if (raw.length) {
+    const folders = freshFolders(raw, model);
+    return {
+      read: folders.reduce((a, f) => a + (f.read || 0), 0),
+      total: folders.reduce((a, f) => a + (f.total || 0), 0),
+    };
+  }
+  return { read: (d && d.read) || 0, total: (d && d.total) || 0 };
 }
 function fillSeen(state) {
   if (typeof api.seen !== 'function') return;
-  api.seen()
-    .then((d) => {
+  Promise.all([api.seen(), Promise.resolve().then(() => getModel()).catch(() => null)])
+    .then(([d, model]) => {
       if (!d) return;
-      const { read, total } = seenPair(d);
+      const { read, total } = seenPair(d, model);
       if (!total) return;
       if (state === 'live') { paint('seen', faNum(read) + ' از ' + faNum(total), { live: true }); return; }
       // A signed-in free reader: the lock bar's own sentence, with their number —

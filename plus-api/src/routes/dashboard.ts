@@ -138,10 +138,11 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     // content index the dashboard tree uses; totals reflect currently published
     // content, so new items lower a folder's percent until consumed.
     const consumed = await getConsumedContentIds(userId);
-    const readByKey = new Map(folderProgress(consumed).map((f) => [f.key, f.read]));
+    const byKey = new Map(folderProgress(consumed).map((f) => [f.key, f]));
     const folder_progress = getFolders().map((f) => ({
       key: f.key, fa: f.fa, url: f.url, total: f.total,
-      read: readByKey.get(f.key) ?? 0,
+      read: byKey.get(f.key)?.read ?? 0,
+      consumed: byKey.get(f.key)?.consumed ?? 0,
     }));
 
     // Score: a concrete, activity-log-derived metric, ready for a future

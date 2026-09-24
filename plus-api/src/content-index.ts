@@ -191,27 +191,59 @@ export function resolveTopic(topic: string): { fa: string; contentIds: string[] 
 }
 
 /**
- * Per-folder «how many of this folder has the reader consumed», capped at the
- * folder's own total.
+ * Is this content_id an ITEM of that folder — a page the folder's total counts?
+ *
+ * Known to the index: yes, by definition. Unknown: yes only when it has an
+ * item's shape — directly under the folder's prefix, not its landing page, not
+ * an en mirror. The second arm is the one that matters: the API's copy of the
+ * index can lag the site by a publish (plak1-6, 1405/07/02 — the site said six
+ * parts, the API still said five), and a page the stale copy has never heard of
+ * is still a page the reader finished. Counting only known ids would repeat the
+ * staleness in the numerator; counting every prefixed id would credit a
+ * highlight on the landing page or on an en mirror as a part read.
+ */
+function isFolderItem(cid: string, prefix: string, idx: IndexFile): boolean {
+  if (idx.byContent[cid]) return true;
+  if (!cid.startsWith(prefix + '/')) return false;
+  const rest = cid.slice(prefix.length + 1);
+  return rest !== '' && rest !== 'index' && !rest.includes('/');
+}
+
+/**
+ * Per-folder «how many of this folder has the reader consumed».
  *
  * ONE definition, two callers: the dashboard's «پیشرفت هر پوشه» bars and the
  * seen-tick bar's «۱۲ از ۷۷». If they ever computed it separately, a folder
  * could read ۱۰۰٪ on the dashboard while a page in it carried no filled tick —
  * the same disagreement services/achievements.ts already refuses to allow
  * between «فاتح» and the bars.
+ *
+ * Two numbers, because this side's `total` can be stale and the browser's is
+ * not (it reads the published index itself): `read` is capped at this side's
+ * total, as every client written before 1405/07/02 expects; `consumed` is the
+ * same count UNCAPPED, so a current client can cap it against the fresher
+ * total instead. Capping here alone is what turned «۶ از ۶» into «۵ از ۵» on
+ * the section page and ٪۸۳ on the dashboard for a reader who had read them all.
  */
-export function folderProgress(consumed: Iterable<string>): { key: string; prefix: string; total: number; read: number }[] {
+export function folderProgress(consumed: Iterable<string>): { key: string; prefix: string; total: number; read: number; consumed: number }[] {
+  const idx = getIndex();
   const byFolder = new Map<string, number>();
   for (const cid of consumed) {
-    const f = folderOf(cid);
-    byFolder.set(f, (byFolder.get(f) || 0) + 1);
+    const key = folderOf(cid);
+    const f = (idx.folders || []).find((x) => x.key === key);
+    if (f && !isFolderItem(cid, f.prefix || f.key, idx)) continue;
+    byFolder.set(key, (byFolder.get(key) || 0) + 1);
   }
-  return getFolders().map((f) => ({
-    key: f.key,
-    prefix: f.prefix || f.key,
-    total: f.total,
-    read: Math.min(byFolder.get(f.key) || 0, f.total),
-  }));
+  return getFolders().map((f) => {
+    const n = byFolder.get(f.key) || 0;
+    return {
+      key: f.key,
+      prefix: f.prefix || f.key,
+      total: f.total,
+      read: Math.min(n, f.total),
+      consumed: n,
+    };
+  });
 }
 
 /** Persian label for a folder key, or the key itself if unknown. */
