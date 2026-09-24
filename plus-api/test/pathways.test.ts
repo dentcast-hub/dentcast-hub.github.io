@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterAll } from 'vitest';
 import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
-import { getPathways } from '../src/pathways.js';
+import { getPathways, getPathwayById, isCertifiable } from '../src/pathways.js';
 
 let app: FastifyInstance;
 let cookie: string;
@@ -76,12 +76,13 @@ describe('GET /pathways — the certificate chip\'s four states', () => {
       .pathways as Array<Record<string, unknown>>;
     const occlusion = plain.find((p) => p.id === PATHWAY_ID)!;
     expect(occlusion).toMatchObject({ certifiable: true, certificate_intent: null, certificate_held: false });
-    // No shipped pathway is `certificate: 'pending'` any more (the flag came
-    // off «سوادِ هوش مصنوعی» on 1405/06/29), so every full pathway certifies;
-    // the «به‌زودی» chip is exercised where the flag itself is — the pending
-    // block in exams.test.ts, which sets it rather than borrowing whichever
-    // pathway happens to be unfinished this month.
-    expect(plain.filter((p) => p.kind !== 'bundle').every((p) => p.certifiable)).toBe(true);
+    // The chip reads the same one predicate every other door reads — the
+    // pending flag and the step floor both — never a copy of either rule.
+    // Which pathways are closed this month is an editorial fact, so it is
+    // compared, not listed; the rules themselves are tested in exams.test.ts.
+    for (const p of plain.filter((x) => x.kind !== 'bundle')) {
+      expect(p.certifiable).toBe(isCertifiable(getPathwayById(p.id as string)));
+    }
     // A bundle is never certificate-sized, and draws no chip either way.
     expect(plain.find((p) => p.id === BUNDLE_ID)).toMatchObject({ certifiable: false });
 

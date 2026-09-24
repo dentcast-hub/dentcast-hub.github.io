@@ -109,9 +109,27 @@ export function getPathways(): Pathway[] {
   return cached;
 }
 
-/** A full pathway whose certificate is open to be earned (see `certificate`). */
+/**
+ * The smallest pathway a certificate may stand on (founder, 1405/07/02). A
+ * certificate hung beside «پروتز ثابت» (115 steps) must not attest to an
+ * hour of reading: «سواد نقد شواهد» is nine metanotes, ~2700 words — one
+ * long article — and every other full pathway starts at 19. Measured in
+ * STEPS because that is what the file carries and what the founder reasons
+ * in; it is a floor on whether a pathway certifies at all, never a number
+ * printed anywhere a reader sees (the certificate carries none). A pathway
+ * that grows past it through publish step 5.6 becomes certifiable on its own;
+ * one that shrinks below it closes to new attempts, while a certificate
+ * already issued stays `passed` — it is the record.
+ */
+export const MIN_CERTIFICATE_STEPS = 15;
+
+/** A full pathway whose certificate is open to be earned (see `certificate`
+ * and MIN_CERTIFICATE_STEPS). */
 export function isCertifiable(p: Pathway | null | undefined): p is Pathway {
-  return Boolean(p) && p!.kind !== 'bundle' && p!.certificate !== 'pending';
+  return Boolean(p)
+    && p!.kind !== 'bundle'
+    && p!.certificate !== 'pending'
+    && (p!.steps?.length ?? 0) >= MIN_CERTIFICATE_STEPS;
 }
 
 export function getPathwayById(id: string): Pathway | null {
