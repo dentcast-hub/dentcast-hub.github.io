@@ -1,0 +1,15 @@
+{
+  "type": "plak_sefr",
+  "note": "Publish of plak-sefr/plak1-6 (پلاک صفر — یک ورودی در برابر صد پست). No new concept: every tag reuses an existing canonical form. #اینستاگرام and #ماندگاری_محتوا return (the part compares an Instagram post's lifespan with a site entry's), #سؤال_بیمار is not carried (the part is about where an answer lives, not what the patient asks).",
+  "concepts": [],
+  "articles": {
+    "plak-sefr/plak1-6": [
+      "#پلاک_صفر",
+      "#اینستاگرام",
+      "#ماندگاری_محتوا",
+      "#جستجوپذیری_محتوا",
+      "#سایت_مطب",
+      "#حضور_آنلاین_دندانپزشک"
+    ]
+  }
+}
