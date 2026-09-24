@@ -45,6 +45,7 @@ const FOLDER_META = [
   // Flat, like every other section. Drops out of `folders` on its own until its
   // first part ships — see the `total > 0` filter below.
   ['plak-sefr', 'پلاک صفر', '/plak-sefr/'],
+  ['taraz', 'تراز شواهد', '/taraz/'],
 ];
 
 function countArticles(folderKey, dirPath) {

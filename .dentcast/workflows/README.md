@@ -1846,6 +1846,8 @@ new content's actual subject against what a learner of each pathway needs.
    ```bash
    python3 tools/pathway_place.py --insert <content_id> --pathway <id> --after <anchor_id> [--milestone] [--confirmed]
    # or --at-end instead of --after <anchor_id>
+   # or --at-start, when the item is the new FIRST step (a foundation the rest builds on;
+   #   تراز شواهد قسمت ۱ opening evidence-literacy is the precedent) — never on a bundle's finish
    ```
    Set `--milestone` only if the item becomes the new end of its conceptual
    block (rare; usually a new item is mid-block, milestone=false).

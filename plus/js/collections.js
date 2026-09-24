@@ -7,22 +7,22 @@
 // opens into a masonry grid of "pins." This module is shared by
 // /plus/collections.html, /plus/collection.html, the workbench's two
 // single-purpose collection buttons, and the dashboard.
-import { el, faNum } from './util.js?v=143';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=143';
-import { premiumCta } from './premium-cta.js?v=143';
-import { api, currentUser, apiBase } from './api.js?v=143';
-import { openLoginModal } from './login-modal.js?v=143';
-import { FOLDER_EN } from './content-index.js?v=143';
-import { markReturnTrail } from './return-trail.js?v=143';
-import { PALETTE } from './config.js?v=143';
+import { el, faNum } from './util.js?v=144';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=144';
+import { premiumCta } from './premium-cta.js?v=144';
+import { api, currentUser, apiBase } from './api.js?v=144';
+import { openLoginModal } from './login-modal.js?v=144';
+import { FOLDER_EN } from './content-index.js?v=144';
+import { markReturnTrail } from './return-trail.js?v=144';
+import { PALETTE } from './config.js?v=144';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
   kindChip, snippetInlineEditor, looksLatin,
-} from './hl-view.js?v=143';
+} from './hl-view.js?v=144';
 // A قطعه‌ی صوتی pin draws the same playable body the دفترچه draws
 // (clip-view.js) — one vocabulary, so a clip never looks like two things.
-import { clipBody, clipInlineEditor, clipHref, clipAsText, createClipPlayer } from './clip-view.js?v=143';
+import { clipBody, clipInlineEditor, clipHref, clipAsText, createClipPlayer } from './clip-view.js?v=144';
 
 const hlColorCss = (key) => (PALETTE.find((p) => p.key === key) || {}).css || '#eaecf5';
 
@@ -39,11 +39,12 @@ const TYPE_COVER_COLOR = {
   episodes: '#0b5fff', notecast: '#0e9f6e', insight: '#e0a100', dentai: '#7c5cff',
   chairside: '#16a34a', metanotes: '#db2777', sharehub: '#ea580c', photocast: '#0891b2',
   'dentcast-plus': '#4f46e5', glossary: '#64748b', 'plak-sefr': '#8e3b7a',
+  taraz: '#8b4a2b',
 };
 const TYPE_ICON = {
   episodes: '🎙️', notecast: '📝', insight: '📄', dentai: '🤖', chairside: '🦷',
   metanotes: '🔬', sharehub: '🔗', photocast: '📷', 'dentcast-plus': '🎬', glossary: '📖',
-  'plak-sefr': '📍',
+  'plak-sefr': '📍', taraz: '⚖️',
 };
 // A snippet pin (text/reference) has no highlight colour and no content type —
 // its cover tile borrows the same accent its card uses, so a board's collage

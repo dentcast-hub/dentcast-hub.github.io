@@ -30,7 +30,7 @@ alwaysApply: true
 
 | اگر درخواست... | فایل مرجع (کانونی) |
 |---|---|
-| محتوای **جدید** برای انتشار دارد (NoteCast، Insight، LiteCast، DentAI، Promptologist، MetaNote، Chairside، PhotoCast، ShareHub، DentCast+، اپیزود، Glossary…) | `.dentcast/workflows/README.md` |
+| محتوای **جدید** برای انتشار دارد (NoteCast، Insight، LiteCast، DentAI، Promptologist، MetaNote، Chairside، PhotoCast، ShareHub، DentCast+، پلاک صفر، تراز شواهد، اپیزود، Glossary…) | `.dentcast/workflows/README.md` |
 | **نسخهٔ انگلیسیِ یک صفحهٔ موجود** را می‌خواهد (تریگر: «… رو انگلیسی کن») | `.dentcast/workflows/en-version.md` |
 | **تبلیغ/آگهی** دارد یا می‌خواهد تبلیغی را مدیریت کند («تبلیغ دارم»، «اسپانسر گرفتیم»، «تبلیغ X رو خاموش کن») | `.dentcast/workflows/ads.md` |
 | **آمار/گزارش تبلیغ** می‌خواهد («گزارش تبلیغ بده»، «کلیک اسپانسر X چقدر بوده؟») | `.dentcast/workflows/spot-report.md` |

@@ -1,0 +1,44 @@
+{
+  "type": "taraz",
+  "enforce": true,
+  "note": "First publish of the تراز شواهد section (taraz/taraz1-1 — قسمت ۱، مطالعه‌ی بالینی چطور ساخته می‌شود). #تحلیل_مطالعه is REUSED: its definition («خواندنِ انتقادیِ یک مطالعه: طراحی، جمعیت، و آنچه واقعاً نشان می‌دهد») and its alias critical appraisal are exactly the skill this series teaches, so a second concept would be a duplicate. #کارآزمایی_تصادفی is deliberately NOT carried: the part names RCT only as the subject of قسمت ۲. Four concepts are newly minted because --simulate returned nothing above threshold for study design, observational study or control group: #تراز_شواهد is the series tag (the #پلاک_صفر role), and the other three are what the part resolves.",
+  "concepts": [
+    {
+      "tag": "#تراز_شواهد",
+      "domain": "brand",
+      "definition": "نام سری «تراز شواهد».",
+      "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
+      "aliases": ["taraz shavahed", "taraz-e shavahed", "تراز‌شواهد"]
+    },
+    {
+      "tag": "#طراحی_مطالعه",
+      "domain": "clinical",
+      "definition": "شکلِ ساختِ یک مطالعه‌ی بالینی: تجربی یا مشاهده‌ای، مقطعی یا طولی، آینده‌نگر یا گذشته‌نگر. طراحی تعیین می‌کند مطالعه برای چه سؤالی مناسب است و در برابر چه خطاهایی آسیب‌پذیرتر است؛ کیفیتِ اجرا جداگانه سنجیده می‌شود.",
+      "use_when": "مقاله انواعِ طراحیِ مطالعه یا جایگاهِ یک طراحی را توضیح دهد، نه صرفاً نتیجه‌ی یک مطالعه را.",
+      "aliases": ["study design", "research design", "نوع مطالعه", "طراحی پژوهش"]
+    },
+    {
+      "tag": "#مطالعه_مشاهده‌ای",
+      "domain": "clinical",
+      "definition": "مطالعه‌ای که در آن محقق تعیین نمی‌کند چه کسی درمان یا مواجهه را بگیرد؛ گروه‌ها در روالِ عادی شکل گرفته‌اند و محقق فقط ثبت و مقایسه می‌کند، پس تضمینی نیست که گروه‌ها از اول شبیه هم بوده باشند.",
+      "use_when": "مقاله مطالعه‌ی مشاهده‌ای را در برابر مطالعه‌ی تجربی قرار دهد یا انواعِ آن را توضیح دهد.",
+      "aliases": ["observational study", "مطالعات مشاهده‌ای", "مطالعه غیرتجربی"]
+    },
+    {
+      "tag": "#گروه_کنترل",
+      "domain": "clinical",
+      "definition": "گروهی که درمانِ موردِ بررسی را نمی‌گیرد، یا درمانِ رایجِ قبلی را می‌گیرد، تا نتیجه‌ی گروهِ درمان با آن مقایسه شود؛ بدونِ آن معلوم نیست بهبود کارِ درمان بوده یا خودبه‌خود رخ داده است.",
+      "use_when": "مقاله نقشِ گروهِ مقایسه را در سنجیدنِ اثرِ یک درمان توضیح دهد.",
+      "aliases": ["control group", "comparison group", "گروه مقایسه"]
+    }
+  ],
+  "articles": {
+    "taraz/taraz1-1": [
+      "#تراز_شواهد",
+      "#تحلیل_مطالعه",
+      "#طراحی_مطالعه",
+      "#مطالعه_مشاهده‌ای",
+      "#گروه_کنترل"
+    ]
+  }
+}

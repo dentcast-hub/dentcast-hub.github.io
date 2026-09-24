@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How a Clinical Study Is Built | Taraz-e Shavahed | DentCast</title>
+  <meta name="description" content="Part 1: the first step of critical appraisal is to understand what kind of study is in front of us. This part starts from the foundation: why a clinical study needs a comparison and a control group, where experimental and observational studies part ways, and how observational studies are classified by the timing of observation (cross-sectional or longitudinal) and the source of the data (prospective or retrospective).">
+  <link rel="canonical" href="https://dentcast.org/taraz/en/taraz1-1.html">
+  <meta name="author" content="Dr. Foad Shahabian">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="How a Clinical Study Is Built | DentCast">
+  <meta property="og:description" content="Part 1: the first step of critical appraisal is to understand what kind of study is in front of us. This part starts from the foundation: why a clinical study needs a comparison and a control group, where experimental and observational studies part ways, and how observational studies are classified by the timing of observation (cross-sectional or longitudinal) and the source of the data (prospective or retrospective).">
+  <meta property="og:url" content="https://dentcast.org/taraz/en/taraz1-1.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How a Clinical Study Is Built | DentCast">
+  <meta name="twitter:description" content="Part 1: the first step of critical appraisal is to understand what kind of study is in front of us. This part starts from the foundation: why a clinical study needs a comparison and a control group, where experimental and observational studies part ways, and how observational studies are classified by the timing of observation (cross-sectional or longitudinal) and the source of the data (prospective or retrospective).">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/taraz/en/taraz1-1.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/taraz/en/taraz1-1.html"
+      },
+      "url": "https://dentcast.org/taraz/en/taraz1-1.html",
+      "headline": "How a Clinical Study Is Built",
+      "description": "Part 1: the first step of critical appraisal is to understand what kind of study is in front of us. This part starts from the foundation: why a clinical study needs a comparison and a control group, where experimental and observational studies part ways, and how observational studies are classified by the timing of observation (cross-sectional or longitudinal) and the source of the data (prospective or retrospective).",
+      "datePublished": "2026-09-24",
+      "dateModified": "2026-09-24",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "Taraz-e Shavahed",
+        "url": "https://dentcast.org/taraz"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Taraz-e Shavahed",
+          "item": "https://dentcast.org/taraz"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "How a Clinical Study Is Built",
+          "item": "https://dentcast.org/taraz/en/taraz1-1.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css?v=7">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-left:4px solid var(--ac);padding-left:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-caption .ep-sub{font-size:1.08rem;font-weight:800;color:var(--txt);line-height:1.5;margin:2.25rem 0 0.875rem;}
+.ep-fig{display:block;max-width:18.75rem;width:100%;height:auto;margin:1.125rem auto;border:1px solid var(--card-border);border-radius:0.875rem;box-shadow:var(--card-sh);}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+  
+/* Body prose — canonical measure, shared with every article page.
+   This page does not load /dc-article.css, so the rule lives here. */
+p{ margin:0.875rem 0; font-size:1.02rem; }
+</style>
+</head>
+<body>
+
+<!-- ── TOP BAR (English chrome, cloned from metanotes/en/meta-1.html) ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT (Taraz-e Shavahed structure, translated, LTR) ── -->
+<main class="article-content-wrap ep-page">
+  <a href="/taraz/" class="ep-back">&#8592; Back to Taraz-e Shavahed</a>
+
+  <!-- 🌐 Persian Version (SEO-friendly language toggle) -->
+  <a class="lang-btn" href="../taraz1-1.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">Part 1</div>
+      <h1 class="ep-title">How a Clinical Study Is Built</h1>
+      <div class="ep-meta">
+        <span>&#9201; 6 min read</span>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">This Part</h2>
+      <div class="ep-caption"><p>Every dentist, in day-to-day work, runs into questions whose answers are not clear. Should antibiotics be given after a third molar extraction? How useful is a periapical radiograph in detecting interproximal caries? Does a diabetic patient develop more complications than others after a third molar extraction? To answer these questions we turn to the literature. But finding a paper is not the hardest part of the job. The hardest part is that, once we have found one, we have to decide whether to believe its result and, if we do, whether it applies to our own patient.</p><p>These two judgements have names. How close a study's result is to the truth is called validity, and how important and usable that result is for our patient is called relevance. The set of skills with which we assess the two is called critical appraisal.</p><p>The first step of critical appraisal is to understand what kind of study is in front of us. The type of study design tells us what kind of question the study is suited to and which errors it is more vulnerable to. Design alone is not enough, of course: knowing the type of a study only classifies it, and the quality with which each study was carried out has to be assessed separately. But without this classification we do not even know what we should be assessing. This article, the first part of a series, starts from the foundation: how a clinical study is built in the first place, and where its main types part ways.</p><h3 class="ep-sub">Why a study needs a comparison</h3><p>Suppose we want to know whether prophylactic antibiotics after a third molar extraction reduce postoperative complications. If we look only at patients who received antibiotics and see that most of them healed without complications, we have learned nothing, because we do not know what would have happened had they not taken antibiotics. Perhaps they would have healed just as well without them. To really find out whether the antibiotic has an effect, we have to compare: people who received the antibiotic against people who did not.</p><p>That is why, when our question is about the effect of a treatment, a valid study places patients in at least two groups side by side and compares the outcomes of the two groups. The group that receives the treatment under study is called the treatment group, and the group set beside it for comparison is called the control group. The control group may receive no treatment or may receive the previous standard treatment; what matters is that we have something to compare against. In our example, the treatment group receives antibiotics and the control group receives none, and then we see in which group complications were more frequent. Without a control group, if the treatment group did well, we cannot tell whether it was because of the treatment or whether they would have recovered on their own. Studies of a treatment question carried out without a control group count as very weak evidence that should not be the basis of a clinical decision; we will reach them in part three. Not every clinical question concerns the effect of a treatment, though. For a question about the accuracy of a diagnostic method, for example, the study does not compare two groups of patients; it measures the result of that method on the same patients against a reference method. What design each type of question requires is the subject of one of the later parts, but in this part and the next our discussion stays with the question of treatment effect.</p><h3 class="ep-sub">Two large families: experimental and observational studies</h3><p>Now the central question arises: how are these two groups formed? Who decides whether each patient is in the treatment group or the control group? The answer to this question divides clinical studies into two large families.</p><p>In an experimental study, the investigator decides. It is the investigator who decides that this patient receives antibiotics and that one does not, that this patient is treated with method A and that one with method B. Neither the patient nor the treating dentist has chosen; the study protocol has specified it in advance. That is why, in an experimental study, the treatment is said to be "under the investigator's control".</p><p>In an observational study, nobody does. Patients receive the same treatment they would have received in the ordinary routine of the practice, or are exposed to whatever they were exposed to in their real lives (some smoke and some do not, for example), and the investigator only looks from the outside, records and compares. Without changing anything, for example, the investigator compares patients whose dentist gave them antibiotics with patients whose dentist did not. Groups exist here too, but they formed on their own, not by the investigator's decision.</p><p>The difference between these two families is not merely technical. In an observational study, nobody deliberately made the groups alike, and there is no guarantee that the two groups were similar to begin with. To make clear what this means (a hypothetical example), suppose that in one practice the dentist gives antibiotics only to patients whose extraction was more difficult or who have an underlying disease. The very reason these patients received antibiotics itself affects the outcome. Then, if the antibiotic group had more complications, we cannot tell whether the antibiotic was ineffective or whether this group consisted of more difficult patients from the start. In an experimental study, because the investigator builds the groups, it is possible to make them alike from the outset. How that is done is the subject of the next part.</p><h3 class="ep-sub">Observational studies are divided along two axes</h3><p>Because in observational studies the investigator only looks, when the investigator looks and where the data come from determine the type of study.</p><p>The first axis is the timing of observation. If the investigator sees the patients at only one moment, that is, records their status at a single point in time, the study is cross-sectional. For example (a hypothetical example), on a given day we ask a number of patients whether they smoke and at the same time measure their periodontal pocket depth. If the investigator follows the patients over time and sees them repeatedly, the study is longitudinal. For example, we follow the same patients for five years and see how the pockets change in the smokers.</p><p>The second axis is the source of the data. If the investigator starts collecting new information from today onward, that is, enrols patients from this moment forward and moves ahead with them, the study is prospective. If the data already exist and the investigator simply goes to them, for example dental records from past years or census data, the study is retrospective. The practical difference between the two lies in how far the data can be trusted: in a prospective study the investigator knows from the start what they are looking for and records exactly that, whereas in a retrospective study they rely on information that someone else wrote in the past, for another purpose and perhaps incompletely. A record written years ago for the purpose of treatment has not necessarily captured what we need today for research.</p><p>These two axes are independent of each other and can be combined. A longitudinal study can be prospective (we enrol patients from today and follow them for years) or retrospective (we open old records and reconstruct the patients' course over past years).</p><h3 class="ep-sub">Summary</h3><p>A study that measures the effect of a treatment compares at least two groups. If the investigator decided who is in which group, the study is experimental; if the groups formed on their own in real life, it is observational. Depending on whether they look at a single moment or over time, and whether they collect data afresh or take it from the past, observational studies are divided into different types, which we will see one by one in the coming parts.</p><p>But before that, we need to turn to the most credible type of experimental study, the RCT, and understand exactly what tool the investigator uses to make the groups alike, and why that very tool has made the RCT the yardstick by which all other studies are measured.</p></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Keywords</h2>
+      <div class="ep-chips"><span class="ep-chip">Validity: how close a study's result is to the truth</span><span class="ep-chip">Relevance: how usable the result is for our patient</span><span class="ep-chip">Design only classifies a study; quality of conduct is assessed separately</span><span class="ep-chip">Without a control group we cannot tell whether improvement came from the treatment or on its own</span><span class="ep-chip">In an experimental study the investigator assigns the groups; in an observational study nobody does</span><span class="ep-chip">Cross-sectional looks at one moment, longitudinal over time</span><span class="ep-chip">Prospective collects new data; retrospective relies on data recorded earlier</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Tags</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#TarazEShavahed</span><span class="ep-hashtag">#StudyAppraisal</span><span class="ep-hashtag">#StudyDesign</span><span class="ep-hashtag">#ObservationalStudy</span><span class="ep-hashtag">#ControlGroup</span></div>
+    </div>
+  </div>
+  <!-- Series prev/next (en tier). Targets are en counterparts only.
+       This is the first part, so the previous slot is an empty placeholder;
+       there is no next part yet, so the next slot stays disabled too. -->
+  <div class="ep-nav">
+    <span class="ep-nav-btn ep-nav-empty"></span>
+    <span class="ep-nav-btn ep-nav-empty">Next Part &#8594;</span>
+  </div>
+</main>
+
+<script src="/global-search.js?v=11" defer></script>
+<script src="/dc-nav.js?v=236" defer></script>
+</body>
+</html>

@@ -116,7 +116,7 @@ def get_priority(path):
         return "1.0"
     if re.search(
         r"/(glossary|notecast|insight|litecast|chairside|dentai|"
-        r"metanotes|dentcast-plus|photocast|sharehub|plak-sefr)/index\.html$", path
+        r"metanotes|dentcast-plus|photocast|sharehub|plak-sefr|taraz)/index\.html$", path
     ):
         return "0.9"
     # پرامپتولوژیست is a section whose landing page happens to sit one level
@@ -132,7 +132,7 @@ def get_priority(path):
     if re.search(r"/glossary/[^/]+\.html$", path) and "index" not in path:
         return "0.8"
     if re.search(
-        r"/(litecast|chairside|dentai|metanotes|dentcast-plus|sharehub|photocast|plak-sefr)/", path
+        r"/(litecast|chairside|dentai|metanotes|dentcast-plus|sharehub|photocast|plak-sefr|taraz)/", path
     ):
         return "0.7"
     return "0.6"

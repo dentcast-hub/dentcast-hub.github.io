@@ -34,6 +34,7 @@ HUBS = [
     "photocast/index.html",
     "plak-sefr/index.html",
     "sharehub/index.html",
+    "taraz/index.html",
 ]
 
 OG_IMAGE = "https://dentcast.org/dentcast-cover.webp"

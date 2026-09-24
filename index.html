@@ -976,17 +976,20 @@ body{
 .dc-list-card--meta      { --accent: 91, 107, 140; }   /* indigo-slate */
 .dc-list-card--prompt    { --accent: 112, 96, 168; }   /* violet — پرامپتولوژیست, muted from its registered #7c5cff */
 .dc-list-card--plak      { --accent: 142, 59, 122; }   /* plum — پلاک صفر's own registered #8e3b7a */
+.dc-list-card--taraz     { --accent: 139, 74, 43; }    /* rust — تراز شواهد's own registered #8b4a2b (never amber: that means premium) */
 [data-theme="dark"] .dc-list-card--insight   { --accent: 100, 196, 210; }
 [data-theme="dark"] .dc-list-card--chairside { --accent: 224, 161, 142; }
 [data-theme="dark"] .dc-list-card--meta      { --accent: 150, 169, 200; }
 [data-theme="dark"] .dc-list-card--prompt    { --accent: 176, 164, 224; }
 [data-theme="dark"] .dc-list-card--plak      { --accent: 224, 163, 208; }
+[data-theme="dark"] .dc-list-card--taraz     { --accent: 224, 169, 138; }
 
 .dc-list-card--insight,
 .dc-list-card--chairside,
 .dc-list-card--meta,
 .dc-list-card--prompt,
-.dc-list-card--plak{
+.dc-list-card--plak,
+.dc-list-card--taraz{
   border-right:5px solid rgba(var(--accent),.55);
   background:
     linear-gradient(to left, rgba(var(--accent),.055), rgba(var(--accent),0) 55%),
@@ -996,7 +999,8 @@ body{
 .dc-list-card--chairside .dc-list-card-title .dc-svg-icon,
 .dc-list-card--meta      .dc-list-card-title .dc-svg-icon,
 .dc-list-card--prompt    .dc-list-card-title .dc-svg-icon,
-.dc-list-card--plak      .dc-list-card-title .dc-svg-icon{
+.dc-list-card--plak      .dc-list-card-title .dc-svg-icon,
+.dc-list-card--taraz     .dc-list-card-title .dc-svg-icon{
   color: rgb(var(--accent));
   width: 1.5em;
   height: 1.5em;
@@ -1124,9 +1128,11 @@ body{
 .dc-mlist-ico--metabase{ color:#3a8da5; }
 .dc-mlist-ico--prompt  { color:#7060a8; }   /* پرامپتولوژیست — the same violet its list card carries */
 .dc-mlist-ico--plak    { color:#8e3b7a; }   /* پلاک صفر — its own registered plum */
+.dc-mlist-ico--taraz   { color:#8b4a2b; }   /* تراز شواهد — its own registered rust */
 [data-theme="dark"] .dc-mlist-ico--metabase{ color:#7fbbcf; }
 [data-theme="dark"] .dc-mlist-ico--prompt  { color:#b0a4e0; }
 [data-theme="dark"] .dc-mlist-ico--plak    { color:#e0a3d0; }
+[data-theme="dark"] .dc-mlist-ico--taraz   { color:#e0a98a; }
 
 /* secondary monitor — extra top margin to visually separate */
 .dc-monitor.dc-monitor-secondary{ margin-top:1.25rem; }
@@ -3472,10 +3478,12 @@ a.dc-list-card--pillar {
 #panel-studio .t-share{ color:#0e7490; background:rgba(14,116,144,.10); }
 #panel-studio .t-plus{ color:#b91c1c; background:rgba(185,28,28,.10); }
 #panel-studio .t-plak{ color:#8e3b7a; background:rgba(142,59,122,.10); }
+#panel-studio .t-taraz{ color:#8b4a2b; background:rgba(139,74,43,.10); }
 [data-theme="dark"] #panel-studio .t-ai{ color:#c4b5fd; background:rgba(139,92,246,.20); }
 [data-theme="dark"] #panel-studio .t-share{ color:#67e8f9; background:rgba(14,116,144,.25); }
 [data-theme="dark"] #panel-studio .t-plus{ color:#fca5a5; background:rgba(185,28,28,.25); }
 [data-theme="dark"] #panel-studio .t-plak{ color:#e0a3d0; background:rgba(142,59,122,.22); }
+[data-theme="dark"] #panel-studio .t-taraz{ color:#e0a98a; background:rgba(139,74,43,.22); }
 #panel-studio .dc-rail-title,
 #dcd-welcome-feed .dc-rail-title{
   font-size:.8rem; font-weight:700; line-height:1.7; color:var(--txt); margin:0;
@@ -4480,6 +4488,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 #panel-studio #dcLatestRail .t-share{ background:rgba(14,116,144,.11); color:#0e7490; }
 #panel-studio #dcLatestRail .t-plus{ background:var(--x-prem-bg); color:var(--x-prem); }
 #panel-studio #dcLatestRail .t-plak{ background:rgba(142,59,122,.11); color:#8e3b7a; }
+#panel-studio #dcLatestRail .t-taraz{ background:rgba(139,74,43,.11); color:#8b4a2b; }
 [data-theme="dark"] #panel-studio #dcLatestRail .t-insight{ color:#5fd0b8; }
 [data-theme="dark"] #panel-studio #dcLatestRail .t-note{ color:#8ab4f8; }
 [data-theme="dark"] #panel-studio #dcLatestRail .t-meta{ color:#c79bf2; }
@@ -4487,6 +4496,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 [data-theme="dark"] #panel-studio #dcLatestRail .t-ai{ color:#c4b5fd; }
 [data-theme="dark"] #panel-studio #dcLatestRail .t-share{ color:#67e8f9; }
 [data-theme="dark"] #panel-studio #dcLatestRail .t-plak{ color:#e0a3d0; }
+[data-theme="dark"] #panel-studio #dcLatestRail .t-taraz{ color:#e0a98a; }
 
 /* The personal card's top row is the channels bar. Its tint used to be
    brand-blue, which against the hero aura made the card's top edge
@@ -4944,7 +4954,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۶۵۷<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۶۵۸<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -5500,6 +5510,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         <a class="dc-exa-cat" href="/dentai/promptologist/"><span><b>پرامپتولوژیست</b><i><!-- COUNTER:CAT_PROMPTOLOGIST:START -->۲۲<!-- COUNTER:CAT_PROMPTOLOGIST:END --> مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
         <a class="dc-exa-cat" href="/dentcast-plus/"><span><b>دنت‌کست پلاس</b><i><!-- COUNTER:CAT_PLUS:START -->۱۳<!-- COUNTER:CAT_PLUS:END --> ویدیو</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
         <a class="dc-exa-cat" href="/plak-sefr/"><span><b>پلاک صفر</b><i><!-- COUNTER:CAT_PLAK_SEFR:START -->۶<!-- COUNTER:CAT_PLAK_SEFR:END --> قسمت</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/taraz/"><span><b>تراز شواهد</b><i><!-- COUNTER:CAT_TARAZ:START -->۱<!-- COUNTER:CAT_TARAZ:END --> قسمت</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
       </div>
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2></div>
@@ -5544,6 +5555,11 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <p class="dc-rail-title">پلاک صفر — یک ورودی در برابر صد پست</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
+        <a class="dc-rail-card" data-cat="taraz" href="/taraz/taraz1-1.html">
+          <span class="dc-type-chip t-taraz">تراز شواهد</span>
+          <p class="dc-rail-title">تراز شواهد — مطالعه‌ی بالینی چطور ساخته می‌شود</p>
+          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
+        </a>
         <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-22.html">
           <span class="dc-type-chip t-share">ShareHub</span>
           <p class="dc-rail-title">رابردم برای سمان کردن لمینیت: الزامی یا اختیاری؟</p>
@@ -5573,13 +5589,13 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li><a href="/taraz/taraz1-1.html">سری تازه‌ی تراز شواهد</a> با قسمت اولش، «مطالعه‌ی بالینی چطور ساخته می‌شود»، شروع شد · ۲ مهر</li>
           <li>یک <a href="/plak-sefr/plak1-6.html">قسمت تازه‌ی پلاک صفر</a> با عنوانِ «یک ورودی در برابر صد پست» منتشر شد · ۲ مهر</li>
           <li>یک <a href="/insight/insight-81.html">اینسایت بالینی</a> با عنوانِ «وقتی روکش قدیمی بیمار، خودش روکش موقت میشه» منتشر شد · ۱ مهر</li>
           <li>یک <a href="/insight/insight-80.html">اینسایت بالینی</a> با عنوانِ «قالب پیک‌آپ چیه؟ کاربردهاش چیه؟» منتشر شد · ۱ مهر</li>
           <li>یک <a href="/chairside/chairside-38.html">کیس تازه‌ی Chairside</a> با عنوانِ «شکستگی پیچ اباتمنت و سرامیک در بریج ایمپلنتی فک بالا، در بیماری با اوردنچر فک پایین» منتشر شد · ۳۱ شهریور</li>
           <li>یک <a href="/insight/insight-79.html">اینسایت بالینی</a> با عنوانِ «روی دیگر وینگ (wing): نکته‌ای که به آن توجه نمی‌شود» منتشر شد · ۳۱ شهریور</li>
           <li>یک <a href="/sharehub/share-22.html">مطلب تازه در Share Hub</a> با عنوانِ «رابردم برای سمان کردن لمینیت: الزامی یا اختیاری؟» منتشر شد · ۳۰ شهریور</li>
-          <li>یک <a href="/insight/insight-78.html">اینسایت بالینی</a> با عنوانِ «کاهش فضای اینتراکلوزال در ناحیه‌ی خلفی فک بالا: قبل از ایمپلنت چه باید کرد؟» منتشر شد · ۳۰ شهریور</li>
         </ul>
       </div>
 
@@ -5773,7 +5789,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         
       </div>
 
-      <div class="dc-home-sec"><h2 class="dc-home-sec-label"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5.5-5.5 2 2-5.5z"/></svg> بیرونِ درمان</h2></div>
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5.5-5.5 2 2-5.5z"/></svg> سری‌های ویژه</h2></div>
 
       <div class="dc-list-card dc-list-card--prompt" onclick="window.location.href='/dentai/promptologist/'">
         <div class="dc-list-card-main">
@@ -5786,6 +5802,13 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         <div class="dc-list-card-main">
           <div class="dc-list-card-title">پلاک صفر <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
           <div class="dc-list-card-sub">سایتِ خودت را داشته باش</div>
+        </div>
+      </div>
+
+      <div class="dc-list-card dc-list-card--taraz" onclick="window.location.href='/taraz/'">
+        <div class="dc-list-card-main">
+          <div class="dc-list-card-title">تراز شواهد <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></div>
+          <div class="dc-list-card-sub">یک مقاله‌ی دندانپزشکی چقدر می‌ارزد؟</div>
         </div>
       </div>
 
@@ -5993,6 +6016,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
           <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
       <button class="dc-filter-btn active" data-type="plak_sefr">پلاک صفر</button>
+      <button class="dc-filter-btn active" data-type="taraz">تراز شواهد</button>
           <button class="dc-filter-btn active" data-type="meta">metanote</button>
           <button class="dc-filter-btn active" data-type="chairside">chairside</button>
           <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
@@ -6083,6 +6107,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <button class="dcd-subitem" data-type="litecast" data-label="LiteCast" data-src="litecast"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"/></svg></span><span class="dcd-subitem-lbl">LiteCast</span></button>
           <button class="dcd-subitem" data-type="sharehub" data-label="Share Hub" data-src="sharehub"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/></svg></span><span class="dcd-subitem-lbl">Share Hub</span></button>
           <button class="dcd-subitem" data-type="plak_sefr" data-label="پلاک صفر" data-src="brain"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span class="dcd-subitem-lbl">پلاک صفر<small class="dcd-subitem-cap">سایتِ خودت را داشته باش</small></span></button>
+          <button class="dcd-subitem" data-type="taraz" data-label="تراز شواهد" data-src="brain"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></span><span class="dcd-subitem-lbl">تراز شواهد<small class="dcd-subitem-cap">سایتِ خودت را داشته باش</small></span></button>
           <button class="dcd-subitem" data-mode="viewer" data-viewer-url="/episodes.html" data-label="اپیزودها"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg></span><span class="dcd-subitem-lbl">اپیزودها</span></button>
         </div>
       </div>
@@ -6259,7 +6284,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
               <span class="k">ساعت محتوای صوتی</span>
             </div>
             <div class="hero-stat" role="listitem">
-              <span class="v"><!-- COUNTER:CONTENT:START -->۶۵۷<!-- COUNTER:CONTENT:END --></span>
+              <span class="v"><!-- COUNTER:CONTENT:START -->۶۵۸<!-- COUNTER:CONTENT:END --></span>
               <span class="k">مطلب و مدخل آموزشی</span>
             </div>
           </div>
@@ -6425,6 +6450,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
     <a class="dc-exa-cat" href="/dentai/promptologist/"><span><b>پرامپتولوژیست</b><i><!-- COUNTER:CAT_PROMPTOLOGIST:START -->۲۲<!-- COUNTER:CAT_PROMPTOLOGIST:END --> مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
     <a class="dc-exa-cat" href="/dentcast-plus/"><span><b>دنت‌کست پلاس</b><i><!-- COUNTER:CAT_PLUS:START -->۱۳<!-- COUNTER:CAT_PLUS:END --> ویدیو</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
     <a class="dc-exa-cat" href="/plak-sefr/"><span><b>پلاک صفر</b><i><!-- COUNTER:CAT_PLAK_SEFR:START -->۶<!-- COUNTER:CAT_PLAK_SEFR:END --> قسمت</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+    <a class="dc-exa-cat" href="/taraz/"><span><b>تراز شواهد</b><i><!-- COUNTER:CAT_TARAZ:START -->۱<!-- COUNTER:CAT_TARAZ:END --> قسمت</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
           </div>
 
           <div class="dc-pulse dcd-welcome-pulse" id="dcdPulse">
@@ -6662,7 +6688,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
       
     </div>
 
-    <div class="dc-home-sec"><h2 class="dc-home-sec-label"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5.5-5.5 2 2-5.5z"/></svg> بیرونِ درمان</h2></div>
+    <div class="dc-home-sec"><h2 class="dc-home-sec-label"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5.5-5.5 2 2-5.5z"/></svg> سری‌های ویژه</h2></div>
 
     <div class="dc-list-card dc-list-card--prompt" data-href="/dentai/promptologist/">
       <div class="dc-list-card-main">
@@ -6675,6 +6701,13 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
       <div class="dc-list-card-main">
         <div class="dc-list-card-title">پلاک صفر <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
         <div class="dc-list-card-sub">سایتِ خودت را داشته باش</div>
+      </div>
+    </div>
+
+    <div class="dc-list-card dc-list-card--taraz" data-href="/taraz/">
+      <div class="dc-list-card-main">
+        <div class="dc-list-card-title">تراز شواهد <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></div>
+        <div class="dc-list-card-sub">یک مقاله‌ی دندانپزشکی چقدر می‌ارزد؟</div>
       </div>
     </div>
 
@@ -6967,7 +7000,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=c0641acdc9',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=5122eb4c9a',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -7068,7 +7101,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=235" defer></script>
+<script src="/dc-nav.js?v=236" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -7190,7 +7223,7 @@ document.getElementById('tool-consult')?.addEventListener('click',()=>{window.lo
 document.getElementById('tool-about')?.addEventListener('click',()=>{window.location.href='about.html';});
 </script>
 
-<script src="/global-search.js?v=10"></script>
+<script src="/global-search.js?v=11"></script>
 <script>if('serviceWorker'in navigator){navigator.serviceWorker.register('/service-worker.js').catch(()=>{});}</script>
 
 <script>
@@ -7338,7 +7371,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=c0641acdc9';
+  const FEED_URL='/dentcast-brain.json?v=5122eb4c9a';
   /* Two hosts, one per homepage shell — the same SLOT_IDS split
      plus/js/home-upboard.js uses for the «بالاترین» arrangement of this same
      box. This script owns «تازه‌ترین» and is the ONLY renderer of it (the
@@ -7358,7 +7391,8 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
        tree's .dcd-subitem entries, so a reader meets one glyph per section
        wherever it appears. */
     prompt:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3"/><path d="M13 15h4"/>',
-    plak:'<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/>'
+    plak:'<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+    taraz:'<path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>'
   };
   /* پرامپتولوژیست is tested BEFORE the studio family on purpose: it is a
      section of its own that happens to live at /dentai/promptologist/, so the
@@ -7368,6 +7402,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     if(/\/episodes\//.test(url)) return 'episodes';
     if(/\/dentai\/promptologist\//.test(url)) return 'prompt';
     if(/\/plak-sefr\//.test(url)) return 'plak';
+    if(/\/taraz\//.test(url)) return 'taraz';
     if(/\/(?:notecast|litecast|photocast|dentai|sharehub)\//.test(url)) return 'studio';
     if(/\/(?:insight|chairside|metanotes|dentcast-plus)\//.test(url)) return 'metabase';
     return null;
@@ -7613,7 +7648,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=c0641acdc9', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=5122eb4c9a', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
@@ -8012,7 +8047,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
          was the one that dropped the reader out of the app. A new section has
          to be added here as well as to the tree (see .dentcast/workflows/
          new-section.md). */
-      if(/^\/(notecast|insight|chairside|litecast|metanotes|dentai|dentcast-plus|photocast|sharehub|plak-sefr)\/.+\.html$/.test(path)){
+      if(/^\/(notecast|insight|chairside|litecast|metanotes|dentai|dentcast-plus|photocast|sharehub|plak-sefr|taraz)\/.+\.html$/.test(path)){
         e.preventDefault();
         openContent(path, a.textContent.trim() || path);
         return;
@@ -8176,7 +8211,8 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     dentcast:'اپیزود', notecast:'NoteCast', clinical:'Clinical Insight',
     insight:'Clinical Insight', dentcast_plus:'ویدیو', dentai:'DentAI',
     promptologist:'پرامپتولوژیست', meta:'Meta Note', chairside:'Chairside',
-    sharehub:'Share Hub', litecast:'LiteCast', plak_sefr:'پلاک صفر'
+    sharehub:'Share Hub', litecast:'LiteCast', plak_sefr:'پلاک صفر',
+    taraz:'تراز شواهد'
   };
   /* Every brain type that can reach this card needs a row above. The fallback
      below is `|| x.type`, which prints the RAW KEY — `plak_sefr` was missing and

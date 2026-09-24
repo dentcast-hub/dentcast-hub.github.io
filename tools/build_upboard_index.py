@@ -132,6 +132,7 @@ TYPE_FA = {
     "sharehub": "ShareHub",
     "promptologist": "پرامپتولوژیست",
     "plak_sefr": "پلاک صفر",
+    "taraz": "تراز شواهد",
     "photocast": "PhotoCast",
     "dentcast": "اپیزود",
     "dentcast_plus": "دنت‌کست پلاس",
