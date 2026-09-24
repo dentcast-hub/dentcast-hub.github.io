@@ -2,31 +2,31 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=145';
-import { currentUser, api } from './js/api.js?v=145';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=145';
-import { openCollectionPicker } from './js/collections.js?v=145';
-import { el, faNum } from './js/util.js?v=145';
-import { initHomeCard } from './js/home-card.js?v=145';
-import { initHomeFeatures } from './js/home-features.js?v=145';
-import { initPremiumPanel } from './js/premium-panel.js?v=145';
-import { initHomeBundles } from './js/home-bundles.js?v=145';
-import { initHomeUpboard } from './js/home-upboard.js?v=145';
-import { initDesTool } from './js/des-scorer.js?v=145';
-import { initHeader } from './js/header.js?v=145';
-import { initTourAutostart } from './js/tour.js?v=145';
-import { initReadingTracker, flushPendingReads } from './js/reading.js?v=145';
-import { initListeningTracker } from './js/listening.js?v=145';
-import { initShareScoring, buildShareButton } from './js/share.js?v=145';
-import { initHeart, buildHeartChip } from './js/votes.js?v=145';
-import { mountClipControl, landOnClip } from './js/clips.js?v=145';
-import { mountArticleThreads } from './js/article-threads.js?v=145';
-import { mountChallenge } from './js/challenge.js?v=145';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=145';
-import { mountDes } from './js/des.js?v=145';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=145';
-import { initAudioHub } from './js/audio-hub.js?v=145';
-import { getModel, freshFolders } from './js/content-index.js?v=145';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=147';
+import { currentUser, api } from './js/api.js?v=147';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=147';
+import { openCollectionPicker } from './js/collections.js?v=147';
+import { el, faNum } from './js/util.js?v=147';
+import { initHomeCard } from './js/home-card.js?v=147';
+import { initHomeFeatures } from './js/home-features.js?v=147';
+import { initPremiumPanel } from './js/premium-panel.js?v=147';
+import { initHomeBundles } from './js/home-bundles.js?v=147';
+import { initHomeUpboard } from './js/home-upboard.js?v=147';
+import { initDesTool } from './js/des-scorer.js?v=147';
+import { initHeader } from './js/header.js?v=147';
+import { initTourAutostart } from './js/tour.js?v=147';
+import { initReadingTracker, flushPendingReads } from './js/reading.js?v=147';
+import { initListeningTracker } from './js/listening.js?v=147';
+import { initShareScoring, buildShareButton } from './js/share.js?v=147';
+import { initHeart, buildHeartChip } from './js/votes.js?v=147';
+import { mountClipControl, landOnClip } from './js/clips.js?v=147';
+import { mountArticleThreads } from './js/article-threads.js?v=147';
+import { mountChallenge } from './js/challenge.js?v=147';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=147';
+import { mountDes } from './js/des.js?v=147';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=147';
+import { initAudioHub } from './js/audio-hub.js?v=147';
+import { getModel, freshFolders } from './js/content-index.js?v=147';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -36,7 +36,7 @@ import { getModel, freshFolders } from './js/content-index.js?v=145';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=145').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=147').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -539,10 +539,12 @@ async function initArticle() {
 // homepage). Re-mounting first tears down the previous in-place workbench.
 let desktopWb = null;
 let desktopMountGen = 0; // bumped per shell mount; an older, slower mount sees it moved and stops
+let desktopListen = null; // the column-C episode's listening tracker, stopped on the next mount
 async function mountArticleWorkbench(root, url) {
   const gen = ++desktopMountGen;
   const alive = () => gen === desktopMountGen;
   if (desktopWb) { try { desktopWb.exit(); } catch (_) { /* ignore */ } desktopWb = null; }
+  if (desktopListen) { try { desktopListen.stop(); } catch (_) { /* ignore */ } desktopListen = null; }
   if (!root || !url) return;
   // Scoped to the injected article: the homepage around it has boxes of its own,
   // so a document-wide lookup would find one of those first.
@@ -554,6 +556,11 @@ async function mountArticleWorkbench(root, url) {
   const [path, query] = url.split('#')[0].split('?');
   const contentId = path.replace(/^\/+/, '').replace(/\.html$/i, '') || detectContentId();
   markViewed(contentId); // record the open for the landing-page "seen" ticks
+  // Listening, for an episode (or a NoteCast with audio) opened in column C.
+  // initListening() runs once at boot on a standalone page and never saw these,
+  // so an episode heard on the desktop shell counted for nothing (1405/07/02).
+  const colAudio = root.querySelector('#ep-audio') || root.querySelector('audio');
+  if (colAudio) desktopListen = initListeningTracker({ contentId, audioEl: colAudio });
   // Re-aim share crediting at the article now on screen (a podcast can be
   // shared too, same as any other page).
   initShareScoring(contentId);
@@ -730,7 +737,7 @@ function folderForPath(folders) {
 }
 
 function openSeenGate() {
-  Promise.all([import('./js/sheet.js?v=145'), import('./js/premium-cta.js?v=145')])
+  Promise.all([import('./js/sheet.js?v=147'), import('./js/premium-cta.js?v=147')])
     .then(([sheet, cta]) => sheet.openSheet(sheet.gateCard({
       title: 'کدام‌ها را خوانده‌ای',
       sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '

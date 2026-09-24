@@ -14,11 +14,11 @@
 // Real play only: we accumulate the forward delta of `currentTime` between
 // timeupdate ticks, ignoring pauses and seeks (a jump to the end is a large or
 // negative delta and is discarded), so seeking to the finish cannot fake it.
-import { api } from './api.js?v=145';
-import { signalStreakActivity } from './util.js?v=145';
+import { sendCompletion } from './outbox.js?v=147';
+import { signalStreakActivity } from './util.js?v=147';
 import {
   LISTEN_FRACTION, LISTEN_MIN_S, LISTEN_MAX_S, LS_LISTEN_AT, LISTEN_REPEAT_MS,
-} from './config.js?v=145';
+} from './config.js?v=147';
 
 // Headroom on the wall-clock ceiling below, for tick jitter and for a playback
 // rate that changes part-way through a tick.
@@ -91,10 +91,13 @@ export function initListeningTracker({ contentId, audioEl }) {
   function complete() {
     fired = true;
     cleanup();
-    try { localStorage.setItem(atKey, String(Date.now())); } catch (_) { /* private mode */ }
-    // Fire-and-forget: requireAuth rejects an anonymous caller quietly; this is
-    // a silent background signal, exactly like reading's article_completed.
-    api.activity('episode_listened', contentId).catch(() => {});
+    // Queued first, sent second (outbox.js): the 20h de-dup stamp is written
+    // only once the server has accepted the listen. Stamping first — as this
+    // did until 1405/07/02 — meant a send lost to a navigation or a network
+    // blink was never retried, and the next 20 hours refused to try again.
+    sendCompletion('episode_listened', contentId).then((ok) => {
+      if (ok) { try { localStorage.setItem(atKey, String(Date.now())); } catch (_) { /* private mode */ } }
+    });
     signalStreakActivity(); // light the header flame live
   }
 

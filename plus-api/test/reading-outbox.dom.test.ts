@@ -60,7 +60,7 @@ describe('reading tracker outbox', () => {
     window.dispatchEvent(new Event('pagehide'));
     await flush();
     expect(calls).toEqual([{ action: 'article_completed', id: 'dentai/promptologist/prompt4-1', keepalive: true }]);
-    expect(localStorage.getItem('dcp:read:pending:dentai/promptologist/prompt4-1')).toBeTruthy();
+    expect(localStorage.getItem('dcp:outbox:article_completed|dentai/promptologist/prompt4-1')).toBeTruthy();
     expect(sessionStorage.getItem('dcp:read:dentai/promptologist/prompt4-1')).toBeNull();
 
     // Next page: the network is back.
@@ -69,8 +69,7 @@ describe('reading tracker outbox', () => {
     const { flushPendingReads } = await import('/plus/js/reading.js');
     await flushPendingReads();
     expect(calls.at(-1)).toEqual({ action: 'article_completed', id: 'dentai/promptologist/prompt4-1', keepalive: false });
-    expect(localStorage.getItem('dcp:read:pending:dentai/promptologist/prompt4-1')).toBeNull();
-    expect(sessionStorage.getItem('dcp:read:dentai/promptologist/prompt4-1')).toBe('1');
+    expect(localStorage.getItem('dcp:outbox:article_completed|dentai/promptologist/prompt4-1')).toBeNull();
   });
 
   it('re-reading in the same tab after a lost send tries again (the flag was never set)', async () => {

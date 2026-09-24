@@ -149,4 +149,17 @@ describe('listening tracker', () => {
       'episodes/episode-160', 'episodes/episode-161',
     ]);
   });
+
+  it('a listen that fails to send stays queued and does not set the 20h stamp', async () => {
+    globalThis.fetch = vi.fn((url: string) => {
+      if (String(url).endsWith('/health')) return Promise.resolve({ ok: true, status: 200, json: async () => ({}) });
+      return Promise.reject(new TypeError('network'));
+    }) as unknown as typeof fetch;
+    const audio = new FakeAudio();
+    initListeningTracker({ contentId: 'episodes/episode-150', audioEl: audio });
+    play(audio, 241);
+    await flush(); await flush();
+    expect(localStorage.getItem('dcp:outbox:episode_listened|episodes/episode-150')).toBeTruthy();
+    expect(Object.keys(localStorage).some((k) => k.startsWith('dcp:listen:'))).toBe(false);
+  });
 });
