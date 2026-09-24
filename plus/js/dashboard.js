@@ -1,18 +1,19 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=144';
-import { api } from './api.js?v=144';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=144';
-import { leagueEntryButton } from './league.js?v=144';
-import { openCollectionPicker, boardCover } from './collections.js?v=144';
-import { bundleRailCard, intentRow } from './pathways.js?v=144';
-import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=144';
-import { currentMonthKey } from './jalali-month.js?v=144';
-import { renewalBanner } from './renewal-banner.js?v=144';
-import { premiumCta } from './premium-cta.js?v=144';
-import { maybeCelebrate } from './achievements.js?v=144';
-import { markReturnTrail } from './return-trail.js?v=144';
+import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=145';
+import { api } from './api.js?v=145';
+import { flushPendingReads } from './reading.js?v=145';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=145';
+import { leagueEntryButton } from './league.js?v=145';
+import { openCollectionPicker, boardCover } from './collections.js?v=145';
+import { bundleRailCard, intentRow } from './pathways.js?v=145';
+import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=145';
+import { currentMonthKey } from './jalali-month.js?v=145';
+import { renewalBanner } from './renewal-banner.js?v=145';
+import { premiumCta } from './premium-cta.js?v=145';
+import { maybeCelebrate } from './achievements.js?v=145';
+import { markReturnTrail } from './return-trail.js?v=145';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',
@@ -471,6 +472,9 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   // at page boot, and using it made the streak number + "active today" look stale
   // after a just-completed read/highlight until a manual page refresh. Fall back
   // to that preMe only if the fresh fetch fails (offline / 401).
+  // A read the previous page earned but could not deliver (reading.js outbox)
+  // lands first, so the bars below count it.
+  await flushPendingReads().catch(() => {});
   const [me, progress, model, league] = await Promise.all([
     api.me().catch(() => preMe || null),
     api.progress().catch(() => ({})),

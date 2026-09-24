@@ -2,31 +2,31 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=144';
-import { currentUser, api } from './js/api.js?v=144';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=144';
-import { openCollectionPicker } from './js/collections.js?v=144';
-import { el, faNum } from './js/util.js?v=144';
-import { initHomeCard } from './js/home-card.js?v=144';
-import { initHomeFeatures } from './js/home-features.js?v=144';
-import { initPremiumPanel } from './js/premium-panel.js?v=144';
-import { initHomeBundles } from './js/home-bundles.js?v=144';
-import { initHomeUpboard } from './js/home-upboard.js?v=144';
-import { initDesTool } from './js/des-scorer.js?v=144';
-import { initHeader } from './js/header.js?v=144';
-import { initTourAutostart } from './js/tour.js?v=144';
-import { initReadingTracker } from './js/reading.js?v=144';
-import { initListeningTracker } from './js/listening.js?v=144';
-import { initShareScoring, buildShareButton } from './js/share.js?v=144';
-import { initHeart, buildHeartChip } from './js/votes.js?v=144';
-import { mountClipControl, landOnClip } from './js/clips.js?v=144';
-import { mountArticleThreads } from './js/article-threads.js?v=144';
-import { mountChallenge } from './js/challenge.js?v=144';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=144';
-import { mountDes } from './js/des.js?v=144';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=144';
-import { initAudioHub } from './js/audio-hub.js?v=144';
-import { getModel, freshFolders } from './js/content-index.js?v=144';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=145';
+import { currentUser, api } from './js/api.js?v=145';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=145';
+import { openCollectionPicker } from './js/collections.js?v=145';
+import { el, faNum } from './js/util.js?v=145';
+import { initHomeCard } from './js/home-card.js?v=145';
+import { initHomeFeatures } from './js/home-features.js?v=145';
+import { initPremiumPanel } from './js/premium-panel.js?v=145';
+import { initHomeBundles } from './js/home-bundles.js?v=145';
+import { initHomeUpboard } from './js/home-upboard.js?v=145';
+import { initDesTool } from './js/des-scorer.js?v=145';
+import { initHeader } from './js/header.js?v=145';
+import { initTourAutostart } from './js/tour.js?v=145';
+import { initReadingTracker, flushPendingReads } from './js/reading.js?v=145';
+import { initListeningTracker } from './js/listening.js?v=145';
+import { initShareScoring, buildShareButton } from './js/share.js?v=145';
+import { initHeart, buildHeartChip } from './js/votes.js?v=145';
+import { mountClipControl, landOnClip } from './js/clips.js?v=145';
+import { mountArticleThreads } from './js/article-threads.js?v=145';
+import { mountChallenge } from './js/challenge.js?v=145';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=145';
+import { mountDes } from './js/des.js?v=145';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=145';
+import { initAudioHub } from './js/audio-hub.js?v=145';
+import { getModel, freshFolders } from './js/content-index.js?v=145';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -36,7 +36,7 @@ import { getModel, freshFolders } from './js/content-index.js?v=144';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=144').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=145').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -730,7 +730,7 @@ function folderForPath(folders) {
 }
 
 function openSeenGate() {
-  Promise.all([import('./js/sheet.js?v=144'), import('./js/premium-cta.js?v=144')])
+  Promise.all([import('./js/sheet.js?v=145'), import('./js/premium-cta.js?v=145')])
     .then(([sheet, cta]) => sheet.openSheet(sheet.gateCard({
       title: 'کدام‌ها را خوانده‌ای',
       sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '
@@ -827,6 +827,10 @@ async function initSeenTicks() {
     if (cid !== here && isSeenContent(cid)) links.push({ a, cid });
   });
   if (links.length < 2) return; // not a list/landing page → skip
+  // The part the reader just left may still be in the outbox (its request was
+  // cut off by this very navigation) — deliver it before asking what was read,
+  // or «بازگشت به فهرست» shows a count one short of the truth.
+  await flushPendingReads().catch(() => {});
   let data;
   try { data = await api.seen(); } catch (_) { return; }
   // An unanswerable /me or /seen must draw nothing at all — never the locked
@@ -1051,6 +1055,7 @@ function boot() {
   step('home-bundles', () => initHomeBundles()); // homepage "از کجا شروع کنم؟" starter-bundle rail (both layouts)
   step('home-upboard', () => initHomeUpboard()); // homepage مطالب box: the «بالاترین» tab + /up-board/ door
   step('des-tool', () => initDesTool()); // homepage ارزیاب DES tab, right under the DES explainer box
+  step('flush-reads', () => flushPendingReads()); // completions a previous page earned but could not deliver (reading.js outbox)
   step('mark-viewed', () => markViewed(contentId)); // mark THIS content page seen on open (any folder, incl. episodes)
   // Credit shares of THIS page. Wired at boot rather than inside the article
   // path on purpose: dc-nav.js puts its share chip on every page built on the
