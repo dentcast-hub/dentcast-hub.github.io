@@ -1,0 +1,32 @@
+{
+  "type": "sharehub",
+  "enforce": true,
+  "note": "ShareHub 23 — آلودگی خون یا بزاق روی عاج وسط باندینگ. Thirteen tags REUSED as found by --simulate (#باندینگ، #عاج، #قدرت_باند، #اچ_اند_رینس، #سلف_اچ، #یونیورسال_باند، #ایزولاسیون، #کنترل_خونریزی، #بزاق، #هیبرید_لیر، #ترمیم_ساب_جینجیوال plus the two series tags). One concept newly minted: nothing covered contamination of the bonding surface on tooth structure — «آلودگی خون» and «رفع آلودگی عاج» cleared no threshold, and the nearest concept, #پاکسازی_سرامیک, is scoped to a ceramic surface and already owns the bare alias «decontamination», which is therefore deliberately NOT reused here.",
+  "concepts": [
+    {
+      "tag": "#آلودگی_حین_باندینگ",
+      "domain": "clinical",
+      "definition": "آلوده شدنِ سطحِ باند روی دندان با بزاق، خون، مایع شیار لثه یا ماده‌ی هموستاتیک در یکی از مراحلِ باندینگ، و پروتکلِ رفعِ آن بسته به مرحله‌ی آلودگی و سیستمِ ادهزیو.",
+      "use_when": "مقاله اثرِ آلودگی روی باند به عاج یا مینا یا روشِ پاک‌سازیِ سطحِ آلوده پیش از ادامه‌ی باندینگ را موضوع داشته باشد؛ برای سطحِ سرامیک #پاکسازی_سرامیک.",
+      "aliases": ["blood contamination", "saliva contamination", "dentin contamination", "dentin decontamination", "آلودگی خون", "آلودگی بزاق", "آلودگی عاج", "رفع آلودگی عاج", "آلودگی حین باندینگ"]
+    }
+  ],
+  "articles": {
+    "sharehub/share-23": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#آلودگی_حین_باندینگ",
+      "#باندینگ",
+      "#عاج",
+      "#قدرت_باند",
+      "#اچ_اند_رینس",
+      "#سلف_اچ",
+      "#یونیورسال_باند",
+      "#ایزولاسیون",
+      "#کنترل_خونریزی",
+      "#بزاق",
+      "#هیبرید_لیر",
+      "#ترمیم_ساب_جینجیوال"
+    ]
+  }
+}
