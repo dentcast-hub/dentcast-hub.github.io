@@ -83,19 +83,41 @@ describe('the showcase', () => {
     expect(sc.textContent).not.toMatch(/قدم|مرحله/);
   });
 
-  it('labels the certificate grey «به‌زودی» while pending, green once certifiable', async () => {
+  it('says the certificate and its discount on ONE label: grey «به‌زودی» while pending, green once certifiable', async () => {
+    const pct = OPEN[0].certificate_discount_percent;
+    expect(pct).toBeGreaterThan(0); // the number the card announces lives in the file
+    const off = '٪' + FA(pct) + ' تخفیف اشتراک';
     let sc = await render();
     const cert = sc.querySelector('.dcp-pws-feat .dcp-pws-cert')!;
     expect(OPEN[0].certificate).toBe('pending');
-    expect(cert.textContent).toBe('🎓 گواهی‌نامه: به‌زودی');
+    expect(cert.textContent).toBe('🎓 گواهی‌نامه + ' + off + ' · به‌زودی');
     expect(cert.classList.contains('is-open')).toBe(false);
+    // said once, beside the certificate, and never «یک‌جا» (a returning reader gets it in instalments)
+    expect(sc.textContent!.split('تخفیف').length - 1).toBe(1);
+    expect(sc.textContent).not.toContain('یک‌جا');
 
     vi.resetModules();
     pathwaysImpl = () => Promise.resolve({ pathways: [{ id: OPEN[0].id, certifiable: true, completed_steps: 0, total_steps: 10 }] });
     sc = await render({ id: 'u1', tier: 'free' });
     const open = sc.querySelector('.dcp-pws-feat .dcp-pws-cert')!;
-    expect(open.textContent).toBe('🎓 گواهی‌نامه');
+    expect(open.textContent).toBe('🎓 گواهی‌نامه · ' + off);
     expect(open.classList.contains('is-open')).toBe(true);
+  });
+
+  it('names no percent for a pathway whose file entry sets none (the API default is not the card\'s to guess)', async () => {
+    const bare = FILE.map((p: any) => (p.id === OPEN[0].id ? { ...p, certificate_discount_percent: undefined } : p));
+    globalThis.fetch = vi.fn(() => Promise.resolve({ ok: true, status: 200, json: async () => bare })) as any;
+    const sc = await render();
+    expect(sc.querySelector('.dcp-pws-feat .dcp-pws-cert')!.textContent).toBe('🎓 گواهی‌نامه: به‌زودی');
+    expect(sc.textContent).not.toContain('٪');
+  });
+
+  it('says the pathway is open once, in a word that is not a price', async () => {
+    const sc = await render();
+    const feat = sc.querySelector('.dcp-pws-feat')!;
+    expect(feat.querySelector('.dcp-pws-ft-open')!.textContent).toBe('باز برای همه');
+    expect(sc.textContent!.split('باز برای همه').length - 1).toBe(1);
+    expect(sc.textContent).not.toContain('رایگان');
   });
 
   it('draws a started reader\'s bar with no number on it', async () => {
