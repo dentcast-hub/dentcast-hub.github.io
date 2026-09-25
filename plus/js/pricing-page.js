@@ -12,16 +12,16 @@
 //   - the visitor is not signed in -> the button signs them in first
 // Each says something different, because a customer who is told the wrong
 // reason goes away for good.
-import { el } from './util.js?v=147';
-import { api, currentUser } from './api.js?v=147';
-import { openLoginModal } from './login-modal.js?v=147';
+import { el } from './util.js?v=149';
+import { api, currentUser } from './api.js?v=149';
+import { openLoginModal } from './login-modal.js?v=149';
 import {
   paymentsNeedIrHost, paymentsIrUrl, PLAN_MONTHS, PLAN_PRICES_RIAL, FROM_MONTHLY_RIAL,
   GIFT_CARD, BANK_TRANSFER,
-} from './config.js?v=147';
-import { premiumBenefits } from './premium-benefits.js?v=147';
-import { registerSW } from './pwa.js?v=147';
-import { wirePageBack } from './page-back.js?v=147';
+} from './config.js?v=149';
+import { premiumBenefits } from './premium-benefits.js?v=149';
+import { registerSW } from './pwa.js?v=149';
+import { wirePageBack } from './page-back.js?v=149';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const toFa = (s) => String(s).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);
@@ -859,9 +859,19 @@ async function main() {
   // خرید مصرف می‌شود» must be on screen BEFORE the pay button — one-time-ness
   // is never allowed to be a surprise. Stacks under the pillar notice, so a
   // seat-holder can read ٪۲۶ as ٪۲۰ + ٪۶.
-  if (info.onetime_discount) {
+  // A certificate's first-purchase discount sits OUTSIDE the badge cap, so it
+  // gets its own card — folded into the one below it would print ٪۲۰ beside
+  // «سقف ٪۱۰» and contradict itself.
+  const firstPct = (info.onetime_discount && info.onetime_discount.first_purchase_percent) || 0;
+  if (firstPct > 0) {
+    notices.push(notice('ok', 'تخفیف گواهی‌نامهٔ شما اعمال شد',
+      `٪${toFa(firstPct)} تخفیف گواهی‌نامه، ویژهٔ اولین خریدِ اشتراک، یک‌جا روی قیمت‌های این `
+      + 'صفحه اعمال شده و با همین خرید مصرف می‌شود.'));
+  }
+  const cappedPct = info.onetime_discount ? info.onetime_discount.percent - firstPct : 0;
+  if (info.onetime_discount && cappedPct > 0) {
     notices.push(notice('ok', 'تخفیف نشان‌های شما اعمال شد',
-      `٪${toFa(info.onetime_discount.percent)} تخفیف یک‌بارمصرفِ نشان‌هایتان روی قیمت‌های این `
+      `٪${toFa(cappedPct)} تخفیف یک‌بارمصرفِ نشان‌هایتان روی قیمت‌های این `
       + 'صفحه اعمال شده و با همین خرید مصرف می‌شود. '
       // «سقف تخفیفِ نشان‌ها», never «سقف این تخفیف»: the pillar notice is a
       // SEPARATE card above this one, so an unowned «این» let a seat-holder read

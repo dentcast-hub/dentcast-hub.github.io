@@ -1,11 +1,11 @@
 import { config } from '../config.js';
 import { pool, one, query, withTransaction, type Queryable } from '../db.js';
-import { getPathwayById, getPathways, computeProgress, isCertifiable, type Pathway } from '../pathways.js';
+import { getPathwayById, getPathways, computeProgress, isCertifiable, isOpenPathway, type Pathway } from '../pathways.js';
 import { getContentInfo } from '../content-index.js';
 import { randomUUID } from 'node:crypto';
 import { getConsumedContentIds } from './consumption.js';
 import { mintReference } from './reference.js';
-import { issueCertificate, type Certificate } from './certificates.js';
+import { issueCertificate, discountSentence, type Certificate } from './certificates.js';
 import { sendCapped } from './notify-policy.js';
 import {
   runPathwayAlerts, notifyCertificateWish, pathwayStandings, type CertificateIntent,
@@ -353,7 +353,10 @@ const intIn = (v: unknown, lo: number, hi: number, dflt: number): number =>
 export async function upsertForm(pathwayId: string, input: FormInput, client: Queryable = pool): Promise<{ form: ExamForm; created: boolean }> {
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
-  if (!isCertifiable(pathway)) throw new Error('pathway_pending');
+  // WRITING the bank stays open on a pathway that cannot certify yet (pending,
+  // or under MIN_CERTIFICATE_STEPS): the founder prepares its questions while
+  // the series is still being written (1405/07/03). Nothing reaches a reader —
+  // publishForm, examState and every reader door still read isCertifiable().
   const norm = parseQuestions(input.questions);
   if (!norm.ok) throw new Error(`invalid_questions:${norm.error}`);
   const d = config.exam;
@@ -414,7 +417,10 @@ export async function addQuestion(
 ): Promise<{ form: ExamForm; question: ExamQuestion; created: boolean }> {
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
-  if (!isCertifiable(pathway)) throw new Error('pathway_pending');
+  // WRITING the bank stays open on a pathway that cannot certify yet (pending,
+  // or under MIN_CERTIFICATE_STEPS): the founder prepares its questions while
+  // the series is still being written (1405/07/03). Nothing reaches a reader —
+  // publishForm, examState and every reader door still read isCertifiable().
 
   return withTransaction(async (client) => {
     const form = await one<ExamForm>(`${FORM_SELECT} where pathway_id = $1 for update`, [pathwayId], client);
@@ -474,7 +480,10 @@ export async function appendQuestions(
 ): Promise<{ form: ExamForm; created: boolean; added: ExamQuestion[]; skipped: number }> {
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
-  if (!isCertifiable(pathway)) throw new Error('pathway_pending');
+  // WRITING the bank stays open on a pathway that cannot certify yet (pending,
+  // or under MIN_CERTIFICATE_STEPS): the founder prepares its questions while
+  // the series is still being written (1405/07/03). Nothing reaches a reader —
+  // publishForm, examState and every reader door still read isCertifiable().
   const norm = parseQuestions(input.questions);
   if (!norm.ok) throw new Error(`invalid_questions:${norm.error}`);
 
@@ -787,7 +796,10 @@ export async function announceOpenExams(
         [c.user_id, JSON.stringify({ pathway_id: c.pathway_id }), c.pathway_id],
       );
       if (claimed.rowCount === 0) continue;
-      await notifyExamOpen(c.user_id, c.pathway_id, c.tier !== 'free', opts.now);
+      // «premium» here means «may sit it»: on a pathway the file opens to
+      // everybody (isOpenPathway) a free reader may, so they get the plain line.
+      await notifyExamOpen(c.user_id, c.pathway_id,
+        c.tier !== 'free' || isOpenPathway(getPathwayById(c.pathway_id)), opts.now);
       out.told.push({ user_id: c.user_id, pathway_id: c.pathway_id });
     }
     return out;
@@ -1408,16 +1420,18 @@ async function settle(
     );
     if (!row) return null;
     let cert: Certificate | null = null;
+    let discount = '';
     if (t.passed) {
       const issued = await issueCertificate(row.user_id, row.pathway_id, {
         holderName: row.holder_name ?? '', attemptId: row.id, client, notify: false,
       });
       cert = issued.certificate;
+      discount = discountSentence(issued.discount_percent, issued.first_purchase);
     }
-    return { row, cert };
+    return { row, cert, discount };
   });
   if (!result) return (await getAttempt(attemptId))!;
-  await notifyReaderSettled(result.row, result.cert);
+  await notifyReaderSettled(result.row, result.cert, result.discount);
   return result.row;
 }
 
@@ -1524,16 +1538,18 @@ export async function ruleAttempt(attemptId: string, input: RuleInput): Promise<
       );
     }
     let cert: Certificate | null = null;
+    let discount = '';
     if (passed) {
       const issued = await issueCertificate(row.user_id, row.pathway_id, {
         holderName: row.holder_name ?? '', attemptId: row.id, client, notify: false,
       });
       cert = issued.certificate;
+      discount = discountSentence(issued.discount_percent, issued.first_purchase);
     }
-    return { row, cert };
+    return { row, cert, discount };
   });
   if (!result) return { ok: false, error: 'not_queued' };
-  await notifyReaderSettled(result.row, result.cert);
+  await notifyReaderSettled(result.row, result.cert, result.discount);
   return { ok: true, attempt: result.row };
 }
 
@@ -1588,13 +1604,16 @@ export function examUrl(pathwayId: string): string {
   return `/plus/exam.html?id=${encodeURIComponent(pathwayId)}`;
 }
 
-async function notifyReaderSettled(a: ExamAttempt, cert: Certificate | null): Promise<void> {
+async function notifyReaderSettled(a: ExamAttempt, cert: Certificate | null, discount = ''): Promise<void> {
   const title = getPathwayById(a.pathway_id)?.title_fa ?? a.pathway_id;
   if (a.status === 'passed' && cert) {
     await sendCapped(a.user_id, {
       title: 'در آزمون مسیر قبول شدی 🎓',
+      // What was actually minted, worded by the one sentence certificates.ts
+      // owns — never the config default, which is wrong for a pathway with
+      // its own percent (٪۲۰ on the open pathway) and for a re-issue (nothing).
       body: `آزمون «${title}» را گذراندی و گواهی‌نامه‌ات به نام ${a.holder_name} صادر شد. کد: ${cert.verify_code}`
-        + ` · ${fa(config.certificate.discountPercent)}٪ تخفیف برای خرید بعدی‌ات ثبت شد.`,
+        + discount,
       url: `/plus/certificate.html?c=${cert.verify_code}`,
       tag: 'exam',
     }, 'exam_result');

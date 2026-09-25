@@ -233,6 +233,35 @@ describe('the tally', () => {
 //
 // Copy is exactly where this class of bug hides — the numbers were right the
 // whole time and every test stayed green.
+describe('a certificate\'s first-purchase discount in the box', () => {
+  const box = (d: Record<string, unknown>) => {
+    document.body.replaceChildren();
+    const b = discountBody(payload({ discount: { cap_percent: 10, spent_percent: 0, pillar_percent: 0, ...d } }));
+    if (b) document.body.appendChild(b);
+    return document.querySelector('.dcp-disc-foot')?.textContent ?? '';
+  };
+
+  it('never tells a newcomer the half above the cap «waits for a later purchase»', () => {
+    const foot = box({ ready_percent: 20, next_purchase_percent: 20, first_purchase_percent: 20 });
+    expect(document.querySelector('.dcp-disc-pct')!.textContent).toBe('٪۲۰');
+    expect(foot).not.toContain('باقی‌مانده');
+    expect(foot).toContain('اولین خرید');
+    expect(foot).toContain('یک‌جا');
+  });
+
+  it('beside capped credits, the remainder is counted from the capped part only', () => {
+    const foot = box({ ready_percent: 35, next_purchase_percent: 30, first_purchase_percent: 20 });
+    expect(foot).toContain('٪۵ باقی‌مانده');
+    expect(foot).toContain('اولین خرید');
+  });
+
+  it('instalments (paid before) read as ordinary capped credit', () => {
+    const foot = box({ ready_percent: 20, next_purchase_percent: 10, first_purchase_percent: 0 });
+    expect(foot).toContain('٪۱۰ باقی‌مانده');
+    expect(foot).not.toContain('اولین خرید');
+  });
+});
+
 describe('the discount block says what the cap governs', () => {
   const discount = (over: Record<string, unknown> = {}) => ({
     discount: {

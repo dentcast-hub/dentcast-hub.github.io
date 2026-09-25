@@ -1,12 +1,13 @@
 // /plus/pathway.html?id=... — one pathway's detail view (Phase 3). Same
-// premium gate shape as pathways.html/cards.html.
-import { el } from './util.js?v=147';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=147';
-import { currentUser, meStatus } from './api.js?v=147';
-import { openLoginModal } from './login-modal.js?v=147';
-import { renderPathwayDetail } from './pathways.js?v=147';
-import { registerSW } from './pwa.js?v=147';
-import { wirePageBack } from './page-back.js?v=147';
+// premium gate shape as pathways.html/cards.html, drawn per pathway: a pathway
+// open to everybody renders for a free reader too.
+import { el } from './util.js?v=149';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=149';
+import { currentUser, meStatus } from './api.js?v=149';
+import { openLoginModal } from './login-modal.js?v=149';
+import { renderPathwayDetail } from './pathways.js?v=149';
+import { registerSW } from './pwa.js?v=149';
+import { wirePageBack } from './page-back.js?v=149';
 
 function comingSoonGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [
@@ -53,9 +54,10 @@ async function main() {
     return;
   }
 
-  if (user.tier !== 'premium') { comingSoonGate(root, user); return; }
-
-  await renderPathwayDetail(root, id);
+  // Premium per PATHWAY (`premium: false` in pathways.json opens one to
+  // everybody): a free reader asks like anyone else, and the server's 402 on
+  // a premium pathway is what draws the gate.
+  await renderPathwayDetail(root, id, user.tier !== 'premium' ? { onLocked: () => comingSoonGate(root, user) } : {});
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', main);

@@ -14,6 +14,7 @@ import { pool } from '../src/db.js';
 import { startPayment, settlePayment } from '../src/services/payment.js';
 import {
   availableCredits, pickCredits, creditPercent, discountedRial, splitGrantPercent,
+  insertGrant, grantCredits, FIRST_PURCHASE_KIND,
   CREDIT_CAP_PERCENT, type DiscountCredit,
 } from '../src/services/discount-credits.js';
 import { config } from '../src/config.js';
@@ -243,6 +244,75 @@ describe('startPayment with credits', () => {
   });
 });
 
+/* ------------------------------------------- first-purchase certificate -- */
+
+// A pathway whose `certificate_discount_percent` is above the cap mints a
+// FIRST-PURCHASE credit (founder, 1405/07/03): whole and outside the cap on
+// the holder's first paid purchase, only the cap once they have paid before —
+// which is what keeps «ستون» from reaching ٪۴۰–٪۵۰ on top of it.
+describe('a first-purchase certificate credit', () => {
+  async function firstGrant(uid: string, percent = 20): Promise<void> {
+    const rows = await insertGrant(uid, { percent, kind: FIRST_PURCHASE_KIND, label_fa: 'گواهی' });
+    expect(rows.map((r) => r.percent)).toEqual([percent]); // ONE row, never split
+  }
+  async function paidBefore(uid: string): Promise<void> {
+    await pool.query(
+      `insert into payments (user_id, amount_rial, months, gateway, ref_id, order_id, status, verified_at)
+       values ($1, 10000000, 1, 'zibal', 'TRK-OLD', 'sub1_old', 'paid', now())`,
+      [uid],
+    );
+  }
+
+  it('applies whole, outside the cap, on a first purchase — beside a full cap', async () => {
+    const uid = await userId(await loginAs(app, PHONE));
+    await firstGrant(uid);
+    await grant(uid, 10, 'عیدی');
+    gatewayReplies(REQUEST_OK);
+    const r = await startPayment({ userId: uid, months: 6 });
+    expect(r.payment!.amount_rial).toBe(42_000_000); // 60M − (20 + 10)
+    const red = await pool.query('select percent from discount_redemptions where user_id = $1 order by percent', [uid]);
+    expect(red.rows.map((x) => x.percent)).toEqual([10, 20]);
+  });
+
+  it('is paid in cap-sized instalments for somebody who has paid before — «ستون» stays at ٪۳۰', async () => {
+    const uid = await userId(await loginAs(app, PHONE));
+    await paidBefore(uid); // a seat among the first fifty
+    await firstGrant(uid);
+    await grant(uid, 5, 'تولد');
+    const avail = await availableCredits(uid);
+    const parts = avail.filter((c) => c.label_fa.startsWith('گواهی'));
+    // The whole ٪۲۰, as two ٪۱۰ instalments inside the cap.
+    expect(parts.map((c) => c.percent)).toEqual([10, 10]);
+    expect(parts.every((c) => !c.outside_cap)).toBe(true);
+    gatewayReplies(REQUEST_OK);
+    const r = await startPayment({ userId: uid, months: 6 });
+    // 20 (pillar) + 10 (the certificate, capped; the ٪۵ waits) = 30.
+    expect(r.payment!.amount_rial).toBe(42_000_000);
+  });
+
+  it('once spent on the first purchase, reads back at the percent it was spent at', async () => {
+    const uid = await userId(await loginAs(app, PHONE));
+    await firstGrant(uid);
+    gatewayReplies(REQUEST_OK);
+    const start = await startPayment({ userId: uid, months: 6 });
+    expect(start.payment!.amount_rial).toBe(48_000_000);
+    gatewayReplies({ result: 100, status: 1, amount: 48_000_000, refNumber: 'REF-F' });
+    expect((await settlePayment(start.payment!.ref_id!)).outcome).toBe('activated');
+    expect(await availableCredits(uid)).toHaveLength(0);
+    const g = await grantCredits(uid);
+    expect(g[0]).toMatchObject({ percent: 20, outside_cap: true });
+  });
+
+  it('a refused first payment releases it, still whole', async () => {
+    const uid = await userId(await loginAs(app, PHONE));
+    await firstGrant(uid);
+    gatewayReplies({ result: 102, message: 'nope' });
+    expect((await startPayment({ userId: uid, months: 6 })).ok).toBe(false);
+    const [c] = await availableCredits(uid);
+    expect(c).toMatchObject({ percent: 20, outside_cap: true });
+  });
+});
+
 /* ------------------------------------------------------------- surfaces --- */
 
 describe('GET /pay/plans', () => {
@@ -253,7 +323,7 @@ describe('GET /pay/plans', () => {
 
     const res = await app.inject({ method: 'GET', url: '/pay/plans', headers: { cookie } });
     const body = res.json();
-    expect(body.onetime_discount).toEqual({ percent: 5, cap_percent: CREDIT_CAP_PERCENT });
+    expect(body.onetime_discount).toEqual({ percent: 5, cap_percent: CREDIT_CAP_PERCENT, first_purchase_percent: 0 });
     const six = body.plans.find((p: { months: number }) => p.months === 6);
     expect(six.amount_rial).toBe(57_000_000);
     expect(six.list_amount_rial).toBe(SIX_MONTH_RIAL);

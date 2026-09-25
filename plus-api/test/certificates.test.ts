@@ -3,7 +3,7 @@ import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
-import { getPathways } from '../src/pathways.js';
+import { getPathways, applyRemotePathways, resetRemotePathways } from '../src/pathways.js';
 import {
   issueCertificate, revokeCertificate, verifyCertificate, listCertificates,
 } from '../src/services/certificates.js';
@@ -108,6 +108,29 @@ describe('issuing a certificate', () => {
     const credits = await availableCredits(uid);
     expect(credits).toHaveLength(1);
     expect(credits[0].percent).toBe(config.certificate.discountPercent);
+  });
+
+  // A pathway's own `certificate_discount_percent` above the cap is a
+  // first-purchase discount (founder, 1405/07/03), written as ONE row.
+  it('mints a pathway\'s own first-purchase percent as one row, and says so', async () => {
+    const raw = JSON.parse(JSON.stringify(getPathways())) as { id: string; certificate_discount_percent?: number }[];
+    raw.find((x) => x.id === PATHWAY_ID)!.certificate_discount_percent = 20;
+    expect(applyRemotePathways(raw)).toBe(true);
+    try {
+      const uid = await userId();
+      const r = await issueCertificate(uid, PATHWAY_ID, { holderName: 'مهسا رضایی' });
+      expect(r.discount_percent).toBe(20);
+      const rows = await pool.query('select percent, kind from discount_grants where user_id = $1', [uid]);
+      expect(rows.rows).toEqual([{ percent: 20, kind: 'certificate_first' }]);
+      const [c] = await availableCredits(uid);
+      expect(c).toMatchObject({ percent: 20, outside_cap: true });
+      const notice = await pool.query(
+        `select body from notification_log where user_id = $1 and body like '%گواهی تکمیل%'`, [uid],
+      );
+      expect(notice.rows[0].body).toContain('اولین خرید');
+    } finally {
+      resetRemotePathways();
+    }
   });
 
   it('does not tell the reader a discount was recorded on a re-issue', async () => {

@@ -1,6 +1,6 @@
-import { el, faNum } from './util.js?v=147';
-import { api } from './api.js?v=147';
-import { openSheet, closeSheet } from './sheet.js?v=147';
+import { el, faNum } from './util.js?v=149';
+import { api } from './api.js?v=149';
+import { openSheet, closeSheet } from './sheet.js?v=149';
 
 /**
  * The profile's «افتخارات» section: two league medals and the badge wall.
@@ -331,6 +331,9 @@ export function discountBody(data) {
   const pillar = d.pillar_percent || 0;
   const next = d.next_purchase_percent || 0;
   const used = d.spent_percent || 0;
+  // A certificate's first-purchase discount: taken whole on the next purchase,
+  // outside the badge cap — so it is left out of the cap arithmetic below.
+  const first = d.first_purchase_percent || 0;
   if (next <= 0 && ready <= 0 && used <= 0) return null;
 
   const kids = [
@@ -390,13 +393,18 @@ export function discountBody(data) {
     // seat-holder as a ceiling on their own discount, which is the opposite of
     // what they were promised. The under-cap branch also used to claim a
     // remainder that cannot exist — under the cap, everything applies.
-    const capLine = ready > (d.cap_percent || 0)
+    const capped = ready - first;
+    const cappedNext = next - pillar - first;
+    const capLine = capped > (d.cap_percent || 0)
       ? `سهم نشان‌ها در هر خرید تا سقف ٪${faNum(d.cap_percent)} است؛ `
-        + `٪${faNum(ready - (next - pillar))} باقی‌مانده برای خریدهای بعد می‌ماند.`
+        + `٪${faNum(capped - cappedNext)} باقی‌مانده برای خریدهای بعد می‌ماند.`
       : `سهم نشان‌ها در هر خرید تا سقف ٪${faNum(d.cap_percent)} است.`;
-    kids.push(el('p', { class: 'dcp-disc-foot' }, pillar > 0
-      ? `${capLine} تخفیف ٪${faNum(pillar)} ستون جدا از این سقف است و همیشه می‌ماند.`
-      : capLine));
+    const firstLine = first > 0
+      ? ` تخفیف ٪${faNum(first)} گواهی‌نامه ویژهٔ اولین خرید است و جدا از این سقف، یک‌جا کم می‌شود.`
+      : '';
+    kids.push(el('p', { class: 'dcp-disc-foot' }, ((capped > 0 ? capLine : '') + firstLine + (pillar > 0
+      ? ` تخفیف ٪${faNum(pillar)} ستون جدا از این سقف است و همیشه می‌ماند.`
+      : '')).trim()));
   }
 
   kids.push(el('a', { class: 'dcp-disc-link', href: '/plus/pricing.html?from=achievements' },

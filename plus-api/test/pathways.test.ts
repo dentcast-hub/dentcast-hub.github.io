@@ -1,8 +1,11 @@
-import { describe, it, expect, beforeEach, afterAll } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, afterAll } from 'vitest';
 import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
-import { getPathways, getPathwayById, isCertifiable } from '../src/pathways.js';
+import {
+  getPathways, getPathwayById, isCertifiable, isOpenPathway, mayOpenPathway,
+  applyRemotePathways, resetRemotePathways,
+} from '../src/pathways.js';
 
 let app: FastifyInstance;
 let cookie: string;
@@ -51,14 +54,64 @@ async function createHighlight(contentId: string): Promise<void> {
   expect(res.statusCode).toBe(201);
 }
 
-describe('requirePremium gate', () => {
-  it('blocks a free user with 402 on every pathway route', async () => {
-    const list = await app.inject({ method: 'GET', url: '/pathways', headers: { cookie } });
-    expect(list.statusCode).toBe(402);
-    const detail = await app.inject({ method: 'GET', url: `/pathways/${PATHWAY_ID}`, headers: { cookie } });
+describe('premium gate — per PATHWAY, not per route', () => {
+  // A pathway opens to a free account by its own entry in the file
+  // (`premium: false`, isOpenPathway). The cases flag one themselves through
+  // applyRemotePathways — the same door content-refresh.ts adopts a published
+  // copy with — so they do not depend on which pathway ships open this month.
+  const OPEN_ID = PATHWAY_ID;
+  const openOne = () => {
+    const raw = JSON.parse(JSON.stringify(getPathways())) as { id: string; premium: boolean }[];
+    for (const x of raw) x.premium = x.id !== OPEN_ID;
+    expect(applyRemotePathways(raw)).toBe(true);
+  };
+  afterEach(() => { resetRemotePathways(); });
+
+  it('blocks a free user with 402 on a premium pathway, and still shows it in the catalog as locked', async () => {
+    const detail = await app.inject({ method: 'GET', url: `/pathways/${BUNDLE_ID}`, headers: { cookie } });
     expect(detail.statusCode).toBe(402);
-    const enroll = await app.inject({ method: 'POST', url: `/pathways/${PATHWAY_ID}/enroll`, headers: { cookie } });
+    const enroll = await app.inject({ method: 'POST', url: `/pathways/${BUNDLE_ID}/enroll`, headers: { cookie } });
     expect(enroll.statusCode).toBe(402);
+    const list = await app.inject({ method: 'GET', url: '/pathways', headers: { cookie } });
+    expect(list.statusCode).toBe(200);
+    const b = list.json().pathways.find((p: { id: string }) => p.id === BUNDLE_ID);
+    expect(b).toMatchObject({ open: false, free: false });
+  });
+
+  it('opens a `premium: false` pathway to a free user: catalog, detail and enrolment', async () => {
+    openOne();
+    const list = (await app.inject({ method: 'GET', url: '/pathways', headers: { cookie } })).json().pathways;
+    expect(list.find((p: { id: string }) => p.id === OPEN_ID)).toMatchObject({ open: true, free: true });
+    expect(list.filter((p: { open: boolean }) => p.open).map((p: { id: string }) => p.id)).toEqual([OPEN_ID]);
+    const detail = await app.inject({ method: 'GET', url: `/pathways/${OPEN_ID}`, headers: { cookie } });
+    expect(detail.statusCode).toBe(200);
+    expect(detail.json().free).toBe(true);
+    const enroll = await app.inject({ method: 'POST', url: `/pathways/${OPEN_ID}/enroll`, headers: { cookie } });
+    expect(enroll.statusCode).toBe(200);
+    expect((await app.inject({ method: 'GET', url: `/pathways/${BUNDLE_ID}`, headers: { cookie } })).statusCode).toBe(402);
+  });
+
+  it('a premium user opens everything, and the free pathway says so', async () => {
+    openOne();
+    await makePremium();
+    const list = (await app.inject({ method: 'GET', url: '/pathways', headers: { cookie } })).json().pathways;
+    expect(list.every((p: { open: boolean }) => p.open)).toBe(true);
+    expect(list.find((p: { id: string }) => p.id === OPEN_ID).free).toBe(true);
+  });
+
+  it('an absent key is premium — only a literal false opens a pathway', () => {
+    const p = getPathwayById(PATHWAY_ID)!;
+    expect(isOpenPathway({ ...p, premium: undefined as unknown as boolean })).toBe(false);
+    expect(isOpenPathway({ ...p, premium: false })).toBe(true);
+    expect(mayOpenPathway('free', { ...p, premium: true })).toBe(false);
+    expect(mayOpenPathway('premium', { ...p, premium: true })).toBe(true);
+  });
+
+  it('ships «ارزیابی شواهد و استدلال بالینی» open to everybody (founder, 1405/07/03)', () => {
+    resetRemotePathways();
+    const p = getPathwayById('evidence-literacy')!;
+    expect(p.title_fa).toBe('ارزیابی شواهد و استدلال بالینی');
+    expect(isOpenPathway(p)).toBe(true);
   });
 
   it('blocks an unauthenticated request with 401', async () => {

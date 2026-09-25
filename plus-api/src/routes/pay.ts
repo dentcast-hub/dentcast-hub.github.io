@@ -7,7 +7,7 @@ import {
   pillarSeat, isPillarSeat, PILLAR_DISCOUNT_PERCENT,
 } from '../services/pillar.js';
 import {
-  availableCredits, pickCredits, creditPercent, discountedRial, CREDIT_CAP_PERCENT,
+  availableCredits, pickCredits, creditPercent, discountedRial, CREDIT_CAP_PERCENT, firstPurchasePercent,
 } from '../services/discount-credits.js';
 import { readCallback } from '../services/zibal.js';
 import {
@@ -134,8 +134,11 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       // Same job for the one-time credits: how much of the personalised price
       // is credits this purchase will CONSUME, so the page can say so before
       // the pay button rather than after. Null when there is nothing to spend.
+      // `first_purchase_percent` is the part of `percent` that sits OUTSIDE the
+      // cap (a certificate's first-purchase discount), so the page can name it
+      // apart instead of printing ٪۲۰ beside «سقف ٪۱۰».
       onetime_discount: creditPct > 0
-        ? { percent: creditPct, cap_percent: CREDIT_CAP_PERCENT }
+        ? { percent: creditPct, cap_percent: CREDIT_CAP_PERCENT, first_purchase_percent: firstPurchasePercent(credits) }
         : null,
       // The کد معرف preview — echoed back so the pricing page can pre-fill and
       // confirm the code from a `?ref=` link, without this route ever writing

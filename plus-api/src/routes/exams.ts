@@ -1,15 +1,18 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
-import { requirePremium } from '../middleware/require-premium.js';
+import { getPathwayById, mayOpenPathway } from '../pathways.js';
 import { config } from '../config.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
 import { examState, startAttempt, submitAttempt, setCertificateIntent } from '../services/pathway-exams.js';
 import { holderNameFrom, holderNameMessageFa } from '../services/holder-name.js';
 
 /**
- * آزمون مسیر — the reader's side. Three routes, all premium: earning a
- * certificate is what a subscription buys (the pathway pages themselves are
- * `requirePremium`, and an exam on a pathway you cannot open is nothing).
+ * آزمون مسیر — the reader's side. Premium PER PATHWAY, exactly as the
+ * pathway pages are: earning a certificate is what a subscription buys, except
+ * on a pathway the file opens to everybody (`premium: false`, isOpenPathway),
+ * whose exam and certificate are free with it — an exam on a pathway you may
+ * open is part of that pathway, and one on a pathway you cannot open is
+ * nothing. An unknown id falls through to the service's own 404.
  *
  *   GET  /exams/:pathwayId          where I stand (services/pathway-exams.ts examState)
  *   POST /exams/:pathwayId/start    {holder_first_name, holder_last_name} → draw and open an attempt
@@ -21,7 +24,14 @@ import { holderNameFrom, holderNameMessageFa } from '../services/holder-name.js'
  */
 export async function examRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAuth);
-  app.addHook('preHandler', requirePremium);
+  // The same 402 requirePremium answers, decided per pathway.
+  app.addHook('preHandler', async (request, reply) => {
+    const { pathwayId } = (request.params ?? {}) as { pathwayId?: string };
+    const pathway = pathwayId ? getPathwayById(pathwayId) : null;
+    if (pathway && !mayOpenPathway(request.user?.tier, pathway)) {
+      return reply.code(402).send({ error: 'premium_required', message: 'این بخش نیازمند اشتراک پریمیوم است.' });
+    }
+  });
 
   const unknown = (reply: import('fastify').FastifyReply) =>
     reply.code(404).send({ error: 'unknown_pathway', message: 'این مسیر آزمون ندارد.' });

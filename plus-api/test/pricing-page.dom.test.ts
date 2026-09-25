@@ -316,6 +316,40 @@ describe('the «ستون» seat-holder view', () => {
  * otherwise, and the two mirrors keep separate sessions, so following a
  * dentcast.ir link while signed in on .org lands precisely here.
  */
+// A certificate's first-purchase discount sits OUTSIDE the badge cap, so the
+// page names it on its own card — folded into the badge notice it read
+// «٪۲۰ تخفیف نشان‌ها … سقف ٪۱۰», which contradicts itself.
+describe('a certificate discount on a first purchase', () => {
+  const READER = { id: 'u2', display_name: 'خوانندهٔ تازه' };
+  const at = (pct: number, first: number) => ({
+    ...LIVE,
+    onetime_discount: { percent: pct, cap_percent: 10, first_purchase_percent: first },
+    plans: LIVE.plans.map((p) => ({ ...p, amount_rial: p.amount_rial * (100 - pct) / 100, list_amount_rial: p.amount_rial })),
+  });
+  const okText = (root: HTMLElement) => Array.from(root.querySelectorAll('.dcp-price-notice.is-ok'))
+    .map((n) => n.textContent).join(' | ');
+
+  it('names ٪۲۰ as the certificate\'s, whole, and never beside the badge cap', async () => {
+    const text = okText(await renderPricing(at(20, 20), READER));
+    expect(text).toContain('تخفیف گواهی‌نامهٔ شما');
+    expect(text).toContain('٪۲۰');
+    expect(text).toContain('اولین خرید');
+    expect(text).not.toContain('سقف');
+  });
+
+  it('with badge credits too, each card says its own part', async () => {
+    const text = okText(await renderPricing(at(30, 20), READER));
+    expect(text).toContain('٪۲۰ تخفیف گواهی‌نامه');
+    expect(text).toContain('٪۱۰ تخفیف یک‌بارمصرفِ نشان‌هایتان');
+  });
+
+  it('an instalment for somebody who has paid before is an ordinary capped credit', async () => {
+    const text = okText(await renderPricing(at(10, 0), READER));
+    expect(text).not.toContain('گواهی‌نامه');
+    expect(text).toContain('سقف تخفیفِ نشان‌ها');
+  });
+});
+
 describe('a visitor we could not identify', () => {
   it('says the prices are the public ones, and offers the way to fix that', async () => {
     const root = await renderPricing(LIVE);

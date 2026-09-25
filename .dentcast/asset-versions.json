@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 239,
-    "hash": "d421d7c3e2279bc1"
+    "v": 241,
+    "hash": "4d58cd25f80d5d1d"
   },
   "/dc-theme.css": {
     "v": 7,
@@ -60,48 +60,48 @@
     "hash": "58a6a293e215e8b0"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 92,
-    "hash": "0878f7584fbe9993"
+    "v": 94,
+    "hash": "18f5f59f057d541f"
   },
   "/plus/js/desboard-page.js": {
     "v": 28,
     "hash": "3e741a3f3c64ab88"
   },
   "/plus/js/exam-page.js": {
-    "v": 32,
-    "hash": "0243b3964e607e43"
+    "v": 33,
+    "hash": "b286746daee56f39"
   },
   "/plus/js/highlights-page.js": {
     "v": 68,
     "hash": "03d9e5f2088a062d"
   },
   "/plus/js/pathway-page.js": {
-    "v": 70,
-    "hash": "ca544889dd7e72a5"
+    "v": 71,
+    "hash": "624308279331dcdd"
   },
   "/plus/js/pathways-page.js": {
-    "v": 70,
-    "hash": "d2779d0047a1ab39"
+    "v": 71,
+    "hash": "f7fe90eb49c27b1e"
   },
   "/plus/js/pay-result-page.js": {
     "v": 51,
     "hash": "d352a1968f0035e6"
   },
   "/plus/js/pricing-page.js": {
-    "v": 68,
-    "hash": "efe961a174682128"
+    "v": 69,
+    "hash": "34c9b225115f6c0f"
   },
   "/plus/js/profile-page.js": {
-    "v": 79,
-    "hash": "76bd5caf6a8823aa"
+    "v": 81,
+    "hash": "a66c7cebcc96e1a2"
   },
   "/plus/js/reading-compass-page.js": {
     "v": 62,
     "hash": "0ddce6fe62e918bc"
   },
   "/plus/js/report-page.js": {
-    "v": 62,
-    "hash": "63ccb39eb2bdd8db"
+    "v": 63,
+    "hash": "4ac2da667302d46b"
   },
   "/plus/js/support-page.js": {
     "v": 42,
@@ -120,20 +120,20 @@
     "hash": "fb9348a5cf72e5f3"
   },
   "/plus/plus-pages.css": {
-    "v": 55,
-    "hash": "deab709daea38b76"
+    "v": 56,
+    "hash": "a0fd15ecede0880b"
   },
   "/plus/plus.css": {
     "v": 51,
     "hash": "1631b04949eb5cc4"
   },
   "dc-nav.js:V": {
-    "v": 232,
-    "hash": "6911a747245aa0ba"
+    "v": 234,
+    "hash": "7e45f9bb50cc8440"
   },
   "modules:M": {
-    "v": 147,
-    "hash": "66d4ef92419120ff"
+    "v": 149,
+    "hash": "c06c5936b4e3dff7"
   },
   "spot.js:SPOT_V": {
     "v": 59,

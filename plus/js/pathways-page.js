@@ -1,13 +1,14 @@
 // /plus/pathways.html — the learning-pathways catalog (Phase 3). Free/anonymous
-// visitors see the same premium upsell shape the review page (cards.html) uses;
-// signed-in premium users get the real catalog (pathways.js).
-import { el } from './util.js?v=147';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=147';
-import { currentUser, meStatus } from './api.js?v=147';
-import { openLoginModal } from './login-modal.js?v=147';
-import { renderPathwaysList } from './pathways.js?v=147';
-import { registerSW } from './pwa.js?v=147';
-import { wirePageBack } from './page-back.js?v=147';
+// visitors are asked to sign in; every signed-in reader gets the real catalog
+// (pathways.js), where a free reader finds the pathway that is open to
+// everybody live and the rest locked.
+import { el } from './util.js?v=149';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=149';
+import { currentUser, meStatus } from './api.js?v=149';
+import { openLoginModal } from './login-modal.js?v=149';
+import { renderPathwaysList } from './pathways.js?v=149';
+import { registerSW } from './pwa.js?v=149';
+import { wirePageBack } from './page-back.js?v=149';
 
 function comingSoonGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [
@@ -44,7 +45,13 @@ async function main() {
     return;
   }
 
-  if (user.tier !== 'premium') { comingSoonGate(root, user); return; }
+  // A free reader gets the real catalog too: the pathway open to everybody is
+  // live and first, every other one wears its lock (pathways.js). An older API
+  // that still gates the whole route answers 402, and that draws the old gate.
+  if (user.tier !== 'premium') {
+    await renderPathwaysList(root, { onLocked: () => comingSoonGate(root, user) });
+    return;
+  }
 
   await renderPathwaysList(root);
 }
