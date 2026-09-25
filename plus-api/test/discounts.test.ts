@@ -274,15 +274,16 @@ describe('a first-purchase certificate credit', () => {
     expect(red.rows.map((x) => x.percent)).toEqual([10, 20]);
   });
 
-  it('is worth only the cap, inside it, for somebody who has paid before — «ستون» stays at ٪۳۰', async () => {
+  it('is paid in cap-sized instalments for somebody who has paid before — «ستون» stays at ٪۳۰', async () => {
     const uid = await userId(await loginAs(app, PHONE));
     await paidBefore(uid); // a seat among the first fifty
     await firstGrant(uid);
     await grant(uid, 5, 'تولد');
     const avail = await availableCredits(uid);
-    const cert = avail.find((c) => c.label_fa === 'گواهی')!;
-    expect(cert).toMatchObject({ percent: 10 });
-    expect(cert.outside_cap).toBeFalsy();
+    const parts = avail.filter((c) => c.label_fa.startsWith('گواهی'));
+    // The whole ٪۲۰, as two ٪۱۰ instalments inside the cap.
+    expect(parts.map((c) => c.percent)).toEqual([10, 10]);
+    expect(parts.every((c) => !c.outside_cap)).toBe(true);
     gatewayReplies(REQUEST_OK);
     const r = await startPayment({ userId: uid, months: 6 });
     // 20 (pillar) + 10 (the certificate, capped; the ٪۵ waits) = 30.
@@ -322,7 +323,7 @@ describe('GET /pay/plans', () => {
 
     const res = await app.inject({ method: 'GET', url: '/pay/plans', headers: { cookie } });
     const body = res.json();
-    expect(body.onetime_discount).toEqual({ percent: 5, cap_percent: CREDIT_CAP_PERCENT });
+    expect(body.onetime_discount).toEqual({ percent: 5, cap_percent: CREDIT_CAP_PERCENT, first_purchase_percent: 0 });
     const six = body.plans.find((p: { months: number }) => p.months === 6);
     expect(six.amount_rial).toBe(57_000_000);
     expect(six.list_amount_rial).toBe(SIX_MONTH_RIAL);

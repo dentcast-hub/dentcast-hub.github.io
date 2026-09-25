@@ -52,20 +52,24 @@ export const CREDIT_CAP_PERCENT = 10;
 /**
  * The one credit that may sit OUTSIDE the cap: a certificate discount larger
  * than it (a pathway's `certificate_discount_percent`, founder 1405/07/03 —
- * «ارزیابی شواهد و استدلال بالینی» mints ٪۲۰). It exists to turn a free reader
- * who finished a pathway into a subscriber, so it is a FIRST-PURCHASE
- * discount, decided at read time like every other credit here:
+ * «ارزیابی شواهد و استدلال بالینی» mints ٪۲۰). Everybody who earns it gets the
+ * WHOLE percent; what differs is only WHEN, decided at read time like every
+ * other credit here:
  *
- *   · no paid purchase yet → the whole percent, outside the cap, on top of
- *     whatever the cap holds (a referred newcomer: ٪۲۰ + ٪۱۰ = ٪۳۰);
- *   · already paid before → worth only the cap, inside it, like any credit.
+ *   · no paid purchase yet → the whole percent in ONE purchase, outside the
+ *     cap, on top of whatever the cap holds (a referred newcomer: ٪۲۰ + ٪۱۰);
+ *   · already paid before → the same percent in cap-sized INSTALMENTS inside
+ *     the cap (٪۲۰ = ٪۱۰ + ٪۱۰ over two purchases), sources `grant:<id>:p1`,
+ *     `:p2`… — so an existing subscriber is never short-changed for having
+ *     come early (founder: «انگار داریم بقیه رو تنبیه می‌کنیم»), and «ستون»
+ *     (٪۲۰, permanent, only ever held by somebody who has paid) still never
+ *     passes ٪۲۰ + ٪۱۰ on one purchase.
  *
- * That second line is what keeps «ستون» (٪۲۰, permanent, only ever held by
- * somebody who has paid) from reaching ٪۴۰–٪۵۰ on top of it. «Paid before»
- * does not count the purchase that spent this very credit, so a spent one
- * reads back at the percent it was spent at. Written as ONE row, never split
- * (splitGrantPercent would turn it into two ٪۱۰ purchases, the opposite of
- * what it promises).
+ * The two shapes must never BOTH be spendable: once the whole row has been
+ * redeemed (on a pending or paid payment) it reads back as that one spent
+ * credit forever, and its instalments are never offered. «Paid before» does not
+ * count the purchase that spent the whole credit. Written as ONE row, never
+ * split at write time, because which shape it takes is not known until then.
  */
 export const FIRST_PURCHASE_KIND = 'certificate_first';
 
@@ -124,16 +128,46 @@ export async function grantCredits(
     [userId, now.toISOString()],
   );
   const firstSources = r.rows.filter((g) => g.kind === FIRST_PURCHASE_KIND).map((g) => `grant:${g.id}`);
-  const paidBefore = firstSources.length ? await hasPaidBefore(userId, firstSources, client) : false;
-  return r.rows.map((g) => {
+  const [paidBefore, spentWhole]: [boolean, Set<string>] = firstSources.length
+    ? await Promise.all([hasPaidBefore(userId, firstSources, client), redeemedSources(userId, firstSources, client)])
+    : [false, new Set<string>()];
+  return r.rows.flatMap((g): DiscountCredit[] => {
     const credit: DiscountCredit = {
       source: `grant:${g.id}`, percent: g.percent, label_fa: g.label_fa, kind: 'grant' as const,
     };
-    if (g.kind !== FIRST_PURCHASE_KIND) return credit;
-    return paidBefore
-      ? { ...credit, percent: Math.min(g.percent, CREDIT_CAP_PERCENT) }
-      : { ...credit, outside_cap: true };
+    if (g.kind !== FIRST_PURCHASE_KIND) return [credit];
+    // Spent whole (or held whole by a pending payment): it stays that one
+    // credit, which availableCredits() then filters out as spent — never
+    // re-offered as instalments.
+    if (!paidBefore || spentWhole.has(credit.source)) return [{ ...credit, outside_cap: true }];
+    const parts = splitGrantPercent(g.percent);
+    // Named as instalments, or the profile's ledger lists «گواهی …» twice at
+    // ٪۱۰ and reads like a duplicate.
+    return parts.map((pct, i) => ({
+      ...credit,
+      source: `${credit.source}:p${i + 1}`,
+      percent: pct,
+      label_fa: `${g.label_fa} · قسط ${faDigits(i + 1)} از ${faDigits(parts.length)}`,
+    }));
   });
+}
+
+const faDigits = (n: number) => String(n).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+
+/** The part of a pick that sits OUTSIDE the cap (a first-purchase certificate). */
+export const firstPurchasePercent = (credits: DiscountCredit[]): number =>
+  credits.filter((c) => c.outside_cap).reduce((s, c) => s + c.percent, 0);
+
+/** Which of `sources` a pending or paid payment has redeemed — spentSources()'s rule, narrowed. */
+async function redeemedSources(userId: string, sources: string[], client: Queryable): Promise<Set<string>> {
+  const r = await client.query<{ source: string }>(
+    `select distinct d.source
+       from discount_redemptions d
+       join payments p on p.id = d.payment_id
+      where d.user_id = $1 and d.source = any($2) and p.status in ('pending', 'paid')`,
+    [userId, sources],
+  );
+  return new Set(r.rows.map((x) => x.source));
 }
 
 /**

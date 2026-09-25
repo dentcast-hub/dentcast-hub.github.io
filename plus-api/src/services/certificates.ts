@@ -109,6 +109,29 @@ export interface IssueResult {
    * the credit the first certificate already minted; see issueCertificate).
    */
   discount_percent: number;
+  /** Whether that discount is a first-purchase one (FIRST_PURCHASE_KIND) —
+   * what decides how discountSentence() words it. */
+  first_purchase: boolean;
+}
+
+/**
+ * The one sentence every notice about a newly minted certificate discount
+ * uses — the issue notice here and the exam's «قبول شدی» notice, which
+ * replaces it on a passed attempt. Two copies had already drifted once: the
+ * exam's printed the config default, so a pathway minting ٪۲۰ told its
+ * reader ٪۱۰. Empty when nothing was minted (a re-issue carries the old one).
+ */
+export function discountSentence(percent: number, firstPurchase: boolean): string {
+  const FA = '۰۱۲۳۴۵۶۷۸۹';
+  const fa = (n: number) => String(n).replace(/\d/g, (d) => FA[Number(d)]);
+  if (percent <= 0) return '';
+  // Says both halves, because which one applies is decided at the till: the
+  // whole percent at once on a first subscription, cap-sized instalments for a
+  // reader who already has one.
+  return firstPurchase
+    ? ` · ${fa(percent)}٪ تخفیف ثبت شد: اگر اولین خرید اشتراکت باشد یک‌جا،`
+      + ` و اگر قبلاً اشتراک خریده‌ای در خریدهای بعدی، هر بار ${fa(CREDIT_CAP_PERCENT)}٪.`
+    : ` · ${fa(percent)}٪ تخفیف برای خرید بعدی‌ات ثبت شد.`;
 }
 
 /**
@@ -186,6 +209,7 @@ export async function issueCertificate(
     certificate: result.certificate,
     created: result.created,
     discount_percent: result.minted,
+    first_purchase: firstPurchase,
   };
 }
 
@@ -226,18 +250,9 @@ async function insertWithFreshCode(
 async function notifyIssued(
   userId: string, cert: Certificate, pathwayTitle: string, percent: number, firstPurchase = false,
 ): Promise<void> {
-  const FA = '۰۱۲۳۴۵۶۷۸۹';
-  const fa = (n: number) => String(n).replace(/\d/g, (d) => FA[Number(d)]);
   const body = `گواهی تکمیل مسیر «${pathwayTitle}» به نام ${cert.holder_name} صادر شد. `
     + `کد: ${cert.verify_code}`
-    + (percent <= 0 ? ''
-      : firstPurchase
-        // Says both halves, because which one applies is decided at the till:
-        // the whole percent on a first subscription, the cap for a reader who
-        // already has one.
-        ? ` · ${fa(percent)}٪ تخفیف برای اولین خرید اشتراکت ثبت شد`
-          + ` (اگر قبلاً اشتراک خریده‌ای، ${fa(Math.min(percent, CREDIT_CAP_PERCENT))}٪ روی خرید بعدی).`
-        : ` · ${fa(percent)}٪ تخفیف برای خرید بعدی‌ات ثبت شد.`);
+    + discountSentence(percent, firstPurchase);
   // 'system' — a founder decision about one reader, exempt from the daily cap,
   // exactly as POST /admin/notices/user is. A certificate must not be the
   // notification a streak nudge crowded out.

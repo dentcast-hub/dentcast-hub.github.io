@@ -9,7 +9,7 @@ import {
 } from '../services/achievement-sync.js';
 import {
   badgeCredits, grantCredits, referralCredits, spentSources, creditPercent, pickCredits,
-  CREDIT_CAP_PERCENT, type DiscountCredit,
+  CREDIT_CAP_PERCENT, firstPurchasePercent, type DiscountCredit,
 } from '../services/discount-credits.js';
 import { PILLAR_DISCOUNT_PERCENT } from '../services/pillar.js';
 
@@ -195,6 +195,10 @@ export async function achievementRoutes(app: FastifyInstance): Promise<void> {
       // always everything this account has ever held, with no third state.
       spent_percent: creditPercent(spentCredits),
       cap_percent: CREDIT_CAP_PERCENT,
+      // Of `ready_percent`, the part the cap does not bound (a certificate's
+      // first-purchase discount), so the box never tells a newcomer that the
+      // half above ٪۱۰ «waits for a later purchase» when it is all taken now.
+      first_purchase_percent: firstPurchasePercent(readyCredits),
       pillar_percent: pillarPct,
       next_purchase_percent: pillarPct + creditPercent(pickCredits(readyCredits)),
       // The itemized position: every credit this account holds, named. Before

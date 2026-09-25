@@ -5,7 +5,7 @@ import { getContentInfo } from '../content-index.js';
 import { randomUUID } from 'node:crypto';
 import { getConsumedContentIds } from './consumption.js';
 import { mintReference } from './reference.js';
-import { issueCertificate, type Certificate } from './certificates.js';
+import { issueCertificate, discountSentence, type Certificate } from './certificates.js';
 import { sendCapped } from './notify-policy.js';
 import {
   runPathwayAlerts, notifyCertificateWish, pathwayStandings, type CertificateIntent,
@@ -1420,16 +1420,18 @@ async function settle(
     );
     if (!row) return null;
     let cert: Certificate | null = null;
+    let discount = '';
     if (t.passed) {
       const issued = await issueCertificate(row.user_id, row.pathway_id, {
         holderName: row.holder_name ?? '', attemptId: row.id, client, notify: false,
       });
       cert = issued.certificate;
+      discount = discountSentence(issued.discount_percent, issued.first_purchase);
     }
-    return { row, cert };
+    return { row, cert, discount };
   });
   if (!result) return (await getAttempt(attemptId))!;
-  await notifyReaderSettled(result.row, result.cert);
+  await notifyReaderSettled(result.row, result.cert, result.discount);
   return result.row;
 }
 
@@ -1536,16 +1538,18 @@ export async function ruleAttempt(attemptId: string, input: RuleInput): Promise<
       );
     }
     let cert: Certificate | null = null;
+    let discount = '';
     if (passed) {
       const issued = await issueCertificate(row.user_id, row.pathway_id, {
         holderName: row.holder_name ?? '', attemptId: row.id, client, notify: false,
       });
       cert = issued.certificate;
+      discount = discountSentence(issued.discount_percent, issued.first_purchase);
     }
-    return { row, cert };
+    return { row, cert, discount };
   });
   if (!result) return { ok: false, error: 'not_queued' };
-  await notifyReaderSettled(result.row, result.cert);
+  await notifyReaderSettled(result.row, result.cert, result.discount);
   return { ok: true, attempt: result.row };
 }
 
@@ -1600,13 +1604,16 @@ export function examUrl(pathwayId: string): string {
   return `/plus/exam.html?id=${encodeURIComponent(pathwayId)}`;
 }
 
-async function notifyReaderSettled(a: ExamAttempt, cert: Certificate | null): Promise<void> {
+async function notifyReaderSettled(a: ExamAttempt, cert: Certificate | null, discount = ''): Promise<void> {
   const title = getPathwayById(a.pathway_id)?.title_fa ?? a.pathway_id;
   if (a.status === 'passed' && cert) {
     await sendCapped(a.user_id, {
       title: 'در آزمون مسیر قبول شدی 🎓',
+      // What was actually minted, worded by the one sentence certificates.ts
+      // owns — never the config default, which is wrong for a pathway with
+      // its own percent (٪۲۰ on the open pathway) and for a re-issue (nothing).
       body: `آزمون «${title}» را گذراندی و گواهی‌نامه‌ات به نام ${a.holder_name} صادر شد. کد: ${cert.verify_code}`
-        + ` · ${fa(config.certificate.discountPercent)}٪ تخفیف برای خرید بعدی‌ات ثبت شد.`,
+        + discount,
       url: `/plus/certificate.html?c=${cert.verify_code}`,
       tag: 'exam',
     }, 'exam_result');

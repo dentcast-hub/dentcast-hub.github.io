@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 240,
-    "hash": "cfe2bdafbf1514a2"
+    "v": 241,
+    "hash": "4d58cd25f80d5d1d"
   },
   "/dc-theme.css": {
     "v": 7,
@@ -60,8 +60,8 @@
     "hash": "58a6a293e215e8b0"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 93,
-    "hash": "a9eecd649390e7b0"
+    "v": 94,
+    "hash": "18f5f59f057d541f"
   },
   "/plus/js/desboard-page.js": {
     "v": 28,
@@ -88,20 +88,20 @@
     "hash": "d352a1968f0035e6"
   },
   "/plus/js/pricing-page.js": {
-    "v": 68,
-    "hash": "efe961a174682128"
+    "v": 69,
+    "hash": "34c9b225115f6c0f"
   },
   "/plus/js/profile-page.js": {
-    "v": 80,
-    "hash": "59384abf188284b1"
+    "v": 81,
+    "hash": "a66c7cebcc96e1a2"
   },
   "/plus/js/reading-compass-page.js": {
     "v": 62,
     "hash": "0ddce6fe62e918bc"
   },
   "/plus/js/report-page.js": {
-    "v": 62,
-    "hash": "63ccb39eb2bdd8db"
+    "v": 63,
+    "hash": "4ac2da667302d46b"
   },
   "/plus/js/support-page.js": {
     "v": 42,
@@ -128,12 +128,12 @@
     "hash": "1631b04949eb5cc4"
   },
   "dc-nav.js:V": {
-    "v": 233,
-    "hash": "83b1df83574315a3"
+    "v": 234,
+    "hash": "7e45f9bb50cc8440"
   },
   "modules:M": {
-    "v": 148,
-    "hash": "b1d83c80e6e7685a"
+    "v": 149,
+    "hash": "c06c5936b4e3dff7"
   },
   "spot.js:SPOT_V": {
     "v": 59,
