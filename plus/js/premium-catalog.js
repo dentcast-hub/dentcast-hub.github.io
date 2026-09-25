@@ -26,7 +26,7 @@
 // GROUPS ARE INFORMATION, not decoration: they answer «what kind of thing is
 // this» for a reader who has never used any of it. Order inside a group is the
 // order a new subscriber meets them, the everyday ones first.
-import { PREMIUM_FEATURES } from './config.js?v=149';
+import { PREMIUM_FEATURES } from './config.js?v=152';
 
 const F = PREMIUM_FEATURES;
 
@@ -106,7 +106,7 @@ export const PREMIUM_GROUPS = [
     sub: 'مسیر یادگیری، پیشرفت، گواهی',
     entries: [
       entry('pathways', IC.pathway, '/plus/pathways.html', 'از پیش‌نیاز تا پیشرفته، به ترتیب درست', { feature: F[1] }),
-      entry('certificate', IC.certificate, '/plus/profile.html#certificates', 'بعد از تمام کردن مسیر و آزمون، گواهی با کد قابل استعلام', { feature: F[8] }),
+      entry('certificate', IC.certificate, '/plus/profile.html#certificates', 'ترتیب مسیر و قدم‌های مانده تا آزمون و گواهی با کد قابل استعلام', { feature: F[8] }),
       entry('compass', IC.compass, '/plus/reading-compass.html', 'چقدر از هر پیلار را خوانده‌اید و کجا جا مانده', { feature: F[3] }),
       entry('report', IC.report, '/plus/report.html', 'گزارش ماهانه‌ی مطالعه و پیشرفت شما', { feature: F[6] }),
       entry('pillar', IC.pillar, '/pillar/', 'سری‌های موضوعی با زیرموضوع و ترتیب خواندن', { title: 'چیدمان موضوعی سری‌ها' }),

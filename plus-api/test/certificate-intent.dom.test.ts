@@ -170,8 +170,10 @@ describe('the terms, reachable from every moment', () => {
     const s = sheet()!;
     expect(s).toBeTruthy();
     expect(s.textContent).toContain('پست و کور');
-    expect(s.textContent).toContain('ثبت‌نام');
-    expect(s.textContent).toContain('پریمیوم');
+    // Since 1405/07/03 finishing with your own account is the condition, and
+    // premium is named as what it buys (the road), never as a condition.
+    expect(s.textContent).toContain('با حساب کاربری');
+    expect(s.textContent).toContain('اشتراک پریمیوم برای آزمون لازم نیست');
     // the line that used to appear only UNDER a certificate already issued
     expect(s.textContent).toContain('امتیاز بازآموزی');
   });

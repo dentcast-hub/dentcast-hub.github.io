@@ -38,7 +38,7 @@ export const PREMIUM_FEATURE_TITLES = [
   'دفترچه‌ی هایلایت‌ها',
   'گزارش ماهانه',
   'هایلایت‌های صوتی',
-  'گواهی‌نامهٔ تکمیل مسیر',
+  'مسیرِ منظم تا گواهی‌نامه',
 ];
 
 /** "الف، ب و ج" — a Persian list, with the final item joined by "و". */

@@ -1,13 +1,13 @@
 // /plus/assistant.html — «دستیار هوشمند» (premium). Free/anonymous visitors see
 // the same premium-upsell shape pathways.html/reading-compass.html use;
 // signed-in premium users get the real wizard (case-assistant.js).
-import { el } from './util.js?v=149';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=149';
-import { currentUser, meStatus } from './api.js?v=149';
-import { openLoginModal } from './login-modal.js?v=149';
-import { renderCaseAssistant } from './case-assistant.js?v=149';
-import { registerSW } from './pwa.js?v=149';
-import { wirePageBack } from './page-back.js?v=149';
+import { el } from './util.js?v=152';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=152';
+import { currentUser, meStatus } from './api.js?v=152';
+import { openLoginModal } from './login-modal.js?v=152';
+import { renderCaseAssistant } from './case-assistant.js?v=152';
+import { registerSW } from './pwa.js?v=152';
+import { wirePageBack } from './page-back.js?v=152';
 
 function comingSoonGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [

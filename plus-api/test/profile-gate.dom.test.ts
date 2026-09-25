@@ -95,8 +95,10 @@ describe('the profile gate names its destination', () => {
     await settle();
     const sheet = document.querySelector('.dcp-sheet')!;
     expect(sheet).toBeTruthy();
-    expect(sheet.textContent).toContain('ثبت‌نام');
-    expect(sheet.textContent).toContain('پریمیوم'); // said as a CONDITION, inside the sheet
+    // Since 1405/07/03: finishing with your own account is the condition;
+    // premium is said as what it buys, never as a condition of sitting.
+    expect(sheet.textContent).toContain('با حساب کاربری');
+    expect(sheet.textContent).toContain('اشتراک پریمیوم برای آزمون لازم نیست');
   });
 });
 

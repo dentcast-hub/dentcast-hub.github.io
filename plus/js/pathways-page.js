@@ -2,19 +2,21 @@
 // visitors are asked to sign in; every signed-in reader gets the real catalog
 // (pathways.js), where a free reader finds the pathway that is open to
 // everybody live and the rest locked.
-import { el } from './util.js?v=149';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=149';
-import { currentUser, meStatus } from './api.js?v=149';
-import { openLoginModal } from './login-modal.js?v=149';
-import { renderPathwaysList } from './pathways.js?v=149';
-import { registerSW } from './pwa.js?v=149';
-import { wirePageBack } from './page-back.js?v=149';
+import { el } from './util.js?v=152';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=152';
+import { currentUser, meStatus } from './api.js?v=152';
+import { openLoginModal } from './login-modal.js?v=152';
+import { renderPathwaysList } from './pathways.js?v=152';
+import { registerSW } from './pwa.js?v=152';
+import { wirePageBack } from './page-back.js?v=152';
 
 function comingSoonGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [
     lapsedNote(me) ? el('p', { class: 'dcp-gate-lapsed' }, lapsedNote(me)) : null,
     el('p', {}, 'مسیرهای یادگیری، ویژه‌ی دنت‌کست پریمیوم است.'),
     el('p', { class: 'dcp-muted' }, 'هایلایت‌ها و مطالعه‌ی شما همین حالا هم ثبت می‌شود؛ با پریمیوم، پیشرفتتان در یک مسیرِ منظم دیده می‌شود.'),
+    // Founder, 1405/07/03: the exam is not behind this gate — only the road to it.
+    el('p', { class: 'dcp-muted' }, 'اگر همهٔ مطالب یک مسیر را با حساب کاربری‌ات خوانده باشی، آزمون پایانی و گواهی‌نامه‌اش بدون اشتراک هم برایت باز است.'),
     premiumCta('gate-pathways'),
     el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/' }, 'رفتن به پیشخوان'),
   ].filter(Boolean)));

@@ -24,15 +24,15 @@
 // answers were right, how many key points each free answer covered — and
 // never the key itself: the pool is small and the second attempt may draw
 // the same question.
-import { el, faNum, debounce } from './util.js?v=149';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=149';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=149';
-import { openLoginModal } from './login-modal.js?v=149';
-import { registerSW } from './pwa.js?v=149';
-import { wirePageBack } from './page-back.js?v=149';
-import { intentRow } from './pathways.js?v=149';
-import { certificateTerms } from './certificate-terms.js?v=149';
-import { openSheet } from './sheet.js?v=149';
+import { el, faNum, debounce } from './util.js?v=152';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=152';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=152';
+import { openLoginModal } from './login-modal.js?v=152';
+import { registerSW } from './pwa.js?v=152';
+import { wirePageBack } from './page-back.js?v=152';
+import { intentRow } from './pathways.js?v=152';
+import { certificateTerms } from './certificate-terms.js?v=152';
+import { openSheet } from './sheet.js?v=152';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' });
 const FA_DATETIME = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium', timeStyle: 'short' });
@@ -85,7 +85,14 @@ export function contract(rules, s) {
   items.push(faNum(rules.max_attempts) + ' تلاش'
     + (rules.retry_days ? ' با فاصلهٔ دست‌کم ' + faNum(rules.retry_days) + ' روز' : '')
     + (s.attempts_used ? ' — ' + faNum(s.attempts_used) + ' تلاش استفاده شده' : '') + '.');
-  items.push('با قبولی، گواهی‌نامهٔ تکمیل مسیر با کد یکتا و صفحهٔ تأیید عمومی به نام خودت صادر می‌شود، به‌علاوهٔ ٪۱۰ تخفیف خرید بعدی.');
+  // The figure THIS pathway mints (s.discount), never a hard-coded ٪۱۰: the
+  // pathway open to everybody mints ٪۲۰, whole on a first purchase.
+  const d = s.discount || { percent: 10, first_purchase: false };
+  items.push('با قبولی، گواهی‌نامهٔ تکمیل مسیر با کد یکتا و صفحهٔ تأیید عمومی به نام خودت صادر می‌شود، به‌علاوهٔ ٪'
+    + faNum(d.percent) + ' تخفیف'
+    + (d.first_purchase
+      ? ' — یک‌جا اگر اولین خرید اشتراکت باشد، وگرنه در خریدهای بعدی هر بار ٪' + faNum(10) + '.'
+      : ' خرید بعدی.'));
   return el('ul', { class: 'dcp-exam-contract', 'data-exam-contract': '' }, items.map((t) => el('li', {}, t)));
 }
 
@@ -282,7 +289,13 @@ function simpleCard(state, title, text, actions = []) {
   ].filter(Boolean));
 }
 
-const backBtn = (id) => el('a', { class: 'dcp-btn dcp-btn-ghost', href: pathwayHref(id) }, 'رفتن به مسیر');
+// Whether this reader may open the pathway page (the API says, per reader).
+// A reader who reached the exam by FINISHING a pathway they cannot open is
+// sent to their certificate wall instead — a link into a 402 is a dead end.
+let pathwayOpen = true;
+const backBtn = (id) => (pathwayOpen
+  ? el('a', { class: 'dcp-btn dcp-btn-ghost', href: pathwayHref(id) }, 'رفتن به مسیر')
+  : el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/profile.html#certificates' }, 'گواهی‌نامه‌ها'));
 
 /**
  * Not enrolled: the one door the reader can open themselves, right here.
@@ -343,8 +356,9 @@ function intentBlock(s) {
 
 /** Draw one state. Exported for the DOM test. */
 export function renderState(root, id, s) {
+  pathwayOpen = s.pathway_open !== false;
   const back = document.getElementById('examBack');
-  if (back) back.href = pathwayHref(id);
+  if (back) back.href = pathwayOpen ? pathwayHref(id) : '/plus/profile.html#certificates';
   const parts = [head(s)];
 
   switch (s.state) {
@@ -449,9 +463,14 @@ export async function renderExam(root, id, opts = {}) {
 function gate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [
     lapsedNote(me) ? el('p', { class: 'dcp-gate-lapsed' }, lapsedNote(me)) : null,
-    el('p', {}, 'آزمون مسیر و گواهی‌نامه، ویژه‌ی دنت‌کست پریمیوم است.'),
+    // Founder, 1405/07/03: the exam opens to whoever finished the pathway
+    // with their own reading, whatever their plan — so this gate says the
+    // two doors, and names neither the steps nor how many remain (that list
+    // is the arrangement a subscription buys).
+    el('p', {}, 'این مسیر برای مشترک‌های پریمیوم است.'),
+    el('p', { class: 'dcp-muted' }, 'آزمون پایانی و گواهی‌نامه‌اش برای کسی هم باز است که همهٔ مطالب مسیر را با حساب کاربری خودش خوانده باشد؛ هنوز به آن‌جا نرسیده‌ای. با اشتراک، ترتیب مسیر و قدم‌های مانده را می‌بینی.'),
     premiumCta('gate-exam'),
-    el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/' }, 'رفتن به پیشخوان'),
+    el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/profile.html#certificates' }, 'گواهی‌نامه‌ها'),
   ].filter(Boolean)));
 }
 

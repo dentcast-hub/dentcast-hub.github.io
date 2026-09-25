@@ -3,16 +3,20 @@ import { requireAuth } from '../middleware/auth.js';
 import { getPathwayById, mayOpenPathway } from '../pathways.js';
 import { config } from '../config.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
-import { examState, startAttempt, submitAttempt, setCertificateIntent } from '../services/pathway-exams.js';
+import {
+  examState, startAttempt, submitAttempt, setCertificateIntent, readerAccess,
+} from '../services/pathway-exams.js';
 import { holderNameFrom, holderNameMessageFa } from '../services/holder-name.js';
 
 /**
- * آزمون مسیر — the reader's side. Premium PER PATHWAY, exactly as the
- * pathway pages are: earning a certificate is what a subscription buys, except
- * on a pathway the file opens to everybody (`premium: false`, isOpenPathway),
- * whose exam and certificate are free with it — an exam on a pathway you may
- * open is part of that pathway, and one on a pathway you cannot open is
- * nothing. An unknown id falls through to the service's own 404.
+ * آزمون مسیر — the reader's side. Whoever may OPEN the pathway may reach its
+ * exam (premium, or a pathway the file opens to everybody). Whoever may not
+ * reaches it anyway once they have FINISHED it with their own reading, or were
+ * let in, or are already mid-attempt (services/pathway-exams.ts readerAccess,
+ * founder 1405/07/03): the pathway's arrangement is what a subscription buys,
+ * the certificate attests to the reading and the exam. Everyone else gets the
+ * same 402 the pathway page gives, with `reason: 'incomplete'` so the page can
+ * say which door this is. An unknown id falls through to the service's 404.
  *
  *   GET  /exams/:pathwayId          where I stand (services/pathway-exams.ts examState)
  *   POST /exams/:pathwayId/start    {holder_first_name, holder_last_name} → draw and open an attempt
@@ -24,14 +28,24 @@ import { holderNameFrom, holderNameMessageFa } from '../services/holder-name.js'
  */
 export async function examRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAuth);
-  // The same 402 requirePremium answers, decided per pathway.
   app.addHook('preHandler', async (request, reply) => {
     const { pathwayId } = (request.params ?? {}) as { pathwayId?: string };
     const pathway = pathwayId ? getPathwayById(pathwayId) : null;
-    if (pathway && !mayOpenPathway(request.user?.tier, pathway)) {
-      return reply.code(402).send({ error: 'premium_required', message: 'این بخش نیازمند اشتراک پریمیوم است.' });
+    if (!pathway || pathway.kind === 'bundle' || mayOpenPathway(request.user?.tier, pathway)) return;
+    const access = await readerAccess(request.user!.id, pathway);
+    if (!access.allowed) {
+      return reply.code(402).send({
+        error: 'premium_required',
+        reason: 'incomplete',
+        message: 'آزمون این مسیر برای مشترک‌ها باز است، یا برای کسی که همهٔ مطالب مسیر را با حساب کاربری خودش خوانده باشد.',
+      });
     }
   });
+
+  // Whether this reader may open the pathway page itself — the exam page
+  // links back to it only then (a link into a 402 is a dead end).
+  const openFor = (request: import('fastify').FastifyRequest, id: string) =>
+    mayOpenPathway(request.user?.tier, getPathwayById(id));
 
   const unknown = (reply: import('fastify').FastifyReply) =>
     reply.code(404).send({ error: 'unknown_pathway', message: 'این مسیر آزمون ندارد.' });
@@ -43,7 +57,7 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
   app.get('/exams/:pathwayId', async (request, reply) => {
     const { pathwayId } = request.params as { pathwayId: string };
     try {
-      return reply.send({ ok: true, ...(await examState(request.user!.id, pathwayId)) });
+      return reply.send({ ok: true, ...(await examState(request.user!.id, pathwayId)), pathway_open: openFor(request, pathwayId) });
     } catch (err) {
       if ((err as Error).message === 'unknown_pathway') return unknown(reply);
       if ((err as Error).message === 'pathway_pending') return pending(reply);
@@ -80,8 +94,8 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
     }
     try {
       const r = await startAttempt(request.user!.id, pathwayId, holderName);
-      if (!r.ok) return reply.code(409).send({ ok: false, error: r.error, ...r.state });
-      return reply.send({ ok: true, ...r.state });
+      if (!r.ok) return reply.code(409).send({ ok: false, error: r.error, ...r.state, pathway_open: openFor(request, pathwayId) });
+      return reply.send({ ok: true, ...r.state, pathway_open: openFor(request, pathwayId) });
     } catch (err) {
       if ((err as Error).message === 'unknown_pathway') return unknown(reply);
       if ((err as Error).message === 'pathway_pending') return pending(reply);
@@ -100,7 +114,7 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
     const { pathwayId } = request.params as { pathwayId: string };
     const { intent } = request.body as { intent: 'wanted' | 'declined' };
     try {
-      return reply.send({ ok: true, ...(await setCertificateIntent(request.user!.id, pathwayId, intent)) });
+      return reply.send({ ok: true, ...(await setCertificateIntent(request.user!.id, pathwayId, intent)), pathway_open: openFor(request, pathwayId) });
     } catch (err) {
       if ((err as Error).message === 'unknown_pathway') return unknown(reply);
       if ((err as Error).message === 'pathway_pending') return pending(reply);
@@ -134,9 +148,9 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
               + `${config.exam.minAnswerChars} نویسه.`,
           });
         }
-        return reply.code(409).send({ ok: false, error: r.error, ...(r.state ?? {}) });
+        return reply.code(409).send({ ok: false, error: r.error, ...(r.state ?? {}), pathway_open: openFor(request, pathwayId) });
       }
-      return reply.send({ ok: true, ...r.state });
+      return reply.send({ ok: true, ...r.state, pathway_open: openFor(request, pathwayId) });
     } catch (err) {
       if ((err as Error).message === 'unknown_pathway') return unknown(reply);
       if ((err as Error).message === 'pathway_pending') return pending(reply);

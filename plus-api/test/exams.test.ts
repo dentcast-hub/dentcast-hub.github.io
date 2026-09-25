@@ -17,7 +17,7 @@ import {
 } from '../src/pathways.js';
 import {
   normalizeQuestions, upsertForm, getForm, deleteForm, formRoster, assignExam,
-  publishForm, unpublishForm, announceOpenExams,
+  publishForm, unpublishForm, announceOpenExams, runReaderPathwayNotices,
   addQuestion, appendQuestions, removeQuestion, nextQuestionId,
   examState, startAttempt, submitAttempt, ruleAttempt, queueRows, attemptRoster, getAttempt,
   drawQuestions, tally, setCertificateIntent, type ExamQuestion,
@@ -419,21 +419,24 @@ describe('who may sit it', () => {
     expect(up.rows[0].n).toBe(1);
   });
 
-  it('finishing the pathway is the other door — but only for a reader who pressed «شروع این مسیر»', async () => {
+  it('finishing the pathway is the other door — on its own since 1405/07/03, no «شروع» needed', async () => {
     const uid = await userId();
     await openForm(PATHWAY, { questions: [MCQ(1)] });
     await finish(uid);
-    const before = await examState(uid, PATHWAY);
-    expect(before.state).toBe('locked');
-    expect(before.is_complete).toBe(true);
-    expect(before.enrolled).toBe(false);
-
-    await enroll(uid);
     const s = await examState(uid, PATHWAY);
     expect(s.state).toBe('ready');
-    expect(s.enrolled).toBe(true);
+    expect(s.is_complete).toBe(true);
+    expect(s.enrolled).toBe(false);
     expect(s.assigned).toBe(false);
     expect((await startAttempt(uid, PATHWAY, 'مهسا رضایی')).ok).toBe(true);
+  });
+
+  it('not finished and not let in: locked, whether or not «شروع» was pressed', async () => {
+    const uid = await userId();
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    expect((await examState(uid, PATHWAY)).state).toBe('locked');
+    await enroll(uid);
+    expect((await examState(uid, PATHWAY)).state).toBe('locked');
   });
 
   it('a «بله» from a reader nowhere near the end still reaches the founder, and says whether the exam is OPEN', async () => {
@@ -547,7 +550,7 @@ describe('who may sit it', () => {
     expect(await notices(uid)).toHaveLength(1);
   });
 
-  it('a lapsed subscriber is told too, and the message says what it costs', async () => {
+  it('a lapsed subscriber is told too — and, having finished, may simply sit it', async () => {
     const uid = await userId();
     await finish(uid); await enroll(uid);
     await setCertificateIntent(uid, PATHWAY, 'wanted');
@@ -556,8 +559,9 @@ describe('who may sit it', () => {
     expect((await announceOpenExams()).told).toHaveLength(1);
     const n = await notices(uid);
     expect(n).toHaveLength(1);
-    expect(n[0].body).toContain('اشتراک پریمیوم');
-    expect(n[0].body).not.toContain('هر وقت خواستی شروع کن');
+    expect(n[0].body).toContain('هر وقت خواستی شروع کن');
+    expect(n[0].body).not.toContain('اشتراک');
+    expect((await get(`/exams/${PATHWAY}`)).json()).toMatchObject({ ok: true, state: 'ready' });
   });
 
   it('«گواهی می‌خواهی؟» — the answer enrols, is reversible, and a «بله» from somebody near the end reaches the founder at once', async () => {
@@ -596,10 +600,11 @@ describe('who may sit it', () => {
   it('the wall reads the same rule', async () => {
     const uid = await userId();
     await openForm(PATHWAY, { questions: [MCQ(1)] });
+    const wall = async () => (await get('/certificates')).json().pathways.find((p: { id: string }) => p.id === PATHWAY).exam.state;
+    expect(await wall()).toBe('locked');
     await finish(uid);
-    expect((await get('/certificates')).json().pathways.find((p: { id: string }) => p.id === PATHWAY).exam.state).toBe('locked');
-    await enroll(uid);
-    expect((await get('/certificates')).json().pathways.find((p: { id: string }) => p.id === PATHWAY).exam.state).toBe('ready');
+    expect(await wall()).toBe('ready');
+    expect((await get(`/exams/${PATHWAY}`)).json().state).toBe('ready');
   });
 
   it('tells a reader let in early when the exam OPENS — and only then, once', async () => {
@@ -690,6 +695,214 @@ describe('who may sit it', () => {
 });
 
 /* ------------------------------------------------------------ the draw -- */
+
+/*
+ * A reader WITHOUT a subscription on a premium pathway (founder, 1405/07/03):
+ * the pathway page stays theirs to open only with a subscription, but the exam
+ * opens once they have FINISHED it with their own reading — «we guarantee
+ * that whoever read it all can earn it, not that everybody will».
+ */
+describe('a reader without a subscription', () => {
+  const free = () => pool.query(`update profiles set tier = 'free' where phone = $1`, [phone]);
+  const sit = async () => {
+    const st = await post(`/exams/${PATHWAY}/start`, { holder_first_name: 'مهسا', holder_last_name: 'رضایی' });
+    expect(st.statusCode).toBe(200);
+    return st.json().open.questions.map((q: { id: string }) => q.id) as string[];
+  };
+
+  it('has not finished: every exam door is the premium 402, saying which door it is', async () => {
+    await free();
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    const uid = await userId();
+    for (const cid of STEPS.slice(0, -1)) {
+      await pool.query(`insert into user_activity (user_id, action, content_id) values ($1, 'article_completed', $2)`, [uid, cid]);
+    }
+    const g = await get(`/exams/${PATHWAY}`);
+    expect(g.statusCode).toBe(402);
+    expect(g.json()).toMatchObject({ error: 'premium_required', reason: 'incomplete' });
+    expect((await post(`/exams/${PATHWAY}/intent`, { intent: 'wanted' })).statusCode).toBe(402);
+    expect((await post(`/exams/${PATHWAY}/start`, { holder_first_name: 'مهسا', holder_last_name: 'رضایی' })).statusCode).toBe(402);
+    // Nothing was written on their behalf.
+    expect((await pool.query('select 1 from user_pathways where user_id = $1', [uid])).rowCount).toBe(0);
+  });
+
+  it('has finished: enrolled by finishing, sits, passes, holds a certificate and ٪۱۰ — the pathway page stays locked', async () => {
+    await free();
+    await openForm(PATHWAY, { questions: [MCQ(1), MCQ(2)] });
+    const uid = await userId();
+    await finish(uid);
+    expect((await get(`/pathways/${PATHWAY}`)).statusCode).toBe(402);
+
+    const s = (await get(`/exams/${PATHWAY}`)).json();
+    // Finishing counts as the enrolment for a reader with no enrol button —
+    // decided in the state, not written by loading a page.
+    expect(s).toMatchObject({ ok: true, state: 'ready', enrolled: false, is_complete: true });
+    const ids = await sit();
+    const done = await post(`/exams/${PATHWAY}/submit`, { answers: Object.fromEntries(ids.map((id) => [id, 1])) });
+    expect(done.json()).toMatchObject({ state: 'passed' });
+    expect(done.json().certificate.verify_code).toMatch(/^DC-/);
+    const credits = await availableCredits(uid);
+    expect(credits.find((c) => c.kind === 'grant')?.percent).toBe(10);
+    expect((await get(`/pathways/${PATHWAY}`)).statusCode).toBe(402);
+  });
+
+  it('a pathway that GROWS mid-attempt never strands the attempt, and a pass stays readable', async () => {
+    await free();
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    await finish(await userId());
+    const ids = await sit();
+    const raw = JSON.parse(JSON.stringify(getPathways())) as { id: string; steps: { content_id: string }[] }[];
+    const extra = raw.find((x) => x.id !== PATHWAY && x.steps.length)!.steps
+      .find((st) => !STEPS.includes(st.content_id))!;
+    raw.find((x) => x.id === PATHWAY)!.steps.push(extra);
+    expect(applyRemotePathways(raw)).toBe(true);
+    try {
+      expect((await get(`/exams/${PATHWAY}`)).json().state).toBe('open');
+      const done = await post(`/exams/${PATHWAY}/submit`, { answers: { [ids[0]]: 1 } });
+      expect(done.json().state).toBe('passed');
+      expect((await get(`/exams/${PATHWAY}`)).json().state).toBe('passed');
+    } finally {
+      resetRemotePathways();
+    }
+  });
+
+  it('let in early by the founder: through the door without finishing', async () => {
+    await free();
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    await assignExam(await userId(), PATHWAY);
+    expect((await get(`/exams/${PATHWAY}`)).json()).toMatchObject({ ok: true, state: 'ready', assigned: true });
+  });
+
+  it('a subscriber is untouched, and the pathway open to everybody still needs no finishing', async () => {
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    expect((await get(`/exams/${PATHWAY}`)).json()).toMatchObject({ ok: true, state: 'locked' });
+    await free();
+    const raw = JSON.parse(JSON.stringify(getPathways())) as { id: string; premium: boolean }[];
+    raw.find((x) => x.id === PATHWAY)!.premium = false;
+    expect(applyRemotePathways(raw)).toBe(true);
+    try {
+      expect((await get(`/exams/${PATHWAY}`)).json()).toMatchObject({ ok: true, state: 'locked', enrolled: false });
+    } finally {
+      resetRemotePathways();
+    }
+  });
+});
+
+/*
+ * The reader's own milestones (founder, 1405/07/03): a reader who cannot open
+ * a pathway page is told, once each, that they are a few steps from its end
+ * and that they finished it — never WHICH steps are left. And everybody who
+ * finished a pathway whose exam opens is told so, on any plan, asked or not.
+ */
+describe('telling a reader how close they are', () => {
+  const free = () => pool.query(`update profiles set tier = 'free' where phone = $1`, [phone]);
+  const read = async (uid: string, ids: string[]) => {
+    for (const cid of ids) {
+      await pool.query(`insert into user_activity (user_id, action, content_id) values ($1, 'article_completed', $2)`, [uid, cid]);
+    }
+  };
+  const progress = async (uid: string) => (await notices(uid)).filter((n) => n.kind === 'pathway_progress');
+
+  it('near the end: how many, once — and never again when the pathway grows under them', async () => {
+    await free();
+    const uid = await userId();
+    await read(uid, STEPS.slice(0, -2));
+    const run = await runReaderPathwayNotices();
+    expect(run.near).toEqual([{ user_id: uid, pathway_id: PATHWAY, remaining: 2 }]);
+    const n = await progress(uid);
+    expect(n).toHaveLength(1);
+    expect(n[0].body).toContain('فقط ۲ قدم');
+    expect(n[0].body).toContain('مشترک‌ها می‌بینند کدام‌ها');
+    // No step is named: the list of what is left is the subscription's.
+    for (const cid of STEPS) expect(n[0].body).not.toContain(cid);
+    expect((await runReaderPathwayNotices()).near).toHaveLength(0);
+    expect(await progress(uid)).toHaveLength(1);
+  });
+
+  it('one step left says «فقط یک قدم»', async () => {
+    await free();
+    const uid = await userId();
+    await read(uid, STEPS.slice(0, -1));
+    await runReaderPathwayNotices();
+    expect((await progress(uid))[0].body).toContain('فقط یک قدم');
+  });
+
+  it('finished before the exam exists: told they finished; then told the day it opens — one message each', async () => {
+    await free();
+    const uid = await userId();
+    await finish(uid);
+    const r1 = await runReaderPathwayNotices();
+    expect(r1.done).toEqual([{ user_id: uid, pathway_id: PATHWAY }]);
+    expect((await progress(uid))[0].body).toContain('هنوز آماده نیست');
+    // The founder opens the exam: the finisher is its candidate.
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    const told = await announceOpenExams({ pathwayId: PATHWAY });
+    expect(told.told).toEqual([{ user_id: uid, pathway_id: PATHWAY }]);
+    const all = await notices(uid);
+    expect(all.filter((n) => n.kind === 'exam_assigned')).toHaveLength(1);
+    expect(all.find((n) => n.kind === 'exam_assigned')!.body).toContain('هر وقت خواستی شروع کن');
+    // Nothing more on later nights.
+    expect((await announceOpenExams()).told).toHaveLength(0);
+    const r2 = await runReaderPathwayNotices();
+    expect(r2.near.length + r2.done.length).toBe(0);
+    expect(await notices(uid)).toHaveLength(all.length);
+  });
+
+  it('finished while the exam is open: the exam notice only, never a second «done»', async () => {
+    await free();
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    const uid = await userId();
+    await finish(uid);
+    // The nightly order: the exam notice first, then the reader's own.
+    expect((await announceOpenExams()).told).toHaveLength(1);
+    const r = await runReaderPathwayNotices();
+    expect(r.done).toHaveLength(0);
+    expect(r.silent).toBe(1);
+    expect(await progress(uid)).toHaveLength(0);
+    expect((await notices(uid)).filter((n) => n.kind === 'exam_assigned')).toHaveLength(1);
+  });
+
+  it('a subscriber gets no progress notice (they have the page) but IS told the exam opened, unasked', async () => {
+    const uid = await userId();
+    await read(uid, STEPS.slice(0, -2));
+    expect((await runReaderPathwayNotices()).near).toHaveLength(0);
+    await finish(uid);
+    expect((await runReaderPathwayNotices()).done).toHaveLength(0);
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    expect((await announceOpenExams()).told).toEqual([{ user_id: uid, pathway_id: PATHWAY }]);
+    expect(await progress(uid)).toHaveLength(0);
+  });
+
+  it('«فعلاً نه» is respected, and somebody already sitting it hears nothing', async () => {
+    const uid = await userId();
+    await finish(uid);
+    await setCertificateIntent(uid, PATHWAY, 'declined');
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    expect((await announceOpenExams()).told).toHaveLength(0);
+
+    await free();
+    await setCertificateIntent(uid, PATHWAY, 'wanted');
+    await post(`/exams/${PATHWAY}/start`, { holder_first_name: 'مهسا', holder_last_name: 'رضایی' });
+    await pool.query(`delete from user_activity where user_id = $1 and action = 'exam_open_told'`, [uid]);
+    expect((await announceOpenExams()).told).toHaveLength(0);
+    const r = await runReaderPathwayNotices();
+    expect(r.done).toHaveLength(0);
+  });
+
+  it('never on a pathway the reader may open (the pathway open to everybody)', async () => {
+    await free();
+    const raw = JSON.parse(JSON.stringify(getPathways())) as { id: string; premium: boolean }[];
+    raw.find((x) => x.id === PATHWAY)!.premium = false;
+    expect(applyRemotePathways(raw)).toBe(true);
+    try {
+      await read(await userId(), STEPS.slice(0, -1));
+      const r = await runReaderPathwayNotices();
+      expect(r.near.length + r.done.length + r.silent).toBe(0);
+    } finally {
+      resetRemotePathways();
+    }
+  });
+});
 
 describe('the draw', () => {
   it('takes the whole pool at 0, n otherwise, and prefers questions the reader has not seen', () => {

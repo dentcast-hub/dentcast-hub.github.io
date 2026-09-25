@@ -87,6 +87,9 @@ export const SERVER_MINTED_ACTIONS: ReadonlySet<string> = new Set([
   'assistant_step',
   'certificate_wish_alerted',
   'exam_open_told',
+  // A reader without the plan was told they are near / at the end of a
+  // pathway (pathway-exams.ts runReaderPathwayNotices) — a high-water mark.
+  'pathway_reader_told',
   'challenge_answered',
   'collection_created',
   'collection_item_added',

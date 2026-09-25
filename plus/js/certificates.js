@@ -16,10 +16,10 @@
 // A revoked certificate does NOT tick its pathway. The wall shows what stands
 // today; the record of a revoked one lives in the API's `certificates` list
 // and on its own verify page, which still answers for the code.
-import { el, faNum, icon } from './util.js?v=149';
-import { openSheet, closeSheet } from './sheet.js?v=149';
-import { certificateTerms } from './certificate-terms.js?v=149';
-import { downloadCertificate } from './certificate-image.js?v=149';
+import { el, faNum, icon } from './util.js?v=152';
+import { openSheet, closeSheet } from './sheet.js?v=152';
+import { certificateTerms } from './certificate-terms.js?v=152';
+import { downloadCertificate } from './certificate-image.js?v=152';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' });
 const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } catch (_) { return ''; } };
@@ -152,12 +152,12 @@ export function lockedCard(p) {
         el('b', {}, p.title_fa),
       ]),
     ]),
-    // This wall is `requireAuth`, not `requirePremium` — a free reader sees it
-    // and used to be told only «مسیر را تا آخر بخوان», then walked into a
-    // premium gate that never mentions a certificate. Premium is one of the
-    // conditions, so it is said here as a condition rather than as a wall.
+    // This wall is `requireAuth`, not `requirePremium` — a free reader sees it.
+    // Since 1405/07/03 premium is NOT a condition of sitting (finishing the
+    // pathway with your own reading is), so the card says what premium does
+    // buy — the road — instead of a wall that no longer exists.
     el('p', { class: 'dcp-cert-card-lead' }, ex ? ex[1]
-      : 'این مسیر را تا آخرین قدم بخوان؛ نزدیک پایان، آزمونِ مسیر برایت گذاشته می‌شود و با قبولی در آن، گواهی‌نامه به نام خودت صادر می‌شود. شرکت در آزمون نیاز به اشتراک پریمیوم دارد.'),
+      : 'همهٔ مطالب این مسیر را با حساب کاربری‌ات بخوان؛ آزمون پایانی‌اش برایت باز می‌شود و با قبولی در آن، گواهی‌نامه به نام خودت صادر می‌شود. شرکت در آزمون اشتراک نمی‌خواهد؛ مسیرِ منظم تا آن — ترتیب و قدم‌های مانده — با اشتراک پریمیوم است.'),
     el('div', { class: 'dcp-cert-actions' }, [
       ex ? el('a', { class: 'dcp-btn', href: examHref }, ex[2]) : null,
       el('a', { class: 'dcp-btn' + (ex ? ' dcp-btn-ghost' : ''), href: `/plus/pathway.html?id=${encodeURIComponent(p.id)}` }, 'رفتن به مسیر'),

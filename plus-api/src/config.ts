@@ -308,6 +308,11 @@ export const config = {
   pathwayAlert: {
     hour: int('PATHWAY_ALERT_HOUR', 22),
     nearRemaining: int('PATHWAY_NEAR_REMAINING', 5),
+    // The READER's own «almost there» notice (a reader who is not premium and
+    // cannot see the pathway page is told they are this close, once). Tighter
+    // than the founder's alert on purpose: five is «start writing the exam»,
+    // three is «you could finish this week» (founder, 1405/07/03).
+    readerNearRemaining: int('PATHWAY_READER_NEAR_REMAINING', 3),
     // Whose phone. Empty falls back to SUPPORT_ALERT_PHONE in the service: the
     // founder already configured one number, and making this alert wait for a
     // second env var is how a feature ships and then never fires.

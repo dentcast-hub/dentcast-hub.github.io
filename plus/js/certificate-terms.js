@@ -14,20 +14,18 @@
 // something else. The only place a number is stated is the exam page itself,
 // where it comes from the form the reader is about to sit and is true by
 // construction. Everything here is what does not change.
-import { el } from './util.js?v=149';
-import { closeSheet } from './sheet.js?v=149';
+import { el } from './util.js?v=152';
+import { closeSheet } from './sheet.js?v=152';
 // The certificate's own words live in ONE place (CERT_TEXT) and are imported
 // by every renderer — the DOM sheet, the canvas download, and now this. The
 // «امتیاز بازآموزی نیست» line in particular belongs in front of the decision,
 // not only under a certificate already issued.
-import { CERT_TEXT } from './certificate-image.js?v=149';
+import { CERT_TEXT } from './certificate-image.js?v=152';
 
 /** What must be true — identical for every pathway, which is why it is stated once. */
 const EARN = [
-  'در مسیر ثبت‌نام کرده باشی («شروع این مسیر»).',
-  'همهٔ قدم‌های مسیر را خوانده یا شنیده باشی؛ پیشرفت خودش از روی مطالعه‌ات حساب می‌شود.',
+  'همهٔ قدم‌های مسیر را با حساب کاربری‌ات خوانده یا شنیده باشی؛ پیشرفت خودش از روی مطالعه‌ات حساب می‌شود.',
   'آزمون پایانیِ مسیر را بدهی و قبول شوی.',
-  'در زمان آزمون، اشتراک پریمیوم فعال داشته باشی؛ مگر در مسیری که برای همه باز است.',
   'نام و نام خانوادگی واقعی‌ات را برای چاپ روی گواهی بنویسی؛ با نام مستعار گواهی صادر نمی‌شود.',
 ];
 
@@ -60,6 +58,10 @@ export function certificateTerms(titleFa, onBack) {
     titleFa ? el('b', {}, titleFa) : el('b', {}, 'مسیرهای کامل'),
     el('div', { class: 'dcp-terms-h' }, 'برای گرفتنش'),
     list(EARN, 'n'),
+    // Founder, 1405/07/03: sitting needs no subscription — what premium buys
+    // is the road to this point, said here so the terms never read as a paywall.
+    el('p', { class: 'dcp-terms-pend', 'data-cert-terms-plan': '' },
+      'اشتراک پریمیوم برای آزمون لازم نیست. پریمیوم مسیرِ منظم تا این‌جا را می‌دهد: ترتیب خواندن، پیشرفت، و اینکه کدام قدم مانده.'),
     el('div', { class: 'dcp-terms-h' }, 'چه چیزی به دست می‌آید'),
     list(GET, '◆'),
     // Deliberately says WHERE the numbers are rather than what they are.

@@ -1,11 +1,12 @@
 import { config } from '../config.js';
 import { pool, one, query, withTransaction, type Queryable } from '../db.js';
-import { getPathwayById, getPathways, computeProgress, isCertifiable, isOpenPathway, type Pathway } from '../pathways.js';
+import { getPathwayById, getPathways, computeProgress, isCertifiable, mayOpenPathway, type Pathway } from '../pathways.js';
 import { getContentInfo } from '../content-index.js';
 import { randomUUID } from 'node:crypto';
 import { getConsumedContentIds } from './consumption.js';
 import { mintReference } from './reference.js';
 import { issueCertificate, discountSentence, type Certificate } from './certificates.js';
+import { CREDIT_CAP_PERCENT } from './discount-credits.js';
 import { sendCapped } from './notify-policy.js';
 import {
   runPathwayAlerts, notifyCertificateWish, pathwayStandings, type CertificateIntent,
@@ -673,6 +674,8 @@ export interface ExamOpenRun {
 type Candidate = {
   user_id: string; pathway_id: string; tier: string;
   assigned: boolean; enrolled: boolean;
+  /** Found by the standings as having finished (decision of 1405/07/03). */
+  finished?: boolean;
 };
 
 /**
@@ -774,15 +777,40 @@ export async function announceOpenExams(
         group by w.user_id, w.pathway_id, p.tier`,
       [ids],
     );
-    if (!cands.rows.length) return out;
-
     // Progress for the ones who need it. One sweep, reused — the same one the
     // founder's nightly alert runs on.
+    const standingsList = await pathwayStandings();
     const standings = new Map<string, number>();
-    for (const st of await pathwayStandings()) standings.set(`${st.user_id}:${st.pathway_id}`, st.remaining);
+    for (const st of standingsList) standings.set(`${st.user_id}:${st.pathway_id}`, st.remaining);
 
-    for (const c of cands.rows) {
-      const ready = c.assigned || (c.enrolled && standings.get(`${c.user_id}:${c.pathway_id}`) === 0);
+    // Everybody who FINISHED one of these pathways is a candidate too, asked
+    // or not, on any plan (founder, 1405/07/03): the exam is theirs to sit,
+    // and before this a reader who finished without pressing anything was
+    // told nothing, ever. A «فعلاً نه» is respected; everyone already acted
+    // on, certified or told is removed by the same three rules as above.
+    const all: Candidate[] = [...cands.rows];
+    const seen = new Set(all.map((c) => `${c.user_id}:${c.pathway_id}`));
+    const finishers = standingsList.filter((st) => ids.includes(st.pathway_id) && st.remaining === 0
+      && st.certificate_intent !== 'declined' && !seen.has(`${st.user_id}:${st.pathway_id}`));
+    if (finishers.length) {
+      const users = [...new Set(finishers.map((f) => f.user_id))];
+      const done = await query<{ k: string }>(
+        `select user_id || ':' || pathway_id as k from pathway_exam_attempts where user_id = any($1)
+         union select user_id || ':' || pathway_id from certificates where user_id = any($1) and revoked_at is null
+         union select user_id || ':' || (meta->>'pathway_id') from user_activity
+          where user_id = any($1) and action = 'exam_open_told'`,
+        [users],
+      );
+      const skip = new Set(done.rows.map((r) => r.k));
+      for (const f of finishers) {
+        if (skip.has(`${f.user_id}:${f.pathway_id}`)) continue;
+        all.push({ user_id: f.user_id, pathway_id: f.pathway_id, tier: f.tier, assigned: false, enrolled: f.enrolled, finished: true });
+      }
+    }
+    if (!all.length) return out;
+
+    for (const c of all) {
+      const ready = c.assigned || c.finished || (c.enrolled && standings.get(`${c.user_id}:${c.pathway_id}`) === 0);
       if (!ready) { out.waiting += 1; continue; }
       // Claim first: a failed notification must not queue the same reader up
       // for a second announcement tomorrow night.
@@ -796,16 +824,128 @@ export async function announceOpenExams(
         [c.user_id, JSON.stringify({ pathway_id: c.pathway_id }), c.pathway_id],
       );
       if (claimed.rowCount === 0) continue;
-      // «premium» here means «may sit it»: on a pathway the file opens to
-      // everybody (isOpenPathway) a free reader may, so they get the plain line.
-      await notifyExamOpen(c.user_id, c.pathway_id,
-        c.tier !== 'free' || isOpenPathway(getPathwayById(c.pathway_id)), opts.now);
+      // Everybody `ready` here may sit it, whatever their plan: a reader
+      // without a subscription who finished the pathway, or was let in, is
+      // through the door by readerAccess() (founder, 1405/07/03).
+      await notifyExamOpen(c.user_id, c.pathway_id, opts.now);
       out.told.push({ user_id: c.user_id, pathway_id: c.pathway_id });
     }
     return out;
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('[exam-open] announce failed', err);
+    return out;
+  }
+}
+
+/* ------------------------------------------- the reader's own milestones -- */
+
+// runReaderPathwayNotices' marker, `pathway_reader_told` — a high-water mark
+// per (reader, pathway). Written as a LITERAL in the SQL below so
+// activity-vocabulary.test.ts can see it (CLAUDE.md, the streak_sms_sent story).
+const READER_RANK: Record<'near' | 'done', number> = { near: 1, done: 2 };
+
+export interface ReaderNoticeRun {
+  near: { user_id: string; pathway_id: string; remaining: number }[];
+  done: { user_id: string; pathway_id: string }[];
+  /** Crossings claimed without a message (already told, already sitting, or the exam's own notice covers it). */
+  silent: number;
+}
+
+/**
+ * The reader's OWN «almost there» and «done», for a reader who cannot open the
+ * pathway page and so has no other way to know (founder, 1405/07/03). We do
+ * not promise everybody a certificate; we promise that whoever read it all
+ * can earn one — so the list of what is left stays the subscription's, and
+ * these two notices say only HOW close, once each:
+ *
+ *   · within PATHWAY_READER_NEAR_REMAINING steps: how many are left, that
+ *     subscribers see which, and that finishing opens the exam without one;
+ *   · finished, while the exam is not open yet: that they finished, and that
+ *     the day it opens they will hear (announceOpenExams tells them then —
+ *     a finisher is its candidate). When the exam IS open, that notice is
+ *     the one they get, so this crossing is claimed silently.
+ *
+ * Certifiable pathways only (the standings' own rule), and never a pathway
+ * this reader may open — a subscriber, or the pathway open to everybody, has
+ * the page. A HIGH-WATER mark like every other milestone here: progress goes
+ * backwards on every publish that files into a pathway, and a reader must
+ * not be told «three steps left» again because of it. Capped kind: a notice
+ * we chose to send, not a reply they are owed — it always lands in اطلاعیه.
+ *
+ * Never throws: it runs on the nightly timer.
+ */
+export async function runReaderPathwayNotices(opts: { now?: Date } = {}): Promise<ReaderNoticeRun> {
+  const out: ReaderNoticeRun = { near: [], done: [], silent: 0 };
+  try {
+    const nearN = config.pathwayAlert.readerNearRemaining;
+    const rows = (await pathwayStandings()).filter((s) => {
+      const p = getPathwayById(s.pathway_id);
+      return p && !mayOpenPathway(s.tier, p) && s.remaining <= nearN;
+    });
+    if (!rows.length) return out;
+    const users = [...new Set(rows.map((r) => r.user_id))];
+    const [told, acted, openForms] = await Promise.all([
+      query<{ k: string; level: 'near' | 'done' }>(
+        `select user_id || ':' || (meta->>'pathway_id') as k, meta->>'level' as level
+           from user_activity where user_id = any($1) and action = 'pathway_reader_told'`, [users],
+      ),
+      query<{ k: string }>(
+        `select user_id || ':' || pathway_id as k from pathway_exam_attempts where user_id = any($1)
+         union select user_id || ':' || pathway_id from certificates where user_id = any($1) and revoked_at is null
+         union select user_id || ':' || (meta->>'pathway_id') from user_activity
+          where user_id = any($1) and action = 'exam_open_told'`, [users],
+      ),
+      query<{ pathway_id: string }>('select pathway_id from pathway_exam_forms where published_at is not null'),
+    ]);
+    const high = new Map<string, number>();
+    for (const t of told.rows) high.set(t.k, Math.max(high.get(t.k) ?? 0, READER_RANK[t.level] ?? 0));
+    const busy = new Set(acted.rows.map((r) => r.k));
+    const examOpen = new Set(openForms.rows.map((r) => r.pathway_id));
+
+    for (const s of rows) {
+      const key = `${s.user_id}:${s.pathway_id}`;
+      const level: 'near' | 'done' = s.remaining === 0 ? 'done' : 'near';
+      if ((high.get(key) ?? 0) >= READER_RANK[level]) continue;
+      const claimed = await query(
+        `insert into user_activity (user_id, action, meta)
+         select $1, 'pathway_reader_told', $2::jsonb
+          where not exists (select 1 from user_activity
+                             where user_id = $1 and action = 'pathway_reader_told'
+                               and meta->>'pathway_id' = $3 and meta->>'level' = $4)`,
+        [s.user_id, JSON.stringify({ pathway_id: s.pathway_id, level }), s.pathway_id, level],
+      );
+      if (claimed.rowCount === 0) continue;
+      // Somebody already sitting it, certified, or told the exam is open
+      // needs neither message; and a finisher whose exam IS open hears it
+      // from announceOpenExams, never twice.
+      if (busy.has(key) || (level === 'done' && examOpen.has(s.pathway_id))) { out.silent += 1; continue; }
+      const title = s.title_fa;
+      if (level === 'near') {
+        const left = s.remaining === 1 ? 'فقط یک قدم' : `فقط ${fa(s.remaining)} قدم`;
+        await sendCapped(s.user_id, {
+          title: 'نزدیک پایان یک مسیر هستی 🧭',
+          body: `${left} تا پایان مسیر «${title}» مانده. مشترک‌ها می‌بینند کدام‌ها مانده‌اند؛ `
+            + 'اگر همه را با حساب کاربری‌ات بخوانی، آزمون پایانی و گواهی‌نامه‌اش بدون اشتراک هم برایت باز است.',
+          url: examUrl(s.pathway_id),
+          tag: `pathway:${s.pathway_id}`,
+        }, 'pathway_progress', opts.now);
+        out.near.push({ user_id: s.user_id, pathway_id: s.pathway_id, remaining: s.remaining });
+      } else {
+        await sendCapped(s.user_id, {
+          title: 'یک مسیر را کامل خواندی 🎉',
+          body: `همهٔ مطالب مسیر «${title}» را خوانده‌ای. آزمون پایانی‌اش هنوز آماده نیست؛ `
+            + 'همان روز که باز شد در «اطلاعیه» خبرت می‌کنیم — با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.',
+          url: '/plus/profile.html#certificates',
+          tag: `pathway:${s.pathway_id}`,
+        }, 'pathway_progress', opts.now);
+        out.done.push({ user_id: s.user_id, pathway_id: s.pathway_id });
+      }
+    }
+    return out;
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('[pathway-reader] notices failed', err);
     return out;
   }
 }
@@ -992,6 +1132,13 @@ export interface ExamState {
   /** Every settled or queued attempt, shaped for the reader. */
   history: AttemptResult[];
   certificate: { verify_code: string; verify_url: string } | null;
+  /** What a pass mints (the pathway's own percent, else the default), and
+   * whether it is a first-purchase one — so the exam page's contract states
+   * the figure this pathway actually pays instead of a hard-coded ٪۱۰. */
+  discount: { percent: number; first_purchase: boolean };
+  /** Whether THIS reader may open the pathway page — decided by the route,
+   * which knows the plan; the page links back to it only when true. */
+  pathway_open?: boolean;
 }
 
 export interface AttemptResult {
@@ -1065,6 +1212,7 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
     state: 'no_form', pathway_id: pathwayId, pathway_title_fa: pathway.title_fa, rules: null,
     attempts_used: 0, is_complete: false, assigned: false, enrolled: false, certificate_intent: null,
     retry_at: null, open: null, history: [], certificate: null,
+    discount: certificateDiscount(pathway),
   };
 
   const [form, consumed, assigned, enrolled, cert] = await Promise.all([
@@ -1080,6 +1228,7 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
     ),
   ]);
   base.is_complete = computeProgress(pathway, consumed).is_complete;
+  const onPathway = countsAsEnrolled(Boolean(enrolled), base.is_complete);
   base.assigned = Boolean(assigned);
   base.enrolled = Boolean(enrolled);
   base.certificate_intent = enrolled?.certificate_intent ?? null;
@@ -1127,7 +1276,7 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
   // somebody who is ON the pathway, not somebody whose reading happens to
   // cover it. It costs one tap on the pathway page and progress is derived,
   // so nobody who finished loses anything by pressing it late.
-  if (!base.enrolled || (!base.is_complete && !base.assigned)) { base.state = 'locked'; return base; }
+  if (!onPathway || (!base.is_complete && !base.assigned)) { base.state = 'locked'; return base; }
   if (counted.length >= form.max_attempts) { base.state = 'exhausted'; return base; }
   const last = counted.reduce<Date | null>((m, a) => (a.submitted_at && (!m || a.submitted_at > m) ? a.submitted_at : m), null);
   if (last && form.retry_days > 0) {
@@ -1136,6 +1285,64 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
   }
   base.state = 'ready';
   return base;
+}
+
+/** The certificate discount a pathway mints — certificates.ts's own rule, restated for display only. */
+function certificateDiscount(p: Pathway): { percent: number; first_purchase: boolean } {
+  const percent = p.certificate_discount_percent ?? config.certificate.discountPercent;
+  return { percent, first_purchase: percent > CREDIT_CAP_PERCENT };
+}
+
+/* ------------------------------------------- a reader without the plan -- */
+
+/**
+ * May an account that cannot OPEN this pathway (no subscription, and the
+ * pathway is not one the file opens to everybody) still reach its exam?
+ *
+ * The founder's rule (1405/07/03): the pathway — its order, its tracking, the
+ * page that says what is left — is what a subscription buys; the certificate
+ * attests to having READ it and passed the exam, and a reader who did that
+ * with their own account has earned the chance whatever their plan. «We
+ * guarantee that whoever read it all can earn it — not that everybody will.»
+ * So the door is:
+ *
+ *   · the pathway is finished by this account's own reading (derived, like
+ *     every other progress figure — `computeProgress`), or
+ *   · the founder let them in early (`pathway_exams`), or
+ *   · they are already in the middle of it — an attempt of any status or a
+ *     live certificate — so a pathway that GREW after they started (progress
+ *     goes backwards on every publish that files into it) never strands an
+ *     open attempt, a queued one, or the page that shows a pass.
+ *
+ * Reading logged out leaves no record, so it cannot count; that is a limit of
+ * the data, not a rule, and the copy says «با حساب کاربری».
+ */
+export async function readerAccess(
+  userId: string, pathway: Pathway,
+): Promise<{ allowed: boolean; complete: boolean }> {
+  const r = await one<{ yes: boolean }>(
+    `select exists (select 1 from pathway_exam_attempts where user_id = $1 and pathway_id = $2)
+         or exists (select 1 from certificates where user_id = $1 and pathway_id = $2 and revoked_at is null)
+         or exists (select 1 from pathway_exams where user_id = $1 and pathway_id = $2) as yes`,
+    [userId, pathway.id],
+  );
+  const complete = computeProgress(pathway, await getConsumedContentIds(userId)).is_complete;
+  return { allowed: Boolean(r?.yes) || complete, complete };
+}
+
+/**
+ * The exam's enrolment rule: «شروع این مسیر», OR having finished the pathway.
+ *
+ * It was «شروع» alone (founder, 2026-09-12 — the deliberate act). Since
+ * 1405/07/03 finishing opens the exam to a reader without the plan, who has
+ * no such button; keeping the old rule for subscribers alone would make the
+ * paying reader the one with the stricter door, and would contradict the
+ * «آزمون باز است» notice every finisher now gets. Decided here, where the
+ * state is computed, and never written as a side effect of reading a page:
+ * the exam page, the certificate wall and «شروع» must all say the same thing.
+ */
+function countsAsEnrolled(enrolled: boolean, complete: boolean): boolean {
+  return enrolled || complete;
 }
 
 /* ---------------------------------------------------------------- start -- */
@@ -1647,21 +1854,18 @@ export async function notifyAssigned(userId: string, pathwayId: string): Promise
  * Separate from `notifyAssigned` because it is a different event with a
  * different audience: that one is «a door was opened FOR YOU, early», this
  * one is «the thing you asked for exists now, and you have finished the
- * reading it needed». The lapsed-subscriber clause is the whole reason it is
- * not one message with a flag — a reader who is told to «start whenever you
- * like» and then meets a paywall has been lied to, and leaving them out
- * entirely was the other way to get it wrong.
+ * reading it needed». It carried a lapsed-subscriber clause («اشتراک لازم
+ * است») until 1405/07/03, when finishing the pathway became a door of its own
+ * (readerAccess): everybody this is sent to can now actually sit it.
  */
 async function notifyExamOpen(
-  userId: string, pathwayId: string, premium: boolean, now?: Date,
+  userId: string, pathwayId: string, now?: Date,
 ): Promise<void> {
   const title = getPathwayById(pathwayId)?.title_fa ?? pathwayId;
   await sendCapped(userId, {
     title: 'آزمون این مسیر برایت باز شد 🎓',
     body: `مسیر «${title}» را تمام کرده‌ای و آزمون پایانی‌اش باز است. `
-      + (premium
-        ? 'هر وقت خواستی شروع کن؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.'
-        : 'برای شرکت در آزمون، اشتراک پریمیوم فعال لازم است؛ خودِ آزمون منتظرت می‌ماند.'),
+      + 'هر وقت خواستی شروع کن؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.',
     url: examUrl(pathwayId),
     tag: 'exam',
   }, 'exam_assigned', now);
@@ -1821,7 +2025,8 @@ export async function examStates(userId: string, pathwayIds: string[]): Promise<
     if (!form.published_at) { out.set(id, 'no_form'); continue; }
     const pathway = getPathwayById(id);
     const complete = pathway ? computeProgress(pathway, consumed).is_complete : false;
-    if (!enrolledSet.has(id) || (!complete && !assignedSet.has(id))) { out.set(id, 'locked'); continue; }
+    const onPathway = countsAsEnrolled(enrolledSet.has(id), complete);
+    if (!onPathway || (!complete && !assignedSet.has(id))) { out.set(id, 'locked'); continue; }
     const counted = mine.filter((a) => COUNTED.includes(a.status));
     if (counted.length >= form.max_attempts) { out.set(id, 'exhausted'); continue; }
     const last = counted.reduce<number>((m, a) => Math.max(m, a.submitted_at ? a.submitted_at.getTime() : 0), 0);

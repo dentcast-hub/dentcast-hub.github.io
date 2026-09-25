@@ -435,12 +435,12 @@ export const PREMIUM_FEATURES = [
   // Index 7 — «هایلایت‌های صوتی» (the clip button under every episode player,
   // played back from the دفترچه). Appended last, same reason as above.
   { title: 'هایلایت‌های صوتی', hint: 'مثل هایلایت متن، ولی روی پادکست: تکه‌ای که به کارت اومد رو نگه دار، بعداً از دفترچه پخشش کن.' },
-  // Index 8 — «گواهی‌نامهٔ تکمیل مسیر» (founder, 1405/06/29). Appended last for
-  // the same reason as the two above. What premium buys here is EARNING one:
-  // the exam routes are `requirePremium`, while `GET /certificates` and the
-  // profile's wall stay on any plan — looking at a certificate, and keeping one
-  // after a subscription lapses, are never gated. It has no dashboard section
-  // of its own (the wall lives in the profile, under «افتخارات»), which is the
-  // same shape index 5 has.
-  { title: 'گواهی‌نامهٔ تکمیل مسیر', hint: 'یک مسیر را تا آخر بخوان و آزمونش را بده؛ گواهی به نام خودت با کد یکتا و صفحهٔ تأیید.' },
+  // Index 8 — «مسیرِ منظم تا گواهی‌نامه» (founder, 1405/06/29; renamed
+  // 1405/07/03). Appended last for the same reason as the two above. It was
+  // «گواهی‌نامهٔ تکمیل مسیر» while EARNING one was premium; since the exam
+  // opens to whoever finished a pathway with their own reading, what premium
+  // buys is the road — the order, the progress, which step is left — so the
+  // title names that. It has no dashboard section of its own (the wall lives in
+  // the profile, under «افتخارات»), which is the same shape index 5 has.
+  { title: 'مسیرِ منظم تا گواهی‌نامه', hint: 'مسیر را به ترتیب درست بخوان، ببین کدام قدم مانده، و در پایان آزمون بده؛ گواهی به نام خودت با کد یکتا.' },
 ];
