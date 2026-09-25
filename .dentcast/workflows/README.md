@@ -1849,6 +1849,11 @@ new content's actual subject against what a learner of each pathway needs.
    # or --at-start, when the item is the new FIRST step (a foundation the rest builds on;
    #   تراز شواهد قسمت ۱ opening evidence-literacy is the precedent) — never on a bundle's finish
    ```
+   **A تراز شواهد part (`taraz/`) is never a scoring question for
+   `evidence-literacy`: it is a required step there** (founder, 1405/07/03),
+   placed `--after` the part before it so the series keeps its order; other
+   pathways it may join go through the ordinary judgment above. Phase F
+   enforces both membership and order (`5.6 pathway`).
    Set `--milestone` only if the item becomes the new end of its conceptual
    block (rare; usually a new item is mid-block, milestone=false).
 4. Verify coverage and report:

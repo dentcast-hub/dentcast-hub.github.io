@@ -1375,6 +1375,22 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                       "placed in at least one learning pathway",
                       "in no learning pathway — place it, or state the deliberate exclusion",
                       f"python3 tools/pathway_place.py {content_id}")
+            if content_id.startswith("taraz/"):
+                # Founder, 1405/07/03: every تراز شواهد part is a step of
+                # evidence-literacy — required, not a scorer's suggestion
+                # (it may sit in other pathways too). Parts keep series order.
+                data = json.loads(paths)
+                data = data.get("pathways", []) if isinstance(data, dict) else data
+                ev = next((p for p in data if p.get("id") == "evidence-literacy"), None)
+                ids = [s["content_id"] for s in (ev or {}).get("steps", [])]
+                parts = [i for i in ids if i.startswith("taraz/")]
+                key = lambda i: tuple(int(n) for n in re.findall(r"\d+", i))
+                rep.check(content_id in ids and parts == sorted(parts, key=key),
+                          "5.6 pathway", "in evidence-literacy, series parts in order",
+                          "a تراز شواهد part must be a step of evidence-literacy, "
+                          "after the part before it",
+                          f"python3 tools/pathway_place.py --insert {content_id} "
+                          f"--pathway evidence-literacy --after <previous part>")
 
     # ---------------- version stamp (step 7, always last) ----------------
     want = content_version()
