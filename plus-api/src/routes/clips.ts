@@ -3,6 +3,11 @@ import { requireAuth } from '../middleware/auth.js';
 import { requirePremium } from '../middleware/require-premium.js';
 import { pool } from '../db.js';
 import { getContentInfo, folderLabel, folderOf } from '../content-index.js';
+import { config } from '../config.js';
+import { consume, HOUR_MS } from '../services/rate-limit.js';
+import {
+  resolveEpisodeAudio, httpRangeReader, cutMp3, buildClipTag, clipFileName, clock, ClipAudioError,
+} from '../services/clip-audio.js';
 
 /**
  * قطعه‌های صوتی — audio clips (migration 0064).
@@ -29,7 +34,12 @@ import { getContentInfo, folderLabel, folderOf } from '../content-index.js';
  *                            premium stays theirs to see on the episode, fix,
  *                            delete and export after the subscription lapses;
  *   · GET /clips/library   — requirePremium: the aggregated view, the same
- *                            boundary the highlight library draws.
+ *                            boundary the highlight library draws;
+ *   · GET /clips/:id/audio — requirePremium: the clip as a real MP3 file (founder,
+ *                            1405/07/03 — «هایلایت صوتی فقط برای پریمیومه، پس
+ *                            دانلودشم»). The two numbers stay the reader's on
+ *                            any plan (GET /export/highlights carries them);
+ *                            cutting the audio out is the premium act.
  *
  * No activity row and no XP: a clip is a bookmark, and the argument score.ts
  * makes for excluding `content_shared` (nothing is read or answered by pressing
@@ -134,6 +144,51 @@ export async function clipRoutes(app: FastifyInstance): Promise<void> {
     );
     if (res.rowCount === 0) return reply.code(404).send({ error: 'not_found' });
     return reply.send({ clip: res.rows[0] });
+  });
+
+  // GET /clips/:id/audio -> premium: the clip cut out of its episode as an MP3,
+  // tagged with where it came from (services/clip-audio.ts). Owner only — a
+  // clip id is not a share link. The reader's note is never put in the file.
+  app.get('/clips/:id/audio', { preHandler: requirePremium }, async (request, reply) => {
+    const { id } = request.params as { id: string };
+    if (!/^[0-9a-f-]{36}$/i.test(id)) return reply.code(404).send({ error: 'not_found' });
+    const res = await pool.query<ClipRow>(
+      `select ${SELECT_COLS} from audio_clips where id = $1 and user_id = $2`,
+      [id, request.user!.id],
+    );
+    if (res.rowCount === 0) return reply.code(404).send({ error: 'not_found' });
+    const clip = res.rows[0];
+
+    const limit = consume(`clip-audio:${request.user!.id}`, config.episodes.clipDownloadsPerHour, HOUR_MS);
+    if (!limit.allowed) {
+      return reply.code(429).send({ error: 'rate_limited', retry_after_s: Math.ceil(limit.retryAfterMs / 1000) });
+    }
+
+    const episode = await resolveEpisodeAudio(clip.content_id);
+    if (!episode) return reply.code(404).send({ error: 'episode_audio_not_found' });
+
+    let cut;
+    try {
+      cut = await cutMp3(httpRangeReader(episode.audio_url), Number(clip.start_s), Number(clip.end_s));
+    } catch (err) {
+      const code = err instanceof ClipAudioError ? err.code : 'source_unavailable';
+      request.log.warn({ clip: clip.id, audio: episode.audio_url, code, err: (err as Error).message }, 'clip audio cut failed');
+      // Past the end of the file is the one case that is about the clip; the
+      // rest are about the source, which is ours to fix, not the reader's.
+      return reply.code(code === 'out_of_range' ? 422 : 502).send({ error: code });
+    }
+
+    const tag = buildClipTag({
+      title: `${episode.title} · ${clock(Number(clip.start_s))}–${clock(Number(clip.end_s))}`,
+      episodeTitle: episode.title,
+      pageUrl: episode.page_url,
+    });
+    const body = Buffer.concat([tag, cut.audio]);
+    const name = clipFileName(clip.content_id, Number(clip.start_s), Number(clip.end_s));
+    reply.header('content-type', 'audio/mpeg');
+    reply.header('content-length', String(body.length));
+    reply.header('content-disposition', `attachment; filename="${name}"`);
+    return reply.send(body);
   });
 
   // POST /clips -> premium: mark a segment.

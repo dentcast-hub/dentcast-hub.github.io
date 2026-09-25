@@ -7,11 +7,12 @@
 //     lapsed subscriber keeps what they marked;
 //   · the span is validated as a PAIR, so a clip can never be saved or moved
 //     into something that is not a clip (backwards, a mis-tap, the whole episode).
-import { describe, it, expect, beforeEach, afterAll } from 'vitest';
+import { describe, it, expect, beforeEach, afterAll, afterEach, vi } from 'vitest';
 import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import { MAX_CLIP_SECONDS } from '../src/routes/clips.js';
+import { resetRateLimits } from '../src/services/rate-limit.js';
 
 let app: FastifyInstance;
 let cookie: string;
@@ -235,5 +236,132 @@ describe('PATCH /clips/:id', () => {
   it('a malformed id is a 404, not a database error', async () => {
     const res = await app.inject({ method: 'GET', url: '/clips/not-a-uuid', headers: { cookie } });
     expect(res.statusCode).toBe(404);
+  });
+});
+
+// GET /clips/:id/audio — the clip as a file (services/clip-audio.ts). The
+// episode's storage is replaced by an in-memory MP3 behind a fake Range server;
+// the catalog is the repo's own dentcast.json, so episode-101 resolves to the
+// file every player on the site plays.
+describe('GET /clips/:id/audio', () => {
+  /** 128 kbps / 44.1 kHz frames, padded like an encoder pads them. */
+  function mp3(seconds: number): Uint8Array {
+    const n = Math.ceil(seconds / (1152 / 44100));
+    const exact = (144 * 128000) / 44100;
+    const parts: number[] = [];
+    let frac = 0;
+    for (let i = 0; i < n; i++) {
+      frac += exact - Math.floor(exact);
+      const pad = frac >= 1;
+      if (pad) frac -= 1;
+      const f = new Array(Math.floor(exact) + (pad ? 1 : 0)).fill(0);
+      f[0] = 0xff; f[1] = 0xfb; f[2] = 0x90 | (pad ? 0x02 : 0);
+      parts.push(...f);
+    }
+    return Uint8Array.from(parts);
+  }
+  const FILE = mp3(12 * 60);
+  const storageHits: string[] = [];
+  let storageDown = false;
+
+  beforeEach(async () => {
+    await setTier('premium');
+    storageHits.length = 0;
+    storageDown = false;
+    const realFetch = globalThis.fetch;
+    vi.spyOn(globalThis, 'fetch').mockImplementation(async (input: any, init?: any) => {
+      const url = String(input instanceof Request ? input.url : input);
+      if (!url.includes('arvanstorage.ir')) return realFetch(input, init);
+      storageHits.push(url);
+      if (storageDown) throw new TypeError('fetch failed');
+      const m = /bytes=(\d+)-(\d+)/.exec(String(init?.headers?.range ?? ''));
+      if (!m) return new Response(FILE, { status: 200 });
+      const from = Number(m[1]);
+      const to = Math.min(FILE.length - 1, Number(m[2]));
+      return new Response(FILE.slice(from, to + 1), {
+        status: 206,
+        headers: { 'content-range': `bytes ${from}-${to}/${FILE.length}` },
+      });
+    });
+  });
+  afterEach(() => { vi.restoreAllMocks(); resetRateLimits(); });
+
+  const get = (id: string, c: string | undefined = cookie) =>
+    app.inject({ method: 'GET', url: `/clips/${id}/audio`, headers: c ? { cookie: c } : {} });
+
+  it('is premium, like making a clip: anonymous 401, a lapsed subscriber 402, never touching storage', async () => {
+    const clip = await createOk(60, 90);
+    expect((await get(clip.id, '')).statusCode).toBe(401);
+    await setTier('free');
+    const res = await get(clip.id);
+    expect(res.statusCode).toBe(402);
+    expect(res.json().error).toBe('premium_required');
+    expect(storageHits).toEqual([]);
+  });
+
+  it('answers an MP3 named for the episode and span, tagged with its source', async () => {
+    const clip = await createOk(447.3, 483, { note: 'یادداشتِ خصوصی من' });
+    const res = await get(clip.id);
+    expect(res.statusCode).toBe(200);
+    expect(res.headers['content-type']).toBe('audio/mpeg');
+    expect(res.headers['content-disposition']).toBe('attachment; filename="DentCast-ep101-07m27s-08m03s.mp3"');
+    const body = res.rawPayload;
+    expect(body.subarray(0, 3).toString('latin1')).toBe('ID3');
+    const tagLen = 10 + (((body[6] & 0x7f) << 21) | ((body[7] & 0x7f) << 14) | ((body[8] & 0x7f) << 7) | (body[9] & 0x7f));
+    const tag = body.subarray(0, tagLen);
+    expect(tag.toString('latin1')).toContain('https://dentcast.ir/episodes/episode-101.html');
+    // Every text frame, decoded (id, 4-byte size, 2 flags; encoding byte + BOM).
+    const texts: string[] = [];
+    for (let p = 10; p + 10 <= tag.length;) {
+      const id = tag.subarray(p, p + 4).toString('latin1');
+      const size = tag.readUInt32BE(p + 4);
+      const bodyOf = tag.subarray(p + 10, p + 10 + size);
+      if (id.startsWith('T')) texts.push(bodyOf.subarray(3).toString('utf16le'));
+      if (id === 'COMM') texts.push(bodyOf.toString('utf16le', 8));
+      p += 10 + size;
+    }
+    expect(texts.some((t) => t.includes('07:27–08:03'))).toBe(true);
+    // The reader's note is private and a file is made to be passed on.
+    expect(texts.join(' ')).not.toContain('یادداشت');
+    expect(body.includes(Buffer.from('یادداشت', 'utf16le'))).toBe(false);
+    expect(body.includes(Buffer.from('یادداشت', 'utf8'))).toBe(false);
+    // 35.7 s of 128 kbps audio after the tag, starting on a frame.
+    expect(body[tagLen]).toBe(0xff);
+    const audioBytes = body.length - tagLen;
+    expect(audioBytes / (128000 / 8)).toBeGreaterThan(35);
+    expect(audioBytes / (128000 / 8)).toBeLessThan(36.5);
+    // Ranged reads only — the 12-minute file is never fetched whole.
+    expect(storageHits.length).toBeGreaterThan(0);
+  });
+
+  it('is the owner\'s: another reader, even a premium one, gets a 404', async () => {
+    const clip = await createOk(10, 20);
+    const other = await loginAs(app, '09121200105');
+    await pool.query(`update profiles set tier = 'premium' where phone = '09121200105'`);
+    expect((await get(clip.id, other)).statusCode).toBe(404);
+    expect(storageHits).toEqual([]);
+  });
+
+  it('a dead source is a 502 about the source, not a crash', async () => {
+    const clip = await createOk(10, 20);
+    storageDown = true;
+    const res = await get(clip.id);
+    expect(res.statusCode).toBe(502);
+    expect(res.json().error).toBe('source_unavailable');
+  });
+
+  it('a clip on something that is not an episode has no file to cut', async () => {
+    const res = await create({ content_id: 'litecast/litecast-1', start_s: 1, end_s: 9 });
+    const id = res.json().clip.id;
+    const out = await get(id);
+    expect(out.statusCode).toBe(404);
+    expect(out.json().error).toBe('episode_audio_not_found');
+  });
+
+  it('a clip past the end of the file is a 422, not an empty file', async () => {
+    const clip = await createOk(13 * 60, 13 * 60 + 20);
+    const res = await get(clip.id);
+    expect(res.statusCode).toBe(422);
+    expect(res.json().error).toBe('out_of_range');
   });
 });

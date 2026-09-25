@@ -39,6 +39,32 @@ describe('api.js query building', () => {
   });
 });
 
+describe('api.clipAudio — a file, not JSON', () => {
+  it('returns the Blob on success and asks with no deadline', async () => {
+    const blob = new Blob(['ID3'], { type: 'audio/mpeg' });
+    let opts: any = null;
+    globalThis.fetch = vi.fn((url: string, o: any) => {
+      calls.push(String(url));
+      if (String(url).endsWith('/health')) return Promise.resolve({ ok: true, status: 200, json: async () => ({}) });
+      opts = o;
+      return Promise.resolve({ ok: true, status: 200, blob: async () => blob, json: async () => { throw new Error('not json'); } });
+    }) as any;
+    const out = await api.clipAudio('11111111-2222-3333-4444-555555555555');
+    expect(out).toBe(blob);
+    expect(calls.some((u) => u.endsWith('/clips/11111111-2222-3333-4444-555555555555/audio'))).toBe(true);
+    expect(opts.credentials).toBe('include');
+    expect(opts.signal).toBeUndefined();
+  });
+
+  it('an error still arrives as the usual ApiError with its status and body', async () => {
+    globalThis.fetch = vi.fn((url: string) => {
+      if (String(url).endsWith('/health')) return Promise.resolve({ ok: true, status: 200, json: async () => ({}) });
+      return Promise.resolve({ ok: false, status: 402, json: async () => ({ error: 'premium_required' }) });
+    }) as any;
+    await expect(api.clipAudio('x')).rejects.toMatchObject({ status: 402, body: { error: 'premium_required' } });
+  });
+});
+
 /**
  * Every `api.X(...)` the site calls must exist on the real client.
  *

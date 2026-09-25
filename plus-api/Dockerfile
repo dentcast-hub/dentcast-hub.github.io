@@ -31,6 +31,9 @@ ENV BADGES_PATH=/app/badges.json
 ENV GLOSSARY_PATH=/app/glossary.json
 ENV HASHTAG_REF_PATH=/app/dentcast-hashtag-reference.json
 ENV FLASHCARDS_PATH=/app/flashcards-index.json
+# The episode catalog (dentcast.json) names each episode's audio file, which is
+# what a downloaded هایلایت صوتی is cut from (services/clip-audio.ts).
+ENV EPISODES_CATALOG_PATH=/app/dentcast.json
 # ...and where to refresh them from while the container runs, so publishing an
 # article no longer means building an image. The baked copies above stay the
 # boot value and the fallback; these are only ever an upgrade. Both mirrors are
@@ -41,6 +44,7 @@ ENV BADGES_URL=https://dentcast.ir/plus/badges.json,https://dentcast.org/plus/ba
 ENV GLOSSARY_URL=https://dentcast.ir/glossary/glossary.json,https://dentcast.org/glossary/glossary.json
 ENV HASHTAG_REF_URL=https://dentcast.ir/dentcast-hashtag-reference.json,https://dentcast.org/dentcast-hashtag-reference.json
 ENV FLASHCARDS_URL=https://dentcast.ir/plus/flashcards-index.json,https://dentcast.org/plus/flashcards-index.json
+ENV EPISODES_CATALOG_URL=https://dentcast.ir/dentcast.json,https://dentcast.org/dentcast.json
 WORKDIR /app
 
 # Prod dependencies only.
@@ -61,6 +65,7 @@ COPY plus/badges.json ./badges.json
 COPY plus/flashcards-index.json ./flashcards-index.json
 COPY glossary/glossary.json ./glossary.json
 COPY dentcast-hashtag-reference.json ./dentcast-hashtag-reference.json
+COPY dentcast.json ./dentcast.json
 
 # Build stamp — what GET /health reports back.
 #

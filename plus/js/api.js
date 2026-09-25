@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=157';
+import { API_BASES } from './config.js?v=159';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -143,7 +143,7 @@ function primaryBase() {
   return API_BASES[0];
 }
 
-async function request(path, { method = 'GET', body, query, pinned = false, timeoutMs, keepalive = false } = {}) {
+async function request(path, { method = 'GET', body, query, pinned = false, timeoutMs, keepalive = false, blob = false } = {}) {
   const base = pinned ? primaryBase() : await pickBase();
   let url = base + path;
   if (query) {
@@ -192,6 +192,9 @@ async function request(path, { method = 'GET', body, query, pinned = false, time
     res = retry;
   }
   if (res.status === 204) return null;
+  // A file rather than JSON (a clip's audio): the body is the answer, and an
+  // error still arrives as the usual JSON so the caller reads it the same way.
+  if (blob && res.ok) return res.blob();
   const data = await res.json().catch(() => null);
   if (!res.ok) throw new ApiError(res.status, data);
   return data;
@@ -268,6 +271,10 @@ export const api = {
   createClip: (c) => request('/clips', { method: 'POST', body: c }),
   updateClip: (id, patch) => request('/clips/' + encodeURIComponent(id), { method: 'PATCH', body: patch }),
   deleteClip: (id) => request('/clips/' + encodeURIComponent(id), { method: 'DELETE' }),
+  // premium: the clip cut out of its episode as an MP3 Blob, tagged with its
+  // source. No deadline — up to ten minutes of audio on a slow line is not a
+  // stalled host.
+  clipAudio: (id) => request('/clips/' + encodeURIComponent(id) + '/audio', { blob: true, timeoutMs: 0 }),
 
   // per-article note (independent of highlights)
   getArticleNote: (content_id) => request('/article-note', { query: { content_id } }),

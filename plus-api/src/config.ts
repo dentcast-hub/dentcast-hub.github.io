@@ -795,6 +795,20 @@ export const config = {
     hashtagRefUrls: list('HASHTAG_REF_URL', []),
     refreshSeconds: int('CONTENT_REFRESH_SECONDS', 300),
   },
+
+  // The episode catalog (the repo's root dentcast.json — every player's list of
+  // episode files), read by services/clip-audio.ts to find the file a clip is
+  // cut from. Path: repo default in dev, the baked copy in the container. URLs:
+  // re-fetched on demand (at most every ten minutes) so an episode published
+  // today can be clipped today. Empty = the file on disk is the live one.
+  episodes: {
+    catalogPath: process.env.EPISODES_CATALOG_PATH || '',
+    catalogUrls: list('EPISODES_CATALOG_URL', []),
+    // Downloads of a cut clip per reader per hour. Each one is a few ranged
+    // reads of storage and at most a few MB; the ceiling is against a loop,
+    // not against a reader.
+    clipDownloadsPerHour: int('CLIP_DOWNLOADS_PER_HOUR', 60),
+  },
 };
 
 // A platform-level proxy variable used to be a silent fallback for
