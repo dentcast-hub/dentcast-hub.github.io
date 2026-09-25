@@ -1238,15 +1238,32 @@ describe('an unfinished series has no certificate (`certificate: pending`)', () 
     expect(isCertifiable(getPathwayById(BUNDLE_ID))).toBe(false);
   });
 
-  it('refuses a form, a question, an assignment, a wish and a hand-issued certificate — each by name', async () => {
+  it('refuses publishing, an assignment, a wish and a hand-issued certificate — each by name', async () => {
     const uid = await userId();
-    await expect(upsertForm(PENDING, { questions: [MCQ(1), MCQ(2)] })).rejects.toThrow('pathway_pending');
-    await expect(addQuestion(PENDING, MCQ(1))).rejects.toThrow('pathway_pending');
     await expect(assignExam(uid, PENDING)).rejects.toThrow('pathway_pending');
     await expect(setCertificateIntent(uid, PENDING, 'wanted')).rejects.toThrow('pathway_pending');
     await expect(issueCertificate(uid, PENDING, { holderName: 'مهسا رضایی', notify: false })).rejects.toThrow('pathway_pending');
-    expect(await getForm(PENDING)).toBeNull();
+    await upsertForm(PENDING, { questions: [MCQ(1), MCQ(2)] });
+    await expect(publishForm(PENDING)).rejects.toThrow('pathway_pending');
+    expect((await getForm(PENDING))!.published_at).toBeNull();
     expect(await listCertificates(uid)).toHaveLength(0);
+  });
+
+  // The founder prepares a pending pathway's questions while its series is
+  // still being written (1405/07/03): writing the bank is open, and NOTHING
+  // of it reaches a reader until the flag comes off and he publishes.
+  it('keeps the question bank open: a paste, a batch and one built question all land, as a draft', async () => {
+    const uid = await userId();
+    await upsertForm(PENDING, { questions: [MCQ(1)] });
+    const batch = await appendQuestions(PENDING, { questions: [MCQ(2), MCQ(3)] });
+    expect(batch.added).toHaveLength(2);
+    const one = await addQuestion(PENDING, MCQ(4));
+    expect(one.form.questions).toHaveLength(4);
+    expect(one.form.published_at).toBeNull();
+    await pool.query(`insert into user_pathways (user_id, pathway_id, current_step) values ($1, $2, 0)`, [uid, PENDING]);
+    const st = await examState(uid, PENDING);
+    expect(st.state).toBe('pending');
+    expect(st.rules).toBeNull();
   });
 
   it('reads as its own state to the reader, and the routes say so rather than 404', async () => {
@@ -1271,13 +1288,16 @@ describe('an unfinished series has no certificate (`certificate: pending`)', () 
     expect(ids).toContain(PATHWAY);
     expect(ids).not.toContain(PENDING);
     const cat = await adminGet('/admin/pathways/catalog');
-    expect((cat.json().pathways as { id: string }[]).map((p) => p.id)).not.toContain(PENDING);
+    const row = (cat.json().pathways as { id: string; certifiable: boolean }[]).find((p) => p.id === PENDING);
+    expect(row).toMatchObject({ certifiable: false });
     const issue = await adminPost('/admin/certificates/issue', { phone, pathway_id: PENDING, holder_name: 'مهسا رضایی', notify: false });
     expect(issue.statusCode).toBe(400);
     expect(issue.json().error).toBe('pathway_pending');
     const form = await adminPost('/admin/exam-forms', { pathway_id: PENDING, questions: [MCQ(1), MCQ(2)] });
-    expect(form.statusCode).toBe(400);
-    expect(form.json().error).toBe('pathway_pending');
+    expect(form.statusCode).toBe(200);
+    const pub = await adminPost('/admin/exam-forms/publish', { pathway_id: PENDING });
+    expect(pub.statusCode).toBe(400);
+    expect(pub.json().error).toBe('pathway_pending');
   });
 
   it('and once the flag comes off, every one of those doors opens', async () => {
@@ -1326,12 +1346,14 @@ describe('a certificate needs at least MIN_CERTIFICATE_STEPS steps', () => {
     expect(isCertifiable(getPathwayById(PATHWAY))).toBe(true);
   });
 
-  it('a short pathway reads as pending to the reader and refuses a form by name', async () => {
+  it('a short pathway reads as pending to the reader; its bank can be written but not published', async () => {
     withSteps(MIN_CERTIFICATE_STEPS - 1);
     const uid = await userId();
     await pool.query(`insert into user_pathways (user_id, pathway_id, current_step) values ($1, $2, 0)`, [uid, PATHWAY]);
     expect((await examState(uid, PATHWAY)).state).toBe('pending');
-    await expect(upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2)] })).rejects.toThrow('pathway_pending');
+    await upsertForm(PATHWAY, { questions: [MCQ(1), MCQ(2)] });
+    await expect(publishForm(PATHWAY)).rejects.toThrow('pathway_pending');
+    expect((await examState(uid, PATHWAY)).state).toBe('pending');
     await expect(setCertificateIntent(uid, PATHWAY, 'wanted')).rejects.toThrow('pathway_pending');
   });
 

@@ -1066,13 +1066,21 @@ function renderHtml(
     var STATUS = { open: 'باز', queued: 'در صف', passed: 'قبول', failed: 'رد', void: 'باطل' };
 
     get('/admin/pathways/catalog').then(function (d) {
-      var opts = (d.pathways || []).map(function (p) {
-        titles[p.id] = p.title_fa;
-        return '<option value="' + esc(p.id) + '">' + esc(p.title_fa) + ' (' + fa(p.steps) + ')</option>';
-      }).join('');
-      document.getElementById('efPath').innerHTML = opts;
-      document.getElementById('exPath').innerHTML = opts;
-      var ce = document.getElementById('cePath'); if (ce) ce.innerHTML = opts;
+      // The question bank takes every full pathway — one that cannot certify
+      // yet is marked, and its questions wait there as a draft. Assigning an
+      // exam and issuing a certificate take only the certifiable ones.
+      function opts(onlyCertifiable) {
+        return (d.pathways || []).filter(function (p) {
+          return !onlyCertifiable || p.certifiable !== false;
+        }).map(function (p) {
+          titles[p.id] = p.title_fa;
+          return '<option value="' + esc(p.id) + '">' + esc(p.title_fa) + ' (' + fa(p.steps) + ')'
+            + (p.certifiable === false ? ' — هنوز گواهی ندارد؛ فقط بانک سؤال' : '') + '</option>';
+        }).join('');
+      }
+      document.getElementById('efPath').innerHTML = opts(false);
+      document.getElementById('exPath').innerHTML = opts(true);
+      var ce = document.getElementById('cePath'); if (ce) ce.innerHTML = opts(true);
     }).catch(function () { efOut.textContent = 'فهرست مسیرها نیامد.'; })
       .then(function () { loadForms(); loadAssign(); loadQueue(); loadPool(); });
 
@@ -5233,14 +5241,16 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
    */
 
   // GET /admin/pathways/catalog — the full pathways as {id, title_fa}, so the
-  // two forms below offer a picker rather than a free-text id.
+  // forms below offer a picker rather than a free-text id.
   app.get('/admin/pathways/catalog', async (_request, reply) => {
-    // Only pathways a certificate can be earned for: a form or a hand issue
-    // for a pending one is refused by the service anyway, so the picker
-    // should not offer it.
+    // Every FULL pathway, each saying whether it certifies: the question bank
+    // is open on all of them (a pending one is prepared while its series is
+    // written, founder 1405/07/03), while assignment and hand issue are
+    // refused by the service on a non-certifiable one, so the panel offers
+    // those two only the certifiable rows.
     const pathways = getPathways()
-      .filter(isCertifiable)
-      .map((p) => ({ id: p.id, title_fa: p.title_fa, steps: p.steps.length }));
+      .filter((p) => p.kind !== 'bundle')
+      .map((p) => ({ id: p.id, title_fa: p.title_fa, steps: p.steps.length, certifiable: isCertifiable(p) }));
     return reply.send({ ok: true, pathways });
   });
 
@@ -5469,7 +5479,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       const code = (err as Error).message;
       const messages: Record<string, string> = {
         unknown_pathway: 'این مسیر وجود ندارد (باندل‌ها آزمون ندارند).',
-        pathway_pending: 'این مسیر هنوز کامل نشده — تا آمدنِ آخرین قسمت آزمون ندارد.',
+        pathway_pending: 'این مسیر هنوز گواهی ندارد (certificate: pending، یا کمتر از حدّ قدم‌ها) — سؤال‌هایش در بانک می‌مانند و وقتی گواهی‌اش باز شد، اعلام آمادگی ممکن است.',
         no_form: 'هنوز برای این مسیر سؤالی نوشته نشده.',
         empty_pool: 'مخزنِ این مسیر خالی است؛ آزمونی که سؤال ندارد، خودبه‌خود قبول می‌کند.',
       };

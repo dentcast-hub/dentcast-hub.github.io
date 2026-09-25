@@ -353,7 +353,10 @@ const intIn = (v: unknown, lo: number, hi: number, dflt: number): number =>
 export async function upsertForm(pathwayId: string, input: FormInput, client: Queryable = pool): Promise<{ form: ExamForm; created: boolean }> {
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
-  if (!isCertifiable(pathway)) throw new Error('pathway_pending');
+  // WRITING the bank stays open on a pathway that cannot certify yet (pending,
+  // or under MIN_CERTIFICATE_STEPS): the founder prepares its questions while
+  // the series is still being written (1405/07/03). Nothing reaches a reader —
+  // publishForm, examState and every reader door still read isCertifiable().
   const norm = parseQuestions(input.questions);
   if (!norm.ok) throw new Error(`invalid_questions:${norm.error}`);
   const d = config.exam;
@@ -414,7 +417,10 @@ export async function addQuestion(
 ): Promise<{ form: ExamForm; question: ExamQuestion; created: boolean }> {
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
-  if (!isCertifiable(pathway)) throw new Error('pathway_pending');
+  // WRITING the bank stays open on a pathway that cannot certify yet (pending,
+  // or under MIN_CERTIFICATE_STEPS): the founder prepares its questions while
+  // the series is still being written (1405/07/03). Nothing reaches a reader —
+  // publishForm, examState and every reader door still read isCertifiable().
 
   return withTransaction(async (client) => {
     const form = await one<ExamForm>(`${FORM_SELECT} where pathway_id = $1 for update`, [pathwayId], client);
@@ -474,7 +480,10 @@ export async function appendQuestions(
 ): Promise<{ form: ExamForm; created: boolean; added: ExamQuestion[]; skipped: number }> {
   const pathway = getPathwayById(pathwayId);
   if (!pathway || pathway.kind === 'bundle') throw new Error('unknown_pathway');
-  if (!isCertifiable(pathway)) throw new Error('pathway_pending');
+  // WRITING the bank stays open on a pathway that cannot certify yet (pending,
+  // or under MIN_CERTIFICATE_STEPS): the founder prepares its questions while
+  // the series is still being written (1405/07/03). Nothing reaches a reader —
+  // publishForm, examState and every reader door still read isCertifiable().
   const norm = parseQuestions(input.questions);
   if (!norm.ok) throw new Error(`invalid_questions:${norm.error}`);
 
