@@ -24,15 +24,15 @@
 // answers were right, how many key points each free answer covered — and
 // never the key itself: the pool is small and the second attempt may draw
 // the same question.
-import { el, faNum, debounce } from './util.js?v=147';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=147';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=147';
-import { openLoginModal } from './login-modal.js?v=147';
-import { registerSW } from './pwa.js?v=147';
-import { wirePageBack } from './page-back.js?v=147';
-import { intentRow } from './pathways.js?v=147';
-import { certificateTerms } from './certificate-terms.js?v=147';
-import { openSheet } from './sheet.js?v=147';
+import { el, faNum, debounce } from './util.js?v=148';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=148';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=148';
+import { openLoginModal } from './login-modal.js?v=148';
+import { registerSW } from './pwa.js?v=148';
+import { wirePageBack } from './page-back.js?v=148';
+import { intentRow } from './pathways.js?v=148';
+import { certificateTerms } from './certificate-terms.js?v=148';
+import { openSheet } from './sheet.js?v=148';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' });
 const FA_DATETIME = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium', timeStyle: 'short' });
@@ -423,12 +423,15 @@ export function renderState(root, id, s) {
 }
 
 /** Fetch and draw. Exported for the DOM test. */
-export async function renderExam(root, id) {
+export async function renderExam(root, id, opts = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری…'));
   try {
     const s = await api.exam(id);
     renderState(root, id, s);
   } catch (e) {
+    // A pathway the reader's plan does not open — the server decides per
+    // pathway (`premium: false` opens one to everybody), the page only draws.
+    if (e instanceof ApiError && e.status === 402 && opts.onLocked) { opts.onLocked(); return; }
     if (e instanceof ApiError && e.status === 404) {
       root.replaceChildren(el('div', { class: 'dcp-empty' }, [
         el('p', {}, 'این مسیر آزمون ندارد.'),
@@ -479,7 +482,10 @@ async function main() {
     ]));
     return;
   }
-  if (user.tier !== 'premium') { gate(root, user); return; }
+  // Premium per PATHWAY: a free reader is sent to the exam too, and a 402
+  // from the server (a pathway the file does not open to everybody) draws
+  // the gate. The server decides; the page never keeps its own list.
+  if (user.tier !== 'premium') { await renderExam(root, id, { onLocked: () => gate(root, user) }); return; }
   await renderExam(root, id);
 }
 

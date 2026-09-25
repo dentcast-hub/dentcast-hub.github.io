@@ -43,6 +43,10 @@ export interface Pathway {
    * on bundles, which have no wall; callers fall back to `title_fa`. */
   short_fa?: string;
   description_fa: string;
+  /** false = open to a FREE account too: the pathway, its progress, and its
+   * exam and certificate once those are released (founder, 1405/07/03 —
+   * «ارزیابی شواهد و استدلال بالینی» is the first). Anything else, including
+   * an absent key, is premium; read it only through isOpenPathway(). */
   premium: boolean;
   /** Bundle-only: another bundle's id to point to as "do this first" (referral, not a lock). */
   prereq_bundle?: string;
@@ -130,6 +134,24 @@ export function isCertifiable(p: Pathway | null | undefined): p is Pathway {
     && p!.kind !== 'bundle'
     && p!.certificate !== 'pending'
     && (p!.steps?.length ?? 0) >= MIN_CERTIFICATE_STEPS;
+}
+
+/**
+ * A pathway a free account may open (`premium: false` in pathways.json).
+ *
+ * The switch is per PATHWAY and lives in the data, never in a route: the
+ * founder opens one pathway to everybody so a reader who has never paid can
+ * see what a pathway is, follow one to the end, and learn what a DentCast
+ * certificate means (founder, 1405/07/03). Strictly `=== false`, so a
+ * pathway added without the key stays premium — the safe default.
+ */
+export function isOpenPathway(p: Pathway | null | undefined): boolean {
+  return Boolean(p) && p!.premium === false;
+}
+
+/** May an account on `tier` open this pathway (page, enrolment, exam)? */
+export function mayOpenPathway(tier: string | null | undefined, p: Pathway | null | undefined): boolean {
+  return tier === 'premium' || isOpenPathway(p);
 }
 
 export function getPathwayById(id: string): Pathway | null {

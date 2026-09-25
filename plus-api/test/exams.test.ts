@@ -663,6 +663,22 @@ describe('who may sit it', () => {
     expect((await get(`/exams/${PATHWAY}`)).json()).toMatchObject({ ok: true, state: 'no_form' });
   });
 
+  it('a pathway open to everybody (`premium: false`) opens its exam to a free reader too', async () => {
+    const raw = JSON.parse(JSON.stringify(getPathways())) as { id: string; premium: boolean }[];
+    raw.find((x) => x.id === PATHWAY)!.premium = false;
+    expect(applyRemotePathways(raw)).toBe(true);
+    try {
+      await pool.query(`update profiles set tier = 'free' where phone = $1`, [phone]);
+      expect((await get(`/exams/${PATHWAY}`)).json()).toMatchObject({ ok: true, state: 'no_form' });
+      expect((await post(`/exams/${PATHWAY}/intent`, { intent: 'wanted' })).statusCode).toBe(200);
+      // Every other pathway keeps its gate.
+      const other = getPathways().find((p) => p.id !== PATHWAY && p.kind !== 'bundle')!.id;
+      expect((await get(`/exams/${other}`)).statusCode).toBe(402);
+    } finally {
+      resetRemotePathways();
+    }
+  });
+
   it('a certificate already held (issued by hand) reads as passed', async () => {
     const uid = await userId();
     await openForm(PATHWAY, { questions: [MCQ(1)] });

@@ -1,6 +1,6 @@
 import { config } from '../config.js';
 import { pool, one, query, withTransaction, type Queryable } from '../db.js';
-import { getPathwayById, getPathways, computeProgress, isCertifiable, type Pathway } from '../pathways.js';
+import { getPathwayById, getPathways, computeProgress, isCertifiable, isOpenPathway, type Pathway } from '../pathways.js';
 import { getContentInfo } from '../content-index.js';
 import { randomUUID } from 'node:crypto';
 import { getConsumedContentIds } from './consumption.js';
@@ -787,7 +787,10 @@ export async function announceOpenExams(
         [c.user_id, JSON.stringify({ pathway_id: c.pathway_id }), c.pathway_id],
       );
       if (claimed.rowCount === 0) continue;
-      await notifyExamOpen(c.user_id, c.pathway_id, c.tier !== 'free', opts.now);
+      // «premium» here means «may sit it»: on a pathway the file opens to
+      // everybody (isOpenPathway) a free reader may, so they get the plain line.
+      await notifyExamOpen(c.user_id, c.pathway_id,
+        c.tier !== 'free' || isOpenPathway(getPathwayById(c.pathway_id)), opts.now);
       out.told.push({ user_id: c.user_id, pathway_id: c.pathway_id });
     }
     return out;

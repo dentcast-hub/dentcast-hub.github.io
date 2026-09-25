@@ -586,6 +586,14 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-pw-chip { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: .74rem; font-weight: 700;
   border-radius: 999px; padding: 1px 9px; color: var(--dcp-cert, #1f7850); background: var(--dcp-cert-bg, rgba(31,120,80,.09)); border: 1px solid var(--dcp-cert-bd, rgba(31,120,80,.26)); }
 .dcp-pw-chip.is-soon { color: var(--txt3, #62779a); background: var(--dcp-surface2, rgba(2,35,96,.04)); border-color: var(--dcp-line, rgba(2,35,96,.12)); }
+/* A free reader's catalog (pathways.js accessChip): amber is the lock, because
+   amber means «this is what a subscription buys»; the open pathway wears the
+   site's own blue, never amber and never the certificate green. */
+.dcp-pw-lock, .dcp-pw-free { flex: 0 0 auto; font-size: .72rem; font-weight: 700; border-radius: 999px; padding: 1px 9px; white-space: nowrap; }
+.dcp-pw-lock { color: var(--dcp-gold, #b7791f); background: var(--dcp-gold-bg, rgba(183,121,31,.10)); border: 1px solid rgba(183,121,31,.30); }
+.dcp-pw-free { color: var(--dcp-accent, #0b5fff); background: rgba(11,95,255,.08); border: 1px solid rgba(11,95,255,.24); }
+.dcp-pw-card.is-locked { opacity: .78; }
+.dcp-pw-freenote { margin: 10px 0 4px; font-size: .86rem; line-height: 1.9; color: var(--txt2, #4a5f85); }
 /* The terms sheet (plus/js/certificate-terms.js). */
 .dcp-terms { list-style: none; padding: 0; margin: 8px 0 0; }
 .dcp-terms li { display: flex; gap: 9px; padding: 7px 0; border-bottom: 1px solid var(--dcp-line, rgba(2,35,96,.10)); font-size: .86rem; line-height: 1.8; }

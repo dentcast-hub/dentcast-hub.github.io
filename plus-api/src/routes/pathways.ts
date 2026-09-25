@@ -1,11 +1,11 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
-import { requirePremium } from '../middleware/require-premium.js';
 import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
 import { getConsumedContentIds } from '../services/consumption.js';
 import {
-  getPathways, getPathwayById, resolveSteps, computeProgress, isCertifiable, type PathwayProgress,
+  getPathways, getPathwayById, resolveSteps, computeProgress, isCertifiable, isOpenPathway, mayOpenPathway,
+  type PathwayProgress,
 } from '../pathways.js';
 
 // Phase 3: curated learning pathways (spec sections 5 + 8). Definitions live in
@@ -13,8 +13,19 @@ import {
 // enrollment + a progress cache live in `user_pathways`. Progress itself is
 // DERIVED from highlights/user_activity (the source of truth) on every read —
 // there is no "mark step complete" endpoint — so it self-heals exactly like
-// the streak caches do. Entirely premium (spec 6: "thematic views and
-// pathways: premium").
+// the streak caches do. Premium (spec 6: "thematic views and pathways:
+// premium") — per PATHWAY, not per route: a pathway whose file entry says
+// `premium: false` is open to a free account too (isOpenPathway, founder
+// 1405/07/03), and the catalog shows a free reader every pathway with the
+// rest marked `open: false` so the locked ones are still there to want.
+
+/** The same 402 requirePremium answers, for one pathway at a time. */
+function premiumRequired(reply: import('fastify').FastifyReply) {
+  return reply.code(402).send({
+    error: 'premium_required',
+    message: 'این مسیر نیازمند اشتراک پریمیوم است.',
+  });
+}
 
 async function syncEnrollmentCache(userId: string, pathwayId: string, progress: PathwayProgress): Promise<void> {
   await pool.query(
@@ -28,7 +39,6 @@ async function syncEnrollmentCache(userId: string, pathwayId: string, progress: 
 
 export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAuth);
-  app.addHook('preHandler', requirePremium);
 
   // GET /pathways - every pathway with the caller's own progress overlaid,
   // enrolled or not: browsing gives credit for content already consumed before
@@ -58,10 +68,15 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
     const intentBy = new Map(enrolled.rows.map((r) => [r.pathway_id, r.certificate_intent]));
     const heldSet = new Set(held.rows.map((r) => r.pathway_id));
 
+    const tier = request.user!.tier;
     const pathways = getPathways().map((p) => {
       const progress = computeProgress(p, consumed);
       return {
         id: p.id,
+        // Whether THIS reader may open it; `free` says the pathway itself is
+        // open to everybody, which is what a premium reader's card can mention.
+        open: mayOpenPathway(tier, p),
+        free: isOpenPathway(p),
         kind: p.kind ?? null,
         glyph: p.glyph ?? null,
         title_fa: p.title_fa,
@@ -86,6 +101,7 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
     const { id } = request.params as { id: string };
     const pathway = getPathwayById(id);
     if (!pathway) return reply.code(404).send({ error: 'unknown_pathway' });
+    if (!mayOpenPathway(request.user!.tier, pathway)) return premiumRequired(reply);
 
     const userId = request.user!.id;
     const consumed = await getConsumedContentIds(userId);
@@ -113,6 +129,7 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
       glyph: pathway.glyph ?? null,
       title_fa: pathway.title_fa,
       description_fa: pathway.description_fa,
+      free: isOpenPathway(pathway),
       prereq_bundle: prereq ? { id: prereq.id, title_fa: prereq.title_fa, glyph: prereq.glyph ?? null } : null,
       continues_pathway: continuesInto ? { id: continuesInto.id, title_fa: continuesInto.title_fa } : null,
       enrolled,
@@ -128,6 +145,7 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
     const { id } = request.params as { id: string };
     const pathway = getPathwayById(id);
     if (!pathway) return reply.code(404).send({ error: 'unknown_pathway' });
+    if (!mayOpenPathway(request.user!.tier, pathway)) return premiumRequired(reply);
 
     const userId = request.user!.id;
     const consumed = await getConsumedContentIds(userId);

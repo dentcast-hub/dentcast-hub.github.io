@@ -4,12 +4,12 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum, icon } from './util.js?v=147';
-import { api } from './api.js?v=147';
-import { FOLDER_EN } from './content-index.js?v=147';
-import { markReturnTrail } from './return-trail.js?v=147';
-import { openSheet, closeSheet } from './sheet.js?v=147';
-import { certificateTerms } from './certificate-terms.js?v=147';
+import { el, faNum, icon } from './util.js?v=148';
+import { api, ApiError } from './api.js?v=148';
+import { FOLDER_EN } from './content-index.js?v=148';
+import { markReturnTrail } from './return-trail.js?v=148';
+import { openSheet, closeSheet } from './sheet.js?v=148';
+import { certificateTerms } from './certificate-terms.js?v=148';
 
 /** A "lightning + label" chip — a leading icon from the shared sprite
  * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
@@ -45,17 +45,34 @@ function certChip(p) {
   return el('span', { class: 'dcp-pw-chip' }, '🎓 گواهی‌نامه');
 }
 
-function pathwayCard(p) {
+/** The lock or the open door, on the catalog a free reader sees. `open` comes
+ * from the server per pathway (`premium: false` in pathways.json opens one to
+ * everybody); a premium reader's catalog carries neither chip, because for
+ * them nothing is locked and «رایگان» would only be noise. Strict `=== false`,
+ * so a surface whose data has no `open` (the homepage rail) draws nothing. */
+function accessChip(p, free) {
+  if (!free) return null;
+  if (p.open === false) return el('span', { class: 'dcp-pw-lock' }, '🔒 پریمیوم');
+  if (p.free) return el('span', { class: 'dcp-pw-free' }, 'رایگان برای همه');
+  return null;
+}
+
+function pathwayCard(p, free = false) {
   const tag = p.is_complete
     ? el('span', { class: 'dcp-pw-tag is-done' }, 'تکمیل شد')
     : (p.enrolled || p.completed_steps > 0)
       ? el('span', { class: 'dcp-pw-tag is-active' }, 'ادامه')
       : null;
 
-  return el('a', { class: 'dcp-pw-card', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, [
+  return el('a', {
+    class: 'dcp-pw-card' + (p.open === false ? ' is-locked' : ''),
+    href: '/plus/pathway.html?id=' + encodeURIComponent(p.id),
+  }, [
     el('div', { class: 'dcp-pw-card-top' }, [
       el('h3', { class: 'dcp-pw-card-title' }, p.title_fa),
-      tag,
+      // The lock outranks «ادامه»: progress on a pathway you cannot open is
+      // real, but the card's first job is to say the door is shut.
+      (free && p.open === false) ? accessChip(p, free) : (tag || accessChip(p, free)),
     ]),
     el('p', { class: 'dcp-pw-card-desc' }, p.description_fa),
     progressBar(p.completed_steps, p.total_steps),
@@ -82,7 +99,7 @@ export function bundleRailCard(p) {
   const meta = started
     ? faNum(p.completed_steps) + ' از ' + faNum(p.total_steps) + ' قدم'
     : faNum(p.total_steps) + ' قدم';
-  const tag = p.is_complete ? 'تکمیل شد' : started ? 'ادامه' : null;
+  const tag = p.open === false ? '🔒 پریمیوم' : p.is_complete ? 'تکمیل شد' : started ? 'ادامه' : null;
 
   return el('a', { class: 'dcb-railcard', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, [
     el('span', { class: 'dcb-railcard-glyph' }, icon(p.glyph || 'icon-lightning')),
@@ -96,16 +113,25 @@ export function bundleRailCard(p) {
 
 /** GET /plus/pathways.html — the catalog: bundles (short, curated starters) above
  * full pathways (unchanged), own progress overlaid on both. */
-export async function renderPathwaysList(container) {
+export async function renderPathwaysList(container, opts = {}) {
   container.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
-  const data = await api.pathways().catch(() => null);
+  let locked = false;
+  const data = await api.pathways().catch((e) => {
+    locked = e instanceof ApiError && e.status === 402;
+    return null;
+  });
+  if (!data && locked && opts.onLocked) { opts.onLocked(); return; }
   if (!data) { container.replaceChildren(el('div', { class: 'dcp-empty' }, 'مسیرها در دسترس نیست.')); return; }
 
   const pathways = data.pathways || [];
   if (!pathways.length) { container.replaceChildren(el('div', { class: 'dcp-empty' }, 'هنوز مسیری تعریف نشده.')); return; }
 
   const bundles = pathways.filter((p) => p.kind === 'bundle');
-  const full = pathways.filter((p) => p.kind !== 'bundle');
+  // A free reader sees the pathway open to them FIRST; the order is otherwise
+  // the file's own (a stable sort keeps it).
+  const free = pathways.some((p) => p.open === false);
+  const full = pathways.filter((p) => p.kind !== 'bundle')
+    .sort((a, b) => (free ? Number(b.open !== false) - Number(a.open !== false) : 0));
 
   const termsLink = el('button', { class: 'dcp-cs-terms', type: 'button', 'data-cert-terms-btn': '' }, 'شرایط گواهی‌نامه');
   termsLink.addEventListener('click', () => openSheet(certificateTerms(null)));
@@ -120,6 +146,12 @@ export async function renderPathwaysList(container) {
   ]);
 
   const sections = [top];
+  if (free) {
+    const openOnes = full.filter((p) => p.open !== false);
+    sections.push(el('p', { class: 'dcp-pw-freenote' }, openOnes.length
+      ? ['مسیر «', el('b', {}, openOnes.map((p) => p.title_fa).join('»، «')), '» برای همه باز است؛ بقیه‌ی مسیرها و باندل‌ها با پریمیوم باز می‌شوند.']
+      : 'مسیرها و باندل‌ها با اشتراک پریمیوم باز می‌شوند.'));
+  }
 
   // Bundles as one compact amber band with a horizontal rail — the same
   // small, contained strip they are on the homepage, never a stack of ten
@@ -143,7 +175,7 @@ export async function renderPathwaysList(container) {
   if (full.length) {
     sections.push(el('div', { class: 'dcb-sec-head' }, [el('h3', { class: 'dcb-sec-title' }, 'مسیرهای کامل')]));
     sections.push(el('p', { class: 'dcp-sec-hint' }, 'از پایه تا پیشرفته، با همه‌ی نکته‌ها و کیس‌ها.'));
-    sections.push(el('div', { class: 'dcp-pw-grid' }, full.map(pathwayCard)));
+    sections.push(el('div', { class: 'dcp-pw-grid' }, full.map((p) => pathwayCard(p, free))));
   }
 
   container.replaceChildren(...sections);
@@ -492,9 +524,14 @@ async function mountExamCard(slot, id, started) {
 /** GET /plus/pathway.html?id=... — one pathway's full step list + progress.
  * Same view for a bundle, plus its type chip, prereq referral, and closing
  * invite into the full pathway it was drawn from. */
-export async function renderPathwayDetail(container, id) {
+export async function renderPathwayDetail(container, id, opts = {}) {
   container.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
-  const data = await api.pathway(id).catch(() => null);
+  let locked = false;
+  const data = await api.pathway(id).catch((e) => {
+    locked = e instanceof ApiError && e.status === 402;
+    return null;
+  });
+  if (!data && locked && opts.onLocked) { opts.onLocked(); return; }
   if (!data) {
     container.replaceChildren(el('div', { class: 'dcp-empty' }, [
       el('p', {}, 'این مسیر پیدا نشد.'),
