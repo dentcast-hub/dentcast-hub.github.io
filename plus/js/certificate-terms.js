@@ -14,13 +14,13 @@
 // something else. The only place a number is stated is the exam page itself,
 // where it comes from the form the reader is about to sit and is true by
 // construction. Everything here is what does not change.
-import { el } from './util.js?v=159';
-import { closeSheet } from './sheet.js?v=159';
+import { el } from './util.js?v=160';
+import { closeSheet } from './sheet.js?v=160';
 // The certificate's own words live in ONE place (CERT_TEXT) and are imported
 // by every renderer — the DOM sheet, the canvas download, and now this. The
 // «امتیاز بازآموزی نیست» line in particular belongs in front of the decision,
 // not only under a certificate already issued.
-import { CERT_TEXT } from './certificate-image.js?v=159';
+import { CERT_TEXT } from './certificate-image.js?v=160';
 
 /** What must be true — identical for every pathway, which is why it is stated once. */
 const EARN = [

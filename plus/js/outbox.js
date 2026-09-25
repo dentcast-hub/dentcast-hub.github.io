@@ -14,7 +14,7 @@
 // every page (plus.js boot) and is awaited by any surface about to READ
 // progress, so «بازگشت به فهرست» never shows a count one short of the truth.
 // A repeat is harmless: the server's log is append-only and prices repeats.
-import { api } from './api.js?v=159';
+import { api } from './api.js?v=160';
 
 const PREFIX = 'dcp:outbox:'; // + action + '|' + contentId -> epoch ms it was earned
 const MAX_AGE_MS = 30 * 24 * 3600 * 1000;
