@@ -419,21 +419,24 @@ describe('who may sit it', () => {
     expect(up.rows[0].n).toBe(1);
   });
 
-  it('finishing the pathway is the other door — but only for a reader who pressed «شروع این مسیر»', async () => {
+  it('finishing the pathway is the other door — on its own since 1405/07/03, no «شروع» needed', async () => {
     const uid = await userId();
     await openForm(PATHWAY, { questions: [MCQ(1)] });
     await finish(uid);
-    const before = await examState(uid, PATHWAY);
-    expect(before.state).toBe('locked');
-    expect(before.is_complete).toBe(true);
-    expect(before.enrolled).toBe(false);
-
-    await enroll(uid);
     const s = await examState(uid, PATHWAY);
     expect(s.state).toBe('ready');
-    expect(s.enrolled).toBe(true);
+    expect(s.is_complete).toBe(true);
+    expect(s.enrolled).toBe(false);
     expect(s.assigned).toBe(false);
     expect((await startAttempt(uid, PATHWAY, 'مهسا رضایی')).ok).toBe(true);
+  });
+
+  it('not finished and not let in: locked, whether or not «شروع» was pressed', async () => {
+    const uid = await userId();
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    expect((await examState(uid, PATHWAY)).state).toBe('locked');
+    await enroll(uid);
+    expect((await examState(uid, PATHWAY)).state).toBe('locked');
   });
 
   it('a «بله» from a reader nowhere near the end still reaches the founder, and says whether the exam is OPEN', async () => {
@@ -597,10 +600,11 @@ describe('who may sit it', () => {
   it('the wall reads the same rule', async () => {
     const uid = await userId();
     await openForm(PATHWAY, { questions: [MCQ(1)] });
+    const wall = async () => (await get('/certificates')).json().pathways.find((p: { id: string }) => p.id === PATHWAY).exam.state;
+    expect(await wall()).toBe('locked');
     await finish(uid);
-    expect((await get('/certificates')).json().pathways.find((p: { id: string }) => p.id === PATHWAY).exam.state).toBe('locked');
-    await enroll(uid);
-    expect((await get('/certificates')).json().pathways.find((p: { id: string }) => p.id === PATHWAY).exam.state).toBe('ready');
+    expect(await wall()).toBe('ready');
+    expect((await get(`/exams/${PATHWAY}`)).json().state).toBe('ready');
   });
 
   it('tells a reader let in early when the exam OPENS — and only then, once', async () => {

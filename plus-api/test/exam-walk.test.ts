@@ -116,13 +116,13 @@ describe('the whole road: a mixed exam, queued, ruled by the founder, certificat
     expect(s.rules).toMatchObject({ question_count: 3, min_answer_chars: config.exam.minAnswerChars });
     expect(s.enrolled).toBe(false);
 
-    // ── 4. reading the whole pathway is not enough — enrolment is the act
+    // ── 4. finishing the pathway IS the door (1405/07/03) — no «شروع» needed
     await readEverything();
-    expect((await examState()).state).toBe('locked');
-    expect((await post(`/exams/${PATHWAY}/start`, { holder_name: 'مهسا رضایی' })).statusCode).toBe(409);
+    expect((await examState()).state).toBe('ready');
 
-    // ── 5. «شروع این مسیر», then «بله» to the certificate question. The reader
-    //       is already finished, so that answer is news the founder gets NOW
+    // ── 5. «شروع این مسیر» changes nothing more, then «بله» to the certificate
+    //       question. The reader is already finished, so that answer is news
+    //       the founder gets NOW
     await post(`/pathways/${PATHWAY}/enroll`);
     expect((await examState()).state).toBe('ready');
     const intent = await post(`/exams/${PATHWAY}/intent`, { intent: 'wanted' });

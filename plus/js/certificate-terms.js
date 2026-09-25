@@ -14,13 +14,13 @@
 // something else. The only place a number is stated is the exam page itself,
 // where it comes from the form the reader is about to sit and is true by
 // construction. Everything here is what does not change.
-import { el } from './util.js?v=151';
-import { closeSheet } from './sheet.js?v=151';
+import { el } from './util.js?v=152';
+import { closeSheet } from './sheet.js?v=152';
 // The certificate's own words live in ONE place (CERT_TEXT) and are imported
 // by every renderer — the DOM sheet, the canvas download, and now this. The
 // «امتیاز بازآموزی نیست» line in particular belongs in front of the decision,
 // not only under a certificate already issued.
-import { CERT_TEXT } from './certificate-image.js?v=151';
+import { CERT_TEXT } from './certificate-image.js?v=152';
 
 /** What must be true — identical for every pathway, which is why it is stated once. */
 const EARN = [
@@ -61,7 +61,7 @@ export function certificateTerms(titleFa, onBack) {
     // Founder, 1405/07/03: sitting needs no subscription — what premium buys
     // is the road to this point, said here so the terms never read as a paywall.
     el('p', { class: 'dcp-terms-pend', 'data-cert-terms-plan': '' },
-      'اشتراک پریمیوم برای آزمون لازم نیست. پریمیوم مسیرِ منظم تا این‌جا را می‌دهد: ترتیب خواندن، پیشرفت، و اینکه کدام قدم مانده. مشترک‌ها با «شروع این مسیر» روی مسیر می‌آیند؛ برای بقیه، تمام‌کردن مسیر خودش کافی است.'),
+      'اشتراک پریمیوم برای آزمون لازم نیست. پریمیوم مسیرِ منظم تا این‌جا را می‌دهد: ترتیب خواندن، پیشرفت، و اینکه کدام قدم مانده.'),
     el('div', { class: 'dcp-terms-h' }, 'چه چیزی به دست می‌آید'),
     list(GET, '◆'),
     // Deliberately says WHERE the numbers are rather than what they are.

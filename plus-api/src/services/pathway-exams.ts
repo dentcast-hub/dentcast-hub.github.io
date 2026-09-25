@@ -1215,7 +1215,7 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
     discount: certificateDiscount(pathway),
   };
 
-  const [form, consumed, assigned, enrolled, cert, profile] = await Promise.all([
+  const [form, consumed, assigned, enrolled, cert] = await Promise.all([
     getForm(pathwayId),
     getConsumedContentIds(userId),
     one<{ id: string }>('select id from pathway_exams where user_id = $1 and pathway_id = $2', [userId, pathwayId]),
@@ -1226,10 +1226,9 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
       'select id, verify_code from certificates where user_id = $1 and pathway_id = $2 and revoked_at is null',
       [userId, pathwayId],
     ),
-    one<{ tier: string }>('select tier from profiles where id = $1', [userId]),
   ]);
   base.is_complete = computeProgress(pathway, consumed).is_complete;
-  const onPathway = countsAsEnrolled(Boolean(enrolled), base.is_complete, profile?.tier, pathway);
+  const onPathway = countsAsEnrolled(Boolean(enrolled), base.is_complete);
   base.assigned = Boolean(assigned);
   base.enrolled = Boolean(enrolled);
   base.certificate_intent = enrolled?.certificate_intent ?? null;
@@ -1332,15 +1331,18 @@ export async function readerAccess(
 }
 
 /**
- * The exam's enrolment rule, for everybody. A reader who may open the pathway
- * enrols with «شروع این مسیر» (founder, 2026-09-12 — the deliberate act). A
- * reader who may NOT has no such button — it lives on the pathway page — so
- * for them FINISHING is the enrolment. Decided here, where the state is
- * computed, and never written as a side effect of reading a page: the exam
- * page, the certificate wall and «شروع» must all say the same thing.
+ * The exam's enrolment rule: «شروع این مسیر», OR having finished the pathway.
+ *
+ * It was «شروع» alone (founder, 2026-09-12 — the deliberate act). Since
+ * 1405/07/03 finishing opens the exam to a reader without the plan, who has
+ * no such button; keeping the old rule for subscribers alone would make the
+ * paying reader the one with the stricter door, and would contradict the
+ * «آزمون باز است» notice every finisher now gets. Decided here, where the
+ * state is computed, and never written as a side effect of reading a page:
+ * the exam page, the certificate wall and «شروع» must all say the same thing.
  */
-function countsAsEnrolled(enrolled: boolean, complete: boolean, tier: string | null | undefined, pathway: Pathway): boolean {
-  return enrolled || (complete && !mayOpenPathway(tier, pathway));
+function countsAsEnrolled(enrolled: boolean, complete: boolean): boolean {
+  return enrolled || complete;
 }
 
 /* ---------------------------------------------------------------- start -- */
@@ -1980,7 +1982,7 @@ export async function attemptRoster(limit = 200): Promise<RosterRow[]> {
 export async function examStates(userId: string, pathwayIds: string[]): Promise<Map<string, ExamStateKind>> {
   const out = new Map<string, ExamStateKind>();
   if (!pathwayIds.length) return out;
-  const [forms, consumed, assigned, enrolled, attempts, profile] = await Promise.all([
+  const [forms, consumed, assigned, enrolled, attempts] = await Promise.all([
     query<{
       pathway_id: string; max_attempts: number; retry_days: number;
       question_count: number; published_at: Date | null;
@@ -1995,7 +1997,6 @@ export async function examStates(userId: string, pathwayIds: string[]): Promise<
     query<{ pathway_id: string; status: AttemptStatus; submitted_at: Date | null }>(
       'select pathway_id, status, submitted_at from pathway_exam_attempts where user_id = $1', [userId],
     ),
-    one<{ tier: string }>('select tier from profiles where id = $1', [userId]),
   ]);
   const formBy = new Map(forms.rows.map((f) => [f.pathway_id, f]));
   // Article questions count toward a pathway's pool too — one query over
@@ -2024,7 +2025,7 @@ export async function examStates(userId: string, pathwayIds: string[]): Promise<
     if (!form.published_at) { out.set(id, 'no_form'); continue; }
     const pathway = getPathwayById(id);
     const complete = pathway ? computeProgress(pathway, consumed).is_complete : false;
-    const onPathway = pathway ? countsAsEnrolled(enrolledSet.has(id), complete, profile?.tier, pathway) : false;
+    const onPathway = countsAsEnrolled(enrolledSet.has(id), complete);
     if (!onPathway || (!complete && !assignedSet.has(id))) { out.set(id, 'locked'); continue; }
     const counted = mine.filter((a) => COUNTED.includes(a.status));
     if (counted.length >= form.max_attempts) { out.set(id, 'exhausted'); continue; }
