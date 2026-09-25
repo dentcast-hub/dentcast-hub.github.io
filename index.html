@@ -4879,6 +4879,9 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 .dcp-hf .dcp-pws-pgl{ flex:none; font-size:.62rem; }
 .dcp-hf .dcp-pws-cat{ display:block; text-align:center; margin-top:.55rem; font-size:.74rem; font-weight:800; color:var(--ac); text-decoration:none; }
 .dcp-hf .dcp-pp-showcase:empty{ display:none; }
+/* above مسیریاب: the host's wrapper adds no margin of its own; the card's does */
+.dc-pathway-showcase > .dcp-hf{ margin:0; }
+.dc-pathway-showcase .dcp-pws{ margin:.7rem 0 0; }
 .dcp-hf .dcp-pp-showcase .dcp-pws{ margin:.2rem 0 .9rem; }
   </style>
 </head>
@@ -5531,6 +5534,15 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
            in wayfinder.js) — so per the site-wide rule that amber marks what
            a subscription buys, the card says that honestly up front instead
            of advertising a free tool in blue. -->
+      <!-- «مسیرهای یادگیری» showcase (plus/js/pathway-showcase.js, drawn by
+           home-features.js for a guest or free reader) — directly ABOVE
+           مسیریاب, founder 1405/07/03: the pathways come first and the
+           wayfinder sits under them. spot.js's homepage ad anchors above THIS
+           slot when it is on the page, so the paid card keeps its place right
+           under the episode hero and the showcase and مسیریاب stay adjacent.
+           Empty and hidden for a subscriber (no showcase, no ad either). -->
+      <div id="dcPathwayShowcase" class="dc-pathway-showcase" aria-label="مسیرهای یادگیری" hidden></div>
+
       <a class="dc-wf-home-entry" id="dcWayfinderHome" href="/plus/wayfinder.html" aria-label="مسیریاب یادگیری">
         <span class="dc-wf-top">
           <span class="dc-wf-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.2 8.8l-2 5.2-5.2 2 2-5.2 5.2-2z"/></svg></span>
@@ -6465,6 +6477,10 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
                position the phone gives it and for the same reason: it helps a
                visitor find their way BEFORE they would browse the grid by hand.
                Amber throughout, like the phone's — only «چیکاره‌ای؟» is free. -->
+          <!-- The desktop layout's copy of #dcPathwayShowcase, above مسیریاب
+               for the same reason; spot.js anchors the desktop ad above it. -->
+          <div id="dcdPathwayShowcase" class="dc-pathway-showcase" aria-label="مسیرهای یادگیری" hidden></div>
+
           <a class="dc-wf-home-entry" id="dcdWayfinderHome" href="/plus/wayfinder.html" aria-label="مسیریاب یادگیری">
     <span class="dc-wf-top">
     <span class="dc-wf-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.2 8.8l-2 5.2-5.2 2 2-5.2 5.2-2z"/></svg></span>
@@ -7154,7 +7170,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=247" defer></script>
+<script src="/dc-nav.js?v=248" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

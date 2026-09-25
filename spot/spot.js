@@ -67,7 +67,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=155';
+import { findProseRoot } from '/plus/js/config.js?v=156';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -161,7 +161,7 @@ function report(kind, slotName, creativeId) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ [key]: name, content_id: contentId }),
   });
-  import('/plus/js/api.js?v=155')
+  import('/plus/js/api.js?v=156')
     .then((m) => m.apiBase())
     .then((base) => {
       if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
@@ -180,7 +180,7 @@ function report(kind, slotName, creativeId) {
       // A network-level failure (not an HTTP error) may mean the cached base is
       // dead — self-heal so the NEXT event, and the next page's /me, re-probe
       // instead of retrying the same unreachable host all session.
-      import('/plus/js/api.js?v=155').then((m) => m.forgetBase()).catch(() => {});
+      import('/plus/js/api.js?v=156').then((m) => m.forgetBase()).catch(() => {});
     });
 }
 
@@ -950,7 +950,15 @@ function renderHome(cfg, creative) {
   // page so the ad still renders directly ABOVE it (paid placement stays
   // first), falling back to the old heading/grid anchor otherwise so nothing
   // breaks if that element is ever removed.
-  const wf = document.querySelector('#panel-studio #dcWayfinderHome');
+  //
+  // The «مسیرهای یادگیری» showcase host sits directly above مسیریاب (founder,
+  // 1405/07/03), so the card anchors above THAT when it is on the page: the
+  // paid card keeps its place right under the featured episode, and the
+  // showcase and مسیریاب stay adjacent instead of being split by the ad. The
+  // host is static HTML (present, if empty, before any module draws into it),
+  // so the anchor never depends on the showcase's own fetch.
+  const wf = document.querySelector('#panel-studio #dcPathwayShowcase')
+    || document.querySelector('#panel-studio #dcWayfinderHome');
   const cats = document.querySelector('#panel-studio .dc-exa-cats');
   if (wf) {
     wf.parentNode.insertBefore(buildCard(creative, 'home'), wf);
@@ -983,7 +991,9 @@ function renderHome(cfg, creative) {
   // Same fallback chain as the phone's, one anchor at a time, so the card can
   // never disappear if a block is removed: مسیریاب → the «دسته‌های محتوا»
   // heading → the Pulse it used to sit under.
-  const dWf = document.querySelector('#dcd-welcome-feed #dcdWayfinderHome');
+  // (The showcase host first, then مسیریاب — the phone's reasoning above.)
+  const dWf = document.querySelector('#dcd-welcome-feed #dcdPathwayShowcase')
+    || document.querySelector('#dcd-welcome-feed #dcdWayfinderHome');
   const dCats = document.querySelector('#dcd-welcome-feed .dc-exa-cats');
   const dPulse = document.querySelector('#dcdPulse');
   if (dWf) {
@@ -1196,7 +1206,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=155')
+  return import('/plus/js/api.js?v=156')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
