@@ -902,7 +902,26 @@ function renderHtml(
         + ' · نوتیف فقط برای کسی که گفته <b>گواهی می‌خواهد</b> (بقیه فقط در همین جدول)'
         + (d.alert_phone_set ? '' : ' · <b>شمارهٔ هشدار تنظیم نشده — فقط همین جدول</b>')
         + '</div>';
-      box.innerHTML = head
+      // Split by plan: who would the exam reach if it opened to readers
+      // without a subscription. Counts only — the rows below name people.
+      var rb = d.readers_by_tier;
+      var byTier = '';
+      if (rb && rb.totals) {
+        var t = rb.totals;
+        byTier = '<h4 style="margin-top:14px">به تفکیک اشتراک</h4>'
+          + '<div class="muted">تمام‌کرده / تا ' + fa(rb.near_remaining) + ' قدم مانده — رایگان: <b>'
+          + fa(t.free_done) + '</b> / ' + fa(t.free_near) + ' · پریمیوم: <b>' + fa(t.premium_done) + '</b> / '
+          + fa(t.premium_near) + '</div>'
+          + (rb.pathways.length
+            ? '<div class="tblwrap"><table><tr><th>مسیر</th><th>رایگان: تمام</th><th>رایگان: نزدیک</th>'
+              + '<th>پریمیوم: تمام</th><th>پریمیوم: نزدیک</th></tr>'
+              + rb.pathways.map(function (r) {
+                return '<tr><td>' + esc(r.title_fa) + '</td><td><b>' + fa(r.free_done) + '</b></td><td>'
+                  + fa(r.free_near) + '</td><td>' + fa(r.premium_done) + '</td><td>' + fa(r.premium_near) + '</td></tr>';
+              }).join('') + '</table></div>'
+            : '');
+      }
+      box.innerHTML = head + byTier
         + '<h4 style="margin-top:14px">تمام کرده‌اند (' + fa(c.done || 0) + ')</h4>'
         + table(d.done || [], { who: 'کاربر' })
         + '<h4 style="margin-top:14px">نزدیک پایان (' + fa(c.near || 0) + ')</h4>'
@@ -5115,6 +5134,34 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
    * `done` and `near` are the two answers that mean yes. `walking` is the tail,
    * capped, and exists only to show the pipeline is not empty.
    */
+  /**
+   * How many readers, split by plan, have FINISHED each pathway or stand within
+   * the reader's own «almost there» threshold of it. The founder's first
+   * question about opening the exam to readers without a subscription
+   * (1405/07/03) was «is this ten people or a hundred», and the standings
+   * already hold the answer for everybody — nobody had split them by plan.
+   * «premium» is the live tier; everyone else (free, lapsed) is one column,
+   * because that is who the change is for.
+   */
+  function readersByTier(standings: Awaited<ReturnType<typeof pathwayStandings>>, readerNear: number) {
+    const rows = new Map<string, { pathway_id: string; title_fa: string; free_done: number; free_near: number; premium_done: number; premium_near: number }>();
+    for (const s of standings) {
+      const stage = s.remaining === 0 ? 'done' : s.remaining <= readerNear ? 'near' : null;
+      if (!stage) continue;
+      const row = rows.get(s.pathway_id) ?? { pathway_id: s.pathway_id, title_fa: s.title_fa, free_done: 0, free_near: 0, premium_done: 0, premium_near: 0 };
+      const plan = s.tier === 'premium' ? 'premium' : 'free';
+      row[`${plan}_${stage}` as 'free_done'] += 1;
+      rows.set(s.pathway_id, row);
+    }
+    const pathways = [...rows.values()].sort((a, b) => (b.free_done + b.free_near) - (a.free_done + a.free_near));
+    const sum = (k: 'free_done' | 'free_near' | 'premium_done' | 'premium_near') => pathways.reduce((n, r) => n + r[k], 0);
+    return {
+      near_remaining: readerNear,
+      totals: { free_done: sum('free_done'), free_near: sum('free_near'), premium_done: sum('premium_done'), premium_near: sum('premium_near') },
+      pathways,
+    };
+  }
+
   app.get('/admin/pathways', async (_request, reply) => {
     const near = config.pathwayAlert.nearRemaining;
     const standings = await pathwayStandings();
@@ -5153,6 +5200,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       done: done.map(shape),
       near: nearEnd.map(shape),
       walking: walking.slice(0, 40).map(shape),
+      readers_by_tier: readersByTier(standings, config.pathwayAlert.readerNearRemaining),
     });
   });
 

@@ -357,6 +357,20 @@ describe('GET /admin/pathways', () => {
     expect(row.alertable).toBe(false);
   });
 
+  it('counts finishers and near-finishers by plan, per pathway', async () => {
+    const other = '09121200079';
+    await loginAs(app, other);
+    await setTier('premium', other);
+    await consume(STEPS);                                  // free, finished
+    await consume(STEPS.slice(0, STEPS.length - 2), other); // premium, two left
+    const res = await app.inject({ method: 'GET', url: '/admin/pathways', headers: { authorization: basic } });
+    const rb = res.json().readers_by_tier;
+    expect(rb.near_remaining).toBe(config.pathwayAlert.readerNearRemaining);
+    expect(rb.totals).toMatchObject({ free_done: 1, free_near: 0, premium_done: 0, premium_near: 1 });
+    expect(rb.pathways.find((r: { pathway_id: string }) => r.pathway_id === PATHWAY_ID))
+      .toMatchObject({ free_done: 1, premium_near: 1 });
+  });
+
   it('refuses without admin credentials', async () => {
     const res = await app.inject({ method: 'GET', url: '/admin/pathways' });
     expect(res.statusCode).toBe(401);
