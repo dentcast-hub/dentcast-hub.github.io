@@ -547,7 +547,7 @@ describe('who may sit it', () => {
     expect(await notices(uid)).toHaveLength(1);
   });
 
-  it('a lapsed subscriber is told too, and the message says what it costs', async () => {
+  it('a lapsed subscriber is told too — and, having finished, may simply sit it', async () => {
     const uid = await userId();
     await finish(uid); await enroll(uid);
     await setCertificateIntent(uid, PATHWAY, 'wanted');
@@ -556,8 +556,9 @@ describe('who may sit it', () => {
     expect((await announceOpenExams()).told).toHaveLength(1);
     const n = await notices(uid);
     expect(n).toHaveLength(1);
-    expect(n[0].body).toContain('اشتراک پریمیوم');
-    expect(n[0].body).not.toContain('هر وقت خواستی شروع کن');
+    expect(n[0].body).toContain('هر وقت خواستی شروع کن');
+    expect(n[0].body).not.toContain('اشتراک');
+    expect((await get(`/exams/${PATHWAY}`)).json()).toMatchObject({ ok: true, state: 'ready' });
   });
 
   it('«گواهی می‌خواهی؟» — the answer enrols, is reversible, and a «بله» from somebody near the end reaches the founder at once', async () => {
@@ -690,6 +691,96 @@ describe('who may sit it', () => {
 });
 
 /* ------------------------------------------------------------ the draw -- */
+
+/*
+ * A reader WITHOUT a subscription on a premium pathway (founder, 1405/07/03):
+ * the pathway page stays theirs to open only with a subscription, but the exam
+ * opens once they have FINISHED it with their own reading — «we guarantee
+ * that whoever read it all can earn it, not that everybody will».
+ */
+describe('a reader without a subscription', () => {
+  const free = () => pool.query(`update profiles set tier = 'free' where phone = $1`, [phone]);
+  const sit = async () => {
+    const st = await post(`/exams/${PATHWAY}/start`, { holder_first_name: 'مهسا', holder_last_name: 'رضایی' });
+    expect(st.statusCode).toBe(200);
+    return st.json().open.questions.map((q: { id: string }) => q.id) as string[];
+  };
+
+  it('has not finished: every exam door is the premium 402, saying which door it is', async () => {
+    await free();
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    const uid = await userId();
+    for (const cid of STEPS.slice(0, -1)) {
+      await pool.query(`insert into user_activity (user_id, action, content_id) values ($1, 'article_completed', $2)`, [uid, cid]);
+    }
+    const g = await get(`/exams/${PATHWAY}`);
+    expect(g.statusCode).toBe(402);
+    expect(g.json()).toMatchObject({ error: 'premium_required', reason: 'incomplete' });
+    expect((await post(`/exams/${PATHWAY}/intent`, { intent: 'wanted' })).statusCode).toBe(402);
+    expect((await post(`/exams/${PATHWAY}/start`, { holder_first_name: 'مهسا', holder_last_name: 'رضایی' })).statusCode).toBe(402);
+    // Nothing was written on their behalf.
+    expect((await pool.query('select 1 from user_pathways where user_id = $1', [uid])).rowCount).toBe(0);
+  });
+
+  it('has finished: enrolled by finishing, sits, passes, holds a certificate and ٪۱۰ — the pathway page stays locked', async () => {
+    await free();
+    await openForm(PATHWAY, { questions: [MCQ(1), MCQ(2)] });
+    const uid = await userId();
+    await finish(uid);
+    expect((await get(`/pathways/${PATHWAY}`)).statusCode).toBe(402);
+
+    const s = (await get(`/exams/${PATHWAY}`)).json();
+    expect(s).toMatchObject({ ok: true, state: 'ready', enrolled: true, is_complete: true });
+    const ids = await sit();
+    const done = await post(`/exams/${PATHWAY}/submit`, { answers: Object.fromEntries(ids.map((id) => [id, 1])) });
+    expect(done.json()).toMatchObject({ state: 'passed' });
+    expect(done.json().certificate.verify_code).toMatch(/^DC-/);
+    const credits = await availableCredits(uid);
+    expect(credits.find((c) => c.kind === 'grant')?.percent).toBe(10);
+    expect((await get(`/pathways/${PATHWAY}`)).statusCode).toBe(402);
+  });
+
+  it('a pathway that GROWS mid-attempt never strands the attempt, and a pass stays readable', async () => {
+    await free();
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    await finish(await userId());
+    const ids = await sit();
+    const raw = JSON.parse(JSON.stringify(getPathways())) as { id: string; steps: { content_id: string }[] }[];
+    const extra = raw.find((x) => x.id !== PATHWAY && x.steps.length)!.steps
+      .find((st) => !STEPS.includes(st.content_id))!;
+    raw.find((x) => x.id === PATHWAY)!.steps.push(extra);
+    expect(applyRemotePathways(raw)).toBe(true);
+    try {
+      expect((await get(`/exams/${PATHWAY}`)).json().state).toBe('open');
+      const done = await post(`/exams/${PATHWAY}/submit`, { answers: { [ids[0]]: 1 } });
+      expect(done.json().state).toBe('passed');
+      expect((await get(`/exams/${PATHWAY}`)).json().state).toBe('passed');
+    } finally {
+      resetRemotePathways();
+    }
+  });
+
+  it('let in early by the founder: through the door without finishing', async () => {
+    await free();
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    await assignExam(await userId(), PATHWAY);
+    expect((await get(`/exams/${PATHWAY}`)).json()).toMatchObject({ ok: true, state: 'ready', assigned: true });
+  });
+
+  it('a subscriber is untouched, and the pathway open to everybody still needs no finishing', async () => {
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    expect((await get(`/exams/${PATHWAY}`)).json()).toMatchObject({ ok: true, state: 'locked' });
+    await free();
+    const raw = JSON.parse(JSON.stringify(getPathways())) as { id: string; premium: boolean }[];
+    raw.find((x) => x.id === PATHWAY)!.premium = false;
+    expect(applyRemotePathways(raw)).toBe(true);
+    try {
+      expect((await get(`/exams/${PATHWAY}`)).json()).toMatchObject({ ok: true, state: 'locked', enrolled: false });
+    } finally {
+      resetRemotePathways();
+    }
+  });
+});
 
 describe('the draw', () => {
   it('takes the whole pool at 0, n otherwise, and prefers questions the reader has not seen', () => {

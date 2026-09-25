@@ -796,10 +796,10 @@ export async function announceOpenExams(
         [c.user_id, JSON.stringify({ pathway_id: c.pathway_id }), c.pathway_id],
       );
       if (claimed.rowCount === 0) continue;
-      // «premium» here means «may sit it»: on a pathway the file opens to
-      // everybody (isOpenPathway) a free reader may, so they get the plain line.
-      await notifyExamOpen(c.user_id, c.pathway_id,
-        c.tier !== 'free' || isOpenPathway(getPathwayById(c.pathway_id)), opts.now);
+      // Everybody `ready` here may sit it, whatever their plan: a reader
+      // without a subscription who finished the pathway, or was let in, is
+      // through the door by readerAccess() (founder, 1405/07/03).
+      await notifyExamOpen(c.user_id, c.pathway_id, opts.now);
       out.told.push({ user_id: c.user_id, pathway_id: c.pathway_id });
     }
     return out;
@@ -1136,6 +1136,58 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
   }
   base.state = 'ready';
   return base;
+}
+
+/* ------------------------------------------- a reader without the plan -- */
+
+/**
+ * May an account that cannot OPEN this pathway (no subscription, and the
+ * pathway is not one the file opens to everybody) still reach its exam?
+ *
+ * The founder's rule (1405/07/03): the pathway — its order, its tracking, the
+ * page that says what is left — is what a subscription buys; the certificate
+ * attests to having READ it and passed the exam, and a reader who did that
+ * with their own account has earned the chance whatever their plan. «We
+ * guarantee that whoever read it all can earn it — not that everybody will.»
+ * So the door is:
+ *
+ *   · the pathway is finished by this account's own reading (derived, like
+ *     every other progress figure — `computeProgress`), or
+ *   · the founder let them in early (`pathway_exams`), or
+ *   · they are already in the middle of it — an attempt of any status or a
+ *     live certificate — so a pathway that GREW after they started (progress
+ *     goes backwards on every publish that files into it) never strands an
+ *     open attempt, a queued one, or the page that shows a pass.
+ *
+ * Reading logged out leaves no record, so it cannot count; that is a limit of
+ * the data, not a rule, and the copy says «با حساب کاربری».
+ */
+export async function readerAccess(
+  userId: string, pathway: Pathway,
+): Promise<{ allowed: boolean; complete: boolean }> {
+  const r = await one<{ yes: boolean }>(
+    `select exists (select 1 from pathway_exam_attempts where user_id = $1 and pathway_id = $2)
+         or exists (select 1 from certificates where user_id = $1 and pathway_id = $2 and revoked_at is null)
+         or exists (select 1 from pathway_exams where user_id = $1 and pathway_id = $2) as yes`,
+    [userId, pathway.id],
+  );
+  const complete = computeProgress(pathway, await getConsumedContentIds(userId)).is_complete;
+  return { allowed: Boolean(r?.yes) || complete, complete };
+}
+
+/**
+ * For a reader without the plan, FINISHING the pathway is the enrolment: the
+ * enrol button lives on the pathway page, which they cannot open, and the
+ * exam's own rule is «enrolled, and finished or let in». Idempotent — an
+ * existing row (a lapsed subscriber's) is left exactly as it was.
+ */
+export async function enrolByCompletion(userId: string, pathwayId: string): Promise<void> {
+  await query(
+    `insert into user_pathways (user_id, pathway_id, current_step, completed_at)
+     values ($1, $2, 0, now())
+     on conflict (user_id, pathway_id) do nothing`,
+    [userId, pathwayId],
+  );
 }
 
 /* ---------------------------------------------------------------- start -- */
@@ -1647,21 +1699,18 @@ export async function notifyAssigned(userId: string, pathwayId: string): Promise
  * Separate from `notifyAssigned` because it is a different event with a
  * different audience: that one is «a door was opened FOR YOU, early», this
  * one is «the thing you asked for exists now, and you have finished the
- * reading it needed». The lapsed-subscriber clause is the whole reason it is
- * not one message with a flag — a reader who is told to «start whenever you
- * like» and then meets a paywall has been lied to, and leaving them out
- * entirely was the other way to get it wrong.
+ * reading it needed». It carried a lapsed-subscriber clause («اشتراک لازم
+ * است») until 1405/07/03, when finishing the pathway became a door of its own
+ * (readerAccess): everybody this is sent to can now actually sit it.
  */
 async function notifyExamOpen(
-  userId: string, pathwayId: string, premium: boolean, now?: Date,
+  userId: string, pathwayId: string, now?: Date,
 ): Promise<void> {
   const title = getPathwayById(pathwayId)?.title_fa ?? pathwayId;
   await sendCapped(userId, {
     title: 'آزمون این مسیر برایت باز شد 🎓',
     body: `مسیر «${title}» را تمام کرده‌ای و آزمون پایانی‌اش باز است. `
-      + (premium
-        ? 'هر وقت خواستی شروع کن؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.'
-        : 'برای شرکت در آزمون، اشتراک پریمیوم فعال لازم است؛ خودِ آزمون منتظرت می‌ماند.'),
+      + 'هر وقت خواستی شروع کن؛ با قبولی، گواهی‌نامه به نام خودت صادر می‌شود.',
     url: examUrl(pathwayId),
     tag: 'exam',
   }, 'exam_assigned', now);

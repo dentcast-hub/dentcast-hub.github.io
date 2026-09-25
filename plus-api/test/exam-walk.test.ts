@@ -326,15 +326,28 @@ describe('the founder editing the pool under a reader', () => {
 });
 
 describe('who may not sit it at all', () => {
-  it('a free reader is refused at the route, not at the card', async () => {
+  it('a free reader who has NOT finished is refused at the route, not at the card', async () => {
     await build([MCQ(1)]);
-    await readEverything();
     await post(`/pathways/${PATHWAY}/enroll`);
+    const id = await uid();
+    for (const cid of STEPS.slice(0, -1)) {
+      await pool.query(`insert into user_activity (user_id, action, content_id) values ($1, 'article_completed', $2)`, [id, cid]);
+    }
     await pool.query(`update profiles set tier = 'free' where phone = $1`, [readerPhone]);
     expect((await get(`/exams/${PATHWAY}`)).statusCode).toBe(402);
     expect((await post(`/exams/${PATHWAY}/start`, { holder_name: 'مهسا رضایی' })).statusCode).toBe(402);
     expect((await post(`/exams/${PATHWAY}/submit`, { answers: {} })).statusCode).toBe(402);
     expect((await post(`/exams/${PATHWAY}/intent`, { intent: 'wanted' })).statusCode).toBe(402);
+  });
+
+  // Founder, 1405/07/03: finishing the pathway with your own reading opens its
+  // exam whatever your plan — the pathway page itself stays a subscriber's.
+  it('a free reader who HAS finished walks through, while the pathway page stays locked', async () => {
+    await build([MCQ(1)]);
+    await readEverything();
+    await pool.query(`update profiles set tier = 'free' where phone = $1`, [readerPhone]);
+    expect((await get(`/pathways/${PATHWAY}`)).statusCode).toBe(402);
+    expect(await examState()).toMatchObject({ ok: true, state: 'ready', enrolled: true });
   });
 
   it('a signed-out visitor gets 401 everywhere, and the panel needs its own auth', async () => {
