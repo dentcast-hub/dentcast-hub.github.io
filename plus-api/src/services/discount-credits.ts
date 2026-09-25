@@ -49,6 +49,26 @@ import { computeAchievementFacts, type AchievementFacts } from './achievements.j
 /** Hard ceiling on the one-time credits applied to a single purchase. */
 export const CREDIT_CAP_PERCENT = 10;
 
+/**
+ * The one credit that may sit OUTSIDE the cap: a certificate discount larger
+ * than it (a pathway's `certificate_discount_percent`, founder 1405/07/03 —
+ * «ارزیابی شواهد و استدلال بالینی» mints ٪۲۰). It exists to turn a free reader
+ * who finished a pathway into a subscriber, so it is a FIRST-PURCHASE
+ * discount, decided at read time like every other credit here:
+ *
+ *   · no paid purchase yet → the whole percent, outside the cap, on top of
+ *     whatever the cap holds (a referred newcomer: ٪۲۰ + ٪۱۰ = ٪۳۰);
+ *   · already paid before → worth only the cap, inside it, like any credit.
+ *
+ * That second line is what keeps «ستون» (٪۲۰, permanent, only ever held by
+ * somebody who has paid) from reaching ٪۴۰–٪۵۰ on top of it. «Paid before»
+ * does not count the purchase that spent this very credit, so a spent one
+ * reads back at the percent it was spent at. Written as ONE row, never split
+ * (splitGrantPercent would turn it into two ٪۱۰ purchases, the opposite of
+ * what it promises).
+ */
+export const FIRST_PURCHASE_KIND = 'certificate_first';
+
 export interface DiscountCredit {
   /** 'badge:<key>:<tier>', 'grant:<uuid>', 'referral:<id>' or 'referral_bonus:<id>' — the credit's identity, and what redemption stores. */
   source: string;
@@ -56,6 +76,9 @@ export interface DiscountCredit {
   /** What a human surface calls this credit — the badge's name, or the grant's own label. */
   label_fa: string;
   kind: 'badge' | 'grant' | 'referral';
+  /** A first-purchase credit still eligible as one: pickCredits always takes
+   * it, whole, and it does not count toward CREDIT_CAP_PERCENT. */
+  outside_cap?: boolean;
 }
 
 /**
@@ -94,15 +117,44 @@ export async function grantCredits(
   now: Date = new Date(),
   client: Queryable = pool,
 ): Promise<DiscountCredit[]> {
-  const r = await client.query<{ id: string; percent: number; label_fa: string }>(
-    `select id, percent, label_fa from discount_grants
+  const r = await client.query<{ id: string; percent: number; label_fa: string; kind: string }>(
+    `select id, percent, label_fa, kind from discount_grants
       where user_id = $1 and (expires_at is null or expires_at > $2)
       order by created_at, id`,
     [userId, now.toISOString()],
   );
-  return r.rows.map((g) => ({
-    source: `grant:${g.id}`, percent: g.percent, label_fa: g.label_fa, kind: 'grant' as const,
-  }));
+  const firstSources = r.rows.filter((g) => g.kind === FIRST_PURCHASE_KIND).map((g) => `grant:${g.id}`);
+  const paidBefore = firstSources.length ? await hasPaidBefore(userId, firstSources, client) : false;
+  return r.rows.map((g) => {
+    const credit: DiscountCredit = {
+      source: `grant:${g.id}`, percent: g.percent, label_fa: g.label_fa, kind: 'grant' as const,
+    };
+    if (g.kind !== FIRST_PURCHASE_KIND) return credit;
+    return paidBefore
+      ? { ...credit, percent: Math.min(g.percent, CREDIT_CAP_PERCENT) }
+      : { ...credit, outside_cap: true };
+  });
+}
+
+/**
+ * Has this account paid for a subscription before, on either rail — not
+ * counting a payment that spent one of `exceptSources`? The same two tables
+ * REFERRAL_QUALIFIED_SQL reads: the gateway's `payments` and the manual
+ * rails' approved `gift_redemptions`.
+ */
+async function hasPaidBefore(userId: string, exceptSources: string[], client: Queryable): Promise<boolean> {
+  const r = await client.query<{ paid: boolean }>(
+    `select (
+       exists (select 1 from payments p
+                where p.user_id = $1 and p.status = 'paid'
+                  and not exists (select 1 from discount_redemptions d
+                                   where d.payment_id = p.id and d.source = any($2)))
+       or exists (select 1 from gift_redemptions g
+                   where g.user_id = $1 and g.status = 'approved')
+     ) as paid`,
+    [userId, exceptSources],
+  );
+  return Boolean(r.rows[0]?.paid);
 }
 
 /**
@@ -230,7 +282,11 @@ export async function insertGrant(
   input: { percent: number; label_fa: string; kind?: string; days?: number | null },
   client: Queryable = pool,
 ): Promise<GrantRow[]> {
-  const parts = splitGrantPercent(input.percent);
+  // A first-purchase credit is the one row the cap does not bound, so it is
+  // written whole (see FIRST_PURCHASE_KIND).
+  const parts = input.kind === FIRST_PURCHASE_KIND
+    ? (input.percent > 0 ? [Math.trunc(input.percent)] : [])
+    : splitGrantPercent(input.percent);
   if (!parts.length) return [];
   const r = await client.query<GrantRow>(
     `insert into discount_grants (user_id, percent, kind, label_fa, expires_at)
@@ -307,6 +363,9 @@ export function pickCredits(
   const picked: DiscountCredit[] = [];
   let sum = 0;
   for (const c of credits) {
+    // A first-purchase credit is always taken, whole, and fills none of the
+    // cap: it exists to sit beside whatever the cap holds.
+    if (c.outside_cap) { picked.push(c); continue; }
     if (sum + c.percent > cap) continue;
     picked.push(c);
     sum += c.percent;

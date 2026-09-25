@@ -48,6 +48,13 @@ export interface Pathway {
    * «ارزیابی شواهد و استدلال بالینی» is the first). Anything else, including
    * an absent key, is premium; read it only through isOpenPathway(). */
   premium: boolean;
+  /** The one-time discount this pathway's certificate mints, in percent
+   * (absent = config.certificate.discountPercent, ٪۱۰). A value ABOVE the
+   * per-purchase credit cap is a FIRST-PURCHASE discount (founder,
+   * 1405/07/03): applied whole and outside the cap on the holder's first paid
+   * purchase, and worth only the cap once they have paid before — see
+   * services/discount-credits.ts FIRST_PURCHASE_KIND. */
+  certificate_discount_percent?: number;
   /** Bundle-only: another bundle's id to point to as "do this first" (referral, not a lock). */
   prereq_bundle?: string;
   /** Bundle-only: the full pathway id its closing card invites the reader into. */
