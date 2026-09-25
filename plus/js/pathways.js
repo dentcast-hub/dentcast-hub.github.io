@@ -4,12 +4,12 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum, icon } from './util.js?v=157';
-import { api, ApiError } from './api.js?v=157';
-import { FOLDER_EN } from './content-index.js?v=157';
-import { markReturnTrail } from './return-trail.js?v=157';
-import { openSheet, closeSheet } from './sheet.js?v=157';
-import { certificateTerms } from './certificate-terms.js?v=157';
+import { el, faNum, icon } from './util.js?v=159';
+import { api, ApiError } from './api.js?v=159';
+import { FOLDER_EN } from './content-index.js?v=159';
+import { markReturnTrail } from './return-trail.js?v=159';
+import { openSheet, closeSheet } from './sheet.js?v=159';
+import { certificateTerms } from './certificate-terms.js?v=159';
 
 /** A "lightning + label" chip — a leading icon from the shared sprite
  * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
@@ -64,15 +64,22 @@ function pathwayCard(p, free = false) {
       ? el('span', { class: 'dcp-pw-tag is-active' }, 'ادامه')
       : null;
 
+  // A pathway this reader cannot open but has read to the end (founder,
+  // 1405/07/03): what is theirs is the exam, so the card says «تکمیل شد» instead
+  // of the lock and goes there — the pathway page would only draw its gate.
+  const finishedLocked = free && p.open === false && p.is_complete;
   return el('a', {
-    class: 'dcp-pw-card' + (p.open === false ? ' is-locked' : ''),
-    href: '/plus/pathway.html?id=' + encodeURIComponent(p.id),
+    class: 'dcp-pw-card' + (p.open === false && !finishedLocked ? ' is-locked' : ''),
+    href: finishedLocked
+      ? '/plus/exam.html?id=' + encodeURIComponent(p.id)
+      : '/plus/pathway.html?id=' + encodeURIComponent(p.id),
   }, [
     el('div', { class: 'dcp-pw-card-top' }, [
       el('h3', { class: 'dcp-pw-card-title' }, p.title_fa),
       // The lock outranks «ادامه»: progress on a pathway you cannot open is
       // real, but the card's first job is to say the door is shut.
-      (free && p.open === false) ? accessChip(p, free) : (tag || accessChip(p, free)),
+      finishedLocked ? el('span', { class: 'dcp-pw-tag is-done' }, 'تکمیل شد · آزمون ›')
+        : (free && p.open === false) ? accessChip(p, free) : (tag || accessChip(p, free)),
     ]),
     el('p', { class: 'dcp-pw-card-desc' }, p.description_fa),
     progressBar(p.completed_steps, p.total_steps),

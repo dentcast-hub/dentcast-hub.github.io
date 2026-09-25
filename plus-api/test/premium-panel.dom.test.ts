@@ -20,6 +20,7 @@ let highlightsImpl: () => Promise<unknown>;
 let collectionsImpl: () => Promise<unknown>;
 let seenImpl: () => Promise<unknown>;
 let pathwaysImpl: () => Promise<unknown>;
+let reportMonthsImpl: () => Promise<unknown>;
 const PATHWAYS_FILE = JSON.parse(fs.readFileSync(path.join(repoRoot, 'plus', 'pathways.json'), 'utf8'));
 
 vi.mock('/plus/js/api.js', () => ({
@@ -28,6 +29,7 @@ vi.mock('/plus/js/api.js', () => ({
     listCollections: () => collectionsImpl(),
     seen: () => seenImpl(),
     pathways: () => pathwaysImpl(),
+    reportMonths: () => reportMonthsImpl(),
   },
   // Mirrors api.js: a REFRESHED /me is announced as `dcp:me` on the document.
   currentUser: ({ refresh = false } = {}) => meImpl().then((u: unknown) => {
@@ -92,6 +94,11 @@ beforeEach(() => {
   collectionsImpl = () => Promise.resolve({ collections: [{}, {}, {}] });
   seenImpl = () => Promise.reject(new Error('401'));
   pathwaysImpl = () => Promise.resolve({ pathways: [] });
+  // An account older than last month: GET /report/months lists it.
+  reportMonthsImpl = async () => {
+    const { currentMonthKey, shiftMonth } = await import('/plus/js/jalali-month.js');
+    return { months: [currentMonthKey(), shiftMonth(currentMonthKey(), -1)] };
+  };
   globalThis.fetch = vi.fn((url: string) => Promise.resolve({
     ok: true, status: 200,
     json: async () => (String(url).startsWith('/plus/pathways.json') ? PATHWAYS_FILE : CHALLENGES),
@@ -729,5 +736,19 @@ describe('«مسیرهای یادگیری» showcase (mockup .dentcast/pathway-s
     await mount();
     expect(showcase()).toBeNull();
     expect(mobile().querySelector('[data-dcp-showcase-slot]')).toBeNull();
+  });
+});
+
+describe('the «گزارش ماهانه» row names only a month the account has', () => {
+  it('says «{ماه جاری} تا امروز», never «{ماه قبل} آماده», for an account opened this month', async () => {
+    const { currentMonthKey, monthName } = await import('/plus/js/jalali-month.js');
+    meImpl = () => Promise.resolve({ id: 'u-new', tier: 'premium', due_card_count: 0 });
+    meStatusImpl = () => 'user';
+    reportMonthsImpl = () => Promise.resolve({ months: [currentMonthKey()] });
+    await mount();
+    const text = mobile().querySelector('[data-dcp-key="report"] .dcp-hf-state, [data-dcp-key="report"] [class*="state"]')?.textContent
+      ?? mobile().querySelector('[data-dcp-key="report"]')!.textContent;
+    expect(text).toContain(monthName(currentMonthKey()) + ' تا امروز');
+    expect(text).not.toContain('آماده');
   });
 });

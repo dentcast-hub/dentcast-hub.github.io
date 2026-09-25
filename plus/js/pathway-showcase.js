@@ -30,8 +30,8 @@
 //     A locked pathway leads to the catalog, never to the pricing page.
 //   - A subscriber never sees it (every pathway is theirs); the callers decide
 //     that, this module only draws.
-import { el, faNum, icon } from './util.js?v=157';
-import { api } from './api.js?v=157';
+import { el, faNum, icon } from './util.js?v=159';
+import { api } from './api.js?v=159';
 
 const CATALOG_HREF = '/plus/pathways.html';
 /** How many locked discs the collapsed strip shows before «+N». */
@@ -215,4 +215,20 @@ export function pathwayShowcase(list) {
     ]));
   }
   return el('div', { class: 'dcp-pws', 'data-dcp-showcase': '' }, parts);
+}
+
+/**
+ * The full pathways a signed-OUT visitor may walk into (`premium: false`), by
+ * id → title, straight from the published file. The gates on the catalog, a
+ * pathway page and the exam page ask it before saying «ویژه‌ی پریمیوم», so a
+ * guest who tapped «شروع مسیر ›» on the showcase is never told the pathway the
+ * card called «باز برای همه» is premium. A failed read resolves to an empty
+ * map — the gate then says what it said before.
+ */
+export function openPathways() {
+  return pathwaysFile()
+    .then((file) => new Map((Array.isArray(file) ? file : [])
+      .filter((p) => p && p.kind !== 'bundle' && p.premium === false)
+      .map((p) => [p.id, p.title_fa])))
+    .catch(() => new Map());
 }

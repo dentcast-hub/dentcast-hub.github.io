@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 249,
-    "hash": "1b39e3e939fe5852"
+    "v": 251,
+    "hash": "03e349acad4c445d"
   },
   "/dc-theme.css": {
     "v": 7,
@@ -32,7 +32,7 @@
     "hash": "06fc931d8f3cf861"
   },
   "/pillar/premium-index.js": {
-    "v": 48,
+    "v": 49,
     "hash": "4b57b0a605074c45"
   },
   "/plus/js/assistant-page.js": {
@@ -52,36 +52,36 @@
     "hash": "804015be8fc29ba1"
   },
   "/plus/js/collection-page.js": {
-    "v": 69,
+    "v": 71,
     "hash": "bba94fb675f04d48"
   },
   "/plus/js/collections-page.js": {
-    "v": 69,
+    "v": 71,
     "hash": "2183abd5576f61c1"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 97,
-    "hash": "ea07d73826e28f7a"
+    "v": 99,
+    "hash": "22ed705664052ddb"
   },
   "/plus/js/desboard-page.js": {
     "v": 30,
     "hash": "6dd391884788e24b"
   },
   "/plus/js/exam-page.js": {
-    "v": 36,
-    "hash": "63b537ce34707db5"
+    "v": 37,
+    "hash": "997d1c36b57f39c3"
   },
   "/plus/js/highlights-page.js": {
-    "v": 70,
+    "v": 72,
     "hash": "17bf9f28e95f848d"
   },
   "/plus/js/pathway-page.js": {
-    "v": 74,
-    "hash": "f9158c82e373926c"
+    "v": 75,
+    "hash": "b22c7d813cc98257"
   },
   "/plus/js/pathways-page.js": {
-    "v": 74,
-    "hash": "a1b9f06824e4c62f"
+    "v": 75,
+    "hash": "5dd6785b1e572727"
   },
   "/plus/js/pay-result-page.js": {
     "v": 53,
@@ -128,12 +128,12 @@
     "hash": "1631b04949eb5cc4"
   },
   "dc-nav.js:V": {
-    "v": 242,
-    "hash": "cf2911ed0e6f493f"
+    "v": 244,
+    "hash": "698c8c21c8b706ce"
   },
   "modules:M": {
-    "v": 157,
-    "hash": "f9429ce5bebce60f"
+    "v": 159,
+    "hash": "0a804ec506af4687"
   },
   "spot.js:SPOT_V": {
     "v": 62,
