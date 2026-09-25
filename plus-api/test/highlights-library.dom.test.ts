@@ -9,7 +9,7 @@
 //      lands ON the highlight with the workbench open;
 //   3. note/label/colour are editable in place;
 //   4. every filter is in the URL, so a filtered view survives a refresh.
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
 globalThis.fetch = vi.fn(() => Promise.reject(new Error('no network'))) as any;
 
@@ -23,6 +23,8 @@ let clipLibResponse: any = null;
 const addedToCollection: Array<{ id: string; item: any }> = [];
 const clipDeleted: string[] = [];
 const clipPatched: Array<{ id: string; patch: any }> = [];
+let clipAudioImpl: (id: string) => Promise<any> = () => Promise.resolve(new Blob(['x'], { type: 'audio/mpeg' }));
+const clipAudioCalls: string[] = [];
 
 vi.mock('/plus/js/api.js', () => ({
   api: {
@@ -38,6 +40,7 @@ vi.mock('/plus/js/api.js', () => ({
     addToCollection: (id: string, item: any) => { addedToCollection.push({ id, item }); return Promise.resolve({ ok: true }); },
     clipLibrary: () => (clipLibResponse ? Promise.resolve(clipLibResponse) : Promise.reject(new Error('none'))),
     deleteClip: (id: string) => { clipDeleted.push(id); return Promise.resolve({ ok: true }); },
+    clipAudio: (id: string) => { clipAudioCalls.push(id); return clipAudioImpl(id); },
     updateClip: (id: string, patch: any) => {
       clipPatched.push({ id, patch });
       return Promise.resolve({ clip: { id, content_id: 'episodes/episode-101', start_s: 447, end_s: 483, note: null, label: null, ...patch } });
@@ -549,5 +552,52 @@ describe('a clip card files into a collection', () => {
     row.click();
     await new Promise((r) => setTimeout(r, 0));
     expect(addedToCollection).toEqual([{ id: 'c1', item: { clip_id: 'clip-1' } }]);
+  });
+});
+
+describe('a clip card downloads its audio', () => {
+  let clicked: Array<{ href: string; download: string }>;
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="root"></div>';
+    history.replaceState(null, '', '/plus/highlights.html');
+    libraryResponse = library();
+    clipLibResponse = clipLibrary();
+    conceptsResponse = null;
+    clipAudioCalls.length = 0;
+    clipAudioImpl = () => Promise.resolve(new Blob(['x'], { type: 'audio/mpeg' }));
+    clicked = [];
+    (URL as any).createObjectURL = vi.fn(() => 'blob:clip');
+    (URL as any).revokeObjectURL = vi.fn();
+    vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (this: HTMLAnchorElement) {
+      clicked.push({ href: this.getAttribute('href') || '', download: this.getAttribute('download') || '' });
+    });
+    document.querySelectorAll('.dcp-cl-toast').forEach((n) => n.remove());
+  });
+  afterEach(() => vi.restoreAllMocks());
+
+  it('«⬇ دانلود» fetches THIS clip and saves it under the episode-and-span name', async () => {
+    await renderHighlightLibrary(document.getElementById('root')!);
+    const card = document.querySelector('.dcp-clipcard-wrap') as HTMLElement;
+    const btn = actNamed('دانلود', card) as HTMLButtonElement;
+    expect(btn.tagName).toBe('BUTTON'); // a card action, never a link off the page
+    btn.click();
+    await new Promise((r) => setTimeout(r, 0));
+    await new Promise((r) => setTimeout(r, 0));
+    expect(clipAudioCalls).toEqual(['clip-1']);
+    expect(clicked).toEqual([{ href: 'blob:clip', download: 'DentCast-ep101-07m27s-08m03s.mp3' }]);
+    expect(btn.disabled).toBe(false);
+    expect(btn.textContent).toBe('⬇ دانلود');
+  });
+
+  it('a failure is a toast on this page, and the button comes back', async () => {
+    clipAudioImpl = () => Promise.reject(Object.assign(new Error('x'), { status: 502 }));
+    await renderHighlightLibrary(document.getElementById('root')!);
+    const btn = actNamed('دانلود', document.querySelector('.dcp-clipcard-wrap') as HTMLElement) as HTMLButtonElement;
+    btn.click();
+    await new Promise((r) => setTimeout(r, 0));
+    await new Promise((r) => setTimeout(r, 0));
+    expect(clicked).toEqual([]);
+    expect(document.querySelector('.dcp-cl-toast')!.textContent).toContain('دانلود نشد');
+    expect(btn.disabled).toBe(false);
   });
 });

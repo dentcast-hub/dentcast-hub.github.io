@@ -54,6 +54,7 @@ vi.mock('/plus/js/api.js', () => ({
       return Promise.resolve({ snippet: { id, ...patch } });
     },
     deleteSnippet: (id: string) => { calls.push({ op: 'deleteSnippet', args: [id] }); return Promise.resolve({ ok: true }); },
+    clipAudio: (id: string) => { calls.push({ op: 'clipAudio', args: [id] }); return Promise.resolve(new Blob(['x'], { type: 'audio/mpeg' })); },
     updateClip: (id: string, patch: any) => {
       calls.push({ op: 'updateClip', args: [id, patch] });
       return Promise.resolve({ clip: { id, content_id: 'episodes/episode-101', start_s: 447, end_s: 483, note: null, label: null, ...patch } });
@@ -689,6 +690,26 @@ describe('clip pins on a board', () => {
     expect([...pin.querySelectorAll('.dcp-hlib-act')].some((a) => /متنِ مقاله/.test(a.textContent || ''))).toBe(false);
     // one shared <audio> for the board, made because a clip is on it
     expect(document.querySelectorAll('audio[data-dc-clip-player]')).toHaveLength(1);
+  });
+
+  it('«⬇ دانلود» on a clip pin fetches the clip by clip_id and names the file for its episode and span', async () => {
+    (URL as any).createObjectURL = vi.fn(() => 'blob:pin');
+    (URL as any).revokeObjectURL = vi.fn();
+    const saved: string[] = [];
+    const spy = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (this: HTMLAnchorElement) {
+      saved.push(this.getAttribute('download') || '');
+    });
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    const pin = document.querySelector('.dcp-cl-pin-clip') as HTMLElement;
+    ([...pin.querySelectorAll('.dcp-hlib-act')].find((a) => /دانلود/.test(a.textContent || '')) as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+    await new Promise((r) => setTimeout(r, 0));
+    spy.mockRestore();
+    expect(calls.filter((c) => c.op === 'clipAudio').map((c) => c.args)).toEqual([['clip-1']]);
+    expect(saved).toEqual(['DentCast-ep101-07m27s-08m03s.mp3']);
+    // only clip pins carry it
+    const hl = document.querySelector('.dcp-cl-pin:not(.dcp-cl-pin-clip)') as HTMLElement;
+    expect([...hl.querySelectorAll('.dcp-hlib-act')].some((a) => /دانلود/.test(a.textContent || ''))).toBe(false);
   });
 
   it('moves a clip pin to another board by clip_id, and removing it removes only the pin', async () => {

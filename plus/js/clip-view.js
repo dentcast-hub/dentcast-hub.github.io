@@ -6,11 +6,11 @@
 // is the clip itself: a play button that plays THIS segment right here, the
 // span, a small bar showing where in the episode it sits, and the note. Going
 // to the episode is one action among others and lands ON the clip (?dcclip=).
-import { el, faNum } from './util.js?v=156';
-import { api } from './api.js?v=156';
-import { LABELS } from './config.js?v=156';
-import { noteBlock, labelChip, actionBtn, confirmStrip, toast, copyToClipboard } from './hl-view.js?v=156';
-import { fmtClock, fmtLength, episodeNumber, episodeCatalog, playSegment, stopSegment } from './clip-audio.js?v=156';
+import { el, faNum } from './util.js?v=157';
+import { api } from './api.js?v=157';
+import { LABELS } from './config.js?v=157';
+import { noteBlock, labelChip, actionBtn, confirmStrip, toast, copyToClipboard } from './hl-view.js?v=157';
+import { fmtClock, fmtLength, episodeNumber, episodeCatalog, playSegment, stopSegment } from './clip-audio.js?v=157';
 
 const PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
 const PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';
@@ -26,6 +26,60 @@ export function clipAsText(clip, article = null) {
   const head = '[' + fmtClock(clip.start_s) + ' → ' + fmtClock(clip.end_s) + ']' + (article ? ' ' + article.title : '');
   const note = (clip.note || '').trim();
   return note ? head + '\n— ' + note : head;
+}
+
+/**
+ * «DentCast-ep91-07m27s-08m03s.mp3» — the same name the API's
+ * Content-Disposition carries (services/clip-audio.ts clipFileName). The page
+ * names the file itself because a cross-origin fetch cannot read that header.
+ */
+export function clipFileName(contentId, start, end) {
+  const m = /^episodes\/episode-([0-9-]+)$/.exec(String(contentId || ''));
+  const part = (s) => {
+    const t = Math.max(0, Math.floor(Number(s) || 0));
+    const h = Math.floor(t / 3600);
+    const mm = String(Math.floor((t % 3600) / 60)).padStart(2, '0');
+    const ss = String(t % 60).padStart(2, '0');
+    return (h ? h + 'h' : '') + mm + 'm' + ss + 's';
+  };
+  return 'DentCast-ep' + (m ? m[1] : 'clip') + '-' + part(start) + '-' + part(end) + '.mp3';
+}
+
+/**
+ * «⬇ دانلود» — the clip as an MP3 file (GET /clips/:id/audio, premium: the
+ * surfaces that draw this button are already premium). The server cuts it out
+ * of the episode and tags it with its source; the reader's note stays out of
+ * the file. fetch + Blob rather than a navigation, so a failure is a toast on
+ * this page instead of a page of JSON.
+ */
+export function clipDownloadBtn(contentId, clip) {
+  const label = '⬇ دانلود';
+  const btn = actionBtn(label, { title: 'دانلود همین تکه به‌صورت فایل MP3' });
+  btn.addEventListener('click', async () => {
+    if (btn.disabled) return;
+    btn.disabled = true;
+    btn.textContent = 'در حال آماده شدن…';
+    try {
+      const blob = await api.clipAudio(clip.id);
+      const url = URL.createObjectURL(blob);
+      const a = el('a', { href: url, download: clipFileName(contentId, clip.start_s, clip.end_s), hidden: true });
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      // Revoked on a later tick: revoking synchronously cancels the download
+      // in Firefox (the certificate download learned this first).
+      setTimeout(() => URL.revokeObjectURL(url), 30000);
+    } catch (e) {
+      const status = e && e.status;
+      toast(status === 429 ? 'چند دقیقه‌ی دیگر دوباره امتحان کن'
+        : status === 402 ? 'دانلود هایلایت صوتی ویژه‌ی پریمیوم است'
+          : 'دانلود نشد؛ دوباره امتحان کن', { icon: '!' });
+    } finally {
+      btn.disabled = false;
+      btn.textContent = label;
+    }
+  });
+  return btn;
 }
 
 /**
@@ -272,6 +326,7 @@ export function clipCard(article, clip, ctx) {
     // «🗂 کالکشن» only where the page can open the picker (the دفترچه passes
     // it in; a board draws its own pin actions instead).
     const collect = ctx.onCollect ? actionBtn('🗂 کالکشن', { onClick: () => ctx.onCollect(clip, article) }) : null;
+    const download = clipDownloadBtn(article.content_id, clip);
     const go = actionBtn('شنیدن در اپیزود ›', { href: clipHref(article.url, clip.id) });
     const del = actionBtn('حذف', {
       danger: true,
@@ -286,7 +341,7 @@ export function clipCard(article, clip, ctx) {
       },
     });
     const actions = el('div', { class: 'dcp-hlib-actions' },
-      [el('span', { class: 'dcp-clipcard-kind' }, '🎧 هایلایت صوتی'), labelChip(clip.label), edit, copy, collect, go, del].filter(Boolean));
+      [el('span', { class: 'dcp-clipcard-kind' }, '🎧 هایلایت صوتی'), labelChip(clip.label), edit, copy, download, collect, go, del].filter(Boolean));
 
     const source = ctx.showSource && ctx.source ? ctx.source(article) : null;
     card.replaceChildren(...[source, body.node, note, actions].filter(Boolean));
