@@ -137,7 +137,11 @@ describe('the showcase', () => {
 });
 
 describe('on the homepage', () => {
-  const SKELETON = '<div id="dcPlusFeatures" hidden></div><div id="dcdPlusFeatures" hidden></div>';
+  // index.html: the showcase hosts sit directly above مسیریاب in each layout
+  // (founder, 1405/07/03), well above the «دنت‌کست پریمیوم» section slots.
+  const SKELETON = '<div id="dcPathwayShowcase" hidden></div><a id="dcWayfinderHome"></a>'
+    + '<div id="dcdPathwayShowcase" hidden></div><a id="dcdWayfinderHome"></a>'
+    + '<div id="dcPlusFeatures" hidden></div><div id="dcdPlusFeatures" hidden></div>';
   async function mount() {
     document.body.innerHTML = SKELETON;
     const { initHomeFeatures } = await import('/plus/js/home-features.js');
@@ -146,24 +150,40 @@ describe('on the homepage', () => {
   }
   const section = (id = 'dcPlusFeatures') => document.getElementById(id)!.querySelector('.dcp-hf')!;
 
-  it('replaces the pathway row with the showcase, first under the header, in both slots', async () => {
+  it('draws the showcase above مسیریاب and takes the pathway row out of the section, in both layouts', async () => {
     const { PREMIUM_FEATURES } = await import('/plus/js/config.js');
     await mount();
-    for (const id of ['dcPlusFeatures', 'dcdPlusFeatures']) {
-      const kids = Array.from(section(id).children);
-      expect(kids[0].classList.contains('dcp-hf-sec')).toBe(true);
-      expect(kids[1].hasAttribute('data-dcp-showcase')).toBe(true);
-      expect(section(id).querySelector(`[data-dcp-feature="${(PREMIUM_FEATURES as any)[1].title}"]`)).toBeNull();
-      // still exactly one buy link in the section: the header's
-      expect(section(id).querySelectorAll('a[href^="/plus/pricing.html"]')).toHaveLength(1);
+    for (const [hostId, wfId, slotId] of [['dcPathwayShowcase', 'dcWayfinderHome', 'dcPlusFeatures'], ['dcdPathwayShowcase', 'dcdWayfinderHome', 'dcdPlusFeatures']]) {
+      const host = document.getElementById(hostId)!;
+      expect(host.hidden).toBe(false);
+      expect(host.querySelector('.dcp-hf > [data-dcp-showcase]')).not.toBeNull();
+      expect(host.nextElementSibling!.id).toBe(wfId);
+      // named once on the page: the section no longer carries a pathways row
+      expect(section(slotId).querySelector(`[data-dcp-feature="${(PREMIUM_FEATURES as any)[1].title}"]`)).toBeNull();
+      expect(section(slotId).querySelector('[data-dcp-showcase]')).toBeNull();
+      // and the section still has exactly one buy link: its header's
+      expect(section(slotId).querySelectorAll('a[href^="/plus/pricing.html"]')).toHaveLength(1);
     }
+    expect(document.querySelectorAll('[data-dcp-showcase]')).toHaveLength(2);
+  });
+
+  it('falls back to the section when a page has no host (an older cached index.html)', async () => {
+    const { PREMIUM_FEATURES } = await import('/plus/js/config.js');
+    document.body.innerHTML = '<div id="dcPlusFeatures" hidden></div>';
+    const { initHomeFeatures } = await import('/plus/js/home-features.js');
+    await initHomeFeatures();
+    await settle();
+    const kids = Array.from(section().children);
+    expect(kids[1].hasAttribute('data-dcp-showcase')).toBe(true);
+    expect(section().querySelector(`[data-dcp-feature="${(PREMIUM_FEATURES as any)[1].title}"]`)).toBeNull();
   });
 
   it('keeps the plain locked row when the pathways file cannot be read', async () => {
     const { PREMIUM_FEATURES } = await import('/plus/js/config.js');
     globalThis.fetch = vi.fn(() => Promise.resolve({ ok: false, status: 503, json: async () => null })) as any;
     await mount();
-    expect(section().querySelector('[data-dcp-showcase]')).toBeNull();
+    expect(document.querySelector('[data-dcp-showcase]')).toBeNull();
+    expect(document.getElementById('dcPathwayShowcase')!.hidden).toBe(true);
     expect(section().children[1].getAttribute('data-dcp-feature')).toBe((PREMIUM_FEATURES as any)[1].title);
   });
 
@@ -174,10 +194,24 @@ describe('on the homepage', () => {
       active_pathway: { is_complete: false, current_step: 12, total_steps: 40 },
     });
     await mount();
-    expect(section().querySelector('[data-dcp-showcase]')).toBeNull();
+    expect(document.querySelector('[data-dcp-showcase]')).toBeNull();
+    expect(document.getElementById('dcPathwayShowcase')!.hidden).toBe(true);
     const row = section().children[1];
     expect(row.getAttribute('data-dcp-feature')).toBe((PREMIUM_FEATURES as any)[1].title);
     expect(row.querySelector('.dcp-hf-state')!.textContent).toBe('قدم ۱۲ از ۴۰');
     expect((globalThis.fetch as any).mock.calls.length).toBe(0);
+  });
+});
+
+describe('index.html itself', () => {
+  it('carries each showcase host directly above its مسیریاب card', () => {
+    const html = fs.readFileSync(path.join(repoRoot, 'index.html'), 'utf8');
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    for (const [hostId, wfId] of [['dcPathwayShowcase', 'dcWayfinderHome'], ['dcdPathwayShowcase', 'dcdWayfinderHome']]) {
+      const host = doc.getElementById(hostId)!;
+      expect(host, hostId).not.toBeNull();
+      expect(host.hasAttribute('hidden')).toBe(true);
+      expect(host.nextElementSibling!.id).toBe(wfId);
+    }
   });
 });

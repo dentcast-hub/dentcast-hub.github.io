@@ -31,12 +31,12 @@
 // with no coordination between the modules. When there is no ad — a premium
 // visitor, or the slot switched off — the section simply moves up under the
 // Pulse and nothing else changes.
-import { el, faNum } from './util.js?v=155';
-import { currentUser, api } from './api.js?v=155';
-import { PREMIUM_FEATURES } from './config.js?v=155';
-import { pricingHref } from './premium-cta.js?v=155';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=155';
-import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=155';
+import { el, faNum } from './util.js?v=156';
+import { currentUser, api } from './api.js?v=156';
+import { PREMIUM_FEATURES } from './config.js?v=156';
+import { pricingHref } from './premium-cta.js?v=156';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=156';
+import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=156';
 
 // Crafted inline icons, one per feature (same reasoning as home-card.js's promo
 // chips: emoji would sit at a different weight than the site's own stroke icons).
@@ -177,19 +177,35 @@ function fillLive(me) {
 /**
  * «مسیرهای یادگیری» becomes the showcase for everybody who does not already
  * have every pathway (pathway-showcase.js; mockup
- * .dentcast/pathway-showcase-mockup.html). The plain locked row is drawn first
- * and REPLACED once the pathways file answers, so a homepage that cannot load
- * it keeps exactly what it showed before. It is the section's first card
- * already (CARDS[0]), which is where the founder asked for it; a subscriber's
- * row stays the live «قدم … از …» card, untouched.
+ * .dentcast/pathway-showcase-mockup.html), and it lives ABOVE مسیریاب, not in
+ * this section (founder, 1405/07/03: «اول مسیرها رو داریم … زیرش مسیریابه»).
+ * index.html carries one host per layout right above the wayfinder card
+ * (SHOWCASE_IDS, paired by index with SLOT_IDS); once the showcase is drawn
+ * there, this section's own locked «مسیرهای یادگیری» row is removed so the
+ * page never names the pathways twice. A homepage that cannot read the
+ * pathways file keeps that row exactly as before, and a page without the host
+ * (an older cached index.html) gets the showcase in the row's place instead.
+ * A subscriber's row stays the live «قدم … از …» card, untouched.
  */
-function showcase(me, slots) {
+const SHOWCASE_IDS = ['dcPathwayShowcase', 'dcdPathwayShowcase'];
+
+function showcase(me) {
   loadShowcase(me)
     .then((list) => {
-      slots.forEach((slot) => {
-        const row = slot.querySelector('[data-dcp-feature="' + F[1].title + '"]');
-        const node = row && pathwayShowcase(list);
-        if (node) row.replaceWith(node);
+      SLOT_IDS.forEach((slotId, i) => {
+        const slot = document.getElementById(slotId);
+        const row = slot && slot.querySelector('[data-dcp-feature="' + F[1].title + '"]');
+        const host = document.getElementById(SHOWCASE_IDS[i]);
+        const node = pathwayShowcase(list);
+        if (!node) return;
+        if (host) {
+          // `.dcp-hf` is the root the showcase's CSS is scoped under in index.html.
+          host.replaceChildren(el('div', { class: 'dcp-hf' }, [node]));
+          host.hidden = false;
+          if (row) row.remove();
+        } else if (row) {
+          row.replaceWith(node);
+        }
       });
     })
     .catch(() => { /* keep the locked row */ });
@@ -205,7 +221,7 @@ export async function initHomeFeatures() {
       slot.hidden = false;
     });
     if (me && me.tier === 'premium') fillLive(me);
-    else showcase(me, slots);
+    else showcase(me);
   } catch (_) {
     // Progressive enhancement: a homepage that cannot reach the API keeps the
     // slot empty rather than showing a section of dead cards.

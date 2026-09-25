@@ -436,3 +436,45 @@ describe('the desktop sidebar', () => {
     expect(sidebarCard()).toBeNull();
   });
 });
+
+describe('the homepage card and the pathways showcase (founder, 1405/07/03)', () => {
+  // index.html's order: episode hero → [ad] → «مسیرهای یادگیری» host → مسیریاب.
+  // The ad keeps its place right under the hero; the showcase and مسیریاب stay
+  // adjacent instead of being split by it.
+  async function bootHome(html: string): Promise<void> {
+    document.body.innerHTML = html;
+    vi.resetModules();
+    await import('/spot/spot.js');
+    await vi.advanceTimersByTimeAsync(10_000);
+  }
+  const PHONE = (host: boolean) => '<div id="mobile-body"><section id="panel-studio">'
+    + '<div id="card-episodes">hero</div>'
+    + (host ? '<div id="dcPathwayShowcase" hidden></div>' : '')
+    + '<a id="dcWayfinderHome">wf</a><div class="dc-home-sec"></div><div class="dc-exa-cats"></div>'
+    + '<div id="dcPulseCard">pulse</div></section></div>';
+
+  it('anchors above the showcase host, so the host sits directly on مسیریاب', async () => {
+    await bootHome(PHONE(true));
+    const card = document.querySelector('#panel-studio .dc-spot')!;
+    expect(card).not.toBeNull();
+    expect(card.previousElementSibling!.id).toBe('card-episodes');
+    expect(card.nextElementSibling!.id).toBe('dcPathwayShowcase');
+    expect(document.getElementById('dcPathwayShowcase')!.nextElementSibling!.id).toBe('dcWayfinderHome');
+  });
+
+  it('falls back to مسیریاب when the host is not on the page', async () => {
+    await bootHome(PHONE(false));
+    const card = document.querySelector('#panel-studio .dc-spot')!;
+    expect(card.nextElementSibling!.id).toBe('dcWayfinderHome');
+  });
+
+  it('does the same on the desktop welcome column', async () => {
+    await bootHome('<div id="mobile-body"></div><section id="dc-desktop-root"><div id="dcd-welcome-feed">'
+      + '<div id="dcd-card-episodes">hero</div><div id="dcdPathwayShowcase" hidden></div>'
+      + '<a id="dcdWayfinderHome">wf</a></div></section>');
+    const card = document.querySelector('#dcd-welcome-feed .dc-spot')!;
+    expect(card).not.toBeNull();
+    expect(card.previousElementSibling!.id).toBe('dcd-card-episodes');
+    expect(card.nextElementSibling!.id).toBe('dcdPathwayShowcase');
+  });
+});
