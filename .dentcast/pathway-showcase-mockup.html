@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ویترین مسیرها</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap">
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10); --border2:rgba(2,35,96,.06); --line-strong:rgba(2,35,96,.18);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --chip-bg:rgba(11,95,255,.08); --chip-bd:rgba(11,95,255,.22);
+    --amber:#c9922b; --amber-ink:#8a6414;
+    --amber-wash:rgba(201,146,43,.08); --amber-wash-2:rgba(201,146,43,.13);
+    --amber-bd:rgba(154,107,21,.22);
+    --bn-bg:rgba(255,255,255,.92); --bn-border:rgba(2,35,96,.10); --bn-txt:#62779a; --bn-active:#0a1a33;
+    --phone-bezel:#0a1a33;
+    --mock-ink:#3b2f7a; --mock-bg:#efeaff; --mock-bd:rgba(59,47,122,.22);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --chip-bg:rgba(91,156,246,.12); --chip-bd:rgba(91,156,246,.28);
+    --amber:#e3b849; --amber-ink:#e3b849;
+    --amber-wash:rgba(227,184,73,.09); --amber-wash-2:rgba(227,184,73,.14);
+    --amber-bd:rgba(227,184,73,.26);
+    --bn-bg:rgba(23,33,43,.92); --bn-border:rgba(255,255,255,.09); --bn-txt:#6f8fb0; --bn-active:#e8f0ff;
+    --phone-bezel:#2a3543;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --chip-bg:rgba(91,156,246,.12); --chip-bd:rgba(91,156,246,.28);
+    --amber:#e3b849; --amber-ink:#e3b849;
+    --amber-wash:rgba(227,184,73,.09); --amber-wash-2:rgba(227,184,73,.14);
+    --amber-bd:rgba(227,184,73,.26);
+    --bn-bg:rgba(23,33,43,.92); --bn-border:rgba(255,255,255,.09); --bn-txt:#6f8fb0; --bn-active:#e8f0ff;
+    --phone-bezel:#2a3543;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    color-scheme:dark;
+  }
+  *{ box-sizing:border-box; }
+  body{ background:var(--bg); color:var(--txt);
+        font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif;
+        direction:rtl; margin:0; padding-inline:16px; padding-block:0 5rem;
+        line-height:1.85; font-size:15px; }
+  button{ font:inherit; color:inherit; }
+  :focus-visible{ outline:2px solid var(--ac); outline-offset:2px; border-radius:6px; }
+  .num{ font-variant-numeric:tabular-nums; }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+  svg.i{ width:1em; height:1em; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; display:inline-block; vertical-align:-.15em; }
+
+  .wrap{ max-width:1040px; margin:0 auto; }
+  header.hd{ padding-block:2rem .4rem; max-width:60ch; }
+  header.hd .kicker{ display:inline-block; font-size:.72rem; font-weight:800; letter-spacing:.02em;
+    color:var(--mock-ink); background:var(--mock-bg); border:1px solid var(--mock-bd);
+    border-radius:999px; padding:.1rem .7rem; margin-bottom:.6rem; }
+  header.hd h1{ font-size:1.55rem; font-weight:900; margin:0 0 .4rem; line-height:1.4; text-wrap:balance; }
+  header.hd p{ margin:.2rem 0; color:var(--txt2); }
+
+  /* ── phones ── */
+  .stage{ display:grid; grid-template-columns:repeat(auto-fit, minmax(330px, 1fr)); gap:1.6rem; align-items:start; margin-top:1.4rem; }
+  .cap{ font-size:.8rem; color:var(--txt3); margin:0 0 .5rem; display:flex; align-items:center; gap:.5rem; }
+  .cap b{ color:var(--txt); font-weight:800; }
+  .cap .st{ font-size:.68rem; font-weight:800; border-radius:999px; padding:.05rem .55rem; border:1px solid; }
+  .cap .st-free{ color:var(--amber-ink); background:var(--amber-wash-2); border-color:var(--amber-bd); }
+  .cap .st-prem{ color:var(--ac); background:var(--chip-bg); border-color:var(--chip-bd); }
+  .phone{ width:100%; max-width:390px; margin:0 auto; height:780px;
+    background:var(--bg); border:8px solid var(--phone-bezel); border-radius:2.4rem;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,.45); position:relative; overflow:hidden;
+    display:flex; flex-direction:column; }
+  .topbar{ flex:none; display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+    padding:.7rem .9rem .5rem; background:var(--surface); border-bottom:1px solid var(--border2); }
+  .topbar .brand{ display:flex; align-items:center; gap:.45rem; font-weight:900; font-size:.9rem; color:var(--pr); }
+  .topbar .brand i{ width:1.55rem; height:1.55rem; border-radius:50%; background:var(--pr); display:inline-block; }
+  .topbar .tb{ display:flex; gap:.35rem; color:var(--txt3); font-size:1.05rem; }
+  .topbar .tb span{ width:1.9rem; height:1.9rem; border-radius:50%; display:grid; place-items:center; background:var(--surface2); }
+  .body{ flex:1; overflow-y:auto; padding:.75rem .75rem 5.2rem; scrollbar-width:thin; }
+
+  /* panel content — the site's own card grammar */
+  .pagehead{ display:flex; align-items:baseline; justify-content:space-between; gap:.6rem; margin:.2rem .1rem .1rem; }
+  .pagetitle{ font-size:1.35rem; font-weight:900; margin:0; letter-spacing:-.01em; }
+  .pagesub{ font-size:.8rem; color:var(--txt3); margin:0 .1rem .7rem; line-height:1.7; }
+
+  .offer{ display:flex; align-items:center; gap:.7rem; padding:.7rem .85rem; margin:0 0 .9rem;
+    background:linear-gradient(180deg, var(--amber-wash), transparent 45%), var(--surface);
+    border:1px solid var(--amber-bd); border-radius:1.1rem; box-shadow:var(--card-sh); text-decoration:none; color:inherit; }
+  .offer .oi{ flex:none; width:2.1rem; height:2.1rem; border-radius:50%; display:grid; place-items:center;
+    background:var(--amber-wash-2); border:1px solid var(--amber-bd); color:var(--amber-ink); font-size:1.05rem; }
+  .offer .ot{ flex:1; min-width:0; }
+  .offer .ot b{ display:block; font-size:.86rem; font-weight:800; }
+  .offer .ot span{ display:block; font-size:.72rem; color:var(--txt3); line-height:1.65; }
+  .offer .go{ flex:none; font-size:.74rem; font-weight:800; color:var(--amber-ink); white-space:nowrap; }
+
+  .mine{ display:grid; grid-template-columns:repeat(3,1fr); gap:.45rem; margin:0 0 .9rem; }
+  .mine > div{ background:var(--surface); border:1px solid var(--border); border-radius:.9rem; padding:.5rem .55rem; box-shadow:var(--card-sh); }
+  .mine b{ display:block; font-size:1.05rem; font-weight:900; color:var(--pr); line-height:1.3; }
+  .mine span{ display:block; font-size:.66rem; color:var(--txt3); }
+
+  .sec{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin:.9rem .1rem .45rem; }
+  .sec h2{ font-size:.86rem; font-weight:900; margin:0; padding-right:.55rem; border-right:4px solid var(--amber); line-height:1.35; }
+  .sec h2 small{ display:block; font-size:.68rem; font-weight:500; color:var(--txt3); }
+  .sec .more{ font-size:.74rem; font-weight:800; color:var(--amber-ink); white-space:nowrap; }
+  .sec .more.blue{ color:var(--ac); }
+
+  .card{ display:flex; align-items:center; gap:.65rem; padding:.62rem .7rem; margin-bottom:.45rem;
+    background:linear-gradient(180deg, var(--amber-wash), transparent 45%), var(--surface);
+    border:1px solid var(--amber-bd); border-radius:1rem; box-shadow:var(--card-sh); }
+  .card .ico{ flex:none; width:2.05rem; height:2.05rem; border-radius:50%; display:grid; place-items:center;
+    background:var(--amber-wash-2); border:1px solid var(--amber-bd); color:var(--amber-ink); font-size:1rem; }
+  .card .main{ flex:1; min-width:0; }
+  .card .t{ font-size:.84rem; font-weight:800; line-height:1.4; }
+  .card .s{ font-size:.7rem; color:var(--txt3); line-height:1.6; }
+  .card .state{ flex:none; font-size:.66rem; font-weight:800; border-radius:999px; padding:.12rem .55rem; white-space:nowrap;
+    background:var(--amber-wash-2); color:var(--amber-ink); border:1px solid var(--amber-bd); }
+  .card .state.live{ background:var(--chip-bg); color:var(--ac); border-color:var(--chip-bd); }
+  .card.hint .t::after{ content:' ·  تازه'; font-size:.66rem; color:var(--ac); font-weight:800; }
+
+  /* bottom nav — four tabs */
+  .bn{ position:absolute; bottom:0; left:0; right:0; z-index:3;
+    display:grid; grid-template-columns:repeat(4,1fr);
+    background:var(--bn-bg); backdrop-filter:blur(14px) saturate(1.4); -webkit-backdrop-filter:blur(14px) saturate(1.4);
+    border-top:1px solid var(--bn-border); box-shadow:0 -2px 14px rgba(2,35,96,.06);
+    padding-bottom:.4rem; border-radius:0 0 2rem 2rem; }
+  .bn .it{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.19rem;
+    padding:.56rem .25rem .44rem; position:relative; color:var(--bn-txt); }
+  .bn .it .ic{ font-size:1.375rem; line-height:1; }
+  .bn .it .lb{ font-size:.66rem; font-weight:700; letter-spacing:.01em; }
+  .bn .it.home .ic{ font-size:1.6875rem; }
+  .bn .it.home .lb{ font-size:.72rem; font-weight:900; }
+  .bn .it.premium .ic{ color:var(--amber); }
+  .bn .it.active .ic{ color:var(--pr); transform:translateY(-1px); }
+  .bn .it.active.premium .ic{ color:var(--amber); }
+  .bn .it.active .lb{ color:var(--pr); font-weight:900; }
+  .bn .it.active::after{ content:""; position:absolute; top:0; left:25%; right:25%; height:.125rem; border-radius:999px; background:var(--ac); }
+  .bn .it.active.premium::after{ background:var(--amber); }
+
+  /* ── notes ── */
+  .notes{ margin-top:2.2rem; display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1rem; }
+  .note{ background:var(--mock-bg); border:1px solid var(--mock-bd); color:var(--mock-ink); border-radius:1rem; padding:.9rem 1.05rem; font-size:.86rem; line-height:1.9; }
+  .note h3{ margin:0 0 .3rem; font-size:.92rem; font-weight:900; }
+  .note p{ margin:.25rem 0; }
+  .note ul{ margin:.25rem 0 0; padding-right:1.1rem; }
+  .note li{ margin:.15rem 0; }
+  .note b{ font-weight:800; }
+
+  
+  .fake{ border:1px dashed var(--line-strong); border-radius:1rem; padding:.9rem .8rem; margin:0 0 .6rem; color:var(--txt3); font-size:.74rem; text-align:center; background:var(--surface2); }
+  .fake.sp{ padding:1.6rem .8rem; }
+  .sec h2.blue{ border-right-color:var(--ac); }
+  .card.live{ background:var(--surface); border-color:var(--border); }
+  .card .ico.b{ background:var(--chip-bg); border-color:var(--chip-bd); color:var(--ac); }
+  .card .ico svg{ width:1.05rem; height:1.05rem; }
+  svg.g{ width:1em; height:1em; }
+
+  /* ── the showcase ── */
+  .show{ background:var(--surface); border:1px solid var(--border); border-radius:1.2rem; box-shadow:var(--card-sh); padding:.75rem .75rem .6rem; margin:0 0 .7rem; }
+  .sh-head{ display:flex; align-items:center; gap:.55rem; margin-bottom:.6rem; }
+  .sh-ico{ flex:none; width:2.05rem; height:2.05rem; border-radius:50%; display:grid; place-items:center; background:var(--amber-wash-2); border:1px solid var(--amber-bd); color:var(--amber-ink); font-size:1rem; }
+  .sh-ht b{ display:block; font-size:.9rem; font-weight:900; line-height:1.35; }
+  .sh-ht span{ display:block; font-size:.68rem; color:var(--txt3); line-height:1.6; }
+
+  .feat{ border:1px solid var(--chip-bd); border-radius:1rem; padding:.7rem .75rem .65rem;
+    background:linear-gradient(180deg, var(--chip-bg), transparent 60%), var(--surface); }
+  .ft-row{ display:flex; align-items:center; gap:.6rem; }
+  .ft-disc{ flex:none; width:2.7rem; height:2.7rem; border-radius:50%; display:grid; place-items:center; font-size:1.35rem; color:var(--ac); background:var(--chip-bg); border:1.5px solid var(--chip-bd); }
+  .ft-t b{ display:block; font-size:.95rem; font-weight:900; line-height:1.45; }
+  .free{ display:inline-block; font-size:.64rem; font-weight:800; color:var(--ac); background:var(--chip-bg); border:1px solid var(--chip-bd); border-radius:999px; padding:0 .5rem; margin-bottom:.1rem; }
+  .ft-d{ font-size:.74rem; color:var(--txt2); line-height:1.8; margin:.45rem 0 .5rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .prog{ display:flex; align-items:center; gap:.5rem; margin:0 0 .5rem; font-size:.68rem; color:var(--txt3); }
+  .prog .bar{ flex:1; height:.35rem; border-radius:999px; background:var(--surface3); overflow:hidden; }
+  .prog .bar i{ display:block; height:100%; background:var(--ac); border-radius:999px; }
+  .ft-foot{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
+  .soon{ font-size:.66rem; font-weight:700; color:var(--txt3); background:var(--surface2); border:1px solid var(--border); border-radius:999px; padding:.05rem .55rem; }
+  .go{ font-size:.78rem; font-weight:900; color:#fff; background:var(--ac); border-radius:999px; padding:.3rem .9rem; white-space:nowrap; }
+
+  .others-h{ font-size:.72rem; font-weight:800; color:var(--amber-ink); margin:.75rem .15rem .4rem; }
+  details.more > summary{ list-style:none; cursor:pointer; }
+  details.more > summary::-webkit-details-marker{ display:none; }
+  .strip{ display:flex; gap:.45rem; overflow:hidden; padding-bottom:.15rem; }
+  .pt{ flex:none; width:3.9rem; display:flex; flex-direction:column; align-items:center; gap:.2rem; position:relative; }
+  .pt svg.g{ width:2.55rem; height:2.55rem; padding:.55rem; border-radius:50%; color:var(--txt3); background:var(--surface2); border:1.5px dashed var(--amber-bd); box-sizing:border-box; }
+  .pt .lk{ position:absolute; top:1.7rem; left:.45rem; font-style:normal; font-size:.6rem; background:var(--surface); border-radius:50%; width:1.05rem; height:1.05rem; display:grid; place-items:center; border:1px solid var(--amber-bd); }
+  .pt span{ font-size:.62rem; color:var(--txt2); text-align:center; line-height:1.4; }
+  .pt-more b{ width:2.55rem; height:2.55rem; border-radius:50%; display:grid; place-items:center; font-size:.78rem; font-weight:900; color:var(--amber-ink); background:var(--amber-wash-2); border:1px solid var(--amber-bd); }
+  .tog{ display:block; text-align:center; margin-top:.45rem; font-size:.74rem; font-weight:800; color:var(--amber-ink); border-top:1px solid var(--border2); padding-top:.45rem; }
+  .tog .o{ display:none; }
+  details[open] .tog .c{ display:none; } details[open] .tog .o{ display:inline; }
+  details[open] .strip{ display:none; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:.4rem; margin-top:.5rem; }
+  .pg{ display:flex; align-items:center; gap:.4rem; padding:.4rem .45rem; border-radius:.8rem; border:1px solid var(--amber-bd);
+    background:linear-gradient(180deg, var(--amber-wash), transparent 60%), var(--surface); }
+  .pgi{ flex:none; width:1.7rem; height:1.7rem; border-radius:50%; display:grid; place-items:center; color:var(--txt3); background:var(--surface2); font-size:.85rem; }
+  .pgt{ flex:1; min-width:0; font-size:.64rem; font-weight:700; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .pgl{ flex:none; font-size:.62rem; }
+  .cat{ display:block; text-align:center; margin-top:.55rem; font-size:.74rem; font-weight:800; color:var(--ac); }
+</style>
+<svg width="0" height="0" style="position:absolute"><symbol id="icon-occlusion" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 6 q2 11 4 0 q2 11 4 0 q2 11 4 0 q2 11 4 0"/>
+    <path d="M4 18 q2 -11 4 0 q2 -11 4 0 q2 -11 4 0 q2 -11 4 0"/>
+  </symbol>
+<symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  </symbol>
+<symbol id="icon-scan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 7V5a1 1 0 0 1 1-1h2"/>
+    <path d="M17 4h2a1 1 0 0 1 1 1v2"/>
+    <path d="M20 17v2a1 1 0 0 1-1 1h-2"/>
+    <path d="M7 20H5a1 1 0 0 1-1-1v-2"/>
+    <path d="M5 12h14"/>
+  </symbol>
+<symbol id="icon-bot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5" y="8" width="14" height="10" rx="3"/>
+    <path d="M12 8V4"/>
+    <circle cx="9" cy="13" r="1"/>
+    <circle cx="15" cy="13" r="1"/>
+    <path d="M9 18v2"/>
+    <path d="M15 18v2"/>
+  </symbol>
+<symbol id="icon-wrench" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+  </symbol>
+<symbol id="icon-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/>
+    <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/>
+    <path d="M7 21h10"/>
+    <path d="M12 3v18"/>
+    <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+  </symbol>
+<symbol id="icon-microbe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"/>
+    <path d="M12 7V4"/>
+    <path d="M12 20v-3"/>
+    <path d="M7 12H4"/>
+    <path d="M20 12h-3"/>
+    <path d="m8.5 8.5-2.1-2.1"/>
+    <path d="m17.6 17.6-2.1-2.1"/>
+    <path d="m15.5 8.5 2.1-2.1"/>
+    <path d="m6.4 17.6 2.1-2.1"/>
+  </symbol>
+<symbol id="icon-post" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 4h10"/>
+    <path d="M9 4v4l-1 9a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1l-1-9V4"/>
+    <path d="M12 8v8"/>
+  </symbol>
+<symbol id="icon-implant" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9.5 3.5h5v3.5h-5z"/>
+    <path d="M8 7h8l-2 12-2 2-2-2z"/>
+    <path d="M9.3 11h5.4"/>
+    <path d="M9.7 14.5h4.6"/>
+    <path d="M10.4 18h3.2"/>
+  </symbol>
+<symbol id="icon-crown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7z"/>
+    <path d="M5 21h14"/>
+  </symbol>
+<symbol id="icon-smile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/>
+    <path d="M8.5 14.5s1.4 2 3.5 2 3.5-2 3.5-2"/>
+    <path d="M9 9.5h.01"/>
+    <path d="M15 9.5h.01"/>
+  </symbol>
+<symbol id="icon-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/>
+    <circle cx="12" cy="12" r="5"/>
+    <circle cx="12" cy="12" r="1.5" style="fill:currentColor" stroke="none"/>
+  </symbol>
+<symbol id="icon-denture" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 6c0 8 3.2 13 8 13s8-5 8-13"/>
+    <path d="M8 7c0 5.6 1.8 9 4 9s4-3.4 4-9"/>
+    <path d="M5.2 9.3 8 8.3"/>
+    <path d="M7.6 15.7 9.9 14.4"/>
+    <path d="M12 18.4v-2.6"/>
+    <path d="M16.4 15.7 14.1 14.4"/>
+    <path d="M18.8 9.3 16 8.3"/>
+  </symbol>
+<symbol id="icon-ceramic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 3h6"/>
+    <path d="M10 3v2.5c0 1-1 1.5-1.6 2.3C7 9.6 6 11.8 6 14a6 6 0 0 0 12 0c0-2.2-1-4.4-2.4-6.2-.6-.8-1.6-1.3-1.6-2.3V3"/>
+  </symbol>
+<symbol id="icon-sprout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 20h10"/>
+    <path d="M10 20c5.5-2.5.8-6.4 3-10"/>
+    <path d="M9.5 9.4c1.1.8 1.8 2.1 2.5 3.6-2.1.9-4.2.4-5.9-.6"/>
+    <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-1 4.4-2.2"/>
+  </symbol>
+<symbol id="icon-lightning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 2 4 14h7l-1 8 9-12h-7z"/>
+  </symbol></svg>
+<div class="wrap">
+  <header class="hd">
+    <span class="kicker">ماکاپ · تأییدشده ۱۴۰۵/۰۷/۰۳</span>
+    <h1>ویترین مسیرها: اول بخش پریمیوم، روی خانه و در تب پریمیوم</h1>
+    <p>«مسیرهای یادگیری» اولین کارت بخش «دنت‌کست پریمیوم» می‌شود، و به‌جای یک ردیف قفل، یک ویترین است: مسیر باز جلوی چشم، و بقیهٔ مسیرها کنارش، قفل، با همان شکل.</p>
+    <p>گوشی ۲ همان ویترین است بعد از زدن «دیدن هر ۱۴ مسیر». در گوشی‌ها می‌شود اسکرول کرد و ویترین را باز و بسته کرد.</p>
+  </header>
+  <div class="stage"><div><p class="cap"><b>گوشی ۱ · خانه — کاربر رایگان</b> <span class="st st-free">ویترین بسته</span></p>
+<div class="phone"><div class="topbar"><div class="brand"><i></i>DentCast</div><div class="tb"><span>☰</span><span>👤</span></div></div>
+<div class="body"><div class="fake">Pulse · آخرین مطالب</div><div class="fake sp">کارت اسپانسر</div>
+<div class="sec"><h2>دنت‌کست پریمیوم</h2><a class="more">پریمیوم چیست؟ ›</a></div>
+<div class="show">
+  <div class="sh-head">
+    <span class="sh-ico"><svg class="g" aria-hidden="true"><use href="#icon-lightning"/></svg></span>
+    <div class="sh-ht"><b>مسیرهای یادگیری</b><span>۱۵ مسیر · هر کدام از پیش‌نیاز تا پیشرفته، به ترتیب درست</span></div>
+  </div>
+  <div class="feat">
+    <div class="ft-row">
+      <span class="ft-disc"><svg class="g" aria-hidden="true"><use href="#icon-scale"/></svg></span>
+      <div class="ft-t"><b>ارزیابی شواهد و استدلال بالینی</b></div>
+    </div>
+    <p class="ft-d">چطور درباره‌ی شواهد قضاوت کنیم و از آن به تصمیم بالینی برسیم — از متد تصمیم تا توهم بقا و اینکه یک قاعده تا کجا منتقل می‌شود.</p>
+    
+    <div class="ft-foot">
+      <span class="soon">🎓 گواهی‌نامه: به‌زودی</span>
+      <a class="go">شروع مسیر ›</a>
+    </div>
+  </div>
+  <div class="others-h">۱۴ مسیر دیگر — همین شکل، با اشتراک پریمیوم</div>
+  <details class="more">
+    <summary>
+      <div class="strip"><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-crown"/></svg><i class="lk">🔒</i><span>پروتز ثابت</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-implant"/></svg><i class="lk">🔒</i><span>ایمپلنت پروتزی</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-sprout"/></svg><i class="lk">🔒</i><span>بیومیمتیک</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-target"/></svg><i class="lk">🔒</i><span>طرح درمان</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-ceramic"/></svg><i class="lk">🔒</i><span>سرامیک دندانی</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-smile"/></svg><i class="lk">🔒</i><span>طراحی لبخند</span></div><div class="pt pt-more"><b>+۸</b><span>مسیر دیگر</span></div></div>
+      <span class="tog"><span class="c">دیدن هر ۱۴ مسیر ▾</span><span class="o">بستن ▴</span></span>
+    </summary>
+    <div class="grid"><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-crown"/></svg></span><span class="pgt">پروتز ثابت: تراش، قالب، سمان و روکش</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-implant"/></svg></span><span class="pgt">ایمپلنت پروتزی: اجزا، اسکن دیجیتال و طراحی رستوریشن</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-sprout"/></svg></span><span class="pgt">دندانپزشکی بیومیمتیک و ترمیم ادهزیو</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-target"/></svg></span><span class="pgt">طرح درمان و تصمیم‌گیری بالینی</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-ceramic"/></svg></span><span class="pgt">سرامیک دندانی: از انتخاب ماده تا سمان</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-smile"/></svg></span><span class="pgt">زیبایی و طراحی لبخند</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-shield"/></svg></span><span class="pgt">ایمپلنت: بیومکانیک، بیولوژی و بقای بلندمدت</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-occlusion"/></svg></span><span class="pgt">اکلوژن: از تحلیل تا بازسازی و اختلالات</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-post"/></svg></span><span class="pgt">پست و کور و بازسازی دندان اندوشده</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-bot"/></svg></span><span class="pgt">سوادِ هوش مصنوعی برای دندانپزشک</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-microbe"/></svg></span><span class="pgt">کاریولوژی و ترمیم مستقیم</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-scan"/></svg></span><span class="pgt">دندانپزشکی دیجیتال: اسکن، CAD/CAM و ورک‌فلو</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-wrench"/></svg></span><span class="pgt">چرا شکست خورد؟ عیب‌یابی و مدیریت شکست</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-denture"/></svg></span><span class="pgt">پروتز متحرک و اوردنچر</span><span class="pgl">🔒</span></div></div>
+    <a class="cat">کاتالوگ مسیرها: ترتیب، پیشرفت و آزمون هر مسیر ›</a>
+  </details>
+</div><div class="card"><span class="ico">✦</span><div class="main"><div class="t">برای مرور امروز</div><div class="s">هر هایلایت درست وقتی برمی‌گردد که در آستانهٔ فراموش‌شدن است</div></div><span class="state">🔒</span></div><div class="card"><span class="ico">✦</span><div class="main"><div class="t">کالکشن‌ها</div><div class="s">هایلایت‌ها و مقاله‌ها در پوشه‌های خودت</div></div><span class="state">🔒</span></div><div class="card"><span class="ico">✦</span><div class="main"><div class="t">قطب‌نمای مطالعه</div><div class="s">ببین کجای هر حوزه ایستاده‌ای</div></div><span class="state">🔒</span></div><div class="card"><span class="ico">✦</span><div class="main"><div class="t">دستیار هوشمند</div><div class="s">شرح کیس، چند پرسش، مرتبط‌ترین مطالب</div></div><span class="state">🔒</span></div></div><nav class="bn"><div class="it home active"><span class="ic">⌂</span><span class="lb">خانه</span></div><div class="it arch"><span class="ic">▤</span><span class="lb">آرشیو</span></div><div class="it premium"><span class="ic">★</span><span class="lb">پریمیوم</span></div><div class="it pat"><span class="ic">☺</span><span class="lb">بیماران</span></div></nav></div></div><div><p class="cap"><b>گوشی ۲ · همان، بعد از «دیدن هر ۱۴ مسیر»</b> <span class="st st-free">ویترین باز</span></p>
+<div class="phone"><div class="topbar"><div class="brand"><i></i>DentCast</div><div class="tb"><span>☰</span><span>👤</span></div></div>
+<div class="body"><div class="fake">Pulse · آخرین مطالب</div><div class="fake sp">کارت اسپانسر</div>
+<div class="sec"><h2>دنت‌کست پریمیوم</h2><a class="more">پریمیوم چیست؟ ›</a></div>
+<div class="show">
+  <div class="sh-head">
+    <span class="sh-ico"><svg class="g" aria-hidden="true"><use href="#icon-lightning"/></svg></span>
+    <div class="sh-ht"><b>مسیرهای یادگیری</b><span>۱۵ مسیر · هر کدام از پیش‌نیاز تا پیشرفته، به ترتیب درست</span></div>
+  </div>
+  <div class="feat">
+    <div class="ft-row">
+      <span class="ft-disc"><svg class="g" aria-hidden="true"><use href="#icon-scale"/></svg></span>
+      <div class="ft-t"><b>ارزیابی شواهد و استدلال بالینی</b></div>
+    </div>
+    <p class="ft-d">چطور درباره‌ی شواهد قضاوت کنیم و از آن به تصمیم بالینی برسیم — از متد تصمیم تا توهم بقا و اینکه یک قاعده تا کجا منتقل می‌شود.</p>
+    
+    <div class="ft-foot">
+      <span class="soon">🎓 گواهی‌نامه: به‌زودی</span>
+      <a class="go">شروع مسیر ›</a>
+    </div>
+  </div>
+  <div class="others-h">۱۴ مسیر دیگر — همین شکل، با اشتراک پریمیوم</div>
+  <details class="more" open>
+    <summary>
+      <div class="strip"><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-crown"/></svg><i class="lk">🔒</i><span>پروتز ثابت</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-implant"/></svg><i class="lk">🔒</i><span>ایمپلنت پروتزی</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-sprout"/></svg><i class="lk">🔒</i><span>بیومیمتیک</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-target"/></svg><i class="lk">🔒</i><span>طرح درمان</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-ceramic"/></svg><i class="lk">🔒</i><span>سرامیک دندانی</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-smile"/></svg><i class="lk">🔒</i><span>طراحی لبخند</span></div><div class="pt pt-more"><b>+۸</b><span>مسیر دیگر</span></div></div>
+      <span class="tog"><span class="c">دیدن هر ۱۴ مسیر ▾</span><span class="o">بستن ▴</span></span>
+    </summary>
+    <div class="grid"><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-crown"/></svg></span><span class="pgt">پروتز ثابت: تراش، قالب، سمان و روکش</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-implant"/></svg></span><span class="pgt">ایمپلنت پروتزی: اجزا، اسکن دیجیتال و طراحی رستوریشن</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-sprout"/></svg></span><span class="pgt">دندانپزشکی بیومیمتیک و ترمیم ادهزیو</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-target"/></svg></span><span class="pgt">طرح درمان و تصمیم‌گیری بالینی</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-ceramic"/></svg></span><span class="pgt">سرامیک دندانی: از انتخاب ماده تا سمان</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-smile"/></svg></span><span class="pgt">زیبایی و طراحی لبخند</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-shield"/></svg></span><span class="pgt">ایمپلنت: بیومکانیک، بیولوژی و بقای بلندمدت</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-occlusion"/></svg></span><span class="pgt">اکلوژن: از تحلیل تا بازسازی و اختلالات</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-post"/></svg></span><span class="pgt">پست و کور و بازسازی دندان اندوشده</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-bot"/></svg></span><span class="pgt">سوادِ هوش مصنوعی برای دندانپزشک</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-microbe"/></svg></span><span class="pgt">کاریولوژی و ترمیم مستقیم</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-scan"/></svg></span><span class="pgt">دندانپزشکی دیجیتال: اسکن، CAD/CAM و ورک‌فلو</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-wrench"/></svg></span><span class="pgt">چرا شکست خورد؟ عیب‌یابی و مدیریت شکست</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-denture"/></svg></span><span class="pgt">پروتز متحرک و اوردنچر</span><span class="pgl">🔒</span></div></div>
+    <a class="cat">کاتالوگ مسیرها: ترتیب، پیشرفت و آزمون هر مسیر ›</a>
+  </details>
+</div><div class="card"><span class="ico">✦</span><div class="main"><div class="t">برای مرور امروز</div><div class="s">هر هایلایت درست وقتی برمی‌گردد که در آستانهٔ فراموش‌شدن است</div></div><span class="state">🔒</span></div><div class="card"><span class="ico">✦</span><div class="main"><div class="t">کالکشن‌ها</div><div class="s">هایلایت‌ها و مقاله‌ها در پوشه‌های خودت</div></div><span class="state">🔒</span></div></div><nav class="bn"><div class="it home active"><span class="ic">⌂</span><span class="lb">خانه</span></div><div class="it arch"><span class="ic">▤</span><span class="lb">آرشیو</span></div><div class="it premium"><span class="ic">★</span><span class="lb">پریمیوم</span></div><div class="it pat"><span class="ic">☺</span><span class="lb">بیماران</span></div></nav></div></div><div><p class="cap"><b>گوشی ۳ · تب پریمیوم — کاربر رایگانی که مسیر باز را شروع کرده</b> <span class="st st-free">ویترین، اول تب</span></p>
+<div class="phone"><div class="topbar"><div class="brand"><i></i>DentCast</div><div class="tb"><span>☰</span><span>👤</span></div></div>
+<div class="body"><div class="pagehead"><h2 class="pagetitle">پریمیوم</h2></div>
+<p class="pagesub">هر چیزی که اشتراک به دنت‌کست اضافه می‌کند، یک‌جا. خواندن مقاله‌ها و شنیدن پادکست همیشه رایگان می‌ماند.</p>
+<a class="offer"><span class="oi">★</span><span class="ot"><b>اشتراک پریمیوم</b><span>همهٔ مسیرها، مرور هوشمند، کالکشن‌ها و بیشتر</span></span><span class="go">دیدن طرح‌ها ›</span></a>
+<div class="show">
+  <div class="sh-head">
+    <span class="sh-ico"><svg class="g" aria-hidden="true"><use href="#icon-lightning"/></svg></span>
+    <div class="sh-ht"><b>مسیرهای یادگیری</b><span>۱۵ مسیر · هر کدام از پیش‌نیاز تا پیشرفته، به ترتیب درست</span></div>
+  </div>
+  <div class="feat">
+    <div class="ft-row">
+      <span class="ft-disc"><svg class="g" aria-hidden="true"><use href="#icon-scale"/></svg></span>
+      <div class="ft-t"><b>ارزیابی شواهد و استدلال بالینی</b></div>
+    </div>
+    <p class="ft-d">چطور درباره‌ی شواهد قضاوت کنیم و از آن به تصمیم بالینی برسیم — از متد تصمیم تا توهم بقا و اینکه یک قاعده تا کجا منتقل می‌شود.</p>
+    <div class="prog"><div class="bar"><i style="width:30%"></i></div><span>ادامه از جایی که ماندی</span></div>
+    <div class="ft-foot">
+      <span class="soon">🎓 گواهی‌نامه: به‌زودی</span>
+      <a class="go">ادامهٔ مسیر ›</a>
+    </div>
+  </div>
+  <div class="others-h">۱۴ مسیر دیگر — همین شکل، با اشتراک پریمیوم</div>
+  <details class="more">
+    <summary>
+      <div class="strip"><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-crown"/></svg><i class="lk">🔒</i><span>پروتز ثابت</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-implant"/></svg><i class="lk">🔒</i><span>ایمپلنت پروتزی</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-sprout"/></svg><i class="lk">🔒</i><span>بیومیمتیک</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-target"/></svg><i class="lk">🔒</i><span>طرح درمان</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-ceramic"/></svg><i class="lk">🔒</i><span>سرامیک دندانی</span></div><div class="pt"><svg class="g" aria-hidden="true"><use href="#icon-smile"/></svg><i class="lk">🔒</i><span>طراحی لبخند</span></div><div class="pt pt-more"><b>+۸</b><span>مسیر دیگر</span></div></div>
+      <span class="tog"><span class="c">دیدن هر ۱۴ مسیر ▾</span><span class="o">بستن ▴</span></span>
+    </summary>
+    <div class="grid"><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-crown"/></svg></span><span class="pgt">پروتز ثابت: تراش، قالب، سمان و روکش</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-implant"/></svg></span><span class="pgt">ایمپلنت پروتزی: اجزا، اسکن دیجیتال و طراحی رستوریشن</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-sprout"/></svg></span><span class="pgt">دندانپزشکی بیومیمتیک و ترمیم ادهزیو</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-target"/></svg></span><span class="pgt">طرح درمان و تصمیم‌گیری بالینی</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-ceramic"/></svg></span><span class="pgt">سرامیک دندانی: از انتخاب ماده تا سمان</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-smile"/></svg></span><span class="pgt">زیبایی و طراحی لبخند</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-shield"/></svg></span><span class="pgt">ایمپلنت: بیومکانیک، بیولوژی و بقای بلندمدت</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-occlusion"/></svg></span><span class="pgt">اکلوژن: از تحلیل تا بازسازی و اختلالات</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-post"/></svg></span><span class="pgt">پست و کور و بازسازی دندان اندوشده</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-bot"/></svg></span><span class="pgt">سوادِ هوش مصنوعی برای دندانپزشک</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-microbe"/></svg></span><span class="pgt">کاریولوژی و ترمیم مستقیم</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-scan"/></svg></span><span class="pgt">دندانپزشکی دیجیتال: اسکن، CAD/CAM و ورک‌فلو</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-wrench"/></svg></span><span class="pgt">چرا شکست خورد؟ عیب‌یابی و مدیریت شکست</span><span class="pgl">🔒</span></div><div class="pg"><span class="pgi"><svg class="g" aria-hidden="true"><use href="#icon-denture"/></svg></span><span class="pgt">پروتز متحرک و اوردنچر</span><span class="pgl">🔒</span></div></div>
+    <a class="cat">کاتالوگ مسیرها: ترتیب، پیشرفت و آزمون هر مسیر ›</a>
+  </details>
+</div><div class="sec"><h2>باندل‌های شروع</h2><a class="more">همه ›</a></div><div class="fake">ریل باندل‌ها (قفل) — همان که الان هست</div><div class="card"><span class="ico">✦</span><div class="main"><div class="t">برای مرور امروز</div><div class="s">هر هایلایت درست وقتی برمی‌گردد که در آستانهٔ فراموش‌شدن است</div></div><span class="state">🔒</span></div><div class="card"><span class="ico">✦</span><div class="main"><div class="t">کالکشن‌ها</div><div class="s">هایلایت‌ها و مقاله‌ها در پوشه‌های خودت</div></div><span class="state">🔒</span></div></div><nav class="bn"><div class="it home"><span class="ic">⌂</span><span class="lb">خانه</span></div><div class="it arch"><span class="ic">▤</span><span class="lb">آرشیو</span></div><div class="it premium active"><span class="ic">★</span><span class="lb">پریمیوم</span></div><div class="it pat"><span class="ic">☺</span><span class="lb">بیماران</span></div></nav></div></div><div><p class="cap"><b>گوشی ۴ · خانه — مشترک</b> <span class="st st-prem">بدون ویترین</span></p>
+<div class="phone"><div class="topbar"><div class="brand"><i></i>DentCast</div><div class="tb"><span>☰</span><span>👤</span></div></div>
+<div class="body"><div class="fake">Pulse · آخرین مطالب</div>
+<div class="sec"><h2 class="blue">دنت‌کست پریمیوم</h2><a class="more blue">پیشخوان ›</a></div>
+<div class="card live"><span class="ico b"><svg class="g" aria-hidden="true"><use href="#icon-crown"/></svg></span><div class="main"><div class="t">مسیر یادگیری</div><div class="s">پروتز ثابت: تراش، قالب، سمان و روکش</div></div><span class="state live">قدم ۱۲ از ۴۰</span></div>
+<div class="card live"><span class="ico b">✦</span><div class="main"><div class="t">برای مرور امروز</div><div class="s">کارت‌هایی که امروز برمی‌گردند</div></div><span class="state live">۷ کارت</span></div></div><nav class="bn"><div class="it home active"><span class="ic">⌂</span><span class="lb">خانه</span></div><div class="it arch"><span class="ic">▤</span><span class="lb">آرشیو</span></div><div class="it premium"><span class="ic">★</span><span class="lb">پریمیوم</span></div><div class="it pat"><span class="ic">☺</span><span class="lb">بیماران</span></div></nav></div></div></div>
+  
+<div class="notes">
+  <div class="note"><h3>چرا کل خانواده دیده می‌شود، نه فقط یکی</h3>
+  <p>مسیر باز در ویترین <b>تنها نیست</b>: همان کارت، زیرش یک ردیف دیسکِ قفل از مسیرهای دیگر («۱۴ مسیر دیگر — همین شکل، با پریمیوم»). خواننده بدون هیچ کلیکی می‌بیند که این یکی نمونه است. کلیکِ «دیدن هر ۱۴ مسیر» همان‌جا باز می‌شود (گوشی ۲)، بدون رفتن به صفحهٔ دیگر.</p></div>
+  <div class="note"><h3>رنگ‌ها، طبق قانون سایت</h3>
+  <ul><li>مسیر باز <b>آبی</b> است و دکمه‌اش هم آبی. کلمهٔ «رایگان» روی ویترین نیست: قفل‌نداشتن کنار ۱۴ قفل، و دکمه‌ای که فعل است، نه قیمت، خودش می‌گوید این در باز است.</li>
+  <li>مسیرهای دیگر و قفل‌ها <b>کهربایی</b>، یعنی «اشتراک این را می‌خرد».</li>
+  <li>برچسب گواهی فعلاً خاکستری «به‌زودی»؛ روز آزاد شدنش سبز می‌شود.</li></ul></div>
+  <div class="note"><h3>عددها</h3>
+  <p>تعداد قدم هیچ‌جا نیست، چون با هر انتشار عوض می‌شود. فقط «۱۵ مسیر» (به‌ندرت عوض می‌شود) و، برای کسی که شروع کرده، نوار پیشرفت خودش (گوشی ۳).</p></div>
+  <div class="note"><h3>مشترک ویترین نمی‌بیند</h3>
+  <p>برای او همه باز است؛ کارت «مسیر یادگیری» اول بخش می‌آید ولی همان کارت زندهٔ امروز است: «قدم ۱۲ از ۴۰» (گوشی ۴). در تب پریمیوم هم خانهٔ زنده‌اش («ادامه بده») دست نمی‌خورد.</p></div>
+  <div class="note"><h3>یک لینک خرید، مثل قبل</h3>
+  <p>ویترین هیچ دکمهٔ خرید ندارد. خرید همان «پریمیوم چیست؟ ›» بالای بخش (و کارت اشتراک در تب پریمیوم) می‌ماند. کلیک روی یک مسیرِ قفل به کاتالوگ می‌رود، نه به صفحهٔ قیمت.</p></div>
+</div>
+</div>
+</html>

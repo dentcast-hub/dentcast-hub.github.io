@@ -40,16 +40,17 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=152';
-import { currentUser, meStatus, api } from './api.js?v=152';
-import { pricingHref, premiumCta } from './premium-cta.js?v=152';
-import { openSheet, gateCard } from './sheet.js?v=152';
-import { openLoginModal } from './login-modal.js?v=152';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=152';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=152';
-import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=152';
-import { armDesTool } from './des-scorer.js?v=152';
-import { getModel, freshFolders } from './content-index.js?v=152';
+import { el, faNum, streakIsActiveToday } from './util.js?v=154';
+import { currentUser, meStatus, api } from './api.js?v=154';
+import { pricingHref, premiumCta } from './premium-cta.js?v=154';
+import { openSheet, gateCard } from './sheet.js?v=154';
+import { openLoginModal } from './login-modal.js?v=154';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=154';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=154';
+import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=154';
+import { armDesTool } from './des-scorer.js?v=154';
+import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=154';
+import { getModel, freshFolders } from './content-index.js?v=154';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -421,6 +422,22 @@ function desToolBand(state) {
   return wrap;
 }
 
+/** Fill every showcase holder the render left (see build()). */
+function fillShowcase(me, slots) {
+  loadShowcase(me)
+    .then((list) => {
+      slots.forEach((slot) => {
+        slot.querySelectorAll('[data-dcp-showcase-slot]').forEach((holder) => {
+          const node = pathwayShowcase(list);
+          if (node) holder.replaceChildren(node); else holder.remove();
+        });
+      });
+    })
+    .catch(() => {
+      slots.forEach((slot) => slot.querySelectorAll('[data-dcp-showcase-slot]').forEach((h) => h.remove()));
+    });
+}
+
 /** The dashboard link, the header's own right-hand slot when the page has one. */
 function dashboardLink() {
   return el('a', { class: 'dcp-hf-more dcp-pp-dash', href: '/plus/' }, 'پیشخوان ›');
@@ -439,6 +456,11 @@ function build(me, { hasHead = false } = {}) {
     top,
     state === 'locked' ? offer() : null,
     anon ? guestLine() : null,
+    // «مسیرهای یادگیری» showcase, under the offer and above the bundles, for a
+    // guest or free reader only: 'unknown' cannot say which doors are locked,
+    // and a subscriber has them all. Filled by fillShowcase(); an empty holder
+    // takes no space if the file never answers.
+    state === 'locked' ? el('div', { class: 'dcp-pp-showcase', 'data-dcp-showcase-slot': '' }) : null,
     live ? null : bundlesBand(state),
     live ? hero(me) : null,
     live ? today(me) : null,
@@ -702,6 +724,7 @@ export async function initPremiumPanel() {
       if (head) placeDashboardLink(head, state);
     });
     if (state === 'live') fillFromMe(me);
+    else if (state === 'locked') fillShowcase(me, slots);
     // Lazy half: only when a copy of the panel is actually on screen.
     armed = false;
     slots.forEach((slot) => whenSeen(slot, lazy));
