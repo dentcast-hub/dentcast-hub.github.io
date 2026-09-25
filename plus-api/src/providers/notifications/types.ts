@@ -138,7 +138,14 @@ export type NotificationKind =
    * lands in اطلاعیه, which is the surface the report was built for anyway.
    * Once per reader per month by construction (the sweep dedups on this row).
    */
-  | 'monthly_report';
+  | 'monthly_report'
+  /**
+   * A reader who cannot open a pathway page is told they are within a few
+   * steps of its end, or have finished it (services/pathway-exams.ts
+   * runReaderPathwayNotices). CAPPED — a notice we chose to send; it always
+   * lands in اطلاعیه. Once per (reader, pathway, level), a high-water mark.
+   */
+  | 'pathway_progress';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.

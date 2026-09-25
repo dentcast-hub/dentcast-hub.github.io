@@ -55,6 +55,7 @@ const KIND_TITLE_FA: Record<string, string> = {
   exam_assigned: 'آزمون مسیر',
   exam_result: 'آزمون مسیر',
   monthly_report: 'گزارش ماهانه',
+  pathway_progress: 'مسیر یادگیری',
 };
 
 /** Who a broadcast is for, resolved against the reader's tier at READ time. */

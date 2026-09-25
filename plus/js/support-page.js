@@ -8,12 +8,12 @@
 // «پشتیبانی و مشاوره» left the form (services/support.ts FORM_KINDS — the
 // premium question path is now «گفت‌وگوی زیر مطلب», under an article), no kind
 // this form offers is ever locked, so there is nothing left to grey out here.
-import { el, faNum } from './util.js?v=150';
-import { currentUser, meStatus, api } from './api.js?v=150';
-import { unreachableGate } from './premium-cta.js?v=150';
-import { openLoginModal } from './login-modal.js?v=150';
-import { registerSW } from './pwa.js?v=150';
-import { wirePageBack } from './page-back.js?v=150';
+import { el, faNum } from './util.js?v=151';
+import { currentUser, meStatus, api } from './api.js?v=151';
+import { unreachableGate } from './premium-cta.js?v=151';
+import { openLoginModal } from './login-modal.js?v=151';
+import { registerSW } from './pwa.js?v=151';
+import { wirePageBack } from './page-back.js?v=151';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', {
   year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit',

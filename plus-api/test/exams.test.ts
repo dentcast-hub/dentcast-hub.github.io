@@ -17,7 +17,7 @@ import {
 } from '../src/pathways.js';
 import {
   normalizeQuestions, upsertForm, getForm, deleteForm, formRoster, assignExam,
-  publishForm, unpublishForm, announceOpenExams,
+  publishForm, unpublishForm, announceOpenExams, runReaderPathwayNotices,
   addQuestion, appendQuestions, removeQuestion, nextQuestionId,
   examState, startAttempt, submitAttempt, ruleAttempt, queueRows, attemptRoster, getAttempt,
   drawQuestions, tally, setCertificateIntent, type ExamQuestion,
@@ -778,6 +778,122 @@ describe('a reader without a subscription', () => {
     expect(applyRemotePathways(raw)).toBe(true);
     try {
       expect((await get(`/exams/${PATHWAY}`)).json()).toMatchObject({ ok: true, state: 'locked', enrolled: false });
+    } finally {
+      resetRemotePathways();
+    }
+  });
+});
+
+/*
+ * The reader's own milestones (founder, 1405/07/03): a reader who cannot open
+ * a pathway page is told, once each, that they are a few steps from its end
+ * and that they finished it — never WHICH steps are left. And everybody who
+ * finished a pathway whose exam opens is told so, on any plan, asked or not.
+ */
+describe('telling a reader how close they are', () => {
+  const free = () => pool.query(`update profiles set tier = 'free' where phone = $1`, [phone]);
+  const read = async (uid: string, ids: string[]) => {
+    for (const cid of ids) {
+      await pool.query(`insert into user_activity (user_id, action, content_id) values ($1, 'article_completed', $2)`, [uid, cid]);
+    }
+  };
+  const progress = async (uid: string) => (await notices(uid)).filter((n) => n.kind === 'pathway_progress');
+
+  it('near the end: how many, once — and never again when the pathway grows under them', async () => {
+    await free();
+    const uid = await userId();
+    await read(uid, STEPS.slice(0, -2));
+    const run = await runReaderPathwayNotices();
+    expect(run.near).toEqual([{ user_id: uid, pathway_id: PATHWAY, remaining: 2 }]);
+    const n = await progress(uid);
+    expect(n).toHaveLength(1);
+    expect(n[0].body).toContain('فقط ۲ قدم');
+    expect(n[0].body).toContain('مشترک‌ها می‌بینند کدام‌ها');
+    // No step is named: the list of what is left is the subscription's.
+    for (const cid of STEPS) expect(n[0].body).not.toContain(cid);
+    expect((await runReaderPathwayNotices()).near).toHaveLength(0);
+    expect(await progress(uid)).toHaveLength(1);
+  });
+
+  it('one step left says «فقط یک قدم»', async () => {
+    await free();
+    const uid = await userId();
+    await read(uid, STEPS.slice(0, -1));
+    await runReaderPathwayNotices();
+    expect((await progress(uid))[0].body).toContain('فقط یک قدم');
+  });
+
+  it('finished before the exam exists: told they finished; then told the day it opens — one message each', async () => {
+    await free();
+    const uid = await userId();
+    await finish(uid);
+    const r1 = await runReaderPathwayNotices();
+    expect(r1.done).toEqual([{ user_id: uid, pathway_id: PATHWAY }]);
+    expect((await progress(uid))[0].body).toContain('هنوز آماده نیست');
+    // The founder opens the exam: the finisher is its candidate.
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    const told = await announceOpenExams({ pathwayId: PATHWAY });
+    expect(told.told).toEqual([{ user_id: uid, pathway_id: PATHWAY }]);
+    const all = await notices(uid);
+    expect(all.filter((n) => n.kind === 'exam_assigned')).toHaveLength(1);
+    expect(all.find((n) => n.kind === 'exam_assigned')!.body).toContain('هر وقت خواستی شروع کن');
+    // Nothing more on later nights.
+    expect((await announceOpenExams()).told).toHaveLength(0);
+    const r2 = await runReaderPathwayNotices();
+    expect(r2.near.length + r2.done.length).toBe(0);
+    expect(await notices(uid)).toHaveLength(all.length);
+  });
+
+  it('finished while the exam is open: the exam notice only, never a second «done»', async () => {
+    await free();
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    const uid = await userId();
+    await finish(uid);
+    // The nightly order: the exam notice first, then the reader's own.
+    expect((await announceOpenExams()).told).toHaveLength(1);
+    const r = await runReaderPathwayNotices();
+    expect(r.done).toHaveLength(0);
+    expect(r.silent).toBe(1);
+    expect(await progress(uid)).toHaveLength(0);
+    expect((await notices(uid)).filter((n) => n.kind === 'exam_assigned')).toHaveLength(1);
+  });
+
+  it('a subscriber gets no progress notice (they have the page) but IS told the exam opened, unasked', async () => {
+    const uid = await userId();
+    await read(uid, STEPS.slice(0, -2));
+    expect((await runReaderPathwayNotices()).near).toHaveLength(0);
+    await finish(uid);
+    expect((await runReaderPathwayNotices()).done).toHaveLength(0);
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    expect((await announceOpenExams()).told).toEqual([{ user_id: uid, pathway_id: PATHWAY }]);
+    expect(await progress(uid)).toHaveLength(0);
+  });
+
+  it('«فعلاً نه» is respected, and somebody already sitting it hears nothing', async () => {
+    const uid = await userId();
+    await finish(uid);
+    await setCertificateIntent(uid, PATHWAY, 'declined');
+    await openForm(PATHWAY, { questions: [MCQ(1)] });
+    expect((await announceOpenExams()).told).toHaveLength(0);
+
+    await free();
+    await setCertificateIntent(uid, PATHWAY, 'wanted');
+    await post(`/exams/${PATHWAY}/start`, { holder_first_name: 'مهسا', holder_last_name: 'رضایی' });
+    await pool.query(`delete from user_activity where user_id = $1 and action = 'exam_open_told'`, [uid]);
+    expect((await announceOpenExams()).told).toHaveLength(0);
+    const r = await runReaderPathwayNotices();
+    expect(r.done).toHaveLength(0);
+  });
+
+  it('never on a pathway the reader may open (the pathway open to everybody)', async () => {
+    await free();
+    const raw = JSON.parse(JSON.stringify(getPathways())) as { id: string; premium: boolean }[];
+    raw.find((x) => x.id === PATHWAY)!.premium = false;
+    expect(applyRemotePathways(raw)).toBe(true);
+    try {
+      await read(await userId(), STEPS.slice(0, -1));
+      const r = await runReaderPathwayNotices();
+      expect(r.near.length + r.done.length + r.silent).toBe(0);
     } finally {
       resetRemotePathways();
     }

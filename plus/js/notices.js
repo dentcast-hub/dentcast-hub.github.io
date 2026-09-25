@@ -1,6 +1,6 @@
-import { el, faNum } from './util.js?v=150';
-import { api } from './api.js?v=150';
-import { sameMirrorUrl } from './config.js?v=150';
+import { el, faNum } from './util.js?v=151';
+import { api } from './api.js?v=151';
+import { sameMirrorUrl } from './config.js?v=151';
 
 /**
  * اطلاعیه — the in-app inbox, opened from the account menu.
@@ -62,6 +62,7 @@ export const KIND_ICON = {
   bank_amount: '🏦',
   payment_result: '💳',
   monthly_report: '📆',
+  pathway_progress: '🧭',
   exam_assigned: '📝',
   exam_result: '🎓',
   support_reply: '💬',
@@ -88,6 +89,7 @@ export const KIND_FA = {
   bank_amount: 'پرداخت',
   payment_result: 'پرداخت',
   monthly_report: 'گزارش ماهانه',
+  pathway_progress: 'مسیر یادگیری',
   exam_assigned: 'آزمون مسیر',
   exam_result: 'آزمون مسیر',
   support_reply: 'پشتیبانی',

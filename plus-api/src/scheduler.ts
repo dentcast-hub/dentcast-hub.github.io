@@ -14,7 +14,7 @@ import { checkCapacityAlert } from './services/payment-cap-alert.js';
 import { runSubscriptionReminders, runWinbackReminders } from './services/subscription-reminder.js';
 import { reconcilePendingPayments } from './services/payment-reconcile.js';
 import { runPathwayAlerts } from './services/pathway-standings.js';
-import { announceOpenExams } from './services/pathway-exams.js';
+import { announceOpenExams, runReaderPathwayNotices } from './services/pathway-exams.js';
 import { runMonthlyReports } from './services/monthly-report.js';
 
 /**
@@ -544,6 +544,13 @@ export function startPathwayAlertScheduler(): () => void {
           if (open.told.length > 0) {
             // eslint-disable-next-line no-console
             console.log(`[exam-open] told ${open.told.length} reader(s), ${open.waiting} still reading`);
+          }
+          // AFTER the exam notice, so a finisher whose exam is open hears
+          // that one and this run claims the crossing silently (1405/07/03).
+          const mine = await runReaderPathwayNotices({ now: new Date() });
+          if (mine.near.length + mine.done.length > 0) {
+            // eslint-disable-next-line no-console
+            console.log(`[pathway-reader] near=${mine.near.length} done=${mine.done.length}`);
           }
         })
         .catch((err) => {

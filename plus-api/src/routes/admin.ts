@@ -63,7 +63,7 @@ import {
 import {
   assignExam, deleteAssignment, listAssignments, assignmentRoster, getAssignment, notifyAssigned,
   upsertForm, appendQuestions, getForm, deleteForm, formRoster, queueRows, attemptRoster, ruleAttempt,
-  publishForm, unpublishForm, announceOpenExams,
+  publishForm, unpublishForm, announceOpenExams, runReaderPathwayNotices,
   parseQuestions, addQuestion, removeQuestion,
   addContentQuestion, removeContentQuestion, listContentQuestions, normalizeContentId, pathwaysContaining,
 } from '../services/pathway-exams.js';
@@ -944,9 +944,12 @@ function renderHtml(
         .then(function (j) {
           btn.disabled = false;
           var n = (j.crossings || []).length;
-          out.textContent = n
+          var rd = j.reader || {};
+          out.textContent = (n
             ? fa(n) + ' مورد تازه' + (j.notified ? ' — نوتیف رفت.' : ' — نوتیف نرفت (شماره؟).')
-            : 'چیز تازه‌ای نبود.';
+            : 'چیز تازه‌ای نبود.')
+            + ' · به خواننده‌ها: نزدیک پایان ' + fa(rd.near || 0) + '، تمام‌کرده ' + fa(rd.done || 0)
+            + '، آزمون باز شد ' + fa(j.exam_open_told || 0);
           load();
         })
         .catch(function () { btn.disabled = false; out.textContent = 'اجرا نشد.'; });
@@ -5212,7 +5215,15 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
    */
   app.post('/admin/pathways/run-alerts', async (_request, reply) => {
     const run = await runPathwayAlerts(new Date());
-    return reply.send({ ok: true, crossings: run.crossings, notified: run.notified });
+    // The readers' own «almost there» / «done» (1405/07/03), in the same order
+    // the nightly timer runs them: the exam notice first, then this.
+    const open = await announceOpenExams({ now: new Date() });
+    const mine = await runReaderPathwayNotices({ now: new Date() });
+    return reply.send({
+      ok: true, crossings: run.crossings, notified: run.notified,
+      exam_open_told: open.told.length,
+      reader: { near: mine.near.length, done: mine.done.length },
+    });
   });
 
   /**
