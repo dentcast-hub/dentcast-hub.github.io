@@ -67,7 +67,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=159';
+import { findProseRoot } from '/plus/js/config.js?v=160';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -161,7 +161,7 @@ function report(kind, slotName, creativeId) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ [key]: name, content_id: contentId }),
   });
-  import('/plus/js/api.js?v=159')
+  import('/plus/js/api.js?v=160')
     .then((m) => m.apiBase())
     .then((base) => {
       if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
@@ -180,7 +180,7 @@ function report(kind, slotName, creativeId) {
       // A network-level failure (not an HTTP error) may mean the cached base is
       // dead — self-heal so the NEXT event, and the next page's /me, re-probe
       // instead of retrying the same unreachable host all session.
-      import('/plus/js/api.js?v=159').then((m) => m.forgetBase()).catch(() => {});
+      import('/plus/js/api.js?v=160').then((m) => m.forgetBase()).catch(() => {});
     });
 }
 
@@ -1086,7 +1086,11 @@ function watchOverlaySlot(cfg, slotName, anchorTitle, audienceNow) {
     const heads = document.querySelectorAll('.dcp-dash-sec > .dcp-dash-h2');
     for (const h of heads) {
       if (h.textContent.trim() !== anchorTitle) continue;
-      const sec = h.parentElement;
+      // The Plus 2.0 dashboard draws «استریک» as one tile of a two-column
+      // bento grid; seating the card beside that tile made it a third grid
+      // cell (squeezed into the narrow column, record pushed to a new row).
+      // The anchor is the whole bento block when there is one.
+      const sec = h.closest('.dcp-bento-wrap') || h.parentElement;
       if (card && sec.nextElementSibling === card) return;
       if (!creative) creative = pickCreative(cfg, slotName, audienceNow());
       if (!creative) return;
@@ -1206,7 +1210,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=159')
+  return import('/plus/js/api.js?v=160')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }

@@ -478,3 +478,41 @@ describe('the homepage card and the pathways showcase (founder, 1405/07/03)', ()
     expect(card.nextElementSibling!.id).toBe('dcdPathwayShowcase');
   });
 });
+
+describe('the dashboard card and the streak bento', () => {
+  // The Plus 2.0 dashboard draws «استریک» as one tile of a two-column grid.
+  // Seating the card right after THAT section made it a third grid cell —
+  // squeezed into the narrow column beside the streak, the record tile pushed
+  // onto a row of its own (founder's screenshot, 1405/07/03). The card belongs
+  // after the whole bento block, full width like every section around it.
+  const slots = JSON.parse(JSON.stringify(CONFIG.slots));
+  afterEach(() => { (CONFIG as any).slots = JSON.parse(JSON.stringify(slots)); });
+
+  async function bootDash(html: string): Promise<void> {
+    (CONFIG as any).slots = { dashboard: { enabled: true } };
+    me.user = { tier: 'free' }; me.status = 'user';
+    document.body.innerHTML = html;
+    vi.resetModules();
+    await import('/spot/spot.js');
+    await vi.advanceTimersByTimeAsync(10_000);
+  }
+
+  it('seats the card after the bento block, never inside its grid', async () => {
+    await bootDash('<main><div class="dcp-bento-wrap"><div class="dcp-bento">'
+      + '<section class="dcp-dash-sec is-streak"><h2 class="dcp-dash-h2">استریک</h2></section>'
+      + '<section class="dcp-dash-sec is-rec"></section></div>'
+      + '<p class="dcp-bento-hint">hint</p></div><section id="next" class="dcp-dash-sec"></section></main>');
+    const card = document.querySelector('.dc-spot--dashboard')!;
+    expect(card).not.toBeNull();
+    expect(card.closest('.dcp-bento'), 'never a grid cell').toBeNull();
+    expect(card.previousElementSibling!.classList.contains('dcp-bento-wrap')).toBe(true);
+    expect(card.nextElementSibling!.id).toBe('next');
+  });
+
+  it('still seats right after a plain «استریک» section (the overlay skin)', async () => {
+    await bootDash('<main><section id="st" class="dcp-dash-sec"><h2 class="dcp-dash-h2">استریک</h2></section>'
+      + '<section id="next" class="dcp-dash-sec"></section></main>');
+    const card = document.querySelector('.dc-spot--dashboard')!;
+    expect(card.previousElementSibling!.id).toBe('st');
+  });
+});
