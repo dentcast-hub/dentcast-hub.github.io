@@ -31,12 +31,12 @@
 // with no coordination between the modules. When there is no ad — a premium
 // visitor, or the slot switched off — the section simply moves up under the
 // Pulse and nothing else changes.
-import { el, faNum } from './util.js?v=156';
-import { currentUser, api } from './api.js?v=156';
-import { PREMIUM_FEATURES } from './config.js?v=156';
-import { pricingHref } from './premium-cta.js?v=156';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=156';
-import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=156';
+import { el, faNum } from './util.js?v=157';
+import { currentUser, api } from './api.js?v=157';
+import { PREMIUM_FEATURES } from './config.js?v=157';
+import { pricingHref } from './premium-cta.js?v=157';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=157';
+import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=157';
 
 // Crafted inline icons, one per feature (same reasoning as home-card.js's promo
 // chips: emoji would sit at a different weight than the site's own stroke icons).
@@ -150,6 +150,20 @@ function paint(title, text) {
  * so a bare «٪۲۴» here would be ambiguous), and the assistant has no state at
  * all — it is a wizard you start.
  */
+/** «{ماه} آماده» when the last completed month has a report for this reader,
+ * «{ماه جاری} تا امروز» when the account is younger than that, null on error. */
+export function reportChip() {
+  const last = shiftMonth(currentMonthKey(), -1);
+  return Promise.resolve()
+    .then(() => api.reportMonths())
+    .then((d) => {
+      const list = (d && d.months) || [];
+      if (list.includes(last)) return monthName(last) + ' آماده';
+      return list.length ? monthName(currentMonthKey()) + ' تا امروز' : null;
+    })
+    .catch(() => null);
+}
+
 function fillLive(me) {
   const p = me.active_pathway;
   if (p) {
@@ -158,9 +172,11 @@ function fillLive(me) {
       : 'قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps));
   }
   if (me.due_card_count > 0) paint(F[0].title, faNum(me.due_card_count) + ' کارت');
-  // «گزارش ماهانه»: the last completed month is a calendar fact, not a request —
-  // its name comes from ICU, so this costs nothing and never says «باز کردن».
-  paint(F[6].title, monthName(shiftMonth(currentMonthKey(), -1)) + ' آماده');
+  // «گزارش ماهانه»: «{last month} آماده» only when that month is one of the
+  // reader's own (GET /report/months starts at the account's first month) — an
+  // account opened this month has no such report, and the calendar alone
+  // would have promised it. Fired after the render like the counts below.
+  reportChip().then((t) => { if (t) paint(F[6].title, t); });
 
   api.recentHighlights(1)
     .then((d) => { if (d && d.total) paint(F[5].title, faNum(d.total) + ' هایلایت'); })

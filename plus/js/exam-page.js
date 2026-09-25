@@ -24,15 +24,15 @@
 // answers were right, how many key points each free answer covered — and
 // never the key itself: the pool is small and the second attempt may draw
 // the same question.
-import { el, faNum, debounce } from './util.js?v=156';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=156';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=156';
-import { openLoginModal } from './login-modal.js?v=156';
-import { registerSW } from './pwa.js?v=156';
-import { wirePageBack } from './page-back.js?v=156';
-import { intentRow } from './pathways.js?v=156';
-import { certificateTerms } from './certificate-terms.js?v=156';
-import { openSheet } from './sheet.js?v=156';
+import { el, faNum, debounce } from './util.js?v=157';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=157';
+import { premiumCta, lapsedNote, unreachableGate } from './premium-cta.js?v=157';
+import { openLoginModal } from './login-modal.js?v=157';
+import { registerSW } from './pwa.js?v=157';
+import { wirePageBack } from './page-back.js?v=157';
+import { intentRow } from './pathways.js?v=157';
+import { certificateTerms } from './certificate-terms.js?v=157';
+import { openSheet } from './sheet.js?v=157';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' });
 const FA_DATETIME = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium', timeStyle: 'short' });
@@ -497,7 +497,10 @@ async function main() {
       if (res && res.user) location.reload();
     });
     root.replaceChildren(el('div', { class: 'dcp-gate' }, [
-      el('p', {}, 'برای آزمون مسیر وارد شوید.'), btn, ...guestPremiumExtras('guest-exam'),
+      // No «ویژه‌ی اشتراک پریمیوم» here (founder, 1405/07/03): finishing the
+      // pathway is what opens its exam, on any plan.
+      el('p', {}, 'برای آزمون مسیر وارد شوید.'), btn,
+      el('p', { class: 'dcp-muted' }, 'آزمون پایانی و گواهی‌نامه برای کسی است که همهٔ مطالب مسیر را با حساب کاربری خودش خوانده باشد.'),
     ]));
     return;
   }

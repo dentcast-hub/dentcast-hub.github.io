@@ -57,6 +57,24 @@ describe('the catalog a free reader sees', () => {
     expect(root.querySelector('.dcb-railcard')!.textContent).toContain('پریمیوم');
   });
 
+  it('a locked pathway the reader has read to the end says «تکمیل شد» and leads to its exam', async () => {
+    pathways = () => Promise.resolve({ pathways: [
+      row('evidence-literacy', 'ارزیابی شواهد و استدلال بالینی', { open: true, free: true }),
+      row('removable-pros', 'پروتز متحرک', { open: false, free: false, completed_steps: 10, total_steps: 10, is_complete: true }),
+      row('fixed-pros', 'پروتز ثابت', { open: false, free: false }),
+    ] });
+    const { renderPathwaysList } = await import('/plus/js/pathways.js');
+    const root = document.getElementById('root')!;
+    await renderPathwaysList(root);
+    const [, done, locked] = Array.from(root.querySelectorAll('.dcp-pw-card'));
+    expect(done.getAttribute('href')).toBe('/plus/exam.html?id=removable-pros');
+    expect(done.classList.contains('is-locked')).toBe(false);
+    expect(done.querySelector('.dcp-pw-tag.is-done')!.textContent).toContain('تکمیل شد');
+    expect(done.querySelector('.dcp-pw-lock')).toBeNull();
+    expect(locked.getAttribute('href')).toBe('/plus/pathway.html?id=fixed-pros');
+    expect(locked.querySelector('.dcp-pw-lock')).toBeTruthy();
+  });
+
   it('a premium reader sees no lock and no «رایگان» chip', async () => {
     pathways = () => Promise.resolve({ pathways: [
       row('fixed-pros', 'پروتز ثابت', { open: true, free: false }),
