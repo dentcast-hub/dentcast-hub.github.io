@@ -31,11 +31,12 @@
 // with no coordination between the modules. When there is no ad — a premium
 // visitor, or the slot switched off — the section simply moves up under the
 // Pulse and nothing else changes.
-import { el, faNum } from './util.js?v=152';
-import { currentUser, api } from './api.js?v=152';
-import { PREMIUM_FEATURES } from './config.js?v=152';
-import { pricingHref } from './premium-cta.js?v=152';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=152';
+import { el, faNum } from './util.js?v=153';
+import { currentUser, api } from './api.js?v=153';
+import { PREMIUM_FEATURES } from './config.js?v=153';
+import { pricingHref } from './premium-cta.js?v=153';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=153';
+import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=153';
 
 // Crafted inline icons, one per feature (same reasoning as home-card.js's promo
 // chips: emoji would sit at a different weight than the site's own stroke icons).
@@ -173,6 +174,27 @@ function fillLive(me) {
     .catch(() => { /* leave «باز کردن» */ });
 }
 
+/**
+ * «مسیرهای یادگیری» becomes the showcase for everybody who does not already
+ * have every pathway (pathway-showcase.js; mockup
+ * .dentcast/pathway-showcase-mockup.html). The plain locked row is drawn first
+ * and REPLACED once the pathways file answers, so a homepage that cannot load
+ * it keeps exactly what it showed before. It is the section's first card
+ * already (CARDS[0]), which is where the founder asked for it; a subscriber's
+ * row stays the live «قدم … از …» card, untouched.
+ */
+function showcase(me, slots) {
+  loadShowcase(me)
+    .then((list) => {
+      slots.forEach((slot) => {
+        const row = slot.querySelector('[data-dcp-feature="' + F[1].title + '"]');
+        const node = row && pathwayShowcase(list);
+        if (node) row.replaceWith(node);
+      });
+    })
+    .catch(() => { /* keep the locked row */ });
+}
+
 export async function initHomeFeatures() {
   const slots = SLOT_IDS.map((id) => document.getElementById(id)).filter(Boolean);
   if (!slots.length) return;
@@ -183,6 +205,7 @@ export async function initHomeFeatures() {
       slot.hidden = false;
     });
     if (me && me.tier === 'premium') fillLive(me);
+    else showcase(me, slots);
   } catch (_) {
     // Progressive enhancement: a homepage that cannot reach the API keeps the
     // slot empty rather than showing a section of dead cards.

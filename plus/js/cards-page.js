@@ -1,13 +1,13 @@
 // /plus/cards.html — premium Leitner review (Phase 2). Free/anonymous visitors
 // see the same "coming soon" explainer the free-version pivot introduced;
 // signed-in premium users get the real due-card queue (review.js).
-import { el } from './util.js?v=152';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=152';
-import { currentUser, meStatus } from './api.js?v=152';
-import { openLoginModal } from './login-modal.js?v=152';
-import { renderReview } from './review.js?v=152';
-import { registerSW } from './pwa.js?v=152';
-import { wirePageBack } from './page-back.js?v=152';
+import { el } from './util.js?v=153';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=153';
+import { currentUser, meStatus } from './api.js?v=153';
+import { openLoginModal } from './login-modal.js?v=153';
+import { renderReview } from './review.js?v=153';
+import { registerSW } from './pwa.js?v=153';
+import { wirePageBack } from './page-back.js?v=153';
 
 function comingSoonGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [

@@ -4827,6 +4827,57 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 /* ── chrome: header white, bottom nav frosted with a whisper of lift ── */
 .dc-topbar{ background:var(--x-card); border-bottom:1px solid var(--x-line); }
 .dc-bottom-nav{ box-shadow:0 -10px 30px -22px rgba(9,32,74,.5); }
+
+/* ── «مسیرهای یادگیری» showcase (plus/js/pathway-showcase.js; approved mockup
+   .dentcast/pathway-showcase-mockup.html). The first card of «دنت‌کست پریمیوم»
+   and of the پریمیوم tab for a guest/free reader: the open pathway in BRAND
+   BLUE (it is not an offer), the rest of the family as locked AMBER discs,
+   the certificate label grey until the pathway certifies and green after.
+   Prefixed `.dcp-hf ` like the block above, for the same source-order reason. */
+.dcp-hf .dcp-pws{ background:var(--x-card); border:1px solid var(--x-line); border-radius:1.2rem; box-shadow:var(--x-sh); padding:.75rem .75rem .6rem; margin:0 0 .7rem; }
+.dcp-hf .dcp-pws svg.dc-icon{ width:1em; height:1em; }
+.dcp-hf .dcp-pws-head{ display:flex; align-items:center; gap:.55rem; margin-bottom:.6rem; }
+.dcp-hf .dcp-pws-ico{ flex:none; width:2.05rem; height:2.05rem; border-radius:50%; display:grid; place-items:center; background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd); color:var(--x-amber-ink); font-size:1rem; }
+.dcp-hf .dcp-pws-ht b{ display:block; font-size:.9rem; font-weight:900; line-height:1.35; color:var(--x-ink); }
+.dcp-hf .dcp-pws-ht span{ display:block; font-size:.68rem; color:var(--txt3); line-height:1.6; }
+.dcp-hf .dcp-pws-feat{ border:1px solid var(--chip-bd); border-radius:1rem; padding:.7rem .75rem .65rem; background:linear-gradient(180deg, var(--chip-bg), transparent 60%), var(--x-card); }
+.dcp-hf .dcp-pws-feat + .dcp-pws-feat{ margin-top:.5rem; }
+.dcp-hf .dcp-pws-ft-row{ display:flex; align-items:center; gap:.6rem; }
+.dcp-hf .dcp-pws-disc{ flex:none; width:2.7rem; height:2.7rem; border-radius:50%; display:grid; place-items:center; font-size:1.35rem; color:var(--ac); background:var(--chip-bg); border:1.5px solid var(--chip-bd); }
+.dcp-hf .dcp-pws-ft-title{ font-size:.95rem; font-weight:900; line-height:1.45; color:var(--x-ink); }
+.dcp-hf .dcp-pws-ft-desc{ font-size:.74rem; color:var(--txt2); line-height:1.8; margin:.45rem 0 .5rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.dcp-hf .dcp-pws-prog{ display:flex; align-items:center; gap:.5rem; margin:0 0 .5rem; font-size:.68rem; color:var(--txt3); }
+.dcp-hf .dcp-pws-bar{ flex:1; height:.35rem; border-radius:999px; background:var(--surface3, var(--x-band)); overflow:hidden; }
+.dcp-hf .dcp-pws-bar i{ display:block; height:100%; background:var(--ac); border-radius:999px; }
+.dcp-hf .dcp-pws-ft-foot{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
+.dcp-hf .dcp-pws-cert{ font-size:.66rem; font-weight:700; color:var(--txt3); background:var(--x-band); border:1px solid var(--x-line); border-radius:999px; padding:.05rem .55rem; }
+.dcp-hf .dcp-pws-cert.is-open{ color:var(--dcp-cert, #1f7850); background:var(--dcp-cert-bg, rgba(31,120,80,.09)); border-color:var(--dcp-cert-bd, rgba(31,120,80,.26)); }
+.dcp-hf .dcp-pws-go{ font-size:.78rem; font-weight:900; color:#fff; background:var(--ac); border-radius:999px; padding:.3rem .9rem; white-space:nowrap; text-decoration:none; }
+/* dark --ac is a light blue (#5b9cf6): white on it is ~3:1, the ground's ink is not */
+[data-theme="dark"] .dcp-hf .dcp-pws-go{ color:var(--x-ground); }
+.dcp-hf .dcp-pws-others{ font-size:.72rem; font-weight:800; color:var(--x-amber-ink); margin:.75rem .15rem .4rem; }
+.dcp-hf .dcp-pws-more > summary{ list-style:none; cursor:pointer; }
+.dcp-hf .dcp-pws-more > summary::-webkit-details-marker{ display:none; }
+.dcp-hf .dcp-pws-strip{ display:flex; gap:.3rem; overflow:hidden; padding-bottom:.15rem; }
+.dcp-hf .dcp-pws-pt{ flex:1 1 0; min-width:0; display:flex; flex-direction:column; align-items:center; gap:.2rem; position:relative; }
+.dcp-hf .dcp-pws-pt-disc{ width:2.55rem; height:2.55rem; border-radius:50%; display:grid; place-items:center; font-size:1.1rem; color:var(--txt3); background:var(--x-band); border:1.5px dashed var(--x-amber-bd); box-sizing:border-box; }
+.dcp-hf .dcp-pws-lk{ position:absolute; top:1.7rem; left:calc(50% - 1.45rem); font-style:normal; font-size:.6rem; background:var(--x-card); border-radius:50%; width:1.05rem; height:1.05rem; display:grid; place-items:center; border:1px solid var(--x-amber-bd); }
+.dcp-hf .dcp-pws-pt-name{ font-size:.6rem; color:var(--txt2); text-align:center; line-height:1.4; max-width:100%; overflow-wrap:anywhere; }
+.dcp-hf .dcp-pws-pt-disc, .dcp-hf .dcp-pws-pt-more b{ flex:none; }
+.dcp-hf .dcp-pws-pt-more b{ width:2.55rem; height:2.55rem; border-radius:50%; display:grid; place-items:center; font-size:.78rem; font-weight:900; color:var(--x-amber-ink); background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd); }
+.dcp-hf .dcp-pws-tog{ display:block; text-align:center; margin-top:.45rem; font-size:.74rem; font-weight:800; color:var(--x-amber-ink); border-top:1px solid var(--border2); padding-top:.45rem; }
+.dcp-hf .dcp-pws-tog-o{ display:none; }
+.dcp-hf .dcp-pws-more[open] .dcp-pws-tog-c{ display:none; }
+.dcp-hf .dcp-pws-more[open] .dcp-pws-tog-o{ display:inline; }
+.dcp-hf .dcp-pws-more[open] .dcp-pws-strip{ display:none; }
+.dcp-hf .dcp-pws-grid{ display:grid; grid-template-columns:1fr 1fr; gap:.4rem; margin-top:.5rem; }
+.dcp-hf .dcp-pws-pg{ display:flex; align-items:center; gap:.4rem; padding:.4rem .45rem; border-radius:.8rem; border:1px solid var(--x-amber-bd); background:linear-gradient(180deg, var(--x-amber-wash), transparent 60%), var(--x-card); color:var(--x-ink); text-decoration:none; }
+.dcp-hf .dcp-pws-pgi{ flex:none; width:1.7rem; height:1.7rem; border-radius:50%; display:grid; place-items:center; color:var(--txt3); background:var(--x-band); font-size:.85rem; }
+.dcp-hf .dcp-pws-pgt{ flex:1; min-width:0; font-size:.64rem; font-weight:700; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.dcp-hf .dcp-pws-pgl{ flex:none; font-size:.62rem; }
+.dcp-hf .dcp-pws-cat{ display:block; text-align:center; margin-top:.55rem; font-size:.74rem; font-weight:800; color:var(--ac); text-decoration:none; }
+.dcp-hf .dcp-pp-showcase:empty{ display:none; }
+.dcp-hf .dcp-pp-showcase .dcp-pws{ margin:.2rem 0 .9rem; }
   </style>
 </head>
 <body>
@@ -7101,7 +7152,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=244" defer></script>
+<script src="/dc-nav.js?v=245" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

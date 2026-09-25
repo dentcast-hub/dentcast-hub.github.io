@@ -19,12 +19,15 @@ let meStatusImpl: () => string;
 let highlightsImpl: () => Promise<unknown>;
 let collectionsImpl: () => Promise<unknown>;
 let seenImpl: () => Promise<unknown>;
+let pathwaysImpl: () => Promise<unknown>;
+const PATHWAYS_FILE = JSON.parse(fs.readFileSync(path.join(repoRoot, 'plus', 'pathways.json'), 'utf8'));
 
 vi.mock('/plus/js/api.js', () => ({
   api: {
     recentHighlights: () => highlightsImpl(),
     listCollections: () => collectionsImpl(),
     seen: () => seenImpl(),
+    pathways: () => pathwaysImpl(),
   },
   // Mirrors api.js: a REFRESHED /me is announced as `dcp:me` on the document.
   currentUser: ({ refresh = false } = {}) => meImpl().then((u: unknown) => {
@@ -88,7 +91,11 @@ beforeEach(() => {
   highlightsImpl = () => Promise.resolve({ total: 132 });
   collectionsImpl = () => Promise.resolve({ collections: [{}, {}, {}] });
   seenImpl = () => Promise.reject(new Error('401'));
-  globalThis.fetch = vi.fn(() => Promise.resolve({ ok: true, status: 200, json: async () => CHALLENGES })) as any;
+  pathwaysImpl = () => Promise.resolve({ pathways: [] });
+  globalThis.fetch = vi.fn((url: string) => Promise.resolve({
+    ok: true, status: 200,
+    json: async () => (String(url).startsWith('/plus/pathways.json') ? PATHWAYS_FILE : CHALLENGES),
+  })) as any;
   (Element.prototype as any).scrollIntoView = vi.fn();
 });
 
@@ -593,7 +600,9 @@ describe('destinations', () => {
     const c = mobile().querySelector('[data-dcp-key="challenge"]')!;
     expect(c.tagName).toBe('A');
     expect(c.getAttribute('href')).toBe('/challenges/');
-    expect((globalThis.fetch as any).mock.calls.length).toBe(0); // no lookup, nothing to fetch
+    // no lookup, nothing to fetch (the one fetch on mount is the pathway showcase's file)
+    const fetched = (globalThis.fetch as any).mock.calls.map((c: unknown[]) => String(c[0]));
+    expect(fetched.filter((u: string) => !u.startsWith('/plus/pathways.json'))).toEqual([]);
   });
 
   it('shows گفت‌وگوی زیر مطلب as a static showcase to a guest — never a link to پشتیبانی', async () => {
@@ -671,5 +680,54 @@ describe('destinations', () => {
     // and the tour's tab stop names four tabs
     const tour = fs.readFileSync(path.join(repoRoot, 'plus/js/tour.js'), 'utf8');
     expect(tour).toMatch(/«خانه».*«آرشیو».*«پریمیوم».*«بیماران»/);
+  });
+});
+
+describe('«مسیرهای یادگیری» showcase (mockup .dentcast/pathway-showcase-mockup.html)', () => {
+  const showcase = (root: Element = mobile()) => root.querySelector('[data-dcp-showcase]');
+
+  it('sits under the offer and above the bundles for a guest, and adds no buy link', async () => {
+    await mount();
+    const sc = showcase();
+    expect(sc).not.toBeNull();
+    const pp = mobile().querySelector('.dcp-pp')!;
+    const order = Array.from(pp.children);
+    const at = (sel: string) => order.findIndex((n) => n.matches(sel) || !!n.querySelector(sel));
+    expect(at('.dcp-pp-offer')).toBeLessThan(at('[data-dcp-showcase]'));
+    expect(at('[data-dcp-showcase]')).toBeLessThan(at('.dcp-pp-bundles'));
+    expect(pricingLinks()).toHaveLength(1);
+    expect(sc!.textContent).not.toContain('رایگان');
+  });
+
+  it('a free reader who started the open pathway sees their own bar and «ادامهٔ مسیر»', async () => {
+    meImpl = () => Promise.resolve({ id: 'u1', tier: 'free' });
+    meStatusImpl = () => 'user';
+    pathwaysImpl = () => Promise.resolve({ pathways: [
+      { id: 'evidence-literacy', enrolled: true, completed_steps: 3, total_steps: 10, certifiable: false },
+    ] });
+    await mount();
+    const feat = showcase()!.querySelector('[data-dcp-pws-open="evidence-literacy"]')!;
+    expect(feat.querySelector('.dcp-pws-bar i')!.getAttribute('style')).toBe('width:30%');
+    expect(feat.querySelector('.dcp-pws-go')!.textContent).toBe('ادامهٔ مسیر ›');
+  });
+
+  it('is absent for a subscriber and when we could not ask', async () => {
+    meImpl = () => Promise.resolve({ id: 'u2', tier: 'premium' });
+    meStatusImpl = () => 'user';
+    await mount();
+    expect(showcase()).toBeNull();
+    expect(mobile().querySelector('[data-dcp-showcase-slot]')).toBeNull();
+
+    meImpl = () => Promise.resolve(null);
+    meStatusImpl = () => 'error';
+    await mount();
+    expect(showcase()).toBeNull();
+  });
+
+  it('leaves no empty holder when the pathways file cannot be read', async () => {
+    globalThis.fetch = vi.fn(() => Promise.resolve({ ok: false, status: 503, json: async () => null })) as any;
+    await mount();
+    expect(showcase()).toBeNull();
+    expect(mobile().querySelector('[data-dcp-showcase-slot]')).toBeNull();
   });
 });
