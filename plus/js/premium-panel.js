@@ -40,17 +40,17 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=156';
-import { currentUser, meStatus, api } from './api.js?v=156';
-import { pricingHref, premiumCta } from './premium-cta.js?v=156';
-import { openSheet, gateCard } from './sheet.js?v=156';
-import { openLoginModal } from './login-modal.js?v=156';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=156';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=156';
-import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=156';
-import { armDesTool } from './des-scorer.js?v=156';
-import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=156';
-import { getModel, freshFolders } from './content-index.js?v=156';
+import { el, faNum, streakIsActiveToday } from './util.js?v=157';
+import { currentUser, meStatus, api } from './api.js?v=157';
+import { pricingHref, premiumCta } from './premium-cta.js?v=157';
+import { openSheet, gateCard } from './sheet.js?v=157';
+import { openLoginModal } from './login-modal.js?v=157';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=157';
+import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=157';
+import { armDesTool } from './des-scorer.js?v=157';
+import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=157';
+import { reportChip } from './home-features.js?v=157';
+import { getModel, freshFolders } from './content-index.js?v=157';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -509,8 +509,9 @@ function fillFromMe(me) {
   }
   paint('cards', me.due_card_count > 0 ? faNum(me.due_card_count) + ' کارت' : '', { live: me.due_card_count > 0 });
   paint('sms', smsText(me));
-  // The last completed month is a calendar fact from ICU, not a request.
-  paint('report', monthName(shiftMonth(currentMonthKey(), -1)) + ' آماده', { live: true });
+  // Only a month this account HAS a report for (reportChip, shared with the
+  // homepage section) — a subscriber who joined this month has no last month.
+  reportChip().then((t) => { if (t) paint('report', t, { live: true }); });
 }
 
 /** The two counts that cost a request each — fired once the panel is seen. */
