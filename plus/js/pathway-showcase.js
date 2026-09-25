@@ -30,8 +30,8 @@
 //     A locked pathway leads to the catalog, never to the pricing page.
 //   - A subscriber never sees it (every pathway is theirs); the callers decide
 //     that, this module only draws.
-import { el, faNum, icon } from './util.js?v=154';
-import { api } from './api.js?v=154';
+import { el, faNum, icon } from './util.js?v=155';
+import { api } from './api.js?v=155';
 
 const CATALOG_HREF = '/plus/pathways.html';
 /** How many locked discs the collapsed strip shows before «+N». */
@@ -89,6 +89,11 @@ export function loadShowcase(me) {
           completed_steps: s ? s.completed_steps || 0 : 0,
           total_steps: s ? s.total_steps || steps : steps,
           started: !!(s && (s.enrolled || s.completed_steps > 0)),
+          // The percent THIS pathway's certificate mints, read from the file
+          // (`certificate_discount_percent`, 1405/07/03) — never typed into the
+          // card, so retuning it is one edit. Absent = the API's default, which
+          // the client does not know, so the card then names no number.
+          discount: discountOf(p.certificate_discount_percent),
         };
       });
   });
@@ -99,10 +104,27 @@ export function loadShowcase(me) {
 
 const pathwayHref = (id) => '/plus/pathway.html?id=' + encodeURIComponent(id);
 
+function discountOf(v) {
+  const n = Number(v);
+  return Number.isFinite(n) && n > 0 && n <= 100 ? Math.round(n) : null;
+}
+
+/**
+ * The certificate and what it buys, on ONE label (founder, 1405/07/03): the
+ * discount belongs to the certificate, so it is said beside it and nowhere
+ * else on the card. While the certificate is not open the whole line stays
+ * grey and ends in «به‌زودی» — a discount nobody can earn yet is not
+ * announced loudly. Once open it turns certificate green, never amber: the
+ * discount is earned, not bought. «٪۲۰» is true for every reader who can see
+ * the card (a first purchase takes it whole, a returning one in cap-sized
+ * instalments), which is why the card never says «یک‌جا».
+ */
 function certLabel(p) {
-  return p.certifiable
-    ? el('span', { class: 'dcp-pws-cert is-open' }, '🎓 گواهی‌نامه')
-    : el('span', { class: 'dcp-pws-cert' }, '🎓 گواهی‌نامه: به‌زودی');
+  const off = p.discount ? '٪' + faNum(p.discount) + ' تخفیف اشتراک' : null;
+  if (p.certifiable) {
+    return el('span', { class: 'dcp-pws-cert is-open' }, off ? '🎓 گواهی‌نامه · ' + off : '🎓 گواهی‌نامه');
+  }
+  return el('span', { class: 'dcp-pws-cert' }, off ? '🎓 گواهی‌نامه + ' + off + ' · به‌زودی' : '🎓 گواهی‌نامه: به‌زودی');
 }
 
 function featured(p) {
@@ -112,7 +134,13 @@ function featured(p) {
   return el('div', { class: 'dcp-pws-feat', 'data-dcp-pws-open': p.id }, [
     el('div', { class: 'dcp-pws-ft-row' }, [
       el('span', { class: 'dcp-pws-disc' }, icon(p.glyph)),
-      el('b', { class: 'dcp-pws-ft-title' }, p.title_fa),
+      el('span', { class: 'dcp-pws-ft-t' }, [
+        el('b', { class: 'dcp-pws-ft-title' }, p.title_fa),
+        // One word, once, and not a price: «باز» says you can walk in, which
+        // is the point; «رایگان» would say what it costs (founder: «هی رایگان
+        // رایگان نکنیم»).
+        el('span', { class: 'dcp-pws-ft-open' }, 'باز برای همه'),
+      ]),
     ]),
     p.description_fa ? el('p', { class: 'dcp-pws-ft-desc' }, p.description_fa) : null,
     p.started ? el('div', { class: 'dcp-pws-prog' }, [

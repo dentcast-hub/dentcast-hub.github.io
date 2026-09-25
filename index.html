@@ -4845,12 +4845,14 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 .dcp-hf .dcp-pws-ft-row{ display:flex; align-items:center; gap:.6rem; }
 .dcp-hf .dcp-pws-disc{ flex:none; width:2.7rem; height:2.7rem; border-radius:50%; display:grid; place-items:center; font-size:1.35rem; color:var(--ac); background:var(--chip-bg); border:1.5px solid var(--chip-bd); }
 .dcp-hf .dcp-pws-ft-title{ font-size:.95rem; font-weight:900; line-height:1.45; color:var(--x-ink); }
+.dcp-hf .dcp-pws-ft-t{ display:flex; flex-direction:column; min-width:0; }
+.dcp-hf .dcp-pws-ft-open{ font-size:.68rem; font-weight:700; color:var(--ac); line-height:1.5; }
 .dcp-hf .dcp-pws-ft-desc{ font-size:.74rem; color:var(--txt2); line-height:1.8; margin:.45rem 0 .5rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .dcp-hf .dcp-pws-prog{ display:flex; align-items:center; gap:.5rem; margin:0 0 .5rem; font-size:.68rem; color:var(--txt3); }
 .dcp-hf .dcp-pws-bar{ flex:1; height:.35rem; border-radius:999px; background:var(--surface3, var(--x-band)); overflow:hidden; }
 .dcp-hf .dcp-pws-bar i{ display:block; height:100%; background:var(--ac); border-radius:999px; }
-.dcp-hf .dcp-pws-ft-foot{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
-.dcp-hf .dcp-pws-cert{ font-size:.66rem; font-weight:700; color:var(--txt3); background:var(--x-band); border:1px solid var(--x-line); border-radius:999px; padding:.05rem .55rem; }
+.dcp-hf .dcp-pws-ft-foot{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; flex-wrap:wrap; }
+.dcp-hf .dcp-pws-cert{ font-size:.66rem; font-weight:700; color:var(--txt3); background:var(--x-band); border:1px solid var(--x-line); border-radius:999px; padding:.1rem .6rem; line-height:1.6; min-width:0; }
 .dcp-hf .dcp-pws-cert.is-open{ color:var(--dcp-cert, #1f7850); background:var(--dcp-cert-bg, rgba(31,120,80,.09)); border-color:var(--dcp-cert-bd, rgba(31,120,80,.26)); }
 .dcp-hf .dcp-pws-go{ font-size:.78rem; font-weight:900; color:#fff; background:var(--ac); border-radius:999px; padding:.3rem .9rem; white-space:nowrap; text-decoration:none; }
 /* dark --ac is a light blue (#5b9cf6): white on it is ~3:1, the ground's ink is not */
@@ -7152,7 +7154,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=246" defer></script>
+<script src="/dc-nav.js?v=247" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

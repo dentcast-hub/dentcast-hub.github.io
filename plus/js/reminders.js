@@ -36,12 +36,12 @@
 // Pulse sentence, which no template can carry. The gate is on the TAP
 // (sheet.js gateCard, the clips pattern): a free reader sees the row, taps the
 // box, and is told what it is before what it costs.
-import { el } from './util.js?v=154';
-import { api, currentUser } from './api.js?v=154';
-import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js?v=154';
-import { baleEnabled } from './config.js?v=154';
-import { openSheet, gateCard } from './sheet.js?v=154';
-import { premiumCta } from './premium-cta.js?v=154';
+import { el } from './util.js?v=155';
+import { api, currentUser } from './api.js?v=155';
+import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js?v=155';
+import { baleEnabled } from './config.js?v=155';
+import { openSheet, gateCard } from './sheet.js?v=155';
+import { premiumCta } from './premium-cta.js?v=155';
 
 const FA = '۰۱۲۳۴۵۶۷۸۹';
 const fa = (s) => String(s).replace(/\d/g, (d) => FA[Number(d)]);

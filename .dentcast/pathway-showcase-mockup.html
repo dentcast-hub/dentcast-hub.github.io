@@ -176,13 +176,14 @@
     background:linear-gradient(180deg, var(--chip-bg), transparent 60%), var(--surface); }
   .ft-row{ display:flex; align-items:center; gap:.6rem; }
   .ft-disc{ flex:none; width:2.7rem; height:2.7rem; border-radius:50%; display:grid; place-items:center; font-size:1.35rem; color:var(--ac); background:var(--chip-bg); border:1.5px solid var(--chip-bd); }
+  .ft-t .open{ display:block; font-size:.68rem; font-weight:700; color:var(--ac); }
   .ft-t b{ display:block; font-size:.95rem; font-weight:900; line-height:1.45; }
   .free{ display:inline-block; font-size:.64rem; font-weight:800; color:var(--ac); background:var(--chip-bg); border:1px solid var(--chip-bd); border-radius:999px; padding:0 .5rem; margin-bottom:.1rem; }
   .ft-d{ font-size:.74rem; color:var(--txt2); line-height:1.8; margin:.45rem 0 .5rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
   .prog{ display:flex; align-items:center; gap:.5rem; margin:0 0 .5rem; font-size:.68rem; color:var(--txt3); }
   .prog .bar{ flex:1; height:.35rem; border-radius:999px; background:var(--surface3); overflow:hidden; }
   .prog .bar i{ display:block; height:100%; background:var(--ac); border-radius:999px; }
-  .ft-foot{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
+  .ft-foot{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; flex-wrap:wrap; }
   .soon{ font-size:.66rem; font-weight:700; color:var(--txt3); background:var(--surface2); border:1px solid var(--border); border-radius:999px; padding:.05rem .55rem; }
   .go{ font-size:.78rem; font-weight:900; color:#fff; background:var(--ac); border-radius:999px; padding:.3rem .9rem; white-space:nowrap; }
 
@@ -318,12 +319,12 @@
   <div class="feat">
     <div class="ft-row">
       <span class="ft-disc"><svg class="g" aria-hidden="true"><use href="#icon-scale"/></svg></span>
-      <div class="ft-t"><b>ارزیابی شواهد و استدلال بالینی</b></div>
+      <div class="ft-t"><b>ارزیابی شواهد و استدلال بالینی</b><span class="open">باز برای همه</span></div>
     </div>
     <p class="ft-d">چطور درباره‌ی شواهد قضاوت کنیم و از آن به تصمیم بالینی برسیم — از متد تصمیم تا توهم بقا و اینکه یک قاعده تا کجا منتقل می‌شود.</p>
     
     <div class="ft-foot">
-      <span class="soon">🎓 گواهی‌نامه: به‌زودی</span>
+      <span class="soon">🎓 گواهی‌نامه + ٪۲۰ تخفیف اشتراک · به‌زودی</span>
       <a class="go">شروع مسیر ›</a>
     </div>
   </div>
@@ -348,12 +349,12 @@
   <div class="feat">
     <div class="ft-row">
       <span class="ft-disc"><svg class="g" aria-hidden="true"><use href="#icon-scale"/></svg></span>
-      <div class="ft-t"><b>ارزیابی شواهد و استدلال بالینی</b></div>
+      <div class="ft-t"><b>ارزیابی شواهد و استدلال بالینی</b><span class="open">باز برای همه</span></div>
     </div>
     <p class="ft-d">چطور درباره‌ی شواهد قضاوت کنیم و از آن به تصمیم بالینی برسیم — از متد تصمیم تا توهم بقا و اینکه یک قاعده تا کجا منتقل می‌شود.</p>
     
     <div class="ft-foot">
-      <span class="soon">🎓 گواهی‌نامه: به‌زودی</span>
+      <span class="soon">🎓 گواهی‌نامه + ٪۲۰ تخفیف اشتراک · به‌زودی</span>
       <a class="go">شروع مسیر ›</a>
     </div>
   </div>
@@ -379,12 +380,12 @@
   <div class="feat">
     <div class="ft-row">
       <span class="ft-disc"><svg class="g" aria-hidden="true"><use href="#icon-scale"/></svg></span>
-      <div class="ft-t"><b>ارزیابی شواهد و استدلال بالینی</b></div>
+      <div class="ft-t"><b>ارزیابی شواهد و استدلال بالینی</b><span class="open">باز برای همه</span></div>
     </div>
     <p class="ft-d">چطور درباره‌ی شواهد قضاوت کنیم و از آن به تصمیم بالینی برسیم — از متد تصمیم تا توهم بقا و اینکه یک قاعده تا کجا منتقل می‌شود.</p>
     <div class="prog"><div class="bar"><i style="width:30%"></i></div><span>ادامه از جایی که ماندی</span></div>
     <div class="ft-foot">
-      <span class="soon">🎓 گواهی‌نامه: به‌زودی</span>
+      <span class="soon">🎓 گواهی‌نامه + ٪۲۰ تخفیف اشتراک · به‌زودی</span>
       <a class="go">ادامهٔ مسیر ›</a>
     </div>
   </div>
@@ -410,7 +411,7 @@
   <div class="note"><h3>رنگ‌ها، طبق قانون سایت</h3>
   <ul><li>مسیر باز <b>آبی</b> است و دکمه‌اش هم آبی. کلمهٔ «رایگان» روی ویترین نیست: قفل‌نداشتن کنار ۱۴ قفل، و دکمه‌ای که فعل است، نه قیمت، خودش می‌گوید این در باز است.</li>
   <li>مسیرهای دیگر و قفل‌ها <b>کهربایی</b>، یعنی «اشتراک این را می‌خرد».</li>
-  <li>برچسب گواهی فعلاً خاکستری «به‌زودی»؛ روز آزاد شدنش سبز می‌شود.</li></ul></div>
+  <li>گواهی و تخفیفش روی یک برچسب: فعلاً خاکستری «🎓 گواهی‌نامه + ٪۲۰ تخفیف اشتراک · به‌زودی»؛ روز آزاد شدنش سبز «🎓 گواهی‌نامه · ٪۲۰ تخفیف اشتراک». عدد از فایل مسیرها خوانده می‌شود و «یک‌جا» گفته نمی‌شود. زیر عنوان، یک بار: «باز برای همه».</li></ul></div>
   <div class="note"><h3>عددها</h3>
   <p>تعداد قدم هیچ‌جا نیست، چون با هر انتشار عوض می‌شود. فقط «۱۵ مسیر» (به‌ندرت عوض می‌شود) و، برای کسی که شروع کرده، نوار پیشرفت خودش (گوشی ۳).</p></div>
   <div class="note"><h3>مشترک ویترین نمی‌بیند</h3>
