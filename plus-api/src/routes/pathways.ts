@@ -90,6 +90,11 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
         certificate_intent: intentBy.get(p.id) ?? null,
         certificate_held: heldSet.has(p.id),
         ...progress,
+        // A pathway this reader cannot open shows HOW FAR (a count), never
+        // WHERE: `current_step` is the first unread step's index, and with the
+        // published step list it names the step — the arrangement a
+        // subscription buys (founder, 1405/07/03).
+        ...(mayOpenPathway(tier, p) ? {} : { current_step: null }),
       };
     });
     return reply.send({ pathways });
