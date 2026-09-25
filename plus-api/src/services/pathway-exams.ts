@@ -1,11 +1,12 @@
 import { config } from '../config.js';
 import { pool, one, query, withTransaction, type Queryable } from '../db.js';
-import { getPathwayById, getPathways, computeProgress, isCertifiable, isOpenPathway, type Pathway } from '../pathways.js';
+import { getPathwayById, getPathways, computeProgress, isCertifiable, mayOpenPathway, type Pathway } from '../pathways.js';
 import { getContentInfo } from '../content-index.js';
 import { randomUUID } from 'node:crypto';
 import { getConsumedContentIds } from './consumption.js';
 import { mintReference } from './reference.js';
 import { issueCertificate, discountSentence, type Certificate } from './certificates.js';
+import { CREDIT_CAP_PERCENT } from './discount-credits.js';
 import { sendCapped } from './notify-policy.js';
 import {
   runPathwayAlerts, notifyCertificateWish, pathwayStandings, type CertificateIntent,
@@ -992,6 +993,13 @@ export interface ExamState {
   /** Every settled or queued attempt, shaped for the reader. */
   history: AttemptResult[];
   certificate: { verify_code: string; verify_url: string } | null;
+  /** What a pass mints (the pathway's own percent, else the default), and
+   * whether it is a first-purchase one — so the exam page's contract states
+   * the figure this pathway actually pays instead of a hard-coded ٪۱۰. */
+  discount: { percent: number; first_purchase: boolean };
+  /** Whether THIS reader may open the pathway page — decided by the route,
+   * which knows the plan; the page links back to it only when true. */
+  pathway_open?: boolean;
 }
 
 export interface AttemptResult {
@@ -1065,9 +1073,10 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
     state: 'no_form', pathway_id: pathwayId, pathway_title_fa: pathway.title_fa, rules: null,
     attempts_used: 0, is_complete: false, assigned: false, enrolled: false, certificate_intent: null,
     retry_at: null, open: null, history: [], certificate: null,
+    discount: certificateDiscount(pathway),
   };
 
-  const [form, consumed, assigned, enrolled, cert] = await Promise.all([
+  const [form, consumed, assigned, enrolled, cert, profile] = await Promise.all([
     getForm(pathwayId),
     getConsumedContentIds(userId),
     one<{ id: string }>('select id from pathway_exams where user_id = $1 and pathway_id = $2', [userId, pathwayId]),
@@ -1078,8 +1087,10 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
       'select id, verify_code from certificates where user_id = $1 and pathway_id = $2 and revoked_at is null',
       [userId, pathwayId],
     ),
+    one<{ tier: string }>('select tier from profiles where id = $1', [userId]),
   ]);
   base.is_complete = computeProgress(pathway, consumed).is_complete;
+  const onPathway = countsAsEnrolled(Boolean(enrolled), base.is_complete, profile?.tier, pathway);
   base.assigned = Boolean(assigned);
   base.enrolled = Boolean(enrolled);
   base.certificate_intent = enrolled?.certificate_intent ?? null;
@@ -1127,7 +1138,7 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
   // somebody who is ON the pathway, not somebody whose reading happens to
   // cover it. It costs one tap on the pathway page and progress is derived,
   // so nobody who finished loses anything by pressing it late.
-  if (!base.enrolled || (!base.is_complete && !base.assigned)) { base.state = 'locked'; return base; }
+  if (!onPathway || (!base.is_complete && !base.assigned)) { base.state = 'locked'; return base; }
   if (counted.length >= form.max_attempts) { base.state = 'exhausted'; return base; }
   const last = counted.reduce<Date | null>((m, a) => (a.submitted_at && (!m || a.submitted_at > m) ? a.submitted_at : m), null);
   if (last && form.retry_days > 0) {
@@ -1136,6 +1147,12 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
   }
   base.state = 'ready';
   return base;
+}
+
+/** The certificate discount a pathway mints — certificates.ts's own rule, restated for display only. */
+function certificateDiscount(p: Pathway): { percent: number; first_purchase: boolean } {
+  const percent = p.certificate_discount_percent ?? config.certificate.discountPercent;
+  return { percent, first_purchase: percent > CREDIT_CAP_PERCENT };
 }
 
 /* ------------------------------------------- a reader without the plan -- */
@@ -1176,18 +1193,15 @@ export async function readerAccess(
 }
 
 /**
- * For a reader without the plan, FINISHING the pathway is the enrolment: the
- * enrol button lives on the pathway page, which they cannot open, and the
- * exam's own rule is «enrolled, and finished or let in». Idempotent — an
- * existing row (a lapsed subscriber's) is left exactly as it was.
+ * The exam's enrolment rule, for everybody. A reader who may open the pathway
+ * enrols with «شروع این مسیر» (founder, 2026-09-12 — the deliberate act). A
+ * reader who may NOT has no such button — it lives on the pathway page — so
+ * for them FINISHING is the enrolment. Decided here, where the state is
+ * computed, and never written as a side effect of reading a page: the exam
+ * page, the certificate wall and «شروع» must all say the same thing.
  */
-export async function enrolByCompletion(userId: string, pathwayId: string): Promise<void> {
-  await query(
-    `insert into user_pathways (user_id, pathway_id, current_step, completed_at)
-     values ($1, $2, 0, now())
-     on conflict (user_id, pathway_id) do nothing`,
-    [userId, pathwayId],
-  );
+function countsAsEnrolled(enrolled: boolean, complete: boolean, tier: string | null | undefined, pathway: Pathway): boolean {
+  return enrolled || (complete && !mayOpenPathway(tier, pathway));
 }
 
 /* ---------------------------------------------------------------- start -- */
@@ -1827,7 +1841,7 @@ export async function attemptRoster(limit = 200): Promise<RosterRow[]> {
 export async function examStates(userId: string, pathwayIds: string[]): Promise<Map<string, ExamStateKind>> {
   const out = new Map<string, ExamStateKind>();
   if (!pathwayIds.length) return out;
-  const [forms, consumed, assigned, enrolled, attempts] = await Promise.all([
+  const [forms, consumed, assigned, enrolled, attempts, profile] = await Promise.all([
     query<{
       pathway_id: string; max_attempts: number; retry_days: number;
       question_count: number; published_at: Date | null;
@@ -1842,6 +1856,7 @@ export async function examStates(userId: string, pathwayIds: string[]): Promise<
     query<{ pathway_id: string; status: AttemptStatus; submitted_at: Date | null }>(
       'select pathway_id, status, submitted_at from pathway_exam_attempts where user_id = $1', [userId],
     ),
+    one<{ tier: string }>('select tier from profiles where id = $1', [userId]),
   ]);
   const formBy = new Map(forms.rows.map((f) => [f.pathway_id, f]));
   // Article questions count toward a pathway's pool too — one query over
@@ -1870,7 +1885,8 @@ export async function examStates(userId: string, pathwayIds: string[]): Promise<
     if (!form.published_at) { out.set(id, 'no_form'); continue; }
     const pathway = getPathwayById(id);
     const complete = pathway ? computeProgress(pathway, consumed).is_complete : false;
-    if (!enrolledSet.has(id) || (!complete && !assignedSet.has(id))) { out.set(id, 'locked'); continue; }
+    const onPathway = pathway ? countsAsEnrolled(enrolledSet.has(id), complete, profile?.tier, pathway) : false;
+    if (!onPathway || (!complete && !assignedSet.has(id))) { out.set(id, 'locked'); continue; }
     const counted = mine.filter((a) => COUNTED.includes(a.status));
     if (counted.length >= form.max_attempts) { out.set(id, 'exhausted'); continue; }
     const last = counted.reduce<number>((m, a) => Math.max(m, a.submitted_at ? a.submitted_at.getTime() : 0), 0);

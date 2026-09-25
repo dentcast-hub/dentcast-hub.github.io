@@ -730,7 +730,9 @@ describe('a reader without a subscription', () => {
     expect((await get(`/pathways/${PATHWAY}`)).statusCode).toBe(402);
 
     const s = (await get(`/exams/${PATHWAY}`)).json();
-    expect(s).toMatchObject({ ok: true, state: 'ready', enrolled: true, is_complete: true });
+    // Finishing counts as the enrolment for a reader with no enrol button —
+    // decided in the state, not written by loading a page.
+    expect(s).toMatchObject({ ok: true, state: 'ready', enrolled: false, is_complete: true });
     const ids = await sit();
     const done = await post(`/exams/${PATHWAY}/submit`, { answers: Object.fromEntries(ids.map((id) => [id, 1])) });
     expect(done.json()).toMatchObject({ state: 'passed' });

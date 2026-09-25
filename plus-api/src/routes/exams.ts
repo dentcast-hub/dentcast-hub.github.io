@@ -4,7 +4,7 @@ import { getPathwayById, mayOpenPathway } from '../pathways.js';
 import { config } from '../config.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
 import {
-  examState, startAttempt, submitAttempt, setCertificateIntent, readerAccess, enrolByCompletion,
+  examState, startAttempt, submitAttempt, setCertificateIntent, readerAccess,
 } from '../services/pathway-exams.js';
 import { holderNameFrom, holderNameMessageFa } from '../services/holder-name.js';
 
@@ -40,10 +40,12 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
         message: 'آزمون این مسیر برای مشترک‌ها باز است، یا برای کسی که همهٔ مطالب مسیر را با حساب کاربری خودش خوانده باشد.',
       });
     }
-    // Finishing IS the enrolment for a reader who has no enrol button (the
-    // pathway page is theirs to open only with a subscription). Idempotent.
-    if (access.complete) await enrolByCompletion(request.user!.id, pathway.id);
   });
+
+  // Whether this reader may open the pathway page itself — the exam page
+  // links back to it only then (a link into a 402 is a dead end).
+  const openFor = (request: import('fastify').FastifyRequest, id: string) =>
+    mayOpenPathway(request.user?.tier, getPathwayById(id));
 
   const unknown = (reply: import('fastify').FastifyReply) =>
     reply.code(404).send({ error: 'unknown_pathway', message: 'این مسیر آزمون ندارد.' });
@@ -55,7 +57,7 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
   app.get('/exams/:pathwayId', async (request, reply) => {
     const { pathwayId } = request.params as { pathwayId: string };
     try {
-      return reply.send({ ok: true, ...(await examState(request.user!.id, pathwayId)) });
+      return reply.send({ ok: true, ...(await examState(request.user!.id, pathwayId)), pathway_open: openFor(request, pathwayId) });
     } catch (err) {
       if ((err as Error).message === 'unknown_pathway') return unknown(reply);
       if ((err as Error).message === 'pathway_pending') return pending(reply);
@@ -92,8 +94,8 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
     }
     try {
       const r = await startAttempt(request.user!.id, pathwayId, holderName);
-      if (!r.ok) return reply.code(409).send({ ok: false, error: r.error, ...r.state });
-      return reply.send({ ok: true, ...r.state });
+      if (!r.ok) return reply.code(409).send({ ok: false, error: r.error, ...r.state, pathway_open: openFor(request, pathwayId) });
+      return reply.send({ ok: true, ...r.state, pathway_open: openFor(request, pathwayId) });
     } catch (err) {
       if ((err as Error).message === 'unknown_pathway') return unknown(reply);
       if ((err as Error).message === 'pathway_pending') return pending(reply);
@@ -112,7 +114,7 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
     const { pathwayId } = request.params as { pathwayId: string };
     const { intent } = request.body as { intent: 'wanted' | 'declined' };
     try {
-      return reply.send({ ok: true, ...(await setCertificateIntent(request.user!.id, pathwayId, intent)) });
+      return reply.send({ ok: true, ...(await setCertificateIntent(request.user!.id, pathwayId, intent)), pathway_open: openFor(request, pathwayId) });
     } catch (err) {
       if ((err as Error).message === 'unknown_pathway') return unknown(reply);
       if ((err as Error).message === 'pathway_pending') return pending(reply);
@@ -146,9 +148,9 @@ export async function examRoutes(app: FastifyInstance): Promise<void> {
               + `${config.exam.minAnswerChars} نویسه.`,
           });
         }
-        return reply.code(409).send({ ok: false, error: r.error, ...(r.state ?? {}) });
+        return reply.code(409).send({ ok: false, error: r.error, ...(r.state ?? {}), pathway_open: openFor(request, pathwayId) });
       }
-      return reply.send({ ok: true, ...r.state });
+      return reply.send({ ok: true, ...r.state, pathway_open: openFor(request, pathwayId) });
     } catch (err) {
       if ((err as Error).message === 'unknown_pathway') return unknown(reply);
       if ((err as Error).message === 'pathway_pending') return pending(reply);

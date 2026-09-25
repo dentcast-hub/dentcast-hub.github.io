@@ -178,6 +178,43 @@ describe('the contract names the total, never the mix', () => {
   });
 });
 
+// Founder, 1405/07/03: a reader without a subscription reaches the exam by
+// FINISHING the pathway — so the page must never link them into the pathway
+// page's 402, must state the discount THIS pathway pays, and a reader who has
+// not finished must be told the two doors without being told what is left.
+describe('a reader who reached the exam without the plan', () => {
+  it('is sent to the certificate wall, never into the pathway page they cannot open', async () => {
+    await mount({ ...BASE, state: 'wait', retry_at: '2026-09-19T10:00:00Z', attempts_used: 1, history: [FAILED], pathway_open: false });
+    const hrefs = Array.from(root().querySelectorAll('a')).map((a) => a.getAttribute('href'));
+    expect(hrefs).toContain('/plus/profile.html#certificates');
+    expect(hrefs.some((h) => (h || '').startsWith('/plus/pathway.html'))).toBe(false);
+  });
+
+  it('a subscriber still goes back to the pathway', async () => {
+    await mount({ ...BASE, state: 'wait', retry_at: '2026-09-19T10:00:00Z', attempts_used: 1, history: [FAILED], pathway_open: true });
+    const hrefs = Array.from(root().querySelectorAll('a')).map((a) => a.getAttribute('href'));
+    expect(hrefs.some((h) => (h || '').startsWith('/plus/pathway.html'))).toBe(true);
+  });
+
+  it('the contract states the discount this pathway mints', async () => {
+    await mount({ ...BASE, state: 'ready', discount: { percent: 20, first_purchase: true } });
+    const c = root().querySelector('[data-exam-contract]')!.textContent!;
+    expect(c).toContain('٪۲۰');
+    expect(c).toContain('اولین خرید');
+    await mount({ ...BASE, state: 'ready', discount: { percent: 10, first_purchase: false } });
+    expect(root().querySelector('[data-exam-contract]')!.textContent).toContain('٪۱۰ تخفیف خرید بعدی');
+  });
+
+  it('not finished: the 402 names both doors and no step, no count', async () => {
+    document.body.innerHTML = '<div id="dcp-root"></div>';
+    examImpl = () => Promise.reject(new ApiError(402, { error: 'premium_required', reason: 'incomplete' }));
+    const mod = await import('/plus/js/exam-page.js');
+    let gated = false;
+    await mod.renderExam(document.getElementById('dcp-root')!, 'digital', { onLocked: () => { gated = true; } });
+    expect(gated).toBe(true);
+  });
+});
+
 describe('starting', () => {
   // The name is asked in TWO boxes and it is the REAL one: a certificate is
   // never issued to the account's pseudonym (founder, 2026-09-20), so a given

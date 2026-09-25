@@ -347,7 +347,7 @@ describe('who may not sit it at all', () => {
     await readEverything();
     await pool.query(`update profiles set tier = 'free' where phone = $1`, [readerPhone]);
     expect((await get(`/pathways/${PATHWAY}`)).statusCode).toBe(402);
-    expect(await examState()).toMatchObject({ ok: true, state: 'ready', enrolled: true });
+    expect(await examState()).toMatchObject({ ok: true, state: 'ready' });
   });
 
   it('a signed-out visitor gets 401 everywhere, and the panel needs its own auth', async () => {

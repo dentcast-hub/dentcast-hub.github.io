@@ -31,11 +31,11 @@
 // with no coordination between the modules. When there is no ad — a premium
 // visitor, or the slot switched off — the section simply moves up under the
 // Pulse and nothing else changes.
-import { el, faNum } from './util.js?v=149';
-import { currentUser, api } from './api.js?v=149';
-import { PREMIUM_FEATURES } from './config.js?v=149';
-import { pricingHref } from './premium-cta.js?v=149';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=149';
+import { el, faNum } from './util.js?v=150';
+import { currentUser, api } from './api.js?v=150';
+import { PREMIUM_FEATURES } from './config.js?v=150';
+import { pricingHref } from './premium-cta.js?v=150';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=150';
 
 // Crafted inline icons, one per feature (same reasoning as home-card.js's promo
 // chips: emoji would sit at a different weight than the site's own stroke icons).
@@ -74,7 +74,7 @@ const CARDS = [
   // the only feature here whose home is not a page of its own, and sending a
   // reader to the pathway catalog instead would show them everything except
   // the thing the card names.
-  { f: F[8], ico: IC.certificate, href: '/plus/profile.html#certificates', sub: 'مسیر را تمام کنید، آزمونش را بدهید، گواهی به نام خودتان بگیرید' },
+  { f: F[8], ico: IC.certificate, href: '/plus/profile.html#certificates', sub: 'مسیر را به ترتیب بخوانید، ببینید چه مانده، آزمون بدهید و گواهی بگیرید' },
 ];
 
 // The two slots index.html carries — one per homepage layout. Both are filled:
