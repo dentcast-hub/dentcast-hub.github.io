@@ -1,7 +1,7 @@
 import type pg from 'pg';
 import { pool, withTransaction } from '../db.js';
 import { dayInTz, dayDiff } from './time.js';
-import { getTiers } from './league.js';
+import { getTiers, groupIsValid } from './league.js';
 import { getLeagueConfig, setLeagueConfig, type LeagueConfig } from './league-config.js';
 
 /**
@@ -33,9 +33,9 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
 
     // Lock every not-yet-finalized group of this week. None -> already done.
     const groupsRes = await client.query<{
-      id: string; tier_id: string; capacity_at_creation: number;
+      id: string; tier_id: string; capacity_at_creation: number; population_at_creation: number | null;
     }>(
-      `select id, tier_id, capacity_at_creation from leagues
+      `select id, tier_id, capacity_at_creation, population_at_creation from leagues
         where week_start = $1 and status <> 'finalized'
         order by id for update`,
       [weekStart],
@@ -85,19 +85,29 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
        * same rule) — and, at the time, no promotion either (see `up` below
        * for why that second part changed on 2026-08-25).
        *
-       * So a group is also valid when it is FULL — when it holds everyone its
-       * tier had to offer. Since 0033 capacity is the tier's own population
-       * (tierCapacity in league.ts), so `filled` at the top means "the whole
-       * level is in this group", which is not a thin group, it is a
-       * championship. And `min_group_capacity` (3) is what keeps that honest:
-       * a tier of one or two cannot reach its own capacity, so it stays
-       * non-competitive instead of crowning someone for existing.
+       * So a group is also valid when it holds everyone its tier had to offer —
+       * "the whole level is in this group", which is not a thin group, it is a
+       * championship.
        *
-       * capacity_at_creation is also why this needs no historical bookkeeping:
-       * it is frozen on the row, so "was that group valid" has the same answer
-       * a year later, whatever the tier's population has done since.
+       * That test asks `population_at_creation`, NOT the capacity, and 0068 is
+       * the week that forced the distinction: `min_group_capacity` floors the
+       * capacity at 3, so for any tier thinner than three people "as big as this
+       * tier can get" was a number its whole population could not reach.
+       * zirconia's two members finished 2026-09-19 on 226 and 112 weekly XP,
+       * both inside the promotion zone and far past promotion_min_weekly_xp, and
+       * neither promoted — so titanium never opened — because `filled` was
+       * `2 >= 3`, the floor. The floor keeps its own two jobs: the join ceiling,
+       * and the gate in front of DEMOTION below, so 0033's lone member is still
+       * never demoted for existing. What it no longer does is decide who counts.
+       *
+       * Both numbers are frozen on the row, which is why this needs no
+       * historical bookkeeping: "was that group valid" has the same answer a
+       * year later, whatever the tier's population has done since — and a group
+       * created before 0068 carries no population at all, so groupIsValid()
+       * coalesces to its capacity and that week stays judged by the rule it was
+       * finalized under.
        */
-      const valid = size >= cfg.min_valid_group_size || filled;
+      const valid = groupIsValid(size, g.capacity_at_creation, g.population_at_creation, cfg);
       const isBottom = tier.tier_order <= 1;
       const promotedCount = Math.ceil((size * cfg.promotion_pct) / 100);
       const demotedCount = Math.ceil((size * cfg.demotion_pct) / 100);
@@ -123,9 +133,12 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
        * the promo zone AND clears promotion_min_weekly_xp, same as at every
        * other level of the ladder), the tier above opens for them — even if
        * that means it opens with as few as 1-3 members its first week. A
-       * group that thin is still a real competition once it exists: it is
-       * "filled" the moment tierCapacity clamps to its (small) population, so
-       * `valid` already treats it as one — see that comment below.
+       * group that thin is still a real competition once it exists: it holds
+       * its tier's whole population, so `valid` already treats it as one — see
+       * that comment above. (Already treats it as one SINCE 0068. Until then
+       * this sentence was true of the capacity and false of the floor under it,
+       * which is exactly how a tier of two came to be un-promotable and
+       * titanium stayed shut.)
        */
       const up = byOrder.get(tier.tier_order + 1) ?? null;
 
@@ -140,7 +153,11 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
           if (inPromoZone && up && m.weekly_xp >= cfg.promotion_min_weekly_xp) {
             outcome = 'promoted';
           } else if (inDemoZone && !inPromoZone && filled && !isBottom) {
-            // Demotions apply ONLY when the group filled to capacity (spec 7).
+            // Demotions apply ONLY when the group filled to capacity (spec 7) —
+            // the FLOORED capacity, deliberately, which is 0033's guard against
+            // demoting the sole member of a thin tier every week. 0068 moved
+            // promotion off that number and left this one exactly where it was:
+            // being ranked and being pushed down are different stakes.
             outcome = 'demoted';
           }
         }

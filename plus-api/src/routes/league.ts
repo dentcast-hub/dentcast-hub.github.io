@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import { pool } from '../db.js';
 import { requireAuth } from '../middleware/auth.js';
 import { dayInTz, nextDay } from '../services/time.js';
-import { leagueWeek, getTiers } from '../services/league.js';
+import { leagueWeek, getTiers, groupIsValid } from '../services/league.js';
 import { getLeagueConfig } from '../services/league-config.js';
 
 /**
@@ -60,8 +60,10 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
     // This week's membership.
     const mem = (await pool.query<{
       league_id: string; weekly_xp: number; tier_id: string; capacity_at_creation: number;
+      population_at_creation: number | null;
     }>(
-      `select lm.league_id, lm.weekly_xp, l.tier_id, l.capacity_at_creation
+      `select lm.league_id, lm.weekly_xp, l.tier_id, l.capacity_at_creation,
+              l.population_at_creation
          from league_members lm join leagues l on l.id = lm.league_id
         where lm.user_id = $1 and lm.week_start = $2`,
       [userId, week_start],
@@ -144,12 +146,15 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
     const size = rows.length;
     const promotion_zone = Math.ceil((size * cfg.promotion_pct) / 100);
     const demotion_zone = Math.ceil((size * cfg.demotion_pct) / 100);
-    // Same rule finalizeWeek decides outcomes by (see the comment there): below
-    // the floor AND not full. A group that holds its whole tier is a
-    // championship, not a thin group, and telling its members «گروه هنوز کوچک
-    // است؛ … وقتی گروه پر شود» was a promise the top tier could never see kept —
-    // its capacity IS its population, so "when it fills" is already now.
-    const neutral_mode = size < cfg.min_valid_group_size && size < mem.capacity_at_creation;
+    // The SAME rule finalizeWeek decides outcomes by — literally the same
+    // function since 0068, because this line and that one disagreeing is a
+    // reader being told their week does not count in the same week it decides
+    // their promotion. A group that holds its whole tier is a championship, not
+    // a thin group, and telling its members «گروه هنوز کوچک است؛ … وقتی گروه پر
+    // شود» was a promise the top tier could never see kept.
+    const neutral_mode = !groupIsValid(
+      size, mem.capacity_at_creation, mem.population_at_creation, cfg,
+    );
     const groupTier = tierById.get(mem.tier_id) ?? currentTier;
     // Structural, not cfg.max_active_tier_order: since 2026-08-25 a group
     // promotes into the tier above the moment someone qualifies, whether or

@@ -97,11 +97,62 @@ export async function effectiveTierId(client: pg.PoolClient, userId: string): Pr
  * anything crowded is pinned to the ceiling either way.
  */
 export async function tierCapacity(db: Db, tierId: string, cfg: LeagueConfig): Promise<number> {
+  return capacityFrom(await tierPopulation(db, tierId), cfg);
+}
+
+/** The clamp itself, so the two callers cannot drift apart. */
+export function capacityFrom(population: number, cfg: LeagueConfig): number {
+  return Math.max(cfg.min_group_capacity, Math.min(cfg.group_size_current, population));
+}
+
+/**
+ * Is this group a real competition — the ONE definition of it.
+ *
+ * Two ways in, and the second is the whole subject of 0068. Either the group
+ * reaches the absolute floor (`min_valid_group_size`), or it holds the tier's
+ * WHOLE population, which at the top of the ladder is a championship rather
+ * than a thin group. That second test asks the population, never the capacity:
+ * `min_group_capacity` floors the capacity at 3 for reasons of its own (the
+ * join ceiling, and not demoting a lone member), and reading the floored number
+ * here is what made the sentence unsayable for a tier of two — zirconia's two
+ * members finished a week at 226 and 112 XP and neither could promote, so
+ * titanium never opened.
+ *
+ * `min_rankable_group_size` is what keeps the second way honest: the whole tier
+ * being present is not a competition when the whole tier is one person.
+ *
+ * `population` is nullable because a group created before 0068 has none; the
+ * caller coalesces to its capacity, so a week already decided keeps being read
+ * by the rule it was decided under.
+ *
+ * Deliberately NOT the same question as `filled` (see league-finalize.ts, which
+ * still gates DEMOTION on the floored capacity): being ranked and being pushed
+ * down are different stakes, and 0033's lone member must stay un-demoted.
+ */
+export function groupIsValid(
+  size: number, capacity: number, population: number | null, cfg: LeagueConfig,
+): boolean {
+  if (size >= cfg.min_valid_group_size) return true;
+  const wholeTier = population ?? capacity;
+  return size >= wholeTier && size >= cfg.min_rankable_group_size;
+}
+
+/**
+ * The tier's population, raw — no floor, no ceiling. "How many people this tier
+ * had to offer", as opposed to `tierCapacity`'s "how many fit in one group".
+ *
+ * The two were one number until 0068, and the floor is what made them disagree:
+ * a tier of two gets capacity 3, so `size >= capacity` — the test that means
+ * «the whole tier is in this group» — was unsatisfiable for exactly the thin
+ * top-of-ladder tiers it was written for. See 0068 for the week that measured
+ * it. The floor keeps its own jobs (the join ceiling, and the gate in front of
+ * demotion); this is the number the validity test needs.
+ */
+export async function tierPopulation(db: Db, tierId: string): Promise<number> {
   const r = await db.query<{ n: number }>(
     'select count(*)::int as n from profiles where current_tier_id = $1', [tierId],
   );
-  const population = r.rows[0]?.n ?? 0;
-  return Math.max(cfg.min_group_capacity, Math.min(cfg.group_size_current, population));
+  return r.rows[0]?.n ?? 0;
 }
 
 /**
@@ -112,6 +163,7 @@ export async function tierCapacity(db: Db, tierId: string, cfg: LeagueConfig): P
  */
 export async function getOrCreateOpenLeague(
   client: pg.PoolClient, tierId: string, weekStart: string, weekEnd: string, capacity: number,
+  population?: number,
 ): Promise<{ id: string; capacity_at_creation: number }> {
   // Bounded loop: at most a handful of "close full -> make next" hops.
   for (let i = 0; i < 50; i += 1) {
@@ -130,12 +182,18 @@ export async function getOrCreateOpenLeague(
       await client.query("update leagues set status = 'closed' where id = $1", [lg.id]);
       continue; // make/find the next open group
     }
+    // `population_at_creation` is frozen here beside the capacity, and for the
+    // same reason: it is what the validity test means by «the whole tier is in
+    // this group», and that question must keep its answer once the week is
+    // decided. Null when the caller does not supply one — every reader
+    // coalesces back to the capacity, which is what a pre-0068 row carries.
     const created = await client.query<{ id: string; capacity_at_creation: number }>(
-      `insert into leagues (tier_id, week_start, week_end, status, capacity_at_creation)
-       values ($1, $2, $3, 'open', $4)
+      `insert into leagues (tier_id, week_start, week_end, status, capacity_at_creation,
+                            population_at_creation)
+       values ($1, $2, $3, 'open', $4, $5)
        on conflict (tier_id, week_start) where status = 'open' do nothing
        returning id, capacity_at_creation`,
-      [tierId, weekStart, weekEnd, capacity],
+      [tierId, weekStart, weekEnd, capacity, population ?? null],
     );
     if (created.rows[0]) return created.rows[0];
     // lost the create race -> loop and select the now-existing open group
@@ -512,8 +570,10 @@ export async function awardLeagueXp(
 
   // First XP of the week -> place into an open group of the user's current tier.
   const tierId = await effectiveTierId(client, userId);
-  const capacity = await tierCapacity(client, tierId, cfg);
-  const league = await getOrCreateOpenLeague(client, tierId, week_start, week_end, capacity);
+  const population = await tierPopulation(client, tierId);
+  const league = await getOrCreateOpenLeague(
+    client, tierId, week_start, week_end, capacityFrom(population, cfg), population,
+  );
   await client.query(
     `insert into league_members (league_id, user_id, week_start, weekly_xp, first_reached_current_xp_at)
      values ($1, $2, $3, $4, $5)
