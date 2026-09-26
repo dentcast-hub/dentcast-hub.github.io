@@ -744,6 +744,68 @@
    ],
    "variants": [],
    "co_tags": [],
+   "count": 40,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31",
+    "chairside/chairside-32",
+    "chairside/chairside-33",
+    "chairside/chairside-34",
+    "chairside/chairside-35",
+    "dentcast-plus/video-10",
+    "chairside/chairside-36",
+    "chairside/chairside-37",
+    "chairside/chairside-38",
+    "chairside/chairside-39"
+   ]
+  },
+  {
+   "key": "کیس_بالینی",
+   "tag": "#کیس_بالینی",
+   "domain": "brand",
+   "words": 2,
+   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
+   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
+   "aliases": [
+    "ویزیت کلینیکی",
+    "گزارش کیس",
+    "کیس ریپورت",
+    "case report"
+   ],
+   "variants": [
+    "#ویزیت_کلینیکی",
+    "#گزارش_کیس"
+   ],
+   "co_tags": [],
    "count": 39,
    "content_ids": [
     "chairside/chairside-1",
@@ -781,70 +843,10 @@
     "chairside/chairside-33",
     "chairside/chairside-34",
     "chairside/chairside-35",
-    "dentcast-plus/video-10",
     "chairside/chairside-36",
     "chairside/chairside-37",
-    "chairside/chairside-38"
-   ]
-  },
-  {
-   "key": "کیس_بالینی",
-   "tag": "#کیس_بالینی",
-   "domain": "brand",
-   "words": 2,
-   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
-   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
-   "aliases": [
-    "ویزیت کلینیکی",
-    "گزارش کیس",
-    "کیس ریپورت",
-    "case report"
-   ],
-   "variants": [
-    "#ویزیت_کلینیکی",
-    "#گزارش_کیس"
-   ],
-   "co_tags": [],
-   "count": 38,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30",
-    "chairside/chairside-31",
-    "chairside/chairside-32",
-    "chairside/chairside-33",
-    "chairside/chairside-34",
-    "chairside/chairside-35",
-    "chairside/chairside-36",
-    "chairside/chairside-37",
-    "chairside/chairside-38"
+    "chairside/chairside-38",
+    "chairside/chairside-39"
    ]
   },
   {
@@ -865,7 +867,7 @@
     "#پست و کور"
    ],
    "co_tags": [],
-   "count": 37,
+   "count": 38,
    "content_ids": [
     "episodes/episode-36",
     "episodes/episode-42",
@@ -903,7 +905,8 @@
     "dentai/dentai-33",
     "insight/insight-76",
     "sharehub/share-20",
-    "notecast/episode-42"
+    "notecast/episode-42",
+    "chairside/chairside-39"
    ]
   },
   {
@@ -2018,6 +2021,43 @@
    ]
   },
   {
+   "key": "دکتر_شهابیان",
+   "tag": "#دکتر_شهابیان",
+   "domain": "brand",
+   "words": 2,
+   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
+   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
+   "aliases": [
+    "شهابیان",
+    "کانسپت شهابیان",
+    "foad shahabian",
+    "دکتر فواد شهابیان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 18,
+   "content_ids": [
+    "episodes/episode-148-2",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31",
+    "chairside/chairside-32",
+    "chairside/chairside-33",
+    "chairside/chairside-34",
+    "chairside/chairside-35",
+    "chairside/chairside-36",
+    "chairside/chairside-37",
+    "chairside/chairside-38",
+    "chairside/chairside-39"
+   ]
+  },
+  {
    "key": "chatgpt",
    "tag": "#ChatGPT",
    "domain": "ai",
@@ -2090,42 +2130,6 @@
     "episodes/episode-156",
     "metanotes/meta-15",
     "metanotes/meta-16"
-   ]
-  },
-  {
-   "key": "دکتر_شهابیان",
-   "tag": "#دکتر_شهابیان",
-   "domain": "brand",
-   "words": 2,
-   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
-   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
-   "aliases": [
-    "شهابیان",
-    "کانسپت شهابیان",
-    "foad shahabian",
-    "دکتر فواد شهابیان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 17,
-   "content_ids": [
-    "episodes/episode-148-2",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30",
-    "chairside/chairside-31",
-    "chairside/chairside-32",
-    "chairside/chairside-33",
-    "chairside/chairside-34",
-    "chairside/chairside-35",
-    "chairside/chairside-36",
-    "chairside/chairside-37",
-    "chairside/chairside-38"
    ]
   },
   {
@@ -2329,6 +2333,41 @@
     "dentai/dentai-29",
     "dentai/dentai-32",
     "insight/insight-74"
+   ]
+  },
+  {
+   "key": "روکش_موقت",
+   "tag": "#روکش_موقت",
+   "domain": null,
+   "words": 2,
+   "definition": "پروویژنالی که فقط یک مرحله‌ی گذرا نیست، بلکه مرجعِ طراحیِ نهایی است.",
+   "use_when": "مقاله نقشِ موقتی را در تعیینِ کارِ نهایی جدی بگیرد.",
+   "aliases": [
+    "provisional",
+    "موقتی",
+    "temporary crown",
+    "پروویژنال",
+    "تمپ",
+    "موقت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-125-2",
+    "insight/insight-2",
+    "insight/insight-12",
+    "insight/insight-19",
+    "insight/insight-21",
+    "chairside/chairside-2",
+    "insight/insight-42",
+    "insight/insight-55",
+    "insight/insight-63",
+    "dentcast-plus/video-8",
+    "insight/insight-77",
+    "sharehub/share-21",
+    "insight/insight-81",
+    "chairside/chairside-39"
    ]
   },
   {
@@ -2562,40 +2601,6 @@
    ]
   },
   {
-   "key": "روکش_موقت",
-   "tag": "#روکش_موقت",
-   "domain": null,
-   "words": 2,
-   "definition": "پروویژنالی که فقط یک مرحله‌ی گذرا نیست، بلکه مرجعِ طراحیِ نهایی است.",
-   "use_when": "مقاله نقشِ موقتی را در تعیینِ کارِ نهایی جدی بگیرد.",
-   "aliases": [
-    "provisional",
-    "موقتی",
-    "temporary crown",
-    "پروویژنال",
-    "تمپ",
-    "موقت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-125-2",
-    "insight/insight-2",
-    "insight/insight-12",
-    "insight/insight-19",
-    "insight/insight-21",
-    "chairside/chairside-2",
-    "insight/insight-42",
-    "insight/insight-55",
-    "insight/insight-63",
-    "dentcast-plus/video-8",
-    "insight/insight-77",
-    "sharehub/share-21",
-    "insight/insight-81"
-   ]
-  },
-  {
    "key": "سایش_دندان",
    "tag": "#سایش_دندان",
    "domain": "clinical",
@@ -2759,7 +2764,7 @@
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
    "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
    "aliases": [
@@ -4293,6 +4298,32 @@
    ]
   },
   {
+   "key": "ارتودنسی",
+   "tag": "#ارتودنسی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "درمان ارتودنتیک به‌عنوان بخشی از طرح درمان.",
+   "use_when": "مقاله تعاملِ ارتو و پروتز را دخیل بداند.",
+   "aliases": [
+    "ارتو",
+    "ortho",
+    "درمان ارتودنتیک"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Orthodontics"
+   ],
+   "count": 6,
+   "content_ids": [
+    "insight/insight-19",
+    "sharehub/share-5",
+    "insight/insight-38",
+    "insight/insight-42",
+    "sharehub/share-19",
+    "chairside/chairside-39"
+   ]
+  },
+  {
    "key": "انتخاب_سمان",
    "tag": "#انتخاب_سمان",
    "domain": "clinical",
@@ -4604,10 +4635,34 @@
    ]
   },
   {
+   "key": "دیاستم",
+   "tag": "#دیاستم",
+   "domain": null,
+   "words": 1,
+   "definition": "فاصله‌ی بین دو دندان مجاور در قدام.",
+   "use_when": "مقاله درباره‌ی بستن یا مدیریت دیاستم تصمیم بگیرد.",
+   "aliases": [
+    "diastema",
+    "دیاستما",
+    "فاصله بین دندانی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-26",
+    "insight/insight-61",
+    "chairside/chairside-33",
+    "insight/insight-72",
+    "chairside/chairside-39"
+   ]
+  },
+  {
    "key": "رادیوگرافی_تشخیصی",
    "tag": "#رادیوگرافی_تشخیصی",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "انتخاب و تفسیرِ درستِ تصویر — پانورامیک در برابر پری‌اپیکال.",
    "use_when": "مقاله کفایت یا نارساییِ یک تصویر را مسئله بداند.",
    "aliases": [
@@ -5160,31 +5215,6 @@
    ]
   },
   {
-   "key": "ارتودنسی",
-   "tag": "#ارتودنسی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "درمان ارتودنتیک به‌عنوان بخشی از طرح درمان.",
-   "use_when": "مقاله تعاملِ ارتو و پروتز را دخیل بداند.",
-   "aliases": [
-    "ارتو",
-    "ortho",
-    "درمان ارتودنتیک"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#Orthodontics"
-   ],
-   "count": 5,
-   "content_ids": [
-    "insight/insight-19",
-    "sharehub/share-5",
-    "insight/insight-38",
-    "insight/insight-42",
-    "sharehub/share-19"
-   ]
-  },
-  {
    "key": "استئواینتگریشن",
    "tag": "#استئواینتگریشن",
    "domain": null,
@@ -5494,29 +5524,6 @@
     "chairside/chairside-4",
     "metanotes/meta-11",
     "sharehub/share-19"
-   ]
-  },
-  {
-   "key": "دیاستم",
-   "tag": "#دیاستم",
-   "domain": null,
-   "words": 1,
-   "definition": "فاصله‌ی بین دو دندان مجاور در قدام.",
-   "use_when": "مقاله درباره‌ی بستن یا مدیریت دیاستم تصمیم بگیرد.",
-   "aliases": [
-    "diastema",
-    "دیاستما",
-    "فاصله بین دندانی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-26",
-    "insight/insight-61",
-    "chairside/chairside-33",
-    "insight/insight-72"
    ]
   },
   {
@@ -6290,6 +6297,29 @@
    ]
   },
   {
+   "key": "تعویض_روکش",
+   "tag": "#تعویض_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "برداشتن و ساختِ دوباره‌ی روکشِ موجود.",
+   "use_when": "مقاله ضرورتِ تعویض را در برابر نگه داشتن بسنجد.",
+   "aliases": [
+    "تعویض روکش",
+    "crown replacement",
+    "تعویض پروتز",
+    "عوض کردن روکش"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-58",
+    "chairside/chairside-34",
+    "insight/insight-73",
+    "chairside/chairside-39"
+   ]
+  },
+  {
    "key": "تغییر_رنگ",
    "tag": "#تغییر_رنگ",
    "domain": "clinical",
@@ -6332,6 +6362,28 @@
     "notecast/episode-38",
     "chairside/chairside-35",
     "insight/insight-79"
+   ]
+  },
+  {
+   "key": "درمان_بین_رشته_ای",
+   "tag": "#درمان_بین_رشته_ای",
+   "domain": null,
+   "words": 4,
+   "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
+   "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
+   "aliases": [
+    "بین رشته ای",
+    "مولتی دیسیپلینری",
+    "interdisciplinary"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-19",
+    "chairside/chairside-2",
+    "insight/insight-38",
+    "chairside/chairside-39"
    ]
   },
   {
@@ -7638,28 +7690,6 @@
    ]
   },
   {
-   "key": "تعویض_روکش",
-   "tag": "#تعویض_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "برداشتن و ساختِ دوباره‌ی روکشِ موجود.",
-   "use_when": "مقاله ضرورتِ تعویض را در برابر نگه داشتن بسنجد.",
-   "aliases": [
-    "تعویض روکش",
-    "crown replacement",
-    "تعویض پروتز",
-    "عوض کردن روکش"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-58",
-    "chairside/chairside-34",
-    "insight/insight-73"
-   ]
-  },
-  {
    "key": "تماس_باز",
    "tag": "#تماس_باز",
    "domain": "clinical",
@@ -7679,6 +7709,31 @@
     "photocast/episode-1",
     "insight/insight-29",
     "metanotes/meta-12"
+   ]
+  },
+  {
+   "key": "توالی_درمان",
+   "tag": "#توالی_درمان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ترتیبی که مراحل درمان یک بیمار چندمشکلی در آن انجام می‌شوند؛ هر فاز شرایط فنیِ لازم برای فاز بعد را می‌سازد، پس جابه‌جا شدنشان کار فاز بعدی را باطل یا تکراری می‌کند.",
+   "use_when": "مقاله خودِ ترتیب یا زمان‌بندیِ مراحل را موضوع قرار دهد — کدام کار پیش از کدام، و اگر رعایت نشود چه از دست می‌رود — نه فقط محتوای یکی از مراحل.",
+   "aliases": [
+    "treatment sequencing",
+    "sequence of treatment",
+    "ترتیب درمان",
+    "فازبندی درمان",
+    "فازهای درمان",
+    "توالی فازها",
+    "مراحل درمان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "sharehub/share-19",
+    "insight/insight-77",
+    "chairside/chairside-39"
    ]
   },
   {
@@ -7922,27 +7977,6 @@
     "episodes/episode-62",
     "episodes/episode-63",
     "episodes/episode-64"
-   ]
-  },
-  {
-   "key": "درمان_بین_رشته_ای",
-   "tag": "#درمان_بین_رشته_ای",
-   "domain": null,
-   "words": 6,
-   "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
-   "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
-   "aliases": [
-    "بین رشته ای",
-    "مولتی دیسیپلینری",
-    "interdisciplinary"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-19",
-    "chairside/chairside-2",
-    "insight/insight-38"
    ]
   },
   {
@@ -10401,30 +10435,6 @@
    ]
   },
   {
-   "key": "توالی_درمان",
-   "tag": "#توالی_درمان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ترتیبی که مراحل درمان یک بیمار چندمشکلی در آن انجام می‌شوند؛ هر فاز شرایط فنیِ لازم برای فاز بعد را می‌سازد، پس جابه‌جا شدنشان کار فاز بعدی را باطل یا تکراری می‌کند.",
-   "use_when": "مقاله خودِ ترتیب یا زمان‌بندیِ مراحل را موضوع قرار دهد — کدام کار پیش از کدام، و اگر رعایت نشود چه از دست می‌رود — نه فقط محتوای یکی از مراحل.",
-   "aliases": [
-    "treatment sequencing",
-    "sequence of treatment",
-    "ترتیب درمان",
-    "فازبندی درمان",
-    "فازهای درمان",
-    "توالی فازها",
-    "مراحل درمان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "sharehub/share-19",
-    "insight/insight-77"
-   ]
-  },
-  {
    "key": "ثبات_قبل_از_سمان",
    "tag": "#ثبات_قبل_از_سمان",
    "domain": "clinical",
@@ -10913,6 +10923,47 @@
    ]
   },
   {
+   "key": "روکش_در_ارتو",
+   "tag": "#روکش_در_ارتو",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "روکشی که در میانه‌ی درمان ارتودنسی گذاشته می‌شود.",
+   "use_when": "مقاله ترتیبِ درمان را عاملِ انتخابِ متریال بداند.",
+   "aliases": [
+    "روکش حین ارتو",
+    "crown during orthodontics",
+    "روکش وسط ارتو"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-42",
+    "chairside/chairside-39"
+   ]
+  },
+  {
+   "key": "ریتریتمنت",
+   "tag": "#ریتریتمنت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "درمانِ مجددِ ریشه، وقتی درمانِ اول کافی نبوده.",
+   "use_when": "مقاله ضرورت یا امکانِ ری‌تریتمنت را بسنجد.",
+   "aliases": [
+    "retreatment",
+    "ری تریتمنت",
+    "درمان مجدد ریشه",
+    "درمان ریشه مجدد"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-20",
+    "chairside/chairside-39"
+   ]
+  },
+  {
    "key": "ریز_نشت",
    "tag": "#ریز_نشت",
    "domain": null,
@@ -11093,6 +11144,28 @@
    "content_ids": [
     "episodes/episode-25",
     "notecast/episode-25"
+   ]
+  },
+  {
+   "key": "شکایت_اصلی",
+   "tag": "#شکایت_اصلی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "مسئله‌ای که بیمار برای آن آمده، نه ایرادی که دندان‌پزشک در معاینه می‌بیند. درمان فقط وقتی موجه است که همان شکایت را واقعاً بهتر کند؛ رفع یک نقصِ عینی که بیمار از آن ناراضی نیست، نارضایتیِ اصلی را حل نمی‌کند.",
+   "use_when": "مقاله‌ای که تطابقِ شکایت بیمار با توانِ درمان را می‌سنجد، یا تعویض/شروع درمان را به‌خاطر عدم تطابق با chief complaint رد یا مشروط می‌کند.",
+   "aliases": [
+    "chief complaint",
+    "CC",
+    "شکایت بیمار",
+    "نارضایتی اصلی",
+    "علت مراجعه"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-34",
+    "chairside/chairside-39"
    ]
   },
   {
@@ -14445,7 +14518,7 @@
    "key": "اینتروژن_ارتودنسی",
    "tag": "#اینتروژن_ارتودنسی",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
    "use_when": "مقاله اینتروژن را راه‌حل بداند.",
    "aliases": [
@@ -15276,7 +15349,7 @@
    "key": "تفسیر_رادیوگرافی",
    "tag": "#تفسیر_رادیوگرافی",
    "domain": "clinical",
-   "words": 4,
+   "words": 2,
    "definition": "خواندنِ الگو — مرزِ صاف در برابر مرزِ منتشر — نه صرفاً دیدنِ لکه.",
    "use_when": "مقاله معیارِ تمایزِ تصویری بدهد.",
    "aliases": [
@@ -16222,7 +16295,7 @@
    "key": "رادیوگرافی_کنترل",
    "tag": "#رادیوگرافی_کنترل",
    "domain": "clinical",
-   "words": 4,
+   "words": 2,
    "definition": "پری‌اپیکالِ صحیح، به‌عنوان تأییدِ قطعیِ نشست.",
    "use_when": "مقاله رادیوگرافی را تأییدِ نهایی بداند، نه حس.",
    "aliases": [
@@ -16562,25 +16635,6 @@
    ]
   },
   {
-   "key": "روکش_در_ارتو",
-   "tag": "#روکش_در_ارتو",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "روکشی که در میانه‌ی درمان ارتودنسی گذاشته می‌شود.",
-   "use_when": "مقاله ترتیبِ درمان را عاملِ انتخابِ متریال بداند.",
-   "aliases": [
-    "روکش حین ارتو",
-    "crown during orthodontics",
-    "روکش وسط ارتو"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-42"
-   ]
-  },
-  {
    "key": "رویش_غیرفعال_تغییریافته",
    "tag": "#رویش_غیرفعال_تغییریافته",
    "domain": "clinical",
@@ -16619,26 +16673,6 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-159"
-   ]
-  },
-  {
-   "key": "ریتریتمنت",
-   "tag": "#ریتریتمنت",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "درمانِ مجددِ ریشه، وقتی درمانِ اول کافی نبوده.",
-   "use_when": "مقاله ضرورت یا امکانِ ری‌تریتمنت را بسنجد.",
-   "aliases": [
-    "retreatment",
-    "ری تریتمنت",
-    "درمان مجدد ریشه",
-    "درمان ریشه مجدد"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-20"
    ]
   },
   {
@@ -17229,27 +17263,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-59"
-   ]
-  },
-  {
-   "key": "شکایت_اصلی",
-   "tag": "#شکایت_اصلی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "مسئله‌ای که بیمار برای آن آمده، نه ایرادی که دندان‌پزشک در معاینه می‌بیند. درمان فقط وقتی موجه است که همان شکایت را واقعاً بهتر کند؛ رفع یک نقصِ عینی که بیمار از آن ناراضی نیست، نارضایتیِ اصلی را حل نمی‌کند.",
-   "use_when": "مقاله‌ای که تطابقِ شکایت بیمار با توانِ درمان را می‌سنجد، یا تعویض/شروع درمان را به‌خاطر عدم تطابق با chief complaint رد یا مشروط می‌کند.",
-   "aliases": [
-    "chief complaint",
-    "CC",
-    "شکایت بیمار",
-    "نارضایتی اصلی",
-    "علت مراجعه"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "chairside/chairside-34"
    ]
   },
   {
@@ -19025,7 +19038,7 @@
    "key": "هوش_مصنوعی_رادیوگرافی",
    "tag": "#هوش_مصنوعی_رادیوگرافی",
    "domain": "ai",
-   "words": 5,
+   "words": 3,
    "definition": "نرم‌افزاری که روی رادیوگرافی ضایعه یا سطح استخوان را علامت می‌زند — تصویری که اغلب با ChatGPT اشتباه گرفته می‌شود.",
    "use_when": "مقاله همین دسته را موضوع یا نقطه‌ی تمایز قرار دهد.",
    "aliases": [

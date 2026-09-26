@@ -15634,5 +15634,40 @@
       "secondary": [],
       "subtopic": "evidence-appraisal"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-39",
+    "title": "وقتی خواسته‌ی بیمار با راه‌حلی که مد نظرش هست جور درنمیاد",
+    "caption": "در این کیس Chairside بیمار ده روکشِ بی‌کیفیت دارد که فردی غیردندانپزشک ساخته، اما شکایتش فقط دو چیز است: فاصله‌ی باقی‌مانده بین دندان‌ها و بزرگ بودنِ روکش‌ها؛ دو خواسته‌ای که با تعویضِ روکش به‌تنهایی با هم جمع نمی‌شوند و درمان را به سمت ارتودنسی می‌برند، با ترتیبی که از مشاوره‌ی ارتودنسی شروع و به روکش‌های نهایی ختم می‌شود.",
+    "hashtags": [
+      "#چیرساید",
+      "#کیس_بالینی",
+      "#دکتر_شهابیان",
+      "#شکایت_اصلی",
+      "#دیاستم",
+      "#ارتودنسی",
+      "#درمان_بین_رشته_ای",
+      "#توالی_درمان",
+      "#تعویض_روکش",
+      "#ریتریتمنت",
+      "#پست_و_کور",
+      "#روکش_موقت",
+      "#روکش_در_ارتو"
+    ],
+    "keywords": [
+      "patient demands conflicting treatment",
+      "diastema closure crown size conflict",
+      "orthodontic consultation before crown replacement",
+      "endodontic retreatment post and core before orthodontics",
+      "provisional crowns bracket bonding",
+      "interdisciplinary prosthodontic orthodontic sequencing"
+    ],
+    "page_url": "/chairside/chairside-39.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]
