@@ -17,6 +17,10 @@ export interface LeagueConfig {
   promotion_pct: number;
   demotion_pct: number;
   min_valid_group_size: number;
+  /** Floor under the OTHER way a group is valid (0068): the whole tier being
+   *  present is not a competition when the whole tier is one person. See
+   *  groupIsValid() in league.ts. */
+  min_rankable_group_size: number;
   promotion_min_weekly_xp: number;
   cooldown_weeks: number;
   max_active_tier_order: number;
@@ -66,7 +70,7 @@ export interface LeagueConfig {
 type Db = pg.Pool | pg.PoolClient;
 
 export const NUMERIC_KEYS: Array<keyof LeagueConfig> = [
-  'group_size_current', 'min_group_capacity', 'promotion_pct', 'demotion_pct', 'min_valid_group_size',
+  'group_size_current', 'min_group_capacity', 'promotion_pct', 'demotion_pct', 'min_valid_group_size', 'min_rankable_group_size',
   'promotion_min_weekly_xp', 'cooldown_weeks', 'max_active_tier_order',
   'xp_active_bonus', 'xp_read', 'xp_listen', 'xp_highlight', 'xp_highlight_cap', 'xp_review',
   'xp_share', 'xp_share_weekly_cap', 'xp_review_weekly_cap', 'xp_challenge', 'xp_challenge_weekly_cap',

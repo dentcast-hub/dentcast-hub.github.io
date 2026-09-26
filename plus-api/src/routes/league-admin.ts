@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import { pool } from '../db.js';
 import { requireAdmin } from '../middleware/basic-auth.js';
 import { dayInTz } from '../services/time.js';
-import { leagueWeek, getTiers } from '../services/league.js';
+import { leagueWeek, getTiers, groupIsValid } from '../services/league.js';
 import {
   getLeagueConfig, getLeagueConfigRows, getLeagueAudit, setLeagueConfigLock,
   setLeagueConfig, NUMERIC_KEYS,
@@ -50,8 +50,12 @@ export async function leagueAdminRoutes(app: FastifyInstance): Promise<void> {
     }));
 
     // Current-week groups: size + capacity per group (for fill + validity).
-    const groups = (await pool.query<{ id: string; tier_id: string; capacity_at_creation: number; size: number }>(
-      `select l.id, l.tier_id, l.capacity_at_creation, count(lm.id)::int as size
+    const groups = (await pool.query<{
+      id: string; tier_id: string; capacity_at_creation: number;
+      population_at_creation: number | null; size: number;
+    }>(
+      `select l.id, l.tier_id, l.capacity_at_creation, l.population_at_creation,
+              count(lm.id)::int as size
          from leagues l left join league_members lm on lm.league_id = l.id
         where l.week_start = $1 group by l.id`,
       [week_start],
@@ -85,10 +89,15 @@ export async function leagueAdminRoutes(app: FastifyInstance): Promise<void> {
     // its reason: 5 of a possible 6 and 5 of a possible 15 are the same size and
     // no longer the same situation.
     const belowValidity = groups
-      .filter((g) => g.size < cfg.min_valid_group_size && g.size < g.capacity_at_creation)
+      .filter((g) => !groupIsValid(g.size, g.capacity_at_creation, g.population_at_creation, cfg))
       .map((g) => ({
         league_id: g.id, size: g.size, min_valid: cfg.min_valid_group_size,
         capacity: g.capacity_at_creation,
+        // The number the second way in is measured against, which since 0068 is
+        // not the capacity. Reporting only the capacity is what made zirconia's
+        // row read «2 of a possible 3» when the tier held exactly 2 people —
+        // a row that states a fact and hides the reason it is a problem.
+        population: g.population_at_creation,
         tier: tiers.find((t) => t.id === g.tier_id)?.slug ?? null,
       }));
 

@@ -42,15 +42,23 @@ async function seedStat(week: string, active: number): Promise<void> {
   );
 }
 
-/** Create a group in `tierSlug` with the given members ({xp, at}), status closed. */
+/**
+ * Create a group in `tierSlug` with the given members ({xp, at}), status closed.
+ *
+ * `population` is the tier's real population frozen on the row (0068). Left out
+ * on purpose by most callers: null is what a group created before that migration
+ * carries, so those tests keep asserting the rule such a row is still judged by.
+ */
 async function seedGroup(
   tierSlug: string, capacity: number, members: Array<{ xp: number; at: string }>, week = WEEK,
+  population: number | null = null,
 ): Promise<{ leagueId: string; userIds: string[] }> {
   const tid = await tierId(tierSlug);
   const lg = await pool.query<{ id: string }>(
-    `insert into leagues (tier_id, week_start, week_end, status, capacity_at_creation)
-     values ($1, $2, $2, 'closed', $3) returning id`,
-    [tid, week, capacity],
+    `insert into leagues (tier_id, week_start, week_end, status, capacity_at_creation,
+                          population_at_creation)
+     values ($1, $2, $2, 'closed', $3, $4) returning id`,
+    [tid, week, capacity, population],
   );
   const leagueId = lg.rows[0].id;
   const userIds: string[] = [];
@@ -796,9 +804,12 @@ describe('validity — the floor OR a full group', () => {
     for (const uid of userIds) expect((await memberOf(uid)).outcome).toBe('stayed');
   });
 
-  it('min_group_capacity keeps a tier of two from crowning anyone', async () => {
-    // Capacity can never go below 3 (tierCapacity), so two people cannot fill
-    // their tier and cannot manufacture a valid group out of each other.
+  it('a pre-0068 row with no population is still judged by its capacity', async () => {
+    // Two members and capacity 3, and NO population on the row — which is what
+    // every group created before 0068 looks like. groupIsValid coalesces to the
+    // capacity, so this week is decided by exactly the rule it was closed under:
+    // 2 >= 3 is false, nobody moves. (A tier that really holds two is the next
+    // test, and it now promotes — see the 0068 block below.)
     const { userIds } = await seedGroup('amalgam', 3, [
       { xp: 90, at: T(1) }, { xp: 10, at: T(2) },
     ]);
@@ -843,13 +854,152 @@ describe('validity — the floor OR a full group', () => {
     const thin = await app.inject({ method: 'GET', url: '/league', headers: { cookie } });
     expect(thin.json().neutral_mode).toBe(true);
 
-    // Shrink the group to exactly what it holds — the "whole tier is here" case.
+    // Still true when the row says the tier holds exactly this one person:
+    // min_rankable_group_size (0068) is what keeps «the whole tier is here» from
+    // meaning «I am here», and a rank of one is not a result.
     await pool.query(
-      `update leagues set capacity_at_creation = 1
+      `update leagues set population_at_creation = 1
          where tier_id = $1 and week_start = (select max(week_start) from leagues)`, [tid],
     );
-    const full = await app.inject({ method: 'GET', url: '/league', headers: { cookie } });
-    expect(full.json().neutral_mode).toBe(false);
+    const alone = await app.inject({ method: 'GET', url: '/league', headers: { cookie } });
+    expect(alone.json().neutral_mode, 'a tier of one is never a championship').toBe(true);
+
+    // Two members, and the tier holds exactly those two — the "whole tier is
+    // here" case, which reads as a championship however far below the floor.
+    // Two accounts that have not scored yet, because awardLeagueXp keeps a member
+    // in the group they were first placed in: moving 94's tier now would leave
+    // them in the composite group they already joined this week.
+    const tierTwo = await tierId('lithium-disilicate');
+    const cookieA = await loginAs(app, '09120000095');
+    const cookieB = await loginAs(app, '09120000096');
+    for (const phone of ['09120000095', '09120000096']) {
+      await pool.query('update profiles set current_tier_id = $1 where phone = $2', [tierTwo, phone]);
+    }
+    for (const c of [cookieA, cookieB]) {
+      await app.inject({
+        method: 'POST', url: '/activity', headers: { cookie: c },
+        payload: { action: 'article_completed', content_id: 'insight/insight-2' },
+      });
+    }
+    const full = await app.inject({ method: 'GET', url: '/league', headers: { cookie: cookieA } });
+    expect(full.json().size).toBe(2);
+    expect(full.json().neutral_mode, 'the whole tier is in this group').toBe(false);
+    await app.close();
+  });
+});
+
+/**
+ * The ceiling of the ladder could not promote (0068).
+ *
+ * zirconia opened on 2026-09-18 with two members. Both competed in week
+ * 2026-09-19 and finished on 226 and 112 weekly XP — inside a 30% promotion zone
+ * of a two-person group, both far past promotion_min_weekly_xp (15) — and
+ * neither promoted, so titanium never opened. The 39 promotions that same
+ * finalize are what make it a bug rather than a quiet week: the machinery ran,
+ * and the top of the ladder was the one place a group could not be valid,
+ * because `filled` asked the capacity and min_group_capacity floors the capacity
+ * at 3. Two people cannot reach three.
+ */
+describe('validity at the ceiling — the population, not the floored capacity', () => {
+  beforeEach(async () => { await resetDb(); });
+
+  const populate = async (slug: string, n: number): Promise<string> => {
+    const tid = await tierId(slug);
+    for (let i = 0; i < n; i += 1) {
+      seq += 1;
+      await pool.query(
+        'insert into profiles (display_name, current_tier_id) values ($1, $2)', [`pop${seq}`, tid],
+      );
+    }
+    return tid;
+  };
+
+  it('the zirconia week: a tier of two promotes its leader and opens titanium', async () => {
+    // Exactly the production row, capacity floored to 3 over a population of 2.
+    const { userIds } = await seedGroup('zirconia', 3, [
+      { xp: 226, at: T(1) }, { xp: 112, at: T(2) },
+    ], WEEK, 2);
+    const res = await finalizeWeek(WEEK);
+
+    expect(res.promotions, 'ceil(2 × 30%) = 1').toBe(1);
+    expect(await tierOf(userIds[0])).toBe('titanium');
+    expect(
+      (await pool.query("select is_active from league_tiers where slug='titanium'")).rows[0].is_active,
+    ).toBe(true);
+    expect(
+      (await pool.query("select value from league_config where key='max_active_tier_order'")).rows[0].value,
+    ).toBe('7');
+  });
+
+  it('and the one who stayed is not demoted — demotion still wants the floored capacity', async () => {
+    // 0033's guard, untouched: `filled` is 2 >= 3, so the thin tier still cannot
+    // push anybody down. Being ranked and being pushed down are different stakes.
+    const { userIds } = await seedGroup('zirconia', 3, [
+      { xp: 226, at: T(1) }, { xp: 112, at: T(2) },
+    ], WEEK, 2);
+    const res = await finalizeWeek(WEEK);
+
+    expect(res.demotions).toBe(0);
+    expect(await tierOf(userIds[1])).toBe('zirconia');
+    expect((await memberOf(userIds[1])).outcome).toBe('stayed');
+  });
+
+  it('a whole tier of ONE is still no competition', async () => {
+    // The other half of what the floor was protecting. min_rankable_group_size
+    // is what says so now, so «the whole tier is here» cannot mean «I am here».
+    const { userIds } = await seedGroup('zirconia', 3, [{ xp: 500, at: T(1) }], WEEK, 1);
+    const res = await finalizeWeek(WEEK);
+
+    expect(res.promotions).toBe(0);
+    expect(await tierOf(userIds[0])).toBe('zirconia');
+    expect(
+      (await pool.query("select is_active from league_tiers where slug='titanium'")).rows[0].is_active,
+    ).toBe(false);
+  });
+
+  it('two present out of a tier of three is still a thin group', async () => {
+    // The population is what it measures against, so the fix does not hand a
+    // promotion to whoever happens to show up: one of the three stayed home.
+    const { userIds } = await seedGroup('zirconia', 3, [
+      { xp: 226, at: T(1) }, { xp: 112, at: T(2) },
+    ], WEEK, 3);
+    const res = await finalizeWeek(WEEK);
+
+    expect(res.promotions).toBe(0);
+    expect(await tierOf(userIds[0])).toBe('zirconia');
+  });
+
+  it('a crowded tier is untouched: the absolute floor still carries it', async () => {
+    // acrylic's population is hundreds, so the second way in is irrelevant and
+    // nothing about the bottom of the pyramid changes.
+    const { userIds } = await seedGroup('amalgam', 8, [
+      { xp: 90, at: T(1) }, { xp: 80, at: T(2) }, { xp: 70, at: T(3) },
+      { xp: 60, at: T(4) }, { xp: 50, at: T(5) }, { xp: 10, at: T(6) },
+    ], WEEK, 400);
+    const res = await finalizeWeek(WEEK);
+
+    expect(res.promotions, 'size 6 clears min_valid_group_size on its own').toBe(2);
+    expect(await tierOf(userIds[0])).toBe('composite');
+  });
+
+  it('freezes the tier population onto the group a real scoring action creates', async () => {
+    // End to end: the number has to reach leagues.population_at_creation, or
+    // every group in production carries null and the fix is inert.
+    const app = await makeApp();
+    const tid = await populate('zirconia', 1);          // one dormant profile...
+    const cookie = await loginAs(app, '09120000096');
+    await pool.query('update profiles set current_tier_id = $1 where phone = $2', [tid, '09120000096']);
+    await app.inject({
+      method: 'POST', url: '/activity', headers: { cookie },
+      payload: { action: 'article_completed', content_id: 'insight/insight-1' },
+    });
+
+    const row = await pool.query<{ capacity_at_creation: number; population_at_creation: number }>(
+      `select l.capacity_at_creation, l.population_at_creation from leagues l
+         join league_tiers t on t.id = l.tier_id where t.slug = 'zirconia'`,
+    );
+    expect(row.rows[0].population_at_creation, '1 dormant + the one who scored').toBe(2);
+    expect(row.rows[0].capacity_at_creation, 'still floored at min_group_capacity').toBe(3);
     await app.close();
   });
 });

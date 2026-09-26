@@ -248,7 +248,7 @@ export async function computeAchievementFacts(
       pool.query<{ final_rank: number; best: number; won: number }>(
         `with sized as (
            select lm.user_id, lm.final_rank, lm.weekly_xp, l.tier_id,
-                  l.capacity_at_creation,
+                  l.capacity_at_creation, l.population_at_creation,
                   count(*) over (partition by lm.league_id) as group_size
              from league_members lm
              join leagues l on l.id = lm.league_id
@@ -264,14 +264,23 @@ export async function computeAchievementFacts(
            from sized s join league_tiers t on t.id = s.tier_id
           where s.user_id = $1 and s.weekly_xp > 0
             -- The validity rule, and it must stay the same one league-finalize.ts
-            -- decides outcomes by: at or above the floor, OR full — a group
-            -- holding its whole tier (capacity is the tier's own population
-            -- since 0033). Without the second half the top of the ladder was the
-            -- one place a medal could never be minted, however hard it was won.
-            and (s.group_size >= $2 or s.group_size >= s.capacity_at_creation)
+            -- decides outcomes by (groupIsValid in league.ts): at or above the
+            -- floor, OR holding the tier's whole population. Without the second
+            -- half the top of the ladder was the one place a medal could never be
+            -- minted, however hard it was won.
+            --
+            -- The population, not the capacity, and 0068 says why: the capacity
+            -- carries min_group_capacity's floor, which no tier of two can reach,
+            -- so the medal was unmintable in exactly the same place the promotion
+            -- was. A coalesce is what keeps a pre-0068 week judged by the rule it
+            -- was finalized under, and min_rankable_group_size ($3) is the guard
+            -- that a whole tier of one person is not a competition.
+            and (s.group_size >= $2
+                 or (s.group_size >= coalesce(s.population_at_creation, s.capacity_at_creation)
+                     and s.group_size >= $3))
             and s.final_rank in (1, 2)
           group by s.final_rank`,
-        [userId, leagueCfg.min_valid_group_size],
+        [userId, leagueCfg.min_valid_group_size, leagueCfg.min_rankable_group_size],
       ),
 
       // ---- the day sequence, for the comeback test ---------------------------
