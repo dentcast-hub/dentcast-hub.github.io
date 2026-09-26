@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 100,
+   "count": 101,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -360,7 +360,8 @@
     "insight/insight-78",
     "insight/insight-79",
     "insight/insight-80",
-    "insight/insight-81"
+    "insight/insight-81",
+    "insight/insight-82"
    ]
   },
   {
@@ -3369,6 +3370,43 @@
    ]
   },
   {
+   "key": "ایمپلنت_فول_آرچ",
+   "tag": "#ایمپلنت_فول_آرچ",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
+   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
+   "aliases": [
+    "all on 4",
+    "all-on-4",
+    "آل آن فور",
+    "allon4",
+    "ایمپلنت تمام فک",
+    "all on 6",
+    "all on four",
+    "all-on-four",
+    "allonfour"
+   ],
+   "variants": [
+    "#AllOn4"
+   ],
+   "co_tags": [
+    "#Full_Arch_Implant"
+   ],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-108",
+    "episodes/episode-144-1",
+    "insight/insight-51",
+    "metanotes/meta-17",
+    "sharehub/share-11",
+    "insight/insight-60",
+    "dentai/dentai-31",
+    "insight/insight-80",
+    "insight/insight-82"
+   ]
+  },
+  {
    "key": "تحلیل_استخوان_کرستال",
    "tag": "#تحلیل_استخوان_کرستال",
    "domain": null,
@@ -3649,42 +3687,6 @@
     "insight/insight-74",
     "sharehub/share-22",
     "sharehub/share-23"
-   ]
-  },
-  {
-   "key": "ایمپلنت_فول_آرچ",
-   "tag": "#ایمپلنت_فول_آرچ",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
-   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
-   "aliases": [
-    "all on 4",
-    "all-on-4",
-    "آل آن فور",
-    "allon4",
-    "ایمپلنت تمام فک",
-    "all on 6",
-    "all on four",
-    "all-on-four",
-    "allonfour"
-   ],
-   "variants": [
-    "#AllOn4"
-   ],
-   "co_tags": [
-    "#Full_Arch_Implant"
-   ],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-108",
-    "episodes/episode-144-1",
-    "insight/insight-51",
-    "metanotes/meta-17",
-    "sharehub/share-11",
-    "insight/insight-60",
-    "dentai/dentai-31",
-    "insight/insight-80"
    ]
   },
   {
@@ -4469,6 +4471,31 @@
    ]
   },
   {
+   "key": "تورک_پیچ",
+   "tag": "#تورک_پیچ",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "میزان و روشِ تورک دادن پیچ.",
+   "use_when": "مقاله تورک را عاملِ نتیجه بداند.",
+   "aliases": [
+    "torque",
+    "تورک",
+    "over torque",
+    "تورک بیش از حد"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-84",
+    "episodes/episode-123-6",
+    "sharehub/share-1",
+    "insight/insight-22",
+    "insight/insight-48",
+    "insight/insight-82"
+   ]
+  },
+  {
    "key": "تیتانیوم_بیس",
    "tag": "#تیتانیوم_بیس",
    "domain": "clinical",
@@ -4625,6 +4652,36 @@
    ]
   },
   {
+   "key": "زمان_لود_ایمپلنت",
+   "tag": "#زمان_لود_ایمپلنت",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "زمان‌بندیِ بارگذاریِ ایمپلنت — فوری، زودهنگام یا تأخیری — و اثرش بر ثبات و موفقیت.",
+   "use_when": "مقاله زمانِ لود را انتخاب یا مقایسه کند.",
+   "aliases": [
+    "loading protocol",
+    "immediate loading",
+    "لود فوری",
+    "لود زودهنگام",
+    "زمان لود",
+    "immediate load",
+    "ایمیدیت لود",
+    "early load",
+    "ارلی لود"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-26",
+    "episodes/episode-45",
+    "episodes/episode-52",
+    "notecast/episode-26",
+    "dentai/dentai-31",
+    "insight/insight-82"
+   ]
+  },
+  {
    "key": "سمان_باقیمانده",
    "tag": "#سمان_باقیمانده",
    "domain": "clinical",
@@ -4674,6 +4731,32 @@
     "chairside/chairside-19",
     "chairside/chairside-31",
     "sharehub/share-14"
+   ]
+  },
+  {
+   "key": "شکست_ایمپلنت",
+   "tag": "#شکست_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتنِ ایمپلنت، بیولوژیک یا مکانیکی.",
+   "use_when": "مقاله علت یا پیشگیریِ شکست را بگوید.",
+   "aliases": [
+    "از دست رفتن ایمپلنت",
+    "فیلور ایمپلنت",
+    "ناموفق بودن ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Implant_Failure"
+   ],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-130-1",
+    "sharehub/share-9",
+    "chairside/chairside-23",
+    "sharehub/share-11",
+    "sharehub/share-13",
+    "insight/insight-82"
    ]
   },
   {
@@ -5054,6 +5137,29 @@
    ]
   },
   {
+   "key": "اتصال_پیچ_شونده",
+   "tag": "#اتصال_پیچ_شونده",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "رستوریشنِ اسکرو-ریتین، در برابر سمان‌شونده.",
+   "use_when": "مقاله پیچ‌شونده بودن را انتخابِ آگاهانه بداند.",
+   "aliases": [
+    "screw retained",
+    "پیچ شونده",
+    "اسکرو ریتین"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-108",
+    "episodes/episode-122-1",
+    "insight/insight-10",
+    "insight/insight-78",
+    "insight/insight-82"
+   ]
+  },
+  {
    "key": "ارتودنسی",
    "tag": "#ارتودنسی",
    "domain": "clinical",
@@ -5293,27 +5399,28 @@
    ]
   },
   {
-   "key": "تورک_پیچ",
-   "tag": "#تورک_پیچ",
-   "domain": "clinical",
+   "key": "ثبات_اولیه",
+   "tag": "#ثبات_اولیه",
+   "domain": null,
    "words": 2,
-   "definition": "میزان و روشِ تورک دادن پیچ.",
-   "use_when": "مقاله تورک را عاملِ نتیجه بداند.",
+   "definition": "گیرِ مکانیکیِ ایمپلنت در لحظه‌ی جراحی.",
+   "use_when": "مقاله ثبات اولیه را شرطِ لود بداند.",
    "aliases": [
-    "torque",
-    "تورک",
-    "over torque",
-    "تورک بیش از حد"
+    "primary stability",
+    "ثبات اولیه ایمپلنت",
+    "ISQ",
+    "insertion torque",
+    "تورک اینسرشن"
    ],
    "variants": [],
    "co_tags": [],
    "count": 5,
    "content_ids": [
-    "episodes/episode-84",
-    "episodes/episode-123-6",
-    "sharehub/share-1",
-    "insight/insight-22",
-    "insight/insight-48"
+    "episodes/episode-45",
+    "notecast/episode-25",
+    "notecast/episode-26",
+    "dentai/dentai-31",
+    "insight/insight-82"
    ]
   },
   {
@@ -5459,35 +5566,6 @@
    ]
   },
   {
-   "key": "زمان_لود_ایمپلنت",
-   "tag": "#زمان_لود_ایمپلنت",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "زمان‌بندیِ بارگذاریِ ایمپلنت — فوری، زودهنگام یا تأخیری — و اثرش بر ثبات و موفقیت.",
-   "use_when": "مقاله زمانِ لود را انتخاب یا مقایسه کند.",
-   "aliases": [
-    "loading protocol",
-    "immediate loading",
-    "لود فوری",
-    "لود زودهنگام",
-    "زمان لود",
-    "immediate load",
-    "ایمیدیت لود",
-    "early load",
-    "ارلی لود"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-26",
-    "episodes/episode-45",
-    "episodes/episode-52",
-    "notecast/episode-26",
-    "dentai/dentai-31"
-   ]
-  },
-  {
    "key": "سایت_مطب",
    "tag": "#سایت_مطب",
    "domain": "web",
@@ -5556,31 +5634,6 @@
     "insight/insight-44",
     "insight/insight-59",
     "insight/insight-65"
-   ]
-  },
-  {
-   "key": "شکست_ایمپلنت",
-   "tag": "#شکست_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتنِ ایمپلنت، بیولوژیک یا مکانیکی.",
-   "use_when": "مقاله علت یا پیشگیریِ شکست را بگوید.",
-   "aliases": [
-    "از دست رفتن ایمپلنت",
-    "فیلور ایمپلنت",
-    "ناموفق بودن ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#Implant_Failure"
-   ],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-130-1",
-    "sharehub/share-9",
-    "chairside/chairside-23",
-    "sharehub/share-11",
-    "sharehub/share-13"
    ]
   },
   {
@@ -5953,28 +6006,6 @@
    ]
   },
   {
-   "key": "اتصال_پیچ_شونده",
-   "tag": "#اتصال_پیچ_شونده",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "رستوریشنِ اسکرو-ریتین، در برابر سمان‌شونده.",
-   "use_when": "مقاله پیچ‌شونده بودن را انتخابِ آگاهانه بداند.",
-   "aliases": [
-    "screw retained",
-    "پیچ شونده",
-    "اسکرو ریتین"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-108",
-    "episodes/episode-122-1",
-    "insight/insight-10",
-    "insight/insight-78"
-   ]
-  },
-  {
    "key": "از_دست_رفتن_کانتکت",
    "tag": "#از_دست_رفتن_کانتکت",
    "domain": "clinical",
@@ -6279,30 +6310,6 @@
     "insight/insight-5",
     "chairside/chairside-29",
     "insight/insight-62"
-   ]
-  },
-  {
-   "key": "ثبات_اولیه",
-   "tag": "#ثبات_اولیه",
-   "domain": null,
-   "words": 2,
-   "definition": "گیرِ مکانیکیِ ایمپلنت در لحظه‌ی جراحی.",
-   "use_when": "مقاله ثبات اولیه را شرطِ لود بداند.",
-   "aliases": [
-    "primary stability",
-    "ثبات اولیه ایمپلنت",
-    "ISQ",
-    "insertion torque",
-    "تورک اینسرشن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-45",
-    "notecast/episode-25",
-    "notecast/episode-26",
-    "dentai/dentai-31"
    ]
   },
   {
