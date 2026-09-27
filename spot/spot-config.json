@@ -20,7 +20,7 @@
   "rotation": {
     "advance": "view",
     "session_minutes": 1,
-    "sequence": ["idc-welcome", "premium", "idc-platform", "idc-launch"]
+    "sequence": ["idc-snapp", "premium", "idc-snapp", "idc-scan"]
   },
   "creatives": {
     "premium": {
@@ -74,7 +74,7 @@
       },
       {
         "id": "idc-welcome",
-        "enabled": true,
+        "enabled": false,
         "badge": "حامی دنت‌کست",
         "title": "",
         "text": "",
@@ -82,11 +82,11 @@
         "url": "",
         "image": "/spot/img/idc-welcome-2.webp",
         "weight": 1,
-        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن (url خالی = کارت کلیک‌پذیر نیست، پس rel و کلیک هم ندارد). عکس: «به آینده دیزاین خوش آمدید — Powered by Ai». زمانِ ۱ از ۴. منبع: ad_photos/ad3.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳). از ۱۴۰۵/۰۵/۲۸ خاموش شد و زمانش را bundle-promo گرفت؛ در ۱۴۰۵/۰۵/۳۱ دوباره روشن شد و زمانِ ۱ را پس گرفت (bundle-promo/bundle-anon خاموش شدند)"
+        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن (url خالی = کارت کلیک‌پذیر نیست، پس rel و کلیک هم ندارد). عکس: «به آینده دیزاین خوش آمدید — Powered by Ai». زمانِ ۱ از ۴. منبع: ad_photos/ad3.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳). از ۱۴۰۵/۰۵/۲۸ خاموش شد و زمانش را bundle-promo گرفت؛ در ۱۴۰۵/۰۵/۳۱ دوباره روشن شد و زمانِ ۱ را پس گرفت (bundle-promo/bundle-anon خاموش شدند). از ۱۴۰۵/۰۷/۰۵ خاموش شد: کمپینِ انیمیشنیِ iDC (idc-snapp/idc-scan) زمان‌های ۱/۳/۴ را گرفت؛ حذف نشده"
       },
       {
         "id": "idc-platform",
-        "enabled": true,
+        "enabled": false,
         "badge": "حامی دنت‌کست",
         "title": "",
         "text": "",
@@ -94,11 +94,11 @@
         "url": "",
         "image": "/spot/img/idc-platform-2.webp",
         "weight": 1,
-        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن. عکس: «اولین پلتفرم دنتال مبتنی بر Ai». زمانِ ۳ از ۴. منبع: ad_photos/ad2.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳). از ۱۴۰۵/۰۵/۲۸ خاموش شد و زمانش را pathway-promo گرفت؛ در ۱۴۰۵/۰۵/۳۱ دوباره روشن شد و زمانِ ۳ را پس گرفت (pathway-promo/compass-anon خاموش شدند)"
+        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن. عکس: «اولین پلتفرم دنتال مبتنی بر Ai». زمانِ ۳ از ۴. منبع: ad_photos/ad2.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳). از ۱۴۰۵/۰۵/۲۸ خاموش شد و زمانش را pathway-promo گرفت؛ در ۱۴۰۵/۰۵/۳۱ دوباره روشن شد و زمانِ ۳ را پس گرفت (pathway-promo/compass-anon خاموش شدند). از ۱۴۰۵/۰۷/۰۵ خاموش شد: کمپینِ انیمیشنیِ iDC (idc-snapp/idc-scan) زمان‌های ۱/۳/۴ را گرفت؛ حذف نشده"
       },
       {
         "id": "idc-launch",
-        "enabled": true,
+        "enabled": false,
         "badge": "حامی دنت‌کست",
         "title": "",
         "text": "",
@@ -106,7 +106,7 @@
         "url": "",
         "image": "/spot/img/idc-launch-2.webp",
         "weight": 1,
-        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن. عکس: «لانچ در اکسیدا — ۳ شهریور». زمانِ ۴ از ۴. منبع: ad_photos/ad1.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳). تاریخِ روی عکس ۱۴۰۵/۰۶/۰۳ است؛ موتور زمان‌بند ندارد. از ۱۴۰۵/۰۵/۲۸ خاموش شد و زمانش را highlights-promo گرفت؛ در ۱۴۰۵/۰۵/۳۱ دوباره روشن شد و زمانِ ۴ را پس گرفت (highlights-promo/collection-anon خاموش شدند)"
+        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن. عکس: «لانچ در اکسیدا — ۳ شهریور». زمانِ ۴ از ۴. منبع: ad_photos/ad1.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳). تاریخِ روی عکس ۱۴۰۵/۰۶/۰۳ است؛ موتور زمان‌بند ندارد. از ۱۴۰۵/۰۵/۲۸ خاموش شد و زمانش را highlights-promo گرفت؛ در ۱۴۰۵/۰۵/۳۱ دوباره روشن شد و زمانِ ۴ را پس گرفت (highlights-promo/collection-anon خاموش شدند). از ۱۴۰۵/۰۷/۰۵ خاموش شد: کمپینِ انیمیشنیِ iDC (idc-snapp/idc-scan) زمان‌های ۱/۳/۴ را گرفت؛ حذف نشده"
       },
       {
         "id": "bundle-promo",
@@ -198,6 +198,30 @@
         "weight": 1,
         "audience": ["anon"],
         "note": "تبلیغ داخلی (خانگی) — پولی نیست، لینکش داخلی است، rel=\"sponsored\" نمی‌گیرد. مخصوص کاربر لاگین‌نشده؛ از ۱۴۰۵/۰۵/۲۸ در زمان‌های ۱/۳/۴ از طریق فال‌بکِ اسپانسر انتخاب می‌شد. در ۱۴۰۵/۰۵/۳۱ خاموش شد (همراه با bundle-anon/compass-anon) چون زمان‌های ۱/۳/۴ اکنون کمپین iDC (بدون قید audience) هستند؛ حذف نشده و هر وقت لازم شد دوباره روشن می‌شود"
+      },
+      {
+        "id": "idc-snapp",
+        "enabled": true,
+        "badge": "حامی دنت‌کست",
+        "title": "",
+        "text": "",
+        "cta": "",
+        "url": "https://idesigncenter.ai/fa",
+        "image": "/spot/img/idc-snapp.webp",
+        "weight": 1,
+        "note": "کمپینِ انیمیشنیِ iDesign Center — کارتِ فقط‌عکس، کلیک‌پذیر، اسپانسر (rel=\"sponsored\"). انیمیشن: «مثل اسنپ بین دندانپزشک و دندانساز به کمک Ai». زمان‌های ۱ و ۳ از ۴ (نه ۱ و ۴: آن دو در چرخه پشت‌سرِ هم‌اند و یک آگهی دو بازدیدِ پیاپی تکرار می‌شد). منبع: ویدیوی ۱۰٫۴ ثانیه‌ای ۱۲۸۰×۶۴۱ که کاربر ۱۴۰۵/۰۷/۰۵ داد، به WebP متحرکِ ۸۰۰×۴۰۰ / ۱۵fps / حلقهٔ بی‌پایان تبدیل شد. جایگزینِ idc-welcome/idc-launch"
+      },
+      {
+        "id": "idc-scan",
+        "enabled": true,
+        "badge": "حامی دنت‌کست",
+        "title": "",
+        "text": "",
+        "cta": "",
+        "url": "https://idesigncenter.ai/fa",
+        "image": "/spot/img/idc-scan.webp",
+        "weight": 1,
+        "note": "کمپینِ انیمیشنیِ iDesign Center — کارتِ فقط‌عکس، کلیک‌پذیر، اسپانسر (rel=\"sponsored\"). انیمیشن: «تو فقط اسکن کن؛ بقیه‌ش با iDC». زمانِ ۴ از ۴. منبع: ویدیوی ۱۰٫۹ ثانیه‌ای ۱۲۸۰×۶۴۱ که کاربر ۱۴۰۵/۰۷/۰۵ داد، به WebP متحرکِ ۸۰۰×۴۰۰ / ۱۵fps / حلقهٔ بی‌پایان تبدیل شد. جایگزینِ idc-platform"
       }
     ]
   }
