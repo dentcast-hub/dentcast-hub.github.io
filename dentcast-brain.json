@@ -15669,5 +15669,38 @@
       "secondary": [],
       "subtopic": "comprehensive-diagnosis"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-83",
+    "title": "کیس: دو ایمپلنت با زاویه‌ی نامناسب نسبت به هم، چطور قالب بگیریم؟",
+    "caption": "دو ایمپلنت کنار هم با زاویه‌ی نامناسب نسبت به هم کار شده‌اند و ایمپرشن کوپینگ‌ها همزمان جا نمی‌افتند. بدون اسکنر دو راه هست: یا اول اباتمنت ایمپلنتِ بدزاویه ساخته و در دهان بسته شود، با رزین به ایمپرشن کوپینگ ایمپلنت دوم اسپلینت شود و قالب open tray گرفته شود؛ یا از هر ایمپلنت جدا قالب گرفته شود و فریم‌ها در دهان پیکاپ شوند، به شرط اینکه لابراتوار برای زاویه‌ی دو اباتمنت نسبت به هم معیار داشته باشد.",
+    "hashtags": [
+      "#اینسایت",
+      "#ایمپلنت_زاویه_دار",
+      "#قالبگیری",
+      "#قالبگیری_اوپن_تری",
+      "#مسیر_نشست",
+      "#اباتمنت_کاستوم",
+      "#قالب_پیک_آپ"
+    ],
+    "keywords": [
+      "non-parallel adjacent implants impression",
+      "open tray impression with splinted abutment",
+      "pattern resin splinting abutment to impression coping",
+      "separate single-implant impressions and intraoral pick-up",
+      "path of insertion of adjacent single implant crowns",
+      "قالب‌گیری دو ایمپلنت غیرموازی",
+      "اسپلینت اباتمنت به ایمپرشن کوپینگ با رزین",
+      "قالب جداگانه و پیکاپ فریم در دهان",
+      "مسیر نشست روکش‌های تکی ایمپلنت",
+      "اصلاح دندان مجاورِ تیلت‌دار"
+    ],
+    "page_url": "/insight/insight-83.html",
+    "pillar": {
+      "primary": "implantology",
+      "secondary": [],
+      "subtopic": "restoration-design"
+    }
   }
 ]
