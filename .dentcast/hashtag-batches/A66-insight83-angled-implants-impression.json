@@ -1,0 +1,24 @@
+{
+  "type": "clinical",
+  "enforce": true,
+  "note": "insight/insight-83 — قالب‌گیری دو ایمپلنت با زاویه‌ی نامناسب نسبت به هم. #اینسایت (series), #ایمپلنت_زاویه_دار, #قالبگیری, #اباتمنت_کاستوم and #قالب_پیک_آپ are REUSED. Two concepts the case resolves are newly minted: --simulate for «open tray» returned only the generic #قالبگیری, and «مسیر نشست» returned only #نشست_ناقص/#نشست_روکش at half overlap, which are about seating completeness, not the direction of insertion.",
+  "concepts": [
+    {
+      "tag": "#قالبگیری_اوپن_تری",
+      "domain": "clinical",
+      "definition": "قالب‌گیری ایمپلنت با تری باز: ایمپرشن کوپینگ (یا قطعه‌ی متصل به آن) داخل قالب می‌ماند و پس از باز کردن پیچ از روی تری، همراه قالب از دهان خارج می‌شود تا موقعیت ایمپلنت به کست منتقل شود.",
+      "use_when": "مقاله روش قالب‌گیری open tray، یا خارج کردن کوپینگ یا اباتمنت همراه قالب را توضیح دهد.",
+      "aliases": ["open tray", "open tray impression", "open-tray", "قالب اوپن تری", "قالب‌گیری تری باز", "pick-up coping impression"]
+    },
+    {
+      "tag": "#مسیر_نشست",
+      "domain": "clinical",
+      "definition": "جهتی که رستوریشن در آن روی پایه (دندان یا اباتمنت) می‌نشیند و از آن برداشته می‌شود؛ وقتی مسیر نشست پایه‌های مجاور با هم یا با دندان کناری تداخل کند، نشاندن و سمان کردن رستوریشن‌ها دشوار می‌شود.",
+      "use_when": "مقاله توازی پایه‌ها، تداخل مسیر نشست و برداشتن رستوریشن‌ها، یا اصلاح پایه‌ی مجاور به‌خاطر آن را بحث کند.",
+      "aliases": ["path of insertion", "path of draw", "insertion path", "مسیر ورود", "توازی پایه‌ها"]
+    }
+  ],
+  "articles": {
+    "insight/insight-83": ["#اینسایت", "#ایمپلنت_زاویه_دار", "#قالبگیری", "#قالبگیری_اوپن_تری", "#مسیر_نشست", "#اباتمنت_کاستوم", "#قالب_پیک_آپ"]
+  }
+}
