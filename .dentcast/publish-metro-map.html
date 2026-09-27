@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>مترو انتشار دنت‌کست</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&display=swap">
+<style>
+:root{
+  --bg:#f3f5f9; --card:#ffffff; --ink:#0a1a33; --ink2:#3d4f6e; --muted:#6a7b98;
+  --rule:rgba(2,35,96,.12); --navy:#022360; --sign:#022360; --sign-ink:#ffffff;
+  --ask:#d6336c;
+  --l-main:#0b5fff; --l-lite:#1a9e6a; --l-paper:#e4572e; --l-des:#6a4fd8;
+  --l-chal:#c2257a; --l-note:#0f97b0; --l-gloss:#8a5a2b; --l-prompt:#7a8a00; --l-ci:#4a5568;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1621; --card:#17212b; --ink:#e6ecf5; --ink2:#b4c1d6; --muted:#8193ad;
+    --rule:rgba(160,190,240,.14); --sign:#1d3a72; --sign-ink:#eaf1ff; --ask:#ff5c93;
+    --l-main:#4c8dff; --l-lite:#35c48b; --l-paper:#ff7a52; --l-des:#9a86ff;
+    --l-chal:#ef5aa6; --l-note:#33c1d9; --l-gloss:#c48a52; --l-prompt:#b3c428; --l-ci:#8b97aa;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1621; --card:#17212b; --ink:#e6ecf5; --ink2:#b4c1d6; --muted:#8193ad;
+  --rule:rgba(160,190,240,.14); --sign:#1d3a72; --sign-ink:#eaf1ff; --ask:#ff5c93;
+  --l-main:#4c8dff; --l-lite:#35c48b; --l-paper:#ff7a52; --l-des:#9a86ff;
+  --l-chal:#ef5aa6; --l-note:#33c1d9; --l-gloss:#c48a52; --l-prompt:#b3c428; --l-ci:#8b97aa;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--ink);font-family:Vazirmatn,Tahoma,"Segoe UI",system-ui,sans-serif;font-size:15px;line-height:1.75}
+.wrap{direction:rtl;padding-inline:16px;padding-block:22px 40px;max-width:1500px;margin-inline:auto}
+header h1{font-weight:900;font-size:clamp(1.5rem,3.2vw,2.2rem);margin:0;letter-spacing:-.01em;text-wrap:balance}
+header p{margin:.35rem 0 0;color:var(--ink2);max-width:70ch}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 12px}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--rule);background:var(--card);color:var(--ink);
+  font:inherit;font-size:.86rem;font-weight:700;padding:5px 12px 5px 10px;border-radius:999px;cursor:pointer}
+.chip i{width:22px;height:7px;border-radius:4px;background:var(--c)}
+.chip[aria-pressed="true"]{border-color:var(--c);box-shadow:0 0 0 2px color-mix(in srgb,var(--c) 35%,transparent)}
+.chip:focus-visible,.zoom button:focus-visible,.close:focus-visible{outline:2px solid var(--l-main);outline-offset:2px}
+.zoom{margin-inline-start:auto;display:flex;gap:6px}
+.zoom button{font:inherit;font-weight:800;width:34px;height:34px;border-radius:10px;border:1px solid var(--rule);background:var(--card);color:var(--ink);cursor:pointer}
+.keys{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.82rem;color:var(--ink2);margin-bottom:10px}
+.keys span{display:inline-flex;align-items:center;gap:6px}
+.keys svg{flex:none}
+.scroller{direction:rtl;overflow:auto;border:1px solid var(--rule);border-radius:16px;background:var(--card);-webkit-overflow-scrolling:touch}
+#map{display:block;width:1900px;height:auto}
+#map text{font-family:Vazirmatn,Tahoma,sans-serif;direction:rtl}
+.lbl{font-weight:800;font-size:15px;fill:var(--ink);paint-order:stroke;stroke:var(--card);stroke-width:5px;stroke-linejoin:round}
+.sub{font-weight:500;font-size:11.5px;fill:var(--muted);paint-order:stroke;stroke:var(--card);stroke-width:4px;stroke-linejoin:round}
+.st{cursor:pointer;outline:none}
+.st:hover .dot,.st:focus-visible .dot{stroke-width:6}
+.st:focus-visible .ring{opacity:1}
+.ring{opacity:0;fill:none;stroke:var(--l-main);stroke-width:2.5;stroke-dasharray:4 4}
+.st.sel .ring{opacity:1}
+.ln,.cs{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.cs{stroke:var(--card);stroke-width:15}
+.ln{stroke-width:8}
+#map.focus .ln:not(.on),#map.focus .st:not(.on),#map.focus .sign{opacity:.13}
+#map .ln,#map .st,#map .sign{transition:opacity .2s}
+.sign rect{fill:var(--sign)}
+.sign text{fill:var(--sign-ink);font-size:12.5px;font-weight:500}
+.sign text.h{font-weight:900;font-size:13.5px}
+.hint{font-size:.8rem;color:var(--muted);margin-top:8px}
+/* detail panel */
+.panel{position:fixed;inset-inline-end:16px;bottom:16px;width:min(410px,calc(100vw - 32px));max-height:min(72vh,640px);overflow:auto;
+  background:var(--card);border:1px solid var(--rule);border-radius:18px;box-shadow:0 18px 50px rgba(2,20,60,.22);padding:16px 18px 18px;direction:rtl;z-index:5}
+.panel .top{display:flex;align-items:flex-start;gap:10px}
+.pill{display:inline-block;background:var(--c,var(--l-main));color:#fff;font-weight:800;font-size:.78rem;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.panel h2{margin:4px 0 0;font-size:1.15rem;font-weight:900;line-height:1.5;text-wrap:balance}
+.close{margin-inline-start:auto;flex:none;border:0;background:transparent;color:var(--muted);font:inherit;font-size:1.3rem;cursor:pointer;width:32px;height:32px;border-radius:8px}
+.panel h3{font-size:.8rem;letter-spacing:.02em;color:var(--muted);margin:14px 0 4px;font-weight:800}
+.panel p{margin:0;color:var(--ink2)}
+.panel ol{margin:0;padding-inline-start:0;list-style:none;display:grid;gap:6px}
+.panel ol li{position:relative;padding-inline-start:22px;color:var(--ink)}
+.panel ol li::before{content:"";position:absolute;inset-inline-start:4px;top:.72em;width:9px;height:9px;border-radius:50%;border:2.5px solid var(--c,var(--l-main));background:var(--card)}
+.panel ol li b{font-weight:800}
+.files{display:flex;flex-wrap:wrap;gap:6px}
+.files code{direction:ltr;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.76rem;background:color-mix(in srgb,var(--ink) 7%,transparent);border-radius:6px;padding:2px 7px;color:var(--ink)}
+.rules{font-size:.86rem;color:var(--ink2)}
+.overview{margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.overview section{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:14px 16px}
+.overview h2{font-size:1rem;font-weight:900;margin:0 0 6px}
+.overview ol{margin:0;padding-inline-start:1.2em;color:var(--ink2);font-size:.92rem}
+.overview ol b{color:var(--ink)}
+@media (max-width:640px){
+  .panel{inset-inline:8px;width:auto;bottom:8px;max-height:58vh;border-radius:16px}
+  .zoom{margin-inline-start:0}
+}
+@media (prefers-reduced-motion:reduce){#map .ln,#map .st,#map .sign{transition:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>مترو انتشار دنت‌کست</h1>
+    <p>هر خط یک مسیرِ واقعی در پروتکل انتشار است و هر ایستگاه یک مرحله. ایستگاه‌های تبادلی جایی‌اند که مسیر دوشاخه می‌شود یا دو خط به هم می‌رسند. روی هر ایستگاه بزن تا الگوریتم همان مرحله را ببینی.</p>
+  </header>
+
+  <div class="bar" id="lines" role="group" aria-label="خط‌ها"></div>
+  <div class="keys" aria-label="راهنمای نمادها">
+    <span><svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="7" fill="var(--card)" stroke="var(--l-main)" stroke-width="4"/></svg>ایستگاه</span>
+    <span><svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="10" fill="var(--card)" stroke="var(--ink)" stroke-width="4.5"/></svg>تبادل / دوراهی</span>
+    <span><svg width="26" height="26" viewBox="0 0 26 26"><circle cx="11" cy="15" r="7" fill="var(--card)" stroke="var(--l-main)" stroke-width="4"/><circle cx="19" cy="7" r="6.5" fill="var(--ask)"/><text x="19" y="10.5" font-size="10" font-weight="900" fill="#fff" text-anchor="middle" font-family="Vazirmatn">؟</text></svg>دروازه‌ی پرسش (اگر مطمئن نبودی)</span>
+    <span><svg width="26" height="22" viewBox="0 0 26 22"><rect x="3" y="7" width="20" height="8" rx="4" fill="var(--l-ci)"/></svg>پایانه / فایلی که نوشته می‌شود</span>
+    <span><svg width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="var(--ink)"/><circle cx="15" cy="15" r="7" fill="var(--card)"/></svg>گیت مکانیکی</span>
+  </div>
+
+  <div class="scroller" id="scroller">
+    <svg id="map" viewBox="0 0 2400 1180" role="img" aria-labelledby="maptitle">
+      <title id="maptitle">نقشه‌ی مترویی پروتکل انتشار دنت‌کست</title>
+      <g id="g-lines"></g>
+      <g id="g-signs"></g>
+      <g id="g-st"></g>
+    </svg>
+  </div>
+  <div class="bar" style="margin-top:10px">
+    <div class="hint">جهت حرکت: از بالا-راست شروع می‌شود و مثل مار پایین می‌آید. نقشه افقی اسکرول می‌خورد.</div>
+    <div class="zoom"><button type="button" id="zout" aria-label="کوچک‌نمایی">−</button><button type="button" id="zin" aria-label="بزرگ‌نمایی">+</button></div>
+  </div>
+  <div class="overview">
+    <section><h2>الگوریتم در هفت ایستگاه</h2><ol>
+      <li><b>مسیریابی:</b> متن و فایل مقاله دو محور مستقل‌اند.</li>
+      <li><b>دریافت:</b> نوع قفل می‌شود و پرسش‌ها از آخرین ورودیِ همان نوع ساخته می‌شوند.</li>
+      <li><b>ساخت:</b> کلونِ دقیق؛ پیلار فقط یک بار، در ۲.۴، تصمیم گرفته می‌شود.</li>
+      <li><b>غنی‌سازی:</b> ۴.۷ تا ۴.۹ همیشه اجرا می‌شوند، کلون هر چه بود.</li>
+      <li><b>داده:</b> هشتگ canonical، بعد ورودی در ته مغز، بعد مسیر یادگیری.</li>
+      <li><b>بیلد:</b> بیلدرها از main؛ مهر نسخه آخرینِ آخر.</li>
+      <li><b>بستن:</b> نسخه‌ی انگلیسی، نشانگر اعلان، گیت F.</li></ol></section>
+    <section><h2>کجا مسیر عوض می‌شود</h2><ol>
+      <li><b>فاز ۰:</b> فقط فایل مقاله → مسیر سریع (Drive، کاتالوگ، کامیت).</li>
+      <li><b>پرسش ۱:</b> لایت‌کست → خط سبز با منبع و دامنه‌ی خودش.</li>
+      <li><b>۴.۸:</b> ارجاع‌های صفحه سبد DES را تعیین می‌کنند، نه نوع آن.</li>
+      <li><b>۴.۹:</b> چالش → نیمه‌ی خصوصی به پایگاه داده می‌رود و نسخه‌ی انگلیسی ندارد.</li>
+      <li><b>نوع:</b> نوت‌کست، پرامپتولوژیست و دانشنامه هر کدام یک صفحه‌ی دیگر را هم تغییر می‌دهند.</li></ol></section>
+  </div>
+</div>
+
+<aside class="panel" id="panel" aria-live="polite" hidden></aside>
+
+<script>
+(function(){
+const LINES={
+  main:{n:'خط اصلی · انتشار .org',c:'--l-main'},
+  lite:{n:'لایت‌کست · ایزوله',c:'--l-lite'},
+  paper:{n:'فایل مقاله',c:'--l-paper'},
+  des:{n:'امتیاز شواهد DES',c:'--l-des'},
+  chal:{n:'چالش',c:'--l-chal'},
+  note:{n:'جفت اپیزود / نوت‌کست',c:'--l-note'},
+  gloss:{n:'واژه‌ی دانشنامه',c:'--l-gloss'},
+  prompt:{n:'سری پرامپتولوژیست',c:'--l-prompt'},
+  ci:{n:'بعد از push · CI',c:'--l-ci'}
+};
+const P={
+  main:[[2120,190],[180,190],[180,470],[2060,470],[2060,750],[180,750],[180,1030],[820,1030]],
+  ci:[[820,1030],[1460,1030]],
+  lite:[[1760,190],[1760,95],[2250,95],[2250,880],[640,880],[640,1030]],
+  paperFast:[[2000,190],[2000,405]],
+  paper:[[1160,190],[1160,285],[1400,285],[1400,470]],
+  des:[[1040,190],[1040,330],[1760,330],[1760,470],[1760,615]],
+  chal:[[920,190],[920,375],[1880,375],[1880,470],[1940,530],[1940,615]],
+  note:[[680,470],[680,625]],
+  prompt:[[800,470],[800,590]],
+  gloss:[[1040,470],[1040,625]]
+};
+const PATHLINE={main:'main',ci:'ci',lite:'lite',paperFast:'paper',paper:'paper',des:'des',chal:'chal',note:'note',prompt:'prompt',gloss:'gloss'};
+const ORDER=['main','ci','note','prompt','gloss','lite','paperFast','paper','des','chal'];
+
+/* k: stop|hub|term|gate|brain · ask: pregunta · p: label position */
+const S=[
+ // ── row 1: intake (right → left)
+ {id:'start',x:2120,y:190,k:'term',o:'v',l:['main'],p:'n',s:'ورودی',t:'«متن جدید دارم»',
+  d:'نقطه‌ی ورود روتر عمومی انتشار. چهار جمله‌ی دیگر هم ورودی دارند، اما هر کدام روتر خودشان را دارند و وارد این خط نمی‌شوند.',
+  a:['«… رو انگلیسی کن» → <b>en-version.md</b> (همان ماشینی که فاز D صدا می‌زند)','«تبلیغ دارم» → <b>ads.md</b>: بدون صفحه، بدون مغز، فقط spot-config.json','«کراس‌لینک بزن» → <b>cross-link.md</b> بدون دامنه (جارو روی کل پیکره)','«بخش جدید» → <b>new-section.md</b>','در غیر این صورت → فاز ۰'],
+  f:['.dentcast/workflows/README.md','CLAUDE.md','AGENTS.md'],r:'agent-parity.md تضمین می‌کند Claude، Cursor و Codex همین خط را یکسان بروند.'},
+ {id:'p0',x:2000,y:190,k:'hub',l:['main','paper'],p:'n',s:'فاز ۰',t:'مسیریابی\nمتن؟ مقاله؟',
+  d:'دو محور مستقل: آیا متنی برای انتشار هست؟ آیا فایل مقاله پیوست شده؟ فایل مقاله به نوع محتوا ربطی ندارد؛ خود فایل شاخه را روشن می‌کند.',
+  a:['متن ✓ مقاله ✗ → فقط خط اصلی','متن ✓ مقاله ✓ → خط اصلی + ۴.۱۰ (هر سه بخش)','متن ✗ مقاله ✓ → <b>مسیر سریع</b>: Drive + کاتالوگ، بعد کامیت. بدون صفحه، بیلدر یا نسخه','هیچ‌کدام → بپرس چه می‌خواهی'],f:[]},
+ {id:'pA',x:1880,y:190,k:'stop',l:['main'],p:'s',s:'فاز A',t:'کشف',
+  d:'قبل از هر سؤالی جز «کدوم نوعه؟» مغز را کامل می‌خواند.',
+  a:['خواندن کل dentcast-brain.json','برای هر دسته، جدیدترین ورودی = الگوی مسیر، اسکیما و رسانه‌ها','خواندن PILLARS زنده از build_pillar.py (هرگز از حافظه)'],
+  f:['dentcast-brain.json','tools/build_pillar.py'],r:'قاعده‌ی ۱: مغز منبع حقیقت است. قاعده‌ی ۷: فهرست پیلارها هرگز هاردکد نمی‌شود.'},
+ {id:'q1',x:1760,y:190,k:'hub',l:['main','lite'],p:'s',s:'پرسش ۱',t:'نوع مطلب',
+  d:'دسته قفل می‌شود و تا آخر اجرا عوض نمی‌شود. شاخه‌های بعدی به همین قفل وابسته‌اند.',
+  a:['لایت‌کست → خط سبز (ایزوله، منبع جدا)','دانشنامه → در ۴.۷-ب توقف می‌کند','نوت‌کست / اپیزود → ۴.۵ و ۴.۵-ب','پرامپتولوژیست → ۴.۶','بقیه → خط اصلی بدون انشعاب'],
+  r:'قاعده‌ی ۲: هیچ دسته‌ای از اسکیمای دسته‌ی دیگر قرض نمی‌گیرد.'},
+ {id:'q2',x:1640,y:190,k:'stop',ask:1,l:['main'],p:'n',s:'پرسش ۲',t:'شماره',
+  d:'شماره‌ی بعدی از بیشترین شماره‌ی همان دسته به‌علاوه‌ی یک به دست می‌آید.',
+  a:['سری بی‌شکاف → اعلام کن و ادامه بده («شماره‌اش meta-16 است»)','شکاف، زیرشماره، دو مقدار محتمل → دو گزینه‌ی مشخص بپرس','کاربر مخالف است → عدد کاربر']},
+ {id:'q3',x:1520,y:190,k:'stop',l:['main'],p:'s',s:'پرسش ۳',t:'متن کامل',d:'متن کامل دریافت می‌شود.',a:['«متن کامل رو بفرست» → صبر']},
+ {id:'q35',x:1400,y:190,k:'stop',ask:1,l:['main'],p:'n',s:'۳.۵',t:'پاکسازی لحن AI',
+  d:'پیش از اینکه هر مرحله‌ای متن را مصرف کند اجرا می‌شود. از این به بعد متنِ بعد از تصمیم، ورودی همه‌ی مراحل است.',
+  a:['اسکن نشانه‌های نوشتار ماشینی','جاهای مشکوک اعلام می‌شوند و چیزی ویرایش نمی‌شود','تأیید کاربر → متن ویرایش‌شده؛ رد → متن اصلی'],
+  r:'قاعده‌ی ۱۶: رشته‌ی کاربر نقطه‌به‌نقطه کپی می‌شود. نیم‌فاصله فاصله نیست و «اندو‌شده» ≠ «اندو شده».'},
+ {id:'q4',x:1280,y:190,k:'stop',ask:1,l:['main'],p:'s',s:'پرسش ۴',t:'رسانه‌ها',
+  d:'سؤال‌ها از فیلدهای پرشده‌ی آخرین ورودی همان دسته ساخته می‌شوند.',
+  a:['تصویر / صدا / ویدیو / پیوست: فقط اگر ورودی قبلی داشته','صدای نوت‌کست از اپیزود هم‌شماره خودکار خوانده می‌شود','فیلدهای مشتق‌شدنی (اسلاگ، تاریخ، URL اسکیما) پرسیده نمی‌شوند','مدت و حجم: از خود فایل؛ اگر نشد بپرس و هرگز تخمین نزن'],
+  r:'قاعده‌ی ۱۳: عدد، تاریخ، شناسه و DOI هرگز حدس زده نمی‌شوند.'},
+ {id:'q47',x:1160,y:190,k:'hub',l:['main','paper'],p:'n',s:'۴.۷ فاز B',t:'مقاله پیوست؟',
+  d:'روی همه‌ی نوع‌ها اجرا می‌شود و فقط به دنت‌AI محدود نیست. اگر فایل هست، شاخه‌ی ۴.۱۰ مسلح می‌شود و نام واقعی فایل نگه داشته می‌شود.',
+  a:['فایل هست → خط نارنجی تا ۴.۱۰','نیست → گزارش «4.10: skipped»','مطمئن نیستی → بپرس']},
+ {id:'q48',x:1040,y:190,k:'hub',ask:1,l:['main','des'],p:'n',s:'۴.۸',t:'سبد DES',
+  d:'سؤال «این محتوا چقدر خوب است» نیست. سؤال این است که مدل امتیازدهی دقیقاً چه متنی را می‌گیرد. نوع محتوا سبد را تعیین نمی‌کند؛ آنچه صفحه ارجاع می‌دهد تعیین می‌کند.',
+  a:['<b>سبد ۱ · تفسیری</b>: هیچ DOI، PubMed یا «منابع» ندارد و استدلال خود نویسنده است → ترکِ COMMENTARY روی متن خود صفحه','<b>سبد ۲ · پژوهشی</b>: شناسه‌ی بازیابی‌پذیر دارد → به‌ازای هر منبع یک رکورد','منبع گزارش ثانویه است (اجماع، گایدلاین) → یک سطح دنبال کن و مطالعه‌های اولیه را امتیاز بده','<b>سبد ۳ · نامعین</b>: پژوهش‌محور است ولی مقاله‌ای مشخص نشده → فقط دو گزینه: «DOI می‌دم» یا «بدون DES». گزینه‌ی سومی وجود ندارد'],
+  r:'اسم بردن از یک مطالعه بدون شناسه سبد ۲ نیست (نمونه: meta-14).'},
+ {id:'q49',x:920,y:190,k:'hub',l:['main','chal'],p:'n',s:'۴.۹',t:'چالش؟',
+  d:'«این پست آزمون است یا مطلب معمولی؟» چالش یعنی پستی که بدنه‌اش یک سؤال است. در همان پوشه، با شماره‌ی بعدی و همان شکل مغز منتشر می‌شود.',
+  a:['چالش → سؤال، تصویر، جواب و ۳ تا ۵ نکته‌ی کلیدی (نکته‌ها را پیشنهاد بده، کاربر تأیید کند)','مطلب معمولی → هیچ چیز دیگری عوض نمی‌شود'],r:'هرگز type یا پوشه‌ی تازه ساخته نمی‌شود.'},
+ {id:'q5',x:800,y:190,k:'stop',l:['main'],p:'s',s:'پرسش ۵',t:'جمله‌ی پالس',
+  d:'پالس خبر انتشار است، نه خلاصه. فقط عنوان را نام می‌برد.',
+  a:['الگوی ثابتِ همان دسته وجود دارد → خودت پیش‌نویس کن و گزارش بده','الگو نیست یا متغیر است → بپرس کدام کلمه لینک شود','هیچ جمله‌ای نباید تصمیم، مکانیسم یا نتیجه را لو بدهد']},
+ {id:'c1',x:680,y:190,k:'stop',l:['main'],p:'n',s:'C·۱',t:'قفل قالب + SHA',
+  d:'صفحه‌ی قبلی همان دسته قالب ساختاری است. هشِ SHA-256 آن ثبت می‌شود و قالب باید تا آخر دست‌نخورده بماند.',a:['sha256(صفحه‌ی قبلی) → ذخیره برای ایستگاه C·۴']},
+ {id:'c2',x:560,y:190,k:'stop',l:['main'],p:'s',s:'C·۲',t:'کلون صفحه',
+  d:'کلونِ دقیق: همان درخت HTML، کلاس‌ها و ترتیب اجزا.',
+  a:['فقط عوض شوند: بدنه، متاها، مقادیر JSON-LD (شکل ثابت)، رسانه، اسلاگ','ناوردای هویت: مسیر عوض می‌شود و دامنه نه (org.؛ لایت‌کست ir.)','GA تأخیری و preconnect باید بعد از کلون سالم مانده باشند'],
+  r:'قاعده‌ی ۱۱: کلون فقط ساختار را تعیین می‌کند و ربطی به غنی‌سازی ندارد.'},
+ {id:'c24',x:440,y:190,k:'stop',ask:1,l:['main'],p:'n',s:'۲.۴',t:'پیلار و زیرموضوع',
+  d:'تنها جایی که این تصمیم گرفته می‌شود. مراحل ۵ و ۵.۵ فقط ثبت و تأیید می‌کنند.',
+  a:['تطبیق مفهومی با PILLARS زنده (هرگز رشته‌ای یا کلیدواژه‌ای)','یک پیلار واضح → اعمال و گزارش؛ چند پیلار محتمل → منوی گزینه','پیلار ساختاریافته → همین کار برای زیرموضوع','زیرموضوع جدید فقط با تأیید؛ پیلار جدید هرگز','لایت‌کست → این ایستگاه رد می‌شود'],
+  r:'قاعده‌ی ۶ و ۸: طبقه‌بندی از شاخه‌ی main خوانده می‌شود.'},
+ {id:'c25',x:320,y:190,k:'stop',l:['main'],p:'s',s:'۲.۵',t:'کپسول ناوبری',
+  d:'دو کپسول «دانشنامه» و «فهرست موضوعی → /pillar/‹پیلار›/» اولین لینک‌های «کاوش بیشتر» می‌شوند.',
+  a:['اول می‌نشینند و از بودجه‌ی ۵ لینک سهم برمی‌دارند','اپیزود → بلوک «محتوای مرتبط» (ep-related-link)'],r:'قاعده‌ی ۹'},
+ // ── row 2: build & enrich (left → right)
+ {id:'c26',x:320,y:470,k:'stop',l:['main'],p:'s',s:'۲.۶',t:'فهرست بخش',
+  d:'صفحه‌ی فرودِ همان نوع باید لینک مطلب تازه را بگیرد.',a:['تولیدشده با بیلدر → بیلدر را اجرا کن','دستی → یک <li> به همان شکل اضافه کن']},
+ {id:'c3',x:440,y:470,k:'stop',l:['main'],p:'n',s:'C·۳',t:'تاریخ و متا',
+  d:'ممیزی همه‌ی فیلدهای meta، OG، Twitter، JSON-LD و تاریخ‌های داخل متن.',a:['جدول STALE / DIVERGENT / MISSING قبل و بعد','datePublished = dateModified = امروز','تا وقتی همه‌ی ردیف‌ها OK نشده‌اند ادامه نده']},
+ {id:'c4',x:560,y:470,k:'stop',l:['main'],p:'s',s:'C·۴',t:'تطبیق هش قالب',d:'SHA قالب دوباره حساب می‌شود.',a:['برابر با C·۱ → ادامه','نابرابر → توقف و گزارش']},
+ {id:'c45',x:680,y:470,k:'hub',l:['main','note'],p:'n',s:'۴.۵',t:'اپیزود والد',
+  d:'فقط برای نوت‌کست. نوت‌کست نسخه‌ی نوشتاریِ اپیزود خودش است.',
+  a:['اپیزود والد لینک را ندارد → با همان ساختارِ اپیزود قبلی اضافه کن','۴.۵-ب: رکورد DES و اعتبار نویسنده‌ی اول/DOI ویژگی مقاله‌اند، نه صفحه → در هر دو صفحه‌ی جفت آینه می‌شوند']},
+ {id:'c46',x:800,y:470,k:'hub',l:['main','prompt'],p:'n',s:'۴.۶',t:'قبلی / بعدی سری',
+  d:'فقط پرامپتولوژیست. پایان صفحه یک ep-nav دارد.',a:['اسلات «قبلی» صفحه‌ی تازه → قسمت قبل','اسلات «بعدی» قسمت قبل → صفحه‌ی تازه (فعال می‌شود)']},
+ {id:'c47',x:920,y:470,k:'stop',ask:1,l:['main'],p:'s',s:'۴.۷',t:'بک‌لینک دانشنامه',
+  d:'مطلب تازه را از صفحه‌ی واژه‌های واقعاً مرتبط لینک می‌کند. کاندیداها فقط از glossary.json می‌آیند و لینک فقط در «کاوش بیشتر» می‌نشیند، نه در متن.',
+  a:['تحلیل معنایی همه‌ی واژه‌ها','مرتبطِ قطعی → یک لینک در «کاوش بیشتر» همان واژه','مرزی → «لینک بزن / رد شو»','بخش پر است (۵ لینک) → رد شو و بنویس'],r:'قاعده‌های ۹ و ۱۱'},
+ {id:'c47b',x:1040,y:470,k:'hub',l:['main','gloss'],p:'n',s:'۴.۷-ب',t:'کراس‌لینک واژه',
+  d:'فقط وقتی خود مطلب واژه‌ی دانشنامه است. واژه با صفر لینک ورودی به دنیا می‌آید و این ایستگاه آن را به بدنه‌ی مقاله‌های قدیمی وصل می‌کند.',
+  a:['cross_link_candidates.py --slug ‹واژه› (فقط پیشنهاد)','cross_link_apply.py تنها نویسنده است: فقط لنگر اضافه می‌کند و متنِ رندرشده باید بایت‌به‌بایت یکی بماند','سیگنال = هشتگ‌ها و keywords خود صفحه از راه لایه‌ی alias','نیم‌فاصله مرز کلمه نیست («ایمپلنت‌محور» لینک نمی‌شود)','سقف چگالی: ۱۲ لینک در هر ۱۰۰۰ کلمه (p90 سایت). اپیزودها بیرون‌اند'],
+  f:['tools/cross_link_candidates.py','tools/cross_link_apply.py']},
+ {id:'c48',x:1160,y:470,k:'stop',ask:1,l:['main'],p:'s',s:'۴.۸',t:'لینک درون متن',
+  d:'عکسِ ۴.۷: بدنه‌ی خود مطلب به واژه‌ها و اپیزودهای موجود لینک می‌دهد. برای اپیزود، کپشن «درباره این اپیزود» هدف است.',
+  a:['فهرست کاندیدا → تحلیل معنایی بدنه','فقط اولین رخداد هر مفهوم','کاملاً مطمئن → درج و گزارش؛ مرزی → بپرس','خالی بود → «۰ کاندیدا» صریحاً گزارش شود'],r:'قاعده‌ی ۱۱: «صفحه‌ی قبلی لینک نداشت» توجیه نیست.'},
+ {id:'c49',x:1280,y:470,k:'stop',ask:1,l:['main'],p:'n',s:'۴.۹',t:'کاوش بیشتر معنایی',
+  d:'«کاوش بیشتر» خودِ صفحه‌ی تازه با ورودی‌های مرتبط مغز پر می‌شود.',a:['مقایسه با کل مغز','باقی‌مانده = ۵ منهای لینک‌های موجود','اپیزود → «محتوای مرتبط»؛ قسمت‌های خواهر یک سری اولویت اول‌اند','هیچ لینکی حذف یا جابه‌جا نمی‌شود']},
+ {id:'c410',x:1400,y:470,k:'hub',ask:1,l:['main','paper'],p:'s',s:'۴.۱۰',t:'شاخه‌ی مقاله',
+  d:'افزودنی است و چیزی را از خط اصلی حذف نمی‌کند.',
+  a:['بخش ۱: آپلود در زیرپوشه‌ی موضوعیِ کابینت Drive (انتخاب معنایی)','بخش ۲: افزودن به papers در کاتالوگ با لینک Drive و تگ‌های kebab','بخش ۳: پیدا کردن DOI از وب + اعتبار «نویسنده‌ی اول → DOI» زیر مطلب (سبک ShareHub)','شک در پوشه، تگ، DOI یا نویسنده → بپرس و عمل نکن'],
+  f:['dentcast_cabinet_full_catalog.json'],r:'DOI این ایستگاه در ۴.۱۳ دوباره استفاده می‌شود و دوباره جستجو نمی‌شود.'},
+ {id:'c411',x:1520,y:470,k:'stop',l:['main'],p:'n',s:'۴.۱۱',t:'فلش‌کارت',
+  d:'DefinedTermSet معنایی داخل کورپوس FAQ، نه در JSON-LD صفحه.',a:['برای هر صفحه‌ای جز لایت‌کست','دنت‌کست پلاس: فقط اگر نکته‌های ویدیو داده شود'],f:['plus/faq-corpus.json']},
+ {id:'c412',x:1640,y:470,k:'stop',l:['main'],p:'s',s:'۴.۱۲',t:'FAQ و کوییز',
+  d:'پرسش‌ها باید بیرون از صفحه هم معنا داشته باشند.',a:['پرسش مستقل از صفحه وگرنه حذف','جواب با «بله،» یا «خیر؛» صریح شروع شود → وارد بانک کوییز'],f:['plus/faq-corpus.json']},
+ {id:'c413',x:1760,y:470,k:'hub',l:['main','des'],p:'n',dx:-64,s:'۴.۱۳',t:'امتیاز DES',
+  d:'مدل امتیازدهی هیچ‌وقت چیزی fetch نمی‌کند، پس source_text پیش از اجرای پرامپت فراهم می‌شود.',
+  a:['source_text: کابینت محلی → PubMed → WebFetch','چکیده پیدا نشد → INSUFFICIENT_TEXT (هرگز امتیازی از متن دنت‌کست)','کل فایل spec v2.4 (بدون ضمیمه) = system prompt؛ یک ورودی برای هر منبع','اعتبارسنجی مکانیکی قرارداد ضمیمه (جریمه = سهمی از لنگر طرح)','ذخیره‌ی خروجی به‌صورت verbatim','رد مجاز: لایت‌کست، «بدون DES»'],
+  f:['.dentcast/dentcast-evidence-score-v2.4.md','plus/des-scores.json'],
+  r:'کارت ویژه‌ی chairside / metanotes / insight: آیتم ۴ از اعلامیه‌ی صفحه‌ی بخش؛ فهرست بسته است.'},
+ {id:'c414',x:1880,y:470,k:'hub',l:['main','chal'],p:'s',dx:-46,s:'۴.۱۴',t:'چالش: دو نیمه',
+  d:'نیمه‌ی عمومی روی صفحه است و نیمه‌ی خصوصی فقط در پایگاه داده. قاطی کردن این دو تنها خطایی است که بعد از git برگشت‌پذیر نیست.',
+  a:['سؤال و تصویر: data-dc-challenge-question/image روی یک <p>','مسیر تصویر همیشه مطلق (/insight/insight68.webp)','جواب و نکات کلیدی → فقط از /admin، «صندوق چالش»، جدول challenges','بعداً: بدون نسخه‌ی انگلیسی و بدون «گفتگوی زیر مطلب»']},
+ // ── row 3: data & builders (right → left)
+ {id:'c50',x:1880,y:750,k:'stop',l:['main'],p:'s',s:'۵.۰',t:'هشتگ‌های استاندارد',
+  d:'هشتگ واژگانِ کنترل‌شده است، نه متن آزاد.',
+  a:['hashtag_ref.py --simulate "‹عبارت›" (از لایه‌ی alias رد می‌شود)','وجود دارد → شکل canonical همان مفهوم','ندارد → مفهوم تازه با definition، use_when و aliases (batch + --apply)','alias هرگز تگ نیست؛ --check باید سبز بماند'],
+  f:['dentcast-hashtag-reference.json','tools/hashtag_ref.py'],r:'قاعده‌ی ۱۵. هشتگ همچنان پیشنهاد است و کاربر تأیید می‌کند.'},
+ {id:'c5',x:1760,y:750,k:'brain',l:['main'],p:'n',s:'۵ · dentcast-brain.json',t:'ورودی مغز',
+  d:'یک آرایه‌ی تختِ ۵۱۹ ورودی بدون بخش‌بندی نوعی. تقریباً هر چیزی که بعد از این ایستگاه ساخته می‌شود از همین فایل می‌خواند.',
+  a:['اسکیما = آخرین ورودیِ همان type؛ همان کلیدها، نه یکی بیشتر و نه کمتر','درج در انتهای مطلق کل آرایه، چون ویجت «تازه‌ها» ۳۰ ورودی آخر را می‌خواند','هشتگ‌ها از ۵.۰ و پیلار از ۲.۴؛ هیچ‌کدام اینجا دوباره تصمیم گرفته نمی‌شوند'],
+  f:['dentcast-brain.json'],r:'قاعده‌های ۳ و ۵'},
+ {id:'c55',x:1640,y:750,k:'stop',l:['main'],p:'s',s:'۵.۵',t:'تأیید پیلار',d:'فقط تأیید؛ نه طبقه‌بندی دوباره، نه بازنویسی.',a:['slug دقیقاً همان است که در build_pillar.py هست','پیلار غیرساختاری → subtopic = null (کلید همیشه حاضر است)']},
+ {id:'c56',x:1520,y:750,k:'stop',ask:1,l:['main'],p:'n',s:'۵.۶',t:'مسیر یادگیری',
+  d:'مسیر یادگیری مستقل از پیلار است. یک آیتم یک خانه‌ی پیلار دارد ولی ممکن است در چند مسیر باشد.',
+  a:['pathway_place.py پیشنهاد می‌دهد و --insert درج می‌کند','امتیاز «قوی» فقط در برابر هسته‌ی منجمد مسیر','مسیر کاملِ سوم برای یک آیتم → همیشه سؤال (--confirmed)','لنگر هرگز یک سری را نمی‌شکند','تراز شواهد → evidence-literacy به ترتیب سری'],
+  f:['plus/pathways.json','.dentcast/pathway-core.json','tools/pathway_place.py']},
+ {id:'c56b',x:1400,y:750,k:'stop',ask:1,l:['main'],p:'s',s:'۵.۶-ب',t:'دروازه‌ی باندل',
+  d:'زنجیری از پنج پرسش بله/خیر. پیش‌فرض «نه» است.',
+  a:['پوشه ∈ episodes / notecast / sharehub / dentai','عنوان یک مفهوم کامل است (نه کیس یا ترفند)','حفره‌ای را پر می‌کند که هیچ قدمی پوشش نداده','قلِ آن داخل باندل نیست','بعد از افزودن حداکثر ۸ قدم','هر ۵ بله → درج میانی خودکار؛ هر شکی → بپرس'],f:['plus/js/home-bundles.js']},
+ {id:'c6',x:1280,y:750,k:'stop',l:['main'],p:'n',s:'۶',t:'پالس',d:'جمله‌ی پرسش ۵ روی صفحه‌ی اصلی.',a:['درج در بالاترین خط پالس','حذف پایین‌ترین خط (تعداد ثابت)'],f:['index.html']},
+ {id:'b1',x:1160,y:750,k:'stop',l:['main'],p:'s',s:'۸·۱',t:'شمارنده‌های خانه',d:'شمارنده‌ها و محتوای بدون JS صفحه‌ی اصلی از روی مغز.',a:['کارت هیرو + کارت‌های ریل «تازه‌های دنت‌کست»'],f:['tools/update-homepage-counters.py']},
+ {id:'b2',x:1040,y:750,k:'stop',l:['main'],p:'n',s:'۸·۲',t:'بیلدر پیلار (all)',
+  d:'یک URL با دو چیدمان: فهرست تخت برای همه و پوشه‌بندی زیرموضوع برای پریمیوم.',
+  a:['برای هر پیلار: index.html تخت (جدیدترین اول) + structure.json','glossary/index.html هم دوباره ساخته می‌شود','تاریخ از datePublished صفحه؛ مطلب بی‌تاریخ ته فهرست می‌افتد'],f:['tools/build_pillar.py','pillar/*/structure.json']},
+ {id:'b3',x:920,y:750,k:'stop',l:['main'],p:'s',s:'۸·۳',t:'فهرست اپیزودها',d:'فقط وقتی dentcast.json تغییر کرده باشد.',a:['episodes.html کاملاً استاتیک است؛ هرگز دستی ویرایش نشود','کروم در tools/episodes_template.html'],f:['tools/build_episodes.py']},
+ {id:'b4',x:800,y:750,k:'stop',l:['main'],p:'n',s:'۸·۴',t:'ایندکس کارت، کوییز و چالش',d:'سه بیلدر؛ هر کدام تنها نویسنده‌ی فایل خودش است.',a:['build_flashcards_index.mjs → flashcards-index.json','build_quiz_index.mjs → quiz-index.json','build_challenge_index.mjs → challenges.json (بدون جواب؛ خودش چک می‌کند)']},
+ {id:'b5',x:680,y:750,k:'stop',l:['main'],p:'s',s:'۸·۵',t:'ویژگی‌های تصویر',d:'پر کردن width، height و alt در کل سایت؛ idempotent.',f:['.github/scripts/inject_img_attrs.py']},
+ {id:'b5b',x:560,y:750,k:'stop',l:['main'],p:'n',s:'۸·۵ب',t:'ایندکس پلاس',d:'content-index.json همان چیزی است که API زنده و دستیار هوشمند می‌خوانند.',a:['حتماً بعد از بیلدر پیلار، چون زیرموضوع‌ها را از structure.json می‌خواند'],f:['tools/build_plus_index.mjs','plus/content-index.json']},
+ {id:'b5c',x:440,y:750,k:'stop',l:['main'],p:'s',s:'۸·۵ج',t:'کاتالوگ up-board',d:'شناسه، عنوان، نوع، URL و تاریخ؛ ترتیب انتشار از ترتیب آرایه‌ی مغز.',f:['tools/build_upboard_index.py','up-board/index.json']},
+ {id:'b7',x:320,y:750,k:'hub',l:['main'],p:'n',s:'۷ · همیشه آخر',t:'مهر نسخه',
+  d:'نسخه = هشِ محتوا، نه عددی دستی. پس هر نوشتنی بعد از این ایستگاه نسخه را بی‌صدا باطل می‌کند.',
+  a:['ver = sha256(brain + glossary + lite-glossary + asset‌های مشترک)[:10]','→ CACHE_NAME در service-worker.js و ?v= در index.html و player.html','«آخر» یعنی آخر در زمان، نه آخر در فهرست','CI روی main دوباره مهر می‌زند؛ این تور ایمنی است، نه بهانه'],f:['tools/stamp-version.py']},
+ // ── row 4: close & ship (left → right)
+ {id:'d',x:340,y:1030,k:'stop',l:['main'],p:'s',s:'فاز D',t:'نسخه‌ی انگلیسی',
+  d:'هر صفحه‌ی org. دوزبانه منتشر می‌شود و دکمه‌ی زبان هیچ‌وقت بدون مقصد اضافه نمی‌شود.',
+  a:['اجرای en-version.md → /‹نوع›/en/‹همان‌نام›.html','کروم از metanotes/en/meta-1.html؛ بدنه و اسکیما از نوع خود صفحه','noindex, follow · بدون hreflang · بیرون از sitemap · بدون مغز و پالس','دکمه‌ی fa↔en در هر دو طرف','رد: لایت‌کست، چالش'],r:'قاعده‌ی ۱۲'},
+ {id:'e',x:480,y:1030,k:'stop',l:['main'],p:'n',s:'فاز E',t:'نشانگر اعلان',d:'فقط یک بار در <head>:',a:['<meta name="dc-notify" content="true">','رد: لایت‌کست، دانشنامه، مسیر سریع مقاله'],f:['tools/notify_new_articles.py']},
+ {id:'f',x:640,y:1030,k:'gate',l:['main','lite'],p:'s',s:'فاز F',t:'گیت verify_publish',
+  d:'انتشار با یک گیت سبز تمام می‌شود، نه با ادعای «انجام شد». هر سطر FAIL دستور اصلاح خودش را چاپ می‌کند.',
+  a:['verify_publish.py ‹content_id› --expect-title "…" --expect-caption "…"','رشته‌ها مستقیم از پیام کاربر (قاعده‌ی ۱۶)؛ نیم‌فاصله‌ی گم‌شده با نامش گزارش می‌شود','دوباره می‌سنجد: صفحه، پیلار، مغز، پالس، کارت، کوییز، DES، مسیر، نسخه‌ی انگلیسی، نشانگر، هش نسخه','کد خروج غیرصفر = انتشار ناقص'],f:['tools/verify_publish.py'],r:'قاعده‌ی ۱۷: اصلاح عنوان یک جاروست، نه ویرایش نقطه‌ای؛ بعدش بیلدرها و F دوباره.'},
+ {id:'push',x:820,y:1030,k:'hub',l:['main','ci'],p:'n',s:'git',t:'کامیت + push به main',d:'از اینجا به بعد کار GitHub Actions است.',a:['پیام کامیت روشن','push فقط با اجازه']},
+ {id:'ci1',x:980,y:1030,k:'stop',l:['ci'],p:'s',s:'sitemap_only.yml',t:'نقشه‌ی سایت + مهر دوباره',d:'روی هر push به main.',a:['gen_sitemap.py (به تاریخچه‌ی کامل git نیاز دارد)','build_plus_index.mjs','stamp-version.py دوباره + کامیت','پینگ Search Console']},
+ {id:'ci2',x:1140,y:1030,k:'stop',l:['ci'],p:'n',s:'notify-new-articles.yml',t:'اعلان مقاله‌ی تازه',
+  d:'یک push فقط وقتی سه شرط برقرار باشد مقاله‌ی تازه حساب می‌شود.',
+  a:['نوع = پوشه‌ی اولِ canonical (جز glossary و litecast)','نشانگر dc-notify در head','content_id از canonical قبلاً اعلان نشده باشد','→ API article_published: پریمیوم فوری، رایگان در خلاصه‌ی ۲۱:۰۰ تهران','→ اعلام در کانال تلگرام']},
+ {id:'ci3',x:1300,y:1030,k:'stop',l:['ci'],p:'s',s:'deploy-arvan.yml',t:'استقرار آروان',d:'همگام‌سازی با Arvan S3 و revalidate فایل‌های حساس به کش.'},
+ {id:'live',x:1460,y:1030,k:'term',o:'v',l:['ci'],p:'n',s:'پایان خط',t:'سایت زنده',
+  d:'API هر چند دقیقه content-index، pathways، badges و glossary را از خود سایت دوباره می‌گیرد، پس برای محتوا نیازی به دیپلوی API نیست.',a:['content-refresh.ts با ?_dc= (کلید کش خودش)','تصویر API کف است، نه جایگزین: نسخه‌ی قدیمی‌تر از BUILT_AT رد می‌شود']},
+ // ── LiteCast line
+ {id:'L1',x:2250,y:300,k:'stop',l:['lite'],p:'e',s:'۰.۱',t:'lite-glossary.json\nبه‌جای مغز',
+  d:'منبع حقیقت لایت‌کست جداست و ورودی تازه به انتهای آرایه‌ی LightGlossary اضافه می‌شود. هیچ ورودی‌ای در dentcast-brain.json نمی‌گیرد.',
+  a:['اسکیما = آخرین ورودی LightGlossary','بدون pillar؛ ۲.۴، ۴.۷، ۴.۸ و ۵.۶ رد می‌شوند'],f:['litecast/lite-glossary.json']},
+ {id:'L2',x:2250,y:440,k:'stop',l:['lite'],p:'e',s:'۰.۶',t:'کاوش بیشتر:\nفقط لایت‌کست',d:'بین آیتم‌های خودش لینک دارد و به دنیای تخصصی لینک نمی‌دهد، در هیچ جهتی.',a:['مقایسه‌ی معنایی با آیتم‌های لایت‌کست','سقف ۵ لینک','بدون کپسول دانشنامه یا فهرست موضوعی']},
+ {id:'L3',x:2250,y:580,k:'stop',l:['lite'],p:'e',s:'قاعده‌ی ۱۰',t:'فقط dentcast.ir\nبدون hreflang',d:'canonical، og:url و JSON-LD روی ir.؛ لینک‌های داخلی root-relative.',a:['رد: فلش‌کارت، کوییز، DES، مسیر، فاز D، فاز E','hashtag (۵.۰) و گیت F همچنان اجرا می‌شوند']},
+ // ── paper fast path
+ {id:'pf1',x:2000,y:275,k:'stop',l:['paper'],p:'e',s:'مسیر سریع · ۱',t:'Drive',d:'فقط فایل، بدون متن: آپلود در زیرپوشه‌ی موضوعیِ کابینت.',a:['پوشه را معنایی انتخاب کن؛ شک داشتی بپرس']},
+ {id:'pf2',x:2000,y:340,k:'stop',l:['paper'],p:'e',s:'مسیر سریع · ۲',t:'کاتالوگ کابینت',d:'افزودن به papers. تگ‌ها سیستم kebab جدایی‌اند و ربطی به هشتگ‌ها ندارند.',a:['robots.txt و noindex دست نمی‌خورند','کاتالوگ جزو هش نسخه نیست، پس stamp لازم نیست'],f:['dentcast_cabinet_full_catalog.json']},
+ {id:'pf3',x:2000,y:405,k:'term',o:'h',l:['paper'],p:'e',s:'پایان',t:'کامیت',d:'بخش ۳ (اعتبار نویسنده) اجرا نمی‌شود، چون صفحه‌ای نیست که زیرش بنویسی.'},
+ // ── spur termini
+ {id:'tDes',x:1760,y:615,k:'term',o:'h',l:['des'],p:'w',s:'فایل',t:'des-scores.json',d:'کلید = content_id و sources = خروجی spec به‌صورت verbatim. هیچ چیز مشتق‌شدنی کنارش ذخیره نمی‌شود.',a:['نبودِ کلید = چیزی نمایش داده نمی‌شود (برای رد کردن کلید خالی ننویس)','نمایش با یک ماژول مشترک است و هیچ صفحه‌ای مارک‌آپ DES ندارد'],f:['plus/des-scores.json']},
+ {id:'tChal',x:1940,y:615,k:'term',o:'h',l:['chal'],p:'w',s:'فقط پایگاه داده',t:'جدول challenges',d:'جواب و نکات کلیدی هرگز در ریپو یا فایل منتشرشده‌ای نیستند.',a:['پاسخ خواننده ← مدل: covered / missing / unsure','هر unsure → کل تلاش به صف بنیان‌گذار','answer_fa فقط برای کسی که پاسخ داده']},
+ {id:'tNote',x:680,y:625,k:'term',o:'h',l:['note'],p:'s',s:'صفحه‌ی دیگر',t:'episodes/episode-XX',d:'لینک برگشت به نوت‌کست + آینه‌ی DES و اعتبار DOI.'},
+ {id:'tPrompt',x:800,y:590,k:'term',o:'h',l:['prompt'],p:'s',s:'صفحه‌ی دیگر',t:'قسمت قبلی سری',d:'اسلات «قسمت بعدی» صفحه‌ی قبل فعال می‌شود.'},
+ {id:'tGloss',x:1040,y:625,k:'term',o:'h',l:['gloss'],p:'s',s:'صفحه‌های دیگر',t:'بدنه‌ی مقاله‌های قدیمی',d:'فقط لنگر؛ هیچ نسخه‌ای بالا نمی‌رود و stamp-version باید «unchanged» گزارش کند.'}
+];
+
+const SIGNS=[
+ {x:200,y:26,w:560,h:[ 'الگوریتم تصمیم (قاعده‌های ۱۳ و ۱۴)' ],b:['مطمئن هستی → اعمال کن و در گزارش بنویس','مردد هستی → منوی کوتاه گزینه، نه سؤال باز','واقعیتِ ناشناخته (مدت، DOI، عنوان پیشنهادی) → همیشه بپرس']},
+ {x:1125,y:540,w:470,h:['بودجه‌ی مشترکِ «کاوش بیشتر»'],b:['حداکثر ۵ لینک، از هر نوع، روی هم','ترتیب: ۲.۵ اول، بعد ۴.۷ و ۴.۹ از باقی‌مانده','فقط اضافه؛ هرگز حذف، جابه‌جایی یا تغییر سبک']},
+ {x:1560,y:950,w:560,h:['ترتیب بیلدرها'],b:['از حالتی اجرا کن که main را منعکس می‌کند (قاعده‌ی ۸)','پیلار قبل از ایندکس پلاس (structure.json)','مهر نسخه آخرینِ آخر در زمان است']},
+ {x:1560,y:1072,w:560,h:['پایان واقعی'],b:['گیت F سبز = انتشار کامل؛ غیرصفر = ناقص']}
+];
+
+const NS='http://www.w3.org/2000/svg';
+const svg=document.getElementById('map');
+const gL=document.getElementById('g-lines'),gS=document.getElementById('g-st'),gG=document.getElementById('g-signs');
+const col=l=>`var(${LINES[l].c})`;
+const el=(n,a,p)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
+const fa=s=>String(s);
+
+function rounded(pts,r){
+  let d=`M${pts[0][0]},${pts[0][1]}`;
+  for(let i=1;i<pts.length-1;i++){
+    const [x0,y0]=pts[i-1],[x1,y1]=pts[i],[x2,y2]=pts[i+1];
+    const l1=Math.hypot(x1-x0,y1-y0),l2=Math.hypot(x2-x1,y2-y1);
+    const rr=Math.min(r,l1/2,l2/2);
+    const ax=x1-(x1-x0)/l1*rr,ay=y1-(y1-y0)/l1*rr,bx=x1+(x2-x1)/l2*rr,by=y1+(y2-y1)/l2*rr;
+    d+=` L${ax},${ay} Q${x1},${y1} ${bx},${by}`;
+  }
+  const e=pts[pts.length-1];return d+` L${e[0]},${e[1]}`;
+}
+for(const key of ORDER){
+  const d=rounded(P[key],70),ln=PATHLINE[key];
+  el('path',{d,class:'cs','data-l':ln},gL);
+  el('path',{d,class:'ln','data-l':ln,stroke:col(ln)},gL);
+}
+
+for(const s of SIGNS){
+  const g=el('g',{class:'sign'},gG);
+  const lh=19,h=12+lh*(s.h.length+s.b.length)+6;
+  el('rect',{x:s.x,y:s.y,width:s.w,height:h,rx:10},g);
+  let y=s.y+24;
+  for(const t of s.h){const tx=el('text',{x:s.x+s.w-14,y,class:'h','text-anchor':'start'},g);tx.textContent=t;y+=lh}
+  for(const t of s.b){const tx=el('text',{x:s.x+s.w-14,y,'text-anchor':'start'},g);tx.textContent='◂ '+t;y+=lh}
+}
+
+function label(g,s){
+  const lines=s.t.split('\n'),p=s.p||'n';
+  const off=s.k==='brain'?26:s.k==='gate'?26:s.k==='hub'?22:20;
+  let x=s.x+(s.dx||0),y=s.y,anchor='middle',lblY=[],subY;
+  const n=lines.length;
+  if(p==='n'){subY=y-off-8-18*n;lblY=lines.map((_,i)=>y-off-4-18*(n-1-i))}
+  else if(p==='s'){lblY=lines.map((_,i)=>y+off+14+18*i);subY=y+off+14+18*n}
+  else if(p==='e'){x=s.x+off;anchor='end';subY=y-8-(n-1)*9;lblY=lines.map((_,i)=>subY+19+18*i)}
+  else {x=s.x-off;anchor='start';subY=y-8-(n-1)*9;lblY=lines.map((_,i)=>subY+19+18*i)}
+  if(s.s){const t=el('text',{x,y:subY,class:'sub','text-anchor':anchor},g);t.textContent=s.s}
+  lines.forEach((ln,i)=>{const t=el('text',{x,y:lblY[i],class:'lbl','text-anchor':anchor},g);t.textContent=ln});
+}
+
+const byId={};
+for(const s of S){
+  byId[s.id]=s;
+  const g=el('g',{class:'st',tabindex:0,role:'button','aria-label':(s.s?s.s+' — ':'')+s.t.replace('\n',' '),'data-id':s.id,'data-l':s.l.join(' ')},gS);
+  const c=col(s.l[s.l.length===1?0:(s.l[0]==='main'?1:0)]);
+  const mainC=col(s.l[0]);
+  if(s.k==='term'){
+    const w=s.o==='v'?12:34,h=s.o==='v'?34:12;
+    el('rect',{x:s.x-w/2,y:s.y-h/2,width:w,height:h,rx:6,fill:mainC,class:'dot',stroke:mainC,'stroke-width':0},g);
+    el('rect',{x:s.x-w/2-6,y:s.y-h/2-6,width:w+12,height:h+12,rx:10,class:'ring'},g);
+  } else if(s.k==='gate'){
+    el('circle',{cx:s.x,cy:s.y,r:19,fill:'var(--ink)',class:'dot',stroke:'var(--ink)','stroke-width':0},g);
+    el('circle',{cx:s.x,cy:s.y,r:9,fill:'var(--card)'},g);
+    el('circle',{cx:s.x,cy:s.y,r:27,class:'ring'},g);
+  } else {
+    const r=s.k==='brain'?17:s.k==='hub'?12:8;
+    const stroke=s.k==='stop'?mainC:'var(--ink)';
+    el('circle',{cx:s.x,cy:s.y,r,fill:'var(--card)',stroke,'stroke-width':s.k==='brain'?6:s.k==='hub'?4.5:4,class:'dot'},g);
+    if(s.k==='brain') el('circle',{cx:s.x,cy:s.y,r:7,fill:'var(--l-main)'},g);
+    el('circle',{cx:s.x,cy:s.y,r:r+8,class:'ring'},g);
+  }
+  if(s.ask){
+    const bx=s.x+(s.k==='hub'?13:10),by=s.y-(s.k==='hub'?13:10);
+    el('circle',{cx:bx,cy:by,r:8,fill:'var(--ask)',stroke:'var(--card)','stroke-width':2},g);
+    const q=el('text',{x:bx,y:by+4,'text-anchor':'middle','font-size':11,'font-weight':900,fill:'#fff'},g);q.textContent='؟';
+  }
+  label(g,s);
+  g.addEventListener('click',()=>show(s.id));
+  g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show(s.id)}});
+}
+
+/* line chips */
+const bar=document.getElementById('lines');
+let focus=null;
+for(const k in LINES){
+  const b=document.createElement('button');
+  b.type='button';b.className='chip';b.style.setProperty('--c',col(k));b.setAttribute('aria-pressed','false');b.dataset.l=k;
+  b.innerHTML=`<i></i>${LINES[k].n}`;
+  b.addEventListener('click',()=>setFocus(focus===k?null:k));
+  bar.appendChild(b);
+}
+function setFocus(k){
+  focus=k;
+  svg.classList.toggle('focus',!!k);
+  bar.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',String(c.dataset.l===k)));
+  svg.querySelectorAll('[data-l]').forEach(n=>n.classList.toggle('on',!!k&&n.dataset.l.split(' ').includes(k)));
+}
+
+/* panel */
+const panel=document.getElementById('panel');
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function keepB(t){return esc(t).replace(/&lt;b&gt;/g,'<b>').replace(/&lt;\/b&gt;/g,'</b>')}
+function overview(){
+  panel.style.setProperty('--c','var(--l-main)');
+  panel.innerHTML=`<div class="top"><div><span class="pill">کل خط در یک نگاه</span><h2>الگوریتم انتشار</h2></div><button class="close" id="pclose" aria-label="بستن">×</button></div>
+  <h3>ترتیب کلی</h3><ol>
+  <li><b>مسیریابی:</b> متن و فایل مقاله دو محور مستقل‌اند</li>
+  <li><b>دریافت:</b> نوع قفل می‌شود و پرسش‌ها از آخرین ورودیِ همان نوع ساخته می‌شوند</li>
+  <li><b>ساخت:</b> کلونِ دقیق و پیلاری که یک بار تصمیم گرفته می‌شود</li>
+  <li><b>غنی‌سازی:</b> ۴.۷ تا ۴.۹ همیشه اجرا می‌شوند، کلون هر چه بود</li>
+  <li><b>داده:</b> هشتگ canonical → ورودی در ته مغز → مسیر یادگیری</li>
+  <li><b>بیلد:</b> بیلدرها از main؛ مهر نسخه آخرِ آخر</li>
+  <li><b>بستن:</b> نسخه‌ی انگلیسی → نشانگر اعلان → گیت F</li></ol>
+  <h3>راهنما</h3><p>روی ایستگاه‌ها بزن. با چیپ‌های بالای نقشه یک خط را جدا ببین.</p>`;
+  document.getElementById('pclose').onclick=()=>{panel.hidden=true};
+}
+function show(id){
+  const s=byId[id];if(!s)return;
+  svg.querySelectorAll('.st.sel').forEach(n=>n.classList.remove('sel'));
+  const node=svg.querySelector(`.st[data-id="${id}"]`);node&&node.classList.add('sel');
+  const lc=col(s.l.length>1&&s.l[0]==='main'?s.l[1]:s.l[0]);
+  panel.style.setProperty('--c',lc);
+  const lines=s.l.map(l=>LINES[l].n).join(' · ');
+  let h=`<div class="top"><div><span class="pill">${esc(s.s||'')}</span><h2>${esc(s.t.replace('\n',' '))}</h2></div><button class="close" id="pclose" aria-label="بستن">×</button></div>`;
+  h+=`<h3>خط</h3><p>${esc(lines)}</p>`;
+  if(s.d)h+=`<h3>چه می‌کند</h3><p>${esc(s.d)}</p>`;
+  if(s.a&&s.a.length)h+=`<h3>الگوریتم</h3><ol>${s.a.map(x=>`<li>${keepB(x)}</li>`).join('')}</ol>`;
+  if(s.f&&s.f.length)h+=`<h3>فایل‌ها</h3><div class="files">${s.f.map(x=>`<code>${esc(x)}</code>`).join('')}</div>`;
+  if(s.r)h+=`<h3>قاعده</h3><p class="rules">${esc(s.r)}</p>`;
+  panel.innerHTML=h;panel.hidden=false;panel.scrollTop=0;
+  document.getElementById('pclose').onclick=()=>{panel.hidden=true;node&&node.classList.remove('sel')};
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')panel.hidden=true});
+
+/* zoom */
+const widths=[1300,1600,1900,2300,2800];let zi=2;
+const setW=()=>{svg.style.width=widths[zi]+'px'};
+document.getElementById('zin').onclick=()=>{zi=Math.min(widths.length-1,zi+1);setW()};
+document.getElementById('zout').onclick=()=>{zi=Math.max(0,zi-1);setW()};
+if(window.innerWidth<700){zi=1;setW()}
+})();
+</script>
