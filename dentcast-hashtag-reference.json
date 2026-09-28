@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 102,
+   "count": 103,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -362,7 +362,8 @@
     "insight/insight-80",
     "insight/insight-81",
     "insight/insight-82",
-    "insight/insight-83"
+    "insight/insight-83",
+    "insight/insight-84"
    ]
   },
   {
@@ -564,7 +565,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 45,
+   "count": 46,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-25",
@@ -610,7 +611,8 @@
     "insight/insight-71",
     "episodes/episode-162",
     "sharehub/share-19",
-    "chairside/chairside-38"
+    "chairside/chairside-38",
+    "insight/insight-84"
    ]
   },
   {
@@ -1595,6 +1597,45 @@
    ]
   },
   {
+   "key": "فرول",
+   "tag": "#فرول",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
+   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
+   "aliases": [
+    "ferrule"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 23,
+   "content_ids": [
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-147-7",
+    "insight/insight-4",
+    "insight/insight-7",
+    "insight/insight-13",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19",
+    "insight/insight-58",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "insight/insight-64",
+    "chairside/chairside-30",
+    "sharehub/share-18",
+    "dentai/dentai-33",
+    "insight/insight-76",
+    "sharehub/share-20",
+    "insight/insight-84"
+   ]
+  },
+  {
    "key": "llm",
    "tag": "#LLM",
    "domain": "ai",
@@ -1632,44 +1673,6 @@
     "dentai/promptologist/prompt6-5",
     "dentai/promptologist/prompt7-1",
     "dentai/promptologist/prompt7-2"
-   ]
-  },
-  {
-   "key": "فرول",
-   "tag": "#فرول",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
-   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
-   "aliases": [
-    "ferrule"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 22,
-   "content_ids": [
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-147-7",
-    "insight/insight-4",
-    "insight/insight-7",
-    "insight/insight-13",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19",
-    "insight/insight-58",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "insight/insight-64",
-    "chairside/chairside-30",
-    "sharehub/share-18",
-    "dentai/dentai-33",
-    "insight/insight-76",
-    "sharehub/share-20"
    ]
   },
   {
@@ -2095,6 +2098,46 @@
    ]
   },
   {
+   "key": "ترمیم_غیرمستقیم",
+   "tag": "#ترمیم_غیرمستقیم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رستوریشنی که بیرون دهان ساخته و بعد باند می‌شود — اینله، آنله، اورلی.",
+   "use_when": "مقاله بین مستقیم و غیرمستقیم انتخاب کند یا رستوریشنِ غیرمستقیم را موضوع داشته باشد.",
+   "aliases": [
+    "indirect restoration",
+    "رستوریشن غیرمستقیم",
+    "اینله",
+    "inlay",
+    "اینله آنله",
+    "اینله و آنله"
+   ],
+   "variants": [
+    "#اینله"
+   ],
+   "co_tags": [],
+   "count": 17,
+   "content_ids": [
+    "episodes/episode-6",
+    "episodes/episode-7",
+    "episodes/episode-9",
+    "episodes/episode-15",
+    "episodes/episode-122",
+    "episodes/episode-123-3",
+    "episodes/episode-137",
+    "episodes/episode-148",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-8",
+    "notecast/episode-11",
+    "notecast/episode-15",
+    "notecast/episode-18",
+    "episodes/episode-159-1",
+    "dentai/dentai-29",
+    "insight/insight-84"
+   ]
+  },
+  {
    "key": "دندانپزشکی_دیجیتال",
    "tag": "#دندانپزشکی_دیجیتال",
    "domain": "clinical",
@@ -2131,45 +2174,6 @@
     "episodes/episode-156",
     "metanotes/meta-15",
     "metanotes/meta-16"
-   ]
-  },
-  {
-   "key": "ترمیم_غیرمستقیم",
-   "tag": "#ترمیم_غیرمستقیم",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "رستوریشنی که بیرون دهان ساخته و بعد باند می‌شود — اینله، آنله، اورلی.",
-   "use_when": "مقاله بین مستقیم و غیرمستقیم انتخاب کند یا رستوریشنِ غیرمستقیم را موضوع داشته باشد.",
-   "aliases": [
-    "indirect restoration",
-    "رستوریشن غیرمستقیم",
-    "اینله",
-    "inlay",
-    "اینله آنله",
-    "اینله و آنله"
-   ],
-   "variants": [
-    "#اینله"
-   ],
-   "co_tags": [],
-   "count": 16,
-   "content_ids": [
-    "episodes/episode-6",
-    "episodes/episode-7",
-    "episodes/episode-9",
-    "episodes/episode-15",
-    "episodes/episode-122",
-    "episodes/episode-123-3",
-    "episodes/episode-137",
-    "episodes/episode-148",
-    "notecast/episode-6",
-    "notecast/episode-7",
-    "notecast/episode-8",
-    "notecast/episode-11",
-    "notecast/episode-15",
-    "notecast/episode-18",
-    "episodes/episode-159-1",
-    "dentai/dentai-29"
    ]
   },
   {
@@ -2569,6 +2573,37 @@
    ]
   },
   {
+   "key": "دندان_اندوشده",
+   "tag": "#دندان_اندوشده",
+   "domain": null,
+   "words": 2,
+   "definition": "دندانی که درمان ریشه شده و بازسازی می‌خواهد.",
+   "use_when": "مقاله بازسازیِ دندان اندوشده را تعیین کند.",
+   "aliases": [
+    "endodontically treated teeth",
+    "دندان اندو شده",
+    "دندان عصب کشی شده"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-40",
+    "episodes/episode-41",
+    "episodes/episode-47",
+    "episodes/episode-122-3",
+    "insight/insight-4",
+    "insight/insight-39",
+    "dentai/dentai-27",
+    "insight/insight-64",
+    "sharehub/share-18",
+    "dentai/dentai-33",
+    "notecast/episode-41",
+    "insight/insight-76",
+    "insight/insight-84"
+   ]
+  },
+  {
    "key": "دوام_ترمیم",
    "tag": "#دوام_ترمیم",
    "domain": "clinical",
@@ -2664,36 +2699,6 @@
     "notecast/episode-35",
     "insight/insight-51",
     "insight/insight-60"
-   ]
-  },
-  {
-   "key": "دندان_اندوشده",
-   "tag": "#دندان_اندوشده",
-   "domain": null,
-   "words": 2,
-   "definition": "دندانی که درمان ریشه شده و بازسازی می‌خواهد.",
-   "use_when": "مقاله بازسازیِ دندان اندوشده را تعیین کند.",
-   "aliases": [
-    "endodontically treated teeth",
-    "دندان اندو شده",
-    "دندان عصب کشی شده"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-40",
-    "episodes/episode-41",
-    "episodes/episode-47",
-    "episodes/episode-122-3",
-    "insight/insight-4",
-    "insight/insight-39",
-    "dentai/dentai-27",
-    "insight/insight-64",
-    "sharehub/share-18",
-    "dentai/dentai-33",
-    "notecast/episode-41",
-    "insight/insight-76"
    ]
   },
   {
@@ -3934,6 +3939,30 @@
    ]
   },
   {
+   "key": "ترمیم_ادهزیو",
+   "tag": "#ترمیم_ادهزیو",
+   "domain": null,
+   "words": 2,
+   "definition": "بازسازی چسبنده به‌جای پوششِ کامل.",
+   "use_when": "مقاله بین ترمیم ادهزیو و روکش انتخاب کند.",
+   "aliases": [
+    "ترمیم چسبنده",
+    "adhesive restoration"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-55",
+    "episodes/episode-56",
+    "episodes/episode-57",
+    "episodes/episode-58",
+    "chairside/chairside-22",
+    "chairside/chairside-27",
+    "insight/insight-84"
+   ]
+  },
+  {
    "key": "ترمیم_بیومیمتیک",
    "tag": "#ترمیم_بیومیمتیک",
    "domain": null,
@@ -4478,29 +4507,6 @@
     "dentai/dentai-10",
     "sharehub/share-18",
     "insight/insight-81"
-   ]
-  },
-  {
-   "key": "ترمیم_ادهزیو",
-   "tag": "#ترمیم_ادهزیو",
-   "domain": null,
-   "words": 2,
-   "definition": "بازسازی چسبنده به‌جای پوششِ کامل.",
-   "use_when": "مقاله بین ترمیم ادهزیو و روکش انتخاب کند.",
-   "aliases": [
-    "ترمیم چسبنده",
-    "adhesive restoration"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-55",
-    "episodes/episode-56",
-    "episodes/episode-57",
-    "episodes/episode-58",
-    "chairside/chairside-22",
-    "chairside/chairside-27"
    ]
   },
   {
@@ -8010,6 +8016,27 @@
    ]
   },
   {
+   "key": "دیواره_نازک",
+   "tag": "#دیواره_نازک",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "دیواره‌ی باقی‌مانده‌ای که از حدِ کلاسیکِ فرول نازک‌تر است.",
+   "use_when": "مقاله ضخامتِ دیواره را عاملِ تصمیم بداند.",
+   "aliases": [
+    "دیواره باریک",
+    "ضخامت دیواره",
+    "دیواره کمتر از یک میلیمتر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-4",
+    "chairside/chairside-22",
+    "insight/insight-84"
+   ]
+  },
+  {
    "key": "راحتی_بیمار",
    "tag": "#راحتی_بیمار",
    "domain": "clinical",
@@ -10869,26 +10896,6 @@
    "content_ids": [
     "episodes/episode-111-1",
     "photocast/episode-3"
-   ]
-  },
-  {
-   "key": "دیواره_نازک",
-   "tag": "#دیواره_نازک",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "دیواره‌ی باقی‌مانده‌ای که از حدِ کلاسیکِ فرول نازک‌تر است.",
-   "use_when": "مقاله ضخامتِ دیواره را عاملِ تصمیم بداند.",
-   "aliases": [
-    "دیواره باریک",
-    "ضخامت دیواره",
-    "دیواره کمتر از یک میلیمتر"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-4",
-    "chairside/chairside-22"
    ]
   },
   {

@@ -15730,5 +15730,41 @@
       "secondary": [],
       "subtopic": "evidence-appraisal"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-84",
+    "title": "بازسازی دندان بعد از خارج کردن پین بزرگ: پرسش و پاسخ",
+    "caption": "رادیوگرافی یک پرمولر فک پایین که پین بزرگی از داخلش خارج شده، دیواره‌های سرویکال نازکی را نشان می‌دهد. با عکس تنها طرح درمان قطعی داده نمی‌شود، اما در این وضعیت عملاً فرول نداریم و تراش برای روکش کانونشنال همان دیواره‌های باقی‌مانده را هم کمتر می‌کند؛ پس مسیر درمان ادهزیو است، و به جای ترمیم مستقیم، رستوریشن غیرمستقیم، چون در ترمیم مستقیم کنترل حجم زیاد کامپوزیت، استرس شیرینکیج روی هیبرید لایر و ساختن فرم و اکلوژن دشوار است.",
+    "hashtags": [
+      "#اینسایت",
+      "#دندان_اندوشده",
+      "#فرول",
+      "#دیواره_نازک",
+      "#ترمیم_غیرمستقیم",
+      "#ترمیم_ادهزیو",
+      "#طرح_درمان"
+    ],
+    "keywords": [
+      "restoring a premolar after large post removal",
+      "thin cervical walls after post removal",
+      "lack of ferrule in endodontically treated premolar",
+      "adhesive indirect restoration instead of conventional crown",
+      "polymerization shrinkage stress on hybrid layer in large direct composite",
+      "treatment planning from radiograph without clinical examination",
+      "بازسازی دندان بعد از خارج کردن پین بزرگ",
+      "دیواره‌های سرویکال نازک بعد از خارج کردن پست",
+      "نبود فرول در پرمولر اندوشده",
+      "درمان ادهزیو به جای روکش کانونشنال",
+      "رستوریشن غیرمستقیم یا ترمیم مستقیم کامپوزیت",
+      "استرس شیرینکیج روی هیبرید لایر",
+      "طرح درمان بدون معاینه"
+    ],
+    "page_url": "/insight/insight-84.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "post-and-core"
+    }
   }
 ]
