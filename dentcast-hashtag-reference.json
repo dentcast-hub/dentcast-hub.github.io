@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 104,
+   "count": 105,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -364,7 +364,8 @@
     "insight/insight-82",
     "insight/insight-83",
     "insight/insight-84",
-    "insight/insight-85"
+    "insight/insight-85",
+    "insight/insight-86"
    ]
   },
   {
@@ -1020,6 +1021,55 @@
    ]
   },
   {
+   "key": "روکش_ایمپلنت",
+   "tag": "#روکش_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
+   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
+   "aliases": [
+    "implant crown",
+    "روکش روی ایمپلنت",
+    "روکش ایمپلنتی",
+    "کراون ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 30,
+   "content_ids": [
+    "episodes/episode-125-1",
+    "episodes/episode-139",
+    "episodes/episode-147",
+    "episodes/episode-148-2",
+    "insight/insight-9",
+    "insight/insight-10",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST12",
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "sharehub/share-4",
+    "dentcast-plus/video-5",
+    "metanotes/meta-10",
+    "insight/insight-30",
+    "insight/insight-33",
+    "chairside/chairside-12",
+    "chairside/chairside-17",
+    "insight/insight-46",
+    "insight/insight-47",
+    "insight/insight-50",
+    "insight/insight-52",
+    "insight/insight-53",
+    "insight/insight-57",
+    "chairside/chairside-28",
+    "insight/insight-62",
+    "insight/insight-63",
+    "chairside/chairside-31",
+    "insight/insight-85",
+    "insight/insight-86"
+   ]
+  },
+  {
    "key": "باندینگ",
    "tag": "#باندینگ",
    "domain": "clinical",
@@ -1107,54 +1157,6 @@
     "episodes/episode-150-1",
     "episodes/episode-150-2",
     "episodes/episode-159-1"
-   ]
-  },
-  {
-   "key": "روکش_ایمپلنت",
-   "tag": "#روکش_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
-   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
-   "aliases": [
-    "implant crown",
-    "روکش روی ایمپلنت",
-    "روکش ایمپلنتی",
-    "کراون ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 29,
-   "content_ids": [
-    "episodes/episode-125-1",
-    "episodes/episode-139",
-    "episodes/episode-147",
-    "episodes/episode-148-2",
-    "insight/insight-9",
-    "insight/insight-10",
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST12",
-    "litecast/lite-CAST16",
-    "litecast/lite-CAST18",
-    "dentcast-plus/video-4",
-    "sharehub/share-4",
-    "dentcast-plus/video-5",
-    "metanotes/meta-10",
-    "insight/insight-30",
-    "insight/insight-33",
-    "chairside/chairside-12",
-    "chairside/chairside-17",
-    "insight/insight-46",
-    "insight/insight-47",
-    "insight/insight-50",
-    "insight/insight-52",
-    "insight/insight-53",
-    "insight/insight-57",
-    "chairside/chairside-28",
-    "insight/insight-62",
-    "insight/insight-63",
-    "chairside/chairside-31",
-    "insight/insight-85"
    ]
   },
   {
@@ -2741,6 +2743,41 @@
    ]
   },
   {
+   "key": "افتادن_روکش",
+   "tag": "#افتادن_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتن گیر و جدا شدن روکش از تکیه‌گاه.",
+   "use_when": "مقاله علتِ افتادن روکش را توضیح بدهد یا پیش‌بینی کند — چه رخ داده باشد، چه مقاله بگوید چرا رخ خواهد داد.",
+   "aliases": [
+    "loose crown",
+    "کندگی روکش",
+    "جدا شدن روکش"
+   ],
+   "variants": [
+    "#روکش_افتاده",
+    "#دباندینگ"
+   ],
+   "co_tags": [
+    "#debonding"
+   ],
+   "count": 12,
+   "content_ids": [
+    "notecast/episode-15",
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5",
+    "chairside/chairside-5",
+    "chairside/chairside-17",
+    "sharehub/share-8",
+    "insight/insight-54",
+    "sharehub/share-10",
+    "insight/insight-59",
+    "chairside/chairside-32",
+    "insight/insight-85",
+    "insight/insight-86"
+   ]
+  },
+  {
    "key": "بعد_عمودی",
    "tag": "#بعد_عمودی",
    "domain": "clinical",
@@ -2804,40 +2841,6 @@
     "chairside/chairside-14",
     "chairside/chairside-21",
     "chairside/chairside-30"
-   ]
-  },
-  {
-   "key": "افتادن_روکش",
-   "tag": "#افتادن_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتن گیر و جدا شدن روکش از تکیه‌گاه.",
-   "use_when": "مقاله علتِ افتادن روکش را توضیح بدهد یا پیش‌بینی کند — چه رخ داده باشد، چه مقاله بگوید چرا رخ خواهد داد.",
-   "aliases": [
-    "loose crown",
-    "کندگی روکش",
-    "جدا شدن روکش"
-   ],
-   "variants": [
-    "#روکش_افتاده",
-    "#دباندینگ"
-   ],
-   "co_tags": [
-    "#debonding"
-   ],
-   "count": 11,
-   "content_ids": [
-    "notecast/episode-15",
-    "dentcast-plus/video-4",
-    "dentcast-plus/video-5",
-    "chairside/chairside-5",
-    "chairside/chairside-17",
-    "sharehub/share-8",
-    "insight/insight-54",
-    "sharehub/share-10",
-    "insight/insight-59",
-    "chairside/chairside-32",
-    "insight/insight-85"
    ]
   },
   {
@@ -4123,6 +4126,31 @@
    ]
   },
   {
+   "key": "سمان_موقت",
+   "tag": "#سمان_موقت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "سمانِ مرحله‌ی آزمایشی، که رنگش با دائم فرق دارد.",
+   "use_when": "مقاله تفاوتِ موقت و دائم را مسئله بداند.",
+   "aliases": [
+    "temporary cement",
+    "سمان تمپ",
+    "سمان آزمایشی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "insight/insight-5",
+    "insight/insight-29",
+    "insight/insight-44",
+    "insight/insight-59",
+    "insight/insight-65",
+    "insight/insight-85",
+    "insight/insight-86"
+   ]
+  },
+  {
    "key": "سمان_کردن",
    "tag": "#سمان_کردن",
    "domain": "clinical",
@@ -4835,30 +4863,6 @@
    ]
   },
   {
-   "key": "سمان_موقت",
-   "tag": "#سمان_موقت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "سمانِ مرحله‌ی آزمایشی، که رنگش با دائم فرق دارد.",
-   "use_when": "مقاله تفاوتِ موقت و دائم را مسئله بداند.",
-   "aliases": [
-    "temporary cement",
-    "سمان تمپ",
-    "سمان آزمایشی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "insight/insight-5",
-    "insight/insight-29",
-    "insight/insight-44",
-    "insight/insight-59",
-    "insight/insight-65",
-    "insight/insight-85"
-   ]
-  },
-  {
    "key": "سوپرااراپشن",
    "tag": "#سوپرااراپشن",
    "domain": "clinical",
@@ -5330,6 +5334,33 @@
     "insight/insight-21",
     "insight/insight-43",
     "insight/insight-77"
+   ]
+  },
+  {
+   "key": "اسکرو_سمنتد",
+   "tag": "#اسکرو_سمنتد",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رستوریشنِ ایمپلنتِ اسکرو-سمنتد — سمان‌شده خارج دهان روی اباتمنتِ پیچ‌شونده، برای حذفِ سمانِ زیرلثه‌ای و حفظِ سرویس‌پذیری.",
+   "use_when": "مقاله رویکردِ اسکرو-سمنتد را انتخاب یا ارزیابی کند.",
+   "aliases": [
+    "screwmentable",
+    "اسکروسمنت",
+    "اسکرو سمنت",
+    "screw cement",
+    "اسکرو سمنتد"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Cement_Retained"
+   ],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-31",
+    "sharehub/share-4",
+    "metanotes/meta-10",
+    "notecast/episode-31",
+    "insight/insight-86"
    ]
   },
   {
@@ -6089,32 +6120,6 @@
    ]
   },
   {
-   "key": "اسکرو_سمنتد",
-   "tag": "#اسکرو_سمنتد",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "رستوریشنِ ایمپلنتِ اسکرو-سمنتد — سمان‌شده خارج دهان روی اباتمنتِ پیچ‌شونده، برای حذفِ سمانِ زیرلثه‌ای و حفظِ سرویس‌پذیری.",
-   "use_when": "مقاله رویکردِ اسکرو-سمنتد را انتخاب یا ارزیابی کند.",
-   "aliases": [
-    "screwmentable",
-    "اسکروسمنت",
-    "اسکرو سمنت",
-    "screw cement",
-    "اسکرو سمنتد"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#Cement_Retained"
-   ],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-31",
-    "sharehub/share-4",
-    "metanotes/meta-10",
-    "notecast/episode-31"
-   ]
-  },
-  {
    "key": "اطمینان_کاذب",
    "tag": "#اطمینان_کاذب",
    "domain": "ai",
@@ -6825,6 +6830,27 @@
     "episodes/episode-124-1",
     "litecast/lite-CAST7",
     "dentai/dentai-30"
+   ]
+  },
+  {
+   "key": "پوسیدگی_ثانویه",
+   "tag": "#پوسیدگی_ثانویه",
+   "domain": null,
+   "words": 2,
+   "definition": "پوسیدگیِ برگشته در حاشیه‌ی ترمیم.",
+   "use_when": "مقاله پوسیدگی ثانویه را پیامد بسنجد.",
+   "aliases": [
+    "secondary caries",
+    "پوسیدگی ثانوی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-23",
+    "dentai/dentai-22",
+    "insight/insight-58",
+    "insight/insight-86"
    ]
   },
   {
@@ -8968,26 +8994,6 @@
     "sharehub/share-3",
     "chairside/chairside-10",
     "episodes/episode-157"
-   ]
-  },
-  {
-   "key": "پوسیدگی_ثانویه",
-   "tag": "#پوسیدگی_ثانویه",
-   "domain": null,
-   "words": 2,
-   "definition": "پوسیدگیِ برگشته در حاشیه‌ی ترمیم.",
-   "use_when": "مقاله پوسیدگی ثانویه را پیامد بسنجد.",
-   "aliases": [
-    "secondary caries",
-    "پوسیدگی ثانوی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-23",
-    "dentai/dentai-22",
-    "insight/insight-58"
    ]
   },
   {
@@ -11218,6 +11224,27 @@
    "content_ids": [
     "insight/insight-55",
     "metanotes/meta-18"
+   ]
+  },
+  {
+   "key": "سمان_دائم",
+   "tag": "#سمان_دائم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "سمانی که برای ماندن گذاشته می‌شود.",
+   "use_when": "مقاله بین دائم و موقت انتخاب کند.",
+   "aliases": [
+    "سمان دائم",
+    "definitive cement",
+    "permanent cement",
+    "سمان نهایی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-59",
+    "insight/insight-86"
    ]
   },
   {
@@ -17105,26 +17132,6 @@
    ]
   },
   {
-   "key": "سمان_دائم",
-   "tag": "#سمان_دائم",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "سمانی که برای ماندن گذاشته می‌شود.",
-   "use_when": "مقاله بین دائم و موقت انتخاب کند.",
-   "aliases": [
-    "سمان دائم",
-    "definitive cement",
-    "permanent cement",
-    "سمان نهایی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-59"
-   ]
-  },
-  {
    "key": "سمان_مرحله_ای",
    "tag": "#سمان_مرحله‌ای",
    "domain": "clinical",
@@ -21296,8 +21303,8 @@
   "antibiotic dental": "آنتی بیوتیک دندانپزشکی",
   "dental antibiotic": "آنتی بیوتیک دندانپزشکی",
   "کلینیکال اینسایت": "اینسایت",
-  "fixed prosthesis": "پروتز ثابت",
   "روکش روی ایمپلنت": "روکش ایمپلنت",
+  "fixed prosthesis": "پروتز ثابت",
   "machine learning": "سواد هوش مصنوعی",
   "محتوای گلچین شده": "curated content",
   "ceramic laminate": "لمینیت سرامیکی",
@@ -21320,6 +21327,7 @@
   "فاصله بین دندانی": "دیاستم",
   "loading protocol": "زمان بارگذاری ایمپلنت",
   "practice website": "سایت مطب",
+  "temporary cement": "سمان موقت",
   "ای آی دندانپزشکی": "هوش مصنوعی دندانپزشکی",
   "proximal contact": "کانتکت باز",
   "osseointegration": "استئواینتگریشن",
@@ -21327,7 +21335,6 @@
   "insertion torque": "ثبات اولیه",
   "اشتباه لابراتوار": "خطای لابراتوار",
   "درمان کانال ریشه": "درمان ریشه",
-  "temporary cement": "سمان موقت",
   "کاهش تنش با زمان": "dwt",
   "از دست رفتن تماس": "از دست رفتن کانتکت",
   "false confidence": "اطمینان کاذب",
@@ -21517,6 +21524,7 @@
   "skeletal change": "رشد فک",
   "cement retained": "سمان ریتین",
   "screw loosening": "شل شدن پیچ",
+  "ضد چرخش اباتمنت": "ضد چرخش",
   "لبه برنده لمینت": "لبه اینسایزال",
   "retraction cord": "نخ زیرلثه",
   "کانتور رستوریشن": "کانتور ترمیم",
@@ -21531,7 +21539,6 @@
   "راحتی حین درمان": "راحتی بیمار",
   "زینک فسفات سمان": "زینک فسفات",
   "antagonist wear": "سایش آنتاگونیست",
-  "ضد چرخش اباتمنت": "ضد چرخش",
   "research design": "طراحی مطالعه",
   "فالو آپ ایمپلنت": "پیگیری زمانی ایمپلنت",
   "لایبرری ایمپلنت": "لایبرری دیجیتال",
@@ -21882,8 +21889,8 @@
   "ایمپلنت متحرک": "اوردنچر",
   "dentcast plus": "دنتکست پلاس",
   "ساییدگی دندان": "سایش دندان",
-  "دایمنشن عمودی": "بعد عمودی",
   "فینیشینگ لاین": "فینیش لاین",
+  "دایمنشن عمودی": "بعد عمودی",
   "تنظیم اکلوزال": "تنظیم اکلوژن",
   "دندان های جلو": "دندان قدامی",
   "bond strength": "قدرت باند",
@@ -22125,6 +22132,7 @@
   "over denture": "اوردنچر",
   "دوام بلندمدت": "دوام ترمیم",
   "ارتفاع عمودی": "بعد عمودی",
+  "جدا شدن روکش": "افتادن روکش",
   "اسکن دیجیتال": "قالبگیری دیجیتال",
   "digital scan": "قالبگیری دیجیتال",
   "دیجیتال اسکن": "قالبگیری دیجیتال",
@@ -22133,7 +22141,6 @@
   "پروفایل خروج": "پروفایل امرجنس",
   "زیرو بون لاس": "zero تحلیل استخوان",
   "آنله سرامیکی": "آنله",
-  "جدا شدن روکش": "افتادن روکش",
   "استتیک قدامی": "زیبایی قدامی",
   "فضای بازسازی": "فضای رستوریتیو",
   "تحلیل کرستال": "تحلیل استخوان کرستال",
@@ -22157,6 +22164,7 @@
   "کاشت ایمپلنت": "جراحی ایمپلنت",
   "لود زودهنگام": "زمان بارگذاری ایمپلنت",
   "سمان زیر لثه": "سمان باقیمانده",
+  "سمان آزمایشی": "سمان موقت",
   "داوری بالینی": "قضاوت اینسایت",
   "نوشتن پرامپت": "پرامپت نویسی",
   "open contact": "کانتکت باز",
@@ -22164,7 +22172,6 @@
   "زاویه فیکسچر": "ایمپلنت زاویه دار",
   "تورک اینسرشن": "ثبات اولیه",
   "خطای دیجیتال": "خطای لابراتوار",
-  "سمان آزمایشی": "سمان موقت",
   "pascal magne": "کتاب مانیه",
   "پاسکال مانیه": "کتاب مانیه",
   "screw cement": "اسکرو سمنتد",
@@ -22365,10 +22372,10 @@
   "چت جی پی تی": "chatgpt",
   "provisional": "روکش موقت",
   "overdenture": "اوردنچر",
+  "loose crown": "افتادن روکش",
   "دندان جلویی": "دندان قدامی",
   "تنسایل باند": "قدرت باند",
   "periodontal": "پریودنتال",
-  "loose crown": "افتادن روکش",
   "حذف پوسیدگی": "برداشت پوسیدگی",
   "زیبایی قدام": "زیبایی قدامی",
   "فضای پروتزی": "فضای رستوریتیو",
@@ -22418,6 +22425,7 @@
   "متال سرامیک": "روکش pfm",
   "روکش سرامیک": "روکش سرامیکی",
   "لق شدن روکش": "شل شدن پیچ",
+  "آنتی روتیشن": "ضد چرخش",
   "مقاومت تراش": "فرم رزیستنس",
   "double cord": "نخ زیرلثه",
   "ونیر سرامیک": "ونیر سرامیکی",
@@ -22437,7 +22445,6 @@
   "درد انتقالی": "درد ارجاعی",
   "سایش دندانی": "سایش آنتاگونیست",
   "سمنت دندانی": "سمان دندانی",
-  "آنتی روتیشن": "ضد چرخش",
   "دیزاین روکش": "طراحی روکش",
   "طراحی پژوهش": "طراحی مطالعه",
   "مواد پروتزی": "متریال پروتزی",
@@ -22631,9 +22638,9 @@
   "کانسرواتیو": "درمان محافظه کارانه",
   "tooth wear": "سایش دندان",
   "fiber post": "فایبر پست",
+  "کندگی روکش": "افتادن روکش",
   "پریودونتال": "پریودنتال",
   "بیماری لثه": "پریودنتال",
-  "کندگی روکش": "افتادن روکش",
   "impression": "قالبگیری",
   "پروتز کامل": "پروتز متحرک",
   "extraction": "کشیدن دندان",
@@ -23138,6 +23145,7 @@
   "diastema": "دیاستم",
   "لود فوری": "زمان بارگذاری ایمپلنت",
   "ارلی لود": "زمان بارگذاری ایمپلنت",
+  "سمان تمپ": "سمان موقت",
   "اکستروژن": "سوپرااراپشن",
   "پسیو فیت": "فیت پروتز",
   "فیت روکش": "فیت پروتز",
@@ -23147,7 +23155,6 @@
   "scanbody": "اسکن بادی",
   "کم تهاجم": "حداقل تهاجم",
   "عامل خطر": "ریسک فاکتور",
-  "سمان تمپ": "سمان موقت",
   "توتال اچ": "اچ اند رینس",
   "رزین کوت": "رزین کوتینگ",
   "رشد فکین": "رشد فک",
