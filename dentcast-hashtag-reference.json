@@ -616,6 +616,66 @@
    ]
   },
   {
+   "key": "نوت_کست",
+   "tag": "#نوت_کست",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سری نوت‌کست — یادداشت فشرده‌ی یک موضوع تخصصی.",
+   "use_when": "روی هر مدخل نوت‌کست، و هیچ‌جای دیگر.",
+   "aliases": [
+    "نوتکست",
+    "notecast",
+    "نوت کست"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 42,
+   "content_ids": [
+    "notecast/episode-2",
+    "notecast/episode-3",
+    "notecast/episode-4",
+    "notecast/episode-5",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-8",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "notecast/episode-11",
+    "notecast/episode-12",
+    "notecast/episode-13",
+    "notecast/episode-14",
+    "notecast/episode-15",
+    "notecast/episode-16",
+    "notecast/episode-17",
+    "notecast/episode-18",
+    "notecast/episode-19",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "notecast/episode-22",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "notecast/episode-25",
+    "notecast/episode-26",
+    "notecast/episode-27",
+    "notecast/episode-28",
+    "notecast/episode-29",
+    "notecast/episode-30",
+    "notecast/episode-31",
+    "notecast/episode-32",
+    "notecast/episode-33",
+    "notecast/episode-34",
+    "notecast/episode-35",
+    "notecast/episode-36",
+    "notecast/episode-37",
+    "notecast/episode-38",
+    "notecast/episode-39",
+    "notecast/episode-40",
+    "notecast/episode-41",
+    "notecast/episode-42",
+    "notecast/episode-43"
+   ]
+  },
+  {
    "key": "اکلوژن",
    "tag": "#اکلوژن",
    "domain": "clinical",
@@ -676,65 +736,6 @@
    ]
   },
   {
-   "key": "نوت_کست",
-   "tag": "#نوت_کست",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سری نوت‌کست — یادداشت فشرده‌ی یک موضوع تخصصی.",
-   "use_when": "روی هر مدخل نوت‌کست، و هیچ‌جای دیگر.",
-   "aliases": [
-    "نوتکست",
-    "notecast",
-    "نوت کست"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 41,
-   "content_ids": [
-    "notecast/episode-2",
-    "notecast/episode-3",
-    "notecast/episode-4",
-    "notecast/episode-5",
-    "notecast/episode-6",
-    "notecast/episode-7",
-    "notecast/episode-8",
-    "notecast/episode-9",
-    "notecast/episode-10",
-    "notecast/episode-11",
-    "notecast/episode-12",
-    "notecast/episode-13",
-    "notecast/episode-14",
-    "notecast/episode-15",
-    "notecast/episode-16",
-    "notecast/episode-17",
-    "notecast/episode-18",
-    "notecast/episode-19",
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "notecast/episode-22",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "notecast/episode-25",
-    "notecast/episode-26",
-    "notecast/episode-27",
-    "notecast/episode-28",
-    "notecast/episode-29",
-    "notecast/episode-30",
-    "notecast/episode-31",
-    "notecast/episode-32",
-    "notecast/episode-33",
-    "notecast/episode-34",
-    "notecast/episode-35",
-    "notecast/episode-36",
-    "notecast/episode-37",
-    "notecast/episode-38",
-    "notecast/episode-39",
-    "notecast/episode-40",
-    "notecast/episode-41",
-    "notecast/episode-42"
-   ]
-  },
-  {
    "key": "چیرساید",
    "tag": "#چیرساید",
    "domain": "brand",
@@ -789,6 +790,67 @@
     "chairside/chairside-37",
     "chairside/chairside-38",
     "chairside/chairside-39"
+   ]
+  },
+  {
+   "key": "پست_و_کور",
+   "tag": "#پست_و_کور",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پست و کور — بازسازیِ ساختارِ ازدست‌رفته‌ی دندانِ اندوشده برای نگه‌داریِ روکش.",
+   "use_when": "مقاله پست/کور را موضوع داشته باشد.",
+   "aliases": [
+    "post and core",
+    "پست اند کور",
+    "پست کور",
+    "پست دندان",
+    "پست داخل کانال"
+   ],
+   "variants": [
+    "#پست و کور"
+   ],
+   "co_tags": [],
+   "count": 39,
+   "content_ids": [
+    "episodes/episode-36",
+    "episodes/episode-42",
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-79",
+    "episodes/episode-125-3",
+    "episodes/episode-128",
+    "episodes/episode-129",
+    "episodes/episode-147-7",
+    "insight/insight-12",
+    "insight/insight-15",
+    "insight/insight-17",
+    "insight/insight-20",
+    "metanotes/meta-7",
+    "insight/insight-21",
+    "metanotes/meta-9",
+    "insight/insight-28",
+    "metanotes/meta-11",
+    "chairside/chairside-5",
+    "insight/insight-39",
+    "insight/insight-41",
+    "notecast/episode-36",
+    "chairside/chairside-20",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19",
+    "metanotes/meta-20",
+    "dentcast-plus/video-7",
+    "dentcast-plus/video-10",
+    "insight/insight-66",
+    "notecast/episode-40",
+    "dentcast-plus/video-12",
+    "dentai/dentai-33",
+    "insight/insight-76",
+    "sharehub/share-20",
+    "notecast/episode-42",
+    "chairside/chairside-39",
+    "notecast/episode-43"
    ]
   },
   {
@@ -849,66 +911,6 @@
     "chairside/chairside-36",
     "chairside/chairside-37",
     "chairside/chairside-38",
-    "chairside/chairside-39"
-   ]
-  },
-  {
-   "key": "پست_و_کور",
-   "tag": "#پست_و_کور",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پست و کور — بازسازیِ ساختارِ ازدست‌رفته‌ی دندانِ اندوشده برای نگه‌داریِ روکش.",
-   "use_when": "مقاله پست/کور را موضوع داشته باشد.",
-   "aliases": [
-    "post and core",
-    "پست اند کور",
-    "پست کور",
-    "پست دندان",
-    "پست داخل کانال"
-   ],
-   "variants": [
-    "#پست و کور"
-   ],
-   "co_tags": [],
-   "count": 38,
-   "content_ids": [
-    "episodes/episode-36",
-    "episodes/episode-42",
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-79",
-    "episodes/episode-125-3",
-    "episodes/episode-128",
-    "episodes/episode-129",
-    "episodes/episode-147-7",
-    "insight/insight-12",
-    "insight/insight-15",
-    "insight/insight-17",
-    "insight/insight-20",
-    "metanotes/meta-7",
-    "insight/insight-21",
-    "metanotes/meta-9",
-    "insight/insight-28",
-    "metanotes/meta-11",
-    "chairside/chairside-5",
-    "insight/insight-39",
-    "insight/insight-41",
-    "notecast/episode-36",
-    "chairside/chairside-20",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19",
-    "metanotes/meta-20",
-    "dentcast-plus/video-7",
-    "dentcast-plus/video-10",
-    "insight/insight-66",
-    "notecast/episode-40",
-    "dentcast-plus/video-12",
-    "dentai/dentai-33",
-    "insight/insight-76",
-    "sharehub/share-20",
-    "notecast/episode-42",
     "chairside/chairside-39"
    ]
   },
@@ -2669,6 +2671,40 @@
    ]
   },
   {
+   "key": "فایبر_پست",
+   "tag": "#فایبر_پست",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پستِ فایبری هم‌مدولِ عاج برای بازسازیِ دندانِ اندوشده.",
+   "use_when": "مقاله فایبرپست را انتخاب، آماده‌سازی یا ارزیابی کند.",
+   "aliases": [
+    "fiber post",
+    "فایبرپست",
+    "فایبر پست",
+    "پست فایبر"
+   ],
+   "variants": [
+    "#فایبرپست"
+   ],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-42",
+    "episodes/episode-43",
+    "episodes/episode-79",
+    "episodes/episode-125-3",
+    "episodes/episode-128",
+    "episodes/episode-129",
+    "episodes/episode-147-7",
+    "metanotes/meta-7",
+    "insight/insight-28",
+    "notecast/episode-36",
+    "sharehub/share-20",
+    "notecast/episode-42",
+    "notecast/episode-43"
+   ]
+  },
+  {
    "key": "بعد_عمودی",
    "tag": "#بعد_عمودی",
    "domain": "clinical",
@@ -2699,39 +2735,6 @@
     "notecast/episode-35",
     "insight/insight-51",
     "insight/insight-60"
-   ]
-  },
-  {
-   "key": "فایبر_پست",
-   "tag": "#فایبر_پست",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پستِ فایبری هم‌مدولِ عاج برای بازسازیِ دندانِ اندوشده.",
-   "use_when": "مقاله فایبرپست را انتخاب، آماده‌سازی یا ارزیابی کند.",
-   "aliases": [
-    "fiber post",
-    "فایبرپست",
-    "فایبر پست",
-    "پست فایبر"
-   ],
-   "variants": [
-    "#فایبرپست"
-   ],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-42",
-    "episodes/episode-43",
-    "episodes/episode-79",
-    "episodes/episode-125-3",
-    "episodes/episode-128",
-    "episodes/episode-129",
-    "episodes/episode-147-7",
-    "metanotes/meta-7",
-    "insight/insight-28",
-    "notecast/episode-36",
-    "sharehub/share-20",
-    "notecast/episode-42"
    ]
   },
   {
@@ -2891,6 +2894,35 @@
     "insight/insight-51",
     "sharehub/share-15",
     "dentai/dentai-32"
+   ]
+  },
+  {
+   "key": "قدرت_باند",
+   "tag": "#قدرت_باند",
+   "domain": null,
+   "words": 2,
+   "definition": "استحکام اتصال رزین به بافت دندان.",
+   "use_when": "مقاله قدرت باند را بسنجد یا مقایسه کند.",
+   "aliases": [
+    "bond strength",
+    "استحکام باند",
+    "تنسایل باند"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-16",
+    "episodes/episode-36",
+    "episodes/episode-42",
+    "episodes/episode-71",
+    "episodes/episode-101",
+    "dentai/dentai-4",
+    "insight/insight-4",
+    "dentai/dentai-16",
+    "notecast/episode-42",
+    "sharehub/share-23",
+    "notecast/episode-43"
    ]
   },
   {
@@ -3261,34 +3293,6 @@
    ]
   },
   {
-   "key": "قدرت_باند",
-   "tag": "#قدرت_باند",
-   "domain": null,
-   "words": 2,
-   "definition": "استحکام اتصال رزین به بافت دندان.",
-   "use_when": "مقاله قدرت باند را بسنجد یا مقایسه کند.",
-   "aliases": [
-    "bond strength",
-    "استحکام باند",
-    "تنسایل باند"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-16",
-    "episodes/episode-36",
-    "episodes/episode-42",
-    "episodes/episode-71",
-    "episodes/episode-101",
-    "dentai/dentai-4",
-    "insight/insight-4",
-    "dentai/dentai-16",
-    "notecast/episode-42",
-    "sharehub/share-23"
-   ]
-  },
-  {
    "key": "پروتز_متحرک",
    "tag": "#پروتز_متحرک",
    "domain": null,
@@ -3473,6 +3477,33 @@
     "sharehub/share-13",
     "episodes/episode-161",
     "episodes/episode-162"
+   ]
+  },
+  {
+   "key": "سایلان",
+   "tag": "#سایلان",
+   "domain": null,
+   "words": 1,
+   "definition": "عاملِ جفت‌کننده‌ی بین سرامیک و رزین.",
+   "use_when": "مقاله نقش یا پروتکلِ سایلان را شرح دهد.",
+   "aliases": [
+    "silane",
+    "سیلان",
+    "silane coupling"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-10",
+    "episodes/episode-16",
+    "episodes/episode-136",
+    "notecast/episode-10",
+    "notecast/episode-12",
+    "notecast/episode-16",
+    "insight/insight-42",
+    "notecast/episode-42",
+    "notecast/episode-43"
    ]
   },
   {
@@ -3699,32 +3730,6 @@
     "insight/insight-74",
     "sharehub/share-22",
     "sharehub/share-23"
-   ]
-  },
-  {
-   "key": "سایلان",
-   "tag": "#سایلان",
-   "domain": null,
-   "words": 1,
-   "definition": "عاملِ جفت‌کننده‌ی بین سرامیک و رزین.",
-   "use_when": "مقاله نقش یا پروتکلِ سایلان را شرح دهد.",
-   "aliases": [
-    "silane",
-    "سیلان",
-    "silane coupling"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-10",
-    "episodes/episode-16",
-    "episodes/episode-136",
-    "notecast/episode-10",
-    "notecast/episode-12",
-    "notecast/episode-16",
-    "insight/insight-42",
-    "notecast/episode-42"
    ]
   },
   {
@@ -6582,6 +6587,28 @@
    ]
   },
   {
+   "key": "سندبلاست",
+   "tag": "#سندبلاست",
+   "domain": null,
+   "words": 1,
+   "definition": "زبر کردنِ سطح با ذرات آلومینا.",
+   "use_when": "مقاله سندبلاست را مرحله‌ای از آماده‌سازی بداند.",
+   "aliases": [
+    "sandblast",
+    "airborne particle abrasion",
+    "ایربورن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "notecast/episode-11",
+    "notecast/episode-18",
+    "sharehub/share-20",
+    "notecast/episode-43"
+   ]
+  },
+  {
    "key": "شل_شدن_پیچ",
    "tag": "#شل_شدن_پیچ",
    "domain": "clinical",
@@ -8146,6 +8173,26 @@
    ]
   },
   {
+   "key": "سمان_سلف_ادهزیو",
+   "tag": "#سمان_سلف_ادهزیو",
+   "domain": null,
+   "words": 3,
+   "definition": "سمان رزینیِ خوداتصال، بدون مرحله‌ی باند جدا.",
+   "use_when": "مقاله این دسته را انتخاب یا مقایسه کند.",
+   "aliases": [
+    "self adhesive cement",
+    "سلف ادهزیو"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-43",
+    "notecast/episode-3",
+    "notecast/episode-43"
+   ]
+  },
+  {
    "key": "سمان_مجدد",
    "tag": "#سمان_مجدد",
    "domain": "clinical",
@@ -8165,27 +8212,6 @@
     "insight/insight-54",
     "chairside/chairside-32",
     "insight/insight-65"
-   ]
-  },
-  {
-   "key": "سندبلاست",
-   "tag": "#سندبلاست",
-   "domain": null,
-   "words": 1,
-   "definition": "زبر کردنِ سطح با ذرات آلومینا.",
-   "use_when": "مقاله سندبلاست را مرحله‌ای از آماده‌سازی بداند.",
-   "aliases": [
-    "sandblast",
-    "airborne particle abrasion",
-    "ایربورن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "notecast/episode-11",
-    "notecast/episode-18",
-    "sharehub/share-20"
    ]
   },
   {
@@ -11158,25 +11184,6 @@
    "content_ids": [
     "insight/insight-55",
     "metanotes/meta-18"
-   ]
-  },
-  {
-   "key": "سمان_سلف_ادهزیو",
-   "tag": "#سمان_سلف_ادهزیو",
-   "domain": null,
-   "words": 3,
-   "definition": "سمان رزینیِ خوداتصال، بدون مرحله‌ی باند جدا.",
-   "use_when": "مقاله این دسته را انتخاب یا مقایسه کند.",
-   "aliases": [
-    "self adhesive cement",
-    "سلف ادهزیو"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-43",
-    "notecast/episode-3"
    ]
   },
   {
