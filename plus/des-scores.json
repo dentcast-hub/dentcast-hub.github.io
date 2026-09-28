@@ -19093,5 +19093,215 @@
         "interpretation_fa": "ارزشِ متن در این است که تصمیمِ بازسازیِ دندانی که پین برنجی بزرگی از آن خارج شده را به یک زنجیره‌ی روشن گره می‌زند: دیواره‌های سرویکال نازک یعنی عملاً فرولی نمانده، تراشِ روکش کانونشنال همان باقی‌مانده را هم کم می‌کند، پس درمان ادهزیو؛ و در حجم زیاد، غیرمستقیم به جای مستقیم، با سه دلیلِ مشخص. متن صریحاً می‌گوید این برداشت از رادیوگرافی و بدون معاینه است و تصمیم نهایی نیست، اما جایگاهش را نسبت به ادبیاتِ منتشرشده بیان نمی‌کند."
       }
     ]
+  },
+  "notecast/episode-43": {
+    "scored_at": "2026-09-28",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Evaluation of different surface treatments on fiber post cemented with a self-adhesive system",
+          "authors": "Prado M, Marques JN, Pereira GD, da Silva EM, Simão RA",
+          "year": 2017,
+          "journal": "Materials Science and Engineering: C",
+          "doi": "10.1016/j.msec.2017.03.141"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "in-vitro push-out bond strength test of glass fiber posts luted with a self-adhesive resin cement (RelyX U200), 6 groups with n=10 posts each (four 1.0 mm discs per post, 40 discs per group); push-out is an established bond-strength method, the specimen count per group is adequate, and the loading regimen is fully defined (universal testing machine, 200-kgf load cell, crosshead 0.5 mm/min, 1.2 mm steel plunger, bonded area formula stated), so it lands on the MATERIAL validated-protocol row (85) rather than the non-standard-protocol row (65). No storage or thermocycling aging is described; that is a limitation for interpretation, not a missing loading definition.",
+          "evidence_quote": "Bond strength was evaluated through push-out test by using a universal testing machine"
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "the aim of the present study was to evaluate the effect of different surface treatments on fiber post cemented with a self-adhesive system",
+              "note": "هدف در چکیده و انتهای مقدمه صریح آمده و فرضیه‌ی صفر هم جداگانه اعلام شده است."
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "طبق پروتکل غیاب (۳b-ii) کل Materials and Methods خوانده شد: 2.1.1 Sample preparation (تعداد و مشخصات پست‌ها و تقسیم به ۶ گروه)، 2.1.2 Push-out bond strength test، 2.1.3 Statistical analysis و 2.2 برای آنالیز شیمیایی و توپوگرافی؛ سپس Results و Discussion هم خوانده شد. متن فقط تعداد را اعلام می‌کند («Sixty fiber epoxy resin posts» و «(n = 10)») و هیچ محاسبه‌ی توان، ارجاع به مطالعه‌ی پیشین برای تعیین حجم نمونه یا توجیه دیگری نمی‌آورد. چون متن کامل است، سکوت طبق ۳b بند ۱ غیاب است نه NR."
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "بخش 2.1.1 و 2.2 خوانده شد: متن فقط می‌گوید پست‌ها «divided into 6 groups (n = 10) according to the surface treatment» و برای آنالیز شیمیایی «Eighteen posts were selected»، بی‌آنکه روش تخصیص یا انتخاب را بگوید؛ واژه‌ی random یا allocation و هیچ روش جایگزینی در کل متن نیامده. این رتبه از شاخه‌ی اول ۳b (غیاب) است نه از آستانه‌ی ۳b-i، چون روشی اعلام نشده که بتوان آن را آشکارا غیرتصادفی نامید."
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هر سه جایی که کور بودن در آن می‌نشیند مستقیماً خوانده شد: اعمال درمان‌های سطحی و سمان‌کردن در ماتریس سیلیکونی (2.1.1)، برش دیسک‌ها و تست push-out با اندازه‌گیری ضخامت با کولیس دیجیتال (2.1.2)، و طبقه‌بندی الگوی شکست با استریومیکروسکوپ و ارزیابی کیفی SEM (2.1.2 و 2.2.2). در هیچ‌کدام اشاره‌ای به کور بودن اپراتور یا ارزیاب نیست و تعداد اپراتورها هم گزارش نشده؛ واژه‌ی blind در کل متن نیست."
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "The data were then analyzed statistically using one-way ANOVA and the Tukey HSD post hoc test for pairwise multiple comparisons",
+              "note": "نرمال‌بودن و همگنی واریانس با Kolmogorov-Smirnov و Levene بررسی شده و مقایسه‌های چندگانه با Tukey HSD تصحیح شده است. متن نمی‌گوید تحلیل روی ۱۰ پست یا ۴۰ دیسک هر گروه انجام شده؛ چون واحد تحلیل صریح نیست، خطای واحد تحلیل طبق ۳c («If you cannot tell, it does not fire») فعال نمی‌شود."
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "some_concerns",
+              "evidence_quote": "This work was supported by the Brazilian agencies: Faperj, Capes (PNPD) & CNPq.",
+              "note": "منبع مالی (سه آژانس دولتی پژوهشی برزیل) اعلام شده، اما بیانیه‌ی تعارض منافع در هیچ جای متن نیست؛ بلوک ACKNOWLEDGMENTS، صفحه‌ی اول و بلوک Corresponding author مستقیماً خوانده شد و جست‌وجو با درنظرگرفتن لیگاتور PDF هم انجام شد. دامنه نیمه‌کامل پوشش داده شده، پس طبق ۳b بند ۴ some_concerns."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع در کل متن وجود ندارد",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "covered in Q_method — نبودِ بیانیه‌ی تعارض منافع همان دلیل some_concerns در دامنه‌ی ششم QUIN است و طبق قاعده‌ی عدم جریمه‌ی مضاعف دوباره کسر نمی‌شود. شاخه‌ی دوم این ردیف هم فعال نیست: تأمین‌کنندگان Faperj، Capes و CNPq آژانس‌های دولتی پژوهشی‌اند، نه سازنده‌ی محصول تحت آزمون."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مطالعه‌ی in-vitro است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "the posts were divided into 6 groups (n = 10) according to the surface treatment",
+            "note": "برای in-vitro این ردیف تنها وقتی فعال می‌شود که تعداد نمونه در هر گروه کمتر از ۱۰ و بدون توجیه باشد؛ اینجا n=10 در هر گروه است، پس ردیف فعال نمی‌شود. نبودِ توجیه حجم نمونه جداگانه در دامنه‌ی دوم QUIN رتبه‌بندی شده است."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "مطالعه‌ی in-vitro تک‌مرحله‌ای است و هیچ ادعای بقا یا موفقیت مبتنی بر پیگیری ندارد؛ پیامد، استحکام باند push-out است. نبودِ کهنه‌سازی و ترموسایکلینگ در تفسیر آمده، نه به‌صورت فعال‌شدن این ردیف."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 26,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این مطالعه در نوع پرسش MATERIAL امتیاز ۲۶ و باند D گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "سایلان، سندبلاست با آلومینا و پلاسمای NH3 و HMDSO استحکام push-out پست فایبرگلاس به RelyX U200 را نسبت به کنترل بالا بردند و پراکسید هیدروژن ۲۴٪ فرقی با کنترل نداشت. تست فقط رابط پست و سمان را بدون عاج و بدون کهنه‌سازی سنجیده، پس عدد، باند اولیه‌ی آزمایشگاهی است. تخصیص تصادفی، کور بودن و توجیه حجم نمونه گزارش نشده."
+      }
+    ]
+  },
+  "episodes/episode-43": {
+    "scored_at": "2026-09-28",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Evaluation of different surface treatments on fiber post cemented with a self-adhesive system",
+          "authors": "Prado M, Marques JN, Pereira GD, da Silva EM, Simão RA",
+          "year": 2017,
+          "journal": "Materials Science and Engineering: C",
+          "doi": "10.1016/j.msec.2017.03.141"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "in-vitro push-out bond strength test of glass fiber posts luted with a self-adhesive resin cement (RelyX U200), 6 groups with n=10 posts each (four 1.0 mm discs per post, 40 discs per group); push-out is an established bond-strength method, the specimen count per group is adequate, and the loading regimen is fully defined (universal testing machine, 200-kgf load cell, crosshead 0.5 mm/min, 1.2 mm steel plunger, bonded area formula stated), so it lands on the MATERIAL validated-protocol row (85) rather than the non-standard-protocol row (65). No storage or thermocycling aging is described; that is a limitation for interpretation, not a missing loading definition.",
+          "evidence_quote": "Bond strength was evaluated through push-out test by using a universal testing machine"
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "the aim of the present study was to evaluate the effect of different surface treatments on fiber post cemented with a self-adhesive system",
+              "note": "هدف در چکیده و انتهای مقدمه صریح آمده و فرضیه‌ی صفر هم جداگانه اعلام شده است."
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "طبق پروتکل غیاب (۳b-ii) کل Materials and Methods خوانده شد: 2.1.1 Sample preparation (تعداد و مشخصات پست‌ها و تقسیم به ۶ گروه)، 2.1.2 Push-out bond strength test، 2.1.3 Statistical analysis و 2.2 برای آنالیز شیمیایی و توپوگرافی؛ سپس Results و Discussion هم خوانده شد. متن فقط تعداد را اعلام می‌کند («Sixty fiber epoxy resin posts» و «(n = 10)») و هیچ محاسبه‌ی توان، ارجاع به مطالعه‌ی پیشین برای تعیین حجم نمونه یا توجیه دیگری نمی‌آورد. چون متن کامل است، سکوت طبق ۳b بند ۱ غیاب است نه NR."
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "بخش 2.1.1 و 2.2 خوانده شد: متن فقط می‌گوید پست‌ها «divided into 6 groups (n = 10) according to the surface treatment» و برای آنالیز شیمیایی «Eighteen posts were selected»، بی‌آنکه روش تخصیص یا انتخاب را بگوید؛ واژه‌ی random یا allocation و هیچ روش جایگزینی در کل متن نیامده. این رتبه از شاخه‌ی اول ۳b (غیاب) است نه از آستانه‌ی ۳b-i، چون روشی اعلام نشده که بتوان آن را آشکارا غیرتصادفی نامید."
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هر سه جایی که کور بودن در آن می‌نشیند مستقیماً خوانده شد: اعمال درمان‌های سطحی و سمان‌کردن در ماتریس سیلیکونی (2.1.1)، برش دیسک‌ها و تست push-out با اندازه‌گیری ضخامت با کولیس دیجیتال (2.1.2)، و طبقه‌بندی الگوی شکست با استریومیکروسکوپ و ارزیابی کیفی SEM (2.1.2 و 2.2.2). در هیچ‌کدام اشاره‌ای به کور بودن اپراتور یا ارزیاب نیست و تعداد اپراتورها هم گزارش نشده؛ واژه‌ی blind در کل متن نیست."
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "The data were then analyzed statistically using one-way ANOVA and the Tukey HSD post hoc test for pairwise multiple comparisons",
+              "note": "نرمال‌بودن و همگنی واریانس با Kolmogorov-Smirnov و Levene بررسی شده و مقایسه‌های چندگانه با Tukey HSD تصحیح شده است. متن نمی‌گوید تحلیل روی ۱۰ پست یا ۴۰ دیسک هر گروه انجام شده؛ چون واحد تحلیل صریح نیست، خطای واحد تحلیل طبق ۳c («If you cannot tell, it does not fire») فعال نمی‌شود."
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "some_concerns",
+              "evidence_quote": "This work was supported by the Brazilian agencies: Faperj, Capes (PNPD) & CNPq.",
+              "note": "منبع مالی (سه آژانس دولتی پژوهشی برزیل) اعلام شده، اما بیانیه‌ی تعارض منافع در هیچ جای متن نیست؛ بلوک ACKNOWLEDGMENTS، صفحه‌ی اول و بلوک Corresponding author مستقیماً خوانده شد و جست‌وجو با درنظرگرفتن لیگاتور PDF هم انجام شد. دامنه نیمه‌کامل پوشش داده شده، پس طبق ۳b بند ۴ some_concerns."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع در کل متن وجود ندارد",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "covered in Q_method — نبودِ بیانیه‌ی تعارض منافع همان دلیل some_concerns در دامنه‌ی ششم QUIN است و طبق قاعده‌ی عدم جریمه‌ی مضاعف دوباره کسر نمی‌شود. شاخه‌ی دوم این ردیف هم فعال نیست: تأمین‌کنندگان Faperj، Capes و CNPq آژانس‌های دولتی پژوهشی‌اند، نه سازنده‌ی محصول تحت آزمون."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مطالعه‌ی in-vitro است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "the posts were divided into 6 groups (n = 10) according to the surface treatment",
+            "note": "برای in-vitro این ردیف تنها وقتی فعال می‌شود که تعداد نمونه در هر گروه کمتر از ۱۰ و بدون توجیه باشد؛ اینجا n=10 در هر گروه است، پس ردیف فعال نمی‌شود. نبودِ توجیه حجم نمونه جداگانه در دامنه‌ی دوم QUIN رتبه‌بندی شده است."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "مطالعه‌ی in-vitro تک‌مرحله‌ای است و هیچ ادعای بقا یا موفقیت مبتنی بر پیگیری ندارد؛ پیامد، استحکام باند push-out است. نبودِ کهنه‌سازی و ترموسایکلینگ در تفسیر آمده، نه به‌صورت فعال‌شدن این ردیف."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 26,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این مطالعه در نوع پرسش MATERIAL امتیاز ۲۶ و باند D گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "سایلان، سندبلاست با آلومینا و پلاسمای NH3 و HMDSO استحکام push-out پست فایبرگلاس به RelyX U200 را نسبت به کنترل بالا بردند و پراکسید هیدروژن ۲۴٪ فرقی با کنترل نداشت. تست فقط رابط پست و سمان را بدون عاج و بدون کهنه‌سازی سنجیده، پس عدد، باند اولیه‌ی آزمایشگاهی است. تخصیص تصادفی، کور بودن و توجیه حجم نمونه گزارش نشده."
+      }
+    ]
   }
 }
