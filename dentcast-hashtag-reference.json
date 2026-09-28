@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 103,
+   "count": 104,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -363,7 +363,8 @@
     "insight/insight-81",
     "insight/insight-82",
     "insight/insight-83",
-    "insight/insight-84"
+    "insight/insight-84",
+    "insight/insight-85"
    ]
   },
   {
@@ -1109,6 +1110,54 @@
    ]
   },
   {
+   "key": "روکش_ایمپلنت",
+   "tag": "#روکش_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
+   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
+   "aliases": [
+    "implant crown",
+    "روکش روی ایمپلنت",
+    "روکش ایمپلنتی",
+    "کراون ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 29,
+   "content_ids": [
+    "episodes/episode-125-1",
+    "episodes/episode-139",
+    "episodes/episode-147",
+    "episodes/episode-148-2",
+    "insight/insight-9",
+    "insight/insight-10",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST12",
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "sharehub/share-4",
+    "dentcast-plus/video-5",
+    "metanotes/meta-10",
+    "insight/insight-30",
+    "insight/insight-33",
+    "chairside/chairside-12",
+    "chairside/chairside-17",
+    "insight/insight-46",
+    "insight/insight-47",
+    "insight/insight-50",
+    "insight/insight-52",
+    "insight/insight-53",
+    "insight/insight-57",
+    "chairside/chairside-28",
+    "insight/insight-62",
+    "insight/insight-63",
+    "chairside/chairside-31",
+    "insight/insight-85"
+   ]
+  },
+  {
    "key": "پروتز_ثابت",
    "tag": "#پروتز_ثابت",
    "domain": "clinical",
@@ -1155,53 +1204,6 @@
     "insight/insight-49",
     "insight/insight-54",
     "dentai/dentai-29"
-   ]
-  },
-  {
-   "key": "روکش_ایمپلنت",
-   "tag": "#روکش_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
-   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
-   "aliases": [
-    "implant crown",
-    "روکش روی ایمپلنت",
-    "روکش ایمپلنتی",
-    "کراون ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 28,
-   "content_ids": [
-    "episodes/episode-125-1",
-    "episodes/episode-139",
-    "episodes/episode-147",
-    "episodes/episode-148-2",
-    "insight/insight-9",
-    "insight/insight-10",
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST12",
-    "litecast/lite-CAST16",
-    "litecast/lite-CAST18",
-    "dentcast-plus/video-4",
-    "sharehub/share-4",
-    "dentcast-plus/video-5",
-    "metanotes/meta-10",
-    "insight/insight-30",
-    "insight/insight-33",
-    "chairside/chairside-12",
-    "chairside/chairside-17",
-    "insight/insight-46",
-    "insight/insight-47",
-    "insight/insight-50",
-    "insight/insight-52",
-    "insight/insight-53",
-    "insight/insight-57",
-    "chairside/chairside-28",
-    "insight/insight-62",
-    "insight/insight-63",
-    "chairside/chairside-31"
    ]
   },
   {
@@ -1678,6 +1680,46 @@
    ]
   },
   {
+   "key": "اباتمنت",
+   "tag": "#اباتمنت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "قطعه‌ی واسط بین ایمپلنت و روکش.",
+   "use_when": "مقاله طراحی، انتخاب یا مشکلی از اباتمنت را تعیین تکلیف کند.",
+   "aliases": [
+    "abutment",
+    "ابوتمنت",
+    "آباتمنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 22,
+   "content_ids": [
+    "episodes/episode-80",
+    "episodes/episode-81",
+    "episodes/episode-102",
+    "episodes/episode-103",
+    "episodes/episode-104",
+    "episodes/episode-105",
+    "episodes/episode-106",
+    "episodes/episode-115",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "metanotes/meta-8",
+    "dentcast-plus/video-5",
+    "insight/insight-35",
+    "episodes/episode-157",
+    "insight/insight-44",
+    "insight/insight-52",
+    "chairside/chairside-23",
+    "insight/insight-60",
+    "insight/insight-62",
+    "insight/insight-77",
+    "insight/insight-85"
+   ]
+  },
+  {
    "key": "مدل_زبانی",
    "tag": "#مدل_زبانی",
    "domain": "ai",
@@ -1794,45 +1836,6 @@
     "dentai/promptologist/prompt6-5",
     "dentai/promptologist/prompt7-1",
     "dentai/promptologist/prompt7-2"
-   ]
-  },
-  {
-   "key": "اباتمنت",
-   "tag": "#اباتمنت",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "قطعه‌ی واسط بین ایمپلنت و روکش.",
-   "use_when": "مقاله طراحی، انتخاب یا مشکلی از اباتمنت را تعیین تکلیف کند.",
-   "aliases": [
-    "abutment",
-    "ابوتمنت",
-    "آباتمنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 21,
-   "content_ids": [
-    "episodes/episode-80",
-    "episodes/episode-81",
-    "episodes/episode-102",
-    "episodes/episode-103",
-    "episodes/episode-104",
-    "episodes/episode-105",
-    "episodes/episode-106",
-    "episodes/episode-115",
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST18",
-    "dentcast-plus/video-4",
-    "metanotes/meta-8",
-    "dentcast-plus/video-5",
-    "insight/insight-35",
-    "episodes/episode-157",
-    "insight/insight-44",
-    "insight/insight-52",
-    "chairside/chairside-23",
-    "insight/insight-60",
-    "insight/insight-62",
-    "insight/insight-77"
    ]
   },
   {
@@ -2705,6 +2708,39 @@
    ]
   },
   {
+   "key": "فینیش_لاین",
+   "tag": "#فینیش_لاین",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "خط ختم تراش — مرزی که مارجین رستوریشن روی آن می‌نشیند.",
+   "use_when": "مقاله شکل، موقعیت، یا کیفیت خط ختم را تعیین کند.",
+   "aliases": [
+    "فینیشینگ لاین",
+    "فینیش‌لاین",
+    "خط ختم"
+   ],
+   "variants": [
+    "#فینیشینگ_لاین"
+   ],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-95",
+    "episodes/episode-114",
+    "dentcast-plus/video-1",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "insight/insight-18",
+    "chairside/chairside-12",
+    "insight/insight-40",
+    "notecast/episode-37",
+    "insight/insight-67",
+    "dentcast-plus/video-11",
+    "insight/insight-73",
+    "insight/insight-85"
+   ]
+  },
+  {
    "key": "بعد_عمودی",
    "tag": "#بعد_عمودی",
    "domain": "clinical",
@@ -2738,42 +2774,10 @@
    ]
   },
   {
-   "key": "فینیش_لاین",
-   "tag": "#فینیش_لاین",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "خط ختم تراش — مرزی که مارجین رستوریشن روی آن می‌نشیند.",
-   "use_when": "مقاله شکل، موقعیت، یا کیفیت خط ختم را تعیین کند.",
-   "aliases": [
-    "فینیشینگ لاین",
-    "فینیش‌لاین",
-    "خط ختم"
-   ],
-   "variants": [
-    "#فینیشینگ_لاین"
-   ],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-95",
-    "episodes/episode-114",
-    "dentcast-plus/video-1",
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "insight/insight-18",
-    "chairside/chairside-12",
-    "insight/insight-40",
-    "notecast/episode-37",
-    "insight/insight-67",
-    "dentcast-plus/video-11",
-    "insight/insight-73"
-   ]
-  },
-  {
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
    "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
    "aliases": [
@@ -2800,6 +2804,40 @@
     "chairside/chairside-14",
     "chairside/chairside-21",
     "chairside/chairside-30"
+   ]
+  },
+  {
+   "key": "افتادن_روکش",
+   "tag": "#افتادن_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتن گیر و جدا شدن روکش از تکیه‌گاه.",
+   "use_when": "مقاله علتِ افتادن روکش را توضیح بدهد یا پیش‌بینی کند — چه رخ داده باشد، چه مقاله بگوید چرا رخ خواهد داد.",
+   "aliases": [
+    "loose crown",
+    "کندگی روکش",
+    "جدا شدن روکش"
+   ],
+   "variants": [
+    "#روکش_افتاده",
+    "#دباندینگ"
+   ],
+   "co_tags": [
+    "#debonding"
+   ],
+   "count": 11,
+   "content_ids": [
+    "notecast/episode-15",
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5",
+    "chairside/chairside-5",
+    "chairside/chairside-17",
+    "sharehub/share-8",
+    "insight/insight-54",
+    "sharehub/share-10",
+    "insight/insight-59",
+    "chairside/chairside-32",
+    "insight/insight-85"
    ]
   },
   {
@@ -3088,39 +3126,6 @@
     "episodes/episode-159-1",
     "metanotes/meta-14",
     "dentai/dentai-29"
-   ]
-  },
-  {
-   "key": "افتادن_روکش",
-   "tag": "#افتادن_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتن گیر و جدا شدن روکش از تکیه‌گاه.",
-   "use_when": "مقاله علتِ افتادن روکش را توضیح بدهد یا پیش‌بینی کند — چه رخ داده باشد، چه مقاله بگوید چرا رخ خواهد داد.",
-   "aliases": [
-    "loose crown",
-    "کندگی روکش",
-    "جدا شدن روکش"
-   ],
-   "variants": [
-    "#روکش_افتاده",
-    "#دباندینگ"
-   ],
-   "co_tags": [
-    "#debonding"
-   ],
-   "count": 10,
-   "content_ids": [
-    "notecast/episode-15",
-    "dentcast-plus/video-4",
-    "dentcast-plus/video-5",
-    "chairside/chairside-5",
-    "chairside/chairside-17",
-    "sharehub/share-8",
-    "insight/insight-54",
-    "sharehub/share-10",
-    "insight/insight-59",
-    "chairside/chairside-32"
    ]
   },
   {
@@ -4701,7 +4706,7 @@
    "key": "رادیوگرافی_تشخیصی",
    "tag": "#رادیوگرافی_تشخیصی",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "انتخاب و تفسیرِ درستِ تصویر — پانورامیک در برابر پری‌اپیکال.",
    "use_when": "مقاله کفایت یا نارساییِ یک تصویر را مسئله بداند.",
    "aliases": [
@@ -4827,6 +4832,30 @@
     "insight/insight-9",
     "sharehub/share-4",
     "metanotes/meta-10"
+   ]
+  },
+  {
+   "key": "سمان_موقت",
+   "tag": "#سمان_موقت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "سمانِ مرحله‌ی آزمایشی، که رنگش با دائم فرق دارد.",
+   "use_when": "مقاله تفاوتِ موقت و دائم را مسئله بداند.",
+   "aliases": [
+    "temporary cement",
+    "سمان تمپ",
+    "سمان آزمایشی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "insight/insight-5",
+    "insight/insight-29",
+    "insight/insight-44",
+    "insight/insight-59",
+    "insight/insight-65",
+    "insight/insight-85"
    ]
   },
   {
@@ -5662,29 +5691,6 @@
    ]
   },
   {
-   "key": "سمان_موقت",
-   "tag": "#سمان_موقت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "سمانِ مرحله‌ی آزمایشی، که رنگش با دائم فرق دارد.",
-   "use_when": "مقاله تفاوتِ موقت و دائم را مسئله بداند.",
-   "aliases": [
-    "temporary cement",
-    "سمان تمپ",
-    "سمان آزمایشی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "insight/insight-5",
-    "insight/insight-29",
-    "insight/insight-44",
-    "insight/insight-59",
-    "insight/insight-65"
-   ]
-  },
-  {
    "key": "عاج",
    "tag": "#عاج",
    "domain": null,
@@ -6407,7 +6413,7 @@
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
-   "words": 6,
+   "words": 4,
    "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
    "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
    "aliases": [
@@ -6632,6 +6638,29 @@
     "insight/insight-22",
     "insight/insight-47",
     "insight/insight-68"
+   ]
+  },
+  {
+   "key": "ضد_چرخش",
+   "tag": "#ضد_چرخش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "هندسه‌ای در اباتمنت که چرخش روکش روی آن را مهار می‌کند.",
+   "use_when": "مقاله وجود یا نبودِ گیرِ ضدچرخشی را ارزیابی کند.",
+   "aliases": [
+    "آنتی روتیشن",
+    "ضد چرخش اباتمنت"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#anti_rotation"
+   ],
+   "count": 4,
+   "content_ids": [
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5",
+    "dentai/dentai-33",
+    "insight/insight-85"
    ]
   },
   {
@@ -8282,28 +8311,6 @@
     "dentcast-plus/video-6",
     "metanotes/meta-12",
     "insight/insight-43"
-   ]
-  },
-  {
-   "key": "ضد_چرخش",
-   "tag": "#ضد_چرخش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "هندسه‌ای در اباتمنت که چرخش روکش روی آن را مهار می‌کند.",
-   "use_when": "مقاله وجود یا نبودِ گیرِ ضدچرخشی را ارزیابی کند.",
-   "aliases": [
-    "آنتی روتیشن",
-    "ضد چرخش اباتمنت"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#anti_rotation"
-   ],
-   "count": 3,
-   "content_ids": [
-    "dentcast-plus/video-4",
-    "dentcast-plus/video-5",
-    "dentai/dentai-33"
    ]
   },
   {
@@ -14630,7 +14637,7 @@
    "key": "اینتروژن_ارتودنسی",
    "tag": "#اینتروژن_ارتودنسی",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
    "use_when": "مقاله اینتروژن را راه‌حل بداند.",
    "aliases": [
@@ -15461,7 +15468,7 @@
    "key": "تفسیر_رادیوگرافی",
    "tag": "#تفسیر_رادیوگرافی",
    "domain": "clinical",
-   "words": 4,
+   "words": 2,
    "definition": "خواندنِ الگو — مرزِ صاف در برابر مرزِ منتشر — نه صرفاً دیدنِ لکه.",
    "use_when": "مقاله معیارِ تمایزِ تصویری بدهد.",
    "aliases": [
@@ -16429,7 +16436,7 @@
    "key": "رادیوگرافی_کنترل",
    "tag": "#رادیوگرافی_کنترل",
    "domain": "clinical",
-   "words": 4,
+   "words": 2,
    "definition": "پری‌اپیکالِ صحیح، به‌عنوان تأییدِ قطعیِ نشست.",
    "use_when": "مقاله رادیوگرافی را تأییدِ نهایی بداند، نه حس.",
    "aliases": [
@@ -19170,7 +19177,7 @@
    "key": "هوش_مصنوعی_رادیوگرافی",
    "tag": "#هوش_مصنوعی_رادیوگرافی",
    "domain": "ai",
-   "words": 5,
+   "words": 3,
    "definition": "نرم‌افزاری که روی رادیوگرافی ضایعه یا سطح استخوان را علامت می‌زند — تصویری که اغلب با ChatGPT اشتباه گرفته می‌شود.",
    "use_when": "مقاله همین دسته را موضوع یا نقطه‌ی تمایز قرار دهد.",
    "aliases": [
