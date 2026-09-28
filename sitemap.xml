@@ -3145,6 +3145,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/insight/insight-87.html</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/insight/insight-9.html</loc>
     <lastmod>2025-12-19</lastmod>
     <changefreq>monthly</changefreq>
@@ -3602,7 +3608,7 @@
   </url>
   <url>
     <loc>https://dentcast.org/pillar/occlusion/</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

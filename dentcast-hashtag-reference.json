@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 105,
+   "count": 106,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -365,7 +365,8 @@
     "insight/insight-83",
     "insight/insight-84",
     "insight/insight-85",
-    "insight/insight-86"
+    "insight/insight-86",
+    "insight/insight-87"
    ]
   },
   {
@@ -618,6 +619,67 @@
    ]
   },
   {
+   "key": "اکلوژن",
+   "tag": "#اکلوژن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "رابطه‌ی تماسی دندان‌های دو فک و هرچه بر آن اثر می‌گذارد.",
+   "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "occlusion",
+    "اکلوزیون"
+   ],
+   "variants": [
+    "#Occlusion"
+   ],
+   "co_tags": [],
+   "count": 42,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-23",
+    "episodes/episode-35",
+    "episodes/episode-60",
+    "episodes/episode-123-2",
+    "episodes/episode-126",
+    "episodes/episode-131",
+    "episodes/episode-132",
+    "episodes/episode-142",
+    "episodes/episode-143",
+    "episodes/episode-144",
+    "episodes/episode-145",
+    "insight/insight-1",
+    "insight/insight-2",
+    "insight/insight-6",
+    "insight/insight-8",
+    "insight/insight-12",
+    "photocast/episode-2",
+    "dentcast-plus/video-2",
+    "notecast/episode-14",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "insight/insight-21",
+    "episodes/episode-154",
+    "sharehub/share-5",
+    "insight/insight-24",
+    "episodes/episode-155",
+    "dentcast-plus/video-6",
+    "insight/insight-29",
+    "chairside/chairside-11",
+    "insight/insight-37",
+    "chairside/chairside-15",
+    "sharehub/share-6",
+    "insight/insight-43",
+    "episodes/episode-160",
+    "chairside/chairside-23",
+    "insight/insight-56",
+    "chairside/chairside-31",
+    "insight/insight-65",
+    "chairside/chairside-36",
+    "sharehub/share-21",
+    "insight/insight-87"
+   ]
+  },
+  {
    "key": "نوت_کست",
    "tag": "#نوت_کست",
    "domain": "brand",
@@ -675,66 +737,6 @@
     "notecast/episode-41",
     "notecast/episode-42",
     "notecast/episode-43"
-   ]
-  },
-  {
-   "key": "اکلوژن",
-   "tag": "#اکلوژن",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "رابطه‌ی تماسی دندان‌های دو فک و هرچه بر آن اثر می‌گذارد.",
-   "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "occlusion",
-    "اکلوزیون"
-   ],
-   "variants": [
-    "#Occlusion"
-   ],
-   "co_tags": [],
-   "count": 41,
-   "content_ids": [
-    "episodes/episode-14",
-    "episodes/episode-23",
-    "episodes/episode-35",
-    "episodes/episode-60",
-    "episodes/episode-123-2",
-    "episodes/episode-126",
-    "episodes/episode-131",
-    "episodes/episode-132",
-    "episodes/episode-142",
-    "episodes/episode-143",
-    "episodes/episode-144",
-    "episodes/episode-145",
-    "insight/insight-1",
-    "insight/insight-2",
-    "insight/insight-6",
-    "insight/insight-8",
-    "insight/insight-12",
-    "photocast/episode-2",
-    "dentcast-plus/video-2",
-    "notecast/episode-14",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "insight/insight-21",
-    "episodes/episode-154",
-    "sharehub/share-5",
-    "insight/insight-24",
-    "episodes/episode-155",
-    "dentcast-plus/video-6",
-    "insight/insight-29",
-    "chairside/chairside-11",
-    "insight/insight-37",
-    "chairside/chairside-15",
-    "sharehub/share-6",
-    "insight/insight-43",
-    "episodes/episode-160",
-    "chairside/chairside-23",
-    "insight/insight-56",
-    "chairside/chairside-31",
-    "insight/insight-65",
-    "chairside/chairside-36",
-    "sharehub/share-21"
    ]
   },
   {
@@ -3798,6 +3800,33 @@
    ]
   },
   {
+   "key": "گروپ_فانکشن",
+   "tag": "#گروپ_فانکشن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Group Function — طرحِ اکلوزالی که در حرکتِ لترال چند دندانِ خلفیِ سمتِ کارگر هم‌زمان تماس دارند.",
+   "use_when": "مقاله گروپ‌فانکشن را طرحِ اکلوزال انتخاب یا مقایسه کند.",
+   "aliases": [
+    "group function",
+    "گروپ فانکشن",
+    "فانکشن گروهی",
+    "عملکرد گروهی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-131",
+    "episodes/episode-132",
+    "dentcast-plus/video-6",
+    "chairside/chairside-15",
+    "sharehub/share-6",
+    "insight/insight-47",
+    "insight/insight-65",
+    "insight/insight-87"
+   ]
+  },
+  {
    "key": "prompt_engineering",
    "tag": "#Prompt_Engineering",
    "domain": "ai",
@@ -3847,6 +3876,32 @@
     "notecast/episode-33",
     "metanotes/meta-18",
     "sharehub/share-17"
+   ]
+  },
+  {
+   "key": "بازسازی_کامل_دهان",
+   "tag": "#بازسازی_کامل_دهان",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "Full mouth rehabilitation — بازسازی همه‌ی دندان‌ها در یک طرح واحد.",
+   "use_when": "مقاله تصمیمش را در مقیاس کل دهان بگیرد، نه یک دندان.",
+   "aliases": [
+    "فول ماوس",
+    "ریهبیلیتیشن دهان"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Full_Mouth_Rehabilitation"
+   ],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-131",
+    "insight/insight-2",
+    "insight/insight-21",
+    "episodes/episode-155",
+    "metanotes/meta-17",
+    "insight/insight-60",
+    "insight/insight-87"
    ]
   },
   {
@@ -4283,6 +4338,33 @@
    ]
   },
   {
+   "key": "کانین_رایز",
+   "tag": "#کانین_رایز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Canine Guidance/Rise — جدا شدنِ دندان‌های خلفی در حرکتِ لترال به‌وسیله‌ی هدایتِ نیش.",
+   "use_when": "مقاله هدایتِ کانین را طرحِ اکلوزال انتخاب یا مقایسه کند.",
+   "aliases": [
+    "canine rise",
+    "canine guidance",
+    "کانین رایز",
+    "هدایت کانین",
+    "راهنمای نیش"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-131",
+    "episodes/episode-132",
+    "dentcast-plus/video-6",
+    "insight/insight-37",
+    "chairside/chairside-15",
+    "sharehub/share-6",
+    "insight/insight-87"
+   ]
+  },
+  {
    "key": "کتاب_لینکویچیوس",
    "tag": "#کتاب_لینکویچیوس",
    "domain": "clinical",
@@ -4307,32 +4389,6 @@
     "episodes/episode-130",
     "episodes/episode-139",
     "episodes/episode-146"
-   ]
-  },
-  {
-   "key": "گروپ_فانکشن",
-   "tag": "#گروپ_فانکشن",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "Group Function — طرحِ اکلوزالی که در حرکتِ لترال چند دندانِ خلفیِ سمتِ کارگر هم‌زمان تماس دارند.",
-   "use_when": "مقاله گروپ‌فانکشن را طرحِ اکلوزال انتخاب یا مقایسه کند.",
-   "aliases": [
-    "group function",
-    "گروپ فانکشن",
-    "فانکشن گروهی",
-    "عملکرد گروهی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-131",
-    "episodes/episode-132",
-    "dentcast-plus/video-6",
-    "chairside/chairside-15",
-    "sharehub/share-6",
-    "insight/insight-47",
-    "insight/insight-65"
    ]
   },
   {
@@ -4490,31 +4546,6 @@
     "chairside/chairside-20",
     "insight/insight-55",
     "chairside/chairside-26"
-   ]
-  },
-  {
-   "key": "بازسازی_کامل_دهان",
-   "tag": "#بازسازی_کامل_دهان",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "Full mouth rehabilitation — بازسازی همه‌ی دندان‌ها در یک طرح واحد.",
-   "use_when": "مقاله تصمیمش را در مقیاس کل دهان بگیرد، نه یک دندان.",
-   "aliases": [
-    "فول ماوس",
-    "ریهبیلیتیشن دهان"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#Full_Mouth_Rehabilitation"
-   ],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-131",
-    "insight/insight-2",
-    "insight/insight-21",
-    "episodes/episode-155",
-    "metanotes/meta-17",
-    "insight/insight-60"
    ]
   },
   {
@@ -5065,32 +5096,6 @@
     "metanotes/meta-12",
     "insight/insight-69",
     "insight/insight-80"
-   ]
-  },
-  {
-   "key": "کانین_رایز",
-   "tag": "#کانین_رایز",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "Canine Guidance/Rise — جدا شدنِ دندان‌های خلفی در حرکتِ لترال به‌وسیله‌ی هدایتِ نیش.",
-   "use_when": "مقاله هدایتِ کانین را طرحِ اکلوزال انتخاب یا مقایسه کند.",
-   "aliases": [
-    "canine rise",
-    "canine guidance",
-    "کانین رایز",
-    "هدایت کانین",
-    "راهنمای نیش"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-131",
-    "episodes/episode-132",
-    "dentcast-plus/video-6",
-    "insight/insight-37",
-    "chairside/chairside-15",
-    "sharehub/share-6"
    ]
   },
   {
@@ -6832,6 +6837,28 @@
     "insight/insight-30",
     "insight/insight-44",
     "sharehub/share-10"
+   ]
+  },
+  {
+   "key": "هدایت_طرفی",
+   "tag": "#هدایت_طرفی",
+   "domain": null,
+   "words": 2,
+   "definition": "الگوی هدایتِ حرکات طرفی.",
+   "use_when": "مقاله ناهماهنگیِ الگوی طرفی را مسئله بداند.",
+   "aliases": [
+    "گایدنس طرفی",
+    "lateral guidance",
+    "هدایت جانبی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-8",
+    "chairside/chairside-15",
+    "insight/insight-47",
+    "insight/insight-87"
    ]
   },
   {
@@ -8669,6 +8696,27 @@
    ]
   },
   {
+   "key": "نسبت_تاج_به_ریشه",
+   "tag": "#نسبت_تاج_به_ریشه",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "نسبتِ اهرمیِ تاج به ریشه.",
+   "use_when": "مقاله این نسبت را معیار بداند.",
+   "aliases": [
+    "crown root ratio",
+    "نسبت تاج ریشه",
+    "c/r ratio"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-55",
+    "metanotes/meta-18",
+    "insight/insight-87"
+   ]
+  },
+  {
    "key": "نشست_ناقص",
    "tag": "#نشست_ناقص",
    "domain": "clinical",
@@ -8730,27 +8778,6 @@
     "dentcast-plus/video-4",
     "dentcast-plus/video-5",
     "metanotes/meta-19"
-   ]
-  },
-  {
-   "key": "هدایت_طرفی",
-   "tag": "#هدایت_طرفی",
-   "domain": null,
-   "words": 2,
-   "definition": "الگوی هدایتِ حرکات طرفی.",
-   "use_when": "مقاله ناهماهنگیِ الگوی طرفی را مسئله بداند.",
-   "aliases": [
-    "گایدنس طرفی",
-    "lateral guidance",
-    "هدایت جانبی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-8",
-    "chairside/chairside-15",
-    "insight/insight-47"
    ]
   },
   {
@@ -11859,26 +11886,6 @@
    "content_ids": [
     "episodes/episode-24",
     "notecast/episode-24"
-   ]
-  },
-  {
-   "key": "نسبت_تاج_به_ریشه",
-   "tag": "#نسبت_تاج_به_ریشه",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "نسبتِ اهرمیِ تاج به ریشه.",
-   "use_when": "مقاله این نسبت را معیار بداند.",
-   "aliases": [
-    "crown root ratio",
-    "نسبت تاج ریشه",
-    "c/r ratio"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-55",
-    "metanotes/meta-18"
    ]
   },
   {
