@@ -5582,7 +5582,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
       <div class="dc-rail" id="dcLatestRail">
         <a class="dc-rail-card" data-cat="clinical" href="/insight/insight-84.html">
           <span class="dc-type-chip t-insight">Insight</span>
-          <p class="dc-rail-title">بازسازی دندان بعد از خارج کردن پین بزرگ: پرسش و پاسخ</p>
+          <p class="dc-rail-title">بازسازی دندان بعد از خارج کردن پین برنجی بزرگ: پرسش و پاسخ</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="notecast" href="/notecast/episode-42.html">
@@ -5654,7 +5654,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           </div>
         </div>
         <ul class="dc-pulse-list">
-          <li>یک <a href="/insight/insight-84.html">اینسایت بالینی</a> با عنوانِ «بازسازی دندان بعد از خارج کردن پین بزرگ: پرسش و پاسخ» منتشر شد · ۶ مهر</li>
+          <li>یک <a href="/insight/insight-84.html">اینسایت بالینی</a> با عنوانِ «بازسازی دندان بعد از خارج کردن پین برنجی بزرگ: پرسش و پاسخ» منتشر شد · ۶ مهر</li>
           <li>یک <a href="/taraz/taraz1-4.html">قسمت تازه‌ی تراز شواهد</a> با عنوانِ «مطالعه‌ی کوهورت» منتشر شد · ۵ مهر</li>
           <li>یک <a href="/insight/insight-83.html">اینسایت بالینی</a> با عنوانِ «کیس: دو ایمپلنت با زاویه‌ی نامناسب نسبت به هم، چطور قالب بگیریم؟» منتشر شد · ۵ مهر</li>
           <li>یک <a href="/chairside/chairside-39.html">کیس Chairside تازه</a> با عنوانِ «وقتی خواسته‌ی بیمار با راه‌حلی که مد نظرش هست جور درنمیاد» منتشر شد · ۴ مهر</li>
@@ -7069,7 +7069,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=3c2948dc65',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=85061992b5',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -7440,7 +7440,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=3c2948dc65';
+  const FEED_URL='/dentcast-brain.json?v=85061992b5';
   /* Two hosts, one per homepage shell — the same SLOT_IDS split
      plus/js/home-upboard.js uses for the «بالاترین» arrangement of this same
      box. This script owns «تازه‌ترین» and is the ONLY renderer of it (the
@@ -7717,7 +7717,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=3c2948dc65', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=85061992b5', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
