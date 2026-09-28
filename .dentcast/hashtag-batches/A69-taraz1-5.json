@@ -1,0 +1,24 @@
+{
+  "type": "taraz",
+  "enforce": true,
+  "note": "taraz/taraz1-5 — تراز شواهد قسمت ۵ «مطالعه‌ی case-control». #تراز_شواهد (series), #مطالعه_مشاهده‌ای and #طراحی_مطالعه are REUSED. Two concepts the part resolves are newly minted: --simulate returned nothing for «case-control» and only generic word overlap for «مطالعه مورد شاهدی»; «بایاس یادآوری»/«recall bias» fold only to the generic #بایاس, while the part defines recall bias as its own mechanism. The canonical spellings follow the part's own words («مورد-شاهدی», «بایاس یادآوری»), with the English terms the part itself uses as aliases.",
+  "concepts": [
+    {
+      "tag": "#مطالعه_مورد_شاهدی",
+      "domain": "clinical",
+      "definition": "مطالعه‌ی مشاهده‌ای که از پیامد شروع می‌کند: گروهی از مبتلایان به یک بیماری (case) و گروهی از افراد بدون آن بیماری ولی از جهات دیگر شبیه آن‌ها (control) انتخاب می‌شوند و سابقه‌ی در معرض بودن با یک عامل در گذشته‌ی دو گروه مقایسه می‌شود؛ برای بیماری‌های نادر و پیامدهایی که سال‌ها بعد از عامل ظاهر می‌شوند مناسب است و به حافظه و پرونده وابسته است.",
+      "use_when": "مقاله طراحی case-control، کاربرد آن برای بیماری نادر یا فاصله‌ی طولانی عامل و پیامد، یا محدودیت‌هایش را توضیح دهد.",
+      "aliases": ["case-control", "case control study", "مطالعه مورد-شاهدی", "مطالعه کیس کنترل", "مورد شاهدی"]
+    },
+    {
+      "tag": "#بایاس_یادآوری",
+      "domain": "clinical",
+      "definition": "خطای سیستماتیک در گزارش مواجهه‌ی گذشته که از تفاوت دقت حافظه بین گروه‌ها می‌آید: کسی که بیمار شده گذشته‌اش را دقیق‌تر برای یافتن علت می‌کاود، پس سابقه‌ی در معرض بودن در گروه بیماران بیش از واقع گزارش می‌شود و رابطه معمولاً بزرگ‌تر از واقع دیده می‌شود.",
+      "use_when": "مقاله خطای ناشی از اتکا به حافظه‌ی شرکت‌کنندگان، به‌ویژه در مطالعات گذشته‌نگر و case-control، را توضیح دهد.",
+      "aliases": ["recall bias", "سوگیری یادآوری", "بایاس به یاد آوردن"]
+    }
+  ],
+  "articles": {
+    "taraz/taraz1-5": ["#تراز_شواهد", "#مطالعه_مورد_شاهدی", "#مطالعه_مشاهده‌ای", "#طراحی_مطالعه", "#بایاس_یادآوری"]
+  }
+}
