@@ -1,0 +1,23 @@
+{
+  "type": "plak_sefr",
+  "note": "Publish of plak-sefr/plak1-7 (پلاک صفر — سرچ محلی و نقشه). #پلاک_صفر, #رتبه_بندی_گوگل, #سایت_مطب and #حضور_آنلاین_دندانپزشک are REUSED. Two concepts the part resolves are newly minted (founder-approved 1405/07/06): --simulate returned nothing for «نقشه گوگل» / «دندانپزشک نزدیک من» beyond word collisions (#گوگل_پلی, #انتخاب_دندانپزشک), and «سئو محلی» folded into #رتبه_بندی_گوگل only through the «سئو» alias — local search is a different result type with its own selection logic, so it is kept a separate concept rather than an alias of ranking. The practice-information concept (NAP) is likewise absent.",
+  "concepts": [
+    {
+      "tag": "#جستجوی_محلی",
+      "domain": "web",
+      "definition": "جست‌وجویی که پرسنده دنبال یک مکان یا کسب‌وکار در نزدیکی خودش است، نه دنبال جواب یک سؤال — مثل «دندانپزشک نزدیک من» یا «ایمپلنت اهواز»؛ گوگل برایش به جای فهرست معمولی نقشه‌ای با چند کسب‌وکار مشخص نشان می‌دهد و انتخاب را اول از همه بر اساس فاصله محدود می‌کند.",
+      "use_when": "مطلب درباره‌ی این باشد که مطب در نتایج محلی و روی نقشه‌ی گوگل چطور دیده می‌شود یا چرا دیده نمی‌شود.",
+      "aliases": ["سرچ محلی", "local seo", "local search", "local pack", "نقشه گوگل", "دندانپزشک نزدیک من"]
+    },
+    {
+      "tag": "#اطلاعات_مطب",
+      "domain": "web",
+      "definition": "اطلاعات پایه‌ی هویتی مطب — اسم دقیق، آدرس، تلفن و ساعت کار — که باید یک بار مکتوب شود و در همه جا (سایت، اینستاگرام، سامانه‌های نوبت‌دهی، پروفایل گوگل) یکسان بیاید؛ ناهمخوانی آن در جاهای مختلف اطمینان موتور جست‌وجو به واقعی و درست بودن مطب را کم می‌کند.",
+      "use_when": "مطلب درباره‌ی ثبت، یکسان‌سازی یا درستیِ اسم، آدرس، تلفن یا ساعت کار مطب در جاهای مختلف باشد.",
+      "aliases": ["nap", "name address phone", "نام آدرس تلفن", "یکسانی اطلاعات مطب"]
+    }
+  ],
+  "articles": {
+    "plak-sefr/plak1-7": ["#پلاک_صفر", "#جستجوی_محلی", "#اطلاعات_مطب", "#رتبه_بندی_گوگل", "#سایت_مطب", "#حضور_آنلاین_دندانپزشک"]
+  }
+}
