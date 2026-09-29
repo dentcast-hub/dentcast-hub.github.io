@@ -19568,5 +19568,104 @@
         "interpretation_fa": "ارزش متن در این است که انتخاب canine guidance در بازسازی فول آرچ را به دو استدلال جدا گره می‌زند: توان ریشه‌ی کانین در برابر لترال، و پیش‌بینی‌پذیری یک تماس در برابر چند تماس هم‌زمان. مزیت اهرمی گروپ فانکشن را رد نمی‌کند و دو طرح را زیرمجموعه‌ی یک اصل مشترک می‌داند."
       }
     ]
+  },
+  "metanotes/meta-21": {
+    "scored_at": "2026-09-29",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Rubber dam use during post placement influences the success of root canal-treated teeth",
+          "authors": "Goldfein J, Speirs C, Finkelman M, Amato R",
+          "year": 2013,
+          "journal": "Journal of Endodontics",
+          "doi": "10.1016/j.joen.2013.07.036"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 50,
+          "anchor": "retrospective cohort from chart review comparing teeth restored with a post with vs without rubber dam (THERAPY retrospective cohort row, 50)",
+          "evidence_quote": "Retrospective chart reviews of 185 patients with an average recall of 2.7 years were assessed"
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "some_concerns",
+              "evidence_quote": "Based on the bivariate GEE model",
+              "note": "مقایسه با مدل دومتغیره گزارش شده؛ در چکیده از تعدیل برای مخدوش‌گری مثل اپراتور، نوع دندان یا کیفیت درمان ریشه چیزی نیامده، ولی نبودِ تعدیل هم صریحاً گفته نشده."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "Retrospective chart reviews of 185 patients",
+              "note": "منبع نمونه (بررسی پرونده) ذکر شده، اما معیارهای ورود و خروج در چکیده نیامده است."
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "some_concerns",
+              "evidence_quote": "The patients were divided into 2 groups based on the presence or absence of an RD clamp in the verification radiograph during post placement.",
+              "note": "مواجهه از روی یک نشانگر غیرمستقیم (کلمپ در رادیوگرافی) طبقه‌بندی شده، نه از ثبت مستقیم استفاده از رابردم."
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده درباره‌ی بیماران بدون فراخوان یا داده‌ی ازدست‌رفته چیزی نمی‌گوید؛ در ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "the incidence of a new periapical lesion (periapical index score >2)",
+              "note": "پیامد با شاخص PAI تعریف شده، اما کورسازی یا کالیبراسیون ارزیاب در چکیده نیامده است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all, or funding by a commercial manufacturer whose own product is among those tested",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه کوهورت گذشته‌نگر است."
+          },
+          {
+            "item": "no sample size justification / power analysis (clinical studies); for in-vitro, specimen count per group <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires (e.g. survival claims with <3y follow-up)",
+            "base_points": 3,
+            "points": 2,
+            "evidence_quote": "with an average recall of 2.7 years",
+            "note": "ادعای موفقیت درمان ریشه با میانگین پیگیری کمتر از سه سال مطرح شده است."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 26,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز شواهد این منبع ۲۶ از ۱۰۰ و باند D است؛ نوع سوال Therapy است و امتیاز مقدماتی از روی چکیده است.",
+        "interpretation_fa": "این مطالعه نشان می‌دهد در پرونده‌های بررسی‌شده، دندان‌هایی که پست آن‌ها با رابردم گذاشته شده کمتر ضایعه‌ی پری‌اپیکال جدید داشته‌اند. طراحی گذشته‌نگر، گروه رابردم کوچک، تشخیص رابردم از روی کلمپ و پیگیری کمتر از سه سال اجازه نمی‌دهد این اختلاف را اثر خود رابردم دانست."
+      }
+    ]
   }
 }
