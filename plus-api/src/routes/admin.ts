@@ -1966,7 +1966,7 @@ function renderHtml(
   </script>
 
   <h3 style="margin-top:26px">ترمیم استریک شکسته</h3>
-  <div class="muted">دورهٔ فعلیِ خواننده را با <b>دورهٔ قبلِ شکست</b> جمع می‌کند، تا شکستن استریک چیزی از او نگیرد. آن دورهٔ قبلی هیچ‌جا ذخیره نشده — از فعالیتِ خودش حساب می‌شود، پس اول «بررسی» را بزن و اعداد را ببین. رکورد هرگز پایین نمی‌آید (<code>max</code> گرفته می‌شود) و دوباره زدنِ دکمه بی‌اثر است. توجه: این دو عدد cache‌اند و <code>rebuild-streaks</code> از روی فعالیت بازمی‌سازدشان و این را برمی‌گرداند؛ تقویمِ روزهای «گزارش ماهانه» هم عوض نمی‌شود، چون log دست‌نخورده می‌ماند.</div>
+  <div class="muted">دورهٔ فعلیِ خواننده را با دوره‌ای که <b>خودت انتخاب می‌کنی</b> جمع می‌کند، تا شکستن استریک چیزی از او نگیرد. دوره‌ها هیچ‌جا ذخیره نشده‌اند — از فعالیتِ خودِ کاربر حساب می‌شوند، پس اول «بررسی» را بزن. <b>انتخاب دست توست چون «دورهٔ قبلِ شکست» فقط برای کسی یک‌معنا دارد که یک بار شکسته باشد</b>؛ کسی که سه بار شکسته، دورهٔ بلافاصله‌قبلش شاید یک دورهٔ ۵ روزهٔ بی‌اهمیت باشد و آن دورهٔ بلندی که منظور توست چند تا عقب‌تر. رکورد هرگز پایین نمی‌آید (<code>max</code> گرفته می‌شود) و دوباره زدنِ دکمه بی‌اثر است. توجه: این دو عدد cache‌اند و <code>rebuild-streaks</code> از روی فعالیت بازمی‌سازدشان و این را برمی‌گرداند؛ تقویمِ روزهای «گزارش ماهانه» عوض نمی‌شود، چون log دست‌نخورده می‌ماند.</div>
   <form class="bc" id="srForm" onsubmit="return false">
     <div><label for="srUser">کاربر (موبایل، نام کاربری یا شناسه)</label><input id="srUser" type="text"></div>
     <div class="row">
@@ -1993,8 +1993,15 @@ function renderHtml(
       var who = esc(j.display_name || '—') + ' · ' + esc(j.phone || '—')
         + (j.username ? ' · @' + esc(j.username) : '');
       var rows = (j.runs || []).map(function (r, i) {
-        return '<div>' + (i === 0 ? 'دورهٔ فعلی' : i === 1 ? 'دورهٔ قبل از شکست' : 'دورهٔ قدیمی‌تر')
-          + ': <b>' + r.length + '</b> روز (' + esc(r.start) + ' تا ' + esc(r.end) + ')</div>';
+        if (i === 0) {
+          return '<div>دورهٔ فعلی: <b>' + r.length + '</b> روز ('
+            + esc(r.start) + ' تا ' + esc(r.end) + ')</div>';
+        }
+        // A radio per older run: the founder picks which break to undo.
+        return '<label style="display:block"><input type="radio" name="srRun" value="'
+          + esc(r.start) + '" data-len="' + r.length + '"' + (i === 1 ? ' checked' : '') + '> '
+          + '<b>' + r.length + '</b> روز (' + esc(r.start) + ' تا ' + esc(r.end) + ')'
+          + (i === 1 ? ' — بلافاصله قبل' : '') + '</label>';
       }).join('');
       var head = '<div>' + who + '</div>'
         + '<div>استریک ثبت‌شده: <b>' + j.cached.current_streak + '</b>'
@@ -2007,11 +2014,35 @@ function renderHtml(
       if (j.blocked === 'no_previous_run') {
         return head + rows + '<div>فقط یک دوره دارد؛ دورهٔ قبلی‌ای نیست که جمع شود.</div>';
       }
-      return head + rows
-        + '<div style="margin-top:6px">مجموع: <b>' + j.current_run.length + ' + '
-        + j.previous_run.length + ' = ' + j.proposed_total + '</b>'
-        + ' → استریک ' + j.would_write.current_streak
-        + ' و رکورد ' + j.would_write.longest_streak + '</div>';
+      var more = j.run_count > (j.runs || []).length
+        ? '<div class="muted">' + (j.run_count - j.runs.length) + ' دورهٔ قدیمی‌تر نشان داده نشده.</div>'
+        : '';
+      return head
+        + '<div style="margin-top:6px">کدام دوره به دورهٔ فعلی اضافه شود؟</div>'
+        + rows + more + '<div id="srSum" style="margin-top:6px"></div>';
+    }
+
+    /** The sum for whichever run is selected, recomputed on every change. */
+    function sum() {
+      if (!pending) return null;
+      var sel = document.querySelector('input[name="srRun"]:checked');
+      if (!sel) return null;
+      var len = parseInt(sel.getAttribute('data-len'), 10);
+      var cur = pending.current_run.length;
+      return {
+        start: sel.value, len: len, cur: cur, total: cur + len,
+        longest: Math.max(pending.cached.longest_streak, cur + len)
+      };
+    }
+
+    function showSum() {
+      var box = document.getElementById('srSum');
+      var s = sum();
+      if (!box) return;
+      if (!s) { box.textContent = ''; apply.disabled = true; return; }
+      box.innerHTML = 'مجموع: <b>' + s.cur + ' + ' + s.len + ' = ' + s.total + '</b>'
+        + ' → استریک ' + s.total + ' و رکورد ' + s.longest;
+      apply.disabled = false;
     }
 
     check.addEventListener('click', function () {
@@ -2025,20 +2056,28 @@ function renderHtml(
           check.disabled = false;
           if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
           out.innerHTML = render(res.j);
-          if (!res.j.blocked) { pending = res.j; apply.disabled = false; }
+          if (!res.j.blocked) {
+            pending = res.j;
+            var radios = document.querySelectorAll('input[name="srRun"]');
+            for (var i = 0; i < radios.length; i += 1) radios[i].addEventListener('change', showSum);
+            showSum();
+          }
         })
         .catch(function () { check.disabled = false; out.textContent = 'خوانده نشد.'; });
     });
 
     apply.addEventListener('click', function () {
-      if (!pending) return;
-      if (!confirm('استریک این کاربر ' + pending.proposed_total + ' شود ('
-        + pending.current_run.length + ' + ' + pending.previous_run.length + ')؟')) return;
+      var s = sum();
+      if (!pending || !s) return;
+      if (!confirm('استریک این کاربر ' + s.total + ' شود ('
+        + s.cur + ' + ' + s.len + ')؟')) return;
       apply.disabled = true; out.textContent = 'در حال ترمیم...';
       fetch('/admin/streak/repair', {
         method: 'POST', credentials: 'include',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ user: pending.user_id, expect_total: pending.proposed_total })
+        body: JSON.stringify({
+          user: pending.user_id, add_run_start: s.start, expect_total: s.total
+        })
       }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
         .then(function (res) {
           if (!res.ok) { apply.disabled = false; out.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
@@ -4585,19 +4624,28 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
    */
   app.post('/admin/streak/repair', userBody({
     expect_total: { type: 'integer', minimum: 1 },
+    add_run_start: { type: 'string', pattern: '^\d{4}-\d{2}-\d{2}$' },
   }), async (request, reply) => {
-    const b = request.body as { user?: string; phone?: string; expect_total?: number };
+    const b = request.body as {
+      user?: string; phone?: string; expect_total?: number; add_run_start?: string;
+    };
     const who = await resolveUser(pick(b), reply);
     if (!who) return reply;
-    const res = await repairStreak(who.id, b.expect_total);
+    const res = await repairStreak(who.id, {
+      expectTotal: b.expect_total, addRunStart: b.add_run_start,
+    });
     if (!res.ok) {
       const message = res.error === 'no_activity'
         ? 'این کاربر هیچ فعالیتِ واجد شرطی ندارد — استریکی نبوده که بشکند.'
         : res.error === 'no_previous_run'
           ? 'فقط یک دوره دارد؛ دورهٔ قبلی‌ای وجود ندارد که جمع شود.'
-          : res.error === 'total_moved'
-            ? 'مجموع عوض شده (حالا ' + res.actual + '، تو ' + res.expected + ' را دیدی) — دوباره بررسی کن.'
-            : 'کاربری با این مشخصات پیدا نشد.';
+          : res.error === 'no_such_run'
+            ? 'دوره‌ای که با آن روز شروع شود ندارد — فهرست را دوباره بخوان.'
+            : res.error === 'run_is_current'
+              ? 'دورهٔ فعلی را نمی‌توان با خودش جمع کرد.'
+              : res.error === 'total_moved'
+                ? 'مجموع عوض شده (حالا ' + res.actual + '، تو ' + res.expected + ' را دیدی) — دوباره بررسی کن.'
+                : 'کاربری با این مشخصات پیدا نشد.';
       return reply.code(res.error === 'no_profile' ? 404 : 409).send({ ...res, message });
     }
     return reply.send(res);

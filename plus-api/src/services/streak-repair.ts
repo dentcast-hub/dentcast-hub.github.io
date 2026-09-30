@@ -48,6 +48,8 @@ export interface StreakDiagnosis {
   alive: boolean;
   /** Every run in the log, newest first, capped for display. */
   runs: DayRun[];
+  /** How many runs the log holds in total, so a capped list says so. */
+  run_count: number;
   /** The run ending at the last active day — what «رقم فعلی» means. */
   current_run: DayRun | null;
   /** The run before it — what «قبلِ شکست» means. */
@@ -60,7 +62,14 @@ export interface StreakDiagnosis {
   blocked: 'no_activity' | 'no_previous_run' | null;
 }
 
-const MAX_RUNS_SHOWN = 8;
+/**
+ * Enough runs for the founder to FIND the break they mean, not just to glance at
+ * the last one. 8 was a display cap and it hid the very run this feature exists
+ * for: ôMǐÐ ĶĦåN's 35-day run (2026-08-01 → 09-09) sat fourth in the list while
+ * his all-time 42 sat outside it entirely, so the panel could not show the two
+ * runs anybody would have wanted to add.
+ */
+const MAX_RUNS_SHOWN = 24;
 
 async function loadDays(userId: string, db: pg.Pool | pg.PoolClient = pool): Promise<{ days: string[]; frozen: string[] }> {
   const actions = Array.from(QUALIFYING_ACTIONS);
@@ -127,6 +136,7 @@ export async function diagnoseStreak(
     },
     alive,
     runs: runs.slice(-MAX_RUNS_SHOWN).reverse(),
+    run_count: runs.length,
     current_run: current,
     previous_run: previous,
     proposed_total: total,
@@ -141,6 +151,8 @@ export async function diagnoseStreak(
 export interface RepairResult {
   ok: true;
   user_id: string;
+  /** The run that was added, so the answer names what it did. */
+  added_run: DayRun;
   before: { current_streak: number; longest_streak: number };
   after: { current_streak: number; longest_streak: number };
   current_run: number;
@@ -153,6 +165,8 @@ export type RepairFailure =
   | { ok: false; error: 'no_profile' }
   | { ok: false; error: 'no_activity' }
   | { ok: false; error: 'no_previous_run' }
+  | { ok: false; error: 'no_such_run'; starts: string[] }
+  | { ok: false; error: 'run_is_current' }
   | { ok: false; error: 'total_moved'; expected: number; actual: number };
 
 /**
@@ -161,8 +175,24 @@ export type RepairFailure =
  * log has produced a different total since — the same optimistic check
  * redecide-stranded-week makes, so what is written is always what was approved.
  */
+export interface RepairOptions {
+  /**
+   * Which run to add, named by its own start day (as the diagnosis lists it).
+   * Omitted means the run immediately before the current one.
+   *
+   * It is a CHOICE and not a computation, because «the run that broke» is only
+   * unambiguous for a reader who broke once. ôMǐÐ ĶĦåN broke three times: 35
+   * days ended 2026-09-09, then a 2-day run, then a 5-day run, then the live 9.
+   * The mechanical previous-run answer is 9 + 5 = 14 and the one the founder
+   * meant is 9 + 35 = 44 — nothing in the data prefers either, so the panel asks.
+   */
+  addRunStart?: string;
+  /** The total the caller was shown; a mismatch is refused. */
+  expectTotal?: number;
+}
+
 export async function repairStreak(
-  userId: string, expectTotal?: number, now: Date = new Date(),
+  userId: string, opts: RepairOptions = {}, now: Date = new Date(),
 ): Promise<RepairResult | RepairFailure> {
   return withTransaction(async (client) => {
     // `for update` for applyStreak's own reason: a qualifying action arriving
@@ -176,14 +206,31 @@ export async function repairStreak(
 
     const d = await diagnoseStreak(userId, now, client);
     if (!d) return { ok: false, error: 'no_profile' } as RepairFailure;
-    if (d.blocked) return { ok: false, error: d.blocked } as RepairFailure;
-    if (expectTotal != null && expectTotal !== d.proposed_total) {
-      return {
-        ok: false, error: 'total_moved', expected: expectTotal, actual: d.proposed_total!,
-      } as RepairFailure;
+    if (d.blocked === 'no_activity') return { ok: false, error: 'no_activity' } as RepairFailure;
+
+    // The run to add: the founder's pick, or the one immediately before.
+    const { days, frozen } = await loadDays(userId, client);
+    const all = dayRuns(days, frozen);
+    const current = all[all.length - 1];
+    let chosen: DayRun | undefined;
+    if (opts.addRunStart) {
+      chosen = all.find((r) => r.start === opts.addRunStart);
+      if (!chosen) {
+        return { ok: false, error: 'no_such_run', starts: all.map((r) => r.start) } as RepairFailure;
+      }
+      // Adding the live run to itself would double it, which is never a repair.
+      if (chosen.start === current.start) return { ok: false, error: 'run_is_current' } as RepairFailure;
+    } else {
+      if (all.length < 2) return { ok: false, error: 'no_previous_run' } as RepairFailure;
+      chosen = all[all.length - 2];
     }
 
-    const total = d.proposed_total!;
+    const total = current.length + chosen.length;
+    if (opts.expectTotal != null && opts.expectTotal !== total) {
+      return {
+        ok: false, error: 'total_moved', expected: opts.expectTotal, actual: total,
+      } as RepairFailure;
+    }
     const after = {
       current_streak: total,
       longest_streak: Math.max(locked.longest_streak, total),
@@ -199,10 +246,11 @@ export async function repairStreak(
     return {
       ok: true,
       user_id: userId,
+      added_run: chosen,
       before: { current_streak: locked.current_streak, longest_streak: locked.longest_streak },
       after,
-      current_run: d.current_run!.length,
-      previous_run: d.previous_run!.length,
+      current_run: current.length,
+      previous_run: chosen.length,
       unchanged,
     } as RepairResult;
   });
