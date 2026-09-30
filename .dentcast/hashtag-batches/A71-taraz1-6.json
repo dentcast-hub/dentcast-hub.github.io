@@ -1,0 +1,24 @@
+{
+  "type": "taraz",
+  "enforce": true,
+  "note": "taraz/taraz1-6 — تراز شواهد قسمت ۶ «مطالعه‌ی cross-sectional». #تراز_شواهد (series), #مطالعه_مشاهده‌ای and #طراحی_مطالعه are REUSED. Two concepts the part resolves are newly minted: --simulate returned nothing for «cross-sectional» and only generic word overlap (#تحلیل_مطالعه, #طراحی_مطالعه) for «مطالعه مقطعی»; «ارتباط و علیت» cleared nothing at all, while the part's first limitation is exactly the association-versus-causation distinction. The canonical spellings follow the part's own words («مقطعی», «ارتباط», «علیت»), with the English terms the part itself uses as aliases.",
+  "concepts": [
+    {
+      "tag": "#مطالعه_مقطعی",
+      "domain": "clinical",
+      "definition": "مطالعه‌ی مشاهده‌ای که در معرض بودن و پیامد را در یک زمان و در یک نوبت در گروهی از افراد می‌سنجد، بدون پیگیری به آینده یا برگشت به گذشته؛ ساده و ارزان است ولی برای سوال علت‌یابی فقط ارتباط را نشان می‌دهد، و طراحی مناسب سوال تشخیصی است که در آن یک تست با استاندارد مرجع مقایسه می‌شود.",
+      "use_when": "مقاله طراحی cross-sectional، کاربرد یا محدودیت‌های آن را توضیح دهد، یا مطالعه‌ی مورد بحث از این نوع باشد.",
+      "aliases": ["cross-sectional", "cross sectional study", "مطالعه مقطعی", "مطالعه کراس سکشنال", "مقطعی"]
+    },
+    {
+      "tag": "#ارتباط_و_علیت",
+      "domain": "clinical",
+      "definition": "تمایز میان ارتباط (association)، یعنی این‌که دو چیز با هم دیده می‌شوند، و علیت، یعنی این‌که یکی باعث دیگری شده است؛ همراه بودن به‌تنهایی علیت را ثابت نمی‌کند، چون ترتیب زمانی ممکن است نامعلوم باشد و عامل سومی می‌تواند هر دو را توضیح بدهد.",
+      "use_when": "مقاله توضیح دهد چرا یک رابطه‌ی دیده‌شده در مطالعه به معنای علت و معلول نیست، یا عامل مخدوش‌کننده را بحث کند.",
+      "aliases": ["association vs causation", "correlation vs causation", "ارتباط و علیت", "همبستگی و علیت", "رابطه علت و معلولی"]
+    }
+  ],
+  "articles": {
+    "taraz/taraz1-6": ["#تراز_شواهد", "#مطالعه_مقطعی", "#مطالعه_مشاهده‌ای", "#طراحی_مطالعه", "#ارتباط_و_علیت"]
+  }
+}
