@@ -12,6 +12,7 @@ import {
 } from '../services/streak-reminder.js';
 import { one, query } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
+import { diagnoseStreak, repairStreak } from '../services/streak-repair.js';
 import {
   activateMonths, activateDays, grantLifetime, revokeSubscription, getSubscription,
   summarizeSubscription, sweepExpiredSubscriptions, subscriptionReport, neverPremiumUserIds,
@@ -1960,6 +1961,95 @@ function renderHtml(
           document.getElementById('bcBody').value = '';
         })
         .catch(function () { btn.disabled = false; out.textContent = 'ارسال نشد.'; });
+    });
+  })();
+  </script>
+
+  <h3 style="margin-top:26px">ترمیم استریک شکسته</h3>
+  <div class="muted">دورهٔ فعلیِ خواننده را با <b>دورهٔ قبلِ شکست</b> جمع می‌کند، تا شکستن استریک چیزی از او نگیرد. آن دورهٔ قبلی هیچ‌جا ذخیره نشده — از فعالیتِ خودش حساب می‌شود، پس اول «بررسی» را بزن و اعداد را ببین. رکورد هرگز پایین نمی‌آید (<code>max</code> گرفته می‌شود) و دوباره زدنِ دکمه بی‌اثر است. توجه: این دو عدد cache‌اند و <code>rebuild-streaks</code> از روی فعالیت بازمی‌سازدشان و این را برمی‌گرداند؛ تقویمِ روزهای «گزارش ماهانه» هم عوض نمی‌شود، چون log دست‌نخورده می‌ماند.</div>
+  <form class="bc" id="srForm" onsubmit="return false">
+    <div><label for="srUser">کاربر (موبایل، نام کاربری یا شناسه)</label><input id="srUser" type="text"></div>
+    <div class="row">
+      <button id="srCheck" type="button">بررسی</button>
+      <button id="srApply" type="button" disabled>ترمیم</button>
+    </div>
+    <div id="srOut"></div>
+  </form>
+  <script>
+  (function () {
+    var check = document.getElementById('srCheck');
+    var apply = document.getElementById('srApply');
+    var out = document.getElementById('srOut');
+    if (!check) return;
+    var pending = null;
+
+    function esc(t) {
+      return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+
+    function render(j) {
+      var who = esc(j.display_name || '—') + ' · ' + esc(j.phone || '—')
+        + (j.username ? ' · @' + esc(j.username) : '');
+      var rows = (j.runs || []).map(function (r, i) {
+        return '<div>' + (i === 0 ? 'دورهٔ فعلی' : i === 1 ? 'دورهٔ قبل از شکست' : 'دورهٔ قدیمی‌تر')
+          + ': <b>' + r.length + '</b> روز (' + esc(r.start) + ' تا ' + esc(r.end) + ')</div>';
+      }).join('');
+      var head = '<div>' + who + '</div>'
+        + '<div>استریک ثبت‌شده: <b>' + j.cached.current_streak + '</b>'
+        + ' · رکورد: <b>' + j.cached.longest_streak + '</b>'
+        + ' · آخرین فعالیت: ' + esc(j.cached.last_active_day || 'هیچ‌وقت')
+        + ' · ' + (j.alive ? 'زنده' : 'شکسته') + '</div>';
+      if (j.blocked === 'no_activity') {
+        return head + '<div>هیچ فعالیتِ واجد شرطی ندارد — چیزی برای ترمیم نیست.</div>';
+      }
+      if (j.blocked === 'no_previous_run') {
+        return head + rows + '<div>فقط یک دوره دارد؛ دورهٔ قبلی‌ای نیست که جمع شود.</div>';
+      }
+      return head + rows
+        + '<div style="margin-top:6px">مجموع: <b>' + j.current_run.length + ' + '
+        + j.previous_run.length + ' = ' + j.proposed_total + '</b>'
+        + ' → استریک ' + j.would_write.current_streak
+        + ' و رکورد ' + j.would_write.longest_streak + '</div>';
+    }
+
+    check.addEventListener('click', function () {
+      var user = document.getElementById('srUser').value.trim();
+      if (!user) { out.textContent = 'کاربر را مشخص کن.'; return; }
+      check.disabled = true; apply.disabled = true; pending = null;
+      out.textContent = 'در حال خواندن...';
+      fetch('/admin/streak?user=' + encodeURIComponent(user), { credentials: 'include' })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          check.disabled = false;
+          if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+          out.innerHTML = render(res.j);
+          if (!res.j.blocked) { pending = res.j; apply.disabled = false; }
+        })
+        .catch(function () { check.disabled = false; out.textContent = 'خوانده نشد.'; });
+    });
+
+    apply.addEventListener('click', function () {
+      if (!pending) return;
+      if (!confirm('استریک این کاربر ' + pending.proposed_total + ' شود ('
+        + pending.current_run.length + ' + ' + pending.previous_run.length + ')؟')) return;
+      apply.disabled = true; out.textContent = 'در حال ترمیم...';
+      fetch('/admin/streak/repair', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ user: pending.user_id, expect_total: pending.proposed_total })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          if (!res.ok) { apply.disabled = false; out.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+          pending = null;
+          out.textContent = res.j.unchanged
+            ? 'از قبل همین بود — چیزی تغییر نکرد (استریک ' + res.j.after.current_streak
+              + '، رکورد ' + res.j.after.longest_streak + ').'
+            : 'انجام شد: استریک ' + res.j.before.current_streak + ' → ' + res.j.after.current_streak
+              + ' و رکورد ' + res.j.before.longest_streak + ' → ' + res.j.after.longest_streak + '.';
+        })
+        .catch(function () { apply.disabled = false; out.textContent = 'ترمیم نشد.'; });
     });
   })();
   </script>
@@ -4466,6 +4556,51 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       grants: await listBadgeGrants(who.id),
       grantable: grantableBadges().map((b) => ({ key: b.key, title_fa: b.title_fa })),
     });
+  });
+
+  /**
+   * GET /admin/streak?user= — one reader's streak, and what a repair would do.
+   *
+   * Read-only, and it is also the only place `longest_streak` and the reader's
+   * run history are visible at all: the profile row carries two numbers and the
+   * run that BROKE is neither of them (see services/streak-repair.ts).
+   */
+  app.get('/admin/streak', async (request, reply) => {
+    const q = request.query as { user?: string; phone?: string };
+    const who = await resolveUser(q.user ?? q.phone, reply);
+    if (!who) return reply;
+    const d = await diagnoseStreak(who.id);
+    if (!d) return reply.code(404).send({ error: 'no_profile' });
+    return reply.send({ ok: true, ...d, username: who.username });
+  });
+
+  /**
+   * POST /admin/streak/repair { user, expect_total? } — add the run that broke
+   * back onto the live one (founder decision, 2026-09-30).
+   *
+   * `expect_total` is the number the panel SHOWED, and the service refuses a
+   * mismatch, so what gets written is always what was approved. Pressing it
+   * twice is harmless by construction: the proposal is derived from the activity
+   * log, which a repair never writes to.
+   */
+  app.post('/admin/streak/repair', userBody({
+    expect_total: { type: 'integer', minimum: 1 },
+  }), async (request, reply) => {
+    const b = request.body as { user?: string; phone?: string; expect_total?: number };
+    const who = await resolveUser(pick(b), reply);
+    if (!who) return reply;
+    const res = await repairStreak(who.id, b.expect_total);
+    if (!res.ok) {
+      const message = res.error === 'no_activity'
+        ? 'این کاربر هیچ فعالیتِ واجد شرطی ندارد — استریکی نبوده که بشکند.'
+        : res.error === 'no_previous_run'
+          ? 'فقط یک دوره دارد؛ دورهٔ قبلی‌ای وجود ندارد که جمع شود.'
+          : res.error === 'total_moved'
+            ? 'مجموع عوض شده (حالا ' + res.actual + '، تو ' + res.expected + ' را دیدی) — دوباره بررسی کن.'
+            : 'کاربری با این مشخصات پیدا نشد.';
+      return reply.code(res.error === 'no_profile' ? 404 : 409).send({ ...res, message });
+    }
+    return reply.send(res);
   });
 
   // Force the pending-payment sweep now instead of waiting for the next tick.

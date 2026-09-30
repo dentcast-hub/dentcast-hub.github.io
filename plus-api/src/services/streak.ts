@@ -196,6 +196,39 @@ export function countedDayRuns(
   });
 }
 
+/** One unbroken run of counted days. */
+export interface DayRun { start: string; end: string; length: number; }
+
+/**
+ * Every run in the log, oldest first — the runs `streakFromDays` reduces to two
+ * numbers. It exists because «the run that just broke» is a third question those
+ * two cannot answer: `longest_streak` is the best of all time and `current_streak`
+ * is the run ending at the last active day, so a reader whose 30-day run broke
+ * and who has since built 9 has no column anywhere naming the 30.
+ *
+ * Derived from the same day list and the same `connectedWith` bridge rule as
+ * everything else here, so a run here is a run the live engine would agree with.
+ */
+export function dayRuns(days: string[], frozenDays: string[] = []): DayRun[] {
+  const sorted = Array.from(new Set(days)).sort();
+  if (!sorted.length) return [];
+  const connected = connectedWith(frozenDays);
+  const runs: DayRun[] = [];
+  let start = sorted[0];
+  let length = 1;
+  for (let i = 1; i < sorted.length; i += 1) {
+    if (connected(sorted[i], sorted[i - 1])) {
+      length += 1;
+    } else {
+      runs.push({ start, end: sorted[i - 1], length });
+      start = sorted[i];
+      length = 1;
+    }
+  }
+  runs.push({ start, end: sorted[sorted.length - 1], length });
+  return runs;
+}
+
 export function streakFromDays(days: string[], frozenDays: string[] = []): StreakState {
   if (!days.length) return { current_streak: 0, longest_streak: 0, last_active_day: null };
   const sorted = Array.from(new Set(days)).sort(); // 'YYYY-MM-DD' sorts chronologically
