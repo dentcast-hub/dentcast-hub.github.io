@@ -300,6 +300,38 @@ describe('GET /admin/streak + POST /admin/streak/repair', () => {
     });
   });
 
+  it('accepts a real date in add_run_start, and adds THAT run', async () => {
+    // v153 shipped with the schema pattern written as '^\d{4}-...' in the
+    // source, which a TS string literal reads as '^d{4}-...' — so every real
+    // date was a 400 and the only path the founder can use was unreachable.
+    // Service-level tests could not see it; this one goes through the route.
+    const days = [
+      ...runBack('2026-09-09', 35),
+      ...runBack('2026-09-19', 5),
+      ...runBack(now, 9),
+    ];
+    const id = await reader(days, { current: 9, longest: 42 });
+
+    const res = await app.inject({
+      method: 'POST', url: '/admin/streak/repair', headers: { authorization: auth },
+      payload: { user: id, add_run_start: '2026-08-06', expect_total: 44 },
+    });
+    expect(res.statusCode, res.body).toBe(200);
+    expect(res.json()).toMatchObject({
+      ok: true, current_run: 9, previous_run: 35,
+      after: { current_streak: 44, longest_streak: 44 },
+    });
+  });
+
+  it('400s a malformed date rather than treating it as no choice at all', async () => {
+    const id = await reader(runBack(now, 3), { current: 3, longest: 3 });
+    const res = await app.inject({
+      method: 'POST', url: '/admin/streak/repair', headers: { authorization: auth },
+      payload: { user: id, add_run_start: 'yesterday' },
+    });
+    expect(res.statusCode).toBe(400);
+  });
+
   it('409s with a Persian reason when there is no previous run', async () => {
     const id = await reader(runBack(now, 9), { current: 9, longest: 9 });
     const res = await app.inject({

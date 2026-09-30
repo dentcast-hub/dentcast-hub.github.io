@@ -4624,7 +4624,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
    */
   app.post('/admin/streak/repair', userBody({
     expect_total: { type: 'integer', minimum: 1 },
-    add_run_start: { type: 'string', pattern: '^\d{4}-\d{2}-\d{2}$' },
+    add_run_start: { type: 'string', pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' },
   }), async (request, reply) => {
     const b = request.body as {
       user?: string; phone?: string; expect_total?: number; add_run_start?: string;
