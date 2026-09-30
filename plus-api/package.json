@@ -19,6 +19,7 @@
     "anniversary-grant": "tsx src/scripts/anniversary-grant.ts",
     "backfill-league-prize-stack": "tsx src/scripts/backfill-league-prize-stack.ts",
     "redecide-stranded-week": "tsx src/scripts/redecide-stranded-week.ts",
+    "merge-streak-record": "tsx src/scripts/merge-streak-record.ts",
     "test": "vitest run",
     "test:watch": "vitest"
   },
