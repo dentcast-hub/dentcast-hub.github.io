@@ -165,3 +165,25 @@ describe('the gift queue names a buyer who has no phone', () => {
     expect(row.display_name).toBe('Gift Buyer');
   });
 });
+
+describe('gifting DAYS to one account', () => {
+  const PHONE = '09121800066';
+
+  it('gives N days, and stacks a second gift on top of the first', async () => {
+    await loginAs(app, PHONE);
+    const first = await post('/admin/subscriptions/grant-days', { user: PHONE, days: 10 });
+    expect(first.statusCode).toBe(200);
+    expect(first.json().is_premium).toBe(true);
+    expect(first.json().days_left).toBe(10);
+
+    const second = await post('/admin/subscriptions/grant-days', { user: PHONE, days: 5 });
+    expect(second.json().days_left).toBe(15);
+  });
+
+  it('refuses a day count outside 1..90', async () => {
+    await loginAs(app, PHONE);
+    expect((await post('/admin/subscriptions/grant-days', { user: PHONE, days: 0 })).statusCode).toBe(400);
+    expect((await post('/admin/subscriptions/grant-days', { user: PHONE, days: 91 })).statusCode).toBe(400);
+    expect((await post('/admin/subscriptions/grant-days', { user: PHONE })).statusCode).toBe(400);
+  });
+});

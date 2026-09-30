@@ -442,6 +442,53 @@ function renderHtml(
   })();
   </script>
 
+  <h3 style="margin-top:26px">هدیه‌ی روزِ پریمیوم به یک نفر</h3>
+  <div class="muted">شناسه‌ی کاربر، موبایل یا نام کاربری را بده و بگو چند روز. روزها روی اشتراکِ فعلی‌اش اضافه می‌شوند (اگر اشتراک ندارد، از همین الان شروع می‌شود).</div>
+  <form class="bc" id="gdForm" onsubmit="return false">
+    <div class="row">
+      <div style="flex:1 1 220px"><label for="gdUser">کاربر (آیدی / موبایل / نام کاربری)</label><input id="gdUser" type="text" dir="ltr"></div>
+      <div style="flex:0 0 140px"><label for="gdDays">چند روز</label><input id="gdDays" type="number" min="1" max="90" value="10"></div>
+    </div>
+    <button id="gdSend" type="button">هدیه بده</button>
+    <div id="gdOut"></div>
+  </form>
+  <script>
+  (function () {
+    var btn = document.getElementById('gdSend');
+    var out = document.getElementById('gdOut');
+    function faDigits(s) {
+      return String(s).replace(/[۰-۹]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d); })
+        .replace(/[٠-٩]/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(d); });
+    }
+    btn.addEventListener('click', function () {
+      var user = document.getElementById('gdUser').value.trim();
+      var days = parseInt(faDigits(document.getElementById('gdDays').value.trim()), 10);
+      if (!user) { out.textContent = 'کاربر را مشخص کن.'; return; }
+      if (!days || days < 1 || days > 90) { out.textContent = 'تعداد روز باید بین ۱ تا ۹۰ باشد.'; return; }
+      if (!confirm(days + ' روز پریمیوم به «' + user + '» هدیه داده شود؟')) return;
+      btn.disabled = true; out.textContent = 'در حال اهدا…';
+      fetch('/admin/subscriptions/grant-days', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ user: user, days: days })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          btn.disabled = false;
+          if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+          var j = res.j;
+          var name = j.display_name || j.username || j.phone || j.user_id;
+          var s = j.subscription || {};
+          var m = days + ' روز به ' + name + ' داده شد.';
+          if (s.is_founder || !s.expires_on) m += ' (این حساب همیشگی است؛ چیزی تغییر نکرد.)';
+          else m += ' الان ' + j.days_left + ' روز پریمیوم دارد (تا ' + s.expires_on + ').';
+          out.textContent = m;
+          document.getElementById('gdUser').value = '';
+        })
+        .catch(function () { btn.disabled = false; out.textContent = 'ارسال نشد (شبکه).'; });
+    });
+  })();
+  </script>
+
   <h3 style="margin-top:26px">گزارش لیگ</h3>
   <div class="muted">«لیگ فعال» یعنی گروهی که این هفته برایش تشکیل شده — این آدم‌ها با هم رقابت می‌کنند. عددهای این بخش از همان API نظارتیِ لیگ (<code>/admin/league</code>) خوانده می‌شوند؛ اینجا فقط رندرِ آن است.</div>
   <div id="lgOut" class="muted" style="margin-top:10px">در حال خواندن…</div>
@@ -3961,6 +4008,20 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       const who = await resolveUser(pick(body), reply);
       if (!who) return reply;
       const sub = await activateMonths(who.id, body.months, { source: 'admin' });
+      return reply.send(subscriptionView(who, sub));
+    });
+
+  // POST /admin/subscriptions/grant-days { user, days } — gift N DAYS to one
+  // account. The months endpoint above cannot say «ده روز», and the only
+  // day-grant on the panel was the bulk gift-never-tried. Same stacking rule:
+  // the days are added onto whatever is left, never replacing it.
+  app.post('/admin/subscriptions/grant-days',
+    userBody({ days: { type: 'integer', minimum: 1, maximum: 90 } }, ['days']),
+    async (request, reply) => {
+      const body = request.body as { user?: string; phone?: string; days: number };
+      const who = await resolveUser(pick(body), reply);
+      if (!who) return reply;
+      const sub = await activateDays(who.id, body.days, { source: 'admin', meta: { via: 'admin_grant_days' } });
       return reply.send(subscriptionView(who, sub));
     });
 
