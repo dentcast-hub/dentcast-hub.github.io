@@ -134,7 +134,7 @@ describe('repairStreak', () => {
     const days = [...runBack('2026-08-20', 30), ...runBack('2026-09-30', 9)];
     const id = await reader(days, { current: 9, longest: 30 });
 
-    const res = await repairStreak(id, 39, now);
+    const res = await repairStreak(id, { expectTotal: 39 }, now);
     expect(res).toMatchObject({
       ok: true, current_run: 9, previous_run: 30, unchanged: false,
       before: { current_streak: 9, longest_streak: 30 },
@@ -148,8 +148,8 @@ describe('repairStreak', () => {
     const days = [...runBack('2026-08-20', 30), ...runBack('2026-09-30', 9)];
     const id = await reader(days, { current: 9, longest: 30 });
 
-    await repairStreak(id, 39, now);
-    const second = await repairStreak(id, 39, now);
+    await repairStreak(id, { expectTotal: 39 }, now);
+    const second = await repairStreak(id, { expectTotal: 39 }, now);
     expect(second).toMatchObject({ ok: true, unchanged: true });
     const row = await pool.query('select current_streak, longest_streak from profiles where id = $1', [id]);
     expect(row.rows[0], 'not 39 + 9 again').toMatchObject({ current_streak: 39, longest_streak: 39 });
@@ -162,7 +162,7 @@ describe('repairStreak', () => {
       'select count(*)::int as n from user_activity where user_id = $1', [id],
     );
 
-    await repairStreak(id, 39, now);
+    await repairStreak(id, { expectTotal: 39 }, now);
     const after = await pool.query<{ n: number }>(
       'select count(*)::int as n from user_activity where user_id = $1', [id],
     );
@@ -177,7 +177,7 @@ describe('repairStreak', () => {
     const days = [...runBack('2026-08-20', 30), ...runBack('2026-09-30', 9)];
     const id = await reader(days, { current: 9, longest: 30 });
 
-    const res = await repairStreak(id, 100, now);
+    const res = await repairStreak(id, { expectTotal: 100 }, now);
     expect(res).toMatchObject({ ok: false, error: 'total_moved', expected: 100, actual: 39 });
     const row = await pool.query('select current_streak from profiles where id = $1', [id]);
     expect(row.rows[0].current_streak, 'and wrote nothing').toBe(9);
@@ -185,7 +185,72 @@ describe('repairStreak', () => {
 
   it('refuses a reader with only one run', async () => {
     const id = await reader(runBack('2026-09-30', 9), { current: 9, longest: 9 });
-    expect(await repairStreak(id, undefined, now)).toMatchObject({ ok: false, error: 'no_previous_run' });
+    expect(await repairStreak(id, {}, now)).toMatchObject({ ok: false, error: 'no_previous_run' });
+  });
+});
+
+describe('choosing WHICH run to add', () => {
+  const now = new Date('2026-09-30T12:00:00Z');
+
+  /**
+   * ôMǐÐ ĶĦåN's real shape (production, 2026-09-30): he broke three times, so
+   * «the run that broke» has no single answer. The immediately-previous run is
+   * 5 days and the one the founder meant is the 35-day run that ended 09-09.
+   */
+  const threeBreaks = () => [
+    ...runBack('2026-09-09', 35),
+    ...runBack('2026-09-13', 2),
+    ...runBack('2026-09-19', 5),
+    ...runBack('2026-09-30', 9),
+  ];
+
+  it('defaults to the run immediately before, as before', async () => {
+    const id = await reader(threeBreaks(), { current: 9, longest: 42 });
+    const res = await repairStreak(id, {}, now);
+    expect(res).toMatchObject({ ok: true, current_run: 9, previous_run: 5 });
+    expect((res as { after: { current_streak: number } }).after.current_streak).toBe(14);
+  });
+
+  it('adds the run the founder picked instead', async () => {
+    const id = await reader(threeBreaks(), { current: 9, longest: 42 });
+    const d = (await diagnoseStreak(id, now))!;
+    const long = d.runs.find((r) => r.length === 35)!;
+
+    const res = await repairStreak(id, { addRunStart: long.start, expectTotal: 44 }, now);
+    expect(res).toMatchObject({
+      ok: true, current_run: 9, previous_run: 35,
+      after: { current_streak: 44, longest_streak: 44 },
+      added_run: { length: 35 },
+    });
+  });
+
+  it('refuses a start day that is not the start of any run', async () => {
+    const id = await reader(threeBreaks(), { current: 9, longest: 42 });
+    const res = await repairStreak(id, { addRunStart: '2026-01-01' }, now);
+    expect(res).toMatchObject({ ok: false, error: 'no_such_run' });
+  });
+
+  it('refuses adding the live run to itself', async () => {
+    const id = await reader(threeBreaks(), { current: 9, longest: 42 });
+    const d = (await diagnoseStreak(id, now))!;
+    const res = await repairStreak(id, { addRunStart: d.current_run!.start }, now);
+    expect(res).toMatchObject({ ok: false, error: 'run_is_current' });
+  });
+
+  it('still refuses a total the caller was not shown', async () => {
+    const id = await reader(threeBreaks(), { current: 9, longest: 42 });
+    const d = (await diagnoseStreak(id, now))!;
+    const long = d.runs.find((r) => r.length === 35)!;
+    const res = await repairStreak(id, { addRunStart: long.start, expectTotal: 14 }, now);
+    expect(res).toMatchObject({ ok: false, error: 'total_moved', expected: 14, actual: 44 });
+  });
+
+  it('lists enough runs for the founder to find the one they mean', async () => {
+    // The 35-day run sat fourth; an 8-run cap was hiding exactly this.
+    const id = await reader(threeBreaks(), { current: 9, longest: 42 });
+    const d = (await diagnoseStreak(id, now))!;
+    expect(d.runs.map((r) => r.length)).toEqual([9, 5, 2, 35]);
+    expect(d.run_count).toBe(4);
   });
 });
 
