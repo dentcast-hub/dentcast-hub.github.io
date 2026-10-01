@@ -88,6 +88,14 @@ which shows the image running right now: drop the `:vNN` off the end and that is
 the value. Reading it from there also means you are copying an address that is
 provably working, rather than one assembled from the docs.
 
+**No laptop?** The same build runs on a GitHub runner:
+Actions → «Build DentCast Plus API image» → Run workflow (branch = what you want
+shipped; `tag` empty = live+1). It needs three repository secrets, set once from
+any browser: `ARVAN_REGISTRY` (the image address with no `:vNN`, the same value
+as `DENTCAST_REGISTRY` below), `ARVAN_REGISTRY_USER`, `ARVAN_REGISTRY_PASSWORD`.
+It refuses a reused tag exactly as the script does, and the run's summary names
+the tag to switch to in the panel. The panel step stays manual either way.
+
 Then, per release: `./plus-api/deploy.sh` (it reads the live tag off `/health`
 and builds the next one), change the tag in the panel, and
 `./plus-api/deploy.sh --verify vNN`. The rest of this section is what the script

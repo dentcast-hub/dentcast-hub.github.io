@@ -1,0 +1,164 @@
+name: Build DentCast Plus API image
+
+# plus-api/deploy.sh, run on a GitHub runner instead of a laptop.
+#
+# WHY: the API image was only ever built by deploy.sh, which needs docker and a
+# registry login on the founder's own machine. The day Google login was ready
+# (1405/07/09) the laptop was not, and a frontend that already shipped the
+# button would have called a route the running image did not have. A runner
+# has docker, international egress and the registry credentials as secrets,
+# so the build is one «Run workflow» from a phone.
+#
+# WHAT IT DOES — the same steps, in the same order, as deploy.sh:
+#   1. refuses a tag that is not vNN, or that is already in the registry
+#      (a reused tag is a deploy that silently does nothing: the panel sees the
+#      string it is already running and pulls nothing);
+#   2. builds plus-api/Dockerfile from the REPO ROOT (the image bakes in
+#      plus/*.json files that live outside plus-api/), linux/amd64, with the
+#      three build args GET /health reports back (BUILD_TAG, GIT_SHA, BUILT_AT);
+#   3. pushes it.
+# The LAST step stays manual and always will: the running tag is changed in the
+# ArvanCloud panel by a person, so nothing here can deploy to production by
+# accident. The summary tells you the tag to type and how to verify it.
+#
+# SECRETS (Settings → Secrets and variables → Actions):
+#   ARVAN_REGISTRY           the image address WITHOUT a tag — copy it from the
+#                            panel: Cloud Container → the API app → Image, drop
+#                            the ':vNN'. Same value as DENTCAST_REGISTRY in
+#                            plus-api/.deploy.env on the laptop. Looks like
+#                            registry-<id>-<account>.apps.<region>.arvancaas.ir/<ns>/dentcast-plus-api
+#   ARVAN_REGISTRY_USER      the registry username (panel → Container Registry)
+#   ARVAN_REGISTRY_PASSWORD  its password / token
+#
+# Run it from Actions → «Build DentCast Plus API image» → Run workflow, on the
+# branch you want shipped (main after a merge; a feature branch for a trial —
+# the summary names the commit, so a rollback always knows what it is rolling
+# back from). Leave `tag` empty to build live+1, read from /health.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Image tag, e.g. v53. Empty = the live /health version + 1.'
+        required: false
+        default: ''
+
+concurrency:
+  group: build-api-image
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check the secrets are there
+        env:
+          REG: ${{ secrets.ARVAN_REGISTRY }}
+          USR: ${{ secrets.ARVAN_REGISTRY_USER }}
+          PASS: ${{ secrets.ARVAN_REGISTRY_PASSWORD }}
+        run: |
+          missing=""
+          [ -n "$REG" ] || missing="$missing ARVAN_REGISTRY"
+          [ -n "$USR" ] || missing="$missing ARVAN_REGISTRY_USER"
+          [ -n "$PASS" ] || missing="$missing ARVAN_REGISTRY_PASSWORD"
+          if [ -n "$missing" ]; then
+            echo "::error::missing repository secret(s):$missing — see the header of this workflow"
+            exit 1
+          fi
+          case "$REG" in
+            *:v[0-9]*) echo "::error::ARVAN_REGISTRY must NOT carry a tag (drop the ':vNN')"; exit 1 ;;
+          esac
+
+      # The same source of truth deploy.sh uses: /health is the image that
+      # actually answered, not the tag the panel was asked to run.
+      - name: Work out the tag
+        id: tag
+        env:
+          WANT: ${{ github.event.inputs.tag }}
+        run: |
+          live=""
+          for host in https://api.dentcast.org https://api.dentcast.ir; do
+            body="$(curl -fsS --max-time 15 "$host/health" 2>/dev/null || true)"
+            if [ -n "$body" ]; then
+              live="$(printf '%s' "$body" | sed -n 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
+              break
+            fi
+          done
+          echo "live version: ${live:-<unreachable>}"
+          tag="$WANT"
+          if [ -z "$tag" ]; then
+            case "$live" in
+              v[0-9]*) tag="v$(( ${live#v} + 1 ))" ;;
+              "")      echo "::error::could not reach /health to work out the next tag. Pass one (e.g. v53)."; exit 1 ;;
+              *)       echo "::error::/health reports version '$live', which is not a vNN tag. Pass one."; exit 1 ;;
+            esac
+          fi
+          case "$tag" in
+            v[0-9]|v[0-9][0-9]|v[0-9][0-9][0-9]) ;;
+            *) echo "::error::tag must look like v53 (got '$tag')"; exit 1 ;;
+          esac
+          if [ "$tag" = "$live" ]; then
+            echo "::error::$tag is already the live version. Pick the next one."; exit 1
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "live=$live" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to the Arvan registry
+        env:
+          REG: ${{ secrets.ARVAN_REGISTRY }}
+          USR: ${{ secrets.ARVAN_REGISTRY_USER }}
+          PASS: ${{ secrets.ARVAN_REGISTRY_PASSWORD }}
+        run: |
+          host="${REG%%/*}"
+          printf '%s' "$PASS" | docker login "$host" --username "$USR" --password-stdin
+
+      # Never reuse a tag (deploy.sh's rule). A registry that refuses the
+      # question is not an answer, so only a positive hit stops the build.
+      - name: Refuse a tag that already exists
+        env:
+          IMAGE: ${{ secrets.ARVAN_REGISTRY }}:${{ steps.tag.outputs.tag }}
+        run: |
+          if docker manifest inspect "$IMAGE" >/dev/null 2>&1; then
+            echo "::error::$IMAGE already exists in the registry. Never reuse a tag — pick the next one."
+            exit 1
+          fi
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        env:
+          IMAGE: ${{ secrets.ARVAN_REGISTRY }}:${{ steps.tag.outputs.tag }}
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          GIT_SHA="$(git rev-parse --short HEAD)"
+          BUILT_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          docker buildx build \
+            --platform linux/amd64 \
+            -f plus-api/Dockerfile \
+            -t "$IMAGE" \
+            --build-arg "BUILD_TAG=$TAG" \
+            --build-arg "GIT_SHA=$GIT_SHA" \
+            --build-arg "BUILT_AT=$BUILT_AT" \
+            --push \
+            .
+          echo "GIT_SHA=$GIT_SHA" >> "$GITHUB_ENV"
+
+      - name: What to do next
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+          LIVE: ${{ steps.tag.outputs.live }}
+        run: |
+          {
+            echo "## Image pushed: \`$TAG\` (commit \`$GIT_SHA\`, branch \`${GITHUB_REF_NAME}\`)"
+            echo
+            echo "Now, in the ArvanCloud panel: **Cloud Container → the API app → set the image tag to \`$TAG\` → Apply**."
+            echo
+            echo "Then prove it happened: open \`https://api.dentcast.org/health\` and wait for \`\"version\":\"$TAG\"\`."
+            echo
+            echo "Rollback: set the tag back to \`${LIVE:-the previous one}\` and Apply. Migrations are additive; the database is unaffected."
+          } >> "$GITHUB_STEP_SUMMARY"
