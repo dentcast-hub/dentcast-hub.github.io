@@ -1,0 +1,16 @@
+{
+  "type": "plak_sefr",
+  "note": "Publish of plak-sefr/plak1-8 (پلاک صفر — اسم مطبت را که می‌زنند، چه بالا می‌آید). #پلاک_صفر, #اطلاعات_مطب, #سایت_مطب and #حضور_آنلاین_دندانپزشک are REUSED. One concept the part resolves is newly minted (founder-approved 1405/07/09): searching a practice or a dentist BY NAME (a navigational/branded search) — --simulate for «جستجوی اسم دکتر در گوگل» returned only #جستجوی_محلی and #دکتر_شهابیان by word collision. It is kept apart from #جستجوی_محلی: the searcher has already chosen the practice and wants its number and address, while a local search is still choosing among nearby practices.",
+  "concepts": [
+    {
+      "tag": "#جستجوی_نام_مطب",
+      "domain": "web",
+      "definition": "جست‌وجویی که پرسنده در آن اسم خود دندانپزشک یا مطب را تایپ می‌کند، نه سؤال یا درمان یا «دندانپزشک نزدیک من»؛ او انتخابش را کرده و فقط دنبال شماره، آدرس یا راه رسیدن است، و نتیجه‌هایی که برای این اسم بالا می‌آیند — کادر مطب، سامانه‌های نوبت‌دهی، اینستاگرام، همنام‌ها — تعیین می‌کنند این بیمار به خود مطب می‌رسد یا نه.",
+      "use_when": "مطلب درباره‌ی این باشد که با جست‌وجوی اسم دندانپزشک یا مطب چه چیزی بالا می‌آید، کدامش مال خود اوست، و اسم چطور باید همه جا یکسان نوشته شود.",
+      "aliases": ["جستجوی اسم دکتر", "سرچ اسم دندانپزشک", "جستجوی برند", "branded search", "navigational search"]
+    }
+  ],
+  "articles": {
+    "plak-sefr/plak1-8": ["#پلاک_صفر", "#جستجوی_نام_مطب", "#اطلاعات_مطب", "#سایت_مطب", "#حضور_آنلاین_دندانپزشک"]
+  }
+}
