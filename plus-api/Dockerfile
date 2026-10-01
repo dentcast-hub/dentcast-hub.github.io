@@ -45,6 +45,9 @@ ENV GLOSSARY_URL=https://dentcast.ir/glossary/glossary.json,https://dentcast.org
 ENV HASHTAG_REF_URL=https://dentcast.ir/dentcast-hashtag-reference.json,https://dentcast.org/dentcast-hashtag-reference.json
 ENV FLASHCARDS_URL=https://dentcast.ir/plus/flashcards-index.json,https://dentcast.org/plus/flashcards-index.json
 ENV EPISODES_CATALOG_URL=https://dentcast.ir/dentcast.json,https://dentcast.org/dentcast.json
+# Google's signing keys, mirrored onto the site by .github/workflows/google-certs-mirror.yml
+# (googleapis.com does not answer an Iranian address); Google itself is the last resort.
+ENV GOOGLE_JWKS_URL=https://dentcast.ir/plus/google-certs.json,https://dentcast.org/plus/google-certs.json,https://www.googleapis.com/oauth2/v3/certs
 WORKDIR /app
 
 # Prod dependencies only.

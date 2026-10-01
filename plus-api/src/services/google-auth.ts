@@ -23,16 +23,24 @@ import { outboundFetch } from '../providers/outbound.js';
  * this API to parse untrusted input with its own quirks. The whole check is
  * ~40 lines and every one of them is on this page.
  *
- * THE KEY SET IS FETCHED, AND THE CONTAINER LIVES IN IRAN. googleapis.com is one
- * of the hosts Google answers selectively by region, so the fetch goes through
- * `outboundFetch` with its own route (GOOGLE_PROXY_URL — per destination, on the
- * same argument providers/outbound.ts makes for the notification channels: a
- * proxy added for one host must never silently reroute another) and a bounded
- * timeout. Keys are cached for the max-age Google states (clamped), a token
- * whose `kid` is unknown triggers at most one refetch a minute (Google rotates
- * keys; a flood of bad tokens must not become a flood of fetches), and a
- * refetch that fails keeps the LAST GOOD set rather than refusing every login
- * until the route returns — the same last-good doctrine content-refresh.ts uses.
+ * THE KEY SET IS FETCHED, AND THE CONTAINER LIVES IN IRAN. googleapis.com does
+ * not answer an Iranian address (confirmed on the first live login, 1405/07/09:
+ * every token ended as keys_unavailable), so the key set is read the way every
+ * other live file in this API is read — from OUR OWN SITE, which the container
+ * provably reaches (content-refresh.ts). `.github/workflows/google-certs-mirror.yml`
+ * copies Google's JWK set to `plus/google-certs.json` every two hours (a runner
+ * has international egress) and uploads it straight to the .ir bucket, and
+ * GOOGLE_JWKS_URL is a comma-separated LIST tried in order — the two mirrors
+ * first, Google itself last, for a deployment that can reach it. Every fetch is
+ * cache-busted (`?_dc=`, content-refresh.ts's argument: a URL nothing has
+ * fetched before cannot be served stale by any edge) and bounded; GOOGLE_PROXY_URL
+ * still routes the whole list for a container that has a route. Keys are cached
+ * for the max-age the answer states (clamped; the mirrors say none, so an hour),
+ * a token whose `kid` is unknown triggers at most one refetch a minute — and
+ * THAT refetch asks every source and unions them, so a key Google rotated in
+ * since the mirror's last copy is still found wherever it can be — and a refetch
+ * that fails keeps the LAST GOOD set rather than refusing every login until the
+ * route returns, the same last-good doctrine content-refresh.ts uses.
  *
  * The scoring of what Google tells us is narrow on purpose: `sub` is the
  * identity (stable, never reused); `email` is kept only when Google itself says
@@ -82,7 +90,7 @@ export interface GoogleKeySet {
   maxAgeMs: number;
 }
 
-export type GoogleKeyFetcher = () => Promise<GoogleKeySet>;
+export type GoogleKeyFetcher = (all?: boolean) => Promise<GoogleKeySet>;
 
 const ISSUERS = new Set(['accounts.google.com', 'https://accounts.google.com']);
 const DEFAULT_MAX_AGE_MS = 60 * 60 * 1000;
@@ -109,18 +117,71 @@ export function maxAgeFrom(cacheControl: string | null | undefined): number {
   return Math.min(MAX_MAX_AGE_MS, Math.max(MIN_MAX_AGE_MS, ms));
 }
 
-/** The production fetcher: Google's JWK set, through this destination's own route. */
-async function fetchGoogleKeys(): Promise<GoogleKeySet> {
+/** GOOGLE_JWKS_URL as a list: comma-separated, trimmed, empties dropped. */
+export function jwksUrls(raw: string = config.auth.google.jwksUrl): string[] {
+  return raw.split(',').map((s) => s.trim()).filter(Boolean);
+}
+
+/** A URL nothing has fetched before (content-refresh.ts's bustUrl). */
+function bust(url: string, stamp: number): string {
+  return `${url}${url.includes('?') ? '&' : '?'}_dc=${stamp}`;
+}
+
+/**
+ * Union several key sets by kid (first occurrence wins) under the SHORTEST
+ * max-age among them — a merged set may only be trusted for as long as its
+ * most perishable part.
+ */
+export function mergeKeySets(sets: GoogleKeySet[]): GoogleKeySet {
+  const seen = new Set<string>();
+  const keys: GoogleJwk[] = [];
+  let maxAgeMs = Infinity;
+  for (const s of sets) {
+    for (const k of s.keys) {
+      if (!k || !k.kid || seen.has(k.kid)) continue;
+      seen.add(k.kid);
+      keys.push(k);
+    }
+    maxAgeMs = Math.min(maxAgeMs, s.maxAgeMs);
+  }
+  return { keys, maxAgeMs: Number.isFinite(maxAgeMs) ? maxAgeMs : DEFAULT_MAX_AGE_MS };
+}
+
+async function fetchOne(url: string): Promise<GoogleKeySet> {
   const g = config.auth.google;
   const res = await outboundFetch(
-    g.jwksUrl,
+    bust(url, Date.now()),
     { headers: { accept: 'application/json' } },
     { proxyUrl: g.proxyUrl, timeoutMs: g.timeoutMs },
   );
-  if (!res.ok) throw new Error(`google jwks: http ${res.status}`);
+  if (!res.ok) throw new Error(`google jwks: http ${res.status} from ${url}`);
   const body = (await res.json()) as { keys?: GoogleJwk[] };
-  if (!body || !Array.isArray(body.keys)) throw new Error('google jwks: no keys array');
+  if (!body || !Array.isArray(body.keys) || body.keys.length === 0) {
+    throw new Error(`google jwks: no keys at ${url}`);
+  }
   return { keys: body.keys, maxAgeMs: maxAgeFrom(res.headers.get('cache-control')) };
+}
+
+/**
+ * The production fetcher. `all: false` (the ordinary refresh) takes the first
+ * source that answers; `all: true` (a refetch for an unknown kid) asks every
+ * source and unions what came back, so a rotation the mirror has not copied
+ * yet is still found at Google by a container that can reach it. Throws only
+ * when NO source answered.
+ */
+async function fetchGoogleKeys(all = false): Promise<GoogleKeySet> {
+  const got: GoogleKeySet[] = [];
+  const errors: string[] = [];
+  for (const url of jwksUrls()) {
+    try {
+      got.push(await fetchOne(url));
+      if (!all) break;
+    } catch (err) {
+      errors.push((err as Error).message);
+    }
+  }
+  if (got.length === 0) throw new Error(errors.join('; ') || 'google jwks: no url configured');
+  return got.length === 1 ? got[0] : mergeKeySets(got);
 }
 
 /**
@@ -153,9 +214,9 @@ function toKeyObjects(keys: GoogleJwk[]): Map<string, crypto.KeyObject> {
 }
 
 /** Refresh the cache; on failure keep whatever was there (last good). */
-async function refresh(now: number): Promise<void> {
+async function refresh(now: number, all = false): Promise<void> {
   try {
-    const set = await fetcher();
+    const set = await fetcher(all);
     cache = { byKid: toKeyObjects(set.keys), fetchedAt: now, maxAgeMs: set.maxAgeMs };
   } catch (err) {
     if (!cache) throw err;
@@ -177,7 +238,7 @@ async function keyFor(kid: string, now: number): Promise<crypto.KeyObject | null
     // Google rotated keys since we cached: one more look, then give up.
     lastMissRefetchAt = now;
     try {
-      await refresh(now);
+      await refresh(now, true);
     } catch {
       /* keep the last-good set */
     }
