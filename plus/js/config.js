@@ -205,7 +205,7 @@ export function telegramLoginEnabled() {
 // Empty = the button is never drawn and the API answers not_configured, so
 // the site is unchanged until the founder's OAuth client exists. Fill it here
 // (or override per page via window.DENTCAST_PLUS.googleClientId).
-const GOOGLE_CLIENT_ID_DEFAULT = '';
+const GOOGLE_CLIENT_ID_DEFAULT = '890346363080-gfihhhqfu0kal44htd5eeohj0oc73atc.apps.googleusercontent.com';
 export const GOOGLE_CLIENT_ID = OVERRIDE.googleClientId || GOOGLE_CLIENT_ID_DEFAULT;
 
 // Shown ONLY on .org, like Telegram, by the founder's decision (1405/07/09):
