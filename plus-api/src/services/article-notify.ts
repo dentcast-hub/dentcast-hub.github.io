@@ -53,9 +53,39 @@ function sectionFa(contentId: string): string {
   }
 }
 
-/** The user-visible line for one article: its Pulse, else "a new article in {section}". */
+/**
+ * The most a messenger line may carry of a Pulse. The SAME rule, number and
+ * sentence-boundary cut as `one_line()` in tools/announce_telegram_channel.py
+ * — the Telegram channel post and the Bale/push message are one publish told
+ * twice, and a reader holding both phones should read the same sentence.
+ */
+export const PULSE_LINE_LIMIT = 200;
+
+/**
+ * One short line, cut on a sentence boundary.
+ *
+ * The brain's `caption` is not one shape: for a Promptologist episode it is a
+ * single line, for an Insight it is a ~1500-character summary. The Telegram
+ * channel announcer has cut it since it was written; this lane never did, and
+ * web push hid that (the OS truncates a notification body on its own) while
+ * Bale showed the whole paragraph verbatim (founder, 1405/07/09). Cut at the
+ * last sentence end before the limit, falling back to the last word, and mark
+ * the cut so nobody mistakes the line for the whole thing. A ZWNJ is not
+ * whitespace: only real whitespace is collapsed (Hard Rule 16).
+ */
+export function oneLine(text: string, limit: number = PULSE_LINE_LIMIT): string {
+  const t = text.split(/[ \t\r\n\f\v]+/).filter(Boolean).join(' ');
+  if (t.length <= limit) return t;
+  const window = t.slice(0, limit);
+  let cut = Math.max(...Array.from('.؟!؛?', (c) => window.lastIndexOf(c)));
+  if (cut < Math.floor(limit / 3)) cut = window.lastIndexOf(' '); // no usable sentence end: cut on a word
+  if (cut <= 0) cut = limit;
+  return window.slice(0, cut + 1).trimEnd() + ' …';
+}
+
+/** The user-visible line for one article: its Pulse (one line), else "a new article in {section}". */
 function articleLine(a: { pulse?: string | null; content_id: string }): string {
-  const p = (a.pulse || '').trim();
+  const p = oneLine(a.pulse || '');
   return p || `مطلب جدیدی در ${sectionFa(a.content_id)} منتشر شد`;
 }
 

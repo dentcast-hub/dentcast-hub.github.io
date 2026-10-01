@@ -4,7 +4,7 @@ import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool, one } from '../src/db.js';
 import { config } from '../src/config.js';
 import { notifications } from '../src/providers/registry.js';
-import { onArticlePublished, runFreeDigest, backfillExistingContent } from '../src/services/article-notify.js';
+import { onArticlePublished, runFreeDigest, backfillExistingContent, oneLine, PULSE_LINE_LIMIT } from '../src/services/article-notify.js';
 import { msUntilNextRun } from '../src/scheduler.js';
 import { WebPushNotificationSender } from '../src/providers/notifications/webpush.js';
 import { getIndex } from '../src/content-index.js';
@@ -83,6 +83,34 @@ describe('new-article Pulse text', () => {
     expect(msg.body).toContain('• پالسِ یک');
     expect(msg.body).toContain('• پالسِ دو');
     spy.mockRestore();
+  });
+
+  // The Telegram channel post (tools/announce_telegram_channel.py one_line) has
+  // cut the Pulse at a sentence boundary since it was written; this lane sent
+  // the whole brain caption, and Bale printed it verbatim as a wall of text.
+  it('a long Pulse is cut to one line on a sentence boundary, marked with an ellipsis', async () => {
+    const spy = vi.spyOn(notifications, 'send').mockResolvedValue();
+    await makeUser('09120000093', 'premium', { newContent: true });
+    const sentence = 'این یک جملهٔ نسبتاً بلند برای آزمایش برش است که به نقطه ختم می‌شود.';
+    const pulse = Array.from({ length: 12 }, () => sentence).join(' ');
+    await onArticlePublished({ contentId: 'insight/long', title: 'ت', url: '/insight/long.html', pulse, publishedAt: T });
+    const msg = spy.mock.calls.at(-1)?.[1] as { body: string };
+    expect(msg.body.length).toBeLessThanOrEqual(PULSE_LINE_LIMIT + 2);
+    expect(msg.body.endsWith('. …')).toBe(true);
+    expect(msg.body.startsWith(sentence)).toBe(true);
+    spy.mockRestore();
+  });
+
+  it('oneLine: short text is untouched, whitespace collapses, a ZWNJ is not whitespace, no sentence end cuts on a word', () => {
+    expect(oneLine('کوتاه')).toBe('کوتاه');
+    expect(oneLine('  دو   خط\nسوم ')).toBe('دو خط سوم');
+    expect(oneLine('می\u200cشود')).toBe('می\u200cشود');
+    const words = Array.from({ length: 80 }, (_, i) => 'واژه' + i).join(' ');
+    const cut = oneLine(words);
+    expect(cut.endsWith(' …')).toBe(true);
+    expect(cut.length).toBeLessThanOrEqual(PULSE_LINE_LIMIT + 2);
+    expect(cut.slice(0, -2)).toMatch(/واژه\d+$/); // never mid-word
+    expect(oneLine('')).toBe('');
   });
 
   it('falls back to the section line when an article has no Pulse', async () => {
