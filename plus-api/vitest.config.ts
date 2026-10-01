@@ -30,6 +30,10 @@ export default defineConfig({
       // the real tokens in .env. Tests sign their payloads with these values.
       TELEGRAM_BOT_TOKEN: '123456:TEST-telegram-bot-token',
       TELEGRAM_BOT_TOKEN_IR: '999999:TEST-telegram-ir-bot-token',
+      // A client id for the Google login route's `aud` check. Tests sign their
+      // own ID tokens and inject the matching public key (setGoogleKeyFetcher),
+      // so no request ever leaves for googleapis.com.
+      GOOGLE_CLIENT_ID: 'test-client-id.apps.googleusercontent.com',
       // Known Bale webhook secret so /webhooks/bale/:secret is exercisable. The
       // bot token stays empty, so baleSendMessage() stub-logs (no real network).
       BALE_WEBHOOK_SECRET: 'test-bale-webhook-secret',

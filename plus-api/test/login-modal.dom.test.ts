@@ -39,6 +39,8 @@ vi.mock('/plus/js/config.js', () => ({
   telegramLoginEnabled: () => false,
   telegramCallbackUrl: () => '',
   telegramBotUsername: () => '',
+  googleLoginEnabled: () => false,
+  GOOGLE_CLIENT_ID: '',
 }));
 
 beforeEach(() => {

@@ -1,11 +1,13 @@
 // Login is a MODAL, never a page (spec 2.5). Two steps: phone -> OTP code.
 // Resolves with { user, return_to } on success, or null if the user cancels.
-import { el, faNum } from './util.js?v=160';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=160';
+import { el, faNum } from './util.js?v=161';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=161';
 import {
   isOrgHost, irMirrorUrl,
   telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername,
-} from './config.js?v=160';
+  googleLoginEnabled,
+} from './config.js?v=161';
+import { mountGoogleButton } from './google-login.js?v=161';
 
 let overlay = null;
 // While the mandatory nickname step is showing, every dismissal path (×,
@@ -191,37 +193,77 @@ export function openOrgNotice({ source = 'login', contentId } = {}) {
   });
 }
 
-// The official Telegram Login Widget, shown ABOVE the phone/OTP step on the
-// hosts where it applies (dentcast.org). It is a REDIRECT widget: clicking it
-// navigates the whole tab to Telegram and then to the API callback
-// (data-auth-url), which sets the session cookie and sends the browser back to
-// `returnTo`. So there is no JS callback and nothing to await here — the modal
-// simply unloads with the navigation. Returns null when Telegram login is not
-// enabled for this host.
-function buildTelegramBlock(returnTo) {
-  if (!telegramLoginEnabled()) return null;
+// The «ورود سریع» block ABOVE the phone/OTP step: the official Telegram Login
+// Widget and/or the official Google button, on the hosts where each applies
+// (both: dentcast.org). Returns null when neither is enabled, so .ir shows the
+// OTP flow alone, exactly as before.
+//
+// The two buttons work differently and the block hides that. Telegram's is a
+// REDIRECT widget: clicking it navigates the whole tab to Telegram and then to
+// the API callback (data-auth-url), which sets the session cookie and sends
+// the browser back to `returnTo` — nothing to await, the modal unloads with
+// the navigation. Google's runs in POPUP mode and hands the page a signed ID
+// token in a callback; `onGoogleCredential` posts it to the API and the modal
+// then continues like a verified OTP (session check, nickname step for a new
+// account, close). `mount()` must be called once the block is in the DOM:
+// Google measures the holder to draw a full-width button (approved mockup).
+function buildQuickBlock(returnTo, { onGoogleCredential, googleMsg }) {
+  const tg = telegramLoginEnabled();
+  const gg = googleLoginEnabled();
+  if (!tg && !gg) return null;
 
-  // The widget script renders its iframe button in place of itself, so it must
-  // be appended live to the DOM (not built as a string). data-request-access
-  // ="write" asks the user to let the bot message them — needed for the future
-  // notification channel (new posts, streak reminders).
-  const holder = el('div', { class: 'dcp-tg-holder' });
-  const s = document.createElement('script');
-  s.async = true;
-  s.src = 'https://telegram.org/js/telegram-widget.js?22';
-  s.setAttribute('data-telegram-login', telegramBotUsername());
-  s.setAttribute('data-size', 'large');
-  s.setAttribute('data-userpic', 'true');
-  s.setAttribute('data-radius', '10');
-  s.setAttribute('data-request-access', 'write');
-  s.setAttribute('data-auth-url', telegramCallbackUrl(returnTo));
-  holder.appendChild(s);
+  const children = [];
+  // The caption names what is below it: one provider by name, two as «سریع».
+  children.push(el('div', { class: 'dcp-tg-caption' },
+    tg && gg ? 'ورود سریع' : (tg ? 'ورود سریع با تلگرام' : 'ورود سریع با گوگل')));
 
-  return el('div', { class: 'dcp-modal-step dcp-tg-step' }, [
-    el('div', { class: 'dcp-tg-caption' }, 'ورود سریع با تلگرام'),
-    holder,
-    el('div', { class: 'dcp-modal-or' }, [el('span', {}, 'یا با شماره موبایل')]),
-  ]);
+  if (tg) {
+    // The widget script renders its iframe button in place of itself, so it
+    // must be appended live to the DOM (not built as a string).
+    // data-request-access="write" asks the user to let the bot message them.
+    const holder = el('div', { class: 'dcp-tg-holder' });
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://telegram.org/js/telegram-widget.js?22';
+    s.setAttribute('data-telegram-login', telegramBotUsername());
+    s.setAttribute('data-size', 'large');
+    s.setAttribute('data-userpic', 'true');
+    s.setAttribute('data-radius', '10');
+    s.setAttribute('data-request-access', 'write');
+    s.setAttribute('data-auth-url', telegramCallbackUrl(returnTo));
+    holder.appendChild(s);
+    children.push(holder);
+  }
+
+  let googleHolder = null;
+  if (gg) {
+    googleHolder = el('div', { class: 'dcp-google-holder', 'data-dc-google-login': '' });
+    children.push(googleHolder);
+    if (googleMsg) children.push(googleMsg);
+  }
+
+  children.push(el('div', { class: 'dcp-modal-or' }, [el('span', {}, 'یا با شماره موبایل')]));
+
+  const node = el('div', { class: 'dcp-modal-step dcp-tg-step' }, children);
+  const mount = () => {
+    if (!googleHolder) return;
+    mountGoogleButton(googleHolder, {
+      onCredential: onGoogleCredential,
+      onError: () => {
+        if (googleMsg) googleMsg.textContent = 'دکمه‌ی گوگل بارگذاری نشد. با تلگرام یا شماره موبایل وارد شوید.';
+      },
+    });
+  };
+  return { node, mount };
+}
+
+// The sentence under the quick block for the login subtitle.
+function quickSubtitle() {
+  const tg = telegramLoginEnabled();
+  const gg = googleLoginEnabled();
+  if (tg && gg) return 'با تلگرام یا گوگل وارد شوید، یا از شماره موبایل استفاده کنید.';
+  if (tg) return 'با تلگرام وارد شوید، یا از شماره موبایل استفاده کنید.';
+  return 'با گوگل وارد شوید، یا از شماره موبایل استفاده کنید.';
 }
 
 // The default carries the FRAGMENT too. `returnTo` travels as an encoded
@@ -259,19 +301,82 @@ export function openLoginModal({ returnTo = location.pathname + location.hash } 
       stepPhone,
     ]);
 
-    // On the .org hosts, offer "Login with Telegram" above the phone step (the
-    // user chose Telegram + OTP). Elsewhere (.ir) the block is null and only the
-    // OTP flow shows.
-    const tgBlock = buildTelegramBlock(returnTo);
-    if (tgBlock) {
+    // On the .org hosts, offer «ورود سریع» (Telegram and/or Google) above the
+    // phone step. Elsewhere (.ir) the block is null and only the OTP flow shows.
+    const googleMsg = el('div', { class: 'dcp-modal-msg', role: 'status' });
+    const quick = buildQuickBlock(returnTo, { onGoogleCredential: submitGoogle, googleMsg });
+    if (quick) {
       const sub = card.querySelector('.dcp-modal-sub');
-      if (sub) sub.textContent = 'با تلگرام وارد شوید، یا از شماره موبایل استفاده کنید.';
-      card.insertBefore(tgBlock, stepPhone);
+      if (sub) sub.textContent = quickSubtitle();
+      card.insertBefore(quick.node, stepPhone);
     }
 
     overlay = el('div', { class: 'dcp-modal-overlay', onclick: (e) => { if (e.target === overlay) close(resolve, null); } }, [card]);
     document.body.appendChild(overlay);
+    if (quick) quick.mount(); // Google measures the holder, so after it is attached
     setTimeout(() => phoneInput.focus(), 30);
+
+    // First login: a MANDATORY nickname step. Plus is built around a chosen
+    // pseudonym (it's the leaderboard identity), so there is no skip and the
+    // modal cannot be dismissed until a valid name is saved. No real name is
+    // ever required — any pseudonym works. Shared by the OTP and Google roads:
+    // `prevStep` is the node the name step replaces, `onLost` puts the modal
+    // back the way it was when the session vanished between «ورود» and «ذخیره».
+    function enterNameStep({ prevStep, res, onLost }) {
+      locked = true; // lock ×/Escape/backdrop until a name is saved
+      const step = buildNameStep({
+        user: res.user,
+        onSaved: (user) => { locked = false; close(resolve, { user, return_to: res.return_to }); },
+        onSessionLost: () => {
+          locked = false;
+          card.querySelector('.dcp-modal-close')?.classList.remove('is-hidden');
+          card.replaceChild(prevStep, step.node);
+          onLost();
+        },
+      });
+      card.replaceChild(step.node, prevStep);
+      card.querySelector('.dcp-modal-close')?.classList.add('is-hidden');
+      step.focus();
+    }
+
+    // Google handed the page a signed ID token: post it, then continue exactly
+    // as a verified OTP would. The quick block itself stays in place for a
+    // returning reader (the modal closes a moment later); for a NEW account it
+    // gives way to the nickname step, together with the phone step under it.
+    let googleBusy = false;
+    async function submitGoogle(credential) {
+      if (googleBusy) return;
+      googleBusy = true;
+      googleMsg.textContent = 'در حال ورود با گوگل...';
+      try {
+        const res = await api.googleLogin(credential, returnTo);
+        if (!(await sessionStuck())) {
+          googleMsg.textContent = SESSION_NOT_KEPT;
+          return;
+        }
+        googleMsg.textContent = '';
+        if (res.is_new) {
+          // Hide the quick block and hand the phone step's slot to the name
+          // step; onLost restores both with the reason on the quick block.
+          const quickNode = quick ? quick.node : null;
+          if (quickNode && quickNode.isConnected) card.removeChild(quickNode);
+          enterNameStep({
+            prevStep: stepPhone,
+            res,
+            onLost: () => {
+              if (quickNode) card.insertBefore(quickNode, stepPhone);
+              googleMsg.textContent = SESSION_NOT_KEPT;
+            },
+          });
+        } else {
+          close(resolve, { user: res.user, return_to: res.return_to });
+        }
+      } catch (e) {
+        googleMsg.textContent = e instanceof ApiError ? e.message : 'ورود با گوگل ناموفق بود.';
+      } finally {
+        googleBusy = false;
+      }
+    }
 
     onKey = (e) => { if (e.key === 'Escape') close(resolve, null); };
     document.addEventListener('keydown', onKey);
@@ -388,29 +493,19 @@ export function openLoginModal({ returnTo = location.pathname + location.hash } 
         }
       }
 
-      // First login: a MANDATORY nickname step. Plus is built around a chosen
-      // pseudonym (it's the leaderboard identity), so there is no skip and the
-      // modal cannot be dismissed until a valid name is saved. No real name is
-      // ever required — any pseudonym works.
+      // First login: the shared nickname step (enterNameStep above). When the
+      // session vanished between «ورود» and «ذخیره», the reader is put back at
+      // the code step with the reason on it, instead of a locked box that
+      // says «ورود لازم است».
       function showOnboardingStep(prevStep, res) {
-        locked = true; // lock ×/Escape/backdrop until a name is saved
-        const step = buildNameStep({
-          user: res.user,
-          onSaved: (user) => { locked = false; close(resolve, { user, return_to: res.return_to }); },
-          onSessionLost: () => {
-            // The session vanished between «ورود» and «ذخیره». Unlock the modal
-            // and put the reader back at the code step with the reason on it,
-            // instead of a locked box that says «ورود لازم است».
-            locked = false;
-            card.querySelector('.dcp-modal-close')?.classList.remove('is-hidden');
-            card.replaceChild(prevStep, step.node);
+        enterNameStep({
+          prevStep,
+          res,
+          onLost: () => {
             codeMsg.textContent = SESSION_NOT_KEPT;
             verifyBtn.disabled = false;
           },
         });
-        card.replaceChild(step.node, prevStep);
-        card.querySelector('.dcp-modal-close')?.classList.add('is-hidden');
-        step.focus();
       }
       verifyBtn.onclick = submitCode;
       codeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitCode(); });

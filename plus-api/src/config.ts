@@ -228,6 +228,22 @@ export const config = {
       // login-widget guidance ("to prevent the use of outdated data").
       maxAgeSeconds: int('TELEGRAM_AUTH_MAX_AGE_SECONDS', 86400),
     },
+    // «Sign in with Google» (dentcast.org; services/google-auth.ts). The client
+    // id is PUBLIC (it also sits in plus/js/config.js for the button) and is the
+    // `aud` every ID token must name; empty = the route answers not_configured
+    // and the button is never drawn. No client secret is needed: the token is
+    // verified against Google's published public keys, never exchanged.
+    google: {
+      clientId: str('GOOGLE_CLIENT_ID', ''),
+      // Google's JWK set. The container lives in Iran and googleapis.com answers
+      // by region, so this fetch has ITS OWN proxy knob (per destination, like
+      // every outbound route in this API) and a bounded timeout.
+      jwksUrl: str('GOOGLE_JWKS_URL', 'https://www.googleapis.com/oauth2/v3/certs'),
+      proxyUrl: str('GOOGLE_PROXY_URL', ''),
+      timeoutMs: int('GOOGLE_JWKS_TIMEOUT_MS', 8_000),
+      clockSkewSeconds: int('GOOGLE_AUTH_CLOCK_SKEW_SECONDS', 60),
+      maxPerIpPerHour: int('GOOGLE_AUTH_MAX_PER_IP_PER_HOUR', 60),
+    },
   },
 
   // Web Push (VAPID). The public key is safe to expose; the client fetches it

@@ -309,6 +309,53 @@ Verify on each site: open the login modal → the Telegram button renders → au
 → you land back logged in (session cookie set); a first-time user is prompted for a
 nickname (the leaderboard name).
 
+## 5b-2. Google login (dentcast.org only)
+
+"Sign in with Google" is shown on **dentcast.org** beside Telegram, for the reader
+abroad who has no Iranian SIM for the OTP (founder, 1405/07/09; approved mockup
+`.dentcast/google-login-mockup.html`). It is deliberately **not** shown on `.ir`:
+Google is not filtered, but `.ir` misbehaves behind a VPN and Google misbehaves
+without one, so the button would ask a reader to toggle their VPN twice in one
+login. The API accepts the token from either host, so widening is one frontend
+check (`googleLoginEnabled()` in `plus/js/config.js`).
+
+Mechanics: the official Google Identity Services button runs in **popup** mode and
+hands the page a signed ID token (JWT); the page posts it to `POST /auth/google`,
+which verifies it against Google's published public keys (`services/google-auth.ts`,
+no dependency, no client secret) and then does what the Telegram callback does —
+sign in as the account this Google already belongs to, link it to the signed-in
+account, or create a phone-less account that is sent to the nickname step.
+`google_taken` (409) refuses to connect a Google that belongs to another account;
+there is never an auto-merge. `POST /auth/google/unlink` needs a phone or Telegram
+fallback, and the Telegram unlink now accepts Google as its fallback too.
+
+One-time setup, outside the repo (Google Cloud Console cannot be opened from an
+Iranian IP; use a VPN or do it from abroad):
+
+1. **Project** — create one (e.g. «DentCast») at console.cloud.google.com.
+2. **Google Auth Platform → Branding** (the old «OAuth consent screen»): user type
+   External, app name «DentCast», a support email, authorized domains
+   `dentcast.org` and `dentcast.ir`, and a privacy-policy link (`/privacy.html`).
+   Only `openid email profile` are requested, so no verification review is needed,
+   **but the publishing status must be «In production»** — in «Testing» only the
+   listed test users (max 100) can sign in.
+3. **Clients → Create client → Web application.** Authorized JavaScript origins:
+   `https://dentcast.org`, `https://www.dentcast.org` (add the two `.ir` origins
+   too, so flipping the host check later needs no console visit). **No redirect
+   URI** is required for popup mode.
+4. **Client ID** — paste it into `GOOGLE_CLIENT_ID_DEFAULT` in `plus/js/config.js`
+   (then `python3 tools/asset_version.py --bump`) AND into the container env as
+   `GOOGLE_CLIENT_ID`. The two must match: the frontend asks Google for a token
+   naming that id, the API refuses any other audience.
+5. **Key fetch from Iran** — the API fetches `https://www.googleapis.com/oauth2/v3/certs`
+   on the first login and caches it (max-age, with a last-good fallback). If that
+   fetch fails from the container, set `GOOGLE_PROXY_URL` — this destination's own
+   knob, never `OUTBOUND_PROXY_URL`.
+
+Verify: on `.org`, open the login modal → the Google button renders under Telegram
+→ pick an account → you land signed in (a first-time user is asked for a nickname);
+the profile shows «حساب گوگل متصل است» with the address half hidden.
+
 ## 5c. Bale (بله) notifications (both sites)
 
 Bale is a **notification channel only** — there is **no login widget** and no

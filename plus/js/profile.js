@@ -1,16 +1,17 @@
 // Reusable profile renderer (spec 2.7). Used by the /plus/profile.html page and
 // the header overlay. Site design language; a clear, readable week strip. Nothing
 // here is mandatory: the pseudonym is editable, no real name is ever required.
-import { el, faNum, tehranDay, sectionIcon } from './util.js?v=160';
-import { certificatesBody } from './certificates.js?v=160';
-import { api, ApiError, currentUser } from './api.js?v=160';
-import { remindersBlock } from './reminders.js?v=160';
-import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js?v=160';
-import { baleEnabled, baleDeepLink } from './config.js?v=160';
-import { leagueEntryButton } from './league.js?v=160';
-import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=160';
-import { subscriptionCta } from './premium-cta.js?v=160';
-import { copyToClipboard, confirmStrip, toast } from './hl-view.js?v=160';
+import { el, faNum, tehranDay, sectionIcon } from './util.js?v=161';
+import { certificatesBody } from './certificates.js?v=161';
+import { api, ApiError, currentUser } from './api.js?v=161';
+import { remindersBlock } from './reminders.js?v=161';
+import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername, googleLoginEnabled } from './config.js?v=161';
+import { mountGoogleButton } from './google-login.js?v=161';
+import { baleEnabled, baleDeepLink } from './config.js?v=161';
+import { leagueEntryButton } from './league.js?v=161';
+import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=161';
+import { subscriptionCta } from './premium-cta.js?v=161';
+import { copyToClipboard, confirmStrip, toast } from './hl-view.js?v=161';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
   timeZone: 'Asia/Tehran', year: 'numeric', month: 'long', day: 'numeric',
@@ -351,6 +352,79 @@ function telegramLoginBlock(me) {
   ]);
 }
 
+// Google login-linking (dentcast.org; approved mockup
+// .dentcast/google-login-mockup.html §4). The Telegram block's twin, with the
+// one difference the provider forces: Google's button runs in POPUP mode and
+// hands the page a token, so connecting is an api call here (POST /auth/google
+// with the session cookie riding along -> case B, link to THIS account) and
+// not a redirect. Three states:
+//   - linked -> the tick, the half-hidden address, and «قطع اتصال» ONLY when the
+//     account keeps another way in (a phone or Telegram) — a Google-only reader
+//     must not lock themselves out.
+//   - not linked, on a host where the button applies (.org) -> the button.
+//   - neither -> null, so the section is omitted entirely.
+function googleBlock(me) {
+  if (me.google_linked) {
+    const msg = el('span', { class: 'dcp-inline-msg' });
+    const children = [
+      el('div', { class: 'dcp-tg-linked' }, [
+        el('span', { class: 'dcp-tg-linked-ico', 'aria-hidden': 'true' }, '✓'),
+        el('span', {}, 'حساب گوگل متصل است'),
+      ]),
+    ];
+    if (me.google_email) {
+      children.push(el('div', { class: 'dcp-muted', dir: 'ltr', style: 'font-size:.86rem;margin-top:4px;text-align:start' }, me.google_email));
+    }
+    children.push(el('p', { class: 'dcp-sec-hint' },
+      'ورود سریع با گوگل فعال است. ایمیل فقط برای شناختن حساب است؛ از این مسیر ایمیلی فرستاده نمی‌شود.'));
+    if (me.phone || me.telegram_linked) {
+      const unlinkBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'قطع اتصال گوگل');
+      unlinkBtn.addEventListener('click', async () => {
+        unlinkBtn.disabled = true;
+        msg.textContent = 'در حال قطع...';
+        try {
+          await api.unlinkGoogle();
+          currentUser({ refresh: true });
+          msg.textContent = 'گوگل قطع شد.';
+          setTimeout(() => location.reload(), 700);
+        } catch (e) {
+          msg.textContent = e instanceof ApiError ? e.message : 'قطع اتصال ناموفق بود.';
+          unlinkBtn.disabled = false;
+        }
+      });
+      children.push(el('div', { class: 'dcp-field-row', style: 'margin-top:8px' }, [unlinkBtn, msg]));
+    } else {
+      children.push(el('p', { class: 'dcp-sec-hint', style: 'margin-top:6px' },
+        'برای قطع گوگل، اول در بخش «شماره موبایل» شماره‌ات را تأیید کن تا راه ورود دیگری داشته باشی.'));
+    }
+    return el('div', {}, children);
+  }
+  if (!googleLoginEnabled()) return null;
+
+  const holder = el('div', { class: 'dcp-google-holder', 'data-dc-google-link': '' });
+  const msg = el('div', { class: 'dcp-modal-msg', role: 'status' });
+  mountGoogleButton(holder, {
+    text: 'continue_with',
+    onCredential: async (credential) => {
+      msg.textContent = 'در حال اتصال...';
+      try {
+        await api.googleLogin(credential, '/plus/profile.html');
+        currentUser({ refresh: true });
+        msg.textContent = 'حساب گوگل وصل شد.';
+        setTimeout(() => location.reload(), 700);
+      } catch (e) {
+        msg.textContent = e instanceof ApiError ? e.message : 'اتصال ناموفق بود.';
+      }
+    },
+    onError: () => { msg.textContent = 'دکمه‌ی گوگل بارگذاری نشد.'; },
+  });
+  return el('div', {}, [
+    holder,
+    msg,
+    el('p', { class: 'dcp-sec-hint' }, 'با اتصال گوگل: ورود بدون کد پیامکی، از هر کشوری. حساب فعلی و اطلاعاتتان حفظ می‌شود.'),
+  ]);
+}
+
 /**
  * کد معرف — services/referrals.ts. Two states: no code yet (a name input with
  * a live preview of the final code, and an explicit irreversible-commit
@@ -604,6 +678,8 @@ export async function renderProfile(root, { me: preMe } = {}) {
     location.href = '/';
   });
 
+  const googleBody = googleBlock(me);
+
   root.replaceChildren(
     // Plus 2.0 skin: the heading wears the reader's avatar (first letter of
     // the display name) and the name itself, both drawn by CSS from these two
@@ -637,6 +713,9 @@ export async function renderProfile(root, { me: preMe } = {}) {
     ...(league ? [section('لیگ من', leagueEntryButton(league))] : []),
     section('مقایسه ماه به ماه', stats.month_vs_month ? monthCompare(stats.month_vs_month) : el('div', { class: 'dcp-muted' }, '—')),
     section(me.phone ? 'شماره موبایل' : 'شماره موبایل (اختیاری)', phoneBlock(me), 'phone'),
+    // Google login (dentcast.org): connect / connected. Omitted where it does
+    // not apply, so .ir readers see exactly the page they saw before.
+    ...(googleBody ? [section('حساب گوگل', googleBody, 'google')] : []),
     // Telegram (login + notifications) + Bale (notifications only). `connect` is the
     // deep-link anchor the homepage Bale/Telegram chips scroll to.
     section('اتصال به پیام‌رسان‌ها', messengerBlock(me), 'connect'),

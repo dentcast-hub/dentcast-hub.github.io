@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <!-- E-NAMAD host guard. The trust seal is registered to dentcast.ir alone and
+       enamad's logo.aspx renders from the referrer, so on the .org mirror it
+       would answer with an "invalid seal" badge. Flagging the host here — before
+       the body is parsed — is what keeps the empty white chip from flashing on
+       .org; dc-nav.js then removes the node outright. The seal markup itself
+       stays verbatim in the HTML so crawlers still read the id/Code it checks. -->
+  <script>
+    if (location.hostname.indexOf('dentcast.ir') === -1) {
+      document.documentElement.className += ' dc-no-seal';
+    }
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>حریم خصوصی | DentCast</title>
+
+  <meta name="description" content="حریم خصوصی دنت‌کست: چه داده‌ای برای حساب کاربری نگه داشته می‌شود، ورود با شماره موبایل، تلگرام و گوگل چه چیزی می‌گیرد، و چطور حساب یا اتصال‌ها را حذف کنید.">
+    <meta name="author" content="دکتر فواد شهابیان">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+
+  <link rel="canonical" href="https://dentcast.org/privacy.html">
+  <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/privacy.html">
+  <link rel="alternate" hreflang="fa" href="https://dentcast.org/privacy.html">
+  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/privacy.html">
+
+
+  <meta property="og:title"       content="حریم خصوصی | DentCast">
+  <meta property="og:description" content="چه داده‌ای در دنت‌کست نگه داشته می‌شود و چرا.">
+  <meta property="og:url"         content="https://dentcast.org/privacy.html">
+  <meta property="og:type"        content="profile">
+  <meta property="og:locale"      content="fa_IR">
+  <meta property="og:site_name"   content="DentCast">
+  <meta property="og:image"       content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="حریم خصوصی | DentCast">
+  <meta name="twitter:description" content="چه داده‌ای در دنت‌کست نگه داشته می‌شود و چرا.">
+  <meta name="twitter:image"       content="https://dentcast.org/dentcast-cover.webp">
+
+
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css?v=7">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
+
+  <!-- Theme init — no flash -->
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+
+  <style>
+/* ── Page-specific: About (FA) ─────────────────────── */
+
+body { font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif; }
+
+main.about-page {
+  max-width: 42.5rem;
+  margin: 0 auto;
+  padding: 2rem 1.125rem 6.25rem;
+}
+
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+
+/* ── Profile hero ─────────────────────────────────── */
+.about-hero {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+  padding: 1.75rem 1.625rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 1.375rem;
+  box-shadow: var(--card-sh2);
+  transition: background var(--tr2), border-color var(--tr2);
+}
+
+.about-hero-logo {
+  flex-shrink: 0;
+  width: 4.25rem; height: 4.25rem;
+  border-radius: 1.125rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  padding: 0.5rem; overflow: hidden;
+  transition: background var(--tr2), border-color var(--tr2);
+}
+
+.about-hero-logo img {
+  width: 3.25rem; height: 3.25rem;
+  object-fit: contain; display: block;
+}
+
+.about-hero-text { flex: 1; min-width: 0; }
+
+.about-hero-name {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--txt);
+  margin: 0 0 0.25rem;
+  line-height: 1.2;
+  transition: color var(--tr2);
+}
+
+.about-hero-title {
+  font-size: .875rem;
+  color: var(--txt2);
+  font-weight: 500;
+  margin: 0 0 0.75rem;
+  transition: color var(--tr2);
+}
+
+.about-hero-chips {
+  display: flex; flex-wrap: wrap; gap: 0.375rem;
+}
+
+.about-chip {
+  font-size: .70rem;
+  font-weight: 700;
+  padding: 0.1875rem 0.625rem;
+  border-radius: 62.4375rem;
+  background: var(--chip-bg);
+  color: var(--chip-txt);
+  border: 1px solid var(--chip-bd);
+  white-space: nowrap;
+  transition: background var(--tr2), color var(--tr2), border-color var(--tr2);
+}
+
+/* ── Content boxes ────────────────────────────────── */
+.content-box {
+  border-radius: 1.125rem;
+  padding: 1.625rem 1.5rem;
+  margin-bottom: 1.125rem;
+}
+
+.content-box h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ac);
+  border-right: 3px solid var(--ac);
+  padding-right: 0.75rem;
+  margin: 0 0 0.875rem;
+  transition: color var(--tr2), border-color var(--tr2);
+}
+
+.content-box p, .content-box li {
+  font-size: .925rem;
+  line-height: 1.9;
+  color: var(--txt);
+  margin: 0 0 0.625rem;
+  transition: color var(--tr2);
+}
+
+.content-box p:last-child,
+.content-box li:last-child { margin-bottom: 0; }
+
+.content-box strong { color: var(--txt); font-weight: 700; }
+
+/* ── Section dividers inside content-box ─────────── */
+.about-section {
+  padding-bottom: 1.375rem;
+  border-bottom: 1px solid var(--border2);
+  margin-bottom: 1.375rem;
+  transition: border-color var(--tr2);
+}
+.about-section:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+/* ── Projects list ────────────────────────────────── */
+.about-projects {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.about-projects li {
+  position: relative;
+  padding-right: 1rem;
+  margin: 0;
+}
+
+.about-projects li::before {
+  content: "";
+  position: absolute;
+  right: 0; top: 0.5625rem;
+  width: 0.375rem; height: 0.375rem;
+  border-radius: 50%;
+  background: var(--ac);
+  opacity: .6;
+}
+
+/* ── Contact rows ─────────────────────────────────── */
+.about-contact-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  font-size: .90rem;
+  color: var(--txt);
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+  transition: color var(--tr2);
+}
+.about-contact-row:last-child { margin-bottom: 0; }
+.about-contact-ico { flex-shrink: 0; font-size: .92rem; }
+.about-contact-row a { color: var(--ac); text-decoration: none; font-weight: 500; }
+.about-contact-row a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── Page label ───────────────────────────────────── */
+.about-page-label {
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--txt3);
+  letter-spacing: .06em;
+  margin-bottom: 0.875rem;
+  transition: color var(--tr2);
+}
+
+/* ── Footer ───────────────────────────────────────── */
+.about-footer {
+  margin-top: 2.25rem;
+  padding-top: 1.375rem;
+  border-top: 1px solid var(--border2);
+  text-align: center;
+  transition: border-color var(--tr2);
+}
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 480px) {
+  .about-hero { padding: 1.25rem 1.125rem; gap: 0.875rem; }
+  .about-hero-logo { width: 3.375rem; height: 3.375rem; padding: 0.375rem; }
+  .about-hero-logo img { width: 2.625rem; height: 2.625rem; }
+  .about-hero-name { font-size: 1.1rem; }
+  .content-box { padding: 1.25rem 1.125rem; }
+}
+  </style>
+</head>
+
+<body>
+
+<!-- ── TOP BAR ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH — خارج از main تا گوگل محتوا رو قاطی نکنه ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="about-page" id="main-content">
+
+  <p class="about-page-label">حریم خصوصی</p>
+
+  <div class="content-box">
+    <div class="about-section">
+      <h1 style="font-size:1.35rem;margin:0 0 .6rem">حریم خصوصی در دنت‌کست</h1>
+      <p>
+        دنت‌کست یک سایت محتوایی است: پادکست، خلاصه‌ی مقاله، یادداشت بالینی و دانشنامه. خواندن و شنیدن همه‌ی این‌ها
+        حساب کاربری نمی‌خواهد و هیچ داده‌ای از شما ثبت نمی‌کند، جز آنچه هر سایتی برای آمار بازدید ثبت می‌کند.
+        حساب کاربری (دنت‌کست پلاس) فقط وقتی ساخته می‌شود که خودتان وارد شوید، و این صفحه می‌گوید در آن صورت
+        چه چیزی نگه داشته می‌شود، چرا، و چطور می‌توانید پاکش کنید.
+      </p>
+      <p style="color:var(--txt3);font-size:.86rem;margin-bottom:0">آخرین به‌روزرسانی: مهر ۱۴۰۵</p>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="about-section">
+      <h2>ورود به حساب</h2>
+      <p>سه راه ورود هست و هر کدام فقط همان چیزی را می‌گیرد که برای شناختن حساب لازم است:</p>
+      <ul>
+        <li><strong>شماره موبایل:</strong> شماره و یک کد یک‌بارمصرف پیامکی. شماره ذخیره می‌شود؛ کد بعد از چند دقیقه از بین می‌رود.</li>
+        <li><strong>تلگرام:</strong> شناسه‌ی عددی حساب تلگرام، نام نمایشی و در صورت وجود نام کاربری و عکس پروفایل، همان‌طور که ویجت رسمی تلگرام می‌فرستد. رمز یا پیام‌های تلگرام شما هرگز در دسترس ما نیست.</li>
+        <li><strong>گوگل:</strong> شناسه‌ی حساب گوگل، نام و ایمیل، فقط اگر خود گوگل ایمیل را تأییدشده اعلام کند. ما فقط «این کیست» را از گوگل می‌پرسیم؛ به ایمیل‌ها، مخاطبین یا هیچ سرویس دیگر گوگل دسترسی نمی‌گیریم و از این مسیر ایمیلی برایتان نمی‌فرستیم.</li>
+      </ul>
+      <p>
+        اگر با دو راه مختلف وارد شوید، از پروفایل می‌توانید آن‌ها را به یک حساب وصل کنید؛ هیچ‌وقت دو حساب بی‌اجازه‌ی شما ادغام نمی‌شوند.
+        هر اتصال را می‌توانید از پروفایل قطع کنید، به شرطی که راه ورود دیگری برای حساب باقی بماند.
+      </p>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="about-section">
+      <h2>چه چیزی در حساب نگه داشته می‌شود</h2>
+      <ul>
+        <li>اسم مستعاری که خودتان انتخاب می‌کنید (همین اسم در لیدربورد و زیر گفتگوها دیده می‌شود؛ نام واقعی لازم نیست).</li>
+        <li>چیزهایی که خودتان می‌سازید: هایلایت‌ها، یادداشت‌ها، کالکشن‌ها، پاسخ چالش‌ها، پیام‌های پشتیبانی، قطعه‌های صوتی.</li>
+        <li>فعالیت مطالعه برای استریک، مرور و گزارش ماهانه: کدام مطلب را باز کرده یا تمام کرده‌اید و کِی.</li>
+        <li>وضعیت اشتراک و سابقه‌ی پرداخت. پرداخت آنلاین از درگاه زیبال انجام می‌شود و اطلاعات کارت بانکی هرگز به دنت‌کست نمی‌رسد.</li>
+        <li>اگر خودتان روشن کنید: اشتراک نوتیفیکیشن مرورگر، اتصال پیام‌رسان بله، و شماره برای پیامک یادآوری.</li>
+        <li>اگر برای آزمون مسیر گواهی بگیرید: نام و نام خانوادگی واقعی که روی گواهی چاپ می‌شود، چون صفحه‌ی تأیید گواهی همین را به دیگران نشان می‌دهد.</li>
+      </ul>
+      <p>
+        هیچ‌کدام از این‌ها فروخته یا به تبلیغ‌دهنده داده نمی‌شود. تبلیغ‌های داخل سایت فقط می‌دانند «این بازدیدکننده اشتراک دارد یا نه»،
+        نه این‌که کیست.
+      </p>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="about-section">
+      <h2>کوکی و آمار</h2>
+      <ul>
+        <li>یک کوکی نشست برای این‌که بعد از ورود، وارد بمانید. با خروج پاک می‌شود.</li>
+        <li>تنظیمات ظاهری مثل تم روشن/تاریک و جای پخش پادکست، در حافظه‌ی خود مرورگر شما می‌ماند، نه روی سرور.</li>
+        <li>آمار بازدید با Google Analytics و یکتانت، به شکل تجمیعی، برای این‌که بدانیم کدام مطلب خوانده می‌شود.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="about-section">
+      <h2>حذف حساب و دسترسی به داده‌ها</h2>
+      <p>
+        خروجی کامل هایلایت‌ها و یادداشت‌هایتان همیشه از پروفایل در دسترس است، در هر نوع اشتراک.
+        برای حذف کامل حساب یا هر سؤالی درباره‌ی داده‌هایتان، از بخش «پشتیبانی» داخل سایت پیام بدهید یا از
+        <a href="/about.html#contact">راه‌های تماس</a> استفاده کنید؛ حساب و همه‌ی داده‌های وابسته‌اش پاک می‌شود.
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="about-footer dc-site-footer">
+    <a href="/">بازگشت به صفحهٔ اصلی</a>
+    <br>
+    <small style="color:var(--txt3);font-size:.78rem;margin-top:0.625rem;display:inline-block;">
+      DentCast &copy; 2025 — طراحی و نگارش توسط دکتر فواد شهابیان
+    </small>
+  </footer>
+
+</main>
+
+<!-- Scripts -->
+<script src="/global-search.js?v=11" defer></script>
+<script src="/dc-nav.js?v=253" defer></script>
+<script src="/global-search-ui.js?v=5" defer></script>
+
+<!-- Analytics -->
+<script>
+  window.addEventListener('load', function () {
+  !function (t, e, n) {
+    t.yektanetAnalyticsObject = n, t[n] = t[n] || function () {
+      t[n].q.push(arguments)
+    }, t[n].q = t[n].q || [];
+    var a = new Date, r = a.getFullYear().toString() + "0" + a.getMonth() + "0" + a.getDate() + "0" + a.getHours(),
+        c = e.getElementsByTagName("script")[0], s = e.createElement("script");
+    s.id = "ua-script-nzlddHSQ"; s.dataset.analyticsobject = n;
+    s.async = 1; s.type = "text/javascript";
+    s.src = "https://cdn.yektanet.com/rg_woebegone/scripts_v3/nzlddHSQ/rg.complete.js?v=" + r;
+    c.parentNode.insertBefore(s, c);
+  }(window, document, "yektanet");
+  });
+</script>
+
+</body>
+</html>

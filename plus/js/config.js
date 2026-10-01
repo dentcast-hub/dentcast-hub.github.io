@@ -195,6 +195,31 @@ export function telegramLoginEnabled() {
 // (not a fetch), so we target the primary same-site API base directly rather
 // than the health-checked failover list. `origin` + `return_to` tell the
 // callback where to send the browser back after it sets the session cookie.
+// --- Google Login -----------------------------------------------------------
+// «Sign in with Google» for the reader abroad, who has no Iranian SIM for the
+// OTP and until now had Telegram alone. The client id is PUBLIC by design (it
+// names our OAuth client to Google and is the `aud` the API checks on every
+// token); the secret half of that client is never used anywhere, because the
+// ID token is verified against Google's published keys, not exchanged.
+//
+// Empty = the button is never drawn and the API answers not_configured, so
+// the site is unchanged until the founder's OAuth client exists. Fill it here
+// (or override per page via window.DENTCAST_PLUS.googleClientId).
+const GOOGLE_CLIENT_ID_DEFAULT = '';
+export const GOOGLE_CLIENT_ID = OVERRIDE.googleClientId || GOOGLE_CLIENT_ID_DEFAULT;
+
+// Shown ONLY on .org, like Telegram, by the founder's decision (1405/07/09):
+// Google is not filtered in Iran, but the .ir site misbehaves behind a VPN and
+// Google misbehaves without one, so on .ir the button would ask a reader to
+// toggle their VPN twice inside one login. The API accepts the token from
+// either host, so widening this is the whole change if that ever flips.
+// Set window.DENTCAST_PLUS.forceGoogleLogin = true to preview it anywhere.
+export function googleLoginEnabled() {
+  if (!GOOGLE_CLIENT_ID) return false;
+  if (OVERRIDE.forceGoogleLogin) return true;
+  return location.hostname.indexOf('dentcast.org') !== -1;
+}
+
 export function telegramCallbackUrl(returnTo) {
   const qs = new URLSearchParams({
     origin: location.origin,

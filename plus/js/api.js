@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=160';
+import { API_BASES } from './config.js?v=161';
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -217,6 +217,13 @@ export const api = {
     request('/auth/phone/link', { method: 'POST', body: { phone, code }, pinned: true, timeoutMs: REQUEST_TIMEOUT_MS }),
   // Disconnect Telegram from the current account (needs a phone fallback).
   unlinkTelegram: () => request('/auth/telegram/unlink', { method: 'POST' }),
+  // «Sign in with Google»: post the ID token the Google button handed the page.
+  // Signed out it signs in (or creates the account); signed in it connects
+  // Google to the current account. Pinned and bounded like the OTP calls.
+  googleLogin: (credential, return_to) =>
+    request('/auth/google', { method: 'POST', body: { credential, return_to }, pinned: true, timeoutMs: REQUEST_TIMEOUT_MS }),
+  // Disconnect Google (needs a phone or Telegram fallback, like Telegram's).
+  unlinkGoogle: () => request('/auth/google/unlink', { method: 'POST' }),
   // Bale (بله) notification channel (no login flow): mint a one-time connect
   // token (the client builds the deep link from it) / disconnect.
   connectBale: () => request('/auth/bale/connect', { method: 'POST' }),

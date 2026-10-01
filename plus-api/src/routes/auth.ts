@@ -8,6 +8,7 @@ import { setSessionCookie, clearSessionCookie, readSession } from '../services/s
 import { sanitizeReturnTo } from '../services/return-to.js';
 import { generatePseudonym } from '../services/pseudonym.js';
 import { verifyTelegramAuthAny } from '../services/telegram-auth.js';
+import { verifyGoogleIdToken, maskEmail, type GoogleAuthReason } from '../services/google-auth.js';
 import { mergeProfiles } from '../services/merge-profiles.js';
 import { sms } from '../providers/registry.js';
 import { loadUser } from '../middleware/auth.js';
@@ -57,6 +58,24 @@ function siteOriginFor(requested: string | undefined): string {
     if (sameSite) return sameSite;
   }
   return config.corsOrigins[0] ?? '';
+}
+
+/** Does this account carry an external identity of `provider`? */
+async function hasIdentity(userId: string, provider: string): Promise<boolean> {
+  const row = await one<{ ok: number }>(
+    'select 1 as ok from auth_identities where user_id = $1 and provider = $2 limit 1',
+    [userId, provider],
+  );
+  return !!row;
+}
+
+/** The Google identity's stored email (verified by Google), or null. */
+async function googleEmailOf(userId: string): Promise<string | null | undefined> {
+  const row = await one<{ username: string | null }>(
+    "select username from auth_identities where user_id = $1 and provider = 'google' limit 1",
+    [userId],
+  );
+  return row ? row.username : undefined; // undefined = no Google identity at all
 }
 
 function publicUser(u: {
@@ -458,7 +477,8 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
   app.post('/auth/telegram/unlink', async (request, reply) => {
     const user = await loadUser(request);
     if (!user) return reply.code(401).send({ error: 'unauthorized', message: 'ورود لازم است.' });
-    if (!user.phone) {
+    // A phone OR a Google identity keeps the door open (Google login, 1405/07/09).
+    if (!user.phone && !(await hasIdentity(user.id, 'google'))) {
       return reply.code(409).send({
         error: 'no_fallback',
         message: 'برای قطع تلگرام، حساب باید راه ورود دیگری داشته باشد؛ اول شماره موبایل خود را تأیید کنید.',
@@ -471,6 +491,153 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       );
       await query('update profiles set telegram_id = null where id = $1', [user.id], client);
     });
+    return reply.send({ ok: true });
+  });
+
+  // --- POST /auth/google -----------------------------------------------------
+  // «Sign in with Google» (dentcast.org). The Google Identity Services button
+  // runs in POPUP mode, so unlike the Telegram widget there is no redirect: the
+  // browser receives a signed ID token (JWT) and posts it here, and the answer
+  // is JSON the login modal reads exactly as it reads /auth/otp/verify. The
+  // token is verified against Google's published keys (services/google-auth.ts);
+  // nothing in it is trusted before that.
+  //
+  // One route for login AND link, the way the Telegram callback is: whether the
+  // browser already carries a session decides which. The three cases and the
+  // one refusal are the Telegram callback's, verbatim in spirit:
+  //   (A) this Google account already belongs to a profile -> sign in as it,
+  //       unless the browser is signed in as a DIFFERENT profile (google_taken:
+  //       never auto-merge, that is how a phone number got eaten once).
+  //   (B) no profile yet, but signed in -> link Google to the current account.
+  //   (C) neither -> a phone-less account with an EMPTY display_name, so the
+  //       mandatory-nickname step fires (is_new tells the modal to show it).
+  const GOOGLE_FAIL_FA: Partial<Record<GoogleAuthReason, string>> = {
+    not_configured: 'ورود با گوگل هنوز روی سرور فعال نشده است. فعلاً با تلگرام یا شماره موبایل وارد شوید.',
+    keys_unavailable: 'تأیید حساب گوگل در حال حاضر ممکن نیست. چند لحظه بعد دوباره تلاش کنید.',
+    expired: 'مهلت این درخواست گذشته است. دوباره روی دکمه‌ی گوگل بزنید.',
+  };
+  const GOOGLE_FAIL_DEFAULT = 'اعتبارسنجی ورود با گوگل ناموفق بود. دوباره تلاش کنید.';
+
+  app.post('/auth/google', {
+    schema: {
+      body: {
+        type: 'object',
+        required: ['credential'],
+        properties: {
+          credential: { type: 'string', minLength: 20, maxLength: 4096 },
+          return_to: { type: 'string' },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const { credential, return_to } = request.body as { credential: string; return_to?: string };
+
+    // Verification is cheap but not free (an RSA check per call, and a key
+    // refetch on an unknown kid), and the only thing that can arrive here
+    // unauthenticated is a token somebody else minted — so one IP gets a
+    // generous but finite number of tries an hour.
+    const perIp = consume(`google:ip:${clientIp(request)}`, config.auth.google.maxPerIpPerHour, HOUR_MS);
+    if (!perIp.allowed) {
+      reply.header('retry-after', Math.ceil(perIp.retryAfterMs / 1000));
+      return reply.code(429).send({
+        error: 'rate_limited',
+        message: 'تعداد درخواست‌ها زیاد است. کمی بعد دوباره تلاش کنید.',
+      });
+    }
+
+    const verdict = await verifyGoogleIdToken(credential);
+    if (!verdict.ok) {
+      const status = verdict.reason === 'not_configured' || verdict.reason === 'keys_unavailable' ? 503 : 400;
+      return reply.code(status).send({
+        error: verdict.reason,
+        message: GOOGLE_FAIL_FA[verdict.reason] ?? GOOGLE_FAIL_DEFAULT,
+      });
+    }
+    const { sub, email, name, picture } = verdict.identity;
+    const sessionUserId = readSession(request);
+
+    const outcome = await withTransaction<{
+      userId?: string; isNew?: boolean; linked?: boolean; rejected?: string;
+    }>(async (client) => {
+      const identity = await one<{ user_id: string }>(
+        `select user_id from auth_identities
+           where provider = 'google' and provider_user_id = $1`,
+        [sub], client,
+      );
+      let sessionAccount: string | null = null;
+      if (sessionUserId) {
+        const s = await one<{ id: string }>('select id from profiles where id = $1', [sessionUserId], client);
+        sessionAccount = s?.id ?? null;
+      }
+
+      const insertIdentity = (uid: string) => query(
+        `insert into auth_identities
+           (user_id, provider, provider_user_id, username, display_name, photo_url)
+         values ($1, 'google', $2, $3, $4, $5)`,
+        [uid, sub, email, name, picture], client,
+      );
+
+      if (identity) {
+        // (A) This Google account already belongs to `identity.user_id`.
+        if (sessionAccount && sessionAccount !== identity.user_id) return { rejected: 'google_taken' };
+        await query(
+          `update auth_identities
+              set username = $2, display_name = $3, photo_url = $4, updated_at = now()
+            where provider = 'google' and provider_user_id = $1`,
+          [sub, email, name, picture], client,
+        );
+        return { userId: identity.user_id, isNew: false, linked: false };
+      }
+      if (sessionAccount) {
+        // (B) Link Google to the account the browser is signed in as.
+        await insertIdentity(sessionAccount);
+        return { userId: sessionAccount, isNew: false, linked: true };
+      }
+      // (C) Brand-new account: no phone, empty name -> the nickname step.
+      const created = await one<{ id: string }>(
+        `insert into profiles (phone, display_name) values (null, '') returning id`,
+        [], client,
+      );
+      await insertIdentity(created!.id);
+      return { userId: created!.id, isNew: true, linked: false };
+    });
+
+    if (outcome.rejected) {
+      return reply.code(409).send({
+        error: outcome.rejected,
+        message: 'این حساب گوگل قبلاً به یک حساب دیگر متصل است. برای اتصال به این حساب، اول از حساب قبلی «قطع اتصال گوگل» را بزنید.',
+      });
+    }
+
+    setSessionCookie(reply, outcome.userId!, request);
+    const u = await one<{
+      id: string; display_name: string; tier: string; current_streak: number; longest_streak: number;
+    }>(
+      'select id, display_name, tier, current_streak, longest_streak from profiles where id = $1',
+      [outcome.userId!],
+    );
+    return reply.send({
+      user: u ? publicUser(u) : null,
+      is_new: outcome.isNew === true,
+      linked: outcome.linked === true,
+      return_to: sanitizeReturnTo(return_to),
+    });
+  });
+
+  // --- POST /auth/google/unlink ----------------------------------------------
+  // Disconnect Google from the current account. Same rule as Telegram: the
+  // account must keep another way in (a phone or a Telegram identity), so a
+  // Google-only reader cannot lock themselves out.
+  app.post('/auth/google/unlink', async (request, reply) => {
+    const user = await loadUser(request);
+    if (!user) return reply.code(401).send({ error: 'unauthorized', message: 'ورود لازم است.' });
+    if (!user.phone && user.telegram_id === null) {
+      return reply.code(409).send({
+        error: 'no_fallback',
+        message: 'برای قطع گوگل، حساب باید راه ورود دیگری داشته باشد؛ اول شماره موبایل خود را تأیید کنید.',
+      });
+    }
+    await query("delete from auth_identities where user_id = $1 and provider = 'google'", [user.id]);
     return reply.send({ ok: true });
   });
 
@@ -516,7 +683,7 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     // The due-card count stays out of it — it is premium-only, and issuing a
     // query for accounts that will not read the answer is the opposite of the
     // point. The streak reads `user`, which is already in hand.
-    const [shownStreak, activePathway, pendingGrant, subscription, counters] = await Promise.all([
+    const [shownStreak, activePathway, pendingGrant, subscription, counters, googleEmail] = await Promise.all([
       // Show the streak only while it is still alive. The cache resets lazily
       // (on the next qualifying action), so after an unbridgeable gap the
       // cached number is stale — the client must see 0, not last week's run.
@@ -525,6 +692,7 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       getPendingPremiumGrant(user.id),
       getSubscriptionSummary(user.id),
       noticeCounters(user.id),
+      googleEmailOf(user.id),
     ]);
 
     const me: Record<string, unknown> = {
@@ -534,6 +702,11 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       phone: user.phone,
       telegram_linked: user.telegram_id !== null,
       bale_linked: user.bale_id !== null,
+      // Google login (dentcast.org). The email is Google's own verified
+      // address, half hidden: enough to tell WHICH account is connected,
+      // never the whole thing in a screenshot. Null when Google gave none.
+      google_linked: googleEmail !== undefined,
+      google_email: googleEmail === undefined ? null : maskEmail(googleEmail),
       current_streak: shownStreak,
       longest_streak: user.longest_streak,
       last_active_day: user.last_active_day,

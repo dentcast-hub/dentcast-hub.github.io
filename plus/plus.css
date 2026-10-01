@@ -1434,6 +1434,12 @@ a.dcp-cl-board {
 .dcp-tg-caption { font-size: .9rem; font-weight: 600; margin-bottom: 4px; }
 .dcp-tg-holder { min-height: 40px; display: flex; }
 .dcp-tg-holder iframe { margin: 0 !important; }
+/* Google Login button holder (login modal + profile). Google draws the button
+   itself into this box (full width per the approved mockup); the holder only
+   reserves the row so the card does not jump when the script lands. */
+.dcp-google-holder { min-height: 40px; display: flex; width: 100%; }
+.dcp-google-holder > div { max-width: 100%; }
+.dcp-google-holder iframe { margin: 0 !important; }
 /* "or with your phone number" divider between Telegram and OTP. */
 .dcp-modal-or { display: flex; align-items: center; text-align: center; gap: 10px; opacity: .6; font-size: .82rem; margin-top: 6px; }
 .dcp-modal-or::before, .dcp-modal-or::after { content: ""; flex: 1; height: 1px; background: var(--dcp-line); }
