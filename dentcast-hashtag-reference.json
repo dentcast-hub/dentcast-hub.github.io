@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 106,
+   "count": 107,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -366,7 +366,8 @@
     "insight/insight-84",
     "insight/insight-85",
     "insight/insight-86",
-    "insight/insight-87"
+    "insight/insight-87",
+    "insight/insight-88"
    ]
   },
   {
@@ -758,7 +759,7 @@
     "#پست و کور"
    ],
    "co_tags": [],
-   "count": 40,
+   "count": 41,
    "content_ids": [
     "episodes/episode-36",
     "episodes/episode-42",
@@ -799,7 +800,8 @@
     "notecast/episode-42",
     "chairside/chairside-39",
     "notecast/episode-43",
-    "metanotes/meta-21"
+    "metanotes/meta-21",
+    "insight/insight-88"
    ]
   },
   {
@@ -2256,6 +2258,42 @@
    ]
   },
   {
+   "key": "روکش_موقت",
+   "tag": "#روکش_موقت",
+   "domain": null,
+   "words": 2,
+   "definition": "پروویژنالی که فقط یک مرحله‌ی گذرا نیست، بلکه مرجعِ طراحیِ نهایی است.",
+   "use_when": "مقاله نقشِ موقتی را در تعیینِ کارِ نهایی جدی بگیرد.",
+   "aliases": [
+    "provisional",
+    "موقتی",
+    "temporary crown",
+    "پروویژنال",
+    "تمپ",
+    "موقت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-125-2",
+    "insight/insight-2",
+    "insight/insight-12",
+    "insight/insight-19",
+    "insight/insight-21",
+    "chairside/chairside-2",
+    "insight/insight-42",
+    "insight/insight-55",
+    "insight/insight-63",
+    "dentcast-plus/video-8",
+    "insight/insight-77",
+    "sharehub/share-21",
+    "insight/insight-81",
+    "chairside/chairside-39",
+    "insight/insight-88"
+   ]
+  },
+  {
    "key": "کامپوزیت",
    "tag": "#کامپوزیت",
    "domain": "clinical",
@@ -2320,6 +2358,44 @@
    ]
   },
   {
+   "key": "اسکنر_داخل_دهانی",
+   "tag": "#اسکنر_داخل_دهانی",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "اسکنرِ داخل‌دهانی که قالبِ دیجیتالِ مستقیم می‌گیرد.",
+   "use_when": "مقاله اسکنر داخل‌دهانی را موضوع داشته باشد.",
+   "aliases": [
+    "intraoral scanner",
+    "اسکنر دیجیتال",
+    "IOS",
+    "اسکنر"
+   ],
+   "variants": [
+    "#اسکن_داخل_دهانی",
+    "#Intraoral_Scanner"
+   ],
+   "co_tags": [
+    "#Intraoral_Scanner"
+   ],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-106-2",
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-149-2",
+    "sharehub/share-2",
+    "insight/insight-33",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "metanotes/meta-16",
+    "sharehub/share-15",
+    "dentai/dentai-29",
+    "dentai/dentai-32",
+    "insight/insight-74",
+    "insight/insight-88"
+   ]
+  },
+  {
    "key": "دقت_اسکن",
    "tag": "#دقت_اسکن",
    "domain": null,
@@ -2350,41 +2426,6 @@
     "dentai/dentai-29",
     "dentai/dentai-32",
     "insight/insight-74"
-   ]
-  },
-  {
-   "key": "روکش_موقت",
-   "tag": "#روکش_موقت",
-   "domain": null,
-   "words": 2,
-   "definition": "پروویژنالی که فقط یک مرحله‌ی گذرا نیست، بلکه مرجعِ طراحیِ نهایی است.",
-   "use_when": "مقاله نقشِ موقتی را در تعیینِ کارِ نهایی جدی بگیرد.",
-   "aliases": [
-    "provisional",
-    "موقتی",
-    "temporary crown",
-    "پروویژنال",
-    "تمپ",
-    "موقت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "episodes/episode-125-2",
-    "insight/insight-2",
-    "insight/insight-12",
-    "insight/insight-19",
-    "insight/insight-21",
-    "chairside/chairside-2",
-    "insight/insight-42",
-    "insight/insight-55",
-    "insight/insight-63",
-    "dentcast-plus/video-8",
-    "insight/insight-77",
-    "sharehub/share-21",
-    "insight/insight-81",
-    "chairside/chairside-39"
    ]
   },
   {
@@ -2421,40 +2462,38 @@
    ]
   },
   {
-   "key": "اسکنر_داخل_دهانی",
-   "tag": "#اسکنر_داخل_دهانی",
+   "key": "فایبر_پست",
+   "tag": "#فایبر_پست",
    "domain": "clinical",
-   "words": 3,
-   "definition": "اسکنرِ داخل‌دهانی که قالبِ دیجیتالِ مستقیم می‌گیرد.",
-   "use_when": "مقاله اسکنر داخل‌دهانی را موضوع داشته باشد.",
+   "words": 2,
+   "definition": "پستِ فایبری هم‌مدولِ عاج برای بازسازیِ دندانِ اندوشده.",
+   "use_when": "مقاله فایبرپست را انتخاب، آماده‌سازی یا ارزیابی کند.",
    "aliases": [
-    "intraoral scanner",
-    "اسکنر دیجیتال",
-    "IOS",
-    "اسکنر"
+    "fiber post",
+    "فایبرپست",
+    "فایبر پست",
+    "پست فایبر"
    ],
    "variants": [
-    "#اسکن_داخل_دهانی",
-    "#Intraoral_Scanner"
+    "#فایبرپست"
    ],
-   "co_tags": [
-    "#Intraoral_Scanner"
-   ],
-   "count": 13,
+   "co_tags": [],
+   "count": 14,
    "content_ids": [
-    "episodes/episode-106-2",
-    "episodes/episode-122-2",
-    "episodes/episode-128-1",
-    "episodes/episode-149-2",
-    "sharehub/share-2",
-    "insight/insight-33",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "metanotes/meta-16",
-    "sharehub/share-15",
-    "dentai/dentai-29",
-    "dentai/dentai-32",
-    "insight/insight-74"
+    "episodes/episode-42",
+    "episodes/episode-43",
+    "episodes/episode-79",
+    "episodes/episode-125-3",
+    "episodes/episode-128",
+    "episodes/episode-129",
+    "episodes/episode-147-7",
+    "metanotes/meta-7",
+    "insight/insight-28",
+    "notecast/episode-36",
+    "sharehub/share-20",
+    "notecast/episode-42",
+    "notecast/episode-43",
+    "insight/insight-88"
    ]
   },
   {
@@ -2681,40 +2720,6 @@
    ]
   },
   {
-   "key": "فایبر_پست",
-   "tag": "#فایبر_پست",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پستِ فایبری هم‌مدولِ عاج برای بازسازیِ دندانِ اندوشده.",
-   "use_when": "مقاله فایبرپست را انتخاب، آماده‌سازی یا ارزیابی کند.",
-   "aliases": [
-    "fiber post",
-    "فایبرپست",
-    "فایبر پست",
-    "پست فایبر"
-   ],
-   "variants": [
-    "#فایبرپست"
-   ],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-42",
-    "episodes/episode-43",
-    "episodes/episode-79",
-    "episodes/episode-125-3",
-    "episodes/episode-128",
-    "episodes/episode-129",
-    "episodes/episode-147-7",
-    "metanotes/meta-7",
-    "insight/insight-28",
-    "notecast/episode-36",
-    "sharehub/share-20",
-    "notecast/episode-42",
-    "notecast/episode-43"
-   ]
-  },
-  {
    "key": "فینیش_لاین",
    "tag": "#فینیش_لاین",
    "domain": "clinical",
@@ -2846,6 +2851,35 @@
     "chairside/chairside-14",
     "chairside/chairside-21",
     "chairside/chairside-30"
+   ]
+  },
+  {
+   "key": "افزایش_vd",
+   "tag": "#افزایش_VD",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بالا بردن بعد عمودی — تصمیمی که فضا می‌سازد و همزمان ریسک می‌آورد.",
+   "use_when": "مقاله درباره‌ی خودِ افزایش VD تصمیم بگیرد: اندیکاسیون، مقدار، یا ریسک.",
+   "aliases": [
+    "بالا بردن بعد عمودی",
+    "افزایش بعد عمودی",
+    "افزایش دایمنشن عمودی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-34",
+    "episodes/episode-35",
+    "insight/insight-12",
+    "notecast/episode-14",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "insight/insight-43",
+    "notecast/episode-35",
+    "insight/insight-77",
+    "insight/insight-88"
    ]
   },
   {
@@ -3163,34 +3197,6 @@
     "episodes/episode-159-1",
     "metanotes/meta-14",
     "dentai/dentai-29"
-   ]
-  },
-  {
-   "key": "افزایش_vd",
-   "tag": "#افزایش_VD",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "بالا بردن بعد عمودی — تصمیمی که فضا می‌سازد و همزمان ریسک می‌آورد.",
-   "use_when": "مقاله درباره‌ی خودِ افزایش VD تصمیم بگیرد: اندیکاسیون، مقدار، یا ریسک.",
-   "aliases": [
-    "بالا بردن بعد عمودی",
-    "افزایش بعد عمودی",
-    "افزایش دایمنشن عمودی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-14",
-    "episodes/episode-34",
-    "episodes/episode-35",
-    "insight/insight-12",
-    "notecast/episode-14",
-    "episodes/episode-154",
-    "episodes/episode-155",
-    "insight/insight-43",
-    "notecast/episode-35",
-    "insight/insight-77"
    ]
   },
   {
@@ -7477,6 +7483,27 @@
    ]
   },
   {
+   "key": "استیج_بندی_درمان",
+   "tag": "#استیج_بندی_درمان",
+   "domain": null,
+   "words": 3,
+   "definition": "شکستنِ درمان به مراحلِ ترتیب‌دار.",
+   "use_when": "مقاله ترتیبِ مراحل را خودِ تصمیم بداند.",
+   "aliases": [
+    "استیجینگ",
+    "staging",
+    "مرحله بندی درمان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-2",
+    "chairside/chairside-24",
+    "insight/insight-88"
+   ]
+  },
+  {
    "key": "اصول_تراش",
    "tag": "#اصول_تراش",
    "domain": "clinical",
@@ -9899,26 +9926,6 @@
    ]
   },
   {
-   "key": "استیج_بندی_درمان",
-   "tag": "#استیج_بندی_درمان",
-   "domain": null,
-   "words": 3,
-   "definition": "شکستنِ درمان به مراحلِ ترتیب‌دار.",
-   "use_when": "مقاله ترتیبِ مراحل را خودِ تصمیم بداند.",
-   "aliases": [
-    "استیجینگ",
-    "staging",
-    "مرحله بندی درمان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-2",
-    "chairside/chairside-24"
-   ]
-  },
-  {
    "key": "اسلایدکست",
    "tag": "#اسلایدکست",
    "domain": "brand",
@@ -11147,6 +11154,27 @@
    "content_ids": [
     "episodes/episode-99",
     "dentai/dentai-2"
+   ]
+  },
+  {
+   "key": "روکش_اسپلینت",
+   "tag": "#روکش_اسپلینت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "روکش‌های متصل به هم، که می‌توانند یک دندانِ هپلس را پنهان کنند.",
+   "use_when": "مقاله اسپلینت بودن را عاملِ عدم قطعیت بداند.",
+   "aliases": [
+    "اسپلینت روکش",
+    "splinted crowns",
+    "روکش متصل",
+    "روکش های به هم چسبیده"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-14",
+    "insight/insight-88"
    ]
   },
   {
@@ -16828,26 +16856,6 @@
    "count": 1,
    "content_ids": [
     "photocast/episode-3"
-   ]
-  },
-  {
-   "key": "روکش_اسپلینت",
-   "tag": "#روکش_اسپلینت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "روکش‌های متصل به هم، که می‌توانند یک دندانِ هپلس را پنهان کنند.",
-   "use_when": "مقاله اسپلینت بودن را عاملِ عدم قطعیت بداند.",
-   "aliases": [
-    "اسپلینت روکش",
-    "splinted crowns",
-    "روکش متصل",
-    "روکش های به هم چسبیده"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-14"
    ]
   },
   {
