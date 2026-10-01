@@ -1,0 +1,24 @@
+{
+  "type": "taraz",
+  "enforce": true,
+  "note": "taraz/taraz1-7 — تراز شواهد قسمت ۷ «گزارش مورد و case series». #تراز_شواهد (series), #مطالعه_مشاهده‌ای and #طراحی_مطالعه are REUSED. Two concepts the part resolves are newly minted: --simulate returned nothing for «گزارش مورد», «case series» or «سری موارد», and «تعمیم‌پذیری» cleared only an unrelated word overlap (#بهداشت_پذیری), while the part's whole argument for the bottom rung is that an uncontrolled, unplanned observation cannot be generalised to other patients. Canonical spellings follow the part's own words; case series is filed as an alias of the case-report concept because the part treats the two as one rung.",
+  "concepts": [
+    {
+      "tag": "#گزارش_مورد",
+      "domain": "clinical",
+      "definition": "شرح وضعیت یک بیمار (case report) یا چند بیمار مشابه کنار هم (case series): با چه مشکلی مراجعه کرد، چه درمانی گرفت و نتیجه چه شد. گروه مقایسه ندارد و از قبل برنامه‌ریزی نشده است، پس پایین‌ترین پله‌ی نردبان شواهد است، ولی برای بیماری‌های نادر، معرفی روش‌های جدید و گزارش عوارض غیرمنتظره اولین و گاهی تنها منبع است و فرضیه‌هایی می‌سازد که مطالعات قوی‌تر آزمایش می‌کنند.",
+      "use_when": "مقاله گزارش مورد یا case series را به‌عنوان یک طراحی توضیح دهد، جایگاه یا کاربردش را بحث کند، یا خودش شرح یک یا چند مورد با همین قالب باشد.",
+      "aliases": ["case report", "case series", "گزارش موردی", "سری موارد", "کیس ریپورت", "کیس سری"]
+    },
+    {
+      "tag": "#تعمیم‌پذیری",
+      "domain": "clinical",
+      "definition": "این‌که نتیجه‌ی یک مشاهده یا مطالعه تا چه حد به بیماران دیگر و به جمعیت بزرگ‌تر قابل انتقال است؛ به کنترل داشتن، برنامه‌ریزی از قبل و شباهت افراد مطالعه به بیماران مطب وابسته است، و مشاهده‌ی بدون کنترل و بدون برنامه آن را ندارد.",
+      "use_when": "مقاله توضیح دهد چرا نتیجه‌ی یک مطالعه یا مشاهده به بیماران دیگر قابل تعمیم هست یا نیست، یا اعتبار بیرونی یک یافته را بحث کند.",
+      "aliases": ["generalizability", "external validity", "تعمیم پذیری", "اعتبار بیرونی", "قابلیت تعمیم"]
+    }
+  ],
+  "articles": {
+    "taraz/taraz1-7": ["#تراز_شواهد", "#گزارش_مورد", "#مطالعه_مشاهده‌ای", "#طراحی_مطالعه", "#تعمیم‌پذیری"]
+  }
+}
