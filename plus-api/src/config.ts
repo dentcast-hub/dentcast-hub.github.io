@@ -235,10 +235,16 @@ export const config = {
     // verified against Google's published public keys, never exchanged.
     google: {
       clientId: str('GOOGLE_CLIENT_ID', ''),
-      // Google's JWK set. The container lives in Iran and googleapis.com answers
-      // by region, so this fetch has ITS OWN proxy knob (per destination, like
-      // every outbound route in this API) and a bounded timeout.
-      jwksUrl: str('GOOGLE_JWKS_URL', 'https://www.googleapis.com/oauth2/v3/certs'),
+      // Where Google's JWK set is read from — a comma-separated list tried in
+      // order. The container lives in Iran and googleapis.com does not answer
+      // it, so the mirror our own CI keeps on the site comes first (the host
+      // every other live file is already fetched from) and Google itself last.
+      // The fetch has ITS OWN proxy knob (per destination, like every outbound
+      // route in this API) and a bounded timeout.
+      jwksUrl: str('GOOGLE_JWKS_URL',
+        'https://dentcast.ir/plus/google-certs.json,'
+        + 'https://dentcast.org/plus/google-certs.json,'
+        + 'https://www.googleapis.com/oauth2/v3/certs'),
       proxyUrl: str('GOOGLE_PROXY_URL', ''),
       timeoutMs: int('GOOGLE_JWKS_TIMEOUT_MS', 8_000),
       clockSkewSeconds: int('GOOGLE_AUTH_CLOCK_SKEW_SECONDS', 60),

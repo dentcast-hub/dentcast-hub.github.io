@@ -355,10 +355,15 @@ Iranian IP; use a VPN or do it from abroad):
    (then `python3 tools/asset_version.py --bump`) AND into the container env as
    `GOOGLE_CLIENT_ID`. The two must match: the frontend asks Google for a token
    naming that id, the API refuses any other audience.
-5. **Key fetch from Iran** — the API fetches `https://www.googleapis.com/oauth2/v3/certs`
-   on the first login and caches it (max-age, with a last-good fallback). If that
-   fetch fails from the container, set `GOOGLE_PROXY_URL` — this destination's own
-   knob, never `OUTBOUND_PROXY_URL`.
+5. **Key fetch from Iran** — googleapis.com does not answer the container (confirmed
+   on the first live login, 1405/07/09), so the keys are read from OUR site:
+   `.github/workflows/google-certs-mirror.yml` copies Google's JWK set to
+   `plus/google-certs.json` every two hours (committed, AND uploaded straight to the
+   `.ir` bucket, because a bot commit triggers no deploy), and the Dockerfile's
+   `GOOGLE_JWKS_URL` lists the two mirrors first and Google last. Nothing to set.
+   The first run after enabling: Actions → «Mirror Google signing keys» → Run
+   workflow, so the bucket has the file before the next site deploy would put it
+   there. `GOOGLE_PROXY_URL` remains for a deployment that has a route of its own.
 
 Verify: on `.org`, open the login modal → the Google button renders under Telegram
 → pick an account → you land signed in (a first-time user is asked for a nickname);

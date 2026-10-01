@@ -5,6 +5,7 @@ import { makeApp, resetDb, sessionCookieFrom, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import {
   verifyGoogleIdToken, setGoogleKeyFetcher, clearGoogleKeyCache, maskEmail, maxAgeFrom,
+  jwksUrls, mergeKeySets,
   type GoogleJwk,
 } from '../src/services/google-auth.js';
 
@@ -60,8 +61,9 @@ function makeToken(claims: Record<string, unknown>, opts: TokenOpts = {}): strin
 
 function serveKeys(keys: GoogleJwk[], maxAgeMs = 3_600_000) {
   let calls = 0;
-  setGoogleKeyFetcher(async () => { calls += 1; return { keys, maxAgeMs }; });
-  return { calls: () => calls };
+  const alls: boolean[] = [];
+  setGoogleKeyFetcher(async (all) => { calls += 1; alls.push(all === true); return { keys, maxAgeMs }; });
+  return { calls: () => calls, alls: () => alls };
 }
 
 async function telegramLogin(app: FastifyInstance, id: string): Promise<string> {
@@ -156,12 +158,13 @@ describe('verifyGoogleIdToken', () => {
     expect(served.calls()).toBe(0);
   });
 
-  it('refetches ONCE for an unknown kid (a rotated key), then gives up', async () => {
+  it('refetches ONCE for an unknown kid (a rotated key), asking EVERY source, then gives up', async () => {
     const served = serveKeys([jwkOf(strangerPublic, 'other')]);
     const r = await verifyGoogleIdToken(makeToken({}));
     expect(r).toEqual({ ok: false, reason: 'unknown_key' });
-    // initial fetch + one miss-driven refetch
+    // initial fetch (first source wins) + one miss-driven refetch (union of all)
     expect(served.calls()).toBe(2);
+    expect(served.alls()).toEqual([false, true]);
     // A second bad token inside the cooldown costs no further fetch.
     await verifyGoogleIdToken(makeToken({}));
     expect(served.calls()).toBe(2);
@@ -199,6 +202,24 @@ describe('verifyGoogleIdToken', () => {
   it('answers keys_unavailable when nothing was ever fetched and the route is down', async () => {
     setGoogleKeyFetcher(async () => { throw new Error('route filtered'); });
     expect(await verifyGoogleIdToken(makeToken({}))).toEqual({ ok: false, reason: 'keys_unavailable' });
+  });
+
+  it('reads GOOGLE_JWKS_URL as a list, mirrors first', () => {
+    expect(jwksUrls(' https://dentcast.ir/plus/google-certs.json, https://dentcast.org/plus/google-certs.json ,, https://www.googleapis.com/oauth2/v3/certs'))
+      .toEqual(['https://dentcast.ir/plus/google-certs.json', 'https://dentcast.org/plus/google-certs.json', 'https://www.googleapis.com/oauth2/v3/certs']);
+    // the shipped default puts the site's own mirrors before Google
+    const d = jwksUrls();
+    expect(d[0]).toMatch(/^https:\/\/dentcast\.ir\/plus\/google-certs\.json$/);
+    expect(d[d.length - 1]).toBe('https://www.googleapis.com/oauth2/v3/certs');
+  });
+
+  it('unions key sets by kid under the shortest max-age', () => {
+    const a = { keys: [jwkOf(publicKey, 'k1'), jwkOf(strangerPublic, 'k2')], maxAgeMs: 3_600_000 };
+    const b = { keys: [jwkOf(strangerPublic, 'k2'), jwkOf(publicKey, 'k3')], maxAgeMs: 600_000 };
+    const m = mergeKeySets([a, b]);
+    expect(m.keys.map((k) => k.kid)).toEqual(['k1', 'k2', 'k3']);
+    expect(m.maxAgeMs).toBe(600_000);
+    expect(mergeKeySets([]).keys).toEqual([]);
   });
 
   it('reads max-age out of Cache-Control and clamps it', () => {

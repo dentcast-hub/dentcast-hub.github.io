@@ -1,0 +1,109 @@
+name: Mirror Google signing keys
+
+# Copies Google's public signing keys (the JWK set «Sign in with Google» tokens
+# are verified against) onto OUR site, so the API container can read them.
+#
+# WHY: the container lives on ArvanCloud in Iran and googleapis.com does not
+# answer an Iranian address — on the first live Google login (1405/07/09) every
+# token ended as keys_unavailable. The container DOES reach dentcast.ir and
+# dentcast.org (content-refresh.ts already fetches every live file from them),
+# so plus-api/src/services/google-auth.ts reads GOOGLE_JWKS_URL as a list with
+# the two mirrors first and Google last. This workflow is what keeps the mirror
+# fresh: a GitHub runner has international egress, Google rotates keys every
+# few days and publishes the new key BEFORE signing with it, and two hours is
+# well inside that overlap (the service also refetches once a minute on an
+# unknown kid, unioning every source it can reach).
+#
+# TWO DELIVERIES, DELIBERATELY. The file is committed to the repo (so the next
+# full `aws s3 sync --delete` in deploy-arvan.yml keeps it, and .org gets it
+# through its ordinary deploy), AND uploaded straight to the .ir bucket with
+# no-cache on the object, because a commit made with GITHUB_TOKEN fires no
+# other workflow — deploy-arvan.yml would never run for it, and the .ir copy,
+# which is the FIRST url the container tries, would sit stale for as long as
+# nobody pushed anything else. The upload is what makes a rotation land within
+# the hour; the commit is what keeps it from being deleted afterwards.
+#
+# Nothing is written when the keys did not change, which is most runs.
+
+on:
+  schedule:
+    - cron: '23 */2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: google-certs-mirror
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Fetch Google's key set and compare
+        id: fetch
+        run: |
+          set -e
+          curl -fsS --max-time 30 -H 'accept: application/json' \
+            https://www.googleapis.com/oauth2/v3/certs -o /tmp/certs.raw
+          python3 - <<'PY'
+          import json, sys
+          raw = json.load(open('/tmp/certs.raw'))
+          keys = raw.get('keys')
+          if not isinstance(keys, list) or not keys:
+              print('::error::Google answered without a keys array'); sys.exit(1)
+          for k in keys:
+              if k.get('kty') != 'RSA' or not k.get('kid') or not k.get('n') or not k.get('e'):
+                  print('::error::malformed key entry: %r' % k); sys.exit(1)
+          # Stable serialisation (sorted by kid) so an unchanged set is a byte-identical file.
+          out = {'keys': sorted(keys, key=lambda k: k['kid'])}
+          new = json.dumps(out, indent=1, sort_keys=True) + '\n'
+          try:
+              old = open('plus/google-certs.json', encoding='utf-8').read()
+          except FileNotFoundError:
+              old = ''
+          changed = new != old
+          open('/tmp/certs.json', 'w', encoding='utf-8').write(new)
+          print('kids:', [k['kid'] for k in out['keys']])
+          print('changed' if changed else 'unchanged')
+          open('/tmp/changed', 'w').write('1' if changed else '0')
+          PY
+          echo "changed=$(cat /tmp/changed)" >> "$GITHUB_OUTPUT"
+
+      - name: Install AWS CLI
+        if: steps.fetch.outputs.changed == '1'
+        run: pip install --quiet awscli
+
+      # Straight to the .ir bucket, with no-cache on the object (the same
+      # header deploy-arvan.yml puts on every /plus/* object), so the container's
+      # first mirror sees the new keys now rather than at the next site deploy.
+      - name: Upload the mirror to dentcast.ir
+        if: steps.fetch.outputs.changed == '1'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_KEY }}
+          AWS_EC2_METADATA_DISABLED: "true"
+          ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}
+          ARVAN_ENDPOINT: ${{ secrets.ARVAN_ENDPOINT }}
+        run: |
+          aws s3 cp /tmp/certs.json "s3://$ARVAN_BUCKET/plus/google-certs.json" \
+            --endpoint-url "$ARVAN_ENDPOINT" \
+            --cache-control "no-cache" \
+            --content-type "application/json"
+
+      - name: Commit the mirror
+        if: steps.fetch.outputs.changed == '1'
+        run: |
+          cp /tmp/certs.json plus/google-certs.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add plus/google-certs.json
+          git commit -m "Mirror Google signing keys ($(date -u +%Y-%m-%dT%H:%MZ))"
+          git push origin HEAD:main
