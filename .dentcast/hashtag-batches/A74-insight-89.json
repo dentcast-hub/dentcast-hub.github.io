@@ -1,0 +1,34 @@
+{
+  "type": "clinical",
+  "enforce": true,
+  "note": "insight/insight-89 — «ماکاپ تصویری با هوش مصنوعی، پیش از تصمیم به کشیدن سانترال‌ها». #اینسایت (series), #هوش_مصنوعی, #کشیدن_دندان, #دیاستم, #طرح_درمان, #ایمپلنت_قدامی and #تصمیم_درمانی are REUSED (each resolved rank-1 by --simulate). One concept is newly minted: --simulate for «ماکاپ» resolves to #موک_آپ, whose definition is «ماک‌آپ به‌عنوان راهنمای تراش» (the mock-up-driven preparation technique), which is not what this page does — here the mock-up is an image built on the patient's own intraoral photo so they can preview an approximate outcome before an irreversible decision. The bare word «ماکاپ» stays an alias of #موک_آپ; the new concept takes only two-word forms so the two cannot collide.",
+  "concepts": [
+    {
+      "tag": "#ماکاپ_تصویری",
+      "domain": "clinical",
+      "definition": "شبیه‌سازی تصویری نتیجه‌ی حدودی درمان روی عکس خود بیمار (با هوش مصنوعی یا نرم‌افزار طراحی)، بدون ساختن چیزی در دهان؛ ابزاری برای این‌که بیمار پیش از یک تصمیم برگشت‌ناپذیر، شکل تقریبی طرح پیشنهادی را ببیند و با آگاهی انتخاب کند.",
+      "use_when": "مقاله یک ماکاپ تصویری/دیجیتال روی عکس بیمار بسازد یا نقش آن را در تصمیم‌گیری و ارتباط با بیمار بحث کند؛ نه برای ماک‌آپ رزینی داخل دهان که راهنمای تراش است (#موک_آپ).",
+      "aliases": [
+        "digital mock-up",
+        "AI mock-up",
+        "smile simulation",
+        "ماکاپ دیجیتال",
+        "ماکاپ هوش مصنوعی",
+        "شبیه سازی لبخند",
+        "پیش نمایش درمان"
+      ]
+    }
+  ],
+  "articles": {
+    "insight/insight-89": [
+      "#اینسایت",
+      "#ماکاپ_تصویری",
+      "#هوش_مصنوعی",
+      "#کشیدن_دندان",
+      "#دیاستم",
+      "#طرح_درمان",
+      "#ایمپلنت_قدامی",
+      "#تصمیم_درمانی"
+    ]
+  }
+}
