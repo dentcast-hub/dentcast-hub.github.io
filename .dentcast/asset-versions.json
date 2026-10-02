@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 254,
-    "hash": "5ed3c580585b46d6"
+    "v": 255,
+    "hash": "ca7f330773ec108e"
   },
   "/dc-theme.css": {
     "v": 7,
@@ -88,8 +88,8 @@
     "hash": "c7884ce95172bae9"
   },
   "/plus/js/pricing-page.js": {
-    "v": 73,
-    "hash": "64dc3d5ab8e82748"
+    "v": 74,
+    "hash": "2f17955500677cd6"
   },
   "/plus/js/profile-page.js": {
     "v": 86,
@@ -128,15 +128,15 @@
     "hash": "326303942380b8ca"
   },
   "dc-nav.js:V": {
-    "v": 246,
-    "hash": "5d81353ca0caac11"
+    "v": 247,
+    "hash": "216fc8257e48c22d"
   },
   "modules:M": {
-    "v": 162,
-    "hash": "5dd54fe981b69b17"
+    "v": 163,
+    "hash": "ab4c7ae00bc6abfe"
   },
   "spot.js:SPOT_V": {
-    "v": 65,
-    "hash": "ef1c139af396d220"
+    "v": 66,
+    "hash": "a5689386dea7afde"
   }
 }
