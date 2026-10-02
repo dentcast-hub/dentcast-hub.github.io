@@ -1310,6 +1310,51 @@
    ]
   },
   {
+   "key": "زیبایی",
+   "tag": "#زیبایی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "استتیک",
+    "esthetic",
+    "aesthetic"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 27,
+   "content_ids": [
+    "episodes/episode-13",
+    "episodes/episode-28",
+    "episodes/episode-32",
+    "episodes/episode-33",
+    "episodes/episode-37",
+    "episodes/episode-39",
+    "episodes/episode-46",
+    "episodes/episode-61",
+    "episodes/episode-68",
+    "episodes/episode-70",
+    "episodes/episode-107",
+    "episodes/episode-116",
+    "episodes/episode-118-1",
+    "episodes/episode-119",
+    "episodes/episode-120-1",
+    "episodes/episode-122-3",
+    "episodes/episode-141",
+    "episodes/episode-147",
+    "episodes/episode-147-4",
+    "notecast/episode-13",
+    "notecast/episode-19",
+    "notecast/episode-28",
+    "notecast/episode-32",
+    "notecast/episode-33",
+    "insight/insight-46",
+    "notecast/episode-39",
+    "sharehub/share-24"
+   ]
+  },
+  {
    "key": "تصمیم_درمانی",
    "tag": "#تصمیم_درمانی",
    "domain": "clinical",
@@ -1358,50 +1403,6 @@
    ]
   },
   {
-   "key": "زیبایی",
-   "tag": "#زیبایی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "استتیک",
-    "esthetic",
-    "aesthetic"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 26,
-   "content_ids": [
-    "episodes/episode-13",
-    "episodes/episode-28",
-    "episodes/episode-32",
-    "episodes/episode-33",
-    "episodes/episode-37",
-    "episodes/episode-39",
-    "episodes/episode-46",
-    "episodes/episode-61",
-    "episodes/episode-68",
-    "episodes/episode-70",
-    "episodes/episode-107",
-    "episodes/episode-116",
-    "episodes/episode-118-1",
-    "episodes/episode-119",
-    "episodes/episode-120-1",
-    "episodes/episode-122-3",
-    "episodes/episode-141",
-    "episodes/episode-147",
-    "episodes/episode-147-4",
-    "notecast/episode-13",
-    "notecast/episode-19",
-    "notecast/episode-28",
-    "notecast/episode-32",
-    "notecast/episode-33",
-    "insight/insight-46",
-    "notecast/episode-39"
-   ]
-  },
-  {
    "key": "بیومکانیک",
    "tag": "#بیومکانیک",
    "domain": "clinical",
@@ -1442,6 +1443,89 @@
     "episodes/episode-161",
     "chairside/chairside-33",
     "episodes/episode-162"
+   ]
+  },
+  {
+   "key": "curated_content",
+   "tag": "#Curated_Content",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
+   "use_when": "روی مدخل‌های بازنشر.",
+   "aliases": [
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 24,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24"
+   ]
+  },
+  {
+   "key": "share_hub",
+   "tag": "#Share_Hub",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
+   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
+   "aliases": [
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 24,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24"
    ]
   },
   {
@@ -1490,87 +1574,6 @@
     "dentai/promptologist/prompt6-5",
     "dentai/promptologist/prompt7-1",
     "dentai/promptologist/prompt7-2"
-   ]
-  },
-  {
-   "key": "curated_content",
-   "tag": "#Curated_Content",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
-   "use_when": "روی مدخل‌های بازنشر.",
-   "aliases": [
-    "محتوای گلچین شده",
-    "کیوریتد",
-    "بازنشر محتوا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 23,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23"
-   ]
-  },
-  {
-   "key": "share_hub",
-   "tag": "#Share_Hub",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
-   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
-   "aliases": [
-    "شیرهاب",
-    "شر هاب"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 23,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23"
    ]
   },
   {
@@ -2400,6 +2403,40 @@
    ]
   },
   {
+   "key": "افزایش_طول_تاج",
+   "tag": "#افزایش_طول_تاج",
+   "domain": null,
+   "words": 3,
+   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
+   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
+   "aliases": [
+    "کراون لنتنینگ",
+    "crown lengthening",
+    "لنتنینگ",
+    "کراون لنتنینگ زیبایی",
+    "esthetic crown lengthening"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-75",
+    "episodes/episode-76",
+    "episodes/episode-77",
+    "episodes/episode-78",
+    "insight/insight-7",
+    "chairside/chairside-6",
+    "chairside/chairside-16",
+    "chairside/chairside-21",
+    "insight/insight-55",
+    "insight/insight-64",
+    "chairside/chairside-30",
+    "sharehub/share-14",
+    "sharehub/share-19",
+    "sharehub/share-24"
+   ]
+  },
+  {
    "key": "دقت_اسکن",
    "tag": "#دقت_اسکن",
    "domain": null,
@@ -2430,6 +2467,40 @@
     "dentai/dentai-29",
     "dentai/dentai-32",
     "insight/insight-74"
+   ]
+  },
+  {
+   "key": "سایش_دندان",
+   "tag": "#سایش_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتنِ ساختار در اثر نیروهای مکرر.",
+   "use_when": "مقاله سایش را بسنجد یا مدیریت کند.",
+   "aliases": [
+    "tooth wear",
+    "ساییدگی دندان",
+    "attrition",
+    "ساییدگی",
+    "اتریشن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-34",
+    "episodes/episode-125",
+    "episodes/episode-127",
+    "insight/insight-6",
+    "insight/insight-11",
+    "insight/insight-43",
+    "notecast/episode-34",
+    "notecast/episode-35",
+    "dentai/dentai-24",
+    "dentai/dentai-26",
+    "chairside/chairside-23",
+    "sharehub/share-11",
+    "sharehub/share-21",
+    "sharehub/share-24"
    ]
   },
   {
@@ -2498,37 +2569,6 @@
     "notecast/episode-42",
     "notecast/episode-43",
     "insight/insight-88"
-   ]
-  },
-  {
-   "key": "افزایش_طول_تاج",
-   "tag": "#افزایش_طول_تاج",
-   "domain": null,
-   "words": 3,
-   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
-   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
-   "aliases": [
-    "کراون لنتنینگ",
-    "crown lengthening",
-    "لنتنینگ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-75",
-    "episodes/episode-76",
-    "episodes/episode-77",
-    "episodes/episode-78",
-    "insight/insight-7",
-    "chairside/chairside-6",
-    "chairside/chairside-16",
-    "chairside/chairside-21",
-    "insight/insight-55",
-    "insight/insight-64",
-    "chairside/chairside-30",
-    "sharehub/share-14",
-    "sharehub/share-19"
    ]
   },
   {
@@ -2689,38 +2729,6 @@
     "episodes/episode-159-1",
     "metanotes/meta-14",
     "notecast/episode-41"
-   ]
-  },
-  {
-   "key": "سایش_دندان",
-   "tag": "#سایش_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتنِ ساختار در اثر نیروهای مکرر.",
-   "use_when": "مقاله سایش را بسنجد یا مدیریت کند.",
-   "aliases": [
-    "tooth wear",
-    "ساییدگی دندان",
-    "attrition",
-    "ساییدگی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-34",
-    "episodes/episode-125",
-    "episodes/episode-127",
-    "insight/insight-6",
-    "insight/insight-11",
-    "insight/insight-43",
-    "notecast/episode-34",
-    "notecast/episode-35",
-    "dentai/dentai-24",
-    "dentai/dentai-26",
-    "chairside/chairside-23",
-    "sharehub/share-11",
-    "sharehub/share-21"
    ]
   },
   {
@@ -3921,6 +3929,33 @@
    ]
   },
   {
+   "key": "ارتودنسی",
+   "tag": "#ارتودنسی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "درمان ارتودنتیک به‌عنوان بخشی از طرح درمان.",
+   "use_when": "مقاله تعاملِ ارتو و پروتز را دخیل بداند.",
+   "aliases": [
+    "ارتو",
+    "ortho",
+    "درمان ارتودنتیک"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Orthodontics"
+   ],
+   "count": 7,
+   "content_ids": [
+    "insight/insight-19",
+    "sharehub/share-5",
+    "insight/insight-38",
+    "insight/insight-42",
+    "sharehub/share-19",
+    "chairside/chairside-39",
+    "sharehub/share-24"
+   ]
+  },
+  {
    "key": "اسپلینت",
    "tag": "#اسپلینت",
    "domain": "clinical",
@@ -4567,32 +4602,6 @@
     "episodes/episode-147-6",
     "notecast/episode-27",
     "chairside/chairside-38"
-   ]
-  },
-  {
-   "key": "ارتودنسی",
-   "tag": "#ارتودنسی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "درمان ارتودنتیک به‌عنوان بخشی از طرح درمان.",
-   "use_when": "مقاله تعاملِ ارتو و پروتز را دخیل بداند.",
-   "aliases": [
-    "ارتو",
-    "ortho",
-    "درمان ارتودنتیک"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#Orthodontics"
-   ],
-   "count": 6,
-   "content_ids": [
-    "insight/insight-19",
-    "sharehub/share-5",
-    "insight/insight-38",
-    "insight/insight-42",
-    "sharehub/share-19",
-    "chairside/chairside-39"
    ]
   },
   {
@@ -11226,6 +11235,30 @@
    ]
   },
   {
+   "key": "رویش_غیرفعال_تغییریافته",
+   "tag": "#رویش_غیرفعال_تغییریافته",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "توقفِ ناقصِ عقب‌نشینیِ لثه به سمتِ CEJ پس از رویشِ دندان؛ دندان‌های قدامی کوتاه‌تر از حدِ طبیعی به نظر می‌رسند و سوند به‌راحتی به CEJ نمی‌رسد.",
+   "use_when": "مقاله کوتاهیِ ظاهریِ تاجِ بالینی به دلیلِ عدمِ عقب‌نشینیِ لثه را تشخیص یا درمان کند.",
+   "aliases": [
+    "altered passive eruption",
+    "APE",
+    "رویش غیرفعال",
+    "رویش پسیو",
+    "passive eruption",
+    "آلترد پسیو اراپشن",
+    "پسیو اراپشن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-14",
+    "sharehub/share-24"
+   ]
+  },
+  {
    "key": "ریتریتمنت",
    "tag": "#ریتریتمنت",
    "domain": "clinical",
@@ -12711,6 +12744,27 @@
    "count": 1,
    "content_ids": [
     "chairside/chairside-17"
+   ]
+  },
+  {
+   "key": "cej",
+   "tag": "#CEJ",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "محل اتصال مینا و سمان روی ریشه (cemento-enamel junction)؛ نشانه‌ی مرجعی که با پروب یا اکسپلورر داخل سالکوس جست‌وجو می‌شود تا موقعیت مارجین لثه نسبت به تاج آناتومیک معلوم شود.",
+   "use_when": "مقاله CEJ را به‌عنوان لندمارک معاینه یا مبنای تشخیص (رویش غیرفعال، عرض بیولوژیک، موقعیت مارجین) به کار ببرد.",
+   "aliases": [
+    "cemento-enamel junction",
+    "cementoenamel junction",
+    "سی ای جی",
+    "محل اتصال مینا و سمان",
+    "اتصال مینا سمان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-24"
    ]
   },
   {
@@ -15303,6 +15357,28 @@
    ]
   },
   {
+   "key": "تاج_بالینی_کوتاه",
+   "tag": "#تاج_بالینی_کوتاه",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "تاج بالینی که از میانگین طبیعی کوتاه‌تر است؛ یک یافته است نه یک تشخیص، و تا علتش (دندان کوچک، سایش لبه، لثه‌ی پایین‌نیامده) معلوم نشود درمان آن قابل انتخاب نیست.",
+   "use_when": "مقاله کوتاهی تاج را به‌عنوان یافته‌ی ورودی بگیرد و بین علت‌های آن تشخیص افتراقی بدهد.",
+   "aliases": [
+    "short clinical crown",
+    "short central incisor",
+    "سانترال کوتاه",
+    "دندان کوتاه",
+    "تاج کوتاه",
+    "کوتاهی تاج"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-24"
+   ]
+  },
+  {
    "key": "تثبیت_موقت_روکش",
    "tag": "#تثبیت_موقت_روکش",
    "domain": "clinical",
@@ -16902,27 +16978,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-11"
-   ]
-  },
-  {
-   "key": "رویش_غیرفعال_تغییریافته",
-   "tag": "#رویش_غیرفعال_تغییریافته",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "توقفِ ناقصِ عقب‌نشینیِ لثه به سمتِ CEJ پس از رویشِ دندان؛ دندان‌های قدامی کوتاه‌تر از حدِ طبیعی به نظر می‌رسند و سوند به‌راحتی به CEJ نمی‌رسد.",
-   "use_when": "مقاله کوتاهیِ ظاهریِ تاجِ بالینی به دلیلِ عدمِ عقب‌نشینیِ لثه را تشخیص یا درمان کند.",
-   "aliases": [
-    "altered passive eruption",
-    "APE",
-    "رویش غیرفعال",
-    "رویش پسیو",
-    "passive eruption"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "sharehub/share-14"
    ]
   },
   {
@@ -19113,6 +19168,27 @@
    ]
   },
   {
+   "key": "میکرودنشیا",
+   "tag": "#میکرودنشیا",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "دندانی که به‌طور تکاملی کوچک‌تر از اندازه‌ی طبیعی است، با آناتومی کامل و CEJ در جای خودش؛ کوتاهی تاج از خودِ دندان است نه از لثه یا سایش.",
+   "use_when": "مقاله اندازه‌ی کوچک ذاتی دندان را تشخیص دهد یا آن را از علت‌های دیگر کوتاهی تاج جدا کند.",
+   "aliases": [
+    "microdontia",
+    "میکرودونشیا",
+    "میکرو دنشیا",
+    "دندان کوچک",
+    "دندان ریز"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-24"
+   ]
+  },
+  {
    "key": "ناحیه_لبخند",
    "tag": "#ناحیه_لبخند",
    "domain": "clinical",
@@ -21072,6 +21148,7 @@
   "radiographic interpretation": "تفسیر رادیوگرافی",
   "alveolar ridge preservation": "حفظ ریج",
   "clarifying questions prompt": "سؤال پیش از تولید",
+  "esthetic crown lengthening": "افزایش طول تاج",
   "temporomandibular disorder": "tmd",
   "interproximal contact loss": "از دست رفتن کانتکت",
   "airborne particle abrasion": "سندبلاست",
@@ -21097,13 +21174,13 @@
   "planning دیجیتال ایمپلنت": "ایمپلنت دیجیتال planning",
   "poly methyl methacrylate": "pmma",
   "enameloplasty آنتاگونیست": "تراش آنتاگونیست",
+  "altered passive eruption": "رویش غیرفعال تغییریافته",
   "provisional as reference": "روکش موقت به عنوان مرجع",
   "hierarchy of bondability": "hob",
   "association vs causation": "ارتباط و علیت",
   "correlation vs causation": "ارتباط و علیت",
   "anterior posterior error": "خطای قدام و خلف",
   "treatment by subtraction": "درمان از طریق تفریق",
-  "altered passive eruption": "رویش غیرفعال تغییریافته",
   "ask clarifying questions": "سؤال پیش از تولید",
   "تحویل کار به گفتگوی بعدی": "سند هندآف",
   "mechanical complications": "عوارض مکانیکی",
@@ -21121,6 +21198,7 @@
   "restorative endodontics": "اندودنتیکس ترمیمی",
   "masticatory performance": "قدرت جویدن",
   "oxygen inhibition layer": "لایه مهار اکسیژن",
+  "cemento enamel junction": "cej",
   "caries removal endpoint": "cre",
   "finite element analysis": "fea",
   "functional interference": "تداخل فانکشنال",
@@ -21143,6 +21221,7 @@
   "اتصال دندان به ایمپلنت": "بریج دندان ایمپلنت",
   "step by step prompting": "شکستن کار",
   "oxygen inhibited layer": "لایه مهار اکسیژن",
+  "cementoenamel junction": "cej",
   "crack removal endpoint": "crre",
   "gap فضای اطراف ایمپلنت": "jumping gap",
   "dentin decontamination": "آلودگی حین باندینگ",
@@ -21172,12 +21251,14 @@
   "shortened dental arch": "sda",
   "ترمیم مستقیم کامپوزیت": "ترمیم مستقیم",
   "روکش های به هم چسبیده": "روکش اسپلینت",
+  "محل اتصال مینا و سمان": "cej",
   "پروتز ایمپلنت انگلیسی": "ایمپلنت prosthetics",
   "prompt writing prompt": "متاپرامپت",
   "ارتودنسی قبل از لمینت": "ارتودنسی پیش از زیبایی",
   "سابسکریپشن هوش مصنوعی": "اشتراک هوش مصنوعی",
   "subperiosteal implant": "ایمپلنت ساب پریوستئال",
   "بازسازی دندان اندوشده": "بازسازی ریشه",
+  "short central incisor": "تاج اینسایت کوتاه",
   "adjustment antagonist": "تعدیل آنتاگونیست",
   "تقارن دندان های قدامی": "تقارن قدامی",
   "cementation technique": "تکنیک سمان",
@@ -21194,6 +21275,7 @@
   "موکوزیت اطراف ایمپلنت": "موکوزیت پری ایمپلنت",
   "حرکت پیش رونده مندیبل": "پروتروزیو",
   "indirect restoration": "ترمیم غیرمستقیم",
+  "کراون لنتنینگ زیبایی": "افزایش طول تاج",
   "دنچر متکی بر ایمپلنت": "اوردنچر",
   "افزایش دایمنشن عمودی": "افزایش vd",
   "peri implant disease": "پری ایمپلنتیتیس",
@@ -21230,6 +21312,7 @@
   "treatment principles": "اصول درمانی",
   "envelope of function": "انولوپ آو فانکشن",
   "proximal preparation": "باکس پروگزیمال",
+  "short clinical crown": "تاج اینسایت کوتاه",
   "marginal discrepancy": "تطابق مارجینال",
   "symmetry of centrals": "تقارن قدامی",
   "orthognathic surgery": "جراحی ارتوگناتیک",
@@ -21441,8 +21524,8 @@
   "digital dentistry": "دندانپزشکی دیجیتال",
   "ترمیم با کامپوزیت": "کامپوزیت",
   "intraoral scanner": "اسکنر داخل دهانی",
-  "scanning accuracy": "دقت اسکن",
   "crown lengthening": "افزایش طول تاج",
+  "scanning accuracy": "دقت اسکن",
   "دندان عصب کشی شده": "دندان اندوشده",
   "میزان کردن اکلوژن": "تنظیم اکلوژن",
   "emergence profile": "پروفایل امرجنس",
@@ -21490,6 +21573,7 @@
   "premature contact": "تماس زودرس",
   "بی حرکتی قبل سمان": "ثبات قبل از سمان",
   "فناوری دندانپزشکی": "دندانپزشکی هوشمند",
+  "آلترد پسیو اراپشن": "رویش غیرفعال تغییریافته",
   "abutment rigidity": "سختی تکیه گاه",
   "definitive cement": "سمان دائم",
   "prosthesis design": "طراحی پروتز",
@@ -21569,8 +21653,8 @@
   "کلینیکال اینسایت": "اینسایت",
   "روکش روی ایمپلنت": "روکش ایمپلنت",
   "fixed prosthesis": "پروتز ثابت",
-  "machine learning": "سواد هوش مصنوعی",
   "محتوای گلچین شده": "curated content",
+  "machine learning": "سواد هوش مصنوعی",
   "ceramic laminate": "لمینیت سرامیکی",
   "دیجیتال دنتیستری": "دندانپزشکی دیجیتال",
   "طبقه بندی سرامیک": "سرامیک دندانی",
@@ -21643,6 +21727,7 @@
   "قرارگیری ایمپلنت": "جایگذاری ایمپلنت",
   "دندانپزشکی اطفال": "دندانپزشکی کودکان",
   "centric relation": "رابطه مرکزی",
+  "passive eruption": "رویش غیرفعال تغییریافته",
   "dental esthetics": "زیبایی دندان",
   "biocompatibility": "زیست سازگاری",
   "استیفنس تکیه گاه": "سختی تکیه گاه",
@@ -21711,7 +21796,6 @@
   "sasan rasaeipour": "رسایی پور",
   "patient behavior": "رفتار بیمار",
   "روکش فلزی کودکان": "روکش استیل",
-  "passive eruption": "رویش غیرفعال تغییریافته",
   "ریلاین کردن روکش": "ریلاین روکش",
   "composite repair": "ریپیر کامپوزیت",
   "زیرکونیا گرادینت": "زیرکونیا مولتی لیر",
@@ -21767,6 +21851,7 @@
   "اختلال مفصل فکی": "tmd",
   "ceramic etching": "اچ سرامیک",
   "online presence": "حضور آنلاین دندانپزشک",
+  "درمان ارتودنتیک": "ارتودنسی",
   "اپلاینس اکلوزال": "اسپلینت",
   "اکلوزال اسپلینت": "اسپلینت",
   "ceramic bonding": "باندینگ سرامیک",
@@ -21777,7 +21862,6 @@
   "عدم پذیرش بیمار": "شروع نکردن درمان",
   "canine guidance": "کانین رایز",
   "global analysis": "global diagnosis",
-  "درمان ارتودنتیک": "ارتودنسی",
   "بیولوژیکال ویدث": "بیولوژیک ویدث",
   "استدلال کلینیکی": "تفکر اینسایت",
   "implant surgery": "جراحی ایمپلنت",
@@ -21855,6 +21939,7 @@
   "cuspal coverage": "پوشش کاسپ",
   "مکالمه با ای آی": "مصاحبه با هوش مصنوعی",
   "ایمپلنت بون لول": "bone level ایمپلنت",
+  "اتصال مینا سمان": "cej",
   "few shot prompt": "few shot prompting",
   "کاشت فوری دندان": "immediate ایمپلنت",
   "حد تیپر رزیستنس": "limiting taper",
@@ -22164,9 +22249,9 @@
   "افتراق تشخیصی": "تشخیص افتراقی",
   "اسکنر دیجیتال": "اسکنر داخل دهانی",
   "کراون لنتنینگ": "افزایش طول تاج",
+  "ساییدگی دندان": "سایش دندان",
   "ایمپلنت متحرک": "اوردنچر",
   "dentcast plus": "دنتکست پلاس",
-  "ساییدگی دندان": "سایش دندان",
   "فینیشینگ لاین": "فینیش لاین",
   "دایمنشن عمودی": "بعد عمودی",
   "تنظیم اکلوزال": "تنظیم اکلوژن",
@@ -22319,6 +22404,7 @@
   "بسته شدن بایت": "بایت بسته",
   "anonymization": "بی نام سازی",
   "درمان آشنایان": "بیمار آشنا",
+  "سانترال کوتاه": "تاج اینسایت کوتاه",
   "پوسیدگی داخلی": "تخریب داخلی",
   "تداخل دینامیک": "تداخل فانکشنال",
   "بررسی دینامیک": "تداخل فانکشنال",
@@ -22401,8 +22487,8 @@
   "ماشین هوشمند": "هوش مصنوعی",
   "تصمیم بالینی": "تصمیم درمانی",
   "تصمیم پروتزی": "تصمیم درمانی",
-  "یادگیری عمیق": "سواد هوش مصنوعی",
   "بازنشر محتوا": "curated content",
+  "یادگیری عمیق": "سواد هوش مصنوعی",
   "resin cement": "سمان رزینی",
   "اینله و آنله": "ترمیم غیرمستقیم",
   "conservative": "درمان محافظه کارانه",
@@ -22765,6 +22851,7 @@
   "model error": "خطای مدل",
   "فارماکولوژی": "داروشناسی",
   "پیتر داوسون": "داوسون",
+  "پسیو اراپشن": "رویش غیرفعال تغییریافته",
   "retreatment": "ریتریتمنت",
   "اکلوژن خلفی": "استاپ خلفی",
   "شکایت بیمار": "شکایت اصلی",
@@ -22813,6 +22900,7 @@
   "ناشناس سازی": "بی نام سازی",
   "بیمار دخانی": "بیمار دخانیات",
   "biofeedback": "بیوفیدبک دیداری",
+  "دندان کوتاه": "تاج اینسایت کوتاه",
   "امتحان روکش": "تثبیت موقت روکش",
   "گپ مارجینال": "تطابق مارجینال",
   "ساخت دوباره": "تکرار کار",
@@ -22873,6 +22961,9 @@
   "مدل چندوجهی": "مالتی مودال",
   "دندان قرینه": "مرجع آناتومیک",
   "فرم استخوان": "معماری استخوان",
+  "microdontia": "میکرودنشیا",
+  "میکرودونشیا": "میکرودنشیا",
+  "میکرو دنشیا": "میکرودنشیا",
   "night guard": "نایت گارد",
   "نوار تفلونی": "نوار تفلون",
   "نیروی جانبی": "نیروی لترال",
@@ -22924,8 +23015,8 @@
   "لنگویج مدل": "مدل زبانی",
   "اینله آنله": "ترمیم غیرمستقیم",
   "کانسرواتیو": "درمان محافظه کارانه",
-  "fiber post": "فایبر پست",
   "tooth wear": "سایش دندان",
+  "fiber post": "فایبر پست",
   "کندگی روکش": "افتادن روکش",
   "پریودونتال": "پریودنتال",
   "بیماری لثه": "پریودنتال",
@@ -23071,6 +23162,7 @@
   "بیسفسفونات": "لاینر فسفونات",
   "بی فسفونات": "لاینر فسفونات",
   "بیمار جوان": "بیمار نوجوان",
+  "کوتاهی تاج": "تاج اینسایت کوتاه",
   "توالی تراش": "ترتیب تراش",
   "probe test": "تست سوند",
   "چک با سوند": "تست سوند",
@@ -23127,6 +23219,7 @@
   "دندان مرجع": "مرجع آناتومیک",
   "مولر پایین": "مولر مندیبل",
   "microcrack": "میکروترک",
+  "دندان کوچک": "میکرودنشیا",
   "smile zone": "ناحیه زیبایی",
   "داخل لبخند": "ناحیه زیبایی",
   "گارد شبانه": "نایت گارد",
@@ -23165,9 +23258,9 @@
   "پروویژنال": "روکش موقت",
   "composite": "کامپوزیت",
   "precision": "دقت اسکن",
+  "attrition": "سایش دندان",
   "پست فایبر": "فایبر پست",
   "bone loss": "تحلیل استخوان",
-  "attrition": "سایش دندان",
   "prognosis": "پروگنوز دندان",
   "پریودنتیت": "پریودنتال",
   "اکستراکشن": "کشیدن دندان",
@@ -23263,6 +23356,7 @@
   "deep bite": "دیپ بایت",
   "بایت عمیق": "دیپ بایت",
   "روکش متصل": "روکش اسپلینت",
+  "رویش پسیو": "رویش غیرفعال تغییریافته",
   "پیچ شکسته": "شکست پیچ",
   "شکستن پیچ": "شکست پیچ",
   "تقسیم کار": "شکستن کار",
@@ -23309,6 +23403,7 @@
   "حذف شناسه": "بی نام سازی",
   "face scan": "بیمار مجازی",
   "آینه دستی": "بیوفیدبک دیداری",
+  "تاج کوتاه": "تاج اینسایت کوتاه",
   "عبور سوند": "تست سوند",
   "تست ناخنه": "تست ناخن",
   "فشار ناخن": "تست ناخن",
@@ -23332,7 +23427,6 @@
   "منبع جعلی": "رفرنس جعلی",
   "روکش جدید": "روکش تازه",
   "روکش اخیر": "روکش تازه",
-  "رویش پسیو": "رویش غیرفعال تغییریافته",
   "قصد جستجو": "سؤال بیمار",
   "سند تحویل": "سند هندآف",
   "سوپر فلاس": "سوپرفلاس",
@@ -23365,6 +23459,7 @@
   "مسیر ورود": "مسیر نشست",
   "mucositis": "موکوزیت پری ایمپلنت",
   "میکرو کرک": "میکروترک",
+  "دندان ریز": "میکرودنشیا",
   "ترتیب کار": "نظم کلینیکی",
   "تعیین نقش": "نقش دادن",
   "نقش متخصص": "نقش دادن",
@@ -23514,6 +23609,7 @@
   "عمق تراش": "کنترل عمق",
   "بی پی اس": "bps",
   "دنچر bps": "bps",
+  "سی ای جی": "cej",
   "تیپر حدی": "limiting taper",
   "ام تی ای": "mta",
   "راسپرینی": "rasperini",
@@ -23717,6 +23813,7 @@
   "شیرهاب": "share hub",
   "شر هاب": "share hub",
   "ادهسیو": "ادهزیو",
+  "اتریشن": "سایش دندان",
   "خط ختم": "فینیش لاین",
   "میلینگ": "cad cam",
   "cadcam": "cad cam",
@@ -23922,6 +24019,7 @@
   "nap": "اطلاعات مطب",
   "لوپ": "بزرگ نمایی",
   "بقا": "بقای رستوریشن",
+  "ape": "رویش غیرفعال تغییریافته",
   "oil": "لایه مهار اکسیژن",
   "wsl": "لکه سفید",
   "mua": "مولتی یونیت اباتمنت",
@@ -23931,7 +24029,6 @@
   "درگ": "کشیدگی قالب",
   "رنچ": "آچار ایمپلنت",
   "vme": "رشد عمودی فک بالا",
-  "ape": "رویش غیرفعال تغییریافته",
   "stl": "فرمت اسکن",
   "obj": "فرمت اسکن",
   "ply": "فرمت اسکن",

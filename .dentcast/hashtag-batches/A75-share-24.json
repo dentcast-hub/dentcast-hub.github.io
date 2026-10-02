@@ -1,0 +1,54 @@
+{
+  "type": "sharehub",
+  "enforce": true,
+  "note": "sharehub/share-24 — «سانترال کوتاه: علت چیست و درمان چیست؟». #Share_Hub and #Curated_Content (series), #رویش_غیرفعال_تغییریافته (--simulate «altered passive eruption» rank-1), #افزایش_طول_تاج («کراون لنتنینگ» rank-1), #سایش_دندان («سایش دندان» rank-1; اتریشن is the subtype the page names), #زیبایی, #ارتودنسی are REUSED. Three concepts are newly minted because --simulate for «میکرودنشیا», «CEJ» and «سانترال کوتاه»/«طول تاج» resolved to nothing or only to #افزایش_طول_تاج, which is the surgery, not the finding: #میکرودنشیا (a developmentally small tooth), #CEJ (the cemento-enamel junction as the landmark a probe looks for), #تاج_بالینی_کوتاه (the short clinical crown as a finding with a differential, which is what this page is about). Three existing concepts gain the Persian transliterations this page uses as aliases so the next --simulate finds them: «آلترد پسیو اراپشن»/«پسیو اراپشن» → #رویش_غیرفعال_تغییریافته, «اتریشن» → #سایش_دندان, «کراون لنتنینگ زیبایی»/«esthetic crown lengthening» → #افزایش_طول_تاج.",
+  "concepts": [
+    {
+      "tag": "#میکرودنشیا",
+      "domain": "clinical",
+      "definition": "دندانی که به‌طور تکاملی کوچک‌تر از اندازه‌ی طبیعی است، با آناتومی کامل و CEJ در جای خودش؛ کوتاهی تاج از خودِ دندان است نه از لثه یا سایش.",
+      "use_when": "مقاله اندازه‌ی کوچک ذاتی دندان را تشخیص دهد یا آن را از علت‌های دیگر کوتاهی تاج جدا کند.",
+      "aliases": ["microdontia", "میکرودونشیا", "میکرو دنشیا", "دندان کوچک", "دندان ریز"]
+    },
+    {
+      "tag": "#CEJ",
+      "domain": "clinical",
+      "definition": "محل اتصال مینا و سمان روی ریشه (cemento-enamel junction)؛ نشانه‌ی مرجعی که با پروب یا اکسپلورر داخل سالکوس جست‌وجو می‌شود تا موقعیت مارجین لثه نسبت به تاج آناتومیک معلوم شود.",
+      "use_when": "مقاله CEJ را به‌عنوان لندمارک معاینه یا مبنای تشخیص (رویش غیرفعال، عرض بیولوژیک، موقعیت مارجین) به کار ببرد.",
+      "aliases": ["cemento-enamel junction", "cementoenamel junction", "سی ای جی", "محل اتصال مینا و سمان", "اتصال مینا سمان"]
+    },
+    {
+      "tag": "#تاج_بالینی_کوتاه",
+      "domain": "clinical",
+      "definition": "تاج بالینی که از میانگین طبیعی کوتاه‌تر است؛ یک یافته است نه یک تشخیص، و تا علتش (دندان کوچک، سایش لبه، لثه‌ی پایین‌نیامده) معلوم نشود درمان آن قابل انتخاب نیست.",
+      "use_when": "مقاله کوتاهی تاج را به‌عنوان یافته‌ی ورودی بگیرد و بین علت‌های آن تشخیص افتراقی بدهد.",
+      "aliases": ["short clinical crown", "short central incisor", "سانترال کوتاه", "دندان کوتاه", "تاج کوتاه", "کوتاهی تاج"]
+    },
+    {
+      "tag": "#رویش_غیرفعال_تغییریافته",
+      "aliases": ["altered passive eruption", "APE", "رویش غیرفعال", "رویش پسیو", "passive eruption", "آلترد پسیو اراپشن", "پسیو اراپشن"]
+    },
+    {
+      "tag": "#سایش_دندان",
+      "aliases": ["tooth wear", "ساییدگی دندان", "attrition", "ساییدگی", "اتریشن"]
+    },
+    {
+      "tag": "#افزایش_طول_تاج",
+      "aliases": ["کراون لنتنینگ", "crown lengthening", "لنتنینگ", "کراون لنتنینگ زیبایی", "esthetic crown lengthening"]
+    }
+  ],
+  "articles": {
+    "sharehub/share-24": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#رویش_غیرفعال_تغییریافته",
+      "#افزایش_طول_تاج",
+      "#سایش_دندان",
+      "#زیبایی",
+      "#ارتودنسی",
+      "#میکرودنشیا",
+      "#CEJ",
+      "#تاج_بالینی_کوتاه"
+    ]
+  }
+}
