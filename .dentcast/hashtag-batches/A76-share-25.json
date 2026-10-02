@@ -1,0 +1,16 @@
+{
+  "type": "sharehub",
+  "enforce": true,
+  "note": "sharehub/share-25 — «ماکاپ تصویری با هوش مصنوعی: چرا با یک پرامپت جواب نگرفتم». Every tag is REUSED: #Share_Hub and #Curated_Content (series), #ماکاپ_تصویری (--simulate «ماکاپ تصویری هوش مصنوعی» rank-1, minted for insight-89 the day before), #هوش_مصنوعی (rank-1 for «تولید تصویر هوش مصنوعی»; the umbrella, paired with the two specific tags as its use_when asks), #پرامپت_نویسی (rank-1 for «پرامپت نویسی» — the page's three lessons are prompt technique), #ایمپلنت_قدامی (rank-1 for «ایمپلنت قدامی»; the case behind the page, grouping it with insight-89 and share-3). Nothing minted: «FP3» and «تولید تصویر» resolved to nothing, but the page names FP3 and image generation without resolving them as concepts, so no new concept is warranted.",
+  "concepts": [],
+  "articles": {
+    "sharehub/share-25": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#ماکاپ_تصویری",
+      "#هوش_مصنوعی",
+      "#پرامپت_نویسی",
+      "#ایمپلنت_قدامی"
+    ]
+  }
+}
