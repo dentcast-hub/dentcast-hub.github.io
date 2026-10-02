@@ -1168,6 +1168,53 @@
    ]
   },
   {
+   "key": "هوش_مصنوعی",
+   "tag": "#هوش_مصنوعی",
+   "domain": "ai",
+   "words": 2,
+   "definition": "چترِ عامِ هوش مصنوعی.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "artificial intelligence",
+    "ای آی",
+    "ماشین هوشمند"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 29,
+   "content_ids": [
+    "episodes/episode-109",
+    "episodes/episode-109-2",
+    "episodes/episode-149-1",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "sharehub/share-15",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2",
+    "dentai/promptologist/prompt6-3",
+    "dentai/promptologist/prompt6-4",
+    "dentai/promptologist/prompt6-5",
+    "dentai/promptologist/prompt7-1",
+    "dentai/promptologist/prompt7-2",
+    "insight/insight-89",
+    "sharehub/share-25"
+   ]
+  },
+  {
    "key": "پروتز_ثابت",
    "tag": "#پروتز_ثابت",
    "domain": "clinical",
@@ -1264,52 +1311,6 @@
    ]
   },
   {
-   "key": "هوش_مصنوعی",
-   "tag": "#هوش_مصنوعی",
-   "domain": "ai",
-   "words": 2,
-   "definition": "چترِ عامِ هوش مصنوعی.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "artificial intelligence",
-    "ای آی",
-    "ماشین هوشمند"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 28,
-   "content_ids": [
-    "episodes/episode-109",
-    "episodes/episode-109-2",
-    "episodes/episode-149-1",
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/dentai-28",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "sharehub/share-15",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1",
-    "dentai/promptologist/prompt6-2",
-    "dentai/promptologist/prompt6-3",
-    "dentai/promptologist/prompt6-4",
-    "dentai/promptologist/prompt6-5",
-    "dentai/promptologist/prompt7-1",
-    "dentai/promptologist/prompt7-2",
-    "insight/insight-89"
-   ]
-  },
-  {
    "key": "زیبایی",
    "tag": "#زیبایی",
    "domain": "clinical",
@@ -1403,6 +1404,91 @@
    ]
   },
   {
+   "key": "curated_content",
+   "tag": "#Curated_Content",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
+   "use_when": "روی مدخل‌های بازنشر.",
+   "aliases": [
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 25,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25"
+   ]
+  },
+  {
+   "key": "share_hub",
+   "tag": "#Share_Hub",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
+   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
+   "aliases": [
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 25,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25"
+   ]
+  },
+  {
    "key": "بیومکانیک",
    "tag": "#بیومکانیک",
    "domain": "clinical",
@@ -1443,89 +1529,6 @@
     "episodes/episode-161",
     "chairside/chairside-33",
     "episodes/episode-162"
-   ]
-  },
-  {
-   "key": "curated_content",
-   "tag": "#Curated_Content",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
-   "use_when": "روی مدخل‌های بازنشر.",
-   "aliases": [
-    "محتوای گلچین شده",
-    "کیوریتد",
-    "بازنشر محتوا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 24,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24"
-   ]
-  },
-  {
-   "key": "share_hub",
-   "tag": "#Share_Hub",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
-   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
-   "aliases": [
-    "شیرهاب",
-    "شر هاب"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 24,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24"
    ]
   },
   {
@@ -4444,6 +4447,33 @@
    ]
   },
   {
+   "key": "پرامپت_نویسی",
+   "tag": "#پرامپت_نویسی",
+   "domain": "ai",
+   "words": 2,
+   "definition": "نوشتنِ درخواست به شکلی که جوابِ به‌دردبخور بدهد.",
+   "use_when": "مقاله تکنیکِ نوشتن پرامپت بدهد.",
+   "aliases": [
+    "نوشتن پرامپت",
+    "prompt writing",
+    "مهندسی پرامپت"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Prompt_Engineering"
+   ],
+   "count": 7,
+   "content_ids": [
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt6-4",
+    "sharehub/share-25"
+   ]
+  },
+  {
    "key": "کانتی_لیور",
    "tag": "#کانتی_لیور",
    "domain": "clinical",
@@ -5173,32 +5203,6 @@
     "dentai/promptologist/prompt1-4",
     "dentai/promptologist/prompt3-1",
     "dentai/dentai-28"
-   ]
-  },
-  {
-   "key": "پرامپت_نویسی",
-   "tag": "#پرامپت_نویسی",
-   "domain": "ai",
-   "words": 2,
-   "definition": "نوشتنِ درخواست به شکلی که جوابِ به‌دردبخور بدهد.",
-   "use_when": "مقاله تکنیکِ نوشتن پرامپت بدهد.",
-   "aliases": [
-    "نوشتن پرامپت",
-    "prompt writing",
-    "مهندسی پرامپت"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#Prompt_Engineering"
-   ],
-   "count": 6,
-   "content_ids": [
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "dentai/promptologist/prompt6-4"
    ]
   },
   {
@@ -7560,6 +7564,29 @@
     "insight/insight-40",
     "chairside/chairside-28",
     "insight/insight-73"
+   ]
+  },
+  {
+   "key": "ایمپلنت_قدامی",
+   "tag": "#ایمپلنت_قدامی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ایمپلنت در ناحیه‌ی قدام، با بارِ زیباییِ بالا.",
+   "use_when": "مقاله تصمیمش مختصِ ناحیه‌ی قدام باشد.",
+   "aliases": [
+    "ایمپلنت ناحیه قدام",
+    "ایمپلنت جلو",
+    "ایمپلنت زون زیبایی"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Anterior_Implant"
+   ],
+   "count": 3,
+   "content_ids": [
+    "sharehub/share-3",
+    "insight/insight-89",
+    "sharehub/share-25"
    ]
   },
   {
@@ -10198,28 +10225,6 @@
    ]
   },
   {
-   "key": "ایمپلنت_قدامی",
-   "tag": "#ایمپلنت_قدامی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ایمپلنت در ناحیه‌ی قدام، با بارِ زیباییِ بالا.",
-   "use_when": "مقاله تصمیمش مختصِ ناحیه‌ی قدام باشد.",
-   "aliases": [
-    "ایمپلنت ناحیه قدام",
-    "ایمپلنت جلو",
-    "ایمپلنت زون زیبایی"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#Anterior_Implant"
-   ],
-   "count": 2,
-   "content_ids": [
-    "sharehub/share-3",
-    "insight/insight-89"
-   ]
-  },
-  {
    "key": "اینترنال_بلیچینگ",
    "tag": "#اینترنال_بلیچینگ",
    "domain": "clinical",
@@ -11829,6 +11834,30 @@
    "content_ids": [
     "plak-sefr/plak1-1",
     "plak-sefr/plak1-3"
+   ]
+  },
+  {
+   "key": "ماکاپ_تصویری",
+   "tag": "#ماکاپ_تصویری",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "شبیه‌سازی تصویری نتیجه‌ی حدودی درمان روی عکس خود بیمار (با هوش مصنوعی یا نرم‌افزار طراحی)، بدون ساختن چیزی در دهان؛ ابزاری برای این‌که بیمار پیش از یک تصمیم برگشت‌ناپذیر، شکل تقریبی طرح پیشنهادی را ببیند و با آگاهی انتخاب کند.",
+   "use_when": "مقاله یک ماکاپ تصویری/دیجیتال روی عکس بیمار بسازد یا نقش آن را در تصمیم‌گیری و ارتباط با بیمار بحث کند؛ نه برای ماک‌آپ رزینی داخل دهان که راهنمای تراش است (#موک_آپ).",
+   "aliases": [
+    "digital mock-up",
+    "AI mock-up",
+    "smile simulation",
+    "ماکاپ دیجیتال",
+    "ماکاپ هوش مصنوعی",
+    "شبیه سازی لبخند",
+    "پیش نمایش درمان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-89",
+    "sharehub/share-25"
    ]
   },
   {
@@ -18682,29 +18711,6 @@
    ]
   },
   {
-   "key": "ماکاپ_تصویری",
-   "tag": "#ماکاپ_تصویری",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "شبیه‌سازی تصویری نتیجه‌ی حدودی درمان روی عکس خود بیمار (با هوش مصنوعی یا نرم‌افزار طراحی)، بدون ساختن چیزی در دهان؛ ابزاری برای این‌که بیمار پیش از یک تصمیم برگشت‌ناپذیر، شکل تقریبی طرح پیشنهادی را ببیند و با آگاهی انتخاب کند.",
-   "use_when": "مقاله یک ماکاپ تصویری/دیجیتال روی عکس بیمار بسازد یا نقش آن را در تصمیم‌گیری و ارتباط با بیمار بحث کند؛ نه برای ماک‌آپ رزینی داخل دهان که راهنمای تراش است (#موک_آپ).",
-   "aliases": [
-    "digital mock-up",
-    "AI mock-up",
-    "smile simulation",
-    "ماکاپ دیجیتال",
-    "ماکاپ هوش مصنوعی",
-    "شبیه سازی لبخند",
-    "پیش نمایش درمان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-89"
-   ]
-  },
-  {
    "key": "ماکت_اولیه",
    "tag": "#ماکت_اولیه",
    "domain": "ai",
@@ -21435,6 +21441,8 @@
   "critical appraisal": "تحلیل مطالعه",
   "content permanence": "ماندگاری محتوا",
   "universal adhesive": "یونیورسال باند",
+  "ایمپلنت ناحیه قدام": "ایمپلنت قدامی",
+  "ایمپلنت زون زیبایی": "ایمپلنت قدامی",
   "تماس باز پروگزیمال": "تماس باز",
   "force distribution": "توزیع نیرو",
   "جایگزین کردن دندان": "جایگزینی دندان",
@@ -21449,8 +21457,6 @@
   "name address phone": "اطلاعات مطب",
   "یکسانی اطلاعات مطب": "اطلاعات مطب",
   "بازسازی دندان اندو": "اندودنتیکس ترمیمی",
-  "ایمپلنت ناحیه قدام": "ایمپلنت قدامی",
-  "ایمپلنت زون زیبایی": "ایمپلنت قدامی",
   "internal bleaching": "اینترنال بلیچینگ",
   "direct restoration": "ترمیم مستقیم",
   "patient adaptation": "تطابق بیمار",
@@ -21734,6 +21740,8 @@
   "permanent cement": "سمان دائم",
   "framework design": "طراحی فریم ورک",
   "قالب برداشت روکش": "قالب peek آپ",
+  "smile simulation": "موک آپ تصویری",
+  "ماکاپ هوش مصنوعی": "موک آپ تصویری",
   "load to fracture": "مقاومت به شکست",
   "نسبت تاج ایمپلنت": "نسبت تاج به ایمپلنت",
   "دی کانتامیناسیون": "پاکسازی سرامیک",
@@ -21819,8 +21827,6 @@
   "حرکت طرفی مندیبل": "لتروتروزیو",
   "attached gingiva": "لثه کراتینیزه",
   "dental marketing": "مارکتینگ دندانپزشکی",
-  "smile simulation": "موک آپ تصویری",
-  "ماکاپ هوش مصنوعی": "موک آپ تصویری",
   "single arm study": "مطالعه بدون کنترل",
   "مطالعه کیس کنترل": "مطالعه مورد شاهدی",
   "mandibular molar": "مولر مندیبل",
@@ -21928,6 +21934,9 @@
   "implant spacing": "فاصله ایمپلنت",
   "distance فیکسچر": "فاصله ایمپلنت",
   "لکه سفید مینایی": "لکه سفید",
+  "digital mock up": "موک آپ تصویری",
+  "شبیه سازی لبخند": "موک آپ تصویری",
+  "پیش نمایش درمان": "موک آپ تصویری",
   "نیروی زاویه دار": "نیروی مایل",
   "هوش مصنوعی خلاق": "هوش مصنوعی مولد",
   "غیرقابل نگهداری": "هپلس",
@@ -22017,9 +22026,6 @@
   "ضخامت لایه سمان": "فیلم تیکنس سمان",
   "laser dentistry": "لیزر دندانپزشکی",
   "ری پوزیشنینگ لب": "لیپ ری پوزیشنینگ",
-  "digital mock up": "موک آپ تصویری",
-  "شبیه سازی لبخند": "موک آپ تصویری",
-  "پیش نمایش درمان": "موک آپ تصویری",
   "reference tooth": "مرجع آناتومیک",
   "fixed reference": "مرجع ثابت",
   "حذف درجات آزادی": "مرجع ثابت",
@@ -22065,6 +22071,7 @@
   "تراش برای روکش": "تراش روکش",
   "clinic website": "سایت مطب",
   "سمان کردن روکش": "سمان کردن",
+  "prompt writing": "پرامپت نویسی",
   "biologic width": "بیولوژیک ویدث",
   "فاصله بیولوژیک": "بیولوژیک ویدث",
   "طرز فکر بالینی": "تفکر اینسایت",
@@ -22072,7 +22079,6 @@
   "immediate load": "زمان بارگذاری ایمپلنت",
   "باقیمانده سمان": "سمان باقیمانده",
   "رویش بیش از حد": "سوپرااراپشن",
-  "prompt writing": "پرامپت نویسی",
   "راهنمای بالینی": "گایدلاین",
   "food impaction": "گیر غذایی",
   "گیر مواد غذایی": "گیر غذایی",
@@ -22265,6 +22271,7 @@
   "اسپلینت تراپی": "اسپلینت",
   "ترمیم زیر لثه": "ترمیم ساب جینجیوال",
   "ایمپلنت تراپی": "درمان ایمپلنت",
+  "مهندسی پرامپت": "پرامپت نویسی",
   "titanium base": "تیتانیوم لاینر",
   "سرجری ایمپلنت": "جراحی ایمپلنت",
   "searchability": "جستجوپذیری محتوا",
@@ -22274,7 +22281,6 @@
   "فیلور ایمپلنت": "شکست ایمپلنت",
   "قضاوت کلینیکی": "قضاوت اینسایت",
   "مرجین سرامیکی": "مارجین روکش",
-  "مهندسی پرامپت": "پرامپت نویسی",
   "ایمپکشن غذایی": "گیر غذایی",
   "food trapping": "گیر غذایی",
   "اسئواینتگریشن": "استئواینتگریشن",
@@ -22363,6 +22369,7 @@
   "شکستن درخواست": "شکستن کار",
   "چک کردن خروجی": "صحت سنجی",
   "فاز تتراگونال": "فاز زیرکونیا",
+  "ماکاپ دیجیتال": "موک آپ تصویری",
   "آلودگی سرامیک": "پاکسازی سرامیک",
   "دیکانتامینیشن": "پاکسازی سرامیک",
   "pattern resin": "پترن رزین",
@@ -22447,7 +22454,6 @@
   "laterotrusion": "لتروتروزیو",
   "تعیین محل درد": "لوکالیزیشن درد",
   "کلاس دو پنهان": "مال اکلوژن پنهان",
-  "ماکاپ دیجیتال": "موک آپ تصویری",
   "supragingival": "متریال سوپراجینجیوال",
   "مدیریت کلینیک": "مدیریت مطب",
   "توازی پایه ها": "مسیر نشست",
@@ -22524,6 +22530,7 @@
   "چسباندن روکش": "سمان کردن",
   "رد طرح درمان": "شروع نکردن درمان",
   "نپذیرفتن کیس": "شروع نکردن درمان",
+  "نوشتن پرامپت": "پرامپت نویسی",
   "تشخیص گلوبال": "global diagnosis",
   "ارزیابی پایه": "انتخاب پایه",
   "عرض بیولوژیک": "بیولوژیک ویدث",
@@ -22533,7 +22540,6 @@
   "سمان زیر لثه": "سمان باقیمانده",
   "study design": "طراحی مطالعه",
   "داوری بالینی": "قضاوت اینسایت",
-  "نوشتن پرامپت": "پرامپت نویسی",
   "open contact": "کانتکت باز",
   "گیر کردن غذا": "گیر غذایی",
   "screw cement": "اسکرو سمنتد",
@@ -22806,6 +22812,7 @@
   "notebook lm": "notebooklm",
   "پرامپت مبهم": "ابهام در پرامپت",
   "ارجاع بیمار": "ارجاع تخصصی",
+  "ایمپلنت جلو": "ایمپلنت قدامی",
   "root dentin": "باند به عاج ریشه",
   "برداشت روکش": "برداشت ترمیم",
   "تشخیص کاریز": "تشخیص پوسیدگی",
@@ -22837,7 +22844,6 @@
   "اندودونتیکس": "اندودنتیکس",
   "اندو ترمیمی": "اندودنتیکس ترمیمی",
   "سلامت بیمار": "ایمنی بیمار",
-  "ایمپلنت جلو": "ایمپلنت قدامی",
   "واکینگ بلیچ": "اینترنال بلیچینگ",
   "آلوی پرایمر": "باند به فلز",
   "بریج ترکیبی": "بریج دندان ایمپلنت",
@@ -23117,6 +23123,7 @@
   "white spot": "لکه سفید",
   "وایت اسپات": "لکه سفید",
   "ضایعه سفید": "لکه سفید",
+  "ai mock up": "موک آپ تصویری",
   "موقتی مرجع": "روکش موقت به عنوان مرجع",
   "multi unit": "مولتی یونیت اباتمنت",
   "knife edge": "نایف اج",
@@ -23210,7 +23217,6 @@
   "pic system": "فوتوگرامتری",
   "لثه چسبنده": "لثه کراتینیزه",
   "multimodal": "مالتی مودال",
-  "ai mock up": "موک آپ تصویری",
   "mockup اول": "ماکت اولیه",
   "متا پرامپت": "متاپرامپت",
   "hinge axis": "محور لولایی",

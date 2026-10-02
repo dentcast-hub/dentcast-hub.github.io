@@ -1,0 +1,437 @@
+<!doctype html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Image Mock-up: Why a Single Prompt Did Not Work | Share Hub – DentCast</title>
+
+<meta name="description" content="For the Insight 89 patient, before deciding to extract the central incisors, an AI image mock-up was built on their own intraoral photo. The final image did not come from a single prompt; this note shows the path to it step by step, with the image from every attempt.">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/en/share-25.html">
+
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="DentCast">
+<meta property="og:title" content="AI Image Mock-up: Why a Single Prompt Did Not Work | Share Hub – DentCast">
+<meta property="og:description" content="For the Insight 89 patient, before deciding to extract the central incisors, an AI image mock-up was built on their own intraoral photo. The final image did not come from a single prompt; this note shows the path to it step by step, with the image from every attempt.">
+<meta property="og:url" content="https://dentcast.org/sharehub/en/share-25.html">
+<meta property="og:image" content="https://dentcast.org/sharehub/share25-0.webp">
+<meta property="og:image:width" content="1079">
+<meta property="og:image:height" content="656">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Image Mock-up: Why a Single Prompt Did Not Work | Share Hub – DentCast">
+<meta name="twitter:description" content="For the Insight 89 patient, before deciding to extract the central incisors, an AI image mock-up was built on their own intraoral photo. The final image did not come from a single prompt; this note shows the path to it step by step, with the image from every attempt.">
+<meta name="twitter:image" content="https://dentcast.org/sharehub/share25-0.webp">
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css?v=7">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+
+  <!-- Theme init — no flash -->
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --radius:18px;
+    }
+
+    html,body { margin:0; padding:0; }
+
+    body {
+      font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+      direction: ltr;
+      background: #f0f2f5;
+      color: #0a1a33;
+      max-width: 47.5rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 6.25rem;line-height:1.9;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0a1020;
+      font-weight: 800;
+      font-size: 1.7rem;
+      line-height: 1.35;
+      margin: 0 0 1.875rem;
+    }
+
+    .glass-box {
+      background: #fff;
+      border: 1px solid rgba(2,35,96,.09);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.875rem;
+      box-shadow: 0 10px 30px rgba(2,35,96,.06);
+    }
+
+    p { margin: 0.875rem 0; font-size: 1.02rem; text-align: left; }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 1.5rem 0 0.625rem;
+      border-left: 4px solid #0b5fff;
+      padding-left: 0.75rem;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* summary tables — LTR counterpart of the .text-box table pattern used elsewhere on the site */
+    .glass-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .glass-box table th,
+    .glass-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:left;
+      vertical-align:top;
+    }
+    .glass-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .glass-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+    @media (max-width:768px){
+      .glass-box table{font-size:.9rem;}
+      .glass-box table th,.glass-box table td{padding:0.45rem 0.5rem;}
+    }
+
+    .text-divider {
+      margin: 1.75rem 0;
+      border: 0;
+      height: 0.0625rem;
+      background-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0),
+        rgba(11,95,255,0.4),
+        rgba(0,0,0,0)
+      );
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: #4a5568;
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* Persian-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 0 1.125rem auto;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      h1 { font-size: 1.4rem; }
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  </style>
+
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/en/share-25.html",
+      "url": "https://dentcast.org/sharehub/en/share-25.html",
+      "name": "AI Image Mock-up: Why a Single Prompt Did Not Work",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/en/share-25.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/en/share-25.html#creativework",
+      "name": "AI Image Mock-up: Why a Single Prompt Did Not Work",
+      "headline": "AI Image Mock-up: Why a Single Prompt Did Not Work",
+      "description": "For the Insight 89 patient, before deciding to extract the central incisors, an AI image mock-up was built on their own intraoral photo. The final image did not come from a single prompt; this note shows the path to it step by step, with the image from every attempt.",
+      "inLanguage": "en",
+      "image": [
+        "https://dentcast.org/sharehub/share25-0.webp",
+        "https://dentcast.org/sharehub/share25-1.webp",
+        "https://dentcast.org/sharehub/share25-2.webp",
+        "https://dentcast.org/sharehub/share25-3.webp",
+        "https://dentcast.org/sharehub/share25-4.webp"
+      ],
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "creator": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/en/share-25.html"
+      },
+      "datePublished": "2026-10-02",
+      "dateModified": "2026-10-02",
+      "genre": "Dental Education",
+      "keywords": [
+        "AI image mock-up",
+        "two-stage prompt for image editing",
+        "removing teeth from a photo with AI",
+        "FP3 prosthesis in an image mock-up",
+        "level incisal edges in the prompt",
+        "visualizing the treatment result for the patient",
+        "editing an intraoral photo with AI",
+        "four teeth between the two canines",
+        "AI mock-up prompting, one change per step",
+        "FP3 prosthesis AI image generation"
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "DentCast", "item": "https://dentcast.org/" },
+    { "@type": "ListItem", "position": 2, "name": "Share Hub", "item": "https://dentcast.org/sharehub/" },
+    { "@type": "ListItem", "position": 3, "name": "AI Image Mock-up: Why a Single Prompt Did Not Work | Share Hub – DentCast", "item": "https://dentcast.org/sharehub/en/share-25.html" }
+  ]
+}
+</script>
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<div class="sh-kicker"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Share Hub</div>
+<h1>AI Image Mock-up: Why a Single Prompt Did Not Work</h1>
+
+<div class="glass-box">
+
+  <a class="lang-btn" href="../share-25.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+  <p>
+  In <a href="/insight/en/insight-89.html">Insight 89</a> I presented a patient whose two maxillary central incisors had very short roots and were mobile; both lateral incisors were also missing, and the proposed treatment plan was to extract the two centrals and place two implants carrying four teeth in the space between the two canines. So that the patient could see roughly what the result would look like before this irreversible decision, I built an image mock-up with AI on their own intraoral photo. There I showed only the initial photo and the final result, but reaching that result did not happen with a single prompt, and the path that led to it seems to me more important than the result itself.
+  </p>
+
+  <img src="../share25-0.webp" alt="The patient's initial situation: two maxillary central incisors with short roots and mobility, both lateral incisors missing and an anterior diastema; intraoral photo with a retractor" loading="lazy" width="1079" height="656">
+
+  <p>
+  In the first attempt I wrote one prompt that asked for both things at once: remove the two centrals and put four teeth in the space between the two canines in their place. The result was clearly wrong, because the two centrals were still in place at almost the same width and the space had not been divided among four teeth.
+  </p>
+
+  <img src="../share25-1.webp" alt="Result of the first attempt with a single prompt: the two centrals are still in place at almost the same width and the space has not been divided among four teeth" loading="lazy" width="896" height="454">
+
+  <p>
+  I tried the same approach once or twice more and did not get an acceptable result. Then it occurred to me that I was actually asking the AI for two separate jobs, one removal and one addition, and when the two come in a single prompt they get mixed up. So I split the work into two stages, in the same order it happens in the clinic: extraction first, then the prosthesis.
+  </p>
+
+  <p>
+  In the first stage I asked only for the two centrals to be removed and said nothing about new teeth. I stressed that the rest of the photo should stay completely unchanged, meaning the canines, the lower teeth, the gingiva, the lip and the retractor must not change at all. The result was exactly what I wanted: an empty space between the two canines, without the rest of the image having been touched.
+  </p>
+
+  <img src="../share25-2.webp" alt="Result of the first stage: the two centrals have been removed, leaving an empty space between the two canines, with the rest of the image untouched" loading="lazy" width="787" height="444">
+
+  <p>
+  In the second stage I gave it this same photo without the centrals and explained that four teeth should be placed in this space and what their characteristics should be. This time the space was divided correctly and the four teeth sat in their places, but the incisal edges did not come out right and were not level.
+  </p>
+
+  <img src="../share25-3.webp" alt="Result of the second stage with a general prompt: four teeth sit in their places but the incisal edges are not level" loading="lazy" width="694" height="359">
+
+  <p>
+  I set this wrong result aside and did not continue working on it, because correcting a wrong image means asking for several changes at once all over again. Instead I went back to the photo from the first stage, the one with only the centrals removed, and changed the prompt. I had realized that from the general phrase "put four teeth" the AI could not tell what kind of prosthesis I had in mind or what the incisal edge should look like. So I explained the problem the way I would define it for a real prosthesis: the prosthesis should be an FP3, meaning that in addition to the tooth crowns it also replaces part of the gingiva, and the incisal edges should be level. With this explanation the result came out right.
+  </p>
+
+  <img src="../share25-4.webp" alt="Final result: an FP3 prosthesis with four teeth between the two canines, part of the gingiva replaced as well, and level incisal edges" loading="lazy" width="872" height="497">
+
+  <p>
+  In both the removal stage and the addition stage I stressed in the prompt that the rest of the photo's details should not be touched. This emphasis mattered a great deal, because the value of this mock-up for the patient lies in seeing a photo of their own mouth in which only the area to be treated has changed. If the gingival colour, the shape of the canines or the lower teeth change as well, the image is no longer their mouth and the before-and-after comparison means nothing.
+  </p>
+
+  <p>
+  Three things made this work. First, I asked for a two-stage job in two separate stages and raised only one change in each stage. Second, when the result of the second stage was wrong, I did not work on the wrong image but started again from the clean photo of the previous stage. Third, I assumed the AI had not understood what I meant and that I had to state the same concept in precise prosthetic terms, such as the type of prosthesis and the state of the incisal edge.
+  </p>
+
+</div>
+
+  <footer class="dc-site-footer">
+  <div style="margin-bottom:1.375rem;">
+    <a href="/"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Back to DentCast
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=11" defer></script>
+<script src="/dc-nav.js?v=255" defer></script>
+</body>
+</html>
