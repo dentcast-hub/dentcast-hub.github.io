@@ -18,7 +18,9 @@
 // Visibility rule — three visitor classes, decided BEFORE anything renders:
 //   anon    (signed out)        → sees ads
 //   plus    (signed in, free)   → sees ads, targeted separately from anon
-//   premium (tier === 'premium')→ never, anywhere ("بدون تبلیغات" is the perk)
+//   premium (tier === 'premium')→ never, anywhere (the perk is promised as
+//                                 "بدون تبلیغ در مقالات", deliberately narrower
+//                                 than this rule — premium-catalog.js says why)
 //
 // The class comes from plus.js's shared /me, plus a localStorage memory of what
 // this device was LAST CONFIRMED to be (K_CLASS), written only on a real answer.
@@ -67,7 +69,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=162';
+import { findProseRoot } from '/plus/js/config.js?v=163';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -161,7 +163,7 @@ function report(kind, slotName, creativeId) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ [key]: name, content_id: contentId }),
   });
-  import('/plus/js/api.js?v=162')
+  import('/plus/js/api.js?v=163')
     .then((m) => m.apiBase())
     .then((base) => {
       if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
@@ -180,7 +182,7 @@ function report(kind, slotName, creativeId) {
       // A network-level failure (not an HTTP error) may mean the cached base is
       // dead — self-heal so the NEXT event, and the next page's /me, re-probe
       // instead of retrying the same unreachable host all session.
-      import('/plus/js/api.js?v=162').then((m) => m.forgetBase()).catch(() => {});
+      import('/plus/js/api.js?v=163').then((m) => m.forgetBase()).catch(() => {});
     });
 }
 
@@ -1210,7 +1212,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=162')
+  return import('/plus/js/api.js?v=163')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }

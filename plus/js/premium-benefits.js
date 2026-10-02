@@ -16,7 +16,7 @@
 // «بریز», «بخون». That voice is right beside a button someone already paid for
 // and wrong on the page asking them for a million toman. Same features,
 // register to match the moment.
-import { PREMIUM_FEATURES } from './config.js?v=162';
+import { PREMIUM_FEATURES } from './config.js?v=163';
 
 /**
  * Keyed by title with a fallback to the shared hint, so a feature added to the
@@ -60,7 +60,12 @@ const PITCH = {
  * score is ever spent on — the number means nothing without what it buys.
  */
 const EXTRA_PERKS = [
-  { title: 'بدون تبلیغ', hint: 'هیچ تبلیغی، در هیچ صفحه‌ای.' },
+  // «در مقالات», deliberately narrow — the same wording and the same reason
+  // as premium-catalog.js's 'no-ads' entry (founder, 1405/06/30): the homepage
+  // may one day carry a hand-placed gold-sponsor card that premium sees too, so
+  // the promise covers the reading surfaces and nothing wider. This line is
+  // what the first-visit popup and the pricing page print.
+  { title: 'بدون تبلیغ در مقالات', hint: 'هیچ کارت اسپانسری لای مقاله‌ها و اپیزودها.' },
   { title: 'اطلاع فوری از مطلب تازه', hint: 'نوتیفیکیشن مطلب تازه بلافاصله پس از انتشار می‌رسد.' },
   {
     title: 'ضریب بالاتر امتیاز',
