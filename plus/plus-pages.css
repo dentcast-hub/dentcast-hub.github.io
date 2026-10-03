@@ -1352,10 +1352,10 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-support-code-row code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; direction: ltr; font-weight: 800; }
 
 /* ===== profile: «افتخارات» ================================================
-   Two metal scales meet in this one section — the league's ten dental
+   Two metal scales meet in this one section — the league's seven dental
    materials (the medals) and the badges' bronze/silver/gold. They are kept
    apart by SHAPE, not by colour: a medal is the league's own tooth-shield
-   (reusing .dcp-tier-t1..t10 from plus.css verbatim, so a medal can never drift
+   (reusing .dcp-tier-t1..t7 from plus.css verbatim, so a medal can never drift
    from the tier badge it is meant to be), and a badge is a disc. The word
    «طلا» is written only in the medal row; on the wall a level is the ring
    colour and nothing else.

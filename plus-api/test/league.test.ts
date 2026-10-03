@@ -176,17 +176,15 @@ describe('finalizeWeek — outcome edge rules', () => {
     expect((await pool.query("select value from league_config where key='max_active_tier_order'")).rows[0].value).toBe('4');
   });
 
-  it('no promotion out of the TRUE ceiling (enamel) — there is nothing above it', async () => {
-    // titanium was the ceiling until 0069 added three tiers above it; the
-    // test follows the ceiling, not the material.
-    const { userIds } = await seedGroup('enamel', 6, [
+  it('no promotion out of the TRUE ceiling (titanium) — there is nothing above it', async () => {
+    const { userIds } = await seedGroup('titanium', 6, [
       { xp: 90, at: T(1) }, { xp: 80, at: T(2) },
       { xp: 40, at: T(3) }, { xp: 30, at: T(4) },
       { xp: 20, at: T(5) }, { xp: 10, at: T(6) },
     ]);
     const res = await finalizeWeek(WEEK);
     expect(res.promotions).toBe(0);
-    expect(await tierOf(userIds[0])).toBe('enamel');
+    expect(await tierOf(userIds[0])).toBe('titanium');
     expect((await memberOf(userIds[0])).outcome).toBe('stayed');
     expect((await memberOf(userIds[0])).final_rank).toBe(1); // recorded for future rewards
   });

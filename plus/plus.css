@@ -742,10 +742,7 @@ html.dcp-pp-open, html.dcp-pp-open body { overflow: hidden; }
 .dcd-welcome-feed .dcp-hf { margin-top: .8rem; }
 
 /* ===== weekly league =================================================== */
-/* tier shield badge — material gradient per tier, low (acrylic) to high (enamel).
-   Only titanium (t7) is dark enough to need light text; the three above it go
-   back to light grounds on purpose — the ladder ends on the original tooth,
-   not on a darker metal. `tierIsDark()` in league.js is the one rule. */
+/* tier shield badge — material gradient per tier, low (acrylic) to high (titanium) */
 .dcp-tier {
   position: relative; display: grid; place-items: center; flex: 0 0 auto; color: #20303f;
   clip-path: polygon(50% 0, 100% 20%, 100% 64%, 50% 100%, 0 64%, 0 20%);
@@ -770,9 +767,6 @@ html.dcp-pp-open, html.dcp-pp-open body { overflow: hidden; }
 .dcp-tier-t5 { background: linear-gradient(155deg, #e9fbff, #7fcbe0); }
 .dcp-tier-t6 { background: linear-gradient(155deg, #ffffff, #c4d0dd); }
 .dcp-tier-t7 { background: linear-gradient(150deg, #6a7d90, #1f2630); }
-.dcp-tier-t8 { background: linear-gradient(155deg, #f6f7fb, #a9b4c4 60%, #e6eaf2); }
-.dcp-tier-t9 { background: linear-gradient(155deg, #fff4cf, #d9a632 55%, #f3d27a); }
-.dcp-tier-t10 { background: linear-gradient(155deg, #ffffff, #f1ecdf 45%, #d8e8ee); }
 
 /* home-card league chip */
 .dcp-lg-chip { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px 4px 8px;

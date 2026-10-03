@@ -548,20 +548,19 @@ describe('«جلودار» و «سلطان» — لیگ‌های متمایز، 
     expect(body.medals[0].earned).toBe(false); // and the medal agrees
   });
 
-  it('keeps «سلطان» dark short of all ten, and lights it on the tenth', async () => {
-    // The whole ladder since 0069: seven materials and the three above titanium.
+  it('keeps «سلطان» dark short of all seven, and lights it on the seventh', async () => {
     const ladder = ['acrylic', 'amalgam', 'composite', 'metal-ceramic',
-      'lithium-disilicate', 'zirconia', 'titanium', 'platinum', 'cast-gold', 'enamel'];
-    // Nine of ten: «جلودار» is at its top level and «سلطان» is still one away.
-    for (let i = 0; i < 9; i += 1) await win(`2026-05-${String(i + 2).padStart(2, '0')}`, ladder[i]);
+      'lithium-disilicate', 'zirconia', 'titanium'];
+    // Six of seven: «جلودار» is at its top level and «سلطان» is still one away.
+    for (let i = 0; i < 6; i += 1) await win(`2026-05-0${i + 2}`, ladder[i]);
     let body = await get();
     expect(badgeOf(body, 'vanguard').metal).toBe('gold');
     const sultanBefore = badgeOf(body, 'sultan');
     expect(sultanBefore.earned).toBe(false);
-    expect(sultanBefore.value).toBe(9);
-    expect(sultanBefore.target).toBe(10);
+    expect(sultanBefore.value).toBe(6);
+    expect(sultanBefore.target).toBe(7);
 
-    await win('2026-05-12', ladder[9]);
+    await win('2026-05-09', ladder[6]);
     body = await get();
     const sultan = badgeOf(body, 'sultan');
     expect(sultan.earned).toBe(true);
@@ -569,11 +568,11 @@ describe('«جلودار» و «سلطان» — لیگ‌های متمایز، 
     // the wall must not hand it a metal it has no level to justify.
     expect(sultan.metal).toBe('plain');
     expect(sultan.levels).toBeNull();
-    expect(sultan.lead_fa).toContain('هر ده لیگ');
+    expect(sultan.lead_fa).toContain('هر هفت لیگ');
   });
 
   it('counts tiers that are not activated yet, since a finalized week is a fact', async () => {
-    // max_active_tier_order is 3 today, so tiers 4-10 cannot be reached now —
+    // max_active_tier_order is 3 today, so tiers 4-7 cannot be reached now —
     // but the metric reads finalized history, not the activation flag. If that
     // ever diverged, «سلطان» would become unearnable even after the ladder opens.
     await win('2026-06-06', 'zirconia');
