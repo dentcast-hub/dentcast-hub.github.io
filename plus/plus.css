@@ -2456,3 +2456,10 @@ html.dcp-touring #mobile-body { overflow: hidden; }
 body.dcp-study .dcp-abar { display: none; }
 body.dcp-has-abar #dc-float-search,
 body.dcp-has-abar #dc-theme-toggle { bottom: max(76px, calc(var(--dcp-abar-top, 0px) + 8px)); }
+
+/* «پخش شروع نشد؟» under an episode player (plus/js/audio-fallback.js) — drawn
+   only after a failed play. Quiet on purpose: a door, not an alarm. */
+.dc-audio-alt{margin:.625rem 0 0;padding:.625rem .875rem;border:1px dashed var(--dcp-line);border-radius:.75rem;font-size:.875rem;line-height:1.8;color:var(--dcp-muted);}
+.dc-audio-alt a{color:var(--dcp-accent);font-weight:700;text-decoration:none;white-space:nowrap;}
+.dc-audio-alt a:hover{text-decoration:underline;}
+.dc-audio-alt[hidden]{display:none;}

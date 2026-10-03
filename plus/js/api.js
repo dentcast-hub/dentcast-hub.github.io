@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import * as CFG from './config.js?v=168';
+import * as CFG from './config.js?v=169';
 
 const API_BASES = CFG.API_BASES;
 
@@ -32,17 +32,35 @@ const SS_BASE = 'dcp:api-base';
 // TWO STRIKES, never one. A silent probe alone proves nothing: on a slow
 // phone network a cold TLS handshake can outlast 1.5s against an API that is
 // perfectly alive, and treating that as an outage would leave a signed-in
-// reader looking signed-out for minutes. So a silent probe only ARMS the
-// memory (`probeSilent`, this page only); it is written when the request sent
-// after it ALSO fails at the network level. On a slow-but-alive network that
-// request simply answers and nothing changes from how the site always
-// behaved. The one single-strike case is a Cloudflare origin-unreachable
-// status (521–524, 530): our own API never produces those, so one is proof.
+// reader looking signed-out. So a silent probe only ARMS the memory, and the
+// memory is written by one of three things:
+//
+//   - the request sent after a silent probe ALSO fails at the network level
+//     (it waited out its own deadline — 15s for /me — so it is the stronger
+//     of the two knocks);
+//   - a SECOND silent probe in the same tab (the strike count is kept in
+//     sessionStorage, so it survives a page change) followed by one longer
+//     knock, CONFIRM_TIMEOUT_MS, that nothing answers either. Without this a
+//     reader who changed page faster than /me's deadline never reached the
+//     second strike, and every page paid the wait again;
+//   - a Cloudflare origin-unreachable status (521–524, 530): our own API
+//     never produces those, so one is proof.
+//
 // An ordinary 4xx/5xx from our API is an answer and writes nothing; any
-// success clears the memory. Short on purpose, and a request the reader
-// started by hand (login, logout — `pinned`) always goes out.
+// success clears the memory AND the strikes. Short on purpose (one minute),
+// and a request the reader started by hand (login, logout — `pinned`; the
+// account icon's /me — `force`) always goes out.
 const SS_DOWN = 'dcp:api-down';
-const API_DOWN_TTL_MS = 2 * 60 * 1000;
+const API_DOWN_TTL_MS = 60 * 1000;
+// The strike count: «n:timestamp». A strike older than this is forgotten, so
+// one slow moment at the start of a visit does not shorten the next one's
+// patience half an hour later.
+const SS_STRIKES = 'dcp:api-strikes';
+const STRIKE_TTL_MS = 5 * 60 * 1000;
+// The longer knock that turns two silent probes into «the API is not there».
+// A living API on a slow connection answers well inside it (a 4s round trip
+// was the worst the .org walk measured); a cut answers nothing at all.
+const CONFIRM_TIMEOUT_MS = 6000;
 // The statuses Cloudflare itself answers when the origin behind it is gone.
 // Our API never produces these, so seeing one says nothing about the reader.
 const ORIGIN_DOWN = [521, 522, 523, 524, 530];
@@ -63,6 +81,19 @@ function isSilence(e) {
   if (leaving) return false;
   const name = e && e.name;
   return name === 'TimeoutError' || name === 'TypeError';
+}
+
+function strikes() {
+  const [n, t] = ssGet(SS_STRIKES).split(':').map(Number);
+  return n > 0 && Date.now() - t < STRIKE_TTL_MS ? n : 0;
+}
+function setStrikes(n) { ssSet(SS_STRIKES, n + ':' + Date.now()); }
+
+function markDown() {
+  ssSet(SS_DOWN, String(Date.now()));
+  // Keep the count armed: once the minute is over, the next page goes
+  // straight to the long knock instead of starting from one again.
+  setStrikes(Math.max(2, strikes()));
 }
 
 function downRecently() {
@@ -127,19 +158,39 @@ function signalFor(ms) {
   return undefined;
 }
 
-function probeSignal() {
-  // AbortSignal.timeout is not in older WebViews (Telegram's in-app browser on
-  // an old Android). Falling back to no signal keeps the old behaviour there
-  // rather than throwing — slow beats broken.
-  return signalFor(PROBE_TIMEOUT_MS);
-}
-
 async function pickBase() {
   if (resolvedBase) return resolvedBase;
   const cached = ssGet(SS_BASE);
   if (cached && API_BASES.indexOf(cached) !== -1) { resolvedBase = cached; return cached; }
   // Seen down a moment ago: do not spend another probe on it.
   if (apiDown()) { resolvedBase = API_BASES[0]; return resolvedBase; }
+  // Two strikes already in this tab: skip the short knock, go to the long one.
+  const before = strikes();
+  let found = await probeMirrors(before >= 2 ? CONFIRM_TIMEOUT_MS : PROBE_TIMEOUT_MS);
+  if (!found.base && found.silent && before < 2 && !leaving) {
+    setStrikes(before + 1);
+    if (before + 1 >= 2) found = await probeMirrors(CONFIRM_TIMEOUT_MS);
+  }
+  if (found.base) {
+    ssClear(SS_STRIKES);
+    resolvedBase = found.base;
+    return resolvedBase;
+  }
+  // Remember an outage only when every mirror was SILENT — no answer at all,
+  // or Cloudflare saying the origin behind it is gone. A mirror that answered
+  // with any other status is there; that is a different problem, and holding
+  // requests back would only hide it.
+  probeSilent = found.silent;
+  // The long knock went unanswered too: that is the second strike.
+  if (found.silent && found.long && !leaving) markDown();
+  // Fall back to the first configured base so callers still get a real error.
+  resolvedBase = API_BASES[0];
+  return resolvedBase;
+}
+
+// Knock on every mirror at once with one deadline. Answers {base} for the
+// first mirror IN ORDER that is there, else {silent, long}.
+async function probeMirrors(ms) {
   // Probe every mirror CONCURRENTLY but honour them in ORDER. The distinction
   // matters in both directions:
   //
@@ -155,7 +206,7 @@ async function pickBase() {
   // So the second mirror is already in flight and warm by the time the first
   // one is given up on — the failover costs a timeout, not a round trip.
   const attempts = API_BASES.map((base) => fetch(base + '/health', {
-    method: 'GET', credentials: 'include', cache: 'no-store', signal: probeSignal(),
+    method: 'GET', credentials: 'include', cache: 'no-store', signal: signalFor(ms),
   }));
   // A rejection nobody is awaiting yet is an unhandled rejection in some
   // browsers; neutralise each one now and read the outcome below.
@@ -163,26 +214,22 @@ async function pickBase() {
   for (let i = 0; i < API_BASES.length; i++) {
     const res = await settled[i];
     if (res && res.ok) {
-      resolvedBase = API_BASES[i];
       // Only the PRIMARY is remembered across pages. The session cookie lives
       // on the primary host alone (it is same-site there and nowhere else), so
       // a failover is a read-only detour for THIS page, never a choice the tab
       // should carry for weeks: remembered, one slow probe at the first page
       // of a visit pinned the whole tab to the mirror where the reader's
       // session does not exist — «signed in on one tab, a guest on the next».
-      if (i === 0) ssSet(SS_BASE, resolvedBase);
-      return resolvedBase;
+      if (i === 0) ssSet(SS_BASE, API_BASES[i]);
+      return { base: API_BASES[i] };
     }
   }
-  // Remember an outage only when every mirror was SILENT — no answer at all,
-  // or Cloudflare saying the origin behind it is gone. A mirror that answered
-  // with any other status is there; that is a different problem, and holding
-  // requests back would only hide it.
   const answers = await Promise.all(settled);
-  probeSilent = answers.every((r) => !r || ORIGIN_DOWN.indexOf(r.status) !== -1);
-  // Fall back to the first configured base so callers still get a real error.
-  resolvedBase = API_BASES[0];
-  return resolvedBase;
+  return {
+    base: null,
+    silent: answers.every((r) => !r || ORIGIN_DOWN.indexOf(r.status) !== -1),
+    long: ms >= CONFIRM_TIMEOUT_MS,
+  };
 }
 
 // Exported so callers that build their own fetch (spot.js's telemetry, which
@@ -228,6 +275,9 @@ async function request(path, { method = 'GET', body, query, pinned = false, forc
   // or the memory would answer it and the form would never open.
   if (isStatic() || (!pinned && !force && downRecently())) throw new ApiError(0, { error: 'offline' });
   const base = pinned ? primaryBase() : await pickBase();
+  // The probe itself may just have confirmed the outage (the long knock went
+  // unanswered): do not then send this request into the same silence.
+  if (!pinned && !force && downRecently()) throw new ApiError(0, { error: 'offline' });
   let url = base + path;
   if (query) {
     // `new URLSearchParams({a: undefined})` stringifies to the literal text
@@ -261,7 +311,7 @@ async function request(path, { method = 'GET', body, query, pinned = false, forc
   } catch (e) {
     forgetBase(); // network-level failure (not an HTTP error) — the cached base may be dead
     // Second strike: the probe was silent AND this request got nothing back.
-    if (probeSilent && !pinned && isSilence(e)) ssSet(SS_DOWN, String(Date.now()));
+    if (probeSilent && !pinned && isSilence(e)) markDown();
     throw e;
   }
   // A 401 from the FALLBACK mirror is not an answer about the reader — the
@@ -277,11 +327,16 @@ async function request(path, { method = 'GET', body, query, pinned = false, forc
     res = retry;
   }
   if (ORIGIN_DOWN.indexOf(res.status) !== -1) {
-    ssSet(SS_DOWN, String(Date.now()));
+    markDown();
     forgetBase();
   } else if (res.ok) {
     ssClear(SS_DOWN);
+    ssClear(SS_STRIKES);
     probeSilent = false;
+    // An answer from the primary is proof it is there, whatever the probe
+    // said. Remember it, or a reader whose round trip is longer than the
+    // probe's 1.5s pays that probe again on every page of the visit.
+    if (base === primaryBase() && !ssGet(SS_BASE)) ssSet(SS_BASE, base);
   }
   if (res.status === 204) return null;
   // A file rather than JSON (a clip's audio): the body is the answer, and an
