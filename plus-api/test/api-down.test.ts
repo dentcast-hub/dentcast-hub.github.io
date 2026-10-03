@@ -36,19 +36,31 @@ describe('the API seen down is remembered for the tab', () => {
     void currentUser; void meStatus;
   });
 
-  it('the first page pays only the probe: /me is not then sent to a silent mirror', async () => {
+  // The normal-mode guarantee. On a slow phone network a cold handshake can
+  // outlast the 1.5s probe against an API that is alive; a silent probe alone
+  // must change nothing about how the reader is recognised.
+  it('a slow but living API: probes time out, /me still answers, nothing is remembered', async () => {
+    globalThis.fetch = vi.fn((url: any, init: any = {}) => {
+      if (String(url).endsWith('/health')) {
+        return new Promise((_r, reject) => init.signal?.addEventListener('abort', () => reject(new Error('aborted'))));
+      }
+      return Promise.resolve(ok({ id: 'u1', tier: 'premium' }));
+    }) as any;
+    const { currentUser, meStatus } = await import('/plus/js/api.js');
+    expect(await currentUser()).toMatchObject({ tier: 'premium' });
+    expect(meStatus()).toBe('user');
+    expect(sessionStorage.getItem('dcp:api-down')).toBeNull();
+  }, 10000);
+
+  it('two strikes: a silent probe AND a /me that never answers write the memory', async () => {
     globalThis.fetch = vi.fn((url: any, init: any = {}) => new Promise((_r, reject) => {
       init.signal?.addEventListener('abort', () => reject(new Error('aborted')));
     })) as any;
     const { currentUser, meStatus } = await import('/plus/js/api.js');
-    const t0 = Date.now();
     expect(await currentUser()).toBeNull();
-    const ms = Date.now() - t0;
     expect(meStatus()).toBe('error');
-    expect(ms, `took ${ms}ms — the probe deadline is 1500ms`).toBeLessThan(2500);
-    const paths = (globalThis.fetch as any).mock.calls.map((c: any[]) => String(c[0]));
-    expect(paths.every((u: string) => u.endsWith('/health'))).toBe(true);
-  }, 10000);
+    expect(sessionStorage.getItem('dcp:api-down')).toBeTruthy();
+  }, 20000);
 
   it('a Cloudflare origin-down answer (522) is remembered too', async () => {
     globalThis.fetch = vi.fn(async (url: any) => (String(url).endsWith('/health') ? ok() : status(522))) as any;

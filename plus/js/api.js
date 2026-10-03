@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import * as CFG from './config.js?v=166';
+import * as CFG from './config.js?v=167';
 
 const API_BASES = CFG.API_BASES;
 
@@ -26,19 +26,28 @@ const SS_BASE = 'dcp:api-base';
 // a dead API cost EVERY page the same wait: both probes run out (1.5s), nothing
 // is learned, /me goes to the first base anyway and hangs until a timeout —
 // against a Cloudflare Worker whose origin is gone, ~15s before a 522. With
-// it, the first page pays the probe once and every page after it renders the
-// «could not ask» state at once. Only a FAILED PROBE (both mirrors silent) or a
-// Cloudflare origin-unreachable status writes it — never an ordinary 4xx/5xx
-// from our own API, which is an answer — and any successful response clears
-// it. Short on purpose: a phone network that blinks must not switch the
-// reader's tools off for long, and after the TTL the next page simply probes
-// again. A request the reader started by hand (login, logout — `pinned`)
-// still goes out; only the background chatter is held back.
+// it, the first page pays that once and every page after it renders the
+// «could not ask» state at once.
+//
+// TWO STRIKES, never one. A silent probe alone proves nothing: on a slow
+// phone network a cold TLS handshake can outlast 1.5s against an API that is
+// perfectly alive, and treating that as an outage would leave a signed-in
+// reader looking signed-out for minutes. So a silent probe only ARMS the
+// memory (`probeSilent`, this page only); it is written when the request sent
+// after it ALSO fails at the network level. On a slow-but-alive network that
+// request simply answers and nothing changes from how the site always
+// behaved. The one single-strike case is a Cloudflare origin-unreachable
+// status (521–524, 530): our own API never produces those, so one is proof.
+// An ordinary 4xx/5xx from our API is an answer and writes nothing; any
+// success clears the memory. Short on purpose, and a request the reader
+// started by hand (login, logout — `pinned`) always goes out.
 const SS_DOWN = 'dcp:api-down';
 const API_DOWN_TTL_MS = 2 * 60 * 1000;
 // The statuses Cloudflare itself answers when the origin behind it is gone.
 // Our API never produces these, so seeing one says nothing about the reader.
 const ORIGIN_DOWN = [521, 522, 523, 524, 530];
+
+let probeSilent = false;
 
 function downRecently() {
   const t = Number(ssGet(SS_DOWN)) || 0;
@@ -91,7 +100,7 @@ const REQUEST_TIMEOUT_MS = 30000;
 // surface that knows the reader waits on it — so thirty seconds of silence is
 // not a slow answer, it is no answer, and it should become «could not ask»
 // while the reader is still on the page.
-const ME_TIMEOUT_MS = 8000;
+const ME_TIMEOUT_MS = 10000;
 
 function signalFor(ms) {
   try {
@@ -154,8 +163,7 @@ async function pickBase() {
   // with any other status is there; that is a different problem, and holding
   // requests back would only hide it.
   const answers = await Promise.all(settled);
-  const silent = answers.every((r) => !r || ORIGIN_DOWN.indexOf(r.status) !== -1);
-  if (silent) ssSet(SS_DOWN, String(Date.now()));
+  probeSilent = answers.every((r) => !r || ORIGIN_DOWN.indexOf(r.status) !== -1);
   // Fall back to the first configured base so callers still get a real error.
   resolvedBase = API_BASES[0];
   return resolvedBase;
@@ -201,9 +209,6 @@ async function request(path, { method = 'GET', body, query, pinned = false, time
   // turns anything but a 401 into 'error').
   if (isStatic() || (!pinned && downRecently())) throw new ApiError(0, { error: 'offline' });
   const base = pinned ? primaryBase() : await pickBase();
-  // The probe that just ran found every mirror silent: sending this request to
-  // one of them anyway would only add its own deadline to the probe's.
-  if (!pinned && downRecently()) throw new ApiError(0, { error: 'offline' });
   let url = base + path;
   if (query) {
     // `new URLSearchParams({a: undefined})` stringifies to the literal text
@@ -236,6 +241,8 @@ async function request(path, { method = 'GET', body, query, pinned = false, time
     res = await fetch(url, opts);
   } catch (e) {
     forgetBase(); // network-level failure (not an HTTP error) — the cached base may be dead
+    // Second strike: the probe was silent AND this request got nothing back.
+    if (probeSilent && !pinned) ssSet(SS_DOWN, String(Date.now()));
     throw e;
   }
   // A 401 from the FALLBACK mirror is not an answer about the reader — the
@@ -255,6 +262,7 @@ async function request(path, { method = 'GET', body, query, pinned = false, time
     forgetBase();
   } else if (res.ok) {
     ssClear(SS_DOWN);
+    probeSilent = false;
   }
   if (res.status === 204) return null;
   // A file rather than JSON (a clip's audio): the body is the answer, and an
