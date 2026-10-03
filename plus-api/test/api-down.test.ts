@@ -154,6 +154,30 @@ describe('strikes carry across pages (a reader who changes page quickly)', () =>
     expect(healthCalls().length, 'no second probe').toBe(probes);
   }, 10000);
 
+  // A slow .org page always has something in flight when the reader taps a
+  // link, and the browser cancels it. That cancellation must not erase the
+  // base the earlier answer remembered — only a real silence may.
+  it('a request cancelled by leaving the page keeps the remembered base; a real silence forgets it', async () => {
+    let next: 'ok' | 'abort' | 'refused' = 'ok';
+    globalThis.fetch = vi.fn((url: any) => {
+      if (String(url).endsWith('/health')) return Promise.resolve(ok());
+      if (next === 'abort') { const e = new Error('The user aborted a request.'); (e as any).name = 'AbortError'; return Promise.reject(e); }
+      if (next === 'refused') return Promise.reject(new TypeError('Failed to fetch'));
+      return Promise.resolve(ok({ id: 'u1', tier: 'free' }));
+    }) as any;
+    const { api } = await import('/plus/js/api.js');
+    await api.me();
+    expect(sessionStorage.getItem('dcp:api-base')).toBe('https://api.one.test');
+
+    next = 'abort';
+    await expect(api.me()).rejects.toThrow();
+    expect(sessionStorage.getItem('dcp:api-base'), 'a cancellation is not an outage').toBe('https://api.one.test');
+
+    next = 'refused';
+    await expect(api.me()).rejects.toThrow();
+    expect(sessionStorage.getItem('dcp:api-base'), 'a refused connection may mean the base is dead').toBeNull();
+  }, 10000);
+
   it('a cut: page 1 is left early, page 2 pays the short and the long knock once, page 3 sends nothing', async () => {
     const silent = (_u: any, init: any = {}) => new Promise((_r, reject) => {
       init.signal?.addEventListener('abort', () => { const e = new Error('t'); (e as any).name = 'TimeoutError'; reject(e); });
