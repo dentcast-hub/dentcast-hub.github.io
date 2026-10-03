@@ -255,12 +255,18 @@ push step becomes a local commit, its Actions step becomes
 catch-up runs after the link returns). Publishing during a cut is OPTIONAL:
 with nothing published, both domains simply keep serving. **A dead API costs
 a tab one page of waiting, not every page, and never delays the text** —
-`api.js` remembers it (`dcp:api-down`, sessionStorage, two minutes) on TWO
-strikes only: a silent probe arms it, and it is written only if the request
-sent after it ALSO fails at the network level (a cold handshake on a slow
-phone can outlast the 1.5s probe against a living API, and that reader must
-stay recognised); a Cloudflare origin-unreachable status (521–524, 530) is the
-one single-strike proof. Any success clears it, a cancelled request (the reader tapped away) is never a strike, and a `/me` the reader asked for by hand (the account icon re-asks it before opening the login form) always goes out; login/logout are never held back; `/me` has a 15-second deadline. **`STATIC_HOSTS` in `plus/js/config.js` is the founder's
+`api.js` remembers it (`dcp:api-down`, sessionStorage, ONE minute) on TWO
+strikes only: a silent 1.5s probe arms it, and it is written only if the request
+sent after it ALSO fails at the network level, or if a SECOND silent probe in the
+same tab (the count, `dcp:api-strikes`, survives a page change and is forgotten
+after five minutes) is followed by a 6-second knock that nothing answers either
+— a reader who changes page faster than `/me`'s deadline never reached the
+first rule's second strike and paid the wait on every page. A cold handshake on
+a slow phone can outlast the 1.5s probe against a living API, and that reader
+must stay recognised: a living API answers the 6s knock. A Cloudflare
+origin-unreachable status (521–524, 530) is the one single-strike proof, and an
+answer from the primary host is remembered as the base even when its probe was
+silent, so a slow round trip is not paid again on every page. Any success clears it and the strikes, a cancelled request (the reader tapped away) is never a strike, and a `/me` the reader asked for by hand (the account icon re-asks it before opening the login form) always goes out; login/logout are never held back; `/me` has a 15-second deadline. **`STATIC_HOSTS` in `plus/js/config.js` is the founder's
 switch**, empty in normal times: keyed by hostname so it can never reach `.ir`,
 and flipping it is a change to the module graph, so `asset_version.py --bump`
 rides in the same commit. Tests: `plus-api/test/api-down.test.ts`.

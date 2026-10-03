@@ -121,6 +121,118 @@ describe('the API seen down is remembered for the tab', () => {
   });
 });
 
+// A host that answers after `ms`, unless the caller's own deadline comes first.
+function slow(ms: number, answer: () => any) {
+  return (_url: any, init: any = {}) => new Promise((resolve, reject) => {
+    const t = setTimeout(() => resolve(answer()), ms);
+    init.signal?.addEventListener('abort', () => {
+      clearTimeout(t);
+      const e = new Error('timed out'); (e as any).name = 'TimeoutError'; reject(e);
+    });
+  });
+}
+const healthCalls = () => (globalThis.fetch as any).mock.calls.filter((c: any[]) => String(c[0]).endsWith('/health'));
+
+describe('strikes carry across pages (a reader who changes page quickly)', () => {
+  // The .org reader whose round trip is longer than the probe: the first
+  // answer proves the API is there, so the next page must not probe again.
+  it('a slow /me that answers is remembered as the base: the next page sends no probe', async () => {
+    globalThis.fetch = vi.fn((url: any, init: any) => (String(url).endsWith('/health')
+      ? slow(3000, () => ok())(url, init)
+      : Promise.resolve(ok({ id: 'u1', tier: 'free' })))) as any;
+    const { currentUser } = await import('/plus/js/api.js');
+    expect(await currentUser()).toMatchObject({ id: 'u1' });
+    expect(sessionStorage.getItem('dcp:api-base')).toBe('https://api.one.test');
+    expect(sessionStorage.getItem('dcp:api-strikes'), 'the answer clears the strike').toBeNull();
+
+    vi.resetModules();
+    const probes = healthCalls().length;
+    const next = await import('/plus/js/api.js');
+    const t0 = Date.now();
+    expect(await next.currentUser()).toMatchObject({ id: 'u1' });
+    expect(Date.now() - t0).toBeLessThan(500);
+    expect(healthCalls().length, 'no second probe').toBe(probes);
+  }, 10000);
+
+  it('a cut: page 1 is left early, page 2 pays the short and the long knock once, page 3 sends nothing', async () => {
+    const silent = (_u: any, init: any = {}) => new Promise((_r, reject) => {
+      init.signal?.addEventListener('abort', () => { const e = new Error('t'); (e as any).name = 'TimeoutError'; reject(e); });
+    });
+    // page 1: the probe is silent, then the reader leaves before /me's deadline
+    globalThis.fetch = vi.fn((url: any, init: any) => (String(url).endsWith('/health')
+      ? silent(url, init)
+      : Promise.reject(Object.assign(new Error('left'), { name: 'AbortError' })))) as any;
+    let mod = await import('/plus/js/api.js');
+    await mod.currentUser();
+    expect(sessionStorage.getItem('dcp:api-down'), 'one strike is not an outage').toBeNull();
+    expect(sessionStorage.getItem('dcp:api-strikes')).toMatch(/^1:/);
+
+    // page 2: silent again, so the long knock; silent too, so it is down
+    vi.resetModules();
+    globalThis.fetch = vi.fn(silent) as any;
+    mod = await import('/plus/js/api.js');
+    const t0 = Date.now();
+    expect(await mod.currentUser()).toBeNull();
+    expect(mod.meStatus()).toBe('error');
+    const took = Date.now() - t0;
+    expect(took).toBeGreaterThan(7000);
+    expect(took, 'never the 15s /me deadline on top').toBeLessThan(9500);
+    expect(sessionStorage.getItem('dcp:api-down')).toBeTruthy();
+    expect((globalThis.fetch as any).mock.calls.some((c: any[]) => String(c[0]).endsWith('/me')),
+      'no /me sent into the silence the long knock just confirmed').toBe(false);
+
+    // page 3: nothing at all
+    vi.resetModules();
+    globalThis.fetch = vi.fn(silent) as any;
+    mod = await import('/plus/js/api.js');
+    expect(await mod.currentUser()).toBeNull();
+    expect(globalThis.fetch).not.toHaveBeenCalled();
+  }, 20000);
+
+  it('a slow but living API on the second strike: the long knock is answered and nothing is remembered', async () => {
+    sessionStorage.setItem('dcp:api-strikes', '1:' + Date.now());
+    globalThis.fetch = vi.fn((url: any, init: any) => (String(url).endsWith('/health')
+      ? slow(3000, () => ok())(url, init)
+      : Promise.resolve(ok({ id: 'u1', tier: 'premium' })))) as any;
+    const { currentUser, meStatus } = await import('/plus/js/api.js');
+    expect(await currentUser()).toMatchObject({ tier: 'premium' });
+    expect(meStatus()).toBe('user');
+    expect(sessionStorage.getItem('dcp:api-down')).toBeNull();
+    expect(sessionStorage.getItem('dcp:api-strikes')).toBeNull();
+  }, 15000);
+
+  it('once the minute is over, an armed tab goes straight to the long knock', async () => {
+    sessionStorage.setItem('dcp:api-down', String(Date.now() - 61 * 1000));
+    sessionStorage.setItem('dcp:api-strikes', '2:' + Date.now());
+    globalThis.fetch = vi.fn((url: any, init: any) => (String(url).endsWith('/health')
+      ? slow(2500, () => ok())(url, init)
+      : Promise.resolve(ok({ id: 'u1', tier: 'free' })))) as any;
+    const { currentUser } = await import('/plus/js/api.js');
+    expect(await currentUser()).toMatchObject({ id: 'u1' });
+    expect(healthCalls().length, 'one knock per mirror, not a short one first').toBe(2);
+  }, 10000);
+
+  it('the memory lasts one minute', async () => {
+    sessionStorage.setItem('dcp:api-down', String(Date.now() - 50 * 1000));
+    globalThis.fetch = vi.fn(async () => ok({ id: 'u1', tier: 'free' })) as any;
+    const { currentUser } = await import('/plus/js/api.js');
+    expect(await currentUser()).toBeNull();
+    expect(globalThis.fetch).not.toHaveBeenCalled();
+  });
+
+  it('a strike older than five minutes is forgotten', async () => {
+    sessionStorage.setItem('dcp:api-strikes', '1:' + (Date.now() - 6 * 60 * 1000));
+    globalThis.fetch = vi.fn((_u: any, init: any = {}) => new Promise((_r, reject) => {
+      init.signal?.addEventListener('abort', () => { const e = new Error('t'); (e as any).name = 'TimeoutError'; reject(e); });
+    })) as any;
+    const { apiBase } = await import('/plus/js/api.js');
+    const t0 = Date.now();
+    await apiBase();
+    expect(Date.now() - t0, 'the short knock only, no long one').toBeLessThan(3000);
+    expect(sessionStorage.getItem('dcp:api-strikes')).toMatch(/^1:/);
+  }, 10000);
+});
+
 describe('the static switch', () => {
   it('sends nothing at all and lands on «could not ask» at once', async () => {
     cfg.static = true;

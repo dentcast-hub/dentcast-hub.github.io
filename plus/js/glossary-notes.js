@@ -19,11 +19,11 @@
 // an IntersectionObserver like article-threads.js, and directly under the
 // prose (mounted just before the bottom action row, so the row still comes
 // first). The cards are read-only on purpose: editing lives in the دفترچه.
-import { el, faNum } from './util.js?v=168';
-import { api, currentUser } from './api.js?v=168';
-import { hlMark, noteBlock, highlightHref } from './hl-view.js?v=168';
-import { premiumCta } from './premium-cta.js?v=168';
-import { FOLDER_EN } from './content-index.js?v=168';
+import { el, faNum } from './util.js?v=169';
+import { api, currentUser } from './api.js?v=169';
+import { hlMark, noteBlock, highlightHref } from './hl-view.js?v=169';
+import { premiumCta } from './premium-cta.js?v=169';
+import { FOLDER_EN } from './content-index.js?v=169';
 
 const SHOWN = 3;
 
