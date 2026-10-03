@@ -2,16 +2,25 @@
 // overlay (this week's group table), and the finalized-outcome announcement.
 // Data comes from GET /league (the backend already returns everything: members,
 // ranks, zone sizes, countdown, neutral-mode, and any pending outcome).
-import { el, faNum } from './util.js?v=171';
-import { api } from './api.js?v=171';
-import { PREMIUM_FEATURES } from './config.js?v=171';
+import { el, faNum } from './util.js?v=172';
+import { api } from './api.js?v=172';
+import { PREMIUM_FEATURES } from './config.js?v=172';
 
 const TOOTH = '<svg class="dcp-tier-tooth" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C8 2 5 4 5 8c0 3 1 5 1.6 8.5C7 19 7.6 22 9 22c1.2 0 1.3-2 1.6-4 .2-1.4.5-2 1.4-2s1.2.6 1.4 2c.3 2 .4 4 1.6 4 1.4 0 2-3 2.4-5.5C19 13 20 11 20 8c0-4-3-6-8-6z"/></svg>';
 
-/** A tier shield badge. `size` ∈ xs|sm|md|lg. Tier 7 (titanium) gets light text. */
+/**
+ * Which tiers need light text on their shield. Titanium alone: it is the one
+ * dark ground on the ladder, and the three tiers above it (platinum, cast gold,
+ * enamel) are light again. It used to be `order >= 7`, which was right only
+ * while 7 was the ceiling; the medal row reads the same rule so a medal can
+ * never differ from the tier badge it is meant to be.
+ */
+export const tierIsDark = (order) => order === 7;
+
+/** A tier shield badge. `size` ∈ xs|sm|md|lg. */
 export function tierBadge(order, { size = 'md' } = {}) {
   const b = el('span', {
-    class: `dcp-tier dcp-tier-t${order} dcp-tier-${size}` + (order >= 7 ? ' is-dark' : ''),
+    class: `dcp-tier dcp-tier-t${order} dcp-tier-${size}` + (tierIsDark(order) ? ' is-dark' : ''),
     'aria-hidden': 'true',
   });
   b.innerHTML = `${TOOTH}<span class="dcp-tier-ord">${faNum(order)}</span>`;

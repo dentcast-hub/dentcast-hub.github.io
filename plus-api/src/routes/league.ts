@@ -116,11 +116,11 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
       // hardcoded number that would quietly start lying the moment it changed.
       //
       // Since 0033 it also depends on WHICH tier is being nudged: the tier with
-      // no tier above it (titanium — see the `up` comment in league-finalize.ts)
+      // no tier above it (enamel since 0069 — see the `up` comment in league-finalize.ts)
       // pays top_tier_prize_days, because it has no promotion to offer. NOT
       // "whichever tier is currently is_active-highest": since 2026-08-25
       // promotion (and the activation it triggers) is available from every
-      // tier below titanium the moment someone qualifies, so nudging composite's
+      // tier below the ceiling the moment someone qualifies, so nudging composite's
       // reader with the long "no promotion" copy would misdescribe their own
       // real odds next week. Resolved from the reader's own tier — the nudge is
       // about the week ahead, which they will spend where they are now.
@@ -159,7 +159,7 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
     // Structural, not cfg.max_active_tier_order: since 2026-08-25 a group
     // promotes into the tier above the moment someone qualifies, whether or
     // not that tier was already active — see league-finalize.ts's `up`. So
-    // "no promotion out of this tier" is only true for titanium, which has no
+    // "no promotion out of this tier" is only true for the ceiling (enamel), which has no
     // tier above it at all; anything else, the finalize this week WILL open
     // the next tier for a qualifying member, and showing promotion_zone: 0
     // here would flatly contradict what actually happens at week's end.

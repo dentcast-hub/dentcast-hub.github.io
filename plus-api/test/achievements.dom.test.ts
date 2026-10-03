@@ -398,3 +398,38 @@ describe('the discount block says what the cap governs', () => {
     });
   });
 });
+
+/**
+ * The ladder grew past titanium (migration 0069: platinum, cast gold, enamel).
+ * Two things are purely visual and would fail silently: a tier with no
+ * `.dcp-tier-tN` rule renders a blank shield, and light text on a light ground
+ * is unreadable — the old `order >= 7` rule would have done exactly that to
+ * all three new tiers. The medal row and the tier badge must read ONE rule.
+ */
+describe('the shield above titanium', () => {
+  it('has a gradient for every tier of the ten-step ladder, in plus.css', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { resolve } = await import('node:path');
+    const css = readFileSync(resolve(process.cwd(), '..', 'plus', 'plus.css'), 'utf8');
+    for (let t = 1; t <= 10; t += 1) expect(css, `t${t}`).toMatch(new RegExp(`\\.dcp-tier-t${t}\\s*\\{`));
+  });
+
+  it('puts light text on titanium alone — platinum, cast gold and enamel are light grounds', async () => {
+    const { tierIsDark } = await import('/plus/js/league.js');
+    expect(tierIsDark(7)).toBe(true);
+    for (const t of [6, 8, 9, 10]) expect(tierIsDark(t), `t${t}`).toBe(false);
+  });
+
+  it('draws a cast-gold medal with its own tier class and no is-dark', () => {
+    mount(payload({
+      medals: [{
+        key: 'medal_gold', title_fa: 'مدال طلا', earned: true, name_fa: 'طلای طلای ریختگی',
+        tier: { slug: 'cast-gold', name_fa: 'طلای ریختگی', tier_order: 9 },
+        lead_fa: '', detail_fa: '',
+      }],
+    }));
+    const cls = document.querySelector('.dcp-md-shield')!.className;
+    expect(cls).toContain('dcp-tier-t9');
+    expect(cls).not.toContain('is-dark');
+  });
+});

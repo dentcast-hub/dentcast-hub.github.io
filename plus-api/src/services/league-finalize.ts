@@ -113,8 +113,9 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
       const demotedCount = Math.ceil((size * cfg.demotion_pct) / 100);
 
       /**
-       * The tier above this one, or null only for the true ceiling (titanium,
-       * tier_order 7 — the one tier with nothing above it to promote into).
+       * The tier above this one, or null only for the true ceiling (enamel,
+       * tier_order 10 since 0069 — the one tier with nothing above it to
+       * promote into; titanium was that tier until the week it filled).
        * `up.is_active` is deliberately NOT part of the promotion condition
        * below — promotion no longer waits on whether the next tier happens to
        * be switched on yet; activation is a CONSEQUENCE of promotion, not a

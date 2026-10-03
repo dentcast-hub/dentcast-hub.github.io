@@ -1,6 +1,7 @@
-import { el, faNum } from './util.js?v=171';
-import { api } from './api.js?v=171';
-import { openSheet, closeSheet } from './sheet.js?v=171';
+import { el, faNum } from './util.js?v=172';
+import { api } from './api.js?v=172';
+import { openSheet, closeSheet } from './sheet.js?v=172';
+import { tierIsDark } from './league.js?v=172';
 
 /**
  * The profile's «افتخارات» section: two league medals and the badge wall.
@@ -15,7 +16,7 @@ import { openSheet, closeSheet } from './sheet.js?v=171';
  *
  *   · A level is a RING COLOUR, never a word. The wall never writes «طلا»;
  *     only the medal row does, and there it never stands alone («طلای
- *     کامپوزیت»). Two metal scales share this section — the league's seven
+ *     کامپوزیت»). Two metal scales share this section — the league's ten
  *     dental materials and the badges' bronze/silver/gold — and the word is
  *     what would collide, so the word stays on one side of the line.
  *
@@ -116,7 +117,7 @@ function icon(name, cls) {
 function medalTile(m) {
   const shield = el('span', {
     class: 'dcp-md-shield ' + (m.earned ? 'dcp-tier-t' + m.tier.tier_order : 'is-off')
-      + (m.earned && m.tier.tier_order >= 7 ? ' is-dark' : ''),
+      + (m.earned && tierIsDark(m.tier.tier_order) ? ' is-dark' : ''),
   }, [icon('star', 'dcp-md-ico')]);
 
   return el('button', {
@@ -136,7 +137,7 @@ function medalCard(m) {
     el('div', { class: 'dcp-ach-sheet-hd' }, [
       el('span', {
         class: 'dcp-md-shield ' + (m.earned ? 'dcp-tier-t' + m.tier.tier_order : 'is-off')
-          + (m.earned && m.tier.tier_order >= 7 ? ' is-dark' : ''),
+          + (m.earned && tierIsDark(m.tier.tier_order) ? ' is-dark' : ''),
       }, [icon('star', 'dcp-md-ico')]),
       el('div', {}, [
         el('h2', { class: 'dcp-sheet-title' }, m.name_fa),

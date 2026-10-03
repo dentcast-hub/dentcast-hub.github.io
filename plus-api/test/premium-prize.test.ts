@@ -557,9 +557,9 @@ describe('what the winner is actually told', () => {
 
   async function winAndAnnounce(tierSlug = 'amalgam'): Promise<{ title: string; body: string }> {
     // Defaults to a middle tier: these tests are about the ordinary winner's
-    // copy. Since 2026-08-25 that rules out composite too, not just titanium —
+    // copy. Since 2026-08-25 that rules out composite too, not just the top —
     // a qualifying composite winner now promotes the same week (see
-    // league-finalize.ts's `up`), so only titanium (nothing above it) is
+    // league-finalize.ts's `up`), so only enamel (nothing above it) is
     // guaranteed to still be "the top" by the time this reads max_active_tier_order.
     const ids = await seedGroup(tierSlug, [90, 80]);
     await pool.query('update profiles set telegram_id = 700900 where id = $1', [ids[0]]);
@@ -586,11 +586,11 @@ describe('what the winner is actually told', () => {
   });
 
   it('tells the champion they are a champion, with the real length', async () => {
-    // The tier with nothing above it (titanium) pays a longer prize (0033). If
+    // The tier with nothing above it (enamel, since 0069) pays a longer prize (0033). If
     // the champion reads the same sentence as everybody else, the thing they
     // actually won is invisible to them — and the number in that sentence
     // would be wrong.
-    const msg = await winAndAnnounce('titanium');
+    const msg = await winAndAnnounce('enamel');
     const cfg = await getLeagueConfig();
     const FA = '۰۱۲۳۴۵۶۷۸۹';
     const fa = String(cfg.top_tier_prize_days).replace(/\d/g, (d) => FA[Number(d)]);
@@ -679,7 +679,7 @@ describe('the premium features named in the prize', () => {
 /**
  * The top of the ladder (0033; redefined 2026-08-25).
  *
- * Titanium (order 7) cannot promote anybody — there is no tier above it, full
+ * Enamel (order 10, since 0069) cannot promote anybody — there is no tier above it, full
  * stop — so first place there is the end of the climb rather than a step on
  * it, and would otherwise pay exactly what first place in the bottom tier
  * pays. These pin the two halves of the answer: the prize is LONGER at the
@@ -693,11 +693,12 @@ describe('the premium features named in the prize', () => {
  * (see league-finalize.ts's `up`), so a composite fixture with a
  * comfortably-qualifying winner would promote them the same week and no
  * longer test "champion" copy at all — it would test the ordinary winner
- * path, silently. Titanium is the only tier where that risk does not exist.
+ * path, silently. Enamel is the only tier where that risk does not exist —
+ * titanium was, until 0069 put three tiers above it.
  */
-describe('the champion of the highest tier (titanium — nothing above it)', () => {
+describe('the champion of the highest tier (enamel — nothing above it)', () => {
   it('wins top_tier_prize_days instead of prize_days', async () => {
-    const top = await seedGroup('titanium', [90, 80]);    // order 7, the true ceiling
+    const top = await seedGroup('enamel', [90, 80]);      // order 10, the true ceiling
     const mid = await seedGroup('amalgam', [90, 80]);     // order 2
     await finalizeWeek(WEEK);
     await grantWeeklyPrizes(NEAR_WEEK);
@@ -718,7 +719,7 @@ describe('the champion of the highest tier (titanium — nothing above it)', () 
     // The reason the length is what grew: upper tiers are thin, so widening the
     // prize there would crown a large fraction of a small group and make "first
     // in your group" worth LESS the higher you climb.
-    const top = await seedGroup('titanium', [90, 80, 70], WEEK, 3);
+    const top = await seedGroup('enamel', [90, 80, 70], WEEK, 3);
     await finalizeWeek(WEEK);
     const res = await grantWeeklyPrizes(NEAR_WEEK);
 
@@ -730,7 +731,7 @@ describe('the champion of the highest tier (titanium — nothing above it)', () 
     // 0 means "no special length", exactly like every other ceiling in
     // league_config — so this is one admin call away from being undone.
     await setPrizeCfg('top_tier_prize_days', '0');
-    const top = await seedGroup('titanium', [90, 80]);
+    const top = await seedGroup('enamel', [90, 80]);
     await finalizeWeek(WEEK);
     await grantWeeklyPrizes(NEAR_WEEK);
 
