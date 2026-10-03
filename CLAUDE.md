@@ -260,7 +260,7 @@ strikes only: a silent probe arms it, and it is written only if the request
 sent after it ALSO fails at the network level (a cold handshake on a slow
 phone can outlast the 1.5s probe against a living API, and that reader must
 stay recognised); a Cloudflare origin-unreachable status (521–524, 530) is the
-one single-strike proof. Any success clears it; `/me` has a 10-second deadline. **`STATIC_HOSTS` in `plus/js/config.js` is the founder's
+one single-strike proof. Any success clears it, a cancelled request (the reader tapped away) is never a strike, and a `/me` the reader asked for by hand (the account icon re-asks it before opening the login form) always goes out; login/logout are never held back; `/me` has a 15-second deadline. **`STATIC_HOSTS` in `plus/js/config.js` is the founder's
 switch**, empty in normal times: keyed by hostname so it can never reach `.ir`,
 and flipping it is a change to the module graph, so `asset_version.py --bump`
 rides in the same commit. Tests: `plus-api/test/api-down.test.ts`.

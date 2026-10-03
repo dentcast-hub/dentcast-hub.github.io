@@ -54,13 +54,29 @@ describe('the API seen down is remembered for the tab', () => {
 
   it('two strikes: a silent probe AND a /me that never answers write the memory', async () => {
     globalThis.fetch = vi.fn((url: any, init: any = {}) => new Promise((_r, reject) => {
-      init.signal?.addEventListener('abort', () => reject(new Error('aborted')));
+      // what AbortSignal.timeout() raises when OUR deadline runs out
+      init.signal?.addEventListener('abort', () => { const e = new Error('timed out'); (e as any).name = 'TimeoutError'; reject(e); });
     })) as any;
     const { currentUser, meStatus } = await import('/plus/js/api.js');
     expect(await currentUser()).toBeNull();
     expect(meStatus()).toBe('error');
     expect(sessionStorage.getItem('dcp:api-down')).toBeTruthy();
-  }, 20000);
+  }, 25000);
+
+  // dentcast.org reaches the API across an international hop; a reader who
+  // taps a link before a slow /me returns cancels it. That is not an outage.
+  it('a request cancelled by the page (AbortError) is not a strike', async () => {
+    globalThis.fetch = vi.fn((url: any, init: any = {}) => {
+      if (String(url).endsWith('/health')) {
+        return new Promise((_r, reject) => init.signal?.addEventListener('abort', () => reject(new Error('aborted'))));
+      }
+      const err = new Error('The user aborted a request.'); (err as any).name = 'AbortError';
+      return Promise.reject(err);
+    }) as any;
+    const { currentUser } = await import('/plus/js/api.js');
+    await currentUser();
+    expect(sessionStorage.getItem('dcp:api-down')).toBeNull();
+  }, 10000);
 
   it('a Cloudflare origin-down answer (522) is remembered too', async () => {
     globalThis.fetch = vi.fn(async (url: any) => (String(url).endsWith('/health') ? ok() : status(522))) as any;
@@ -83,6 +99,17 @@ describe('the API seen down is remembered for the tab', () => {
     expect(await currentUser()).toMatchObject({ id: 'u1' });
     expect(meStatus()).toBe('user');
     expect(sessionStorage.getItem('dcp:api-down'), 'a success clears it').toBeNull();
+  });
+
+  // The account icon re-asks /me before opening the login form; if the memory
+  // answered that, the form would never open while the memory lasted.
+  it('a /me the reader asked for by hand (refresh) is really asked', async () => {
+    sessionStorage.setItem('dcp:api-down', String(Date.now()));
+    globalThis.fetch = vi.fn(async () => ok({ id: 'u1', tier: 'free' })) as any;
+    const { currentUser, meStatus } = await import('/plus/js/api.js');
+    expect(await currentUser({ refresh: true })).toMatchObject({ id: 'u1' });
+    expect(meStatus()).toBe('user');
+    expect(sessionStorage.getItem('dcp:api-down'), 'the answer clears the memory').toBeNull();
   });
 
   it('a request the reader started by hand still goes out', async () => {

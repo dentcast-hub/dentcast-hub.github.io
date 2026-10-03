@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import * as CFG from './config.js?v=167';
+import * as CFG from './config.js?v=168';
 
 const API_BASES = CFG.API_BASES;
 
@@ -48,6 +48,22 @@ const API_DOWN_TTL_MS = 2 * 60 * 1000;
 const ORIGIN_DOWN = [521, 522, 523, 524, 530];
 
 let probeSilent = false;
+
+// A page that is going away cancels its own requests, and a cancelled request
+// is not an answer about the API. On dentcast.org the API sits behind an
+// international hop and can be slow, so a reader who taps a link before /me
+// returns is ordinary — counting that cancellation as a second strike would
+// show them signed-out on the next page for no reason.
+let leaving = false;
+try { window.addEventListener('pagehide', () => { leaving = true; }); } catch (_) { /* no window */ }
+
+/** Only a real silence counts as a strike: our own deadline ran out, or the
+ *  network refused. A cancellation (AbortError) or a page unloading does not. */
+function isSilence(e) {
+  if (leaving) return false;
+  const name = e && e.name;
+  return name === 'TimeoutError' || name === 'TypeError';
+}
 
 function downRecently() {
   const t = Number(ssGet(SS_DOWN)) || 0;
@@ -100,7 +116,7 @@ const REQUEST_TIMEOUT_MS = 30000;
 // surface that knows the reader waits on it — so thirty seconds of silence is
 // not a slow answer, it is no answer, and it should become «could not ask»
 // while the reader is still on the page.
-const ME_TIMEOUT_MS = 10000;
+const ME_TIMEOUT_MS = 15000;
 
 function signalFor(ms) {
   try {
@@ -202,12 +218,15 @@ function primaryBase() {
   return API_BASES[0];
 }
 
-async function request(path, { method = 'GET', body, query, pinned = false, timeoutMs, keepalive = false, blob = false } = {}) {
+async function request(path, { method = 'GET', body, query, pinned = false, force = false, timeoutMs, keepalive = false, blob = false } = {}) {
   // Answer «could not ask» without touching the network: always in static
   // mode, and for background requests while the API was just seen down.
   // Status 0 is what every caller already reads as unreachable (currentUser
   // turns anything but a 401 into 'error').
-  if (isStatic() || (!pinned && downRecently())) throw new ApiError(0, { error: 'offline' });
+  // `force` is a question the reader asked by hand (a tap on the account
+  // icon re-asks /me before opening the login form): it must really be asked,
+  // or the memory would answer it and the form would never open.
+  if (isStatic() || (!pinned && !force && downRecently())) throw new ApiError(0, { error: 'offline' });
   const base = pinned ? primaryBase() : await pickBase();
   let url = base + path;
   if (query) {
@@ -242,7 +261,7 @@ async function request(path, { method = 'GET', body, query, pinned = false, time
   } catch (e) {
     forgetBase(); // network-level failure (not an HTTP error) — the cached base may be dead
     // Second strike: the probe was silent AND this request got nothing back.
-    if (probeSilent && !pinned) ssSet(SS_DOWN, String(Date.now()));
+    if (probeSilent && !pinned && isSilence(e)) ssSet(SS_DOWN, String(Date.now()));
     throw e;
   }
   // A 401 from the FALLBACK mirror is not an answer about the reader — the
@@ -275,7 +294,7 @@ async function request(path, { method = 'GET', body, query, pinned = false, time
 
 export const api = {
   // auth
-  me: () => request('/me', { timeoutMs: ME_TIMEOUT_MS }),
+  me: ({ force = false } = {}) => request('/me', { timeoutMs: ME_TIMEOUT_MS, force }),
   updateMe: (patch) => request('/me', { method: 'PATCH', body: patch }),
   profileStats: () => request('/profile/stats'),
   // The login calls are PINNED to the primary host (see primaryBase) and
@@ -594,7 +613,7 @@ export function currentUser({ refresh = false } = {}) {
     const announce = refresh;
     // Any failure (401, or the API being unreachable) means "treat as anonymous"
     // so the static site stays pristine as pure progressive enhancement.
-    mePromise = api.me()
+    mePromise = api.me({ force: refresh })
       .then((u) => { lastMeStatus = u ? 'user' : 'anon'; rememberSignedIn(lastMeStatus); return u; })
       .catch((e) => { lastMeStatus = (e && e.status === 401) ? 'anon' : 'error'; rememberSignedIn(lastMeStatus); return null; })
       .then((u) => {
