@@ -490,6 +490,53 @@ function renderHtml(
   })();
   </script>
 
+  <h3 style="margin-top:26px">پریمیومِ ابدی به یک نفر</h3>
+  <div class="muted">اشتراکِ بدونِ تاریخِ پایان. حساب باید از قبل وجود داشته باشد (یک بار وارد سایت شده باشد). برای جلوگیری از اشتباه، شناسه را دو بار می‌پرسد. پس‌گرفتنش با <code>POST /admin/subscriptions/revoke</code> است.</div>
+  <form class="bc" id="glForm" onsubmit="return false">
+    <div class="row">
+      <div style="flex:1 1 220px"><label for="glUser">کاربر (آیدی / موبایل / نام کاربری)</label><input id="glUser" type="text" dir="ltr"></div>
+    </div>
+    <button id="glSend" type="button">پریمیومِ ابدی بده</button>
+    <div id="glOut"></div>
+  </form>
+  <script>
+  (function () {
+    var btn = document.getElementById('glSend');
+    var out = document.getElementById('glOut');
+    btn.addEventListener('click', function () {
+      var user = document.getElementById('glUser').value.trim();
+      if (!user) { out.textContent = 'کاربر را مشخص کن.'; return; }
+      var again = prompt('پریمیومِ ابدی برای «' + user + '». برای تأیید، همین شناسه را دوباره بنویس:');
+      if (again === null) return;
+      if (again.trim() !== user) { out.textContent = 'شناسه‌ی دوم با اولی یکی نبود؛ کاری انجام نشد.'; return; }
+      btn.disabled = true; out.textContent = 'در حال اهدا…';
+      fetch('/admin/subscriptions/grant-lifetime', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ user: user })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          btn.disabled = false;
+          if (!res.ok) {
+            var m = 'نشد: ' + (res.j.message || res.j.error || 'خطا');
+            if (res.j.candidates && res.j.candidates.length) {
+              m += ' — ' + res.j.candidates.map(function (c) {
+                return (c.display_name || c.username || c.phone || '?') + ' (' + c.user_id + ')';
+              }).join('، ');
+            }
+            out.textContent = m;
+            return;
+          }
+          var j = res.j;
+          var name = j.display_name || j.username || j.phone || j.user_id;
+          out.textContent = 'پریمیومِ ابدی به ' + name + ' داده شد.';
+          document.getElementById('glUser').value = '';
+        })
+        .catch(function () { btn.disabled = false; out.textContent = 'ارسال نشد (شبکه).'; });
+    });
+  })();
+  </script>
+
   <h3 style="margin-top:26px">گزارش لیگ</h3>
   <div class="muted">«لیگ فعال» یعنی گروهی که این هفته برایش تشکیل شده — این آدم‌ها با هم رقابت می‌کنند. عددهای این بخش از همان API نظارتیِ لیگ (<code>/admin/league</code>) خوانده می‌شوند؛ اینجا فقط رندرِ آن است.</div>
   <div id="lgOut" class="muted" style="margin-top:10px">در حال خواندن…</div>
