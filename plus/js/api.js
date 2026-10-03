@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import * as CFG from './config.js?v=170';
+import * as CFG from './config.js?v=171';
 
 const API_BASES = CFG.API_BASES;
 
@@ -309,7 +309,13 @@ async function request(path, { method = 'GET', body, query, pinned = false, forc
   try {
     res = await fetch(url, opts);
   } catch (e) {
-    forgetBase(); // network-level failure (not an HTTP error) — the cached base may be dead
+    // A real silence (our deadline ran out, or the network refused) may mean
+    // the cached base is dead, so forget it. A cancellation is not one: when
+    // the reader changes page the browser aborts whatever is still in flight,
+    // and on a slow .org connection something always is — forgetting there
+    // erased the base the previous answer had just remembered, and every page
+    // paid the 1.5s probe again.
+    if (isSilence(e)) forgetBase();
     // Second strike: the probe was silent AND this request got nothing back.
     if (probeSilent && !pinned && isSilence(e)) markDown();
     throw e;
