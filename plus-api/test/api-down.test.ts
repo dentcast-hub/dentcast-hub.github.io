@@ -201,8 +201,8 @@ describe('strikes carry across pages (a reader who changes page quickly)', () =>
     expect(sessionStorage.getItem('dcp:api-strikes')).toBeNull();
   }, 15000);
 
-  it('once the minute is over, an armed tab goes straight to the long knock', async () => {
-    sessionStorage.setItem('dcp:api-down', String(Date.now() - 61 * 1000));
+  it('once the two minutes are over, an armed tab goes straight to the long knock', async () => {
+    sessionStorage.setItem('dcp:api-down', String(Date.now() - 121 * 1000));
     sessionStorage.setItem('dcp:api-strikes', '2:' + Date.now());
     globalThis.fetch = vi.fn((url: any, init: any) => (String(url).endsWith('/health')
       ? slow(2500, () => ok())(url, init)
@@ -212,8 +212,8 @@ describe('strikes carry across pages (a reader who changes page quickly)', () =>
     expect(healthCalls().length, 'one knock per mirror, not a short one first').toBe(2);
   }, 10000);
 
-  it('the memory lasts one minute', async () => {
-    sessionStorage.setItem('dcp:api-down', String(Date.now() - 50 * 1000));
+  it('the memory lasts two minutes', async () => {
+    sessionStorage.setItem('dcp:api-down', String(Date.now() - 110 * 1000));
     globalThis.fetch = vi.fn(async () => ok({ id: 'u1', tier: 'free' })) as any;
     const { currentUser } = await import('/plus/js/api.js');
     expect(await currentUser()).toBeNull();

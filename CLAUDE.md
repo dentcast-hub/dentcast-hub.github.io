@@ -255,7 +255,7 @@ push step becomes a local commit, its Actions step becomes
 catch-up runs after the link returns). Publishing during a cut is OPTIONAL:
 with nothing published, both domains simply keep serving. **A dead API costs
 a tab one page of waiting, not every page, and never delays the text** —
-`api.js` remembers it (`dcp:api-down`, sessionStorage, ONE minute) on TWO
+`api.js` remembers it (`dcp:api-down`, sessionStorage, two minutes) on TWO
 strikes only: a silent 1.5s probe arms it, and it is written only if the request
 sent after it ALSO fails at the network level, or if a SECOND silent probe in the
 same tab (the count, `dcp:api-strikes`, survives a page change and is forgotten
