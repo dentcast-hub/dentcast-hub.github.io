@@ -30,8 +30,8 @@
 //     A locked pathway leads to the catalog, never to the pricing page.
 //   - A subscriber never sees it (every pathway is theirs); the callers decide
 //     that, this module only draws.
-import { el, faNum, icon } from './util.js?v=166';
-import { api } from './api.js?v=166';
+import { el, faNum, icon } from './util.js?v=168';
+import { api } from './api.js?v=168';
 
 const CATALOG_HREF = '/plus/pathways.html';
 /** How many locked discs the collapsed strip shows before «+N». */

@@ -31,12 +31,12 @@
 // with no coordination between the modules. When there is no ad — a premium
 // visitor, or the slot switched off — the section simply moves up under the
 // Pulse and nothing else changes.
-import { el, faNum } from './util.js?v=166';
-import { currentUser, api } from './api.js?v=166';
-import { PREMIUM_FEATURES } from './config.js?v=166';
-import { pricingHref } from './premium-cta.js?v=166';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=166';
-import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=166';
+import { el, faNum } from './util.js?v=168';
+import { currentUser, api } from './api.js?v=168';
+import { PREMIUM_FEATURES } from './config.js?v=168';
+import { pricingHref } from './premium-cta.js?v=168';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=168';
+import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=168';
 
 // Crafted inline icons, one per feature (same reasoning as home-card.js's promo
 // chips: emoji would sit at a different weight than the site's own stroke icons).

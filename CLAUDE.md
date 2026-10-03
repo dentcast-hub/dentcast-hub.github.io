@@ -248,13 +248,19 @@ static site** for readers abroad (its API is a Cloudflare Worker in front of a
 container in Iran, so during a cut it hangs rather than refuses). Three facts
 the rest depends on. **GitHub is unreachable from inside Iran and GitHub's
 runners cannot reach Arvan**, so `sitemap_only.yml` and `deploy-arvan.yml` both
-die and `.ir` is published from the founder's laptop: `tools/publish-local.sh`
-(the post-merge chain, no commit) then `./deploy-frontend.sh --skip-push`.
-**A dead API costs a tab one probe, not every page** — `api.js` remembers it
-(`dcp:api-down`, sessionStorage, two minutes) only when every mirror is SILENT
-or Cloudflare reports the origin gone (521–524, 530), never on an ordinary
-error our own API returned, and clears it on any success; `/me` has its own
-8-second deadline. **`STATIC_HOSTS` in `plus/js/config.js` is the founder's
+die and `.ir` is published from the founder's laptop — and the offline agent's
+DEFAULT is `.dentcast/workflows/MINIMAL-PUBLISH.md`, not the full router (its
+push step becomes a local commit, its Actions step becomes
+`tools/publish-local.sh` + `./deploy-frontend.sh --skip-push`; the Deferred
+catch-up runs after the link returns). Publishing during a cut is OPTIONAL:
+with nothing published, both domains simply keep serving. **A dead API costs
+a tab one page of waiting, not every page, and never delays the text** —
+`api.js` remembers it (`dcp:api-down`, sessionStorage, two minutes) on TWO
+strikes only: a silent probe arms it, and it is written only if the request
+sent after it ALSO fails at the network level (a cold handshake on a slow
+phone can outlast the 1.5s probe against a living API, and that reader must
+stay recognised); a Cloudflare origin-unreachable status (521–524, 530) is the
+one single-strike proof. Any success clears it, a cancelled request (the reader tapped away) is never a strike, and a `/me` the reader asked for by hand (the account icon re-asks it before opening the login form) always goes out; login/logout are never held back; `/me` has a 15-second deadline. **`STATIC_HOSTS` in `plus/js/config.js` is the founder's
 switch**, empty in normal times: keyed by hostname so it can never reach `.ir`,
 and flipping it is a change to the module graph, so `asset_version.py --bump`
 rides in the same commit. Tests: `plus-api/test/api-down.test.ts`.

@@ -1,20 +1,20 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=166';
-import { api } from './api.js?v=166';
-import { flushPendingReads } from './reading.js?v=166';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=166';
-import { leagueEntryButton } from './league.js?v=166';
-import { openCollectionPicker, boardCover } from './collections.js?v=166';
-import { bundleRailCard, intentRow } from './pathways.js?v=166';
-import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=166';
-import { currentMonthKey } from './jalali-month.js?v=166';
-import { renewalBanner } from './renewal-banner.js?v=166';
-import { openPathways } from './pathway-showcase.js?v=166';
-import { premiumCta } from './premium-cta.js?v=166';
-import { maybeCelebrate } from './achievements.js?v=166';
-import { markReturnTrail } from './return-trail.js?v=166';
+import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=168';
+import { api } from './api.js?v=168';
+import { flushPendingReads } from './reading.js?v=168';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=168';
+import { leagueEntryButton } from './league.js?v=168';
+import { openCollectionPicker, boardCover } from './collections.js?v=168';
+import { bundleRailCard, intentRow } from './pathways.js?v=168';
+import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=168';
+import { currentMonthKey } from './jalali-month.js?v=168';
+import { renewalBanner } from './renewal-banner.js?v=168';
+import { openPathways } from './pathway-showcase.js?v=168';
+import { premiumCta } from './premium-cta.js?v=168';
+import { maybeCelebrate } from './achievements.js?v=168';
+import { markReturnTrail } from './return-trail.js?v=168';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',

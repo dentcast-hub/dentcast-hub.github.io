@@ -1,5 +1,12 @@
 # Minimal Publish Path (no AI agent)
 
+> **During a cut of Iran's international link** this is the DEFAULT publish path
+> for the offline agent, with two substitutions because GitHub is unreachable:
+> step 7 becomes a LOCAL commit on `main` (no push), and step 9 becomes
+> `tools/publish-local.sh` then `./deploy-frontend.sh --skip-push`. Verify on
+> `dentcast.ir`. Full procedure, and the catch-up after the link returns:
+> `.dentcast/offline-publish.md`.
+
 **Use this only when `.dentcast/workflows/README.md` (the ~70-step router) is
 not executable — no agent available to run it.** This path gets one Persian
 page **live, indexable, and reachable from inside the site**, by hand, with a

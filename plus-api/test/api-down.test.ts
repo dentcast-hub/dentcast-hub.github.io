@@ -36,18 +36,46 @@ describe('the API seen down is remembered for the tab', () => {
     void currentUser; void meStatus;
   });
 
-  it('the first page pays only the probe: /me is not then sent to a silent mirror', async () => {
+  // The normal-mode guarantee. On a slow phone network a cold handshake can
+  // outlast the 1.5s probe against an API that is alive; a silent probe alone
+  // must change nothing about how the reader is recognised.
+  it('a slow but living API: probes time out, /me still answers, nothing is remembered', async () => {
+    globalThis.fetch = vi.fn((url: any, init: any = {}) => {
+      if (String(url).endsWith('/health')) {
+        return new Promise((_r, reject) => init.signal?.addEventListener('abort', () => reject(new Error('aborted'))));
+      }
+      return Promise.resolve(ok({ id: 'u1', tier: 'premium' }));
+    }) as any;
+    const { currentUser, meStatus } = await import('/plus/js/api.js');
+    expect(await currentUser()).toMatchObject({ tier: 'premium' });
+    expect(meStatus()).toBe('user');
+    expect(sessionStorage.getItem('dcp:api-down')).toBeNull();
+  }, 10000);
+
+  it('two strikes: a silent probe AND a /me that never answers write the memory', async () => {
     globalThis.fetch = vi.fn((url: any, init: any = {}) => new Promise((_r, reject) => {
-      init.signal?.addEventListener('abort', () => reject(new Error('aborted')));
+      // what AbortSignal.timeout() raises when OUR deadline runs out
+      init.signal?.addEventListener('abort', () => { const e = new Error('timed out'); (e as any).name = 'TimeoutError'; reject(e); });
     })) as any;
     const { currentUser, meStatus } = await import('/plus/js/api.js');
-    const t0 = Date.now();
     expect(await currentUser()).toBeNull();
-    const ms = Date.now() - t0;
     expect(meStatus()).toBe('error');
-    expect(ms, `took ${ms}ms — the probe deadline is 1500ms`).toBeLessThan(2500);
-    const paths = (globalThis.fetch as any).mock.calls.map((c: any[]) => String(c[0]));
-    expect(paths.every((u: string) => u.endsWith('/health'))).toBe(true);
+    expect(sessionStorage.getItem('dcp:api-down')).toBeTruthy();
+  }, 25000);
+
+  // dentcast.org reaches the API across an international hop; a reader who
+  // taps a link before a slow /me returns cancels it. That is not an outage.
+  it('a request cancelled by the page (AbortError) is not a strike', async () => {
+    globalThis.fetch = vi.fn((url: any, init: any = {}) => {
+      if (String(url).endsWith('/health')) {
+        return new Promise((_r, reject) => init.signal?.addEventListener('abort', () => reject(new Error('aborted'))));
+      }
+      const err = new Error('The user aborted a request.'); (err as any).name = 'AbortError';
+      return Promise.reject(err);
+    }) as any;
+    const { currentUser } = await import('/plus/js/api.js');
+    await currentUser();
+    expect(sessionStorage.getItem('dcp:api-down')).toBeNull();
   }, 10000);
 
   it('a Cloudflare origin-down answer (522) is remembered too', async () => {
@@ -71,6 +99,17 @@ describe('the API seen down is remembered for the tab', () => {
     expect(await currentUser()).toMatchObject({ id: 'u1' });
     expect(meStatus()).toBe('user');
     expect(sessionStorage.getItem('dcp:api-down'), 'a success clears it').toBeNull();
+  });
+
+  // The account icon re-asks /me before opening the login form; if the memory
+  // answered that, the form would never open while the memory lasted.
+  it('a /me the reader asked for by hand (refresh) is really asked', async () => {
+    sessionStorage.setItem('dcp:api-down', String(Date.now()));
+    globalThis.fetch = vi.fn(async () => ok({ id: 'u1', tier: 'free' })) as any;
+    const { currentUser, meStatus } = await import('/plus/js/api.js');
+    expect(await currentUser({ refresh: true })).toMatchObject({ id: 'u1' });
+    expect(meStatus()).toBe('user');
+    expect(sessionStorage.getItem('dcp:api-down'), 'the answer clears the memory').toBeNull();
   });
 
   it('a request the reader started by hand still goes out', async () => {
