@@ -1,5 +1,12 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import { API_BASES } from './config.js?v=165';
+import * as CFG from './config.js?v=166';
+
+const API_BASES = CFG.API_BASES;
+
+// Read defensively: a test's stand-in for config.js may carry API_BASES only.
+function isStatic() {
+  try { return typeof CFG.staticMode === 'function' && CFG.staticMode() === true; } catch (_) { return false; }
+}
 
 // The health-check round trip only needs to happen ONCE per browser tab, not
 // once per page load — this is a static multi-page site, so every navigation
@@ -14,6 +21,34 @@ import { API_BASES } from './config.js?v=165';
 // (not an HTTP error status, which is a real API answer) so the very next
 // request re-probes and can fail over to the other mirror.
 const SS_BASE = 'dcp:api-base';
+
+// «The API is not there» is remembered for a short while, per tab. Without it
+// a dead API cost EVERY page the same wait: both probes run out (1.5s), nothing
+// is learned, /me goes to the first base anyway and hangs until a timeout —
+// against a Cloudflare Worker whose origin is gone, ~15s before a 522. With
+// it, the first page pays the probe once and every page after it renders the
+// «could not ask» state at once. Only a FAILED PROBE (both mirrors silent) or a
+// Cloudflare origin-unreachable status writes it — never an ordinary 4xx/5xx
+// from our own API, which is an answer — and any successful response clears
+// it. Short on purpose: a phone network that blinks must not switch the
+// reader's tools off for long, and after the TTL the next page simply probes
+// again. A request the reader started by hand (login, logout — `pinned`)
+// still goes out; only the background chatter is held back.
+const SS_DOWN = 'dcp:api-down';
+const API_DOWN_TTL_MS = 2 * 60 * 1000;
+// The statuses Cloudflare itself answers when the origin behind it is gone.
+// Our API never produces these, so seeing one says nothing about the reader.
+const ORIGIN_DOWN = [521, 522, 523, 524, 530];
+
+function downRecently() {
+  const t = Number(ssGet(SS_DOWN)) || 0;
+  return t > 0 && Date.now() - t < API_DOWN_TTL_MS;
+}
+
+/** True when no request should be sent: static mode, or the API was just seen down. */
+export function apiDown() {
+  return isStatic() || downRecently();
+}
 
 function ssGet(key) {
   try { return sessionStorage.getItem(key) || ''; } catch (_) { return ''; }
@@ -51,6 +86,13 @@ const LOGOUT_TIMEOUT_MS = 8000;
 // header simply stayed «guest» for as long as the browser cared to wait.
 const REQUEST_TIMEOUT_MS = 30000;
 
+// /me gets a shorter deadline of its own. It is a single indexed read that a
+// healthy API answers in well under a second from anywhere in Iran, and every
+// surface that knows the reader waits on it — so thirty seconds of silence is
+// not a slow answer, it is no answer, and it should become «could not ask»
+// while the reader is still on the page.
+const ME_TIMEOUT_MS = 8000;
+
 function signalFor(ms) {
   try {
     if (ms && typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function') {
@@ -71,6 +113,8 @@ async function pickBase() {
   if (resolvedBase) return resolvedBase;
   const cached = ssGet(SS_BASE);
   if (cached && API_BASES.indexOf(cached) !== -1) { resolvedBase = cached; return cached; }
+  // Seen down a moment ago: do not spend another probe on it.
+  if (apiDown()) { resolvedBase = API_BASES[0]; return resolvedBase; }
   // Probe every mirror CONCURRENTLY but honour them in ORDER. The distinction
   // matters in both directions:
   //
@@ -105,6 +149,13 @@ async function pickBase() {
       return resolvedBase;
     }
   }
+  // Remember an outage only when every mirror was SILENT — no answer at all,
+  // or Cloudflare saying the origin behind it is gone. A mirror that answered
+  // with any other status is there; that is a different problem, and holding
+  // requests back would only hide it.
+  const answers = await Promise.all(settled);
+  const silent = answers.every((r) => !r || ORIGIN_DOWN.indexOf(r.status) !== -1);
+  if (silent) ssSet(SS_DOWN, String(Date.now()));
   // Fall back to the first configured base so callers still get a real error.
   resolvedBase = API_BASES[0];
   return resolvedBase;
@@ -144,7 +195,15 @@ function primaryBase() {
 }
 
 async function request(path, { method = 'GET', body, query, pinned = false, timeoutMs, keepalive = false, blob = false } = {}) {
+  // Answer «could not ask» without touching the network: always in static
+  // mode, and for background requests while the API was just seen down.
+  // Status 0 is what every caller already reads as unreachable (currentUser
+  // turns anything but a 401 into 'error').
+  if (isStatic() || (!pinned && downRecently())) throw new ApiError(0, { error: 'offline' });
   const base = pinned ? primaryBase() : await pickBase();
+  // The probe that just ran found every mirror silent: sending this request to
+  // one of them anyway would only add its own deadline to the probe's.
+  if (!pinned && downRecently()) throw new ApiError(0, { error: 'offline' });
   let url = base + path;
   if (query) {
     // `new URLSearchParams({a: undefined})` stringifies to the literal text
@@ -191,6 +250,12 @@ async function request(path, { method = 'GET', body, query, pinned = false, time
     ssSet(SS_BASE, resolvedBase);
     res = retry;
   }
+  if (ORIGIN_DOWN.indexOf(res.status) !== -1) {
+    ssSet(SS_DOWN, String(Date.now()));
+    forgetBase();
+  } else if (res.ok) {
+    ssClear(SS_DOWN);
+  }
   if (res.status === 204) return null;
   // A file rather than JSON (a clip's audio): the body is the answer, and an
   // error still arrives as the usual JSON so the caller reads it the same way.
@@ -202,7 +267,7 @@ async function request(path, { method = 'GET', body, query, pinned = false, time
 
 export const api = {
   // auth
-  me: () => request('/me'),
+  me: () => request('/me', { timeoutMs: ME_TIMEOUT_MS }),
   updateMe: (patch) => request('/me', { method: 'PATCH', body: patch }),
   profileStats: () => request('/profile/stats'),
   // The login calls are PINNED to the primary host (see primaryBase) and

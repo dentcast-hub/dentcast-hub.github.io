@@ -34,6 +34,9 @@ vi.mock('/plus/js/highlights.js', () => ({
 
 beforeEach(() => {
   document.body.innerHTML = '<div id="dcp-root"></div>';
+  // Each case is a fresh tab: api.js remembers an unreachable API per tab
+  // (sessionStorage), and the first case leaves exactly that memory behind.
+  sessionStorage.clear();
   vi.resetModules();
 });
 
