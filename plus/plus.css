@@ -184,7 +184,7 @@
 
 /* زمان مطالعه — NOT a button. It was a .dc-meta-chip, identical to the share
    pill next to it, and a reader had to try it to discover it did nothing. */
-.dc-act-time { font-size: .8rem; font-weight: 600; color: var(--dcp-muted); white-space: nowrap; }
+.dc-act-time { font-size: .8rem; font-weight: 600; color: var(--dcp-muted); white-space: nowrap; unicode-bidi: plaintext; }
 
 /* The heart ships wrapped (button + spelled-out count). Inside this row the
    wrapper is just a flex item; the sentence beside it is worth its width on a
@@ -333,7 +333,31 @@
    than a different control. No aux group here: there is no share/زمان
    مطالعه/دس chip to repeat, only the two acts a finished reader wants. */
 .dc-actions-end { margin-top: 28px; justify-content: flex-start; }
-.dc-actions-end-lead { flex: 0 0 100%; margin: 0 0 2px; font-weight: 700; color: var(--dcp-ink); }
+.dc-actions-end-lead { flex: 0 0 100%; margin: 0 0 2px; font-weight: 700; color: var(--dcp-ink); unicode-bidi: plaintext; }
+
+/* The فهرست مطالب card, below the row and above the prose. dc-article.css
+   carries these same declarations for the 197 article pages that link it
+   (and index.html mirrors them for the desktop shell); they live here too
+   because the ToC is now built on pages that load neither — the ep-page
+   layout (پرامپتولوژیست, پلاک صفر, تراز شواهد) and the en mirrors, where it
+   rendered as a bare <details> with the browser's triangle (QA, 2026-10-03).
+   Same --card-* references, same values; logical padding on the list so an
+   LTR page (dir="ltr" on every /en/ mirror) indents from its own start. */
+.dc-toc {
+  margin: 0 0 1.25rem;
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border, rgba(2,35,96,.09));
+  border-radius: var(--r-lg, 1.125rem);
+  box-shadow: var(--card-sh, 0 1px 3px rgba(2,35,96,.07));
+  padding: 0.25rem 1.25rem;
+}
+.dc-toc summary { cursor: pointer; font-size: .9rem; font-weight: 700; color: var(--txt2, #4a5f85); padding: 0.75rem 0; }
+.dc-toc ol { margin: 0 0 0.875rem; padding-inline-start: 1.25rem; }
+.dc-toc li { margin: 0.4375rem 0; font-size: .88rem; }
+.dc-toc a { color: var(--txt2, #4a5f85); text-decoration: none; }
+.dc-toc a:hover { color: var(--ac, #0b5fff); text-decoration: underline; text-underline-offset: 3px; }
+/* ToC jump targets clear the fixed topbar */
+[id^="dc-sec-"] { scroll-margin-top: 72px; }
 
 /* «؟» reveal, reused by both the کالکشن button in this row and the workbench
    toolbar's own — hidden by default, toggles a plain caption line. */
@@ -351,7 +375,10 @@
   border-radius: var(--dcp-radius); background: var(--dcp-surface);
   max-width: 520px;
 }
-.dcp-invite-line { margin: 0 0 10px; line-height: 1.8; }
+/* plaintext: an English line («~12 min read», the invitation) keeps its own
+   direction inside the desktop shell's RTL column, where an /en/ mirror is
+   injected without its dir="ltr"; a Persian line is unaffected. */
+.dcp-invite-line { margin: 0 0 10px; line-height: 1.8; unicode-bidi: plaintext; }
 .dcp-invite-actions { display: flex; gap: 8px; }
 
 /* ---- landing-page card-archive entry point (logged-in only) -------------- */

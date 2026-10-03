@@ -454,6 +454,92 @@ export const LISTEN_REPEAT_MS = 20 * 3600 * 1000; // don't re-post the same epis
 export const INVITE_LINE =
   'هایلایت، یادداشت و پیگیری پیشرفت، رایگان. برای شروع وارد شوید.';
 
+// --- The action row's own words, in the page's language ----------------------
+//
+// An /en/ mirror is a standalone English page (`<html lang="en" dir="ltr">`),
+// and the row above its prose — میز کار / افزودن به کالکشن / پسندیدم /
+// اشتراک‌گذاری / «حدود ۱۲ دقیقه» — plus the «فهرست مطالب» card were built in
+// Persian regardless (QA, 2026-10-03). Scope is exactly that row, its twin at
+// the end of the article, and the ToC: the sheets and modals behind the
+// buttons stay as they are.
+//
+// Two signals, because the two surfaces carry different ones. A standalone
+// page says it on <html lang>. On the desktop shell the article arrives as
+// innerHTML — no <html>, no <main> attributes, and the host document is `fa` —
+// so the only thing left is its path: every en mirror lives at
+// /{type}/en/{file} (CLAUDE.md, en-version protocol), which is the same
+// `parts[1] === 'en'` rule plus.js's isSeenContent() already keys on.
+// dc-nav.js cannot import this (a classic script), and does not need to: every
+// en mirror opts out of the shared header (`data-dc-no-header`), and that
+// script's phase 7 lives inside injectSharedHeader(), so on those pages the
+// row is always plus.js's.
+// Persian digits, the way util.js's faNum writes them — local rather than
+// imported, because util.js imports this module and a cycle is not worth a
+// one-line map.
+const faDigits = (n) => String(n).replace(/[0-9]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[+d]);
+
+export function pageLang(contentId) {
+  if (/(^|\/)en\//.test(contentId || '')) return 'en';
+  if (typeof document !== 'undefined' && document.documentElement.lang === 'en') return 'en';
+  return 'fa';
+}
+
+// The Persian column is the founder's copy as it was in each builder before
+// this table existed, byte for byte (Hard Rule 16); only the English column is
+// new. Latin digits in English, Persian digits in Persian.
+export const ROW_TEXT = {
+  fa: {
+    workbench: 'میز کار',
+    workbenchExit: 'خروج از میز کار',
+    collect: 'افزودن به کالکشن',
+    collectWhat: 'کالکشن یعنی چی؟',
+    collectMark: '؟',
+    collectCap: 'با این دکمه، کلِ همین صفحه (نه یک هایلایتِ خاص) به یکی از کالکشن‌های خودت اضافه می‌شود.',
+    heart: 'پسندیدم',
+    heartUndo: 'برداشتن پسند',
+    heartDo: 'پسندیدن این مطلب',
+    heartCount: (n) => faDigits(n) + ' نفر پسندیده‌اند',
+    num: (n) => faDigits(n),
+    share: 'اشتراک‌گذاری',
+    copied: 'لینک کپی شد ✓',
+    copyByHand: 'کپی نشد — لینک را دستی کپی کنید:',
+    readTime: (mins) => 'حدود ' + faDigits(mins) + ' دقیقه',
+    toc: 'فهرست مطالب',
+    endLead: 'این مطلب به کارتان آمد؟',
+    invite: INVITE_LINE,
+    inviteAria: 'دعوت به میز کار',
+    signIn: 'ورود',
+    later: 'بعدا',
+  },
+  en: {
+    workbench: 'Workbench',
+    workbenchExit: 'Exit workbench',
+    collect: 'Add to collection',
+    collectWhat: 'What is a collection?',
+    collectMark: '?',
+    collectCap: 'This button adds this whole page (not one particular highlight) to one of your own collections.',
+    heart: 'Like',
+    heartUndo: 'Remove like',
+    heartDo: 'Like this article',
+    heartCount: (n) => String(n) + (n === 1 ? ' person liked this' : ' people liked this'),
+    num: (n) => String(n),
+    share: 'Share',
+    copied: 'Link copied ✓',
+    copyByHand: 'Could not copy — copy the link by hand:',
+    readTime: (mins) => '~' + String(mins) + ' min read',
+    toc: 'Contents',
+    endLead: 'Was this useful?',
+    invite: 'Highlights, notes and progress tracking, free. Sign in to start.',
+    inviteAria: 'Workbench invitation',
+    signIn: 'Sign in',
+    later: 'Later',
+  },
+};
+
+export function rowText(contentId) {
+  return ROW_TEXT[pageLang(contentId)];
+}
+
 // --- premium features (shared) -----------------------------------------------
 // The five LIVE premium features' title + short hint. One place to edit so the
 // dashboard's own sections, the "you won a week of premium" banner, and the

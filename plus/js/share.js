@@ -13,8 +13,9 @@
 // and buildShareButton() below supplies one. That is a real gap being closed,
 // not a nicety — without it, scoring shares would have paid mobile readers and
 // silently paid desktop readers nothing.
-import { api } from './api.js?v=164';
-import { el } from './util.js?v=164';
+import { api } from './api.js?v=165';
+import { el } from './util.js?v=165';
+import { rowText } from './config.js?v=165';
 
 /** Dispatched on `document` after a share actually went through. */
 export const SHARE_EVENT = 'dcp:content-shared';
@@ -68,8 +69,8 @@ export function signalShared() {
  * platforms resolve on dismiss) — which is exactly why the server refuses to
  * pay for a page the reader has not finished, rather than trusting this.
  */
-export function buildShareButton(target) {
-  const btn = el('button', { class: 'dc-act dc-act-quiet', type: 'button' }, 'اشتراک‌گذاری');
+export function buildShareButton(target, T = rowText()) {
+  const btn = el('button', { class: 'dc-act dc-act-quiet', type: 'button' }, T.share);
   btn.addEventListener('click', () => {
     const { title, url } = target() || {};
     if (!url) return;
@@ -78,10 +79,10 @@ export function buildShareButton(target) {
     } else if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(url).then(() => {
         const prev = btn.textContent;
-        btn.textContent = 'لینک کپی شد ✓';
+        btn.textContent = T.copied;
         setTimeout(() => { btn.textContent = prev; }, 1600);
         signalShared();
-      }, () => showLinkByHand(url));
+      }, () => showLinkByHand(url, T));
     } else {
       showLinkByHand(url);
     }
@@ -96,6 +97,6 @@ export function buildShareButton(target) {
  * the URL selected so the reader can copy it by hand — the one thing every
  * browser can still do. No credit is given: nothing was shared.
  */
-export function showLinkByHand(url) {
-  try { window.prompt('کپی نشد — لینک را دستی کپی کنید:', url); } catch (_) { /* no dialogs here */ }
+export function showLinkByHand(url, T = rowText()) {
+  try { window.prompt(T.copyByHand, url); } catch (_) { /* no dialogs here */ }
 }

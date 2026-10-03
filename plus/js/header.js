@@ -4,24 +4,24 @@
 //  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
 //    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
 //    an OVERLAY. Clicking the person again closes whatever is open.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=164';
-import { currentUser, api, meStatus } from './api.js?v=164';
-import { isOrgHost, detectContentId } from './config.js?v=164';
-import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=164';
-import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=164';
-import { renderDashboard } from './dashboard.js?v=164';
-import { renderProfile } from './profile.js?v=164';
-import { maybeShowWelcome } from './welcome.js?v=164';
-import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=164';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=164';
-import { healPushSubscription } from './push.js?v=164';
-import { maybeShowPremiumPopup } from './premium-popup.js?v=164';
-import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=164';
-import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=164';
-import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=164';
-import { installLibraryGate } from './library-gate.js?v=164';
-import { toast } from './hl-view.js?v=164';
-import { wirePageBack } from './page-back.js?v=164';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=165';
+import { currentUser, api, meStatus } from './api.js?v=165';
+import { isOrgHost, detectContentId } from './config.js?v=165';
+import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=165';
+import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=165';
+import { renderDashboard } from './dashboard.js?v=165';
+import { renderProfile } from './profile.js?v=165';
+import { maybeShowWelcome } from './welcome.js?v=165';
+import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=165';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=165';
+import { healPushSubscription } from './push.js?v=165';
+import { maybeShowPremiumPopup } from './premium-popup.js?v=165';
+import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=165';
+import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=165';
+import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=165';
+import { installLibraryGate } from './library-gate.js?v=165';
+import { toast } from './hl-view.js?v=165';
+import { wirePageBack } from './page-back.js?v=165';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;

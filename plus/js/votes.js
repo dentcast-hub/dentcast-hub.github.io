@@ -19,10 +19,10 @@
 // and it has to be able to fail. A chip built by a classic script that cannot
 // reach the session would be a dead control on any page where this module did
 // not load, and a heart that does nothing is worse than no heart.
-import { api, currentUser } from './api.js?v=164';
-import { openLoginModal, openOrgNotice } from './login-modal.js?v=164';
-import { el, faNum } from './util.js?v=164';
-import { isOrgHost } from './config.js?v=164';
+import { api, currentUser } from './api.js?v=165';
+import { openLoginModal, openOrgNotice } from './login-modal.js?v=165';
+import { el } from './util.js?v=165';
+import { isOrgHost, rowText } from './config.js?v=165';
 
 const HEART_PATH = 'M12 20.5s-7.5-4.7-7.5-10A4.5 4.5 0 0 1 12 7.6a4.5 4.5 0 0 1 7.5 2.9c0 5.3-7.5 10-7.5 10z';
 
@@ -67,6 +67,7 @@ function heartIcon() {
  * is not that row, and a builder that hardcodes its host's class cannot be.
  */
 export function buildHeartChip(contentId, extraClass) {
+  const T = rowText(contentId); // the page's language — an /en/ mirror says «Like»
   const btn = el('button', {
     class: 'dcp-heart' + (extraClass ? ' ' + extraClass : ''),
     type: 'button',
@@ -78,7 +79,7 @@ export function buildHeartChip(contentId, extraClass) {
   // grey as «زمان مطالعه» beside it, was read as one more piece of article
   // metadata — nobody could tell it was a control, let alone what pressing it
   // meant. The label says so once, and the colour keeps saying it.
-  btn.appendChild(el('span', { class: 'dcp-heart-label' }, 'پسندیدم'));
+  btn.appendChild(el('span', { class: 'dcp-heart-label' }, T.heart));
   btn.appendChild(num);
 
   const wrap = el('div', { class: 'dcp-like' }, [btn]);
@@ -96,16 +97,16 @@ export function buildHeartChip(contentId, extraClass) {
   // number that differs between two people looking at the same page is the one
   // thing a printed count may never do.
   const paint = () => {
-    num.textContent = hearts > 0 ? faNum(hearts) : '';
+    num.textContent = hearts > 0 ? T.num(hearts) : '';
     btn.setAttribute('aria-pressed', String(voted));
     btn.classList.toggle('is-voted', voted);
-    btn.setAttribute('aria-label', voted ? 'برداشتن پسند' : 'پسندیدن این مطلب');
+    btn.setAttribute('aria-label', voted ? T.heartUndo : T.heartDo);
     btn.title = btn.getAttribute('aria-label');
     // Spelled out beside the button rather than left as a bare number: «۹» on
     // its own is the kind of thing a reader has to decode, and the whole
     // complaint about the old chip was that nothing said what it counted.
     wrap.querySelector('.dcp-like-count').textContent =
-      hearts > 0 ? faNum(hearts) + ' نفر پسندیده‌اند' : '';
+      hearts > 0 ? T.heartCount(hearts) : '';
   };
 
   const pop = () => {

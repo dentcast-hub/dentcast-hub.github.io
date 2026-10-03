@@ -90,8 +90,10 @@ const TERM_FA: Record<number, string> = {
 };
 const termFa = (months: number): string => TERM_FA[months] || `${faNum(months)} ماهه`;
 
-/** The tag the buyer writes into the transfer/gift message — services/reference.ts owns the alphabet. */
-const mintClaimReference = (): string => mintReference('DC');
+/** The tag the buyer writes into the transfer/gift message — services/reference.ts owns the alphabet.
+ *  'DP' (a payment claim), never 'DC': that prefix is the certificate credential id, and a
+ *  claim reference pasted into the public verify page answered «ثبت نشده» (QA, 2026-10-02). */
+const mintClaimReference = (): string => mintReference('DP');
 
 export type StartOutcome = 'started' | 'disabled' | 'already_pending';
 

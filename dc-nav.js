@@ -701,11 +701,34 @@
           (The fa↔en language switch lives ONLY next to the article title
           itself — see .lang-btn in each page's own markup — never in the
           shared topbar, which has no room to spare.)
-          All idempotent; styles live in plus.css (see 7b). */
-    if (document.querySelector('link[href^="/dc-article.css"]')) {
+          All idempotent; styles live in plus.css (see 7b).
+          The ep-page layout (پرامپتولوژیست, پلاک صفر, تراز شواهد) is the one
+          TEXT layout that loads no dc-article.css and has none of the three
+          boxes — one `.ep-box` whose prose is its `.ep-caption` — so its 37
+          part pages had the row (plus.js built it) but never the reading-time
+          chip or a ToC (QA, 2026-10-03). It joins here on its own tell, and an
+          audio episode, which shares the same shell, is told apart by its
+          player — the same gate initArticle() in plus.js uses. The caption is
+          what is measured and scanned, never the card's own section labels
+          («کلیدواژه‌ها», «برچسب‌ها»), which are chrome rather than sections;
+          and a part is short, so 3 sub-headings earn it a ToC where an
+          article needs 4. */
+    var dcEpMain = document.querySelector('main.article-content-wrap.ep-page');
+    var dcEpLayout = !!(dcEpMain && !document.getElementById('ep-audio'));
+    if (document.querySelector('link[href^="/dc-article.css"]') || dcEpLayout) {
 
       var dcBoxes = document.querySelectorAll('.text-box, .glass-box, .content-box');
       var firstBox = dcBoxes.length ? dcBoxes[0] : null;
+      var dcTocMin = 4;
+      if (!firstBox && dcEpLayout) {
+        var dcEpBox = dcEpMain.querySelector('.ep-box');
+        if (dcEpBox) {
+          firstBox = dcEpBox; /* the row and the ToC go above the card, where plus.js already put the row */
+          var dcEpCaps = dcEpBox.querySelectorAll('.ep-caption');
+          dcBoxes = dcEpCaps.length ? dcEpCaps : [dcEpBox];
+          dcTocMin = 3;
+        }
+      }
 
       /* 7b) THE ACTION ROW — one element, two groups, one owner.
              Until 2026-08-12 the area above the prose was four independent
@@ -797,7 +820,8 @@
         firstBox.parentNode.insertBefore(actionRow, firstBox);
       }
 
-      /* 7c) Auto table of contents — long articles only (4+ sections).
+      /* 7c) Auto table of contents — long articles only (4+ sections; 3+ on
+             the ep-page layout, see above).
              Inserted before firstBox AFTER the row above, so it lands between
              the two: [action row] › [فهرست مطالب] › [prose]. The ToC is the one
              thing in this area that is content rather than a control, which is
@@ -808,7 +832,7 @@
           var hs = dcBoxes[ti].querySelectorAll('h2:not(.dc-related-label), h3, h4');
           for (var hi = 0; hi < hs.length; hi++) tocHeads.push(hs[hi]);
         }
-        if (tocHeads.length >= 4) {
+        if (tocHeads.length >= dcTocMin) {
           var toc = document.createElement('details');
           toc.id = 'dcToc';
           toc.className = 'dc-toc';
@@ -2244,7 +2268,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '248';
+  var V = '249';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
@@ -2283,7 +2307,7 @@
 (function () {
   if (window.__dcSpotLoaded) return;
   window.__dcSpotLoaded = true;
-  var SPOT_V = '67';
+  var SPOT_V = '68';
   var js = document.createElement('script');
   js.type = 'module';
   js.src = '/spot/spot.js?v=' + SPOT_V;

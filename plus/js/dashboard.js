@@ -1,20 +1,20 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=164';
-import { api } from './api.js?v=164';
-import { flushPendingReads } from './reading.js?v=164';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=164';
-import { leagueEntryButton } from './league.js?v=164';
-import { openCollectionPicker, boardCover } from './collections.js?v=164';
-import { bundleRailCard, intentRow } from './pathways.js?v=164';
-import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=164';
-import { currentMonthKey } from './jalali-month.js?v=164';
-import { renewalBanner } from './renewal-banner.js?v=164';
-import { openPathways } from './pathway-showcase.js?v=164';
-import { premiumCta } from './premium-cta.js?v=164';
-import { maybeCelebrate } from './achievements.js?v=164';
-import { markReturnTrail } from './return-trail.js?v=164';
+import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=165';
+import { api } from './api.js?v=165';
+import { flushPendingReads } from './reading.js?v=165';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=165';
+import { leagueEntryButton } from './league.js?v=165';
+import { openCollectionPicker, boardCover } from './collections.js?v=165';
+import { bundleRailCard, intentRow } from './pathways.js?v=165';
+import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=165';
+import { currentMonthKey } from './jalali-month.js?v=165';
+import { renewalBanner } from './renewal-banner.js?v=165';
+import { openPathways } from './pathway-showcase.js?v=165';
+import { premiumCta } from './premium-cta.js?v=165';
+import { maybeCelebrate } from './achievements.js?v=165';
+import { markReturnTrail } from './return-trail.js?v=165';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',
@@ -301,8 +301,10 @@ function reviewDueBlock(me) {
 // recently started still-in-progress FULL-pathway enrollment, or the last
 // completed one — bundles are excluded server-side, they have their own
 // «از کجا شروع کنم؟» block below), so no extra request is needed here.
-// current_step doubles as a plain count of steps done — "قدم ۳ از ۲۰" reads
-// naturally either way.
+// completed_steps is the count of steps done; current_step is the cursor, which
+// stops at the first unread step (a reader who skipped step 2 and read the
+// rest has current_step 1) — so the bar and «قدم N از M» read completed_steps
+// and fall back to the cursor only for an older /me without it.
 function pathwayBlock(me) {
   const p = me.active_pathway;
   const allLink = el('a', { class: 'dcp-pw-alllink', href: '/plus/pathways.html' }, 'همه مسیرها');
@@ -312,7 +314,8 @@ function pathwayBlock(me) {
       allLink,
     ]);
   }
-  const pct = p.total_steps > 0 ? Math.round((p.current_step / p.total_steps) * 100) : 0;
+  const done = Number.isFinite(p.completed_steps) ? p.completed_steps : p.current_step;
+  const pct = p.total_steps > 0 ? Math.round((done / p.total_steps) * 100) : 0;
   // The «گواهی می‌خواهی؟» question, for readers already mid-pathway who may
   // not open the pathway page again soon. It no longer goes away with the
   // answer and no longer needs its own confirmation copy: intentRow itself
@@ -328,14 +331,14 @@ function pathwayBlock(me) {
     rules: null,
   };
   const slot = el('div');
-  const paint = (s) => slot.replaceChildren(...[intentRow(s, paint, { started: p.current_step > 0 })].filter(Boolean));
+  const paint = (s) => slot.replaceChildren(...[intentRow(s, paint, { started: done > 0 })].filter(Boolean));
   paint(state);
   const ask = slot.firstChild ? slot : null;
   return el('div', { class: 'dcp-pw-dash' }, [
     el('a', { class: 'dcp-pw-dash-title', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, p.title_fa),
     el('div', { class: 'dcp-progress-track' }, el('div', { class: 'dcp-progress-fill', style: 'width:' + pct + '%' })),
     el('div', { class: 'dcp-pw-dash-foot' }, [
-      el('span', {}, p.is_complete ? 'این مسیر را کامل کرده‌اید 🎉' : ('قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps))),
+      el('span', {}, p.is_complete ? 'این مسیر را کامل کرده‌اید 🎉' : ('قدم ' + faNum(done) + ' از ' + faNum(p.total_steps))),
       allLink,
     ]),
     ask,
