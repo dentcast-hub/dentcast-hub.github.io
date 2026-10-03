@@ -34,6 +34,12 @@ Disallow: /up-board/index.json
 Disallow: /dentcast_cabinet_full_catalog.json
 Disallow: /dentcast_cabinet_full_catalog.enriched.json
 
+# Build tooling — scripts and the episode page template (tools/episodes_template.html
+# is the unfilled skeleton the builder fills; it ships "index, follow" with a canonical
+# to /episodes.html because the BUILT pages inherit those lines). Nothing under
+# /tools/ is a page for a reader. The cabinet search page lives at the root, not here.
+Disallow: /tools/
+
 # AI Crawlers — explicitly allowed
 User-agent: GPTBot
 Allow: /

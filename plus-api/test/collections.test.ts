@@ -583,6 +583,34 @@ describe('orphan rule on DELETE /collections/:id/items/:itemId', () => {
   });
 });
 
+// Deleting the BOARD cascades its pins, which is the same orphaning one level
+// up: a snippet pinned only there must go with it, one pinned elsewhere too
+// must stay.
+describe('orphan rule on DELETE /collections/:id', () => {
+  it('deletes the snippets whose only pins were on the deleted board, and keeps the ones pinned elsewhere', async () => {
+    await makePremium();
+    const id1 = await createCollection('برد یک');
+    const id2 = await createCollection('برد دو');
+    const only = await createSnippet(id1, { kind: 'text', body: 'فقط اینجا' });
+    const shared = await createSnippet(id1, { kind: 'reference', title: 'رفرنس', authors: 'Smith J', year: 2020 });
+    const onlyId = only.json().item.snippet_id;
+    const sharedId = shared.json().item.snippet_id;
+    await app.inject({
+      method: 'POST', url: `/collections/${id2}/items`, headers: { cookie }, payload: { snippet_id: sharedId },
+    });
+
+    const del = await app.inject({ method: 'DELETE', url: `/collections/${id1}`, headers: { cookie } });
+    expect(del.statusCode).toBe(200);
+
+    const gone = await pool.query('select 1 from snippets where id = $1', [onlyId]);
+    expect(gone.rowCount).toBe(0);
+    const kept = await pool.query('select 1 from snippets where id = $1', [sharedId]);
+    expect(kept.rowCount).toBe(1);
+    const pins = await pool.query('select count(*)::int as n from collection_items where snippet_id = $1', [sharedId]);
+    expect(pins.rows[0].n).toBe(1);
+  });
+});
+
 describe('DELETE /snippets/:id', () => {
   it('deletes the snippet and cascades its pins off every board', async () => {
     await makePremium();

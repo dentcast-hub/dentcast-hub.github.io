@@ -66,10 +66,17 @@
       box-shadow: 0 0 35px rgba(11,95,255,0.5);
     }
 
+    /* The heading and the lead follow the site's theme tokens (dc-theme.css,
+       loaded after this block, owns the page ground): the near-white gradient
+       and the icy-white lead were written for the dark ground alone and were
+       unreadable on the light one. Dark keeps the original look below. */
     h1 {
       font-size: 1.7rem;
       font-weight: 800;
       margin-bottom: 0.75rem;
+      color: var(--txt, #e7eaf1);
+    }
+    [data-theme="dark"] h1 {
       background: linear-gradient(to right, #ffffff, #dbeafe);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -78,10 +85,13 @@
 
     /* ✅ اصلاح مهم: رنگ متن توضیحات روشن شد */
     p.subtitle {
-      color: #e2e8f0; /* سفید یخی */
+      color: var(--txt2, #e2e8f0);
       font-size: 1rem;
       line-height: 1.8;
       margin-bottom: 2.1875rem;
+    }
+    [data-theme="dark"] p.subtitle {
+      color: #e2e8f0; /* سفید یخی */
       text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* سایه برای خوانایی */
     }
 
@@ -154,7 +164,7 @@
     .spam-note {
       margin-top: 1.25rem;
       font-size: 0.85rem;
-      color: #cbd5e1; /* طوسی خیلی روشن */
+      color: #cbd5e1; /* طوسی خیلی روشن — the glass box around it is dark in both themes */
       opacity: 0.9;
     }
 
@@ -170,7 +180,7 @@
     }
 
     .home-link:hover {
-        color: #fff;
+        color: var(--txt, #fff);
         opacity: 1;
         text-shadow: 0 0 10px rgba(147, 197, 253, 0.6);
     }
@@ -286,6 +296,6 @@
   <div class="dc-results-box" id="dcResults"></div>
 </div>
 <script src="/global-search.js?v=11" defer></script>
-<script src="/dc-nav.js?v=255" defer></script>
+<script src="/dc-nav.js?v=256" defer></script>
 </body>
 </html>

@@ -7,22 +7,22 @@
 // opens into a masonry grid of "pins." This module is shared by
 // /plus/collections.html, /plus/collection.html, the workbench's two
 // single-purpose collection buttons, and the dashboard.
-import { el, faNum } from './util.js?v=163';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=163';
-import { premiumCta } from './premium-cta.js?v=163';
-import { api, currentUser, apiBase } from './api.js?v=163';
-import { openLoginModal } from './login-modal.js?v=163';
-import { FOLDER_EN } from './content-index.js?v=163';
-import { markReturnTrail } from './return-trail.js?v=163';
-import { PALETTE } from './config.js?v=163';
+import { el, faNum } from './util.js?v=164';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=164';
+import { premiumCta } from './premium-cta.js?v=164';
+import { api, currentUser, apiBase } from './api.js?v=164';
+import { openLoginModal } from './login-modal.js?v=164';
+import { FOLDER_EN } from './content-index.js?v=164';
+import { markReturnTrail } from './return-trail.js?v=164';
+import { PALETTE } from './config.js?v=164';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
   kindChip, snippetInlineEditor, looksLatin,
-} from './hl-view.js?v=163';
+} from './hl-view.js?v=164';
 // A قطعه‌ی صوتی pin draws the same playable body the دفترچه draws
 // (clip-view.js) — one vocabulary, so a clip never looks like two things.
-import { clipBody, clipInlineEditor, clipHref, clipAsText, createClipPlayer, clipDownloadBtn } from './clip-view.js?v=163';
+import { clipBody, clipInlineEditor, clipHref, clipAsText, createClipPlayer, clipDownloadBtn } from './clip-view.js?v=164';
 
 const hlColorCss = (key) => (PALETTE.find((p) => p.key === key) || {}).css || '#eaecf5';
 
@@ -1077,8 +1077,9 @@ export async function renderCollectionDetail(container, id) {
   const arrangeBtn = el('button', { class: 'dcp-hlib-act', type: 'button' }, '⇅ چیدمانِ دستی');
   const resetBtn = el('button', { class: 'dcp-hlib-act', type: 'button' }, 'بازگشت به تازه‌ترین');
   const countLine = el('p', { class: 'dcp-hlib-count' });
+  const filterRow = el('div', { class: 'dcp-hlib-row' }, [search, sortSel]);
   const tools = el('div', { class: 'dcp-hlib-controls' }, [
-    el('div', { class: 'dcp-hlib-row' }, [search, sortSel]),
+    filterRow,
     el('div', { class: 'dcp-hlib-row dcp-hlib-row-tools' }, [kindChips, countLine, arrangeBtn, resetBtn]),
   ]);
 
@@ -1134,7 +1135,13 @@ export async function renderCollectionDetail(container, id) {
   });
 
   function renderItems() {
-    tools.hidden = data.items.length < 4;
+    // The FILTERS earn their place at four pins; the ARRANGE tool at two. The
+    // export sheet tells the reader to arrange the board before exporting it,
+    // which has to be possible on a board of two or three — one `hidden` on
+    // the whole block took «⇅ چیدمانِ دستی» away with the search box.
+    const few = data.items.length < 4;
+    tools.hidden = data.items.length < 2;
+    filterRow.hidden = few;
     paintSort();
     arrangeBtn.textContent = arranging ? '✓ پایانِ چیدمان' : '⇅ چیدمانِ دستی';
     arrangeBtn.classList.toggle('is-on', arranging);
@@ -1163,9 +1170,9 @@ export async function renderCollectionDetail(container, id) {
     // Arranging orders the WHOLE board, so while it is on the filters step
     // aside entirely: ↑/↓ over a filtered subset would move an item past cards
     // that are not on screen.
-    search.hidden = arranging;
-    sortSel.hidden = arranging;
-    kindChips.hidden = arranging;
+    search.hidden = arranging || few;
+    sortSel.hidden = arranging || few;
+    kindChips.hidden = arranging || few;
 
     const q = arranging ? '' : foldFa(search.value);
     let rows = data.items.filter((it) => {

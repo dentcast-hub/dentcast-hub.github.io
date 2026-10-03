@@ -181,6 +181,34 @@ describe('renderReportPage', () => {
     expect(root.querySelector('h1')!.textContent).toBe('مرداد ۱۴۰۵');
   });
 
+  it('says so and normalises the URL when ?month= names a month the account does not have', async () => {
+    state.reports['1405-06'] = report();
+    const root = document.createElement('div');
+    document.body.appendChild(root);
+    // Before the account (or after today): a well-formed key not in the list.
+    history.replaceState(null, '', '/plus/report.html?month=1399-01');
+    await renderReportPage(root, '1399-01');
+    expect(calls).toEqual(['months', 'report:1405-06']);
+    expect(root.querySelector('[data-rp-fallback]')!.textContent).toBe('گزارش ماه خواسته‌شده در دسترس نیست؛ شهریور ۱۴۰۵ نشان داده می‌شود.');
+    expect(location.search).toBe('?month=1405-06');
+
+    // Not a month at all: monthFromUrl read it as null, and the junk used to stay in the URL.
+    calls.length = 0;
+    history.replaceState(null, '', '/plus/report.html?month=garbage');
+    await renderReportPage(root, null);
+    expect(calls).toEqual(['months', 'report:1405-06']);
+    expect(root.querySelector('[data-rp-fallback]')).not.toBeNull();
+    expect(location.search).toBe('?month=1405-06');
+
+    // A month the account has: no line, nothing rewritten.
+    calls.length = 0;
+    history.replaceState(null, '', '/plus/report.html?month=1405-06');
+    await renderReportPage(root, '1405-06');
+    expect(root.querySelector('[data-rp-fallback]')).toBeNull();
+    expect(location.search).toBe('?month=1405-06');
+    history.replaceState(null, '', '/');
+  });
+
   it('reads a well-formed ?month= and ignores junk', () => {
     expect(monthFromUrl('?month=1405-06')).toBe('1405-06');
     expect(monthFromUrl('?month=abc')).toBeNull();

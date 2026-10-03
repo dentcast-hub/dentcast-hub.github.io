@@ -107,11 +107,11 @@ export async function notifyPremiumPrizes(now: Date = new Date()): Promise<{ not
     const stacked = g.extends_subscription;
     const lead = stacked
       ? (isChampion
-        ? `اولِ بالاترین لیگِ دنت‌کست شدی — ${toFa(days)} روز به اشتراک پرمیومت اضافه شد. `
-        : `نفر اولِ گروهت شدی — ${toFa(days)} روز به اشتراک پرمیومت اضافه شد. `)
+        ? `اولِ بالاترین لیگِ دنت‌کست شدی — ${toFa(days)} روز به اشتراک پریمیومت اضافه شد. `
+        : `نفر اولِ گروهت شدی — ${toFa(days)} روز به اشتراک پریمیومت اضافه شد. `)
       : (isChampion
-        ? `اولِ بالاترین لیگِ دنت‌کست شدی — ${toFa(days)} روز پرمیوم مهمانِ ما هستی: `
-        : `نفر اولِ گروهت شدی — ${toFa(days)} روز پرمیوم مهمانِ ما هستی: `);
+        ? `اولِ بالاترین لیگِ دنت‌کست شدی — ${toFa(days)} روز پریمیوم مهمانِ ما هستی: `
+        : `نفر اولِ گروهت شدی — ${toFa(days)} روز پریمیوم مهمانِ ما هستی: `);
     const message: NotificationMessage = {
       title: isChampion ? 'قهرمان شدی 🏆' : 'برنده شدی 🎉',
       body: stacked

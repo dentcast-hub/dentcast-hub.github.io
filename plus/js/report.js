@@ -21,12 +21,12 @@
 //     you did; the compass is where what you have never done belongs.
 //   · Zero is never printed as a section. A month with no league weeks has no
 //     league section, not a «۰ هفته» one — same rule as the heart count.
-import { el, faNum, sectionIcon } from './util.js?v=163';
-import { api } from './api.js?v=163';
-import { FOLDER_EN } from './content-index.js?v=163';
-import { markReturnTrail } from './return-trail.js?v=163';
-import { monthName, shiftMonth } from './jalali-month.js?v=163';
-import { badgeIcon } from './achievements.js?v=163';
+import { el, faNum, sectionIcon } from './util.js?v=164';
+import { api } from './api.js?v=164';
+import { FOLDER_EN } from './content-index.js?v=164';
+import { markReturnTrail } from './return-trail.js?v=164';
+import { monthName, shiftMonth } from './jalali-month.js?v=164';
+import { badgeIcon } from './achievements.js?v=164';
 
 const RETURN = { url: '/plus/report.html', eyebrow: 'گزارش ماهانه', title: 'گزارش ماهانه', iconId: 'icon-chart-bar' };
 
@@ -313,8 +313,15 @@ export async function renderReportPage(container, initialMonth) {
   const list = months.months; // newest first
   const lastCompleted = list.length > 1 ? list[1] : list[0];
   let key = initialMonth && list.includes(initialMonth) ? initialMonth : lastCompleted;
+  // What the URL ASKED for, raw: a month before the account, after today, or
+  // not a month at all (`?month=garbage`, which monthFromUrl already read as
+  // null) all fall back to `key` — and the reader is told so in one line, and
+  // the URL is normalised to the month actually shown, in every such case.
+  // Before, the first two rewrote the URL silently and the third kept the junk.
+  const asked = new URLSearchParams(location.search).get('month');
+  const fellBack = asked !== null && asked !== key;
 
-  const show = async (k, push) => {
+  const show = async (k, push, note) => {
     key = k;
     if (push) history.replaceState(null, '', '/plus/report.html?month=' + k);
     container.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
@@ -326,7 +333,11 @@ export async function renderReportPage(container, initialMonth) {
       next: i > 0 ? list[i - 1] : null,
       onPick: (next) => { void show(next, true); },
     });
+    if (note) {
+      container.prepend(el('p', { class: 'dcp-rp-fallback dcp-muted', 'data-rp-fallback': '' },
+        'گزارش ماه خواسته‌شده در دسترس نیست؛ ' + r.month.title_fa + ' نشان داده می‌شود.'));
+    }
     window.scrollTo({ top: 0 });
   };
-  await show(key, !!initialMonth && initialMonth !== key);
+  await show(key, fellBack || (!!initialMonth && initialMonth !== key), fellBack);
 }

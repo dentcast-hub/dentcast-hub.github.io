@@ -4004,6 +4004,16 @@ a.dc-list-card--pillar {
 }
 #panel-sharehub .dc-ub-door:active,
 #dcd-archive .dc-ub-door:active{ background:var(--x-amber-wash-2); }
+/* یک مشترکِ تأییدشده (home-upboard.js) درِ باز می‌بیند: نه قفل، نه نشانِ
+   «پریمیوم»، نه کهربایی — کهربایی یعنی «این را اشتراک می‌خرد» و او خریده است. */
+#panel-sharehub .dc-ub-door.is-premium,
+#dcd-archive .dc-ub-door.is-premium{ background:var(--surface); border-color:var(--border); }
+#panel-sharehub .dc-ub-door.is-premium:active,
+#dcd-archive .dc-ub-door.is-premium:active{ background:var(--surface); }
+#panel-sharehub .dc-ub-door.is-premium .dc-ub-door-l,
+#panel-sharehub .dc-ub-door.is-premium .dc-ub-door-b,
+#dcd-archive .dc-ub-door.is-premium .dc-ub-door-l,
+#dcd-archive .dc-ub-door.is-premium .dc-ub-door-b{ display:none; }
 #panel-sharehub .dc-ub-door-l,
 #dcd-archive .dc-ub-door-l{ flex:none; font-size:0.95rem; line-height:1; }
 /* رنگ صریح، نه ارثی — عنوان داخل یک <a> است و اگر رنگ را از لینک به ارث ببرد،
@@ -6172,7 +6182,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <button class="dcd-subitem" data-type="litecast" data-label="LiteCast" data-src="litecast"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"/></svg></span><span class="dcd-subitem-lbl">LiteCast</span></button>
           <button class="dcd-subitem" data-type="sharehub" data-label="Share Hub" data-src="sharehub"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/></svg></span><span class="dcd-subitem-lbl">Share Hub</span></button>
           <button class="dcd-subitem" data-type="plak_sefr" data-label="پلاک صفر" data-src="brain"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span class="dcd-subitem-lbl">پلاک صفر<small class="dcd-subitem-cap">سایتِ خودت را داشته باش</small></span></button>
-          <button class="dcd-subitem" data-type="taraz" data-label="تراز شواهد" data-src="brain"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></span><span class="dcd-subitem-lbl">تراز شواهد<small class="dcd-subitem-cap">سایتِ خودت را داشته باش</small></span></button>
+          <button class="dcd-subitem" data-type="taraz" data-label="تراز شواهد" data-src="brain"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></span><span class="dcd-subitem-lbl">تراز شواهد<small class="dcd-subitem-cap">یک مقاله‌ی دندانپزشکی چقدر می‌ارزد؟</small></span></button>
           <button class="dcd-subitem" data-mode="viewer" data-viewer-url="/episodes.html" data-label="اپیزودها"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg></span><span class="dcd-subitem-lbl">اپیزودها</span></button>
         </div>
       </div>
@@ -7170,7 +7180,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=255" defer></script>
+<script src="/dc-nav.js?v=256" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -7621,6 +7631,16 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     patientItem.addEventListener('click', () => {
       /* No sidebar sub-item is "selected" while in patients mode */
       root.querySelectorAll('.dcd-subitem').forEach(b => b.classList.remove('active'));
+      /* Leave the archive / پریمیوم exactly as picking a section does
+         (loadList): column C's states are exclusive, and `.is-premium` hides
+         the content area this feed is about to fill — so without this the
+         catalog stayed on screen with both items highlighted, and the
+         remembered `dc:panel` brought the mixed state back on reload. */
+      colCScroll.classList.remove('is-archive');
+      document.getElementById('dcd-archive-item')?.classList.remove('active');
+      colCScroll.classList.remove('is-premium');
+      document.getElementById('dcd-premium-item')?.classList.remove('active');
+      try{ sessionStorage.removeItem('dc:panel'); }catch(x){}
       /* Enter patients mode: film pinned in the middle column (col-B),
          links + reader in the wide col-C. NOT is-viewer — col-C uses its
          scroll/content area, not the page-viewer iframe. */
@@ -7873,6 +7893,18 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   ══════════════════════════════════════════════ */
   async function openContent(url, title, keepPatient){
     if(!url) return;
+    /* The url may carry the article's own query string (?dcphl=<highlight>,
+       ?dcclip=<clip>) — the address bar keeps showing the homepage here, so
+       plus.js can only learn it from us: `window.__dcdInjectedSearch` is
+       published for the injection and cleared once the workbench has mounted
+       (config.js pageSearch() reads it ahead of location.search). The path
+       alone is the content identity (col-B's active row, the fetch). */
+    const hashAt = url.indexOf('#');
+    const noHash = hashAt >= 0 ? url.slice(0, hashAt) : url;
+    const qAt = noHash.indexOf('?');
+    const search = qAt >= 0 ? noHash.slice(qAt) : '';
+    url = qAt >= 0 ? noHash.slice(0, qAt) : noHash;
+    try{ window.__dcdInjectedSearch = search; }catch(x){}
 
     /* Exit viewer mode. Leave patients mode only when NOT keepPatient, so a
        LiteCast link clicked from the patients feed opens here while the film
@@ -7907,7 +7939,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
          stripped from this document, so nothing would remove it on .org. */
       ['header.dc-topbar','#dcToolbarDrawer','#dcRadarOverlay',
        '#dcGlobalBox','.dc-site-footer','footer','.dc-trustseal',
-       '#dc-theme-toggle','.dc-search-overlay',
+       '#dc-theme-toggle','.dc-search-overlay','[data-dc-back]',
        'script[src*="dc-nav"]','script[src*="global-search"]']
         .forEach(sel => doc.querySelectorAll(sel).forEach(el => el.remove()));
 
@@ -7995,7 +8027,13 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       /* Mount the Plus workbench (میز کار) onto the just-injected article. plus.js
          exposes this; dc-nav/plus was stripped from the fetched HTML, so the
          button must be wired explicitly here, with the article's own URL. */
-      if (window.dcpMountArticleWorkbench) window.dcpMountArticleWorkbench(contentArea, url);
+      if (window.dcpMountArticleWorkbench) {
+        Promise.resolve(window.dcpMountArticleWorkbench(contentArea, url + search))
+          .catch(() => {})
+          .then(() => { try{ if(window.__dcdInjectedSearch === search) window.__dcdInjectedSearch = ''; }catch(x){} });
+      } else {
+        try{ window.__dcdInjectedSearch = ''; }catch(x){}
+      }
 
       /* Place the in-article ad. Same reason as the workbench above: this is a
          client-side injection, so spot.js — which ran once, when the homepage
@@ -8024,6 +8062,15 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
      as full-page or iframe navigations.
   ══════════════════════════════════════════════ */
   const EP_PAGE_RE = /^\/episodes\/episode-[^/]+\.html$/;
+  /* An individual article page of any content section — what column C
+     fetches and injects. One list, read by the iframe click guard and by the
+     in-content click router below. `.+\.html` (not `[^/]+`) so sub-folder
+     pages like the English versions at /metanotes/en/meta-1.html are caught;
+     a folder's own index.html is a listing, never an article. plak-sefr was
+     missing from this list until 2026-09-10 — a new section has to be added
+     here as well as to the tree (see .dentcast/workflows/new-section.md). */
+  const ARTICLE_PAGE_RE = /^\/(notecast|insight|chairside|litecast|metanotes|dentai|dentcast-plus|photocast|sharehub|plak-sefr|taraz)\/.+\.html$/;
+  const isArticlePath = (p) => EP_PAGE_RE.test(p) || (ARTICLE_PAGE_RE.test(p) && !/\/index\.html$/.test(p));
 
   /* 1. If the viewer iframe navigates to an individual episode page,
         switch out of viewer mode and load it via openContent instead.
@@ -8048,12 +8095,19 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         iDoc.addEventListener('click', function(ev){
           const a = ev.target.closest('a[href]');
           if(!a) return;
-          let p;
-          try{ p = new URL(a.href, location.origin).pathname; }catch(x){ return; }
-          if(EP_PAGE_RE.test(p)){
+          let u;
+          try{ u = new URL(a.href, location.origin); }catch(x){ return; }
+          if(u.origin !== location.origin) return;
+          const p = u.pathname;
+          /* Any article page — an episode or a section's own page — goes to
+             column C the way col-A → col-B → col-C navigation already does;
+             left alone it opened as a whole page, header and all, nested
+             inside this viewer. The query string rides along (?dcphl= from a
+             glossary term's notes block, ?dcclip= from a player). */
+          if(isArticlePath(p)){
             ev.preventDefault();
             ev.stopImmediatePropagation();
-            openContent(p, a.textContent.trim() || p);
+            openContent(p + u.search, a.textContent.trim() || p);
           }
         }, true /* capture — runs before iframe's own handlers */);
 
@@ -8087,7 +8141,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       /* Individual episode page → load in col-C */
       if(EP_PAGE_RE.test(path)){
         e.preventDefault();
-        openContent(path, a.textContent.trim() || path);
+        openContent(path + u.search, a.textContent.trim() || path);
         return;
       }
       /* Episodes listing → reopen the episodes viewer */
@@ -8108,17 +8162,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         return;
       }
       /* Related-content / language links to individual article pages → load
-         in col-C instead of letting the browser navigate out of the app.
-         `.+\.html` (not `[^/]+`) so sub-folder pages like the English
-         versions at /metanotes/en/meta-1.html are also caught. */
-      /* plak-sefr was missing from this list — added 2026-09-10. Every other
-         content folder was here, so a «پلاک صفر» link inside a fetched article
-         was the one that dropped the reader out of the app. A new section has
-         to be added here as well as to the tree (see .dentcast/workflows/
-         new-section.md). */
-      if(/^\/(notecast|insight|chairside|litecast|metanotes|dentai|dentcast-plus|photocast|sharehub|plak-sefr|taraz)\/.+\.html$/.test(path)){
+         in col-C instead of letting the browser navigate out of the app
+         (ARTICLE_PAGE_RE, shared with the viewer's click guard above). */
+      if(isArticlePath(path)){
         e.preventDefault();
-        openContent(path, a.textContent.trim() || path);
+        openContent(path + u.search, a.textContent.trim() || path);
         return;
       }
       /* Any remaining internal section directory (not the home page) → viewer */

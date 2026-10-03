@@ -260,6 +260,17 @@ describe('a subscriber', () => {
     expect(hero.textContent).not.toContain('قدم ۰');
   });
 
+  it('measures how far by completed_steps, never by the resume cursor (which stops at the first unread step)', async () => {
+    // One step read out of order: the cursor is still 0, the reader has started.
+    meImpl = () => Promise.resolve({ tier: 'premium', due_card_count: 0, active_pathway: { id: 'bio', title_fa: 'بیومیمتیک', current_step: 0, completed_steps: 1, total_steps: 97, is_complete: false } });
+    await mount();
+    const hero = mobile().querySelector('.dcp-pp-hero')!;
+    expect(hero.querySelector('.dcp-pp-hero-k')!.textContent).toBe('ادامه بده');
+    expect(hero.querySelector('.dcp-pp-hero-m')!.textContent).toBe('قدم ۱ از ۹۷');
+    expect(hero.querySelector('.dcp-pp-hero-cta')!.textContent).toBe('ادامهٔ مسیر ›');
+    expect(Number(hero.querySelector('.dcp-pp-hero-bar')!.getAttribute('aria-valuenow'))).toBeGreaterThan(0);
+  });
+
   it('falls through: a finished pathway → today\'s cards → the دفترچه', async () => {
     meImpl = () => Promise.resolve({ tier: 'premium', due_card_count: 4, active_pathway: { id: 'p', title_fa: 'x', current_step: 5, total_steps: 5, is_complete: true } });
     await mount();
@@ -330,6 +341,12 @@ describe('a subscriber', () => {
     await initPremiumPanel();
     await settle();
     expect(head.querySelectorAll('a.dcp-pp-dash')).toHaveLength(1);
+  });
+
+  it('names the YEAR on the expiry — «تا ۱۰ مهر» alone reads as this year\'s', async () => {
+    meImpl = () => Promise.resolve({ tier: 'premium', due_card_count: 0, subscription: { expires_at: '2027-10-02T00:00:00Z' } });
+    await mount();
+    expect(mobile().querySelector('.dcp-pp-status')!.textContent).toContain('۱۴۰۶');
   });
 });
 

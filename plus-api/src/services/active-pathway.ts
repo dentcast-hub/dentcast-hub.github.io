@@ -5,7 +5,11 @@ import { getConsumedContentIds } from './consumption.js';
 export interface ActivePathwaySummary {
   id: string;
   title_fa: string;
+  /** The resume cursor — stops at the first unread step (the «ادامه بده» link target). */
   current_step: number;
+  /** Steps read anywhere in the list — the measure of HOW FAR, never `current_step`
+   * (a reader who skipped step 2 and read the other eleven has `current_step` 1). */
+  completed_steps: number;
   total_steps: number;
   is_complete: boolean;
   /** «گواهی‌نامه می‌خواهی؟» — null until the reader answered, so the dashboard can ask. */
@@ -57,6 +61,7 @@ export async function getActivePathwaySummary(userId: string): Promise<ActivePat
     id: pathway.id,
     title_fa: pathway.title_fa,
     current_step: progress.current_step,
+    completed_steps: progress.completed_steps,
     total_steps: progress.total_steps,
     is_complete: progress.is_complete,
     certificate_intent: certificate_intent ?? null,

@@ -1,19 +1,20 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=163';
-import { api } from './api.js?v=163';
-import { flushPendingReads } from './reading.js?v=163';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=163';
-import { leagueEntryButton } from './league.js?v=163';
-import { openCollectionPicker, boardCover } from './collections.js?v=163';
-import { bundleRailCard, intentRow } from './pathways.js?v=163';
-import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=163';
-import { currentMonthKey } from './jalali-month.js?v=163';
-import { renewalBanner } from './renewal-banner.js?v=163';
-import { premiumCta } from './premium-cta.js?v=163';
-import { maybeCelebrate } from './achievements.js?v=163';
-import { markReturnTrail } from './return-trail.js?v=163';
+import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=164';
+import { api } from './api.js?v=164';
+import { flushPendingReads } from './reading.js?v=164';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=164';
+import { leagueEntryButton } from './league.js?v=164';
+import { openCollectionPicker, boardCover } from './collections.js?v=164';
+import { bundleRailCard, intentRow } from './pathways.js?v=164';
+import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=164';
+import { currentMonthKey } from './jalali-month.js?v=164';
+import { renewalBanner } from './renewal-banner.js?v=164';
+import { openPathways } from './pathway-showcase.js?v=164';
+import { premiumCta } from './premium-cta.js?v=164';
+import { maybeCelebrate } from './achievements.js?v=164';
+import { markReturnTrail } from './return-trail.js?v=164';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',
@@ -268,9 +269,9 @@ function premiumGrantBanner(grant) {
   const banner = el('div', { class: 'dcp-prize-banner' }, [
     el('h2', { class: 'dcp-prize-h' }, stacked
       ? '🎉 نفر اولِ گروهت شدی: ' + faNum(days) + ' روز به اشتراکت اضافه شد'
-      : '🎉 نفر اولِ گروهت شدی: ' + faNum(days) + ' روز پرمیوم'),
+      : '🎉 نفر اولِ گروهت شدی: ' + faNum(days) + ' روز پریمیوم'),
     el('p', { class: 'dcp-sec-hint' }, stacked
-      ? 'این هفته در گروهت اول شدی — ' + faNum(days) + ' روز به اشتراک پرمیومت اضافه شد. همین‌ها برات بازه:'
+      ? 'این هفته در گروهت اول شدی — ' + faNum(days) + ' روز به اشتراک پریمیومت اضافه شد. همین‌ها برات بازه:'
       : 'این هفته در گروهت اول شدی — تا ' + faNum(days) + ' روز همه‌ی این‌ها برات بازه:'),
     list,
     cooldown,
@@ -415,17 +416,26 @@ async function compassBlock() {
 // report is one request; the card shows the top of it and links to the rest.
 async function reportBlock() {
   const allLink = el('a', { class: 'dcp-pw-alllink', href: '/plus/report.html' }, 'دیدن گزارش کامل ›');
+  // No completed month yet (the account is in its first month): the first
+  // report arrives with the first full month, and saying so is the honest
+  // card — not an empty one.
+  const firstMonthCard = () => el('div', { class: 'dcp-pw-dash' }, [
+    el('div', { class: 'dcp-muted' }, 'اولین گزارش، اول ماه آینده می‌رسد — ماه جاری را از همین حالا می‌توانید ببینید.'),
+    el('a', { class: 'dcp-pw-alllink', href: '/plus/report.html?month=' + currentMonthKey() }, 'ماه جاری تا امروز ›'),
+  ]);
   let data = null;
-  try { data = await api.report(); } catch (e) {
-    // A month before the account existed (the default is LAST month): the
-    // first report arrives with the first full month, and saying so is the
-    // honest card — not an empty one.
-    if (e && e.body && e.body.error === 'before_account') {
-      return el('div', { class: 'dcp-pw-dash' }, [
-        el('div', { class: 'dcp-muted' }, 'اولین گزارش، اول ماه آینده می‌رسد — ماه جاری را از همین حالا می‌توانید ببینید.'),
-        el('a', { class: 'dcp-pw-alllink', href: '/plus/report.html?month=' + currentMonthKey() }, 'ماه جاری تا امروز ›'),
-      ]);
-    }
+  try {
+    // Ask which months exist before asking for one: the default month of
+    // GET /report/monthly is LAST month, which an account in its first month
+    // does not have — that request was a 400 (`before_account`) on every
+    // dashboard open for a whole month. /report/months lists the account's
+    // months newest-first; the last COMPLETED one is the second entry.
+    const months = await api.reportMonths();
+    const list = (months && months.months) || [];
+    if (list.length < 2) return firstMonthCard();
+    data = await api.report(list[1]);
+  } catch (e) {
+    if (e && e.body && e.body.error === 'before_account') return firstMonthCard();
   }
   if (!data) return el('div', { class: 'dcp-pw-dash' }, [el('div', { class: 'dcp-muted' }, 'گزارش در دسترس نیست.'), allLink]);
   const c = data.counts;
@@ -500,6 +510,15 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   children.push(el('div', { class: 'dcp-dash-hello' }, 'سلام، ' + (me.display_name || '')));
 
   const isPremium = me.tier === 'premium';
+  // A pathway OPEN to every account (`premium: false` in pathways.json —
+  // «باز برای همه» on the showcase, open on the catalog and the pathway page)
+  // that a free reader has started is theirs to see here too: this block was
+  // the one surface still telling them «ویژه‌ی پریمیوم» about a pathway they
+  // are walking. Openness comes from the static file, the way the showcase
+  // and the gates read it; a failed read resolves empty and the lock stands.
+  const openActive = !isPremium && me.active_pathway && me.active_pathway.id
+    ? (await openPathways()).has(me.active_pathway.id)
+    : false;
 
   // Own-data sections FIRST, for every plan: a free (or even premium, no
   // difference in cost) visitor should see proof the site/their account is
@@ -534,7 +553,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   children.push(section(
     PREMIUM_FEATURES[1].title,
     PREMIUM_FEATURES[1].hint,
-    isPremium ? pathwayBlock(me) : lockedFeatureCard('/plus/pathways.html', 'dash-pathways'),
+    (isPremium || openActive) ? pathwayBlock(me) : lockedFeatureCard('/plus/pathways.html', 'dash-pathways'),
     'دیگر لازم نیست فکر کنید چه چیزی را بعد از چه چیزی بخوانید — خودمان مسیرِ یادگیریِ هر موضوع را قدم‌به‌قدم نشانتان می‌دهیم، تا در آن موضوع کاملاً مسلط شوید و مهارتِ واقعی پیدا کنید.',
   ));
   // Bundles get their own entry right under the pathways — premium only: the

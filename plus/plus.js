@@ -2,31 +2,31 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE } from './js/config.js?v=163';
-import { currentUser, api } from './js/api.js?v=163';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=163';
-import { openCollectionPicker } from './js/collections.js?v=163';
-import { el, faNum } from './js/util.js?v=163';
-import { initHomeCard } from './js/home-card.js?v=163';
-import { initHomeFeatures } from './js/home-features.js?v=163';
-import { initPremiumPanel } from './js/premium-panel.js?v=163';
-import { initHomeBundles } from './js/home-bundles.js?v=163';
-import { initHomeUpboard } from './js/home-upboard.js?v=163';
-import { initDesTool } from './js/des-scorer.js?v=163';
-import { initHeader } from './js/header.js?v=163';
-import { initTourAutostart } from './js/tour.js?v=163';
-import { initReadingTracker, flushPendingReads } from './js/reading.js?v=163';
-import { initListeningTracker } from './js/listening.js?v=163';
-import { initShareScoring, buildShareButton } from './js/share.js?v=163';
-import { initHeart, buildHeartChip } from './js/votes.js?v=163';
-import { mountClipControl, landOnClip } from './js/clips.js?v=163';
-import { mountArticleThreads } from './js/article-threads.js?v=163';
-import { mountChallenge } from './js/challenge.js?v=163';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=163';
-import { mountDes } from './js/des.js?v=163';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=163';
-import { initAudioHub } from './js/audio-hub.js?v=163';
-import { getModel, freshFolders } from './js/content-index.js?v=163';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE, pageSearch } from './js/config.js?v=164';
+import { currentUser, api } from './js/api.js?v=164';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=164';
+import { openCollectionPicker } from './js/collections.js?v=164';
+import { el, faNum } from './js/util.js?v=164';
+import { initHomeCard } from './js/home-card.js?v=164';
+import { initHomeFeatures } from './js/home-features.js?v=164';
+import { initPremiumPanel } from './js/premium-panel.js?v=164';
+import { initHomeBundles } from './js/home-bundles.js?v=164';
+import { initHomeUpboard } from './js/home-upboard.js?v=164';
+import { initDesTool } from './js/des-scorer.js?v=164';
+import { initHeader } from './js/header.js?v=164';
+import { initTourAutostart } from './js/tour.js?v=164';
+import { initReadingTracker, flushPendingReads } from './js/reading.js?v=164';
+import { initListeningTracker } from './js/listening.js?v=164';
+import { initShareScoring, buildShareButton } from './js/share.js?v=164';
+import { initHeart, buildHeartChip } from './js/votes.js?v=164';
+import { mountClipControl, landOnClip } from './js/clips.js?v=164';
+import { mountArticleThreads } from './js/article-threads.js?v=164';
+import { mountChallenge } from './js/challenge.js?v=164';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=164';
+import { mountDes } from './js/des.js?v=164';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=164';
+import { initAudioHub } from './js/audio-hub.js?v=164';
+import { getModel, freshFolders } from './js/content-index.js?v=164';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -36,7 +36,7 @@ import { getModel, freshFolders } from './js/content-index.js?v=163';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=163').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=164').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -363,8 +363,8 @@ async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget, 
 // highlights until study mode is on: without this, following your own note
 // dropped you at the top of an article that looked untouched and you had to
 // press «میز کار» yourself to see anything (user report, 2026-08-05).
-function deepLinkHighlightId() {
-  try { return new URLSearchParams(location.search).get('dcphl') || null; }
+function deepLinkHighlightId(search = pageSearch()) {
+  try { return new URLSearchParams(search).get('dcphl') || null; }
   catch (_) { return null; }
 }
 
@@ -376,6 +376,34 @@ async function openDeepLinkedHighlight(wb, updateBtn, id) {
   // not scroll — the page itself is still the right destination.
   wb.focusHighlight(id);
   return true;
+}
+
+// What opens study mode on ARRIVAL, for a standalone page — one machine for
+// an article (initArticle) and an audio episode (initEpisodeActions), which
+// used to have only the first half of it and so ignored both a ?dcphl= link to
+// a caption highlight and the session's remembered «study» choice (the mode
+// key is written by workbench.js for every content_id, episodes included; it
+// was simply never read back on an episode page). In order of precedence:
+// the ?dcphl= deep link (the only case where a FIRST visit opens study mode,
+// and one the reader asked for by clicking), the post-login return-to-study
+// funnel, then the remembered choice this session. Never auto-enters on a
+// fresh visit: sessionStorage is empty then.
+async function openStudyOnArrival({ wb, updateBtn, contentId }) {
+  const user = await currentUser();
+  if (!user) return;
+  if (await openDeepLinkedHighlight(wb, updateBtn, deepLinkHighlightId())) {
+    sessionStorage.removeItem(SS_RETURN_STUDY);
+    return;
+  }
+  const returnStudy = sessionStorage.getItem(SS_RETURN_STUDY);
+  if (returnStudy === location.pathname) {
+    sessionStorage.removeItem(SS_RETURN_STUDY);
+    await wb.enter();
+    updateBtn();
+  } else if (sessionStorage.getItem(SS_MODE + contentId) === 'study') {
+    await wb.enter();
+    updateBtn();
+  }
 }
 
 // An audio episode gets the SAME action row an article does now — میز کار,
@@ -405,7 +433,7 @@ async function initEpisodeActions() {
   mountReturnTrail(box.parentNode);
   const contentId = detectContentId();
   const shareTarget = () => ({ title: document.title, url: location.href });
-  const { bindButton } = await setupWorkbench({
+  const { wb, updateBtn, bindButton } = await setupWorkbench({
     proseRoot: findProseRoot() || box, proseAnchor: box, contentId, shareTarget,
   });
   // DES, for an episode too — and NOT because episodes are special. The badge is
@@ -433,13 +461,19 @@ async function initEpisodeActions() {
   // قطعه‌های صوتی: the «شروع قطعه» row under the page's own transport, the
   // reader's clips on its bar, and the ?dcclip= landing — clips.js.
   mountEpisodeClips(document, contentId);
+  // A ?dcphl= link to a caption highlight, the post-login funnel, or the
+  // session's remembered study mode — the same arrival logic as an article.
+  await openStudyOnArrival({ wb, updateBtn, contentId });
 }
 
 // The clip control for an episode page's own player (standalone page or the
 // desktop shell's injected copy). `scope` is the document or the injected
 // root; the player is found inside it so the shell's second article never
 // picks up the first one's <audio>.
-function mountEpisodeClips(scope, contentId) {
+// `clipId` is the shell's: the injected article's own ?dcclip= is carried in
+// through mountArticleWorkbench's url (the address bar shows the homepage);
+// a standalone page reads its own query string through landOnClip's default.
+function mountEpisodeClips(scope, contentId, clipId = null) {
   const audioEl = scope.querySelector('#ep-audio');
   if (!audioEl) return;
   const host = audioEl.closest('.ep-player-wrap') || audioEl.parentNode;
@@ -449,7 +483,7 @@ function mountEpisodeClips(scope, contentId) {
     audioEl, contentId, host, seekEl,
     episodeLabel: badge ? badge.textContent.trim() : null,
   });
-  landOnClip({ audioEl, contentId, host }).catch(() => {});
+  landOnClip({ audioEl, contentId, host, ...(clipId ? { clipId } : {}) }).catch(() => {});
 }
 
 async function initArticle() {
@@ -511,25 +545,9 @@ async function initArticle() {
   // mountBottomActions' own comment for why the ordering works out that way).
   mountBottomActions(findProseEnd() || proseRoot, contentId, { bindButton });
 
-  // Post-login return-to-study (the funnel) or a remembered choice this session.
-  // Never auto-enters on a fresh visit: sessionStorage is empty then.
-  const user = await currentUser();
-  // A ?dcphl= link is an explicit "open my highlight" request and outranks both
-  // of those — it is the only case where a FIRST visit to a page opens study
-  // mode, and it is one the reader asked for by clicking.
-  if (user && await openDeepLinkedHighlight(wb, updateBtn, deepLinkHighlightId())) {
-    sessionStorage.removeItem(SS_RETURN_STUDY);
-    return;
-  }
-  const returnStudy = sessionStorage.getItem(SS_RETURN_STUDY);
-  if (user && returnStudy === location.pathname) {
-    sessionStorage.removeItem(SS_RETURN_STUDY);
-    await wb.enter();
-    updateBtn();
-  } else if (user && sessionStorage.getItem(SS_MODE + contentId) === 'study') {
-    await wb.enter();
-    updateBtn();
-  }
+  // ?dcphl= deep link, post-login return-to-study (the funnel), or a
+  // remembered choice this session — see openStudyOnArrival.
+  await openStudyOnArrival({ wb, updateBtn, contentId });
 }
 
 // Desktop 3-column viewer: the homepage loads an article IN PLACE inside
@@ -596,8 +614,11 @@ async function mountArticleWorkbench(root, url) {
   mountArticleThreads(findProseEnd(root) || proseRoot, contentId); // under the article, not after its first box
   mountDesHere(findProseEnd(root) || proseRoot, contentId, root);  // the score, under that conversation
   mountBottomActions(findProseEnd(root) || proseRoot, contentId, { bindButton });  // the end-of-article میز کار/پسندیدم/کالکشن trio
-  mountEpisodeClips(root, contentId); // an injected episode: its own player gets the clip row too
-  const hlId = query ? new URLSearchParams(query).get('dcphl') : null;
+  // ?dcphl= / ?dcclip= come from the injected article's OWN url (carried in
+  // above), never from location.search, which is still the homepage's here.
+  const params = query ? new URLSearchParams(query) : null;
+  mountEpisodeClips(root, contentId, params && params.get('dcclip')); // an injected episode: its own player gets the clip row too
+  const hlId = params ? params.get('dcphl') : null;
   if (hlId && await currentUser()) await openDeepLinkedHighlight(wb, updateBtn, hlId);
 }
 if (typeof window !== 'undefined') window.dcpMountArticleWorkbench = mountArticleWorkbench;
@@ -737,7 +758,7 @@ function folderForPath(folders) {
 }
 
 function openSeenGate() {
-  Promise.all([import('./js/sheet.js?v=163'), import('./js/premium-cta.js?v=163')])
+  Promise.all([import('./js/sheet.js?v=164'), import('./js/premium-cta.js?v=164')])
     .then(([sheet, cta]) => sheet.openSheet(sheet.gateCard({
       title: 'کدام‌ها را خوانده‌ای',
       sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '

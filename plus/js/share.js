@@ -13,8 +13,8 @@
 // and buildShareButton() below supplies one. That is a real gap being closed,
 // not a nicety — without it, scoring shares would have paid mobile readers and
 // silently paid desktop readers nothing.
-import { api } from './api.js?v=163';
-import { el } from './util.js?v=163';
+import { api } from './api.js?v=164';
+import { el } from './util.js?v=164';
 
 /** Dispatched on `document` after a share actually went through. */
 export const SHARE_EVENT = 'dcp:content-shared';
@@ -81,8 +81,21 @@ export function buildShareButton(target) {
         btn.textContent = 'لینک کپی شد ✓';
         setTimeout(() => { btn.textContent = prev; }, 1600);
         signalShared();
-      }, () => {});
+      }, () => showLinkByHand(url));
+    } else {
+      showLinkByHand(url);
     }
   });
   return btn;
+}
+
+/**
+ * The last resort when nothing automatic is available: no share sheet, and
+ * the clipboard refused (a denied permission, an insecure context). Before
+ * this the button did nothing visible, which reads as broken. A prompt shows
+ * the URL selected so the reader can copy it by hand — the one thing every
+ * browser can still do. No credit is given: nothing was shared.
+ */
+export function showLinkByHand(url) {
+  try { window.prompt('کپی نشد — لینک را دستی کپی کنید:', url); } catch (_) { /* no dialogs here */ }
 }

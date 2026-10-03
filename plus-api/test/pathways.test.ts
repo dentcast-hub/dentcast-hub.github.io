@@ -339,6 +339,7 @@ describe('GET /me active_pathway', () => {
     const active = res.json().active_pathway;
     expect(active.id).toBe(PATHWAY_ID);
     expect(active.current_step).toBe(1);
+    expect(active.completed_steps).toBe(1); // how FAR — the premium tab's hero reads this, not the cursor
     expect(active.is_complete).toBe(false);
   });
 

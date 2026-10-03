@@ -396,13 +396,40 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
   });
 
   // DELETE /collections/:id - the whole collection (items cascade).
+  //
+  // The orphan rule applies here too: the cascade removes every pin on the
+  // board, so a snippet whose only pins were on it would be left alive with no
+  // pin anywhere — invisible forever, since there is no snippets library page.
+  // The snippets are collected BEFORE the delete (the cascade takes the rows
+  // that name them) and removed in the same transaction when no pin on any
+  // other board still holds them, exactly as removing a single pin does.
   app.delete('/collections/:id', async (request, reply) => {
     const { id } = request.params as { id: string };
-    const res = await pool.query(
-      `delete from collections where id = $1 and user_id = $2`,
-      [id, request.user!.id],
-    );
-    if (res.rowCount === 0) return reply.code(404).send({ error: 'not_found' });
+    const userId = request.user!.id;
+    const removed = await withTransaction(async (client) => {
+      const pinned = await client.query<{ snippet_id: string }>(
+        `select distinct ci.snippet_id from collection_items ci
+           join collections c on c.id = ci.collection_id
+          where c.id = $1 and c.user_id = $2 and ci.snippet_id is not null`,
+        [id, userId],
+      );
+      const res = await client.query(
+        `delete from collections where id = $1 and user_id = $2`,
+        [id, userId],
+      );
+      if (res.rowCount === 0) return false;
+      const snippetIds = pinned.rows.map((r) => r.snippet_id);
+      if (snippetIds.length) {
+        await client.query(
+          `delete from snippets s
+            where s.id = any($1::uuid[])
+              and not exists (select 1 from collection_items ci where ci.snippet_id = s.id)`,
+          [snippetIds],
+        );
+      }
+      return true;
+    });
+    if (!removed) return reply.code(404).send({ error: 'not_found' });
     return reply.send({ ok: true });
   });
 

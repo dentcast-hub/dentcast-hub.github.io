@@ -643,6 +643,21 @@ describe('arrange mode takes the filters off the table', () => {
     };
   });
 
+  // The export sheet tells the reader to arrange the board first, so the
+  // arrange tool is offered from two pins; the filters still wait for four.
+  it('offers «⇅ چیدمانِ دستی» on a board of three while the filters wait for four', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    const tools = document.querySelector('.dcp-hlib-controls') as HTMLElement;
+    expect(tools.hasAttribute('hidden')).toBe(false);
+    const arrange = [...document.querySelectorAll('.dcp-hlib-act')].find((b) => (b.textContent || '').includes('چیدمانِ دستی')) as HTMLElement;
+    expect(arrange.closest('[hidden]'), 'the arrange tool is on screen').toBeNull();
+    expect((document.querySelector('input[type="search"]') as HTMLElement).closest('[hidden]'), 'the search box is not').not.toBeNull();
+
+    board.items = [board.items[0]];
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    expect((document.querySelector('.dcp-hlib-controls') as HTMLElement).hasAttribute('hidden'), 'one pin has nothing to arrange').toBe(true);
+  });
+
   it('clears and hides the filters, and shows every item', async () => {
     await renderCollectionDetail(document.getElementById('root')!, 'c1');
     const search = document.querySelector('input[type="search"]') as HTMLInputElement;
