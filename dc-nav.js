@@ -780,9 +780,18 @@
               shareBtn.textContent = 'لینک کپی شد ✓';
               setTimeout(function () { shareBtn.textContent = prev; }, 1600);
               dcShared();
-            });
+            }, dcLinkByHand); /* a denied clipboard used to be an unhandled
+                                  rejection and a button that did nothing */
+          } else {
+            dcLinkByHand();
           }
         });
+        /* The last resort: no share sheet and no clipboard (or one that
+           refused). The URL in a prompt, selected, is the one thing every
+           browser can still do — mirrors share.js's showLinkByHand. */
+        function dcLinkByHand() {
+          try { window.prompt('کپی نشد — لینک را دستی کپی کنید:', location.href); } catch (e) {}
+        }
         actionAux.appendChild(shareBtn);
 
         firstBox.parentNode.insertBefore(actionRow, firstBox);
@@ -2235,7 +2244,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '247';
+  var V = '248';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
@@ -2274,7 +2283,7 @@
 (function () {
   if (window.__dcSpotLoaded) return;
   window.__dcSpotLoaded = true;
-  var SPOT_V = '66';
+  var SPOT_V = '67';
   var js = document.createElement('script');
   js.type = 'module';
   js.src = '/spot/spot.js?v=' + SPOT_V;

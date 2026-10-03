@@ -103,3 +103,33 @@ describe('the desktop shell button', () => {
     expect(calls).toEqual([]);
   });
 });
+
+// No share sheet and a clipboard that refused: the button used to do nothing
+// visible. The URL in a prompt is the one thing every browser can still do.
+describe('the share button with nothing automatic available', () => {
+  it('shows the link by hand when the clipboard write is denied, and credits nothing', async () => {
+    const nav = navigator as any;
+    const hadShare = 'share' in nav;
+    const share = nav.share;
+    const clipboard = nav.clipboard;
+    Object.defineProperty(nav, 'share', { value: undefined, configurable: true });
+    Object.defineProperty(nav, 'clipboard', {
+      value: { writeText: () => Promise.reject(new DOMException('denied', 'NotAllowedError')) }, configurable: true,
+    });
+    const prompts: string[] = [];
+    const realPrompt = window.prompt;
+    window.prompt = ((msg: string, def: string) => { prompts.push(def); return null; }) as any;
+    try {
+      initShareScoring('insight/insight-9');
+      const btn = buildShareButton(() => ({ title: 't', url: 'https://dentcast.ir/insight/insight-9.html' }));
+      btn.click();
+      await Promise.resolve(); await Promise.resolve(); await Promise.resolve();
+      expect(prompts).toEqual(['https://dentcast.ir/insight/insight-9.html']);
+      expect(calls).toEqual([]);
+    } finally {
+      window.prompt = realPrompt;
+      Object.defineProperty(nav, 'clipboard', { value: clipboard, configurable: true });
+      if (hadShare) Object.defineProperty(nav, 'share', { value: share, configurable: true });
+    }
+  });
+});

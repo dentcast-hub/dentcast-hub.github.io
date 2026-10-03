@@ -51,8 +51,12 @@ const notice = (over: Record<string, unknown> = {}) => ({
   ...over,
 });
 
-beforeEach(() => {
+beforeEach(async () => {
   document.body.replaceChildren();
+  // Wiping the body is, to a celebration card left open by the previous test,
+  // a dismissal — and a dismissal now acknowledges (on a microtask). Let that
+  // land before the log is cleared, so no test reads its predecessor's ack.
+  await new Promise((r) => setTimeout(r, 0));
   apiCalls.length = 0;
   state.notices = [];
   state.unread = 0;
@@ -223,6 +227,51 @@ describe('the badge celebration', () => {
     const seen = Array.from(document.querySelectorAll('.dcp-cel button'))
       .find((b) => b.textContent === 'دیدم') as HTMLButtonElement;
     seen.click();
+    await new Promise((r) => setTimeout(r, 0));
+    expect(apiCalls).toContain('achievementsSeen');
+  });
+
+  // Every way OUT acknowledges, not only «دیدم»: sheet.js closes on the backdrop
+  // and on Escape, and until 2026-10-03 neither told the server, so the same
+  // card came back on every dashboard and profile visit. The overlay node
+  // leaves the document after the sheet's 300ms exit transition; that removal
+  // is what the module watches, so the test waits it out.
+  it('acknowledges when the card is dismissed by the backdrop', async () => {
+    state.pending = [badge()];
+    await maybeCelebrate({ pending_achievements: 1 });
+    const overlay = document.querySelector('.dcp-sheet-overlay') as HTMLElement;
+    overlay.click();
+    await new Promise((r) => setTimeout(r, 350));
+    expect(document.querySelector('.dcp-cel')).toBeNull();
+    expect(apiCalls.filter((c) => c === 'achievementsSeen')).toHaveLength(1);
+  });
+
+  it('acknowledges when the card is dismissed with Escape', async () => {
+    state.pending = [badge()];
+    await maybeCelebrate({ pending_achievements: 1 });
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    await new Promise((r) => setTimeout(r, 350));
+    expect(apiCalls.filter((c) => c === 'achievementsSeen')).toHaveLength(1);
+  });
+
+  it('acknowledges exactly once however many ways it is closed', async () => {
+    state.pending = [badge()];
+    await maybeCelebrate({ pending_achievements: 1 });
+    (Array.from(document.querySelectorAll('.dcp-cel button'))
+      .find((b) => b.textContent === 'دیدم') as HTMLButtonElement).click();
+    await new Promise((r) => setTimeout(r, 350));
+    expect(apiCalls.filter((c) => c === 'achievementsSeen')).toHaveLength(1);
+  });
+
+  // The wall button leads to the wall ITSELF (profile.js gives «افتخارات»
+  // id="achievements"), not to the top of the profile — and acknowledges before
+  // leaving, or the queue would re-cover the very wall it just opened.
+  it('sends the reader to the wall\'s own anchor and acknowledges before leaving', async () => {
+    state.pending = [badge()];
+    await maybeCelebrate({ pending_achievements: 1 });
+    const wall = document.querySelector('.dcp-cel a.dcp-btn') as HTMLAnchorElement;
+    expect(wall.getAttribute('href')).toBe('/plus/profile.html#achievements');
+    wall.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
     await new Promise((r) => setTimeout(r, 0));
     expect(apiCalls).toContain('achievementsSeen');
   });

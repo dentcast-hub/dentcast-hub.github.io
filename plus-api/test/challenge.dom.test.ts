@@ -44,7 +44,7 @@ vi.mock('/plus/js/login-modal.js', () => ({
   openLoginModal: () => Promise.resolve(null),
 }));
 
-const PREMIUM_MSG = 'برای شرکت در چالش و بررسی پاسختون با هوش مصنوعی اشتراک پرمیوم تهیه کنید';
+const PREMIUM_MSG = 'برای شرکت در چالش و بررسی پاسختون با هوش مصنوعی اشتراک پریمیوم تهیه کنید';
 
 function anchor(): HTMLElement {
   document.body.innerHTML = `<main><div class="glass-box" id="p">

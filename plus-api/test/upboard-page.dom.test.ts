@@ -106,6 +106,12 @@ const SKELETON = `
     <p id="ubLead"></p>
     <div><button type="button" data-sort="new" aria-selected="true">تازه‌ترین</button>
          <button type="button" data-sort="top" aria-selected="false">بالاترین</button></div>
+    <a class="ub-door" href="/des-board/">
+      <span class="ub-door-l" aria-hidden="true">🔒</span>
+      <span class="ub-door-t">طبقه‌بندی مقالات بر اساس قدرت شواهد</span>
+      <span class="ub-door-b">پریمیوم</span>
+      <span class="ub-door-c" aria-hidden="true">›</span>
+    </a>
     <div id="ubFilters"></div>
     <p id="ubCount"></p>
     <ol id="ubList"></ol>
@@ -386,6 +392,28 @@ describe('/up-board/', () => {
       click('[data-sort="top"]');
       await settle();
       expect(document.querySelector('.dcp-sheet')!.querySelector('.dcp-btn-primary')!.textContent).toBe('ورود');
+    });
+
+    // The static door to /des-board/ ships with a padlock and amber for
+    // everybody who has not paid; a CONFIRMED subscriber sees neither.
+    it('drops the lock and the amber on the DES door for a premium reader, and for nobody else', async () => {
+      await mount();
+      const door = document.querySelector('.ub-door') as HTMLElement;
+      expect(door.classList.contains('is-premium')).toBe(true);
+      expect((door.querySelector('.ub-door-l') as HTMLElement).hidden).toBe(true);
+      expect((door.querySelector('.ub-door-b') as HTMLElement).hidden).toBe(true);
+      expect(door.style.background).toBe('var(--surface)');
+
+      meImpl = () => Promise.resolve({ tier: 'free' });
+      await mount();
+      expect(document.querySelector('.ub-door')!.classList.contains('is-premium')).toBe(false);
+      expect((document.querySelector('.ub-door-l') as HTMLElement).hidden).toBe(false);
+
+      boardImpl = hangs;
+      meImpl = () => Promise.resolve(null);
+      meStatusImpl = () => 'error';
+      await mount();
+      expect(document.querySelector('.ub-door')!.classList.contains('is-premium'), 'unreachable leaves it as shipped').toBe(false);
     });
 
     // «We could not ask» is not «you are not a subscriber», on this path either.

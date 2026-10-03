@@ -19,11 +19,11 @@
 // an IntersectionObserver like article-threads.js, and directly under the
 // prose (mounted just before the bottom action row, so the row still comes
 // first). The cards are read-only on purpose: editing lives in the دفترچه.
-import { el, faNum } from './util.js?v=163';
-import { api, currentUser } from './api.js?v=163';
-import { hlMark, noteBlock, highlightHref } from './hl-view.js?v=163';
-import { premiumCta } from './premium-cta.js?v=163';
-import { FOLDER_EN } from './content-index.js?v=163';
+import { el, faNum } from './util.js?v=164';
+import { api, currentUser } from './api.js?v=164';
+import { hlMark, noteBlock, highlightHref } from './hl-view.js?v=164';
+import { premiumCta } from './premium-cta.js?v=164';
+import { FOLDER_EN } from './content-index.js?v=164';
 
 const SHOWN = 3;
 
@@ -81,7 +81,7 @@ export function renderGlossaryNotes(host, data) {
     return;
   }
   const shown = newest(data.articles, SHOWN);
-  const allHref = data.concepts && data.concepts.length ? conceptHref(data.concepts[0].key) : '/plus/highlights.html';
+  const target = conceptTarget(data);
   host.replaceChildren(
     el('div', { class: 'dcp-gn-head' }, [
       el('h3', { class: 'dcp-gn-title' }, 'یادداشت‌های خودت درباره‌ی این مفهوم'),
@@ -89,11 +89,51 @@ export function renderGlossaryNotes(host, data) {
     ]),
     el('p', { class: 'dcp-gn-hint' }, 'آنچه پیش‌تر در مطالب دیگر درباره‌ی ' + data.term.fa_title + ' هایلایت کرده‌اید.'),
     ...cardList(shown),
-    el('a', { class: 'dcp-gn-all', href: allHref },
-      data.total > shown.length
-        ? 'همه‌ی ' + faNum(data.total) + ' هایلایت این مفهوم در دفترچه ›'
+    el('a', { class: 'dcp-gn-all', href: target.href },
+      target.count > shown.length
+        ? 'همه‌ی ' + faNum(target.count) + ' هایلایت این مفهوم در دفترچه ›'
         : 'دیدن در دفترچه‌ی هایلایت‌ها ›'),
   );
+}
+
+/**
+ * Where «همه‌ی N هایلایت» leads, and what N is — the two must agree.
+ *
+ * A term can resolve to SEVERAL concepts (14 of the 109 do — «ایمپلنت» is
+ * «ایمپلنت» plus «پری‌ایمپلنتایتیس» plus …), while the دفترچه's `?concept=`
+ * opens exactly ONE. The block's total sums every concept, so a link to the
+ * first key opened a subset, or an empty view when the first concept was not
+ * the one holding the highlights. `concept_counts` (the reader's own catalog,
+ * fetched by draw() only when there is a choice) picks the concept that
+ * actually holds them and prints ITS count; with one concept the term's own
+ * total is the concept's. When the counts could not be fetched, the link
+ * still opens the first concept but promises no number.
+ */
+function conceptTarget(data) {
+  const concepts = (data.concepts || []).filter((c) => c && c.key);
+  if (!concepts.length) return { href: '/plus/highlights.html', count: data.total };
+  if (concepts.length === 1) return { href: conceptHref(concepts[0].key), count: data.total };
+  const counts = data.concept_counts;
+  if (!counts) return { href: conceptHref(concepts[0].key), count: 0 };
+  let best = concepts[0];
+  let bestN = -1;
+  for (const c of concepts) {
+    const n = Number(counts[c.key]) || 0;
+    if (n > bestN) { best = c; bestN = n; }
+  }
+  return { href: conceptHref(best.key), count: Math.max(bestN, 0) };
+}
+
+/** The reader's per-concept highlight counts, keyed by concept — only asked
+ *  for when the term resolves to more than one concept. Null on any failure. */
+async function conceptCounts() {
+  if (typeof api.highlightConcepts !== 'function') return null;
+  try {
+    const cat = await api.highlightConcepts();
+    const out = {};
+    for (const c of (cat && cat.concepts) || []) out[c.key] = c.highlights || 0;
+    return out;
+  } catch (_) { return null; }
 }
 
 async function draw(host, slug) {
@@ -101,6 +141,7 @@ async function draw(host, slug) {
   if (!user) { host.remove(); return; }
   const data = await api.glossaryNotes(slug).catch(() => null);
   if (!data || !data.total) { host.remove(); return; }
+  if (!data.locked && data.concepts && data.concepts.length > 1) data.concept_counts = await conceptCounts();
   renderGlossaryNotes(host, data);
 }
 

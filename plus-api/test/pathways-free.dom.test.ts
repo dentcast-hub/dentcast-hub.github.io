@@ -15,13 +15,16 @@ class ApiError extends Error {
 
 let pathways: () => Promise<unknown>;
 let pathway: (id: string) => Promise<unknown>;
+let exam: (id: string) => Promise<unknown> = () => Promise.reject(new ApiError(409));
+let examIntent: (id: string, intent: string) => Promise<unknown> = () => Promise.reject(new ApiError(409));
 
 vi.mock('/plus/js/api.js', () => ({
   ApiError,
   api: {
     pathways: () => pathways(),
     pathway: (id: string) => pathway(id),
-    exam: () => Promise.reject(new ApiError(409)),
+    exam: (id: string) => exam(id),
+    examIntent: (id: string, intent: string) => examIntent(id, intent),
   },
 }));
 
@@ -35,7 +38,11 @@ const row = (id: string, title: string, extra: Record<string, unknown> = {}) => 
 
 const settle = () => new Promise((r) => setTimeout(r, 0));
 
-beforeEach(() => { document.body.innerHTML = '<div id="root"></div>'; });
+beforeEach(() => {
+  document.body.innerHTML = '<div id="root"></div>';
+  exam = () => Promise.reject(new ApiError(409));
+  examIntent = () => Promise.reject(new ApiError(409));
+});
 
 describe('the catalog a free reader sees', () => {
   it('puts the open pathway first, says so, and locks the rest', async () => {
@@ -105,6 +112,25 @@ describe('one pathway page', () => {
     await renderPathwayDetail(root, 'fixed-pros', { onLocked });
     expect(onLocked).toHaveBeenCalledOnce();
     expect(root.textContent).not.toContain('پیدا نشد');
+  });
+
+  it('«می‌خواهمش» enrols, and the header\'s «شروع این مسیر» button follows without a reload', async () => {
+    const base = { state: 'locked', pathway_id: 'evidence-literacy', pathway_title_fa: 'ارزیابی شواهد', certifiable: true, enrolled: false, certificate_intent: null, rules: null };
+    pathway = () => Promise.resolve(row('evidence-literacy', 'ارزیابی شواهد', { open: true, free: true, steps: [] }));
+    exam = () => Promise.resolve(base);
+    examIntent = (_id, intent) => Promise.resolve({ ...base, enrolled: true, certificate_intent: intent });
+    const { renderPathwayDetail } = await import('/plus/js/pathways.js');
+    const root = document.getElementById('root')!;
+    await renderPathwayDetail(root, 'evidence-literacy', {});
+    await settle();
+    const btn = () => Array.from(root.querySelectorAll('button')).find((b) => b.textContent === 'شروع این مسیر');
+    expect(btn()).toBeTruthy();
+    expect(root.querySelector('.dcp-pw-enrolled-tag')).toBeNull();
+
+    (root.querySelector('[data-pw-intent="wanted"]') as HTMLButtonElement).click();
+    await settle(); await settle();
+    expect(root.querySelector('.dcp-pw-enrolled-tag')!.textContent).toBe('✓ این مسیر را شروع کرده‌اید');
+    expect(btn()).toBeUndefined();
   });
 
   it('a 404 is still «پیدا نشد»', async () => {

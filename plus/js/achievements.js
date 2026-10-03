@@ -1,6 +1,6 @@
-import { el, faNum } from './util.js?v=163';
-import { api } from './api.js?v=163';
-import { openSheet, closeSheet } from './sheet.js?v=163';
+import { el, faNum } from './util.js?v=164';
+import { api } from './api.js?v=164';
+import { openSheet, closeSheet } from './sheet.js?v=164';
 
 /**
  * The profile's «افتخارات» section: two league medals and the badge wall.
@@ -55,6 +55,12 @@ const ICONS = {
   // to somebody else — and a reader holding both should be able to see that.
   lamp: '<path d="M10.5 4.2v-.7a1.5 1.5 0 0 1 3 0v.7"/><path d="M6.8 7.2 8.9 4.2h6.2l2.1 3"/><path d="M8.6 7.2c-.9 3.6-.9 6.6 0 9.8"/><path d="M15.4 7.2c.9 3.6.9 6.6 0 9.8"/><path d="M6.8 20 8.9 17h6.2l2.1 3z"/><path d="M12 8.8c2 2.6 3 3.7 3 5.6a3 3 0 0 1-6 0c0-1.2.55-2.15 1.45-3 .18.78.54 1.26 1.02 1.5-.4-.86-.6-2.2.53-4.1z"/>',
   star: '<path d="M12 3.4l2.7 5.5 6 .9-4.35 4.2 1.05 6-5.4-2.85L6.6 20l1.05-6L3.3 9.8l6-.9z"/>',
+  // A target — «چالشگر» (badges.json's `challenger`, icon "target"). Three
+  // concentric rings and nothing else: an arrow in the bull's-eye turned to
+  // mush at the 25px the wall draws these, and the rings alone still read as a
+  // target that small. Without this key the catalog's own icon name fell back
+  // to the star, so the badge wore a glyph the catalog never gave it.
+  target: '<circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="5.2"/><circle cx="12" cy="12" r="1.6"/>',
   // A column — «ستون». Two horizontal bars for the capital and base, three
   // vertical flutes between them: at the 25px the wall draws these, the flutes
   // are what keep it from collapsing into the letter π, and a pediment or any
@@ -458,7 +464,9 @@ function celebrationDisc(item) {
   }, [icon(item.icon, 'dcp-bg-ico')]);
 }
 
-function celebrationCard(items, onDone) {
+const WALL_HREF = '/plus/profile.html#achievements';
+
+function celebrationCard(items, onDone, onAck) {
   let at = 0;
   const card = el('div', { class: 'dcp-sheet-card dcp-cel', role: 'dialog', 'aria-modal': 'true' });
 
@@ -496,7 +504,21 @@ function celebrationCard(items, onDone) {
             onclick: () => { at += 1; paint(); },
           }, 'بعدی')
           : el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button', onclick: onDone }, 'دیدم'),
-        el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/profile.html' }, 'دیوارِ افتخارات'),
+        // To the wall itself (#achievements is the section's anchor), and
+        // acknowledged BEFORE leaving: the profile is one of the two surfaces
+        // that open this card, so an unacknowledged queue would re-cover the
+        // very wall the button just sent the reader to. The sheet closes first
+        // because on the profile page this is only a hash change, no reload.
+        el('a', {
+          class: 'dcp-btn dcp-btn-ghost', href: WALL_HREF,
+          onclick: (e) => {
+            if (e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // new tab: let the browser
+            e.preventDefault();
+            closeSheet();
+            const go = () => { location.href = WALL_HREF; };
+            Promise.race([onAck(), new Promise((r) => setTimeout(r, 1200))]).then(go, go);
+          },
+        }, 'دیوارِ افتخارات'),
       ]),
     ].filter(Boolean));
   };
@@ -521,13 +543,33 @@ export async function maybeCelebrate(me) {
   } catch (_) { return; }
   if (!items.length) return;
 
-  const done = () => {
-    closeSheet();
-    api.achievementsSeen()
+  // Once, whichever way the card went: «دیدم», the backdrop, Escape, the wall
+  // button, or another sheet opening over it. Until 2026-10-03 only «دیدم»
+  // acknowledged, so a card closed by a tap outside came back on every
+  // dashboard and profile visit — the opposite of the comment above.
+  let acked = false;
+  const ack = () => {
+    if (acked) return Promise.resolve();
+    acked = true;
+    return api.achievementsSeen()
       .then(() => { document.dispatchEvent(new CustomEvent(ACHIEVEMENTS_SEEN_EVENT)); })
       .catch(() => { /* it will simply be offered again next time */ });
   };
-  openSheet(celebrationCard(items, done));
+  const done = () => { closeSheet(); ack(); };
+  const card = celebrationCard(items, done, ack);
+  openSheet(card);
+  // sheet.js exposes no close hook; what every dismissal path has in common is
+  // that it ends with the overlay node leaving the document (after the exit
+  // transition), so that removal is what acknowledges the rest of them.
+  const overlay = card.closest('.dcp-sheet-overlay');
+  if (overlay && typeof MutationObserver === 'function') {
+    const mo = new MutationObserver(() => {
+      if (overlay.isConnected) return;
+      mo.disconnect();
+      ack();
+    });
+    mo.observe(document.body, { childList: true });
+  }
 }
 
 /** Fired once the celebration has been acknowledged, so the dot can go out. */

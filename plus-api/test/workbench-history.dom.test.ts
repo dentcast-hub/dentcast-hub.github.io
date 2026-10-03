@@ -275,6 +275,31 @@ describe('colour and label edit the TAPPED highlight, and only the tapped one', 
     expect(marks()[0].dataset.color).toBe('pink');
   });
 
+  it('a tap on the segment of a highlight that sits inside a link selects it instead of following the link', async () => {
+    // Re-draw the prose with «عاج» linked (the glossary links in insight-9's
+    // body); the text is the same PROSE, so quote() still anchors.
+    wb.exit();
+    document.body.innerHTML = `<main class="article-content-wrap"><div class="text-box"><p>${PROSE.replace('عاج', '<a href="#waj">عاج</a>')}</p></div></main>`;
+    wb = new Workbench({ contentId: 'insight/insight-9', proseRoot: document.querySelector('.text-box') });
+    rows.push({ id: 'h9', ...quote('به عاج همیشه'), color: 'blue', underline: false, cloze_markers: [], note: null, label: null });
+    await wb.enter();
+    await tick();
+    const inLink = marks().find((m) => m.closest('a'))!;
+    expect(inLink).toBeTruthy();
+    expect(marks().length).toBeGreaterThan(1); // split around the <a>
+    const ev = new MouseEvent('click', { bubbles: true, cancelable: true });
+    const followed = inLink.dispatchEvent(ev); // false = default (navigation) cancelled
+    expect(followed).toBe(false);
+    expect(location.hash).not.toBe('#waj');
+    expect(marks().every((m) => m.classList.contains('is-current'))).toBe(true);
+    expect(tool('حذف').disabled).toBe(false);
+    // Outside study mode the marks are gone and the link is a link again.
+    wb.exit();
+    const a = document.querySelector('a[href="#waj"]')!;
+    expect(a.querySelector('mark')).toBeNull();
+    expect(a.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }))).toBe(true);
+  });
+
   it('clicking plain prose clears the selection', async () => {
     rows.push({ id: 'h9', ...quote('شمارش دیواره'), color: 'blue', underline: false, cloze_markers: [], note: null, label: null });
     await wb._loadAndRender();

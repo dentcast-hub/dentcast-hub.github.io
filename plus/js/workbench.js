@@ -1,11 +1,11 @@
 // Study mode controller. A mode of the article page, not a separate page. It
 // inherits the site's typography (styles live in plus.css and reference the
 // site's own CSS variables). Never auto-enters; the caller decides when.
-import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=163';
-import { api } from './api.js?v=163';
-import { PALETTE, LABELS, SS_MODE } from './config.js?v=163';
-import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=163';
-import { openCollectionPicker } from './collections.js?v=163';
+import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=164';
+import { api } from './api.js?v=164';
+import { PALETTE, LABELS, SS_MODE } from './config.js?v=164';
+import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=164';
+import { openCollectionPicker } from './collections.js?v=164';
 
 /**
  * The workbench's history — undo/redo over SERVER writes.
@@ -510,7 +510,17 @@ export class Workbench {
     });
     // Tapping a highlight only SELECTS it (ring + toolbar follow it); it never
     // opens the editor. The note editor is opened solely by the یادداشت button.
-    for (const m of marks) m.addEventListener('click', (e) => { e.stopPropagation(); this._setCurrent(h.id, 'tap'); });
+    // A highlight that spans an in-text link is split into several marks, one
+    // of them INSIDE the <a>; stopPropagation does nothing about the link's
+    // default action, so that segment navigated instead of selecting. In study
+    // mode a tap on a mark is a selection, so the link's own act is cancelled;
+    // the marks are unwrapped on exit, which is what keeps links working
+    // outside it.
+    for (const m of marks) m.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (this.active && m.closest('a')) e.preventDefault();
+      this._setCurrent(h.id, 'tap');
+    });
     if (this._currentHl === h.id) for (const m of marks) m.classList.add('is-current');
     this.items.set(h.id, { data: h, marks });
   }

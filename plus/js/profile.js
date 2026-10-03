@@ -1,17 +1,17 @@
 // Reusable profile renderer (spec 2.7). Used by the /plus/profile.html page and
 // the header overlay. Site design language; a clear, readable week strip. Nothing
 // here is mandatory: the pseudonym is editable, no real name is ever required.
-import { el, faNum, tehranDay, sectionIcon } from './util.js?v=163';
-import { certificatesBody } from './certificates.js?v=163';
-import { api, ApiError, currentUser } from './api.js?v=163';
-import { remindersBlock } from './reminders.js?v=163';
-import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername, googleLoginEnabled } from './config.js?v=163';
-import { mountGoogleButton } from './google-login.js?v=163';
-import { baleEnabled, baleDeepLink } from './config.js?v=163';
-import { leagueEntryButton } from './league.js?v=163';
-import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=163';
-import { subscriptionCta } from './premium-cta.js?v=163';
-import { copyToClipboard, confirmStrip, toast } from './hl-view.js?v=163';
+import { el, faNum, tehranDay, sectionIcon } from './util.js?v=164';
+import { certificatesBody } from './certificates.js?v=164';
+import { api, ApiError, currentUser } from './api.js?v=164';
+import { remindersBlock } from './reminders.js?v=164';
+import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername, googleLoginEnabled } from './config.js?v=164';
+import { mountGoogleButton } from './google-login.js?v=164';
+import { baleEnabled, baleDeepLink } from './config.js?v=164';
+import { leagueEntryButton } from './league.js?v=164';
+import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=164';
+import { subscriptionCta } from './premium-cta.js?v=164';
+import { copyToClipboard, confirmStrip, toast } from './hl-view.js?v=164';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
   timeZone: 'Asia/Tehran', year: 'numeric', month: 'long', day: 'numeric',
@@ -705,7 +705,7 @@ export async function renderProfile(root, { me: preMe } = {}) {
     ])),
     // «افتخارات» sits between رکوردها and لیگ من on purpose: records are the raw
     // numbers it is built from, and the league is where its two medals are won.
-    ...(achBody ? [section('افتخارات', achBody)] : []),
+    ...(achBody ? [section('افتخارات', achBody, 'achievements')] : []), // #achievements: report.js's badge tiles + the GATE map land here
     // Directly under «افتخارات», and drawn in the same wall vocabulary: a
     // certificate is the other thing this reader has to show for the work,
     // and the two shelves are read together (founder, 2026-09-12).

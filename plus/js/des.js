@@ -23,7 +23,7 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=163';
+import { el, faNum } from './util.js?v=164';
 
 /* ------------------------------------------------------------ the data -- */
 
@@ -216,8 +216,14 @@ export function sourceBlock(src, index, total) {
   const parts = [];
   if (total > 1) {
     const cite = src.citation || {};
-    parts.push(el('div', { class: 'dc-des-srctitle' },
-      faNum(index + 1) + '. ' + (cite.title || cite.doi || 'منبع')));
+    // A Latin citation title in an RTL block scatters its numbers and periods;
+    // `dir=auto` lets each title set its own direction, so a Persian one is
+    // untouched and an English one reads left-to-right. The ordinal is kept
+    // out of that decision, in its own isolated span, so «۱.» stays first.
+    parts.push(el('div', { class: 'dc-des-srctitle' }, [
+      el('span', { class: 'dc-des-srcnum' }, faNum(index + 1) + '. '),
+      el('bdi', { dir: 'auto' }, cite.title || cite.doi || 'منبع'),
+    ]));
   }
   const na = src.content_type === 'NOT_APPRAISABLE';
   parts.push(na ? notAppraisableHead(src)

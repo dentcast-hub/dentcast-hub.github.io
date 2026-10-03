@@ -40,17 +40,17 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=163';
-import { currentUser, meStatus, api } from './api.js?v=163';
-import { pricingHref, premiumCta } from './premium-cta.js?v=163';
-import { openSheet, gateCard } from './sheet.js?v=163';
-import { openLoginModal } from './login-modal.js?v=163';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=163';
-import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=163';
-import { armDesTool } from './des-scorer.js?v=163';
-import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=163';
-import { reportChip } from './home-features.js?v=163';
-import { getModel, freshFolders } from './content-index.js?v=163';
+import { el, faNum, streakIsActiveToday } from './util.js?v=164';
+import { currentUser, meStatus, api } from './api.js?v=164';
+import { pricingHref, premiumCta } from './premium-cta.js?v=164';
+import { openSheet, gateCard } from './sheet.js?v=164';
+import { openLoginModal } from './login-modal.js?v=164';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=164';
+import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=164';
+import { armDesTool } from './des-scorer.js?v=164';
+import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=164';
+import { reportChip } from './home-features.js?v=164';
+import { getModel, freshFolders } from './content-index.js?v=164';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -74,8 +74,11 @@ function stateChip(text, live) {
  * about money (the up-board gate-card argument), and for a subscriber it
  * points at the one thing that is NOT here — their own material.
  */
+// «۱۰ مهر ۱۴۰۶», always with the year: «تا ۱۰ مهر» alone reads as this year's
+// ۱۰ مهر, so an expiry 364 days away looked like one due today. ICU names
+// the Jalali year, never a leap table of our own (the jalali-month.js rule).
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
-  day: 'numeric', month: 'long', timeZone: 'Asia/Tehran',
+  day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Tehran',
 });
 
 function lead(state, me) {
@@ -210,7 +213,7 @@ export function stateOf(me) {
 const TINT = { reading: 'blue', path: 'green', tools: 'violet', together: 'teal' };
 const byKey = (key) => PREMIUM_ENTRIES.find((e) => e.key === key);
 
-/** «اشتراک فعال · تا ۲۴ آبان» — the one amber mark on a subscriber's page. */
+/** «اشتراک فعال · تا ۲۴ آبان ۱۴۰۵» — the one amber mark on a subscriber's page. */
 function statusLine(me) {
   const sub = me && me.subscription;
   let until = '';
@@ -236,16 +239,21 @@ function hero(me) {
     href = '/plus/pathway.html?id=' + encodeURIComponent(p.id);
     title = p.title_fa || 'مسیر یادگیری';
     glyph = '🧭';
-    if (!(p.current_step > 0)) {
+    // How FAR is `completed_steps` (every step read, anywhere in the list);
+    // `current_step` is the resume cursor and stops at the first unread step,
+    // so a reader who skipped step 1 and read step 2 was told «هنوز شروع
+    // نشده» / 0% by it. An older /me without the field falls back to the cursor.
+    const done = typeof p.completed_steps === 'number' ? p.completed_steps : p.current_step;
+    if (!(done > 0)) {
       // Enrolled, nothing read yet: «continue from where you were» is a
       // sentence about a place that does not exist (founder's screenshot,
       // 1405/06/31 — «قدم ۰ از ۹۷ · از همان‌جایی که بودی»).
       kicker = 'شروع کن'; meta = 'هنوز شروع نشده'; cta = 'شروع مسیر ›'; pct = 0;
     } else {
       kicker = 'ادامه بده';
-      meta = 'قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps);
+      meta = 'قدم ' + faNum(done) + ' از ' + faNum(p.total_steps);
       cta = 'ادامهٔ مسیر ›';
-      pct = p.total_steps ? Math.max(3, Math.min(100, Math.round((p.current_step / p.total_steps) * 100))) : 0;
+      pct = p.total_steps ? Math.max(3, Math.min(100, Math.round((done / p.total_steps) * 100))) : 0;
     }
   } else if (due > 0) {
     href = '/plus/cards.html'; kicker = 'برای امروز';

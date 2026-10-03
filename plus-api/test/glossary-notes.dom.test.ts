@@ -12,11 +12,12 @@
 //     view in the دفترچه.
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-const state = { user: null as null | { tier: string }, notes: null as any, calls: [] as string[] };
+const state = { user: null as null | { tier: string }, notes: null as any, calls: [] as string[], concepts: null as any };
 
 vi.mock('/plus/js/api.js', () => ({
   api: {
     glossaryNotes: async (slug: string) => { state.calls.push(slug); if (!state.notes) throw new Error('none'); return state.notes; },
+    highlightConcepts: async () => { state.calls.push('concepts'); if (!state.concepts) throw new Error('none'); return state.concepts; },
   },
   currentUser: async () => state.user,
 }));
@@ -69,7 +70,7 @@ function page() {
 const flush = () => new Promise((r) => setTimeout(r, 0));
 
 beforeEach(() => {
-  state.user = null; state.notes = null; state.calls = [];
+  state.user = null; state.notes = null; state.calls = []; state.concepts = null;
   (globalThis as any).IntersectionObserver = undefined;
 });
 
@@ -110,6 +111,19 @@ describe('mountGlossaryNotes', () => {
     expect(host).not.toBeNull();
     expect(host.querySelector('.dcp-gn-title')!.textContent).toBe('یادداشت‌های خودت درباره‌ی این مفهوم');
     expect(host.querySelector('.dcp-gn-meta')!.textContent).toBe('۴ هایلایت · ۲ مطلب');
+    expect(state.calls).toEqual(['resin-cements']); // one concept: the catalog is not asked for
+  });
+
+  it('asks the concept catalog only when the term resolves to more than one concept, and links by its counts', async () => {
+    state.user = { tier: 'premium' };
+    state.notes = notes({ total: 8, concepts: [{ key: 'پری‌ایمپلنتایتیس', fa: 'پری‌ایمپلنتایتیس' }, { key: 'ایمپلنت', fa: 'ایمپلنت' }] });
+    state.concepts = { concepts: [{ key: 'ایمپلنت', fa: 'ایمپلنت', highlights: 8, articles: 3 }] };
+    mountGlossaryNotes(page(), 'glossary/dental-implant');
+    await flush(); await flush(); await flush();
+    expect(state.calls).toEqual(['dental-implant', 'concepts']);
+    const all = document.querySelector<HTMLAnchorElement>('.dcp-gn-all')!;
+    expect(all.getAttribute('href')).toBe(conceptHref('ایمپلنت'));
+    expect(all.textContent).toBe('همه‌ی ۸ هایلایت این مفهوم در دفترچه ›');
   });
 });
 
@@ -142,6 +156,30 @@ describe('renderGlossaryNotes', () => {
     expect(door.querySelector('.dcp-btn')!.textContent).toBe('خرید اشتراک پریمیوم');
     expect(host.querySelector('mark.dcp-hl')).toBeNull();
     expect(host.querySelector('.dcp-gn-all')).toBeNull();
+  });
+
+  // A term can resolve to SEVERAL concepts while the دفترچه's ?concept= opens
+  // ONE: the link used to take the first key and the count the sum of all of
+  // them, so on «ایمپلنت» it promised eight and opened an empty view.
+  it('with several concepts the link opens the one that holds the highlights, and promises ITS count', () => {
+    const host = document.createElement('section');
+    const n = notes({
+      total: 8,
+      concepts: [{ key: 'پری‌ایمپلنتایتیس', fa: 'پری‌ایمپلنتایتیس' }, { key: 'ایمپلنت', fa: 'ایمپلنت' }],
+      concept_counts: { 'ایمپلنت': 7, 'پری‌ایمپلنتایتیس': 1 },
+    });
+    renderGlossaryNotes(host, n);
+    const all = host.querySelector<HTMLAnchorElement>('.dcp-gn-all')!;
+    expect(all.getAttribute('href')).toBe(conceptHref('ایمپلنت'));
+    expect(all.textContent).toBe('همه‌ی ۷ هایلایت این مفهوم در دفترچه ›');
+    expect(host.querySelector('.dcp-gn-meta')!.textContent).toBe('۸ هایلایت · ۲ مطلب');
+  });
+
+  it('with several concepts and no counts in hand, the link promises no number', () => {
+    const host = document.createElement('section');
+    const n = notes({ total: 8, concepts: [{ key: 'الف', fa: 'الف' }, { key: 'ب', fa: 'ب' }] });
+    renderGlossaryNotes(host, n);
+    expect(host.querySelector('.dcp-gn-all')!.textContent).toBe('دیدن در دفترچه‌ی هایلایت‌ها ›');
   });
 
   it('with three or fewer notes the link still leads to the دفترچه, worded plainly', () => {

@@ -419,6 +419,22 @@ export const LISTEN_FRACTION = 0.2;  // must hear at least a fifth of the episod
 export const LISTEN_MIN_S = 60;      // floor: even a short clip needs 60s of real play
 export const LISTEN_MAX_S = 1200;    // cap: a very long episode never demands > 20 min
 
+// --- the page's own query string ---------------------------------------------
+// ?dcphl=<id> and ?dcclip=<id> are read from here, not from location.search
+// directly. On a standalone page the two are the same thing. On the desktop
+// shell they are not: the address bar still shows the homepage while the
+// article (with ITS query string) is fetched and injected into column C, so a
+// reader following «شنیدن در اپیزود ›» there was landed on nothing. The shell
+// publishes the injected article's search string as `window.__dcdInjectedSearch`
+// around the injection (index.html, openContent) and this reads it first.
+export function pageSearch() {
+  try {
+    const s = typeof window !== 'undefined' ? window.__dcdInjectedSearch : null;
+    if (typeof s === 'string' && s) return s;
+  } catch (_) { /* fall through */ }
+  try { return location.search; } catch (_) { return ''; }
+}
+
 // --- storage keys -----------------------------------------------------------
 // Mode choice is remembered per session only (never auto-enter across sessions).
 export const SS_MODE = 'dcp:mode:'; // + contentId -> 'study'

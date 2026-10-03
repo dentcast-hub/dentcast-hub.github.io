@@ -4,12 +4,12 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum, icon } from './util.js?v=163';
-import { api, ApiError } from './api.js?v=163';
-import { FOLDER_EN } from './content-index.js?v=163';
-import { markReturnTrail } from './return-trail.js?v=163';
-import { openSheet, closeSheet } from './sheet.js?v=163';
-import { certificateTerms } from './certificate-terms.js?v=163';
+import { el, faNum, icon } from './util.js?v=164';
+import { api, ApiError } from './api.js?v=164';
+import { FOLDER_EN } from './content-index.js?v=164';
+import { markReturnTrail } from './return-trail.js?v=164';
+import { openSheet, closeSheet } from './sheet.js?v=164';
+import { certificateTerms } from './certificate-terms.js?v=164';
 
 /** A "lightning + label" chip — a leading icon from the shared sprite
  * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
@@ -225,10 +225,15 @@ function stepRow(step, idx, currentStep, pathway) {
   ]);
 }
 
+/** The header's «✓ این مسیر را شروع کرده‌اید» tag, in place of the button. */
+function markEnrolled(wrap) {
+  wrap.replaceChildren(el('span', { class: 'dcp-pw-enrolled-tag' }, '✓ این مسیر را شروع کرده‌اید'));
+}
+
 function enrollArea(id, enrolled) {
   const wrap = el('div', { class: 'dcp-pw-enroll' });
   if (enrolled) {
-    wrap.appendChild(el('span', { class: 'dcp-pw-enrolled-tag' }, '✓ این مسیر را شروع کرده‌اید'));
+    markEnrolled(wrap);
     return wrap;
   }
   const btn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'شروع این مسیر');
@@ -236,7 +241,7 @@ function enrollArea(id, enrolled) {
     btn.disabled = true;
     try {
       await api.enrollPathway(id);
-      wrap.replaceChildren(el('span', { class: 'dcp-pw-enrolled-tag' }, '✓ این مسیر را شروع کرده‌اید'));
+      markEnrolled(wrap);
     } catch (_) { btn.disabled = false; }
   });
   wrap.append(
@@ -518,10 +523,11 @@ function cta(state, href, label) {
 /** Kept for callers that still say «exam card»; it is the same strip. */
 export const examCard = certificateStrip;
 
-async function mountExamCard(slot, id, started) {
+async function mountExamCard(slot, id, started, onState) {
   if (typeof api.exam !== 'function') return;
   const draw = (state) => {
     if (state && state.state) slot.replaceChildren(certificateStrip(state, draw, { started }));
+    if (state && onState) onState(state);
   };
   try {
     draw(await api.exam(id));
@@ -573,9 +579,16 @@ export async function renderPathwayDetail(container, id, opts = {}) {
     data.steps.map((s, i) => stepRow(s, i, data.current_step, data)));
 
   const examSlot = isBundle ? null : el('div', { class: 'dcp-pw-exam-slot' });
+  const enroll = enrollArea(data.id, data.enrolled);
   container.replaceChildren(...[
-    head, progressWrap, enrollArea(data.id, data.enrolled), examSlot, steps,
+    head, progressWrap, enroll, examSlot, steps,
     isBundle ? continueCard(data.continues_pathway) : null,
   ].filter(Boolean));
-  if (examSlot) mountExamCard(examSlot, data.id, data.completed_steps > 0);
+  // A «می‌خواهمش» enrols server-side (a wish about a pathway is being on it),
+  // so every exam state the strip redraws from carries `enrolled` — and the
+  // header's «شروع این مسیر» button follows it, instead of offering to start
+  // a pathway the reader is already on until the next reload.
+  if (examSlot) mountExamCard(examSlot, data.id, data.completed_steps > 0, (state) => {
+    if (state.enrolled === true && !enroll.querySelector('.dcp-pw-enrolled-tag')) markEnrolled(enroll);
+  });
 }

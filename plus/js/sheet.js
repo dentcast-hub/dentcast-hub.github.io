@@ -1,4 +1,6 @@
-import { el } from './util.js?v=163';
+import { el } from './util.js?v=164';
+import * as apiMod from './api.js?v=164';
+import { PRICING_URL, guestPremiumExtras } from './premium-cta.js?v=164';
 
 /**
  * The bottom sheet — one implementation, for every surface that needs to ask
@@ -59,10 +61,55 @@ export function openSheet(card) {
  * the same object — same rule as the sheet itself, and as hl-view.js: the
  * second caller moves the component here rather than drawing it twice.
  */
-export function gateCard({ title, sub, cta }) {
+export function gateCard({ title, sub, cta, guest, from }) {
+  // A SIGNED-OUT visitor gets a different bottom half, and the split is the
+  // up-board gate's (upboard-page.js gateSheet): they may already be a
+  // subscriber who is logged out on this device, and selling a subscription to
+  // somebody who owns one is worse than saying nothing — so «ورود» leads and
+  // the purchase link follows, quieter (premium-cta.js guestPremiumExtras).
+  // Decided HERE, once, from what /me last answered: every caller already
+  // probes before it opens the sheet, and a card built from the answer means
+  // no call site has to branch (library-gate.js, home-bundles.js and the two
+  // seen-gates shipped with only «خرید اشتراک» for a guest because each had
+  // to remember the split on its own). It only ever rewrites a cta that IS the
+  // pricing link; a caller that already drew its own guest button (upboard,
+  // home-upboard) is left exactly as it was.
+  const signedOut = typeof guest === 'boolean' ? guest : lastMeStatus() === 'anon';
+  const buyLink = cta && cta.tagName === 'A' && isPricingHref(cta.getAttribute('href'));
+  if (signedOut && buyLink) {
+    const tag = from || fromOf(cta.getAttribute('href'));
+    const login = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
+    login.addEventListener('click', () => {
+      closeSheet();
+      import('./login-modal.js?v=164')
+        .then((m) => m.openLoginModal({ returnTo: location.pathname + location.search + location.hash }))
+        .catch(() => {});
+    });
+    return el('div', { class: 'dcp-sheet-card', role: 'dialog', 'aria-label': title }, [
+      el('h2', { class: 'dcp-sheet-title' }, title),
+      el('p', { class: 'dcp-sheet-sub' }, sub),
+      login,
+      ...guestPremiumExtras(tag),
+    ]);
+  }
   return el('div', { class: 'dcp-sheet-card', role: 'dialog', 'aria-label': title }, [
     el('h2', { class: 'dcp-sheet-title' }, title),
     el('p', { class: 'dcp-sheet-sub' }, sub),
     cta,
   ]);
+}
+
+/** What /me last answered — read defensively, because a sheet must open even
+ *  where the API module is a stand-in with no `meStatus` (tests, an old copy). */
+function lastMeStatus() {
+  try { return typeof apiMod.meStatus === 'function' ? apiMod.meStatus() : 'unknown'; } catch (_) { return 'unknown'; }
+}
+
+function isPricingHref(href) {
+  if (!href) return false;
+  try { return new URL(href, location.origin).pathname === PRICING_URL; } catch (_) { return false; }
+}
+
+function fromOf(href) {
+  try { return new URL(href, location.origin).searchParams.get('from') || ''; } catch (_) { return ''; }
 }

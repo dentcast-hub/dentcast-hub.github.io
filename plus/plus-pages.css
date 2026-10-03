@@ -3,8 +3,18 @@
    dc-theme.css tokens, light by default, and they follow the site's dark toggle)
    instead of a separate dark identity. Everything is prefixed .dcp-. RTL. */
 
+/* The site's face, the same file dc-article.css loads (one cache entry, never a
+   second copy of the family): the /plus pages link no article stylesheet, so
+   until this was declared they rendered in the browser's default serif while
+   every article wore Vazirmatn. Mirrors `.dentcast/plus-modern-mockup.html`. */
+@font-face{
+  font-family:'Vazirmatn';
+  src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');
+  font-weight:100 900; font-display:swap;
+}
 body.dcp-page {
   margin: 0;
+  font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
   background: var(--bg, #f0f2f5);
   color: var(--txt, #0a1a33);
   min-height: 100vh;
@@ -2222,6 +2232,10 @@ body.dcp-page .dcp-page-back::before {
   body.dcp-page .dcp-page-header { max-width: var(--dcp-col, 760px); margin: 14px auto 6px; padding: 8px 8px 8px 10px; }
   body.dcp-page .dcp-page-brand { font-size: .95rem; }
 }
+/* A deep link (#certificates, #reminders, #connect, #phone, #referral, #achievements)
+   lands with its heading under the sticky header above: header height (~46px) + its
+   10px top offset + breathing room. Page only — the overlay has no glass header. */
+body.dcp-page .dcp-dash-sec[id] { scroll-margin-top: 72px; }
 
 /* ---- page titles ---------------------------------------------------------- */
 body.dcp-page .dcp-dash-hello { font-size: 1.7rem; font-weight: 900; letter-spacing: -.02em; line-height: 1.25; margin: 22px 6px 16px; }
@@ -2470,6 +2484,10 @@ body.dcp-page .dcp-empty::before, body.dcp-page .dcp-gate:not(.is-named)::before
 /* a bare gate («وارد شوید») keeps the stack but no glyph; an empty state with its own paragraphs wears the folder */
 body.dcp-page .dcp-gate:not(.is-named):not(:has(> p))::before { content: ""; }
 body.dcp-page .dcp-empty > p, body.dcp-page .dcp-gate:not(.is-named) > p { margin: 0 0 4px; font-size: .98rem; font-weight: 900; letter-spacing: -.01em; color: var(--txt, #0a1a33); }
-body.dcp-page .dcp-empty > p.dcp-muted, body.dcp-page .dcp-gate:not(.is-named) > p.dcp-muted { font-size: .8rem; font-weight: 500; color: var(--txt3, #62779a); margin: 0 auto 14px; max-width: 26ch; line-height: 1.7; }
+body.dcp-page .dcp-empty > p.dcp-muted, body.dcp-page .dcp-gate:not(.is-named) > p.dcp-muted { font-size: .8rem; font-weight: 500; color: var(--txt3, #62779a); margin: 0 auto 14px; line-height: 1.7; }
+/* 26ch is for the empty state's one-line caption; a gate's explanation («اشتراک شما تمام شده است…»,
+   «نتوانستیم حسابت را بخوانیم…») is a paragraph and was being folded into ~166px inside a 760px card */
+body.dcp-page .dcp-empty > p.dcp-muted { max-width: 26ch; }
+body.dcp-page .dcp-gate:not(.is-named) > p.dcp-muted { max-width: 60ch; }
 body.dcp-page .dcp-loading { color: var(--txt3, #62779a); }
 /* =========================================================== end Plus 2.0 skin */

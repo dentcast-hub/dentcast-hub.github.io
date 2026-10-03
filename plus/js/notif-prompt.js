@@ -11,11 +11,11 @@
 // prompt on page load: a "Block" is permanent, and a drive-by prompt on the very
 // first login would burn the channel for good (Safari refuses it without a
 // gesture, Chrome demotes it to quiet UI).
-import { el, tehranDay } from './util.js?v=163';
-import { api, currentUser } from './api.js?v=163';
-import { openOverlay } from './overlay.js?v=163';
-import { renderProfile } from './profile.js?v=163';
-import { ensurePushSubscription, pushSupported } from './push.js?v=163';
+import { el, tehranDay } from './util.js?v=164';
+import { api, currentUser } from './api.js?v=164';
+import { openOverlay } from './overlay.js?v=164';
+import { renderProfile } from './profile.js?v=164';
+import { ensurePushSubscription, pushSupported } from './push.js?v=164';
 
 const SS_SHOWN = 'dcp:notifprompt:shown'; // once per browser session
 const MAX = 2;                            // account-scoped, total appearances
@@ -138,7 +138,11 @@ export function maybeShowNotifPrompt(user) {
   // Open the profile at the section that matters for this mode.
   const openProfileAt = (anchor) => {
     cleanup();
-    openOverlay('profile', 'پروفایل', (root) => renderProfile(root, { me: user }));
+    // Not from `user`: that is the /me snapshot the prompt was decided on, and
+    // the refresh above has just been requested — render from its answer so the
+    // reminder switches show the saved state (fall back to the snapshot only if
+    // the API could not be asked).
+    openOverlay('profile', 'پروفایل', (root) => currentUser().then((m) => renderProfile(root, { me: m || user })));
     setTimeout(() => {
       const target = anchor === 'connect'
         ? document.querySelector('.dcp-overlay #connect')

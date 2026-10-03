@@ -28,12 +28,12 @@
 //   2. Every filter lives in the URL (?sort=&type=), written with replaceState.
 //      Same rule as the highlight library: a filtered view survives a refresh
 //      and the back button, and is a link somebody can send.
-import { api, currentUser, meStatus } from '/plus/js/api.js?v=163';
-import { el, faNum } from '/plus/js/util.js?v=163';
-import { openSheet, closeSheet, gateCard } from '/plus/js/sheet.js?v=163';
-import { premiumCta, guestPremiumExtras } from '/plus/js/premium-cta.js?v=163';
-import { openLoginModal } from '/plus/js/login-modal.js?v=163';
-import { markReturnTrail } from '/plus/js/return-trail.js?v=163';
+import { api, currentUser, meStatus } from '/plus/js/api.js?v=164';
+import { el, faNum } from '/plus/js/util.js?v=164';
+import { openSheet, closeSheet, gateCard } from '/plus/js/sheet.js?v=164';
+import { premiumCta, guestPremiumExtras } from '/plus/js/premium-cta.js?v=164';
+import { openLoginModal } from '/plus/js/login-modal.js?v=164';
+import { markReturnTrail } from '/plus/js/return-trail.js?v=164';
 
 /** Which gate sent a buyer, for the pricing page's ?from= report. */
 const FROM = 'upboard';
@@ -178,6 +178,25 @@ function unreachableSheet() {
     el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', onclick: closeSheet }, 'باشه'),
   ]);
   openSheet(card);
+}
+
+/**
+ * The static door to /des-board/ under the sort bar ships with a padlock and
+ * the amber wash, which is right for everybody who has not paid. For a reader
+ * /me has CONFIRMED premium it is wrong on both counts: amber means «this is
+ * what a subscription buys» and they bought it. Data decides, the markup
+ * never branches: only a definite premium answer opens the door — a free or
+ * signed-out reader, and «we could not ask», leave it exactly as shipped.
+ */
+function openDesDoor(root) {
+  const door = root.querySelector('.ub-door');
+  if (!door) return;
+  door.classList.add('is-premium');
+  door.querySelectorAll('.ub-door-l, .ub-door-b').forEach((n) => { n.hidden = true; });
+  // The page's own stylesheet has no premium state for the door, so the amber
+  // wash is replaced inline with the page's neutral card tokens.
+  door.style.background = 'var(--surface)';
+  door.style.borderColor = 'var(--border)';
 }
 
 function heartIcon() {
@@ -438,6 +457,7 @@ export function initUpBoard(root) {
   // «we could not ask» locks nothing and must never reach a paying reader as
   // an upsell.
   const tierKnown = currentUser().then((user) => {
+    if (user && user.tier === 'premium') openDesDoor(root);
     if (denied) return;                     // the board already answered
     if (user) {
       if (user.tier === 'premium') return;  // a subscriber sees no lock

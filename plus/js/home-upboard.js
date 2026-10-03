@@ -15,11 +15,11 @@
 //     to drift — and no race with a script that fills the same <ul> we do.
 //
 // It is only ever the top five. The box is a doorway, not the board.
-import { api, currentUser, meStatus } from './api.js?v=163';
-import { el, faNum } from './util.js?v=163';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=163';
-import { premiumCta, guestPremiumExtras } from './premium-cta.js?v=163';
-import { openLoginModal } from './login-modal.js?v=163';
+import { api, currentUser, meStatus } from './api.js?v=164';
+import { el, faNum } from './util.js?v=164';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=164';
+import { premiumCta, guestPremiumExtras } from './premium-cta.js?v=164';
+import { openLoginModal } from './login-modal.js?v=164';
 
 const FROM = 'home-upboard';
 
@@ -138,7 +138,12 @@ export function initHomeUpboard() {
     } else if (user.tier !== 'premium') {
       denied = 'gated';
     } else {
-      return;                               // a subscriber sees no lock
+      // A subscriber sees no lock — and the DES door beside the box must not
+      // wear one either: it is static markup that ships locked for the two
+      // definite «no» answers, so a CONFIRMED premium is the one answer that
+      // opens it (the `is-premium` rule lives in index.html's inline CSS).
+      document.querySelectorAll('.dc-ub-door').forEach((d) => d.classList.add('is-premium'));
+      return;
     }
     lockAll();
   });

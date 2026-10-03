@@ -4,24 +4,24 @@
 //  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
 //    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
 //    an OVERLAY. Clicking the person again closes whatever is open.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=163';
-import { currentUser, api, meStatus } from './api.js?v=163';
-import { isOrgHost, detectContentId } from './config.js?v=163';
-import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=163';
-import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=163';
-import { renderDashboard } from './dashboard.js?v=163';
-import { renderProfile } from './profile.js?v=163';
-import { maybeShowWelcome } from './welcome.js?v=163';
-import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=163';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=163';
-import { healPushSubscription } from './push.js?v=163';
-import { maybeShowPremiumPopup } from './premium-popup.js?v=163';
-import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=163';
-import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=163';
-import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=163';
-import { installLibraryGate } from './library-gate.js?v=163';
-import { toast } from './hl-view.js?v=163';
-import { wirePageBack } from './page-back.js?v=163';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=164';
+import { currentUser, api, meStatus } from './api.js?v=164';
+import { isOrgHost, detectContentId } from './config.js?v=164';
+import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=164';
+import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=164';
+import { renderDashboard } from './dashboard.js?v=164';
+import { renderProfile } from './profile.js?v=164';
+import { maybeShowWelcome } from './welcome.js?v=164';
+import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=164';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=164';
+import { healPushSubscription } from './push.js?v=164';
+import { maybeShowPremiumPopup } from './premium-popup.js?v=164';
+import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=164';
+import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=164';
+import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=164';
+import { installLibraryGate } from './library-gate.js?v=164';
+import { toast } from './hl-view.js?v=164';
+import { wirePageBack } from './page-back.js?v=164';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -134,6 +134,18 @@ function buildUserPerson(user) {
       .catch(() => { /* leave the dot as it is rather than lie in either direction */ });
   });
 
+  // The profile overlay draws the reader's SETTINGS (the reminder matrix, the
+  // SMS streak switch…) and `user` here is the /me captured when the header
+  // booted. Reopening the overlay from that snapshot showed the toggles as they
+  // were at page load, so the next tap sent the opposite of what the reader
+  // saw. A fresh /me first — currentUser({ refresh: true }) also announces
+  // `dcp:me`, so the premium tab repaints on the same answer — falling back to
+  // the snapshot only when the API could not be asked (never to a blank page).
+  const renderFreshProfile = (root) => {
+    root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
+    return currentUser({ refresh: true }).then((m) => renderProfile(root, { me: m || user }));
+  };
+
   let menu = null;
   const closeMenu = () => { if (menu) { menu.remove(); menu = null; document.removeEventListener('click', onDoc); } };
   const onDoc = (e) => { if (menu && !menu.contains(e.target) && e.target !== btn && !btn.contains(e.target)) closeMenu(); };
@@ -143,7 +155,7 @@ function buildUserPerson(user) {
       el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
         onclick: () => { closeMenu(); openOverlay('dashboard', 'پیشخوان', (root) => renderDashboard(root, { me: user })); } }, 'پیشخوان'),
       el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
-        onclick: () => { closeMenu(); openOverlay('profile', 'پروفایل', (root) => renderProfile(root, { me: user })); } }, 'پروفایل'),
+        onclick: () => { closeMenu(); openOverlay('profile', 'پروفایل', renderFreshProfile); } }, 'پروفایل'),
       // اطلاعیه‌ها — an overlay, not a page: the host already exists, is
       // layout-aware (it docks over column C on the desktop shell) and is what
       // the two items above use. A third destination would have been a page, a
