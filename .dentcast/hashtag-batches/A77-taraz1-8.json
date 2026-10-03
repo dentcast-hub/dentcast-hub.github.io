@@ -1,0 +1,17 @@
+{
+  "type": "taraz",
+  "enforce": true,
+  "note": "taraz/taraz1-8 — تراز شواهد قسمت ۸ «مرور سیستماتیک و متاآنالیز». #تراز_شواهد (series), #طراحی_مطالعه and #بایاس are REUSED; #متاآنالیز is REUSED too, because «مرور سیستماتیک» and «systematic review» are already filed as its aliases — minting a separate systematic-review tag would duplicate that concept. One concept the part resolves is newly minted: --simulate returned nothing for «pooled effect» and only an unrelated word overlap (#اثر_چتر) for «اثر ترکیبی», while the part defines the pooled effect estimate as the number a meta-analysis produces. Canonical spelling follows the part's own words.",
+  "concepts": [
+    {
+      "tag": "#اثر_تجمیعی",
+      "domain": "clinical",
+      "definition": "برآوردی از اثر یک درمان (pooled effect estimate) که متاآنالیز از ترکیب آماری نتایج چند مطالعه درباره‌ی یک سوال به دست می‌دهد؛ در این ترکیب دقت هر مطالعه و هم‌خوانی نتایج مطالعات با هم به حساب می‌آید.",
+      "use_when": "مقاله توضیح دهد متاآنالیز چطور نتایج مطالعات را به یک عدد تبدیل می‌کند، یا اثر تجمیعی یک متاآنالیز را گزارش و تفسیر کند.",
+      "aliases": ["pooled effect", "pooled effect estimate", "pooled estimate", "اثر ترکیبی", "برآورد تجمیعی"]
+    }
+  ],
+  "articles": {
+    "taraz/taraz1-8": ["#تراز_شواهد", "#متاآنالیز", "#طراحی_مطالعه", "#بایاس", "#اثر_تجمیعی"]
+  }
+}
