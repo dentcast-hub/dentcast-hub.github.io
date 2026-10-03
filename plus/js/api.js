@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import * as CFG from './config.js?v=169';
+import * as CFG from './config.js?v=170';
 
 const API_BASES = CFG.API_BASES;
 
@@ -47,11 +47,11 @@ const SS_BASE = 'dcp:api-base';
 //     never produces those, so one is proof.
 //
 // An ordinary 4xx/5xx from our API is an answer and writes nothing; any
-// success clears the memory AND the strikes. Short on purpose (one minute),
+// success clears the memory AND the strikes. Short on purpose (two minutes),
 // and a request the reader started by hand (login, logout — `pinned`; the
 // account icon's /me — `force`) always goes out.
 const SS_DOWN = 'dcp:api-down';
-const API_DOWN_TTL_MS = 60 * 1000;
+const API_DOWN_TTL_MS = 2 * 60 * 1000;
 // The strike count: «n:timestamp». A strike older than this is forgotten, so
 // one slow moment at the start of a visit does not shorten the next one's
 // patience half an hour later.
@@ -91,7 +91,7 @@ function setStrikes(n) { ssSet(SS_STRIKES, n + ':' + Date.now()); }
 
 function markDown() {
   ssSet(SS_DOWN, String(Date.now()));
-  // Keep the count armed: once the minute is over, the next page goes
+  // Keep the count armed: once the two minutes are over, the next page goes
   // straight to the long knock instead of starting from one again.
   setStrikes(Math.max(2, strikes()));
 }
