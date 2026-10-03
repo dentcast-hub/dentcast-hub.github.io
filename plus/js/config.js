@@ -23,6 +23,31 @@ function defaultBases() {
 
 export const API_BASES = OVERRIDE.apiBases || defaultBases();
 
+// --- Static mode (a cut of Iran's international link) -----------------------
+// The plan for a full cut: dentcast.ir keeps serving readers inside Iran with
+// everything (every dependency it has is domestic, the API included), while
+// dentcast.org keeps serving readers ABROAD as a plain static site — its API
+// is a Cloudflare Worker in front of a container in Iran, so during a cut it
+// does not refuse, it HANGS, and every page would sit in «waiting for /me».
+//
+// STATIC_HOSTS is the founder's switch: put 'dentcast.org' in it and push
+// (Cloudflare Pages deploys .org from GitHub, which still works during a
+// cut), and on that host api.js answers every request at once with «could
+// not ask» — the same 'error' state every surface already renders — so no
+// page ever waits on an API that is not there. It is keyed by HOSTNAME so it
+// can never reach dentcast.ir even if the same commit is deployed there.
+// Empty means off, and off changes nothing. Flipping it changes this file,
+// which is in the module graph: run `python3 tools/asset_version.py --bump`
+// in the same commit or returning browsers keep the old copy.
+// Manual: .dentcast/offline-publish.md
+export const STATIC_HOSTS = [];
+
+export function staticMode() {
+  if (OVERRIDE.staticMode === true) return true;
+  const h = (typeof location !== 'undefined' && location.hostname) || '';
+  return STATIC_HOSTS.some((x) => h === x || h.endsWith('.' + x));
+}
+
 // --- .org gate (RETIRED) ----------------------------------------------------
 // api.dentcast.org is now wired: a Cloudflare Worker on api.dentcast.org proxies
 // to the same container, so .org has a same-site API and the SameSite=Lax session

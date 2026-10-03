@@ -237,6 +237,28 @@ Hard guard for this trigger: **«اگر جایی شک داشتی سوال کن �
 you're unsure (subfolder, topic/tags, DOI, first author), **ask first, never
 guess.**
 
+## International-cut protocol (trigger)
+
+A **seventh** workflow. When the user says Iran's international link is cut or
+about to be — «اینترنت بین‌الملل قطع شد», «حالت قطعی», «سایت رو استاتیک کن», «از
+لپ‌تاپ منتشر کن» — read `.dentcast/offline-publish.md` and follow it. The plan
+it encodes: **dentcast.ir keeps everything** for readers inside Iran (every
+dependency it has is domestic, the API included) and **dentcast.org becomes a
+static site** for readers abroad (its API is a Cloudflare Worker in front of a
+container in Iran, so during a cut it hangs rather than refuses). Three facts
+the rest depends on. **GitHub is unreachable from inside Iran and GitHub's
+runners cannot reach Arvan**, so `sitemap_only.yml` and `deploy-arvan.yml` both
+die and `.ir` is published from the founder's laptop: `tools/publish-local.sh`
+(the post-merge chain, no commit) then `./deploy-frontend.sh --skip-push`.
+**A dead API costs a tab one probe, not every page** — `api.js` remembers it
+(`dcp:api-down`, sessionStorage, two minutes) only when every mirror is SILENT
+or Cloudflare reports the origin gone (521–524, 530), never on an ordinary
+error our own API returned, and clears it on any success; `/me` has its own
+8-second deadline. **`STATIC_HOSTS` in `plus/js/config.js` is the founder's
+switch**, empty in normal times: keyed by hostname so it can never reach `.ir`,
+and flipping it is a change to the module graph, so `asset_version.py --bump`
+rides in the same commit. Tests: `plus-api/test/api-down.test.ts`.
+
 ## Repo conventions
 
 - **چالش** — a founder-authored **post whose body is a question**, published through the ordinary router into an existing folder (chairside/, insight/, whichever), taking that folder's next number and its ordinary brain shape — **never** a new `type`, **never** a new folder. Full design: `.dentcast/challenge-handoff.md`. Reading the question (+ image) is public, generated into `plus/challenges.json` by `tools/build_challenge_index.mjs`; **the answer and the 3–5 key points are never in the repo and never in any published file** — they live only in the `challenges` database table, written through `GET /admin` → «صندوق چالش». On submit, a model compares the reader's free-text answer against the key points and returns, per point, `covered`/`missing`/`unsure`; **any `unsure` queues the whole attempt** for the founder rather than guessing. `answer_fa` is released by ONE fact — the reader has an attempt row for this page — never by tier, so a lapsed reader who answered while premium keeps seeing it. Workflow hooks: Phase B **Question 4.9**, Phase C **step 4.14**. **The second documented exception to Hard Rule 12** (alongside LiteCast): no en mirror, no fa↔en toggle (RULE 16 — the mirror would be a different `content_id` with no row in `challenges`). **گفتگوی زیر مطلب never mounts under a چالش at all** (RULE 17, founder decision 2026-08-30) — a چالش already owns the reader's one interaction with the page, so the support-ticket-backed comment thread is not just reordered below it, it is absent; enforced inside `plus/js/article-threads.js`'s `mountArticleThreads()` itself (a `data-dc-challenge-question` scope check that returns `false`), never by an `if` at any of the four `plus.js` call sites — the same "data decides, call site never branches" shape RULE 9 already uses for mounting `mountChallenge` itself. **insight-68 is the reference implementation for the page markup** (RULE 18): the question and the image are `data-dc-challenge-question` / `data-dc-challenge-image` on the *same* `<p>`, never a separate visible `<img>` (a real `<img>` plus the JS-drawn copy is what rendered the photo twice on the first draft), and the image path is always site-absolute (`/insight/insight68.webp`, never a bare filename — a bare filename works by accident on the standalone page but 404s on the desktop 3-column shell, which injects the article's markup in place inside `index.html` rather than in an iframe). Both are enforced by `tools/build_challenge_index.mjs` (throws on a non-absolute path) and re-checked by `tools/verify_publish.py`'s چالش row (also confirms the `article-threads.js` guard above is still present).
