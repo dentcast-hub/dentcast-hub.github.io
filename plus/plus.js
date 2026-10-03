@@ -2,31 +2,31 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE, pageSearch } from './js/config.js?v=164';
-import { currentUser, api } from './js/api.js?v=164';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=164';
-import { openCollectionPicker } from './js/collections.js?v=164';
-import { el, faNum } from './js/util.js?v=164';
-import { initHomeCard } from './js/home-card.js?v=164';
-import { initHomeFeatures } from './js/home-features.js?v=164';
-import { initPremiumPanel } from './js/premium-panel.js?v=164';
-import { initHomeBundles } from './js/home-bundles.js?v=164';
-import { initHomeUpboard } from './js/home-upboard.js?v=164';
-import { initDesTool } from './js/des-scorer.js?v=164';
-import { initHeader } from './js/header.js?v=164';
-import { initTourAutostart } from './js/tour.js?v=164';
-import { initReadingTracker, flushPendingReads } from './js/reading.js?v=164';
-import { initListeningTracker } from './js/listening.js?v=164';
-import { initShareScoring, buildShareButton } from './js/share.js?v=164';
-import { initHeart, buildHeartChip } from './js/votes.js?v=164';
-import { mountClipControl, landOnClip } from './js/clips.js?v=164';
-import { mountArticleThreads } from './js/article-threads.js?v=164';
-import { mountChallenge } from './js/challenge.js?v=164';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=164';
-import { mountDes } from './js/des.js?v=164';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=164';
-import { initAudioHub } from './js/audio-hub.js?v=164';
-import { getModel, freshFolders } from './js/content-index.js?v=164';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, rowText, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE, pageSearch } from './js/config.js?v=165';
+import { currentUser, api } from './js/api.js?v=165';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=165';
+import { openCollectionPicker } from './js/collections.js?v=165';
+import { el, faNum } from './js/util.js?v=165';
+import { initHomeCard } from './js/home-card.js?v=165';
+import { initHomeFeatures } from './js/home-features.js?v=165';
+import { initPremiumPanel } from './js/premium-panel.js?v=165';
+import { initHomeBundles } from './js/home-bundles.js?v=165';
+import { initHomeUpboard } from './js/home-upboard.js?v=165';
+import { initDesTool } from './js/des-scorer.js?v=165';
+import { initHeader } from './js/header.js?v=165';
+import { initTourAutostart } from './js/tour.js?v=165';
+import { initReadingTracker, flushPendingReads } from './js/reading.js?v=165';
+import { initListeningTracker } from './js/listening.js?v=165';
+import { initShareScoring, buildShareButton } from './js/share.js?v=165';
+import { initHeart, buildHeartChip } from './js/votes.js?v=165';
+import { mountClipControl, landOnClip } from './js/clips.js?v=165';
+import { mountArticleThreads } from './js/article-threads.js?v=165';
+import { mountChallenge } from './js/challenge.js?v=165';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=165';
+import { mountDes } from './js/des.js?v=165';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=165';
+import { initAudioHub } from './js/audio-hub.js?v=165';
+import { getModel, freshFolders } from './js/content-index.js?v=165';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -36,7 +36,7 @@ import { getModel, freshFolders } from './js/content-index.js?v=164';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=164').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=165').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -46,16 +46,17 @@ const loadWorkbench = () => import('./js/workbench.js?v=164').then((m) => m.Work
 // openCollectionPicker already handles anon (-> login) and free (-> premium
 // upsell) on its own, so no gating logic is needed here.
 function injectCollectionButton(contentId) {
-  const cap = el('p', { class: 'dcp-wb-cap' }, 'با این دکمه، کلِ همین صفحه (نه یک هایلایتِ خاص) به یکی از کالکشن‌های خودت اضافه می‌شود.');
+  const T = rowText(contentId); // the page's language (config.js ROW_TEXT)
+  const cap = el('p', { class: 'dcp-wb-cap' }, T.collectCap);
   cap.hidden = true;
   const info = el('button', {
-    class: 'dcp-wb-info', type: 'button', 'aria-label': 'کالکشن یعنی چی؟', title: 'کالکشن یعنی چی؟',
+    class: 'dcp-wb-info', type: 'button', 'aria-label': T.collectWhat, title: T.collectWhat,
     onclick: () => { cap.hidden = !cap.hidden; },
-  }, '؟');
+  }, T.collectMark);
   const btn = el('button', {
     class: 'dc-act dc-act-outline', type: 'button',
     onclick: () => openCollectionPicker({ contentId }),
-  }, 'افزودن به کالکشن');
+  }, T.collect);
   return { btn, info, cap };
 }
 
@@ -75,7 +76,27 @@ function injectCollectionButton(contentId) {
 // the same three selectors instead of through a URL prefix: no dc-article box,
 // no chip and no ToC.
 const ARTICLE_BOX_SEL = '.text-box, .glass-box, .content-box';
-const articleBoxes = (scope) => Array.from((scope || document).querySelectorAll(ARTICLE_BOX_SEL));
+//
+// The ep-page layout (پرامپتولوژیست, پلاک صفر, تراز شواهد — one `.ep-box`
+// whose prose is its `.ep-caption`) is the one TEXT layout with none of those
+// three boxes, which is why its 37 part pages had an action row but neither a
+// reading-time chip nor a ToC (QA, 2026-10-03). The caption is what is measured
+// and scanned — the card's own section labels («کلیدواژه‌ها», «برچسب‌ها») are
+// chrome, not sections — and an audio episode, which shares the shell, is told
+// apart by its player, the same tell initArticle() uses. Mirrors dc-nav.js
+// phase 7, which draws the same line for the standalone page.
+const articleBoxes = (scope) => {
+  const host = scope || document;
+  const boxes = Array.from(host.querySelectorAll(ARTICLE_BOX_SEL));
+  if (boxes.length || host.querySelector('#ep-audio')) return boxes;
+  const ep = host.querySelector('.ep-box');
+  if (!ep) return boxes;
+  const caps = Array.from(ep.querySelectorAll('.ep-caption'));
+  return caps.length ? caps : [ep];
+};
+// A ToC needs 4+ headings on an article; a part of a series is short and its
+// sub-headings are the whole map of it, so 3 is enough there (the ep layout).
+const tocMinFor = (boxes) => (boxes.length && !boxes[0].matches(ARTICLE_BOX_SEL) ? 3 : 4);
 
 /**
  * «حدود N دقیقه» over the article's own boxes, at dc-nav.js's 180 wpm, with
@@ -83,10 +104,10 @@ const articleBoxes = (scope) => Array.from((scope || document).querySelectorAll(
  * standalone pages it mirrors: insight-72 «حدود ۳ دقیقه»,
  * notecast/episode-30 «حدود ۳ دقیقه», sharehub/share-14 «حدود ۱۱ دقیقه».
  */
-function buildReadingTime(boxes) {
+function buildReadingTime(boxes, T) {
   if (!boxes.length) return null;
   const words = boxes.reduce((n, b) => n + (b.textContent || '').trim().split(/\s+/).length, 0);
-  return el('span', { class: 'dc-act-time' }, 'حدود ' + faNum(Math.max(1, Math.round(words / 180))) + ' دقیقه');
+  return el('span', { class: 'dc-act-time' }, T.readTime(Math.max(1, Math.round(words / 180))));
 }
 
 /**
@@ -102,19 +123,19 @@ function buildReadingTime(boxes) {
  * the ToC between the two: [action row] › [فهرست مطالب] › [prose], exactly
  * what dc-nav.js produces.
  */
-function buildToc(boxes, anchorEl, scope) {
+function buildToc(boxes, anchorEl, scope, T) {
   const host = scope || document;
   if (!anchorEl || !anchorEl.parentNode || host.querySelector('#dcToc')) return;
   const heads = [];
   boxes.forEach((b) => b.querySelectorAll('h2:not(.dc-related-label), h3, h4')
     .forEach((h) => heads.push(h)));
-  if (heads.length < 4) return;
+  if (heads.length < tocMinFor(boxes)) return;
   const items = heads.map((h, i) => {
     if (!h.id) h.id = 'dc-sec-' + (i + 1);
     return el('li', {}, [el('a', { href: '#' + h.id }, (h.textContent || '').trim())]);
   });
   const toc = el('details', { class: 'dc-toc', id: 'dcToc' },
-    [el('summary', {}, 'فهرست مطالب'), el('ol', {}, items)]);
+    [el('summary', {}, T.toc), el('ol', {}, items)]);
   anchorEl.parentNode.insertBefore(toc, anchorEl);
 }
 
@@ -165,7 +186,8 @@ function mountDesHere(anchor, contentId, scope = document) {
 // the main group, in that order — the thing this page is FOR, the thing you do
 // with it, the thing you say about it.
 function injectActionRow(anchorEl, contentId, shareTarget, scope) {
-  const btn = el('button', { class: 'dc-act dc-act-primary', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
+  const T = rowText(contentId);
+  const btn = el('button', { class: 'dc-act dc-act-primary', type: 'button', 'aria-pressed': 'false' }, T.workbench);
   const { btn: collectBtn, info: collectInfo, cap: collectCap } = injectCollectionButton(contentId);
   const { row, main, aux, built } = ensureActionRow(anchorEl);
 
@@ -178,12 +200,12 @@ function injectActionRow(anchorEl, contentId, shareTarget, scope) {
   // chip (mounted later, by mountDesHere) lands after both.
   if (built) {
     const boxes = articleBoxes(scope);
-    const timeChip = buildReadingTime(boxes);
+    const timeChip = buildReadingTime(boxes, T);
     if (timeChip) aux.appendChild(timeChip);
-    buildToc(boxes, anchorEl, scope);
+    buildToc(boxes, anchorEl, scope, T);
   }
   if (built && shareTarget && !document.getElementById('dcShareBtn')) {
-    aux.appendChild(buildShareButton(shareTarget));
+    aux.appendChild(buildShareButton(shareTarget, T));
   }
   // The heart is mounted at boot by initHeart() wherever a row already exists,
   // which on a standalone page is before this async path gets here. So build one
@@ -241,10 +263,11 @@ function mountBottomActions(anchor, contentId, workbenchCtx) {
   }
   const { btn: collectBtn, info: collectInfo, cap: collectCap } = injectCollectionButton(contentId);
   const heart = buildHeartChip(contentId, 'dc-act dc-act-heart');
-  const lead = el('p', { class: 'dc-actions-end-lead' }, 'این مطلب به کارتان آمد؟');
+  const T = rowText(contentId);
+  const lead = el('p', { class: 'dc-actions-end-lead' }, T.endLead);
   const mainChildren = [collectBtn, collectInfo, heart];
   if (workbenchCtx) {
-    const wbBtn = el('button', { class: 'dc-act dc-act-primary', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
+    const wbBtn = el('button', { class: 'dc-act dc-act-primary', type: 'button', 'aria-pressed': 'false' }, T.workbench);
     workbenchCtx.bindButton(wbBtn);
     mainChildren.unshift(wbBtn); // میز کار › کالکشن › پسندیدم, same order as the top row
   }
@@ -254,13 +277,13 @@ function mountBottomActions(anchor, contentId, workbenchCtx) {
   return true;
 }
 
-function showInvitation(anchorBtn, onProceed) {
+function showInvitation(anchorBtn, onProceed, T = rowText()) {
   const existing = document.querySelector('.dcp-invite');
   if (existing) existing.remove();
-  const proceed = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
-  const dismiss = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'بعدا');
-  const box = el('div', { class: 'dcp-invite', role: 'dialog', 'aria-label': 'دعوت به میز کار' }, [
-    el('p', { class: 'dcp-invite-line' }, INVITE_LINE),
+  const proceed = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, T.signIn);
+  const dismiss = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, T.later);
+  const box = el('div', { class: 'dcp-invite', role: 'dialog', 'aria-label': T.inviteAria }, [
+    el('p', { class: 'dcp-invite-line' }, T.invite),
     el('div', { class: 'dcp-invite-actions' }, [proceed, dismiss]),
   ]);
   anchorBtn.parentNode.insertBefore(box, anchorBtn.nextSibling);
@@ -284,6 +307,7 @@ async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget, 
   // میز کار» after the workbench had closed some other way.
   const wb = new Workbench({ contentId, proseRoot, onChange: () => updateBtn() });
   const btn = injectActionRow(proseAnchor || proseRoot, contentId, shareTarget, scope);
+  const T = rowText(contentId); // the row's words, in the page's language
 
   // Reading-completion signal: started only for a signed-in reader (the /activity
   // endpoint requires auth) and only once. Guarded so a mid-page login does not
@@ -314,7 +338,7 @@ async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget, 
   const updateBtn = () => {
     const on = wb.isActive();
     for (const b of buttons) {
-      b.textContent = on ? 'خروج از میز کار' : 'میز کار';
+      b.textContent = on ? T.workbenchExit : T.workbench;
       b.setAttribute('aria-pressed', String(on));
       b.classList.toggle('is-active', on);
     }
@@ -339,7 +363,7 @@ async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget, 
             await wb.enter();
             updateBtn();
           }
-        });
+        }, T);
         return;
       }
       if (wb.isActive()) wb.exit(); else await wb.enter();
@@ -758,7 +782,7 @@ function folderForPath(folders) {
 }
 
 function openSeenGate() {
-  Promise.all([import('./js/sheet.js?v=164'), import('./js/premium-cta.js?v=164')])
+  Promise.all([import('./js/sheet.js?v=165'), import('./js/premium-cta.js?v=165')])
     .then(([sheet, cta]) => sheet.openSheet(sheet.gateCard({
       title: 'کدام‌ها را خوانده‌ای',
       sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '

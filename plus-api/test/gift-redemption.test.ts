@@ -89,7 +89,7 @@ describe('opening a claim', () => {
     const res = await claim(cookie);
 
     expect(res.statusCode).toBe(200);
-    expect(res.json().reference).toMatch(/^DC-[A-Z0-9]{3}-[A-Z0-9]{3}$/);
+    expect(res.json().reference).toMatch(/^DP-[A-Z0-9]{3}-[A-Z0-9]{3}$/);
     expect(res.json().months).toBe(10);
     // Nothing until a human has actually redeemed a card.
     expect(await getSubscription(uid)).toBeNull();

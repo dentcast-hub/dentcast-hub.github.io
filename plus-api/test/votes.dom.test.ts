@@ -36,7 +36,7 @@ vi.mock('/plus/js/login-modal.js', () => ({
   openOrgNotice: () => Promise.resolve(null),
 }));
 
-vi.mock('/plus/js/config.js', () => ({ isOrgHost: () => orgHost }));
+vi.mock('/plus/js/config.js', async (importOriginal) => ({ ...(await importOriginal<object>()), isOrgHost: () => orgHost }));
 
 const ART = 'chairside/chairside-30';
 

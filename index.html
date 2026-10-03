@@ -3627,7 +3627,7 @@ a.dc-list-card--pillar {
       },
       "primaryImageOfPage": {
         "@type": "ImageObject",
-        "url": "https://dentcast.org/header.webp"
+        "url": "https://dentcast.org/dentcast-cover.webp"
       }
     },
     {
@@ -7180,7 +7180,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=256" defer></script>
+<script src="/dc-nav.js?v=257" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -8716,14 +8716,41 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   }
   measure();
 
-  /* preload all frames */
+  /* frames — the film is 277 webp files (~3.9 MB) and the panel is hidden
+     on every homepage load (and never shown at all on the desktop shell,
+     which plays /patients/cinematic.html in its own column), so only the
+     poster (frame 1) is fetched eagerly; the rest start the first time
+     #panel-patient turns .active (tab, swipe, ?patient/#patient, the
+     remembered tab) — see loadFrame/startPreload and the observer below. */
   const frames=[];
-  for(let i=1;i<=FRAME_COUNT;i++){
+  let preloadStarted=false;
+  function loadFrame(i){
+    if(frames[i-1]) return frames[i-1];
     const img=new Image();
     img.src='/patients/frames/f'+String(i).padStart(3,'0')+'.webp';
-    img.onload=function(){ if(i===1) drawFrame(img); };
-    frames.push(img);
+    img.onload=function(){
+      /* poster before any scroll, or the frame the reader is parked on
+         that arrived after update() had to draw a neighbour instead */
+      if(lastIdx===-1 ? i===1 : lastIdx===i-1){ ctx.clearRect(0,0,canvas.width,canvas.height); drawFrame(img); }
+    };
+    frames[i-1]=img;
+    return img;
   }
+  function startPreload(){
+    if(preloadStarted) return;
+    preloadStarted=true;
+    for(let i=1;i<=FRAME_COUNT;i++) loadFrame(i);
+  }
+  /* nearest frame already decoded, for a scroll that outruns the download */
+  function nearestReady(idx){
+    for(let d=0;d<FRAME_COUNT;d++){
+      const a=frames[idx-d], b=frames[idx+d];
+      if(a&&a.complete&&a.naturalWidth) return a;
+      if(b&&b.complete&&b.naturalWidth) return b;
+    }
+    return null;
+  }
+  loadFrame(1); /* poster */
 
   /* helpers */
   function rng(p,a,b){ return Math.max(0,Math.min(1,(p-a)/(b-a))); }
@@ -8751,10 +8778,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     const idx=Math.round(p*(FRAME_COUNT-1));
     if(idx!==lastIdx){
       lastIdx=idx;
-      const f=frames[idx];
-      if(f&&f.complete&&f.naturalWidth){
+      startPreload(); /* a scroll on the panel means it is being seen */
+      const f=frames[idx], ready=(f&&f.complete&&f.naturalWidth)?f:nearestReady(idx);
+      if(ready){
         ctx.clearRect(0,0,canvas.width,canvas.height);
-        drawFrame(f);
+        drawFrame(ready);
       }
     }
 
@@ -8847,6 +8875,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     new MutationObserver(function(muts){
       if(muts.some(function(m){ return m.attributeName==='class'; })){
         if(panelEl.classList.contains('active')){
+          startPreload();
           requestAnimationFrame(function(){
             requestAnimationFrame(function(){
               measure();
@@ -8868,6 +8897,9 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         }
       }
     }).observe(panelEl,{attributes:true});
+    /* the remembered tab (dc:panel) is restored by an earlier script, so the
+       panel can already be active before this observer exists */
+    if(panelEl.classList.contains('active')) startPreload();
   }
 
 })();
