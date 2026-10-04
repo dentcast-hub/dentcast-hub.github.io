@@ -271,15 +271,15 @@ function render(t){
   // confusion layer: ghost cards and question marks
   const cz=seg(t,11.4,11.9)*(1-seg(t,14.3,14.7));
   if(cz>0){GH.forEach(c=>{const a=c.a0+c.w*(t-11)*(1+(t-11)*.25);ctx.save();ctx.translate(Math.sin(t*37)*3*cz,0);
-      tile(540+c.rx*Math.cos(a),860+c.ry*Math.sin(a),.9,.55*cz,0,true,c.seed);ctx.restore()});
+      const gx=540+c.rx*Math.cos(a),gy=860+c.ry*Math.sin(a);ctx.globalAlpha=.6*cz;ctx.translate(gx,gy);ctx.rotate(Math.sin(t*2+c.r0)*.3);rr(-62,-62,124,124,22);ctx.fillStyle='#0f2552';ctx.fill();ctx.strokeStyle='rgba(120,150,220,.4)';ctx.lineWidth=3;ctx.stroke();ctx.translate(0,-8);glyph(c.seed%7,1.2);text('؟',34,36,34,900,K.blueL,1);ctx.restore()});
     [[11.8,-80],[12.4,70],[13.0,-20],[13.5,95]].forEach(([s0,dx],i)=>{const u=seg(t,s0,s0+1.6);if(u<=0||u>=1)return;const k=back(seg(t,s0,s0+.35));
       ctx.save();ctx.translate(540+dx,1640-330-u*160);ctx.scale(k,k);text('؟',0,0,96+i*6,900,i%2?K.blueL:K.ink,1-seg(u,.6,1));ctx.restore()});}
 
   // the rail: «از کجا شروع کنم؟»
   const rail=seg(t,14.5,14.9)*(1-seg(t,18.0,18.4));
   if(rail>0){
-    text('از کجا شروع کنم؟',540,420,74,900,K.ink,rail*seg(t,14.6,15.0));
-    pill('باندل‌های شروع',540,520,34,'#cfe0ff','rgba(79,127,255,.18)','rgba(157,188,255,.5)',rail*seg(t,14.8,15.2));
+    text('باندل‌های شروع',540,420,84,900,K.ink,rail*seg(t,14.6,15.0));
+    pill('پروتز را از پایه، کوتاه و مرتب',540,525,32,'#cfe0ff','rgba(79,127,255,.18)','rgba(157,188,255,.5)',rail*seg(t,14.8,15.2));
     const s=660*eio(seg(t,15.3,16.1)),sel=eo(seg(t,16.8,17.25)),toRoad=eio(seg(t,18.0,18.5));
     BUNDLES.forEach((_,i)=>{let x=870-i*330+s;if(x<-220||x>1300)return;
       const rise=eo(seg(t,14.6+i*.06,15.1+i*.06));let y=900+(1-rise)*160,sc=1,al=rise*rail,sl=0;
@@ -327,7 +327,7 @@ function render(t){
 
   // party captions
   const CAPS=[[.35,2.9,'وقت زیاده…',72],[3.2,5.9,'حالا کو تا امتحان؟',72],[6.3,9.2,'بعداً می‌خونم.',72],
-    [9.6,10.9,'فارغ‌التحصیل شدی!',80],[11.6,14.3,'حالا… از کجا شروع کنم؟',72],
+    [9.6,10.9,'فارغ‌التحصیل شدی!',80],[11.6,14.3,'پروتز زیاد نگرفتم… حالا چیکار کنم؟',64],
     [18.3,19.95,'یک شروع کوتاه.',72],[20.1,22.5,'و بعد، ادامهٔ مسیر.',72]];
   CAPS.forEach(([a,b,s,size])=>{const al=win(t,a,b);if(al<=0)return;ctx.save();
     if(t<11){ctx.shadowColor='rgba(0,0,0,.5)';ctx.shadowBlur=20}
@@ -348,7 +348,7 @@ function render(t){
       ctx.translate(0,-40);ctx.beginPath();ctx.arc(0,0,32,0,6.283);ctx.fillStyle='rgba(79,127,255,.25)';ctx.fill();glyph(k?k+5:3,.8);
       ctx.translate(0,80);for(let i=0;i<5;i++){ctx.beginPath();ctx.arc((i-2)*20,0,5,0,6.283);ctx.fillStyle=k?'rgba(157,188,255,.35)':K.blueL;ctx.fill()}ctx.restore()});
     const u=eo(seg(t,23.2,23.9));
-    text('از کجا شروع کنم؟',540,860+20*(1-u),56,600,'#c7d7ff',u);
+    text('پروتز زیاد نگرفتی؟',540,860+20*(1-u),56,600,'#c7d7ff',u);
     ctx.save();ctx.shadowColor='rgba(79,127,255,.8)';ctx.shadowBlur=60;text('باندل‌های شروع',540,1010+30*(1-u),128,900,'#fff',u);ctx.restore();
     const u2=eo(seg(t,23.8,24.4));
     text('چند قدمِ کوتاه؛ بعد، ادامهٔ مسیر',540,1160,44,600,'#a9bbe6',u2);
