@@ -1,9 +1,10 @@
 import numpy as np, wave
-SR=44100; DUR=26.0; N=int(SR*DUR); B=60/124
+SR=44100; DUR=24.2; N=int(SR*DUR); B=60/124
 L=np.zeros(N); Rr=np.zeros(N); rng=np.random.default_rng(3)
 def hz(n): return 440*2**((n-69)/12)
+SHIFT=0.0
 def add(sig,t0,pan=0.0,g=1.0):
-    i=int(t0*SR); j=min(N,i+len(sig))
+    i=int((t0+SHIFT)*SR); j=min(N,i+len(sig))
     if j<=i or i<0: return
     s=sig[:j-i]*g; L[i:j]+=s*np.sqrt((1-pan)/2); Rr[i:j]+=s*np.sqrt((1+pan)/2)
 def tone(f,dur,harm=(1,),amps=(1,),det=0.0):
@@ -38,13 +39,22 @@ def groove(t0,t1,chords,bassline,light=False,gain=1.0):
         if k%2==1: add(sum(pluck(hz(n+12),.3,.9) for n in ch)/3,t+B/2,.2,.09*gain)
         t+=B; k+=1
 
-# ---- party: A minor four-on-the-floor (0 → 9.4) ----
-groove(0.0,3.05,[[57,60,64],[53,57,60],[60,64,67],[55,59,62]],[45,41,48,43])
-groove(3.05,6.2,[[57,60,64],[53,57,60],[60,64,67],[55,59,62]],[45,41,48,43],light=True,gain=.8)   # the walk: half-time, headphones
-groove(6.2,9.4,[[57,60,64],[53,57,60],[60,64,67],[55,59,62]],[45,41,48,43],gain=1.1)
-# page tears
+# ---- hook (0 → 2.4): a hit, then the confusion we will come back to ----
+add(kick(1.0,90,30),0.0,0,.7); c0=noise(1.6); add(hp(c0)*np.exp(-np.arange(len(c0))/SR*2.5),0.0,0,.14)
+add(pad([40,46,52,58],2.4,.02),0.0,0,.22)
+tt=0.25;i=0
+while tt<2.35:
+    s_=tone(2400 if i%2 else 1800,.03)*dec(int(.03*SR),.001,.008); add(s_,tt,.3 if i%2 else -.3,.25); tt+=.5; i+=1
+add(bell(hz(76),1.2),0.95,0,.12)
+# ---- rewind (2.4 → 2.9): tape spun backwards ----
+t_=np.arange(int(.5*SR))/SR; f_=900+700*np.sin(2*np.pi*23*t_)*np.linspace(1,.3,len(t_))+np.linspace(1200,300,len(t_))
+add(np.sin(2*np.pi*np.cumsum(f_)/SR)*np.linspace(.4,1,len(t_))*.5+hp(noise(.5))*.25,2.4,0,.28)
+# ---- party: A minor four-on-the-floor, the six years at double speed (2.9 → 7.6) ----
+CH=[[57,60,64],[53,57,60],[60,64,67],[55,59,62]];BL=[45,41,48,43]
+groove(2.9,4.43,CH,BL); groove(4.43,6.0,CH,BL,light=True,gain=.8); groove(6.0,7.6,CH,BL,gain=1.1)
 for f in [1.3,2.6,3.9,5.2,6.5,7.9]:
-    n=noise(.35); add(hp(n)*np.exp(-np.arange(len(n))/SR*12)*np.linspace(1,.3,len(n)),f,.4,.07)
+    n=noise(.3); add(hp(n)*np.exp(-np.arange(len(n))/SR*14)*np.linspace(1,.3,len(n)),2.9+f/2,.4,.08)
+SHIFT=-1.8   # everything from graduation on keeps its original timing, 1.8 s earlier
 # graduation: riser, crash, cheer bells
 r=noise(.6)*np.linspace(0,1,int(.6*SR))**2; add(hp(r),9.2,0,.08)
 c=noise(1.8); add(hp(c)*np.exp(-np.arange(len(c))/SR*2.2),9.8,0,.16)
