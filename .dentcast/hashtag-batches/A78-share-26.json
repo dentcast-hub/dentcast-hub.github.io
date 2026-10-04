@@ -1,0 +1,31 @@
+{
+  "type": "sharehub",
+  "enforce": true,
+  "note": "sharehub/share-26 — راهنمای انتخاب رنگ دندان و رساندن آن به لابراتوار. #Share_Hub, #Curated_Content, #انتخاب_shade (whose aliases already carry «انتخاب رنگ»), #زیبایی and #ترانسلوسنسی are REUSED. Three concepts the page resolves are newly minted, each after --simulate returned no real match: «عکاسی دندانپزشکی» only overlapped #تجهیزات_دندانپزشکی on the generic word; «وایت بالانس» and «white balance» cleared nothing; «ارتباط با لابراتوار» only overlapped #ارتباط_و_علیت (a statistics concept) on the word «ارتباط». Founder confirmed the set on 1405/07/12.",
+  "concepts": [
+    {
+      "tag": "#عکاسی_دندانپزشکی",
+      "domain": "clinical",
+      "definition": "عکاسی بالینی از دندان و دهان برای ثبت وضعیت، انتقال اطلاعات به لابراتوار یا مستندسازی درمان؛ شامل انتخاب نور، دوربین و تنظیمات آن.",
+      "use_when": "مقاله روش یا تجهیزات عکس گرفتن از دندان و دهان را برای کار بالینی یا لابراتواری توضیح دهد.",
+      "aliases": ["dental photography", "clinical dental photography", "عکس داخل دهانی", "عکاسی دندان", "عکاسی داخل دهانی"]
+    },
+    {
+      "tag": "#وایت_بالانس",
+      "domain": "clinical",
+      "definition": "تنظیمی در دوربین یا نرم‌افزار که ته‌رنگ کلی نور (زردی یا آبی بودن) را از عکس حذف می‌کند تا رنگ‌ها نزدیک به رنگ واقعی دیده شوند؛ دقیق‌ترین حالتش با یک مرجع خنثی مثل گری کارت تنظیم می‌شود.",
+      "use_when": "مقاله اصلاح رنگ عکس دندان با وایت بالانس یا گری کارت را توضیح دهد.",
+      "aliases": ["white balance", "گری کارت", "gray card", "grey card", "تراز سفیدی"]
+    },
+    {
+      "tag": "#ارتباط_با_لابراتوار",
+      "domain": "clinical",
+      "definition": "انتقال اطلاعاتی که تکنسین برای ساخت کار لازم دارد و خودش نمی‌تواند در بیمار ببیند، مثل رنگ، شفافیت، لکه‌ها و ویژگی‌های سطح دندان، از طریق عکس، نوشته یا مرجع مشترک.",
+      "use_when": "مقاله توضیح دهد چه اطلاعاتی و چطور باید از مطب به لابراتوار برسد.",
+      "aliases": ["lab communication", "laboratory communication", "shade communication", "ارتباط با تکنسین", "ارسال رنگ به لابراتوار"]
+    }
+  ],
+  "articles": {
+    "sharehub/share-26": ["#Share_Hub", "#Curated_Content", "#انتخاب_shade", "#زیبایی", "#ترانسلوسنسی", "#عکاسی_دندانپزشکی", "#ارتباط_با_لابراتوار", "#وایت_بالانس"]
+  }
+}

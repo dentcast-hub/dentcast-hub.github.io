@@ -22,9 +22,9 @@
 // reader's own attempt row). Answering is premium and gated ON the challenge
 // page itself (challenge.js) — this page only lists, and says once, at the
 // end, who may answer.
-import { el } from './util.js?v=171';
-import { api, currentUser, meStatus } from './api.js?v=171';
-import { pricingHref } from './premium-cta.js?v=171';
+import { el } from './util.js?v=172';
+import { api, currentUser, meStatus } from './api.js?v=172';
+import { pricingHref } from './premium-cta.js?v=172';
 
 /** Which gate sent a buyer, for the pricing page's ?from= report. */
 const FROM = 'gate-challenges';

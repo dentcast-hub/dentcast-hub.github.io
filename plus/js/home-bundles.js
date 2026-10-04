@@ -12,13 +12,13 @@
 // PREMIUM_FEATURES. `glyph` is a symbol id from the shared icon sprite
 // (assets/icons/icons.svg — the single source of truth for every icon on the
 // site; see assets/icons/README.md), never a raw emoji.
-import { el, faNum, icon } from './util.js?v=171';
-import { currentUser, api } from './api.js?v=171';
-import { pricingHref, premiumCta } from './premium-cta.js?v=171';
-import { openSheet, gateCard } from './sheet.js?v=171';
+import { el, faNum, icon } from './util.js?v=172';
+import { currentUser, api } from './api.js?v=172';
+import { pricingHref, premiumCta } from './premium-cta.js?v=172';
+import { openSheet, gateCard } from './sheet.js?v=172';
 
 const BUNDLES = [
-  { id: 'bundle-laminate', glyph: 'icon-tooth', title: 'لمینیت: شروع کن', steps: 6 },
+  { id: 'bundle-laminate', glyph: 'icon-tooth', title: 'لمینیت: شروع کن', steps: 7 },
   { id: 'bundle-bonding', glyph: 'icon-droplet', title: 'باندینگ و ادهزیو: شروع کن', steps: 5 },
   { id: 'bundle-ceramic-select', glyph: 'icon-ceramic', title: 'انتخاب سرامیک: شروع کن', steps: 6 },
   { id: 'bundle-ceramic-cement', glyph: 'icon-flask', title: 'آماده‌سازی سطح و سمان سرامیک: شروع کن', steps: 7 },
