@@ -1,0 +1,24 @@
+{
+  "type": "taraz",
+  "enforce": true,
+  "note": "taraz/taraz1-9 — تراز شواهد قسمت ۹ «نردبان شواهد». #تراز_شواهد (series), #طراحی_مطالعه and #بایاس are REUSED. Two concepts the part resolves are newly minted: --simulate for «نردبان شواهد», «سلسله مراتب شواهد» and «هرم شواهد» surfaced only the series tag on the shared word «شواهد», and «معنی داری آماری» cleared nothing. Canonical spelling of the ladder follows the part's own words; the hierarchy/pyramid spellings are its aliases.",
+  "concepts": [
+    {
+      "tag": "#نردبان_شواهد",
+      "domain": "clinical",
+      "definition": "چیدن انواع مطالعه به ترتیب قدرت شواهدی که می‌دهند (ladder / hierarchy of evidence)، از مرور سیستماتیک و RCT در بالا تا case series و نظر متخصصان در پایین؛ نوع مطالعه را رتبه‌بندی می‌کند، نه کیفیت اجرای یک مطالعه‌ی خاص را.",
+      "use_when": "مقاله توضیح دهد انواع مطالعه نسبت به هم چه جایگاهی در قدرت شواهد دارند، یا جایگاه یک مطالعه را در سلسله‌مراتب شواهد بسنجد.",
+      "aliases": ["ladder of evidence", "hierarchy of evidence", "evidence hierarchy", "levels of evidence", "evidence pyramid", "سلسله مراتب شواهد", "سلسله‌مراتب شواهد", "هرم شواهد", "سطح شواهد"]
+    },
+    {
+      "tag": "#معنی‌داری_آماری",
+      "domain": "clinical",
+      "definition": "این‌که تفاوتی که یک مطالعه بین گروه‌ها دیده، با اطمینان آماری به خاطر درمان باشد و نه شانس (statistical significance)؛ معنی‌دار نبودن یعنی نمی‌شود شانس را کنار گذاشت، نه این‌که اثری وجود ندارد.",
+      "use_when": "مقاله معنی‌دار بودن یا نبودن آماری یک نتیجه را توضیح یا تفسیر کند.",
+      "aliases": ["statistical significance", "statistically significant", "معنی داری آماری", "معناداری آماری", "معنادار آماری"]
+    }
+  ],
+  "articles": {
+    "taraz/taraz1-9": ["#تراز_شواهد", "#نردبان_شواهد", "#طراحی_مطالعه", "#بایاس", "#معنی‌داری_آماری"]
+  }
+}
