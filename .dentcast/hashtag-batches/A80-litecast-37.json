@@ -1,0 +1,28 @@
+{
+  "type": "litecast",
+  "note": "Publish of litecast/lite-CAST37 (دندان مصنوعی ژله‌ای خوب است یا بد؟). Mints #دندان_مصنوعی_ژله‌ای: --simulate for «دندان مصنوعی ژله ای» and «پارسیل ژله ای» surfaced only unrelated tags on the shared word «دندان» and the partial-denture tags, with no concept for the nylon/flexible base itself. Reuses #دندان_مصنوعی #پروتز_پارسیل #پروتز_متحرک #آگاهی_درمانی. LiteCast is not in dentcast-brain.json, so articles is empty; tags are written to litecast/lite-glossary.json by hand.",
+  "concepts": [
+    {
+      "tag": "#دندان_مصنوعی_ژله‌ای",
+      "domain": "clinical",
+      "definition": "دندان مصنوعی متحرک (پارسیل یا کامل) با پایه‌ی نرم و خم‌شونده‌ی نایلونی/پلی‌آمیدی و قلاب هم‌رنگ لثه؛ همان نرمی که مزیت ظاهری‌اش است، سفتی لازم برای ثبات و پخش نیرو را از آن می‌گیرد و ریلاین و تعمیرش دشوار است.",
+      "use_when": "مقاله پروتز انعطاف‌پذیر نایلونی (flexible / non-metal clasp denture) را — مزایا، محدودیت‌ها یا موارد مصرفش را — موضوع داشته باشد.",
+      "aliases": [
+        "دندان مصنوعی ژله ای",
+        "پارسیل ژله‌ای",
+        "پارسیل ژله ای",
+        "دست دندان ژله‌ای",
+        "پروتز ژله‌ای",
+        "پروتز انعطاف‌پذیر",
+        "پروتز نایلونی",
+        "flexible denture",
+        "flexible partial denture",
+        "non-metal clasp denture",
+        "nylon denture",
+        "polyamide denture",
+        "Valplast"
+      ]
+    }
+  ],
+  "articles": {}
+}
