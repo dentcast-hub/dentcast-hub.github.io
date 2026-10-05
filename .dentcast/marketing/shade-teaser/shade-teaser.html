@@ -27,12 +27,12 @@ body.render .bar{display:none}
 <div class="bar">
   <button id="play" type="button">توقف</button>
   <button id="again" type="button">از اول</button>
-  <input id="scrub" type="range" min="0" max="26" step="0.01" value="0" aria-label="زمان">
+  <input id="scrub" type="range" min="0" max="24" step="0.01" value="0" aria-label="زمان">
   <output id="clock">0.0s</output>
 </div>
 
 <script>
-const W=1080,H=1920,DUR=26;
+const W=1080,H=1920,DUR=24;
 const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
 const FF='Vazirmatn, VazirLocal, Tahoma, sans-serif';
 const K={ink:'#16223f',inkS:'#5b6a8c',blue:'#2f5bd3',blueL:'#dfe8ff',red:'#e0573f',green:'#22a873',bulb:'#ffc93c',wall:'#f3f6fb',floor:'#e3e9f4'};
@@ -93,7 +93,7 @@ function stick(x,y,s,P,o={}){
   else if(o.face==='o'){ctx.arc(lk*8,12,5,0,6.283)}
   else ctx.arc(lk*8,6,10,.25,Math.PI-.25);
   ctx.stroke();
-  if(o.bulb>0){ctx.save();ctx.globalAlpha*=clamp(o.bulb);const k=back(clamp(o.bulb));ctx.translate(0,-72);ctx.scale(k,k);
+  if(o.bulb>0){ctx.save();ctx.globalAlpha*=clamp(o.bulb);const k=back(clamp(o.bulb))*(o.bs||1);ctx.translate(0,-72);ctx.scale(k,k);
     ctx.shadowColor=K.bulb;ctx.shadowBlur=40;ctx.beginPath();ctx.arc(0,0,22,0,6.283);ctx.fillStyle=K.bulb;ctx.fill();ctx.shadowBlur=0;
     ctx.fillStyle='#8a94ad';rr(-10,18,20,14,4);ctx.fill();
     ctx.strokeStyle=K.bulb;ctx.lineWidth=5;for(let i=0;i<7;i++){const a=-Math.PI/2+(i-3)*.42;ctx.beginPath();ctx.moveTo(Math.cos(a)*32,Math.sin(a)*32);ctx.lineTo(Math.cos(a)*46,Math.sin(a)*46);ctx.stroke()}
@@ -140,19 +140,20 @@ function addLine(x0,y0,x1,y1){const n=Math.ceil(Math.hypot(x1-x0,y1-y0)/4);for(l
 function addArc(cx,cy,r,a0,a1){const n=Math.ceil(Math.abs(a1-a0)*r/4);for(let i=1;i<=n;i++){const a=lerp(a0,a1,i/n);P.push([cx+r*Math.cos(a),cy+r*Math.sin(a)])}}
 const RY=[1700,1290,880];
 P.push([1000,RY[0]]);addLine(1000,RY[0],270,RY[0]);addArc(270,RY[0]-205,205,Math.PI/2,Math.PI*1.5);
-addLine(270,RY[1],810,RY[1]);addArc(810,RY[1]-205,205,Math.PI/2,-Math.PI/2);addLine(810,RY[2],150,RY[2]);
+addLine(270,RY[1],810,RY[1]);addArc(810,RY[1]-205,205,Math.PI/2,-Math.PI/2);addLine(810,RY[2],330,RY[2]);
 const L=[0];for(let i=1;i<P.length;i++)L.push(L[i-1]+Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]));
 const TOTAL=L[L.length-1];
 function at(d){d=clamp(d,0,TOTAL);let lo=0,hi=L.length-1;while(hi-lo>1){const m=(lo+hi)>>1;if(L[m]<d)lo=m;else hi=m}
   const f=(d-L[lo])/((L[hi]-L[lo])||1);return[lerp(P[lo][0],P[hi][0],f),lerp(P[lo][1],P[hi][1],f)]}
 function nearestD(x,y){let b=0,bd=1e9;P.forEach((p,i)=>{const dd=(p[0]-x)**2+(p[1]-y)**2;if(dd<bd){bd=dd;b=i}});return L[b]}
 // stops: image key, x, row, and the one line the article teaches there
-const STOPS=[['0',760,0,'شید رو هم‌سطح و لبه‌به‌لبه کنار دندون'],['1',320,0,'دمای رنگ نور، به کلوین'],
-             ['2',320,1,'CRI: نور چقدر کامله'],['3',760,1,'وایت بالانس'],
-             ['5',760,2,'گری کارت: یک مرجع خنثی'],['4',320,2,'تنظیم وایت بالانس با گری کارت']]
+// each stop is a realisation, not a recipe
+const STOPS=[['0',760,0,'تکنسین بیمار رو نمی‌بینه؛ فقط عکس رو می‌بینه.'],['1',320,0,'نور همیشه سفید نیست.'],
+             ['2',320,1,'بعضی نورها همه‌ی رنگ‌ها رو ندارن.'],['3',760,1,'دوربین هم رنگ رو عوض می‌کنه.'],
+             ['5',540,2,'رنگ واقعی یه مرجع لازم داره.']]
   .map(([k,x,r,s])=>({k,x,y:RY[r],py:RY[r]-215,d:nearestD(x,RY[r]),s}));
 // walking schedule: constant speed, a pause under every image
-const WALK0=9.7,WALK1=19.0,PAUSE=.62;
+const WALK0=9.7,WALK1=15.6,PAUSE=.3;
 const SPEED=TOTAL/((WALK1-WALK0)-PAUSE*STOPS.length);
 STOPS.forEach((s,i)=>{s.arrive=WALK0+s.d/SPEED+i*PAUSE});
 function walkD(t){if(t<WALK0)return 0;let tt=t-WALK0,d=0,prev=0;
@@ -164,8 +165,8 @@ function render(t){
   ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.filter='none';
   ctx.fillStyle=K.wall;ctx.fillRect(0,0,W,H);
 
-  const inClinic=t<9.5||(t>=19.2&&t<22.6);
-  const roadA=seg(t,9.3,9.7)*(1-seg(t,19.0,19.3));
+  const inClinic=t<9.5||(t>=15.75&&t<20.5);
+  const roadA=seg(t,9.3,9.7)*(1-seg(t,15.6,15.9));
   if(inClinic)clinic(1);
   if(roadA>0){ctx.save();ctx.globalAlpha=roadA;ctx.fillStyle='#f4f7fc';ctx.fillRect(0,0,W,H);
     ctx.strokeStyle='rgba(47,91,211,.06)';ctx.lineWidth=1;for(let x=0;x<=W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<=H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore()}
@@ -237,56 +238,59 @@ function render(t){
       photo(s.k,s.x,s.py-(1-app)*40,410*(1+.07*pop),230*(1+.07*pop),lit,app);
       if(t>=s.arrive)current=s});
     const[px,py]=at(d);const moving=d>0&&!STOPS.some(s=>t>=s.arrive&&t<s.arrive+PAUSE)&&t<WALK1;
-    const lastArr=current?current.arrive:-9;
-    stick(px,py-6,.56,moving?walkPose(d/30):BASE,{face:'happy',bulb:(t>=lastArr&&t<lastArr+1.0)?seg(t,lastArr,lastArr+.2)*(1-seg(t,lastArr+.7,lastArr+1.0)):0});
+    const reached=STOPS.filter(s=>t>=s.arrive).length,lastArr=current?current.arrive:-9,pulse=seg(t,lastArr,lastArr+.12)*(1-seg(t,lastArr+.12,lastArr+.5));
+    stick(px,py-6,.56,moving?walkPose(d/30):BASE,{face:reached?'happy':'flat',bulb:reached?1:0,bs:.55+.13*reached+.25*pulse});
     // the line the article teaches at this stop
     if(current){const a=seg(t,current.arrive,current.arrive+.2);pill(current.s,540,300,40,K.ink,'#fff','#cfd8ea',a)}
     else text('می‌خونه…',540,300,56,900,K.ink,seg(t,9.6,9.9));
     ctx.restore()}
 
-  /* --- payoff: a photo with the shade tab and a grey card, and a crown that matches --- */
-  if(t>=19.2&&t<22.6){
-    const ba=seg(t,19.3,19.6);bubble(700,1020,280,ba);
-    ctx.save();ctx.globalAlpha=ba;tooth(600,1020,1.25,'natural');ctx.restore();
-    const tabA=seg(t,19.5,19.8)*(1-seg(t,20.8,21.0));if(tabA>0){ctx.save();ctx.globalAlpha=tabA;shadeTab(790,1050,1.1);
-      ctx.fillStyle='#8f9195';rr(860,1170,110,80,8);ctx.fill();text('گری کارت',915,1290,24,600,K.inkS);ctx.restore()}
-    const fl=seg(t,20.0,20.05)*(1-seg(t,20.05,20.35));
-    const P0=t<20.6?mix(BASE,HOLD,eio(seg(t,19.4,19.7))):t<21.6?BASE:mix(BASE,CHEER,eio(seg(t,21.75,22.0)));
-    stick(330,1650,1.45,P0,{face:t<21.6?'flat':'happy',look:.5});
-    // camera in hand
-    if(t<20.6){const hx=330+1.45*80,hy=1650-1.45*150;ctx.save();ctx.globalAlpha=seg(t,19.5,19.7);ctx.fillStyle=K.ink;rr(hx-6,hy-40,74,50,10);ctx.fill();ctx.beginPath();ctx.arc(hx+31,hy-15,15,0,6.283);ctx.fillStyle='#9fb3dc';ctx.fill();ctx.restore()}
-    if(fl>0){ctx.fillStyle=`rgba(255,255,255,${fl*.9})`;ctx.fillRect(0,0,W,H)}
-    // the photo leaves, the box returns
-    const pu=seg(t,20.35,20.9);if(pu>0&&pu<1){ctx.save();ctx.translate(lerp(700,1250,eio(pu)),lerp(1020,600,eio(pu)));ctx.rotate(pu*.6);ctx.scale(lerp(.5,.3,pu),lerp(.5,.3,pu));
-      ctx.fillStyle='#fff';ctx.shadowColor='rgba(0,0,0,.2)';ctx.shadowBlur=20;rr(-260,-130,520,260,10);ctx.fill();ctx.shadowBlur=0;const im=IMGS['0'];if(im.complete)ctx.drawImage(im,-250,-115,500,229);ctx.restore()}
-    const bu=seg(t,20.9,21.35);if(t>20.9){ctx.save();ctx.translate(lerp(1250,850,eo(bu)),1560);ctx.fillStyle='#f6e3c4';ctx.strokeStyle='#b78e55';ctx.lineWidth=4;rr(-70,-50,140,100,10);ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(-70,-12);ctx.lineTo(70,-12);ctx.stroke();text('LAB',0,20,28,800,'#8a6534');ctx.restore()}
-    if(t>21.35){ctx.save();ctx.globalAlpha=ba;tooth(800,1020,1.25*back(seg(t,21.35,21.6)),'good');ctx.restore();badge(880,880,true,seg(t,21.5,21.7))}
+  /* --- awareness: the same clinic, now he sees what touches the colour --- */
+  if(t>=15.75&&t<20.5){
+    const ba=seg(t,15.8,16.1);bubble(700,1020,280,ba);
+    ctx.save();ctx.globalAlpha=ba;tooth(620,1020,1.4,'natural');ctx.restore();
+    // the technician's screen
+    ctx.save();ctx.globalAlpha=seg(t,15.8,16.1);ctx.fillStyle='#16223f';rr(70,1170,170,110,10);ctx.fill();ctx.fillStyle='#c9b98f';rr(82,1182,146,86,6);ctx.fill();
+    ctx.fillStyle='#c4cee3';rr(145,1280,20,40,4);ctx.fill();rr(110,1318,90,10,5);ctx.fill();ctx.restore();
+    const look=[[16.3,-.8],[16.8,-.8],[17.3,.9],[17.8,.9],[18.3,-.6],[18.8,.6]].filter(([a])=>t>=a).pop();
+    const P0=mix(BASE,HOLD,eio(seg(t,17.9,18.2)));
+    stick(330,1650,1.45,P0,{face:t>19.3?'happy':'o',look:look?look[1]:0,lookY:-2,bulb:1,bs:1.2+.08*Math.sin(t*6)});
+    if(t>18.0){const hx=330+1.45*78,hy=1650-1.45*150;ctx.save();ctx.globalAlpha=seg(t,18.0,18.2);ctx.fillStyle=K.ink;rr(hx-6,hy-40,74,50,10);ctx.fill();ctx.beginPath();ctx.arc(hx+31,hy-15,15,0,6.283);ctx.fillStyle='#9fb3dc';ctx.fill();ctx.restore()}
+    // what he notices, one after another
+    const NOTE=[[16.3,'نور پنجره',195,505,195,560],[16.8,'نور یونیت: زرد یا آبی؟',760,455,870,560],[17.3,'شفافیت لبه',860,1140,660,1110],
+                [17.8,'ولیو: روشنی، نه فقط رنگ',830,880,650,960],[18.3,'وایت بالانس دوربین',540,1280,470,1390],[18.8,'مانیتور تکنسین',155,1110,155,1170]];
+    NOTE.forEach(([a,s_,lx,ly,tx,ty])=>{const u=seg(t,a,a+.25);if(u<=0)return;
+      ctx.save();ctx.globalAlpha=u;ctx.strokeStyle=K.blue;ctx.lineWidth=3;ctx.setLineDash([6,8]);ctx.beginPath();ctx.moveTo(lx,ly+22);ctx.lineTo(tx,ty);ctx.stroke();ctx.setLineDash([]);
+      ctx.beginPath();ctx.arc(tx,ty,9,0,6.283);ctx.fillStyle=K.blue;ctx.fill();
+      const ring=seg(t,a,a+.6);if(ring<1){ctx.beginPath();ctx.arc(tx,ty,lerp(9,46,ring),0,6.283);ctx.strokeStyle=`rgba(47,91,211,${1-ring})`;ctx.lineWidth=4;ctx.stroke()}
+      ctx.restore();
+      ctx.save();ctx.translate(lx,ly);ctx.scale(back(u),back(u));pill(s_,0,0,28,K.ink,'#fff',K.blue,1);ctx.restore()});
   }
 
   /* --- captions --- */
   [[2.75,3.95,'A2. همین.',70],[4.0,5.85,'روکش برگشت. رنگش جور نبود.',62],[5.9,7.65,'دوباره… و دوباره.',70],[7.75,9.2,'یه مطلب تو دنت‌کست…',66],
-   [19.3,20.6,'این بار شید کنار دندون، با گری کارت.',52],[20.7,22.5,'و روکش همون رنگی شد که دیدی.',58]]
+   [15.9,18.1,'حالا چیزهایی رو می‌بینه که قبلاً نمی‌دید.',52],[18.2,20.4,'رنگ، فقط A2 نیست.',72]]
    .forEach(([a,b,s,size])=>{const al=win(t,a,b,.25);if(al<=0)return;text(s,540,300-8*(1-eo(seg(t,a,a+.3))),size,900,K.ink,al)});
-  if(t>2.6&&t<22.6)text('دنت‌کست',540,130,38,800,K.blue,.55);
+  if(t>2.6&&t<20.5)text('دنت‌کست',540,130,38,800,K.blue,.55);
 
   /* --- end card --- */
-  const endA=seg(t,22.6,23.2);
+  const endA=seg(t,20.5,21.1);
   if(endA>0){ctx.save();ctx.globalAlpha=endA;ctx.fillStyle='#f4f7fc';ctx.fillRect(0,0,W,H);
     const rg=ctx.createRadialGradient(540,850,30,540,850,800);rg.addColorStop(0,'rgba(47,91,211,.12)');rg.addColorStop(1,'rgba(47,91,211,0)');ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);
-    const u0=eo(seg(t,22.8,23.5));photo('0',540,600+30*(1-u0),640,300,1,u0);
-    const u=eo(seg(t,23.2,23.9));
+    const u0=eo(seg(t,20.7,21.4));photo('0',540,600+30*(1-u0),640,300,1,u0);
+    const u=eo(seg(t,21.1,21.8));
     pill('Share Hub',540,830,32,K.blue,'#fff','#cfd8ea',u);
     text('راهنمای انتخاب رنگ دندان',540,960+20*(1-u),76,900,K.ink,u);
     text('چطور رنگ رو درست به لابراتوار برسونیم',540,1060+20*(1-u),46,800,K.inkS,u);
-    text('در دنت‌کست',540,1210,40,600,K.blue,eo(seg(t,23.8,24.3)));
-    text('dentcast.ir',540,1700,46,600,K.inkS,eo(seg(t,24.2,24.7)));
+    text('در دنت‌کست',540,1210,40,600,K.blue,eo(seg(t,21.7,22.2)));
+    text('dentcast.ir',540,1700,46,600,K.inkS,eo(seg(t,22.1,22.6)));
     ctx.restore()}
 }
 
 /* ---------- transport ---------- */
 const playBtn=document.getElementById('play'),scrub=document.getElementById('scrub'),clock=document.getElementById('clock');
 let t=0,playing=true,last=null;
-if(matchMedia('(prefers-reduced-motion: reduce)').matches){t=25;playing=false}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){t=23;playing=false}
 function show(){render(t);scrub.value=t;clock.textContent=t.toFixed(1)+'s';playBtn.textContent=playing?'توقف':'پخش'}
 function loop(now){if(playing){if(last!=null)t+=(now-last)/1000;if(t>DUR+1)t=0}last=now;show();requestAnimationFrame(loop)}
 playBtn.onclick=()=>{playing=!playing;last=null;show()};

@@ -1,5 +1,5 @@
 import numpy as np, wave
-SR=44100; DUR=26.0; N=int(SR*DUR); B=60/110
+SR=44100; DUR=24.0; N=int(SR*DUR); B=60/110
 L=np.zeros(N); Rr=np.zeros(N); rng=np.random.default_rng(8)
 def hz(n): return 440*2**((n-69)/12)
 def add(sig,t0,pan=0.0,g=1.0):
@@ -54,20 +54,20 @@ for o,b in [(4.0,5.0),(5.9,6.6),(6.95,7.6)]:
 add(bell(hz(84),1.2),7.95,0,.14); add(bell(hz(88),1.0),8.8,0,.2); add(bell(hz(91),1.0),8.88,0,.14); add(whoosh(.6),9.15,0,.12)
 # reading: soft groove in C, a chime each time a light goes on
 ch=[[48,55,60,64],[45,52,57,60],[41,48,53,57],[43,50,55,59]]
-for k,tt in enumerate(np.arange(9.7,19.3,4*B)): add(pad(ch[k%4],4*B,.3),tt,0,.14)
-for k,tt in enumerate(np.arange(9.7,22.6,B)):
+for k,tt in enumerate(np.arange(9.7,15.8,4*B)): add(pad(ch[k%4],4*B,.3),tt,0,.14)
+for k,tt in enumerate(np.arange(9.7,20.5,B)):
     add(kick(.3,100,48),tt,0,.32); add(shaker(),tt+B/2,.3,.05); add(shaker(),tt+B/4,-.3,.025); add(shaker(),tt+3*B/4,-.3,.025)
-for k,tt in enumerate(np.arange(9.7,19.0,B/2)):
+for k,tt in enumerate(np.arange(9.7,15.6,B/2)):
     add(marimba(hz([72,76,79,76][k%4])),tt,(-.3 if k%2 else .3),.05)
-for i,a in enumerate([10.115,11.496,13.406,14.789,16.699,18.082]):
+for i,a in enumerate([10.047,10.982,12.36,13.297,14.993]):
     n=[72,74,76,79,81,84][i]; add(bell(hz(n+12),1.6),a,(-.3 if i%2 else .3),.22); add(bell(hz(n+19),1.2),a+.06,0,.08)
-# payoff: shutter, send, box, success
-add(hp(noise(.03))*np.exp(-np.arange(int(.03*SR))/SR*80),20.0,0,.4); add(hp(noise(.05))*np.exp(-np.arange(int(.05*SR))/SR*60),20.08,0,.3)
-add(whoosh(.55),20.35,.4,.12); add(thud(),21.3,.3,.35)
-for k,n in enumerate([72,76,79,84]): add(bell(hz(n),1.6),21.5+k*.07,(k-1.5)*.25,.16)
-add(pad([48,55,60,64],3.1,.2),19.3,0,.14)
+# awareness: one soft ping for every thing he now notices, over an open chord
+add(whoosh(.5),15.6,0,.1); add(pad([48,55,62,64,71],4.8,.6),15.8,0,.18)
+for k,a in enumerate([16.3,16.8,17.3,17.8,18.3,18.8]):
+    add(marimba(hz([79,83,84,86,88,91][k])),a,(-.4 if k%2 else .4),.16); add(bell(hz([91,95,96,98,100,103][k]),1.0),a+.02,0,.05)
+add(bell(hz(84),1.8),19.4,0,.14)
 # end
-add(pad([48,55,60,64,67,71,74],3.4,.15),22.6,0,.24); add(kick(1.0,70,32),22.6,0,.4); add(bell(hz(84),2.6),22.65,0,.16)
+add(pad([48,55,60,64,67,71,74],3.5,.15),20.5,0,.24); add(kick(1.0,70,32),20.5,0,.4); add(bell(hz(84),2.6),20.55,0,.16)
 
 def reverb(x,d=1.4):
     n=int(d*SR); ir=rng.standard_normal(n)*np.exp(-np.arange(n)/SR*4/d); ir/=np.sqrt((ir**2).sum())
