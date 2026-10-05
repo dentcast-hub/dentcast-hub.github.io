@@ -18515,7 +18515,7 @@
     ]
   },
   "taraz/taraz1-1": {
-    "scored_at": "2026-09-24",
+    "scored_at": "2026-10-05",
     "sources": [
       {
         "des_version": "2.4",
@@ -18523,10 +18523,10 @@
         "question_type": null,
         "text_basis": "FULL_TEXT",
         "citation": {
-          "title": "تراز شواهد — مطالعه‌ی بالینی چطور ساخته می‌شود",
-          "authors": "دکتر فواد شهابیان",
-          "year": 2026,
-          "journal": "",
+          "title": "Evidence-based Dentistry: Part IV. Research Design and Levels of Evidence",
+          "authors": "Sutherland SE",
+          "year": 2001,
+          "journal": "Journal of the Canadian Dental Association",
           "doi": ""
         },
         "journal_quartile": {
@@ -18538,31 +18538,137 @@
         "penalties": null,
         "commentary_checklist": [
           {
-            "item": "زنجیره‌ی استدلال صریح است",
+            "item": "reasoning chain is explicit",
             "points": 4,
-            "evidence_quote": "بدون گروه کنترل، اگر گروه درمان خوب شد، نمی‌دانیم به خاطر درمان بوده یا خودبه‌خود خوب می‌شدند."
+            "evidence_quote": "The fact that randomization keeps study groups as similar as possible from the outset, together with other features of the design, such as blinding, sample size justification, appropriate outcome measures and statistical analysis, means that RCTs have the greatest potential to minimize bias.",
+            "note": ""
           },
           {
-            "item": "نسبتش با شواهد منتشرشده بیان شده است",
-            "points": 0,
-            "evidence_quote": ""
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "In fact, methodology research has shown that, most often, bias and weak designs cause trials to conclude that a treatment is effective when it really may not be, and to overestimate the effect, even when it is true.",
+            "note": ""
           },
           {
-            "item": "دامنه‌ی ادعا محدود شده است",
+            "item": "scope of the claim is bounded",
             "points": 3,
-            "evidence_quote": "در این قسمت و قسمت بعد، بحث ما روی سوال اثر درمان می‌ماند."
+            "evidence_quote": "It should be noted that using the \"rules\" or categories of evidence only helps classify studies based on the type of research design.",
+            "note": ""
           },
           {
-            "item": "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد",
+            "item": "explicitly labeled as experience/opinion, not evidence",
             "points": 0,
-            "evidence_quote": ""
+            "evidence_quote": "",
+            "note": ""
           }
         ],
-        "des_score": 12,
+        "des_score": 16,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این متن آموزشی تألیفی امتیاز شفافیت ۱۲ از ۱۹ گرفت و مثل هر محتوای تألیفی در باند E است.",
-        "interpretation_fa": "متن هر ادعایش را به دلیلی روشن وصل می‌کند، مثلاً اینکه بدون گروه کنترل نمی‌شود اثر درمان را از بهبود خودبه‌خودی جدا کرد، و دامنه‌ی بحث را صریحاً به سؤال اثر درمان محدود می‌کند. نسبتش با ادبیات منتشرشده بیان نشده و خودش را تجربه یا دیدگاه نمی‌نامد؛ ارزشش آموزش مفاهیم پایه‌ی طراحی مطالعه است، نه گزارش یک یافته."
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی چهارم از یک سری آموزشی درباره‌ی دندانپزشکی مبتنی بر شواهد که انواع طراحی مطالعه و نردبان شواهد را معرفی می‌کند و ستون اصلی سری تراز شواهد است. استدلالش روشن است، به پژوهش‌های روش‌شناختی ارجاع می‌دهد و صریحاً می‌گوید نردبان فقط نوع طراحی را دسته‌بندی می‌کند و برای سوال درمان ساخته شده است. خودش را دیدگاه یا تجربه نمی‌نامد، و چون داده‌ای جمع نمی‌کند ارزشش آموزشی است، نه یافته‌ی پژوهشی."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "A practical approach to evidence-based dentistry: How to search for evidence to inform clinical decisions",
+          "authors": "Brignardello-Petersen R, Carrasco-Labra A, Booth HA, Glick M, Guyatt GH, Azarpazhooh A, Agoritsas T",
+          "year": 2014,
+          "journal": "The Journal of the American Dental Association",
+          "doi": "10.14219/jada.2014.113"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Because of the increasing number of new treatments and studies that address their effectiveness, knowing how to search for and use the best current evidence is a fundamental skill",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Depending on the nature of the question, EBD proposes a hierarchy of study designs, starting with those that minimize the risk of bias, which we should seek first to inform our clinical practice.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "For questions regarding therapy or prevention, well-designed and conducted randomized controlled trials",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": ""
+          }
+        ],
+        "des_score": 16,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی دوم از یک سری آموزشی در JADA که نشان می‌دهد سوال بالینی را چطور با چارچوب PICO بسازیم، برای هر نوع سوال کدام طراحی مطالعه مناسب‌تر است، و منابع شواهد را بر اساس سطح پردازش از مطالعه‌ی اولیه تا راهنمای بالینی مرتب می‌کند. به ادبیات روش‌شناسی تکیه دارد و دامنه‌ی سلسله‌مراتب را به نوع سوال گره می‌زند، ولی خودش را دیدگاه نمی‌نامد. ارزشش راهنمای عملی جست‌وجو و انتخاب شواهد است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "New evidence pyramid",
+          "authors": "Murad MH, Asi N, Alsawas M, Alahdab F",
+          "year": 2016,
+          "journal": "Evidence-Based Medicine",
+          "doi": "10.1136/ebmed-2016-110401"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Study design alone appears to be insufficient on its own as a surrogate for risk of bias.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Another challenge to the notion of having systematic reviews on the top of the evidence pyramid relates to the framework presented in the Journal of the American Medical Association User's Guide on systematic reviews and meta-analysis.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "One of the limitations of all 'pyramids' and depictions of evidence hierarchy relates to the underpinning of such schemas.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "we suggest, in this perspective, two visual modifications to the pyramid",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله یک یادداشت دیدگاه (Perspective) است نه مطالعه، و با امتیاز شفافیت ۱۹ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "یادداشتی دیدگاهی که دو تغییر در هرم شواهد پیشنهاد می‌کند: مرزهای موجی میان طراحی‌ها، چون طبق رویکرد GRADE کیفیت شواهد هر طراحی می‌تواند بالا یا پایین برود، و برداشتن مرور سیستماتیک از رأس هرم و دیدنش به‌عنوان ذره‌بینی برای ارزیابی شواهد. هر چهار معیار شفافیت را دارد و خودش را صریحاً دیدگاه می‌نامد. ارزشش نشان دادن محدودیت نردبان سنتی است."
       }
     ]
   },
@@ -18768,7 +18874,7 @@
     ]
   },
   "taraz/taraz1-2": {
-    "scored_at": "2026-09-25",
+    "scored_at": "2026-10-05",
     "sources": [
       {
         "des_version": "2.4",
@@ -18776,10 +18882,10 @@
         "question_type": null,
         "text_basis": "FULL_TEXT",
         "citation": {
-          "title": "تراز شواهد — RCT (Randomized Controlled Trial)",
-          "authors": "دکتر فواد شهابیان",
-          "year": 2026,
-          "journal": "",
+          "title": "Evidence-based Dentistry: Part IV. Research Design and Levels of Evidence",
+          "authors": "Sutherland SE",
+          "year": 2001,
+          "journal": "Journal of the Canadian Dental Association",
           "doi": ""
         },
         "journal_quartile": {
@@ -18791,31 +18897,137 @@
         "penalties": null,
         "commentary_checklist": [
           {
-            "item": "زنجیره‌ی استدلال صریح است",
+            "item": "reasoning chain is explicit",
             "points": 4,
-            "evidence_quote": "ولی این نتیجه به خاطر روش جدید نیست، به خاطر این است که بیماران بهتری به آن رسیده‌اند."
+            "evidence_quote": "The fact that randomization keeps study groups as similar as possible from the outset, together with other features of the design, such as blinding, sample size justification, appropriate outcome measures and statistical analysis, means that RCTs have the greatest potential to minimize bias.",
+            "note": ""
           },
           {
-            "item": "نسبتش با شواهد منتشرشده بیان شده است",
+            "item": "relationship to published evidence is stated",
             "points": 4,
-            "evidence_quote": "وقتی محققان مطالعات منتشرشده را بررسی کرده‌اند تا ببینند خطاها در عمل به کدام سمت می‌روند، به یک الگوی روشن رسیده‌اند: مطالعات ضعیف بیشتر اوقات درمان را بهتر از آنچه هست نشان می‌دهند."
+            "evidence_quote": "In fact, methodology research has shown that, most often, bias and weak designs cause trials to conclude that a treatment is effective when it really may not be, and to overestimate the effect, even when it is true.",
+            "note": ""
           },
           {
-            "item": "دامنه‌ی ادعا محدود شده است",
+            "item": "scope of the claim is bounded",
             "points": 3,
-            "evidence_quote": "اما هر دو فقط وقتی معتبرند که شرایط خاصی رعایت شده باشد، وگرنه نتیجه گمراه‌کننده می‌شود."
+            "evidence_quote": "It should be noted that using the \"rules\" or categories of evidence only helps classify studies based on the type of research design.",
+            "note": ""
           },
           {
-            "item": "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد",
+            "item": "explicitly labeled as experience/opinion, not evidence",
             "points": 0,
-            "evidence_quote": ""
+            "evidence_quote": "",
+            "note": ""
           }
         ],
         "des_score": 16,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این متن آموزشی تألیفی امتیاز شفافیت ۱۶ از ۱۹ گرفت و مثل هر محتوای تألیفی در باند E است.",
-        "interpretation_fa": "متن هر ادعایش را به سازوکاری روشن وصل می‌کند، مثلاً اینکه برتریِ ظاهری ممکن است از انتخابِ بیمارانِ بهتر بیاید نه از خودِ درمان، جهتِ غالبِ بایاس را به بررسی مطالعات منتشرشده نسبت می‌دهد، و اعتبارِ طراحی‌های cross-over و split-mouth را به شرایط خاص مشروط می‌کند. خودش را تجربه یا دیدگاه نمی‌نامد؛ ارزشش آموزشِ ابزارهای پایه‌ی RCT برای خواندنِ مقاله است، نه گزارشِ یک یافته."
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی چهارم از یک سری آموزشی درباره‌ی دندانپزشکی مبتنی بر شواهد که انواع طراحی مطالعه و نردبان شواهد را معرفی می‌کند و ستون اصلی سری تراز شواهد است. استدلالش روشن است، به پژوهش‌های روش‌شناختی ارجاع می‌دهد و صریحاً می‌گوید نردبان فقط نوع طراحی را دسته‌بندی می‌کند و برای سوال درمان ساخته شده است. خودش را دیدگاه یا تجربه نمی‌نامد، و چون داده‌ای جمع نمی‌کند ارزشش آموزشی است، نه یافته‌ی پژوهشی."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "A practical approach to evidence-based dentistry: How to search for evidence to inform clinical decisions",
+          "authors": "Brignardello-Petersen R, Carrasco-Labra A, Booth HA, Glick M, Guyatt GH, Azarpazhooh A, Agoritsas T",
+          "year": 2014,
+          "journal": "The Journal of the American Dental Association",
+          "doi": "10.14219/jada.2014.113"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Because of the increasing number of new treatments and studies that address their effectiveness, knowing how to search for and use the best current evidence is a fundamental skill",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Depending on the nature of the question, EBD proposes a hierarchy of study designs, starting with those that minimize the risk of bias, which we should seek first to inform our clinical practice.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "For questions regarding therapy or prevention, well-designed and conducted randomized controlled trials",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": ""
+          }
+        ],
+        "des_score": 16,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی دوم از یک سری آموزشی در JADA که نشان می‌دهد سوال بالینی را چطور با چارچوب PICO بسازیم، برای هر نوع سوال کدام طراحی مطالعه مناسب‌تر است، و منابع شواهد را بر اساس سطح پردازش از مطالعه‌ی اولیه تا راهنمای بالینی مرتب می‌کند. به ادبیات روش‌شناسی تکیه دارد و دامنه‌ی سلسله‌مراتب را به نوع سوال گره می‌زند، ولی خودش را دیدگاه نمی‌نامد. ارزشش راهنمای عملی جست‌وجو و انتخاب شواهد است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "New evidence pyramid",
+          "authors": "Murad MH, Asi N, Alsawas M, Alahdab F",
+          "year": 2016,
+          "journal": "Evidence-Based Medicine",
+          "doi": "10.1136/ebmed-2016-110401"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Study design alone appears to be insufficient on its own as a surrogate for risk of bias.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Another challenge to the notion of having systematic reviews on the top of the evidence pyramid relates to the framework presented in the Journal of the American Medical Association User's Guide on systematic reviews and meta-analysis.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "One of the limitations of all 'pyramids' and depictions of evidence hierarchy relates to the underpinning of such schemas.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "we suggest, in this perspective, two visual modifications to the pyramid",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله یک یادداشت دیدگاه (Perspective) است نه مطالعه، و با امتیاز شفافیت ۱۹ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "یادداشتی دیدگاهی که دو تغییر در هرم شواهد پیشنهاد می‌کند: مرزهای موجی میان طراحی‌ها، چون طبق رویکرد GRADE کیفیت شواهد هر طراحی می‌تواند بالا یا پایین برود، و برداشتن مرور سیستماتیک از رأس هرم و دیدنش به‌عنوان ذره‌بینی برای ارزیابی شواهد. هر چهار معیار شفافیت را دارد و خودش را صریحاً دیدگاه می‌نامد. ارزشش نشان دادن محدودیت نردبان سنتی است."
       }
     ]
   },
@@ -18829,7 +19041,7 @@
     ]
   },
   "taraz/taraz1-3": {
-    "scored_at": "2026-09-26",
+    "scored_at": "2026-10-05",
     "sources": [
       {
         "des_version": "2.4",
@@ -18837,10 +19049,10 @@
         "question_type": null,
         "text_basis": "FULL_TEXT",
         "citation": {
-          "title": "تراز شواهد — مطالعه‌ی تجربی بدون گروه کنترل واقعی",
-          "authors": "دکتر فواد شهابیان",
-          "year": 2026,
-          "journal": "",
+          "title": "Evidence-based Dentistry: Part IV. Research Design and Levels of Evidence",
+          "authors": "Sutherland SE",
+          "year": 2001,
+          "journal": "Journal of the Canadian Dental Association",
           "doi": ""
         },
         "journal_quartile": {
@@ -18852,31 +19064,137 @@
         "penalties": null,
         "commentary_checklist": [
           {
-            "item": "زنجیره‌ی استدلال صریح است",
+            "item": "reasoning chain is explicit",
             "points": 4,
-            "evidence_quote": "بدون چنین مقایسه‌ای، عدد هجده به تنهایی چیزی درباره‌ی بهتر یا بدتر بودن ایمپلنت جدید نمی‌گوید، چون معلوم نیست اگر همین بیست نفر با ایمپلنت معمول درمان می‌شدند، چند نفرشان مشکل پیدا می‌کرد."
+            "evidence_quote": "The fact that randomization keeps study groups as similar as possible from the outset, together with other features of the design, such as blinding, sample size justification, appropriate outcome measures and statistical analysis, means that RCTs have the greatest potential to minimize bias.",
+            "note": ""
           },
           {
-            "item": "نسبتش با شواهد منتشرشده بیان شده است",
-            "points": 0,
-            "evidence_quote": ""
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "In fact, methodology research has shown that, most often, bias and weak designs cause trials to conclude that a treatment is effective when it really may not be, and to overestimate the effect, even when it is true.",
+            "note": ""
           },
           {
-            "item": "دامنه‌ی ادعا محدود شده است",
+            "item": "scope of the claim is bounded",
             "points": 3,
-            "evidence_quote": "هر دو برای شروع کار روی یک درمان جدید مفیدند و هر دو وقتی به جای شواهد نهایی به کار بروند، گمراه‌کننده می‌شوند."
+            "evidence_quote": "It should be noted that using the \"rules\" or categories of evidence only helps classify studies based on the type of research design.",
+            "note": ""
           },
           {
-            "item": "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد",
+            "item": "explicitly labeled as experience/opinion, not evidence",
             "points": 0,
-            "evidence_quote": ""
+            "evidence_quote": "",
+            "note": ""
           }
         ],
-        "des_score": 12,
+        "des_score": 16,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این متن آموزشی تألیفی امتیاز شفافیت ۱۲ از ۱۹ گرفت و مثل هر محتوای تألیفی در باند E است.",
-        "interpretation_fa": "متن هر حکمش را به سازوکاری روشن وصل می‌کند، مثلاً این‌که بدون گروه مقایسه عدد موفقیت چیزی درباره‌ی برتری درمان نمی‌گوید، و ارزش هر دو طراحی را به مرحله‌ی مقدماتی محدود می‌کند. جایگاهش را نسبت به مطالعات منتشرشده‌ی مشخصی بیان نمی‌کند و خودش را تجربه یا دیدگاه نمی‌نامد. ارزشش آموزش تشخیص شواهد ضعیف در خواندن مقاله است."
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی چهارم از یک سری آموزشی درباره‌ی دندانپزشکی مبتنی بر شواهد که انواع طراحی مطالعه و نردبان شواهد را معرفی می‌کند و ستون اصلی سری تراز شواهد است. استدلالش روشن است، به پژوهش‌های روش‌شناختی ارجاع می‌دهد و صریحاً می‌گوید نردبان فقط نوع طراحی را دسته‌بندی می‌کند و برای سوال درمان ساخته شده است. خودش را دیدگاه یا تجربه نمی‌نامد، و چون داده‌ای جمع نمی‌کند ارزشش آموزشی است، نه یافته‌ی پژوهشی."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "A practical approach to evidence-based dentistry: How to search for evidence to inform clinical decisions",
+          "authors": "Brignardello-Petersen R, Carrasco-Labra A, Booth HA, Glick M, Guyatt GH, Azarpazhooh A, Agoritsas T",
+          "year": 2014,
+          "journal": "The Journal of the American Dental Association",
+          "doi": "10.14219/jada.2014.113"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Because of the increasing number of new treatments and studies that address their effectiveness, knowing how to search for and use the best current evidence is a fundamental skill",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Depending on the nature of the question, EBD proposes a hierarchy of study designs, starting with those that minimize the risk of bias, which we should seek first to inform our clinical practice.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "For questions regarding therapy or prevention, well-designed and conducted randomized controlled trials",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": ""
+          }
+        ],
+        "des_score": 16,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی دوم از یک سری آموزشی در JADA که نشان می‌دهد سوال بالینی را چطور با چارچوب PICO بسازیم، برای هر نوع سوال کدام طراحی مطالعه مناسب‌تر است، و منابع شواهد را بر اساس سطح پردازش از مطالعه‌ی اولیه تا راهنمای بالینی مرتب می‌کند. به ادبیات روش‌شناسی تکیه دارد و دامنه‌ی سلسله‌مراتب را به نوع سوال گره می‌زند، ولی خودش را دیدگاه نمی‌نامد. ارزشش راهنمای عملی جست‌وجو و انتخاب شواهد است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "New evidence pyramid",
+          "authors": "Murad MH, Asi N, Alsawas M, Alahdab F",
+          "year": 2016,
+          "journal": "Evidence-Based Medicine",
+          "doi": "10.1136/ebmed-2016-110401"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Study design alone appears to be insufficient on its own as a surrogate for risk of bias.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Another challenge to the notion of having systematic reviews on the top of the evidence pyramid relates to the framework presented in the Journal of the American Medical Association User's Guide on systematic reviews and meta-analysis.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "One of the limitations of all 'pyramids' and depictions of evidence hierarchy relates to the underpinning of such schemas.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "we suggest, in this perspective, two visual modifications to the pyramid",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله یک یادداشت دیدگاه (Perspective) است نه مطالعه، و با امتیاز شفافیت ۱۹ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "یادداشتی دیدگاهی که دو تغییر در هرم شواهد پیشنهاد می‌کند: مرزهای موجی میان طراحی‌ها، چون طبق رویکرد GRADE کیفیت شواهد هر طراحی می‌تواند بالا یا پایین برود، و برداشتن مرور سیستماتیک از رأس هرم و دیدنش به‌عنوان ذره‌بینی برای ارزیابی شواهد. هر چهار معیار شفافیت را دارد و خودش را صریحاً دیدگاه می‌نامد. ارزشش نشان دادن محدودیت نردبان سنتی است."
       }
     ]
   },
@@ -18989,7 +19307,7 @@
     ]
   },
   "taraz/taraz1-4": {
-    "scored_at": "2026-09-27",
+    "scored_at": "2026-10-05",
     "sources": [
       {
         "des_version": "2.4",
@@ -18997,10 +19315,10 @@
         "question_type": null,
         "text_basis": "FULL_TEXT",
         "citation": {
-          "title": "تراز شواهد — مطالعه‌ی کوهورت",
-          "authors": "دکتر فواد شهابیان",
-          "year": 2026,
-          "journal": "",
+          "title": "Evidence-based Dentistry: Part IV. Research Design and Levels of Evidence",
+          "authors": "Sutherland SE",
+          "year": 2001,
+          "journal": "Journal of the Canadian Dental Association",
           "doi": ""
         },
         "journal_quartile": {
@@ -19012,31 +19330,137 @@
         "penalties": null,
         "commentary_checklist": [
           {
-            "item": "زنجیره‌ی استدلال صریح است",
+            "item": "reasoning chain is explicit",
             "points": 4,
-            "evidence_quote": "محقق می‌تواند تفاوت‌هایی را که می‌شناسد اندازه بگیرد و در تحلیل لحاظ کند، ولی برای تفاوت‌هایی که نمی‌شناسد کاری از دستش برنمی‌آید."
+            "evidence_quote": "The fact that randomization keeps study groups as similar as possible from the outset, together with other features of the design, such as blinding, sample size justification, appropriate outcome measures and statistical analysis, means that RCTs have the greatest potential to minimize bias.",
+            "note": ""
           },
           {
-            "item": "نسبتش با شواهد منتشرشده بیان شده است",
+            "item": "relationship to published evidence is stated",
             "points": 4,
-            "evidence_quote": "این مطالعه یکی از پایه‌های اصلی اثبات رابطه‌ی سیگار با سرطان ریه شد و نشان داد هر چه مصرف سیگار بیشتر باشد، خطر هم بیشتر است."
+            "evidence_quote": "In fact, methodology research has shown that, most often, bias and weak designs cause trials to conclude that a treatment is effective when it really may not be, and to overestimate the effect, even when it is true.",
+            "note": ""
           },
           {
-            "item": "دامنه‌ی ادعا محدود شده است",
+            "item": "scope of the claim is bounded",
             "points": 3,
-            "evidence_quote": "برای سوال‌هایی که RCT در آن‌ها ممکن یا اخلاقی نیست، قوی‌ترین ابزار در دسترس است"
+            "evidence_quote": "It should be noted that using the \"rules\" or categories of evidence only helps classify studies based on the type of research design.",
+            "note": ""
           },
           {
-            "item": "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد",
+            "item": "explicitly labeled as experience/opinion, not evidence",
             "points": 0,
-            "evidence_quote": ""
+            "evidence_quote": "",
+            "note": ""
           }
         ],
         "des_score": 16,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این متن آموزشی تألیفی امتیاز شفافیت ۱۶ از ۱۹ گرفت و مثل هر محتوای تألیفی در باند E است.",
-        "interpretation_fa": "متن ضعف اصلی کوهورت را به سازوکاری روشن وصل می‌کند، این‌که تعدیل آماری فقط به تفاوت‌های شناخته‌شده می‌رسد، و حرفش را با مطالعه‌ی منتشرشده‌ی پزشکان بریتانیایی پشتیبانی می‌کند. کاربرد کوهورت را به سوال‌هایی محدود می‌کند که RCT در آن‌ها ممکن یا اخلاقی نیست. خودش را تجربه یا دیدگاه نمی‌نامد. ارزشش آموزش این است که نتیجه‌ی یک کوهورت را کجا می‌شود جدی گرفت و کجا باید محتاط بود."
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی چهارم از یک سری آموزشی درباره‌ی دندانپزشکی مبتنی بر شواهد که انواع طراحی مطالعه و نردبان شواهد را معرفی می‌کند و ستون اصلی سری تراز شواهد است. استدلالش روشن است، به پژوهش‌های روش‌شناختی ارجاع می‌دهد و صریحاً می‌گوید نردبان فقط نوع طراحی را دسته‌بندی می‌کند و برای سوال درمان ساخته شده است. خودش را دیدگاه یا تجربه نمی‌نامد، و چون داده‌ای جمع نمی‌کند ارزشش آموزشی است، نه یافته‌ی پژوهشی."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "A practical approach to evidence-based dentistry: How to search for evidence to inform clinical decisions",
+          "authors": "Brignardello-Petersen R, Carrasco-Labra A, Booth HA, Glick M, Guyatt GH, Azarpazhooh A, Agoritsas T",
+          "year": 2014,
+          "journal": "The Journal of the American Dental Association",
+          "doi": "10.14219/jada.2014.113"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Because of the increasing number of new treatments and studies that address their effectiveness, knowing how to search for and use the best current evidence is a fundamental skill",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Depending on the nature of the question, EBD proposes a hierarchy of study designs, starting with those that minimize the risk of bias, which we should seek first to inform our clinical practice.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "For questions regarding therapy or prevention, well-designed and conducted randomized controlled trials",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": ""
+          }
+        ],
+        "des_score": 16,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی دوم از یک سری آموزشی در JADA که نشان می‌دهد سوال بالینی را چطور با چارچوب PICO بسازیم، برای هر نوع سوال کدام طراحی مطالعه مناسب‌تر است، و منابع شواهد را بر اساس سطح پردازش از مطالعه‌ی اولیه تا راهنمای بالینی مرتب می‌کند. به ادبیات روش‌شناسی تکیه دارد و دامنه‌ی سلسله‌مراتب را به نوع سوال گره می‌زند، ولی خودش را دیدگاه نمی‌نامد. ارزشش راهنمای عملی جست‌وجو و انتخاب شواهد است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "New evidence pyramid",
+          "authors": "Murad MH, Asi N, Alsawas M, Alahdab F",
+          "year": 2016,
+          "journal": "Evidence-Based Medicine",
+          "doi": "10.1136/ebmed-2016-110401"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Study design alone appears to be insufficient on its own as a surrogate for risk of bias.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Another challenge to the notion of having systematic reviews on the top of the evidence pyramid relates to the framework presented in the Journal of the American Medical Association User's Guide on systematic reviews and meta-analysis.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "One of the limitations of all 'pyramids' and depictions of evidence hierarchy relates to the underpinning of such schemas.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "we suggest, in this perspective, two visual modifications to the pyramid",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله یک یادداشت دیدگاه (Perspective) است نه مطالعه، و با امتیاز شفافیت ۱۹ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "یادداشتی دیدگاهی که دو تغییر در هرم شواهد پیشنهاد می‌کند: مرزهای موجی میان طراحی‌ها، چون طبق رویکرد GRADE کیفیت شواهد هر طراحی می‌تواند بالا یا پایین برود، و برداشتن مرور سیستماتیک از رأس هرم و دیدنش به‌عنوان ذره‌بینی برای ارزیابی شواهد. هر چهار معیار شفافیت را دارد و خودش را صریحاً دیدگاه می‌نامد. ارزشش نشان دادن محدودیت نردبان سنتی است."
       }
     ]
   },
@@ -19464,7 +19888,7 @@
     ]
   },
   "taraz/taraz1-5": {
-    "scored_at": "2026-09-28",
+    "scored_at": "2026-10-05",
     "sources": [
       {
         "des_version": "2.4",
@@ -19472,10 +19896,10 @@
         "question_type": null,
         "text_basis": "FULL_TEXT",
         "citation": {
-          "title": "تراز شواهد — مطالعه‌ی case-control",
-          "authors": "دکتر فواد شهابیان",
-          "year": 2026,
-          "journal": "",
+          "title": "Evidence-based Dentistry: Part IV. Research Design and Levels of Evidence",
+          "authors": "Sutherland SE",
+          "year": 2001,
+          "journal": "Journal of the Canadian Dental Association",
           "doi": ""
         },
         "journal_quartile": {
@@ -19487,31 +19911,137 @@
         "penalties": null,
         "commentary_checklist": [
           {
-            "item": "زنجیره‌ی استدلال صریح است",
+            "item": "reasoning chain is explicit",
             "points": 4,
-            "evidence_quote": "کسی که بیمار شده، معمولاً با دقت بیشتری در گذشته‌اش دنبال علت می‌گردد و چیزهایی را به یاد می‌آورد که فرد سالم به آن‌ها فکر هم نمی‌کند."
+            "evidence_quote": "The fact that randomization keeps study groups as similar as possible from the outset, together with other features of the design, such as blinding, sample size justification, appropriate outcome measures and statistical analysis, means that RCTs have the greatest potential to minimize bias.",
+            "note": ""
           },
           {
-            "item": "نسبتش با شواهد منتشرشده بیان شده است",
+            "item": "relationship to published evidence is stated",
             "points": 4,
-            "evidence_quote": "مطالعه از خود بیماران شروع کرد، گروه مشابهی از زنان سالم را کنار آن‌ها گذاشت و سابقه‌ی دارویی مادران دو گروه را مقایسه کرد."
+            "evidence_quote": "In fact, methodology research has shown that, most often, bias and weak designs cause trials to conclude that a treatment is effective when it really may not be, and to overestimate the effect, even when it is true.",
+            "note": ""
           },
           {
-            "item": "دامنه‌ی ادعا محدود شده است",
+            "item": "scope of the claim is bounded",
             "points": 3,
-            "evidence_quote": "این‌که مطالعه‌ای case-control است فقط می‌گوید برای چه سوالی مناسب است و در برابر چه خطایی آسیب‌پذیر است؛ نمی‌گوید آن مطالعه‌ی خاص چقدر خوب انجام شده."
+            "evidence_quote": "It should be noted that using the \"rules\" or categories of evidence only helps classify studies based on the type of research design.",
+            "note": ""
           },
           {
-            "item": "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد",
+            "item": "explicitly labeled as experience/opinion, not evidence",
             "points": 0,
-            "evidence_quote": ""
+            "evidence_quote": "",
+            "note": ""
           }
         ],
         "des_score": 16,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این متن آموزشی تألیفی امتیاز شفافیت ۱۶ از ۱۹ گرفت و مثل هر محتوای تألیفی در باند E است.",
-        "interpretation_fa": "متن ضعف اصلی case-control را به سازوکاری روشن وصل می‌کند، این‌که بیمار گذشته‌اش را دقیق‌تر از فرد سالم می‌کاود و سابقه‌ی در معرض بودن را بیش از واقع گزارش می‌کند، و کاربرد این طراحی را با مطالعه‌ی منتشرشده‌ی دی‌اتیل‌استیل‌بسترول نشان می‌دهد. صریحاً می‌گوید نوع طراحی جای کیفیت اجرا را نمی‌گیرد. خودش را تجربه یا دیدگاه نمی‌نامد. ارزشش آموزش این است که نتیجه‌ی یک case-control را کجا می‌شود جدی گرفت و کجا باید به بایاس یادآوری مشکوک بود."
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی چهارم از یک سری آموزشی درباره‌ی دندانپزشکی مبتنی بر شواهد که انواع طراحی مطالعه و نردبان شواهد را معرفی می‌کند و ستون اصلی سری تراز شواهد است. استدلالش روشن است، به پژوهش‌های روش‌شناختی ارجاع می‌دهد و صریحاً می‌گوید نردبان فقط نوع طراحی را دسته‌بندی می‌کند و برای سوال درمان ساخته شده است. خودش را دیدگاه یا تجربه نمی‌نامد، و چون داده‌ای جمع نمی‌کند ارزشش آموزشی است، نه یافته‌ی پژوهشی."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "A practical approach to evidence-based dentistry: How to search for evidence to inform clinical decisions",
+          "authors": "Brignardello-Petersen R, Carrasco-Labra A, Booth HA, Glick M, Guyatt GH, Azarpazhooh A, Agoritsas T",
+          "year": 2014,
+          "journal": "The Journal of the American Dental Association",
+          "doi": "10.14219/jada.2014.113"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Because of the increasing number of new treatments and studies that address their effectiveness, knowing how to search for and use the best current evidence is a fundamental skill",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Depending on the nature of the question, EBD proposes a hierarchy of study designs, starting with those that minimize the risk of bias, which we should seek first to inform our clinical practice.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "For questions regarding therapy or prevention, well-designed and conducted randomized controlled trials",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": ""
+          }
+        ],
+        "des_score": 16,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی دوم از یک سری آموزشی در JADA که نشان می‌دهد سوال بالینی را چطور با چارچوب PICO بسازیم، برای هر نوع سوال کدام طراحی مطالعه مناسب‌تر است، و منابع شواهد را بر اساس سطح پردازش از مطالعه‌ی اولیه تا راهنمای بالینی مرتب می‌کند. به ادبیات روش‌شناسی تکیه دارد و دامنه‌ی سلسله‌مراتب را به نوع سوال گره می‌زند، ولی خودش را دیدگاه نمی‌نامد. ارزشش راهنمای عملی جست‌وجو و انتخاب شواهد است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "New evidence pyramid",
+          "authors": "Murad MH, Asi N, Alsawas M, Alahdab F",
+          "year": 2016,
+          "journal": "Evidence-Based Medicine",
+          "doi": "10.1136/ebmed-2016-110401"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Study design alone appears to be insufficient on its own as a surrogate for risk of bias.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Another challenge to the notion of having systematic reviews on the top of the evidence pyramid relates to the framework presented in the Journal of the American Medical Association User's Guide on systematic reviews and meta-analysis.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "One of the limitations of all 'pyramids' and depictions of evidence hierarchy relates to the underpinning of such schemas.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "we suggest, in this perspective, two visual modifications to the pyramid",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله یک یادداشت دیدگاه (Perspective) است نه مطالعه، و با امتیاز شفافیت ۱۹ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "یادداشتی دیدگاهی که دو تغییر در هرم شواهد پیشنهاد می‌کند: مرزهای موجی میان طراحی‌ها، چون طبق رویکرد GRADE کیفیت شواهد هر طراحی می‌تواند بالا یا پایین برود، و برداشتن مرور سیستماتیک از رأس هرم و دیدنش به‌عنوان ذره‌بینی برای ارزیابی شواهد. هر چهار معیار شفافیت را دارد و خودش را صریحاً دیدگاه می‌نامد. ارزشش نشان دادن محدودیت نردبان سنتی است."
       }
     ]
   },
@@ -19669,7 +20199,7 @@
     ]
   },
   "taraz/taraz1-6": {
-    "scored_at": "2026-09-30",
+    "scored_at": "2026-10-05",
     "sources": [
       {
         "des_version": "2.4",
@@ -19677,10 +20207,10 @@
         "question_type": null,
         "text_basis": "FULL_TEXT",
         "citation": {
-          "title": "تراز شواهد — مطالعه‌ی cross-sectional",
-          "authors": "دکتر فواد شهابیان",
-          "year": 2026,
-          "journal": "",
+          "title": "Evidence-based Dentistry: Part IV. Research Design and Levels of Evidence",
+          "authors": "Sutherland SE",
+          "year": 2001,
+          "journal": "Journal of the Canadian Dental Association",
           "doi": ""
         },
         "journal_quartile": {
@@ -19692,31 +20222,137 @@
         "penalties": null,
         "commentary_checklist": [
           {
-            "item": "زنجیره‌ی استدلال صریح است",
+            "item": "reasoning chain is explicit",
             "points": 4,
-            "evidence_quote": "مثلاً شاید بیماری زمینه‌ای خاصی در مادر، هم او را به مصرف آن دارو کشانده و هم خودش مستقلاً خطر شکاف کام را بالا برده باشد."
+            "evidence_quote": "The fact that randomization keeps study groups as similar as possible from the outset, together with other features of the design, such as blinding, sample size justification, appropriate outcome measures and statistical analysis, means that RCTs have the greatest potential to minimize bias.",
+            "note": ""
           },
           {
-            "item": "نسبتش با شواهد منتشرشده بیان شده است",
-            "points": 0,
-            "evidence_quote": ""
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "In fact, methodology research has shown that, most often, bias and weak designs cause trials to conclude that a treatment is effective when it really may not be, and to overestimate the effect, even when it is true.",
+            "note": ""
           },
           {
-            "item": "دامنه‌ی ادعا محدود شده است",
+            "item": "scope of the claim is bounded",
             "points": 3,
-            "evidence_quote": "ولی یک نوع سوال دیگر هست که برای آن، همین طراحی انتخاب اول است: سوال تشخیصی."
+            "evidence_quote": "It should be noted that using the \"rules\" or categories of evidence only helps classify studies based on the type of research design.",
+            "note": ""
           },
           {
-            "item": "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد",
+            "item": "explicitly labeled as experience/opinion, not evidence",
             "points": 0,
-            "evidence_quote": ""
+            "evidence_quote": "",
+            "note": ""
           }
         ],
-        "des_score": 12,
+        "des_score": 16,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این متن آموزشی تألیفی امتیاز شفافیت ۱۲ از ۱۹ گرفت و مثل هر محتوای تألیفی در باند E است.",
-        "interpretation_fa": "متن محدودیت اصلی cross-sectional را به سازوکاری روشن وصل می‌کند، این‌که عامل سوم می‌تواند هم مواجهه و هم پیامد را توضیح بدهد، و دامنه‌ی ادعا را با جدا کردن سوال علت‌یابی از سوال تشخیصی محدود می‌کند. به مطالعه‌ی منتشرشده‌ی مشخصی ارجاع نمی‌دهد و خودش را تجربه یا دیدگاه نمی‌نامد. ارزشش آموزش خواندن درست یافته‌ی مقطعی است."
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی چهارم از یک سری آموزشی درباره‌ی دندانپزشکی مبتنی بر شواهد که انواع طراحی مطالعه و نردبان شواهد را معرفی می‌کند و ستون اصلی سری تراز شواهد است. استدلالش روشن است، به پژوهش‌های روش‌شناختی ارجاع می‌دهد و صریحاً می‌گوید نردبان فقط نوع طراحی را دسته‌بندی می‌کند و برای سوال درمان ساخته شده است. خودش را دیدگاه یا تجربه نمی‌نامد، و چون داده‌ای جمع نمی‌کند ارزشش آموزشی است، نه یافته‌ی پژوهشی."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "A practical approach to evidence-based dentistry: How to search for evidence to inform clinical decisions",
+          "authors": "Brignardello-Petersen R, Carrasco-Labra A, Booth HA, Glick M, Guyatt GH, Azarpazhooh A, Agoritsas T",
+          "year": 2014,
+          "journal": "The Journal of the American Dental Association",
+          "doi": "10.14219/jada.2014.113"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Because of the increasing number of new treatments and studies that address their effectiveness, knowing how to search for and use the best current evidence is a fundamental skill",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Depending on the nature of the question, EBD proposes a hierarchy of study designs, starting with those that minimize the risk of bias, which we should seek first to inform our clinical practice.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "For questions regarding therapy or prevention, well-designed and conducted randomized controlled trials",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": ""
+          }
+        ],
+        "des_score": 16,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی دوم از یک سری آموزشی در JADA که نشان می‌دهد سوال بالینی را چطور با چارچوب PICO بسازیم، برای هر نوع سوال کدام طراحی مطالعه مناسب‌تر است، و منابع شواهد را بر اساس سطح پردازش از مطالعه‌ی اولیه تا راهنمای بالینی مرتب می‌کند. به ادبیات روش‌شناسی تکیه دارد و دامنه‌ی سلسله‌مراتب را به نوع سوال گره می‌زند، ولی خودش را دیدگاه نمی‌نامد. ارزشش راهنمای عملی جست‌وجو و انتخاب شواهد است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "New evidence pyramid",
+          "authors": "Murad MH, Asi N, Alsawas M, Alahdab F",
+          "year": 2016,
+          "journal": "Evidence-Based Medicine",
+          "doi": "10.1136/ebmed-2016-110401"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Study design alone appears to be insufficient on its own as a surrogate for risk of bias.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Another challenge to the notion of having systematic reviews on the top of the evidence pyramid relates to the framework presented in the Journal of the American Medical Association User's Guide on systematic reviews and meta-analysis.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "One of the limitations of all 'pyramids' and depictions of evidence hierarchy relates to the underpinning of such schemas.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "we suggest, in this perspective, two visual modifications to the pyramid",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله یک یادداشت دیدگاه (Perspective) است نه مطالعه، و با امتیاز شفافیت ۱۹ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "یادداشتی دیدگاهی که دو تغییر در هرم شواهد پیشنهاد می‌کند: مرزهای موجی میان طراحی‌ها، چون طبق رویکرد GRADE کیفیت شواهد هر طراحی می‌تواند بالا یا پایین برود، و برداشتن مرور سیستماتیک از رأس هرم و دیدنش به‌عنوان ذره‌بینی برای ارزیابی شواهد. هر چهار معیار شفافیت را دارد و خودش را صریحاً دیدگاه می‌نامد. ارزشش نشان دادن محدودیت نردبان سنتی است."
       }
     ]
   },
@@ -19773,7 +20409,7 @@
     ]
   },
   "taraz/taraz1-7": {
-    "scored_at": "2026-10-01",
+    "scored_at": "2026-10-05",
     "sources": [
       {
         "des_version": "2.4",
@@ -19781,10 +20417,10 @@
         "question_type": null,
         "text_basis": "FULL_TEXT",
         "citation": {
-          "title": "تراز شواهد — گزارش مورد و case series",
-          "authors": "دکتر فواد شهابیان",
-          "year": 2026,
-          "journal": "",
+          "title": "Evidence-based Dentistry: Part IV. Research Design and Levels of Evidence",
+          "authors": "Sutherland SE",
+          "year": 2001,
+          "journal": "Journal of the Canadian Dental Association",
           "doi": ""
         },
         "journal_quartile": {
@@ -19796,31 +20432,137 @@
         "penalties": null,
         "commentary_checklist": [
           {
-            "item": "زنجیره‌ی استدلال صریح است",
+            "item": "reasoning chain is explicit",
             "points": 4,
-            "evidence_quote": "نمی‌دانیم اگر این پنج نفر درمان نمی‌شدند چه می‌شد؛ شاید خودبه‌خود خوب می‌شدند."
+            "evidence_quote": "The fact that randomization keeps study groups as similar as possible from the outset, together with other features of the design, such as blinding, sample size justification, appropriate outcome measures and statistical analysis, means that RCTs have the greatest potential to minimize bias.",
+            "note": ""
           },
           {
-            "item": "نسبتش با شواهد منتشرشده بیان شده است",
-            "points": 0,
-            "evidence_quote": ""
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "In fact, methodology research has shown that, most often, bias and weak designs cause trials to conclude that a treatment is effective when it really may not be, and to overestimate the effect, even when it is true.",
+            "note": ""
           },
           {
-            "item": "دامنه‌ی ادعا محدود شده است",
+            "item": "scope of the claim is bounded",
             "points": 3,
-            "evidence_quote": "با وجود این دو ضعف، گزارش مورد در سه موقعیت کاربرد دارد که مطالعات دیگر جایش را نمی‌گیرند."
+            "evidence_quote": "It should be noted that using the \"rules\" or categories of evidence only helps classify studies based on the type of research design.",
+            "note": ""
           },
           {
-            "item": "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد",
+            "item": "explicitly labeled as experience/opinion, not evidence",
             "points": 0,
-            "evidence_quote": ""
+            "evidence_quote": "",
+            "note": ""
           }
         ],
-        "des_score": 12,
+        "des_score": 16,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این متن آموزشی تألیفی امتیاز شفافیت ۱۲ از ۱۹ گرفت و مثل هر محتوای تألیفی در باند E است.",
-        "interpretation_fa": "متن جایگاه گزارش مورد را به دو سازوکار روشن وصل می‌کند، نبود گروه مقایسه و نبود طرح از پیش، و دامنه‌ی ادعا را با نام بردن سه موقعیتی که این طراحی در آن‌ها جایگزین ندارد محدود می‌کند. به مطالعه‌ی منتشرشده‌ی مشخصی ارجاع نمی‌دهد و خودش را تجربه یا دیدگاه نمی‌نامد. ارزشش آموزش خواندن درست یک case series است."
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی چهارم از یک سری آموزشی درباره‌ی دندانپزشکی مبتنی بر شواهد که انواع طراحی مطالعه و نردبان شواهد را معرفی می‌کند و ستون اصلی سری تراز شواهد است. استدلالش روشن است، به پژوهش‌های روش‌شناختی ارجاع می‌دهد و صریحاً می‌گوید نردبان فقط نوع طراحی را دسته‌بندی می‌کند و برای سوال درمان ساخته شده است. خودش را دیدگاه یا تجربه نمی‌نامد، و چون داده‌ای جمع نمی‌کند ارزشش آموزشی است، نه یافته‌ی پژوهشی."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "A practical approach to evidence-based dentistry: How to search for evidence to inform clinical decisions",
+          "authors": "Brignardello-Petersen R, Carrasco-Labra A, Booth HA, Glick M, Guyatt GH, Azarpazhooh A, Agoritsas T",
+          "year": 2014,
+          "journal": "The Journal of the American Dental Association",
+          "doi": "10.14219/jada.2014.113"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Because of the increasing number of new treatments and studies that address their effectiveness, knowing how to search for and use the best current evidence is a fundamental skill",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Depending on the nature of the question, EBD proposes a hierarchy of study designs, starting with those that minimize the risk of bias, which we should seek first to inform our clinical practice.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "For questions regarding therapy or prevention, well-designed and conducted randomized controlled trials",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": ""
+          }
+        ],
+        "des_score": 16,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی دوم از یک سری آموزشی در JADA که نشان می‌دهد سوال بالینی را چطور با چارچوب PICO بسازیم، برای هر نوع سوال کدام طراحی مطالعه مناسب‌تر است، و منابع شواهد را بر اساس سطح پردازش از مطالعه‌ی اولیه تا راهنمای بالینی مرتب می‌کند. به ادبیات روش‌شناسی تکیه دارد و دامنه‌ی سلسله‌مراتب را به نوع سوال گره می‌زند، ولی خودش را دیدگاه نمی‌نامد. ارزشش راهنمای عملی جست‌وجو و انتخاب شواهد است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "New evidence pyramid",
+          "authors": "Murad MH, Asi N, Alsawas M, Alahdab F",
+          "year": 2016,
+          "journal": "Evidence-Based Medicine",
+          "doi": "10.1136/ebmed-2016-110401"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Study design alone appears to be insufficient on its own as a surrogate for risk of bias.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Another challenge to the notion of having systematic reviews on the top of the evidence pyramid relates to the framework presented in the Journal of the American Medical Association User's Guide on systematic reviews and meta-analysis.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "One of the limitations of all 'pyramids' and depictions of evidence hierarchy relates to the underpinning of such schemas.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "we suggest, in this perspective, two visual modifications to the pyramid",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله یک یادداشت دیدگاه (Perspective) است نه مطالعه، و با امتیاز شفافیت ۱۹ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "یادداشتی دیدگاهی که دو تغییر در هرم شواهد پیشنهاد می‌کند: مرزهای موجی میان طراحی‌ها، چون طبق رویکرد GRADE کیفیت شواهد هر طراحی می‌تواند بالا یا پایین برود، و برداشتن مرور سیستماتیک از رأس هرم و دیدنش به‌عنوان ذره‌بینی برای ارزیابی شواهد. هر چهار معیار شفافیت را دارد و خودش را صریحاً دیدگاه می‌نامد. ارزشش نشان دادن محدودیت نردبان سنتی است."
       }
     ]
   },
@@ -20037,7 +20779,7 @@
     ]
   },
   "taraz/taraz1-8": {
-    "scored_at": "2026-10-03",
+    "scored_at": "2026-10-05",
     "sources": [
       {
         "des_version": "2.4",
@@ -20045,10 +20787,10 @@
         "question_type": null,
         "text_basis": "FULL_TEXT",
         "citation": {
-          "title": "تراز شواهد — مرور سیستماتیک و متاآنالیز",
-          "authors": "دکتر فواد شهابیان",
-          "year": 2026,
-          "journal": "",
+          "title": "Evidence-based Dentistry: Part IV. Research Design and Levels of Evidence",
+          "authors": "Sutherland SE",
+          "year": 2001,
+          "journal": "Journal of the Canadian Dental Association",
           "doi": ""
         },
         "journal_quartile": {
@@ -20060,31 +20802,137 @@
         "penalties": null,
         "commentary_checklist": [
           {
-            "item": "زنجیره‌ی استدلال صریح است",
+            "item": "reasoning chain is explicit",
             "points": 4,
-            "evidence_quote": "اگر تفاوتشان کوچک یا متوسط باشد، برای دیدن آن باید بیماران خیلی زیادی وارد مطالعه شوند، و یک مطالعه‌ی تنها معمولاً این‌قدر بیمار ندارد."
+            "evidence_quote": "The fact that randomization keeps study groups as similar as possible from the outset, together with other features of the design, such as blinding, sample size justification, appropriate outcome measures and statistical analysis, means that RCTs have the greatest potential to minimize bias.",
+            "note": ""
           },
           {
-            "item": "نسبتش با شواهد منتشرشده بیان شده است",
-            "points": 0,
-            "evidence_quote": ""
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "In fact, methodology research has shown that, most often, bias and weak designs cause trials to conclude that a treatment is effective when it really may not be, and to overestimate the effect, even when it is true.",
+            "note": ""
           },
           {
-            "item": "دامنه‌ی ادعا محدود شده است",
+            "item": "scope of the claim is bounded",
             "points": 3,
-            "evidence_quote": "در قسمت‌های آخر سری هم خواهیم دید که جایگاه مرور سیستماتیک در بالای این نردبان بی‌قیدوشرط نیست."
+            "evidence_quote": "It should be noted that using the \"rules\" or categories of evidence only helps classify studies based on the type of research design.",
+            "note": ""
           },
           {
-            "item": "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد",
+            "item": "explicitly labeled as experience/opinion, not evidence",
             "points": 0,
-            "evidence_quote": ""
+            "evidence_quote": "",
+            "note": ""
           }
         ],
-        "des_score": 12,
+        "des_score": 16,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این متن آموزشی تألیفی امتیاز شفافیت ۱۲ از ۱۹ گرفت و مثل هر محتوای تألیفی در باند E است.",
-        "interpretation_fa": "متن ضرورت مرور سیستماتیک را به یک سازوکار روشن وصل می‌کند، این‌که یک مطالعه‌ی تنها بیمار کافی برای دیدن تفاوت‌های کوچک ندارد، و جایگاه مرور را در بالای نردبان شواهد صریحاً مشروط می‌کند. به مطالعه‌ی منتشرشده‌ی مشخصی ارجاع نمی‌دهد و خودش را تجربه یا دیدگاه نمی‌نامد. ارزشش آموزش خواندن درست یک مرور سیستماتیک و متاآنالیز است."
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی چهارم از یک سری آموزشی درباره‌ی دندانپزشکی مبتنی بر شواهد که انواع طراحی مطالعه و نردبان شواهد را معرفی می‌کند و ستون اصلی سری تراز شواهد است. استدلالش روشن است، به پژوهش‌های روش‌شناختی ارجاع می‌دهد و صریحاً می‌گوید نردبان فقط نوع طراحی را دسته‌بندی می‌کند و برای سوال درمان ساخته شده است. خودش را دیدگاه یا تجربه نمی‌نامد، و چون داده‌ای جمع نمی‌کند ارزشش آموزشی است، نه یافته‌ی پژوهشی."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "A practical approach to evidence-based dentistry: How to search for evidence to inform clinical decisions",
+          "authors": "Brignardello-Petersen R, Carrasco-Labra A, Booth HA, Glick M, Guyatt GH, Azarpazhooh A, Agoritsas T",
+          "year": 2014,
+          "journal": "The Journal of the American Dental Association",
+          "doi": "10.14219/jada.2014.113"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Because of the increasing number of new treatments and studies that address their effectiveness, knowing how to search for and use the best current evidence is a fundamental skill",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Depending on the nature of the question, EBD proposes a hierarchy of study designs, starting with those that minimize the risk of bias, which we should seek first to inform our clinical practice.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "For questions regarding therapy or prevention, well-designed and conducted randomized controlled trials",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": ""
+          }
+        ],
+        "des_score": 16,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی دوم از یک سری آموزشی در JADA که نشان می‌دهد سوال بالینی را چطور با چارچوب PICO بسازیم، برای هر نوع سوال کدام طراحی مطالعه مناسب‌تر است، و منابع شواهد را بر اساس سطح پردازش از مطالعه‌ی اولیه تا راهنمای بالینی مرتب می‌کند. به ادبیات روش‌شناسی تکیه دارد و دامنه‌ی سلسله‌مراتب را به نوع سوال گره می‌زند، ولی خودش را دیدگاه نمی‌نامد. ارزشش راهنمای عملی جست‌وجو و انتخاب شواهد است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "New evidence pyramid",
+          "authors": "Murad MH, Asi N, Alsawas M, Alahdab F",
+          "year": 2016,
+          "journal": "Evidence-Based Medicine",
+          "doi": "10.1136/ebmed-2016-110401"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Study design alone appears to be insufficient on its own as a surrogate for risk of bias.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Another challenge to the notion of having systematic reviews on the top of the evidence pyramid relates to the framework presented in the Journal of the American Medical Association User's Guide on systematic reviews and meta-analysis.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "One of the limitations of all 'pyramids' and depictions of evidence hierarchy relates to the underpinning of such schemas.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "we suggest, in this perspective, two visual modifications to the pyramid",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله یک یادداشت دیدگاه (Perspective) است نه مطالعه، و با امتیاز شفافیت ۱۹ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "یادداشتی دیدگاهی که دو تغییر در هرم شواهد پیشنهاد می‌کند: مرزهای موجی میان طراحی‌ها، چون طبق رویکرد GRADE کیفیت شواهد هر طراحی می‌تواند بالا یا پایین برود، و برداشتن مرور سیستماتیک از رأس هرم و دیدنش به‌عنوان ذره‌بینی برای ارزیابی شواهد. هر چهار معیار شفافیت را دارد و خودش را صریحاً دیدگاه می‌نامد. ارزشش نشان دادن محدودیت نردبان سنتی است."
       }
     ]
   },
@@ -20149,10 +20997,10 @@
         "question_type": null,
         "text_basis": "FULL_TEXT",
         "citation": {
-          "title": "تراز شواهد — نردبان شواهد",
-          "authors": "دکتر فواد شهابیان",
-          "year": 2026,
-          "journal": "",
+          "title": "Evidence-based Dentistry: Part IV. Research Design and Levels of Evidence",
+          "authors": "Sutherland SE",
+          "year": 2001,
+          "journal": "Journal of the Canadian Dental Association",
           "doi": ""
         },
         "journal_quartile": {
@@ -20164,31 +21012,137 @@
         "penalties": null,
         "commentary_checklist": [
           {
-            "item": "زنجیره‌ی استدلال صریح است",
+            "item": "reasoning chain is explicit",
             "points": 4,
-            "evidence_quote": "RCT بالاست چون گروه درمان و گروه کنترل دارد و بیماران به صورت تصادفی بین این دو گروه تقسیم شده‌اند."
+            "evidence_quote": "The fact that randomization keeps study groups as similar as possible from the outset, together with other features of the design, such as blinding, sample size justification, appropriate outcome measures and statistical analysis, means that RCTs have the greatest potential to minimize bias.",
+            "note": ""
           },
           {
-            "item": "نسبتش با شواهد منتشرشده بیان شده است",
-            "points": 0,
-            "evidence_quote": ""
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "In fact, methodology research has shown that, most often, bias and weak designs cause trials to conclude that a treatment is effective when it really may not be, and to overestimate the effect, even when it is true.",
+            "note": ""
           },
           {
-            "item": "دامنه‌ی ادعا محدود شده است",
+            "item": "scope of the claim is bounded",
             "points": 3,
-            "evidence_quote": "اول این‌که این نردبان بیشتر برای سوال‌هایی ساخته شده که می‌پرسند یک درمان چقدر مؤثر است."
+            "evidence_quote": "It should be noted that using the \"rules\" or categories of evidence only helps classify studies based on the type of research design.",
+            "note": ""
           },
           {
-            "item": "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد",
+            "item": "explicitly labeled as experience/opinion, not evidence",
             "points": 0,
-            "evidence_quote": ""
+            "evidence_quote": "",
+            "note": ""
           }
         ],
-        "des_score": 12,
+        "des_score": 16,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این متن آموزشی تألیفی امتیاز شفافیت ۱۲ از ۱۹ گرفت و مثل هر محتوای تألیفی در باند E است.",
-        "interpretation_fa": "متن جایگاه هر نوع مطالعه در نردبان شواهد را به یک سازوکار روشن وصل می‌کند، یعنی وجود گروه مقایسه و تقسیم تصادفی، و دامنه‌ی نردبان را صریحاً محدود می‌کند: بیشتر برای سوال اثربخشی درمان است و کیفیت اجرای یک مطالعه را نمی‌سنجد. به مطالعه‌ی منتشرشده‌ی مشخصی ارجاع نمی‌دهد و خودش را تجربه یا دیدگاه نمی‌نامد. ارزشش آموزش سنجیدن سریع وزن یک مقاله از روی نوع طراحی آن است."
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی چهارم از یک سری آموزشی درباره‌ی دندانپزشکی مبتنی بر شواهد که انواع طراحی مطالعه و نردبان شواهد را معرفی می‌کند و ستون اصلی سری تراز شواهد است. استدلالش روشن است، به پژوهش‌های روش‌شناختی ارجاع می‌دهد و صریحاً می‌گوید نردبان فقط نوع طراحی را دسته‌بندی می‌کند و برای سوال درمان ساخته شده است. خودش را دیدگاه یا تجربه نمی‌نامد، و چون داده‌ای جمع نمی‌کند ارزشش آموزشی است، نه یافته‌ی پژوهشی."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "A practical approach to evidence-based dentistry: How to search for evidence to inform clinical decisions",
+          "authors": "Brignardello-Petersen R, Carrasco-Labra A, Booth HA, Glick M, Guyatt GH, Azarpazhooh A, Agoritsas T",
+          "year": 2014,
+          "journal": "The Journal of the American Dental Association",
+          "doi": "10.14219/jada.2014.113"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Because of the increasing number of new treatments and studies that address their effectiveness, knowing how to search for and use the best current evidence is a fundamental skill",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Depending on the nature of the question, EBD proposes a hierarchy of study designs, starting with those that minimize the risk of bias, which we should seek first to inform our clinical practice.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "For questions regarding therapy or prevention, well-designed and conducted randomized controlled trials",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": ""
+          }
+        ],
+        "des_score": 16,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی دوم از یک سری آموزشی در JADA که نشان می‌دهد سوال بالینی را چطور با چارچوب PICO بسازیم، برای هر نوع سوال کدام طراحی مطالعه مناسب‌تر است، و منابع شواهد را بر اساس سطح پردازش از مطالعه‌ی اولیه تا راهنمای بالینی مرتب می‌کند. به ادبیات روش‌شناسی تکیه دارد و دامنه‌ی سلسله‌مراتب را به نوع سوال گره می‌زند، ولی خودش را دیدگاه نمی‌نامد. ارزشش راهنمای عملی جست‌وجو و انتخاب شواهد است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "New evidence pyramid",
+          "authors": "Murad MH, Asi N, Alsawas M, Alahdab F",
+          "year": 2016,
+          "journal": "Evidence-Based Medicine",
+          "doi": "10.1136/ebmed-2016-110401"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Study design alone appears to be insufficient on its own as a surrogate for risk of bias.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Another challenge to the notion of having systematic reviews on the top of the evidence pyramid relates to the framework presented in the Journal of the American Medical Association User's Guide on systematic reviews and meta-analysis.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "One of the limitations of all 'pyramids' and depictions of evidence hierarchy relates to the underpinning of such schemas.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "we suggest, in this perspective, two visual modifications to the pyramid",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله یک یادداشت دیدگاه (Perspective) است نه مطالعه، و با امتیاز شفافیت ۱۹ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "یادداشتی دیدگاهی که دو تغییر در هرم شواهد پیشنهاد می‌کند: مرزهای موجی میان طراحی‌ها، چون طبق رویکرد GRADE کیفیت شواهد هر طراحی می‌تواند بالا یا پایین برود، و برداشتن مرور سیستماتیک از رأس هرم و دیدنش به‌عنوان ذره‌بینی برای ارزیابی شواهد. هر چهار معیار شفافیت را دارد و خودش را صریحاً دیدگاه می‌نامد. ارزشش نشان دادن محدودیت نردبان سنتی است."
       }
     ]
   }
