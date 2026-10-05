@@ -1370,7 +1370,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 26,
+   "count": 27,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1397,7 +1397,8 @@
     "sharehub/share-23",
     "sharehub/share-24",
     "sharehub/share-25",
-    "sharehub/share-26"
+    "sharehub/share-26",
+    "sharehub/share-27"
    ]
   },
   {
@@ -1413,7 +1414,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 26,
+   "count": 27,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1440,7 +1441,8 @@
     "sharehub/share-23",
     "sharehub/share-24",
     "sharehub/share-25",
-    "sharehub/share-26"
+    "sharehub/share-26",
+    "sharehub/share-27"
    ]
   },
   {
@@ -1860,6 +1862,51 @@
    ]
   },
   {
+   "key": "لمینیت_سرامیکی",
+   "tag": "#لمینیت_سرامیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ونیر/لمینیتِ سرامیکی — رستوریشنِ نازکِ باندشونده‌ی زیبایی.",
+   "use_when": "مقاله لمینیتِ سرامیکی را موضوع داشته باشد.",
+   "aliases": [
+    "ceramic laminate",
+    "لامینیت",
+    "لمینت",
+    "لامینیت سرامیکی",
+    "veneer laminate"
+   ],
+   "variants": [
+    "#لمینیت"
+   ],
+   "co_tags": [
+    "#Laminate_Veneer"
+   ],
+   "count": 21,
+   "content_ids": [
+    "episodes/episode-9",
+    "episodes/episode-19",
+    "episodes/episode-37",
+    "episodes/episode-38",
+    "episodes/episode-39",
+    "episodes/episode-148",
+    "notecast/episode-19",
+    "metanotes/meta-1",
+    "dentai/dentai-10",
+    "chairside/chairside-1",
+    "insight/insight-36",
+    "insight/insight-37",
+    "sharehub/share-6",
+    "sharehub/share-8",
+    "notecast/episode-37",
+    "notecast/episode-38",
+    "chairside/chairside-32",
+    "chairside/chairside-35",
+    "sharehub/share-22",
+    "insight/insight-79",
+    "sharehub/share-27"
+   ]
+  },
+  {
    "key": "متانوت",
    "tag": "#متانوت",
    "domain": "brand",
@@ -1933,50 +1980,6 @@
     "notecast/episode-40",
     "sharehub/share-20",
     "sharehub/share-22"
-   ]
-  },
-  {
-   "key": "لمینیت_سرامیکی",
-   "tag": "#لمینیت_سرامیکی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ونیر/لمینیتِ سرامیکی — رستوریشنِ نازکِ باندشونده‌ی زیبایی.",
-   "use_when": "مقاله لمینیتِ سرامیکی را موضوع داشته باشد.",
-   "aliases": [
-    "ceramic laminate",
-    "لامینیت",
-    "لمینت",
-    "لامینیت سرامیکی",
-    "veneer laminate"
-   ],
-   "variants": [
-    "#لمینیت"
-   ],
-   "co_tags": [
-    "#Laminate_Veneer"
-   ],
-   "count": 20,
-   "content_ids": [
-    "episodes/episode-9",
-    "episodes/episode-19",
-    "episodes/episode-37",
-    "episodes/episode-38",
-    "episodes/episode-39",
-    "episodes/episode-148",
-    "notecast/episode-19",
-    "metanotes/meta-1",
-    "dentai/dentai-10",
-    "chairside/chairside-1",
-    "insight/insight-36",
-    "insight/insight-37",
-    "sharehub/share-6",
-    "sharehub/share-8",
-    "notecast/episode-37",
-    "notecast/episode-38",
-    "chairside/chairside-32",
-    "chairside/chairside-35",
-    "sharehub/share-22",
-    "insight/insight-79"
    ]
   },
   {
@@ -2842,7 +2845,7 @@
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
    "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
    "aliases": [
@@ -3188,6 +3191,41 @@
    ]
   },
   {
+   "key": "cad_cam",
+   "tag": "#CAD_CAM",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "طراحی و ساختِ کامپیوتریِ رستوریشن — اسکن، دیزاین و میلینگ/پرینت.",
+   "use_when": "مقاله جریانِ CAD/CAM یا میلینگ را موضوع داشته باشد.",
+   "aliases": [
+    "cad cam",
+    "کدکم",
+    "cad/cam",
+    "میلینگ",
+    "milling",
+    "cadcam",
+    "کد کم",
+    "سی ای دی کم"
+   ],
+   "variants": [
+    "#CADCAM"
+   ],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-96",
+    "episodes/episode-104",
+    "episodes/episode-123-1",
+    "episodes/episode-133",
+    "episodes/episode-149-2",
+    "insight/insight-30",
+    "insight/insight-31",
+    "insight/insight-35",
+    "dentai/dentai-30",
+    "sharehub/share-27"
+   ]
+  },
+  {
    "key": "zero_bone_loss",
    "tag": "#Zero_Bone_Loss",
    "domain": "clinical",
@@ -3361,6 +3399,40 @@
    ]
   },
   {
+   "key": "لیتیوم_دی_سیلیکات",
+   "tag": "#لیتیوم_دی_سیلیکات",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "گلاس‌سرامیکِ لیتیوم‌دی‌سیلیکات (اِمکس) — تعادلِ استحکام و زیبایی برای ونیر، اینله/آنله و روکشِ تک‌واحدی.",
+   "use_when": "مقاله لیتیوم‌دی‌سیلیکات یا اِمکس را انتخاب یا ارزیابی کند.",
+   "aliases": [
+    "lithium disilicate",
+    "emax",
+    "e.max",
+    "ایمکس",
+    "امکس",
+    "اینگات ایمکس",
+    "لیتیوم دیسیلیکات"
+   ],
+   "variants": [
+    "#lithium_disilicate"
+   ],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-69",
+    "episodes/episode-123-1",
+    "notecast/episode-8",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "dentai/dentai-25",
+    "episodes/episode-159-1",
+    "metanotes/meta-14",
+    "dentai/dentai-26",
+    "sharehub/share-27"
+   ]
+  },
+  {
    "key": "متاآنالیز",
    "tag": "#متاآنالیز",
    "domain": null,
@@ -3417,40 +3489,6 @@
     "dentai/dentai-34",
     "sharehub/share-19",
     "dentai/dentai-35"
-   ]
-  },
-  {
-   "key": "cad_cam",
-   "tag": "#CAD_CAM",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "طراحی و ساختِ کامپیوتریِ رستوریشن — اسکن، دیزاین و میلینگ/پرینت.",
-   "use_when": "مقاله جریانِ CAD/CAM یا میلینگ را موضوع داشته باشد.",
-   "aliases": [
-    "cad cam",
-    "کدکم",
-    "cad/cam",
-    "میلینگ",
-    "milling",
-    "cadcam",
-    "کد کم",
-    "سی ای دی کم"
-   ],
-   "variants": [
-    "#CADCAM"
-   ],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-96",
-    "episodes/episode-104",
-    "episodes/episode-123-1",
-    "episodes/episode-133",
-    "episodes/episode-149-2",
-    "insight/insight-30",
-    "insight/insight-31",
-    "insight/insight-35",
-    "dentai/dentai-30"
    ]
   },
   {
@@ -3632,39 +3670,6 @@
    ]
   },
   {
-   "key": "لیتیوم_دی_سیلیکات",
-   "tag": "#لیتیوم_دی_سیلیکات",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "گلاس‌سرامیکِ لیتیوم‌دی‌سیلیکات (اِمکس) — تعادلِ استحکام و زیبایی برای ونیر، اینله/آنله و روکشِ تک‌واحدی.",
-   "use_when": "مقاله لیتیوم‌دی‌سیلیکات یا اِمکس را انتخاب یا ارزیابی کند.",
-   "aliases": [
-    "lithium disilicate",
-    "emax",
-    "e.max",
-    "ایمکس",
-    "امکس",
-    "اینگات ایمکس",
-    "لیتیوم دیسیلیکات"
-   ],
-   "variants": [
-    "#lithium_disilicate"
-   ],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-69",
-    "episodes/episode-123-1",
-    "notecast/episode-8",
-    "notecast/episode-9",
-    "notecast/episode-10",
-    "dentai/dentai-25",
-    "episodes/episode-159-1",
-    "metanotes/meta-14",
-    "dentai/dentai-26"
-   ]
-  },
-  {
    "key": "ids",
    "tag": "#IDS",
    "domain": null,
@@ -3798,6 +3803,33 @@
     "notecast/episode-16",
     "notecast/episode-29",
     "insight/insight-42"
+   ]
+  },
+  {
+   "key": "تراش_لمینیت",
+   "tag": "#تراش_لمینیت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "آماده‌سازی دندان برای لمینت — حفظ مینا، فضا، مسیر نشست.",
+   "use_when": "مقاله اصولِ تراش لمینت را بدهد.",
+   "aliases": [
+    "تراش ونیر",
+    "veneer preparation",
+    "پرپ لمینت",
+    "تراش برای لمینت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-37",
+    "episodes/episode-38",
+    "dentai/dentai-10",
+    "sharehub/share-8",
+    "notecast/episode-37",
+    "notecast/episode-38",
+    "chairside/chairside-35",
+    "sharehub/share-27"
    ]
   },
   {
@@ -4143,32 +4175,6 @@
     "insight/insight-49",
     "insight/insight-54",
     "sharehub/share-10"
-   ]
-  },
-  {
-   "key": "تراش_لمینیت",
-   "tag": "#تراش_لمینیت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "آماده‌سازی دندان برای لمینت — حفظ مینا، فضا، مسیر نشست.",
-   "use_when": "مقاله اصولِ تراش لمینت را بدهد.",
-   "aliases": [
-    "تراش ونیر",
-    "veneer preparation",
-    "پرپ لمینت",
-    "تراش برای لمینت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-37",
-    "episodes/episode-38",
-    "dentai/dentai-10",
-    "sharehub/share-8",
-    "notecast/episode-37",
-    "notecast/episode-38",
-    "chairside/chairside-35"
    ]
   },
   {
@@ -4958,7 +4964,7 @@
    "key": "رادیوگرافی_تشخیصی",
    "tag": "#رادیوگرافی_تشخیصی",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "انتخاب و تفسیرِ درستِ تصویر — پانورامیک در برابر پری‌اپیکال.",
    "use_when": "مقاله کفایت یا نارساییِ یک تصویر را مسئله بداند.",
    "aliases": [
@@ -5108,6 +5114,32 @@
     "sharehub/share-11",
     "sharehub/share-13",
     "insight/insight-82"
+   ]
+  },
+  {
+   "key": "فلدسپاتیک",
+   "tag": "#فلدسپاتیک",
+   "domain": null,
+   "words": 1,
+   "definition": "پرسلن فلدسپاتیک.",
+   "use_when": "مقاله رفتار یا اندیکاسیون فلدسپاتیک را بگوید.",
+   "aliases": [
+    "feldspathic",
+    "feldspathic porcelain",
+    "پرسلن فلدسپاتیک"
+   ],
+   "variants": [
+    "#feldspathic_porcelain"
+   ],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "notecast/episode-8",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "notecast/episode-16",
+    "insight/insight-42",
+    "sharehub/share-27"
    ]
   },
   {
@@ -5890,31 +5922,6 @@
    ]
   },
   {
-   "key": "فلدسپاتیک",
-   "tag": "#فلدسپاتیک",
-   "domain": null,
-   "words": 1,
-   "definition": "پرسلن فلدسپاتیک.",
-   "use_when": "مقاله رفتار یا اندیکاسیون فلدسپاتیک را بگوید.",
-   "aliases": [
-    "feldspathic",
-    "feldspathic porcelain",
-    "پرسلن فلدسپاتیک"
-   ],
-   "variants": [
-    "#feldspathic_porcelain"
-   ],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "notecast/episode-8",
-    "notecast/episode-9",
-    "notecast/episode-10",
-    "notecast/episode-16",
-    "insight/insight-42"
-   ]
-  },
-  {
    "key": "مطالعه_مشاهده_ای",
    "tag": "#مطالعه_مشاهده‌ای",
    "domain": "clinical",
@@ -6541,7 +6548,7 @@
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
-   "words": 6,
+   "words": 4,
    "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
    "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
    "aliases": [
@@ -6882,6 +6889,31 @@
     "plak-sefr/plak1-2",
     "plak-sefr/plak1-3",
     "plak-sefr/plak1-6"
+   ]
+  },
+  {
+   "key": "موک_آپ",
+   "tag": "#موک_آپ",
+   "domain": null,
+   "words": 2,
+   "definition": "ماک‌آپ به‌عنوان راهنمای تراش.",
+   "use_when": "مقاله تراشِ ماک‌آپ‌محور را شرح دهد.",
+   "aliases": [
+    "mock up",
+    "mockup",
+    "mock-up driven",
+    "ماکاپ",
+    "ماک آپ",
+    "موکاپ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-38",
+    "notecast/episode-38",
+    "insight/insight-71",
+    "sharehub/share-27"
    ]
   },
   {
@@ -8765,30 +8797,6 @@
     "insight/insight-8",
     "insight/insight-41",
     "insight/insight-45"
-   ]
-  },
-  {
-   "key": "موک_آپ",
-   "tag": "#موک_آپ",
-   "domain": null,
-   "words": 2,
-   "definition": "ماک‌آپ به‌عنوان راهنمای تراش.",
-   "use_when": "مقاله تراشِ ماک‌آپ‌محور را شرح دهد.",
-   "aliases": [
-    "mock up",
-    "mockup",
-    "mock-up driven",
-    "ماکاپ",
-    "ماک آپ",
-    "موکاپ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-38",
-    "notecast/episode-38",
-    "insight/insight-71"
    ]
   },
   {
@@ -14905,7 +14913,7 @@
    "key": "اینتروژن_ارتودنسی",
    "tag": "#اینتروژن_ارتودنسی",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
    "use_when": "مقاله اینتروژن را راه‌حل بداند.",
    "aliases": [
@@ -15778,7 +15786,7 @@
    "key": "تفسیر_رادیوگرافی",
    "tag": "#تفسیر_رادیوگرافی",
    "domain": "clinical",
-   "words": 4,
+   "words": 2,
    "definition": "خواندنِ الگو — مرزِ صاف در برابر مرزِ منتشر — نه صرفاً دیدنِ لکه.",
    "use_when": "مقاله معیارِ تمایزِ تصویری بدهد.",
    "aliases": [
@@ -16767,7 +16775,7 @@
    "key": "رادیوگرافی_کنترل",
    "tag": "#رادیوگرافی_کنترل",
    "domain": "clinical",
-   "words": 4,
+   "words": 2,
    "definition": "پری‌اپیکالِ صحیح، به‌عنوان تأییدِ قطعیِ نشست.",
    "use_when": "مقاله رادیوگرافی را تأییدِ نهایی بداند، نه حس.",
    "aliases": [
@@ -19617,7 +19625,7 @@
    "key": "هوش_مصنوعی_رادیوگرافی",
    "tag": "#هوش_مصنوعی_رادیوگرافی",
    "domain": "ai",
-   "words": 5,
+   "words": 3,
    "definition": "نرم‌افزاری که روی رادیوگرافی ضایعه یا سطح استخوان را علامت می‌زند — تصویری که اغلب با ChatGPT اشتباه گرفته می‌شود.",
    "use_when": "مقاله همین دسته را موضوع یا نقطه‌ی تمایز قرار دهد.",
    "aliases": [

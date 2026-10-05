@@ -28,11 +28,11 @@
 //                        than guessing.
 //   · anything else    → «نتوانستیم بررسی کنیم» — a dead API is not a forged
 //                        certificate, and must never be printed as one.
-import { el } from './util.js?v=172';
-import { api } from './api.js?v=172';
-import { registerSW } from './pwa.js?v=172';
-import { wirePageBack } from './page-back.js?v=172';
-import { downloadCertificate, CERT_TEXT } from './certificate-image.js?v=172';
+import { el } from './util.js?v=173';
+import { api } from './api.js?v=173';
+import { registerSW } from './pwa.js?v=173';
+import { wirePageBack } from './page-back.js?v=173';
+import { downloadCertificate, CERT_TEXT } from './certificate-image.js?v=173';
 
 const LOGO = '/logo-v2.png';
 const VERIFY_HOST = 'dentcast.ir/plus/certificate.html';
