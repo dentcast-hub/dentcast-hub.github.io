@@ -138,6 +138,10 @@ body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
 .ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
 .ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
 .ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+.ep-refs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.75rem;}
+.ep-refs li{font-size:.85rem;color:var(--txt2);line-height:1.8;}
+.ep-refs a{color:var(--ac);text-decoration:none;font-weight:600;}
+.ep-refs a:hover{text-decoration:underline;}
 @media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
 .lang-btn{
   display: flex;
@@ -267,6 +271,14 @@ p{ margin:0.875rem 0; font-size:1.02rem; }
     <div class="ep-section">
       <h2 class="ep-section-label">Tags</h2>
       <div class="ep-tags"><span class="ep-hashtag">#TarazEShavahed</span><span class="ep-hashtag">#RandomizedTrial</span><span class="ep-hashtag">#Randomization</span><span class="ep-hashtag">#Blinding</span><span class="ep-hashtag">#Bias</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">References</h2>
+      <ul class="ep-refs">
+        <li>Sutherland SE. Evidence-based dentistry: Part IV. Research design and levels of evidence. J Can Dent Assoc. 2001;67(7):375-378. <a href="https://pubmed.ncbi.nlm.nih.gov/11468093/" target="_blank" rel="noopener noreferrer">PubMed</a></li>
+        <li>Brignardello-Petersen R, Carrasco-Labra A, Booth HA, Glick M, Guyatt GH, Azarpazhooh A, Agoritsas T. A practical approach to evidence-based dentistry: How to search for evidence to inform clinical decisions. J Am Dent Assoc. 2014;145(12):1262-1267. <a href="https://doi.org/10.14219/jada.2014.113" target="_blank" rel="noopener noreferrer">DOI</a></li>
+        <li>Murad MH, Asi N, Alsawas M, Alahdab F. New evidence pyramid. Evid Based Med. 2016;21(4):125-127. <a href="https://doi.org/10.1136/ebmed-2016-110401" target="_blank" rel="noopener noreferrer">DOI</a></li>
+      </ul>
     </div>
   </div>
   <!-- Series prev/next (en tier). Targets are en counterparts only. -->
