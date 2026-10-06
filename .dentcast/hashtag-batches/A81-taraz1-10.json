@@ -1,0 +1,24 @@
+{
+  "type": "taraz",
+  "enforce": true,
+  "note": "taraz/taraz1-10 — تراز شواهد قسمت ۱۰ «نوع مطالعه همه‌ی ماجرا نیست». #تراز_شواهد (series), #نردبان_شواهد and #متاآنالیز are REUSED. Two concepts the part resolves are newly minted: --simulate for «GRADE» cleared nothing and «سطح اطمینان شواهد» surfaced only the series tag on the shared word «شواهد»; «فاصله اطمینان» and «confidence interval» surfaced only unrelated tags (#اطمینان_کاذب, #فاصله_ایمپلنت) on a shared word.",
+  "concepts": [
+    {
+      "tag": "#رویکرد_GRADE",
+      "domain": "clinical",
+      "definition": "روشی برای سنجیدن این‌که چقدر می‌شود به مجموعه‌ی شواهد درباره‌ی یک سوال اطمینان کرد (Grading of Recommendations Assessment, Development and Evaluation)؛ نوع مطالعه نقطه‌ی شروع است و اجرای ضعیف، نتیجه‌ی نادقیق، غیرمستقیم بودن و ناهم‌خوانی آن را پایین و عواملی دیگر آن را بالا می‌برند، و نتیجه در چهار سطح بالا، متوسط، پایین و خیلی پایین گزارش می‌شود.",
+      "use_when": "مقاله توضیح دهد اطمینان به شواهد چطور فراتر از نوع مطالعه سنجیده می‌شود، یا سطح‌های GRADE را در یک مرور سیستماتیک یا گایدلاین تفسیر کند.",
+      "aliases": ["GRADE", "GRADE approach", "certainty of evidence", "quality of evidence", "قطعیت شواهد", "اطمینان به شواهد", "سطح اطمینان شواهد"]
+    },
+    {
+      "tag": "#فاصله_اطمینان",
+      "domain": "clinical",
+      "definition": "محدوده‌ای که یک مطالعه برای اثر واقعی درمان گزارش می‌کند، یعنی اثر واقعی به احتمال زیاد جایی بین دو سر آن است (confidence interval)؛ هرچه پهن‌تر باشد نتیجه نادقیق‌تر است، و اگر هم فایده و هم ضرر را در بر بگیرد مطالعه جوابی به سوال نداده است.",
+      "use_when": "مقاله دقت نتیجه‌ی یک مطالعه را از روی پهنای محدوده‌ی اثر آن توضیح یا تفسیر کند.",
+      "aliases": ["confidence interval", "CI", "imprecision", "فاصله‌ی اطمینان", "بازه اطمینان", "نادقیق بودن نتیجه"]
+    }
+  ],
+  "articles": {
+    "taraz/taraz1-10": ["#تراز_شواهد", "#رویکرد_GRADE", "#فاصله_اطمینان", "#نردبان_شواهد", "#متاآنالیز"]
+  }
+}

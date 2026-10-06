@@ -713,6 +713,10 @@
         "milestone": false
       },
       {
+        "content_id": "taraz/taraz1-10",
+        "milestone": true
+      },
+      {
         "content_id": "metanotes/meta-6",
         "milestone": false
       },

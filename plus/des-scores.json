@@ -21197,5 +21197,163 @@
         "interpretation_fa": "متن یک راهنمای مرجع است: حداقل تراش هر ماده را از دستورالعمل کارخانه‌ها و منابع مرجع کنار هم می‌گذارد و هر عدد را به دلیلش گره می‌زند، از لب‌پریدگی لبه‌های نازک در میلینگ تا دلیل جدا بودن thin veneer از ونیر معمولی. دامنه‌ی اعداد را هم مشخص می‌کند و قاعده‌ی گام رنگ را تجربی می‌نامد. آنچه نگرفته نام بردن خودش به‌عنوان تجربه یا دیدگاه است. ارزش بالینی‌اش جدولی است که پیش از تراش می‌شود به آن مراجعه کرد."
       }
     ]
+  },
+  "taraz/taraz1-10": {
+    "scored_at": "2026-10-06",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Evidence-based Dentistry: Part IV. Research Design and Levels of Evidence",
+          "authors": "Sutherland SE",
+          "year": 2001,
+          "journal": "Journal of the Canadian Dental Association",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "The fact that randomization keeps study groups as similar as possible from the outset, together with other features of the design, such as blinding, sample size justification, appropriate outcome measures and statistical analysis, means that RCTs have the greatest potential to minimize bias.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "In fact, methodology research has shown that, most often, bias and weak designs cause trials to conclude that a treatment is effective when it really may not be, and to overestimate the effect, even when it is true.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "It should be noted that using the \"rules\" or categories of evidence only helps classify studies based on the type of research design.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": ""
+          }
+        ],
+        "des_score": 16,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی چهارم از یک سری آموزشی درباره‌ی دندانپزشکی مبتنی بر شواهد که انواع طراحی مطالعه و نردبان شواهد را معرفی می‌کند و ستون اصلی سری تراز شواهد است. استدلالش روشن است، به پژوهش‌های روش‌شناختی ارجاع می‌دهد و صریحاً می‌گوید نردبان فقط نوع طراحی را دسته‌بندی می‌کند و برای سوال درمان ساخته شده است. خودش را دیدگاه یا تجربه نمی‌نامد، و چون داده‌ای جمع نمی‌کند ارزشش آموزشی است، نه یافته‌ی پژوهشی."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "A practical approach to evidence-based dentistry: How to search for evidence to inform clinical decisions",
+          "authors": "Brignardello-Petersen R, Carrasco-Labra A, Booth HA, Glick M, Guyatt GH, Azarpazhooh A, Agoritsas T",
+          "year": 2014,
+          "journal": "The Journal of the American Dental Association",
+          "doi": "10.14219/jada.2014.113"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Because of the increasing number of new treatments and studies that address their effectiveness, knowing how to search for and use the best current evidence is a fundamental skill",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Depending on the nature of the question, EBD proposes a hierarchy of study designs, starting with those that minimize the risk of bias, which we should seek first to inform our clinical practice.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "For questions regarding therapy or prevention, well-designed and conducted randomized controlled trials",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": ""
+          }
+        ],
+        "des_score": 16,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله‌ی آموزشی، مرور روایتی است نه مطالعه، و با امتیاز شفافیت ۱۶ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله‌ی دوم از یک سری آموزشی در JADA که نشان می‌دهد سوال بالینی را چطور با چارچوب PICO بسازیم، برای هر نوع سوال کدام طراحی مطالعه مناسب‌تر است، و منابع شواهد را بر اساس سطح پردازش از مطالعه‌ی اولیه تا راهنمای بالینی مرتب می‌کند. به ادبیات روش‌شناسی تکیه دارد و دامنه‌ی سلسله‌مراتب را به نوع سوال گره می‌زند، ولی خودش را دیدگاه نمی‌نامد. ارزشش راهنمای عملی جست‌وجو و انتخاب شواهد است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "New evidence pyramid",
+          "authors": "Murad MH, Asi N, Alsawas M, Alahdab F",
+          "year": 2016,
+          "journal": "Evidence-Based Medicine",
+          "doi": "10.1136/ebmed-2016-110401"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Study design alone appears to be insufficient on its own as a surrogate for risk of bias.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "Another challenge to the notion of having systematic reviews on the top of the evidence pyramid relates to the framework presented in the Journal of the American Medical Association User's Guide on systematic reviews and meta-analysis.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "One of the limitations of all 'pyramids' and depictions of evidence hierarchy relates to the underpinning of such schemas.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "we suggest, in this perspective, two visual modifications to the pyramid",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله یک یادداشت دیدگاه (Perspective) است نه مطالعه، و با امتیاز شفافیت ۱۹ از ۱۹ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "یادداشتی دیدگاهی که دو تغییر در هرم شواهد پیشنهاد می‌کند: مرزهای موجی میان طراحی‌ها، چون طبق رویکرد GRADE کیفیت شواهد هر طراحی می‌تواند بالا یا پایین برود، و برداشتن مرور سیستماتیک از رأس هرم و دیدنش به‌عنوان ذره‌بینی برای ارزیابی شواهد. هر چهار معیار شفافیت را دارد و خودش را صریحاً دیدگاه می‌نامد. ارزشش نشان دادن محدودیت نردبان سنتی است."
+      }
+    ]
   }
 }
