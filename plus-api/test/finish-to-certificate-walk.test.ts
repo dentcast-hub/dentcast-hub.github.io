@@ -18,7 +18,7 @@ import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import {
-  getPathways, getPathwayById, applyRemotePathways, resetRemotePathways, MIN_CERTIFICATE_STEPS,
+  getPathways, getPathwayById, applyRemotePathways, resetRemotePathways, MIN_CERTIFICATE_STEPS, isCertifiable,
 } from '../src/pathways.js';
 import { announceOpenExams, runReaderPathwayNotices } from '../src/services/pathway-exams.js';
 import { resetRateLimits } from '../src/services/rate-limit.js';
@@ -200,11 +200,13 @@ describe('a subscriber', () => {
 });
 
 describe('the pathway open to everybody is untouched', () => {
-  it('as shipped: a free reader opens it, its exam reads «pending», and no reader notice ever fires for it', async () => {
+  it('as shipped: a free reader opens it, it certifies (released 1405/07/14) but has no exam yet, and no reader notice ever fires for it', async () => {
     const phone = '09121400005';
     const me = as(await loginAs(app, phone));
+    expect(getPathwayById(OPEN_PATHWAY)!.certificate).toBeUndefined();
+    expect(isCertifiable(getPathwayById(OPEN_PATHWAY)!)).toBe(true);
     expect((await me.get(`/pathways/${OPEN_PATHWAY}`)).statusCode).toBe(200);
-    expect((await me.get(`/exams/${OPEN_PATHWAY}`)).json()).toMatchObject({ ok: true, state: 'pending' });
+    expect((await me.get(`/exams/${OPEN_PATHWAY}`)).json()).toMatchObject({ ok: true, state: 'no_form' });
     await read(phone, getPathwayById(OPEN_PATHWAY)!.steps.map((s) => s.content_id));
     await night();
     expect(await inbox(phone)).toHaveLength(0);
