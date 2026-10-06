@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>لحظه‌ی آلودگی — موشن Share Hub ۲۳</title>
+<!--
+  Motion graphic for /sharehub/share-23.html (founder brief, 1405/07/14):
+  a veneer is about to be bonded, the field gets contaminated, the clinician
+  freezes — and then REMEMBERS having read share-23. Nothing of the article's
+  answers is shown: only its ∆ headings and its two framing questions, so the
+  film reminds rather than teaches.
+
+  Everything on screen is a pure function of t (render(t)), so the same file
+  plays in a browser and renders frame-exact to video (?render=1 + __render(t)).
+-->
+<style>
+@font-face{font-family:Vaz;font-weight:400;src:url('../../fonts/Vazirmatn-Regular.woff2') format('woff2')}
+@font-face{font-family:Vaz;font-weight:700;src:url('../../fonts/Vazirmatn-Bold.woff2') format('woff2')}
+@font-face{font-family:Vaz;font-weight:900;src:url('../../fonts/Vazirmatn-Black.woff2') format('woff2')}
+:root{
+  --ink:#e9eef7; --mute:#8b98ad; --navy:#142c4c; --blue:#6aa8ff; --blue2:#9cc6ff;
+  --blood:#b3121f; --teal:#3fd0c9; --bg:#060b13;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;overflow:hidden}
+body{display:grid;place-items:center;font-family:Vaz,Tahoma,sans-serif;color:var(--ink)}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--bg);transform-origin:center center;flex:none}
+.layer{position:absolute;inset:0;will-change:opacity,transform,filter}
+svg{position:absolute;inset:0;width:1080px;height:1920px;overflow:visible}
+.cap{position:absolute;left:60px;right:60px;text-align:center;font-weight:700;font-size:58px;line-height:1.5;
+     text-shadow:0 4px 30px rgba(0,0,0,.7);opacity:0}
+.cap.red{color:#ff6b74}
+.cap.big{font-size:84px;font-weight:900}
+.hud{position:absolute;top:96px;left:72px;right:72px;display:flex;justify-content:space-between;align-items:center;font-size:30px;color:var(--mute)}
+.hud .chip{border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:12px 26px;background:rgba(255,255,255,.04)}
+.hud .clock{font-weight:700;font-size:40px;letter-spacing:2px;color:var(--ink);direction:ltr}
+.thought{position:absolute;white-space:nowrap;font-weight:700;color:#f2d6d8;transform:translate(-50%,-50%);opacity:0;
+         text-shadow:0 0 22px rgba(255,60,70,.35)}
+#now{position:absolute;left:0;right:0;top:770px;text-align:center;font-weight:900;font-size:170px;color:#fff;opacity:0;
+     text-shadow:0 0 60px rgba(255,70,80,.6)}
+/* memory card */
+#card{position:absolute;left:130px;width:820px;top:560px;height:760px;border-radius:34px;overflow:hidden;
+      background:#f4f0e7;box-shadow:0 40px 120px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.1);opacity:0}
+#card .head{position:absolute;top:0;left:0;right:0;height:96px;background:#142c4c;color:#cfe0ff;display:flex;align-items:center;
+            justify-content:space-between;padding:0 40px;font-size:28px;font-weight:700;z-index:2}
+#card .roll{position:absolute;top:96px;left:0;right:0;padding:40px 52px}
+#card .h{font-weight:900;font-size:40px;color:#142c4c;margin:46px 0 22px}
+#card .bar{height:20px;border-radius:10px;background:#b9b2a3;margin:16px 0;filter:blur(4px)}
+#card .fade{position:absolute;left:0;right:0;height:160px;z-index:1;pointer-events:none}
+#card .fade.t{top:96px;background:linear-gradient(#f4f0e7,rgba(244,240,231,0))}
+#card .fade.b{bottom:0;background:linear-gradient(rgba(244,240,231,0),#f4f0e7)}
+/* framework */
+.q{position:absolute;left:0;right:0;text-align:center;font-weight:900;font-size:66px;opacity:0}
+.q small{display:block;font-size:34px;font-weight:400;color:var(--mute);margin-bottom:6px}
+.node{position:absolute;width:200px;margin-right:-100px;text-align:center;opacity:0}
+.node .dot{width:38px;height:38px;border-radius:50%;border:4px solid var(--blue);margin:0 auto 22px;background:var(--bg)}
+.node .lb{font-size:30px;line-height:1.35;color:var(--ink);font-weight:700}
+.node .lb i{font-style:normal;display:block;font-size:24px;color:var(--mute);font-weight:400}
+#rail{position:absolute;top:799px;height:4px;left:220px;width:640px;background:rgba(106,168,255,.25);transform-origin:right;transform:scaleX(0)}
+#marker{position:absolute;top:763px;width:72px;height:72px;margin-right:-36px;border-radius:50%;border:4px solid #fff;opacity:0;
+        box-shadow:0 0 30px rgba(106,168,255,.9)}
+#here{position:absolute;top:690px;width:220px;margin-right:-110px;text-align:center;font-weight:900;font-size:32px;color:#fff;opacity:0}
+#here span{background:var(--blue);color:#06142b;padding:8px 22px;border-radius:999px}
+.sys{position:absolute;width:400px;height:96px;border-radius:24px;border:2px solid rgba(255,255,255,.16);background:rgba(255,255,255,.04);
+     display:grid;place-items:center;font-size:36px;font-weight:700;direction:ltr;font-family:Vaz,system-ui,sans-serif;opacity:0;color:#cfd8e6}
+/* end card */
+#tile{position:absolute;left:390px;top:410px;width:300px;height:300px;border-radius:72px;background:#fff;display:grid;place-items:center;opacity:0;
+      box-shadow:0 30px 100px rgba(106,168,255,.35)}
+#tile img{width:206px;height:auto;display:block}
+.end{position:absolute;left:70px;right:70px;text-align:center;opacity:0}
+#e1{top:770px;font-weight:900;font-size:104px}
+#e2{top:910px;font-size:36px;color:var(--blue2);direction:rtl}
+#e3{top:1030px;font-weight:700;font-size:52px;line-height:1.6;padding:44px 40px;border-radius:32px;background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.12)}
+#e4{top:1420px;font-size:40px;color:#c5cfdd}
+#e5{top:1560px;left:200px;right:200px;direction:ltr;font-size:34px;font-weight:700;color:#06142b;background:var(--blue);border-radius:999px;padding:20px 0}
+#grain{position:absolute;inset:-200px;opacity:.07;pointer-events:none;mix-blend-mode:overlay;
+       background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 45%,rgba(0,0,0,.75) 100%)}
+#redv{position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 45%,rgba(120,0,10,0) 35%,rgba(150,0,15,.85) 100%)}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+#replay{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);font:700 15px Vaz,Tahoma,sans-serif;color:#cfd8e6;background:rgba(255,255,255,.08);
+        border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:9px 20px;cursor:pointer;opacity:0;transition:opacity .4s}
+body.done #replay{opacity:1}
+body.render #replay{display:none}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- ── clinic: tooth, veneer, contamination, curing light ── -->
+  <div class="layer" id="clinic">
+    <svg viewBox="0 0 1080 1920">
+      <defs>
+        <clipPath id="toothClip"><path id="crownClipPath" d="M392 556 C450 544 630 544 688 556 C712 720 728 880 722 1006 C718 1048 690 1072 650 1074 L430 1074 C390 1072 362 1048 358 1006 C352 880 368 720 392 556 Z"/></clipPath>
+        <linearGradient id="enamel" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#efe3c8"/><stop offset=".45" stop-color="#f6f0e2"/><stop offset="1" stop-color="#e3ecf2"/>
+        </linearGradient>
+        <linearGradient id="gum" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#7d2f3c" stop-opacity="0"/><stop offset=".45" stop-color="#8a3442"/><stop offset="1" stop-color="#c9606d"/>
+        </linearGradient>
+        <linearGradient id="bloodG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#7a0812"/><stop offset=".6" stop-color="#b3121f"/><stop offset="1" stop-color="#d4303c"/>
+        </linearGradient>
+        <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="rinse" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#bfe3ff" stop-opacity="0"/><stop offset=".5" stop-color="#bfe3ff" stop-opacity=".7"/><stop offset="1" stop-color="#bfe3ff" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="tipGlow"><stop offset="0" stop-color="#bcd6ff"/><stop offset=".35" stop-color="#4f7dff" stop-opacity=".9"/><stop offset="1" stop-color="#2b4dff" stop-opacity="0"/></radialGradient>
+        <linearGradient id="cone" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0" stop-color="#5d86ff" stop-opacity=".8"/><stop offset="1" stop-color="#5d86ff" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="soft"><feGaussianBlur stdDeviation="6"/></filter>
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14"/></filter>
+      </defs>
+
+      <g id="scene">
+        <!-- neighbours, out of focus -->
+        <g opacity=".22" filter="url(#soft)">
+          <path d="M150 600 C200 590 300 590 340 606 C352 740 352 860 340 960 C332 1000 300 1014 262 1014 L210 1014 C170 1012 148 990 142 950 C130 840 136 720 150 600 Z" fill="#e8dcc4"/>
+          <path d="M740 606 C780 590 880 590 930 600 C944 720 950 840 938 950 C932 990 910 1012 870 1014 L818 1014 C780 1014 748 1000 740 960 C728 860 728 740 740 606 Z" fill="#e8dcc4"/>
+        </g>
+
+        <!-- the prepared central incisor -->
+        <path d="M392 556 C450 544 630 544 688 556 C712 720 728 880 722 1006 C718 1048 690 1072 650 1074 L430 1074 C390 1072 362 1048 358 1006 C352 880 368 720 392 556 Z" fill="url(#enamel)"/>
+        <g clip-path="url(#toothClip)">
+          <!-- exposed dentin at the cervical third -->
+          <ellipse cx="540" cy="680" rx="118" ry="70" fill="#d8b46c" opacity=".42"/>
+          <!-- uncured adhesive: a moving gloss -->
+          <rect id="sheenBar" x="300" y="540" width="140" height="560" fill="url(#sheen)" transform="skewX(-14)"/>
+          <!-- contamination: grows down from the margin -->
+          <clipPath id="bloodReveal"><rect id="bloodRect" x="300" y="560" width="480" height="0"/></clipPath>
+          <g id="blood" clip-path="url(#bloodReveal)">
+            <path d="M548 560 C552 600 536 640 540 690 C544 742 570 790 594 784 C624 776 610 720 624 676 C636 636 650 600 652 560 Z" fill="url(#bloodG)"/>
+            <path d="M600 560 C606 590 640 610 662 660 C676 700 668 730 650 726 C628 722 632 680 618 650 C606 622 596 590 600 560 Z" fill="url(#bloodG)" opacity=".85"/>
+            <path d="M566 600 C562 640 560 680 574 720" stroke="#ff8a92" stroke-width="5" fill="none" stroke-linecap="round" opacity=".5"/>
+          </g>
+          <g id="drop" opacity="0">
+            <path id="trail" d="M592 770 L592 770" stroke="#a30f1b" stroke-width="12" stroke-linecap="round"/>
+            <circle id="dropC" cx="592" cy="770" r="15" fill="url(#bloodG)"/>
+            <circle id="dropH" cx="587" cy="764" r="4" fill="#ffb3b8" opacity=".8"/>
+          </g>
+          <rect id="rinseBar" x="300" y="400" width="480" height="180" fill="url(#rinse)" opacity="0"/>
+        </g>
+        <path d="M392 556 C450 544 630 544 688 556 C712 720 728 880 722 1006 C718 1048 690 1072 650 1074 L430 1074 C390 1072 362 1048 358 1006 C352 880 368 720 392 556 Z" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>
+
+        <!-- gingiva, drawn over the cervical line -->
+        <path d="M-40 380 H1120 V660 C1000 664 900 652 860 640 C830 632 810 628 790 624 C740 612 716 600 700 590 C640 548 440 548 380 590 C364 600 340 612 290 624 C220 640 180 652 80 656 C40 660 0 664 -40 660 Z" fill="url(#gum)"/>
+        <path d="M700 590 C640 548 440 548 380 590" fill="none" stroke="#e48a95" stroke-width="4" opacity=".7"/>
+
+        <!-- dentin label -->
+        <g id="dentinTag" opacity="0">
+          <line x1="430" y1="690" x2="250" y2="760" stroke="#d8b46c" stroke-width="2"/>
+          <circle cx="430" cy="690" r="6" fill="#d8b46c"/>
+          <text x="236" y="776" fill="#d8b46c" font-size="30" font-weight="700" text-anchor="end" font-family="Vaz">عاج</text>
+        </g>
+
+        <!-- the veneer -->
+        <g id="veneer">
+          <path d="M392 556 C450 544 630 544 688 556 C712 720 728 880 722 1006 C718 1048 690 1072 650 1074 L430 1074 C390 1072 362 1048 358 1006 C352 880 368 720 392 556 Z"
+                fill="#f7fbff" fill-opacity=".2" stroke="#fff" stroke-opacity=".85" stroke-width="3"/>
+          <path d="M420 600 C470 590 520 590 560 596" stroke="#fff" stroke-opacity=".7" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M690 700 C700 800 704 900 700 980" stroke="#fff" stroke-opacity=".35" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </g>
+        <circle id="seatRing" cx="540" cy="815" r="300" fill="none" stroke="#fff" stroke-width="4" opacity="0"/>
+
+        <!-- curing light -->
+        <g id="lamp">
+          <polygon id="cone" points="-70,-40 70,-40 260,-520 -260,-520" fill="url(#cone)" opacity="0"/>
+          <rect x="-46" y="-30" width="92" height="760" rx="30" fill="#5a6478"/><rect x="-46" y="-30" width="30" height="760" rx="15" fill="#8a96ad" opacity=".5"/>
+          <rect x="-46" y="-30" width="92" height="760" rx="30" fill="none" stroke="#9aa6bd" stroke-width="2"/>
+          <rect x="-34" y="-40" width="68" height="40" rx="12" fill="#1a2030"/>
+          <circle id="tip" cx="0" cy="-40" r="70" fill="url(#tipGlow)" opacity="0"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <!-- heartbeat -->
+  <div class="layer" id="ecgL">
+    <svg viewBox="0 0 1080 1920">
+      <polyline id="ecg" fill="none" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" points=""/>
+      <circle id="ecgDot" r="9"/>
+      <circle id="ecgHalo" r="26" opacity=".35" filter="url(#glow)"/>
+    </svg>
+  </div>
+
+  <div class="hud" id="hud">
+    <div class="chip">لمینیت · سانترال بالا · تراش به عاج رسیده</div>
+    <div class="clock" id="clock">11:40:00</div>
+  </div>
+
+  <!-- panic -->
+  <div class="layer" id="thoughts"></div>
+  <div id="now">حالا چی؟</div>
+
+  <!-- memory -->
+  <div class="layer" id="memory">
+    <svg viewBox="0 0 1080 1920">
+      <g id="deltaG">
+        <path id="deltaGlow" d="M540 560 L720 872 L360 872 Z" fill="none" stroke="#6aa8ff" stroke-width="22" stroke-linejoin="round" filter="url(#glow)" opacity="0"/>
+        <path id="delta" d="M540 560 L720 872 L360 872 Z" fill="none" stroke="#cfe2ff" stroke-width="12" stroke-linejoin="round" stroke-dasharray="1100" stroke-dashoffset="1100"/>
+      </g>
+    </svg>
+    <div id="card">
+      <div class="head"><span>Share Hub</span><span>دنت‌کست</span></div>
+      <div class="fade t"></div>
+      <div class="roll" id="roll"></div>
+      <div class="fade b"></div>
+    </div>
+  </div>
+
+  <!-- the two questions -->
+  <div class="layer" id="frame">
+    <div class="q" id="q0" style="top:400px;font-size:42px;font-weight:700;color:#c5cfdd">همه‌چیز به دو سؤال برمی‌گشت</div>
+    <div class="q" id="q1" style="top:520px">کدوم مرحله؟</div>
+    <div id="rail"></div>
+    <div class="node" id="n0" style="right:220px;top:780px"><div class="dot"></div><div class="lb">تراش<i>هنوز هیچی نزدی</i></div></div>
+    <div class="node" id="n1" style="right:433px;top:780px"><div class="dot"></div><div class="lb">اچ<i>عاج بی‌دفاع</i></div></div>
+    <div class="node" id="n2" style="right:647px;top:780px"><div class="dot"></div><div class="lb">ادهزیو<i>هنوز کیور نشده</i></div></div>
+    <div class="node" id="n3" style="right:860px;top:780px"><div class="dot"></div><div class="lb">بعد از کیور<i>سفت شده</i></div></div>
+    <div id="marker"></div>
+    <div id="here"><span>تو اینجایی</span></div>
+    <div class="q" id="q2" style="top:1060px">کدوم سیستم؟</div>
+    <div class="sys" id="s0" style="right:120px;top:1200px">Etch &amp; Rinse</div>
+    <div class="sys" id="s1" style="right:560px;top:1200px">Self-etch · 2-step</div>
+    <div class="sys" id="s2" style="right:120px;top:1320px">Self-etch · 1-step</div>
+    <div class="sys" id="s3" style="right:560px;top:1320px">Universal</div>
+  </div>
+
+  <!-- end card -->
+  <div class="layer" id="endL">
+    <div id="tile"><img src="../../logo-v2.png" alt="دنت‌کست"></div>
+    <div class="end" id="e1">دنت‌کست</div>
+    <div class="end" id="e2">Share Hub · شماره‌ی ۲۳</div>
+    <div class="end" id="e3">اگر وسط باندینگ خون یا بزاق روی عاج (دنتین) بیاد چی کار کنیم؟</div>
+    <div class="end" id="e4">بخون، قبل از اینکه لازمش داشته باشی.</div>
+    <div class="end" id="e5">dentcast.org/sharehub/share-23</div>
+  </div>
+
+  <div id="caps"></div>
+  <div id="redv"></div>
+  <div id="vig"></div>
+  <div id="grain"></div>
+  <div id="flash"></div>
+</div>
+<button id="replay" type="button">↻ دوباره</button>
+
+<script>
+(function () {
+  'use strict';
+  var DURATION = 32;
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ── math ──
+  function clamp(x, a, b) { return x < a ? a : x > b ? b : x; }
+  function seg(t, a, b) { return clamp((t - a) / (b - a), 0, 1); }
+  function lerp(a, b, k) { return a + (b - a) * k; }
+  function eio(k) { return k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+  function eo(k) { return 1 - Math.pow(1 - k, 3); }
+  function ei(k) { return k * k * k; }
+  function eback(k) { var c = 1.6; return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2); }
+  function win(t, a, b, fi, fo) { fi = fi == null ? .4 : fi; fo = fo == null ? .4 : fo; return Math.min(seg(t, a, a + fi), 1 - seg(t, b - fo, b)); }
+  function fa(n) { return String(n).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); }
+  function mix(c1, c2, k) {
+    var a = c1.match(/\w\w/g).map(function (h) { return parseInt(h, 16); });
+    var b = c2.match(/\w\w/g).map(function (h) { return parseInt(h, 16); });
+    return 'rgb(' + a.map(function (v, i) { return Math.round(lerp(v, b[i], k)); }).join(',') + ')';
+  }
+
+  // Time stands still between the contamination and the return to the chair.
+  var FREEZE = 7.6, RESUME = 21.0;
+  function clinicTime(t) { return t < FREEZE ? t : t < RESUME ? FREEZE : FREEZE + (t - RESUME); }
+
+  // ── captions ──
+  var CAPS = [
+    { tx: 'لمینیت آماده‌ست. ادهزیو روی دندونه.', a: 1.0, b: 4.4, y: 1260 },
+    { tx: '…و لثه.', a: 4.9, b: 7.55, y: 1260, cls: 'red big', fo: .05 },
+    { tx: 'یه جایی خونده بودیش.', a: 14.0, b: 16.9, y: 1400 },
+    { tx: 'بقیه‌ش یادته.', a: 20.0, b: 21.2, y: 1480, cls: 'big' },
+    { tx: 'نفس عمیق.', a: 21.4, b: 23.0, y: 1380 },
+    { tx: 'دستت دیگه نمی‌لرزه.', a: 23.2, b: 25.3, y: 1380, cls: 'big' }
+  ];
+  var capsHost = $('caps');
+  CAPS.forEach(function (c) {
+    var d = document.createElement('div');
+    d.className = 'cap ' + (c.cls || '');
+    d.style.top = c.y + 'px';
+    d.textContent = c.tx;
+    capsHost.appendChild(d);
+    c.el = d;
+  });
+
+  // ── the questions a frozen mind asks (questions only, never answers) ──
+  var THOUGHTS = [
+    ['پوار بزنم، کیور کنم؟', 300, 400, 8.4, 54],
+    ['یه لایه‌ی دیگه روش بزنم؟', 760, 520, 8.7, 50],
+    ['خون بود یا بزاق؟', 270, 1090, 9.0, 52],
+    ['اچ دوباره؟', 820, 1130, 9.25, 60],
+    ['همه‌ش رو بتراشم؟', 560, 300, 9.5, 50],
+    ['هموستاتیک بزنم؟', 330, 1320, 9.75, 48],
+    ['رابردم که نذاشتم…', 770, 1380, 10.0, 46],
+    ['کسی نمی‌فهمه…', 540, 1500, 10.35, 40]
+  ];
+  var thHost = $('thoughts');
+  THOUGHTS.forEach(function (th, i) {
+    var d = document.createElement('div');
+    d.className = 'thought';
+    d.style.fontSize = th[4] + 'px';
+    d.textContent = th[0];
+    if (i === 7) d.style.color = '#9a8a8c';
+    thHost.appendChild(d);
+    th.el = d;
+  });
+
+  // ── the remembered page: share-23's own ∆ headings, the body blurred ──
+  var HEADS = ['∆ چرا آلودگی مهم است', '∆ یک قاعده‌ی ساده برای همه‌ی مراحل', '∆ مرحله‌ی اول', '∆ مرحله‌ی دوم',
+               '∆ مرحله‌ی سوم', '∆ مرحله‌ی چهارم', '∆ مواد هموستاتیک'];
+  var roll = $('roll'), headEls = [];
+  var widths = [92, 100, 84, 97, 70, 100, 88, 63, 95, 79, 100, 58];
+  HEADS.forEach(function (h, i) {
+    var e = document.createElement('div'); e.className = 'h'; e.textContent = h; roll.appendChild(e); headEls.push(e);
+    for (var k = 0; k < 4; k++) {
+      var b = document.createElement('div'); b.className = 'bar';
+      b.style.width = widths[(i * 4 + k) % widths.length] + '%';
+      if (k === 3) b.style.width = (40 + (i * 13) % 35) + '%';
+      roll.appendChild(b);
+    }
+  });
+
+  // ── heartbeat: rate & amplitude over the film, integrated to a phase ──
+  function rate(t) {
+    if (t < 4.5) return 72;
+    if (t < FREEZE) return lerp(72, 150, seg(t, 4.5, 7.2));
+    if (t < 12.6) return 158;
+    if (t < 21) return 58;
+    return 66;
+  }
+  function amp(t) {
+    var flat1 = win(t, FREEZE, 8.35, .02, .3);        // the stop
+    var flat2 = win(t, 11.8, 12.7, .15, .3);          // the silence before ∆
+    return 1 - Math.max(flat1, flat2);
+  }
+  var HZ = 240, phaseTab = [0];
+  for (var i = 1; i <= (DURATION + 2) * HZ; i++) phaseTab[i] = phaseTab[i - 1] + rate(i / HZ) / 60 / HZ;
+  function phase(t) {
+    if (t <= 0) return t * 72 / 60;
+    var x = t * HZ, i0 = Math.floor(x), f = x - i0;
+    if (i0 + 1 >= phaseTab.length) return phaseTab[phaseTab.length - 1];
+    return lerp(phaseTab[i0], phaseTab[i0 + 1], f);
+  }
+  function g(x, m, s, a) { return a * Math.exp(-Math.pow((x - m) / s, 2)); }
+  function beat(p) {
+    var x = p - Math.floor(p);
+    return g(x, .12, .03, .12) - g(x, .28, .012, .18) + g(x, .31, .012, 1) - g(x, .34, .014, .32) + g(x, .55, .05, .22);
+  }
+
+  var stage = $('stage');
+  function fit() {
+    if (document.body.classList.contains('render')) { stage.style.transform = 'none'; return; }
+    var s = Math.min(window.innerWidth / 1080, window.innerHeight / 1920);
+    stage.style.transform = 'scale(' + s + ')';
+  }
+
+  // ── one frame ──
+  function render(t) {
+    var tc = clinicTime(t);
+    var crisis = Math.max(seg(t, 4.6, 7.0), 0) * (1 - seg(t, 11.8, 12.6));
+    var frozen = seg(t, FREEZE, FREEZE + .08) * (1 - seg(t, RESUME - .4, RESUME + .2));
+    var panicDim = win(t, 8.3, 12.2, .6, .4);
+
+    // clinic layer
+    var clinicOn = Math.max(win(t, .2, 12.3, 1.0, .5), win(t, 20.6, 26.6, .9, 1.0));
+    var outro = eio(seg(t, 25.2, 26.6));
+    var z = 1 + .07 * eio(seg(t, 0, FREEZE)) + .03 * seg(t, FREEZE, FREEZE + .15) * (1 - seg(t, 20.8, 22));
+    var cl = $('clinic');
+    cl.style.opacity = clinicOn;
+    cl.style.transformOrigin = '540px 815px';
+    cl.style.transform = 'translate(0,' + lerp(0, -175, outro) + 'px) scale(' + lerp(z, .3, outro) + ')';
+    cl.style.filter = 'grayscale(' + frozen + ') brightness(' + (1 - .62 * panicDim) + ') contrast(' + (1 + .15 * frozen) + ')';
+
+    $('dentinTag').setAttribute('opacity', win(t, 2.0, 4.6, .5, .5));
+
+    // adhesive gloss keeps moving only while time moves
+    var sp = (tc % 2.6) / 2.6;
+    $('sheenBar').setAttribute('x', lerp(160, 900, sp));
+    $('sheenBar').setAttribute('opacity', 1 - seg(t, 25, 25.6));
+
+    // contamination
+    var grow = eio(seg(tc, 4.6, 7.3));
+    $('bloodRect').setAttribute('height', 300 * grow);
+    var clean = eio(seg(t, 21.3, 22.5));
+    $('blood').setAttribute('opacity', 1 - clean);
+    var dk = seg(tc, 6.3, 8.8);                     // still falling when time stops
+    var dy = lerp(770, 1000, ei(dk));
+    $('drop').setAttribute('opacity', (dk > 0 ? 1 : 0) * (1 - clean));
+    $('dropC').setAttribute('cy', dy);
+    $('dropH').setAttribute('cy', dy - 6);
+    $('trail').setAttribute('d', 'M592 770 L592 ' + dy);
+    $('rinseBar').setAttribute('y', lerp(380, 1100, seg(t, 21.2, 22.6)));
+    $('rinseBar').setAttribute('opacity', win(t, 21.2, 22.6, .2, .3));
+
+    // veneer: held aside, then seated
+    var seat = eio(seg(t, 23.0, 24.0));
+    var bob = Math.sin(tc * 1.6) * 10 * (1 - seat);
+    var vx = lerp(310, 0, seat), vy = lerp(250, 0, seat) + bob, vr = lerp(13, 0, seat), vs = lerp(.8, 1.015, seat);
+    var vin = eo(seg(t, .8, 2.2));
+    $('veneer').setAttribute('transform', 'translate(' + (vx + (1 - vin) * 200) + ' ' + vy + ') rotate(' + vr + ' 540 815) translate(540 815) scale(' + vs + ') translate(-540 -815)');
+    $('veneer').setAttribute('opacity', vin);
+    var ring = seg(t, 24.0, 24.9);
+    $('seatRing').setAttribute('r', lerp(260, 420, eo(ring)));
+    $('seatRing').setAttribute('opacity', ring > 0 && ring < 1 ? (1 - ring) * .8 : 0);
+
+    // curing light: approaches, stops mid-air, then cures after seating
+    var la = eo(seg(tc, 1.4, 6.2)) * .55, lc = eio(seg(t, 24.2, 24.7));
+    var lp = la + (1 - la) * lc * .9;
+    var lx = lerp(-220, 250, lp), ly = lerp(1900, 1290, lp);
+    $('lamp').setAttribute('transform', 'translate(' + lx + ' ' + ly + ') rotate(' + lerp(40, 26, lp) + ')');
+    var cure = win(t, 24.6, 25.6, .12, .5);
+    $('tip').setAttribute('opacity', Math.max(cure, .25 * win(t, 1.4, 7.6, .5, .1)));
+    $('cone').setAttribute('opacity', cure);
+
+    // HUD
+    $('hud').style.opacity = win(t, .5, 25.2, .8, .6);
+    var secs = 12 + Math.floor(tc);
+    $('clock').textContent = '11:40:' + (secs < 10 ? '0' : '') + secs;
+    $('clock').style.color = frozen > .5 ? '#ff6b74' : '';
+
+    // red pressure + the freeze flash
+    var b0 = Math.max(0, beat(phase(t)));
+    $('redv').style.opacity = crisis * (.32 + .45 * b0) * (1 - .6 * frozen);
+    $('flash').style.opacity = .7 * (1 - seg(t, FREEZE, FREEZE + .3)) * (t >= FREEZE ? 1 : 0)
+                               + .55 * (1 - seg(t, 12.2, 12.6)) * (t >= 12.2 ? 1 : 0)
+                               + .12 * cure;
+
+    // thoughts swarm, then collapse into one point
+    var col = eio(seg(t, 11.8, 12.35));
+    THOUGHTS.forEach(function (th, i) {
+      var a = seg(t, th[3], th[3] + .35);
+      var jx = Math.sin(t * 23 + i * 7.1) * 5 + Math.sin(t * 2.1 + i) * 14;
+      var jy = Math.cos(t * 19 + i * 3.3) * 4 + Math.cos(t * 1.7 + i * 2) * 10;
+      var x = lerp(th[1] + jx, 540, col), y = lerp(th[2] + jy, 716, col);
+      th.el.style.left = x + 'px'; th.el.style.top = y + 'px';
+      th.el.style.opacity = a * (1 - col);
+      th.el.style.transform = 'translate(-50%,-50%) scale(' + lerp(.85 + .15 * eback(a), .05, col) + ')';
+      th.el.style.filter = 'blur(' + ((1 - a) * 8 + col * 6) + 'px)';
+    });
+    var nw = win(t, 9.2, 11.75, .25, .25);
+    var shake = nw * (Math.sin(t * 61) * 7 + Math.sin(t * 37) * 5);
+    $('now').style.opacity = nw;
+    $('now').style.transform = 'translate(' + shake + 'px,0) scale(' + (1 + .04 * b0 * nw) + ')';
+
+    // ∆ — memory
+    var mem = $('memory');
+    mem.style.opacity = win(t, 12.15, 17.3, .1, .5);
+    var draw = eio(seg(t, 12.3, 13.15));
+    $('delta').setAttribute('stroke-dashoffset', 1100 * (1 - draw));
+    $('deltaGlow').setAttribute('opacity', seg(t, 12.9, 13.4) * (.6 + .4 * Math.sin(t * 3)));
+    var up = eio(seg(t, 13.5, 14.2));
+    $('deltaG').setAttribute('transform', 'translate(540 716) scale(' + lerp(1, .32, up) + ') translate(-540 -716) translate(0 ' + lerp(0, -1180, up) + ')');
+    var card = $('card');
+    var cin = eo(seg(t, 13.6, 14.4));
+    card.style.opacity = cin * (1 - seg(t, 16.6, 17.2));
+    card.style.transform = 'perspective(1600px) rotateX(' + lerp(18, 4, cin) + 'deg) rotateZ(-2deg) translateY(' + lerp(120, 0, cin) + 'px) scale(' + lerp(.92, 1, cin) + ')';
+    var sc = eio(seg(t, 13.8, 16.8));
+    var rollY = lerp(140, -1880, sc);
+    roll.style.transform = 'translateY(' + rollY + 'px)';
+    headEls.forEach(function (h) {
+      var mid = h.offsetTop + rollY + 96 + 40 + 20;          // centre of the heading inside the card
+      var d = Math.abs(mid - 380);
+      h.style.filter = 'blur(' + Math.min(7, d / 45) + 'px)';
+      h.style.opacity = clamp(1.25 - d / 380, .25, 1);
+    });
+
+    // the two questions
+    var fr = $('frame');
+    fr.style.opacity = win(t, 16.9, 21.3, .3, .5);
+    $('q0').style.opacity = seg(t, 17.0, 17.4);
+    [['q1', 17.3], ['q2', 19.0]].forEach(function (q) {
+      var k = seg(t, q[1], q[1] + .45);
+      $(q[0]).style.opacity = k;
+      $(q[0]).style.transform = 'translateY(' + (1 - eo(k)) * 30 + 'px)';
+    });
+    $('rail').style.transform = 'scaleX(' + eio(seg(t, 17.5, 18.2)) + ')';
+    for (var n = 0; n < 4; n++) {
+      var k = seg(t, 17.55 + n * .15, 17.95 + n * .15);
+      $('n' + n).style.opacity = k;
+      $('n' + n).style.transform = 'translateY(' + (1 - eo(k)) * 24 + 'px)';
+    }
+    var mv = eio(seg(t, 18.15, 18.95));
+    var mx = lerp(220, 647, mv);
+    var lock = seg(t, 18.95, 19.4);
+    $('marker').style.right = mx + 'px';
+    $('marker').style.opacity = seg(t, 18.05, 18.25);
+    $('marker').style.transform = 'scale(' + (1 + .25 * Math.sin(lock * Math.PI)) + ')';
+    $('here').style.right = '647px';
+    $('here').style.opacity = lock;
+    $('here').style.transform = 'translateY(' + (1 - eback(lock)) * 20 + 'px)';
+    for (var s = 0; s < 4; s++) {
+      var ks = seg(t, 19.25 + s * .12, 19.6 + s * .12);
+      var lit = win(t, 19.75 + s * .16, 20.4 + s * .16, .1, .35);
+      var el = $('s' + s);
+      el.style.opacity = ks;
+      el.style.transform = 'translateY(' + (1 - eo(ks)) * 24 + 'px)';
+      el.style.borderColor = 'rgba(106,168,255,' + (.16 + .7 * lit) + ')';
+      el.style.background = 'rgba(106,168,255,' + (.04 + .16 * lit) + ')';
+      el.style.color = lit > .4 ? '#fff' : '';
+    }
+
+    // captions
+    CAPS.forEach(function (c) {
+      var o = win(t, c.a, c.b, .45, c.fo == null ? .4 : c.fo);
+      var k = seg(t, c.a, c.a + .6);
+      c.el.style.opacity = o;
+      c.el.style.transform = 'translateY(' + (1 - eo(k)) * 26 + 'px)';
+      c.el.style.filter = 'blur(' + (1 - k) * 6 + 'px)';
+    });
+
+    // heartbeat line
+    var ecgOn = win(t, .4, 25.4, .8, .6) * (1 - .55 * win(t, 12.3, 21.0, .5, .5));
+    var col1 = mix('3fd0c9', 'ff4757', crisis);
+    var pts = [], base = 1660;
+    for (var x = 120; x <= 960; x += 4) {
+      var tp = t - (960 - x) / 280;
+      var y = base - 120 * amp(tp) * beat(phase(tp));
+      pts.push(x + ',' + y.toFixed(1));
+    }
+    var ecg = $('ecg');
+    ecg.setAttribute('points', pts.join(' '));
+    ecg.setAttribute('stroke', col1);
+    ecg.style.opacity = ecgOn;
+    var ly2 = base - 120 * amp(t) * beat(phase(t));
+    ['ecgDot', 'ecgHalo'].forEach(function (id) {
+      var c = $(id); c.setAttribute('cx', 960); c.setAttribute('cy', ly2); c.setAttribute('fill', col1); c.style.opacity = ecgOn;
+    });
+
+    // end card — the tooth shrinks into the mark
+    var lt = seg(t, 25.7, 26.7);
+    $('tile').style.opacity = lt;
+    $('tile').style.transform = 'scale(' + lerp(.7, 1, eback(lt)) + ')';
+    [['e1', 26.5], ['e2', 26.9], ['e3', 27.4], ['e4', 28.4], ['e5', 29.0]].forEach(function (e) {
+      var k = seg(t, e[1], e[1] + .6);
+      $(e[0]).style.opacity = k;
+      $(e[0]).style.transform = 'translateY(' + (1 - eo(k)) * 30 + 'px)';
+      $(e[0]).style.filter = 'blur(' + (1 - k) * 5 + 'px)';
+    });
+
+    // film grain
+    var f = Math.floor(t * 24);
+    $('grain').style.transform = 'translate(' + ((f * 73) % 200 - 100) + 'px,' + ((f * 151) % 200 - 100) + 'px)';
+  }
+
+  window.__render = render;
+  window.__duration = DURATION;
+
+  var renderMode = /[?&]render=1/.test(location.search);
+  if (renderMode) document.body.classList.add('render');
+  fit();
+  window.addEventListener('resize', fit);
+  render(0);
+  if (renderMode) return;
+
+  var start = null;
+  function loop(now) {
+    if (start === null) start = now;
+    var t = (now - start) / 1000;
+    render(Math.min(t, DURATION));
+    if (t < DURATION) requestAnimationFrame(loop);
+    else document.body.classList.add('done');
+  }
+  function play() { document.body.classList.remove('done'); start = null; requestAnimationFrame(loop); }
+  $('replay').addEventListener('click', play);
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(play);
+})();
+</script>
+</body>
+</html>
