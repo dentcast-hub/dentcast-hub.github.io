@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>ماکاپ پیشخوان ادمین</title>
+<!--
+  Mockup — the GET /admin page, rearranged. Every section that exists today
+  is here, filed under one of seven groups; nothing is added and nothing is
+  removed. Numbers and rows are fake. Palette = the panel's own light tokens.
+-->
+<style>
+  :root{
+    --bg:#f0f2f5;--card:#fff;--ink:#0a1a33;--ink2:#4a5f85;--mute:#62779a;
+    --line:rgba(2,35,96,.10);--soft:#f4f6fb;--brand:#0b5fff;--brand-w:rgba(11,95,255,.08);
+    --hot:#8a6414;--hot-w:rgba(201,146,43,.12);--ok:#0f7a4a;--ok-w:rgba(15,122,74,.09);--bad:#b3261e;
+    --sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --side:270px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,'Segoe UI',Tahoma,sans-serif;line-height:1.75}
+  button{font:inherit;cursor:pointer}
+  a{color:inherit}
+
+  /* ── top bar ───────────────────────────── */
+  .top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+    height:58px;padding:0 16px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .burger{display:none;width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:var(--soft);font-size:1.15rem}
+  .brand{font-weight:900;font-size:1rem;white-space:nowrap}
+  .brand small{display:block;font-weight:500;font-size:.7rem;color:var(--mute);line-height:1.2}
+  .search{flex:1;max-width:460px;margin-inline-start:auto;position:relative}
+  .search input{width:100%;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--soft);
+    padding:0 40px 0 64px;font:inherit;font-size:.9rem;color:var(--ink)}
+  .search input:focus{outline:2px solid var(--brand);outline-offset:-1px;background:#fff}
+  .search .ic{position:absolute;right:13px;top:9px;color:var(--mute)}
+  .search kbd{position:absolute;left:10px;top:9px;font:600 .7rem/1 system-ui;color:var(--mute);
+    border:1px solid var(--line);border-radius:6px;padding:4px 6px;background:#fff}
+  .results{position:absolute;top:46px;right:0;left:0;background:#fff;border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 12px 40px rgba(2,35,96,.16);padding:6px;display:none;max-height:60vh;overflow:auto}
+  .results.on{display:block}
+  .results button{display:flex;width:100%;align-items:center;gap:10px;text-align:right;border:0;background:none;
+    padding:9px 10px;border-radius:9px;color:var(--ink)}
+  .results button:hover,.results button.sel{background:var(--brand-w)}
+  .results .g{margin-inline-start:auto;font-size:.74rem;color:var(--mute)}
+  .results .none{padding:12px;color:var(--mute);font-size:.88rem}
+
+  /* ── layout ───────────────────────────── */
+  .shell{display:grid;grid-template-columns:var(--side) 1fr;min-height:calc(100vh - 58px)}
+  .side{position:sticky;top:58px;height:calc(100vh - 58px);overflow:auto;background:#fff;border-left:1px solid var(--line);padding:14px 10px 40px}
+  .main{padding:22px 26px 80px;min-width:0}
+  .main-in{max-width:900px;margin:0 auto}
+
+  /* ── side nav ───────────────────────────── */
+  .nav-home{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;padding:9px 10px;border-radius:10px;
+    font-weight:800;color:var(--ink);text-align:right}
+  .grp{margin-top:10px}
+  .grp>button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;padding:8px 10px;border-radius:10px;
+    color:var(--ink);font-weight:800;font-size:.9rem;text-align:right}
+  .grp>button .chev{margin-inline-start:auto;color:var(--mute);transition:transform .2s;font-size:.8rem}
+  .grp.closed>button .chev{transform:rotate(90deg)}
+  .grp.closed ul{display:none}
+  .gi{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:.95rem;flex:none}
+  .grp ul{list-style:none;margin:2px 0 0;padding:0 0 0 0}
+  .grp li button,.nav-home{position:relative}
+  .grp li button{display:flex;align-items:center;gap:8px;width:100%;border:0;background:none;text-align:right;
+    padding:7px 48px 7px 10px;border-radius:9px;color:var(--ink2);font-size:.87rem}
+  .grp li button:hover,.nav-home:hover,.grp>button:hover{background:var(--soft)}
+  .grp li button.on,.nav-home.on{background:var(--brand-w);color:var(--brand);font-weight:800}
+  .grp li button.on::before,.nav-home.on::before{content:"";position:absolute;right:-10px;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--brand)}
+  .cnt{margin-inline-start:auto;min-width:22px;height:20px;padding:0 7px;border-radius:99px;font-size:.72rem;font-weight:800;
+    display:inline-grid;place-items:center;background:var(--soft);color:var(--mute)}
+  .cnt.hot{background:var(--hot-w);color:var(--hot)}
+  .side-foot{margin-top:18px;padding:10px;font-size:.74rem;color:var(--mute);border-top:1px solid var(--line)}
+
+  /* group tints — one per group, used on the icon tile only */
+  .t-inbox{background:rgba(201,146,43,.14)} .t-over{background:rgba(11,95,255,.10)}
+  .t-users{background:rgba(124,77,255,.11)} .t-learn{background:rgba(15,122,74,.11)}
+  .t-content{background:rgba(0,150,160,.11)} .t-rep{background:rgba(2,35,96,.07)} .t-comm{background:rgba(214,70,90,.10)}
+
+  /* ── content ───────────────────────────── */
+  .crumb{font-size:.8rem;color:var(--mute);display:flex;gap:6px;align-items:center}
+  .crumb button{border:0;background:none;color:var(--brand);padding:0;font-size:.8rem}
+  h1{font-size:1.35rem;margin:.15rem 0 .2rem}
+  .lede{color:var(--mute);font-size:.88rem;margin:0 0 16px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:var(--sh);margin-top:14px}
+  .panel h2{font-size:1rem;margin:0 0 8px;display:flex;align-items:center;gap:8px}
+  .muted{color:var(--mute);font-size:.84rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+  .kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--sh)}
+  .kpi .k{font-size:.72rem;font-weight:800;color:var(--brand)}
+  .kpi h3{margin:0;font-size:.85rem;color:var(--ink2)}
+  .kpi .v{font-size:1.6rem;font-weight:900}
+  .kpi .s{font-size:.76rem;color:var(--mute)}
+
+  /* waiting cards on the home view */
+  .wait{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+  .wc{display:flex;flex-direction:column;gap:2px;text-align:right;background:#fff;border:1px solid var(--line);border-radius:16px;
+    padding:14px 16px;box-shadow:var(--sh);color:var(--ink);transition:transform .12s,border-color .12s}
+  .wc:hover{transform:translateY(-2px);border-color:var(--brand)}
+  .wc.need{border-color:rgba(154,107,21,.45);background:linear-gradient(180deg,rgba(201,146,43,.07),#fff 55%)}
+  .wc .row{display:flex;align-items:center;gap:8px}
+  .wc .n{font-size:1.9rem;font-weight:900;line-height:1.1}
+  .wc.need .n{color:var(--hot)}
+  .wc .t{font-weight:800;font-size:.92rem}
+  .wc .s{font-size:.76rem;color:var(--mute)}
+  .wc.clear .n{color:var(--ok)}
+  .sec-title{display:flex;align-items:baseline;gap:10px;margin:26px 0 10px}
+  .sec-title h2{font-size:1rem;margin:0}
+
+  /* category tiles (home, mostly for phone) */
+  .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+  .cat{display:flex;gap:12px;align-items:flex-start;text-align:right;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--sh);color:var(--ink)}
+  .cat:hover{border-color:var(--brand)}
+  .cat .gi{width:38px;height:38px;border-radius:11px;font-size:1.15rem}
+  .cat b{display:block;font-size:.93rem}
+  .cat span{font-size:.76rem;color:var(--mute);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+  /* section-level tabs inside a group (phone uses these instead of the side nav) */
+  .subtabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:6px;scrollbar-width:none}
+  .subtabs::-webkit-scrollbar{display:none}
+  .subtabs button{flex:none;border:1px solid var(--line);background:#fff;color:var(--ink2);border-radius:99px;padding:6px 14px;font-size:.84rem;font-weight:700;display:flex;gap:6px;align-items:center}
+  .subtabs button.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .subtabs button.on .cnt{background:rgba(255,255,255,.25);color:#fff}
+
+  /* mock bits of real sections */
+  .tk{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px;background:#fff}
+  .tk.need{border-color:rgba(154,107,21,.45)}
+  .tk-h{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.9rem}
+  .tk-x{color:var(--ink2);font-size:.84rem;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pill{display:inline-block;background:var(--soft);border:1px solid var(--line);border-radius:99px;padding:1px 9px;font-size:.72rem;color:var(--mute)}
+  .pill.hot{background:var(--hot-w);border-color:rgba(154,107,21,.3);color:var(--hot)}
+  .pill.ok{background:var(--ok-w);border-color:rgba(15,122,74,.25);color:var(--ok)}
+  .form{display:flex;flex-direction:column;gap:8px}
+  .form label{font-size:.8rem;color:var(--mute)}
+  .form input,.form textarea,.form select{width:100%;background:var(--soft);border:1px solid var(--line);border-radius:9px;padding:9px 11px;font:inherit;font-size:.9rem;color:var(--ink)}
+  .form textarea{min-height:70px}
+  .btn{white-space:nowrap;flex:none;align-self:flex-start;background:var(--brand);color:#fff;border:0;border-radius:99px;padding:9px 20px;font-weight:800}
+  .btn.ghost{background:var(--soft);color:var(--ink2);border:1px solid var(--line)}
+  table{width:100%;border-collapse:collapse;font-size:.85rem}
+  th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:center}
+  th{color:var(--mute);font-weight:700}
+  .ph{border:1.5px dashed var(--line);border-radius:12px;padding:16px;color:var(--mute);font-size:.85rem;text-align:center;background:repeating-linear-gradient(-45deg,transparent 0 10px,rgba(2,35,96,.025) 10px 20px)}
+  .bar{height:7px;border-radius:99px;background:#eaecf5;overflow:hidden;margin-top:3px}.bar i{display:block;height:100%;background:var(--brand)}
+
+  /* annotation for the reviewer — not part of the design */
+  .note{margin-top:22px;border-radius:14px;background:#fffbea;border:1px solid #f0dd9a;padding:12px 14px;font-size:.84rem;color:#5b4a12}
+  .note b{color:#3c300a}
+
+  /* ── phone ───────────────────────────── */
+  .scrim{display:none}
+  @media (max-width:899px){
+    .shell{grid-template-columns:1fr}
+    .burger{display:grid;place-items:center}
+    .side{position:fixed;top:0;right:0;bottom:0;width:min(86vw,320px);height:100vh;z-index:50;transform:translateX(105%);
+      transition:transform .22s ease;box-shadow:-10px 0 40px rgba(2,35,96,.18);border-left:0}
+    body.drawer .side{transform:none}
+    .scrim{position:fixed;inset:0;background:rgba(10,26,51,.35);z-index:40}
+    body.drawer .scrim{display:block}
+    .main{padding:16px 16px 90px}
+    .brand small{display:none}
+    .search{max-width:none}
+    .search kbd{display:none}
+    .search input{padding-left:12px}
+    h1{font-size:1.2rem}
+    .wait{grid-template-columns:1fr 1fr;gap:10px}
+    .wc{padding:12px}
+    .wc .n{font-size:1.55rem}
+    .cats{grid-template-columns:1fr}
+    .grid{grid-template-columns:1fr 1fr;gap:10px}
+    .kpi .v{font-size:1.3rem}
+    .panel{padding:14px}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <button class="burger" id="burger" aria-label="منو">☰</button>
+  <div class="brand">پیشخوان بنیان‌گذار<small>تولید: ۱۴۰۵/۰۷/۱۴ · ۱۰:۴۲ تهران</small></div>
+  <div class="search">
+    <span class="ic">⌕</span>
+    <input id="q" type="search" placeholder="جستجو: پشتیبانی، ستون، تخفیف، شبا…" autocomplete="off">
+    <kbd>Ctrl K</kbd>
+    <div class="results" id="results"></div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="scrim" id="scrim"></div>
+  <main class="main"><div class="main-in" id="view"></div></main>
+</div>
+
+<script>
+/* ── the map: every section on today's /admin, filed once ── */
+var GROUPS = [
+  { id:'inbox', name:'صندوق‌ها', icon:'📥', tint:'t-inbox', blurb:'هر چیزی که منتظر تصمیم توست',
+    items:[
+      { id:'support',  name:'صندوق پشتیبانی', wait:3, kw:'تیکت سوال گفتگو زیر مطلب T- مرجع' },
+      { id:'bank',     name:'صف واریز به حساب', wait:2, kw:'شبا بانک واریز دانشجو مبلغ کارت هدیه' },
+      { id:'challenge',name:'صندوق چالش', wait:4, kw:'چالش جواب حکم' },
+      { id:'des',      name:'ارزیاب DES', wait:1, kw:'des امتیاز مقاله خواننده' },
+      { id:'examq',    name:'صندوق آزمون', wait:2, kw:'حکم آزمون تشریحی' },
+      { id:'wishes',   name:'تقاضای گواهی‌نامه', wait:3, kw:'گواهی بله خواسته' }
+    ]},
+  { id:'over', name:'نمای کلی', icon:'📊', tint:'t-over', blurb:'KPIها و درگیری کاربران',
+    items:[
+      { id:'kpi',  name:'شاخص‌های اصلی (KPI)', kw:'تقاضای ناشناس فعال‌سازی بازگشت عمق آرشیو' },
+      { id:'eng',  name:'درگیری و اتصال کاربران', kw:'استریک بله تلگرام پوش نوتیف' },
+      { id:'d7',   name:'ماندگاری روز هفتم', kw:'kpi 4 ماندگاری پلن' }
+    ]},
+  { id:'users', name:'کاربران و اشتراک', icon:'👥', tint:'t-users', blurb:'پریمیوم، هدیه، نشان، استریک',
+    items:[
+      { id:'subs',    name:'گزارش کاربران و اشتراک', kw:'پرمیوم اشتراک تمدید تمام می‌شود' },
+      { id:'giftall', name:'هدیهٔ پریمیوم به تازه‌واردها', kw:'هدیه تجربه نکرده' },
+      { id:'giftone', name:'هدیهٔ روز پریمیوم به یک نفر', kw:'هدیه روز' },
+      { id:'forever', name:'پریمیوم ابدی به یک نفر', kw:'ابدی همیشگی' },
+      { id:'badge',   name:'اهدای نشان', kw:'نشان همراه دانشجو ستون تخفیف' },
+      { id:'streak',  name:'ترمیم استریک شکسته', kw:'استریک ترمیم' }
+    ]},
+  { id:'learn', name:'مسیر، آزمون، گواهی', icon:'🎓', tint:'t-learn', blurb:'مسیرهای یادگیری و چیزی که پشتشان است',
+    items:[
+      { id:'paths', name:'چه کسی نزدیک پایان است', wait:0, kw:'مسیر پایان نزدیک' },
+      { id:'exam',  name:'فرم و سؤال‌های آزمون', kw:'سوال بانک notebooklm اعلام آمادگی' },
+      { id:'cert',  name:'صدور و ابطال گواهی', kw:'گواهی صادر باطل DC-' }
+    ]},
+  { id:'content', name:'محتوا و چالش', icon:'🗂', tint:'t-content', blurb:'فایل‌های زنده، چالش‌ها، کتابخانهٔ DES',
+    items:[
+      { id:'live',   name:'نسخهٔ زندهٔ فایل‌ها', wait:0, kw:'pathways content-index refresh محتوا' },
+      { id:'chrep',  name:'گزارش چالش‌ها', kw:'چالش آمار' },
+      { id:'chedit', name:'ثبت/ویرایش چالش', kw:'چالش کلید نکته' },
+      { id:'deslib', name:'افزودن به کتابخانهٔ DES', kw:'des کتابخانه json pmid' }
+    ]},
+  { id:'rep', name:'گزارش‌ها', icon:'📈', tint:'t-rep', blurb:'لیگ و تبلیغ‌ها',
+    items:[
+      { id:'league', name:'گزارش لیگ', kw:'لیگ رده هفته' },
+      { id:'ads',    name:'گزارش تبلیغ‌ها', kw:'تبلیغ اسپانسر نمایش کلیک ctr spot' }
+    ]},
+  { id:'comm', name:'اطلاع‌رسانی و مطب', icon:'📣', tint:'t-comm', blurb:'اطلاعیه برای همه، تعطیلی مطب',
+    items:[
+      { id:'notice', name:'اطلاعیهٔ بنیان‌گذار', kw:'اطلاعیه broadcast پوش' },
+      { id:'clinic', name:'تعطیلی مطب', kw:'مطب تعطیل کارت' }
+    ]}
+];
+var BY = {}; GROUPS.forEach(function(g){ g.items.forEach(function(it){ it.g = g; BY[it.id] = it; }); });
+function fa(n){ return String(n).replace(/\d/g, function(d){ return '۰۱۲۳۴۵۶۷۸۹'[d]; }); }
+function waitingIn(g){ return g.items.reduce(function(s,i){ return s + (i.wait||0); }, 0); }
+
+/* ── side nav ── */
+function drawSide(cur){
+  var h = '<button class="nav-home'+(cur==='home'?' on':'')+'" data-go="home"><span class="gi t-over">🏠</span>امروز'
+        + '<span class="cnt hot">'+fa(waitingIn(GROUPS[0]))+'</span></button>';
+  GROUPS.forEach(function(g){
+    var w = waitingIn(g);
+    h += '<div class="grp" data-g="'+g.id+'"><button data-toggle="'+g.id+'"><span class="gi '+g.tint+'">'+g.icon+'</span>'+g.name
+       + (w ? '<span class="cnt hot">'+fa(w)+'</span>' : '') + '<span class="chev">▾</span></button><ul>';
+    g.items.forEach(function(it){
+      h += '<li><button data-go="'+it.id+'" class="'+(cur===it.id?'on':'')+'">'+it.name
+         + (it.wait ? '<span class="cnt hot">'+fa(it.wait)+'</span>' : '') + '</button></li>';
+    });
+    h += '</ul></div>';
+  });
+  h += '<div class="side-foot">۲۴ بخش · ۷ گروه<br>هر بخش آدرس خودش را دارد (<code>/admin#support</code>) — رفرش یا «برگشت» همان‌جا می‌ماند.</div>';
+  side.innerHTML = h;
+}
+
+/* ── views ── */
+function home(){
+  var h = '<div class="crumb">امروز</div><h1>سلام، چه چیزی منتظر توست</h1>'
+        + '<p class="lede">بالای صفحه فقط کارهایی است که بدون تو جلو نمی‌روند. بقیه یک کلیک دورتر، در منوی کنار.</p>'
+        + '<div class="wait">';
+  GROUPS[0].items.forEach(function(it){
+    h += '<button class="wc '+(it.wait?'need':'clear')+'" data-go="'+it.id+'">'
+       + '<div class="row"><span class="n">'+fa(it.wait)+'</span></div>'
+       + '<span class="t">'+it.name+'</span>'
+       + '<span class="s">'+(it.wait ? 'منتظر تو ›' : 'خالی است ✓')+'</span></button>';
+  });
+  h += '</div>';
+  h += '<div class="sec-title"><h2>یک نگاه به عددها</h2><button class="crumb" style="border:0;background:none;color:var(--brand)" data-go="kpi">همه‌ی شاخص‌ها ›</button></div>'
+     + '<div class="grid">'
+     + kpi('KPI 2','فعال‌سازی ۴۸ ساعت','٪۳۸','اولین هایلایت')
+     + kpi('KPI 3','بازگشت روز اول','٪۲۹','گروه: ۱۴۲')
+     + kpi('','فعال امروز','۱۸۷','فعالیت واجد شرایط')
+     + kpi('','پریمیوم فعال','۶۴','۹ تا ۱۴ روز دیگر تمام می‌شوند')
+     + '</div>';
+  h += '<div class="sec-title"><h2>همه‌ی بخش‌ها</h2></div><div class="cats">';
+  GROUPS.slice(1).forEach(function(g){
+    h += '<button class="cat" data-go="'+g.items[0].id+'"><span class="gi '+g.tint+'">'+g.icon+'</span>'
+       + '<div><b>'+g.name+'</b><span>'+g.items.map(function(i){return i.name;}).join(' · ')+'</span></div></button>';
+  });
+  h += '</div>';
+  h += note();
+  return h;
+}
+function kpi(k,t,v,s){ return '<div class="kpi">'+(k?'<div class="k">'+k+'</div>':'')+'<h3>'+t+'</h3><div class="v">'+v+'</div><div class="s">'+s+'</div></div>'; }
+
+function section(id){
+  var it = BY[id], g = it.g;
+  var h = '<div class="crumb"><button data-go="home">امروز</button> › '+g.name+'</div>'
+        + '<h1>'+it.name+(it.wait?' <span class="pill hot">'+fa(it.wait)+' منتظر</span>':'')+'</h1>'
+        + '<p class="lede">'+g.blurb+'</p>';
+  if (g.items.length > 1){
+    h += '<div class="subtabs">';
+    g.items.forEach(function(x){
+      h += '<button data-go="'+x.id+'" class="'+(x.id===id?'on':'')+'">'+x.name+(x.wait?'<span class="cnt hot">'+fa(x.wait)+'</span>':'')+'</button>';
+    });
+    h += '</div>';
+  }
+  h += (BODY[id] ? BODY[id]() : '<div class="panel"><div class="ph">محتوای فعلی «'+it.name+'» بدون هیچ تغییری همین‌جا می‌نشیند — فقط دیگر لازم نیست تا آن پایین اسکرول کنی.</div></div>');
+  return h;
+}
+
+/* a few sections drawn out, so the shape is visible; the rest are placeholders */
+var BODY = {
+  support: function(){
+    return '<div class="panel"><h2>صف — هر کس بیشتر منتظر مانده، اول</h2>'
+      + tk(true,'T-MCF-VN2','مریم ·','دانشجو','۲ روز منتظر','کارت دانشجویی را در بله فرستادم، لطفاً بررسی کنید…')
+      + tk(true,'T-6P4-3PA','رضا ·','گفتگو زیر مطلب','۱ روز','در اپیزود ۹۱ گفتید مونولیتیک بهتر است، ولی…')
+      + tk(true,'T-A2K-Q7R','سارا ·','پرداخت','۵ ساعت','پرداخت انجام شد ولی پریمیوم فعال نشده')
+      + tk(false,'T-H9D-2WM','علی ·','باگ','بسته','ممنون، درست شد')
+      + '</div><div class="panel"><h2>پیدا کردن با کد مرجع</h2><div class="form" style="flex-direction:row"><input placeholder="T-ABC-DEF" dir="ltr"><button class="btn">پیدا کن</button></div></div>';
+  },
+  bank: function(){
+    return '<div class="panel"><h2>درخواست‌های باز</h2>'
+      + tk(true,'B-7QX-K3M','نرگس ·','دانشجو · منتظر اعلام مبلغ','۶ ماهه','۳٬۳۰۰٬۰۰۰ تومان (فهرست)')
+      + tk(false,'B-2RT-9JD','حمید ·','منتظر واریز','۱ ماهه','۶۹۰٬۰۰۰ تومان')
+      + '</div>';
+  },
+  kpi: function(){
+    return '<div class="grid">'
+      + kpi('KPI 1','تقاضای ناشناس','۴۱۲','کلیک میز کار مهمان')
+      + kpi('KPI 2','فعال‌سازی ۴۸ ساعت','٪۳۸','گروه: ۱۴۲')
+      + kpi('KPI 3','بازگشت روز اول','٪۲۹','گروه: ۱۴۲')
+      + kpi('KPI 5','عمق','۶٫۵','میانه هایلایت در هفته')
+      + kpi('KPI 6','استفاده از آرشیو','۱٫۲','جلسه برای هر کاربر رایگان')
+      + '</div>';
+  },
+  ads: function(){
+    return '<div class="panel"><div class="subtabs" style="margin:0 0 8px"><button class="on">۲۴ ساعت</button><button>۷ روز</button><button>۳۰ روز</button></div>'
+      + '<div class="grid">'+kpi('','کل نمایش','۱۲٬۴۸۰','بارِ دیده‌شدن، نه آدم')+kpi('','کل کلیک','۱۸۶','')+kpi('','CTR','٪۱٫۵','')+'</div>'
+      + '<div style="margin-top:12px;font-size:.86rem">اسپانسر الف<div class="bar"><i style="width:62%"></i></div></div>'
+      + '<div style="margin-top:8px;font-size:.86rem">تبلیغ داخلی — پریمیوم<div class="bar"><i style="width:31%"></i></div></div></div>';
+  },
+  notice: function(){
+    return '<div class="panel"><div class="form"><label>عنوان</label><input><label>متن</label><textarea></textarea>'
+      + '<label>مخاطب</label><select><option>همه</option><option>رایگان</option><option>پریمیوم</option></select>'
+      + '<button class="btn">بفرست</button></div></div>';
+  },
+  clinic: function(){
+    return '<div class="panel"><div class="form"><label>از (شمسی)</label><input placeholder="۱۴۰۵/۰۷/۲۰"><label>تا (اختیاری)</label><input>'
+      + '<label>یادداشت (اختیاری)</label><input><button class="btn">ثبت تعطیلی</button></div>'
+      + '<table style="margin-top:12px"><tr><th>از</th><th>تا</th><th></th></tr><tr><td>۱۴۰۵/۰۷/۲۰</td><td>۱۴۰۵/۰۷/۲۲</td><td><button class="btn ghost" style="padding:4px 12px">حذف</button></td></tr></table></div>';
+  }
+};
+function tk(need,ref,who,kind,age,txt){
+  return '<div class="tk'+(need?' need':'')+'"><div class="tk-h"><b>'+who+'</b><span class="pill">'+kind+'</span>'
+    + '<span class="pill'+(need?' hot':' ok')+'">'+age+'</span><span class="muted" dir="ltr" style="margin-inline-start:auto">'+ref+'</span></div>'
+    + '<div class="tk-x">'+txt+'</div></div>';
+}
+function note(){
+  return '<div class="note"><b>یادداشت ماکاپ (روی صفحهٔ واقعی نیست):</b> هیچ بخشی حذف یا اضافه نمی‌شود — همان ۲۴ بخش امروز، در ۷ گروه. '
+    + 'عددهای نارنجی همان شمارنده‌هایی‌اند که الان کنار عنوان‌ها هست (پشتیبانی، چالش، DES، آزمون، گواهی‌نامه)، فقط بالا آمده‌اند. '
+    + 'جستجو کلمه‌های داخل بخش را هم می‌شناسد: «ستون»، «تخفیف»، «شبا» را امتحان کن. روی گوشی، ☰ منو را باز می‌کند.</div>';
+}
+
+/* ── routing (hash, so refresh and back keep your place) ── */
+function go(id){ if (location.hash !== '#'+id) location.hash = id; else render(); }
+function render(){
+  var id = (location.hash || '#home').slice(1); if (id !== 'home' && !BY[id]) id = 'home';
+  drawSide(id);
+  view.innerHTML = id === 'home' ? home() : section(id);
+  document.body.classList.remove('drawer');
+  window.scrollTo(0,0);
+}
+document.addEventListener('click', function(e){
+  var t = e.target.closest('[data-go]'); if (t){ e.preventDefault(); closeSearch(); go(t.getAttribute('data-go')); return; }
+  var tg = e.target.closest('[data-toggle]'); if (tg){ tg.parentNode.classList.toggle('closed'); return; }
+  if (!e.target.closest('.search')) closeSearch();
+});
+burger.onclick = function(){ document.body.classList.add('drawer'); };
+scrim.onclick = function(){ document.body.classList.remove('drawer'); };
+window.addEventListener('hashchange', render);
+
+/* ── search ── */
+var sel = 0, hits = [];
+function fold(s){ return s.replace(/[‌\s]+/g,' ').replace(/ي/g,'ی').replace(/ك/g,'ک').toLowerCase(); }
+function search(){
+  var v = fold(q.value.trim());
+  if (!v){ closeSearch(); return; }
+  hits = [];
+  GROUPS.forEach(function(g){ g.items.forEach(function(it){
+    if (fold(it.name+' '+g.name+' '+it.kw).indexOf(v) >= 0) hits.push(it);
+  }); });
+  sel = 0; drawHits();
+}
+function drawHits(){
+  results.classList.add('on');
+  results.innerHTML = hits.length ? hits.map(function(it,i){
+    return '<button data-go="'+it.id+'" class="'+(i===sel?'sel':'')+'"><span class="gi '+it.g.tint+'" style="width:24px;height:24px;font-size:.8rem">'+it.g.icon+'</span>'
+      + it.name + (it.wait?'<span class="cnt hot">'+fa(it.wait)+'</span>':'') + '<span class="g">'+it.g.name+'</span></button>';
+  }).join('') : '<div class="none">چیزی پیدا نشد.</div>';
+}
+function closeSearch(){ results.classList.remove('on'); }
+q.addEventListener('input', search);
+q.addEventListener('keydown', function(e){
+  if (!hits.length) return;
+  if (e.key==='ArrowDown'){ sel=(sel+1)%hits.length; drawHits(); e.preventDefault(); }
+  if (e.key==='ArrowUp'){ sel=(sel-1+hits.length)%hits.length; drawHits(); e.preventDefault(); }
+  if (e.key==='Enter'){ go(hits[sel].id); q.value=''; closeSearch(); q.blur(); }
+  if (e.key==='Escape'){ closeSearch(); q.blur(); }
+});
+document.addEventListener('keydown', function(e){
+  if ((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); q.focus(); }
+});
+
+render();
+</script>
+</body>
+</html>
