@@ -255,6 +255,133 @@ function renderHtml(
   #clOut{font-size:.85rem;color:#62779a;min-height:1.6em}
   #clList td button{background:#b3261e;color:#fff;border:0;border-radius:999px;padding:5px 14px;
     font:inherit;font-weight:800;font-size:.82rem;cursor:pointer}
+  /* dca:start — the panel's navigation (approved mockup .dentcast/admin-nav-mockup.html,
+     1405/07/14). APPEARANCE ONLY: the script at the end of the page files the
+     sections below into seven groups by MOVING their existing nodes — nothing is
+     re-created, so every listener the blocks above attached stays on its node. */
+  body{background:#f0f2f5}
+  .dca-top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;height:58px;padding:0 16px;
+    background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid rgba(2,35,96,.10)}
+  .dca-burger{display:none;width:40px;height:40px;border-radius:11px;border:1px solid rgba(2,35,96,.10);background:#f4f6fb;
+    font:inherit;font-size:1.15rem;cursor:pointer;color:#0a1a33}
+  .dca-brand{font-weight:900;font-size:1rem;white-space:nowrap;line-height:1.3}
+  .dca-brand small{display:block;font-weight:500;font-size:.7rem;color:#62779a}
+  .dca-search{flex:1;max-width:460px;margin-inline-start:auto;position:relative}
+  .dca-search input{width:100%;box-sizing:border-box;height:40px;border-radius:12px;border:1px solid rgba(2,35,96,.10);background:#f4f6fb;
+    padding:0 40px 0 64px;font:inherit;font-size:.9rem;color:#0a1a33}
+  .dca-search input:focus{outline:2px solid #0b5fff;outline-offset:-1px;background:#fff}
+  .dca-search .dca-ic{position:absolute;right:13px;top:8px;color:#62779a}
+  .dca-search kbd{position:absolute;left:10px;top:9px;font:600 .7rem/1 system-ui;color:#62779a;border:1px solid rgba(2,35,96,.10);
+    border-radius:6px;padding:4px 6px;background:#fff}
+  .dca-results{position:absolute;top:46px;right:0;left:0;background:#fff;border:1px solid rgba(2,35,96,.10);border-radius:14px;
+    box-shadow:0 12px 40px rgba(2,35,96,.16);padding:6px;display:none;max-height:60vh;overflow:auto;z-index:5}
+  .dca-results.on{display:block}
+  .dca-results button{display:flex;width:100%;align-items:center;gap:10px;text-align:right;border:0;background:none;
+    padding:9px 10px;border-radius:9px;color:#0a1a33;font:inherit;cursor:pointer}
+  .dca-results button:hover,.dca-results button.sel{background:rgba(11,95,255,.08)}
+  .dca-results .dca-g{margin-inline-start:auto;font-size:.74rem;color:#62779a}
+  .dca-results .dca-none{padding:12px;color:#62779a;font-size:.88rem}
+
+  .dca-shell{display:grid;grid-template-columns:270px minmax(0,1fr);min-height:calc(100vh - 58px)}
+  .dca-side{position:sticky;top:58px;height:calc(100vh - 58px);overflow:auto;background:#fff;border-left:1px solid rgba(2,35,96,.10);
+    padding:14px 10px 40px;box-sizing:border-box}
+  .dca-main{min-width:0;padding:22px 26px 80px}
+  .dca-main .wrap{max-width:900px;padding:0}
+  .dca-head,.dca-home{max-width:900px;margin:0 auto}
+
+  .dca-side button{font:inherit;cursor:pointer}
+  .dca-nhome{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;padding:9px 10px;border-radius:10px;
+    font-weight:800;color:#0a1a33;text-align:right;position:relative}
+  .dca-grp{margin-top:10px}
+  .dca-grp>button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;padding:8px 10px;border-radius:10px;
+    color:#0a1a33;font-weight:800;font-size:.9rem;text-align:right}
+  .dca-grp>button .dca-chev{margin-inline-start:auto;color:#62779a;transition:transform .2s;font-size:.8rem}
+  .dca-grp.closed>button .dca-chev{transform:rotate(90deg)}
+  .dca-grp.closed ul{display:none}
+  .dca-gi{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:.95rem;flex:none}
+  .dca-grp ul{list-style:none;margin:2px 0 0;padding:0}
+  .dca-grp li button{position:relative;display:flex;align-items:center;gap:8px;width:100%;border:0;background:none;text-align:right;
+    padding:7px 48px 7px 10px;border-radius:9px;color:#4a5f85;font-size:.87rem}
+  .dca-grp li button:hover,.dca-nhome:hover,.dca-grp>button:hover{background:#f4f6fb}
+  .dca-grp li button.on,.dca-nhome.on{background:rgba(11,95,255,.08);color:#0b5fff;font-weight:800}
+  .dca-grp li button.on::before,.dca-nhome.on::before{content:"";position:absolute;right:-10px;top:8px;bottom:8px;width:3px;border-radius:3px;background:#0b5fff}
+  .dca-cnt{margin-inline-start:auto;min-width:22px;height:20px;padding:0 7px;border-radius:99px;font-size:.72rem;font-weight:800;
+    display:inline-grid;place-items:center;background:#f4f6fb;color:#62779a;box-sizing:border-box}
+  .dca-cnt.hot{background:rgba(201,146,43,.12);color:#8a6414}
+  .dca-cnt:empty{display:none}
+  .dca-foot{margin-top:18px;padding:10px;font-size:.74rem;color:#62779a;border-top:1px solid rgba(2,35,96,.10)}
+
+  .t-inbox{background:rgba(201,146,43,.14)} .t-over{background:rgba(11,95,255,.10)}
+  .t-users{background:rgba(124,77,255,.11)} .t-learn{background:rgba(15,122,74,.11)}
+  .t-content{background:rgba(0,150,160,.11)} .t-rep{background:rgba(2,35,96,.07)} .t-comm{background:rgba(214,70,90,.10)}
+
+  .dca-crumb{font-size:.8rem;color:#62779a;display:flex;gap:6px;align-items:center}
+  .dca-crumb button,.dca-link{border:0;background:none;color:#0b5fff;padding:0;font:inherit;font-size:.8rem;cursor:pointer}
+  .dca-subtabs{display:flex;gap:6px;overflow-x:auto;padding:8px 0 4px;scrollbar-width:none}
+  .dca-subtabs::-webkit-scrollbar{display:none}
+  .dca-subtabs button{flex:none;border:1px solid rgba(2,35,96,.10);background:#fff;color:#4a5f85;border-radius:99px;padding:6px 14px;
+    font:inherit;font-size:.84rem;font-weight:700;display:flex;gap:6px;align-items:center;cursor:pointer}
+  .dca-subtabs button.on{background:#0b5fff;color:#fff;border-color:#0b5fff}
+  .dca-subtabs button.on .dca-cnt{background:rgba(255,255,255,.25);color:#fff}
+
+  /* a section, shown one at a time; its own first heading is the page title */
+  .dca-sec[hidden]{display:none}
+  .dca-sec [id]{scroll-margin-top:72px}
+  .dca-sec>h3:first-child,.dca-sec>h4:first-child,.dca-title{font-size:1.35rem;margin:.3rem 0 .4rem !important;color:#0a1a33}
+  .dca-sec>h1{display:none}
+  .dca-home[hidden],.dca-head[hidden]{display:none}
+
+  .dca-home h1{font-size:1.35rem;margin:.15rem 0 .2rem}
+  .dca-lede{color:#62779a;font-size:.88rem;margin:0 0 16px}
+  .dca-wait,.dca-cats,.dca-glance{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+  .dca-wc{display:flex;flex-direction:column;gap:2px;text-align:right;background:#fff;border:1px solid rgba(2,35,96,.10);border-radius:16px;
+    padding:14px 16px;box-shadow:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);color:#0a1a33;font:inherit;cursor:pointer;
+    transition:transform .12s,border-color .12s}
+  .dca-wc:hover{transform:translateY(-2px);border-color:#0b5fff}
+  .dca-wc.need{border-color:rgba(154,107,21,.45);background:linear-gradient(180deg,rgba(201,146,43,.07),#fff 55%)}
+  .dca-wc .dca-n{font-size:1.9rem;font-weight:900;line-height:1.1;min-height:1.1em}
+  .dca-wc.need .dca-n{color:#8a6414}
+  .dca-wc .dca-t{font-weight:800;font-size:.92rem}
+  .dca-wc .dca-s{font-size:.76rem;color:#62779a}
+  .dca-st{display:flex;align-items:baseline;gap:10px;margin:26px 0 10px}
+  .dca-st h2{font-size:1rem;margin:0}
+  .dca-kpi{background:#fff;border:1px solid rgba(2,35,96,.10);border-radius:14px;padding:12px 14px;box-shadow:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04)}
+  .dca-kpi b{display:block;font-size:.85rem;color:#4a5f85}
+  .dca-kpi .dca-v{font-size:1.6rem;font-weight:900}
+  .dca-kpi span{font-size:.76rem;color:#62779a}
+  .dca-cat{display:flex;gap:12px;align-items:flex-start;text-align:right;background:#fff;border:1px solid rgba(2,35,96,.10);border-radius:16px;
+    padding:14px;box-shadow:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);color:#0a1a33;font:inherit;cursor:pointer}
+  .dca-cat:hover{border-color:#0b5fff}
+  .dca-cat .dca-gi{width:38px;height:38px;border-radius:11px;font-size:1.15rem}
+  .dca-cat b{display:block;font-size:.93rem}
+  .dca-cat span{font-size:.76rem;color:#62779a;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+  /* the existing blocks, one step closer to the mockup's surfaces */
+  .card,form.bc,table,.sp-c,.tk{border-radius:16px}
+  .tabs button{font-size:.84rem}
+
+  .dca-scrim{display:none}
+  @media (max-width:899px){
+    .dca-shell{grid-template-columns:minmax(0,1fr)}
+    .dca-burger{display:grid;place-items:center}
+    .dca-side{position:fixed;top:0;right:0;bottom:0;width:min(86vw,320px);height:100vh;z-index:50;transform:translateX(105%);
+      transition:transform .22s ease;box-shadow:-10px 0 40px rgba(2,35,96,.18);border-left:0}
+    body.dca-drawer .dca-side{transform:none}
+    .dca-scrim{position:fixed;inset:0;background:rgba(10,26,51,.35);z-index:40}
+    body.dca-drawer .dca-scrim{display:block}
+    .dca-main{padding:16px 16px 90px}
+    .dca-brand small{display:none}
+    .dca-search{max-width:none}
+    .dca-search kbd{display:none}
+    .dca-search input{padding-left:12px}
+    .dca-wait,.dca-glance{grid-template-columns:1fr 1fr;gap:10px}
+    .dca-wc{padding:12px}
+    .dca-wc .dca-n{font-size:1.55rem}
+    .dca-kpi .dca-v{font-size:1.3rem}
+    .dca-cats{grid-template-columns:1fr}
+    .dca-sec>h3:first-child,.dca-sec>h4:first-child,.dca-title,.dca-home h1{font-size:1.2rem}
+  }
+  /* dca:end */
 </style></head><body><div class="wrap">
   <h1>پیشخوان بنیان‌گذار</h1>
   <div class="muted">تولید: ${k.generated_at} · منطقه زمانی: ${k.tz}</div>
@@ -3299,7 +3426,323 @@ function renderHtml(
     });
   })();
   </script>
-</div></body></html>`;
+</div>
+<!-- dca:start -->
+<script>
+  (function () {
+    // The panel's navigation. It never creates, re-creates or rewrites a node
+    // the blocks above own: it MOVES each top-level child of .wrap into one
+    // section wrapper per heading and shows one wrapper at a time. A moved node
+    // keeps its listeners and its id, so every form and queue above works
+    // exactly as before; the counts beside the menu are READ from the pills
+    // those blocks already fill, never asked of the API a second time.
+    var ZW = String.fromCharCode(8204);
+    function norm(s) { return String(s || '').split(ZW).join('').replace(/ +/g, '').replace(/ي/g, 'ی').replace(/ك/g, 'ک'); }
+    function dcaFa(n) { return String(n).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.charAt(+d); }); }
+    function lead(s) {
+      var t = String(s || ''), out = '', i, c, p;
+      for (i = 0; i < t.length; i++) {
+        c = t.charAt(i); p = '۰۱۲۳۴۵۶۷۸۹'.indexOf(c);
+        if (p >= 0) c = String(p);
+        if (c >= '0' && c <= '9') out += c; else if (out) break;
+      }
+      return out ? +out : 0;
+    }
+    function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+    function text(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+    // [key, menu name, heading prefix (or #id), pill id, pill is "waiting for you", search words]
+    var GROUPS = [
+      { id: 'inbox', name: 'صندوق‌ها', icon: '📥', tint: 't-inbox', items: [
+        ['support', 'صندوق پشتیبانی', 'صندوق پشتیبانی', 'tkWaiting', 1, 'تیکت سوال گفتگو زیر مطلب مرجع'],
+        ['bank', 'صف واریز به حساب', 'صف واریز', '', 0, 'شبا بانک واریز دانشجو مبلغ کارت هدیه'],
+        ['challenge', 'صندوق چالش', 'صندوق چالش', 'chWaiting', 1, 'چالش جواب حکم'],
+        ['des', 'ارزیاب DES', 'ارزیاب DES', 'dsWaiting', 1, 'des امتیاز مقاله خواننده'],
+        ['exam-queue', 'صندوق آزمون', 'صندوق آزمون', 'exqWaiting', 1, 'حکم آزمون تشریحی تلاش'],
+        ['cert-wishes', 'تقاضای گواهی‌نامه', '#cert-wishes', 'cwWaiting', 1, 'گواهی بله خواسته']
+      ] },
+      { id: 'over', name: 'نمای کلی', icon: '📊', tint: 't-over', items: [
+        ['kpi', 'شاخص‌های اصلی (KPI)', '', '', 0, 'تقاضای ناشناس فعال‌سازی بازگشت عمق آرشیو'],
+        ['engagement', 'درگیری و اتصال کاربران', 'درگیری و اتصال', '', 0, 'استریک بله تلگرام پوش نوتیف'],
+        ['d7', 'ماندگاری روز هفتم', 'KPI 4', '', 0, 'ماندگاری پلن']
+      ] },
+      { id: 'users', name: 'کاربران و اشتراک', icon: '👥', tint: 't-users', items: [
+        ['subs', 'گزارش کاربران و اشتراک', 'گزارش کاربران', '', 0, 'پرمیوم پریمیوم اشتراک تمدید'],
+        ['gift-new', 'هدیهٔ پریمیوم به تازه‌واردها', 'هدیه‌ی پریمیوم به کسانی', '', 0, 'هدیه تجربه نکرده'],
+        ['gift-day', 'هدیهٔ روز پریمیوم به یک نفر', 'هدیه‌ی روزِ پریمیوم', '', 0, 'هدیه روز'],
+        ['forever', 'پریمیوم ابدی به یک نفر', 'پریمیومِ ابدی', '', 0, 'ابدی همیشگی'],
+        ['badge', 'اهدای نشان', 'اهدای نشان', '', 0, 'نشان همراه دانشجو ستون تخفیف'],
+        ['streak', 'ترمیم استریک شکسته', 'ترمیم استریک', '', 0, 'استریک ترمیم']
+      ] },
+      { id: 'learn', name: 'مسیر، آزمون، گواهی', icon: '🎓', tint: 't-learn', items: [
+        ['paths', 'چه کسی نزدیک پایان است', 'مسیرها', 'pwWaiting', 0, 'مسیر پایان نزدیک'],
+        ['exams', 'فرم و سؤال‌های آزمون', '#exams', '', 0, 'سوال بانک notebooklm اعلام آمادگی واگذاری'],
+        ['cert', 'صدور و ابطال گواهی', '=گواهی', '', 0, 'گواهی صادر باطل DC']
+      ] },
+      { id: 'content', name: 'محتوا و چالش', icon: '🗂', tint: 't-content', items: [
+        ['live', 'نسخهٔ زندهٔ فایل‌ها', 'محتوا', 'cnWaiting', 1, 'pathways content-index refresh محتوا'],
+        ['challenge-report', 'گزارش چالش‌ها', 'گزارش چالش', 'chRepCount', 0, 'چالش آمار'],
+        ['challenge-edit', 'ثبت/ویرایش چالش', 'ثبت/ویرایش', '', 0, 'چالش کلید نکته'],
+        ['des-library', 'افزودن به کتابخانهٔ DES', 'افزودنِ مستقیم', '', 0, 'des کتابخانه json pmid']
+      ] },
+      { id: 'rep', name: 'گزارش‌ها', icon: '📈', tint: 't-rep', items: [
+        ['league', 'گزارش لیگ', 'گزارش لیگ', '', 0, 'لیگ رده هفته'],
+        ['ads', 'گزارش تبلیغ‌ها', 'گزارش تبلیغ', '', 0, 'تبلیغ اسپانسر نمایش کلیک ctr spot']
+      ] },
+      { id: 'comm', name: 'اطلاع‌رسانی و مطب', icon: '📣', tint: 't-comm', items: [
+        ['notice', 'اطلاعیهٔ بنیان‌گذار', 'اطلاعیه', '', 0, 'اطلاعیه broadcast پوش'],
+        ['clinic', 'تعطیلی مطب', 'تعطیلی مطب', '', 0, 'مطب تعطیل کارت']
+      ] }
+    ];
+    var OTHER = { id: 'other', name: 'سایر', icon: '•', tint: 't-rep', items: [] };
+    var ITEMS = [], BY = {};
+    GROUPS.forEach(function (g) {
+      g.items = g.items.map(function (a) {
+        var it = { key: a[0], name: a[1], match: a[2], pill: a[3], hot: !!a[4], kw: a[5], g: g, count: 0, sec: null };
+        ITEMS.push(it); BY[it.key] = it; return it;
+      });
+    });
+
+    var wrap = document.querySelector('.wrap');
+    if (!wrap) return;
+
+    function headingText(h) {
+      var s = '', n;
+      for (n = h.firstChild; n; n = n.nextSibling) if (n.nodeType === 3) s += n.nodeValue;
+      return norm(s);
+    }
+    function find(h) {
+      var i, it, m, t = headingText(h);
+      for (i = 0; i < ITEMS.length; i++) {
+        it = ITEMS[i]; m = it.match;
+        if (it.sec || !m) continue;
+        if (m.charAt(0) === '#') { if (h.id === m.slice(1)) return it; continue; }
+        if (h.tagName === 'H4' && it.key !== 'exam-queue') continue;
+        if (h.tagName === 'H3' && it.key === 'exam-queue') continue;
+        if (m.charAt(0) === '=') { if (t === norm(m.slice(1))) return it; continue; }
+        if (t.indexOf(norm(m)) === 0) return it;
+      }
+      return null;
+    }
+
+    // ── file every child of .wrap under its heading ──
+    var kids = Array.prototype.slice.call(wrap.children);
+    var cur = BY.kpi, secs = [];
+    function open(it) {
+      it.sec = el('section', 'dca-sec'); it.sec.id = 'dca-' + it.key; it.sec.hidden = true;
+      wrap.appendChild(it.sec); secs.push(it); return it;
+    }
+    open(cur);
+    BY.kpi.sec.appendChild(el('h2', 'dca-title', 'شاخص‌های اصلی (KPI)')).setAttribute('data-dca', '');
+    kids.forEach(function (k) {
+      if (k.tagName === 'H3' || k.tagName === 'H4') {
+        var it = find(k);
+        if (!it && k.tagName === 'H3') {
+          it = { key: 'other-' + (OTHER.items.length + 1), name: headingText(k) || 'بخش', match: '', pill: '', hot: false,
+            kw: '', g: OTHER, count: 0, sec: null };
+          OTHER.items.push(it); ITEMS.push(it); BY[it.key] = it;
+        }
+        if (it) cur = open(it);
+      }
+      cur.sec.appendChild(k);
+    });
+    if (OTHER.items.length) GROUPS.push(OTHER);
+    GROUPS.forEach(function (g) { g.items = g.items.filter(function (it) { return it.sec; }); });
+    GROUPS = GROUPS.filter(function (g) { return g.items.length; });
+    ITEMS = ITEMS.filter(function (it) { return it.sec; });
+
+    // ── chrome ──
+    var stamp = BY.kpi.sec.querySelector('.muted');
+    var top = el('header', 'dca-top');
+    top.setAttribute('data-dca', '');
+    top.innerHTML = '<button type="button" class="dca-burger" aria-label="منو">☰</button>'
+      + '<div class="dca-brand">پیشخوان بنیان‌گذار<small>' + text(stamp ? stamp.textContent : '') + '</small></div>'
+      + '<div class="dca-search"><span class="dca-ic">⌕</span>'
+      + '<input type="search" placeholder="جستجو: پشتیبانی، ستون، تخفیف، شبا…" autocomplete="off" aria-label="جستجوی بخش‌ها">'
+      + '<kbd>Ctrl K</kbd><div class="dca-results"></div></div>';
+    var shell = el('div', 'dca-shell');
+    var side = el('aside', 'dca-side'); side.setAttribute('data-dca', '');
+    var scrim = el('div', 'dca-scrim'); scrim.setAttribute('data-dca', '');
+    var main = el('main', 'dca-main');
+    var home = el('div', 'dca-home'); home.setAttribute('data-dca', '');
+    var head = el('div', 'dca-head'); head.setAttribute('data-dca', '');
+    wrap.parentNode.insertBefore(top, wrap);
+    wrap.parentNode.insertBefore(shell, wrap);
+    shell.appendChild(side); shell.appendChild(scrim); shell.appendChild(main);
+    main.appendChild(home); main.appendChild(head); main.appendChild(wrap);
+
+    function badge(it) {
+      return '<span class="dca-cnt' + (it.hot ? ' hot' : '') + '" data-dca-count="' + it.key + '">' + (it.count ? dcaFa(it.count) : '') + '</span>';
+    }
+    function groupWaiting(g) { return g.items.reduce(function (s, it) { return s + (it.hot ? it.count : 0); }, 0); }
+    function drawSide(curKey) {
+      var h = '<button type="button" class="dca-nhome' + (curKey === 'home' ? ' on' : '') + '" data-dca-go="home">'
+        + '<span class="dca-gi t-over">🏠</span>امروز<span class="dca-cnt hot" data-dca-gcount="inbox"></span></button>';
+      GROUPS.forEach(function (g) {
+        h += '<div class="dca-grp"><button type="button" data-dca-toggle><span class="dca-gi ' + g.tint + '">' + g.icon + '</span>'
+          + text(g.name) + '<span class="dca-cnt hot" data-dca-gcount="' + g.id + '"></span><span class="dca-chev">▾</span></button><ul>';
+        g.items.forEach(function (it) {
+          h += '<li><button type="button" data-dca-go="' + it.key + '" class="' + (curKey === it.key ? 'on' : '') + '">'
+            + text(it.name) + badge(it) + '</button></li>';
+        });
+        h += '</ul></div>';
+      });
+      h += '<div class="dca-foot">' + dcaFa(ITEMS.length) + ' بخش · ' + dcaFa(GROUPS.length) + ' گروه — هر بخش آدرس خودش را دارد؛ رفرش یا «برگشت» همان‌جا می‌ماند.</div>';
+      side.innerHTML = h;
+      paintCounts();
+    }
+    function paintCounts() {
+      Array.prototype.forEach.call(document.querySelectorAll('[data-dca-count]'), function (s) {
+        var it = BY[s.getAttribute('data-dca-count')];
+        s.textContent = it && it.count ? dcaFa(it.count) : '';
+      });
+      GROUPS.forEach(function (g) {
+        var w = groupWaiting(g);
+        Array.prototype.forEach.call(document.querySelectorAll('[data-dca-gcount="' + g.id + '"]'), function (s) { s.textContent = w ? dcaFa(w) : ''; });
+      });
+      Array.prototype.forEach.call(home.querySelectorAll('[data-dca-wc]'), function (b) {
+        var it = BY[b.getAttribute('data-dca-wc')];
+        b.className = 'dca-wc' + (it.count ? ' need' : '');
+        // an empty pill is «nothing waiting» OR «not answered yet» — the card
+        // never claims the first when it may be the second
+        b.querySelector('.dca-n').textContent = it.count ? dcaFa(it.count) : '';
+        b.querySelector('.dca-s').textContent = it.count ? 'منتظر تو ›' : 'باز کن ›';
+      });
+    }
+
+    function glance() {
+      var want = ['فعال‌سازی', 'بازگشت روز اول', 'فعال امروز', 'استریک زنده'], out = '';
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.dca-sec .card'));
+      want.forEach(function (w) {
+        var c = cards.filter(function (c) { var h = c.querySelector('h3'); return h && norm(h.textContent).indexOf(norm(w)) === 0; })[0];
+        if (!c) return;
+        var v = c.querySelector('.v'), s = c.querySelector('.s');
+        out += '<div class="dca-kpi"><b>' + text(c.querySelector('h3').textContent) + '</b><div class="dca-v">' + text(v ? v.textContent : '')
+          + '</div><span>' + text(s ? s.textContent : '') + '</span></div>';
+      });
+      return out;
+    }
+    function drawHome() {
+      var inbox = GROUPS.filter(function (g) { return g.id === 'inbox'; })[0];
+      var h = '<div class="dca-crumb">امروز</div><h1>چه چیزی منتظر توست</h1>'
+        + '<p class="dca-lede">بالای صفحه فقط کارهایی است که بدون تو جلو نمی‌روند. بقیه یک کلیک دورتر، در منوی کنار.</p>';
+      if (inbox) {
+        h += '<div class="dca-wait">';
+        inbox.items.forEach(function (it) {
+          h += '<button type="button" class="dca-wc" data-dca-go="' + it.key + '" data-dca-wc="' + it.key + '">'
+            + '<span class="dca-n"></span><span class="dca-t">' + text(it.name) + '</span><span class="dca-s"></span></button>';
+        });
+        h += '</div>';
+      }
+      var g = glance();
+      if (g) h += '<div class="dca-st"><h2>یک نگاه به عددها</h2><button type="button" class="dca-link" data-dca-go="kpi">همه‌ی شاخص‌ها ›</button></div>'
+        + '<div class="dca-glance">' + g + '</div>';
+      h += '<div class="dca-st"><h2>همه‌ی بخش‌ها</h2></div><div class="dca-cats">';
+      GROUPS.forEach(function (gr) {
+        if (gr.id === 'inbox') return;
+        h += '<button type="button" class="dca-cat" data-dca-go="' + gr.items[0].key + '"><span class="dca-gi ' + gr.tint + '">' + gr.icon + '</span>'
+          + '<div><b>' + text(gr.name) + '</b><span>' + gr.items.map(function (i) { return text(i.name); }).join(' · ') + '</span></div></button>';
+      });
+      home.innerHTML = h + '</div>';
+    }
+
+    // ── counts: read from the pills the blocks above already fill ──
+    ITEMS.forEach(function (it) {
+      if (!it.pill) return;
+      var p = document.getElementById(it.pill);
+      if (!p) return;
+      var read = function () { var n = lead(p.textContent); if (n !== it.count) { it.count = n; paintCounts(); } };
+      new MutationObserver(read).observe(p, { childList: true, characterData: true, subtree: true });
+      read();
+    });
+
+    // ── routing: the hash is the section, so refresh and back keep your place ──
+    function show(key, anchor) {
+      var it = BY[key];
+      if (!it) key = 'home';
+      ITEMS.forEach(function (x) { x.sec.hidden = x !== it; });
+      home.hidden = key !== 'home';
+      head.hidden = key === 'home';
+      if (it) {
+        var h = '<div class="dca-crumb"><button type="button" data-dca-go="home">امروز</button> › ' + text(it.g.name) + '</div>';
+        if (it.g.items.length > 1) {
+          h += '<div class="dca-subtabs">';
+          it.g.items.forEach(function (x) {
+            h += '<button type="button" data-dca-go="' + x.key + '" class="' + (x === it ? 'on' : '') + '">' + text(x.name) + badge(x) + '</button>';
+          });
+          h += '</div>';
+        }
+        head.innerHTML = h;
+      }
+      drawSide(key);
+      document.body.classList.remove('dca-drawer');
+      // after the browser's own jump to a fragment that is also an element id
+      setTimeout(function () { if (anchor && anchor.scrollIntoView) anchor.scrollIntoView(); else window.scrollTo(0, 0); }, 0);
+    }
+    function route() {
+      var raw = decodeURIComponent((location.hash || '').slice(1));
+      if (!raw || raw === 'home') return show('home');
+      if (BY[raw]) return show(raw);
+      // an anchor that lives inside a section (an old link to an element id)
+      var a = document.getElementById(raw), s = a && a.closest ? a.closest('.dca-sec') : null;
+      if (s) return show(s.id.slice(4), a);
+      show('home');
+    }
+    function go(key) {
+      if (location.hash === '#' + key) route(); else location.hash = key;
+    }
+    window.addEventListener('hashchange', route);
+    // #exams / #cert-wishes are also element ids, so the browser jumps to them
+    // after load; a section opens at its top instead
+    window.addEventListener('load', function () {
+      if (BY[decodeURIComponent((location.hash || '').slice(1))]) setTimeout(function () { window.scrollTo(0, 0); }, 0);
+    });
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest ? e.target.closest('[data-dca-go]') : null;
+      if (t) { e.preventDefault(); closeSearch(); go(t.getAttribute('data-dca-go')); return; }
+      var tg = e.target.closest ? e.target.closest('[data-dca-toggle]') : null;
+      if (tg) { tg.parentNode.classList.toggle('closed'); return; }
+      if (!(e.target.closest && e.target.closest('.dca-search'))) closeSearch();
+    });
+    top.querySelector('.dca-burger').addEventListener('click', function () { document.body.classList.add('dca-drawer'); });
+    scrim.addEventListener('click', function () { document.body.classList.remove('dca-drawer'); });
+
+    // ── search: section names, their group, and the words inside them ──
+    var q = top.querySelector('input'), results = top.querySelector('.dca-results'), hits = [], sel = 0;
+    function closeSearch() { results.classList.remove('on'); }
+    function drawHits() {
+      results.classList.add('on');
+      results.innerHTML = hits.length ? hits.map(function (it, i) {
+        return '<button type="button" data-dca-go="' + it.key + '" class="' + (i === sel ? 'sel' : '') + '">'
+          + '<span class="dca-gi ' + it.g.tint + '" style="width:24px;height:24px;font-size:.8rem">' + it.g.icon + '</span>'
+          + text(it.name) + badge(it) + '<span class="dca-g">' + text(it.g.name) + '</span></button>';
+      }).join('') : '<div class="dca-none">چیزی پیدا نشد.</div>';
+    }
+    q.addEventListener('input', function () {
+      var v = norm(q.value).toLowerCase();
+      if (!v) { closeSearch(); return; }
+      hits = ITEMS.filter(function (it) {
+        return norm(it.name + it.g.name + it.kw + headingText(it.sec.firstElementChild || it.sec)).toLowerCase().indexOf(v) >= 0;
+      });
+      sel = 0; drawHits();
+    });
+    q.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closeSearch(); q.blur(); return; }
+      if (!hits.length) return;
+      if (e.key === 'ArrowDown') { sel = (sel + 1) % hits.length; drawHits(); e.preventDefault(); }
+      if (e.key === 'ArrowUp') { sel = (sel - 1 + hits.length) % hits.length; drawHits(); e.preventDefault(); }
+      if (e.key === 'Enter') { e.preventDefault(); var k = hits[sel].key; q.value = ''; closeSearch(); q.blur(); go(k); }
+    });
+    document.addEventListener('keydown', function (e) {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); q.focus(); }
+    });
+
+    drawHome();
+    route();
+  })();
+</script>
+<!-- dca:end -->
+</body></html>`;
 }
 
 export async function adminRoutes(app: FastifyInstance): Promise<void> {
