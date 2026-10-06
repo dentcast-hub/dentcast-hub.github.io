@@ -87,9 +87,13 @@ describe('the showcase', () => {
     const pct = OPEN[0].certificate_discount_percent;
     expect(pct).toBeGreaterThan(0); // the number the card announces lives in the file
     const off = '٪' + FA(pct) + ' تخفیف اشتراک';
+    // Pending is set on a copy, never read from the shipped file: the founder
+    // lifted the flag from the open pathway on 1405/07/14, and a test that
+    // borrowed it from the catalog would break the day a pathway is released.
+    const pending = FILE.map((p: any) => (p.id === OPEN[0].id ? { ...p, certificate: 'pending' } : p));
+    globalThis.fetch = vi.fn(() => Promise.resolve({ ok: true, status: 200, json: async () => pending })) as any;
     let sc = await render();
     const cert = sc.querySelector('.dcp-pws-feat .dcp-pws-cert')!;
-    expect(OPEN[0].certificate).toBe('pending');
     expect(cert.textContent).toBe('🎓 گواهی‌نامه + ' + off + ' · به‌زودی');
     expect(cert.classList.contains('is-open')).toBe(false);
     // said once, beside the certificate, and never «یک‌جا» (a returning reader gets it in instalments)
@@ -104,11 +108,18 @@ describe('the showcase', () => {
     expect(open.classList.contains('is-open')).toBe(true);
   });
 
+  it('as shipped, a guest already sees the open pathway\'s certificate in green (released 1405/07/14)', async () => {
+    expect(OPEN[0].certificate).toBeUndefined();
+    const cert = (await render()).querySelector('.dcp-pws-feat .dcp-pws-cert')!;
+    expect(cert.textContent).toBe('🎓 گواهی‌نامه · ٪' + FA(OPEN[0].certificate_discount_percent) + ' تخفیف اشتراک');
+    expect(cert.classList.contains('is-open')).toBe(true);
+  });
+
   it('names no percent for a pathway whose file entry sets none (the API default is not the card\'s to guess)', async () => {
     const bare = FILE.map((p: any) => (p.id === OPEN[0].id ? { ...p, certificate_discount_percent: undefined } : p));
     globalThis.fetch = vi.fn(() => Promise.resolve({ ok: true, status: 200, json: async () => bare })) as any;
     const sc = await render();
-    expect(sc.querySelector('.dcp-pws-feat .dcp-pws-cert')!.textContent).toBe('🎓 گواهی‌نامه: به‌زودی');
+    expect(sc.querySelector('.dcp-pws-feat .dcp-pws-cert')!.textContent).toBe('🎓 گواهی‌نامه');
     expect(sc.textContent).not.toContain('٪');
   });
 
