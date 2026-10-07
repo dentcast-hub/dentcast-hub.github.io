@@ -1,20 +1,20 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=175';
-import { api } from './api.js?v=175';
-import { flushPendingReads } from './reading.js?v=175';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=175';
-import { leagueEntryButton } from './league.js?v=175';
-import { openCollectionPicker, boardCover } from './collections.js?v=175';
-import { bundleRailCard, intentRow } from './pathways.js?v=175';
-import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=175';
-import { currentMonthKey } from './jalali-month.js?v=175';
-import { renewalBanner } from './renewal-banner.js?v=175';
-import { openPathways } from './pathway-showcase.js?v=175';
-import { premiumCta } from './premium-cta.js?v=175';
-import { maybeCelebrate } from './achievements.js?v=175';
-import { markReturnTrail } from './return-trail.js?v=175';
+import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=176';
+import { api } from './api.js?v=176';
+import { flushPendingReads } from './reading.js?v=176';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=176';
+import { leagueEntryButton } from './league.js?v=176';
+import { openCollectionPicker, boardCover } from './collections.js?v=176';
+import { bundleRailCard, intentRow } from './pathways.js?v=176';
+import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=176';
+import { currentMonthKey } from './jalali-month.js?v=176';
+import { renewalBanner } from './renewal-banner.js?v=176';
+import { openPathways } from './pathway-showcase.js?v=176';
+import { premiumCta } from './premium-cta.js?v=176';
+import { maybeCelebrate } from './achievements.js?v=176';
+import { markReturnTrail } from './return-trail.js?v=176';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',
@@ -100,15 +100,31 @@ function progressBars(progress, model) {
   // has READ = article_completed) comes from /progress. Recomputed every mount,
   // never cached; as new articles ship the totals grow and a folder's percent
   // drops until they are read.
-  const folders = (model.folders || []).filter((f) => f.total > 0 && !PROGRESS_EXCLUDE.has(f.key));
-  if (!folders.length) return el('div', { class: 'dcp-muted' }, 'هنوز پوشه‌ای برای نمایش نیست.');
+  const shown = (model.folders || []).filter((f) => f.total > 0 && !PROGRESS_EXCLUDE.has(f.key));
+  if (!shown.length) return el('div', { class: 'dcp-muted' }, 'هنوز پوشه‌ای برای نمایش نیست.');
   // `consumed` is the uncapped count (a current API); the cap is applied below
   // against the PUBLISHED total, which the API's own copy of the index can lag.
   const readByKey = new Map((progress.folder_progress || []).map((f) => [f.key,
     typeof f.consumed === 'number' ? f.consumed : (f.read || 0)]));
+  // Folders that read under one name are ONE row: DentAI is a closed section
+  // listed under Share Hub (1405/07/15), so FOLDER_EN names both «ShareHub» and
+  // two rows of that name — one linking a landing that now forwards — would be
+  // the duplicate the fold removed everywhere else. Each folder is capped
+  // against its own total first, then summed; the first folder's place in the
+  // order and the row's url are kept (both are /sharehub/ for the two).
+  const folders = [];
+  const byName = new Map();
+  for (const f of shown) {
+    const name = FOLDER_EN[f.key] || f.key;
+    const read = Math.min(readByKey.get(f.key) || 0, f.total);
+    const row = byName.get(name);
+    if (row) { row.total += f.total; row.read += read; continue; }
+    const fresh = { key: f.key, url: f.url, total: f.total, read };
+    byName.set(name, fresh); folders.push(fresh);
+  }
   const list = el('div', { class: 'dcp-progress-list' });
   for (const f of folders) {
-    const read = Math.min(readByKey.get(f.key) || 0, f.total);
+    const read = f.read;
     // f.total > 0 here (divide-by-zero guarded above); clamp to 0..100.
     const pct = Math.max(0, Math.min(100, Math.round((read / f.total) * 100)));
     list.appendChild(el('div', { class: 'dcp-progress-row' }, [

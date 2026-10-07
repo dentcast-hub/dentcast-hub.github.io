@@ -17,7 +17,7 @@
 // Telegram alone. Not on .ir, by the founder's call: the .ir site misbehaves
 // behind a VPN and Google misbehaves without one, so the button would ask a
 // reader to toggle their VPN twice in one login.
-import { GOOGLE_CLIENT_ID, googleLoginEnabled } from './config.js?v=175';
+import { GOOGLE_CLIENT_ID, googleLoginEnabled } from './config.js?v=176';
 
 const GSI_SRC = 'https://accounts.google.com/gsi/client';
 

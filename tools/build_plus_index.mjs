@@ -27,12 +27,12 @@ const FOLDER_META = [
   ['episodes', 'پادکست', '/episodes.html'],
   ['notecast', 'نوت‌کست', '/notecast/'],
   ['insight', 'کلینیکال اینسایت', '/insight/'],
-  ['dentai', 'دنت‌ای‌آی', '/dentai/'],
+  ['dentai', 'دنت‌ای‌آی', '/sharehub/'],  // closed section (1405/07/15): its landing forwards to Share Hub
   ['chairside', 'چیرساید', '/chairside/'],
   ['metanotes', 'متانوت', '/metanotes/'],
   ['litecast', 'لایت‌کست', '/litecast/'],
   ['glossary', 'دانشنامه', '/glossary/'],
-  ['photocast', 'فوتوکست', '/photocast/'],
+  ['photocast', 'فوتوکست', '/sharehub/'],  // closed section, as above
   ['sharehub', 'شیرهاب', '/sharehub/'],
   // پرامپتولوژیست carries a fourth element because it is the one section whose
   // key is NOT its top folder: its pages live at /dentai/promptologist/, a
