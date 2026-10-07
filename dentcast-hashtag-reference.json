@@ -1265,6 +1265,97 @@
    ]
   },
   {
+   "key": "curated_content",
+   "tag": "#Curated_Content",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
+   "use_when": "روی مدخل‌های بازنشر.",
+   "aliases": [
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 28,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28"
+   ]
+  },
+  {
+   "key": "share_hub",
+   "tag": "#Share_Hub",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
+   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
+   "aliases": [
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 28,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28"
+   ]
+  },
+  {
    "key": "زیبایی",
    "tag": "#زیبایی",
    "domain": "clinical",
@@ -1355,95 +1446,6 @@
     "insight/insight-62",
     "sharehub/share-17",
     "sharehub/share-20"
-   ]
-  },
-  {
-   "key": "curated_content",
-   "tag": "#Curated_Content",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
-   "use_when": "روی مدخل‌های بازنشر.",
-   "aliases": [
-    "محتوای گلچین شده",
-    "کیوریتد",
-    "بازنشر محتوا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 27,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27"
-   ]
-  },
-  {
-   "key": "share_hub",
-   "tag": "#Share_Hub",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
-   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
-   "aliases": [
-    "شیرهاب",
-    "شر هاب"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 27,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27"
    ]
   },
   {
@@ -2447,6 +2449,41 @@
    ]
   },
   {
+   "key": "تحلیل_استخوان",
+   "tag": "#تحلیل_استخوان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتنِ استخوانِ اطرافِ دندان یا ایمپلنت.",
+   "use_when": "مقاله تحلیل استخوان را پیامد یا معیار قرار دهد.",
+   "aliases": [
+    "bone loss",
+    "تحلیل استخوانی",
+    "استخوان",
+    "تغییرات استخوان"
+   ],
+   "variants": [
+    "#استخوان"
+   ],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-23",
+    "episodes/episode-24",
+    "episodes/episode-26",
+    "episodes/episode-59",
+    "episodes/episode-147-8",
+    "episodes/episode-148-1",
+    "litecast/lite-CAST3",
+    "litecast/lite-CAST4",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "metanotes/meta-4",
+    "chairside/chairside-14",
+    "insight/insight-72",
+    "sharehub/share-28"
+   ]
+  },
+  {
    "key": "دقت_اسکن",
    "tag": "#دقت_اسکن",
    "domain": null,
@@ -2612,40 +2649,6 @@
     "chairside/chairside-11",
     "dentai/dentai-34",
     "chairside/chairside-38"
-   ]
-  },
-  {
-   "key": "تحلیل_استخوان",
-   "tag": "#تحلیل_استخوان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتنِ استخوانِ اطرافِ دندان یا ایمپلنت.",
-   "use_when": "مقاله تحلیل استخوان را پیامد یا معیار قرار دهد.",
-   "aliases": [
-    "bone loss",
-    "تحلیل استخوانی",
-    "استخوان",
-    "تغییرات استخوان"
-   ],
-   "variants": [
-    "#استخوان"
-   ],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-23",
-    "episodes/episode-24",
-    "episodes/episode-26",
-    "episodes/episode-59",
-    "episodes/episode-147-8",
-    "episodes/episode-148-1",
-    "litecast/lite-CAST3",
-    "litecast/lite-CAST4",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "metanotes/meta-4",
-    "chairside/chairside-14",
-    "insight/insight-72"
    ]
   },
   {
@@ -7616,6 +7619,27 @@
    ]
   },
   {
+   "key": "اورلود_اکلوزالی",
+   "tag": "#اورلود_اکلوزالی",
+   "domain": null,
+   "words": 2,
+   "definition": "بارِ اکلوزالیِ بیش از تحملِ سیستم.",
+   "use_when": "مقاله اورلود را علتِ تحلیل یا شکست بداند.",
+   "aliases": [
+    "occlusal overload",
+    "اورلود",
+    "بار اکلوزالی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-23",
+    "notecast/episode-23",
+    "sharehub/share-28"
+   ]
+  },
+  {
    "key": "اورهنگ",
    "tag": "#اورهنگ",
    "domain": "clinical",
@@ -7857,6 +7881,29 @@
     "episodes/episode-61",
     "episodes/episode-70",
     "chairside/chairside-35"
+   ]
+  },
+  {
+   "key": "بهداشت_پذیری",
+   "tag": "#بهداشت_پذیری",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "اینکه بیمار عملاً بتواند ناحیه را تمیز کند — شرطِ طراحی، نه توصیه.",
+   "use_when": "مقاله دسترسیِ بهداشتی را معیارِ طراحی بداند.",
+   "aliases": [
+    "بهداشت پذیری",
+    "cleansability",
+    "دسترسی بهداشتی",
+    "قابلیت تمیز کردن",
+    "بهداشت ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-16",
+    "insight/insight-32",
+    "sharehub/share-28"
    ]
   },
   {
@@ -10057,6 +10104,25 @@
    ]
   },
   {
+   "key": "اسپلینت_ایمپلنت",
+   "tag": "#اسپلینت_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "implant splinting",
+    "اسپلینت کردن ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-147-5",
+    "sharehub/share-28"
+   ]
+  },
+  {
    "key": "اسکروسمنت",
    "tag": "#اسکروسمنت",
    "domain": null,
@@ -10232,26 +10298,6 @@
    "content_ids": [
     "metanotes/meta-7",
     "metanotes/meta-15"
-   ]
-  },
-  {
-   "key": "اورلود_اکلوزالی",
-   "tag": "#اورلود_اکلوزالی",
-   "domain": null,
-   "words": 2,
-   "definition": "بارِ اکلوزالیِ بیش از تحملِ سیستم.",
-   "use_when": "مقاله اورلود را علتِ تحلیل یا شکست بداند.",
-   "aliases": [
-    "occlusal overload",
-    "اورلود",
-    "بار اکلوزالی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-23",
-    "notecast/episode-23"
    ]
   },
   {
@@ -10502,28 +10548,6 @@
    "content_ids": [
     "notecast/episode-15",
     "sharehub/share-22"
-   ]
-  },
-  {
-   "key": "بهداشت_پذیری",
-   "tag": "#بهداشت_پذیری",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "اینکه بیمار عملاً بتواند ناحیه را تمیز کند — شرطِ طراحی، نه توصیه.",
-   "use_when": "مقاله دسترسیِ بهداشتی را معیارِ طراحی بداند.",
-   "aliases": [
-    "بهداشت پذیری",
-    "cleansability",
-    "دسترسی بهداشتی",
-    "قابلیت تمیز کردن",
-    "بهداشت ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-16",
-    "insight/insight-32"
    ]
   },
   {
@@ -11708,6 +11732,26 @@
    "content_ids": [
     "insight/insight-8",
     "chairside/chairside-3"
+   ]
+  },
+  {
+   "key": "عوارض_مکانیکی",
+   "tag": "#عوارض_مکانیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "شکستِ قطعات: پیچ، پرسلن، فریم.",
+   "use_when": "مقاله عارضه‌ی مکانیکی را پیش‌بینی یا مدیریت کند.",
+   "aliases": [
+    "mechanical complications",
+    "عارضه مکانیکی",
+    "شکست قطعات پروتز"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-11",
+    "sharehub/share-28"
    ]
   },
   {
@@ -14389,24 +14433,6 @@
    ]
   },
   {
-   "key": "اسپلینت_ایمپلنت",
-   "tag": "#اسپلینت_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "implant splinting",
-    "اسپلینت کردن ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-147-5"
-   ]
-  },
-  {
    "key": "اسپلینت_پروتزی",
    "tag": "#اسپلینت_پروتزی",
    "domain": "clinical",
@@ -14967,6 +14993,27 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-123-4"
+   ]
+  },
+  {
+   "key": "ایمپلنت_پتریگوئید",
+   "tag": "#ایمپلنت_پتریگوئید",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ایمپلنتی که از ناحیه‌ی توبروزیتی فک بالا با زاویه به سمت عقب و بالا گذاشته می‌شود تا در زائده‌ی پتریگوئید استخوان اسفنوئید و صفحه‌ی پتریگوئید گیر بگیرد؛ برای جایگزینی دندان‌های خلفی فک بالا بدون سینوس لیفت یا پیوند استخوان به کار می‌رود.",
+   "use_when": "مطلب درباره‌ی انتخاب، بقا، بارگذاری یا طراحی پروتز ایمپلنت‌های پتریگوئید (یا پتریگوماگزیلاری) باشد.",
+   "aliases": [
+    "pterygoid implant",
+    "pterygomaxillary implant",
+    "ایمپلنت پتریگوماگزیلاری",
+    "ایمپلنت پتریگوید",
+    "پتریگوئید ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-28"
    ]
   },
   {
@@ -18053,25 +18100,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-45"
-   ]
-  },
-  {
-   "key": "عوارض_مکانیکی",
-   "tag": "#عوارض_مکانیکی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "شکستِ قطعات: پیچ، پرسلن، فریم.",
-   "use_when": "مقاله عارضه‌ی مکانیکی را پیش‌بینی یا مدیریت کند.",
-   "aliases": [
-    "mechanical complications",
-    "عارضه مکانیکی",
-    "شکست قطعات پروتز"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "sharehub/share-11"
    ]
   },
   {
@@ -21481,16 +21509,17 @@
   "poly methyl methacrylate": "pmma",
   "enameloplasty آنتاگونیست": "تراش آنتاگونیست",
   "altered passive eruption": "رویش غیرفعال تغییریافته",
+  "mechanical complications": "عوارض مکانیکی",
   "provisional as reference": "روکش موقت به عنوان مرجع",
   "hierarchy of bondability": "hob",
   "laboratory communication": "ارتباط با لابراتوار",
   "association vs causation": "ارتباط و علیت",
   "correlation vs causation": "ارتباط و علیت",
+  "pterygomaxillary implant": "ایمپلنت پتریگوئید",
   "anterior posterior error": "خطای قدام و خلف",
   "treatment by subtraction": "درمان از طریق تفریق",
   "ask clarifying questions": "سؤال پیش از تولید",
   "تحویل کار به گفتگوی بعدی": "سند هندآف",
-  "mechanical complications": "عوارض مکانیکی",
   "ضخامت بافت اطراف ایمپلنت": "فنوتیپ پری ایمپلنت",
   "statistical significance": "معنی داری آماری",
   "مصرف بی رویه آنتی بیوتیک": "آنتی بیوتیک دندانپزشکی",
@@ -21510,6 +21539,7 @@
   "cemento enamel junction": "cej",
   "caries removal endpoint": "cre",
   "finite element analysis": "fea",
+  "ایمپلنت پتریگوماگزیلاری": "ایمپلنت پتریگوئید",
   "functional interference": "تداخل فانکشنال",
   "sequence of preparation": "ترتیب تراش",
   "patient confidentiality": "حریم بیمار",
@@ -21610,6 +21640,7 @@
   "self adhesive cement": "سمان سلف ادهزیو",
   "مفصل تمپورومندیبولار": "مفصل فکی",
   "درمان نگهدارنده پریو": "spt",
+  "اسپلینت کردن ایمپلنت": "اسپلینت ایمپلنت",
   "tooth implant bridge": "بریج دندان ایمپلنت",
   "angled screw channel": "کانال پیچ زاویه دار",
   "آماده سازی برای روکش": "روکش preparation",
@@ -21621,7 +21652,6 @@
   "saliva contamination": "آلودگی حین باندینگ",
   "dentin contamination": "آلودگی حین باندینگ",
   "diagnostic reasoning": "استدلال تشخیصی",
-  "اسپلینت کردن ایمپلنت": "اسپلینت ایمپلنت",
   "prosthetic splinting": "اسپلینت پروتزی",
   "رنگ آمیزی داخلی روکش": "اصلاح رنگ چیرساید",
   "treatment principles": "اصول درمانی",
@@ -21881,6 +21911,7 @@
   "باندینگ یونیورسال": "یونیورسال باند",
   "لیگامان پریودنتال": "pdl",
   "visual perception": "ادراک بصری",
+  "occlusal overload": "اورلود اکلوزال",
   "load distribution": "توزیع نیرو",
   "removal technique": "تکنیک خارج سازی",
   "bite registration": "ثبت رابطه",
@@ -21893,7 +21924,7 @@
   "جای گذاری سه بعدی": "پوزیشن ایمپلنت",
   "ترمیم روی ایمپلنت": "ایمپلنت restoration",
   "چقرمگی تحول یافته": "transformation toughening",
-  "occlusal overload": "اورلود اکلوزال",
+  "implant splinting": "اسپلینت ایمپلنت",
   "تداخل سمت working": "تداخل سمت کارگر",
   "اصلاح دندان مقابل": "تراش آنتاگونیست",
   "premature contact": "تماس زودرس",
@@ -21924,7 +21955,6 @@
   "chained prompting": "شکستن کار",
   "lab communication": "ارتباط با لابراتوار",
   "axial wall height": "ارتفاع دیواره",
-  "implant splinting": "اسپلینت ایمپلنت",
   "overexposure اسکن": "اسکن سطح براق",
   "intaglio staining": "اصلاح رنگ چیرساید",
   "الگوی جویدن محدود": "انولوپ آو فانکشن",
@@ -21932,6 +21962,8 @@
   "sleeping implants": "ایمپلنت خواب",
   "zygomatic implant": "ایمپلنت زایگوماتیک",
   "ایمپلنت تمام دهان": "ایمپلنت بازسازی کامل دهان",
+  "pterygoid implant": "ایمپلنت پتریگوئید",
+  "پتریگوئید ایمپلنت": "ایمپلنت پتریگوئید",
   "pain reproduction": "بازسازی درد",
   "عدم قفل شدن درمان": "بازگشت پذیری درمان",
   "personal branding": "برندینگ",
@@ -22028,6 +22060,7 @@
   "ambiguous prompt": "ابهام در پرامپت",
   "مرحله بندی درمان": "استیج بندی درمان",
   "systematic error": "بایاس",
+  "قابلیت تمیز کردن": "بهداشت پذیری",
   "drug interaction": "تداخل دارویی",
   "caries detection": "تشخیص پوسیدگی",
   "هذیان هوش مصنوعی": "توهم هوش مصنوعی",
@@ -22052,7 +22085,6 @@
   "کامپوننت ایمپلنت": "اجزای ایمپلنت",
   "space management": "اصلاح فضا",
   "implant survival": "بقای ایمپلنت",
-  "قابلیت تمیز کردن": "بهداشت پذیری",
   "local anesthesia": "بی حسی",
   "concept analysis": "تحلیل مفهومی",
   "اینترفیرنس کارگر": "تداخل سمت کارگر",
@@ -22066,6 +22098,7 @@
   "استیفنس تکیه گاه": "سختی تکیه گاه",
   "permanent cement": "سمان دائم",
   "framework design": "طراحی فریم ورک",
+  "شکست قطعات پروتز": "عوارض مکانیکی",
   "قالب برداشت روکش": "قالب peek آپ",
   "smile simulation": "موک آپ تصویری",
   "ماکاپ هوش مصنوعی": "موک آپ تصویری",
@@ -22102,6 +22135,7 @@
   "radiation safety": "ایمنی پرتو",
   "sleeping implant": "ایمپلنت خواب",
   "فول ماوس ایمپلنت": "ایمپلنت بازسازی کامل دهان",
+  "ایمپلنت پتریگوید": "ایمپلنت پتریگوئید",
   "چسبندگی به دنتین": "باند به دنتین",
   "اصلاح کانتکت باز": "بستن کانتکت",
   "deidentification": "بی نام سازی",
@@ -22145,7 +22179,6 @@
   "silicone replica": "سیلیکون رپلیکا",
   "درد عضلانی ماضغه": "عضلات ماضغه",
   "unclear etiology": "علت نامشخص",
-  "شکست قطعات پروتز": "عوارض مکانیکی",
   "عکاسی داخل دهانی": "عکاسی دندانپزشکی",
   "scan file format": "فرمت اسکن",
   "فرمت خروجی اسکنر": "فرمت اسکن",
@@ -22387,8 +22420,8 @@
   "language model": "مدل زبانی",
   "کانسپت شهابیان": "دکتر شهابیان",
   "foad shahabian": "دکتر شهابیان",
-  "dental ceramic": "سرامیک دندانی",
   "تحلیل استخوانی": "تحلیل استخوان",
+  "dental ceramic": "سرامیک دندانی",
   "دندان اندو شده": "دندان اندوشده",
   "طول عمر سرامیک": "دوام ترمیم",
   "بعد عمودی صورت": "بعد عمودی",
@@ -22440,6 +22473,8 @@
   "خارج کردن روکش": "برداشت ترمیم",
   "باز کردن ترمیم": "برداشت ترمیم",
   "black triangle": "بلک تراینگل",
+  "دسترسی بهداشتی": "بهداشت پذیری",
+  "بهداشت ایمپلنت": "بهداشت پذیری",
   "بایو رستوریتیو": "بیو رستوریتیو",
   "تکنیک خارجسازی": "تکنیک خارج سازی",
   "ثبت رابطه فکین": "ثبت رابطه",
@@ -22462,8 +22497,6 @@
   "patient safety": "ایمنی بیمار",
   "walking bleach": "اینترنال بلیچینگ",
   "اباتمنت ترکیبی": "بریج دندان ایمپلنت",
-  "دسترسی بهداشتی": "بهداشت پذیری",
-  "بهداشت ایمپلنت": "بهداشت پذیری",
   "بی دندانی کامل": "بیمار بی دندان",
   "تزریق بدون درد": "تزریق بی درد",
   "دکتر مهدی جوان": "جوان",
@@ -22651,6 +22684,7 @@
   "برداشتن ترمیم": "برداشت ترمیم",
   "سیستم ایمپلنت": "برند ایمپلنت",
   "office bleach": "بلیچینگ",
+  "cleansability": "بهداشت پذیری",
   "vertical prep": "تراش عمودی",
   "باز بودن تماس": "تماس باز",
   "فازبندی درمان": "توالی درمان",
@@ -22685,7 +22719,6 @@
   "magnification": "بزرگ نمایی",
   "survival rate": "بقای رستوریشن",
   "طول عمر ترمیم": "بقای رستوریشن",
-  "cleansability": "بهداشت پذیری",
   "تروما اکلوزال": "ترومای اکلوزال",
   "سازگاری بیمار": "تطابق بیمار",
   "ریشه یابی خطا": "تفکیک منشأ خطا",
@@ -22707,6 +22740,7 @@
   "نارضایتی اصلی": "شکایت اصلی",
   "شکستن درخواست": "شکستن کار",
   "چک کردن خروجی": "صحت سنجی",
+  "عارضه مکانیکی": "عوارض مکانیکی",
   "فاز تتراگونال": "فاز زیرکونیا",
   "ماکاپ دیجیتال": "موک آپ تصویری",
   "آلودگی سرامیک": "پاکسازی سرامیک",
@@ -22786,7 +22820,6 @@
   "نوار ۸ میکرون": "شیم استاک",
   "دیزاین دفنسیو": "طراحی خودمحافظ",
   "بدون علت واضح": "علت نامشخص",
-  "عارضه مکانیکی": "عوارض مکانیکی",
   "output format": "فرمت خروجی",
   "missing molar": "فقدان مولر",
   "fibrous ridge": "فلبی ریج",
@@ -22911,6 +22944,7 @@
   "اتچمنت پروتز": "اتچمنت",
   "ادراک دیداری": "ادراک بصری",
   "ادراک اندازه": "ادراک بصری",
+  "بار اکلوزالی": "اورلود اکلوزال",
   "ایمپلنت شورت": "ایمپلنت کوتاه",
   "باند به ریشه": "باند به عاج ریشه",
   "مارک ایمپلنت": "برند ایمپلنت",
@@ -22945,7 +22979,6 @@
   "کریز دیتکتور": "پوسیدگی detector",
   "عدم قطعیت vd": "vd تخمینی",
   "uncertain vd": "vd تخمینی",
-  "بار اکلوزالی": "اورلود اکلوزال",
   "جفری اوکیسون": "اوکیسون",
   "metal primer": "باند به فلز",
   "بی حسی موضعی": "بی حسی",
@@ -23617,10 +23650,10 @@
   "سمان رزین": "سمان رزینی",
   "پروویژنال": "روکش موقت",
   "composite": "کامپوزیت",
+  "bone loss": "تحلیل استخوان",
   "precision": "دقت اسکن",
   "attrition": "سایش دندان",
   "پست فایبر": "فایبر پست",
-  "bone loss": "تحلیل استخوان",
   "prognosis": "پروگنوز دندان",
   "پریودنتیت": "پریودنتال",
   "اکستراکشن": "کشیدن دندان",
@@ -24178,9 +24211,9 @@
   "امرجنسی": "امرجنس",
   "بالینی": "اینسایت",
   "نوتکست": "نوت کست",
-  "استتیک": "زیبایی",
   "شیرهاب": "share hub",
   "شر هاب": "share hub",
+  "استتیک": "زیبایی",
   "ادهسیو": "ادهزیو",
   "اتریشن": "سایش دندان",
   "خط ختم": "فینیش لاین",

@@ -21460,5 +21460,501 @@
         "interpretation_fa": "متن هر توصیه‌اش را به یک دلیل وصل می‌کند: اسم سایت از اسم دندانپزشک ساخته شود چون مطب ممکن است جابه‌جا شود و اسم او نه، و دامنه به اسم خود او ثبت شود چون صاحب امتیاز همان کسی است که اسم سایت قانوناً مال اوست. جایی که توصیه استثنا دارد هم آن را می‌گوید، مثل مطبی که اسمش از اسم دندانپزشک شناخته‌شده‌تر است. ارزشش عملی است: چند آزمون ساده برای انتخاب اسم، سه بررسی مشخص برای اطمینان از مالکیت دامنه، و یک تمرین تلفنی. پایه‌اش استدلال و تجربه‌ی ثبت دامنه‌ی خود نویسنده است، نه مطالعه، و متن نسبتش را با راهنماهای منتشرشده بیان نمی‌کند."
       }
     ]
+  },
+  "sharehub/share-28": {
+    "scored_at": "2026-10-07",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Should the restoration of adjacent implants be splinted or nonsplinted? A systematic review and meta-analysis",
+          "authors": "de Souza Batista VE, Verri FR, Lemos CAA, Cruz RS, Oliveira HFF, Gomes JML, Pellizzer EP",
+          "year": 2019,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/j.prosdent.2018.03.004"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR/meta-analysis of 1 RCT, 7 prospective and 11 retrospective clinical studies (THERAPY SR/MA row, 100, via Step 2 routing)",
+          "evidence_quote": "One was an RCT,4 7 were prospective clinical trials,5,19,21,24-26,34 and 11 were retrospective studies."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "low",
+              "evidence_quote": "this review was registered at the International Prospective Register of Systematic Reviews (PROSPERO) (CRD42017080162)."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "An electronic search in the PubMed/MEDLINE, Cochrane Library, and Scopus databases was conducted until November 2017.",
+              "note": "three bibliographic databases (MEDLINE via PubMed, Cochrane Library, Scopus), above the 3b-i threshold of 2; hand-searching of journals is additional and not counted"
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "low",
+              "evidence_quote": "1 study35 was excluded because it did not report information about crestal bone loss, implant survival, or prosthetic complications of splinted and nonsplinted implants.",
+              "note": "the single full-text exclusion is identified by citation (ref 35) with a specific, checkable reason"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "the Newcastle-Ottawa scale was used to assess the risk bias of the selected non-RCT studies",
+              "note": "Cochrane RoB tool for the one RCT and Newcastle-Ottawa for the 18 non-randomized studies, with results reported per study"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "The meta-analysis was based on the Mantel-Haenszel and inverse variance methods.",
+              "note": "M-H and IV pooling with a heterogeneity-driven switch to random effects; implant failure is pooled per implant, as reported by the primary studies"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "low",
+              "evidence_quote": "A software program (Reviewer Manager 5; Cochrane Group) was used for the meta-analysis and to elaborate the funnel plots."
+            }
+          ],
+          "multiplier": 1.0
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all",
+            "base_points": 8,
+            "points": 8,
+            "evidence_quote": "",
+            "note": "no conflict-of-interest or competing-interest declaration anywhere; read the title-page footnote block (which carries only the funding line naming the Sao Paulo Research Foundation, a public agency, and author affiliations), the end matter after the Conclusions (corresponding author, Acknowledgments, copyright line) and searched for interest / conflict / competing / disclosure / declaration wording including ligature variants. Funding disclosure alone is not a conflict-of-interest statement"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT; this is a systematic review"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "The mean follow-up was 87.8 months (range = 12-264 months).",
+            "note": "mean follow-up of about 7 years supports the implant-survival claim; two included studies ran 12 months, but the review's own text does not flag follow-up length as a limitation"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 92,
+        "band": "A",
+        "provisional": false,
+        "fact_fa": "امتیاز ۹۲ از ۱۰۰، باند A، نوع سوال THERAPY.",
+        "interpretation_fa": "مرور سیستماتیک ثبت‌شده در PROSPERO با جستجوی سه دیتابیس، ارزیابی سوگیری مطالعات و بررسی سوگیری انتشار، و تنها کسر امتیاز از نبود بیانیه تعارض منافع است. بیشتر مطالعات واردشده غیرتصادفی‌اند و شکست در سطح ایمپلنت شمرده شده است. نبود تفاوت در تحلیل استخوان مارژینال و عوارض پروتزی و بقای بیشتر ایمپلنت در رستوریشن اسپلینت، برای تصمیم درباره اسپلینت کردن ایمپلنت‌های مجاور کاربردی است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "The influence of prosthetic designs on peri-implant bone loss: An AO/AAP systematic review and meta-analysis",
+          "authors": "Lin GH, Lee E, Barootchi S, Rosen PS, Curtis D, Kan J, Wang HL",
+          "year": 2025,
+          "journal": "Journal of Periodontology",
+          "doi": "10.1002/JPER.24-0144"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR/meta-analysis of RCTs and non-randomized studies (THERAPY SR/MA row, 100, via Step 2 routing)",
+          "evidence_quote": "The majority of the included studies (N = 60) were RCTs, while another 31 studies were prospective or retrospective case series and two studies were cross-sectional studies."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "low",
+              "evidence_quote": "This study was registered at the PROSPERO database under the registration code CRD42023484513."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "EMBASE, and Dentistry and Oral Sciences Source)",
+              "note": "three bibliographic databases (Ovid MEDLINE, EMBASE, Dentistry and Oral Sciences Source), above the 3b-i threshold of 2, plus reference-list and manual journal searches"
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "low",
+              "evidence_quote": "Forty-four articles were further excluded. Please see Table S1 in the online Journal of Periodontology for the reasons for exclusion and the associated bibliography.",
+              "note": "the 44 excluded full-text articles are listed with their bibliography and the reason for each in Table S1; a PRISMA flowchart (Figure 1) and explicit inclusion/exclusion criteria are also reported"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "Two reviewers (G.H.L. and E.L.) assessed all the included articles independently.",
+              "note": "RoB 2 for the RCTs and ROBINS-I for the non-RCTs, with results reported per study in Tables S3 and S4"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "Random-effects meta-analyses of the selected studies were applied if the I2 test showed a value of more than 50%",
+              "note": "inverse-variance pooling, chi-square and I2 heterogeneity, and a random-effects switch are described; implants are the unit of analysis, as in the primary studies pooled"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "low",
+              "evidence_quote": "Funnel plots were generated to assess the presence of publication bias."
+            }
+          ],
+          "multiplier": 1.0
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors declare no conflicts of interest.",
+            "note": "disclosure is present and the authors received no specific funding. The consensus conference was sponsored by implant manufacturers (BioHorizons, Dentsply Sirona, Nobel Biocare, Straumann USA and others); this is disclosed, and a review of prosthetic design across many implant systems tests no single company's product"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT; this is a systematic review"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 3,
+            "evidence_quote": "The follow-up period ranged from 1 year to 16 years.",
+            "note": "inclusion required only 12 months after prosthesis delivery, so the pooled MBL and peri-implantitis claims rest partly on 1-year data; the review itself states that longitudinal studies with extended follow-ups are still needed"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 97,
+        "band": "A",
+        "provisional": false,
+        "fact_fa": "امتیاز ۹۷ از ۱۰۰، باند A، نوع سوال THERAPY.",
+        "interpretation_fa": "مرور سیستماتیک ثبت‌شده در PROSPERO با جستجوی سه‌دیتابیسی، ارزیابی ریسک سوگیری مستقل و بررسی سوگیری انتشار. افت امتیاز فقط از کوتاهی پیگیری برخی مطالعات واردشده می‌آید. تفاوت‌های MBL زیر نیم میلی‌متر است و خود نویسندگان ارزش بالینی بیشترشان را محدود می‌دانند. برای platform switching، اتصال conical و ارتفاع اباتمنت جهت‌گیری کلی می‌دهد."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Impact of splinting implant-supported crowns on the performance of adjacent posterior implants: A systematic review and meta-analysis",
+          "authors": "Pascoal ALB, Paiva KRG, Marinho LCN, Bezerra ADS, Calderon PDS",
+          "year": 2024,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/j.prosdent.2024.05.020"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR/meta-analysis of clinical studies, randomized and non-randomized (THERAPY SR/MA row, 100, via Step 2 routing)",
+          "evidence_quote": "The purpose of this systematic review with meta-analysis was to assess whether adjacent implants with internal connections in the posterior region should be treated with splinted or nonsplinted crowns."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "low",
+              "evidence_quote": "The systematic review was registered on the prospective register of systematic reviews (PROSPERO) under the code, CRD42021248525."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "Two authors searched 4 electronic databases (PubMed, Cochrane Library, Scopus, and Web of Science) independently for articles published up to December 2023."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "ابسترکت هیچ فلوچارت غربالگری یا فهرست مطالعات حذف‌شده‌ای گزارش نمی‌کند؛ در ABSTRACT_ONLY سکوت NR است"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "Risk of bias and quality were assessed using the Cochrane Collaboration's Tool for Assessing Risk and the Newcastle-Ottawa scale."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "some_concerns",
+              "evidence_quote": "A single-arm meta-analysis was conducted using RevMan.",
+              "note": "نرم‌افزار و ناهمگونی (I) گزارش شده، ولی مدل fixed یا random نام برده نشده و عبارت single-arm با گزارش RR مقایسه‌ای همخوان نیست؛ توصیف ناقص و مبهم است"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "ابسترکت درباره‌ی ارزیابی سوگیری انتشار چیزی نمی‌گوید؛ در ABSTRACT_ONLY سکوت NR است"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT; this is a systematic review"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "with observation times ranging from 5 months to 16 years",
+            "note": "بازه‌ی پیگیری تا ۱۶ سال می‌رسد و ابسترکت نمی‌گوید ادعای عوارض عمدتا بر پیگیری کوتاه تکیه دارد؛ نقص به‌صورت مثبت نشان داده نشده"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "امتیاز مقدماتی ۵۵ از ۱۰۰، باند C، نوع سوال THERAPY.",
+        "interpretation_fa": "فقط ابسترکت در دسترس بود، پس امتیاز مقدماتی است. مرور سیستماتیک ثبت‌شده در PROSPERO با جستجوی چهار دیتابیس و ارزیابی سوگیری، ولی روش متاآنالیز مبهم گزارش شده. یافته‌ی اصلی کاهش عوارض مکانیکی با اسپلینت کراون‌های ایمپلنتی خلفی بدون تفاوت در عوارض بیولوژیک است که برای انتخاب طرح پروتز کاربردی است."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Under pressure: Unraveling the impact of occlusal overload on peri-implant health–A systematic review",
+          "authors": "Mojaver S, Patel N, Sarmiento H, Fiorellini JP",
+          "year": 2025,
+          "journal": "Journal of Prosthodontics",
+          "doi": "10.1111/jopr.14088"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review without meta-analysis of mixed clinical, experimental (in-vitro, FEA, animal) and review literature on occlusal overload as a risk factor for peri-implant disease (ETIOLOGY SR/meta-analysis row, 100)",
+          "evidence_quote": "Inclusion criteria encompassed randomized controlled trials (RCTs), cohort studies, case–control studies, experimental investigations, and systematic reviews that investigated the effects of occlusal overload on peri-implant tissues."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ پروتکل ثبت‌شده‌ای (PROSPERO یا هر رجیستری دیگر) و هیچ پروتکل از پیش منتشرشده‌ای در متن نیست؛ بخش‌های خوانده‌شده: پاراگراف آغازین Methods و سؤال PICO، Search strategy، Inclusion and exclusion criteria، Data extraction، Quality assessment، Data synthesis، Sensitivity analysis، Publication bias، Ethical considerations، Results، بخش محدودیت‌های Discussion، Acknowledgments و Conflict of interest statement. واژه‌های register/registration/PROSPERO/protocol جستجو شد و protocol فقط در معنای پروتکل بارگذاری یا پروتکل‌های اکلوزالی آمده است؛ پیروی از PRISMA جای ثبت پروتکل را نمی‌گیرد."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "A systematic search was conducted across PubMed, Scopus, Web of Science, and the Cochrane Library for studies published between January 2000 and October 2023.",
+              "note": "چهار پایگاه داده جستجو شده و از آستانه‌ی دو پایگاه بالاتر است؛ محدودیت زبان انگلیسی و ناهمخوانی بازه‌ی جستجو (۲۰۰۰ تا ۲۰۲۳) با بازه‌ی معیار ورود (۲۰۱۰ تا ۲۰۲۵) در تفسیر آمده است، نه در این رتبه."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "some_concerns",
+              "evidence_quote": "Of 160 initially identified references, 80 studies met the inclusion criteria and were analyzed for relevant outcomes.",
+              "note": "فهرست مطالعات کنارگذاشته‌شده با دلیل هر یک وجود ندارد، اما هر دو شرط 3b-iii برقرار است: (الف) شرح غربالگری با عدد (۱۶۰ رفرنس به ۸۰ مطالعه) همراه با فلوچارت Figure 1، و (ب) معیارهای صریح ورود و خروج در بخش Inclusion and exclusion criteria."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "some_concerns",
+              "evidence_quote": "The methodological quality of the included studies was assessed using appropriate tools based on study design.",
+              "note": "ارزیابی سوگیری توصیف شده اما ناقص و مبهم است: ابزار فقط برای RCT (Cochrane ROB) و کوهورت و case-control (Newcastle-Ottawa) نام برده شده، مطالعات آزمایشگاهی، FEA، حیوانی و گزارش مورد ابزاری ندارند، همه با ROBVIS Rob2.0 که ابزار RCT است بازارزیابی شده‌اند و طبق زیرنویس Figure 2 بخشی از مطالعات از این تحلیل کنار گذاشته شده‌اند."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "متاآنالیزی انجام نشده است؛ بخش Data synthesis صراحتاً می‌گوید سنتز روایتی بوده و «No meta-analysis was performed at this time». Methods، Results و جدول‌های ۱ و ۲ خوانده شد: اعداد bone loss و peri-implantitis فقط کنار هم فهرست شده‌اند و هیچ مدل تجمیع، وزن‌دهی یا سنجش ناهمگنی در متن نیست."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "some_concerns",
+              "evidence_quote": "Publication bias was assessed, and Egger’s test was employed to statistically assess the presence of publication bias, but was not included.",
+              "note": "متن می‌گوید سوگیری انتشار با آزمون Egger ارزیابی شده اما نتیجه گزارش نشده است؛ پرداخته‌شده ولی مبهم. بدون متاآنالیز، مبنای آماری این آزمون هم روشن نیست."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors declare no conflicts of interest, financial, personal, or otherwise, that could influence the research, authorship, or publication of this paper.",
+            "note": "بیانیه‌ی تعارض منافع وجود دارد و در Acknowledgments هم آمده که هیچ تأمین مالی خارجی دریافت نشده است."
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "کارآزمایی بالینی نیست؛ این یک مرور سیستماتیک است."
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 3,
+            "evidence_quote": "Second, most clinical studies had short follow-up periods (≤3 years), limiting insight into long-term outcomes.",
+            "note": "ادعای مرور درباره‌ی بروز ۲۰ تا ۵۰ درصدی peri-implantitis و طول عمر ایمپلنت بر مطالعات بالینی‌ای تکیه دارد که به گفته‌ی خود متن عمدتاً پیگیری ۳ سال یا کمتر داشته‌اند؛ برای پیامدی مثل peri-implantitis کوتاه است."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 27,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "امتیاز ۲۷ از ۱۰۰، باند D، نوع سوال ETIOLOGY.",
+        "interpretation_fa": "مرور پروتکل ثبت‌شده و متاآنالیز ندارد و مطالعات بالینی، حیوانی، FEA و مرورها را کنار هم می‌گذارد؛ ارزیابی سوگیری هم فقط بخشی از آن‌ها را پوشش می‌دهد. اعداد bone loss و peri-implantitis تجمیع آماری نیستند و پیگیری مطالعات کوتاه است. برای فرضیه‌ی نقش overload در peri-implantitis مفید است، نه برای برآورد ریسک. بخشی از شواهدش ماهیت MATERIAL دارد."
+      },
+      {
+        "des_version": "2.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Clinical Outcomes of Pterygoid and Maxillary Tuberosity Implants: A Systematic Review",
+          "authors": "Raouf K, Chrcanovic BR",
+          "year": 2024,
+          "journal": "Journal of Clinical Medicine",
+          "doi": "10.3390/jcm13154544"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR of non-randomized clinical studies, case series and case reports with pooled survival analysis (THERAPY SR/MA row, 100, via Step 2 routing)",
+          "evidence_quote": "The eligibility criteria included clinical human studies, either randomized or not, reporting cases of patients that received implants in the maxillary tuberosity or in the pterygoid process."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "some_concerns",
+              "evidence_quote": "Registration in PROSPERO was undertaken with the registration number CRD42023492041.",
+              "note": "ثبت در PROSPERO گزارش شده، ولی متن نمی‌گوید ثبت پیش از شروع مرور (جستجوی اول در اکتبر ۲۰۲۲) انجام شده است"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "PubMed/Medline, Web of Science, and Science Direct."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "some_concerns",
+              "evidence_quote": "The study selection process is summarized in Figure 1.",
+              "note": "فهرست مطالعات حذف‌شده با دلیل هر کدام در متن نیست، ولی هم فلودیاگرام غربالگری (Figure 1، با شمار ۱۵۹۶ رکورد و ۳۸ مطالعه‌ی واردشده) و هم معیارهای ورود و خروج صریح در بخش 2.3 گزارش شده است"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "the quality assessment was carried out independently by the reviewers"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "some_concerns",
+              "evidence_quote": "the cumulative survival rate (CSR) was calculated over the maximal period of follow-up reported, in a life table survival analysis",
+              "note": "روش تجمیع توصیف شده، ولی ایمپلنت‌های همه‌ی مطالعات در یک life table واحد جمع شده‌اند، بدون وزن‌دهی سطح مطالعه و بدون بررسی heterogeneity"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ ارزیابی publication bias در متن نیست؛ بخش‌های Materials and Methods (2.1 تا 2.8، از جمله Analyses)، Results (3.1 تا 3.4) و Discussion با پاراگراف محدودیت‌ها خوانده شد و دنبال publication bias / funnel / small-study / Egger گشته شد؛ تنها bias موجود در متن به عدم تعادل گروه‌ها در مقایسه‌ی pterygoid و tuber برمی‌گردد"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "Conflicts of Interest: The authors declare no conflicts of interest.",
+            "note": "بیانیه‌ی تعارض منافع موجود است و پژوهش بودجه‌ی خارجی نداشته"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not an RCT; this is a systematic review"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 3,
+            "evidence_quote": "In addition, several studies presented small cohort sizes and short follow-ups.",
+            "note": "ادعای بقای ده‌ساله روی مطالعاتی بنا شده که به گفته‌ی خود مرور بخشی از آن‌ها پیگیری کوتاه دارند (حداقل پیگیری ۱ ماه)"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 52,
+        "band": "C",
+        "provisional": false,
+        "fact_fa": "امتیاز ۵۲ از ۱۰۰، باند C، نوع سوال THERAPY.",
+        "interpretation_fa": "مرور سیستماتیک ثبت‌شده با جستجوی سه‌دیتابیسی و ارزیابی کیفیت مستقل، ولی مطالعات واردشده بیشتر کیس‌سری و گذشته‌نگرند و بدون بررسی publication bias در یک life table تجمیع شده‌اند. بقای ده‌ساله‌ی بالای ایمپلنت pterygoid و tuberosity را نشان می‌دهد. برتری tuberosity و اثر اسپلینت از مقایسه‌ی تعدیل‌نشده می‌آید و قطعی نیست."
+      }
+    ]
   }
 }
