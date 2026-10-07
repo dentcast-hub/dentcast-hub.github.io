@@ -1,0 +1,16 @@
+{
+  "type": "sharehub",
+  "note": "Publish of sharehub/share-28 (اسپلینت یا روکش جدا در ایمپلنت‌های مجاور). #Share_Hub, #Curated_Content, #اسپلینت_ایمپلنت, #تحلیل_استخوان, #عوارض_مکانیکی, #اورلود_اکلوزالی and #بهداشت_پذیری are REUSED (--simulate returned each at rank 1). One concept the note resolves is newly minted (founder-approved 1405/07/15): the pterygoid implant — --simulate «ایمپلنت پتریگوئید» returned only the generic #ایمپلنت and #پوزیشن_ایمپلنت. Tuberosity implants are deliberately not folded into it as an alias: they are a different anatomical site with a different survival profile in the cited review.",
+  "concepts": [
+    {
+      "tag": "#ایمپلنت_پتریگوئید",
+      "domain": "clinical",
+      "definition": "ایمپلنتی که از ناحیه‌ی توبروزیتی فک بالا با زاویه به سمت عقب و بالا گذاشته می‌شود تا در زائده‌ی پتریگوئید استخوان اسفنوئید و صفحه‌ی پتریگوئید گیر بگیرد؛ برای جایگزینی دندان‌های خلفی فک بالا بدون سینوس لیفت یا پیوند استخوان به کار می‌رود.",
+      "use_when": "مطلب درباره‌ی انتخاب، بقا، بارگذاری یا طراحی پروتز ایمپلنت‌های پتریگوئید (یا پتریگوماگزیلاری) باشد.",
+      "aliases": ["pterygoid implant", "pterygomaxillary implant", "ایمپلنت پتریگوماگزیلاری", "ایمپلنت پتریگوید", "پتریگوئید ایمپلنت"]
+    }
+  ],
+  "articles": {
+    "sharehub/share-28": ["#Share_Hub", "#Curated_Content", "#اسپلینت_ایمپلنت", "#تحلیل_استخوان", "#عوارض_مکانیکی", "#اورلود_اکلوزالی", "#بهداشت_پذیری", "#ایمپلنت_پتریگوئید"]
+  }
+}
