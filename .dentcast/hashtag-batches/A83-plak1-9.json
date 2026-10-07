@@ -1,0 +1,23 @@
+{
+  "type": "plak_sefr",
+  "note": "Publish of plak-sefr/plak1-9 (پلاک صفر — دامنه). #پلاک_صفر, #مالکیت_پلتفرم, #سایت_مطب and #حضور_آنلاین_دندانپزشک are REUSED (#مالکیت_پلتفرم's own definition names «آدرس» among the three things that must be yours, and the part calls a designer-registered domain «همان مستأجری قسمت ۱»). Two concepts the part resolves are newly minted (founder-approved 1405/07/15): the site's domain name — choosing it and registering it in one's own name — and Google Search Console. --simulate for «دامنه», «ثبت دامنه» and «Search Console» returned nothing above threshold or only word collisions (#ثبت_رابطه).",
+  "concepts": [
+    {
+      "tag": "#دامنه_سایت",
+      "domain": "web",
+      "definition": "اسم سایت، مثل dentcast.ir، که بیمار تایپ می‌کند و گوگل زیر هر نتیجه نشان می‌دهد؛ تنها جزء سایت که بعداً تقریباً قابل تغییر نیست، برای یک دوره‌ی مشخص به شناسه‌ی صاحبش ثبت می‌شود و باید تمدید شود.",
+      "use_when": "مطلب درباره‌ی انتخاب اسم سایت، پسوند آن، ثبت دامنه به اسم خود صاحب سایت، تمدید، یا بررسی صاحب امتیاز دامنه باشد.",
+      "aliases": ["دامنه", "نام دامنه", "ثبت دامنه", "اسم سایت", "domain", "domain name", "دامین"]
+    },
+    {
+      "tag": "#سرچ_کنسول",
+      "domain": "web",
+      "definition": "ابزار رایگان گوگل (Google Search Console) که فقط به صاحب تأییدشده‌ی یک سایت نشان می‌دهد سایتش در چه جست‌وجوهایی دیده شده، چند بار در نتیجه‌ها آمده و چند بار رویش زده‌اند؛ دسترسی به آن با اثبات مالکیت دامنه داده می‌شود.",
+      "use_when": "مطلب درباره‌ی دیدن وضعیت سایت در گوگل از نگاه صاحب سایت، جست‌وجوهایی که به سایت رسیده‌اند، یا اثبات مالکیت سایت نزد گوگل باشد.",
+      "aliases": ["Search Console", "Google Search Console", "سرچ کنسول گوگل", "کنسول جستجوی گوگل", "GSC"]
+    }
+  ],
+  "articles": {
+    "plak-sefr/plak1-9": ["#پلاک_صفر", "#دامنه_سایت", "#مالکیت_پلتفرم", "#سرچ_کنسول", "#سایت_مطب", "#حضور_آنلاین_دندانپزشک"]
+  }
+}
