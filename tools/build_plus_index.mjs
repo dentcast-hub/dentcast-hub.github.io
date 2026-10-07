@@ -132,7 +132,13 @@ for (const e of brain) {
   if (byContent[contentId]) continue; // first wins
   const primary = (e.pillar && e.pillar.primary) || null;
   const subtopic = (e.pillar && e.pillar.subtopic) || null;
-  const type = contentId.split('/')[0];
+  // The section, not the first path segment: پرامپتولوژیست lives at
+  // dentai/promptologist/…, and reading parts[0] filed its 22 pages as
+  // `dentai`, which every Plus label (pathway step, collection pin, report,
+  // assistant) then printed through FOLDER_EN — «DentAI» before the fold,
+  // «ShareHub» after it. Same nested-prefix rule as FOLDER_META's 4th element.
+  const nested = FOLDER_META.find(([, , , dir]) => dir && contentId.startsWith(dir + '/'));
+  const type = nested ? nested[0] : contentId.split('/')[0];
   byContent[contentId] = {
     cluster: primary,
     subtopic,
