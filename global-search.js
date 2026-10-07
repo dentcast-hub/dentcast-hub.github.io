@@ -125,17 +125,21 @@ const TYPE_MAP = {
  const _iSpark = _ic('<path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/>');
  const _iPin = _ic('<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/>');
  const _iScale = _ic('<path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>');
+ /* «بخش — عنوان», unless the title already opens with the section's own name:
+    every پرامپتولوژیست, پلاک صفر and تراز شواهد title is written «سری — قسمت»,
+    and prefixing it again printed «پرامپتولوژیست — پرامپتولوژیست — …». */
+ const named = (name) => title.trim().startsWith(name) ? " " + title.trim() : " " + name + " — " + title;
  const labelMap = {
   dentcast:      _iMic  + " دنت‌کست — اپیزود " + item.episode,
-  notecast:      _iNote + " نوت‌کست — " + title,
-  clinical:      _iBulb + " نکته کلینیکی — " + title,
-  dentcast_plus: _iPlay + " دنت‌کست+ — " + title,
-  promptologist: _iSpark + " پرامپتولوژیست — " + title,
-  plak_sefr:     _iPin   + " پلاک صفر — " + title,
-  taraz:         _iScale + " تراز شواهد — " + title,
-  meta:          _iPuzz + " متانوت — " + title,
-  chairside:     _iToot + " چرساید — " + title,
-  sharehub:      _iLink + " Share Hub — " + title
+  notecast:      _iNote + named("نوت‌کست"),
+  clinical:      _iBulb + named("نکته کلینیکی"),
+  dentcast_plus: _iPlay + named("دنت‌کست+"),
+  promptologist: _iSpark + named("پرامپتولوژیست"),
+  plak_sefr:     _iPin   + named("پلاک صفر"),
+  taraz:         _iScale + named("تراز شواهد"),
+  meta:          _iPuzz + named("متانوت"),
+  chairside:     _iToot + named("چرساید"),
+  sharehub:      _iLink + named("Share Hub")
 };
 
 
