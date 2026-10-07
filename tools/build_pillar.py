@@ -474,7 +474,6 @@ GLOBAL_SEARCH_HTML = (
     '      <!-- <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>-->\n'
     '      <!-- <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>-->\n'
     '      <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>\n'
-    '      <button class="dc-filter-btn active" data-type="dentai">مقالات</button>\n'
     '      <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>\n'
     '      <button class="dc-filter-btn active" data-type="meta">metanote</button>\n'
     '      <button class="dc-filter-btn active" data-type="chairside">chairside</button>\n'
@@ -496,23 +495,28 @@ URL_TO_TYPE = [
     ("/episodes/",      "podcast"),
     ("/notecast/",      "notecast"),
     ("/insight/",       "insight"),
-    ("/dentai/",        "dentai"),
+    # /dentai/ and /photocast/ are closed sections (1405/07/15): their pages
+    # keep their URLs and brain `type`, but every row they produce is a
+    # Share Hub / Chairside row. The fold happens on the KEY, not the label,
+    # so the filter chip, the icon and the sr-only name all move together.
+    # (پرامپتولوژیست never reaches this list: its brain type resolves first.)
+    ("/dentai/",        "sharehub"),
     ("/chairside/",     "chairside"),
     ("/metanotes/",     "metanote"),
     ("/litecast/",      "litecast"),
-    ("/photocast/",     "photocast"),
+    ("/photocast/",     "chairside"),
     ("/dentcast-plus/", "dentcast_plus"),
     ("/sharehub/",      "sharehub"),
 ]
 
 JSON_TYPE_TO_KEY = {
     "notecast":     "notecast",
-    "dentai":       "dentai",
+    "dentai":       "sharehub",    # closed section → Share Hub (see URL_TO_TYPE)
     "clinical":     "insight",
     "chairside":    "chairside",
     "meta":         "metanote",
     "litecast":     "litecast",
-    "photocast":    "photocast",
+    "photocast":    "chairside",   # closed section → Chairside
     "dentcast_plus": "dentcast_plus",
     "sharehub":     "sharehub",
     "dentcast":     "podcast",
@@ -1337,7 +1341,6 @@ def render_page(slug, cfg, intro_html, flat_ordered):
         '      <!-- <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>-->\n'
         '      <!-- <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>-->\n'
         '      <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>\n'
-        '      <button class="dc-filter-btn active" data-type="dentai">مقالات</button>\n'
         '      <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>\n'
         '      <button class="dc-filter-btn active" data-type="meta">metanote</button>\n'
         '      <button class="dc-filter-btn active" data-type="chairside">chairside</button>\n'
@@ -1942,7 +1945,6 @@ def _render_index_page(pillars_info, cards_html):
         '      <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>\n'
         '      <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>\n'
         '      <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>\n'
-        '      <button class="dc-filter-btn active" data-type="dentai">مقالات</button>\n'
         '      <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>\n'
         '      <button class="dc-filter-btn active" data-type="meta">metanote</button>\n'
         '      <button class="dc-filter-btn active" data-type="chairside">chairside</button>\n'
@@ -2694,7 +2696,6 @@ _GLOSSARY_TAIL = restamp("""<div class="dc-global-filter-box" id="dcGlobalBox">
     <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
     <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
     <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
-    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
     <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
     <button class="dc-filter-btn active" data-type="meta">metanote</button>
     <button class="dc-filter-btn active" data-type="chairside">chairside</button>

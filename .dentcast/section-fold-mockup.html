@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>یک در به جای سه</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap">
+<style>
+  :root{
+    --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb; --surface3:#eaecf5;
+    --border:rgba(2,35,96,.10); --border2:rgba(2,35,96,.06); --line-strong:rgba(2,35,96,.18);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --chip-bg:rgba(11,95,255,.08); --chip-bd:rgba(11,95,255,.22);
+    --phone-bezel:#0a1a33;
+    --mock-ink:#3b2f7a; --mock-bg:#efeaff; --mock-bd:rgba(59,47,122,.22);
+    --gone:#b4432a; --gone-bg:rgba(180,67,42,.08); --gone-bd:rgba(180,67,42,.25);
+    --ok:#1f7a4d; --ok-bg:rgba(31,122,77,.09); --ok-bd:rgba(31,122,77,.28);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --chip-bg:rgba(91,156,246,.12); --chip-bd:rgba(91,156,246,.28);
+    --phone-bezel:#2a3543;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    --gone:#f08a6e; --gone-bg:rgba(240,138,110,.10); --gone-bd:rgba(240,138,110,.3);
+    --ok:#5ccf93; --ok-bg:rgba(92,207,147,.10); --ok-bd:rgba(92,207,147,.3);
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+    --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04); --line-strong:rgba(255,255,255,.16);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --chip-bg:rgba(91,156,246,.12); --chip-bd:rgba(91,156,246,.28);
+    --phone-bezel:#2a3543;
+    --mock-ink:#c9bdf6; --mock-bg:#241d47; --mock-bd:rgba(201,189,246,.28);
+    --gone:#f08a6e; --gone-bg:rgba(240,138,110,.10); --gone-bd:rgba(240,138,110,.3);
+    --ok:#5ccf93; --ok-bg:rgba(92,207,147,.10); --ok-bd:rgba(92,207,147,.3);
+    color-scheme:dark;
+  }
+  *{ box-sizing:border-box; }
+  body{ background:var(--bg); color:var(--txt);
+        font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif;
+        direction:rtl; margin:0; padding-inline:16px; padding-block:0 5rem;
+        line-height:1.85; font-size:15px; }
+  a{ color:inherit; text-decoration:none; }
+  .num{ font-variant-numeric:tabular-nums; }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+  svg.i{ width:1em; height:1em; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; display:inline-block; vertical-align:-.15em; }
+
+  .wrap{ max-width:1080px; margin:0 auto; }
+  header.hd{ padding-block:2rem .4rem; max-width:64ch; }
+  header.hd .kicker{ display:inline-block; font-size:.72rem; font-weight:800; letter-spacing:.02em;
+    color:var(--mock-ink); background:var(--mock-bg); border:1px solid var(--mock-bd);
+    border-radius:999px; padding:.1rem .7rem; margin-bottom:.6rem; }
+  header.hd h1{ font-size:1.55rem; font-weight:900; margin:0 0 .4rem; line-height:1.4; text-wrap:balance; }
+  header.hd p{ margin:.2rem 0; color:var(--txt2); }
+
+  .rules{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:.7rem; margin:1.1rem 0 .4rem; }
+  .rule{ background:var(--surface); border:1px solid var(--border); border-radius:1rem; padding:.7rem .9rem; box-shadow:var(--card-sh); font-size:.84rem; }
+  .rule b{ display:block; font-weight:900; margin-bottom:.15rem; }
+  .rule.keep b{ color:var(--ok); } .rule.change b{ color:var(--ac); }
+  .rule ul{ margin:.2rem 0 0; padding-inline-start:1.1rem; color:var(--txt2); }
+
+  h2.sec{ font-size:1.1rem; font-weight:900; margin:2.4rem 0 .2rem; padding-right:.6rem; border-right:4px solid var(--ac); line-height:1.4; }
+  h2.sec + p{ margin:.1rem 0 .6rem; color:var(--txt2); font-size:.88rem; max-width:70ch; }
+
+  .stage{ display:grid; grid-template-columns:repeat(auto-fit, minmax(330px, 1fr)); gap:1.6rem; align-items:start; margin-top:.9rem; }
+  .cap{ font-size:.8rem; color:var(--txt3); margin:0 0 .5rem; display:flex; align-items:center; gap:.5rem; }
+  .cap b{ color:var(--txt); font-weight:800; }
+  .cap .st{ font-size:.68rem; font-weight:800; border-radius:999px; padding:.05rem .55rem; border:1px solid; }
+  .st-before{ color:var(--txt3); background:var(--surface2); border-color:var(--border); }
+  .st-after{ color:var(--ok); background:var(--ok-bg); border-color:var(--ok-bd); }
+  .phone{ width:100%; max-width:390px; margin:0 auto; height:760px;
+    background:var(--bg); border:8px solid var(--phone-bezel); border-radius:2.4rem;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,.45); position:relative; overflow:hidden;
+    display:flex; flex-direction:column; }
+  .topbar{ flex:none; display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+    padding:.7rem .9rem .5rem; background:var(--surface); border-bottom:1px solid var(--border2); }
+  .topbar .brand{ display:flex; align-items:center; gap:.45rem; font-weight:900; font-size:.9rem; color:var(--pr); }
+  .topbar .brand i{ width:1.55rem; height:1.55rem; border-radius:50%; background:var(--pr); display:inline-block; }
+  .topbar .tb{ display:flex; gap:.35rem; color:var(--txt3); font-size:1.05rem; }
+  .topbar .tb span{ width:1.9rem; height:1.9rem; border-radius:50%; display:grid; place-items:center; background:var(--surface2); }
+  .body{ flex:1; overflow-y:auto; padding:.75rem .75rem 2rem; scrollbar-width:thin; }
+
+  /* homepage archive grammar */
+  .hsec{ font-size:.84rem; font-weight:900; margin:.9rem .1rem .4rem; display:flex; align-items:center; gap:.4rem; color:var(--txt); }
+  .lcard{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; padding:.7rem .85rem; margin-bottom:.5rem;
+    background:var(--surface); border:1px solid var(--border); border-radius:1rem; box-shadow:var(--card-sh); }
+  .lcard .t{ font-weight:900; font-size:.92rem; display:flex; gap:.4rem; align-items:center; }
+  .lcard .s{ font-size:.72rem; color:var(--txt3); line-height:1.6; }
+  .lcard .n{ font-size:.72rem; color:var(--txt3); white-space:nowrap; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:.5rem; margin-bottom:.5rem; }
+  .gcard{ background:var(--surface); border:1px solid var(--border); border-radius:1rem; padding:.75rem .8rem; box-shadow:var(--card-sh); min-height:5.6rem; }
+  .gcard .ico{ color:var(--ac); font-size:1.15rem; }
+  .gcard .t{ font-weight:900; font-size:.88rem; margin-top:.15rem; }
+  .gcard .s{ font-size:.7rem; color:var(--txt3); line-height:1.55; }
+  .gone{ position:relative; }
+  .gone::after{ content:'حذف می‌شود'; position:absolute; top:.45rem; left:.5rem; font-size:.62rem; font-weight:800;
+    color:var(--gone); background:var(--gone-bg); border:1px solid var(--gone-bd); border-radius:999px; padding:0 .45rem; }
+  .gone{ outline:1.5px dashed var(--gone-bd); outline-offset:2px; }
+  .fresh{ outline:1.5px solid var(--ok-bd); outline-offset:2px; position:relative; }
+  .fresh::after{ content:'تغییر'; position:absolute; top:-.55rem; left:.7rem; font-size:.6rem; font-weight:800;
+    color:var(--ok); background:var(--ok-bg); border:1px solid var(--ok-bd); border-radius:999px; padding:0 .45rem; }
+  .dim{ opacity:.5; }
+
+  /* landing-page grammar */
+  .lp h1{ font-size:1.2rem; font-weight:900; margin:.3rem .1rem .2rem; display:flex; gap:.4rem; align-items:center; }
+  .lp .intro{ background:var(--surface); border:1px solid var(--border); border-radius:1rem; padding:.7rem .85rem; margin:.5rem 0 .8rem; font-size:.84rem; box-shadow:var(--card-sh); }
+  .lp .intro p{ margin:.15rem 0; }
+  .lp .intro.old{ color:var(--txt2); }
+  .lp h2{ font-size:.9rem; font-weight:900; margin:.9rem .1rem .4rem; }
+  .list{ background:var(--surface); border:1px solid var(--border); border-radius:1rem; box-shadow:var(--card-sh); overflow:hidden; }
+  .row{ display:flex; align-items:flex-start; gap:.6rem; padding:.6rem .8rem; border-bottom:1px solid var(--border2); font-size:.84rem; line-height:1.55; }
+  .row:last-child{ border-bottom:0; }
+  .row .d{ flex:none; font-size:.66rem; color:var(--txt3); min-width:5.4rem; padding-top:.2rem; }
+  .row .tag{ flex:none; font-size:.6rem; font-weight:800; border-radius:999px; padding:0 .45rem; border:1px solid var(--border); color:var(--txt3); align-self:flex-start; margin-top:.25rem; }
+  .row .tag.ai{ color:var(--gone); border-color:var(--gone-bd); background:var(--gone-bg); }
+  .notice{ display:flex; gap:.6rem; align-items:flex-start; padding:.65rem .8rem; margin:.4rem 0 .8rem; border-radius:.9rem;
+    background:var(--chip-bg); border:1px solid var(--chip-bd); font-size:.8rem; line-height:1.7; }
+  .notice .ic{ flex:none; color:var(--ac); font-size:1rem; }
+  .notice b{ color:var(--ac); }
+  .capsule{ display:flex; align-items:center; gap:.6rem; padding:.6rem .8rem; margin:.4rem 0 .8rem; border-radius:.9rem;
+    background:var(--surface); border:1px solid var(--border); font-size:.8rem; }
+  .capsule .ey{ font-size:.66rem; color:var(--txt3); display:block; }
+
+  /* names table */
+  table{ width:100%; border-collapse:collapse; background:var(--surface); border:1px solid var(--border); border-radius:1rem; overflow:hidden; box-shadow:var(--card-sh); font-size:.84rem; margin-top:.8rem; }
+  th,td{ padding:.55rem .8rem; text-align:right; border-bottom:1px solid var(--border2); vertical-align:top; }
+  th{ font-size:.74rem; color:var(--txt3); font-weight:800; background:var(--surface2); }
+  tr:last-child td{ border-bottom:0; }
+  td code{ font-family:ui-monospace,Menlo,monospace; font-size:.78rem; direction:ltr; unicode-bidi:isolate; background:var(--surface2); padding:0 .3rem; border-radius:.3rem; }
+  td .was{ color:var(--gone); text-decoration:line-through; text-decoration-color:var(--gone-bd); margin-left:.4rem; }
+  td .now{ color:var(--ok); font-weight:800; }
+
+  .ledger{ margin-top:2.4rem; background:var(--surface); border:1px solid var(--border); border-radius:1.1rem; padding:.9rem 1.1rem; box-shadow:var(--card-sh); max-width:70ch; }
+  .ledger h3{ margin:0 0 .4rem; font-size:.95rem; font-weight:900; }
+  .ledger ol{ margin:0; padding-inline-start:1.2rem; color:var(--txt2); font-size:.88rem; }
+  .ledger li{ margin:.25rem 0; }
+  .ledger li b{ color:var(--txt); }
+</style>
+
+<div class="wrap">
+<header class="hd">
+  <span class="kicker">ماکاپ · لایه‌ی نمایش</span>
+  <h1>یک در به جای سه: DentAI و PhotoCast تعیین تکلیف می‌شوند</h1>
+  <p>هیچ صفحه‌ای جابه‌جا نمی‌شود. آنچه عوض می‌شود، <em>اسمی</em> است که روی در نوشته شده و اینکه چند تا در هست.</p>
+</header>
+
+<div class="rules">
+  <div class="rule keep"><b>دست نمی‌خورد</b>
+    <ul><li>۳۵ آدرس <code>/dentai/…</code> و ۳ آدرس <code>/photocast/…</code>، canonical، فایل‌ها</li>
+        <li><code>type</code> در brain (<code>dentai</code> / <code>photocast</code>)، هشتگ‌ها، DES</li>
+        <li>قلب‌ها، هایلایت‌ها، کالکشن‌ها، جایگاه در مسیرها (content_id همان است)</li>
+        <li>پرامپتولوژیست — کاملاً جداست</li></ul></div>
+  <div class="rule change"><b>عوض می‌شود</b>
+    <ul><li>برچسب <code>dentai</code> → «Share Hub»، برچسب <code>photocast</code> → «Chairside» — در هر جایی که برچسب رندر می‌شود</li>
+        <li>دَرِ DentAI و PhotoCast از ناوبری برداشته می‌شود (آرشیو، درخت دسکتاپ، ریل)</li>
+        <li>فهرست Share Hub و Chairside آیتم‌های قدیمی را به ترتیب تاریخ می‌گیرند</li>
+        <li>لندینگ قدیمی‌ها زنده می‌ماند، با یک خط ارجاع</li></ul></div>
+</div>
+
+<!-- ─────────────────────────── 1. archive tab ─────────────────────────── -->
+<h2 class="sec">۱ · تب آرشیو — «مرور منابع علمی»</h2>
+<p>الان NoteCast یک کارت تمام‌عرض دارد و زیرش DentAI و Share Hub کنار هم در یک گرید دوتایی نشسته‌اند، با دو توضیحی که از هم قابل تفکیک نیستند. بعد: دو کارت تمام‌عرض، هر کدام یک جمله که فقط درباره‌ی خودش صادق است.</p>
+<div class="stage">
+  <div>
+    <p class="cap"><span class="st st-before">قبل</span><b>سه در</b></p>
+    <div class="phone"><div class="topbar"><div class="brand"><i></i>دنت‌کست</div><div class="tb"><span>☾</span><span>👤</span></div></div>
+    <div class="body">
+      <div class="hsec">🎤 مرور منابع علمی</div>
+      <div class="lcard"><div><div class="t">NoteCast</div><div class="s">خلاصه‌نویسی اپیزودها از مقالات علمی</div></div></div>
+      <div class="grid2">
+        <div class="gcard gone"><div class="ico">🤖</div><div class="t">DentAI</div><div class="s">مرور با هوش مصنوعی</div></div>
+        <div class="gcard"><div class="ico">🔗</div><div class="t">Share Hub</div><div class="s">مطالب با ذکر منبع</div></div>
+      </div>
+      <div class="hsec">🪑 تولید اختصاصی دنت‌کست</div>
+      <div class="lcard"><div><div class="t">Clinical Insight</div><div class="s">بینش کلینیکی</div></div></div>
+      <div class="lcard"><div><div class="t">Chairside</div><div class="s">نکاتی از ویزیت‌های روزانه</div></div></div>
+      <div class="lcard dim"><div><div class="t">Meta Note</div><div class="s">ایده‌ها و مدل‌های تحلیلی</div></div></div>
+      <div class="hsec">🧭 درخت دسکتاپ (ستون A)</div>
+      <div class="lcard dim"><div class="t" style="font-size:.8rem">NoteCast</div><div class="n">۴۲</div></div>
+      <div class="lcard gone"><div class="t" style="font-size:.8rem">DentAI</div><div class="n">۳۵</div></div>
+      <div class="lcard dim"><div class="t" style="font-size:.8rem">Share Hub</div><div class="n">۲۸</div></div>
+      <div class="lcard gone"><div class="t" style="font-size:.8rem">PhotoCast</div><div class="n">۳ · هاردکد</div></div>
+    </div></div>
+  </div>
+  <div>
+    <p class="cap"><span class="st st-after">بعد</span><b>یک در برای خوانش ادبیات، یک در برای کیس</b></p>
+    <div class="phone"><div class="topbar"><div class="brand"><i></i>دنت‌کست</div><div class="tb"><span>☾</span><span>👤</span></div></div>
+    <div class="body">
+      <div class="hsec">🎤 مرور منابع علمی</div>
+      <div class="lcard"><div><div class="t">NoteCast</div><div class="s">خلاصه‌نویسی اپیزودها از مقالات علمی</div></div></div>
+      <div class="lcard fresh"><div><div class="t">Share Hub 🔗</div><div class="s">خوانش دنت‌کست از مقالات — یک مقاله یا چند مقاله، همیشه با منبع</div></div></div>
+      <div class="hsec">🪑 تولید اختصاصی دنت‌کست</div>
+      <div class="lcard"><div><div class="t">Clinical Insight</div><div class="s">بینش کلینیکی</div></div></div>
+      <div class="lcard"><div><div class="t">Chairside</div><div class="s">نکاتی از ویزیت‌های روزانه</div></div></div>
+      <div class="lcard dim"><div><div class="t">Meta Note</div><div class="s">ایده‌ها و مدل‌های تحلیلی</div></div></div>
+      <div class="hsec">🧭 درخت دسکتاپ (ستون A)</div>
+      <div class="lcard dim"><div class="t" style="font-size:.8rem">NoteCast</div><div class="n">۴۲</div></div>
+      <div class="lcard fresh"><div class="t" style="font-size:.8rem">Share Hub</div><div class="n num">۶۳</div></div>
+      <div class="lcard fresh"><div class="t" style="font-size:.8rem">Chairside</div><div class="n num">۴۲</div></div>
+      <p style="font-size:.72rem;color:var(--txt3);margin:.6rem .2rem 0;line-height:1.7">شمارش‌ها جمع واقعی‌اند: ۲۸+۳۵ و ۳۹+۳. گرید دوتایی با یک کارت معنی ندارد، پس Share Hub کارت تمام‌عرض می‌شود، هم‌شکل NoteCast بالای خودش.</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ─────────────────────────── 2. sharehub landing ─────────────────────────── -->
+<h2 class="sec">۲ · لندینگ Share Hub</h2>
+<p>وعده‌ی فعلی («از دیگران… تولید مستقیم دنت‌کست نیستند») همین حالا هم برای ده مطلب آخر غلط است. جمله‌ی جدید پیشنهاد است؛ متن نهایی را خودت می‌نویسی. فهرست به ترتیب تاریخ درهم‌تنیده می‌شود — آیتم‌های قدیمی DentAI بلوک جدا نیستند و برچسب جدا ندارند.</p>
+<div class="stage">
+  <div>
+    <p class="cap"><span class="st st-before">قبل</span><b>وعده‌ای که دیگر صادق نیست</b></p>
+    <div class="phone"><div class="topbar"><div class="brand"><i></i>دنت‌کست</div><div class="tb"><span>☾</span><span>👤</span></div></div>
+    <div class="body lp">
+      <h1>🔗 دنت‌کست – Share Hub</h1>
+      <div class="intro old gone">
+        <p>در <strong>Share Hub</strong>، مطالب، نوشته‌ها، تصاویر و ایده‌هایی از دیگران <strong>به انتخاب دنت‌کست بازنشر می‌شوند</strong>.</p>
+        <p>تمام محتواها با <strong>ذکر منبع و رفرنس شفاف</strong> ارائه می‌شوند و تولید مستقیم دنت‌کست نیستند.</p>
+      </div>
+      <h2>📁 فهرست مطالب Share Hub <span style="font-weight:500;color:var(--txt3);font-size:.72rem">· ۲۸</span></h2>
+      <div class="list">
+        <div class="row"><span class="d">۱۵ مهر</span><span>روکش‌های ایمپلنت‌های مجاور را اسپلینت کنیم یا جدا بگذاریم؟</span></div>
+        <div class="row"><span class="d">۱۳ مهر</span><span>حد تراش لمینیت: از فلدسپاتیک تا CAD/CAM</span></div>
+        <div class="row"><span class="d">۱۲ مهر</span><span>راهنمای انتخاب رنگ دندان: چطور رنگ رو درست به لابراتوار برسونیم</span></div>
+        <div class="row"><span class="d">۱۰ مهر</span><span>ماکاپ تصویری با هوش مصنوعی: چرا با یک پرامپت جواب نگرفتم</span></div>
+        <div class="row"><span class="d">۱۰ مهر</span><span>سانترال کوتاه: علت چیست و درمان چیست؟</span></div>
+        <div class="row"><span class="d">۲ مهر</span><span>اگر وسط باندینگ خون یا بزاق روی عاج بیاد چی کار کنیم؟</span></div>
+        <div class="row"><span class="d">۳۰ شهریور</span><span>رابردم برای سمان کردن لمینیت: الزامی یا اختیاری؟</span></div>
+        <div class="row"><span class="d">۲۷ شهریور</span><span>سه فضایی که موقعیت رستوریشن را تعیین می‌کنند</span></div>
+        <div class="row"><span class="d">۲۶ شهریور</span><span>پست و کور زیرکونیا: مزایا، معایب و مقایسه</span></div>
+        <div class="row"><span class="d">۲۴ شهریور</span><span>فازهای طرح درمان: از کجا شروع کنیم؟</span></div>
+        <div class="row dim"><span class="d">…</span><span>۱۸ مطلب دیگر</span></div>
+      </div>
+      <p style="font-size:.72rem;color:var(--txt3);margin:.7rem .2rem 0;line-height:1.7">«کامبینیشن سندروم» (۲۸ شهریور) و «ایمپلنت و جویدن» (۱۹ شهریور) اینجا نیستند؛ در DentAI‌اند. خواننده نمی‌داند چرا.</p>
+    </div></div>
+  </div>
+  <div>
+    <p class="cap"><span class="st st-after">بعد</span><b>یک فهرست، یک جمله، ۶۳ مطلب</b></p>
+    <div class="phone"><div class="topbar"><div class="brand"><i></i>دنت‌کست</div><div class="tb"><span>☾</span><span>👤</span></div></div>
+    <div class="body lp">
+      <h1>🔗 دنت‌کست – Share Hub</h1>
+      <div class="intro fresh">
+        <p><strong>خوانش دنت‌کست از ادبیات علمی.</strong> گاهی یک مقاله، گاهی جمع‌بندی چند مقاله، گاهی دیدگاه یک همکار — همیشه با منبع.</p>
+        <p style="color:var(--txt3);font-size:.76rem">[پیشنهاد — جمله‌ی نهایی با توست]</p>
+      </div>
+      <h2>📁 فهرست مطالب Share Hub <span style="font-weight:500;color:var(--txt3);font-size:.72rem">· ۶۳</span></h2>
+      <div class="list">
+        <div class="row"><span class="d">۱۵ مهر</span><span>روکش‌های ایمپلنت‌های مجاور را اسپلینت کنیم یا جدا بگذاریم؟</span></div>
+        <div class="row"><span class="d">۱۳ مهر</span><span>حد تراش لمینیت: از فلدسپاتیک تا CAD/CAM</span></div>
+        <div class="row"><span class="d">۱۲ مهر</span><span>راهنمای انتخاب رنگ دندان: چطور رنگ رو درست به لابراتوار برسونیم</span></div>
+        <div class="row"><span class="d">۱۰ مهر</span><span>ماکاپ تصویری با هوش مصنوعی: چرا با یک پرامپت جواب نگرفتم</span></div>
+        <div class="row"><span class="d">۱۰ مهر</span><span>سانترال کوتاه: علت چیست و درمان چیست؟</span></div>
+        <div class="row"><span class="d">۲ مهر</span><span>اگر وسط باندینگ خون یا بزاق روی عاج بیاد چی کار کنیم؟</span></div>
+        <div class="row"><span class="d">۳۰ شهریور</span><span>رابردم برای سمان کردن لمینیت: الزامی یا اختیاری؟</span></div>
+        <div class="row" style="background:var(--ok-bg)"><span class="d">۲۸ شهریور</span><span>کامبینیشن سندروم: چیزی که پنجاه سال تدریس شد و بعد پیدا نشد</span></div>
+        <div class="row"><span class="d">۲۷ شهریور</span><span>سه فضایی که موقعیت رستوریشن را تعیین می‌کنند</span></div>
+        <div class="row"><span class="d">۲۶ شهریور</span><span>پست و کور زیرکونیا: مزایا، معایب و مقایسه</span></div>
+        <div class="row"><span class="d">۲۴ شهریور</span><span>فازهای طرح درمان: از کجا شروع کنیم؟</span></div>
+        <div class="row" style="background:var(--ok-bg)"><span class="d">۱۹ شهریور</span><span>ایمپلنت واقعاً جویدن را چقدر بهتر می‌کند؟</span></div>
+        <div class="row" style="background:var(--ok-bg)"><span class="d">۱۵ شهریور</span><span>پست دو تیکه (Split Cast Post and Core) چیست و کِی استفاده می‌شود؟</span></div>
+        <div class="row" style="background:var(--ok-bg)"><span class="d">۶ شهریور</span><span>عوامل موثر بر دقت اسکنرهای داخل دهانی</span></div>
+        <div class="row"><span class="d">۲ شهریور</span><span>فرول در رستوریشن‌های باند شونده: یک کلمه، سه مفهوم</span></div>
+        <div class="row dim"><span class="d">…</span><span>۴۸ مطلب دیگر</span></div>
+      </div>
+      <p style="font-size:.72rem;color:var(--txt3);margin:.7rem .2rem 0;line-height:1.7">ردیف‌های سبز فقط برای این ماکاپ رنگی‌اند تا نشان بدهند آیتم‌های DentAI کجا می‌نشینند. روی سایت هیچ رنگ، برچسب یا جداکننده‌ای ندارند — این کلِ ایده است. لینکشان همان <code>/dentai/dentai-35.html</code> می‌ماند.</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ─────────────────────────── 3. old landings ─────────────────────────── -->
+<h2 class="sec">۳ · لندینگ‌های قدیمی — زنده، بی‌در، با یک خط</h2>
+<p><code>/dentai/</code> و <code>/photocast/</code> حذف یا ریدایرکت نمی‌شوند (بک‌لینک دارند، و لندینگ DentAI میزبان کپسول پرامپتولوژیست است). فقط دیگر از هیچ‌جای سایت به آن‌ها لینکی نیست و بالایشان یک خط می‌گوید ادامه کجاست. کسی که از گوگل یا یک لینک قدیمی می‌رسد، گم نمی‌شود.</p>
+<div class="stage">
+  <div>
+    <p class="cap"><span class="st st-after">بعد</span><b>/dentai/</b></p>
+    <div class="phone" style="height:560px"><div class="topbar"><div class="brand"><i></i>دنت‌کست</div><div class="tb"><span>☾</span><span>👤</span></div></div>
+    <div class="body lp">
+      <h1>🤖 DentAI – دنت‌ای‌آی</h1>
+      <div class="notice fresh"><span class="ic">ℹ</span><span>این بخش بسته شده و مطالب تازه در <b>Share Hub ›</b> منتشر می‌شوند. ۳۵ مقاله‌ی اینجا سر جایشان می‌مانند و از آن‌جا هم در دسترس‌اند.</span></div>
+      <div class="intro old"><p><strong>DentAI</strong> ترکیبی از دندان‌پزشکی و هوش مصنوعی برای خواندن، خلاصه‌سازی و استخراج نکات کلینیکی از مقالات علمی است.</p></div>
+      <div class="capsule"><span>✨</span><span><span class="ey">پرامپتولوژیست</span>هوش مصنوعی برای دندانپزشکان</span></div>
+      <div class="list">
+        <div class="row"><span>⚡ مقالهٔ یک – تمایز بین خطوط ترک سنتی و خطوط ترک داخلی در مینای دندان</span></div>
+        <div class="row"><span>⚡ مقالهٔ دوم – رزین اینفیلتریشن برای درمان لکه‌های سفید دندانی</span></div>
+        <div class="row dim"><span>… بدون تغییر</span></div>
+      </div>
+    </div></div>
+  </div>
+  <div>
+    <p class="cap"><span class="st st-after">بعد</span><b>/photocast/</b></p>
+    <div class="phone" style="height:560px"><div class="topbar"><div class="brand"><i></i>دنت‌کست</div><div class="tb"><span>☾</span><span>👤</span></div></div>
+    <div class="body lp">
+      <h1>📷 فوتوکست‌ها</h1>
+      <div class="notice fresh"><span class="ic">ℹ</span><span>کیس‌های تصویری از این پس در <b>Chairside ›</b> روایت می‌شوند. سه کیس اینجا سر جایشان می‌مانند.</span></div>
+      <div class="list">
+        <div class="row"><span class="d">۲۴ آبان ۱۴۰۴</span><span>دندان ۶ پایین در زیر ۱۸ سال — چه روکشی و چه زمانی؟</span></div>
+        <div class="row"><span class="d">۱۹ آبان ۱۴۰۴</span><span>بیمار با درد شدید در ناحیهٔ چپ فک پایین پس از روکش تازه</span></div>
+        <div class="row"><span class="d">۱۴ آبان ۱۴۰۴</span><span>قانون BULL در تنظیم اکلوزال</span></div>
+      </div>
+      <p style="font-size:.72rem;color:var(--txt3);margin:.7rem .2rem 0;line-height:1.7">در فهرست Chairside همین سه ردیف، به تاریخ خودشان (آبان ۱۴۰۴)، ته فهرست می‌نشینند — نه بلوک جدا، نه برچسب «فوتوکست».</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ─────────────────────────── 4. names ─────────────────────────── -->
+<h2 class="sec">۴ · یک چیز، چهار اسم</h2>
+<p>این جدول دلیل اصلی «گیجی» است و دیدنش کافی است. همین الان یک مطلب DentAI، بسته به اینکه خواننده از کجا به آن نگاه می‌کند، چهار اسم مختلف دارد. بعد از تغییر، همه‌ی این سطوح یک برچسب رندر می‌کنند؛ <code>type</code> در داده همان می‌ماند.</p>
+<table>
+  <thead><tr><th>سطح</th><th>فایل</th><th>برچسب</th></tr></thead>
+  <tbody>
+    <tr><td>کارت آرشیو و ریل خانه</td><td><code>index.html</code></td><td><span class="was">DentAI</span><span class="now">Share Hub</span></td></tr>
+    <tr><td>ایندکس موضوعی (پیلار)</td><td><code>tools/build_pillar.py</code> نقشه‌ی type→label</td><td><span class="was">دنت‌AI</span><span class="now">Share Hub</span></td></tr>
+    <tr><td>چیپ فیلتر جستجوی سراسری</td><td><code>build_pillar.py</code> + لندینگ‌ها</td><td><span class="was">مقالات</span><span class="now">Share Hub</span> <span style="color:var(--txt3);font-size:.74rem">(چیپ جدا حذف، آیتم‌ها زیر چیپ Share Hub)</span></td></tr>
+    <tr><td>up-board، درخت پلاس، نتایج جستجو</td><td><code>up-board/index.json</code> · <code>content-index.js</code> · <code>FOLDER_META</code></td><td><span class="was">DentAI</span><span class="now">Share Hub</span></td></tr>
+    <tr><td>همان چهار سطح برای فوتوکست</td><td>—</td><td><span class="was">PhotoCast / فوتوکست</span><span class="now">Chairside</span></td></tr>
+    <tr><td>خودِ ۳۵ صفحه (title، OG، breadcrumb)</td><td><code>dentai/dentai-*.html</code></td><td><span style="color:var(--txt3)">DentAI — دست نمی‌خورد؛ هیچ لینک داخلی به بخش ندارند، فقط اسم در تب مرورگر</span></td></tr>
+  </tbody>
+</table>
+
+<div class="ledger">
+  <h3>چیزهایی که فقط تو تصمیم می‌گیری</h3>
+  <ol>
+    <li><b>جمله‌ی Share Hub.</b> پیشنهاد بالا یک جای خالی است، نه متن.</li>
+    <li><b>زیرعنوان کارت آرشیو</b> («مطالب با ذکر منبع» می‌ماند یا عوض می‌شود).</li>
+    <li><b>چیپ «مقالات» در جستجوی سراسری</b>: حذف (پیشنهاد من) یا نگه‌داشتن با اسم جدید.</li>
+    <li><b>فوتوکست در همین پاس</b> یا جدا — ماکاپ هر دو را نشان می‌دهد، کار یکی است.</li>
+  </ol>
+</div>
+</div>
+</html>

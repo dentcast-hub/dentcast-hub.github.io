@@ -93,8 +93,13 @@ FOLDER_TYPE = {
     # printed the raw slug «plak-sefr» under every one of those rows AND on the
     # filter chip. Same shape as `dentcast-plus` directly above.
     "plak-sefr": "plak_sefr",
-    # Everything else names its own type: notecast, chairside, dentai, litecast,
-    # sharehub, photocast.
+    # Two closed sections (1405/07/15). Their pages keep their URLs and their
+    # brain `type`; what changed is the section a reader finds them under, and
+    # `t` is exactly that — the filter chip and the row label, never the id.
+    "dentai": "sharehub",
+    "photocast": "chairside",
+    # Everything else names its own type: notecast, chairside, litecast,
+    # sharehub.
 }
 
 

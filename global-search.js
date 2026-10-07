@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
   "notecast",
   "clinical",
   "dentcast_plus",
-  "dentai",
   "promptologist",
   "plak_sefr",
   "taraz",
@@ -30,11 +29,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ------------ مپ نوع‌ها --------------- */
+/* A brain `type` → the filter GROUP it answers to. Two types answer to a
+   group that is not their own name, since 1405/07/15 (founder decision):
+   DentAI and PhotoCast are closed sections — their 35 + 3 pages keep their
+   URLs and their `type`, but on every reader surface they are Share Hub and
+   Chairside now. Folding them here (rather than deleting the chip from the
+   983 pages that carry it) keeps every article byte-identical; the chip
+   itself is removed at runtime below. */
 const TYPE_MAP = {
   notecast:       "notecast",
   clinical:       "clinical",
   dentcast_plus:  "dentcast_plus",
-  dentai:         "dentai",
+  dentai:         "sharehub",
+  photocast:      "chairside",
   promptologist:  "promptologist",
   plak_sefr:      "plak_sefr",
   taraz:          "taraz",
@@ -64,7 +71,12 @@ const TYPE_MAP = {
   }
 
   /* ------------ مدیریت فیلترها -------------- */
+  /* The «مقالات» (dentai) chip is still in the static markup of every page
+     built before the fold; its group no longer exists, so it goes. The
+     template in tools/build_pillar.py no longer emits it. */
+  filterBtns.forEach(btn => { if (btn.dataset.type === "dentai") btn.remove(); });
   filterBtns.forEach(btn => {
+    if (!btn.isConnected) return;
     btn.addEventListener("click", () => {
       const key = btn.dataset.type;
 
@@ -93,7 +105,7 @@ const TYPE_MAP = {
   /* ------------ تشخیص گروه ---------------- */
   function detectGroup(item) {
     if (item.episode && !item.type) return "dentcast";
-    if (item.type && TYPE_MAP[item.type]) return item.type;
+    if (item.type && TYPE_MAP[item.type]) return TYPE_MAP[item.type];
     return null;
   }
 
@@ -119,7 +131,6 @@ const TYPE_MAP = {
   notecast:      _iNote + " نوت‌کست — " + title,
   clinical:      _iBulb + " نکته کلینیکی — " + title,
   dentcast_plus: _iPlay + " دنت‌کست+ — " + title,
-  dentai:        _iBook + " مقاله — " + title,
   promptologist: _iSpark + " پرامپتولوژیست — " + title,
   plak_sefr:     _iPin   + " پلاک صفر — " + title,
   taraz:         _iScale + " تراز شواهد — " + title,

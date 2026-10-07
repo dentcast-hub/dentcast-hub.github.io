@@ -95,22 +95,23 @@ def compute_content():
 
 RAIL_CATS = (
     "clinical", "notecast", "meta", "chairside",
-    "dentai", "promptologist", "sharehub", "dentcast_plus",
+    "promptologist", "sharehub", "dentcast_plus",
     "plak_sefr", "taraz",
 )
 
-# دسته‌های محتوا grid: COUNTER name -> brain `type` to count, or None for a
+# دسته‌های محتوا grid: COUNTER name -> brain `type`(s) to count, or None for a
 # card counted from its own source (episodes.json / lite-glossary.json)
-# instead of the brain.
+# instead of the brain. A tuple counts several types into one cell: DentAI and
+# PhotoCast are closed sections (1405/07/15) whose pages keep their `type` but
+# are listed under Share Hub and Chairside, so those two cells count both.
 CAT_COUNTERS = {
     "CAT_EPISODES": None,
     "CAT_INSIGHT": "clinical",
     "CAT_NOTECAST": "notecast",
-    "CAT_CHAIRSIDE": "chairside",
-    "CAT_DENTAI": "dentai",
+    "CAT_CHAIRSIDE": ("chairside", "photocast"),
     "CAT_METANOTES": "meta",
     "CAT_LITECAST": None,
-    "CAT_SHAREHUB": "sharehub",
+    "CAT_SHAREHUB": ("sharehub", "dentai"),
     "CAT_PROMPTOLOGIST": "promptologist",
     "CAT_PLUS": "dentcast_plus",
     "CAT_PLAK_SEFR": "plak_sefr",
@@ -137,7 +138,8 @@ def compute_category_counts():
         elif name == "CAT_LITECAST":
             n = lite_count
         else:
-            n = by_type.get(ty, 0)
+            tys = ty if isinstance(ty, tuple) else (ty,)
+            n = sum(by_type.get(t, 0) for t in tys)
         out[name] = to_fa(n)
     return out
 
