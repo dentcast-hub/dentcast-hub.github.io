@@ -1,0 +1,23 @@
+{
+  "type": "sharehub",
+  "note": "Publish of sharehub/share-29 (چرا چشم در انتخاب ولیو رنگ خطا می‌کند و راه اصلاح آن). #Share_Hub, #Curated_Content, #انتخاب_shade and #عکاسی_دندانپزشکی are REUSED (--simulate returned each at rank 1). Two concepts the note resolves are newly minted (founder-approved 1405/07/15): value, the lightness dimension of color (--simulate «ولیو و کروما» returned nothing), and black-and-white photography as a value-comparison tool (--simulate «عکس سیاه سفید» returned only the unrelated #لکه_سفید).",
+  "concepts": [
+    {
+      "tag": "#ولیو",
+      "domain": "clinical",
+      "definition": "بُعد روشنی یا تیرگی رنگ، مستقل از hue و chroma؛ در انتخاب رنگ دندان مهم‌ترین بُعد تطابق است و چشم آن را مستقل از chroma درک نمی‌کند.",
+      "use_when": "مطلب درباره‌ی انتخاب، مقایسه، ثبت یا خطای درک value در تطابق رنگ دندان و رستوریشن باشد.",
+      "aliases": ["value", "ولیو رنگ", "روشنایی رنگ", "brightness", "lightness"]
+    },
+    {
+      "tag": "#عکس_سیاه_سفید",
+      "domain": "clinical",
+      "definition": "عکسی از دندان و تب شید که رنگ آن حذف شده (grayscale) تا فقط value باقی بماند و مقایسه‌ی روشنی دندان و شید بدون اثر chroma ممکن شود.",
+      "use_when": "مطلب درباره‌ی استفاده از عکس grayscale یا سیاه‌سفید برای مقایسه‌ی value در انتخاب رنگ یا ارتباط با لابراتوار باشد.",
+      "aliases": ["black and white photography", "grayscale", "عکس سیاه و سفید", "عکس سیاه‌وسفید", "عکس گری اسکیل"]
+    }
+  ],
+  "articles": {
+    "sharehub/share-29": ["#Share_Hub", "#Curated_Content", "#انتخاب_shade", "#عکاسی_دندانپزشکی", "#ولیو", "#عکس_سیاه_سفید"]
+  }
+}

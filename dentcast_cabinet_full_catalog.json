@@ -138515,6 +138515,51 @@
         "Kami Raouf",
         "Bruno Ramos Chrcanovic"
       ]
+    },
+    {
+      "id": "P2921",
+      "title": "Combine Conventional and Digital Methods to Maximize Shade Matching",
+      "file_name": "Combine Conventional and Digital Methods to Maximize Shade Matching.pdf",
+      "topic": "Color",
+      "topic_path": "Color",
+      "type": "narrative review",
+      "local_path": "",
+      "file_size": 1042674,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "sharehub/share-29"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1ldiAvRxEhHsmKqnTr4m4RLUelQsDBUqU/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1ldiAvRxEhHsmKqnTr4m4RLUelQsDBUqU",
+      "drive_view": "https://drive.google.com/file/d/1ldiAvRxEhHsmKqnTr4m4RLUelQsDBUqU/view",
+      "drive_id": "1ldiAvRxEhHsmKqnTr4m4RLUelQsDBUqU",
+      "tags": [
+        "shade-matching",
+        "shade-guide",
+        "value-chroma",
+        "black-and-white-photography",
+        "digital-photography",
+        "photoshop",
+        "3d-master",
+        "spectrophotometer",
+        "topic:color",
+        "combine-conventional-and-digital-methods-to-maximize-shade-matching"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Combine Conventional and Digital Methods to Maximize Shade Matching",
+      "doi": null,
+      "journal": "Compendium of Continuing Education in Dentistry",
+      "crossref_year": 2011,
+      "subjects": [],
+      "abstract": "Shade determination requires dental professionals to understand the science of color, as well as the shade and surface characteristics of teeth. Additionally, dentists must be able to effectively communicate this information to the laboratory, where ceramists are then tasked to interpret the shade information and choose the correct ceramic materials and shades to create highly esthetic restorations that appear indistinguishable from the patient’s surrounding dentition. This article provides current perspectives and information about shade-taking technologies and the advancements and techniques facilitating this process.",
+      "display_title": "Combine Conventional and Digital Methods to Maximize Shade Matching",
+      "authors": [
+        "Edward A. McLaren",
+        "Todd Schoenbaum"
+      ]
     }
   ],
   "drive_matched": 2849,

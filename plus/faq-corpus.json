@@ -36105,6 +36105,101 @@
           ]
         }
       ]
+    },
+    "sharehub/share-29": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/sharehub/share-29.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا چشم، value یک تب شید را مستقل از chroma آن درک می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ به گفته‌ی McLaren چشم value را مستقل از chroma نمی‌بیند. وقتی دو سطح value نزدیک به هم دارند، سطحی که chroma بالاتری دارد تیره‌تر به نظر می‌رسد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "در شید گاید کلاسیک، آیا B1 واقعاً value بالاتری از A1 دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ B1 با چشم روشن‌تر دیده می‌شود، ولی در عکس سیاه‌سفید معلوم می‌شود value بالاتر مال A1 است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "در عکسی که برای مقایسه‌ی رنگ دندان و تب شید گرفته می‌شود، تب شید نسبت به سطح دندان کجا باید قرار بگیرد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "کنار دندان و هم‌تراز با سطح آن، یعنی نه جلوتر از دندان و نه عقب‌تر، تا فاصله‌اش تا دوربین با دندان یکی باشد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "روش McLaren برای مقایسه‌ی value شید و دندان با DSLR و فتوشاپ چه مراحلی دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "تب شید کنار دندان و هم‌تراز با سطح آن قرار می‌گیرد و عکس RAW گرفته می‌شود. در فتوشاپ بخشی از تب شید روی تصویر دندان گذاشته می‌شود تا مقایسه مستقیم‌تر باشد، و بعد یک نسخه‌ی grayscale برای مقایسه‌ی value ساخته می‌شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا برای مقایسه‌ی value شید و دندان در بیشتر موارد بالینی، عکس گرفتن با گوشی کافی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله، به شرطی که دو اصل رعایت شود: رنگ حذف شود تا فقط value بماند و شرایط عکس برای تب شید و دندان یکسان باشد؛ یعنی تب شید کنار دندان و هم‌تراز با سطح آن باشد، نور یکنواخت باشد و انعکاس شدید روی دندان یا تب شید نیفتد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا فیلترهای سیاه‌سفید آماده‌ی گوشی برای مقایسه‌ی value شید و دندان مناسب‌اند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ این فیلترها کنتراست را تغییر می‌دهند و به کانال‌های رنگی وزن متفاوتی می‌دهند، پس ممکن است تب شید و دندان در یک فیلتر هم‌اندازه و در فیلتر دیگر متفاوت دیده شوند. بهتر است در ادیتور گوشی saturation تا صفر پایین آورده شود."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/sharehub/share-29.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-29.html#flashcards-c1",
+              "name": "اثر chroma بر درک value",
+              "description": "خطای ادراکی در تطابق رنگ: از دو نمونه با value نزدیک به هم، نمونه‌ی پرکروماتر تیره‌تر به چشم می‌آید؛ برای همین قضاوت چشمی value بدون حذف رنگ قابل اعتماد نیست.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-29.html#flashcards-c2",
+              "name": "A1 و B1 در شید گاید VITA classical",
+              "description": "نمونه‌ی رایج خطای انتخاب value: B1 به دلیل chroma پایین‌ترش روشن‌تر دیده می‌شود، در حالی که A1 در واقع value بالاتری دارد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-29.html#flashcards-c3",
+              "name": "دو اصل مقایسه‌ی value با عکس",
+              "description": "حذف رنگ تا فقط روشنی باقی بماند، و یکسان بودن شرایط تصویربرداری برای دندان و تب شید (هم‌ترازی با سطح دندان، نور یکنواخت، بدون انعکاس شدید).",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-29.html#flashcards-c4",
+              "name": "saturation صفر در برابر فیلتر سیاه‌سفید",
+              "description": "راه درست grayscale کردن عکس شید: کم کردن saturation تا صفر فقط رنگ را برمی‌دارد، اما فیلترهای آماده کنتراست و وزن کانال‌های رنگی را هم عوض می‌کنند و نتیجه‌ی مقایسه را از فیلتری به فیلتر دیگر تغییر می‌دهند.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

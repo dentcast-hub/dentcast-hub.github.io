@@ -21956,5 +21956,61 @@
         "interpretation_fa": "مرور سیستماتیک ثبت‌شده با جستجوی سه‌دیتابیسی و ارزیابی کیفیت مستقل، ولی مطالعات واردشده بیشتر کیس‌سری و گذشته‌نگرند و بدون بررسی publication bias در یک life table تجمیع شده‌اند. بقای ده‌ساله‌ی بالای ایمپلنت pterygoid و tuberosity را نشان می‌دهد. برتری tuberosity و اثر اسپلینت از مقایسه‌ی تعدیل‌نشده می‌آید و قطعی نیست."
       }
     ]
+  },
+  "sharehub/share-29": {
+    "scored_at": "2026-10-07",
+    "sources": [
+      {
+        "des_version": "2.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Combine Conventional and Digital Methods to Maximize Shade Matching",
+          "authors": "McLaren EA, Schoenbaum T",
+          "year": 2011,
+          "journal": "Compendium of Continuing Education in Dentistry",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "When viewed, B1 typically appears brighter than A1. However, A1 is actually the brighter of the two, and this can be seen when the two are photographed in black and white and compared. The incorrect perception is caused by the lower chroma of the B1 shade.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "The systems’ digital spectrophotometers have been proven to be a reliable tool for determining the shade of the patient’s dentition.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "However, to ensure optimum, error-free results, digital shade-taking devices should be used in combination with linear and 3-D guides.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "In the authors’ experience, using all three modalities for shade analysis—visual, digital photographic, and computerized—and comparing the data has proven to be the most accurate way to finalize exact shade determinate",
+            "note": ""
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله به‌عنوان یک یادداشت بالینی ارزیابی شد و با امتیاز ۱۹ در باند E قرار گرفت.",
+        "interpretation_fa": "این متن یک مقاله‌ی کاربردی است که روش انتخاب رنگ را بر پایه‌ی تجربه‌ی نویسندگان در UCLA شرح می‌دهد و روش، نمونه یا داده‌ای برای ادعاهایش گزارش نمی‌کند. ارزشش در منطق روشن مقایسه‌ی value در عکس grayscale و در یک پروتکل عملی عکاسی و Photoshop است، نه در وزن آماری شواهد."
+      }
+    ]
   }
 }

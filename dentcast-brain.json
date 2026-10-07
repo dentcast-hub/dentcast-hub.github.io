@@ -16469,5 +16469,39 @@
       "secondary": [],
       "subtopic": "restoration-design"
     }
+  },
+  {
+    "type": "sharehub",
+    "id": "29",
+    "title": "چرا چشم در انتخاب ولیو رنگ خطا می‌کند و راه اصلاح آن",
+    "caption": "وقتی در انتخاب value بین دندان و تب شید شک داریم، عکس سیاه‌سفید معمولاً تکلیف را روشن می‌کند. این مطلب روش McLaren با DSLR و فتوشاپ را توضیح می‌دهد و نسخه‌ی ساده‌ترش با گوشی را که برای بیشتر موارد بالینی کافی است.",
+    "author": "دنت‌کست",
+    "source": "https://dentcast.org",
+    "hashtags": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#انتخاب_shade",
+      "#عکاسی_دندانپزشکی",
+      "#ولیو",
+      "#عکس_سیاه_سفید"
+    ],
+    "keywords": [
+      "علت خطای چشم در انتخاب value",
+      "مقایسه‌ی value با عکس سیاه‌سفید",
+      "چرا B1 روشن‌تر از A1 دیده می‌شود",
+      "اثر chroma بر درک value",
+      "ترتیب value در شید گاید کلاسیک",
+      "هم‌تراز کردن تب شید با سطح دندان در عکس",
+      "مقایسه‌ی شید و دندان در فتوشاپ",
+      "سیاه‌سفید کردن عکس با saturation صفر",
+      "black and white photography for shade value",
+      "value and chroma perception shade matching"
+    ],
+    "url": "/sharehub/share-29.html",
+    "pillar": {
+      "primary": "esthetic",
+      "secondary": [],
+      "subtopic": "shade-and-whitening"
+    }
   }
 ]
