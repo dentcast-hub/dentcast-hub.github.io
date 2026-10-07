@@ -115,8 +115,8 @@ Ask:
 **Two types the brain still carries are CLOSED and are never offered (founder,
 1405/07/15): `dentai` and `photocast`.** Their 35 + 3 pages stay exactly where
 they are, but no new entry is ever appended to either. A single- or multi-paper
-reading is **`sharehub`**; an image-led case is **`chairside`**. If the user
-names one of the closed types, say so and route to its successor — never create
+reading is **`sharehub`**. If the user names one of the closed types, say so and
+ask which living section it goes to (`sharehub` for a reading) — never create
 `dentai-36` or `photocast/episode-4` (CLAUDE.md → Repo conventions).
 
 Wait. Lock the chosen category for the rest of the run.

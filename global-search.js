@@ -32,8 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* A brain `type` → the filter GROUP it answers to. Two types answer to a
    group that is not their own name, since 1405/07/15 (founder decision):
    DentAI and PhotoCast are closed sections — their 35 + 3 pages keep their
-   URLs and their `type`, but on every reader surface they are Share Hub and
-   Chairside now. Folding them here (rather than deleting the chip from the
+   URLs and their `type`, but on every reader surface they are Share Hub now. Folding them here (rather than deleting the chip from the
    983 pages that carry it) keeps every article byte-identical; the chip
    itself is removed at runtime below. */
 const TYPE_MAP = {
@@ -41,7 +40,7 @@ const TYPE_MAP = {
   clinical:       "clinical",
   dentcast_plus:  "dentcast_plus",
   dentai:         "sharehub",
-  photocast:      "chairside",
+  photocast:      "sharehub",
   promptologist:  "promptologist",
   plak_sefr:      "plak_sefr",
   taraz:          "taraz",

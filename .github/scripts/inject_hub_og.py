@@ -23,7 +23,6 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fi
 
 HUBS = [
     "chairside/index.html",
-    "dentai/index.html",
     "dentai/promptologist/index.html",
     "dentcast-plus/index.html",
     "glossary/index.html",
@@ -31,7 +30,6 @@ HUBS = [
     "litecast/index.html",
     "metanotes/index.html",
     "notecast/index.html",
-    "photocast/index.html",
     "plak-sefr/index.html",
     "sharehub/index.html",
     "taraz/index.html",

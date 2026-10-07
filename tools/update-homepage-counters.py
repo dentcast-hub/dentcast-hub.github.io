@@ -103,15 +103,15 @@ RAIL_CATS = (
 # card counted from its own source (episodes.json / lite-glossary.json)
 # instead of the brain. A tuple counts several types into one cell: DentAI and
 # PhotoCast are closed sections (1405/07/15) whose pages keep their `type` but
-# are listed under Share Hub and Chairside, so those two cells count both.
+# are listed under Share Hub, so that cell counts all three.
 CAT_COUNTERS = {
     "CAT_EPISODES": None,
     "CAT_INSIGHT": "clinical",
     "CAT_NOTECAST": "notecast",
-    "CAT_CHAIRSIDE": ("chairside", "photocast"),
+    "CAT_CHAIRSIDE": "chairside",
     "CAT_METANOTES": "meta",
     "CAT_LITECAST": None,
-    "CAT_SHAREHUB": ("sharehub", "dentai"),
+    "CAT_SHAREHUB": ("sharehub", "dentai", "photocast"),
     "CAT_PROMPTOLOGIST": "promptologist",
     "CAT_PLUS": "dentcast_plus",
     "CAT_PLAK_SEFR": "plak_sefr",

@@ -14,7 +14,7 @@
 - [Glossary / Knowledge Base](https://dentcast.org/glossary/): Structured dental terminology and concept definitions in Persian
 - [Clinical Insights](https://dentcast.org/insight/): Short clinical reasoning articles based on scientific evidence
 - [NoteCast](https://dentcast.org/notecast/): Structured episode notes and summaries
-- [DentAI Articles](https://dentcast.org/dentai/): AI-assisted dental education articles
+- [Share Hub](https://dentcast.org/sharehub/): Evidence readings — single papers, multi-paper syntheses and colleague views, always cited (includes the former DentAI and PhotoCast articles)
 - [Chairside](https://dentcast.org/chairside/): Quick chairside clinical tips
 - [About the Author](https://dentcast.org/about.html): Dr. Foad Shahabian, Prosthodontist
 

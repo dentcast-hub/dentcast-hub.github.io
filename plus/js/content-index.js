@@ -55,7 +55,7 @@ export const FOLDER_EN = {
   metanotes: 'MetaNote',
   glossary: 'Glossary',
   sharehub: 'ShareHub',
-  photocast: 'Chairside',
+  photocast: 'ShareHub',
   'dentcast-plus': 'DentCast+',
   promptologist: 'Promptologist',
   'plak-sefr': 'Plak-e Sefr',

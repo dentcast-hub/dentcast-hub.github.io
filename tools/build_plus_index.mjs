@@ -27,12 +27,12 @@ const FOLDER_META = [
   ['episodes', 'پادکست', '/episodes.html'],
   ['notecast', 'نوت‌کست', '/notecast/'],
   ['insight', 'کلینیکال اینسایت', '/insight/'],
-  ['dentai', 'دنت‌ای‌آی', '/dentai/'],
+  ['dentai', 'دنت‌ای‌آی', '/sharehub/'],  // closed section (1405/07/15): its landing forwards to Share Hub
   ['chairside', 'چیرساید', '/chairside/'],
   ['metanotes', 'متانوت', '/metanotes/'],
   ['litecast', 'لایت‌کست', '/litecast/'],
   ['glossary', 'دانشنامه', '/glossary/'],
-  ['photocast', 'فوتوکست', '/photocast/'],
+  ['photocast', 'فوتوکست', '/sharehub/'],  // closed section, as above
   ['sharehub', 'شیرهاب', '/sharehub/'],
   // پرامپتولوژیست carries a fourth element because it is the one section whose
   // key is NOT its top folder: its pages live at /dentai/promptologist/, a
@@ -132,7 +132,13 @@ for (const e of brain) {
   if (byContent[contentId]) continue; // first wins
   const primary = (e.pillar && e.pillar.primary) || null;
   const subtopic = (e.pillar && e.pillar.subtopic) || null;
-  const type = contentId.split('/')[0];
+  // The section, not the first path segment: پرامپتولوژیست lives at
+  // dentai/promptologist/…, and reading parts[0] filed its 22 pages as
+  // `dentai`, which every Plus label (pathway step, collection pin, report,
+  // assistant) then printed through FOLDER_EN — «DentAI» before the fold,
+  // «ShareHub» after it. Same nested-prefix rule as FOLDER_META's 4th element.
+  const nested = FOLDER_META.find(([, , , dir]) => dir && contentId.startsWith(dir + '/'));
+  const type = nested ? nested[0] : contentId.split('/')[0];
   byContent[contentId] = {
     cluster: primary,
     subtopic,
