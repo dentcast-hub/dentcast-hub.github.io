@@ -97,7 +97,7 @@ FOLDER_TYPE = {
     # brain `type`; what changed is the section a reader finds them under, and
     # `t` is exactly that — the filter chip and the row label, never the id.
     "dentai": "sharehub",
-    "photocast": "chairside",
+    "photocast": "sharehub",
     # Everything else names its own type: notecast, chairside, litecast,
     # sharehub.
 }

@@ -497,14 +497,14 @@ URL_TO_TYPE = [
     ("/insight/",       "insight"),
     # /dentai/ and /photocast/ are closed sections (1405/07/15): their pages
     # keep their URLs and brain `type`, but every row they produce is a
-    # Share Hub / Chairside row. The fold happens on the KEY, not the label,
+    # Share Hub row. The fold happens on the KEY, not the label,
     # so the filter chip, the icon and the sr-only name all move together.
     # (پرامپتولوژیست never reaches this list: its brain type resolves first.)
     ("/dentai/",        "sharehub"),
     ("/chairside/",     "chairside"),
     ("/metanotes/",     "metanote"),
     ("/litecast/",      "litecast"),
-    ("/photocast/",     "chairside"),
+    ("/photocast/",     "sharehub"),
     ("/dentcast-plus/", "dentcast_plus"),
     ("/sharehub/",      "sharehub"),
 ]
@@ -516,7 +516,7 @@ JSON_TYPE_TO_KEY = {
     "chairside":    "chairside",
     "meta":         "metanote",
     "litecast":     "litecast",
-    "photocast":    "chairside",   # closed section → Chairside
+    "photocast":    "sharehub",    # closed section → Share Hub
     "dentcast_plus": "dentcast_plus",
     "sharehub":     "sharehub",
     "dentcast":     "podcast",
