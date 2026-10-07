@@ -12,9 +12,9 @@
 //     the account, not localStorage).
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
-import { el, faNum } from './util.js?v=176';
-import { api, currentUser } from './api.js?v=176';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=176';
+import { el, faNum } from './util.js?v=177';
+import { api, currentUser } from './api.js?v=177';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=177';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 
@@ -139,10 +139,12 @@ const STOPS = [
   },
   {
     key: 'sources', panel: 'panel-sharehub', title: 'مرور منابع علمی',
-    text: 'بخش‌های مبتنی بر مقالات علمی: NoteCast خلاصه‌نویسی اپیزودها از مقالات است، DentAI مرور مطالب با هوش مصنوعی و Share Hub مطالب منتخب با ذکر منبع.',
+    text: 'بخش‌های مبتنی بر مقالات علمی: NoteCast خلاصه‌نویسی اپیزودها از مقالات است و Share Hub خوانش دنت‌کست از ادبیات علمی — یک مقاله یا چند مقاله، همیشه با منبع.',
     targets: () => [
       document.querySelector('#panel-sharehub .dc-list-card[onclick*="notecast"]'),
-      document.querySelector('#panel-sharehub .dc-grid'),
+      // Share Hub is a list card since DentAI closed (1405/07/15); the 2×2
+      // .dc-grid it used to share with DentAI no longer exists.
+      document.querySelector('#panel-sharehub .dc-list-card[onclick*="sharehub"]'),
     ],
   },
   {
