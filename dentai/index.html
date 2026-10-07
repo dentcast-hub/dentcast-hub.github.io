@@ -494,6 +494,12 @@ footer{
     <h1>🤖 DentAI – دنت‌ای‌آی</h1>
   </header>
 
+  <style>
+    /* closed-section notice (1405/07/15) */
+    .dc-closed-note{display:flex;gap:.6rem;align-items:flex-start;margin:0 0 1rem;padding:.7rem .9rem;border-radius:.9rem;background:rgba(var(--ac-rgb,11,95,255),.08);border:1px solid rgba(var(--ac-rgb,11,95,255),.22);font-size:.9rem;line-height:1.8}
+    .dc-closed-note a{color:var(--ac,#0b5fff);font-weight:800;text-decoration:none}
+  </style>
+  <p class="dc-closed-note"><span aria-hidden="true">ℹ</span><span>این بخش بسته شده است. مطالب تازه در <a href="/sharehub/">Share Hub</a> منتشر می‌شوند و ۳۵ مقالهٔ این‌جا، با همین نشانی‌ها، از آن‌جا هم در دسترس‌اند.</span></p>
   <!-- 🔍 Global Search -->
   <div class="dc-global-filter-box" id="dcGlobalBox">
     <button class="dc-close-results">✖</button>
@@ -730,7 +736,7 @@ footer{
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
 <!-- JS (unchanged) -->
-<script src="/global-search.js?v=11"></script>
+<script src="/global-search.js?v=12"></script>
 <script src="/global-search-ui.js?v=5"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -766,6 +772,6 @@ document.addEventListener("DOMContentLoaded", function () {
   updateState();
 });
 </script>
-<script src="/dc-nav.js?v=265" defer></script>
+<script src="/dc-nav.js?v=266" defer></script>
 </body>
 </html>

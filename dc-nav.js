@@ -284,6 +284,9 @@
 
      پرامپتولوژیست lives UNDER /dentai/ on disk but stands on its own here, on
      purpose: in this drawer a section is a destination, never a sub-menu.
+     /dentai/ itself is not listed since 1405/07/15: DentAI is a closed section
+     (its pages now list under Share Hub), and a closed section is not a
+     destination. The landing page stays on disk for inbound links.
 
      Styling is injected from JS rather than added to dc-nav.css because
      index.html loads no shared stylesheet — the same reason DC_MUSIC_CSS and
@@ -293,7 +296,6 @@
     ['/dentai/promptologist/',     'message', 'پرامپتولوژیست'],
     ['/plak-sefr/',                'pin',     'پلاک صفر'],
     ['/taraz/',                    'scale',   'تراز شواهد'],
-    ['/dentai/',                   'bot',     'DentAI'],
     ['/dentcast-plus/',            'play',    'DentCast+'],
     ['/sharehub/',                 'link',    'Share Hub'],
     ['/chairside/',                'tooth',   'Chairside'],
@@ -2268,7 +2270,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '257';
+  var V = '258';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
