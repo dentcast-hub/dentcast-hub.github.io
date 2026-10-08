@@ -16535,5 +16535,38 @@
       "secondary": [],
       "subtopic": "comprehensive-diagnosis"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-91",
+    "title": "یک شید، دو value: چرا A1 در ایمکس و زیرکونیا یکی نیست",
+    "caption": "اگر برای یک دندان شید A1 را یک بار با ایمکس و یک بار با زیرکونیا بسازیم، value دو روکش یکی درنمی‌آید. چرا A1 برای مواد مختلف یک رنگ ثابت نیست، اختلاف زیرکونیا و ایمکس هر کدام از کجا می‌آید، و در سفارش لابراتوار چه چیزی را باید کنار شید در نظر گرفت.",
+    "hashtags": [
+      "#اینسایت",
+      "#ولیو",
+      "#انتخاب_shade",
+      "#زیرکونیا",
+      "#لیتیوم_دی_سیلیکات",
+      "#ترانسلوسنسی",
+      "#رنگ_دندان_پایه"
+    ],
+    "keywords": [
+      "same shade different value: IPS e.max vs zirconia",
+      "why A1 is not one color across ceramic materials",
+      "zirconia higher value and lower chroma than the VITA shade tab",
+      "lithium disilicate translucency, stump shade and cement color",
+      "multilayer translucent zirconia brand variation",
+      "شید A1 در ایمکس و زیرکونیا",
+      "value بالاتر و chroma کمتر در زیرکونیا",
+      "اثر رنگ دندان تراش‌خورده و سمان در ایمکس",
+      "تفاوت برندها و زیرکونیای multilayer",
+      "سفارش شید به لابراتوار بر اساس جنس سرامیک"
+    ],
+    "page_url": "/insight/insight-91.html",
+    "pillar": {
+      "primary": "esthetic",
+      "secondary": [],
+      "subtopic": "shade-and-whitening"
+    }
   }
 ]
