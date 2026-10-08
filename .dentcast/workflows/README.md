@@ -1382,7 +1382,7 @@ real hit:
 **If none of the three yields a real abstract, that source is not scorable.** The
 spec's own error output is the correct result, and it is what gets recorded:
 ```json
-{"des_version":"1.6","error":"INSUFFICIENT_TEXT"}
+{"des_version":"2.5","error":"INSUFFICIENT_TEXT"}
 ```
 Per the capability protocol (`agent-parity.md` §2), when the blocker is a **missing
 tool** rather than a missing abstract, **ask the user to paste the abstract** —
@@ -1397,10 +1397,21 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v2.4.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v2.5.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v2.2 is the current spec, and its change from 2.1 is `text_basis:
+**v2.5 is the current spec, and its change from 2.4 is a SECOND call: the
+FIDELITY track.** No SOURCE score moves — Steps 0-5 and the COMMENTARY track
+are untouched except for a `mode` field whose absence means `SOURCE`. The new
+call takes the page's own text and the source it cites and answers one
+question: does each claim the page attributes to the source appear in the
+source, unchanged in direction, hedge and scope? It is run **after** the SOURCE
+call for that source, per source, and is described in **Part 2b** below. Its
+release precision test is recorded in the spec's own Versioning entry (41
+independent runs, three inputs, every verdict and score identical from the
+second round on).
+
+**v2.2's change from 2.1 is `text_basis:
 SECONDARY_REPORT` (Step 0 + Step 1).** A document that reports work published
 elsewhere — a consensus statement, a guideline, a conference synthesis — rates
 silence about a method as `NR` rather than `high`, and caps the multiplier at
@@ -1504,6 +1515,46 @@ clinical_question: <omit unless this publish explicitly answers one>
   input blocks and three DES objects. Never concatenate sources into one block and
   never average their scores.
 
+#### Part 2b — Run the FIDELITY call (spec v2.5), once per scored source
+
+**When.** For every source in basket 2 whose SOURCE call returned a scored
+record — RESEARCH or COMMENTARY. Skip it, and store `null` in its slot, when the
+SOURCE call returned an error (`INSUFFICIENT_TEXT`, `DOI_TEXT_MISMATCH`) or
+`NOT_APPRAISABLE` (a book has no sentences to be faithful to in the sense the
+track measures), and for the page's own COMMENTARY self-record (a text cannot be
+unfaithful to itself). Basket 1 pages never reach this call: fidelity needs a
+cited source. No classifier decides whether the page «is a report of the paper»
+— spec F1 decides per unit, and a page that merely lists the paper in its
+references attributes fewer than three claims to it and lands on
+`INSUFFICIENT_CLAIMS` by itself (spec appendix rule 9).
+
+**The model must not have seen the page's text in the SOURCE call, and must not
+see the SOURCE score here.** Two calls, two contexts. A model that read the
+write-up before scoring the paper can be led by it; a model that knows the band
+before judging the write-up confuses a weak paper with an unfaithful summary.
+
+**Build the input block yourself** (spec F0 + appendix rule 7):
+
+```
+mode:              FIDELITY
+source_text:       <exactly the source_text the SOURCE call scored>
+text_basis:        <exactly the SOURCE call's text_basis>
+units:             <the page's body, split by the rule below, as [{id:"u1", text:"…"}, …]>
+derivative_url:    <the page's canonical URL — provenance only>
+source_conclusion: <the LAST sentence of source_text, copied verbatim>
+```
+
+The split is deterministic and is **yours, never the model's**: take the
+rendered prose of the page (title, headings and body, in order; the same region
+`verify_publish.py`'s `article_region()` reads), split on line breaks, then on
+`.` `!` `?` `؟` `۔` followed by whitespace or end of text; trim; drop empties;
+never split on `;` `،` `:` or «و». Number `u1…uN`. Model segmentation was the
+largest source of run-to-run disagreement in the release test and was taken out
+of the model's hands for exactly that reason.
+
+**The output** is the spec's F5 object. Validate it in Part 3(5), then store it
+in Part 4.
+
 #### Part 3 — Validate the output mechanically (the appendix's contract)
 
 The prompt returns a single raw JSON object. Before anything is stored, run the
@@ -1530,8 +1581,19 @@ appendix's checks yourself — an output that fails these is not a score:
 4. **Schema.** Exactly the spec's key set, no extras. `question_type` is the literal
    `null` (unquoted) for COMMENTARY; `s_design` / `q_method` / `penalties` are `null`
    for COMMENTARY; `commentary_checklist` is `null` for RESEARCH.
+5. **FIDELITY (spec appendix rule 8).** One `claims` object per unit, in input
+   order, `claim_quote` byte-equal to the unit's text; every non-empty
+   `source_quote` a verbatim substring of `source_text` by the rule in (1), and
+   ONE whole sentence; no `NOT_IN_SOURCE` under `ABSTRACT_ONLY`/`SECONDARY_REPORT`
+   and no `NOT_ASSESSABLE` under `FULL_TEXT`; every `ALTERED` carries a
+   `change_kind` from the closed F2-i list and no other verdict carries one;
+   `counts` equal the tally of `claims`; `assessable` = matches + altered +
+   reversed + not_in_source; `fidelity_score` and `level` recompute by F4 (score
+   `null` and level `INSUFFICIENT_CLAIMS` below three assessable claims; any
+   `REVERSED` caps the level at `MEDIUM`); `provisional` is true exactly when
+   `text_basis` is not `FULL_TEXT`; `source_conclusion` is echoed unchanged.
 
-**These four are also enforced mechanically.** Phase F re-runs all of them over
+**These five are also enforced mechanically.** Phase F re-runs all of them over
 every record in `plus/des-scores.json` (rows tagged `4.13 DES`), so a mistake
 here fails the publish rather than shipping. Running them yourself first is
 still the job — the gate tells you *that* something is wrong, not what the
@@ -1556,13 +1618,23 @@ without the leading `/` and without `.html` — the same id Phase F takes):
 {
   "episodes/episode-161": {
     "scored_at": "2026-08-14",
-    "sources": [ { "des_version": "1.6", "content_type": "RESEARCH", "...": "..." } ]
+    "sources":  [ { "des_version": "2.5", "content_type": "RESEARCH", "...": "..." } ],
+    "fidelity": [ { "des_version": "2.5", "mode": "FIDELITY", "...": "..." } ]
   }
 }
 ```
 
-Two invariants and nothing else. **`sources` holds the spec's output objects
-verbatim** — the spec owns that shape, so never reshape, rename, reorder or trim it.
+**`fidelity` is an array PARALLEL to `sources` by index** — same length, slot
+`i` is the FIDELITY object for `sources[i]`, and `null` where no FIDELITY call
+ran for that source (Part 2b's skip cases). It is omitted entirely on a record
+written before v2.5 or on a basket-1 page; Phase F accepts both shapes and
+rejects a `fidelity` whose length differs from `sources`. Parallel by index
+rather than keyed by DOI because the spec's output object carries no
+identifier of its own, and inventing one would be a second copy of
+`citation.doi`.
+
+Two invariants and nothing else. **`sources` and `fidelity` hold the spec's output objects
+verbatim** — the spec owns both shapes, so never reshape, rename, reorder or trim them.
 And **nothing derivable is stored beside them**: no wrapper-level `band`, no `track`,
 no display strings. `content_type`, `band`, `question_type` and `provisional` already
 live inside each object, and a second copy is a second source of truth that can drift
@@ -1584,7 +1656,11 @@ commentary variant, the colour rule) lives in **CLAUDE.md § "DES display"**.
 **This step's obligation ends at the record.** It writes data; it does not edit the
 page. Status as of 2026-08-14: the record format and this step are live, the shared
 renderer is not built yet — which costs nothing, because every record written now
-lights up the moment that module ships. Do **not** compensate by inlining markup or
+lights up the moment that module ships. **The same holds for `fidelity` as of
+2026-10-08:** `plus/js/des.js` reads `sources` and ignores `fidelity`, so a
+record carrying both renders exactly as before until the fidelity block is
+drawn (mockup `.dentcast/des-fidelity-mockup.html`; display rules in CLAUDE.md
+§ DES). Do **not** compensate by inlining markup or
 CSS into the published page.
 
 #### Verify & report
@@ -1592,7 +1668,10 @@ CSS into the published page.
 Per source: the DOI (or «متنِ خودِ مطلب» for COMMENTARY); where `source_text` came
 from (cabinet hit / MCP lookup / WebFetch / pasted by the user); the `text_basis` and
 why; the resulting `des_score`, `band`, `question_type` and whether `provisional` is
-true; and the outcome of each of the four Part-3 checks. For a skip, the documented
+true; and the outcome of each of the five Part-3 checks. Per FIDELITY slot: the
+`level`, the count line («۴ از ۵ ادعای قابل‌بررسی مطابق منبع»), every `ALTERED`
+and `REVERSED` unit with its `change_kind`, or the skip reason for a `null`
+slot. For a skip, the documented
 reason line. Explicitly confirm that no DOI, abstract, or quartile was guessed.
 
 ### 4.14. چالش — public half on the page, private half in the admin queue
