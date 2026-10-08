@@ -657,6 +657,8 @@ The comparison is with **the source's own sentences**, never with what the sourc
 
 `NOT_IN_SOURCE` is never emitted under `ABSTRACT_ONLY` or `SECONDARY_REPORT`, and `NOT_ASSESSABLE` is never emitted under `FULL_TEXT`. A verdict from the wrong row for the `text_basis` invalidates the output.
 
+**Which sentence to quote when several would do.** `source_quote` is exactly ONE sentence of `source_text` (from one terminator to the next, whole), never a fragment and never two sentences joined. When more than one sentence supports the verdict, quote the one that appears **earliest** in `source_text`. For `REVERSED` and `ALTERED` the quoted sentence must contain the element that disagrees (the negation, the hedge, the number, the comparator), so a Methods sentence stating «No aging was performed» is quoted over a Discussion sentence calling the absence of aging a limitation — it is both earlier and the direct statement. Two runs that agree on the verdict and quote different sentences are a reproducibility failure of the record, not of the score, and this rule exists to remove it.
+
 A claim that the source addresses only partly — one half stated, the other half silent — takes the verdict of the stated half; the silent half is noted, not scored, because the unit is one claim and silence is not disagreement.
 
 #### F2-i — The five alterations. Nothing else is `ALTERED`.
