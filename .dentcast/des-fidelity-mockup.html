@@ -75,9 +75,9 @@
   .blk{ width:30px; height:30px; display:flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:800;
     background:var(--surface2); color:var(--txt3); border-left:1px solid var(--line); }
   .blk:first-child{ border-left:0; }
-  .blk.on{ color:#fff; background:repeating-linear-gradient(45deg,var(--des-C),var(--des-C) 4px,color-mix(in srgb,var(--des-C) 72%,transparent) 4px,color-mix(in srgb,var(--des-C) 72%,transparent) 8px); }
+  .blk.on{ color:#fff; background:repeating-linear-gradient(45deg,var(--des-D),var(--des-D) 4px,color-mix(in srgb,var(--des-D) 72%,transparent) 4px,color-mix(in srgb,var(--des-D) 72%,transparent) 8px); }
   .meta{ display:flex; flex-direction:column; gap:2px; min-width:0; }
-  .bandname{ font-weight:700; font-size:.95rem; color:var(--des-C); }
+  .bandname{ font-weight:700; font-size:.95rem; color:var(--des-D); }
   .qtype{ font-size:.76rem; color:var(--txt3); }
   .score{ margin-inline-start:auto; font-size:.8rem; color:var(--txt3); background:var(--surface2); border:1px solid var(--line);
     border-radius:7px; padding:3px 9px; font-variant-numeric:tabular-nums; }
@@ -115,6 +115,10 @@
   .why{ margin:.35rem 0 0; font-size:.73rem; color:var(--txt3); }
   .kind{ display:inline-block; font-size:.64rem; font-weight:700; color:var(--fd-over); background:color-mix(in srgb,var(--fd-over) 9%,transparent); border-radius:6px; padding:0 6px; margin-inline-end:4px; }
   .claim.dim{ opacity:.72; }
+  .tie{ margin:.1rem 0 .7rem; font-size:.76rem; color:var(--txt2); background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:.5rem .65rem; }
+  .tie b{ color:var(--txt); }
+  .not{ margin:.3rem 0 0; font-size:.73rem; color:var(--txt3); }
+  .not b{ color:var(--txt2); }
 
   details.calc{ border:1px solid var(--line); border-radius:9px; background:var(--surface2); overflow:hidden; margin-top:.75rem; }
   details.calc > summary{ cursor:pointer; padding:8px 12px; font-size:.8rem; font-weight:600; color:var(--txt3); }
@@ -137,77 +141,77 @@
 
 <div class="shell">
   <div class="ttl">DES — منبع + انطباق</div>
-  <p class="lead">ورودی: یک متن فارسی + لینک منبعش. خروجی: دو نتیجه‌ی جدا روی یک کارت. یکی اینکه <b>مقاله</b> چقدر محکم است (همان DES)، و دیگری اینکه <b>متن فارسی</b> چقدر به همان چیزی که مقاله گفته وفادار است.</p>
+  <p class="lead">DES قبلاً گفته مقاله چقدر محکم است. انطباق فقط یک سؤال دارد: <b>آیا متن فارسی همان چیزی را می‌گوید که مقاله گفته؟</b> قوی یا ضعیف بودن مقاله در این سؤال جایی ندارد.</p>
 
-  <!-- ═══ 1. what the prompt receives ═══ -->
+  <!-- ═══ 1. input ═══ -->
   <div class="sec">۱ · ورودی <b>(آنچه به پرامپت می‌رسد)</b></div>
   <div class="box">
     <span class="sample-flag">نمونه‌ی ساختگی برای ماکاپ؛ مقاله‌ی واقعی نیست</span>
     <p class="fa-text">
       <mark class="c ok">در این مطالعه کراون‌های زیرکونیای مونولیتیک مقاومت به شکست بیشتری از لیتیوم دی‌سیلیکات داشتند</mark><sup class="n">۱</sup>
       و <mark class="c ok">نمونه‌ها پیش از تست، ۱٫۲ میلیون سیکل بارگذاری شدند</mark><sup class="n">۲</sup>.
-      <mark class="c over">بنابراین برای بیماران براکسیسمی زیرکونیا انتخاب بهتری است</mark><sup class="n">۳</sup>
-      و <mark class="c contra">ضخامت ۰٫۵ میلی‌متر هم برای آن کافی است</mark><sup class="n">۴</sup>.
+      <mark class="c contra">برای بیماران براکسیسمی هم زیرکونیا انتخاب خوبی است</mark><sup class="n">۳</sup>
+      و <mark class="c over">در بیماران دیگر حتماً باید برای کراون خلفی زیرکونیا گذاشت</mark><sup class="n">۴</sup>.
       <mark class="c na">نویسندگان هیچ تعارض منافعی نداشتند</mark><sup class="n">۵</sup>.
       <mark class="c own">از تجربه‌ی خودم، لیتیوم دی‌سیلیکات در ناحیه‌ی قدامی زیباتر است</mark><sup class="n">۶</sup>.
     </p>
     <div class="abs">
       <b>Abstract</b> (resolved from DOI · ABSTRACT_ONLY)<br>
-      … Specimens underwent 1.2 million cycles of thermomechanical loading. Monolithic zirconia crowns showed significantly higher fracture loads than lithium disilicate crowns (p&lt;0.001). At 0.5 mm, zirconia fracture loads fell below the clinically acceptable threshold. Within the limitations of this in vitro study, …
+      … Specimens underwent 1.2 million cycles of thermomechanical loading. Monolithic zirconia crowns showed significantly higher fracture loads than lithium disilicate crowns (p&lt;0.001). Owing to antagonist enamel wear, monolithic zirconia is not recommended for patients with bruxism. In other patients, monolithic zirconia may be considered for posterior crowns.
     </div>
   </div>
 
-  <!-- ═══ 2. the card ═══ -->
+  <!-- ═══ 2. card ═══ -->
   <div class="sec">۲ · نمایش <b>(کارت DES)</b></div>
   <section class="card" aria-label="ارزیابی خودکار شواهد">
     <h3 class="card-h">ارزیابی خودکار شواهد</h3>
-    <p class="prov-note">این کادر جزو متن نیست. DES اول خودِ مقاله را می‌سنجد، بعد اینکه این متن چقدر همان چیزی را می‌گوید که مقاله گفته.</p>
+    <p class="prov-note">این کادر جزو متن نیست. بخش اول می‌گوید مقاله چقدر محکم است. بخش دوم می‌گوید این متن فارسی چقدر همان چیزی را می‌گوید که مقاله گفته.</p>
 
-    <!-- part A — the source, exactly today's block -->
     <div class="part">
       <div class="part-lbl"><i>۱</i> منبع: مقاله چقدر محکم است</div>
       <div class="srctitle"><bdi>Fracture resistance of monolithic zirconia vs lithium disilicate crowns — an in vitro study</bdi></div>
       <div class="head">
-        <span class="bar" aria-label="باند C از E تا A">
-          <span class="blk">E</span><span class="blk">D</span><span class="blk on">C</span><span class="blk">B</span><span class="blk">A</span>
+        <span class="bar" aria-label="باند D از E تا A">
+          <span class="blk">E</span><span class="blk on">D</span><span class="blk">C</span><span class="blk">B</span><span class="blk">A</span>
         </span>
-        <span class="meta"><span class="bandname">باند C</span><span class="qtype">سؤال مواد · مطالعه‌ی آزمایشگاهی</span></span>
-        <span class="score">۵۸ از ۱۰۰</span>
+        <span class="meta"><span class="bandname">باند D</span><span class="qtype">سؤال مواد · مطالعه‌ی آزمایشگاهی</span></span>
+        <span class="score">۴۰ از ۱۰۰</span>
       </div>
       <span class="prov">امتیاز مقدماتی · فقط از چکیده</span>
     </div>
 
-    <!-- part B — fidelity, its own shape -->
     <div class="part">
-      <div class="part-lbl"><i>۲</i> انطباق: متن چقدر به مقاله وفادار است</div>
+      <div class="part-lbl"><i>۲</i> انطباق: این متن چقدر همان مقاله است</div>
       <div class="fd-head">
-        <span class="fd-big">۲ از ۴ ادعای قابل‌بررسی منطبق</span>
+        <span class="fd-big">۲ از ۴ ادعای قابل‌بررسی مطابق مقاله</span>
         <span class="lvl mid">انطباق متوسط</span>
         <span class="score">۶۳ از ۱۰۰</span>
       </div>
       <div class="claimrow" aria-label="شش ادعا">
-        <span class="dot ok">۱</span><span class="dot ok">۲</span><span class="dot over">۳</span><span class="dot contra">۴</span><span class="dot na">۵</span><span class="dot own">۶</span>
+        <span class="dot ok">۱</span><span class="dot ok">۲</span><span class="dot contra">۳</span><span class="dot over">۴</span><span class="dot na">۵</span><span class="dot own">۶</span>
       </div>
-      <div class="flags"><b class="contra">۱ ادعا خلاف منبع</b> · <b class="over">۱ ادعا اغراق‌شده</b> · ۱ ادعا از روی چکیده قابل‌بررسی نیست · ۱ دیدگاه نویسنده (شمرده نمی‌شود)</div>
+      <div class="flags"><b class="contra">۱ جمله برعکسِ مقاله</b> · <b class="over">۱ جمله تغییر کرده</b> · ۱ مورد از روی چکیده قابل‌بررسی نیست · ۱ دیدگاه نویسنده (شمرده نمی‌شود)</div>
+      <p class="tie">یعنی آنچه اینجا خواندی <b>کاملاً همان مقاله‌ی باند D نیست</b>: دو جمله‌اش چیزی می‌گوید که آن مقاله نگفته.</p>
       <span class="prov">انطباق مقدماتی · فقط با چکیده مقایسه شد</span>
 
       <ul class="claims">
         <li class="claim">
-          <div class="claim-top"><span class="claim-q">«ضخامت ۰٫۵ میلی‌متر هم برای آن کافی است»</span><span class="v contra">خلاف منبع</span></div>
-          <p class="ev">“At 0.5 mm, zirconia fracture loads fell below the clinically acceptable threshold.”</p>
-          <p class="why">مقاله درست برعکسِ این را می‌گوید.</p>
+          <div class="claim-top"><span class="claim-q">«برای بیماران براکسیسمی هم زیرکونیا انتخاب خوبی است»</span><span class="v contra">برعکسِ مقاله</span></div>
+          <p class="ev">“Owing to antagonist enamel wear, monolithic zirconia is not recommended for patients with bruxism.”</p>
+          <p class="why">مقاله گفته توصیه نمی‌شود؛ متن گفته خوب است.</p>
         </li>
         <li class="claim">
-          <div class="claim-top"><span class="claim-q">«برای بیماران براکسیسمی زیرکونیا انتخاب بهتری است»</span><span class="v over">اغراق‌شده</span></div>
-          <p class="ev">“Within the limitations of this in vitro study, …”</p>
-          <p class="why"><span class="kind">آزمایشگاهی ← توصیه‌ی بالینی</span>مقاله نمونه‌ی آزمایشگاهی را تست کرده، نه بیمار براکسیسمی.</p>
+          <div class="claim-top"><span class="claim-q">«در بیماران دیگر حتماً باید برای کراون خلفی زیرکونیا گذاشت»</span><span class="v over">تغییر کرده</span></div>
+          <p class="ev">“In other patients, monolithic zirconia may be considered for posterior crowns.”</p>
+          <p class="why"><span class="kind">«می‌تواند» ← «حتماً باید»</span>خود مقاله این را با احتیاط گفته و متن فارسی آن احتیاط را برداشته است.</p>
+          <p class="not"><b>اگر خود مقاله نوشته بود «باید»</b>، همین جمله منطبق بود، حتی با اینکه مقاله باند D است.</p>
         </li>
         <li class="claim">
-          <div class="claim-top"><span class="claim-q">«زیرکونیای مونولیتیک مقاومت به شکست بیشتری از لیتیوم دی‌سیلیکات داشت»</span><span class="v ok">منطبق</span></div>
+          <div class="claim-top"><span class="claim-q">«زیرکونیای مونولیتیک مقاومت به شکست بیشتری از لیتیوم دی‌سیلیکات داشت»</span><span class="v ok">مطابق مقاله</span></div>
           <p class="ev">“Monolithic zirconia crowns showed significantly higher fracture loads than lithium disilicate crowns (p&lt;0.001).”</p>
         </li>
         <li class="claim">
-          <div class="claim-top"><span class="claim-q">«نمونه‌ها ۱٫۲ میلیون سیکل بارگذاری شدند»</span><span class="v ok">منطبق</span></div>
+          <div class="claim-top"><span class="claim-q">«نمونه‌ها ۱٫۲ میلیون سیکل بارگذاری شدند»</span><span class="v ok">مطابق مقاله</span></div>
           <p class="ev">“Specimens underwent 1.2 million cycles of thermomechanical loading.”</p>
         </li>
         <li class="claim dim">
@@ -223,10 +227,10 @@
       <details class="calc">
         <summary>محاسبه‌ی انطباق</summary>
         <div class="calc-body">
-          ادعاهای قابل‌بررسی: ۴ (منطبق ۲ · اغراق‌شده ۱ · خلاف منبع ۱)<br>
+          ادعاهای قابل‌بررسی: ۴ (مطابق ۲ · تغییر کرده ۱ · برعکس ۱)<br>
           کنار گذاشته: قابل‌بررسی نیست ۱ · دیدگاه نویسنده ۱<br>
           <code>(2 × 1 + 1 × 0.5 + 1 × 0) ÷ 4 × 100 = 62.5 → 63</code><br>
-          سقف: یک ادعای خلاف منبع ⇒ حداکثر «متوسط»
+          سقف: یک جمله‌ی برعکس ⇒ حداکثر «متوسط»
           <div class="fin">انطباق ۶۳ · متوسط · مقدماتی</div>
         </div>
       </details>
@@ -234,18 +238,18 @@
 
     <hr class="rule">
     <span class="interp-lbl">تفسیر امتیاز</span>
-    <p class="interp">مقاله یک تست آزمایشگاهی معقول است. متن یافته‌ی اصلی‌اش را درست نقل کرده، ولی یک توصیه‌ی بالینی به آن اضافه کرده که مقاله نداده، و درباره‌ی ضخامت حداقلی خلاف مقاله را گفته است.</p>
+    <p class="interp">یافته‌ی اصلی مقاله درست نقل شده، ولی توصیه‌ی مقاله درباره‌ی بیماران براکسیسمی برعکس آمده و توصیه‌ی محتاطانه‌اش برای بقیه‌ی بیماران قطعی شده است.</p>
   </section>
 
   <div class="legend" aria-hidden="true">
-    <span><i class="dot ok"></i>منطبق</span><span><i class="dot over"></i>اغراق‌شده</span><span><i class="dot contra"></i>خلاف منبع</span>
-    <span><i class="dot absent"></i>در منبع نیست</span><span><i class="dot na"></i>قابل‌بررسی نیست</span><span><i class="dot own"></i>دیدگاه نویسنده</span>
+    <span><i class="dot ok"></i>مطابق مقاله</span><span><i class="dot over"></i>تغییر کرده</span><span><i class="dot contra"></i>برعکسِ مقاله</span>
+    <span><i class="dot absent"></i>در مقاله نیست</span><span><i class="dot na"></i>قابل‌بررسی نیست</span><span><i class="dot own"></i>دیدگاه نویسنده</span>
   </div>
 
-  <!-- ═══ 3. prompt contract ═══ -->
+  <!-- ═══ 3. contract ═══ -->
   <div class="sec">۳ · قرارداد پرامپت <b>(پیشنهادی، v2.5)</b></div>
   <div class="box">
-    <p><b>دو فراخوانی جدا، نه یکی.</b> اول خودِ منبع، دقیقاً مثل امروز و بدون دیدن متن فارسی، تا تعریف یا تخریبِ متن روی نمره‌ی مقاله اثر نگذارد. بعد یک فراخوانی دوم برای انطباق که منبع و متن فارسی را می‌گیرد، ولی نمره‌ی DES را نه.</p>
+    <p><b>دو فراخوانی جدا.</b> اول خود منبع، دقیقاً مثل امروز و بدون دیدن متن فارسی. بعد انطباق، که منبع و متن فارسی را می‌گیرد ولی نه نمره‌ی DES را و نه طراحی مطالعه را به‌عنوان معیار.</p>
     <pre class="json">// call 2 — input block
 source_text:      "…abstract…"
 text_basis:       ABSTRACT_ONLY
@@ -257,14 +261,14 @@ derivative_url:   "https://…"     // provenance only
   "fidelity": {
     "text_basis": "ABSTRACT_ONLY",
     "claims": [{
-      "id": "c4",
-      "claim_quote":  "ضخامت ۰٫۵ میلی‌متر هم برای آن کافی است",
-      "source_quote": "At 0.5 mm, zirconia fracture loads fell below …",
-      "verdict": "CONTRADICTED",
-      "overstatement_kind": null,
+      "id": "c3",
+      "claim_quote":  "برای بیماران براکسیسمی هم زیرکونیا انتخاب خوبی است",
+      "source_quote": "monolithic zirconia is not recommended for patients with bruxism",
+      "verdict": "REVERSED",
+      "change_kind": null,
       "note": ""
     }],
-    "counts": { "supported":2, "overstated":1, "contradicted":1,
+    "counts": { "matches":2, "altered":1, "reversed":1,
                 "not_in_source":0, "not_assessable":1, "author_view":1 },
     "fidelity_score": 63,
     "level": "MEDIUM",
@@ -273,12 +277,13 @@ derivative_url:   "https://…"     // provenance only
   }
 }</pre>
     <ol class="rules">
-      <li><b>واحد سنجش ادعاست، نه کل متن.</b> متن به جمله‌هایی شکسته می‌شود که چیزی را به منبع نسبت می‌دهند.</li>
+      <li><b>معیار فقط حرف خود مقاله است.</b> طراحی، حجم نمونه و باند DES در انطباق هیچ نقشی ندارند. اگر مقاله‌ی ضعیف ادعای مطلق کرده و متن هم همان را گفته، آن جمله منطبق است. سنجیدن ضعف مقاله کار بخش اول است.</li>
+      <li><b>واحد سنجش ادعاست، نه کل متن.</b> متن به جمله‌هایی شکسته می‌شود که چیزی را به مقاله نسبت می‌دهند.</li>
       <li><b>دو نقل‌قول verbatim برای هر حکم:</b> <code>claim_quote</code> از متن فارسی و <code>source_quote</code> از منبع. pipeline هر دو را چک می‌کند (قانون ۲). نیم‌فاصله فاصله نیست، پس «اندو‌شده» ≠ «اندو شده».</li>
-      <li><b>شش حکم بسته:</b> SUPPORTED · OVERSTATED · CONTRADICTED · NOT_IN_SOURCE · NOT_ASSESSABLE · AUTHOR_VIEW.</li>
-      <li><b>اغراق نوع دارد</b> و نوعش نام برده می‌شود: آزمایشگاهی ← بالینی · همبستگی ← علیت · حذف قید احتیاط · تعمیم جمعیت · بزرگ‌نمایی عدد.</li>
-      <li><b>سکوت چکیده = قابل‌بررسی نیست.</b> وقتی text_basis برابر ABSTRACT_ONLY است، حکم NOT_IN_SOURCE مجاز نیست؛ همان منطق <code>NR</code> در Step 3b. این حکم فقط با متن کامل صادر می‌شود.</li>
-      <li><b>دیدگاه نویسنده فقط وقتی کنار می‌رود</b> که متن خودش صریحاً آن را تجربه یا نظر بنامد. ادعای بی‌نشان به منبع نسبت داده می‌شود.</li>
+      <li><b>شش حکم بسته:</b> MATCHES · ALTERED · REVERSED · NOT_IN_SOURCE · NOT_ASSESSABLE · AUTHOR_VIEW.</li>
+      <li><b>«تغییر کرده» یعنی نسبت به جمله‌ی خود مقاله</b>، نه نسبت به چیزی که مقاله «حق داشت» بگوید. نوعش هم نام برده می‌شود: قید احتیاط مقاله حذف یا اضافه شده · عدد عوض شده · جمعیت یا شرایط عوض شده.</li>
+      <li><b>سکوت چکیده = قابل‌بررسی نیست.</b> وقتی text_basis برابر ABSTRACT_ONLY است، حکم NOT_IN_SOURCE مجاز نیست؛ همان منطق <code>NR</code> در Step 3b.</li>
+      <li><b>دیدگاه نویسنده فقط وقتی کنار می‌رود</b> که متن خودش صریحاً آن را تجربه یا نظر بنامد. ادعای بی‌نشان به مقاله نسبت داده می‌شود.</li>
       <li><b>کیفیت ترجمه و نثر سنجیده نمی‌شود</b>؛ فقط وفاداری.</li>
     </ol>
   </div>
@@ -286,10 +291,10 @@ derivative_url:   "https://…"     // provenance only
   <div class="sec">۴ · فرمول <b>(تصمیم‌های باز)</b></div>
   <div class="box">
     <ol class="rules">
-      <li>نمره = <code>(supported×1 + overstated×w) ÷ assessable × 100</code>، که در آن assessable = منطبق + اغراق + خلاف + در منبع نیست. <span class="open">باز: w = ۰٫۵؟</span></li>
+      <li>نمره = <code>(matches×1 + altered×w) ÷ assessable × 100</code>، که در آن assessable = مطابق + تغییر کرده + برعکس + در مقاله نیست. <span class="open">باز: w = ۰٫۵؟</span></li>
       <li>سطح‌ها: ۸۵ به بالا «بالا»، ۶۰ تا ۸۴ «متوسط»، زیر ۶۰ «پایین». <span class="open">باز: مرزها</span></li>
-      <li>هر ادعای خلاف منبع سطح را حداکثر به «متوسط» محدود می‌کند. <span class="open">باز: سقف «پایین»؟</span></li>
-      <li>با کمتر از ۳ ادعای قابل‌بررسی، عددی داده نمی‌شود و نتیجه «ادعای کافی برای سنجش نیست» است. این جلوی متن مبهمی را می‌گیرد که چیزی نمی‌گوید و ۱۰۰٪ می‌گیرد. <span class="open">باز: ۳؟</span></li>
+      <li>هر جمله‌ی برعکس سطح را حداکثر به «متوسط» محدود می‌کند. <span class="open">باز: سقف «پایین»؟</span></li>
+      <li>با کمتر از ۳ ادعای قابل‌بررسی، عددی داده نمی‌شود و نتیجه «ادعای کافی برای سنجش نیست» است. <span class="open">باز: ۳؟</span></li>
       <li>اگر بیش از نیمی از ادعاها «قابل‌بررسی نیست» باشند، نتیجه حتی با متن کامل هم مقدماتی است.</li>
       <li>عدد کوچک و کم‌رنگ می‌ماند و تیتر، شمارش ادعاهاست. انطباق هیچ‌وقت روی پنج بلوک E تا A نمی‌آید.</li>
     </ol>
