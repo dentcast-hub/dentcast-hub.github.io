@@ -657,7 +657,12 @@ The comparison is with **the source's own sentences**, never with what the sourc
 
 `NOT_IN_SOURCE` is never emitted under `ABSTRACT_ONLY` or `SECONDARY_REPORT`, and `NOT_ASSESSABLE` is never emitted under `FULL_TEXT`. A verdict from the wrong row for the `text_basis` invalidates the output.
 
-**Which sentence to quote when several would do.** `source_quote` is exactly ONE sentence of `source_text` (from one terminator to the next, whole), never a fragment and never two sentences joined. When more than one sentence supports the verdict, quote the one that appears **earliest** in `source_text`. For `REVERSED` and `ALTERED` the quoted sentence must contain the element that disagrees (the negation, the hedge, the number, the comparator), so a Methods sentence stating «No aging was performed» is quoted over a Discussion sentence calling the absence of aging a limitation — it is both earlier and the direct statement. Two runs that agree on the verdict and quote different sentences are a reproducibility failure of the record, not of the score, and this rule exists to remove it.
+**Which sentence to quote when several would do.** `source_quote` is exactly ONE sentence of `source_text` (from one terminator to the next, whole), never a fragment and never two sentences joined. When more than one sentence supports the verdict, apply these two filters in order and quote the earliest sentence that survives both:
+
+1. For `REVERSED` and `ALTERED`, the sentence must contain the element that disagrees (the negation, the hedge word, the figure, the comparator) — so a Methods sentence stating «No aging was performed» is quoted over a Discussion sentence calling the absence of aging a limitation.
+2. If the unit shares a **proper name, product name, group label or number** with `source_text` (a product like *3Shape Dental Designer*, a group like *CC group*, a figure like *1.2 million*), the sentence must contain that shared token. A sentence that only describes the thing generically («a conventional CAD software program») loses to the one that names it, even when the generic one comes first. Tokens are compared as written in the source; a Persian transliteration never counts as shared, and when nothing is shared this filter does nothing.
+
+Then, among the survivors, the **earliest** in `source_text`. Two runs that agree on the verdict and quote different sentences are a reproducibility failure of the record, not of the score, and this rule exists to remove it.
 
 A claim that the source addresses only partly — one half stated, the other half silent — takes the verdict of the stated half; the silent half is noted, not scored, because the unit is one claim and silence is not disagreement.
 
