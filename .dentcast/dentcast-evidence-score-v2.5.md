@@ -673,6 +673,20 @@ A claim that the source addresses only partly — one half stated, the other hal
 
 If none of the five fits and the direction agrees, the verdict is `MATCHES`. If the direction disagrees, it is `REVERSED`, whatever else differs. There is no `OTHER`.
 
+#### F2-ii — What a hedge is, and what it is not
+
+The two hedge kinds fire only when the claim and the source state the **same proposition about the same finding** and differ in the epistemic qualifier alone. A hedge is a word that weakens how sure the statement is. The list is closed:
+
+- English: *may*, *might*, *could*, *possibly*, *appears to*, *seems to*, *suggests*, *tended to*, *within the limitations of*, *should be considered*, *likely*
+- Persian: شاید · احتمالاً · ممکن است · به نظر می‌رسد · می‌تواند (when it means *may*) · در حد پیشنهاد · احتمالِ · تا حدی
+
+Two things are NOT a hedge difference, and two runs of the same text split on exactly this before the rule was written:
+
+1. **A hedged generalization from a stated finding is `MATCHES`.** The source reports that three systems differed significantly; the text says «هر موتور طراحی می‌تواند رفتار متفاوتی داشته باشد». That is a wider sentence than the finding, and the «می‌تواند» is what keeps it faithful: it claims a possibility the finding demonstrates, not a rule the finding does not. Rating this `HEDGE_ADDED` would penalize the text for being careful. The same generalization **without** the hedge («هر موتور طراحی رفتار متفاوتی دارد») is `ALTERED` with `POPULATION_OR_CONDITION_CHANGED`, because it now applies the finding to every engine when three were tested.
+2. **A statement that merely restates an observed result in the past tense — «داشتند», «نشان داد», «بود» — carries no hedge and needs none**; it is compared on direction, magnitude, population and comparator only.
+
+So the test for `HEDGE_ADDED` is: strip the qualifier, and the claim is the source's own finding, not wider and not narrower — and the source states that finding without a qualifier. The test for `HEDGE_REMOVED` is the mirror: the source's sentence carries a word from the list, and the claim states the same proposition without one.
+
 ### F3 — One unit, one verdict: precedence
 
 When a unit carries more than one attributed claim, rate each claim silently and emit the single verdict highest in this list:
