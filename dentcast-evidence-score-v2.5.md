@@ -670,7 +670,7 @@ A claim that the source addresses only partly — one half stated, the other hal
 
 **What counts as "stated" is narrow, and two near-misses are silence:**
 
-1. **A topic sentence is not a statement of the topic's content.** A source sentence that only says a subject *is reviewed / is discussed / is described / is illustrated / is considered / is examined* states that the paper covers the subject, not what it concludes about it. «Concepts of … minimally acceptable preparation taper … are discussed» supports a claim that the paper discusses taper; it does not support «برای هر نسبت ارتفاع به قاعده یک حداکثر taper وجود دارد». Against such a sentence the content claim is silence.
+1. **A topic sentence is not a statement of the topic's content.** A source sentence whose only verb is *is/are discussed*, *is/are reviewed*, *is/are considered* or *is/are examined*, and which states no conclusion after it, says that the paper covers the subject, not what it concludes about it. Two things take a sentence out of this rule: a conclusion clause after the verb (*…are reviewed, supporting the principle that X* states X), and a subject that already carries the content (*the usefulness of grooves … is illustrated* states that grooves are useful; *is illustrated / is shown / is demonstrated* report a finding and are never on this list). «Concepts of … minimally acceptable preparation taper … are discussed» supports a claim that the paper discusses taper; it does not support «برای هر نسبت ارتفاع به قاعده یک حداکثر taper وجود دارد». Against such a sentence the content claim is silence.
 2. **A neighbouring proposition is not the same proposition.** A half is stated only when a source sentence asserts the same subject with the same predicate. «resistance form is an essential element in preparation design» and «resistance form عمدتاً در مرحلهٔ تراش تعیین می‌شود، نه در لابراتوار» share a subject and differ in predicate (importance against where it is determined), so the second is silence against the first, not a partial match.
 
 #### F2-i — The five alterations. Nothing else is `ALTERED`.
@@ -691,13 +691,15 @@ If none of the five fits and the direction agrees, the verdict is `MATCHES`. If 
 
 The two hedge kinds fire only when the claim and the source state the **same proposition about the same finding** and differ in the epistemic qualifier alone. A hedge is a word that weakens how sure the statement is. The list is closed:
 
-- English: *may*, *might*, *could*, *possibly*, *appears to*, *seems to*, *suggests*, *tended to*, *within the limitations of*, *should be considered*, *likely*
+- English: *may*, *might*, *could*, *possibly*, *appears to*, *seems to*, *suggests*, *tended to*, *within the limitations of*, *should be considered*, *likely*. **«can» is not on the list**: *blow-drying can reduce scanning errors* reports a capability the study observed, and «خشک‌کردن خطا را کاهش می‌دهد» repeats it faithfully
 - Persian: شاید · احتمالاً · ممکن است · به نظر می‌رسد · می‌تواند (when it means *may*) · در حد پیشنهاد · احتمالِ · تا حدی
 
 Two things are NOT a hedge difference, and two runs of the same text split on exactly this before the rule was written:
 
 1. **A hedged generalization from a stated finding is `MATCHES`.** The source reports that three systems differed significantly; the text says «هر موتور طراحی می‌تواند رفتار متفاوتی داشته باشد». That is a wider sentence than the finding, and the «می‌تواند» is what keeps it faithful: it claims a possibility the finding demonstrates, not a rule the finding does not. Rating this `HEDGE_ADDED` would penalize the text for being careful. The same generalization **without** the hedge («هر موتور طراحی رفتار متفاوتی دارد») is `ALTERED` with `POPULATION_OR_CONDITION_CHANGED`, because it now applies the finding to every engine when three were tested.
 2. **A statement that merely restates an observed result in the past tense — «داشتند», «نشان داد», «بود» — carries no hedge and needs none**; it is compared on direction, magnitude, population and comparator only.
+
+**A source that says the same thing twice, once hedged and once not, has not hedged it.** `HEDGE_REMOVED` fires only when **no** sentence of `source_text` states the claim's proposition without a hedge. If the conclusion hedges («may lead to an increased index of dental caries») but another sentence states the same proposition plainly, the unhedged claim matches that plain sentence, and `source_quote` is the plain one (the order filters of F2 apply among the plain sentences only). Whether the two sentences really state the same proposition is the F2 same-subject-same-predicate test: «exhibit an elevated risk of dental caries» is a statement about risk, not about cause, and does not make «دیابت پوسیدگی را می‌سازد» plain.
 
 So the test for `HEDGE_ADDED` is: strip the qualifier, and the claim is the source's own finding, not wider and not narrower — and the source states that finding without a qualifier. The test for `HEDGE_REMOVED` is the mirror: the source's sentence carries a word from the list, and the claim states the same proposition without one.
 
