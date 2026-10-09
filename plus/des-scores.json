@@ -13085,7 +13085,7 @@
     ]
   },
   "sharehub/share-18": {
-    "scored_at": "2026-08-24",
+    "scored_at": "2026-10-09",
     "sources": [
       {
         "des_version": "2.4",
@@ -13569,6 +13569,695 @@
         "provisional": false,
         "fact_fa": "این مطالعه‌ی آزمایشگاهی، از روی متن کامل مقاله (موجود در کتابخانه‌ی دنت‌کست)، اثر فرول تراش بر مقاومت شکست اندوکراون مولر را با ابزار QUIN سنجید و در پرسش نوع متریال امتیاز ۲۶ از ۱۰۰، باند D گرفت.",
         "interpretation_fa": "نبود بلایندینگ ارزیاب و توجیه حجم نمونه امتیاز روش‌شناسی را پایین آورده، هرچند تصادفی‌سازی و آنالیز آماری به‌خوبی گزارش شده‌اند. یافته‌ی اصلی، یعنی بار شکست بالاتر با فرول ولی بدون تفاوت در تنش محاسبه‌شده بر واحد سطح، در همین سطح شواهد قابل استناد است."
+      }
+    ],
+    "fidelity": [
+      {
+        "des_version": "2.9",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u56",
+            "claim_quote": "در مطالعه‌ی Saker، گروه فرول یعنی شولدر ۱ میلی‌متری محیطی در برابر butt joint.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Group N received no ferrule preparation, and Group\nF1 had 1 mm circumferential ferrule preparation with a shoulder finish line (Figure 1).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u100",
+            "claim_quote": "Saker و همکاران برای توضیح اینکه چرا در مطالعه‌شان گروه بدون فرول قوی‌تر بود، می‌نویسند وقتی برای فرول شولدر می‌تراشید، آن سطح صاف و پهنی که نیروی جویدن مستقیم روی آن می‌نشیند کوچک‌تر می‌شود، چون بخشی از آن صرف ساخت شولدر شده.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Although the pulpal extension depth exhibited a direct correlation to the fracture resistance, utilizing a 1 mm axial ferrule reduced the resistance to fracture of the endocrowns;\nthis could be attributed to the fact that the ferrule design reduced tooth structure and\n\n\fMaterials 2024, 17, 1411\n\n10 of 14\n\nremoved a substantial part of the outer circumferential conventional occlusal table of the\nendocrowns, leading to reduction in the resistance against the compressive loads exerted\nperpendicular to the occlusal table and parallel to the long axis of the tooth.",
+            "source_ref": null,
+            "note": "Authors' explanation reported as such; source hedges it (could be attributed), the unit states what the authors write, not a certainty."
+          },
+          {
+            "id": "u101",
+            "claim_quote": "سطح کمتر یعنی پخش‌شدن ضعیف‌تر نیروی عمودی، و احتمالاً همین مقاومت را پایین می‌آورد.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author explanation with possibility hedge (احتمالاً)"
+          },
+          {
+            "id": "u117",
+            "claim_quote": "در مطالعه‌ی Saker، طرح فرول‌دار (شولدر ۱ میلی‌متری) عدم تطابق بیشتری با دندان نشان داد نسبت به طرح بدون فرول (butt joint).",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Increasing the\ndepth of the pulpal inlay and incorporating the ferrule design led to decreased accuracy of\nthe restorations’ fit.",
+            "source_ref": null,
+            "note": "Source: significantly higher gap with ferrule at marginal, cervical and internal surfaces, not at axial and pulpal; unit does not name surfaces."
+          },
+          {
+            "id": "u118",
+            "claim_quote": "اما این بدتر شدن انطباق در همه‌جای رستوریشن پخش نشده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, it was not statistically significant at the axial\nand pulpal surfaces, p = 0.323 and 0. 341, respectively.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u119",
+            "claim_quote": "تفاوت معنی‌دار فقط در دو ناحیه از چهار ناحیه‌ای که اندازه گرفته شد دیده شد: خود لبه‌ی رستوریشن، و نوار سرویکال بلافاصله بالای آن.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, it was not statistically significant at the axial\nand pulpal surfaces, p = 0.323 and 0. 341, respectively.",
+            "source_ref": null,
+            "note": "The source reports significantly higher gaps at the marginal and cervical surfaces (also the pooled internal value) and no significant difference at the axial and pulpal surfaces, matching the claim's two of four areas; the internal value is a composite, not a fourth area."
+          },
+          {
+            "id": "u120",
+            "claim_quote": "روی دیواره‌های اگزیال و کف پالپ، طرح فرول‌دار و طرح butt joint تفاوت معنی‌داری با هم نداشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, it was not statistically significant at the axial\nand pulpal surfaces, p = 0.323 and 0. 341, respectively.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u149",
+            "claim_quote": "Saker (۲۰۲۴)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation label"
+          },
+          {
+            "id": "u183",
+            "claim_quote": "Saker (۲۰۲۴)، نتیجه‌ی معکوس.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "label with no finding of its own; the finding is in the next unit"
+          },
+          {
+            "id": "u184",
+            "claim_quote": "این مطالعه اندوکراون‌های با شولدر ۱ میلی‌متری را با طرح butt joint مقایسه کرد و نتیجه‌ی برعکس گرفت: گروه‌های بدون فرول در همه‌ی حالت‌ها مقاومت بالاتری داشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The\nresults of this study revealed that endocrowns without ferrule exhibited superior fracture strength\nthan a 1 mm ferrule design p < 0.05, irrespective of the inlay depth.",
+            "source_ref": null,
+            "note": "The contrast with other work implied by «برعکس» names no other source and is not scored."
+          },
+          {
+            "id": "u308",
+            "claim_quote": "در Saker، شایع‌ترین الگو در همه‌ی گروه‌ها شکستگی زیر CEJ و غیرقابل ترمیم بود، و هر چه اکستنشن عمیق‌تر می‌شد این وضع بدتر می‌شد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Unfavorable fracture was the most common mode of failure among\nall the tested groups, Figure 5.",
+            "source_ref": null,
+            "note": "Chi-squared found no significant difference between groups in failure modes (noted); descriptive trend 70% at 2 mm vs almost universal at 3 and 4 mm is stated."
+          }
+        ],
+        "counts": {
+          "matches": 8,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 0,
+          "not_assessable": 0,
+          "author_view": 1,
+          "not_a_claim": 2
+        },
+        "assessable": 8,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "However, all designs exhibited clinically acceptable marginal, cervical, and axial gaps.",
+        "fact_fa": "از ۸ ادعایی که منبع به آن پرداخته‌اند، ۸ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "2.9",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u57",
+            "claim_quote": "در Stoilov، گروه فرول یعنی شولدر ۲ میلی‌متری در برابر butt joint نود درجه.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A 2\nmm wide shoulder finish line with the respective ferrule design is clearly visible.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u58",
+            "claim_quote": "در Bamajboor و Dudley هم گروه فرول یعنی تراش اگزیال اضافی با finish line شولدر (بر اساس چکیده).",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "گروه فرول در Bamajboor و Dudley در این منبع نیامده است؛ ادعا درباره‌ی منابع دیگر است."
+          },
+          {
+            "id": "u112",
+            "claim_quote": "مشاهده‌ی Stoilov تفسیر دوم را تقویت می‌کند.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost: جمله فقط به واحدهای بعدی اشاره می‌کند و یافته‌ی مستقل ندارد"
+          },
+          {
+            "id": "u113",
+            "claim_quote": "در نمونه‌های فرول‌دار، هرجا شکستگی رخ داد، ناحیه‌ی مارجینال اندوکراون همیشه درگیر بود، برخلاف طرح کلاسیک.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Furthermore, it\nwas observed that the marginal area of the endocrowns with ferrule design was consistently\ninvolved in the fracture of the samples.",
+            "source_ref": null,
+            "note": "جمله‌ی بعدی منبع («This, in contrast to the classic design, appears to be a potential weak point…») تضاد با طرح کلاسیک را می‌گوید."
+          },
+          {
+            "id": "u114",
+            "claim_quote": "یعنی احتمالاً خود لبه‌ی نازک، نقطه‌ی ضعف شده بود.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "AUTHOR_VIEW (c): توضیح نویسنده برای یافته با قید احتمالاً"
+          },
+          {
+            "id": "u115",
+            "claim_quote": "به همین دلیل نویسندگان توصیه می‌کنند اگر فرول می‌گذارید، شولدر را حداقل ۲ میلی‌متر پهن بگیرید تا سرامیک در لبه ضخامت کافی داشته باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Therefore, the authors recommend always ensuring at least a 2 mm shoulder finish line\nto maintain sufficient thickness of the crown margin when employing endocrowns with\nferrule design.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u143",
+            "claim_quote": "Stoilov (۲۰۲۴)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation label only"
+          },
+          {
+            "id": "u173",
+            "claim_quote": "Stoilov (۲۰۲۴)، تنها مطالعه‌ای که واقعاً دوام را سنجیده.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "ادعای انحصار نسبت به مطالعات دیگر (رابطه‌ی بین منابع)؛ منبع فقط می‌گوید خودش اولین مطالعه با روش step-stress روی اندوکراون زیرکونیا است."
+          },
+          {
+            "id": "u174",
+            "claim_quote": "این مطالعه اندوکراون‌های زیرکونیا را با و بدون فرول ۲ میلی‌متری مقایسه کرد، اما با یک تفاوت مهم: به جای اینکه نیرو را یک‌باره زیاد کند تا نمونه بشکند، هزاران سیکل جویدن شبیه‌سازی‌شده اعمال کرد و بار را پله‌پله بالا برد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The applied loading force was incrementally raised in\nincrements of 100 N per step, reaching a maximum of 1500 N, over the course of 150,000 cycles.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u175",
+            "claim_quote": "این به رفتار واقعی دهان نزدیک‌تر است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "To examine reliability over time in function more\neffectively, earlier studies employed staircase or step-stress methods [36,58].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u306",
+            "claim_quote": "Stoilov هم توضیح می‌دهد چرا این نوع تست ناکافی است: سرامیک ترد است و در دهان معمولاً با یک ضربه‌ی بزرگ نمی‌شکند، بلکه با انباشت کرک‌های ریز در طول ماه‌ها و سال‌ها می‌شکند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Consequently, fatigue\nemerges as the principal mechanism for the clinical failure of ceramics [38], given the\nanticipation of gradual crack propagation in oral environments [39].",
+            "source_ref": null,
+            "note": "بخش «ماه‌ها و سال‌ها» در منبع عددی ندارد و فقط ذکر شده است."
+          },
+          {
+            "id": "u312",
+            "claim_quote": "در Stoilov اکثر شکستگی‌ها قابل ترمیم بودند، و نویسندگان این را به تراش محافظه‌کارانه و نبود پست نسبت می‌دهند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Of the total nine fractured samples, only three teeth were no longer restorable and\nwould have required extraction in a clinical setting.",
+            "source_ref": null,
+            "note": "نسبت دادن به تراش حداقلی و نبود حفاری پست در جمله‌ی «This can be attributed…» منبع هم آمده است."
+          },
+          {
+            "id": "u313",
+            "claim_quote": "هر چه عاج بیشتری نگه دارید، احتمال اینکه بعد از شکست رستوریشن بتوانید دندان را نجات دهید بیشتر است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Therefore, remaining dentin thickness is a crucial factor for the survival of\npost-endodontically treated teeth (especially for the tooth itself after endocrown failure).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u337",
+            "claim_quote": "Stoilov صریحاً هشدار می‌دهد که این کار دندان را ضعیف‌تر می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, the preparation of the ferrule involves additional substance removal, weakening\nthe tooth and possibly making it more prone to fractures.",
+            "source_ref": null,
+            "note": "«این کار» به تراش فرول خوانده شد."
+          },
+          {
+            "id": "u339",
+            "claim_quote": "اما اگر انجامش می‌دهید، به دو بعد جداگانه توجه کنید که Stoilov آن‌ها را از هم تفکیک می‌کند.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost: announces the following units"
+          },
+          {
+            "id": "u340",
+            "claim_quote": "پهنای شولدر را حداقل ۲ میلی‌متر بگیرید تا لبه‌ی سرامیک ضخامت کافی داشته باشد و خودش نقطه‌ی ضعف نشود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Therefore, the authors recommend always ensuring at least a 2 mm shoulder finish line\nto maintain sufficient thickness of the crown margin when employing endocrowns with\nferrule design.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u341",
+            "claim_quote": "ارتفاع فرول را کم نگه دارید؛ توصیه‌ی خود Stoilov حدود ۱ میلی‌متر است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In accordance\nwith Einhorn et al. [29] a ferrule design with a height of 1 mm should be accomplished.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u342",
+            "claim_quote": "این دو با هم تعارض ندارند: یکی درباره‌ی ضخامت متریال در مارجین است و دیگری درباره‌ی مقدار عاجی که می‌تراشید.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "رابطه‌ی بین دو توصیه را منبع بیان نمی‌کند"
+          },
+          {
+            "id": "u344",
+            "claim_quote": "هم Stoilov و هم بقیه‌ی منابع همین را توصیه می‌کنند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "ادعای توافق بین منابع؛ در تماس تک‌منبعی قابل سنجش نیست"
+          }
+        ],
+        "counts": {
+          "matches": 11,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 4,
+          "not_assessable": 0,
+          "author_view": 1,
+          "not_a_claim": 3
+        },
+        "assessable": 11,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "Marginal integrity or infiltration should also be investigated in this context.",
+        "fact_fa": "از ۱۱ ادعایی که منبع به آن پرداخته‌اند، ۱۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۴ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "2.9",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u70",
+            "claim_quote": "مرور Fraga هم دقیقاً همین را به عنوان ضعف مطالعات ثبت کرده: برخی از مقالات به‌طور کامل ننوشته‌اند فرولشان چه ارتفاع و چه ضخامتی داشته، یا چه نوع finish line استفاده کرده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In Domain 2,\n'Bias in sample/specimen,' some studies did not provide adequate details on sample preparation,\nsuch as the type of finishing line and a complete description of the ferrule characteristics (height and\nthickness).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u154",
+            "claim_quote": "Fraga (۲۰۲۵)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation label only"
+          },
+          {
+            "id": "u198",
+            "claim_quote": "متارگرسیون Fraga (۲۰۲۵).",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "label only"
+          },
+          {
+            "id": "u199",
+            "claim_quote": "اول توضیح خود روش، چون کمتر شناخته‌شده است.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "announces what follows"
+          },
+          {
+            "id": "u200",
+            "claim_quote": "یک مرور سیستماتیک معمولی نتیجه‌ی هر مطالعه را کنار هم می‌گذارد و می‌گوید بعضی موافق و بعضی مخالف بودند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "general description of ordinary systematic reviews; source does not state it"
+          },
+          {
+            "id": "u201",
+            "claim_quote": "مشکل اینجاست که این مطالعات در ده‌ها چیز با هم فرق دارند: نوع سمان، زاویه‌ی نیرو، متریال، نوع دندان.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The indirect restorations were\nluted using conventional resin cement in 16 studies (15,18–23,25,27–29,31,33,35,37,38), selfadhesive resin cement in 4 studies (17,24,36,39), resin composite in 4 studies (16,26,30,34), and\nconventional resin cement for core in one study (32).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u202",
+            "claim_quote": "پس وقتی نتایج متناقض می‌شوند، معلوم نیست تقصیر کدام متغیر است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Although these reviews suggest that endocrowns exhibit comparable or\neven superior biomechanical performance to conventional crown restorations, they consistently\nhighlight the considerable heterogeneity among included studies as a significant limitation, hindering\nthe interpretation of the results.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u208",
+            "claim_quote": "اول یک نکته‌ی مهم درباره‌ی دامنه‌ی این مطالعه: Fraga فقط رستوریشن‌های باند شونده را بررسی نکرده.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This systematic review and meta-regression analysis compared the load-tofracture of endodontically treated teeth restored with endocrown and postand-crown restorations, identifying factors influencing their mechanical\nbehavior.",
+            "source_ref": null,
+            "note": "framing opener; scope claim judged"
+          },
+          {
+            "id": "u209",
+            "claim_quote": "مطالعاتی را وارد کرده که در آن‌ها اندوکراون با پست و کراون مقایسه شده بود، یعنی هر دو نوع رستوریشن در یک مدل کنار هم هستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This systematic review and meta-regression analysis compared the load-tofracture of endodontically treated teeth restored with endocrown and postand-crown restorations, identifying factors influencing their mechanical\nbehavior.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u210",
+            "claim_quote": "متغیر فرول هم در هر دو گروه کدگذاری شده.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Extracted data included type of restoration (endocrown or postand-crown), tooth type, presence of ferrule, finishing line, post material, material of the restoration,\nluting agent, presence of aging (thermocycling, mechanical cycling, or thermomechanical cycling),\nangle and speed of load application, the mean and standard deviation of the load-to-fracture test,\nbesides the year of publication, and sample size.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u211",
+            "claim_quote": "پس وقتی می‌گوییم فرول اثر معنی‌داری نداشت، این نتیجه از مجموعه‌ای می‌آید که هم اندوکراون دارد و هم پست و کراون.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Similarly, the presence of a ferrule did not\nsignificantly influence the load-to-fracture (p > 0.05).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u223",
+            "claim_quote": "اما متارگرسیون Fraga که مطالعات قدامی را هم شامل می‌شد، نشان داد نوع دندان اثر معنی‌داری ندارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The\ntype of teeth, ferrule presence, and restoration material did not significantly\ninfluence the outcomes, whereas luting material and load application angle\nwere critical determinants of load-to-fracture performance.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u224",
+            "claim_quote": "در عوض، زاویه‌ی نیرو، در کنار نوع سمان، عامل تعیین‌کننده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The\ntype of teeth, ferrule presence, and restoration material did not significantly\ninfluence the outcomes, whereas luting material and load application angle\nwere critical determinants of load-to-fracture performance.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u244",
+            "claim_quote": "Fraga می‌گوید نوع دندان مهم نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The\ntype of teeth, ferrule presence, and restoration material did not significantly\ninfluence the outcomes, whereas luting material and load application angle\nwere critical determinants of load-to-fracture performance.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u245",
+            "claim_quote": "هر دو می‌توانند درست باشند: دندان قدامی احتمالاً به خاطر قدامی بودنش خاص نیست، به خاطر برداری که غالباً رویش می‌نشیند خاص است.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "explanation with possibility hedge (احتمالاً)"
+          },
+          {
+            "id": "u246",
+            "claim_quote": "مکانیزم زیرین در هر دو یکی است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "relation between two sources/mechanism; source silent"
+          },
+          {
+            "id": "u268",
+            "claim_quote": "همان متاآنالیزی که Fraga به آن ارجاع می‌دهد، اثر مثبت فرول را فقط در پره‌مولرها پیدا کرد و در مولرها و دندان‌های قدامی تفاوت معنی‌داری ندید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Furthermore, Skupien et al. (41) observed that while ferrules\nimproved clinical survival in premolars, no statistically significant differences in survival were found\nin molars and anterior teeth with or without a ferrule.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u269",
+            "claim_quote": "یعنی حتی در بستر کلاسیک هم فرول یک قانون جهان‌شمول نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Furthermore, Skupien et al. (41) observed that while ferrules\nimproved clinical survival in premolars, no statistically significant differences in survival were found\nin molars and anterior teeth with or without a ferrule.",
+            "source_ref": null,
+            "note": "inference restating the finding"
+          }
+        ],
+        "counts": {
+          "matches": 12,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 2,
+          "not_assessable": 0,
+          "author_view": 1,
+          "not_a_claim": 3
+        },
+        "assessable": 12,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "Proper selection of cementation technique appears essential to ensure optimal mechanical performance in these restorative approaches.",
+        "fact_fa": "از ۱۲ ادعایی که منبع به آن پرداخته‌اند، ۱۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۲ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "2.9",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u127",
+            "claim_quote": "مرور Mostafavi هم به همین نتیجه می‌رسد: اضافه کردن فیچر به تراش، عدم تطابق مارجینال را بیشتر می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Conclusion: Marginal discrepancy of endocrowns is intensified with adding\npreparation features, higher cavity depth and increasing the divergence.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u189",
+            "claim_quote": "مرور سیستماتیک Mostafavi (۲۰۲۲).",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "title/citation label only"
+          },
+          {
+            "id": "u190",
+            "claim_quote": "این مرور مطالعات آزمایشگاهی روی طرح تراش اندوکراون را جمع کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "All included studies were in vitro.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u191",
+            "claim_quote": "نکته‌ی اول این است که نتوانست نتایج را عددی با هم ترکیب کند، چون طرح‌های تراش و روش‌های ارزیابی آنقدر با هم فرق داشتند که قابل جمع‌کردن نبودند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Meta-analysis could not\nbe done due to heterogeneity of preparation designs and evaluation methods.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u192",
+            "claim_quote": "همین خودش یک یافته است.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost: points at the previous sentence, states no finding of its own"
+          },
+          {
+            "id": "u290",
+            "claim_quote": "مرور Mostafavi اشاره می‌کند دندان اندو شده برای رستوریشن ادهزیو به دیواره‌هایی با ضخامت بیش از ۳ میلی‌متر نیاز دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "One of the factors affecting occlusal\nreduction is thickness of remaining axial walls,\nas endodontically treated teeth need more\nthan 3 mm thickness of walls for adhesive\nrestorations.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u291",
+            "claim_quote": "یعنی سؤال واقعی در اورلی «فرول بله یا نه» نیست، «این دیواره ضخیم هست یا باید پوشانده شود» است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "inference: the source does not frame the question as wall thickness versus ferrule"
+          },
+          {
+            "id": "u293",
+            "claim_quote": "یک نکته‌ی کمتر گفته‌شده: مطالعه‌ای که در مرور Mostafavi آمده، اورلی تخت بدون هیچ اکستنشن داخل چمبر را با اندوکراون‌های عمیق‌تر و کراون کلاسیک مقایسه کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "1) Flat\noverlays with\nno endocore\n2) 2mm\nextension\n3) 4mm\nextension\n4) control\ngroup: fiber\npost-crown",
+            "source_ref": null,
+            "note": "importance framing («کمتر گفته‌شده») not judged; the comparison groups are stated in Table 2"
+          },
+          {
+            "id": "u294",
+            "claim_quote": "اندوکراون‌ها به خوبی کراون کلاسیک عمل کردند، اما نویسندگان اورلی تختی که فقط با باند نگه داشته می‌شود و هیچ گیر هندسی ندارد را توصیه نکردند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Endocrowns with 2mm\nand 4mm long endocores showed identical\nmarginal integrity and\nfatigue resistance to\nclassical crowns.",
+            "source_ref": null,
+            "note": "second half (authors discouraged flat overlays with only adhesive retention) also stated in the same table cell"
+          },
+          {
+            "id": "u295",
+            "claim_quote": "مطالعه‌ی دیگری هم نشان داد اورلی بدون اکستنشن مقاومت پایین‌تری از اندوکراون دارد، هرچند این تفاوت به حد معنی‌داری نرسید.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "no other study of flat overlay without extension versus endocrown with a non-significant difference is stated"
+          },
+          {
+            "id": "u305",
+            "claim_quote": "مرور Mostafavi صریحاً نتیجه می‌گیرد که وقتی هر دو طرح از این آستانه عبور می‌کنند، تراش اضافه فقط برای بالا بردن عدد مقاومت توجیهی ندارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "2) Fracture resistance of standard and\nmodified endocrowns in terms of preparation\ndesign is beyond the normal masticatory force\nrange, therefore excessive preparation (more\nocclusal reduction and cavity depth) in order\nto increase the fracture resistance is not\nrecommended.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u309",
+            "claim_quote": "مرور Mostafavi هم به همین می‌رسد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "agreement with an unnamed antecedent; nothing in this unit to compare"
+          },
+          {
+            "id": "u310",
+            "claim_quote": "یعنی یک اندوکراون ممکن است عدد مقاومت خوبی بدهد ولی وقتی بشکند، دندان را با خودش ببرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Also, the type of fracture in\nstandard and modified endocrowns is severe\nand non-repairable.",
+            "source_ref": null,
+            "note": "hedged possibility («ممکن است») following a plainly stated finding"
+          }
+        ],
+        "counts": {
+          "matches": 8,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 3,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 2
+        },
+        "assessable": 8,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "3) Marginal discrepancy of endocrowns is increased with adding preparation features, more cavity depth and increasing the divergence, so it is suggested to maintain the preparation as simple as cavity configuration lead.",
+        "fact_fa": "از ۸ ادعایی که منبع به آن پرداخته‌اند، ۸ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۳ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "2.9",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u138",
+            "claim_quote": "Einhorn (۲۰۱۹)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation label only"
+          },
+          {
+            "id": "u160",
+            "claim_quote": "Einhorn (۲۰۱۹)، مقاله‌ی مرجع طرفدار فرول (در بار شکست).",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Calculated failure stress found no difference in failure resistance among the\nthree groups; however, failure load results identified that the endocrown preparations\nwithout ferrule had significantly lower fracture load resistance.",
+            "source_ref": null,
+            "note": "The 2019 year is citation metadata, not a claim about the finding."
+          }
+        ],
+        "counts": {
+          "matches": 1,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 0,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 1
+        },
+        "assessable": 1,
+        "fidelity_score": null,
+        "level": "INSUFFICIENT_CLAIMS",
+        "provisional": false,
+        "source_conclusion": "Future studies should further investigate both restoration adaptation to the preparation surface and fatigue studies.",
+        "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق ادعای کافی ندارد.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]
   },

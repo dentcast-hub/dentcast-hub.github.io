@@ -1397,10 +1397,24 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v2.8.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v2.9.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v2.8 is the current spec, and its change from 2.7 is the FIDELITY arithmetic
+**v2.9 is the current spec, and its change from 2.8 is four FIDELITY verdict
+rules, plus the way the FIDELITY call is run (Part 2c).** No SOURCE score
+moves. A ranking («قوی‌ترین», «مطمئن‌ترین», «بیشتر از») is one claim wherever
+it appears; a relation between sources («تنها مطالعه‌ای که…», «هم X و هم
+بقیه…», «تعارض ندارند») is silence in a one-source call; one governing
+sentence decides the verdict, the `change_kind` and the quote, and a faithful
+sentence must carry the claim's modifiers too; and an absolute word the source
+does not use («فقط», «همیشه», «هرگز», «همه‌ی»…) is `HEDGE_REMOVED`, never
+silence (founder, 1405/07/17). `sharehub/share-18` is why: two v2.8 runs over
+the same five full texts agreed on 57 of 61 units, and three Sonnet rounds
+under the v2.9 drafts took one source from 16/19 to 18/19 identical units with
+the flagged sentences identical from round 2 on. A 2.8 record is re-run, never
+re-labelled.
+
+**v2.8's change from 2.7 is the FIDELITY arithmetic
 only: F4 scores the claims the source ADDRESSES** (`MATCHES` + `ALTERED` +
 `REVERSED`). A sentence the source is silent about (`NOT_IN_SOURCE`) is counted
 and shown, never scored — under a full text it is almost always the author's own
@@ -1605,6 +1619,40 @@ were taken out of the model's hands for exactly that reason.
 **The output** is the spec's F5 object. Validate it in Part 3(5), then store it
 in Part 4.
 
+#### Part 2c — How the FIDELITY call is run: Sonnet, three looks at what is flagged, majority vote (v2.9)
+
+The FIDELITY call is an independent agent per input block, **on Sonnet**,
+reading `.dentcast/des-v2.9-knowledge.md` (the spec minus its appendix) as its
+instruction and the block as its user turn. Never Opus for one run and Sonnet
+for another inside one record: the model is part of the measurement, and the
+v2.9 precision rounds measured Sonnet. Every record is built the same way:
+
+1. **One full run per input block** — save it as `<dir>/out-src<k>-1.json`.
+2. **Two confirming runs over the units run 1 flagged** (`ALTERED`/`REVERSED`)
+   — build blocks holding only those units with
+   `--build <dir2> --only u114,u338,…` (same text, same basis; the tool keeps
+   the units' own ids), run each twice, save as `out-src<k>-2.json` and
+   `-3.json` in the first directory. No flagged unit → no confirming runs.
+3. **Vote**: `python3 tools/des_fidelity_units.py <content_id> --vote <dir>`
+   writes `voted-src<k>.json`. Per unit, the `(verdict, change_kind)` that at
+   least two runs agree on wins, its quote and note taken from the earliest
+   run in that majority; a unit only run 1 judged keeps run 1's answer; counts,
+   score, level, `fact_fa` and `interpretation_fa` are recomputed by the tool.
+4. **Adjudicate only a unit with no majority** (three different answers): the
+   session's own model reads that unit, the three answers and the source
+   sentences each run quoted, decides by the spec, and writes the claim fields
+   into `<dir>/adjudicate.json` (`{"src<k>": {"u…": {verdict, change_kind,
+   source_quote, note}}}`); re-run `--vote`, which exits non-zero while any unit
+   is still open. The adjudicator never re-reads the whole paper and never
+   overrides a majority.
+
+`voted-src<k>.json` is what Part 3 validates and Part 4 stores — one object per
+source, the spec's own shape. What this buys and what it does not: a flagged
+sentence, which is what the founder is shown and the reader sees, has been
+looked at three times; a sentence run 1 called `MATCHES` has been looked at
+once. `--vote` is for SOURCE scope; a POOLED page is not voted yet (it
+runs one call per part and `--merge`, as before).
+
 #### Part 3 — Validate the output mechanically (the appendix's contract)
 
 The prompt returns a single raw JSON object. Before anything is stored, run the
@@ -1695,12 +1743,19 @@ never a «بله» to the others.
   sentence also lives on another surface (the lead used for the description,
   the brain `summary`, the Pulse line), that is a **sweep** (Hard Rule 17): every
   surface in the same commit.
-- **Re-run the whole FIDELITY step for the page** — rebuild the units with
-  `tools/des_fidelity_units.py` (sentence boundaries may have moved, so ids may
-  shift), run every call again against the **same** `source_text` (spec F0,
-  appendix rule 11), `--merge` if POOLED, and validate again (Part 3). Never
-  patch verdicts by hand and never splice new calls into an old record: the
-  stored object is one coherent run.
+- **Re-check only the edited sentences** (founder, 1405/07/17) — the last
+  full run already judged every other sentence, and judging them again buys
+  nothing but fresh run-to-run noise on sentences nobody touched. Build blocks
+  for the edited units alone (`--build <dir2> --only u…`, same `source_text`,
+  same basis), run them by Part 2c (one run; two confirming runs for any it
+  flags), then
+  `python3 tools/des_fidelity_units.py <content_id> --vote <dir2> --base <dir1>`,
+  where `<dir1>` holds the `voted-src<k>.json` of the last full run. The tool
+  keeps the base verdict for every unit not re-checked, recomputes counts,
+  score, level and the Persian lines, and **refuses** when the edit shifted the
+  page's unit ids (a sentence split or joined), when a changed unit was not
+  re-checked, or when a re-check judged old text — in those cases, and only
+  those, run the full step again. Never patch a verdict by hand.
 - Report the grade **before → after** («تطابق خیلی بالا → کاملاً مطابق»). If the
   new run still flags a sentence — including one just rewritten — offer it
   again; the loop ends when nothing is flagged or the founder says «همین بماند».
