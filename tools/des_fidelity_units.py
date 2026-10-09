@@ -25,7 +25,9 @@ Three modes, decided here and nowhere else:
   * several, some named inline → each unit goes to the source(s) it names, or
     to the one named last earlier in its paragraph (scope SOURCE, one call per
     source that received at least one unit).
-  * several, none named inline → one call against all of them (scope POOLED).
+  * several, none named inline → scope POOLED: one call PER SOURCE (each
+    `input-pooled-S<n>.json`, judged as SOURCE), then `--merge DIR` folds the
+    answers (`out-S<n>.json`) into the one pooled object by spec F6.
 """
 import argparse
 import html
@@ -204,6 +206,11 @@ def text_for(s, texts):
 
 
 def build(content_id, sources, units, mode, plan, texts, outdir):
+    """One input block per CALL. Under POOLED (spec v2.7 F6) that is one
+    block PER SOURCE, each judged alone as scope SOURCE and carrying
+    `pooled_part` («S2») so the caller can merge the answers afterwards
+    (`--merge`) — one model never reads two full papers in one call, which is
+    where the v2.7 precision test lost its verdicts."""
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     by_id = {u["id"]: u for u in units}
@@ -212,29 +219,96 @@ def build(content_id, sources, units, mode, plan, texts, outdir):
     made = []
     for key, ids in plan.items():
         if key == "pooled":
-            blocks, bases, concl = [], [], []
             for n, s in enumerate(sources, 1):
                 if not scorable(s):
                     continue
                 t = text_for(s, texts)
-                blocks.append(f"[S{n}] {t['source_text']}")
-                bases.append(t["text_basis"])
-                concl.append(f"[S{n}] {conclusion_of(t['source_text'], t['text_basis'])}")
-            blk = {"mode": "FIDELITY", "scope": "POOLED", "source_text": "\n\n".join(blocks),
-                   "text_basis": max(bases, key=BASIS_ORDER.index), "units": pub(ids),
-                   "derivative_url": url, "source_conclusion": "\n".join(concl)}
-            name = "pooled"
+                blk = {"mode": "FIDELITY", "scope": "SOURCE", "pooled_part": f"S{n}",
+                       "source_text": t["source_text"], "text_basis": t["text_basis"], "units": pub(ids),
+                       "derivative_url": url,
+                       "source_conclusion": conclusion_of(t["source_text"], t["text_basis"])}
+                p = outdir / f"input-pooled-S{n}.json"
+                p.write_text(json.dumps(blk, ensure_ascii=False, indent=1), encoding="utf-8")
+                made.append(str(p))
         else:
             s = sources[key]
             t = text_for(s, texts)
             blk = {"mode": "FIDELITY", "scope": "SOURCE", "source_text": t["source_text"],
                    "text_basis": t["text_basis"], "units": pub(ids), "derivative_url": url,
                    "source_conclusion": conclusion_of(t["source_text"], t["text_basis"])}
-            name = f"src{key}"
-        p = outdir / f"input-{name}.json"
-        p.write_text(json.dumps(blk, ensure_ascii=False, indent=1), encoding="utf-8")
-        made.append(str(p))
+            p = outdir / f"input-src{key}.json"
+            p.write_text(json.dumps(blk, ensure_ascii=False, indent=1), encoding="utf-8")
+            made.append(str(p))
     return made
+
+
+SILENT = ("NOT_IN_SOURCE", "NOT_ASSESSABLE")
+EXCLUDED = ("NOT_A_CLAIM", "AUTHOR_VIEW")
+
+
+def merge_pooled(parts, basis):
+    """Spec v2.7 F6: fold the per-source answers of a POOLED page into the one
+    pooled object, deterministically. Per unit: MATCHES when any source states
+    it; else ALTERED when any does (the earliest source's kind and quote);
+    else REVERSED when any does; else silence (by the pooled basis); and
+    NOT_A_CLAIM / AUTHOR_VIEW only when EVERY source said so (attribution does
+    not depend on the source, so one call attributing the unit wins — F1's
+    default). `parts` is {"S1": output, "S2": output, …}."""
+    tags = sorted(parts, key=lambda s: int(s[1:]))
+    n_units = len(parts[tags[0]]["claims"])
+    claims = []
+    for i in range(n_units):
+        rows = [(tag, parts[tag]["claims"][i]) for tag in tags]
+        cid = rows[0][1]["id"]
+        assert all(c["id"] == cid for _, c in rows), f"part outputs disagree on unit order at {cid}"
+        base = {"id": cid, "claim_quote": rows[0][1]["claim_quote"]}
+        pick = None
+        for want in ("MATCHES", "ALTERED", "REVERSED"):
+            hit = [(tag, c) for tag, c in rows if c["verdict"] == want]
+            if hit:
+                tag, c = hit[0]
+                pick = {**base, "verdict": want, "change_kind": c.get("change_kind") if want == "ALTERED" else None,
+                        "source_quote": c.get("source_quote", ""), "source_ref": tag}
+                others = [f"{t2}: {c2['verdict']}" for t2, c2 in rows if t2 != tag and c2["verdict"] not in SILENT]
+                note = (c.get("note") or "").strip()
+                if others:
+                    note = (note + "; " if note else "") + "other sources: " + ", ".join(others)
+                if note:
+                    pick["note"] = note
+                break
+        if pick is None:
+            if all(c["verdict"] in EXCLUDED for _, c in rows):
+                v = rows[0][1]["verdict"]
+                pick = {**base, "verdict": v, "change_kind": None, "source_quote": "", "source_ref": None,
+                        "note": rows[0][1].get("note") or v.lower()}
+            else:
+                v = "NOT_IN_SOURCE" if basis == "FULL_TEXT" else "NOT_ASSESSABLE"
+                pick = {**base, "verdict": v, "change_kind": None, "source_quote": "", "source_ref": None,
+                        "note": "no source addresses it: " + ", ".join(f"{t2}: {c2['verdict']}" for t2, c2 in rows)}
+        claims.append(pick)
+    vs = [c["verdict"] for c in claims]
+    counts = {"matches": vs.count("MATCHES"), "altered": vs.count("ALTERED"), "reversed": vs.count("REVERSED"),
+              "not_in_source": vs.count("NOT_IN_SOURCE"), "not_assessable": vs.count("NOT_ASSESSABLE"),
+              "author_view": vs.count("AUTHOR_VIEW"), "not_a_claim": vs.count("NOT_A_CLAIM")}
+    assessable, score, level = vp.des_fidelity_recompute(counts)
+    fa = lambda n: str(n).translate(str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹"))
+    lvl_fa = {"HIGH": "بالا", "MEDIUM": "متوسط", "LOW": "پایین", "INSUFFICIENT_CLAIMS": "ادعای کافی ندارد"}[level]
+    fact = (f"از {fa(assessable)} ادعای قابل‌بررسی، {fa(counts['matches'])} مورد با منابع مطابق است، "
+            f"{fa(counts['altered'])} مورد تغییر یافته و {fa(counts['reversed'])} مورد برعکس؛ سطح انطباق {lvl_fa}.")
+    flagged = [c for c in claims if c["verdict"] in ("ALTERED", "REVERSED")]
+    if not flagged:
+        interp = "هر ادعای قابل‌بررسی با دست‌کم یکی از منابع مطابق است."
+    else:
+        kinds = {"HEDGE_REMOVED": "قاطع‌تر از منبع", "HEDGE_ADDED": "محتاط‌تر از منبع", "MAGNITUDE_CHANGED": "اندازه متفاوت",
+                 "POPULATION_OR_CONDITION_CHANGED": "دامنه گسترده‌تر از منبع", "GROUP_OR_COMPARATOR_CHANGED": "گروه مقایسه متفاوت"}
+        items = [f"«{c['claim_quote'][:50]}…» ({'برعکس' if c['verdict'] == 'REVERSED' else kinds.get(c['change_kind'], 'تغییریافته')})"
+                 for c in flagged[:6]]
+        interp = "موارد تغییریافته یا برعکس: " + "؛ ".join(items) + ("." if len(flagged) <= 6 else f"؛ و {fa(len(flagged) - 6)} مورد دیگر.")
+    concl = "\n".join(f"[{tag}] {parts[tag].get('source_conclusion', '')}" for tag in tags)
+    return {"des_version": parts[tags[0]].get("des_version", "2.7"), "mode": "FIDELITY", "scope": "POOLED",
+            "text_basis": basis, "claims": claims, "counts": counts, "assessable": assessable,
+            "fidelity_score": score, "level": level, "provisional": basis != "FULL_TEXT",
+            "source_conclusion": concl, "fact_fa": fact, "interpretation_fa": interp}
 
 
 def main():
@@ -243,6 +317,7 @@ def main():
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--texts")
     ap.add_argument("--build")
+    ap.add_argument("--merge", metavar="DIR", help="fold DIR/out-S<n>.json (one per source) into DIR/pooled.json")
     a = ap.parse_args()
     rec = json.loads((ROOT / "plus/des-scores.json").read_text(encoding="utf-8")).get(a.content_id)
     if not rec:
@@ -250,6 +325,19 @@ def main():
     sources = rec["sources"]
     units = split_page(a.content_id, sources)
     mode, plan = assign(units, sources)
+    if a.merge:
+        if mode != "POOLED":
+            sys.exit("--merge is for a POOLED page")
+        d = Path(a.merge)
+        parts = {p.stem[4:]: json.loads(p.read_text(encoding="utf-8")) for p in sorted(d.glob("out-S*.json"))}
+        want = {f"S{n}" for n, s in enumerate(sources, 1) if scorable(s)}
+        if set(parts) != want:
+            sys.exit(f"--merge needs {sorted(want)}, found {sorted(parts)}")
+        bases = [s.get("text_basis") for s in sources if scorable(s)]
+        merged = merge_pooled(parts, max(bases, key=BASIS_ORDER.index))
+        (d / "pooled.json").write_text(json.dumps(merged, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(d / "pooled.json", merged["fidelity_score"], merged["level"])
+        return
     if a.build:
         if not a.texts:
             sys.exit("--build needs --texts")

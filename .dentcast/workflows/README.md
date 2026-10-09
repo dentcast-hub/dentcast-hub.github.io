@@ -1565,13 +1565,18 @@ page was written from it. `--build` exits non-zero when a basis differs from
 the stored SOURCE record (spec v2.7 appendix rule 11).
 The tool decides the scope: one source → every unit to it;
 several named in the prose → one call per named source with only its units;
-several and none named → one `POOLED` call over all of them. Each block it writes
-has this shape:
+several and none named → `POOLED`, which is one ordinary `SOURCE` call **per
+source** (`input-pooled-S<n>.json`, every unit in each, `pooled_part` set) and
+then `python3 tools/des_fidelity_units.py <content_id> --merge <dir>` over the
+answers saved as `out-S<n>.json`, which writes the one pooled object by spec
+F6's fold — the model never reads two papers in one call (v2.7). Each block it
+writes has this shape:
 
 ```
 mode:              FIDELITY
-scope:             SOURCE | POOLED
-source_text:       <exactly the source_text the SOURCE call scored; POOLED: every source, tagged [S1] [S2] …>
+scope:             SOURCE (always; POOLED exists only as the merge's output)
+pooled_part:       <«S<n>» on a POOLED page's per-source blocks, absent otherwise>
+source_text:       <exactly the source_text the SOURCE call scored>
 text_basis:        <exactly the SOURCE call's text_basis>
 units:             <the page's body, split by the rule below, as [{id:"u1", text:"…"}, …]>
 derivative_url:    <the page's canonical URL — provenance only>
