@@ -708,12 +708,22 @@ Two things are NOT a hedge difference, and two runs of the same text split on ex
 
 #### F2-iii — An instruction is judged on the action it gives
 
-A unit that tells the reader what to do — an imperative («بشویید، خشک کنید و مرحله را از نو انجام دهید») or «باید» / «لازم است» with an action — states no degree of certainty about an outcome; it states an action. It is compared with the source in one of two ways, and which one is decided by what the source says about that action:
+A unit that tells the reader what to do states no degree of certainty about an outcome; it states an action. **What is an instruction is decided by grammar alone:** the main verb is an imperative («بشویید، خشک کنید و مرحله را از نو انجام دهید»), or «باید» / «لازم است» / «نباید» governs an action verb («باید دوباره اچ کنید»). Nothing else is. «… کافی است», «… جواب می‌دهد», «… مؤثر است», «… قابل اتکا نیست», «… باند را بازمی‌گرداند» state an **outcome** — that the action works, or how well — however practical they sound, and are compared as outcomes, hedge included («شستشو و خشک کردن کافی است» against «water-spray and reapplication … could revert the impairment» is `ALTERED` / `HEDGE_REMOVED`). It is compared with the source in one of two ways, and which one is decided by what the source says about that action:
 
 1. **The source itself recommends or advises on the action** (*is recommended*, *is advised*, *should*, *may be considered*, *is not recommended*): compare the two recommendations. A recommendation the source hedges («may be considered») stated as an obligation («حتماً باید») is `ALTERED` with `HEDGE_REMOVED`; the opposite recommendation is `REVERSED`; the same strength is `MATCHES`.
 2. **The source only reports the action's effect** (*reapplication could revert the impairment*, *re-etching showed the most promising results*): the instruction `MATCHES` when the reported effect of that action is favourable and is `REVERSED` when it is unfavourable («hemostatic agents … not recommended», an action shown to lower the outcome). There is no hedge to compare, because a source that reports an effect has made no recommendation for the instruction to have strengthened.
 
-A unit that states an **outcome** («این قاعده باند را بازمی‌گرداند») is not an instruction, even when it follows one, and is compared as an outcome — including on its hedge.
+A unit that states an **outcome** («این قاعده باند را بازمی‌گرداند») is not an instruction, even when it follows one, and is compared as an outcome — including on its hedge. A unit that holds both («برای خون، شستشو جوابگو نیست و باید دوباره اچ کنید») is two claims, and F3 gives the one verdict.
+
+#### F2-iv — A claim that tells two conditions apart is judged on the difference
+
+A claim that distinguishes two conditions — before and after a step, saliva and blood, one system and another, one tooth group and another — asserts that the conditions **differ**, and that difference is what is compared:
+
+1. A source that reports the same difference → `MATCHES` (or `ALTERED` / `REVERSED` on how it reports it).
+2. A source that states the effect **explicitly for the condition the claim sets apart**, without the difference → `REVERSED`. «اگر آلودگی خون است، شستشو و ادهزیو مجدد به تنهایی جواب نمی‌دهد» against «water-spray and reapplication of the bonding system could revert the impairment produced by the saliva **or blood** contamination» is `REVERSED`: the source names blood and says the opposite.
+3. A source whose finding names **neither** condition → silence (`NOT_ASSESSABLE`, or `NOT_IN_SOURCE` under `FULL_TEXT`). A general finding about decontamination does not speak to whether it works before curing but not after.
+
+This is the narrowing rule's other half: a claim about ONE subset is judged against the general finding, while a claim that two subsets DIFFER is judged on a difference the general finding cannot show.
 
 So the test for `HEDGE_ADDED` is: strip the qualifier, and the claim is the source's own finding, not wider and not narrower — and the source states that finding without a qualifier. The test for `HEDGE_REMOVED` is the mirror: the source's sentence carries a word from the list, and the claim states the same proposition without one.
 
