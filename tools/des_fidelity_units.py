@@ -373,6 +373,33 @@ def vote_source(runs, adjudicated=None):
     return out, unresolved
 
 
+def rebase(base, runs, page_units, k):
+    """Part 3b re-check: the last full voted object stands for every unit the
+    founder did not edit, and the new runs cover the edited ones only. Refuse
+    unless the page's units for this source are still the base's units, same
+    ids in the same order, each with the same text — except the units the new
+    runs judged, whose text must be the page's current text. An edit that
+    split or joined a sentence shifts ids, and then only a full run is honest."""
+    rechecked = {c["id"] for r in runs for c in r["claims"]}
+    base_ids = [c["id"] for c in base["claims"]]
+    if base_ids != [u["id"] for u in page_units]:
+        sys.exit(f"src{k}: the page's units are no longer the base's (ids shifted) — run the full step again")
+    stale = [u["id"] for u, c in zip(page_units, base["claims"])
+             if u["text"] != c["claim_quote"] and u["id"] not in rechecked]
+    if stale:
+        sys.exit(f"src{k}: {stale} changed on the page but were not re-checked")
+    for r in runs:
+        for c in r["claims"]:
+            cur = next(u["text"] for u in page_units if u["id"] == c["id"])
+            if c["claim_quote"] != cur:
+                sys.exit(f"src{k}: re-check of {c['id']} judged old text")
+    if not runs:
+        return [base]
+    first = {c["id"]: c for c in runs[0]["claims"]}
+    run0 = {**base, "claims": [first.get(c["id"], c) for c in base["claims"]]}
+    return [run0] + runs[1:]
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("content_id")
@@ -382,6 +409,9 @@ def main():
     ap.add_argument("--merge", metavar="DIR", help="fold DIR/out-S<n>.json (one per source) into DIR/pooled.json")
     ap.add_argument("--only", metavar="IDS", help="with --build: keep only these units (comma list), for the "
                     "confirming runs of step 4.13 Part 2c")
+    ap.add_argument("--base", metavar="OLD_DIR", help="with --vote: re-check only. OLD_DIR holds the voted-src<k>.json "
+                    "of the last full run; DIR holds runs over the EDITED units alone (Part 3b). Every other unit "
+                    "must still be on the page with the same id and text, or the tool refuses")
     ap.add_argument("--vote", metavar="DIR", help="majority-vote DIR/out-src<k>-<run>.json (run 1 full, runs 2-3 "
                     "the flagged units) into DIR/voted-src<k>.json; DIR/adjudicate.json "
                     "{\"src<k>\": {uid: claim fields}} settles a unit with no majority")
@@ -410,11 +440,18 @@ def main():
         adj_p = d / "adjudicate.json"
         adj = json.loads(adj_p.read_text(encoding="utf-8")) if adj_p.exists() else {}
         open_units = 0
+        by_id = {u["id"]: u for u in units}
         for k in sorted(plan, key=str):
             if k == "pooled":
                 sys.exit("--vote is per source (scope SOURCE); a POOLED page votes each S<n> part, then --merge")
             runs = [json.loads(p.read_text(encoding="utf-8"))
                     for p in sorted(d.glob(f"out-src{k}-*.json"), key=lambda p: int(p.stem.rsplit("-", 1)[1]))]
+            if a.base:
+                base_p = Path(a.base) / f"voted-src{k}.json"
+                if not base_p.exists():
+                    sys.exit(f"--base: no {base_p}")
+                base = json.loads(base_p.read_text(encoding="utf-8"))
+                runs = rebase(base, runs, [by_id[i] for i in plan[k]], k)
             if not runs:
                 continue
             out, unresolved = vote_source(runs, adj.get(f"src{k}"))

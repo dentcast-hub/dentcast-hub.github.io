@@ -1743,12 +1743,19 @@ never a «بله» to the others.
   sentence also lives on another surface (the lead used for the description,
   the brain `summary`, the Pulse line), that is a **sweep** (Hard Rule 17): every
   surface in the same commit.
-- **Re-run the whole FIDELITY step for the page** — rebuild the units with
-  `tools/des_fidelity_units.py` (sentence boundaries may have moved, so ids may
-  shift), run every call again against the **same** `source_text` (spec F0,
-  appendix rule 11), `--merge` if POOLED, and validate again (Part 3). Never
-  patch verdicts by hand and never splice new calls into an old record: the
-  stored object is one coherent run.
+- **Re-check only the edited sentences** (founder, 1405/07/17) — the last
+  full run already judged every other sentence, and judging them again buys
+  nothing but fresh run-to-run noise on sentences nobody touched. Build blocks
+  for the edited units alone (`--build <dir2> --only u…`, same `source_text`,
+  same basis), run them by Part 2c (one run; two confirming runs for any it
+  flags), then
+  `python3 tools/des_fidelity_units.py <content_id> --vote <dir2> --base <dir1>`,
+  where `<dir1>` holds the `voted-src<k>.json` of the last full run. The tool
+  keeps the base verdict for every unit not re-checked, recomputes counts,
+  score, level and the Persian lines, and **refuses** when the edit shifted the
+  page's unit ids (a sentence split or joined), when a changed unit was not
+  re-checked, or when a re-check judged old text — in those cases, and only
+  those, run the full step again. Never patch a verdict by hand.
 - Report the grade **before → after** («تطابق خیلی بالا → کاملاً مطابق»). If the
   new run still flags a sentence — including one just rewritten — offer it
   again; the loop ends when nothing is flagged or the founder says «همین بماند».
