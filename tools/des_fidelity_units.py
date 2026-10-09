@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DES v2.7 FIDELITY — the caller's half: split a page into units and say
+"""DES v2.9 FIDELITY — the caller's half: split a page into units and say
 which cited source each unit is judged against.
 
 The spec (appendix rules 7 and 10) takes segmentation and attribution out of
@@ -246,6 +246,34 @@ SILENT = ("NOT_IN_SOURCE", "NOT_ASSESSABLE")
 EXCLUDED = ("NOT_A_CLAIM", "AUTHOR_VIEW")
 
 
+def compose_fa(claims, counts, assessable, level, version, pooled):
+    """fact_fa / interpretation_fa composed from a tally the caller built
+    (POOLED merge, majority vote) — never by a model that saw only one run."""
+    fa = lambda n: str(n).translate(str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹"))
+    src_fa = "منابع" if pooled else "منبع"
+    lvl_fa = {"HIGH": "بالا", "MEDIUM": "متوسط", "LOW": "پایین", "INSUFFICIENT_CLAIMS": "ادعای کافی ندارد"}[level]
+    if vp.des_ge(version, (2, 8)):
+        # v2.8 F4: the score is over the claims the sources ADDRESS; a sentence
+        # they are silent about is counted, never called a fault (F5 fact_fa)
+        fact = (f"از {fa(assessable)} ادعایی که {src_fa} به آن پرداخته‌اند، {fa(counts['matches'])} مورد مطابق است، "
+                f"{fa(counts['altered'])} مورد تغییر یافته و {fa(counts['reversed'])} مورد برعکس؛ سطح انطباق {lvl_fa}"
+                + (f"؛ {fa(counts['not_in_source'])} جمله‌ی دیگر در {src_fa} نیامده است." if counts['not_in_source'] else "."))
+    else:
+        fact = (f"از {fa(assessable)} ادعای قابل‌بررسی، {fa(counts['matches'])} مورد با {src_fa} مطابق است، "
+                f"{fa(counts['altered'])} مورد تغییر یافته و {fa(counts['reversed'])} مورد برعکس؛ سطح انطباق {lvl_fa}.")
+    flagged = [c for c in claims if c["verdict"] in ("ALTERED", "REVERSED")]
+    if not flagged:
+        interp = ("هر ادعای قابل‌بررسی با دست‌کم یکی از منابع مطابق است." if pooled
+                  else "هر ادعای قابل‌بررسی با منبع مطابق است.")
+    else:
+        kinds = {"HEDGE_REMOVED": "قاطع‌تر از منبع", "HEDGE_ADDED": "محتاط‌تر از منبع", "MAGNITUDE_CHANGED": "اندازه متفاوت",
+                 "POPULATION_OR_CONDITION_CHANGED": "دامنه گسترده‌تر از منبع", "GROUP_OR_COMPARATOR_CHANGED": "گروه مقایسه متفاوت"}
+        items = [f"«{c['claim_quote'][:50]}…» ({'برعکس' if c['verdict'] == 'REVERSED' else kinds.get(c['change_kind'], 'تغییریافته')})"
+                 for c in flagged[:6]]
+        interp = "موارد تغییریافته یا برعکس: " + "؛ ".join(items) + ("." if len(flagged) <= 6 else f"؛ و {fa(len(flagged) - 6)} مورد دیگر.")
+    return fact, interp
+
+
 def merge_pooled(parts, basis):
     """Spec v2.7 F6: fold the per-source answers of a POOLED page into the one
     pooled object, deterministically. Per unit: MATCHES when any source states
@@ -292,31 +320,57 @@ def merge_pooled(parts, basis):
               "author_view": vs.count("AUTHOR_VIEW"), "not_a_claim": vs.count("NOT_A_CLAIM")}
     version = parts[tags[0]].get("des_version", "2.8")
     assessable, score, level = vp.des_fidelity_recompute(counts, version)
-    fa = lambda n: str(n).translate(str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹"))
-    lvl_fa = {"HIGH": "بالا", "MEDIUM": "متوسط", "LOW": "پایین", "INSUFFICIENT_CLAIMS": "ادعای کافی ندارد"}[level]
-    if vp.des_ge(version, (2, 8)):
-        # v2.8 F4: the score is over the claims the sources ADDRESS; a sentence
-        # they are silent about is counted, never called a fault (F5 fact_fa)
-        fact = (f"از {fa(assessable)} ادعایی که منابع به آن پرداخته‌اند، {fa(counts['matches'])} مورد مطابق است، "
-                f"{fa(counts['altered'])} مورد تغییر یافته و {fa(counts['reversed'])} مورد برعکس؛ سطح انطباق {lvl_fa}"
-                + (f"؛ {fa(counts['not_in_source'])} جمله‌ی دیگر در منابع نیامده است." if counts['not_in_source'] else "."))
-    else:
-        fact = (f"از {fa(assessable)} ادعای قابل‌بررسی، {fa(counts['matches'])} مورد با منابع مطابق است، "
-                f"{fa(counts['altered'])} مورد تغییر یافته و {fa(counts['reversed'])} مورد برعکس؛ سطح انطباق {lvl_fa}.")
-    flagged = [c for c in claims if c["verdict"] in ("ALTERED", "REVERSED")]
-    if not flagged:
-        interp = "هر ادعای قابل‌بررسی با دست‌کم یکی از منابع مطابق است."
-    else:
-        kinds = {"HEDGE_REMOVED": "قاطع‌تر از منبع", "HEDGE_ADDED": "محتاط‌تر از منبع", "MAGNITUDE_CHANGED": "اندازه متفاوت",
-                 "POPULATION_OR_CONDITION_CHANGED": "دامنه گسترده‌تر از منبع", "GROUP_OR_COMPARATOR_CHANGED": "گروه مقایسه متفاوت"}
-        items = [f"«{c['claim_quote'][:50]}…» ({'برعکس' if c['verdict'] == 'REVERSED' else kinds.get(c['change_kind'], 'تغییریافته')})"
-                 for c in flagged[:6]]
-        interp = "موارد تغییریافته یا برعکس: " + "؛ ".join(items) + ("." if len(flagged) <= 6 else f"؛ و {fa(len(flagged) - 6)} مورد دیگر.")
+    fact, interp = compose_fa(claims, counts, assessable, level, version, pooled=True)
     concl = "\n".join(f"[{tag}] {parts[tag].get('source_conclusion', '')}" for tag in tags)
     return {"des_version": version, "mode": "FIDELITY", "scope": "POOLED",
             "text_basis": basis, "claims": claims, "counts": counts, "assessable": assessable,
             "fidelity_score": score, "level": level, "provisional": basis != "FULL_TEXT",
             "source_conclusion": concl, "fact_fa": fact, "interpretation_fa": interp}
+
+FLAGGED = ("ALTERED", "REVERSED")
+
+
+def vote_source(runs, adjudicated=None):
+    """Majority vote over repeated SOURCE-scope runs of ONE source (workflow
+    step 4.13 Part 2c). `runs` is a list of outputs: runs[0] covers every
+    unit; later runs may cover only a subset (the units runs[0] flagged).
+    Per unit, the (verdict, change_kind) pair at least two runs agree on
+    wins and its quote/note come from the earliest run in that majority;
+    a unit only runs[0] judged keeps runs[0]'s answer. A unit with no
+    majority is unresolved until `adjudicated[uid]` supplies the claim
+    object (the adjudicator's decision, Part 2c). Returns (object, unresolved)."""
+    adjudicated = adjudicated or {}
+    base = runs[0]
+    by_run = [{c["id"]: c for c in r["claims"]} for r in runs]
+    claims, unresolved = [], []
+    for c0 in base["claims"]:
+        uid = c0["id"]
+        votes = [(i, br[uid]) for i, br in enumerate(by_run) if uid in br]
+        if uid in adjudicated:
+            pick = {**c0, **adjudicated[uid]}
+        elif len(votes) == 1:
+            pick = c0
+        else:
+            keys = [(c["verdict"], c.get("change_kind")) for _, c in votes]
+            top = max(set(keys), key=lambda k: (keys.count(k), -keys.index(k)))
+            if keys.count(top) * 2 <= len(keys):
+                unresolved.append(uid)
+                pick = c0
+            else:
+                pick = votes[keys.index(top)][1]
+        for c in (pick,):
+            assert c["claim_quote"] == c0["claim_quote"], f"runs disagree on the text of {uid}"
+        claims.append(pick)
+    vs = [c["verdict"] for c in claims]
+    counts = {"matches": vs.count("MATCHES"), "altered": vs.count("ALTERED"), "reversed": vs.count("REVERSED"),
+              "not_in_source": vs.count("NOT_IN_SOURCE"), "not_assessable": vs.count("NOT_ASSESSABLE"),
+              "author_view": vs.count("AUTHOR_VIEW"), "not_a_claim": vs.count("NOT_A_CLAIM")}
+    version = base.get("des_version")
+    assessable, score, level = vp.des_fidelity_recompute(counts, version)
+    fact, interp = compose_fa(claims, counts, assessable, level, version, pooled=False)
+    out = {**base, "claims": claims, "counts": counts, "assessable": assessable,
+           "fidelity_score": score, "level": level, "fact_fa": fact, "interpretation_fa": interp}
+    return out, unresolved
 
 
 def main():
@@ -326,6 +380,11 @@ def main():
     ap.add_argument("--texts")
     ap.add_argument("--build")
     ap.add_argument("--merge", metavar="DIR", help="fold DIR/out-S<n>.json (one per source) into DIR/pooled.json")
+    ap.add_argument("--only", metavar="IDS", help="with --build: keep only these units (comma list), for the "
+                    "confirming runs of step 4.13 Part 2c")
+    ap.add_argument("--vote", metavar="DIR", help="majority-vote DIR/out-src<k>-<run>.json (run 1 full, runs 2-3 "
+                    "the flagged units) into DIR/voted-src<k>.json; DIR/adjudicate.json "
+                    "{\"src<k>\": {uid: claim fields}} settles a unit with no majority")
     a = ap.parse_args()
     rec = json.loads((ROOT / "plus/des-scores.json").read_text(encoding="utf-8")).get(a.content_id)
     if not rec:
@@ -346,10 +405,35 @@ def main():
         (d / "pooled.json").write_text(json.dumps(merged, ensure_ascii=False, indent=1), encoding="utf-8")
         print(d / "pooled.json", merged["fidelity_score"], merged["level"])
         return
+    if a.vote:
+        d = Path(a.vote)
+        adj_p = d / "adjudicate.json"
+        adj = json.loads(adj_p.read_text(encoding="utf-8")) if adj_p.exists() else {}
+        open_units = 0
+        for k in sorted(plan, key=str):
+            if k == "pooled":
+                sys.exit("--vote is per source (scope SOURCE); a POOLED page votes each S<n> part, then --merge")
+            runs = [json.loads(p.read_text(encoding="utf-8"))
+                    for p in sorted(d.glob(f"out-src{k}-*.json"), key=lambda p: int(p.stem.rsplit("-", 1)[1]))]
+            if not runs:
+                continue
+            out, unresolved = vote_source(runs, adj.get(f"src{k}"))
+            (d / f"voted-src{k}.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+            flagged = [c["id"] for c in out["claims"] if c["verdict"] in FLAGGED]
+            print(f"src{k}: {len(runs)} run(s) · {out['fidelity_score']} {out['level']} · "
+                  f"flagged {flagged or '—'} · no majority {unresolved or '—'}")
+            open_units += len(unresolved)
+        if open_units:
+            sys.exit(f"{open_units} unit(s) have no majority — adjudicate them in {adj_p}")
+        return
     if a.build:
         if not a.texts:
             sys.exit("--build needs --texts")
         texts = {k.lower(): v for k, v in json.loads(Path(a.texts).read_text(encoding="utf-8")).items()}
+        if a.only:
+            keep = set(a.only.split(","))
+            plan = {k: [i for i in ids if i in keep] for k, ids in plan.items()}
+            plan = {k: ids for k, ids in plan.items() if ids}
         for p in build(a.content_id, sources, units, mode, plan, texts, a.build):
             print(p)
         return
