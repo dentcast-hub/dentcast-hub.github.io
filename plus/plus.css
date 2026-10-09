@@ -2003,6 +2003,8 @@ html.dcp-touring #mobile-body { overflow: hidden; }
   margin: 5px 0 14px; font-size: .76rem; line-height: 1.8;
   color: var(--dcp-muted);
 }
+/* The chips scroll the card's top under the sticky header (des.js scrollToCard). */
+#dcDesCard { scroll-margin-top: 76px; }
 .dc-des-src + .dc-des-src { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--dcp-line); }
 .dc-des-srctitle { font-size: .82rem; color: var(--dcp-muted); margin-bottom: 8px; line-height: 1.7; }
 .dc-des-head { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; }
