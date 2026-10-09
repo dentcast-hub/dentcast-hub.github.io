@@ -182,6 +182,17 @@ describe('DES fidelity display (spec v2.8)', () => {
     expect(text(row.querySelector('.dc-act-fid'))).toContain('ادعای کافی برای سنجش ندارد');
   });
 
+  it('a chip brings the card\'s TOP into view, never its middle', async () => {
+    const calls: unknown[] = [];
+    const prev = Element.prototype.scrollIntoView;
+    Element.prototype.scrollIntoView = function (o?: unknown) { calls.push(o); };
+    try {
+      const { row } = await mount(SHARE23);
+      (row.querySelector('.dc-act-fid') as HTMLElement).click();
+      expect(calls[0]).toMatchObject({ block: 'start' });
+    } finally { Element.prototype.scrollIntoView = prev; }
+  });
+
   it('the word follows the stored level, refined by the score', async () => {
     const { fidelityWord } = await import('/plus/js/des.js');
     const w = (level: string, score: number | null, a = 0, r = 0) =>

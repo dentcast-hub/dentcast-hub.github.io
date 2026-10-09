@@ -23,7 +23,7 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=180';
+import { el, faNum } from './util.js?v=181';
 
 /* ------------------------------------------------------------ the data -- */
 
@@ -562,6 +562,26 @@ function fidelityChip(rec, fids) {
   ]);
 }
 
+// Bring the card's TOP under the header, not its middle: the card is taller
+// than half a phone screen, so `block: 'center'` left «گفت‌وگو زیر این مطلب»
+// filling the upper half and the card starting below it (founder, 1405/07/17).
+// `scroll-margin-top` on #dcDesCard (plus.css) clears the sticky header. Blocks
+// above the card can still change height while the smooth scroll runs (the
+// conversation block draws lazily), so one correction follows unless the
+// reader has started scrolling by hand.
+function scrollToCard(target) {
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  let moved = false;
+  const stop = () => { moved = true; };
+  ['wheel', 'touchstart', 'keydown'].forEach((t) => window.addEventListener(t, stop, { once: true, passive: true }));
+  setTimeout(() => {
+    ['wheel', 'touchstart', 'keydown'].forEach((t) => window.removeEventListener(t, stop));
+    if (moved || !target.isConnected) return;
+    const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+    if (Math.abs(target.getBoundingClientRect().top - margin) > 24) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 900);
+}
+
 /* -------------------------------------------------------------- mount --- */
 
 /**
@@ -629,7 +649,7 @@ export async function mountDes(row, anchor, contentId) {
         const target = document.getElementById('dcDesCard');
         if (!target) return;
         if (target.classList.contains('has-fid')) selectPane(target, chip.dataset.pane || 'src');
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        scrollToCard(target);
       });
       row.appendChild(chip);
     });
