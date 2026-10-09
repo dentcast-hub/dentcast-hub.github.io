@@ -688,13 +688,15 @@ A claim that the source addresses only partly — one half stated, the other hal
 | `POPULATION_OR_CONDITION_CHANGED` | applies the finding to a population, a material, a loading condition or a setting the source did not test it in, or drops a condition the source attached to it |
 | `GROUP_OR_COMPARATOR_CHANGED` | names a different comparator, group, system or material than the source's for that finding (the source compared against a conventional CAD program; the claim says it compared against an automatic design) |
 
-If none of the five fits and the direction agrees, the verdict is `MATCHES`. If the direction disagrees, it is `REVERSED`, whatever else differs. There is no `OTHER`.
+If none of the five fits and the direction agrees, the verdict is `MATCHES`. If the direction disagrees, it is `REVERSED`, whatever else differs. There is no `OTHER`. When more than one kind fits one claim, `change_kind` is the **first** of them in this table's order.
+
+**Narrowing is not a change.** A claim that applies a finding to a subset of the population, materials or systems the source itself studied («self-etch دومرحله‌ای» under a finding about adhesive systems) is the source's finding, not `POPULATION_OR_CONDITION_CHANGED`. That kind fires when the claim **widens** the scope or **moves** it to something the source did not include.
 
 #### F2-ii — What a hedge is, and what it is not
 
 The two hedge kinds fire only when the claim and the source state the **same proposition about the same finding** and differ in the epistemic qualifier alone. A hedge is a word that weakens how sure the statement is. The list is closed:
 
-- English: *may*, *might*, *could*, *possibly*, *appears to*, *seems to*, *suggests*, *tended to*, *within the limitations of*, *should be considered*, *likely*. **«can» is not on the list**: *blow-drying can reduce scanning errors* reports a capability the study observed, and «خشک‌کردن خطا را کاهش می‌دهد» repeats it faithfully
+- English: *may*, *might*, *could* (always — *could revert* may mean «was able to» or «might», and two readers do not split that the same way, so it counts as a hedge in every sentence), *possibly*, *appears to*, *seems to*, *suggests*, *tended to*, *within the limitations of*, *should be considered*, *likely*. **«can» is not on the list**: *blow-drying can reduce scanning errors* reports a capability the study observed, and «خشک‌کردن خطا را کاهش می‌دهد» repeats it faithfully
 - Persian: شاید · احتمالاً · ممکن است · به نظر می‌رسد · می‌تواند (when it means *may*) · در حد پیشنهاد · احتمالِ · تا حدی
 
 Two things are NOT a hedge difference, and two runs of the same text split on exactly this before the rule was written:
@@ -703,6 +705,15 @@ Two things are NOT a hedge difference, and two runs of the same text split on ex
 2. **A statement that merely restates an observed result in the past tense — «داشتند», «نشان داد», «بود» — carries no hedge and needs none**; it is compared on direction, magnitude, population and comparator only.
 
 **A source that says the same thing twice, once hedged and once not, has not hedged it.** `HEDGE_REMOVED` fires only when **no** sentence of `source_text` states the claim's proposition without a hedge. If the conclusion hedges («may lead to an increased index of dental caries») but another sentence states the same proposition plainly, the unhedged claim matches that plain sentence, and `source_quote` is the plain one (the order filters of F2 apply among the plain sentences only). Whether the two sentences really state the same proposition is the F2 same-subject-same-predicate test: «exhibit an elevated risk of dental caries» is a statement about risk, not about cause, and does not make «دیابت پوسیدگی را می‌سازد» plain.
+
+#### F2-iii — An instruction is judged on the action it gives
+
+A unit that tells the reader what to do — an imperative («بشویید، خشک کنید و مرحله را از نو انجام دهید») or «باید» / «لازم است» with an action — states no degree of certainty about an outcome; it states an action. It is compared with the source in one of two ways, and which one is decided by what the source says about that action:
+
+1. **The source itself recommends or advises on the action** (*is recommended*, *is advised*, *should*, *may be considered*, *is not recommended*): compare the two recommendations. A recommendation the source hedges («may be considered») stated as an obligation («حتماً باید») is `ALTERED` with `HEDGE_REMOVED`; the opposite recommendation is `REVERSED`; the same strength is `MATCHES`.
+2. **The source only reports the action's effect** (*reapplication could revert the impairment*, *re-etching showed the most promising results*): the instruction `MATCHES` when the reported effect of that action is favourable and is `REVERSED` when it is unfavourable («hemostatic agents … not recommended», an action shown to lower the outcome). There is no hedge to compare, because a source that reports an effect has made no recommendation for the instruction to have strengthened.
+
+A unit that states an **outcome** («این قاعده باند را بازمی‌گرداند») is not an instruction, even when it follows one, and is compared as an outcome — including on its hedge.
 
 So the test for `HEDGE_ADDED` is: strip the qualifier, and the claim is the source's own finding, not wider and not narrower — and the source states that finding without a qualifier. The test for `HEDGE_REMOVED` is the mirror: the source's sentence carries a word from the list, and the claim states the same proposition without one.
 
