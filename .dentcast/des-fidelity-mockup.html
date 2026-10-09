@@ -1,0 +1,303 @@
+<title>DES انطباق</title>
+<div dir="rtl" lang="fa" id="app">
+
+<style>
+  @font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-weight:100 900;font-display:swap;}
+  :root{
+    --pr:#022360; --ac:#0b5fff;
+    --bg:#f0f2f5; --surface:#ffffff; --surface2:#f4f6fb;
+    --line:rgba(2,35,96,.10);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+    --des-E:#78808f; --des-D:#5f8a63; --des-C:#3f9a49; --des-B:#2f8f3f; --des-A:#1f7a34;
+    --des-chrome:#6455a6; --des-chrome-rgb:100,85,166;
+    /* fidelity verdicts — its OWN scale. never the band greens (that is the
+       source's scale), never amber (premium), never brand blue (site), never
+       chrome (the machine). red appears for exactly one verdict: a claim the
+       source says the opposite of — that is an error, not a low grade. */
+    --fd-ok:#1d8178; --fd-over:#b15a33; --fd-contra:#b3302a; --fd-absent:#5d6b80; --fd-na:#8b93a3;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --pr:#5b9cf6; --ac:#5b9cf6;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a;
+    --line:rgba(255,255,255,.08);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --des-E:#8b93a3; --des-D:#89a68c; --des-C:#6fae74; --des-B:#4f9d5c; --des-A:#2f8f52;
+    --des-chrome:#a99ce0; --des-chrome-rgb:169,156,224;
+    --fd-ok:#4fbdb2; --fd-over:#e08a62; --fd-contra:#ec6d63; --fd-absent:#93a2b8; --fd-na:#8b93a3;
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --pr:#5b9cf6; --ac:#5b9cf6;
+    --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a;
+    --line:rgba(255,255,255,.08);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+    --des-E:#8b93a3; --des-D:#89a68c; --des-C:#6fae74; --des-B:#4f9d5c; --des-A:#2f8f52;
+    --des-chrome:#a99ce0; --des-chrome-rgb:169,156,224;
+    --fd-ok:#4fbdb2; --fd-over:#e08a62; --fd-contra:#ec6d63; --fd-absent:#93a2b8; --fd-na:#8b93a3;
+    color-scheme:dark;
+  }
+
+  #app{ font-family:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--txt);
+    min-height:100vh; box-sizing:border-box; padding:0 0 3rem; line-height:1.85; }
+  #app *{ box-sizing:border-box; }
+  .shell{ max-width:460px; margin:0 auto; padding:0 1rem; }
+  .ttl{ font-size:1.05rem; font-weight:800; color:var(--pr); margin:1.2rem 0 .2rem; }
+  .lead{ font-size:.8rem; color:var(--txt2); margin:0 0 1rem; }
+  .sec{ font-size:.72rem; font-weight:800; letter-spacing:.3px; color:var(--txt3); margin:1.6rem 0 .5rem; }
+  .sec b{ color:var(--des-chrome); }
+  .box{ background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:var(--card-sh); padding:.9rem 1rem; font-size:.8rem; color:var(--txt2); }
+  .box p{ margin:.3rem 0; }
+  .sample-flag{ display:inline-block; font-size:.66rem; font-weight:700; color:var(--txt3); border:1px dashed var(--line); border-radius:999px; padding:.05rem .6rem; margin-bottom:.4rem; }
+  .abs{ direction:ltr; text-align:left; font-size:.76rem; color:var(--txt2); background:var(--surface2); border-radius:10px; padding:.6rem .75rem; margin-top:.5rem; line-height:1.7; }
+  .fa-text{ font-size:.84rem; color:var(--txt); }
+  mark.c{ background:none; color:inherit; border-bottom:2px solid; padding-bottom:1px; }
+  mark.ok{ border-color:var(--fd-ok); } mark.over{ border-color:var(--fd-over); } mark.contra{ border-color:var(--fd-contra); }
+  mark.na{ border-color:var(--fd-na); border-bottom-style:dashed; } mark.own{ border-color:var(--line); border-bottom-style:dotted; }
+  sup.n{ font-size:.6rem; font-weight:800; color:var(--txt3); margin-inline-start:2px; }
+
+  /* ── the DES card: identical chrome to the live one (plus.css .dc-des-card) ── */
+  .card{ background:rgba(var(--des-chrome-rgb),.045); border:1px solid rgba(var(--des-chrome-rgb),.22);
+    border-inline-start:3px solid var(--des-chrome); border-radius:14px; padding:15px 17px 17px; }
+  .card-h{ font-size:.95rem; font-weight:700; color:var(--des-chrome); margin:0; }
+  .prov-note{ margin:5px 0 14px; font-size:.74rem; color:var(--txt3); }
+  .part + .part{ margin-top:18px; padding-top:16px; border-top:1px solid var(--line); }
+  .part-lbl{ display:flex; align-items:center; gap:.45rem; font-size:.7rem; font-weight:800; color:var(--des-chrome); margin-bottom:.45rem; }
+  .part-lbl i{ font-style:normal; display:inline-flex; width:1.2rem; height:1.2rem; border-radius:50%; align-items:center; justify-content:center;
+    background:rgba(var(--des-chrome-rgb),.12); font-size:.62rem; }
+  .srctitle{ font-size:.8rem; color:var(--txt3); margin-bottom:8px; line-height:1.7; }
+  .srctitle bdi{ unicode-bidi:isolate; }
+  .head{ display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:10px; }
+  .bar{ display:inline-flex; direction:ltr; border-radius:7px; overflow:hidden; border:1px solid var(--line); flex:none; }
+  .blk{ width:30px; height:30px; display:flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:800;
+    background:var(--surface2); color:var(--txt3); border-left:1px solid var(--line); }
+  .blk:first-child{ border-left:0; }
+  .blk.on{ color:#fff; background:repeating-linear-gradient(45deg,var(--des-D),var(--des-D) 4px,color-mix(in srgb,var(--des-D) 72%,transparent) 4px,color-mix(in srgb,var(--des-D) 72%,transparent) 8px); }
+  .meta{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+  .bandname{ font-weight:700; font-size:.95rem; color:var(--des-D); }
+  .qtype{ font-size:.76rem; color:var(--txt3); }
+  .score{ margin-inline-start:auto; font-size:.8rem; color:var(--txt3); background:var(--surface2); border:1px solid var(--line);
+    border-radius:7px; padding:3px 9px; font-variant-numeric:tabular-nums; }
+  .prov{ display:inline-block; font-size:.72rem; color:var(--des-E); margin-bottom:6px;
+    background:repeating-linear-gradient(45deg,color-mix(in srgb,var(--des-E) 14%,transparent),color-mix(in srgb,var(--des-E) 14%,transparent) 4px,transparent 4px,transparent 8px);
+    border:1px dashed color-mix(in srgb,var(--des-E) 55%,transparent); border-radius:999px; padding:2px 11px; }
+
+  /* ── fidelity: one dot per CLAIM, never a gauge. the number is a count first. ── */
+  .claimrow{ display:flex; gap:6px; direction:rtl; margin:2px 0 8px; flex-wrap:wrap; }
+  .dot{ width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-size:.6rem; font-weight:800; color:#fff; flex:none; }
+  .dot.ok{ background:var(--fd-ok); } .dot.over{ background:var(--fd-over); } .dot.contra{ background:var(--fd-contra); }
+  .dot.absent{ background:var(--fd-absent); }
+  .dot.na{ background:repeating-linear-gradient(45deg,color-mix(in srgb,var(--fd-na) 30%,transparent),color-mix(in srgb,var(--fd-na) 30%,transparent) 3px,transparent 3px,transparent 6px);
+    border:1.5px dashed var(--fd-na); color:var(--fd-na); }
+  .dot.own{ background:transparent; border:1.5px dotted var(--txt3); color:var(--txt3); }
+  .fd-head{ display:flex; align-items:baseline; flex-wrap:wrap; gap:8px; }
+  .fd-big{ font-weight:800; font-size:.98rem; color:var(--txt); }
+  .lvl{ font-size:.72rem; font-weight:800; border-radius:999px; padding:1px 10px; border:1px solid; }
+  .lvl.mid{ color:var(--fd-over); border-color:color-mix(in srgb,var(--fd-over) 45%,transparent); background:color-mix(in srgb,var(--fd-over) 9%,transparent); }
+  .flags{ font-size:.74rem; color:var(--txt3); margin:4px 0 10px; }
+  .flags b.contra{ color:var(--fd-contra); } .flags b.over{ color:var(--fd-over); }
+
+  .claims{ list-style:none; margin:0; padding:0; }
+  .claim{ border:1px solid var(--line); border-radius:11px; background:var(--surface); padding:.6rem .7rem; margin-top:.5rem; font-size:.78rem; color:var(--txt2); }
+  .claim-top{ display:flex; gap:.5rem; align-items:flex-start; }
+  .claim-q{ flex:1; color:var(--txt); font-size:.8rem; }
+  .v{ flex:none; font-size:.66rem; font-weight:800; border-radius:999px; padding:1px 9px; white-space:nowrap; border:1px solid; }
+  .v.ok{ color:var(--fd-ok); border-color:color-mix(in srgb,var(--fd-ok) 40%,transparent); }
+  .v.over{ color:var(--fd-over); border-color:color-mix(in srgb,var(--fd-over) 40%,transparent); }
+  .v.contra{ color:#fff; background:var(--fd-contra); border-color:var(--fd-contra); }
+  .v.na{ color:var(--fd-na); border-style:dashed; border-color:var(--fd-na); }
+  .v.own{ color:var(--txt3); border-style:dotted; border-color:var(--txt3); }
+  .ev{ direction:ltr; text-align:left; margin:.4rem 0 0; font-size:.73rem; color:var(--txt2); border-inline-start:2px solid var(--line); padding:0 .55rem; font-style:italic; }
+  .why{ margin:.35rem 0 0; font-size:.73rem; color:var(--txt3); }
+  .kind{ display:inline-block; font-size:.64rem; font-weight:700; color:var(--fd-over); background:color-mix(in srgb,var(--fd-over) 9%,transparent); border-radius:6px; padding:0 6px; margin-inline-end:4px; }
+  .claim.dim{ opacity:.72; }
+  .tie{ margin:.1rem 0 .7rem; font-size:.76rem; color:var(--txt2); background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:.5rem .65rem; }
+  .tie b{ color:var(--txt); }
+  .not{ margin:.3rem 0 0; font-size:.73rem; color:var(--txt3); }
+  .not b{ color:var(--txt2); }
+
+  details.calc{ border:1px solid var(--line); border-radius:9px; background:var(--surface2); overflow:hidden; margin-top:.75rem; }
+  details.calc > summary{ cursor:pointer; padding:8px 12px; font-size:.8rem; font-weight:600; color:var(--txt3); }
+  .calc-body{ padding:2px 12px 11px; font-size:.76rem; color:var(--txt3); line-height:1.9; }
+  .calc-body .fin{ margin-top:6px; padding-top:6px; border-top:1px solid var(--line); font-weight:700; color:var(--txt); }
+  .calc-body code, .box code{ direction:ltr; unicode-bidi:isolate; font-size:.72rem; }
+  .rule{ border:0; border-top:1px solid var(--line); margin:13px 0 10px; }
+  .interp-lbl{ display:block; margin:0 0 5px; font-size:.7rem; font-weight:800; color:var(--des-chrome); }
+  .interp{ margin:0; font-size:.8rem; color:var(--txt3); background:rgba(var(--des-chrome-rgb),.05); border-radius:9px; padding:9px 11px; }
+
+  pre.json{ direction:ltr; text-align:left; font-size:.68rem; line-height:1.6; background:var(--surface2); border-radius:10px; padding:.7rem .8rem; overflow-x:auto; margin:.5rem 0 0; color:var(--txt2); }
+  .rules{ margin:.3rem 0 0; padding-inline-start:1.1rem; }
+  .rules li{ margin:.35rem 0; }
+  .rules b{ color:var(--txt); }
+  .open{ display:inline-block; font-size:.62rem; font-weight:800; color:var(--des-chrome); border:1px solid rgba(var(--des-chrome-rgb),.35); border-radius:999px; padding:0 7px; margin-inline-start:4px; }
+  .legend{ display:flex; flex-wrap:wrap; gap:.4rem .9rem; font-size:.7rem; color:var(--txt3); margin-top:.6rem; }
+  .legend span{ display:inline-flex; align-items:center; gap:.3rem; }
+  .legend .dot{ width:12px; height:12px; }
+</style>
+
+<div class="shell">
+  <div class="ttl">DES — منبع + انطباق</div>
+  <p class="lead">DES قبلاً گفته مقاله چقدر محکم است. انطباق فقط یک سؤال دارد: <b>آیا متن فارسی همان چیزی را می‌گوید که مقاله گفته؟</b> قوی یا ضعیف بودن مقاله در این سؤال جایی ندارد.</p>
+
+  <!-- ═══ 1. input ═══ -->
+  <div class="sec">۱ · ورودی <b>(آنچه به پرامپت می‌رسد)</b></div>
+  <div class="box">
+    <span class="sample-flag">نمونه‌ی ساختگی برای ماکاپ؛ مقاله‌ی واقعی نیست</span>
+    <p class="fa-text">
+      <mark class="c ok">در این مطالعه کراون‌های زیرکونیای مونولیتیک مقاومت به شکست بیشتری از لیتیوم دی‌سیلیکات داشتند</mark><sup class="n">۱</sup>
+      و <mark class="c ok">نمونه‌ها پیش از تست، ۱٫۲ میلیون سیکل بارگذاری شدند</mark><sup class="n">۲</sup>.
+      <mark class="c contra">برای بیماران براکسیسمی هم زیرکونیا انتخاب خوبی است</mark><sup class="n">۳</sup>
+      و <mark class="c over">در بیماران دیگر حتماً باید برای کراون خلفی زیرکونیا گذاشت</mark><sup class="n">۴</sup>.
+      <mark class="c na">نویسندگان هیچ تعارض منافعی نداشتند</mark><sup class="n">۵</sup>.
+      <mark class="c own">از تجربه‌ی خودم، لیتیوم دی‌سیلیکات در ناحیه‌ی قدامی زیباتر است</mark><sup class="n">۶</sup>.
+    </p>
+    <div class="abs">
+      <b>Abstract</b> (resolved from DOI · ABSTRACT_ONLY)<br>
+      … Specimens underwent 1.2 million cycles of thermomechanical loading. Monolithic zirconia crowns showed significantly higher fracture loads than lithium disilicate crowns (p&lt;0.001). Owing to antagonist enamel wear, monolithic zirconia is not recommended for patients with bruxism. In other patients, monolithic zirconia may be considered for posterior crowns.
+    </div>
+  </div>
+
+  <!-- ═══ 2. card ═══ -->
+  <div class="sec">۲ · نمایش <b>(کارت DES)</b></div>
+  <section class="card" aria-label="ارزیابی خودکار شواهد">
+    <h3 class="card-h">ارزیابی خودکار شواهد</h3>
+    <p class="prov-note">این کادر جزو متن نیست. بخش اول می‌گوید مقاله چقدر محکم است. بخش دوم می‌گوید این متن فارسی چقدر همان چیزی را می‌گوید که مقاله گفته.</p>
+
+    <div class="part">
+      <div class="part-lbl"><i>۱</i> منبع: مقاله چقدر محکم است</div>
+      <div class="srctitle"><bdi>Fracture resistance of monolithic zirconia vs lithium disilicate crowns — an in vitro study</bdi></div>
+      <div class="head">
+        <span class="bar" aria-label="باند D از E تا A">
+          <span class="blk">E</span><span class="blk on">D</span><span class="blk">C</span><span class="blk">B</span><span class="blk">A</span>
+        </span>
+        <span class="meta"><span class="bandname">باند D</span><span class="qtype">سؤال مواد · مطالعه‌ی آزمایشگاهی</span></span>
+        <span class="score">۴۰ از ۱۰۰</span>
+      </div>
+      <span class="prov">امتیاز مقدماتی · فقط از چکیده</span>
+    </div>
+
+    <div class="part">
+      <div class="part-lbl"><i>۲</i> انطباق: این متن چقدر همان مقاله است</div>
+      <div class="fd-head">
+        <span class="fd-big">۲ از ۴ ادعای قابل‌بررسی مطابق مقاله</span>
+        <span class="lvl mid">انطباق متوسط</span>
+        <span class="score">۶۳ از ۱۰۰</span>
+      </div>
+      <div class="claimrow" aria-label="شش ادعا">
+        <span class="dot ok">۱</span><span class="dot ok">۲</span><span class="dot contra">۳</span><span class="dot over">۴</span><span class="dot na">۵</span><span class="dot own">۶</span>
+      </div>
+      <div class="flags"><b class="contra">۱ جمله برعکسِ مقاله</b> · <b class="over">۱ جمله تغییر کرده</b> · ۱ مورد از روی چکیده قابل‌بررسی نیست · ۱ دیدگاه نویسنده (شمرده نمی‌شود)</div>
+      <p class="tie">یعنی آنچه اینجا خواندی <b>کاملاً همان مقاله‌ی باند D نیست</b>: دو جمله‌اش چیزی می‌گوید که آن مقاله نگفته.</p>
+      <span class="prov">انطباق مقدماتی · فقط با چکیده مقایسه شد</span>
+
+      <ul class="claims">
+        <li class="claim">
+          <div class="claim-top"><span class="claim-q">«برای بیماران براکسیسمی هم زیرکونیا انتخاب خوبی است»</span><span class="v contra">برعکسِ مقاله</span></div>
+          <p class="ev">“Owing to antagonist enamel wear, monolithic zirconia is not recommended for patients with bruxism.”</p>
+          <p class="why">مقاله گفته توصیه نمی‌شود؛ متن گفته خوب است.</p>
+        </li>
+        <li class="claim">
+          <div class="claim-top"><span class="claim-q">«در بیماران دیگر حتماً باید برای کراون خلفی زیرکونیا گذاشت»</span><span class="v over">تغییر کرده</span></div>
+          <p class="ev">“In other patients, monolithic zirconia may be considered for posterior crowns.”</p>
+          <p class="why"><span class="kind">«می‌تواند» ← «حتماً باید»</span>خود مقاله این را با احتیاط گفته و متن فارسی آن احتیاط را برداشته است.</p>
+          <p class="not"><b>اگر خود مقاله نوشته بود «باید»</b>، همین جمله منطبق بود، حتی با اینکه مقاله باند D است.</p>
+        </li>
+        <li class="claim">
+          <div class="claim-top"><span class="claim-q">«زیرکونیای مونولیتیک مقاومت به شکست بیشتری از لیتیوم دی‌سیلیکات داشت»</span><span class="v ok">مطابق مقاله</span></div>
+          <p class="ev">“Monolithic zirconia crowns showed significantly higher fracture loads than lithium disilicate crowns (p&lt;0.001).”</p>
+        </li>
+        <li class="claim">
+          <div class="claim-top"><span class="claim-q">«نمونه‌ها ۱٫۲ میلیون سیکل بارگذاری شدند»</span><span class="v ok">مطابق مقاله</span></div>
+          <p class="ev">“Specimens underwent 1.2 million cycles of thermomechanical loading.”</p>
+        </li>
+        <li class="claim dim">
+          <div class="claim-top"><span class="claim-q">«نویسندگان هیچ تعارض منافعی نداشتند»</span><span class="v na">قابل‌بررسی نیست</span></div>
+          <p class="why">چکیده درباره‌ی تعارض منافع چیزی نمی‌گوید. این یعنی «نمی‌دانیم»، نه «غلط است». در نمره شمرده نمی‌شود.</p>
+        </li>
+        <li class="claim dim">
+          <div class="claim-top"><span class="claim-q">«از تجربه‌ی خودم، لیتیوم دی‌سیلیکات در ناحیه‌ی قدامی زیباتر است»</span><span class="v own">دیدگاه نویسنده</span></div>
+          <p class="why">نویسنده این را صریحاً تجربه‌ی خودش نامیده و به مقاله نسبت نداده، پس در انطباق شمرده نمی‌شود.</p>
+        </li>
+      </ul>
+
+      <details class="calc">
+        <summary>محاسبه‌ی انطباق</summary>
+        <div class="calc-body">
+          ادعاهای قابل‌بررسی: ۴ (مطابق ۲ · تغییر کرده ۱ · برعکس ۱)<br>
+          کنار گذاشته: قابل‌بررسی نیست ۱ · دیدگاه نویسنده ۱<br>
+          <code>(2 × 1 + 1 × 0.5 + 1 × 0) ÷ 4 × 100 = 62.5 → 63</code><br>
+          سقف: یک جمله‌ی برعکس ⇒ حداکثر «متوسط»
+          <div class="fin">انطباق ۶۳ · متوسط · مقدماتی</div>
+        </div>
+      </details>
+    </div>
+
+    <hr class="rule">
+    <span class="interp-lbl">تفسیر امتیاز</span>
+    <p class="interp">یافته‌ی اصلی مقاله درست نقل شده، ولی توصیه‌ی مقاله درباره‌ی بیماران براکسیسمی برعکس آمده و توصیه‌ی محتاطانه‌اش برای بقیه‌ی بیماران قطعی شده است.</p>
+  </section>
+
+  <div class="legend" aria-hidden="true">
+    <span><i class="dot ok"></i>مطابق مقاله</span><span><i class="dot over"></i>تغییر کرده</span><span><i class="dot contra"></i>برعکسِ مقاله</span>
+    <span><i class="dot absent"></i>در مقاله نیست</span><span><i class="dot na"></i>قابل‌بررسی نیست</span><span><i class="dot own"></i>دیدگاه نویسنده</span>
+  </div>
+
+  <!-- ═══ 3. contract ═══ -->
+  <div class="sec">۳ · قرارداد پرامپت <b>(پیشنهادی، v2.5)</b></div>
+  <div class="box">
+    <p><b>دو فراخوانی جدا.</b> اول خود منبع، دقیقاً مثل امروز و بدون دیدن متن فارسی. بعد انطباق، که منبع و متن فارسی را می‌گیرد ولی نه نمره‌ی DES را و نه طراحی مطالعه را به‌عنوان معیار.</p>
+    <pre class="json">// call 2 — input block
+source_text:      "…abstract…"
+text_basis:       ABSTRACT_ONLY
+derivative_text:  "…Persian write-up…"
+derivative_url:   "https://…"     // provenance only
+
+// call 2 — output
+{
+  "fidelity": {
+    "text_basis": "ABSTRACT_ONLY",
+    "claims": [{
+      "id": "c3",
+      "claim_quote":  "برای بیماران براکسیسمی هم زیرکونیا انتخاب خوبی است",
+      "source_quote": "monolithic zirconia is not recommended for patients with bruxism",
+      "verdict": "REVERSED",
+      "change_kind": null,
+      "note": ""
+    }],
+    "counts": { "matches":2, "altered":1, "reversed":1,
+                "not_in_source":0, "not_assessable":1, "author_view":1 },
+    "fidelity_score": 63,
+    "level": "MEDIUM",
+    "provisional": true,
+    "interpretation_fa": "…"
+  }
+}</pre>
+    <ol class="rules">
+      <li><b>معیار فقط حرف خود مقاله است.</b> طراحی، حجم نمونه و باند DES در انطباق هیچ نقشی ندارند. اگر مقاله‌ی ضعیف ادعای مطلق کرده و متن هم همان را گفته، آن جمله منطبق است. سنجیدن ضعف مقاله کار بخش اول است.</li>
+      <li><b>واحد سنجش ادعاست، نه کل متن.</b> متن به جمله‌هایی شکسته می‌شود که چیزی را به مقاله نسبت می‌دهند.</li>
+      <li><b>دو نقل‌قول verbatim برای هر حکم:</b> <code>claim_quote</code> از متن فارسی و <code>source_quote</code> از منبع. pipeline هر دو را چک می‌کند (قانون ۲). نیم‌فاصله فاصله نیست، پس «اندو‌شده» ≠ «اندو شده».</li>
+      <li><b>شش حکم بسته:</b> MATCHES · ALTERED · REVERSED · NOT_IN_SOURCE · NOT_ASSESSABLE · AUTHOR_VIEW.</li>
+      <li><b>«تغییر کرده» یعنی نسبت به جمله‌ی خود مقاله</b>، نه نسبت به چیزی که مقاله «حق داشت» بگوید. نوعش هم نام برده می‌شود: قید احتیاط مقاله حذف یا اضافه شده · عدد عوض شده · جمعیت یا شرایط عوض شده.</li>
+      <li><b>سکوت چکیده = قابل‌بررسی نیست.</b> وقتی text_basis برابر ABSTRACT_ONLY است، حکم NOT_IN_SOURCE مجاز نیست؛ همان منطق <code>NR</code> در Step 3b.</li>
+      <li><b>دیدگاه نویسنده فقط وقتی کنار می‌رود</b> که متن خودش صریحاً آن را تجربه یا نظر بنامد. ادعای بی‌نشان به مقاله نسبت داده می‌شود.</li>
+      <li><b>کیفیت ترجمه و نثر سنجیده نمی‌شود</b>؛ فقط وفاداری.</li>
+    </ol>
+  </div>
+
+  <div class="sec">۴ · فرمول <b>(تصمیم‌های باز)</b></div>
+  <div class="box">
+    <ol class="rules">
+      <li>نمره = <code>(matches×1 + altered×w) ÷ assessable × 100</code>، که در آن assessable = مطابق + تغییر کرده + برعکس + در مقاله نیست. <span class="open">باز: w = ۰٫۵؟</span></li>
+      <li>سطح‌ها: ۸۵ به بالا «بالا»، ۶۰ تا ۸۴ «متوسط»، زیر ۶۰ «پایین». <span class="open">باز: مرزها</span></li>
+      <li>هر جمله‌ی برعکس سطح را حداکثر به «متوسط» محدود می‌کند. <span class="open">باز: سقف «پایین»؟</span></li>
+      <li>با کمتر از ۳ ادعای قابل‌بررسی، عددی داده نمی‌شود و نتیجه «ادعای کافی برای سنجش نیست» است. <span class="open">باز: ۳؟</span></li>
+      <li>اگر بیش از نیمی از ادعاها «قابل‌بررسی نیست» باشند، نتیجه حتی با متن کامل هم مقدماتی است.</li>
+      <li>عدد کوچک و کم‌رنگ می‌ماند و تیتر، شمارش ادعاهاست. انطباق هیچ‌وقت روی پنج بلوک E تا A نمی‌آید.</li>
+    </ol>
+  </div>
+</div>
+</div>

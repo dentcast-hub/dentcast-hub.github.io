@@ -341,6 +341,117 @@ def des_scaled_penalty(base_points, s_design):
     return max(1, int(scaled))
 
 
+DES_FID_VERDICTS = ("MATCHES", "ALTERED", "REVERSED", "NOT_IN_SOURCE",
+                    "NOT_ASSESSABLE", "AUTHOR_VIEW", "NOT_A_CLAIM")
+DES_FID_KINDS = ("HEDGE_REMOVED", "HEDGE_ADDED", "MAGNITUDE_CHANGED",
+                 "POPULATION_OR_CONDITION_CHANGED", "GROUP_OR_COMPARATOR_CHANGED")
+
+
+def des_fidelity_recompute(counts):
+    """Spec v2.5 F4: score and level from the verdict tally, exact integer
+    arithmetic and round-half-up (Step 5's rule). Returns (assessable, score, level)."""
+    m, a, r, n = (int(counts.get(k, 0)) for k in ("matches", "altered", "reversed", "not_in_source"))
+    assessable = m + a + r + n
+    if assessable < 3:
+        return assessable, None, "INSUFFICIENT_CLAIMS"
+    score = int((Decimal(m * 100 + a * 50) / Decimal(assessable)).quantize(
+        Decimal("1"), rounding=ROUND_HALF_UP))
+    if score < 60:
+        level = "LOW"
+    elif score <= 84 or r:
+        level = "MEDIUM"
+    else:
+        level = "HIGH"
+    return assessable, score, level
+
+
+def des_check_fidelity(rep, ftag, f, scope, basis_expected, page_hay, source_hay):
+    """Spec v2.5/2.6 appendix rule 8 on one FIDELITY object."""
+    claims = f.get("claims") or []
+    rep.check(f.get("mode") == "FIDELITY" and f.get("des_version"), "4.13 DES",
+              f"{ftag} is a FIDELITY object with a version stamp",
+              f"{ftag} lacks mode: FIDELITY or des_version", "spec F5")
+    v26 = des_ge(f.get("des_version"), (2, 6))
+    if v26:
+        rep.check(f.get("scope", "SOURCE") == scope, "4.13 DES", f"{ftag} scope is {scope}",
+                  f"{ftag} scope is {f.get('scope')!r} where the record shape says {scope}", "spec v2.6 F5")
+    basis = f.get("text_basis")
+    rep.check(basis == basis_expected, "4.13 DES", f"{ftag} text_basis matches its source(s) ({basis})",
+              f"{ftag} text_basis {basis!r} differs from the expected {basis_expected!r} — the two calls "
+              f"scored the same text (POOLED: the weakest of them)",
+              "step 4.13 Part 2b — pass the SOURCE call's text_basis unchanged")
+    nums = [int(c["id"][1:]) for c in claims if re.fullmatch(r"u\d+", str(c.get("id")))]
+    rep.check(claims and len(nums) == len(claims) and nums == sorted(set(nums)), "4.13 DES",
+              f"{ftag} claim ids are page unit ids in order",
+              f"{ftag} claim ids are {[c.get('id') for c in claims][:6]}… — one object per unit, ids copied "
+              f"from the tool's split, strictly increasing", "spec F0/F5")
+    bad_v = [c.get("id") for c in claims if c.get("verdict") not in DES_FID_VERDICTS]
+    rep.check(not bad_v, "4.13 DES", f"{ftag} every verdict is from the closed list",
+              f"{ftag} has verdicts outside the list on {bad_v}", "spec F2")
+    wrong_basis = [c.get("id") for c in claims
+                   if (c.get("verdict") == "NOT_IN_SOURCE" and basis != "FULL_TEXT")
+                   or (c.get("verdict") == "NOT_ASSESSABLE" and basis == "FULL_TEXT")]
+    rep.check(not wrong_basis, "4.13 DES", f"{ftag} silence verdicts match the text basis",
+              f"{ftag} uses NOT_IN_SOURCE/NOT_ASSESSABLE from the wrong row for {basis} on {wrong_basis}",
+              "spec F2 — an abstract's silence is NOT_ASSESSABLE, a full text's is NOT_IN_SOURCE")
+    bad_k = [c.get("id") for c in claims
+             if (c.get("verdict") == "ALTERED") != (c.get("change_kind") is not None)
+             or (c.get("verdict") == "ALTERED" and c.get("change_kind") not in DES_FID_KINDS)]
+    rep.check(not bad_k, "4.13 DES", f"{ftag} change_kind is on every ALTERED and nowhere else",
+              f"{ftag} change_kind is wrong on {bad_k}", "spec F2-i — five kinds, no OTHER")
+    no_q = [c.get("id") for c in claims
+            if c.get("verdict") in ("MATCHES", "ALTERED", "REVERSED") and not c.get("source_quote")]
+    rep.check(not no_q, "4.13 DES", f"{ftag} every MATCHES/ALTERED/REVERSED quotes the source",
+              f"{ftag} has an empty source_quote on {no_q}", "spec F2")
+    if v26:
+        if scope == "POOLED":
+            bad_r = [c.get("id") for c in claims if c.get("source_quote")
+                     and not re.fullmatch(r"S\d+", str(c.get("source_ref")))]
+        else:
+            bad_r = [c.get("id") for c in claims if c.get("source_ref") is not None]
+        rep.check(not bad_r, "4.13 DES", f"{ftag} source_ref follows the scope",
+                  f"{ftag} source_ref is wrong on {bad_r} — an «S<n>» tag on every quoted claim under "
+                  f"POOLED, null under SOURCE", "spec v2.6 F5/F6")
+    bad_c = [c.get("id") for c in claims if des_norm(c.get("claim_quote") or "") not in page_hay]
+    rep.check(not bad_c, "4.13 DES", f"{ftag} every claim_quote is verbatim from this page",
+              f"{ftag} claim_quote is not on the page for {bad_c} — units are the page's own sentences, "
+              f"copied whole", "spec F0 — claim_quote is the unit's text, verbatim")
+    sqs = [c.get("source_quote") for c in claims if c.get("source_quote")]
+    if source_hay is None:
+        rep.skip("4.13 DES", f"{ftag} source quotes not checkable (source text not in the repo)")
+    else:
+        bad_s = [q for q in sqs if des_norm(q) not in source_hay]
+        rep.check(not bad_s, "4.13 DES", f"{ftag} all {len(sqs)} source quotes are verbatim",
+                  f"{ftag} has {len(bad_s)} source_quote(s) not in the source text, e.g. "
+                  f"{repr((bad_s[0] or '')[:60]) if bad_s else ''}", "spec Core Rule 2")
+    vs = [c.get("verdict") for c in claims]
+    tally = {"matches": vs.count("MATCHES"), "altered": vs.count("ALTERED"),
+             "reversed": vs.count("REVERSED"), "not_in_source": vs.count("NOT_IN_SOURCE"),
+             "not_assessable": vs.count("NOT_ASSESSABLE"), "author_view": vs.count("AUTHOR_VIEW"),
+             "not_a_claim": vs.count("NOT_A_CLAIM")}
+    rep.check(f.get("counts") == tally, "4.13 DES", f"{ftag} counts equal the verdict tally",
+              f"{ftag} counts {f.get('counts')} but the claims tally to {tally}",
+              "spec F5 — counts are derived, re-run never hand-patch")
+    assessable, score, level = des_fidelity_recompute(tally)
+    rep.check(f.get("assessable") == assessable and f.get("fidelity_score") == score
+              and f.get("level") == level, "4.13 DES",
+              f"{ftag} fidelity arithmetic checks out ({score} · {level})",
+              f"{ftag} says {f.get('assessable')}/{f.get('fidelity_score')}/{f.get('level')} "
+              f"but recomputes to {assessable}/{score}/{level}", "spec F4")
+    rep.check(f.get("provisional") is (basis != "FULL_TEXT"), "4.13 DES",
+              f"{ftag} provisional follows text_basis",
+              f"{ftag} provisional is {f.get('provisional')} under {basis}",
+              "spec F0 — provisional iff not FULL_TEXT")
+
+
+def des_ge(version, target):
+    try:
+        major, _, minor = (version or "").partition(".")
+        return (int(major), int(minor or 0)) >= target
+    except ValueError:
+        return False
+
+
 def des_norm(s):
     """The appendix's quote-comparison normalization: NFKC, collapse whitespace
     runs, strip soft hyphens and line-break hyphenation, straighten curly
@@ -845,12 +956,62 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                                  "not a forgotten step 4.13",
                      "step 4.13 / Question 4.8 — score it, or record why it has none")
         else:
-            rep.check(set(rec) == {"scored_at", "sources"}, "4.13 DES",
-                      "record carries only scored_at + sources",
-                      f"record has extra wrapper keys {sorted(set(rec) - {'scored_at', 'sources'})} — "
+            # `fidelity` (spec v2.5) is the one other key: an array parallel
+            # to `sources`, holding the FIDELITY call's own output objects —
+            # data the spec owns, not something derivable from `sources`.
+            rep.check(set(rec) in ({"scored_at", "sources"}, {"scored_at", "sources", "fidelity"}),
+                      "4.13 DES",
+                      "record carries only scored_at + sources (+ fidelity)",
+                      f"record has extra wrapper keys "
+                      f"{sorted(set(rec) - {'scored_at', 'sources', 'fidelity'})} — "
                       f"band/content_type/question_type live INSIDE each source and a second copy "
                       f"is a second source of truth",
                       "step 4.13 Part 4 — nothing derivable is stored beside the sources")
+            if "fidelity" in rec:
+                fid = rec.get("fidelity")
+                srcs = rec.get("sources") or []
+                # the tool's units start with the page's own <h1>, which
+                # article_region() begins AFTER — so the title is added back
+                _h1 = re.search(r"<h1[^>]*>(.*?)</h1>", doc, re.S)
+                page_hay = des_norm((text_of(_h1.group(1)) + " " if _h1 else "") + text_of(article_region(doc)))
+                if isinstance(fid, dict):
+                    # spec v2.6 F6: a page naming none of its sources inline is
+                    # judged ONCE against all of them — one pooled object, not
+                    # an array, because no slot belongs to any one source.
+                    scored = [s for s in srcs if not s.get("error") and s.get("content_type") != "NOT_APPRAISABLE"]
+                    rep.check(len(scored) > 1, "4.13 DES", "pooled fidelity sits on a page with several sources",
+                              "fidelity is a pooled object on a page with one scored source — POOLED exists "
+                              "only for several sources none of which the prose names",
+                              "spec v2.6 F6 / tools/des_fidelity_units.py decides the scope")
+                    bases = [s.get("text_basis") for s in scored]
+                    weakest = max(bases, key=lambda b: ["FULL_TEXT", "SECONDARY_REPORT", "ABSTRACT_ONLY"].index(b)
+                                  if b in ("FULL_TEXT", "SECONDARY_REPORT", "ABSTRACT_ONLY") else 2) if bases else None
+                    hays = [des_source_text(s, doc, page_title=title) for s in scored]
+                    pooled_hay = None if any(h is None for h in hays) else " ".join(hays)
+                    des_check_fidelity(rep, "fidPOOLED", fid, "POOLED", weakest, page_hay, pooled_hay)
+                elif rep.check(isinstance(fid, list) and len(fid) == len(srcs),
+                               "4.13 DES", "fidelity is parallel to sources",
+                               f"fidelity has {len(fid) if isinstance(fid, list) else '?'} slots against "
+                               f"{len(srcs)} sources — slot i is the FIDELITY object "
+                               f"for sources[i], null where no call ran",
+                               "step 4.13 Part 4 — one slot per source, same order"):
+                    for i, f in enumerate(fid):
+                        ftag = f"fid{i}"
+                        src_i = srcs[i] or {}
+                        if f is None:
+                            # A null slot is legal for an error, a book, the page's
+                            # own COMMENTARY record, or (v2.6) a source no unit of the
+                            # page names — the last is not visible from the record, so
+                            # a null on a scored RESEARCH source is a warning, not a fail.
+                            if src_i.get("error") or src_i.get("content_type") in ("NOT_APPRAISABLE", "COMMENTARY"):
+                                rep.ok("4.13 DES", f"{ftag} is null for a source that gets no fidelity call")
+                            else:
+                                rep.warn("4.13 DES", f"{ftag} is null on a scored RESEARCH source — confirm "
+                                         f"tools/des_fidelity_units.py gave it no units",
+                                         "step 4.13 Part 2b — run the call if the tool assigned it units")
+                            continue
+                        des_check_fidelity(rep, ftag, f, "SOURCE", src_i.get("text_basis"), page_hay,
+                                           des_source_text(src_i, doc, page_title=title))
             for i, s in enumerate(rec.get("sources") or []):
                 tag = f"src{i}"
                 if s.get("error"):
