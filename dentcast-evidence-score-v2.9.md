@@ -678,8 +678,8 @@ A claim that the source addresses only partly — one half stated, the other hal
 
 1. **A topic sentence is not a statement of the topic's content.** A source sentence whose only verb is *is/are discussed*, *is/are reviewed*, *is/are considered* or *is/are examined*, and which states no conclusion after it, says that the paper covers the subject, not what it concludes about it. Two things take a sentence out of this rule: a conclusion clause after the verb (*…are reviewed, supporting the principle that X* states X), and a subject that already carries the content (*the usefulness of grooves … is illustrated* states that grooves are useful; *is illustrated / is shown / is demonstrated* report a finding and are never on this list). «Concepts of … minimally acceptable preparation taper … are discussed» supports a claim that the paper discusses taper; it does not support «برای هر نسبت ارتفاع به قاعده یک حداکثر taper وجود دارد». Against such a sentence the content claim is silence.
 2. **A neighbouring proposition is not the same proposition.** A half is stated only when a source sentence asserts the same subject with the same predicate. «resistance form is an essential element in preparation design» and «resistance form عمدتاً در مرحلهٔ تراش تعیین می‌شود، نه در لابراتوار» share a subject and differ in predicate (importance against where it is determined), so the second is silence against the first, not a partial match.
-3. **A ranking is stated only by a sentence that ranks.** A superlative or comparative claim — «مؤثرترین», «مطمئن‌ترین», «بهترین», «بیشتر از …» — is stated only by a source sentence that ranks the same things (*most*, *best*, *highest*, *more … than*, *the most consistently effective*). A sentence reporting that the action works, without ranking it, states the other half of the unit and is silence on the ranking; the ranking half is then judged against the ranking sentence alone, hedge included («appears to be the most consistently effective» against «مطمئن‌ترین کار این است» is `HEDGE_REMOVED`). **A ranking is ONE claim wherever it appears, not only in an inference (F1)** (v2.9). A unit whose predicate is the ranking — «زاویه‌ی نیرو قوی‌ترین عامل منفرد بود», «X مطمئن‌ترین کار است», «X بیشتر از Y اثر دارد» — makes one assertion, the ranking; its subject being real, effective or significant is the premise of that ranking, never a second half. So a source sentence reporting that X matters, works or was significant, without ranking it against the same things, is silence on the unit, and the unit is `NOT_IN_SOURCE` (`FULL_TEXT`) or `NOT_ASSESSABLE` (otherwise) — never `MATCHES` on a premise. «The same things» is literal: the source sentence must rank the claim's own items against each other. A superlative about a different comparison is not a ranking of these items — *the most significant reduction … under oblique loading* ranks oblique against other loading directions, not load angle against luting agent and tooth type, so it is silence on «زاویه‌ی نیرو قوی‌ترین عامل بود», neither `MATCHES` nor `ALTERED`. A unit that makes the ranking AND a separate assertion (two predicates, F2's half rule) still has two halves; the ranking half is judged by this item.
-4. **A claim about how several sources relate is silence in a one-source call** (v2.9). A unit whose predicate is a relation between this call's source and other sources — exclusivity («تنها مطالعه‌ای که دوام را سنجیده»), agreement («هم Stoilov و هم بقیه‌ی منابع همین را توصیه می‌کنند»), contrast or compatibility («برخلاف مطالعه‌ی دیگر», «این دو با هم تعارض ندارند»), or a count across studies («بیشتر مطالعات») — cannot be decided from one source, because the other side of the relation is not in the text. The unit is `NOT_IN_SOURCE` (`FULL_TEXT`) or `NOT_ASSESSABLE` (otherwise), with `note` naming the relation; never `MATCHES` because this source's own part is true, and never `ALTERED`/`REVERSED` because the others are absent. This differs from F6's two-findings unit («در کار Gurel … و در کار Gresnigt …»), which states a separate finding about each source and is judged on this source's finding: the test is whether the predicate is about ONE source or about the RELATION between them. A relation the source itself states about the literature («unlike previous studies, …», «few studies have evaluated …») is a sentence of the source and is compared normally.
+3. **A ranking is stated only by a sentence that ranks.** A superlative or comparative claim — «مؤثرترین», «مطمئن‌ترین», «بهترین», «بیشتر از …» — is stated only by a source sentence that ranks the same things (*most*, *best*, *highest*, *more … than*, *the most consistently effective*). A sentence reporting that the action works, without ranking it, states the other half of the unit and is silence on the ranking; the ranking half is then judged against the ranking sentence alone, hedge included («appears to be the most consistently effective» against «مطمئن‌ترین کار این است» is `HEDGE_REMOVED`). **A ranking is ONE claim wherever it appears, not only in an inference (F1)** (v2.9). A unit whose predicate is the ranking — «X قوی‌ترین عامل بود», «X مطمئن‌ترین کار است», «X بیشتر از Y اثر دارد» — makes one assertion, the ranking; its subject being real, effective or significant is the premise of that ranking, never a second half. So a source sentence reporting that X matters, works or was significant, without ranking it against the same things, is silence on the unit, and the unit is `NOT_IN_SOURCE` (`FULL_TEXT`) or `NOT_ASSESSABLE` (otherwise) — never `MATCHES` on a premise. «The same things» is literal: the source sentence must rank the claim's own items against each other. A superlative about a different comparison is not a ranking of these items — *the largest drop occurred at 120 °C* ranks one temperature against other temperatures, not temperature against the other variables of a regression, so it is silence on «دما قوی‌ترین عامل بود», neither `MATCHES` nor `ALTERED`. A unit that makes the ranking AND a separate assertion (two predicates, F2's half rule) still has two halves; the ranking half is judged by this item.
+4. **A claim about how several sources relate is silence in a one-source call** (v2.9). A unit whose predicate is a relation between this call's source and other sources — exclusivity («تنها مطالعه‌ای که اثر طولانی‌مدت را سنجیده»), agreement («هم Smith و هم بقیه‌ی منابع همین را توصیه می‌کنند»), contrast or compatibility («برخلاف مطالعه‌ی دیگر», «این دو یافته با هم تناقض ندارند»), or a count across studies («بیشتر مطالعات») — cannot be decided from one source, because the other side of the relation is not in the text. The unit is `NOT_IN_SOURCE` (`FULL_TEXT`) or `NOT_ASSESSABLE` (otherwise), with `note` naming the relation; never `MATCHES` because this source's own part is true, and never `ALTERED`/`REVERSED` because the others are absent. This differs from F6's two-findings unit («در کار Gurel … و در کار Gresnigt …»), which states a separate finding about each source and is judged on this source's finding: the test is whether the predicate is about ONE source or about the RELATION between them. A relation the source itself states about the literature («unlike previous studies, …», «few studies have evaluated …») is a sentence of the source and is compared normally.
 
 **A unit is judged on its own words.** A condition the unit does not name is not read into it from its heading or its neighbours, with one exception: a pointing word («همین مرحله», «این حالت», «این سیستم») names whatever the nearest heading or the previous unit names, and is read through to it. «بیشترین افت باند در همین مرحله دیده می‌شود» under a heading about curing names the stage and no contaminant, so it is a claim about contamination at that stage, whatever the contaminant; a source that ranks the stage for blood alone reports it for a subset, and the claim widens it (`POPULATION_OR_CONDITION_CHANGED`).
 
@@ -869,37 +869,23 @@ This is DES v2.9. If scoring criteria change in the future, the version number m
 
 Comparability across versions:
 
-- v2.8 → v2.9: **No SOURCE score moves; two FIDELITY verdict rules become
+- v2.8 → v2.9: **No SOURCE score moves; four FIDELITY rules become
   deterministic.** (1) F2 item 3 + F3: a ranking is one claim wherever it
-  appears, not only after «پس/بنابراین» — a source sentence reporting that X
-  matters or works is silence on «X قوی‌ترین/مطمئن‌ترین است», never `MATCHES`
-  on its premise, and a superlative about a different comparison is not a
-  ranking of the claim's items. (2) F2 item 4: a predicate about how several
-  sources relate (only, both, unlike, do not conflict, most studies) is
-  silence in a one-source call. `sharehub/share-18` is why: two independent
-  v2.8 runs over the same five full texts agreed on 57 of 61 units, and all
-  four splits were one of these two shapes — «زاویه‌ی نیرو قوی‌ترین عامل
-  منفرد بود» went `MATCHES` (premise confirmed, superlative silent, per v2.8
-  F3) in one run and `ALTERED` in the other (an unrelated superlative about
-  oblique loading found in a 56k-character text), and «تنها مطالعه‌ای که…»,
-  «هم Stoilov و هم بقیه‌ی منابع…» and «این دو با هم تعارض ندارند» swung
-  between `MATCHES` and `NOT_IN_SOURCE`. Under v2.9 all four have one answer
-  that does not depend on what a run happens to find. Effect on stored
-  records: a 2.8 unit that was `MATCHES` only on a ranking's premise or on a
-  cross-source relation becomes silent, which leaves the count of
-  firmer/reversed claims unchanged and can move `fidelity_score` up or down
-  by one claim's weight; records are re-run, never re-labelled by hand.
-  Same version, before any 2.9 record was stored (first Sonnet precision
-  round, 3 runs × Stoilov, 2 × Fraga): (3) F2-v step 2 names the condition a
-  pointing word reads through to, and a new step 4 makes ONE governing
-  sentence the source of the verdict, the `change_kind` and the quote — three
-  runs agreed on `ALTERED` for one unit and gave three different kinds,
-  because each judged a different sentence. (4) F2-i: an absolute word the
-  source does not use («فقط», «همیشه», «هرگز», «همه‌ی» …, a closed list) is
-  `HEDGE_REMOVED`, never silence — under v2.8 a «فقط» over a finding the source
-  states plainly was `MATCHES` because an unquantified source made the «فقط» silence, which
-  let exactly the firmness this track exists to catch pass unmarked
-  (founder, 1405/07/17).
+  appears, never split into premise + superlative, and a superlative about a
+  different comparison does not rank the claim's items. (2) F2 item 4: a
+  predicate about how several sources relate (only, both, unlike, do not
+  conflict, most studies) is silence in a one-source call. (3) F2-v step 2
+  names the condition a pointing word reads through to, and step 4 makes ONE
+  governing sentence the source of the verdict, the `change_kind` and the
+  quote. (4) F2-i: an absolute word the source does not use (a closed list)
+  is `HEDGE_REMOVED`, never silence (founder, 1405/07/17). Measured on
+  `sharehub/share-18`: two v2.8 runs over the same five full texts agreed on
+  57 of 61 units, all four splits rankings or cross-source relations; a
+  first v2.9 Sonnet round agreed on every verdict but named three different
+  kinds for one unit, each from a different sentence. Effect on stored
+  records: a unit that was `MATCHES` on a ranking's premise, on a
+  cross-source relation, or despite an added absolute changes verdict;
+  records are re-run, never re-labelled by hand.
 - v2.7 → v2.8: **No SOURCE score moves and no verdict changes; only the
   FIDELITY arithmetic does.** Second, same version (before any 2.8 record was
   published): a page with exactly one `ALTERED` and no `REVERSED` is `HIGH`
