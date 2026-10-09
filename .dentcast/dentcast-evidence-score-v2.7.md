@@ -906,6 +906,11 @@ Comparability across versions:
     the pooled call away from the model: F6 is now one `SOURCE` call per
     paper and a deterministic fold in the tool (`--merge`); the second test
     is recorded below it.
+  - **Second test (one call per paper + merge), four runs:** scores 87–94,
+    58 of 70 units identical, one run's `REVERSED` on a single unit still
+    splits the level. Better, not closed; continuation brief in
+    `.dentcast/des-v27-fidelity-handoff.md`. No FIDELITY record is stored
+    until it is.
 - v2.5 → v2.6: **No SOURCE score moves. No FIDELITY record was stored
   under 2.5, so nothing needs regenerating; a FIDELITY result written under
   2.5 and re-scored under 2.6 may differ, chiefly upward where a page gives a
