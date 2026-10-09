@@ -1,4 +1,4 @@
-# DentCast Evidence Score (DES) — v2.10
+# DentCast Evidence Score (DES) — v3.0
 
 System instruction for the DentCast article scoring engine.
 Load the whole file as the system prompt. The user turn carries the input block defined in Step 0.
@@ -45,8 +45,8 @@ Admissibility check, run before anything else:
 Error output format, emitted alone with no other keys:
 
 ```json
-{"des_version":"2.10","error":"INSUFFICIENT_TEXT"}
-{"des_version":"2.10","error":"DOI_TEXT_MISMATCH"}
+{"des_version":"3.0","error":"INSUFFICIENT_TEXT"}
+{"des_version":"3.0","error":"DOI_TEXT_MISMATCH"}
 ```
 
 If `text_basis` is `ABSTRACT_ONLY`, the `Q_method` multiplier is capped at 0.75 and `provisional` must be `true`. Abstract-only scores are structurally uncertain: most risk-of-bias domains are not reportable from an abstract, and the resulting NR ratings will legitimately pull the multiplier down. Do not compensate for this.
@@ -631,7 +631,7 @@ Units are supplied by the caller and are never re-split, merged, trimmed or re-o
 
 Admissibility, run before anything else:
 
-- `units` missing or empty → `{"des_version":"2.10","error":"INSUFFICIENT_TEXT"}`.
+- `units` missing or empty → `{"des_version":"3.0","error":"INSUFFICIENT_TEXT"}`.
 - `source_text` missing, empty, or bibliographic metadata only → the same error. A fidelity judgment needs the source in front of it exactly as a SOURCE score does.
 - Under `ABSTRACT_ONLY` and `SECONDARY_REPORT` the result is `provisional: true`; under `FULL_TEXT` it is `false`. Nothing else sets it.
 
@@ -708,7 +708,7 @@ The two hedge kinds fire only when the claim and the source state the **same pro
 - English: *may*, *might*, *could* (always — *could revert* may mean «was able to» or «might», and two readers do not split that the same way, so it counts as a hedge in every sentence), *possibly*, *appears to*, *seems to*, *suggests*, *tended to*, *should be considered*, *likely*. **«can» is not on the list**: *blow-drying can reduce scanning errors* reports a capability the study observed, and «خشک‌کردن خطا را کاهش می‌دهد» repeats it faithfully
 - Persian: شاید · احتمالاً · ممکن است · به نظر می‌رسد · می‌تواند (when it means *may*) · در حد پیشنهاد · احتمالِ · تا حدی
 
-**A study-scope formula is not a hedge** (v2.10, founder 1405/07/17). *Under the conditions of this study*, *within the limitations of this study*, *in this in vitro study* and their kin say that a finding belongs to the study that produced it, which is true of every finding of every paper, and which a reader of a DentCast page already knows: the page cites the study and the DES card beside it grades that study's design. A claim that leaves the formula out is therefore not firmer than its source, and the formula is read as absent when comparing hedges — what remains of the source sentence is compared as usual, so a real hedge in it (*may*, *suggests*, *appears to* …) still counts. This is the formula alone: a limitation the source states with content («the short follow-up limits…», «only one material was tested») is a finding about scope and is compared like any other.
+**A study-scope formula is not a hedge** (v3.0, founder 1405/07/17). *Under the conditions of this study*, *within the limitations of this study*, *in this in vitro study* and their kin say that a finding belongs to the study that produced it, which is true of every finding of every paper, and which a reader of a DentCast page already knows: the page cites the study and the DES card beside it grades that study's design. A claim that leaves the formula out is therefore not firmer than its source, and the formula is read as absent when comparing hedges — what remains of the source sentence is compared as usual, so a real hedge in it (*may*, *suggests*, *appears to* …) still counts. This is the formula alone: a limitation the source states with content («the short follow-up limits…», «only one material was tested») is a finding about scope and is compared like any other.
 
 Two things are NOT a hedge difference, and two runs of the same text split on exactly this before the rule was written:
 
@@ -788,7 +788,7 @@ Output a single raw JSON object and nothing else. `scope` is copied from the inp
 
 ```json
 {
-  "des_version": "2.10",
+  "des_version": "3.0",
   "mode": "FIDELITY",
   "scope": "SOURCE or POOLED",
   "text_basis": "FULL_TEXT, ABSTRACT_ONLY, or SECONDARY_REPORT",
@@ -832,7 +832,7 @@ JSON semantics: `question_type` for COMMENTARY is the JSON literal `null` (unquo
 
 ```json
 {
-  "des_version": "2.10",
+  "des_version": "3.0",
   "content_type": "RESEARCH, COMMENTARY, or NOT_APPRAISABLE",
   "source_kind": "book — present only when content_type is NOT_APPRAISABLE, omitted otherwise",
   "question_type": "THERAPY, DIAGNOSTIC, MATERIAL, ETIOLOGY, or null",
@@ -867,11 +867,11 @@ Both Persian fields follow DentCast style: plain, direct, scientific, technical 
 
 ## Versioning
 
-This is DES v2.10. If scoring criteria change in the future, the version number must change and old scores must not be silently compared with new ones. Store the version with every published score.
+This is DES v3.0. If scoring criteria change in the future, the version number must change and old scores must not be silently compared with new ones. Store the version with every published score.
 
 Comparability across versions:
 
-- v2.9 → v2.10: **No SOURCE score moves; one FIDELITY rule.** F2-ii: a
+- v2.9 → v3.0: **No SOURCE score moves; one FIDELITY rule.** F2-ii: a
   study-scope formula (*under the conditions of this study*, *within the
   limitations of this study* …) is not a hedge, so a claim that omits it is
   not `HEDGE_REMOVED`; *within the limitations of* leaves the closed hedge
@@ -1278,35 +1278,3 @@ Comparability across versions:
   comparable.
 
 ---
-
-## Appendix — pipeline contract (NOT part of the model instruction)
-
-These checks run in the backend, not in the model. Do not include this appendix if the file is loaded verbatim as a system prompt.
-
-1. **DOI resolution.** Resolve the DOI to title, abstract, authors, year, journal via Crossref, OpenAlex, or PubMed, and place the abstract into `source_text` before calling the model. If no abstract is retrievable, do not call the model; return `INSUFFICIENT_TEXT` directly.
-2. **Quote verification.** Every `evidence_quote` must be a substring of `source_text` after normalization on both sides: collapse whitespace runs, strip soft hyphens and line-break hyphenation, expand ligatures (fi, fl), normalize curly quotes to straight, convert nbsp to space, Unicode NFKC. On failure, flag `quote_check: failed` and send to manual review rather than discarding the output; recurrent failures usually indicate bad PDF text extraction, not model fabrication.
-3. **Arithmetic recomputation.** Recompute `des_score` from `s_design.value`, `q_method.multiplier` and the penalty points (or from the checklist for COMMENTARY). A mismatch invalidates the record.
-4. **Schema validation.** Validate against a strict schema (Ajv, Zod, or equivalent) with `additionalProperties: false` so any stray key is rejected and null-able fields fall back to defaults.
-5. **Display.** Show the band badge with the question type (`A · Material`), never the band alone. Keep the numeric score and the full JSON on the detail page. Store `des_version` with every record. A FIDELITY result is shown beside — never instead of, and never without — the SOURCE result for the same source; its headline is the altered and reversed claims themselves («۲ جا متن از مقاله قاطع‌تر است», or «همه‌ی ادعاها با مقاله مطابق است» when there are none), what a reader sees for the fidelity score is **one word, never a number** — a refinement of `level`, never a second scale: «کاملاً مطابق» (HIGH with no `ALTERED` and no `REVERSED`), «تطابق خیلی بالا» (HIGH, score ≥ 95), «تطابق بالا» (HIGH, 85–94), «تطابق متوسط» (MEDIUM — including every page with a `REVERSED`), «تطابق پایین» (LOW), «ادعای کافی برای سنجش ندارد» (`INSUFFICIENT_CLAIMS`); the same word is on the article's chip, which scrolls to the card, and the percentage, the counts and the arithmetic live one tap away in the card's expander, because a number over four claims and a number over fifty look equally precise and are not (founder, 1405/07/17), the sentences the source does not address are shown as a neutral count with no fault colour («۴ جمله از دانش یا استدلال نویسنده؛ در مقاله نیامده»), it never uses the band colours or the five band blocks, and `source_conclusion` is printed under it as information with no mark on it.
-7. **FIDELITY unit splitting (caller, before the model).** Split the derivative text into units deterministically. **Stop at the page's citation block**: nothing from the FIRST of these lines onward becomes a unit — (a) a line whose letters, with leading or trailing symbols stripped («∆ منابع», «منابع:»), are exactly «منابع», «منبع», «References» or «Reference»; (b) a line that is exactly the first-author credit label «نویسنده:» (the ShareHub credit block); (c) a line containing the cited source's DOI or its title (case-insensitive, quotation marks ignored). A citation line is not a claim, and the dry run that found this scored «2004;48(2):387-96 — شامل تست روی die و داده‌های بالینی» as a match. DentCast pages mark that block three different ways, which is why there are three signals rather than one heading. Then split first on line breaks, then on sentence terminators `.` `!` `?` `؟` `۔` followed by whitespace or end of text. Trim whitespace. Drop units that are empty. Do NOT split on `;` `،` `:` or on «و». Number them `u1…uN` in order, and mark every unit taken from an `<h1>`–`<h6>` element with `"heading": true` (the model cannot see markup, and a heading that makes an assertion otherwise reads as a claim). Never let the model see the unsplit text. Pass `source_conclusion` as the last sentence of `source_text` (same terminator rule) — under `ABSTRACT_ONLY` that is the abstract's conclusion sentence. Under `FULL_TEXT` the text ends on back matter (declarations, ORCID links), so it is the last sentence of the paper's last «Conclusion(s)» section, cut at the first back-matter heading after it (v2.7; `conclusion_of()` in the tool).
-8. **FIDELITY verification.** Check that `claims` has one object per unit, in order, with `claim_quote` equal to the unit text; verify every non-empty `source_quote` against `source_text` by rule 2; reject `NOT_IN_SOURCE` under `ABSTRACT_ONLY`/`SECONDARY_REPORT` and `NOT_ASSESSABLE` under `FULL_TEXT`; reject `ALTERED` without a `change_kind` from the F2-i list; recompute `counts`, `assessable`, `fidelity_score` and `level` by the F4 of the record's own `des_version` (from 2.8 `NOT_IN_SOURCE` is outside the denominator; a 2.5–2.7 record keeps the formula it was written under). The FIDELITY call runs only AFTER the SOURCE call for that source returned a record, and the two are stored side by side, never merged into one object: in `plus/des-scores.json` the record gains `fidelity`: under `SOURCE` scope an array parallel to `sources` by index (same length; `null` in a slot whose source got no FIDELITY call — an error, `NOT_APPRAISABLE`, the page's own COMMENTARY self-record, or a source no unit of the page names), and under `POOLED` scope the one pooled object itself rather than an array.
-9. **When FIDELITY runs.** Whatever runs the SOURCE call for a cited identifier (publishing Question 4.8's basket 2, or an external submission carrying a link) runs the FIDELITY call for the same identifier afterwards. No classifier decides whether a page is «a report of the paper»: the attribution test in F1 decides per unit, and a page that merely lists the paper in its references attributes fewer than three claims to it and lands on `INSUFFICIENT_CLAIMS` by itself, which stores no number.
-10. **FIDELITY assignment on a page with several sources (caller, before the model).** Run `tools/des_fidelity_units.py <content_id>`; it is this rule as code and its output is what the model receives. Under `POOLED` it writes one `SOURCE` block per source (`input-pooled-S<n>.json`, every unit in each); store each call's answer as `out-S<n>.json` in one directory and run `--merge <dir>`, which writes the pooled object by F6's fold and is the only thing that ever writes `scope: POOLED`. Markers for a source are its first author's family name as cited (and that name's last word when it has four letters or more), its DOI, and the first word of its journal when that word is a proper name rather than a generic one or a demonym («Cochrane», never «Journal», «Dental» or «Brazilian»). A unit goes to every source whose marker it contains as a whole Latin word; a unit with none goes to the source(s) named last earlier in the same paragraph; a heading or a new paragraph clears that. A unit no source reaches is in no call. When NO unit names any source, the page gets one `POOLED` call over all of them instead. Persian transliterations of names («مطالعهٔ ساکر») and numbered inline references are not markers yet; a page written that way reads as unnamed and falls to `POOLED`, which is the honest fallback rather than a wrong attribution.
-11. **FIDELITY basis parity (caller, before the model).** The FIDELITY call for a source receives the very `source_text` the SOURCE call for it scored, with the same `text_basis` — the full text when the cabinet holds it, the abstract only when nothing more was retrievable. `tools/des_fidelity_units.py --build` refuses a text whose basis differs from the stored SOURCE record's, so a full-text page cannot be judged against its abstract by accident. Under `POOLED` every block keeps its own source's text, and the call's `text_basis` is the weakest of them (F6).
-6. **Reproducibility test — trueness and precision, kept separate.** The two
-   are different failures and only one of them is fatal to a comparative score.
-   - **Precision (repeatability)** is the binding requirement. Score five
-     cabinet papers **three times each**, and additionally have a *second*
-     scorer score them once. Bands must be identical across all runs, including
-     across scorers. A one or two point drift in the number is acceptable; **a
-     band change is not**, and means some decision in Steps 2–5 is still open to
-     taste — find it and close it, rather than averaging the results.
-   - **Trueness** is judged separately, by asking whether the band a paper lands
-     in matches expert reading of that paper. A systematic offset — every paper
-     landing one band low — is a **calibration** problem, and the honest fix is
-     to move the band boundaries once, deliberately, with a version bump.
-   - **A repeatable bias is tolerable; scatter is not.** This system exists to
-     rank papers against each other. If every score is uniformly a little harsh,
-     the ranking it produces is still sound. If the same paper can come out C or
-     D depending on who ran it, no ranking survives, and the number on the page
-     is telling readers something it does not know.

@@ -110,7 +110,7 @@ alwaysApply: true
   ورود خودکار وسطِ باندل، هر ابهام = سؤال، و حکم هر باندلِ کاندید در گزارش
   صریح می‌آید).
 - هر publish (جز LiteCast) در **گام ۴.۱۳** امتیازِ **DES** می‌گیرد: پرامپتِ
-  `.dentcast/dentcast-evidence-score-v2.10.md` به‌عنوان system prompt اجرا می‌شود (FIDELITY روی Sonnet، دو اجرای کامل + اجرای سوم روی اختلاف‌ها + رأیِ اکثریت + بازبینیِ Opus روی هر جملهٔ علامت‌خورده، بخش 2c)
+  `.dentcast/dentcast-evidence-score-v3.0.md` به‌عنوان system prompt اجرا می‌شود (FIDELITY روی Sonnet، دو اجرای کامل + اجرای سوم روی اختلاف‌ها + رأیِ اکثریت + بازبینیِ Opus روی هر جملهٔ علامت‌خورده، بخش 2c)
   (بدون appendix) و خروجی **عیناً** در `plus/des-scores.json` می‌نشیند؛ به
   ازای هر منبعِ امتیازگرفته یک فراخوانیِ دومِ **FIDELITY** هم دارد (بخش 2b: متنِ
   صفحه، تقسیم و تخصیص‌یافته با `tools/des_fidelity_units.py`، در برابرِ همان
