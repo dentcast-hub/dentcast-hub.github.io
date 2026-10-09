@@ -1397,10 +1397,17 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v2.5.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v2.6.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v2.5 is the current spec, and its change from 2.4 is a SECOND call: the
+**v2.6 is the current spec, and its change from 2.5 is the FIDELITY track made
+to work on DentCast's own prose and on pages that cite several sources** — F1/F2
+rules for an author who explains rather than reports, F2-iii (instructions),
+F2-iv (claims that tell conditions apart), F6 (several sources, `POOLED` when
+none is named), and `tools/des_fidelity_units.py`, which is the caller's split
+and assignment as code. No SOURCE score moves.
+
+**v2.5's change from 2.4 was a SECOND call: the
 FIDELITY track.** No SOURCE score moves — Steps 0-5 and the COMMENTARY track
 are untouched except for a `mode` field whose absence means `SOURCE`. The new
 call takes the page's own text and the source it cites and answers one
@@ -1533,24 +1540,38 @@ see the SOURCE score here.** Two calls, two contexts. A model that read the
 write-up before scoring the paper can be led by it; a model that knows the band
 before judging the write-up confuses a weak paper with an unfaithful summary.
 
-**Build the input block yourself** (spec F0 + appendix rule 7):
+**Build the input blocks with the tool, never by hand** (spec F0, F6, appendix rules 7 and 10):
+
+```bash
+python3 tools/des_fidelity_units.py <content_id>                 # which calls, how many units each
+python3 tools/des_fidelity_units.py <content_id> \
+  --texts texts.json --build <dir>                                 # one input block per call
+```
+
+`texts.json` maps each source's DOI to the `source_text` and `text_basis` the
+SOURCE call scored. The tool decides the scope: one source → every unit to it;
+several named in the prose → one call per named source with only its units;
+several and none named → one `POOLED` call over all of them. Each block it writes
+has this shape:
 
 ```
 mode:              FIDELITY
-source_text:       <exactly the source_text the SOURCE call scored>
+scope:             SOURCE | POOLED
+source_text:       <exactly the source_text the SOURCE call scored; POOLED: every source, tagged [S1] [S2] …>
 text_basis:        <exactly the SOURCE call's text_basis>
 units:             <the page's body, split by the rule below, as [{id:"u1", text:"…"}, …]>
 derivative_url:    <the page's canonical URL — provenance only>
 source_conclusion: <the LAST sentence of source_text, copied verbatim>
 ```
 
-The split is deterministic and is **yours, never the model's**: take the
-rendered prose of the page (title, headings and body, in order; the same region
-`verify_publish.py`'s `article_region()` reads), split on line breaks, then on
-`.` `!` `?` `؟` `۔` followed by whitespace or end of text; trim; drop empties;
-never split on `;` `،` `:` or «و». Number `u1…uN`. Model segmentation was the
-largest source of run-to-run disagreement in the release test and was taken out
-of the model's hands for exactly that reason.
+The split and the assignment are deterministic and are **the tool's, never the
+model's**: it reads the rendered prose (title, headings and body, in order; the
+region `verify_publish.py`'s `article_region()` reads), stops at the citation
+block, splits on line breaks and sentence terminators, marks headings, and
+numbers units `u1…uN` over the whole page — so a call that received only some
+units sees ids with gaps, which is correct. Model segmentation and attribution
+were the two largest sources of run-to-run disagreement in the release tests and
+were taken out of the model's hands for exactly that reason.
 
 **The output** is the spec's F5 object. Validate it in Part 3(5), then store it
 in Part 4.
@@ -1582,7 +1603,9 @@ appendix's checks yourself — an output that fails these is not a score:
    `null` (unquoted) for COMMENTARY; `s_design` / `q_method` / `penalties` are `null`
    for COMMENTARY; `commentary_checklist` is `null` for RESEARCH.
 5. **FIDELITY (spec appendix rule 8).** One `claims` object per unit, in input
-   order, `claim_quote` byte-equal to the unit's text; every non-empty
+   order and with the input's ids, `claim_quote` byte-equal to the unit's text;
+   `scope` copied from the input, and `source_ref` an «S<n>» tag on every quoted
+   claim under `POOLED` and `null` otherwise; every non-empty
    `source_quote` a verbatim substring of `source_text` by the rule in (1), and
    ONE whole sentence; no `NOT_IN_SOURCE` under `ABSTRACT_ONLY`/`SECONDARY_REPORT`
    and no `NOT_ASSESSABLE` under `FULL_TEXT`; every `ALTERED` carries a
@@ -1626,7 +1649,9 @@ without the leading `/` and without `.html` — the same id Phase F takes):
 
 **`fidelity` is an array PARALLEL to `sources` by index** — same length, slot
 `i` is the FIDELITY object for `sources[i]`, and `null` where no FIDELITY call
-ran for that source (Part 2b's skip cases). It is omitted entirely on a record
+ran for that source (Part 2b's skip cases, plus a source no unit of the page
+names). **Under `POOLED` scope it is the one pooled object instead of an array**,
+because that call judged the page against all its sources at once. It is omitted entirely on a record
 written before v2.5 or on a basket-1 page; Phase F accepts both shapes and
 rejects a `fidelity` whose length differs from `sources`. Parallel by index
 rather than keyed by DOI because the spec's output object carries no

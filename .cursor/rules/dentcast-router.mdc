@@ -110,11 +110,11 @@ alwaysApply: true
   ورود خودکار وسطِ باندل، هر ابهام = سؤال، و حکم هر باندلِ کاندید در گزارش
   صریح می‌آید).
 - هر publish (جز LiteCast) در **گام ۴.۱۳** امتیازِ **DES** می‌گیرد: پرامپتِ
-  `.dentcast/dentcast-evidence-score-v2.5.md` به‌عنوان system prompt اجرا می‌شود
-  (بدون appendix) و خروجی **عیناً** در `plus/des-scores.json` می‌نشیند؛ v2.5 به
+  `.dentcast/dentcast-evidence-score-v2.6.md` به‌عنوان system prompt اجرا می‌شود
+  (بدون appendix) و خروجی **عیناً** در `plus/des-scores.json` می‌نشیند؛ به
   ازای هر منبعِ امتیازگرفته یک فراخوانیِ دومِ **FIDELITY** هم دارد (بخش 2b: متنِ
-  صفحه، تقسیم‌شده توسط خودت، در برابرِ همان منبع؛ خروجی در آرایهٔ موازیِ
-  `fidelity`) — **نه**
+  صفحه، تقسیم و تخصیص‌یافته با `tools/des_fidelity_units.py`، در برابرِ همان
+  منبع یا در حالت `POOLED` همهٔ منابع؛ خروجی در `fidelity`) — **نه**
   در brain (Hard Rule 5) و **نه** به‌صورت مارک‌آپ روی صفحه (رندرر ماژولِ مشترک
   است). مدلِ امتیازده **هرگز fetch نمی‌کند**، پس `source_text` باید قبلش resolve
   شود (اول کابینتِ محلی، بعد PubMed MCP، بعد WebFetch)؛ منبعِ بدون abstract
