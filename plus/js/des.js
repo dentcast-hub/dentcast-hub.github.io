@@ -23,7 +23,7 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=178';
+import { el, faNum } from './util.js?v=179';
 
 /* ------------------------------------------------------------ the data -- */
 
@@ -411,8 +411,14 @@ function fidelityPane(rec, fids) {
 
 // The weakest of several per-source fidelity results speaks for the chip:
 // one misquoted source is the news, however faithfully the others are quoted.
+// A source with too few claims to measure is not a weak result, it is no
+// result: it never speaks for the page while another source was measured
+// (sharehub/share-18 read «ادعای کافی برای سنجش ندارد» because one of five
+// sources carried a single claim, beside four at «کاملاً مطابق»).
 function headlineFidelity(fids) {
-  return fids.reduce((w, x) => (LEVEL_RANK[x.f.level] < LEVEL_RANK[w.f.level] ? x : w), fids[0]).f;
+  const measured = fids.filter((x) => x.f.level !== 'INSUFFICIENT_CLAIMS');
+  const pool = measured.length ? measured : fids;
+  return pool.reduce((w, x) => (LEVEL_RANK[x.f.level] < LEVEL_RANK[w.f.level] ? x : w), pool[0]).f;
 }
 
 function selectPane(cardEl, which) {
