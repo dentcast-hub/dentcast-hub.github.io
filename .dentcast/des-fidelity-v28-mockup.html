@@ -60,6 +60,7 @@ h1{font-size:1.22rem;line-height:1.7;margin:0 0 12px}
 .seg button[aria-selected="true"]{background:var(--surface);color:var(--chrome);box-shadow:0 1px 2px rgba(0,0,0,.06)}
 
 /* verdict: one word, one sentence */
+.ask{margin:0 0 6px;font-size:.8rem;font-weight:700;color:var(--muted)}
 .verdict{display:flex;align-items:center;gap:10px;margin:0 0 4px}
 .dot{width:14px;height:14px;border-radius:50%;flex:none;background:var(--chrome)}
 .dot.hi{background:transparent;border:2.5px solid var(--chrome)}
@@ -133,8 +134,8 @@ h2{font-size:.98rem;margin:38px 0 4px}
     <div class="row">
       <span class="meta">۹ دقیقه</span>
       <span class="chips">
-        <a class="chip str" href="#card" data-open="src"><span class="b">C</span><span class="lbl">قوت منابع</span><span class="val">C–D</span></a>
-        <a class="chip fid" href="#card" data-open="fid"><span class="dot" id="chipDot"></span><span class="lbl">تطابق</span><span class="val" id="chipWord"></span></a>
+        <a class="chip str" href="#card" data-open="src"><span class="b">C</span><span class="lbl">قوت منابع:</span><span class="val">C–D</span></a>
+        <a class="chip fid" href="#card" data-open="fid"><span class="dot" id="chipDot"></span><span class="lbl">تطابق با مقاله:</span><span class="val" id="chipWord"></span></a>
       </span>
     </div>
     <div class="prose">
@@ -198,7 +199,8 @@ const silent  = claims.filter(c => c.verdict === 'NOT_IN_SOURCE');
 const matched = claims.filter(c => c.verdict === 'MATCHES');
 const skipped = claims.length - flagged.length - silent.length - matched.length;
 
-let h = `<div class="verdict"><span class="dot ${k}"></span><span class="word ${k}">${w}</span></div>
+let h = `<p class="ask">این نوشته چقدر همان را می‌گوید که مقاله‌ها گفته‌اند؟</p>
+  <div class="verdict"><span class="dot ${k}"></span><span class="word ${k}">${w}</span></div>
   <p class="say">${say(f)}</p>`;
 if (flagged.length) {
   h += `<div class="diff-h">${fa(flagged.length)} جا که با مقاله فرق دارد</div>` + flagged.map(c => `
@@ -231,7 +233,7 @@ h += `<div class="rows">
 document.getElementById('paneFid').innerHTML = h;
 
 const BANDS = ['E','D','C','B','A'];
-document.getElementById('paneSrc').innerHTML = D.sources.map(s => `
+document.getElementById('paneSrc').innerHTML = `<p class="ask">مقاله‌هایی که این نوشته به آن‌ها تکیه کرده چقدر قوی‌اند؟</p>` + D.sources.map(s => `
   <div class="srcrow" style="--cur:var(--des-${s.band})"><div class="bar">${BANDS.map(b => `<span class="blk ${b === s.band ? 'on' : ''}">${b}</span>`).join('')}</div>
     <div class="sname"><b>رده‌ی ${s.band} · سؤال مواد</b><span><bdi>${esc(s.authors)} et al., ${esc(s.year)}</bdi> — ${fa(s.score)} از ۱۰۰</span></div></div>`).join('') +
   `<p class="foot">قوت هر مقاله جدا از انطباق متن سنجیده می‌شود: مقاله‌ی ضعیف را می‌شود کاملاً درست نقل کرد، و مقاله‌ی قوی را نادرست.</p>`;
