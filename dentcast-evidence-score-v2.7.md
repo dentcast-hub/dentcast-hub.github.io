@@ -935,14 +935,23 @@ Comparability across versions:
     source's own advice: F2-iii now says advice attributed to others is a
     report of the literature, governs nothing, and its hedge is theirs.
     F1's topic-announcement line gains the page's own scope («این چهارچوب
-    برای … نوشته شده»).
+    برای … نوشته شده»). None of the three touches a unit that has no
+    inference connective, no attributed advice, or no scope sentence.
   - **Round 7:** scores 91–93, all four runs HIGH, 69 of 70 identical.
     The one split (u56, 2–2) was a ranking conclusion after «پس» read by
     two runs as «removal works» + a silent ranking — the reading the F3
     ranking example invited. F1 now says an inference's conclusion is one
     claim, never split, and a ranking conclusion is the ranking alone;
-    F3's example is limited to units that are not inferences. None of the three touches a unit that has no
-    inference connective, no attributed advice, or no scope sentence.
+    F3's example is limited to units that are not inferences.
+  - **Round 8 (final text), closed:** scores 89–91, all four runs HIGH,
+    67 of 70 identical; u56 unanimous. Rounds 7 and 8 together: eight
+    runs, every one HIGH, no `REVERSED` surviving the merge; the three
+    remaining splits (u20, u51, u53) are each one run against three and
+    move no level. That meets appendix rule 6 (the level never moves; a
+    one- or two-point drift is accepted). The `sharehub/share-23`
+    FIDELITY record (run 8A, whose every verdict is the round's majority
+    verdict) is stored under 2.7: **from here on, any change to the text of
+    this spec is a version bump.**
 - v2.5 → v2.6: **No SOURCE score moves. No FIDELITY record was stored
   under 2.5, so nothing needs regenerating; a FIDELITY result written under
   2.5 and re-scored under 2.6 may differ, chiefly upward where a page gives a
