@@ -95,3 +95,23 @@ a contaminated uncured layer — Kucukyilmaz vs Chang).
    and run `python3 tools/verify_publish.py sharehub/share-23`.
    `verify_publish.py` already handles the pooled object; check it accepts
    `pooled_part` being absent from the merged object.
+
+## Closed (1405/07/17, second session)
+
+Inputs rebuilt from the two Drive PDFs (references cut, Drive markup
+stripped; Katebi 30,327 + Bourgi 64,566 characters). Four more rounds of
+4 runs × 2 calls + `--merge`:
+
+| Round | Spec change before it | Scores | Level | Identical |
+|---|---|---|---|---|
+| r5 | none | 88–89 | 4/4 HIGH | 66/70 |
+| r6 | F3: a silent half never outranks an addressed one | 89–94 | 3 HIGH, 1 MEDIUM (u57) | 63/70 |
+| r7 | F1: inference rule runs before F2-v; F2-iii: advice attributed to others does not govern; page-scope sentence is NOT_A_CLAIM | 91–93 | 4/4 HIGH | 69/70 |
+| r8 | F1: an inference's conclusion is one claim (a ranking conclusion is the ranking alone) | 89–91 | 4/4 HIGH | 67/70 |
+
+Precision accepted on appendix rule 6. The FIDELITY record for
+`sharehub/share-23` is in `plus/des-scores.json` (run 8A: 91 · HIGH; 50
+match, 2 altered: u46 scope, u48 hedge). `verify_publish.py` passes every
+DES fidelity row; its two FAILs (brain position, Pulse) predate this
+work. **A record now carries 2.7, so any further spec text change bumps
+the version.** This brief is spent.
