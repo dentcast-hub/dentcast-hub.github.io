@@ -673,10 +673,11 @@ A claim that the source addresses only partly — one half stated, the other hal
 
 **A "half" is a separate assertion, never a word inside one.** A unit has two halves only when it makes two assertions — two predicates joined by «و» or a comma, or two clauses. A modifier inside the subject is not a half: in «انحرافات مثبت ناشی از مایع می‌توانستند از ۱۲۰ میکرون فراتر بروند» the one assertion is the magnitude, and «مثبت» only describes what is being measured. That unit is judged on the magnitude alone, which an abstract with no figure in microns leaves silent.
 
-**What counts as "stated" is narrow, and two near-misses are silence:**
+**What counts as "stated" is narrow, and three near-misses are silence:**
 
 1. **A topic sentence is not a statement of the topic's content.** A source sentence whose only verb is *is/are discussed*, *is/are reviewed*, *is/are considered* or *is/are examined*, and which states no conclusion after it, says that the paper covers the subject, not what it concludes about it. Two things take a sentence out of this rule: a conclusion clause after the verb (*…are reviewed, supporting the principle that X* states X), and a subject that already carries the content (*the usefulness of grooves … is illustrated* states that grooves are useful; *is illustrated / is shown / is demonstrated* report a finding and are never on this list). «Concepts of … minimally acceptable preparation taper … are discussed» supports a claim that the paper discusses taper; it does not support «برای هر نسبت ارتفاع به قاعده یک حداکثر taper وجود دارد». Against such a sentence the content claim is silence.
 2. **A neighbouring proposition is not the same proposition.** A half is stated only when a source sentence asserts the same subject with the same predicate. «resistance form is an essential element in preparation design» and «resistance form عمدتاً در مرحلهٔ تراش تعیین می‌شود، نه در لابراتوار» share a subject and differ in predicate (importance against where it is determined), so the second is silence against the first, not a partial match.
+3. **A ranking is stated only by a sentence that ranks.** A superlative or comparative claim — «مؤثرترین», «مطمئن‌ترین», «بهترین», «بیشتر از …» — is stated only by a source sentence that ranks the same things (*most*, *best*, *highest*, *more … than*, *the most consistently effective*). A sentence reporting that the action works, without ranking it, states the other half of the unit and is silence on the ranking; the ranking half is then judged against the ranking sentence alone, hedge included («appears to be the most consistently effective» against «مطمئن‌ترین کار این است» is `HEDGE_REMOVED`).
 
 #### F2-i — The five alterations. Nothing else is `ALTERED`.
 
@@ -692,7 +693,7 @@ A claim that the source addresses only partly — one half stated, the other hal
 
 If none of the five fits and the direction agrees, the verdict is `MATCHES`. If the direction disagrees, it is `REVERSED`, whatever else differs. There is no `OTHER`. When more than one kind fits one claim, `change_kind` is the **first** of them in this table's order.
 
-**Narrowing is not a change.** A claim that applies a finding to a subset of the population, materials or systems the source itself studied («self-etch دومرحله‌ای» under a finding about adhesive systems) is the source's finding, not `POPULATION_OR_CONDITION_CHANGED`. That kind fires when the claim **widens** the scope or **moves** it to something the source did not include.
+**Narrowing is not a change.** A claim that applies a finding to a subset of the population, materials or systems the source itself studied («self-etch دومرحله‌ای» under a finding about adhesive systems) is the source's finding, not `POPULATION_OR_CONDITION_CHANGED`. That kind fires when the claim **widens** the scope or **moves** it to something the source did not include. Two shapes of it recur: a quantifier over a finding the source reports for named systems («در همه‌ی سیستم‌ها», «در هر سیستمی» over one tested adhesive), and a finding reported for one named system assigned to a different group («در بقیه‌ی سیستم‌ها راه مطمئن برداشتن لایه است» when the removal was tested on a universal adhesive alone) — both are `POPULATION_OR_CONDITION_CHANGED`, inside an instruction as much as outside one. **Which category a named product belongs to is outside knowledge** (Core Rule 4) unless the source itself says so: a table row naming «Clearfil S3 Bond» without calling it self-etch is, for this comparison, a row about an adhesive system, and a claim about etch-and-rinse systems narrows it rather than moves it.
 
 #### F2-ii — What a hedge is, and what it is not
 
@@ -715,6 +716,8 @@ A unit that tells the reader what to do states no degree of certainty about an o
 1. **The source itself recommends or advises on the action** (*is recommended*, *is advised*, *should*, *may be considered*, *is not recommended*): compare the two recommendations. A recommendation the source hedges («may be considered») stated as an obligation («حتماً باید») is `ALTERED` with `HEDGE_REMOVED`; the opposite recommendation is `REVERSED`; the same strength is `MATCHES`.
 2. **The source only reports the action's effect** (*reapplication could revert the impairment*, *re-etching showed the most promising results*): the instruction `MATCHES` when the reported effect of that action is favourable and is `REVERSED` when it is unfavourable («hemostatic agents … not recommended», an action shown to lower the outcome). There is no hedge to compare, because a source that reports an effect has made no recommendation for the instruction to have strengthened.
 
+When the source does both for the same action — advises on it in one sentence and reports its effect in another — **the advice governs** (way 1), because it is the source's own position on the action and the effect is its evidence for it.
+
 A unit that states an **outcome** («این قاعده باند را بازمی‌گرداند») is not an instruction, even when it follows one, and is compared as an outcome — including on its hedge. A unit that holds both («برای خون، شستشو جوابگو نیست و باید دوباره اچ کنید») is two claims, and F3 gives the one verdict.
 
 #### F2-iv — A claim that tells two conditions apart is judged on the difference
@@ -730,10 +733,11 @@ This is the narrowing rule's other half: a claim about ONE subset is judged agai
 
 #### F2-v — Under `FULL_TEXT` the whole paper speaks, and the most specific sentence governs
 
-A full text says the same thing at several grains: the abstract, the results, a table row, the discussion, the clinical-implications paragraph. A claim is compared with the sentences that address **its own subject at its own grain** — the stage, the contaminant, the system, the group it names — wherever in the paper they stand. Two rules close what that leaves open:
+A full text says the same thing at several grains: the abstract, the results, a table row, the discussion, the clinical-implications paragraph. Before any verdict on a unit, run these three steps in order; they are a procedure, not a preference.
 
-1. **Specific outranks general.** When one sentence addresses the claim's condition specifically and another addresses it only as part of a wider statement, the specific one decides the verdict and is the one quoted; the general one is not a contradiction. The F2 quote filters then choose among the specific sentences only. «after adhesive curing … simple rinsing or drying alone is generally insufficient» decides a claim about blood after curing; the abstract's «decontamination … could revert the impairment» does not.
-2. **A paper that says both, at the same grain, has not contradicted the page.** When two specific sentences of one source disagree with each other about the claim's condition — a review reporting one study that recovered the bond and another that did not — the claim that follows one of them is `MATCHES` (or `ALTERED` against that sentence), and `note` names the other. This is F6's pooled rule inside one paper, for the same reason: the page may be following the first, and the disagreement is the source's.
+1. **Gather.** Collect every sentence of `source_text` that addresses the claim's own subject — the stage, the contaminant, the system, the group it names — wherever it stands. **A table cell is a sentence**: the text of a «Main results» or «Significant finding» cell, from one study name to the next, is quoted exactly as any other sentence and counts exactly as much.
+2. **Specific outranks general.** A sentence that addresses the claim's condition specifically outranks one that addresses it only inside a wider statement; the general one is dropped from the comparison and is not a contradiction. «after adhesive curing … simple rinsing or drying alone is generally insufficient» decides a claim about blood after curing; the abstract's «decontamination … could revert the impairment» does not.
+3. **One faithful sentence is enough.** If ANY gathered sentence states the claim unchanged — same direction, same hedge level, same scope — the verdict is `MATCHES`, that sentence is quoted, and `note` names any gathered sentence that disagrees. `ALTERED` and `REVERSED` are legal only when no gathered sentence states the claim unchanged; then the verdict follows the closest of them. This is F2-ii's plain-beats-hedged rule and F6's pooled rule made one: a review that reports one study recovering the bond and another not has not contradicted a page that follows the first, and a table row stating plainly what the conclusion hedges is the plain sentence. **`REVERSED` is never emitted until this search has been run and found nothing.**
 
 Under `ABSTRACT_ONLY` and `SECONDARY_REPORT` there is one grain, and these rules change nothing — except that item 4 of F2-iv still keeps a pooled summary sentence from reversing a claim about one condition.
 
@@ -873,9 +877,17 @@ Comparability across versions:
     4: a sentence naming both conditions together («saliva or blood») is a
     general finding, read as silence. The v2.6 example, which was this exact
     error, is replaced.
-  - **F2-v** (new) — under `FULL_TEXT` the most specific sentence governs,
-    and two specific sentences of one paper that disagree leave a claim
-    following either of them `MATCHES`.
+  - **F2-v** (new) — under `FULL_TEXT` a procedure run before every verdict:
+    gather every sentence on the claim's subject (a table cell is a
+    sentence), drop the general for the specific, and `MATCHES` when any one
+    of them states the claim unchanged; `REVERSED` only after that search
+    finds nothing.
+  - **F2** — a ranking («مؤثرترین», «مطمئن‌ترین») is stated only by a
+    sentence that ranks. **F2-i** — «in all systems» over a finding from one,
+    and a finding moved to «the other systems», are both a scope change; a
+    product's category is outside knowledge unless the source names it.
+    **F2-iii** — when the source both advises on an action and reports its
+    effect, the advice governs.
 - v2.5 → v2.6: **No SOURCE score moves. No FIDELITY record was stored
   under 2.5, so nothing needs regenerating; a FIDELITY result written under
   2.5 and re-scored under 2.6 may differ, chiefly upward where a page gives a
