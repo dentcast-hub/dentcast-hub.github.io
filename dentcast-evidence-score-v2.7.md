@@ -748,11 +748,12 @@ So the test for `HEDGE_ADDED` is: strip the qualifier, and the claim is the sour
 
 ### F3 — One unit, one verdict: precedence
 
-When a unit carries more than one attributed claim, rate each claim silently and emit the single verdict highest in this list:
+When a unit carries more than one attributed claim, rate each claim silently, then decide in two steps:
 
-`REVERSED` > `NOT_IN_SOURCE` > `ALTERED` > `MATCHES` > `NOT_ASSESSABLE`
+1. **A silent claim never outranks an addressed one.** A claim the source does not address (`NOT_IN_SOURCE` under `FULL_TEXT`, `NOT_ASSESSABLE` otherwise) is the silent half of F2's partial rule: it is named in `note` and does not decide the verdict. This holds under every `text_basis` — silence is not disagreement, and a full text's silence is no more a verdict on the other half than an abstract's.
+2. **Among the claims the source does address, emit the highest:** `REVERSED` > `ALTERED` > `MATCHES`. Only when **no** claim of the unit is addressed is the unit `NOT_IN_SOURCE` (`FULL_TEXT`) or `NOT_ASSESSABLE` (otherwise).
 
-`MATCHES` outranks `NOT_ASSESSABLE` on purpose: a unit that states two findings, one of which the abstract confirms and one of which it is silent about, has been partly verified, and partly verified is more than not verified. `source_quote` is then the sentence supporting the emitted verdict, and `note` names the other claim and its silent verdict.
+A unit that states two findings, one of which the source confirms and one of which it is silent about, has been partly verified, and partly verified is more than not verified. This includes a ranking half (F2 item 3): «مطمئن‌ترین کار این است که X» against a source that reports X working and ranks nothing is `MATCHES` on X, with the unranked superlative named in `note` — while a ranking half the source does address with a hedge («appears to be the most …») is `ALTERED` by step 2. `source_quote` is then the sentence supporting the emitted verdict, and `note` names the other claim and its silent verdict.
 
 A single predicate with a list of objects («دقت، مورفولوژی و پایداری ساختاری را مقایسه کردند») is ONE claim, not three.
 
@@ -911,6 +912,20 @@ Comparability across versions:
     splits the level. Better, not closed; continuation brief in
     `.dentcast/des-v27-fidelity-handoff.md`. No FIDELITY record is stored
     until it is.
+  - **F3 precedence — a silent half never outranks an addressed one**
+    (third test, round 5). F2 said a partly-addressed unit «takes the
+    verdict of the stated half»; F3's list put `NOT_IN_SOURCE` above
+    `ALTERED` and `MATCHES`. The two agree under an abstract (where
+    `MATCHES` > `NOT_ASSESSABLE` already) and contradict each other under
+    `FULL_TEXT`, and five of the round's eight calls reported the conflict
+    unprompted: seven of the eight followed F2, one followed F3, and that
+    one call was the source of most of the round's splits. F3 now decides
+    in two steps — drop silent halves, then `REVERSED` > `ALTERED` >
+    `MATCHES` among the rest — which is F2's rule restated. Nothing moves
+    under `ABSTRACT_ONLY`. Round 5 itself (the text from before this
+    change, one call per paper + `--merge`, four runs): scores 88–89,
+    every run HIGH, 66 of 70 units identical, every remaining split one
+    run against three.
 - v2.5 → v2.6: **No SOURCE score moves. No FIDELITY record was stored
   under 2.5, so nothing needs regenerating; a FIDELITY result written under
   2.5 and re-scored under 2.6 may differ, chiefly upward where a page gives a
