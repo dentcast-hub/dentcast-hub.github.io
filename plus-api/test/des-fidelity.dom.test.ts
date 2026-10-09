@@ -136,10 +136,48 @@ describe('DES fidelity display (spec v2.8)', () => {
     expect(chip).not.toContain('ادعای کافی');
   });
 
-  it('every source too small to measure: the chip says so', async () => {
+  it('several sources are shown as ONE fidelity box, totals over every claim', async () => {
+    const { card } = await mount(ALL['sharehub/share-18'], 'sharehub/share-18');
+    const pane = card!.querySelector('.dc-des-pane[data-pane="fid"]')!;
+    expect(pane.querySelectorAll('.dc-fid')).toHaveLength(1);
+    expect(pane.querySelectorAll('.dc-des-srctitle')).toHaveLength(0);
+    expect(text(pane)).toContain('کاملاً مطابق');
+    expect(text(pane)).not.toContain('ادعای کافی');
+    expect(text(pane)).toContain('به تفکیک منبع');
+  });
+
+  it('a differing sentence in the combined box names its own paper', async () => {
     const rec = JSON.parse(JSON.stringify(ALL['sharehub/share-18']));
-    rec.fidelity = rec.fidelity.map((f: { level: string; fidelity_score: number | null }) =>
-      ({ ...f, level: 'INSUFFICIENT_CLAIMS', fidelity_score: null }));
+    const f = rec.fidelity[1]; // Stoilov
+    const c = f.claims.find((x: { verdict: string }) => x.verdict === 'MATCHES');
+    c.verdict = 'ALTERED'; c.change_kind = 'HEDGE_REMOVED';
+    f.counts.matches -= 1; f.counts.altered += 1;
+    const { row, card } = await mount(rec);
+    const diff = card!.querySelectorAll('.dc-fid-diff');
+    expect(diff).toHaveLength(1);
+    expect(text(diff[0])).toContain('Stoilov');
+    expect(text(row.querySelector('.dc-act-fid'))).not.toContain('کاملاً');
+  });
+
+  it('a sentence judged under two sources counts once, and a difference in either half flags it', async () => {
+    const rec = JSON.parse(JSON.stringify(ALL['sharehub/share-18']));
+    const a = rec.fidelity[0].claims.find((x: { verdict: string }) => x.verdict === 'MATCHES');
+    const twin = { ...a, verdict: 'ALTERED', change_kind: 'POPULATION_OR_CONDITION_CHANGED' };
+    rec.fidelity[2].claims.push(twin);
+    rec.fidelity[2].counts.altered += 1;
+    const { card } = await mount(rec);
+    const pane = card!.querySelector('.dc-des-pane[data-pane="fid"]')!;
+    expect(pane.querySelectorAll('.dc-fid-diff')).toHaveLength(1);
+    expect(text(pane.querySelector('.dc-fid-diff'))).toContain(a.claim_quote);
+  });
+
+  it('fewer than three claims across every source: the chip says so', async () => {
+    const rec = JSON.parse(JSON.stringify(ALL['sharehub/share-18']));
+    let kept = 0;
+    rec.fidelity.forEach((f: { claims: { verdict: string }[] }) => f.claims.forEach((c) => {
+      if (c.verdict === 'MATCHES' && kept < 2) { kept += 1; return; }
+      if (['MATCHES', 'ALTERED', 'REVERSED'].includes(c.verdict)) c.verdict = 'NOT_A_CLAIM';
+    }));
     const { row } = await mount(rec);
     expect(text(row.querySelector('.dc-act-fid'))).toContain('ادعای کافی برای سنجش ندارد');
   });

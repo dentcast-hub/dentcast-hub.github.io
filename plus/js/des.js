@@ -23,7 +23,7 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=179';
+import { el, faNum } from './util.js?v=180';
 
 /* ------------------------------------------------------------ the data -- */
 
@@ -279,7 +279,58 @@ function fidelityOf(rec) {
   const ok = (o) => o && o.mode === 'FIDELITY' && verAtLeast(o.des_version, 2, 8) && Array.isArray(o.claims);
   if (f && !Array.isArray(f)) return ok(f) ? [{ f, src: null }] : [];
   if (!Array.isArray(f)) return [];
-  return f.map((o, i) => (ok(o) ? { f: o, src: rec.sources[i] } : null)).filter(Boolean);
+  const slots = f.map((o, i) => (ok(o) ? { f: o, src: rec.sources[i], i } : null)).filter(Boolean);
+  return slots.length > 1 ? [{ f: combineFidelity(slots), src: null }] : slots;
+}
+
+// Several per-source FIDELITY objects are shown as ONE (founder, 1405/07/17):
+// the reader's question is whether this page says what its sources say, not
+// how each source fared. Display only — the record keeps one object per
+// source, the spec's shape, and nothing derived is stored. Per page unit:
+// a unit judged under two sources (it names both) is ONE claim; each call
+// judged its own half, so any REVERSED wins, then any ALTERED, then any
+// MATCHES, then silence; NOT_A_CLAIM / AUTHOR_VIEW only when every call said
+// so. `source_ref` («S<n>», by position in rec.sources) carries which paper a
+// quoted sentence comes from. The tally is scored by spec F4 (v2.8+).
+function combineFidelity(slots) {
+  const ORDER = ['REVERSED', 'ALTERED', 'MATCHES', 'NOT_IN_SOURCE', 'NOT_ASSESSABLE'];
+  const byUnit = new Map();
+  slots.forEach(({ f, i }) => f.claims.forEach((c) => {
+    if (!byUnit.has(c.id)) byUnit.set(c.id, []);
+    byUnit.get(c.id).push({ ...c, source_ref: 'S' + (i + 1) });
+  }));
+  const num = (id) => parseInt(String(id).replace(/\D/g, ''), 10) || 0;
+  const claims = [...byUnit.keys()].sort((a, b) => num(a) - num(b)).map((id) => {
+    const cs = byUnit.get(id);
+    for (const v of ORDER) {
+      const hit = cs.find((c) => c.verdict === v);
+      if (hit) return hit;
+    }
+    return cs[0];
+  });
+  const n = (v) => claims.filter((c) => c.verdict === v).length;
+  const counts = {
+    matches: n('MATCHES'), altered: n('ALTERED'), reversed: n('REVERSED'),
+    not_in_source: n('NOT_IN_SOURCE'), not_assessable: n('NOT_ASSESSABLE'),
+    author_view: n('AUTHOR_VIEW'), not_a_claim: n('NOT_A_CLAIM'),
+  };
+  const m = counts.matches, a = counts.altered, r = counts.reversed;
+  const assessable = m + a + r;
+  let score = null, level = 'INSUFFICIENT_CLAIMS';
+  if (assessable >= 3) {
+    score = Math.floor((2 * (m * 100 + a * 50) + assessable) / (2 * assessable)); // round half up, exact
+    const oneNotch = a === 1 && !r;
+    level = score < 60 ? 'LOW' : (r || (score <= 84 && !oneNotch)) ? 'MEDIUM' : 'HIGH';
+  }
+  const fs = slots.map((x) => x.f);
+  return {
+    des_version: fs[0].des_version, mode: 'FIDELITY', scope: 'COMBINED',
+    claims, counts, assessable, fidelity_score: score, level,
+    provisional: fs.some((f) => f.provisional),
+    source_conclusion: slots.map(({ f, i }) => (f.source_conclusion ? '[S' + (i + 1) + '] ' + f.source_conclusion : ''))
+      .filter(Boolean).join('\n'),
+    per_source: slots.map(({ f, src }) => ({ src, f })),
+  };
 }
 
 // The word, from `level` (spec v2.8 appendix rule 5). `key` drives the dot.
@@ -372,10 +423,26 @@ function fidelityBlock(f, one, srcFor) {
       ['تطابق متوسط', '٪۶۰ تا ٪۸۴، یا هر جمله‌ی برعکس'],
       ['تطابق پایین', 'زیر ٪۶۰'],
     ].flatMap(([a, b]) => [el('span', {}, a), el('span', {}, b)])),
-    el('p', {}, (one ? '' : 'هر جمله جداگانه با هر منبع سنجیده شده؛ اگر یکی از منابع آن را بگوید، مطابق است. ') +
+    el('p', {}, (one ? '' : f.scope === 'COMBINED'
+      ? 'هر جمله با همان منبعی سنجیده شده که به آن اشاره می‌کند؛ اینجا همه با هم شمرده شده‌اند. '
+      : 'هر جمله جداگانه با هر منبع سنجیده شده؛ اگر یکی از منابع آن را بگوید، مطابق است. ') +
       faNum(outside) + ' جمله (تیترها، جمله‌های راهنما) ادعا نیستند و بیرون مانده‌اند.'),
   ]));
   if (matched.length) rows.push(row('همه‌ی جمله‌های مطابق', matched.length, [list(matched)]));
+  if (f.per_source) {
+    rows.push(row('به تفکیک منبع', f.per_source.length, [
+      el('ul', { class: 'dc-fid-persrc' }, f.per_source.map(({ src, f: pf }) => {
+        const pc = pf.counts || {};
+        const k = (pc.matches || 0) + (pc.altered || 0) + (pc.reversed || 0);
+        return el('li', {}, [
+          el('bdi', { dir: 'rtl' }, citeName(src)), ': ',
+          faNum(k) + ' ادعا' + (pc.altered || pc.reversed
+            ? '، ' + faNum((pc.altered || 0) + (pc.reversed || 0)) + ' متفاوت'
+            : k ? '، همه مطابق' : ''),
+        ]);
+      })),
+    ]));
+  }
   if (f.source_conclusion) {
     rows.push(row('جمع‌بندیِ خودِ ' + SRC, null, [
       ...String(f.source_conclusion).split('\n').filter(Boolean).map((l) => {
