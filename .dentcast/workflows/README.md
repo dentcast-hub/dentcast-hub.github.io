@@ -1397,10 +1397,20 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v2.7.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v2.8.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v2.7 is the current spec, and its change from 2.6 is that the FIDELITY call
+**v2.8 is the current spec, and its change from 2.7 is the FIDELITY arithmetic
+only: F4 scores the claims the source ADDRESSES** (`MATCHES` + `ALTERED` +
+`REVERSED`). A sentence the source is silent about (`NOT_IN_SOURCE`) is counted
+and shown, never scored — under a full text it is almost always the author's own
+background knowledge or clinical reasoning, and scoring it zero took
+`sharehub/share-23` from 98 to 91 for explaining. No verdict changes and no
+SOURCE score moves; a 2.7 record is re-scored by recomputing F4 from its stored
+verdicts and re-stamped 2.8 (no model call). The card's headline is the
+firmer/wider/reversed claims themselves, not the percentage (appendix rule 5).
+
+**v2.7's change from 2.6 is that the FIDELITY call
 reads the SAME text the SOURCE call scored, on the same basis** — a page written
 from a full text is judged against the full text, never its abstract; the tool
 refuses a mismatch (spec F0, appendix rule 11). Under `FULL_TEXT` the most
@@ -1630,7 +1640,7 @@ appendix's checks yourself — an output that fails these is not a score:
    and no `NOT_ASSESSABLE` under `FULL_TEXT`; every `ALTERED` carries a
    `change_kind` from the closed F2-i list and no other verdict carries one;
    `counts` equal the tally of `claims`; `assessable` = matches + altered +
-   reversed + not_in_source; `fidelity_score` and `level` recompute by F4 (score
+   reversed (from v2.8; + not_in_source on a 2.5–2.7 record); `fidelity_score` and `level` recompute by F4 (score
    `null` and level `INSUFFICIENT_CLAIMS` below three assessable claims; any
    `REVERSED` caps the level at `MEDIUM`); `provisional` is true exactly when
    `text_basis` is not `FULL_TEXT`; `source_conclusion` is echoed unchanged.
@@ -1645,6 +1655,65 @@ right score was.
 score the same input three times. A one- or two-point drift in the number is
 acceptable; **a band change is not** — it means the anchors were read loosely and the
 run is unusable.
+
+#### Part 3b — Offer the founder a fix for every differing sentence (founder gate, never automatic)
+
+**The fidelity grade exists to make the writing better, and the goal is
+«کاملاً مطابق»** (founder, 1405/07/17). So when a validated FIDELITY result
+carries any `ALTERED` or `REVERSED` unit, the publish **stops here, before
+Part 4 stores anything**, and the founder is shown each such sentence and asked
+whether to fix it. This is a gate of `agent-parity.md` §1 (never batched into
+the final report, never skipped because the grade is already high).
+
+For **each** `ALTERED` / `REVERSED` unit, one block, in this order:
+
+1. the page's own sentence, **verbatim** (copied from the page, never re-typed —
+   Hard Rule 16);
+2. what is different, in plain Persian («قاطع‌تر از منبع»، «گسترده‌تر از منبع»،
+   «برعکسِ منبع»…), from `change_kind`;
+3. the source's own sentence (`source_quote`), and which source it is;
+4. **one proposed rewrite with the smallest change that makes it match** —
+   add the source's own qualifier («ممکن است», «در برخی مطالعات»), narrow the
+   scope back to what was tested («در یونیورسال‌ها» for «در همه‌ی سیستم‌ها»),
+   or, for a `REVERSED`, state the source's direction or drop the claim. Keep
+   the founder's wording, rhythm and terms everywhere else in the sentence;
+   change nothing a `MATCHES` sentence says; a ZWNJ stays a ZWNJ;
+5. the question, with exactly three named answers: **«اصلاح کن»** (apply the
+   proposal as shown), **«خودم می‌نویسم»** (the founder types the sentence; it
+   is copied verbatim), **«همین بماند»** (no change — the author's right; the
+   sentence stays flagged in the record).
+
+Sentences the sources do not address (`NOT_IN_SOURCE`) are **not** offered:
+they are not faults and do not lower the grade (spec v2.8 F4). Never edit a
+sentence without its own «اصلاح کن» / «خودم می‌نویسم»; a «بله» to one is
+never a «بله» to the others.
+
+**After any accepted edit:**
+
+- Apply it to the page body exactly as approved, and to the **same sentence in
+  the en mirror** (Phase D) — translated, nothing else touched. If the edited
+  sentence also lives on another surface (the lead used for the description,
+  the brain `summary`, the Pulse line), that is a **sweep** (Hard Rule 17): every
+  surface in the same commit.
+- **Re-run the whole FIDELITY step for the page** — rebuild the units with
+  `tools/des_fidelity_units.py` (sentence boundaries may have moved, so ids may
+  shift), run every call again against the **same** `source_text` (spec F0,
+  appendix rule 11), `--merge` if POOLED, and validate again (Part 3). Never
+  patch verdicts by hand and never splice new calls into an old record: the
+  stored object is one coherent run.
+- Report the grade **before → after** («تطابق خیلی بالا → کاملاً مطابق»). If the
+  new run still flags a sentence — including one just rewritten — offer it
+  again; the loop ends when nothing is flagged or the founder says «همین بماند».
+
+Only then go on to Part 4, which stores the **final** result.
+
+**For a page already published** (trigger **«تطابق X رو کامل کن»**, «عدم
+انطباق‌های X رو نشونم بده»): read its stored `fidelity` from
+`plus/des-scores.json`, run this same Part 3b on it, then the re-run above,
+then Part 4 (replace the record's `fidelity` and its `scored_at`), Phase F,
+and `tools/stamp-version.py` last. Resolve `source_text` again by Part 1 (the
+scratch copy does not survive a session) — and from the **same** basis the
+SOURCE record was scored on, or the tool refuses it.
 
 #### Part 4 — Store the record
 
@@ -1700,12 +1769,14 @@ commentary variant, the colour rule) lives in **CLAUDE.md § "DES display"**.
 **This step's obligation ends at the record.** It writes data; it does not edit the
 page. Status as of 2026-08-14: the record format and this step are live, the shared
 renderer is not built yet — which costs nothing, because every record written now
-lights up the moment that module ships. **The same holds for `fidelity` as of
-2026-10-08:** `plus/js/des.js` reads `sources` and ignores `fidelity`, so a
-record carrying both renders exactly as before until the fidelity block is
-drawn (mockup `.dentcast/des-fidelity-mockup.html`; display rules in CLAUDE.md
-§ DES). Do **not** compensate by inlining markup or
-CSS into the published page.
+lights up the moment that module ships. **`fidelity` is drawn too, from spec 2.8 on
+(1405/07/17):** `plus/js/des.js` adds a second chip («تطابق با منابع: …», one
+word, never a number) beside the band chip and a «تطابق با منابع» tab in the
+card, read from the record this step writes — so a 2.8 fidelity object goes
+live the moment it is stored, and an older stamp is ignored (approved mockup
+`.dentcast/des-fidelity-v28-mockup.html`; display rules in CLAUDE.md § DES).
+A publish therefore needs nothing on the page for it: the record is the whole
+job. Do **not** compensate by inlining markup or CSS into the published page.
 
 #### Verify & report
 
@@ -1713,9 +1784,12 @@ Per source: the DOI (or «متنِ خودِ مطلب» for COMMENTARY); where `s
 from (cabinet hit / MCP lookup / WebFetch / pasted by the user); the `text_basis` and
 why; the resulting `des_score`, `band`, `question_type` and whether `provisional` is
 true; and the outcome of each of the five Part-3 checks. Per FIDELITY slot: the
-`level`, the count line («۴ از ۵ ادعای قابل‌بررسی مطابق منبع»), every `ALTERED`
-and `REVERSED` unit with its `change_kind`, or the skip reason for a `null`
-slot. For a skip, the documented
+`level` and the word the reader will see for it («تطابق خیلی بالا», spec v2.8
+appendix rule 5), the count line («۵۰ از ۵۲ ادعایی که منابع به آن پرداخته‌اند
+مطابق است؛ ۴ جملهٔ دیگر در منابع نیامده»), every `ALTERED` and `REVERSED` unit
+with its `change_kind`, or the skip reason for a `null` slot. And Part 3b's outcome: each
+offered sentence with the founder's answer («اصلاح کن» / «خودم می‌نویسم» /
+«همین بماند»), and the grade before → after the re-run. For a skip, the documented
 reason line. Explicitly confirm that no DOI, abstract, or quartile was guessed.
 
 ### 4.14. چالش — public half on the page, private half in the admin queue

@@ -3,10 +3,10 @@
 // the card text expands to the whole sentence around the highlight, and the
 // highlighted piece becomes the cloze blank (revealable). Manual review logs
 // card_reviewed_manual and never touches card_state.
-import { el, faNum, signalStreakActivity, renderNoteLines } from './util.js?v=177';
-import { api } from './api.js?v=177';
-import { getModel, contentInfo } from './content-index.js?v=177';
-import { LABELS, PALETTE } from './config.js?v=177';
+import { el, faNum, signalStreakActivity, renderNoteLines } from './util.js?v=178';
+import { api } from './api.js?v=178';
+import { getModel, contentInfo } from './content-index.js?v=178';
+import { LABELS, PALETTE } from './config.js?v=178';
 
 const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
 const colorCss = (k) => (PALETTE.find((p) => p.key === k) || {}).css || 'transparent';

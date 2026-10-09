@@ -17,7 +17,7 @@ agent produces byte-identical input blocks for the same page.
 `texts.json` maps each source's DOI (lower case) to
 {"source_text": "...", "text_basis": "ABSTRACT_ONLY" | "FULL_TEXT" | ...} —
 the same text the SOURCE call scored, on the same basis (the tool refuses
-a mismatch — spec v2.7 appendix rule 11). Resolving it (cabinet, PubMed, WebFetch)
+a mismatch — spec v2.7+ appendix rule 11). Resolving it (cabinet, PubMed, WebFetch)
 is step 4.13 Part 1's job, not this tool's.
 
 Three modes, decided here and nowhere else:
@@ -290,11 +290,19 @@ def merge_pooled(parts, basis):
     counts = {"matches": vs.count("MATCHES"), "altered": vs.count("ALTERED"), "reversed": vs.count("REVERSED"),
               "not_in_source": vs.count("NOT_IN_SOURCE"), "not_assessable": vs.count("NOT_ASSESSABLE"),
               "author_view": vs.count("AUTHOR_VIEW"), "not_a_claim": vs.count("NOT_A_CLAIM")}
-    assessable, score, level = vp.des_fidelity_recompute(counts)
+    version = parts[tags[0]].get("des_version", "2.8")
+    assessable, score, level = vp.des_fidelity_recompute(counts, version)
     fa = lambda n: str(n).translate(str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹"))
     lvl_fa = {"HIGH": "بالا", "MEDIUM": "متوسط", "LOW": "پایین", "INSUFFICIENT_CLAIMS": "ادعای کافی ندارد"}[level]
-    fact = (f"از {fa(assessable)} ادعای قابل‌بررسی، {fa(counts['matches'])} مورد با منابع مطابق است، "
-            f"{fa(counts['altered'])} مورد تغییر یافته و {fa(counts['reversed'])} مورد برعکس؛ سطح انطباق {lvl_fa}.")
+    if vp.des_ge(version, (2, 8)):
+        # v2.8 F4: the score is over the claims the sources ADDRESS; a sentence
+        # they are silent about is counted, never called a fault (F5 fact_fa)
+        fact = (f"از {fa(assessable)} ادعایی که منابع به آن پرداخته‌اند، {fa(counts['matches'])} مورد مطابق است، "
+                f"{fa(counts['altered'])} مورد تغییر یافته و {fa(counts['reversed'])} مورد برعکس؛ سطح انطباق {lvl_fa}"
+                + (f"؛ {fa(counts['not_in_source'])} جمله‌ی دیگر در منابع نیامده است." if counts['not_in_source'] else "."))
+    else:
+        fact = (f"از {fa(assessable)} ادعای قابل‌بررسی، {fa(counts['matches'])} مورد با منابع مطابق است، "
+                f"{fa(counts['altered'])} مورد تغییر یافته و {fa(counts['reversed'])} مورد برعکس؛ سطح انطباق {lvl_fa}.")
     flagged = [c for c in claims if c["verdict"] in ("ALTERED", "REVERSED")]
     if not flagged:
         interp = "هر ادعای قابل‌بررسی با دست‌کم یکی از منابع مطابق است."
@@ -305,7 +313,7 @@ def merge_pooled(parts, basis):
                  for c in flagged[:6]]
         interp = "موارد تغییریافته یا برعکس: " + "؛ ".join(items) + ("." if len(flagged) <= 6 else f"؛ و {fa(len(flagged) - 6)} مورد دیگر.")
     concl = "\n".join(f"[{tag}] {parts[tag].get('source_conclusion', '')}" for tag in tags)
-    return {"des_version": parts[tags[0]].get("des_version", "2.7"), "mode": "FIDELITY", "scope": "POOLED",
+    return {"des_version": version, "mode": "FIDELITY", "scope": "POOLED",
             "text_basis": basis, "claims": claims, "counts": counts, "assessable": assessable,
             "fidelity_score": score, "level": level, "provisional": basis != "FULL_TEXT",
             "source_conclusion": concl, "fact_fa": fact, "interpretation_fa": interp}

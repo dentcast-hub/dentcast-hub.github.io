@@ -2086,6 +2086,94 @@ html.dcp-touring #mobile-body { overflow: hidden; }
   border-style: dashed;
 }
 
+/* ── FIDELITY (spec v2.8) — the card's second question ────────────────────
+   «does THIS page say what its sources say?» Drawn only on a page whose record
+   carries a 2.8+ fidelity object (des.js fidelityOf); every other page keeps
+   the untabbed card above exactly as it was. It wears the card's CHROME, never
+   the band scale: the band answers a different question, and a weak paper can
+   be quoted faithfully. The reader sees one word; the number is one tap away. */
+
+/* the second chip — chrome, beside the band chip, never merged into it */
+.dc-act-fid {
+  font-size: .85rem; color: var(--des-chrome);
+  border-color: rgba(var(--des-chrome-rgb), .45);
+  background: rgba(var(--des-chrome-rgb), .07);
+}
+.dc-act-fid .dc-fid-chip-lbl { font-weight: 500; opacity: .85; }
+.dc-act-fid .dc-fid-chip-val { font-weight: 800; }
+.dc-act-fid .dc-fid-dot { width: 10px; height: 10px; }
+
+/* the dot: one shape per word, so the word is never carried by colour alone */
+.dc-fid-dot { display: inline-block; flex: none; width: 13px; height: 13px; border-radius: 50%; background: var(--des-chrome); }
+.dc-fid-dot.is-hi { background: transparent; border: 2.5px solid var(--des-chrome); }
+.dc-fid-dot.is-med { background: repeating-linear-gradient(45deg, var(--des-chrome) 0 2px, transparent 2px 4px); border: 1.5px solid var(--des-chrome); }
+.dc-fid-dot.is-low { background: transparent; border: 2.5px solid var(--dcp-ink); }
+.dc-fid-dot.is-none { background: transparent; border: 1.5px dashed var(--dcp-muted); }
+
+/* two tabs inside the card: a segmented control, not article headings */
+.dc-des-seg {
+  display: flex; gap: 0; margin: 2px 0 16px; padding: 3px;
+  background: var(--dcp-surface-2); border: 1px solid var(--dcp-line); border-radius: 12px;
+}
+.dc-des-seg button {
+  flex: 1; border: 0; background: transparent; cursor: pointer;
+  font: inherit; font-size: .82rem; font-weight: 700; color: var(--dcp-muted);
+  padding: 7px 6px; border-radius: 9px;
+}
+.dc-des-seg button[aria-selected="true"] { background: var(--dcp-surface); color: var(--des-chrome); box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+.dc-des-seg button:focus-visible { outline: 2px solid var(--des-chrome); outline-offset: 1px; }
+.dc-des-pane[hidden] { display: none; }
+
+.dc-fid-ask { margin: 0 0 6px; font-size: .8rem; font-weight: 700; color: var(--dcp-muted); text-align: right; }
+.dc-fid-verdict { display: flex; align-items: center; gap: 10px; margin: 0 0 4px; }
+.dc-fid-word { font-size: 1.2rem; font-weight: 800; color: var(--des-chrome); }
+.dc-fid-word.is-med, .dc-fid-word.is-low { color: var(--dcp-ink); }
+.dc-fid-word.is-none { color: var(--dcp-muted); font-size: 1.02rem; }
+.dc-fid-say { margin: 0 0 14px; font-size: .86rem; color: var(--dcp-muted); line-height: 1.95; }
+
+.dc-fid-diff-h { margin: 0 0 8px; font-size: .78rem; font-weight: 800; color: var(--dcp-muted); }
+.dc-fid-diff { background: var(--dcp-surface); border: 1px solid var(--dcp-line); border-radius: 12px; margin-bottom: 8px; overflow: hidden; }
+.dc-fid-diff-top { padding: 11px 13px 4px; }
+.dc-fid-diff-top p { margin: 0; font-size: .9rem; line-height: 1.95; color: var(--dcp-ink); }
+.dc-fid-tag {
+  display: inline-block; margin-bottom: 4px; padding: 0 8px; border-radius: 6px;
+  font-size: .72rem; font-weight: 700; color: var(--des-chrome); background: rgba(var(--des-chrome-rgb), .10);
+}
+.dc-fid-tag.is-rev { background: var(--dcp-ink); color: var(--dcp-surface); }
+.dc-fid-src > summary {
+  list-style: none; cursor: pointer; padding: 6px 13px 10px;
+  font-size: .78rem; font-weight: 700; color: var(--des-chrome);
+}
+.dc-fid-src > summary::-webkit-details-marker { display: none; }
+.dc-fid-src > summary::after { content: " ‹"; font-weight: 800; }
+.dc-fid-src[open] > summary::after { content: " ˅"; }
+.dc-fid-src > .dc-fid-q { margin: 0 13px 12px; }
+/* a source's own sentence — Latin, so it reads left to right in its own box */
+.dc-fid-q {
+  margin: 0 0 8px; padding: 8px 10px; border-radius: 8px; background: var(--dcp-surface-2);
+  font-size: .82rem; line-height: 1.7; color: var(--dcp-ink); unicode-bidi: plaintext;
+}
+.dc-fid-q small { display: block; direction: rtl; text-align: right; font-size: .7rem; font-weight: 700; color: var(--dcp-muted); margin-bottom: 2px; }
+
+/* everything else: quiet collapsed rows */
+.dc-fid-rows { margin-top: 12px; border-top: 1px solid var(--dcp-line); }
+.dc-fid-row { border-bottom: 1px solid var(--dcp-line); }
+.dc-fid-row > summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px;
+  padding: 11px 2px; font-size: .85rem; color: var(--dcp-ink);
+}
+.dc-fid-row > summary::-webkit-details-marker { display: none; }
+.dc-fid-row > summary::after { content: "‹"; color: var(--dcp-muted); font-weight: 800; transition: transform .15s; }
+.dc-fid-row[open] > summary::after { transform: rotate(-90deg); }
+.dc-fid-n { margin-inline-start: auto; font-size: .8rem; color: var(--dcp-muted); }
+.dc-fid-rbody { padding: 0 2px 13px; font-size: .83rem; color: var(--dcp-muted); line-height: 1.9; }
+.dc-fid-rbody p { margin: 0 0 6px; }
+.dc-fid-rbody ol { margin: 6px 0 0; padding-inline-start: 20px; }
+.dc-fid-rbody li { margin: 5px 0; color: var(--dcp-ink); }
+.dc-fid-calc { background: var(--dcp-surface-2); border-radius: 10px; padding: 9px 11px; color: var(--dcp-ink); }
+.dc-fid-scale { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 8px 0; font-size: .8rem; }
+.dc-fid-scale span:nth-child(odd) { font-weight: 700; color: var(--dcp-ink); }
+
 /* ══════════════════════════════════════════════════════════════════════
    ارزیاب DES — the homepage tool panel (plus/js/des-scorer.js).
    The tab + drawer shell is static markup in index.html (a formal twin of

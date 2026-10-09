@@ -23,7 +23,7 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=177';
+import { el, faNum } from './util.js?v=178';
 
 /* ------------------------------------------------------------ the data -- */
 
@@ -103,7 +103,7 @@ export function bandBar(band) {
 // hides that the page also leans on weak material. The range says both in the
 // same breath and hides nothing, and the card below lists every source with its
 // own band anyway.
-function chipFor(rec) {
+function chipFor(rec, named) {
   const src = rec.sources[0];
   const multi = rec.sources.length > 1;
   const band = src.band;
@@ -117,12 +117,15 @@ function chipFor(rec) {
   const best = banded.reduce((w, s) => (idx(s.band) > idx(w) ? s.band : w), seed);
   const worst = banded.reduce((w, s) => (idx(s.band) < idx(w) ? s.band : w), seed);
   const spread = best !== worst ? best + '–' + worst : best;
-  const label = multi
-    ? faNum(rec.sources.length) + ' منبع · ' + spread
-    : BAND_FA[band] || band;
+  const label = named
+    ? 'سطح شواهد: ' + (multi ? spread : band)
+    : multi
+      ? faNum(rec.sources.length) + ' منبع · ' + spread
+      : BAND_FA[band] || band;
   return el('button', {
     class: 'dc-act dc-act-des dc-des-band-' + (multi ? best : band),
     type: 'button',
+    'data-pane': 'src',
     'aria-label': multi
       ? 'ارزیابی شواهد این مطلب — ' + faNum(rec.sources.length) + ' منبع، از باند ' + best + ' تا ' + worst
       : 'ارزیابی شواهد این مطلب',
@@ -243,9 +246,186 @@ export function sourceBlock(src, index, total) {
   return el('div', { class: 'dc-des-src' }, parts);
 }
 
+/* ------------------------------------------------------------ fidelity -- */
+// Spec v2.8 FIDELITY, the second question the card answers: does THIS page say
+// what its sources say? It is shown BESIDE the source scores, never instead of
+// them and never in the band colours (spec appendix rule 5) — a weak paper can
+// be quoted faithfully and a strong one misquoted, so the two are two tabs.
+//
+// What a reader sees is ONE WORD, a refinement of the stored `level`, never a
+// second scale (founder, 1405/07/17): a percentage over four claims and one
+// over fifty look equally precise and are not, so the number lives one tap
+// away in «چطور حساب شد». A record stamped before 2.8 is not drawn at all:
+// its level was computed with silence in the denominator, and the words below
+// mean the 2.8 rule.
+
+const FID_KIND_FA = {
+  HEDGE_REMOVED: 'قاطع‌تر از منبع',
+  HEDGE_ADDED: 'محتاط‌تر از منبع',
+  MAGNITUDE_CHANGED: 'عدد متفاوت با منبع',
+  POPULATION_OR_CONDITION_CHANGED: 'گسترده‌تر از منبع',
+  GROUP_OR_COMPARATOR_CHANGED: 'مقایسه‌ی متفاوت با منبع',
+};
+
+function verAtLeast(v, major, minor) {
+  const [a, b] = String(v || '').split('.').map((x) => parseInt(x, 10));
+  return Number.isFinite(a) && (a > major || (a === major && (b || 0) >= minor));
+}
+
+// The fidelity objects worth drawing: the one POOLED object, or the non-null
+// slots of a SOURCE-scope array (each tagged with the source it belongs to).
+function fidelityOf(rec) {
+  const f = rec.fidelity;
+  const ok = (o) => o && o.mode === 'FIDELITY' && verAtLeast(o.des_version, 2, 8) && Array.isArray(o.claims);
+  if (f && !Array.isArray(f)) return ok(f) ? [{ f, src: null }] : [];
+  if (!Array.isArray(f)) return [];
+  return f.map((o, i) => (ok(o) ? { f: o, src: rec.sources[i] } : null)).filter(Boolean);
+}
+
+// The word, from `level` (spec v2.8 appendix rule 5). `key` drives the dot.
+export function fidelityWord(f) {
+  if (f.level === 'INSUFFICIENT_CLAIMS') return { word: 'ادعای کافی برای سنجش ندارد', key: 'none' };
+  if (f.level === 'LOW') return { word: 'تطابق پایین', key: 'low' };
+  if (f.level === 'MEDIUM') return { word: 'تطابق متوسط', key: 'med' };
+  const c = f.counts || {};
+  if (!c.altered && !c.reversed) return { word: 'کاملاً مطابق', key: 'full' };
+  return f.fidelity_score >= 95 ? { word: 'تطابق خیلی بالا', key: 'full' } : { word: 'تطابق بالا', key: 'hi' };
+}
+const LEVEL_RANK = { INSUFFICIENT_CLAIMS: 0, LOW: 1, MEDIUM: 2, HIGH: 3 };
+
+function citeName(src) {
+  const c = (src && src.citation) || {};
+  const first = String(c.authors || '').split(',')[0].trim();
+  return [first ? first + ' و همکاران' : '', c.year].filter(Boolean).join('، ') || 'منبع';
+}
+
+// `srcFor(claim)`: which source a quoted sentence comes from — `source_ref`
+// («S2») under POOLED, the slot's own source under SOURCE scope.
+function fidelityBlock(f, one, srcFor) {
+  const SRC = one ? 'منبع' : 'منابع';
+  const claims = f.claims;
+  const c = f.counts || {};
+  const { word, key } = fidelityWord(f);
+  const flagged = claims.filter((x) => x.verdict === 'ALTERED' || x.verdict === 'REVERSED');
+  const silent = claims.filter((x) => x.verdict === 'NOT_IN_SOURCE' || x.verdict === 'NOT_ASSESSABLE');
+  const matched = claims.filter((x) => x.verdict === 'MATCHES');
+  const outside = claims.length - flagged.length - silent.length - matched.length;
+
+  const say = [faNum(c.matches || 0) + ' جمله همان را می‌گوید که ' + SRC + ' گفته‌اند.'];
+  if (c.reversed) say.push(faNum(c.reversed) + ' جا برعکسِ منبع است.');
+  if (c.altered) say.push(faNum(c.altered) + ' جا کمی قاطع‌تر یا گسترده‌تر از منبع است.');
+
+  const parts = [
+    el('p', { class: 'dc-fid-ask' }, 'این نوشته چقدر با ' + (one ? 'منبع اصلی‌اش' : 'منابع اصلی‌اش') + ' تطابق دارد؟'),
+    el('div', { class: 'dc-fid-verdict' }, [
+      el('span', { class: 'dc-fid-dot is-' + key, 'aria-hidden': 'true' }),
+      el('span', { class: 'dc-fid-word is-' + key }, word),
+    ]),
+  ];
+  if (f.level !== 'INSUFFICIENT_CLAIMS') parts.push(el('p', { class: 'dc-fid-say' }, say.join(' ')));
+  if (f.provisional) parts.push(el('span', { class: 'dc-des-prov' }, 'مقدماتی — فقط از روی چکیده'));
+
+  if (flagged.length) {
+    parts.push(el('div', { class: 'dc-fid-diff-h' }, faNum(flagged.length) + ' جا که با ' + SRC + ' فرق دارد'));
+    flagged.forEach((x) => {
+      const rev = x.verdict === 'REVERSED';
+      parts.push(el('div', { class: 'dc-fid-diff' }, [
+        el('div', { class: 'dc-fid-diff-top' }, [
+          el('span', { class: 'dc-fid-tag' + (rev ? ' is-rev' : '') }, rev ? 'برعکسِ منبع' : (FID_KIND_FA[x.change_kind] || 'متفاوت با منبع')),
+          el('p', {}, x.claim_quote),
+        ]),
+        x.source_quote ? el('details', { class: 'dc-fid-src' }, [
+          el('summary', {}, 'منبع چه می‌گوید'),
+          el('p', { class: 'dc-fid-q', dir: 'auto' }, [
+            el('small', {}, citeName(srcFor(x))),
+            x.source_quote,
+          ]),
+        ]) : null,
+      ].filter(Boolean)));
+    });
+  }
+
+  const row = (title, n, body) => el('details', { class: 'dc-fid-row' }, [
+    el('summary', {}, [el('span', {}, title), n != null ? el('span', { class: 'dc-fid-n' }, faNum(n)) : null].filter(Boolean)),
+    el('div', { class: 'dc-fid-rbody' }, body),
+  ]);
+  const list = (xs) => el('ol', {}, xs.map((x) => el('li', {}, x.claim_quote)));
+  const rows = [];
+  if (silent.length) {
+    rows.push(row('جمله‌هایی از دانش یا استدلال نویسنده', silent.length, [
+      el('p', {}, 'این جمله‌ها چیزی می‌گویند که ' + SRC + ' درباره‌اش حرفی ' + (one ? 'نزده' : 'نزده‌اند') + '. خطا حساب نمی‌شوند و در ارزیابی نیستند.'),
+      list(silent),
+    ]));
+  }
+  rows.push(row('این ارزیابی چطور حساب شد', null, [
+    f.fidelity_score == null
+      ? el('p', { class: 'dc-fid-calc' }, 'منابع کمتر از سه ادعای این نوشته را پوشش می‌دهند؛ برای سنجش دست‌کم سه ادعا لازم است.')
+      : el('p', { class: 'dc-fid-calc' }, 'از ' + faNum(f.assessable) + ' ادعایی که ' + SRC + ' به آن پرداخته‌اند، ' +
+        faNum(c.matches || 0) + ' مورد کاملاً مطابق است (امتیاز کامل)' +
+        (c.altered ? '، ' + faNum(c.altered) + ' مورد کمی جلوتر رفته (نصف امتیاز)' : '') +
+        (c.reversed ? '، ' + faNum(c.reversed) + ' مورد برعکس است (بدون امتیاز)' : '') +
+        ': ٪' + faNum(f.fidelity_score) + '.'),
+    el('div', { class: 'dc-fid-scale' }, [
+      ['کاملاً مطابق', 'هیچ جمله‌ای فرق ندارد'],
+      ['تطابق خیلی بالا', '٪۹۵ و بالاتر'],
+      ['تطابق بالا', '٪۸۵ تا ٪۹۴، یا فقط یک جمله کمی جلوتر'],
+      ['تطابق متوسط', '٪۶۰ تا ٪۸۴، یا هر جمله‌ی برعکس'],
+      ['تطابق پایین', 'زیر ٪۶۰'],
+    ].flatMap(([a, b]) => [el('span', {}, a), el('span', {}, b)])),
+    el('p', {}, (one ? '' : 'هر جمله جداگانه با هر منبع سنجیده شده؛ اگر یکی از منابع آن را بگوید، مطابق است. ') +
+      faNum(outside) + ' جمله (تیترها، جمله‌های راهنما) ادعا نیستند و بیرون مانده‌اند.'),
+  ]));
+  if (matched.length) rows.push(row('همه‌ی جمله‌های مطابق', matched.length, [list(matched)]));
+  if (f.source_conclusion) {
+    rows.push(row('جمع‌بندیِ خودِ ' + SRC, null, [
+      ...String(f.source_conclusion).split('\n').filter(Boolean).map((l) => {
+        const m = l.match(/^\[(S\d+)\]\s*(.*)$/);
+        return el('p', { class: 'dc-fid-q', dir: 'auto' }, [
+          el('small', {}, citeName(m ? srcFor({ source_ref: m[1] }) : srcFor({}))),
+          m ? m[2] : l,
+        ]);
+      }),
+      el('p', {}, 'برای اطلاع؛ ارزیابی روی آن نیست.'),
+    ]));
+  }
+  parts.push(el('div', { class: 'dc-fid-rows' }, rows));
+  return el('div', { class: 'dc-fid' }, parts);
+}
+
+function fidelityPane(rec, fids) {
+  const one = rec.sources.filter((s) => !s.error).length === 1;
+  const bySlot = (src) => () => src;
+  const byRef = (x) => rec.sources[(parseInt(String(x.source_ref || '').slice(1), 10) || 1) - 1];
+  const blocks = fids.map(({ f, src }) => {
+    const b = fidelityBlock(f, one || !!src, src ? bySlot(src) : byRef);
+    return src && fids.length > 1 ? el('div', { class: 'dc-des-src' }, [
+      el('div', { class: 'dc-des-srctitle' }, el('bdi', { dir: 'auto' }, (src.citation || {}).title || citeName(src))), b]) : b;
+  });
+  return el('div', { class: 'dc-des-pane', 'data-pane': 'fid' }, [
+    ...blocks,
+    el('p', { class: 'dc-des-foot' },
+      'این ارزیابی فقط می‌پرسد جمله‌های متن همان را می‌گویند که ' + (one ? 'منبع گفته' : 'منابع گفته‌اند') +
+      ' یا نه؛ درباره‌ی سطح شواهد (زبانه‌ی کنار) چیزی نمی‌گوید.'),
+  ]);
+}
+
+// The weakest of several per-source fidelity results speaks for the chip:
+// one misquoted source is the news, however faithfully the others are quoted.
+function headlineFidelity(fids) {
+  return fids.reduce((w, x) => (LEVEL_RANK[x.f.level] < LEVEL_RANK[w.f.level] ? x : w), fids[0]).f;
+}
+
+function selectPane(cardEl, which) {
+  if (!cardEl) return;
+  cardEl.querySelectorAll('.dc-des-seg button').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.pane === which)));
+  cardEl.querySelectorAll('.dc-des-pane').forEach((p) => { p.hidden = p.dataset.pane !== which; });
+}
+
 function card(rec) {
   const scored = rec.sources.filter((s) => !s.error);
   if (!scored.length) return null;
+  const fids = fidelityOf(rec);
+  if (fids.length) return tabbedCard(rec, scored, fids);
   return el('section', { class: 'dc-des-card', id: 'dcDesCard' }, [
     // The heading names the MACHINE, not a topic. «ارزیابی شواهد» alone is a
     // section title an author could plausibly have written, and readers took it
@@ -258,6 +438,54 @@ function card(rec) {
     ...scored.map((s, i) => sourceBlock(s, i, scored.length)),
     el('p', { class: 'dc-des-foot' },
       'این امتیاز ساختار مطالعه را می‌سنجد، نه اینکه یافته‌اش برای بیمار شما مناسب است یا نه.'),
+  ]);
+}
+
+// The same card with two questions in it. Fidelity first: it is the one about
+// THIS page. The strength pane is the untabbed card's own content, unchanged.
+function tabbedCard(rec, scored, fids) {
+  const one = scored.length === 1;
+  const SRC = one ? 'منبع' : 'منابع';
+  const seg = el('div', { class: 'dc-des-seg', role: 'tablist' }, [
+    el('button', { type: 'button', role: 'tab', 'aria-selected': 'true', 'data-pane': 'fid' }, 'تطابق با ' + SRC),
+    el('button', { type: 'button', role: 'tab', 'aria-selected': 'false', 'data-pane': 'src' }, 'سطح شواهد'),
+  ]);
+  const srcPane = el('div', { class: 'dc-des-pane', 'data-pane': 'src', hidden: '' }, [
+    el('p', { class: 'dc-fid-ask' }, (one ? 'منبعی' : 'منابعی') + ' که این نوشته به ' + (one ? 'آن' : 'آن‌ها') + ' تکیه کرده چه سطحی از شواهد دارند؟'),
+    ...scored.map((s, i) => sourceBlock(s, i, scored.length)),
+    el('p', { class: 'dc-des-foot' },
+      'این امتیاز ساختار مطالعه را می‌سنجد، نه اینکه یافته‌اش برای بیمار شما مناسب است یا نه.'),
+  ]);
+  const node = el('section', { class: 'dc-des-card has-fid', id: 'dcDesCard' }, [
+    el('h2', { class: 'dc-des-card-h' }, 'ارزیابی خودکار شواهد'),
+    el('p', { class: 'dc-des-prov-note' },
+      'این بخش را دنت‌کست به‌صورت خودکار محاسبه می‌کند و بخشی از متنِ نویسنده نیست.'),
+    seg,
+    fidelityPane(rec, fids),
+    srcPane,
+  ]);
+  srcPane.hidden = true;
+  seg.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-pane]');
+    if (b) selectPane(node, b.dataset.pane);
+  });
+  return node;
+}
+
+// The second chip, beside the strength chip and never merged into it: two
+// questions, two colours (band scale / the card's chrome).
+function fidelityChip(rec, fids) {
+  const one = rec.sources.filter((s) => !s.error).length === 1;
+  const { word, key } = fidelityWord(headlineFidelity(fids));
+  return el('button', {
+    class: 'dc-act dc-act-fid',
+    type: 'button',
+    'data-pane': 'fid',
+    'aria-label': 'تطابق این نوشته با ' + (one ? 'منبع' : 'منابع') + ': ' + word,
+  }, [
+    el('span', { class: 'dc-fid-dot is-' + key, 'aria-hidden': 'true' }),
+    el('span', { class: 'dc-fid-chip-lbl' }, 'تطابق با ' + (one ? 'منبع' : 'منابع') + ':'),
+    el('span', { class: 'dc-fid-chip-val' }, word.replace(/^تطابق /, '')),
   ]);
 }
 
@@ -303,8 +531,7 @@ export async function mountDes(row, anchor, contentId) {
     if (old) old.remove();
   }
   if (row) {
-    const oldChip = row.querySelector('.dc-act-des');
-    if (oldChip) oldChip.remove();
+    row.querySelectorAll('.dc-act-des, .dc-act-fid').forEach((c) => c.remove());
   }
 
   const body = card(rec);
@@ -316,16 +543,23 @@ export async function mountDes(row, anchor, contentId) {
   }
 
   if (row) {
-    const chip = chipFor(rec);
-    // Tapping the chip goes to the card. Deliberately not a popover: this shell
-    // scrolls inside #mobile-body rather than on window, so an absolutely
-    // positioned panel stays put while the page moves under it — the bug the
-    // homepage explainer already had and was rebuilt in flow to fix.
-    chip.addEventListener('click', () => {
-      const target = document.getElementById('dcDesCard');
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const fids = fidelityOf(rec);
+    const chips = [chipFor(rec, fids.length > 0)];
+    if (fids.length) chips.push(fidelityChip(rec, fids));
+    // Tapping a chip goes to the card (and, when the card has two tabs, to
+    // that chip's own tab). Deliberately not a popover: this shell scrolls
+    // inside #mobile-body rather than on window, so an absolutely positioned
+    // panel stays put while the page moves under it — the bug the homepage
+    // explainer already had and was rebuilt in flow to fix.
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const target = document.getElementById('dcDesCard');
+        if (!target) return;
+        if (target.classList.contains('has-fid')) selectPane(target, chip.dataset.pane || 'src');
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      row.appendChild(chip);
     });
-    row.appendChild(chip);
   }
   return true;
 }
