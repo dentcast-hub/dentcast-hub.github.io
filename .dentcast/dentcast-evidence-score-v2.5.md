@@ -845,8 +845,31 @@ Comparability across versions:
   `HEDGE_ADDED`); F2-ii closed it. Rounds two onward agreed on every verdict,
   `change_kind`, count, score and level in every run; two further rounds were
   spent closing which sentence is quoted when several support a verdict (the
-  filters in F2), after which the quoted sentences agreed as well. Final
-  records: 88/HIGH, 60/MEDIUM, 50/LOW.
+  filters in F2), after which the quoted sentences agreed as well. Records at that
+  point: 88/HIGH, 60/MEDIUM, 50/LOW. **Then a second test on real
+  explanatory prose**, because the synthetic texts said little that was not
+  a report: three DentCast pages that each stand on one paper
+  (`sharehub/share-7`, `sharehub/share-10`, `dentai/dentai-21`; 25, 36 and
+  50 units after the citation block is cut), scored against their PubMed or
+  cabinet abstracts. A dry run of two runs per page agreed on every level and
+  split on six units, all of one kind the synthetic inputs lacked — the
+  author explaining rather than reporting. Five loop rounds (49 runs, the
+  three earlier inputs re-run each round as a regression) closed it: F1 gained
+  signposts, colon-introductions, importance judgments and
+  talk-about-the-topic framing (`NOT_A_CLAIM`), hedged explanations
+  (`AUTHOR_VIEW`), headings marked by the caller, and the rule that an
+  inference is judged on its conclusion; F2 gained the topic-sentence and
+  neighbouring-proposition limits on "stated", the rule that a half is a
+  separate assertion, and «a hedge counts only if no sentence says it
+  plainly»; F2-i's `MAGNITUDE_CHANGED` now needs the source to state a
+  DIFFERENT magnitude, and appendix 7 stops at the citation block. The last
+  round agreed on every verdict in every run. Final records: share-7
+  94/HIGH (one `HEDGE_REMOVED`: the page says diabetes *makes* caries
+  through saliva where the review says it *may lead to* it), share-10
+  100/HIGH, dentai-21 100/HIGH; the regression inputs 88/HIGH, **70**/MEDIUM
+  and 50/LOW — the zirconia text moved from 60 to 70 by design, because
+  «بسیار بیشتر» against *significantly higher* is no longer an altered
+  magnitude (*significantly* is a statistical word, not a size).
 - v2.3 → v2.4: **A RESEARCH score for the excluded-studies domain (3b-iii) may
   RISE from `some_concerns` to `low`, and only when the excluded full-text
   studies are individually identified (by citation) with a specific, checkable
