@@ -128,6 +128,22 @@ describe('DES fidelity display (spec v2.8)', () => {
     expect(text(card!.querySelector('.dc-fid-ask'))).toContain('منبع اصلی‌اش');
   });
 
+  it('share-18: a source with too few claims never speaks for the page', async () => {
+    // four sources at «کاملاً مطابق», Einhorn at INSUFFICIENT_CLAIMS (one claim)
+    const { row } = await mount(ALL['sharehub/share-18'], 'sharehub/share-18');
+    const chip = text(row.querySelector('.dc-act-fid'));
+    expect(chip).toContain('کاملاً مطابق');
+    expect(chip).not.toContain('ادعای کافی');
+  });
+
+  it('every source too small to measure: the chip says so', async () => {
+    const rec = JSON.parse(JSON.stringify(ALL['sharehub/share-18']));
+    rec.fidelity = rec.fidelity.map((f: { level: string; fidelity_score: number | null }) =>
+      ({ ...f, level: 'INSUFFICIENT_CLAIMS', fidelity_score: null }));
+    const { row } = await mount(rec);
+    expect(text(row.querySelector('.dc-act-fid'))).toContain('ادعای کافی برای سنجش ندارد');
+  });
+
   it('the word follows the stored level, refined by the score', async () => {
     const { fidelityWord } = await import('/plus/js/des.js');
     const w = (level: string, score: number | null, a = 0, r = 0) =>
