@@ -143,7 +143,7 @@ h2{font-size:1rem;margin:40px 0 4px}
       <span class="act meta">⏱ ۹ دقیقه</span>
       <a class="act act-des band-C" href="#card" id="chip">
         <span class="dot">C</span><span>۲ منبع · C–D</span>
-        <span class="sep"></span><span class="fidc">۵۰/۵۲ مطابق</span>
+        <span class="sep"></span><span class="fidc">٪۹۸ انطباق</span>
       </a>
       <button class="act" type="button">اشتراک‌گذاری</button>
     </div>
@@ -156,7 +156,7 @@ h2{font-size:1rem;margin:40px 0 4px}
       <h2 class="card-h" id="cardH" style="margin:0">ارزیابی خودکار شواهد</h2>
       <p class="prov">این بخش را نویسنده ننوشته؛ با معیار ثابتِ DES نسخه‌ی ۲٫۸ و با خواندنِ متن کامل هر دو مقاله محاسبه شده.</p>
       <div class="tabs" role="tablist">
-        <button class="tab" role="tab" aria-selected="true" data-t="fid">انطباق این نوشته <small>۵۰/۵۲</small></button>
+        <button class="tab" role="tab" aria-selected="true" data-t="fid">انطباق این نوشته <small>٪۹۸</small></button>
         <button class="tab" role="tab" aria-selected="false" data-t="src">قوت منابع <small>C–D</small></button>
       </div>
       <div id="paneFid"></div>
@@ -210,8 +210,8 @@ function fidPane(f, claims, {real}) {
   const silentN = silent.length || f.counts.not_in_source || 0;
   let h = `<div class="fid-head"><div style="flex:1;min-width:200px">
       <div class="fid-count">${headline}</div>
-      <div class="fid-sub"><span class="big2">${fa(f.counts.matches)} از ${fa(f.assessable)}</span> ادعایی که ${real ? 'مقاله‌ها' : 'مقاله'} به آن پرداخته‌اند مطابق است${silentN ? ` · ${fa(silentN)} جمله از دانش یا استدلال نویسنده` : ''}</div>
-    </div><span class="lvl ${lvlCls}">${LVL[f.level]}</span><span class="num">${fa(f.fidelity_score)} از ۱۰۰</span></div>
+      <div class="fid-sub">انطباق با ${real ? 'مقاله‌ها' : 'مقاله'}: <span class="big2">٪${fa(f.fidelity_score)}</span>${silentN ? ` · ${fa(silentN)} جمله از دانش یا استدلال نویسنده (در درصد نیست)` : ''}</div>
+    </div><span class="lvl ${lvlCls}">${LVL[f.level]}</span></div>
     <div class="strip" role="list">${strip}</div>
     <div class="legend"><span><i class="cell m"></i>مطابق</span><span><i class="cell a"></i>یک درجه جلوتر</span><span><i class="cell r"></i>برعکس</span></div>`;
   if (flagged.length) {
@@ -220,10 +220,10 @@ function fidPane(f, claims, {real}) {
   if (real) {
     if (silent.length) h += `<details class="calc neutral"><summary>${fa(silent.length)} جمله در مقاله‌ها نیامده · از دانش یا استدلال نویسنده — در نمره نیست</summary><div class="calc-body"><p class="small">این جمله‌ها چیزی می‌گویند که هیچ‌کدام از دو مقاله درباره‌اش حرفی نزده: دانش پایه یا استدلال بالینیِ خود نویسنده. خطا حساب نمی‌شوند و نمره را کم نمی‌کنند؛ فقط اینجا هستند تا معلوم باشد کدام جمله‌ها پشتوانه‌ی مقاله ندارند.</p>` + silent.map(c => claimCard(c)).join('') + `</div></details>`;
     const groups = [['MATCHES','مطابق']];
-    h += `<details class="calc"><summary>همه‌ی ${fa(claims.length)} جمله‌ی متن، یکی‌یکی</summary><div class="calc-body">` +
+    h += `<details class="calc" id="calcBox"><summary>درصد چطور حساب شد؟ و همه‌ی ${fa(claims.length)} جمله، یکی‌یکی</summary><div class="calc-body">` +
       groups.map(([v,l]) => { const cs = claims.filter(c => c.verdict === v); return cs.length ? `<div class="grp">${l} · ${fa(cs.length)}</div>` + cs.map(c => claimCard(c)).join('') : ''; }).join('') +
       `<div class="grp">بیرون از شمارش · ${fa(excluded)}</div><p class="small">تیترها، جمله‌های راهنما مثل «در ادامه…» و جمله‌هایی که فقط موضوع را معرفی می‌کنند ادعا حساب نمی‌شوند و در نمره نمی‌آیند.</p>
-      <div class="grp">محاسبه</div><p class="small">نمره = (مطابق×۱۰۰ + یک‌درجه‌جلوتر×۵۰) ÷ ادعاهایی که مقاله‌ها به آن پرداخته‌اند = (${fa(f.counts.matches)}×۱۰۰ + ${fa(f.counts.altered)}×۵۰) ÷ ${fa(f.assessable)} = ${fa(f.fidelity_score)}. جمله‌هایی که در مقاله‌ها نیامده‌اند در این حساب نیستند. یک «برعکس» سطح را از «بالا» پایین‌تر می‌برد، هرچه نمره باشد. هر جمله در هر مقاله جداگانه سنجیده شده و اگر یکی از دو مقاله آن را بگوید، «مطابق» است.</p>
+      <div class="grp">درصد چطور حساب شد</div><p class="small">از ${fa(f.assessable)} ادعایی که مقاله‌ها به آن پرداخته‌اند، ${fa(f.counts.matches)} مورد کاملاً مطابق است و هر کدام یک امتیاز کامل می‌گیرد؛ ${fa(f.counts.altered)} مورد یک درجه جلوتر رفته و هر کدام نصف امتیاز. (${fa(f.counts.matches)} + ${fa(f.counts.altered)}×½) ÷ ${fa(f.assessable)} = ٪${fa(f.fidelity_score)}. جمله‌هایی که در مقاله‌ها نیامده‌اند در این حساب نیستند. یک «برعکس» سطح را از «بالا» پایین‌تر می‌برد، هرچه نمره باشد. هر جمله در هر مقاله جداگانه سنجیده شده و اگر یکی از دو مقاله آن را بگوید، «مطابق» است.</p>
       </div></details>`;
     h += `<div class="concl"><div class="concl-l">جمع‌بندیِ خود مقاله‌ها (برای اطلاع؛ داوری روی آن نیست)</div>` +
       f.source_conclusion.split('\n').map(l => { const m = l.match(/^\[(S\d)\]\s*(.*)$/); return `<p><span class="tag" style="font-family:Vazirmatn">${esc(m ? srcName(m[1]) : '')}</span>${esc(m ? m[2] : l)}</p>`; }).join('') + `</div>`;
