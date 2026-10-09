@@ -37,9 +37,16 @@ article{background:var(--surface);border:1px solid var(--line);border-radius:var
 h1{font-size:1.22rem;line-height:1.7;margin:0 0 12px}
 .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px}
 .meta{font-size:.8rem;color:var(--muted)}
-.chip{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 13px 0 6px;border-radius:999px;border:1px solid rgba(var(--chrome-rgb),.35);background:rgba(var(--chrome-rgb),.06);color:var(--chrome);font-size:.82rem;font-weight:700;text-decoration:none}
-.chip .b{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--des-C);color:#fff;font-size:.72rem;font-weight:800}
-.chip .sep{width:1px;height:14px;background:rgba(var(--chrome-rgb),.35)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 12px 0 6px;border-radius:999px;font-size:.82rem;text-decoration:none;white-space:nowrap}
+.chip .lbl{font-weight:500;opacity:.8}
+.chip .val{font-weight:800}
+/* strength: the band's own colour (grey → green), the DES chip as it ships */
+.chip.str{--cur:var(--des-C);border:1px solid var(--cur);color:var(--cur);background:transparent}
+.chip.str .b{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--cur);color:#fff;font-size:.72rem;font-weight:800}
+/* fidelity: the card's chrome (violet), never a band colour */
+.chip.fid{border:1px solid rgba(var(--chrome-rgb),.4);background:rgba(var(--chrome-rgb),.07);color:var(--chrome);padding-inline-start:10px}
+.chip.fid .dot{width:11px;height:11px}
 .prose{font-size:.93rem}
 .prose .more{color:var(--muted);font-size:.8rem;text-align:center;margin:8px 0 0}
 
@@ -125,7 +132,10 @@ h2{font-size:.98rem;margin:38px 0 4px}
     <h1>اگر وسط باندینگ خون یا بزاق روی عاج (دنتین) بیاد چی کار کنیم؟</h1>
     <div class="row">
       <span class="meta">۹ دقیقه</span>
-      <a class="chip" href="#card" id="chip"><span class="b">C</span>۲ منبع<span class="sep"></span><span id="chipWord"></span></a>
+      <span class="chips">
+        <a class="chip str" href="#card" data-open="src"><span class="b">C</span><span class="lbl">قوت منابع</span><span class="val">C–D</span></a>
+        <a class="chip fid" href="#card" data-open="fid"><span class="dot" id="chipDot"></span><span class="lbl">تطابق</span><span class="val" id="chipWord"></span></a>
+      </span>
     </div>
     <div class="prose">
       <p>ایزولاسیون با رابردم استاندارد طلایی است، اما در مارجین‌های ساب‌ژنژیوال، حفره‌های عمیق پروگزیمال، نواحی تازه جراحی‌شده یا بیماران ناهمکار همیشه امکان‌پذیر نیست…</p>
@@ -166,8 +176,8 @@ function word(f) {
   if (f.level === 'INSUFFICIENT_CLAIMS') return ['ادعای کافی برای سنجش ندارد', 'none'];
   if (f.level === 'LOW') return ['تطابق پایین', 'low'];
   if (f.level === 'MEDIUM') return ['تطابق متوسط', 'med'];
-  if (!f.counts.altered && !f.counts.reversed) return ['کاملاً مطابق', 'top'];
-  return f.fidelity_score >= 95 ? ['تطابق خیلی بالا', 'top'] : ['تطابق بالا', 'hi'];
+  if (!f.counts.altered && !f.counts.reversed) return ['کاملاً مطابق', 'full'];
+  return f.fidelity_score >= 95 ? ['تطابق خیلی بالا', 'full'] : ['تطابق بالا', 'hi'];
 }
 // one plain sentence under the word
 function say(f) {
@@ -180,7 +190,8 @@ function say(f) {
 
 const f = D.fid, claims = D.claims;
 const [w, k] = word(f);
-document.getElementById('chipWord').textContent = w;
+document.getElementById('chipWord').textContent = w.replace(/^تطابق /,'');
+document.getElementById('chipDot').classList.add(k);
 
 const flagged = claims.filter(c => c.verdict === 'ALTERED' || c.verdict === 'REVERSED');
 const silent  = claims.filter(c => c.verdict === 'NOT_IN_SOURCE');
@@ -230,7 +241,7 @@ document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click'
   document.getElementById('paneFid').hidden = b.dataset.t !== 'fid';
   document.getElementById('paneSrc').hidden = b.dataset.t !== 'src';
 }));
-document.getElementById('chip').addEventListener('click', () => document.querySelector('.seg button[data-t="fid"]').click());
+document.querySelectorAll('.chip[data-open]').forEach(c => c.addEventListener('click', () => document.querySelector(`.seg button[data-t="${c.dataset.open}"]`).click()));
 document.getElementById('themeBtn').addEventListener('click', () => {
   const r = document.documentElement, dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
   r.dataset.theme = dark ? 'light' : 'dark';
