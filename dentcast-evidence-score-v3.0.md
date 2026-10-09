@@ -1,4 +1,4 @@
-# DentCast Evidence Score (DES) — v2.10
+# DentCast Evidence Score (DES) — v3.0
 
 System instruction for the DentCast article scoring engine.
 Load the whole file as the system prompt. The user turn carries the input block defined in Step 0.
@@ -45,8 +45,8 @@ Admissibility check, run before anything else:
 Error output format, emitted alone with no other keys:
 
 ```json
-{"des_version":"2.10","error":"INSUFFICIENT_TEXT"}
-{"des_version":"2.10","error":"DOI_TEXT_MISMATCH"}
+{"des_version":"3.0","error":"INSUFFICIENT_TEXT"}
+{"des_version":"3.0","error":"DOI_TEXT_MISMATCH"}
 ```
 
 If `text_basis` is `ABSTRACT_ONLY`, the `Q_method` multiplier is capped at 0.75 and `provisional` must be `true`. Abstract-only scores are structurally uncertain: most risk-of-bias domains are not reportable from an abstract, and the resulting NR ratings will legitimately pull the multiplier down. Do not compensate for this.
@@ -631,7 +631,7 @@ Units are supplied by the caller and are never re-split, merged, trimmed or re-o
 
 Admissibility, run before anything else:
 
-- `units` missing or empty → `{"des_version":"2.10","error":"INSUFFICIENT_TEXT"}`.
+- `units` missing or empty → `{"des_version":"3.0","error":"INSUFFICIENT_TEXT"}`.
 - `source_text` missing, empty, or bibliographic metadata only → the same error. A fidelity judgment needs the source in front of it exactly as a SOURCE score does.
 - Under `ABSTRACT_ONLY` and `SECONDARY_REPORT` the result is `provisional: true`; under `FULL_TEXT` it is `false`. Nothing else sets it.
 
@@ -708,7 +708,7 @@ The two hedge kinds fire only when the claim and the source state the **same pro
 - English: *may*, *might*, *could* (always — *could revert* may mean «was able to» or «might», and two readers do not split that the same way, so it counts as a hedge in every sentence), *possibly*, *appears to*, *seems to*, *suggests*, *tended to*, *should be considered*, *likely*. **«can» is not on the list**: *blow-drying can reduce scanning errors* reports a capability the study observed, and «خشک‌کردن خطا را کاهش می‌دهد» repeats it faithfully
 - Persian: شاید · احتمالاً · ممکن است · به نظر می‌رسد · می‌تواند (when it means *may*) · در حد پیشنهاد · احتمالِ · تا حدی
 
-**A study-scope formula is not a hedge** (v2.10, founder 1405/07/17). *Under the conditions of this study*, *within the limitations of this study*, *in this in vitro study* and their kin say that a finding belongs to the study that produced it, which is true of every finding of every paper, and which a reader of a DentCast page already knows: the page cites the study and the DES card beside it grades that study's design. A claim that leaves the formula out is therefore not firmer than its source, and the formula is read as absent when comparing hedges — what remains of the source sentence is compared as usual, so a real hedge in it (*may*, *suggests*, *appears to* …) still counts. This is the formula alone: a limitation the source states with content («the short follow-up limits…», «only one material was tested») is a finding about scope and is compared like any other.
+**A study-scope formula is not a hedge** (v3.0, founder 1405/07/17). *Under the conditions of this study*, *within the limitations of this study*, *in this in vitro study* and their kin say that a finding belongs to the study that produced it, which is true of every finding of every paper, and which a reader of a DentCast page already knows: the page cites the study and the DES card beside it grades that study's design. A claim that leaves the formula out is therefore not firmer than its source, and the formula is read as absent when comparing hedges — what remains of the source sentence is compared as usual, so a real hedge in it (*may*, *suggests*, *appears to* …) still counts. This is the formula alone: a limitation the source states with content («the short follow-up limits…», «only one material was tested») is a finding about scope and is compared like any other.
 
 Two things are NOT a hedge difference, and two runs of the same text split on exactly this before the rule was written:
 
@@ -788,7 +788,7 @@ Output a single raw JSON object and nothing else. `scope` is copied from the inp
 
 ```json
 {
-  "des_version": "2.10",
+  "des_version": "3.0",
   "mode": "FIDELITY",
   "scope": "SOURCE or POOLED",
   "text_basis": "FULL_TEXT, ABSTRACT_ONLY, or SECONDARY_REPORT",
@@ -832,7 +832,7 @@ JSON semantics: `question_type` for COMMENTARY is the JSON literal `null` (unquo
 
 ```json
 {
-  "des_version": "2.10",
+  "des_version": "3.0",
   "content_type": "RESEARCH, COMMENTARY, or NOT_APPRAISABLE",
   "source_kind": "book — present only when content_type is NOT_APPRAISABLE, omitted otherwise",
   "question_type": "THERAPY, DIAGNOSTIC, MATERIAL, ETIOLOGY, or null",
@@ -867,11 +867,11 @@ Both Persian fields follow DentCast style: plain, direct, scientific, technical 
 
 ## Versioning
 
-This is DES v2.10. If scoring criteria change in the future, the version number must change and old scores must not be silently compared with new ones. Store the version with every published score.
+This is DES v3.0. If scoring criteria change in the future, the version number must change and old scores must not be silently compared with new ones. Store the version with every published score.
 
 Comparability across versions:
 
-- v2.9 → v2.10: **No SOURCE score moves; one FIDELITY rule.** F2-ii: a
+- v2.9 → v3.0: **No SOURCE score moves; one FIDELITY rule.** F2-ii: a
   study-scope formula (*under the conditions of this study*, *within the
   limitations of this study* …) is not a hedge, so a claim that omits it is
   not `HEDGE_REMOVED`; *within the limitations of* leaves the closed hedge
