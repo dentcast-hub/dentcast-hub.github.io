@@ -905,7 +905,26 @@ Comparability across versions:
   100/HIGH, dentai-21 100/HIGH; the regression inputs 88/HIGH, **70**/MEDIUM
   and 50/LOW — the zirconia text moved from 60 to 70 by design, because
   «بسیار بیشتر» against *significantly higher* is no longer an altered
-  magnitude (*significantly* is a statistical word, not a size).
+  magnitude (*significantly* is a statistical word, not a size). **Then a third
+  test, on pages with several sources** (F6, appendix rule 10,
+  `tools/des_fidelity_units.py`): `sharehub/share-22`, which names its six
+  studies in the prose (six `SOURCE` calls, 2–6 units each), and
+  `sharehub/share-23`, which names none (one `POOLED` call, 70 units, two
+  reviews). The per-source calls agreed on every unit in every run from the
+  first round. The pooled call — a clinical protocol synthesised from two
+  abstracts — took three rounds: F2-iii (an instruction is judged on its
+  action, and what is an instruction is decided by grammar alone), F2-iv (a
+  claim that two conditions differ is judged on the difference), narrowing
+  is not a change, the first fitting `change_kind` wins, and «could» is
+  always a hedge. Its final round agreed on the level in all three runs
+  (MEDIUM, capped by the same `REVERSED` units in every run) and on the score
+  within one point (77–78), with five of seventy units still split between
+  a verdict and silence on stage- or system-specific steps the abstracts
+  address only in general terms. That meets this spec's own precision bar
+  (appendix rule 6: drift in the number is tolerable, a band or level change
+  is not) and not the zero-split bar the single-source tests reached; a
+  pooled score is therefore the one FIDELITY result whose number should be
+  read to the level, not to the point.
 - v2.3 → v2.4: **A RESEARCH score for the excluded-studies domain (3b-iii) may
   RISE from `some_concerns` to `low`, and only when the excluded full-text
   studies are individually identified (by citation) with a specific, checkable
