@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DES v2.9 FIDELITY — the caller's half: split a page into units and say
+"""DES v2.10 FIDELITY — the caller's half: split a page into units and say
 which cited source each unit is judged against.
 
 The spec (appendix rules 7 and 10) takes segmentation and attribution out of
