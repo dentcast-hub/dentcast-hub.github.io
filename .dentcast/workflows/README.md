@@ -1397,10 +1397,18 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v2.9.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v2.10.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v2.9 is the current spec, and its change from 2.8 is four FIDELITY verdict
+**v2.10 is the current spec, and its change from 2.9 is one FIDELITY rule:**
+a study-scope formula (*under the conditions of this study*, *within the
+limitations of this study* …) is not a hedge, so a claim that leaves it out is
+not «قاطع‌تر از منبع» — every finding belongs to its study, the page cites the
+study and the DES card grades it (founder, 1405/07/17). Real hedges (*may*,
+*suggests*, *appears to* …) still count. No SOURCE score moves; a 2.9 record
+stays valid under its own stamp.
+
+**v2.9's change from 2.8 is four FIDELITY verdict
 rules, plus the way the FIDELITY call is run (Part 2c).** No SOURCE score
 moves. A ranking («قوی‌ترین», «مطمئن‌ترین», «بیشتر از») is one claim wherever
 it appears; a relation between sources («تنها مطالعه‌ای که…», «هم X و هم
@@ -1619,39 +1627,42 @@ were taken out of the model's hands for exactly that reason.
 **The output** is the spec's F5 object. Validate it in Part 3(5), then store it
 in Part 4.
 
-#### Part 2c — How the FIDELITY call is run: Sonnet, three looks at what is flagged, majority vote (v2.9)
+#### Part 2c — How the FIDELITY call is run: two full Sonnet runs, a tie-break, an Opus review (v2.9)
 
 The FIDELITY call is an independent agent per input block, **on Sonnet**,
-reading `.dentcast/des-v2.9-knowledge.md` (the spec minus its appendix) as its
-instruction and the block as its user turn. Never Opus for one run and Sonnet
-for another inside one record: the model is part of the measurement, and the
-v2.9 precision rounds measured Sonnet. Every record is built the same way:
+reading `.dentcast/des-v2.10-knowledge.md` (the spec minus its appendix) as its
+instruction and the block as its user turn. The model is part of the
+measurement: never mix models for the runs inside one record.
 
-1. **One full run per input block** — save it as `<dir>/out-src<k>-1.json`.
-2. **Two confirming runs over the units run 1 flagged** (`ALTERED`/`REVERSED`)
-   — build blocks holding only those units with
-   `--build <dir2> --only u114,u338,…` (same text, same basis; the tool keeps
-   the units' own ids), run each twice, save as `out-src<k>-2.json` and
-   `-3.json` in the first directory. No flagged unit → no confirming runs.
-3. **Vote**: `python3 tools/des_fidelity_units.py <content_id> --vote <dir>`
-   writes `voted-src<k>.json`. Per unit, the `(verdict, change_kind)` that at
-   least two runs agree on wins, its quote and note taken from the earliest
-   run in that majority; a unit only run 1 judged keeps run 1's answer; counts,
-   score, level, `fact_fa` and `interpretation_fa` are recomputed by the tool.
-4. **Adjudicate only a unit with no majority** (three different answers): the
-   session's own model reads that unit, the three answers and the source
-   sentences each run quoted, decides by the spec, and writes the claim fields
-   into `<dir>/adjudicate.json` (`{"src<k>": {"u…": {verdict, change_kind,
-   source_quote, note}}}`); re-run `--vote`, which exits non-zero while any unit
-   is still open. The adjudicator never re-reads the whole paper and never
-   overrides a majority.
+1. **Two full runs per input block** — `<dir>/out-src<k>-1.json` and `-2.json`.
+   Two, not one: a sentence one run calls `MATCHES` is otherwise never looked
+   at again, and a missed firmer-than-the-source sentence is the error nobody
+   sees (share-18: «لبه‌ی نازک» was caught by some runs and missed by others).
+2. **Tie-break only where they differ.** `--vote <dir>` lists every unit the
+   two runs answered differently (any verdict or kind, flagged or not); build
+   blocks for those alone (`--build <dir2> --only u…`), run them once, save
+   as `out-src<k>-3.json`. Units the two runs agree on are settled.
+3. **Vote**: `python3 tools/des_fidelity_units.py <content_id> --vote <dir>`.
+   Two agreeing votes win; with three, the `(verdict, change_kind)` pair two
+   share wins, quote and note from the earliest run in it. Three different
+   answers → the session's model adjudicates that unit in
+   `<dir>/adjudicate.json` (`{"src<k>": {"u…": {verdict, change_kind,
+   source_quote, note}}}`).
+4. **Opus reviews every unit the vote leaves `ALTERED`/`REVERSED`** — not only
+   the unresolved ones. More Sonnet votes cure random disagreement but not a
+   shared misreading (share-18: two of three runs read Saker's «internal», an
+   average of the other areas, as a third surface). The reviewer reads the
+   unit, its neighbours, the sentences the runs quoted and, where a term is
+   defined there, the source's Methods, then writes
+   `<dir>/review.json` (`{"src<k>": {"u…": {"agree": true|false, "reason":
+   "…"}}}`). A dissent never flips the verdict: `--vote` appends it to the
+   unit's `note`, and Part 3b shows the founder both reasons side by side.
 
-`voted-src<k>.json` is what Part 3 validates and Part 4 stores — one object per
-source, the spec's own shape. What this buys and what it does not: a flagged
-sentence, which is what the founder is shown and the reader sees, has been
-looked at three times; a sentence run 1 called `MATCHES` has been looked at
-once. `--vote` is for SOURCE scope; a POOLED page is not voted yet (it
-runs one call per part and `--merge`, as before).
+`--vote` exits non-zero while any unit still needs a tie-break run, an
+adjudication or a review. `voted-src<k>.json` is what Part 3 validates and
+Part 4 stores — one object per source, the spec's own shape. `--vote` is for
+SOURCE scope; a POOLED page is not voted yet (it runs one call per part and
+`--merge`, as before).
 
 #### Part 3 — Validate the output mechanically (the appendix's contract)
 
@@ -1747,8 +1758,8 @@ never a «بله» to the others.
   full run already judged every other sentence, and judging them again buys
   nothing but fresh run-to-run noise on sentences nobody touched. Build blocks
   for the edited units alone (`--build <dir2> --only u…`, same `source_text`,
-  same basis), run them by Part 2c (one run; two confirming runs for any it
-  flags), then
+  same basis), run them by Part 2c (two runs, a tie-break where they differ, an Opus
+  review of anything still flagged), then
   `python3 tools/des_fidelity_units.py <content_id> --vote <dir2> --base <dir1>`,
   where `<dir1>` holds the `voted-src<k>.json` of the last full run. The tool
   keeps the base verdict for every unit not re-checked, recomputes counts,

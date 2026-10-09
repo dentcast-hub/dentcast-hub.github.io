@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DES v2.9 FIDELITY — the caller's half: split a page into units and say
+"""DES v2.10 FIDELITY — the caller's half: split a page into units and say
 which cited source each unit is judged against.
 
 The spec (appendix rules 7 and 10) takes segmentation and attribution out of
@@ -330,36 +330,51 @@ def merge_pooled(parts, basis):
 FLAGGED = ("ALTERED", "REVERSED")
 
 
-def vote_source(runs, adjudicated=None):
+def vote_source(runs, adjudicated=None, reviewed=None):
     """Majority vote over repeated SOURCE-scope runs of ONE source (workflow
-    step 4.13 Part 2c). `runs` is a list of outputs: runs[0] covers every
-    unit; later runs may cover only a subset (the units runs[0] flagged).
-    Per unit, the (verdict, change_kind) pair at least two runs agree on
-    wins and its quote/note come from the earliest run in that majority;
-    a unit only runs[0] judged keeps runs[0]'s answer. A unit with no
-    majority is unresolved until `adjudicated[uid]` supplies the claim
-    object (the adjudicator's decision, Part 2c). Returns (object, unresolved)."""
-    adjudicated = adjudicated or {}
+    step 4.13 Part 2c). runs[0] and runs[1] are the two FULL runs; runs[2]
+    is the tie-break run over the units the two disagreed on. Per unit:
+      * two votes that agree → that answer;
+      * two votes that differ → `tiebreak` until the third run covers it;
+      * three votes → the (verdict, change_kind) pair at least two share,
+        quote/note from the earliest run in it; none shared → `unresolved`
+        until `adjudicated[uid]` supplies the claim fields;
+      * one vote (a re-check base that judged a unit once) → that answer.
+    Every unit whose final verdict is ALTERED/REVERSED needs an Opus review
+    in `reviewed[uid]` = {"agree": bool, "reason": str}; a dissent never
+    flips the verdict — it is appended to `note` and shown to the founder
+    beside the majority's reason (Part 3b). Returns
+    (object, tiebreak, unresolved, unreviewed)."""
+    adjudicated, reviewed = adjudicated or {}, reviewed or {}
     base = runs[0]
     by_run = [{c["id"]: c for c in r["claims"]} for r in runs]
-    claims, unresolved = [], []
+    claims, tiebreak, unresolved, unreviewed = [], [], [], []
     for c0 in base["claims"]:
         uid = c0["id"]
         votes = [(i, br[uid]) for i, br in enumerate(by_run) if uid in br]
+        keys = [(c["verdict"], c.get("change_kind")) for _, c in votes]
         if uid in adjudicated:
             pick = {**c0, **adjudicated[uid]}
         elif len(votes) == 1:
             pick = c0
+        elif len(votes) == 2 and keys[0] != keys[1]:
+            tiebreak.append(uid)
+            pick = c0
         else:
-            keys = [(c["verdict"], c.get("change_kind")) for _, c in votes]
             top = max(set(keys), key=lambda k: (keys.count(k), -keys.index(k)))
             if keys.count(top) * 2 <= len(keys):
                 unresolved.append(uid)
                 pick = c0
             else:
                 pick = votes[keys.index(top)][1]
-        for c in (pick,):
-            assert c["claim_quote"] == c0["claim_quote"], f"runs disagree on the text of {uid}"
+        assert pick["claim_quote"] == c0["claim_quote"], f"runs disagree on the text of {uid}"
+        if pick["verdict"] in FLAGGED and uid not in tiebreak + unresolved:
+            r = reviewed.get(uid)
+            if r is None:
+                unreviewed.append(uid)
+            elif not r.get("agree"):
+                pick = {**pick, "note": ((pick.get("note") or "").strip() + " | Opus review disagrees: "
+                                         + r.get("reason", "")).strip(" |")}
         claims.append(pick)
     vs = [c["verdict"] for c in claims]
     counts = {"matches": vs.count("MATCHES"), "altered": vs.count("ALTERED"), "reversed": vs.count("REVERSED"),
@@ -370,7 +385,7 @@ def vote_source(runs, adjudicated=None):
     fact, interp = compose_fa(claims, counts, assessable, level, version, pooled=False)
     out = {**base, "claims": claims, "counts": counts, "assessable": assessable,
            "fidelity_score": score, "level": level, "fact_fa": fact, "interpretation_fa": interp}
-    return out, unresolved
+    return out, tiebreak, unresolved, unreviewed
 
 
 def rebase(base, runs, page_units, k):
@@ -412,8 +427,9 @@ def main():
     ap.add_argument("--base", metavar="OLD_DIR", help="with --vote: re-check only. OLD_DIR holds the voted-src<k>.json "
                     "of the last full run; DIR holds runs over the EDITED units alone (Part 3b). Every other unit "
                     "must still be on the page with the same id and text, or the tool refuses")
-    ap.add_argument("--vote", metavar="DIR", help="majority-vote DIR/out-src<k>-<run>.json (run 1 full, runs 2-3 "
-                    "the flagged units) into DIR/voted-src<k>.json; DIR/adjudicate.json "
+    ap.add_argument("--vote", metavar="DIR", help="majority-vote DIR/out-src<k>-<run>.json (runs 1-2 full, run 3 the "
+                    "units they disagree on) into DIR/voted-src<k>.json; DIR/review.json holds the Opus "
+                    "review of every flagged unit; DIR/adjudicate.json "
                     "{\"src<k>\": {uid: claim fields}} settles a unit with no majority")
     a = ap.parse_args()
     rec = json.loads((ROOT / "plus/des-scores.json").read_text(encoding="utf-8")).get(a.content_id)
@@ -439,6 +455,8 @@ def main():
         d = Path(a.vote)
         adj_p = d / "adjudicate.json"
         adj = json.loads(adj_p.read_text(encoding="utf-8")) if adj_p.exists() else {}
+        rev_p = d / "review.json"
+        rev = json.loads(rev_p.read_text(encoding="utf-8")) if rev_p.exists() else {}
         open_units = 0
         by_id = {u["id"]: u for u in units}
         for k in sorted(plan, key=str):
@@ -454,14 +472,16 @@ def main():
                 runs = rebase(base, runs, [by_id[i] for i in plan[k]], k)
             if not runs:
                 continue
-            out, unresolved = vote_source(runs, adj.get(f"src{k}"))
+            out, tiebreak, unresolved, unreviewed = vote_source(runs, adj.get(f"src{k}"), rev.get(f"src{k}"))
             (d / f"voted-src{k}.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
             flagged = [c["id"] for c in out["claims"] if c["verdict"] in FLAGGED]
             print(f"src{k}: {len(runs)} run(s) · {out['fidelity_score']} {out['level']} · "
-                  f"flagged {flagged or '—'} · no majority {unresolved or '—'}")
-            open_units += len(unresolved)
+                  f"flagged {flagged or '—'} · tie-break {tiebreak or '—'} · no majority {unresolved or '—'} · "
+                  f"awaiting Opus review {unreviewed or '—'}")
+            open_units += len(tiebreak) + len(unresolved) + len(unreviewed)
         if open_units:
-            sys.exit(f"{open_units} unit(s) have no majority — adjudicate them in {adj_p}")
+            sys.exit(f"{open_units} unit(s) open — tie-break run (--only), {adj_p} for no majority, "
+                     f"{rev_p} for the Opus review of every flagged unit")
         return
     if a.build:
         if not a.texts:
