@@ -1619,6 +1619,578 @@ were taken out of the model's hands for exactly that reason.
 **The output** is the spec's F5 object. Validate it in Part 3(5), then store it
 in Part 4.
 
+#### Part 2c — How the FIDELITY call is run: two full Sonnet runs, a tie-break, an Opus review (v2.9)
+
+The FIDELITY call is an independent agent per input block, **on Sonnet**,
+reading `.dentcast/des-v2.9-knowledge.md` (the spec minus its appendix) as its
+instruction and the block as its user turn. The model is part of the
+measurement: never mix models for the runs inside one record.
+
+1. **Two full runs per input block** — `<dir>/out-src<k>-1.json` and `-2.json`.
+   Two, not one: a sentence one run calls `MATCHES` is otherwise never looked
+   at again, and a missed firmer-than-the-source sentence is the error nobody
+   sees (share-18: «لبه‌ی نازک» was caught by some runs and missed by others).
+2. **Tie-break only where they differ.** `--vote <dir>` lists every unit the
+   two runs answered differently (any verdict or kind, flagged or not); build
+   blocks for those alone (`--build <dir2> --only u…`), run them once, save
+   as `out-src<k>-3.json`. Units the two runs agree on are settled.
+3. **Vote**: `python3 tools/des_fidelity_units.py <content_id> --vote <dir>`.
+   Two agreeing votes win; with three, the `(verdict, change_kind)` pair two
+   share wins, quote and note from the earliest run in it. Three different
+   answers → the session's model adjudicates that unit in
+   `<dir>/adjudicate.json` (`{"src<k>": {"u…": {verdict, change_kind,
+   source_quote, note}}}`).
+4. **Opus reviews every unit the vote leaves `ALTERED`/`REVERSED`** — not only
+   the unresolved ones. More Sonnet votes cure random disagreement but not a
+   shared misreading (share-18: two of three runs read Saker's «internal», an
+   average of the other areas, as a third surface). The reviewer reads the
+   unit, its neighbours, the sentences the runs quoted and, where a term is
+   defined there, the source's Methods, then writes
+   `<dir>/review.json` (`{"src<k>": {"u…": {"agree": true|false, "reason":
+   "…"}}}`). A dissent never flips the verdict: `--vote` appends it to the
+   unit's `note`, and Part 3b shows the founder both reasons side by side.
+
+`--vote` exits non-zero while any unit still needs a tie-break run, an
+adjudication or a review. `voted-src<k>.json` is what Part 3 validates and
+Part 4 stores — one object per source, the spec's own shape. `--vote` is for
+SOURCE scope; a POOLED page is not voted yet (it runs one call per part and
+`--merge`, as before).
+
+#### Part 3 — Find the DOI on the web and add a first-author → DOI credit on the page (ShareHub style)
+
+**Runs only when a page is being published** (text-bearing publish, any type). On
+the **paper-only fast path** there is no page — skip this part entirely and report
+the skip. This is the on-page action and mirrors how **ShareHub** credits its
+source: a `.author` block reading «نویسنده:» followed by a single hyperlinked
+name. Here the linked name is the **paper's first author** and the link target is
+the **DOI**.
+
+1. **Find the DOI + first author on the web.** Search the net for the paper's
+   **DOI** and its **first author** — use `WebSearch` and/or the article-lookup
+   MCP tools (`search_articles`, `lookup_article_by_citation`,
+   `get_article_metadata`, `convert_article_ids`). Cross-check the DOI resolves
+   to the correct paper (matching title/journal/year). **If you cannot confidently
+   determine the DOI or the first author, ASK the user — never fabricate either.**
+   The DOI/journal/year found here also feed Part 2's catalog fields.
+2. **Add the credit under the article body.** On the published page (whatever its
+   type), **below the article body**, add a source-credit block crediting the
+   paper's first author, where the **first author's name is an anchor to the DOI**:
+   ```html
+   <div class="author">
+     نویسنده:
+     <a href="https://doi.org/<doi>" target="_blank" rel="noopener noreferrer">First Author</a>
+   </div>
+   ```
+   - Use the **same markup/style precedent the page's own type already uses** for
+     a source credit. DentAI, for instance, has a source-citation precedent (e.g.
+     `dentai/dentai-3.html`: a citation card with the paper title, authors,
+     journal, and DOI, plus a JSON-LD `isBasedOn` → `doi.org` reference). If such a
+     citation card is present on the page, **enhance it** by making the **first
+     author** a real `<a href="https://doi.org/<doi>">` link (ShareHub style)
+     rather than adding a visually duplicate block; if no such block exists, add
+     the ShareHub-style `.author` credit above, and ensure its `.author` CSS exists
+     in the page (it does on ShareHub-derived pages; add it if the type's template
+     lacks it).
+   - **This is the SOURCE paper's author** — do **not** confuse it with, or
+     overwrite, any existing site author credit (e.g. DentCast's `.author-note`,
+     دکتر فواد شهابیان, the narrator/site author). The two coexist.
+3. **Keep JSON-LD consistent.** If the page's template carries an `isBasedOn`
+   (CreativeWork) reference, set its `url` to `https://doi.org/<doi>` and its
+   `name` to the paper title — matching the `dentai-3` precedent.
+4. **Hash the new page before and after Part 3.** The only allowed diffs are the
+   first-author→DOI credit (and any `isBasedOn` value update). Report before/after
+   hashes. Don't break HTML (no link inside an existing link or heading).
+
+**Verify after the branch:** report the Drive subfolder the paper landed in (and
+its `drive_view` URL); the new catalog entry's `id`, `topic`/`topic_path`,
+`tags`, and Drive link; and — when a page was published — the DOI + first author
+used for the on-page credit (with the rendered anchor), or the "Part 3 skipped —
+paper-only" note otherwise. Explicitly flag anything you had to ask the user
+about, and confirm nothing was guessed.
+
+### 4.11. Flashcards (Leitner) — semantic `DefinedTermSet` in the FAQ corpus
+
+**Runs for EVERY type, on EVERY publish that produces a page — LiteCast and
+DentCast+ (`dentcast_plus`) are the two exceptions.** LiteCast stays outside
+the specialist ecosystem, same as the glossary/pillar linking it skips in
+step 0. **DentCast+ is optional, not skipped:** a video's real content is
+in the video itself, not in re-typable prose — the page's own text is often
+just a one-line caption — so authoring a card/question requires the founder
+to supply the actual clinical tips from the recording. When that text is
+available, run this step normally (same standard as every other type). When
+it is not, and the founder declines to supply it, no cards are written and
+that is a **documented skip**, never a fabricated card standing in for real
+content (Hard Rule 13; a thin or fabricated card is worse than no card —
+see the "ask, don't guess" note below). Decided 2026-08-22 on
+`dentcast-plus/video-10`; `tools/verify_publish.py`'s `FLASHCARD_OPTIONAL_TYPES`
+enforces the same two-type exception so the gate reports a skip, not a FAIL.
+A flashcard is **a concept, not a
+question** — so it lives in schema.org's real vocabulary for exactly that:
+`DefinedTermSet` → `hasDefinedTerm[]` of `DefinedTerm { name, description }`.
+This block is written into **`plus/faq-corpus.json`, under the new page's
+content id** — **never into the page's own JSON-LD**. FAQ/flashcards used to
+live on the page itself; that shipped hidden markup with no visible rendering
+at scale and was an SEO liability, so it was migrated into this corpus (see
+`.dentcast/faq-schema-removal-handoff.md`). `verify_publish.py` fails any page
+whose own HTML still carries a `#flashcards`-tagged `DefinedTermSet`.
+`plus/flashcards-index.json` (the premium app's Leitner-seed catalog) is
+**generated**, never edited directly: run
+`node tools/build_flashcards_index.mjs` (added to step 8's rebuild list) to
+read every content id's `DefinedTermSet` out of the corpus and regenerate it.
+**This step never touches `dentcast-brain.json`** — Hard Rule 6 (brain schema
+is sacred; never add a field absent from the previous same-category entry)
+makes the brain the wrong home for a feature being rolled out prospectively
+while older entries wait for a later, separate backfill pass.
+
+**Card content must be semantic, never a mechanical FAQ dump.** Each
+`DefinedTerm` tests recall of **one concept**: `name` is a tight recall
+prompt, `description` is the complete, precise answer to that one concept —
+never a verbatim copy of a FAQ question/answer pair.
+
+**"Verbatim" includes the near-copy — this is the step's most common failure.**
+Deleting the answer's opening verdict («بله؛ …» → «…») and shipping the rest
+unchanged is **not** a rewrite; neither is reordering a clause or swapping one
+word. The test is whether the text was **re-authored as a definition**: a FAQ
+answer argues a case *about this article*, while a card states what a concept
+*is*, standing alone, for a reader meeting it cold months later. If your
+`description` would still read as an answer to the question it came from, it
+has not been rewritten. Phase F fails the publish on a description that matches
+a FAQ answer with or without its verdict prefix, so this is enforced, not
+advisory.
+
+**FAQ → flashcard compression, but judged, not mechanical.** Where this
+content's corpus entry already carries a FAQPage node, walk its `mainEntity`
+and classify each Q/A pair:
+- **Genuinely "define/explain X" shaped** (the question names one concept,
+  the answer explains it) → compress it into one `DefinedTerm`: rewrite the
+  question into a `name` recall prompt, rewrite the answer into a complete
+  `description` for that one concept. If the answer bundles more than one
+  concept, split it into multiple atomic terms instead of one crowded one.
+- **Comparison/decision/procedural shaped** (e.g. "ایمپلنت کوتاه یا سینوس
+  لیفت؟", "کدوم بهتره؟") — these have no single concept to define. **Skip
+  them** rather than forcing a card; note the skip in the report.
+- **Ambiguous cases** — ask the user rather than guessing which bucket a Q/A
+  pair falls into.
+
+Where no FAQ exists yet, author `DefinedTerm`s directly from the published
+body using the same atomicity rule.
+
+**Ask, don't guess — same standard as step 4.10's paper branch.** Anywhere
+you're not confident a candidate concept is genuinely atomic, clinically
+accurate, or worth a card at all, stop and present it to the user rather than
+forcing a term into existence. A thin or fabricated card is worse than no
+card.
+
+Written into `plus/faq-corpus.json`, under this content id's
+`definedTermSets` array (the node's own shape — including the `@id`
+convention below — is unchanged from the old on-page form; only its storage
+location moved):
+
+```html
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  "@id": "https://dentcast.org/insight/insight-12.html#flashcards",
+  "hasDefinedTerm": [
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://dentcast.org/insight/insight-12.html#flashcards-c1",
+      "name": "single-concept recall prompt",
+      "description": "complete, precise answer to that one concept",
+      "source": "faq",
+      "sourceFaqIndex": 2
+    }
+  ]
+}
+</script>
+```
+
+- `@id` on each `DefinedTerm` ends in `#flashcards-c<n>`, 1-indexed per page,
+  stable once published — a later wording fix must not renumber existing ids
+  (the backend's `card_state` rows key off the fragment).
+- `source` and `sourceFaqIndex` are non-standard but harmless extra
+  properties (ignored by anything reading strict schema.org): `source` is
+  `"faq"` or `"authored"`; `sourceFaqIndex` is present **only** when `source`
+  is `"faq"`, pointing at the FAQPage `mainEntity` index the term was derived
+  from, for traceability if that FAQ entry changes later.
+- No other properties beyond real `DefinedTerm`/`DefinedTermSet` fields plus
+  these two. Match this shape exactly on every future publish — this is now
+  the schema template.
+
+**Verify:** confirm the `DefinedTermSet` node is present in
+`plus/faq-corpus.json` and is valid JSON; that every `DefinedTerm` has a
+unique `@id`; that no `name`/`description` is a verbatim copy of a FAQ Q/A
+pair; and report the count of terms written, how many came from `faq` vs
+`authored`, and which FAQ entries (if any) were judged comparison/decision-
+shaped and skipped.
+
+### 4.12. Quiz-ready FAQ + scored binary bank
+
+**Runs for EVERY type, on EVERY publish that produces a page — LiteCast is the
+sole exception** (same scope as flashcards: LiteCast is patient-facing and
+stays out of the specialist quiz/flashcard ecosystem). The FAQPage node
+authored for this content — written into `plus/faq-corpus.json` under its
+content id, **never into the page's own JSON-LD** (see step 4.11) — feeds
+two premium surfaces: the Leitner flashcards (step 4.11) **and** a scored
+yes/no quiz (`plus/quiz-index.json`, awarding premium XP). Both consume the
+same corpus entry, so FAQ questions must be authored to a
+**standalone-quiz standard**, not written as page-bound reading aids. Two
+hard requirements on every FAQ Question:
+
+**(a) Self-contained — no article deixis.** Each question must be
+understandable and answerable by a dentist who read the article a month ago and
+remembers only the concept, not which article it was. **Forbidden in a
+question `name`:** «این کیس», «این بیمار», «این مطالعه», «این متن», «این
+ویدیو», «این تکنیک/روش/وضعیت/تصمیم/خطا», or any other reference that only
+resolves by seeing this specific page. Case-based content (chairside, insight
+case-studies, dentcast-plus videos) must embed the case's key conditions **into
+the question itself** — turn «چرا MTA برای این کیس انتخاب شد؟» into «در تحلیلِ
+خارجیِ سرویکالِ (ECR) پیشرفته، چرا MTA ماده‌ی مناسبی برای ترمیم است؟». A
+question that is pure narrative recall of one unnamed patient («تصمیمِ نهایی
+برای این بیمار چه بود؟») with no concept to generalize does not belong in the
+FAQ at all — don't author it. The answer stays 100% grounded in the body;
+never add a clinical claim the article doesn't make.
+
+**(b) Binary answers open with an explicit verdict.** `tools/build_quiz_index.mjs`
+selects the yes/no subset mechanically: a question qualifies only when it is
+phrased as a yes/no question (opens with «آیا»/«مگر», or ends «… درست است؟» /
+«… امکان دارد؟» etc.) **and** its answer's **first clause** states «بله» or
+«خیر»/«نه». So whenever a FAQ question is yes/no-shaped, **write the answer to
+open with the verdict** — «خیر؛ …», «بله، …», or a short concession then the
+verdict («برخلافِ باورِ قدیمی، خیر؛ …»). That one word becomes the graded
+answer key. If the honest answer is genuinely "it depends" (no clean yes/no),
+that's fine — write it hedged and it is correctly **excluded** from the scored
+bank (it still serves as a flashcard / reference FAQ entry). Never contort a real "it
+depends" into a false yes/no just to get it scored: accuracy over coverage,
+the bank must never grade against a guessed key.
+
+The builder is generated-only, run in step 8 (never hand-edit
+`plus/quiz-index.json`); its `content_id` is the page path without `.html`, and
+each question keeps its `source_faq_index` so a later FAQ edit is traceable to
+its quiz entry — the same identifier convention as flashcards, so the premium
+app maps "reader finished article X" → X's quiz questions and flashcards alike.
+
+**When to run — and fix, not just flag.** This is an authoring gate, not a
+report-only check: it runs on the FAQ **before** the corpus entry is
+finalized (right after the step-2 clone establishes the new page, alongside
+the step-4.11 flashcard pass which reads the same FAQ). Walk every
+`mainEntity` question and **bring it into compliance in place** — a
+cloned/adapted question that still carries deixis (per (a)) gets
+**rewritten standalone or removed here**, and a yes/no-shaped question whose
+answer buries or omits the verdict gets its answer **reopened with
+«بله»/«خیر» (per (b))** — so the corpus entry is already correct and never
+needs a later correction pass. Editing is confined to the corpus entry's
+FAQPage node; the answer stays grounded in the body.
+
+**Ask, don't guess — same standard as steps 4.10/4.11.** Where a call is
+genuinely borderline, stop and ask the user rather than deciding silently:
+whether a case-bound question can be rewritten into a self-contained vignette
+**or** should be dropped entirely; whether an answer is truly a clean yes/no
+**or** an honest "it depends" (so it should stay hedged and fall out of the
+scored bank); or whether embedding the case conditions would smuggle in a claim
+the body doesn't actually make. A wrong auto-decision here ships a
+misleading quiz key or an unanswerable question — exactly the outcomes worth a
+one-line question to prevent. Phrase it as a concrete rewrite-vs-drop choice,
+not an open question.
+
+**Verify:** after step 8's quiz build, report how many binary questions this
+page contributed (and, if zero, confirm its FAQ is intentionally all
+open/comparison-shaped); confirm no question `name` on the page contains a
+deictic reference per (a); and list any question you rewrote/dropped for
+compliance and anything you asked the user about.
+
+### 4.13. DES — DentCast Evidence Score (run the scoring prompt, store the record)
+
+**Runs for EVERY type, on EVERY publish that produced a page**, in the basket
+decided at **Phase B Question 4.8**. Two documented skips and no others:
+**LiteCast** (outside the specialist ecosystem, Hard Rule 10 — report "4.13:
+skipped — LiteCast") and a publish whose Question 4.8 answer was **«بدون DES»**.
+Everything else scores.
+
+**Order matters: this runs after 4.10 on purpose.** When a paper file was attached,
+step 4.10 Part 3 has already found and cross-checked the DOI — reuse it rather than
+looking it up a second time and risking a different answer.
+
+**The one rule this entire step rests on: the model never fetches, so `source_text`
+must exist before the prompt runs.** DES spec Core Rule 4 is absolute. A DOI whose
+abstract you could not retrieve is **not scorable** and must end in
+`INSUFFICIENT_TEXT` — never a score assembled from the DentCast متن about the paper,
+from the paper's title, or from what you happen to know about the study.
+
+#### Part 1 — Resolve `source_text` (never skipped, never improvised)
+
+**COMMENTARY basket:** `source_text` is the page's **own body text** — the متن of
+record from Question 3.5 (the post-decision text, edited if rewrites were approved),
+exactly as it will ship. `text_basis` is `FULL_TEXT`. No DOI, no lookup, done.
+
+**RESEARCH basket:** first confirm Question 4.8's **secondary-report** decision is
+already made — if a cited source is a consensus statement/guideline that names its
+primary studies, the DOIs you resolve here are **those studies', not the
+wrapper's**. Then resolve **each** DOI through this ladder, stopping at the first
+real hit:
+
+1. **The local cabinet first** — `dentcast_cabinet_full_catalog.json` already holds
+   abstracts for a large share of the library, and a local hit is free and cannot
+   fail. Look the DOI up directly:
+   ```bash
+   python3 -c "
+   import json,sys
+   doi=sys.argv[1].strip().lower()
+   d=json.load(open('dentcast_cabinet_full_catalog.json'))
+   m=[p for p in d['papers'] if (p.get('doi') or '').strip().lower()==doi]
+   print(json.dumps(m[0], ensure_ascii=False, indent=2) if m else 'NOT IN CABINET')
+   " "10.1111/clr.13849"
+   ```
+   A hit hands you `abstract`, `real_title`, `journal`, `crossref_year` and
+   `authors` in one read. **Compare DOIs case-insensitively** — the catalog stores
+   them as found, so `episode-161`'s reference `10.1111/CLR.13672` lives there as
+   `10.1111/clr.13672` and an exact-match lookup misses it.
+2. **PubMed / article-lookup MCP** — `get_article_metadata`, `search_articles`,
+   `lookup_article_by_citation`, `convert_article_ids`.
+3. **The DOI/publisher page via `WebFetch`** — last resort, and only to read the
+   abstract text.
+
+**If none of the three yields a real abstract, that source is not scorable.** The
+spec's own error output is the correct result, and it is what gets recorded:
+```json
+{"des_version":"2.5","error":"INSUFFICIENT_TEXT"}
+```
+Per the capability protocol (`agent-parity.md` §2), when the blocker is a **missing
+tool** rather than a missing abstract, **ask the user to paste the abstract** —
+never downgrade the result silently.
+
+**`text_basis` is a fact, not a formality.** It is `ABSTRACT_ONLY` whenever what you
+resolved is an abstract — the normal case for every cabinet and lookup hit — and
+`FULL_TEXT` only when you genuinely hold the paper's body. Getting this wrong is not
+cosmetic: `ABSTRACT_ONLY` caps the methodology multiplier at 0.75 and forces
+`provisional: true`, so labelling an abstract as full text silently inflates every
+score built on it.
+
+#### Part 2 — Run the prompt file
+
+**Load `.dentcast/dentcast-evidence-score-v2.9.md` as the system prompt — the whole
+file, verbatim, minus the appendix.**
+
+**v2.9 is the current spec, and its change from 2.8 is four FIDELITY verdict
+rules, plus the way the FIDELITY call is run (Part 2c).** No SOURCE score
+moves. A ranking («قوی‌ترین», «مطمئن‌ترین», «بیشتر از») is one claim wherever
+it appears; a relation between sources («تنها مطالعه‌ای که…», «هم X و هم
+بقیه…», «تعارض ندارند») is silence in a one-source call; one governing
+sentence decides the verdict, the `change_kind` and the quote, and a faithful
+sentence must carry the claim's modifiers too; and an absolute word the source
+does not use («فقط», «همیشه», «هرگز», «همه‌ی»…) is `HEDGE_REMOVED`, never
+silence (founder, 1405/07/17). `sharehub/share-18` is why: two v2.8 runs over
+the same five full texts agreed on 57 of 61 units, and three Sonnet rounds
+under the v2.9 drafts took one source from 16/19 to 18/19 identical units with
+the flagged sentences identical from round 2 on. A 2.8 record is re-run, never
+re-labelled.
+
+**v2.8's change from 2.7 is the FIDELITY arithmetic
+only: F4 scores the claims the source ADDRESSES** (`MATCHES` + `ALTERED` +
+`REVERSED`). A sentence the source is silent about (`NOT_IN_SOURCE`) is counted
+and shown, never scored — under a full text it is almost always the author's own
+background knowledge or clinical reasoning, and scoring it zero took
+`sharehub/share-23` from 98 to 91 for explaining. No verdict changes and no
+SOURCE score moves; a 2.7 record is re-scored by recomputing F4 from its stored
+verdicts and re-stamped 2.8 (no model call). The card's headline is the
+firmer/wider/reversed claims themselves, not the percentage (appendix rule 5).
+
+**v2.7's change from 2.6 is that the FIDELITY call
+reads the SAME text the SOURCE call scored, on the same basis** — a page written
+from a full text is judged against the full text, never its abstract; the tool
+refuses a mismatch (spec F0, appendix rule 11). Under `FULL_TEXT` the most
+specific sentence governs (F2-v), and a sentence naming two conditions together
+(«saliva or blood») is a general finding, not a statement about either (F2-iv
+item 4). `sharehub/share-23` is why: judged against its abstracts, three of its
+stage-by-stage blood claims read as `REVERSED`; the full texts support them. No
+SOURCE score moves.
+
+**v2.6's change from 2.5 is the FIDELITY track made
+to work on DentCast's own prose and on pages that cite several sources** — F1/F2
+rules for an author who explains rather than reports, F2-iii (instructions),
+F2-iv (claims that tell conditions apart), F6 (several sources, `POOLED` when
+none is named), and `tools/des_fidelity_units.py`, which is the caller's split
+and assignment as code. No SOURCE score moves.
+
+**v2.5's change from 2.4 was a SECOND call: the
+FIDELITY track.** No SOURCE score moves — Steps 0-5 and the COMMENTARY track
+are untouched except for a `mode` field whose absence means `SOURCE`. The new
+call takes the page's own text and the source it cites and answers one
+question: does each claim the page attributes to the source appear in the
+source, unchanged in direction, hedge and scope? It is run **after** the SOURCE
+call for that source, per source, and is described in **Part 2b** below. Its
+release precision test is recorded in the spec's own Versioning entry (41
+independent runs, three inputs, every verdict and score identical from the
+second round on).
+
+**v2.2's change from 2.1 is `text_basis:
+SECONDARY_REPORT` (Step 0 + Step 1).** A document that reports work published
+elsewhere — a consensus statement, a guideline, a conference synthesis — rates
+silence about a method as `NR` rather than `high`, and caps the multiplier at
+0.75, exactly as `ABSTRACT_ONLY` does: an abstract condenses by length, a
+secondary report condenses by role, and in neither is a missing method evidence
+that the study skipped it. It is the **fallback**, not the default — Question
+4.8's chain rule scores the primary studies wherever they are retrievable, and
+this basis is for the wrapper you could not get past. Only records scored
+`FULL_TEXT` against a secondary report move under this bump; the four
+consensus/guideline sources already on record were all `ABSTRACT_ONLY` and are
+arithmetically unchanged.
+
+**v2.1's change from 2.0 is that the AMSTAR-2
+excluded-studies domain has THREE outcomes instead of two (Step 3b-iii).** A
+review that published no per-study list of excluded full-text studies is now
+`some_concerns` rather than `high` **when it reported both** a screening account
+with counts (a PRISMA flow diagram, or records screened → full texts assessed →
+included) **and** explicit inclusion/exclusion criteria; a review that documented
+neither, or only one of the two, is still `high`, and that `high` still counts
+toward AMSTAR-2 *critically low*. The reason is that the old rule failed **9 of
+the 9** full-text reviews on record — a domain nothing can pass carries no
+information, and it was rating a PROSPERO-registered five-database review with a
+PRISMA flow identically to a narrative review with no Methods section at all.
+Under `ABSTRACT_ONLY` nothing changes: silence there stays `NR`. Two scores moved
+when this landed, both systematic reviews cited by `sharehub/share-9`, from 55/C
+to 80/A; everything else on record is arithmetically identical.
+
+**v2.0 remains in force for everything else, and its change from 1.x is that a transparency
+penalty is a SHARE of the design anchor, not a flat deduction (Step 4a).** The
+table's numbers are now `base_points`, and what gets subtracted is
+`max(1, round_half_up(base_points × S_design ÷ 100))`. Every penalty object
+therefore carries **both** `base_points` (the row's table weight, always 8/5/5/3)
+and `points` (what was actually subtracted); Phase F recomputes the scaling from
+the pair and fails a mismatch, so writing the old flat value is caught rather
+than shipped. The reason is that `S_design` ceilings differ by almost seven times:
+a flat −8 was 8% of an SR's achievable range and 53% of a narrative review's, and
+below a certain anchor it exceeded the whole range, so weak-design papers piled
+up on a floored 0 and stopped being distinguishable. **Version-gated:** records
+stamped `1.x` keep validating against the flat table they were written under —
+only `2.0` and later are checked for scaling. Across the 47 RESEARCH sources on
+record only 5 carried a penalty at all and **no band moved**, so a page's
+reader-facing band is unaffected either way.
+
+**The determinism rules from v1.5/v1.6 are unchanged and still binding.** Two of
+them exist because a blind reproducibility run found them missing, so do not
+treat them as pedantry: **quality judgment is out of the domain rating**
+(present-vs-absent, plus the closed threshold table in 3b-i — if you are arguing
+that a described method is *bad enough* to count as absent, the answer is
+`some_concerns`), and **an absence-based `high` must name the sections you
+actually read** (3b-ii). Do not decide absence by keyword search alone: a paper
+can appraise its studies without ever writing the word "quality", and a grep
+that misses that produces a confidently wrong `high`. Phase F fails any
+absence-based `high` that carries no note. Every place
+v1.3 left a decision to the scorer is now decided: one tool per design, a fixed
+domain list, an explicit rating rule (under `FULL_TEXT`, silence about a
+safeguard is `high`, not `NR`), routing for the designs that matched no anchor,
+a narrowed funding penalty, and round-half-up on exact decimals. Follow the
+rules even where your own judgment differs — **a score everyone reproduces is
+worth more than a slightly better score nobody can.** Any RESEARCH record still
+stamped `des_version` below `1.5` predates this and must be regenerated before its
+number is compared with a new one; v1.6 changed nothing on the RESEARCH side, so
+`1.5` and `1.6` research scores are directly comparable.
+
+**The COMMENTARY track's one carve-out is why a Chairside, MetaNote or Insight
+page now scores 3 higher than it did.** Checklist item 4 («صریحاً تجربه/دیدگاه
+نامیده شده») can be earned from the section's own published declaration rather
+than a sentence inside the page — for `chairside/`, `metanotes/` and `insight/`
+only, because those three landing pages carry such a declaration and the spec
+quotes all three verbatim in a closed table. When you use it, the
+`evidence_quote` is that declaration copied from the landing page and the item's
+`note` is MANDATORY and names the file it came from.
+
+**The list is closed and has exactly one entrance, which `insight/` is the
+precedent for: the section's landing page gets an explicit declaration first,
+and the spec version bumps after.** Never add a section because it resembles one
+already listed. `insight/` did not qualify under v1.6, when its page said the
+series covers «تجربه‌های بالینی **و** یافته‌های علمی» and therefore could not
+tell a reader which of the two the page in front of them was; v1.7 added it
+because that page was rewritten to declare the section. Any COMMENTARY record in
+`chairside/` or `metanotes/` stamped `des_version` below `1.6`, or in `insight/`
+below `1.7`, is scoring low by 3 and must be regenerated. The appendix says so itself ("NOT part of the
+model instruction … Do not include this appendix if the file is loaded verbatim as a
+system prompt"): those checks are yours to run in Part 3, not the model's.
+
+The user turn is the spec's Step 0 input block, **one block per source**:
+
+```
+doi:               <the DOI, or empty for COMMENTARY>
+source_text:       <the text resolved in Part 1>
+text_basis:        FULL_TEXT | ABSTRACT_ONLY
+metadata:          title / authors / year / journal (from the cabinet hit or the lookup)
+clinical_question: <omit unless this publish explicitly answers one>
+```
+
+- **`journal_quartile` has no source anywhere in this repo.** Neither the cabinet nor
+  any other file carries a Scopus/JCR quartile, so leave it out of `metadata` and
+  expect `{"value":"NR","source":"NR"}` back. Never fill it from memory: it is
+  barred from influencing any rating anyway, but a fabricated Q1 is still a false
+  claim shipped on a page.
+- **One run per source, never merged.** A page citing three papers produces three
+  input blocks and three DES objects. Never concatenate sources into one block and
+  never average their scores.
+
+#### Part 2b — Run the FIDELITY call (spec v2.5, v2.7), once per scored source
+
+**When.** For every source in basket 2 whose SOURCE call returned a scored
+record — RESEARCH or COMMENTARY. Skip it, and store `null` in its slot, when the
+SOURCE call returned an error (`INSUFFICIENT_TEXT`, `DOI_TEXT_MISMATCH`) or
+`NOT_APPRAISABLE` (a book has no sentences to be faithful to in the sense the
+track measures), and for the page's own COMMENTARY self-record (a text cannot be
+unfaithful to itself). Basket 1 pages never reach this call: fidelity needs a
+cited source. No classifier decides whether the page «is a report of the paper»
+— spec F1 decides per unit, and a page that merely lists the paper in its
+references attributes fewer than three claims to it and lands on
+`INSUFFICIENT_CLAIMS` by itself (spec appendix rule 9).
+
+**The model must not have seen the page's text in the SOURCE call, and must not
+see the SOURCE score here.** Two calls, two contexts. A model that read the
+write-up before scoring the paper can be led by it; a model that knows the band
+before judging the write-up confuses a weak paper with an unfaithful summary.
+
+**Build the input blocks with the tool, never by hand** (spec F0, F6, appendix rules 7 and 10):
+
+```bash
+python3 tools/des_fidelity_units.py <content_id>                 # which calls, how many units each
+python3 tools/des_fidelity_units.py <content_id> \
+  --texts texts.json --build <dir>                                 # one input block per call
+```
+
+`texts.json` maps each source's DOI to the `source_text` and `text_basis` the
+SOURCE call scored — **the same text, never a shorter one**: a source scored
+`FULL_TEXT` from the cabinet is judged here on that full text, because the
+page was written from it. `--build` exits non-zero when a basis differs from
+the stored SOURCE record (spec v2.7 appendix rule 11).
+The tool decides the scope: one source → every unit to it;
+several named in the prose → one call per named source with only its units;
+several and none named → `POOLED`, which is one ordinary `SOURCE` call **per
+source** (`input-pooled-S<n>.json`, every unit in each, `pooled_part` set) and
+then `python3 tools/des_fidelity_units.py <content_id> --merge <dir>` over the
+answers saved as `out-S<n>.json`, which writes the one pooled object by spec
+F6's fold — the model never reads two papers in one call (v2.7). Each block it
+writes has this shape:
+
+```
+mode:              FIDELITY
+scope:             SOURCE (always; POOLED exists only as the merge's output)
+pooled_part:       <«S<n>» on a POOLED page's per-source blocks, absent otherwise>
+source_text:       <exactly the source_text the SOURCE call scored>
+text_basis:        <exactly the SOURCE call's text_basis>
+units:             <the page's body, split by the rule below, as [{id:"u1", text:"…"}, …]>
+derivative_url:    <the page's canonical URL — provenance only>
+source_conclusion: <the LAST sentence of source_text (FULL_TEXT: of its last Conclusion section), copied verbatim>
+```
+
+The split and the assignment are deterministic and are **the tool's, never the
+model's**: it reads the rendered prose (title, headings and body, in order; the
+region `verify_publish.py`'s `article_region()` reads), stops at the citation
+block, splits on line breaks and sentence terminators, marks headings, and
+numbers units `u1…uN` over the whole page — so a call that received only some
+units sees ids with gaps, which is correct. Model segmentation and attribution
+were the two largest sources of run-to-run disagreement in the release tests and
+were taken out of the model's hands for exactly that reason.
+
+**The output** is the spec's F5 object. Validate it in Part 3(5), then store it
+in Part 4.
+
 #### Part 2c — How the FIDELITY call is run: Sonnet, three looks at what is flagged, majority vote (v2.9)
 
 The FIDELITY call is an independent agent per input block, **on Sonnet**,
@@ -1747,8 +2319,8 @@ never a «بله» to the others.
   full run already judged every other sentence, and judging them again buys
   nothing but fresh run-to-run noise on sentences nobody touched. Build blocks
   for the edited units alone (`--build <dir2> --only u…`, same `source_text`,
-  same basis), run them by Part 2c (one run; two confirming runs for any it
-  flags), then
+  same basis), run them by Part 2c (two runs, a tie-break where they differ, an Opus
+  review of anything still flagged), then
   `python3 tools/des_fidelity_units.py <content_id> --vote <dir2> --base <dir1>`,
   where `<dir1>` holds the `voted-src<k>.json` of the last full run. The tool
   keeps the base verdict for every unit not re-checked, recomputes counts,
