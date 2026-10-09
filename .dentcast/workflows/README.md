@@ -1397,10 +1397,20 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v2.6.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v2.7.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v2.6 is the current spec, and its change from 2.5 is the FIDELITY track made
+**v2.7 is the current spec, and its change from 2.6 is that the FIDELITY call
+reads the SAME text the SOURCE call scored, on the same basis** — a page written
+from a full text is judged against the full text, never its abstract; the tool
+refuses a mismatch (spec F0, appendix rule 11). Under `FULL_TEXT` the most
+specific sentence governs (F2-v), and a sentence naming two conditions together
+(«saliva or blood») is a general finding, not a statement about either (F2-iv
+item 4). `sharehub/share-23` is why: judged against its abstracts, three of its
+stage-by-stage blood claims read as `REVERSED`; the full texts support them. No
+SOURCE score moves.
+
+**v2.6's change from 2.5 is the FIDELITY track made
 to work on DentCast's own prose and on pages that cite several sources** — F1/F2
 rules for an author who explains rather than reports, F2-iii (instructions),
 F2-iv (claims that tell conditions apart), F6 (several sources, `POOLED` when
@@ -1522,7 +1532,7 @@ clinical_question: <omit unless this publish explicitly answers one>
   input blocks and three DES objects. Never concatenate sources into one block and
   never average their scores.
 
-#### Part 2b — Run the FIDELITY call (spec v2.5), once per scored source
+#### Part 2b — Run the FIDELITY call (spec v2.5, v2.7), once per scored source
 
 **When.** For every source in basket 2 whose SOURCE call returned a scored
 record — RESEARCH or COMMENTARY. Skip it, and store `null` in its slot, when the
@@ -1549,7 +1559,11 @@ python3 tools/des_fidelity_units.py <content_id> \
 ```
 
 `texts.json` maps each source's DOI to the `source_text` and `text_basis` the
-SOURCE call scored. The tool decides the scope: one source → every unit to it;
+SOURCE call scored — **the same text, never a shorter one**: a source scored
+`FULL_TEXT` from the cabinet is judged here on that full text, because the
+page was written from it. `--build` exits non-zero when a basis differs from
+the stored SOURCE record (spec v2.7 appendix rule 11).
+The tool decides the scope: one source → every unit to it;
 several named in the prose → one call per named source with only its units;
 several and none named → one `POOLED` call over all of them. Each block it writes
 has this shape:
@@ -1561,7 +1575,7 @@ source_text:       <exactly the source_text the SOURCE call scored; POOLED: ever
 text_basis:        <exactly the SOURCE call's text_basis>
 units:             <the page's body, split by the rule below, as [{id:"u1", text:"…"}, …]>
 derivative_url:    <the page's canonical URL — provenance only>
-source_conclusion: <the LAST sentence of source_text, copied verbatim>
+source_conclusion: <the LAST sentence of source_text (FULL_TEXT: of its last Conclusion section), copied verbatim>
 ```
 
 The split and the assignment are deterministic and are **the tool's, never the

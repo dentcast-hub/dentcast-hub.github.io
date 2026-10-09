@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DES v2.5 FIDELITY — the caller's half: split a page into units and say
+"""DES v2.7 FIDELITY — the caller's half: split a page into units and say
 which cited source each unit is judged against.
 
 The spec (appendix rules 7 and 10) takes segmentation and attribution out of
@@ -16,7 +16,8 @@ agent produces byte-identical input blocks for the same page.
 
 `texts.json` maps each source's DOI (lower case) to
 {"source_text": "...", "text_basis": "ABSTRACT_ONLY" | "FULL_TEXT" | ...} —
-the same text the SOURCE call scored. Resolving it (cabinet, PubMed, WebFetch)
+the same text the SOURCE call scored, on the same basis (the tool refuses
+a mismatch — spec v2.7 appendix rule 11). Resolving it (cabinet, PubMed, WebFetch)
 is step 4.13 Part 1's job, not this tool's.
 
 Three modes, decided here and nowhere else:
@@ -163,7 +164,43 @@ def last_sentence(text):
     return parts[-1] if parts else ""
 
 
+CONCL_HEAD = re.compile(r"(?<![A-Za-z])(?<!In )(?:CONCLUSIONS?|Conclusions?)\b:?\s+(?=[A-Z])")
+BACK_MATTER = re.compile(r"(?<![A-Za-z])(?:Abbreviations|Acknowledg(?:e)?ments?|ACKNOWLEDG|Supplementary|"
+                         r"Funding|FUNDING|Declarations|Data availability|DATA AVAILABILITY|Authors?[’'] contributions|"
+                         r"AUTHOR CONTRIBUTIONS|CONFLICT OF INTEREST|Conflicts? of interest|Competing interests|"
+                         r"ORCID|REFERENCES|References)\b")
+
+
+def conclusion_of(text, basis):
+    """source_conclusion (spec appendix rule 7). An abstract ends on its
+    conclusion; a full text ends on its back matter (ORCID, declarations), so
+    under FULL_TEXT it is the last sentence of the paper's last Conclusion(s)
+    section, cut at the first back-matter heading after it."""
+    if basis == "FULL_TEXT":
+        heads = list(CONCL_HEAD.finditer(text))
+        if heads:
+            body = text[heads[-1].end():]
+            m = BACK_MATTER.search(body)
+            return last_sentence(body[:m.start()] if m else body)
+    return last_sentence(text)
+
+
 BASIS_ORDER = ["FULL_TEXT", "SECONDARY_REPORT", "ABSTRACT_ONLY"]
+
+
+def text_for(s, texts):
+    """The FIDELITY call reads what the SOURCE call scored (spec v2.7 F0,
+    appendix rule 11): a page written from a full text is never judged
+    against its abstract. Refuse a text whose basis differs from the record."""
+    doi = (s.get("citation") or {}).get("doi", "").lower()
+    if doi not in texts:
+        sys.exit(f"no text for {doi} in --texts")
+    t = texts[doi]
+    want = s.get("text_basis")
+    if want and t.get("text_basis") != want:
+        sys.exit(f"{doi}: --texts gives {t.get('text_basis')} but the SOURCE record was scored "
+                 f"on {want} — pass the same text the SOURCE call scored (spec appendix rule 11)")
+    return t
 
 
 def build(content_id, sources, units, mode, plan, texts, outdir):
@@ -179,20 +216,20 @@ def build(content_id, sources, units, mode, plan, texts, outdir):
             for n, s in enumerate(sources, 1):
                 if not scorable(s):
                     continue
-                t = texts[(s.get("citation") or {}).get("doi", "").lower()]
+                t = text_for(s, texts)
                 blocks.append(f"[S{n}] {t['source_text']}")
                 bases.append(t["text_basis"])
-                concl.append(f"[S{n}] {last_sentence(t['source_text'])}")
+                concl.append(f"[S{n}] {conclusion_of(t['source_text'], t['text_basis'])}")
             blk = {"mode": "FIDELITY", "scope": "POOLED", "source_text": "\n\n".join(blocks),
                    "text_basis": max(bases, key=BASIS_ORDER.index), "units": pub(ids),
                    "derivative_url": url, "source_conclusion": "\n".join(concl)}
             name = "pooled"
         else:
             s = sources[key]
-            t = texts[(s.get("citation") or {}).get("doi", "").lower()]
+            t = text_for(s, texts)
             blk = {"mode": "FIDELITY", "scope": "SOURCE", "source_text": t["source_text"],
                    "text_basis": t["text_basis"], "units": pub(ids), "derivative_url": url,
-                   "source_conclusion": last_sentence(t["source_text"])}
+                   "source_conclusion": conclusion_of(t["source_text"], t["text_basis"])}
             name = f"src{key}"
         p = outdir / f"input-{name}.json"
         p.write_text(json.dumps(blk, ensure_ascii=False, indent=1), encoding="utf-8")
