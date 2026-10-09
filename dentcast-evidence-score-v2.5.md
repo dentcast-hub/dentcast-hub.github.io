@@ -616,14 +616,15 @@ Applies only when `mode` is `FIDELITY`. It answers ONE question: does each claim
 
 ```
 mode:              FIDELITY
-source_text:       string — the source's abstract, or abstract + body (same object the SOURCE call scored)
+scope:             SOURCE | POOLED (absent = SOURCE) — SOURCE: one cited source; POOLED: every source of the page at once (F6)
+source_text:       string — the source's abstract, or abstract + body (same object the SOURCE call scored); under POOLED, every source's text, each block opened by its tag «[S1]», «[S2]» …
 text_basis:        FULL_TEXT | ABSTRACT_ONLY | SECONDARY_REPORT
 units:             array of { "id": "u1", "text": "…", "heading": true? } — the derivative text, already split by the caller; `heading` is present and true only on a unit the caller took from a heading element (h1–h6)
 derivative_url:    string or empty — provenance only, never fetched, never quoted
 source_conclusion: string — the LAST sentence of source_text that states a result or conclusion, copied verbatim by the caller
 ```
 
-**Units are supplied by the caller and are never re-split, merged, trimmed or re-ordered by the model.** Segmentation is the single largest source of disagreement between two runs of the same text, so it is taken out of the model's hands entirely (the appendix states the splitting rule). A unit that holds two claims receives ONE verdict, decided by the precedence rule in F3. `claim_quote` is always the unit's `text`, whole and verbatim.
+**Units are supplied by the caller and are never re-split, merged, trimmed or re-ordered by the model.** Their ids are the page's own (`u1…uN` over the whole page), so a call that received only some units sees ids with gaps (`u20, u23, u24`) — that is correct, and the output keeps them exactly. Segmentation is the single largest source of disagreement between two runs of the same text, so it is taken out of the model's hands entirely (the appendix states the splitting rule). A unit that holds two claims receives ONE verdict, decided by the precedence rule in F3. `claim_quote` is always the unit's `text`, whole and verbatim.
 
 Admissibility, run before anything else:
 
@@ -736,16 +737,17 @@ fidelity_score  = round_half_up((MATCHES × 100 + ALTERED × 50) ÷ assessable) 
 
 ### F5 — Output format (FIDELITY)
 
-Output a single raw JSON object and nothing else. `claims` holds exactly one object per input unit, in input order, with `id` copied from the unit. `claim_quote` is the unit's `text`, verbatim and whole. `change_kind` is a string on `ALTERED` and the literal `null` elsewhere. `note` is required whenever `source_quote` is `""` and on every F3 precedence case; it may be omitted otherwise. Emit no keys other than these.
+Output a single raw JSON object and nothing else. `scope` is copied from the input. `claims` holds exactly one object per input unit, in input order, with `id` copied from the unit. `source_ref` is the tag of the source whose sentence `source_quote` comes from («S2») under `POOLED`, and the literal `null` under `SOURCE` and whenever `source_quote` is empty. `claim_quote` is the unit's `text`, verbatim and whole. `change_kind` is a string on `ALTERED` and the literal `null` elsewhere. `note` is required whenever `source_quote` is `""` and on every F3 precedence case; it may be omitted otherwise. Emit no keys other than these.
 
 ```json
 {
   "des_version": "2.5",
   "mode": "FIDELITY",
+  "scope": "SOURCE or POOLED",
   "text_basis": "FULL_TEXT, ABSTRACT_ONLY, or SECONDARY_REPORT",
   "claims": [
     { "id": "u1", "claim_quote": "", "verdict": "MATCHES, ALTERED, REVERSED, NOT_IN_SOURCE, NOT_ASSESSABLE, AUTHOR_VIEW, or NOT_A_CLAIM",
-      "change_kind": null, "source_quote": "", "note": "" }
+      "change_kind": null, "source_quote": "", "source_ref": null, "note": "" }
   ],
   "counts": { "matches": 0, "altered": 0, "reversed": 0, "not_in_source": 0, "not_assessable": 0, "author_view": 0, "not_a_claim": 0 },
   "assessable": 0,
@@ -761,6 +763,19 @@ Output a single raw JSON object and nothing else. `claims` holds exactly one obj
 `counts` must equal the tally of `claims`; `assessable` must equal the F4 sum; the pipeline recomputes both and the score, and a mismatch invalidates the output.
 
 `fact_fa`: ONE Persian sentence stating how many attributed claims were checkable, how many match, and the level. `interpretation_fa`: at most three Persian sentences and 50 words, naming the altered or reversed claims in plain terms. It never mentions the source's design, strength, band or score, never says the text omitted something, and never advises the author. If every assessable claim matches, say so and stop. Both fields follow DentCast style (plain, direct, no em dashes); escape newlines as `\n`.
+
+### F6 — A page that cites several sources
+
+The caller decides which units each call receives (appendix rule 10, and `tools/des_fidelity_units.py`, which is that rule as code); the model never decides who a sentence is about. There are three shapes, and the caller tells the model which one by `scope`:
+
+- **One scored source** — every unit goes to its one call, `scope: SOURCE`. This is everything above.
+- **Several sources, some named in the prose** — one call per source, `scope: SOURCE`, each receiving only the units that name that source or follow one that does in the same paragraph. Judge each unit **only for what it says about this call's source.** A unit naming two sources («مارجین عاجی در کار Gurel خطر شکست را ده برابر کرد، و در کار Gresnigt …») reaches both calls; in each, the half about the other study is silence for this source, and the F3 precedence rule decides the one verdict. A unit that reached this call by following a named sentence («در هر دو مطالعه دباندها روی عاج اتفاق افتاده‌اند») is judged against this source as if it named it; if it speaks of several studies together, it is judged on what this source says.
+- **Several sources, none named in the prose** — one call against all of them, `scope: POOLED`. The page has synthesised its sources without saying which said what, so the only fair question is whether each attributed claim is in **any** of them:
+  - `MATCHES` when at least one source states it; `ALTERED` or `REVERSED` only when **no** source states it unchanged and at least one states it altered or reversed — a claim one source supports and another contradicts is `MATCHES`, because the page may be following the first, and the note names the second.
+  - Silence is judged across all of them together: `NOT_ASSESSABLE` (or `NOT_IN_SOURCE` under `FULL_TEXT`) only when no source addresses the claim.
+  - `source_ref` names the source the quoted sentence came from, and every F2 quote filter applies across the whole concatenated text, tags included in nothing: a quote never contains a «[S1]» tag.
+  - `text_basis` is the weakest of the sources' bases (`ABSTRACT_ONLY` if any is), and so is `provisional`.
+  - `source_conclusion` carries one line per source, each opened by its tag, echoed unchanged.
 
 ## Output format (SOURCE)
 
@@ -1039,8 +1054,9 @@ These checks run in the backend, not in the model. Do not include this appendix 
 4. **Schema validation.** Validate against a strict schema (Ajv, Zod, or equivalent) with `additionalProperties: false` so any stray key is rejected and null-able fields fall back to defaults.
 5. **Display.** Show the band badge with the question type (`A · Material`), never the band alone. Keep the numeric score and the full JSON on the detail page. Store `des_version` with every record. A FIDELITY result is shown beside — never instead of, and never without — the SOURCE result for the same source; its headline is the count («۴ از ۵ ادعای قابل‌بررسی مطابق مقاله»), the number rides small, it never uses the band colours or the five band blocks, and `source_conclusion` is printed under it as information with no mark on it.
 7. **FIDELITY unit splitting (caller, before the model).** Split the derivative text into units deterministically. **Stop at the page's citation block**: nothing from the FIRST of these lines onward becomes a unit — (a) a line whose letters, with leading or trailing symbols stripped («∆ منابع», «منابع:»), are exactly «منابع», «منبع», «References» or «Reference»; (b) a line that is exactly the first-author credit label «نویسنده:» (the ShareHub credit block); (c) a line containing the cited source's DOI or its title (case-insensitive, quotation marks ignored). A citation line is not a claim, and the dry run that found this scored «2004;48(2):387-96 — شامل تست روی die و داده‌های بالینی» as a match. DentCast pages mark that block three different ways, which is why there are three signals rather than one heading. Then split first on line breaks, then on sentence terminators `.` `!` `?` `؟` `۔` followed by whitespace or end of text. Trim whitespace. Drop units that are empty. Do NOT split on `;` `،` `:` or on «و». Number them `u1…uN` in order, and mark every unit taken from an `<h1>`–`<h6>` element with `"heading": true` (the model cannot see markup, and a heading that makes an assertion otherwise reads as a claim). Never let the model see the unsplit text. Pass `source_conclusion` as the last sentence of `source_text` (same terminator rule) — under `ABSTRACT_ONLY` that is the abstract's conclusion sentence.
-8. **FIDELITY verification.** Check that `claims` has one object per unit, in order, with `claim_quote` equal to the unit text; verify every non-empty `source_quote` against `source_text` by rule 2; reject `NOT_IN_SOURCE` under `ABSTRACT_ONLY`/`SECONDARY_REPORT` and `NOT_ASSESSABLE` under `FULL_TEXT`; reject `ALTERED` without a `change_kind` from the F2-i list; recompute `counts`, `assessable`, `fidelity_score` and `level` by F4. The FIDELITY call runs only AFTER the SOURCE call for that source returned a record, and the two are stored side by side, never merged into one object: in `plus/des-scores.json` the record gains `fidelity`, an array parallel to `sources` by index (same length; `null` in a slot whose source got no FIDELITY call — an error, `NOT_APPRAISABLE`, or the page's own COMMENTARY self-record).
+8. **FIDELITY verification.** Check that `claims` has one object per unit, in order, with `claim_quote` equal to the unit text; verify every non-empty `source_quote` against `source_text` by rule 2; reject `NOT_IN_SOURCE` under `ABSTRACT_ONLY`/`SECONDARY_REPORT` and `NOT_ASSESSABLE` under `FULL_TEXT`; reject `ALTERED` without a `change_kind` from the F2-i list; recompute `counts`, `assessable`, `fidelity_score` and `level` by F4. The FIDELITY call runs only AFTER the SOURCE call for that source returned a record, and the two are stored side by side, never merged into one object: in `plus/des-scores.json` the record gains `fidelity`: under `SOURCE` scope an array parallel to `sources` by index (same length; `null` in a slot whose source got no FIDELITY call — an error, `NOT_APPRAISABLE`, the page's own COMMENTARY self-record, or a source no unit of the page names), and under `POOLED` scope the one pooled object itself rather than an array.
 9. **When FIDELITY runs.** Whatever runs the SOURCE call for a cited identifier (publishing Question 4.8's basket 2, or an external submission carrying a link) runs the FIDELITY call for the same identifier afterwards. No classifier decides whether a page is «a report of the paper»: the attribution test in F1 decides per unit, and a page that merely lists the paper in its references attributes fewer than three claims to it and lands on `INSUFFICIENT_CLAIMS` by itself, which stores no number.
+10. **FIDELITY assignment on a page with several sources (caller, before the model).** Run `tools/des_fidelity_units.py <content_id>`; it is this rule as code and its output is what the model receives. Markers for a source are its first author's family name as cited (and that name's last word when it has four letters or more), its DOI, and the first word of its journal when that word is a proper name rather than a generic one or a demonym («Cochrane», never «Journal», «Dental» or «Brazilian»). A unit goes to every source whose marker it contains as a whole Latin word; a unit with none goes to the source(s) named last earlier in the same paragraph; a heading or a new paragraph clears that. A unit no source reaches is in no call. When NO unit names any source, the page gets one `POOLED` call over all of them instead. Persian transliterations of names («مطالعهٔ ساکر») and numbered inline references are not markers yet; a page written that way reads as unnamed and falls to `POOLED`, which is the honest fallback rather than a wrong attribution.
 6. **Reproducibility test — trueness and precision, kept separate.** The two
    are different failures and only one of them is fatal to a comparative score.
    - **Precision (repeatability)** is the binding requirement. Score five
