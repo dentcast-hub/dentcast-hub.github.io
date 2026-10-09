@@ -19,10 +19,10 @@
 // and it has to be able to fail. A chip built by a classic script that cannot
 // reach the session would be a dead control on any page where this module did
 // not load, and a heart that does nothing is worse than no heart.
-import { api, currentUser } from './api.js?v=177';
-import { openLoginModal, openOrgNotice } from './login-modal.js?v=177';
-import { el } from './util.js?v=177';
-import { isOrgHost, rowText } from './config.js?v=177';
+import { api, currentUser } from './api.js?v=178';
+import { openLoginModal, openOrgNotice } from './login-modal.js?v=178';
+import { el } from './util.js?v=178';
+import { isOrgHost, rowText } from './config.js?v=178';
 
 const HEART_PATH = 'M12 20.5s-7.5-4.7-7.5-10A4.5 4.5 0 0 1 12 7.6a4.5 4.5 0 0 1 7.5 2.9c0 5.3-7.5 10-7.5 10z';
 

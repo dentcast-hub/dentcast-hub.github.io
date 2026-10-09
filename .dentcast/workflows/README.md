@@ -1710,12 +1710,14 @@ commentary variant, the colour rule) lives in **CLAUDE.md § "DES display"**.
 **This step's obligation ends at the record.** It writes data; it does not edit the
 page. Status as of 2026-08-14: the record format and this step are live, the shared
 renderer is not built yet — which costs nothing, because every record written now
-lights up the moment that module ships. **The same holds for `fidelity` as of
-2026-10-08:** `plus/js/des.js` reads `sources` and ignores `fidelity`, so a
-record carrying both renders exactly as before until the fidelity block is
-drawn (mockup `.dentcast/des-fidelity-mockup.html`; display rules in CLAUDE.md
-§ DES). Do **not** compensate by inlining markup or
-CSS into the published page.
+lights up the moment that module ships. **`fidelity` is drawn too, from spec 2.8 on
+(1405/07/17):** `plus/js/des.js` adds a second chip («تطابق با منابع: …», one
+word, never a number) beside the band chip and a «تطابق با منابع» tab in the
+card, read from the record this step writes — so a 2.8 fidelity object goes
+live the moment it is stored, and an older stamp is ignored (approved mockup
+`.dentcast/des-fidelity-v28-mockup.html`; display rules in CLAUDE.md § DES).
+A publish therefore needs nothing on the page for it: the record is the whole
+job. Do **not** compensate by inlining markup or CSS into the published page.
 
 #### Verify & report
 
@@ -1723,9 +1725,10 @@ Per source: the DOI (or «متنِ خودِ مطلب» for COMMENTARY); where `s
 from (cabinet hit / MCP lookup / WebFetch / pasted by the user); the `text_basis` and
 why; the resulting `des_score`, `band`, `question_type` and whether `provisional` is
 true; and the outcome of each of the five Part-3 checks. Per FIDELITY slot: the
-`level`, the count line («۴ از ۵ ادعای قابل‌بررسی مطابق منبع»), every `ALTERED`
-and `REVERSED` unit with its `change_kind`, or the skip reason for a `null`
-slot. For a skip, the documented
+`level` and the word the reader will see for it («تطابق خیلی بالا», spec v2.8
+appendix rule 5), the count line («۵۰ از ۵۲ ادعایی که منابع به آن پرداخته‌اند
+مطابق است؛ ۴ جملهٔ دیگر در منابع نیامده»), every `ALTERED` and `REVERSED` unit
+with its `change_kind`, or the skip reason for a `null` slot. For a skip, the documented
 reason line. Explicitly confirm that no DOI, abstract, or quartile was guessed.
 
 ### 4.14. چالش — public half on the page, private half in the admin queue
