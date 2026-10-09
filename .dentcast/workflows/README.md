@@ -1397,10 +1397,20 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v2.7.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v2.8.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v2.7 is the current spec, and its change from 2.6 is that the FIDELITY call
+**v2.8 is the current spec, and its change from 2.7 is the FIDELITY arithmetic
+only: F4 scores the claims the source ADDRESSES** (`MATCHES` + `ALTERED` +
+`REVERSED`). A sentence the source is silent about (`NOT_IN_SOURCE`) is counted
+and shown, never scored — under a full text it is almost always the author's own
+background knowledge or clinical reasoning, and scoring it zero took
+`sharehub/share-23` from 98 to 91 for explaining. No verdict changes and no
+SOURCE score moves; a 2.7 record is re-scored by recomputing F4 from its stored
+verdicts and re-stamped 2.8 (no model call). The card's headline is the
+firmer/wider/reversed claims themselves, not the percentage (appendix rule 5).
+
+**v2.7's change from 2.6 is that the FIDELITY call
 reads the SAME text the SOURCE call scored, on the same basis** — a page written
 from a full text is judged against the full text, never its abstract; the tool
 refuses a mismatch (spec F0, appendix rule 11). Under `FULL_TEXT` the most
@@ -1630,7 +1640,7 @@ appendix's checks yourself — an output that fails these is not a score:
    and no `NOT_ASSESSABLE` under `FULL_TEXT`; every `ALTERED` carries a
    `change_kind` from the closed F2-i list and no other verdict carries one;
    `counts` equal the tally of `claims`; `assessable` = matches + altered +
-   reversed + not_in_source; `fidelity_score` and `level` recompute by F4 (score
+   reversed (from v2.8; + not_in_source on a 2.5–2.7 record); `fidelity_score` and `level` recompute by F4 (score
    `null` and level `INSUFFICIENT_CLAIMS` below three assessable claims; any
    `REVERSED` caps the level at `MEDIUM`); `provisional` is true exactly when
    `text_basis` is not `FULL_TEXT`; `source_conclusion` is echoed unchanged.

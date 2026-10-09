@@ -18873,7 +18873,7 @@
       }
     ],
     "fidelity": {
-      "des_version": "2.7",
+      "des_version": "2.8",
       "mode": "FIDELITY",
       "scope": "POOLED",
       "text_basis": "FULL_TEXT",
@@ -19514,12 +19514,12 @@
         "author_view": 0,
         "not_a_claim": 14
       },
-      "assessable": 56,
-      "fidelity_score": 91,
+      "assessable": 52,
+      "fidelity_score": 98,
       "level": "HIGH",
       "provisional": false,
       "source_conclusion": "[S1] Management should therefore be tailored to the adhesive system and contamination stage, and further research is needed to establish standardized clinical guidelines.\n[S2] Considering the current available evidence, the utmost significant feature for warranting a good resin—dentin bonding is to evade the blood or saliva contamination of dental surface using a proper isolation method.",
-      "fact_fa": "از ۵۶ ادعای قابل‌بررسی، ۵۰ مورد با منابع مطابق است، ۲ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+      "fact_fa": "از ۵۲ ادعایی که منابع به آن پرداخته‌اند، ۵۰ مورد مطابق است، ۲ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۴ جمله‌ی دیگر در منابع نیامده است.",
       "interpretation_fa": "موارد تغییریافته یا برعکس: «این چالش‌برانگیزترین حالت است و بیشترین افت باند د…» (دامنه گسترده‌تر از منبع)؛ «اگر آلودگی خون است، شستشو و ادهزیو مجدد به تنهایی …» (قاطع‌تر از منبع)."
     }
   },

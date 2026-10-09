@@ -347,11 +347,14 @@ DES_FID_KINDS = ("HEDGE_REMOVED", "HEDGE_ADDED", "MAGNITUDE_CHANGED",
                  "POPULATION_OR_CONDITION_CHANGED", "GROUP_OR_COMPARATOR_CHANGED")
 
 
-def des_fidelity_recompute(counts):
-    """Spec v2.5 F4: score and level from the verdict tally, exact integer
-    arithmetic and round-half-up (Step 5's rule). Returns (assessable, score, level)."""
+def des_fidelity_recompute(counts, version=None):
+    """Spec F4: score and level from the verdict tally, exact integer
+    arithmetic and round-half-up (Step 5's rule). Returns (assessable, score, level).
+    Version-gated: from v2.8 the denominator is the claims the source ADDRESSES
+    (NOT_IN_SOURCE is counted and shown, never scored); a record stamped 2.5–2.7
+    still checks against the formula it was written under."""
     m, a, r, n = (int(counts.get(k, 0)) for k in ("matches", "altered", "reversed", "not_in_source"))
-    assessable = m + a + r + n
+    assessable = m + a + r + (0 if des_ge(version, (2, 8)) else n)
     if assessable < 3:
         return assessable, None, "INSUFFICIENT_CLAIMS"
     score = int((Decimal(m * 100 + a * 50) / Decimal(assessable)).quantize(
@@ -432,7 +435,7 @@ def des_check_fidelity(rep, ftag, f, scope, basis_expected, page_hay, source_hay
     rep.check(f.get("counts") == tally, "4.13 DES", f"{ftag} counts equal the verdict tally",
               f"{ftag} counts {f.get('counts')} but the claims tally to {tally}",
               "spec F5 — counts are derived, re-run never hand-patch")
-    assessable, score, level = des_fidelity_recompute(tally)
+    assessable, score, level = des_fidelity_recompute(tally, f.get("des_version"))
     rep.check(f.get("assessable") == assessable and f.get("fidelity_score") == score
               and f.get("level") == level, "4.13 DES",
               f"{ftag} fidelity arithmetic checks out ({score} · {level})",
