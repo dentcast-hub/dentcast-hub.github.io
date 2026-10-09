@@ -771,8 +771,8 @@ fidelity_score  = round_half_up((MATCHES × 100 + ALTERED × 50) ÷ assessable) 
 |---|---|
 | `INSUFFICIENT_CLAIMS` | `assessable` < 3 — fewer than three claims the source addresses; `fidelity_score` is `null`. A vague text that attributes almost nothing to its source does not earn a high score by saying nothing, and a text whose claims the source never addresses has not been checked against it at all |
 | `LOW` | `fidelity_score` < 60 |
-| `MEDIUM` | 60 ≤ `fidelity_score` ≤ 84, **or any `REVERSED` verdict regardless of score** — one claim stated backwards caps the level, because a reader who trusts that sentence is misled however faithful the rest is |
-| `HIGH` | `fidelity_score` ≥ 85 and no `REVERSED` |
+| `MEDIUM` | 60 ≤ `fidelity_score` ≤ 84 — **unless exactly one `ALTERED` and no `REVERSED`** (that is `HIGH`, below) — **or any `REVERSED` verdict regardless of score** — one claim stated backwards caps the level, because a reader who trusts that sentence is misled however faithful the rest is |
+| `HIGH` | no `REVERSED`, and either `fidelity_score` ≥ 85 or exactly one `ALTERED` (v2.8). One sentence a notch firmer than its source never by itself takes a page below `HIGH`: on a three-claim page it would score 83 where the same sentence on a fifty-claim page scores 99, and the level would then measure the page's length rather than its faithfulness. One `ALTERED` cannot score below 60 (its minimum, over three claims, is 83), so it never meets `LOW` first |
 
 `source_conclusion` is echoed into the output **unchanged and unjudged**. It is information for the reader — «the source itself concludes this» — so that a text which chose a secondary finding can be seen to have chosen it. It never affects the score, the level or `interpretation_fa`, and no verdict is ever derived from it. Omitting the main conclusion is a choice, not an infidelity.
 
@@ -866,7 +866,9 @@ This is DES v2.8. If scoring criteria change in the future, the version number m
 Comparability across versions:
 
 - v2.7 → v2.8: **No SOURCE score moves and no verdict changes; only the
-  FIDELITY arithmetic does.** F4's denominator drops `NOT_IN_SOURCE`: the
+  FIDELITY arithmetic does.** Second, same version (before any 2.8 record was
+  published): a page with exactly one `ALTERED` and no `REVERSED` is `HIGH`
+  whatever its score, so a short page is not dropped a level by its length. F4's denominator drops `NOT_IN_SOURCE`: the
   score is now computed over the claims the source addresses (`MATCHES` +
   `ALTERED` + `REVERSED`), and a sentence the source is silent about is
   counted and shown but never scored (founder, 1405/07/17). `sharehub/share-23`

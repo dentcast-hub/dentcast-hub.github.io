@@ -8,312 +8,252 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-/* Mockup only — not loaded by any page. Tokens copied from plus/plus.css
-   (DES section) so the card reads exactly like the live one. */
+/* Mockup only — not loaded by any page. Tokens from plus/plus.css (DES section). */
 :root{
-  --bg:#f4f6f9; --dcp-surface:#fff; --dcp-surface-2:#f3f5f8; --dcp-line:#e3e7ee;
-  --dcp-ink:#1d2733; --dcp-muted:#66717f; --dcp-radius:14px; --brand:#2f6fb5;
+  --bg:#f4f6f9; --surface:#fff; --surface-2:#f5f6f9; --line:#e6e9ef;
+  --ink:#1d2733; --muted:#6a7584; --radius:16px;
   --des-E:#78808f; --des-D:#5f8a63; --des-C:#3f9a49; --des-B:#2f8f3f; --des-A:#1f7a34;
-  --des-chrome:#6455a6; --des-chrome-rgb:100,85,166;
-  --rev:#3a2f52;
+  --chrome:#6455a6; --chrome-rgb:100,85,166; --rev:#3a2f52;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#0e1621; --dcp-surface:#17212b; --dcp-surface-2:#1e2a36; --dcp-line:#2a3846;
-  --dcp-ink:#e6ebf1; --dcp-muted:#93a0ae; --brand:#6aa6e8;
+  --bg:#0e1621; --surface:#17212b; --surface-2:#1d2833; --line:#283542; --ink:#e6ebf1; --muted:#95a1af;
   --des-E:#8b93a3; --des-D:#89a68c; --des-C:#6fae74; --des-B:#4f9d5c; --des-A:#2f8f52;
-  --des-chrome:#a99ce0; --des-chrome-rgb:169,156,224; --rev:#e3dcf7;
+  --chrome:#a99ce0; --chrome-rgb:169,156,224; --rev:#e3dcf7;
 }}
 :root[data-theme="dark"]{
-  --bg:#0e1621; --dcp-surface:#17212b; --dcp-surface-2:#1e2a36; --dcp-line:#2a3846;
-  --dcp-ink:#e6ebf1; --dcp-muted:#93a0ae; --brand:#6aa6e8;
+  --bg:#0e1621; --surface:#17212b; --surface-2:#1d2833; --line:#283542; --ink:#e6ebf1; --muted:#95a1af;
   --des-E:#8b93a3; --des-D:#89a68c; --des-C:#6fae74; --des-B:#4f9d5c; --des-A:#2f8f52;
-  --des-chrome:#a99ce0; --des-chrome-rgb:169,156,224; --rev:#e3dcf7;
+  --chrome:#a99ce0; --chrome-rgb:169,156,224; --rev:#e3dcf7;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--dcp-ink);font-family:Vazirmatn,Tahoma,sans-serif;line-height:1.9;font-size:15px}
-.wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
-.mock-h{font-size:.8rem;color:var(--dcp-muted);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-.mock-h b{color:var(--dcp-ink)}
-.tbtn{font:inherit;font-size:.78rem;border:1px solid var(--dcp-line);background:var(--dcp-surface);color:var(--dcp-ink);border-radius:999px;padding:4px 12px;cursor:pointer}
-.note{font-size:.78rem;color:var(--dcp-muted);background:var(--dcp-surface);border:1px dashed var(--dcp-line);border-radius:10px;padding:10px 12px;margin:0 0 18px}
-.note b{color:var(--dcp-ink)}
-article{background:var(--dcp-surface);border:1px solid var(--dcp-line);border-radius:var(--dcp-radius);padding:18px 18px 22px}
-h1{font-size:1.25rem;line-height:1.7;margin:0 0 12px}
-.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px}
-.act{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:999px;border:1px solid var(--dcp-line);background:var(--dcp-surface);font:inherit;font-size:.82rem;color:var(--dcp-ink);text-decoration:none;cursor:pointer}
-.act.meta{border:0;background:transparent;color:var(--dcp-muted);padding:0 4px;cursor:default}
-.act-des{color:var(--des-cur);border-color:var(--des-cur);font-weight:700}
-.dot{width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--des-cur);color:#fff;font-size:.72rem;font-weight:800}
-.act-des .sep{width:1px;height:16px;background:rgba(var(--des-chrome-rgb),.35)}
-.act-des .fidc{color:var(--des-chrome)}
-.prose{color:var(--dcp-ink);font-size:.92rem}
-.prose .fade{color:var(--dcp-muted);text-align:center;font-size:.8rem;margin:10px 0 0}
-.band-A{--des-cur:var(--des-A)}.band-B{--des-cur:var(--des-B)}.band-C{--des-cur:var(--des-C)}.band-D{--des-cur:var(--des-D)}.band-E{--des-cur:var(--des-E)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Vazirmatn,Tahoma,sans-serif;line-height:1.9;font-size:15px}
+.wrap{max-width:680px;margin:0 auto;padding:18px 16px 64px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;font-size:.78rem;color:var(--muted)}
+.tbtn{white-space:nowrap;flex:none;font:inherit;font-size:.76rem;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:3px 12px;cursor:pointer}
+button{font:inherit}
 
-/* ===== the card (verbatim vocabulary of .dc-des-card) ===== */
-.card{background:rgba(var(--des-chrome-rgb),.045);border:1px solid rgba(var(--des-chrome-rgb),.22);border-inline-start:3px solid var(--des-chrome);border-radius:var(--dcp-radius);padding:15px 17px 17px;margin:2.25rem 0 1rem;position:relative}
-.card::before{content:"";position:absolute;inset-inline:0;top:-1.15rem;height:1px;background:var(--dcp-line)}
-.card-h{font-size:.95rem;font-weight:700;color:var(--des-chrome);margin:0}
-.prov{margin:5px 0 14px;font-size:.76rem;line-height:1.8;color:var(--dcp-muted)}
-.tabs{display:flex;gap:6px;margin:0 0 14px;border-bottom:1px solid rgba(var(--des-chrome-rgb),.2)}
-.tab{font:inherit;font-size:.82rem;font-weight:700;background:none;border:0;border-bottom:2px solid transparent;color:var(--dcp-muted);padding:6px 4px 8px;margin-bottom:-1px;cursor:pointer}
-.tab[aria-selected="true"]{color:var(--des-chrome);border-bottom-color:var(--des-chrome)}
-.tab small{font-weight:500;opacity:.8}
-.src+.src{margin-top:16px;padding-top:14px;border-top:1px solid var(--dcp-line)}
-.srctitle{font-size:.8rem;color:var(--dcp-muted);margin-bottom:8px;line-height:1.7}
-.srctitle bdi{unicode-bidi:isolate}
-.tag{display:inline-block;font-size:.68rem;font-weight:800;color:var(--des-chrome);background:rgba(var(--des-chrome-rgb),.1);border-radius:6px;padding:0 6px;margin-inline-end:5px}
-.head{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:8px}
-.bar{display:inline-flex;direction:ltr;border-radius:7px;overflow:hidden;border:1px solid var(--dcp-line)}
-.blk{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:800;background:var(--dcp-surface-2);color:var(--dcp-muted);border-left:1px solid var(--dcp-line)}
-.blk:first-child{border-left:0}
-.blk.on{background:var(--des-cur);color:#fff}
-.meta2{display:flex;flex-direction:column;gap:1px}
-.bandname{font-weight:700;font-size:.92rem;color:var(--des-cur)}
-.qtype{font-size:.76rem;color:var(--dcp-muted)}
-.num{margin-inline-start:auto;font-size:.78rem;color:var(--dcp-muted);background:var(--dcp-surface-2);border:1px solid var(--dcp-line);border-radius:7px;padding:2px 9px;font-variant-numeric:tabular-nums}
-.small{font-size:.8rem;color:var(--dcp-muted);line-height:1.9;margin:6px 0 0}
+/* article */
+article{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 18px 24px}
+h1{font-size:1.22rem;line-height:1.7;margin:0 0 12px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px}
+.meta{font-size:.8rem;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 13px 0 6px;border-radius:999px;border:1px solid rgba(var(--chrome-rgb),.35);background:rgba(var(--chrome-rgb),.06);color:var(--chrome);font-size:.82rem;font-weight:700;text-decoration:none}
+.chip .b{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--des-C);color:#fff;font-size:.72rem;font-weight:800}
+.chip .sep{width:1px;height:14px;background:rgba(var(--chrome-rgb),.35)}
+.prose{font-size:.93rem}
+.prose .more{color:var(--muted);font-size:.8rem;text-align:center;margin:8px 0 0}
 
-/* ===== fidelity — never the band scale, never five blocks ===== */
-.fid-head{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-.fid-count{font-size:1.02rem;font-weight:800;color:var(--dcp-ink);line-height:1.6}
-.fid-count .big{color:var(--des-chrome)}
-.big2{font-weight:800;color:var(--des-chrome)}
-.fid-word{font-size:1.12rem;font-weight:800;line-height:1.6;color:var(--des-chrome)}
-.fid-word.w-med,.fid-word.w-low{color:var(--dcp-ink)}
-.fid-word.w-none{color:var(--dcp-muted);font-size:.98rem}
-.fid-word::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-inline-end:8px;vertical-align:middle;background:var(--des-chrome)}
-.fid-word.w-hi::before{background:transparent;border:2px solid var(--des-chrome)}
-.fid-word.w-med::before{background:repeating-linear-gradient(45deg,var(--des-chrome) 0 2px,transparent 2px 4px);border:1px solid var(--des-chrome)}
-.fid-word.w-low::before{background:transparent;border:2px solid var(--rev)}
-.fid-word.w-none::before{background:transparent;border:1px dashed var(--dcp-muted)}
-details.calc.neutral{background:transparent;border-style:dashed}
-.fid-sub{font-size:.78rem;color:var(--dcp-muted);margin-top:2px}
-.lvl{display:inline-flex;align-items:center;gap:6px;background:rgba(var(--des-chrome-rgb),.10);border:1px solid rgba(var(--des-chrome-rgb),.30);color:var(--des-chrome);border-radius:999px;padding:3px 12px;font-weight:700;font-size:.82rem}
-.lvl.med{background:transparent}
-.lvl.none{background:transparent;border-style:dashed}
-.strip{display:flex;flex-wrap:wrap;gap:3px;direction:rtl;margin:4px 0 6px}
-.cell{width:12px;height:18px;border-radius:3px;border:1px solid transparent;cursor:pointer;padding:0}
-.cell.m{background:var(--des-chrome)}
-.cell.a{background:repeating-linear-gradient(45deg,var(--des-chrome) 0 2px,transparent 2px 5px);border-color:var(--des-chrome)}
-.cell.r{background:var(--dcp-surface);border:2px solid var(--rev);position:relative}
-.cell.r::after{content:"";position:absolute;inset:2px;background:linear-gradient(45deg,transparent 45%,var(--rev) 45% 55%,transparent 55%)}
-.cell.n{background:transparent;border:1px dashed rgba(var(--des-chrome-rgb),.55)}
-.cell:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
-.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.72rem;color:var(--dcp-muted);margin-bottom:12px}
-.legend span{display:inline-flex;align-items:center;gap:5px}
-.legend .cell{width:10px;height:14px;cursor:default}
-.flag{background:var(--dcp-surface);border:1px solid var(--dcp-line);border-radius:10px;padding:10px 12px;margin:8px 0}
-.flag.hl{outline:2px solid rgba(var(--des-chrome-rgb),.6);outline-offset:1px}
-.flag-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
-.kind{font-size:.72rem;font-weight:800;border-radius:6px;padding:1px 8px;color:var(--des-chrome);background:rgba(var(--des-chrome-rgb),.1)}
-.kind.rev{color:var(--dcp-surface);background:var(--rev)}
-.kind.ok{background:transparent;border:1px solid rgba(var(--des-chrome-rgb),.35)}
-.kind.na{background:transparent;border:1px dashed rgba(var(--des-chrome-rgb),.45);color:var(--dcp-muted)}
-.uid{font-size:.7rem;color:var(--dcp-muted);font-variant-numeric:tabular-nums}
-.q-page{font-size:.86rem;line-height:1.95;margin:0}
-.q-page::before{content:"متن: ";font-size:.72rem;font-weight:800;color:var(--dcp-muted)}
-.q-src{direction:ltr;text-align:left;font-size:.8rem;line-height:1.75;color:var(--dcp-muted);border-left:2px solid rgba(var(--des-chrome-rgb),.45);padding:2px 9px;margin:7px 0 0;font-family:Georgia,'Times New Roman',serif}
-.q-src .who{font-family:Vazirmatn,sans-serif;font-size:.7rem;font-weight:800;color:var(--des-chrome);display:block;direction:rtl;text-align:right;margin-bottom:2px}
-.why{font-size:.76rem;color:var(--dcp-muted);margin:6px 0 0}
-details.calc{border:1px solid var(--dcp-line);border-radius:9px;background:var(--dcp-surface-2);margin-top:10px}
-details.calc>summary{cursor:pointer;padding:8px 12px;font-size:.82rem;font-weight:700;color:var(--dcp-muted)}
-.calc-body{padding:0 10px 10px}
-.grp{font-size:.74rem;font-weight:800;color:var(--des-chrome);margin:12px 2px 4px}
-.concl{margin-top:14px;padding-top:12px;border-top:1px solid var(--dcp-line)}
-.concl-l{font-size:.72rem;font-weight:800;color:var(--dcp-muted);margin-bottom:4px}
-.concl p{direction:ltr;text-align:left;font-size:.8rem;color:var(--dcp-muted);margin:4px 0;font-family:Georgia,serif;line-height:1.7}
-.interp-l{display:block;margin:12px 0 5px;font-size:.7rem;font-weight:800;color:var(--des-chrome)}
-.interp{margin:0;font-size:.82rem;color:var(--dcp-muted);line-height:1.9;background:rgba(var(--des-chrome-rgb),.05);border-radius:9px;padding:9px 11px}
-.foot{margin:14px 0 0;font-size:.74rem;color:var(--dcp-muted);line-height:1.8}
-.hatch{display:inline-block;font-size:.72rem;color:var(--des-E);border:1px dashed var(--des-E);border-radius:999px;padding:1px 10px;background:repeating-linear-gradient(45deg,color-mix(in srgb,var(--des-E) 14%,transparent) 0 4px,transparent 4px 8px)}
+/* the card */
+.card{margin:2.2rem 0 0;position:relative;background:rgba(var(--chrome-rgb),.04);border:1px solid rgba(var(--chrome-rgb),.2);border-inline-start:3px solid var(--chrome);border-radius:var(--radius);padding:16px 16px 18px}
+.card::before{content:"";position:absolute;inset-inline:0;top:-1.1rem;height:1px;background:var(--line)}
+.card-h{margin:0;font-size:.92rem;font-weight:700;color:var(--chrome)}
+.prov{margin:2px 0 14px;font-size:.74rem;color:var(--muted);line-height:1.7}
+.seg{display:flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:3px;margin-bottom:18px}
+.seg button{flex:1;border:0;background:transparent;color:var(--muted);font-size:.82rem;font-weight:700;padding:7px 6px;border-radius:9px;cursor:pointer}
+.seg button[aria-selected="true"]{background:var(--surface);color:var(--chrome);box-shadow:0 1px 2px rgba(0,0,0,.06)}
 
-/* gallery */
-h2{font-size:1rem;margin:40px 0 4px}
-.gal-note{font-size:.78rem;color:var(--dcp-muted);margin:0 0 12px}
-.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.gal .card{margin:0}
-.gal .card::before{display:none}
-.gl{font-size:.7rem;font-weight:800;color:var(--dcp-muted);margin-bottom:8px}
+/* verdict: one word, one sentence */
+.verdict{display:flex;align-items:center;gap:10px;margin:0 0 4px}
+.dot{width:14px;height:14px;border-radius:50%;flex:none;background:var(--chrome)}
+.dot.hi{background:transparent;border:2.5px solid var(--chrome)}
+.dot.med{background:repeating-linear-gradient(45deg,var(--chrome) 0 2px,transparent 2px 4px);border:1.5px solid var(--chrome)}
+.dot.low{background:transparent;border:2.5px solid var(--rev)}
+.dot.none{background:transparent;border:1.5px dashed var(--muted)}
+.word{font-size:1.25rem;font-weight:800;color:var(--chrome)}
+.word.med,.word.low{color:var(--ink)} .word.none{color:var(--muted);font-size:1.05rem}
+.say{margin:0 0 16px;font-size:.88rem;color:var(--muted);line-height:1.95}
+.hatch{display:inline-block;font-size:.7rem;color:var(--des-E);border:1px dashed var(--des-E);border-radius:999px;padding:0 9px;margin-inline-start:4px;vertical-align:middle}
+
+/* differences: the sentence, then «what the paper says» on demand */
+.diff-h{font-size:.78rem;font-weight:800;color:var(--muted);margin:0 0 8px}
+.diff{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.diff-top{padding:11px 13px 4px}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;color:var(--chrome);background:rgba(var(--chrome-rgb),.1);border-radius:6px;padding:0 8px;margin-bottom:4px}
+.tag.rev{background:var(--rev);color:var(--surface)}
+.diff p{margin:0;font-size:.92rem;line-height:1.95}
+details.src>summary{list-style:none;cursor:pointer;padding:6px 13px 10px;font-size:.78rem;font-weight:700;color:var(--chrome)}
+details.src>summary::-webkit-details-marker{display:none}
+details.src>summary::after{content:" ‹";font-weight:800}
+details.src[open]>summary::after{content:" ˅"}
+.src-body{padding:0 13px 12px;font-size:.82rem;color:var(--muted)}
+.q{direction:ltr;text-align:left;margin:0 0 8px;padding:8px 10px;background:var(--surface-2);border-radius:8px;font-family:Georgia,'Times New Roman',serif;line-height:1.7;color:var(--ink)}
+.q small{display:block;font-family:Vazirmatn,sans-serif;direction:rtl;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:2px}
+.why{margin:0;line-height:1.85}
+
+/* quiet rows at the bottom */
+.rows{margin-top:14px;border-top:1px solid var(--line)}
+details.rowd{border-bottom:1px solid var(--line)}
+details.rowd>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 2px;font-size:.86rem}
+details.rowd>summary::-webkit-details-marker{display:none}
+details.rowd>summary::after{content:"‹";color:var(--muted);font-weight:800;transition:transform .15s}
+details.rowd[open]>summary::after{transform:rotate(-90deg)}
+details.rowd>summary .n{color:var(--muted);font-size:.8rem;margin-inline-start:auto}
+.rbody{padding:0 2px 14px;font-size:.84rem;color:var(--muted);line-height:1.9}
+.rbody ol{margin:6px 0 0;padding-inline-start:20px} .rbody li{margin:5px 0;color:var(--ink)}
+.rbody .grp{font-size:.74rem;font-weight:800;color:var(--muted);margin:12px 0 2px}
+.calc{background:var(--surface-2);border-radius:10px;padding:10px 12px;color:var(--ink);margin:0 0 6px}
+.scale{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:8px 0 0;font-size:.8rem}
+.scale span:nth-child(odd){font-weight:700;color:var(--ink)}
+
+/* sources pane */
+.srcrow{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.srcrow:last-of-type{border-bottom:0}
+.bar{display:inline-flex;direction:ltr;border-radius:6px;overflow:hidden;border:1px solid var(--line);flex:none}
+.blk{width:22px;height:24px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;background:var(--surface-2);color:var(--muted);border-left:1px solid var(--line)}
+.blk:first-child{border-left:0} .blk.on{background:var(--cur);color:#fff}
+.sname{font-size:.84rem;line-height:1.6;min-width:0}
+.sname b{display:block;color:var(--cur)} .sname span{color:var(--muted);font-size:.76rem}
+.foot{margin:14px 0 0;font-size:.74rem;color:var(--muted);line-height:1.8}
+
+/* other pages: one line each */
+h2{font-size:.98rem;margin:38px 0 4px}
+.gnote{font-size:.78rem;color:var(--muted);margin:0 0 12px}
+.glist{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:4px 14px}
+.gi{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.gi:last-child{border-bottom:0}
+.gi .what{flex:1;font-size:.84rem;color:var(--muted);line-height:1.7}
+.gi .res{display:flex;align-items:center;gap:7px;font-weight:800;font-size:.88rem;color:var(--chrome);white-space:nowrap}
+.gi .res.med,.gi .res.low{color:var(--ink)} .gi .res.none{color:var(--muted);font-weight:700}
+.gi .dot{width:11px;height:11px}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="mock-h">
-    <span><b>ماکاپ · انطباق متن با منبع (DES v2.8 FIDELITY)</b> — داده‌ی واقعیِ share-23</span>
-    <button class="tbtn" id="themeBtn" type="button">تم روشن/تیره</button>
-  </div>
-  <p class="note"><b>این صفحه فقط ماکاپ است.</b> کارت بالایی با رکورد ذخیره‌شده‌ی <bdi>sharehub/share-23</bdi> در <bdi>plus/des-scores.json</bdi> ساخته شده: همان ۷۰ جمله، همان حکم‌ها و نقل‌قول‌ها. نمونه‌های پایین صفحه فرضی‌اند و فقط برای دیدنِ حالت‌های دیگر.</p>
+  <div class="top"><span>ماکاپ · انطباق متن با منبع (DES v2.8) · داده‌ی واقعیِ share-23</span><button class="tbtn" id="themeBtn" type="button">روشن / تیره</button></div>
 
   <article>
     <h1>اگر وسط باندینگ خون یا بزاق روی عاج (دنتین) بیاد چی کار کنیم؟</h1>
-    <div class="actions">
-      <span class="act meta">⏱ ۹ دقیقه</span>
-      <a class="act act-des band-C" href="#card" id="chip" title="ریزِ ارزیابی">
-        <span class="dot">C</span><span>۲ منبع · C–D</span>
-        <span class="sep"></span><span class="fidc">تطابق خیلی بالا</span>
-      </a>
-      <button class="act" type="button">اشتراک‌گذاری</button>
+    <div class="row">
+      <span class="meta">۹ دقیقه</span>
+      <a class="chip" href="#card" id="chip"><span class="b">C</span>۲ منبع<span class="sep"></span><span id="chipWord"></span></a>
     </div>
     <div class="prose">
-      <p>ایزولاسیون با رابردم استاندارد طلایی است، اما در مارجین‌های ساب‌ژنژیوال، حفره‌های عمیق پروگزیمال، نواحی تازه جراحی‌شده یا بیماران ناهمکار همیشه امکان‌پذیر نیست. در این شرایط بزاق، خون یا مایع شیار لثه‌ای می‌تواند در یکی از مراحل باندینگ روی عاج بنشیند…</p>
-      <p class="fade">⋯ بقیه‌ی متن مقاله ⋯</p>
+      <p>ایزولاسیون با رابردم استاندارد طلایی است، اما در مارجین‌های ساب‌ژنژیوال، حفره‌های عمیق پروگزیمال، نواحی تازه جراحی‌شده یا بیماران ناهمکار همیشه امکان‌پذیر نیست…</p>
+      <p class="more">⋯ بقیه‌ی مقاله ⋯</p>
     </div>
 
-    <section class="card" id="card" aria-labelledby="cardH">
-      <h2 class="card-h" id="cardH" style="margin:0">ارزیابی خودکار شواهد</h2>
-      <p class="prov">این بخش را نویسنده ننوشته؛ با معیار ثابتِ DES نسخه‌ی ۲٫۸ و با خواندنِ متن کامل هر دو مقاله محاسبه شده.</p>
-      <div class="tabs" role="tablist">
-        <button class="tab" role="tab" aria-selected="true" data-t="fid">انطباق با مقاله‌ها <small>خیلی بالا</small></button>
-        <button class="tab" role="tab" aria-selected="false" data-t="src">قوت منابع <small>C–D</small></button>
+    <section class="card" id="card">
+      <h2 class="card-h" style="margin:0;font-size:.92rem">ارزیابی خودکار شواهد</h2>
+      <p class="prov">این بخش را نویسنده ننوشته؛ با معیار ثابت DES و با خواندن متن کامل هر دو مقاله محاسبه شده.</p>
+      <div class="seg" role="tablist">
+        <button role="tab" aria-selected="true" data-t="fid">انطباق با مقاله‌ها</button>
+        <button role="tab" aria-selected="false" data-t="src">قوت مقاله‌ها</button>
       </div>
       <div id="paneFid"></div>
       <div id="paneSrc" hidden></div>
     </section>
   </article>
 
-  <h2>حالت‌های دیگر (فرضی)</h2>
-  <p class="gal-note">همین کارت روی صفحه‌هایی با وضعیت دیگر. هیچ‌کدام از این نمونه‌ها صفحه‌ی واقعی نیست.</p>
-  <div class="gal" id="gal"></div>
+  <h2>همین کلمه روی صفحه‌های دیگر</h2>
+  <p class="gnote">نمونه‌های فرضی، برای دیدن اینکه کلمه با طول صفحه عوض نمی‌شود.</p>
+  <div class="glist" id="gal"></div>
 </div>
 
 <script>
 const D = {"sources": [{"band": "C", "score": 55, "qt": "MATERIAL", "authors": "Katebi K", "year": 2026, "title": "Effect of blood decontamination methods on dentin bond strength across adhesive systems: a systematic review", "journal": "BMC Oral Health", "doi": "10.1186/s12903-026-08876-5", "interp": "ثبت پیشینی پروتکل در PROSPERO، جست‌وجوی چهار پایگاه داده و ارزیابی مستقل کیفیت با QUIN به‌خوبی گزارش شده‌اند و تنها نبود ارزیابی سوگیری انتشار امتیاز را پایین آورده. یافته‌ی اصلی، یعنی کاهش استحکام باند با آلودگی خونی و بهبود نسبی با ری‌اپلیکیشن ادهزیو یا NaOCl همراه آنتی‌اکسیدان، بر پایه‌ی مطالعات in-vitro است و ترجمه‌ی بالینی آن محدود است."}, {"band": "D", "score": 30, "qt": "MATERIAL", "authors": "Bourgi R", "year": 2023, "title": "Effect of contamination and decontamination methods on the bond strength of adhesive systems to dentin: A systematic review", "journal": "Journal of Esthetic and Restorative Dentistry", "doi": "10.1111/jerd.13078", "interp": "نبود ثبت پروتکل پیشینی و نبود ارزیابی سوگیری انتشار، امتیاز این مرور را با وجود جست‌وجوی پنج پایگاه داده و ارزیابی مستقل risk of bias پایین آورده. به دلیل ناهمگنی پروتکل‌ها سنتز فقط کیفی است. افت bond strength پس از آلودگی و جبران نسبی آن با شست‌وشو و re-bonding، در سطح شواهد in vitro قابل استناد است."}], "fid": {"counts": {"matches": 50, "altered": 2, "reversed": 0, "not_in_source": 4, "not_assessable": 0, "author_view": 0, "not_a_claim": 14}, "assessable": 52, "fidelity_score": 98, "level": "HIGH", "source_conclusion": "[S1] Management should therefore be tailored to the adhesive system and contamination stage, and further research is needed to establish standardized clinical guidelines.\n[S2] Considering the current available evidence, the utmost significant feature for warranting a good resin—dentin bonding is to evade the blood or saliva contamination of dental surface using a proper isolation method.", "fact_fa": "از ۵۲ ادعایی که منابع به آن پرداخته‌اند، ۵۰ مورد مطابق است، ۲ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۴ جمله‌ی دیگر در منابع نیامده است.", "interpretation_fa": "موارد تغییریافته یا برعکس: «این چالش‌برانگیزترین حالت است و بیشترین افت باند د…» (دامنه گسترده‌تر از منبع)؛ «اگر آلودگی خون است، شستشو و ادهزیو مجدد به تنهایی …» (قاطع‌تر از منبع)."}, "claims": [{"id": "u1", "claim_quote": "اگر وسط باندینگ خون یا بزاق روی عاج (دنتین) بیاد چی کار کنیم؟", "verdict": "NOT_A_CLAIM", "change_kind": null, "source_quote": "", "source_ref": null, "note": "heading only"}, {"id": "u2", "claim_quote": "English", "verdict": "NOT_A_CLAIM", "change_kind": null, "source_quote": "", "source_ref": null, "note": "link label"}, {"id": "u3", "claim_quote": "∆ چرا آلودگی مهم است", "verdict": "NOT_A_CLAIM", "change_kind": null, "source_quote": "", "source_ref": null, "note": "heading only"}, {"id": "u4", "claim_quote": "ایزولاسیون با رابردم استاندارد طلایی است، اما در مارجین‌های ساب‌ژنژیوال، حفره‌های عمیق پروگزیمال، نواحی تازه جراحی‌شده یا بیماران ناهمکار همیشه امکان‌پذیر نیست.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Although rubber dam isolation is the gold standard for preventing contamination, it is not routinely used in clinical practice due to time-consuming application, technique sensitivity, operator training requirements and patient discomfort [5, 6].", "source_ref": "S1", "note": "gold-standard half stated; the specific situations listed (proximal cavities, surgical sites, uncooperative patients) are not named by the source and are noted, not scored; other sources: S2: MATCHES"}, {"id": "u5", "claim_quote": "در این شرایط بزاق، خون یا مایع شیار لثه‌ای می‌تواند در یکی از مراحل باندینگ روی عاج بنشیند.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Contamination may occur at different stages of the bonding process, including before or after etching, before or after adhesive application, or after adhesive curing, and the timing can affect both bond strength and marginal adaptation of restorations [14, 15].", "source_ref": "S1", "note": "other sources: S2: MATCHES"}, {"id": "u6", "claim_quote": "بزاق عمدتاً آب است و مقداری آنزیم و گلیکوپروتئین دارد که سطح عاج را می‌پوشاند و wetting ادهزیو را مختل می‌کند.", "verdict": "MATCHES", "change_kind": null, "source_quote": "It was reported that dental substrates, contaminated by organic film of saliva, generates a very low surface tension, prevents suitable wetting of adhesive,10 and develops shorter resin tags,11 through which a lack of good bonding was noticed.", "source_ref": "S2", "note": "water content stated in «This fluid is constituted for more than 99% of water…»; enzymes and glycoproteins named in the Discussion"}, {"id": "u7", "claim_quote": "خون وضعیت بدتری ایجاد می‌کند، چون پروتئین‌های پلاسما لایه‌ای روی عاج تشکیل می‌دهند که مانع نفوذ رزین به توبول‌ها و تشکیل هایبرید لایر می‌شود و رزین تگ‌ها کوتاه‌تر و کم‌تعدادتر می‌شوند.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Plasma proteins adsorbed on the dentin surface can interfere with adhe- sive monomer infiltration into dentinal tubules, disrupt- ing hybrid layer formation and impairing adhesion [10].", "source_ref": "S1", "note": "mechanism half (plasma proteins, tubule infiltration, hybrid layer; fewer and shorter resin tags) stated; the comparison with saliva («وضعیت بدتری») is not addressed by this source, which studies blood alone; other sources: S2: MATCHES"}, {"id": "u8", "claim_quote": "به همین دلیل اثر مخرب خون بر استحکام باند از بزاق بیشتر است.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Blood contamination affects more than saliva contaminatio n", "source_ref": "S2", "note": "inference judged on its conclusion (blood more harmful than saliva); the Conclusion states it with a hedge («it seems that saliva contamination has less prejudice…»), the table cell states it plainly"}, {"id": "u9", "claim_quote": "این چهارچوب برای سطح عاج نوشته شده است.", "verdict": "NOT_A_CLAIM", "change_kind": null, "source_quote": "", "source_ref": null, "note": "page's own scope"}, {"id": "u10", "claim_quote": "∆ یک قاعده‌ی ساده برای همه‌ی مراحل", "verdict": "NOT_A_CLAIM", "change_kind": null, "source_quote": "", "source_ref": null, "note": "heading only"}, {"id": "u11", "claim_quote": "پاسخ به آلودگی به دو چیز وابسته است: در کدام مرحله رخ داده و با چه سیستم ادهزیوی کار می‌کنید.", "verdict": "MATCHES", "change_kind": null, "source_quote": "The effectiveness of decontamination strategies varied according to adhesive type, contamination timing (before or after adhesive curing), and decontamination protocol.", "source_ref": "S1", "note": null}, {"id": "u12", "claim_quote": "اما اگر بخواهید یک قاعده در ذهن داشته باشید، این است: بشویید، خشک کنید، و مرحله‌ای را که در آن بودید از نو انجام دهید.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Some studies reported that re-application of the adhesive following rinsing and drying improved bond strength compared with no decontamination [15, 24, 30], although complete recov- ery to uncontaminated control levels was not consistently observed.", "source_ref": "S1", "note": "instruction judged on reported effect of rinsing/drying and redoing the step: favourable; other sources: S2: MATCHES"}, {"id": "u13", "claim_quote": "این قاعده تا قبل از کیور کردن ادهزیو در بیشتر سیستم‌ها جواب می‌دهد و باند را به‌طور قابل توجه، و اغلب تا نزدیک حالت بدون آلودگی، بازمی‌گرداند.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Contamination before adhesive polymerization was more amenable to reversal.", "source_ref": "S1", "note": "source reports the before/after-curing difference; the quantifiers «بیشتر سیستم‌ها» and «اغلب» are not stated as proportions by the source and are noted; other sources: S2: ALTERED"}, {"id": "u14", "claim_quote": "بعد از کیور کردن ادهزیو، به‌ویژه اگر آلودگی خون باشد، این قاعده قابل اتکا نیست و مطمئن‌ترین راه برداشتن لایه‌ی ادهزیو و شروع مجدد است.", "verdict": "MATCHES", "change_kind": null, "source_quote": "In contrast, contamination after adhesive curing is more difficult to reverse, and simple rinsing or drying alone is generally insufficient.", "source_ref": "S1", "note": "ranking half («مطمئن‌ترین راه برداشتن لایه») is not ranked by the source (silent, noted); removal restoring bond is reported for Liu; other sources: S2: ALTERED"}, {"id": "u15", "claim_quote": "مواد هموستاتیک هم استثنای جداگانه‌ای هستند که در انتها می‌آید.", "verdict": "NOT_A_CLAIM", "change_kind": null, "source_quote": "", "source_ref": null, "note": "signpost: points at a later section of the page"}, {"id": "u16", "claim_quote": "یک نکته‌ی کلی هم هست: هیچ روش رفع آلودگی، بازگشت کامل و قابل اعتماد باند به حالت بدون آلودگی را تضمین نمی‌کند؛ این روش‌ها افت را کم می‌کنند، نه صفر.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Although various decontamination methods can partially improve bonding, full recovery to uncontaminated levels is not reliably achieved.", "source_ref": "S1", "note": "other sources: S2: MATCHES"}, {"id": "u17", "claim_quote": "در ادامه هر مرحله برای چهار سیستم رایج جدا نوشته شده: etch-and-rinse (دو یا سه مرحله‌ای با اسید فسفریک جداگانه)، self-etch دومرحله‌ای (پرایمر و ادهزیو جدا)، self-etch تک‌مرحله‌ای (all-in-one) و ادهزیو یونیورسال در حالت self-etch.", "verdict": "NOT_A_CLAIM", "change_kind": null, "source_quote": "", "source_ref": null, "note": "signpost: «در ادامه», announces the page structure"}, {"id": "u18", "claim_quote": "∆ مرحله‌ی اول: عاج تراش‌خورده، هنوز چیزی روی آن نزده‌اید", "verdict": "NOT_A_CLAIM", "change_kind": null, "source_quote": "", "source_ref": null, "note": "heading only"}, {"id": "u19", "claim_quote": "ساده‌ترین حالت است و راه‌حل در همه‌ی سیستم‌ها یکی است: با اسپری آب بشویید (در حد ده ثانیه جریان آب کافی است)، خشک کنید و روند عادی را ادامه دهید.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Decontamination procedures including water-spray and reapplication of the bonding system could revert the impairment produced by the saliva or blood contamination.", "source_ref": "S2", "note": "instruction compared on its reported effect (F2-iii way 2); «ده ثانیه» and «ساده‌ترین حالت» are not addressed (silent); other sources: S1: ALTERED"}, {"id": "u20", "claim_quote": "etch-and-rinse: بعد از شستشو، اچ معمولی با اسید فسفریک خودش باقی‌مانده‌های خون را از سطح عاج حذف می‌کند و نیاز به کار اضافه‌ای نیست.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Re-etching with phosphoric acid was able to restore the bond strength of bloodand salivacontaminated dentin.", "source_ref": "S2", "note": "«نیاز به کار اضافه‌ای نیست» not addressed (silent)"}, {"id": "u21", "claim_quote": "self-etch دومرحله‌ای: شستشو و خشک کردن، یا حتی خشک کردن با کاغذ جاذب (blot dry)، قبل از پرایمر کافی گزارش شده است.", "verdict": "MATCHES", "change_kind": null, "source_quote": "In contamination before primer application, blot dry or rinse then dry restored the bond strength.", "source_ref": "S1", "note": "narrowing of a self-etch finding to two-step self-etch; other sources: S2: MATCHES"}, {"id": "u22", "claim_quote": "self-etch تک‌مرحله‌ای: شستشوی کوتاه با جریان آب قبل از کاربرد ادهزیو کافی است.", "verdict": "MATCHES", "change_kind": null, "source_quote": "The use of a water stream for 10 s was enough to remove blood contamination on enamel and dentin, before the application of a one-step adhesive system.", "source_ref": "S1", "note": "other sources: S2: MATCHES"}, {"id": "u23", "claim_quote": "یونیورسال: شستشو و خشک کردن کافی است.", "verdict": "MATCHES", "change_kind": null, "source_quote": "In Universal adhesive in self-etch mode, air-drying improved the bond strength significantly.", "source_ref": "S1", "note": "claim names no stage; Liu reports spray rinsing ineffective on cured universal adhesive (different stage), Shaikh reports no full restoration; other sources: S2: MATCHES"}, {"id": "u24", "claim_quote": "در آلودگی شدید با خون، سدیم هیپوکلریت به همراه یک آنتی‌اکسیدان (سدیم آسکوربات یا پروآنتوسیانیدین) قبل از ادهزیو هم گزارش مثبت دارد، ولی گزینه‌ی اضافه است، نه جایگزین شستشو.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Combination of sodium hypochlorite (10%) and Proanthocyanidin improved the shear bond strength of com- posite to dentin significantly in contamination before adhesive application.", "source_ref": "S1", "note": "«گزینه‌ی اضافه، نه جایگزین شستشو» not addressed; severity is a narrowing; other sources: S2: MATCHES"}, {"id": "u25", "claim_quote": "∆ مرحله‌ی دوم: عاج را اچ کرده‌اید و بعد آلودگی رخ داده", "verdict": "NOT_A_CLAIM", "change_kind": null, "source_quote": "", "source_ref": null, "note": "heading only"}, {"id": "u26", "claim_quote": "این مرحله فقط در etch-and-rinse (و یونیورسال در حالت etch-and-rinse) وجود دارد.", "verdict": "NOT_IN_SOURCE", "change_kind": null, "source_quote": "", "source_ref": null, "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"}, {"id": "u27", "claim_quote": "عاج اچ‌شده و بدون پوشش نسبت به آلودگی بسیار حساس است.", "verdict": "MATCHES", "change_kind": null, "source_quote": "A previous study reported that contamination after etching had an adverse effect on adhesion, nonetheless, blotting and applying a primer agent might regain the bond strength.", "source_ref": "S2", "note": "«بسیار» against the Discussion's report of a 40% loss after saliva contamination following etching"}, {"id": "u28", "claim_quote": "برای بزاق، شستشو و خشک کردن مجدد معمولاً کافی است.", "verdict": "MATCHES", "change_kind": null, "source_quote": "This could be in agreement with previous reports showing no difference between control (noncontaminated group) and group contaminated with saliva but rinsed after.", "source_ref": "S2", "note": "the hedge «could» qualifies the agreement, not the reported finding; «All in all … could be sufficient for decreasing the adverse effect of saliva» states the same hedged"}, {"id": "u29", "claim_quote": "برای خون، شستشو با آب جوابگو نیست و باید دوباره اچ کنید، بشویید و خشک کنید.", "verdict": "MATCHES", "change_kind": null, "source_quote": "However, in contamination before adhesive application [30] (rinsing, re-etching, rinsing) improved the bond strength to some extent.", "source_ref": "S1", "note": "instruction (re-etch) judged on reported effect: favourable (also Juneja); outcome half «شستشو با آب جوابگو نیست» stated by Koppolu cell «(Water rinsing, air-drying) was not able to improve the bond strength»; other sources: S2: MATCHES"}, {"id": "u30", "claim_quote": "اچینگ مجدد در این مرحله مؤثرترین اقدام است و باند را تا نزدیک حالت بدون آلودگی بازمی‌گرداند.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Some approaches, such as adhesive reapplication and phosphoric acid re-etching in etch-and-rinse systems, as well as sodium hypochlorite combined with antioxidants, show the most promising results.", "source_ref": "S1", "note": "ranking half matches the abstract ranking («most promising»); near-control half also reported by Elkassas pre-curing (28.9 vs 32.3 MPa); other sources: S2: MATCHES"}, {"id": "u31", "claim_quote": "∆ مرحله‌ی سوم: پرایمر یا ادهزیو را زده‌اید، هنوز کیور نکرده‌اید", "verdict": "NOT_A_CLAIM", "change_kind": null, "source_quote": "", "source_ref": null, "note": "heading only"}, {"id": "u32", "claim_quote": "شایع‌ترین اتفاق در کار روزمره: ادهزیو روی عاج است، دستتان به سمت لایت‌کیور می‌رود و در همین فاصله لثه خونریزی می‌کند یا بزاق وارد حفره می‌شود.", "verdict": "NOT_IN_SOURCE", "change_kind": null, "source_quote": "", "source_ref": null, "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"}, {"id": "u33", "claim_quote": "دو کار را در هیچ سیستمی نباید بکنید: با پوار خشک کنید و کیور کنید، یا روی همان لایه‌ی آلوده یک لایه ادهزیو دیگر بزنید.", "verdict": "MATCHES", "change_kind": null, "source_quote": "In Shaikh et al., water spraying and air-drying alone after contamination of uncured adhesive resulted in complete bond failure (0 MPa), whereas subsequent adhesive reap- plication increased bond strength to 20.0 ± 5.6 MPa [24].", "source_ref": "S1", "note": "single predicate over two prohibited actions; drying alone over contaminated uncured adhesive gave complete bond failure. Kucukyilmaz cell «(Drying and reapplying the adhesive) improved the bond strength statistically when contamination occurred before curing» disagrees on the second action; other sources: S2: MATCHES"}, {"id": "u34", "claim_quote": "اصل مشترک این است که لایه‌ی آلوده باید با آب شسته شود و بعد مرحله تکرار شود.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Some studies reported that re-application of the adhesive following rinsing and drying improved bond strength compared with no decontamination [15, 24, 30], although complete recov- ery to uncontaminated control levels was not consistently observed.", "source_ref": "S1", "note": "instruction judged on reported effect: favourable; other sources: S2: MATCHES"}, {"id": "u35", "claim_quote": "etch-and-rinse: بشویید، با کاغذ جاذب یا پوار ملایم خشک کنید و ادهزیو را از نو بزنید و کیور کنید.", "verdict": "MATCHES", "change_kind": null, "source_quote": "In contamination before adhesive curing (rinsing, absorbent paper drying, re-bonding) and (sodium hypochlorite (10%), drying, re-bonding) were successful.", "source_ref": "S1", "note": "Lund, Elkassas and Faisal report no effective strategy in their etch-and-rinse systems; one faithful sentence suffices; other sources: S2: MATCHES"}, {"id": "u36", "claim_quote": "اگر آلودگی خون بود، اچ مجدد کوتاه قبل از ادهزیو نتیجه را بهتر می‌کند و باند را تا نزدیک حالت بدون آلودگی بازمی‌گرداند.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Elkassas and Arafa reported that post-cure contamination reduced bond strength to 4.2 ± 1.2 MPa, re-etching followed by adhesive reapplication increased values further to 16.7 ± 3.2 MPa; However, the same protocol in pre curing Page Katebi et al. BMC Oral Health (2026) 26:1540 7 of 9 contamination had increased the bond strength to 28.9 ± 2.2 more close to the non-contaminated control (32.3 ± 1.6 MPa) [30].", "source_ref": "S1", "note": "other sources: S2: MATCHES"}, {"id": "u37", "claim_quote": "self-etch دومرحله‌ای: بشویید، خشک کنید و پرایمر و سپس ادهزیو را از نو بزنید و کیور کنید.", "verdict": "MATCHES", "change_kind": null, "source_quote": "(Water rinsing, air-drying, self-etch primer, adhesive, curing) im- proved the bond strength in Tyrian SPE.", "source_ref": "S1", "note": "other sources: S2: MATCHES"}, {"id": "u38", "claim_quote": "نتیجه به محصول بستگی دارد؛ در برخی سیستم‌ها این کار باند را بازمی‌گرداند و در برخی دیگر هیچ روشی مؤثر نبوده است.", "verdict": "MATCHES", "change_kind": null, "source_quote": "These findings indicate that mechanical cleaning efficacy is strongly material-dependent and may be influ- enced by solvent system, adhesive acidity, viscosity, and hydrophilicity [10].", "source_ref": "S1", "note": "other sources: S2: MATCHES"}, {"id": "u39", "claim_quote": "self-etch تک‌مرحله‌ای: این گروه بیشترین وابستگی به محصول را دارد؛ یک ادهزیو با شستشو و تکرار به خوبی بازیابی می‌شود و ادهزیوی دیگر با همان پروتکل حتی افت بیشتری نشان می‌دهد.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Yoo and Pereira reported that water rinsing, air-drying, and adhesive reapplication improved bond strength in One-Up Bond F.", "source_ref": "S1", "note": "«بیشترین وابستگی به محصول» ranking not addressed; next sentence: the same protocol reduced performance in Xeno III and Adper Prompt L-Pop; other sources: S2: MATCHES"}, {"id": "u40", "claim_quote": "مطمئن‌ترین کار این است که سطح را کامل بشویید و خشک کنید و باندینگ را از اول انجام دهید، نه اینکه صرفاً یک لایه اضافه کنید.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Decontamination procedures including water-spray and reapplication of the bonding system could revert the impairment produced by the saliva or blood contamination.", "source_ref": "S2", "note": "the action matches by its reported effect; the ranking «مطمئن‌ترین … نه اینکه صرفاً یک لایه اضافه کنید» is not stated by a ranking sentence (silent, F3); other sources: S1: ALTERED"}, {"id": "u41", "claim_quote": "یونیورسال: بشویید، خشک کنید و ادهزیو را از نو بزنید و کیور کنید.", "verdict": "MATCHES", "change_kind": null, "source_quote": "However, rinsing, air-drying and repeating the bonding procedure could improve the bond strength significantly in both pre and post curing contamination.", "source_ref": "S1", "note": "instruction judged on reported effect (could improve significantly): favourable, no hedge comparison under way 2; other sources: S2: MATCHES"}, {"id": "u42", "claim_quote": "این پروتکل در یونیورسال‌ها ثابت‌ترین نتیجه را داده و باند را تا نزدیک حالت بدون آلودگی بازمی‌گرداند.", "verdict": "MATCHES", "change_kind": null, "source_quote": "In Kucukyilmaz et al., contamina- tion of uncured universal adhesives followed by adhesive reapplication restored bond strength close to control values [27].", "source_ref": "S1", "note": "«ثابت‌ترین نتیجه» ranking of universals against other systems not addressed; other sources: S2: MATCHES"}, {"id": "u43", "claim_quote": "∆ مرحله‌ی چهارم: ادهزیو را کیور کرده‌اید و بعد آلودگی رخ داده", "verdict": "NOT_A_CLAIM", "change_kind": null, "source_quote": "", "source_ref": null, "note": "heading only"}, {"id": "u44", "claim_quote": "این بار لایه‌ی ادهزیو سفت شده و آلودگی روی سطح آن نشسته، نه روی عاج.", "verdict": "MATCHES", "change_kind": null, "source_quote": "In contrast, contamination occurring after adhesive curing was reported to affect the adhesive surface and its inter- action with subsequent resin layers [33].", "source_ref": "S1", "note": null}, {"id": "u45", "claim_quote": "کامپوزیت باید به این سطح بچسبد و لایه‌ی بزاق یا خون بین این دو قرار گرفته است.", "verdict": "MATCHES", "change_kind": null, "source_quote": "In contrast, contamination occurring after adhesive curing was reported to affect the adhesive surface and its inter- action with subsequent resin layers [33].", "source_ref": "S1", "note": "saliva not studied by this source; noted"}, {"id": "u46", "claim_quote": "این چالش‌برانگیزترین حالت است و بیشترین افت باند در همین مرحله دیده می‌شود.", "verdict": "ALTERED", "change_kind": "POPULATION_OR_CONDITION_CHANGED", "source_quote": "Blood contamination consistently reduces dentin bond strength across adhesive systems with the most severe effects occurring when contamination happens after polymerization.", "source_ref": "S1", "note": "pointing word «همین مرحله» reads through to post-curing; the source ranks this stage for blood contamination alone, the claim names no contaminant"}, {"id": "u47", "claim_quote": "اگر آلودگی بزاق است، در همه‌ی سیستم‌ها بشویید، خشک کنید و یک لایه ادهزیو تازه بزنید و کیور کنید؛ این معمولاً کافی است.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Also, when salivary contamination occurred after polymerizing the adhesive, water decontamination should be accomplished followed by an adhesive reapplication.", "source_ref": "S2", "note": "the source's own advice governs the instruction (F2-iii); «معمولاً کافی است» matches the plain report in Chasqueira/Santschi cells"}, {"id": "u48", "claim_quote": "اگر آلودگی خون است، شستشو و ادهزیو مجدد به تنهایی جواب نمی‌دهد، چون پروتئین‌های خون به سطح رزین چسبیده‌اند و با آب نمی‌روند.", "verdict": "ALTERED", "change_kind": "HEDGE_REMOVED", "source_quote": "Residual blood components may remain even after water rinsing, adversely affecting adhesive bonding by interfer- ing with proper resin penetration and polymerization [11].", "source_ref": "S1", "note": "outcome half matches «simple rinsing or drying alone is generally insufficient» after curing (also Damé, Mendonça, Kucukyilmaz); reason half (blood proteins not removed by water) is stated by the source only with «may»; other sources: S2: ALTERED"}, {"id": "u49", "claim_quote": "اینجا سیستم‌ها از هم جدا می‌شوند:", "verdict": "NOT_A_CLAIM", "change_kind": null, "source_quote": "", "source_ref": null, "note": "signpost ending in «:», introduces what follows"}, {"id": "u50", "claim_quote": "etch-and-rinse: اچ مجدد با اسید فسفریک روی سطح کیورشده و سپس ادهزیو تازه، بهبود نسبی می‌دهد اما قدرت باند همچنان نسبت به حالت بدون آلودگی کمتر خواهد بود.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Elkassas and Arafa reported that post-cure contamination reduced bond strength to 4.2 ± 1.2 MPa, re-etching followed by adhesive reapplication increased values further to 16.7 ± 3.2 MPa; However, the same protocol in pre curing Page Katebi et al. BMC Oral Health (2026) 26:1540 7 of 9 contamination had increased the bond strength to 28.9 ± 2.2 more close to the non-contaminated control (32.3 ± 1.6 MPa) [30].", "source_ref": "S1", "note": "Damé reports no strategy worked after curing in etch-and-rinse; one faithful sentence suffices; other sources: S2: AUTHOR_VIEW"}, {"id": "u51", "claim_quote": "اگر ترمیم در ناحیه‌ی پرتنش است، لایه را بردارید و از اول شروع کنید.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Recent evidence from Liu et al. demonstrated that spray rinsing alone was ineffective after blood contami- nation of polymerized Single Bond Universal, whereas phosphoric acid, sodium hypochlorite, antioxidant com- binations, and diamond bur repreparation restored bond strength to approximately control values [31].", "source_ref": "S1", "note": "high-stress condition is a narrowing; removal by diamond bur restored bond"}, {"id": "u52", "claim_quote": "self-etch دومرحله‌ای و تک‌مرحله‌ای: در این دو گروه هیچ روش محافظه‌کارانه‌ای بعد از کیور باند را جبران نکرده است.", "verdict": "MATCHES", "change_kind": null, "source_quote": "When con- tamination occurred after the curing of adhesive, no strategy could improve the bond strength.", "source_ref": "S1", "note": "source labels these studies «Self-etch»; split into two-step and one-step is a narrowing. Also Yoo, Koppolu; other sources: S2: ALTERED"}, {"id": "u53", "claim_quote": "راه‌حل ساده: لایه‌ی ادهزیو را با فرز الماسی بردارید و باندینگ را از اول انجام دهید.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Recent evidence from Liu et al. demonstrated that spray rinsing alone was ineffective after blood contami- nation of polymerized Single Bond Universal, whereas phosphoric acid, sodium hypochlorite, antioxidant com- binations, and diamond bur repreparation restored bond strength to approximately control values [31].", "source_ref": "S1", "note": null}, {"id": "u54", "claim_quote": "یونیورسال: تنها گروهی که برایش روش محافظه‌کارانه با نتیجه‌ی نزدیک به حالت بدون آلودگی گزارش شده.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Chlorhexidine 2% was able to re-establish the bond strength in contamination after adhesive curing.", "source_ref": "S1", "note": "«تنها گروهی» exclusivity not stated as a ranking by the source; Liu also reports restoration on cured universal adhesive"}, {"id": "u55", "claim_quote": "اسید فسفریک یا سدیم هیپوکلریت روی سطح کیورشده و سپس شستشو، خشک کردن و ادهزیو تازه، و در یک گزارش شستشو با کلرهگزیدین دو درصد، باند را بازگردانده‌اند.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Chlorhexidine 2% was able to re-establish the bond strength in contamination after adhesive curing.", "source_ref": "S1", "note": "Liu cell also states phosphoric acid or sodium hypochlorite alone is beneficial for restoring the bond strength on cured universal adhesive; other sources: S2: MATCHES"}, {"id": "u56", "claim_quote": "با این حال در برخی گزارش‌های دیگر با همین گروه هیچ روشی مؤثر نبوده است، پس اگر مطمئن نیستید، برداشتن لایه و شروع مجدد گزینه‌ی امن‌تر است.", "verdict": "NOT_IN_SOURCE", "change_kind": null, "source_quote": "", "source_ref": null, "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"}, {"id": "u57", "claim_quote": "برداشتن لایه با فرز الماسی در همه‌ی سیستم‌ها باند را کامل بازمی‌گرداند، ولی مقداری ساختار سالم دندان از دست می‌رود؛ به همین دلیل آخرین گزینه است، نه اولین.", "verdict": "NOT_IN_SOURCE", "change_kind": null, "source_quote": "", "source_ref": null, "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"}, {"id": "u58", "claim_quote": "∆ مواد هموستاتیک: راه‌حل نیستند، بخشی از مسئله‌اند", "verdict": "NOT_A_CLAIM", "change_kind": null, "source_quote": "", "source_ref": null, "note": "heading only"}, {"id": "u59", "claim_quote": "وقتی خونریزی وجود دارد، استفاده از مواد هموستاتیک طبیعی به نظر می‌رسد، اما مواد حاوی آلومینیوم کلراید یا فریک سولفات خودشان روی عاج رسوب می‌گذارند و استحکام باند را، به‌ویژه در سیستم‌های self-etch و یونیورسال، کاهش می‌دهند.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Contamination of the bonding substrate with blood, saliva, gingival fluid, hemostatic agents, or handpiece oil can significantly compromise adhesion and reduce bond strength [3].", "source_ref": "S1", "note": "deposition mechanism and «به‌ویژه self-etch و یونیورسال» not addressed (hemostatic agents excluded from included studies); reduced bond strength stated in the introduction; other sources: S2: MATCHES"}, {"id": "u60", "claim_quote": "این مواد برای کنترل خونریزی لثه هستند، نه برای رفع آلودگی عاج، و کاربرد آن‌ها به‌عنوان روش پاک‌سازی خون توصیه نمی‌شود.", "verdict": "MATCHES", "change_kind": null, "source_quote": "The use of hemostatic agents as a method of blood decontamination is not recommended.", "source_ref": "S2", "note": "gingival use stated in «Mostly, these agents were applied around the gingiva…»"}, {"id": "u61", "claim_quote": "اگر هموستاتیک ناخواسته به عاج رسید، شستشو با آب کافی نیست و به یک عامل شیمیایی نیاز دارید:", "verdict": "MATCHES", "change_kind": null, "source_quote": "Rinsing with water was not effective to restore the bond strength", "source_ref": "S2", "note": "Kuphasuk and Ulusoy cells disagree; the need for a chemical agent is supported by Faisal (NaOCl) and Ajami (EDTA) cells"}, {"id": "u62", "claim_quote": "etch-and-rinse: اچ معمولی با اسید فسفریک اثر هموستاتیک را برطرف می‌کند و کار اضافه‌ای لازم نیست.", "verdict": "MATCHES", "change_kind": null, "source_quote": "EDTA and phosphoric acid removed the contaminant agent from dentin.", "source_ref": "S2", "note": "«کار اضافه‌ای لازم نیست» not addressed (silent)"}, {"id": "u63", "claim_quote": "self-etch (هر دو نوع) و یونیورسال: چون مرحله‌ی اسید ندارند، باید یک مرحله اضافه کنید: اچ کوتاه با اسید فسفریک یا EDTA، یا شستشو با کلرهگزیدین، سپس شستشو و خشک کردن و ادامه‌ی روند عادی.", "verdict": "MATCHES", "change_kind": null, "source_quote": "EDTA and phosphoric acid removed the contaminant agent from dentin.", "source_ref": "S2", "note": "the experts' EDTA/chlorhexidine suggestion is attributed to others and governs nothing; effect reported favourably (Ajami, Pucci). Reason clause («چون مرحله‌ی اسید ندارند») not addressed (silent)"}, {"id": "u64", "claim_quote": "فریک سولفات یک مشکل اضافه هم دارد: احتمال تغییر رنگ عاج در ترمیم‌های زیبایی.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Additionally, the possible discoloration combined with the reduction in bond strength of ferric sulfate agents should alert the clinicians in using these agents in an esthetic restoration.", "source_ref": "S2", "note": null}, {"id": "u65", "claim_quote": "∆ جمع‌بندی", "verdict": "NOT_A_CLAIM", "change_kind": null, "source_quote": "", "source_ref": null, "note": "heading only"}, {"id": "u66", "claim_quote": "هر بار که آلودگی رخ داد، بشویید، خشک کنید و مرحله‌ای را که در آن بودید از نو انجام دهید.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Some studies reported that re-application of the adhesive following rinsing and drying improved bond strength compared with no decontamination [15, 24, 30], although complete recov- ery to uncontaminated control levels was not consistently observed.", "source_ref": "S1", "note": "instruction judged on reported effect: favourable; other sources: S2: MATCHES"}, {"id": "u67", "claim_quote": "تا قبل از کیور کردن ادهزیو، این قاعده در بیشتر سیستم‌ها باند را به‌طور قابل توجه بازمی‌گرداند و در etch-and-rinse، اسید فسفریک مؤثرترین ابزار برای اصلاح سطح آلوده است.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Some approaches, such as adhesive reapplication and phosphoric acid re-etching in etch-and-rinse systems, as well as sodium hypochlorite combined with antioxidants, show the most promising results.", "source_ref": "S1", "note": "shares «etch-and-rinse»; first half also stated by «Contamination before adhesive polymerization was more amenable to reversal.»; other sources: S2: ALTERED"}, {"id": "u68", "claim_quote": "بعد از کیور کردن، اگر بزاق است همان قاعده کافی است؛ اگر خون است، در یونیورسال‌ها اسید فسفریک یا هیپوکلریت روی سطح کیورشده شانس بازیابی دارد، و در بقیه‌ی سیستم‌ها راه مطمئن برداشتن لایه و شروع مجدد است.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Also, when salivary contamination occurred after polymerizing the adhesive, water decontamination should be accomplished followed by an adhesive reapplication.", "source_ref": "S2", "note": "blood/universal half matches as a hedged generalization of Haralur and Juneja cells; «در بقیه‌ی سیستم‌ها راه مطمئن برداشتن لایه» not addressed (silent); other sources: S1: ALTERED"}, {"id": "u69", "claim_quote": "مواد هموستاتیک را برای پاک کردن خون به کار نبرید و اگر به عاج رسیدند، با اسید یا کلرهگزیدین پاکشان کنید.", "verdict": "MATCHES", "change_kind": null, "source_quote": "The use of hemostatic agents as a method of blood decontamination is not recommended.", "source_ref": "S2", "note": "cleaning with acid or chlorhexidine matches by reported effect (Ajami, Pucci cells)"}, {"id": "u70", "claim_quote": "و در نهایت، هیچ روش رفع آلودگی باند را به‌طور قابل اعتماد به حالت بدون آلودگی بازنمی‌گرداند؛ پیشگیری با ایزولاسیون درست همچنان اصلی‌ترین راه‌حل است.", "verdict": "MATCHES", "change_kind": null, "source_quote": "Although various decontamination methods can partially improve bonding, full recovery to uncontaminated levels is not reliably achieved.", "source_ref": "S1", "note": "prevention half also stated in Clinical implications; other sources: S2: MATCHES"}]};
 const fa = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const KIND = {HEDGE_REMOVED:'قاطع‌تر از منبع', HEDGE_ADDED:'محتاط‌تر از منبع', MAGNITUDE_CHANGED:'عدد متفاوت',
-  POPULATION_OR_CONDITION_CHANGED:'دامنه‌ی گسترده‌تر از منبع', GROUP_OR_COMPARATOR_CHANGED:'گروه مقایسه‌ی متفاوت'};
-const LVL = {HIGH:'انطباق بالا', MEDIUM:'انطباق متوسط', LOW:'انطباق پایین', INSUFFICIENT_CLAIMS:'ادعای کافی ندارد'};
-// the one word a reader sees (appendix rule 5, v2.8): a refinement of `level`, never a second scale
-function fidWord(f) {
-  if (f.level === 'INSUFFICIENT_CLAIMS') return {w:'ادعای کافی برای سنجش ندارد', k:'none'};
-  if (f.level === 'LOW') return {w:'تطابق پایین', k:'low'};
-  if (f.level === 'MEDIUM') return {w:'تطابق متوسط', k:'med'};
-  if (!f.counts.altered && !f.counts.reversed) return {w:'کاملاً مطابق', k:'top'};
-  return f.fidelity_score >= 95 ? {w:'تطابق خیلی بالا', k:'top'} : {w:'تطابق بالا', k:'hi'};
-}
-const QT = {MATERIAL:'سؤال مواد و ماده‌ی دندانی', CLINICAL:'سؤال بالینی'};
-const BANDS = ['E','D','C','B','A'];
-const srcName = tag => { const s = D.sources[+tag.slice(1)-1]; return s.fake ? 'مقاله‌ی نمونه' : `${s.authors} ${s.year} · ${tag}`; };
-// plain-language reason per change kind, for the flagged list
+const KIND = {HEDGE_REMOVED:'قاطع‌تر از مقاله', HEDGE_ADDED:'محتاط‌تر از مقاله', MAGNITUDE_CHANGED:'عدد متفاوت با مقاله',
+  POPULATION_OR_CONDITION_CHANGED:'گسترده‌تر از مقاله', GROUP_OR_COMPARATOR_CHANGED:'مقایسه‌ی متفاوت با مقاله'};
 const WHY = {
-  u46: 'مقاله این مرحله را فقط برای آلودگی خون «بدترین» می‌داند؛ جمله‌ی متن، آلاینده را نام نمی‌برد و آن را برای هر آلودگی می‌گوید.',
-  u48: 'نتیجه (شستشو و ادهزیو مجدد بعد از کیور جواب نمی‌دهد) با منبع مطابق است؛ اما دلیلش، یعنی «پروتئین‌ها با آب نمی‌روند»، در مقاله با «ممکن است» آمده و در متن قطعی گفته شده.'
+  u46: 'مقاله این مرحله را فقط برای آلودگی «خون» بدترین می‌داند؛ این جمله آلاینده را نام نمی‌برد و آن را برای هر آلودگی می‌گوید.',
+  u48: 'اینکه شستشو و ادهزیو مجدد بعد از کیور جواب نمی‌دهد با مقاله یکی است؛ ولی دلیلش («پروتئین‌ها با آب نمی‌روند») در مقاله با «ممکن است» آمده و اینجا قطعی گفته شده.'
 };
-const cls = v => ({MATCHES:'m', ALTERED:'a', REVERSED:'r', NOT_IN_SOURCE:'n', NOT_ASSESSABLE:'n'}[v]);
+const srcName = tag => { const s = D.sources[+tag.slice(1)-1]; return `${s.authors} و همکاران، ${s.year}`; };
 
-function claimCard(c, opts = {}) {
-  const k = c.verdict === 'ALTERED' ? `<span class="kind">${KIND[c.change_kind]}</span>`
-          : c.verdict === 'REVERSED' ? `<span class="kind rev">برعکسِ منبع</span>`
-          : c.verdict === 'MATCHES' ? `<span class="kind ok">مطابق</span>`
-          : `<span class="kind na">از دانش یا استدلال نویسنده</span>`;
-  const src = c.source_quote ? `<p class="q-src"><span class="who">${esc(srcName(c.source_ref))}</span>${esc(c.source_quote)}</p>` : '';
-  const why = opts.why ? `<p class="why">${esc(opts.why)}</p>` : '';
-  return `<div class="flag" id="c-${c.id}"><div class="flag-top">${k}<span class="uid">جمله‌ی ${fa(c.id.slice(1))}</span></div>
-    <p class="q-page">${esc(c.claim_quote)}</p>${src}${why}</div>`;
+// the word (spec v2.8 appendix rule 5): a refinement of level, never a second scale
+function word(f) {
+  if (f.level === 'INSUFFICIENT_CLAIMS') return ['ادعای کافی برای سنجش ندارد', 'none'];
+  if (f.level === 'LOW') return ['تطابق پایین', 'low'];
+  if (f.level === 'MEDIUM') return ['تطابق متوسط', 'med'];
+  if (!f.counts.altered && !f.counts.reversed) return ['کاملاً مطابق', 'top'];
+  return f.fidelity_score >= 95 ? ['تطابق خیلی بالا', 'top'] : ['تطابق بالا', 'hi'];
+}
+// one plain sentence under the word
+function say(f) {
+  const c = f.counts, parts = [];
+  parts.push(`${fa(c.matches)} جمله همان را می‌گوید که مقاله‌ها گفته‌اند.`);
+  if (c.reversed) parts.push(`${fa(c.reversed)} جا برعکسِ مقاله است.`);
+  if (c.altered) parts.push(`${fa(c.altered)} جا کمی قاطع‌تر یا گسترده‌تر از مقاله است.`);
+  return parts.join(' ');
 }
 
-function fidPane(f, claims, opts) { const real = opts.real;
-  const scored = claims.filter(c => ['MATCHES','ALTERED','REVERSED'].includes(c.verdict));
-  const strip = scored.map(c => `<button class="cell ${cls(c.verdict)}" type="button" data-id="${c.id}" aria-label="جمله‌ی ${fa(c.id.slice(1))}"></button>`).join('');
-  const flagged = claims.filter(c => c.verdict === 'ALTERED' || c.verdict === 'REVERSED');
-  const W = fidWord(f);
-  const excluded = f.counts.not_a_claim + f.counts.author_view;
-  const silent = claims.filter(c => c.verdict === 'NOT_IN_SOURCE' || c.verdict === 'NOT_ASSESSABLE');
-  const nA = f.counts.altered, nR = f.counts.reversed;
-  const silentN = silent.length || f.counts.not_in_source || 0;
-  const bits = [nR ? `${fa(nR)} جا برعکسِ مقاله` : '', nA ? `${fa(nA)} جا یک درجه جلوتر از مقاله` : '',
-                !nA && !nR ? 'همه‌ی ادعاها همان را می‌گویند که مقاله گفته' : '',
-                silentN ? `${fa(silentN)} جمله از دانش یا استدلال نویسنده` : ''].filter(Boolean);
-  let h = `<div class="fid-head"><div style="flex:1;min-width:200px">
-      <div class="fid-word w-${W.k}">${W.w}</div>
-      <div class="fid-sub">${bits.join('؛ ')}</div>
-    </div>${opts.prov ? '<span class="hatch">مقدماتی · فقط چکیده</span>' : ''}</div>
-    <div class="strip" role="list">${strip}</div>
-    <div class="legend"><span><i class="cell m"></i>مطابق</span><span><i class="cell a"></i>یک درجه جلوتر</span><span><i class="cell r"></i>برعکس</span></div>`;
-  if (flagged.length) {
-    h += `<div class="grp">کجا با مقاله فرق دارد</div>` + flagged.map(c => claimCard(c, {why: WHY[c.id]})).join('');
-  }
-  if (real) {
-    if (silent.length) h += `<details class="calc neutral"><summary>${fa(silent.length)} جمله در مقاله‌ها نیامده · از دانش یا استدلال نویسنده — در نمره نیست</summary><div class="calc-body"><p class="small">این جمله‌ها چیزی می‌گویند که هیچ‌کدام از دو مقاله درباره‌اش حرفی نزده: دانش پایه یا استدلال بالینیِ خود نویسنده. خطا حساب نمی‌شوند و نمره را کم نمی‌کنند؛ فقط اینجا هستند تا معلوم باشد کدام جمله‌ها پشتوانه‌ی مقاله ندارند.</p>` + silent.map(c => claimCard(c)).join('') + `</div></details>`;
-    const groups = [['MATCHES','مطابق']];
-    h += `<details class="calc" id="calcBox"><summary>این ارزیابی چطور حساب شد؟ و همه‌ی ${fa(claims.length)} جمله، یکی‌یکی</summary><div class="calc-body">` +
-      groups.map(([v,l]) => { const cs = claims.filter(c => c.verdict === v); return cs.length ? `<div class="grp">${l} · ${fa(cs.length)}</div>` + cs.map(c => claimCard(c)).join('') : ''; }).join('') +
-      `<div class="grp">بیرون از شمارش · ${fa(excluded)}</div><p class="small">تیترها، جمله‌های راهنما مثل «در ادامه…» و جمله‌هایی که فقط موضوع را معرفی می‌کنند ادعا حساب نمی‌شوند و در نمره نمی‌آیند.</p>
-      <div class="grp">این ارزیابی چطور حساب شد</div><p class="small">از ${fa(f.assessable)} ادعایی که مقاله‌ها به آن پرداخته‌اند، ${fa(f.counts.matches)} مورد کاملاً مطابق است و هر کدام یک امتیاز کامل می‌گیرد؛ ${fa(f.counts.altered)} مورد یک درجه جلوتر رفته و هر کدام نصف امتیاز. (${fa(f.counts.matches)} + ${fa(f.counts.altered)}×½) ÷ ${fa(f.assessable)} = ٪${fa(f.fidelity_score)}. از ٪۹۵ به بالا «تطابق خیلی بالا»، از ٪۸۵ «تطابق بالا»، از ٪۶۰ «تطابق متوسط»؛ صد بی‌هیچ جمله‌ی جلوتر «کاملاً مطابق». جمله‌هایی که در مقاله‌ها نیامده‌اند در این حساب نیستند. یک «برعکس» سطح را از «بالا» پایین‌تر می‌برد، هرچه نمره باشد. هر جمله در هر مقاله جداگانه سنجیده شده و اگر یکی از دو مقاله آن را بگوید، «مطابق» است.</p>
-      </div></details>`;
-    h += `<div class="concl"><div class="concl-l">جمع‌بندیِ خود مقاله‌ها (برای اطلاع؛ داوری روی آن نیست)</div>` +
-      f.source_conclusion.split('\n').map(l => { const m = l.match(/^\[(S\d)\]\s*(.*)$/); return `<p><span class="tag" style="font-family:Vazirmatn">${esc(m ? srcName(m[1]) : '')}</span>${esc(m ? m[2] : l)}</p>`; }).join('') + `</div>`;
-    h += `<p class="foot">این ارزیابی فقط می‌پرسد آیا جمله‌های متن همان را می‌گویند که مقاله‌ها گفته‌اند؛ درباره‌ی قوت مقاله‌ها (زبانه‌ی کناری) یا اهمیت آنچه انتخاب شده چیزی نمی‌گوید.</p>`;
-  }
-  return h;
+const f = D.fid, claims = D.claims;
+const [w, k] = word(f);
+document.getElementById('chipWord').textContent = w;
+
+const flagged = claims.filter(c => c.verdict === 'ALTERED' || c.verdict === 'REVERSED');
+const silent  = claims.filter(c => c.verdict === 'NOT_IN_SOURCE');
+const matched = claims.filter(c => c.verdict === 'MATCHES');
+const skipped = claims.length - flagged.length - silent.length - matched.length;
+
+let h = `<div class="verdict"><span class="dot ${k}"></span><span class="word ${k}">${w}</span></div>
+  <p class="say">${say(f)}</p>`;
+if (flagged.length) {
+  h += `<div class="diff-h">${fa(flagged.length)} جا که با مقاله فرق دارد</div>` + flagged.map(c => `
+    <div class="diff"><div class="diff-top"><span class="tag ${c.verdict === 'REVERSED' ? 'rev' : ''}">${c.verdict === 'REVERSED' ? 'برعکسِ مقاله' : KIND[c.change_kind]}</span>
+      <p>${esc(c.claim_quote)}</p></div>
+      <details class="src"><summary>مقاله چه می‌گوید</summary><div class="src-body">
+        <p class="q"><small>${esc(srcName(c.source_ref))}</small>${esc(c.source_quote)}</p>
+        ${WHY[c.id] ? `<p class="why">${esc(WHY[c.id])}</p>` : ''}</div></details></div>`).join('');
 }
+h += `<div class="rows">
+  <details class="rowd"><summary>جمله‌هایی از دانش یا استدلال نویسنده<span class="n">${fa(silent.length)}</span></summary>
+    <div class="rbody">این جمله‌ها چیزی می‌گویند که مقاله‌ها درباره‌اش حرفی نزده‌اند. خطا حساب نمی‌شوند و در ارزیابی نیستند.
+      <ol>${silent.map(c => `<li>${esc(c.claim_quote)}</li>`).join('')}</ol></div></details>
+  <details class="rowd"><summary>این ارزیابی چطور حساب شد</summary>
+    <div class="rbody">
+      <p class="calc">از ${fa(f.assessable)} ادعایی که مقاله‌ها به آن پرداخته‌اند، ${fa(f.counts.matches)} مورد کاملاً مطابق است (امتیاز کامل) و ${fa(f.counts.altered)} مورد کمی جلوتر رفته (نصف امتیاز): ٪${fa(f.fidelity_score)}.</p>
+      <div class="scale"><span>کاملاً مطابق</span><span>هیچ جمله‌ای فرق ندارد</span>
+        <span>تطابق خیلی بالا</span><span>٪۹۵ و بالاتر</span>
+        <span>تطابق بالا</span><span>٪۸۵ تا ٪۹۴، یا فقط یک جمله کمی جلوتر</span>
+        <span>تطابق متوسط</span><span>٪۶۰ تا ٪۸۴، یا هر جمله‌ی برعکس</span>
+        <span>تطابق پایین</span><span>زیر ٪۶۰</span></div>
+      <p style="margin:10px 0 0">هر جمله یک‌بار با هر مقاله سنجیده شده؛ اگر یکی از دو مقاله آن را بگوید، مطابق است. ${fa(skipped)} جمله (تیترها، جمله‌های راهنما) ادعا نیستند و بیرون مانده‌اند.</p></div></details>
+  <details class="rowd"><summary>همه‌ی جمله‌های مطابق<span class="n">${fa(matched.length)}</span></summary>
+    <div class="rbody"><ol>${matched.map(c => `<li>${esc(c.claim_quote)}</li>`).join('')}</ol></div></details>
+  <details class="rowd"><summary>جمع‌بندیِ خودِ مقاله‌ها</summary>
+    <div class="rbody">${f.source_conclusion.split('\n').map(l => { const m = l.match(/^\[(S\d)\]\s*(.*)$/); return `<p class="q"><small>${esc(m ? srcName(m[1]) : '')}</small>${esc(m ? m[2] : l)}</p>`; }).join('')}
+      برای اطلاع؛ ارزیابی روی آن نیست.</div></details>
+</div>
+<p class="foot">این ارزیابی فقط می‌پرسد جمله‌های متن همان را می‌گویند که مقاله‌ها گفته‌اند یا نه؛ درباره‌ی قوت مقاله‌ها (زبانه‌ی کنار) چیزی نمی‌گوید.</p>`;
+document.getElementById('paneFid').innerHTML = h;
 
-function srcPane() {
-  return D.sources.map((s, i) => `<div class="src band-${s.band}">
-    <div class="srctitle"><span class="tag">S${fa(i+1)}</span><bdi>${esc(s.authors)} et al., ${esc(s.year)} — ${esc(s.title)}</bdi> · <bdi>${esc(s.journal)}</bdi></div>
-    <div class="head"><div class="bar">${BANDS.map(b => `<span class="blk ${b === s.band ? 'on' : ''}">${b}</span>`).join('')}</div>
-      <div class="meta2"><span class="bandname">رده‌ی ${s.band}</span><span class="qtype">${QT[s.qt] || s.qt}</span></div>
-      <span class="num">${fa(s.score)} از ۱۰۰</span></div>
-    <span class="interp-l">تفسیر امتیاز</span><p class="interp">${esc(s.interp)}</p></div>`).join('') +
-    `<p class="foot">قوتِ هر مقاله جدا از انطباقِ متن سنجیده می‌شود: مقاله‌ی ضعیف را می‌شود کاملاً درست نقل کرد، و مقاله‌ی قوی را نادرست.</p>`;
-}
+const BANDS = ['E','D','C','B','A'];
+document.getElementById('paneSrc').innerHTML = D.sources.map(s => `
+  <div class="srcrow" style="--cur:var(--des-${s.band})"><div class="bar">${BANDS.map(b => `<span class="blk ${b === s.band ? 'on' : ''}">${b}</span>`).join('')}</div>
+    <div class="sname"><b>رده‌ی ${s.band} · سؤال مواد</b><span><bdi>${esc(s.authors)} et al., ${esc(s.year)}</bdi> — ${fa(s.score)} از ۱۰۰</span></div></div>`).join('') +
+  `<p class="foot">قوت هر مقاله جدا از انطباق متن سنجیده می‌شود: مقاله‌ی ضعیف را می‌شود کاملاً درست نقل کرد، و مقاله‌ی قوی را نادرست.</p>`;
 
-document.getElementById('paneFid').innerHTML = fidPane(D.fid, D.claims, {real: true});
-document.getElementById('paneSrc').innerHTML = srcPane();
-
-// tabs
-document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
-  document.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-selected', x === t));
-  document.getElementById('paneFid').hidden = t.dataset.t !== 'fid';
-  document.getElementById('paneSrc').hidden = t.dataset.t !== 'src';
+document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-selected', x === b));
+  document.getElementById('paneFid').hidden = b.dataset.t !== 'fid';
+  document.getElementById('paneSrc').hidden = b.dataset.t !== 'src';
 }));
-document.getElementById('chip').addEventListener('click', () => document.querySelector('.tab[data-t="fid"]').click());
-// strip cell → its sentence (opening the full list when needed)
-document.addEventListener('click', e => {
-  const c = e.target.closest('#paneFid .cell[data-id]'); if (!c) return;
-  const el = document.getElementById('c-' + c.dataset.id); if (!el) return;
-  const det = el.closest('details'); if (det) det.open = true;
-  document.querySelectorAll('.flag.hl').forEach(x => x.classList.remove('hl'));
-  el.classList.add('hl'); el.scrollIntoView({behavior: 'smooth', block: 'center'});
-});
-// theme
+document.getElementById('chip').addEventListener('click', () => document.querySelector('.seg button[data-t="fid"]').click());
 document.getElementById('themeBtn').addEventListener('click', () => {
   const r = document.documentElement, dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
   r.dataset.theme = dark ? 'light' : 'dark';
 });
 
-// hypothetical states
-const mk = (m, a, r, n, x) => {
+// the same word on other (hypothetical) pages, computed by the same rule
+const mk = (m, a, r) => {
   const ass = m + a + r, sc = ass ? Math.floor((m*100 + a*50)/ass + .5) : null;
-  const lvl = ass < 3 ? 'INSUFFICIENT_CLAIMS' : r ? (sc >= 60 ? 'MEDIUM' : 'LOW') : sc >= 85 ? 'HIGH' : sc >= 60 ? 'MEDIUM' : 'LOW';
-  return {counts:{matches:m, altered:a, reversed:r, not_in_source:n, not_a_claim:x, author_view:0}, assessable:ass, fidelity_score:sc, level:lvl};
+  const lvl = ass < 3 ? 'INSUFFICIENT_CLAIMS' : r ? (sc < 60 ? 'LOW' : 'MEDIUM')
+            : (sc >= 85 || a === 1) ? 'HIGH' : sc >= 60 ? 'MEDIUM' : 'LOW';
+  return {counts:{matches:m, altered:a, reversed:r}, fidelity_score:sc, level:lvl};
 };
-const fake = (id, v, k, cq, sq) => ({id, verdict:v, change_kind:k, claim_quote:cq, source_quote:sq, source_ref:'S3'});
-D.sources.push({fake:true});
 const G = [
-  {label:'صفحه‌ی کوتاه، ۴ ادعا، یک جمله جلوتر', f: mk(3,1,0,1,3),
-   claims:[fake('u2','MATCHES'),fake('u3','MATCHES'),fake('u4','MATCHES'),
-     fake('u5','ALTERED','HEDGE_REMOVED','این روش باند را به حالت اولیه بازمی‌گرداند.','This protocol may partially restore bond strength.'),fake('u6','NOT_IN_SOURCE')]},
-  {label:'همه مطابق', f: mk(12,0,0,2,5), claims:[...Array(12)].map((_,i)=>fake('u'+(i+2),'MATCHES'))},
-  {label:'یک جمله برعکس شده', f: mk(17,2,1,1,6),
-   claims:[...Array(17)].map((_,i)=>fake('u'+(i+2),'MATCHES')).concat([
-     fake('u20','ALTERED','HEDGE_REMOVED','این روش باند را به حالت اولیه بازمی‌گرداند.','This protocol may partially restore bond strength.'),
-     fake('u21','ALTERED','POPULATION_OR_CONDITION_CHANGED','در همه‌ی ادهزیوها همین نتیجه دیده می‌شود.','Only the universal adhesive showed recovery.'),
-     fake('u22','REVERSED',null,'کلرهگزیدین قبل از باندینگ استحکام باند را کم نمی‌کند.','Chlorhexidine pretreatment significantly reduced bond strength.'),
-     fake('u23','NOT_IN_SOURCE')])},
-  {label:'فقط چکیده در دست بود', prov:true, f: mk(9,1,0,0,4),
-   claims:[...Array(9)].map((_,i)=>fake('u'+(i+2),'MATCHES')).concat([fake('u11','ALTERED','MAGNITUDE_CHANGED','افت باند حدود نصف است.','Bond strength decreased by approximately 30%.')])},
-  {label:'متن به مقاله تکیه نمی‌کند', f: mk(1,1,0,6,4), claims:[]},
+  ['همین صفحه: ۵۲ ادعا، ۲ جمله کمی جلوتر', mk(50,2,0)],
+  ['صفحه‌ی کوتاه: ۴ ادعا، ۱ جمله کمی جلوتر', mk(3,1,0)],
+  ['صفحه‌ی خیلی کوتاه: ۳ ادعا، ۱ جمله کمی جلوتر', mk(2,1,0)],
+  ['۱۲ ادعا، همه مطابق', mk(12,0,0)],
+  ['۲۰ ادعا، ۱ جمله برعکس', mk(19,0,1)],
+  ['۴ ادعا، ۲ جمله کمی جلوتر', mk(2,2,0)],
+  ['متن فقط به ۲ جمله از مقاله تکیه دارد', mk(1,1,0)],
 ];
-document.getElementById('gal').innerHTML = G.map(g => {
-  const f = g.f;
-  if (f.level === 'INSUFFICIENT_CLAIMS') return `<section class="card"><div class="gl">${g.label}</div>
-    <div class="fid-head"><div><div class="fid-word w-none">${fidWord(f).w}</div><div class="fid-sub">مقاله فقط به ${fa(f.assessable)} جمله‌ی متن پرداخته</div>
-    <div class="fid-sub">بقیه‌ی متن حرفِ خود نویسنده است و مقاله درباره‌اش ساکت است؛ برای انطباق دست‌کم سه ادعا لازم است، پس نمره‌ای نمایش داده نمی‌شود.</div></div></div></section>`;
-  const body = fidPane(f, g.claims, {real:false, prov:g.prov});
-  return `<section class="card"><div class="gl">${g.label}</div>${body}</section>`;
-}).join('');
+document.getElementById('gal').innerHTML = G.map(([what, g]) => { const [ww, kk] = word(g);
+  return `<div class="gi"><span class="what">${what}</span><span class="res ${kk}"><span class="dot ${kk}"></span>${ww}</span></div>`; }).join('');
 </script>
 </body>
 </html>

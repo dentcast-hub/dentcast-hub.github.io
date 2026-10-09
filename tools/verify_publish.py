@@ -359,9 +359,10 @@ def des_fidelity_recompute(counts, version=None):
         return assessable, None, "INSUFFICIENT_CLAIMS"
     score = int((Decimal(m * 100 + a * 50) / Decimal(assessable)).quantize(
         Decimal("1"), rounding=ROUND_HALF_UP))
+    one_notch = des_ge(version, (2, 8)) and a == 1 and not r   # v2.8 F4: one ALTERED alone is HIGH
     if score < 60:
         level = "LOW"
-    elif score <= 84 or r:
+    elif r or (score <= 84 and not one_notch):
         level = "MEDIUM"
     else:
         level = "HIGH"
