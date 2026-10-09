@@ -18673,7 +18673,7 @@
     ]
   },
   "sharehub/share-23": {
-    "scored_at": "2026-09-24",
+    "scored_at": "2026-10-09",
     "sources": [
       {
         "des_version": "2.4",
@@ -18894,7 +18894,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "link label"
+          "note": "link label (language toggle)"
         },
         {
           "id": "u3",
@@ -18912,7 +18912,7 @@
           "change_kind": null,
           "source_quote": "Although rubber dam isolation is the gold standard for preventing contamination, it is not routinely used in clinical practice due to time-consuming application, technique sensitivity, operator training requirements and patient discomfort [5, 6].",
           "source_ref": "S1",
-          "note": "gold-standard half stated; the specific situations listed (proximal cavities, surgical sites, uncooperative patients) are not named by the source and are noted, not scored; other sources: S2: MATCHES"
+          "note": "the second half (situations where isolation is not possible) is addressed only generally (Discussion: subgingival areas, deep cervical margins); the gold-standard half matches; other sources: S2: MATCHES"
         },
         {
           "id": "u5",
@@ -18928,9 +18928,9 @@
           "claim_quote": "بزاق عمدتاً آب است و مقداری آنزیم و گلیکوپروتئین دارد که سطح عاج را می‌پوشاند و wetting ادهزیو را مختل می‌کند.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "It was reported that dental substrates, contaminated by organic film of saliva, generates a very low surface tension, prevents suitable wetting of adhesive,10 and develops shorter resin tags,11 through which a lack of good bonding was noticed.",
+          "source_quote": "This fluid is constituted for more than 99% of water, and hence causes an excess of moisture, which ultimately lowers the bond strength.8,9",
           "source_ref": "S2",
-          "note": "water content stated in «This fluid is constituted for more than 99% of water…»; enzymes and glycoproteins named in the Discussion"
+          "note": "wetting half matched by «It was reported that dental substrates, contaminated by organic film of saliva, … prevents suitable wetting of adhesive»"
         },
         {
           "id": "u7",
@@ -18939,7 +18939,7 @@
           "change_kind": null,
           "source_quote": "Plasma proteins adsorbed on the dentin surface can interfere with adhe- sive monomer infiltration into dentinal tubules, disrupt- ing hybrid layer formation and impairing adhesion [10].",
           "source_ref": "S1",
-          "note": "mechanism half (plasma proteins, tubule infiltration, hybrid layer; fewer and shorter resin tags) stated; the comparison with saliva («وضعیت بدتری») is not addressed by this source, which studies blood alone; other sources: S2: MATCHES"
+          "note": "F3: the comparison with saliva («وضعیت بدتری») is not addressed by this source (blood only), silent; the reason clause matches, and the resin-tag half matches «resin tags formed under contaminated conditions are fewer and shorter»; other sources: S2: MATCHES"
         },
         {
           "id": "u8",
@@ -18948,7 +18948,7 @@
           "change_kind": null,
           "source_quote": "Blood contamination affects more than saliva contaminatio n",
           "source_ref": "S2",
-          "note": "inference judged on its conclusion (blood more harmful than saliva); the Conclusion states it with a hedge («it seems that saliva contamination has less prejudice…»), the table cell states it plainly"
+          "note": "inference; conclusion compared. The Conclusion states the same ranking hedged («it seems that saliva contamination has less prejudice…»); the plain table cell governs (F2-ii)"
         },
         {
           "id": "u9",
@@ -18957,7 +18957,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "page's own scope"
+          "note": "page states its own scope"
         },
         {
           "id": "u10",
@@ -18973,7 +18973,7 @@
           "claim_quote": "پاسخ به آلودگی به دو چیز وابسته است: در کدام مرحله رخ داده و با چه سیستم ادهزیوی کار می‌کنید.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "The effectiveness of decontamination strategies varied according to adhesive type, contamination timing (before or after adhesive curing), and decontamination protocol.",
+          "source_quote": "Management should therefore be tailored to the adhesive system and contamination stage, and further research is needed to establish standardized clinical guidelines.",
           "source_ref": "S1"
         },
         {
@@ -18983,25 +18983,25 @@
           "change_kind": null,
           "source_quote": "Some studies reported that re-application of the adhesive following rinsing and drying improved bond strength compared with no decontamination [15, 24, 30], although complete recov- ery to uncontaminated control levels was not consistently observed.",
           "source_ref": "S1",
-          "note": "instruction judged on reported effect of rinsing/drying and redoing the step: favourable; other sources: S2: MATCHES"
+          "note": "instruction judged on reported effect (F2-iii way 2): rinsing, drying and re-application reported favourable; other sources: S2: MATCHES"
         },
         {
           "id": "u13",
           "claim_quote": "این قاعده تا قبل از کیور کردن ادهزیو در بیشتر سیستم‌ها جواب می‌دهد و باند را به‌طور قابل توجه، و اغلب تا نزدیک حالت بدون آلودگی، بازمی‌گرداند.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "Contamination before adhesive polymerization was more amenable to reversal.",
+          "source_quote": "In contamination before adhesive curing (rinsing, absorbent paper drying, re-bonding) and (sodium hypochlorite (10%), drying, re-bonding) were successful.",
           "source_ref": "S1",
-          "note": "source reports the before/after-curing difference; the quantifiers «بیشتر سیستم‌ها» and «اغلب» are not stated as proportions by the source and are noted; other sources: S2: ALTERED"
+          "note": "F3: «در بیشتر سیستم‌ها» is a quantifier the source gives no figure for (silent); the pre-curing recovery half matches (also Kucukyilmaz: restored close to control values); other sources: S2: MATCHES"
         },
         {
           "id": "u14",
           "claim_quote": "بعد از کیور کردن ادهزیو، به‌ویژه اگر آلودگی خون باشد، این قاعده قابل اتکا نیست و مطمئن‌ترین راه برداشتن لایه‌ی ادهزیو و شروع مجدد است.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "In contrast, contamination after adhesive curing is more difficult to reverse, and simple rinsing or drying alone is generally insufficient.",
+          "source_quote": "However, no strategy worked in contamination after adhesive curing.",
           "source_ref": "S1",
-          "note": "ranking half («مطمئن‌ترین راه برداشتن لایه») is not ranked by the source (silent, noted); removal restoring bond is reported for Liu; other sources: S2: ALTERED"
+          "note": "F3: ranking half «مطمئن‌ترین راه برداشتن لایه» is not ranked by any source sentence (silent); Shaikh reports improvement post-cure in one universal adhesive, noted; other sources: S2: MATCHES"
         },
         {
           "id": "u15",
@@ -19010,7 +19010,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "signpost: points at a later section of the page"
+          "note": "signpost: announces a later section"
         },
         {
           "id": "u16",
@@ -19028,7 +19028,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "signpost: «در ادامه», announces the page structure"
+          "note": "signpost: «در ادامه», announces the structure that follows"
         },
         {
           "id": "u18",
@@ -19044,9 +19044,9 @@
           "claim_quote": "ساده‌ترین حالت است و راه‌حل در همه‌ی سیستم‌ها یکی است: با اسپری آب بشویید (در حد ده ثانیه جریان آب کافی است)، خشک کنید و روند عادی را ادامه دهید.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "Decontamination procedures including water-spray and reapplication of the bonding system could revert the impairment produced by the saliva or blood contamination.",
+          "source_quote": "Accordingly, rinsing should be a must when dentin was contaminated with saliva.",
           "source_ref": "S2",
-          "note": "instruction compared on its reported effect (F2-iii way 2); «ده ثانیه» and «ساده‌ترین حالت» are not addressed (silent); other sources: S1: ALTERED"
+          "note": "the source's own advice governs (F2-iii); the ten-second figure is not addressed; other sources: S1: ALTERED"
         },
         {
           "id": "u20",
@@ -19055,7 +19055,7 @@
           "change_kind": null,
           "source_quote": "Re-etching with phosphoric acid was able to restore the bond strength of bloodand salivacontaminated dentin.",
           "source_ref": "S2",
-          "note": "«نیاز به کار اضافه‌ای نیست» not addressed (silent)"
+          "note": "no gathered sentence names etching before contamination; the stage-less re-etching sentences are the comparison. «no extra work» not addressed"
         },
         {
           "id": "u21",
@@ -19064,7 +19064,7 @@
           "change_kind": null,
           "source_quote": "In contamination before primer application, blot dry or rinse then dry restored the bond strength.",
           "source_ref": "S1",
-          "note": "narrowing of a self-etch finding to two-step self-etch; other sources: S2: MATCHES"
+          "note": "other sources: S2: MATCHES"
         },
         {
           "id": "u22",
@@ -19073,16 +19073,16 @@
           "change_kind": null,
           "source_quote": "The use of a water stream for 10 s was enough to remove blood contamination on enamel and dentin, before the application of a one-step adhesive system.",
           "source_ref": "S1",
-          "note": "other sources: S2: MATCHES"
+          "note": "Koppolu (self-etch): water rinsing and air-drying not able to improve pre-adhesive contamination, noted (F2-v step 3); other sources: S2: MATCHES"
         },
         {
           "id": "u23",
           "claim_quote": "یونیورسال: شستشو و خشک کردن کافی است.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "In Universal adhesive in self-etch mode, air-drying improved the bond strength significantly.",
-          "source_ref": "S1",
-          "note": "claim names no stage; Liu reports spray rinsing ineffective on cured universal adhesive (different stage), Shaikh reports no full restoration; other sources: S2: MATCHES"
+          "source_quote": "Saliva decontamination with distilled water followed by reapplication of the bonding agent adhesive produced similar bond strength values when compared to noncontaminated group.",
+          "source_ref": "S2",
+          "note": "Kucukyilmaz (universal adhesives, blood) reports decontamination not preventing the decrease"
         },
         {
           "id": "u24",
@@ -19091,7 +19091,7 @@
           "change_kind": null,
           "source_quote": "Combination of sodium hypochlorite (10%) and Proanthocyanidin improved the shear bond strength of com- posite to dentin significantly in contamination before adhesive application.",
           "source_ref": "S1",
-          "note": "«گزینه‌ی اضافه، نه جایگزین شستشو» not addressed; severity is a narrowing; other sources: S2: MATCHES"
+          "note": "«آلودگی شدید» and «گزینه‌ی اضافه، نه جایگزین» are not addressed (silent); the positive report matches; other sources: S2: MATCHES"
         },
         {
           "id": "u25",
@@ -19116,18 +19116,18 @@
           "claim_quote": "عاج اچ‌شده و بدون پوشش نسبت به آلودگی بسیار حساس است.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "A previous study reported that contamination after etching had an adverse effect on adhesion, nonetheless, blotting and applying a primer agent might regain the bond strength.",
+          "source_quote": "A previous study reported that contamination after etching had an adverse effect on adhesion, nonetheless, blotting and applying a primer agent might regain the bond strength.25",
           "source_ref": "S2",
-          "note": "«بسیار» against the Discussion's report of a 40% loss after saliva contamination following etching"
+          "note": "Taskonak and Xie report no adverse effect of saliva"
         },
         {
           "id": "u28",
           "claim_quote": "برای بزاق، شستشو و خشک کردن مجدد معمولاً کافی است.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "This could be in agreement with previous reports showing no difference between control (noncontaminated group) and group contaminated with saliva but rinsed after.",
+          "source_quote": "Saliva decontamination with distilled water followed by reapplication of the bonding agent adhesive produced similar bond strength values when compared to noncontaminated group.",
           "source_ref": "S2",
-          "note": "the hedge «could» qualifies the agreement, not the reported finding; «All in all … could be sufficient for decreasing the adverse effect of saliva» states the same hedged"
+          "note": "no gathered rinse sentence names the after-etching stage (blotting/priming and re-etching are different actions); the stage-less plain sentences are the comparison"
         },
         {
           "id": "u29",
@@ -19136,7 +19136,7 @@
           "change_kind": null,
           "source_quote": "However, in contamination before adhesive application [30] (rinsing, re-etching, rinsing) improved the bond strength to some extent.",
           "source_ref": "S1",
-          "note": "instruction (re-etch) judged on reported effect: favourable (also Juneja); outcome half «شستشو با آب جوابگو نیست» stated by Koppolu cell «(Water rinsing, air-drying) was not able to improve the bond strength»; other sources: S2: MATCHES"
+          "note": "F3: the instruction (re-etch, rinse) matches by reported effect (also Juneja: re-etching significantly improved); the outcome half «شستشو با آب جوابگو نیست» for blood after etching is not addressed for this stage (silent); the saliva contrast is not addressed; other sources: S2: MATCHES"
         },
         {
           "id": "u30",
@@ -19145,7 +19145,7 @@
           "change_kind": null,
           "source_quote": "Some approaches, such as adhesive reapplication and phosphoric acid re-etching in etch-and-rinse systems, as well as sodium hypochlorite combined with antioxidants, show the most promising results.",
           "source_ref": "S1",
-          "note": "ranking half matches the abstract ranking («most promising»); near-control half also reported by Elkassas pre-curing (28.9 vs 32.3 MPa); other sources: S2: MATCHES"
+          "note": "ranking of phosphoric acid re-etching in etch-and-rinse matches «most promising results»; the near-control half matches Elkassas (28.9 vs 32.3 MPa pre-curing); other sources: S2: MATCHES"
         },
         {
           "id": "u31",
@@ -19170,18 +19170,18 @@
           "claim_quote": "دو کار را در هیچ سیستمی نباید بکنید: با پوار خشک کنید و کیور کنید، یا روی همان لایه‌ی آلوده یک لایه ادهزیو دیگر بزنید.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "In Shaikh et al., water spraying and air-drying alone after contamination of uncured adhesive resulted in complete bond failure (0 MPa), whereas subsequent adhesive reap- plication increased bond strength to 20.0 ± 5.6 MPa [24].",
-          "source_ref": "S1",
-          "note": "single predicate over two prohibited actions; drying alone over contaminated uncured adhesive gave complete bond failure. Kucukyilmaz cell «(Drying and reapplying the adhesive) improved the bond strength statistically when contamination occurred before curing» disagrees on the second action; other sources: S2: MATCHES"
+          "source_quote": "Drying without rinsing after saliva contamination might not be capable of removing some organic elements and salivary glycoproteins, as this prevents the resin composite from the interaction with the oxygen inhibition layer.37",
+          "source_ref": "S2",
+          "note": "second action (another layer over the contaminated one) supported by Chang's failed decontamination; Neelagiri reports air-drying and adhesive reapplication recovering the bond; other sources: S1: REVERSED"
         },
         {
           "id": "u34",
           "claim_quote": "اصل مشترک این است که لایه‌ی آلوده باید با آب شسته شود و بعد مرحله تکرار شود.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "Some studies reported that re-application of the adhesive following rinsing and drying improved bond strength compared with no decontamination [15, 24, 30], although complete recov- ery to uncontaminated control levels was not consistently observed.",
+          "source_quote": "In contamination before adhesive curing (rinsing, absorbent paper drying, re-bonding) and (sodium hypochlorite (10%), drying, re-bonding) were successful.",
           "source_ref": "S1",
-          "note": "instruction judged on reported effect: favourable; other sources: S2: MATCHES"
+          "note": "Yoo reports the same protocol reducing performance in Xeno III and Adper Prompt L-Pop, noted (F2-v step 3); other sources: S2: MATCHES"
         },
         {
           "id": "u35",
@@ -19190,7 +19190,7 @@
           "change_kind": null,
           "source_quote": "In contamination before adhesive curing (rinsing, absorbent paper drying, re-bonding) and (sodium hypochlorite (10%), drying, re-bonding) were successful.",
           "source_ref": "S1",
-          "note": "Lund, Elkassas and Faisal report no effective strategy in their etch-and-rinse systems; one faithful sentence suffices; other sources: S2: MATCHES"
+          "note": "Elkassas, Lund and Faisal report no effective strategy in their etch-and-rinse adhesives, noted (F2-v step 3); other sources: S2: MATCHES"
         },
         {
           "id": "u36",
@@ -19208,14 +19208,14 @@
           "change_kind": null,
           "source_quote": "(Water rinsing, air-drying, self-etch primer, adhesive, curing) im- proved the bond strength in Tyrian SPE.",
           "source_ref": "S1",
-          "note": "other sources: S2: MATCHES"
+          "note": "AdheSE: no strategy improved, noted; other sources: S2: MATCHES"
         },
         {
           "id": "u38",
           "claim_quote": "نتیجه به محصول بستگی دارد؛ در برخی سیستم‌ها این کار باند را بازمی‌گرداند و در برخی دیگر هیچ روشی مؤثر نبوده است.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "These findings indicate that mechanical cleaning efficacy is strongly material-dependent and may be influ- enced by solvent system, adhesive acidity, viscosity, and hydrophilicity [10].",
+          "source_quote": "No strategy could improve the bond strength in AdheSE.",
           "source_ref": "S1",
           "note": "other sources: S2: MATCHES"
         },
@@ -19226,16 +19226,16 @@
           "change_kind": null,
           "source_quote": "Yoo and Pereira reported that water rinsing, air-drying, and adhesive reapplication improved bond strength in One-Up Bond F.",
           "source_ref": "S1",
-          "note": "«بیشترین وابستگی به محصول» ranking not addressed; next sentence: the same protocol reduced performance in Xeno III and Adper Prompt L-Pop; other sources: S2: MATCHES"
+          "note": "F3: the ranking «بیشترین وابستگی به محصول» is not ranked by the source (silent); the two-product contrast matches (same protocol reduced performance in Xeno III and Adper Prompt L-Pop)"
         },
         {
           "id": "u40",
           "claim_quote": "مطمئن‌ترین کار این است که سطح را کامل بشویید و خشک کنید و باندینگ را از اول انجام دهید، نه اینکه صرفاً یک لایه اضافه کنید.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "Decontamination procedures including water-spray and reapplication of the bonding system could revert the impairment produced by the saliva or blood contamination.",
+          "source_quote": "Reapplication of the adhesive system was effective to restore the bond strength.",
           "source_ref": "S2",
-          "note": "the action matches by its reported effect; the ranking «مطمئن‌ترین … نه اینکه صرفاً یک لایه اضافه کنید» is not stated by a ranking sentence (silent, F3); other sources: S1: ALTERED"
+          "note": "the superlative «مطمئن‌ترین» is not ranked by the source (F3); other sources: S1: ALTERED"
         },
         {
           "id": "u41",
@@ -19244,7 +19244,7 @@
           "change_kind": null,
           "source_quote": "However, rinsing, air-drying and repeating the bonding procedure could improve the bond strength significantly in both pre and post curing contamination.",
           "source_ref": "S1",
-          "note": "instruction judged on reported effect (could improve significantly): favourable, no hedge comparison under way 2; other sources: S2: MATCHES"
+          "note": "instruction judged on reported effect (F2-iii way 2); other sources: S2: MATCHES"
         },
         {
           "id": "u42",
@@ -19253,7 +19253,7 @@
           "change_kind": null,
           "source_quote": "In Kucukyilmaz et al., contamina- tion of uncured universal adhesives followed by adhesive reapplication restored bond strength close to control values [27].",
           "source_ref": "S1",
-          "note": "«ثابت‌ترین نتیجه» ranking of universals against other systems not addressed; other sources: S2: MATCHES"
+          "note": "F3: «ثابت‌ترین نتیجه» ranks universal adhesives against the other systems, which no source sentence ranks (silent); the near-control half matches; other sources: S2: MATCHES"
         },
         {
           "id": "u43",
@@ -19278,35 +19278,33 @@
           "verdict": "MATCHES",
           "change_kind": null,
           "source_quote": "In contrast, contamination occurring after adhesive curing was reported to affect the adhesive surface and its inter- action with subsequent resin layers [33].",
-          "source_ref": "S1",
-          "note": "saliva not studied by this source; noted"
+          "source_ref": "S1"
         },
         {
           "id": "u46",
-          "claim_quote": "این چالش‌برانگیزترین حالت است و بیشترین افت باند در همین مرحله دیده می‌شود.",
-          "verdict": "ALTERED",
-          "change_kind": "POPULATION_OR_CONDITION_CHANGED",
+          "claim_quote": "این چالش‌برانگیزترین حالت است و در آلودگی با خون بیشترین افت باند در همین مرحله دیده می‌شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
           "source_quote": "Blood contamination consistently reduces dentin bond strength across adhesive systems with the most severe effects occurring when contamination happens after polymerization.",
-          "source_ref": "S1",
-          "note": "pointing word «همین مرحله» reads through to post-curing; the source ranks this stage for blood contamination alone, the claim names no contaminant"
+          "source_ref": "S1"
         },
         {
           "id": "u47",
           "claim_quote": "اگر آلودگی بزاق است، در همه‌ی سیستم‌ها بشویید، خشک کنید و یک لایه ادهزیو تازه بزنید و کیور کنید؛ این معمولاً کافی است.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "Also, when salivary contamination occurred after polymerizing the adhesive, water decontamination should be accomplished followed by an adhesive reapplication.",
+          "source_quote": "Also, when salivary contamination occurred after polymerizing the adhesive, water decontamination should be accomplished followed by an adhesive reapplication.42",
           "source_ref": "S2",
-          "note": "the source's own advice governs the instruction (F2-iii); «معمولاً کافی است» matches the plain report in Chasqueira/Santschi cells"
+          "note": "the source's own advice for saliva after polymerization governs; the outcome half matches the plain rinse-and-reapply sentences (Sattabanasuk names before or after polymerization together and hedges)"
         },
         {
           "id": "u48",
-          "claim_quote": "اگر آلودگی خون است، شستشو و ادهزیو مجدد به تنهایی جواب نمی‌دهد، چون پروتئین‌های خون به سطح رزین چسبیده‌اند و با آب نمی‌روند.",
-          "verdict": "ALTERED",
-          "change_kind": "HEDGE_REMOVED",
-          "source_quote": "Residual blood components may remain even after water rinsing, adversely affecting adhesive bonding by interfer- ing with proper resin penetration and polymerization [11].",
+          "claim_quote": "اگر آلودگی خون است، شستشو و ادهزیو مجدد به تنهایی جواب نمی‌دهد، احتمالاً چون پروتئین‌های خون به سطح رزین می‌چسبند و ممکن است با آب کامل پاک نشوند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "However, no strategy worked in contamination after adhesive curing.",
           "source_ref": "S1",
-          "note": "outcome half matches «simple rinsing or drying alone is generally insufficient» after curing (also Damé, Mendonça, Kucukyilmaz); reason half (blood proteins not removed by water) is stated by the source only with «may»; other sources: S2: ALTERED"
+          "note": "also Kucukyilmaz, Mendonça and Liu (spray rinsing ineffective on cured universal); Shaikh reports improvement post-cure with rinsing and rebonding, noted; the hedged mechanism half is consistent with «Residual blood components may remain even after water rinsing»; other sources: S2: MATCHES"
         },
         {
           "id": "u49",
@@ -19315,7 +19313,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "signpost ending in «:», introduces what follows"
+          "note": "signpost ending in «:»"
         },
         {
           "id": "u50",
@@ -19324,7 +19322,7 @@
           "change_kind": null,
           "source_quote": "Elkassas and Arafa reported that post-cure contamination reduced bond strength to 4.2 ± 1.2 MPa, re-etching followed by adhesive reapplication increased values further to 16.7 ± 3.2 MPa; However, the same protocol in pre curing Page Katebi et al. BMC Oral Health (2026) 26:1540 7 of 9 contamination had increased the bond strength to 28.9 ± 2.2 more close to the non-contaminated control (32.3 ± 1.6 MPa) [30].",
           "source_ref": "S1",
-          "note": "Damé reports no strategy worked after curing in etch-and-rinse; one faithful sentence suffices; other sources: S2: AUTHOR_VIEW"
+          "note": "other sources: S2: MATCHES"
         },
         {
           "id": "u51",
@@ -19333,7 +19331,7 @@
           "change_kind": null,
           "source_quote": "Recent evidence from Liu et al. demonstrated that spray rinsing alone was ineffective after blood contami- nation of polymerized Single Bond Universal, whereas phosphoric acid, sodium hypochlorite, antioxidant com- binations, and diamond bur repreparation restored bond strength to approximately control values [31].",
           "source_ref": "S1",
-          "note": "high-stress condition is a narrowing; removal by diamond bur restored bond"
+          "note": "instruction judged on reported effect (diamond bur repreparation restored bond strength); the «ناحیه‌ی پرتنش» condition is not addressed (silent)"
         },
         {
           "id": "u52",
@@ -19342,7 +19340,7 @@
           "change_kind": null,
           "source_quote": "When con- tamination occurred after the curing of adhesive, no strategy could improve the bond strength.",
           "source_ref": "S1",
-          "note": "source labels these studies «Self-etch»; split into two-step and one-step is a narrowing. Also Yoo, Koppolu; other sources: S2: ALTERED"
+          "note": "Chang reports improvements in Clearfil SE Bond and Tyrian SPE without naming the stage, noted; other sources: S2: ALTERED"
         },
         {
           "id": "u53",
@@ -19350,7 +19348,8 @@
           "verdict": "MATCHES",
           "change_kind": null,
           "source_quote": "Recent evidence from Liu et al. demonstrated that spray rinsing alone was ineffective after blood contami- nation of polymerized Single Bond Universal, whereas phosphoric acid, sodium hypochlorite, antioxidant com- binations, and diamond bur repreparation restored bond strength to approximately control values [31].",
-          "source_ref": "S1"
+          "source_ref": "S1",
+          "note": "instruction judged on reported effect (F2-iii way 2)"
         },
         {
           "id": "u54",
@@ -19359,16 +19358,16 @@
           "change_kind": null,
           "source_quote": "Chlorhexidine 2% was able to re-establish the bond strength in contamination after adhesive curing.",
           "source_ref": "S1",
-          "note": "«تنها گروهی» exclusivity not stated as a ranking by the source; Liu also reports restoration on cured universal adhesive"
+          "note": "F3: «تنها گروهی» is an exclusivity the source does not state (silent); the near-control conservative result for universal adhesives matches; other sources: S2: MATCHES"
         },
         {
           "id": "u55",
           "claim_quote": "اسید فسفریک یا سدیم هیپوکلریت روی سطح کیورشده و سپس شستشو، خشک کردن و ادهزیو تازه، و در یک گزارش شستشو با کلرهگزیدین دو درصد، باند را بازگردانده‌اند.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "Chlorhexidine 2% was able to re-establish the bond strength in contamination after adhesive curing.",
+          "source_quote": "Decontamination with spray rinsing is ineffective for blood contamination on the cured universal adhesive, how- ever, phosphoric acid or sodium hypochlorite alone is beneficial for restoring the bond strength.",
           "source_ref": "S1",
-          "note": "Liu cell also states phosphoric acid or sodium hypochlorite alone is beneficial for restoring the bond strength on cured universal adhesive; other sources: S2: MATCHES"
+          "note": "the chlorhexidine report matches Gaviolli («Chlorhexidine 2% was able to re-establish the bond strength»); other sources: S2: MATCHES"
         },
         {
           "id": "u56",
@@ -19404,7 +19403,7 @@
           "change_kind": null,
           "source_quote": "Contamination of the bonding substrate with blood, saliva, gingival fluid, hemostatic agents, or handpiece oil can significantly compromise adhesion and reduce bond strength [3].",
           "source_ref": "S1",
-          "note": "deposition mechanism and «به‌ویژه self-etch و یونیورسال» not addressed (hemostatic agents excluded from included studies); reduced bond strength stated in the introduction; other sources: S2: MATCHES"
+          "note": "F3: deposition on dentin and «به‌ویژه در سیستم‌های self-etch و یونیورسال» are not addressed (silent); the bond-strength reduction by hemostatic agents matches; other sources: S2: MATCHES"
         },
         {
           "id": "u60",
@@ -19412,17 +19411,16 @@
           "verdict": "MATCHES",
           "change_kind": null,
           "source_quote": "The use of hemostatic agents as a method of blood decontamination is not recommended.",
-          "source_ref": "S2",
-          "note": "gingival use stated in «Mostly, these agents were applied around the gingiva…»"
+          "source_ref": "S2"
         },
         {
           "id": "u61",
           "claim_quote": "اگر هموستاتیک ناخواسته به عاج رسید، شستشو با آب کافی نیست و به یک عامل شیمیایی نیاز دارید:",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "Rinsing with water was not effective to restore the bond strength",
+          "source_quote": "EDTA and phosphoric acid removed the contaminant agent from dentin.",
           "source_ref": "S2",
-          "note": "Kuphasuk and Ulusoy cells disagree; the need for a chemical agent is supported by Faisal (NaOCl) and Ajami (EDTA) cells"
+          "note": "rinse-insufficient half stated by Saad («Rinsing with water was not effective…»); Ulusoy reports no impairment"
         },
         {
           "id": "u62",
@@ -19430,8 +19428,7 @@
           "verdict": "MATCHES",
           "change_kind": null,
           "source_quote": "EDTA and phosphoric acid removed the contaminant agent from dentin.",
-          "source_ref": "S2",
-          "note": "«کار اضافه‌ای لازم نیست» not addressed (silent)"
+          "source_ref": "S2"
         },
         {
           "id": "u63",
@@ -19440,14 +19437,14 @@
           "change_kind": null,
           "source_quote": "EDTA and phosphoric acid removed the contaminant agent from dentin.",
           "source_ref": "S2",
-          "note": "the experts' EDTA/chlorhexidine suggestion is attributed to others and governs nothing; effect reported favourably (Ajami, Pucci). Reason clause («چون مرحله‌ی اسید ندارند») not addressed (silent)"
+          "note": "the EDTA/chlorhexidine advice is attributed to «certain experts» and governs nothing (way 2); the reason clause (no acid step) is not addressed"
         },
         {
           "id": "u64",
           "claim_quote": "فریک سولفات یک مشکل اضافه هم دارد: احتمال تغییر رنگ عاج در ترمیم‌های زیبایی.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "Additionally, the possible discoloration combined with the reduction in bond strength of ferric sulfate agents should alert the clinicians in using these agents in an esthetic restoration.",
+          "source_quote": "Additionally, the possible discoloration combined with the reduction in bond strength of ferric sulfate agents should alert the clinicians in using these agents in an esthetic restoration.53",
           "source_ref": "S2"
         },
         {
@@ -19466,7 +19463,7 @@
           "change_kind": null,
           "source_quote": "Some studies reported that re-application of the adhesive following rinsing and drying improved bond strength compared with no decontamination [15, 24, 30], although complete recov- ery to uncontaminated control levels was not consistently observed.",
           "source_ref": "S1",
-          "note": "instruction judged on reported effect: favourable; other sources: S2: MATCHES"
+          "note": "instruction judged on reported effect (F2-iii way 2); other sources: S2: MATCHES"
         },
         {
           "id": "u67",
@@ -19475,16 +19472,16 @@
           "change_kind": null,
           "source_quote": "Some approaches, such as adhesive reapplication and phosphoric acid re-etching in etch-and-rinse systems, as well as sodium hypochlorite combined with antioxidants, show the most promising results.",
           "source_ref": "S1",
-          "note": "shares «etch-and-rinse»; first half also stated by «Contamination before adhesive polymerization was more amenable to reversal.»; other sources: S2: ALTERED"
+          "note": "F3: the pre-curing recovery half matches as in u13 (Damé); the phosphoric-acid ranking in etch-and-rinse matches «most promising results»; other sources: S2: MATCHES"
         },
         {
           "id": "u68",
           "claim_quote": "بعد از کیور کردن، اگر بزاق است همان قاعده کافی است؛ اگر خون است، در یونیورسال‌ها اسید فسفریک یا هیپوکلریت روی سطح کیورشده شانس بازیابی دارد، و در بقیه‌ی سیستم‌ها راه مطمئن برداشتن لایه و شروع مجدد است.",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "Also, when salivary contamination occurred after polymerizing the adhesive, water decontamination should be accomplished followed by an adhesive reapplication.",
+          "source_quote": "Also, when salivary contamination occurred after polymerizing the adhesive, water decontamination should be accomplished followed by an adhesive reapplication.42",
           "source_ref": "S2",
-          "note": "blood/universal half matches as a hedged generalization of Haralur and Juneja cells; «در بقیه‌ی سیستم‌ها راه مطمئن برداشتن لایه» not addressed (silent); other sources: S1: ALTERED"
+          "note": "blood/universal half matched by Juneja; «remove the layer in the other systems» not addressed (bur-removal sentence is about another stage); other sources: S1: ALTERED"
         },
         {
           "id": "u69",
@@ -19493,7 +19490,7 @@
           "change_kind": null,
           "source_quote": "The use of hemostatic agents as a method of blood decontamination is not recommended.",
           "source_ref": "S2",
-          "note": "cleaning with acid or chlorhexidine matches by reported effect (Ajami, Pucci cells)"
+          "note": "second instruction judged by the reported effects (Ajami, Pucci); the EDTA/chlorhexidine advice is attributed to others"
         },
         {
           "id": "u70",
@@ -19502,12 +19499,12 @@
           "change_kind": null,
           "source_quote": "Although various decontamination methods can partially improve bonding, full recovery to uncontaminated levels is not reliably achieved.",
           "source_ref": "S1",
-          "note": "prevention half also stated in Clinical implications; other sources: S2: MATCHES"
+          "note": "prevention half matches «underscores the importance of preventing contamination whenever possible»; other sources: S2: MATCHES"
         }
       ],
       "counts": {
-        "matches": 50,
-        "altered": 2,
+        "matches": 52,
+        "altered": 0,
         "reversed": 0,
         "not_in_source": 4,
         "not_assessable": 0,
@@ -19515,12 +19512,12 @@
         "not_a_claim": 14
       },
       "assessable": 52,
-      "fidelity_score": 98,
+      "fidelity_score": 100,
       "level": "HIGH",
       "provisional": false,
       "source_conclusion": "[S1] Management should therefore be tailored to the adhesive system and contamination stage, and further research is needed to establish standardized clinical guidelines.\n[S2] Considering the current available evidence, the utmost significant feature for warranting a good resin—dentin bonding is to evade the blood or saliva contamination of dental surface using a proper isolation method.",
-      "fact_fa": "از ۵۲ ادعایی که منابع به آن پرداخته‌اند، ۵۰ مورد مطابق است، ۲ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۴ جمله‌ی دیگر در منابع نیامده است.",
-      "interpretation_fa": "موارد تغییریافته یا برعکس: «این چالش‌برانگیزترین حالت است و بیشترین افت باند د…» (دامنه گسترده‌تر از منبع)؛ «اگر آلودگی خون است، شستشو و ادهزیو مجدد به تنهایی …» (قاطع‌تر از منبع)."
+      "fact_fa": "از ۵۲ ادعایی که منابع به آن پرداخته‌اند، ۵۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۴ جمله‌ی دیگر در منابع نیامده است.",
+      "interpretation_fa": "هر ادعای قابل‌بررسی با دست‌کم یکی از منابع مطابق است."
     }
   },
   "taraz/taraz1-2": {

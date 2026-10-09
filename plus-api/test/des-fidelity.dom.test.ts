@@ -11,7 +11,24 @@ import { fileURLToPath } from 'node:url';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const ALL = JSON.parse(readFileSync(path.join(repo, 'plus/des-scores.json'), 'utf8'));
-const SHARE23 = ALL['sharehub/share-23'];
+const REAL = ALL['sharehub/share-23'];
+// A fixture with two flagged sentences, built from the real record so the shape
+// stays the stored one: share-23 itself was fixed to «کاملاً مطابق» (step 4.13
+// Part 3b, 1405/07/17), and the differing-sentence display still needs a case.
+const SHARE23 = (() => {
+  const r = JSON.parse(JSON.stringify(REAL));
+  const f = r.fidelity;
+  for (const id of ['u46', 'u48']) {
+    const c = f.claims.find((x: { id: string }) => x.id === id);
+    c.verdict = 'ALTERED';
+    c.change_kind = id === 'u46' ? 'POPULATION_OR_CONDITION_CHANGED' : 'HEDGE_REMOVED';
+    c.source_quote = c.source_quote || 'Residual blood components may remain even after water rinsing.';
+    c.source_ref = c.source_ref || 'S1';
+  }
+  f.counts.matches -= 2; f.counts.altered += 2;
+  f.fidelity_score = 98; f.level = 'HIGH';
+  return r;
+})();
 
 let scores: Record<string, unknown> = {};
 vi.stubGlobal('fetch', vi.fn(async () => ({ ok: true, json: async () => scores })));
@@ -65,6 +82,14 @@ describe('DES fidelity display (spec v2.8)', () => {
     expect(rows[0]).toContain('۴');
     // the strength pane holds the two source blocks, unchanged
     expect(srcPane.querySelectorAll('.dc-des-src')).toHaveLength(2);
+  });
+
+  it('the stored share-23 record, after its fixes, reads «کاملاً مطابق» with nothing flagged', async () => {
+    const { row, card } = await mount(REAL);
+    expect(text(row.querySelector('.dc-act-fid'))).toContain('کاملاً مطابق');
+    expect(text(card!.querySelector('.dc-fid-word'))).toBe('کاملاً مطابق');
+    expect(card!.querySelectorAll('.dc-fid-diff')).toHaveLength(0);
+    expect(card!.querySelector('.dc-fid-diff-h')).toBeNull();
   });
 
   it('each chip opens its own tab', async () => {
