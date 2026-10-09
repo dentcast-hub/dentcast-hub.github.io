@@ -1841,6 +1841,9 @@ word, never a number) beside the band chip and a «تطابق با منابع» 
 card, read from the record this step writes — so a 2.8 fidelity object goes
 live the moment it is stored, and an older stamp is ignored (approved mockup
 `.dentcast/des-fidelity-v28-mockup.html`; display rules in CLAUDE.md § DES).
+Several per-source fidelity objects are drawn as **one** box — one tally, one
+word, each differing sentence naming its paper, a collapsed «به تفکیک منبع»
+row — by `des.js` alone; this step still stores one object per source.
 A publish therefore needs nothing on the page for it: the record is the whole
 job. Do **not** compensate by inlining markup or CSS into the published page.
 
