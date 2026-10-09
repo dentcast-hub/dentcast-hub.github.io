@@ -896,6 +896,17 @@ Comparability across versions:
   - **F1/F2** — a reason clause («چون», «زیرا») is always a half; a «پس»
     mid-sentence makes what follows it the conclusion; a unit is judged on
     its own words, a pointing word («همین مرحله») read through to its heading.
+  - **Precision, measured and NOT yet closed.** Three rounds, twelve
+    independent runs of `sharehub/share-23` (`POOLED`, two full texts, ~92k
+    characters, 70 units): no run reversed any blood or saliva claim the
+    full texts support; 49 of 70 units identical in all twelve; but scores
+    75–90 and the level split HIGH/MEDIUM, because the page sits on the 85
+    line and a run that misses a sentence in a 60-page review marks its claim
+    `NOT_IN_SOURCE`. The four abstract-based regression inputs (share-7,
+    dentai-21, T2, T3) were identical to their v2.6 records. So under v2.7 a
+    `POOLED` score over full texts is read to the claim verdicts that
+    recur, not to the level; a full-text pooled record is not to be stored
+    until that is closed.
 - v2.5 → v2.6: **No SOURCE score moves. No FIDELITY record was stored
   under 2.5, so nothing needs regenerating; a FIDELITY result written under
   2.5 and re-scored under 2.6 may differ, chiefly upward where a page gives a
