@@ -79,6 +79,14 @@ h1{font-size:1.25rem;line-height:1.7;margin:0 0 12px}
 .fid-count{font-size:1.02rem;font-weight:800;color:var(--dcp-ink);line-height:1.6}
 .fid-count .big{color:var(--des-chrome)}
 .big2{font-weight:800;color:var(--des-chrome)}
+.fid-word{font-size:1.12rem;font-weight:800;line-height:1.6;color:var(--des-chrome)}
+.fid-word.w-med,.fid-word.w-low{color:var(--dcp-ink)}
+.fid-word.w-none{color:var(--dcp-muted);font-size:.98rem}
+.fid-word::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-inline-end:8px;vertical-align:middle;background:var(--des-chrome)}
+.fid-word.w-hi::before{background:transparent;border:2px solid var(--des-chrome)}
+.fid-word.w-med::before{background:repeating-linear-gradient(45deg,var(--des-chrome) 0 2px,transparent 2px 4px);border:1px solid var(--des-chrome)}
+.fid-word.w-low::before{background:transparent;border:2px solid var(--rev)}
+.fid-word.w-none::before{background:transparent;border:1px dashed var(--dcp-muted)}
 details.calc.neutral{background:transparent;border-style:dashed}
 .fid-sub{font-size:.78rem;color:var(--dcp-muted);margin-top:2px}
 .lvl{display:inline-flex;align-items:center;gap:6px;background:rgba(var(--des-chrome-rgb),.10);border:1px solid rgba(var(--des-chrome-rgb),.30);color:var(--des-chrome);border-radius:999px;padding:3px 12px;font-weight:700;font-size:.82rem}
@@ -141,9 +149,9 @@ h2{font-size:1rem;margin:40px 0 4px}
     <h1>اگر وسط باندینگ خون یا بزاق روی عاج (دنتین) بیاد چی کار کنیم؟</h1>
     <div class="actions">
       <span class="act meta">⏱ ۹ دقیقه</span>
-      <a class="act act-des band-C" href="#card" id="chip">
+      <a class="act act-des band-C" href="#card" id="chip" title="ریزِ ارزیابی">
         <span class="dot">C</span><span>۲ منبع · C–D</span>
-        <span class="sep"></span><span class="fidc">٪۹۸ انطباق</span>
+        <span class="sep"></span><span class="fidc">تطابق خیلی بالا</span>
       </a>
       <button class="act" type="button">اشتراک‌گذاری</button>
     </div>
@@ -156,7 +164,7 @@ h2{font-size:1rem;margin:40px 0 4px}
       <h2 class="card-h" id="cardH" style="margin:0">ارزیابی خودکار شواهد</h2>
       <p class="prov">این بخش را نویسنده ننوشته؛ با معیار ثابتِ DES نسخه‌ی ۲٫۸ و با خواندنِ متن کامل هر دو مقاله محاسبه شده.</p>
       <div class="tabs" role="tablist">
-        <button class="tab" role="tab" aria-selected="true" data-t="fid">انطباق این نوشته <small>٪۹۸</small></button>
+        <button class="tab" role="tab" aria-selected="true" data-t="fid">انطباق با مقاله‌ها <small>خیلی بالا</small></button>
         <button class="tab" role="tab" aria-selected="false" data-t="src">قوت منابع <small>C–D</small></button>
       </div>
       <div id="paneFid"></div>
@@ -165,7 +173,7 @@ h2{font-size:1rem;margin:40px 0 4px}
   </article>
 
   <h2>حالت‌های دیگر (فرضی)</h2>
-  <p class="gal-note">همین کارت روی صفحه‌هایی با وضعیت دیگر. هیچ‌کدام از این سه نمونه صفحه‌ی واقعی نیست.</p>
+  <p class="gal-note">همین کارت روی صفحه‌هایی با وضعیت دیگر. هیچ‌کدام از این نمونه‌ها صفحه‌ی واقعی نیست.</p>
   <div class="gal" id="gal"></div>
 </div>
 
@@ -176,6 +184,14 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;
 const KIND = {HEDGE_REMOVED:'قاطع‌تر از منبع', HEDGE_ADDED:'محتاط‌تر از منبع', MAGNITUDE_CHANGED:'عدد متفاوت',
   POPULATION_OR_CONDITION_CHANGED:'دامنه‌ی گسترده‌تر از منبع', GROUP_OR_COMPARATOR_CHANGED:'گروه مقایسه‌ی متفاوت'};
 const LVL = {HIGH:'انطباق بالا', MEDIUM:'انطباق متوسط', LOW:'انطباق پایین', INSUFFICIENT_CLAIMS:'ادعای کافی ندارد'};
+// the one word a reader sees (appendix rule 5, v2.8): a refinement of `level`, never a second scale
+function fidWord(f) {
+  if (f.level === 'INSUFFICIENT_CLAIMS') return {w:'ادعای کافی برای سنجش ندارد', k:'none'};
+  if (f.level === 'LOW') return {w:'تطابق پایین', k:'low'};
+  if (f.level === 'MEDIUM') return {w:'تطابق متوسط', k:'med'};
+  if (!f.counts.altered && !f.counts.reversed) return {w:'کاملاً مطابق', k:'top'};
+  return f.fidelity_score >= 95 ? {w:'تطابق خیلی بالا', k:'top'} : {w:'تطابق بالا', k:'hi'};
+}
 const QT = {MATERIAL:'سؤال مواد و ماده‌ی دندانی', CLINICAL:'سؤال بالینی'};
 const BANDS = ['E','D','C','B','A'];
 const srcName = tag => { const s = D.sources[+tag.slice(1)-1]; return s.fake ? 'مقاله‌ی نمونه' : `${s.authors} ${s.year} · ${tag}`; };
@@ -197,33 +213,34 @@ function claimCard(c, opts = {}) {
     <p class="q-page">${esc(c.claim_quote)}</p>${src}${why}</div>`;
 }
 
-function fidPane(f, claims, {real}) {
+function fidPane(f, claims, opts) { const real = opts.real;
   const scored = claims.filter(c => ['MATCHES','ALTERED','REVERSED'].includes(c.verdict));
   const strip = scored.map(c => `<button class="cell ${cls(c.verdict)}" type="button" data-id="${c.id}" aria-label="جمله‌ی ${fa(c.id.slice(1))}"></button>`).join('');
   const flagged = claims.filter(c => c.verdict === 'ALTERED' || c.verdict === 'REVERSED');
-  const lvlCls = f.level === 'HIGH' ? '' : f.level === 'INSUFFICIENT_CLAIMS' ? 'none' : 'med';
+  const W = fidWord(f);
   const excluded = f.counts.not_a_claim + f.counts.author_view;
   const silent = claims.filter(c => c.verdict === 'NOT_IN_SOURCE' || c.verdict === 'NOT_ASSESSABLE');
   const nA = f.counts.altered, nR = f.counts.reversed;
-  const headline = !flagged.length ? 'همه‌ی ادعاها با مقاله مطابق است'
-    : [nR ? `${fa(nR)} جا متن برعکسِ مقاله است` : '', nA ? `${fa(nA)} جا متن یک درجه از مقاله جلوتر رفته` : ''].filter(Boolean).join(' · ');
   const silentN = silent.length || f.counts.not_in_source || 0;
+  const bits = [nR ? `${fa(nR)} جا برعکسِ مقاله` : '', nA ? `${fa(nA)} جا یک درجه جلوتر از مقاله` : '',
+                !nA && !nR ? 'همه‌ی ادعاها همان را می‌گویند که مقاله گفته' : '',
+                silentN ? `${fa(silentN)} جمله از دانش یا استدلال نویسنده` : ''].filter(Boolean);
   let h = `<div class="fid-head"><div style="flex:1;min-width:200px">
-      <div class="fid-count">${headline}</div>
-      <div class="fid-sub">انطباق با ${real ? 'مقاله‌ها' : 'مقاله'}: <span class="big2">٪${fa(f.fidelity_score)}</span>${silentN ? ` · ${fa(silentN)} جمله از دانش یا استدلال نویسنده (در درصد نیست)` : ''}</div>
-    </div><span class="lvl ${lvlCls}">${LVL[f.level]}</span></div>
+      <div class="fid-word w-${W.k}">${W.w}</div>
+      <div class="fid-sub">${bits.join('؛ ')}</div>
+    </div>${opts.prov ? '<span class="hatch">مقدماتی · فقط چکیده</span>' : ''}</div>
     <div class="strip" role="list">${strip}</div>
     <div class="legend"><span><i class="cell m"></i>مطابق</span><span><i class="cell a"></i>یک درجه جلوتر</span><span><i class="cell r"></i>برعکس</span></div>`;
   if (flagged.length) {
-    h += flagged.map(c => claimCard(c, {why: WHY[c.id]})).join('');
+    h += `<div class="grp">کجا با مقاله فرق دارد</div>` + flagged.map(c => claimCard(c, {why: WHY[c.id]})).join('');
   }
   if (real) {
     if (silent.length) h += `<details class="calc neutral"><summary>${fa(silent.length)} جمله در مقاله‌ها نیامده · از دانش یا استدلال نویسنده — در نمره نیست</summary><div class="calc-body"><p class="small">این جمله‌ها چیزی می‌گویند که هیچ‌کدام از دو مقاله درباره‌اش حرفی نزده: دانش پایه یا استدلال بالینیِ خود نویسنده. خطا حساب نمی‌شوند و نمره را کم نمی‌کنند؛ فقط اینجا هستند تا معلوم باشد کدام جمله‌ها پشتوانه‌ی مقاله ندارند.</p>` + silent.map(c => claimCard(c)).join('') + `</div></details>`;
     const groups = [['MATCHES','مطابق']];
-    h += `<details class="calc" id="calcBox"><summary>درصد چطور حساب شد؟ و همه‌ی ${fa(claims.length)} جمله، یکی‌یکی</summary><div class="calc-body">` +
+    h += `<details class="calc" id="calcBox"><summary>این ارزیابی چطور حساب شد؟ و همه‌ی ${fa(claims.length)} جمله، یکی‌یکی</summary><div class="calc-body">` +
       groups.map(([v,l]) => { const cs = claims.filter(c => c.verdict === v); return cs.length ? `<div class="grp">${l} · ${fa(cs.length)}</div>` + cs.map(c => claimCard(c)).join('') : ''; }).join('') +
       `<div class="grp">بیرون از شمارش · ${fa(excluded)}</div><p class="small">تیترها، جمله‌های راهنما مثل «در ادامه…» و جمله‌هایی که فقط موضوع را معرفی می‌کنند ادعا حساب نمی‌شوند و در نمره نمی‌آیند.</p>
-      <div class="grp">درصد چطور حساب شد</div><p class="small">از ${fa(f.assessable)} ادعایی که مقاله‌ها به آن پرداخته‌اند، ${fa(f.counts.matches)} مورد کاملاً مطابق است و هر کدام یک امتیاز کامل می‌گیرد؛ ${fa(f.counts.altered)} مورد یک درجه جلوتر رفته و هر کدام نصف امتیاز. (${fa(f.counts.matches)} + ${fa(f.counts.altered)}×½) ÷ ${fa(f.assessable)} = ٪${fa(f.fidelity_score)}. جمله‌هایی که در مقاله‌ها نیامده‌اند در این حساب نیستند. یک «برعکس» سطح را از «بالا» پایین‌تر می‌برد، هرچه نمره باشد. هر جمله در هر مقاله جداگانه سنجیده شده و اگر یکی از دو مقاله آن را بگوید، «مطابق» است.</p>
+      <div class="grp">این ارزیابی چطور حساب شد</div><p class="small">از ${fa(f.assessable)} ادعایی که مقاله‌ها به آن پرداخته‌اند، ${fa(f.counts.matches)} مورد کاملاً مطابق است و هر کدام یک امتیاز کامل می‌گیرد؛ ${fa(f.counts.altered)} مورد یک درجه جلوتر رفته و هر کدام نصف امتیاز. (${fa(f.counts.matches)} + ${fa(f.counts.altered)}×½) ÷ ${fa(f.assessable)} = ٪${fa(f.fidelity_score)}. از ٪۹۵ به بالا «تطابق خیلی بالا»، از ٪۸۵ «تطابق بالا»، از ٪۶۰ «تطابق متوسط»؛ صد بی‌هیچ جمله‌ی جلوتر «کاملاً مطابق». جمله‌هایی که در مقاله‌ها نیامده‌اند در این حساب نیستند. یک «برعکس» سطح را از «بالا» پایین‌تر می‌برد، هرچه نمره باشد. هر جمله در هر مقاله جداگانه سنجیده شده و اگر یکی از دو مقاله آن را بگوید، «مطابق» است.</p>
       </div></details>`;
     h += `<div class="concl"><div class="concl-l">جمع‌بندیِ خود مقاله‌ها (برای اطلاع؛ داوری روی آن نیست)</div>` +
       f.source_conclusion.split('\n').map(l => { const m = l.match(/^\[(S\d)\]\s*(.*)$/); return `<p><span class="tag" style="font-family:Vazirmatn">${esc(m ? srcName(m[1]) : '')}</span>${esc(m ? m[2] : l)}</p>`; }).join('') + `</div>`;
@@ -251,6 +268,7 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
   document.getElementById('paneFid').hidden = t.dataset.t !== 'fid';
   document.getElementById('paneSrc').hidden = t.dataset.t !== 'src';
 }));
+document.getElementById('chip').addEventListener('click', () => document.querySelector('.tab[data-t="fid"]').click());
 // strip cell → its sentence (opening the full list when needed)
 document.addEventListener('click', e => {
   const c = e.target.closest('#paneFid .cell[data-id]'); if (!c) return;
@@ -274,6 +292,10 @@ const mk = (m, a, r, n, x) => {
 const fake = (id, v, k, cq, sq) => ({id, verdict:v, change_kind:k, claim_quote:cq, source_quote:sq, source_ref:'S3'});
 D.sources.push({fake:true});
 const G = [
+  {label:'صفحه‌ی کوتاه، ۴ ادعا، یک جمله جلوتر', f: mk(3,1,0,1,3),
+   claims:[fake('u2','MATCHES'),fake('u3','MATCHES'),fake('u4','MATCHES'),
+     fake('u5','ALTERED','HEDGE_REMOVED','این روش باند را به حالت اولیه بازمی‌گرداند.','This protocol may partially restore bond strength.'),fake('u6','NOT_IN_SOURCE')]},
+  {label:'همه مطابق', f: mk(12,0,0,2,5), claims:[...Array(12)].map((_,i)=>fake('u'+(i+2),'MATCHES'))},
   {label:'یک جمله برعکس شده', f: mk(17,2,1,1,6),
    claims:[...Array(17)].map((_,i)=>fake('u'+(i+2),'MATCHES')).concat([
      fake('u20','ALTERED','HEDGE_REMOVED','این روش باند را به حالت اولیه بازمی‌گرداند.','This protocol may partially restore bond strength.'),
@@ -287,10 +309,9 @@ const G = [
 document.getElementById('gal').innerHTML = G.map(g => {
   const f = g.f;
   if (f.level === 'INSUFFICIENT_CLAIMS') return `<section class="card"><div class="gl">${g.label}</div>
-    <div class="fid-head"><div><div class="fid-count" style="font-size:.92rem">مقاله فقط به ${fa(f.assessable)} جمله‌ی متن پرداخته</div>
-    <div class="fid-sub">بقیه‌ی متن حرفِ خود نویسنده است و مقاله درباره‌اش ساکت است؛ برای انطباق دست‌کم سه ادعا لازم است، پس نمره‌ای نمایش داده نمی‌شود.</div></div><span class="lvl none">${LVL[f.level]}</span></div></section>`;
-  const body = fidPane(f, g.claims, {real:false})
-    .replace(/<span class="num">/, g.prov ? '<span class="hatch">مقدماتی · فقط چکیده</span><span class="num">' : '<span class="num">');
+    <div class="fid-head"><div><div class="fid-word w-none">${fidWord(f).w}</div><div class="fid-sub">مقاله فقط به ${fa(f.assessable)} جمله‌ی متن پرداخته</div>
+    <div class="fid-sub">بقیه‌ی متن حرفِ خود نویسنده است و مقاله درباره‌اش ساکت است؛ برای انطباق دست‌کم سه ادعا لازم است، پس نمره‌ای نمایش داده نمی‌شود.</div></div></div></section>`;
+  const body = fidPane(f, g.claims, {real:false, prov:g.prov});
   return `<section class="card"><div class="gl">${g.label}</div>${body}</section>`;
 }).join('');
 </script>
