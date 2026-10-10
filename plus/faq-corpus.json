@@ -36747,11 +36747,11 @@
         }
       ]
     },
-    "dentai/promptologist/prompt-append2": {
+    "dentai/promptologist/prompt-append2-1": {
       "faqPages": [
         {
           "@type": "FAQPage",
-          "@id": "https://dentcast.org/dentai/promptologist/prompt-append2.html#faq",
+          "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-1.html#faq",
           "mainEntity": [
             {
               "@type": "Question",
@@ -36832,11 +36832,11 @@
         {
           "@context": "https://schema.org",
           "@type": "DefinedTermSet",
-          "@id": "https://dentcast.org/dentai/promptologist/prompt-append2.html#flashcards",
+          "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-1.html#flashcards",
           "hasDefinedTerm": [
             {
               "@type": "DefinedTerm",
-              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2.html#flashcards-c1",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-1.html#flashcards-c1",
               "name": "نقطه‌ی شکست (single point of failure)",
               "description": "بخشی از یک سامانه که از کار افتادنِ تنهایش همه‌ی چیزهای وابسته به آن را از کار می‌اندازد. وقتی هرچه با مدل ساخته‌اید فقط در یک اکانت است، خودِ آن اکانت چنین نقطه‌ای است: بسته‌شدن، هک یا حذفِ اشتباهی کافی است تا همه‌چیز با هم برود.",
               "source": "faq",
@@ -36844,7 +36844,7 @@
             },
             {
               "@type": "DefinedTerm",
-              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2.html#flashcards-c2",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-1.html#flashcards-c2",
               "name": "آنچه از کارِ با مدل نسخه‌گرفتنی است",
               "description": "ارزشِ کار با مدل در چیزی است که داخلِ گفت‌وگوها ساخته شده، نه در خودِ گفت‌وگوها: پرامپتِ به‌نسخه‌ی نهایی‌رسیده، روشِ کاریِ جواب‌داده، تصمیم‌ها همراهِ دلیلشان و قواعدِ سبکِ جاافتاده. از این‌هاست که نسخه گرفته می‌شود، آن هم به‌صورتِ نتیجه‌ی نهایی و چند خط درباره‌ی چرایی‌اش.",
               "source": "faq",
@@ -36852,7 +36852,7 @@
             },
             {
               "@type": "DefinedTerm",
-              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2.html#flashcards-c3",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-1.html#flashcards-c3",
               "name": "فایل مارک‌داون به‌عنوان قالبِ پشتیبان",
               "description": "فایلِ متنیِ ساده‌ای که چون به شرکت یا سرویسِ خاصی بسته نیست، به هر مدلِ دیگری داده می‌شود و کار از همان‌جا ادامه پیدا می‌کند. ساختنش با خودِ مدل است، ولی چون مدل فقط پروژه‌ی جاری را می‌بیند، گرفتنِ آن عادتی دوره‌ای است و سرویسی خودکار نیست.",
               "source": "faq",
@@ -36860,14 +36860,14 @@
             },
             {
               "@type": "DefinedTerm",
-              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2.html#flashcards-c4",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-1.html#flashcards-c4",
               "name": "ریپو (repository)",
               "description": "پوشه‌ای آنلاین در گیت‌هاب که فایل‌های پشتیبانِ کاربر در آن جمع می‌شود. اگر خصوصی ساخته شود فقط صاحبش آن را می‌بیند، و خصوصی‌بودنش اجازه نمی‌دهد اطلاعاتِ بیمار، رمز یا کلیدِ دسترسی در آن گذاشته شود.",
               "source": "authored"
             },
             {
               "@type": "DefinedTerm",
-              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2.html#flashcards-c5",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-1.html#flashcards-c5",
               "name": "نسخه‌های قبلیِ فایل در گیت‌هاب",
               "description": "ویژگی‌ای که گیت‌هاب را از پوشه‌ی معمولی جدا می‌کند: هر تغییرِ فایل کنار نسخه‌های پیشین ثبت می‌شود، نه جای آن‌ها. با آن می‌شود از ویرایشی که نتیجه را بدتر کرده یا از حذفِ اشتباهیِ بخشی از دستورالعمل‌ها به نسخه‌ی سالمِ قبلی برگشت.",
               "source": "faq",
@@ -36875,7 +36875,7 @@
             },
             {
               "@type": "DefinedTerm",
-              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2.html#flashcards-c6",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-1.html#flashcards-c6",
               "name": "پشتیبانِ مستقل از هر اکانت",
               "description": "قاعده‌ای که می‌گوید نسخه‌ی پشتیبان نباید فقط پیش یک اکانت باشد، چون خودِ آن اکانت هم از دست می‌رود. در عمل کار در دو جای جدا از هم نگه داشته می‌شود: گیت‌هاب برای ثبتِ فوریِ هر چیزِ به‌نتیجه‌رسیده و لپ‌تاپِ خودِ کاربر برای نسخه‌ای که در اختیارِ خودِ اوست.",
               "source": "faq",
