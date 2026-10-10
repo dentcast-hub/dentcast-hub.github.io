@@ -1,0 +1,123 @@
+{
+ "des_version": "3.0",
+ "mode": "FIDELITY",
+ "scope": "SOURCE",
+ "text_basis": "ABSTRACT_ONLY",
+ "claims": [
+  {
+   "id": "u1",
+   "claim_quote": "طراحی کرون با AI تا ۵۰٪ سریع‌تر شده است",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u2",
+   "claim_quote": "یک مرور سیستماتیک و متاآنالیز جدید روی ۱۷ مطالعه نشان می‌دهد هوش مصنوعی می‌تواند زمان طراحی کرون را به‌طور قابل‌توجهی کاهش دهد؛ در مطالعات بررسی‌شده، کاهش زمان طراحی حدود ۲۵ تا ۵۰ درصد گزارش شده است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Workflow efficiency improved significantly, with reductions in design time of 25-50% and enhanced precision in chamfer and marginal gaps (p < 0.001).",
+   "source_ref": null,
+   "note": ""
+  },
+  {
+   "id": "u3",
+   "claim_quote": "چه اتفاقی افتاده؟",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u4",
+   "claim_quote": "پژوهشگران عملکرد سیستم‌های طراحی خودکار مبتنی بر AI را از نظر فرم دندان، تماس اکلوزالی، تطابق داخلی، مارجین و زمان طراحی با روش‌های متداول مقایسه کردند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "This systematic review and meta-analysis critically evaluate whether AI-assisted crown design systems, including machine learning (ML), deep learning (DL), generative adversarial networks (GANs), and diffusion models, produce restorations with comparable or superior morphological accuracy, occlusal integration, internal fit, and workflow efficiency relative to computer-aided design (CAD) or technician-driven workflows.",
+   "source_ref": null,
+   "note": ""
+  },
+  {
+   "id": "u5",
+   "claim_quote": "نتایج نشان داد طراحی‌های AI در بسیاری از شاخص‌ها به نتایج قابل‌قبول رسیده‌اند و مهم‌ترین مزیت آنها، سرعت بالاتر طراحی بوده است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "AI-based systems achieved clinically acceptable morphological accuracy, internal fit, and occlusal contact reproduction (RMS deviation: SMD = -0.15, 95% CI -1.04 to 0.74).",
+   "source_ref": null,
+   "note": "The claim that speed was the most important advantage ranks the advantages; the abstract reports efficiency but does not rank it, so that half is not assessable and does not decide the verdict."
+  },
+  {
+   "id": "u6",
+   "claim_quote": "با این حال، بخش قابل‌توجهی از شواهد موجود هنوز آزمایشگاهی یا کامپیوتری است و برای اثبات برتری بالینی AI به تحقیقات بیشتری نیاز داریم.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "However, the current evidence is derived predominantly from in vitro and computational studies, with limited prospective clinical validation, limited integration of patient-specific dynamic occlusal data, and insufficient long-term follow-up evidence.",
+   "source_ref": null,
+   "note": ""
+  },
+  {
+   "id": "u7",
+   "claim_quote": "چرا مهم است؟",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u8",
+   "claim_quote": "صرفه‌جویی چند دقیقه در یک کیس شاید زیاد به نظر نرسد؛ اما در یک واحد طراحی پرتعداد، همین زمان می‌تواند روی ظرفیت طراحی و سرعت تحویل سفارش‌ها اثر جدی بگذارد.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "The abstract says nothing about the effect of minutes saved per case on unit capacity or delivery speed."
+  },
+  {
+   "id": "u9",
+   "claim_quote": "خلاصه iDC",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u10",
+   "claim_quote": "AI فعلاً دیزاینر را حذف نمی‌کند؛ اما دارد نقش او را تغییر می‌دهد.",
+   "verdict": "AUTHOR_VIEW",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "opinion marker: خلاصه iDC (heading labels the units under it)"
+  },
+  {
+   "id": "u11",
+   "claim_quote": "احتمالاً رقابت آینده کمتر بین « AI و دیزاینر» و بیشتر بین دیزاینری که از AI استفاده می‌کند و دیزاینری که استفاده نمی‌کند خواهد بود.",
+   "verdict": "AUTHOR_VIEW",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "future tense, study not named; opinion marker: خلاصه iDC"
+  }
+ ],
+ "counts": {
+  "matches": 4,
+  "altered": 0,
+  "reversed": 0,
+  "not_in_source": 0,
+  "not_assessable": 1,
+  "author_view": 2,
+  "not_a_claim": 4
+ },
+ "assessable": 4,
+ "fidelity_score": 100,
+ "level": "HIGH",
+ "provisional": true,
+ "source_conclusion": "Standardized clinical protocols and prospective trials are required to confirm long-term efficacy.",
+ "fact_fa": "از ۴ ادعایی که منبع به آن‌ها می‌پردازد، هر ۴ مورد با منبع مطابق است و هیچ موردی تغییر یا وارونه نشده است؛ سطح تطابق بالا است و ۱ جمله خارج از دامنه‌ی چکیده است.",
+ "interpretation_fa": "همه‌ی ادعاهای قابل سنجش با منبع مطابق هستند."
+}
