@@ -23505,5 +23505,303 @@
         "interpretation_fa": "ارزش متن در این است که تطابق رنگ لمینیت و روکش را از مسئله‌ای دومتغیره به دو مرحله تبدیل می‌کند: لمینیت سمان‌شده مرجع ثابت می‌شود و روکش با آن ساخته می‌شود. سازوکار اختلاف رنگ روشن بیان شده، اما مرز کاربرد روش و نسبت آن با مطالعات منتشرشده بیان نشده است."
       }
     ]
+  },
+  "sharehub/share-30": {
+    "scored_at": "2026-10-10",
+    "sources": [
+      {
+        "des_version": "3.0",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Retrofitting a dowel and core to an existing crown",
+          "authors": "Gardner FM, Robinson FG",
+          "year": 1997,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/s0022-3913(97)70110-0"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "This procedure is more difficult and technique-sensitive, because it is difficult to adjust the cast dowel and core to fit the tooth the same as it did before casting and to obtain acceptable results with the existing crown.",
+            "note": "the choice between prefabricated post with resin core and a cast dowel and core is tied to a stated rationale"
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "no reference to published studies and no statement about the evidence base anywhere in the text"
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "Before attempting this technique the dentist should ensure that the fractured tooth has completely intact margins that fit to the existing restoration and adequate remaining coronal tooth structure, ideally 2 mm (Fig. 1). If not, the tooth should be prepared again for a new restoration.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "the text never names itself as clinical experience or opinion; journal technique article, not one of the carve-out sections"
+          }
+        ],
+        "des_score": 12,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله‌ی تکنیک یک توصیه‌ی بالینی بدون داده‌ی پژوهشی است و در مسیر COMMENTARY امتیاز ۱۲ از ۱۰۰ و باند E گرفته است.",
+        "interpretation_fa": "متن یک روش گام‌به‌گام برای ساختن post و core زیر یک crown موجود را با شرایط کاربردش توضیح می‌دهد، اما هیچ بیمار، پیگیری یا نتیجه‌ای گزارش نمی‌کند و به ادبیات علمی ارجاع نمی‌دهد. ارزش آن فنی است: حفظ یک crown قابل قبول پس از شکستگی دندان، بدون سنجش اثربخشی."
+      }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "پست و کور رتروفیت",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "link label"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "گاهی روکش بیمار سالم و قابل قبول است، اما همراه با کور داخلش از دندان جدا شده، یا بعد از تراش، موقع برداشتن روکش موقت، بخش تاجی دندان شکسته است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When a patient has an acceptable crown that has fractured from a tooth with remaining restorative or core material inside, or the coronal portion of a crown preparation fractures when the interim restoration is removed before the cementation of the new crown, the following procedure will allow the dentist to successfully use the existing crown as the final restoration without making a new one.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u4",
+            "claim_quote": "در این شرایط می‌شود به جای ساخت روکش جدید، یک پست و کور تازه ساخت که دقیقاً با داخل همان روکش قدیمی جفت شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When a patient has an acceptable crown that has fractured from a tooth with remaining restorative or core material inside, or the coronal portion of a crown preparation fractures when the interim restoration is removed before the cementation of the new crown, the following procedure will allow the dentist to successfully use the existing crown as the final restoration without making a new one.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u5",
+            "claim_quote": "∆ چه وقت می‌شود از این روش استفاده کرد؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u6",
+            "claim_quote": "این کار فقط وقتی منطقی است که هم روکش و هم دندان شرایط لازم را داشته باشند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Before attempting this technique the dentist should ensure that the fractured tooth has completely intact margins that fit to the existing restoration and adequate remaining coronal tooth structure, ideally 2 mm (Fig. 1).",
+            "source_ref": null,
+            "note": "the source states the exclusion itself: if the conditions are not met, a new restoration or new crown is made"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "روکش باید از نظر ظاهر، تماس با دندان‌های کناری و بایت مشکلی نداشته باشد یا مشکلش قابل اصلاح باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "If these are not acceptable or correctable, then a new crown should be made.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u8",
+            "claim_quote": "لبه‌های دندان هم باید سالم باشند و هنوز دقیق زیر لبه‌ی روکش قرار بگیرند، و حدود ۲ میلی‌متر از ساختار تاجی دندان باقی مانده باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Before attempting this technique the dentist should ensure that the fractured tooth has completely intact margins that fit to the existing restoration and adequate remaining coronal tooth structure, ideally 2 mm (Fig. 1).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u9",
+            "claim_quote": "اگر دندان به درمان مجدد ریشه نیاز دارد، باید طوری انجام شود که لبه‌ها و ارتفاع دیواره‌ها از دست نرود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The fractured tooth must have an adequate endodontic fill (Fig. 2), or endodontic retreatment should be done without compromising the margins or axial height of the tooth.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u10",
+            "claim_quote": "∆ مراحل کار",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "برای انجام کار، کانال برای یک پست پیش‌ساخته آماده می‌شود و طول بیرونی پست طوری انتخاب می‌شود که مانع نشستن کامل روکش نشود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Prepare the root canal to receive a prefabricated dowel with the procedure and materials of choice and ensure that the coronal length of the dowel allows the crown to fully seat.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u12",
+            "claim_quote": "بعد در اتاقک پالپ و اطراف پست آندرکات ایجاد می‌شود تا کامپوزیت گیر مکانیکی داشته باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Prepare undercuts in the pulp chamber of the tooth and around the dowel for mechanical retention of the resin core material.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u13",
+            "claim_quote": "کامپوزیت خلفی لایت‌کیوری انتخاب می‌شود که رنگش با دندان فرق داشته باشد تا کامپوزیت اضافه روی لبه‌ها راحت دیده شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Select a light-curing posterior composite resin that has a distinct shade difference from the tooth being restored.",
+            "source_ref": null,
+            "note": "the stated reason (seeing excess composite on the margins) is not given by the source; the selection half matches"
+          },
+          {
+            "id": "u14",
+            "claim_quote": "داخل روکش هم با باندینگ آغشته می‌شود تا کامپوزیت به آن نچسبد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Lubricate the inside of the existing crown with unfilled resin (bonding agent).",
+            "source_ref": null,
+            "note": "the stated purpose (composite not sticking) is not given by the source; the action half matches"
+          },
+          {
+            "id": "u15",
+            "claim_quote": "کور لایه‌لایه ساخته می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Add a second increment of resin and repeat the trial seating procedure.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u16",
+            "claim_quote": "هر بار مقدار کمی کامپوزیت گذاشته می‌شود، روکش امتحان می‌شود تا مطمئن شویم کامل می‌نشیند و کامپوزیتی روی لبه‌ها رانده نشده، بعد روکش برداشته و کامپوزیت کیور می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "With the first increment of resin none should be displaced onto the tooth margins.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u17",
+            "claim_quote": "این کار آن‌قدر تکرار می‌شود تا کور گیر و مقاومت کافی پیدا کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Continue this incremental process until the core resin furnishes adequate retention and resistance form (Fig. 3).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u18",
+            "claim_quote": "اگر جایی روکش کامل ننشست، همان موقع با فرز از کور برداشته می‌شود و کار ادامه پیدا می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "If at any point the crown will not fully seat on the tooth, relieve the resin core material with a diamond bur until the crown fully seats, and continue the process.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u19",
+            "claim_quote": "کور کامپوزیتی نهایی با گیر و مقاومت کافی، آماده برای سمان کردن روکش قدیمی.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Final core preparation with adequate retention and resistance form.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u20",
+            "claim_quote": "تصویر از Gardner و Robinson، J Prosthet Dent، 1997.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "image credit line"
+          },
+          {
+            "id": "u21",
+            "claim_quote": "در آخر، باندینگ از داخل روکش پاک می‌شود، داخل روکش سندبلاست می‌شود و روکش سمان می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When the core is complete, remove any remaining unfilled resin from the crown and air-abrade the internal aspect of the crown.",
+            "source_ref": null,
+            "note": "cementation half is stated by step 12 and also matches"
+          },
+          {
+            "id": "u22",
+            "claim_quote": "∆ نسخه‌ی ریختگی و مشکلش",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u23",
+            "claim_quote": "می‌شود به جای این روش، پترن پست و کور را مستقیم در دهان ساخت، طوری که هم با کانال و هم با روکش جفت شود، و بعد آن را ریخته‌گری کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "An alternative to the prefabricated post and resin core method is to fabricate a direct dowel and core pattern with the materials of choice that fits both the root canal preparation and the existing crown, and then make the casting.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u24",
+            "claim_quote": "اما این روش سخت‌تر و حساس‌تر به تکنیک است، چون پترنی که در دهان دقیق بوده، بعد از ریخته‌گری ممکن است دیگر همان تطابق را با دندان و روکش نداشته باشد، و رساندن یک قطعه‌ی فلزی به همان دقت کار ساده‌ای نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This procedure is more difficult and technique-sensitive, because it is difficult to adjust the cast dowel and core to fit the tooth the same as it did before casting and to obtain acceptable results with the existing crown.",
+            "source_ref": null,
+            "note": ""
+          }
+        ],
+        "counts": {
+          "matches": 18,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 0,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 6
+        },
+        "assessable": 18,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "J Prosthet Dent 1997;77:636-7.",
+        "fact_fa": "از ۱۸ ادعایی که منبع به آن پرداخته‌اند، ۱۸ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
+    ]
   }
 }

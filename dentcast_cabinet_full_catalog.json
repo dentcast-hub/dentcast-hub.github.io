@@ -138560,6 +138560,51 @@
         "Edward A. McLaren",
         "Todd Schoenbaum"
       ]
+    },
+    {
+      "id": "P2922",
+      "title": "Retrofitting a dowel and core to an existing crown",
+      "file_name": "Retrofitting a dowel and core to an existing crown.pdf",
+      "topic": "Post & core",
+      "topic_path": "Post & core",
+      "type": "primary/other",
+      "local_path": "",
+      "file_size": 403509,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "sharehub/share-30"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1SuT0dWxYmlpgdDDXc4QfaqnxjFZ0FEvu/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1SuT0dWxYmlpgdDDXc4QfaqnxjFZ0FEvu",
+      "drive_view": "https://drive.google.com/file/d/1SuT0dWxYmlpgdDDXc4QfaqnxjFZ0FEvu/view",
+      "drive_id": "1SuT0dWxYmlpgdDDXc4QfaqnxjFZ0FEvu",
+      "tags": [
+        "post-and-core",
+        "retrofit-post-and-core",
+        "existing-crown",
+        "composite-core",
+        "prefabricated-post",
+        "incremental-core-build-up",
+        "cast-post-and-core",
+        "technique-article",
+        "topic:post-core",
+        "retrofitting-a-dowel-and-core-to-an-existing-crown"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Retrofitting a dowel and core to an existing crown",
+      "doi": "10.1016/s0022-3913(97)70110-0",
+      "journal": "The Journal of Prosthetic Dentistry",
+      "crossref_year": 1997,
+      "subjects": [],
+      "abstract": "",
+      "display_title": "Retrofitting a dowel and core to an existing crown",
+      "authors": [
+        "F. Michael Gardner",
+        "Fonda G. Robinson"
+      ]
     }
   ],
   "drive_matched": 2849,
