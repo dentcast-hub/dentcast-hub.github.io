@@ -23859,5 +23859,61 @@
         "interpretation_fa": "این متن نقدی بالینی بر یک کیس منتشرشده است و استدلال آن بر سازوکارهای فنی پست رتروفیت و سمان همزمان استوار است، نه بر مطالعه‌ی مشخص. ارزش آن در روشن کردن نقاط تصمیم‌گیری و خطاهای محتمل در طرح درمان روکش‌های متصل است. میزان واقعی این خطاها را فقط شواهد پژوهشی می‌تواند تعیین کند."
       }
     ]
+  },
+  "dentai/promptologist/prompt8-1": {
+    "scored_at": "2026-10-10",
+    "sources": [
+      {
+        "des_version": "3.0",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "پرامپتولوژیست — اگر فردا اکانتتان نباشد، چه می‌ماند؟",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "اگر دوباره داخل همان اکانت بماند، با از دست رفتن اکانت آن هم از دست می‌رود.",
+            "note": "each recommendation (backup outside the account, then a second copy on the laptop) is tied to the stated single point of failure rationale"
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "the text cites no literature and does not position itself against published evidence, nor does it state that evidence is absent"
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "لازم نیست از همه‌ی گفت‌وگوها نسخه بگیرید.",
+            "note": "states what the backup advice covers (final prompts, workflows, decisions, style rules) and what it does not (the conversations themselves)"
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "no sentence names the text itself as experience or opinion rather than a research finding; «پیشنهاد من گیت‌هاب است» labels a single recommendation, not the text, and the opening anecdote is a story, not a label; promptologist/ has no section-level carve-out"
+          }
+        ],
+        "des_score": 12,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این متن تألیفی دنت‌کست با امتیاز ۱۲ در سطح E (سطح پس‌زمینه و دیدگاه) قرار می‌گیرد.",
+        "interpretation_fa": "متن یک راهنمای عملی درباره‌ی پشتیبان‌گیری از کار با هوش مصنوعی است که استدلالش را روشن بیان می‌کند و دامنه‌ی توصیه را محدود می‌کند. به هیچ شواهد منتشرشده‌ای ارجاع نمی‌دهد و خود را صریحاً دیدگاه شخصی معرفی نمی‌کند. ارزش آن عملی و مربوط به مدیریت داده‌ی کاری است، نه یک ادعای بالینی."
+      }
+    ]
   }
 }

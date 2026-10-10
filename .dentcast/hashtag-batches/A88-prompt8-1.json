@@ -1,0 +1,24 @@
+{
+  "type": "promptologist",
+  "enforce": true,
+  "note": "dentai/promptologist/prompt8-1 — «اگر فردا اکانتتان نباشد، چه می‌ماند؟». Series tags (#پرامپتولوژیست, #هوش_مصنوعی, #سواد_هوش_مصنوعی, #AI_Literacy, #مدل_زبانی, #LLM) and #Markdown (--simulate «مارک داون Markdown» rank-1) and #مالکیت_پلتفرم (--simulate «مالکیت داده اکانت» surfaced it at rank 2; its use_when names the closed-account case exactly) are REUSED. Two concepts are newly minted because --simulate «پشتیبان گیری از کار با هوش مصنوعی» and --simulate «GitHub گیت هاب» cleared nothing relevant.",
+  "concepts": [
+    {
+      "tag": "#پشتیبان_گیری",
+      "domain": "ai",
+      "definition": "نگه‌داشتنِ نسخه‌ای از کاری که ساخته‌اید در جایی بیرون از جایی که ساخته شده، تا از بین رفتنِ آن جا کارِ شما را با خودش نبرد.",
+      "use_when": "مطلب به این بپردازد که چه چیزی از کارِ ساخته‌شده با مدل (پرامپت، روشِ کاری، تصمیم) را و کجا نگه دارید تا از دست رفتنِ اکانت یا پروژه همه‌چیز را نبرد.",
+      "aliases": ["backup", "بک آپ", "بکاپ", "نسخه پشتیبان", "نسخه‌ی پشتیبان", "نسخه گرفتن از کار"]
+    },
+    {
+      "tag": "#GitHub",
+      "domain": "ai",
+      "definition": "سرویسِ آنلاینِ نگه‌داریِ فایل‌ها در ریپو (repository)، که نسخه‌های قبلیِ هر فایل را هم نگه می‌دارد؛ برای کد ساخته شده ولی برای هر فایلِ متنی کار می‌کند.",
+      "use_when": "مطلب مشخصاً به این سرویس، ریپو یا نگه‌داریِ فایل‌ها در آن بپردازد.",
+      "aliases": ["گیت‌هاب", "گیت هاب", "github", "ریپو", "ریپوزیتوری", "repository", "git hub"]
+    }
+  ],
+  "articles": {
+    "dentai/promptologist/prompt8-1": ["#پرامپتولوژیست", "#هوش_مصنوعی", "#سواد_هوش_مصنوعی", "#AI_Literacy", "#مدل_زبانی", "#LLM", "#مالکیت_پلتفرم", "#Markdown", "#پشتیبان_گیری", "#GitHub"]
+  }
+}
