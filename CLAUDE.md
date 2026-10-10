@@ -272,6 +272,28 @@ switch**, empty in normal times: keyed by hostname so it can never reach `.ir`,
 and flipping it is a change to the module graph, so `asset_version.py --bump`
 rides in the same commit. Tests: `plus-api/test/api-down.test.ts`.
 
+## External-fidelity protocol (trigger)
+
+An **eighth** workflow. When the user wants a FIDELITY result for an article
+that is **not published on DentCast** — to be shown on the author's own site
+(«برای این مقاله‌ی بیرونی تطابق بگیر», «نشان تطابق برای سایت X») — read
+`.dentcast/workflows/external-fidelity.md` and follow it. Scoring is the
+ordinary step 4.13 Part 2b/2c pipeline; `tools/des_external_embed.py` only
+packages ONE result into ONE self-contained `.js` (data, wording, styles and
+Vazirmatn inline, built from `tools/des_external_embed.tpl.js`) that the other
+site serves from its own host — **no runtime request to DentCast**, because a
+DentCast outage must never break someone else's page (founder, 1405/07/18).
+Only verification lives on DentCast (the «راستی‌آزمایی در دنت‌کست» link, the
+E-namad pattern), so a revocation reaches the verify page, never the file.
+The host adds one `<dentcast-fidelity-chip>` beside the date; the explanation
+opens as a sheet on tap and takes no room in their layout. The chip never says
+«مقدماتی» and never puts «چکیده» beside the verdict — the basis is one quiet
+line inside the sheet («مبنای سنجش: چکیده‌ی مقاله»). We never edit an external
+author's sentences. Nothing is written to `plus/des-scores.json`, the brain or
+any page. **Open (step 2):** the verify page `/verify/<code>` and its registry
+do not exist yet, so the link is a 404 until they do — say so before anything
+is handed to a real site. Demo: `.dentcast/external-fidelity-demo/`.
+
 ## Repo conventions
 
 - **چالش** — a founder-authored **post whose body is a question**, published through the ordinary router into an existing folder (chairside/, insight/, whichever), taking that folder's next number and its ordinary brain shape — **never** a new `type`, **never** a new folder. Full design: `.dentcast/challenge-handoff.md`. Reading the question (+ image) is public, generated into `plus/challenges.json` by `tools/build_challenge_index.mjs`; **the answer and the 3–5 key points are never in the repo and never in any published file** — they live only in the `challenges` database table, written through `GET /admin` → «صندوق چالش». On submit, a model compares the reader's free-text answer against the key points and returns, per point, `covered`/`missing`/`unsure`; **any `unsure` queues the whole attempt** for the founder rather than guessing. `answer_fa` is released by ONE fact — the reader has an attempt row for this page — never by tier, so a lapsed reader who answered while premium keeps seeing it. Workflow hooks: Phase B **Question 4.9**, Phase C **step 4.14**. **The second documented exception to Hard Rule 12** (alongside LiteCast): no en mirror, no fa↔en toggle (RULE 16 — the mirror would be a different `content_id` with no row in `challenges`). **گفتگوی زیر مطلب never mounts under a چالش at all** (RULE 17, founder decision 2026-08-30) — a چالش already owns the reader's one interaction with the page, so the support-ticket-backed comment thread is not just reordered below it, it is absent; enforced inside `plus/js/article-threads.js`'s `mountArticleThreads()` itself (a `data-dc-challenge-question` scope check that returns `false`), never by an `if` at any of the four `plus.js` call sites — the same "data decides, call site never branches" shape RULE 9 already uses for mounting `mountChallenge` itself. **insight-68 is the reference implementation for the page markup** (RULE 18): the question and the image are `data-dc-challenge-question` / `data-dc-challenge-image` on the *same* `<p>`, never a separate visible `<img>` (a real `<img>` plus the JS-drawn copy is what rendered the photo twice on the first draft), and the image path is always site-absolute (`/insight/insight68.webp`, never a bare filename — a bare filename works by accident on the standalone page but 404s on the desktop 3-column shell, which injects the article's markup in place inside `index.html` rather than in an iframe). Both are enforced by `tools/build_challenge_index.mjs` (throws on a non-absolute path) and re-checked by `tools/verify_publish.py`'s چالش row (also confirms the `article-threads.js` guard above is still present).
