@@ -23803,5 +23803,61 @@
         "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]
+  },
+  "sharehub/share-31": {
+    "scored_at": "2026-10-10",
+    "sources": [
+      {
+        "des_version": "3.0",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "نقد یک کیس اینستاگرامی با پست رتروفیت",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "پوسیدگی زیر روکش بدون یک مسیر ورود ایجاد نمی‌شود.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "متن به هیچ پژوهش منتشرشده‌ای ارجاع نمی‌دهد و خود را در برابر ادبیات علمی موضع‌گیری نمی‌کند؛ نقد متوجه یک کیس ویدیویی است."
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "در یک روکش منفرد، اگر پست کامل ننشیند، فقط همان روکش بالاتر می‌ایستد.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "به نظر من این تصمیم و نتیجه‌ی آن از چند جهت قابل نقد است.",
+            "note": ""
+          }
+        ],
+        "des_score": 15,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این متن با امتیاز ۱۵ در سطح E (سطح دیدگاه و نقد بالینی) قرار می‌گیرد.",
+        "interpretation_fa": "این متن نقدی بالینی بر یک کیس منتشرشده است و استدلال آن بر سازوکارهای فنی پست رتروفیت و سمان همزمان استوار است، نه بر مطالعه‌ی مشخص. ارزش آن در روشن کردن نقاط تصمیم‌گیری و خطاهای محتمل در طرح درمان روکش‌های متصل است. میزان واقعی این خطاها را فقط شواهد پژوهشی می‌تواند تعیین کند."
+      }
+    ]
   }
 }
