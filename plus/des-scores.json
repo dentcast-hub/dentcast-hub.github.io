@@ -23505,5 +23505,61 @@
         "interpretation_fa": "ارزش متن در این است که تطابق رنگ لمینیت و روکش را از مسئله‌ای دومتغیره به دو مرحله تبدیل می‌کند: لمینیت سمان‌شده مرجع ثابت می‌شود و روکش با آن ساخته می‌شود. سازوکار اختلاف رنگ روشن بیان شده، اما مرز کاربرد روش و نسبت آن با مطالعات منتشرشده بیان نشده است."
       }
     ]
+  },
+  "sharehub/share-30": {
+    "scored_at": "2026-10-10",
+    "sources": [
+      {
+        "des_version": "3.0",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Retrofitting a dowel and core to an existing crown",
+          "authors": "Gardner FM, Robinson FG",
+          "year": 1997,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/s0022-3913(97)70110-0"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "This procedure is more difficult and technique-sensitive, because it is difficult to adjust the cast dowel and core to fit the tooth the same as it did before casting and to obtain acceptable results with the existing crown.",
+            "note": "the choice between prefabricated post with resin core and a cast dowel and core is tied to a stated rationale"
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "no reference to published studies and no statement about the evidence base anywhere in the text"
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "Before attempting this technique the dentist should ensure that the fractured tooth has completely intact margins that fit to the existing restoration and adequate remaining coronal tooth structure, ideally 2 mm (Fig. 1). If not, the tooth should be prepared again for a new restoration.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "the text never names itself as clinical experience or opinion; journal technique article, not one of the carve-out sections"
+          }
+        ],
+        "des_score": 12,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله‌ی تکنیک یک توصیه‌ی بالینی بدون داده‌ی پژوهشی است و در مسیر COMMENTARY امتیاز ۱۲ از ۱۰۰ و باند E گرفته است.",
+        "interpretation_fa": "متن یک روش گام‌به‌گام برای ساختن post و core زیر یک crown موجود را با شرایط کاربردش توضیح می‌دهد، اما هیچ بیمار، پیگیری یا نتیجه‌ای گزارش نمی‌کند و به ادبیات علمی ارجاع نمی‌دهد. ارزش آن فنی است: حفظ یک crown قابل قبول پس از شکستگی دندان، بدون سنجش اثربخشی."
+      }
+    ]
   }
 }
