@@ -23860,7 +23860,7 @@
       }
     ]
   },
-  "dentai/promptologist/prompt8-1": {
+  "dentai/promptologist/prompt-append2": {
     "scored_at": "2026-10-10",
     "sources": [
       {
@@ -23869,7 +23869,7 @@
         "question_type": null,
         "text_basis": "FULL_TEXT",
         "citation": {
-          "title": "پرامپتولوژیست — اگر فردا اکانتتان نباشد، چه می‌ماند؟",
+          "title": "پرامپتولوژیست — پیوست ۲: اگر فردا اکانتتان نباشد، چه می‌ماند؟",
           "authors": "دکتر فواد شهابیان",
           "year": 2026,
           "journal": "",

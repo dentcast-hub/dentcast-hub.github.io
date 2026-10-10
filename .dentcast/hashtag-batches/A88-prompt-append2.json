@@ -1,7 +1,7 @@
 {
   "type": "promptologist",
   "enforce": true,
-  "note": "dentai/promptologist/prompt8-1 — «اگر فردا اکانتتان نباشد، چه می‌ماند؟». Series tags (#پرامپتولوژیست, #هوش_مصنوعی, #سواد_هوش_مصنوعی, #AI_Literacy, #مدل_زبانی, #LLM) and #Markdown (--simulate «مارک داون Markdown» rank-1) and #مالکیت_پلتفرم (--simulate «مالکیت داده اکانت» surfaced it at rank 2; its use_when names the closed-account case exactly) are REUSED. Two concepts are newly minted because --simulate «پشتیبان گیری از کار با هوش مصنوعی» and --simulate «GitHub گیت هاب» cleared nothing relevant.",
+  "note": "dentai/promptologist/prompt-append2 — «اگر فردا اکانتتان نباشد، چه می‌ماند؟». Series tags (#پرامپتولوژیست, #هوش_مصنوعی, #سواد_هوش_مصنوعی, #AI_Literacy, #مدل_زبانی, #LLM) and #Markdown (--simulate «مارک داون Markdown» rank-1) and #مالکیت_پلتفرم (--simulate «مالکیت داده اکانت» surfaced it at rank 2; its use_when names the closed-account case exactly) are REUSED. Two concepts are newly minted because --simulate «پشتیبان گیری از کار با هوش مصنوعی» and --simulate «GitHub گیت هاب» cleared nothing relevant.",
   "concepts": [
     {
       "tag": "#پشتیبان_گیری",
@@ -19,6 +19,6 @@
     }
   ],
   "articles": {
-    "dentai/promptologist/prompt8-1": ["#پرامپتولوژیست", "#هوش_مصنوعی", "#سواد_هوش_مصنوعی", "#AI_Literacy", "#مدل_زبانی", "#LLM", "#مالکیت_پلتفرم", "#Markdown", "#پشتیبان_گیری", "#GitHub"]
+    "dentai/promptologist/prompt-append2": ["#پرامپتولوژیست", "#هوش_مصنوعی", "#سواد_هوش_مصنوعی", "#AI_Literacy", "#مدل_زبانی", "#LLM", "#مالکیت_پلتفرم", "#Markdown", "#پشتیبان_گیری", "#GitHub"]
   }
 }
