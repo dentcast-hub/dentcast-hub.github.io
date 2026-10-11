@@ -23915,5 +23915,61 @@
         "interpretation_fa": "متن یک راهنمای عملی درباره‌ی پشتیبان‌گیری از کار با هوش مصنوعی است که استدلالش را روشن بیان می‌کند و دامنه‌ی توصیه را محدود می‌کند. به هیچ شواهد منتشرشده‌ای ارجاع نمی‌دهد و خود را صریحاً دیدگاه شخصی معرفی نمی‌کند. ارزش آن عملی و مربوط به مدیریت داده‌ی کاری است، نه یک ادعای بالینی."
       }
     ]
+  },
+  "sharehub/share-32": {
+    "scored_at": "2026-10-11",
+    "sources": [
+      {
+        "des_version": "3.0",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "VITA ENAMIC® Instructions for use (Prod. No. 1982E)",
+          "authors": "VITA Zahnfabrik H. Rauter GmbH & Co. KG",
+          "year": 2022,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Since dust is formed when grinding sintered dental ceramic products, always wear a face mask or grind when wet.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فهرست «Literature» در انتهای سند هست، اما متن خودش را در برابر آن‌ها قرار نمی‌دهد"
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "VITA ENAMIC is indicated for the fabrication of fully anatomical, esthetic single tooth restorations if",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "سند خودش را تجربه یا نظر معرفی نمی‌کند؛ دستورالعمل سازنده است"
+          }
+        ],
+        "des_score": 12,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این دستورالعمل مصرف سازنده امتیاز ۱۲ از ۱۰۰ و سطح E را در مسیر COMMENTARY گرفت.",
+        "interpretation_fa": "سند دستورالعمل کاربرد یک سازنده است و گزارش پژوهشی نیست. دلیل بعضی توصیه‌ها و محدوده‌ی کاربرد (indication و contraindication) را می‌گوید، ولی خودش را با شواهد منتشرشده مقایسه نمی‌کند. ارزش آن مرجع عملی برای کار با محصول است، نه شاهد بالینی."
+      }
+    ]
   }
 }

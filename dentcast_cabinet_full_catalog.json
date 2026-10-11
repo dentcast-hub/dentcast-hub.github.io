@@ -138605,6 +138605,52 @@
         "F. Michael Gardner",
         "Fonda G. Robinson"
       ]
+    },
+    {
+      "id": "P2923",
+      "title": "VITA ENAMIC® Instructions for use",
+      "file_name": "VITA ENAMIC® Instructions for use.pdf",
+      "topic": "biomimetic",
+      "topic_path": "biomimetic/Enamic",
+      "type": "primary/other",
+      "local_path": "",
+      "file_size": 1705985,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "sharehub/share-32"
+      ],
+      "drive_link": "https://drive.google.com/file/d/14czyAGk_H3AJHqP8VY9Gq-mZhNhKmmfa/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=14czyAGk_H3AJHqP8VY9Gq-mZhNhKmmfa",
+      "drive_view": "https://drive.google.com/file/d/14czyAGk_H3AJHqP8VY9Gq-mZhNhKmmfa/view",
+      "drive_id": "14czyAGk_H3AJHqP8VY9Gq-mZhNhKmmfa",
+      "tags": [
+        "vita-enamic",
+        "hybrid-ceramic",
+        "picn",
+        "polymer-infiltrated-ceramic-network",
+        "instructions-for-use",
+        "manufacturer-document",
+        "preparation-thickness",
+        "polishing",
+        "resin-cement-bonding",
+        "topic:biomimetic",
+        "topic:enamic",
+        "vita-enamic-instructions-for-use"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "VITA ENAMIC® Instructions for use",
+      "doi": null,
+      "journal": null,
+      "crossref_year": 2022,
+      "subjects": [],
+      "abstract": "",
+      "display_title": "VITA ENAMIC® Instructions for use",
+      "authors": [
+        "VITA Zahnfabrik"
+      ]
     }
   ],
   "drive_matched": 2849,
