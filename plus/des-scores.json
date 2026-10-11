@@ -23915,5 +23915,735 @@
         "interpretation_fa": "متن یک راهنمای عملی درباره‌ی پشتیبان‌گیری از کار با هوش مصنوعی است که استدلالش را روشن بیان می‌کند و دامنه‌ی توصیه را محدود می‌کند. به هیچ شواهد منتشرشده‌ای ارجاع نمی‌دهد و خود را صریحاً دیدگاه شخصی معرفی نمی‌کند. ارزش آن عملی و مربوط به مدیریت داده‌ی کاری است، نه یک ادعای بالینی."
       }
     ]
+  },
+  "sharehub/share-32": {
+    "scored_at": "2026-10-11",
+    "sources": [
+      {
+        "des_version": "3.0",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "VITA ENAMIC® Instructions for use (Prod. No. 1982E)",
+          "authors": "VITA Zahnfabrik H. Rauter GmbH & Co. KG",
+          "year": 2022,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "Since dust is formed when grinding sintered dental ceramic products, always wear a face mask or grind when wet.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فهرست «Literature» در انتهای سند هست، اما متن خودش را در برابر آن‌ها قرار نمی‌دهد"
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "VITA ENAMIC is indicated for the fabrication of fully anatomical, esthetic single tooth restorations if",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "سند خودش را تجربه یا نظر معرفی نمی‌کند؛ دستورالعمل سازنده است"
+          }
+        ],
+        "des_score": 12,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این دستورالعمل مصرف سازنده امتیاز ۱۲ از ۱۰۰ و سطح E را در مسیر COMMENTARY گرفت.",
+        "interpretation_fa": "سند دستورالعمل کاربرد یک سازنده است و گزارش پژوهشی نیست. دلیل بعضی توصیه‌ها و محدوده‌ی کاربرد (indication و contraindication) را می‌گوید، ولی خودش را با شواهد منتشرشده مقایسه نمی‌کند. ارزش آن مرجع عملی برای کار با محصول است، نه شاهد بالینی."
+      }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "ویتا انامیک در کار روزمره",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "∆ این ماده چیست",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u4",
+            "claim_quote": "ویتا انامیک یک سرامیک هیبرید (Hybrid Ceramic) است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "VITA ENAMIC is the first hybrid dental ceramic in the world with a dual- network structure.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u5",
+            "claim_quote": "اسم علمی دقیق‌تر این گروه PICN یا Polymer-Infiltrated Ceramic Network است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not address this claim"
+          },
+          {
+            "id": "u6",
+            "claim_quote": "برای ساخت آن، ابتدا یک بلوک متخلخل از سرامیک فلدسپاتیک ساخته می‌شود که ذراتش به هم جوش خورده‌اند و یک اسکلت پیوسته‌ی سه‌بعدی تشکیل داده‌اند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not address this claim"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "بعد پلیمر متاکریلاتی وارد تخلخل‌های این اسکلت می‌شود و همان‌جا پلیمریزه می‌شود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not address this claim"
+          },
+          {
+            "id": "u8",
+            "claim_quote": "نتیجه دو شبکه‌ی پیوسته است که در هم فرو رفته‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In this dental material, the dominant fine-structure ceramic network (86% by wt.) is strengthened by an acrylate polymer network, with both networks fully integrated with one another.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u9",
+            "claim_quote": "حدود ۸۶ درصد وزنی آن سرامیک است و حدود ۱۴ درصد پلیمر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In this dental material, the dominant fine-structure ceramic network (86% by wt.) is strengthened by an acrylate polymer network, with both networks fully integrated with one another.",
+            "source_ref": null,
+            "note": "14% polymer appears in the material ratio table"
+          },
+          {
+            "id": "u10",
+            "claim_quote": "شبکه‌ی سرامیکی پیوسته (تصویر از بروشور VITA)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "شبکه‌ی پلیمری که تخلخل‌ها را پر کرده است (تصویر از بروشور VITA)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u12",
+            "claim_quote": "فرق اصلی آن با کامپوزیت CAD/CAM همین‌جاست.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u13",
+            "claim_quote": "در کامپوزیت، ذرات فیلر جدا از هم داخل رزین پخش شده‌اند، اما در انامیک خود سرامیک یک اسکلت یکپارچه است و پلیمر فقط فضای خالی آن را پر کرده است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not address this claim"
+          },
+          {
+            "id": "u14",
+            "claim_quote": "∆ کجا استفاده کنیم و کجا نه",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u15",
+            "claim_quote": "استحکام (Flexural Strength) این ماده از لیتیوم دی‌سیلیکات کمتر است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not address this claim"
+          },
+          {
+            "id": "u16",
+            "claim_quote": "به همین دلیل کارخانه آن را فقط برای رستوریشن تک‌واحدی تأیید کرده است، یعنی کراون (از جمله روی ایمپلنت)، اینله، انله، ونیر و تیبل تاپ.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "VITA ENAMIC is indicated for the fabrication of fully anatomical, esthetic single tooth restorations if\n\n• the preconditions for the adhesive or self-adhesive bonding technique are fulfilled.",
+            "source_ref": null,
+            "note": "premise about strength versus lithium disilicate is not compared; conclusion judged; exclusion stated by contraindications of bridge and free-end restorations"
+          },
+          {
+            "id": "u17",
+            "claim_quote": "تیبل تاپ (Table Top) همان اکلوزال ونیر است، یعنی یک رستوریشن نازک که فقط سطح اکلوزال دندان خلفی را می‌پوشاند و برای دندان‌های سایش‌یافته یا افزایش ارتفاع عمودی به کار می‌رود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not address this claim"
+          },
+          {
+            "id": "u18",
+            "claim_quote": "بریج، کنتیلور و بیمار دارای بروکسیسم جزو موارد مصرف آن نیستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Bridge restorations\n\n• Free-end restorations\n\n• Parafunction (for example bruxism)",
+            "source_ref": null,
+            "note": "cantilever read as free-end restoration"
+          },
+          {
+            "id": "u19",
+            "claim_quote": "در عوض، سفتی (Elastic Modulus) و سختی (Hardness) آن از سرامیک‌های معمول کمتر و به عاج نزدیک‌تر است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not address this claim"
+          },
+          {
+            "id": "u20",
+            "claim_quote": "به همین خاطر لبه‌های نازکش کمتر لب‌پر می‌شوند، داخل دهان راحت تنظیم و پالیش می‌شود و دندان مقابل را کمتر سایش می‌دهد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not address this claim"
+          },
+          {
+            "id": "u21",
+            "claim_quote": "∆ تراش",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u22",
+            "claim_quote": "تراش لازم برای این ماده کم است و به همین دلیل وقتی نمی‌خواهید بافت زیادی از دندان بردارید، گزینه‌ی خوبی است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not address this claim"
+          },
+          {
+            "id": "u23",
+            "claim_quote": "حداقل ضخامت‌هایی که کارخانه تعیین کرده این‌هاست:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u24",
+            "claim_quote": "نوع رستوریشن",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u25",
+            "claim_quote": "حداقل ضخامت",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u26",
+            "claim_quote": "کراون قدامی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u27",
+            "claim_quote": "اینسیزال ۱ میلی‌متر، محیطی ۰.۸ میلی‌متر",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Incisal: at least 1.0 mm Circumferential: at least 0.8 mm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u28",
+            "claim_quote": "کراون خلفی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u29",
+            "claim_quote": "اکلوزال ۱ میلی‌متر، محیطی ۰.۸ میلی‌متر",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Occlusal: at least 1.0 mm ≥ 1.0 mm\n\nCircumferential: at least 0.8 mm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u30",
+            "claim_quote": "اینله، انله، تیبل تاپ",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u31",
+            "claim_quote": "۱ میلی‌متر",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Occlusal: at least 1.0 mm In the area of the isthmus: at least 1.0 mm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u32",
+            "claim_quote": "ونیر",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u33",
+            "claim_quote": "لبیال و اینسیزال ۰.۳، سرویکال ۰.۲ میلی‌متر",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Incisal: at least 0.3 mm Labial: at least 0.3 mm\n\n≥ 0.3 mm\n\nCervical: at least 0.2 mm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u34",
+            "claim_quote": "کراون قدامی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u35",
+            "claim_quote": "کراون خلفی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u36",
+            "claim_quote": "انله",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u37",
+            "claim_quote": "تیبل تاپ",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u38",
+            "claim_quote": "ونیر (تصاویر از بروشور VITA)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u39",
+            "claim_quote": "∆ کدام بلوک را بخواهیم",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u40",
+            "claim_quote": "بلوک‌های انامیک در سه درجه‌ی شفافیت تولید می‌شوند: T (Translucent، شفافیت معمولی)، HT (High Translucent، شفافیت زیاد) و ST (Super Translucent، شفافیت خیلی زیاد).",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "VITA ENAMIC ST (Super Translucent)\n\nmono- chromatic\n\nVITA ENAMIC HT (High Translucent)\n\nmono- chromatic\n\nVITA ENAMIC T (Translucent)",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u41",
+            "claim_quote": "هرچه بلوک شفاف‌تر باشد، رنگ دندان زیرین بیشتر از آن دیده می‌شود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not address this claim"
+          },
+          {
+            "id": "u42",
+            "claim_quote": "پس اگر استامپ تیره است، مثلاً کور فلزی یا تغییر رنگ شدید دارد، از لابراتوار بلوک T بخواهید که پوشانندگی بیشتری دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Primarily suitable for full crowns intended to mask discolored or dark stumps, such as in cases of tetracycline discoloration, amalgam tattoos, metal core-build ups and restorations of older patients.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u43",
+            "claim_quote": "برای کراون و ونیر معمولی HT استفاده می‌شود و ST بیشتر برای اینله، انله و تیبل تاپ است که باید با رنگ دندان اطراف یکی شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Thanks to the pronounced chameleon effect, they are primarily suitable for inlays, onlays, table tops, incisal edges.",
+            "source_ref": null,
+            "note": "HT half stated by: Primarily suitable for full and partial crowns and veneers, cervical veneers."
+          },
+          {
+            "id": "u44",
+            "claim_quote": "رنگ‌های موجود برای هر درجه‌ی شفافیت بر اساس VITA 3D-MASTER.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The shades of VITA ENAMIC have been matched with those of VITA SYSTEM 3D-MASTER, which is the only tooth shade system available on the market that takes all three color dimensions into account and integrates them into a systematic classification principle for shade determination and shade reproduction:",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u45",
+            "claim_quote": "نسخه‌ی multiColor لایه‌های رنگی دارد که کروما به سمت سرویکال بیشتر می‌شود (تصویر از بروشور VITA)",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The six shade layers integrated in the block, with an increasing intensity (chroma) towards the bottom, enable excellent reproduction of the natural tooth shade gradient.",
+            "source_ref": null,
+            "note": "source says bottom of the block; cervical not named"
+          },
+          {
+            "id": "u46",
+            "claim_quote": "∆ امتحان، تنظیم و پالیش",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u47",
+            "claim_quote": "موقع امتحان کردن و تنظیم اکلوژن، فقط با فرز الماسی، همراه آب و با فشار کم کار کنید، چون فرز تنگستن کارباید ممکن است به ماده آسیب بزند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Do not rework VITA ENAMIC restorations manually using tungsten carbide instru- ments, as these may damage the material.",
+            "source_ref": null,
+            "note": "دستور مبتنی بر توصیه‌ی خود منبع (کار با ابزار الماسی، آب و فشار کم؛ پرهیز از کارباید) و دلیل با همان سطح احتیاط (may damage)."
+          },
+          {
+            "id": "u48",
+            "claim_quote": "هر جایی که تراش خورد باید دوباره پالیش شود، چون سطح زبر هم براقیتش را از دست می‌دهد و هم زودتر رنگ می‌گیرد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not address this claim"
+          },
+          {
+            "id": "u49",
+            "claim_quote": "پالیش دو مرحله دارد: اول پالیشر صورتی همراه آب، بعد پالیشر خاکستری الماسه با فشار کم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Prepolishing with the pink polishers of the VITA ENAMIC Polishing Set\n\n(7,000 – 10,000 rpm) while cooling with water.",
+            "source_ref": null,
+            "note": "second step: High-gloss polishing with the grey diamond-coated polishers; Exert slight pressure only!"
+          },
+          {
+            "id": "u50",
+            "claim_quote": "اگر از دیسک Sof-Lex استفاده می‌کنید، فقط دیسک متوسط و خیلی نرم را به کار ببرید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "If Sof-Lex polishing discs are used for prepolishing, ensure that only the medium grain (M) and very fine grain (SF) types are used.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u51",
+            "claim_quote": "پاک‌کننده‌های حاوی استون هم نباید با رستوریشن تماس داشته باشند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Cleaning agents containing acetone for cavities, prepared teeth, root canals and tooth surfaces (such as FOKALDRY, Lege Artis) should not come into contact with restorations made of VITA ENAMIC, since they may damage the surfaces of the restorations.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u52",
+            "claim_quote": "مرحله‌ی اول، پالیشر صورتی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u53",
+            "claim_quote": "مرحله‌ی دوم، پالیشر خاکستری (تصاویر از بروشور VITA)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u54",
+            "claim_quote": "∆ سمان کردن",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u55",
+            "claim_quote": "سمان کردن این ماده حتماً با سمان رزینی انجام می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Adhesive bonding of VITA ENAMIC restorations requires the use of light-curing or dual-curing luting composites.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u56",
+            "claim_quote": "سطح داخلی رستوریشن ابتدا با اتانول تمیز می‌شود، سپس ۶۰ ثانیه با هیدروفلوریک اسید ۵ درصد اچ می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Apply VITA ADIVA CERA-ETCH (hydrofluoric acid gel, 5%) to the inner surfaces.",
+            "source_ref": null,
+            "note": "ethanol and 60 sec are stated in the adjacent sentences"
+          },
+          {
+            "id": "u57",
+            "claim_quote": "اسید فقط بخش سرامیکی را حل می‌کند و همین گیر میکرومکانیکی ایجاد می‌کند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not address this claim"
+          },
+          {
+            "id": "u58",
+            "claim_quote": "بعد سطح کامل شسته و خشک می‌شود و سایلن زده می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Completely remove any remaining acid by using water spray (60 sec.) or clean in\n\nthe ultrasonic bath.",
+            "source_ref": null,
+            "note": "drying and silane stated in the following sentences"
+          },
+          {
+            "id": "u59",
+            "claim_quote": "سطح اچ‌شده را با برس تمیز نکنید، چون آلوده می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Do not brush off, as this would lead to significant surface contamination.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u60",
+            "claim_quote": "اچ سطح داخلی رستوریشن با هیدروفلوریک اسید ۵ درصد (تصویر از بروشور VITA)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u61",
+            "claim_quote": "سمان سلف‌ادهزیو فقط برای کراون قابل قبول است و اینله، انله، تیبل تاپ و ونیر باید با سیستم ادهزیو کامل سمان شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The self-adhesive composite VITA ADIVA S-CEM is also only suitable for cementing crowns (dentine adhesion).",
+            "source_ref": null,
+            "note": "source names the product S-CEM; table row marks other restorations with no self-adhesive option"
+          },
+          {
+            "id": "u62",
+            "claim_quote": "برای ونیر نازک هم سمان لایت‌کیور بهتر است، چون سمان دوال‌کیور ممکن است بعداً رنگ را کمی به سمت زرد ببرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Dual-curing composites should not be used for thin veneers, since these composites may cause a slight change in color (yellow shade) after curing.",
+            "source_ref": null,
+            "note": "preference for light-curing in the next sentence"
+          },
+          {
+            "id": "u63",
+            "claim_quote": "∆ لابراتوار و اضافه کردن کامپوزیت",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u64",
+            "claim_quote": "این ماده هیچ‌وقت در کوره قرار نمی‌گیرد، چون بخش پلیمری آن در دمای کوره از بین می‌رود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Under no circumstances should restorations made from VITA ENAMIC be fired during processing.",
+            "source_ref": null,
+            "note": "reason about polymer in furnace heat not addressed"
+          },
+          {
+            "id": "u65",
+            "claim_quote": "رنگ‌آمیزی‌اش در لابراتوار با استین لایت‌کیور انجام می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "VITA ENAMIC restorations can be easily characterized (staining technique) with the special VITA AKZENT LC stains by polymerization.",
+            "source_ref": null,
+            "note": "laboratory setting not named by the source"
+          },
+          {
+            "id": "u66",
+            "claim_quote": "اگر بعداً لازم شد داخل دهان کامپوزیت به آن اضافه کنید، از هیدروفلوریک اسید استفاده نکنید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Extraorally only (!): etching with a 5% hydrofluoric acid gel such as VITA ADIVA\n\nCERA-ETCH, as follows:",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u67",
+            "claim_quote": "سطح را با فرز الماسی یا سندبلاست زبر کنید و بعد سایلن و باندینگ بزنید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Apply silane bonding agent, for example, VITA ADIVA C-PRIME, to the roughened surface.",
+            "source_ref": null,
+            "note": "roughening by diamond bur or sandblasting stated in the preceding list"
+          },
+          {
+            "id": "u68",
+            "claim_quote": "رستوریشن انامیک نباید در کوره پخته شود (تصویر از بروشور VITA)",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Under no circumstances should restorations made from VITA ENAMIC be fired during processing.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u69",
+            "claim_quote": "∆ یک نمونه از بروشور",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u70",
+            "claim_quote": "قبل از درمان",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          },
+          {
+            "id": "u71",
+            "claim_quote": "بعد از درمان با بلوک 1M2-HT (تصاویر از بروشور VITA)",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The restorations were fabricated using VITA ENAMIC blocks of shade 1M2-HT.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u72",
+            "claim_quote": "نکات بالا بر اساس دستورالعمل کارخانه‌ی سازنده (VITA) و توضیحات کلی مربوط به این گروه از مواد نوشته شده و از مطالعات بالینی گرفته نشده است.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, caption, signpost or page-scope statement"
+          }
+        ],
+        "counts": {
+          "matches": 30,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 12,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 30
+        },
+        "assessable": 30,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "The current version can be found at www.vita-zahnfabrik.com",
+        "fact_fa": "از ۳۰ ادعایی که منبع به آن پرداخته‌اند، ۳۰ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱۲ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
+    ]
   }
 }

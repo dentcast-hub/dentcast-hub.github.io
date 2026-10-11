@@ -1047,7 +1047,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 31,
+   "count": 32,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1079,7 +1079,8 @@
     "sharehub/share-28",
     "sharehub/share-29",
     "sharehub/share-30",
-    "sharehub/share-31"
+    "sharehub/share-31",
+    "sharehub/share-32"
    ]
   },
   {
@@ -1095,7 +1096,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 31,
+   "count": 32,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1127,7 +1128,8 @@
     "sharehub/share-28",
     "sharehub/share-29",
     "sharehub/share-30",
-    "sharehub/share-31"
+    "sharehub/share-31",
+    "sharehub/share-32"
    ]
   },
   {
@@ -1981,7 +1983,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 20,
+   "count": 21,
    "content_ids": [
     "episodes/episode-3",
     "episodes/episode-11",
@@ -2002,7 +2004,8 @@
     "insight/insight-59",
     "notecast/episode-40",
     "sharehub/share-20",
-    "sharehub/share-22"
+    "sharehub/share-22",
+    "sharehub/share-32"
    ]
   },
   {
@@ -2078,6 +2081,47 @@
    ]
   },
   {
+   "key": "ترمیم_غیرمستقیم",
+   "tag": "#ترمیم_غیرمستقیم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رستوریشنی که بیرون دهان ساخته و بعد باند می‌شود — اینله، آنله، اورلی.",
+   "use_when": "مقاله بین مستقیم و غیرمستقیم انتخاب کند یا رستوریشنِ غیرمستقیم را موضوع داشته باشد.",
+   "aliases": [
+    "indirect restoration",
+    "رستوریشن غیرمستقیم",
+    "اینله",
+    "inlay",
+    "اینله آنله",
+    "اینله و آنله"
+   ],
+   "variants": [
+    "#اینله"
+   ],
+   "co_tags": [],
+   "count": 18,
+   "content_ids": [
+    "episodes/episode-6",
+    "episodes/episode-7",
+    "episodes/episode-9",
+    "episodes/episode-15",
+    "episodes/episode-122",
+    "episodes/episode-123-3",
+    "episodes/episode-137",
+    "episodes/episode-148",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-8",
+    "notecast/episode-11",
+    "notecast/episode-15",
+    "notecast/episode-18",
+    "episodes/episode-159-1",
+    "dentai/dentai-29",
+    "insight/insight-84",
+    "sharehub/share-32"
+   ]
+  },
+  {
    "key": "دکتر_شهابیان",
    "tag": "#دکتر_شهابیان",
    "domain": "brand",
@@ -2148,46 +2192,6 @@
     "dentai/promptologist/prompt6-2",
     "dentai/promptologist/prompt6-3",
     "dentai/promptologist/prompt7-1"
-   ]
-  },
-  {
-   "key": "ترمیم_غیرمستقیم",
-   "tag": "#ترمیم_غیرمستقیم",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "رستوریشنی که بیرون دهان ساخته و بعد باند می‌شود — اینله، آنله، اورلی.",
-   "use_when": "مقاله بین مستقیم و غیرمستقیم انتخاب کند یا رستوریشنِ غیرمستقیم را موضوع داشته باشد.",
-   "aliases": [
-    "indirect restoration",
-    "رستوریشن غیرمستقیم",
-    "اینله",
-    "inlay",
-    "اینله آنله",
-    "اینله و آنله"
-   ],
-   "variants": [
-    "#اینله"
-   ],
-   "co_tags": [],
-   "count": 17,
-   "content_ids": [
-    "episodes/episode-6",
-    "episodes/episode-7",
-    "episodes/episode-9",
-    "episodes/episode-15",
-    "episodes/episode-122",
-    "episodes/episode-123-3",
-    "episodes/episode-137",
-    "episodes/episode-148",
-    "notecast/episode-6",
-    "notecast/episode-7",
-    "notecast/episode-8",
-    "notecast/episode-11",
-    "notecast/episode-15",
-    "notecast/episode-18",
-    "episodes/episode-159-1",
-    "dentai/dentai-29",
-    "insight/insight-84"
    ]
   },
   {
@@ -2938,6 +2942,42 @@
    ]
   },
   {
+   "key": "cad_cam",
+   "tag": "#CAD_CAM",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "طراحی و ساختِ کامپیوتریِ رستوریشن — اسکن، دیزاین و میلینگ/پرینت.",
+   "use_when": "مقاله جریانِ CAD/CAM یا میلینگ را موضوع داشته باشد.",
+   "aliases": [
+    "cad cam",
+    "کدکم",
+    "cad/cam",
+    "میلینگ",
+    "milling",
+    "cadcam",
+    "کد کم",
+    "سی ای دی کم"
+   ],
+   "variants": [
+    "#CADCAM"
+   ],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-96",
+    "episodes/episode-104",
+    "episodes/episode-123-1",
+    "episodes/episode-133",
+    "episodes/episode-149-2",
+    "insight/insight-30",
+    "insight/insight-31",
+    "insight/insight-35",
+    "dentai/dentai-30",
+    "sharehub/share-27",
+    "sharehub/share-32"
+   ]
+  },
+  {
    "key": "افزایش_vd",
    "tag": "#افزایش_VD",
    "domain": "clinical",
@@ -3284,41 +3324,6 @@
    ]
   },
   {
-   "key": "cad_cam",
-   "tag": "#CAD_CAM",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "طراحی و ساختِ کامپیوتریِ رستوریشن — اسکن، دیزاین و میلینگ/پرینت.",
-   "use_when": "مقاله جریانِ CAD/CAM یا میلینگ را موضوع داشته باشد.",
-   "aliases": [
-    "cad cam",
-    "کدکم",
-    "cad/cam",
-    "میلینگ",
-    "milling",
-    "cadcam",
-    "کد کم",
-    "سی ای دی کم"
-   ],
-   "variants": [
-    "#CADCAM"
-   ],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-96",
-    "episodes/episode-104",
-    "episodes/episode-123-1",
-    "episodes/episode-133",
-    "episodes/episode-149-2",
-    "insight/insight-30",
-    "insight/insight-31",
-    "insight/insight-35",
-    "dentai/dentai-30",
-    "sharehub/share-27"
-   ]
-  },
-  {
    "key": "zero_bone_loss",
    "tag": "#Zero_Bone_Loss",
    "domain": "clinical",
@@ -3574,6 +3579,38 @@
     "litecast/lite-CAST17",
     "litecast/lite-CAST18",
     "litecast/lite-CAST19"
+   ]
+  },
+  {
+   "key": "اچ_سرامیک",
+   "tag": "#اچ_سرامیک",
+   "domain": null,
+   "words": 2,
+   "definition": "اچ کردنِ سطح سرامیک با هیدروفلوریک.",
+   "use_when": "مقاله پروتکل اچ سرامیک را تعیین کند.",
+   "aliases": [
+    "HF",
+    "هیدروفلوریک",
+    "hydrofluoric",
+    "اچ HF",
+    "ceramic etching",
+    "hf"
+   ],
+   "variants": [
+    "#HF"
+   ],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-10",
+    "episodes/episode-16",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "notecast/episode-12",
+    "notecast/episode-16",
+    "notecast/episode-29",
+    "insight/insight-42",
+    "sharehub/share-32"
    ]
   },
   {
@@ -3884,37 +3921,6 @@
     "episodes/episode-159-1",
     "metanotes/meta-14",
     "sharehub/share-18"
-   ]
-  },
-  {
-   "key": "اچ_سرامیک",
-   "tag": "#اچ_سرامیک",
-   "domain": null,
-   "words": 2,
-   "definition": "اچ کردنِ سطح سرامیک با هیدروفلوریک.",
-   "use_when": "مقاله پروتکل اچ سرامیک را تعیین کند.",
-   "aliases": [
-    "HF",
-    "هیدروفلوریک",
-    "hydrofluoric",
-    "اچ HF",
-    "ceramic etching",
-    "hf"
-   ],
-   "variants": [
-    "#HF"
-   ],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-10",
-    "episodes/episode-16",
-    "notecast/episode-9",
-    "notecast/episode-10",
-    "notecast/episode-12",
-    "notecast/episode-16",
-    "notecast/episode-29",
-    "insight/insight-42"
    ]
   },
   {
@@ -4943,6 +4949,31 @@
    ]
   },
   {
+   "key": "ترانسلوسنسی",
+   "tag": "#ترانسلوسنسی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "میزانِ عبورِ نور از رستوریشن.",
+   "use_when": "مقاله ترانسلوسنسی را عاملِ نتیجه‌ی رنگی بداند.",
+   "aliases": [
+    "translucency",
+    "شفافیت",
+    "اپسیتی",
+    "opacity"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "insight/insight-5",
+    "sharehub/share-26",
+    "insight/insight-91",
+    "sharehub/share-32"
+   ]
+  },
+  {
    "key": "تورک_پیچ",
    "tag": "#تورک_پیچ",
    "domain": "clinical",
@@ -5747,30 +5778,6 @@
     "episodes/episode-52",
     "litecast/lite-CAST13",
     "sharehub/share-13"
-   ]
-  },
-  {
-   "key": "ترانسلوسنسی",
-   "tag": "#ترانسلوسنسی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "میزانِ عبورِ نور از رستوریشن.",
-   "use_when": "مقاله ترانسلوسنسی را عاملِ نتیجه‌ی رنگی بداند.",
-   "aliases": [
-    "translucency",
-    "شفافیت",
-    "اپسیتی",
-    "opacity"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-17",
-    "episodes/episode-18",
-    "insight/insight-5",
-    "sharehub/share-26",
-    "insight/insight-91"
    ]
   },
   {
@@ -6701,6 +6708,30 @@
     "insight/insight-28",
     "insight/insight-29",
     "insight/insight-32"
+   ]
+  },
+  {
+   "key": "سرامیک_هیبرید",
+   "tag": "#سرامیک_هیبرید",
+   "domain": null,
+   "words": 2,
+   "definition": "سرامیکِ رزین‌ماتریکس — PICN و RNC.",
+   "use_when": "مقاله این دسته را مقایسه یا انتخاب کند.",
+   "aliases": [
+    "resin matrix ceramic",
+    "PICN",
+    "RNC",
+    "هیبرید سرامیک",
+    "RMC"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-30",
+    "notecast/episode-29",
+    "notecast/episode-30",
+    "sharehub/share-32"
    ]
   },
   {
@@ -8628,29 +8659,6 @@
     "episodes/episode-34",
     "episodes/episode-35",
     "dentai/dentai-26"
-   ]
-  },
-  {
-   "key": "سرامیک_هیبرید",
-   "tag": "#سرامیک_هیبرید",
-   "domain": null,
-   "words": 2,
-   "definition": "سرامیکِ رزین‌ماتریکس — PICN و RNC.",
-   "use_when": "مقاله این دسته را مقایسه یا انتخاب کند.",
-   "aliases": [
-    "resin matrix ceramic",
-    "PICN",
-    "RNC",
-    "هیبرید سرامیک",
-    "RMC"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-30",
-    "notecast/episode-29",
-    "notecast/episode-30"
    ]
   },
   {

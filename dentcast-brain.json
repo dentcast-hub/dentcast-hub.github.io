@@ -16702,5 +16702,41 @@
       "secondary": [],
       "subtopic": "llm-tools"
     }
+  },
+  {
+    "type": "sharehub",
+    "id": "32",
+    "title": "ویتا انامیک در کار روزمره",
+    "caption": "نکات کاربردی دستورالعمل VITA ENAMIC برای انتخاب، تراش، تنظیم و سمان کردن",
+    "author": "دنت‌کست",
+    "source": "https://dentcast.org",
+    "hashtags": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#سرامیک_هیبرید",
+      "#CAD_CAM",
+      "#اچ_سرامیک",
+      "#سمان_رزینی",
+      "#ترانسلوسنسی",
+      "#ترمیم_غیرمستقیم"
+    ],
+    "keywords": [
+      "سرامیک هیبرید ویتا انامیک",
+      "PICN شبکه‌ی سرامیکی آغشته به پلیمر",
+      "موارد مصرف و منع مصرف ویتا انامیک",
+      "حداقل ضخامت تراش برای رستوریشن انامیک",
+      "انتخاب شفافیت بلوک T و HT و ST",
+      "تیبل تاپ با بلوک انامیک",
+      "پالیش رستوریشن انامیک",
+      "اچ هیدروفلوریک و سایلن برای سمان کردن انامیک",
+      "VITA ENAMIC hybrid ceramic preparation thickness",
+      "polymer-infiltrated ceramic network cementation"
+    ],
+    "url": "/sharehub/share-32.html",
+    "pillar": {
+      "primary": "ceramics",
+      "secondary": [],
+      "subtopic": "indications"
+    }
   }
 ]
