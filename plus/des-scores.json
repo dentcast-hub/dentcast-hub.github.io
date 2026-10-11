@@ -2519,6 +2519,257 @@
         "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
         "interpretation_fa": "متاآنالیز روی بیست‌وهشت مطالعه نشان می‌دهد دیابت نوع ۲ با DMFT بالاتر و افت جریان، pH و ظرفیت بافری بزاق همراه است. بین دیابت کنترل‌شده و کنترل‌نشده تفاوت معناداری در DMFT دیده نشد. داده‌ها مشاهده‌ای‌اند، پس همراهی نشان می‌دهند نه علیت. امتیاز مقدماتی است چون فقط چکیده در دسترس بود."
       }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "ABSTRACT_ONLY",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "Share Hub — دیابت و پوسیدگی؛ رابطه‌ای که آن‌قدرها مستقیم نیست",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "link label"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "وقتی از پیوند دیابت و سلامت دهان حرف می‌زنیم، ذهن اغلب مستقیم می‌رود سراغ پریودنتیت؛ آنجا هم شواهد قوی‌ترین حالت خودش را دارد.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "periodontitis evidence strength; the abstract does not address periodontitis"
+          },
+          {
+            "id": "u4",
+            "claim_quote": "اما درباره‌ی خودِ پوسیدگی ماجرا ظریف‌تر است، و یک متاآنالیز تازه این ظرافت را خوب نشان می‌دهد.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "announces the topic"
+          },
+          {
+            "id": "u5",
+            "claim_quote": "∆ متاآنالیز و شاخص DMFT",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u6",
+            "claim_quote": "در این مطالعه، پژوهشگران از میان نزدیک به دو هزار مقاله، در نهایت ۲۸ مطالعه را کنار هم گذاشتند تا ببینند آیا مبتلایان به دیابت نوع ۲ واقعاً پوسیدگی بیشتری دارند یا نه.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Thirty-nine studies that met the eligibility criteria were included in the qualitative synthesis, and twenty-eight of the included studies were suitable for the quantitative synthesis (meta-analysis).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u7",
+            "claim_quote": "پاسخ مثبت بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The meta-analysis showed that compared to non-diabetic individuals, type 2 diabetic individuals had higher DMFT (mean difference: 2.27; 95 % CI, 1.31 to 3.22; P < 0.00001).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u8",
+            "claim_quote": "شاخص DMFT (شمارش دندان‌های پوسیده، کشیده‌شده و پُرشده) در دیابتی‌ها به‌طور معناداری بالاتر بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The meta-analysis showed that compared to non-diabetic individuals, type 2 diabetic individuals had higher DMFT (mean difference: 2.27; 95 % CI, 1.31 to 3.22; P < 0.00001).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u9",
+            "claim_quote": "∆ حلقه‌ی واسط: بزاق",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u10",
+            "claim_quote": "اما نکته‌ی اصلی جای دیگری است.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost / importance judgment"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "همین افراد در سه شاخص بزاق هم وضعیت بدتری داشتند: جریان بزاق کمتر، pH پایین‌تر، و ظرفیت بافری ضعیف‌تر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Moreover, type 2 diabetic individuals had lower salivary flow rate (standardized mean difference: -2.62; 95 % CI, -4.38 to -0.86; P = 0.003), salivary pH (standardized mean difference: -1.35; 95 % CI, -1.89 to -0.80; P < 0.00001) and salivary buffering capacity (standardized mean difference: -0.60; 95 % CI, -0.93 to -0.27; P = 0.0004).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u12",
+            "claim_quote": "و همین‌جاست که حلقه‌ی واسط پیدا می‌شود.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost: the link it promises is stated by the next unit"
+          },
+          {
+            "id": "u13",
+            "claim_quote": "دیابت ممکن است پوسیدگی را نه با یک اثر مستقیم، بلکه از مسیر بزاق بسازد؛ بزاقی که کم شده، اسیدی‌تر شده و توان خنثی‌سازی‌اش را از دست داده.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Type 2 diabetes may lead to an increased index of dental caries and a reduction in salivary flow rate, salivary pH, and salivary buffering capacity in adults.",
+            "source_ref": null,
+            "note": "Hedge level matches (ممکن است / may). The 'not a direct effect' clause is not stated by the abstract and is silent, not scored; the later sentence on salivary alterations that facilitate caries progression is consistent."
+          },
+          {
+            "id": "u14",
+            "claim_quote": "بزاق سالم دهان را می‌شوید، اسید را خنثی می‌کند و جلوی باکتری را می‌گیرد؛ وقتی این سپر ضعیف می‌شود، باکتری‌های اسیدزا میدان بیشتری پیدا می‌کنند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "saliva physiology and mechanism of acidogenic bacteria not addressed in the abstract"
+          },
+          {
+            "id": "u15",
+            "claim_quote": "∆ دیابت کنترل‌شده و کنترل‌نشده",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u16",
+            "claim_quote": "یک نکته‌ی جالب هم هست.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "announces the topic"
+          },
+          {
+            "id": "u17",
+            "claim_quote": "وقتی دیابت کنترل‌شده را با کنترل‌نشده مقایسه کردند، تفاوت معناداری در پوسیدگی دیده نشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Whereas DMFT (mean difference: -2.15; 95 % CI, -6.47 to 2.17; P = 0.33) and salivary buffering capacity (standardized mean difference: -0.05; 95 % CI, -0.48 to 0.37; P = 0.80) were not significantly different between individuals with well-controlled diabetes and those with poorly-controlled diabetes.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u18",
+            "claim_quote": "علتش احتمالاً این است که DMFT یک شاخص تجمعی است؛ کل گذشته‌ی دهان فرد را در خودش دارد و وضعیت قند امروزش را خوب نشان نمی‌دهد.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "explanation for a finding with possibility hedge: احتمالاً"
+          },
+          {
+            "id": "u19",
+            "claim_quote": "پس محدودیت از خودِ ابزار اندازه‌گیری است، نه از واقعیت بیماری.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "inference about the DMFT instrument; the abstract does not state it"
+          },
+          {
+            "id": "u20",
+            "claim_quote": "∆ هشدار روش‌شناختی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u21",
+            "claim_quote": "و در نهایت یک هشدار روش‌شناختی.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost"
+          },
+          {
+            "id": "u22",
+            "claim_quote": "تمام این داده‌ها از مطالعات مشاهده‌ای می‌آید، نه مداخله‌ای.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Observational studies (cross-sectional, case-control, or cohort studies) that evaluated the association between type 2 diabetes and dental caries and/or salivary changes were included.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u23",
+            "claim_quote": "یعنی فقط نشان می‌دهد دیابت و پوسیدگی کنار هم دیده می‌شوند، اما ثابت نمی‌کند دیابت مستقیماً علتِ پوسیدگی است.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "what observational data can prove is not addressed in the abstract"
+          },
+          {
+            "id": "u24",
+            "claim_quote": "ارتباط واقعی و قابل‌اعتماد است، اما غیرمستقیم و از مسیر واسطه‌ها.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The meta-analysis showed that compared to non-diabetic individuals, type 2 diabetic individuals had higher DMFT (mean difference: 2.27; 95 % CI, 1.31 to 3.22; P < 0.00001).",
+            "source_ref": null,
+            "note": "The association half matches; the indirect, via-mediators half is silent in the abstract."
+          },
+          {
+            "id": "u25",
+            "claim_quote": "اثبات یک رابطه‌ی علّی قطعی به مطالعه‌ی دیگری نیاز دارد.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "need for a further study is not addressed in the abstract"
+          }
+        ],
+        "counts": {
+          "matches": 8,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 0,
+          "not_assessable": 5,
+          "author_view": 1,
+          "not_a_claim": 11
+        },
+        "assessable": 8,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": true,
+        "source_conclusion": "It is recommended that dentists and endocrinologists focus their attention on the oral health of this population.",
+        "fact_fa": "از ۸ ادعایی که منبع به آن پرداخته‌اند، ۸ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
     ]
   },
   "sharehub/share-2": {
