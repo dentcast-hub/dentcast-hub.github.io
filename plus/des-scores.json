@@ -12469,6 +12469,842 @@
         "fact_fa": "امتیاز شواهد این منبع ۵۲ از ۱۰۰ و باند C است؛ نوع سوال Therapy است.",
         "interpretation_fa": "این مرور سیستماتیک و متاآنالیز روی ۶ مطالعه بالینی (عمدتاً غیر تصادفی‌سازی‌شده) با پروتکل ثبت‌شده در PROSPERO انجام شده و جست‌وجوی دیتابیس و ارزیابی ریسک بایاس با دو ارزیاب مستقل به‌طور کامل توصیف شده‌اند. اما ارزیابی publication bias در متن ذکر نشده و پیگیری بیشتر مطالعات کوتاه‌مدت بوده، دو نقطه‌ضعفی که اعتبار یافته‌های بقا و موفقیت را محدود می‌کند بدون آنکه آن‌ها را بی‌اعتبار کند."
       }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "سرنوشت ونیرهای سرامیکی: باند رو انامل، دنتین یا کامپوزیت قدیمی؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "یک مرور سیستماتیک و متاآنالیز بررسی کرده است که بستر زیر ونیر سرامیکی چه اثری بر بقای ونیر، موفقیت درمان و عوارض کلینیکی دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The purpose of this systematic review and meta-analysis was to evaluate the effect of various substrates, including enamel, dentin, or an existing composite resin restoration, on the clinical survival and complication rates of ceramic veneers.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u4",
+            "claim_quote": "منظور از بستر، سطحی است که ونیر روی آن باند می‌شود: انامل، دنتین، یا ترمیم کامپوزیت رزینی موجود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The purpose of this systematic review and meta-analysis was to evaluate the effect of various substrates, including enamel, dentin, or an existing composite resin restoration, on the clinical survival and complication rates of ceramic veneers.",
+            "source_ref": null,
+            "note": "definition of substrate is implicit in the listed substrates"
+          },
+          {
+            "id": "u5",
+            "claim_quote": "در این مرور ۶ مطالعه بالینی و در مجموع ۱۴۲۹ ونیر گلاس‌سرامیک ارزیابی شدند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "All the included studies were carried out on glassceramic materials with a total of 1429 CVs.",
+            "source_ref": null,
+            "note": "6 studies stated in the abstract sentence: Of 973 screened articles, 6 clinical studies were included"
+          },
+          {
+            "id": "u6",
+            "claim_quote": "یک تفکیک مهم: بقا در برابر موفقیت",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "قبل از رفتن سراغ اعداد، باید دو مفهوم را از هم جدا کرد.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u8",
+            "claim_quote": "بقا (Survival): ونیر دچار شکست مطلق نشده باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The success rate of the included participants was estimated by the number of veneers that did not require a clinical intervention, and the survival rate by all veneers that did not fail absolutely.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u9",
+            "claim_quote": "یعنی نیاز به ساخت مجدد ونیر، درمان اندودنتیک پس از قرارگیری ونیر، تغییر طرح درمان یا کشیدن دندان پیدا نکرده باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Moreover, the failure incidences were divided into 2 rows of data: clinical complications, including all postinsertion complications that required clinical intervention, and absolute failure incidences, including those that required a remake of the veneer, pulp complications requiring endodontic treatment after CV insertion, change of treatment plan, or tooth extraction.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u10",
+            "claim_quote": "موفقیت (Success): ونیر در طول دوره پیگیری به هیچ مداخله کلینیکی نیاز پیدا نکرده باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The success rate of the included participants was estimated by the number of veneers that did not require a clinical intervention, and the survival rate by all veneers that did not fail absolutely.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u11",
+            "claim_quote": "پس ممکن است ونیری هنوز در دهان باشد و از نظر Survival موفق حساب شود، اما چون در طول پیگیری حداقل یک بار پای صندلی کار برده، در گروه Success قرار نگیرد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "inference that survival and success can diverge is not stated by the source; only the two definitions are"
+          },
+          {
+            "id": "u12",
+            "claim_quote": "فاصله‌ی این دو عدد در هر گروه، همان چیزی است که مقدار دردسر بالینی آن بستر را نشان می‌دهد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "interpretation of the gap between the two figures is not in the source"
+          },
+          {
+            "id": "u13",
+            "claim_quote": "اعداد اصلی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u14",
+            "claim_quote": "وقتی داده‌های این ۶ مطالعه با هم ترکیب شد، نتایج بر اساس بستر باندینگ این‌طور بود:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u15",
+            "claim_quote": "بستر",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u16",
+            "claim_quote": "بقا",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u17",
+            "claim_quote": "موفقیت",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u18",
+            "claim_quote": "انامل",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u19",
+            "claim_quote": "۹۹٪",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u20",
+            "claim_quote": "۹۹٪",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u21",
+            "claim_quote": "دنتین، اکسپوژر حداقل",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u22",
+            "claim_quote": "۹۵٪",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u23",
+            "claim_quote": "۹۵٪",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u24",
+            "claim_quote": "کامپوزیت رزینی موجود",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u25",
+            "claim_quote": "۹۴٪",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u26",
+            "claim_quote": "۷۰٪",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u27",
+            "claim_quote": "دنتین، اکسپوژر شدید",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u28",
+            "claim_quote": "۹۱٪",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u29",
+            "claim_quote": "۷۴٪",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u30",
+            "claim_quote": "محدوده‌های گزارش‌شده: انامل ۹۸ تا ۱۰۰ برای هر دو شاخص؛ اکسپوژر حداقل دنتین ۹۱ تا ۱۰۰ برای بقا و ۹۰ تا ۹۹ برای موفقیت؛ کامپوزیت موجود ۹۱ تا ۹۷ و ۶۰ تا ۸۰؛ اکسپوژر شدید دنتین ۸۴ تا ۹۸ و ۶۴ تا ۸۵.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The pooled survival rates were 99% (range 98% to 100%) when CVs were bonded to enamel,10,22,30–32 94% (range 91% to 97%) when CVs were bonded to existing composite resin restorations,10,22,31 95% (range 91% to 100%) when CVs were bonded to surfaces with minimal dentin exposure,29,30 and 91% (range 84% to 98%) when CVs were bonded to surfaces with severe dentin exposure29,30 (Fig. 2).",
+            "source_ref": null,
+            "note": "success ranges are in the following pooled-success sentence and agree"
+          },
+          {
+            "id": "u31",
+            "claim_quote": "نکته‌ی کلیدی جدول این است که در انامل و در اکسپوژر حداقل دنتین، دو عدد بقا و موفقیت تقریباً یکی هستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Enamel-bonded veneers had almost perfect rates of survival (99% with a range of 98% to 100%) and success (99% with a range of 98% to 100%).",
+            "source_ref": null,
+            "note": "minimal dentin exposure 95% and 95% is in the abstract sentence on composite and minimal dentin"
+          },
+          {
+            "id": "u32",
+            "claim_quote": "اما در کامپوزیت موجود و در اکسپوژر شدید دنتین، ونیر معمولاً سر جایش می‌ماند ولی برای نگه داشتنش مداخله لازم شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Veneers bonded to composite resin or surfaces with minimal dentin exposure had slightly lower survival rates (94% with a range of 91% to 97% and 95% with a range of 91% to 100%, respectively) and success rates (70% with a range of 60% to 80% and 95% with a range of 90% to 99%).",
+            "source_ref": null,
+            "note": "severe dentin exposure 91% versus 74% is in the abstract severe-exposure sentence"
+          },
+          {
+            "id": "u33",
+            "claim_quote": "کامپوزیت موجود از این نظر بدترین گروه بود؛ حدود ۳۰٪ ونیرها در طول پیگیری به مداخله نیاز پیدا کردند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Veneers bonded to composite resin or surfaces with minimal dentin exposure had slightly lower survival rates (94% with a range of 91% to 97% and 95% with a range of 91% to 100%, respectively) and success rates (70% with a range of 60% to 80% and 95% with a range of 90% to 99%).",
+            "source_ref": null,
+            "note": "ranking as worst group is not stated by any sentence (silent half); 30% is the complement of the 70% success rate"
+          },
+          {
+            "id": "u34",
+            "claim_quote": "در مقایسه مستقیم، ونیرهای باندشده به دنتین عوارض و شکست بیشتری نسبت به ونیرهای باندشده به انامل داشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The enamel is the perfect surface for CV adhesion; fewer clinical complications and failure incidences were reported, with high success and survival rates in comparison with other substrates.30–32",
+            "source_ref": null,
+            "note": "conclusion 3 says absolute failure was similar, although enamel was more favorable"
+          },
+          {
+            "id": "u35",
+            "claim_quote": "همچنین ونیرهای روی دنتین با اکسپوژر حداقل، نسبت به اکسپوژر شدید، به‌طور معنی‌داری کمتر به مداخله کلینیکی نیاز پیدا کردند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Additionally, veneers attached to teeth with minimal dentin exposure were significantly less likely to require clinical interventions (RD: −0.16; 95% CI: −0.31 to −0.01) and had a reduced incidence of failure (RD: −0.08; 95% CI: −0.17 to 0.01) compared with those with severe dentin exposure.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u36",
+            "claim_quote": "چرا باند به دنتین دردسر بیشتری دارد",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u37",
+            "claim_quote": "باند به انامل عمدتاً بر تشکیل resin tags تکیه دارد و از نظر بالینی اتصال قابل‌اعتمادتری می‌دهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Bonding to enamel relies mainly on resin tags to provide reliable and durable bonds, as documented by long-term clinical trials and in vitro studies.14,15",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u38",
+            "claim_quote": "دنتین به دلیل ماهیت مرطوبش سطح دشوارتری است و نفوذ رزین در آن می‌تواند ناقص بماند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Incomplete resin infiltration of the demineralized dentin may occur16 because of the wet nature of dentin and the hydrogel-rich zone which is formed of highly hydrated proteoglycans17,18",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u39",
+            "claim_quote": "مقاله تأکید می‌کند که با پروتکل ادهزیو مناسب و آماده‌سازی درست سطح، باند بادوام به دنتین هم قابل دستیابی است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Nonetheless, selecting the optimal adhesive protocol and surface pretreatment can produce a durable and reliable bond to dentin.18,19",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u40",
+            "claim_quote": "آنچه در پیگیری‌های بالینی دیده شده این است که بخش قابل‌توجهی از عوارض به از دست رفتن اتصال برمی‌گردد: مایکرولیکیج، تغییر رنگ مارژین، پوسیدگی ثانویه و جداشدگی یا شکست ونیر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Most clinical complications have been associated with the loss of adhesion, particularly recurrent caries, microleakage, marginal discoloration, and veneer fractures.10,22,29–31",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u41",
+            "claim_quote": "در بسیاری از موارد شکست هم، قطعه‌ی شکسته پیش از fracture اتصالش را از دست داده بود؛ یعنی loss of adhesion ممکن است مقدم بر شکست باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In many situations, the nonfractured parts remained attached to the underlying substrate, indicating that the fractured part encountered attachment loss before fracture.10,29,32",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u42",
+            "claim_quote": "نکات کلینیکی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u43",
+            "claim_quote": "حفظ انامل مهم‌ترین متغیر است",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u44",
+            "claim_quote": "مقاله انامل را مطلوب‌ترین بستر برای adhesion ونیر معرفی می‌کند و تأکید دارد که حفظ انامل هنگام preparation و قرار گرفتن مارژین‌ها روی انامل برای موفقیت بلندمدت اهمیت دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The enamel is the perfect surface for CV adhesion; fewer clinical complications and failure incidences were reported, with high success and survival rates in comparison with other substrates.30–32",
+            "source_ref": null,
+            "note": "second half (key to long-term success is enamel preservation and enamel margins) is in a later Discussion sentence"
+          },
+          {
+            "id": "u45",
+            "claim_quote": "رویکردهای محافظه‌کارانه، از جمله تکنیک‌های non-preparation و ونیرهای با ضخامت حداکثر حدود ۰/۲ میلی‌متر، به حفظ انامل کمک می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The preservation of enamel during CV tooth preparation is beneficial and has been made feasible with a contemporary approach,37 the adoption of nonpreparation techniques38 and the fabrication of restorations not exceeding 0.2 mm.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u46",
+            "claim_quote": "مقاله اشاره می‌کند که ساخت چنین ونیرهای فوق‌نازکی با تکنیک‌های دستی، heat-press و CAD-CAM دشوار بوده و 3D printing می‌تواند یک راهکار بالقوه باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Conventional manual, heat-press, or CAD-CAM techniques had difficulties producing ultrathin veneer restorations.39",
+            "source_ref": null,
+            "note": "second half (3D printing could be the answer) is the next sentence"
+          },
+          {
+            "id": "u47",
+            "claim_quote": "روی کامپوزیت قدیمی باید محتاط‌تر بود",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u48",
+            "claim_quote": "ونیرهای باندشده به ترمیم‌های کامپوزیتی موجود، نسبت به ونیرهای باندشده به ساختار دندان، عوارض بیشتری نشان دادند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Nevertheless, complications of CVs bonded to existing composite resin restorations were statistically significantly higher than those bonded to tooth substrates.10,22,31",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u49",
+            "claim_quote": "مقاله اشاره می‌کند که conditioning و bonding protocol مناسب و silica-coating کامپوزیت موجود می‌تواند نتایج را بهبود دهد، هرچند نتایج همچنان از باند به ساختار دندان ضعیف‌تر بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Gresgnigt et al10,22,31 reported better outcomes than earlier reports based on improved conditioning and bonding protocols applied to enamel, dentin, and composite resin substrates and silica-coating of the existing composite resin restorations.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u50",
+            "claim_quote": "گسترش preparation به سمت پالاتال در برخی شرایط",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u51",
+            "claim_quote": "در دندان‌هایی با ترمیم کامپوزیت بزرگ یا اکسپوژر قابل‌توجه دنتین، مقاله پیشنهاد می‌کند preparation در صورت نیاز به سمت پالاتال گسترش پیدا کند تا مقدار بیشتری از سطح باندشونده روی انامل قرار بگیرد و سطح اتصال زیاد شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The preparation of teeth with large composite resin restorations or significant dentin exposure could Alqutaibi et al Month xxxx be extended palatally, increasing the amount of bonded enamel and enhancing the surface area for adhesion.45,46",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u52",
+            "claim_quote": "در مقابل، بهتر است از palatal chamfer پرهیز شود مگر اینکه اندیکاسیون مشخصی داشته باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, a palatal chamfer preparation should be avoided, unless specifically indicated; it is not a conservative option and is associated with higher marginal discrepancies compared with the shoulder design.48",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u53",
+            "claim_quote": "این طرح preparation محافظه‌کارانه نیست و در مقایسه با طراحی shoulder، marginal discrepancy بیشتری نشان داده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, a palatal chamfer preparation should be avoided, unless specifically indicated; it is not a conservative option and is associated with higher marginal discrepancies compared with the shoulder design.48",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u54",
+            "claim_quote": "ناحیه سرویکال حساس‌ترین نقطه است",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u55",
+            "claim_quote": "مایکرولیکیج و تغییر رنگ مارژین در مطالعات بیشتر در ناحیه سرویکال دیده شدند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Microleakage and marginal discolorations were detected more at the cervical than the incisal margins, while the proximal margins are hidden and were free from discoloration.10,22,31",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u56",
+            "claim_quote": "مقاله این را به کاهش ضخامت انامل در این ناحیه و احتمال بیشتر قرار گرفتن مارژین ونیر روی دنتین ربط می‌دهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "There is a consensus that cervical enamel is depleted during preparation and that dentin is more prone to exposure at the middle and cervical third of the tooth, leaving the cervical margin of the CV on dentin.10,22,29–32",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u57",
+            "claim_quote": "در مقابل، مارژین‌های پروگزیمال که در این مطالعات پنهان بودند، عموماً بدون تغییر رنگ گزارش شدند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Microleakage and marginal discolorations were detected more at the cervical than the incisal margins, while the proximal margins are hidden and were free from discoloration.10,22,31",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u58",
+            "claim_quote": "در اکسپوژر بیش از ۵۰٪ دنتین، IDS کمک می‌کند",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u59",
+            "claim_quote": "در یکی از مطالعات واردشده در این مرور، استفاده از Immediate Dentin Sealing (IDS) در preparationهایی با بیش از ۵۰٪ dentin exposure با افزایش survival از ۸۱/۸٪ به ۹۶/۴٪ همراه بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The debonding risk of CVs placed on preparations with more than 50% dentin exposure can be reduced by immediate dentin sealing (IDS), which enhances the survival rate up to 96.4% versus 81.8% for no sealing preparation.31",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u60",
+            "claim_quote": "نویسندگان IDS را در کنار بررسی fit ونیر قبل از bonding و surface treatment مناسب، به‌عنوان استراتژی پیشگیرانه مطرح کرده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These strategies may include incorporating an immediate dentin sealing luting protocol, assessing the fit of ceramic veneers before bonding, and using appropriate surface treatments to improve adhesion reliability.31,56",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u61",
+            "claim_quote": "فیت ونیر قبل از باندینگ",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u62",
+            "claim_quote": "مقاله ارزیابی fit ونیر پیش از bonding را، به‌خصوص وقتی اکسپوژر دنتین قابل‌توجه است، در کنار سایر اقدامات پیشگیرانه مطرح می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These strategies may include incorporating an immediate dentin sealing luting protocol, assessing the fit of ceramic veneers before bonding, and using appropriate surface treatments to improve adhesion reliability.31,56",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u63",
+            "claim_quote": "در اکسپوژر وسیع دنتین، مداخلات بعدی خطرناک‌اند",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u64",
+            "claim_quote": "مقاله مواردی از fracture ونیر هنگام آماده‌سازی access cavity اندودنتیک را گزارش کرده و تأکید می‌کند که مداخلات تهاجمی می‌توانند باعث شکست ونیر یا حتی دندان شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "As CVs are delicate restorations, aggressive interventions to manage complications may lead to veneer or tooth fracture, notably in the cervical area, as evidenced when an endodontic access cavity is prepared with CVs bonded to surfaces with extensive dentin exposure.29,30",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u65",
+            "claim_quote": "بنابراین وضعیت پالپ و احتمال نیاز به درمان اندودنتیک باید از ابتدا در برنامه‌ریزی درمان دیده شود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "inference: pulp status and endodontic planning from the start is not advised by the source"
+          },
+          {
+            "id": "u66",
+            "claim_quote": "پارافانکشن و محافظ اکلوزالی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u67",
+            "claim_quote": "در یکی از مطالعات رابطه‌ی مشخصی میان bruxism و failure دیده نشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "While Gurel et al32 did not establish a link between bruxism and failure rates, Gresnight et al31 recommended protective occlusal devices for patients with parafunctional habits.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u68",
+            "claim_quote": "با این حال مطالعه‌ی دیگری استفاده از protective occlusal devices را برای بیماران دارای عادات پارافانکشنال توصیه کرده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "While Gurel et al32 did not establish a link between bruxism and failure rates, Gresnight et al31 recommended protective occlusal devices for patients with parafunctional habits.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u69",
+            "claim_quote": "شواهد این بخش به اندازه‌ی یافته‌های مربوط به substrate قطعی نیستند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not compare the strength of evidence between sections"
+          },
+          {
+            "id": "u70",
+            "claim_quote": "Heat-pressed در مقایسه با CAD-CAM",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u71",
+            "claim_quote": "هر دو روش با marginal gap همراه‌اند و حذف کامل این gap ممکن نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The available evidence indicates that regardless of the fabrication technique, a marginal gap is inevitable.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u72",
+            "claim_quote": "با این حال ونیرهای glass-ceramic ساخته‌شده به روش heat-pressed، fit داخلی و مارژینال بهتر و microleakage کمتری نسبت به ونیرهای CAD-CAM نشان داده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Nevertheless, heatpressed glass-ceramic veneers exhibited better internal and marginal fit and less microleakage compared with CADCAM fabricated veneers.48,54",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u73",
+            "claim_quote": "ارقام شکست مطلق",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u74",
+            "claim_quote": "در داده‌های این مرور، میزان absolute failure برای ونیرهای باندشده به ترمیم‌های کامپوزیتی موجود ۲۵/۳٪ و برای ونیرهای باندشده به substrate دندانی بدون ترمیم ۹/۵٪ گزارش شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "CVs bonded to teeth with existing composite resin restorations displayed double and half the incidence of absolute failure compared with those bonded to tooth substrates without restorations (25.3% versus 9.5%, respectively).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u75",
+            "claim_quote": "نویسندگان در نتیجه‌گیری این اختلاف را به‌عنوان یکی از یافته‌های مهم مطالعه مطرح کرده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "CVs bonded to teeth with existing composite resin restorations displayed double and half the incidence of absolute failure compared with those bonded to tooth substrates without restorations (25.3% versus 9.5%, respectively).",
+            "source_ref": null,
+            "note": "listed as one of the five conclusions"
+          },
+          {
+            "id": "u76",
+            "claim_quote": "در مورد دنتین هم تفاوت قابل‌توجه بود: absolute failure در اکسپوژر حداقل ۹/۵٪ و در اکسپوژر شدید ۳۰/۶٪ گزارش شد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "CVs bonded to teeth with severe dentin exposure demonstrated a significantly higher absolute failure rate than CVs luted to teeth with minimal dentin exposure, with failure rates of 30.6% versus 9.5%, respectively.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u77",
+            "claim_quote": "محدودیت‌های مطالعه",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u78",
+            "claim_quote": "این نتایج باید با توجه به محدودیت‌های مطالعه تفسیر شوند.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u79",
+            "claim_quote": "تنها ۶ مطالعه بالینی وارد مرور شدند و مطالعات از نظر طراحی، تعداد نمونه و مدت پیگیری با هم تفاوت داشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Of 973 screened articles, 6 clinical studies were included.",
+            "source_ref": null,
+            "note": "second half (designs, sample sizes, follow-up varied) is the limitations sentence"
+          },
+          {
+            "id": "u80",
+            "claim_quote": "تمام مطالعات روی glass-matrix ceramics انجام شده بودند، اما در برخی از آن‌ها داده‌های انواع مختلف سرامیک، از جمله feldspathic، leucite-reinforced و lithium disilicate، جداگانه گزارش نشده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Furthermore, all the included studies concentrated on Alqutaibi et al 9 glass-matrix ceramics without separate data for feldspathic ceramic, leucite-reinforced ceramics, and lithium disilicate glass CVs in some studies.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u81",
+            "claim_quote": "بنابراین بر اساس این مرور نمی‌توان عملکرد این مواد را مستقل از یکدیگر مقایسه کرد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "inference: that the materials cannot be compared independently is not stated by the source"
+          },
+          {
+            "id": "u82",
+            "claim_quote": "نویسندگان همچنین اشاره می‌کنند که follow-up در بیشتر مطالعات نسبتاً کوتاه بوده و ممکن است برای ارزیابی نتایج بلندمدت و longevity ونیر کافی نباشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Also, the short-term follow-up periods in most studies may not provide a comprehensive understanding of long-term outcomes and veneer longevity.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u83",
+            "claim_quote": "جمع‌بندی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label, table cell or signpost only"
+          },
+          {
+            "id": "u84",
+            "claim_quote": "انامل مطلوب‌ترین substrate برای ونیرهای سرامیکی است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The enamel is the perfect surface for CV adhesion; fewer clinical complications and failure incidences were reported, with high success and survival rates in comparison with other substrates.30–32",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u85",
+            "claim_quote": "ونیرهای باندشده به انامل بالاترین میزان بقا و موفقیت را داشتند، هر دو ۹۹٪.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Ceramic veneers bonded to enamel showed higher survival and success rates with lower clinical incidences of complications and failure than those bonded to dentin or teeth with existing composite resin restorations.",
+            "source_ref": null,
+            "note": "the 99% figures are in the abstract sentence on enamel-bonded veneers"
+          },
+          {
+            "id": "u86",
+            "claim_quote": "باند به کامپوزیت رزینی موجود با survival حدود ۹۴٪ همراه بود، اما success به ۷۰٪ کاهش یافت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Veneers bonded to composite resin or surfaces with minimal dentin exposure had slightly lower survival rates (94% with a range of 91% to 97% and 95% with a range of 91% to 100%, respectively) and success rates (70% with a range of 60% to 80% and 95% with a range of 90% to 99%).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u87",
+            "claim_quote": "در اکسپوژر حداقل دنتین، survival و success هر دو حدود ۹۵٪ بودند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Veneers bonded to composite resin or surfaces with minimal dentin exposure had slightly lower survival rates (94% with a range of 91% to 97% and 95% with a range of 91% to 100%, respectively) and success rates (70% with a range of 60% to 80% and 95% with a range of 90% to 99%).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u88",
+            "claim_quote": "اما در اکسپوژر شدید دنتین، survival به ۹۱٪ و success به ۷۴٪ رسید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Severe dentin exposure significantly decreased both survival rates (91% with a range of 84% to 98%) and success rates (74% with a range of 64% to 85%).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u89",
+            "claim_quote": "بنابراین از دیدگاه این مقاله، حفظ حداکثری انامل و انتخاب دقیق substrate هنگام preparation از عوامل مهم در کاهش عوارض و افزایش longevity ونیرهای سرامیکی هستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The conservation of tooth enamel during preparation for ceramic veneers is critical for reliable bonding and a high rate of clinical success.",
+            "source_ref": null,
+            "note": "careful substrate assessment and enamel maintenance also stated later in the Discussion"
+          },
+          {
+            "id": "u90",
+            "claim_quote": "جایی که دنتین یا کامپوزیت موجود بخش قابل‌توجهی از substrate را تشکیل می‌دهد، باید با دقت بیشتری سراغ surface treatment، bonding protocol، IDS در اکسپوژر وسیع دنتین، بررسی fit ونیر و استراتژی‌های پیشگیرانه رفت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Precautions should be taken before bonding ceramic veneers to dentin or existing composite resin restorations, including proper surface treatment and bonding protocols that should optimize the survival rate.",
+            "source_ref": null,
+            "note": "IDS and fit assessment are stated in Discussion as strategies that 'may include'"
+          }
+        ],
+        "counts": {
+          "matches": 49,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 5,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 36
+        },
+        "assessable": 49,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "CVs bonded to teeth with severe dentin exposure demonstrated a significantly higher absolute failure rate than CVs luted to teeth with minimal dentin exposure, with failure rates of 30.6% versus 9.5%, respectively.",
+        "fact_fa": "از ۴۹ ادعایی که منبع به آن پرداخته‌اند، ۴۹ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۵ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
     ]
   },
   "sharehub/share-16": {
