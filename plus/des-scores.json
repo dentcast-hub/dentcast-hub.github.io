@@ -24184,6 +24184,332 @@
         "fact_fa": "امتیاز مقدماتی ۲۵ از ۱۰۰، باند D، نوع سوال MATERIAL.",
         "interpretation_fa": "فقط ابسترکت در دسترس بود، پس بیشتر دامنه‌های روش‌شناسی گزارش‌نشده مانده و امتیاز مقدماتی است. نتیجه‌اش برتری باند به مینا زیر رابردم است، ولی در جهت مخالف مطالعه‌ی Saraiva قرار می‌گیرد و هر دو فقط باند کوتاه‌مدت را می‌سنجند."
       }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u6",
+            "claim_quote": "بهترین نقطه‌ی شروع برای چنین سؤالی مرورهای Cochrane است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not rank evidence sources or say where to start; no sentence ranks Cochrane reviews"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "Cochrane یک سازمان بین‌المللی غیرانتفاعی است که برای هر سؤال درمانی همه‌ی کارآزمایی‌های موجود را با روشی سخت‌گیرانه جمع می‌کند، کیفیتشان را می‌سنجد و می‌گوید به نتیجه چقدر می‌شود اعتماد کرد، و به همین دلیل مرورهایش معمولا بالاترین سطح شواهد حساب می‌شوند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source says nothing about Cochrane as a non-profit organisation or about how its reviews rank as a level of evidence"
+          },
+          {
+            "id": "u8",
+            "claim_quote": "مرور سال ۲۰۲۱ آنها دقیقا پرسیده که آیا رابردم در مقایسه با رول پنبه و ساکشن بقای رستوریشن را بیشتر می‌کند، و قرار بود ونیر و سایر رستوریشن‌های غیرمستقیم را هم پوشش بدهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "To assess the effects of rubber dam isolation compared with other types of isolation used for direct and indirect restorative treatments in dental patients.",
+            "source_ref": null,
+            "note": "survival as the question is the review's primary outcome; comparator narrowed to cotton rolls with suction is a subset of the alternatives the source studied"
+          },
+          {
+            "id": "u12",
+            "claim_quote": "مرور Cochrane کارآزمایی‌های تصادفی‌شده (از جمله مطالعات split-mouth) را وارد کرده که رابردم را با روش‌های دیگر ایزولاسیون مقایسه و دنبال کرده باشند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "We included randomised controlled trials (including split-mouth trials) over one month in length assessing the effects of rubber dam compared with alternative isolation methods for dental restorative treatments.",
+            "source_ref": null,
+            "note": "one-month minimum length is read as follow-up"
+          },
+          {
+            "id": "u13",
+            "claim_quote": "شش کارآزمایی‌ای که پیدا شد همگی درباره‌ی ترمیم مستقیم بودند و کیفیت پایینی داشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "All the included studies were at high risk of bias.",
+            "source_ref": null,
+            "note": "low quality read as high risk of bias; all six trials are direct restorations (sealants, NCCL composites, ART) and the source notes a lack of studies on indirect restorations"
+          },
+          {
+            "id": "u14",
+            "claim_quote": "در ترمیم‌های سرویکال، رابردم در شش ماه اول شاید بقا را از حدود ۸ ترمیم سالم در هر ۱۰ تا به ۹ تا برساند، ولی این اثر عمدتا از یک مطالعه‌ی ضعیف می‌آید و در بهترین کارآزماییِ همین مرور، تا ۱۸ ماه هیچ تفاوتی دیده نشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Pooled results from two studies involving 192 participants indicated that the use of rubber dam isolation may increase the survival rates of direct composite restorations of non-carious cervical lesions (NCCLs) at six months (odds ratio (OR) 2.29, 95% confidence interval (CI) 1.05 to 4.99; low-certainty evidence).",
+            "source_ref": null,
+            "note": "six-month cervical effect and hedge match; no difference through 18 months in the Loguercio 2015 trial matches the results text; the claim that the effect mainly comes from one weak study and the label best trial are not stated by the source (silent halves)"
+          }
+        ],
+        "counts": {
+          "matches": 4,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 2,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 0
+        },
+        "assessable": 4,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "Further high-quality research evaluating the effects of rubber dam usage on different types of restorative treatments is required.",
+        "fact_fa": "از ۴ ادعایی که منبع به آن پرداخته‌اند، ۴ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۲ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u20",
+            "claim_quote": "Gresnigt و همکاران نزدیک به ۴۰۰ لمینیت را زیر رابردم سمان کردند و بقای ۱۱ ساله حدود ۹۵ درصد بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The overall survival rate was 95% (Fig. 2) over 11 years, 19 failures were observed in the form of debonding (n = 3), cracking and fracture (n = 15) and extraction due to endodontic complications (n = 1).",
+            "source_ref": null,
+            "note": "384 veneers (نزدیک به ۴۰۰), rubber dam isolation stated in Methods 2.3, 95% over 11 years"
+          },
+          {
+            "id": "u23",
+            "claim_quote": "مارجین عاجی در کار Gurel خطر شکست را حدود ۱۰ برابر کرد، و در کار Gresnigt، وقتی بیش از نیمی از سطح تراش عاج بود، سیل فوری عاج (IDS) بقا را به طور واضح بالا برد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In teeth with more than 50% of dentin exposure, a significant increase in survival rate was observed when IDS was used (96.4% versus 81.8%).",
+            "source_ref": null,
+            "note": "Gurel half: the source reports no Gurel result (silent, NOT_IN_SOURCE); the Gresnigt half is judged and matches"
+          },
+          {
+            "id": "u24",
+            "claim_quote": "یعنی چیزی که سرنوشت لمینیت را تعیین کرده سوبسترا بوده، نه روش ایزولاسیون.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "inference that substrate rather than isolation method determined the outcome; the source does not state it or compare isolation methods"
+          }
+        ],
+        "counts": {
+          "matches": 2,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 1,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 0
+        },
+        "assessable": 2,
+        "fidelity_score": null,
+        "level": "INSUFFICIENT_CLAIMS",
+        "provisional": false,
+        "source_conclusion": "The quality of life was not impaired due to the laminate veneer treatment and patients were highly satisfied with their restorations.",
+        "fact_fa": "از ۲ ادعایی که منبع به آن پرداخته‌اند، ۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق ادعای کافی ندارد؛ ۱ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u21",
+            "claim_quote": "Gurel و همکاران نزدیک به ۶۰۰ لمینیت را تا ۱۲ سال دنبال کردند و نوع ایزولاسیون را اصلا گزارش نکردند، ولی وقتی تراش کاملا در مینا مانده بود بقا به ۹۹ درصد رسید و نه دباند دیده شد و نه میکرولیکیج.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A survival rate of 99% was observed for veneers with preparations confined to enamel and 94% for veneers with enamel only at the margins.",
+            "source_ref": null,
+            "note": "Results also state no debonding or microleakage when preparations were limited to enamel. The claim that isolation type was not reported is not addressed by the source (silent half)."
+          },
+          {
+            "id": "u22",
+            "claim_quote": "در هر دو مطالعه دباندها روی عاج اتفاق افتاده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Confirming this result, in 100% of PLVs in this study in which microleakage, secondary caries, postoperative sensitivity, or debonding occurred, the tooth substrate was dentin.",
+            "source_ref": null,
+            "note": "Reached the call by following a unit naming Gurel; judged on what this source says. The other study is not in this source."
+          },
+          {
+            "id": "u23",
+            "claim_quote": "مارجین عاجی در کار Gurel خطر شکست را حدود ۱۰ برابر کرد، و در کار Gresnigt، وقتی بیش از نیمی از سطح تراش عاج بود، سیل فوری عاج (IDS) بقا را به طور واضح بالا برد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Multivariable analysis (Cox regression model) also showed that PLVs bonded to dentin and teeth with preparation margins in dentin were approximately 10 times more likely to fail than PLVs bonded to enamel.",
+            "source_ref": null,
+            "note": "Gresnigt half is silent for this source (F6)."
+          },
+          {
+            "id": "u24",
+            "claim_quote": "یعنی چیزی که سرنوشت لمینیت را تعیین کرده سوبسترا بوده، نه روش ایزولاسیون.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "Inference judged on its conclusion: substrate decided the outcome, not the isolation method. The source never addresses isolation method or compares it with substrate."
+          }
+        ],
+        "counts": {
+          "matches": 3,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 1,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 0
+        },
+        "assessable": 3,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "The long-term survival rates significantly increased when intraenamel preparations were used.",
+        "fact_fa": "از ۳ ادعایی که منبع به آن پرداخته‌اند، ۳ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u25",
+            "claim_quote": "تنها مطالعه‌ای که در جستجوی ما پیدا شد و رابردم را در رستوریشن باند شونده‌ی غیرمستقیم واقعا به عنوان متغیر سنجیده، کار Vosmeijer و همکاران روی بیش از ۶۰۰ اینله و انله‌ی سرامیکی خلفی است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "relation between sources (exclusivity: the only study found by the authors' search); the other side of the relation is not in the source"
+          },
+          {
+            "id": "u26",
+            "claim_quote": "رابردم اثر معناداری بر بقا نداشت و عوامل مهم، ریسک پوسیدگی بیمار و مارجین عمیق نزدیک به استخوان بودند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Multilevel Cox regression showed a medium to high caries risk (HR: 1.57; 95 % CI: 1.21 – 2.04) and an approximal outline located within 3 mm of the bone (HR: 1.52; 95 % CI: 1.05 – 2.22) as significant risk factors for failure.",
+            "source_ref": null,
+            "note": "second half (caries risk and an outline within 3 mm of the bone as the significant factors) is stated; the rubber dam half is silent: no prose sentence of the source reports its effect on survival"
+          },
+          {
+            "id": "u27",
+            "claim_quote": "البته گروه بدون رابردم کوچک بود و فقط مواردی را شامل می‌شد که بستن رابردم ممکن نبود، پس این یافته اثر رابردم را نه رد می‌کند و نه تأیید.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "inference opened by «پس»: its conclusion (the finding neither refutes nor confirms the rubber dam effect) is not stated by the source; the premise is not compared"
+          }
+        ],
+        "counts": {
+          "matches": 1,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 2,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 0
+        },
+        "assessable": 1,
+        "fidelity_score": null,
+        "level": "INSUFFICIENT_CLAIMS",
+        "provisional": false,
+        "source_conclusion": "Patient and toothrelated factors seemed to play a more important role.",
+        "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق ادعای کافی ندارد؛ ۲ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u29",
+            "claim_quote": "نزدیک‌ترین داده کار Saraiva و همکاران است که روی قطعات عاج در دهان یک داوطلب و با رول پنبه باند انجام دادند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "For this purpose, restorative procedures were conducted on dentin fragments ﬁxed in an acetate tray and placed in the upper incisor or molar region of a volunteer.",
+            "source_ref": null,
+            "note": "Dentin fragments in one volunteer's mouth match this sentence; cotton-roll relative isolation is stated in Methods (restorative procedures were performed under relative isolation with cotton rolls). The superlative 'closest data' is a relation to other studies, silent in this source and not scored (F3)."
+          },
+          {
+            "id": "u30",
+            "claim_quote": "رطوبت ناحیه‌ی قدامی حدود ۸۵ درصد بود و با این حال استحکام باند فوری به عاج با استحکام باند شرایط اتاق، تفاوتی نداشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "There were no signiﬁcant diﬀerences in dentin bond strengths among experimental conditions (room versus incisor versus molar sites) for either adhesive system (p = 0.67).",
+            "source_ref": null,
+            "note": "RH figure 84.84 is from Table 2; no-difference finding stated in Results."
+          }
+        ],
+        "counts": {
+          "matches": 2,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 0,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 0
+        },
+        "assessable": 2,
+        "fidelity_score": null,
+        "level": "INSUFFICIENT_CLAIMS",
+        "provisional": false,
+        "source_conclusion": "Considering the limitations of the present study, the intraoral temperature and RH in the molar site were higher when compared with the incisor site; however, the diﬀerences in intraoral environments did not aﬀect the immediate dentin bond strength of two-step etch-and-rinse adhesive systems.",
+        "fact_fa": "از ۲ ادعایی که منبع به آن پرداخته‌اند، ۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق ادعای کافی ندارد.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "ABSTRACT_ONLY",
+        "claims": [
+          {
+            "id": "u31",
+            "claim_quote": "در جهت مقابل، یک مطالعه‌ی داخل دهانی دیگر باند به مینا را زیر رابردم قوی‌تر یافته است (Falacho 2022، ابسترکت).",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The highest mean shear bond strength values were obtained in rubber dam experimental groups, regardless of the adhesive system.",
+            "source_ref": null,
+            "note": "The framing «در جهت مقابل / یک مطالعه‌ی دیگر» is a relation to other work and is not scored; the finding itself (enamel bond stronger with rubber dam, specimens bonded in the oral cavity on a splint) is stated by the source."
+          },
+          {
+            "id": "u32",
+            "claim_quote": "هر دو فقط باند کوتاه‌مدت را سنجیده‌اند، و بدون رابردم خطر آلودگی مستقیم با بزاق، خون و مایع شیار لثه همچنان سر جایش است.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "Relation between two studies («هر دو») and a statement on contamination risk without rubber dam; the abstract does not address either, and says nothing on follow-up duration."
+          }
+        ],
+        "counts": {
+          "matches": 1,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 0,
+          "not_assessable": 1,
+          "author_view": 0,
+          "not_a_claim": 0
+        },
+        "assessable": 1,
+        "fidelity_score": null,
+        "level": "INSUFFICIENT_CLAIMS",
+        "provisional": true,
+        "source_conclusion": "A filled three-step etch-and-rinse adhesive performed superiorly, with or without rubber dam isolation, when bonding to enamel compared to an isopropanol-based universal adhesive.",
+        "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق ادعای کافی ندارد.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
     ]
   },
   "insight/insight-79": {
