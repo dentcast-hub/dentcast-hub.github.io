@@ -138651,6 +138651,52 @@
       "authors": [
         "VITA Zahnfabrik"
       ]
+    },
+    {
+      "id": "P2924",
+      "title": "Guide to Optimizing the Accuracy of Intraoral Implant Scans: A Review Article",
+      "file_name": "Guide to Optimizing the Accuracy of Intraoral Implant Scans: A Review Article.pdf",
+      "topic": "Scaning",
+      "topic_path": "Scaning",
+      "type": "review",
+      "local_path": "",
+      "file_size": 165003,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "sharehub/share-2"
+      ],
+      "drive_link": "https://drive.google.com/file/d/17pcNFnGirtfH7eD0RtF7gXcRfcImjE5-/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=17pcNFnGirtfH7eD0RtF7gXcRfcImjE5-",
+      "drive_view": "https://drive.google.com/file/d/17pcNFnGirtfH7eD0RtF7gXcRfcImjE5-/view",
+      "drive_id": "17pcNFnGirtfH7eD0RtF7gXcRfcImjE5-",
+      "tags": [
+        "accuracy",
+        "digital-implant-scans",
+        "implant-scanning-factors",
+        "intraoral-scanner",
+        "intraoral-scanning",
+        "operator-experience",
+        "precision",
+        "review",
+        "scan-distance",
+        "trueness",
+        "topic:scaning",
+        "guide-to-optimizing-the-accuracy-of-intraoral-implant-scans-a-review-article"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Guide to Optimizing the Accuracy of Intraoral Implant Scans: A Review Article",
+      "doi": "10.4274/cjms.2024.2024-31",
+      "journal": "Cyprus Journal of Medical Sciences",
+      "crossref_year": 2025,
+      "subjects": [],
+      "abstract": "As intraoral scanners (IOS) develop daily, their trueness and precision are increasingly being questioned and evaluated. Accuracy is affected by both patient and operator factors. These factors cause image distortion and impression inaccuracies. To maximize the accuracy, it is necessary to master the scanning process. The purpose of this review is to summarize the knowledge of the factors and highlight the points that should be considered to ensure maximum accuracy. Studies conducted with the IOSs technologies used today have revealed that operator experience, scanning distance, scanning head size, distance between implants, scanned area (full/half arch), implant depth, and the presence of saliva or blood in the area to be scanned are factors that significantly affect accuracy. When choosing and using a scanner, obtaining maximum performance from the scanner and knowing what factors affect the accuracy of the impression taken will enable us to use the scanner more accurately, have a higher accuracy of the impression taken, and therefore produce more successful and long-lasting restorations. Although an optimum condition that increases accuracy cannot be determined due to differences in the evaluation of studies, the lack of a sufficient number of studies for each factor, and the conditions changing from case to case, preliminary conclusions that should be paid particular attention to in increasing accuracy have been determined. In addition, the manufacturer’s instructions should also be considered in improving the performance of the IOS.",
+      "display_title": "Guide to Optimizing the Accuracy of Intraoral Implant Scans: A Review Article",
+      "authors": [
+        "Çise Özal"
+      ]
     }
   ],
   "drive_matched": 2849,
