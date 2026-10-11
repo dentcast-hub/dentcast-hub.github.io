@@ -2624,6 +2624,490 @@
         "fact_fa": "این مقاله در نوع پرسش DIAGNOSTIC امتیاز ۴ و باند E گرفت.",
         "interpretation_fa": "مروری روایتی روی عوامل مؤثر بر دقت اسکن ایمپلنت است و خودش هم می‌گوید شرایط بهینه‌ی واحدی قابل تعیین نیست. فهرست عوامل و جدول‌هایش کنار یونیت به کار می‌آید. اما وزن شواهد را نمی‌سنجد، پس مبنای تصمیم قطعی نیست. نبود بیانیه‌ی تعارض منافع هم امتیازش را پایین آورد."
       }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "Share Hub — اصول کلیدی برای بهینه‌سازی دقت اسکن داخل دهانی در ایمپلنت‌ها",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "link label"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "با گسترش استفاده از اسکنرهای دیجیتال، این تصور شکل گرفته که «اسکن داخل دهانی» فرآیندی ساده و بدون نیاز به مهارت",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "how the profession talks about the topic"
+          },
+          {
+            "id": "u4",
+            "claim_quote": "تخصصی است.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "fragment without predicate; part of u3"
+          },
+          {
+            "id": "u5",
+            "claim_quote": "اما همانند قالب‌گیری سنتی، این فرایند بر اساس اصولی مشخص بنا شده است و رعایت صحیح این اصول",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not state that scanning rests on defined principles in the manner of conventional impressions"
+          },
+          {
+            "id": "u6",
+            "claim_quote": "برای دستیابی به دقت قابل قبول ضروری است (Accumulated distortion).",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source says mastering the scanning process is needed for maximum accuracy, not acceptable accuracy from adherence to principles; neighbouring proposition"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "هدف این مرور، بررسی عوامل کلیدی است",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The purpose of this review is to summarize the knowledge of the factors and highlight the points that should be considered to ensure maximum accuracy.",
+            "source_ref": null
+          },
+          {
+            "id": "u8",
+            "claim_quote": "که نقش مهمی در بهینه‌سازی دقت اسکن دارند (Guide to Optimizing the Accuracy of Intraoral Implant",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The purpose of this review is to summarize the knowledge of the factors and highlight the points that should be considered to ensure maximum accuracy.",
+            "source_ref": null
+          },
+          {
+            "id": "u9",
+            "claim_quote": "Scans: A Review Article – Çise Özal).",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation label"
+          },
+          {
+            "id": "u10",
+            "claim_quote": "نه عجله بی‌هدف، نه مکث‌های طولانی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "اسکن باید پیوسته و یکنواخت انجام شود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not address continuous or uniform scanning"
+          },
+          {
+            "id": "u12",
+            "claim_quote": "اسکن یکنواخت و سریع‌تر باعث کاهش تعداد فریم‌های اضافی می‌شود؛ زیرا",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not address uniform or faster scanning reducing redundant frames"
+          },
+          {
+            "id": "u13",
+            "claim_quote": "فریم‌های کمتر یعنی فرآیند هم‌پوشانی ساده‌تر و کاهش Distortion تجمعی.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The increase in the number of images recorded in IOS causes overlapping of images and distortions.",
+            "source_ref": null,
+            "note": "converse of the source statement: more images cause distortion"
+          },
+          {
+            "id": "u14",
+            "claim_quote": "برعکس، مکث‌های طولانی یا",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "fragment without predicate"
+          },
+          {
+            "id": "u15",
+            "claim_quote": "حرکات نامنظم باعث تولید فریم‌های بیشتر، دشواری در مطابقت تصاویر و کاهش دقت نهایی اسکن می‌گردد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not address pauses or irregular movements"
+          },
+          {
+            "id": "u16",
+            "claim_quote": "حد و مرز منطقی اسکن",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u17",
+            "claim_quote": "زمانی که فقط به اطلاعات یک کوادرانت نیاز داریم، محدود کردن اسکن به همان ناحیه موجب افزایش دقت",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The error rate increased as the length of the scanned arch increased.",
+            "source_ref": null,
+            "note": "source conclusion calls full or partial arch results contradictory; Yilmaz row reports similar results; a plain faithful sentence exists"
+          },
+          {
+            "id": "u18",
+            "claim_quote": "می‌شود.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "fragment without content; part of u17"
+          },
+          {
+            "id": "u19",
+            "claim_quote": "در اسکن‌های کامل قوس، تعداد فریم‌ها و میزان هم‌پوشانی افزایش یافته و احتمال Distortion تجمعی بالا می‌رود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The increase in the number of images recorded in IOS causes overlapping of images and distortions.",
+            "source_ref": null
+          },
+          {
+            "id": "u20",
+            "claim_quote": "نور محیط را کنترل کنید",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u21",
+            "claim_quote": "شدت بسیار زیاد یا خیلی کم نور باعث بازتاب و نویز می‌شود و دقت تطابق تصاویر را کاهش می‌دهد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not address too bright or too dim light, reflection or noise"
+          },
+          {
+            "id": "u22",
+            "claim_quote": "طبق شواهد این",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "fragment without predicate"
+          },
+          {
+            "id": "u23",
+            "claim_quote": "مقاله، بیشتر اسکنرهای داخل‌دهانی در شرایط نور اتاق (حدود ۱۰۰۰ لوکس) عملکرد بهتری دارند، یعنی زمانی که چراغ یونیت",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Most IOSs function better under 1000-lux ambient illumination conditions, also referred to as room lighting conditions, although there is no single ideal lighting condition that can maximize accuracy for all IOSs.",
+            "source_ref": null,
+            "note": "The unit continues in u24 (chair light off); the source states this in the following sentence, plainly."
+          },
+          {
+            "id": "u24",
+            "claim_quote": "خاموش باشد و تنها نور اتاق فعال باشد؛ هرچند برای همه‌ی اسکنرها یک شرایط نوریِ ایده‌آل واحد وجود ندارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Most IOSs function better under 1000-lux ambient illumination conditions, also referred to as room lighting conditions, although there is no single ideal lighting condition that can maximize accuracy for all IOSs.",
+            "source_ref": null,
+            "note": "Both halves match: no single ideal condition is stated in this sentence; the chair light off with the room ceiling light on is stated plainly in the next sentence (To attain this ambient lighting condition, the dental chair light was turned off while the room ceiling light was left on.)."
+          },
+          {
+            "id": "u25",
+            "claim_quote": "فقط اطلاعات لازم را اسکن کنید",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u26",
+            "claim_quote": "اسکن بخش‌هایی که ضرورت ندارند (مثل کام‌های بلند) می‌تواند دقت را کاهش دهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It also showed higher mean accuracy and precision values when the palate was not included in the intraoral digital scan.",
+            "source_ref": null,
+            "note": "hedged generalization from the stated palate finding; the earlier palatal-height sentence reports a non-significant decrease"
+          },
+          {
+            "id": "u27",
+            "claim_quote": "در صورت عدم نیاز، کام،",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "fragment without predicate"
+          },
+          {
+            "id": "u28",
+            "claim_quote": "اسکن نشود تا از افزایش Distortion غیرضروری جلوگیری شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It also showed higher mean accuracy and precision values when the palate was not included in the intraoral digital scan.",
+            "source_ref": null,
+            "note": "instruction judged by reported effect (favourable); source gives no recommendation of its own"
+          },
+          {
+            "id": "u29",
+            "claim_quote": "سایز تیپ اسکنر و دقت",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u30",
+            "claim_quote": "اسکنرها با تیپ‌های مختلف عرضه می‌شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Various IOSs are available on the market, each with a different scan head size.",
+            "source_ref": null
+          },
+          {
+            "id": "u31",
+            "claim_quote": "تیپ‌های بزرگ‌تر معمولاً تصاویر کمتری تولید می‌کنند که این موضوع به",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The literature has reported that when larger scan head sizes are used, higher trueness and precision values and fewer scanning images are required.",
+            "source_ref": null
+          },
+          {
+            "id": "u32",
+            "claim_quote": "افزایش Precision و Trueness کمک می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The literature has reported that when larger scan head sizes are used, higher trueness and precision values and fewer scanning images are required.",
+            "source_ref": null
+          },
+          {
+            "id": "u33",
+            "claim_quote": "روند کلی نشان می‌دهد: Head بزرگ‌تر → اسکن پایدارتر →",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not address scan stability"
+          },
+          {
+            "id": "u34",
+            "claim_quote": "خطای تجمعی کمتر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The literature has reported that when larger scan head sizes are used, higher trueness and precision values and fewer scanning images are required.",
+            "source_ref": null,
+            "note": "less error stated as higher trueness and precision"
+          },
+          {
+            "id": "u35",
+            "claim_quote": "در نواحی وسیع‌تر، تیپ‌های بزرگ‌تر غالباً دقت بالاتری ارائه می‌دهند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The literature has reported that when larger scan head sizes are used, higher trueness and precision values and fewer scanning images are required.",
+            "source_ref": null,
+            "note": "claim narrows the source finding to wider areas"
+          },
+          {
+            "id": "u36",
+            "claim_quote": "انتخاب مناسب اسکن‌بادی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u37",
+            "claim_quote": "طبق نتایج مقاله، اسکن‌بادی‌های فلزی پایداری ابعادی بیشتری دارند و دقت بالاتری ارائه می‌دهند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Overall, 1-piece PEEK scan body designs showed higher displacements than the metallic-scan bodies.",
+            "source_ref": null,
+            "note": "source Table 4 also reports metallic scan body best; conclusion calls scan body material results contradictory"
+          },
+          {
+            "id": "u38",
+            "claim_quote": "در",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "fragment without predicate"
+          },
+          {
+            "id": "u39",
+            "claim_quote": "مقابل، اسکن‌بادی‌های PEEK ممکن است در اثر سفت‌کردن پیچ یا استریلیزاسیون دچار تغییر شکل شوند و استفاده مکرر",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "As a result, based on the limited data that is currently available, a metallicscan body design may be selected to minimize displacement caused by PEEK material distortion from tightening or sterilization.",
+            "source_ref": null
+          },
+          {
+            "id": "u40",
+            "claim_quote": "از آن‌ها می‌تواند دقت ثبت ایمپلنت را کاهش دهد؛ بنابراین استفاده از آن‌ها باید محدود و کنترل‌شده باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These results further support the idea that 1-piece PEEK scan bodies should only be used once.",
+            "source_ref": null,
+            "note": "conclusion (limit PEEK use) compared with the source advice"
+          },
+          {
+            "id": "u41",
+            "claim_quote": "فاصلهٔ تیپ تا سطح اسکن",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u42",
+            "claim_quote": "هر اسکنر فاصلهٔ ایده‌آل مشخصی دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The ideal scanning distance is specified by the IOS manufacturer for each IOS version.",
+            "source_ref": null
+          },
+          {
+            "id": "u43",
+            "claim_quote": "دور شدن یا خیلی نزدیک شدن تیپ به این فاصله باعث کاهش دقت می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These are the recommended distances recommended by the company, and following them maximizes the performance of the IOS accuracy.",
+            "source_ref": null
+          },
+          {
+            "id": "u44",
+            "claim_quote": "در",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "fragment without predicate"
+          },
+          {
+            "id": "u45",
+            "claim_quote": "مطالعه Miyoshi نشان داده شد که با افزایش فاصله، Precision به‌طور محسوسی افت کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "As a result of the study, the precision declined as the impression ranges expanded.",
+            "source_ref": null,
+            "note": "magnitude word not stated by source"
+          },
+          {
+            "id": "u46",
+            "claim_quote": "فاصلهٔ ثابت و کنترل‌شده",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "fragment without predicate"
+          },
+          {
+            "id": "u47",
+            "claim_quote": "مطابق دستور سازنده باید حفظ شود تا از نویز، از دست رفتن جزئیات یا افزایش Distortion جلوگیری شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These are the recommended distances recommended by the company, and following them maximizes the performance of the IOS accuracy.",
+            "source_ref": null,
+            "note": "instruction aligned with the source advice to follow manufacturer distance"
+          },
+          {
+            "id": "u48",
+            "claim_quote": "خشکی ناحیه اسکن برای دقت ضروری است",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u49",
+            "claim_quote": "وجود بزاق یا خون الگوی نوری اسکن را مختل می‌کند، نقاط مرجع را تضعیف می‌سازد و فرآیند تطبیق تصاویر را دچار خطا",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The accuracy of digital impressions can be negatively affected by blood or saliva on the implant site.",
+            "source_ref": null,
+            "note": "mechanism details (optical pattern, reference points) are not stated; stated half matches"
+          },
+          {
+            "id": "u50",
+            "claim_quote": "می‌کند.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "fragment without content"
+          },
+          {
+            "id": "u51",
+            "claim_quote": "پیامد این شرایط کاهش قابل توجه دقت اسکن و افزایش احتمال Distortion در برداشت دیجیتال",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The accuracy of digital impressions can be negatively affected by blood or saliva on the implant site.",
+            "source_ref": null
+          },
+          {
+            "id": "u52",
+            "claim_quote": "داخل دهان است.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "fragment without content"
+          }
+        ],
+        "counts": {
+          "matches": 23,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 7,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 22
+        },
+        "assessable": 23,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "When choosing and using a scanner, obtaining maximum performance from the scanner and knowing what factors affect the accuracy of the impression taken will enable us to use the scanner more accurately, have a higher accuracy of the impression taken, and therefore produce more successful and long-lasting restorations.",
+        "fact_fa": "از ۲۳ ادعایی که منبع به آن پرداخته‌اند، ۲۳ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۷ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
     ]
   },
   "sharehub/share-8": {
