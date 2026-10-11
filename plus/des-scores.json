@@ -16393,6 +16393,1472 @@
         "fact_fa": "امتیاز شواهد این منبع ۴۷ از ۱۰۰ و باند C است؛ نوع سؤال Diagnostic است.",
         "interpretation_fa": "این متاآنالیز پانزده مطالعهٔ آزمایشگاهی را با پروتکل ثبت‌شده در OSF و جست‌وجوی پنج دیتابیس جمع کرده و خشک بودن سطح و لندمارک مصنوعی را به‌عنوان بهبوددهندهٔ دقت نشان می‌دهد، اما ارزیابی publication bias در متن نیامده، RoB مطالعات واردشده با چک‌لیست اختصاصی (نه QUADAS-2) انجام شده، و اعلان تعارض منافع/حمایت مالی در متن کامل دیده نشد. یافته‌ها in vitro‌اند و چکیده دربارهٔ الگوی S شکل با Results ناسازگار است — برای استناد به Results تکیه کنید."
       }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "عوامل موثر بر دقت اسکنرهای داخل دهانی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "مروری بر متاآنالیز Hardan و همکاران، Journal of Advanced Prosthodontics 2023؛ 15(6): 315-332.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u4",
+            "claim_quote": "اول یک تفکیک که همه چیز به آن بستگی دارد",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u5",
+            "claim_quote": "واژه‌ی «دقت» یا accuracy یک چتر است و زیرش دو چیز کاملاً متفاوت قرار دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It’s important to note that the accuracy of a measurement method should adhere to the International Organization for Standardization (ISO) guidelines, which encompass both trueness and precision (ISO 5725- 1).7",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u6",
+            "claim_quote": "تا این دو را از هم جدا نکنیم، نتایج این مطالعه گمراه‌کننده به نظر می‌رسند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not say the results are misleading without the split"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "خود مقاله هم بر اساس ISO 5725-1 همین تفکیک را مبنا قرار داده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It’s important to note that the accuracy of a measurement method should adhere to the International Organization for Standardization (ISO) guidelines, which encompass both trueness and precision (ISO 5725- 1).7",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u8",
+            "claim_quote": "ترونس (trueness) یعنی اسکن شما چقدر به واقعیت نزدیک است، یعنی خطای سیستماتیک.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Trueness relates to the systematic error or measurement bias between the target object and the reference object, indicating the agreement between an accepted reference value and the mean value derived from multiple test outcomes.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u9",
+            "claim_quote": "تصور کنید ده تیر به سمت سیبل پرتاب می‌کنید.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "illustration only"
+          },
+          {
+            "id": "u10",
+            "claim_quote": "ترونس یعنی مرکز برخورد این ده تیر چقدر به مرکز سیبل نزدیک است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Trueness relates to the systematic error or measurement bias between the target object and the reference object, indicating the agreement between an accepted reference value and the mean value derived from multiple test outcomes.",
+            "source_ref": null,
+            "note": "dart analogy of the same definition"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "پرسیژن (precision) یعنی اگر همان اسکن را چند بار تکرار کنید نتایج چقدر شبیه هم درمی‌آیند، یعنی خطای تصادفی.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In contrast, precision accounts for the random errors when a procedure is repeated.8-10",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u12",
+            "claim_quote": "در همان مثال، پرسیژن یعنی ده تیر چقدر نزدیک به هم نشسته‌اند، فارغ از اینکه کجای سیبل هستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In contrast, precision accounts for the random errors when a procedure is repeated.8-10",
+            "source_ref": null,
+            "note": "dart analogy of the same definition"
+          },
+          {
+            "id": "u13",
+            "claim_quote": "یک اسکنر داخل‌دهانی می‌تواند در یکی از این دو خوب و در دیگری ضعیف باشد، و در ادامه خواهیم دید که الگوهای اسکن دقیقاً همین رفتار را دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Conversely, discrepancies between a master model and the digital scanner were more substantial when a linear pattern was employed (P = .04).",
+            "source_ref": null,
+            "note": "first half (scanner good at one component, poor at the other) not stated as such; patterns half stated"
+          },
+          {
+            "id": "u14",
+            "claim_quote": "جدول ۱.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u15",
+            "claim_quote": "ترونس در برابر پرسیژن",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u16",
+            "claim_quote": "مولفه",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u17",
+            "claim_quote": "یعنی چه",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u18",
+            "claim_quote": "نشانه‌ی افت آن",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u19",
+            "claim_quote": "ترونس (trueness)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u20",
+            "claim_quote": "اسکن چقدر به واقعیت نزدیک است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Trueness relates to the systematic error or measurement bias between the target object and the reference object, indicating the agreement between an accepted reference value and the mean value derived from multiple test outcomes.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u21",
+            "claim_quote": "خطای سیستماتیک.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Trueness relates to the systematic error or measurement bias between the target object and the reference object, indicating the agreement between an accepted reference value and the mean value derived from multiple test outcomes.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u22",
+            "claim_quote": "در مثال سیبل: مرکز تیرها چقدر به مرکز هدف نزدیک است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Trueness relates to the systematic error or measurement bias between the target object and the reference object, indicating the agreement between an accepted reference value and the mean value derived from multiple test outcomes.",
+            "source_ref": null,
+            "note": "dart analogy of the same definition"
+          },
+          {
+            "id": "u23",
+            "claim_quote": "خطای انباشته در طول قوس.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "accumulated error along the arch is not stated"
+          },
+          {
+            "id": "u24",
+            "claim_quote": "حساس‌ترین موقعیت‌ها: فریم‌ورک full-arch و کیس ایمپلنت.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "no ranking of most sensitive situations in the source"
+          },
+          {
+            "id": "u25",
+            "claim_quote": "پرسیژن (precision)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u26",
+            "claim_quote": "تکرار همان اسکن چقدر نتیجه‌ی مشابه می‌دهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In contrast, precision accounts for the random errors when a procedure is repeated.8-10",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u27",
+            "claim_quote": "خطای تصادفی.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In contrast, precision accounts for the random errors when a procedure is repeated.8-10",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u28",
+            "claim_quote": "در مثال سیبل: تیرها چقدر نزدیک هم نشسته‌اند، فارغ از جای هدف.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In contrast, precision accounts for the random errors when a procedure is repeated.8-10",
+            "source_ref": null,
+            "note": "dart analogy of the same definition"
+          },
+          {
+            "id": "u29",
+            "claim_quote": "پیش‌بینی‌ناپذیری.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "unpredictability as the sign of precision loss is not stated"
+          },
+          {
+            "id": "u30",
+            "claim_quote": "یک اسکن خوب درمی‌آید و اسکن بعدی از همان بیمار بد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "not stated"
+          },
+          {
+            "id": "u31",
+            "claim_quote": "خوانش بالینی: مقاله می‌گوید دقت قالب‌گیری، مارجینال فیت و کیفیت رستوریشن نهایی را تعیین می‌کند، ولی این دو مولفه را به سناریوهای بالینی مشخص ترجمه نمی‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Critical to any lifelong dental restoration is the accuracy of the impression, which determines the marginal fit and overall quality of the final restoration.5,6",
+            "source_ref": null,
+            "note": "second half (not translated into scenarios) not addressed by source"
+          },
+          {
+            "id": "u32",
+            "claim_quote": "اگر بخواهیم ترجمه کنیم: افت ترونس بیشتر خودش را در ابعاد و روابط بین‌قوسی نشان می‌دهد، جایی که خطا در طول قوس انباشته می‌شود، و به همین دلیل در فریم‌ورک‌های full-arch و کیس‌های ایمپلنت حساس‌تر است.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author marker (خوانش بالینی / first person / explicit inference label)"
+          },
+          {
+            "id": "u33",
+            "claim_quote": "افت پرسیژن بیشتر خودش را به شکل پیش‌بینی‌ناپذیری نشان می‌دهد، یعنی یک اسکن خوب درمی‌آید و اسکن بعدی از همان بیمار بد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author translation, not stated by source"
+          },
+          {
+            "id": "u34",
+            "claim_quote": "این مطالعه چه بود و چه نبود",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u35",
+            "claim_quote": "این مقاله نتایج ۱۵ مطالعه را روی هم جمع کرده و پرسیده: آیا کاری متفاوت با توصیه‌ی کارخانه انجام دهیم، اسکن بهتری می‌گیریم؟",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The meta-analysis included 15 articles.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u36",
+            "claim_quote": "تمام مطالعات وارد شده آزمایشگاهی (in vitro) بودند و روی مدل انجام شده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The inclusion criteria were based onin vitro studies that reported the accuracy of digital impressions using intraoral scanners.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u37",
+            "claim_quote": "مطالعات بالینی عمداً و به‌صراحت از تحلیل کنار گذاشته شدند، به‌طوری که در فرآیند غربالگری، هفت مطالعه فقط به همین دلیل حذف شده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Among these, 37 studies were excluded for the following reasons: (23) did not include comparisons between different scanning techniques,22-44 (7) were clinical studies,45-51 (5) fulltext manuscripts were inaccessible,52-56 (1) did not assess accuracy on teeth,57 and (1) did not use any digital IOS.58",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u38",
+            "claim_quote": "خود نویسندگان این را به‌عنوان یک محدودیت ذکر کرده‌اند: حذف مطالعات بالینی، تعمیم این نتایج به شرایط بالینی را محدود می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "First, clinical studies were not included, limiting the generalizability of these findings to clinical scenarios.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u39",
+            "claim_quote": "بنابراین اندازه‌ی این اثرها را نمی‌توان مستقیماً به دهان بیمار تعمیم داد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "First, clinical studies were not included, limiting the generalizability of these findings to clinical scenarios.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u40",
+            "claim_quote": "خوانش بالینی: شرایط دهان واقعی، یعنی بزاق، زبان، حرکت بیمار و محدودیت دسترسی، همه در جهت افزایش خطا عمل می‌کنند نه کاهش آن.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author marker (خوانش بالینی / first person / explicit inference label)"
+          },
+          {
+            "id": "u41",
+            "claim_quote": "پس منطقی است که این اعداد را کف خطا در نظر بگیریم نه سقف آن.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author marker (خوانش بالینی / first person / explicit inference label)"
+          },
+          {
+            "id": "u42",
+            "claim_quote": "این استنباط است، نه گزاره‌ی مقاله.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "statement about the page itself"
+          },
+          {
+            "id": "u43",
+            "claim_quote": "یافته‌ها",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u44",
+            "claim_quote": "جدول ۲.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u45",
+            "claim_quote": "اثر هر متغیر بر دو مولفه‌ی دقت",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u46",
+            "claim_quote": "متغیر",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u47",
+            "claim_quote": "اثر",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u48",
+            "claim_quote": "قدرت شواهد",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u49",
+            "claim_quote": "رطوبت سطح",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u50",
+            "claim_quote": "هر دو مولفه افت می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Digital impression accuracy significantly improved under dry conditions (P < 0.001).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u51",
+            "claim_quote": "سطح خشک نتیجه‌ی بهتری داد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Digital impression accuracy significantly improved under dry conditions (P < 0.001).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u52",
+            "claim_quote": "قوی‌ترین یافته‌ی مقاله.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not rank its findings"
+          },
+          {
+            "id": "u53",
+            "claim_quote": "اثر بزرگ و در همه‌ی مطالعات یک‌جهت.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "effect size and consistency across studies not stated in text"
+          },
+          {
+            "id": "u54",
+            "claim_quote": "لندمارک مصنوعی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u55",
+            "claim_quote": "هر دو مولفه بهبود یافتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Moreover, trueness and precision were enhanced when artificial landmarks were used (P ≤ 0.02) and when an S-shaped pattern was followed (P ≤ 0.01).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u56",
+            "claim_quote": "معنادار، ولی اثر در همه‌ی مطالعات یکسان نبود و در یکی از آنها اثر بر ترونس معنادار نشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Moreover, trueness and precision were enhanced when artificial landmarks were used (P ≤ 0.02) and when an S-shaped pattern was followed (P ≤ 0.01).",
+            "source_ref": null,
+            "note": "significance stated; per-study non-significance on trueness not stated, silent half"
+          },
+          {
+            "id": "u57",
+            "claim_quote": "الگوی اسکن",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u58",
+            "claim_quote": "دوسویه.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Conversely, discrepancies between a master model and the digital scanner were more substantial when a linear pattern was employed (P = .04).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u59",
+            "claim_quote": "با S شکل پرسیژن پایین‌تر، با خطی ترونس پایین‌تر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The analysis indicates that differences in measurements were more pronounced when an S-shaped pattern was used (P = .0007).",
+            "source_ref": null,
+            "note": "linear half stated by next Results sentence; abstract sentence disagrees on S-shape"
+          },
+          {
+            "id": "u60",
+            "claim_quote": "اثر کوچک.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "effect magnitude of pattern not stated in text"
+          },
+          {
+            "id": "u61",
+            "claim_quote": "الگوی برتر مطلق وجود ندارد و نتیجه وابسته به دستگاه است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Previous manuscripts.66,105 established numerous IOSs and discovered that the scan strategy influences the accuracy differently, depending on the data capturing method of each scanner.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u62",
+            "claim_quote": "نور محیط",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u63",
+            "claim_quote": "تفاوت معناداری در هیچ‌کدام دیده نشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, the type of light used did not have a significant impact on the accuracy of the digital intraoral scanners (P ≥ 0.16).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u64",
+            "claim_quote": "محدود به مقایسه‌ی نور اتاق با تاریکی مطلق.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The meta-analysis results indicate that these parameters were not significantly affected when the digitalization process was performed under room light or zero-light conditions (P = .27;P = .16).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u65",
+            "claim_quote": "بخش مروری همان مقاله نتایج ناهمسو دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Determining the ideal lighting condition for accurate scans remains a subject of debate, as different recommendations exist for dental operatory lighting conditions.107",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u66",
+            "claim_quote": "مواد کمک‌اسکن",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u67",
+            "claim_quote": "فقط پرسیژن بهبود یافت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The results reveal that only precision is affected by the use of scanning-aid materials (P < .001).",
+            "source_ref": null,
+            "note": "source says affected, direction not explicit in that sentence"
+          },
+          {
+            "id": "u68",
+            "claim_quote": "ترونس بدون تغییر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The results reveal that only precision is affected by the use of scanning-aid materials (P < .001).",
+            "source_ref": null,
+            "note": "source says affected, direction not explicit in that sentence"
+          },
+          {
+            "id": "u69",
+            "claim_quote": "معنادار برای پرسیژن.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The results reveal that only precision is affected by the use of scanning-aid materials (P < .001).",
+            "source_ref": null,
+            "note": "source says affected, direction not explicit in that sentence"
+          },
+          {
+            "id": "u70",
+            "claim_quote": "برتری ماده‌ی مایع بر اسپری پودری از یک مطالعه‌ی منفرد نقل شده، نه از متاآنالیز.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Liquid-type scanning-aid materials with brush techniques have also been proposed to create thinner and more uniform layers compared to powder sprays, improving accuracy.104",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u71",
+            "claim_quote": "نکته‌ی خواندن جدول: ستون آخر عمداً وجود دارد.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u72",
+            "claim_quote": "اگر فقط ستون میانی را بخوانید، پنج یافته هم‌وزن به نظر می‌رسند، در حالی که فقط اولی اثر بزرگ و پایدار دارد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "large and stable effect is not stated; ranking of findings"
+          },
+          {
+            "id": "u73",
+            "claim_quote": "۱.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u74",
+            "claim_quote": "خشک بودن سطح، قوی‌ترین یافته",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u75",
+            "claim_quote": "از میان همه‌ی متغیرهای بررسی‌شده، رطوبت واضح‌ترین و یک‌دست‌ترین اثر را داشت.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "no ranking across variables in the source"
+          },
+          {
+            "id": "u76",
+            "claim_quote": "حضور مایع روی سطح دندان به‌طور معنادار دقت اسکن را پایین آورد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Digital impression accuracy significantly improved under dry conditions (P < 0.001).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u77",
+            "claim_quote": "این تنها یافته‌ای است که در آن اثر هم بزرگ بود و هم بین مطالعات یک‌جهت.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "relation between findings, not stated"
+          },
+          {
+            "id": "u78",
+            "claim_quote": "مکانیسمی که نویسندگان توضیح می‌دهند ساده است: لایه‌ی نازک بزاق باعث می‌شود اسکنر هندسه‌ی سطح را اشتباه بخواند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Specifically, saliva can negatively impact digital impressions, causing the scanner to misinterpret the geometry due to the presence of saliva on the tooth’s surface.87",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u79",
+            "claim_quote": "نویسندگان برای اینکه نشان دهند این خطا در چه مقیاسی است، به یک مطالعه‌ی قبلی استناد می‌کنند که در آن انحرافات در نمونه‌های آلوده به بزاق از حد ۱۲۰ میکرون، که به‌عنوان آستانه‌ی قابل قبول بالینی در نظر گرفته می‌شود، فراتر رفته بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In addition to this, a previous study demonstrated that the measurement of deviations in ‘saliva samples’ is much higher than the clinically adequate cut-off value of 120 microns.113",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u80",
+            "claim_quote": "این عدد یافته‌ی خود متاآنالیز نیست، ولی مقیاس را دستمان می‌دهد.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author marker (خوانش بالینی / first person / explicit inference label)"
+          },
+          {
+            "id": "u81",
+            "claim_quote": "خوانش بالینی: خشک کردن کامل سطح قبل از شروع اسکن، از هر تغییری در تکنیک حرکت دادن اسکنر بازده بیشتری دارد.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author marker (خوانش بالینی / first person / explicit inference label)"
+          },
+          {
+            "id": "u82",
+            "claim_quote": "این تنها جایی است که داده‌ها اثر بزرگی نشان می‌دهند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "effect size and exclusivity not stated"
+          },
+          {
+            "id": "u83",
+            "claim_quote": "۲.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u84",
+            "claim_quote": "لندمارک مصنوعی، برای جاهایی که آناتومی کمکتان نمی‌کند",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u85",
+            "claim_quote": "استفاده از مارکرهای مصنوعی هم ترونس و هم پرسیژن را بهبود داد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Moreover, trueness and precision were enhanced when artificial landmarks were used (P ≤ 0.02) and when an S-shaped pattern was followed (P ≤ 0.01).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u86",
+            "claim_quote": "منطقش این است: اسکنر با چسباندن تصاویر پی‌درپی به هم (stitching) مدل را می‌سازد و برای این کار به نقاط مرجع پایدار نیاز دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Furthermore, the presence of stable attached gingiva or palate wasn’t enough to eliminate complications in stitching scans obtained from IOSs due to the absence of clear anatomical landmarks.121",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u87",
+            "claim_quote": "در یک قوس دنددار، خود دندان‌ها این نقاط را فراهم می‌کنند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "teeth providing reference points in dentate arch not stated"
+          },
+          {
+            "id": "u88",
+            "claim_quote": "در فک بی‌دندان کامل یا در نواحی وسیع بافت نرم متحرک چنین نقاطی وجود ندارد و خطا در طول اسکن انباشته می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In order to improve the accuracy of these devices, this systematic review recommends taking digital impressions in dry conditions and using artificial landmarks, especially in cases without intraoral landmarks, such as edentulous patients.",
+            "source_ref": null,
+            "note": "accumulated error half silent"
+          },
+          {
+            "id": "u89",
+            "claim_quote": "مقاله به‌طور مشخص روی همین موقعیت تمرکز می‌کند و به مارکرهای رزینی روی کام اشاره می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "To solve this issue, the use of resin markers on the palate surface was proposed.116,117",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u90",
+            "claim_quote": "باید توجه داشت که این اثر در همه‌ی مطالعات یکسان نبود و در یکی از آنها اثر معناداری روی ترونس دیده نشد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "per-study heterogeneity of the landmark effect not reported in text"
+          },
+          {
+            "id": "u91",
+            "claim_quote": "نویسندگان در بخش بحث به مطالعه‌ی Flügge اشاره می‌کنند که در آن فاصله‌ی زیاد بین اسکن‌بادی‌های ایمپلنت مشکل‌ساز بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Additionally, Flügge et al.,120 conveyed that the accuracy of scanned areas decreased when significant distances separated dental implant scanbodies.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u92",
+            "claim_quote": "این یافته‌ی یک مطالعه‌ی منفرد است و بخشی از تحلیل لندمارک نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Additionally, Flügge et al.,120 conveyed that the accuracy of scanned areas decreased when significant distances separated dental implant scanbodies.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u93",
+            "claim_quote": "خوانش بالینی: در قوس دنددار نیازی به این کار نیست، چون خود دندان‌ها نقاط مرجع را می‌دهند.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author marker (خوانش بالینی / first person / explicit inference label)"
+          },
+          {
+            "id": "u94",
+            "claim_quote": "در بی‌دندانی کامل ارزش دارد، و این همان موقعیتی است که خود مقاله رویش تمرکز کرده.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In order to improve the accuracy of these devices, this systematic review recommends taking digital impressions in dry conditions and using artificial landmarks, especially in cases without intraoral landmarks, such as edentulous patients.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u95",
+            "claim_quote": "کیس ایمپلنت با فواصل بی‌دندان طولانی هم می‌تواند مورد توجه باشد، ولی این را مقاله نگفته: استنباط از کنار هم گذاشتن دو یافته‌ی جدا است، اینکه لندمارک مصنوعی دقت را بهبود می‌دهد، و اینکه در مطالعه‌ی Flügge فاصله‌ی زیاد بین اسکن‌بادی‌ها مشکل‌ساز بود.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author marker (خوانش بالینی / first person / explicit inference label)"
+          },
+          {
+            "id": "u96",
+            "claim_quote": "۳.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u97",
+            "claim_quote": "الگوی اسکن، جایی که ساده‌سازی خطرناک است",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u98",
+            "claim_quote": "اینجا رایج‌ترین بدفهمی اتفاق می‌افتد.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "sentence about how the topic is usually misunderstood"
+          },
+          {
+            "id": "u99",
+            "claim_quote": "متاآنالیز نگفت یک الگو بهتر است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Conversely, discrepancies between a master model and the digital scanner were more substantial when a linear pattern was employed (P = .04).",
+            "source_ref": null,
+            "note": "abstract says S-shaped enhanced accuracy, Results/Discussion report two-sided result"
+          },
+          {
+            "id": "u100",
+            "claim_quote": "نتیجه دو طرفه بود و بخش Results مقاله دقیقاً این دو گزاره را کنار هم می‌آورد:",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Conversely, discrepancies between a master model and the digital scanner were more substantial when a linear pattern was employed (P = .04).",
+            "source_ref": null,
+            "note": "two-sided result stated by the pair of Results sentences"
+          },
+          {
+            "id": "u101",
+            "claim_quote": "با الگوی S شکل، اختلاف بین اندازه‌گیری‌های مکرر بیشتر بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The analysis indicates that differences in measurements were more pronounced when an S-shaped pattern was used (P = .0007).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u102",
+            "claim_quote": "یعنی پرسیژن پایین‌تر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Fast scanning speed and S-shaped scan strategy has lower precision.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u103",
+            "claim_quote": "با الگوی خطی، اختلاف بین مدل مرجع و مدل دیجیتال بیشتر بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Conversely, discrepancies between a master model and the digital scanner were more substantial when a linear pattern was employed (P = .04).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u104",
+            "claim_quote": "یعنی ترونس پایین‌تر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Conversely, discrepancies between a master model and the digital scanner were more substantial when a linear pattern was employed (P = .04).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u105",
+            "claim_quote": "به بیان دیگر هر الگو یکی از دو مولفه را قربانی می‌کند و هیچ‌کدام برنده‌ی مطلق نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Conversely, discrepancies between a master model and the digital scanner were more substantial when a linear pattern was employed (P = .04).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u106",
+            "claim_quote": "اندازه‌ی این اثرها هم کوچک بود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "pattern effect size not stated in text"
+          },
+          {
+            "id": "u107",
+            "claim_quote": "نکات مکملی که از دل همین مقاله بیرون می‌آید:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost ending with colon"
+          },
+          {
+            "id": "u108",
+            "claim_quote": "اثر الگو وابسته به دستگاه است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Previous manuscripts.66,105 established numerous IOSs and discovered that the scan strategy influences the accuracy differently, depending on the data capturing method of each scanner.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u109",
+            "claim_quote": "مقاله به‌صراحت می‌گوید استراتژی اسکن بسته به روش داده‌برداری هر اسکنر متفاوت عمل می‌کند و به نرم‌افزار merging گره خورده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Previous manuscripts.66,105 established numerous IOSs and discovered that the scan strategy influences the accuracy differently, depending on the data capturing method of each scanner.",
+            "source_ref": null,
+            "note": "second half (linked to merging software) stated in next sentence"
+          },
+          {
+            "id": "u110",
+            "claim_quote": "در مطالعه‌ی Müller و همکاران، استراتژی پیشنهادی خود کارخانه بالاترین ترونس و پرسیژن را در اسکن full-arch داد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The strategy suggested by the company demonstrated the highest precision and trueness of fullarch scans.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u111",
+            "claim_quote": "این یافته با توصیه‌ی کلی نویسندگان هم‌راستاست که اپراتور آموزش‌دیده مسیر پیشنهادی سازنده را دنبال کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In all clinical scenarios, a careful scanning without a time limit is proposed, and trained operator should follow the recommendation of the manufacturer for better accuracy.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u112",
+            "claim_quote": "تغییر شدید جهت‌گیری هد اسکنر و حرکت خیلی سریع می‌توانند فرآیند stitching را مختل کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The scan strategy is strictly linked to the image merging software; if the scanner movement has severe changes in orientation or too fast, the stitching procedure might be compromised.5,15",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u113",
+            "claim_quote": "توصیه‌ی مقاله اسکن آرام و بدون محدودیت زمانی است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In all clinical scenarios, a careful scanning without a time limit is proposed, and trained operator should follow the recommendation of the manufacturer for better accuracy.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u114",
+            "claim_quote": "مقاله بین این عامل و انتخاب الگو رتبه‌بندی نکرده است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source silent on any ranking between these factors"
+          },
+          {
+            "id": "u115",
+            "claim_quote": "درباره‌ی نقطه‌ی شروع اسکن، بین مطالعات توافق وجود ندارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In contrast, another study stating that the starting position of the area scanned does not influence accuracy and highlighted that the rotational and vertical movements of the IOSs head must be diminished, as an alteration of the direction might disturb an image-stitching procedure.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u116",
+            "claim_quote": "یک مطالعه پرسیژن را وابسته به نقطه‌ی شروع دانسته و مطالعه‌ی دیگری این را رد کرده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In contrast, another study stating that the starting position of the area scanned does not influence accuracy and highlighted that the rotational and vertical movements of the IOSs head must be diminished, as an alteration of the direction might disturb an image-stitching procedure.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u117",
+            "claim_quote": "خوانش بالینی: چون اثر الگو وابسته به دستگاه است، پترنی که روی یک برند جواب می‌دهد لزوماً روی برند دیگر همان نتیجه را نمی‌دهد.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author marker (خوانش بالینی / first person / explicit inference label)"
+          },
+          {
+            "id": "u118",
+            "claim_quote": "این استنباط از گزاره‌ی بالاست، نه مقایسه‌ای که متاآنالیز بین برندها انجام داده باشد.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "statement about the page itself"
+          },
+          {
+            "id": "u119",
+            "claim_quote": "کار عملی این است که به‌جای دنبال کردن پترن‌هایی که دست به دست می‌شوند، مسیر پیشنهادی سازنده‌ی دستگاه خودتان را یاد بگیرید و همان را با حرکت آرام و کنترل‌شده تکرار کنید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In all clinical scenarios, a careful scanning without a time limit is proposed, and trained operator should follow the recommendation of the manufacturer for better accuracy.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u120",
+            "claim_quote": "۴.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u121",
+            "claim_quote": "نور محیط",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u122",
+            "claim_quote": "مقایسه‌ی اسکن در نور معمول اتاق با تاریکی مطلق، تفاوت معناداری در ترونس یا پرسیژن نشان نداد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The meta-analysis results indicate that these parameters were not significantly affected when the digitalization process was performed under room light or zero-light conditions (P = .27;P = .16).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u123",
+            "claim_quote": "این نتیجه محدود به همین مقایسه‌ی دوحالته است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The meta-analysis results indicate that these parameters were not significantly affected when the digitalization process was performed under room light or zero-light conditions (P = .27;P = .16).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u124",
+            "claim_quote": "در بخش مروری همان مقاله، چند مطالعه اثر شرایط نوری را تایید کرده‌اند و توصیه‌ها با هم نمی‌خوانند: از ۵۰۰ لوکس با دمای رنگ ۳۹۰۰ کلوین تا پیشنهاد ۱۰۰۰ لوکس.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Determining the ideal lighting condition for accurate scans remains a subject of debate, as different recommendations exist for dental operatory lighting conditions.107",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u125",
+            "claim_quote": "در یکی از این مطالعات، جلوگیری از تابش مستقیم چراغ یونیت توصیه شده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The chair light must be prevented.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u126",
+            "claim_quote": "جمع‌بندی نویسندگان این است که شرایط نوری باید بر اساس مشخصات همان اسکنر انتخاب شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Revilla-León et al.107 established that the lighting condition must be selected with reference to the specific IOS system used.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u127",
+            "claim_quote": "خوانش بالینی: لازم نیست اتاق را تاریک کنید.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author marker (خوانش بالینی / first person / explicit inference label)"
+          },
+          {
+            "id": "u128",
+            "claim_quote": "کنار زدن نور مستقیم یونیت از ناحیه‌ی کار هزینه‌ای ندارد و توصیه‌ی دست‌کم یک مطالعه پشتش هست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The chair light must be prevented.",
+            "source_ref": null,
+            "note": "no-cost half not addressed"
+          },
+          {
+            "id": "u129",
+            "claim_quote": "۵.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u130",
+            "claim_quote": "مواد کمک‌اسکن",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u131",
+            "claim_quote": "این مواد فقط پرسیژن را بهبود دادند و روی ترونس هیچ اثری نداشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The results reveal that only precision is affected by the use of scanning-aid materials (P < .001).",
+            "source_ref": null,
+            "note": "source says affected, direction not explicit in that sentence"
+          },
+          {
+            "id": "u132",
+            "claim_quote": "یعنی نتیجه را یکنواخت‌تر می‌کنند ولی لزوماً به واقعیت نزدیک‌تر نمی‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The results reveal that only precision is affected by the use of scanning-aid materials (P < .001).",
+            "source_ref": null,
+            "note": "source says affected, direction not explicit in that sentence"
+          },
+          {
+            "id": "u133",
+            "claim_quote": "نکته‌ای که در بخش بحث مقاله و به نقل از یک مطالعه‌ی منفرد آمده: مواد مایع که با براش اعمال می‌شوند لایه‌ی نازک‌تر و یکنواخت‌تری نسبت به اسپری پودری می‌سازند، چون ضخامت لایه‌ی پودر به بزاق، مهارت اپراتور و فضای در دسترس وابسته است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Liquid-type scanning-aid materials with brush techniques have also been proposed to create thinner and more uniform layers compared to powder sprays, improving accuracy.104",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u134",
+            "claim_quote": "این یافته‌ی متاآنالیز نیست.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "statement about the page itself"
+          },
+          {
+            "id": "u135",
+            "claim_quote": "خوانش بالینی: کاربرد اصلی این مواد در سطوح براق و متریال‌های بازتاب‌دهنده است، نه در اسکن روتین دندان طبیعی.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author marker (خوانش بالینی / first person / explicit inference label)"
+          },
+          {
+            "id": "u136",
+            "claim_quote": "چقدر می‌توان به این نتایج تکیه کرد",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u137",
+            "claim_quote": "سه محدودیت که در استناد به این مقاله باید در نظر گرفته شوند:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost ending with colon"
+          },
+          {
+            "id": "u138",
+            "claim_quote": "همه‌ی داده‌ها آزمایشگاهی هستند و خود نویسندگان تعمیم به شرایط بالینی را محدود دانسته‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The inclusion criteria were based onin vitro studies that reported the accuracy of digital impressions using intraoral scanners.",
+            "source_ref": null,
+            "note": "second half (authors limited generalization) stated in limitations sentence"
+          },
+          {
+            "id": "u139",
+            "claim_quote": "بر اساس ارزیابی خود مقاله، بیشتر مطالعات وارد شده در سطح risk of bias متوسط و تعداد قابل توجهی در سطح بالا قرار داشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Most of the articles were categorized as having a medium RoB.",
+            "source_ref": null,
+            "note": "high-risk count supported by Table 3 rows"
+          },
+          {
+            "id": "u140",
+            "claim_quote": "فقط سه مطالعه در گروه low risk of bias بودند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the count of three low-risk studies appears only as table rows, no sentence states it"
+          },
+          {
+            "id": "u141",
+            "claim_quote": "ضعف‌های تکرارشونده: بلایند نبودن اپراتور، مشخص نبودن تعداد اپراتورها و نبود محاسبه‌ی حجم نمونه.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The categories that most manuscripts did not meet included the assessment of a single operator, operator blinding, and sample size calculation.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u142",
+            "claim_quote": "مطالعات جمع‌شده در هر تحلیل واقعاً شبیه هم نبودند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "similarity of pooled studies within each analysis not stated"
+          },
+          {
+            "id": "u143",
+            "claim_quote": "اسکنرها، نرم‌افزارهای اندازه‌گیری و حتی تعریف پترن‌ها بین مطالعات فرق داشت.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "scanners vary (stated across the sentence interrupted by Table 1), measurement software and pattern definitions not stated"
+          },
+          {
+            "id": "u144",
+            "claim_quote": "خود نویسندگان می‌گویند استانداردسازی روش‌ها لازم است تا مقایسه‌ها معنا پیدا کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Standardization in research methods is essential to facilitate meaningful comparisons in future meta-analyses.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u145",
+            "claim_quote": "عملاً یعنی میانگین‌های گزارش‌شده جهت کلی را نشان می‌دهند، نه عدد قابل استناد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author inference, not stated"
+          },
+          {
+            "id": "u146",
+            "claim_quote": "یک هشدار برای استناد: در مورد الگوی S شکل، چکیده‌ی این مقاله با بخش Results و Discussion خودش ناسازگار است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not state its own abstract/results inconsistency"
+          },
+          {
+            "id": "u147",
+            "claim_quote": "چکیده می‌نویسد ترونس و پرسیژن با این الگو بهبود یافتند، در حالی که بخش نتایج، بخش بحث و نمودارها جهت مخالف را نشان می‌دهند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Moreover, trueness and precision were enhanced when artificial landmarks were used (P ≤ 0.02) and when an S-shaped pattern was followed (P ≤ 0.01).",
+            "source_ref": null,
+            "note": "abstract sentence; opposite direction in Results stated by the Figure 5 sentences"
+          },
+          {
+            "id": "u148",
+            "claim_quote": "اگر به این مقاله ارجاع می‌دهید، به بخش نتایج استناد کنید نه به چکیده.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citing advice not in source"
+          },
+          {
+            "id": "u149",
+            "claim_quote": "جمع‌بندی چیرساید",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u150",
+            "claim_quote": "این ترتیب، خوانش بالینی نویسنده از مقاله است و ترتیب خود مقاله نیست.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading, label or table header"
+          },
+          {
+            "id": "u151",
+            "claim_quote": "سطح را کاملاً خشک کنید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In order to improve the accuracy of these devices, this systematic review recommends taking digital impressions in dry conditions and using artificial landmarks, especially in cases without intraoral landmarks, such as edentulous patients.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u152",
+            "claim_quote": "تنها موردی که داده‌ها اثر بزرگ و یک‌دست نشان می‌دهند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "exclusivity relation not stated"
+          },
+          {
+            "id": "u153",
+            "claim_quote": "مسیر پیشنهادی سازنده‌ی دستگاه خودتان را یاد بگیرید و به آن پایبند باشید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In all clinical scenarios, a careful scanning without a time limit is proposed, and trained operator should follow the recommendation of the manufacturer for better accuracy.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u154",
+            "claim_quote": "داده‌ها از هیچ الگوی جهان‌شمولی حمایت نمی‌کنند، و در دست‌کم یک مطالعه، مسیر خود کارخانه بهترین نتیجه را داد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The strategy suggested by the company demonstrated the highest precision and trueness of fullarch scans.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u155",
+            "claim_quote": "آرام و کنترل‌شده حرکت کنید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In all clinical scenarios, a careful scanning without a time limit is proposed, and trained operator should follow the recommendation of the manufacturer for better accuracy.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u156",
+            "claim_quote": "سرعت بالا و تغییر ناگهانی جهت ممکن است فرایند stitching را مختل کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The scan strategy is strictly linked to the image merging software; if the scanner movement has severe changes in orientation or too fast, the stitching procedure might be compromised.",
+            "source_ref": null,
+            "note": "Same hedge (might / ممکن است); speed and orientation change both named."
+          },
+          {
+            "id": "u157",
+            "claim_quote": "در بی‌دندانی کامل، لندمارک مصنوعی را در نظر بگیرید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In order to improve the accuracy of these devices, this systematic review recommends taking digital impressions in dry conditions and using artificial landmarks, especially in cases without intraoral landmarks, such as edentulous patients.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u158",
+            "claim_quote": "جایی که آناتومی نقطه‌ی مرجع نمی‌دهد.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "subordinate fragment, no predicate of its own"
+          },
+          {
+            "id": "u159",
+            "claim_quote": "نور مستقیم یونیت را از ناحیه‌ی اسکن کنار ببرید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The chair light must be prevented.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u160",
+            "claim_quote": "هزینه‌ی صفر، ریسک صفر.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "not in source"
+          }
+        ],
+        "counts": {
+          "matches": 80,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 25,
+          "not_assessable": 0,
+          "author_view": 10,
+          "not_a_claim": 45
+        },
+        "assessable": 80,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "In order to improve the accuracy of these devices, this systematic review recommends taking digital impressions in dry conditions and using artificial landmarks, especially in cases without intraoral landmarks, such as edentulous patients.",
+        "fact_fa": "از ۸۰ ادعایی که منبع به آن پرداخته‌اند، ۸۰ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۲۵ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
     ]
   },
   "insight/insight-69": {
