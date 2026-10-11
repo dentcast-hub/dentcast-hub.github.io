@@ -22901,6 +22901,409 @@
         "fact_fa": "امتیاز شواهد این منبع ۲۵ از ۱۰۰ و باند D است؛ نوع سوال Etiology است.",
         "interpretation_fa": "طراحی cross sectional سقف امتیاز را روی ۴۵ می‌بندد و مقایسه‌ی دو گروه بدون تعدیل برای متغیرهای مخدوش‌کننده انجام شده است. سنجش هم با یک معاینه‌کننده و بدون بلایند بوده است. ارزش عملی مقاله جای دیگری است: جمعیتش به سمت یافتن سندروم سوگیری داشت و سندروم باز هم پیدا نشد."
       }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "کامبینیشن سندروم: چیزی که پنجاه سال تدریس شد و بعد پیدا نشد",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "link label"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "کامبینیشن سندروم پنجاه سال است سر کلاس گفته می‌شود و درمان‌های پیشگیرانه‌ی سنگینی را توجیه می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, treatments to address or to avoid Combination Syndrome are proposed and routinely taught to Dentistry students and graduates all over the world.",
+            "source_ref": null,
+            "note": "fifty years not stated by source (magnitude unaddressed); taught worldwide stated"
+          },
+          {
+            "id": "u4",
+            "claim_quote": "یک مطالعه روی ۹۹ بیمار با دقیقاً همان الگوی فکی رفت سراغش تا ببیند این تابلو در بالین پیدا می‌شود یا نه.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Results: 99 patients were recruited who were wearing maxillary removable complete dentures opposing only mandibular anterior teeth.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u5",
+            "claim_quote": "هر کدام از ما این را در دوران دانشجویی شنیده‌ایم: بیماری که ماگزیلایش کاملاً بی‌دندان است و مقابلش فقط دندان‌های قدامی مندیبل باقی مانده، در معرض یک سرنوشت مشخص است.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "first-person plural experience: هر کدام از ما ... شنیده‌ایم"
+          },
+          {
+            "id": "u6",
+            "claim_quote": "اسمش کامبینیشن سندروم(combination syndrome) بود و پنج جزء داشت که قرار بود با هم بیایند: تحلیل استخوان قدام ماگزیلا، بزرگ شدن توبروزیتی‌ها، پاپیلاری هایپرپلازی کام سخت، اکستروژن دندان‌های قدامی پایین، و تحلیل استخوان زیر بیس دنچر در خلف مندیبل.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These were: loss of bone from the anterior part of the maxillary ridge, overgrowth of the tuberosities, inflammatory papillary hyperplasia in the hard palate, extrusion of the lower anterior teeth and loss of bone under the denture bases.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u7",
+            "claim_quote": "بعدها شش علامت دیگر هم به فهرست اضافه شد که به جز تغییرات پریودنتال، احتمالاً نشانه‌های پروتز کهنه و مراقبت ناکافی بودند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, except for periodontal changes, these features probably represent poor Prosthodontic care rather than evidence of a syndrome.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u8",
+            "claim_quote": "این ساختمان روی یک پایه‌ی بسیار باریک بنا شده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, these studies are few, small and had significant limitations which were neither accounted for nor controlled.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u9",
+            "claim_quote": "Kelly در ۱۹۷۲ فقط شش بیمار را دنبال کرده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Resulting from a study following 6 patients with mandibular anterior teeth opposing maxillary complete dentures over 3 years, Kelly identified five changes that he proposed constituted Combination Syndrome.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u10",
+            "claim_quote": "مطالعات بعدی که وجود سندروم را تأیید کردند، روی هم حدود ۷۵ بیمار داشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These studies involved small numbers, the combined number of patients in all three studies was at 75, less than the 99 patients whose data were analyzed in this study.",
+            "source_ref": null,
+            "note": "source count of 75 includes Kelly study"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "همین کافی بود تا مطالب مربوط به این سندروم وارد کتاب‌ها شود و درمان‌هایی برای پیشگیری از آن در سراسر دنیا تدریس شود: از ایمپلنت و پرسیژن اتچمنت گرفته تا تکنیک‌های پیچیده تر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, treatments to address or to avoid Combination Syndrome are proposed and routinely taught to Dentistry students and graduates all over the world.",
+            "source_ref": null,
+            "note": "causal clause (this was enough to enter books) not addressed; teaching and treatment list stated"
+          },
+          {
+            "id": "u12",
+            "claim_quote": "درمان‌هایی که اغلب چندتخصصی‌اند، وقت می‌برند و هزینه‌ی قابل توجهی دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These often necessitate interdisciplinary approaches, involving specialist skills, taking much time and incurring considerable costs.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u13",
+            "claim_quote": "در سال ۲۰۰۳ یک بررسی انتقادی منابع علمی به این نتیجه رسید که این پدیده اصلاً شرایط لازم برای «سندروم» نامیده شدن در پزشکی را ندارد، ولی عملاً چیزی در آموزش تغییر نکرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Palmqvist et al [4] in a comprehensive review of the literature in relation to Combination Syndrome concluded that Combination Syndrome did not meet the requirements for a syndrome as commonly understood in medicine and that there was not conclusive evidence that Combination Syndrome existed as a clinical entity.",
+            "source_ref": null,
+            "note": "second half (nothing changed in teaching) not addressed"
+          },
+          {
+            "id": "u14",
+            "claim_quote": "تا اینکه در سال ۲۰۱۹ سه محقق در کینگز کالج لندن تصمیم گرفتند مستقیماً دنبالش بگردند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Objectives: To investigate the prevalence of Combination Syndrome, and to investigate if provision of a mandibular removable partial denture has any influence on the prevalence of Combination Syndrome.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u15",
+            "claim_quote": "۹۹ بیمار با دنچر کامل ماگزیلا مقابل فقط دندان‌های قدامی مندیبل، همه توسط یک معاینه‌کننده‌ی واحد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Results: 99 patients were recruited who were wearing maxillary removable complete dentures opposing only mandibular anterior teeth.",
+            "source_ref": null,
+            "note": "one examiner stated in Method: All patients were recruited and examined by one researcher (MF)"
+          },
+          {
+            "id": "u16",
+            "claim_quote": "نکته‌ی ظریف طراحی این بود که این بیماران از بیمارستان ارجاعی آمده بودند، یعنی موارد دشوار و درمان‌های ناموفق قبلی.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "They are mostly referred by General Dental Practitioners because their problems are perceived as difficult for General Dental Practice or because efforts at treating these patients have been unsuccessful, as was the case with over 60 of the patients in the current study.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u17",
+            "claim_quote": "اگر قرار بود جایی این سندروم پیدا شود، اینجا بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Recruitment within a Dental Hospital would be expected to identify a higher proportion of difficult cases, reflecting an exaggerated prevalence.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u18",
+            "claim_quote": "پیدا نشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Evidence supporting the existence of Combination Syndrome was not discovered in this research.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u19",
+            "claim_quote": "هیچ بیماری بیش از دو علامت نداشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "No patient was found to have more than two features of “Combination Syndrome” as described by Kelly [1].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u20",
+            "claim_quote": "اکستروژن دندان‌های قدامی پایین، که شاید شهودی‌ترین جزء ماجراست، در هیچ کس دیده نشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Extrusion of the mandibular anterior teeth was not found in any patient.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u21",
+            "claim_quote": "پاپیلاری هایپرپلازی در دو نفر و بزرگی توبروزیتی در دو نفر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Papillary hyperplasia was found in two patients (out of a total of 7 with denture related stomatitis).",
+            "source_ref": null,
+            "note": "second half (two patients with enlarged tuberosities) also stated in Results"
+          },
+          {
+            "id": "u22",
+            "claim_quote": "تحلیل دوطرفه‌ی خلف مندیبل در هیچ موردی.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Excessive resorption of the residual alveolar ridges in the posterior mandibular sextants was not found bilaterally in any case.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u23",
+            "claim_quote": "و جالب‌تر اینکه تعداد قابل توجهی از بیماران در خلف مندیبل تحلیل کمتری از نواحی متناظر ماگزیلا داشتند، یعنی دقیقاً عکس چیزی که فرضیه پیش‌بینی می‌کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, 17 patients were found to have less resorption of mandibular sextants when compared with the equivalent maxillary sextants.",
+            "source_ref": null,
+            "note": "\"exactly opposite to what the hypothesis predicted\" not stated as such; source reports 17 here and 29 in Discussion"
+          },
+          {
+            "id": "u24",
+            "claim_quote": "اما یک چیز پیدا شد، و خیلی هم شایع بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The presence of maxillary complete dentures opposed by mandibular anterior teeth with or without mandibular partial dentures was associated with a high prevalence of excessive bony resorption of, and fibrous replacement of the maxillary anterior residual alveolar ridge.",
+            "source_ref": null
+          },
+          {
+            "id": "u25",
+            "claim_quote": "۳۸ بیمار از ۹۹ نفر تحلیل شدید سکستانت قدامی ماگزیلا داشتند، و در تمام موارد این تحلیل با جایگزینی فیبروزی همراه بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "All 38 patients with excessive resorption of the anterior sextant of the maxilla had fibrous replacement of the bone to some extent.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u26",
+            "claim_quote": "همان فلبی ریجی که همه‌مان در قالب‌گیری با آن دست و پنجه نرم می‌کنیم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "first-person plural clinical experience: همه‌مان ... دست و پنجه نرم می‌کنیم"
+          },
+          {
+            "id": "u27",
+            "claim_quote": "پس چرا بقیه‌ی اجزا کنارش نمی‌آیند؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "question with no answer in it"
+          },
+          {
+            "id": "u28",
+            "claim_quote": "منطق نویسندگان روشن است.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "importance/framing sentence, no finding of its own"
+          },
+          {
+            "id": "u29",
+            "claim_quote": "پاپیلاری هایپرپلازی محصول بایوفیلم دنچر است، نه تروما از اکلوژن.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Denture related stomatitis, of which papillary hyperplasia is the most severe type has been demonstrated to be caused by the denture biofilm interacting with the patient and not by trauma from occlusion [13].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u30",
+            "claim_quote": "کاهش ورتیکال دایمنشن یا VD و اپولیس فیشوراتوم و تطابق ضعیف پروتز هم احتمالاً نشانه‌ی پروتز رها شده‌اند، نه جزئی از یک سندروم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, except for periodontal changes, these features probably represent poor Prosthodontic care rather than evidence of a syndrome.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u31",
+            "claim_quote": "چیزهایی که کنار هم دیده می‌شدند، کنار هم بودند چون در یک بیمار با پروتز قدیمی همه‌شان محتمل‌اند، نه چون ریشه‌ی مشترکی دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, except for periodontal changes, these features probably represent poor Prosthodontic care rather than evidence of a syndrome.",
+            "source_ref": null,
+            "note": "same sentence; the shared-root clause is the other side of rather than evidence of a syndrome"
+          },
+          {
+            "id": "u32",
+            "claim_quote": "مطالعه یک پرسش دوم هم داشت: آیا پارشیال دنچر پایین برای این بیماران سودی دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Do mandibular partial dentures offer any benefit or disadvantage to patients with complete dentures in the maxilla opposed by mandibular anterior teeth?",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u33",
+            "claim_quote": "پاسخ جالب بود.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "importance judgment only"
+          },
+          {
+            "id": "u34",
+            "claim_quote": "پارشیال دنچر هیچ محافظتی در برابر فلبی شدن ریج قدامی ماگزیلا ایجاد نکرد؛ روند داده‌ها حتی در جهت مخالف بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Wearing a mandibular partial denture did not protect against having a displaceable maxillary anterior residual alveolar ridge, the trend suggested the opposite, but the difference was not statistically significant (Table 2).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u35",
+            "claim_quote": "اما دو اثر واقعی داشت: بیمارانی که پارشیال داشتند هم گیر دنچر بالا را بهتر ارزیابی می‌کردند و هم توانایی جویدنشان را، در حالی که شیوع پریودنتیت در آن‌ها بیشتر بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The presence of a mandibular partial denture was significantly associated with prevalence of periodontitis.",
+            "source_ref": null,
+            "note": "fit and chewing halves also stated (Tables 4 and 5, significantly positive)"
+          },
+          {
+            "id": "u36",
+            "claim_quote": "یعنی پارشیال دنچر پایین جای خودش را دارد، به دلیل عملکرد و رضایت بیمار، با پذیرفتن هزینه‌ی پریودنتال آن.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "conclusion that the lower partial denture has its place is a recommendation the source does not make; it reports benefit and periodontitis risk only"
+          },
+          {
+            "id": "u37",
+            "claim_quote": "نتیجه‌ای که از این مقاله بیرون می‌آید ساده است و ارزش تغییر رفتار دارد.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "importance judgment; the finding is stated in the units after it"
+          },
+          {
+            "id": "u38",
+            "claim_quote": "شواهد این مطالعه پیشنهاد می‌کند تابلوی پنج‌جزئی Kelly در واقعیت بالینی یا نادر است یا اصلاً وجود ندارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Prevalence of Combination Syndrome appeared to be low or non-existent.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u39",
+            "claim_quote": "اما مشکل قدام ماگزیلا کاملاً واقعی است و در نزدیک به ۴۰ درصد این بیماران حضور دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Only 8 patients displayed two features of Combination Syndrome and 38 patients displayed one feature of Combination Syndrome, excessive resorption of the anterior maxillary sextant.",
+            "source_ref": null,
+            "note": "near 40 percent is 38 of 99; high prevalence also stated in Conclusions"
+          },
+          {
+            "id": "u40",
+            "claim_quote": "پس انرژی ما باید صرف همان شود، نه صرف درمان‌های پیشگیرانه‌ی سنگینی که خود نویسندگان مقاله تجویزشان را بدون شواهد قطعی یک علامت سوال می‌دانند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Without conclusive evidence that Combination Syndrome exists, or, if it exists, it is not rare, such treatments raise an ethical question in relation to treating patients unnecessarily.",
+            "source_ref": null,
+            "note": "the recommendation to direct effort to the maxillary problem is not stated by the source (silent half)"
+          },
+          {
+            "id": "u41",
+            "claim_quote": "مشکل واقعی است، اما به نظر می‌رسد سندروم نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Prevalence of Combination Syndrome appeared to be low or non-existent.",
+            "source_ref": null,
+            "note": "problem-is-real half: high prevalence of maxillary anterior ridge resorption stated in Conclusions"
+          },
+          {
+            "id": "u42",
+            "claim_quote": "منبع اصلی:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "label"
+          }
+        ],
+        "counts": {
+          "matches": 32,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 1,
+          "not_assessable": 0,
+          "author_view": 2,
+          "not_a_claim": 7
+        },
+        "assessable": 32,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "This suggests that factors other than those supposedly causative of Combination Syndrome are determinants of resorption in these sextants.",
+        "fact_fa": "از ۳۲ ادعایی که منبع به آن پرداخته‌اند، ۳۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
     ]
   },
   "episodes/episode-42": {
