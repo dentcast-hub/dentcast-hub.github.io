@@ -3817,6 +3817,356 @@
         "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
         "interpretation_fa": "مروری روایتی است که اصل رزیستنس فرم و ماهیت صفر و یکی آن را جمع‌بندی می‌کند و می‌گوید رسیدن به آن در مولرها سخت‌تر از قدامی‌هاست. نقش گراو در مارجین‌های نامنظم و ناسازگاری روش Weed با دو روش دیگر، برداشت‌های عملی‌اش هستند. رابطه‌ی رزیستنس فرم با موفقیت بالینی را خودش هم محل مناقشه می‌داند."
       }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "ABSTRACT_ONLY",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "Resistance Form در روکش‌ها",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "label only"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "یکی از مفاهیمی که موقع تراش دندان برای روکش زیاد اسمش می‌آید ولی همیشه دقیق تعریف نمی‌شود، «resistance form» است.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "how the profession talks about the topic"
+          },
+          {
+            "id": "u4",
+            "claim_quote": "طبق تعریف رسمی در Glossary of Prosthodontic Terms، resistance form یعنی آن ویژگی‌هایی از تراش که پایداری روکش را بیشتر می‌کند و جلوی جابجایی آن را در راستایی غیر از مسیر نشستن (path of placement) می‌گیرد.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u5",
+            "claim_quote": "مهم‌ترین نکته، فرقش با retention است، چون این دو معمولاً با هم اشتباه گرفته می‌شوند.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "importance framing"
+          },
+          {
+            "id": "u6",
+            "claim_quote": "Retention form جلوی بیرون آمدن روکش را در جهت عمودی و در امتداد مسیر خارج شدن می‌گیرد.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "Resistance form در مقابل، جلوی حرکت چرخشی روکش حول یک نقطه ثابت را می‌گیرد.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u8",
+            "claim_quote": "یعنی وقتی نیروهای جویدن سعی می‌کنند روکش را کج یا بلند کنند، این resistance form است که مانع می‌شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u9",
+            "claim_quote": "در عمل این دو کاملاً از هم جدا نیستند و با هم همپوشانی دارند، ولی از نظر مفهومی دو چیز متفاوت‌اند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u10",
+            "claim_quote": "∆ چرا مهم است؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "اهمیتش فقط تئوریک نیست.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "importance judgment"
+          },
+          {
+            "id": "u12",
+            "claim_quote": "در مطالعات بالینی، بیش از ۹۵٪ روکش‌هایی که با لق شدن و از دست رفتن سمان شکست خورده بودند، resistance form نداشتند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u13",
+            "claim_quote": "پس نبود آن یکی از دلایل اصلی decementation است، نه یک جزئیات فرعی.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u14",
+            "claim_quote": "به‌دست آوردنش هم در همه دندان‌ها به یک اندازه آسان نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It is more challenging to obtain resistive molar preparations than resistive anterior preparations, and uneven preparation margins can make parallel 0 degree taper preparations lack resistance form.",
+            "source_ref": null,
+            "note": "direction matches"
+          },
+          {
+            "id": "u15",
+            "claim_quote": "در بررسی تراش‌های واقعی ارسال‌شده به لابراتوار، درصد بالایی از تراش‌های دندان‌های قدامی و پرمولرها resistance form داشتند، در حالی که فقط حدود نیمی از تراش‌های مولرها به این هدف رسیده بودند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It is more challenging to obtain resistive molar preparations than resistive anterior preparations, and uneven preparation margins can make parallel 0 degree taper preparations lack resistance form.",
+            "source_ref": null,
+            "note": "direction matches (molars harder); proportions and lab-submission data unaddressed"
+          },
+          {
+            "id": "u16",
+            "claim_quote": "علتش هندسهٔ مولرهاست: ارتفاع کوتاه و قاعدهٔ پهن.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u17",
+            "claim_quote": "∆ چه چیزی resistance form را می‌سازد؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u18",
+            "claim_quote": "عامل اصلی، رابطهٔ بین taper (زاویهٔ total occlusal convergence)، ارتفاع تراش و پهنای قاعدهٔ آن است.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u19",
+            "claim_quote": "قاعدهٔ کلی این است که هرچه تراش کوتاه‌تر و پهن‌تر و زاویه‌دارتر باشد، resistance form راحت‌تر از بین می‌رود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u20",
+            "claim_quote": "برای هر نسبت مشخصی از ارتفاع به قاعده، یک حداکثر taper وجود دارد که اگر تراش از آن بگذرد، resistance form عملاً صفر می‌شود (مفهوم limiting taper).",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u21",
+            "claim_quote": "به همین دلیل تراش کوتاه و over-reduced مولر بیشترین ریسک را دارد.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u22",
+            "claim_quote": "از نظر عددی، تکست‌بوک‌های مرجع مثل Shillingburg و Rosenstiel توصیه می‌کنند total occlusal convergence حدود ۲ تا ۶ درجه باشد، هرچند در عمل معمولاً چیزی حدود ۱۰ تا ۲۰ درجه به دست می‌آید.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u23",
+            "claim_quote": "وقتی هندسهٔ تراش به‌تنهایی کافی نیست (باز هم مخصوصاً در مولرها)، از تراش‌های کمکی مثل groove یا box برای زیاد کردن resistance form استفاده می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The usefulness of grooves, especially in molar preparations with uneven margins, is illustrated.",
+            "source_ref": null,
+            "note": "grooves stated; box unaddressed"
+          },
+          {
+            "id": "u24",
+            "claim_quote": "∆ حالا روکش آمده توی مطب: از کجا بفهمیم resistance form دارد یا نه؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u25",
+            "claim_quote": "یک تست عملی ساده وجود دارد، ولی ترتیب کار مهم است:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost ending in colon"
+          },
+          {
+            "id": "u26",
+            "claim_quote": "اول روکش را کامل روی تراش بنشانید و مطمئن شوید که واقعاً تا انتها seat شده، نه اینکه یک تماس پروگزیمالی یا یک برجستگی داخلی نگهش داشته باشد.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u27",
+            "claim_quote": "این مرحله حیاتی است، چون روکشی که کامل ننشسته هم لق می‌زند و نتیجه را گمراه‌کننده می‌کند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u28",
+            "claim_quote": "بعد از اطمینان از نشستن کامل، با انگشت یا اینسترومنت روی دو نقطهٔ مقابل هم فشار متناوب وارد کنید (یک لبه را به پایین فشار بدهید و ببینید لبهٔ مقابل بلند می‌شود یا نه).",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u29",
+            "claim_quote": "روکشی که resistance form کافی دارد ثابت می‌ماند و کج نمی‌شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u30",
+            "claim_quote": "روکشی که ندارد، حول یک نقطه (معمولاً لبهٔ مقابل) می‌چرخد و طرف دیگرش بالا می‌آید.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u31",
+            "claim_quote": "همین rocking، بعد از اینکه دلایل دیگر (نشستن ناقص، تماس زودرس، مارجین معیوب، کستینگ over-extended) را رد کردید، نشانهٔ نبود resistance form است.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u32",
+            "claim_quote": "قبل از سمان‌کردن هم می‌شود روی die کست تست کرد: روکشی که resistance form ندارد به‌راحتی روی die می‌غلتد، در حالی که روکش دارای resistance form سر جایش قفل می‌شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u33",
+            "claim_quote": "یک نکتهٔ مهم که موقع «تایید کار لابراتوار» باید حواستان باشد: resistance form عمدتاً در مرحلهٔ تراش تعیین می‌شود، نه در لابراتوار.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u34",
+            "claim_quote": "اگر تراش over-taper شده باشد، لابراتوار نمی‌تواند این کمبود را جبران کند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u35",
+            "claim_quote": "پس اگر روکش موقع امتحان می‌چرخد و بقیهٔ عوامل هم رد شده‌اند، مشکل معمولاً به خود تراش برمی‌گردد و راه‌حل درست، اصلاح تراش و اضافه‌کردن groove یا box است، نه صرفاً ساختِ دوبارهٔ روکش.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u36",
+            "claim_quote": "یعنی این تست هم کیفیت کار لابراتوار را نشان می‌دهد و هم صادقانه کیفیت تراش خودتان را.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          }
+        ],
+        "counts": {
+          "matches": 3,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 0,
+          "not_assessable": 24,
+          "author_view": 0,
+          "not_a_claim": 9
+        },
+        "assessable": 3,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": true,
+        "source_conclusion": "The Lewis and Zuckerman techniques for evaluating resistive areas of a preparation are shown to be consistent with each other but not with the Weed method.",
+        "fact_fa": "از ۳ ادعایی که منبع به آن پرداخته‌اند، ۳ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
     ]
   },
   "sharehub/share-11": {
