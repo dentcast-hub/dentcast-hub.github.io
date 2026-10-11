@@ -13601,6 +13601,1094 @@
         "fact_fa": "امتیاز شواهد این منبع ۲۷ از ۱۰۰ و باند D است؛ نوع سوال Therapy است.",
         "interpretation_fa": "متن کامل نشان می‌دهد این مرور سیستماتیک سه پایگاه را جست‌وجو کرده، مطالعات را با NOS/Cochrane ارزیابی کرده و جدول کنارگذاشته‌ها با دلیل دارد، اما پروتکل ثبت‌شده و ارزیابی سوگیری انتشار ندارد؛ سنتز هم توصیفی است نه متاآنالیز. دو دامنهٔ حیاتی AMSTAR-2 رد می‌شوند (critically low) و خودِ نویسندگان کمبود فالوآپ را می‌پذیرند — برای مشاورهٔ بالینی عدد ۹۹٫۸٪ abstract را نقل نکنید."
       }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "All-on-4: خلاصه‌ی بالینی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "title/label only"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "مرور سیستماتیک ۲۰۱۷ می‌گوید all-on-4 یعنی چهار ایمپلنت در قدام فک بی‌دندان: دو تای قدامی اگزیال، دو تای خلفی زاویه‌دار به سمت دیستال، تا استخوان باقی‌مانده کافی باشد و نیازی به لیفت سینوس و گرفت نباشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The “all-on-four” treatment concept was developed to maximize the use of available remnant bone in atrophic jaws, allowing immediate function and avoiding regenerative procedures that increase the treatment costs and patient morbidity, as well as the complications inherent to these procedures (1).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u4",
+            "claim_quote": "پروتز ثابت موقت همان جلسه لود می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The protocol uses four implants in the anterior part of complete edentulous jaws to support a provisional, fixed and immediately loaded prosthesis.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u5",
+            "claim_quote": "در ۱۱۷۴۳ ایمپلنت گزارش‌شده، بیشتر شکست‌ها مال سال اول است و آنچه بیمار بعداً با آن سروکار دارد عمدتاً عارضه‌ی پروتزی است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Of these implants, 134 failed during the first year, 9 implants fai- led before two years, and 31 implants failed during an interval of 3-10 years.",
+            "source_ref": null,
+            "note": "second half (prosthetic complications are what the patient deals with later, vs biological) ranks complication types over time; source silent on that ranking; first half matches counts"
+          },
+          {
+            "id": "u6",
+            "claim_quote": "بیمار بی‌دندان با استخوان خلفی ناکافی که نمی‌خواهد وارد رژنراسیون شود، کاندید اصلی all-on-4 است: چهار ایمپلنت در قدام، دو تا اگزیال و دو تا خلفی tilted، پروتز ثابت موقت همان جلسه.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The main treatment indication was an atrophic jaw or edentulous maxilla, with or without remnant hopeless tooth.",
+            "source_ref": null,
+            "note": "reluctance to regenerate is reported for some studies; narrowing, not a change"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "این جمع‌بندی روی مرور سیستماتیک Soto-Peñaloza ۲۰۱۷ سوار است و مسیر را از انتخاب بیمار تا عوارض پروتزی و بیولوژیک جلو می‌برد.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "page's own scope/provenance statement"
+          },
+          {
+            "id": "u8",
+            "claim_quote": "مفهوم درمان",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u9",
+            "claim_quote": "در پروتکل all-on-4 چهار ایمپلنت در ناحیه‌ی قدامی فک بی‌دندان قرار می‌گیرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The protocol uses four implants in the anterior part of complete edentulous jaws to support a provisional, fixed and immediately loaded prosthesis.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u10",
+            "claim_quote": "دو ایمپلنت قدامی به‌صورت axial و دو ایمپلنت خلفی با tilt به سمت دیستال.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The two most anterior implants are placed axially, whereas the two posterior implants are placed distally and angled to minimize the cantilever length, and to allow the application of prostheses with up to 12 teeth, thereby enhancing masticatory efficiency (2,3).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u11",
+            "claim_quote": "زاویه دادن به ایمپلنت‌های خلفی، محل خروج آن‌ها را عقب‌تر می‌برد و در نتیجه طول cantilever کوتاه می‌شود و پروتز می‌تواند تا ۱۲ دندان را پوشش دهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The two most anterior implants are placed axially, whereas the two posterior implants are placed distally and angled to minimize the cantilever length, and to allow the application of prostheses with up to 12 teeth, thereby enhancing masticatory efficiency (2,3).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u12",
+            "claim_quote": "کل منطق طرح این است که از استخوان باقی‌مانده حداکثر استفاده شود تا نیازی به sinus lift و bone graft نباشد، و به این ترتیب موربیدیتی، هزینه و زمان درمان کاهش پیدا کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The “all-on-four” treatment concept was developed to maximize the use of available remnant bone in atrophic jaws, allowing immediate function and avoiding regenerative procedures that increase the treatment costs and patient morbidity, as well as the complications inherent to these procedures (1).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u13",
+            "claim_quote": "روی همین چهار ایمپلنت، پروتز ثابت موقت بلافاصله لود می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The protocol uses four implants in the anterior part of complete edentulous jaws to support a provisional, fixed and immediately loaded prosthesis.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u14",
+            "claim_quote": "انتخاب بیمار",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u15",
+            "claim_quote": "این پروتکل برای فک کاملاً بی‌دندان طراحی شده، یا فکی که فقط چند دندان با پیش‌آگهی ضعیف در آن باقی مانده و قرار است در همان جلسه کشیده شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The main treatment indication was an atrophic jaw or edentulous maxilla, with or without remnant hopeless tooth.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u16",
+            "claim_quote": "آنچه انتخاب را تعیین می‌کند وضعیت استخوان خلفی است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source lists indications and does not say what determines selection"
+          },
+          {
+            "id": "u17",
+            "claim_quote": "بیماری که استخوان خلفی کافی برای ایمپلنت‌گذاری معمول ندارد و حاضر نیست sinus lift یا bone graft انجام دهد، کاندید اصلی این درمان است، و در چند مطالعه همین بی‌میلی بیمار به جراحی رژنراتیو صراحتاً به‌عنوان اندیکاسیون ثبت شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Some studies considered as indication patient reluctance to undergo regenerative procedures such as sinus lift or bone grafts allowing implant placement in the posterior atrophic jaw (5,29,33).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u18",
+            "claim_quote": "از نظر سلامت عمومی، اکثر مطالعات بیماران ASA I و II را وارد کرده‌اند، یعنی افراد سالم یا با بیماری سیستمیک خفیف و کنترل‌شده.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In the present systematic review, most authors considered the inclusion of healthy patients, compatible with an American Association of Anesthesiology (ASA) score of ASA I or II.",
+            "source_ref": null,
+            "note": "the ASA II gloss is not in the source sentence; noted, not scored"
+          },
+          {
+            "id": "u19",
+            "claim_quote": "معیار عملی انتخاب بیمار در این پروتکل، ابعاد استخوان است نه دانسیته.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not state that bone dimension rather than density is the practical criterion; it reports two studies using dimensions and bone quality assessed only during drilling"
+          },
+          {
+            "id": "u20",
+            "claim_quote": "کیفیت استخوان در مطالعات با Lekholm & Zarb ارزیابی شده، اما این ارزیابی فقط حین دریل کردن انجام شده و پیش از جراحی نقشی در تصمیم‌گیری نداشته است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Bone quality was assessed according to the criteria established by Lekholm & Zarb in 1985 (39) in some studies (6,22,26,35).",
+            "source_ref": null,
+            "note": "second half (assessed only during drilling, no additional data for decision making) is stated in the Discussion: «However, bone quality was only assessed during the implant drilling»"
+          },
+          {
+            "id": "u21",
+            "claim_quote": "در مقابل، دو مطالعه حداقل ابعاد استخوان اینترفورامینال را مشخص کرده‌اند: در یکی ارتفاع حداقل ۶ میلی‌متر و در دیگری عرض بیش از ۵ و ارتفاع بیش از ۸ میلی‌متر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Moreover, two reports placed importance on jaw width and height in the interforaminal crest area as an indication on placing implants, these reports describe, a minimum required height of 6 mm, and at least >5 mm width and >8 mm height, respectively (21,22).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u22",
+            "claim_quote": "برای پیش‌بینی دشواری جراحی، Lopes بیماران را بر اساس عرض ریج باقی‌مانده طبقه‌بندی کرده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In the publication by Lopes et al. (24), the patients were classified according to the degree of surgical difficulty based on the residual ridge dimensions – difficulty being scored as low (residual ridge > 5 mm wide), moderate (irregular residual ridge 4-5 mm wide) or high (irregular residual ridge < 4 mm wide).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u23",
+            "claim_quote": "عرض بیش از ۵ میلی‌متر دشواری کم، ریج نامنظم ۴ تا ۵ میلی‌متر دشواری متوسط، و ریج نامنظم کمتر از ۴ میلی‌متر دشواری زیاد محسوب می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In the publication by Lopes et al. (24), the patients were classified according to the degree of surgical difficulty based on the residual ridge dimensions – difficulty being scored as low (residual ridge > 5 mm wide), moderate (irregular residual ridge 4-5 mm wide) or high (irregular residual ridge < 4 mm wide).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u24",
+            "claim_quote": "در یک مطالعه از طبقه‌بندی Cawood & Howell استفاده شده که میزان تحلیل ریج بی‌دندان را درجه‌بندی می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In turn, Tallarico et al. (16), based on the Cawood & Howell classification, considering discrepancies in the degree of resorption as indication criteria.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u25",
+            "claim_quote": "در این طبقه‌بندی کلاس III ریجی است که هنوز پهن و محدب است، کلاس IV ریج تیغه‌ای یا knife-edge با ارتفاع کافی ولی عرض ناکافی، کلاس V ریج تخت با ارتفاع و عرض ناکافی، و کلاس VI ریج فرورفته با تحلیل استخوان بازال.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the class definitions III to VI are not in the source text"
+          },
+          {
+            "id": "u26",
+            "claim_quote": "نتیجه‌ی آن مطالعه این بود که all-on-4 در کلاس‌های IV، V و VI پروتکل ایمن و مؤثری به نظر می‌رسد، یعنی دقیقاً در همان فک‌های تحلیل‌رفته‌ای که ایمپلنت‌گذاری معمول در آن‌ها بدون گرفت ممکن نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The study indicates that in patients corresponding to Cawood & Howell class IV, V and VI, the all-on-four treatment concept seems to be a safe, effective and efficient surgical-prosthetic protocol applied to both jaws, avoiding technique-sensitive augmentation procedures (49,50).",
+            "source_ref": null,
+            "note": "the claim that conventional placement without grafting is impossible in these jaws is the page's own gloss; the stated half matches with the same hedge"
+          },
+          {
+            "id": "u27",
+            "claim_quote": "جراحی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u28",
+            "claim_quote": "بی‌حسی و sedation",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u29",
+            "claim_quote": "همه‌ی مطالعات از بی‌حسی موضعی با تکنیک انفیلتراسیون استفاده کرده‌اند و در بخشی از آن‌ها sedation خوراکی یا وریدی هم اضافه شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Prior to surgery, all authors used local anesthesia based on the infiltration technique, and some authors moreover used sedation with local anesthesia (5,17,18,25-27,29,32,37).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u30",
+            "claim_quote": "هیچ عارضه‌ای مرتبط با sedation در این پروتکل گزارش نشده، اما یک نکته‌ی دارویی اهمیت دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "On the other hand, no study has reported complications related to the sedation procedure during implant surgery following the all-on-four treatment concept.",
+            "source_ref": null,
+            "note": "second clause is an importance framing"
+          },
+          {
+            "id": "u31",
+            "claim_quote": "بنزودیازپین‌هایی مثل تریازولام در کبد و از مسیر آنزیم CYP3A متابولیزه می‌شوند، پس هر دارویی که این مسیر را مهار کند سطح خونی دارو را بالا می‌برد و sedation را عمیق‌تر و طولانی‌تر از حد انتظار می‌کند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source says triazolam is contraindicated with CYP3A-impairing drugs; liver metabolism, raised blood level and deeper sedation are not stated"
+          },
+          {
+            "id": "u32",
+            "claim_quote": "مهم‌ترین این داروها آنتی‌بیوتیک‌های ماکرولید (اریترومایسین، کلاریترومایسین)، ضدقارچ‌های آزولی (کتوکونازول، ایتراکونازول) و مهارکننده‌های پروتئاز هستند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "ranking of the most important drugs, and erythromycin/clarithromycin as named drugs, are not in the source"
+          },
+          {
+            "id": "u33",
+            "claim_quote": "مصرف آب گریپ‌فروت، سیکلوسپورین و بلاکرهای کانال کلسیم (نیفدیپین، وراپامیل، دیلتیازم) هم همین اثر را با شدت کمتر دارند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source advises caution with these agents; the same effect at lower intensity is not stated"
+          },
+          {
+            "id": "u34",
+            "claim_quote": "تریازولام در بارداری و شیردهی و در فرد الکل‌مصرف هم منع دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In our opinion, this is a relevant topic, since Flanagan (2004) indicated that benzodiazepines such as triazolam are contraindicated in pregnant or nursing patients, and well as in individuals who consume alcohol or are under treatment with macrolide antibiotics, certain protease inhibitors, psychotropic agents, ketoconazole, itraconazole, nefazodone, or other medications that impair oxidative metabolism mediated by the cytochrome P450 3A (CYP 3A isoenzyme) metabolic pathway.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u35",
+            "claim_quote": "برش",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u36",
+            "claim_quote": "در هر دو فک یک برش کرستال سراسری زده می‌شود، از ناحیه‌ی مولر اول یک سمت تا مولر اول سمت مقابل.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "On other hand, regarding the incision approach, a crestal incision was performed in both the maxilla and mandible, from the first molar to the same piece on the contralateral side.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u37",
+            "claim_quote": "در ماگزیلا بعضی جراحان یک برش عمودی رهاننده در انتهای دیستال اضافه می‌کنند تا دسترسی بهتر شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "On the other hand, some authors prefer to perform a vertical distal incision to relieve the flap (5,19,25), allowing improved access to the surgical site.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u38",
+            "claim_quote": "اگر جراحی به‌صورت guided و flapless برنامه‌ریزی شده باشد، برشی زده نمی‌شود و ایمپلنت‌ها از داخل اسپلینت طراحی‌شده جایگذاری می‌شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, when a guided surgical approach was programmed, the authors placed a computer-designed prosthetic splint with subsequent implant placement following a flapless technique (23,24,31).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u39",
+            "claim_quote": "چرا جراح سینوس و عصب را نمایان می‌کند",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u40",
+            "claim_quote": "محدودکننده‌ی اصلی در این پروتکل، آناتومی خلفی است: در فک بالا سینوس ماگزیلاری و در فک پایین عصب و محل خروج آن از سوراخ mental.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not name posterior anatomy as the main limiting factor"
+          },
+          {
+            "id": "u41",
+            "claim_quote": "کل ایده‌ی tilt کردن ایمپلنت خلفی این است که ایمپلنت درست جلوتر از این ساختارها و در امتداد دیواره‌ی آن‌ها قرار بگیرد، پس جراح باید محل دقیق آن‌ها را ببیند نه اینکه حدس بزند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Once incision and detachment were performed, and as a safety measure or as a way to orientate placement of the distal jaw implants, some authors made a window in the maxillary sinus, locating the mesial wall (5,20,2527,37).",
+            "source_ref": null,
+            "note": "conclusion (surgeon should see the structures) judged as an instruction against the reported practice; the tilt rationale premise is not compared"
+          },
+          {
+            "id": "u42",
+            "claim_quote": "در ماگزیلا برای این کار پنجره‌ی کوچکی در دیواره‌ی قدامی سینوس باز می‌شود تا لبه‌ی مزیال سینوس مستقیم دیده شود و ایمپلنت دیستال درست جلوی آن و موازی با دیواره‌اش قرار بگیرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Once incision and detachment were performed, and as a safety measure or as a way to orientate placement of the distal jaw implants, some authors made a window in the maxillary sinus, locating the mesial wall (5,20,2527,37).",
+            "source_ref": null,
+            "note": "small window, and implant parallel to the wall, are not stated"
+          },
+          {
+            "id": "u43",
+            "claim_quote": "در مندیبل، محل خروج عصب mental نمایان می‌شود تا ایمپلنت دیستال جلوتر از آن بماند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The same procedure was used in the jaw until reaching the emergence of the mental nerve (21,26).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u44",
+            "claim_quote": "نتیجه‌ی پروتزی این کار مستقیم است: محل خروج ایمپلنت خلفی تا حد ممکن عقب می‌رود و cantilever کوتاه‌تر می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The two most anterior implants are placed axially, whereas the two posterior implants are placed distally and angled to minimize the cantilever length, and to allow the application of prostheses with up to 12 teeth, thereby enhancing masticatory efficiency (2,3).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u45",
+            "claim_quote": "در بیمارانی که دندان با پیش‌آگهی ضعیف دارند، دندان‌ها در همان جلسه و پیش از جایگذاری ایمپلنت کشیده می‌شوند، ساکت‌ها تمیز می‌شود و در صورت لزوم کرست استخوان صاف می‌شود تا لبه‌های تیز حذف شود و پروتز روی بستر منظم بنشیند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Regularization of the bone crest was performed if considered opportune by the operator in dentate patients undergoing tooth extraction in the same surgery (17,19,20,30,32-34).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u46",
+            "claim_quote": "گاید جراحی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u47",
+            "claim_quote": "از ۲۴ مطالعه، ۱۷ مطالعه از نوعی گاید استفاده کرده‌اند تا موقعیت و زاویه‌ی ایمپلنت‌ها دقیق‌تر شود، بیشتر با سیستم Nobel Biocare و all-on-four guide.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Of the different types of guided surgery, the most widely used option was the Nobel Biocare System (16,21,29,38).",
+            "source_ref": null,
+            "note": "17 of 24 stated in an earlier sentence"
+          },
+          {
+            "id": "u48",
+            "claim_quote": "با این حال guided surgery خودش learning curve و عوارض خاص خود را دارد، از جمله شکستن گاید، از دست رفتن ایمپلنت و استابیلیتی اولیه‌ی پایین.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, associated complications such as implant loss, prosthetic or surgical guide fractures, and low primary stability are often observed, and there is a learning curve for ensuring treatment success, as recently reported by a systematic review (57).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u49",
+            "claim_quote": "زاویه‌ی ایمپلنت‌های دیستال",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u50",
+            "claim_quote": "در بسیاری از مطالعات ۳۰ درجه بوده و محدوده‌ی کلی گزارش‌شده ۳۰ تا ۴۵ درجه است که به آناتومی ناحیه بستگی دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Regarding implant inclination, the reported angulations vary between 30 to 45 degrees, although this depends on the anatomical location (18-20,22,31).",
+            "source_ref": null,
+            "note": "Two claims, both addressed and both faithful: many studies at 30 degrees (source: Many authors placed the distal implants with an angulation of 30 degrees) and the 30 to 45 range depending on anatomical location (governing sentence, the one that names both figures and the anatomy)."
+          },
+          {
+            "id": "u51",
+            "claim_quote": "شواهد جانبی پیشنهاد می‌کند تفاوت زاویه ممکن است روی بقای ایمپلنت و marginal bone loss اثری نداشته باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The use of tilted implants to support fixed partial and full-arch prostheses for the rehabilitation of edentulous jaws can be considered a predictable technique, with an excellent prognosis over the short and middle term (58), though it has been suggested that differences in angulation of dental implants might not affect implant survival or marginal bone loss (59).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u52",
+            "claim_quote": "گیر اولیه و شرط لود فوری",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u53",
+            "claim_quote": "در مطالعات، برای امکان لود فوری، ایمپلنت در همان جلسه‌ی جراحی با گیر مکانیکی کافی، یعنی primary stability، قرار داده شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In relation to the indication of implant insertion to allow immediate rehabilitation, specific procedures were adopted for increasing primary stability of the implants during site preparation, such as the under-preparation of bone, dependent upon the bone strength observed during initial drilling (5,18,19,21,26).",
+            "source_ref": null,
+            "note": "same-session placement is implicit and not separately stated"
+          },
+          {
+            "id": "u54",
+            "claim_quote": "معیار عملی این گیر، تورک درج ۳۰ تا ۵۰ نیوتن‌سانتی‌متر است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "To allow immediate rehabilitation, the implants were inserted with a final torque of between 30-50 Ncm.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u55",
+            "claim_quote": "جراح برای رسیدن به این تورک دو کار می‌کند.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost announcing the next units"
+          },
+          {
+            "id": "u56",
+            "claim_quote": "اول اینکه حفره‌ی استخوانی را عمداً کمی باریک‌تر از قطر ایمپلنت آماده می‌کند (under-preparation) تا ایمپلنت با فشار در استخوان قفل شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In relation to the indication of implant insertion to allow immediate rehabilitation, specific procedures were adopted for increasing primary stability of the implants during site preparation, such as the under-preparation of bone, dependent upon the bone strength observed during initial drilling (5,18,19,21,26).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u57",
+            "claim_quote": "دوم اینکه مرحله‌ی countersink را حذف می‌کند، یعنی قسمت کرونالی حفره را برای جا دادن گردن ایمپلنت گشاد نمی‌کند، تا استخوان کورتیکال کرست دست‌نخورده بماند و بیشترین گیر را بدهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The insertion torque is frequently enhanced through implant site under-drilling by avoiding the countersink to maximize implant stability (5).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u58",
+            "claim_quote": "منطق کلی آماده‌سازی سایت هم بر همین اساس است: توالی دریل‌ها متناسب با دانسیته‌ی استخوان زودتر یا دیرتر متوقف می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In relation to the indication of implant insertion to allow immediate rehabilitation, specific procedures were adopted for increasing primary stability of the implants during site preparation, such as the under-preparation of bone, dependent upon the bone strength observed during initial drilling (5,18,19,21,26).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u59",
+            "claim_quote": "در استخوان نرم، آماده‌سازی در قطرهای کوچک‌تر متوقف می‌شود تا ایمپلنت با فشار بیشتری بنشیند، و دریل‌های قطورتر فقط در استخوان متراکم و آن هم فقط در لایه‌ی کورتیکال استفاده می‌شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In cases of high bone density, 3.8/4.2 mm step drills were used only in cortical bone.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u60",
+            "claim_quote": "گردن ایمپلنت در سطح استخوان قرار می‌گیرد و در صورت امکان ایمپلنت هر دو کورتکس را درگیر می‌کند (bicortical anchorage) تا گیر اولیه بیشتر شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The implant neck was aimed to be positioned at bone level, and bicortical anchorage was established whenever possible (26).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u61",
+            "claim_quote": "دو نکته در این مرحله اهمیت بالینی دارد.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "importance judgment, the reasons that follow are judged"
+          },
+          {
+            "id": "u62",
+            "claim_quote": "تورک بیش از حد می‌تواند سطح ایمپلنت را بساید و با آزاد شدن ذرات و یون‌های تیتانیوم واکنش foreign body ایجاد کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, excess insertion torque may possibly cause wearing on the implant surface, generating a foreign body reaction due to titanium debris and ions released from the surface (62).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u63",
+            "claim_quote": "همچنین شواهد پره‌کلینیکال نشان داده under-drilling همراه با تورک بالا ممکن است تماس استخوان با ایمپلنت را در ناحیه‌ی کرستال در مراحل اولیه‌ی ترمیم کاهش دهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Moreover, insertion of implants with high torque following an under-drilling protocol - commonly used for immediate loading - may reduce crestal bone-to-implant contact in the early healing stages, as recently demonstrated in a pre-clinical study.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u64",
+            "claim_quote": "یعنی گیر اولیه‌ی بیشتر همیشه به معنی نتیجه‌ی بهتر نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Moreover, insertion of implants with high torque following an under-drilling protocol - commonly used for immediate loading - may reduce crestal bone-to-implant contact in the early healing stages, as recently demonstrated in a pre-clinical study.",
+            "source_ref": null,
+            "note": "inference judged on its conclusion"
+          },
+          {
+            "id": "u65",
+            "claim_quote": "هیچ‌کدام از مطالعات از resonance frequency analysis مانند Osstell که استابیلیتی را به‌صورت عددی و مستقل می‌سنجد استفاده نکرده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, no studies suggested the use of resonance frequency analysis to evaluate dental implant stability (e.g., Ostell).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u66",
+            "claim_quote": "در همه‌ی مطالعات، تنها ملاک برای اینکه ایمپلنت لود فوری بشود یا نه، عددی بوده که هنگام بستن ایمپلنت روی راتچت خوانده شده است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "ratchet reading as the only criterion in all studies is not stated; source says torque 30-50 Ncm and under-preparation dependent on bone strength"
+          },
+          {
+            "id": "u67",
+            "claim_quote": "ابعاد ایمپلنت",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u68",
+            "claim_quote": "کوتاه‌ترین طول ۷ میلی‌متر با بقای ۹۵.۴ درصد در سه سال، بلندترین ۱۸ میلی‌متر و میانگین حدود ۱۰ میلی‌متر گزارش شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The shortest length, described by Malo et al. (2015) (27), was 7 mm, with a survival rate of 95.4% at three years, while the longest implant length was 18 mm (5,18,32).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u69",
+            "claim_quote": "قطرها بین ۳.۳ تا ۵ میلی‌متر بوده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In turn, the smallest reported diameter was 3.3 mm (16,26), with a maximum of 5 mm, described by Niedermaier et al. (30).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u70",
+            "claim_quote": "پروتز",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u71",
+            "claim_quote": "زمان لود موقت در مطالعات متفاوت است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Immediate loading protocols were used after 48 hours in 6 studies (17,21,23,25,33,36), after 24 hours in other studies (22,34,37), and on the same day a minimum of two hours to a maximum of 8 hours after surgery (5,18,26,29,31,32).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u72",
+            "claim_quote": "شش مطالعه در همان روز جراحی و در فاصله‌ی ۲ تا ۸ ساعت لود کرده‌اند، سه مطالعه پس از ۲۴ ساعت و شش مطالعه پس از ۴۸ ساعت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Immediate loading protocols were used after 48 hours in 6 studies (17,21,23,25,33,36), after 24 hours in other studies (22,34,37), and on the same day a minimum of two hours to a maximum of 8 hours after surgery (5,18,26,29,31,32).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u73",
+            "claim_quote": "پروتز موقت در بیشتر موارد اکریلی بوده، در بسیاری از مطالعات تقویت‌شده با فریم‌ورک تیتانیومی یا سیلندرهای تیتانیومی، و شامل ۱۰ تا ۱۲ دندان، که در چند مطالعه بدون cantilever ساخته شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Only 5 studies indicated the number of teeth included in the prostheses (5,17,18,21,23) - the number being 10 to 12 teeth in some studies, without cantilever.",
+            "source_ref": null,
+            "note": "acrylic and reinforcement parts are in a sentence with a page-break artifact"
+          },
+          {
+            "id": "u74",
+            "claim_quote": "پروتز نهایی در ۱۴ مطالعه بین ۴ تا ۶ ماه پس از جراحی تحویل شده، در یک مطالعه پس از ۲ ماه و در دو مطالعه پس از ۳ ماه.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Fourteen studies performed definitive prosthetic loading after between 4-6 months.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u75",
+            "claim_quote": "جنس پروتز نهایی در برخی مطالعات CAD/CAM با فریم‌ورک تیتانیومی و دندان‌های رزینی بوده، در بخشی از مطالعات متال-سرامیک، و در یک مطالعه زیرکونیا.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The definitive prostheses were fabricated using CADCAM in some studies, or were made with metal-ceramic materials, reinforced with titanium frameworks.",
+            "source_ref": null,
+            "note": "zirconia in one study is stated in the next sentence; the pairing of titanium framework and resin teeth with CAD/CAM is not in this sentence but appears in the source tables"
+          },
+          {
+            "id": "u76",
+            "claim_quote": "اباتمنت‌ها از نوع multiunit هستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Straight and 17° angulated multiunit abutments were frequently used on anterior implants, and 30° angulated abutments were most commonly used on distal implants, as reported by some authors (24,25,33).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u77",
+            "claim_quote": "روی ایمپلنت‌های قدامی معمولاً اباتمنت straight یا ۱۷ درجه و روی ایمپلنت‌های دیستال اباتمنت ۳۰ درجه استفاده می‌شود، و محدوده‌ی کلی زاویه ۱۷ تا ۳۵ درجه است که برای جبران عدم موازی بودن ایمپلنت‌ها انتخاب می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In relation to prosthetic abutment inclination, most of the studies described the use of both tilted and straight types inclined between 17° to 35°, being indicated to compensate the lack of parallelism between implants.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u78",
+            "claim_quote": "تورک پیچ‌های پروتزی را فقط چند مطالعه گزارش کرده‌اند و در محدوده‌ی ۱۰ تا ۲۰ نیوتن‌سانتی‌متر بوده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Data referred to prosthetic screw tightening using a torque controller were provided by a few studies - the applied forces being in the order of 10-20 Ncm (5,17,25,32,33).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u79",
+            "claim_quote": "هدف اکلوزالی در همه‌ی مطالعات یکی است: کم کردن بار روی ایمپلنت‌ها در ماه‌های اول و هدایت نیرو به ناحیه‌ی قدامی که ایمپلنت‌های axial در آن قرار دارند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "a common occlusal aim in all studies is not stated; source describes several occlusal schemes"
+          },
+          {
+            "id": "u80",
+            "claim_quote": "در حرکات excursive، تماس‌ها به ناحیه‌ی بین دو کانین محدود می‌شود و گاید کانین یا کانین و پرمولر برقرار می‌شود، یعنی همان mutually protected occlusion.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Many studies treated interferences in excursive dynamic movements through the establishment of centric and lateral contacts within the inter-canine zone, in attempting to secure mutually protected occlusion.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u81",
+            "claim_quote": "تماس‌های سنتریک اما روی همه‌ی واحدهای فانکشنال توزیع می‌شود و فقط cantilever از تماس خارج می‌ماند، در یکی از پروتکل‌ها دست‌کم برای سه ماه اول.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Other approaches were also described by some authors, considering as static occlusion that comprising central contacts established on all masticatory units but the cantilevers for the first three months (30).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u82",
+            "claim_quote": "وقتی قوس مقابل دنچر کامل متحرک باشد، به‌جای mutually protected از balanced occlusion استفاده می‌شود، چون پایداری دنچر مقابل به تماس‌های دوطرفه‌ی هم‌زمان وابسته است و گاید قدامی آن را بی‌ثبات می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Mutually protected occlusion with anterior guidance or balanced occlusion in cases of opposing natural dentition or opposite implants and complete removable denture respectively",
+            "source_ref": null,
+            "note": "reason clause (denture stability) is silent in the source; quote is a Table 5 cell"
+          },
+          {
+            "id": "u83",
+            "claim_quote": "نشست پروتز و اباتمنت‌ها با رادیوگرافی پانورامیک و پری‌اپیکال به روش موازی کنترل می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Prosthetic settlement and implant placement was checked from panoramic and periapical radiographs taken using the parallel projection technique to guide fitting of the prostheses and abutments, though few studies described this procedure (18,27,34,36).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u84",
+            "claim_quote": "بقا و الگوی شکست",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u85",
+            "claim_quote": "در مجموع اطلاعات مربوط به ۱۱۷۴۳ ایمپلنت گزارش شده که ۱۷۵ مورد آن‌ها شکست خورده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In total, 175 implants were unsuccessful.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u86",
+            "claim_quote": "توزیع این شکست‌ها مهم‌تر از خود عدد است: ۱۳۴ شکست در سال اول، ۹ شکست تا پایان سال دوم و ۳۱ شکست در فاصله‌ی سه تا ده سال.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Of these implants, 134 failed during the first year, 9 implants fai- led before two years, and 31 implants failed during an interval of 3-10 years.",
+            "source_ref": null,
+            "note": "the first clause is an importance framing"
+          },
+          {
+            "id": "u87",
+            "claim_quote": "یعنی اکثریت قاطع شکست‌ها در فاز اولیه‌ی ترمیم رخ می‌دهد و نه در بلندمدت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Of these implants, 134 failed during the first year, 9 implants fai- led before two years, and 31 implants failed during an interval of 3-10 years.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u88",
+            "claim_quote": "نقطه‌ی حساس پرونده رسیدن به گیر اولیه و کنترل بار در ماه‌های نخست است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not name primary stability and early load control as the critical point"
+          },
+          {
+            "id": "u89",
+            "claim_quote": "محدوده‌ی بقای گزارش‌شده در مطالعات، از حداقل ۹۷.۶ درصد در ۳۶ ماه تا ۹۴.۸ درصد در ۱۰ سال روی ۲۴۵ بیمار متغیر است و چند مطالعه‌ی کوچک بقای ۱۰۰ درصد گزارش کرده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The lowest reported success rate was 94.8% in 245 patients at 10 years (18).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u90",
+            "claim_quote": "عدد ۹۹.۸ درصد که در abstract مقاله آمده، برآورد تجمیعی نیست و به یک مطالعه تعلق دارد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not say whether 99.8% is a pooled estimate or one study"
+          },
+          {
+            "id": "u91",
+            "claim_quote": "برای مشاوره‌ی بالینی، محدوده‌ی ۹۵ تا ۹۸ درصد در بازه‌های پنج تا ده ساله بیان دقیق‌تری است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "counselling recommendation is not in the source"
+          },
+          {
+            "id": "u92",
+            "claim_quote": "عوارض مکانیکی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u93",
+            "claim_quote": "شایع‌ترین عارضه‌ی پروتزی، شکست پروتز اکریلی است که در ۹ مطالعه گزارش شده.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The most frequent prosthetic complication was fracture of the acrylic prostheses, which occurred in 9 clinical studies (further details are provided in Table 5).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u94",
+            "claim_quote": "پس از آن، کنده شدن یکی از المان‌های پروتز نهایی قرار دارد که در دو مطالعه در ۲۳.۲ درصد بیماران دیده شده، و شل شدن یا شکست پیچ پروتزی که در چند مطالعه گزارش شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Of all the technical and prosthetic complications, the detachment of an element of the definitive prosthesis was the most frequent problem (recorded in 23.2% of the patients) (24,36).",
+            "source_ref": null,
+            "note": "the source also calls detachment the most frequent problem, so «پس از آن» as a rank is not stated; the reported figures match"
+          },
+          {
+            "id": "u95",
+            "claim_quote": "پنج مطالعه هیچ عارضه‌ی پروتزی گزارش نکرده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Five studies reported no prosthetic complications (19,21,29,31,32).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u96",
+            "claim_quote": "اکثر نویسندگان معتقدند این عوارض بقای ایمپلنت یا پروتز را تغییر نمی‌دهند و در حد نگهداری قابل مدیریت هستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Most authors reported that such technical and mechanical complications do not affect the survival rate of either implants or prostheses.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u97",
+            "claim_quote": "مدیریت این موارد شامل ترمیم پروتز و بازسازی بخش اکریلی روی فریم‌ورک، تنظیم اکلوژن، ساخت نایت‌گارد، سفت کردن مجدد پیچ و توصیه به بیمار برای پرهیز از بارگذاری بیش از حد است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These problems were resolved by repairing the prostheses, adjusting the occlusion, and manufacturing and using an occlusal nightguard (36).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u98",
+            "claim_quote": "عامل خطر مهم برای شکست دندان‌های پروتز، وضعیت قوس مقابل است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These authors also reported that fractures were frequently observed when the opposing arch included only natural teeth, and were more common than in the case of full dentures or implant-supported overdentures, due to the greater force these patients can apply, as well as to the abrasiveness of the natural enamel or the fixed ceramic prostheses that could form part of the arch.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u99",
+            "claim_quote": "وقتی قوس مقابل دندان طبیعی یا پروتز ثابت سرامیکی باشد، به دلیل نیروی بیشتر و سایندگی مینا شکست بیشتر رخ می‌دهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These authors also reported that fractures were frequently observed when the opposing arch included only natural teeth, and were more common than in the case of full dentures or implant-supported overdentures, due to the greater force these patients can apply, as well as to the abrasiveness of the natural enamel or the fixed ceramic prostheses that could form part of the arch.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u100",
+            "claim_quote": "در حالتی که هر دو قوس full-arch implant-supported باشند نیز شکست زیاد گزارش شده که به کاهش proprioception نسبت داده می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In cases with full arch implant supported prostheses in both arches, a high incidence of fractures has been described, which could be due to reduced proprioception (64).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u101",
+            "claim_quote": "عوارض بیولوژیک",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u102",
+            "claim_quote": "از دست رفتن حداقل یک ایمپلنت شایع‌ترین عارضه‌ی بیولوژیک است و پری‌ایمپلنتایتیس، که پس از حدود دو سال ظاهر می‌شود، دومین عارضه‌ی شایع محسوب می‌شود و در شش مطالعه گزارش شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In turn, the second most frequent complication was the development of peri-implantitis after two years (16,17,27,33,36,38), and some studies reported cases of mucositis (33,36).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u103",
+            "claim_quote": "موکوزایتیس در دو مطالعه، عفونت حداقل یک ایمپلنت در دو مطالعه و یک مورد پارستزی که ظرف شش ماه برطرف شده نیز گزارش شده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In turn, the second most frequent complication was the development of peri-implantitis after two years (16,17,27,33,36,38), and some studies reported cases of mucositis (33,36).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u104",
+            "claim_quote": "این موارد در مطالعات بدون تعریف دقیق و بدون معیار مشخص ثبت شده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These complications were reported without precise definitions or detailed comments on the topic.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u105",
+            "claim_quote": "نبودِ تعریف استاندارد برای success و survival باعث شده برآورد واقعی بیماری‌های پری‌ایمپلنت در این پروتکل ممکن نباشد، یعنی نبود گزارش عارضه در یک مطالعه به معنای نبود عارضه نیست.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source calls for adequate definitions; it does not state that the true peri-implant disease estimate is impossible"
+          },
+          {
+            "id": "u106",
+            "claim_quote": "از طرف دیگر سابقه‌ی پریودنتیت با موکوزایتیس، پری‌ایمپلنتایتیس و از دست رفتن ایمپلنت مرتبط است، بنابراین علت کشیدن دندان‌های قبلی در ارزیابی ریسک بیمار اهمیت دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, it is important to consider the reasons for tooth extraction, since previous reports point to a critical role of periodontitis as a contributor to mucositis and peri-implantitis, which seems to be related to implant loss (63).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u107",
+            "claim_quote": "رضایت بیمار",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u108",
+            "claim_quote": "رضایت گزارش‌شده بالا بوده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A high degree of patient satisfaction was reported in relation to this clinical procedure (25,33).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u109",
+            "claim_quote": "بیماران پس از اتمام درمان از نتایج آوایی، زیبایی، روانی و عملکردی راضی بوده‌اند و در یک مطالعه ۹۵.۶ درصد بیماران نتیجه را عالی ارزیابی کرده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Patient satisfaction with the all-on-four treatment concept was very high (rated as excellent by 95.6% of the patients)(20).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u110",
+            "claim_quote": "با این حال فقط سه مطالعه از ۲۴ مطالعه رضایت را به‌صورت رسمی با پرسشنامه یا VAS سنجیده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Consideration is also required of the patient-related outcomes (Proms) to compliment surrogate clinical outcomes, because in the present systematic review only three studies (17,25,31) assessed patient satisfaction using questionnaires and visual analog scales.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u111",
+            "claim_quote": "جمع‌بندی کاربردی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u112",
+            "claim_quote": "all-on-4 راهی قابل پیش‌بینی برای درمان فک آتروفیک در بیماری است که نمی‌خواهد وارد رژنراسیون شود، و بیمار مناسب آن بیمار سالم با استخوان اینترفورامینال کافی است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The all-on-four treatment concept offers a predictable way to treat the atrophic jaw in patients that do not prefer regenerative procedures, which increase morbidity and the treatment fees.",
+            "source_ref": null,
+            "note": "second half (suitable patient is healthy with enough interforaminal bone) is only partly stated"
+          },
+          {
+            "id": "u113",
+            "claim_quote": "چون اکثر شکست‌های ایمپلنت در سال اول رخ می‌دهد، تمرکز مراقبت باید روی گیر اولیه و کنترل بار در ماه‌های نخست باشد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the care-focus recommendation is not in the source"
+          },
+          {
+            "id": "u114",
+            "claim_quote": "آنچه بیمار در بلندمدت عملاً با آن روبه‌رو می‌شود عوارض پروتزی است، نه از دست دادن ایمپلنت، و از ابتدا باید به او توضیح داده شود که این پروتز نیازمند نگهداری دوره‌ای است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "long-term ranking of prosthetic complications over implant loss is not stated"
+          },
+          {
+            "id": "u115",
+            "claim_quote": "اگر قوس مقابل دندان طبیعی یا پروتز سرامیکی باشد، ریسک شکست بالاتر است و نایت‌گارد و کنترل اکلوژن جدی‌تر می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These authors also reported that fractures were frequently observed when the opposing arch included only natural teeth, and were more common than in the case of full dentures or implant-supported overdentures, due to the greater force these patients can apply, as well as to the abrasiveness of the natural enamel or the fixed ceramic prostheses that could form part of the arch.",
+            "source_ref": null,
+            "note": "nightguard and occlusal-control advice is the author’s"
+          },
+          {
+            "id": "u116",
+            "claim_quote": "کنترل اکلوژن اصل اصلی نگهداری است، یعنی محدود کردن تماس‌های excursive به ناحیه‌ی بین دو کانین و خارج نگه داشتن cantilever از تماس در ماه‌های اول.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "occlusal control as the main maintenance principle is not stated"
+          },
+          {
+            "id": "u117",
+            "claim_quote": "بیمار با سابقه‌ی پریودنتیت باید در برنامه‌ی ریکال منظم پری‌ایمپلنت باشد، چون پری‌ایمپلنتایتیس دومین عارضه‌ی شایع این پروتکل است و داده‌های موجود درباره‌ی آن ناقص و بدون تعریف استاندارد است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In turn, the second most frequent complication was the development of peri-implantitis after two years (16,17,27,33,36,38), and some studies reported cases of mucositis (33,36).",
+            "source_ref": null,
+            "note": "recall recommendation is the author’s; reason clause matches"
+          },
+          {
+            "id": "u118",
+            "claim_quote": "در نهایت، در مشاوره‌ی بیمار عدد ۹۹.۸ درصد نقل نشود و محدوده‌ی ۹۵ تا ۹۸ درصد بیان محتاطانه‌تر و دقیق‌تری است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "counselling recommendation is not in the source"
+          }
+        ],
+        "counts": {
+          "matches": 80,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 17,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 21
+        },
+        "assessable": 80,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "Adequate definition of the success / survival criteria is thus necessary, due the high prevalence of peri-implant diseases.",
+        "fact_fa": "از ۸۰ ادعایی که منبع به آن پرداخته‌اند، ۸۰ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱۷ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
     ]
   },
   "sharehub/share-17": {
