@@ -626,6 +626,71 @@
    ]
   },
   {
+   "key": "پست_و_کور",
+   "tag": "#پست_و_کور",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پست و کور — بازسازیِ ساختارِ ازدست‌رفته‌ی دندانِ اندوشده برای نگه‌داریِ روکش.",
+   "use_when": "مقاله پست/کور را موضوع داشته باشد.",
+   "aliases": [
+    "post and core",
+    "پست اند کور",
+    "پست کور",
+    "پست دندان",
+    "پست داخل کانال"
+   ],
+   "variants": [
+    "#پست و کور"
+   ],
+   "co_tags": [],
+   "count": 43,
+   "content_ids": [
+    "episodes/episode-36",
+    "episodes/episode-42",
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-79",
+    "episodes/episode-125-3",
+    "episodes/episode-128",
+    "episodes/episode-129",
+    "episodes/episode-147-7",
+    "insight/insight-12",
+    "insight/insight-15",
+    "insight/insight-17",
+    "insight/insight-20",
+    "metanotes/meta-7",
+    "insight/insight-21",
+    "metanotes/meta-9",
+    "insight/insight-28",
+    "metanotes/meta-11",
+    "chairside/chairside-5",
+    "insight/insight-39",
+    "insight/insight-41",
+    "notecast/episode-36",
+    "chairside/chairside-20",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19",
+    "metanotes/meta-20",
+    "dentcast-plus/video-7",
+    "dentcast-plus/video-10",
+    "insight/insight-66",
+    "notecast/episode-40",
+    "dentcast-plus/video-12",
+    "dentai/dentai-33",
+    "insight/insight-76",
+    "sharehub/share-20",
+    "notecast/episode-42",
+    "chairside/chairside-39",
+    "notecast/episode-43",
+    "metanotes/meta-21",
+    "insight/insight-88",
+    "sharehub/share-30",
+    "sharehub/share-31"
+   ]
+  },
+  {
    "key": "اکلوژن",
    "tag": "#اکلوژن",
    "domain": "clinical",
@@ -744,70 +809,6 @@
     "notecast/episode-41",
     "notecast/episode-42",
     "notecast/episode-43"
-   ]
-  },
-  {
-   "key": "پست_و_کور",
-   "tag": "#پست_و_کور",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پست و کور — بازسازیِ ساختارِ ازدست‌رفته‌ی دندانِ اندوشده برای نگه‌داریِ روکش.",
-   "use_when": "مقاله پست/کور را موضوع داشته باشد.",
-   "aliases": [
-    "post and core",
-    "پست اند کور",
-    "پست کور",
-    "پست دندان",
-    "پست داخل کانال"
-   ],
-   "variants": [
-    "#پست و کور"
-   ],
-   "co_tags": [],
-   "count": 42,
-   "content_ids": [
-    "episodes/episode-36",
-    "episodes/episode-42",
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-79",
-    "episodes/episode-125-3",
-    "episodes/episode-128",
-    "episodes/episode-129",
-    "episodes/episode-147-7",
-    "insight/insight-12",
-    "insight/insight-15",
-    "insight/insight-17",
-    "insight/insight-20",
-    "metanotes/meta-7",
-    "insight/insight-21",
-    "metanotes/meta-9",
-    "insight/insight-28",
-    "metanotes/meta-11",
-    "chairside/chairside-5",
-    "insight/insight-39",
-    "insight/insight-41",
-    "notecast/episode-36",
-    "chairside/chairside-20",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19",
-    "metanotes/meta-20",
-    "dentcast-plus/video-7",
-    "dentcast-plus/video-10",
-    "insight/insight-66",
-    "notecast/episode-40",
-    "dentcast-plus/video-12",
-    "dentai/dentai-33",
-    "insight/insight-76",
-    "sharehub/share-20",
-    "notecast/episode-42",
-    "chairside/chairside-39",
-    "notecast/episode-43",
-    "metanotes/meta-21",
-    "insight/insight-88",
-    "sharehub/share-30"
    ]
   },
   {
@@ -1046,7 +1047,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 30,
+   "count": 31,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1077,7 +1078,8 @@
     "sharehub/share-27",
     "sharehub/share-28",
     "sharehub/share-29",
-    "sharehub/share-30"
+    "sharehub/share-30",
+    "sharehub/share-31"
    ]
   },
   {
@@ -1093,7 +1095,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 30,
+   "count": 31,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1124,7 +1126,8 @@
     "sharehub/share-27",
     "sharehub/share-28",
     "sharehub/share-29",
-    "sharehub/share-30"
+    "sharehub/share-30",
+    "sharehub/share-31"
    ]
   },
   {
@@ -1226,6 +1229,54 @@
    ]
   },
   {
+   "key": "هوش_مصنوعی",
+   "tag": "#هوش_مصنوعی",
+   "domain": "ai",
+   "words": 2,
+   "definition": "چترِ عامِ هوش مصنوعی.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "artificial intelligence",
+    "ای آی",
+    "ماشین هوشمند"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 30,
+   "content_ids": [
+    "episodes/episode-109",
+    "episodes/episode-109-2",
+    "episodes/episode-149-1",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "sharehub/share-15",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2",
+    "dentai/promptologist/prompt6-3",
+    "dentai/promptologist/prompt6-4",
+    "dentai/promptologist/prompt6-5",
+    "dentai/promptologist/prompt7-1",
+    "dentai/promptologist/prompt7-2",
+    "insight/insight-89",
+    "sharehub/share-25",
+    "dentai/promptologist/prompt-append2-1"
+   ]
+  },
+  {
    "key": "باندینگ",
    "tag": "#باندینگ",
    "domain": "clinical",
@@ -1313,53 +1364,6 @@
     "episodes/episode-150-1",
     "episodes/episode-150-2",
     "episodes/episode-159-1"
-   ]
-  },
-  {
-   "key": "هوش_مصنوعی",
-   "tag": "#هوش_مصنوعی",
-   "domain": "ai",
-   "words": 2,
-   "definition": "چترِ عامِ هوش مصنوعی.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "artificial intelligence",
-    "ای آی",
-    "ماشین هوشمند"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 29,
-   "content_ids": [
-    "episodes/episode-109",
-    "episodes/episode-109-2",
-    "episodes/episode-149-1",
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/dentai-28",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "sharehub/share-15",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1",
-    "dentai/promptologist/prompt6-2",
-    "dentai/promptologist/prompt6-3",
-    "dentai/promptologist/prompt6-4",
-    "dentai/promptologist/prompt6-5",
-    "dentai/promptologist/prompt7-1",
-    "dentai/promptologist/prompt7-2",
-    "insight/insight-89",
-    "sharehub/share-25"
    ]
   },
   {
@@ -1568,7 +1572,7 @@
    "co_tags": [
     "#AI_Literacy"
    ],
-   "count": 24,
+   "count": 25,
    "content_ids": [
     "episodes/episode-109",
     "episodes/episode-109-2",
@@ -1593,7 +1597,49 @@
     "dentai/promptologist/prompt6-4",
     "dentai/promptologist/prompt6-5",
     "dentai/promptologist/prompt7-1",
-    "dentai/promptologist/prompt7-2"
+    "dentai/promptologist/prompt7-2",
+    "dentai/promptologist/prompt-append2-1"
+   ]
+  },
+  {
+   "key": "llm",
+   "tag": "#LLM",
+   "domain": "ai",
+   "words": 1,
+   "definition": "سرنامِ Large Language Model.",
+   "use_when": "همیشه همراه #مدل_زبانی.",
+   "aliases": [
+    "ال ال ام"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#مدل_زبانی"
+   ],
+   "count": 23,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2",
+    "dentai/promptologist/prompt6-3",
+    "dentai/promptologist/prompt6-4",
+    "dentai/promptologist/prompt6-5",
+    "dentai/promptologist/prompt7-1",
+    "dentai/promptologist/prompt7-2",
+    "dentai/promptologist/prompt-append2-1"
    ]
   },
   {
@@ -1675,20 +1721,21 @@
    ]
   },
   {
-   "key": "llm",
-   "tag": "#LLM",
+   "key": "مدل_زبانی",
+   "tag": "#مدل_زبانی",
    "domain": "ai",
-   "words": 1,
-   "definition": "سرنامِ Large Language Model.",
-   "use_when": "همیشه همراه #مدل_زبانی.",
+   "words": 2,
+   "definition": "LLM — مدلی که با حدسِ ادامه‌ی محتملِ متن جواب می‌سازد.",
+   "use_when": "مقاله درباره‌ی سازوکار یا رفتار خودِ مدل زبانی باشد.",
    "aliases": [
-    "ال ال ام"
+    "language model",
+    "لنگویج مدل"
    ],
    "variants": [],
    "co_tags": [
-    "#مدل_زبانی"
+    "#LLM"
    ],
-   "count": 22,
+   "count": 23,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
     "dentai/promptologist/prompt1-2",
@@ -1711,7 +1758,88 @@
     "dentai/promptologist/prompt6-4",
     "dentai/promptologist/prompt6-5",
     "dentai/promptologist/prompt7-1",
-    "dentai/promptologist/prompt7-2"
+    "dentai/promptologist/prompt7-2",
+    "dentai/promptologist/prompt-append2-1"
+   ]
+  },
+  {
+   "key": "پرامپتولوژیست",
+   "tag": "#پرامپتولوژیست",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری «پرامپتولوژیست».",
+   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
+   "aliases": [
+    "promptologist",
+    "پرامپتولوژی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 23,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2",
+    "dentai/promptologist/prompt6-3",
+    "dentai/promptologist/prompt6-4",
+    "dentai/promptologist/prompt6-5",
+    "dentai/promptologist/prompt7-1",
+    "dentai/promptologist/prompt7-2",
+    "dentai/promptologist/prompt-append2-1"
+   ]
+  },
+  {
+   "key": "ai_literacy",
+   "tag": "#AI_Literacy",
+   "domain": "ai",
+   "words": 2,
+   "definition": "همان #سواد_هوش_مصنوعی، با اصطلاح انگلیسی.",
+   "use_when": "همیشه همراه #سواد_هوش_مصنوعی.",
+   "aliases": [],
+   "variants": [
+    "#AILiteracy"
+   ],
+   "co_tags": [
+    "#سواد_هوش_مصنوعی"
+   ],
+   "count": 22,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2",
+    "dentai/promptologist/prompt6-3",
+    "dentai/promptologist/prompt6-4",
+    "dentai/promptologist/prompt6-5",
+    "dentai/promptologist/prompt7-1",
+    "dentai/promptologist/prompt7-2",
+    "dentai/promptologist/prompt-append2-1"
    ]
   },
   {
@@ -1838,125 +1966,6 @@
     "metanotes/meta-20",
     "metanotes/meta-21",
     "metanotes/meta-22"
-   ]
-  },
-  {
-   "key": "مدل_زبانی",
-   "tag": "#مدل_زبانی",
-   "domain": "ai",
-   "words": 2,
-   "definition": "LLM — مدلی که با حدسِ ادامه‌ی محتملِ متن جواب می‌سازد.",
-   "use_when": "مقاله درباره‌ی سازوکار یا رفتار خودِ مدل زبانی باشد.",
-   "aliases": [
-    "language model",
-    "لنگویج مدل"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#LLM"
-   ],
-   "count": 22,
-   "content_ids": [
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/dentai-28",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1",
-    "dentai/promptologist/prompt6-2",
-    "dentai/promptologist/prompt6-3",
-    "dentai/promptologist/prompt6-4",
-    "dentai/promptologist/prompt6-5",
-    "dentai/promptologist/prompt7-1",
-    "dentai/promptologist/prompt7-2"
-   ]
-  },
-  {
-   "key": "پرامپتولوژیست",
-   "tag": "#پرامپتولوژیست",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام سری «پرامپتولوژیست».",
-   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
-   "aliases": [
-    "promptologist",
-    "پرامپتولوژی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 22,
-   "content_ids": [
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1",
-    "dentai/promptologist/prompt6-2",
-    "dentai/promptologist/prompt6-3",
-    "dentai/promptologist/prompt6-4",
-    "dentai/promptologist/prompt6-5",
-    "dentai/promptologist/prompt7-1",
-    "dentai/promptologist/prompt7-2"
-   ]
-  },
-  {
-   "key": "ai_literacy",
-   "tag": "#AI_Literacy",
-   "domain": "ai",
-   "words": 2,
-   "definition": "همان #سواد_هوش_مصنوعی، با اصطلاح انگلیسی.",
-   "use_when": "همیشه همراه #سواد_هوش_مصنوعی.",
-   "aliases": [],
-   "variants": [
-    "#AILiteracy"
-   ],
-   "co_tags": [
-    "#سواد_هوش_مصنوعی"
-   ],
-   "count": 21,
-   "content_ids": [
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1",
-    "dentai/promptologist/prompt6-2",
-    "dentai/promptologist/prompt6-3",
-    "dentai/promptologist/prompt6-4",
-    "dentai/promptologist/prompt6-5",
-    "dentai/promptologist/prompt7-1",
-    "dentai/promptologist/prompt7-2"
    ]
   },
   {
@@ -4533,6 +4542,34 @@
    ]
   },
   {
+   "key": "مارجین_روکش",
+   "tag": "#مارجین_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "لبه‌ی رستوریشن و انطباقش با خط ختم.",
+   "use_when": "مقاله دقت یا موقعیتِ مارجین را مسئله بداند.",
+   "aliases": [
+    "مرجین",
+    "مارژین",
+    "مرجین سرامیکی",
+    "مارژین دقیق",
+    "margin",
+    "لبه روکش"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "insight/insight-32",
+    "chairside/chairside-12",
+    "chairside/chairside-18",
+    "insight/insight-50",
+    "insight/insight-63",
+    "chairside/chairside-34",
+    "sharehub/share-31"
+   ]
+  },
+  {
    "key": "مدیریت_بافت_نرم",
    "tag": "#مدیریت_بافت_نرم",
    "domain": "clinical",
@@ -4665,6 +4702,32 @@
     "episodes/episode-130",
     "episodes/episode-139",
     "episodes/episode-146"
+   ]
+  },
+  {
+   "key": "کور_ریختگی",
+   "tag": "#کور_ریختگی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پست و کورِ ریختگیِ یکپارچه.",
+   "use_when": "مقاله طراحی یا ساختِ کور ریختگی را تعیین کند.",
+   "aliases": [
+    "cast core",
+    "کست کور",
+    "کور ریختگی فلزی",
+    "پست ریختگی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "insight/insight-15",
+    "metanotes/meta-9",
+    "insight/insight-28",
+    "metanotes/meta-19",
+    "metanotes/meta-20",
+    "sharehub/share-20",
+    "sharehub/share-31"
    ]
   },
   {
@@ -5246,33 +5309,6 @@
    ]
   },
   {
-   "key": "مارجین_روکش",
-   "tag": "#مارجین_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "لبه‌ی رستوریشن و انطباقش با خط ختم.",
-   "use_when": "مقاله دقت یا موقعیتِ مارجین را مسئله بداند.",
-   "aliases": [
-    "مرجین",
-    "مارژین",
-    "مرجین سرامیکی",
-    "مارژین دقیق",
-    "margin",
-    "لبه روکش"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "insight/insight-32",
-    "chairside/chairside-12",
-    "chairside/chairside-18",
-    "insight/insight-50",
-    "insight/insight-63",
-    "chairside/chairside-34"
-   ]
-  },
-  {
    "key": "هوش_مصنوعی_دندانپزشکی",
    "tag": "#هوش_مصنوعی_دندانپزشکی",
    "domain": "ai",
@@ -5320,31 +5356,6 @@
     "metanotes/meta-12",
     "insight/insight-69",
     "insight/insight-80"
-   ]
-  },
-  {
-   "key": "کور_ریختگی",
-   "tag": "#کور_ریختگی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پست و کورِ ریختگیِ یکپارچه.",
-   "use_when": "مقاله طراحی یا ساختِ کور ریختگی را تعیین کند.",
-   "aliases": [
-    "cast core",
-    "کست کور",
-    "کور ریختگی فلزی",
-    "پست ریختگی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "insight/insight-15",
-    "metanotes/meta-9",
-    "insight/insight-28",
-    "metanotes/meta-19",
-    "metanotes/meta-20",
-    "sharehub/share-20"
    ]
   },
   {
@@ -6920,6 +6931,31 @@
    ]
   },
   {
+   "key": "مالکیت_پلتفرم",
+   "tag": "#مالکیت_پلتفرم",
+   "domain": "web",
+   "words": 2,
+   "definition": "تفاوتِ داشتنِ خودِ محتوا با داشتنِ چیزی که محتوا روی آن می‌نشیند: آدرس، دسترسی و بایگانی. روی پلتفرمِ کسِ دیگر، این سه مالِ شما نیست و قانونشان را او می‌نویسد.",
+   "use_when": "مقاله به این بپردازد که کار روی پلتفرمی نگهداری می‌شود که مالکش نیستید — بسته‌شدنِ اکانت، تغییرِ الگوریتم، یا از‌دست‌رفتنِ کلِ حضور.",
+   "aliases": [
+    "platform ownership",
+    "اجاره‌نشینی دیجیتال",
+    "وابستگی به پلتفرم",
+    "مالکیت محتوا",
+    "platform dependence",
+    "own your platform"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "plak-sefr/plak1-1",
+    "plak-sefr/plak1-3",
+    "plak-sefr/plak1-9",
+    "dentai/promptologist/prompt-append2-1"
+   ]
+  },
+  {
    "key": "ماندگاری_محتوا",
    "tag": "#ماندگاری_محتوا",
    "domain": "web",
@@ -7407,6 +7443,28 @@
     "episodes/episode-156",
     "episodes/episode-157",
     "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "markdown",
+   "tag": "#Markdown",
+   "domain": "ai",
+   "words": 1,
+   "definition": "فرمتِ متنیِ ساده که ساختارِ سند (تیتر، بولد، فهرست) را با علائمِ کوچک داخلِ خودِ متن نگه می‌دارد، نه در ظاهرِ چاپی.",
+   "use_when": "مقاله دربارهٔ آماده‌سازیِ فایل برای دادن به مدل یا نگه‌داشتنِ خروجیِ مدل به‌شکلی باشد که ساختارش برای ماشین سالم بماند.",
+   "aliases": [
+    "مارک‌داون",
+    "md فایل",
+    "markdown format",
+    "مارکداون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/promptologist/prompt6-2",
+    "dentai/promptologist/prompt6-5",
+    "dentai/promptologist/prompt-append2-1"
    ]
   },
   {
@@ -8486,6 +8544,28 @@
    ]
   },
   {
+   "key": "روکش_اسپلینت",
+   "tag": "#روکش_اسپلینت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "روکش‌های متصل به هم، که می‌توانند یک دندانِ هپلس را پنهان کنند.",
+   "use_when": "مقاله اسپلینت بودن را عاملِ عدم قطعیت بداند.",
+   "aliases": [
+    "اسپلینت روکش",
+    "splinted crowns",
+    "روکش متصل",
+    "روکش های به هم چسبیده"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-14",
+    "insight/insight-88",
+    "sharehub/share-31"
+   ]
+  },
+  {
    "key": "ریز_نشت",
    "tag": "#ریز_نشت",
    "domain": null,
@@ -8810,30 +8890,6 @@
     "insight/insight-26",
     "insight/insight-31",
     "insight/insight-35"
-   ]
-  },
-  {
-   "key": "مالکیت_پلتفرم",
-   "tag": "#مالکیت_پلتفرم",
-   "domain": "web",
-   "words": 2,
-   "definition": "تفاوتِ داشتنِ خودِ محتوا با داشتنِ چیزی که محتوا روی آن می‌نشیند: آدرس، دسترسی و بایگانی. روی پلتفرمِ کسِ دیگر، این سه مالِ شما نیست و قانونشان را او می‌نویسد.",
-   "use_when": "مقاله به این بپردازد که کار روی پلتفرمی نگهداری می‌شود که مالکش نیستید — بسته‌شدنِ اکانت، تغییرِ الگوریتم، یا از‌دست‌رفتنِ کلِ حضور.",
-   "aliases": [
-    "platform ownership",
-    "اجاره‌نشینی دیجیتال",
-    "وابستگی به پلتفرم",
-    "مالکیت محتوا",
-    "platform dependence",
-    "own your platform"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "plak-sefr/plak1-1",
-    "plak-sefr/plak1-3",
-    "plak-sefr/plak1-9"
    ]
   },
   {
@@ -9765,27 +9821,6 @@
    "content_ids": [
     "notecast/episode-17",
     "insight/insight-27"
-   ]
-  },
-  {
-   "key": "markdown",
-   "tag": "#Markdown",
-   "domain": "ai",
-   "words": 1,
-   "definition": "فرمتِ متنیِ ساده که ساختارِ سند (تیتر، بولد، فهرست) را با علائمِ کوچک داخلِ خودِ متن نگه می‌دارد، نه در ظاهرِ چاپی.",
-   "use_when": "مقاله دربارهٔ آماده‌سازیِ فایل برای دادن به مدل یا نگه‌داشتنِ خروجیِ مدل به‌شکلی باشد که ساختارش برای ماشین سالم بماند.",
-   "aliases": [
-    "مارک‌داون",
-    "md فایل",
-    "markdown format",
-    "مارکداون"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "dentai/promptologist/prompt6-2",
-    "dentai/promptologist/prompt6-5"
    ]
   },
   {
@@ -11402,27 +11437,6 @@
    "content_ids": [
     "insight/insight-91",
     "insight/insight-92"
-   ]
-  },
-  {
-   "key": "روکش_اسپلینت",
-   "tag": "#روکش_اسپلینت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "روکش‌های متصل به هم، که می‌توانند یک دندانِ هپلس را پنهان کنند.",
-   "use_when": "مقاله اسپلینت بودن را عاملِ عدم قطعیت بداند.",
-   "aliases": [
-    "اسپلینت روکش",
-    "splinted crowns",
-    "روکش متصل",
-    "روکش های به هم چسبیده"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-14",
-    "insight/insight-88"
    ]
   },
   {
@@ -13362,6 +13376,29 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-155"
+   ]
+  },
+  {
+   "key": "github",
+   "tag": "#GitHub",
+   "domain": "ai",
+   "words": 1,
+   "definition": "سرویسِ آنلاینِ نگه‌داریِ فایل‌ها در ریپو (repository)، که نسخه‌های قبلیِ هر فایل را هم نگه می‌دارد؛ برای کد ساخته شده ولی برای هر فایلِ متنی کار می‌کند.",
+   "use_when": "مطلب مشخصاً به این سرویس، ریپو یا نگه‌داریِ فایل‌ها در آن بپردازد.",
+   "aliases": [
+    "گیت‌هاب",
+    "گیت هاب",
+    "github",
+    "ریپو",
+    "ریپوزیتوری",
+    "repository",
+    "git hub"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "dentai/promptologist/prompt-append2-1"
    ]
   },
   {
@@ -20237,6 +20274,28 @@
    ]
   },
   {
+   "key": "پشتیبان_گیری",
+   "tag": "#پشتیبان_گیری",
+   "domain": "ai",
+   "words": 2,
+   "definition": "نگه‌داشتنِ نسخه‌ای از کاری که ساخته‌اید در جایی بیرون از جایی که ساخته شده، تا از بین رفتنِ آن جا کارِ شما را با خودش نبرد.",
+   "use_when": "مطلب به این بپردازد که چه چیزی از کارِ ساخته‌شده با مدل (پرامپت، روشِ کاری، تصمیم) را و کجا نگه دارید تا از دست رفتنِ اکانت یا پروژه همه‌چیز را نبرد.",
+   "aliases": [
+    "backup",
+    "بک آپ",
+    "بکاپ",
+    "نسخه پشتیبان",
+    "نسخه‌ی پشتیبان",
+    "نسخه گرفتن از کار"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "dentai/promptologist/prompt-append2-1"
+   ]
+  },
+  {
    "key": "پلنینگ_پروتز_محور",
    "tag": "#پلنینگ_پروتز_محور",
    "domain": "clinical",
@@ -21701,11 +21760,11 @@
   "fixed partial denture": "بریج",
   "occlusal interference": "تداخل اکلوزال",
   "sequence of treatment": "توالی درمان",
+  "روکش های به هم چسبیده": "روکش اسپلینت",
   "کتاب گلوبال دیاگنوزیس": "کتاب رابینز",
   "طراحی دیجیتال ایمپلنت": "ایمپلنت دیجیتال planning",
   "shortened dental arch": "sda",
   "ترمیم مستقیم کامپوزیت": "ترمیم مستقیم",
-  "روکش های به هم چسبیده": "روکش اسپلینت",
   "hierarchy of evidence": "نردبان شواهد",
   "محل اتصال مینا و سمان": "cej",
   "پروتز ایمپلنت انگلیسی": "ایمپلنت prosthetics",
@@ -21813,10 +21872,10 @@
   "طراحی درمان ایمپلنت": "پلنینگ ایمپلنت",
   "برنامه ریزی ایمپلنت": "پلنینگ ایمپلنت",
   "enamel preservation": "حفظ مینای دندان",
-  "پیچ اباتمنت ایمپلنت": "پیچ اباتمنت",
-  "root dentin bonding": "باند به عاج ریشه",
   "اجاره نشینی دیجیتال": "مالکیت پلتفرم",
   "platform dependence": "مالکیت پلتفرم",
+  "پیچ اباتمنت ایمپلنت": "پیچ اباتمنت",
+  "root dentin bonding": "باند به عاج ریشه",
   "prosthetic material": "متریال پروتزی",
   "esthetic prosthesis": "پروتز زیبایی",
   "اکستراکشن و ایمپلنت": "کشیدن و ایمپلنت",
@@ -21897,6 +21956,7 @@
   "کامپلیکیشن ایمپلنت": "عوارض ایمپلنت",
   "زیرکونیا ترنسلوسنت": "نسل زیرکونیا",
   "critical appraisal": "تحلیل مطالعه",
+  "platform ownership": "مالکیت پلتفرم",
   "content permanence": "ماندگاری محتوا",
   "universal adhesive": "یونیورسال باند",
   "ایمپلنت ناحیه قدام": "ایمپلنت قدامی",
@@ -21907,7 +21967,6 @@
   "porcelain fracture": "شکست پرسلن",
   "cuspal inclination": "شیب کاسپی",
   "dental photography": "عکاسی دندانپزشکی",
-  "platform ownership": "مالکیت پلتفرم",
   "incomplete seating": "نشست ناقص",
   "digital prosthesis": "پروتز دیجیتال",
   "پروتز زیبایی دندان": "پروتز زیبایی",
@@ -22019,6 +22078,8 @@
   "crown replacement": "تعویض روکش",
   "interdisciplinary": "درمان بین رشته ای",
   "all ceramic crown": "روکش سرامیکی",
+  "وابستگی به پلتفرم": "مالکیت پلتفرم",
+  "own your platform": "مالکیت پلتفرم",
   "content longevity": "ماندگاری محتوا",
   "evergreen content": "ماندگاری محتوا",
   "universal bonding": "یونیورسال باند",
@@ -22032,8 +22093,6 @@
   "tooth replacement": "جایگزینی دندان",
   "long term outcome": "درمان بلندمدت",
   "implant follow up": "پیگیری زمانی ایمپلنت",
-  "وابستگی به پلتفرم": "مالکیت پلتفرم",
-  "own your platform": "مالکیت پلتفرم",
   "عادت پارافانکشنال": "پارافانکشن",
   "جای گذاری سه بعدی": "پوزیشن ایمپلنت",
   "ترمیم روی ایمپلنت": "ایمپلنت restoration",
@@ -22116,6 +22175,7 @@
   "at home whitening": "هوم بلیچ",
   "لثه مصنوعی پروتزی": "پرسلن صورتی",
   "hybrid prosthesis": "پروتز هیبرید",
+  "نسخه گرفتن از کار": "پشتیبان گیری",
   "محدودیت حافظه مدل": "پنجره کانتکست",
   "three way syringe": "پوآر",
   "dynamic clearance": "کلیرنس دینامیک",
@@ -22128,8 +22188,8 @@
   "پروتز انعطاف پذیر": "دندان مصنوعی ژله ای",
   "polyamide denture": "دندان مصنوعی ژله ای",
   "کلینیکال اینسایت": "اینسایت",
-  "روکش روی ایمپلنت": "روکش ایمپلنت",
   "محتوای گلچین شده": "curated content",
+  "روکش روی ایمپلنت": "روکش ایمپلنت",
   "fixed prosthesis": "پروتز ثابت",
   "machine learning": "سواد هوش مصنوعی",
   "ceramic laminate": "لمینیت سرامیکی",
@@ -22225,6 +22285,7 @@
   "implant retained": "پروتز متکی بر ایمپلنت",
   "3d printed model": "کست پرینتی",
   "glycemic control": "کنترل قند خون",
+  "بیلدآپ کامپوزیتی": "کور کامپوزیتی",
   "comparison group": "گروه کنترل",
   "چت با هوش مصنوعی": "مصاحبه با هوش مصنوعی",
   "غربالگری ساییدگی": "bewe",
@@ -22314,7 +22375,6 @@
   "سندروم کامبینیشن": "کامبینیشن سندروم",
   "افت ارتفاع عمودی": "کاهش vdo",
   "نوار رنگی هندپیس": "کدگذاری توربین",
-  "بیلدآپ کامپوزیتی": "کور کامپوزیتی",
   "inception cohort": "کوهورت تک گروهی",
   "هدایت طرفی کانین": "گایدنس کانین",
   "فاصله پست و گوتا": "گپ پست و گوتا",
@@ -22348,11 +22408,11 @@
   "استدلال کلینیکی": "تفکر اینسایت",
   "عدم پذیرش بیمار": "شروع نکردن درمان",
   "canine guidance": "کانین رایز",
+  "کور ریختگی فلزی": "کور ریختگی",
   "global analysis": "global diagnosis",
   "بیولوژیکال ویدث": "بیولوژیک ویدث",
   "implant surgery": "جراحی ایمپلنت",
   "پرسلن فلدسپاتیک": "فلدسپاتیک",
-  "کور ریختگی فلزی": "کور ریختگی",
   "digital implant": "ایمپلنت دیجیتال",
   "دیجیتال ایمپلنت": "ایمپلنت دیجیتال",
   "implant loading": "بارگذاری ایمپلنت",
@@ -22367,6 +22427,7 @@
   "لبه برنده لمینت": "لبه اینسایزال",
   "retraction cord": "نخ زیرلثه",
   "کانتور رستوریشن": "کانتور ترمیم",
+  "markdown format": "markdown",
   "جدا کردن کانتکت": "باز کردن کانتکت",
   "شناسایی ایمپلنت": "برند ایمپلنت",
   "سفید کردن دندان": "بلیچینگ",
@@ -22376,6 +22437,7 @@
   "خیال پردازی مدل": "توهم هوش مصنوعی",
   "patient comfort": "راحتی بیمار",
   "راحتی حین درمان": "راحتی بیمار",
+  "splinted crowns": "روکش اسپلینت",
   "زینک فسفات سمان": "زینک فسفات",
   "antagonist wear": "سایش آنتاگونیست",
   "فالو آپ ایمپلنت": "پیگیری زمانی ایمپلنت",
@@ -22388,7 +22450,6 @@
   "کنترل لابراتوار": "کنترل کار لابراتوار",
   "چک قبل از تحویل": "کنترل کار لابراتوار",
   "بازسازی ایمپلنت": "ایمپلنت restoration",
-  "markdown format": "markdown",
   "custom abutment": "اباتمنت کاستوم",
   "umbrella effect": "اثر چتر",
   "تحویل کار پروتز": "تحویل پروتز",
@@ -22402,7 +22463,6 @@
   "درد بعد از سمان": "درد بعد از روکش",
   "smart dentistry": "دندانپزشکی هوشمند",
   "رتبه بندی جستجو": "رتبه بندی گوگل",
-  "splinted crowns": "روکش اسپلینت",
   "درمان مجدد ریشه": "ریتریتمنت",
   "درمان ریشه مجدد": "ریتریتمنت",
   "ناسازگاری قطعات": "سازگاری برند",
@@ -22536,9 +22596,9 @@
   "کانسپت شهابیان": "دکتر شهابیان",
   "foad shahabian": "دکتر شهابیان",
   "تحلیل استخوانی": "تحلیل استخوان",
+  "دندان اندو شده": "دندان اندوشده",
   "dental ceramic": "سرامیک دندانی",
   "بعد عمودی صورت": "بعد عمودی",
-  "دندان اندو شده": "دندان اندوشده",
   "طول عمر سرامیک": "دوام ترمیم",
   "پیش آگهی دندان": "پروگنوز دندان",
   "caries removal": "برداشت پوسیدگی",
@@ -22633,6 +22693,7 @@
   "occlusal plane": "پلان اکلوژن",
   "buccal contour": "کانتور باکال",
   "کشیده شدن قالب": "کشیدگی قالب",
+  "composite core": "کور کامپوزیتی",
   "تراش روکش کامل": "روکش preparation",
   "finite element": "fea",
   "مسدود کردن تری": "posterior damming",
@@ -22717,6 +22778,7 @@
   "implant hybrid": "پروتز هیبرید",
   "پست زیرکونیایی": "پست زیرکونیا",
   "post and crown": "پست و روکش",
+  "نسخه ی پشتیبان": "پشتیبان گیری",
   "پلن پروتز محور": "پلنینگ پروتز محور",
   "context window": "پنجره کانتکست",
   "context length": "پنجره کانتکست",
@@ -22726,7 +22788,6 @@
   "kelly syndrome": "کامبینیشن سندروم",
   "کاهش بعد عمودی": "کاهش vdo",
   "cross mounting": "کراس مانت",
-  "composite core": "کور کامپوزیتی",
   "راهنمایی کانین": "گایدنس کانین",
   "post gutta gap": "گپ پست و گوتا",
   "aphthous ulcer": "آفت دهان",
@@ -22759,6 +22820,7 @@
   "اسپلینت تراپی": "اسپلینت",
   "ترمیم زیر لثه": "ترمیم ساب جینجیوال",
   "ایمپلنت تراپی": "درمان ایمپلنت",
+  "مرجین سرامیکی": "مارجین روکش",
   "مهندسی پرامپت": "پرامپت نویسی",
   "titanium base": "تیتانیوم لاینر",
   "سرجری ایمپلنت": "جراحی ایمپلنت",
@@ -22768,7 +22830,6 @@
   "supraeruption": "سوپرااراپشن",
   "فیلور ایمپلنت": "شکست ایمپلنت",
   "قضاوت کلینیکی": "قضاوت اینسایت",
-  "مرجین سرامیکی": "مارجین روکش",
   "ایمپکشن غذایی": "گیر غذایی",
   "food trapping": "گیر غذایی",
   "اسئواینتگریشن": "استئواینتگریشن",
@@ -23054,6 +23115,7 @@
   "interference": "تداخل اکلوزال",
   "متال پالاتال": "روکش pfm",
   "شل شدن اسکرو": "شل شدن پیچ",
+  "مالکیت محتوا": "مالکیت پلتفرم",
   "کانتکت پوینت": "کانتکت",
   "core buildup": "کور بیلدآپ",
   "دیسمانتاسیون": "debonding",
@@ -23078,10 +23140,10 @@
   "حرکات لترالی": "حرکات اکسکورسیو",
   "دیواره باریک": "دیواره نازک",
   "ضخامت دیواره": "دیواره نازک",
+  "اسپلینت روکش": "روکش اسپلینت",
   "microleakage": "ریز نشت",
   "چسباندن مجدد": "سمان مجدد",
   "crown design": "طراحی روکش",
-  "مالکیت محتوا": "مالکیت پلتفرم",
   "متریال پروتز": "متریال پروتزی",
   "medico legal": "مسئولیت حرفه ای",
   "wisdom tooth": "مولر سوم",
@@ -23112,7 +23174,6 @@
   "pharmacology": "داروشناسی",
   "اوربایت عمیق": "دیپ بایت",
   "رتبه در گوگل": "رتبه بندی گوگل",
-  "اسپلینت روکش": "روکش اسپلینت",
   "استتیک دندان": "زیبایی دندان",
   "cytotoxicity": "زیست سازگاری",
   "دیزاین پروتز": "طراحی پروتز",
@@ -23127,6 +23188,7 @@
   "پلتفرم سوئیچ": "پلتفرم سویچ",
   "کاغذ اکلوزال": "کاغذ ارتیکولاسیون",
   "printed cast": "کست پرینتی",
+  "کور کامپوزیت": "کور کامپوزیتی",
   "محدوده فینیش": "finish zone",
   "resin bonded": "rbfdp",
   "دیابت نوع دو": "type2 دیابت",
@@ -23215,6 +23277,7 @@
   "وینگ سرامیکی": "وینگ لمینیت",
   "پرسلن لثه ای": "پرسلن صورتی",
   "pink ceramic": "پرسلن صورتی",
+  "نسخه پشتیبان": "پشتیبان گیری",
   "design check": "چک قبل از ساخت",
   "gingivectomy": "ژینژیوکتومی",
   "missed canal": "کانال میس شده",
@@ -23228,7 +23291,6 @@
   "آنتی ریترکشن": "کنترل عفونت",
   "برگشت مایعات": "کنترل عفونت",
   "بیانیه اجماع": "کنسنسوس iti",
-  "کور کامپوزیت": "کور کامپوزیتی",
   "پلیمریزاسیون": "کیور",
   "friction fit": "گیر مکانیکی",
   "بیهوشی عمومی": "بیهوشی",
@@ -23265,6 +23327,7 @@
   "دلیوری روکش": "تحویل روکش",
   "subgingival": "ترمیم ساب جینجیوال",
   "cementation": "سمان کردن",
+  "مارژین دقیق": "مارجین روکش",
   "soft tissue": "مدیریت بافت نرم",
   "canine rise": "کانین رایز",
   "هدایت کانین": "کانین رایز",
@@ -23278,7 +23341,6 @@
   "سوپرا اراپت": "سوپرااراپشن",
   "feldspathic": "فلدسپاتیک",
   "passive fit": "فیت پروتز",
-  "مارژین دقیق": "مارجین روکش",
   "ایمپکشن غذا": "گیر غذایی",
   "فود ایمپکشن": "گیر غذایی",
   "اسکرو ریتین": "اتصال پیچ شونده",
@@ -23541,6 +23603,7 @@
   "نوع مطالعه": "طراحی مطالعه",
   "غیر تهاجمی": "درمان غیرتهاجمی",
   "مدیریت لثه": "مدیریت بافت نرم",
+  "پست ریختگی": "کور ریختگی",
   "دیپ مارجین": "dme",
   "بال اورینگ": "اتچمنت اوردنچر",
   "سمان مناسب": "انتخاب سمان",
@@ -23553,7 +23616,6 @@
   "پری اپیکال": "رادیوگرافی کنترل",
   "early load": "زمان بارگذاری ایمپلنت",
   "سمان اضافه": "سمان باقیمانده",
-  "پست ریختگی": "کور ریختگی",
   "استاپ عقبی": "استاپ خلفی",
   "اسکرو سمنت": "اسکرو سمنتد",
   "ایمپلنت کج": "ایمپلنت زاویه دار",
@@ -23651,6 +23713,8 @@
   "ناحیه ایمن": "کنترل عمق",
   "ناحیه آرنج": "elbow zone",
   "اجزا محدود": "fea",
+  "ریپوزیتوری": "github",
+  "repository": "github",
   "hall crown": "hall technique",
   "جامپینگ گپ": "jumping gap",
   "رزین باندد": "rbfdp",
@@ -23763,8 +23827,8 @@
   "play store": "گوگل پلی",
   "کامپلیکیشن": "عوارض",
   "پلن درمان": "طرح درمان",
-  "occlusion": "اکلوژن",
   "پست دندان": "پست و کور",
+  "occlusion": "اکلوژن",
   "chairside": "چیرساید",
   "گزارش کیس": "کیس اینسایت",
   "دنت ای آی": "dentai",
@@ -23793,13 +23857,13 @@
   "تحویل کار": "تحویل روکش",
   "بدون تراش": "درمان غیرتهاجمی",
   "کانتیلیور": "کانتی لیور",
+  "cast core": "کور ریختگی",
   "کدام سمان": "انتخاب سمان",
   "پرپ دندان": "تراش دندان",
   "روت کانال": "درمان ریشه",
   "پانورامیک": "رادیوگرافی تشخیصی",
   "وریفیکیشن": "راستی آزمایی",
   "بررسی صحت": "راستی آزمایی",
-  "cast core": "کور ریختگی",
   "guideline": "گایدلاین",
   "سیل محیطی": "psz",
   "اینتگریشن": "استئواینتگریشن",
@@ -23825,6 +23889,7 @@
   "اورکانتور": "کانتور ترمیم",
   "هموستاتیک": "کنترل خونریزی",
   "دیباندینگ": "debonding",
+  "مارک داون": "markdown",
   "لبه اضافه": "اورهنگ",
   "مثلث سیاه": "بلک تراینگل",
   "bleaching": "بلیچینگ",
@@ -23835,6 +23900,7 @@
   "retrieval": "تکنیک خارج سازی",
   "خارج کردن": "تکنیک خارج سازی",
   "excursive": "حرکات اکسکورسیو",
+  "روکش متصل": "روکش اسپلینت",
   "فسفات روی": "زینک فسفات",
   "لب پریدگی": "شکست سرامیک",
   "چیپ پرسلن": "شکست پرسلن",
@@ -23849,7 +23915,6 @@
   "پری مولار": "پرمولر",
   "پست دوتکه": "پست دو تکه",
   "lab check": "کنترل کار لابراتوار",
-  "مارک داون": "markdown",
   "قوس کوتاه": "sda",
   "vent hole": "smart ونت روکش",
   "تیرگی لثه": "اثر چتر",
@@ -23873,7 +23938,6 @@
   "دست دندان": "دندان مصنوعی",
   "deep bite": "دیپ بایت",
   "بایت عمیق": "دیپ بایت",
-  "روکش متصل": "روکش اسپلینت",
   "رویش پسیو": "رویش غیرفعال تغییریافته",
   "پیچ شکسته": "شکست پیچ",
   "شکستن پیچ": "شکست پیچ",
@@ -24049,6 +24113,7 @@
   "پرپ روکش": "تراش روکش",
   "diastema": "دیاستم",
   "سمان تمپ": "سمان موقت",
+  "لبه روکش": "مارجین روکش",
   "کانتیلور": "کانتی لیور",
   "دی ام ای": "dme",
   "بار کلیپ": "اتچمنت اوردنچر",
@@ -24062,7 +24127,6 @@
   "پسیو فیت": "فیت پروتز",
   "فیت روکش": "فیت پروتز",
   "عدم نشست": "نشست ناقص",
-  "لبه روکش": "مارجین روکش",
   "وی دی او": "vdo",
   "scanbody": "اسکن بادی",
   "کم تهاجم": "حداقل تهاجم",
@@ -24076,6 +24140,7 @@
   "سیت روکش": "نشست روکش",
   "build up": "بازسازی دیواره",
   "دباندینگ": "debonding",
+  "مارکداون": "markdown",
   "ام دی پی": "mdp",
   "پی دی ال": "pdl",
   "خطای دید": "ادراک بصری",
@@ -24104,7 +24169,6 @@
   "premolar": "پرمولر",
   "خشک کردن": "کنترل رطوبت",
   "ال تی دی": "ltd",
-  "مارکداون": "markdown",
   "ام آی اچ": "mih",
   "فرم زینی": "ridge lap",
   "اس دی ای": "sda",
@@ -24233,13 +24297,13 @@
   "overlay": "اورلی",
   "زیر لثه": "ترمیم ساب جینجیوال",
   "دیاستما": "دیاستم",
+  "کست کور": "کور ریختگی",
   "فرم gad": "global diagnosis",
   "لوکیتور": "اتچمنت اوردنچر",
   "locator": "اتچمنت اوردنچر",
   "ti base": "تیتانیوم لاینر",
   "تای بیس": "تیتانیوم لاینر",
   "عصب کشی": "درمان ریشه",
-  "کست کور": "کور ریختگی",
   "امبرژور": "امبراژور",
   "opacity": "ترانسلوسنسی",
   "اصل دال": "dahl concept",
@@ -24248,6 +24312,7 @@
   "ایربورن": "سندبلاست",
   "لقی پیچ": "شل شدن پیچ",
   "mock up": "موک آپ",
+  "md فایل": "markdown",
   "amalgam": "آمالگام",
   "staging": "استیج بندی درمان",
   "biobase": "بایوبیس",
@@ -24259,7 +24324,6 @@
   "آلومینا": "پلی کریستالین",
   "alumina": "پلی کریستالین",
   "robbins": "کتاب رابینز",
-  "md فایل": "markdown",
   "ونت هول": "smart ونت روکش",
   "لبه بات": "بات جوینت",
   "آب دهان": "بزاق",
@@ -24274,6 +24338,8 @@
   "papilla": "پاپیلا",
   "حس عمقی": "پروپریوسپشن",
   "فیو شات": "few shot prompting",
+  "گیت هاب": "github",
+  "git hub": "github",
   "فرم گیر": "retention form",
   "premill": "اباتمنت پریمیل",
   "هم رنگی": "اثر آفتاب پرست",
@@ -24353,11 +24419,11 @@
   "silane": "سایلان",
   "اورلای": "اورلی",
   "splint": "اسپلینت",
+  "مارژین": "مارجین روکش",
+  "margin": "مارجین روکش",
   "torque": "تورک پیچ",
   "tibase": "تیتانیوم لاینر",
   "misfit": "فیت پروتز",
-  "مارژین": "مارجین روکش",
-  "margin": "مارجین روکش",
   "شفافیت": "ترانسلوسنسی",
   "اپسیتی": "ترانسلوسنسی",
   "dentin": "عاج",
@@ -24418,6 +24484,7 @@
   "polish": "پالیش نهایی",
   "پرسلین": "پرسلن",
   "پرسلان": "پرسلن",
+  "backup": "پشتیبان گیری",
   "pontic": "پونتیک",
   "پانتیک": "پونتیک",
   "فالوآپ": "پیگیری زمانی",
@@ -24482,6 +24549,7 @@
   "لیزری": "لیزر دندانپزشکی",
   "gpt 4": "مدل زبانی بزرگ",
   "بالچه": "وینگ لمینیت",
+  "بک آپ": "پشتیبان گیری",
   "piezo": "پیزو",
   "glp 1": "داروهای لاغری",
   "پارشل": "پارشیال",
@@ -24505,6 +24573,7 @@
   "icon": "رزین اینفیلتریشن",
   "بیوی": "bewe",
   "bopt": "finish zone",
+  "ریپو": "github",
   "oaot": "one اباتمنت one time",
   "اپکر": "اوپکر",
   "اوپک": "اوپکر",
@@ -24522,6 +24591,7 @@
   "ptfe": "نوار تفلون",
   "vent": "ونت",
   "wing": "وینگ لمینیت",
+  "بکاپ": "پشتیبان گیری",
   "پوار": "پوآر",
   "آنگل": "کدگذاری توربین",
   "glp1": "داروهای لاغری",
