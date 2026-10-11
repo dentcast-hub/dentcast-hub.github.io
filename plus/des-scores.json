@@ -19553,6 +19553,410 @@
         "fact_fa": "امتیاز شواهد این منبع ۱۴ از ۱۰۰ و باند E است؛ نوع سوال Therapy است.",
         "interpretation_fa": "این متن گزارش دو کیس بدون گروه کنترل است، نه شاهدی برای برتری یک طراحی بر دیگری. آنچه نشان می‌دهد این است که پست دو تکه در مولر با ریشه‌های واگرا در عمل قابل ساخت است و در کیس اول تا یک سال پایدار مانده. برای کیس دوم پیامدی گزارش نشده. جمع‌بندی درباره‌ی بقای بلندمدت از این داده در نمی‌آید."
       }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "پست دو تیکه (Split Cast Post and Core) چیست و کِی استفاده می‌شود؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "link label"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "توضیح مفهوم پست دو تکه (Split Cast Post and Core)، دو طراحی رایج آن و اندیکاسیون‌هایش؛ بر پایه‌ی گزارش موردی Bansal و همکاران، Case Reports in Dentistry، ۲۰۱۶.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "states the page's own scope and provenance"
+          },
+          {
+            "id": "u4",
+            "claim_quote": "بعد از دنت‌کست پلاس دوازدهم، سؤال‌های زیادی آمد که این پست دو تکه دقیقاً چیست.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "page context, about the audience not the source"
+          },
+          {
+            "id": "u5",
+            "claim_quote": "خلاصه‌اش این است:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "colon introduction"
+          },
+          {
+            "id": "u6",
+            "claim_quote": "وقتی یک مولر آن‌قدر تخریب شده که هیچ دیواره‌ای باقی نمانده، چند مسیر درمانی پیش رو داریم.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source mentions only extraction with implant/FPD as the alternative to a conservative approach; no set of treatment paths is stated"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "یکی از آن‌ها استفاده از پست داخل ریشه برای گیر کور است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In such cases if ferrule is available and coronal retention core buildup is not sufficient then intraradicular retention may be used by custom made post and core which replaces any lost coronal tooth structure [1].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u8",
+            "claim_quote": "گاهی یک پست تنها کافی نیست، چون کور یا می‌چرخد یا گیر لازم را پیدا نمی‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Single cast post and core in largest and straightest canal was also not considered as single post in the distal canal may lead to either rotation of the core or inadequate retention.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u9",
+            "claim_quote": "راه‌حل هم بلندتر کردن پست نیست، چون پست بلند احتمال پرفوریشن و استرس داخلی ریشه را بالا می‌برد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Further a long post also increases the chances of perforation of the root leading to failure.",
+            "source_ref": null,
+            "note": "internal stress half matches: Internal stresses are more by placing one long post as compared to two short posts."
+          },
+          {
+            "id": "u10",
+            "claim_quote": "دو پست کوتاه‌تر در دو کانال، از یک پست بلند بهتر عمل می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "For these teeth, retention is better provided by two or more relatively short posts in divergent canals [2].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u11",
+            "claim_quote": "مشکل اینجاست: ریشه‌های مولر واگرا هستند، پس مسیر نشست دو پست یکی نیست و نمی‌شود پست و کور را یک‌تکه ریخت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Divergence of mesial and distal root does not allow fabrication of the two posts with core as single unit since path of withdrawal for the two posts will be different.",
+            "source_ref": null,
+            "note": "inference judged on its conclusion; premise (molar roots divergent) not compared"
+          },
+          {
+            "id": "u12",
+            "claim_quote": "برای حل این مسئله مجموعه‌ی پست را به دو تکه تقسیم می‌کنیم که هر تکه مسیر نشست مستقل خودش را دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This can be achieved by multisection post and core with each section having its own path of withdrawal or single piece post and core with a separate auxiliary post.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u13",
+            "claim_quote": "دو طراحی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u14",
+            "claim_quote": "دو طراحی وجود دارد:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "colon introduction"
+          },
+          {
+            "id": "u15",
+            "claim_quote": "Multisection: کور به دو جزء تقسیم می‌شود و هر جزء پست خودش را دارد، با مسیر خروج مستقل.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This can be achieved by multisection post and core with each section having its own path of withdrawal or single piece post and core with a separate auxiliary post.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u16",
+            "claim_quote": "اول یک جزء ریخته و امتحان می‌شود، بعد جزء دوم با جزء اول در دهان ساخته می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Casting of the mesial portion was done and the fit was checked.",
+            "source_ref": null,
+            "note": "second half matches: Direct wax pattern of the distal section of post and core was prepared with the casting of mesial section of post and core in place"
+          },
+          {
+            "id": "u17",
+            "claim_quote": "اگر هر دو جزء روی ferrule بنشینند و زیر کراون کامل محصور شوند، حتی نیازی به قفل dovetail بین‌شان نیست، چون خود کراون آن‌ها را نگه می‌دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "As both the sections were resting on ferrule and are encased by full coverage crowns interlock was not required.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u18",
+            "claim_quote": "کور یکپارچه با پست کمکی: یک کور یکپارچه با پست کوتاه در یکی از کانال‌ها ساخته می‌شود، به‌علاوه‌ی یک پست جدا در کانال دیگر که از داخل سوراخ کور سُر می‌خورد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "During luting of the castings, the single core and post of the mesial root was luted first followed by the immediate sliding of the distal auxiliary post through the hole in the core which was held by locking tweezer for fast and comfortable insertion (Figure 2(f)).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u19",
+            "claim_quote": "اول کور و پست اصلی سمان می‌شود و بلافاصله پست کمکی از داخل سوراخ جا می‌رود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "During luting of the castings, the single core and post of the mesial root was luted first followed by the immediate sliding of the distal auxiliary post through the hole in the core which was held by locking tweezer for fast and comfortable insertion (Figure 2(f)).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u20",
+            "claim_quote": "کدام طراحی را انتخاب کنیم؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u21",
+            "claim_quote": "کدام طراحی؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "question with no answer in it"
+          },
+          {
+            "id": "u22",
+            "claim_quote": "درجه‌ی واگرایی تعیین می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Hence in such cases the design in (b) is suggested, while in teeth with lesser divergence design in (c) is suggested.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u23",
+            "claim_quote": "در واگرایی کم تا متوسط، multisection.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "So it was decided to prepare multisection post and core with each section having separate path of withdrawal in Case 1 (Figure 3).",
+            "source_ref": null,
+            "note": "Case 1 is the less divergent case per the source; moderate divergence is not defined by the source"
+          },
+          {
+            "id": "u24",
+            "claim_quote": "در واگرایی زیاد، multisection هم جواب نمی‌دهد، چون محور دو جزء در یک راستا نمی‌افتد و حین ساخت با wax pattern آندرکات و تداخل ایجاد می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This will cause interference during wax pattern fabrication for both the castings due to the undercut formed.",
+            "source_ref": null,
+            "note": "outcome half rests on the preceding sentence about multisection axes not being in a straight line"
+          },
+          {
+            "id": "u25",
+            "claim_quote": "اینجا طرح دوم انتخاب می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Hence single post and core with auxiliary post was planned in Case 2.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u26",
+            "claim_quote": "(یادداشت مترجم: منبع اصلی wax pattern نوشته است؛ ما امروز در کلینیک بیشتر از پترن رزینی استفاده می‌کنیم.)",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "translator note, first person: ما امروز در کلینیک"
+          },
+          {
+            "id": "u27",
+            "claim_quote": "اندیکاسیون",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u28",
+            "claim_quote": "اندیکاسیون در سه شرط:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "colon introduction"
+          },
+          {
+            "id": "u29",
+            "claim_quote": "تاج به حدی تخریب شده که کور از ساختار کرونال گیر نمی‌گیرد، ولی ferrule (حلقه‌ی عاجی سالم در محیط دندان، بالای مارجین تراش) موجود است",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In such cases if ferrule is available and coronal retention core buildup is not sufficient then intraradicular retention may be used by custom made post and core which replaces any lost coronal tooth structure [1].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u30",
+            "claim_quote": "یک پست ممکن است برای گیر و آنتی روتیشن کافی نباشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Single cast post and core in largest and straightest canal was also not considered as single post in the distal canal may lead to either rotation of the core or inadequate retention.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u31",
+            "claim_quote": "در کانال‌های واگرا، گیر بهتر است از دو پست نسبتاً کوتاه در دو کانال گرفته شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "For these teeth, retention is better provided by two or more relatively short posts in divergent canals [2].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u32",
+            "claim_quote": "(به نظر من این برای ریشه‌هایی هم کاربرد دارد که نمی‌توانیم در آن‌ها پستی با طول کافی بسازیم.)",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: به نظر من"
+          },
+          {
+            "id": "u33",
+            "claim_quote": "واگرایی ریشه‌ها اجازه‌ی ساخت یک‌تکه را نمی‌دهد",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Divergence of mesial and distal root does not allow fabrication of the two posts with core as single unit since path of withdrawal for the two posts will be different.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u34",
+            "claim_quote": "اگر شرط سوم برقرار نباشد، یعنی ریشه ها واگرا نباشند، همان پست و کور یک‌تکه کار را راه می‌اندازد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source never states that non-divergent roots are managed by a one-piece post and core"
+          },
+          {
+            "id": "u35",
+            "claim_quote": "نکات عملی و محدودیت‌ها",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u36",
+            "claim_quote": "دو نکته‌ی عملی:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "colon introduction"
+          },
+          {
+            "id": "u37",
+            "claim_quote": "در انتخاب کانال، ضخامت عاج اطراف را ببینید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Mesiobuccal canal was selected instead of mesiolingual canal as more amount of dentin is present at the danger zone area in mesiobuccal canal.",
+            "source_ref": null,
+            "note": "instruction; source reports its canal choice by dentin amount, favourable"
+          },
+          {
+            "id": "u38",
+            "claim_quote": "مثلاً در مولر پایین، مزیوباکال به مزیولینگوال ترجیح دارد چون در ناحیه‌ی danger zone عاج بیشتری دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Mesiobuccal canal was selected instead of mesiolingual canal as more amount of dentin is present at the danger zone area in mesiobuccal canal.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u39",
+            "claim_quote": "و محدودیت‌ها: تکنیک‌سنسیتیو است، جلسات و مراحل لابراتواری اضافه دارد، تراش بیشتری از دندان می‌گیرد، و ری‌تریتمنت آینده را دشوار می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It is technique sensitive.",
+            "source_ref": null,
+            "note": "other limitations also match: additional operative and lab procedures, removal of additional tooth structure, can complicate or prevent future endodontic retreatment"
+          },
+          {
+            "id": "u40",
+            "claim_quote": "منبع: Bansal R و همکاران، Case Reports in Dentistry، ۲۰۱۶.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation line"
+          },
+          {
+            "id": "u41",
+            "claim_quote": "توجه کنید که این یک گزارش کیس ریپورت است، نه مطالعه‌ی بقا.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This paper presents two case reports on post endodontic management of badly mutilated mandibular molars: one with two-section post and core and one with single post and core with separate auxiliary post.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u42",
+            "claim_quote": "کل شواهد موجود درباره‌ی این تکنیک از همین جنس است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "claim about the whole body of literature, a relation between sources; the source does not state it"
+          }
+        ],
+        "counts": {
+          "matches": 23,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 3,
+          "not_assessable": 0,
+          "author_view": 2,
+          "not_a_claim": 14
+        },
+        "assessable": 23,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "Two short posts in divergent root are sufficient to provide retention instead of one long post.",
+        "fact_fa": "از ۲۳ ادعایی که منبع به آن پرداخته‌اند، ۲۳ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۳ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
     ]
   },
   "dentcast-plus/video-13": {
