@@ -263,6 +263,11 @@ abstract. It qualifies when any of these holds:
   `episodes/episode-161.html`'s «منابع» — three DOIs, therefore three separately
   scored sources).
 
+A reference in that block with **no** DOI — a textbook, a glossary, a standard — is a
+source too (step 4.13 records it `NOT_APPRAISABLE`), and from spec v3.1 it gets a
+FIDELITY call whenever its text is in hand: the score and the fidelity are two
+questions, and the gate is the text, never the score.
+
 Record the DOI(s) and carry them to step 4.13, which resolves each into its own
 `source_text` and scores each one separately — **one DES record per cited source,
 never one blended score for the page.**
@@ -1388,6 +1393,23 @@ Per the capability protocol (`agent-parity.md` §2), when the blocker is a **mis
 tool** rather than a missing abstract, **ask the user to paste the abstract** —
 never downgrade the result silently.
 
+**A source with no method to appraise still needs its text** (spec v3.1). For a
+textbook, a glossary or a standard in the «منابع» block the ladder is: the cabinet;
+`WebFetch` for an open glossary or standard (the Glossary of Prosthodontic Terms
+is open access, so the cited entry is retrievable); and then **the founder's own
+copy** — show him the page's sentences that lean on that source and ask for the
+chapter or page range they come from, as a gate question (`agent-parity.md`
+§1), never from memory. The SOURCE call then runs on that text with
+`text_basis: EXCERPT` (a part of the work — a chapter, a page range, one entry)
+or `FULL_TEXT` (the whole cited work), returns `NOT_APPRAISABLE`, and the
+FIDELITY call (Part 2b) reads the same text. «ندارم» is a legal answer: the
+SOURCE call then runs on the reference line alone and records
+`text_basis: CITATION_ONLY`, so the citation reaches the card, and the fidelity
+slot is the spec's own `{"des_version":"3.1","error":"INSUFFICIENT_TEXT"}` —
+reported, never silent. `EXCERPT` and `CITATION_ONLY` exist for this content
+type only; a paper is scored from its abstract or its full text, never a chosen
+part.
+
 **`text_basis` is a fact, not a formality.** It is `ABSTRACT_ONLY` whenever what you
 resolved is an abstract — the normal case for every cabinet and lookup hit — and
 `FULL_TEXT` only when you genuinely hold the paper's body. Getting this wrong is not
@@ -1397,10 +1419,25 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v3.0.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v3.1.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v3.0 is the current spec, and its change from 2.9 is one FIDELITY rule:**
+**v3.1 is the current spec, and its change from 3.0 cuts the FIDELITY track loose
+from the score** (founder, 1405/07/19). A source recorded `NOT_APPRAISABLE` used
+to get no FIDELITY call by rule, although nothing in the track reads a band: «how
+strong is the source?» and «did we say what it says?» are two questions. Now
+`source_kind` is `book`, `glossary` or `standard` (closed; a guideline stays on
+`SECONDARY_REPORT`); a NOT_APPRAISABLE record states what text was in hand through
+its own `text_basis` list — `FULL_TEXT`, `EXCERPT` (new) or `CITATION_ONLY` (new;
+a reference line alone is admissible for this one content type); the FIDELITY call
+runs on the same text under the same basis, with `EXCERPT`'s silence
+`NOT_ASSESSABLE` and its result provisional; and a fidelity slot on such a source
+holds the F5 object, or the spec's `INSUFFICIENT_TEXT` error object when the text
+was not in hand, or `null` only when no call was owed. No SOURCE score moves and
+no verdict changes; every 2.8–3.0 record stays valid under its own stamp, and
+`sharehub/share-14`'s 1.9 book record gets a fidelity slot only by a re-run.
+
+**v3.0's change from 2.9 is one FIDELITY rule:**
 a study-scope formula (*under the conditions of this study*, *within the
 limitations of this study* …) is not a hedge, so a claim that leaves it out is
 not «قاطع‌تر از منبع» — every finding belongs to its study, the page cites the
@@ -1564,14 +1601,20 @@ clinical_question: <omit unless this publish explicitly answers one>
   input blocks and three DES objects. Never concatenate sources into one block and
   never average their scores.
 
-#### Part 2b — Run the FIDELITY call (spec v2.5, v2.7), once per scored source
+#### Part 2b — Run the FIDELITY call (spec v2.5, v2.7, v3.1), once per source whose text is in hand
 
-**When.** For every source in basket 2 whose SOURCE call returned a scored
-record — RESEARCH or COMMENTARY. Skip it, and store `null` in its slot, when the
-SOURCE call returned an error (`INSUFFICIENT_TEXT`, `DOI_TEXT_MISMATCH`) or
-`NOT_APPRAISABLE` (a book has no sentences to be faithful to in the sense the
-track measures), and for the page's own COMMENTARY self-record (a text cannot be
-unfaithful to itself). Basket 1 pages never reach this call: fidelity needs a
+**When.** For every source in basket 2 whose SOURCE call read a text — RESEARCH,
+COMMENTARY, **or `NOT_APPRAISABLE` with `text_basis` `FULL_TEXT` or `EXCERPT`**
+(spec v3.1: a textbook chapter or a glossary entry has sentences, and whether the
+page says what they say is a separate question from whether the source is strong).
+Skip it, and store `null` in its slot, when the SOURCE call returned an error
+(`INSUFFICIENT_TEXT`, `DOI_TEXT_MISMATCH`) and for the page's own COMMENTARY
+self-record (a text cannot be unfaithful to itself). A `NOT_APPRAISABLE` source
+recorded `CITATION_ONLY` (its text was sought and not found, Part 1) gets no call
+and its slot is the spec's own error object
+`{"des_version":"3.1","error":"INSUFFICIENT_TEXT"}` — never a silent `null`; the
+reader is told nothing about it (what is not there is not announced — founder,
+1405/07/19), the record and the publish report are. Basket 1 pages never reach this call: fidelity needs a
 cited source. No classifier decides whether the page «is a report of the paper»
 — spec F1 decides per unit, and a page that merely lists the paper in its
 references attributes fewer than three claims to it and lands on
@@ -1590,8 +1633,9 @@ python3 tools/des_fidelity_units.py <content_id> \
   --texts texts.json --build <dir>                                 # one input block per call
 ```
 
-`texts.json` maps each source's DOI to the `source_text` and `text_basis` the
-SOURCE call scored — **the same text, never a shorter one**: a source scored
+`texts.json` maps each source's DOI — or, for a DOI-less source, its position tag
+`S<n>` — to the `source_text` and `text_basis` the SOURCE call scored — **the same
+text, never a shorter one** (a book's `EXCERPT` included): a source scored
 `FULL_TEXT` from the cabinet is judged here on that full text, because the
 page was written from it. `--build` exits non-zero when a basis differs from
 the stored SOURCE record (spec v2.7 appendix rule 11).
@@ -1630,7 +1674,7 @@ in Part 4.
 #### Part 2c — How the FIDELITY call is run: two full Sonnet runs, a tie-break, an Opus review (v2.9)
 
 The FIDELITY call is an independent agent per input block, **on Sonnet**,
-reading `.dentcast/des-v3.0-knowledge.md` (the spec minus its appendix) as its
+reading `.dentcast/des-v3.1-knowledge.md` (the spec minus its appendix) as its
 instruction and the block as its user turn. The model is part of the
 measurement: never mix models for the runs inside one record.
 
@@ -1802,9 +1846,14 @@ without the leading `/` and without `.html` — the same id Phase F takes):
 ```
 
 **`fidelity` is an array PARALLEL to `sources` by index** — same length, slot
-`i` is the FIDELITY object for `sources[i]`, and `null` where no FIDELITY call
-ran for that source (Part 2b's skip cases, plus a source no unit of the page
-names). **Under `POOLED` scope it is the one pooled object instead of an array**,
+`i` is the FIDELITY object for `sources[i]`; the spec's own error object
+`{"des_version":"3.1","error":"INSUFFICIENT_TEXT"}` where the source is
+`NOT_APPRAISABLE` / `CITATION_ONLY` (its text was sought and not found — v3.1);
+and `null` only where no FIDELITY call was owed (Part 2b's skip cases, plus a
+source no unit of the page names). Phase F is version-gated: a fidelity object
+on a `NOT_APPRAISABLE` source must be stamped ≥ 3.1 over a `FULL_TEXT`/`EXCERPT`
+record, and a `null` on such a source in a record with no 3.1 slot is still what
+the rule then said. **Under `POOLED` scope it is the one pooled object instead of an array**,
 because that call judged the page against all its sources at once. It is omitted entirely on a record
 written before v2.5 or on a basket-1 page; Phase F accepts both shapes and
 rejects a `fidelity` whose length differs from `sources`. Parallel by index
@@ -1856,7 +1905,7 @@ true; and the outcome of each of the five Part-3 checks. Per FIDELITY slot: the
 `level` and the word the reader will see for it («تطابق خیلی بالا», spec v2.8
 appendix rule 5), the count line («۵۰ از ۵۲ ادعایی که منابع به آن پرداخته‌اند
 مطابق است؛ ۴ جملهٔ دیگر در منابع نیامده»), every `ALTERED` and `REVERSED` unit
-with its `change_kind`, or the skip reason for a `null` slot. And Part 3b's outcome: each
+with its `change_kind`, or the reason for a `null` or `INSUFFICIENT_TEXT` slot. And Part 3b's outcome: each
 offered sentence with the founder's answer («اصلاح کن» / «خودم می‌نویسم» /
 «همین بماند»), and the grade before → after the re-run. For a skip, the documented
 reason line. Explicitly confirm that no DOI, abstract, or quartile was guessed.
