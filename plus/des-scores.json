@@ -20479,6 +20479,1058 @@
         "fact_fa": "امتیاز شواهد این منبع ۲۲ از ۱۰۰ و باند D است؛ نوع سوال Therapy است.",
         "interpretation_fa": "مرور سیستماتیک ۲۰۰۷ پیش از PROSPERO است و متن کامل نه پروتکل ثبت‌شده دارد نه ارزیابی سوگیری انتشار. جست‌وجوی PubMed و Cochrane و رتبه‌بندی AHRQ با دو نویسنده توصیف شده‌اند. مزیت عینی جویدن عمدتاً به اوردنچر مندیبولار در ریج تحلیل‌رفته یا ناسازگاری با دنچر محدود می‌ماند."
       }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.0",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "ایمپلنت واقعاً جویدن را چقدر بهتر می‌کند؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "link label"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "نگرانی‌ای هست که انتخاب ایمپلنت بر این تصور استوار باشد که جویدن را بهتر می‌کند، و رضایت بیمار می‌تواند همین تصور را تقویت کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "While this restoration of masticatory function may be of critical value to the patient, there is some concern that this rationale for selection of implant-supported or retained dentures compared to conventional dentures may be based on a perception that implant-supported or retained dentures will routinely improve masticatory ability.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u4",
+            "claim_quote": "این مرور با کنار زدن پرسشنامه‌ها و تکیه بر آزمون‌های عینیِ خرد کردن غذا، سراغ پاسخ واقعی رفته.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "English articles published from 1966 to June 2007, in which the masticatory performance of subjects with implant-supported or retained dentures was assessed by objective methods and compared to performance with conventional dentures, were included.",
+            "source_ref": null,
+            "note": "objective-only inclusion criterion"
+          },
+          {
+            "id": "u5",
+            "claim_quote": "راهنمای خواندن: در این متن هرجا برداشت و تفسیر آمده، با برچسب تفسیر مشخص شده است.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "page's own scope"
+          },
+          {
+            "id": "u6",
+            "claim_quote": "بقیه‌ی متن گزارش یافته‌های خود مقاله است.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "page's own scope"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "چرا این مقاله نوشته شد",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u8",
+            "claim_quote": "بیمار وقتی سراغ ایمپلنت می‌آید، معمولاً دلیل اولش این است که می‌خواهد بهتر بجود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Patient desire for improved masticatory function is often given as a primary reason for treatment with implant-supported or retained dentures.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u9",
+            "claim_quote": "نگرانی هست که فرض رایج این باشد که پروتز متکی بر ایمپلنت به‌طور معمول جویدن را بهتر می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "While this restoration of masticatory function may be of critical value to the patient, there is some concern that this rationale for selection of implant-supported or retained dentures compared to conventional dentures may be based on a perception that implant-supported or retained dentures will routinely improve masticatory ability.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u10",
+            "claim_quote": "مشکل اینجاست که رضایت بیمار و عملکرد واقعی جویدن دو چیز جدا هستند و ارتباط‌شان ضعیف است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In fact, it has been repeatedly shown that relationships between objective measures of masticatory performance and perceptional estimates of masticatory ability are weak in patients wearing conven- Fueki et al tional dentures7,8 and implant-supported or retained dentures.9-12",
+            "source_ref": null,
+            "note": "satisfaction vs perceptional estimates treated as the same construct"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "بیمار می‌تواند از پروتزش کاملاً راضی باشد در حالی که بازده واقعی خرد کردن غذایش تغییر چندانی نکرده، و برعکس.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "illustration of weak correlation; the specific case is not stated"
+          },
+          {
+            "id": "u12",
+            "claim_quote": "مقاله تأکید می‌کند که این ضعف ارتباط بارها نشان داده شده، هم در بیماران با دنچر معمولی و هم در بیماران با پروتز ایمپلنتی.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In fact, it has been repeatedly shown that relationships between objective measures of masticatory performance and perceptional estimates of masticatory ability are weak in patients wearing conven- Fueki et al tional dentures7,8 and implant-supported or retained dentures.9-12",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u13",
+            "claim_quote": "این مرور سیستماتیک فقط سراغ معیارهای عینی رفت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "English articles published from 1966 to June 2007, in which the masticatory performance of subjects with implant-supported or retained dentures was assessed by objective methods and compared to performance with conventional dentures, were included.",
+            "source_ref": null,
+            "note": "inclusion restricted to objectively assessed studies"
+          },
+          {
+            "id": "u14",
+            "claim_quote": "منظور از عینی، آزمون‌های استانداردی است که مستقیماً اندازه می‌گیرند غذا چقدر خرد یا مخلوط شده است، نه پرسشنامه‌ی رضایت بیمار.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not define objective tests as measuring how much food is comminuted or mixed"
+          },
+          {
+            "id": "u15",
+            "claim_quote": "سؤال ساده بود: وقتی واقعاً اندازه می‌گیریم، ایمپلنت چقدر جویدن را بهتر می‌کند؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "question with no answer"
+          },
+          {
+            "id": "u16",
+            "claim_quote": "نویسندگان از میان صدها مقاله، ۱۸ مقاله را پیدا کردند که این معیارها را داشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "From 281 articles identified, 18 peer-reviewed articles met prespecified criteria for inclusion.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u17",
+            "claim_quote": "این ۱۸ مقاله در مجموع گزارش ۱۴ مطالعه بودند، چون بعضی مطالعات در چند مقاله منتشر شده بودند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The 18 articles10,11,23-38 meeting the inclusion criteria were peerreviewed and based on 14 studies.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u18",
+            "claim_quote": "یک نکته درباره‌ی قوت شواهد: تا زمان این مرور، تعدادی مطالعه در این زمینه انجام شده بود، ولی شواهد سطح‌بالا محدود بود و بخش قابل‌توجهی از آن‌ها هم طراحی محکمی نداشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "While a number of studies on masticatory performance have been conducted in patients with various designs of implant-supported or retained dentures, high-level evidence supporting advantages in masticatory performance of implant-supported or retained dentures over conventional dentures is limited.",
+            "source_ref": null,
+            "note": "second half (design quality) only partly addressed"
+          },
+          {
+            "id": "u19",
+            "claim_quote": "یعنی بیماران به‌صورت تصادفی بین دو درمان تقسیم نشده بودند، یا اصلاً گروه مقایسه‌ای وجود نداشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "There were no RCTs or retrospective studies.",
+            "source_ref": null,
+            "note": "stated for the fixed complete denture comparison"
+          },
+          {
+            "id": "u20",
+            "claim_quote": "نتیجه این است که یافته‌های این مقاله را باید به‌عنوان بهترین چیزی که در دسترس بوده خواند، نه به‌عنوان حرف آخر.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "best-available framing is the page's own conclusion; not stated"
+          },
+          {
+            "id": "u21",
+            "claim_quote": "هرجا شواهد ضعیف‌تر بوده در متن اشاره می‌شود.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "page's own scope"
+          },
+          {
+            "id": "u22",
+            "claim_quote": "۱.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u23",
+            "claim_quote": "پروتز پارسیل ثابت روی ایمپلنت در برابر پارسیل متحرک",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u24",
+            "claim_quote": "در این زمینه فقط یک مطالعه‌ی تصادفی‌شده وجود دارد که روی بیماران با بی‌دندانی کلاس یک و دو کندی در مندیبل انجام شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "There was only 1 prospective (RCT) study and there were no retrospective studies comparing a fixed implant-supported partial denture (FIPD) with a conventional removable partial denture (RPD) (Table I).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u25",
+            "claim_quote": "در این مطالعه بیماران به دو گروه تقسیم شدند: یک گروه پروتز پارسیل ثابت روی ایمپلنت گرفتند و گروه دیگر پارسیل متحرک معمولی.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In the single RCT, masticatory performance with an FIPD was compared with an RPD in Kennedy Class I and II partially edentulous mandibles.23",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u26",
+            "claim_quote": "نتیجه این بود که هیچ تفاوتی بین دو گروه دیده نشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The results of the RCT indicated no significant differences in masticatory performance between the FIPD (n=105) and RPD (n=104).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u27",
+            "claim_quote": "عملکرد جویدن در هر دو گروه به یک اندازه بهتر شد و پروتز ثابت روی ایمپلنت هیچ برتری‌ای نسبت به پارسیل متحرک نشان نداد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The results of the RCT indicated no significant differences in masticatory performance between the FIPD (n=105) and RPD (n=104).",
+            "source_ref": null,
+            "note": "equal improvement is also supported by the effect sizes"
+          },
+          {
+            "id": "u28",
+            "claim_quote": "این خلاف انتظار است، ولی توضیح نویسندگان منطقی است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This would be an unexpected result given the belief that fixed dentures result in better masticatory function than removable dentures.",
+            "source_ref": null,
+            "note": "\"logical\" is the page's own judgment, not addressed"
+          },
+          {
+            "id": "u29",
+            "claim_quote": "در آن مطالعه عرض باکولینگوال پلتفرم اکلوزال پروتز ثابت را عمداً باریک کرده بودند تا بار روی ایمپلنت‌ها کم شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In this RCT, the buccal-lingual width of the occlusal platform for FIPDs was narrowed to reduce functional load on implants, and the occlusal platform for RPDs was larger than for FIPDs.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u30",
+            "claim_quote": "در نتیجه سطح جویدن پارسیل متحرک پهن‌تر از پروتز ثابت بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In this RCT, the buccal-lingual width of the occlusal platform for FIPDs was narrowed to reduce functional load on implants, and the occlusal platform for RPDs was larger than for FIPDs.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u31",
+            "claim_quote": "مطالعه‌ی دیگری نشان داده که پلتفرم اکلوزال پهن‌تر در پارسیل متحرک با توان جویدن بهتر همراه است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A recent study has shown that increased width of the occlusal platform for an RPD is associated with greater masticatory function, as measured by the mixing ability test.39",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u32",
+            "claim_quote": "نویسندگان احتمال می‌دهند که سطح جویدن بزرگ‌تر پارسیل متحرک، بخشی از مزیت گیر و ساپورت پروتز ثابت را خنثی کرده باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "As the authors discussed,23 a larger occlusal platform with the RPDs may have offset the advantages in retention and support offered by the FIPDs.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u33",
+            "claim_quote": "دو نکته را هم باید کنار این نتیجه گذاشت.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost"
+          },
+          {
+            "id": "u34",
+            "claim_quote": "اول اینکه ایمپلنت‌های این مطالعه از نوع blade-vent بودند که با ایمپلنت‌های استوانه‌ای رایج امروز تفاوت اساسی دارند، پس تعمیم مستقیم این نتیجه به سیستم‌های امروزی باید با احتیاط انجام شود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "blade-vent type is stated, but the contrast with today's implants and the caution about generalizing are not"
+          },
+          {
+            "id": "u35",
+            "claim_quote": "دوم اینکه این تنها مطالعه‌ای است که چنین مقایسه‌ای انجام داده، و یک مطالعه به‌تنهایی پایه‌ی محکمی برای نتیجه‌گیری قطعی نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "There was only 1 prospective (RCT) study and there were no retrospective studies comparing a fixed implant-supported partial denture (FIPD) with a conventional removable partial denture (RPD) (Table I).",
+            "source_ref": null,
+            "note": "\"only one study\" stated; the firmness-of-basis half is not addressed"
+          },
+          {
+            "id": "u36",
+            "claim_quote": "۲.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u37",
+            "claim_quote": "پروتز کامل ثابت روی ایمپلنت در برابر دنچر کامل",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u38",
+            "claim_quote": "سه مطالعه این مقایسه را انجام داده‌اند، ولی هیچ‌کدام تصادفی‌شده نبودند و هیچ‌کدام گروه کنترلِ دنچر جدید نداشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "There were no RCTs or retrospective studies.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u39",
+            "claim_quote": "در همه‌ی آن‌ها عملکرد جویدن همان بیمار قبل و بعد از درمان سنجیده شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A within-subject prospective study compared a maxillary FICD and original maxillary CD (n=21).24,25",
+            "source_ref": null,
+            "note": "all three FICD studies are within-subject in Table I"
+          },
+          {
+            "id": "u40",
+            "claim_quote": "در مندیبل، پروتز کامل ثابت روی ایمپلنت بهبود بزرگی نسبت به دنچر قبلی بیمار ایجاد کرد و این بهبود تا ده سال هم پایدار ماند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The results after 3 years of treatment with mandibular FICDs indicated significant improvement in masticatory performance from original CDs (ES=1.3, 95% CI [0.8-1.9]).10",
+            "source_ref": null,
+            "note": "10-year maintenance stated in the next sentence"
+          },
+          {
+            "id": "u41",
+            "claim_quote": "در ماگزیلا هم یک مطالعه‌ی درون‌فردی (در دو مقاله، با پیگیری ۳ تا ۶ ماه و ۳ سال) بهبود بزرگ نشان داد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The results showed significant improvement in masticatory performance with maxillary FICDs compared to original maxillary CDs at 3-6 months after treatment (n=21, ES=1.6, 95% CI [1.0-2.2])24 and at 3 years after treatment (n=17, ES=1.8, 95% CI [1.1-2.5]).25",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u42",
+            "claim_quote": "مطالعه‌ی کوچک دیگری در ماگزیلا اثر بزرگی دید ولی به آستانه‌ی معناداری آماری نرسید، که به احتمال زیاد به‌خاطر تعداد بسیار کم بیماران بود نه نبود اثر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The results indicated a large effect (ES=1.0, 95% CI [-0.7-2.7]), but statistically marginal improvement in masticatory performance with a maxillary FICD compared to the original maxillary CD (P=.06).",
+            "source_ref": null,
+            "note": "reason clause (low power, small n) stated in Discussion with \"likely\""
+          },
+          {
+            "id": "u43",
+            "claim_quote": "سه قید این تصویر را عوض می‌کند:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost ending with colon"
+          },
+          {
+            "id": "u44",
+            "claim_quote": "اول، جمعیت مطالعه از پیش انتخاب‌شده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The subjects participating in this study were selected from a group seeking treatment with FICDs in the mandible due to difficulties with their original CDs.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u45",
+            "claim_quote": "بیماران مطالعه‌ی FICD مندیبل کسانی بودند که به‌خاطر مشکل داشتن با دنچر خود دنبال پروتز ثابت آمده بودند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The subjects participating in this study were selected from a group seeking treatment with FICDs in the mandible due to difficulties with their original CDs.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u46",
+            "claim_quote": "یعنی گروهی که با پروتز متحرک کنار نیامده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The subjects participating in this study were selected from a group seeking treatment with FICDs in the mandible due to difficulties with their original CDs.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u47",
+            "claim_quote": "مقاله صراحتاً می‌گوید روشن نیست بیماری که با دنچرش خوب سازگار شده یا از آن راضی است هم همین اندازه سود ببرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It is not clear that provision of mandibular FICDs offers greater masticatory performance compared to CDs for patients with well-adapted CDs or who are satisfied with their CDs.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u48",
+            "claim_quote": "دوم، مقایسه با دنچر قبلی خود بیمار انجام شده، نه با یک دنچر کامل تازه‌ساخته‌شده.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Furthermore, these studies did not include control groups treated with new CDs, and several include mixed dentition/denture categories in the opposing arch.10,11,24,25",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u49",
+            "claim_quote": "هیچ‌کدام از این مطالعات گروه کنترلی با دنچر نو نداشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Furthermore, these studies did not include control groups treated with new CDs, and several include mixed dentition/denture categories in the opposing arch.10,11,24,25",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u50",
+            "claim_quote": "تفسیر: وقتی مرجع مقایسه پروتز قبلی بیمار باشد، بخشی از بهبود می‌تواند صرفاً اثر ساخته شدن یک پروتز جدید باشد، نه اثر ایمپلنت.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: label تفسیر"
+          },
+          {
+            "id": "u51",
+            "claim_quote": "نویسندگان هم می‌گویند شواهد قطعی نیازمند مطالعات تصادفی‌شده‌ای است که پروتز ثابت را با دنچر نو مقایسه کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Definitive evidence should be provided with RCTs comparing FICDs and new CDs.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u52",
+            "claim_quote": "سوم، و از نظر بالینی جالب‌تر از همه: در پیگیری ده‌ساله، بیمارانی که پروتز ثابت در هر دو فک داشتند با بیمارانی که فقط در مندیبل داشتند، تفاوت معناداری در عملکرد جویدن نداشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Ten years following initial treatment with mandibular FICDs, the improvement in masticatory performance relative to original CDs was maintained, but no significant differences in masticatory performance were found between the groups treated with FICDs for the mandible only (n=14) and with FICDs for the mandible and maxilla (n=9).11",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u53",
+            "claim_quote": "نویسندگان از این نتیجه می‌گیرند که سهم پروتز ثابت ماگزیلا در عملکرد جویدن ممکن است محدود باشد، ولی تأکید می‌کنند این فرضیه نیازمند مطالعات بهتری است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This suggests the impact of an FICD for maxillary masticatory performance may be limited.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u54",
+            "claim_quote": "۳.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u55",
+            "claim_quote": "اوردنچر روی ایمپلنت در برابر دنچر کامل",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u56",
+            "claim_quote": "قوی‌ترین شواهد این مقاله در همین بخش است، و نکته‌ی مهم اینجاست که به نظر می‌رسد ارتفاع ریج باقیمانده‌ی مندیبل عاملی تعیین‌کننده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This suggests mandibular residual ridge height in edentulous patients is a critical factor for providing greater improvement in masticatory performance with IODs.",
+            "source_ref": null,
+            "note": "\"strongest evidence is in this section\" is a ranking the source does not make (silent); ridge height claim is hedged in both"
+          },
+          {
+            "id": "u57",
+            "claim_quote": "بسته به اینکه ریج بیمار چقدر باقی مانده باشد، به نظر می‌رسد جواب فرق می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This suggests mandibular residual ridge height in edentulous patients is a critical factor for providing greater improvement in masticatory performance with IODs.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u58",
+            "claim_quote": "بیمار با ریج متوسط یا خوب",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u59",
+            "claim_quote": "در بیمارانی که ارتفاع ریج‌شان در محدوده‌ی طبیعی بود، اوردنچر نو و دنچر کامل نو نتیجه‌ی مشابهی دادند و هیچ برتری‌ای برای ایمپلنت دیده نشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In 1 RCT, subjects having average mandibular residual ridge height Fueki et al (mean height = 27 mm, ranged from 11 to 40 mm) achieved similar masticatory performance following treatment with a new mandibular CD (n=25, ES=0.2, 95% CI [-0.1-0.4]) or IOD (n=43, ES=0.5, 95% CI [0.30.7]).27",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u60",
+            "claim_quote": "در زیرگروه ریج متوسط، میزان بهبود گروه دنچر معمولی حتی کمی بیشتر هم بود، ولی این تفاوت معنادار نبود و نباید آن را برتری دنچر معمولی خواند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "mid: IOD = CD",
+            "source_ref": null,
+            "note": "table row for the mid-ridge subgroup"
+          },
+          {
+            "id": "u61",
+            "claim_quote": "حرف درست این است که در این گروه هیچ‌کدام از دو درمان بر دیگری برتری نداشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In 1 RCT, subjects having average mandibular residual ridge height Fueki et al (mean height = 27 mm, ranged from 11 to 40 mm) achieved similar masticatory performance following treatment with a new mandibular CD (n=25, ES=0.2, 95% CI [-0.1-0.4]) or IOD (n=43, ES=0.5, 95% CI [0.30.7]).27",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u62",
+            "claim_quote": "بیمار با ریج تحلیل‌رفته",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u63",
+            "claim_quote": "اینجا تصویر کاملاً برعکس می‌شود.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost"
+          },
+          {
+            "id": "u64",
+            "claim_quote": "در بیماران با ارتفاع ریج کمتر از حدود ۲۱ میلی‌متر، اوردنچر روی ایمپلنت بهبود بزرگی داد، در حالی که همان بیماران اگر دنچر نو می‌گرفتند نه‌تنها بهتر نمی‌شدند بلکه عملکردشان کمی افت هم می‌کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Subgroup analyses of this RCT found significantly greater improvement for the IOD group (n=11, ES=0.8, 95% CI [0.4-1.2]) compared to the new CD group (n=6, ES=-0.3, 95% CI [-0.9-0.2]) in patients having resorbed mandibular residual ridges (height <21 mm).28",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u65",
+            "claim_quote": "مطالعه‌ی تصادفی‌شده‌ی دیگری روی بیماران با ریج به‌مراتب تحلیل‌رفته‌تر (حدود ۱۴ میلی‌متر) هم همین برتری را در سال اول تأیید کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Masticatory performance with the IOD (n=56) was found to be significantly greater than with the new CD (n=28) at 1 year after treatment,29 but not 4 years after treatment.30",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u66",
+            "claim_quote": "نکته‌ای که معمولاً نقل نمی‌شود",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u67",
+            "claim_quote": "یکی از مطالعات چند گروه را کنار هم سنجید و نتیجه‌اش این بود که اوردنچر روی ایمپلنت در فک تحلیل‌رفته، از دنچر کامل روی همان فک تحلیل‌رفته بهتر عمل کرد، ولی هنوز از دنچر کامل روی یک ریج بلند و سالم ضعیف‌تر بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A retrospective study found mean masticatory performance for a mandibular IOD group with reduced mandibular residual ridge height (n=40, mean height = 14 mm) was significantly greater than for a CD group with reduced mandibular residual ridge height (n=13, mean height = 14 mm), but significantly less than for a CD group with high mandibular residual ridge height (n=24, mean height = 23 mm).34",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u68",
+            "claim_quote": "یعنی ترتیب عملکرد جویدن این‌طور درآمد:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost ending with colon"
+          },
+          {
+            "id": "u69",
+            "claim_quote": "دنچر کامل روی ریج بلند",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "list item with no predicate; ranking judged in u72"
+          },
+          {
+            "id": "u70",
+            "claim_quote": "اوردنچر روی ایمپلنت در فک تحلیل‌رفته",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "list item with no predicate; ranking judged in u72"
+          },
+          {
+            "id": "u71",
+            "claim_quote": "دنچر کامل روی ریج تحلیل‌رفته",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "list item with no predicate; ranking judged in u72"
+          },
+          {
+            "id": "u72",
+            "claim_quote": "بالاتر از همه‌ی این‌ها هم، جای تعجب ندارد، دندان طبیعی قرار داشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "ND> TOD= CD (high ridge height >IOD>CD (low ridge height)",
+            "source_ref": null,
+            "note": "table cell of Fontijn-Tekamp 2000"
+          },
+          {
+            "id": "u73",
+            "claim_quote": "تفسیر: این الگو نشان می‌دهد ایمپلنت بیمار با ریج شدیداً تحلیل‌رفته را لزوماً به سطح بیمار با ریج سالم نمی‌رساند، بلکه بخشی از فاصله‌ی عملکردی را جبران می‌کند.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: label تفسیر"
+          },
+          {
+            "id": "u74",
+            "claim_quote": "این را باید موقع مدیریت انتظار بیمار در ذهن داشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Clinicians should be aware of the limitations of the objective functional benefits of implant-supported and/or retained dentures and relate these benefits and limitations to patients in order to have a well-informed discussion related to treatment choices.",
+            "source_ref": null,
+            "note": "recommendation compared with recommendation, same strength"
+          },
+          {
+            "id": "u75",
+            "claim_quote": "مسئله‌ی زمان",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u76",
+            "claim_quote": "در همان مطالعه روی بیماران با ریج شدیداً تحلیل‌رفته، برتری اوردنچر که در سال اول کاملاً واضح بود، در سال چهارم دیگر معنادار نبود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Masticatory performance with the IOD (n=56) was found to be significantly greater than with the new CD (n=28) at 1 year after treatment,29 but not 4 years after treatment.30",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u77",
+            "claim_quote": "توضیحی که نویسندگان برای این موضوع پیشنهاد می‌کنند این است که بیمار با فک تحلیل‌رفته برای سازگاری با دنچر نو به دوره‌ی adaptation خیلی طولانی‌تری نیاز دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Edentulous patients with resorbed mandibles may require longer adaptation periods with new CDs compared to IODs.",
+            "source_ref": null,
+            "note": "source hedges with \"may\"; the page frames it as the authors' proposal"
+          },
+          {
+            "id": "u78",
+            "claim_quote": "توجه کنید که این یک توضیح احتمالی از سوی نویسندگان است، نه چیزی که مطالعه مستقیماً اندازه گرفته باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Edentulous patients with resorbed mandibles may require longer adaptation periods with new CDs compared to IODs.",
+            "source_ref": null,
+            "note": "\"not directly measured\" is not stated"
+          },
+          {
+            "id": "u79",
+            "claim_quote": "تفسیر: اگر این توضیح درست باشد، بخشی از مزیت ایمپلنت «رسیدن سریع‌تر» است تا «رسیدن به سقف بالاتر».",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: label تفسیر"
+          },
+          {
+            "id": "u80",
+            "claim_quote": "برای بیماری که سن یا شرایطش اجازه‌ی یک دوره‌ی سازگاری طولانی را نمی‌دهد، همین تفاوت زمانی به‌تنهایی می‌تواند تعیین‌کننده باشد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author's reasoning, not stated"
+          },
+          {
+            "id": "u81",
+            "claim_quote": "۴.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u82",
+            "claim_quote": "نوع ایمپلنت و سیستم اتچمنت",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u83",
+            "claim_quote": "سه مطالعه این موضوع را بررسی کردند و هر سه به یک نتیجه رسیدند: هیچ‌کدام از این انتخاب‌ها تفاوت معناداری در عملکرد جویدن ایجاد نکرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The type of implant and attachment system for mandibular IODs were found to have no significant effects on masticatory performance.29,30,36,37",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u84",
+            "claim_quote": "وقتی دو نوع ایمپلنت متفاوت (IMZ و ترنس‌مندیبولار) با هم مقایسه شدند، عملکرد جویدن بیماران تفاوتی نداشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "An RCT in subjects with reduced mandibular residual ridge height (mean height = 14 mm) found no significant difference in masticatory performance with IODs supported and retained by 2 different combinations of types of implants and attachment systems (n=27, transmandibu- Fueki et al lar implant with a triple bar-5 clips; and n=29, 2 cylindrical IMZ (Friatec, Mannheim, Germany) implants with a single bar-1 metal clip).29,30",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u85",
+            "claim_quote": "وقتی سه پروتکل مختلف مقایسه شدند، یعنی ایمپلنت کوتاه، ایمپلنت گذاشته‌شده پس از augmentation، و ترنس‌مندیبولار، باز هم عملکرد جویدن در هر سه گروه یکسان بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "An RCT in subjects with severely reduced mandibular ridge height (mean height =10 mm) found no significant differences in mean masticatory performance between 3 different combinations of implant type and the attachment system (n=20: transmandibular implant with a triple extended bar-5 clips; n=19: 4 IMZ cylindrical implants with a triple bar-3 clips following augmentation; and n=19: 4 short IMZ cylindrical implants with a triple bar-3 clips).36",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u86",
+            "claim_quote": "وقتی سه سیستم اتچمنت مقایسه شدند، یعنی ball-socket و bar-clip و مگنت، هر سه بهبود قابل‌توجهی دادند ولی هیچ‌کدام بر دیگری برتری نداشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A crossover trial in subjects with reduced mandibular ridge height (≤15 mm) found no significant differences in masticatory performance between 3 attachment systems (n=18: ball-socket, bar-clips, and magnet) retaining mandibular IODs supported by 2 cylindrical implants.37",
+            "source_ref": null,
+            "note": "\"improvement for all three\" only partly addressed (Table II effect sizes)"
+          },
+          {
+            "id": "u87",
+            "claim_quote": "نتیجه‌گیری خود نویسندگان این است که میزان ساپورت ایمپلنت و سطح گیر اتچمنت به نظر می‌رسد تأثیر محدودی بر عملکرد جویدن دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These results\nsuggest that the degree of support\nby implants and level of retention\nwith attachments for a mandibular\noverdenture have a limited impact on\nmasticatory performance.",
+            "source_ref": null,
+            "note": "Discussion sentence states the same finding with the same hedge (suggest / به نظر می‌رسد); the abstract's plain 'limited impact' sentence is about implant type and attachment system, not degree of support or retention level."
+          },
+          {
+            "id": "u88",
+            "claim_quote": "به بیان دیگر، ساپورت یا گیر بیشتر لزوماً به جویدن بهتر ترجمه نمی‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Specific outcomes of significance identified by these articles rated as level II are: (1) fixed implant-supported partial dentures do not provide significant improvement in masticatory performance compared to conventional removable partial dentures for Kennedy Class I and II partially edentulous mandibles; (2) the combination of a mandibular implant-supported or retained overdenture (IOD) and maxillary conventional complete denture (CD) provides significant improvement in masticatory performance compared to CDs in both the mandible and maxilla for a limited population having persistent functional problems with an existing mandibular CD due to severely resorbed mandible; and (3) the type of implant and attachment system for mandibular IODs has a limited impact.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u89",
+            "claim_quote": "تفسیر: یعنی انتخاب اتچمنت را باید بر پایه‌ی سهولت نگهداری، هزینه، فضای بین‌فکی و شرایط بافتی گرفت، نه با این استدلال که کدام‌یک بهتر می‌جود.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: label تفسیر"
+          },
+          {
+            "id": "u90",
+            "claim_quote": "یک محدودیت را هم باید در نظر داشت.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost"
+          },
+          {
+            "id": "u91",
+            "claim_quote": "در همه‌ی این مطالعات، فک بالای بیمار دنچر معمولی داشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In these studies, subjects used CDs in the maxilla.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u92",
+            "claim_quote": "یعنی در مطالعات این مرور بررسی نشده که اگر گیر و ثبات به‌طور هم‌زمان در هر دو فک بهتر شود، عملکرد جویدن چه تغییری می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Additional studies are necessary to investigate the effect of improvements in retention and stability afforded by IODs for both the mandible and maxilla on masticatory performance.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u93",
+            "claim_quote": "۵.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u94",
+            "claim_quote": "بیماران بازسازی فک",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u95",
+            "claim_quote": "در بیماران تحت partial mandibulectomy و بازسازی با fibula free-flap، هم پروتز معمولی و هم پروتز متکی بر ایمپلنت عملکرد جویدن را در سمت defect بهبود دادند، ولی بهبود با پروتز ایمپلنتی به‌طور معنادار بیشتر بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Masticatory performance on the defect side of the mouth was improved significantly after treatments with both conventional dentures (n=15, ES=0.7, 95% CI [0.0-1.4]) and implant-supported dentures (n=15, ES=1.8, 95% CI [1.02.5]) compared to the interval prior to prosthetic rehabilitation.",
+            "source_ref": null,
+            "note": "greater improvement with implant dentures is the next sentence"
+          },
+          {
+            "id": "u96",
+            "claim_quote": "این برتری فقط در سمت defect دیده شد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Masticatory performance on the defect side improved significantly with the implant-supported dentures compared to the conventional dentures (ES=0.7, 95% CI [0.0-1.5]), but not on the nondefect side (ES=0.1, 95% CI [-0.7-0.80]).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u97",
+            "claim_quote": "در سمت سالم دهان، دو نوع پروتز عملاً یکسان عمل کردند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Similar, and not statistically significant, im- provements were seen for both types of dentures on the nondefect sides.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u98",
+            "claim_quote": "نویسندگان یک توصیه‌ی بالینی هم اضافه می‌کنند: در این بیماران درمان ایمپلنتی باید پس از یک سال از جراحی در نظر گرفته شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, this treatment should be considered after 1 year of surgical treatment due to a high rate of recurrence/metastasis (35%; 16/46).40",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u99",
+            "claim_quote": "استدلال آن‌ها نرخ بالای عود و متاستاز (حدود یک‌سوم موارد) است که در منبع دیگری گزارش شده، نه در همین مطالعه‌ی عملکرد جویدن.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, this treatment should be considered after 1 year of surgical treatment due to a high rate of recurrence/metastasis (35%; 16/46).40",
+            "source_ref": null,
+            "note": "source cites ref 40 for the 35% figure"
+          },
+          {
+            "id": "u100",
+            "claim_quote": "درباره‌ی بیماران ماگزیلکتومی هم هیچ مطالعه‌ای پیدا نشد که عملکرد جویدن را با پروتز معمولی و ایمپلنتی مقایسه کرده باشد، و نویسندگان این را یک خلأ آشکار می‌دانند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "There were no articles identified evaluating masticatory performance in maxillectomy patients with conventional or implant-supported dentures.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u101",
+            "claim_quote": "جمع‌بندی بالینی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u102",
+            "claim_quote": "نتیجه‌گیری خود مقاله این است: مزایای عینی پروتزهای متکی یا گیرکرده بر ایمپلنت در عملکرد جویدن، نسبت به پروتزهای معمولی، محدود است به اوردنچر مندیبولار در بیماران کاملاً بی‌دندان با مندیبل تحلیل‌رفته و یا بیمارانی که در سازگاری با دنچر کامل مشکل دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Objective benefits in masticatory performance of implant-supported or retained dentures compared to conventional dentures are limited to a mandibular IOD in edentulous patients with a resorbed mandible and/or difficulty adapting to CDs.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u103",
+            "claim_quote": "به بیان ساده‌تر، دو گروه از بیماران هستند که برای آن‌ها اوردنچر روی ایمپلنت تفاوت واقعی و قابل اندازه‌گیری ایجاد می‌کند: بیمار کاملاً بی‌دندانی که مندیبلش شدیداً تحلیل رفته، و بیماری که هرچه بکنید با دنچر معمولی کنار نمی‌آید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Objective benefits in masticatory performance of implant-supported or retained dentures compared to conventional dentures are limited to a mandibular IOD in edentulous patients with a resorbed mandible and/or difficulty adapting to CDs.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u104",
+            "claim_quote": "برای بقیه‌ی گروه‌هایی که در این مرور بررسی شدند، از بیمار پارسیل کلاس یک و دو کندی گرفته تا بیمار بی‌دندان با ریج خوب، شواهد قوی برای برتری عینی در جویدن وجود نداشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Objective benefits in masticatory performance of implant-supported or retained dentures compared to conventional dentures are limited to a mandibular IOD in edentulous patients with a resorbed mandible and/or difficulty adapting to CDs.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u105",
+            "claim_quote": "تفسیر: این به معنی بی‌ارزش بودن ایمپلنت نیست.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: label تفسیر"
+          },
+          {
+            "id": "u106",
+            "claim_quote": "راحتی، اعتمادبه‌نفس، حذف قلاب، حفظ استخوان و رضایت کلی بیمار همه دلایل کاملاً موجهی برای انتخاب ایمپلنت هستند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "reasons for choosing implants other than chewing are not addressed"
+          },
+          {
+            "id": "u107",
+            "claim_quote": "ولی هیچ‌کدام‌شان «بهتر می‌جود» نیستند، و بهتر است در جلسه‌ی مشاوره این دو دسته دلیل با هم قاطی نشوند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "separating reasons in consultation is not stated"
+          },
+          {
+            "id": "u108",
+            "claim_quote": "توصیه‌ی بالینی خود مقاله هم دقیقاً همین است: دندانپزشک باید از محدودیت‌های مزایای عملکردی ایمپلنت آگاه باشد و آن‌ها را برای بیمار شفاف توضیح دهد تا تصمیم درمانی آگاهانه گرفته شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Clinicians should be aware of the limitations of the objective functional benefits of implant-supported and/or retained dentures and relate these benefits and limitations to patients in order to have a well-informed discussion related to treatment choices.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u109",
+            "claim_quote": "قید کلی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u110",
+            "claim_quote": "جستجوی این مرور تا ژوئن ۲۰۰۷ انجام شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "English articles published from 1966 to June 2007, in which the masticatory performance of subjects with implant-supported or retained dentures was assessed by objective methods and compared to performance with conventional dentures, were included.",
+            "source_ref": null,
+            "note": "search period stated"
+          },
+          {
+            "id": "u111",
+            "claim_quote": "طراحی ایمپلنت، پروتکل‌های اکلوزال و مواد از آن زمان تغییر کرده‌اند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "changes since 2007 are not stated"
+          },
+          {
+            "id": "u112",
+            "claim_quote": "تفسیر: منطق کلی مقاله، یعنی اینکه ارتفاع ریج متغیر تعیین‌کننده است و افزودن گیر بیشتر لزوماً بازده جویدن نمی‌آورد، به احتمال زیاد هنوز پابرجاست.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: label تفسیر"
+          },
+          {
+            "id": "u113",
+            "claim_quote": "ولی مقایسه‌های خاص را باید تاریخی خواند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "reading advice not stated"
+          },
+          {
+            "id": "u114",
+            "claim_quote": "منبع اصلی:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation label"
+          }
+        ],
+        "counts": {
+          "matches": 67,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 9,
+          "not_assessable": 0,
+          "author_view": 6,
+          "not_a_claim": 32
+        },
+        "assessable": 67,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "Objective benefits in masticatory performance of implant-supported or retained dentures compared to conventional dentures have been substantiated for mandibular implant-supported or retained dentures in edentulous patients with resorbed mandibles and/or difficulty adapting to conventional removable complete dentures.",
+        "fact_fa": "از ۶۷ ادعایی که منبع به آن پرداخته‌اند، ۶۷ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۹ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
     ]
   },
   "episodes/episode-162": {
