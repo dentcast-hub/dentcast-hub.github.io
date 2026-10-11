@@ -168,7 +168,7 @@ def last_sentence(text):
 
 CONCL_HEAD = re.compile(r"(?<![A-Za-z])(?<!In )(?:CONCLUSIONS?|Conclusions?)\b:?\s+(?=[A-Z])")
 BACK_MATTER = re.compile(r"(?<![A-Za-z])(?:Abbreviations|Acknowledg(?:e)?ments?|ACKNOWLEDG|Supplementary|"
-                         r"Funding|FUNDING|Declarations|Data availab(?:ility|le)|DATA AVAILABILITY|Authors?[’'] contributions|Author Contributions|"
+                         r"Funding|FUNDING|Declarations?(?: of [Ii]nterests?)?|Data availab(?:ility|le)|DATA AVAILABILITY|Authors?[’'] contributions|Author Contributions|"
                          r"AUTHOR CONTRIBUTIONS|CONFLICT OF INTEREST|Conflicts? of interest|Competing [Ii]nterests|"
                          r"ORCID|REFERENCES|References)\b")
 
@@ -185,6 +185,24 @@ def conclusion_of(text, basis):
             m = BACK_MATTER.search(body)
             return last_sentence(body[:m.start()] if m else body)
     return last_sentence(text)
+
+
+def _squash(x):
+    return re.sub(r"\s+", " ", x).strip()
+
+
+def source_conclusion_for(t):
+    """The echoed conclusion. A caller may pin it with `source_conclusion` in
+    texts.json when the paper's layout defeats conclusion_of() (a bulleted
+    conclusion, a figure or a vendor list between the section and the back
+    matter). The pinned sentence must be a verbatim substring of the source
+    text — the tool refuses anything the paper does not say."""
+    pin = t.get("source_conclusion")
+    if pin:
+        if _squash(pin) not in _squash(t["source_text"]):
+            sys.exit("texts.json: source_conclusion is not a verbatim substring of source_text")
+        return _squash(pin)
+    return conclusion_of(t["source_text"], t["text_basis"])
 
 
 BASIS_ORDER = ["FULL_TEXT", "SECONDARY_REPORT", "ABSTRACT_ONLY"]
@@ -226,7 +244,7 @@ def build(content_id, sources, units, mode, plan, texts, outdir):
                 blk = {"mode": "FIDELITY", "scope": "SOURCE", "pooled_part": f"S{n}",
                        "source_text": t["source_text"], "text_basis": t["text_basis"], "units": pub(ids),
                        "derivative_url": url,
-                       "source_conclusion": conclusion_of(t["source_text"], t["text_basis"])}
+                       "source_conclusion": source_conclusion_for(t)}
                 p = outdir / f"input-pooled-S{n}.json"
                 p.write_text(json.dumps(blk, ensure_ascii=False, indent=1), encoding="utf-8")
                 made.append(str(p))
@@ -235,7 +253,7 @@ def build(content_id, sources, units, mode, plan, texts, outdir):
             t = text_for(s, texts)
             blk = {"mode": "FIDELITY", "scope": "SOURCE", "source_text": t["source_text"],
                    "text_basis": t["text_basis"], "units": pub(ids), "derivative_url": url,
-                   "source_conclusion": conclusion_of(t["source_text"], t["text_basis"])}
+                   "source_conclusion": source_conclusion_for(t)}
             p = outdir / f"input-src{key}.json"
             p.write_text(json.dumps(blk, ensure_ascii=False, indent=1), encoding="utf-8")
             made.append(str(p))
