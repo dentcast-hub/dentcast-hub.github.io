@@ -7510,7 +7510,786 @@
         "fact_fa": "این منبع یک خلاصه‌ی راهنمای بالینی (گزارش ثانویه) درباره‌ی مدیریت trigeminal neuralgia است و امتیاز DES آن ۸ از ۱۰۰ و در سطح E (سطح مقاله‌ی مروری روایی) برای پرسش THERAPY است.",
         "interpretation_fa": "متن خلاصه‌ای روایی از راهنمای بالینی بریتانیا و اروپا است و روش‌شناسی مرور، جست‌وجو و ارزیابی خطای سوگیری در منابع اولیه قرار دارد، بنابراین امتیاز پایین ساختاری است و کیفیت راهنما را قضاوت نمی‌کند. ارزش آن در جمع‌بندی دارودرمانی و جراحی برای کاربرد بالینی است."
       }
-    ]
+    ],
+    "fidelity": {
+      "des_version": "3.0",
+      "mode": "FIDELITY",
+      "scope": "POOLED",
+      "text_basis": "SECONDARY_REPORT",
+      "claims": [
+        {
+          "id": "u1",
+          "claim_quote": "نورالژی تریژمینال",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u2",
+          "claim_quote": "English",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "language label, not an assertion"
+        },
+        {
+          "id": "u3",
+          "claim_quote": "آنچه یک دندانپزشک عمومی باید بداند.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "page's own scope statement"
+        },
+        {
+          "id": "u4",
+          "claim_quote": "∆ این بیمار چطور وارد مطب می‌شود",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u5",
+          "claim_quote": "بیماری می‌آید و می‌گوید یک درد وحشتناک در فک بالا یا پایین دارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The pain of TN most frequently affects the distribu- tion of the maxillary (V2) and mandibular (V3) divi- sions of the trigeminal nerve, though approximately a quarter of the cases have ophthalmic (V1) division involvement.7",
+          "source_ref": "S4",
+          "note": "Presenting complaint wording is not in the source; the distribution is."
+        },
+        {
+          "id": "u6",
+          "claim_quote": "معمولاً هم یک دندان مشخص را نشان می‌دهد و اصرار دارد که مشکل از همان است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u7",
+          "claim_quote": "اگر دقت نکنیم، همین اصرار ما را به سمت اندو یا کشیدن یک دندان کاملاً سالم می‌برد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Patients will often undergo unnecessary, sometimes irreversible dental treatment before the condition is recognised.",
+          "source_ref": "S3",
+          "note": "endo/extraction not named by the source; unnecessary dental treatment is stated"
+        },
+        {
+          "id": "u8",
+          "claim_quote": "این اتفاق آنقدر شایع است که بسیاری از این بیماران، پیش از رسیدن به تشخیص درست، درمان‌های دندانی غیرضروری و گاهی برگشت‌ناپذیر (مثل کشیدن دندان سالم) را از سر می‌گذرانند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Patients will often undergo unnecessary, sometimes irreversible dental treatment before the condition is recognised.",
+          "source_ref": "S3",
+          "note": "example in parentheses not named by the source"
+        },
+        {
+          "id": "u9",
+          "claim_quote": "∆ چه چیزی این درد را متفاوت می‌کند",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u10",
+          "claim_quote": "پنج ویژگی، این درد را از درد دندانی جدا می‌کند:",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "signpost ending in colon"
+        },
+        {
+          "id": "u11",
+          "claim_quote": "۱.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "list numeral"
+        },
+        {
+          "id": "u12",
+          "claim_quote": "کوتاه بودن حمله.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "label fragment"
+        },
+        {
+          "id": "u13",
+          "claim_quote": "درد چند ثانیه طول می‌کشد، نهایتاً تا دو دقیقه.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The International Association for the Study of Pain (IASP) defines TN as sudden, usually unilateral, severe, brief, stabbing, recurrent episodes of pain in the dis- tribution of one or more branches of the trigeminal nerve.",
+          "source_ref": "S2",
+          "note": "source states the pain is brief; the figures (seconds, up to two minutes) are not given by the source and are noted as unaddressed; other sources: S3: MATCHES, S4: MATCHES, S5: MATCHES"
+        },
+        {
+          "id": "u14",
+          "claim_quote": "بعد کاملاً قطع می‌شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Patients usually do not experience pain between attacks; although should they report additional continuous pain, in the same distribution and in the same periods as the sharp attacks of pain, they are considered to have TN with concomitant pain3 (14-50% of patients have TN with concomitant pain)4; this concomitant pain can be mistaken as toothache.",
+          "source_ref": "S3",
+          "note": "'usually' is not on the closed hedge list; other sources: S4: MATCHES, S5: MATCHES"
+        },
+        {
+          "id": "u15",
+          "claim_quote": "درد پالپی چنین رفتاری ندارد، پالپیت یک درد کشدار و ادامه‌دار است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u16",
+          "claim_quote": "۲.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "list numeral"
+        },
+        {
+          "id": "u17",
+          "claim_quote": "جنس درد.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "label fragment"
+        },
+        {
+          "id": "u18",
+          "claim_quote": "بیمار از کلماتی مثل برق‌گرفتگی، تیر کشیدن، شوک و چاقو استفاده می‌کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Trigeminal neuralgia (TN) is a rare but devastating episodic, usually unilateral, electric shock-like facial pain.",
+          "source_ref": "S3",
+          "note": "words stabbing and knife are not in the source; electric shock-like is; other sources: S4: MATCHES, S5: MATCHES"
+        },
+        {
+          "id": "u19",
+          "claim_quote": "درد پالپی معمولاً ضربان‌دار و مبهم توصیف می‌شود.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u20",
+          "claim_quote": "۳.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "list numeral"
+        },
+        {
+          "id": "u21",
+          "claim_quote": "نقطه‌ی تریگر.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "label fragment"
+        },
+        {
+          "id": "u22",
+          "claim_quote": "یک ناحیه‌ی کوچک روی صورت، لثه یا مخاط وجود دارد که با کوچک‌ترین تماس، حمله شروع می‌شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Patients may report their pain as arising spontaneously, although pain attacks can be triggered by innocuous light touch stimuli or movements.",
+          "source_ref": "S3",
+          "note": "other sources: S4: MATCHES, S5: MATCHES"
+        },
+        {
+          "id": "u23",
+          "claim_quote": "مسواک زدن، اصلاح صورت، شستن صورت، حرف زدن، جویدن، حتی وزش باد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Common triggers include light touch, talking, chewing, brushing teeth, washing or drying, drinking and shaving.19",
+          "source_ref": "S4",
+          "note": "Wind as a trigger is not mentioned in the source.; other sources: S5: MATCHES"
+        },
+        {
+          "id": "u24",
+          "claim_quote": "نکته اینجاست که محرک، یک محرک بی‌ضرر است، یعنی چیزی که برای هیچ آدم سالمی درد ندارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Patients may report their pain as arising spontaneously, although pain attacks can be triggered by innocuous light touch stimuli or movements.",
+          "source_ref": "S3",
+          "note": "the gloss on innocuous is read as the meaning of the source's word; other sources: S4: MATCHES"
+        },
+        {
+          "id": "u25",
+          "claim_quote": "این با درد دندانی که با سرما و گرما تحریک می‌شود فرق دارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u26",
+          "claim_quote": "۴.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "list numeral"
+        },
+        {
+          "id": "u27",
+          "claim_quote": "یک‌طرفه بودن.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "label fragment"
+        },
+        {
+          "id": "u28",
+          "claim_quote": "درد تقریباً همیشه فقط یک سمت صورت است و از خط وسط رد نمی‌شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Trigeminal neuralgia (TN) is a rare but devastating episodic, usually unilateral, electric shock-like facial pain.",
+          "source_ref": "S3",
+          "note": "source also gives 3% bilateral; other sources: S2: ALTERED, S4: MATCHES, S5: MATCHES"
+        },
+        {
+          "id": "u29",
+          "claim_quote": "۵.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "list numeral"
+        },
+        {
+          "id": "u30",
+          "claim_quote": "خواب.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "label fragment"
+        },
+        {
+          "id": "u31",
+          "claim_quote": "این درد معمولاً بیمار را نیمه‌شب بیدار نمی‌کند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u32",
+          "claim_quote": "پالپیت irreversible دقیقاً همان چیزی است که بیمار را شب از خواب می‌پراند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u33",
+          "claim_quote": "یک ویژگی دیگر هم هست که خیلی کمک‌کننده است.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "signpost, states no finding of its own"
+        },
+        {
+          "id": "u34",
+          "claim_quote": "بلافاصله بعد از یک حمله، یک دوره‌ی کوتاه وجود دارد که هرچقدر هم نقطه‌ی تریگر را تحریک کنید، درد راه نمی‌افتد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "In most people with TN, a triggered attack is normally followed by a period of seconds or minutes during which further attacks cannot be provoked, a phenom- enon called refractory period.18",
+          "source_ref": "S4",
+          "note": "The source says in most people, normally; the claim states it without a quantifier.; other sources: S5: MATCHES"
+        },
+        {
+          "id": "u35",
+          "claim_quote": "اسمش refractory period است و تقریباً مختص همین بیماری.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "In most people with TN, a triggered attack is normally followed by a period of seconds or minutes during which further attacks cannot be provoked, a phenom- enon called refractory period.18",
+          "source_ref": "S4",
+          "note": "Exclusivity to this disease is not stated; the source contrasts only with SUNHA.; other sources: S5: MATCHES"
+        },
+        {
+          "id": "u36",
+          "claim_quote": "∆ کجای صورت درگیر می‌شود",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u37",
+          "claim_quote": "به زبان کاربردی، سه ناحیه:",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "signpost ending in colon"
+        },
+        {
+          "id": "u38",
+          "claim_quote": "پیشانی و اطراف چشم",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_A_CLAIM, S3: NOT_ASSESSABLE, S4: NOT_A_CLAIM, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u39",
+          "claim_quote": "گونه، فک بالا، دندان‌های بالا، لب بالا، کنار بینی",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_A_CLAIM, S3: NOT_ASSESSABLE, S4: NOT_A_CLAIM, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u40",
+          "claim_quote": "فک پایین، دندان‌های پایین، لب پایین، چانه، جلوی گوش",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_A_CLAIM, S3: NOT_ASSESSABLE, S4: NOT_A_CLAIM, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u41",
+          "claim_quote": "ناحیه‌ی دوم و سوم به مراتب شایع‌ترند و دقیقاً به همین دلیل است که این بیماران اول سراغ دندانپزشک می‌آیند نه پزشک.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The pain of TN most frequently affects the distribu- tion of the maxillary (V2) and mandibular (V3) divi- sions of the trigeminal nerve, though approximately a quarter of the cases have ophthalmic (V1) division involvement.7",
+          "source_ref": "S4",
+          "note": "The reason clause (why patients see a dentist first) is not addressed."
+        },
+        {
+          "id": "u42",
+          "claim_quote": "درگیری فقط ناحیه‌ی پیشانی نادر است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u43",
+          "claim_quote": "∆ معاینه چه چیزی نشان می‌دهد",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u44",
+          "claim_quote": "معمولاً هیچ چیز.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The physical and neurological examinations are gener- ally normal, though approximately 30% of cases can have sensory changes including mild hypoaesthesia.7",
+          "source_ref": "S4"
+        },
+        {
+          "id": "u45",
+          "claim_quote": "و همین «هیچ چیز» مهم‌ترین یافته است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_A_CLAIM, S4: NOT_A_CLAIM, S5: NOT_A_CLAIM"
+        },
+        {
+          "id": "u46",
+          "claim_quote": "تست‌های حیاتی پالپ نرمال",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u47",
+          "claim_quote": "پرکاشن و پالپیشن معمولاً منفی",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u48",
+          "claim_quote": "رادیوگرافی بدون ضایعه",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u49",
+          "claim_quote": "حس صورت در معاینه معمولاً سالم است و بیمار معمولاً بی‌حسی یا کرختی ندارد",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The physical and neurological examinations are gener- ally normal, though approximately 30% of cases can have sensory changes including mild hypoaesthesia.7",
+          "source_ref": "S4",
+          "note": "Sensory changes in about 30% are noted; the claim says usually normal."
+        },
+        {
+          "id": "u50",
+          "claim_quote": "اگر تصویر بالینی شبیه نورالژی است ولی هیچ توجیه دندانی پیدا نمی‌کنید، همین تناقض بین شدت درد و نرمال بودن همه چیز، خودش تشخیص را می‌سازد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u51",
+          "claim_quote": "یک کار ساده هم می‌توانید بکنید.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "signpost"
+        },
+        {
+          "id": "u52",
+          "claim_quote": "اگر بی‌حسی موضعی در نقطه‌ی تریگر، برای مدت اثر دارو حملات را کاملاً قطع کند، این به نفع تشخیص است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u53",
+          "claim_quote": "∆ چه زمانی نگران‌تر باشیم",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u54",
+          "claim_quote": "این‌ها نشانه‌های هشدارند و ممکن است ارجاع فوری‌تر را لازم کنند، چون احتمال یک علت زمینه‌ای مثل تومور یا ام‌اس بیشتر می‌شود:",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "‘Red flags’ that may necessitate a more urgent referral to specialist services include:28 sensory or motor deficits, deafness or other ear problems, optic neuritis, history of malignancy, bilateral TN pain, systemic symptoms (eg fever, weight loss) and presentation in patients aged under 30 years.",
+          "source_ref": "S3",
+          "note": "reason clause (higher chance of an underlying cause) is not stated; noted, not scored; other sources: S2: NOT_A_CLAIM"
+        },
+        {
+          "id": "u55",
+          "claim_quote": "سن زیر چهل سال",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Secondary TN patients were significantly younger com-\n\npared to primary TN patients.",
+          "source_ref": "S1",
+          "note": "Direction agrees (secondary TN younger); the under-forty threshold is not stated by the source and is noted, not scored. The source also notes considerable overlap in age ranges.; other sources: S2: MATCHES, S3: ALTERED"
+        },
+        {
+          "id": "u56",
+          "claim_quote": "درد دوطرفه",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Bilateral pain\n\nis thus associated with secondary TN due to MS but\n\nmost secondary TN patients have unilateral pain\n\nreflected in a low pooled sensitivity.",
+          "source_ref": "S1",
+          "note": "Judged as a sign associated with secondary TN, as the source states.; other sources: S2: MATCHES, S3: MATCHES, S4: MATCHES"
+        },
+        {
+          "id": "u57",
+          "claim_quote": "کرختی یا کاهش حس واقعی در معاینه",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Trigeminal sensory\n\ndeficits were significantly more common in patients\n\nwith secondary TN.",
+          "source_ref": "S1",
+          "note": "other sources: S2: MATCHES, S3: MATCHES"
+        },
+        {
+          "id": "u58",
+          "claim_quote": "درگیری همزمان عصب‌های دیگر، مثل دوبینی، کاهش شنوایی یا ضعف عضلات صورت",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "‘Red flags’ that may necessitate a more urgent referral to specialist services include:28 sensory or motor deficits, deafness or other ear problems, optic neuritis, history of malignancy, bilateral TN pain, systemic symptoms (eg fever, weight loss) and presentation in patients aged under 30 years.",
+          "source_ref": "S3",
+          "note": "diplopia and facial weakness not named; deafness and motor deficits are; other sources: S5: MATCHES"
+        },
+        {
+          "id": "u59",
+          "claim_quote": "بیماری که به داروی خط اول جواب نمی‌دهد (البته در مطالعه‌ها این به‌تنهایی با TN ثانویه ارتباط معناداری نشان نداد)",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Involvement of the first trigeminal\n\ndivision and poor response to treatment were not\n\nsignificantly associated with secondary TN (Table 1).",
+          "source_ref": "S1",
+          "note": "The unit itself reports the source's finding in its parenthesis.; other sources: S2: MATCHES"
+        },
+        {
+          "id": "u60",
+          "claim_quote": "∆ تشخیص نهایی چطور گذاشته می‌شود",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u61",
+          "claim_quote": "تشخیص بالینی است، یعنی بر اساس همین شرح حال.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The diagnosis of facial pain is almost exclusively reliant on the pain history,¹ hence time should be taken to actively listen to the patient’s narrative and elicit a thorough history.",
+          "source_ref": "S3",
+          "note": "other sources: S4: MATCHES, S5: MATCHES"
+        },
+        {
+          "id": "u62",
+          "claim_quote": "اما هر بیمار باید MRI مغز با پروتکل مخصوص عصب تریژمینال بشود تا علت زمینه‌ای رد شود و اگر قرار باشد روزی جراحی شود، تصمیم‌گیری ممکن باشد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Magnetic resonance imaging (MRI),\n\nusing a combination of three high-resolution sequences, should be performed\n\nas part of the work-up in TN patients, because no clinical characteristics can\n\nexclude secondary TN.",
+          "source_ref": "S1",
+          "note": "Source also says NVC findings may help decide referral for MVD.; other sources: S2: ALTERED, S3: ALTERED, S4: MATCHES, S5: MATCHES"
+        },
+        {
+          "id": "u63",
+          "claim_quote": "سفارش و تفسیر این MRI کار ما نیست؛ ایده‌آل این است که رادیولوژیست آشنا با TN آن را گزارش کند، و تصمیم بعدی با نورولوژیست یا جراح مغز و اعصاب باشد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The expectation is that TN imaging will be conducted in the specialist setting.",
+          "source_ref": "S3",
+          "note": "radiologist with TN interest stated elsewhere in the same paragraph; the next-decision half is silent; other sources: S5: MATCHES"
+        },
+        {
+          "id": "u64",
+          "claim_quote": "∆ دارو، فقط در حد آشنایی",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u65",
+          "claim_quote": "داروی خط اول کاربامازپین است و اکس‌کاربازپین جایگزین آن.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "For long-term treatment,\n\ncarbamazepine or oxcarbazepine are recommended as drugs of first choice.",
+          "source_ref": "S1",
+          "note": "other sources: S2: MATCHES, S3: MATCHES, S4: MATCHES, S5: MATCHES"
+        },
+        {
+          "id": "u66",
+          "claim_quote": "هر دو ضدتشنج‌اند و با آرام کردن تحریک‌پذیری عصب کار می‌کنند، نه با اثر مسکن.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Initial treatment with anticonvulsant medications eg carbamazepine, will often provide complete pain relief for TN.",
+          "source_ref": "S3",
+          "note": "mechanism (calming nerve excitability) not stated; anticonvulsant class is; other sources: S4: MATCHES"
+        },
+        {
+          "id": "u67",
+          "claim_quote": "چند نکته‌ی عملی:",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "signpost ending in colon"
+        },
+        {
+          "id": "u68",
+          "claim_quote": "پاسخ به کاربامازپین معمولاً چشمگیر و سریع است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Initial treatment with anticonvulsant medications eg carbamazepine, will often provide complete pain relief for TN.",
+          "source_ref": "S3",
+          "note": "'rapid' not stated; source says anticonvulsants may take several days to take full effect; other sources: S4: MATCHES"
+        },
+        {
+          "id": "u69",
+          "claim_quote": "اگر بیمار هیچ پاسخی ندهد، احتمالاً تشخیص چیز دیگری است",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u70",
+          "claim_quote": "شروع با دوز پایین و افزایش تدریجی.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "However, it is crucial that\n\npatients are instructed to increase and decrease\n\ndosages slowly over several days.",
+          "source_ref": "S1",
+          "note": "Gradual titration is stated; starting at a low dose is not stated and is noted, not scored.; other sources: S5: MATCHES"
+        },
+        {
+          "id": "u71",
+          "claim_quote": "مدیریت دوز و آزمایش‌های پایش (شمارش سلولی، تست کبدی، سدیم خون) کار متخصص است، نه ما",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u72",
+          "claim_quote": "عوارض شایعش سرگیجه، خواب‌آلودگی، عدم تعادل و دوبینی است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Car-\n\nbamazepine has been shown to increase pain relief com-\n\npared with placebo, but also causes adverse effects such\n\nas drowsiness, dizziness, rash, liver damage and ataxia\n\nand has the potential for multiple drug interactions.",
+          "source_ref": "S1",
+          "note": "Drowsiness, dizziness and ataxia are stated; diplopia and the word common are not stated by the source and are noted, not scored.; other sources: S5: MATCHES"
+        },
+        {
+          "id": "u73",
+          "claim_quote": "اگر بیماری با این شکایات برگشت، بفرستیدش پیش پزشک معالجش",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u74",
+          "claim_quote": "تداخل دارویی مهم برای ما: اریترومایسین، کلاریترومایسین و فلوکونازول سطح کاربامازپین را بالا می‌برند و می‌توانند بیمار را مسموم کنند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u75",
+          "claim_quote": "اگر برای این بیمار آنتی‌بیوتیک یا ضدقارچ لازم شد، این را در نظر بگیرید",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u76",
+          "claim_quote": "مسکن‌های معمول، ایبوپروفن و استامینوفن و حتی مخدرها، روی این درد اثر ندارند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Pain killer medications, such as morphine & codeine, are not effective in the management of TN.",
+          "source_ref": "S3",
+          "note": "ibuprofen and paracetamol not named; opioids are; other sources: S1: ALTERED, S4: MATCHES"
+        },
+        {
+          "id": "u77",
+          "claim_quote": "تجویزشان فقط وقت تلف کردن است",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Pain killer medications, such as morphine & codeine, are not effective in the management of TN.",
+          "source_ref": "S3",
+          "note": "instruction read as an outcome (not effective); 'فقط' is idiomatic here; other sources: S4: ALTERED"
+        },
+        {
+          "id": "u78",
+          "claim_quote": "اگر بیمار به دارو جواب ندهد یا عوارض را تحمل نکند، گزینه‌های جراحی وجود دارد که کاملاً خارج از حیطه‌ی ماست.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "It is recommended\n\nthat patients should be offered surgery if pain is not sufficiently controlled\n\nmedically or if medical treatment is poorly tolerated.",
+          "source_ref": "S1",
+          "note": "The half that surgery is outside the general dentist's scope is not addressed by the source.; other sources: S2: MATCHES, S3: MATCHES, S4: MATCHES, S5: MATCHES"
+        },
+        {
+          "id": "u79",
+          "claim_quote": "∆ خلاصه‌ی کاری",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u80",
+          "claim_quote": "درد شوک‌مانند، چند ثانیه‌ای، یک‌طرفه، با لمس سبک شروع می‌شود، تست‌های دندانی همه نرمال.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Trigeminal neuralgia (TN) is a rare but devastating episodic, usually unilateral, electric shock-like facial pain.",
+          "source_ref": "S3",
+          "note": "dental tests normal: silent half; other sources: S4: MATCHES, S5: MATCHES"
+        },
+        {
+          "id": "u81",
+          "claim_quote": "در این حالت دست نگه دارید.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Patients will often undergo unnecessary, sometimes irreversible dental treatment before the condition is recognised.",
+          "source_ref": "S3",
+          "note": "instruction judged by the reported effect of the action (way 2)"
+        },
+        {
+          "id": "u82",
+          "claim_quote": "هیچ درمان برگشت‌ناپذیری روی دندان انجام ندهید.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Patients will often undergo unnecessary, sometimes irreversible dental treatment before the condition is recognised.",
+          "source_ref": "S3",
+          "note": "instruction judged by the reported effect of the action (way 2)"
+        },
+        {
+          "id": "u83",
+          "claim_quote": "بیمار را به نورولوژیست یا کلینیک درد اوروفاسیال ارجاع دهید و در گزارش ارجاع بنویسید که علل دندانی را بررسی و رد کرده‌اید.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Patients who have suspected TN should be referred to a specialist who is experienced in working with TN patients.",
+          "source_ref": "S3",
+          "note": "wording of the referral letter is not addressed; other sources: S4: ALTERED"
+        },
+        {
+          "id": "u84",
+          "claim_quote": "همین یک جمله مسیر بیمار را کوتاه می‌کند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_IN_SOURCE, S5: NOT_ASSESSABLE"
+        }
+      ],
+      "counts": {
+        "matches": 36,
+        "altered": 0,
+        "reversed": 0,
+        "not_in_source": 0,
+        "not_assessable": 22,
+        "author_view": 0,
+        "not_a_claim": 26
+      },
+      "assessable": 36,
+      "fidelity_score": 100,
+      "level": "HIGH",
+      "provisional": true,
+      "source_conclusion": "[S1] Compared with previous TN guidelines, there are important changes regarding diagnosis and imaging.\n[S2] Carbamazepine is established as effective for controlling pain in patients with TN (multiple Class I and II).\n[S3] Surgical discussions should be supported by providing TN patients with written information on the procedures, including details on the possible side effects of surgery\n[S4] Recent advances in TN have led to an improvement in its classification on the basis of the neuroimaging findings.\n[S5] Evidence-based discussions and decisions are encouraged to establish care pathways for prompt diagnosis and treatment, and long-term outcomes data collection to improve care.",
+      "fact_fa": "از ۳۶ ادعایی که منابع به آن پرداخته‌اند، ۳۶ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+      "interpretation_fa": "هر ادعای قابل‌بررسی با دست‌کم یکی از منابع مطابق است."
+    }
   },
   "sharehub/share-13": {
     "scored_at": "2026-08-15",
