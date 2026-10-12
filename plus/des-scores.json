@@ -1,15 +1,15 @@
 {
   "dentai/dentai-21": {
-    "scored_at": "2026-08-14",
+    "scored_at": "2026-10-12",
     "sources": [
       {
-        "des_version": "1.5",
+        "des_version": "3.0",
         "content_type": "RESEARCH",
         "question_type": "MATERIAL",
-        "text_basis": "ABSTRACT_ONLY",
+        "text_basis": "FULL_TEXT",
         "citation": {
           "title": "Influence of Liquid on the Tooth Surface on the Accuracy of Intraoral Scanners: An In Vitro Study",
-          "authors": "Yuming Chen, Zhai Z, Li H, Yamada S, Matsuoka T, Ono S, Nakano T",
+          "authors": "Yuming Chen, Zhihao Zhai, Hefei Li, Shuhei Yamada, Takashi Matsuoka, Shinji Ono, Tamaki Nakano",
           "year": 2021,
           "journal": "Journal of Prosthodontics",
           "doi": "10.1111/jopr.13358"
@@ -19,66 +19,88 @@
           "source": "NR"
         },
         "s_design": {
-          "value": 65,
-          "anchor": "in-vitro with non-standard but fully described protocol",
-          "evidence_quote": "A scanning platform was designed to simulate three specific tooth surface states (dry, wet, blow-dry)."
+          "value": 85,
+          "anchor": "In-vitro study with established method (trueness/precision per ISO 5725 definitions, CT reference, 10 scans per group, defined conditions) (MATERIAL in-vitro validated-protocol row, 85)",
+          "evidence_quote": "A comparable method had been previously established."
         },
         "q_method": {
           "tool": "QUIN",
           "domains": [
             {
-              "domain": "clearly stated aim",
+              "domain": "clearly stated aims",
               "rating": "low",
-              "evidence_quote": "To assess the influence of liquid attached on the tooth surfaces on the accuracy (trueness and precision) of intraoral scanners"
+              "evidence_quote": "This study aimed to explore the effect of liquid on the accuracy of intraoral scanners, in terms of both trueness and precision",
+              "note": ""
             },
             {
               "domain": "sample size justification",
-              "rating": "NR",
-              "evidence_quote": ""
+              "rating": "low",
+              "evidence_quote": "10 times were calculated as the appropriate sample size for per group (actual power = 95.7%; power = 95%; α = 0.05)",
+              "note": ""
             },
             {
               "domain": "randomization / allocation of specimens",
-              "rating": "NR",
-              "evidence_quote": ""
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence: read Methods (scanning procedures: fixed Step 1 dry, Step 2 wet, Step 3 blow-dry sequence on one model) and Statistical analysis; no randomization or allocation wording anywhere in the text."
             },
             {
               "domain": "operator and assessor blinding",
-              "rating": "NR",
-              "evidence_quote": ""
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence: read Scanning procedures (single experienced operator) and Scan processing/Statistical analysis; no blinding of operator or assessor mentioned anywhere in the text."
             },
             {
               "domain": "appropriate statistical analysis",
               "rating": "low",
-              "evidence_quote": "The 3-way ANOVA (condition, intraoral scanner, liquid) followed by the Tukey test were used to assess precision and trueness."
+              "evidence_quote": "The normality of deviations was evaluated using the Shapiro–Wilk test and the homoscedasticity was assessed using the Levene test.",
+              "note": ""
             },
             {
               "domain": "conflict of interest / funding",
-              "rating": "NR",
-              "evidence_quote": ""
+              "rating": "some_concerns",
+              "evidence_quote": "The authors declare no potential conflicts of interest with respect to the authorship and/or publication of this article.",
+              "note": "Conflict statement present; no funding statement found."
             }
           ],
-          "multiplier": 0.55
+          "multiplier": 0.3
         },
         "penalties": [
           {
-            "item": "CoI not disclosed",
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
             "points": 0,
-            "evidence_quote": "",
-            "note": "not assessable in abstract"
+            "evidence_quote": "The authors declare no potential conflicts of interest with respect to the authorship and/or publication of this article.",
+            "note": "Statement present; no funder named."
           },
           {
-            "item": "no sample size justification (in-vitro, <10 per group)",
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
             "points": 0,
-            "evidence_quote": "Two intraoral scanners (Trios 3 and Primescan) were used to scan the mandibular jaw model 10 times under each condition.",
-            "note": "10 scans per condition, so the <10 threshold is not met"
+            "evidence_quote": "",
+            "note": "Not applicable: in-vitro study, not a clinical trial."
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "10 times were calculated as the appropriate sample size for per group (actual power = 95.7%; power = 95%; α = 0.05)",
+            "note": "Power analysis reported."
+          },
+          {
+            "item": "follow-up shorter than outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "Not applicable: in-vitro study with no survival or follow-up claim."
           }
         ],
         "commentary_checklist": null,
-        "des_score": 36,
+        "des_score": 26,
         "band": "D",
-        "provisional": true,
-        "fact_fa": "این مقاله در نوع سؤال مواد (آزمایشگاهی) امتیاز ۳۶ از ۱۰۰ و باند D گرفت.",
-        "interpretation_fa": "نشان می‌دهد رطوبت سطح دندان دقت اسکن داخل‌دهانی را به‌طور معنادار کم می‌کند و خشک‌کردن با هوا خطا را کاهش می‌دهد. چون فقط چکیده در دسترس بود، کنترل تورش قابل ارزیابی نیست. نتیجه به شرایط آزمایشگاهی و همین دو اسکنر محدود است."
+        "provisional": false,
+        "fact_fa": "امتیاز DES این مطالعه ۲۶ از ۱۰۰ و در سطح D (شواهد ضعیف) برای پرسش از نوع MATERIAL است.",
+        "interpretation_fa": "طراحی آزمایشگاهی با روش مشخص و تعیین حجم نمونه قوی است، اما تصادفی‌سازی و کورسازی گزارش نشده و ضریب روش‌شناسی را پایین آورده است. یافته‌ی اثر مایع بر دقت اسکن در شرایط آزمایشگاهی معتبر است، ولی انتقال بالینی آن با یک مدل ثابت و دو اسکنر محدود می‌ماند."
       }
     ]
   },
