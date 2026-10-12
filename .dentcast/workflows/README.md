@@ -1419,10 +1419,20 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v3.1.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v3.2.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v3.1 is the current spec, and its change from 3.0 cuts the FIDELITY track loose
+**v3.2 is the current spec, and its change from 3.1 is one assignment rule** (F6,
+founder 1405/07/20): on a page that names SOME of its sources, the units that
+name none of them go to the cited source(s) no unit names — `sharehub/share-10`
+names its glossary and textbooks in two sentences and writes the other
+twenty-nine from a paper it never names, and under v3.1 that paper received
+nothing. `tools/des_fidelity_units.py` applies it; markers are read from every
+cited source, so a sentence naming a `CITATION_ONLY` book still reaches no call;
+several unnamed sources are not pooled yet (the tool says so). No stored record
+moves.
+
+**v3.1's change from 3.0 cuts the FIDELITY track loose
 from the score** (founder, 1405/07/19). A source recorded `NOT_APPRAISABLE` used
 to get no FIDELITY call by rule, although nothing in the track reads a band: «how
 strong is the source?» and «did we say what it says?» are two questions. Now
@@ -1601,7 +1611,7 @@ clinical_question: <omit unless this publish explicitly answers one>
   input blocks and three DES objects. Never concatenate sources into one block and
   never average their scores.
 
-#### Part 2b — Run the FIDELITY call (spec v2.5, v2.7, v3.1), once per source whose text is in hand
+#### Part 2b — Run the FIDELITY call (spec v2.5, v2.7, v3.1, v3.2), once per source whose text is in hand
 
 **When.** For every source in basket 2 whose SOURCE call read a text — RESEARCH,
 COMMENTARY, **or `NOT_APPRAISABLE` with `text_basis` `FULL_TEXT` or `EXCERPT`**
@@ -1640,7 +1650,8 @@ text, never a shorter one** (a book's `EXCERPT` included): a source scored
 page was written from it. `--build` exits non-zero when a basis differs from
 the stored SOURCE record (spec v2.7 appendix rule 11).
 The tool decides the scope: one source → every unit to it;
-several named in the prose → one call per named source with only its units;
+several named in the prose → one call per named source with only its units,
+and (v3.2) the units naming none of them to the one source no unit names;
 several and none named → `POOLED`, which is one ordinary `SOURCE` call **per
 source** (`input-pooled-S<n>.json`, every unit in each, `pooled_part` set) and
 then `python3 tools/des_fidelity_units.py <content_id> --merge <dir>` over the
@@ -1674,7 +1685,7 @@ in Part 4.
 #### Part 2c — How the FIDELITY call is run: two full Sonnet runs, a tie-break, an Opus review (v2.9)
 
 The FIDELITY call is an independent agent per input block, **on Sonnet**,
-reading `.dentcast/des-v3.1-knowledge.md` (the spec minus its appendix) as its
+reading `.dentcast/des-v3.2-knowledge.md` (the spec minus its appendix) as its
 instruction and the block as its user turn. The model is part of the
 measurement: never mix models for the runs inside one record.
 
