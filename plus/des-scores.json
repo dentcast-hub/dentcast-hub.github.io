@@ -36235,9 +36235,10 @@
         "interpretation_fa": "مقاله با عنوان Systematic Review، در بخش روش‌ها خود را narrative synthesis اعلام کرده است. فقط یک پایگاه (PubMed) جست‌وجو شده، پروتکل ثبت نشده و ارزیابی سوگیری مطالعات واردشده انجام نشده است. مطالعات واردشده خودشان مرورهای روایی و رهنمودها هستند. ارزش بالینی آن خلاصه‌ی منظم دیدگاه‌های موجود درباره vasoconstrictor ها در بارداری است."
       },
       {
-        "des_version": "3.2",
-        "content_type": "RESEARCH",
-        "question_type": "THERAPY",
+        "des_version": "3.4",
+        "content_type": "NOT_APPRAISABLE",
+        "source_kind": "consensus",
+        "question_type": null,
         "text_basis": "SECONDARY_REPORT",
         "citation": {
           "title": "Oral Health Care During Pregnancy: A National Consensus Statement (rev. ed.)",
@@ -36250,88 +36251,19 @@
           "value": "NR",
           "source": "NR"
         },
-        "s_design": {
-          "value": 15,
-          "anchor": "Expert consensus statement / practice guidance, a narrative synthesis of existing guidelines with no stated review method (THERAPY narrative review row, 15, via Step 2 nearest row)",
-          "evidence_quote": "This national consensus statement was developed to"
-        },
-        "q_method": {
-          "tool": "AMSTAR-2",
-          "domains": [
-            {
-              "domain": "protocol registered before commencement",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "not assessable in a secondary report: the statement summarises guidance from other documents and states no review methods of its own"
-            },
-            {
-              "domain": "adequacy of the literature search",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "not assessable in a secondary report: the statement summarises guidance from other documents and states no review methods of its own"
-            },
-            {
-              "domain": "justification for excluding individual studies",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "not assessable in a secondary report: the statement summarises guidance from other documents and states no review methods of its own"
-            },
-            {
-              "domain": "risk of bias assessment of included studies",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "not assessable in a secondary report: the statement summarises guidance from other documents and states no review methods of its own"
-            },
-            {
-              "domain": "appropriateness of meta-analytical methods",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "not assessable in a secondary report: the statement summarises guidance from other documents and states no review methods of its own"
-            },
-            {
-              "domain": "assessment of publication bias",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "not assessable in a secondary report: the statement summarises guidance from other documents and states no review methods of its own"
-            }
-          ],
-          "multiplier": 0.55
-        },
-        "penalties": [
-          {
-            "item": "no conflict-of-interest statement, or commercial manufacturer funding with no independent-analysis statement",
-            "base_points": 8,
-            "points": 0,
-            "evidence_quote": "funding from nongovernmental sources",
-            "note": "funding disclosed: HRSA/HHS award with no funding from nongovernmental sources; not a manufacturer"
-          },
-          {
-            "item": "clinical trial not prospectively registered (RCTs only)",
-            "base_points": 5,
-            "points": 0,
-            "evidence_quote": "",
-            "note": "not applicable: not an RCT; not assessable in a secondary report"
-          },
-          {
-            "item": "no sample size justification / power analysis",
-            "base_points": 5,
-            "points": 0,
-            "evidence_quote": "",
-            "note": "not applicable to a secondary study"
-          },
-          {
-            "item": "follow-up shorter than the outcome plausibly requires",
-            "base_points": 3,
-            "points": 0,
-            "evidence_quote": "",
-            "note": "not assessable in a secondary report; source text does not address follow-up duration"
-          }
-        ],
-        "des_score": 8,
-        "band": "E",
-        "provisional": true,
-        "fact_fa": "امتیاز این منبع ۸ از ۱۰۰ و در سطح E (مسئله‌ی درمانی) است.",
-        "interpretation_fa": "این سند بیانیه‌ی اجماع کارشناسی است و روش مرور خودش را گزارش نمی‌کند، پس امتیاز ساختاری پایینی می‌گیرد. ارزش آن در راهنمایی عملی برای مراقبت دهان در بارداری است، نه در شواهد اولیه. روش‌شناسی مطالعات پایه در منابع دیگر قرار دارد."
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": null,
+        "des_score": null,
+        "band": null,
+        "provisional": false,
+        "fact_fa": "این سند بیانیه‌ی اجماعِ ملیِ مراقبت از دهان در بارداری است و با شواهد مقایسه‌ای امتیاز نمی‌گیرد.",
+        "interpretation_fa": null,
+        "issuing_bodies": "Health Resources and Services Administration (HRSA) · American College of Obstetricians and Gynecologists · American Dental Association",
+        "issuing_quote": "Maternal and Child Health Bureau in collaboration with the American College of Obstetricians and Gynecologists and the American Dental Association",
+        "evidence_basis": "EXPERT_CONSENSUS",
+        "basis_quote": ""
       },
       {
         "des_version": "3.2",

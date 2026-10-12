@@ -1419,7 +1419,7 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v3.3.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v3.4.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
 **v3.3 is the current spec, and its change from 3.2 is one FIDELITY rule** (F0, F2,
@@ -1700,7 +1700,7 @@ in Part 4.
 #### Part 2c — How the FIDELITY call is run: two full Sonnet runs, a tie-break, an Opus review (v2.9)
 
 The FIDELITY call is an independent agent per input block, **on Sonnet**,
-reading `.dentcast/des-v3.3-knowledge.md` (the spec minus its appendix) as its
+reading `.dentcast/des-v3.4-knowledge.md` (the spec minus its appendix) as its
 instruction and the block as its user turn. The model is part of the
 measurement: never mix models for the runs inside one record.
 

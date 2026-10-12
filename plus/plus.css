@@ -2088,6 +2088,16 @@ html.dcp-touring #mobile-body { overflow: hidden; }
   border-style: dashed;
 }
 
+/* A consensus (spec v3.4): no band, no number. Chrome-coloured, since it
+   carries no meaning on the band scale. */
+.dc-act-cons { font-size: .85rem; font-weight: 700; color: var(--des-chrome); border-color: rgba(var(--des-chrome-rgb), .55); }
+.dc-des-cons-what { margin: 10px 0; font-size: .86rem; line-height: 1.95; color: var(--dcp-ink); }
+.dc-des-cons-which { background: var(--dcp-surface); border: 1px solid var(--dcp-line); border-radius: 12px; padding: 9px 12px; }
+.dc-des-cons-k { font-size: .72rem; font-weight: 800; color: var(--des-chrome); }
+.dc-des-cons-t { font-weight: 700; font-size: .9rem; margin: 2px 0; unicode-bidi: plaintext; }
+.dc-des-cons-b { font-size: .8rem; color: var(--dcp-muted); unicode-bidi: plaintext; }
+.dc-des-cons-basis { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--dcp-line); font-size: .82rem; }
+
 /* ── FIDELITY (spec v2.8) — the card's second question ────────────────────
    «does THIS page say what its sources say?» Drawn only on a page whose record
    carries a 2.8+ fidelity object (des.js fidelityOf); every other page keeps

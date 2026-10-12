@@ -23,7 +23,7 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=184';
+import { el, faNum } from './util.js?v=185';
 
 /* ------------------------------------------------------------ the data -- */
 
@@ -69,7 +69,23 @@ export const QTYPE_FA = {
 };
 
 // Spec v3.1 Step 1: the closed list of sources that are cited, not scored.
-const SOURCE_KIND_FA = { book: 'کتاب مرجع', glossary: 'واژه‌نامه‌ی مرجع', standard: 'استاندارد' };
+const SOURCE_KIND_FA = { book: 'کتاب مرجع', glossary: 'واژه‌نامه‌ی مرجع', standard: 'استاندارد', consensus: 'کانسنسوس' };
+
+// Spec v3.4: a consensus statement or clinical guideline carries NO score. The
+// study-design table cannot rank a document that weighs other people's studies,
+// and a band E beside a case report told readers the document a clinician is
+// most likely to follow was worthless. So the page shows its name and says
+// what it is; the explanation below is fixed text owned by this module, never
+// model wording (the record's interpretation_fa is null).
+const isConsensus = (s) => s && s.content_type === 'NOT_APPRAISABLE' && s.source_kind === 'consensus';
+const CONSENSUS_WHAT =
+  'کانسنسوس یا بیانیه‌ی اجماع، سندی است که چند سازمان یا گروه تخصصی با هم می‌نویسند تا بگویند در یک موضوع مشخص، ' +
+  'بر پایه‌ی شواهد و نظر کارشناسان، چه کاری توصیه می‌شود. نه پژوهشِ تازه است و نه نظرِ یک نفر؛ مرجعی است که ' +
+  'بالینگر برای تصمیم‌گیری به آن رجوع می‌کند، و به همین دلیل با مقیاسِ طراحیِ مطالعه سنجیده نمی‌شود.';
+const CONSENSUS_BASIS_FA = {
+  EVIDENCE_REVIEWED: 'مبتنی بر مرور سیستماتیک شواهد',
+  EXPERT_CONSENSUS: 'مبتنی بر توافق کارشناسان',
+};
 
 // What text a provisional result rests on (spec Step 0 / F0). Never «چکیده»
 // for a book chapter or a glossary entry: EXCERPT (v3.1) is a part of a work
@@ -119,9 +135,11 @@ export function bandBar(band) {
 // same breath and hides nothing, and the card below lists every source with its
 // own band anyway.
 function chipFor(rec, named) {
-  const src = rec.sources[0];
-  const multi = rec.sources.length > 1;
-  const band = src.band;
+  // A consensus has no band and its own chip, so it is not one of the sources
+  // the strength chip counts (v3.4).
+  const appr = rec.sources.filter((x) => !isConsensus(x));
+  const multi = appr.length > 1;
+  const band = (appr[0] || {}).band;
   const idx = (b) => BANDS.indexOf(b);
   // A NOT_APPRAISABLE source (a textbook) has no band, so it defines no end of
   // the range — but it IS a source the page cites, so it still counts. Dropping
@@ -140,19 +158,31 @@ function chipFor(rec, named) {
   const label = named
     ? 'سطح شواهد: ' + (multi ? spread : band)
     : multi
-      ? faNum(rec.sources.length) + ' منبع · ' + spread
+      ? faNum(appr.length) + ' منبع · ' + spread
       : BAND_FA[band] || band;
   return el('button', {
     class: 'dc-act dc-act-des dc-des-band-' + (multi ? best : band),
     type: 'button',
     'data-pane': 'src',
     'aria-label': multi
-      ? 'ارزیابی شواهد این مطلب — ' + faNum(rec.sources.length) + ' منبع، از باند ' + best + ' تا ' + worst
+      ? 'ارزیابی شواهد این مطلب — ' + faNum(appr.length) + ' منبع، از باند ' + best + ' تا ' + worst
       : 'ارزیابی شواهد این مطلب',
   }, [
     el('span', { class: 'dc-des-dot' }, multi ? best : band),
     el('span', { class: 'dc-des-chip-txt' }, label),
   ]);
+}
+
+// The consensus chip: one word, no band, no number. Chrome-coloured like the
+// fidelity chip, since it carries no meaning on the band scale.
+function consensusChip(rec) {
+  if (!rec.sources.some(isConsensus)) return null;
+  return el('button', {
+    class: 'dc-act dc-act-cons',
+    type: 'button',
+    'data-pane': 'src',
+    'aria-label': 'این مطلب به یک کانسنسوس تکیه دارد',
+  }, [el('span', { class: 'dc-des-chip-txt' }, 'کانسنسوس')]);
 }
 
 function penaltyRows(list) {
@@ -211,6 +241,29 @@ function commentaryCard(src) {
 // would give it the shape of a measurement and none of the substance. Saying
 // «cited, not scored» is the honest third answer, and it beats the alternative
 // this replaced: the source was dropped from the record silently.
+// The card's block for a consensus: what a consensus is (fixed text), which one
+// this is (copied from the document), and one line of basis.
+function consensusBlock(src) {
+  const cite = src.citation || {};
+  const basis = CONSENSUS_BASIS_FA[src.evidence_basis];
+  const which = [
+    el('div', { class: 'dc-des-cons-k' }, 'کدام کانسنسوس'),
+    el('div', { class: 'dc-des-cons-t', dir: 'auto' }, cite.title || 'منبع'),
+  ];
+  const meta = [src.issuing_bodies, cite.year ? String(cite.year) : ''].filter(Boolean).join(' — ');
+  if (meta) which.push(el('div', { class: 'dc-des-cons-b', dir: 'auto' }, meta));
+  const parts = [
+    notAppraisableHead(src),
+    el('p', { class: 'dc-des-cons-what' }, CONSENSUS_WHAT),
+    el('div', { class: 'dc-des-cons-which' }, which),
+  ];
+  if (basis) {
+    parts.push(el('div', { class: 'dc-des-cons-basis' }, [
+      el('span', { class: 'dc-des-cons-k' }, 'پشتوانه: '), basis]));
+  }
+  return el('div', { class: 'dc-des-src' }, parts);
+}
+
 function notAppraisableHead(src) {
   return el('div', { class: 'dc-des-head' }, [
     el('span', { class: 'dc-des-badge dc-des-badge-na' }, SOURCE_KIND_FA[src.source_kind] || 'منبع'),
@@ -236,6 +289,7 @@ function researchHead(src) {
 // submission, not a cited source on an article), so des-scorer.js wraps this
 // in its own shell rather than reusing card().
 export function sourceBlock(src, index, total) {
+  if (isConsensus(src)) return consensusBlock(src);
   const parts = [];
   if (total > 1) {
     const cite = src.citation || {};
@@ -538,9 +592,9 @@ function card(rec) {
     el('p', { class: 'dc-des-prov-note' },
       'این بخش را دنت‌کست به‌صورت خودکار محاسبه می‌کند و بخشی از متنِ نویسنده نیست.'),
     ...scored.map((s, i) => sourceBlock(s, i, scored.length)),
-    el('p', { class: 'dc-des-foot' },
+    scored.every(isConsensus) ? null : el('p', { class: 'dc-des-foot' },
       'این امتیاز ساختار مطالعه را می‌سنجد، نه اینکه یافته‌اش برای بیمار شما مناسب است یا نه.'),
-  ]);
+  ].filter(Boolean));
 }
 
 // The same card with two questions in it. Fidelity first: it is the one about
@@ -550,14 +604,16 @@ function tabbedCard(rec, scored, fids) {
   const SRC = one ? 'منبع' : 'منابع';
   const seg = el('div', { class: 'dc-des-seg', role: 'tablist' }, [
     el('button', { type: 'button', role: 'tab', 'aria-selected': 'true', 'data-pane': 'fid' }, 'تطابق با ' + SRC),
-    el('button', { type: 'button', role: 'tab', 'aria-selected': 'false', 'data-pane': 'src' }, 'سطح شواهد'),
+    el('button', { type: 'button', role: 'tab', 'aria-selected': 'false', 'data-pane': 'src' },
+      scored.every(isConsensus) ? 'کانسنسوس' : 'سطح شواهد'),
   ]);
   const srcPane = el('div', { class: 'dc-des-pane', 'data-pane': 'src', hidden: '' }, [
-    el('p', { class: 'dc-fid-ask' }, (one ? 'منبعی' : 'منابعی') + ' که این نوشته به ' + (one ? 'آن' : 'آن‌ها') + ' تکیه کرده چه سطحی از شواهد دارند؟'),
+    scored.every(isConsensus) ? null
+      : el('p', { class: 'dc-fid-ask' }, (one ? 'منبعی' : 'منابعی') + ' که این نوشته به ' + (one ? 'آن' : 'آن‌ها') + ' تکیه کرده چه سطحی از شواهد دارند؟'),
     ...scored.map((s, i) => sourceBlock(s, i, scored.length)),
-    el('p', { class: 'dc-des-foot' },
+    scored.every(isConsensus) ? null : el('p', { class: 'dc-des-foot' },
       'این امتیاز ساختار مطالعه را می‌سنجد، نه اینکه یافته‌اش برای بیمار شما مناسب است یا نه.'),
-  ]);
+  ].filter(Boolean));
   const node = el('section', { class: 'dc-des-card has-fid', id: 'dcDesCard' }, [
     el('h2', { class: 'dc-des-card-h' }, 'ارزیابی خودکار شواهد'),
     el('p', { class: 'dc-des-prov-note' },
@@ -653,7 +709,7 @@ export async function mountDes(row, anchor, contentId) {
     if (old) old.remove();
   }
   if (row) {
-    row.querySelectorAll('.dc-act-des, .dc-act-fid').forEach((c) => c.remove());
+    row.querySelectorAll('.dc-act-des, .dc-act-cons, .dc-act-fid').forEach((c) => c.remove());
   }
 
   const body = card(rec);
@@ -666,7 +722,7 @@ export async function mountDes(row, anchor, contentId) {
 
   if (row) {
     const fids = fidelityOf(rec);
-    const chips = [chipFor(rec, fids.length > 0)].filter(Boolean);
+    const chips = [chipFor(rec, fids.length > 0), consensusChip(rec)].filter(Boolean);
     if (fids.length) chips.push(fidelityChip(rec, fids));
     // Tapping a chip goes to the card (and, when the card has two tabs, to
     // that chip's own tab). Deliberately not a popover: this shell scrolls

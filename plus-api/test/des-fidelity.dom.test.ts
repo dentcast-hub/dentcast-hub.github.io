@@ -311,3 +311,33 @@ describe('DES fidelity on an unscored source (spec v3.1)', () => {
     }
   });
 });
+
+describe('DES consensus display (spec v3.4)', () => {
+  const ID = 'sharehub/share-33';
+  it('share-33: a consensus chip, no band on it, and the card says what and which', async () => {
+    const rec = ALL[ID];
+    const { ok, row, card } = await mount(rec, ID);
+    expect(ok).toBe(true);
+    const cons = row.querySelectorAll('.dc-act-cons');
+    expect(cons).toHaveLength(1);
+    expect(text(cons[0]).trim()).toBe('کانسنسوس');
+    // the strength chip counts the two papers only
+    const des = row.querySelector('.dc-act-des');
+    expect(text(des)).not.toMatch(/۳ منبع/);
+    const t = text(card);
+    expect(t).toContain('کدام کانسنسوس');
+    expect(t).toContain('American College of Obstetricians and Gynecologists');
+    expect(t).toContain('مبتنی بر توافق کارشناسان');
+    // nothing about this document is a number
+    const block = card!.querySelector('.dc-des-cons-which')!.closest('.dc-des-src')!;
+    expect(text(block)).not.toMatch(/\/۱۰۰|باند [A-E]/);
+  });
+  it('a consensus-only page draws no strength chip', async () => {
+    const rec = JSON.parse(JSON.stringify(ALL[ID]));
+    rec.sources = [rec.sources[1]];
+    rec.fidelity = null;
+    const { row } = await mount(rec, 'test/cons');
+    expect(row.querySelectorAll('.dc-act-des')).toHaveLength(0);
+    expect(row.querySelectorAll('.dc-act-cons')).toHaveLength(1);
+  });
+});

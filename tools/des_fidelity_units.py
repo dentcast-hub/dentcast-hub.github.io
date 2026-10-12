@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DES v3.3 FIDELITY — the caller's half: split a page into units and say
+"""DES v3.4 FIDELITY — the caller's half: split a page into units and say
 which cited source each unit is judged against.
 
 The spec (appendix rules 7 and 10) takes segmentation and attribution out of
@@ -75,6 +75,9 @@ def scorable(src):
     if src.get("error"):
         return False
     if src.get("content_type") == "NOT_APPRAISABLE":
+        # v3.4: a consensus read whole is recorded SECONDARY_REPORT and is a complete text
+        if src.get("source_kind") == "consensus" and vp.des_ge(src.get("des_version"), (3, 4)):
+            return src.get("text_basis") in NA_TEXT_BASES + ("SECONDARY_REPORT",)
         return vp.des_ge(src.get("des_version"), (3, 1)) and src.get("text_basis") in NA_TEXT_BASES
     return True
 
