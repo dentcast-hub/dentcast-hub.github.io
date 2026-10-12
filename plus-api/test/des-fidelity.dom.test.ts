@@ -206,3 +206,108 @@ describe('DES fidelity display (spec v2.8)', () => {
     expect(w('INSUFFICIENT_CLAIMS', null)).toBe('ادعای کافی برای سنجش ندارد');
   });
 });
+
+// Spec v3.1: the FIDELITY track is cut loose from the score. A source that is
+// cited and not scored (a textbook, a glossary, a standard) is judged like any
+// other when its text was in hand, and a book nobody could open says so in the
+// record (the INSUFFICIENT_TEXT error object in its slot) and in one quiet line
+// of «به تفکیک منبع» — never on the chip, never in the word.
+describe('DES fidelity on an unscored source (spec v3.1)', () => {
+  beforeEach(() => { document.body.innerHTML = ''; });
+
+  const NA = (kind: string, basis: string, title: string, authors: string) => ({
+    des_version: '3.1', content_type: 'NOT_APPRAISABLE', source_kind: kind, question_type: null,
+    text_basis: basis, citation: { title, authors, year: 2012, journal: '', doi: '' },
+    journal_quartile: { value: 'NR', source: 'NR' }, s_design: null, q_method: null, penalties: null,
+    commentary_checklist: null, des_score: null, band: null, provisional: false,
+    fact_fa: 'این منبع کتاب مرجع است و امتیاز نمی‌گیرد.', interpretation_fa: '',
+  });
+  const claim = (id: string, verdict: string, kind: string | null = null) => ({
+    id, claim_quote: 'جمله‌ی ' + id, verdict, change_kind: kind,
+    source_quote: verdict === 'NOT_ASSESSABLE' || verdict === 'NOT_A_CLAIM' ? '' : 'Total occlusal convergence should be between 2 and 6 degrees.',
+    source_ref: null, note: verdict === 'NOT_ASSESSABLE' ? 'not in the pages in hand' : '',
+  });
+  // a 3.1 FIDELITY object over a book chapter: three claims, one firmer than the book
+  const BOOK_FID = {
+    des_version: '3.1', mode: 'FIDELITY', scope: 'SOURCE', text_basis: 'EXCERPT',
+    claims: [claim('u3', 'MATCHES'), claim('u4', 'ALTERED', 'HEDGE_REMOVED'), claim('u5', 'MATCHES'), claim('u6', 'NOT_ASSESSABLE')],
+    counts: { matches: 2, altered: 1, reversed: 0, not_in_source: 0, not_assessable: 1, author_view: 0, not_a_claim: 0 },
+    assessable: 3, fidelity_score: 83, level: 'HIGH', provisional: true,
+    source_conclusion: 'Total occlusal convergence should be between 2 and 6 degrees.',
+    fact_fa: '', interpretation_fa: '',
+  };
+  // share-18's five papers + a textbook with its own 3.1 slot + a citation-only
+  // glossary whose slot is the error object (its text was not in hand)
+  const withBook = () => {
+    const rec = JSON.parse(JSON.stringify(ALL['sharehub/share-18']));
+    rec.sources.push(NA('book', 'EXCERPT', 'Fundamentals of Fixed Prosthodontics', 'Shillingburg HT, et al.'));
+    rec.fidelity.push(JSON.parse(JSON.stringify(BOOK_FID)));
+    rec.sources.push(NA('glossary', 'CITATION_ONLY', 'The Glossary of Prosthodontic Terms (Ninth Edition)', ''));
+    rec.fidelity.push({ des_version: '3.1', error: 'INSUFFICIENT_TEXT' });
+    return rec;
+  };
+
+  it('a textbook with its text in hand is judged, counted and named like any source', async () => {
+    const { row, card } = await mount(withBook());
+    const pane = card!.querySelector('.dc-des-pane[data-pane="fid"]')!;
+    // the book's one firmer sentence is the page's one difference, and names the book
+    const diff = pane.querySelectorAll('.dc-fid-diff');
+    expect(diff).toHaveLength(1);
+    expect(text(diff[0])).toContain('Shillingburg');
+    expect(text(diff[0])).toContain('قاطع‌تر از منبع');
+    expect(text(row.querySelector('.dc-act-fid'))).not.toContain('کاملاً');
+    expect(text(row.querySelector('.dc-act-fid'))).not.toMatch(/[٪%]/);
+    // the per-source row carries the book with its counts
+    const per = text(pane.querySelector('.dc-fid-persrc'));
+    expect(per).toContain('Shillingburg');
+    expect(per).toContain('۳ ادعا');
+    // the strength pane still says «cited, not scored» for it
+    const src = card!.querySelector('.dc-des-pane[data-pane="src"]')!;
+    expect(text(src)).toContain('کتاب مرجع');
+    expect(text(src)).toContain('امتیازدهی نمی‌شود');
+  });
+
+  it('a book whose text was not in hand is a fact of the record, never announced on the card', async () => {
+    const { row, card } = await mount(withBook());
+    const pane = card!.querySelector('.dc-des-pane[data-pane="fid"]')!;
+    // the error slot is never a fidelity object: one box, and nothing drawn for it anywhere
+    expect(pane.querySelectorAll('.dc-fid')).toHaveLength(1);
+    expect(text(card!)).not.toContain('در دست نبود');
+    expect(text(pane.querySelector('.dc-fid-persrc'))).not.toContain('Glossary');
+    expect(text(row.querySelector('.dc-act-fid'))).not.toContain('در دست نبود');
+    // the strength pane still lists the citation itself, cited-not-scored
+    expect(text(card!.querySelector('.dc-des-pane[data-pane="src"]'))).toContain('واژه‌نامه‌ی مرجع');
+  });
+
+  it('an EXCERPT basis is never called «چکیده»', async () => {
+    const rec = JSON.parse(JSON.stringify(ALL['sharehub/share-18']));
+    rec.sources = [NA('book', 'EXCERPT', 'Fundamentals of Fixed Prosthodontics', 'Shillingburg HT, et al.')];
+    rec.fidelity = [JSON.parse(JSON.stringify(BOOK_FID))];
+    const { row, card } = await mount(rec);
+    const pane = card!.querySelector('.dc-des-pane[data-pane="fid"]')!;
+    const prov = text(pane.querySelector('.dc-des-prov'));
+    expect(prov).toContain('بخشی از منبع');
+    expect(prov).not.toContain('چکیده');
+    // a page whose every source is cited-not-scored has no band, and what is not
+    // there is not announced: no strength chip at all, the fidelity chip alone
+    expect(row.querySelectorAll('.dc-act-des')).toHaveLength(0);
+    expect(row.querySelectorAll('.dc-act-fid')).toHaveLength(1);
+    expect(text(row)).not.toContain('undefined');
+    expect(text(row.querySelector('.dc-act-fid'))).toContain('تطابق با منبع:');
+  });
+
+  it('a mixed page says which basis made it provisional, in plain words', async () => {
+    const { card } = await mount(ALL['sharehub/share-22'], 'sharehub/share-22');
+    const prov = text(card!.querySelector('.dc-des-pane[data-pane="fid"] .dc-des-prov'));
+    expect(prov).toContain('دست‌کم یکی از منابع');
+    expect(prov).toContain('چکیده');
+  });
+
+  it('every stored 3.0 record renders with the same word and the same differences as before', async () => {
+    for (const id of ['sharehub/share-18', 'sharehub/share-23', 'dentai/dentai-30', 'sharehub/share-28']) {
+      const { row, card } = await mount(ALL[id], id);
+      expect(text(row.querySelector('.dc-act-fid'))).toContain('کاملاً مطابق');
+      expect(card!.querySelectorAll('.dc-fid-diff')).toHaveLength(0);
+    }
+  });
+});

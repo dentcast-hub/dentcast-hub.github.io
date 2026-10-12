@@ -369,9 +369,18 @@ def des_fidelity_recompute(counts, version=None):
     return assessable, score, level
 
 
+DES_NA_KINDS_31 = ("book", "glossary", "standard")   # spec v3.1 Step 1, closed
+DES_NA_BASES_31 = ("FULL_TEXT", "EXCERPT", "CITATION_ONLY")   # a NOT_APPRAISABLE object's own list
+DES_NA_ONLY_BASES = ("EXCERPT", "CITATION_ONLY")   # legal on no other content type
+
+
 def des_check_fidelity(rep, ftag, f, scope, basis_expected, page_hay, source_hay):
     """Spec v2.5/2.6 appendix rule 8 on one FIDELITY object."""
     claims = f.get("claims") or []
+    rep.check(f.get("text_basis") != "EXCERPT" or des_ge(f.get("des_version"), (3, 1)), "4.13 DES",
+              f"{ftag} basis EXCERPT is on a 3.1+ object",
+              f"{ftag} is EXCERPT but stamped {f.get('des_version')!r} — that basis exists from v3.1",
+              "spec v3.1 F0 — re-run under the current spec")
     rep.check(f.get("mode") == "FIDELITY" and f.get("des_version"), "4.13 DES",
               f"{ftag} is a FIDELITY object with a version stamp",
               f"{ftag} lacks mode: FIDELITY or des_version", "spec F5")
@@ -448,6 +457,17 @@ def des_check_fidelity(rep, ftag, f, scope, basis_expected, page_hay, source_hay
               "spec F0 — provisional iff not FULL_TEXT")
 
 
+def des_fidelity_owed(s):
+    """A source the FIDELITY call runs against (README step 4.13 Part 2b): any
+    scored source, and from spec v3.1 a NOT_APPRAISABLE source whose SOURCE
+    call read a text (FULL_TEXT or EXCERPT) — the gate is the text, not the score."""
+    if s.get("error"):
+        return False
+    if s.get("content_type") == "NOT_APPRAISABLE":
+        return des_ge(s.get("des_version"), (3, 1)) and s.get("text_basis") in ("FULL_TEXT", "EXCERPT")
+    return True
+
+
 def des_ge(version, target):
     try:
         major, _, minor = (version or "").partition(".")
@@ -495,6 +515,11 @@ def des_source_text(source, doc, page_title=None):
     Composed as the spec defines source_text: title, then abstract.
     """
     global _cabinet_by_doi
+    # A NOT_APPRAISABLE source's text (a book chapter, a glossary entry — spec
+    # v3.1) is never in this repo: the cabinet holds a paper's abstract, and
+    # that would be the wrong haystack even when the DOI matches (the GPT has one).
+    if source.get("content_type") == "NOT_APPRAISABLE":
+        return None
     if source.get("content_type") == "COMMENTARY":
         cite_title = des_norm((source.get("citation") or {}).get("title") or "")
         if page_title is not None and cite_title and cite_title != des_norm(page_title):
@@ -982,14 +1007,14 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                     # spec v2.6 F6: a page naming none of its sources inline is
                     # judged ONCE against all of them — one pooled object, not
                     # an array, because no slot belongs to any one source.
-                    scored = [s for s in srcs if not s.get("error") and s.get("content_type") != "NOT_APPRAISABLE"]
+                    scored = [s for s in srcs if des_fidelity_owed(s)]
                     rep.check(len(scored) > 1, "4.13 DES", "pooled fidelity sits on a page with several sources",
                               "fidelity is a pooled object on a page with one scored source — POOLED exists "
                               "only for several sources none of which the prose names",
                               "spec v2.6 F6 / tools/des_fidelity_units.py decides the scope")
                     bases = [s.get("text_basis") for s in scored]
-                    weakest = max(bases, key=lambda b: ["FULL_TEXT", "SECONDARY_REPORT", "ABSTRACT_ONLY"].index(b)
-                                  if b in ("FULL_TEXT", "SECONDARY_REPORT", "ABSTRACT_ONLY") else 2) if bases else None
+                    _order = ("FULL_TEXT", "SECONDARY_REPORT", "ABSTRACT_ONLY", "EXCERPT")
+                    weakest = max(bases, key=lambda b: _order.index(b) if b in _order else 2) if bases else None
                     hays = [des_source_text(s, doc, page_title=title) for s in scored]
                     pooled_hay = None if any(h is None for h in hays) else " ".join(hays)
                     des_check_fidelity(rep, "fidPOOLED", fid, "POOLED", weakest, page_hay, pooled_hay)
@@ -999,21 +1024,53 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                                f"{len(srcs)} sources — slot i is the FIDELITY object "
                                f"for sources[i], null where no call ran",
                                "step 4.13 Part 4 — one slot per source, same order"):
+                    # v3.1: the record's own fidelity stamp decides which rule a
+                    # null on a NOT_APPRAISABLE source is read under
+                    rec31 = any(isinstance(f, dict) and des_ge(f.get("des_version"), (3, 1)) for f in fid)
                     for i, f in enumerate(fid):
                         ftag = f"fid{i}"
                         src_i = srcs[i] or {}
+                        is_na = src_i.get("content_type") == "NOT_APPRAISABLE"
                         if f is None:
-                            # A null slot is legal for an error, a book, the page's
-                            # own COMMENTARY record, or (v2.6) a source no unit of the
+                            # A null slot is legal for an error, the page's own
+                            # COMMENTARY record, or (v2.6) a source no unit of the
                             # page names — the last is not visible from the record, so
                             # a null on a scored RESEARCH source is a warning, not a fail.
-                            if src_i.get("error") or src_i.get("content_type") in ("NOT_APPRAISABLE", "COMMENTARY"):
+                            # A book (NOT_APPRAISABLE) was a null by rule until v3.1;
+                            # from 3.1 it is judged like any source whose text was in
+                            # hand, so on a 3.1 record a null there is the same warning.
+                            if src_i.get("error") or src_i.get("content_type") == "COMMENTARY" or (is_na and not rec31):
                                 rep.ok("4.13 DES", f"{ftag} is null for a source that gets no fidelity call")
                             else:
-                                rep.warn("4.13 DES", f"{ftag} is null on a scored RESEARCH source — confirm "
-                                         f"tools/des_fidelity_units.py gave it no units",
+                                rep.warn("4.13 DES", f"{ftag} is null on a source the FIDELITY call is owed to — confirm "
+                                         f"tools/des_fidelity_units.py gave it no units"
+                                         + (" (v3.1: a book whose text was in hand is judged; one whose text "
+                                            "was not is CITATION_ONLY with an INSUFFICIENT_TEXT slot)" if is_na else ""),
                                          "step 4.13 Part 2b — run the call if the tool assigned it units")
                             continue
+                        if isinstance(f, dict) and f.get("error"):
+                            # spec v3.1 appendix rule 8: the spec's own error object in
+                            # a slot says the text was sought and not found — legal
+                            # only on a NOT_APPRAISABLE source recorded CITATION_ONLY
+                            rep.check(is_na and src_i.get("text_basis") == "CITATION_ONLY"
+                                      and f.get("error") == "INSUFFICIENT_TEXT" and des_ge(f.get("des_version"), (3, 1)),
+                                      "4.13 DES", f"{ftag} records INSUFFICIENT_TEXT for a citation-only source",
+                                      f"{ftag} is an error object ({f.get('error')!r}, v{f.get('des_version')}) on a source that is "
+                                      f"{src_i.get('content_type')}/{src_i.get('text_basis')} — an error slot belongs only to a "
+                                      f"NOT_APPRAISABLE source whose text was not in hand (CITATION_ONLY), from v3.1",
+                                      "spec v3.1 appendix rule 8 — a scored source with no text is an error in `sources`, "
+                                      "and its fidelity slot is null")
+                            continue
+                        if is_na:
+                            # spec v3.1: a book's fidelity is judged on the text its
+                            # SOURCE call read, so the record must say which text that was
+                            if not rep.check(des_ge(f.get("des_version"), (3, 1)) and src_i.get("text_basis") in ("FULL_TEXT", "EXCERPT"),
+                                             "4.13 DES", f"{ftag} fidelity on an unscored source is a 3.1 call over a text in hand",
+                                             f"{ftag} is a fidelity object (v{f.get('des_version')}) on a NOT_APPRAISABLE source whose "
+                                             f"text_basis is {src_i.get('text_basis')!r} — before v3.1 a book got no call, and a call "
+                                             f"needs FULL_TEXT or EXCERPT in hand",
+                                             "spec v3.1 appendix rule 8 — re-run the SOURCE call on the text (EXCERPT/FULL_TEXT), then the FIDELITY call"):
+                                continue
                         des_check_fidelity(rep, ftag, f, "SOURCE", src_i.get("text_basis"), page_hay,
                                            des_source_text(src_i, doc, page_title=title))
             for i, s in enumerate(rec.get("sources") or []):
@@ -1037,11 +1094,20 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                               f"{tag} is NOT_APPRAISABLE but {nulls} is not null — a source with "
                               f"no method to appraise must carry no number at all",
                               "spec v1.9 — des_score/band/question_type and every track field are null")
-                    rep.check(s.get("source_kind") == "book", "4.13 DES",
-                              f"{tag} names why it is not appraisable",
+                    kinds = DES_NA_KINDS_31 if des_ge(s.get("des_version"), (3, 1)) else ("book",)
+                    rep.check(s.get("source_kind") in kinds, "4.13 DES",
+                              f"{tag} names why it is not appraisable ({s.get('source_kind')})",
                               f"{tag} is NOT_APPRAISABLE with source_kind={s.get('source_kind')!r} — "
-                              f"the list is closed and has one member",
-                              "spec v1.9 — source_kind must be \"book\"")
+                              f"the list is closed: {list(kinds)} under v{s.get('des_version')}",
+                              "spec v3.1 Step 1 — book, glossary or standard (v1.9–3.0: book only)")
+                    # spec v3.1: a NOT_APPRAISABLE object says what text was in hand
+                    # through a list of its own; a pre-3.1 record keeps whatever it wrote
+                    if des_ge(s.get("des_version"), (3, 1)):
+                        rep.check(s.get("text_basis") in DES_NA_BASES_31, "4.13 DES",
+                                  f"{tag} states the text in hand ({s.get('text_basis')})",
+                                  f"{tag} is NOT_APPRAISABLE (v{s.get('des_version')}) with text_basis="
+                                  f"{s.get('text_basis')!r} — FULL_TEXT, EXCERPT or CITATION_ONLY, honestly",
+                                  "spec v3.1 Step 1 — an abstract a book does not have is not a basis")
                     rep.check(((s.get("citation") or {}).get("title") or "").strip(), "4.13 DES",
                               f"{tag} not-appraisable source names the work",
                               f"{tag} is NOT_APPRAISABLE with no citation.title — an unscored source "
@@ -1049,6 +1115,12 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                               "spec v1.9 — fill citation from the reference line")
                     continue
                 is_comm = s.get("content_type") == "COMMENTARY"
+                rep.check(s.get("text_basis") not in DES_NA_ONLY_BASES, "4.13 DES",
+                          f"{tag} is scored from an abstract or a full text",
+                          f"{tag} is {s.get('content_type')} on text_basis {s.get('text_basis')!r} — EXCERPT and "
+                          f"CITATION_ONLY exist for a NOT_APPRAISABLE source only; a paper is scored from its abstract "
+                          f"or its full text, never a chosen part",
+                          "spec v3.1 Step 1 — resolve the abstract or the full text and re-run")
 
                 # 2 — arithmetic recomputation
                 if is_comm:
