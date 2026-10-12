@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DES v3.1 FIDELITY — the caller's half: split a page into units and say
+"""DES v3.2 FIDELITY — the caller's half: split a page into units and say
 which cited source each unit is judged against.
 
 The spec (appendix rules 7 and 10) takes segmentation and attribution out of
@@ -162,15 +162,25 @@ def split_page(content_id, sources):
 
 
 def assign(units, sources):
-    idx = [i for i, s in enumerate(sources) if scorable(s)]
-    if len(idx) == 1:
-        return "SOURCE", {idx[0]: [u["id"] for u in units]}
-    marks = {i: markers_for(sources[i]) for i in idx}
-    direct = {u["id"]: [i for i in idx if names(u["text"], marks[i])] for u in units}
+    """Spec F6 + appendix rule 10. Markers come from EVERY cited source (a book
+    with no text still takes the units that name it — they are about the book,
+    not about the paper beside it); calls go only to the sources with a text.
+    v3.2 (founder, 1405/07/20): a page that names SOME of
+    its sources used to leave every unit naming none of them in no call at all
+    — on sharehub/share-10 that was the whole body, written from the one paper
+    the prose never names. Those units now go to the cited source(s) no unit
+    names; when that is one source it is an ordinary SOURCE call."""
+    cited = [i for i, s in enumerate(sources) if not s.get("error")]
+    idx = [i for i in cited if scorable(sources[i])]
+    if len(cited) == 1:
+        return "SOURCE", {idx[0]: [u["id"] for u in units]} if idx else {}
+    marks = {i: markers_for(sources[i]) for i in cited}
+    direct = {u["id"]: [i for i in cited if names(u["text"], marks[i])] for u in units}
     if not any(direct.values()):
         return "POOLED", {"pooled": [u["id"] for u in units]}
     out = {i: [] for i in idx}
     carry, cur_para = [], None
+    remainder = []
     for u in units:
         if u["para"] != cur_para or u.get("heading"):
             carry, cur_para = [], u["para"]
@@ -179,8 +189,21 @@ def assign(units, sources):
             carry = hit
         if u.get("heading"):
             continue
+        if not (hit or carry):
+            remainder.append(u["id"])
         for i in (hit or carry):
-            out[i].append(u["id"])
+            if i in out:
+                out[i].append(u["id"])
+    unnamed = [i for i in idx if not any(i in d for d in direct.values())]
+    if remainder and unnamed:
+        if len(unnamed) > 1:
+            # a pooled part over several unnamed sources is not defined yet: the
+            # remainder stays in no call, as before, and the caller is told
+            print(f"note: {len(remainder)} units name no source and {len(unnamed)} sources with a text are never "
+                  f"named — those units reach no call (spec F6; several unnamed sources are not pooled yet)",
+                  file=sys.stderr)
+        else:
+            out[unnamed[0]].extend(remainder)
     return "SOURCE", {i: ids for i, ids in out.items() if ids}
 
 
