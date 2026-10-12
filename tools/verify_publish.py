@@ -370,6 +370,7 @@ def des_fidelity_recompute(counts, version=None):
 
 
 DES_NA_KINDS_31 = ("book", "glossary", "standard")   # spec v3.1 Step 1, closed
+DES_NA_KINDS_34 = DES_NA_KINDS_31 + ("consensus",)   # spec v3.4
 DES_NA_BASES_31 = ("FULL_TEXT", "EXCERPT", "CITATION_ONLY")   # a NOT_APPRAISABLE object's own list
 DES_NA_ONLY_BASES = ("EXCERPT", "CITATION_ONLY")   # legal on no other content type
 
@@ -401,12 +402,17 @@ def des_check_fidelity(rep, ftag, f, scope, basis_expected, page_hay, source_hay
     bad_v = [c.get("id") for c in claims if c.get("verdict") not in DES_FID_VERDICTS]
     rep.check(not bad_v, "4.13 DES", f"{ftag} every verdict is from the closed list",
               f"{ftag} has verdicts outside the list on {bad_v}", "spec F2")
+    # v3.3: a SECONDARY_REPORT (a consensus statement or guideline, read whole)
+    # is a complete text for the FIDELITY question — its silence is
+    # NOT_IN_SOURCE and the result is not provisional. Below 3.3 it was judged
+    # like an abstract, and those records stay valid under their own stamp.
+    complete = basis == "FULL_TEXT" or (basis == "SECONDARY_REPORT" and des_ge(f.get("des_version"), (3, 3)))
     wrong_basis = [c.get("id") for c in claims
-                   if (c.get("verdict") == "NOT_IN_SOURCE" and basis != "FULL_TEXT")
-                   or (c.get("verdict") == "NOT_ASSESSABLE" and basis == "FULL_TEXT")]
+                   if (c.get("verdict") == "NOT_IN_SOURCE" and not complete)
+                   or (c.get("verdict") == "NOT_ASSESSABLE" and complete)]
     rep.check(not wrong_basis, "4.13 DES", f"{ftag} silence verdicts match the text basis",
               f"{ftag} uses NOT_IN_SOURCE/NOT_ASSESSABLE from the wrong row for {basis} on {wrong_basis}",
-              "spec F2 — an abstract's silence is NOT_ASSESSABLE, a full text's is NOT_IN_SOURCE")
+              "spec F2 — an abstract's silence is NOT_ASSESSABLE, a full text's (and, from v3.3, a secondary report's) is NOT_IN_SOURCE")
     bad_k = [c.get("id") for c in claims
              if (c.get("verdict") == "ALTERED") != (c.get("change_kind") is not None)
              or (c.get("verdict") == "ALTERED" and c.get("change_kind") not in DES_FID_KINDS)]
@@ -451,10 +457,10 @@ def des_check_fidelity(rep, ftag, f, scope, basis_expected, page_hay, source_hay
               f"{ftag} fidelity arithmetic checks out ({score} · {level})",
               f"{ftag} says {f.get('assessable')}/{f.get('fidelity_score')}/{f.get('level')} "
               f"but recomputes to {assessable}/{score}/{level}", "spec F4")
-    rep.check(f.get("provisional") is (basis != "FULL_TEXT"), "4.13 DES",
+    rep.check(f.get("provisional") is (not complete), "4.13 DES",
               f"{ftag} provisional follows text_basis",
               f"{ftag} provisional is {f.get('provisional')} under {basis}",
-              "spec F0 — provisional iff not FULL_TEXT")
+              "spec F0 — provisional iff not a complete text (FULL_TEXT; SECONDARY_REPORT from v3.3)")
 
 
 def des_fidelity_owed(s):
@@ -464,6 +470,8 @@ def des_fidelity_owed(s):
     if s.get("error"):
         return False
     if s.get("content_type") == "NOT_APPRAISABLE":
+        if s.get("source_kind") == "consensus" and des_ge(s.get("des_version"), (3, 4)):
+            return s.get("text_basis") in ("FULL_TEXT", "EXCERPT", "SECONDARY_REPORT")
         return des_ge(s.get("des_version"), (3, 1)) and s.get("text_basis") in ("FULL_TEXT", "EXCERPT")
     return True
 
@@ -1064,7 +1072,9 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                         if is_na:
                             # spec v3.1: a book's fidelity is judged on the text its
                             # SOURCE call read, so the record must say which text that was
-                            if not rep.check(des_ge(f.get("des_version"), (3, 1)) and src_i.get("text_basis") in ("FULL_TEXT", "EXCERPT"),
+                            _na_ok = ("FULL_TEXT", "EXCERPT") + (("SECONDARY_REPORT",) if src_i.get("source_kind") == "consensus"
+                                                                  and des_ge(src_i.get("des_version"), (3, 4)) else ())
+                            if not rep.check(des_ge(f.get("des_version"), (3, 1)) and src_i.get("text_basis") in _na_ok,
                                              "4.13 DES", f"{ftag} fidelity on an unscored source is a 3.1 call over a text in hand",
                                              f"{ftag} is a fidelity object (v{f.get('des_version')}) on a NOT_APPRAISABLE source whose "
                                              f"text_basis is {src_i.get('text_basis')!r} — before v3.1 a book got no call, and a call "
@@ -1094,7 +1104,9 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                               f"{tag} is NOT_APPRAISABLE but {nulls} is not null — a source with "
                               f"no method to appraise must carry no number at all",
                               "spec v1.9 — des_score/band/question_type and every track field are null")
-                    kinds = DES_NA_KINDS_31 if des_ge(s.get("des_version"), (3, 1)) else ("book",)
+                    kinds = (DES_NA_KINDS_34 if des_ge(s.get("des_version"), (3, 4))
+                             else DES_NA_KINDS_31 if des_ge(s.get("des_version"), (3, 1)) else ("book",))
+                    is_cons = s.get("source_kind") == "consensus" and des_ge(s.get("des_version"), (3, 4))
                     rep.check(s.get("source_kind") in kinds, "4.13 DES",
                               f"{tag} names why it is not appraisable ({s.get('source_kind')})",
                               f"{tag} is NOT_APPRAISABLE with source_kind={s.get('source_kind')!r} — "
@@ -1103,11 +1115,27 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                     # spec v3.1: a NOT_APPRAISABLE object says what text was in hand
                     # through a list of its own; a pre-3.1 record keeps whatever it wrote
                     if des_ge(s.get("des_version"), (3, 1)):
-                        rep.check(s.get("text_basis") in DES_NA_BASES_31, "4.13 DES",
+                        rep.check(s.get("text_basis") in DES_NA_BASES_31
+                                  or (is_cons and s.get("text_basis") == "SECONDARY_REPORT"), "4.13 DES",
                                   f"{tag} states the text in hand ({s.get('text_basis')})",
                                   f"{tag} is NOT_APPRAISABLE (v{s.get('des_version')}) with text_basis="
                                   f"{s.get('text_basis')!r} — FULL_TEXT, EXCERPT or CITATION_ONLY, honestly",
                                   "spec v3.1 Step 1 — an abstract a book does not have is not a basis")
+                    if is_cons:
+                        ev = s.get("evidence_basis")
+                        rep.check(bool((s.get("issuing_bodies") or "").strip()) and bool((s.get("issuing_quote") or "").strip()),
+                                  "4.13 DES", f"{tag} consensus names its issuing bodies from the document",
+                                  f"{tag} is a consensus with no issuing_bodies/issuing_quote — the bodies are copied from "
+                                  f"the document, never composed", "spec v3.4 Step 1")
+                        rep.check(ev in ("EVIDENCE_REVIEWED", "EXPERT_CONSENSUS")
+                                  and bool((s.get("basis_quote") or "").strip()) == (ev == "EVIDENCE_REVIEWED"),
+                                  "4.13 DES", f"{tag} consensus basis ({ev}) agrees with its basis_quote",
+                                  f"{tag} evidence_basis={ev!r} basis_quote={s.get('basis_quote')!r} — a quote exactly when "
+                                  f"the document reports a systematic search", "spec v3.4 Step 1")
+                        rep.check(s.get("interpretation_fa") is None, "4.13 DES",
+                                  f"{tag} consensus carries no model-written interpretation",
+                                  f"{tag} consensus has interpretation_fa — the explanation is fixed display text",
+                                  "spec v3.4 Step 1 — interpretation_fa is null")
                     rep.check(((s.get("citation") or {}).get("title") or "").strip(), "4.13 DES",
                               f"{tag} not-appraisable source names the work",
                               f"{tag} is NOT_APPRAISABLE with no citation.title — an unscored source "

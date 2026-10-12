@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DES v3.2 FIDELITY — the caller's half: split a page into units and say
+"""DES v3.4 FIDELITY — the caller's half: split a page into units and say
 which cited source each unit is judged against.
 
 The spec (appendix rules 7 and 10) takes segmentation and attribution out of
@@ -75,6 +75,9 @@ def scorable(src):
     if src.get("error"):
         return False
     if src.get("content_type") == "NOT_APPRAISABLE":
+        # v3.4: a consensus read whole is recorded SECONDARY_REPORT and is a complete text
+        if src.get("source_kind") == "consensus" and vp.des_ge(src.get("des_version"), (3, 4)):
+            return src.get("text_basis") in NA_TEXT_BASES + ("SECONDARY_REPORT",)
         return vp.des_ge(src.get("des_version"), (3, 1)) and src.get("text_basis") in NA_TEXT_BASES
     return True
 
@@ -364,6 +367,10 @@ def merge_pooled(parts, basis):
     default). `parts` is {"S1": output, "S2": output, …}."""
     tags = sorted(parts, key=lambda s: int(s[1:]))
     n_units = len(parts[tags[0]]["claims"])
+    # v3.3: a SECONDARY_REPORT read whole is a complete text for this question
+    # (silence → NOT_IN_SOURCE, not provisional); below 3.3 it was abstract-like.
+    complete = basis == "FULL_TEXT" or (
+        basis == "SECONDARY_REPORT" and vp.des_ge(parts[tags[0]].get("des_version", "2.8"), (3, 3)))
     claims = []
     for i in range(n_units):
         rows = [(tag, parts[tag]["claims"][i]) for tag in tags]
@@ -390,7 +397,7 @@ def merge_pooled(parts, basis):
                 pick = {**base, "verdict": v, "change_kind": None, "source_quote": "", "source_ref": None,
                         "note": rows[0][1].get("note") or v.lower()}
             else:
-                v = "NOT_IN_SOURCE" if basis == "FULL_TEXT" else "NOT_ASSESSABLE"
+                v = "NOT_IN_SOURCE" if complete else "NOT_ASSESSABLE"
                 pick = {**base, "verdict": v, "change_kind": None, "source_quote": "", "source_ref": None,
                         "note": "no source addresses it: " + ", ".join(f"{t2}: {c2['verdict']}" for t2, c2 in rows)}
         claims.append(pick)
@@ -404,7 +411,7 @@ def merge_pooled(parts, basis):
     concl = "\n".join(f"[{tag}] {parts[tag].get('source_conclusion', '')}" for tag in tags)
     return {"des_version": version, "mode": "FIDELITY", "scope": "POOLED",
             "text_basis": basis, "claims": claims, "counts": counts, "assessable": assessable,
-            "fidelity_score": score, "level": level, "provisional": basis != "FULL_TEXT",
+            "fidelity_score": score, "level": level, "provisional": not complete,
             "source_conclusion": concl, "fact_fa": fact, "interpretation_fa": interp}
 
 FLAGGED = ("ALTERED", "REVERSED")

@@ -20,10 +20,10 @@
 // tools/build_upboard_index.py on every publish). There is no endpoint, no
 // migration, and no third copy of a page's title that could drift from the other
 // two — the API is asked exactly one question, «is this reader premium».
-import { el, faNum } from './util.js?v=184';
-import { currentUser, meStatus } from './api.js?v=184';
-import { premiumCta, guestPremiumExtras, lapsedNote, unreachableGate } from './premium-cta.js?v=184';
-import { openLoginModal } from './login-modal.js?v=184';
+import { el, faNum } from './util.js?v=185';
+import { currentUser, meStatus } from './api.js?v=185';
+import { premiumCta, guestPremiumExtras, lapsedNote, unreachableGate } from './premium-cta.js?v=185';
+import { openLoginModal } from './login-modal.js?v=185';
 
 /** Which gate sent a buyer, for the pricing page's ?from= report. */
 const FROM = 'gate-desboard';
@@ -138,11 +138,12 @@ function sourceRow(s) {
   // and dropping it from the list is the bug spec v1.9 fixed.
   if (s.content_type === 'NOT_APPRAISABLE') {
     return el('li', { class: 'sr sr-na' }, [
-      el('span', { class: 'sr-g sr-gna' }, 'کتاب'),
+      el('span', { class: 'sr-g sr-gna' }, s.source_kind === 'consensus' ? 'کانسنسوس' : 'کتاب'),
       el('div', { class: 'sr-m' }, [
         el('p', { class: 'sr-t' }, c.title || ''),
-        el('p', { class: 'sr-s fa' },
-          'کتاب مرجع است، نه مطالعه — روشی ندارد که بشود ارزیابی کرد، پس نمره نمی‌گیرد.'),
+        el('p', { class: 'sr-s fa' }, s.source_kind === 'consensus'
+          ? 'بیانیه‌ی اجماع است، نه مطالعه — با مقیاس طراحی مطالعه سنجیده نمی‌شود، پس نمره نمی‌گیرد.'
+          : 'کتاب مرجع است، نه مطالعه — روشی ندارد که بشود ارزیابی کرد، پس نمره نمی‌گیرد.'),
       ]),
     ]);
   }

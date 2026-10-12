@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="dc-notify" content="true">
+
+<title>ویزیت بیمار باردار در مطب دندانپزشکی | Share Hub – دنت‌کست</title>
+
+<meta name="description" content="راهنمای عملیِ ویزیت بیمار باردار در مطب: سه سؤال پیش از شروع، زمان‌بندی درمان، رادیوگرافی، انتخاب بی‌حسی و دارو، و آنچه با سن بارداری عوض می‌شود.">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/share-33.html">
+<link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/sharehub/share-33.html">
+<link rel="alternate" hreflang="fa" href="https://dentcast.org/sharehub/share-33.html">
+<link rel="alternate" hreflang="x-default" href="https://dentcast.org/sharehub/share-33.html">
+
+  <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css?v=6">
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
+      --text:#111;
+      --muted:#444;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.2);
+    }
+
+    p { margin: 0.875rem 0; }
+
+
+    ul {
+      list-style: none;
+      padding-right: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* summary tables — same pattern as .text-box table elsewhere on the site */
+    .glass-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .glass-box table th,
+    .glass-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:right;
+      vertical-align:top;
+    }
+    .glass-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .glass-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+    @media (max-width:768px){
+      .glass-box table{font-size:.9rem;}
+      .glass-box table th,.glass-box table td{padding:0.45rem 0.5rem;}
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { margin: 1.25rem 0; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.8;
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      direction: ltr;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img, .glass-box figure img { width: 100%; height: auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+
+    /* permission chips (مجاز / با محدودیت / استفاده نکن) */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* English-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 auto 1.125rem 0;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  </style>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/share-33.html",
+      "url": "https://dentcast.org/sharehub/share-33.html",
+      "name": "ویزیت بیمار باردار در مطب دندانپزشکی",
+      "inLanguage": "fa-IR",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/share-33.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/share-33.html#creativework",
+      "name": "ویزیت بیمار باردار در مطب دندانپزشکی",
+      "headline": "ویزیت بیمار باردار در مطب دندانپزشکی",
+      "description": "راهنمای عملیِ ویزیت بیمار باردار در مطب: سه سؤال پیش از شروع، زمان‌بندی درمان، رادیوگرافی، انتخاب بی‌حسی و دارو، و آنچه با سن بارداری عوض می‌شود.",
+      "inLanguage": "fa-IR",
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "creator": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/share-33.html"
+      },
+      "datePublished": "2026-10-12",
+      "dateModified": "2026-10-12",
+      "genre": "Dental Education",
+      "keywords": [
+        "ویزیت دندانپزشکی بیمار باردار",
+        "بی‌حسی موضعی در بارداری",
+        "اپی‌نفرین در بارداری و سقف دوز ۰٫۰۴ میلی‌گرم",
+        "فلیپرسین و اکتاپرسین در بارداری",
+        "لوونوردفرین در بارداری",
+        "مسکن و آنتی‌بیوتیک مجاز در بارداری",
+        "ایبوپروفن در سه‌ماهه‌های بارداری",
+        "رادیوگرافی در بارداری",
+        "وضعیت بیمار باردار روی یونیت",
+        "dental care during pregnancy vasoconstrictor safety"
+      ]
+    }
+  ]
+}
+</script>
+
+    <link rel="stylesheet" href="/dc-theme.css?v=7">
+<link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="ویزیت بیمار باردار در مطب دندانپزشکی | Share Hub – دنت‌کست">
+  <meta property="og:description" content="راهنمای عملیِ ویزیت بیمار باردار در مطب: سه سؤال پیش از شروع، زمان‌بندی درمان، رادیوگرافی، انتخاب بی‌حسی و دارو، و آنچه با سن بارداری عوض می‌شود.">
+  <meta property="og:url" content="https://dentcast.org/sharehub/share-33.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ویزیت بیمار باردار در مطب دندانپزشکی | Share Hub – دنت‌کست">
+  <meta name="twitter:description" content="راهنمای عملیِ ویزیت بیمار باردار در مطب: سه سؤال پیش از شروع، زمان‌بندی درمان، رادیوگرافی، انتخاب بی‌حسی و دارو، و آنچه با سن بارداری عوض می‌شود.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "DentCast", "item": "https://dentcast.org/" },
+    { "@type": "ListItem", "position": 2, "name": "Share Hub", "item": "https://dentcast.org/sharehub/" },
+    { "@type": "ListItem", "position": 3, "name": "ویزیت بیمار باردار در مطب دندانپزشکی | Share Hub – دنت‌کست", "item": "https://dentcast.org/sharehub/share-33.html" }
+  ]
+}
+</script>
+  <meta name="robots" content="index, follow, max-image-preview:large">
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<div class="sh-kicker"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Share Hub</div>
+<h1>ویزیت بیمار باردار در مطب دندانپزشکی</h1>
+
+<div class="glass-box">
+
+  <a class="lang-btn" href="en/share-33.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> English
+  </a>
+  <p>
+  ویزیت یک بیمار باردار همان ویزیت معمول است، با چند تفاوت که باید پیش از شروع بدانی. این مطلب به ترتیبِ خودِ ویزیت جلو می‌رود: چه چیزی بپرس، چه زمانی و با چه بی‌حسی و دارویی درمان کن، و بعد از درمان چه چیزهایی به بیمار بگو.
+  </p>
+  <h3>∆ ۱. سه سؤالی که مسیر درمان را تعیین می‌کند</h3>
+  <ul>
+  <li><strong>چند هفته باردار است؟</strong> انتخاب مسکن و مدت مجاز آرام‌بخشی به سن بارداری بستگی دارد (بند ۵ و ۶).</li>
+  <li><strong>بیماری زمینه‌ای یا عارضه‌ی بارداری دارد؟</strong>
+  <ul>
+  <li>اگر بیمار پره‌اکلامپسی (عارضه‌ای از بارداری که با فشار خون بالا همراه است)، بیماری قلبی عروقی ناپایدار، آریتمی شدید (بی‌نظمی شدید ضربان قلب) یا سابقه‌ی اخیر ترومبوآمبولی (لخته‌ای که در رگ تشکیل شده و جابه‌جا شده) دارد، بیمار پرخطر است. پیش از درمان با پزشک او هماهنگ کن و از بی‌حسی‌هایی که تنگ‌کننده‌ی عروقی دارند استفاده نکن (بند ۴).</li>
+  <li>اگر بیمار فشار خون بارداری یا دیابت بارداری دارد که کنترل شده است، حین درمان پایش بیشتری لازم است و در برخی موارد پیش از درمان باید با پزشک او مشورت کرد.</li>
+  <li>اگر بیمار دیابت، فشار خون بالا، بیماری قلبی یا ریوی، یا اختلال خونریزی دارد، پیش از درمان با پزشک او هماهنگ کن، چون این بیماری‌ها ممکن است روی روند درمان دندانپزشکی اثر بگذارند.</li>
+  </ul></li>
+  <li><strong>استفراغ دارد و چند وقت یک بار؟</strong> اگر دارد، دستور شستشوی دهان بعد از استفراغ را به او بده (بند ۷).</li>
+  </ul>
+  <figure>
+      <img src="share33-0.webp" alt="دسته‌بندی بیماران باردار برای انتخاب بی‌حسی" loading="lazy" width="1395" height="785">
+      <figcaption>دسته‌بندی بیماران باردار برای انتخاب بی‌حسی. G1 بیمار کم‌خطر: بی‌حسی همراه با اپی‌نفرین. G2 ریسک متوسط: اپی‌نفرین همراه با پایش، و مشورت با پزشک بیمار (اگر بیماری کنترل نشده باشد، مشورت الزامی است). G3 پرخطر: مشورت با پزشک الزامی و بی‌حسی بدون تنگ‌کننده‌ی عروقی. G4 حساسیت به اپی‌نفرین یا سولفیت: بی‌حسی بدون تنگ‌کننده‌ی عروقی.</figcaption>
+    </figure>
+
+  <h3>∆ ۲. زمان‌بندی درمان</h3>
+  <ul>
+  <li>درمان دندانپزشکی در هیچ هفته‌ای از بارداری ممنوع نیست و درمان‌های پیشگیری، تشخیصی، ترمیمی و درمان ریشه در هر سه‌ماهه قابل انجام‌اند.</li>
+  <li>درد، عفونت و هر وضعیت حاد دیگری را همان موقع درمان کن و برای رسیدن به سه‌ماهه‌ی خاصی صبر نکن.</li>
+  <li>درمان‌هایی که فوریت ندارند و بیمار انتخاب کرده (مثل کارهای زیبایی) بهتر است در سه‌ماهه‌ی دوم انجام شوند، هرچند انجامشان در سه‌ماهه‌ی اول و سوم منع ندارد.</li>
+  <li>درمان‌های لازم را عقب نینداز و طوری برنامه‌ریزی کن که پیش از زایمان تمام شوند، چون تأخیر در درمان خودش خطر دارد؛ برای مثال عفونت شدید یک دندان می‌تواند در بدن پخش شود.</li>
+  </ul>
+
+  <h3>∆ ۳. رادیوگرافی</h3>
+  <ul>
+  <li>رادیوگرافی در تمام دوران بارداری ایمن است.</li>
+  <li>هر وقت برای ارزیابی و تشخیص قطعی لازم است، آن را بگیر.</li>
+  </ul>
+  <p>به نظر من، اگر بیمار نگران است و پیش‌بند در مسیر پرتو قرار نمی‌گیرد، استفاده از آن برای اطمینان خاطر بیمار مانعی ندارد، هرچند از نظر کاهش دوز سود قابل توجهی ندارد.</p>
+
+  <h3>∆ ۴. حین درمان</h3>
+
+  <p><strong>بی‌حسی: اول بدان کارپول تو چه دارد</strong></p>
+  <p>کارپول‌های بی‌حسی معمولاً دو جزء اصلی دارند: خود ماده‌ی بی‌حس‌کننده (مثل لیدوکائین یا پریلوکائین) و یک تنگ‌کننده‌ی عروقی. تنگ‌کننده‌ی عروقی رگ‌های محل تزریق را تنگ می‌کند تا بی‌حسی دیرتر جذب خون شود، عمیق‌تر و طولانی‌تر باشد و خونریزی کمتر شود. در بارداری، نوع تنگ‌کننده‌ی عروقی مهم است، چون همه‌شان یکسان نیستند. سه نوع رایج آن اپی‌نفرین، فلیپرسین و لوونوردفرین است. پیش از تزریق، روی کارپول یا جعبه‌ی آن ترکیب را بخوان و ببین کدام تنگ‌کننده‌ی عروقی در آن است.</p>
+
+  <p><strong>اپی‌نفرین (آدرنالین)</strong> <span class="chip ok">مجاز</span></p>
+  <ul>
+  <li>بی‌حسی‌هایی که تنگ‌کننده‌ی عروقی‌شان اپی‌نفرین است، مثل لیدوکائین، مپیواکائین، پریلوکائین و بوپیواکائین همراه با اپی‌نفرین، در بارداری قابل استفاده‌اند.</li>
+  <li>اپی‌نفرین تنها تنگ‌کننده‌ی عروقی است که در بارداری ایمنی قابل قبول دارد، به شرط اینکه با دوز پایین و تکنیک درست تزریق شود.</li>
+  <li>قبل از تزریق حتماً آسپیره کن، از کمترین غلظت مؤثر اپی‌نفرین استفاده کن و دوز اپی‌نفرین را در هر جلسه به حداکثر ۰٫۰۴ میلی‌گرم محدود کن. این مقدار تقریباً برابر ۴ میلی‌لیتر محلول ۱:۱۰۰٬۰۰۰ یا ۸ میلی‌لیتر محلول ۱:۲۰۰٬۰۰۰ است.</li>
+  </ul>
+
+  <p><strong>فلیپرسین</strong> <span class="chip no">استفاده نکن</span></p>
+  <ul>
+  <li>فلیپرسین از نظر ساختار شبیه وازوپرسین است، یکی از هورمون‌های طبیعی بدن که رگ‌ها را تنگ می‌کند. مشکلش در بارداری این است که خاصیت اکسی‌توسیک دارد، یعنی مثل هورمون اکسی‌توسین که موقع زایمان رحم را منقبض می‌کند، می‌تواند باعث انقباض رحم و زایمان زودرس شود. این خطر به‌خصوص در سه‌ماهه‌ی دوم و سوم مطرح است.</li>
+  <li>رایج‌ترین بی‌حسی‌ای که فلیپرسین دارد، سیتانست ۳٪ با اکتاپرسین (<bdi dir="ltr">Citanest with Octapressin</bdi>) است که پریلوکائین ۳٪ همراه با فلیپرسین است. اکتاپرسین همان فلیپرسین است با نام تجاری.</li>
+  <li>پس اگر روی کارپول یا جعبه <bdi dir="ltr">felypressin</bdi> یا <bdi dir="ltr">Octapressin</bdi> نوشته شده، برای بیمار باردار استفاده نکن. خود پریلوکائین مشکلی ندارد؛ پریلوکائین همراه با اپی‌نفرین مجاز است و مشکل فقط وقتی است که تنگ‌کننده‌ی عروقی‌اش فلیپرسین باشد.</li>
+  </ul>
+
+  <p><strong>لوونوردفرین</strong> <span class="chip no">استفاده نکن</span></p>
+  <ul>
+  <li>لوونوردفرین تنگ‌کننده‌ی عروقی دیگری است که معمولاً همراه مپیواکائین ۲٪ با غلظت ۱:۲۰٬۰۰۰ عرضه می‌شود. این ماده فشار خون مادر را بیشتر از اپی‌نفرین بالا می‌برد، از نظر تئوریک می‌تواند جریان خون رحم را کم کند، و داده‌ی کافی درباره‌ی ایمنی آن در بارداری وجود ندارد.</li>
+  <li>اگر روی کارپول <bdi dir="ltr">levonordefrin</bdi> نوشته شده، آن را برای بیمار باردار استفاده نکن. مپیواکائین به‌تنهایی یا همراه با اپی‌نفرین مشکلی ندارد.</li>
+  </ul>
+
+  <p><strong>آرتیکائین</strong> <span class="chip no">استفاده نکن</span></p>
+  <p>از آرتیکائین استفاده نکن، مگر بعد از مشورت با پزشک بیمار.</p>
+
+  <p><strong>حساسیت به سولفیت</strong></p>
+  <p>محلول‌های بی‌حسی که اپی‌نفرین دارند، ماده‌ای به نام متابی‌سولفیت دارند که به‌عنوان آنتی‌اکسیدان اضافه می‌شود. اگر بیمار به سولفیت حساسیت دارد، از مپیواکائین ۳٪ بدون تنگ‌کننده‌ی عروقی (ساده، <bdi dir="ltr">plain</bdi>) استفاده کن.</p>
+
+  <figure>
+      <img src="share33-1.webp" alt="الگوریتم انتخاب بی‌حسی در بیمار باردار" loading="lazy" width="1265" height="1430">
+      <figcaption>الگوریتم انتخاب بی‌حسی در بیمار باردار. بیمار کم‌خطر یا با ریسک متوسط: بی‌حسی همراه با اپی‌نفرین ۱:۱۰۰٬۰۰۰ یا ۱:۲۰۰٬۰۰۰، با سقف دوز ۰٫۰۴ میلی‌گرم، پرهیز از تزریق داخل رگ و پایش علائم حیاتی. بیمار پرخطر یا در سه‌ماهه‌ی اول: اگر درمان قابل تعویق است عقب بیفتد، وگرنه با پزشک بیمار مشورت شود. حساسیت به اپی‌نفرین یا متابی‌سولفیت: بی‌حسی بدون تنگ‌کننده‌ی عروقی.</figcaption>
+    </figure>
+
+  <p><strong>مواد ترمیمی</strong></p>
+  <p>از مواد و روش‌های ترمیمی استاندارد استفاده کن، ولی اگر جایگزین مناسب وجود دارد، در دوران بارداری از آمالگام استفاده نکن.</p>
+
+  <p><strong>رابر دم</strong></p>
+  <p>در درمان ریشه و کارهای ترمیمی از <a href="/glossary/rubber-dam.html">رابر دم</a> استفاده کن.</p>
+
+  <p><strong>وضعیت بیمار روی یونیت</strong></p>
+  <ul>
+  <li>سر بیمار باید بالاتر از پاهایش باشد.</li>
+  <li>بیمار را در وضعیت نیمه‌خوابیده قرار بده، تا حدی که برایش قابل تحمل است، و اجازه بده در طول کار وضعیتش را عوض کند.</li>
+  <li>اگر بیمار به‌خاطر افت فشار خون دچار سرگیجه یا تهوع شد، یک بالش کوچک زیر لگن سمت راستش بگذار یا از او بخواه کمی به سمت چپ بچرخد. در ماه‌های آخر بارداری، وقتی بیمار به پشت می‌خوابد، رحم بزرگ‌شده روی رگ‌های اصلی شکم (آئورت و ورید اجوف تحتانی) فشار می‌آورد و خون کمتری به قلب برمی‌گردد؛ چرخیدن به چپ این فشار را برمی‌دارد.</li>
+  </ul>
+
+  <p><strong>پایش</strong></p>
+  <p>در طول درمان علائم حیاتی بیمار (فشار خون و ضربان قلب) را پایش کن و در بیماران با ریسک متوسط و بالا، بعد از درمان هم مدتی بیمار را تحت نظر داشته باش.</p>
+
+  <h3>∆ ۵. دارو</h3>
+
+  <p><strong>مسکن</strong></p>
+  <ul>
+  <li><span class="chip ok">مجاز</span> استامینوفن در تمام بارداری مجاز است و انتخاب اول است، چون درد دهان اغلب بدون مسکن‌های مخدر کنترل می‌شود.</li>
+  <li><span class="chip warn">با محدودیت</span> مسکن‌های مخدر یا اپیوئیدها (استامینوفن کدئین، هیدروکودون، اکسی‌کودون، کدئین، مپریدین و مورفین) مجازند، ولی با کمترین دوز و کوتاه‌ترین مدت، که معمولاً کمتر از ۳ روز است، و بدون نسخه‌ی تکراری تا خطر وابستگی کم شود.</li>
+  <li><span class="chip warn">با محدودیت</span> ایبوپروفن، ناپروکسن و آسپرین فقط در بازه‌های مشخصی از بارداری مجازند (بند ۶).</li>
+  </ul>
+
+  <p><strong>آنتی‌بیوتیک</strong></p>
+  <ul>
+  <li><span class="chip ok">مجاز</span> آموکسی‌سیلین، پنی‌سیلین، سفالوسپورین‌ها (مثل سفالکسین)، کلیندامایسین و مترونیدازول.</li>
+  <li><span class="chip no">استفاده نکن</span> سیپروفلوکساسین، لووفلوکساسین، موکسی‌فلوکساسین و کلاریترومایسین.</li>
+  <li><span class="chip no">هرگز</span> تتراسایکلین هرگز نباید در بارداری تجویز شود.</li>
+  </ul>
+
+  <p><strong>آرام‌بخشی و بیهوشی</strong></p>
+  <ul>
+  <li><span class="chip no">استفاده نکن</span> از نیتروس اکساید (گازی که از راه بینی داده می‌شود تا بیمار آرام شود) استفاده نکن، مگر بعد از مشورت با پزشک بیمار.</li>
+  <li><span class="chip warn">با مشورت</span> بیهوشی عمومی، آرام‌بخشی وریدی (آرام‌بخش تزریقی در رگ) و آرام‌بخشی استنشاقی (به‌تنهایی یا همراه با قرص آرام‌بخش) فقط بعد از مشورت با پزشک بیمار انجام شود.</li>
+  </ul>
+
+  <p><strong>دهان‌شویه</strong></p>
+  <ul>
+  <li>در بارداری از محصولات بدون الکل استفاده شود.</li>
+  <li><span class="chip ok">مجاز</span> دهان‌شویه‌ی کلرهگزیدین، دهان‌شویه‌ی ستیل پیریدینیوم کلراید (<bdi dir="ltr">CPC</bdi>) و زایلیتول (شیرین‌کننده‌ای که باکتری‌های عامل پوسیدگی را کم می‌کند).</li>
+  </ul>
+
+  <h3>∆ ۶. چه چیزی با سن بارداری عوض می‌شود</h3>
+  <ul>
+  <li><strong>تا هفته‌ی ۱۲</strong> ایبوپروفن، ناپروکسن و آسپرین نباید مصرف شوند و مسکن انتخابی استامینوفن است.</li>
+  <li><strong>هفته‌ی ۱۳ تا ۲۰</strong> ایبوپروفن، ناپروکسن و آسپرین را می‌توان برای مدت کوتاه، حداکثر ۴۸ تا ۷۲ ساعت، تجویز کرد.</li>
+  <li><strong>هفته‌ی ۲۰ تا ۲۷</strong> مصرف ایبوپروفن، ناپروکسن و آسپرین باید محدود باشد.</li>
+  <li><strong>سه‌ماهه‌ی سوم</strong> ایبوپروفن، ناپروکسن و آسپرین نباید مصرف شوند. اگر در سه‌ماهه‌ی سوم بیهوشی عمومی یا آرام‌بخشی (با مشورت پزشک) لازم است، مدت آن باید کمتر از ۳ ساعت باشد. در بی‌حسی، خطر فلیپرسین در این دوره بیشتر است (بند ۴).</li>
+  </ul>
+  <p><strong>استثنای آسپرین با دوز پایین:</strong> آسپرین با دوز پایین (معمولاً آسپرین بچه) از هفته‌ی ۱۲ به بعد برای زنانی که در معرض خطر بالای پره‌اکلامپسی هستند مجاز است.</p>
+
+  <h3>∆ ۷. دستورهای مخصوص بارداری برای بیمار</h3>
+  <ul>
+  <li>به بیمار توضیح بده که تغییرات بدن در بارداری می‌تواند لثه را دردناک یا متورم کند و باعث خونریزی آن شود. به این حالت ژنژیویت (التهاب لثه) می‌گویند و اگر درمان نشود ممکن است به بیماری پریودنتال (بیماری بافت‌های نگهدارنده‌ی دندان) و در نهایت از دست رفتن دندان برسد.</li>
+  <li>بعد از هر بار استفراغ، دهانش را با محلول یک قاشق چای‌خوری جوش شیرین در یک لیوان آب بشوید تا اسید به دندان‌ها آسیب نزند.</li>
+  <li>اگر حالت تهوع دارد، به جای وعده‌های بزرگ، در طول روز مقدار کمی غذای سالم بخورد.</li>
+  <li>هر شب از یک دهان‌شویه‌ی فلورایددار بدون الکل استفاده کند.</li>
+  <li>بعد از غذا آدامس یا محصولات حاوی زایلیتول مصرف کند.</li>
+  <li>باردار بودن و تاریخ زایمانش را به دندانپزشکی اطلاع دهد.</li>
+  </ul>
+
+  <h3>∆ ۸. بعد از زایمان</h3>
+  <ul>
+  <li>نوزاد دست‌کم ۴ ماه و در حالت ایده‌آل ۶ ماه فقط با شیر مادر تغذیه شود.</li>
+  <li>از ۶ ماهگی، پزشک کودک دهان او را از نظر ریسک بیماری‌های دهان ارزیابی کند و در صورت نیاز به درمان فوری، او را به دندانپزشک ارجاع دهد.</li>
+  <li>کودک تا یک‌سالگی برای اولین بار به دندانپزشک برده شود.</li>
+  </ul>
+  <h3>∆ منابع</h3>
+  <ul class="sh-refs">
+    <li><a href="https://doi.org/10.3390/jcm14134773" target="_blank" rel="noopener noreferrer">Urîtu A, Buciu VB, Roi C, et al. Review of the Safety and Clinical Considerations of Vasoconstrictor Agents in Dental Anesthesia During Pregnancy. J Clin Med. 2025;14(13):4773. doi:10.3390/jcm14134773</a></li>
+    <li>Oral Health Care During Pregnancy Expert Workgroup. Oral Health Care During Pregnancy: A National Consensus Statement (rev. ed.). Washington, DC: National Maternal and Child Oral Health Resource Center; 2026.</li>
+    <li><a href="https://doi.org/10.1111/j.1471-0528.1986.tb08017.x" target="_blank" rel="noopener noreferrer">Lee ET, Ozumba EN, Bevan JR. A randomized trial of Citanest with Octapressin for relief of pain associated with laser vaporization of the cervix. Br J Obstet Gynaecol. 1986;93(9):967-969. doi:10.1111/j.1471-0528.1986.tb08017.x</a></li>
+    <li>دو شکلِ بالا (دسته‌بندی بیماران و الگوریتم انتخاب بی‌حسی) از مقالهٔ نخستِ همین فهرست با مجوز CC BY 4.0 آورده شده است.</li>
+  </ul>
+</div>
+
+<div class="dc-related-section">
+  <h2 class="dc-related-label">کاوش بیشتر</h2>
+  <div class="dc-related-capsules">
+    <a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+    <a href="/pillar/" class="dc-related-capsule">فهرست موضوعی</a>
+    <a href="/sharehub/share-16.html" class="dc-related-capsule">تیرزپاتاید روی یونیت</a>
+    <a href="/notecast/episode-22.html" class="dc-related-capsule">تداخل‌های دارویی در دندان‌پزشکی</a>
+  </div>
+</div>
+
+  <footer class="dc-site-footer">
+  <div style="margin-bottom:1.375rem;">
+    <a href="index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=14" defer></script>
+<script src="/dc-nav.js?v=277" defer></script>
+</body>
+</html>

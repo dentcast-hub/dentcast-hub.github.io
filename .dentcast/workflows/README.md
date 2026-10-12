@@ -1419,10 +1419,25 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v3.2.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v3.4.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v3.2 is the current spec, and its change from 3.1 is one assignment rule** (F6,
+**v3.3 is the current spec, and its change from 3.2 is one FIDELITY rule** (F0, F2,
+F6, appendix rule 8; founder 1405/07/20): a `SECONDARY_REPORT` source — a consensus
+statement or a guideline, read whole — is a **complete text** for the FIDELITY
+question. Its silence is `NOT_IN_SOURCE` (never `NOT_ASSESSABLE`), the F2-v grains
+apply, and the result is **not provisional**. The basis belongs to the SOURCE
+question, where it still caps the multiplier and marks the score provisional;
+fidelity only asks whether the page says what the document says and nothing changed
+on the way into Persian, and how strong the source is never enters that call.
+`sharehub/share-33` is why: written from a national consensus statement, every claim
+checked against its full text, and still «مقدماتی» only because the consensus is a
+secondary report. Silence has been outside the denominator since v2.8, so no score
+moves; records below 3.3 stay valid under their own stamp
+(`tools/des_fidelity_units.py --merge` and `tools/verify_publish.py` are
+version-gated).
+
+**v3.2's change from 3.1 is one assignment rule** (F6,
 founder 1405/07/20): on a page that names SOME of its sources, the units that
 name none of them go to the cited source(s) no unit names — `sharehub/share-10`
 names its glossary and textbooks in two sentences and writes the other
@@ -1611,7 +1626,7 @@ clinical_question: <omit unless this publish explicitly answers one>
   input blocks and three DES objects. Never concatenate sources into one block and
   never average their scores.
 
-#### Part 2b — Run the FIDELITY call (spec v2.5, v2.7, v3.1, v3.2), once per source whose text is in hand
+#### Part 2b — Run the FIDELITY call (spec v2.5, v2.7, v3.1, v3.2, v3.3), once per source whose text is in hand
 
 **When.** For every source in basket 2 whose SOURCE call read a text — RESEARCH,
 COMMENTARY, **or `NOT_APPRAISABLE` with `text_basis` `FULL_TEXT` or `EXCERPT`**
@@ -1685,7 +1700,7 @@ in Part 4.
 #### Part 2c — How the FIDELITY call is run: two full Sonnet runs, a tie-break, an Opus review (v2.9)
 
 The FIDELITY call is an independent agent per input block, **on Sonnet**,
-reading `.dentcast/des-v3.2-knowledge.md` (the spec minus its appendix) as its
+reading `.dentcast/des-v3.4-knowledge.md` (the spec minus its appendix) as its
 instruction and the block as its user turn. The model is part of the
 measurement: never mix models for the runs inside one record.
 

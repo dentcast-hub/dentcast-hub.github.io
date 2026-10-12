@@ -24,15 +24,15 @@
 // answers were right, how many key points each free answer covered — and
 // never the key itself: the pool is small and the second attempt may draw
 // the same question.
-import { el, faNum, debounce } from './util.js?v=184';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=184';
-import { premiumCta, lapsedNote, unreachableGate } from './premium-cta.js?v=184';
-import { openLoginModal } from './login-modal.js?v=184';
-import { registerSW } from './pwa.js?v=184';
-import { wirePageBack } from './page-back.js?v=184';
-import { intentRow } from './pathways.js?v=184';
-import { certificateTerms } from './certificate-terms.js?v=184';
-import { openSheet } from './sheet.js?v=184';
+import { el, faNum, debounce } from './util.js?v=185';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=185';
+import { premiumCta, lapsedNote, unreachableGate } from './premium-cta.js?v=185';
+import { openLoginModal } from './login-modal.js?v=185';
+import { registerSW } from './pwa.js?v=185';
+import { wirePageBack } from './page-back.js?v=185';
+import { intentRow } from './pathways.js?v=185';
+import { certificateTerms } from './certificate-terms.js?v=185';
+import { openSheet } from './sheet.js?v=185';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' });
 const FA_DATETIME = new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium', timeStyle: 'short' });
