@@ -16738,5 +16738,40 @@
       "secondary": [],
       "subtopic": "indications"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-40",
+    "title": "شرح ویزیت: بیمار ۳۵ ساله، تحلیل استخوان ژنرالیزه و درمان ایمپلنت Segmental",
+    "caption": "در این کیس Chairside بیمار خانم ۳۵ ساله‌ای با شکایت زیبایی مراجعه می‌کند که در معاینه spacing ژنرالیزه و تحلیل استخوان دارد؛ ارتودنسی کنار گذاشته شده و متخصص پریو او را به پروتز ارجاع داده است.",
+    "hashtags": [
+      "#چیرساید",
+      "#کیس_بالینی",
+      "#دکتر_شهابیان",
+      "#ایمپلنت_سگمنتال",
+      "#درمان_ایمپلنت",
+      "#تحلیل_استخوان",
+      "#پریودنتال",
+      "#نسبت_تاج_به_ریشه",
+      "#پروگنوز_دندان",
+      "#کشیدن_و_ایمپلنت",
+      "#درمان_بین_رشته_ای",
+      "#ارجاع_تخصصی",
+      "#موک_آپ"
+    ],
+    "keywords": [
+      "generalized bone loss young patient esthetic complaint",
+      "generalized spacing periodontal bone loss prosthetic decision",
+      "short roots unfavorable crown root ratio",
+      "orthodontic and periodontal referral to prosthodontics",
+      "mockup before implant surgery",
+      "segmental implant treatment sequence"
+    ],
+    "page_url": "/chairside/chairside-40.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "extraction-vs-preservation"
+    }
   }
 ]
