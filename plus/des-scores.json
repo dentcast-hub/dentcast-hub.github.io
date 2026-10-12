@@ -24847,7 +24847,337 @@
         "fact_fa": "امتیاز DES این مطالعه ۲۰ از ۱۰۰ و در سطح D برای پرسش نوع MATERIAL است.",
         "interpretation_fa": "این مطالعه آزمایشگاهی با پروتکل کامل و ترموسایکلینگ، سیمان رزینی را در مقاومت کششی پست زیرکونیایی بالاتر از زینک فسفات و RMGIC نشان می‌دهد. نبود توجیه حجم نمونه و نبود کورسازی، اعتبار روش را کم می‌کند. نمونه‌ها فقط پرمولر و بارگذاری استاتیک بودند، پس تعمیم بالینی محدود است."
       }
-    ]
+    ],
+    "fidelity": {
+      "des_version": "3.0",
+      "mode": "FIDELITY",
+      "scope": "POOLED",
+      "text_basis": "FULL_TEXT",
+      "claims": [
+        {
+          "id": "u1",
+          "claim_quote": "پست و کور زیرکونیا: مزایا، معایب و مقایسه با فایبر پست و پست ریختگی",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u2",
+          "claim_quote": "English",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "link label"
+        },
+        {
+          "id": "u3",
+          "claim_quote": "پست و کور زیرکونیا برای حل یک مشکل زیبایی ساخته شد: پست فلزی زیر روکش تمام سرامیک ترنسلوسنت می‌تواند سایه‌ی خاکستری بدهد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Zirconium dioxide ceramic post systems\nhave been shown to improve aesthetics of all ceramic\ncrowns when compared to their metallic and carbon\n\nCorrespondence: Dr. Shivaughn Marchan, Department of Restorative Dentistry, School of Dentistry, University of the West Indies,\nEWMSC, Champs Fleurs, Trinidad and Tobago, WI. Tel: +868-645-2640 ext 4027. Fax: +868-645-3823. e-mail: smarchan@hotmail.com\n\nBraz Dent J 16(3) 2005\n\n\n214\n\nS. Marchan et al.\n\nfibre counterparts (3).",
+          "source_ref": "S1",
+          "note": "The gray-shade detail is not stated; the aesthetic advantage of zirconia posts over metallic ones is.; other sources: S2: MATCHES"
+        },
+        {
+          "id": "u4",
+          "claim_quote": "با این حال امروز عملا در کلینیک دیده نمی‌شود.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u5",
+          "claim_quote": "∆ مزایای پست زیرکونیا",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u6",
+          "claim_quote": "زیرکونیا سفید است و استحکام خمشی بالایی دارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Zirconia oxide (ZrO) posts offer great potential for restoration of endodontically\ntreated teeth due to high strength, increased cement polymerization, translucency and\nbetter fit of the customized post.",
+          "source_ref": "S2",
+          "note": "سفیدی زیرکونیا در منبع نیست؛ استحکام بالا آمده ولی استحکام خمشی جدا ذکر نشده."
+        },
+        {
+          "id": "u7",
+          "claim_quote": "کروژن هم ندارد، در حالی که پست بیس متال در صورت میکرولیکیج می‌تواند کروژن بدهد و ریشه را تیره کند.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u8",
+          "claim_quote": "پست و کور یک‌تکه‌ی CAD/CAM آن در کانال‌های گشاد تطابق خوبی می‌دهد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Zirconia oxide (ZrO) posts offer great potential for restoration of endodontically\ntreated teeth due to high strength, increased cement polymerization, translucency and\nbetter fit of the customized post.",
+          "source_ref": "S2",
+          "note": "یک‌تکه بودن و کانال گشاد در منبع نیامده؛ فقط تطابق بهتر پست سفارشی آمده."
+        },
+        {
+          "id": "u9",
+          "claim_quote": "∆ معایب پست زیرکونیا",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u10",
+          "claim_quote": "پست زیرکونیا دو عیب را با هم دارد.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "signpost: announces the two disadvantages stated in the next units"
+        },
+        {
+          "id": "u11",
+          "claim_quote": "اول سفتی.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "signpost fragment: labels the next unit"
+        },
+        {
+          "id": "u12",
+          "claim_quote": "مدول الاستیسیته‌ی آن هم‌اندازه‌ی آلیاژهای بیس متال و حدود ده برابر عاج است، پس استرس را به ریشه منتقل می‌کند و شکست‌ها معمولا از نوع شکست ریشه هستند.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u13",
+          "claim_quote": "دوم شکنندگی.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "signpost fragment: labels the next unit"
+        },
+        {
+          "id": "u14",
+          "claim_quote": "فلز زیر بار خم می‌شود، زیرکونیا بدون هشدار یک‌باره می‌شکند، مخصوصا در قطرهای کم.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u15",
+          "claim_quote": "اگر داخل کانال بشکند یا دندان به درمان ریشه‌ی مجدد نیاز پیدا کند، خارج کردن آن دشوار است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "However, it has been shown that bonded posts\nprove difficult to remove and are associated with a\nconcurrent undesirable increase in temperature (4).",
+          "source_ref": "S1",
+          "note": "Bonded posts difficult to remove is stated in the context of zirconia posts normally luted with resin; failure inside the canal is not addressed."
+        },
+        {
+          "id": "u16",
+          "claim_quote": "∆ سمان کردن پست زیرکونیا",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u17",
+          "claim_quote": "با سمان کانونشنال می‌شود آن را سمان کرد، ولی قدرت باند کمتر است (۱، ۲).",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Posts luted with\nthe resin cement presented statistically significant higher tensile bond strength than those retained with glass ionomer (p<0.05).",
+          "source_ref": "S1",
+          "note": "Conventional cement is read as the glass ionomer the source tested; the cited references (1, 2) are not judged.; other sources: S2: MATCHES"
+        },
+        {
+          "id": "u18",
+          "claim_quote": "انتخاب منطقی سمان رزینی است، با سندبلاست ملایم آلومینا و پرایمر یا سمان حاوی MDP.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Posts luted with\nthe resin cement presented statistically significant higher tensile bond strength than those retained with glass ionomer (p<0.05).",
+          "source_ref": "S1",
+          "note": "Resin cement choice is judged by the reported higher retention; mild alumina sandblasting, primer and MDP cement are not addressed.; other sources: S2: MATCHES"
+        },
+        {
+          "id": "u19",
+          "claim_quote": "اسید هیدروفلوئوریک و سایلن روی زیرکونیا اثر ندارند.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u20",
+          "claim_quote": "∆ پست زیرکونیا یا فایبر پست؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u21",
+          "claim_quote": "فایبر پست مدول نزدیک به عاج دارد، شکست‌هایش بیشتر قابل جبران است و امکان درمان مجدد را حفظ می‌کند.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u22",
+          "claim_quote": "همان نتیجه‌ی زیبایی را هم می‌دهد.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u23",
+          "claim_quote": "در کانال‌های با شکل و قطر معمول، دلیلی برای انتخاب زیرکونیا باقی نمی‌ماند.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u24",
+          "claim_quote": "∆ پست زیرکونیا یا پست ریختگی؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u25",
+          "claim_quote": "در کانال‌های گشاد، بیضی یا فلیر شده که فایبر پست تطابق ندارد، پست ریختگی انتخاب بهتری است.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u26",
+          "claim_quote": "سفتی آن مشابه زیرکونیا است، ولی شکننده نیست، با سمان کانونشنال گیر خوبی می‌گیرد و قابل خارج کردن است.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u27",
+          "claim_quote": "رنگ فلز را می‌شود با کامپوزیت اوپک روی کور پوشاند، به شرط سندبلاست سطح کور و پرایمر فلز.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u28",
+          "claim_quote": "کور باید کوچک‌تر طراحی شود تا اوپکر جای سرامیک را نگیرد.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u29",
+          "claim_quote": "راه دیگر، روکش زیرکونیا با ترنسلوسنسی کمتر و سمان اوپک است.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u30",
+          "claim_quote": "اوپکر فقط بخش تاجی را حل می‌کند و سایه‌ی ریشه زیر لثه‌ی نازک باقی می‌ماند.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u31",
+          "claim_quote": "در بایوتایپ نازک با خط لبخند بالا، فایبر پست انتخاب بهتری است.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u32",
+          "claim_quote": "∆ جمع‌بندی",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u33",
+          "claim_quote": "شرط تعیین‌کننده در همه‌ی حالت‌ها حدود ۲ میلی‌متر فرول (حلقه‌ی عاجی) است.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u34",
+          "claim_quote": "پست دندان را تقویت نمی‌کند، فقط کور را نگه می‌دارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The only function of an endodontic post is to\nretain the core to facilitate a final cuspal coverage\nrestoration.",
+          "source_ref": "S1",
+          "note": "Not strengthening the tooth is the implication of the post's only function being to retain the core.; other sources: S2: REVERSED"
+        }
+      ],
+      "counts": {
+        "matches": 7,
+        "altered": 0,
+        "reversed": 0,
+        "not_in_source": 16,
+        "not_assessable": 0,
+        "author_view": 0,
+        "not_a_claim": 11
+      },
+      "assessable": 7,
+      "fidelity_score": 100,
+      "level": "HIGH",
+      "provisional": false,
+      "source_conclusion": "[S1] From the findings of this study, it may be concluded that zirconia posts cemented with resinbased cement (Variolink II) failed at significantly higher values compared to those cemented with glass ionomer cement (Fuji I). Regardless of the cement type, the posts failed adhesively at the cement/post interface when subjected to a tensile force.\n[S2] Chemical bonding with a hybrid layer formation with resin tags by polymer cement enhanced the pull out strength of customized ZrO posts compared to physical frictional retention offered by Zinc phosphate (non-polymeric) and RMGIC (hybrid polymer).",
+      "fact_fa": "از ۷ ادعایی که منابع به آن پرداخته‌اند، ۷ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱۶ جمله‌ی دیگر در منابع نیامده است.",
+      "interpretation_fa": "هر ادعای قابل‌بررسی با دست‌کم یکی از منابع مطابق است."
+    }
   },
   "sharehub/share-21": {
     "scored_at": "2026-09-18",
