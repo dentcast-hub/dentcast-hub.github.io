@@ -139362,6 +139362,143 @@
       "authors": [
         "Royal College of Surgeons of England, Faculty of Dental Surgery"
       ]
+    },
+    {
+      "id": "P2939",
+      "title": "A randomized trial of Citanest with Octapressin for relief of pain associated with laser vaporization of the cervix",
+      "file_name": "A randomized trial of Citanest with Octapressin for relief of pain associated with laser vaporization of the cervix.pdf",
+      "topic": "Anesthesia",
+      "topic_path": "Anesthesia",
+      "type": "primary/other",
+      "local_path": "",
+      "file_size": 228783,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "sharehub/share-33"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1SXw55koxtpt3j8QbajnTTUBorBFMJ3_k/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1SXw55koxtpt3j8QbajnTTUBorBFMJ3_k",
+      "drive_view": "https://drive.google.com/file/d/1SXw55koxtpt3j8QbajnTTUBorBFMJ3_k/view",
+      "drive_id": "1SXw55koxtpt3j8QbajnTTUBorBFMJ3_k",
+      "tags": [
+        "felypressin",
+        "prilocaine",
+        "local-anesthesia",
+        "randomized-controlled-trial",
+        "rct",
+        "vasoconstrictor",
+        "topic:anesthesia",
+        "a-randomized-trial-of-citanest-with-octapressin-for-relief-of-pain-associated-wi"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "A randomized trial of Citanest with Octapressin for relief of pain associated with laser vaporization of the cervix",
+      "doi": "10.1111/j.1471-0528.1986.tb08017.x",
+      "journal": "British Journal of Obstetrics and Gynaecology",
+      "crossref_year": 1986,
+      "subjects": [],
+      "abstract": "Fifty women undergoing laser vaporization of the cervix for cervical intraepithelial neoplasia were randomly allocated to one of two groups. In one group the patients received no anaesthesia, in the other the ectocervix was infiltrated with 2 ml of Citanest with Octapressin (prilocaine 3% with 0.03 i.u./ml. of felypressin) immediately before the procedure. The pain experienced by each group was assessed immediately after treatment by visual analogue and verbal rating scales. The pain experienced by those women receiving local anaesthesia was significantly reduced as assessed by the visual analogue scale (P = 0.011) and this reduction was not quite significant by the verbal rating scale (P = 0.06). The Citanest group had less troublesome bleeding but the difference in bleeding between the two groups was not significant.",
+      "display_title": "A randomized trial of Citanest with Octapressin for relief of pain associated with laser vaporization of the cervix",
+      "authors": [
+        "E T C Lee",
+        "E N Ozumba",
+        "J R Bevan"
+      ]
+    },
+    {
+      "id": "P2940",
+      "title": "Review of the Safety and Clinical Considerations of Vasoconstrictor Agents in Dental Anesthesia During Pregnancy",
+      "file_name": "Review of the Safety and Clinical Considerations of Vasoconstrictor Agents in Dental Anesthesia During Pregnancy.pdf",
+      "topic": "Anesthesia",
+      "topic_path": "Anesthesia",
+      "type": "primary/other",
+      "local_path": "",
+      "file_size": 1000856,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "sharehub/share-33"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1GzfpsVO3Wo5JW8ZJJ8peTtIg-DCWo7Wi/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1GzfpsVO3Wo5JW8ZJJ8peTtIg-DCWo7Wi",
+      "drive_view": "https://drive.google.com/file/d/1GzfpsVO3Wo5JW8ZJJ8peTtIg-DCWo7Wi/view",
+      "drive_id": "1GzfpsVO3Wo5JW8ZJJ8peTtIg-DCWo7Wi",
+      "tags": [
+        "pregnancy",
+        "vasoconstrictor",
+        "epinephrine",
+        "levonordefrin",
+        "felypressin",
+        "dental-anesthesia",
+        "narrative-review",
+        "topic:anesthesia",
+        "review-of-the-safety-and-clinical-considerations-of-vasoconstrictor-agents-in-de"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Review of the Safety and Clinical Considerations of Vasoconstrictor Agents in Dental Anesthesia During Pregnancy",
+      "doi": "10.3390/jcm14134773",
+      "journal": "Journal of Clinical Medicine",
+      "crossref_year": 2025,
+      "subjects": [],
+      "abstract": "The use of vasoconstrictors in dental anesthesia during pregnancy raises clinical concerns due to their potential effects on uteroplacental blood flow and fetal well-being. Despite widespread use, the safety profiles of agents such as epinephrine, levonordefrin, and felypressin remain insufficiently reviewed, particularly in isolation from local anesthetics. A systematic literature search was conducted using PubMed (MEDLINE) for studies published between January 2000 and May 2025, following PRISMA 2020 guidelines. Included studies assessed the use, pharmacokinetics, or outcomes of vasoconstrictor agents used in dental procedures during pregnancy. Articles were selected based on predefined inclusion criteria and synthesized narratively. Out of 95 screened records, only six narrative reviews and three clinical guidelines met eligibility criteria. Epinephrine was the most frequently described agent, generally regarded as safe at low dental doses (1:100,000-1:200,000) when properly administered. Levonordefrin showed insufficient safety data and was associated with potential uterine vasoconstriction. Felypressin was contraindicated due to its oxytocic properties and high risk of inducing uterine contractions. Among vasoconstrictors, epinephrine remains the only agent with an acceptable safety profile in pregnancy when used correctly. Levonordefrin lacks adequate evidence, and felypressin poses clear risks. Until further clinical trials are available, individualized risk assessment and adherence to obstetric and dental guidelines are critical for ensuring maternal and fetal safety.",
+      "display_title": "Review of the Safety and Clinical Considerations of Vasoconstrictor Agents in Dental Anesthesia During Pregnancy",
+      "authors": [
+        "Andrei Urîtu",
+        "Victor Bogdan Buciu",
+        "Ciprian Roi",
+        "Doina Chioran",
+        "Denis Mihai Serban",
+        "Nicolae Nicoleta",
+        "Elena Lavinia Rusu",
+        "Mihai Ionac",
+        "Mircea Riviș",
+        "Sebastian Ciurescu"
+      ]
+    },
+    {
+      "id": "P2941",
+      "title": "Oral Health Care During Pregnancy - A National Consensus Statement (rev. ed. 2026)",
+      "file_name": "Oral Health Care During Pregnancy - A National Consensus Statement (rev. ed. 2026).pdf",
+      "topic": "Medically compromized patient",
+      "topic_path": "Medically compromized patient",
+      "type": "primary/other",
+      "local_path": "",
+      "file_size": 5324793,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "sharehub/share-33"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1NAy8nKSCovHe6Vn1iSL2q-YOKYJR69A4/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1NAy8nKSCovHe6Vn1iSL2q-YOKYJR69A4",
+      "drive_view": "https://drive.google.com/file/d/1NAy8nKSCovHe6Vn1iSL2q-YOKYJR69A4/view",
+      "drive_id": "1NAy8nKSCovHe6Vn1iSL2q-YOKYJR69A4",
+      "tags": [
+        "pregnancy",
+        "consensus",
+        "oral-health-care",
+        "prenatal-care",
+        "guideline",
+        "topic:medically-compromized-patient",
+        "oral-health-care-during-pregnancy-a-national-consensus-statement-rev-ed-2026"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Oral Health Care During Pregnancy - A National Consensus Statement (rev. ed. 2026)",
+      "doi": "",
+      "journal": "National Maternal and Child Oral Health Resource Center, Georgetown University",
+      "crossref_year": 2026,
+      "subjects": [],
+      "abstract": "Revised (2026) national consensus statement of the National Maternal and Child Oral Health Resource Center (Georgetown University). It gives guidance for prenatal care health professionals and for oral health professionals on assessing pregnant women's oral health and advising them about oral health care, and guidance for health professionals to share with pregnant women.",
+      "display_title": "Oral Health Care During Pregnancy - A National Consensus Statement (rev. ed. 2026)",
+      "authors": [
+        "Oral Health Care During Pregnancy Expert Workgroup"
+      ]
     }
   ],
   "drive_matched": 2849,
