@@ -138697,6 +138697,63 @@
       "authors": [
         "Çise Özal"
       ]
+    },
+    {
+      "id": "P2925",
+      "title": "Tirzepatide Once Weekly for the Treatment of Obesity",
+      "file_name": "Tirzepatide Once Weekly for the Treatment of Obesity.pdf",
+      "topic": "Drug",
+      "topic_path": "Drug",
+      "type": "primary/other",
+      "local_path": "",
+      "file_size": 591785,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "sharehub/share-16"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1DLtCGHGYw8OXWS_duHgCVQapIITJQ8M1/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1DLtCGHGYw8OXWS_duHgCVQapIITJQ8M1",
+      "drive_view": "https://drive.google.com/file/d/1DLtCGHGYw8OXWS_duHgCVQapIITJQ8M1/view",
+      "drive_id": "1DLtCGHGYw8OXWS_duHgCVQapIITJQ8M1",
+      "tags": [
+        "tirzepatide",
+        "glp-1-receptor-agonist",
+        "gip",
+        "obesity",
+        "weight-loss",
+        "surmount-1",
+        "randomized-controlled-trial",
+        "topic:drug",
+        "tirzepatide-once-weekly-for-the-treatment-of-obesity"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Tirzepatide Once Weekly for the Treatment of Obesity",
+      "doi": "10.1056/NEJMoa2206038",
+      "journal": "The New England Journal of Medicine",
+      "crossref_year": 2022,
+      "subjects": [
+        "Obesity",
+        "Tirzepatide",
+        "Randomized controlled trial"
+      ],
+      "abstract": "Obesity is a chronic disease that results in substantial global morbidity and mortality. The efficacy and safety of tirzepatide, a novel glucose-dependent insulinotropic polypeptide and glucagon-like peptide-1 receptor agonist, in people with obesity are not known. In this phase 3 double-blind, randomized, controlled trial, 2539 adults with a BMI of 30 or more, or 27 or more and at least one weight-related complication, excluding diabetes, were assigned 1:1:1:1 to once-weekly subcutaneous tirzepatide (5, 10 or 15 mg) or placebo for 72 weeks. Coprimary end points were the percentage change in weight and a weight reduction of 5% or more. Mean percentage change in weight at week 72 was -15.0%, -19.5% and -20.9% with 5, 10 and 15 mg of tirzepatide versus -3.1% with placebo (P<0.001). Weight reduction of 5% or more occurred in 85%, 89% and 91% versus 35% with placebo. Adverse events were mainly gastrointestinal and mild to moderate; discontinuation due to adverse events was 4.3%, 7.1%, 6.2% and 2.6%. Tirzepatide once weekly provided substantial and sustained reductions in body weight in participants with obesity (SURMOUNT-1, NCT04184622).",
+      "display_title": "Tirzepatide Once Weekly for the Treatment of Obesity",
+      "authors": [
+        "Ania M. Jastreboff",
+        "Louis J. Aronne",
+        "Nadia N. Ahmad",
+        "Sean Wharton",
+        "Lisa Connery",
+        "Breno Alves",
+        "Arihiro Kiyosue",
+        "Shuyu Zhang",
+        "Bing Liu",
+        "Mathijs C. Bunck",
+        "Adam Stefanski"
+      ]
     }
   ],
   "drive_matched": 2849,
