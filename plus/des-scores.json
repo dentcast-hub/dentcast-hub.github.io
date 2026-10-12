@@ -14583,7 +14583,1128 @@
         "fact_fa": "امتیاز این منبع ۵۷ از ۱۰۰ و در باند C (شواهد محدود) برای پرسش نوع THERAPY است.",
         "interpretation_fa": "این کارآزمایی تصادفی فاز ۳ روش تصادفی‌سازی و پنهان‌سازی تخصیص را به‌روشنی توصیف کرده و نسبت به SURMOUNT-1 شفاف‌تر است. تأمین مالی توسط الی‌لیلی بدون بیانیه‌ی تحلیل مستقل و محدودیت به چکیده امتیاز نهایی را پایین آورده، هرچند کاهش وزنِ گزارش‌شده در بیماران دیابتی نوع ۲ از نظر بالینی معنادار است."
       }
-    ]
+    ],
+    "fidelity": {
+      "des_version": "3.0",
+      "mode": "FIDELITY",
+      "scope": "POOLED",
+      "text_basis": "ABSTRACT_ONLY",
+      "claims": [
+        {
+          "id": "u1",
+          "claim_quote": "اسپارتینا (تیرزپاتاید) روی یونیت: چه چیزی را بپرسیم و چه چیزی را تغییر دهیم",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u2",
+          "claim_quote": "English",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "link label"
+        },
+        {
+          "id": "u3",
+          "claim_quote": "اسپارتینا (Spartina) پرمصرف‌ترین داروی کاهش وزن تزریقی هفتگی در ایران است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u4",
+          "claim_quote": "ماده‌ی مؤثره‌ی آن تیرزپاتاید (Tirzepatide) است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u5",
+          "claim_quote": "همین ماده در بازار جهانی با نام مونجارو (Mounjaro) برای دیابت نوع ۲ و زپباوند (Zepbound) برای چاقی عرضه می‌شود.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u6",
+          "claim_quote": "تیرزپاتاید اثر دو هورمون گوارشی طبیعی بدن را تقلید می‌کند؛ هورمون‌هایی که بعد از غذا ترشح می‌شوند، اشتها را کم می‌کنند، ترشح انسولین را بالا می‌برند و تخلیه‌ی معده را کند می‌کنند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Tirzepatide is a once-weekly subcutaneous\ninjectable peptide (approved by the Food and\nDrug Administration [FDA] for type 2 diabetes)\nengineered from the native GIP sequence, with\nagonist activity at both the GIP and GLP-1 receptors.",
+          "source_ref": "S1",
+          "note": "addressed half: agonist activity at the GIP and GLP-1 receptors; the appetite, insulin and gastric-emptying effects are silent in this source; other sources: S2: MATCHES"
+        },
+        {
+          "id": "u7",
+          "claim_quote": "سه اثر آخر همان جایی است که به کار ما ربط پیدا می‌کند.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "signpost, importance judgment about unstated content"
+        },
+        {
+          "id": "u8",
+          "claim_quote": "با شیوع فعلی مصرف، احتمال اینکه بیمار روی یونیت شما اسپارتینا مصرف کند بالاست.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u9",
+          "claim_quote": "مشکل اینجاست که خیلی از بیماران آن را در قسمت تاریخچه‌ی پرونده ذکر نمی‌کنند، چون آن را «دارو» حساب نمی‌کنند و یک قلم لاغری می‌دانند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u10",
+          "claim_quote": "∆ منبع این مقاله",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u11",
+          "claim_quote": "مبنای اعداد این مقاله سند رسمی اطلاعات تجویز داروی زپباوند است؛ همان بروشور کامل و مفصلی که شرکت سازنده (Eli Lilly) تدوین می‌کند و FDA آن را تأیید و منتشر می‌کند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u12",
+          "claim_quote": "نسخه‌ی مورد استفاده، بازنگری دسامبر ۲۰۲۴ است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u13",
+          "claim_quote": "داده‌های عوارض این سند از دو کارآزمایی بالینی می‌آید که در سند با نام Study 1 و Study 2 معرفی شده‌اند و در واقع همان مطالعات SURMOUNT-1 و SURMOUNT-2 هستند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u14",
+          "claim_quote": "هر دو تصادفی، دوسوکور و کنترل‌شده با پلاسبو بودند، ۷۲ هفته طول کشیدند و در مجموع حدود ۳۴۰۰ بیمار داشتند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "In this phase 3 double-blind, randomized, controlled trial, we assigned 2539\nadults with a body-mass index (BMI; the weight in kilograms divided by the square\nof the height in meters) of 30 or more, or 27 or more and at least one weight-related complication, excluding diabetes, in a 1:1:1:1 ratio to receive once-weekly,\nsubcutaneous tirzepatide (5 mg, 10 mg, or 15 mg) or placebo for 72 weeks, including a 20-week dose-escalation period.",
+          "source_ref": "S1",
+          "note": "addressed half for this trial: randomized, double-blind, placebo-controlled, 72 weeks; the combined count of about 3400 is not this trial alone (silent); other sources: S2: MATCHES"
+        },
+        {
+          "id": "u15",
+          "claim_quote": "لینک هر دو در انتهای مقاله آمده تا خودتان بتوانید چک کنید.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "link pointer, page scope"
+        },
+        {
+          "id": "u16",
+          "claim_quote": "یک نکته‌ی صادقانه درباره‌ی خود اسپارتینا: ما داده‌ی بالینی مستقلی از اسپارتینا نداریم.",
+          "verdict": "AUTHOR_VIEW",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "first-person marker: ما"
+        },
+        {
+          "id": "u17",
+          "claim_quote": "فرض ما این است که چون ماده‌ی مؤثره یکسان است، عوارض هم مشابه خواهد بود.",
+          "verdict": "AUTHOR_VIEW",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "first-person marker: فرض ما"
+        },
+        {
+          "id": "u18",
+          "claim_quote": "این فرض منطقی است، اما آزمایش‌نشده؛ یعنی مطالعه‌ای در دسترس نیست که نشان دهد اسپارتینا دقیقاً همان مقدار دارو را با همان سرعت وارد خون می‌کند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u19",
+          "claim_quote": "علاوه بر این، اعداد زیر از مطالعات چاقی می‌آید.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "page scope: where the numbers below come from"
+        },
+        {
+          "id": "u20",
+          "claim_quote": "بیماری که تیرزپاتاید را برای دیابت مصرف می‌کند، بیمار متفاوتی است و ارقام عوارضش هم می‌تواند فرق کند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u21",
+          "claim_quote": "∆ سؤالاتی که باید در تاریخچه‌ی پرونده بپرسید",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u22",
+          "claim_quote": "پرسیدن «دارویی مصرف می‌کنید؟» کافی نیست.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u23",
+          "claim_quote": "چهار سؤال مشخص:",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "ends in colon, introduces what follows"
+        },
+        {
+          "id": "u24",
+          "claim_quote": "۱.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "list number"
+        },
+        {
+          "id": "u25",
+          "claim_quote": "آمپول هفتگی لاغری یا قند می‌زنید؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "question"
+        },
+        {
+          "id": "u26",
+          "claim_quote": "اسمش چیست؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "question"
+        },
+        {
+          "id": "u27",
+          "claim_quote": "۲.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "list number"
+        },
+        {
+          "id": "u28",
+          "claim_quote": "چند وقت است شروع کرده‌اید و اخیراً دوزتان بالا رفته؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "question"
+        },
+        {
+          "id": "u29",
+          "claim_quote": "۳.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "list number"
+        },
+        {
+          "id": "u30",
+          "claim_quote": "تهوع، استفراغ یا ترش‌کردن دارید؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "question"
+        },
+        {
+          "id": "u31",
+          "claim_quote": "۴.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "list number"
+        },
+        {
+          "id": "u32",
+          "claim_quote": "همراهش انسولین یا قرص قند هم مصرف می‌کنید؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "question"
+        },
+        {
+          "id": "u33",
+          "claim_quote": "سؤال دوم از چیزی که به نظر می‌رسد مهم‌تر است.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "importance judgment about unstated content"
+        },
+        {
+          "id": "u34",
+          "claim_quote": "این دارو با دوز ۲.۵ میلی‌گرم شروع می‌شود و هر چهار هفته ۲.۵ میلی‌گرم بالا می‌رود تا به دوز ثابت نگهدارنده برسد (۵، ۱۰ یا ۱۵ میلی‌گرم).",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Tirzepatide was initiated at a dose of 2.5 mg\nonce weekly (or matching placebo) and was increased by 2.5 mg every 4 weeks during the\ndose-escalation period to reach a maintenance\ndose of up to 15 mg once weekly by week 20\n(Fig. S1).",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u35",
+          "claim_quote": "این دوره‌ی بالا رفتن دوز تا حدود ۲۰ هفته طول می‌کشد و بیشتر عوارض گوارشی دقیقاً در همین دوره رخ می‌دهند و بعد کم می‌شوند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The most common adverse events with tirzepatide were\ngastrointestinal, and most were mild to moderate in severity, occurring primarily\nduring dose escalation.",
+          "source_ref": "S1",
+          "note": "the 20-week escalation is stated in Methods; the later decline is covered by the transient wording"
+        },
+        {
+          "id": "u36",
+          "claim_quote": "پس بیماری که سه هفته پیش دوزش بالا رفته با بیماری که یک سال است روی دوز ثابت است، دو بیمار متفاوت‌اند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u37",
+          "claim_quote": "∆ ۱.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u38",
+          "claim_quote": "سِدیشن و بیهوشی: مهم‌ترین بند برای ما",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u39",
+          "claim_quote": "این تنها بخشی است که در بازنگری اخیر سند اضافه شده (اکتبر ۲۰۲۴) و مستقیم‌ترین ربط را به دندانپزشکی دارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u40",
+          "claim_quote": "تیرزپاتاید تخلیه‌ی معده را کند می‌کند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u41",
+          "claim_quote": "گزارش‌های نادری وجود دارد از بیمارانی که این دسته دارو را مصرف می‌کردند، برای عمل الکتیو تحت بیهوشی عمومی یا سِدیشن عمیق رفتند، دستور ناشتایی را هم کامل رعایت کرده بودند، ولی باز معده‌شان خالی نبود و محتویات معده وارد ریه شد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u42",
+          "claim_quote": "نکته‌ی حیاتی این است که سند صراحتاً می‌گوید داده‌ی کافی برای توصیه به طولانی‌تر کردن ناشتایی یا قطع موقت دارو وجود ندارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u43",
+          "claim_quote": "یعنی شما نه مجازید خودتان دارو را قطع کنید و نه می‌توانید با اضافه کردن چند ساعت ناشتایی خیالتان راحت شود.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u44",
+          "claim_quote": "کار درست این است:",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "signpost"
+        },
+        {
+          "id": "u45",
+          "claim_quote": "در هر کیسی که سِدیشن عمیق یا بیهوشی عمومی دارد (جراحی‌های وسیع، ایمپلنت‌های متعدد، درمان کودکان و بیماران با نیاز خاص)، مصرف اسپارتینا را قبل از رزرو نوبت مشخص کنید",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u46",
+          "claim_quote": "صریحاً به متخصص بیهوشی اطلاع بدهید و تصمیم درباره‌ی ناشتایی یا قطع دارو را به او بسپارید",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u47",
+          "claim_quote": "برای سِدیشن خفیف و گاز نیتروژن این هشدار موضوعیت ندارد",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u48",
+          "claim_quote": "∆ ۲.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u49",
+          "claim_quote": "اروژن: چیزی که باید بیشتر از خشکی دهان نگرانتان کند",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u50",
+          "claim_quote": "اگر قرار باشد فقط یک ریسک دندانی از برگه‌ی تجویز Zepbound بیرون بکشیم، خشکی دهان نیست:",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u51",
+          "claim_quote": "طبق برگه‌ی Zepbound، استفراغ در ۸ تا ۱۳ درصد بیماران (بسته به دوز)، در برابر ۲ درصد پلاسبو",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u52",
+          "claim_quote": "ریفلاکس معده به مری در ۴ تا ۵ درصد، در برابر ۲ درصد",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u53",
+          "claim_quote": "طبق برگه‌ی Zepbound، تهوع در ۲۵ تا ۲۹ درصد، در برابر ۸ درصد",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u54",
+          "claim_quote": "از نظر بزرگی عدد، تماس مکرر مینا با اسید معده چند برابر شایع‌تر از هر سناریوی مربوط به بزاق است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u55",
+          "claim_quote": "در معاینه به اروژن سطح پالاتال دندان‌های قدامی بالا و کاپینگ سطوح اکلوزال توجه کنید، مخصوصاً در بیمارانی که در دوره‌ی افزایش دوز هستند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u56",
+          "claim_quote": "آموزش بیمار در این دوره مشخص است: بعد از استفراغ بلافاصله مسواک نزند، دهانش را با آب یا محلول جوش شیرین بشوید و مسواک را حداقل نیم ساعت عقب بیندازد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u57",
+          "claim_quote": "فلوراید موضعی با غلظت بالا در بیمار با اروژن فعال منطقی است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u58",
+          "claim_quote": "∆ ۳.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u59",
+          "claim_quote": "افت قند روی یونیت",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u60",
+          "claim_quote": "در مطالعه‌ی بیماران دیابتی، افت قند زیر ۵۴ در ۴.۲ درصد گروه دارو در برابر ۱.۳ درصد پلاسبو گزارش شد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u61",
+          "claim_quote": "اما عدد کلیدی این است: در بیمارانی که هم‌زمان قرص سولفونیل‌اوره (مثل گلی‌بن‌کلامید) مصرف می‌کردند این رقم به ۱۰.۳ درصد رسید، در برابر ۲.۱ درصد در بقیه.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u62",
+          "claim_quote": "پس اسپارتینا به‌تنهایی ریسک افت قند چشمگیری ندارد، ولی اسپارتینا به‌علاوه‌ی گلی‌بن‌کلامید یا انسولین یک بیمار پرخطر است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u63",
+          "claim_quote": "برای این گروه قرارهای طولانی صبح زود و ناشتا را کنار بگذارید، قند سریع‌الجذب دم دست داشته باشید و حین کار حواستان به علائم افت قند باشد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u64",
+          "claim_quote": "افت فشار خون هم در ۱.۶ درصد بیماران گزارش شده که در بیماران مصرف‌کننده‌ی داروی فشار خون به ۲.۲ درصد می‌رسد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u65",
+          "claim_quote": "بلند شدن تدریجی از روی یونیت را یادآوری کنید.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u66",
+          "claim_quote": "∆ ۴.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u67",
+          "claim_quote": "مسکنی که بعد از درمان می‌نویسید",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u68",
+          "claim_quote": "اسپارتینا تخلیه‌ی معده را کند می‌کند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u69",
+          "claim_quote": "هر قرص خوراکی هم برای جذب باید اول از معده وارد روده شود، پس با کند شدن تخلیه، رسیدن دارو به خون عقب می‌افتد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u70",
+          "claim_quote": "سند این را با استامینوفن اندازه گرفته است: اوج اثر یک ساعت دیرتر رسید و در آن لحظه غلظت دارو در خون ۵۵ درصد کمتر از حالت عادی بود.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u71",
+          "claim_quote": "اما مجموع دارویی که در طول ۲۴ ساعت جذب شد فرقی نکرد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u72",
+          "claim_quote": "این اثر هم موقتی بود و بعد از چند هفته دیگر دیده نشد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u73",
+          "claim_quote": "ترجمه‌ی ساده: کل مسکنی که به بیمار می‌رسد کم نمی‌شود، ولی ممکن است دیرتر اثر کند، آن هم عمدتاً در هفته‌های اول درمان یا درست بعد از افزایش دوز.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u74",
+          "claim_quote": "برای کنترل درد بعد از جراحی منطقی است که مسکن را زودتر و قبل از تمام شدن اثر بی‌حسی شروع کنید تا این تأخیر پوشش داده شود.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u75",
+          "claim_quote": "∆ ۵.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u76",
+          "claim_quote": "عوارض مستقیم دهانی: کم‌شیوع ولی لازم به دانستن",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u77",
+          "claim_quote": "هیچ‌کدام از این‌ها به آستانه‌ی ۲ درصد لازم برای ورود به جدول اصلی عوارض شایع نرسیده‌اند:",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u78",
+          "claim_quote": "خشکی دهان یا گلو: ۱ درصد در برابر ۰.۱ درصد پلاسبو.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u79",
+          "claim_quote": "این عدد ترکیبی است، یعنی خشکی دهان و خشکی گلو با هم شمرده شده‌اند، پس سهم خشکی دهان به‌تنهایی از ۱ درصد هم کمتر است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u80",
+          "claim_quote": "اختلال چشایی: ۰.۴ درصد در برابر صفر در پلاسبو.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u81",
+          "claim_quote": "حس غیرطبیعی و مورمور (Dysesthesia): ۰.۲ تا ۰.۴ درصد در برابر ۰.۱ درصد پلاسبو.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u82",
+          "claim_quote": "سند نگفته کجای بدن.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u83",
+          "claim_quote": "اگر بیمار از مورمور مبهم لب یا زبان شکایت کرد این را در ذهن داشته باشید، ولی اول علل شایع‌تر را رد کنید.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u84",
+          "claim_quote": "واکنش‌های آلرژیک: واکنش‌های سریع (ظرف یک روز بعد از تزریق) در ۲.۱ درصد در برابر ۰.۴ درصد پلاسبو، که اکثرشان صرفاً کهیر و خارش پوستی بوده.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u85",
+          "claim_quote": "واکنش شدید در ۰.۱ درصد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u86",
+          "claim_quote": "موارد آنافیلاکسی و تورم صورت و لب و زبان و گلو فقط در بخش «گزارش‌های بعد از عرضه به بازار» آمده‌اند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u87",
+          "claim_quote": "خود سند تصریح می‌کند این گزارش‌ها داوطلبانه‌اند، شیوع‌شان قابل محاسبه نیست و معلوم هم نیست حتماً تقصیر دارو بوده باشد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u88",
+          "claim_quote": "معاینه‌ی گردن: این دارو در موش تومور تیروئید ایجاد کرده و معلوم نیست در انسان هم همین‌طور باشد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u89",
+          "claim_quote": "مستقل از این، به همه‌ی بیماران گفته می‌شود اگر توده در گردن، گرفتگی مداوم صدا، اشکال در بلع یا تنگی نفس پیدا کردند به پزشک بگویند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u90",
+          "claim_quote": "اگر شما در معاینه‌ی روتین سر و گردن به چنین چیزی برخوردید، ارجاع بدهید.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u91",
+          "claim_quote": "∆ این اعداد را چقدر جدی بگیریم",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u92",
+          "claim_quote": "نکته‌ای که راحت از قلم می‌افتد: اینکه یک عدد از دل یک کارآزمایی خوب بیرون آمده باشد، به‌تنهایی آن را معتبر نمی‌کند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u93",
+          "claim_quote": "مهم این است که مطالعه اصلاً دنبال آن متغیر بوده یا نه.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u94",
+          "claim_quote": "این مطالعات برای اندازه‌گیری وضعیت دهان طراحی نشده بودند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u95",
+          "claim_quote": "هدفشان کاهش وزن بود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Coprimary end points were the percentage\nchange in weight from baseline and a weight reduction of 5% or more.",
+          "source_ref": "S1",
+          "note": "other sources: S2: MATCHES"
+        },
+        {
+          "id": "u96",
+          "claim_quote": "عوارض دهانی صرفاً از این راه ثبت شده‌اند که بیمار خودش موقع ویزیت شکایتی مطرح کرده و بعد کدگذاری شده است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u97",
+          "claim_quote": "هیچ اندازه‌گیری ترشح بزاق، هیچ پرسشنامه‌ی هدفمند خشکی دهان و هیچ تست چشایی استانداردی در کار نبوده.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u98",
+          "claim_quote": "تعداد نمونه هم برای پیدا کردن تفاوت در عوارضی با شیوع کمتر از ۱ درصد کافی نیست.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u99",
+          "claim_quote": "نتیجه‌ی عملی: این ارقام به درد برآورد بزرگی مسئله می‌خورند، نه به درد اثبات یا رد یک رابطه‌ی علت و معلولی ظریف.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u100",
+          "claim_quote": "∆ دیدگاه بالینی",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u101",
+          "claim_quote": "از اینجا به بعد استدلال است، نه یافته‌ی مستند در سند.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "page scope: marks what follows as reasoning"
+        },
+        {
+          "id": "u102",
+          "claim_quote": "این تفکیک را عمداً نگه می‌داریم.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "page scope, first person"
+        },
+        {
+          "id": "u103",
+          "claim_quote": "اول، باید بین احساس ذهنی خشکی دهان (Xerostomia) و کاهش واقعی و اندازه‌گیری‌شده‌ی ترشح بزاق تفاوت قائل شد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: AUTHOR_VIEW"
+        },
+        {
+          "id": "u104",
+          "claim_quote": "سند فقط شکایت خود بیمار را ثبت کرده و هیچ داده‌ای از میزان ترشح بزاق ندارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: AUTHOR_VIEW"
+        },
+        {
+          "id": "u105",
+          "claim_quote": "پس از این سند نمی‌توان نتیجه گرفت که تیرزپاتاید ترشح بزاق را کم می‌کند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: AUTHOR_VIEW"
+        },
+        {
+          "id": "u106",
+          "claim_quote": "اگر بیماری از خشکی دهان شکایت داشت، به‌جای اینکه مستقیم گردن اسپارتینا بیندازید، اول ترشح بزاق را اندازه بگیرید و بقیه‌ی داروهای خشکی‌آور او را مرور کنید.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: AUTHOR_VIEW"
+        },
+        {
+          "id": "u107",
+          "claim_quote": "دوم، پوسیدگی یک پدیده‌ی چندعاملی است و بیش از هر چیز به دفعات تماس دندان با کربوهیدرات تخمیرپذیر بستگی دارد، نه به کل کالری دریافتی.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: AUTHOR_VIEW"
+        },
+        {
+          "id": "u108",
+          "claim_quote": "سند نشان می‌دهد این دارو کالری دریافتی را کم می‌کند، اما هیچ داده‌ای درباره‌ی الگو و دفعات مصرف قند ندارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: AUTHOR_VIEW"
+        },
+        {
+          "id": "u109",
+          "claim_quote": "اینکه تغییر رژیم غذایی شاید نقش محافظتی داشته باشد یک حدس معقول است، نه یک یافته.",
+          "verdict": "AUTHOR_VIEW",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "author explanation with possibility hedge (شاید)"
+        },
+        {
+          "id": "u110",
+          "claim_quote": "نتیجه‌گیری قطعی در هر دو جهت از این سند درنمی‌آید.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: AUTHOR_VIEW"
+        },
+        {
+          "id": "u111",
+          "claim_quote": "سوم، اگر در بیمار خاصی کاهش واقعی بزاق مستند شد، پیامدهایش قابل پیش‌بینی است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: AUTHOR_VIEW"
+        },
+        {
+          "id": "u112",
+          "claim_quote": "بزاق در ایجاد سیل و ثبات پروتز متحرک نقش دارد و تغییر غلظت یا حجم آن می‌تواند گیر پروتز و راحتی بیمار را بدتر کند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: AUTHOR_VIEW"
+        },
+        {
+          "id": "u113",
+          "claim_quote": "در بیماران ایمپلنت، مخصوصاً جایی که لثه‌ی کراتینیزه کم است، مختل شدن شست‌وشوی طبیعی دهان می‌تواند تجمع پلاک را سریع‌تر کند و فواصل ریکال را کوتاه‌تر.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: AUTHOR_VIEW"
+        },
+        {
+          "id": "u114",
+          "claim_quote": "این زنجیره در سند بررسی نشده و صرفاً بر پایه‌ی نقش شناخته‌شده‌ی بزاق مطرح می‌شود.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: AUTHOR_VIEW"
+        },
+        {
+          "id": "u115",
+          "claim_quote": "∆ جمع‌بندی",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u116",
+          "claim_quote": "عوارض مستقیم دهانی تیرزپاتاید شیوع پایینی دارند و به‌تنهایی تهدید مهمی برای دندان‌ها نیستند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u117",
+          "claim_quote": "اما این یعنی جای نگرانی از بابت پوسیدگی کم است، نه اینکه مصرف اسپارتینا یک قلم بی‌اهمیت در پرونده باشد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u118",
+          "claim_quote": "سه چیز است که پاسخ مثبت به آن عملاً کار شما را عوض می‌کند:",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "ends in colon, introduces what follows"
+        },
+        {
+          "id": "u119",
+          "claim_quote": "سِدیشن عمیق یا بیهوشی عمومی در برنامه است: حتماً به متخصص بیهوشی بگویید و خودتان دارو را قطع نکنید",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u120",
+          "claim_quote": "بیمار در دوره‌ی افزایش دوز است و استفراغ یا ریفلاکس دارد: ارزیابی اروژن، آموزش بعد از استفراغ، فلوراید موضعی",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u121",
+          "claim_quote": "هم‌زمان انسولین یا قرص سولفونیل‌اوره مصرف می‌کند: زمان‌بندی قرار و آمادگی برای افت قند",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u122",
+          "claim_quote": "بقیه‌ی موارد در حد آگاهی و معاینه‌ی دوره‌ای هوشیارانه کافی است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE"
+        }
+      ],
+      "counts": {
+        "matches": 5,
+        "altered": 0,
+        "reversed": 0,
+        "not_in_source": 0,
+        "not_assessable": 79,
+        "author_view": 3,
+        "not_a_claim": 35
+      },
+      "assessable": 5,
+      "fidelity_score": 100,
+      "level": "HIGH",
+      "provisional": true,
+      "source_conclusion": "[S1] In this 72-week trial in participants with obesity, 5 mg, 10 mg, or 15 mg of tirzepatide once weekly provided substantial and sustained reductions in body weight.\n[S2] In this 72-week trial in adults living with obesity and type 2 diabetes, once-weekly tirzepatide 10 mg and 15 mg provided substantial and clinically meaningful reduction in bodyweight, with a safety profile that was similar to other incretin-based therapies for weight management.",
+      "fact_fa": "از ۵ ادعایی که منابع به آن پرداخته‌اند، ۵ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+      "interpretation_fa": "هر ادعای قابل‌بررسی با دست‌کم یکی از منابع مطابق است."
+    }
   },
   "dentai/dentai-31": {
     "scored_at": "2026-08-21",
@@ -23528,15 +24649,15 @@
     ]
   },
   "sharehub/share-20": {
-    "scored_at": "2026-09-17",
+    "scored_at": "2026-10-12",
     "sources": [
       {
-        "des_version": "2.4",
+        "des_version": "3.0",
         "content_type": "RESEARCH",
         "question_type": "MATERIAL",
-        "text_basis": "ABSTRACT_ONLY",
+        "text_basis": "FULL_TEXT",
         "citation": {
-          "title": "In vitro evaluation of the retention of zirconia-based ceramic posts luted with glass ionomer and resin cements.",
+          "title": "In vitro evaluation of the retention of zirconia-based ceramic posts luted with glass ionomer and resin cements",
           "authors": "Marchan S, Coldero L, Whiting R, Barclay S",
           "year": 2005,
           "journal": "Brazilian Dental Journal",
@@ -23548,7 +24669,7 @@
         },
         "s_design": {
           "value": 65,
-          "anchor": "in-vitro tensile pull-out test of prefabricated zirconia posts luted with two cements; the protocol is fully described (post space depth, post diameter, embedding, tensile testing, statistics) but no ISO reference, no load rate and no aging step are reported, so it lands on the MATERIAL row for an in-vitro study with a non-standard but fully described protocol (65) rather than the validated-protocol row (85)",
+          "anchor": "in-vitro with non-standard but fully described protocol (MATERIAL, 65): custom tensile pull-out set-up, no ISO standard and no artificial aging",
           "evidence_quote": "The post/teeth specimens were embedded in resin blocks and subjected to tensile testing."
         },
         "q_method": {
@@ -23557,86 +24678,82 @@
             {
               "domain": "clearly stated aims",
               "rating": "low",
-              "evidence_quote": "The retention of zirconia-based ceramic posts (CosmoPost system) luted with glass ionomer and resin cements was evaluated.",
-              "note": ""
+              "evidence_quote": "compare the retentive values of CosmoPosts cemented"
             },
             {
               "domain": "sample size justification",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "چکیده هیچ محاسبه یا توجیه حجم نمونه‌ای گزارش نمی‌کند. text_basis برابر ABSTRACT_ONLY است، پس سکوت اینجا NR است نه high (Step 3b بند ۵)."
+              "rating": "some_concerns",
+              "evidence_quote": "was in agreement with that used in studies of a similar"
             },
             {
               "domain": "randomization / allocation of specimens",
               "rating": "low",
-              "evidence_quote": "The teeth were endodontically treated and randomly assigned to two groups (n=16).",
-              "note": ""
+              "evidence_quote": "assigned to two experimental groups (n=16) and returned"
             },
             {
               "domain": "operator and assessor blinding",
-              "rating": "NR",
+              "rating": "high",
               "evidence_quote": "",
-              "note": "چکیده چیزی درباره‌ی کور بودن اپراتور یا ارزیاب نمی‌گوید. زیر ABSTRACT_ONLY سکوت NR است."
+              "note": "Absence: read Material and Methods (specimen preparation, cementation, tensile testing, failure-mode examination) and Discussion; no wording about blinding or masking of operator or assessor anywhere in the text."
             },
             {
               "domain": "appropriate statistical analysis",
               "rating": "low",
-              "evidence_quote": "The mean stress values of both groups were analyzed for statistical differences using ANOVA and Student's t-test. Significance level was set at 5%.",
-              "note": ""
+              "evidence_quote": "The mean stress values of both groups were analyzed"
             },
             {
               "domain": "conflict of interest / funding",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "چکیده بیانیه‌ی تعارض منافع یا تأمین مالی ندارد؛ زیر ABSTRACT_ONLY این غیاب اطلاعات نیست و NR رتبه‌بندی می‌شود."
+              "rating": "some_concerns",
+              "evidence_quote": "donation of the CosmoPosts and Variolink cement kits, and Mr.",
+              "note": "Funding source and manufacturer material donation are disclosed in Acknowledgements, but there is no explicit conflict-of-interest or independence statement."
             }
           ],
           "multiplier": 0.55
         },
         "penalties": [
           {
-            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "item": "no conflict-of-interest statement / commercial funding without independence statement",
             "base_points": 8,
             "points": 0,
-            "evidence_quote": "",
-            "note": "not assessable in abstract"
+            "evidence_quote": "donation of the CosmoPosts and Variolink cement kits, and Mr.",
+            "note": "Funding by a university research fund is named; the manufacturer only donated materials and did not fund the study. Disclosure is present, so no penalty; also partly covered in Q_method."
           },
           {
-            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "item": "clinical trial not prospectively registered",
             "base_points": 5,
             "points": 0,
             "evidence_quote": "",
-            "note": "فقط برای RCT اعمال می‌شود؛ این یک مطالعه‌ی in-vitro است."
+            "note": "not applicable to an in-vitro study"
           },
           {
-            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "item": "no sample size justification / power analysis",
             "base_points": 5,
             "points": 0,
-            "evidence_quote": "The teeth were endodontically treated and randomly assigned to two groups (n=16).",
-            "note": "برای in-vitro این ردیف وقتی فعال می‌شود که تعداد نمونه در هر گروه کمتر از ۱۰ و بدون توجیه باشد؛ اینجا n=16 در هر گروه است، پس فعال نمی‌شود."
+            "evidence_quote": "The group sample size",
+            "note": "n=16 per group is at least 10, so the in-vitro threshold does not fire; a similarity-to-prior-studies justification is also given."
           },
           {
-            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "item": "follow-up shorter than the outcome plausibly requires",
             "base_points": 3,
             "points": 0,
             "evidence_quote": "",
-            "note": "مطالعه‌ی in-vitro تک‌مرحله‌ای است و هیچ ادعای بقا یا موفقیت مبتنی بر پیگیری ندارد، پس این بند موضوعیت ندارد."
+            "note": "not applicable; bench retention test with no survival claim"
           }
         ],
         "commentary_checklist": null,
         "des_score": 36,
         "band": "D",
-        "provisional": true,
-        "fact_fa": "این مطالعه در نوع پرسش MATERIAL امتیاز ۳۶ و باند D گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
-        "interpretation_fa": "تست کشش روی ۳۲ دندان نشان می‌دهد گیر پست زیرکونیا با سمان رزینی حدود دو برابر گلاس آینومر است (۲۲۸ در برابر ۱۲۲ نیوتن). نکته‌ی کاربردی‌ترش این است که شکست مستقل از نوع سمان در سطح مشترک سمان و پست رخ داد. بدون ترموسایکلینگ و بدون گزارش کور بودن، پس عدد را نباید بقای بالینی خواند."
+        "provisional": false,
+        "fact_fa": "این مطالعه امتیاز ۳۶ و سطح D را در پرسش نوع MATERIAL گرفته است.",
+        "interpretation_fa": "این مطالعه in-vitro با ۱۶ نمونه در هر گروه، تفاوت retention دو سمان را در آزمون کشش ساده نشان می‌دهد. پروتکل غیراستاندارد و بدون aging است و blinding گزارش نشده است. نتیجه فقط برای مقایسه نسبی دو سمان در شرایط آزمایشگاهی ارزش دارد و به نتیجه بالینی تعمیم داده نمی‌شود."
       },
       {
-        "des_version": "2.4",
+        "des_version": "3.0",
         "content_type": "RESEARCH",
         "question_type": "MATERIAL",
-        "text_basis": "ABSTRACT_ONLY",
+        "text_basis": "FULL_TEXT",
         "citation": {
-          "title": "Influence of Conventional Polymer, Hybrid Polymer and Zinc Phosphate Luting Agents on the Bond Strength of Customized Zirconia Post in Premolars-An In-Vitro Evaluation.",
+          "title": "Influence of Conventional Polymer, Hybrid Polymer and Zinc Phosphate Luting Agents on the Bond Strength of Customized Zirconia Post in Premolars-An In-Vitro Evaluation",
           "authors": "AlAali KA, AlHelal A, Almahri JR, Albakri AA, Albani RM, Alhaizan YA, Alhamdan MM, Alaql NA, Binhasan M, Alhamdan EM, Albaqawi AH, Vohra F, Abduljabbar T",
           "year": 2022,
           "journal": "Polymers",
@@ -23647,9 +24764,9 @@
           "source": "NR"
         },
         "s_design": {
-          "value": 85,
-          "anchor": "in-vitro pull-out bond strength study of CAD/CAM customized zirconia posts in sixty premolars, using an established universal-testing-machine protocol with a stated crosshead rate, twenty specimens per cement group and an explicitly defined thermocycling aging regimen, which is the MATERIAL row for an in-vitro study with a validated protocol, adequate specimen count and defined aging/loading (85)",
-          "evidence_quote": "Ten specimens in each group were thermocycled (TC) at 5 and 55 °C in distilled water baths (40,000 cycles). Pull out bond strength was assessed using a universal testing machine at 0.5 mm/min."
+          "value": 65,
+          "anchor": "in-vitro pull-out bond strength study with non-standard but fully described protocol (MATERIAL, 65)",
+          "evidence_quote": "was assessed using a universal testing machine at 0.5 mm/min."
         },
         "q_method": {
           "tool": "QUIN",
@@ -23657,78 +24774,78 @@
             {
               "domain": "clearly stated aims",
               "rating": "low",
-              "evidence_quote": "The aim was to identify the influence of conventional polymeric resin based cement (RC), hybrid polymer modified glass ionomer (RMGIC) and Zinc phosphate cement (ZPC) on the pull out strength of the customized zirconia post in premolars.",
+              "evidence_quote": "The aim was to identify the influence of conventional polymeric resin based cement (RC),",
               "note": ""
             },
             {
               "domain": "sample size justification",
-              "rating": "NR",
+              "rating": "high",
               "evidence_quote": "",
-              "note": "چکیده تعداد نمونه را اعلام می‌کند ولی هیچ محاسبه یا توجیهی برایش نمی‌آورد. زیر ABSTRACT_ONLY سکوت NR است."
+              "note": "Absence under FULL_TEXT: read Materials and Methods (2.2 specimen preparation, 2.4 statistical analysis) and Discussion limitations; specimens are stated (n = 10 per cell) but no sample size calculation, power analysis or justification appears anywhere."
             },
             {
               "domain": "randomization / allocation of specimens",
-              "rating": "some_concerns",
-              "evidence_quote": "All prepared specimens were divided equally in three groups based on the cement type employed for luting as follows:",
-              "note": "تخصیص نمونه‌ها توصیف شده ولی تصادفی بودنش گفته نشده. این روش «آشکارا غیرتصادفی» هم اعلام نشده، پس آستانه‌ی 3b-i فعال نمی‌شود و رتبه some_concerns است نه high."
+              "rating": "low",
+              "evidence_quote": "divided into three groups randomly",
+              "note": ""
             },
             {
               "domain": "operator and assessor blinding",
-              "rating": "NR",
+              "rating": "high",
               "evidence_quote": "",
-              "note": "چکیده چیزی درباره‌ی کور بودن اپراتور یا ارزیاب نمی‌گوید. زیر ABSTRACT_ONLY سکوت NR است."
+              "note": "Absence under FULL_TEXT: read 2.2 specimen preparation, 2.3 specimen testing and 2.4 statistical analysis; no operator or assessor blinding is mentioned anywhere in the text."
             },
             {
               "domain": "appropriate statistical analysis",
               "rating": "low",
-              "evidence_quote": "The means and standard deviations were compared using ANOVA and Tukey Kramer multiple comparisons tests.",
+              "evidence_quote": "ANOVA and Tukey Kramer multiple comparisons tests",
               "note": ""
             },
             {
               "domain": "conflict of interest / funding",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "چکیده بیانیه‌ی تعارض منافع یا تأمین مالی ندارد؛ زیر ABSTRACT_ONLY این غیاب اطلاعات نیست و NR رتبه‌بندی می‌شود."
+              "rating": "low",
+              "evidence_quote": "The authors declare no conflict of interest.",
+              "note": ""
             }
           ],
-          "multiplier": 0.55
+          "multiplier": 0.3
         },
         "penalties": [
           {
-            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "item": "no conflict-of-interest statement, or commercial manufacturer funding own product",
             "base_points": 8,
             "points": 0,
-            "evidence_quote": "",
-            "note": "not assessable in abstract"
+            "evidence_quote": "The authors declare no conflict of interest.",
+            "note": "CoI statement present; funder is a university research support project, not a manufacturer."
           },
           {
-            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "item": "clinical trial not prospectively registered",
             "base_points": 5,
             "points": 0,
             "evidence_quote": "",
-            "note": "فقط برای RCT اعمال می‌شود؛ این یک مطالعه‌ی in-vitro است."
+            "note": "not applicable: in-vitro study, not a clinical trial"
           },
           {
-            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "item": "no sample size justification (in-vitro: specimens per group <10 with no justification)",
             "base_points": 5,
             "points": 0,
-            "evidence_quote": "Access cavity and root canals were performed in sixty premolar teeth with the standardized crown down technique (ProTaper Universal, Dentsply).",
-            "note": "برای in-vitro این ردیف وقتی فعال می‌شود که تعداد نمونه در هر گروه کمتر از ۱۰ و بدون توجیه باشد؛ ۶۰ دندان در سه گروه یعنی ۲۰ نمونه در هر گروه، پس فعال نمی‌شود."
+            "evidence_quote": "",
+            "note": "specimen count is 10 per group, not fewer than 10; absence of justification already captured in Q_method"
           },
           {
-            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "item": "follow-up shorter than the outcome plausibly requires",
             "base_points": 3,
             "points": 0,
             "evidence_quote": "",
-            "note": "مطالعه‌ی in-vitro است و ادعای بقا یا موفقیت مبتنی بر پیگیری بالینی ندارد؛ ترموسایکلینگ به‌جای پیگیری در s_design لحاظ شده است."
+            "note": "not applicable: in-vitro bond strength, no survival claim"
           }
         ],
         "commentary_checklist": null,
-        "des_score": 47,
-        "band": "C",
-        "provisional": true,
-        "fact_fa": "این مطالعه در نوع پرسش MATERIAL امتیاز ۴۷ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
-        "interpretation_fa": "روی پست اختصاصی CAD/CAM، سمان رزینی دوال‌کیور بیشترین گیر و زینک فسفات کمترین را داد و RMGI میان این دو ایستاد. ترموسایکلینگ گیر را در هر سه گروه پایین آورد. طراحی‌اش از مطالعه‌ی قدیمی‌تر محکم‌تر است: شصت دندان، سه گروه و پیرسازی تعریف‌شده."
+        "des_score": 20,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "امتیاز DES این مطالعه ۲۰ از ۱۰۰ و در سطح D برای پرسش نوع MATERIAL است.",
+        "interpretation_fa": "این مطالعه آزمایشگاهی با پروتکل کامل و ترموسایکلینگ، سیمان رزینی را در مقاومت کششی پست زیرکونیایی بالاتر از زینک فسفات و RMGIC نشان می‌دهد. نبود توجیه حجم نمونه و نبود کورسازی، اعتبار روش را کم می‌کند. نمونه‌ها فقط پرمولر و بارگذاری استاتیک بودند، پس تعمیم بالینی محدود است."
       }
     ]
   },
