@@ -36427,6 +36427,1031 @@
         "fact_fa": "این مطالعه امتیاز ۳۶ از ۱۰۰ و سطح D را در پرسش نوع درمان (THERAPY) گرفته است.",
         "interpretation_fa": "این کارآزمایی تصادفی کوچک (۵۰ بیمار) کاهش درد با بی‌حسی موضعی prilocaine با felypressin را نشان می‌دهد، اما روش تولید توالی و پنهان‌سازی تخصیص گزارش نشده و ارزیابی درد بدون کورسازی انجام شده است. نتیجه برای درد در لیزر سرویکس است و به طب دندان قابل تعمیم مستقیم نیست. ارزش آن بیشتر در حد شاهد اولیه برای اثر این ترکیب بی‌حسی است."
       }
-    ]
+    ],
+    "fidelity": {
+      "des_version": "3.2",
+      "mode": "FIDELITY",
+      "scope": "POOLED",
+      "text_basis": "SECONDARY_REPORT",
+      "claims": [
+        {
+          "id": "u1",
+          "claim_quote": "ویزیت بیمار باردار در مطب دندانپزشکی",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u2",
+          "claim_quote": "English",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u3",
+          "claim_quote": "ویزیت یک بیمار باردار همان ویزیت معمول است، با چند تفاوت که باید پیش از شروع بدانی.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_ASSESSABLE, S3: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u4",
+          "claim_quote": "این مطلب به ترتیبِ خودِ ویزیت جلو می‌رود: چه چیزی بپرس، چه زمانی و با چه بی‌حسی و دارویی درمان کن، و بعد از درمان چه چیزهایی به بیمار بگو.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u5",
+          "claim_quote": "∆ ۱.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u6",
+          "claim_quote": "سه سؤالی که مسیر درمان را تعیین می‌کند",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u7",
+          "claim_quote": "چند هفته باردار است؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u8",
+          "claim_quote": "انتخاب مسکن و مدت مجاز آرام‌بخشی به سن بارداری بستگی دارد (بند ۵ و ۶).",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "May be used after 12 weeks for women at high risk for preeclampsia.",
+          "source_ref": "S2",
+          "note": "analgesic and sedation limits are stated by trimester or week in the source table; one claim with two objects"
+        },
+        {
+          "id": "u9",
+          "claim_quote": "بیماری زمینه‌ای یا عارضه‌ی بارداری دارد؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u10",
+          "claim_quote": "اگر بیمار پره‌اکلامپسی (عارضه‌ای از بارداری که با فشار خون بالا همراه است)، بیماری قلبی عروقی ناپایدار، آریتمی شدید (بی‌نظمی شدید ضربان قلب) یا سابقه‌ی اخیر ترومبوآمبولی (لخته‌ای که در رگ تشکیل شده و جابه‌جا شده) دارد، بیمار پرخطر است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The third group (G3): high-risk patients (HRP), includes those with unstable cardiovascular disease, pre-eclampsia, severe arrhythmias, or recent thromboembolic events.",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u11",
+          "claim_quote": "پیش از درمان با پزشک او هماهنگ کن و از بی‌حسی‌هایی که تنگ‌کننده‌ی عروقی دارند استفاده نکن (بند ۴).",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "In these cases, vasoconstrictor use should be avoided.",
+          "source_ref": "S1",
+          "note": "consultation half stated in the Figure 2 caption: G3 requires mandatory interdisciplinary consultation.; other sources: S2: MATCHES"
+        },
+        {
+          "id": "u12",
+          "claim_quote": "اگر بیمار فشار خون بارداری یا دیابت بارداری دارد که کنترل شده است، حین درمان پایش بیشتری لازم است و در برخی موارد پیش از درمان باید با پزشک او مشورت کرد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The second group (G2): moderate-risk patients (MRP), includes those with well-controlled chronic conditions (e.g., gestational hypertension, type 2 diabetes, gestational diabetes, other unrelated chronic diseases).",
+          "source_ref": "S1",
+          "note": "other sources: S2: MATCHES"
+        },
+        {
+          "id": "u13",
+          "claim_quote": "اگر بیمار دیابت، فشار خون بالا، بیماری قلبی یا ریوی، یا اختلال خونریزی دارد، پیش از درمان با پزشک او هماهنگ کن، چون این بیماری‌ها ممکن است روی روند درمان دندانپزشکی اثر بگذارند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Consult with prenatal care health professionals,\nas necessary—for example, when considering the\nfollowing:",
+          "source_ref": "S2",
+          "note": "the reason clause (may affect oral health management) is in a separate source fragment and agrees"
+        },
+        {
+          "id": "u14",
+          "claim_quote": "استفراغ دارد و چند وقت یک بار؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u15",
+          "claim_quote": "اگر دارد، دستور شستشوی دهان بعد از استفراغ را به او بده (بند ۷).",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "If you vomit, rinse your mouth with a teaspoon\nof baking soda in a cup of water to stop acid\nfrom attacking your teeth.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u16",
+          "claim_quote": "دسته‌بندی بیماران باردار برای انتخاب بی‌حسی.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u17",
+          "claim_quote": "G1 بیمار کم‌خطر: بی‌حسی همراه با اپی‌نفرین.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "G1 allows the use of vasoconstrictors (Lidocaine 2% + Epinephrine 1:200,000 or Articaine 4% + Epinephrine 1:200,000, in the USA) without restrictions.",
+          "source_ref": "S1",
+          "note": "other sources: S2: MATCHES"
+        },
+        {
+          "id": "u18",
+          "claim_quote": "G2 ریسک متوسط: اپی‌نفرین همراه با پایش، و مشورت با پزشک بیمار (اگر بیماری کنترل نشده باشد، مشورت الزامی است).",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Local anesthetics with epinephrine\n(e.g., Bupivacaine, Lidocaine,\nMepivacaine, Prilocaine)\n\nMay be used during pregnancy.",
+          "source_ref": "S2",
+          "note": "epinephrine half matches; monitoring is not addressed; consultation mandatory if uncontrolled disease is not addressed in those terms (source: as necessary); other sources: S1: ALTERED"
+        },
+        {
+          "id": "u19",
+          "claim_quote": "G3 پرخطر: مشورت با پزشک الزامی و بی‌حسی بدون تنگ‌کننده‌ی عروقی.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "G3 requires mandatory interdisciplinary consultation and restricts vasoconstrictor use.",
+          "source_ref": "S1",
+          "note": "other sources: S2: MATCHES"
+        },
+        {
+          "id": "u20",
+          "claim_quote": "G4 حساسیت به اپی‌نفرین یا سولفیت: بی‌حسی بدون تنگ‌کننده‌ی عروقی.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "G4 prohibits vasoconstrictors, permitting either plain lidocaine or 3% mepivacaine as a plain anesthetic without additives.",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u21",
+          "claim_quote": "∆ ۲.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u22",
+          "claim_quote": "زمان‌بندی درمان",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u23",
+          "claim_quote": "درمان دندانپزشکی در هیچ هفته‌ای از بارداری ممنوع نیست و درمان‌های پیشگیری، تشخیصی، ترمیمی و درمان ریشه در هر سه‌ماهه قابل انجام‌اند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "This message is reinforced by the ACOG, which in Committee Opinion No. 569 states that dental procedures requiring local anesthesia can be safely performed during pregnancy—ideally in the second trimester, but not contraindicated in the first or third.",
+          "source_ref": "S1",
+          "note": "the source speaks of procedures requiring local anesthesia; procedure types listed in the unit are not addressed separately.; other sources: S2: MATCHES"
+        },
+        {
+          "id": "u24",
+          "claim_quote": "درد، عفونت و هر وضعیت حاد دیگری را همان موقع درمان کن و برای رسیدن به سه‌ماهه‌ی خاصی صبر نکن.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "However, urgent care should not be delayed if the maternal or fetal risk of untreated oral infection outweighs that of the anesthetic intervention.",
+          "source_ref": "S1",
+          "note": "other sources: S2: MATCHES"
+        },
+        {
+          "id": "u25",
+          "claim_quote": "درمان‌هایی که فوریت ندارند و بیمار انتخاب کرده (مثل کارهای زیبایی) بهتر است در سه‌ماهه‌ی دوم انجام شوند، هرچند انجامشان در سه‌ماهه‌ی اول و سوم منع ندارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "This message is reinforced by the ACOG, which in Committee Opinion No. 569 states that dental procedures requiring local anesthesia can be safely performed during pregnancy—ideally in the second trimester, but not contraindicated in the first or third.",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u26",
+          "claim_quote": "درمان‌های لازم را عقب نینداز و طوری برنامه‌ریزی کن که پیش از زایمان تمام شوند، چون تأخیر در درمان خودش خطر دارد؛ برای مثال عفونت شدید یک دندان می‌تواند در بدن پخش شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Accordingly, dental procedures requiring local anesthesia should not be postponed solely due to pregnancy.",
+          "source_ref": "S1",
+          "note": "planning to finish before delivery is not addressed; the reason half (delay is itself risky) is stated by the ADA sentence on withholding treatment.; other sources: S2: ALTERED"
+        },
+        {
+          "id": "u27",
+          "claim_quote": "∆ ۳.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u28",
+          "claim_quote": "رادیوگرافی",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u29",
+          "claim_quote": "رادیوگرافی در تمام دوران بارداری ایمن است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Reassure women that oral health care, including use\nof radiographs, pain medication, and local anesthesia,\nis safe throughout pregnancy.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u30",
+          "claim_quote": "هر وقت برای ارزیابی و تشخیص قطعی لازم است، آن را بگیر.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Take radiographs to evaluate and definitively diagnose oral diseases and conditions when clinically\nindicated.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u31",
+          "claim_quote": "به نظر من، اگر بیمار نگران است و پیش‌بند در مسیر پرتو قرار نمی‌گیرد، استفاده از آن برای اطمینان خاطر بیمار مانعی ندارد، هرچند از نظر کاهش دوز سود قابل توجهی ندارد.",
+          "verdict": "AUTHOR_VIEW",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "opinion marker: به نظر من"
+        },
+        {
+          "id": "u32",
+          "claim_quote": "∆ ۴.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u33",
+          "claim_quote": "حین درمان",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u34",
+          "claim_quote": "بی‌حسی: اول بدان کارپول تو چه دارد",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u35",
+          "claim_quote": "کارپول‌های بی‌حسی معمولاً دو جزء اصلی دارند: خود ماده‌ی بی‌حس‌کننده (مثل لیدوکائین یا پریلوکائین) و یک تنگ‌کننده‌ی عروقی.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Vasoconstrictors, such as epinephrine, levonordefrin, and felypressin, are frequently combined with local anesthetics to prolong their duration of action, reduce bleeding, and enhance depth of anesthesia [3,4].",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u36",
+          "claim_quote": "تنگ‌کننده‌ی عروقی رگ‌های محل تزریق را تنگ می‌کند تا بی‌حسی دیرتر جذب خون شود، عمیق‌تر و طولانی‌تر باشد و خونریزی کمتر شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Vasoconstrictors, such as epinephrine, levonordefrin, and felypressin, are frequently combined with local anesthetics to prolong their duration of action, reduce bleeding, and enhance depth of anesthesia [3,4].",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u37",
+          "claim_quote": "در بارداری، نوع تنگ‌کننده‌ی عروقی مهم است، چون همه‌شان یکسان نیستند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "These findings suggest that not all vasoconstrictors are created equal and that pregnancy-specific pharmacovigilance remains essential [13].",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u38",
+          "claim_quote": "سه نوع رایج آن اپی‌نفرین، فلیپرسین و لوونوردفرین است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Vasoconstrictors, such as epinephrine, levonordefrin, and felypressin, are frequently combined with local anesthetics to prolong their duration of action, reduce bleeding, and enhance depth of anesthesia [3,4].",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u39",
+          "claim_quote": "پیش از تزریق، روی کارپول یا جعبه‌ی آن ترکیب را بخوان و ببین کدام تنگ‌کننده‌ی عروقی در آن است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE, S3: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u40",
+          "claim_quote": "اپی‌نفرین (آدرنالین) مجاز",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Local anesthetics with epinephrine\n(e.g., Bupivacaine, Lidocaine,\nMepivacaine, Prilocaine)\n\nMay be used during pregnancy.",
+          "source_ref": "S2",
+          "note": "other sources: S1: NOT_A_CLAIM"
+        },
+        {
+          "id": "u41",
+          "claim_quote": "بی‌حسی‌هایی که تنگ‌کننده‌ی عروقی‌شان اپی‌نفرین است، مثل لیدوکائین، مپیواکائین، پریلوکائین و بوپیواکائین همراه با اپی‌نفرین، در بارداری قابل استفاده‌اند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The ADA (2023) clearly supports the use of epinephrine-containing anesthetics during pregnancy, provided that proper technique is used.",
+          "source_ref": "S1",
+          "note": "other sources: S2: MATCHES"
+        },
+        {
+          "id": "u42",
+          "claim_quote": "اپی‌نفرین تنها تنگ‌کننده‌ی عروقی است که در بارداری ایمنی قابل قبول دارد، به شرط اینکه با دوز پایین و تکنیک درست تزریق شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Conclusions: Among vasoconstrictors, epinephrine remains the only agent with an acceptable safety profile in pregnancy when used correctly.",
+          "source_ref": "S1",
+          "note": "other sources: S2: ALTERED"
+        },
+        {
+          "id": "u43",
+          "claim_quote": "قبل از تزریق حتماً آسپیره کن، از کمترین غلظت مؤثر اپی‌نفرین استفاده کن و دوز اپی‌نفرین را در هر جلسه به حداکثر ۰٫۰۴ میلی‌گرم محدود کن.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "These include careful aspiration before injection, limiting the epinephrine dose to a maximum recommended dose (MRD) of 0.04 mg per session, using the lowest effective concentration, and employing left lateral tilt positioning in advanced gestation to avoid aortocaval compression [34,35].",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u44",
+          "claim_quote": "این مقدار تقریباً برابر ۴ میلی‌لیتر محلول ۱:۱۰۰٬۰۰۰ یا ۸ میلی‌لیتر محلول ۱:۲۰۰٬۰۰۰ است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "This corresponds to approximately 4 mL of a 1:100,000 solution or 8 mL of a 1:200,000 solution.",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u45",
+          "claim_quote": "فلیپرسین استفاده نکن",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_ASSESSABLE, S3: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u46",
+          "claim_quote": "فلیپرسین از نظر ساختار شبیه وازوپرسین است، یکی از هورمون‌های طبیعی بدن که رگ‌ها را تنگ می‌کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Other vasoconstrictors, such as levonordefrin, a synthetic catecholamine, and felypressin, a vasopressin analog with known oxytocic effects, have limited safety data in pregnant patients [7].",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u47",
+          "claim_quote": "مشکلش در بارداری این است که خاصیت اکسی‌توسیک دارد، یعنی مثل هورمون اکسی‌توسین که موقع زایمان رحم را منقبض می‌کند، می‌تواند باعث انقباض رحم و زایمان زودرس شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Felypressin was contraindicated due to its oxytocic properties and high risk of inducing uterine contractions.",
+          "source_ref": "S1",
+          "note": "preterm labour is stated in Section 4.3."
+        },
+        {
+          "id": "u48",
+          "claim_quote": "این خطر به‌خصوص در سه‌ماهه‌ی دوم و سوم مطرح است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Felypressin can stimulate uterine contractions, a pharmacodynamic effect that significantly limits its safety during mid to late gestation.",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u49",
+          "claim_quote": "رایج‌ترین بی‌حسی‌ای که فلیپرسین دارد، سیتانست ۳٪ با اکتاپرسین (Citanest with Octapressin) است که پریلوکائین ۳٪ همراه با فلیپرسین است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "In one group the patients received no anaesthesia, in the other\nthe ectocervix was infiltrated with 2 m l of Citanest with Octapressin\n(prilocaine 3% with 0.03 i.u./ml. of felypressin) immediately before the\nprocedure.",
+          "source_ref": "S3",
+          "note": "ranking half («رایج‌ترین») is not addressed by the source and is not scored; the composition of Citanest with Octapressin (prilocaine 3% with felypressin) is stated"
+        },
+        {
+          "id": "u50",
+          "claim_quote": "اکتاپرسین همان فلیپرسین است با نام تجاری.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_IN_SOURCE, S2: NOT_ASSESSABLE, S3: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u51",
+          "claim_quote": "پس اگر روی کارپول یا جعبه felypressin یا Octapressin نوشته شده، برای بیمار باردار استفاده نکن.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Felypressin was contraindicated due to its oxytocic properties and high risk of inducing uterine contractions.",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u52",
+          "claim_quote": "خود پریلوکائین مشکلی ندارد؛ پریلوکائین همراه با اپی‌نفرین مجاز است و مشکل فقط وقتی است که تنگ‌کننده‌ی عروقی‌اش فلیپرسین باشد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Local anesthetics with epinephrine\n(e.g., Bupivacaine, Lidocaine,\nMepivacaine, Prilocaine)\n\nMay be used during pregnancy.",
+          "source_ref": "S2",
+          "note": "prilocaine with epinephrine half matches; the felypressin half is not addressed (NOT_ASSESSABLE)"
+        },
+        {
+          "id": "u53",
+          "claim_quote": "لوونوردفرین استفاده نکن",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_ASSESSABLE, S3: NOT_IN_SOURCE"
+        },
+        {
+          "id": "u54",
+          "claim_quote": "لوونوردفرین تنگ‌کننده‌ی عروقی دیگری است که معمولاً همراه مپیواکائین ۲٪ با غلظت ۱:۲۰٬۰۰۰ عرضه می‌شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Not individually categorized by the FDA; however, 2% mepivacaine + 1:20,000 levonordefrin is Category C in the USA",
+          "source_ref": "S1",
+          "note": "the source gives the combination; \"usually\" is not addressed."
+        },
+        {
+          "id": "u55",
+          "claim_quote": "این ماده فشار خون مادر را بیشتر از اپی‌نفرین بالا می‌برد، از نظر تئوریک می‌تواند جریان خون رحم را کم کند، و داده‌ی کافی درباره‌ی ایمنی آن در بارداری وجود ندارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Levonordefrin’s potential to induce systemic vasoconstriction and elevate maternal blood pressure raises the theoretical risk of reduced uterine blood flow—particularly problematic in pregnancies already complicated by hypertensive disorders [10–16].",
+          "source_ref": "S1",
+          "note": "the comparison with epinephrine is stated in Section 4.3."
+        },
+        {
+          "id": "u56",
+          "claim_quote": "اگر روی کارپول levonordefrin نوشته شده، آن را برای بیمار باردار استفاده نکن.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "In contrast, both levonordefrin and felypressin present pharmacological profiles that raise sufficient concern to recommend their avoidance.",
+          "source_ref": "S1",
+          "note": "other sentences hedge the avoidance (unless absolutely necessary); a plain sentence exists."
+        },
+        {
+          "id": "u57",
+          "claim_quote": "مپیواکائین به‌تنهایی یا همراه با اپی‌نفرین مشکلی ندارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Plain anesthetics such as 3% mepivacaine, which lack preservatives, are safer alternatives in such patients.",
+          "source_ref": "S1",
+          "note": "other sources: S2: MATCHES"
+        },
+        {
+          "id": "u58",
+          "claim_quote": "آرتیکائین استفاده نکن",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Avoid during pregnancy; consult with a prenatal care health professional.",
+          "source_ref": "S2",
+          "note": "other sources: S1: NOT_A_CLAIM"
+        },
+        {
+          "id": "u59",
+          "claim_quote": "از آرتیکائین استفاده نکن، مگر بعد از مشورت با پزشک بیمار.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Avoid during pregnancy; consult with a prenatal care health professional.",
+          "source_ref": "S2",
+          "note": "other sources: S1: REVERSED"
+        },
+        {
+          "id": "u60",
+          "claim_quote": "حساسیت به سولفیت",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u61",
+          "claim_quote": "محلول‌های بی‌حسی که اپی‌نفرین دارند، ماده‌ای به نام متابی‌سولفیت دارند که به‌عنوان آنتی‌اکسیدان اضافه می‌شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "We must mention that true allergic reactions to epinephrine are extremely rare; in most cases, hypersensitivity is caused by the metabisulfite antioxidant present in epinephrine-containing solutions.",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u62",
+          "claim_quote": "اگر بیمار به سولفیت حساسیت دارد، از مپیواکائین ۳٪ بدون تنگ‌کننده‌ی عروقی (ساده، plain) استفاده کن.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Plain anesthetics such as 3% mepivacaine, which lack preservatives, are safer alternatives in such patients.",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u63",
+          "claim_quote": "الگوریتم انتخاب بی‌حسی در بیمار باردار.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u64",
+          "claim_quote": "بیمار کم‌خطر یا با ریسک متوسط: بی‌حسی همراه با اپی‌نفرین ۱:۱۰۰٬۰۰۰ یا ۱:۲۰۰٬۰۰۰، با سقف دوز ۰٫۰۴ میلی‌گرم، پرهیز از تزریق داخل رگ و پایش علائم حیاتی.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "These include careful aspiration before injection, limiting the epinephrine dose to a maximum recommended dose (MRD) of 0.04 mg per session, using the lowest effective concentration, and employing left lateral tilt positioning in advanced gestation to avoid aortocaval compression [34,35].",
+          "source_ref": "S1",
+          "note": "monitoring of vital signs is stated in the following sentence.; other sources: S2: MATCHES"
+        },
+        {
+          "id": "u65",
+          "claim_quote": "بیمار پرخطر یا در سه‌ماهه‌ی اول: اگر درمان قابل تعویق است عقب بیفتد، وگرنه با پزشک بیمار مشورت شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "G3 requires mandatory interdisciplinary consultation and restricts vasoconstrictor use.",
+          "source_ref": "S1",
+          "note": "deferral of treatment for the first trimester is only partly addressed (elective care ideally in the second trimester)."
+        },
+        {
+          "id": "u66",
+          "claim_quote": "حساسیت به اپی‌نفرین یا متابی‌سولفیت: بی‌حسی بدون تنگ‌کننده‌ی عروقی.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "G4 prohibits vasoconstrictors, permitting either plain lidocaine or 3% mepivacaine as a plain anesthetic without additives.",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u67",
+          "claim_quote": "مواد ترمیمی",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u68",
+          "claim_quote": "از مواد و روش‌های ترمیمی استاندارد استفاده کن، ولی اگر جایگزین مناسب وجود دارد، در دوران بارداری از آمالگام استفاده نکن.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Use standard practice when placing restorative\nmaterials.",
+          "source_ref": "S2",
+          "note": "second half matches Avoid using dental amalgam during pregnancy, if possible and appropriate."
+        },
+        {
+          "id": "u69",
+          "claim_quote": "رابر دم",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u70",
+          "claim_quote": "در درمان ریشه و کارهای ترمیمی از رابر دم استفاده کن.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Use a rubber dam during endodontic procedures\nand restorative procedures.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u71",
+          "claim_quote": "وضعیت بیمار روی یونیت",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u72",
+          "claim_quote": "سر بیمار باید بالاتر از پاهایش باشد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Keep the woman’s head at a higher level than her feet.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u73",
+          "claim_quote": "بیمار را در وضعیت نیمه‌خوابیده قرار بده، تا حدی که برایش قابل تحمل است، و اجازه بده در طول کار وضعیتش را عوض کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Place the woman in a semi-reclining position, as\ntolerated, and allow frequent position changes.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u74",
+          "claim_quote": "اگر بیمار به‌خاطر افت فشار خون دچار سرگیجه یا تهوع شد، یک بالش کوچک زیر لگن سمت راستش بگذار یا از او بخواه کمی به سمت چپ بچرخد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "These include careful aspiration before injection, limiting the epinephrine dose to a maximum recommended dose (MRD) of 0.04 mg per session, using the lowest effective concentration, and employing left lateral tilt positioning in advanced gestation to avoid aortocaval compression [34,35].",
+          "source_ref": "S1",
+          "note": "the dizziness trigger and the pillow are not addressed; the left lateral tilt is.; other sources: S2: MATCHES"
+        },
+        {
+          "id": "u75",
+          "claim_quote": "در ماه‌های آخر بارداری، وقتی بیمار به پشت می‌خوابد، رحم بزرگ‌شده روی رگ‌های اصلی شکم (آئورت و ورید اجوف تحتانی) فشار می‌آورد و خون کمتری به قلب برمی‌گردد؛ چرخیدن به چپ این فشار را برمی‌دارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "These include careful aspiration before injection, limiting the epinephrine dose to a maximum recommended dose (MRD) of 0.04 mg per session, using the lowest effective concentration, and employing left lateral tilt positioning in advanced gestation to avoid aortocaval compression [34,35].",
+          "source_ref": "S1",
+          "note": "the mechanism details beyond aortocaval compression are not stated."
+        },
+        {
+          "id": "u76",
+          "claim_quote": "پایش",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u77",
+          "claim_quote": "در طول درمان علائم حیاتی بیمار (فشار خون و ضربان قلب) را پایش کن و در بیماران با ریسک متوسط و بالا، بعد از درمان هم مدتی بیمار را تحت نظر داشته باش.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Maternal vital signs should be monitored throughout, and post-procedural observation is advisable in moderate- to high-risk cases [36].",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u78",
+          "claim_quote": "∆ ۵.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u79",
+          "claim_quote": "دارو",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u80",
+          "claim_quote": "مسکن",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u81",
+          "claim_quote": "مجاز استامینوفن در تمام بارداری مجاز است و انتخاب اول است، چون درد دهان اغلب بدون مسکن‌های مخدر کنترل می‌شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "May be used during pregnancy.",
+          "source_ref": "S2",
+          "note": "first-choice ranking is not addressed; reason clause matches Oral pain can often be managed with nonopioid medication."
+        },
+        {
+          "id": "u82",
+          "claim_quote": "با محدودیت مسکن‌های مخدر یا اپیوئیدها (استامینوفن کدئین، هیدروکودون، اکسی‌کودون، کدئین، مپریدین و مورفین) مجازند، ولی با کمترین دوز و کوتاه‌ترین مدت، که معمولاً کمتر از ۳ روز است، و بدون نسخه‌ی تکراری تا خطر وابستگی کم شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "If opioids are used, prescribe the lowest dose for the\nshortest duration (usually less than 3 days), and avoid issuing refills to\nreduce risk for dependency.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u83",
+          "claim_quote": "با محدودیت ایبوپروفن، ناپروکسن و آسپرین فقط در بازه‌های مشخصی از بارداری مجازند (بند ۶).",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Second trimester, 13 up to 20 weeks: May use for short duration, 48 to 72 hours.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u84",
+          "claim_quote": "آنتی‌بیوتیک",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u85",
+          "claim_quote": "مجاز آموکسی‌سیلین، پنی‌سیلین، سفالوسپورین‌ها (مثل سفالکسین)، کلیندامایسین و مترونیدازول.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "May be used during pregnancy.",
+          "source_ref": "S2",
+          "note": "drug grouping read from the source table as given"
+        },
+        {
+          "id": "u86",
+          "claim_quote": "استفاده نکن سیپروفلوکساسین، لووفلوکساسین، موکسی‌فلوکساسین و کلاریترومایسین.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Avoid during pregnancy.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u87",
+          "claim_quote": "هرگز تتراسایکلین هرگز نباید در بارداری تجویز شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Never use during pregnancy.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u88",
+          "claim_quote": "آرام‌بخشی و بیهوشی",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u89",
+          "claim_quote": "استفاده نکن از نیتروس اکساید (گازی که از راه بینی داده می‌شود تا بیمار آرام شود) استفاده نکن، مگر بعد از مشورت با پزشک بیمار.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Avoid during pregnancy; consult with a prenatal care health professional.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u90",
+          "claim_quote": "با مشورت بیهوشی عمومی، آرام‌بخشی وریدی (آرام‌بخش تزریقی در رگ) و آرام‌بخشی استنشاقی (به‌تنهایی یا همراه با قرص آرام‌بخش) فقط بعد از مشورت با پزشک بیمار انجام شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Consult with a prenatal care health professional before using general anesthesia, intravenous sedation,\noral-inhalation sedation, or enteral-inhalation sedation.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u91",
+          "claim_quote": "دهان‌شویه",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u92",
+          "claim_quote": "در بارداری از محصولات بدون الکل استفاده شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Use alcohol-free products during pregnancy.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u93",
+          "claim_quote": "مجاز دهان‌شویه‌ی کلرهگزیدین، دهان‌شویه‌ی ستیل پیریدینیوم کلراید (CPC) و زایلیتول (شیرین‌کننده‌ای که باکتری‌های عامل پوسیدگی را کم می‌کند).",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "May be used during pregnancy.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u94",
+          "claim_quote": "∆ ۶.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u95",
+          "claim_quote": "چه چیزی با سن بارداری عوض می‌شود",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u96",
+          "claim_quote": "تا هفته‌ی ۱۲ ایبوپروفن، ناپروکسن و آسپرین نباید مصرف شوند و مسکن انتخابی استامینوفن است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "First trimester: Avoid use.",
+          "source_ref": "S2",
+          "note": "acetaminophen as the preferred analgesic is a ranking the source does not state (NOT_ASSESSABLE)"
+        },
+        {
+          "id": "u97",
+          "claim_quote": "هفته‌ی ۱۳ تا ۲۰ ایبوپروفن، ناپروکسن و آسپرین را می‌توان برای مدت کوتاه، حداکثر ۴۸ تا ۷۲ ساعت، تجویز کرد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Second trimester, 13 up to 20 weeks: May use for short duration, 48 to 72 hours.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u98",
+          "claim_quote": "هفته‌ی ۲۰ تا ۲۷ مصرف ایبوپروفن، ناپروکسن و آسپرین باید محدود باشد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Second trimester, 20 up to 27 weeks: Limit use.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u99",
+          "claim_quote": "سه‌ماهه‌ی سوم ایبوپروفن، ناپروکسن و آسپرین نباید مصرف شوند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Third trimester: Avoid use.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u100",
+          "claim_quote": "اگر در سه‌ماهه‌ی سوم بیهوشی عمومی یا آرام‌بخشی (با مشورت پزشک) لازم است، مدت آن باید کمتر از ۳ ساعت باشد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Limit duration of exposure to less than 3 hours in pregnant women in the third trimester.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u101",
+          "claim_quote": "در بی‌حسی، خطر فلیپرسین در این دوره بیشتر است (بند ۴).",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Felypressin can stimulate uterine contractions, a pharmacodynamic effect that significantly limits its safety during mid to late gestation.",
+          "source_ref": "S1",
+          "note": "\"this period\" read as the third trimester; the source states mid to late gestation."
+        },
+        {
+          "id": "u102",
+          "claim_quote": "استثنای آسپرین با دوز پایین: آسپرین با دوز پایین (معمولاً آسپرین بچه) از هفته‌ی ۱۲ به بعد برای زنانی که در معرض خطر بالای پره‌اکلامپسی هستند مجاز است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "May be used after 12 weeks for women at high risk for preeclampsia.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u103",
+          "claim_quote": "∆ ۷.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u104",
+          "claim_quote": "دستورهای مخصوص بارداری برای بیمار",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u105",
+          "claim_quote": "به بیمار توضیح بده که تغییرات بدن در بارداری می‌تواند لثه را دردناک یا متورم کند و باعث خونریزی آن شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Changes\nto your body when you are pregnant can make\nyour gums sore or puffy and can make them\nbleed.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u106",
+          "claim_quote": "به این حالت ژنژیویت (التهاب لثه) می‌گویند و اگر درمان نشود ممکن است به بیماری پریودنتال (بیماری بافت‌های نگهدارنده‌ی دندان) و در نهایت از دست رفتن دندان برسد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "If gingivitis is not treated,\nit may lead to more serious periodontal (gum)\ndisease.",
+          "source_ref": "S2",
+          "note": "tooth loss half matches This disease can lead to tooth loss."
+        },
+        {
+          "id": "u107",
+          "claim_quote": "بعد از هر بار استفراغ، دهانش را با محلول یک قاشق چای‌خوری جوش شیرین در یک لیوان آب بشوید تا اسید به دندان‌ها آسیب نزند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "If you vomit, rinse your mouth with a teaspoon\nof baking soda in a cup of water to stop acid\nfrom attacking your teeth.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u108",
+          "claim_quote": "اگر حالت تهوع دارد، به جای وعده‌های بزرگ، در طول روز مقدار کمی غذای سالم بخورد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "If you have problems with nausea, try eating small\namounts of healthy foods throughout the day.",
+          "source_ref": "S2",
+          "note": "instead of large meals is not addressed"
+        },
+        {
+          "id": "u109",
+          "claim_quote": "هر شب از یک دهان‌شویه‌ی فلورایددار بدون الکل استفاده کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Rinse every night with an over-the-counter\nfluoridated, alcohol-free mouthrinse.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u110",
+          "claim_quote": "بعد از غذا آدامس یا محصولات حاوی زایلیتول مصرف کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "After eating, chew xylitol-containing gum or\nuse other xylitol-containing products, such as\nmints, which can help reduce bacteria that can\ncause tooth decay.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u111",
+          "claim_quote": "باردار بودن و تاریخ زایمانش را به دندانپزشکی اطلاع دهد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Tell the dental office that you are pregnant and\nyour due date.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u112",
+          "claim_quote": "∆ ۸.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u113",
+          "claim_quote": "بعد از زایمان",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, label, question or topic announcement only"
+        },
+        {
+          "id": "u114",
+          "claim_quote": "نوزاد دست‌کم ۴ ماه و در حالت ایده‌آل ۶ ماه فقط با شیر مادر تغذیه شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Take care of your baby’s gums and teeth,\nfeed your baby healthy foods (exclusive\nbreastfeeding for at least 4 months, but\nideally for 6 months), and take your baby\nto the dentist by age 1.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u115",
+          "claim_quote": "از ۶ ماهگی، پزشک کودک دهان او را از نظر ریسک بیماری‌های دهان ارزیابی کند و در صورت نیاز به درمان فوری، او را به دندانپزشک ارجاع دهد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Ask your baby’s pediatric health professional to check your baby’s mouth (conduct\nan oral health risk assessment) starting at\nage 6 months, and to provide a referral to a\ndentist for urgent oral health care.",
+          "source_ref": "S2"
+        },
+        {
+          "id": "u116",
+          "claim_quote": "کودک تا یک‌سالگی برای اولین بار به دندانپزشک برده شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Take care of your baby’s gums and teeth,\nfeed your baby healthy foods (exclusive\nbreastfeeding for at least 4 months, but\nideally for 6 months), and take your baby\nto the dentist by age 1.",
+          "source_ref": "S2"
+        }
+      ],
+      "counts": {
+        "matches": 76,
+        "altered": 0,
+        "reversed": 0,
+        "not_in_source": 0,
+        "not_assessable": 5,
+        "author_view": 1,
+        "not_a_claim": 34
+      },
+      "assessable": 76,
+      "fidelity_score": 100,
+      "level": "HIGH",
+      "provisional": true,
+      "source_conclusion": "[S1] Strengthening the evidence base, especially for lesser-used agents, remains a key research priority to enhance maternal and fetal safety in dental care.\n[S2] Permission is given to photocopy this publication or to forward it, in its entirety, to others.\n[S3] Received I1 July 1985 Accepted 30 December 1985",
+      "fact_fa": "از ۷۶ ادعایی که منابع به آن پرداخته‌اند، ۷۶ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+      "interpretation_fa": "هر ادعای قابل‌بررسی با دست‌کم یکی از منابع مطابق است."
+    }
   }
 }
