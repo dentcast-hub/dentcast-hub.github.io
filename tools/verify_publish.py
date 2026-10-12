@@ -401,12 +401,17 @@ def des_check_fidelity(rep, ftag, f, scope, basis_expected, page_hay, source_hay
     bad_v = [c.get("id") for c in claims if c.get("verdict") not in DES_FID_VERDICTS]
     rep.check(not bad_v, "4.13 DES", f"{ftag} every verdict is from the closed list",
               f"{ftag} has verdicts outside the list on {bad_v}", "spec F2")
+    # v3.3: a SECONDARY_REPORT (a consensus statement or guideline, read whole)
+    # is a complete text for the FIDELITY question — its silence is
+    # NOT_IN_SOURCE and the result is not provisional. Below 3.3 it was judged
+    # like an abstract, and those records stay valid under their own stamp.
+    complete = basis == "FULL_TEXT" or (basis == "SECONDARY_REPORT" and des_ge(f.get("des_version"), (3, 3)))
     wrong_basis = [c.get("id") for c in claims
-                   if (c.get("verdict") == "NOT_IN_SOURCE" and basis != "FULL_TEXT")
-                   or (c.get("verdict") == "NOT_ASSESSABLE" and basis == "FULL_TEXT")]
+                   if (c.get("verdict") == "NOT_IN_SOURCE" and not complete)
+                   or (c.get("verdict") == "NOT_ASSESSABLE" and complete)]
     rep.check(not wrong_basis, "4.13 DES", f"{ftag} silence verdicts match the text basis",
               f"{ftag} uses NOT_IN_SOURCE/NOT_ASSESSABLE from the wrong row for {basis} on {wrong_basis}",
-              "spec F2 — an abstract's silence is NOT_ASSESSABLE, a full text's is NOT_IN_SOURCE")
+              "spec F2 — an abstract's silence is NOT_ASSESSABLE, a full text's (and, from v3.3, a secondary report's) is NOT_IN_SOURCE")
     bad_k = [c.get("id") for c in claims
              if (c.get("verdict") == "ALTERED") != (c.get("change_kind") is not None)
              or (c.get("verdict") == "ALTERED" and c.get("change_kind") not in DES_FID_KINDS)]
@@ -451,10 +456,10 @@ def des_check_fidelity(rep, ftag, f, scope, basis_expected, page_hay, source_hay
               f"{ftag} fidelity arithmetic checks out ({score} · {level})",
               f"{ftag} says {f.get('assessable')}/{f.get('fidelity_score')}/{f.get('level')} "
               f"but recomputes to {assessable}/{score}/{level}", "spec F4")
-    rep.check(f.get("provisional") is (basis != "FULL_TEXT"), "4.13 DES",
+    rep.check(f.get("provisional") is (not complete), "4.13 DES",
               f"{ftag} provisional follows text_basis",
               f"{ftag} provisional is {f.get('provisional')} under {basis}",
-              "spec F0 — provisional iff not FULL_TEXT")
+              "spec F0 — provisional iff not a complete text (FULL_TEXT; SECONDARY_REPORT from v3.3)")
 
 
 def des_fidelity_owed(s):
