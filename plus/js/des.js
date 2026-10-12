@@ -1,7 +1,7 @@
 // DentCast Evidence Score — the reader-facing display.
 //
 // The score itself is produced at publish time by workflow step 4.13 (the
-// scoring prompt in .dentcast/dentcast-evidence-score-v1.9.md) and stored in
+// scoring prompt in .dentcast/dentcast-evidence-score-v3.1.md) and stored in
 // plus/des-scores.json, keyed by content_id. Nothing here computes, judges, or
 // re-derives anything: this module renders what that file already says.
 //
@@ -23,7 +23,7 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=181';
+import { el, faNum } from './util.js?v=184';
 
 /* ------------------------------------------------------------ the data -- */
 
@@ -68,7 +68,22 @@ export const QTYPE_FA = {
   ETIOLOGY: 'علت‌شناسی',
 };
 
-const SOURCE_KIND_FA = { book: 'کتاب مرجع' };
+// Spec v3.1 Step 1: the closed list of sources that are cited, not scored.
+const SOURCE_KIND_FA = { book: 'کتاب مرجع', glossary: 'واژه‌نامه‌ی مرجع', standard: 'استاندارد' };
+
+// What text a provisional result rests on (spec Step 0 / F0). Never «چکیده»
+// for a book chapter or a glossary entry: EXCERPT (v3.1) is a part of a work
+// that has no abstract, and the line says so.
+const BASIS_FA = {
+  ABSTRACT_ONLY: 'فقط از روی چکیده',
+  SECONDARY_REPORT: 'از روی گزارش ثانویه، نه مطالعه‌های اصلی',
+  EXCERPT: 'فقط از روی بخشی از منبع که در دست بود',
+};
+const BASIS_ORDER = ['FULL_TEXT', 'SECONDARY_REPORT', 'ABSTRACT_ONLY', 'EXCERPT'];
+function provisionalLine(basis, several) {
+  const what = BASIS_FA[basis] || BASIS_FA.ABSTRACT_ONLY;
+  return several ? 'مقدماتی — دست‌کم یکی از منابع ' + what : 'مقدماتی — ' + what;
+}
 
 /* ------------------------------------------------------------- pieces --- */
 
@@ -117,6 +132,11 @@ function chipFor(rec, named) {
   const best = banded.reduce((w, s) => (idx(s.band) > idx(w) ? s.band : w), seed);
   const worst = banded.reduce((w, s) => (idx(s.band) < idx(w) ? s.band : w), seed);
   const spread = best !== worst ? best + '–' + worst : best;
+  // A page whose every source is cited-not-scored (a textbook, a glossary —
+  // spec v3.1 lets such a page carry a fidelity record, so this branch can now
+  // be reached) has no band to show, and what is not there is not announced
+  // (founder, 1405/07/19): no strength chip at all, the fidelity chip alone.
+  if (!banded.length) return null;
   const label = named
     ? 'سطح شواهد: ' + (multi ? spread : band)
     : multi
@@ -232,7 +252,7 @@ export function sourceBlock(src, index, total) {
   parts.push(na ? notAppraisableHead(src)
     : src.content_type === 'COMMENTARY' ? commentaryCard(src) : researchHead(src));
   if (src.provisional) {
-    parts.push(el('span', { class: 'dc-des-prov' }, 'امتیاز مقدماتی — فقط از روی چکیده'));
+    parts.push(el('span', { class: 'dc-des-prov' }, 'امتیاز ' + provisionalLine(src.text_basis, false)));
   }
   if (!na) parts.push(calcBlock(src)); // nothing was calculated, so there is no calculation to show
   if (src.interpretation_fa) {
@@ -327,6 +347,8 @@ function combineFidelity(slots) {
     des_version: fs[0].des_version, mode: 'FIDELITY', scope: 'COMBINED',
     claims, counts, assessable, fidelity_score: score, level,
     provisional: fs.some((f) => f.provisional),
+    text_basis: fs.map((f) => f.text_basis).filter((b) => BASIS_ORDER.includes(b))
+      .reduce((w, b) => (BASIS_ORDER.indexOf(b) > BASIS_ORDER.indexOf(w) ? b : w), 'FULL_TEXT'),
     source_conclusion: slots.map(({ f, i }) => (f.source_conclusion ? '[S' + (i + 1) + '] ' + f.source_conclusion : ''))
       .filter(Boolean).join('\n'),
     per_source: slots.map(({ f, src }) => ({ src, f })),
@@ -347,7 +369,10 @@ const LEVEL_RANK = { INSUFFICIENT_CLAIMS: 0, LOW: 1, MEDIUM: 2, HIGH: 3 };
 function citeName(src) {
   const c = (src && src.citation) || {};
   const first = String(c.authors || '').split(',')[0].trim();
-  return [first ? first + ' و همکاران' : '', c.year].filter(Boolean).join('، ') || 'منبع';
+  // A work with no author (a glossary, a standard — spec v3.1) is named by its
+  // title; «۲۰۱۷» alone names nothing.
+  const who = first ? first + ' و همکاران' : String(c.title || '').trim();
+  return [who, c.year].filter(Boolean).join('، ') || 'منبع';
 }
 
 // `srcFor(claim)`: which source a quoted sentence comes from — `source_ref`
@@ -374,7 +399,7 @@ function fidelityBlock(f, one, srcFor) {
     ]),
   ];
   if (f.level !== 'INSUFFICIENT_CLAIMS') parts.push(el('p', { class: 'dc-fid-say' }, say.join(' ')));
-  if (f.provisional) parts.push(el('span', { class: 'dc-des-prov' }, 'مقدماتی — فقط از روی چکیده'));
+  if (f.provisional) parts.push(el('span', { class: 'dc-des-prov' }, provisionalLine(f.text_basis, f.scope === 'COMBINED')));
 
   if (flagged.length) {
     parts.push(el('div', { class: 'dc-fid-diff-h' }, faNum(flagged.length) + ' جا که با ' + SRC + ' فرق دارد'));
@@ -429,6 +454,10 @@ function fidelityBlock(f, one, srcFor) {
       faNum(outside) + ' جمله (تیترها، جمله‌های راهنما) ادعا نیستند و بیرون مانده‌اند.'),
   ]));
   if (matched.length) rows.push(row('همه‌ی جمله‌های مطابق', matched.length, [list(matched)]));
+  // «به تفکیک منبع»: every judged source with its own counts. A source whose
+  // text was sought and not found (spec v3.1: the INSUFFICIENT_TEXT error object
+  // in its slot) is a fact of the record and the publish report, never of the
+  // card — what is not there is not announced to the reader (founder, 1405/07/19).
   if (f.per_source) {
     rows.push(row('به تفکیک منبع', f.per_source.length, [
       el('ul', { class: 'dc-fid-persrc' }, f.per_source.map(({ src, f: pf }) => {
@@ -637,7 +666,7 @@ export async function mountDes(row, anchor, contentId) {
 
   if (row) {
     const fids = fidelityOf(rec);
-    const chips = [chipFor(rec, fids.length > 0)];
+    const chips = [chipFor(rec, fids.length > 0)].filter(Boolean);
     if (fids.length) chips.push(fidelityChip(rec, fids));
     // Tapping a chip goes to the card (and, when the card has two tabs, to
     // that chip's own tab). Deliberately not a popover: this shell scrolls
