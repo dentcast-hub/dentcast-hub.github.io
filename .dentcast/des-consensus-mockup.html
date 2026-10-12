@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>DES کانسنسوس · ماکاپ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* Mockup only — not loaded by any page. Tokens from plus/plus.css (DES section),
+   same as .dentcast/des-fidelity-v28-mockup.html. */
+:root{
+  --bg:#f4f6f9; --surface:#fff; --surface-2:#f5f6f9; --line:#e6e9ef;
+  --ink:#1d2733; --muted:#6a7584; --radius:16px;
+  --des-E:#78808f; --des-D:#5f8a63; --des-C:#3f9a49; --des-B:#2f8f3f; --des-A:#1f7a34;
+  --chrome:#6455a6; --chrome-rgb:100,85,166; --note:#fff8e6; --note-ink:#7a5a00;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0e1621; --surface:#17212b; --surface-2:#1d2833; --line:#283542; --ink:#e6ebf1; --muted:#95a1af;
+  --des-E:#8b93a3; --des-D:#89a68c; --des-C:#6fae74; --des-B:#4f9d5c; --des-A:#2f8f52;
+  --chrome:#a99ce0; --chrome-rgb:169,156,224; --note:#2b2617; --note-ink:#e8cf86;
+}}
+:root[data-theme="dark"]{
+  --bg:#0e1621; --surface:#17212b; --surface-2:#1d2833; --line:#283542; --ink:#e6ebf1; --muted:#95a1af;
+  --des-E:#8b93a3; --des-D:#89a68c; --des-C:#6fae74; --des-B:#4f9d5c; --des-A:#2f8f52;
+  --chrome:#a99ce0; --chrome-rgb:169,156,224; --note:#2b2617; --note-ink:#e8cf86;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Vazirmatn,Tahoma,sans-serif;line-height:1.9;font-size:15px}
+.wrap{max-width:680px;margin:0 auto;padding:18px 16px 64px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;font-size:.78rem;color:var(--muted)}
+.tbtn{white-space:nowrap;flex:none;font:inherit;font-size:.76rem;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:3px 12px;cursor:pointer}
+button{font:inherit}
+.label{font-size:.74rem;font-weight:800;color:var(--chrome);letter-spacing:.02em;margin:26px 0 8px}
+.mocknote{background:var(--note);color:var(--note-ink);border-radius:12px;padding:10px 14px;font-size:.82rem;margin:0 0 14px}
+
+article{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 18px 24px}
+h1{font-size:1.22rem;line-height:1.7;margin:0 0 12px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.meta{font-size:.8rem;color:var(--muted)}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 12px 3px 4px;font-size:.8rem;font-weight:700;border:1px solid;cursor:pointer;background:var(--surface)}
+.chip .dot{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:999px;color:#fff;font-size:.72rem;font-weight:800;padding:0 5px}
+.chip-E{border-color:var(--des-E);color:var(--des-E)} .chip-E .dot{background:var(--des-E)}
+.chip-D{border-color:var(--des-D);color:var(--des-D)} .chip-D .dot{background:var(--des-D)}
+.chip-fid,.chip-gl{border-color:rgba(var(--chrome-rgb),.55);color:var(--chrome);padding:3px 12px}
+.chip-gl .ic{font-size:.85rem}
+.plus{color:var(--muted);font-weight:500}
+
+/* card */
+.card{margin-top:18px;background:rgba(var(--chrome-rgb),.05);border:1px solid rgba(var(--chrome-rgb),.35);border-inline-start:4px solid var(--chrome);border-radius:14px;padding:14px 14px 16px}
+.card-h{margin:0;font-size:.92rem;color:var(--chrome)}
+.prov{font-size:.76rem;color:var(--muted);margin:2px 0 10px}
+.tabs{display:flex;gap:6px;margin:6px 0 12px}
+.tab{border:1px solid rgba(var(--chrome-rgb),.4);background:transparent;color:var(--chrome);border-radius:999px;padding:2px 12px;font-size:.8rem;font-weight:700}
+.tab.on{background:var(--chrome);color:#fff}
+.src{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 12px 10px;margin-top:10px}
+.srctitle{font-size:.8rem;color:var(--muted);margin-bottom:6px}
+.srctitle bdi{color:var(--ink);font-weight:600}
+.head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.bar{display:inline-flex;gap:3px;direction:ltr}
+.bar i{display:block;width:16px;height:12px;border-radius:3px;background:var(--line)}
+.bar i.on.E{background:var(--des-E)} .bar i.on.D{background:var(--des-D)}
+.bandname{font-weight:800;font-size:.86rem}
+.qtype{font-size:.74rem;color:var(--muted)}
+.score{margin-inline-start:auto;font-size:.74rem;color:var(--muted)}
+.badge{display:inline-block;border:1px solid rgba(var(--chrome-rgb),.55);color:var(--chrome);background:rgba(var(--chrome-rgb),.08);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:800}
+.bodies{font-size:.82rem;margin:8px 0 2px}
+.bodies b{font-weight:700}
+.basis{font-size:.86rem;font-weight:700;margin:4px 0 8px}
+.basis span{font-weight:500;color:var(--muted);font-size:.78rem}
+.prof{display:grid;grid-template-columns:auto 1fr auto;gap:5px 10px;align-items:center;font-size:.8rem;margin:6px 0 4px}
+.prof .track{height:8px;border-radius:99px;background:var(--line);overflow:hidden;direction:ltr}
+.prof .fill{height:100%;background:var(--chrome);border-radius:99px}
+.prof .pct{font-size:.72rem;color:var(--muted);min-width:2.4em;text-align:left}
+details{margin-top:8px;font-size:.8rem}
+summary{cursor:pointer;color:var(--chrome);font-weight:700}
+.items{margin:6px 0 0;padding:0;list-style:none}
+.items li{padding:4px 0;border-top:1px dashed var(--line)}
+.items .r{display:inline-block;min-width:1.6em;text-align:center;border-radius:6px;font-weight:800;margin-inline-end:6px;color:#fff;background:var(--chrome)}
+.items .r.r4{opacity:.7}.items .r.r1{opacity:.4}
+.items q{display:block;direction:ltr;text-align:left;color:var(--muted);font-size:.74rem;quotes:none}
+.interp-lbl{display:block;font-size:.72rem;font-weight:800;color:var(--chrome);margin-top:10px}
+.interp{margin:2px 0 0;font-size:.84rem}
+hr{border:0;border-top:1px solid var(--line);margin:10px 0}
+.opt{display:flex;flex-direction:column;gap:8px}
+.opt .lbl{font-size:.74rem;color:var(--muted)}
+
+.chip-cs{border-color:rgba(var(--chrome-rgb),.55);color:var(--chrome);padding:3px 12px}
+.cs-what{font-size:.86rem;margin:6px 0 10px}
+.cs-which{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px}
+.cs-which .k{font-size:.72rem;font-weight:800;color:var(--chrome)}
+.cs-which .t{font-weight:700;font-size:.9rem;margin:2px 0}
+.cs-which .b{font-size:.82rem;color:var(--muted)}
+.cs-basis{font-size:.8rem;margin-top:10px;padding-top:8px;border-top:1px dashed var(--line)}
+.cs-basis .k{font-weight:800;color:var(--chrome)}
+.droppable{outline:2px dashed var(--note-ink);outline-offset:3px;border-radius:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <span>ماکاپ · DES v3.4 · کانسنسوس (بدون باند، بدون عدد)</span>
+    <button class="tbtn" onclick="var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark'">تم روشن/تیره</button>
+  </div>
+  <p class="mocknote">جایگزینِ طرحِ AGREE II. کانسنسوس <b>امتیاز نمی‌گیرد</b>؛ فقط نامش و توضیحش نمایش داده می‌شود. خطِ سوم («پشتوانه») با خط‌چینِ زرد مشخص است و اگر نخواهی حذف می‌شود.</p>
+
+  <div class="label">۱. چیپ بالای مطلب — صفحه‌ای که مقاله و کانسنسوس با هم دارد (share-33)</div>
+  <article>
+    <h1>ویزیت بیمار باردار در مطب دندانپزشکی</h1>
+    <div class="row">
+      <span class="meta">۲۰ مهر ۱۴۰۵</span>
+      <button class="chip chip-E"><span class="dot">E</span>سطح شواهد: E <span class="plus">· ۲ منبع</span></button>
+      <button class="chip chip-cs">کانسنسوس</button>
+      <button class="chip chip-fid">تطابق با منابع: کاملاً مطابق</button>
+    </div>
+  </article>
+
+  <div class="label">۲. چیپ — صفحه‌ای که فقط به یک کانسنسوس تکیه دارد</div>
+  <article>
+    <div class="row">
+      <span class="meta">۲۰ مهر ۱۴۰۵</span>
+      <button class="chip chip-cs">کانسنسوس</button>
+      <button class="chip chip-fid">تطابق با منبع: کاملاً مطابق</button>
+    </div>
+  </article>
+
+  <div class="label">۳. باکس پایین مطلب — بخشِ کانسنسوس</div>
+  <div class="card">
+    <h3 class="card-h">ارزیابی خودکار شواهد</h3>
+    <div class="prov">این پنل را ماشین نوشته است، نه نویسندهٔ مطلب.</div>
+    <div class="src">
+      <div class="head"><span class="badge">کانسنسوس</span><span class="qtype">امتیازدهی نمی‌شود</span></div>
+      <p class="cs-what">کانسنسوس یا بیانیهٔ اجماع، سندی است که چند سازمان یا گروه تخصصی با هم می‌نویسند تا بگویند در یک موضوعِ مشخص، بر پایهٔ شواهد و نظرِ کارشناسان، چه کاری توصیه می‌شود. نه یک پژوهشِ تازه است و نه نظرِ یک نفر؛ مرجعی است که بالینگر برای تصمیم‌گیری به آن رجوع می‌کند، و به همین دلیل با مقیاسِ طراحیِ مطالعه سنجیده نمی‌شود.</p>
+      <div class="cs-which">
+        <div class="k">کدام کانسنسوس</div>
+        <div class="t" dir="ltr" style="text-align:left">Oral Health Care During Pregnancy: A National Consensus Statement</div>
+        <div class="b">HRSA · ACOG · ADA — ۲۰۲۶ (نمونه؛ در نسخهٔ واقعی عیناً از خودِ سند)</div>
+      </div>
+      <div class="cs-basis droppable"><span class="k">پشتوانه:</span> مبتنی بر توافق کارشناسان <span class="qtype">(سند گزارشی از جستجوی نظام‌مند شواهد ندارد)</span></div>
+    </div>
+  </div>
+
+  <div class="label">۴. همان خط سوم، وقتی سند خودش مرور سیستماتیک گزارش کرده</div>
+  <div class="card">
+    <div class="src">
+      <div class="head"><span class="badge">کانسنسوس</span><span class="qtype">امتیازدهی نمی‌شود</span></div>
+      <div class="cs-which"><div class="k">کدام کانسنسوس</div><div class="t">عنوان سند، عیناً</div><div class="b">نهادهای صادرکننده · سال</div></div>
+      <div class="cs-basis droppable"><span class="k">پشتوانه:</span> مبتنی بر مرور سیستماتیک شواهد</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
