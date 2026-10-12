@@ -7008,15 +7008,15 @@
     }
   },
   "sharehub/share-12": {
-    "scored_at": "2026-08-15",
+    "scored_at": "2026-10-12",
     "sources": [
       {
-        "des_version": "1.8",
+        "des_version": "3.0",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
-        "text_basis": "ABSTRACT_ONLY",
+        "text_basis": "SECONDARY_REPORT",
         "citation": {
-          "title": "European Academy of Neurology guideline on trigeminal neuralgia.",
+          "title": "European Academy of Neurology guideline on trigeminal neuralgia",
           "authors": "Bendtsen L, Zakrzewska JM, Abbott J, Braschinsky M, Di Stefano G, Donnet A, Eide PK, Leal PRL, Maarbjerg S, May A, Nurmikko T, Obermann M, Jensen TS, Cruccu G",
           "year": 2019,
           "journal": "European Journal of Neurology",
@@ -7028,8 +7028,8 @@
         },
         "s_design": {
           "value": 100,
-          "anchor": "clinical practice guideline built on a systematic review of the literature with GRADE (THERAPY SR/meta-analysis row, 100, via Step 2 routing for a review of non-randomized evidence)",
-          "evidence_quote": "A systematic review of the literature was performed and recommendations was developed based on GRADE, where feasible; if not, a good practice statement was given."
+          "anchor": "Clinical practice guideline built on a self-described systematic review of mixed designs, treated as a secondary report (THERAPY SR/MA row, 100, via Step 2 routing; primary aim is management, diagnosis is a secondary question type)",
+          "evidence_quote": "A systematic review of the literature was performed and recommen-"
         },
         "q_method": {
           "tool": "AMSTAR-2",
@@ -7038,81 +7038,85 @@
               "domain": "protocol registered before commencement",
               "rating": "NR",
               "evidence_quote": "",
-              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+              "note": "Secondary report: no protocol or registration wording in Abstract, Methods or Search strategy; silence is NR under SECONDARY_REPORT, counted as some_concerns."
             },
             {
               "domain": "adequacy of the literature search",
-              "rating": "some_concerns",
-              "evidence_quote": "A systematic review of the literature was performed",
-              "note": "جست‌وجوی سیستماتیک اعلام شده اما نام هیچ دیتابیسی در چکیده نیست، پس آستانه‌ی «کمتر از دو دیتابیس» بند 3b-i قابل احراز نیست و رتبه some_concerns می‌ماند."
+              "rating": "low",
+              "evidence_quote": "fied using PubMed/MEDLINE, Embase and Cochrane",
+              "note": "Three databases (MEDLINE, Embase, Cochrane Library) named in the Search strategy section; threshold of 2 databases met."
             },
             {
               "domain": "justification for excluding individual studies",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+              "rating": "some_concerns",
+              "evidence_quote": "criteria for acceptable studies were set: (i) diagnostic",
+              "note": "Inclusion criteria and per-question study counts are reported; no list of excluded full-text studies. Secondary report, so 3b-iii does not apply and silence is not high."
             },
             {
               "domain": "risk of bias assessment of included studies",
               "rating": "some_concerns",
-              "evidence_quote": "recommendations was developed based on GRADE, where feasible",
-              "note": "GRADE نام برده شده و محدودیت مطالعات یکی از دامنه‌های آن است، اما چکیده نمی‌گوید تک‌تک مطالعات واردشده ارزیابی سوگیری شده‌اند؛ پرداخته‌شده اما مبهم."
+              "evidence_quote": "as high, moderate, low or very low based on study",
+              "note": "Evidence quality rated with GRADE (study limitations, inconsistency, indirectness, imprecision); no per-study risk-of-bias tool is described."
             },
             {
               "domain": "appropriateness of meta-analytical methods",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+              "rating": "some_concerns",
+              "evidence_quote": "idiopathic or classical TN. A pooled sensitivity of",
+              "note": "Pooled sensitivity/specificity and odds ratios are reported in tables, but the pooling method is not described; the primary methods belong to the summarised studies."
             },
             {
               "domain": "assessment of publication bias",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+              "rating": "some_concerns",
+              "evidence_quote": "imprecision, publication bias, effect size, dose response",
+              "note": "Publication bias is listed as one GRADE domain; no dedicated assessment per body of evidence is described."
             }
           ],
           "multiplier": 0.55
         },
         "penalties": [
           {
-            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "item": "no conflict-of-interest statement, or manufacturer-funded with own product tested",
+            "base_points": 8,
             "points": 0,
-            "evidence_quote": "",
-            "note": "not assessable in abstract"
+            "evidence_quote": "The authors declare no financial or other conflicts of",
+            "note": "Conflict-of-interest statement present; funding is by EAN meetings and an NIHR centre, not a manufacturer."
           },
           {
-            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "",
-            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+            "note": "Not applicable: the document is a guideline, not an RCT."
           },
           {
-            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "",
             "note": "not applicable to a secondary study"
           },
           {
-            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
-            "points": 0,
-            "evidence_quote": "",
-            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 3,
+            "evidence_quote": "because of side effects. All the RCTs were small and short",
+            "note": "The guideline recommends carbamazepine for long-term treatment while stating that all its RCTs were short term; the fired penalty scales to max(1, round(3 x 100 / 100)) = 3."
           }
         ],
         "commentary_checklist": null,
-        "des_score": 55,
+        "des_score": 52,
         "band": "C",
         "provisional": true,
-        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
-        "interpretation_fa": "گایدلاین مرجع اروپا برای نورالژی تریژمینال است و همان چیزی را می‌دهد که یک دندانپزشک عمومی لازم دارد: کاربامازپین یا اکسکاربازپین خط اول، MRI با سه سکانس در بررسی اولیه، و ارجاع جراحی وقتی درد با دارو کنترل نمی‌شود. صریحاً می‌گوید هیچ ویژگی بالینی نمی‌تواند نوع ثانویه را رد کند."
+        "fact_fa": "امتیاز DES این راهنمای بالینی ۵۲ از ۱۰۰ و در سطح C (شواهد محدود) برای پرسش از نوع درمان (THERAPY) است.",
+        "interpretation_fa": "این متن گزارشی ثانویه است و روش‌شناسی مطالعات اولیه در آن فقط خلاصه شده است. بیشتر توصیه‌های دارویی و جراحی بر شواهد با کیفیت پایین یا بسیار پایین در GRADE بنا شده و کارآزمایی‌های کاربامازپین کوتاه‌مدت بوده‌اند. ارزش بالینی آن در ساختار دادن به تصمیم‌گیری درباره MRI، دارو و زمان جراحی است، نه اثبات قطعی اثر."
       },
       {
-        "des_version": "1.8",
+        "des_version": "3.0",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
-        "text_basis": "ABSTRACT_ONLY",
+        "text_basis": "SECONDARY_REPORT",
         "citation": {
-          "title": "AAN-EFNS guidelines on trigeminal neuralgia management.",
+          "title": "AAN-EFNS guidelines on trigeminal neuralgia management",
           "authors": "Cruccu G, Gronseth G, Alksne J, Argoff C, Brainin M, Burchiel K, Nurmikko T, Zakrzewska JM",
           "year": 2008,
           "journal": "European Journal of Neurology",
@@ -7124,8 +7128,8 @@
         },
         "s_design": {
           "value": 100,
-          "anchor": "joint task-force clinical practice guideline built on a systematic review of the literature (THERAPY SR/meta-analysis row, 100, via Step 2 routing for a review of non-randomized evidence)",
-          "evidence_quote": "After systematic review of the literature the Task Force came to a series of evidence-based recommendations."
+          "anchor": "Guideline built on a systematic literature review of mixed-design studies (THERAPY SR/MA row, 100, via Step 2 routing)",
+          "evidence_quote": "After systematic review of the literature the Task Force came to a series of evidence-based recom-"
         },
         "q_method": {
           "tool": "AMSTAR-2",
@@ -7134,81 +7138,185 @@
               "domain": "protocol registered before commencement",
               "rating": "NR",
               "evidence_quote": "",
-              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+              "note": "Guideline is scored as a secondary report, so silence is NR; no protocol or registration wording found in the Search Methods section or elsewhere."
             },
             {
               "domain": "adequacy of the literature search",
-              "rating": "some_concerns",
-              "evidence_quote": "After systematic review of the literature the Task Force came to a series of evidence-based recommendations.",
-              "note": "جست‌وجوی سیستماتیک اعلام شده اما نام هیچ دیتابیسی نمی‌آید، پس آستانه‌ی بند 3b-i قابل احراز نیست و رتبه some_concerns می‌ماند."
+              "rating": "low",
+              "evidence_quote": "We searched MEDLINE, EMBASE and the Cochrane",
+              "note": "Three databases plus bibliography screening; threshold of 2 databases met."
             },
             {
               "domain": "justification for excluding individual studies",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+              "rating": "some_concerns",
+              "evidence_quote": "communications were accepted. Panel members reviewed",
+              "note": "Selection process and inclusion criteria are mentioned, but no counts and no list of excluded studies; secondary report so no absence rating."
             },
             {
               "domain": "risk of bias assessment of included studies",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+              "rating": "low",
+              "evidence_quote": "Nine studies were graded Class IV be- cause they relied on the unmasked findings of the operating surgeon to determine the presence of vascular contact",
+              "note": "Included studies are graded into Class I-IV with stated risk-of-bias reasons."
             },
             {
               "domain": "appropriateness of meta-analytical methods",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+              "rating": "some_concerns",
+              "evidence_quote": "Pooled sensitivity 94% (95% CI, 91 to 97); pooled specificity 87% (95% CI, 77 to 93).",
+              "note": "Pooled estimates are reported but the pooling method and heterogeneity handling are not described."
             },
             {
               "domain": "assessment of publication bias",
               "rating": "NR",
               "evidence_quote": "",
-              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+              "note": "Not addressed in the text; secondary report so silence is NR."
             }
           ],
           "multiplier": 0.55
         },
         "penalties": [
           {
-            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "item": "no conflict-of-interest statement, or commercial-manufacturer funding of a tested product",
+            "base_points": 8,
             "points": 0,
-            "evidence_quote": "",
-            "note": "not assessable in abstract"
+            "evidence_quote": "Conflicts of interest were disclosed.",
+            "note": "Disclosure present; panelists not compensated; no manufacturer funding of a tested product."
           },
           {
-            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "",
-            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+            "note": "Not applicable: guideline, not an RCT; not assessable in a secondary report."
           },
           {
-            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "",
             "note": "not applicable to a secondary study"
           },
           {
-            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
             "points": 0,
             "evidence_quote": "",
-            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+            "note": "not assessable in a secondary report; text reports follow-up up to 5 years and does not itself state short follow-up as a flaw."
           }
         ],
         "commentary_checklist": null,
         "des_score": 55,
         "band": "C",
         "provisional": true,
-        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
-        "interpretation_fa": "نسخه‌ی مشترک AAN و EFNS است که گایدلاین اروپایی ۲۰۱۹ جایگزینش شد، پس ارزشش امروز تاریخی و تطبیقی است. دو نکته‌اش هنوز پابرجاست: کاربامازپین شواهد قوی‌تر و اکسکاربازپین تحمل بهتر دارد، و دکمپرشن میکروواسکولار طولانی‌ترین دوره‌ی بی‌دردی را می‌دهد."
+        "fact_fa": "امتیاز DES این راهنمای بالینی ۵۵ از ۱۰۰ و در سطح C برای پرسش درمانی است.",
+        "interpretation_fa": "این راهنما از مرور نظام‌مند با جست‌وجو در سه پایگاه و درجه‌بندی کلاس I تا IV ساخته شده، ولی ثبت پروتکل، فهرست مطالعات حذف‌شده و سوگیری انتشار در متن گزارش نشده است. نتیجه یک گزارش ثانویه است و سقف امتیاز آن محدود می‌ماند. برای انتخاب دارو و جراحی در نورالژی تری‌ژمینال مرجع معتبری است."
       },
       {
-        "des_version": "1.8",
+        "des_version": "3.0",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
-        "text_basis": "ABSTRACT_ONLY",
+        "text_basis": "SECONDARY_REPORT",
         "citation": {
-          "title": "Trigeminal neuralgia: a practical guide.",
+          "title": "Guidelines for the management of trigeminal neuralgia",
+          "authors": "Royal College of Surgeons of England, Faculty of Dental Surgery",
+          "year": 2021,
+          "journal": "Faculty of Dental Surgery, Royal College of Surgeons of England",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "Clinical practice guideline (modified Delphi consensus derived from existing guidelines and one systematic review, no own literature search); matches no design row, routed to the nearest row, THERAPY narrative review (15). Classified as a secondary report because its methods live in the sources it summarises.",
+          "evidence_quote": "The recommendations in this guideline have been derived from these existing sources, with any caveats or divergent advice being cited separately."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "Not assessable in a secondary report: the guideline text does not describe this step, and under SECONDARY_REPORT silence is NR (counted as some_concerns). No search strategy, registration, screening account or pooling is described anywhere in the text; the method belongs to the sources it summarises."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "Not assessable in a secondary report: the guideline text does not describe this step, and under SECONDARY_REPORT silence is NR (counted as some_concerns). No search strategy, registration, screening account or pooling is described anywhere in the text; the method belongs to the sources it summarises."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "Not assessable in a secondary report: the guideline text does not describe this step, and under SECONDARY_REPORT silence is NR (counted as some_concerns). No search strategy, registration, screening account or pooling is described anywhere in the text; the method belongs to the sources it summarises."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "some_concerns",
+              "evidence_quote": "used a combination of the GRADE (Grading of Recommendations, Assessment, Development and Evaluations)22",
+              "note": "The guideline reports only that the source guidelines and review used GRADE/AAN appraisal; it describes no appraisal of its own, so the domain is addressed partially (some_concerns)."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "Not assessable in a secondary report: the guideline text does not describe this step, and under SECONDARY_REPORT silence is NR (counted as some_concerns). No search strategy, registration, screening account or pooling is described anywhere in the text; the method belongs to the sources it summarises."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "Not assessable in a secondary report: the guideline text does not describe this step, and under SECONDARY_REPORT silence is NR (counted as some_concerns). No search strategy, registration, screening account or pooling is described anywhere in the text; the method belongs to the sources it summarises."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / commercial funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The Faculty of Dental Surgery is funded by its fellows and members, and no contributors or reviewers were paid for their work on this guideline.",
+            "note": "A conflict-of-interest statement is present and funding is non-commercial."
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "Not applicable: RCTs only; this is a secondary report."
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in a secondary report: the text does not itself affirmatively show a short follow-up for a survival/success claim (Table 1 cites follow-up of several years for the surgical outcomes)."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این رهنمود با امتیاز ۸ در سطح E و برای پرسش درمانی (THERAPY) قرار می‌گیرد.",
+        "interpretation_fa": "این سند یک guideline اجماعی (modified Delphi) است که توصیه‌هایش را از رهنمودهای بین‌المللی و یک systematic review موجود گرفته است. روش جست‌وجو و ارزیابی خطای سوگیری در منابع اصلی انجام شده و در این متن گزارش نمی‌شود. ارزش آن بیشتر در جمع‌بندی مسیر درمان trigeminal neuralgia است تا شواهد مستقل."
+      },
+      {
+        "des_version": "3.0",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Trigeminal neuralgia: a practical guide",
           "authors": "Lambru G, Zakrzewska J, Matharu M",
           "year": 2021,
           "journal": "Practical Neurology",
@@ -7220,91 +7328,95 @@
         },
         "s_design": {
           "value": 15,
-          "anchor": "narrative practical review of diagnosis and management (THERAPY narrative review row, 15)",
-          "evidence_quote": "Trigeminal neuralgia (TN) is a highly disabling disorder characterised by very severe, brief and electric shock like recurrent episodes of facial pain."
+          "anchor": "narrative review (THERAPY narrative review row, 15); a peer-reviewed practical guide to diagnosis and management that reports the authors' own practice algorithm, with no systematic method; primary aim is management, secondary aim is diagnosis",
+          "evidence_quote": "We have outlined an algorithm of our practice (see figure 3)."
         },
         "q_method": {
           "tool": "AMSTAR-2",
           "domains": [
             {
               "domain": "protocol registered before commencement",
-              "rating": "NR",
+              "rating": "high",
               "evidence_quote": "",
-              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+              "note": "no protocol or registration mentioned; no such wording anywhere in the text; sections read: abstract, introduction, diagnosis, treatment, conclusions, key points, declarations, references; looked for protocol, registered, PROSPERO"
             },
             {
               "domain": "adequacy of the literature search",
-              "rating": "NR",
+              "rating": "high",
               "evidence_quote": "",
-              "note": "چکیده نام هیچ دیتابیس یا استراتژی جست‌وجویی نمی‌آورد؛ تحت ABSTRACT_ONLY این NR است."
+              "note": "no search strategy and no bibliographic database named; no such wording anywhere in the text; sections read: abstract, introduction, diagnosis, treatment, conclusions, key points, declarations, references; looked for databases, MEDLINE, Embase, Cochrane, search terms, dates"
             },
             {
               "domain": "justification for excluding individual studies",
-              "rating": "NR",
+              "rating": "high",
               "evidence_quote": "",
-              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+              "note": "neither (a) a screening account with counts nor (b) explicit inclusion/exclusion criteria is reported; there is no Methods section; no such wording anywhere in the text; sections read: abstract, introduction, diagnosis, treatment, conclusions, key points, declarations, references"
             },
             {
               "domain": "risk of bias assessment of included studies",
-              "rating": "NR",
+              "rating": "high",
               "evidence_quote": "",
-              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+              "note": "no appraisal of included studies; the text only remarks generally on the evidence base, without assessing any study with a tool or criteria; no such wording anywhere in the text; sections read: abstract, introduction, diagnosis, treatment, conclusions, key points, declarations, references; looked for risk of bias, quality assessment, appraisal, GRADE"
             },
             {
               "domain": "appropriateness of meta-analytical methods",
-              "rating": "NR",
+              "rating": "high",
               "evidence_quote": "",
-              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+              "note": "no meta-analysis or quantitative synthesis method is described; efficacy figures are tabulated from other sources; no such wording anywhere in the text; sections read: abstract, introduction, diagnosis, treatment, conclusions, key points, declarations, references"
             },
             {
               "domain": "assessment of publication bias",
-              "rating": "NR",
+              "rating": "high",
               "evidence_quote": "",
-              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+              "note": "no publication bias assessment (funnel plot, Egger, or similar) anywhere; no such wording anywhere in the text; sections read: abstract, introduction, diagnosis, treatment, conclusions, key points, declarations, references"
             }
           ],
-          "multiplier": 0.55
+          "multiplier": 0.3
         },
         "penalties": [
           {
-            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "item": "no conflict-of-interest statement, or commercial manufacturer funding its own product",
+            "base_points": 8,
             "points": 0,
-            "evidence_quote": "",
-            "note": "not assessable in abstract"
+            "evidence_quote": "Competing interests GL has received speaker honoraria",
+            "note": "competing interests are declared in full and the authors state they were not funded by any commercial agency; disclosure was made, and no tested product of a funder is involved"
           },
           {
-            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "",
-            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+            "note": "not applicable; applies to RCTs only and this is a narrative review"
           },
           {
-            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "",
             "note": "not applicable to a secondary study"
           },
           {
-            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
             "points": 0,
-            "evidence_quote": "",
-            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+            "evidence_quote": "Data in over 5000 patients showed a pain- free rate of 62%–89% after 3–10 years of follow- up.",
+            "note": "the reported success rates rest on 3 to 10 years of follow-up, which is adequate for the stated claim"
           }
         ],
         "commentary_checklist": null,
-        "des_score": 8,
+        "des_score": 5,
         "band": "E",
-        "provisional": true,
-        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
-        "interpretation_fa": "مرور روایتی است، پس امتیاز ساختاری‌اش پایین می‌ماند، اما همان توصیه‌های گایدلاین اروپا را در قالبی کوتاه و قابل استفاده در مطب می‌گذارد. تفکیک بیمار بر اساس وجود کانفلیکت نوروواسکولار، همان چیزی است که مسیر ارجاع را تعیین می‌کند."
+        "provisional": false,
+        "fact_fa": "امتیاز این مقاله مروری روایی ۵ از ۱۰۰ و در سطح E برای پرسش درمانی (THERAPY) است.",
+        "interpretation_fa": "این مقاله راهنمای بالینی مروری و روایی است و روش جست‌وجو، انتخاب مطالعات و ارزیابی سوگیری ندارد، پس نمره ساختاری پایین است. بخش مهمی از آن بر تجربه خود نویسندگان تکیه دارد. برای تصمیم‌گیری درباره‌ی نورالژی تریژمینال به عنوان یک مرور تخصصی معتبر و خوانا کاربرد دارد، نه به عنوان شواهد قطعی."
       },
       {
-        "des_version": "1.8",
+        "des_version": "3.0",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
-        "text_basis": "ABSTRACT_ONLY",
+        "text_basis": "SECONDARY_REPORT",
         "citation": {
-          "title": "Guidelines for the management of trigeminal neuralgia.",
+          "title": "Guidelines for the management of trigeminal neuralgia",
           "authors": "Chong MS, Bahra A, Zakrzewska JM",
           "year": 2023,
           "journal": "Cleveland Clinic Journal of Medicine",
@@ -7316,8 +7428,8 @@
         },
         "s_design": {
           "value": 15,
-          "anchor": "narrative summary of the UK trigeminal neuralgia guidelines (THERAPY narrative review row, 15)",
-          "evidence_quote": "Guidelines for the diagnosis and treatment of patients with trigeminal neuralgia (TN) advocate for a multidisciplinary team approach to improve the care of patients with acute and chronic TN."
+          "anchor": "Narrative summary of existing clinical guidelines (secondary report), routed to the THERAPY narrative review row (15); it is not itself an SR/MA and reports no pooled analysis",
+          "evidence_quote": "These guidelines are based on other documents first published by the American Academy of Neurology"
         },
         "q_method": {
           "tool": "AMSTAR-2",
@@ -7326,73 +7438,77 @@
               "domain": "protocol registered before commencement",
               "rating": "NR",
               "evidence_quote": "",
-              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+              "note": "NR under SECONDARY_REPORT: the document summarises guidelines whose methods live elsewhere; nothing in the text addresses this domain"
             },
             {
               "domain": "adequacy of the literature search",
-              "rating": "NR",
-              "evidence_quote": "",
-              "note": "چکیده نام هیچ دیتابیس یا استراتژی جست‌وجویی نمی‌آورد؛ تحت ABSTRACT_ONLY این NR است."
+              "rating": "some_concerns",
+              "evidence_quote": "using their guideline-development process encompassing literature search, peer review, public engagement, and approval by the Faculty",
+              "note": "A literature search is mentioned for the underlying guideline but no databases or strategy are given, so the domain is addressed only partially"
             },
             {
               "domain": "justification for excluding individual studies",
               "rating": "NR",
               "evidence_quote": "",
-              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+              "note": "NR under SECONDARY_REPORT: the document summarises guidelines whose methods live elsewhere; nothing in the text addresses this domain"
             },
             {
               "domain": "risk of bias assessment of included studies",
               "rating": "NR",
               "evidence_quote": "",
-              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+              "note": "NR under SECONDARY_REPORT: the document summarises guidelines whose methods live elsewhere; nothing in the text addresses this domain"
             },
             {
               "domain": "appropriateness of meta-analytical methods",
               "rating": "NR",
               "evidence_quote": "",
-              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+              "note": "NR under SECONDARY_REPORT: the document summarises guidelines whose methods live elsewhere; nothing in the text addresses this domain; no meta-analysis is performed"
             },
             {
               "domain": "assessment of publication bias",
               "rating": "NR",
               "evidence_quote": "",
-              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+              "note": "NR under SECONDARY_REPORT: the document summarises guidelines whose methods live elsewhere; nothing in the text addresses this domain"
             }
           ],
           "multiplier": 0.55
         },
         "penalties": [
           {
-            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "item": "no conflict-of-interest statement / manufacturer-funded product tested",
+            "base_points": 8,
             "points": 0,
-            "evidence_quote": "",
-            "note": "not assessable in abstract"
+            "evidence_quote": "Dr. Bahra has disclosed consulting for Pfizer.",
+            "note": "disclosures are present; no tested product is a funder's own"
           },
           {
-            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "",
-            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+            "note": "not applicable: not an RCT"
           },
           {
-            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "",
             "note": "not applicable to a secondary study"
           },
           {
-            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
             "points": 0,
             "evidence_quote": "",
-            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+            "note": "not assessable in a secondary report; no short-follow-up flaw is stated in the text"
           }
         ],
         "commentary_checklist": null,
         "des_score": 8,
         "band": "E",
         "provisional": true,
-        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
-        "interpretation_fa": "معرفی کوتاه گایدلاین بریتانیاست و ادعای پژوهشی خودش را ندارد. حرف عملی‌اش تیم چندتخصصی و مسیر مراقبت است، یعنی همان جایی که نقش دندانپزشک عمومی تشخیص زودهنگام و ارجاع درست است. برای بیمار هم مواد آموزشی دارد."
+        "fact_fa": "این منبع یک خلاصه‌ی راهنمای بالینی (گزارش ثانویه) درباره‌ی مدیریت trigeminal neuralgia است و امتیاز DES آن ۸ از ۱۰۰ و در سطح E (سطح مقاله‌ی مروری روایی) برای پرسش THERAPY است.",
+        "interpretation_fa": "متن خلاصه‌ای روایی از راهنمای بالینی بریتانیا و اروپا است و روش‌شناسی مرور، جست‌وجو و ارزیابی خطای سوگیری در منابع اولیه قرار دارد، بنابراین امتیاز پایین ساختاری است و کیفیت راهنما را قضاوت نمی‌کند. ارزش آن در جمع‌بندی دارودرمانی و جراحی برای کاربرد بالینی است."
       }
     ]
   },
