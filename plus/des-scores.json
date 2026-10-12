@@ -36130,5 +36130,303 @@
         "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]
+  },
+  "sharehub/share-33": {
+    "scored_at": "2026-10-12",
+    "sources": [
+      {
+        "des_version": "3.2",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Review of the Safety and Clinical Considerations of Vasoconstrictor Agents in Dental Anesthesia During Pregnancy",
+          "authors": "Urîtu A, Buciu VB, Roi C, Chioran D, Serban DM, Nicoleta N, Rusu EL, Ionac M, Riviș M, Ciurescu S",
+          "year": 2025,
+          "journal": "Journal of Clinical Medicine",
+          "doi": "10.3390/jcm14134773"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "Self-declared narrative synthesis of narrative reviews and guidelines (THERAPY narrative review row, 15), despite the Systematic Review label",
+          "evidence_quote": "we have decided to declare our work as a narrative synthesis rather than"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "This systematic review has not\nbeen registered.",
+              "note": "The text states the review was not registered."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "A structured search of the PubMed (MEDLINE) database was performed to identify",
+              "note": "Only one bibliographic database (PubMed/MEDLINE) was searched, below the threshold of 2; manual search of ADA/ACOG guidelines and reference screening are not databases."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "some_concerns",
+              "evidence_quote": "The initial search of the PubMed (MEDLINE) database yielded a total of 95 records",
+              "note": "No list of excluded full-text studies; but a screening account with counts (95 records, 23 duplicates, 70 screened, 32 excluded, 38 full texts, 8+17+7 excluded, 6 reviews included) and explicit inclusion/exclusion criteria in 2.2 are both reported."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Read 2.2 Study Selection (search, screening, data extraction fields), 2.3 Study Design, 3 Results and 4.4 Limitations; no risk-of-bias or critical appraisal step and no appraisal wording anywhere; the word quality appears only for a database filter and for a call for future trials."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "Given the limited number of randomized controlled trials and the diversity of designs",
+              "note": "No meta-analysis performed; the choice to synthesize narratively because of heterogeneous designs and outcomes is stated and justified."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "some_concerns",
+              "evidence_quote": "epinephrine studies hinders balanced comparisons, as levonordefrin and felypressin remain",
+              "note": "Publication bias is addressed only as a narrative limitation; no formal assessment method is described."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / commercial funder of tested product",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "Conflicts of Interest: The authors declare no conflicts of interest.",
+            "note": "Conflict-of-interest statement present; funding: no external funding."
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "Not an RCT; the missing registration is covered in Q_method (protocol domain)."
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "The review makes no survival/success claim and states no follow-up duration; the row does not fire."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 5,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "امتیاز DES این مقاله ۵ از ۱۰۰ و در سطح E برای پرسش درمانی (THERAPY) است.",
+        "interpretation_fa": "مقاله با عنوان Systematic Review، در بخش روش‌ها خود را narrative synthesis اعلام کرده است. فقط یک پایگاه (PubMed) جست‌وجو شده، پروتکل ثبت نشده و ارزیابی سوگیری مطالعات واردشده انجام نشده است. مطالعات واردشده خودشان مرورهای روایی و رهنمودها هستند. ارزش بالینی آن خلاصه‌ی منظم دیدگاه‌های موجود درباره vasoconstrictor ها در بارداری است."
+      },
+      {
+        "des_version": "3.2",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "SECONDARY_REPORT",
+        "citation": {
+          "title": "Oral Health Care During Pregnancy: A National Consensus Statement (rev. ed.)",
+          "authors": "Oral Health Care During Pregnancy Expert Workgroup",
+          "year": 2026,
+          "journal": "National Maternal and Child Oral Health Resource Center, Georgetown University",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "Expert consensus statement / practice guidance, a narrative synthesis of existing guidelines with no stated review method (THERAPY narrative review row, 15, via Step 2 nearest row)",
+          "evidence_quote": "This national consensus statement was developed to"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "not assessable in a secondary report: the statement summarises guidance from other documents and states no review methods of its own"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "not assessable in a secondary report: the statement summarises guidance from other documents and states no review methods of its own"
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "not assessable in a secondary report: the statement summarises guidance from other documents and states no review methods of its own"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "not assessable in a secondary report: the statement summarises guidance from other documents and states no review methods of its own"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "not assessable in a secondary report: the statement summarises guidance from other documents and states no review methods of its own"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "not assessable in a secondary report: the statement summarises guidance from other documents and states no review methods of its own"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement, or commercial manufacturer funding with no independent-analysis statement",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "funding from nongovernmental sources",
+            "note": "funding disclosed: HRSA/HHS award with no funding from nongovernmental sources; not a manufacturer"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: not an RCT; not assessable in a secondary report"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in a secondary report; source text does not address follow-up duration"
+          }
+        ],
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "امتیاز این منبع ۸ از ۱۰۰ و در سطح E (مسئله‌ی درمانی) است.",
+        "interpretation_fa": "این سند بیانیه‌ی اجماع کارشناسی است و روش مرور خودش را گزارش نمی‌کند، پس امتیاز ساختاری پایینی می‌گیرد. ارزش آن در راهنمایی عملی برای مراقبت دهان در بارداری است، نه در شواهد اولیه. روش‌شناسی مطالعات پایه در منابع دیگر قرار دارد."
+      },
+      {
+        "des_version": "3.2",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "A randomized trial of Citanest with Octapressin for relief of pain associated with laser vaporization of the cervix",
+          "authors": "Lee ET, Ozumba EN, Bevan JR",
+          "year": 1986,
+          "journal": "British Journal of Obstetrics and Gynaecology",
+          "doi": "10.1111/j.1471-0528.1986.tb08017.x"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "RCT (THERAPY RCT row, 85)",
+          "evidence_quote": "The study was a randomized comparison of two"
+        },
+        "q_method": {
+          "tool": "RoB2",
+          "domains": [
+            {
+              "domain": "randomization process",
+              "rating": "some_concerns",
+              "evidence_quote": "were randomly allocated to one of two",
+              "note": "Random allocation is stated but neither sequence generation nor allocation concealment is described; no 3b-i threshold is met."
+            },
+            {
+              "domain": "deviations from intended interventions",
+              "rating": "some_concerns",
+              "evidence_quote": "Local anaesthetic was employed in the",
+              "note": "Control patients could receive anaesthetic when pain was significant (seven did); patients and operator were not blinded."
+            },
+            {
+              "domain": "missing outcome data",
+              "rating": "some_concerns",
+              "evidence_quote": "groups of 25 patients each undergoing laser",
+              "note": "Outcome tables list 25 per group but no statement on attrition or exclusions is made."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "double-blind control trial, which would have",
+              "note": "Pain was self-reported on VAS and verbal scales; bleeding was a subjective operator impression; no blinding of patients or assessor."
+            },
+            {
+              "domain": "selection of the reported result",
+              "rating": "some_concerns",
+              "evidence_quote": "asked whether they had experienced sweating,",
+              "note": "Outcomes listed in Methods are reported in Results, but no protocol, registration or prespecified analysis plan is stated."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all",
+            "base_points": 8,
+            "points": 7,
+            "evidence_quote": "",
+            "note": "Read Acknowledgments and the end matter: only a thanks for statistical help; no conflict-of-interest, funding or disclosure wording anywhere in the text. 8 x 85 / 100 = 6.8 rounds to 7."
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "covered in Q_method"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 4,
+            "evidence_quote": "",
+            "note": "Read Patients and methods and Discussion: groups of 25 stated with no sample size justification or power calculation (the only 'power' is laser power density). 5 x 85 / 100 = 4.25 rounds to 4."
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "Outcome is procedural pain assessed immediately after the procedure; follow-up duration is adequate for that outcome."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 36,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این مطالعه امتیاز ۳۶ از ۱۰۰ و سطح D را در پرسش نوع درمان (THERAPY) گرفته است.",
+        "interpretation_fa": "این کارآزمایی تصادفی کوچک (۵۰ بیمار) کاهش درد با بی‌حسی موضعی prilocaine با felypressin را نشان می‌دهد، اما روش تولید توالی و پنهان‌سازی تخصیص گزارش نشده و ارزیابی درد بدون کورسازی انجام شده است. نتیجه برای درد در لیزر سرویکس است و به طب دندان قابل تعمیم مستقیم نیست. ارزش آن بیشتر در حد شاهد اولیه برای اثر این ترکیب بی‌حسی است."
+      }
+    ]
   }
 }
