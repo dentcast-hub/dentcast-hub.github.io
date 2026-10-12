@@ -52,6 +52,14 @@ KIND_FA = {
 SILENT = ('NOT_ASSESSABLE', 'NOT_IN_SOURCE')
 
 
+BASIS_FA = {
+    'FULL_TEXT': 'متن کامل مقاله',
+    'ABSTRACT_ONLY': 'چکیده‌ی مقاله',
+    'SECONDARY_REPORT': 'گزارش ثانویه (نه مطالعه‌های اصلی)',
+    'EXCERPT': 'بخشی از منبع که در دست بود',
+}
+
+
 def fidelity_word(f):
     c = f.get('counts') or {}
     if f['level'] == 'INSUFFICIENT_CLAIMS':
@@ -88,7 +96,10 @@ def bundle(f, cite, doi, code, date, spec):
         # word «مقدماتی» and never «چکیده» beside the verdict (founder,
         # 1405/07/18): the author may well have written from the abstract, and
         # the chip must not suggest our check fell short of their source.
-        'provisional': f.get('text_basis') == 'ABSTRACT_ONLY',
+        # Spec v3.1 adds EXCERPT (a part of a book or a glossary): named as what
+        # it is, never called a full text and never called an abstract.
+        'provisional': f.get('text_basis') != 'FULL_TEXT',
+        'basis_fa': BASIS_FA.get(f.get('text_basis'), 'متن کامل مقاله'),
         'word': fidelity_word(f),
         'level': f['level'],
         'score': f.get('fidelity_score'),

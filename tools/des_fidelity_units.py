@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DES v3.0 FIDELITY — the caller's half: split a page into units and say
+"""DES v3.1 FIDELITY — the caller's half: split a page into units and say
 which cited source each unit is judged against.
 
 The spec (appendix rules 7 and 10) takes segmentation and attribution out of
@@ -14,11 +14,17 @@ agent produces byte-identical input blocks for the same page.
     python3 tools/des_fidelity_units.py sharehub/share-22 \\
         --texts texts.json --build DIR
 
-`texts.json` maps each source's DOI (lower case) to
+`texts.json` maps each source's DOI (lower case) — or, for a source with no
+DOI (a textbook, a standard), its position tag `S<n>` — to
 {"source_text": "...", "text_basis": "ABSTRACT_ONLY" | "FULL_TEXT" | ...} —
 the same text the SOURCE call scored, on the same basis (the tool refuses
-a mismatch — spec v2.7+ appendix rule 11). Resolving it (cabinet, PubMed, WebFetch)
-is step 4.13 Part 1's job, not this tool's.
+a mismatch — spec v2.7+ appendix rule 11). Resolving it (cabinet, PubMed, WebFetch,
+the founder's own copy of a book) is step 4.13 Part 1's job, not this tool's.
+
+A NOT_APPRAISABLE source (spec v3.1) is judged like any other when its text
+was in hand (`text_basis` FULL_TEXT or EXCERPT): the score and the fidelity
+are two questions, and the gate is the text, never the score. A
+CITATION_ONLY record has no text and gets no call.
 
 Three modes, decided here and nowhere else:
   * ONE scored source          → every unit goes to it (scope SOURCE).
@@ -58,10 +64,18 @@ JOURNAL_STOP = {
 }
 
 
+NA_TEXT_BASES = ("FULL_TEXT", "EXCERPT")
+
+
 def scorable(src):
-    """A source the FIDELITY call can run against (README step 4.13 Part 2b)."""
-    if src.get("error") or src.get("content_type") == "NOT_APPRAISABLE":
+    """A source the FIDELITY call can run against (README step 4.13 Part 2b).
+    From spec v3.1 a NOT_APPRAISABLE source is one too, whenever its SOURCE
+    call read a text (FULL_TEXT or EXCERPT) — a book with only its reference
+    line in hand (CITATION_ONLY, or a pre-3.1 record) has nothing to judge."""
+    if src.get("error"):
         return False
+    if src.get("content_type") == "NOT_APPRAISABLE":
+        return vp.des_ge(src.get("des_version"), (3, 1)) and src.get("text_basis") in NA_TEXT_BASES
     return True
 
 
@@ -80,6 +94,15 @@ def markers_for(src):
         out.add(" ".join(words))
         if len(words[-1]) >= 4:
             out.add(words[-1])
+    else:
+        # spec v3.1 appendix rule 10: a work with no author (a glossary, a
+        # standard) is named in prose by its title, as one whole phrase, minus
+        # a leading article and a trailing parenthetical. A work WITH an
+        # author keeps the author rule alone, so no earlier assignment moves.
+        t = re.sub(r"\s*\([^)]*\)\s*$", "", (cit.get("title") or "").strip().rstrip("."))
+        t = re.sub(r"^(?:the|a|an)\s+", "", t, flags=re.I).strip()
+        if len(t.split()) >= 2:
+            out.add(t)
     if cit.get("doi"):
         out.add(cit["doi"])
     jw = (cit.get("journal") or "").split()
@@ -205,20 +228,36 @@ def source_conclusion_for(t):
     return conclusion_of(t["source_text"], t["text_basis"])
 
 
-BASIS_ORDER = ["FULL_TEXT", "SECONDARY_REPORT", "ABSTRACT_ONLY"]
+BASIS_ORDER = ["FULL_TEXT", "SECONDARY_REPORT", "ABSTRACT_ONLY", "EXCERPT"]
 
 
-def text_for(s, texts):
+def weakest(bases):
+    """Spec F6 / v3.1: the pooled basis is the weakest of the parts' —
+    FULL_TEXT < SECONDARY_REPORT < ABSTRACT_ONLY < EXCERPT."""
+    known = [b for b in bases if b in BASIS_ORDER]
+    return max(known, key=BASIS_ORDER.index) if known else None
+
+
+def text_key(s, n):
+    """texts.json key: the DOI, lower case; a DOI-less source (a book, a
+    standard) by its position tag S<n> (1-based, the tag F6 uses)."""
+    doi = ((s.get("citation") or {}).get("doi") or "").strip().lower()
+    return doi or f"s{n}"
+
+
+def text_for(s, texts, n):
     """The FIDELITY call reads what the SOURCE call scored (spec v2.7 F0,
     appendix rule 11): a page written from a full text is never judged
-    against its abstract. Refuse a text whose basis differs from the record."""
-    doi = (s.get("citation") or {}).get("doi", "").lower()
-    if doi not in texts:
-        sys.exit(f"no text for {doi} in --texts")
-    t = texts[doi]
+    against its abstract. Refuse a text whose basis differs from the record.
+    A NOT_APPRAISABLE source is no exception (v3.1): its SOURCE call read the
+    chapter or the entry, and this call reads the same."""
+    key = text_key(s, n)
+    if key not in texts:
+        sys.exit(f"no text for {key} in --texts")
+    t = texts[key]
     want = s.get("text_basis")
     if want and t.get("text_basis") != want:
-        sys.exit(f"{doi}: --texts gives {t.get('text_basis')} but the SOURCE record was scored "
+        sys.exit(f"{key}: --texts gives {t.get('text_basis')} but the SOURCE record was scored "
                  f"on {want} — pass the same text the SOURCE call scored (spec appendix rule 11)")
     return t
 
@@ -240,7 +279,7 @@ def build(content_id, sources, units, mode, plan, texts, outdir):
             for n, s in enumerate(sources, 1):
                 if not scorable(s):
                     continue
-                t = text_for(s, texts)
+                t = text_for(s, texts, n)
                 blk = {"mode": "FIDELITY", "scope": "SOURCE", "pooled_part": f"S{n}",
                        "source_text": t["source_text"], "text_basis": t["text_basis"], "units": pub(ids),
                        "derivative_url": url,
@@ -250,7 +289,7 @@ def build(content_id, sources, units, mode, plan, texts, outdir):
                 made.append(str(p))
         else:
             s = sources[key]
-            t = text_for(s, texts)
+            t = text_for(s, texts, key + 1)
             blk = {"mode": "FIDELITY", "scope": "SOURCE", "source_text": t["source_text"],
                    "text_basis": t["text_basis"], "units": pub(ids), "derivative_url": url,
                    "source_conclusion": source_conclusion_for(t)}
@@ -464,8 +503,10 @@ def main():
         want = {f"S{n}" for n, s in enumerate(sources, 1) if scorable(s)}
         if set(parts) != want:
             sys.exit(f"--merge needs {sorted(want)}, found {sorted(parts)}")
-        bases = [s.get("text_basis") for s in sources if scorable(s)]
-        merged = merge_pooled(parts, max(bases, key=BASIS_ORDER.index))
+        # the pooled basis is the weakest of the PARTS' own (each copied its
+        # input's), which is the same as the sources' for a paper and the only
+        # honest reading for a NOT_APPRAISABLE source (v3.1)
+        merged = merge_pooled(parts, weakest([p.get("text_basis") for p in parts.values()]))
         (d / "pooled.json").write_text(json.dumps(merged, ensure_ascii=False, indent=1), encoding="utf-8")
         print(d / "pooled.json", merged["fidelity_score"], merged["level"])
         return
