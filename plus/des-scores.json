@@ -5807,7 +5807,1205 @@
         "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
         "interpretation_fa": "متنی آموزشی از سال ۲۰۰۲ است و پشتوانه‌اش استدلال بیومکانیکی است نه داده‌ی تجمیع‌شده. کاری که می‌کند ترجمه‌ی نیرو به تصمیم طراحی است: ایمپلنت بیشتر و پهن‌تر، حذف کانتی‌لیور، گاید قدامی و سطح اکلوزال فلزی. همین فهرست هنوز چارچوب طرح درمان بیمار پرنیرو را می‌سازد."
       }
-    ]
+    ],
+    "fidelity": {
+      "des_version": "3.0",
+      "mode": "FIDELITY",
+      "scope": "POOLED",
+      "text_basis": "ABSTRACT_ONLY",
+      "claims": [
+        {
+          "id": "u1",
+          "claim_quote": "استخوان حجیم، نشانه بروکسیسم قدیمی؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u2",
+          "claim_quote": "English",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u3",
+          "claim_quote": "بحثی درباره ایمپلنت فول آرچ.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u4",
+          "claim_quote": "∆ ماجرا از کجا شروع شد",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u5",
+          "claim_quote": "یک متخصص پروتز در جمعی از جراح‌ها این نکته را گفت: وقتی سر جراحی می‌بینید استخوان حجیم و متراکم است و با خودتان می‌گویید چه استخوان خوبی، به این هم فکر کنید که شاید این حجم استخوان از بروکسیسم قدیمی بیمار باشد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: AUTHOR_VIEW, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_A_CLAIM, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u6",
+          "claim_quote": "آن نیرو هنوز سر جایش است و بعداً پروتز این بیمار دردسر می‌شود.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: AUTHOR_VIEW, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u7",
+          "claim_quote": "سؤال ساده است: آیا می‌شود از روی استخوان فهمید بیمار بروکسر بوده؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u8",
+          "claim_quote": "∆ جواب کوتاه",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u9",
+          "claim_quote": "نه، نمی‌شود.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u10",
+          "claim_quote": "اما این حرف به عنوان تلنگر ارزش دارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_A_CLAIM, S3: NOT_A_CLAIM, S4: NOT_A_CLAIM, S5: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_IN_SOURCE, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM"
+        },
+        {
+          "id": "u11",
+          "claim_quote": "پیام واقعی‌اش این است که استخوان خوب یعنی جراحی راحت، نه کیس راحت.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u12",
+          "claim_quote": "به عنوان تلنگر خوب است، به عنوان نشانه تشخیصی نه.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u13",
+          "claim_quote": "∆ این حرف سه ادعای جداست",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u14",
+          "claim_quote": "توروس و اگزوستوز و استخوان ضخیم، احتمالاً اثر فشار بروکسیسم گذشته است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Corroborating these findings, Igarashi et al. [11] concluded that class and size of torus are positively cor- related with degree of attrition and number of functional teeth, thus supporting the hypothesis that the develop- ment of mandibular torus is accelerated by masticatory stress.",
+          "source_ref": "S2",
+          "note": "thick bone and exostosis not addressed; hedge matches the source's hypothesis wording"
+        },
+        {
+          "id": "u15",
+          "claim_quote": "آن الگوی عضلانی بعد از بی‌دندان شدن باقی می‌ماند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u16",
+          "claim_quote": "آن نیرو در پروتز فول آرچ دردسر می‌سازد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "This becomes par- ticularly challenging in full-arch rehabilitations and complex prosthetic reconstructions, where the extensive nature amplifies the consequences of any complications.",
+          "source_ref": "S7",
+          "note": "pointing word 'آن نیرو' read as bruxing forces"
+        },
+        {
+          "id": "u17",
+          "claim_quote": "هر سه را جدا نگاه می‌کنیم، چون زنجیره فقط به اندازه ضعیف‌ترین حلقه‌اش قوی است.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u18",
+          "claim_quote": "∆ ادعای اول: توروس از بروکسیسم است",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u19",
+          "claim_quote": "اینجا یک ارتباط واقعی وجود دارد، ولی نه آن ارتباطی که معمولاً نقل می‌شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The results showed that patients with brux- ism are 4 times more likely to have mandibular torus compared to those patients without bruxism.",
+          "source_ref": "S2",
+          "note": "the clause about how the association is usually cited is not a claim about this source; other sources: S1: NOT_A_CLAIM, S3: NOT_A_CLAIM, S9: NOT_A_CLAIM"
+        },
+        {
+          "id": "u20",
+          "claim_quote": "تنها مرور سیستماتیکی که مستقیماً این سؤال را بررسی کرده، فقط یک یافته مثبت داشت: سایش غیرطبیعی دندان با توروس مرتبط است، عمدتاً توروس مندیبولاریس.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Presence of abnormal tooth wear increased the odds of having tori, mainly for torus mandibularis.",
+          "source_ref": "S1",
+          "note": "exclusivity of the review (the only review) is a relation between sources, silent here"
+        },
+        {
+          "id": "u21",
+          "claim_quote": "برای ارتباط توروس با بقیه علائم بروکسیسم، شواهد کافی برای تأیید یا رد نبود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "There is no sufficient evidence to credit or discredit the association of tori and other signs and/or symptoms of bruxism.",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u22",
+          "claim_quote": "گزارش خود بیمار از دندان‌ساییدن نتایج متناقض داد و کیفیت کلی شواهد پایین ارزیابی شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Self-report of teeth grinding and/or clenching presented contradictory results.",
+          "source_ref": "S1"
+        },
+        {
+          "id": "u23",
+          "claim_quote": "عدد چهار برابری که در سخنرانی‌ها نقل می‌شود از یک مطالعه برزیلی می‌آید: بیماران بروکسر حدود چهار برابر بیشتر احتمال داشتن توروس مندیبل داشتند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The results showed that patients with brux- ism are 4 times more likely to have mandibular torus compared to those patients without bruxism.",
+          "source_ref": "S2",
+          "note": "the clause about lectures is not a claim about this source"
+        },
+        {
+          "id": "u24",
+          "claim_quote": "و یافته‌ای که تقریباً هیچ‌وقت نقل نمی‌شود: در همان مطالعه، وجود wear facet خطر توروس را حدود بیست برابر بالا برد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The pres- ence of wear facets increases the risk of mandibular to- rus by 20 times.",
+          "source_ref": "S2",
+          "note": "the clause about how rarely it is cited is not a claim about this source"
+        },
+        {
+          "id": "u25",
+          "claim_quote": "یعنی سایش، خیلی قوی‌تر از خود تشخیص بروکسیسم، با توروس گره خورده بود.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u26",
+          "claim_quote": "این نکته را نگه دارید، چون بحث بعداً روی همین متمرکز می‌شود.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u27",
+          "claim_quote": "یک محدودیت مهم: تمام این ادبیات درباره ضایعات موضعی مشخص است، یعنی توروس پالاتینوس، توروس مندیبولاریس و اگزوستوز باکال.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u28",
+          "claim_quote": "هیچ منبعی درباره «ریج حجیم» به طور کلی حرف نزده است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u29",
+          "claim_quote": "∆ ادعای دوم: عضله بعد از بی‌دندانی هنوز کار می‌کند",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u30",
+          "claim_quote": "هیچ مطالعه‌ای بروکسیسم بیمار بی‌دندان را قبل و بعد از درمان اندازه نگرفته.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u31",
+          "claim_quote": "این یک شکاف واقعی است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_A_CLAIM, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u32",
+          "claim_quote": "آنچه می‌دانیم این است: در بیمارانی که با پروتز ثابت روی ایمپلنت درمان می‌شوند، ضخامت ماستر و تمپورال قدامی زیاد می‌شود و ظرف حدود شش ماه به اندازه افراد دنتیت می‌رسد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The results showed that there were significant comparison differences in muscle thickness at the baseline measure- ments between groups while at the end of the 6th month, these differences were not significant.",
+          "source_ref": "S3",
+          "note": "Increase over T1 is stated in the next abstract sentence (increased significantly at T2 and T3); similar thickness at 6 months is the quoted sentence and the Conclusion. The discussion says masseter was even thicker than dentate at six months, but a plain sentence states the claim unchanged."
+        },
+        {
+          "id": "u33",
+          "claim_quote": "مطالعات EMG هم بازگشت فعالیت عضلانی به الگوی افراد دنتیت را نشان می‌دهند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Comparing edentulous patients treated with imme- diate loading fixed implant-supported prostheses with den- tate patients, similar EMG activity in the masseter muscle was discovered by Mostoyei et al. to that of dentate patients immediately after loading [20].",
+          "source_ref": "S3",
+          "note": "The source reports one EMG study (Mostoyei et al.) with similar activity to dentate patients; the plural is not a count claim.; other sources: S4: MATCHES"
+        },
+        {
+          "id": "u34",
+          "claim_quote": "ترجمه بالینی‌اش: توان عضله برمی‌گردد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The researchers interpreted this finding as evidence that the restoration of masseter muscle contraction capacity occurs immediately, without requiring adaptation over time.",
+          "source_ref": "S3",
+          "note": "Inference judged on its conclusion (restored contraction capacity); the source states it in its own text, attributed to the cited researchers.; other sources: S4: MATCHES"
+        },
+        {
+          "id": "u35",
+          "claim_quote": "اگر عادت بروکسیسم هنوز در بیمار باشد، ابزار اجرایش دوباره فراهم شده.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u36",
+          "claim_quote": "ولی خود این مطالعات نگفته‌اند که عادت برمی‌گردد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u37",
+          "claim_quote": "این پل زدن، استدلال ماست نه یافته آنها.",
+          "verdict": "AUTHOR_VIEW",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "opinion marker: استدلال ماست"
+        },
+        {
+          "id": "u38",
+          "claim_quote": "∆ ادعای سوم: بروکسیسم به ایمپلنت آسیب می‌زند",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u39",
+          "claim_quote": "این محکم‌ترین قسمت است و شواهدش از دو ادعای دیگر قوی‌تر است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u40",
+          "claim_quote": "در یک مطالعه رتروسپکتیو بزرگ، شکست ایمپلنت در بروکسرها ۱۳ درصد بود در برابر ۴٫۶ درصد در بقیه.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The implant failure rates were 1340% (24/185) for bruxers and 446% (155/3364) for non-bruxers (P < 04001).",
+          "source_ref": "S5",
+          "note": "13.0% and 4.6% as in the source.; other sources: S7: MATCHES"
+        },
+        {
+          "id": "u41",
+          "claim_quote": "متاآنالیزها ریسک شکست را حدود دو تا چهار برابر می‌دانند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "the meta- analysis showed that implants placed in probable bruxers had a higher risk of failure than in non- bruxers (OR 2.189; 95% CI 1.337, 3.583, p = .002).",
+          "source_ref": "S6",
+          "note": "range two to four covers this source's OR 2.189; other sources: S7: MATCHES"
+        },
+        {
+          "id": "u42",
+          "claim_quote": "اما جنس مشکل مهم‌تر از خود ریسک است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_A_CLAIM, S3: NOT_A_CLAIM, S4: NOT_A_CLAIM, S5: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_ASSESSABLE, S10: NOT_A_CLAIM, S11: NOT_ASSESSABLE, S12: NOT_A_CLAIM"
+        },
+        {
+          "id": "u43",
+          "claim_quote": "آنچه در بروکسرها بیشتر دیده می‌شود، عوارض مکانیکی است: کندگی و شکستن پرسلن، شکست فریم‌ورک، شل شدن و شکستن اسکرو.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Chrca- novic et al. identified 98 bruxing patients among 2,670 patients and found that the bruxing group had a higher prevalence of mechanical complications compared to non-bruxing patients, with an odds ratio of implant fail- ure of 2.71 (95% CI 1.25, 5.88) [17].",
+          "source_ref": "S7",
+          "note": "porcelain chipping not named in source; source lists component fractures, framework failures, screw loosening as bruxism-related technical complications; other sources: S5: ALTERED, S8: MATCHES"
+        },
+        {
+          "id": "u44",
+          "claim_quote": "در مقابل، درباره تحلیل استخوان مارژینال شواهد به مراتب ضعیف‌تر است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Although studies comparing MBL between the groups are still lack- ing the overall evidence from the present systematic review show that implants placed in probable bruxers present a significantly higher risk of failure than in non- bruxers.",
+          "source_ref": "S6",
+          "note": "other sources: S7: MATCHES"
+        },
+        {
+          "id": "u45",
+          "claim_quote": "متاآنالیز اصلاً نتوانست این را بررسی کند چون مطالعات داده را بین بروکسر و غیربروکسر تفکیک نکرده بودند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "A meta- analysis comparing MBL between groups was not possi- ble, due to the lack of studies reporting MBL separately by bruxers and non- bruxers.",
+          "source_ref": "S6"
+        },
+        {
+          "id": "u46",
+          "claim_quote": "یعنی جمله «بروکسیسم باعث تحلیل استخوان دور ایمپلنت می‌شود» پشتوانه‌ای در حد جمله مربوط به failure ندارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Although studies comparing MBL between the groups are still lack- ing the overall evidence from the present systematic review show that implants placed in probable bruxers present a significantly higher risk of failure than in non- bruxers.",
+          "source_ref": "S6",
+          "note": "conclusion is the same as the weaker MBL backing"
+        },
+        {
+          "id": "u47",
+          "claim_quote": "این تفکیک برای فالوآپ اهمیت دارد.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u48",
+          "claim_quote": "در بیمار پرنیرو، آنچه باید منتظرش باشید و برایش برنامه داشته باشید، بیشتر از جنس مکانیکی است تا بیولوژیک.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Technical and mechanical complications represent the primary concern in bruxism patients with implant-sup- ported rehabilitations.",
+          "source_ref": "S7",
+          "note": "mechanical complications named the primary concern"
+        },
+        {
+          "id": "u49",
+          "claim_quote": "∆ سایش: نشانه‌ای که هر دو سر ماجرا را به هم وصل می‌کند",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u50",
+          "claim_quote": "اینجا یک نکته هست که ارزش دارد جداگانه مطرح شود، و ربطی هم به حرف آن استاد درباره حجم استخوان ندارد.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u51",
+          "claim_quote": "سایش دندان، همان نشانه‌ای است که ادبیات ایمپلنت بر پایه‌اش بیمار پرخطر را شناسایی می‌کند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u52",
+          "claim_quote": "طبق اجماع بین‌المللی، تشخیص probable bruxism یعنی گزارش خود بیمار به علاوه معاینه بالینی، و سایش دندان یکی از همان نشانه‌های بالینی است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "‘Probable’ sleep/awake bruxism should be based on self-report plus the inspection part of a clinical exami- nation.",
+          "source_ref": "S5",
+          "note": "Wear as a listed clinical sign: ICSD sign (ii) abnormal tooth wear.; other sources: S6: MATCHES, S7: MATCHES, S8: MATCHES, S9: ALTERED, S10: MATCHES"
+        },
+        {
+          "id": "u53",
+          "claim_quote": "عملاً تقریباً تمام مطالعاتی که ریسک بالاتر ایمپلنت را در بروکسرها نشان داده‌اند، بروکسر بودن را با ترکیبی از گزارش بیمار و مشاهده سایش تعریف کرده‌اند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u54",
+          "claim_quote": "پس وقتی می‌گوییم «بروکسرها ریسک بالاتری دارند»، در عمل داریم درباره بیمارانی حرف می‌زنیم که یکی از نشانه‌های شناسایی‌شان همین سایش بوده.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u55",
+          "claim_quote": "از این زاویه، حرف اینکه دیدن سایش باید شما را نگران کند، پشتوانه دارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u56",
+          "claim_quote": "اما همان اجماع یک قید مهم می‌گذارد که معمولاً نادیده گرفته می‌شود: سایش ممکن است نشانه بروکسیسم باشد، ولی بروکسیسم گذشته بدون فعالیت فعلی را رد نمی‌کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "However, although attrition may be indicative of (especially) sleep bruxism, it does not rule out past sleep bruxism without current activity.",
+          "source_ref": "S9"
+        },
+        {
+          "id": "u57",
+          "claim_quote": "یعنی سایش هم مثل توروس یک رکورد است، فقط رکورد دقیق‌تر و در دسترس‌تری.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u58",
+          "claim_quote": "و شواهد این قید را تأیید می‌کنند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_A_CLAIM, S3: NOT_A_CLAIM, S4: NOT_IN_SOURCE, S5: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u59",
+          "claim_quote": "در یک مطالعه case-control با ثبت EMG خواب، افرادی که سایش از نوع attrition داشتند، فعالیت عضلانی بیشتری در خواب نسبت به گروه کنترل جفت‌شده نشان ندادند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Interestingly, none of the measures of jaw muscle EMG activity during sleep, as recorded by the portable EMG equipment, differed significantly between the attrition group and the matched controls (*P* > 0.05).",
+          "source_ref": "S10",
+          "note": "Conclusions sentence also states no greater EMG activity"
+        },
+        {
+          "id": "u60",
+          "claim_quote": "نتیجه‌گیری نویسندگان این بود که به‌نظر می‌رسد کلینیسین نمی‌تواند وجود سایش را نشانه مستقیم بروکسیسم فعال بداند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "This suggests that the clinician cannot use the presence of tooth wear as a direct indication of active sleep bruxism.",
+          "source_ref": "S10",
+          "note": "hedge 'suggests' kept; Discussion sentence adds an age/mild-wear scope"
+        },
+        {
+          "id": "u61",
+          "claim_quote": "ضمناً سایش به‌احتمال زیاد اتیولوژی چندگانه دارد و عواملی مثل اروژن، ابریژن و رژیم غذایی هم می‌توانند در آن سهم داشته باشند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "SB alone may not be the sole cause of such faceting and is more likely the result of a combination of different wear-promoting causative factors [14,15].",
+          "source_ref": "S10",
+          "note": "Discussion also names dental erosion and erosive diet as contributors"
+        },
+        {
+          "id": "u62",
+          "claim_quote": "به همین دلیل مرورهای ایمپلنت هم تأکید می‌کنند که attrition به تنهایی تشخیص بروکسیسم نیست.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u63",
+          "claim_quote": "جمع‌بندی این بخش: سایش بهترین نشانه بالینی در دسترس شماست و از شکل استخوان به مراتب ارزش بیشتری دارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u64",
+          "claim_quote": "اما سایش هم دقیقاً همان مشکل زمانی را دارد که در ادامه می‌آید.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_A_CLAIM, S3: NOT_A_CLAIM, S4: NOT_A_CLAIM, S5: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_IN_SOURCE, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_A_CLAIM, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u65",
+          "claim_quote": "سایش را ببینید و جدی بگیرید، ولی آن را با شواهد فعال بودن ترکیب کنید، نه اینکه به تنهایی مبنای تصمیم قرارش دهید.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "This suggests that the clinician cannot use the presence of tooth wear as a direct indication of active sleep bruxism.",
+          "source_ref": "S10",
+          "note": "only the not-alone half is addressed; the 'take wear seriously' half is silent; Discussion sentence 'should not be used for diagnosis of SB' adds an age/mild-wear scope"
+        },
+        {
+          "id": "u66",
+          "claim_quote": "∆ پس مشکل آن حرف کجاست",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u67",
+          "claim_quote": "جهت استدلال برعکس شده.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_A_CLAIM, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u68",
+          "claim_quote": "مطالعات می‌گویند: بروکسرها بیشتر توروس دارند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The results showed that patients with brux- ism are 4 times more likely to have mandibular torus compared to those patients without bruxism.",
+          "source_ref": "S2",
+          "note": "other sources: S1: ALTERED"
+        },
+        {
+          "id": "u69",
+          "claim_quote": "آن حرف می‌خواهد بگوید: توروس‌دارها بروکسرند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_A_CLAIM, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u70",
+          "claim_quote": "این دو یکی نیستند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_A_CLAIM, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u71",
+          "claim_quote": "با یک مثال ساده روشن می‌شود.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u72",
+          "claim_quote": "اعداد زیر فرضی است و از هیچ مقاله‌ای نیامده.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u73",
+          "claim_quote": "هزار بیمار را تصور کنید:",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u74",
+          "claim_quote": "دویست نفر بروکسر، هشتصد نفر غیربروکسر",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u75",
+          "claim_quote": "از دویست بروکسر، صد نفر توروس دارند",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u76",
+          "claim_quote": "از هشتصد غیربروکسر، صد و شصت نفر توروس دارند",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u77",
+          "claim_quote": "چرا در گروه غیربروکسر هم این‌قدر توروس هست؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u78",
+          "claim_quote": "چون توروس در جمعیت عادی هم شایع است و ژنتیک و نژاد نقش پررنگی در آن دارند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Mandibular torus occurs in various ethnic groups with prevalences ranging from 0.5 % among Brazilian Indians [7], 3.2 % among Nigerians [9], 20 % among Brazilians [10] and 31.9 % among Thais and up to 74 % in the Jap- anese population [11].",
+          "source_ref": "S2",
+          "note": "genetic role is reported only as others' theory, and a 30/70 genetic/environmental split is also quoted; prevalence and ethnic variation are what this sentence states"
+        },
+        {
+          "id": "u79",
+          "claim_quote": "حالا بیمار توروس‌دار روی صندلی شماست.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u80",
+          "claim_quote": "او یکی از ۲۶۰ نفر توروس‌دار است که فقط صد نفرشان بروکسرند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_A_CLAIM, S3: NOT_A_CLAIM, S4: NOT_IN_SOURCE, S5: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_IN_SOURCE, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM"
+        },
+        {
+          "id": "u81",
+          "claim_quote": "یعنی احتمال بروکسر بودنش حدود ۳۸ درصد است، در حالی که بدون دیدن توروس ۲۰ درصد بود.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_A_CLAIM, S3: NOT_A_CLAIM, S4: NOT_IN_SOURCE, S5: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_IN_SOURCE, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM"
+        },
+        {
+          "id": "u82",
+          "claim_quote": "دیدن توروس شک شما را دو برابر می‌کند، ولی هنوز احتمال بیشتر این است که بیمار بروکسر نباشد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_A_CLAIM, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_IN_SOURCE, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM"
+        },
+        {
+          "id": "u83",
+          "claim_quote": "برای اینکه سؤال‌های بیشتری بپرسید عالی است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_A_CLAIM, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_A_CLAIM, S8: NOT_IN_SOURCE, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u84",
+          "claim_quote": "برای اینکه تصمیم درمانی بگیرید کافی نیست.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u85",
+          "claim_quote": "∆ ایراد دوم، و شاید مهم‌ترین: مسئله زمان",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u86",
+          "claim_quote": "توروس احتمالاً یک رکورد انباشته از سال‌ها بارگذاری است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u87",
+          "claim_quote": "شما دارید از روی یک اثر قدیمی درباره وضعیت عضلانی امروز بیمار قضاوت می‌کنید.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u88",
+          "claim_quote": "همان‌طور که در بخش قبل دیدیم، این ایراد به سایش هم وارد است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: AUTHOR_VIEW, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_A_CLAIM, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u89",
+          "claim_quote": "و این فقط یک نکته نظری نیست.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u90",
+          "claim_quote": "بروکسیسم در بسیاری از افراد با بالا رفتن سن کاهش پیدا می‌کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Bruxism activities were found to be unrelated to sex, and a decrease with age was described in elderly people.",
+          "source_ref": "S11",
+          "note": "hedged-quantifier «در بسیاری از افراد» within what the source describes"
+        },
+        {
+          "id": "u91",
+          "claim_quote": "مرور سیستماتیک اپیدمیولوژی بروکسیسم در بزرگسالان صریحاً می‌گوید که شیوع بروکسیسم با سن کم می‌شود و در سالمندان پایین‌تر است، در حالی که بین زن و مرد تفاوتی ندارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Bruxism activities were found to be unrelated to sex, and a decrease with age was described in elderly people.",
+          "source_ref": "S11"
+        },
+        {
+          "id": "u92",
+          "claim_quote": "این یافته در مرورهای بعدی هم تکرار شده.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u93",
+          "claim_quote": "البته داده‌های موجود عمدتاً بر پایه پرسشنامه و گزارش خود بیمار است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Epidemiological data on bruxism, especially awake bruxism, is predominantly based on self- report and reported prevalence varies greatly between stud- ies.",
+          "source_ref": "S6",
+          "note": "other sources: S11: MATCHES"
+        },
+        {
+          "id": "u94",
+          "claim_quote": "این نکته برای کیس فول آرچ حیاتی است.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u95",
+          "claim_quote": "بیمار بی‌دندان کاندید فول آرچ معمولاً بیمار مسن است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u96",
+          "claim_quote": "توروسی که در دهانش می‌بینید ممکن است محصول دهه سوم و چهارم زندگی او باشد، در حالی که همان الگوی پارافانکشن امروز می‌تواند به مراتب کمتر شده باشد یا اصلاً وجود نداشته باشد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u97",
+          "claim_quote": "استخوان، اثر گذشته را نگه می‌دارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u98",
+          "claim_quote": "عضله لزوماً همان رفتار را نگه نمی‌دارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u99",
+          "claim_quote": "پس حتی اگر ارتباط توروس با بروکسیسم را کاملاً بپذیریم، باز هم بین «این بیمار زمانی بروکسر بوده» و «این بیمار الان پرنیرو است» یک فاصله واقعی وجود دارد، و آن چیزی که برای پروتز شما اهمیت دارد دومی است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u100",
+          "claim_quote": "∆ دو ایراد دیگر",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u101",
+          "claim_quote": "ریج حجیم با توروس فرق دارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u102",
+          "claim_quote": "حجم ریج در بیمار بی‌دندان بیشتر به این بستگی دارد که چند سال از کشیدن دندان‌ها گذشته، دندان‌ها چرا کشیده شده‌اند، و الگوی تحلیل استخوان خود بیمار چطور بوده.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u103",
+          "claim_quote": "روی دیگر سکه خطرناک‌تر است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_A_CLAIM, S3: NOT_A_CLAIM, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u104",
+          "claim_quote": "اگر بگوییم استخوان حجیم یعنی بروکسر، ناخواسته گفته‌ایم استخوان نازک یعنی غیربروکسر.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u105",
+          "claim_quote": "بیمار پرنیرو با استخوان ضعیف دقیقاً همان کسی است که بیشترین احتیاط را لازم دارد، و این قاعده باعث می‌شود از کنارش رد شویم.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u106",
+          "claim_quote": "∆ پس سر یونیت چه کار کنیم",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u107",
+          "claim_quote": "منطق ساده است: هر نشانه‌ای را در یکی از دو ستون بگذارید.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_A_CLAIM, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_IN_SOURCE, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM"
+        },
+        {
+          "id": "u108",
+          "claim_quote": "ستون اول، رکوردهای گذشته.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u109",
+          "claim_quote": "این‌ها می‌گویند بیمار زمانی پرنیرو بوده:",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u110",
+          "claim_quote": "توروس و اگزوستوز (ضعیف‌ترین مورد این ستون)",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u111",
+          "claim_quote": "سایش دندان‌های باقی‌مانده، یا سابقه سایش شدید قبل از کشیدن (قوی‌ترین مورد این ستون)",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u112",
+          "claim_quote": "هیپرتروفی ماستر در لمس",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u113",
+          "claim_quote": "ستون دوم، شواهد فعال بودن امروز.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u114",
+          "claim_quote": "این‌ها همان چیزی است که برای پروتز شما اهمیت دارد:",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u115",
+          "claim_quote": "همسر یا هم‌اتاقی‌اش الان صدای دندان‌ساییدن می‌شنود؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u116",
+          "claim_quote": "صبح‌ها عضلات فک درد می‌کند یا خسته است؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u117",
+          "claim_quote": "سابقه شکستن مکرر پروتز یا روکش مربوط به سال‌های اخیر است یا خیلی قدیمی؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u118",
+          "claim_quote": "علائم فعلی TMD دارد؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u119",
+          "claim_quote": "تصمیم درمانی را بر پایه ستون دوم بگیرید، نه ستون اول.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u120",
+          "claim_quote": "ستون اول فقط باید باعث شود سؤال‌های ستون دوم را بپرسید.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u121",
+          "claim_quote": "و اگر ستون دوم مثبت بود، آن وقت است که پارافانکشن باید تعداد و ابعاد ایمپلنت، طراحی پروتز و انتخاب متریال را عوض کند، نه اینکه صرفاً یک نایت‌گارد تحویل بیمار بدهید.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Successful management requires accurate diagnosis, strategic treatment planning, appropriate prosthetic design, occlusal splint therapy, and long-term monitor- ing.",
+          "source_ref": "S7",
+          "note": "conditional on the claim's second column and on material choice only partly addressed; source lists placement, prosthetic design, splint together; other sources: S6: ALTERED, S12: MATCHES"
+        },
+        {
+          "id": "u122",
+          "claim_quote": "∆ جمع‌بندی",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading, signpost, question, importance judgment or hypothetical illustration"
+        },
+        {
+          "id": "u123",
+          "claim_quote": "حلقه سوم زنجیره محکم است: بروکسیسم واقعاً ریسک ایمپلنت را بالا می‌برد، عمدتاً از جنس عوارض مکانیکی.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "the meta- analysis showed that implants placed in probable bruxers had a higher risk of failure than in non- bruxers (OR 2.189; 95% CI 1.337, 3.583, p = .002).",
+          "source_ref": "S6",
+          "note": "the claim that the higher risk is mainly mechanical is not addressed by the source; other sources: S5: ALTERED, S7: MATCHES, S8: ALTERED, S12: ALTERED"
+        },
+        {
+          "id": "u124",
+          "claim_quote": "حلقه دوم مطالعه مستقیم ندارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u125",
+          "claim_quote": "حلقه اول پشتوانه محدودی دارد، آن هم فقط برای توروس و اگزوستوز، و مسیر ارتباطش از سایش دندان می‌گذرد نه از بروکسیسم.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Presence of abnormal tooth wear increased the odds of having tori, mainly for torus mandibularis.",
+          "source_ref": "S1",
+          "note": "exostosis and the age/chain parts are not addressed by the abstract; other sources: S2: REVERSED"
+        },
+        {
+          "id": "u126",
+          "claim_quote": "و بین این حلقه‌ها یک شکاف زمانی هست که معمولاً دیده نمی‌شود: استخوان و سایش هر دو اثر گذشته را نگه می‌دارند، ولی خود بروکسیسم با بالا رفتن سن کم می‌شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Bruxism activities were found to be unrelated to sex, and a decrease with age was described in elderly people.",
+          "source_ref": "S11",
+          "note": "other halves (bone and wear retain past effects) are silent for this source"
+        },
+        {
+          "id": "u127",
+          "claim_quote": "یعنی حتی وقتی نشانه درست باشد، ممکن است درباره بیماری حرف بزند که دیگر وجود ندارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u128",
+          "claim_quote": "زنجیره کامل، یعنی استفاده از شکل استخوان به عنوان پیش‌بینی‌کننده ریسک در کاندید فول آرچ، در ادبیات مطالعه اختصاصی ندارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u129",
+          "claim_quote": "این یک استنتاج منطقی است، نه یک یافته علمی.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_A_CLAIM, S3: NOT_A_CLAIM, S4: NOT_IN_SOURCE, S5: NOT_A_CLAIM, S6: NOT_IN_SOURCE, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: AUTHOR_VIEW, S10: NOT_A_CLAIM, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM"
+        },
+        {
+          "id": "u130",
+          "claim_quote": "اگر مخاطب آن جمله جراحی باشد که کیس را در روز تحویل پروتز فراموش می‌کند، حرف مفیدی است و کار خودش را می‌کند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S2: NOT_A_CLAIM, S3: NOT_A_CLAIM, S4: NOT_IN_SOURCE, S5: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_A_CLAIM, S12: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u131",
+          "claim_quote": "اگر به عنوان یک نشانه تشخیصی نقل شود و کسی بر اساسش تصمیم بگیرد، از حدی که شواهد اجازه می‌دهد فراتر رفته است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_IN_SOURCE, S3: NOT_IN_SOURCE, S4: NOT_IN_SOURCE, S5: NOT_IN_SOURCE, S6: NOT_IN_SOURCE, S7: NOT_IN_SOURCE, S8: NOT_IN_SOURCE, S9: NOT_ASSESSABLE, S10: NOT_IN_SOURCE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE"
+        }
+      ],
+      "counts": {
+        "matches": 33,
+        "altered": 0,
+        "reversed": 0,
+        "not_in_source": 0,
+        "not_assessable": 59,
+        "author_view": 1,
+        "not_a_claim": 38
+      },
+      "assessable": 33,
+      "fidelity_score": 100,
+      "level": "HIGH",
+      "provisional": true,
+      "source_conclusion": "[S1] Based on available evidence, the presence of abnormal tooth wear might be associated with tori, mainly torus mandibularis.\n[S2] There was a strong association between mandibular torus and presence of both bruxism and wear facets.\n[S3] At six months, implant-treated patients showed similar muscle thicknesses compared to dentate individuals.\n[S4] The present study demonstrated that provisional implant-supported prostheses are capable of restoring the EMG activity immediately after prostheses fixation and that they do not require an adaptation period.\n[S5] It is suggested that bruxism may be associated with an increased risk of dental implant failure.\n[S6] This should be considered in treatment planning and management of implant patients.\n[S7] However, the relationship between bruxism and implant complications remains complex, requiring standardized diagnostic criteria and evidence-based treatment protocols.\n[S8] The present study suggests that bruxism may significantly increase both the implant US failure rate and the rate of mechanical and\n[S9] In otherwise healthy individuals, bruxism should not be consid- ered as a disorder, but rather as a behaviour that can be a risk (and/or protective) factor for certain clinical consequences.\n[S10] Individuals with attrition-type tooth wear did not have greater EMG activity during sleep than matched controls.\n[S11] The present systematic review described variable prevalence data for bruxism activities.\n[S12] Night guards designed with specific features also are a benefit to initially diagnose the influence of occlusal factors for the patient, and as importantly, to reduce the influence of extraneous stress on implants and implant-retained restorations.",
+      "fact_fa": "از ۳۳ ادعایی که منابع به آن پرداخته‌اند، ۳۳ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+      "interpretation_fa": "هر ادعای قابل‌بررسی با دست‌کم یکی از منابع مطابق است."
+    }
   },
   "sharehub/share-12": {
     "scored_at": "2026-08-15",
