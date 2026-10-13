@@ -174,7 +174,10 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
       size,
       neutral_mode,
       promotion_zone: isTop ? 0 : promotion_zone, // no promotion out of the top tier
-      demotion_zone: isBottom ? 0 : demotion_zone, // no demotion out of tier 1
+      // Match finalizeWeek: only valid, filled groups can demote, and the
+      // promotion zone is protected even when its XP threshold is not met.
+      demotion_zone: isBottom || neutral_mode || size < mem.capacity_at_creation
+        ? 0 : Math.min(demotion_zone, Math.max(0, size - promotion_zone)),
       promotion_min_weekly_xp: cfg.promotion_min_weekly_xp,
       my_rank: me?.rnk ?? null,
       my_weekly_xp: mem.weekly_xp,
