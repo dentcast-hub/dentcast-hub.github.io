@@ -12,6 +12,12 @@ name: Notify new articles
 # Required repository secrets: PLUS_API_BASE, PLUS_ADMIN_USER, PLUS_ADMIN_PASSWORD.
 
 on:
+  workflow_dispatch:
+    inputs:
+      page:
+        description: 'Published Persian page to announce independently in Telegram (e.g. chairside/chairside-40.html)'
+        required: true
+        type: string
   push:
     branches: [main]
     paths:
@@ -35,6 +41,7 @@ jobs:
           python-version: '3.x'
 
       - name: Fire article_published for real publishes
+        if: github.event_name == 'push'
         env:
           PLUS_API_BASE: ${{ secrets.PLUS_API_BASE }}
           ADMIN_USER: ${{ secrets.PLUS_ADMIN_USER }}
@@ -63,7 +70,25 @@ jobs:
           # secret — it is a public URL) so the domain can be switched from the
           # GitHub UI without a code change or a deploy; falls back to .org.
           SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://dentcast.org' }}
+          EVENT_NAME: ${{ github.event_name }}
+          MANUAL_PAGE: ${{ inputs.page }}
         run: |
-          python tools/announce_telegram_channel.py \
-            --base-sha "${{ github.event.before }}" \
-            --head-sha "${{ github.sha }}"
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            # Validate the path without ever interpolating input into shell code.
+            python - <<'PY'
+          import os
+          from pathlib import Path
+          root = Path.cwd().resolve()
+          page = Path(os.environ['MANUAL_PAGE'])
+          target = (root / page).resolve()
+          if page.is_absolute() or not target.is_relative_to(root) or target.suffix != '.html' or not target.is_file():
+              raise SystemExit('page must be an existing repository-relative HTML file')
+          if any(part.startswith('.') or part in ('node_modules', 'tmp') for part in page.parts):
+              raise SystemExit('page must be a published site page')
+          PY
+            python tools/announce_telegram_channel.py --files "$MANUAL_PAGE"
+          else
+            python tools/announce_telegram_channel.py \
+              --base-sha "${{ github.event.before }}" \
+              --head-sha "${{ github.sha }}"
+          fi
