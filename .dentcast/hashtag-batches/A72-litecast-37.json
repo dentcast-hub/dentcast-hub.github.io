@@ -1,0 +1,20 @@
+{
+  "type": "litecast",
+  "note": "litecast/lite-CAST37 — سوالات متداول مراقبت‌های دندانپزشکی در بارداری. #سلامت_دهان, #بهداشت_دهان, #آگاهی_درمانی are REUSED. --simulate on «دندانپزشکی بارداری / pregnancy dentistry» returned only generic dental* tags at 0.50 (#تجهیزات_دندانپزشکی, #دندانپزشکی_هوشمند, …) and nothing about pregnancy; no بارداری concept exists in the library. Articles omitted: LiteCast is not in dentcast-brain.json, and --apply refuses a cid with no brain entry. Tags written by hand into litecast/lite-glossary.json.",
+  "concepts": [
+    {
+      "tag": "#دندانپزشکی_بارداری",
+      "domain": "clinical",
+      "definition": "مراقبت و درمان دندانپزشکی در دوران بارداری: درمان‌های پیشگیری و ضروری در هر سه‌ماهه مجازند، کارهای غیرفوری معمولاً در سه‌ماهه‌ی دوم ترجیح داده می‌شوند، و رادیوگرافی و مسکنِ خط اول (استامینوفن) مشمول همین مراقبت‌اند.",
+      "use_when": "مطلب مراقبت دندان، درد یا عفونت، رادیوگرافی، وضعیت روی یونیت، یا مسکن را در بستر بارداری موضوع داشته باشد.",
+      "aliases": [
+        "pregnancy dentistry",
+        "dental care in pregnancy",
+        "dental care during pregnancy",
+        "prenatal dentistry",
+        "دندانپزشکی در بارداری",
+        "مراقبت دندان بارداری"
+      ]
+    }
+  ]
+}
