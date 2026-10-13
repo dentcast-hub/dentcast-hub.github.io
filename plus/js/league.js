@@ -2,9 +2,9 @@
 // overlay (this week's group table), and the finalized-outcome announcement.
 // Data comes from GET /league (the backend already returns everything: members,
 // ranks, zone sizes, countdown, neutral-mode, and any pending outcome).
-import { el, faNum } from './util.js?v=185';
-import { api } from './api.js?v=185';
-import { PREMIUM_FEATURES } from './config.js?v=185';
+import { el, faNum } from './util.js?v=186';
+import { api } from './api.js?v=186';
+import { PREMIUM_FEATURES } from './config.js?v=186';
 
 const TOOTH = '<svg class="dcp-tier-tooth" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C8 2 5 4 5 8c0 3 1 5 1.6 8.5C7 19 7.6 22 9 22c1.2 0 1.3-2 1.6-4 .2-1.4.5-2 1.4-2s1.2.6 1.4 2c.3 2 .4 4 1.6 4 1.4 0 2-3 2.4-5.5C19 13 20 11 20 8c0-4-3-6-8-6z"/></svg>';
 
@@ -201,7 +201,9 @@ function buildCard(data, onClose) {
 
   const foot = data.neutral_mode
     ? 'این هفته گروه هنوز کوچک است؛ صعود/سقوط وقتی فعال می‌شود که گروه پر شود. فعلاً فقط فعالیتت را جمع کن.'
-    : 'برای صعود، هم باید در ناحیهٔ سبز باشی و هم حداقل ' + faNum(data.promotion_min_weekly_xp || 0) + ' امتیازِ هفتگی بگیری.';
+    : data.can_promote === false || data.promotion_zone === 0
+      ? 'در بالاترین لیگ هستی؛ برای رتبهٔ بهتر در گروهت رقابت کن.'
+      : 'برای صعود، هم باید در ناحیهٔ سبز باشی و هم حداقل ' + faNum(data.promotion_min_weekly_xp || 0) + ' امتیازِ هفتگی بگیری.';
   card.append(el('div', { class: 'dcp-lg-foot' }, foot));
   card.append(howto());
   return card;
@@ -244,7 +246,9 @@ export async function maybeAnnounceOutcome(data) {
     ? 'به لیگ ' + nt.name_fa + ' رفتی. رقابتِ این هفته سخت‌تر و شیرین‌تر است.'
     : kind === 'demoted'
       ? 'به لیگ ' + nt.name_fa + ' برگشتی. این هفته دوباره بالا بیا.'
-      : 'این هفته امتیاز کافی برای صعود از لیگ ' + nt.name_fa + ' نیاوردی. هفته‌ی تازه از صفر شروع شده — این‌بار نفر اولِ گروهت شو.';
+      : data.can_promote === false
+        ? 'در لیگ ' + nt.name_fa + '، بالاترین لیگ، ماندی. هفته‌ی تازه از صفر شروع شده — این‌بار برای رتبهٔ بهتر رقابت کن.'
+        : 'این هفته امتیاز کافی برای صعود از لیگ ' + nt.name_fa + ' نیاوردی. هفته‌ی تازه از صفر شروع شده — این‌بار نفر اولِ گروهت شو.';
 
   const done = () => { closeOverlay(); api.leagueOutcomeSeen().catch(() => {}); };
   const okBtn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'دیدم');

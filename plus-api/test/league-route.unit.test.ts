@@ -37,5 +37,6 @@ it.each([
     const response = await app.inject({ method: 'GET', url: '/league' });
     expect(response.statusCode).toBe(200);
     expect(response.json().demotion_zone).toBe(expected);
+    expect(response.json().can_promote).toBe(order < 7);
   } finally { await app.close(); }
 });

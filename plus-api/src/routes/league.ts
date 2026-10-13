@@ -74,6 +74,7 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
       week_end,
       time_remaining_seconds: secondsUntilWeekEnd(week_end, now),
       tier: tierPublic(currentTier),
+      can_promote: !!byOrder.get(currentTier.tier_order + 1),
       pending_outcome,
       // The scoring table the "چطور امتیازِ لیگ می‌گیرم؟" box shows. Sent rather
       // than hardcoded in the client because these are league_config values a
@@ -171,6 +172,7 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
       ...base,
       joined: true,
       group_tier: tierPublic(groupTier),
+      can_promote: !isTop,
       size,
       neutral_mode,
       promotion_zone: isTop ? 0 : promotion_zone, // no promotion out of the top tier

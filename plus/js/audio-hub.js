@@ -32,9 +32,9 @@
 // window.dcAudioHub / window.dcAudioPending (the dcpPendingListen shape).
 // player.html keeps its own record-keeping (#dc-audio is never adopted); the
 // hub only asks it to stop when something else starts.
-import { apiBase } from './api.js?v=185';
-import { el, faNum } from './util.js?v=185';
-import { fmtClock, segmentActive } from './clip-audio.js?v=185';
+import { apiBase } from './api.js?v=186';
+import { el, faNum } from './util.js?v=186';
+import { fmtClock, segmentActive } from './clip-audio.js?v=186';
 
 export const RESUME_KEY = 'dc-resume-state';   // player.html's own record — same key, same shape
 export const META_KEY = 'dc-resume-meta';      // what the bar needs to draw it without the 500 KB catalog
