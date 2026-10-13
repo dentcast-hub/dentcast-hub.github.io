@@ -824,7 +824,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 40,
+   "count": 41,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -865,7 +865,8 @@
     "chairside/chairside-36",
     "chairside/chairside-37",
     "chairside/chairside-38",
-    "chairside/chairside-39"
+    "chairside/chairside-39",
+    "chairside/chairside-40"
    ]
   },
   {
@@ -886,7 +887,7 @@
     "#گزارش_کیس"
    ],
    "co_tags": [],
-   "count": 39,
+   "count": 40,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -926,7 +927,8 @@
     "chairside/chairside-36",
     "chairside/chairside-37",
     "chairside/chairside-38",
-    "chairside/chairside-39"
+    "chairside/chairside-39",
+    "chairside/chairside-40"
    ]
   },
   {
@@ -2047,6 +2049,44 @@
    ]
   },
   {
+   "key": "دکتر_شهابیان",
+   "tag": "#دکتر_شهابیان",
+   "domain": "brand",
+   "words": 2,
+   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
+   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
+   "aliases": [
+    "شهابیان",
+    "کانسپت شهابیان",
+    "foad shahabian",
+    "دکتر فواد شهابیان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 19,
+   "content_ids": [
+    "episodes/episode-148-2",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31",
+    "chairside/chairside-32",
+    "chairside/chairside-33",
+    "chairside/chairside-34",
+    "chairside/chairside-35",
+    "chairside/chairside-36",
+    "chairside/chairside-37",
+    "chairside/chairside-38",
+    "chairside/chairside-39",
+    "chairside/chairside-40"
+   ]
+  },
+  {
    "key": "انتخاب_متریال",
    "tag": "#انتخاب_متریال",
    "domain": "clinical",
@@ -2121,43 +2161,6 @@
     "dentai/dentai-29",
     "insight/insight-84",
     "sharehub/share-32"
-   ]
-  },
-  {
-   "key": "دکتر_شهابیان",
-   "tag": "#دکتر_شهابیان",
-   "domain": "brand",
-   "words": 2,
-   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
-   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
-   "aliases": [
-    "شهابیان",
-    "کانسپت شهابیان",
-    "foad shahabian",
-    "دکتر فواد شهابیان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 18,
-   "content_ids": [
-    "episodes/episode-148-2",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30",
-    "chairside/chairside-31",
-    "chairside/chairside-32",
-    "chairside/chairside-33",
-    "chairside/chairside-34",
-    "chairside/chairside-35",
-    "chairside/chairside-36",
-    "chairside/chairside-37",
-    "chairside/chairside-38",
-    "chairside/chairside-39"
    ]
   },
   {
@@ -3584,6 +3587,33 @@
    ]
   },
   {
+   "key": "انتخاب_shade",
+   "tag": "#انتخاب_shade",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخابِ رنگِ کار، شامل رنگِ سمان.",
+   "use_when": "مقاله رنگ را متغیرِ تصمیم بداند.",
+   "aliases": [
+    "shade selection",
+    "انتخاب رنگ",
+    "shade"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-68",
+    "episodes/episode-147-4",
+    "insight/insight-5",
+    "insight/insight-42",
+    "sharehub/share-26",
+    "sharehub/share-29",
+    "insight/insight-91",
+    "insight/insight-92",
+    "chairside/chairside-40"
+   ]
+  },
+  {
    "key": "اچ_سرامیک",
    "tag": "#اچ_سرامیک",
    "domain": null,
@@ -3850,32 +3880,6 @@
    ]
   },
   {
-   "key": "انتخاب_shade",
-   "tag": "#انتخاب_shade",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخابِ رنگِ کار، شامل رنگِ سمان.",
-   "use_when": "مقاله رنگ را متغیرِ تصمیم بداند.",
-   "aliases": [
-    "shade selection",
-    "انتخاب رنگ",
-    "shade"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-68",
-    "episodes/episode-147-4",
-    "insight/insight-5",
-    "insight/insight-42",
-    "sharehub/share-26",
-    "sharehub/share-29",
-    "insight/insight-91",
-    "insight/insight-92"
-   ]
-  },
-  {
    "key": "اندوکراون",
    "tag": "#اندوکراون",
    "domain": null,
@@ -3979,6 +3983,32 @@
     "plak-sefr/plak1-7",
     "plak-sefr/plak1-8",
     "plak-sefr/plak1-9"
+   ]
+  },
+  {
+   "key": "سمان_موقت",
+   "tag": "#سمان_موقت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "سمانِ مرحله‌ی آزمایشی، که رنگش با دائم فرق دارد.",
+   "use_when": "مقاله تفاوتِ موقت و دائم را مسئله بداند.",
+   "aliases": [
+    "temporary cement",
+    "سمان تمپ",
+    "سمان آزمایشی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "insight/insight-5",
+    "insight/insight-29",
+    "insight/insight-44",
+    "insight/insight-59",
+    "insight/insight-65",
+    "insight/insight-85",
+    "insight/insight-86",
+    "chairside/chairside-40"
    ]
   },
   {
@@ -4169,6 +4199,32 @@
     "notecast/episode-33",
     "metanotes/meta-18",
     "sharehub/share-17"
+   ]
+  },
+  {
+   "key": "انتخاب_سمان",
+   "tag": "#انتخاب_سمان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخاب سمان بر اساس متریال، گیر و شرایط کیس.",
+   "use_when": "مقاله بین سمان‌ها انتخاب کند.",
+   "aliases": [
+    "کدام سمان",
+    "سمان مناسب",
+    "cement selection",
+    "انواع سمان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-2",
+    "episodes/episode-3",
+    "episodes/episode-148",
+    "notecast/episode-2",
+    "notecast/episode-3",
+    "insight/insight-59",
+    "chairside/chairside-40"
    ]
   },
   {
@@ -4469,31 +4525,6 @@
     "dentai/dentai-26",
     "insight/insight-62",
     "chairside/chairside-36"
-   ]
-  },
-  {
-   "key": "سمان_موقت",
-   "tag": "#سمان_موقت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "سمانِ مرحله‌ی آزمایشی، که رنگش با دائم فرق دارد.",
-   "use_when": "مقاله تفاوتِ موقت و دائم را مسئله بداند.",
-   "aliases": [
-    "temporary cement",
-    "سمان تمپ",
-    "سمان آزمایشی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "insight/insight-5",
-    "insight/insight-29",
-    "insight/insight-44",
-    "insight/insight-59",
-    "insight/insight-65",
-    "insight/insight-85",
-    "insight/insight-86"
    ]
   },
   {
@@ -4818,31 +4849,6 @@
     "episodes/episode-147-6",
     "notecast/episode-27",
     "chairside/chairside-38"
-   ]
-  },
-  {
-   "key": "انتخاب_سمان",
-   "tag": "#انتخاب_سمان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخاب سمان بر اساس متریال، گیر و شرایط کیس.",
-   "use_when": "مقاله بین سمان‌ها انتخاب کند.",
-   "aliases": [
-    "کدام سمان",
-    "سمان مناسب",
-    "cement selection",
-    "انواع سمان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-2",
-    "episodes/episode-3",
-    "episodes/episode-148",
-    "notecast/episode-2",
-    "notecast/episode-3",
-    "insight/insight-59"
    ]
   },
   {
@@ -6710,6 +6716,28 @@
     "insight/insight-28",
     "insight/insight-29",
     "insight/insight-32"
+   ]
+  },
+  {
+   "key": "زینک_فسفات",
+   "tag": "#زینک_فسفات",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "سمانِ کانونشنالی که گیرِ جدی می‌دهد، رادیواپک است و درآوردنِ روکش را غیرممکن نمی‌کند.",
+   "use_when": "مقاله زینک فسفات را انتخاب یا رد کند.",
+   "aliases": [
+    "zinc phosphate",
+    "زینک فسفات سمان",
+    "فسفات روی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-5",
+    "insight/insight-59",
+    "sharehub/share-20",
+    "chairside/chairside-40"
    ]
   },
   {
@@ -8664,27 +8692,6 @@
    ]
   },
   {
-   "key": "زینک_فسفات",
-   "tag": "#زینک_فسفات",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "سمانِ کانونشنالی که گیرِ جدی می‌دهد، رادیواپک است و درآوردنِ روکش را غیرممکن نمی‌کند.",
-   "use_when": "مقاله زینک فسفات را انتخاب یا رد کند.",
-   "aliases": [
-    "zinc phosphate",
-    "زینک فسفات سمان",
-    "فسفات روی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-5",
-    "insight/insight-59",
-    "sharehub/share-20"
-   ]
-  },
-  {
    "key": "سایش_آنتاگونیست",
    "tag": "#سایش_آنتاگونیست",
    "domain": null,
@@ -8705,6 +8712,28 @@
     "episodes/episode-34",
     "episodes/episode-35",
     "dentai/dentai-26"
+   ]
+  },
+  {
+   "key": "سمان_دائم",
+   "tag": "#سمان_دائم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "سمانی که برای ماندن گذاشته می‌شود.",
+   "use_when": "مقاله بین دائم و موقت انتخاب کند.",
+   "aliases": [
+    "سمان دائم",
+    "definitive cement",
+    "permanent cement",
+    "سمان نهایی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-59",
+    "insight/insight-86",
+    "chairside/chairside-40"
    ]
   },
   {
@@ -11638,27 +11667,6 @@
    "content_ids": [
     "insight/insight-55",
     "metanotes/meta-18"
-   ]
-  },
-  {
-   "key": "سمان_دائم",
-   "tag": "#سمان_دائم",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "سمانی که برای ماندن گذاشته می‌شود.",
-   "use_when": "مقاله بین دائم و موقت انتخاب کند.",
-   "aliases": [
-    "سمان دائم",
-    "definitive cement",
-    "permanent cement",
-    "سمان نهایی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-59",
-    "insight/insight-86"
    ]
   },
   {
