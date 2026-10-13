@@ -129,16 +129,19 @@ export function startStreakReminderScheduler(): () => void {
  */
 export function startLeagueScheduler(): () => void {
   let timer: NodeJS.Timeout;
+  let running: Promise<void> | null = null;
+  let stopped = false;
 
   void expirePremiumPrizes(new Date()).catch((err) => {
     // eslint-disable-next-line no-console
     console.error('[premium-prize] boot expiry sweep failed', err);
   });
 
-  const schedule = () => {
-    const delay = msUntilNextRun(new Date(), 0, config.streakTimezone); // 00:00 Tehran
-    timer = setTimeout(() => {
-      void finalizeDueWeeks(new Date())
+  // Recover missed finalizations on boot as well as at midnight. A slow boot
+  // sweep and the midnight timer share one run, rather than overlapping jobs.
+  const run = (): Promise<void> => {
+    if (running) return running;
+    running = finalizeDueWeeks(new Date())
         .then(async (r) => {
           if (r.weeks > 0) {
             // eslint-disable-next-line no-console
@@ -160,13 +163,22 @@ export function startLeagueScheduler(): () => void {
           // eslint-disable-next-line no-console
           console.error('[league] finalization run failed', err);
         })
-        .finally(schedule);
+        .finally(() => { running = null; });
+    return running;
+  };
+
+  const schedule = () => {
+    if (stopped) return;
+    const delay = msUntilNextRun(new Date(), 0, config.streakTimezone); // 00:00 Tehran
+    timer = setTimeout(() => {
+      void run().finally(schedule);
     }, delay);
     if (typeof timer.unref === 'function') timer.unref();
   };
 
+  void run();
   schedule();
-  return () => clearTimeout(timer);
+  return () => { stopped = true; clearTimeout(timer); };
 }
 
 /**
