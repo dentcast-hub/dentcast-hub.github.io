@@ -1,7 +1,7 @@
 import type pg from 'pg';
 import { pool, withTransaction } from '../db.js';
 import { dayInTz, dayDiff } from './time.js';
-import { getTiers, groupIsValid } from './league.js';
+import { getTiers, groupIsValid, leagueWeek, moveCurrentLeagueMembership } from './league.js';
 import { getLeagueConfig, setLeagueConfig, type LeagueConfig } from './league-config.js';
 
 /**
@@ -55,6 +55,7 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
     let demotions = 0;
     let activeUsers = 0;
     let fillSum = 0;
+    const tierChanges = new Map<string, string>();
 
     for (const g of groupsRes.rows) {
       const tier = tierById.get(g.tier_id)!;
@@ -169,6 +170,7 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
         if (outcome === 'promoted') {
           await client.query('update profiles set current_tier_id = $2 where id = $1', [m.user_id, up!.id]);
           promotions += 1;
+          tierChanges.set(m.user_id, up!.id);
           if (!up!.is_active) {
             await client.query(
               'update league_tiers set is_active = true, activated_at = now() where id = $1', [up!.id],
@@ -184,12 +186,25 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
           }
         } else if (outcome === 'demoted') {
           const down = byOrder.get(tier.tier_order - 1);
-          if (down) await client.query('update profiles set current_tier_id = $2 where id = $1', [m.user_id, down.id]);
+          if (down) {
+            await client.query('update profiles set current_tier_id = $2 where id = $1', [m.user_id, down.id]);
+            tierChanges.set(m.user_id, down.id);
+          }
           demotions += 1;
         }
       }
 
       await client.query("update leagues set status = 'finalized' where id = $1", [g.id]);
+    }
+
+    // A new-week action can win the profile lock before this finalize does.
+    // Repair that early placement after ALL tier changes, so population counts
+    // reflect the completed outcome. Keep XP, timestamps and membership IDs.
+    const currentWeek = leagueWeek(dayInTz(now, cfg.timezone));
+    if (currentWeek.week_start > weekStart) {
+      for (const [userId, tierId] of tierChanges) {
+        await moveCurrentLeagueMembership(client, userId, tierId, currentWeek, cfg);
+      }
     }
 
     const groupsCount = groupsRes.rows.length;

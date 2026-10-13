@@ -201,6 +201,27 @@ export async function getOrCreateOpenLeague(
   throw new Error('getOrCreateOpenLeague: exceeded group-creation attempts');
 }
 
+/** Preserve this week's XP when last week's outcome lands after the first join.
+ * Called while finalizeWeek still holds the user's profile lock. Historical
+ * memberships stay in the tier in which their competition took place.
+ */
+export async function moveCurrentLeagueMembership(
+  client: pg.PoolClient, userId: string, tierId: string, week: LeagueWeek, cfg: LeagueConfig,
+): Promise<void> {
+  const membership = await client.query<{ id: string; tier_id: string }>(
+    `select lm.id, l.tier_id from league_members lm join leagues l on l.id = lm.league_id
+      where lm.user_id = $1 and lm.week_start = $2`,
+    [userId, week.week_start],
+  );
+  const member = membership.rows[0];
+  if (!member || member.tier_id === tierId) return;
+  const population = await tierPopulation(client, tierId);
+  const destination = await getOrCreateOpenLeague(
+    client, tierId, week.week_start, week.week_end, capacityFrom(population, cfg), population,
+  );
+  await client.query('update league_members set league_id = $2 where id = $1', [member.id, destination.id]);
+}
+
 /**
  * How much a share of `contentId` is worth right now: `xp_share`, or nothing.
  *
