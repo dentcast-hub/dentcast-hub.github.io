@@ -427,7 +427,7 @@ def vote_source(runs, adjudicated=None, reviewed=None):
         quote/note from the earliest run in it; none shared → `unresolved`
         until `adjudicated[uid]` supplies the claim fields;
       * one vote (a re-check base that judged a unit once) → that answer.
-    Every unit whose final verdict is ALTERED/REVERSED needs an Opus review
+    Every unit whose final verdict is ALTERED/REVERSED needs a stronger-model review
     in `reviewed[uid]` = {"agree": bool, "reason": str}; a dissent never
     flips the verdict — it is appended to `note` and shown to the founder
     beside the majority's reason (Part 3b). Returns
@@ -460,7 +460,7 @@ def vote_source(runs, adjudicated=None, reviewed=None):
             if r is None:
                 unreviewed.append(uid)
             elif not r.get("agree"):
-                pick = {**pick, "note": ((pick.get("note") or "").strip() + " | Opus review disagrees: "
+                pick = {**pick, "note": ((pick.get("note") or "").strip() + " | Stronger-model review disagrees: "
                                          + r.get("reason", "")).strip(" |")}
         claims.append(pick)
     vs = [c["verdict"] for c in claims]
@@ -515,7 +515,7 @@ def main():
                     "of the last full run; DIR holds runs over the EDITED units alone (Part 3b). Every other unit "
                     "must still be on the page with the same id and text, or the tool refuses")
     ap.add_argument("--vote", metavar="DIR", help="majority-vote DIR/out-src<k>-<run>.json (runs 1-2 full, run 3 the "
-                    "units they disagree on) into DIR/voted-src<k>.json; DIR/review.json holds the Opus "
+                    "units they disagree on) into DIR/voted-src<k>.json; DIR/review.json holds the stronger-model "
                     "review of every flagged unit; DIR/adjudicate.json "
                     "{\"src<k>\": {uid: claim fields}} settles a unit with no majority")
     a = ap.parse_args()
@@ -566,11 +566,11 @@ def main():
             flagged = [c["id"] for c in out["claims"] if c["verdict"] in FLAGGED]
             print(f"src{k}: {len(runs)} run(s) · {out['fidelity_score']} {out['level']} · "
                   f"flagged {flagged or '—'} · tie-break {tiebreak or '—'} · no majority {unresolved or '—'} · "
-                  f"awaiting Opus review {unreviewed or '—'}")
+                  f"awaiting stronger-model review {unreviewed or '—'}")
             open_units += len(tiebreak) + len(unresolved) + len(unreviewed)
         if open_units:
             sys.exit(f"{open_units} unit(s) open — tie-break run (--only), {adj_p} for no majority, "
-                     f"{rev_p} for the Opus review of every flagged unit")
+                     f"{rev_p} for the stronger-model review of every flagged unit")
         return
     if a.build:
         if not a.texts:

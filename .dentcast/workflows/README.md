@@ -1697,12 +1697,38 @@ were taken out of the model's hands for exactly that reason.
 **The output** is the spec's F5 object. Validate it in Part 3(5), then store it
 in Part 4.
 
-#### Part 2c — How the FIDELITY call is run: two full Sonnet runs, a tie-break, an Opus review (v2.9)
+#### Part 2c — How the FIDELITY call is run: two independent checker runs, a tie-break, a stronger reviewer
 
-The FIDELITY call is an independent agent per input block, **on Sonnet**,
-reading `.dentcast/des-v3.4-knowledge.md` (the spec minus its appendix) as its
-instruction and the block as its user turn. The model is part of the
-measurement: never mix models for the runs inside one record.
+The FIDELITY call is an independent agent per input block, reading
+`.dentcast/des-v3.4-knowledge.md` (the spec minus its appendix) as its
+instruction and the block as its user turn. **The roles are provider-neutral:**
+choose a capable, lighter reasoning model as the **checker**, and a stronger
+reasoning model as the **reviewer/adjudicator**. Sonnet and Opus name the original
+Claude implementation, not a requirement to use Anthropic.
+
+| Environment | Checker: both full runs + disagreement-only third run | Stronger reviewer/adjudicator |
+|---|---|---|
+| Claude / Anthropic | Sonnet | Opus |
+| ChatGPT / Codex / OpenAI | e.g. `gpt-6.1-sol`, when exposed by the execution environment | e.g. `gpt-6-astra`, when exposed by the execution environment |
+| Grok / xAI | an available lighter **reasoning** model, e.g. a Fast reasoning variant | the available stronger flagship reasoning model, e.g. Grok 4.7 |
+| Any future provider | a capable lighter reasoning model available to the agent | an available stronger reasoning model |
+
+These are role examples, not fixed versions, cross-provider quality equivalences,
+or a claim that an app subscription exposes every model or multi-agent tools.
+Verify actual model IDs and delegation capabilities before starting. For Grok,
+consult the live official model list (`https://docs.x.ai/developers/models`);
+if a Fast variant is not available, do not invent one. If separate agents or a
+stronger reviewer are unavailable, report the missing stage; never label one
+model's repeated self-review as the completed two-tier protocol.
+
+**The model is part of the measurement:** freeze the same checker model/version
+and reasoning settings for runs 1, 2 and 3 of a record; the stronger reviewer is
+a separate role, not a third checker vote. Give the first two agents identical
+spec/source/unit inputs but separate contexts; neither sees the other's output.
+The third checker sees only the disagreement units and their source/context,
+not the earlier verdicts. Record actual provider/model IDs, reasoning settings
+and each run's role in the publish report (outside the spec's score objects).
+Keep historical records and their provenance unchanged.
 
 1. **Two full runs per input block** — `<dir>/out-src<k>-1.json` and `-2.json`.
    Two, not one: a sentence one run calls `MATCHES` is otherwise never looked
@@ -1715,11 +1741,11 @@ measurement: never mix models for the runs inside one record.
 3. **Vote**: `python3 tools/des_fidelity_units.py <content_id> --vote <dir>`.
    Two agreeing votes win; with three, the `(verdict, change_kind)` pair two
    share wins, quote and note from the earliest run in it. Three different
-   answers → the session's model adjudicates that unit in
+   answers → the designated stronger reviewer/adjudicator decides that unit in
    `<dir>/adjudicate.json` (`{"src<k>": {"u…": {verdict, change_kind,
    source_quote, note}}}`).
-4. **Opus reviews every unit the vote leaves `ALTERED`/`REVERSED`** — not only
-   the unresolved ones. More Sonnet votes cure random disagreement but not a
+4. **The stronger reviewer reviews every unit the vote leaves `ALTERED`/`REVERSED`** — not only
+   the unresolved ones. More checker votes cure random disagreement but not a
    shared misreading (share-18: two of three runs read Saker's «internal», an
    average of the other areas, as a third surface). The reviewer reads the
    unit, its neighbours, the sentences the runs quoted and, where a term is
@@ -1828,7 +1854,7 @@ never a «بله» to the others.
   full run already judged every other sentence, and judging them again buys
   nothing but fresh run-to-run noise on sentences nobody touched. Build blocks
   for the edited units alone (`--build <dir2> --only u…`, same `source_text`,
-  same basis), run them by Part 2c (two runs, a tie-break where they differ, an Opus
+  same basis), run them by Part 2c (two runs, a tie-break where they differ, a stronger-model
   review of anything still flagged), then
   `python3 tools/des_fidelity_units.py <content_id> --vote <dir2> --base <dir1>`,
   where `<dir1>` holds the `voted-src<k>.json` of the last full run. The tool
