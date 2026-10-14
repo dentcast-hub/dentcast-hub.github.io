@@ -574,7 +574,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 47,
+   "count": 48,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-25",
@@ -622,7 +622,8 @@
     "sharehub/share-19",
     "chairside/chairside-38",
     "insight/insight-84",
-    "insight/insight-89"
+    "insight/insight-89",
+    "chairside/chairside-41"
    ]
   },
   {
@@ -824,7 +825,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 41,
+   "count": 42,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -866,7 +867,8 @@
     "chairside/chairside-37",
     "chairside/chairside-38",
     "chairside/chairside-39",
-    "chairside/chairside-40"
+    "chairside/chairside-40",
+    "chairside/chairside-41"
    ]
   },
   {
@@ -887,7 +889,7 @@
     "#گزارش_کیس"
    ],
    "co_tags": [],
-   "count": 40,
+   "count": 41,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -928,7 +930,8 @@
     "chairside/chairside-37",
     "chairside/chairside-38",
     "chairside/chairside-39",
-    "chairside/chairside-40"
+    "chairside/chairside-40",
+    "chairside/chairside-41"
    ]
   },
   {
@@ -2013,6 +2016,45 @@
    ]
   },
   {
+   "key": "دکتر_شهابیان",
+   "tag": "#دکتر_شهابیان",
+   "domain": "brand",
+   "words": 2,
+   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
+   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
+   "aliases": [
+    "شهابیان",
+    "کانسپت شهابیان",
+    "foad shahabian",
+    "دکتر فواد شهابیان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 20,
+   "content_ids": [
+    "episodes/episode-148-2",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31",
+    "chairside/chairside-32",
+    "chairside/chairside-33",
+    "chairside/chairside-34",
+    "chairside/chairside-35",
+    "chairside/chairside-36",
+    "chairside/chairside-37",
+    "chairside/chairside-38",
+    "chairside/chairside-39",
+    "chairside/chairside-40",
+    "chairside/chairside-41"
+   ]
+  },
+  {
    "key": "تشخیص_افتراقی",
    "tag": "#تشخیص_افتراقی",
    "domain": "clinical",
@@ -2046,44 +2088,6 @@
     "chairside/chairside-28",
     "sharehub/share-12",
     "chairside/chairside-29"
-   ]
-  },
-  {
-   "key": "دکتر_شهابیان",
-   "tag": "#دکتر_شهابیان",
-   "domain": "brand",
-   "words": 2,
-   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
-   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
-   "aliases": [
-    "شهابیان",
-    "کانسپت شهابیان",
-    "foad shahabian",
-    "دکتر فواد شهابیان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 19,
-   "content_ids": [
-    "episodes/episode-148-2",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30",
-    "chairside/chairside-31",
-    "chairside/chairside-32",
-    "chairside/chairside-33",
-    "chairside/chairside-34",
-    "chairside/chairside-35",
-    "chairside/chairside-36",
-    "chairside/chairside-37",
-    "chairside/chairside-38",
-    "chairside/chairside-39",
-    "chairside/chairside-40"
    ]
   },
   {
@@ -3957,6 +3961,32 @@
    ]
   },
   {
+   "key": "دیاستم",
+   "tag": "#دیاستم",
+   "domain": null,
+   "words": 1,
+   "definition": "فاصله‌ی بین دو دندان مجاور در قدام.",
+   "use_when": "مقاله درباره‌ی بستن یا مدیریت دیاستم تصمیم بگیرد.",
+   "aliases": [
+    "diastema",
+    "دیاستما",
+    "فاصله بین دندانی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-26",
+    "insight/insight-61",
+    "chairside/chairside-33",
+    "insight/insight-72",
+    "chairside/chairside-39",
+    "insight/insight-89",
+    "chairside/chairside-41"
+   ]
+  },
+  {
    "key": "سایت_مطب",
    "tag": "#سایت_مطب",
    "domain": "web",
@@ -4476,31 +4506,6 @@
     "notecast/episode-34",
     "notecast/episode-35",
     "notecast/episode-39"
-   ]
-  },
-  {
-   "key": "دیاستم",
-   "tag": "#دیاستم",
-   "domain": null,
-   "words": 1,
-   "definition": "فاصله‌ی بین دو دندان مجاور در قدام.",
-   "use_when": "مقاله درباره‌ی بستن یا مدیریت دیاستم تصمیم بگیرد.",
-   "aliases": [
-    "diastema",
-    "دیاستما",
-    "فاصله بین دندانی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-26",
-    "insight/insight-61",
-    "chairside/chairside-33",
-    "insight/insight-72",
-    "chairside/chairside-39",
-    "insight/insight-89"
    ]
   },
   {
@@ -5812,6 +5817,30 @@
    ]
   },
   {
+   "key": "تعویض_روکش",
+   "tag": "#تعویض_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "برداشتن و ساختِ دوباره‌ی روکشِ موجود.",
+   "use_when": "مقاله ضرورتِ تعویض را در برابر نگه داشتن بسنجد.",
+   "aliases": [
+    "تعویض روکش",
+    "crown replacement",
+    "تعویض پروتز",
+    "عوض کردن روکش"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-58",
+    "chairside/chairside-34",
+    "insight/insight-73",
+    "chairside/chairside-39",
+    "chairside/chairside-41"
+   ]
+  },
+  {
    "key": "ثبات_اولیه",
    "tag": "#ثبات_اولیه",
    "domain": null,
@@ -6530,29 +6559,6 @@
     "insight/insight-56",
     "insight/insight-68",
     "sharehub/share-21"
-   ]
-  },
-  {
-   "key": "تعویض_روکش",
-   "tag": "#تعویض_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "برداشتن و ساختِ دوباره‌ی روکشِ موجود.",
-   "use_when": "مقاله ضرورتِ تعویض را در برابر نگه داشتن بسنجد.",
-   "aliases": [
-    "تعویض روکش",
-    "crown replacement",
-    "تعویض پروتز",
-    "عوض کردن روکش"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-58",
-    "chairside/chairside-34",
-    "insight/insight-73",
-    "chairside/chairside-39"
    ]
   },
   {
@@ -8797,6 +8803,29 @@
     "insight/insight-54",
     "chairside/chairside-32",
     "insight/insight-65"
+   ]
+  },
+  {
+   "key": "شکایت_اصلی",
+   "tag": "#شکایت_اصلی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "مسئله‌ای که بیمار برای آن آمده، نه ایرادی که دندان‌پزشک در معاینه می‌بیند. درمان فقط وقتی موجه است که همان شکایت را واقعاً بهتر کند؛ رفع یک نقصِ عینی که بیمار از آن ناراضی نیست، نارضایتیِ اصلی را حل نمی‌کند.",
+   "use_when": "مقاله‌ای که تطابقِ شکایت بیمار با توانِ درمان را می‌سنجد، یا تعویض/شروع درمان را به‌خاطر عدم تطابق با chief complaint رد یا مشروط می‌کند.",
+   "aliases": [
+    "chief complaint",
+    "CC",
+    "شکایت بیمار",
+    "نارضایتی اصلی",
+    "علت مراجعه"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "chairside/chairside-34",
+    "chairside/chairside-39",
+    "chairside/chairside-41"
    ]
   },
   {
@@ -11690,28 +11719,6 @@
    ]
   },
   {
-   "key": "شکایت_اصلی",
-   "tag": "#شکایت_اصلی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "مسئله‌ای که بیمار برای آن آمده، نه ایرادی که دندان‌پزشک در معاینه می‌بیند. درمان فقط وقتی موجه است که همان شکایت را واقعاً بهتر کند؛ رفع یک نقصِ عینی که بیمار از آن ناراضی نیست، نارضایتیِ اصلی را حل نمی‌کند.",
-   "use_when": "مقاله‌ای که تطابقِ شکایت بیمار با توانِ درمان را می‌سنجد، یا تعویض/شروع درمان را به‌خاطر عدم تطابق با chief complaint رد یا مشروط می‌کند.",
-   "aliases": [
-    "chief complaint",
-    "CC",
-    "شکایت بیمار",
-    "نارضایتی اصلی",
-    "علت مراجعه"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "chairside/chairside-34",
-    "chairside/chairside-39"
-   ]
-  },
-  {
    "key": "شکست_پیچ",
    "tag": "#شکست_پیچ",
    "domain": "clinical",
@@ -12809,6 +12816,28 @@
    "content_ids": [
     "insight/insight-34",
     "insight/insight-75"
+   ]
+  },
+  {
+   "key": "کلیرنس_دینامیک",
+   "tag": "#کلیرنس_دینامیک",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "فضای باقی‌مانده بین رستوریشن و دندان مقابل، سنجیده‌شده در سرتاسر مسیر حرکات طرفی و پروتروزیو به‌جای یک موقعیت ثابت اکلوزال؛ معیار کفایتش ضخامت متریال رستوریشن نهایی در هر نقطه از آن مسیر است. با فضای رستوریتیو، که فضای عمودی در حالت ایستا است، اشتباه گرفته نشود.",
+   "use_when": "مقاله کفایت فضا را در طول مسیر حرکت فک بسنجد، نه فقط در تماس استاتیک.",
+   "aliases": [
+    "dynamic clearance",
+    "کلیرنس دینامیک",
+    "کلیرنس در حرکات",
+    "فضای حرکتی",
+    "excursive clearance"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-66",
+    "chairside/chairside-41"
    ]
   },
   {
@@ -20883,27 +20912,6 @@
    ]
   },
   {
-   "key": "کلیرنس_دینامیک",
-   "tag": "#کلیرنس_دینامیک",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "فضای باقی‌مانده بین رستوریشن و دندان مقابل، سنجیده‌شده در سرتاسر مسیر حرکات طرفی و پروتروزیو به‌جای یک موقعیت ثابت اکلوزال؛ معیار کفایتش ضخامت متریال رستوریشن نهایی در هر نقطه از آن مسیر است. با فضای رستوریتیو، که فضای عمودی در حالت ایستا است، اشتباه گرفته نشود.",
-   "use_when": "مقاله کفایت فضا را در طول مسیر حرکت فک بسنجد، نه فقط در تماس استاتیک.",
-   "aliases": [
-    "dynamic clearance",
-    "کلیرنس دینامیک",
-    "کلیرنس در حرکات",
-    "فضای حرکتی",
-    "excursive clearance"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-66"
-   ]
-  },
-  {
    "key": "کمبود_فضای_عمودی",
    "tag": "#کمبود_فضای_عمودی",
    "domain": "clinical",
@@ -22160,6 +22168,7 @@
   "bite registration": "ثبت رابطه",
   "tooth replacement": "جایگزینی دندان",
   "long term outcome": "درمان بلندمدت",
+  "definitive cement": "سمان دائم",
   "implant follow up": "پیگیری زمانی ایمپلنت",
   "عادت پارافانکشنال": "پارافانکشن",
   "جای گذاری سه بعدی": "پوزیشن ایمپلنت",
@@ -22173,7 +22182,6 @@
   "فناوری دندانپزشکی": "دندانپزشکی هوشمند",
   "آلترد پسیو اراپشن": "رویش غیرفعال تغییریافته",
   "abutment rigidity": "سختی تکیه گاه",
-  "definitive cement": "سمان دائم",
   "prosthesis design": "طراحی پروتز",
   "فاصله بین ایمپلنت": "فاصله ایمپلنت",
   "pickup impression": "قالب peek آپ",
@@ -22272,14 +22280,14 @@
   "استخوان مارژینال": "تحلیل استخوان کرستال",
   "digital presence": "حضور آنلاین دندانپزشک",
   "practice website": "سایت مطب",
+  "temporary cement": "سمان موقت",
   "bonding protocol": "پروتکل باند",
+  "cement selection": "انتخاب سمان",
   "ریهبیلیتیشن دهان": "بازسازی کامل دهان",
   "بیومیمتیک ترمیمی": "ترمیم بیومیمتیک",
   "درمان با ایمپلنت": "درمان ایمپلنت",
   "فاصله بین دندانی": "دیاستم",
-  "temporary cement": "سمان موقت",
   "فرم دهی بافت نرم": "مدیریت بافت نرم",
-  "cement selection": "انتخاب سمان",
   "biological width": "بیولوژیک ویدث",
   "دیده شدن در گوگل": "جستجوپذیری محتوا",
   "درمان کانال ریشه": "درمان ریشه",
@@ -22312,6 +22320,7 @@
   "درمان طولانی مدت": "درمان بلندمدت",
   "کاهش درد حین کار": "راحتی بیمار",
   "سایش دندان مقابل": "سایش آنتاگونیست",
+  "permanent cement": "سمان دائم",
   "ceramic fracture": "شکست سرامیک",
   "cusp inclination": "شیب کاسپی",
   "عکاسی داخل دهانی": "عکاسی دندانپزشکی",
@@ -22340,7 +22349,6 @@
   "dental esthetics": "زیبایی دندان",
   "biocompatibility": "زیست سازگاری",
   "استیفنس تکیه گاه": "سختی تکیه گاه",
-  "permanent cement": "سمان دائم",
   "framework design": "طراحی فریم ورک",
   "شکست قطعات پروتز": "عوارض مکانیکی",
   "قالب برداشت روکش": "قالب peek آپ",
@@ -22461,12 +22469,12 @@
   "خارج کردن دندان": "کشیدن دندان",
   "نگه داشتن دندان": "حفظ دندان",
   "tooth retention": "حفظ دندان",
+  "shade selection": "انتخاب shade",
   "ceramic etching": "اچ سرامیک",
   "ایمپلنت تمام فک": "ایمپلنت بیمار بی دندان",
   "online presence": "حضور آنلاین دندانپزشک",
   "silane coupling": "سایلان",
   "اختلال مفصل فکی": "tmd",
-  "shade selection": "انتخاب shade",
   "تراش برای لمینت": "تراش لمینیت",
   "سایت دندانپزشکی": "سایت مطب",
   "research design": "طراحی مطالعه",
@@ -22492,6 +22500,7 @@
   "مطالعه غیرتجربی": "مطالعه مشاهده ای",
   "جداسازی با زمان": "dwt",
   "skeletal change": "رشد فک",
+  "زینک فسفات سمان": "زینک فسفات",
   "cement retained": "سمان ریتین",
   "screw loosening": "شل شدن پیچ",
   "ضد چرخش اباتمنت": "ضد چرخش",
@@ -22509,7 +22518,6 @@
   "patient comfort": "راحتی بیمار",
   "راحتی حین درمان": "راحتی بیمار",
   "splinted crowns": "روکش اسپلینت",
-  "زینک فسفات سمان": "زینک فسفات",
   "antagonist wear": "سایش آنتاگونیست",
   "فالو آپ ایمپلنت": "پیگیری زمانی ایمپلنت",
   "لایبرری ایمپلنت": "لایبرری دیجیتال",
@@ -22707,6 +22715,7 @@
   "etch and rinse": "اچ اند رینس",
   "نگه داشتن مینا": "حفظ مینای دندان",
   "تغییرات اسکلتی": "رشد فک",
+  "zinc phosphate": "زینک فسفات",
   "محتوای ماندگار": "ماندگاری محتوا",
   "mock up driven": "موک آپ",
   "ceramic veneer": "ونیر سرامیکی",
@@ -22728,7 +22737,6 @@
   "ثبت رابطه فکین": "ثبت رابطه",
   "درد اوروفاسیال": "درد فکی",
   "orofacial pain": "درد فکی",
-  "zinc phosphate": "زینک فسفات",
   "عکس داخل دهانی": "عکاسی دندانپزشکی",
   "پیگیری ایمپلنت": "پیگیری زمانی ایمپلنت",
   "retention type": "نوع ریتنشن",
@@ -23150,6 +23158,7 @@
   "hydrofluoric": "اچ سرامیک",
   "تحلیل کرستال": "تحلیل استخوان کرستال",
   "سیل فوری عاج": "ids",
+  "سمان آزمایشی": "سمان موقت",
   "smile design": "طراحی لبخند",
   "دیزاین لبخند": "طراحی لبخند",
   "آنالیز لبخند": "طراحی لبخند",
@@ -23158,7 +23167,6 @@
   "عملکرد گروهی": "گروپ فانکشن",
   "ترمیم چسبنده": "ترمیم ادهزیو",
   "non invasive": "درمان غیرتهاجمی",
-  "سمان آزمایشی": "سمان موقت",
   "چسباندن روکش": "سمان کردن",
   "رد طرح درمان": "شروع نکردن درمان",
   "نپذیرفتن کیس": "شروع نکردن درمان",
@@ -23675,16 +23683,16 @@
   "extraction": "کشیدن دندان",
   "impression": "قالبگیری",
   "پروتز کامل": "پروتز متحرک",
-  "rubber dam": "ایزولاسیون",
   "انتخاب رنگ": "انتخاب shade",
+  "rubber dam": "ایزولاسیون",
   "نوع مطالعه": "طراحی مطالعه",
+  "سمان مناسب": "انتخاب سمان",
+  "انواع سمان": "انتخاب سمان",
   "غیر تهاجمی": "درمان غیرتهاجمی",
   "مدیریت لثه": "مدیریت بافت نرم",
   "پست ریختگی": "کور ریختگی",
   "دیپ مارجین": "dme",
   "بال اورینگ": "اتچمنت اوردنچر",
-  "سمان مناسب": "انتخاب سمان",
-  "انواع سمان": "انتخاب سمان",
   "prep دندان": "تراش دندان",
   "مزوستراکچر": "تیتانیوم لاینر",
   "جراحی کاشت": "جراحی ایمپلنت",
@@ -23731,6 +23739,7 @@
   "خطای اسکنر": "خطای اسکن",
   "بیماری قند": "دیابت",
   "میکرولیکیج": "ریز نشت",
+  "سمان نهایی": "سمان دائم",
   "سمان دندان": "سمان دندانی",
   "design تاج": "طراحی روکش",
   "ماده پروتز": "متریال پروتزی",
@@ -23760,7 +23769,6 @@
   "ری تریتمنت": "ریتریتمنت",
   "short root": "ریشه کوتاه",
   "سمیت سلولی": "زیست سازگاری",
-  "سمان نهایی": "سمان دائم",
   "sinus lift": "سینوس لیفت",
   "لیفت سینوس": "سینوس لیفت",
   "علت مراجعه": "شکایت اصلی",
@@ -23931,11 +23939,11 @@
   "endocrown": "اندوکراون",
   "تراش ونیر": "تراش لمینیت",
   "پرپ لمینت": "تراش لمینیت",
+  "کدام سمان": "انتخاب سمان",
   "تحویل کار": "تحویل روکش",
   "بدون تراش": "درمان غیرتهاجمی",
   "کانتیلیور": "کانتی لیور",
   "cast core": "کور ریختگی",
-  "کدام سمان": "انتخاب سمان",
   "پرپ دندان": "تراش دندان",
   "روت کانال": "درمان ریشه",
   "پانورامیک": "رادیوگرافی تشخیصی",
@@ -23957,6 +23965,7 @@
   "نقد مقاله": "تحلیل مطالعه",
   "رنگ گرفتن": "پایداری رنگ",
   "حفظ انامل": "حفظ مینای دندان",
+  "فسفات روی": "زینک فسفات",
   "self etch": "سلف اچ",
   "لایه سمان": "سمان",
   "sandblast": "سندبلاست",
@@ -23978,7 +23987,6 @@
   "خارج کردن": "تکنیک خارج سازی",
   "excursive": "حرکات اکسکورسیو",
   "روکش متصل": "روکش اسپلینت",
-  "فسفات روی": "زینک فسفات",
   "لب پریدگی": "شکست سرامیک",
   "چیپ پرسلن": "شکست پرسلن",
   "شکست چینی": "شکست پرسلن",
@@ -24189,10 +24197,10 @@
   "آی دی اس": "ids",
   "تی ام دی": "tmd",
   "اندوکران": "اندوکراون",
+  "سمان تمپ": "سمان موقت",
   "فول ماوس": "بازسازی کامل دهان",
   "پرپ روکش": "تراش روکش",
   "diastema": "دیاستم",
-  "سمان تمپ": "سمان موقت",
   "لبه روکش": "مارجین روکش",
   "کانتیلور": "کانتی لیور",
   "دی ام ای": "dme",
