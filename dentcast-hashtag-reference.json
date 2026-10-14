@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 112,
+   "count": 113,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -372,7 +372,8 @@
     "insight/insight-90",
     "insight/insight-91",
     "insight/insight-92",
-    "insight/insight-93"
+    "insight/insight-93",
+    "insight/insight-94"
    ]
   },
   {
@@ -628,6 +629,68 @@
    ]
   },
   {
+   "key": "اکلوژن",
+   "tag": "#اکلوژن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "رابطه‌ی تماسی دندان‌های دو فک و هرچه بر آن اثر می‌گذارد.",
+   "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "occlusion",
+    "اکلوزیون"
+   ],
+   "variants": [
+    "#Occlusion"
+   ],
+   "co_tags": [],
+   "count": 43,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-23",
+    "episodes/episode-35",
+    "episodes/episode-60",
+    "episodes/episode-123-2",
+    "episodes/episode-126",
+    "episodes/episode-131",
+    "episodes/episode-132",
+    "episodes/episode-142",
+    "episodes/episode-143",
+    "episodes/episode-144",
+    "episodes/episode-145",
+    "insight/insight-1",
+    "insight/insight-2",
+    "insight/insight-6",
+    "insight/insight-8",
+    "insight/insight-12",
+    "photocast/episode-2",
+    "dentcast-plus/video-2",
+    "notecast/episode-14",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "insight/insight-21",
+    "episodes/episode-154",
+    "sharehub/share-5",
+    "insight/insight-24",
+    "episodes/episode-155",
+    "dentcast-plus/video-6",
+    "insight/insight-29",
+    "chairside/chairside-11",
+    "insight/insight-37",
+    "chairside/chairside-15",
+    "sharehub/share-6",
+    "insight/insight-43",
+    "episodes/episode-160",
+    "chairside/chairside-23",
+    "insight/insight-56",
+    "chairside/chairside-31",
+    "insight/insight-65",
+    "chairside/chairside-36",
+    "sharehub/share-21",
+    "insight/insight-87",
+    "insight/insight-94"
+   ]
+  },
+  {
    "key": "پست_و_کور",
    "tag": "#پست_و_کور",
    "domain": "clinical",
@@ -690,67 +753,6 @@
     "insight/insight-88",
     "sharehub/share-30",
     "sharehub/share-31"
-   ]
-  },
-  {
-   "key": "اکلوژن",
-   "tag": "#اکلوژن",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "رابطه‌ی تماسی دندان‌های دو فک و هرچه بر آن اثر می‌گذارد.",
-   "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "occlusion",
-    "اکلوزیون"
-   ],
-   "variants": [
-    "#Occlusion"
-   ],
-   "co_tags": [],
-   "count": 42,
-   "content_ids": [
-    "episodes/episode-14",
-    "episodes/episode-23",
-    "episodes/episode-35",
-    "episodes/episode-60",
-    "episodes/episode-123-2",
-    "episodes/episode-126",
-    "episodes/episode-131",
-    "episodes/episode-132",
-    "episodes/episode-142",
-    "episodes/episode-143",
-    "episodes/episode-144",
-    "episodes/episode-145",
-    "insight/insight-1",
-    "insight/insight-2",
-    "insight/insight-6",
-    "insight/insight-8",
-    "insight/insight-12",
-    "photocast/episode-2",
-    "dentcast-plus/video-2",
-    "notecast/episode-14",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "insight/insight-21",
-    "episodes/episode-154",
-    "sharehub/share-5",
-    "insight/insight-24",
-    "episodes/episode-155",
-    "dentcast-plus/video-6",
-    "insight/insight-29",
-    "chairside/chairside-11",
-    "insight/insight-37",
-    "chairside/chairside-15",
-    "sharehub/share-6",
-    "insight/insight-43",
-    "episodes/episode-160",
-    "chairside/chairside-23",
-    "insight/insight-56",
-    "chairside/chairside-31",
-    "insight/insight-65",
-    "chairside/chairside-36",
-    "sharehub/share-21",
-    "insight/insight-87"
    ]
   },
   {
@@ -2245,6 +2247,40 @@
    ]
   },
   {
+   "key": "روکش",
+   "tag": "#روکش",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "چترِ عامِ روکش.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "crown",
+    "کراون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 17,
+   "content_ids": [
+    "episodes/episode-2",
+    "episodes/episode-8",
+    "dentcast-plus/video-6",
+    "metanotes/meta-12",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "chairside/chairside-15",
+    "insight/insight-49",
+    "chairside/chairside-22",
+    "chairside/chairside-27",
+    "chairside/chairside-29",
+    "insight/insight-61",
+    "sharehub/share-15",
+    "dentcast-plus/video-9",
+    "insight/insight-76",
+    "sharehub/share-30",
+    "insight/insight-94"
+   ]
+  },
+  {
    "key": "درمان_محافظه_کارانه",
    "tag": "#درمان_محافظه‌کارانه",
    "domain": "clinical",
@@ -2277,39 +2313,6 @@
     "chairside/chairside-29",
     "notecast/episode-39",
     "notecast/episode-40"
-   ]
-  },
-  {
-   "key": "روکش",
-   "tag": "#روکش",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "چترِ عامِ روکش.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "crown",
-    "کراون"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 16,
-   "content_ids": [
-    "episodes/episode-2",
-    "episodes/episode-8",
-    "dentcast-plus/video-6",
-    "metanotes/meta-12",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "chairside/chairside-15",
-    "insight/insight-49",
-    "chairside/chairside-22",
-    "chairside/chairside-27",
-    "chairside/chairside-29",
-    "insight/insight-61",
-    "sharehub/share-15",
-    "dentcast-plus/video-9",
-    "insight/insight-76",
-    "sharehub/share-30"
    ]
   },
   {
@@ -6889,6 +6892,30 @@
    ]
   },
   {
+   "key": "شیب_کاسپی",
+   "tag": "#شیب_کاسپی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "شیبِ سطحِ کاسپ — سطحی که در تنظیم حرکات طرفی هدف تراش قرار می‌گیرد.",
+   "use_when": "مقاله شیب کاسپ را ارزیابی یا اصلاح کند.",
+   "aliases": [
+    "cusp inclination",
+    "شیب کاسپ",
+    "cuspal inclination"
+   ],
+   "variants": [
+    "#کاسپ"
+   ],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "dentcast-plus/video-6",
+    "metanotes/meta-12",
+    "insight/insight-43",
+    "insight/insight-94"
+   ]
+  },
+  {
    "key": "ضد_چرخش",
    "tag": "#ضد_چرخش",
    "domain": "clinical",
@@ -8878,29 +8905,6 @@
    ]
   },
   {
-   "key": "شیب_کاسپی",
-   "tag": "#شیب_کاسپی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "شیبِ سطحِ کاسپ — سطحی که در تنظیم حرکات طرفی هدف تراش قرار می‌گیرد.",
-   "use_when": "مقاله شیب کاسپ را ارزیابی یا اصلاح کند.",
-   "aliases": [
-    "cusp inclination",
-    "شیب کاسپ",
-    "cuspal inclination"
-   ],
-   "variants": [
-    "#کاسپ"
-   ],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "dentcast-plus/video-6",
-    "metanotes/meta-12",
-    "insight/insight-43"
-   ]
-  },
-  {
    "key": "طراحی_روکش",
    "tag": "#طراحی_روکش",
    "domain": "clinical",
@@ -9699,6 +9703,28 @@
     "insight/insight-32",
     "insight/insight-46",
     "insight/insight-53"
+   ]
+  },
+  {
+   "key": "گایدنس_قدامی",
+   "tag": "#گایدنس_قدامی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "مسیرِ هدایتِ دندان‌های قدامی در حرکات پیش‌گرایی.",
+   "use_when": "مقاله تنظیمِ گایدنس قدامی را عاملِ نتیجه بداند.",
+   "aliases": [
+    "anterior guidance",
+    "گایدنس قدامی",
+    "هدایت قدامی",
+    "راهنمای قدامی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-37",
+    "sharehub/share-21",
+    "insight/insight-94"
    ]
   },
   {
@@ -12907,27 +12933,6 @@
    "content_ids": [
     "insight/insight-28",
     "sharehub/share-30"
-   ]
-  },
-  {
-   "key": "گایدنس_قدامی",
-   "tag": "#گایدنس_قدامی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "مسیرِ هدایتِ دندان‌های قدامی در حرکات پیش‌گرایی.",
-   "use_when": "مقاله تنظیمِ گایدنس قدامی را عاملِ نتیجه بداند.",
-   "aliases": [
-    "anterior guidance",
-    "گایدنس قدامی",
-    "هدایت قدامی",
-    "راهنمای قدامی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-37",
-    "sharehub/share-21"
    ]
   },
   {
@@ -22023,9 +22028,9 @@
   "رستوریشن غیرمستقیم": "ترمیم غیرمستقیم",
   "دندونپزشکی دیجیتال": "دندانپزشکی دیجیتال",
   "lithium disilicate": "لیتیوم دی سیلیکات",
+  "tooth preservation": "حفظ دندان",
   "digital impression": "قالبگیری دیجیتال",
   "بدون تحلیل استخوان": "zero تحلیل استخوان",
-  "tooth preservation": "حفظ دندان",
   "marginal bone loss": "تحلیل استخوان کرستال",
   "اختلال گیجگاهی فکی": "tmd",
   "veneer preparation": "تراش لمینیت",
@@ -22130,9 +22135,9 @@
   "تصمیم گیری بالینی": "تصمیم درمانی",
   "دکتر فواد شهابیان": "دکتر شهابیان",
   "digital dentistry": "دندانپزشکی دیجیتال",
+  "crown lengthening": "افزایش طول تاج",
   "ترمیم با کامپوزیت": "کامپوزیت",
   "intraoral scanner": "اسکنر داخل دهانی",
-  "crown lengthening": "افزایش طول تاج",
   "scanning accuracy": "دقت اسکن",
   "دندان عصب کشی شده": "دندان اندوشده",
   "میزان کردن اکلوژن": "تنظیم اکلوژن",
@@ -22469,11 +22474,11 @@
   "temporary crown": "روکش موقت",
   "ترمیم کامپوزیتی": "کامپوزیت",
   "تغییرات استخوان": "تحلیل استخوان",
-  "برداشتن پوسیدگی": "برداشت پوسیدگی",
-  "پری ایمپلنتایتس": "پری ایمپلنتیتیس",
   "خارج کردن دندان": "کشیدن دندان",
+  "برداشتن پوسیدگی": "برداشت پوسیدگی",
   "نگه داشتن دندان": "حفظ دندان",
   "tooth retention": "حفظ دندان",
+  "پری ایمپلنتایتس": "پری ایمپلنتیتیس",
   "shade selection": "انتخاب shade",
   "ceramic etching": "اچ سرامیک",
   "ایمپلنت تمام فک": "ایمپلنت بیمار بی دندان",
@@ -22888,8 +22893,8 @@
   "deep learning": "سواد هوش مصنوعی",
   "promptologist": "پرامپتولوژیست",
   "افتراق تشخیصی": "تشخیص افتراقی",
-  "اسکنر دیجیتال": "اسکنر داخل دهانی",
   "کراون لنتنینگ": "افزایش طول تاج",
+  "اسکنر دیجیتال": "اسکنر داخل دهانی",
   "ساییدگی دندان": "سایش دندان",
   "ایمپلنت متحرک": "اوردنچر",
   "دایمنشن عمودی": "بعد عمودی",
@@ -23683,9 +23688,9 @@
   "tooth wear": "سایش دندان",
   "fiber post": "فایبر پست",
   "کندگی روکش": "افتادن روکش",
+  "extraction": "کشیدن دندان",
   "پریودونتال": "پریودنتال",
   "بیماری لثه": "پریودنتال",
-  "extraction": "کشیدن دندان",
   "impression": "قالبگیری",
   "پروتز کامل": "پروتز متحرک",
   "انتخاب رنگ": "انتخاب shade",
@@ -23934,8 +23939,8 @@
   "attrition": "سایش دندان",
   "پست فایبر": "فایبر پست",
   "prognosis": "پروگنوز دندان",
-  "پریودنتیت": "پریودنتال",
   "اکستراکشن": "کشیدن دندان",
+  "پریودنتیت": "پریودنتال",
   "قالب گیری": "قالبگیری",
   "isolation": "ایزولاسیون",
   "آل آن فور": "ایمپلنت بیمار بی دندان",
@@ -24376,8 +24381,8 @@
   "dent ai": "dentai",
   "کیوریتد": "curated content",
   "bonding": "باندینگ",
-  "ceramic": "سرامیک",
   "ferrule": "فرول",
+  "ceramic": "سرامیک",
   "ابوتمنت": "اباتمنت",
   "آباتمنت": "اباتمنت",
   "لامینیت": "لمینیت سرامیکی",

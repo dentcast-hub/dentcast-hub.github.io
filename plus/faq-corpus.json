@@ -37359,6 +37359,63 @@
           ]
         }
       ]
+    },
+    "insight/insight-94": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/insight/insight-94.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا می‌توان شیب کاسپ‌های دندان‌های بیمار را برای طراحی روکش الگو قرار داد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ به‌شرط اینکه دندان‌های مرجع از نظر فرم و عملکرد مشکلی نداشته باشند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا هنگام طراحی روکش همیشه اطلاعات دقیقی از حرکات فکی و مسیر حرکت کندیل‌های بیمار داریم؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ دندان‌های بدون مشکل بیمار می‌توانند از اثر این عوامل سرنخ بدهند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "چرا فرم دندان‌های قابل اتکای بیمار برای طراحی شیب کاسپ روکش مفید است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "زیرا این دندان‌ها بدون مشکل در سیستم حرکتی همان بیمار کار می‌کنند و از هماهنگی با حرکات فکی او سرنخ می‌دهند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/insight/insight-94.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-94.html#flashcards-c1",
+              "name": "شرط انتخاب دندان مرجع برای شیب کاسپ روکش",
+              "description": "دندان مرجع باید فرم و عملکرد قابل اتکا داشته باشد؛ هماهنگی شیب کاسپ روکش با چنین دندانی برآوردی متناسب با سیستم حرکتی همان بیمار فراهم می‌کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-94.html#flashcards-c2",
+              "name": "استفاده از فرم دندان به‌عنوان سرنخ حرکات فکی",
+              "description": "فرم دندان‌هایی که در دهان بیمار بدون مشکل کار می‌کنند، اثر هماهنگی با حرکت فک را نشان می‌دهد و می‌تواند بدون اطلاع دقیق از همهٔ عوامل هدایت‌کننده، به طراحی روکش کمک کند.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
