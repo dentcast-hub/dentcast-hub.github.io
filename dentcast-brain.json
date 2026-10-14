@@ -16864,5 +16864,32 @@
       "secondary": [],
       "subtopic": "extraction-vs-preservation"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-94",
+    "title": "یه سرنخ ساده برای طراحی بهتر روکش",
+    "caption": "یکی از کلیدهای طراحی روکش، هماهنگ کردن شیب کاسپ‌های آن با دندان‌های خود بیمار است.",
+    "hashtags": [
+      "#اینسایت",
+      "#روکش",
+      "#اکلوژن",
+      "#شیب_کاسپی",
+      "#گایدنس_قدامی"
+    ],
+    "keywords": [
+      "طراحی روکش",
+      "شیب کاسپ‌های روکش",
+      "دندان‌های خود بیمار",
+      "حرکات فکی بیمار",
+      "راهنمای قدامی",
+      "مسیر حرکت کندیل‌ها"
+    ],
+    "page_url": "/insight/insight-94.html",
+    "pillar": {
+      "primary": "occlusion",
+      "secondary": [],
+      "subtopic": "occlusal-scheme-guidance"
+    }
   }
 ]
