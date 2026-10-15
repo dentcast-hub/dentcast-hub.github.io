@@ -1721,6 +1721,8 @@ if a Fast variant is not available, do not invent one. If separate agents or a
 stronger reviewer are unavailable, report the missing stage; never label one
 model's repeated self-review as the completed two-tier protocol.
 
+**Mandatory model-routing preflight (before any FIDELITY checker call).** Inspect the execution environment's *actual* model/delegation controls, not the example model names above. Resolve and record (a) the exact provider/model ID and reasoning settings for the lighter checker, (b) the exact provider/model ID and reasoning settings for the stronger reviewer/adjudicator, and (c) whether independent checker contexts and per-role model selection are actually supported. Verify that the checker is genuinely the lower-cost role using available provider pricing/usage information; never infer cost from a model nickname. If these facts cannot be verified, **STOP before launching FIDELITY agents**, report which capability or cost evidence is missing and request the founder's explicit choice to defer or use a documented fallback. Never silently run all roles on the default model, claim savings without evidence, or present repeated calls to one model/context as independent agents. Record the preflight outcome and actual model IDs/settings in the publish report; if the runtime does not expose actual executed model IDs, mark them UNVERIFIED rather than claiming compliance. This gate does not change DES/FIDELITY scoring rules, stored JSON, or historical records.
+
 **The model is part of the measurement:** freeze the same checker model/version
 and reasoning settings for runs 1, 2 and 3 of a record; the stronger reviewer is
 a separate role, not a third checker vote. Give the first two agents identical
