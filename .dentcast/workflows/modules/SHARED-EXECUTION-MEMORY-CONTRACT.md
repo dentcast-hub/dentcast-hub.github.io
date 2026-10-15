@@ -1,0 +1,80 @@
+# Shared GitHub execution memory — design contract v0.1 (STAGING, NOT ACTIVE)
+
+## Purpose
+
+A publication belongs to a **run**, not to Claude Code, Cursor, Codex, or a chat session. An agent resuming a run must discover the current committed state, verify receipts, and continue at the first unfinished *substep*; it must never infer completion from prose or from a model name.
+
+This is a **design contract**, not a working GitHub-backed publication store. Current draft checkpoint code remains local, read-only, and publication-disabled. Do not claim that production Fidelity can already resume across agents.
+
+## Storage and confidentiality
+
+Use a **separate private GitHub repository** (or a genuinely access-restricted GitHub storage location) for execution memory, shared with authorized agents. **Never put clinical inputs, patient identifiers, private challenge answers, licensed full text, source passages, claim-level scientific judgments or unpublished scientific artifacts in the public dentcast-hub.github.io repository.** Public publishing repo can carry only safe opaque run pointers and non-sensitive hashes. Git history retains removed secrets; a public branch is not a private storage area.
+
+Proposed private layout:
+
+```text
+runs/<run_id>/manifest.json
+runs/<run_id>/state.json
+runs/<run_id>/events/000001-<event_id>.json
+runs/<run_id>/artifacts/<artifact_digest>.json
+runs/<run_id>/receipts/<receipt_id>.json
+```
+
+Store event/receipt/artifact objects as **immutable, content-addressed** objects. Use GitHub commit SHA and GitHub API optimistic concurrency for state updates, with an atomic branch-ref update or a dedicated serialized writer. Local POSIX flock only protects one machine; it does NOT protect GitHub writers. A successful push is not proof that an agent held an exclusive lease; re-fetch HEAD and reconcile on conflicts. Never force-push memory history.
+
+## Required provenance
+
+Every event records `event_id`, `run_id`, `actor.agent_family` (claude/cursor/codex/other), `actor.model` when known, `actor.session_id` when available, `timestamp_utc`, `stage_id`, `substep_id`, `event_type`, `source_revision`, `contract_version`, `input_digest`, `output_digest`, `artifact_refs`, `verification_receipt`, and `previous_event_digest`. An actor's own name is provenance, **not authorization or verification**. A claimed result must be validated against its original invocation and immutable evidence before being marked complete.
+
+Record decisions and explicit founder approvals as distinct signed/verified-or-attributed events bound to exact scope, content fingerprint, and version. No agent can create a founder approval by writing an event.
+
+## Nested Fidelity/DES checkpoint example (illustrative, not an actual scientific result)
+
+```json
+{
+  "run_id": "opaque-run",
+  "module": "evidence",
+  "engine": "fidelity",
+  "engine_version": "PINNED_EXISTING_VERSION",
+  "input_digest": "sha256:PINNED_EXACT_CLAIM_SET_AND_SOURCES",
+  "claim_set": {"count": 72, "manifest_ref": "private:artifacts/claims-digest"},
+  "substeps": {
+    "agent_1": {
+      "status": "completed_verified",
+      "actor": {"agent_family": "claude", "model": "PINNED_MODEL"},
+      "result_ref": "private:artifacts/agent1-full-72-claim-result",
+      "receipt_ref": "private:receipts/agent1-validated-receipt",
+      "illustrative_summary": {"matched": 70, "total": 72}
+    },
+    "agent_2": {"status": "pending"},
+    "comparison": {"status": "blocked_waiting_for_agent_2"},
+    "adjudication": {"status": "pending"}
+  }
+}
+```
+
+The number **70/72 is hypothetical**, not a substitute for all 72 per-claim decisions, quotes, source spans, confidence/grade fields, and provenance required by the **existing** Fidelity engine. Exact claim IDs/order, source-text hashes, engine/prompt versions, model roles, and input/output schema must match the existing scientific implementation. Do **not** change scientific voting, thresholds, prompts, adjudication, approvals or required agent independence to make resume easier.
+
+## Resume algorithm
+
+1. Read current private GitHub branch HEAD and immutable run manifest; check run ID, permissions, source revision, contract versions and hashes.
+2. Replay/verify event chain and materialize state. Reject missing, corrupted, contradictory or unverified receipts. Do not rely on `state.json` alone.
+3. Determine first pending substep using the **scientific engine's actual state machine**, not a generic publishing-level status. If `agent_1` has a complete validated 72-claim result with matching input/version, **reuse it**; otherwise pause or invalidate it explicitly.
+4. Dispatch only `agent_2` with the same pinned claim set and required independent agent/model role. Do not give agent 2 agent 1's judgments if existing blind-voting rules prohibit it.
+5. Validate agent 2's full receipt, persist immutable result, then invoke existing comparison and adjudication exactly as originally defined. A mere 70/72 count is insufficient for comparison.
+6. Commit state transition with GitHub optimistic concurrency; on conflict re-read HEAD and re-evaluate, never overwrite another agent's progress.
+7. If source text, claim set, scientific engine/prompt, or dependency version changes, invalidate **only the scientifically affected checkpoints** under existing rules; never silently reuse stale judgments.
+
+## Required future tests (not yet implemented)
+
+- Claude completes first scientific agent; Cursor resumes second without rerunning first; Codex compares the same two complete claim arrays.
+- Invalid, incomplete or mismatched first-agent receipt triggers fail-closed behavior, not reuse.
+- Two writers race on GitHub; exactly one state transition commits and the loser re-reads and reconciles.
+- Crash after immutable result upload but before state update recovers without duplicate scientific execution or duplicate side effects.
+- Privacy check ensures no private clinical/scientific artifacts reach the public repo or public GitHub Actions logs.
+- Changing one source or claim set invalidates affected scientific receipts and enforces all original gates.
+- Independence of the second agent and existing scientific comparison/adjudication are preserved.
+
+## Activation gate
+
+Before use for real publishing: private GitHub storage selected and access controlled; exact existing DES/Fidelity engine contract mapped; GitHub writer and replay verifier implemented; security/privacy and concurrent-writer tests pass; behavioral parity independently audited; founder explicitly approves activation. Until then the only working shared checkpoint is the local **staging** checkpoint.
