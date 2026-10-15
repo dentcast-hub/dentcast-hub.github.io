@@ -22,7 +22,7 @@
 | 4 | Semantic glossary and related links | `05-semantic-linking.md` | Mandatory analysis on all applicable routes | Final-ish page, shared 5-link budget |
 | 5 | Attached paper / cabinet | `06-paper-ingestion.md` | If paper attached | Actual file, DOI and Drive metadata |
 | 6 | Flashcards and quiz | `07-flashcards-and-quiz.md` | As prescribed by type | Page content; challenge exclusions |
-| 7 | DES and Fidelity | `08-des-fidelity.md` | Every publication, basket-dependent | Exact source text, DES spec, final claims, founder gate |
+| 7 | Opaque evidence subsystem invocation | `08-des-fidelity.md` (unchanged adapter/legacy extraction) | Invoke according to the EXISTING publication eligibility/skip rules | Pass exact approved inputs; consume validated results; no internal modification |
 | 8 | Challenge | `09-challenge.md` | Only if challenge selected | Private handoff contract |
 | 9 | Hashtags, brain, pathways | `10-brain-and-pathways.md` | Applicable routes | Locked taxonomy, final metadata |
 | 10 | Pulse, version and build | `11-build-and-version.md` | Applicable routes | All content-affecting writes |
@@ -30,11 +30,17 @@
 
 **Important:** This manifest mirrors source order; it does not yet prove that each stage is independently resumable. Some steps are intertwined and require an execution dependency review before checkpointing.
 
+## Immutable evidence subsystem boundary
+
+**DES + Fidelity are one indivisible, closed subsystem.** The publishing router may decide **when** to invoke the existing system based on the canonical eligibility rules, provide the exact source material and final claims, and consume its validated outputs. It must NOT split DES from Fidelity, change either prompt, alter source selection, scoring, claim segmentation, two-checker voting, tie-break, stronger review, founder gates, or output schema. Do not introduce new skip conditions or automatically run it on cases where the existing protocol says to skip. The existing prompt files and tools are the authority; `08-des-fidelity.md` is a verbatim extracted invocation contract, NOT permission to refactor the engine. If the internal engine changes independently in the future, the publishing router must still treat it as opaque.
+
+Checkpointing later may store a validated completed result and its provenance, but may not introduce internal checkpoints or reuse partial/invalid outputs without the engine's own existing guarantees.
+
 ## Routing invariants
 
 - LiteCast: its own data source and `.ir` identity; no specialist cross-links or English mirror. Read the LiteCast branch within stage 2; don't infer that specialist stage 4 can run unchanged.
 - Challenge: private answers never go into public git; documented English skip.
-- Source-based DES: classify by cited sources, not category; keep exact text basis, two checker runs, vote, stronger review and founder approval rules.
+- Source-based DES: preserve the existing eligibility logic and pass exact inputs into the opaque DES/Fidelity subsystem. Do not replicate or edit its internal algorithm.
 - New specialist pages: fresh semantic link analyses, shared 5-link cap, taxonomy decision locked before use.
 - All routes: preserve title/caption exactness, mandatory approvals, build order, stamp-after-last-write, and final `verify_publish.py` gate.
 
