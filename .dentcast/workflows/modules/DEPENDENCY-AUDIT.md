@@ -4,7 +4,7 @@
 
 ## Founder decision — immutable evidence subsystem
 
-DES and Fidelity constitute **one opaque, externally invoked subsystem**, not two stages to refactor. This modularization may only route to it, provide the existing required inputs, and consume its existing outputs. All prompt files, tools, evaluation, voting, adjudication, approval gates, and internal workflow are **out of scope and must remain byte-for-byte unchanged**. Preserve current eligibility and skip rules exactly. Any future checkpoint must be outside this subsystem and reuse only a fully validated output with matching provenance; no internal checkpoints are authorized.
+DES and Fidelity constitute **one opaque, externally invoked subsystem**, not two stages to refactor. This modularization may only route to it, provide the existing required inputs, and consume its existing outputs. All prompt files, tools, evaluation, voting, adjudication, approval gates, and internal workflow are **out of scope and must remain byte-for-byte unchanged**. Preserve current eligibility and skip rules exactly. **Internal checkpoints ARE authorized at agent-result boundaries:** save each returned checker/agent answer durably with exact input and spec fingerprints, so context/token interruption does not discard paid work. Resume pending agents and preserve all existing downstream vote/adjudication/founder gates. Intermediate answers are not final validated outputs. Checkpoint implementation must not modify scientific prompts or decision rules; private/source material must not be committed publicly.
 
 ## Findings
 
@@ -36,7 +36,7 @@ DES and Fidelity constitute **one opaque, externally invoked subsystem**, not tw
 | Navigation/enrichment | Pillar decision, brain, glossary, final-ish body | Capsules, backlinks, inline links, related links | 5-link shared cap; mandatory fresh semantic analysis |
 | Attached paper | Paper file and citation metadata | Cabinet record, DOI/credit links | Drive capability, copyright and exact metadata |
 | Learning content | Final text and category | Flashcards, quiz | Explicit challenge/LiteCast skips |
-| DES/Fidelity (opaque) | Inputs required by the existing subsystem, with original eligibility rules | Existing validated output, unchanged | No prompt, algorithm, voting, or internal state changes; only external invocation/reuse of validated result |
+| DES/Fidelity (opaque) | Inputs required by the existing subsystem, with original eligibility rules | Existing validated output, unchanged | No prompt, algorithm or voting changes; durable per-agent intermediate results and safe resume allowed |
 | Challenge | Explicit challenge decision, approved public question | Public markup and private admin handoff | No private answer in repo; different skip path |
 | Brain/pathways | Category, locked taxonomy, final page, tags | Brain entry, learning placement | Append to absolute end; gate bundle |
 | Build/version | All content-affecting writes | Generated indexes, content stamp | Re-run stamp after any hashed write |
