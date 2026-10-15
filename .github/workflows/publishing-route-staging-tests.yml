@@ -12,6 +12,7 @@ on:
       - 'tests/test_dentcast_checkpoint_draft.py'
       - 'tools/dentcast_checkpoint_store_draft.py'
       - 'tests/test_dentcast_checkpoint_store_draft.py'
+      - 'tests/test_dentcast_staging_integration.py'
       - '.dentcast/workflows/modules/MODULE-CONTRACTS.v1.json'
       - '.github/workflows/publishing-route-staging-tests.yml'
   workflow_dispatch:
@@ -36,3 +37,4 @@ jobs:
           python -m unittest discover -s tests -p test_dentcast_route_plan_validator.py -v
           python -m unittest discover -s tests -p test_dentcast_checkpoint_draft.py -v
           python -m unittest discover -s tests -p test_dentcast_checkpoint_store_draft.py -v
+          python -m unittest discover -s tests -p test_dentcast_staging_integration.py -v
