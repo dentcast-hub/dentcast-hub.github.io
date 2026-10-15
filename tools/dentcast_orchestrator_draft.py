@@ -43,10 +43,10 @@ def dry_run(request, run_id, revision, checkpoint_path=None):
         return {"status": "blocked", "code": "PLAN_VALIDATION_FAILED",
                 "issues": issues, "execution_authorized": False}
     state = checkpoint.begin(plan, run_id, revision)
-    response = adapter.dispatch(adapter.invocation(plan, run_id, revision))
-    if response["run_id"] != run_id or response["source_revision"] != revision:
-        raise ValueError("ADAPTER_IDENTITY_MISMATCH")
-    state = checkpoint.accept(state, adapter.checkpoint_receipt(response), revision)
+    invocation = adapter.invocation(plan, run_id, revision)
+    response = adapter.dispatch(invocation)
+    adapter.validate_response(invocation, response)
+    state = checkpoint.accept(state, adapter.checkpoint_receipt(response, invocation), revision)
     if checkpoint_path is not None:
         store.save(checkpoint_path, state)
     return {"status": "staging_checkpoint", "route": plan["route"],
