@@ -83,6 +83,7 @@ def audit(root=ROOT):
     issues = []
     canonical = (root / ".dentcast/workflows/README.md").read_text(encoding="utf-8")
     covered = bytearray(len(canonical))
+    assigned = [set() for _ in canonical]
     ranges = {}
     for name, owners in SLICES.items():
         piece = (root / ".dentcast/workflows/modules" / name).read_text(encoding="utf-8").strip()
@@ -92,12 +93,18 @@ def audit(root=ROOT):
             continue
         start = canonical.index(piece)
         covered[start:start+len(piece)] = b"\x01" * len(piece)
+        for pos in range(start, start + len(piece)):
+            assigned[pos].update(owners)
         ranges[name] = (canonical.count("\n", 0, start) + 1,
                         canonical.count("\n", 0, start+len(piece)) + 1)
     uncovered = [i for i, char in enumerate(canonical) if not char.isspace() and not covered[i]]
     if uncovered:
         issues.append("CANONICAL_UNCOVERED_NONWHITESPACE:" +
                       str(canonical.count("\n", 0, uncovered[0]) + 1))
+    headings = list(re.finditer(r"(?m)^#{2,4} .+$", canonical))
+    missing_heading_owners = [h.group(0) for h in headings if not assigned[h.start()]]
+    if missing_heading_owners:
+        issues.append("UNOWNED_CANONICAL_HEADINGS:" + repr(missing_heading_owners))
     hard_rules_section = canonical.split("## Phase 0 — Routing:", 1)[0]
     found_rules = [int(m) for m in re.findall(r"(?m)^(\d{1,2})\. \*\*", hard_rules_section)]
     if found_rules != list(range(1, 18)):
@@ -132,6 +139,9 @@ def audit(root=ROOT):
             issues.append("INVALID_DEPENDENCY:" + mid)
         if not (root / cm_by_id[mid]["source_of_truth"]).is_file():
             issues.append("MISSING_MODULE_SOURCE:" + mid)
+        for extra in cm_by_id[mid].get("additional_sources", []):
+            if not (root / extra).is_file():
+                issues.append("MISSING_ADDITIONAL_MODULE_SOURCE:" + mid)
     def visit(mid, active, done):
         if mid in active:
             issues.append("UNCONDITIONAL_DEPENDENCY_CYCLE:" + mid)
@@ -148,6 +158,9 @@ def audit(root=ROOT):
     ops = cm_by_id.get("notification", {}).get("phase_invocations", [])
     if [op.get("canonical_step") for op in ops] != ["C6", "E"]:
         issues.append("NOTIFICATION_PULSE_AND_PUSH_PHASES_NOT_SPLIT")
+    push = next((op for op in ops if op.get("canonical_step") == "E"), {})
+    if set(push.get("may_skip_for", [])) != {"paper-only", "litecast", "glossary"}:
+        issues.append("PHASE_E_CANONICAL_SKIP_SET_MISMATCH")
     if not any(op.get("canonical_step") == "D" and "build:C8" in op.get("requires", [])
                for op in cm_by_id.get("english", {}).get("phase_invocations", [])):
         issues.append("ENGLISH_MUST_FOLLOW_BUILD")
@@ -178,6 +191,7 @@ def audit(root=ROOT):
             "hard_rules_mapped": len(RULE_OWNERS),
             "contract_modules_mapped": len(ids),
             "canonical_anchors_checked": len(CRITICAL_ANCHORS),
+            "canonical_headings_with_owner": len(headings),
             "live_entrypoints_checked": len(ENTRYPOINTS),
             "issues": issues}
 
