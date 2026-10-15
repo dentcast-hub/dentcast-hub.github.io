@@ -14,8 +14,10 @@ import copy
 import hashlib
 import importlib.util
 import json
+import os
 import re
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -155,6 +157,9 @@ def _data(store, run_id, source_id):
     head, folder = snap["head"], mem.run_folder(run_id)
     relevant = []
     for event in snap["events"]:
+        if (event["kind"] == "fidelity_invalidate" and
+                event["step_id"] == "evidence:" + source_id + ":invalidate"):
+            raise ValueError("SOURCE_CHECKPOINT_INVALIDATED_RESTART_EXPLICITLY")
         if (event["kind"] != "fidelity_checkpoint" or
                 not event["step_id"].startswith("evidence:" + source_id + ":")):
             continue
@@ -379,9 +384,98 @@ def submit_reviewer_result(store, run_id, source_id, role, actor, decisions, *,
                         public_artifacts=[artifact], public_receipt=receipt)
 
 
+def invalidate_source(store, run_id, source_id, actor, *,
+                      new_input_digest, reason_digest):
+    """Explicitly revoke source-specific reuse; never rewrite saved judgments.
+
+    A changed source/claim block or scientific prompt requires a NEW versioned
+    source run, not blind reuse of old checker outputs. Unaffected sources remain.
+    """
+    need(mem.safe_digest(new_input_digest) and mem.safe_digest(reason_digest),
+         "INVALID_INVALIDATION_PROVENANCE")
+    snap, spec, checks, others = state_of(store, run_id, source_id)
+    need(new_input_digest != spec["input_digest"],
+         "UNCHANGED_SOURCE_CANNOT_BE_INVALIDATED_AS_CHANGED")
+    mem.actor_check(actor)
+    return store.append(run_id, actor, "fidelity_invalidate",
+                        "evidence:" + source_id + ":invalidate",
+                        input_digest=spec["input_digest"],
+                        output_digest=new_input_digest,
+                        receipt_digest=reason_digest, gate="blocked")
+
+
+def _write_verified_file(path, obj):
+    """Local-only, no symlink, no conflicting existing scientific result."""
+    path = Path(path)
+    need(path.parent.is_dir() and not path.is_symlink(),
+         "INVALID_SCIENTIFIC_OUTPUT_PATH")
+    payload = json.dumps(obj, ensure_ascii=False, indent=1) + "\n"
+    if path.exists():
+        old = json.loads(path.read_text(encoding="utf-8"))
+        need(old == obj, "CONFLICTING_SCIENTIFIC_OUTPUT")
+        return
+    fd, tmp = tempfile.mkstemp(prefix=".fidelity-checkpoint-", dir=str(path.parent))
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as writer:
+            writer.write(payload)
+            writer.flush()
+            os.fsync(writer.fileno())
+        os.replace(tmp, path)
+    finally:
+        if os.path.exists(tmp):
+            os.unlink(tmp)
+
+
+def restore_engine_files(store, run_id, source_id, out_dir):
+    """Restore ALL full/partial checker outputs into the existing engine layout.
+
+    Does NOT run the engine or fabricate vote/review/founder decisions.
+    --vote and --merge remain owned by tools/des_fidelity_units.py.
+    """
+    need(re.fullmatch(r"(?:src[0-9]+|S[1-9][0-9]*)", source_id) is not None,
+         "SOURCE_TAG_NOT_CANONICAL")
+    directory = Path(out_dir)
+    need(directory.is_dir() and not directory.is_symlink(),
+         "INVALID_LOCAL_OUTPUT_DIRECTORY")
+    snap, spec, checks, others = state_of(store, run_id, source_id)
+    block = spec["block"]
+    base = ("input-pooled-" + source_id if "pooled_part" in block
+            else "input-" + source_id)
+    _write_verified_file(directory / (base + ".json"), block)
+    restored = [base + ".json"]
+    for role in CHECKER_ROLES:
+        if role not in checks:
+            continue
+        index = int(role[-1])
+        name = ("out-" + source_id if "pooled_part" in block
+                else "out-" + source_id + "-" + str(index)) + ".json"
+        _write_verified_file(directory / name, checks[role][0])
+        restored.append(name)
+    if "pooled_part" not in block:
+        for role, filename in (("adjudication", "adjudicate.json"),
+                               ("review", "review.json")):
+            if role not in others:
+                continue
+            path = directory / filename
+            existing = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+            need(isinstance(existing, dict), "INVALID_EXISTING_ENGINE_MAP")
+            need(source_id not in existing or existing[source_id] == others[role],
+                 "CONFLICTING_REVIEW_SOURCE")
+            updated = {**existing, source_id: others[role]}
+            if path.exists() and existing != updated:
+                # Multi-source preservation: rebuild a safe unique merged file.
+                need(not path.is_symlink(), "REVIEW_SYMLINK_FORBIDDEN")
+                path.unlink()
+            _write_verified_file(path, updated)
+            restored.append(filename)
+    return {"status": "scientific_inputs_restored_locally",
+            "source_id": source_id, "files": restored,
+            "execution_authorized": False, "engine_run_not_performed": True}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("command", choices=["next", "begin", "checker", "reviewer"])
+    ap.add_argument("command", choices=["next", "begin", "checker", "reviewer", "restore", "invalidate"])
     ap.add_argument("--run-id", required=True)
     ap.add_argument("--source-id", required=True)
     ap.add_argument("--block", help="Existing des_fidelity_units.py --build output")
@@ -391,6 +485,9 @@ def main():
     ap.add_argument("--public-release-approval-digest")
     ap.add_argument("--role")
     ap.add_argument("--result", help="Existing scientific engine JSON output")
+    ap.add_argument("--out-dir", help="Existing scientific CLI input/output directory")
+    ap.add_argument("--new-input-digest")
+    ap.add_argument("--reason-digest")
     ap.add_argument("--only", help="Comma separated mismatch unit IDs")
     ap.add_argument("--actor-family", choices=sorted(mem.FAMILIES), default="other")
     ap.add_argument("--actor-model")
@@ -411,6 +508,13 @@ def main():
                                   file(args.reviewer_config), actor,
                                   prompt_digest=args.prompt_digest,
                                   public_release_approval_digest=args.public_release_approval_digest)
+        elif args.command == "restore":
+            result = restore_engine_files(store, args.run_id, args.source_id,
+                                          args.out_dir)
+        elif args.command == "invalidate":
+            result = invalidate_source(store, args.run_id, args.source_id, actor,
+                                       new_input_digest=args.new_input_digest,
+                                       reason_digest=args.reason_digest)
         elif args.command == "checker":
             result = submit_checker(store, args.run_id, args.source_id,
                                     args.role, actor, file(args.result),
