@@ -2,6 +2,7 @@
 import copy
 import hashlib
 import json
+import re
 
 
 def digest(value):
@@ -14,7 +15,7 @@ def begin(plan, run_id, revision):
     ids = [m["id"] for m in plan["ordered_modules"]]
     if not ids or ids[0] != "intake" or len(ids) != len(set(ids)):
         raise ValueError("INVALID_ORDER")
-    if not run_id or not revision:
+    if not isinstance(run_id, str) or not run_id.strip() or not isinstance(revision, str) or not revision.strip():
         raise ValueError("MISSING_IDENTITY")
     return {"run_id": run_id, "revision": revision, "plan_digest": digest(plan),
             "execution_authorized": False, "sequence": ids, "next_index": 0,
@@ -33,15 +34,17 @@ def accept(state, receipt, revision):
         if state["receipts"][mid] == receipt:
             return copy.deepcopy(state)
         raise ValueError("CONFLICTING_REPLAY")
+    if state["paused"]:
+        raise ValueError("PAUSED_REQUIRES_EXPLICIT_RECOVERY")
     if state["next_index"] >= len(state["sequence"]) or state["sequence"][state["next_index"]] != mid:
         raise ValueError("OUT_OF_ORDER")
     if receipt["source_revision"] != revision:
         raise ValueError("STALE_RECEIPT")
     if receipt["status"] not in {"completed", "blocked", "failed", "awaiting_approval"}:
         raise ValueError("INVALID_STATUS")
-    if not isinstance(receipt["input_fingerprint"], str) or len(receipt["input_fingerprint"]) != 64:
+    if not isinstance(receipt["input_fingerprint"], str) or not re.fullmatch(r"[0-9a-f]{64}", receipt["input_fingerprint"]):
         raise ValueError("INVALID_FINGERPRINT")
-    if receipt["artifact_receipts"] or not isinstance(receipt["verification"], dict):
+    if not isinstance(receipt["artifact_receipts"], list) or receipt["artifact_receipts"] or not isinstance(receipt["verification"], dict):
         raise ValueError("SIDE_EFFECTS_NOT_RECONCILED")
     if receipt["status"] == "completed" and receipt["verification"].get("passed") is not True:
         raise ValueError("NOT_VERIFIED")
