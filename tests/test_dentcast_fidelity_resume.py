@@ -134,6 +134,11 @@ class FidelityResumeTests(unittest.TestCase):
         review_task = f.next_task(self.store, "sci-test", "src0")
         self.assertEqual(review_task["role"], "review")
         self.assertEqual(review_task["units"], ["u37"])
+        context = review_task["scientific_context"]
+        self.assertIn("Evidence supports", context["source_text"])
+        self.assertEqual(context["focused_units_and_neighbors"][0]["previous"]["id"], "u36")
+        self.assertEqual(context["focused_units_and_neighbors"][0]["next"]["id"], "u38")
+        self.assertEqual(len(context["checker_verdicts_and_quoted_evidence"]), 3)
         f.submit_reviewer_result(
             self.store, "sci-test", "src0", "review", OPUS,
             {"u37": {"agree": False, "reason": "Reviewer disputes scope"}},
@@ -141,6 +146,9 @@ class FidelityResumeTests(unittest.TestCase):
         founder = f.next_task(self.store, "sci-test", "src0")
         self.assertEqual(founder["role"], "founder_review")
         self.assertEqual(founder["flagged_units"], ["u37"])
+        self.assertEqual(founder["flagged_claims_with_quote_and_reason"][0]["id"], "u37")
+        self.assertIn("Stronger-model review disagrees",
+                      founder["flagged_claims_with_quote_and_reason"][0]["note"])
         self.assertEqual(founder["status"], "awaiting_explicit_founder_decision")
         _, _, runs, x = f.state_of(self.store, "sci-test", "src0")
         voted, tie, unresolved, unreviewed = f.engine.vote_source(
@@ -160,6 +168,7 @@ class FidelityResumeTests(unittest.TestCase):
         t = f.next_task(self.store, "sci-test", "src0")
         self.assertEqual(t["role"], "adjudication")
         self.assertEqual(t["units"], ["u37"])
+        self.assertEqual(len(t["scientific_context"]["checker_verdicts_and_quoted_evidence"]), 3)
         f.submit_reviewer_result(
             self.store, "sci-test", "src0", "adjudication", OPUS,
             {"u37": {"verdict": "ALTERED", "change_kind": "HEDGE_REMOVED",
