@@ -25,10 +25,13 @@ The earlier 8-file extraction is retained temporarily as a reference, not as an 
 
 ## Supporting design files
 
+- [ORCHESTRATOR-CONTRACT.md](ORCHESTRATOR-CONTRACT.md) — central state machine, round-trip module interface, ownership and failure isolation (staging).
+- [MODULE-REGISTRY.draft.json](MODULE-REGISTRY.draft.json) — machine-readable logical module map; eligibility and executable adapters explicitly unresolved.
+
 - [DEPENDENCY-AUDIT.md](DEPENDENCY-AUDIT.md) — global and cross-stage constraints, risks and parity gates.
 - [STAGE-ROUTER-DRAFT.md](STAGE-ROUTER-DRAFT.md) — proposed lazy-loading algorithm, **not activated**.
 - [ENTRYPOINT-PARITY-PLAN.md](ENTRYPOINT-PARITY-PLAN.md) — cross-agent source map, known conflicts, coordinated activation plan and test scenarios.
-- [GLOBAL-INVARIANTS-SOURCE-MAP.md](GLOBAL-INVARIANTS-SOURCE-MAP.md) — 18 canonical hard rules, global source boundaries, contradictions and higher-effort review gates.
+- [GLOBAL-INVARIANTS-SOURCE-MAP.md](GLOBAL-INVARIANTS-SOURCE-MAP.md) — canonical hard-rule source map (its former count of 18 is incorrect; README has 17 numbered hard rules), global source boundaries, contradictions and higher-effort review gates.
 - [VERIFICATION-LEDGER.md](VERIFICATION-LEDGER.md) — 12/12 exact source-slice parity, pending clause audit, independent-review handoff.
 - [INDEPENDENT-REVIEW-BRIEF.md](INDEPENDENT-REVIEW-BRIEF.md) — ordered reading list and precise high-effort model audit assignment.
 
