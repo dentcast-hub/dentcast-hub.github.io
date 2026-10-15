@@ -7,7 +7,10 @@
     "This registry defines interfaces, NOT executable conditions or parity-certified implementation.",
     "Dependencies are minimum inputs, NOT an exhaustive executable DAG. Canonical ordering and cross-step constraints remain binding.",
     "DES/Fidelity scientific engine remains opaque and independently versioned.",
-    "No writes to production or merge authorized."
+    "No writes to production or merge authorized.",
+    "All requires arrays express unconditional prerequisites only. Conditional prerequisites (e.g. taxonomy for specialist page, build for publish verification) are declared in inputs and must be compiled into the route-specific DAG; never use requires as the whole execution graph.",
+    "Route plans must explicitly distinguish paper-only, LiteCast, Challenge and standard publication; skip receipts must cite canonical authority.",
+    "Module interface contract validated structurally; complete clause-level canonical parity is still pending."
   ],
   "request_schema": {
     "required": [
@@ -139,6 +142,10 @@
         {
           "name": "media",
           "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "taxonomy_lock_if_required",
+          "required": "for_specialist_routes_before_page_creation"
         }
       ],
       "outputs": [
@@ -211,6 +218,10 @@
         {
           "name": "approved_body",
           "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "live_taxonomy_and_semantic_body",
+          "required": "for_specialist_taxonomy"
         }
       ],
       "outputs": [
@@ -1072,7 +1083,7 @@
         "status": "requires executable predicate mapping"
       },
       "requires": [
-        "build"
+        "intake"
       ],
       "inputs": [
         {
@@ -1090,6 +1101,22 @@
         {
           "name": "all_module_receipts",
           "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "route_execution_ledger",
+          "required": "always"
+        },
+        {
+          "name": "required_stage_receipts",
+          "required": "all_applicable_modules"
+        },
+        {
+          "name": "founder_approval_receipts",
+          "required": "all_applicable_gates"
+        },
+        {
+          "name": "phase_f_execution_result",
+          "required": "all_publish_routes"
         }
       ],
       "outputs": [
@@ -1127,7 +1154,8 @@
         "input/output schema validation",
         "positive route test",
         "negative exception test",
-        "downstream invalidation test"
+        "downstream invalidation test",
+        "route-complete ledger with no unresolved mandatory module, approval or side effect"
       ],
       "privacy_class": "public-safe-metadata-only",
       "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
@@ -1142,5 +1170,22 @@
     "schemas_enforced": false,
     "behavior_parity_passed": false,
     "founder_approval_required": true
+  },
+  "validation": {
+    "date": "2026-10-15",
+    "method": "GitHub source fetch, JSON parse, unique ID/dependency/cycle checks, targeted canonical excerpt inspection",
+    "result": "structural_pass_with_behavioral_blockers",
+    "issues_fixed_in_draft": [
+      "taxonomy no longer waits for a created page",
+      "verification now requires complete route ledger rather than only build",
+      "conditional dependencies separated from unconditional requires"
+    ],
+    "still_blocked": [
+      "all 15 adapters absent",
+      "all 15 validators absent",
+      "canonical clause-by-clause rule mapping absent",
+      "route-specific DAG and state machine absent",
+      "end-to-end parity untested"
+    ]
   }
 }
