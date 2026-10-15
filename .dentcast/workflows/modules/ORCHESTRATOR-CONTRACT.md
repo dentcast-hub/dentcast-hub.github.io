@@ -8,7 +8,7 @@ For work **on the staging modularization project** (not live publication), start
 
 ## Shared GitHub execution memory (proposed, not active)
 
-See [SHARED-EXECUTION-MEMORY-CONTRACT.md](SHARED-EXECUTION-MEMORY-CONTRACT.md). Cross-agent continuation must preserve **nested** module checkpoints (including completed first Fidelity reviewer and pending second reviewer), complete immutable per-claim scientific outputs, verified receipts, and actor provenance. The public site repository is **not** a safe place for private scientific or clinical artifacts; shared execution memory requires access-controlled GitHub storage and conflict-safe remote writes. Local checkpoint tests do not prove GitHub-level concurrency or scientific resumability.
+See [SHARED-EXECUTION-MEMORY-CONTRACT.md](SHARED-EXECUTION-MEMORY-CONTRACT.md). Cross-agent continuation must preserve **nested** module checkpoints (including completed first Fidelity reviewer and pending second reviewer), complete immutable per-claim scientific outputs, verified receipts, and actor provenance. The existing public repository holds only public-safe temporary run records; restricted or identifying material must never enter Git history. Shared memory requires conflict-safe GitHub writes and orchestrator-controlled cleanup after verified publication. Local checkpoint tests do not prove GitHub-level concurrency or scientific resumability.
 
 ## Mental model
 
