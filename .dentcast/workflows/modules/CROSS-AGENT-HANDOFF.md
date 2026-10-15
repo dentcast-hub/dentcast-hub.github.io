@@ -27,7 +27,7 @@
 - Prior verified GitHub Actions run: https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/38786784803 — 66 tests passed on an earlier SHA; **not proof of the current HEAD**.
 - For latest HEAD, retrieve GitHub Actions run and job logs, including per-suite counts, after commits. Fix failures before moving on.
 
-## Next priorities
+## New staging central entrypoint\n\nUse `tools/dentcast_orchestrator_draft.py` as the single **read-only** dry-run entrypoint across Claude Code, Cursor and Codex. Read `AGENT-ENTRYPOINT-STAGING.md` for explicit startup traces. The orchestrator now validates each adapter response against its **original invocation** before checkpoint acceptance; never bypass this validator. This is not an active publishing workflow and has no authority to publish.\n\n## Next priorities
 
 1. **Dependency parity audit:** compare every generated route against `MODULE-REGISTRY.draft.json` DAG, with explicit treatment of intentionally optional modules. Determine whether mismatches are bad route order, bad draft dependency contract, or a real canonical rule ambiguity. Record evidence before changing.
 2. **Adversarial checkpoint tests:** stale writers and overwrites, mismatched plan digest, corrupt/tampered receipts, path safety, retry after crash. Do not imply atomic rename alone is concurrency-safe.
