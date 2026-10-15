@@ -95,6 +95,28 @@ class CheckpointStoreTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "PAUSE_RECEIPT_MISMATCH"):
                 store.save(Path(folder) / "state.json", state)
 
+    def test_reject_non_string_sequence(self):
+        with tempfile.TemporaryDirectory() as folder:
+            state = sample()
+            state["sequence"] = ["intake", ["page"]]
+            with self.assertRaisesRegex(ValueError, "INVALID_SEQUENCE"):
+                store.save(Path(folder) / "state.json", state)
+
+    def test_reject_non_object_receipt(self):
+        with tempfile.TemporaryDirectory() as folder:
+            state = sample()
+            state["receipts"]["intake"] = None
+            with self.assertRaisesRegex(ValueError, "INVALID_RECEIPT_SHAPE"):
+                store.save(Path(folder) / "state.json", state)
+
+    def test_reject_completed_pause_receipt(self):
+        with tempfile.TemporaryDirectory() as folder:
+            state = sample()
+            state["paused"] = True
+            state["receipts"]["intake"] = {"status": "completed"}
+            with self.assertRaisesRegex(ValueError, "INVALID_PAUSE_RECEIPT"):
+                store.save(Path(folder) / "state.json", state)
+
     def test_reject_symlink(self):
         with tempfile.TemporaryDirectory() as folder:
             target = Path(folder) / "real.json"
