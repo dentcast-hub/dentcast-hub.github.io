@@ -252,6 +252,14 @@ class RemoteMemory:
                 status = "active"
             elif event["kind"] == "staging_finished":
                 status = "finished_staging"
+            for art in event["artifact_digests"]:
+                obj = self.read_json(head, folder + "/artifacts/" + art + ".json")
+                require(digest(obj) == art, "ARTIFACT_REPLAY_INTEGRITY_FAILURE")
+            if event["kind"] in {"step_completed", "fidelity_checkpoint"}:
+                h_receipt = event["receipt_digest"]
+                require(safe_digest(h_receipt), "RECEIPT_HASH_MISSING")
+                obj = self.read_json(head, folder + "/receipts/" + h_receipt + ".json")
+                require(digest(obj) == h_receipt, "RECEIPT_REPLAY_INTEGRITY_FAILURE")
             previous = h
             events.append(event)
         require(state["completed_steps"] == completed and
@@ -324,7 +332,7 @@ class RemoteMemory:
 
     def append(self, run_id, actor, kind, step_id, *, input_digest=None,
                output_digest=None, receipt_digest=None, artifact_digests=(),
-               gate="unverified_staging"):
+               gate="unverified_staging", public_artifacts=(), public_receipt=None):
         require(kind in KINDS - {"begin"}, "INVALID_APPEND_KIND")
         actor_check(actor)
         snap = self.snapshot(run_id)
@@ -343,6 +351,64 @@ class RemoteMemory:
                     "FIDELITY_REQUIRES_ENGINE_RECEIPT")
         if kind == "staging_finished":
             require(old["status"] == "active", "FINISH_REQUIRES_ACTIVE")
+        folder = run_folder(run_id)
+        object_files = {}
+        # Full scientific outputs require a public-release approval reference.
+        # This staging writer never generates or verifies founder approvals.
+        for item in public_artifacts:
+            require(isinstance(item, dict) and
+                    set(item) == {"schema", "kind", "public_release_approval_digest",
+                                  "payload"}, "ARTIFACT_SCHEMA")
+            require(item["schema"] == "dc-public-artifact-v1" and
+                    item["kind"] in {"fidelity_checker", "fidelity_vote",
+                                     "fidelity_adjudication", "fidelity_review",
+                                     "fidelity_input_manifest"} and
+                    safe_digest(item["public_release_approval_digest"]),
+                    "ARTIFACT_PUBLIC_RELEASE_GATE_MISSING")
+            require(len(canonical(item)) <= 350000 and
+                    isinstance(item["payload"], dict),
+                    "ARTIFACT_TOO_LARGE_OR_UNSTRUCTURED")
+            h_art = digest(item)
+            require(h_art in artifact_digests, "UNDECLARED_PUBLIC_ARTIFACT")
+            path = folder + "/artifacts/" + h_art + ".json"
+            old_item = self.try_json(head, path)
+            require(old_item is None or old_item == item,
+                    "IMMUTABLE_ARTIFACT_COLLISION")
+            object_files[path] = item
+        for h_art in artifact_digests:
+            require(safe_digest(h_art), "INVALID_ARTIFACT_DIGEST")
+            path = folder + "/artifacts/" + h_art + ".json"
+            if path not in object_files:
+                existing = self.try_json(head, path)
+                require(existing is not None and digest(existing) == h_art,
+                        "MISSING_CONTENT_ADDRESSED_ARTIFACT")
+        if public_receipt is not None:
+            require(isinstance(public_receipt, dict) and
+                    set(public_receipt) == {"schema", "validation", "input_digest",
+                                           "output_digest", "source_revision"} and
+                    public_receipt["schema"] == "dc-public-receipt-v1",
+                    "RECEIPT_SCHEMA")
+            v = public_receipt["validation"]
+            require(isinstance(v, dict) and
+                    set(v) == {"contract_checked", "input_bound",
+                               "source_verified"} and
+                    all(v[k] is True for k in v) and
+                    public_receipt["source_revision"] == manifest["source_revision"] and
+                    safe_digest(public_receipt["input_digest"]) and
+                    safe_digest(public_receipt["output_digest"]),
+                    "UNVERIFIED_PUBLIC_RECEIPT")
+            hr = digest(public_receipt)
+            require(receipt_digest == hr, "RECEIPT_DIGEST_MISMATCH")
+            path = folder + "/receipts/" + hr + ".json"
+            old_receipt = self.try_json(head, path)
+            require(old_receipt is None or old_receipt == public_receipt,
+                    "IMMUTABLE_RECEIPT_COLLISION")
+            object_files[path] = public_receipt
+        elif kind in {"step_completed", "fidelity_checkpoint"}:
+            # A naked self-reported checksum does NOT count as proof.
+            existing = self.try_json(head, folder + "/receipts/" + str(receipt_digest) + ".json")
+            require(existing is not None and digest(existing) == receipt_digest,
+                    "VERIFIED_RECEIPT_OBJECT_REQUIRED")
         seq = old["revision"] + 1
         state = dict(old)
         state["event_digests"] = list(old["event_digests"])
@@ -377,8 +443,7 @@ class RemoteMemory:
         elif kind == "staging_finished":
             state["status"] = "finished_staging"
         state_check(state, manifest)
-        folder = run_folder(run_id)
-        files = {folder + "/state.json": state, self.event_path(run_id, seq, h): event}
+        files = {folder + "/state.json": state, self.event_path(run_id, seq, h): event, **object_files}
         commit = self._atomic_commit(head, files, "staging-memory: " + kind +
                                       " " + run_id + " " + step_id)
         return {"commit": commit, "state": state, "event_digest": h}
