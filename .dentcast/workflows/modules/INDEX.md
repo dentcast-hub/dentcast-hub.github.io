@@ -1,6 +1,6 @@
 # Publishing modules — staging index
 
-**Status: extracted and dependency-audited; NOT ACTIVATED.** The canonical `../README.md`, `CLAUDE.md`, `AGENTS.md`, Cursor routing and `../agent-parity.md` remain unchanged.
+**Status: extracted and dependency-audited; NOT ACTIVATED. DES/Fidelity is an immutable opaque subsystem.** The canonical `../README.md`, `CLAUDE.md`, `AGENTS.md`, Cursor routing and `../agent-parity.md` remain unchanged.
 
 ## Proposed execution-order modules (verbatim source slices)
 
@@ -13,13 +13,15 @@
 | [05-semantic-linking.md](05-semantic-linking.md) | 795–957 |
 | [06-paper-ingestion.md](06-paper-ingestion.md) | 958–1143 |
 | [07-flashcards-and-quiz.md](07-flashcards-and-quiz.md) | 1144–1335 |
-| [08-des-fidelity.md](08-des-fidelity.md) | 1336–1966 |
+| [08-des-fidelity.md](08-des-fidelity.md) — verbatim invocation contract; **do not modify engine/prompts** | 1336–1966 |
 | [09-challenge.md](09-challenge.md) | 1967–2038 |
 | [10-brain-and-pathways.md](10-brain-and-pathways.md) | 2039–2329 |
 | [11-build-and-version.md](11-build-and-version.md) | 2330–2393 |
 | [12-english-notify-verify.md](12-english-notify-verify.md) | 2394–2598 |
 
 The earlier 8-file extraction is retained temporarily as a reference, not as an alternative runnable route. **Only the twelve files in this table constitute the proposed modular sequence.**
+
+**Scope lock:** The evidence subsystem is invoked as a single closed unit under existing eligibility rules. Neither DES nor Fidelity prompts, scoring, voting, adjudication, or tools may be modified by this modularization. See [STAGE-ROUTER-DRAFT.md](STAGE-ROUTER-DRAFT.md) for the interface boundary.
 
 ## Supporting design files
 
