@@ -10,7 +10,7 @@ MODULES = ("intake", "taxonomy", "page", "navigation", "semantic-links",
            "brain", "pathways", "english", "notification", "build", "verify")
 CLOSED = {"dentai", "photocast"}
 KINDS = {"specialist", "litecast", "challenge"}
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[1]
 CONTRACT = ROOT / ".dentcast/workflows/modules/MODULE-CONTRACTS.v1.json"
 
 
