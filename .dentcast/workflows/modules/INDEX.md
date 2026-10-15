@@ -26,7 +26,8 @@ The earlier 8-file extraction is retained temporarily as a reference, not as an 
 ## Supporting design files
 
 - [ORCHESTRATOR-CONTRACT.md](ORCHESTRATOR-CONTRACT.md) — central state machine, round-trip module interface, ownership and failure isolation (staging).
-- [MODULE-REGISTRY.draft.json](MODULE-REGISTRY.draft.json) — machine-readable logical module map; eligibility and executable adapters explicitly unresolved.
+- [MODULE-REGISTRY.draft.json](MODULE-REGISTRY.draft.json) — initial 15-module ownership sketch (superseded for interface design).
+- [MODULE-CONTRACTS.v1.json](MODULE-CONTRACTS.v1.json) — 15 detailed draft interfaces: owner, inputs, outputs, dependencies, writes, approvals, failures, invalidation, privacy, checkpoints and tests. **Not executable or parity-certified.**
 
 - [DEPENDENCY-AUDIT.md](DEPENDENCY-AUDIT.md) — global and cross-stage constraints, risks and parity gates.
 - [STAGE-ROUTER-DRAFT.md](STAGE-ROUTER-DRAFT.md) — proposed lazy-loading algorithm, **not activated**.
