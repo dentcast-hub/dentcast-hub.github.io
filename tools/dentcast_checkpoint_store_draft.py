@@ -1,8 +1,10 @@
 """Atomic local staging checkpoint storage. Never publishes or executes modules."""
+import hashlib
 import json
 import os
 import re
 import tempfile
+from contextlib import contextmanager
 from pathlib import Path
 
 
@@ -94,3 +96,67 @@ def load(path, expected_run_id, expected_revision, expected_plan_digest):
             state["plan_digest"] != expected_plan_digest):
         raise ValueError("CHECKPOINT_IDENTITY_MISMATCH")
     return state
+
+def content_digest(state):
+    """Canonical content digest for optimistic compare-and-swap."""
+    _validate(state)
+    return hashlib.sha256(json.dumps(state, ensure_ascii=False, sort_keys=True,
+                                     separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+@contextmanager
+def _exclusive_lock(path):
+    """Advisory cross-process lock on POSIX; never silently pretend Windows is safe."""
+    if os.name != "posix":
+        raise RuntimeError("CAS_UNSUPPORTED_PLATFORM")
+    import fcntl
+    target = Path(path)
+    lock = target.with_name(target.name + ".lock")
+    if lock.is_symlink():
+        raise ValueError("CHECKPOINT_LOCK_SYMLINK_FORBIDDEN")
+    flags = os.O_CREAT | os.O_RDWR
+    if hasattr(os, "O_NOFOLLOW"):
+        flags |= os.O_NOFOLLOW
+    fd = os.open(lock, flags, 0o600)
+    try:
+        if not os.path.isfile(lock) or os.fstat(fd).st_nlink != 1:
+            raise ValueError("INVALID_CHECKPOINT_LOCK")
+        fcntl.flock(fd, fcntl.LOCK_EX)
+        yield
+    finally:
+        fcntl.flock(fd, fcntl.LOCK_UN)
+        os.close(fd)
+
+
+def save_checked(path, state, expected_digest=None):
+    """Compare-and-swap update; None means create only.
+
+    All cooperating writers MUST use this method, not legacy save().
+    Keep .lock stable: never delete it, because deleting/recreating locks
+    can let different processes lock different inodes.
+    """
+    _validate(state)
+    if expected_digest is not None and (not isinstance(expected_digest, str) or
+                                         not re.fullmatch(r"[0-9a-f]{64}", expected_digest)):
+        raise ValueError("INVALID_EXPECTED_DIGEST")
+    target = Path(path)
+    if not target.parent.is_dir() or target.is_symlink():
+        raise ValueError("INVALID_CHECKPOINT_TARGET")
+    with _exclusive_lock(target):
+        if target.is_symlink():
+            raise ValueError("CHECKPOINT_SYMLINK_FORBIDDEN")
+        if target.exists():
+            if expected_digest is None:
+                raise ValueError("CHECKPOINT_ALREADY_EXISTS")
+            current = json.loads(target.read_text(encoding="utf-8"))
+            _validate(current)
+            if (current["run_id"] != state["run_id"] or
+                    current["revision"] != state["revision"] or
+                    current["plan_digest"] != state["plan_digest"]):
+                raise ValueError("CHECKPOINT_IDENTITY_MISMATCH")
+            if content_digest(current) != expected_digest:
+                raise ValueError("STALE_CHECKPOINT_WRITER")
+        elif expected_digest is not None:
+            raise ValueError("CHECKPOINT_MISSING")
+        save(target, state)
+    return content_digest(state)
