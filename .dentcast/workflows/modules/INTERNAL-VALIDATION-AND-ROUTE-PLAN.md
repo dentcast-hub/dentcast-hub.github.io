@@ -76,3 +76,53 @@ Build a **read-only route-plan compiler and validator** first, using canonical f
 ## Stage 2 gate status — NOT COMPLETE
 
 The source-specific issues above are documented, and the draft registry no longer falsely requires specialist brain for LiteCast build. However the 2,598-line canonical workflow, 314-line agent-parity contract, 473-line CLAUDE entrypoint, 1,623-line AGENTS entrypoint, and both Cursor entrypoints still require a full cross-rule matrix and route-by-route executable positive/negative tests. A header inventory or a few sampled sections is **not** proof of behavioral equivalence. Stage 3 must remain blocked until the matrix and tests are independently checked.
+
+## Canonical rule inventory and ownership map — audit expansion
+
+All 17 hard rules (README lines 3–56) mapped to owner and invariant below. This is a **traceability map**, not proof of executable equivalence.
+
+| Canonical hard rule | Primary module | Required invariant / acceptance test |
+|---|---|---|
+| HR1 brain source | intake, page, brain | derive same-type schema from live brain; LiteCast exception HR10 |
+| HR2 type isolation | intake, page | reject cross-type templates |
+| HR3 brain tail | brain, verify | append to absolute flat-array tail |
+| HR4 discover before ask | intake | probe authoritative data before questions |
+| HR5 exact key parity | brain, verify | no invented/missing same-type fields |
+| HR6 one-time semantic pillar lock | taxonomy, navigation, brain | classify once; ask only ambiguous; never re-decide |
+| HR7 live structured pillars | taxonomy | read current PILLARS, no hardcoding |
+| HR8 main authority | taxonomy, build | taxonomy/build tools reflect main |
+| HR9 global five-link cap | navigation, semantic-links, verify | count all related capsules and preserve insertion order |
+| HR10 LiteCast isolation | page, semantic-links, build, verify | own .ir source, links, no specialist brain or English |
+| HR11 fresh semantic enrichment | semantic-links, verify | explicit analysis/empty receipt; episode and LiteCast equivalents |
+| HR12 English exceptions | english, verify | mirror+toggle for ordinary .org, skip LiteCast/challenge only |
+| HR13 no invented facts | intake, paper-cabinet, all | ask before unknown metadata/labels/DOI |
+| HR14 confidence gates | intake, taxonomy, semantic-links | high-confidence report, ambiguous named-choice approval |
+| HR15 canonical hashtag vocab | brain, verify | simulate/reuse/apply/check reference tags |
+| HR16 exact user strings | intake, page, verify | byte/codepoint parity across surfaces |
+| HR17 correction sweep | page, brain, build, verify | update every derived surface and rerun Phase F |
+
+Canonical section-to-module traceability (all top-level execution sections, including special branches):
+
+| Canonical sections | Module ownership | Mandatory conditional behavior |
+|---|---|---|
+| Phase 0, A, B Q1–Q5 | intake | four paper/text routes, writing-style gate, media, DES basis, challenge, Pulse |
+| C 0, 1, 2 | page, semantic-links | LiteCast override, hash, clone same type, body approval |
+| C 2.4 | taxonomy | main-backed semantic lock before 2.5 and brain |
+| C 2.5–2.6 | navigation | cap, related capsules, landing/index |
+| C 3–4, 4.5–4.6 | page, navigation, evidence | meta/hash, NoteCast parent and shared score, Promptologist links |
+| C 4.7, 4.7-b, 4.8, 4.9 | semantic-links | fresh analysis, glossary reverse links, first occurrence, 5 cap |
+| C 4.10 Parts 1–3 | paper-cabinet | paper-only 1+2; page+paper 1+2+3; confirm Drive/DOI |
+| C 4.11–4.12 | learning-assets | FAQ/flashcards/quiz with category gates |
+| C 4.13 Parts 1–5 | evidence | preserve exact DES source basis, independent checker/vote/reviewer, founder per-claim gate |
+| C 4.14 | challenge | public half and private admin handoff; English exception |
+| C 5.0, 5, 5.5 | brain, taxonomy | canonical hashtags, brain append and taxonomy verification |
+| C 5.6, 5.6-b | pathways | founder gates and bundle checks |
+| C 6 | notification | Pulse convention and approvals |
+| C 7–8 | build | stamp version then rebuild, conditional route-specific outputs |
+| D | english | full noindex mirror/toggle except two canonical skips |
+| E | notification | push marker and eligibility |
+| F, final summary | verify | exact strings, all receipts, semantic audit not inferred from green mechanical gate |
+
+**Agent-entrypoint sources inspected:** `CLAUDE.md`, `AGENTS.md`, `.cursor/rules/dentcast-router.mdc`, `.cursor/rules/dentcast-publishing.mdc`, `.dentcast/workflows/agent-parity.md`. All still point to active canonical publication rules; this stage does not reroute them.
+
+**Known important behavior that the current draft planner does NOT yet implement:** conditional learning/evidence/pathway eligibility; LiteCast internal 0.5/0.6 semantic analysis; challenge private handoff; Phase B hard approvals; page+paper DOI credit; exact Phase F receipt and semantic receipt enforcement. A complete parity test cannot honestly be green with these unimplemented.
