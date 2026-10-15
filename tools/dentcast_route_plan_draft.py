@@ -9,7 +9,7 @@ MODULES = ("intake", "taxonomy", "page", "navigation", "semantic-links",
            "paper-cabinet", "learning-assets", "evidence", "challenge",
            "brain", "pathways", "english", "notification", "build", "verify")
 CLOSED = {"dentai", "photocast"}
-KINDS = {"specialist", "litecast", "challenge"}
+KNOWN_CATEGORIES = {"episode", "clinical", "litecast", "dentcast_plus", "notecast", "meta", "sharehub", "chairside", "dentcast", "promptologist", "plak_sefr", "taraz"}
 ROOT = Path(__file__).resolve().parents[1]
 CONTRACT = ROOT / ".dentcast/workflows/modules/MODULE-CONTRACTS.v1.json"
 
@@ -38,34 +38,35 @@ def plan(request, contract=None):
     if content and category in CLOSED:
         return {"status": "blocked", "code": "CATEGORY_CLOSED",
                 "reason": "No new DentAI/PhotoCast content", "no_side_effects": True}
-    if content and category not in KINDS:
+    if content and category not in KNOWN_CATEGORIES:
         return {"status": "blocked", "code": "CATEGORY_RULES_NOT_MAPPED",
                 "reason": "This conservative prototype has no audited predicate for this category",
                 "no_side_effects": True}
-    if content and category == "specialist" and request.get("challenge") is True:
+    if content and category == "litecast" and request.get("challenge") is True:
         return {"status": "blocked", "code": "CHALLENGE_CATEGORY_CONFLICT",
-                "reason": "Challenge must use explicit challenge route", "no_side_effects": True}
+                "reason": "LiteCast+Challenge combination needs separate rule audit", "no_side_effects": True}
 
-    route = "paper-only" if not content else (
-        "litecast" if category == "litecast" else
-        "challenge" if category == "challenge" else "specialist")
+    challenge = request.get("challenge", False)
+    if type(challenge) is not bool:
+        return {"status": "blocked", "code": "CHALLENGE_UNRESOLVED", "no_side_effects": True}
+    route = "paper-only" if not content else ("litecast" if category == "litecast" else "challenge" if challenge else "publication")
     if content and paper:
         route += "+paper"
     selected = ["intake"]
     if content:
-        if category == "specialist":
+        if category != "litecast":
             selected += ["taxonomy"]
         selected += ["page"]
-        if category == "specialist":
+        if category != "litecast":
             selected += ["navigation", "semantic-links"]
         if paper:
             selected += ["paper-cabinet"]
-        if category == "challenge":
+        if challenge:
             selected += ["challenge"]
-        if category == "specialist":
+        if category != "litecast":
             selected += ["brain"]
         # Learning/evidence/pathways are deliberately unresolved, not silently skipped.
-        if category == "specialist":
+        if category != "litecast" and not challenge:
             selected += ["english"]
         if category != "litecast":
             selected += ["notification"]
@@ -80,7 +81,7 @@ def plan(request, contract=None):
                        "module order and side-effect boundaries require clause-level parity"]
     if category == "litecast":
         unresolved += ["LiteCast-specific page/brain/build routing requires specialist contract audit"]
-    if category == "challenge":
+    if challenge:
         unresolved += ["Challenge exclusions and private handoff require full source mapping"]
     if paper:
         unresolved += ["paper cabinet requires verified Drive capability and citation metadata"]
@@ -93,7 +94,7 @@ def plan(request, contract=None):
                       "not selected by conservative route skeleton; eligibility may be unresolved")
             skipped.append({"module": mid, "status": "not_scheduled_pending_rule_audit",
                             "reason": reason})
-    return {"status": "draft_requires_audit", "route": route, "no_side_effects": True,
+    return {"status": "draft_requires_audit", "route": route, "category": category, "challenge": challenge, "no_side_effects": True,
             "ordered_modules": [{"id": mid, "contract": registry[mid]["source_of_truth"]}
                                 for mid in selected],
             "not_scheduled": skipped, "unresolved": unresolved,
