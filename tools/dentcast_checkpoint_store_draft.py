@@ -1,6 +1,7 @@
 """Atomic local staging checkpoint storage. Never publishes or executes modules."""
 import json
 import os
+import re
 import tempfile
 from pathlib import Path
 
@@ -46,6 +47,10 @@ def _validate(state):
             raise ValueError('INVALID_VERIFICATION')
         if receipt.get('status') == 'completed' and receipt['verification'].get('passed') is not True:
             raise ValueError('UNVERIFIED_COMPLETION')
+        if not isinstance(receipt.get('input_fingerprint'), str) or not re.fullmatch(r'[0-9a-f]{64}', receipt['input_fingerprint']):
+            raise ValueError('INVALID_FINGERPRINT')
+        if receipt.get('artifact_receipts') != []:
+            raise ValueError('SIDE_EFFECTS_NOT_RECONCILED')
 
 
 def save(path, state):
