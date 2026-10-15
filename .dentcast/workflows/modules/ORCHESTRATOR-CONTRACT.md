@@ -10,6 +10,10 @@ For work **on the staging modularization project** (not live publication), start
 
 See [SHARED-EXECUTION-MEMORY-CONTRACT.md](SHARED-EXECUTION-MEMORY-CONTRACT.md). Cross-agent continuation must preserve **nested** module checkpoints (including completed first Fidelity reviewer and pending second reviewer), complete immutable per-claim scientific outputs, verified receipts, and actor provenance. The existing public repository holds only public-safe temporary run records; restricted or identifying material must never enter Git history. Shared memory requires conflict-safe GitHub writes and orchestrator-controlled cleanup after verified publication. Local checkpoint tests do not prove GitHub-level concurrency or scientific resumability.
 
+## Stage 1 architecture baseline
+
+The founder chose temporary execution memory in this existing GitHub repository. Cleanup of an active run is orchestrator-owned and allowed only after the applicable canonical completion gate and verified publication outcome. Local POSIX CAS is not remote GitHub concurrency control. Open Stage 2 parity issues include taxonomy/page order, LiteCast build/brain dependencies, conditional route edges and schema naming. No activation or scientific behavior changes are authorized.
+
 ## Mental model
 
 The **orchestrator is a state machine**, not a large replacement README and not an agent that memorizes every specialist rule. It owns route selection, dependency graph, approvals, status transitions, dispatch, checkpoint references, error routing, invalidation and final verification. Each module owns a bounded responsibility, its full domain rules, a version and explicit inputs/outputs. The orchestrator calls a module and receives a structured result; it does not silently reproduce that module's scientific or editorial work.
