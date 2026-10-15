@@ -48,7 +48,7 @@ def dry_run(request, run_id, revision, checkpoint_path=None):
     adapter.validate_response(invocation, response)
     state = checkpoint.accept(state, adapter.checkpoint_receipt(response, invocation), revision)
     if checkpoint_path is not None:
-        store.save(checkpoint_path, state)
+        store.save_checked(checkpoint_path, state)
     return {"status": "staging_checkpoint", "route": plan["route"],
             "next_module": state["sequence"][state["next_index"]] if state["next_index"] < len(state["sequence"]) else None,
             "checkpoint": state, "execution_authorized": False}
