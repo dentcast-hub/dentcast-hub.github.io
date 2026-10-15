@@ -775,7 +775,7 @@ A single predicate with a list of objects («دقت، مورفولوژی و پا
 
 ### F4 — Score, level and the information line
 
-**Single-claim rule (v3.5 proposal):** for records stamped 3.5 or later, one assessable claim is sufficient for a score and verdict. For older records the historical three-claim threshold remains unchanged. Zero assessable claims still yield `INSUFFICIENT_CLAIMS`. Report the assessable count with the verdict; a perfect single-claim match does not imply comprehensive source coverage.
+**Single-claim rule (v3.4 update):** for records stamped 3.4 or later, one assessable claim is sufficient for a score and verdict. For older records the historical three-claim threshold remains unchanged. Zero assessable claims still yield `INSUFFICIENT_CLAIMS`. Report the assessable count with the verdict; a perfect single-claim match does not imply comprehensive source coverage.
 
 
 ```
