@@ -11,6 +11,7 @@ permission; passing a SHA does not make an unsafe document safe. Otherwise STOP.
 """
 import argparse
 import copy
+import hashlib
 import importlib.util
 import json
 import re
@@ -171,8 +172,10 @@ def _data(store, run_id, source_id):
     manifest = relevant[0][1]["payload"]
     block = manifest["block"]
     validate_block(block)
+    current_prompt = hashlib.sha256(
+        (ROOT / ".dentcast/des-v3.4-knowledge.md").read_bytes()).hexdigest()
     need(mem.digest(block) == manifest["input_digest"] and
-         manifest["prompt_digest"] and
+         manifest["prompt_digest"] == current_prompt and
          manifest["engine_version"] == "3.4",
          "PINNED_INPUT_OR_ENGINE_DRIFT")
     return snap, manifest, relevant
@@ -182,8 +185,11 @@ def begin_source(store, run_id, source_id, block, checker, reviewer, actor,
                  *, prompt_digest, public_release_approval_digest):
     validate_block(block)
     check_models(checker, reviewer)
-    need(mem.safe_digest(prompt_digest) and
-         mem.safe_digest(public_release_approval_digest), "PUBLIC_RELEASE_OR_PROMPT_MISSING")
+    current_prompt = hashlib.sha256(
+        (ROOT / ".dentcast/des-v3.4-knowledge.md").read_bytes()).hexdigest()
+    need(prompt_digest == current_prompt and
+         mem.safe_digest(public_release_approval_digest),
+         "PUBLIC_RELEASE_OR_PROMPT_MISSING_OR_STALE")
     snap = store.snapshot(run_id)
     folder = mem.run_folder(run_id)
     need(mem.safe_atom(source_id) and "/" not in source_id, "UNSAFE_SOURCE_ID")
