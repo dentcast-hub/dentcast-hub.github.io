@@ -22,6 +22,20 @@ def _validate(state):
     if type(state["paused"]) is not bool:
         raise ValueError("INVALID_PAUSE_FLAG")
 
+    seq = state['sequence']
+    receipts = state['receipts']
+    if not seq or seq[0] != 'intake' or len(seq) != len(set(seq)):
+        raise ValueError('INVALID_SEQUENCE')
+    if any(mid not in seq for mid in receipts):
+        raise ValueError('UNKNOWN_RECEIPT_MODULE')
+    if any(mid not in receipts or receipts[mid].get('status') != 'completed' for mid in seq[:state['next_index']]):
+        raise ValueError('CURSOR_RECEIPT_MISMATCH')
+    if any(mid in receipts for mid in seq[state['next_index'] + 1:]):
+        raise ValueError('FUTURE_RECEIPT')
+    current = seq[state['next_index']] if state['next_index'] < len(seq) else None
+    if state['paused'] != bool(current in receipts):
+        raise ValueError('PAUSE_RECEIPT_MISMATCH')
+
 
 def save(path, state):
     """Atomic replace with fsync; caller supplies a private local staging path."""
