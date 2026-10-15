@@ -2,6 +2,10 @@
 
 **Status:** design and dependency audit only. No live router switch; no checkpoint implementation; no merge.
 
+## Founder decision — immutable evidence subsystem
+
+DES and Fidelity constitute **one opaque, externally invoked subsystem**, not two stages to refactor. This modularization may only route to it, provide the existing required inputs, and consume its existing outputs. All prompt files, tools, evaluation, voting, adjudication, approval gates, and internal workflow are **out of scope and must remain byte-for-byte unchanged**. Preserve current eligibility and skip rules exactly. Any future checkpoint must be outside this subsystem and reuse only a fully validated output with matching provenance; no internal checkpoints are authorized.
+
 ## Findings
 
 1. **Canonical read rule is a blocker to lazy loading.** `.dentcast/workflows/agent-parity.md` Rule 0 requires reading the entire canonical workflow on every run. `.cursor/rules/dentcast-publishing.mdc` also requires the full README. A new modular router must amend those rules in sync, otherwise splitting files cannot reduce context usage.
@@ -32,7 +36,7 @@
 | Navigation/enrichment | Pillar decision, brain, glossary, final-ish body | Capsules, backlinks, inline links, related links | 5-link shared cap; mandatory fresh semantic analysis |
 | Attached paper | Paper file and citation metadata | Cabinet record, DOI/credit links | Drive capability, copyright and exact metadata |
 | Learning content | Final text and category | Flashcards, quiz | Explicit challenge/LiteCast skips |
-| DES/Fidelity | Cited source inventory, exact source text, final page claims, spec version | Source records, votes, founder review, final fidelity record | Multiple sources, same text basis, no invented DOI; changed claims invalidate votes |
+| DES/Fidelity (opaque) | Inputs required by the existing subsystem, with original eligibility rules | Existing validated output, unchanged | No prompt, algorithm, voting, or internal state changes; only external invocation/reuse of validated result |
 | Challenge | Explicit challenge decision, approved public question | Public markup and private admin handoff | No private answer in repo; different skip path |
 | Brain/pathways | Category, locked taxonomy, final page, tags | Brain entry, learning placement | Append to absolute end; gate bundle |
 | Build/version | All content-affecting writes | Generated indexes, content stamp | Re-run stamp after any hashed write |
