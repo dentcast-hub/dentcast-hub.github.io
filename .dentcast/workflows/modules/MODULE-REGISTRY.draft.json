@@ -161,7 +161,7 @@
       "id": "build",
       "source": ".dentcast/workflows/modules/11-build-and-version.md",
       "depends_on": [
-        "brain"
+        "page"
       ],
       "outputs": [
         "built_artifacts"
@@ -200,7 +200,7 @@
       "id": "verify",
       "source": ".dentcast/workflows/modules/12-english-notify-verify.md",
       "depends_on": [
-        "build"
+        "intake"
       ],
       "outputs": [
         "verification_report"
@@ -216,5 +216,11 @@
     "source_parity_passed": true,
     "behavior_parity_passed": false,
     "contracts_implemented": false
-  }
+  },
+  "notes": [
+    "Dependencies are unconditional minimum prerequisites, not a complete route DAG.",
+    "Build requires page on publication routes; brain is route-conditional and absent on LiteCast.",
+    "Verify consumes all applicable completed stage receipts, including Phase F for page publication; paper-only has separate completion criteria.",
+    "Canonical README remains authoritative; no behavioral parity is claimed."
+  ]
 }
