@@ -40,6 +40,7 @@ class Stage2ContractTests(unittest.TestCase):
         self.assertEqual(report["contract_modules_mapped"], 15)
         self.assertEqual(len(report["canonical_slice_ranges"]), 12)
         self.assertEqual(report["live_entrypoints_checked"], 5)
+        self.assertGreaterEqual(report["canonical_headings_with_owner"], 85)
         self.assertTrue(report["not_execution_or_behavioral_parity"])
 
     def test_negative_missing_slice_detected(self):
@@ -69,6 +70,17 @@ class Stage2ContractTests(unittest.TestCase):
             next(m for m in obj["modules"] if m["id"] == "notification")["phase_invocations"] = []
             p.write_text(json.dumps(obj), encoding="utf-8")
             self.assertIn("NOTIFICATION_PULSE_AND_PUSH_PHASES_NOT_SPLIT",
+                          audit_module.audit(root)["issues"])
+
+    def test_negative_glossary_push_marker_skip_deleted(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.fixture_root(tmp)
+            p = root / ".dentcast/workflows/modules/MODULE-CONTRACTS.v1.json"
+            obj = json.loads(p.read_text(encoding="utf-8"))
+            notification = next(m for m in obj["modules"] if m["id"] == "notification")
+            notification["phase_invocations"][1]["may_skip_for"].remove("glossary")
+            p.write_text(json.dumps(obj), encoding="utf-8")
+            self.assertIn("PHASE_E_CANONICAL_SKIP_SET_MISMATCH",
                           audit_module.audit(root)["issues"])
 
     def test_negative_entrypoint_rerouted_early_detected(self):
@@ -152,6 +164,15 @@ class Stage2RoutesTests(unittest.TestCase):
                          ["page", "taxonomy", "semantic-links", "challenge", "brain",
                           "notification", "build", "verify"],
                          ["pathways", "english", "evidence", "learning-assets"], "challenge")
+
+    def test_glossary_phase_e_skip_contract_while_pulse_still_runs(self):
+        p = route(category="glossary")
+        self.check_route(p, ["page", "taxonomy", "semantic-links", "brain",
+                             "notification", "build", "english", "verify"], [], "publication")
+        import json
+        contract = json.loads((ROOT / ".dentcast/workflows/modules/MODULE-CONTRACTS.v1.json").read_text(encoding="utf-8"))
+        marker = next(m for m in contract["modules"] if m["id"] == "notification")["phase_invocations"][1]
+        self.assertIn("glossary", marker["may_skip_for"])
 
     def test_challenge_paper_additive(self):
         self.check_route(route(category="chairside", challenge=True, paper=True),
