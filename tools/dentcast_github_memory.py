@@ -464,6 +464,8 @@ def main():
     p.add_argument("--output-digest")
     p.add_argument("--receipt-digest")
     p.add_argument("--gate", default="unverified_staging")
+    p.add_argument("--artifact-file", action="append", default=[], help="Reviewed public-safe JSON object only")
+    p.add_argument("--receipt-file", help="Validated public-safe receipt JSON")
     args = p.parse_args()
     try:
         store = RemoteMemory(GithubAPI())
@@ -474,11 +476,19 @@ def main():
             result = store.snapshot(args.run_id)
         else:
             require(args.kind and args.step, "EVENT_KIND_AND_STEP_REQUIRED")
+            from pathlib import Path
+            objects = [json.loads(Path(path).read_text(encoding="utf-8"))
+                       for path in args.artifact_file]
+            receipt_obj = (json.loads(Path(args.receipt_file).read_text(encoding="utf-8"))
+                           if args.receipt_file else None)
+            receipt_hash = digest(receipt_obj) if receipt_obj is not None else args.receipt_digest
             result = store.append(args.run_id, actor, args.kind, args.step,
                                   input_digest=args.input_digest,
                                   output_digest=args.output_digest,
-                                  receipt_digest=args.receipt_digest,
-                                  gate=args.gate)
+                                  receipt_digest=receipt_hash,
+                                  artifact_digests=[digest(item) for item in objects],
+                                  gate=args.gate, public_artifacts=objects,
+                                  public_receipt=receipt_obj)
         # CLI never prints raw patient notes, quotes or private material.
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0
