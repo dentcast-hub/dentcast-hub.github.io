@@ -2,6 +2,10 @@
 
 > **Primary objective: modular ownership, round-trip invocation, fault isolation, testability and resumability.** Token reduction is optional, not an acceptance criterion. This document defines a proposed interface, not an active publishing instruction. Original README and all current entrypoints remain authoritative.
 
+## Cross-agent continuation (Claude Code / Cursor / Codex)
+
+For work **on the staging modularization project** (not live publication), start with [CROSS-AGENT-HANDOFF.md](CROSS-AGENT-HANDOFF.md). This is one shared source of continuation state, not a replacement for the active canonical README or agent-parity rules. Never infer permission to activate or merge from the handoff.
+
 ## Mental model
 
 The **orchestrator is a state machine**, not a large replacement README and not an agent that memorizes every specialist rule. It owns route selection, dependency graph, approvals, status transitions, dispatch, checkpoint references, error routing, invalidation and final verification. Each module owns a bounded responsibility, its full domain rules, a version and explicit inputs/outputs. The orchestrator calls a module and receives a structured result; it does not silently reproduce that module's scientific or editorial work.
