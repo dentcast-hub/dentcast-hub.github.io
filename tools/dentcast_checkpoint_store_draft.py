@@ -39,6 +39,13 @@ def _validate(state):
         raise ValueError('PAUSE_RECEIPT_MISMATCH')
     if current in receipts and receipts[current].get('status') not in ('blocked', 'failed', 'awaiting_approval'):
         raise ValueError('INVALID_PAUSE_RECEIPT')
+    for mid, receipt in receipts.items():
+        if receipt.get('module_id') != mid or receipt.get('source_revision') != state['revision']:
+            raise ValueError('RECEIPT_IDENTITY_MISMATCH')
+        if not isinstance(receipt.get('verification'), dict):
+            raise ValueError('INVALID_VERIFICATION')
+        if receipt.get('status') == 'completed' and receipt['verification'].get('passed') is not True:
+            raise ValueError('UNVERIFIED_COMPLETION')
 
 
 def save(path, state):
