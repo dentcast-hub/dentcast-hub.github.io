@@ -41,6 +41,23 @@ class CrossAgentOrchestratorTests(unittest.TestCase):
             self.assertEqual(result["status"], "blocked")
             self.assertFalse(path.exists())
 
+    def test_orchestrator_blocks_forged_adapter_without_writing(self):
+        request = {"has_text": True, "has_paper": False, "category": "clinical", "challenge": False}
+        original = orchestrator.adapter.dispatch
+        def forged(invocation):
+            response = original(invocation)
+            response["outputs"]["route"] = "challenge"
+            return response
+        orchestrator.adapter.dispatch = forged
+        try:
+            with tempfile.TemporaryDirectory() as folder:
+                path = Path(folder) / "state.json"
+                with self.assertRaisesRegex(ValueError, "OUTPUT_MISMATCH"):
+                    orchestrator.dry_run(request, "run", "rev", path)
+                self.assertFalse(path.exists())
+        finally:
+            orchestrator.adapter.dispatch = original
+
     def test_reject_non_object(self):
         with self.assertRaisesRegex(ValueError, "INVALID_REQUEST"):
             orchestrator.dry_run([], "run", "rev")
