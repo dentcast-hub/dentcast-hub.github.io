@@ -14,7 +14,7 @@ PROMPT = hashlib.sha256(
 
 
 def load(name, filename):
-    spec = importlib.util.spec_from_file_location(name, ROOT / "tools" / filename)
+    spec = importlib.util.spec_from_file_location(name, ROOT / (filename if "/" in filename else "tools/" + filename))
     obj = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(obj)
     return obj
