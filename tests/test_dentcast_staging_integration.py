@@ -50,7 +50,7 @@ class IntegrationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "PAUSED_REQUIRES_EXPLICIT_RECOVERY"):
                 checkpoint.accept(state, receipt("page", "completed"), "staging-sha")
             state = checkpoint.recover(state, "staging-sha", "page", checkpoint.digest(failed))
-            state = checkpoint.accept(state, receipt("taxonomy", "completed"), "staging-sha")
+            state = checkpoint.accept(state, receipt("page", "completed"), "staging-sha")
             store.save(path, state)
             state = store.load(path, "integration-1", "staging-sha", state["plan_digest"])
             self.assertEqual(state["sequence"][state["next_index"]], "taxonomy")
