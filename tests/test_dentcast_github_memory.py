@@ -42,6 +42,16 @@ class FakeGit:
         if verb == "GET" and endpoint.startswith("git/commits/"):
             sha = endpoint.split("/")[-1]
             return self.commits[sha]
+        if verb == "GET" and endpoint.startswith("git/trees/"):
+            sha = endpoint.split("/")[-1].split("?")[0]
+            entries = next(
+                (commit["files"] for commit in self.commits.values()
+                 if commit["tree"]["sha"] == sha), None)
+            if entries is None:
+                raise FileNotFoundError("TREE_NOT_FOUND")
+            return {"truncated": False,
+                    "tree": [{"path": path, "type": "blob"}
+                             for path in sorted(entries)]}
         if verb == "GET" and endpoint.startswith("contents/"):
             from urllib.parse import unquote
             path, ref = endpoint[9:].split("?ref=")
@@ -130,6 +140,19 @@ class RemoteMemoryTests(unittest.TestCase):
         self.assertEqual(snap["state"]["completed_steps"], ["intake:route"])
         self.assertEqual(snap["state"]["revision"], 2)
         self.assertEqual(len(snap["events"]), 2)
+
+    def test_run_discovery_from_branch_without_prior_agent_context(self):
+        first = self.start("run-one")
+        self.start("run-two")
+        self.store.append(first, ACTORS["cursor"], "step_paused", "page:draft")
+        discovered = self.store.list_runs()
+        self.assertEqual([x["run_id"] for x in discovered["runs"]],
+                         ["run-one", "run-two"])
+        self.assertEqual([x["status"] for x in discovered["runs"]],
+                         ["paused", "active"])
+        self.assertTrue(all(not x["execution_authorized"] for x in
+                            discovered["runs"]))
+        self.assertEqual(discovered["head"], self.store.head())
 
     def test_resume_from_existing_commit_pinned_snapshot(self):
         run = self.start()
