@@ -57,6 +57,35 @@ class CheckpointTests(unittest.TestCase):
         self.assertTrue(state["paused"])
         self.assertEqual(state["next_index"], 0)
 
+    def test_pause_requires_recovery(self):
+        state = mod.accept(mod.begin(plan(), "run1", "abc"), receipt(status="failed"), "abc")
+        with self.assertRaisesRegex(ValueError, "PAUSED_REQUIRES_EXPLICIT_RECOVERY"):
+            mod.accept(state, receipt("page"), "abc")
+
+    def test_explicit_recovery_and_retry(self):
+        state = mod.accept(mod.begin(plan(), "run1", "abc"), receipt(status="failed"), "abc")
+        state = mod.recover(state, "abc", "intake", mod.digest(receipt(status="failed")))
+        self.assertFalse(state["paused"])
+        self.assertEqual(len(state["history"]), 1)
+        self.assertEqual(mod.accept(state, receipt(), "abc")["next_index"], 1)
+
+    def test_recovery_rejects_changed_receipt(self):
+        state = mod.accept(mod.begin(plan(), "run1", "abc"), receipt(status="blocked"), "abc")
+        with self.assertRaisesRegex(ValueError, "PAUSE_RECEIPT_CHANGED"):
+            mod.recover(state, "abc", "intake", "0" * 64)
+
+    def test_invalid_hex_fingerprint(self):
+        x = receipt()
+        x["input_fingerprint"] = "z" * 64
+        with self.assertRaisesRegex(ValueError, "INVALID_FINGERPRINT"):
+            mod.accept(mod.begin(plan(), "run1", "abc"), x, "abc")
+
+    def test_invalid_artifact_receipt_type(self):
+        x = receipt()
+        x["artifact_receipts"] = {}
+        with self.assertRaisesRegex(ValueError, "SIDE_EFFECTS_NOT_RECONCILED"):
+            mod.accept(mod.begin(plan(), "run1", "abc"), x, "abc")
+
     def test_unsafe_plan(self):
         p = plan()
         p["no_side_effects"] = False
