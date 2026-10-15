@@ -53,6 +53,7 @@ SOURCE_STEPS = {
 }
 GATES = {
     "intake:route": ["user-string-provenance", "unverifiable-metadata", "approved-opening-when-generated"],
+    "page:draft": ["opening-paragraph-founder-approval-when-generated", "exact-title-caption"],
     "taxonomy:lock": ["ambiguous-pillar", "new-subtopic"],
     "semantic-links:specialist": ["ambiguous-links"],
     "semantic-links:litecast": ["ambiguous-litecast-links"],
