@@ -64,29 +64,34 @@ def plan(request, contract=None):
         if category != "litecast":
             selected += ["taxonomy"]
         if category != "litecast":
-            selected += ["navigation", "semantic-links"]
+            selected += ["navigation"]
+        # Specialist 4.7-4.9 or LiteCast internal equivalents 0.5/0.6.
+        selected += ["semantic-links"]
         if paper:
             selected += ["paper-cabinet"]
         if challenge:
             selected += ["challenge"]
         if category != "litecast":
             selected += ["brain"]
-        # Learning/evidence/pathways are deliberately unresolved, not silently skipped.
+            if not challenge:
+                selected += ["pathways"]
+        # C6 Pulse runs even on LiteCast; phase E push-marker is a distinct
+        # conditional notification invocation AFTER phase D, not a second module.
+        selected += ["notification", "build"]
         if category != "litecast" and not challenge:
             selected += ["english"]
-        if category != "litecast":
-            selected += ["notification"]
-        selected += ["build", "verify"]
+        selected += ["verify"]
     else:
         selected += ["paper-cabinet"]
     unresolved = []
     if content:
         unresolved += ["learning-assets eligibility requires canonical Q4 and type-specific rules",
                        "evidence eligibility requires source-basket/Q4.8/Q4.13 audit",
-                       "pathways eligibility requires canonical category/bundle rules",
-                       "module order and side-effect boundaries require clause-level parity"]
+                       "pathways placement requires canonical relevance/bundle gates when scheduled",
+                       "module order and side-effect boundaries require clause-level parity",
+                       "notification phase E needs a SECOND phase-scoped invocation after D (not a repeat full module)"]
     if category == "litecast":
-        unresolved += ["LiteCast-specific page/brain/build routing requires specialist contract audit"]
+        unresolved += ["LiteCast semantic-links executes ONLY internal 0.5/0.6; 2.5/4.7/4.8/4.9 specialist actions are excluded"]
     if challenge:
         unresolved += ["Challenge exclusions and private handoff require full source mapping"]
     if paper:
