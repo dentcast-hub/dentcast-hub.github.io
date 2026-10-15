@@ -108,7 +108,7 @@ class RemoteMemoryTests(unittest.TestCase):
                               receipt_digest=D, gate="local_integrity_checked")
         self.store.append(run, ACTORS["cursor"], "step_recovered", "page:draft")
         self.store.append(run, ACTORS["codex"], "step_completed", "page:draft",
-                          receipt_digest=D, gate="local_integrity_checked")
+                          gate="local_integrity_checked", **RECEIPT_KW)
         last = self.store.snapshot(run)
         self.assertEqual(last["state"]["revision"], 5)
         self.assertEqual(last["state"]["completed_steps"],
@@ -125,8 +125,7 @@ class RemoteMemoryTests(unittest.TestCase):
         self.api.inject_race = winner
         with self.assertRaisesRegex(m.Conflict, "CONCURRENT_WRITER_LOST"):
             self.store.append(run, ACTORS["claude"], "step_completed",
-                              "page:draft", receipt_digest=D,
-                              gate="local_integrity_checked")
+                              "page:draft", gate="local_integrity_checked", **RECEIPT_KW)
         snap = self.store.snapshot(run)
         self.assertEqual(snap["state"]["completed_steps"], ["intake:route"])
         self.assertEqual(snap["state"]["revision"], 2)
@@ -183,6 +182,43 @@ class RemoteMemoryTests(unittest.TestCase):
             self.store.begin("../../bad", REV, D, ACTORS["claude"])
         with self.assertRaisesRegex(ValueError, "RUN_ALREADY_EXISTS"):
             self.store.begin(run, REV, D, ACTORS["claude"])
+
+    def test_atomic_artifact_receipt_replay_and_corruption(self):
+        run = self.start()
+        obj = {"schema": "dc-public-artifact-v1", "kind": "fidelity_checker",
+               "public_release_approval_digest": D,
+               "payload": {"unit_verdicts": [{"id": "u1", "verdict": "MATCHES"}]}}
+        h = m.digest(obj)
+        self.store.append(run, ACTORS["claude"], "fidelity_checkpoint",
+                          "evidence:src0:checker1", input_digest=D, output_digest=D,
+                          gate="engine_verified", artifact_digests=[h],
+                          public_artifacts=[obj], **RECEIPT_KW)
+        snap = self.store.snapshot(run)
+        self.assertEqual(snap["events"][-1]["artifact_digests"], [h])
+        folder = m.run_folder(run)
+        path = folder + "/artifacts/" + h + ".json"
+        self.assertEqual(self.store.read_json(snap["head"], path), obj)
+        self.api.commits[self.api.head_ref]["files"][path]["payload"]["unit_verdicts"][0]["verdict"] = "ALTERED"
+        with self.assertRaisesRegex(ValueError, "ARTIFACT_REPLAY_INTEGRITY_FAILURE"):
+            self.store.snapshot(run)
+
+    def test_missing_artifact_permission_and_receipt_refused(self):
+        run = self.start()
+        obj = {"schema": "dc-public-artifact-v1", "kind": "fidelity_checker",
+               "public_release_approval_digest": None, "payload": {"a": 1}}
+        with self.assertRaisesRegex(ValueError, "ARTIFACT_PUBLIC_RELEASE_GATE_MISSING"):
+            self.store.append(run, ACTORS["claude"], "fidelity_checkpoint",
+                              "evidence:src0:checker1", gate="engine_verified",
+                              artifact_digests=[m.digest(obj)], public_artifacts=[obj],
+                              **RECEIPT_KW)
+        with self.assertRaisesRegex(ValueError, "MISSING_CONTENT_ADDRESSED_ARTIFACT"):
+            self.store.append(run, ACTORS["claude"], "fidelity_checkpoint",
+                              "evidence:src0:checker1", gate="engine_verified",
+                              artifact_digests=[D], **RECEIPT_KW)
+        with self.assertRaisesRegex(ValueError, "VERIFIED_RECEIPT_OBJECT_REQUIRED"):
+            self.store.append(run, ACTORS["claude"], "step_completed",
+                              "page:draft", gate="engine_verified",
+                              receipt_digest=D)
 
     def test_finished_is_staging_only(self):
         run = self.start()
