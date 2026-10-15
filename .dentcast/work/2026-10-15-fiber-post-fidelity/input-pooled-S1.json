@@ -1,0 +1,132 @@
+{
+ "mode": "FIDELITY",
+ "scope": "SOURCE",
+ "pooled_part": "S1",
+ "source_text": "BACKGROUND: Since the introduction of glass fiber posts, irreversible vertical root fractures have become a rare occurrence; however, adhesive failure has become the primary failure mode.\n\nPURPOSE: The purpose of this study was to evaluate the push-out bond strength of glass fiber posts cemented with different luting agents on 3 segments of the root.\n\nMETHODS: Eighty human maxillary canines with similar root lengths were randomly divided into 8 groups (n=10) according to the cement assessed (Rely X luting, Luting and Lining, Ketac Cem, Rely X ARC, Biscem, Duo-link, Rely X U100, and Variolink II). After standardized post space preparation, the root dentin was pretreated for dual-polymerizing resin cements and untreated for the other cements. The mixed luting cement paste was inserted into post spaces with a spiral file and applied to the post surface that was seated into the canal. After 7 days, the teeth were sectioned perpendicular to their long axis into 1-mm-thick sections. The push-out test was performed at a speed of 0.5 mm/min until extrusion of the post occurred. The results were evaluated by 2-way ANOVA and the all pairwise multiple comparison procedures (Tukey test) (α=.05).\n\nRESULTS: ANOVA showed that the type of interaction between cement and root location significantly influenced the push-out strength (P<.05). The highest push-out strength results with root location were obtained with Luting and Lining (S3) (19.5 ±4.9 MPa), Ketac Cem (S2) (18.6 ±5.5 MPa), and Luting and Lining (S1) (18.0 ±7.6 MPa). The lowest mean values were recorded with Variolink II (S1) (4.6 ±4.0 MPa), Variolink II (S2) (1.6 ±1.5 MPa), and Rely X ARC (S3) (0.9 ±1.1 MPa).\n\nCONCLUSION: Self-adhesive cements and glass ionomer cements showed significantly higher values compared to dual-polymerizing resin cements. In all root segments, dual-polymerizing resin cements provided significantly lower bond strength. Significant differences among root segments were found only for Duo-link cement.",
+ "text_basis": "ABSTRACT_ONLY",
+ "units": [
+  {
+   "id": "u1",
+   "text": "آیا می‌توان فایبرپست را با گلاس‌آینومر معمولی سمان کرد؟",
+   "heading": true
+  },
+  {
+   "id": "u2",
+   "text": "English"
+  },
+  {
+   "id": "u3",
+   "text": "یکی از همکاران از من پرسید:"
+  },
+  {
+   "id": "u4",
+   "text": "«فایبرپست رو می‌شه با گلاس‌آینومر هم سمان کرد؟»"
+  },
+  {
+   "id": "u5",
+   "text": "جواب دادم: «شدنش که می‌شه."
+  },
+  {
+   "id": "u6",
+   "text": "تو هر کاری دوست داشته باشی می‌تونی بکنی!"
+  },
+  {
+   "id": "u7",
+   "text": "😂»"
+  },
+  {
+   "id": "u8",
+   "text": "بعد توضیح داد که در کلینیکشان قبلاً فایبرپست را بدون رزین سمان و فقط با گلاس‌آینومر سمان می‌کردند."
+  },
+  {
+   "id": "u9",
+   "text": "حالا به او پیشنهاد داده بودند که اگر به فایبرپست نیاز دارد، برایش تهیه کنند تا با همان گلاس‌آینومر استفاده کند."
+  },
+  {
+   "id": "u10",
+   "text": "پرسید: «بود و نبودش فرقی می‌کنه؟"
+  },
+  {
+   "id": "u11",
+   "text": "جای این کار همون پست ریختگی کار کنم بهتر نیست؟»"
+  },
+  {
+   "id": "u12",
+   "text": "من در جواب پرسیدم: «به نظرت دلیل وجود پست چیه؟»"
+  },
+  {
+   "id": "u13",
+   "text": "گفت: «گیر بهتر کور و تقویت سرویکال؟»"
+  },
+  {
+   "id": "u14",
+   "text": "گفتم: «آفرین، گیر بهتر کور."
+  },
+  {
+   "id": "u15",
+   "text": "حالا فکر نمی‌کنم فایبرپست با سمان کانونشنال و گیر اصطکاکی کارکرد مقبولی داشته باشه.»"
+  },
+  {
+   "id": "u16",
+   "text": "اما بعد از بررسی مقالات، نظرم تغییر کرد"
+  },
+  {
+   "id": "u17",
+   "text": "بعد از این گفت‌وگو تصمیم گرفتم ببینم شواهد علمی دربارهٔ سمان کردن فایبرپست با گلاس‌آینومر معمولی چه می‌گویند."
+  },
+  {
+   "id": "u18",
+   "text": "چهار مقالهٔ مرتبط پیدا کردم و ابسترکت‌هایشان را خواندم."
+  },
+  {
+   "id": "u19",
+   "text": "نتیجه برخلاف تصور اولیهٔ من بود."
+  },
+  {
+   "id": "u20",
+   "text": "در برخی مطالعات آزمایشگاهی، گلاس‌آینومر معمولی توانسته گیر مناسبی برای فایبرپست ایجاد کند و حتی در بعضی آزمون‌های Push-out نتایجی قابل‌مقایسه یا بهتر از برخی سمان‌های رزینی داشته است."
+  },
+  {
+   "id": "u21",
+   "text": "البته نتایج همهٔ مطالعات یکسان نبودند و در یک مطالعهٔ دیگر، گیر پست با سمان گلاس‌آینومرِ مورد آزمایش به‌مراتب کمتر گزارش شده بود."
+  },
+  {
+   "id": "u22",
+   "text": "نکتهٔ جالب دیگر این بود که انبساط هیگروسکوپیک گلاس‌آینومر، یعنی افزایش حجم ناشی از جذب آب، می‌تواند در افزایش گیر اصطکاکی پست نقش داشته باشد."
+  },
+  {
+   "id": "u23",
+   "text": "بنابراین برداشت اولیهٔ من مبنی بر اینکه فایبرپست با سمان کانونشنال و گیر اصطکاکی نمی‌تواند عملکرد قابل‌قبولی داشته باشد، بیش از حد قطعی بود."
+  },
+  {
+   "id": "u24",
+   "text": "دست‌کم نتایج مطالعات آزمایشگاهی چنین حکمی را تأیید نمی‌کنند."
+  },
+  {
+   "id": "u25",
+   "text": "البته این به معنای اثبات موفقیت بلندمدت کلینیکی این روش یا برتری آن نسبت به سمان‌های رزینی نیست."
+  },
+  {
+   "id": "u26",
+   "text": "من برای این بررسی سراغ فول‌تکست مقالات نرفتم و به مطالعهٔ ابسترکت‌ها اکتفا کردم."
+  },
+  {
+   "id": "u27",
+   "text": "دلیلش هم ساده است: این موضوع در حال حاضر مسئله‌ای نیست که در کار روزمرهٔ من کاربرد مستقیمی داشته باشد یا بخواهم بر اساس آن پروتکل درمانی‌ام را تغییر بدهم."
+  },
+  {
+   "id": "u28",
+   "text": "هدفم بیشتر این بود که درستی پاسخ خودم را بررسی کنم."
+  },
+  {
+   "id": "u29",
+   "text": "در نهایت، همچنان برای سمان کردن فایبرپست از سیستم رزین سمان مناسب استفاده می‌کنم؛ اما حالا می‌دانم که نمی‌توانم صرفاً بر اساس تصور قبلی‌ام، استفاده از گلاس‌آینومر معمولی را روشی فاقد گیر قابل‌قبول بدانم."
+  },
+  {
+   "id": "u30",
+   "text": "گاهی ارزش بررسی یک سؤال در این نیست که روش درمانمان را تغییر بدهیم؛ در این است که بفهمیم یکی از قضاوت‌های قبلی‌مان به آن اندازه که فکر می‌کردیم پشتوانه نداشته است."
+  }
+ ],
+ "derivative_url": "https://dentcast.org/sharehub/share-34.html",
+ "source_conclusion": "Significant differences among root segments were found only for Duo-link cement."
+}

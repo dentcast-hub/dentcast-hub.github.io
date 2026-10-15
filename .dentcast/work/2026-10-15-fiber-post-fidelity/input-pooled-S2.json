@@ -1,0 +1,132 @@
+{
+ "mode": "FIDELITY",
+ "scope": "SOURCE",
+ "pooled_part": "S2",
+ "source_text": "PURPOSE: To evaluate the effect of different strategies for post cementation on the pullout bond strength of a double-tapered glass fiber post cemented into a root canal.\n\nMETHODS: The root canals of 70 single-rooted bovine teeth (16 mm-length) were prepared to 9 mm using the preparation drill of a double-tapered glass fiber post system (White Post DC, FGM). Each specimen was embedded in a plastic cylinder using acrylic resin up to 3 mm of the most coronal portion of the specimen and allocated into one of seven groups (n=10) based on strategies for cementation: Gr1-ScotchBond Multi Purpose plus (SBMP) + Relyx ARC resin cement; Gr2-Single Bond + Relyx ARC; Gr3-ED Primer + Panavia F resin cement; Gr4-SBMP + AllCem resin cement; Gr5-Relyx ARC; Gr6-Relyx Unicem resin cement; Gr7-Relyx Luting 2 glass ionomer cement. After cementation, the specimens were stored for seven days (in a humid environment at 37 degrees C) and submitted to pullout bond strength testing (the inferior part of each specimen was fixed and the fiber post was pulled out). The data (Kgf) were submitted to statistical analysis (one-way ANOVA and post-hoc Tukey tests, alpha=.05). The tested specimens were analyzed under the microscope and SEM for fracture analysis.\n\nRESULTS: The strategy for post cementation affected the pullout retentive strength (Kgf) (p<0.0001) significantly. Gr6 (37.7 +/- 8a), Gr1 (37.4 +/- 5.7a) and Gr4 (31.6 +/- 6.6ab) presented the highest pullout bond strengths. Gr2 (12.2 +/- 5.6c), Gr3 (6.5 +/- 5.2c) and Gr7 (5.1 +/- 2.8c) presented the lowest pullout bond strengths. Gr5 (24.2 +/- 7.4b) was similar to Gr4 and inferior to Gr6 and Gr1.\n\nCONCLUSION: The use of a three-step etch-&-rinse adhesive system appears to be effective. The application of other adhesive systems (single-bottle etch-&-rinse and self-etch adhesive systems) did not present high pullout strength values. The simplified self-adhesive resin cement (without adhesive application) presented good retentive performance. Further studies should be conducted.",
+ "text_basis": "ABSTRACT_ONLY",
+ "units": [
+  {
+   "id": "u1",
+   "text": "آیا می‌توان فایبرپست را با گلاس‌آینومر معمولی سمان کرد؟",
+   "heading": true
+  },
+  {
+   "id": "u2",
+   "text": "English"
+  },
+  {
+   "id": "u3",
+   "text": "یکی از همکاران از من پرسید:"
+  },
+  {
+   "id": "u4",
+   "text": "«فایبرپست رو می‌شه با گلاس‌آینومر هم سمان کرد؟»"
+  },
+  {
+   "id": "u5",
+   "text": "جواب دادم: «شدنش که می‌شه."
+  },
+  {
+   "id": "u6",
+   "text": "تو هر کاری دوست داشته باشی می‌تونی بکنی!"
+  },
+  {
+   "id": "u7",
+   "text": "😂»"
+  },
+  {
+   "id": "u8",
+   "text": "بعد توضیح داد که در کلینیکشان قبلاً فایبرپست را بدون رزین سمان و فقط با گلاس‌آینومر سمان می‌کردند."
+  },
+  {
+   "id": "u9",
+   "text": "حالا به او پیشنهاد داده بودند که اگر به فایبرپست نیاز دارد، برایش تهیه کنند تا با همان گلاس‌آینومر استفاده کند."
+  },
+  {
+   "id": "u10",
+   "text": "پرسید: «بود و نبودش فرقی می‌کنه؟"
+  },
+  {
+   "id": "u11",
+   "text": "جای این کار همون پست ریختگی کار کنم بهتر نیست؟»"
+  },
+  {
+   "id": "u12",
+   "text": "من در جواب پرسیدم: «به نظرت دلیل وجود پست چیه؟»"
+  },
+  {
+   "id": "u13",
+   "text": "گفت: «گیر بهتر کور و تقویت سرویکال؟»"
+  },
+  {
+   "id": "u14",
+   "text": "گفتم: «آفرین، گیر بهتر کور."
+  },
+  {
+   "id": "u15",
+   "text": "حالا فکر نمی‌کنم فایبرپست با سمان کانونشنال و گیر اصطکاکی کارکرد مقبولی داشته باشه.»"
+  },
+  {
+   "id": "u16",
+   "text": "اما بعد از بررسی مقالات، نظرم تغییر کرد"
+  },
+  {
+   "id": "u17",
+   "text": "بعد از این گفت‌وگو تصمیم گرفتم ببینم شواهد علمی دربارهٔ سمان کردن فایبرپست با گلاس‌آینومر معمولی چه می‌گویند."
+  },
+  {
+   "id": "u18",
+   "text": "چهار مقالهٔ مرتبط پیدا کردم و ابسترکت‌هایشان را خواندم."
+  },
+  {
+   "id": "u19",
+   "text": "نتیجه برخلاف تصور اولیهٔ من بود."
+  },
+  {
+   "id": "u20",
+   "text": "در برخی مطالعات آزمایشگاهی، گلاس‌آینومر معمولی توانسته گیر مناسبی برای فایبرپست ایجاد کند و حتی در بعضی آزمون‌های Push-out نتایجی قابل‌مقایسه یا بهتر از برخی سمان‌های رزینی داشته است."
+  },
+  {
+   "id": "u21",
+   "text": "البته نتایج همهٔ مطالعات یکسان نبودند و در یک مطالعهٔ دیگر، گیر پست با سمان گلاس‌آینومرِ مورد آزمایش به‌مراتب کمتر گزارش شده بود."
+  },
+  {
+   "id": "u22",
+   "text": "نکتهٔ جالب دیگر این بود که انبساط هیگروسکوپیک گلاس‌آینومر، یعنی افزایش حجم ناشی از جذب آب، می‌تواند در افزایش گیر اصطکاکی پست نقش داشته باشد."
+  },
+  {
+   "id": "u23",
+   "text": "بنابراین برداشت اولیهٔ من مبنی بر اینکه فایبرپست با سمان کانونشنال و گیر اصطکاکی نمی‌تواند عملکرد قابل‌قبولی داشته باشد، بیش از حد قطعی بود."
+  },
+  {
+   "id": "u24",
+   "text": "دست‌کم نتایج مطالعات آزمایشگاهی چنین حکمی را تأیید نمی‌کنند."
+  },
+  {
+   "id": "u25",
+   "text": "البته این به معنای اثبات موفقیت بلندمدت کلینیکی این روش یا برتری آن نسبت به سمان‌های رزینی نیست."
+  },
+  {
+   "id": "u26",
+   "text": "من برای این بررسی سراغ فول‌تکست مقالات نرفتم و به مطالعهٔ ابسترکت‌ها اکتفا کردم."
+  },
+  {
+   "id": "u27",
+   "text": "دلیلش هم ساده است: این موضوع در حال حاضر مسئله‌ای نیست که در کار روزمرهٔ من کاربرد مستقیمی داشته باشد یا بخواهم بر اساس آن پروتکل درمانی‌ام را تغییر بدهم."
+  },
+  {
+   "id": "u28",
+   "text": "هدفم بیشتر این بود که درستی پاسخ خودم را بررسی کنم."
+  },
+  {
+   "id": "u29",
+   "text": "در نهایت، همچنان برای سمان کردن فایبرپست از سیستم رزین سمان مناسب استفاده می‌کنم؛ اما حالا می‌دانم که نمی‌توانم صرفاً بر اساس تصور قبلی‌ام، استفاده از گلاس‌آینومر معمولی را روشی فاقد گیر قابل‌قبول بدانم."
+  },
+  {
+   "id": "u30",
+   "text": "گاهی ارزش بررسی یک سؤال در این نیست که روش درمانمان را تغییر بدهیم؛ در این است که بفهمیم یکی از قضاوت‌های قبلی‌مان به آن اندازه که فکر می‌کردیم پشتوانه نداشته است."
+  }
+ ],
+ "derivative_url": "https://dentcast.org/sharehub/share-34.html",
+ "source_conclusion": "Further studies should be conducted."
+}

@@ -1,0 +1,394 @@
+[
+  {
+    "des_version": "3.4",
+    "content_type": "RESEARCH",
+    "question_type": "MATERIAL",
+    "text_basis": "ABSTRACT_ONLY",
+    "citation": {
+      "title": "Push-out bond strengths of different dental cements used to cement glass fiber posts",
+      "authors": "Pereira et al.",
+      "year": 2013,
+      "journal": "Journal of Prosthetic Dentistry",
+      "doi": "10.1016/S0022-3913(13)60353-4"
+    },
+    "journal_quartile": {
+      "value": "NR",
+      "source": "NR"
+    },
+    "s_design": {
+      "value": 45,
+      "anchor": "In-vitro with incomplete protocol description",
+      "evidence_quote": "The push-out test was performed at a speed of 0.5 mm/min until extrusion of the post occurred."
+    },
+    "q_method": {
+      "tool": "QUIN",
+      "domains": [
+        {
+          "domain": "clearly stated aims",
+          "rating": "low",
+          "evidence_quote": "The purpose of this study was to evaluate the push-out bond strength of glass fiber posts cemented with different luting agents on 3 segments of the root."
+        },
+        {
+          "domain": "sample size justification",
+          "rating": "NR",
+          "evidence_quote": "",
+          "note": "The abstract states n=10 per group but does not report a sample-size rationale or power calculation."
+        },
+        {
+          "domain": "randomization / allocation of specimens",
+          "rating": "low",
+          "evidence_quote": "Eighty human maxillary canines with similar root lengths were randomly divided into 8 groups (n=10) according to the cement assessed"
+        },
+        {
+          "domain": "operator and assessor blinding",
+          "rating": "NR",
+          "evidence_quote": "",
+          "note": "Operator or assessor blinding is not addressed in the abstract."
+        },
+        {
+          "domain": "appropriate statistical analysis",
+          "rating": "low",
+          "evidence_quote": "The results were evaluated by 2-way ANOVA and the all pairwise multiple comparison procedures (Tukey test) (α=.05)."
+        },
+        {
+          "domain": "conflict of interest / funding",
+          "rating": "NR",
+          "evidence_quote": "",
+          "note": "Conflict of interest and funding are not addressed in the abstract."
+        }
+      ],
+      "multiplier": 0.55
+    },
+    "penalties": [
+      {
+        "item": "conflict of interest / commercial funding",
+        "base_points": 8,
+        "points": 0,
+        "evidence_quote": "",
+        "note": "not assessable in abstract"
+      },
+      {
+        "item": "prospective trial registration",
+        "base_points": 5,
+        "points": 0,
+        "evidence_quote": "",
+        "note": "not applicable: in-vitro material study, not a clinical RCT"
+      },
+      {
+        "item": "sample size justification / power analysis",
+        "base_points": 5,
+        "points": 0,
+        "evidence_quote": "8 groups (n=10)",
+        "note": "The in-vitro threshold of fewer than 10 specimens per group is not met; n=10 per group. Sample-size justification is NR in Q_method."
+      },
+      {
+        "item": "follow-up shorter than the outcome plausibly requires",
+        "base_points": 3,
+        "points": 0,
+        "evidence_quote": "After 7 days",
+        "note": "The stated outcome is laboratory bond strength at the reported interval; the abstract makes no long-term clinical survival claim."
+      }
+    ],
+    "commentary_checklist": null,
+    "des_score": 25,
+    "band": "D",
+    "provisional": true,
+    "fact_fa": "این مطالعه با امتیاز ۲۵ در باند D برای پرسش MATERIAL قرار می‌گیرد.",
+    "interpretation_fa": "این چکیده تفاوت push-out bond strength سمان‌ها را در دندان انسانی نشان می‌دهد، اما جزئیات کامل پروتکل و چند مؤلفه روش‌شناختی در دسترس نیست. یافته‌ها برای شناخت رفتار آزمایشگاهی مواد ارزش دارند و معادل شواهد بقای بالینی پست نیستند."
+  },
+  {
+    "des_version": "3.4",
+    "content_type": "RESEARCH",
+    "question_type": "MATERIAL",
+    "text_basis": "ABSTRACT_ONLY",
+    "citation": {
+      "title": "An in vitro comparison of different cementation strategies on the pull-out strength of a glass fiber post",
+      "authors": "Amaral et al.",
+      "year": 2009,
+      "journal": "Operative Dentistry",
+      "doi": "10.2341/08-113"
+    },
+    "journal_quartile": {
+      "value": "NR",
+      "source": "NR"
+    },
+    "s_design": {
+      "value": 45,
+      "anchor": "In-vitro with incomplete protocol description",
+      "evidence_quote": "After cementation, the specimens were stored for seven days (in a humid environment at 37 degrees C) and submitted to pullout bond strength testing (the inferior part of each specimen was fixed and the fiber post was pulled out)."
+    },
+    "q_method": {
+      "tool": "QUIN",
+      "domains": [
+        {
+          "domain": "clearly stated aims",
+          "rating": "low",
+          "evidence_quote": "To evaluate the effect of different strategies for post cementation on the pullout bond strength of a double-tapered glass fiber post cemented into a root canal."
+        },
+        {
+          "domain": "sample size justification",
+          "rating": "NR",
+          "evidence_quote": "",
+          "note": "The abstract states n=10 per group but does not report a sample-size rationale or power calculation."
+        },
+        {
+          "domain": "randomization / allocation of specimens",
+          "rating": "some_concerns",
+          "evidence_quote": "allocated into one of seven groups (n=10) based on strategies for cementation",
+          "note": "Group allocation is described, but the abstract does not state whether allocation was random; no openly non-random method is stated."
+        },
+        {
+          "domain": "operator and assessor blinding",
+          "rating": "NR",
+          "evidence_quote": "",
+          "note": "Operator or assessor blinding is not addressed in the abstract."
+        },
+        {
+          "domain": "appropriate statistical analysis",
+          "rating": "low",
+          "evidence_quote": "The data (Kgf) were submitted to statistical analysis (one-way ANOVA and post-hoc Tukey tests, alpha=.05)."
+        },
+        {
+          "domain": "conflict of interest / funding",
+          "rating": "NR",
+          "evidence_quote": "",
+          "note": "Conflict of interest and funding are not addressed in the abstract."
+        }
+      ],
+      "multiplier": 0.55
+    },
+    "penalties": [
+      {
+        "item": "conflict of interest / commercial funding",
+        "base_points": 8,
+        "points": 0,
+        "evidence_quote": "",
+        "note": "not assessable in abstract"
+      },
+      {
+        "item": "prospective trial registration",
+        "base_points": 5,
+        "points": 0,
+        "evidence_quote": "",
+        "note": "not applicable: in-vitro material study, not a clinical RCT"
+      },
+      {
+        "item": "sample size justification / power analysis",
+        "base_points": 5,
+        "points": 0,
+        "evidence_quote": "seven groups (n=10)",
+        "note": "The in-vitro threshold of fewer than 10 specimens per group is not met; n=10 per group. Sample-size justification is NR in Q_method."
+      },
+      {
+        "item": "follow-up shorter than the outcome plausibly requires",
+        "base_points": 3,
+        "points": 0,
+        "evidence_quote": "stored for seven days",
+        "note": "The stated outcome is laboratory bond strength at the reported interval; the abstract makes no long-term clinical survival claim."
+      }
+    ],
+    "commentary_checklist": null,
+    "des_score": 25,
+    "band": "D",
+    "provisional": true,
+    "fact_fa": "این مطالعه با امتیاز ۲۵ در باند D برای پرسش MATERIAL قرار می‌گیرد.",
+    "interpretation_fa": "این چکیده تفاوت pull-out bond strength راهبردهای سمان‌کردن را در دندان گاوی نشان می‌دهد، اما پروتکل آزمون و برخی روش‌های کنترل سوگیری کامل گزارش نشده‌اند. نتیجه به شرایط آزمایشگاهی و مواد آزموده‌شده محدود است و اثربخشی بالینی بلندمدت را تعیین نمی‌کند."
+  },
+  {
+    "des_version": "3.4",
+    "content_type": "RESEARCH",
+    "question_type": "MATERIAL",
+    "text_basis": "ABSTRACT_ONLY",
+    "citation": {
+      "title": "Effect of hygroscopic expansion on the push-out resistance of glass ionomer-based cements used for the luting of glass fiber posts",
+      "authors": "Cury et al.",
+      "year": 2006,
+      "journal": "Journal of Endodontics",
+      "doi": "10.1016/j.joen.2005.10.060"
+    },
+    "journal_quartile": {
+      "value": "NR",
+      "source": "NR"
+    },
+    "s_design": {
+      "value": 45,
+      "anchor": "In-vitro study with incomplete protocol description",
+      "evidence_quote": "Experimental specimens were stored in water, while control specimens were desiccated and stored in mineral oil"
+    },
+    "q_method": {
+      "tool": "QUIN",
+      "domains": [
+        {
+          "domain": "clearly stated aims",
+          "rating": "low",
+          "evidence_quote": "This study examined the contribution of hygroscopic expansion"
+        },
+        {
+          "domain": "sample size justification",
+          "rating": "NR",
+          "evidence_quote": "Glass fiber posts were luted to post spaces using different cements.",
+          "note": "The abstract reports neither specimen count nor a sample-size justification."
+        },
+        {
+          "domain": "randomization / allocation of specimens",
+          "rating": "NR",
+          "evidence_quote": "Glass fiber posts were luted to post spaces using different cements.",
+          "note": "The abstract names different cements but reports no specimen-allocation procedure or randomization."
+        },
+        {
+          "domain": "operator and assessor blinding",
+          "rating": "NR",
+          "evidence_quote": "Thin slice push-out tests revealed no difference in retention strengths",
+          "note": "The abstract does not report operator or assessor blinding."
+        },
+        {
+          "domain": "appropriate statistical analysis",
+          "rating": "NR",
+          "evidence_quote": "Thin slice push-out tests revealed no difference in retention strengths",
+          "note": "The abstract reports test findings but does not identify a statistical-analysis method."
+        },
+        {
+          "domain": "conflict of interest / funding",
+          "rating": "NR",
+          "evidence_quote": "Glass fiber posts were luted to post spaces using different cements.",
+          "note": "The abstract does not address conflicts of interest or funding."
+        }
+      ],
+      "multiplier": 0.55
+    },
+    "penalties": [
+      {
+        "item": "conflict of interest / manufacturer funding",
+        "base_points": 8,
+        "points": 0,
+        "evidence_quote": "Glass fiber posts were luted to post spaces using different cements.",
+        "note": "not assessable in abstract"
+      },
+      {
+        "item": "clinical trial not prospectively registered",
+        "base_points": 5,
+        "points": 0,
+        "evidence_quote": "Glass fiber posts were luted to post spaces using different cements.",
+        "note": "not applicable to an in-vitro study"
+      },
+      {
+        "item": "sample size justification / specimen count",
+        "base_points": 5,
+        "points": 0,
+        "evidence_quote": "Glass fiber posts were luted to post spaces using different cements.",
+        "note": "not assessable in abstract; no affirmative evidence of fewer than 10 specimens per group; sample-size reporting is covered in Q_method"
+      },
+      {
+        "item": "follow-up shorter than outcome requires",
+        "base_points": 3,
+        "points": 0,
+        "evidence_quote": "Glass fiber posts were luted to post spaces using different cements.",
+        "note": "laboratory push-out outcome; no clinical survival claim or affirmatively inadequate follow-up reported"
+      }
+    ],
+    "commentary_checklist": null,
+    "des_score": 25,
+    "band": "D",
+    "provisional": true,
+    "fact_fa": "این پژوهش با امتیاز ۲۵ در باند D برای پرسش MATERIAL قرار می‌گیرد.",
+    "interpretation_fa": "این مطالعه اثر جذب آب بر گیر fiber post را در شرایط آزمایشگاهی بررسی می‌کند. چکیده جزئیات کافی برای بازسازی پروتکل یا ارزیابی کامل روش ندارد و امتیاز مقدماتی است. یافته‌ها برای توضیح نقش hygroscopic expansion مفیدند، اما دوام بالینی یا برتری درمانی را نشان نمی‌دهند."
+  },
+  {
+    "des_version": "3.4",
+    "content_type": "RESEARCH",
+    "question_type": "MATERIAL",
+    "text_basis": "ABSTRACT_ONLY",
+    "citation": {
+      "title": "Push-out bond strength of fiber posts to root dentin using glass ionomer and resin modified glass ionomer cements",
+      "authors": "Pereira et al.",
+      "year": 2014,
+      "journal": "Journal of Applied Oral Science",
+      "doi": "10.1590/1678-775720130466"
+    },
+    "journal_quartile": {
+      "value": "NR",
+      "source": "NR"
+    },
+    "s_design": {
+      "value": 45,
+      "anchor": "In-vitro study with incomplete protocol description",
+      "evidence_quote": "all roots were stored at 100% humidity until testing"
+    },
+    "q_method": {
+      "tool": "QUIN",
+      "domains": [
+        {
+          "domain": "clearly stated aims",
+          "rating": "low",
+          "evidence_quote": "The purpose of this study was to assess the push-out bond strength"
+        },
+        {
+          "domain": "sample size justification",
+          "rating": "NR",
+          "evidence_quote": "Fifty human maxillary canines were transversally sectioned at 15 mm from the apex.",
+          "note": "The abstract reports a total of 50 teeth but no specimen-count justification; equal group sizes are not stated."
+        },
+        {
+          "domain": "randomization / allocation of specimens",
+          "rating": "some_concerns",
+          "evidence_quote": "specimens were divided into five groups according to the cement used for post cementation",
+          "note": "Allocation to cement groups is described, but the allocation procedure and randomization are not specified."
+        },
+        {
+          "domain": "operator and assessor blinding",
+          "rating": "NR",
+          "evidence_quote": "The push-out test was performed in a universal testing machine",
+          "note": "The abstract does not report operator or assessor blinding."
+        },
+        {
+          "domain": "appropriate statistical analysis",
+          "rating": "low",
+          "evidence_quote": "analyzed by Kolmogorov-Smirnov and Levene's tests and by two-way ANOVA and Tukey's post hoc test at a significance level of 5%."
+        },
+        {
+          "domain": "conflict of interest / funding",
+          "rating": "NR",
+          "evidence_quote": "Fifty human maxillary canines were transversally sectioned at 15 mm from the apex.",
+          "note": "The abstract does not address conflicts of interest or funding."
+        }
+      ],
+      "multiplier": 0.55
+    },
+    "penalties": [
+      {
+        "item": "conflict of interest / manufacturer funding",
+        "base_points": 8,
+        "points": 0,
+        "evidence_quote": "Fifty human maxillary canines were transversally sectioned at 15 mm from the apex.",
+        "note": "not assessable in abstract"
+      },
+      {
+        "item": "clinical trial not prospectively registered",
+        "base_points": 5,
+        "points": 0,
+        "evidence_quote": "Fifty human maxillary canines were transversally sectioned at 15 mm from the apex.",
+        "note": "not applicable to an in-vitro study"
+      },
+      {
+        "item": "sample size justification / specimen count",
+        "base_points": 5,
+        "points": 0,
+        "evidence_quote": "Fifty human maxillary canines were transversally sectioned at 15 mm from the apex.",
+        "note": "not assessable in abstract; no affirmative evidence of fewer than 10 specimens per group; sample-size reporting is covered in Q_method"
+      },
+      {
+        "item": "follow-up shorter than outcome requires",
+        "base_points": 3,
+        "points": 0,
+        "evidence_quote": "Fifty human maxillary canines were transversally sectioned at 15 mm from the apex.",
+        "note": "laboratory push-out outcome; no clinical survival claim or affirmatively inadequate follow-up reported"
+      }
+    ],
+    "commentary_checklist": null,
+    "des_score": 25,
+    "band": "D",
+    "provisional": true,
+    "fact_fa": "این پژوهش با امتیاز ۲۵ در باند D برای پرسش MATERIAL قرار می‌گیرد.",
+    "interpretation_fa": "این مطالعه push-out bond strength چند سمان را روی دندان‌های خارج‌شده مقایسه می‌کند. چکیده روش آزمون را شرح می‌دهد، اما زمان نگهداری و برخی جزئیات لازم برای ارزیابی کامل پروتکل گزارش نشده‌اند. نتیجه برای مقایسه رفتار آزمایشگاهی مواد مفید است و به‌تنهایی بقای بالینی fiber post را تعیین نمی‌کند."
+  }
+]

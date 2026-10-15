@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-15",
+  "workflow_main_commit": "9a55a5a7bef1ee3efcb107315f73c1e1fe3382cf",
+  "workflow_pr": 891,
+  "status": "BLOCKED_BEFORE_RELAUNCH",
+  "independent_contexts_supported": true,
+  "per_role_requested_model_selection_supported": true,
+  "checker": {
+    "provider": "OpenAI",
+    "requested_model": "gpt-6.1-sol",
+    "requested_reasoning": "high",
+    "actual_executed_model_id": "UNVERIFIED",
+    "cost_evidence": "UNVERIFIED"
+  },
+  "reviewer": {
+    "provider": "OpenAI",
+    "planned_model": "gpt-6-astra",
+    "planned_reasoning": "high",
+    "actual_executed_model_id": "NOT_EXECUTED",
+    "cost_evidence": "UNVERIFIED"
+  },
+  "lower_cost_role_verified": false,
+  "earlier_attempts": {
+    "checker_agents_started": 6,
+    "completed_schema_valid_outputs": 0,
+    "reason": "All six terminated with usage-limit errors before saving F5 outputs.",
+    "agreement": null,
+    "tie_break_executed": false,
+    "stronger_review_executed": false
+  },
+  "decision_required": "Founder must explicitly choose deferral or a documented fallback under current workflow Part 2c. No new FIDELITY agents launched after discovering PR 891.",
+  "source_scoring": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_reasoning": "high",
+    "actual_executed_model_id": "UNVERIFIED",
+    "independent_contexts": 2,
+    "source_records": 4,
+    "derivative_text_seen": false
+  },
+  "input_preparation": {
+    "builder": "tools/des_fidelity_units.py",
+    "scope": "POOLED",
+    "units": 30,
+    "sources": 4,
+    "input_revision": 2,
+    "note": "A paragraph was initially rendered as h3 by the caller. Restored to p, matching the approved plain-paragraph source; words and unit IDs unchanged. Earlier attempts are invalid for these final inputs."
+  }
+}
