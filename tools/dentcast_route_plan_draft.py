@@ -52,7 +52,7 @@ def plan(request, contract=None):
         return {"status": "blocked", "code": "CHALLENGE_CATEGORY_CONFLICT",
                 "reason": "LiteCast+Challenge combination needs separate rule audit", "no_side_effects": True}
 
-    challenge = request.get("challenge", False)
+    challenge = request.get("challenge") if content else False
     if type(challenge) is not bool:
         return {"status": "blocked", "code": "CHALLENGE_UNRESOLVED", "no_side_effects": True}
     route = "paper-only" if not content else ("litecast" if category == "litecast" else "challenge" if challenge else "publication")
