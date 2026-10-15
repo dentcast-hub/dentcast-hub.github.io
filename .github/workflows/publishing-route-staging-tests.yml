@@ -15,6 +15,8 @@ on:
       - 'tests/test_dentcast_staging_integration.py'
       - 'tools/audit_dentcast_route_dependencies.py'
       - 'tests/test_dentcast_route_dependencies.py'
+      - 'tools/dentcast_module_dispatch_draft.py'
+      - 'tests/test_dentcast_module_dispatch_draft.py'
       - '.dentcast/workflows/modules/MODULE-REGISTRY.draft.json'
       - '.dentcast/workflows/modules/MODULE-CONTRACTS.v1.json'
       - '.github/workflows/publishing-route-staging-tests.yml'
@@ -42,3 +44,4 @@ jobs:
           python -m unittest discover -s tests -p test_dentcast_checkpoint_store_draft.py -v
           python -m unittest discover -s tests -p test_dentcast_staging_integration.py -v
           python -m unittest discover -s tests -p test_dentcast_route_dependencies.py -v
+          python -m unittest discover -s tests -p test_dentcast_module_dispatch_draft.py -v
