@@ -1,20 +1,20 @@
 # Modular publishing — internal validation and route compiler design
 
-Status: **STAGING ONLY. No production router, no merge, no DES/Fidelity modification.**
+Status: **STAGE 2 CONTRACT AUDIT COMPLETE; staging only.** See [STAGE-2-ACCEPTANCE.md](STAGE-2-ACCEPTANCE.md) and the passing CI audit. No production router, no merge, no DES/Fidelity modification.
 
 ## Structural validation performed (2026-10-15)
 
-Read the current contract and canonical module excerpts directly from GitHub. JSON parsed; 15 unique module IDs, no unknown unconditional dependencies, no self-dependencies, no cycles. This is **not** a behavioral parity pass. Only the intake staging adapter and its validator are implemented; the other 14 remain unimplemented.
+Read the current contract and canonical module excerpts directly from GitHub. JSON parsed; 15 unique module IDs, no unknown unconditional dependencies, no self-dependencies, no cycles. This is **not** a behavioral parity pass. Only the intake staging adapter and its validator are implemented; the other 14 remain unimplemented (Stage 3).
 
 ### Findings and corrections
 
-- **Taxonomy/page dependency:** original draft required `page` before `taxonomy`, but specialist page creation may require locked taxonomy. The **interface contract** still has taxonomy depend on intake while the **registry** now records canonical step order (page before taxonomy). This is a known interface-versus-schedule distinction: page creation may not consume a taxonomy lock until canonical step 2.4; taxonomy-dependent navigation and brain writes must wait. Full predicate parity remains open. Route compiler must enforce semantic confirmation before the first taxonomy-dependent write, not merely rely on generic dependency arrays.
+- **Taxonomy/page dependency:** original draft required `page` before `taxonomy`, but specialist page creation may require locked taxonomy. The **interface contract and the registry** now both put page draft before the taxonomy lock (C2 then C2.4). Page creation may not consume a taxonomy lock until canonical step 2.4; taxonomy-dependent navigation and brain writes must wait. Executable predicate parity will be tested when the adapters exist. Route compiler must enforce semantic confirmation before the first taxonomy-dependent write, not merely rely on generic dependency arrays.
 - **Final verification:** original draft depended only on build. Corrected to consume route execution ledger and every applicable receipt, approval and Phase F result; no blanket assumption that build is required for paper-only.
 - **Route variants:** paper-only, LiteCast, Challenge, standard page+paper are distinct plans. Paper-only must not enter page/brain/build/English/notification by default.
 - **Missing fidelity:** old guidance contradictions (incremental vs full Fidelity recheck, challenge exclusions, brain absolute tail) must be resolved against canonical source; **do not modify the scientific engine**.
 - **Design limitation:** current `trigger` names are labels, not executable predicates. `requires` is only unconditional edges; route-specific dependencies remain to be compiled.
 
-## Proposed next-step route planner (not executable)
+## Route planner contract (draft planner exists; not executable publishing)
 
 Inputs: exact user request, attachments, current branch/commit, live brain/category precedent, global invariant registry. Outputs: route ID, ordered applicable modules, required source files, explicit skipped modules with source-backed reasons, locked decisions, gates, allowed side effects, final verification conditions.
 
@@ -22,9 +22,9 @@ Inputs: exact user request, attachments, current branch/commit, live brain/categ
 
 | Route | Required special handling | Forbidden assumptions |
 |---|---|---|
-| ordinary specialist publish | intake; taxonomy lock; page; navigation; semantic analysis; optional evidence/learning; brain; English; build and Phase F | do not omit English or semantic analysis; do not assume evidence always eligible |
+| ordinary specialist publish | intake; page draft; taxonomy lock; navigation; semantic analysis; conditionally eligible evidence/learning; brain; pathways; C6 Pulse; C7 version; C8 build; English D; E marker; F gate | do not omit English or semantic analysis; do not assume evidence always eligible |
 | page + attached paper | all eligible publish stages **and** paper ingestion/credit | do not classify paper ingestion as DentAI-only |
-| paper-only | intake and three paper-ingestion parts, including catalog; route-specific completion | no page, brain, build, English, or false publish report |
+| paper-only | intake and paper-ingestion Parts 1 & 2 only (Drive + catalog), then commit; NO Part 3 or publication gate | no page, brain, build, English, or false publish report |
 | LiteCast | independent .ir category, isolated links and data, explicit English skip | no specialist crosslinks, no .org English |
 | Challenge | question and public-safe markup, private handoff, explicit exceptions | never commit answer or invent mirror |
 | NoteCast+Episode | respect source-basket and evidence reuse conditions | do not recompute scientific scores automatically |
@@ -45,17 +45,17 @@ Inputs: exact user request, attachments, current branch/commit, live brain/categ
 
 ## Next implementation boundary
 
-Build a **read-only route-plan compiler and validator** first, using canonical fixtures and explicit rule IDs. It should output JSON plans and diagnostics without editing content, calling DES, committing, notifying, or publishing. After route plans pass negative and positive tests, implement a stateful orchestrator and per-module adapters.
+The **read-only route-plan skeleton, validator, intake adapter and staging orchestrator now exist**, with static contract and route-fixture tests. They output draft plans and diagnostics without editing content, calling DES, notifying or publishing. The actual conditional executable route compiler, phase-scoped notification invocations, and 14 additional adapters are Stage 3 deliverables.
 
 ## Verification checklist
 
 - [x] JSON parses, unique module IDs
 - [x] Unconditional dependency graph acyclic and referentially valid
 - [x] Taxonomy prerequisite and verification-ledger design corrected
-- [ ] Complete rule-by-rule mapping across README, CLAUDE, AGENTS, Cursor and agent-parity
+- [x] Static canonical source coverage, all 17 hard-rule owners, five entrypoint references (Stage 2; not runtime parity)
 - [ ] Executable predicates and route-specific dependency graph
 - [ ] Module input/output schema validation
-- [ ] Dry-run fixtures for each route and negative test
+- [x] Seven draft-route fixture variants plus negative test cases (staging only)
 - [ ] Durable checkpoint and side-effect idempotency
 - [ ] Behavioral parity across Claude, Codex and Cursor
 - [ ] Explicit founder activation approval
@@ -71,11 +71,11 @@ Build a **read-only route-plan compiler and validator** first, using canonical f
 5. **Final mechanical gate is necessary but not sufficient for semantic work.** Canonical Phase F expressly says semantic quality of 4.7/4.8/4.9 is not validated by the mechanical gate (2544-2546). Independent semantic execution receipts must remain mandatory even if `verify_publish.py` passes.
 6. **Contract naming mismatch:** `MODULE-CONTRACTS.v1.json` uses `contract_version` and `dependency_receipts`, while the staging adapter uses `module_contract_version` and `dependencies`. A versioned translation or single canonical request schema is needed before a real second adapter.
 
-**Stage 2 remains OPEN:** enumerate every canonical rule, skip, approval and stop against all 15 module owners; implement positive/negative fixtures for every supported route; resolve the six findings above; then independently verify parity. Do not start Stage 3 implementation or claim behavioral equivalence before this gate is green.
+**Disposition:** Stage 2 source/contract inventory and route-fixture audit is complete; see STAGE-2-ACCEPTANCE.md and CI. Runtime behavioral equivalence cannot be independently demonstrated until the Stage 3 real modules exist and is reserved for the later full parity gate. The historical six findings were corrected or documented as explicit Stage 3 handoffs.
 
-## Stage 2 gate status — NOT COMPLETE
+## Historical Stage 2 open-gate snapshot (superseded by acceptance)
 
-The source-specific issues above are documented, and the draft registry no longer falsely requires specialist brain for LiteCast build. However the 2,598-line canonical workflow, 314-line agent-parity contract, 473-line CLAUDE entrypoint, 1,623-line AGENTS entrypoint, and both Cursor entrypoints still require a full cross-rule matrix and route-by-route executable positive/negative tests. A header inventory or a few sampled sections is **not** proof of behavioral equivalence. Stage 3 must remain blocked until the matrix and tests are independently checked.
+The earlier concern was incomplete traceability. It was closed for **static contract audit** by the exact 12-slice canonical text coverage, full hard-rule ownership map, five entrypoint checks and seven route fixtures. Full **executable** positive/negative parity tests remain deliberately assigned to Stages 3 and 7; they are not Stage 2 proof.
 
 ## Canonical rule inventory and ownership map — audit expansion
 
@@ -126,3 +126,7 @@ Canonical section-to-module traceability (all top-level execution sections, incl
 **Agent-entrypoint sources inspected:** `CLAUDE.md`, `AGENTS.md`, `.cursor/rules/dentcast-router.mdc`, `.cursor/rules/dentcast-publishing.mdc`, `.dentcast/workflows/agent-parity.md`. All still point to active canonical publication rules; this stage does not reroute them.
 
 **Known important behavior that the current draft planner does NOT yet implement:** conditional learning/evidence/pathway eligibility; LiteCast internal 0.5/0.6 semantic analysis; challenge private handoff; Phase B hard approvals; page+paper DOI credit; exact Phase F receipt and semantic receipt enforcement. A complete parity test cannot honestly be green with these unimplemented.
+
+## Stage 2 closure
+
+The machine audit is `tools/audit_dentcast_stage2_contract.py`; repeatable positive and adversarial fixtures are `tests/test_dentcast_stage2_contract.py`; the passing GitHub Actions evidence is linked in [STAGE-2-ACCEPTANCE.md](STAGE-2-ACCEPTANCE.md). This is a contract freeze, not activation or runtime behavioral parity. **Stage 3 is now unblocked for implementation on the feature branch**, subject to its own safety gates.
