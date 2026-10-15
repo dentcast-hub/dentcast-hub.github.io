@@ -135,6 +135,27 @@ class CheckpointStoreTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "UNVERIFIED_COMPLETION"):
                 store.save(Path(folder) / "state.json", state)
 
+    def test_reject_side_effect_receipt(self):
+        with tempfile.TemporaryDirectory() as folder:
+            state = sample()
+            state["next_index"] = 1
+            state["receipts"]["intake"] = {"module_id": "intake", "status": "completed",
+                                           "source_revision": "revision-1", "verification": {"passed": True},
+                                           "input_fingerprint": "a" * 64,
+                                           "artifact_receipts": [{"path": "live.html"}]}
+            with self.assertRaisesRegex(ValueError, "SIDE_EFFECTS_NOT_RECONCILED"):
+                store.save(Path(folder) / "state.json", state)
+
+    def test_reject_bad_fingerprint_receipt(self):
+        with tempfile.TemporaryDirectory() as folder:
+            state = sample()
+            state["next_index"] = 1
+            state["receipts"]["intake"] = {"module_id": "intake", "status": "completed",
+                                           "source_revision": "revision-1", "verification": {"passed": True},
+                                           "input_fingerprint": "bad", "artifact_receipts": []}
+            with self.assertRaisesRegex(ValueError, "INVALID_FINGERPRINT"):
+                store.save(Path(folder) / "state.json", state)
+
     def test_reject_symlink(self):
         with tempfile.TemporaryDirectory() as folder:
             target = Path(folder) / "real.json"
