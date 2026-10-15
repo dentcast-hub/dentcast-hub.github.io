@@ -46,7 +46,7 @@ ALLOWED = {
     "pathways": ("plus/pathways.json",),
     "notification": ("index.html", "*.html"),
     "build": ("*.html", "*.json", "*.js", "*.css", "service-worker.js"),
-    "english": ("*/en/*.html",),
+    "english": ("*/*.html", "*/en/*.html"),
 }
 NO_EDITS = {"intake", "taxonomy", "verify"}
 PROTECTED_PREFIXES = (
@@ -75,8 +75,11 @@ def allowed(module, name):
     patterns = ALLOWED[module]
     fail(any(fnmatch.fnmatch(name, pat) for pat in patterns), "MODULE_WRITE_SCOPE_FORBIDDEN")
     if module == "english":
-        fail("/en/" in "/" + name and name.endswith(".html"),
-             "ENGLISH_WRITES_EN_MIRRORS_ONLY")
+        # Phase D changes BOTH the source fa toggle and the en mirror.
+        # Require article-folder HTML, never index.html at repository root.
+        parts = Path(name).parts
+        fail(len(parts) in (2, 3) and (len(parts) != 3 or parts[1] == "en")
+             and name.endswith(".html"), "ENGLISH_WRITES_ARTICLE_PAIR_ONLY")
     if module == "paper-cabinet" and name.endswith(".html"):
         # Only credit step can change HTML, never Drive/catalog steps.
         pass
