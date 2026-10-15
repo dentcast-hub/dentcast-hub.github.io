@@ -11,6 +11,12 @@ m = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(m)
 D = "a" * 64
 REV = "b" * 40
+RECEIPT = {"schema": "dc-public-receipt-v1",
+           "validation": {"contract_checked": True, "input_bound": True,
+                          "source_verified": True},
+           "input_digest": D, "output_digest": D, "source_revision": REV}
+RECEIPT_DIGEST = m.digest(RECEIPT)
+RECEIPT_KW = {"receipt_digest": RECEIPT_DIGEST, "public_receipt": RECEIPT}
 ACTORS = {
     "claude": {"family": "claude", "model": "sonnet", "session": "s1"},
     "cursor": {"family": "cursor", "model": "model-x", "session": "s2"},
@@ -92,7 +98,7 @@ class RemoteMemoryTests(unittest.TestCase):
         self.assertEqual(len(first["events"]), 1)
         self.assertFalse(first["state"]["execution_authorized"])
         self.store.append(run, ACTORS["claude"], "step_completed", "intake:route",
-                          input_digest=D, receipt_digest=D, gate="local_integrity_checked")
+                          input_digest=D, gate="local_integrity_checked", **RECEIPT_KW)
         self.store.append(run, ACTORS["cursor"], "step_paused", "page:draft",
                           input_digest=D, gate="blocked")
         blocked = self.store.snapshot(run)
@@ -115,8 +121,7 @@ class RemoteMemoryTests(unittest.TestCase):
         run = self.start()
         def winner():
             self.store.append(run, ACTORS["cursor"], "step_completed",
-                              "intake:route", receipt_digest=D,
-                              gate="local_integrity_checked")
+                              "intake:route", gate="local_integrity_checked", **RECEIPT_KW)
         self.api.inject_race = winner
         with self.assertRaisesRegex(m.Conflict, "CONCURRENT_WRITER_LOST"):
             self.store.append(run, ACTORS["claude"], "step_completed",
@@ -138,7 +143,7 @@ class RemoteMemoryTests(unittest.TestCase):
     def test_forged_or_missing_event_replay_blocks(self):
         run = self.start()
         self.store.append(run, ACTORS["claude"], "step_completed", "intake:route",
-                          receipt_digest=D, gate="engine_verified")
+                          gate="engine_verified", **RECEIPT_KW)
         filemap = self.api.commits[self.api.head_ref]["files"]
         state = filemap[m.run_folder(run) + "/state.json"]
         state["completed_steps"] = ["not-really"]
