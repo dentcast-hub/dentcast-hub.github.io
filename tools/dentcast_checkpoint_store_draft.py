@@ -24,7 +24,7 @@ def _validate(state):
 
     seq = state['sequence']
     receipts = state['receipts']
-    if not seq or seq[0] != 'intake' or len(seq) != len(set(seq)):
+    if not seq or seq[0] != 'intake' or any(not isinstance(mid, str) or not mid for mid in seq) or len(seq) != len(set(seq)):
         raise ValueError('INVALID_SEQUENCE')
     if any(mid not in seq for mid in receipts):
         raise ValueError('UNKNOWN_RECEIPT_MODULE')
