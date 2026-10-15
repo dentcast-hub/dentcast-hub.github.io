@@ -355,7 +355,7 @@ def des_fidelity_recompute(counts, version=None):
     still checks against the formula it was written under."""
     m, a, r, n = (int(counts.get(k, 0)) for k in ("matches", "altered", "reversed", "not_in_source"))
     assessable = m + a + r + (0 if des_ge(version, (2, 8)) else n)
-    if assessable < 3:
+    if assessable < (1 if des_ge(version, (3, 5)) else 3):
         return assessable, None, "INSUFFICIENT_CLAIMS"
     score = int((Decimal(m * 100 + a * 50) / Decimal(assessable)).quantize(
         Decimal("1"), rounding=ROUND_HALF_UP))
