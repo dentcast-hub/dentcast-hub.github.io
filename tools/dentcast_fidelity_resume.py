@@ -154,8 +154,8 @@ def _data(store, run_id, source_id):
     head, folder = snap["head"], mem.run_folder(run_id)
     relevant = []
     for event in snap["events"]:
-        if event["kind"] != "fidelity_checkpoint" or
-           not event["step_id"].startswith("evidence:" + source_id + ":"):
+        if (event["kind"] != "fidelity_checkpoint" or
+                not event["step_id"].startswith("evidence:" + source_id + ":")):
             continue
         need(len(event["artifact_digests"]) == 1,
              "SCIENCE_EVENT_NEEDS_COMPLETE_ARTIFACT")
