@@ -404,7 +404,7 @@ def invalidate_source(store, run_id, source_id, actor, *,
                         receipt_digest=reason_digest, gate="blocked")
 
 
-def _write_verified_file(path, obj):
+def _write_verified_file(path, obj, *, replace_existing=False):
     """Local-only, no symlink, no conflicting existing scientific result."""
     path = Path(path)
     need(path.parent.is_dir() and not path.is_symlink(),
@@ -412,8 +412,9 @@ def _write_verified_file(path, obj):
     payload = json.dumps(obj, ensure_ascii=False, indent=1) + "\n"
     if path.exists():
         old = json.loads(path.read_text(encoding="utf-8"))
-        need(old == obj, "CONFLICTING_SCIENTIFIC_OUTPUT")
-        return
+        if old == obj:
+            return
+        need(replace_existing, "CONFLICTING_SCIENTIFIC_OUTPUT")
     fd, tmp = tempfile.mkstemp(prefix=".fidelity-checkpoint-", dir=str(path.parent))
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as writer:
@@ -462,11 +463,8 @@ def restore_engine_files(store, run_id, source_id, out_dir):
             need(source_id not in existing or existing[source_id] == others[role],
                  "CONFLICTING_REVIEW_SOURCE")
             updated = {**existing, source_id: others[role]}
-            if path.exists() and existing != updated:
-                # Multi-source preservation: rebuild a safe unique merged file.
-                need(not path.is_symlink(), "REVIEW_SYMLINK_FORBIDDEN")
-                path.unlink()
-            _write_verified_file(path, updated)
+            # Atomic replace for the aggregate multi-source review map.
+            _write_verified_file(path, updated, replace_existing=True)
             restored.append(filename)
     return {"status": "scientific_inputs_restored_locally",
             "source_id": source_id, "files": restored,
