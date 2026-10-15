@@ -38,7 +38,7 @@ class ModuleDispatchTests(unittest.TestCase):
         p = sample()
         state = checkpoint.begin(p, "run-1", "rev-1")
         result = adapter.dispatch(adapter.invocation(p, "run-1", "rev-1"))
-        state = checkpoint.accept(state, adapter.checkpoint_receipt(result), "rev-1")
+        state = checkpoint.accept(state, adapter.checkpoint_receipt(result, adapter.invocation(p, "run-1", "rev-1")), "rev-1")
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "state.json"
             store.save(path, state)
@@ -77,12 +77,52 @@ class ModuleDispatchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "UNSAFE_PLAN"):
             adapter.dispatch(req)
 
+    def test_reject_missing_original_invocation(self):
+        req = adapter.invocation(sample(), "run-1", "rev-1")
+        with self.assertRaisesRegex(ValueError, "ORIGINAL_INVOCATION_REQUIRED"):
+            adapter.checkpoint_receipt(adapter.dispatch(req))
+
+    def test_reject_forged_run_identity(self):
+        req = adapter.invocation(sample(), "run-1", "rev-1")
+        response = adapter.dispatch(req)
+        response["run_id"] = "other-run"
+        with self.assertRaisesRegex(ValueError, "ADAPTER_IDENTITY_MISMATCH"):
+            adapter.checkpoint_receipt(response, req)
+
+    def test_reject_forged_output(self):
+        req = adapter.invocation(sample(), "run-1", "rev-1")
+        response = adapter.dispatch(req)
+        response["outputs"]["route"] = "paper-only"
+        with self.assertRaisesRegex(ValueError, "OUTPUT_MISMATCH"):
+            adapter.checkpoint_receipt(response, req)
+
+    def test_reject_hidden_approval_request(self):
+        req = adapter.invocation(sample(), "run-1", "rev-1")
+        response = adapter.dispatch(req)
+        response["approval_requests"] = ["publish"]
+        with self.assertRaisesRegex(ValueError, "UNSAFE_ADAPTER_RESULT"):
+            adapter.checkpoint_receipt(response, req)
+
+    def test_reject_false_verification_scope(self):
+        req = adapter.invocation(sample(), "run-1", "rev-1")
+        response = adapter.dispatch(req)
+        response["verification"]["scope"] = "full-publish"
+        with self.assertRaisesRegex(ValueError, "INVALID_VERIFICATION"):
+            adapter.checkpoint_receipt(response, req)
+
+    def test_reject_extra_response_field(self):
+        req = adapter.invocation(sample(), "run-1", "rev-1")
+        response = adapter.dispatch(req)
+        response["unreviewed"] = True
+        with self.assertRaisesRegex(ValueError, "INVALID_RESPONSE_SCHEMA"):
+            adapter.checkpoint_receipt(response, req)
+
     def test_reject_side_effect_result_as_checkpoint(self):
         req = adapter.invocation(sample(), "run-1", "rev-1")
         result = adapter.dispatch(req)
         result["artifacts"] = [{"path": "live.html"}]
         with self.assertRaisesRegex(ValueError, "UNSAFE_ADAPTER_RESULT"):
-            adapter.checkpoint_receipt(result)
+            adapter.checkpoint_receipt(result, req)
 
 
 if __name__ == "__main__":
