@@ -166,9 +166,10 @@ class Stage2RoutesTests(unittest.TestCase):
                          ["pathways", "english", "evidence", "learning-assets"], "challenge")
 
     def test_glossary_phase_e_skip_contract_while_pulse_still_runs(self):
+        # Glossary lives outside the brain category array; the conservative
+        # draft planner must fail closed rather than silently invent a route.
         p = route(category="glossary")
-        self.check_route(p, ["page", "taxonomy", "semantic-links", "brain",
-                             "notification", "build", "english", "verify"], [], "publication")
+        self.assertEqual(p["code"], "CATEGORY_RULES_NOT_MAPPED")
         import json
         contract = json.loads((ROOT / ".dentcast/workflows/modules/MODULE-CONTRACTS.v1.json").read_text(encoding="utf-8"))
         marker = next(m for m in contract["modules"] if m["id"] == "notification")["phase_invocations"][1]
