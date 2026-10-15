@@ -90,6 +90,19 @@ class ValidatorTests(unittest.TestCase):
         p["category"] = "clinical"
         self.assertIn("LITECAST_CATEGORY_MISMATCH", mod.validate(p, REGISTRY))
 
+    def test_unresolved_gate_must_be_list(self):
+        p = sample()
+        p["unresolved"] = 42
+        issues = mod.validate(p, REGISTRY)
+        self.assertIn("UNRESOLVED_AUDIT_GATES_MISSING", issues)
+        self.assertIn("PAPER_ONLY_PART3_RULE_MISSING", issues)
+
+    def test_unresolved_gate_must_contain_strings(self):
+        p = sample()
+        p["unresolved"] = [{"unsafe": True}]
+        issues = mod.validate(p, REGISTRY)
+        self.assertIn("UNRESOLVED_AUDIT_GATES_MISSING", issues)
+
     def test_not_authorized_to_execute(self):
         p = sample()
         p["status"] = "ready"
