@@ -10,7 +10,8 @@
     "No writes to production or merge authorized.",
     "All requires arrays express unconditional prerequisites only. Conditional prerequisites (e.g. taxonomy for specialist page, build for publish verification) are declared in inputs and must be compiled into the route-specific DAG; never use requires as the whole execution graph.",
     "Route plans must explicitly distinguish paper-only, LiteCast, Challenge and standard publication; skip receipts must cite canonical authority.",
-    "Module interface contract validated structurally; complete clause-level canonical parity is still pending."
+    "Module interface contract validated structurally; complete clause-level canonical parity is still pending.",
+    "Stage 2: build->brain is conditional on specialist routes, never unconditional on LiteCast; verify is ledger-driven, not automatically build-dependent on paper-only."
   ],
   "request_schema": {
     "required": [
@@ -868,7 +869,7 @@
         "status": "requires executable predicate mapping"
       },
       "requires": [
-        "brain"
+        "page"
       ],
       "inputs": [
         {
