@@ -29,9 +29,10 @@ The earlier 8-file extraction is retained temporarily as a reference, not as an 
 - [STAGE-ROUTER-DRAFT.md](STAGE-ROUTER-DRAFT.md) — proposed lazy-loading algorithm, **not activated**.
 - [ENTRYPOINT-PARITY-PLAN.md](ENTRYPOINT-PARITY-PLAN.md) — cross-agent source map, known conflicts, coordinated activation plan and test scenarios.
 - [GLOBAL-INVARIANTS-SOURCE-MAP.md](GLOBAL-INVARIANTS-SOURCE-MAP.md) — 18 canonical hard rules, global source boundaries, contradictions and higher-effort review gates.
+- [VERIFICATION-LEDGER.md](VERIFICATION-LEDGER.md) — 12/12 exact source-slice parity, pending clause audit, independent-review handoff.
 
 ## Verification and safeguards
 
-The source ranges above cover all 2,598 original lines once, in original order, without overlaps or gaps. The first 8-file extraction was previously reassembled with exact character parity. The refined 12-file extraction is verbatim from the same original ranges; final machine parity and representative behavior tests remain required before activation.
+The source ranges above cover all 2,598 original lines once, in original order, without overlaps or gaps. The first 8-file extraction was previously reassembled with exact character parity. **The refined 12-file extraction has now passed exact text equality against each canonical source range (12/12).** Representative behavior tests and global rule coverage still remain required before activation.
 
 Do not activate a router, alter read-all requirements, introduce checkpoints, merge to main or claim production readiness before the specified parity gates and founder review.
