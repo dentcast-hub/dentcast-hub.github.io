@@ -52,12 +52,45 @@ def dispatch(request):
             "error": None, "execution_authorized": False}
 
 
-def checkpoint_receipt(response):
-    """Translate a validated no-side-effect adapter result into a checkpoint receipt."""
-    if not isinstance(response, dict) or response.get("module_id") != "intake" or response.get("status") != "completed":
+def validate_response(request, response):
+    """Independent fail-closed validation; never trust a module's self-reported success."""
+    if not isinstance(request, dict) or not isinstance(response, dict):
         raise ValueError("INVALID_ADAPTER_RESULT")
-    if response.get("execution_authorized") is not False or response.get("artifacts") != [] or response.get("verification", {}).get("passed") is not True:
+    required = {"run_id", "module_id", "module_contract_version", "source_revision",
+                "status", "input_fingerprint", "outputs", "artifacts", "decisions",
+                "approval_requests", "invalidates", "verification", "error",
+                "execution_authorized"}
+    if set(response) != required:
+        raise ValueError("INVALID_RESPONSE_SCHEMA")
+    for field in ("run_id", "module_id", "module_contract_version", "source_revision",
+                  "input_fingerprint"):
+        if response[field] != request.get(field):
+            raise ValueError("ADAPTER_IDENTITY_MISMATCH")
+    if response["module_id"] != "intake" or response["status"] != "completed":
+        raise ValueError("INVALID_ADAPTER_RESULT")
+    if response["execution_authorized"] is not False:
+        raise ValueError("UNAUTHORIZED_EXECUTION")
+    if any(response[key] != [] for key in
+           ("artifacts", "decisions", "approval_requests", "invalidates")):
         raise ValueError("UNSAFE_ADAPTER_RESULT")
+    if response["error"] is not None:
+        raise ValueError("INVALID_ADAPTER_RESULT")
+    if response["verification"] != {"passed": True, "scope": "draft-shape-only"}:
+        raise ValueError("INVALID_VERIFICATION")
+    expected_outputs = {"route": request["inputs"]["plan"].get("route"),
+                        "draft_status": "draft_requires_audit"}
+    if response["outputs"] != expected_outputs:
+        raise ValueError("OUTPUT_MISMATCH")
+    if response["input_fingerprint"] != fingerprint(request["inputs"]):
+        raise ValueError("INPUT_FINGERPRINT_MISMATCH")
+    return True
+
+
+def checkpoint_receipt(response, request=None):
+    """Validate adapter result against its original invocation before checkpointing."""
+    if request is None:
+        raise ValueError("ORIGINAL_INVOCATION_REQUIRED")
+    validate_response(request, response)
     return {"module_id": "intake", "status": "completed",
             "source_revision": response["source_revision"],
             "input_fingerprint": response["input_fingerprint"],
