@@ -1,5 +1,7 @@
 # Cross-agent modularization handoff — STAGING ONLY
 
+**CURRENT IMPLEMENTATION STATUS (after Stages 1–5):** Read [STAGE-2-ACCEPTANCE.md](STAGE-2-ACCEPTANCE.md), [STAGE-3-ACCEPTANCE.md](STAGE-3-ACCEPTANCE.md), [STAGE-4-ACCEPTANCE.md](STAGE-4-ACCEPTANCE.md) and [STAGE-5-ACCEPTANCE.md](STAGE-5-ACCEPTANCE.md) first. The GitHub memory writer is `tools/dentcast_github_memory.py`; per-unit scientific resume is `tools/dentcast_fidelity_resume.py`; the portable staging orchestration is `tools/dentcast_stage3_orchestrator.py`. All remain STAGING ONLY and must not publish or activate the live router. The older audit notes below describe historical defects, not current implementation status.
+
 **Purpose:** Claude Code, Cursor, Codex/GPT and Work must continue the SAME modularization project from the SAME GitHub branch and evidence, not restart from memory or a platform-specific prompt.
 
 ## First five actions, in order
@@ -12,19 +14,19 @@
 
 ## Immutable operating boundaries
 
-- Current 12 Markdown slices are **verbatim reference extracts**, not independently callable implementations. The 15 logical module contracts are **proposals** with adapters and validators NOT_IMPLEMENTED.
+- Current 12 Markdown slices remain **verbatim reference extracts**. The 15 logical owners now have callable staging validators and step executor; they are **NOT autonomous publication handlers** and may not be used on live content without explicit activation.
 - No live router activation, main merge, deployment, content publication, or unrequested side effects.
 - DES/Fidelity is an opaque independently versioned scientific subsystem; do not modify its scoring, prompts, voting, approval or adjudication logic.
 - Preserve all 17 numbered hard rules, Phase F, exact title/caption bytes, explicit founder approvals, category exceptions, paper-only semantics, and cross-agent behavioral parity.
-- The current planner produces `draft_requires_audit`, never an executable plan. Checkpoint records always have `execution_authorized: false`.
+- The legacy planner produces `draft_requires_audit`. The Stage 3 step compiler and Stage 4/5 remote memory run **staging only**; every checkpoint retains `execution_authorized: false`, and no real publish is reported.
 - A successful unit suite proves only the tested assertions; behavioral parity and executable-module completeness remain unproven.
 
 ## Current implementation and known risks
 
-- Route planner and validator: conservative skeleton, some category predicates still unresolved.
-- Checkpoint transition + local atomic store: staging-only, no actual module dispatch, no durable approval registry, local POSIX compare-and-swap now exists but no GitHub remote compare-and-swap, no idempotent side-effect reconciliation.
-- **Discovered registry dependency mismatch:** registry says `taxonomy` depends on `page`; older planner put taxonomy before page. Corrected planner to put page first. Other dependency mismatches still require a complete DAG audit, particularly `build` on LiteCast routes (registry currently requires `brain`, which LiteCast omits). Do not silently change the canonical workflow to fit the draft registry.
-- Prior verified GitHub Actions run: https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/38786784803 — 66 tests passed on an earlier SHA; **not proof of the current HEAD**.
+- Route planner and validator: conservative skeleton; Stage 3 adds a phase-scoped compiled staging plan, bounded validators, local file edits and verified receipts.
+- Checkpoint transition + local atomic store: staging-only; GitHub Git-Data atomic commit, non-force ref CAS, event replay and immutable scientific/receipt storage have now been implemented in Stage 4. Real founder approval verification and external side-effect reconciliation are still unimplemented.
+- **Historical dependency mismatch was resolved in Stage 2:** LiteCast build no longer requires specialist brain, its own links and Pulse remain, and Phase E vs C6 notification are distinct invocations. Live README stays authoritative.
+- Stage 4/5 integrated suite has **162 tests passing** including nested 72-unit replay, conflict rejection, original-engine restoration and source invalidation. Verified run: https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/38801124387. Always verify current HEAD's CI again after code edits.
 - For latest HEAD, retrieve GitHub Actions run and job logs, including per-suite counts, after commits. Fix failures before moving on.
 
 ## New staging central entrypoint
@@ -35,11 +37,11 @@ Use `tools/dentcast_orchestrator_draft.py` as the single **read-only** dry-run e
 
 Use `store.save_checked(path, state, expected_digest)` for every new checkpoint write. First creation uses `expected_digest=None`; subsequent updates require the digest of the exact previously loaded state. A stable POSIX `flock` lock plus digest comparison rejects stale writes. The legacy `store.save()` remains for old staging tests and **is not concurrency-safe**; never use it in new agent orchestration. This is cooperative locking, not a protection against agents bypassing the API or networked filesystems with unreliable flock. On Windows the checked API fails closed. Keep checkpoint paths in a trusted private directory.
 
-## GitHub shared execution memory: future design
+## GitHub shared execution memory: implemented for staging
 
-Read `SHARED-EXECUTION-MEMORY-CONTRACT.md` before implementing remote cross-agent resume. Preserve scientific substeps and complete per-claim receipts: a verified first Fidelity agent must not be rerun merely because a different agent takes over. The second agent, comparison, and adjudication must follow the **existing** Fidelity engine unchanged. Use the existing public repository for temporary public-safe execution memory; never commit confidential or restricted inputs. Clean completed runs from the active tree only after verified publication. Current implementation has no GitHub-backed state writer or scientific substep resume yet.
+Read `SHARED-EXECUTION-MEMORY-CONTRACT.md` before implementing remote cross-agent resume. Preserve scientific substeps and complete per-claim receipts: a verified first Fidelity agent must not be rerun merely because a different agent takes over. The second agent, comparison, and adjudication must follow the **existing** Fidelity engine unchanged. Use the existing public repository for temporary public-safe execution memory; never commit confidential or restricted inputs. Clean completed runs from the active tree only after verified publication. These both now exist for staging (`tools/dentcast_github_memory.py`, `tools/dentcast_fidelity_resume.py`). Do not confuse local/mock validation or the public-safe synthetic GitHub smoke run with production scientific model execution. Full live 3-agent validation remains Stage 6.
 
-## Next priorities
+## Next priorities (Stages 6–8; preceding list is historical)
 
 1. **Dependency parity audit:** compare every generated route against `MODULE-REGISTRY.draft.json` DAG, with explicit treatment of intentionally optional modules. Determine whether mismatches are bad route order, bad draft dependency contract, or a real canonical rule ambiguity. Record evidence before changing.
 2. **Adversarial checkpoint tests:** stale writers and overwrites, mismatched plan digest, corrupt/tampered receipts, path safety, retry after crash. Do not imply atomic rename alone is concurrency-safe.
