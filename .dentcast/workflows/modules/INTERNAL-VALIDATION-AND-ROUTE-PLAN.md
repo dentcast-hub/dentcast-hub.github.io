@@ -4,11 +4,11 @@ Status: **STAGING ONLY. No production router, no merge, no DES/Fidelity modifica
 
 ## Structural validation performed (2026-10-15)
 
-Read the current contract and canonical module excerpts directly from GitHub. JSON parsed; 15 unique module IDs, no unknown unconditional dependencies, no self-dependencies, no cycles. This is **not** a behavioral parity pass. All 15 adapters and schema validators remain unimplemented.
+Read the current contract and canonical module excerpts directly from GitHub. JSON parsed; 15 unique module IDs, no unknown unconditional dependencies, no self-dependencies, no cycles. This is **not** a behavioral parity pass. Only the intake staging adapter and its validator are implemented; the other 14 remain unimplemented.
 
 ### Findings and corrections
 
-- **Taxonomy/page dependency:** original draft required `page` before `taxonomy`, but specialist page creation may require locked taxonomy. Corrected taxonomy to depend on intake; page has conditional taxonomy-lock input. Route compiler must enforce semantic confirmation before the first taxonomy-dependent write, not merely rely on generic dependency arrays.
+- **Taxonomy/page dependency:** original draft required `page` before `taxonomy`, but specialist page creation may require locked taxonomy. The **interface contract** still has taxonomy depend on intake while the **registry** now records canonical step order (page before taxonomy). This is a known interface-versus-schedule distinction: page creation may not consume a taxonomy lock until canonical step 2.4; taxonomy-dependent navigation and brain writes must wait. Full predicate parity remains open. Route compiler must enforce semantic confirmation before the first taxonomy-dependent write, not merely rely on generic dependency arrays.
 - **Final verification:** original draft depended only on build. Corrected to consume route execution ledger and every applicable receipt, approval and Phase F result; no blanket assumption that build is required for paper-only.
 - **Route variants:** paper-only, LiteCast, Challenge, standard page+paper are distinct plans. Paper-only must not enter page/brain/build/English/notification by default.
 - **Missing fidelity:** old guidance contradictions (incremental vs full Fidelity recheck, challenge exclusions, brain absolute tail) must be resolved against canonical source; **do not modify the scientific engine**.
@@ -72,3 +72,7 @@ Build a **read-only route-plan compiler and validator** first, using canonical f
 6. **Contract naming mismatch:** `MODULE-CONTRACTS.v1.json` uses `contract_version` and `dependency_receipts`, while the staging adapter uses `module_contract_version` and `dependencies`. A versioned translation or single canonical request schema is needed before a real second adapter.
 
 **Stage 2 remains OPEN:** enumerate every canonical rule, skip, approval and stop against all 15 module owners; implement positive/negative fixtures for every supported route; resolve the six findings above; then independently verify parity. Do not start Stage 3 implementation or claim behavioral equivalence before this gate is green.
+
+## Stage 2 gate status — NOT COMPLETE
+
+The source-specific issues above are documented, and the draft registry no longer falsely requires specialist brain for LiteCast build. However the 2,598-line canonical workflow, 314-line agent-parity contract, 473-line CLAUDE entrypoint, 1,623-line AGENTS entrypoint, and both Cursor entrypoints still require a full cross-rule matrix and route-by-route executable positive/negative tests. A header inventory or a few sampled sections is **not** proof of behavioral equivalence. Stage 3 must remain blocked until the matrix and tests are independently checked.
