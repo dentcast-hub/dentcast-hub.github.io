@@ -66,15 +66,20 @@
       "id": "semantic-links",
       "source": ".dentcast/workflows/modules/05-semantic-linking.md",
       "depends_on": [
-        "page",
-        "navigation"
+        "page"
       ],
       "outputs": [
         "semantic_links"
       ],
-      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "eligibility": "Every page: specialist 4.7/4.8/4.9; LiteCast INTERNAL 0.5/0.6 only",
       "adapter": "NOT_IMPLEMENTED",
-      "validation": "NOT_IMPLEMENTED"
+      "validation": "NOT_IMPLEMENTED",
+      "conditional_dependencies": {
+        "specialist": [
+          "navigation"
+        ],
+        "litecast": []
+      }
     },
     {
       "id": "paper-cabinet",
@@ -181,7 +186,13 @@
       ],
       "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
       "adapter": "NOT_IMPLEMENTED",
-      "validation": "NOT_IMPLEMENTED"
+      "validation": "NOT_IMPLEMENTED",
+      "conditional_dependencies": {
+        "ordinary_org": [
+          "build"
+        ],
+        "litecast_challenge_skip": []
+      }
     },
     {
       "id": "notification",
@@ -192,9 +203,13 @@
       "outputs": [
         "notification_marker"
       ],
-      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "eligibility": "Every page C6 Pulse; E marker conditional with paper-only/LiteCast/glossary skip",
       "adapter": "NOT_IMPLEMENTED",
-      "validation": "NOT_IMPLEMENTED"
+      "validation": "NOT_IMPLEMENTED",
+      "phase_invocations": [
+        "C6:Pulse before C8 build",
+        "E:push marker after D English if applicable and before F verification"
+      ]
     },
     {
       "id": "verify",
@@ -207,7 +222,15 @@
       ],
       "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
       "adapter": "NOT_IMPLEMENTED",
-      "validation": "NOT_IMPLEMENTED"
+      "validation": "NOT_IMPLEMENTED",
+      "conditional_dependencies": {
+        "page_publish": [
+          "Phase F after E"
+        ],
+        "paper_only": [
+          "Drive and catalog and commit; no Phase F"
+        ]
+      }
     }
   ],
   "activation_guards": {
@@ -221,6 +244,7 @@
     "Dependencies are unconditional minimum prerequisites, not a complete route DAG.",
     "Build requires page on publication routes; brain is route-conditional and absent on LiteCast.",
     "Verify consumes all applicable completed stage receipts, including Phase F for page publication; paper-only has separate completion criteria.",
-    "Canonical README remains authoritative; no behavioral parity is claimed."
+    "Canonical README remains authoritative; no behavioral parity is claimed.",
+    "Staging route planner lists each owner once. Notification has two ordered phase-scoped invocations C6 and E; future executable route plans MUST expand them."
   ]
 }
