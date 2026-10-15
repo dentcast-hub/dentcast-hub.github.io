@@ -3,6 +3,7 @@ import copy
 import hashlib
 import importlib.util
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -231,6 +232,44 @@ class FidelityResumeTests(unittest.TestCase):
         filemap[name]["payload"]["result"]["claims"][0]["verdict"] = "ALTERED"
         with self.assertRaisesRegex(ValueError, "ARTIFACT_REPLAY_INTEGRITY_FAILURE"):
             f.next_task(self.store, "sci-test", "src0")
+
+    def test_reconstruct_existing_v34_cli_outputs_after_crash(self):
+        self.start()
+        original = output(self.block, {"u37": "ALTERED"})
+        self.checker("checker1", CLAUDE, original)
+        self.checker("checker2", CURSOR, output(self.block))
+        task = f.next_task(self.store, "sci-test", "src0")
+        self.assertEqual(task["role"], "checker3")
+        third = output(self.block, {"u37": "ALTERED"}, only=["u37"])
+        self.checker("checker3", CODEX, third, only=["u37"])
+        with tempfile.TemporaryDirectory() as tmp:
+            restored = f.restore_engine_files(self.store, "sci-test", "src0", tmp)
+            self.assertIn("out-src0-1.json", restored["files"])
+            self.assertIn("out-src0-2.json", restored["files"])
+            self.assertIn("out-src0-3.json", restored["files"])
+            self.assertEqual(json.loads((Path(tmp) / "out-src0-1.json").read_text()),
+                             original)
+            self.assertEqual(len(json.loads((Path(tmp) / "out-src0-3.json").read_text())["claims"]), 1)
+            # Reconstruct is deterministic and refuses silently replacing
+            # a changed checker result.
+            f.restore_engine_files(self.store, "sci-test", "src0", tmp)
+            (Path(tmp) / "out-src0-1.json").write_text('{"wrong":true}')
+            with self.assertRaisesRegex(ValueError, "CONFLICTING_SCIENTIFIC_OUTPUT"):
+                f.restore_engine_files(self.store, "sci-test", "src0", tmp)
+
+    def test_source_only_invalidation_leaves_other_sources(self):
+        self.start("src0")
+        second_block = block(3)
+        f.begin_source(self.store, "sci-test", "src1", second_block,
+                       CHECKER, REVIEWER, CLAUDE, prompt_digest=PROMPT,
+                       public_release_approval_digest=D)
+        self.checker("checker1", CLAUDE, source_id="src0")
+        f.invalidate_source(self.store, "sci-test", "src0", CLAUDE,
+                            new_input_digest="c" * 64,
+                            reason_digest="d" * 64)
+        with self.assertRaisesRegex(ValueError, "SOURCE_CHECKPOINT_INVALIDATED"):
+            f.next_task(self.store, "sci-test", "src0")
+        self.assertEqual(f.next_task(self.store, "sci-test", "src1")["role"], "checker1")
 
     def test_duplicate_checker1_prevented_after_successful_resume(self):
         self.start()
