@@ -22,15 +22,27 @@ class DraftDependencyAuditTests(unittest.TestCase):
         p = planner.plan({"has_text": True, "has_paper": False, "category": "clinical", "challenge": False})
         self.assertEqual(audit.audit(p), [])
 
+    def test_challenge_still_runs_push_but_not_english_or_pathways(self):
+        p = planner.plan({"has_text": True, "has_paper": False, "category": "clinical", "challenge": True})
+        ids = [m["id"] for m in p["ordered_modules"]]
+        self.assertIn("notification", ids)
+        self.assertNotIn("english", ids)
+        self.assertNotIn("pathways", ids)
+        self.assertEqual(audit.audit(p), [])
+
     def test_paper_only_honors_registered_dependencies(self):
         p = planner.plan({"has_text": False, "has_paper": True})
         self.assertEqual(audit.audit(p), [])
 
-    def test_litecast_build_dependency_needs_contract_review(self):
+    def test_litecast_internal_links_and_build_without_specialist_brain(self):
         p = planner.plan({"has_text": True, "has_paper": False, "category": "litecast", "challenge": False})
-        self.assertIn({"module": "build", "requires": "brain",
-                       "code": "MISSING_OR_LATE_DEPENDENCY", "review_required": True},
-                      audit.audit(p))
+        ids = [m["id"] for m in p["ordered_modules"]]
+        self.assertIn("semantic-links", ids)
+        self.assertIn("notification", ids)  # C6 Pulse, not Phase E push
+        self.assertIn("build", ids)
+        self.assertNotIn("brain", ids)
+        self.assertNotIn("english", ids)
+        self.assertEqual(audit.audit(p), [])
 
 
 if __name__ == "__main__":
