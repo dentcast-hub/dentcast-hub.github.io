@@ -247,6 +247,34 @@ def state_of(store, run_id, source_id):
     return snap, manifest, checker, other
 
 
+def _stronger_review_context(block, unit_ids, runs, voted):
+    """The existing scientific reviewer sees context AND earlier verdicts.
+
+    Unlike checker2/3, adjudication and stronger review must see the source,
+    unit neighbors, earlier source_quotes and the vote reasoning.
+    """
+    selected = set(unit_ids)
+    units = block["units"]
+    focus = []
+    for i, unit in enumerate(units):
+        if unit["id"] not in selected:
+            continue
+        focus.append({"unit": unit,
+                      "previous": units[i-1] if i else None,
+                      "next": units[i+1] if i+1 < len(units) else None})
+    votes = []
+    for role, run in enumerate(runs, 1):
+        votes.append({"checker_run": role,
+                      "claims": [claim for claim in run["claims"]
+                                 if claim["id"] in selected]})
+    return {"source_text": block["source_text"],
+            "text_basis": block["text_basis"],
+            "focused_units_and_neighbors": focus,
+            "checker_verdicts_and_quoted_evidence": votes,
+            "current_vote": [claim for claim in voted["claims"]
+                             if claim["id"] in selected]}
+
+
 def next_task(store, run_id, source_id):
     """Returns the next domain call with input, NEVER earlier checker verdicts."""
     snap, spec, checks, others = state_of(store, run_id, source_id)
@@ -284,17 +312,24 @@ def next_task(store, run_id, source_id):
     if unresolved:
         return {"role": "adjudication", "status": "pending",
                 "model": spec["reviewer"], "units": unresolved,
-                "source_id": source_id}
+                "source_id": source_id,
+                "scientific_context": _stronger_review_context(
+                    block, unresolved, runs, voted)}
     if unreviewed:
         return {"role": "review", "status": "pending",
                 "model": spec["reviewer"], "units": unreviewed,
-                "source_id": source_id}
+                "source_id": source_id,
+                "scientific_context": _stronger_review_context(
+                    block, unreviewed, runs, voted)}
     flagged = [c["id"] for c in voted["claims"]
                if c["verdict"] in {"ALTERED", "REVERSED"}]
     return {"role": "founder_review" if flagged else "validate_final_vote",
             "status": "awaiting_explicit_founder_decision" if flagged
                       else "ready_for_existing_vote_cli",
-            "flagged_units": flagged, "voted_digest": mem.digest(voted),
+            "flagged_units": flagged,
+            "flagged_claims_with_quote_and_reason": [
+                claim for claim in voted["claims"] if claim["id"] in flagged],
+            "voted_digest": mem.digest(voted),
             "only_existing_engine_may_finalize": True}
 
 
