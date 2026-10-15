@@ -13,7 +13,8 @@
     "Module interface contract validated structurally; complete clause-level canonical parity is still pending.",
     "Stage 2: build->brain is conditional on specialist routes, never unconditional on LiteCast; verify is ledger-driven, not automatically build-dependent on paper-only.",
     "Stage 2: phase-scoped module invocation identity is module:substep. notification has two invocations C6 and E; module-level one-pass sequencing is NOT sufficient; phase E marker cannot be executed during C6 Pulse.",
-    "Stage 2: source sequence is page draft C2 -> taxonomy lock C2.4 -> navigation C2.5/2.6 -> specialist links OR LiteCast 0.5/0.6 -> brain where applicable -> pathways -> C6 Pulse -> C7 stamp -> C8 build -> D English where applicable -> E marker where applicable -> F verify."
+    "Stage 2: source sequence is page draft C2 -> taxonomy lock C2.4 -> navigation C2.5/2.6 -> specialist links OR LiteCast 0.5/0.6 -> brain where applicable -> pathways -> C6 Pulse -> C7 stamp -> C8 build -> D English where applicable -> E marker where applicable -> F verify.",
+    "Stage 2 contract audit complete; do not treat this as executable behavioral parity certification. The 12 source slices and every hard rule are checked by tools/audit_dentcast_stage2_contract.py."
   ],
   "request_schema": {
     "required": [
@@ -418,7 +419,10 @@
       "privacy_class": "public-safe-metadata-only",
       "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
       "adapter": "NOT_IMPLEMENTED",
-      "schema_validator": "NOT_IMPLEMENTED"
+      "schema_validator": "NOT_IMPLEMENTED",
+      "additional_sources": [
+        ".dentcast/workflows/modules/03-litecast-and-page.md"
+      ]
     },
     {
       "id": "paper-cabinet",
@@ -1014,7 +1018,8 @@
           "skip_only": [
             "litecast",
             "challenge"
-          ]
+          ],
+          "canonical_authority": "README Phase D after C8 build; stamp-version rerun last after mirror modifications"
         }
       ]
     },
@@ -1099,7 +1104,8 @@
           ],
           "must_precede": [
             "build:C8"
-          ]
+          ],
+          "canonical_authority": "README Phase C Step 6"
         },
         {
           "invocation_id": "notification:push-marker",
@@ -1114,8 +1120,12 @@
             "paper-only",
             "litecast",
             "glossary"
-          ]
+          ],
+          "canonical_authority": "README Phase E"
         }
+      ],
+      "additional_sources": [
+        ".dentcast/workflows/modules/11-build-and-version.md"
       ]
     },
     {
