@@ -777,15 +777,15 @@ A single predicate with a list of objects («دقت، مورفولوژی و پا
 
 ```
 assessable      = MATCHES + ALTERED + REVERSED
-fidelity_score  = round_half_up((MATCHES × 100 + ALTERED × 50) ÷ assessable)        when assessable ≥ 3
-                = null                                                                  when assessable < 3
+fidelity_score  = round_half_up((MATCHES × 100 + ALTERED × 50) ÷ assessable)        when assessable ≥ 1
+                = null                                                                  when assessable = 0
 ```
 
 **The score is computed only over claims the source ADDRESSES** (v2.8). `NOT_IN_SOURCE`, `NOT_ASSESSABLE`, `AUTHOR_VIEW` and `NOT_A_CLAIM` are all outside the denominator. A claim the source is silent about is reported — counted in `counts.not_in_source` and listed for the reader — but it neither raises nor lowers the score: what this track measures is whether the text **says what the source says** (direction, hedge, scope), and a sentence the source never addresses has nothing in the source to be faithful or unfaithful to. Under `FULL_TEXT` such a sentence is almost always the author's own background knowledge or clinical reasoning stated without an opinion marker, and scoring it as zero punished explaining. Compute `MATCHES × 100 + ALTERED × 50` in integer arithmetic before dividing; round half away from zero (Step 5's rule, for Step 5's reasons).
 
 | `level` | Condition (first match wins) |
 |---|---|
-| `INSUFFICIENT_CLAIMS` | `assessable` < 3 — fewer than three claims the source addresses; `fidelity_score` is `null`. A vague text that attributes almost nothing to its source does not earn a high score by saying nothing, and a text whose claims the source never addresses has not been checked against it at all |
+| `INSUFFICIENT_CLAIMS` | `assessable` = 0 — no claims the source addresses; `fidelity_score` is `null`. A text whose claims the source never addresses has not been checked against it at all. One or two assessable claims receive a score and level; the `assessable` count must remain visible so a perfect match of one claim is not mistaken for comprehensive coverage |
 | `LOW` | `fidelity_score` < 60 |
 | `MEDIUM` | 60 ≤ `fidelity_score` ≤ 84 — **unless exactly one `ALTERED` and no `REVERSED`** (that is `HIGH`, below) — **or any `REVERSED` verdict regardless of score** — one claim stated backwards caps the level, because a reader who trusts that sentence is misled however faithful the rest is |
 | `HIGH` | no `REVERSED`, and either `fidelity_score` ≥ 85 or exactly one `ALTERED` (v2.8). One sentence a notch firmer than its source never by itself takes a page below `HIGH`: on a three-claim page it would score 83 where the same sentence on a fifty-claim page scores 99, and the level would then measure the page's length rather than its faithfulness. One `ALTERED` cannot score below 60 (its minimum, over three claims, is 83), so it never meets `LOW` first |
@@ -932,7 +932,7 @@ Comparability across versions:
   unnamed sources are not pooled yet (the caller is told; those units stay in
   no call). Measured on share-10 against the abstract: two Sonnet runs
   identical on all 29 units, 2 matching, 22 the abstract does not address,
-  `INSUFFICIENT_CLAIMS` — the honest answer for a page written from a full
+  `INSUFFICIENT_CLAIMS` under the historical three-claim gate — a result now superseded for one or two assessable claims — for a page written from a full
   text whose record holds only the abstract. No stored record moves: every
   record on file names all of its sources or none of them.
 - v3.0 → v3.1: **No SOURCE score moves and no FIDELITY verdict changes; the
@@ -1197,7 +1197,7 @@ Comparability across versions:
   never judged; an abstract's silence is `NOT_ASSESSABLE` and outside the
   denominator (Step 3b rule 5 applied to a different question); `ALTERED`
   costs half and has five named kinds and no `OTHER`; one `REVERSED` caps the
-  level at `MEDIUM`; fewer than three checkable claims yields no number. The
+  level at `MEDIUM`; zero checkable claims yields no number. The
   first input run through it was a third-party page about Sim et al. 2026
   (10.1016/j.prosdent.2026.07.012), which reported the paper's findings
   faithfully sentence by sentence while naming the conventional-CAD comparator
