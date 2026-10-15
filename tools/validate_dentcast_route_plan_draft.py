@@ -54,7 +54,7 @@ def validate(plan, registry):
     if route == "paper-only":
         if ids != ["intake", "paper-cabinet"]:
             problems.append("PAPER_ONLY_MUST_NOT_PUBLISH")
-        if not any("NO Part 3 credit" in item for item in unresolved if isinstance(item, str)) if isinstance(unresolved, list) else True:
+        if not isinstance(unresolved, list) or not any("NO Part 3 credit" in item for item in unresolved if isinstance(item, str)):
             problems.append("PAPER_ONLY_PART3_RULE_MISSING")
     if route.startswith("litecast") and "english" in ids:
         problems.append("LITECAST_ENGLISH_FORBIDDEN")
