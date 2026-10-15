@@ -74,6 +74,27 @@ class CheckpointStoreTests(unittest.TestCase):
             with self.assertRaises(json.JSONDecodeError):
                 store.load(path, "run-1", "revision-1", "f" * 64)
 
+    def test_reject_inconsistent_cursor(self):
+        with tempfile.TemporaryDirectory() as folder:
+            state = sample()
+            state["next_index"] = 1
+            with self.assertRaisesRegex(ValueError, "CURSOR_RECEIPT_MISMATCH"):
+                store.save(Path(folder) / "state.json", state)
+
+    def test_reject_future_receipt(self):
+        with tempfile.TemporaryDirectory() as folder:
+            state = sample()
+            state["receipts"]["page"] = {"status": "completed"}
+            with self.assertRaisesRegex(ValueError, "FUTURE_RECEIPT"):
+                store.save(Path(folder) / "state.json", state)
+
+    def test_reject_pause_without_receipt(self):
+        with tempfile.TemporaryDirectory() as folder:
+            state = sample()
+            state["paused"] = True
+            with self.assertRaisesRegex(ValueError, "PAUSE_RECEIPT_MISMATCH"):
+                store.save(Path(folder) / "state.json", state)
+
     def test_reject_symlink(self):
         with tempfile.TemporaryDirectory() as folder:
             target = Path(folder) / "real.json"
