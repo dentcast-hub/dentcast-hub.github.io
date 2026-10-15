@@ -60,9 +60,9 @@ def plan(request, contract=None):
         route += "+paper"
     selected = ["intake"]
     if content:
+        selected += ["page"]
         if category != "litecast":
             selected += ["taxonomy"]
-        selected += ["page"]
         if category != "litecast":
             selected += ["navigation", "semantic-links"]
         if paper:
