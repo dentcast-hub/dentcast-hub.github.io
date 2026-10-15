@@ -1,0 +1,16 @@
+# Stage 4 acceptance — GitHub-backed cross-agent run memory
+
+**STAGE 4 COMPLETE AS A STAGING MEMORY TRANSPORT. NOT ACTIVATED FOR PUBLICATION.**
+
+- Implementation: `tools/dentcast_github_memory.py`. GitHub **Git Data API** stores a run in `.dentcast/execution-memory/runs/<run_id>/` with `manifest.json`, `state.json`, immutable SHA-256 event files, and optional immutable artifact and receipt objects.
+- Each transition **writes an entire Git tree and commit, then advances the staging branch with a NON-FORCE update**. Concurrent commits that fork from the same parent cannot both fast-forward. A conflict is a stop-and-reread, never an overwrite/force-push.
+- Resume re-reads at one pinned commit SHA, checks manifest/state identity, SHA-256 event-chain continuity, actor provenance, every referenced artifact/receipt and the recomputed state. It refuses missing, altered or stale records.
+- A safe run is independent of any individual agent session. Events carry exact agent family and model/session identifiers, input/output digests and validation state. No model signature counts as founder approval.
+- Raw scientific results may be attached only as explicitly public-release-reviewed artifacts identified by an outside approval digest. Such a digest is **attribution, not a cryptographic proof of founder authorization**; the next activation gate must independently verify the approval. Private patient material, credentials or licensed sources must never go to public Git.
+- The CLI uses `GH_TOKEN`/`GITHUB_TOKEN` for authorized GitHub access. The repo and branch are hard-pinned. The connected-app integration can also perform the same commit/ref operations.
+- Staging intentionally does not provide cleanup or real-publication success. Cleanup after publication needs the real canonical completion receipt and explicit activation, not a draft dry run.
+- Tests: `tests/test_dentcast_github_memory.py` exercises mock Git semantics, multi-agent handoff, stale-writer races, missing/forged events, unchanged pinned snapshots and immutable artifact replay. Earlier staging tests remain enabled.
+- **Real GitHub smoke:** a **public-safe synthetic** run `stage4-smoke-20261015` was committed in one atomic tree+commit update, SHA `1a91589228f81443a5defeb7e40f1da3927cec46`. Verified all 3 objects exist and match their expected schema on branch `refactor/publishing-modular-workflow`. No publish/merge. A deliberately stale sibling update returned a GitHub API error; branch HEAD remained at the smoke commit. Because the API returned a generic error rather than a typed conflict, exact live conflict classification is still a Stage 6 test.
+- **CI passing:** 150 staging unit tests including initial Stage 4 suite: https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/38799358348 . Later artifact/receipt integration tests expand coverage.
+
+**Stage 5 consumes this remote store but keeps the scientific DES/Fidelity specification, models, prompts, unit-splitting, voting and adjudication unchanged.**
