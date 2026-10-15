@@ -1,0 +1,69 @@
+{
+  "des_version": "3.4",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+    {
+      "id": "u6",
+      "claim_quote": "تو هر کاری دوست داشته باشی می‌تونی بکنی!",
+      "verdict": "NOT_ASSESSABLE",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "The unmarked assertion about being able to do anything is not addressed by the abstract; the neighbouring first-person reporting clause is not part of this unit."
+    },
+    {
+      "id": "u8",
+      "claim_quote": "بعد توضیح داد که در کلینیکشان قبلاً فایبرپست را بدون رزین سمان و فقط با گلاس‌آینومر سمان می‌کردند.",
+      "verdict": "NOT_ASSESSABLE",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "The abstract does not report this clinic's prior practice or this colleague's explanation."
+    },
+    {
+      "id": "u9",
+      "claim_quote": "حالا به او پیشنهاد داده بودند که اگر به فایبرپست نیاز دارد، برایش تهیه کنند تا با همان گلاس‌آینومر استفاده کند.",
+      "verdict": "NOT_ASSESSABLE",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "The abstract does not report the offer made to this colleague or the proposed use at that clinic."
+    },
+    {
+      "id": "u20",
+      "claim_quote": "در برخی مطالعات آزمایشگاهی، گلاس‌آینومر معمولی توانسته گیر مناسبی برای فایبرپست ایجاد کند و حتی در بعضی آزمون‌های Push-out نتایجی قابل‌مقایسه یا بهتر از برخی سمان‌های رزینی داشته است.",
+      "verdict": "NOT_ASSESSABLE",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "The abstract reports pullout bond strengths and places the tested glass ionomer among the lowest groups; it does not state whether its retention was adequate, or state the claimed comparable-or-better result in Push-out testing. A low relative rank does not itself negate adequate retention, and the grouped lowest results do not explicitly establish the claimed comparison."
+    },
+    {
+      "id": "u21",
+      "claim_quote": "البته نتایج همهٔ مطالعات یکسان نبودند و در یک مطالعهٔ دیگر، گیر پست با سمان گلاس‌آینومرِ مورد آزمایش به‌مراتب کمتر گزارش شده بود.",
+      "verdict": "NOT_ASSESSABLE",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "This unit states a contrast between studies: their results were not all the same, with another study illustrating the contrast. Under F2 item 4 this relation is the whole claim and cannot be assessed from this one abstract; the illustrative lower-retention clause is not split off."
+    }
+  ],
+  "counts": {
+    "matches": 0,
+    "altered": 0,
+    "reversed": 0,
+    "not_in_source": 0,
+    "not_assessable": 5,
+    "author_view": 0,
+    "not_a_claim": 0
+  },
+  "assessable": 0,
+  "fidelity_score": null,
+  "level": "INSUFFICIENT_CLAIMS",
+  "provisional": true,
+  "source_conclusion": "Further studies should be conducted.",
+  "fact_fa": "از پنج واحد، هیچ ادعایی با این چکیده قابل ارزیابی نبود؛ تعداد ادعاهای مطابق، تغییریافته و معکوس صفر است و سطح INSUFFICIENT_CLAIMS است.",
+  "interpretation_fa": "این چکیده هیچ‌یک از ادعاهای این پنج واحد را به‌صورتی که قابل مقایسه باشد بیان نمی‌کند."
+}

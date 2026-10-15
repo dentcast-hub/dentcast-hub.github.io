@@ -1,0 +1,19 @@
+
+── verify_publish: sharehub/share-34 POOLED ──────────────────────────────
+  ok  4.13 DES  pooled basis EXCERPT is on a 3.1+ object
+  ok  4.13 DES  pooled is a FIDELITY object with a version stamp
+  ok  4.13 DES  pooled scope is POOLED
+  ok  4.13 DES  pooled text_basis matches its source(s) (ABSTRACT_ONLY)
+  ok  4.13 DES  pooled claim ids are page unit ids in order
+  ok  4.13 DES  pooled every verdict is from the closed list
+  ok  4.13 DES  pooled silence verdicts match the text basis
+  ok  4.13 DES  pooled change_kind is on every ALTERED and nowhere else
+  ok  4.13 DES  pooled every MATCHES/ALTERED/REVERSED quotes the source
+  ok  4.13 DES  pooled source_ref follows the scope
+  ok  4.13 DES  pooled every claim_quote is verbatim from this page
+  ok  4.13 DES  pooled all 3 source quotes are verbatim
+  ok  4.13 DES  pooled counts equal the verdict tally
+  ok  4.13 DES  pooled fidelity arithmetic checks out (100 · HIGH)
+  ok  4.13 DES  pooled provisional follows text_basis
+────────────────────────────────────────────────────
+15 passed, 0 warned, 0 failed  — publish is COMPLETE

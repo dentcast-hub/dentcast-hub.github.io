@@ -37416,6 +37416,73 @@
           ]
         }
       ]
+    },
+    "sharehub/share-34": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/sharehub/share-34.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا گلاس‌آینومر معمولی در برخی مطالعات آزمایشگاهی توانسته برای فایبرپست گیر مناسبی ایجاد کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ برخی مطالعات آزمایشگاهی گیر مناسب گزارش کرده‌اند، اما نتایج همهٔ مطالعات یکسان نیست."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا نتیجهٔ مناسب آزمون Push-out برای فایبرپست، موفقیت بلندمدت کلینیکی سمان گلاس‌آینومر معمولی را اثبات می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ نتیجهٔ آزمایشگاهی به‌تنهایی موفقیت بلندمدت کلینیکی یا برتری نسبت به سمان‌های رزینی را اثبات نمی‌کند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "انبساط هیگروسکوپیک گلاس‌آینومر چه ارتباطی با گیر اصطکاکی فایبرپست دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "افزایش حجم ناشی از جذب آب می‌تواند در افزایش گیر اصطکاکی پست نقش داشته باشد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "مبنای ABSTRACT_ONLY در بررسی یک مقاله چیست؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "ارزیابی به اطلاعات ابسترکت مقاله محدود است و متن کامل مبنای ارزیابی قرار نمی‌گیرد."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/sharehub/share-34.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-34.html#flashcards-c1",
+              "name": "انبساط هیگروسکوپیک",
+              "description": "جذب آب می‌تواند حجم ماده را افزایش دهد؛ این تغییر حجمی در گلاس‌آینومر ممکن است به گیر اصطکاکی پست کمک کند.",
+              "source": "faq",
+              "sourceFaqIndex": 2
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-34.html#flashcards-c2",
+              "name": "مبنای ABSTRACT_ONLY",
+              "description": "محدودکردن ارزیابی مقاله به اطلاعات گزارش‌شده در ابسترکت، بدون استفاده از متن کامل برای ارزیابی.",
+              "source": "faq",
+              "sourceFaqIndex": 3
+            }
+          ]
+        }
+      ]
     }
   }
 }

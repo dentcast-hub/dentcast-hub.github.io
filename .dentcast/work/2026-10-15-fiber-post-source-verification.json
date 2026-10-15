@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-15",
+  "source_json_substantive_correction_required": false,
+  "sources": [
+    {
+      "pmid": "23929375",
+      "doi": "10.1016/S0022-3913(13)60353-4",
+      "title_match": true,
+      "year_match": true,
+      "abstract_sentence_content_match": true,
+      "basis": "ABSTRACT_ONLY",
+      "full_text_used": false,
+      "verification_channel": "PubMed web retrieval; S2 complete PubMed search result after direct-page footer-only response",
+      "section_headings_normalized_in_existing_JSON": true
+    },
+    {
+      "pmid": "19678450",
+      "doi": "10.2341/08-113",
+      "title_match": true,
+      "year_match": true,
+      "abstract_sentence_content_match": true,
+      "basis": "ABSTRACT_ONLY",
+      "full_text_used": false,
+      "verification_channel": "PubMed web retrieval; S2 complete PubMed search result after direct-page footer-only response",
+      "section_headings_normalized_in_existing_JSON": true
+    },
+    {
+      "pmid": "16728245",
+      "doi": "10.1016/j.joen.2005.10.060",
+      "title_match": true,
+      "year_match": true,
+      "abstract_sentence_content_match": true,
+      "basis": "ABSTRACT_ONLY",
+      "full_text_used": false,
+      "verification_channel": "PubMed web retrieval; S2 complete PubMed search result after direct-page footer-only response",
+      "section_headings_normalized_in_existing_JSON": true
+    },
+    {
+      "pmid": "25004052",
+      "doi": "10.1590/1678-775720130466",
+      "title_match": true,
+      "year_match": true,
+      "abstract_sentence_content_match": true,
+      "basis": "ABSTRACT_ONLY",
+      "full_text_used": false,
+      "verification_channel": "PubMed web retrieval; S2 complete PubMed search result after direct-page footer-only response",
+      "section_headings_normalized_in_existing_JSON": true
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+ "mode": "FIDELITY",
+ "scope": "SOURCE",
+ "pooled_part": "S3",
+ "source_text": "UNSTRUCTURED: This study examined the contribution of hygroscopic expansion of glass-ionomer (GIC) and resin modified glass-ionomer (RMGIC) luting cements to the push-out resistance of fiber posts. Glass fiber posts were luted to post spaces using different cements. Experimental specimens were stored in water, while control specimens were desiccated and stored in mineral oil to eliminate water from intraradicular dentinal tubules and/or the external environment that could have contributed to hygroscopic expansion of the cements. Thin slice push-out tests revealed no difference in retention strengths of resin composite cements that were stored in water or oil. Conversely, GIC and RMGIC cements exhibited increased retention strengths after water sorption. As unfavorable cavity geometry is taxing to dentin bond integrity in root canals, a strategy that relies on increasing the frictional resistance to post dislodgement via delayed hygroscopic expansion of glass-ionomer based materials may be a more pragmatic approach to fiber post retention.",
+ "text_basis": "ABSTRACT_ONLY",
+ "units": [
+  {
+   "id": "u1",
+   "text": "آیا می‌توان فایبرپست را با گلاس‌آینومر معمولی سمان کرد؟",
+   "heading": true
+  },
+  {
+   "id": "u2",
+   "text": "English"
+  },
+  {
+   "id": "u3",
+   "text": "یکی از همکاران از من پرسید:"
+  },
+  {
+   "id": "u4",
+   "text": "«فایبرپست رو می‌شه با گلاس‌آینومر هم سمان کرد؟»"
+  },
+  {
+   "id": "u5",
+   "text": "جواب دادم: «شدنش که می‌شه."
+  },
+  {
+   "id": "u6",
+   "text": "تو هر کاری دوست داشته باشی می‌تونی بکنی!"
+  },
+  {
+   "id": "u7",
+   "text": "😂»"
+  },
+  {
+   "id": "u8",
+   "text": "بعد توضیح داد که در کلینیکشان قبلاً فایبرپست را بدون رزین سمان و فقط با گلاس‌آینومر سمان می‌کردند."
+  },
+  {
+   "id": "u9",
+   "text": "حالا به او پیشنهاد داده بودند که اگر به فایبرپست نیاز دارد، برایش تهیه کنند تا با همان گلاس‌آینومر استفاده کند."
+  },
+  {
+   "id": "u10",
+   "text": "پرسید: «بود و نبودش فرقی می‌کنه؟"
+  },
+  {
+   "id": "u11",
+   "text": "جای این کار همون پست ریختگی کار کنم بهتر نیست؟»"
+  },
+  {
+   "id": "u12",
+   "text": "من در جواب پرسیدم: «به نظرت دلیل وجود پست چیه؟»"
+  },
+  {
+   "id": "u13",
+   "text": "گفت: «گیر بهتر کور و تقویت سرویکال؟»"
+  },
+  {
+   "id": "u14",
+   "text": "گفتم: «آفرین، گیر بهتر کور."
+  },
+  {
+   "id": "u15",
+   "text": "حالا فکر نمی‌کنم فایبرپست با سمان کانونشنال و گیر اصطکاکی کارکرد مقبولی داشته باشه.»"
+  },
+  {
+   "id": "u16",
+   "text": "اما بعد از بررسی مقالات، نظرم تغییر کرد"
+  },
+  {
+   "id": "u17",
+   "text": "بعد از این گفت‌وگو تصمیم گرفتم ببینم شواهد علمی دربارهٔ سمان کردن فایبرپست با گلاس‌آینومر معمولی چه می‌گویند."
+  },
+  {
+   "id": "u18",
+   "text": "چهار مقالهٔ مرتبط پیدا کردم و ابسترکت‌هایشان را خواندم."
+  },
+  {
+   "id": "u19",
+   "text": "نتیجه برخلاف تصور اولیهٔ من بود."
+  },
+  {
+   "id": "u20",
+   "text": "در برخی مطالعات آزمایشگاهی، گلاس‌آینومر معمولی توانسته گیر مناسبی برای فایبرپست ایجاد کند و حتی در بعضی آزمون‌های Push-out نتایجی قابل‌مقایسه یا بهتر از برخی سمان‌های رزینی داشته است."
+  },
+  {
+   "id": "u21",
+   "text": "البته نتایج همهٔ مطالعات یکسان نبودند و در یک مطالعهٔ دیگر، گیر پست با سمان گلاس‌آینومرِ مورد آزمایش به‌مراتب کمتر گزارش شده بود."
+  },
+  {
+   "id": "u22",
+   "text": "نکتهٔ جالب دیگر این بود که انبساط هیگروسکوپیک گلاس‌آینومر، یعنی افزایش حجم ناشی از جذب آب، می‌تواند در افزایش گیر اصطکاکی پست نقش داشته باشد."
+  },
+  {
+   "id": "u23",
+   "text": "بنابراین برداشت اولیهٔ من مبنی بر اینکه فایبرپست با سمان کانونشنال و گیر اصطکاکی نمی‌تواند عملکرد قابل‌قبولی داشته باشد، بیش از حد قطعی بود."
+  },
+  {
+   "id": "u24",
+   "text": "دست‌کم نتایج مطالعات آزمایشگاهی چنین حکمی را تأیید نمی‌کنند."
+  },
+  {
+   "id": "u25",
+   "text": "البته این به معنای اثبات موفقیت بلندمدت کلینیکی این روش یا برتری آن نسبت به سمان‌های رزینی نیست."
+  },
+  {
+   "id": "u26",
+   "text": "من برای این بررسی سراغ فول‌تکست مقالات نرفتم و به مطالعهٔ ابسترکت‌ها اکتفا کردم."
+  },
+  {
+   "id": "u27",
+   "text": "دلیلش هم ساده است: این موضوع در حال حاضر مسئله‌ای نیست که در کار روزمرهٔ من کاربرد مستقیمی داشته باشد یا بخواهم بر اساس آن پروتکل درمانی‌ام را تغییر بدهم."
+  },
+  {
+   "id": "u28",
+   "text": "هدفم بیشتر این بود که درستی پاسخ خودم را بررسی کنم."
+  },
+  {
+   "id": "u29",
+   "text": "در نهایت، همچنان برای سمان کردن فایبرپست از سیستم رزین سمان مناسب استفاده می‌کنم؛ اما حالا می‌دانم که نمی‌توانم صرفاً بر اساس تصور قبلی‌ام، استفاده از گلاس‌آینومر معمولی را روشی فاقد گیر قابل‌قبول بدانم."
+  },
+  {
+   "id": "u30",
+   "text": "گاهی ارزش بررسی یک سؤال در این نیست که روش درمانمان را تغییر بدهیم؛ در این است که بفهمیم یکی از قضاوت‌های قبلی‌مان به آن اندازه که فکر می‌کردیم پشتوانه نداشته است."
+  }
+ ],
+ "derivative_url": "https://dentcast.org/sharehub/share-34.html",
+ "source_conclusion": "As unfavorable cavity geometry is taxing to dentin bond integrity in root canals, a strategy that relies on increasing the frictional resistance to post dislodgement via delayed hygroscopic expansion of glass-ionomer based materials may be a more pragmatic approach to fiber post retention."
+}

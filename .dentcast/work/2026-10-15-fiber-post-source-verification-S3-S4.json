@@ -1,0 +1,130 @@
+{
+  "task": "Independent SOURCE-mode DES evaluation, PMID 16728245 and 25004052",
+  "date": "2026-10-15",
+  "mode": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "evaluator": {
+    "model_family": "GPT-6 (Codex, per developer instructions)",
+    "actual_model_identifier": null,
+    "identifier_note": "The executing model/API identifier is not exposed in this worker context; do not substitute a guessed model name.",
+    "agent": "/root/des_sources_3_4"
+  },
+  "spec": {
+    "repository": "dentcast-hub/dentcast-hub.github.io",
+    "ref": "content/sharehub-fiber-post-20261015",
+    "path": ".dentcast/dentcast-evidence-score-v3.4.md",
+    "sha": "5c70cc7e509e041eb53bbc4728d21e72b7e88e6b",
+    "scope": "SOURCE rules plus instruction content preceding Appendix; Appendix not used for scoring"
+  },
+  "source_json": {
+    "path": ".dentcast/work/2026-10-15-fiber-post-abstracts.json",
+    "sha": "f5f6acb2aca329d9c06b953b63cac380c5c1e3cc"
+  },
+  "independence": {
+    "derivative_article_read": false,
+    "approved_text_read": false,
+    "full_text_used": false,
+    "scoring_inputs": "Only each supplied source_text and its citation metadata. PubMed checked for verification; indexing tags did not fill missing methods."
+  },
+  "sources": [
+    {
+      "source_id": "S3",
+      "pmid": "16728245",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/16728245/",
+      "live_verification": "PubMed opened today",
+      "title_match": true,
+      "year_match": true,
+      "doi_match": true,
+      "abstract_sentence_content_match": true,
+      "source_json_correction_required": false,
+      "notes": [
+        "UNSTRUCTURED is an input serialization label, not an abstract heading.",
+        "PubMed publication type Randomized Controlled Trial does not override the supplied bench-materials abstract; randomization remains NR."
+      ],
+      "score": 25,
+      "band": "D",
+      "question_type": "MATERIAL",
+      "provisional": true,
+      "anchor": 45,
+      "multiplier": 0.55,
+      "penalty_points": 0
+    },
+    {
+      "source_id": "S4",
+      "pmid": "25004052",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/25004052/",
+      "live_verification": "PubMed canonical record opened today, with PMID-specific PubMed search verification",
+      "title_match": true,
+      "year_match": true,
+      "doi_match": true,
+      "abstract_sentence_content_match": true,
+      "source_json_correction_required": false,
+      "optional_label_normalization": {
+        "METHODS": "MATERIAL AND METHODS",
+        "CONCLUSION": "CONCLUSIONS"
+      },
+      "notes": [
+        "All abstract sentence text matches live PubMed, including the printed P>0.05 value; no statistical typo was silently corrected.",
+        "50 total teeth across five groups does not affirmatively state equal per-group counts.",
+        "Defined crosshead speed and total specimen count do not establish a fully described protocol: storage duration is absent.",
+        "PMC4245750 was not opened; no full-text methods or findings entered scoring."
+      ],
+      "score": 25,
+      "band": "D",
+      "question_type": "MATERIAL",
+      "provisional": true,
+      "anchor": 45,
+      "multiplier": 0.55,
+      "penalty_points": 0
+    }
+  ],
+  "checks": {
+    "S3_abstract_sentences": [
+      {
+        "sentence": "This study examined the contribution of hygroscopic expansion of glass-ionomer (GIC) and resin modified glass-ionomer (RMGIC) luting cements to the push-out resistance of fiber posts.",
+        "found": true
+      },
+      {
+        "sentence": "Glass fiber posts were luted to post spaces using different cements.",
+        "found": true
+      },
+      {
+        "sentence": "Experimental specimens were stored in water, while control specimens were desiccated and stored in mineral oil to eliminate water from intraradicular dentinal tubules and/or the external environment that could have contributed to hygroscopic expansion of the cements.",
+        "found": true
+      },
+      {
+        "sentence": "Thin slice push-out tests revealed no difference in retention strengths of resin composite cements that were stored in water or oil.",
+        "found": true
+      },
+      {
+        "sentence": "Conversely, GIC and RMGIC cements exhibited increased retention strengths after water sorption.",
+        "found": true
+      },
+      {
+        "sentence": "As unfavorable cavity geometry is taxing to dentin bond integrity in root canals, a strategy that relies on increasing the frictional resistance to post dislodgement via delayed hygroscopic expansion of glass-ionomer based materials may be a more pragmatic approach to fiber post retention.",
+        "found": true
+      }
+    ],
+    "S4_abstract_fields": [
+      {
+        "field": "objective",
+        "all_sentences_match": true
+      },
+      {
+        "field": "methods",
+        "all_sentences_match": true
+      },
+      {
+        "field": "results",
+        "all_sentences_match": true
+      },
+      {
+        "field": "conclusion",
+        "all_sentences_match": true
+      }
+    ],
+    "evidence_quotes": "All nonempty evidence_quote values are exact source_text substrings; NR fields use contextual verbatim excerpts and notes rather than invented safeguards.",
+    "arithmetic": "round_half_up(45*55/100) - 0 = 25",
+    "schema": "Only SOURCE RESEARCH schema keys emitted; source_kind omitted; commentary_checklist null."
+  }
+}

@@ -1,0 +1,31 @@
+SOURCE-only DES provenance, 2026-10-15
+Scope: S1 PMID 23929375 and S2 PMID 19678450 only. No derivative DentCast article or approved text was read. No full text fetched. Other abstracts from source JSON did not contribute to either score.
+Evaluator: GPT-6 / Codex as identified by session instructions. Exact serving model identifier is not exposed; no more-specific identifier claimed.
+Repository: dentcast-hub/dentcast-hub.github.io
+Branch: content/sharehub-fiber-post-20261015
+Specification: .dentcast/dentcast-evidence-score-v3.4.md
+Specification blob SHA: 5c70cc7e509e041eb53bbc4728d21e72b7e88e6b
+Instruction portion read through line 1378, before Appendix heading at 1379. Entire file fetched by GitHub connector; Appendix not used as instruction.
+Source JSON: .dentcast/work/2026-10-15-fiber-post-abstracts.json
+Source blob SHA: f5f6acb2aca329d9c06b953b63cac380c5c1e3cc
+Mode SOURCE, text_basis ABSTRACT_ONLY, exact source_text fields used for scores. External retrieval checked metadata/content only and supplied no missing methods.
+
+Verification:
+S1: live PubMed record opened on 2026-10-15. Title, 2013 year, DOI 10.1016/S0022-3913(13)60353-4, all five abstract sections match source JSON. Section labels normalized, content unchanged.
+S2: direct PubMed open returned only footer; format=pubmed returned access error. Live web search for exact PubMed PMID URL returned PubMed title, 2009 year, DOI 10.2341/08-113, authors and complete abstract matching source JSON. METHODS normalizes Materials and methods. Verification rests on PubMed search result, not successful full-page extraction.
+No source JSON correction required for S1/S2 title/year/DOI/abstract.
+https://pubmed.ncbi.nlm.nih.gov/23929375/
+https://pubmed.ncbi.nlm.nih.gov/19678450/
+
+Results:
+S1: 25/D MATERIAL provisional. S2: 25/D MATERIAL provisional.
+Each: S_design 45, QUIN 0.55, penalties 0. round_half_up(45*0.55)=25.
+
+Anchor rationale:
+Both source_text blocks describe in-vitro material tests; PubMed publication types do not turn bench testing into a clinical RCT.
+Both use fixed MATERIAL row 45 (in-vitro with incomplete protocol description). Neither abstract affirms ISO or a validated protocol. S1 reports push-out loading rate and 7-day interval, but not complete pretreatment/material handling or storage conditions. S2 reports storage and pull-out direction but not loading rate. Naming a pull-out/push-out test was not treated as source evidence of protocol validation. Row 85 would require an established/validated protocol assumption beyond source_text; row 65 requires fully described protocol.
+S1 random allocation is explicit, rated low. S2 describes allocation without stating randomization, rated some_concerns rather than high.
+Both have NR for sample-size justification, operator/assessor blinding and CoI/funding. NR counts as some_concerns and forces 0.55. No abstract silence was rated high and no unreported clustering flaw inferred.
+NR domains use empty evidence_quote plus explanatory notes as representation of unreported evidence. No low/some_concerns rating has empty quote.
+No GitHub mutation performed.
+
