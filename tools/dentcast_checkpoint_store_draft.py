@@ -26,6 +26,8 @@ def _validate(state):
     receipts = state['receipts']
     if not seq or seq[0] != 'intake' or any(not isinstance(mid, str) or not mid for mid in seq) or len(seq) != len(set(seq)):
         raise ValueError('INVALID_SEQUENCE')
+    if any(not isinstance(value, dict) for value in receipts.values()):
+        raise ValueError('INVALID_RECEIPT_SHAPE')
     if any(mid not in seq for mid in receipts):
         raise ValueError('UNKNOWN_RECEIPT_MODULE')
     if any(mid not in receipts or receipts[mid].get('status') != 'completed' for mid in seq[:state['next_index']]):
@@ -35,6 +37,8 @@ def _validate(state):
     current = seq[state['next_index']] if state['next_index'] < len(seq) else None
     if state['paused'] != bool(current in receipts):
         raise ValueError('PAUSE_RECEIPT_MISMATCH')
+    if current in receipts and receipts[current].get('status') not in ('blocked', 'failed', 'awaiting_approval'):
+        raise ValueError('INVALID_PAUSE_RECEIPT')
 
 
 def save(path, state):
