@@ -56,6 +56,21 @@ class ValidatorTests(unittest.TestCase):
         self.assertIn("UNKNOWN_MODULE:bogus",
                       mod.validate(sample(ids=["intake", "bogus"]), REGISTRY))
 
+    def test_invalid_module_identifier(self):
+        p = sample()
+        p["ordered_modules"] = [{"id": ["not", "hashable"]}]
+        self.assertIn("INVALID_MODULE_ID", mod.validate(p, REGISTRY))
+
+    def test_non_string_route(self):
+        p = sample()
+        p["route"] = None
+        self.assertIn("INVALID_ROUTE", mod.validate(p, REGISTRY))
+
+    def test_unknown_route(self):
+        p = sample()
+        p["route"] = "unmapped"
+        self.assertIn("UNKNOWN_ROUTE", mod.validate(p, REGISTRY))
+
     def test_not_authorized_to_execute(self):
         p = sample()
         p["status"] = "ready"
