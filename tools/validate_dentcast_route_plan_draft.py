@@ -20,7 +20,8 @@ def validate(plan, registry):
         problems.append("SIDE_EFFECTS_NOT_DISABLED")
     if plan.get("status") != "draft_requires_audit":
         problems.append("NOT_A_DRAFT_PLAN")
-    if not plan.get("unresolved"):
+    unresolved = plan.get("unresolved")
+    if not isinstance(unresolved, list) or not unresolved or any(not isinstance(item, str) for item in unresolved):
         problems.append("UNRESOLVED_AUDIT_GATES_MISSING")
     modules = plan.get("ordered_modules")
     if not isinstance(modules, list):
@@ -53,7 +54,7 @@ def validate(plan, registry):
     if route == "paper-only":
         if ids != ["intake", "paper-cabinet"]:
             problems.append("PAPER_ONLY_MUST_NOT_PUBLISH")
-        if not any("NO Part 3 credit" in item for item in plan.get("unresolved", [])):
+        if not any("NO Part 3 credit" in item for item in unresolved if isinstance(item, str)) if isinstance(unresolved, list) else True:
             problems.append("PAPER_ONLY_PART3_RULE_MISSING")
     if route.startswith("litecast") and "english" in ids:
         problems.append("LITECAST_ENGLISH_FORBIDDEN")
