@@ -71,6 +71,25 @@ class ValidatorTests(unittest.TestCase):
         p["route"] = "unmapped"
         self.assertIn("UNKNOWN_ROUTE", mod.validate(p, REGISTRY))
 
+    def test_challenge_route_requires_flag(self):
+        p = sample("challenge", ["intake", "page", "verify"])
+        p["challenge"] = False
+        self.assertIn("CHALLENGE_FLAG_MISMATCH", mod.validate(p, REGISTRY))
+
+    def test_publication_cannot_claim_challenge(self):
+        p = sample("publication", ["intake", "page", "english", "verify"])
+        p["challenge"] = True
+        self.assertIn("CHALLENGE_FLAG_MISMATCH", mod.validate(p, REGISTRY))
+
+    def test_attached_paper_requires_module(self):
+        p = sample("publication+paper", ["intake", "page", "english", "verify"])
+        self.assertIn("PAPER_MODULE_MISSING", mod.validate(p, REGISTRY))
+
+    def test_litecast_route_requires_category_match(self):
+        p = sample("litecast", ["intake", "page", "verify"])
+        p["category"] = "clinical"
+        self.assertIn("LITECAST_CATEGORY_MISMATCH", mod.validate(p, REGISTRY))
+
     def test_not_authorized_to_execute(self):
         p = sample()
         p["status"] = "ready"
