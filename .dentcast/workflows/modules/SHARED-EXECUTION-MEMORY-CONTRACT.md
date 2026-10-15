@@ -1,16 +1,18 @@
-# Shared GitHub execution memory — design contract v0.1 (STAGING, NOT ACTIVE)
+# Shared GitHub execution memory — implemented staging contract v0.2 (NOT ACTIVE)
+
+**Implementation:** `tools/dentcast_github_memory.py` provides atomic GitHub Git-Data commit/branch CAS, full manifest/state/event chain replay and immutable artifacts/receipts. `tools/dentcast_fidelity_resume.py` implements per-unit cross-agent scientific checkpoints using the *unchanged* DES v3.4 engine. See `STAGE-4-ACCEPTANCE.md` and `STAGE-5-ACCEPTANCE.md`. This remains **staging only**; CI uses synthetic data and a real GitHub write smoke was performed. No public data upload is safe merely because a SHA attestation is present.
 
 ## Purpose
 
 A publication belongs to a **run**, not to Claude Code, Cursor, Codex, or a chat session. An agent resuming a run must discover the current committed state, verify receipts, and continue at the first unfinished *substep*; it must never infer completion from prose or from a model name.
 
-This is a **design contract**, not a working GitHub-backed publication store. Current draft checkpoint code remains local, read-only, and publication-disabled. Do not claim that production Fidelity can already resume across agents.
+The **staging GitHub-backed implementation now works** for machine-readable events and externally provided scientific results. It is **not** a working production publishing system: no model execution is launched, no founder authorization is inferred and the old production router is unchanged.
 
 ## Storage and confidentiality
 
 Use the existing public DentCast repository for temporary cross-agent execution memory. Only public-safe inputs and results may be committed; never include identifying patient data, credentials, restricted licensed content, or private challenge answers. Deleting files from the active branch does not erase Git history.
 
-Proposed temporary layout in the existing repository:
+Current temporary layout in the existing repository:
 
 ```text
 .dentcast/execution-memory/runs/<run_id>/manifest.json
@@ -65,7 +67,7 @@ The number **70/72 is hypothetical**, not a substitute for all 72 per-claim deci
 6. Commit state transition with GitHub optimistic concurrency; on conflict re-read HEAD and re-evaluate, never overwrite another agent's progress.
 7. If source text, claim set, scientific engine/prompt, or dependency version changes, invalidate **only the scientifically affected checkpoints** under existing rules; never silently reuse stale judgments.
 
-## Required future tests (not yet implemented)
+## Required integration/production tests (unit coverage exists; live validations still required)
 
 - Claude completes first scientific agent; Cursor resumes second without rerunning first; Codex compares the same two complete claim arrays.
 - Invalid, incomplete or mismatched first-agent receipt triggers fail-closed behavior, not reuse.
@@ -77,7 +79,7 @@ The number **70/72 is hypothetical**, not a substitute for all 72 per-claim deci
 
 ## Activation gate
 
-Before use for real publishing: public-safe data reviewed and cleanup verified; exact existing DES/Fidelity engine contract mapped; GitHub writer and replay verifier implemented; security/privacy and concurrent-writer tests pass; behavioral parity independently audited; founder explicitly approves activation. Until then the only working shared checkpoint is the local **staging** checkpoint.
+Before use for real publishing: public-safe data reviewed and cleanup verified; exact existing DES/Fidelity engine contract mapped; GitHub writer and replay verifier implemented; security/privacy and concurrent-writer tests pass; behavioral parity independently audited; founder explicitly approves activation. Until activation the only allowed use is **staging**, whether local or GitHub-backed; no production publication or DES/Fidelity execution is authorized.
 
 ## Temporary-run lifecycle
 
