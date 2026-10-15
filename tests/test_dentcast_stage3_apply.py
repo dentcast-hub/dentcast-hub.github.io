@@ -180,6 +180,13 @@ class Stage3ApplyTests(unittest.TestCase):
                                         report(self.inv, outcome["artifact_receipt_digest"]),
                                         receipt, self.workspace)
 
+    def test_english_requires_both_article_folder_paths_not_site_root(self):
+        patcher.allowed("english", "clinical/clinical-99.html")
+        patcher.allowed("english", "clinical/en/clinical-99.html")
+        for name in ("index.html", "clinical/other/sub/file.html", "tools/foo.html"):
+            with self.subTest(name=name), self.assertRaises(ValueError):
+                patcher.allowed("english", name)
+
     def test_unknown_non_edit_module_does_not_allow_file_edit(self):
         self.state = runner.submit(self.state, report(self.inv, DIGEST))
         self.inv = runner.next_invocation(self.state)
