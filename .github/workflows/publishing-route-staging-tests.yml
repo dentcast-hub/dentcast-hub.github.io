@@ -22,6 +22,10 @@ on:
       - 'tests/test_dentcast_checkpoint_cas.py'
       - 'tools/audit_dentcast_stage2_contract.py'
       - 'tests/test_dentcast_stage2_contract.py'
+      - 'tools/dentcast_stage3_route.py'
+      - 'tools/dentcast_stage3_modules.py'
+      - 'tools/dentcast_stage3_orchestrator.py'
+      - 'tests/test_dentcast_stage3_runtime.py'
       - '.dentcast/workflows/README.md'
       - '.dentcast/workflows/agent-parity.md'
       - '.dentcast/workflows/modules/[0-1][0-9]-*.md'
@@ -59,5 +63,6 @@ jobs:
           python -m unittest discover -s tests -p test_dentcast_orchestrator_draft.py -v
           python -m unittest discover -s tests -p test_dentcast_checkpoint_cas.py -v
           python -m unittest discover -s tests -p test_dentcast_stage2_contract.py -v
+          python -m unittest discover -s tests -p test_dentcast_stage3_runtime.py -v
       - name: Audit Stage 2 canonical traceability
         run: python tools/audit_dentcast_stage2_contract.py
