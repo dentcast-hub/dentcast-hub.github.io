@@ -98,7 +98,8 @@ def audit(root=ROOT):
     if uncovered:
         issues.append("CANONICAL_UNCOVERED_NONWHITESPACE:" +
                       str(canonical.count("\n", 0, uncovered[0]) + 1))
-    found_rules = [int(m) for m in re.findall(r"(?m)^(\d{1,2})\. \*\*", canonical)]
+    hard_rules_section = canonical.split("## Phase 0 — Routing:", 1)[0]
+    found_rules = [int(m) for m in re.findall(r"(?m)^(\d{1,2})\. \*\*", hard_rules_section)]
     if found_rules != list(range(1, 18)):
         issues.append("HARD_RULES_NOT_EXACT_1_TO_17:" + repr(found_rules))
     for anchor in CRITICAL_ANCHORS:
