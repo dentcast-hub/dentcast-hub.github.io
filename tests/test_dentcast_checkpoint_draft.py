@@ -60,7 +60,7 @@ class CheckpointTests(unittest.TestCase):
     def test_pause_requires_recovery(self):
         state = mod.accept(mod.begin(plan(), "run1", "abc"), receipt(status="failed"), "abc")
         with self.assertRaisesRegex(ValueError, "PAUSED_REQUIRES_EXPLICIT_RECOVERY"):
-            mod.accept(state, receipt("page"), "abc")
+            mod.accept(state, receipt(), "abc")
 
     def test_explicit_recovery_and_retry(self):
         state = mod.accept(mod.begin(plan(), "run1", "abc"), receipt(status="failed"), "abc")
