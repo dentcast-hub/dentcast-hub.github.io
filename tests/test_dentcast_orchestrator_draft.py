@@ -58,6 +58,17 @@ class CrossAgentOrchestratorTests(unittest.TestCase):
         finally:
             orchestrator.adapter.dispatch = original
 
+    def test_second_agent_cannot_overwrite_checkpoint(self):
+        request = {"has_text": True, "has_paper": False, "category": "clinical", "challenge": False}
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "checkpoint.json"
+            first = orchestrator.dry_run(request, "run", "rev", path)
+            with self.assertRaisesRegex(ValueError, "CHECKPOINT_ALREADY_EXISTS"):
+                orchestrator.dry_run(request, "run", "rev", path)
+            restored = orchestrator.store.load(path, "run", "rev",
+                                               first["checkpoint"]["plan_digest"])
+            self.assertEqual(restored, first["checkpoint"])
+
     def test_reject_non_object(self):
         with self.assertRaisesRegex(ValueError, "INVALID_REQUEST"):
             orchestrator.dry_run([], "run", "rev")
