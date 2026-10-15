@@ -33,6 +33,8 @@ def accept(state, receipt, revision):
     if mid in state["receipts"]:
         if state["receipts"][mid] == receipt:
             return copy.deepcopy(state)
+        if state["paused"]:
+            raise ValueError("PAUSED_REQUIRES_EXPLICIT_RECOVERY")
         raise ValueError("CONFLICTING_REPLAY")
     if state["paused"]:
         raise ValueError("PAUSED_REQUIRES_EXPLICIT_RECOVERY")
