@@ -30,6 +30,7 @@ The earlier 8-file extraction is retained temporarily as a reference, not as an 
 - [ENTRYPOINT-PARITY-PLAN.md](ENTRYPOINT-PARITY-PLAN.md) — cross-agent source map, known conflicts, coordinated activation plan and test scenarios.
 - [GLOBAL-INVARIANTS-SOURCE-MAP.md](GLOBAL-INVARIANTS-SOURCE-MAP.md) — 18 canonical hard rules, global source boundaries, contradictions and higher-effort review gates.
 - [VERIFICATION-LEDGER.md](VERIFICATION-LEDGER.md) — 12/12 exact source-slice parity, pending clause audit, independent-review handoff.
+- [INDEPENDENT-REVIEW-BRIEF.md](INDEPENDENT-REVIEW-BRIEF.md) — ordered reading list and precise high-effort model audit assignment.
 
 ## Verification and safeguards
 
