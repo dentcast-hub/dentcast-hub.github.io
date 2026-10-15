@@ -1,0 +1,211 @@
+#!/usr/bin/env python3
+"""Stage-3 operator executor: apply one agent-produced module change-set.
+
+Real local file edits occur ONLY in an explicitly marked disposable workspace.
+Agents (Claude/Cursor/Codex) own the semantic or clinical decisions by reading
+the pinned canonical module slice. This tool executes and validates their exact
+proposed changes with old-hash compare-and-swap, no network, and no publish.
+
+No operation here is proof of human approval or scientific correctness.
+"""
+import argparse
+import hashlib
+import importlib.util
+import json
+import os
+import re
+import sys
+import tempfile
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+def load(name, filename):
+    spec = importlib.util.spec_from_file_location(name, ROOT / "tools" / filename)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+runner = load("stage3_exe_runner", "dentcast_stage3_orchestrator.py")
+bridge = load("stage3_exe_bridge", "dentcast_stage3_bridge.py")
+handlers = load("stage3_exe_handlers", "dentcast_stage3_modules.py")
+
+# Only explicit proposed content changes can be applied. Never edit the
+# publication router, scientific engine, workflow, CI, settings, or secrets.
+# These are writable *staging* paths; canonical rules still decide eligibility.
+ALLOWED = {
+    "page": ("*.html", "*.webp", "*.jpg", "*.png"),
+    "navigation": ("*.html",),
+    "semantic-links": ("*.html",),
+    "paper-cabinet": ("dentcast_cabinet_full_catalog.json", "*.html"),
+    "learning-assets": ("plus/faq-corpus.json", "plus/quiz-index.json"),
+    "evidence": ("des-scores.json",),
+    "challenge": ("*.html", "plus/challenges.json"),
+    "brain": ("dentcast-brain.json", "litecast/lite-glossary.json",
+              "dentcast-hashtag-reference.json"),
+    "pathways": ("plus/pathways.json",),
+    "notification": ("index.html", "*.html"),
+    "build": ("*.html", "*.json", "*.js", "*.css", "service-worker.js"),
+    "english": ("*/en/*.html",),
+}
+NO_EDITS = {"intake", "taxonomy", "verify"}
+PROTECTED_PREFIXES = (
+    "tools/", "tests/", ".dentcast/", ".github/", ".cursor/",
+    "plus-api/", ".claude/", ".git/", "admin/",
+)
+PROTECTED_NAMES = ("CLAUDE.md", "AGENTS.md", "package.json",
+                   "requirements.txt", "pyproject.toml", ".env")
+
+
+def fail(ok, code):
+    if not ok:
+        raise ValueError(code)
+
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def allowed(module, name):
+    import fnmatch
+    fail(module in ALLOWED, "MODULE_HAS_NO_FILE_EDIT_AUTHORITY:" + module)
+    fail(not any(name.startswith(p) for p in PROTECTED_PREFIXES) and
+         not name.startswith("/") and name not in PROTECTED_NAMES,
+         "PROTECTED_REPOSITORY_PATH")
+    patterns = ALLOWED[module]
+    fail(any(fnmatch.fnmatch(name, pat) for pat in patterns), "MODULE_WRITE_SCOPE_FORBIDDEN")
+    if module == "english":
+        fail("/en/" in "/" + name and name.endswith(".html"),
+             "ENGLISH_WRITES_EN_MIRRORS_ONLY")
+    if module == "paper-cabinet" and name.endswith(".html"):
+        # Only credit step can change HTML, never Drive/catalog steps.
+        pass
+
+
+def _target(root, name):
+    fail(isinstance(name, str) and name and "\x00" not in name and
+         len(name) < 512, "BAD_EDIT_PATH")
+    rel = Path(name)
+    fail(not rel.is_absolute() and ".." not in rel.parts and "." not in rel.parts,
+         "PATH_ESCAPE")
+    target = root / rel
+    fail(target.parent.is_dir() and
+         target.parent.resolve(strict=True).is_relative_to(root) and
+         not target.is_symlink() and not target.is_dir(), "INVALID_EDIT_TARGET")
+    return target
+
+
+def check_intent(state, intent, workspace):
+    """Preflight ALL edits before any write; fail closed on stale content."""
+    root = bridge.workspace_root(workspace)
+    inv = runner.next_invocation(state)
+    fail(inv is not None, "NO_PENDING_STEP")
+    step = inv["step"]
+    fail(isinstance(intent, dict) and
+         set(intent) == {"step_id", "input_digest", "edits", "author_asserted_gates"},
+         "INVALID_INTENT_SCHEMA")
+    fail(intent["step_id"] == step["step_id"] and
+         intent["input_digest"] == inv["input_digest"], "STALE_MODULE_INVOCATION")
+    fail(isinstance(intent["edits"], list) and len(intent["edits"]) <= 40,
+         "INVALID_EDIT_LIST")
+    gates = step["approval_gates"]
+    fail(isinstance(intent["author_asserted_gates"], list) and
+         set(intent["author_asserted_gates"]) >= set(gates),
+         "UNRESOLVED_REQUIRED_GATES")
+    # Gate assertions are operator statements, not real founder approvals.
+    # This executable is NEVER permitted to advance production publishing.
+    seen = set()
+    checked = []
+    for edit in intent["edits"]:
+        fail(isinstance(edit, dict) and
+             set(edit) == {"path", "before_sha256", "content_utf8"}, "BAD_EDIT_SCHEMA")
+        path, before, text = edit["path"], edit["before_sha256"], edit["content_utf8"]
+        fail(isinstance(text, str) and len(text.encode("utf-8")) <= 5_000_000,
+             "INVALID_EDIT_TEXT")
+        fail(path not in seen, "DUPLICATE_WRITE")
+        seen.add(path)
+        allowed(step["module_id"], path)
+        if step["module_id"] == "paper-cabinet":
+            fail(step["step_id"] == "paper-cabinet:credit" or
+                 path == "dentcast_cabinet_full_catalog.json",
+                 "PAPER_STEP_CANNOT_EDIT_PAGE")
+            if step["step_id"] == "paper-cabinet:drive":
+                fail(False, "DRIVE_UPLOAD_REQUIRES_EXTERNAL_TOOL")
+        if step["module_id"] == "notification" and step["step_id"] == "notification:push-marker":
+            fail(path.endswith(".html"), "MARKER_ONLY_HTML")
+        target = _target(root, path)
+        existing = target.read_bytes() if target.exists() else None
+        fail(before is None if existing is None else
+             isinstance(before, str) and re.fullmatch(r"[0-9a-f]{64}", before) and
+             sha(existing) == before, "STALE_EDIT_PRECONDITION:" + path)
+        checked.append((target, existing, text.encode("utf-8")))
+    fail(bool(checked), "NO_LOCAL_CHANGES")
+    return checked
+
+
+def apply_intent(state, intent, workspace):
+    """Atomic per-file updates; restore all touched files if any commit fails.
+
+    Intended only for single-process staging use; later GitHub multi-agent CAS
+    remains a separate Stage 4 deliverable.
+    """
+    changes = check_intent(state, intent, workspace)
+    written = []
+    try:
+        for target, old, new in changes:
+            fd, temp = tempfile.mkstemp(prefix=".dentcast-stage3-", dir=str(target.parent))
+            try:
+                with os.fdopen(fd, "wb") as out:
+                    out.write(new)
+                    out.flush()
+                    os.fsync(out.fileno())
+                os.replace(temp, target)
+            finally:
+                if os.path.exists(temp):
+                    os.unlink(temp)
+            written.append((target, old))
+    except Exception:
+        for target, old in reversed(written):
+            if old is None:
+                target.unlink(missing_ok=True)
+            else:
+                target.write_bytes(old)
+        raise
+    root = bridge.workspace_root(workspace)
+    relative = [str(path.relative_to(root)) for path, _, _ in changes]
+    receipt = bridge.attest_sample_receipt(state, workspace, relative)
+    # Explicitly NOT a claim that all canonical semantic and approval gates pass.
+    return {"status": "staging_files_applied", "step_id":intent["step_id"],
+            "artifact_receipt": receipt,
+            "artifact_receipt_digest": handlers.hash_public(receipt),
+            "paths": relative, "execution_authorized": False,
+            "published": False}
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--state", required=True, help="Stage 3 local checkpoint JSON")
+    ap.add_argument("--intent", required=True, help="Agent-authored module edit intent JSON")
+    ap.add_argument("--workspace", required=True, help="Marked disposable checkout")
+    ap.add_argument("--receipt", help="Destination receipt JSON; not a publish receipt")
+    args = ap.parse_args()
+    try:
+        state = json.loads(Path(args.state).read_text(encoding="utf-8"))
+        intent = json.loads(Path(args.intent).read_text(encoding="utf-8"))
+        result = apply_intent(state, intent, args.workspace)
+        if args.receipt:
+            output = Path(args.receipt)
+            fail(not output.is_symlink() and output.parent.is_dir(),
+                 "INVALID_RECEIPT_DESTINATION")
+            output.write_text(json.dumps(result["artifact_receipt"],
+                                         ensure_ascii=False, indent=2), encoding="utf-8")
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0
+    except (ValueError, OSError, KeyError, TypeError) as exc:
+        print(json.dumps({"status": "blocked", "error": str(exc),
+                          "execution_authorized": False}), file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())
