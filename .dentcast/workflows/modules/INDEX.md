@@ -27,6 +27,7 @@ The earlier 8-file extraction is retained temporarily as a reference, not as an 
 
 - [DEPENDENCY-AUDIT.md](DEPENDENCY-AUDIT.md) — global and cross-stage constraints, risks and parity gates.
 - [STAGE-ROUTER-DRAFT.md](STAGE-ROUTER-DRAFT.md) — proposed lazy-loading algorithm, **not activated**.
+- [ENTRYPOINT-PARITY-PLAN.md](ENTRYPOINT-PARITY-PLAN.md) — cross-agent source map, known conflicts, coordinated activation plan and test scenarios.
 
 ## Verification and safeguards
 
