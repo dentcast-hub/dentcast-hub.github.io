@@ -62,8 +62,14 @@ def _file_hash(path):
 
 def workspace_root(path):
     """Require disposable *marked* workspace, never default to live repository."""
-    root = Path(path).resolve(strict=True)
+    supplied = Path(path)
+    _need(not supplied.is_symlink(), "INVALID_STAGE3_WORKSPACE")
+    root = supplied.resolve(strict=True)
     _need(root.is_dir() and not root.is_symlink(), "INVALID_STAGE3_WORKSPACE")
+    # A marker inside (or above) the active source checkout is not a sandbox.
+    live = ROOT.resolve(strict=True)
+    _need(not root.is_relative_to(live) and not live.is_relative_to(root),
+          "LIVE_REPOSITORY_IS_NOT_DISPOSABLE")
     marker = root / SANDBOX_MARKER
     _need(marker.is_file() and not marker.is_symlink(), "UNMARKED_STAGE3_WORKSPACE")
     data = json.loads(marker.read_text(encoding="utf-8"))
