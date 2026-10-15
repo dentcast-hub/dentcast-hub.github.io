@@ -9,8 +9,8 @@ MODULES = ("intake", "taxonomy", "page", "navigation", "semantic-links",
            "paper-cabinet", "learning-assets", "evidence", "challenge",
            "brain", "pathways", "english", "notification", "build", "verify")
 CLOSED = {"dentai", "photocast"}
-KNOWN_CATEGORIES = {"episode", "clinical", "litecast", "dentcast_plus", "notecast", "meta", "sharehub", "chairside", "dentcast", "promptologist", "plak_sefr", "taraz"}
 ROOT = Path(__file__).resolve().parents[1]
+BRAIN = ROOT / "dentcast-brain.json"
 CONTRACT = ROOT / ".dentcast/workflows/modules/MODULE-CONTRACTS.v1.json"
 
 
@@ -38,7 +38,13 @@ def plan(request, contract=None):
     if content and category in CLOSED:
         return {"status": "blocked", "code": "CATEGORY_CLOSED",
                 "reason": "No new DentAI/PhotoCast content", "no_side_effects": True}
-    if content and category not in KNOWN_CATEGORIES:
+    live_entries = json.loads(BRAIN.read_text(encoding="utf-8"))
+    if not isinstance(live_entries, list):
+        raise ValueError("brain must be a flat array")
+    live_categories = {str(e["type"]).lower() for e in live_entries if isinstance(e, dict) and isinstance(e.get("type"), str)}
+    if any(isinstance(e, dict) and "episode" in e for e in live_entries):
+        live_categories.add("episode")
+    if content and category not in live_categories:
         return {"status": "blocked", "code": "CATEGORY_RULES_NOT_MAPPED",
                 "reason": "This conservative prototype has no audited predicate for this category",
                 "no_side_effects": True}
