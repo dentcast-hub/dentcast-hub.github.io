@@ -219,6 +219,36 @@ class RemoteMemory:
     def event_path(run_id, seq, event_hash):
         return run_folder(run_id) + "/events/%06d-%s.json" % (seq, event_hash)
 
+    def list_runs(self):
+        """Discover run IDs from the pinned staging branch, then VERIFY each.
+
+        A different agent can resume knowing only the repository/branch, not
+        the previous agent's local file path or chat conversation.
+        """
+        head = self.head()
+        commit = self.api.call("GET", "git/commits/" + head)
+        tree_sha = commit["tree"]["sha"]
+        listing = self.api.call("GET", "git/trees/" + tree_sha + "?recursive=1")
+        require(listing.get("truncated") is False,
+                "GITHUB_TREE_TRUNCATED_CANNOT_DISCOVER_ALL_RUNS")
+        pattern = re.compile("^" + re.escape(PREFIX) +
+                             r"/([a-z0-9][a-z0-9_-]{0,47})/manifest[.]json$")
+        ids = sorted({m.group(1) for entry in listing.get("tree", [])
+                      if isinstance(entry, dict) and entry.get("type") == "blob"
+                      and (m := pattern.fullmatch(entry.get("path", "")))})
+        runs = []
+        for run_id in ids:
+            snapshot = self.snapshot(run_id, head=head)
+            state = snapshot["state"]
+            runs.append({"run_id": run_id, "status": state["status"],
+                         "revision": state["revision"],
+                         "source_revision": state["source_revision"],
+                         "completed_steps": list(state["completed_steps"]),
+                         "pending_step": state["pending_step"],
+                         "execution_authorized": False})
+        return {"head": head, "runs": runs,
+                "execution_authorized": False}
+
     def snapshot(self, run_id, head=None):
         folder = run_folder(run_id)
         head = head or self.head()
@@ -451,8 +481,8 @@ class RemoteMemory:
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("command", choices=["begin", "show", "append"])
-    p.add_argument("--run-id", required=True)
+    p.add_argument("command", choices=["begin", "show", "append", "list"])
+    p.add_argument("--run-id")
     p.add_argument("--revision")
     p.add_argument("--plan-digest")
     p.add_argument("--agent", choices=sorted(FAMILIES), default="other")
@@ -470,7 +500,11 @@ def main():
     try:
         store = RemoteMemory(GithubAPI())
         actor = {"family": args.agent, "model": args.model, "session": args.session}
-        if args.command == "begin":
+        if args.command != "list":
+            require(args.run_id is not None, "RUN_ID_REQUIRED")
+        if args.command == "list":
+            result = store.list_runs()
+        elif args.command == "begin":
             result = store.begin(args.run_id, args.revision, args.plan_digest, actor)
         elif args.command == "show":
             result = store.snapshot(args.run_id)
