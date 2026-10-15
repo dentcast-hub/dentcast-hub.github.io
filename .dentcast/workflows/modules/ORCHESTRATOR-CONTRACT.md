@@ -6,6 +6,10 @@
 
 For work **on the staging modularization project** (not live publication), start with [CROSS-AGENT-HANDOFF.md](CROSS-AGENT-HANDOFF.md). This is one shared source of continuation state, not a replacement for the active canonical README or agent-parity rules. Never infer permission to activate or merge from the handoff.
 
+## Shared GitHub execution memory (proposed, not active)
+
+See [SHARED-EXECUTION-MEMORY-CONTRACT.md](SHARED-EXECUTION-MEMORY-CONTRACT.md). Cross-agent continuation must preserve **nested** module checkpoints (including completed first Fidelity reviewer and pending second reviewer), complete immutable per-claim scientific outputs, verified receipts, and actor provenance. The public site repository is **not** a safe place for private scientific or clinical artifacts; shared execution memory requires access-controlled GitHub storage and conflict-safe remote writes. Local checkpoint tests do not prove GitHub-level concurrency or scientific resumability.
+
 ## Mental model
 
 The **orchestrator is a state machine**, not a large replacement README and not an agent that memorizes every specialist rule. It owns route selection, dependency graph, approvals, status transitions, dispatch, checkpoint references, error routing, invalidation and final verification. Each module owns a bounded responsibility, its full domain rules, a version and explicit inputs/outputs. The orchestrator calls a module and receives a structured result; it does not silently reproduce that module's scientific or editorial work.
