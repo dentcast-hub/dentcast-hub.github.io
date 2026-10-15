@@ -1,0 +1,294 @@
+{
+  "des_version": "3.4",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+    {
+      "id": "u1",
+      "claim_quote": "آیا می‌توان فایبرپست را با گلاس‌آینومر معمولی سمان کرد؟",
+      "verdict": "NOT_A_CLAIM",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "heading only"
+    },
+    {
+      "id": "u2",
+      "claim_quote": "English",
+      "verdict": "NOT_A_CLAIM",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "language link label"
+    },
+    {
+      "id": "u3",
+      "claim_quote": "یکی از همکاران از من پرسید:",
+      "verdict": "NOT_A_CLAIM",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "colon-introduction of the personal dialogue"
+    },
+    {
+      "id": "u4",
+      "claim_quote": "«فایبرپست رو می‌شه با گلاس‌آینومر هم سمان کرد؟»",
+      "verdict": "NOT_A_CLAIM",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "question with no answer"
+    },
+    {
+      "id": "u5",
+      "claim_quote": "جواب دادم: «شدنش که می‌شه.",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "first-person marker: جواب دادم; historical personal response"
+    },
+    {
+      "id": "u6",
+      "claim_quote": "تو هر کاری دوست داشته باشی می‌تونی بکنی!",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "historical personal dialogue: the author’s humorous personal response, not a present treatment recommendation"
+    },
+    {
+      "id": "u7",
+      "claim_quote": "😂»",
+      "verdict": "NOT_A_CLAIM",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "emoji and quotation punctuation only"
+    },
+    {
+      "id": "u8",
+      "claim_quote": "بعد توضیح داد که در کلینیکشان قبلاً فایبرپست را بدون رزین سمان و فقط با گلاس‌آینومر سمان می‌کردند.",
+      "verdict": "NOT_ASSESSABLE",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "The abstract does not address this colleague’s clinic or its historical cementation practice."
+    },
+    {
+      "id": "u9",
+      "claim_quote": "حالا به او پیشنهاد داده بودند که اگر به فایبرپست نیاز دارد، برایش تهیه کنند تا با همان گلاس‌آینومر استفاده کند.",
+      "verdict": "NOT_ASSESSABLE",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "The abstract does not address the colleague’s proposed procurement or treatment arrangement."
+    },
+    {
+      "id": "u10",
+      "claim_quote": "پرسید: «بود و نبودش فرقی می‌کنه؟",
+      "verdict": "NOT_A_CLAIM",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "question with no answer"
+    },
+    {
+      "id": "u11",
+      "claim_quote": "جای این کار همون پست ریختگی کار کنم بهتر نیست؟»",
+      "verdict": "NOT_A_CLAIM",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "question with no answer"
+    },
+    {
+      "id": "u12",
+      "claim_quote": "من در جواب پرسیدم: «به نظرت دلیل وجود پست چیه؟»",
+      "verdict": "NOT_A_CLAIM",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "question with no answer"
+    },
+    {
+      "id": "u13",
+      "claim_quote": "گفت: «گیر بهتر کور و تقویت سرویکال؟»",
+      "verdict": "NOT_A_CLAIM",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "question with no answer"
+    },
+    {
+      "id": "u14",
+      "claim_quote": "گفتم: «آفرین، گیر بهتر کور.",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "first-person marker: گفتم; historical personal response"
+    },
+    {
+      "id": "u15",
+      "claim_quote": "حالا فکر نمی‌کنم فایبرپست با سمان کانونشنال و گیر اصطکاکی کارکرد مقبولی داشته باشه.»",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "opinion marker: فکر نمی‌کنم; historical personal opinion"
+    },
+    {
+      "id": "u16",
+      "claim_quote": "اما بعد از بررسی مقالات، نظرم تغییر کرد",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "first-person opinion marker: نظرم"
+    },
+    {
+      "id": "u17",
+      "claim_quote": "بعد از این گفت‌وگو تصمیم گرفتم ببینم شواهد علمی دربارهٔ سمان کردن فایبرپست با گلاس‌آینومر معمولی چه می‌گویند.",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "first-person marker: تصمیم گرفتم; account of the author’s own investigation"
+    },
+    {
+      "id": "u18",
+      "claim_quote": "چهار مقالهٔ مرتبط پیدا کردم و ابسترکت‌هایشان را خواندم.",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "first-person markers: پیدا کردم، خواندم"
+    },
+    {
+      "id": "u19",
+      "claim_quote": "نتیجه برخلاف تصور اولیهٔ من بود.",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "opinion marker: تصور اولیهٔ من"
+    },
+    {
+      "id": "u20",
+      "claim_quote": "در برخی مطالعات آزمایشگاهی، گلاس‌آینومر معمولی توانسته گیر مناسبی برای فایبرپست ایجاد کند و حتی در بعضی آزمون‌های Push-out نتایجی قابل‌مقایسه یا بهتر از برخی سمان‌های رزینی داشته است.",
+      "verdict": "NOT_ASSESSABLE",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "The abstract reports increased GIC/RMGIC retention after water sorption, but does not state that retention was adequate or rank GIC retention against resin cements; an increase after water sorption is a neighbouring proposition, not either claimed outcome."
+    },
+    {
+      "id": "u21",
+      "claim_quote": "البته نتایج همهٔ مطالعات یکسان نبودند و در یک مطالعهٔ دیگر، گیر پست با سمان گلاس‌آینومرِ مورد آزمایش به‌مراتب کمتر گزارش شده بود.",
+      "verdict": "NOT_ASSESSABLE",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "This is a contrast between studies, which cannot be decided from this one source (F2 item 4); the abstract also gives no finding of markedly lower GIC retention relative to another cement."
+    },
+    {
+      "id": "u22",
+      "claim_quote": "نکتهٔ جالب دیگر این بود که انبساط هیگروسکوپیک گلاس‌آینومر، یعنی افزایش حجم ناشی از جذب آب، می‌تواند در افزایش گیر اصطکاکی پست نقش داشته باشد.",
+      "verdict": "MATCHES",
+      "change_kind": null,
+      "source_quote": "As unfavorable cavity geometry is taxing to dentin bond integrity in root canals, a strategy that relies on increasing the frictional resistance to post dislodgement via delayed hygroscopic expansion of glass-ionomer based materials may be a more pragmatic approach to fiber post retention.",
+      "source_ref": null,
+      "note": "The claim preserves the possible contribution of water-related hygroscopic expansion to frictional post retention; the source’s statement explicitly connects expansion and frictional resistance."
+    },
+    {
+      "id": "u23",
+      "claim_quote": "بنابراین برداشت اولیهٔ من مبنی بر اینکه فایبرپست با سمان کانونشنال و گیر اصطکاکی نمی‌تواند عملکرد قابل‌قبولی داشته باشد، بیش از حد قطعی بود.",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "opinion marker: برداشت اولیهٔ من"
+    },
+    {
+      "id": "u24",
+      "claim_quote": "دست‌کم نتایج مطالعات آزمایشگاهی چنین حکمی را تأیید نمی‌کنند.",
+      "verdict": "NOT_ASSESSABLE",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "The conclusion that laboratory studies do not support the preceding categorical judgment is not stated in this abstract; the source reports water-related retention changes and a potentially pragmatic approach, not this judgment about the studies."
+    },
+    {
+      "id": "u25",
+      "claim_quote": "البته این به معنای اثبات موفقیت بلندمدت کلینیکی این روش یا برتری آن نسبت به سمان‌های رزینی نیست.",
+      "verdict": "NOT_ASSESSABLE",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "The conclusion about what is or is not proved regarding long-term clinical success or superiority over resin cements is not stated in this abstract; no missing clinical result is supplied."
+    },
+    {
+      "id": "u26",
+      "claim_quote": "من برای این بررسی سراغ فول‌تکست مقالات نرفتم و به مطالعهٔ ابسترکت‌ها اکتفا کردم.",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "first-person markers: من، نرفتم، اکتفا کردم"
+    },
+    {
+      "id": "u27",
+      "claim_quote": "دلیلش هم ساده است: این موضوع در حال حاضر مسئله‌ای نیست که در کار روزمرهٔ من کاربرد مستقیمی داشته باشد یا بخواهم بر اساس آن پروتکل درمانی‌ام را تغییر بدهم.",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "first-person markers: کار روزمرهٔ من، بخواهم، پروتکل درمانی‌ام; present personal treatment intention"
+    },
+    {
+      "id": "u28",
+      "claim_quote": "هدفم بیشتر این بود که درستی پاسخ خودم را بررسی کنم.",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "first-person markers: هدفم، پاسخ خودم"
+    },
+    {
+      "id": "u29",
+      "claim_quote": "در نهایت، همچنان برای سمان کردن فایبرپست از سیستم رزین سمان مناسب استفاده می‌کنم؛ اما حالا می‌دانم که نمی‌توانم صرفاً بر اساس تصور قبلی‌ام، استفاده از گلاس‌آینومر معمولی را روشی فاقد گیر قابل‌قبول بدانم.",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "first-person markers: استفاده می‌کنم، می‌دانم، نمی‌توانم; present personal treatment choice and opinion, not an instruction"
+    },
+    {
+      "id": "u30",
+      "claim_quote": "گاهی ارزش بررسی یک سؤال در این نیست که روش درمانمان را تغییر بدهیم؛ در این است که بفهمیم یکی از قضاوت‌های قبلی‌مان به آن اندازه که فکر می‌کردیم پشتوانه نداشته است.",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "first-person plural markers: درمانمان، بفهمیم، قضاوت‌های قبلی‌مان، فکر می‌کردیم; personal reflection"
+    }
+  ],
+  "counts": {
+    "matches": 1,
+    "altered": 0,
+    "reversed": 0,
+    "not_in_source": 0,
+    "not_assessable": 6,
+    "author_view": 14,
+    "not_a_claim": 9
+  },
+  "assessable": 1,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "As unfavorable cavity geometry is taxing to dentin bond integrity in root canals, a strategy that relies on increasing the frictional resistance to post dislodgement via delayed hygroscopic expansion of glass-ionomer based materials may be a more pragmatic approach to fiber post retention.",
+  "fact_fa": "از یک ادعای قابل‌سنجش، یک ادعا مطابق منبع است و هیچ ادعای تغییرکرده یا معکوسی وجود ندارد؛ سطح وفاداری بالا است.",
+  "interpretation_fa": "تنها ادعای قابل‌سنجش، نقش انبساط هیگروسکوپیک در افزایش گیر اصطکاکی پست را مطابق منبع بیان می‌کند."
+}

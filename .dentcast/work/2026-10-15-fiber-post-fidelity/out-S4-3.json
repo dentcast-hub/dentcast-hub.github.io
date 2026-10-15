@@ -1,0 +1,42 @@
+{
+  "des_version": "3.4",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+    {
+      "id": "u24",
+      "claim_quote": "دست‌کم نتایج مطالعات آزمایشگاهی چنین حکمی را تأیید نمی‌کنند.",
+      "verdict": "MATCHES",
+      "change_kind": null,
+      "source_quote": "CONCLUSION: Except for Ionoseal, all cements provided satisfactory bond strength values.",
+      "source_ref": null,
+      "note": "«چنین حکمی» به داوری قبلی دربارهٔ نداشتن عملکرد قابل‌قبول اشاره دارد؛ گزارش استحکام باند رضایت‌بخش با رد آن داوری مطلق همسو است."
+    },
+    {
+      "id": "u30",
+      "claim_quote": "گاهی ارزش بررسی یک سؤال در این نیست که روش درمانمان را تغییر بدهیم؛ در این است که بفهمیم یکی از قضاوت‌های قبلی‌مان به آن اندازه که فکر می‌کردیم پشتوانه نداشته است.",
+      "verdict": "AUTHOR_VIEW",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "F1(2a): first-person opinion marker «فکر می‌کردیم» and reflection on «قضاوت‌های قبلی‌مان» mark the author’s own view."
+    }
+  ],
+  "counts": {
+    "matches": 1,
+    "altered": 0,
+    "reversed": 0,
+    "not_in_source": 0,
+    "not_assessable": 0,
+    "author_view": 1,
+    "not_a_claim": 0
+  },
+  "assessable": 1,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "CONCLUSION: Except for Ionoseal, all cements provided satisfactory bond strength values.",
+  "fact_fa": "از یک ادعای قابل‌ارزیابی، یک ادعا مطابق منبع است و هیچ ادعایی تغییر‌یافته یا وارونه نیست؛ سطح وفاداری بالا است.",
+  "interpretation_fa": "تنها ادعای قابل‌ارزیابی با منبع مطابقت دارد."
+}

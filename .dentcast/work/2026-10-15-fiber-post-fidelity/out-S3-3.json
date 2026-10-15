@@ -1,0 +1,42 @@
+{
+  "des_version": "3.4",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+    {
+      "id": "u8",
+      "claim_quote": "بعد توضیح داد که در کلینیکشان قبلاً فایبرپست را بدون رزین سمان و فقط با گلاس‌آینومر سمان می‌کردند.",
+      "verdict": "NOT_ASSESSABLE",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "F1: این گزارش از تجربهٔ کلینیک همکار، نشانگر اول‌شخص یا نظر نویسنده در خود واحد ندارد؛ چکیده دربارهٔ سابقهٔ سمان کردن فایبرپست در آن کلینیک چیزی نمی‌گوید."
+    },
+    {
+      "id": "u9",
+      "claim_quote": "حالا به او پیشنهاد داده بودند که اگر به فایبرپست نیاز دارد، برایش تهیه کنند تا با همان گلاس‌آینومر استفاده کند.",
+      "verdict": "NOT_ASSESSABLE",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "F1: واحد گزارشِ پیشنهاد پیشین به همکار است و نشانگر نظر نویسنده یا پیش‌بینی آینده ندارد؛ چکیده دربارهٔ این پیشنهاد و تهیهٔ فایبرپست چیزی نمی‌گوید."
+    }
+  ],
+  "counts": {
+    "matches": 0,
+    "altered": 0,
+    "reversed": 0,
+    "not_in_source": 0,
+    "not_assessable": 2,
+    "author_view": 0,
+    "not_a_claim": 0
+  },
+  "assessable": 0,
+  "fidelity_score": null,
+  "level": "INSUFFICIENT_CLAIMS",
+  "provisional": true,
+  "source_conclusion": "As unfavorable cavity geometry is taxing to dentin bond integrity in root canals, a strategy that relies on increasing the frictional resistance to post dislodgement via delayed hygroscopic expansion of glass-ionomer based materials may be a more pragmatic approach to fiber post retention.",
+  "fact_fa": "منبع هیچ‌یک از این دو ادعا را بررسی نمی‌کند؛ تعداد ادعاهای مطابق، تغییریافته و معکوس همگی صفر و سطح ارزیابی INSUFFICIENT_CLAIMS است.",
+  "interpretation_fa": "چکیده دربارهٔ سابقهٔ کار کلینیک همکار و پیشنهاد تهیهٔ فایبرپست گزارشی ندارد؛ هیچ ادعای قابل‌ارزیابی وجود ندارد."
+}

@@ -2,7 +2,7 @@
   "date": "2026-10-15",
   "workflow_main_commit": "9a55a5a7bef1ee3efcb107315f73c1e1fe3382cf",
   "workflow_pr": 891,
-  "status": "BLOCKED_BEFORE_RELAUNCH",
+  "status": "FIDELITY_COMPLETED_WITH_FOUNDER_APPROVED_FALLBACK",
   "independent_contexts_supported": true,
   "per_role_requested_model_selection_supported": true,
   "checker": {
@@ -28,7 +28,7 @@
     "tie_break_executed": false,
     "stronger_review_executed": false
   },
-  "decision_required": "Founder must explicitly choose deferral or a documented fallback under current workflow Part 2c. No new FIDELITY agents launched after discovering PR 891.",
+  "decision_required": null,
   "source_scoring": {
     "requested_model": "gpt-6.1-sol",
     "requested_reasoning": "high",
@@ -44,5 +44,35 @@
     "sources": 4,
     "input_revision": 2,
     "note": "A paragraph was initially rendered as h3 by the caller. Restored to p, matching the approved plain-paragraph source; words and unit IDs unchanged. Earlier attempts are invalid for these final inputs."
+  },
+  "founder_choice": {
+    "option": 2,
+    "verbatim_reply": "2",
+    "scope": "Continue independent requested checker/reviewer roles with actual executed IDs UNVERIFIED and no verified cost-ordering claim."
+  },
+  "new_execution": {
+    "checker_requested_model": "gpt-6.1-sol",
+    "checker_requested_reasoning": "high",
+    "reviewer_requested_model": "gpt-6-astra",
+    "reviewer_requested_reasoning": "high",
+    "actual_ids": "UNVERIFIED",
+    "independent_contexts": true,
+    "cost_ordering_verified": false,
+    "completed_full_checker_runs": 8,
+    "completed_disagreement_checker_runs": 3,
+    "completed_stronger_adjudicator_runs": 1,
+    "agreement": {
+      "same": 111,
+      "total": 120,
+      "percent": 92.5
+    },
+    "final": {
+      "score": 100,
+      "level": "HIGH",
+      "assessable": 3,
+      "altered": 0,
+      "reversed": 0,
+      "provisional": true
+    }
   }
 }

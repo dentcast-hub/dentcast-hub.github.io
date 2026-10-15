@@ -1,0 +1,89 @@
+{
+  "results": [
+    {
+      "source": "S1",
+      "agreement": 30,
+      "total": 30,
+      "runs": 2,
+      "tie_break_pending": [],
+      "unresolved": [],
+      "unreviewed_flags": [],
+      "counts": {
+        "matches": 1,
+        "altered": 0,
+        "reversed": 0,
+        "not_in_source": 0,
+        "not_assessable": 7,
+        "author_view": 13,
+        "not_a_claim": 9
+      },
+      "score": 100,
+      "level": "HIGH"
+    },
+    {
+      "source": "S2",
+      "agreement": 25,
+      "total": 30,
+      "runs": 3,
+      "tie_break_pending": [],
+      "unresolved": [],
+      "unreviewed_flags": [],
+      "counts": {
+        "matches": 0,
+        "altered": 0,
+        "reversed": 0,
+        "not_in_source": 0,
+        "not_assessable": 8,
+        "author_view": 13,
+        "not_a_claim": 9
+      },
+      "score": null,
+      "level": "INSUFFICIENT_CLAIMS"
+    },
+    {
+      "source": "S3",
+      "agreement": 28,
+      "total": 30,
+      "runs": 3,
+      "tie_break_pending": [],
+      "unresolved": [],
+      "unreviewed_flags": [],
+      "counts": {
+        "matches": 1,
+        "altered": 0,
+        "reversed": 0,
+        "not_in_source": 0,
+        "not_assessable": 6,
+        "author_view": 14,
+        "not_a_claim": 9
+      },
+      "score": 100,
+      "level": "HIGH"
+    },
+    {
+      "source": "S4",
+      "agreement": 28,
+      "total": 30,
+      "runs": 3,
+      "tie_break_pending": [],
+      "unresolved": [],
+      "unreviewed_flags": [],
+      "counts": {
+        "matches": 2,
+        "altered": 0,
+        "reversed": 0,
+        "not_in_source": 0,
+        "not_assessable": 3,
+        "author_view": 16,
+        "not_a_claim": 9
+      },
+      "score": 100,
+      "level": "HIGH"
+    }
+  ],
+  "agreement": 111,
+  "total": 120,
+  "pending": 0,
+  "validation": "F5 schema; exact IDs/text/order; canonical des_check_fidelity; exact echoed conclusion",
+  "voting": "unchanged tools/des_fidelity_units.py vote_source called per SOURCE part"
+}

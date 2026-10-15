@@ -1,0 +1,11 @@
+{
+  "S2": {
+    "u20": {
+      "verdict": "NOT_ASSESSABLE",
+      "change_kind": null,
+      "source_quote": "",
+      "source_ref": null,
+      "note": "F1: attributed assertion. F2-F3: NOT_ASSESSABLE on the supplied abstract, because neither separate assertion is stated or negated. The first assertion concerns adequate retention; the source ranks Gr7 among the lowest pullout strengths but gives no adequacy criterion and does not call Gr7 ineffective or inadequate. Thus checker 1's REVERSED converts a relative rank into a negation of adequacy, which is not the same predicate. The second assertion concerns comparable-or-better results than some resin cements in Push-out tests. The source reports pullout tests, and the sentence grouping Gr2, Gr3 and Gr7 among the lowest results does not expressly state the claimed comparable-or-better relation for Gr7. Checker 2 correctly notices the different test but has not established the same directional finding from which a POPULATION_OR_CONDITION_CHANGED alteration could be made; a neighboring pullout result alone is insufficient. Checker 3 correctly separates adequacy from relative rank and treats the unaddressed Push-out comparison as abstract silence. Its NOT_ASSESSABLE verdict is upheld. The abstract calls the product Relyx Luting 2 glass ionomer cement without specifying conventional or resin-modified; neither category is supplied from outside knowledge, and this omission creates no independent mismatch. No inference is made about other studies or manuscript-wide coverage. Both assertions are silent for this source, so F3 supplies no addressed half that would outrank silence."
+    }
+  }
+}
