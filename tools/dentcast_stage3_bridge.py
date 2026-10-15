@@ -201,3 +201,61 @@ def attest_sample_receipt(state, workspace, relative_paths):
         "global_rules_sha256": task["global_rules_sha256"],
         "artifacts": artifacts,
     }
+
+def main():
+    """A single practical CLI for Claude Code, Cursor and Codex handoffs."""
+    import argparse
+    import sys
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("command", choices=["task", "attest", "confirm", "status"])
+    parser.add_argument("--state", required=True)
+    parser.add_argument("--workspace")
+    parser.add_argument("--paths", nargs="*", default=[])
+    parser.add_argument("--receipt")
+    parser.add_argument("--report")
+    args = parser.parse_args()
+    try:
+        state_path = Path(args.state)
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+        orchestrator.validate_state(state)
+        if args.command == "task":
+            result = prepare_task(state)
+        elif args.command == "status":
+            result = {"status": orchestrator.stage3_status(state),
+                      "completed_steps": state["next_index"],
+                      "total_steps": len(state["plan"]["ordered_steps"]),
+                      "execution_authorized": False}
+        elif args.command == "attest":
+            _need(args.workspace and args.receipt, "WORKSPACE_AND_RECEIPT_REQUIRED")
+            receipt = attest_sample_receipt(state, args.workspace, args.paths)
+            output = Path(args.receipt)
+            _need(output.parent.is_dir() and not output.is_symlink(), "BAD_RECEIPT_OUTPUT_PATH")
+            output.write_text(json.dumps(receipt, ensure_ascii=False, indent=2), encoding="utf-8")
+            result = {"status": "local_receipt_created",
+                      "receipt_digest": handlers.hash_public(receipt),
+                      "step_id": receipt["step_id"],
+                      "execution_authorized": False}
+        else:
+            _need(args.workspace and args.receipt and args.report,
+                  "WORKSPACE_RECEIPT_AND_REPORT_REQUIRED")
+            report = json.loads(Path(args.report).read_text(encoding="utf-8"))
+            validated = verify_local_receipt(state, report, args.receipt, args.workspace)
+            orchestrator.save_checked(state_path, validated,
+                                      expected_digest=orchestrator.storage_digest(state))
+            result = {"status": orchestrator.stage3_status(validated),
+                      "completed_steps": validated["next_index"],
+                      "total_steps": len(validated["plan"]["ordered_steps"]),
+                      "step_id": report["step_id"],
+                      "artifact_integrity_verified": True,
+                      "real_publish_completed": False,
+                      "execution_authorized": False}
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0
+    except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
+        print(json.dumps({"status": "blocked", "reason": str(exc),
+                          "execution_authorized": False}), file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
