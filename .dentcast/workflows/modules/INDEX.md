@@ -1,30 +1,33 @@
-# Publishing workflow modularization — staging index
+# Publishing modules — staging index
 
-**Status: staged extraction only; NOT activated.**
+**Status: extracted and dependency-audited; NOT ACTIVATED.** The canonical `../README.md`, `CLAUDE.md`, `AGENTS.md`, Cursor routing and `../agent-parity.md` remain unchanged.
 
-The eight files below are consecutive, verbatim slices of the existing `.dentcast/workflows/README.md`. The original canonical workflow, `CLAUDE.md`, `AGENTS.md`, and Cursor rules remain unchanged on this branch. Publishing behavior has **not** switched to these modules.
+## Proposed execution-order modules (verbatim source slices)
 
-## Ordered modules
+| File | Original lines |
+|---|---|
+| [01-hard-rules.md](01-hard-rules.md) | 1–56 |
+| [02-routing-intake.md](02-routing-intake.md) | 57–356 |
+| [03-litecast-and-page.md](03-litecast-and-page.md) | 357–528 |
+| [04-taxonomy-and-navigation.md](04-taxonomy-and-navigation.md) | 529–794 |
+| [05-semantic-linking.md](05-semantic-linking.md) | 795–957 |
+| [06-paper-ingestion.md](06-paper-ingestion.md) | 958–1143 |
+| [07-flashcards-and-quiz.md](07-flashcards-and-quiz.md) | 1144–1335 |
+| [08-des-fidelity.md](08-des-fidelity.md) | 1336–1966 |
+| [09-challenge.md](09-challenge.md) | 1967–2038 |
+| [10-brain-and-pathways.md](10-brain-and-pathways.md) | 2039–2329 |
+| [11-build-and-version.md](11-build-and-version.md) | 2330–2393 |
+| [12-english-notify-verify.md](12-english-notify-verify.md) | 2394–2598 |
 
-1. [Hard rules](01-hard-rules.md) — original lines 1–56
-2. [Routing and intake](02-routing-intake.md) — original lines 57–356
-3. [Page creation and linking](03-page-and-links.md) — original lines 357–957
-4. [Paper ingestion](04-paper-ingestion.md) — original lines 958–1143
-5. [Flashcards and quiz](05-learning-content.md) — original lines 1144–1335
-6. [DES and Fidelity](06-des-fidelity.md) — original lines 1336–1966
-7. [Challenge, metadata, pathways and build](07-finalize-build.md) — original lines 1967–2393
-8. [English, notification, mechanical gate and report](08-english-notify-verify.md) — original lines 2394–2598
+The earlier 8-file extraction is retained temporarily as a reference, not as an alternative runnable route. **Only the twelve files in this table constitute the proposed modular sequence.**
 
-## Invariants and next gate
+## Supporting design files
 
-- The original 2,598-line README was reconstructed from these eight module bodies with exact character-for-character equality in the working branch.
-- **Do not** edit or shorten policy while moving it. Retain global hard rules and mandatory gates.
-- Before activation, audit cross-module dependencies and exception routing (LiteCast, challenge, DES, Fidelity, English mirror).
-- Design a small router that loads global rules plus only the required stage. Update `CLAUDE.md`, `AGENTS.md` and `.cursor/rules/` in sync only when ready to activate.
-- Re-run a full text-parity check and behavior checks before switching the canonical entrypoint.
-- Checkpointing comes **after** the module boundaries and their inputs/outputs are approved.
-- No merge to `main` without explicit founder approval.
+- [DEPENDENCY-AUDIT.md](DEPENDENCY-AUDIT.md) — global and cross-stage constraints, risks and parity gates.
+- [STAGE-ROUTER-DRAFT.md](STAGE-ROUTER-DRAFT.md) — proposed lazy-loading algorithm, **not activated**.
 
-## Why staged?
+## Verification and safeguards
 
-Extracting content is reversible and testable. Changing agent entrypoints is a separate, higher-risk step. This branch first proves lossless extraction before modifying live publishing instructions.
+The source ranges above cover all 2,598 original lines once, in original order, without overlaps or gaps. The first 8-file extraction was previously reassembled with exact character parity. The refined 12-file extraction is verbatim from the same original ranges; final machine parity and representative behavior tests remain required before activation.
+
+Do not activate a router, alter read-all requirements, introduce checkpoints, merge to main or claim production readiness before the specified parity gates and founder review.
