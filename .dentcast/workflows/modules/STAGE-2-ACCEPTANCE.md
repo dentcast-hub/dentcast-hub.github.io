@@ -7,7 +7,7 @@ Audit baseline: canonical `.dentcast/workflows/README.md` on `refactor/publishin
 ## What passed and how to reproduce
 
 - Canonical README: **2,598 lines**; all **12** named source slices in `.dentcast/workflows/modules/01-*.md` through `12-*.md` are exact, contiguous text spans of the canonical source. Their union covers **every non-whitespace character** of the original. The static audit explicitly fails for modified/missing text.
-- All **17 numbered hard rules** are mapped to owning module(s), as are all canonical heading spans; ownership is traced through the source slices and the explicit section map in `INTERNAL-VALIDATION-AND-ROUTE-PLAN.md`.
+- All **17 numbered hard rules** and **90 canonical section headings** are mapped to owning module(s); ownership is traced through the source slices and the explicit section map in `INTERNAL-VALIDATION-AND-ROUTE-PLAN.md`.
 - All **15** conceptual module IDs exist in both draft contracts, with identical unconditional dependencies. The graph is checked for missing entries, unknown references, self-reference and cycles.
 - All **5** production publishing entrypoints (`CLAUDE.md`, `AGENTS.md`, two Cursor router files and `agent-parity.md`) continue to direct agents to the original canonical workflow. The audit fails if a live entrypoint switches to the staging orchestrator.
 - **7 route fixtures** (paper-only, ordinary, ordinary+paper, LiteCast, LiteCast+paper, Challenge, Challenge+paper), additional category variations, and negative/fail-closed cases are exercised. These assert the *staging route skeleton* and explicitly do not grant execution permission.
@@ -22,7 +22,7 @@ python3 -m unittest discover -s tests -p 'test_dentcast_stage2_contract.py' -v
 python3 -m unittest discover -s tests -p 'test_dentcast_route_dependencies.py' -v
 ```
 
-GitHub Actions passed on commit `31dfd21a00af16e04c9a8f2353a7228c0f3352e7`: [staging audit and tests](https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/38792785122). The dedicated CI job includes the previous staging suite and the new static audit, and watches canonical/entrypoint/contract changes.
+**Final verification:** GitHub Actions passed on commit `fab63ae945065b528f1a4280c35d425c23a55858`: [113 passing staging/unit tests + source audit](https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/38793402519). Static audit reported **zero issues**, 90 heading owners, 17 hard rules, 12 exact source slices and 15 module contracts. The dedicated CI job watches canonical/entrypoint/contract changes. Four workflows on that code commit passed; later documentation-only commits do not alter these test inputs.
 
 ## Canonical routing and approval decisions locked for Stage 3
 
@@ -33,7 +33,7 @@ GitHub Actions passed on commit `31dfd21a00af16e04c9a8f2353a7228c0f3352e7`: [sta
 | Specialist ordinary | Same-category page C2, taxonomy lock C2.4 before dependent writes, C2.5/C2.6, fresh 4.7–4.9, brain tail, pathway assessment, Pulse C6, version C7, Build C8, English D, Phase E marker when eligible, Phase F |
 | LiteCast | `litecast/lite-glossary.json` and .ir identity; 0.5/0.6 internal linking, C6 Pulse, C7/C8 build, **no specialist taxonomy/brain/pathways, English D or push marker E** |
 | Challenge | Ordinary specialist page/brain/taxonomy/Pulse/build and Phase E/F still apply; 4.11/4.12/4.13, pathway placement and English D explicitly skipped. Admin answer stays **outside public Git** |
-| Glossary | Specialist enrichment + build and English D; **Phase E marker skipped** |
+| Glossary | The glossary-writer is a **separate existing workflow**, not an entry type in `dentcast-brain.json`. Its Phase E marker is skipped; the current staging publication planner deliberately **fails closed** on `category=glossary` rather than inventing a normal brain route. The future compiler must integrate or explicitly delegate to that authoritative glossary workflow. |
 | NoteCast / Episode | Parent episode update, shared evidence-basis rules and episode-specific related-link surfaces; no generic template shortcut |
 | DentCast+ | FAQ and quiz use own canonical type rules; flashcards can be documented optional based on actual clinical source, never fabricated |
 | DES / Fidelity | Source-basket and text-basis gate preserved; 2 independent checker contexts with identical pinned input/model, optional disagreement-only third, vote, stronger adjudication/review, per-differing-sentence founder approval (4.13) |
@@ -52,6 +52,7 @@ Source map: `INTERNAL-VALIDATION-AND-ROUTE-PLAN.md` includes all 17 hard rules a
 6. **Paper-only verification conflation** — corrected unconditional verify prerequisites and explicit route completion behavior; no false Phase F page receipt.
 7. **DES independent checkpoints and separate v0.1 vs v1.0 schemas** — documented with fail-closed compatibility requirement; implementation and scientific end-to-end proof await Stage 3/5/7.
 8. **Obsolete CI test asserting the old LiteCast defect** — replaced; negative test now detects deliberate reintroduction.
+9. **Glossary special router** — verified absent from specialist brain categories; reject in the generic draft planner and preserve its existing dedicated authoring route and Phase E exception.
 
 ## What Stage 2 does NOT establish
 
