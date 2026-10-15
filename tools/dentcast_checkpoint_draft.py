@@ -55,3 +55,23 @@ def accept(state, receipt, revision):
     else:
         new["paused"] = True
     return new
+
+
+def recover(state, expected_revision, module_id, prior_digest):
+    """Explicit pause reset; keep an audit trail and never authorize execution."""
+    if state.get('execution_authorized') is not False or state.get('revision') != expected_revision:
+        raise ValueError('STALE_OR_UNSAFE')
+    if not state.get('paused') or state['next_index'] >= len(state['sequence']):
+        raise ValueError('NOT_PAUSED')
+    if state['sequence'][state['next_index']] != module_id:
+        raise ValueError('WRONG_RECOVERY_TARGET')
+    previous = state['receipts'].get(module_id)
+    if not previous or previous['status'] not in ('blocked', 'failed', 'awaiting_approval'):
+        raise ValueError('NO_PAUSE_RECEIPT')
+    if digest(previous) != prior_digest:
+        raise ValueError('PAUSE_RECEIPT_CHANGED')
+    new = copy.deepcopy(state)
+    new.setdefault('history', []).append({'event': 'explicit_recovery', 'module': module_id, 'prior_receipt_digest': prior_digest})
+    del new['receipts'][module_id]
+    new['paused'] = False
+    return new
