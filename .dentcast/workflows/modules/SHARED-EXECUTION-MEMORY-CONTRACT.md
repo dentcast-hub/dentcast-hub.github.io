@@ -8,16 +8,16 @@ This is a **design contract**, not a working GitHub-backed publication store. Cu
 
 ## Storage and confidentiality
 
-Use a **separate private GitHub repository** (or a genuinely access-restricted GitHub storage location) for execution memory, shared with authorized agents. **Never put clinical inputs, patient identifiers, private challenge answers, licensed full text, source passages, claim-level scientific judgments or unpublished scientific artifacts in the public dentcast-hub.github.io repository.** Public publishing repo can carry only safe opaque run pointers and non-sensitive hashes. Git history retains removed secrets; a public branch is not a private storage area.
+Use the existing public DentCast repository for temporary cross-agent execution memory. Only public-safe inputs and results may be committed; never include identifying patient data, credentials, restricted licensed content, or private challenge answers. Deleting files from the active branch does not erase Git history.
 
-Proposed private layout:
+Proposed temporary layout in the existing repository:
 
 ```text
-runs/<run_id>/manifest.json
-runs/<run_id>/state.json
-runs/<run_id>/events/000001-<event_id>.json
-runs/<run_id>/artifacts/<artifact_digest>.json
-runs/<run_id>/receipts/<receipt_id>.json
+.dentcast/execution-memory/runs/<run_id>/manifest.json
+.dentcast/execution-memory/runs/<run_id>/state.json
+.dentcast/execution-memory/runs/<run_id>/events/000001-<event_id>.json
+.dentcast/execution-memory/runs/<run_id>/artifacts/<artifact_digest>.json
+.dentcast/execution-memory/runs/<run_id>/receipts/<receipt_id>.json
 ```
 
 Store event/receipt/artifact objects as **immutable, content-addressed** objects. Use GitHub commit SHA and GitHub API optimistic concurrency for state updates, with an atomic branch-ref update or a dedicated serialized writer. Local POSIX flock only protects one machine; it does NOT protect GitHub writers. A successful push is not proof that an agent held an exclusive lease; re-fetch HEAD and reconcile on conflicts. Never force-push memory history.
@@ -37,13 +37,13 @@ Record decisions and explicit founder approvals as distinct signed/verified-or-a
   "engine": "fidelity",
   "engine_version": "PINNED_EXISTING_VERSION",
   "input_digest": "sha256:PINNED_EXACT_CLAIM_SET_AND_SOURCES",
-  "claim_set": {"count": 72, "manifest_ref": "private:artifacts/claims-digest"},
+  "claim_set": {"count": 72, "manifest_ref": "artifacts/claims-digest"},
   "substeps": {
     "agent_1": {
       "status": "completed_verified",
       "actor": {"agent_family": "claude", "model": "PINNED_MODEL"},
-      "result_ref": "private:artifacts/agent1-full-72-claim-result",
-      "receipt_ref": "private:receipts/agent1-validated-receipt",
+      "result_ref": "artifacts/agent1-full-72-claim-result",
+      "receipt_ref": "receipts/agent1-validated-receipt",
       "illustrative_summary": {"matched": 70, "total": 72}
     },
     "agent_2": {"status": "pending"},
@@ -57,7 +57,7 @@ The number **70/72 is hypothetical**, not a substitute for all 72 per-claim deci
 
 ## Resume algorithm
 
-1. Read current private GitHub branch HEAD and immutable run manifest; check run ID, permissions, source revision, contract versions and hashes.
+1. Read current GitHub branch HEAD and immutable run manifest; check run ID, permissions, source revision, contract versions and hashes.
 2. Replay/verify event chain and materialize state. Reject missing, corrupted, contradictory or unverified receipts. Do not rely on `state.json` alone.
 3. Determine first pending substep using the **scientific engine's actual state machine**, not a generic publishing-level status. If `agent_1` has a complete validated 72-claim result with matching input/version, **reuse it**; otherwise pause or invalidate it explicitly.
 4. Dispatch only `agent_2` with the same pinned claim set and required independent agent/model role. Do not give agent 2 agent 1's judgments if existing blind-voting rules prohibit it.
@@ -77,4 +77,8 @@ The number **70/72 is hypothetical**, not a substitute for all 72 per-claim deci
 
 ## Activation gate
 
-Before use for real publishing: private GitHub storage selected and access controlled; exact existing DES/Fidelity engine contract mapped; GitHub writer and replay verifier implemented; security/privacy and concurrent-writer tests pass; behavioral parity independently audited; founder explicitly approves activation. Until then the only working shared checkpoint is the local **staging** checkpoint.
+Before use for real publishing: public-safe data reviewed and cleanup verified; exact existing DES/Fidelity engine contract mapped; GitHub writer and replay verifier implemented; security/privacy and concurrent-writer tests pass; behavioral parity independently audited; founder explicitly approves activation. Until then the only working shared checkpoint is the local **staging** checkpoint.
+
+## Temporary-run lifecycle
+
+Keep only unfinished runs in the active directory. After the canonical final verification and confirmed successful publication, the orchestrator deletes the completed run directory in a separate commit. Never delete paused, failed, awaiting-approval or unverified runs. Cleanup does not erase Git history or published artifacts. Staging dry-runs never trigger cleanup. Paper-only runs follow their own canonical completion gate.
