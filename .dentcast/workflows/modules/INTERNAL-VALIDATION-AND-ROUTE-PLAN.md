@@ -59,3 +59,16 @@ Build a **read-only route-plan compiler and validator** first, using canonical f
 - [ ] Durable checkpoint and side-effect idempotency
 - [ ] Behavioral parity across Claude, Codex and Cursor
 - [ ] Explicit founder activation approval
+
+## Stage 2 canonical parity audit — findings requiring resolution (2026-10-15)
+
+**Source read:** full canonical README heading inventory (2,598 lines), specifically hard rules (lines 3-56), LiteCast (361-440), taxonomy determination (529-573), Fidelity (1629-1764), final gate (2472-2554). This is a substantive **partial audit**, not a completed clause-by-clause parity proof. No active publishing code changed.
+
+1. **LiteCast build/brain dependency is a draft contract defect.** Canonical 0.1 explicitly forbids LiteCast entries in specialist brain (lines 365-369), yet canonical 0.4 explicitly requires step 7 and step 8 rebuild (lines 381-389). A registry edge `build -> brain` cannot be unconditional. Fix the draft registry with a route-scoped prerequisite and test LiteCast, without introducing a specialist brain write.
+2. **Taxonomy/page ordering requires a semantic boundary, not just a reordered list.** Canonical 2.4 starts after step 2 page construction (lines 440-529), but requires locked pillar/subtopic before step 2.5 capsule and step 5 brain write (529-573). Planner page-before-taxonomy is defensible only if page generation does not prematurely write taxonomy-dependent artifacts. Add an explicit precondition on navigation and brain, and a regression test.
+3. **Fidelity resumability must be per input block and per checker.** Canonical 2c requires two independent full runs `out-src<k>-1.json`, `-2.json`, then disagreement-only third run, vote, stronger reviewer and founder gates (1700-1764). Resume must not rerun a valid first run, but cannot pass the first run's judgments to the second. Model identity, source/unit fingerprint and exact input block are required to reuse a result.
+4. **Paper-only route must not be treated as a completed ordinary publish.** Canonical Phase 0 and paper branch require route-specific behavior. Final Phase F is mandatory for actual page publications (2472-2554); never synthesize a green page gate for paper-only.
+5. **Final mechanical gate is necessary but not sufficient for semantic work.** Canonical Phase F expressly says semantic quality of 4.7/4.8/4.9 is not validated by the mechanical gate (2544-2546). Independent semantic execution receipts must remain mandatory even if `verify_publish.py` passes.
+6. **Contract naming mismatch:** `MODULE-CONTRACTS.v1.json` uses `contract_version` and `dependency_receipts`, while the staging adapter uses `module_contract_version` and `dependencies`. A versioned translation or single canonical request schema is needed before a real second adapter.
+
+**Stage 2 remains OPEN:** enumerate every canonical rule, skip, approval and stop against all 15 module owners; implement positive/negative fixtures for every supported route; resolve the six findings above; then independently verify parity. Do not start Stage 3 implementation or claim behavioral equivalence before this gate is green.
