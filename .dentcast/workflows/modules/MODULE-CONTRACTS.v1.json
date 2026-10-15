@@ -11,7 +11,9 @@
     "All requires arrays express unconditional prerequisites only. Conditional prerequisites (e.g. taxonomy for specialist page, build for publish verification) are declared in inputs and must be compiled into the route-specific DAG; never use requires as the whole execution graph.",
     "Route plans must explicitly distinguish paper-only, LiteCast, Challenge and standard publication; skip receipts must cite canonical authority.",
     "Module interface contract validated structurally; complete clause-level canonical parity is still pending.",
-    "Stage 2: build->brain is conditional on specialist routes, never unconditional on LiteCast; verify is ledger-driven, not automatically build-dependent on paper-only."
+    "Stage 2: build->brain is conditional on specialist routes, never unconditional on LiteCast; verify is ledger-driven, not automatically build-dependent on paper-only.",
+    "Stage 2: phase-scoped module invocation identity is module:substep. notification has two invocations C6 and E; module-level one-pass sequencing is NOT sufficient; phase E marker cannot be executed during C6 Pulse.",
+    "Stage 2: source sequence is page draft C2 -> taxonomy lock C2.4 -> navigation C2.5/2.6 -> specialist links OR LiteCast 0.5/0.6 -> brain where applicable -> pathways -> C6 Pulse -> C7 stamp -> C8 build -> D English where applicable -> E marker where applicable -> F verify."
   ],
   "request_schema": {
     "required": [
@@ -146,7 +148,7 @@
         },
         {
           "name": "taxonomy_lock_if_required",
-          "required": "for_specialist_routes_before_page_creation"
+          "required": "only_after_step_2_4_before_taxonomy_dependent_write_never_draft_creation"
         }
       ],
       "outputs": [
@@ -205,7 +207,8 @@
         "status": "requires executable predicate mapping"
       },
       "requires": [
-        "intake"
+        "intake",
+        "page"
       ],
       "inputs": [
         {
@@ -346,8 +349,7 @@
         "status": "requires executable predicate mapping"
       },
       "requires": [
-        "page",
-        "navigation"
+        "page"
       ],
       "inputs": [
         {
@@ -356,7 +358,7 @@
         },
         {
           "name": "navigation_changes",
-          "required": "conditional_per_canonical_route"
+          "required": "only_on_specialist_routes"
         },
         {
           "name": "brain_snapshot",
@@ -392,7 +394,8 @@
       "side_effects": "explicit receipts and idempotency checks required",
       "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
       "skip_conditions": [
-        "LiteCast specialist links forbidden; analysis/skip per original source"
+        "LiteCast specialist 2.5/4.7/4.8/4.9 skipped; ALWAYS execute LiteCast-internal 0.5/0.6 on a LiteCast page",
+        "ordinary specialist publishes always perform fresh semantic steps 4.7/4.8/4.9 or source-authorized no-op"
       ],
       "invalidated_by": [
         "body",
@@ -893,10 +896,6 @@
         {
           "name": "version_stamp",
           "required": "conditional_per_canonical_route"
-        },
-        {
-          "name": "pulse",
-          "required": "conditional_per_canonical_route"
         }
       ],
       "reads": "restricted_to_declared_inputs_and_authoritative_sources",
@@ -1004,7 +1003,20 @@
       "privacy_class": "public-safe-metadata-only",
       "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
       "adapter": "NOT_IMPLEMENTED",
-      "schema_validator": "NOT_IMPLEMENTED"
+      "schema_validator": "NOT_IMPLEMENTED",
+      "phase_invocations": [
+        {
+          "invocation_id": "english:mirror",
+          "canonical_step": "D",
+          "requires": [
+            "build:C8"
+          ],
+          "skip_only": [
+            "litecast",
+            "challenge"
+          ]
+        }
+      ]
     },
     {
       "id": "notification",
@@ -1035,6 +1047,10 @@
       ],
       "outputs": [
         {
+          "name": "pulse_result",
+          "required": "every_page_publish_canonical_C6"
+        },
+        {
           "name": "notification_marker",
           "required": "conditional_per_canonical_route"
         },
@@ -1045,12 +1061,14 @@
       ],
       "reads": "restricted_to_declared_inputs_and_authoritative_sources",
       "writes": [
+        "pulse",
         "notification_marker"
       ],
       "side_effects": "explicit receipts and idempotency checks required",
       "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
       "skip_conditions": [
-        "paper-only/LiteCast/glossary exceptions according to original phase E"
+        "Phase C6 Pulse applies to all page types, including LiteCast (with category convention approval)",
+        "Phase E marker skips paper-only, LiteCast, glossary; Challenge is NOT a Phase E skip"
       ],
       "invalidated_by": [
         "route",
@@ -1071,7 +1089,34 @@
       "privacy_class": "public-safe-metadata-only",
       "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
       "adapter": "NOT_IMPLEMENTED",
-      "schema_validator": "NOT_IMPLEMENTED"
+      "schema_validator": "NOT_IMPLEMENTED",
+      "phase_invocations": [
+        {
+          "invocation_id": "notification:pulse",
+          "canonical_step": "C6",
+          "requires": [
+            "page"
+          ],
+          "must_precede": [
+            "build:C8"
+          ]
+        },
+        {
+          "invocation_id": "notification:push-marker",
+          "canonical_step": "E",
+          "requires": [
+            "build:C8"
+          ],
+          "must_follow": [
+            "english:D_if_applicable"
+          ],
+          "may_skip_for": [
+            "paper-only",
+            "litecast",
+            "glossary"
+          ]
+        }
+      ]
     },
     {
       "id": "verify",
@@ -1188,5 +1233,10 @@
       "route-specific DAG and state machine absent",
       "end-to-end parity untested"
     ]
+  },
+  "interface_versions": {
+    "future_target": "1.0-draft",
+    "current_intake_staging": "0.1",
+    "adapter_compatibility": "Existing staging-only intake adapter uses module_contract_version, attempt, dependencies, approvals, artifacts. Stage 3 MUST implement explicit v0.1->v1.0 translation and result schema validation; these versions are NOT interchangeable."
   }
 }
