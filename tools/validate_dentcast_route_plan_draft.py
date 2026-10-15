@@ -42,6 +42,14 @@ def validate(plan, registry):
         return problems + ["INVALID_ROUTE"]
     if route not in {"paper-only", "litecast", "litecast+paper", "challenge", "challenge+paper", "publication", "publication+paper"}:
         problems.append("UNKNOWN_ROUTE")
+    if route.startswith("challenge") and plan.get("challenge") is not True:
+        problems.append("CHALLENGE_FLAG_MISMATCH")
+    if route.startswith(("publication", "litecast")) and plan.get("challenge") is True:
+        problems.append("CHALLENGE_FLAG_MISMATCH")
+    if route.startswith("litecast") and plan.get("category") not in (None, "litecast"):
+        problems.append("LITECAST_CATEGORY_MISMATCH")
+    if route.endswith("+paper") and "paper-cabinet" not in ids:
+        problems.append("PAPER_MODULE_MISSING")
     if route == "paper-only":
         if ids != ["intake", "paper-cabinet"]:
             problems.append("PAPER_ONLY_MUST_NOT_PUBLISH")
