@@ -2,6 +2,8 @@
 import hashlib
 import importlib.util
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -90,6 +92,40 @@ class Stage3ApplyTests(unittest.TestCase):
         self.assertEqual(updated["plan"]["ordered_steps"][2]["step_id"], "taxonomy:lock")
         self.assertTrue(updated["history"][-1]["local_artifact_integrity_verified"])
         self.assertFalse(updated["real_publish_completed"])
+
+    def test_phone_friendly_cli_task_apply_confirm_round_trip(self):
+        state_path = self.workspace / "checkpoint.json"
+        intent_path = self.workspace / "intent.json"
+        receipt_path = self.workspace / "receipt.json"
+        report_path = self.workspace / "report.json"
+        state_path.write_text(json.dumps(self.state), encoding="utf-8")
+        intent_path.write_text(json.dumps(self.intent()), encoding="utf-8")
+        def command(*args):
+            result = subprocess.run([sys.executable, *map(str, args)],
+                                    cwd=ROOT, text=True, capture_output=True,
+                                    check=False)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            return json.loads(result.stdout)
+
+        task = command("tools/dentcast_stage3_bridge.py", "task",
+                       "--state", state_path)
+        self.assertEqual(task["step_id"], "page:draft")
+        result = command("tools/dentcast_stage3_apply.py",
+                         "--state", state_path, "--intent", intent_path,
+                         "--workspace", self.workspace,
+                         "--receipt", receipt_path)
+        self.assertEqual(result["status"], "staging_files_applied")
+        report_path.write_text(json.dumps(
+            report(self.inv, result["artifact_receipt_digest"])), encoding="utf-8")
+        outcome = command("tools/dentcast_stage3_bridge.py", "confirm",
+                          "--state", state_path, "--workspace", self.workspace,
+                          "--receipt", receipt_path, "--report", report_path)
+        self.assertEqual(outcome["completed_steps"], 2)
+        self.assertEqual(self.target.read_text(encoding="utf-8"), "<h1>After</h1>")
+        restored = json.loads(state_path.read_text(encoding="utf-8"))
+        self.assertEqual(restored["next_index"], 2)
+        self.assertTrue(restored["history"][-1]["local_artifact_integrity_verified"])
+        self.assertFalse(restored["real_publish_completed"])
 
     def test_stale_sha_no_write(self):
         with self.assertRaisesRegex(ValueError, "STALE_EDIT_PRECONDITION"):
