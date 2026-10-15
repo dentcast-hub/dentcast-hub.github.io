@@ -26,6 +26,8 @@ def validate(plan, registry):
     if not isinstance(modules, list):
         return problems + ["MODULE_LIST_MISSING"]
     ids = [m.get("id") for m in modules if isinstance(m, dict)]
+    if any(not isinstance(mid, str) or not mid for mid in ids):
+        return problems + ["INVALID_MODULE_ID"]
     if len(ids) != len(modules):
         problems.append("INVALID_MODULE_ENTRY")
     if len(ids) != len(set(ids)):
@@ -35,21 +37,26 @@ def validate(plan, registry):
     for module_id in ids:
         if module_id not in registry:
             problems.append("UNKNOWN_MODULE:" + str(module_id))
-    if plan.get("route") == "paper-only":
+    route = plan.get("route")
+    if not isinstance(route, str):
+        return problems + ["INVALID_ROUTE"]
+    if route not in {"paper-only", "litecast", "litecast+paper", "challenge", "challenge+paper", "publication", "publication+paper"}:
+        problems.append("UNKNOWN_ROUTE")
+    if route == "paper-only":
         if ids != ["intake", "paper-cabinet"]:
             problems.append("PAPER_ONLY_MUST_NOT_PUBLISH")
         if not any("NO Part 3 credit" in item for item in plan.get("unresolved", [])):
             problems.append("PAPER_ONLY_PART3_RULE_MISSING")
-    if plan.get("route", "").startswith("litecast") and "english" in ids:
+    if route.startswith("litecast") and "english" in ids:
         problems.append("LITECAST_ENGLISH_FORBIDDEN")
     if plan.get("route", "").startswith("challenge") and "english" in ids:
         problems.append("CHALLENGE_ENGLISH_FORBIDDEN")
     if plan.get("route", "").startswith("publication") and "english" not in ids:
         problems.append("ENGLISH_MISSING")
-    if plan.get("route") != "paper-only" and "verify" not in ids:
+    if route != "paper-only" and "verify" not in ids:
         problems.append("VERIFY_MISSING")
     if "paper-cabinet" in ids and plan.get("route") != "paper-only":
-        if not plan.get("route", "").endswith("+paper"):
+        if not route.endswith("+paper"):
             problems.append("UNJUSTIFIED_PAPER_BRANCH")
     return problems
 
