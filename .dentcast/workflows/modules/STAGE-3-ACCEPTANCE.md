@@ -57,7 +57,7 @@ Non-file steps (intake, taxonomy, Drive upload requests and verify) must report 
 ## Acceptance boundaries
 
 - **Stage 3 implementation complete:** all 15 domain owners callable; correct phase-scoped routing; guarded local file changes; independent local file-digest verification; local pause/recover and CAS; representative real CLI round-trip; CI tests.
-- **Stage 4 and 5 still required:** GitHub-shared run memory with remote branch CAS and independent nested DES/Fidelity agent checkpoints.
+- **Stage 4 and 5 now implemented for staging:** GitHub-shared run memory with remote branch CAS and immutable nested DES/Fidelity checker checkpoints. See STAGE-4-ACCEPTANCE.md and STAGE-5-ACCEPTANCE.md. Production behavior, founder gate verification and external model runtimes remain unproven.
 - **Stages 6–8 still required:** real cross-agent handoff, external tool integration, full canonical publication parity, independent adversarial review, and the founder's separate explicit authorization for any live router/merge/publish.
 - A completed Stage 3 sandbox checkpoint always says `all_contract_reports_validated_staging_only_not_published`; it **must never claim real publication success**.
 - Source of truth: `.dentcast/workflows/README.md`, all nonautomatable founder gates in `agent-parity.md`, and original DES/Fidelity engine unchanged.
