@@ -7235,7 +7235,7 @@ scrollBody.addEventListener('touchend',e=>{
   document.addEventListener('click',function(e){
     if(e.target.closest && e.target.closest('.dcOpenSearch')) openS(true);
   });
-  closeBtn&&closeBtn.addEventListener('click',()=>closeS(false));
+  closeBtn&&closeBtn.addEventListener('click',()=>{ if(!document.body.classList.contains('dc-desktop-ui')) closeS(false); });
 
   /* آپدیت hash هنگام تایپ */
   searchInput.addEventListener('input',function(){
@@ -8227,8 +8227,9 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       const feed = document.querySelector('#dcd-welcome .dcd-welcome-feed');
       if(feed && !feed.contains(globalBox)) feed.appendChild(globalBox);
     }
-    if(history.state&&history.state.dcSearch) history.back();
-    else if(window.location.hash.startsWith('#search'))
+    /* Clear the search hash without re-entering popstate handlers.
+       Calling history.back() here could reopen the overlay on narrow desktops. */
+    if(window.location.hash.startsWith('#search'))
       history.replaceState(null,'',window.location.pathname+window.location.search);
   }
   document.getElementById('dcd-hdr-search')?.addEventListener('click', ()=>deskOpenSearch());
@@ -8241,8 +8242,10 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   document.addEventListener('click', (e) => {
     if(e.target.closest && e.target.closest('#dc-desktop-root .dcOpenSearch')) deskOpenSearch();
   });
-  document.getElementById('dcCloseSearchOverlay')?.addEventListener('click', () => {
-    if(document.body.classList.contains('dc-desktop-ui')) deskCloseSearch();
+  document.getElementById('dcCloseSearchOverlay')?.addEventListener('click', (e) => {
+    if(!document.body.classList.contains('dc-desktop-ui')) return;
+    e.stopImmediatePropagation();
+    deskCloseSearch();
   });
   window.addEventListener('popstate', () => {
     if(document.body.classList.contains('dc-desktop-ui') &&
