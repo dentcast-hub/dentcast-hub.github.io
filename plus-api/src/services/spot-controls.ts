@@ -31,6 +31,9 @@ export function parseSpotCreative(slot: SpotSlot, body: unknown): { enabled: boo
     (creative as unknown as Record<string, unknown>)[key] = (b[key] as string).trim();
   }
   if (!validSpotLink(creative.url)) return null;
+  // The public renderer recognizes external HTTP(S) links by their prefix.
+  // Canonicalize the scheme so uppercase input also gets sponsored attributes.
+  if (creative.url && !creative.url.startsWith('/')) creative.url = new URL(creative.url).href;
   if (b.image !== null && b.image !== '') {
     if (typeof b.image !== 'string' || !/^\/spot\/img\/[a-z0-9][a-z0-9._-]*\.(webp|png|jpe?g|gif)$/i.test(b.image)) return null;
     creative.image = b.image;

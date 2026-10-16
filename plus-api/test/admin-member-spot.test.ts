@@ -143,6 +143,11 @@ describe('persistent Spot controls', () => {
     expect((await app.inject({ method: 'PUT', url: '/admin/spot/config/home', headers, payload: { ...creative, title: '', text: '' } })).statusCode).toBe(400);
     expect((await app.inject('/spot/config')).body).not.toContain('SPOT_GITHUB_TOKEN');
   });
+  it('canonicalizes uppercase HTTP schemes so sponsored-link detection remains correct', async () => {
+    const response = await app.inject({ method: 'PUT', url: '/admin/spot/config/home', headers, payload: { ...creative, url: 'HTTPS://EXAMPLE.COM/path' } });
+    expect(response.statusCode).toBe(200);
+    expect((await app.inject('/spot/config')).json().slots.home.creative.url).toBe('https://example.com/path');
+  });
   it('uploads WebP bytes to the existing repository media path and keeps bytes out of the database', async () => {
     process.env.SPOT_GITHUB_TOKEN = 'test-token';
     const remote = vi.fn().mockResolvedValue(new Response('{}', { status: 201 })); vi.stubGlobal('fetch', remote);
