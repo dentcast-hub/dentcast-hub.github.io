@@ -1,14 +1,14 @@
 ---
-description: DentCast Cursor always-on content router including modular publishing staging and all original specialty routes.
+description: DentCast Cursor always-on content router for live modular new publishing and original specialty routes.
 alwaysApply: true
 ---
 
-# DentCast Cursor routing — staging only
+# DentCast Cursor live modular routing
 
-**STAGING_ONLY_NO_LIVE_PUBLISH**. Original complete rule: `.dentcast/workflows/legacy/cursor/dentcast-router.mdc`. Original complete agent rules: `AGENTS.legacy.md` **§§6–8** and `CLAUDE.legacy.md`. Read `.dentcast/workflows/agent-parity.md` before content work. The new short `AGENTS.md` does not have §§6–8: they are in the archived exact original.
+**LIVE_MODULAR_PUBLISHING_ENABLED.** Read complete archived global rules: `.dentcast/workflows/legacy/cursor/dentcast-router.mdc`, `AGENTS.legacy.md` §§6–8 and `CLAUDE.legacy.md`, plus the whole `.dentcast/workflows/agent-parity.md`.
 
-**New content/paper/glossary publication → `.dentcast/workflows/README.md`**. Read complete `modules/01-hard-rules.md` and `02-routing-intake.md` and all selected slices. The complete original `.dentcast/workflows/README.legacy.md` has rule precedence.
+**New content → `.dentcast/workflows/README.md`.** Read full `modules/01-hard-rules.md`, `02-routing-intake.md` and each applicable stage slice. Full original `.dentcast/workflows/README.legacy.md` wins for rule priority, approvals, completeness and conflicts.
 
-**Other triggers preserve old destinations:** existing English → `.dentcast/workflows/en-version.md`; ads → `.dentcast/workflows/ads.md`; ad stats → `.dentcast/workflows/spot-report.md`; glossary *writing* → `.claude/skills/glossary-writer/SKILL.md`; glossary backlog cross-link → `.dentcast/workflows/cross-link.md`; offline → `.dentcast/offline-publish.md`; new section → `.dentcast/workflows/new-section.md`; external Fidelity → `.dentcast/workflows/external-fidelity.md`. See archived router for the full trigger matrix.
+Specialty requests keep their original routes: English → `en-version.md`; ads → `ads.md`; ad stats → `spot-report.md`; glossary drafting → `.claude/skills/glossary-writer/SKILL.md`; cross-link → `cross-link.md`; offline → `.dentcast/offline-publish.md`; new section → `new-section.md`; external Fidelity → `external-fidelity.md`.
 
-Never publish/deploy, call real Drive/Admin, use private GitHub data, merge main, bypass any founder gate or claim real semantic equivalence from staging results.
+Real publication actions are permitted **only under all original human/science/verification gates**. Synthetic staging tools and hash receipts never grant permission or replace execution.
