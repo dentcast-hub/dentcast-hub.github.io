@@ -31,6 +31,7 @@ router = load("s7_route", "tools/dentcast_stage3_route.py")
 runner = load("s7_runner", "tools/dentcast_stage3_orchestrator.py")
 editor = load("s7_editor", "tools/dentcast_stage3_apply.py")
 bridge = load("s7_bridge", "tools/dentcast_stage3_bridge.py")
+glossary_builder = load("s7_glossary_builder", "tools/build_pillar.py")
 pairwise = load("s7_pairwise", "tools/audit_dentcast_stage7_pairwise.py")
 
 
@@ -202,6 +203,33 @@ class LegacyToolSandboxTests(unittest.TestCase):
             text=True, timeout=65)
         self.assert_phase_f_exit_matches_summary(proc)
 
+
+    def test_real_glossary_builder_scope_only_index_is_generated(self):
+        # Canonical README 2.6 claims *term pages* and the index are built;
+        # the current actual builder writes ONLY glossary/index.html.
+        # Execute the original builder in an isolated destination, without
+        # altering the source-of-truth JSON or real repository.
+        gloss = self.sandbox / "glossary"
+        gloss.mkdir()
+        source = ROOT / "glossary/glossary.json"
+        original = source.read_bytes()
+        shutil.copyfile(source, gloss / "glossary.json")
+        previous_root = glossary_builder.ROOT
+        previous_gloss = glossary_builder.GLOSS_PATH
+        try:
+            glossary_builder.ROOT = self.sandbox
+            glossary_builder.GLOSS_PATH = gloss / "glossary.json"
+            generated = glossary_builder.build_glossary()
+            self.assertEqual(generated, gloss / "index.html")
+            content = generated.read_text(encoding="utf-8")
+            term = json.loads(original)["glossary"][0]
+            self.assertIn(term["url"], content)
+            self.assertEqual({p.name for p in gloss.glob("*.html")},
+                             {"index.html"})
+        finally:
+            glossary_builder.ROOT = previous_root
+            glossary_builder.GLOSS_PATH = previous_gloss
+        self.assertEqual(source.read_bytes(), original)
 
     def test_real_legacy_phase_f_rejects_missing_page_and_wrong_title(self):
         # The legacy gate is the source of truth; don't fake a success receipt.
