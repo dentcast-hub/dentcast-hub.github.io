@@ -38,7 +38,9 @@ on:
       - 'tools/audit_dentcast_stage7_parity.py'
       - 'tools/audit_dentcast_stage7_pairwise.py'
       - 'tools/dentcast_stage8_9_preflight.py'
+      - 'tools/dentcast_stage9_release_dossier.py'
       - 'tests/test_dentcast_stage8_9_preflight.py'
+      - 'tests/test_dentcast_stage9_release_dossier.py'
       - '.dentcast/workflows/modules/STAGE-7-STAGING-ACCEPTANCE.md'
       - '.dentcast/workflows/modules/STAGE-8-INTEGRATION.md'
       - '.dentcast/workflows/modules/STAGE-9-PRE-ACTIVATION.md'
@@ -91,7 +93,10 @@ jobs:
           python -m unittest discover -s tests -p test_dentcast_stage7_parity.py -v
           python -m unittest discover -s tests -p test_dentcast_stage7_legacy_tools.py -v
           python -m unittest discover -s tests -p test_dentcast_stage8_9_preflight.py -v
+          python -m unittest discover -s tests -p test_dentcast_stage9_release_dossier.py -v
       - name: Audit Stage 2 canonical traceability
         run: python tools/audit_dentcast_stage2_contract.py
       - name: Stage 8-9 read-only integration and pre-activation gate
         run: python tools/dentcast_stage8_9_preflight.py --baseline-ref origin/main
+      - name: Stage 9 final read-only release-scope and boundary gate
+        run: python tools/dentcast_stage9_release_dossier.py --baseline-ref origin/main
