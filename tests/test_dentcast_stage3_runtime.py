@@ -95,15 +95,24 @@ class Stage3RouteTests(unittest.TestCase):
                                          "paper-cabinet:catalog", "verify:paper-only"])
                 else:
                     self.assertEqual(s[-1], "verify:phase-f")
+                    self.assertIn("build:restamp-final", s)
                     self.assertLess(s.index("notification:pulse"), s.index("build:rebuild"))
+                    self.assertLess(s.index("build:rebuild"), s.index("build:restamp-final"))
+                    self.assertLess(s.index("build:restamp-final"), s.index("verify:phase-f"))
                     self.assertLess(s.index("build:rebuild"), s.index("build:version-final"))
                     self.assertEqual(s[-2], "build:version-final")
                     if "english:mirror" in s:
                         self.assertLess(s.index("build:rebuild"), s.index("english:mirror"))
+                        self.assertLess(s.index("english:mirror"), s.index("build:restamp-final"))
                     if "notification:push-marker" in s:
                         self.assertLess(s.index("build:rebuild"), s.index("notification:push-marker"))
                 if expected.startswith("litecast"):
                     self.assertIn("semantic-links:litecast", s)
+                    self.assertIn("page:litecast-register", s)
+                    self.assertLess(s.index("semantic-links:litecast"),
+                                    s.index("page:litecast-register"))
+                    self.assertLess(s.index("page:litecast-register"),
+                                    s.index("build:rebuild"))
                     for item in ("taxonomy:lock", "brain:append", "english:mirror",
                                  "notification:push-marker", "pathways:place"):
                         self.assertNotIn(item, s)
