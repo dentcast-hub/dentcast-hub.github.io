@@ -344,8 +344,18 @@ class RemoteMemory:
         actor_check(actor)
         head = self.head()
         folder = run_folder(run_id)
-        require(self.try_json(head, folder + "/manifest.json") is None,
-                "RUN_ALREADY_EXISTS")
+        existing = self.try_json(head, folder + "/manifest.json")
+        if existing is not None:
+            require(existing.get("run_id") == run_id and
+                    existing.get("source_revision") == source_revision and
+                    existing.get("plan_digest") == plan_digest and
+                    existing.get("contract_version") == contract_version,
+                    "RUN_ALREADY_EXISTS_WITH_DIFFERENT_IDENTITY")
+            snap = self.snapshot(run_id, head=head)
+            require(snap["events"][0]["actor"] == actor,
+                    "RUN_ALREADY_EXISTS_WITH_DIFFERENT_ORIGINATOR")
+            return {"commit": head, "state": snap["state"],
+                    "idempotent_replay": True}
         manifest = {
             "schema": CONTRACT, "run_id": run_id, "source_revision": source_revision,
             "plan_digest": plan_digest, "contract_version": contract_version,
