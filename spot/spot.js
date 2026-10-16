@@ -493,6 +493,56 @@ a.dc-spot-link:active { transform: scale(0.99); }
 }
 .dc-spot--search .dc-spot-link { padding: 0.75rem 1rem; }
 .dc-spot--search.dc-spot--art .dc-spot-link { padding: 0.5rem; }
+/* Compact the entire search creative; never create an inner scrollbar.
+   Artwork scales proportionally and stays fully visible (no cropping). */
+body.dc-desktop-ui.dc-search-mode .dc-spot--search {
+  flex: 0 0 auto;
+  margin: 0.25rem auto;
+  min-height: 0;
+  max-height: 230px;
+  max-width: 320px;
+  width: 100%;
+  overflow: visible;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-link {
+  padding: 0.375rem 0.625rem;
+  gap: 0.5rem;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search.dc-spot--art .dc-spot-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-art-img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: min(calc(17vh + 50px), 195px);
+  object-fit: contain;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-badge {
+  font-size: 0.6rem;
+  margin-bottom: 0.125rem;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-img {
+  width: 34px;
+  height: 34px;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-title {
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-text {
+  font-size: 0.68rem;
+  line-height: 1.4;
+  margin-top: 0.125rem;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-cta {
+  font-size: 0.66rem;
+  padding: 0.3rem 0.55rem;
+}
+
 .dc-spot--archive { margin: 1.25rem 0 0.75rem; }
 /* The desktop sidebar is 220px wide and its rows are 203px: the card matches
    «خرید اشتراک پریمیوم» directly below it in width, radius and gutter, so the
@@ -1142,7 +1192,25 @@ function setupSearchSlot(cfg, audienceNow) {
     if (adsKilled || !slotAllows(cfg, 'search', audienceNow())) return;
     const creative = pickCreative(cfg, 'search', audienceNow());
     if (!creative) return;
-    results.parentNode.insertBefore(buildCard(creative, 'search'), results);
+    const card = buildCard(creative, 'search');
+    const input = document.getElementById('dcSearch');
+    const updatePlacement = () => {
+      const desktop = document.body.classList.contains('dc-desktop-ui');
+      const overlayBody = document.getElementById('dcSearchOverlayBody');
+      if (desktop && overlayBody && overlayBody.contains(box)) {
+        // Outside the search box, as a small footer AFTER the complete search UI.
+        if (card.parentElement !== overlayBody || box.nextElementSibling !== card) box.after(card);
+        card.style.display = '';
+      } else {
+        // Keep the existing mobile placement inside the shared search box.
+        if (card.parentElement !== box || results.previousElementSibling !== card) results.before(card);
+        card.style.display = '';
+      }
+    };
+    updatePlacement();
+    input?.addEventListener('input', updatePlacement);
+    // The same shared search sheet moves between desktop and mobile layouts.
+    window.addEventListener('resize', updatePlacement);
   };
   if (isOpen()) { seat(); return; }
   const observer = new MutationObserver(() => {
