@@ -82,11 +82,13 @@ const CONFIG = {
 };
 
 let posts: Array<{ url: string; body: any }> = [];
+let controls: Record<string, unknown> = {};
 
 function stubFetch(activityStatus = 204) {
   globalThis.fetch = vi.fn(async (input: any, init: any) => {
     const url = String(input);
-    if (url.includes('spot-config.json')) return { ok: true, json: async () => CONFIG } as any;
+    if (url.includes('spot-config.json')) return { ok: true, json: async () => structuredClone(CONFIG) } as any;
+    if (url.endsWith('/spot/config')) return { ok: true, json: async () => ({ slots: controls }) } as any;
     posts.push({ url, body: JSON.parse(init.body) });
     if (url.includes('/activity') && activityStatus !== 204) return { ok: false, status: activityStatus } as any;
     return { ok: true, status: 204 } as any;
@@ -113,6 +115,7 @@ const creativeShown = () => document.querySelector('.dc-spot')?.getAttribute('da
 beforeEach(() => {
   vi.useFakeTimers();
   posts = [];
+  controls = {};
   observers = [];
   localStorage.clear();
   me.user = null; me.status = 'anon'; me.delayMs = 0;
@@ -514,5 +517,33 @@ describe('the dashboard card and the streak bento', () => {
       + '<section id="next" class="dcp-dash-sec"></section></main>');
     const card = document.querySelector('.dc-spot--dashboard')!;
     expect(card.previousElementSibling!.id).toBe('st');
+  });
+});
+
+
+
+describe('saved placement controls', () => {
+  it('renders stored text-only content rather than the rotating campaign', async () => {
+    controls = { home: { enabled: true, creative: { id: 'managed-home', title: '<custom title>', text: 'saved text', url: '', image: null } } };
+    await boot();
+    expect(creativeShown()).toBe('managed-home');
+    expect(document.querySelector('.dc-spot-title')?.textContent).toBe('<custom title>');
+    expect(document.querySelector('.dc-spot-title')?.children.length).toBe(0);
+    expect(document.querySelector('.dc-spot a')).toBeNull();
+  });
+  it('leaves no DOM for a disabled saved placement', async () => {
+    controls = { home: { enabled: false, creative: { id: 'managed-home', title: 'hidden' } } };
+    await boot(); expect(cards()).toBe(0);
+  });
+  it('renders WebP and mixed content with sponsored external links', async () => {
+    controls = { home: { enabled: true, creative: { id: 'managed-home', title: 'mixed', text: 'text', url: 'https://example.com/', image: '/spot/img/banner.webp' } } };
+    await boot();
+    expect(document.querySelector('.dc-spot img')?.getAttribute('src')).toBe('/spot/img/banner.webp');
+    expect(document.querySelector('.dc-spot a')?.getAttribute('rel')).toContain('sponsored');
+  });
+  it('still hides saved placements from premium readers', async () => {
+    controls = { home: { enabled: true, creative: { id: 'managed-home', title: 'saved' } } };
+    me.user = { tier: 'premium' }; me.status = 'user';
+    await boot(); expect(cards()).toBe(0); expect(posts).toHaveLength(0);
   });
 });

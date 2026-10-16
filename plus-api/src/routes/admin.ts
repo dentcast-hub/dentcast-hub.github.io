@@ -1,3 +1,5 @@
+import { adminMemberSpotRoutes } from './admin-member-spot.js';
+import { renderMemberSpotControls } from './admin-member-spot-ui.js';
 import type { FastifyInstance, FastifyReply } from 'fastify';
 import { requireAdmin } from '../middleware/basic-auth.js';
 import { refreshOnce, contentStatus } from '../content-refresh.js';
@@ -410,6 +412,7 @@ function renderHtml(
   <table><thead><tr><th>پلن</th><th>گروه</th><th>مانده</th><th>درصد</th></tr></thead><tbody>${d7Rows}</tbody></table>
   <p class="muted" style="margin-top:14px">KPI ها از user_activity و anon_events محاسبه می‌شوند. تبدیل KPI 1 تقریبی است چون رویدادهای ناشناس هویت‌محور نیستند.</p>
 
+${renderMemberSpotControls()}
   <h3 style="margin-top:26px">گزارش کاربران — پرمیوم و اشتراک</h3>
   <div class="muted">«چند ماهه» یعنی ماهِ اولین شروعِ اشتراک (started_at) — تمدید ماه شروع را عوض نمی‌کند، پس هر ردیف یک کوهورتِ واقعیِ جذب است، نه شمارشِ تمدیدها. «پرمیومِ لیگی» معمولاً فقط از premium_grants است؛ اگر برنده‌ی لیگ از قبل اشتراک پولی داشته باشد، روزهای جایزه روی همان اشتراک هم می‌نشیند.</div>
   <div id="subOut" class="muted" style="margin-top:10px">در حال خواندن…</div>
@@ -3467,6 +3470,8 @@ function renderHtml(
         ['d7', 'ماندگاری روز هفتم', 'KPI 4', '', 0, 'ماندگاری پلن']
       ] },
       { id: 'users', name: 'کاربران و اشتراک', icon: '👥', tint: 't-users', items: [
+        ['member-list', 'فهرست اعضا', 'فهرست اعضا', '', 0, 'عضویت جستجو پرداخت اشتراک'],
+        ['spot-controls', 'مدیریت جایگاه‌های تبلیغ', 'مدیریت جایگاه‌های تبلیغ', '', 0, 'آگهی تصویر spot'],
         ['subs', 'گزارش کاربران و اشتراک', 'گزارش کاربران', '', 0, 'پرمیوم پریمیوم اشتراک تمدید'],
         ['gift-new', 'هدیهٔ پریمیوم به تازه‌واردها', 'هدیه‌ی پریمیوم به کسانی', '', 0, 'هدیه تجربه نکرده'],
         ['gift-day', 'هدیهٔ روز پریمیوم به یک نفر', 'هدیه‌ی روزِ پریمیوم', '', 0, 'هدیه روز'],
@@ -3752,6 +3757,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // the body parsed and validated on the way. At onRequest nothing about an
   // unauthenticated request is read but its Authorization header.
   app.addHook('onRequest', requireAdmin);
+  await app.register(adminMemberSpotRoutes);
 
   app.get('/admin/kpis', async (_request, reply) => {
     const kpis = await computeKpis();
@@ -4756,34 +4762,6 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // turns PAYMENT_CAP_COUNTS_ATTEMPTS from a guess into a decision.
   app.get('/admin/payments/capacity', async (_request, reply) => {
     return reply.send({ ok: true, ...await getCapacity() });
-  });
-
-  /**
-   * GET /admin/users/search?q= — find an account by PART of a name.
-   *
-   * resolveUser matches exactly, which is right for "do this to that account"
-   * and useless for "who is صدرا?" — a display name is rarely the whole handle,
-   * and on 2026-08-08 that was the only thing standing between a suspected
-   * farming account and any look at its data.
-   */
-  app.get('/admin/users/search', async (request, reply) => {
-    const q = ((request.query as { q?: string }).q ?? '').trim();
-    if (q.length < 2) return reply.code(400).send({ error: 'query_too_short' });
-    const rows = await query<{
-      id: string; display_name: string | null; username: string | null;
-      phone: string | null; tier: string; created_at: string;
-    }>(
-      `select distinct p.id, p.display_name, ai.username, nullif(p.phone,'') as phone,
-              p.tier, p.created_at
-         from profiles p
-         left join auth_identities ai on ai.user_id = p.id
-        where p.display_name ilike '%' || $1 || '%'
-           or ai.username     ilike '%' || $1 || '%'
-        order by p.created_at desc
-        limit 25`,
-      [q],
-    );
-    return reply.send({ ok: true, count: rows.rowCount, users: rows.rows });
   });
 
   /**
@@ -6469,3 +6447,4 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ ok: true, attempt: r.attempt });
   });
 }
+

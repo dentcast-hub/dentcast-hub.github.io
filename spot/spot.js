@@ -205,7 +205,7 @@ function allowedIn(creative, slotName, audience) {
 // visitor — so artwork alone is enough to render. A creative with neither is an
 // empty placeholder (the `example-sponsor` stub) and still renders never.
 function renderable(creative) {
-  return !!(creative.url || creative.image);
+  return !!(creative.url || creative.image || creative.title || creative.text);
 }
 
 // A HOUSE creative is one of ours: the premium card, or a sponsor-array entry
@@ -276,10 +276,12 @@ function rotationSequence(cfg) {
  * of the code: change the sequence in spot-config.json and this follows.
  */
 function pinnedCreative(cfg, slotName, audience) {
+  if (cfg.slots?.[slotName]?.creative) return cfg.slots[slotName].creative;
   return resolveStep(cfg, rotationSequence(cfg)[0], slotName, audience);
 }
 
 function pickCreative(cfg, slotName, audience) {
+  if (cfg.slots?.[slotName]?.creative) return cfg.slots[slotName].creative;
   const seq = rotationSequence(cfg);
   return resolveStep(cfg, seq[lsGet(K_TICK) % seq.length], slotName, audience);
 }
@@ -1339,6 +1341,20 @@ async function main() {
     if (!res.ok) return;
     cfg = await res.json();
   } catch (_) { return; }
+  // Untouched placements retain the checked-in rotation and targeting. Only
+  // explicitly saved placements have a database override. Public read, no login.
+  try {
+    const { apiBase } = await import('/plus/js/api.js?v=187');
+    const base = await apiBase();
+    const response = await fetch(base + '/spot/config', { cache: 'no-store', signal: AbortSignal.timeout(2500) });
+    if (response.ok) {
+      const saved = await response.json();
+      for (const [name, value] of Object.entries(saved.slots || {})) {
+        if (!cfg.slots?.[name] || typeof value.enabled !== 'boolean') continue;
+        cfg.slots[name] = { ...cfg.slots[name], enabled: value.enabled, creative: value.creative };
+      }
+    }
+  } catch (_) { /* API unavailable: retain the published configuration. */ }
   if (!cfg || !cfg.enabled) return; // master off → zero trace
 
   // Decide up front whether this page view may move the rotation, and keep the
@@ -1450,3 +1466,4 @@ if (document.readyState === 'loading') {
 } else {
   main().catch(() => {});
 }
+
