@@ -143,6 +143,49 @@ class IndependentParityTests(unittest.TestCase):
         self.assertTrue(any("STAMP" in s or "CANONICAL_ORDER" in s
                             for s in oracle.inspect_route(plan)))
 
+
+    def test_glossary_phase_e_exception_is_not_a_false_failure(self):
+        # Oracle checks the canonical exception independent of the incomplete
+        # glossary route compiler; this does NOT claim glossary can be published.
+        plan = routes.compile_steps(request())
+        plan["category"] = "glossary"
+        plan["ordered_steps"] = [
+            step for step in plan["ordered_steps"]
+            if step["step_id"] != "notification:push-marker"
+        ]
+        self.assertEqual(oracle.inspect_route(plan), [])
+        self.write_pair(category="glossary", filename="term-999.html", marker=False)
+        self.assertEqual(oracle.inspect_page_pair(
+            self.root, "glossary", "term-999.html"), [])
+
+    def test_litecast_relative_and_protocol_relative_specialist_escape_blocked(self):
+        page = self.write_pair(category="litecast", filename="lite-CAST99.html",
+                               with_english=False, marker=False)
+        original = page.read_text()
+        for href in ("../glossary/ferrule.html", "//dentcast.org/glossary/",
+                     "/pillar/fixed-pros/", "https://dentcast.ir/sharehub/share-1.html"):
+            with self.subTest(href=href):
+                page.write_text(original + '<a href="' + href + '">cross-track</a>')
+                self.assertIn("LITECAST_SPECIALIST_LINK_FORBIDDEN",
+                              oracle.inspect_page_pair(
+                                  self.root, "litecast", "lite-CAST99.html"))
+
+    def test_forbidden_extra_scientific_and_paper_steps_cannot_hide(self):
+        for category, challenge, injected in (
+            ("litecast", False, "evidence:des-fidelity"),
+            ("sharehub", True, "learning-assets:quiz"),
+            ("sharehub", False, "paper-cabinet:catalog"),
+        ):
+            with self.subTest(category=category, challenge=challenge,
+                              extra=injected):
+                plan = routes.compile_steps(request(category=category,
+                                                    challenge=challenge))
+                self.assertEqual(oracle.inspect_route(plan), [])
+                extra = dict(plan["ordered_steps"][0], step_id=injected)
+                plan["ordered_steps"].insert(-2, extra)
+                self.assertIn("FORBIDDEN_STEP:" + injected,
+                              oracle.inspect_route(plan))
+
     def test_real_existing_site_pages_are_independent_baselines(self):
         # Read existing published pages, without changing a byte.
         # These are output specimens from the current canonical workflow.

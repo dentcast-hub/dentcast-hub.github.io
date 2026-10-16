@@ -10,6 +10,7 @@ import argparse
 import json
 from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import urljoin, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 CANONICAL = ROOT / ".dentcast/workflows/README.md"
@@ -119,6 +120,7 @@ def inspect_route(plan):
     paper_only = route == "paper-only"
     litecast = route.startswith("litecast")
     challenge = route.startswith("challenge")
+    glossary = plan.get("category") == "glossary"
     attached = route.endswith("+paper")
     required("intake:route")
     if paper_only:
@@ -126,7 +128,10 @@ def inspect_route(plan):
             required(s)
         for s in ("page:draft", "paper-cabinet:credit", "brain:append",
                   "build:rebuild", "english:mirror", "notification:push-marker",
-                  "verify:phase-f", "build:version-final"):
+                  "verify:phase-f", "build:version-final", "notification:pulse",
+                  "semantic-links:specialist", "semantic-links:litecast",
+                  "learning-assets:flashcards", "learning-assets:quiz",
+                  "evidence:des-fidelity", "challenge:public", "pathways:place"):
             absent(s)
         earlier("paper-cabinet:drive", "paper-cabinet:catalog")
         earlier("paper-cabinet:catalog", "verify:paper-only")
@@ -147,7 +152,9 @@ def inspect_route(plan):
             earlier("page:litecast-register", "notification:pulse")
             for s in ("brain:append", "taxonomy:lock", "navigation:publish",
                       "semantic-links:specialist", "english:mirror",
-                      "notification:push-marker"):
+                      "notification:push-marker", "learning-assets:flashcards",
+                      "learning-assets:quiz", "evidence:des-fidelity",
+                      "challenge:public", "pathways:place"):
                 absent(s)
         else:
             for s in ("taxonomy:lock", "navigation:publish",
@@ -157,13 +164,21 @@ def inspect_route(plan):
             earlier("taxonomy:lock", "navigation:publish")
             if challenge:
                 required("challenge:public")
-                absent("english:mirror")
+                for s in ("english:mirror", "learning-assets:flashcards",
+                          "learning-assets:quiz", "evidence:des-fidelity",
+                          "pathways:place"):
+                    absent(s)
             else:
+                absent("challenge:public")
                 required("english:mirror")
                 earlier("build:rebuild", "english:mirror")
                 earlier("english:mirror", "build:version-final")
-            required("notification:push-marker")
-            earlier("notification:push-marker", "build:version-final")
+            # Canonical Phase E explicitly excludes glossary (besides LiteCast).
+            if glossary:
+                absent("notification:push-marker")
+            else:
+                required("notification:push-marker")
+                earlier("notification:push-marker", "build:version-final")
         if attached:
             for s in ("paper-cabinet:drive", "paper-cabinet:catalog",
                       "paper-cabinet:credit"):
@@ -171,7 +186,9 @@ def inspect_route(plan):
             earlier("paper-cabinet:drive", "paper-cabinet:catalog")
             earlier("paper-cabinet:catalog", "paper-cabinet:credit")
         else:
-            absent("paper-cabinet:credit")
+            for s in ("paper-cabinet:drive", "paper-cabinet:catalog",
+                      "paper-cabinet:credit"):
+                absent(s)
     return problems
 
 
@@ -200,9 +217,21 @@ def inspect_page_pair(root, category, filename, *,
     if category == "litecast":
         _require(not any("hreflang" in x for x in fa.links),
                  "LITECAST_HREFLANG_FORBIDDEN", problems)
-        _require(not any(x.startswith(("https://dentcast.org", "/glossary/",
-                                      "/pillar/", "/episodes/", "/sharehub/"))
-                         for x in (a.get("href", "") for a in fa.anchors)),
+        # Resolve relative/protocol-relative URLs against the actual LiteCast URL.
+        # Raw string prefixes miss ../glossary/ and //dentcast.org/... links.
+        specialist_roots = ("/glossary", "/pillar", "/episodes", "/sharehub")
+        def targets_specialist(raw):
+            if not isinstance(raw, str):
+                return False
+            parsed = urlsplit(urljoin(expected_fa, raw))
+            host = (parsed.hostname or "").lower()
+            if host == "dentcast.org" or host.endswith(".dentcast.org"):
+                return True
+            return host == "dentcast.ir" and any(
+                parsed.path == base or parsed.path.startswith(base + "/")
+                for base in specialist_roots)
+        _require(not any(targets_specialist(a.get("href", ""))
+                         for a in fa.anchors),
                  "LITECAST_SPECIALIST_LINK_FORBIDDEN", problems)
     want_en = expect_english and category != "litecast" and not challenge
     en_path = root / category / "en" / filename
