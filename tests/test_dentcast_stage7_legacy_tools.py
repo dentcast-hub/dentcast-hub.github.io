@@ -51,7 +51,7 @@ def fake_report(inv, receipt=D):
 
 class LegacyToolSandboxTests(unittest.TestCase):
     def assert_phase_f_exit_matches_summary(self, run):
-        match = re.search(r"(\\d+) passed, (\\d+) warned, (\\d+) failed",
+        match = re.search(r"(\d+) passed, (\d+) warned, (\d+) failed",
                           run.stdout)
         self.assertIsNotNone(match, run.stdout[-1500:] + run.stderr[-500:])
         failures = int(match.group(3))
