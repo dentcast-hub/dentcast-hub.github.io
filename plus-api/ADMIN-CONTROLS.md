@@ -66,7 +66,7 @@ From `plus-api`, with the existing local PostgreSQL service available:
 ```sh
 npm ci
 npm run build
-npm test -- test/admin-member-spot.test.ts test/admin.test.ts test/admin-resolve-user.test.ts test/admin-page-scripts.test.ts test/spot.dom.test.ts test/spot-stats.test.ts test/subscription.test.ts test/subscription-backfill.test.ts
+npm test -- test/admin-member-spot.test.ts test/admin-member-spot.dom.test.ts test/admin.test.ts test/admin-resolve-user.test.ts test/admin-page-scripts.test.ts test/spot.dom.test.ts test/spot-stats.test.ts test/subscription.test.ts test/subscription-backfill.test.ts
 ```
 
 The scoped Actions workflow runs this same build and these tests with PostgreSQL

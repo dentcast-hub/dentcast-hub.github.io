@@ -48,5 +48,5 @@ jobs:
       - run: npm run build
         working-directory: plus-api
       - name: Admin, rendering, payment-state and subscription regressions
-        run: npm test -- test/admin-member-spot.test.ts test/admin.test.ts test/admin-resolve-user.test.ts test/admin-page-scripts.test.ts test/spot.dom.test.ts test/spot-stats.test.ts test/subscription.test.ts test/subscription-backfill.test.ts
+        run: npm test -- test/admin-member-spot.test.ts test/admin-member-spot.dom.test.ts test/admin.test.ts test/admin-resolve-user.test.ts test/admin-page-scripts.test.ts test/spot.dom.test.ts test/spot-stats.test.ts test/subscription.test.ts test/subscription-backfill.test.ts
         working-directory: plus-api
