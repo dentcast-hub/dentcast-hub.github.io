@@ -126,6 +126,39 @@ class LegacyToolSandboxTests(unittest.TestCase):
         self.assertIn("Pulse links to the page 0x", run.stdout)
         self.assertIn("claim_quote is not on the page", run.stdout)
 
+    def test_real_large_paper_catalog_local_edit_receipt(self):
+        # Existing canonical catalog exceeds default 5 MB; synthetic whitespace
+        # tests transport only, not medical metadata or external Drive filing.
+        rel = "dentcast_cabinet_full_catalog.json"
+        before = (ROOT / rel).read_bytes()
+        self.assertGreater(len(before), 5_000_000)
+        destination = self.sandbox / rel
+        destination.write_bytes(before)
+        state = runner.begin({"has_text": False, "has_paper": True},
+                             "large-catalog", REV)
+        while runner.next_invocation(state)["step"]["step_id"] != "paper-cabinet:catalog":
+            state = runner.submit(state, fake_report(runner.next_invocation(state)))
+        inv = runner.next_invocation(state)
+        proposed = before.decode("utf-8") + "\n"
+        self.assertEqual(json.loads(proposed), json.loads(before))
+        intent = {
+            "step_id": inv["step"]["step_id"],
+            "input_digest": inv["input_digest"],
+            "author_asserted_gates": inv["step"]["approval_gates"],
+            "edits": [{"path": rel, "before_sha256": hashlib.sha256(before).hexdigest(),
+                       "content_utf8": proposed}],
+        }
+        out = editor.apply_intent(state, intent, self.sandbox)
+        self.assertFalse(out["published"])
+        self.assertEqual(destination.read_bytes(), proposed.encode("utf-8"))
+        receipt = self.sandbox / "large-catalog-receipt.json"
+        receipt.write_text(json.dumps(out["artifact_receipt"]))
+        state_after = bridge.verify_local_receipt(
+            state, fake_report(inv, out["artifact_receipt_digest"]),
+            receipt, self.sandbox)
+        self.assertEqual(state_after["next_index"], state["next_index"] + 1)
+        self.assertEqual((ROOT / rel).read_bytes(), before)
+
     def test_binary_webp_byte_receipt_and_bad_payload_rejection(self):
         state = runner.begin({"has_text": True, "has_paper": False,
                               "category": "litecast", "challenge": False},
