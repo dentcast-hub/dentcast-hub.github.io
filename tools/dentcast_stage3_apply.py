@@ -163,9 +163,12 @@ def check_intent(state, intent, workspace):
         # establish scientific, taxonomy or publication identity.
         if step["module_id"] == "build":
             source_inputs = {
-                "dentcast-brain.json", "glossary/glossary.json",
-                "litecast/lite-glossary.json", "dentcast-music.json",
-                "dentcast_cabinet_full_catalog.json",
+                "dentcast-brain.json", "dentcast.json",
+                "glossary/glossary.json", "litecast/lite-glossary.json",
+                "dentcast-music.json", "dentcast_cabinet_full_catalog.json",
+                "dc-theme.css", "dc-article.css", "dc-nav.css", "dc-nav.js",
+                "global-search.css", "global-search.js", "global-search-ui.js",
+                "episodes-drawer.js",
                 "dentcast-hashtag-reference.json", "plus/faq-corpus.json",
                 "plus/des-scores.json", "plus/pathways.json",
             }

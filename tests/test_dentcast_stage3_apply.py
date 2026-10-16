@@ -92,6 +92,38 @@ class Stage3ApplyTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "MODULE_WRITE_SCOPE_FORBIDDEN"):
                     patcher.allowed(owner, path)
 
+    def test_stage7_builder_write_ownership_prevents_source_mutation(self):
+        state = runner.begin({"has_text": True, "has_paper": False,
+                              "category": "clinical", "challenge": False},
+                             "builder-guard", SHA)
+        while runner.next_invocation(state)["step"]["step_id"] != "build:version":
+            state = runner.submit(state, report(runner.next_invocation(state), DIGEST))
+        invocation = runner.next_invocation(state)
+        self.assertEqual(invocation["step"]["step_id"], "build:version")
+        def intent(inv, name):
+            return {"step_id": inv["step"]["step_id"],
+                    "input_digest": inv["input_digest"],
+                    "author_asserted_gates": inv["step"]["approval_gates"],
+                    "edits": [{"path": name, "before_sha256": None,
+                               "content_utf8": "{}"}]}
+
+        with self.assertRaisesRegex(ValueError, "STAMPER_OUTPUT_SCOPE_FORBIDDEN"):
+            patcher.check_intent(state, intent(invocation, "plus/quiz-index.json"),
+                                 self.workspace)
+        patcher.check_intent(state, intent(invocation, "service-worker.js"),
+                             self.workspace)
+        state = runner.submit(state, report(invocation, DIGEST))
+        rebuild = runner.next_invocation(state)
+        self.assertEqual(rebuild["step"]["step_id"], "build:rebuild")
+        for name in ("dentcast-brain.json", "dentcast.json",
+                     "glossary/glossary.json", "litecast/lite-glossary.json",
+                     "plus/des-scores.json", "plus/faq-corpus.json",
+                     "dentcast_cabinet_full_catalog.json", "dc-nav.js"):
+            with self.subTest(name=name):
+                with self.assertRaisesRegex(ValueError,
+                                            "BUILDER_SOURCE_MUTATION_FORBIDDEN"):
+                    patcher.check_intent(state, intent(rebuild, name), self.workspace)
+
     def test_actual_edit_receipt_and_runner_advance(self):
         result = patcher.apply_intent(self.state, self.intent(), self.workspace)
         self.assertEqual(self.target.read_text(encoding="utf-8"), "<h1>After</h1>")
