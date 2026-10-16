@@ -1633,6 +1633,18 @@ body.dc-desktop-ui.dc-search-mode #dcGlobalBox{
 }
 body.dc-desktop-ui.dc-search-mode #dcGlobalBox .dc-search-input,
 body.dc-desktop-ui.dc-search-mode #dcGlobalBox .dc-filter-list{flex-shrink:0;}
+/* No query: do not reserve the entire reader column for an empty results pane.
+   The search sponsor follows #dcGlobalBox, so it now sits immediately below
+   the filters rather than under a giant blank panel. */
+body.dc-desktop-ui.dc-search-mode #dcGlobalBox:has(#dcSearch:placeholder-shown){
+  flex:0 0 auto !important;
+  height:auto !important;
+}
+body.dc-desktop-ui.dc-search-mode #dcGlobalBox:has(#dcSearch:placeholder-shown) #dcResults{
+  display:none !important;
+  flex:0 0 auto !important;
+}
+
 body.dc-desktop-ui.dc-search-mode #dcResults{
   display:block !important; flex:1 1 auto !important;
   max-height:none !important; overflow:auto !important;
