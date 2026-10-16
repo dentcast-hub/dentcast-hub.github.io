@@ -74,8 +74,17 @@ def sha(data):
 def allowed(module, name):
     import fnmatch
     fail(module in ALLOWED, "MODULE_HAS_NO_FILE_EDIT_AUTHORITY:" + module)
-    fail(not any(name.startswith(p) for p in PROTECTED_PREFIXES) and
-         not name.startswith("/") and name not in PROTECTED_NAMES,
+    fail(isinstance(name, str) and bool(name) and "\x00" not in name
+         and len(name) < 512, "BAD_EDIT_PATH")
+    relative = Path(name)
+    fail(not relative.is_absolute() and relative.as_posix() == name
+         and not any(part in (".", "..") for part in relative.parts),
+         "NONCANONICAL_EDIT_PATH")
+    # A nested repo/control directory is no less sensitive than one at root.
+    protected_segments = {p.rstrip("/") for p in PROTECTED_PREFIXES}
+    fail(not any(part in protected_segments for part in relative.parts)
+         and not any(name.startswith(p) for p in PROTECTED_PREFIXES)
+         and name not in PROTECTED_NAMES,
          "PROTECTED_REPOSITORY_PATH")
     patterns = ALLOWED[module]
     fail(any(fnmatch.fnmatch(name, pat) for pat in patterns), "MODULE_WRITE_SCOPE_FORBIDDEN")
@@ -132,6 +141,7 @@ def check_intent(state, intent, workspace):
                            {"path", "before_sha256", "content_base64"}),
              "BAD_EDIT_SCHEMA")
         path, before = edit["path"], edit["before_sha256"]
+        fail(isinstance(path, str), "BAD_EDIT_PATH")
         if "content_utf8" in edit:
             text = edit["content_utf8"]
             fail(isinstance(text, str), "INVALID_EDIT_TEXT")

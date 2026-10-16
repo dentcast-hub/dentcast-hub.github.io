@@ -78,6 +78,37 @@ class Stage3ApplyTests(unittest.TestCase):
         }
 
 
+    def test_cycle1_bad_path_type_is_cleanly_rejected(self):
+        for bad in (123, None, ["clinical/insight-test.html"]):
+            with self.subTest(bad=bad):
+                intent = self.intent()
+                intent["edits"][0]["path"] = bad
+                with self.assertRaisesRegex(ValueError, "BAD_EDIT_PATH"):
+                    patcher.check_intent(self.state, intent, self.workspace)
+                self.assertEqual(self.target.read_text(), "<h1>Before</h1>")
+
+    def test_cycle1_nested_repo_and_admin_paths_are_protected(self):
+        for path in ("clinical/.git/config.html",
+                     "clinical/.dentcast/data.html",
+                     "clinical/tools/unsafe.html",
+                     "clinical/admin/private.html",
+                     "clinical/tests/mock.html"):
+            with self.subTest(path=path):
+                with self.assertRaisesRegex(ValueError, "PROTECTED_REPOSITORY_PATH"):
+                    patcher.check_intent(self.state, self.intent(path=path),
+                                         self.workspace)
+        self.assertEqual(self.target.read_text(), "<h1>Before</h1>")
+
+    def test_cycle1_noncanonical_aliases_fail_closed(self):
+        for path in ("clinical//insight-test.html",
+                     "clinical/./insight-test.html",
+                     "clinical/../clinical/insight-test.html"):
+            with self.subTest(path=path):
+                with self.assertRaisesRegex(ValueError, "NONCANONICAL_EDIT_PATH"):
+                    patcher.check_intent(self.state, self.intent(path=path),
+                                         self.workspace)
+        self.assertEqual(self.target.read_text(), "<h1>Before</h1>")
+
     def test_stage7_canonical_write_ownership_fail_closed(self):
         # Test the concrete canonical paths, not only permissive wildcard scopes.
         patcher.allowed("evidence", "plus/des-scores.json")
