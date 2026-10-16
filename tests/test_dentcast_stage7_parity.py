@@ -146,21 +146,19 @@ class IndependentParityTests(unittest.TestCase):
 
 
 
-    def test_glossary_unsupported_route_remains_explicitly_blocked(self):
+    def test_glossary_has_separate_registry_and_inbound_handoff(self):
         plan = routes.compile_steps(request(category="glossary"))
-        self.assertEqual(plan["status"], "blocked")
-        self.assertEqual(plan["code"], "CATEGORY_RULES_NOT_MAPPED")
+        self.assertEqual(plan["status"], "compiled_staging_requires_operator")
+        steps = [s["step_id"] for s in plan["ordered_steps"]]
+        self.assertIn("brain:glossary-register", steps)
+        self.assertIn("semantic-links:glossary", steps)
+        self.assertNotIn("brain:append", steps)
+        self.assertNotIn("pathways:place", steps)
         self.assertFalse(plan["execution_authorized"])
 
     def test_glossary_phase_e_exception_is_not_a_false_failure(self):
-        # Oracle checks the canonical exception independent of the incomplete
-        # glossary route compiler; this does NOT claim glossary can be published.
-        plan = routes.compile_steps(request())
-        plan["category"] = "glossary"
-        plan["ordered_steps"] = [
-            step for step in plan["ordered_steps"]
-            if step["step_id"] != "notification:push-marker"
-        ]
+        # Verify the actual glossary plan; a route is not publication permission.
+        plan = routes.compile_steps(request(category="glossary"))
         self.assertEqual(oracle.inspect_route(plan), [])
         self.write_pair(category="glossary", filename="term-999.html", marker=False)
         self.assertEqual(oracle.inspect_page_pair(
@@ -367,6 +365,68 @@ class PairwiseParityTests(unittest.TestCase):
         (self.b / "escapes").symlink_to(ROOT, target_is_directory=True)
         with self.assertRaisesRegex(ValueError, "SYMLINK_IN_COMPARISON"):
             pairwise.compare(self.a, self.b, ["sharehub/share-18.html"])
+
+class ClosureRouteTests(unittest.TestCase):
+    def test_all_requested_categories_and_paper_variants(self):
+        for category in ("clinical", "chairside", "sharehub", "litecast", "notecast", "episode", "glossary"):
+            for paper in (False, True):
+                with self.subTest(category=category, paper=paper):
+                    p = routes.compile_steps(request(category, paper))
+                    self.assertEqual(p["status"], "compiled_staging_requires_operator")
+                    self.assertEqual(oracle.inspect_route(p), [])
+                    self.assertEqual(p["ordered_steps"][-1]["step_id"], "verify:phase-f")
+
+    def test_missing_science_learning_or_pathway_is_rejected(self):
+        import copy
+        original = routes.compile_steps(request("clinical"))
+        for step in ("evidence:des-fidelity", "learning-assets:quiz", "learning-assets:flashcards", "pathways:place"):
+            changed = copy.deepcopy(original)
+            changed["ordered_steps"] = [s for s in changed["ordered_steps"] if s["step_id"] != step]
+            self.assertIn("MISSING_REQUIRED_STEP:" + step, oracle.inspect_route(changed))
+
+    def test_marker_cannot_precede_english_even_with_final_stamp(self):
+        p = routes.compile_steps(request("chairside"))
+        steps = p["ordered_steps"]
+        marker = next(x for x in steps if x["step_id"] == "notification:push-marker")
+        steps.remove(marker)
+        steps.insert(steps.index(next(x for x in steps if x["step_id"] == "english:mirror")), marker)
+        self.assertIn("CANONICAL_ORDER:english:mirror->notification:push-marker", oracle.inspect_route(p))
+
+    def test_no_source_is_not_a_des_skip_and_video_skip_is_scoped(self):
+        handlers = routes._load("closure_handlers", "dentcast_stage3_modules.py")
+        for category, sid, skip in (
+            ("clinical", "evidence:des-fidelity", "CANONICAL_NO_CITED_SOURCE_ELIGIBLE"),
+            ("sharehub", "learning-assets:flashcards", "DENTCAST_PLUS_SOURCE_TIPS_NOT_PROVIDED"),
+            ("chairside", "learning-assets:quiz", "DENTCAST_PLUS_SOURCE_TIPS_NOT_PROVIDED"),
+            ("clinical", "notification:pulse", "GLOSSARY_NOT_CUSTOMARY"),
+        ):
+            p = routes.compile_steps(request(category))
+            step = next(x for x in p["ordered_steps"] if x["step_id"] == sid)
+            report = {"step_id": sid, "module_id": step["module_id"], "input_digest": DIGEST,
+                      "status": "skipped_with_reason", "outputs": {"canonical_skip_rule": skip},
+                      "external_receipt_digest": None, "approval_receipt_digest": DIGEST, "error": None}
+            with self.subTest(category=category, sid=sid), self.assertRaises(ValueError):
+                handlers.validate_report(step, report, {"category": category}, DIGEST)
+
+    def test_human_pause_cannot_be_recovered_with_its_own_hash(self):
+        state = runner.begin(request(), "approval-barrier", REVISION)
+        report = synthetic_report(runner.next_invocation(state))
+        report.update(status="awaiting_approval", outputs={}, external_receipt_digest=None,
+                      error="FOUNDER_GATE")
+        paused = runner.submit(state, report)
+        digest = runner.modules.hash_public(paused["receipts"]["intake:route"])
+        with self.assertRaisesRegex(ValueError, "TRUSTED_HUMAN_APPROVAL_REQUIRED"):
+            runner.recover(paused, digest)
+        self.assertEqual(paused["next_index"], 0)
+        self.assertTrue(paused["paused"])
+
+    def test_internal_symlink_cannot_bypass_protected_write_scope(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "tools").mkdir()
+            (root / "article-alias").symlink_to(root / "tools", target_is_directory=True)
+            with self.assertRaisesRegex(ValueError, "SYMLINK_EDIT_ANCESTOR"):
+                patcher._target(root, "article-alias/hidden.html")
 
 
 if __name__ == "__main__":

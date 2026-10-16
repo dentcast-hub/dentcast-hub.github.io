@@ -42,6 +42,8 @@ SOURCE_STEPS = {
     "learning-assets:quiz": ("learning-assets", "C4.12", "07-flashcards-and-quiz.md"),
     "evidence:des-fidelity": ("evidence", "C4.13", "08-des-fidelity.md"),
     "challenge:public": ("challenge", "C4.14", "09-challenge.md"),
+    "brain:glossary-register": ("brain", "C2.6 glossary source", "04-taxonomy-and-navigation.md"),
+    "semantic-links:glossary": ("semantic-links", "C4.7 then C4.7-ب handoff then C4.8-C4.9", "05-semantic-linking.md"),
     "brain:append": ("brain", "C5.0-C5.5", "10-brain-and-pathways.md"),
     "pathways:place": ("pathways", "C5.6-C5.6-b", "10-brain-and-pathways.md"),
     "notification:pulse": ("notification", "C6", "11-build-and-version.md"),
@@ -57,6 +59,8 @@ GATES = {
     "intake:route": ["user-string-provenance", "unverifiable-metadata", "approved-opening-when-generated"],
     "page:draft": ["opening-paragraph-founder-approval-when-generated", "exact-title-caption"],
     "page:litecast-register": ["same-type-litecast-entry-shape", "litecast-brain-isolation"],
+    "brain:glossary-register": ["same-type-glossary-entry-shape", "glossary-brain-isolation"],
+    "semantic-links:glossary": ["ambiguous-links", "cross-link-ask-verdicts"],
     "taxonomy:lock": ["ambiguous-pillar", "new-subtopic"],
     "semantic-links:specialist": ["ambiguous-links"],
     "semantic-links:litecast": ["ambiguous-litecast-links"],
@@ -103,7 +107,11 @@ def compile_steps(request, contract=None):
     if not paper_only:
         steps += ["page:draft"]
         if not litecast:
-            steps += ["taxonomy:lock", "navigation:publish", "semantic-links:specialist"]
+            steps += ["taxonomy:lock", "navigation:publish"]
+            if category == "glossary":
+                steps += ["brain:glossary-register", "semantic-links:glossary"]
+            else:
+                steps += ["semantic-links:specialist"]
         else:
             steps += ["semantic-links:litecast", "page:litecast-register"]
     if paper:
@@ -121,8 +129,9 @@ def compile_steps(request, contract=None):
             steps += ["learning-assets:flashcards", "learning-assets:quiz",
                       "evidence:des-fidelity"]
         if not litecast:
-            steps += ["brain:append"]
-            if not challenge:
+            if category != "glossary":
+                steps += ["brain:append"]
+            if not challenge and category != "glossary":
                 steps += ["pathways:place"]
         steps += ["notification:pulse", "build:version", "build:rebuild"]
         if not litecast and not challenge:

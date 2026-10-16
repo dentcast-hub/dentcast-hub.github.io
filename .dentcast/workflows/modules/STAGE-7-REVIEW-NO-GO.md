@@ -1,3 +1,9 @@
+> **Current disposition (2026-10-16): STAGING ACCEPTED for the founder's revised
+> offline/Sandbox scope. Production activation remains NO-GO.** See
+> [STAGE-7-STAGING-ACCEPTANCE.md](STAGE-7-STAGING-ACCEPTANCE.md) for current fixes,
+> executed evidence, limitations and pre-activation gates. The text below is the
+> preserved historical audit, not the current glossary implementation status.
+
 # Stage 7 — Independent sandbox parity audit (NO-GO for activation)
 
 **Decision: MECHANICAL / SELECTED CONTENT TESTS PASS; FULL CANONICAL BEHAVIORAL PARITY IS NOT PROVEN. Stage 8 activation MUST REMAIN BLOCKED.**

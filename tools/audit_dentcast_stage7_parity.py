@@ -131,7 +131,8 @@ def inspect_route(plan):
                   "verify:phase-f", "build:version-final", "notification:pulse",
                   "semantic-links:specialist", "semantic-links:litecast",
                   "learning-assets:flashcards", "learning-assets:quiz",
-                  "evidence:des-fidelity", "challenge:public", "pathways:place"):
+                  "evidence:des-fidelity", "challenge:public", "pathways:place",
+                  "brain:glossary-register", "semantic-links:glossary"):
             absent(s)
         earlier("paper-cabinet:drive", "paper-cabinet:catalog")
         earlier("paper-cabinet:catalog", "verify:paper-only")
@@ -154,14 +155,27 @@ def inspect_route(plan):
                       "semantic-links:specialist", "english:mirror",
                       "notification:push-marker", "learning-assets:flashcards",
                       "learning-assets:quiz", "evidence:des-fidelity",
-                      "challenge:public", "pathways:place"):
+                      "challenge:public", "pathways:place",
+                      "brain:glossary-register", "semantic-links:glossary"):
                 absent(s)
         else:
             for s in ("taxonomy:lock", "navigation:publish",
-                      "semantic-links:specialist", "brain:append"):
+                      "semantic-links:glossary" if glossary else "semantic-links:specialist"):
                 required(s)
             earlier("page:draft", "taxonomy:lock")
             earlier("taxonomy:lock", "navigation:publish")
+            if glossary:
+                required("brain:glossary-register")
+                required("semantic-links:glossary")
+                absent("brain:append")
+                absent("pathways:place")
+                absent("semantic-links:specialist")
+                earlier("navigation:publish", "brain:glossary-register")
+                earlier("brain:glossary-register", "semantic-links:glossary")
+            else:
+                required("brain:append")
+                absent("brain:glossary-register")
+                absent("semantic-links:glossary")
             if challenge:
                 required("challenge:public")
                 for s in ("english:mirror", "learning-assets:flashcards",
@@ -170,6 +184,16 @@ def inspect_route(plan):
                     absent(s)
             else:
                 absent("challenge:public")
+                for s in ("learning-assets:flashcards", "learning-assets:quiz", "evidence:des-fidelity"):
+                    required(s)
+                earlier("learning-assets:flashcards", "learning-assets:quiz")
+                earlier("learning-assets:quiz", "evidence:des-fidelity")
+                if not glossary:
+                    earlier("evidence:des-fidelity", "brain:append")
+                if not glossary:
+                    required("pathways:place")
+                    earlier("brain:append", "pathways:place")
+                    earlier("pathways:place", "notification:pulse")
                 required("english:mirror")
                 earlier("build:rebuild", "english:mirror")
                 earlier("english:mirror", "build:version-final")
@@ -179,6 +203,8 @@ def inspect_route(plan):
             else:
                 required("notification:push-marker")
                 earlier("notification:push-marker", "build:version-final")
+                if not challenge:
+                    earlier("english:mirror", "notification:push-marker")
         if attached:
             for s in ("paper-cabinet:drive", "paper-cabinet:catalog",
                       "paper-cabinet:credit"):

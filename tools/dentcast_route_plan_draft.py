@@ -44,11 +44,15 @@ def plan(request, contract=None):
     live_categories = {str(e["type"]).lower() for e in live_entries if isinstance(e, dict) and isinstance(e.get("type"), str)}
     if any(isinstance(e, dict) and "episode" in e for e in live_entries):
         live_categories.add("episode")
+    # Glossary uses its own canonical registry, never a fabricated brain type.
+    glossary = json.loads((ROOT / "glossary/glossary.json").read_text(encoding="utf-8"))
+    if isinstance(glossary.get("glossary"), list) and glossary["glossary"]:
+        live_categories.add("glossary")
     if content and category not in live_categories:
         return {"status": "blocked", "code": "CATEGORY_RULES_NOT_MAPPED",
                 "reason": "This conservative prototype has no audited predicate for this category",
                 "no_side_effects": True}
-    if content and category == "litecast" and request.get("challenge") is True:
+    if content and category in {"litecast", "glossary"} and request.get("challenge") is True:
         return {"status": "blocked", "code": "CHALLENGE_CATEGORY_CONFLICT",
                 "reason": "LiteCast+Challenge combination needs separate rule audit", "no_side_effects": True}
 
@@ -73,7 +77,7 @@ def plan(request, contract=None):
             selected += ["challenge"]
         if category != "litecast":
             selected += ["brain"]
-            if not challenge:
+            if not challenge and category != "glossary":
                 selected += ["pathways"]
         # C6 Pulse runs even on LiteCast; phase E push-marker is a distinct
         # conditional notification invocation AFTER phase D, not a second module.

@@ -128,7 +128,7 @@ class Stage3RouteTests(unittest.TestCase):
             {"has_text": False, "has_paper": False},
             {"has_text": True, "has_paper": False, "category": "clinical"},
             request(category="bogus"),
-            request(category="glossary"),
+            request(category="glossary", challenge=True),
             request(category="litecast", challenge=True),
         ):
             with self.subTest(request=request_input):
@@ -248,7 +248,7 @@ class Stage3ModuleTests(unittest.TestCase):
     def test_pause_recover_requires_matching_receipt_digest(self):
         state, inv = self.setup_invocation()
         report = fake_report(inv)
-        report.update({"status": "awaiting_approval", "outputs": {},
+        report.update({"status": "failed", "outputs": {},
                        "external_receipt_digest": None, "error": "FOUNDER_GATE"})
         paused = runner.submit(state, report)
         self.assertEqual(runner.stage3_status(paused), "paused_staging")

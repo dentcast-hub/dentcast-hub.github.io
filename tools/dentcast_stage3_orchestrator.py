@@ -116,6 +116,8 @@ def validate_state(state):
           paused == (cursor < len(ids) and ids[cursor] in receipts), "BAD_PAUSE_STATE")
     if paused:
         _need(receipts[ids[cursor]].get("status") == "paused_staging", "BAD_PAUSED_RECEIPT")
+        _need(type(receipts[ids[cursor]].get("requires_human_approval")) is bool,
+              "PAUSE_APPROVAL_PROVENANCE_MISSING")
     _need(isinstance(state.get("history"), list), "INVALID_HISTORY")
     return True
 
@@ -177,6 +179,9 @@ def recover(state, expected_pause_receipt_digest):
     sid = state["plan"]["ordered_steps"][state["next_index"]]["step_id"]
     old = state["receipts"][sid]
     _need(_digest(old) == expected_pause_receipt_digest, "PAUSE_RECEIPT_CHANGED")
+    # A hash identifies the pause; it is not the founder's decision.
+    # No trusted approval adapter exists in staging, so this gate stays shut.
+    _need(old.get("requires_human_approval") is False, "TRUSTED_HUMAN_APPROVAL_REQUIRED")
     result = copy.deepcopy(state)
     result["history"].append({"step_id": sid, "receipt_digest": _digest(old),
                               "action": "explicit_recovery"})

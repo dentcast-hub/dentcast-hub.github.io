@@ -1,0 +1,55 @@
+{
+  "measurement": "UTF-8 file bytes, NOT model tokens or billed usage",
+  "files": {
+    "AGENTS.md": 331697,
+    "CLAUDE.md": 244394,
+    ".cursor/rules/dentcast-router.mdc": 18886,
+    ".cursor/rules/dentcast-publishing.mdc": 20014,
+    ".dentcast/workflows/README.md": 240501,
+    ".dentcast/workflows/agent-parity.md": 31348
+  },
+  "routes": {
+    "clinical": {
+      "unique_module_bytes": 224497,
+      "reloading_each_invocation_bytes": 741216,
+      "steps": 17
+    },
+    "chairside": {
+      "unique_module_bytes": 224497,
+      "reloading_each_invocation_bytes": 741216,
+      "steps": 17
+    },
+    "sharehub": {
+      "unique_module_bytes": 224497,
+      "reloading_each_invocation_bytes": 741216,
+      "steps": 17
+    },
+    "litecast": {
+      "unique_module_bytes": 105765,
+      "reloading_each_invocation_bytes": 376651,
+      "steps": 9
+    },
+    "notecast": {
+      "unique_module_bytes": 224497,
+      "reloading_each_invocation_bytes": 741216,
+      "steps": 17
+    },
+    "episode": {
+      "unique_module_bytes": 224497,
+      "reloading_each_invocation_bytes": 741216,
+      "steps": 17
+    },
+    "glossary": {
+      "unique_module_bytes": 201895,
+      "reloading_each_invocation_bytes": 654509,
+      "steps": 15
+    }
+  },
+  "caveats": [
+    "No live Claude/Cursor/Codex token meter was used.",
+    "Active read-all rules are unchanged: staged modules are ADDITIONAL context until activation.",
+    "Codex truncation/configuration and Cursor AGENTS discovery are client-dependent and unmeasured.",
+    "Task prompts, templates, data, specialty workflows, scientific calls and cached-token accounting excluded.",
+    "Unique-module scenario assumes deduplication; per-invocation scenario models repeated full source reads."
+  ]
+}

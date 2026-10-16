@@ -33,6 +33,7 @@ routes = _load("s3bridge_routes", "dentcast_stage3_route.py")
 
 SANDBOX_MARKER = ".dentcast-stage3-disposable-workspace.json"
 ARTIFACT_REQUIRED = {
+    "brain:glossary-register", "semantic-links:glossary",
     "page:draft", "page:litecast-register", "navigation:publish", "semantic-links:specialist",
     "semantic-links:litecast", "paper-cabinet:catalog",
     "paper-cabinet:credit", "learning-assets:flashcards",

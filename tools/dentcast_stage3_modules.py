@@ -81,6 +81,17 @@ SCHEMAS = {
         "answer_not_in_git_verified": "bool_true", "private_handoff_ready": "bool_true",
         "admin_setup_status_recorded": "bool_true",
     },
+    "brain:glossary-register": {
+        "glossary_artifact_digest": "digest", "same_type_keys_match": "bool_true",
+        "specialist_brain_unchanged": "bool_true", "term_page_exists": "bool_true",
+    },
+    "semantic-links:glossary": {
+        "analysis_digest": "digest", "new_slug_scope_verified": "bool_true",
+        "fresh_47": "bool_true", "fresh_48": "bool_true", "fresh_49": "bool_true",
+        "canonical_47_inbound_48_49_order": "bool_true",
+        "unresolved_candidates": "zero", "related_link_count": "nonnegative",
+        "required_approvals_verified": "bool_true",
+    },
     "brain:append": {
         "brain_artifact_digest": "digest", "entry_at_absolute_tail": "bool_true",
         "same_type_keys_match": "bool_true", "canonical_hashtags_checked": "bool_true",
@@ -127,9 +138,10 @@ SCHEMAS = {
     },
 }
 SKIPS = {
+    "notification:pulse": {"GLOSSARY_NOT_CUSTOMARY"},
     "learning-assets:flashcards": {"DENTCAST_PLUS_SOURCE_TIPS_NOT_PROVIDED"},
-    "evidence:des-fidelity": {"FOUNDER_APPROVED_NO_DES",
-                              "CANONICAL_NO_CITED_SOURCE_ELIGIBLE"},
+    "learning-assets:quiz": {"DENTCAST_PLUS_SOURCE_TIPS_NOT_PROVIDED"},
+    "evidence:des-fidelity": {"FOUNDER_APPROVED_NO_DES"},
 }
 
 
@@ -191,6 +203,8 @@ def navigation(step_id, output, ctx):
 
 def semantic_links(step_id, output, ctx):
     _validate_fields(step_id, output)
+    if step_id == "semantic-links:glossary":
+        _require(ctx.get("category") == "glossary", "GLOSSARY_ROUTE_REQUIRED")
     _require(("litecast" in step_id) == ctx["route"].startswith("litecast"),
              "SEMANTIC_UNIVERSE_MISMATCH")
 
@@ -221,6 +235,8 @@ def challenge(step_id, output, ctx):
 
 def brain(step_id, output, ctx):
     _validate_fields(step_id, output)
+    _require((step_id == "brain:glossary-register") == (ctx.get("category") == "glossary"),
+             "WRONG_REGISTRY_FOR_CATEGORY")
     _require(not ctx["route"].startswith("litecast"), "LITECAST_SPECIALIST_BRAIN_FORBIDDEN")
 
 
@@ -304,6 +320,11 @@ def validate_report(step, report, context, expected_input_digest):
                  set(report["outputs"]) == {"canonical_skip_rule"} and
                  report["outputs"]["canonical_skip_rule"] in allowed,
                  "UNAUTHORIZED_SKIP")
+        rule = report["outputs"]["canonical_skip_rule"]
+        if rule == "GLOSSARY_NOT_CUSTOMARY":
+            _require(context.get("category") == "glossary", "SKIP_CATEGORY_MISMATCH")
+        if rule == "DENTCAST_PLUS_SOURCE_TIPS_NOT_PROVIDED":
+            _require(context.get("category") == "dentcast_plus", "SKIP_CATEGORY_MISMATCH")
         if report["outputs"]["canonical_skip_rule"] in {
                 "FOUNDER_APPROVED_NO_DES", "DENTCAST_PLUS_SOURCE_TIPS_NOT_PROVIDED"}:
             _require(isinstance(report["approval_receipt_digest"], str) and
@@ -318,7 +339,9 @@ def validate_report(step, report, context, expected_input_digest):
              and len(report["error"]) < 256, "PAUSED_REPORT_REQUIRES_ERROR_CODE")
     return {"status": "paused_staging", "step_id": step_id, "module_id": module_id,
             "report_digest": hash_public(report),
-            "reason": report["error"], "execution_authorized": False}
+            "reason": report["error"],
+            "requires_human_approval": report["status"] == "awaiting_approval",
+            "execution_authorized": False}
 
 
 def hash_public(value):

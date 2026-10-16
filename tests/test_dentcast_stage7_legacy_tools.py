@@ -353,6 +353,190 @@ class LegacyToolSandboxTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "MODULE_WRITE_SCOPE_FORBIDDEN"):
             editor.allowed("page", "dentcast-brain.json")
 
+class StagingClosureTests(unittest.TestCase):
+    setUp = LegacyToolSandboxTests.setUp
+
+    def write(self, root, path, data):
+        target = root / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(data if isinstance(data, str) else json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    def tool(self, root, name, *args):
+        target = root / "tools" / name
+        target.parent.mkdir(exist_ok=True)
+        shutil.copyfile(ROOT / "tools" / name, target)
+        run = subprocess.run(["node" if name.endswith(".mjs") else sys.executable,
+                              str(target), *args], cwd=root, text=True,
+                             capture_output=True, timeout=40)
+        self.assertEqual(run.returncode, 0, run.stdout[-2500:] + run.stderr[-1000:])
+        return run
+
+    def fixture_state(self, category, target_step):
+        # Shape-only positioning of a local mechanical slice. Never run or
+        # synthesize a scientific/Drive/human result to get to the target.
+        state = runner.begin({"has_text": True, "has_paper": False,
+                              "category": category, "challenge": False}, "slice", REV)
+        while runner.next_invocation(state)["step"]["step_id"] != target_step:
+            inv = runner.next_invocation(state)
+            self.assertNotIn(inv["step"]["module_id"], {"evidence", "paper-cabinet", "challenge"})
+            state = runner.submit(state, fake_report(inv))
+        return state
+
+    def apply(self, state, root, path, data):
+        inv = runner.next_invocation(state)
+        target = root / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        before = hashlib.sha256(target.read_bytes()).hexdigest() if target.exists() else None
+        return editor.apply_intent(state, {
+            "step_id": inv["step"]["step_id"], "input_digest": inv["input_digest"],
+            "author_asserted_gates": inv["step"]["approval_gates"],
+            "edits": [{"path": path, "before_sha256": before,
+                       "content_utf8": data if isinstance(data, str) else json.dumps(data, ensure_ascii=False, indent=2)}],
+        }, root)
+
+    def pair(self):
+        marker = (self.sandbox / bridge.SANDBOX_MARKER).read_text()
+        roots = [self.sandbox / n for n in ("legacy", "modular")]
+        for root in roots:
+            root.mkdir()
+            self.write(root, bridge.SANDBOX_MARKER, marker)
+        return roots
+
+    def test_glossary_real_paired_registration_page_and_index_builder(self):
+        a, b = self.pair()
+        entry = {"slug": "stage7-fixture", "title": "Staging Fixture",
+                 "fa_title": "مدخل آزمایشی", "synonyms": ["Staging Fixture"],
+                 "url": "/glossary/stage7-fixture.html",
+                 "pillar": {"primary": None, "secondary": [], "subtopic": None}}
+        data = {"glossary": [entry]}
+        for root in (a, b):
+            self.write(root, "glossary/glossary.json", {"glossary": []})
+            self.write(root, ".dentcast/asset-versions.json", (ROOT / ".dentcast/asset-versions.json").read_text())
+        html = '<html lang="fa"><body><h1>مدخل آزمایشی</h1><p>این مدخل صرفاً دادهٔ آزمایشی است.</p></body></html>'
+        self.write(a, "glossary/stage7-fixture.html", html)
+        self.apply(self.fixture_state("glossary", "page:draft"), b,
+                   "glossary/stage7-fixture.html", html)
+        self.write(a, "glossary/glossary.json", data)
+        state = self.fixture_state("glossary", "brain:glossary-register")
+        self.apply(state, b, "glossary/glossary.json", data)
+        with self.assertRaisesRegex(ValueError, "GLOSSARY_REGISTRY_SCOPE"):
+            self.apply(state, b, "dentcast-brain.json", [])
+        for root in (a, b):
+            self.tool(root, "build_pillar.py", "glossary")
+            self.assertIn(entry["url"], (root / "glossary/index.html").read_text())
+            self.assertEqual((root / "glossary/stage7-fixture.html").read_text(), html)
+            self.assertFalse((root / "dentcast-brain.json").exists())
+        result = pairwise.compare(a, b, ["glossary/glossary.json", "glossary/index.html", "glossary/stage7-fixture.html"])
+        self.assertEqual(result["status"], "PAIRED_BYTES_EQUAL", result)
+
+    def test_new_synthetic_litecast_real_phase_f_pass_and_mutation_failure(self):
+        root = self.sandbox
+        title, caption = "آزمایش مستقل", "این متن صرفاً برای آزمون آفلاین است."
+        cid = "litecast/lite-CAST999998"
+        entry = {"type": "litecast", "id": "litecast-999998", "title": title,
+                 "caption": caption, "hashtags": [], "keywords": [], "page_url": cid + ".html"}
+        self.write(root, "dentcast-brain.json", [])
+        self.write(root, "litecast/lite-glossary.json", {"LightGlossary": [entry]})
+        self.write(root, "glossary/glossary.json", {"glossary": []})
+        self.write(root, "plus/faq-corpus.json", {"byContent": {}})
+        self.write(root, "plus/content-index.json", {})
+        self.write(root, "index.html", '<script src="dentcast-brain.json?v=old"></script>')
+        self.write(root, "player.html", '<script src="dentcast-brain.json?v=old"></script>')
+        self.write(root, "service-worker.js", "const CACHE_NAME = 'dentcast-assets-old';")
+        self.write(root, "sitemap.xml", "<urlset/>")
+        url = "https://dentcast.ir/" + cid + ".html"
+        ld = {"@context": "https://schema.org", "@type": "Article", "headline": title,
+              "datePublished": "2026-10-16", "dateModified": "2026-10-16"}
+        html = (f'<html lang="fa" dir="rtl"><head><title>{title}</title>'
+                f'<link rel="canonical" href="{url}"><meta property="og:url" content="{url}">'
+                f'<meta property="og:title" content="{title}"><meta name="twitter:title" content="{title}">'
+                f'<meta name="description" content="{caption}"><meta property="og:description" content="{caption}">'
+                f'<meta name="twitter:description" content="{caption}">'
+                '<script>/* Offline fixture; never loaded in a browser. */'
+                'gtag("config", "G-GMM0WC8X3M"); var src="G-GMM0WC8X3M";</script>'
+                f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script></head>'
+                f'<body><main class="article-content-wrap"><h1>{title}</h1><p>{caption}</p></main></body></html>')
+        self.apply(self.fixture_state("litecast", "page:draft"), root, cid + ".html", html)
+        self.tool(root, "stamp-version.py")
+        result = self.tool(root, "verify_publish.py", cid, "--expect-title", title, "--expect-caption", caption)
+        self.assertIn("0 failed", result.stdout)
+        print("SYNTHETIC LITECAST PHASE F:", result.stdout.strip().splitlines()[-1])
+        # This proves the unchanged mechanical gate on NEW synthetic bytes;
+        # it is not a scientific result or an authorization to publish.
+        (root / (cid + ".html")).write_text(html.replace(f"<h1>{title}</h1>", "<h1>تغییر تأییدنشده</h1>"))
+        bad = subprocess.run([sys.executable, str(root / "tools/verify_publish.py"), cid],
+                             cwd=root, text=True, capture_output=True, timeout=30)
+        self.assertEqual(bad.returncode, 1)
+        self.assertIn("16 title", bad.stdout)
+
+    def test_real_learning_builders_synthetic_multiple_categories(self):
+        # Actual builders consume nonclinical synthetic corpus, without DES calls.
+        a, b = self.pair()
+        ids = ["insight/stage7", "chairside/stage7", "sharehub/stage7", "notecast/stage7", "episodes/stage7", "glossary/stage7"]
+        source = {"faqPages": [{"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "آیا این یک آزمون آفلاین است؟", "acceptedAnswer": {"@type": "Answer", "text": "بله، این داده صرفاً آزمایشی است."}}]}],
+                  "definedTermSets": [{"@type": "DefinedTermSet", "@id": "https://example.invalid/#flashcards", "hasDefinedTerm": [{"@type": "DefinedTerm", "name": "آزمون آفلاین", "description": "اجرای ابزار بدون ارسال به سرویس خارجی."}]}]}
+        corpus = {"byContent": {cid: source for cid in ids + ["litecast/stage7", "insight/en/stage7"]}}
+        self.write(a, "plus/faq-corpus.json", corpus)
+        self.write(b, "plus/faq-corpus.json", {"byContent": {}})
+        self.apply(self.fixture_state("clinical", "learning-assets:flashcards"), b, "plus/faq-corpus.json", corpus)
+        for root in (a, b):
+            self.tool(root, "build_flashcards_index.mjs")
+            self.tool(root, "build_quiz_index.mjs")
+            cards = json.loads((root / "plus/flashcards-index.json").read_text())["byContent"]
+            quiz = json.loads((root / "plus/quiz-index.json").read_text())["byContent"]
+            self.assertEqual(set(cards), set(ids))
+            self.assertEqual(set(quiz), set(ids))
+            self.assertEqual(json.loads((root / "plus/faq-corpus.json").read_text()), corpus)
+        self.assertEqual(pairwise.compare(a, b, ["plus/faq-corpus.json", "plus/flashcards-index.json", "plus/quiz-index.json"])["status"], "PAIRED_BYTES_EQUAL")
+
+    def test_episode_catalog_real_builder_preserves_notecast_link(self):
+        # Slice-level injection selects only the writer boundary, not fabricated
+        # predecessor science/approvals. The original builder is really executed.
+        from unittest.mock import patch
+        a, b = self.pair()
+        episode = {"episode": "999998", "title": "Sandbox episode", "description": "<p>Offline fixture.</p>",
+                   "duration": "01:00", "audio_url": "https://example.invalid/test.mp3",
+                   "page_url": "/episodes/episode-999998.html", "published": "Fri, 16 Oct 2026 00:00:00 GMT"}
+        for root in (a, b):
+            self.write(root, "dentcast.json", [])
+            self.write(root, "dentcast-brain.json", [])
+            self.write(root, "tools/episodes_template.html", (ROOT / "tools/episodes_template.html").read_text())
+            self.write(root, "episodes/episode-999998.html", '<p>Offline episode</p><a class="ep-related-link" href="/notecast/stage7.html">NoteCast</a>')
+        state = runner.begin({"has_text": True, "has_paper": False, "category": "episode", "challenge": False}, "boundary", REV)
+        inv = runner.next_invocation(state)
+        inv["step"] = next(s for s in state["plan"]["ordered_steps"] if s["step_id"] == "brain:append")
+        self.write(a, "dentcast.json", [episode])
+        # Patch only invocation selection and receipt production, not writer or builder.
+        with patch.object(editor.runner, "next_invocation", return_value=inv), patch.object(editor.bridge, "attest_sample_receipt", return_value={"scope": "mechanical-fixture-only"}):
+            intent = {"step_id": "brain:append", "input_digest": inv["input_digest"], "author_asserted_gates": [],
+                      "edits": [{"path": "dentcast.json", "before_sha256": hashlib.sha256((b / "dentcast.json").read_bytes()).hexdigest(), "content_utf8": json.dumps([episode], ensure_ascii=False, indent=2)}]}
+            editor.apply_intent(state, intent, b)
+            inv["context"]["category"] = "notecast"
+            with self.assertRaisesRegex(ValueError, "EPISODE_CATALOG_SCOPE"):
+                editor.check_intent(state, intent, b)
+        for root in (a, b):
+            self.tool(root, "build_episodes.py")
+            self.assertIn('/episodes/episode-999998.html', (root / "episodes.html").read_text())
+            self.assertIn('/notecast/stage7.html', (root / "episodes/episode-999998.html").read_text())
+        self.assertEqual(pairwise.compare(a, b, ["episodes.html", "dentcast.json", "episodes/episode-999998.html"])["status"], "PAIRED_BYTES_EQUAL")
+
+    def test_challenge_public_builder_paired_no_answer_or_english(self):
+        a, b = self.pair()
+        question = '<p data-dc-challenge-question>آیا این یک دادهٔ آزمایشی است؟</p>'
+        for root in (a, b):
+            (root / "plus").mkdir()
+        self.write(a, "chairside/stage7.html", question)
+        self.apply(self.fixture_state("chairside", "page:draft"), b, "chairside/stage7.html", question)
+        for root in (a, b):
+            self.tool(root, "build_challenge_index.mjs")
+            data = json.loads((root / "plus/challenges.json").read_text())
+            entry = data["byContent"]["chairside/stage7"]
+            self.assertTrue(entry["question"])
+            self.assertNotIn("answer_fa", entry)
+            self.assertNotIn("key_points", entry)
+            self.assertFalse((root / "chairside/en/stage7.html").exists())
+        self.assertEqual(pairwise.compare(a, b, ["chairside/stage7.html", "plus/challenges.json"])["status"], "PAIRED_BYTES_EQUAL")
+
 
 if __name__ == "__main__":
     unittest.main()

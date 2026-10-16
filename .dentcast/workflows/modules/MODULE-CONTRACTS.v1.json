@@ -396,7 +396,8 @@
       "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
       "skip_conditions": [
         "LiteCast specialist 2.5/4.7/4.8/4.9 skipped; ALWAYS execute LiteCast-internal 0.5/0.6 on a LiteCast page",
-        "ordinary specialist publishes always perform fresh semantic steps 4.7/4.8/4.9 or source-authorized no-op"
+        "ordinary specialist publishes always perform fresh semantic steps 4.7/4.8/4.9 or source-authorized no-op",
+        "Glossary uses semantic-links:glossary: C4.7 then C4.7-ب scoped cross-link handoff then C4.8 and C4.9, preserving all ASK gates"
       ],
       "invalidated_by": [
         "body",
@@ -768,18 +769,23 @@
       "reads": "restricted_to_declared_inputs_and_authoritative_sources",
       "writes": [
         "brain_array",
-        "hashtag_reference"
+        "hashtag_reference",
+        "glossary_registry_only_for_glossary",
+        "episode_catalog_only_for_episode"
       ],
       "side_effects": "explicit receipts and idempotency checks required",
       "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
       "skip_conditions": [
-        "LiteCast uses lite-glossary.json, not specialist brain"
+        "LiteCast uses lite-glossary.json, not specialist brain",
+        "Glossary uses brain:glossary-register for glossary/glossary.json; no specialist brain append or hashtag minting"
       ],
       "invalidated_by": [
         "page",
         "taxonomy",
         "hashtags",
-        "brain_snapshot"
+        "brain_snapshot",
+        "glossary_snapshot",
+        "episode_catalog"
       ],
       "failure_codes": [
         "BRAIN_SCHEMA_DRIFT",
@@ -796,7 +802,10 @@
       "privacy_class": "public-safe-metadata-only",
       "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
       "adapter": "NOT_IMPLEMENTED",
-      "schema_validator": "NOT_IMPLEMENTED"
+      "schema_validator": "NOT_IMPLEMENTED",
+      "additional_sources": [
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md"
+      ]
     },
     {
       "id": "pathways",
@@ -1072,7 +1081,7 @@
       "side_effects": "explicit receipts and idempotency checks required",
       "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
       "skip_conditions": [
-        "Phase C6 Pulse applies to all page types, including LiteCast (with category convention approval)",
+        "Phase C6 assesses the category convention for every page, including LiteCast; glossary has the documented not-customary Pulse skip (Phase F)",
         "Phase E marker skips paper-only, LiteCast, glossary; Challenge is NOT a Phase E skip"
       ],
       "invalidated_by": [
