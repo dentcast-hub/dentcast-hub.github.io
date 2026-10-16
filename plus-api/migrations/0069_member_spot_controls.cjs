@@ -2,8 +2,8 @@
 exports.shorthands = undefined;
 exports.up = (pgm) => {
   pgm.sql(`
-    create index profiles_joined_id_idx on profiles (created_at, id);
-    create table spot_controls (
+    create index if not exists profiles_joined_id_idx on profiles (created_at, id);
+    create table if not exists spot_controls (
       slot text primary key,
       enabled boolean not null,
       use_default boolean not null default false,

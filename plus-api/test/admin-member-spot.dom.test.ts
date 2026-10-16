@@ -7,17 +7,16 @@ const user = (id: string) => ({ id, display_name: '<member>', created_at: '2026-
 const controls = { home: { enabled: true, creative: {
   badge: 'b', title: '<title>', text: 'body', cta: '', url: '', image: null,
 } } };
-let calls: { url: string; opts: any }[], members: any[], delayed: ((value: unknown) => void) | null;
+let calls: { url: string; opts: any }[], members: any[];
 const response = (body: unknown) => ({ ok: true, json: async () => body });
 const flush = async () => { for (let i = 0; i < 20; i++) await Promise.resolve(); };
 function el<T extends HTMLElement>(id: string): T { return document.getElementById(id) as T; }
 
 beforeEach(() => {
-  calls = []; members = [{ users: [user('one')], next_cursor: 'next' }, { users: [user('two')], next_cursor: null }]; delayed = null;
+  calls = []; members = [{ users: [user('one')], next_cursor: 'next' }, { users: [user('two')], next_cursor: null }];
   const fetcher = vi.fn(async (url: string, opts: any = {}) => {
     calls.push({ url: String(url), opts });
     if (String(url).startsWith('/admin/users?')) {
-      if (delayed) return await new Promise(resolve => { delayed = resolve; });
       return response(members.shift() || { users: [], next_cursor: null });
     }
     if (url === '/admin/spot/config') return response({ placements: { home: 'خانه', article: 'مقاله', sidebar: 'کنار' }, slots: structuredClone(controls), upload_configured: false });

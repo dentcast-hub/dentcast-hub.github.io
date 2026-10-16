@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import { describe, it, expect, beforeEach, afterAll, vi } from 'vitest';
 import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb } from './helpers.js';
@@ -99,6 +100,14 @@ describe('member review', () => {
 });
 
 describe('persistent Spot controls', () => {
+  it('retains saved controls through migration rollback and reapplication', async () => {
+    await app.inject({ method: 'PUT', url: '/admin/spot/config/home', headers, payload: creative });
+    const migration = createRequire(import.meta.url)('../migrations/0069_member_spot_controls.cjs');
+    migration.down();
+    const sql: string[] = []; migration.up({ sql: (value: string) => sql.push(value) });
+    for (const statement of sql) await pool.query(statement);
+    expect((await app.inject('/spot/config')).json().slots.home.creative.title).toBe(creative.title);
+  });
   it('leaves all current campaigns alone until saved, persists independent slots across app restarts', async () => {
     expect((await app.inject('/spot/config')).json()).toEqual({ slots: {} });
     for (const slot of ['home', 'article', 'sidebar']) {
