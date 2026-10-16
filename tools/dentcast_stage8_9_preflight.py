@@ -23,6 +23,7 @@ SCIENTIFIC = (".dentcast/des-v3.4-knowledge.md",
               "tools/des_fidelity_units.py")
 CANONICAL = ".dentcast/workflows/README.legacy.md"
 ACTIVE_ROUTER = ".dentcast/workflows/README.md"
+PRE_MIGRATION_SOURCE_COMMIT = "af318d4274c04ecb50697ea5a543bb9f24db8570"
 LEGACY_ARCHIVE = {
     "CLAUDE.md": "CLAUDE.legacy.md",
     "AGENTS.md": "AGENTS.legacy.md",
@@ -129,9 +130,15 @@ def analyze(baseline=None):
         baseline_identity = "not_checked"
     else:
         try:
-            diff = baseline_check(ENTRYPOINTS + SCIENTIFIC + (ACTIVE_ROUTER,), baseline)
+            # Original branch workflow predates one upstream main edit to the
+            # glossary generation rule (README line 668). Prove the exact
+            # archived branch source against its FROZEN pre-migration SHA,
+            # and compare the unchanged agent instructions/science to main.
+            diff = baseline_check(ENTRYPOINTS + SCIENTIFIC, baseline)
+            source_diff = baseline_check((ACTIVE_ROUTER,), PRE_MIGRATION_SOURCE_COMMIT)
             issues.extend("LEGACY_OR_SCIENCE_DRIFT:" + path for path in diff)
-            baseline_identity = "identical" if not diff else "mismatch"
+            issues.extend("ARCHIVED_ORIGINAL_WORKFLOW_DRIFT:" + path for path in source_diff)
+            baseline_identity = "identical" if not diff and not source_diff else "mismatch"
         except (ValueError, OSError, subprocess.SubprocessError) as exc:
             issues.append("BASELINE_CHECK_FAILED:" + str(exc))
             baseline_identity = "not_verified"
