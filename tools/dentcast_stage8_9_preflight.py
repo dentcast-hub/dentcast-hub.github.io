@@ -21,7 +21,16 @@ ENTRYPOINTS = (
 )
 SCIENTIFIC = (".dentcast/des-v3.4-knowledge.md",
               "tools/des_fidelity_units.py")
-CANONICAL = ".dentcast/workflows/README.md"
+CANONICAL = ".dentcast/workflows/README.legacy.md"
+ACTIVE_ROUTER = ".dentcast/workflows/README.md"
+LEGACY_ARCHIVE = {
+    "CLAUDE.md": "CLAUDE.legacy.md",
+    "AGENTS.md": "AGENTS.legacy.md",
+    ".cursor/rules/dentcast-router.mdc": ".dentcast/workflows/legacy/cursor/dentcast-router.mdc",
+    ".cursor/rules/dentcast-publishing.mdc": ".dentcast/workflows/legacy/cursor/dentcast-publishing.mdc",
+    ".dentcast/workflows/agent-parity.md": ".dentcast/workflows/agent-parity.legacy.md",
+    ACTIVE_ROUTER: CANONICAL,
+}
 STAGING_REPORT = ".dentcast/workflows/modules/STAGE-7-STAGING-ACCEPTANCE.md"
 RELEASE_GATES = (
     "authenticated_founder_approval",
@@ -69,7 +78,7 @@ def baseline_check(paths, baseline):
         )
         if proc.returncode:
             raise ValueError("MISSING_BASELINE_FILE:" + path)
-        if hashlib.sha256(proc.stdout).hexdigest() != file_hash(path):
+        if hashlib.sha256(proc.stdout).hexdigest() != file_hash(LEGACY_ARCHIVE.get(path, path)):
             mismatches.append(path)
     return mismatches
 
@@ -101,19 +110,27 @@ def analyze(baseline=None):
                       "step_count": len(ids), "digest": hashlib.sha256(
                           json.dumps(ids, separators=(",", ":")).encode()).hexdigest(),
                       "issues": errs})
-    for path in ENTRYPOINTS + SCIENTIFIC + (CANONICAL, STAGING_REPORT):
+    for path in ENTRYPOINTS + SCIENTIFIC + (CANONICAL, ACTIVE_ROUTER, STAGING_REPORT) + tuple(LEGACY_ARCHIVE.values()):
         if not (ROOT / path).is_file():
             issues.append("MISSING_REQUIRED_SOURCE:" + path)
     if (ROOT / STAGING_REPORT).is_file() and not (ROOT / STAGING_REPORT).read_text(
             encoding="utf-8").startswith("# Stage 7 — STAGING ACCEPTED"):
         issues.append("STAGE7_NOT_ACCEPTED")
+    for path in ENTRYPOINTS + (ACTIVE_ROUTER,):
+        candidate = ROOT / path
+        if candidate.is_file():
+            body = candidate.read_text(encoding="utf-8")
+            if "STAGING_ONLY_NO_LIVE_PUBLISH" not in body:
+                issues.append("ACTIVE_CONNECTOR_STAGING_GUARD_MISSING:" + path)
+            if path != ACTIVE_ROUTER and ACTIVE_ROUTER not in body:
+                issues.append("ACTIVE_CONNECTOR_ROUTE_MISSING:" + path)
     if baseline is None:
         issues.append("BASELINE_NOT_CHECKED")
         baseline_identity = "not_checked"
     else:
         try:
-            diff = baseline_check(ENTRYPOINTS + SCIENTIFIC, baseline)
-            issues.extend("LIVE_CONTRACT_DRIFT:" + path for path in diff)
+            diff = baseline_check(ENTRYPOINTS + SCIENTIFIC + (ACTIVE_ROUTER,), baseline)
+            issues.extend("LEGACY_OR_SCIENCE_DRIFT:" + path for path in diff)
             baseline_identity = "identical" if not diff else "mismatch"
         except (ValueError, OSError, subprocess.SubprocessError) as exc:
             issues.append("BASELINE_CHECK_FAILED:" + str(exc))
@@ -127,6 +144,7 @@ def analyze(baseline=None):
                   else "PRE_ACTIVATION_PACKAGE_BLOCKED",
         "route_cases_checked": len(cases), "routes": cases,
         "baseline_entrypoints_and_science": baseline_identity,
+        "entrypoint_migration": "STAGING_ONLY_ARCHIVED_LEGACY" if baseline_identity == "identical" else "NOT_VERIFIED",
         "blocked_external_gates": list(RELEASE_GATES),
         "issues": sorted(set(issues)),
         "execution_authorized": False, "publish_authorized": False,

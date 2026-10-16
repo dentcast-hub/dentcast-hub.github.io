@@ -17,6 +17,17 @@ class Stage9ReleaseBoundaryTests(unittest.TestCase):
     def test_explicit_staging_writers_only(self):
         valid = (
             ".dentcast/workflows/README.md",
+            ".dentcast/workflows/README.legacy.md",
+            "CLAUDE.md", "CLAUDE.legacy.md",
+            "AGENTS.md", "AGENTS.legacy.md",
+            ".dentcast/workflows/agent-parity.md",
+            ".dentcast/workflows/agent-parity.legacy.md",
+            ".cursor/rules/dentcast-router.mdc",
+            ".cursor/rules/dentcast-publishing.mdc",
+            ".cursor/rules/dentcast-operating-protocol.mdc",
+            ".dentcast/workflows/legacy/cursor/dentcast-router.mdc",
+            ".dentcast/workflows/legacy/cursor/dentcast-publishing.mdc",
+            ".dentcast/workflows/legacy/cursor/dentcast-operating-protocol.mdc",
             ".dentcast/workflows/modules/STAGE-9-PRE-ACTIVATION.md",
             ".github/workflows/publishing-route-staging-tests.yml",
             "tools/dentcast_stage9_release_dossier.py",
@@ -30,8 +41,7 @@ class Stage9ReleaseBoundaryTests(unittest.TestCase):
         invalid = (
             "sharehub/share-34.html", "plus/des-scores.json",
             ".dentcast/des-v3.4-knowledge.md",
-            "tools/des_fidelity_units.py", "CLAUDE.md", "AGENTS.md",
-            ".cursor/rules/dentcast-router.mdc", "dc-nav.js",
+            "tools/des_fidelity_units.py", "dc-nav.js",
             ".dentcast/execution-memory/runs/real-patient/state.json",
         )
         for path in invalid:
@@ -43,7 +53,7 @@ class Stage9ReleaseBoundaryTests(unittest.TestCase):
         self.assertEqual(out["stage9_offline"], "FINAL_STAGING_HANDOFF_PASS")
         self.assertTrue(out["changed_file_count"] > 0)
         self.assertEqual(out["out_of_scope_files"], [])
-        self.assertTrue(out["live_entrypoints_identical_to_main"])
+        self.assertTrue(out["archived_entrypoints_and_science_identical_to_main"])
         self.assertEqual(len(out["closed_external_gates"]), 7)
         self.assertFalse(out["permission_to_merge"])
         self.assertFalse(out["permission_to_publish"])

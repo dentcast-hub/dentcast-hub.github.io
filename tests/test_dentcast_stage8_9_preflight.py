@@ -31,7 +31,7 @@ class OfflineIntegrationTests(unittest.TestCase):
     def test_live_entrypoint_drift_blocks_integration(self):
         with patch.object(preflight, "baseline_check", return_value=["CLAUDE.md"]):
             outcome = preflight.analyze("origin/main")
-        self.assertIn("LIVE_CONTRACT_DRIFT:CLAUDE.md", outcome["issues"])
+        self.assertIn("LEGACY_OR_SCIENCE_DRIFT:CLAUDE.md", outcome["issues"])
         self.assertEqual(outcome["stage8"], "STAGING_INTEGRATION_BLOCKED")
         self.assertFalse(outcome["activation_authorized"])
 

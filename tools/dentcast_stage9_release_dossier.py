@@ -22,6 +22,17 @@ EXPECTED_STAGING_PREFIXES = (
 )
 EXPECTED_STAGING_EXACT = {
     ".dentcast/workflows/README.md",
+    ".dentcast/workflows/README.legacy.md",
+    ".dentcast/workflows/agent-parity.md",
+    ".dentcast/workflows/agent-parity.legacy.md",
+    "CLAUDE.md", "CLAUDE.legacy.md",
+    "AGENTS.md", "AGENTS.legacy.md",
+    ".cursor/rules/dentcast-router.mdc",
+    ".cursor/rules/dentcast-publishing.mdc",
+    ".cursor/rules/dentcast-operating-protocol.mdc",
+    ".dentcast/workflows/legacy/cursor/dentcast-router.mdc",
+    ".dentcast/workflows/legacy/cursor/dentcast-publishing.mdc",
+    ".dentcast/workflows/legacy/cursor/dentcast-operating-protocol.mdc",
     ".github/workflows/publishing-route-staging-tests.yml",
 }
 SYNTHETIC_RUN = re.compile(
@@ -102,8 +113,8 @@ def evaluate(base="origin/main"):
                 git("rev-list", "--count", revision + ".." + baseline).decode("ascii")),
             "feature_commits_not_in_main": int(
                 git("rev-list", "--count", baseline + ".." + revision).decode("ascii")),
-            "legacy_README_touched": ".dentcast/workflows/README.md" in changed,
-            "live_entrypoints_identical_to_main":
+            "modular_router_touched": ".dentcast/workflows/README.md" in changed,
+            "archived_entrypoints_and_science_identical_to_main":
                 integration_result["baseline_entrypoints_and_science"] == "identical",
         })
     except (ValueError, OSError, UnicodeDecodeError) as e:
