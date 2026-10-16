@@ -479,21 +479,52 @@ a.dc-spot-link:active { transform: scale(0.99); }
 .dc-spot--dashboard, .dc-spot--profile { margin: 1.125rem 0; }
 .dc-spot--search { margin: 0.75rem 0; }
 .dc-spot--search .dc-spot-link { padding: 0.75rem 1rem; }
-/* Keep the sponsored placement from consuming the search results viewport.
-   The creative remains fully accessible by scrolling inside its own card. */
+/* Compact the entire search creative; never create an inner scrollbar.
+   Artwork scales proportionally and stays fully visible (no cropping). */
 body.dc-desktop-ui.dc-search-mode .dc-spot--search {
   flex: 0 0 auto;
-  max-height: min(22vh, 180px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  margin: 0.375rem 0;
   min-height: 0;
+  overflow: visible;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-link {
+  padding: 0.375rem 0.625rem;
+  gap: 0.5rem;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search.dc-spot--art .dc-spot-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-art-img {
-  max-height: 135px;
-  width: 100%;
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: min(14vh, 120px);
   object-fit: contain;
 }
-
+body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-badge {
+  font-size: 0.6rem;
+  margin-bottom: 0.125rem;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-img {
+  width: 34px;
+  height: 34px;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-title {
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-text {
+  font-size: 0.68rem;
+  line-height: 1.4;
+  margin-top: 0.125rem;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-cta {
+  font-size: 0.66rem;
+  padding: 0.3rem 0.55rem;
+}
 .dc-spot--archive { margin: 1.25rem 0 0.75rem; }
 /* The desktop sidebar is 220px wide and its rows are 203px: the card matches
    «خرید اشتراک پریمیوم» directly below it in width, radius and gutter, so the
