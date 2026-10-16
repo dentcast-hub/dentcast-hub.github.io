@@ -47,6 +47,11 @@ on:
       - 'tests/test_dentcast_stage7_parity.py'
       - 'tests/test_dentcast_stage7_legacy_tools.py'
       - '.dentcast/workflows/README.md'
+      - '.dentcast/workflows/README.legacy.md'
+      - '.dentcast/workflows/agent-parity.legacy.md'
+      - '.dentcast/workflows/legacy/cursor/**'
+      - 'CLAUDE.legacy.md'
+      - 'AGENTS.legacy.md'
       - '.dentcast/workflows/agent-parity.md'
       - '.dentcast/workflows/modules/[0-1][0-9]-*.md'
       - 'CLAUDE.md'
@@ -94,6 +99,7 @@ jobs:
           python -m unittest discover -s tests -p test_dentcast_stage7_legacy_tools.py -v
           python -m unittest discover -s tests -p test_dentcast_stage8_9_preflight.py -v
           python -m unittest discover -s tests -p test_dentcast_stage9_release_dossier.py -v
+          python -m unittest discover -s tests -p test_dentcast_agent_entrypoint_migration.py -v
       - name: Audit Stage 2 canonical traceability
         run: python tools/audit_dentcast_stage2_contract.py
       - name: Stage 8-9 read-only integration and pre-activation gate
