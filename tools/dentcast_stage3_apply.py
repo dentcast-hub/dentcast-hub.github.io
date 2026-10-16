@@ -158,6 +158,21 @@ def check_intent(state, intent, workspace):
         fail(path not in seen, "DUPLICATE_WRITE")
         seen.add(path)
         allowed(step["module_id"], path)
+        # Builder and version commands own GENERATED artifacts only. A
+        # broad "*.json" output scope must not allow modifying the inputs that
+        # establish scientific, taxonomy or publication identity.
+        if step["module_id"] == "build":
+            source_inputs = {
+                "dentcast-brain.json", "glossary/glossary.json",
+                "litecast/lite-glossary.json", "dentcast-music.json",
+                "dentcast_cabinet_full_catalog.json",
+                "dentcast-hashtag-reference.json", "plus/faq-corpus.json",
+                "plus/des-scores.json", "plus/pathways.json",
+            }
+            fail(path not in source_inputs, "BUILDER_SOURCE_MUTATION_FORBIDDEN")
+            if step["step_id"] in {"build:version", "build:version-final"}:
+                fail(path == "service-worker.js" or path.endswith(".html"),
+                     "STAMPER_OUTPUT_SCOPE_FORBIDDEN")
         if step["module_id"] == "page":
             if step["step_id"] == "page:litecast-register":
                 fail(path == "litecast/lite-glossary.json",
