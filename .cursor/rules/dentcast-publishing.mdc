@@ -1,12 +1,12 @@
 ---
-description: DentCast NEW content publication only, using 12 staged canonical modules and unchanged founder gates.
+description: DentCast NEW content publishing via twelve modular source slices and unchanged founder gates.
 alwaysApply: false
 ---
 
-# DentCast Cursor publishing — staging connector
+# DentCast Cursor publishing — live modular connector
 
-**STAGING_ONLY_NO_LIVE_PUBLISH.** Complete original rule preserved at `.dentcast/workflows/legacy/cursor/dentcast-publishing.mdc`. The always-on `dentcast-router.mdc` provides the primary pointer even when this conditional rule is not loaded.
+**LIVE_MODULAR_PUBLISHING_ENABLED.** Read `.dentcast/workflows/agent-parity.md`, `AGENTS.legacy.md` §§6–8 and archived client rule `.dentcast/workflows/legacy/cursor/dentcast-publishing.mdc`.
 
-Before any staging task read `.dentcast/workflows/agent-parity.md`, `AGENTS.legacy.md` §§6–8 and the applicable archived rules. Load `.dentcast/workflows/README.md`, all of `modules/01-hard-rules.md` and `modules/02-routing-intake.md` and then the applicable twelve source slices. `.dentcast/workflows/README.legacy.md` is the complete original authority; no prior gate, exception, order or scientific DES/Fidelity logic can be omitted.
+Read `.dentcast/workflows/README.md`, all of `modules/01-hard-rules.md` and `02-routing-intake.md`, followed by each applicable full module in original order. `.dentcast/workflows/README.legacy.md` is the complete original authority; preserve all original approval gates, source-dependent DES/Fidelity, link decisions, build and final Phase F.
 
-Only disposable synthetic Sandbox staging; a completed checkpoint is neither a publish nor permission to merge or invoke real external services.
+Publish actual content through original authorized tooling. Do not mistake staging synthetic runners, mock scientific results or unverified checkpoint hashes for production execution.
