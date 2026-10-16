@@ -184,15 +184,18 @@ class LegacyToolSandboxTests(unittest.TestCase):
             self.assertEqual(verdict["legacy_manifest"][path]["sha256"],
                              verdict["modular_manifest"][path]["sha256"])
 
-    def test_latest_sharehub_legacy_phase_f_positive_probe(self):
-        # A recent canonical publication is a better positive control than
-        # historical share-18 (whose rotating Pulse entry has expired).
+    def test_latest_sharehub_legacy_phase_f_detects_existing_fidelity_drift(self):
+        # Real unchanged Phase F on the latest ShareHub is *not* green:
+        # six pooled Fidelity quotes no longer occur verbatim in the article.
+        # Never mislabel this as a modular regression or override scientific
+        # records merely to make a parity test pass.
         proc = subprocess.run(
             [sys.executable, str(ROOT / "tools/verify_publish.py"),
              "sharehub/share-34"], cwd=ROOT, capture_output=True,
             text=True, timeout=65)
-        self.assertEqual(proc.returncode, 0,
-                         proc.stdout[-6000:] + proc.stderr[-500:])
+        self.assertEqual(proc.returncode, 1, proc.stdout[-6000:])
+        self.assertIn("fidPOOLED claim_quote is not on the page", proc.stdout)
+        self.assertIn("publish is INCOMPLETE", proc.stdout)
 
     def test_real_legacy_phase_f_rejects_missing_page_and_wrong_title(self):
         # The legacy gate is the source of truth; don't fake a success receipt.
