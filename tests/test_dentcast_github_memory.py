@@ -35,6 +35,7 @@ class FakeGit:
                                         "parent": None, "files": {}}}
         self.pending_trees = {}
         self.inject_race = None
+        self.drop_ack_after_update = False
 
     def call(self, verb, endpoint, body=None):
         if verb == "GET" and endpoint.startswith("git/ref/heads/"):
@@ -88,6 +89,9 @@ class FakeGit:
             if candidate["parent"] != self.head_ref or body["force"] is not False:
                 raise m.Conflict("RACING_WRITER")
             self.head_ref = body["sha"]
+            if self.drop_ack_after_update:
+                self.drop_ack_after_update = False
+                raise ConnectionError("SIMULATED_LOST_COMMIT_ACK_AFTER_SUCCESS")
             return {"ref": endpoint, "object": {"sha": self.head_ref}}
         raise AssertionError((verb, endpoint, body))
 
@@ -206,8 +210,10 @@ class RemoteMemoryTests(unittest.TestCase):
                               "page:draft", gate="local_integrity_checked")
         with self.assertRaisesRegex(ValueError, "INVALID_RUN_ID"):
             self.store.begin("../../bad", REV, D, ACTORS["claude"])
-        with self.assertRaisesRegex(ValueError, "RUN_ALREADY_EXISTS"):
-            self.store.begin(run, REV, D, ACTORS["claude"])
+        retried = self.store.begin(run, REV, D, ACTORS["claude"])
+        self.assertTrue(retried["idempotent_replay"])
+        with self.assertRaisesRegex(ValueError, "RUN_ALREADY_EXISTS_WITH_DIFFERENT"):
+            self.store.begin(run, REV, "c" * 64, ACTORS["claude"])
 
     def test_atomic_artifact_receipt_replay_and_corruption(self):
         run = self.start()
@@ -247,6 +253,77 @@ class RemoteMemoryTests(unittest.TestCase):
             self.store.append(run, ACTORS["claude"], "step_completed",
                               "page:draft", input_digest=D, output_digest=D,
                               gate="engine_verified", receipt_digest=D)
+
+    def test_lost_ack_during_begin_does_not_duplicate_first_event(self):
+        self.api.drop_ack_after_update = True
+        with self.assertRaisesRegex(ConnectionError, "LOST_COMMIT_ACK"):
+            self.store.begin("acklost", REV, D, ACTORS["claude"])
+        retried = self.store.begin("acklost", REV, D, ACTORS["claude"])
+        self.assertTrue(retried["idempotent_replay"])
+        snap = self.store.snapshot("acklost")
+        self.assertEqual(snap["state"]["revision"], 1)
+        self.assertEqual(len(snap["events"]), 1)
+
+    def test_lost_ack_during_completed_step_replays_without_duplicate(self):
+        run = self.start()
+        self.api.drop_ack_after_update = True
+        with self.assertRaisesRegex(ConnectionError, "LOST_COMMIT_ACK"):
+            self.store.append(run, ACTORS["claude"], "step_completed",
+                              "intake:route", input_digest=D, output_digest=D,
+                              gate="local_integrity_checked", **RECEIPT_KW)
+        restarted = m.RemoteMemory(self.api)
+        seen = restarted.append(run, ACTORS["cursor"], "step_completed",
+                                "intake:route", input_digest=D, output_digest=D,
+                                gate="local_integrity_checked", **RECEIPT_KW)
+        self.assertTrue(seen["idempotent_replay"])
+        self.assertEqual(seen["state"]["revision"], 2)
+        snap = restarted.snapshot(run)
+        self.assertEqual(len(snap["events"]), 2)
+        self.assertEqual(snap["events"][-1]["actor"], ACTORS["claude"])
+        different_receipt = dict(RECEIPT, output_digest="c" * 64)
+        with self.assertRaisesRegex(m.Conflict, "DIFFERENT_OUTPUT"):
+            restarted.append(run, ACTORS["cursor"], "step_completed",
+                             "intake:route", input_digest=D,
+                             output_digest="c" * 64, gate="engine_verified",
+                             receipt_digest=m.digest(different_receipt),
+                             public_receipt=different_receipt)
+
+    def test_fidelity_checkpoint_duplicate_and_inconsistent_receipt_fail_closed(self):
+        run = self.start()
+        obj = {"schema": "dc-public-artifact-v1", "kind": "fidelity_checker",
+               "public_release_approval_digest": D, "payload": {"test": True}}
+        h = m.digest(obj)
+        first = self.store.append(run, ACTORS["claude"], "fidelity_checkpoint",
+                                  "evidence:src0:checker1", input_digest=D,
+                                  output_digest=D, gate="engine_verified",
+                                  artifact_digests=[h], public_artifacts=[obj],
+                                  **RECEIPT_KW)
+        replay = self.store.append(run, ACTORS["cursor"], "fidelity_checkpoint",
+                                   "evidence:src0:checker1", input_digest=D,
+                                   output_digest=D, gate="engine_verified",
+                                   artifact_digests=[h], **RECEIPT_KW)
+        self.assertTrue(replay["idempotent_replay"])
+        self.assertEqual(replay["state"]["revision"], 2)
+        with self.assertRaisesRegex(m.Conflict, "DIFFERENT_OUTPUT"):
+            self.store.append(run, ACTORS["cursor"], "fidelity_checkpoint",
+                              "evidence:src0:checker1", input_digest=D,
+                              output_digest="f" * 64, gate="engine_verified",
+                              artifact_digests=[h], **RECEIPT_KW)
+        with self.assertRaisesRegex(ValueError, "RECEIPT_NOT_BOUND_TO_EVENT"):
+            wrong = dict(RECEIPT, output_digest="f" * 64)
+            self.store.append(run, ACTORS["codex"], "step_completed",
+                              "page:draft", input_digest=D, output_digest=D,
+                              gate="engine_verified",
+                              receipt_digest=m.digest(wrong), public_receipt=wrong)
+
+    def test_pause_pending_step_tamper_blocks_replay(self):
+        run = self.start()
+        self.store.append(run, ACTORS["claude"], "step_paused", "page:draft")
+        files = self.api.commits[self.api.head_ref]["files"]
+        state = files[m.run_folder(run) + "/state.json"]
+        state["pending_step"] = "another:step"
+        with self.assertRaisesRegex(ValueError, "STATE_EVENT_REPLAY_DIVERGENCE"):
+            self.store.snapshot(run)
 
     def test_finished_is_staging_only(self):
         run = self.start()
