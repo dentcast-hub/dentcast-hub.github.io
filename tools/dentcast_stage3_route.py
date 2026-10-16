@@ -30,6 +30,7 @@ dependency_audit = _load("stage3_dependency_audit", "audit_dentcast_route_depend
 SOURCE_STEPS = {
     "intake:route": ("intake", "Phase 0, A and B", "02-routing-intake.md"),
     "page:draft": ("page", "C1-C2", "03-litecast-and-page.md"),
+    "page:litecast-register": ("page", "C0.1 LiteCast index append", "03-litecast-and-page.md"),
     "taxonomy:lock": ("taxonomy", "C2.4", "04-taxonomy-and-navigation.md"),
     "navigation:publish": ("navigation", "C2.5-C2.6, C4.5-C4.6", "04-taxonomy-and-navigation.md"),
     "semantic-links:specialist": ("semantic-links", "C4.7-C4.9", "05-semantic-linking.md"),
@@ -46,6 +47,7 @@ SOURCE_STEPS = {
     "notification:pulse": ("notification", "C6", "11-build-and-version.md"),
     "build:version": ("build", "C7", "11-build-and-version.md"),
     "build:rebuild": ("build", "C8", "11-build-and-version.md"),
+    "build:restamp-final": ("build", "C8 final stamp / D3 restamp", "12-english-notify-verify.md"),
     "build:version-final": ("build", "C8 final stamp; D restamp if applicable", "12-english-notify-verify.md"),
     "english:mirror": ("english", "D", "12-english-notify-verify.md"),
     "notification:push-marker": ("notification", "E", "12-english-notify-verify.md"),
@@ -55,6 +57,7 @@ SOURCE_STEPS = {
 GATES = {
     "intake:route": ["user-string-provenance", "unverifiable-metadata", "approved-opening-when-generated"],
     "page:draft": ["opening-paragraph-founder-approval-when-generated", "exact-title-caption"],
+    "page:litecast-register": ["same-type-litecast-entry-shape", "litecast-brain-isolation"],
     "taxonomy:lock": ["ambiguous-pillar", "new-subtopic"],
     "semantic-links:specialist": ["ambiguous-links"],
     "semantic-links:litecast": ["ambiguous-litecast-links"],
@@ -103,7 +106,7 @@ def compile_steps(request, contract=None):
         if not litecast:
             steps += ["taxonomy:lock", "navigation:publish", "semantic-links:specialist"]
         else:
-            steps += ["semantic-links:litecast"]
+            steps += ["semantic-links:litecast", "page:litecast-register"]
     if paper:
         steps += ["paper-cabinet:drive", "paper-cabinet:catalog"]
         if not paper_only:
@@ -125,6 +128,9 @@ def compile_steps(request, contract=None):
         steps += ["notification:pulse", "build:version", "build:rebuild"]
         if not litecast and not challenge:
             steps += ["english:mirror"]
+        # README C8: stamper must run LAST among all builders. README D3:
+        # after English/hreflang/sitemap rerun stamp-version.py LAST again.
+        steps += ["build:restamp-final"]
         if not litecast and category != "glossary":
             steps += ["notification:push-marker"]
         # Canonical C8 requires a LAST stamp after builders; English D can
