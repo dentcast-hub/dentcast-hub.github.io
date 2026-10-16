@@ -149,7 +149,7 @@ class LegacyToolSandboxTests(unittest.TestCase):
         shutil.copy2(ROOT / rel, target)
         before = target.read_bytes()
         data = json.loads(before)
-        old_entries = data["LightGlossary"]
+        old_entries = list(data["LightGlossary"])
         self.assertTrue(old_entries)
         synthetic = dict(old_entries[-1], id="litecast-999999",
                          title="صرفاً تست", page_url="litecast/lite-CAST999999.html")
