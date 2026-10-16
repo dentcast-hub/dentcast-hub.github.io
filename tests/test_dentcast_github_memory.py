@@ -288,6 +288,26 @@ class RemoteMemoryTests(unittest.TestCase):
                              receipt_digest=m.digest(different_receipt),
                              public_receipt=different_receipt)
 
+    def test_pause_and_recovery_lost_ack_retries_do_not_duplicate(self):
+        run = self.start()
+        self.api.drop_ack_after_update = True
+        with self.assertRaises(ConnectionError):
+            self.store.append(run, ACTORS["claude"], "step_paused",
+                              "page:draft", gate="blocked")
+        retry_pause = m.RemoteMemory(self.api).append(
+            run, ACTORS["cursor"], "step_paused", "page:draft", gate="blocked")
+        self.assertTrue(retry_pause["idempotent_replay"])
+        self.assertEqual(retry_pause["state"]["revision"], 2)
+        self.api.drop_ack_after_update = True
+        with self.assertRaises(ConnectionError):
+            self.store.append(run, ACTORS["cursor"], "step_recovered",
+                              "page:draft")
+        retry_recovery = m.RemoteMemory(self.api).append(
+            run, ACTORS["codex"], "step_recovered", "page:draft")
+        self.assertTrue(retry_recovery["idempotent_replay"])
+        self.assertEqual(retry_recovery["state"]["revision"], 3)
+        self.assertEqual(self.store.snapshot(run)["state"]["status"], "active")
+
     def test_fidelity_checkpoint_duplicate_and_inconsistent_receipt_fail_closed(self):
         run = self.start()
         obj = {"schema": "dc-public-artifact-v1", "kind": "fidelity_checker",
