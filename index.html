@@ -1610,10 +1610,18 @@ body.dc-desktop-ui.dc-search-mode .dc-global-filter-box{
 body.dc-desktop-ui.dc-search-mode #dcGlobalBox{
   height:100% !important; display:flex !important;
   flex-direction:column !important; overflow:hidden !important;
+  min-height:0 !important;
 }
+/* Results absorb leftover height and scroll; the Spot card above them must
+   keep its natural (image-driven) height — see .dc-spot--search { flex-shrink:0 }
+   in spot.js. flex:1 1 auto without min-height:0 let the card get squeezed. */
 body.dc-desktop-ui.dc-search-mode #dcResults{
-  display:block !important; flex:1 1 auto !important;
+  display:block !important; flex:1 1 0 !important;
   max-height:none !important; overflow:auto !important;
+  min-height:0 !important;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search{
+  flex-shrink:0 !important;
 }
 body.dc-desktop-ui{ height:100vh!important; overflow:hidden!important; }
 body.dc-desktop-ui #dc-desktop-root{
@@ -7055,7 +7063,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=b9413f6825',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=4781b3957b',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -7156,7 +7164,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=278" defer></script>
+<script src="/dc-nav.js?v=281" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -7426,7 +7434,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=b9413f6825';
+  const FEED_URL='/dentcast-brain.json?v=4781b3957b';
   /* Two hosts, one per homepage shell — the same SLOT_IDS split
      plus/js/home-upboard.js uses for the «بالاترین» arrangement of this same
      box. This script owns «تازه‌ترین» and is the ONLY renderer of it (the
@@ -7713,7 +7721,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=b9413f6825', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=4781b3957b', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });

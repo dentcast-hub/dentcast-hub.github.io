@@ -1,6 +1,6 @@
-import { el } from './util.js?v=186';
-import * as apiMod from './api.js?v=186';
-import { PRICING_URL, guestPremiumExtras } from './premium-cta.js?v=186';
+import { el } from './util.js?v=187';
+import * as apiMod from './api.js?v=187';
+import { PRICING_URL, guestPremiumExtras } from './premium-cta.js?v=187';
 
 /**
  * The bottom sheet — one implementation, for every surface that needs to ask
@@ -81,7 +81,7 @@ export function gateCard({ title, sub, cta, guest, from }) {
     const login = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
     login.addEventListener('click', () => {
       closeSheet();
-      import('./login-modal.js?v=186')
+      import('./login-modal.js?v=187')
         .then((m) => m.openLoginModal({ returnTo: location.pathname + location.search + location.hash }))
         .catch(() => {});
     });

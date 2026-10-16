@@ -69,7 +69,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=186';
+import { findProseRoot } from '/plus/js/config.js?v=187';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -163,7 +163,7 @@ function report(kind, slotName, creativeId) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ [key]: name, content_id: contentId }),
   });
-  import('/plus/js/api.js?v=186')
+  import('/plus/js/api.js?v=187')
     .then((m) => m.apiBase())
     .then((base) => {
       if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
@@ -182,7 +182,7 @@ function report(kind, slotName, creativeId) {
       // A network-level failure (not an HTTP error) may mean the cached base is
       // dead — self-heal so the NEXT event, and the next page's /me, re-probe
       // instead of retrying the same unreachable host all session.
-      import('/plus/js/api.js?v=186').then((m) => m.forgetBase()).catch(() => {});
+      import('/plus/js/api.js?v=187').then((m) => m.forgetBase()).catch(() => {});
     });
 }
 
@@ -477,8 +477,22 @@ a.dc-spot-link:active { transform: scale(0.99); }
 .dc-spot--article { margin: 1.5rem 0; }
 .dc-spot--article .dc-spot-text, .dc-spot--article .dc-spot-title { margin-top: 0.25rem; }
 .dc-spot--dashboard, .dc-spot--profile { margin: 1.125rem 0; }
-.dc-spot--search { margin: 0.75rem 0; }
+.dc-spot--search { margin: 0.75rem 0; flex-shrink: 0; }
+/* Search overlay (esp. desktop) is a flex column with overflow:hidden; without
+   flex-shrink:0 the card is squeezed and the artwork is cropped at the bottom.
+   Keep the image's own aspect ratio — width leads, height follows — same rule
+   as every other art slot. Opt out of the 560px cap so the banner matches the
+   search column the way dashboard/profile match theirs. */
+.dc-spot--search.dc-spot--art { max-width: none; }
+.dc-spot--search .dc-spot-art-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+}
 .dc-spot--search .dc-spot-link { padding: 0.75rem 1rem; }
+.dc-spot--search.dc-spot--art .dc-spot-link { padding: 0.5rem; }
 .dc-spot--archive { margin: 1.25rem 0 0.75rem; }
 /* The desktop sidebar is 220px wide and its rows are 203px: the card matches
    «خرید اشتراک پریمیوم» directly below it in width, radius and gutter, so the
@@ -1212,7 +1226,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=186')
+  return import('/plus/js/api.js?v=187')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
