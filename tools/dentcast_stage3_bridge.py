@@ -38,7 +38,7 @@ ARTIFACT_REQUIRED = {
     "paper-cabinet:credit", "learning-assets:flashcards",
     "learning-assets:quiz", "challenge:public", "brain:append",
     "pathways:place", "notification:pulse", "build:version",
-    "build:rebuild", "build:restamp-final", "english:mirror", "notification:push-marker",
+    "build:rebuild", "build:version-final", "english:mirror", "notification:push-marker",
     "verify:phase-f", "verify:paper-only",
 }
 
