@@ -1,6 +1,6 @@
 # DentCast Agent-Parity Contract
 
-**STAGING_ONLY_NO_LIVE_PUBLISH** — the full original shared behavior contract remains byte-identical at `.dentcast/workflows/agent-parity.legacy.md`. This *feature branch only* routes new publishing requests through `.dentcast/workflows/README.md` and the 12 verbatim source slices. The 2,598-line complete original `.dentcast/workflows/README.legacy.md` still has ultimate authority for approvals, exceptions, DES/Fidelity and semantic completeness. On this branch, NEVER perform real publishing, main merge, sensitive Git storage, deploy, external Drive/Admin/notification side effects, or infer founder consent from a hash. Agent global rules are preserved at `CLAUDE.legacy.md`, `AGENTS.legacy.md` §§6–8 and `.dentcast/workflows/legacy/cursor/`. **All rules below still apply.**
+**LIVE_MODULAR_PUBLISHING_ENABLED** — new real publishing follows `.dentcast/workflows/README.md` and its applicable full source slices. The original full `README.legacy.md`, `agent-parity.legacy.md`, and archived global client rules remain binding. Original founder approvals, scientific DES/Fidelity calls, builder ordering and Phase F remain mandatory; staging mock receipts do not authorize any real decision. **All rules below still apply.**
 
 **هدف:** خروجیِ انتشار در این ریپو باید **مستقل از اینکه کدام ایجنت آن را اجرا
 می‌کند** یکسان باشد — Claude Code، Cursor، Codex/GPT، یا هر ایجنت دیگری. این
