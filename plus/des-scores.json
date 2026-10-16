@@ -38234,48 +38234,21 @@
         },
         {
           "id": "u26",
-          "claim_quote": "من برای این بررسی سراغ فول‌تکست مقالات نرفتم و به مطالعهٔ ابسترکت‌ها اکتفا کردم.",
+          "claim_quote": "هدفم از این بررسی، سنجیدن درستی پاسخ خودم بود؛ برای همین به خواندن ابسترکت‌ها اکتفا کردم و سراغ فول‌تکست نرفتم.",
           "verdict": "AUTHOR_VIEW",
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "F1.2(a): first-person description of the author’s reading, من ... نرفتم and اکتفا کردم."
+          "note": "F1.2(a) AUTHOR_VIEW: the author's first-person purpose (هدفم، پاسخ خودم) and own reading scope (ابسترکت‌ها only; no full text) are stated together in the page's current u26; this combines former u26 and u28, with no new scientific evidence claim."
         },
         {
           "id": "u27",
-          "claim_quote": "دلیلش هم ساده است: این موضوع در حال حاضر مسئله‌ای نیست که در کار روزمرهٔ من کاربرد مستقیمی داشته باشد یا بخواهم بر اساس آن پروتکل درمانی‌ام را تغییر بدهم.",
+          "claim_quote": "اگر بحث فقط گیر فایبرپست در کانال باشد، جواب اولیهٔ من غلط بود؛ اما بررسی مشکلات احتمالی دیگر این روش از حوصلهٔ این بحث خارج است و این نتیجه به معنای توصیهٔ کلینیکی استفاده از گلاس‌آینومر برای سمان کردن فایبرپست نیست.",
           "verdict": "AUTHOR_VIEW",
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "F1.2(a): personal relevance and intended protocol choices, کار روزمرهٔ من and پروتکل درمانی‌ام."
-        },
-        {
-          "id": "u28",
-          "claim_quote": "هدفم بیشتر این بود که درستی پاسخ خودم را بررسی کنم.",
-          "verdict": "AUTHOR_VIEW",
-          "change_kind": null,
-          "source_quote": "",
-          "source_ref": null,
-          "note": "F1.2(a): the author’s own purpose, هدفم and پاسخ خودم."
-        },
-        {
-          "id": "u29",
-          "claim_quote": "در نهایت، همچنان برای سمان کردن فایبرپست از سیستم رزین سمان مناسب استفاده می‌کنم؛ اما حالا می‌دانم که نمی‌توانم صرفاً بر اساس تصور قبلی‌ام، استفاده از گلاس‌آینومر معمولی را روشی فاقد گیر قابل‌قبول بدانم.",
-          "verdict": "AUTHOR_VIEW",
-          "change_kind": null,
-          "source_quote": "",
-          "source_ref": null,
-          "note": "F1.2(a): first-person present account of the author’s own treatment choice and changed judgment, من ... استفاده می‌کنم and می‌دانم. It gives no imperative, باید, لازم است, or نباید instruction to the reader."
-        },
-        {
-          "id": "u30",
-          "claim_quote": "گاهی ارزش بررسی یک سؤال در این نیست که روش درمانمان را تغییر بدهیم؛ در این است که بفهمیم یکی از قضاوت‌های قبلی‌مان به آن اندازه که فکر می‌کردیم پشتوانه نداشته است.",
-          "verdict": "AUTHOR_VIEW",
-          "change_kind": null,
-          "source_quote": "",
-          "source_ref": null,
-          "note": "F1.2(a): first-person plural reflection, درمانمان, بفهمیم, and قضاوت‌های قبلی‌مان; the author’s assessment of the value of reconsidering a judgment."
+          "note": "F1.2(a) AUTHOR_VIEW: the first-person marker جواب اولیهٔ من makes the whole fixed page unit the author's reassessment; the joined caution explicitly limits the statement to fiber-post retention in the canal, leaves other possible problems unreviewed, and disclaims a clinical recommendation. It is not a claim of clinical superiority or long-term success. This replaces old u27 and is not a paraphrase of deleted old u29."
         }
       ],
       "counts": {
@@ -38284,7 +38257,7 @@
         "reversed": 0,
         "not_in_source": 0,
         "not_assessable": 5,
-        "author_view": 13,
+        "author_view": 10,
         "not_a_claim": 9
       },
       "assessable": 3,
