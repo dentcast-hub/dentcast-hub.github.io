@@ -1,0 +1,2597 @@
+# DentCast Publishing Router
+
+## Hard rules
+
+1. **Brain is the source of truth.** Every content type's structure, required fields, schema, directory, URL pattern, image/audio/video requirements — all of it is inferable from `dentcast-brain.json`. Read it first.
+2. **Categories are isolated.** Never use one category's entry as a template for another. Never borrow another type's schema shape.
+3. **New entries go to the absolute END of the flat `dentcast-brain.json` array.** The latest-content widget reads the last 30 entries across all types, so physical tail position is what matters. The brain is a single flat array (no per-type sections) — the new entry becomes the last element of the whole file, regardless of type.
+4. **Auto-discover first, ask second.** Only ask the user for things you cannot infer.
+5. **Don't invent fields.** A new brain entry must have the same keys as previous same-category entries — no more, no less.
+6. **Pillar & subtopic are determined semantically, confirmed by the user, then never silently re-decided.** Both are decided **once, up front** in the semantic determination step (**step 2.4**), *before* any step consumes them — the «کاوش بیشتر»/«محتوای مرتبط» pillar capsule (step 2.5) and the brain write (step 5). `pillar.primary` is chosen by a genuinely **semantic** match between the new content and the **live pillar set** (the pillars listed on `/pillar/` = `list(PILLARS.keys())`); when that pillar is **structured**, `pillar.subtopic` is chosen by a semantic match against that pillar's **own** subtopics. Matching is conceptual — **never** keyword/string matching. Each pick is decided in step 2.4 per **Hard Rule 14**: a clear, unambiguous best match is stated and applied directly, while a genuinely ambiguous case is proposed to the user as named options and only written after their pick (the user may always override or choose none, either way). Once decided and written, the brain write (step 5) and the verify step (step 5.5) **record and verify** the decision — they do NOT re-classify, re-guess, or overwrite it under any circumstance.
+7. **Structured-pillar list is live, never hardcoded.** Only some pillars are *structured* — meaning `tools/build_pillar.py` generates a topical-index page for them. A structured pillar builds **two** artifacts: `/pillar/<slug>/index.html`, the flat date-ordered list everyone sees, and `/pillar/<slug>/structure.json`, the subtopic foldering that `/pillar/premium-index.js` layers onto that same URL for premium subscribers. So a **subtopic is a premium-side arrangement, not a page section** — it still has to be right (the میز کار tree and the premium view both read it), but it is no longer what decides whether a reader can find the article, because the flat list carries every item regardless. The structured set grows over time and MUST be read live from `PILLARS` in `tools/build_pillar.py` on every run. Subtopics are meaningful only for structured pillars; non-structured pillars get no subtopic. Do NOT bake pillar slugs, subtopic slugs, or Persian titles into this workflow. A new subtopic is created only on explicit user confirmation; a new pillar is never created in the determination step (step 2.4).
+8. **`main` is authoritative for taxonomy and builders.** The authoritative source for pillars/subtopics — and for the build scripts in general — is always the `main` branch. Before reading `PILLARS` or running any builder, ensure the working state reflects `main` (run from `main`, or merge `main` into the working branch first). Never trust a feature branch's `tools/build_pillar.py` as the taxonomy source of truth.
+9. **Hard cap of 5 links per "کاوش بیشتر" section.** Any single "کاوش بیشتر" section may contain **at most 5 links total** — an absolute ceiling counting *every* link of *every* kind in that section together: the nav capsules (دانشنامه + فهرست موضوعی — the دانشنامه capsule is sitewide `/glossary/`, the فهرست موضوعی capsule now points to the entry's **own** pillar `/pillar/<pillar.primary>/`), glossary back-links, semantic brain-entry links — all share **one budget of 5**. There are **no** separate per-type quotas. Before any step adds a link, it must **count the links already present**; if the section already has 5 or more, that step adds nothing and skips; if fewer, it may add only up to `(5 − current count)`, choosing its highest-priority candidates first. Insertion order across steps matters because of the shared budget: the nav capsules (step 2.5) are placed first and consume their slots, and later steps (step 4.7 on glossary pages, step 4.9 on the new page) fill only whatever remains. **Only add within the remaining budget — never remove, reorder, or restyle existing links to make room.** If there's no room, skip. Every step that touches a "کاوش بیشتر" section (2.5, 4.7, 4.9) defers to this single rule.
+10. **LiteCast is an isolated track.** LiteCast is non-specialist (general-audience) content governed by its **own** source of truth (`litecast/lite-glossary.json`, not `dentcast-brain.json`) and its **own** internal link structure. It is deliberately kept **separate** from the *specialist* ecosystem and must **not** be cross-linked with it in either direction — but it **does** link **among its own items**: a LiteCast page's **«کاوش بیشتر»** section is populated **only** with links to other LiteCast entries (never the site-wide دانشنامه / فهرست موضوعی capsules, never glossary terms, never brain entries). When the locked category is LiteCast, the Phase C **step 0 branch** overrides the corresponding general steps (it skips the site-wide *specialist* capsules and all specialist cross-linking, fills «کاوش بیشتر» with LiteCast-internal links per **step 0.6**, and writes the entry to `litecast/lite-glossary.json` only). See Phase C step 0. **LiteCast also has its own single-domain identity:** every LiteCast page lives on `https://dentcast.ir` — full `.ir` profile (canonical, `og:url`, JSON-LD `/litecast/` values), with **NO hreflang** and **root-relative** internal links — whereas every other category stays on `https://dentcast.org`. New pages inherit this by cloning the previous LiteCast page (domain kept, path swapped — see Phase C step 2's identity invariant), and `.github/scripts/inject_hreflang.py` enforces the hreflang-absence by skipping `.ir`-canonical pages.
+
+11. **Enrichment steps (4.7, 4.8, 4.9) are MANDATORY and template-independent — they run on every publish, for every type, and "skip" is not a default.** These three semantic-linking steps are *not* optional, *not* conditional on the template, and *not* satisfied by the clone. Specifically:
+    - **They run on EVERY publish, for EVERY type — core episodes included.** A publish is **incomplete** until each of 4.7, 4.8, and 4.9 has been **explicitly resolved** and reported. "I didn't get to it" is a protocol violation.
+    - **The step-2 clone and any "same-category precedent" govern STRUCTURE ONLY — never enrichment.** What the previous same-category page (or a sibling in the same series) happened to contain has **zero** bearing on whether 4.7/4.8/4.9 run. *"The previous/cloned page had no inline links / only the pillar capsule, so I'll match it"* is an **explicitly forbidden** justification. If earlier pages lack these links, that is a **gap to fix on this publish**, never a pattern to copy forward. Any inline or related link that merely survived the clone does **not** count as having executed 4.8/4.9 — those steps require a fresh semantic analysis on this content.
+    - **"Auto-apply or ask" ≠ "skip".** 4.8, 4.9, and 4.7 always require you to *run the semantic analysis*. Per **Hard Rule 14**, a high-confidence candidate (the matched concept is unmistakably the one being discussed) gets inserted directly and reported; a borderline or ambiguous candidate gets surfaced to the user as an explicit link/skip option. Either way, doing nothing without having run the analysis, or discarding a genuine candidate without reporting it, is never allowed.
+    - **The only valid no-op is a documented empty result.** A step may add nothing **only** when you actually performed the analysis and there were **zero genuinely-qualifying candidates** (or the section is at the 5-link cap). You must then **say so explicitly** in the report ("4.8: analyzed body, 0 qualifying glossary/episode candidates" / "4.9: section at cap, skipped"). Silence is not an allowed state.
+    - **Type mapping for core episodes (no on-disk `dc-related-section`).** Episodes use the **«محتوای مرتبط»** block (`ep-related-link`), not a `dc-related-section` «کاوش بیشتر». For episodes, **step 4.9 targets the «محتوای مرتبط» block** (fill its free slots, under the Hard-Rule-9 cap, with semantically related brain entries — e.g. sibling parts of a multi-part series first), and **step 4.8 targets the «درباره این اپیزود» caption body**. The naming difference is **not** an excuse to skip; the «محتوای مرتبط» block IS the episode's related-links section for 4.9 purposes.
+
+12. **Every published page ships bilingual: the English mirror + fa↔en toggle is MANDATORY (Phase D), never an afterthought.** A `.org` publish is **incomplete** until the new page has a real English counterpart at `/{type}/en/{same-filename}.html` and a working **per-document fa↔en language toggle on both sides**. The toggle button (`.lang-btn`) is **never** added alone: a toggle whose English target does not exist on disk is a forbidden phantom pair, so the en page MUST be created in the same publish. The en mirror ships **noindexed** (`noindex, follow`, no hreflang, out of the sitemap — it is an unreviewed AI translation and a reader feature, not a search surface; see Phase D). This is produced by running the **English-version workflow** (`.dentcast/workflows/en-version.md`) on the just-published page as the final phase — see **Phase D**. "The cloned template had no toggle, so I matched it" is an **explicitly forbidden** justification (same spirit as Hard Rule 11): if earlier same-type pages lack the toggle/en mirror, that is a gap, never a pattern to copy forward, EXCEPT for the two documented exceptions below — do not let that sentence talk you into building a toggle for either of them. **Two exceptions, and no others.** LiteCast is `.ir`-only, carries **no** hreflang, and gets **no** en mirror or toggle (Hard Rule 10). A **چالش** (`.dentcast/challenge-handoff.md` RULE 16, decided 2026-08-28) gets none either, for a mechanical reason: its en mirror would be a *different* `content_id` with no row in the `challenges` table, so the toggle would lead to a page missing the only thing on it. For either, Phase D is a documented skip.
+
+13. **Never guess — this generalizes every scattered "ask, don't guess" note elsewhere in this document into one binding rule that applies to the whole workflow, not just the paper branch.** If a fact is not (a) directly stated by the user, (b) verifiable by reading a file already in the repo, (c) verifiable by reading the live taxonomy at runtime, or (d) successfully fetched/probed from a real source (the audio file itself, a DOI lookup, a Drive listing) — **you do not know it, and you may not estimate, infer, round, or fabricate a stand-in value for it.** Stop and ask the user instead. Zero exceptions:
+    - **Numeric/factual metadata — duration, file size, dates, counts, IDs — is never estimated.** If the audio host is unreachable (network policy block, missing tool, timeout, anything else) and the duration can't be probed, **ask the user for the exact duration.** Do not write a "reasonable-sounding" placeholder into the brain, `dentcast.json`, the page's visible time, or its JSON-LD `duration` — not even temporarily, not even flagged as an estimate in a later report. A wrong number silently shipped to a live page is exactly the failure this rule exists to prevent.
+    - **Titles, hashtags, keywords, and short labels the user did not explicitly supply are proposals, not facts.** Present them and get confirmation before writing them anywhere (brain entry, page `<h1>`, meta tags, en-mirror title). Composing a title from a caption, or reusing another page's title/terminology as a stand-in, is a draft to show the user — not a decision to ship silently.
+    - **Schema-shape choices that affect site behavior must be asked about, not resolved by picking whichever precedent seems closer.** When more than one precedent could plausibly govern a new entry's field set (e.g. an older sub-episode's shape vs. the parent series' current shape), ask which one applies — a wrong pick here can silently break downstream automation that keys off specific fields (e.g. the homepage hero/latest-content script keys off `type` and `audio_url`; an entry missing them never surfaces there, with no error raised anywhere).
+    - **Steps 4.7/4.8/4.9 still MUST run their semantic analysis every time** — a standing instruction to proceed autonomously never authorizes skipping the analysis itself or fabricating a match. What changed under Hard Rule 14 is only whether a *high-confidence result* of that analysis needs a stop-and-ask round-trip before being applied — see Hard Rule 14 for exactly when that round-trip is required vs. waived.
+    - **Disclosing an assumption after the fact, in a final report, is not a substitute for asking first.** By the time a report discloses a guess, the page is already live with unconfirmed data. Ask **before** writing, not after. (This is about genuinely unknown/unknowable facts — Hard Rule 14 governs the separate case of a confident judgment call, which is reported, not asked.)
+
+14. **Confidence-gated confirmation — auto-apply what you're genuinely sure of; ask with concrete options for what you're not.** This rule narrows *when* a proposal needs a stop-and-ask round-trip; it never narrows Hard Rule 13's ban on fabricating unknowable facts. Two different situations recur throughout this workflow, and they are handled differently:
+    - **Unknowable/unverifiable facts stay under Hard Rule 13, always ask, no exceptions.** Durations, file sizes, dates, counts, IDs, DOIs, first authors, and any title/hashtag/keyword/label the user did not explicitly supply are never auto-applied regardless of how "obvious" they seem — confidence is not the test there, derivability is. Nothing in this rule changes that.
+    - **Judgment calls get auto-applied when confidence is genuinely high.** This covers: the auto-discovered next sequence number when there is no gap in the series; the pillar/subtopic pick when exactly one pillar/subtopic is a clear conceptual fit and no other pillar is plausibly competitive; a Pulse sentence that follows the same-type precedent's established phrasing pattern; a glossary-term or brain-entry link where the matched word/phrase unmistakably refers to that exact concept in context; and the writing-style pass finding no genuine AI-tell. In each of these, proceed directly — do not stop for a rubber-stamp — and state the decision plainly in the running commentary and the final summary so the user can see and override it after the fact if they disagree.
+    - **Genuine uncertainty still stops and asks — but as a short menu, not an open question.** Multiple plausible pillars/subtopics, a borderline or tangential enrichment candidate, a gap or irregularity in the number sequence, two precedents that could each govern a schema shape, or any other spot where a wrong pick would need to be walked back — stop and ask. Phrase it as a small set of concrete, named options (the candidate pillars, "link it / skip it", the competing precedents) rather than a free-form question, so confirming is a single pick. Fall back to open-ended phrasing only when the options genuinely can't be enumerated (e.g. "what should the Pulse sentence say" when no usable convention exists yet).
+    - **Reporting is not optional either way.** Whether a call was auto-applied or asked-and-confirmed, the final summary must say which happened and why, exactly as today — auto-applied items are not silent just because they skipped the question.
+
+15. **Hashtags are a standardized vocabulary, not free text — `dentcast-hashtag-reference.json` is their single source of truth.** Every `#hashtag` written to a brain entry (and shown as a page chip) MUST be a **canonical concept** in the reference library — the same library the AI case-assistant search reads (mirrored into `plus/content-index.json` by `tools/build_plus_index.mjs`). Before writing any hashtag: **(a) resolve first** — check each proposed concept against the library with `python3 tools/hashtag_ref.py --simulate "<phrase>"`, which tokenizes through the alias layer, so a concept already present under **any** spelling (Persian/English/variant) is found; **(b) reuse if it exists** — use that concept's **canonical `#tag`** verbatim; **(c) mint only if genuinely absent** — add a new canonical concept to the library (with `definition`, `use_when`, and the alternative spellings a dentist would type as `aliases`) via a `.dentcast/hashtag-batches/*.json` batch + `hashtag_ref.py --apply`, then use it. Four invariants, non-negotiable: **an alias is never used as a tag** (the canonical form always wins); **a canonical `#tag` is never filed as another concept's alias** (only non-canonical spellings go in `aliases`); **no duplicate concept when one already covers it** (reuse, don't re-mint); **every brain tag has a library entry** — `--apply` enforces this and `--check` must stay green. This does **not** override Hard Rule 13: the hashtags are still proposals shown to the user for confirmation — this rule governs *how a confirmed concept becomes a canonical tag*, and forbids inventing a fresh spelling when the vocabulary already has one. Operationalized in **Phase C step 5.0**; the campaign that seeded the library is `.dentcast/hashtag-campaign-handoff.md`.
+
+16. **A string the user supplied is COPIED, never re-typed — codepoint for codepoint.** When the user hands you a title, a caption, a Pulse sentence, a term, or any other literal text, that exact sequence of characters is what ships. You may propose a *different* string and get it confirmed (Hard Rule 13), but you may never silently produce a *near*-copy of the one they gave you. The failures this prevents are invisible on screen and therefore never caught by eye:
+    - **Persian typography.** A ZWNJ (`U+200C`, نیم‌فاصله) is not a space and a space is not a ZWNJ. «اندو‌شده» ≠ «اندو شده». The same applies to NBSP vs space, Arabic ی/ک (`U+064A`/`U+0643`) vs Persian ی/ک (`U+06CC`/`U+06A9`), and any bidi mark.
+    - **"Helpful" widening or tightening.** Adding a clause the user did not write («… از اورهنگ **و روکشِ مجاور** بیاید»), dropping one, or swapping a synonym is a rewrite, not a copy — even when it is more accurate. If you believe the text should change, say so and let the user decide; do not improve it in passing.
+    - **Round-tripping through your own summary.** Never reconstruct the string from your understanding of it. Copy it from the user's message.
+    - **Mechanically enforced.** Paste the user's own strings into the final gate and let the tool do the comparison — it names the exact index and spells out invisible characters by name:
+      ```bash
+      python3 tools/verify_publish.py <content_id> \
+        --expect-title "<the title exactly as the user wrote it>" \
+        --expect-caption "<the caption exactly as the user wrote it>"
+      ```
+      This is not optional whenever the user supplied a title or caption in their own words: a mismatch here means the site is publishing something the author did not write.
+
+17. **A text correction is a SWEEP, never a targeted edit — one string lives on many surfaces.** The moment a title, caption, or description changes after the first write (the user corrects it, or you catch an error), every surface carrying that string changes **in the same commit**. Editing "the places I remember" is the failure mode: it leaves the site self-contradictory, with a corrected `<h1>` above a description still arguing the old framing, and nothing anywhere reports an error.
+    - **A title lives in at least eight places:** the brain entry, the page `<title>`, `<h1>`, `og:title`, `twitter:title`, the JSON-LD `headline`, the JSON-LD `BreadcrumbList` item `name`, the type's landing-page `<li>` label, and the homepage rail card. The last two are regenerated by builders — **rerun them, don't hand-edit**.
+    - **A caption lives in at least four:** the brain `caption`, the page `<meta name="description">`, and (in their own wording) `og:description` + `twitter:description` on **both** the fa page **and** its en mirror. A social description left describing the *previous* title is the exact residue this rule exists to catch.
+    - **Never trust recall for the list.** After any such correction, re-run the full builder chain and then **Phase F** — the gate re-derives every surface from the brain and fails on the ones you missed. A correction is not finished when the string looks right in the file you opened; it is finished when Phase F is green.
+
+## Phase 0 — Routing: is there an attached paper file? is there text to publish?
+
+Before anything else, classify what the user handed you along two independent axes:
+
+- **Is there text/content to publish?** (a متن for a page)
+- **Is there an attached research paper/article file?** (a PDF or similar)
+
+The **attached-paper actions are triggered by the paper file itself — independent
+of content type.** They are **not** tied to DentAI; whenever a paper file is
+present, the paper branch (**Phase C step 4.10**) fires, whatever the locked
+category is (or even when there is no category at all). Route as follows:
+
+| Text to publish? | Paper file attached? | What runs |
+|---|---|---|
+| **Yes** | **No** | Normal publish only (Phases A–D). No paper branch. |
+| **Yes** | **Yes** | Normal publish for that type (any type — **not just DentAI**) **plus** step 4.10's **all three parts** (Drive filing + catalog enrichment + first-author→DOI credit on the published page). |
+| **No** | **Yes** | **Paper-only fast path** — do **NOT** run the publishing phases (no page clone, no brain entry, no pillar, no Pulse, no en mirror, no rebuild). Run **only step 4.10 Part 1 (Drive) and Part 2 (catalog)**. **Skip Part 3** — there is no published page to put a credit under. Then commit. |
+| **No** | **No** | Nothing to do — ask the user what they want. |
+
+**Paper-only fast path (text-less) detail.** When the user gives you just a paper
+file with no متن: jump straight to **step 4.10**, run **Parts 1 & 2 only**, and
+stop. The cabinet catalog (`dentcast_cabinet_full_catalog.json`) is read
+client-side by `dentcast_cabinet_search.html` via `fetch`, and it is **not** part
+of the site version hash (step 7), so a paper-only addition needs **no** builder
+run and **no** version bump — Drive upload + catalog edit + commit is the whole job.
+
+The catalog is also deliberately **kept out of search**: `robots.txt` disallows
+both `dentcast_cabinet_full_catalog.json` and its `.enriched.json` sibling,
+`_headers` carries `X-Robots-Tag: noindex` for the catalog, and
+`dentcast_cabinet_search.html` carries its own `<meta robots noindex>`. Adding a
+paper therefore **never** touches `robots.txt` and **never** puts anything in a
+sitemap — leave both alone, and never "fix" the disallow.
+
+When there **is** text, proceed through Phases A–D as usual; the paper branch (if a
+file is attached) runs as step 4.10 inside Phase C.
+
+## Phase A — Discover
+
+Before asking the user anything other than "what type is this":
+
+1. Read `dentcast-brain.json` end-to-end.
+2. Identify every distinct content category present (top-level arrays/sections, or a `type`/`category` field on entries — whatever the actual schema is). Build a list of categories.
+3. For each category, find the most recent entry. That entry defines:
+   - The directory + URL pattern for that type.
+   - The schema shape (which fields exist, what they mean).
+   - Which media fields the type uses: text body, image, audio, video link, external link, transcript, etc.
+   - Whether previous entries link to a page file on disk (e.g., `/notecast/episode-33.html`) — if yes, that page is the structural HTML template.
+4. For NoteCast type specifically, the workflow must also touch the matching parent episode page in `/episodes/` to add a related-content link back to the new NoteCast.
+5. Read the **live structured-pillar set** at runtime — never from memory and never from a list written into this workflow. Authoritative source: the `PILLARS` dict in `tools/build_pillar.py`. Its keys are the slugs of the pillars that get a built topical-index page, and `PILLARS[slug]['subtopics']` is the live subtopic list for each. Re-derive on every run so newly structured pillars are picked up automatically. A practical one-liner: `python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"`. The entry's pillar (`pillar.primary`) and — when that pillar is structured — its `subtopic` are decided up front in the semantic determination step (**step 2.4**), *before* the page capsules (step 2.5) and the brain write (step 5) consume them.
+
+## Phase B — Intake
+
+### Question 1 — Type
+
+Ask:
+
+> این مطلب کدوم نوعه؟ (لیست نوع‌هایی که از brain پیدا کردی رو نشون بده)
+
+**Two types the brain still carries are CLOSED and are never offered (founder,
+1405/07/15): `dentai` and `photocast`.** Their 35 + 3 pages stay exactly where
+they are, but no new entry is ever appended to either. A single- or multi-paper
+reading is **`sharehub`**. If the user names one of the closed types, say so and
+ask which living section it goes to (`sharehub` for a reading) — never create
+`dentai-36` or `photocast/episode-4` (CLAUDE.md → Repo conventions).
+
+Wait. Lock the chosen category for the rest of the run.
+
+### Question 2 — Number / identifier
+
+Try to determine the next number automatically (max existing number in this category + 1). Per **Hard Rule 14**: if the series has no gaps and the next number is unambiguous, state it directly (e.g. «شماره‌اش meta-16 است») and move on — no need to wait for a yes. Only ask when the numbering is irregular or ambiguous (a gap in the sequence, a sub-numbered entry, two plausible next values), and phrase it as the specific candidates to pick from:
+
+> شماره‌اش [N] درسته یا [alternative]؟
+
+If user disagrees, accept their number.
+
+### Question 3 — Text
+
+Ask:
+
+> متن کامل رو بفرست.
+
+Wait for it.
+
+### Question 3.5 — Writing-style check (de-AI pass)
+
+**Runs for EVERY type, on EVERY publish, on whatever متن was just received in Question 3 — before any other step.** This gate happens before Phase C (and before Question 4 onward) consumes the text, because if changes are approved, the **edited** text — not the raw submission — is what every downstream step (page build, glossary linking, Pulse, etc.) works from.
+
+**Goal:** read the submitted متن the way an editor would, and flag the spots that read as AI-generated rather than human-written — phrasing/rhythm/word-choice only, **never** facts, claims, numbers, or meaning.
+
+#### Step 1 — Scan for AI tells
+
+Look for patterns like (non-exhaustive — judge by ear, not by a checklist):
+- **Formulaic throat-clearing openers/closers** — generic preambles or wrap-up sentences that restate what was just said («در نتیجه می‌توان گفت که...», «به طور کلی...»).
+- **Overused AI clichés** — stock phrases such as «بدون شک», «نکته قابل توجه این است که», «در دنیای امروز», «نقش بسزایی دارد», «از اهمیت ویژه‌ای برخوردار است».
+- **False-balance hedge stacking** — reflexive «نه‌تنها... بلکه...», «از یک سو... از سوی دیگر...» used as filler rather than because a real contrast exists.
+- **Mechanical parallelism / listy prose** — three-item lists or rule-of-three constructions inserted by reflex, or prose chopped into bullet-like sentence fragments where a human would just write a sentence.
+- **Uniform sentence rhythm** — every sentence near-identical in length/structure, lacking the natural variation a human writer has.
+- **Generic filler with no concrete content** — sentences that sound authoritative but say nothing specific to this topic.
+- **Over-punctuated emphasis** — excessive em-dashes, bolding, or exclamation used as a substitute for a real point.
+
+#### Step 2 — Identify and announce, don't edit yet
+
+For each genuine instance found, prepare: the exact original phrase/sentence, a proposed rewrite that keeps the **same meaning, facts, and register** but reads naturally, and a one-line reason it tripped the check. Present the full list to the user as a numbered review **before touching the text** — this is a proposal, not an edit.
+
+If the متن has **no** genuine AI tells, say so explicitly («متن طبیعی به نظر می‌رسه، تغییری لازم نیست») and proceed straight to Question 4 with the text unchanged.
+
+#### Step 3 — Confirm, then branch
+
+Ask the user to confirm. The user may approve all, a subset, or none.
+
+- **Approved (all or a subset):** apply only the approved rewrites to the متن. The resulting edited text becomes the text of record for the rest of this publish (Phase C step 2 and everything downstream uses it).
+- **Not approved / rejected:** make no changes — continue with the original متن exactly as submitted. Proceed to Question 4.
+
+#### Constraints
+
+- **Style and phrasing only.** Never alter clinical claims, data, numbers, names, citations, or meaning. If a flagged sentence can't be rewritten without touching its substance, drop it from the list rather than risk changing meaning.
+- **No new content.** Rewrites tighten or naturalize existing sentences — they don't add claims, examples, or sections that weren't in the original.
+- **One pass.** This runs once, here, on the as-submitted متن — it is not repeated later in the same publish.
+
+### Question 4 — Required media (dynamic, based on category)
+
+Look at the latest entry in the locked category and identify which media fields are populated. For each one, ask the user — but phrase the question based on what's actually needed:
+
+- If previous entries have an **image field** populated → ask: «عکس داره؟ اگه آره فایل یا اسمش رو بده.»
+- If previous entries have an **audio field** populated:
+  - For types where audio lives in a sibling directory (e.g., NoteCast pulls audio from `/episodes/episode-XX`): **don't ask**. Try to fetch automatically from the matching sibling path. If sibling path can't be resolved or has no audio, then ask the user.
+  - Otherwise ask the user directly.
+- If previous entries have a **video / external link field** populated → ask: «لینک ویدیو/منبع چیه؟»
+- If previous entries have a **transcript or attachment field** populated → ask for it.
+- For any other populated field that the user clearly needs to supply (not derivable from text), ask.
+- For fields that are derivable (slug, date, schema URL, etc.) — don't ask, generate them.
+
+If a field exists in previous entries but you genuinely don't know whether the user wants it this time, ask: «این بار [field] داری یا نه؟»
+
+### Question 4.7 — Any type: is there an accompanying article (paper) file?
+
+**Runs for EVERY type, not just DentAI** (Phase 0 routing). The attached-paper
+actions key off the **paper file**, not the content category — so check this on
+every publish regardless of the locked category.
+
+When the user supplies the content **together with a research paper/article file**
+(a PDF or similar attachment), the publish gains **three extra, additive actions**
+beyond the normal flow — Drive filing, cabinet-catalog enrichment, and a
+first-author→DOI credit on the published page. These are specified in **Phase C
+step 4.10**.
+
+- If the user attached a paper file → set the **attached-paper branch (step 4.10)
+  ACTIVE** and keep the file (and its real filename) for that step.
+- If no paper file accompanies this publish → the branch is a documented **skip**;
+  the page publishes normally with no Drive/catalog/DOI actions.
+- If you're unsure whether a file was provided, **ask** — don't assume either way.
+
+This branch is **additive**: it never replaces or overrides any general step. The
+normal publish for the locked type (clone, pillar, brain entry, enrichment, Pulse,
+en mirror) runs in full; step 4.10 only adds the three paper-specific actions.
+(For a paper file with **no** متن at all, see the **paper-only fast path** in
+Phase 0 — Parts 1 & 2 only, no publish.)
+
+### Question 4.8 — DES evidence basis (what text will the score be computed from?)
+
+**Runs for EVERY type, on EVERY publish that produces a page.** This arms the **DES
+scoring step (Phase C step 4.13)**. The question is *not* "how good is this
+content" — it is the purely factual one of **what text the scoring model will be
+given**, because that model never fetches anything (DES spec Core Rule 4: "You score
+ONLY what is inside `source_text` … A DOI is an identifier, never a source of
+content").
+
+Classify the publish into exactly one of three baskets. Per **Hard Rule 14**,
+baskets 1 and 2 are normally unambiguous — state the classification plainly and move
+on. Basket 3 always stops and asks.
+
+**1. COMMENTARY — DentCast's own authored piece.** The متن is the founder's (or a
+guest specialist's) own clinical reasoning, case narration, or reflection, and the
+page names **no retrievable paper**. No DOI is needed and none is asked for: the
+**content's own text is the `source_text`**, and step 4.13 runs the COMMENTARY
+track on it.
+
+**The CONTENT TYPE never decides the basket — what the page CITES does.** Until
+2026-08-15 this step said Chairside, MetaNote and ShareHub were COMMENTARY *by
+definition*, and ShareHub is the section that proves that wrong. Its fifteen pages
+are three different things: eight short practical notes with no citation at all
+(`share-1…7`, `share-15`, 1.2–3.2k chars), two carrying audio, and five that are
+literature reviews standing on real DOIs — `share-11` on **eleven**, `share-14` on
+**twelve**. Calling those five COMMENTARY scores the founder's transparency on a
+page whose actual basis is a dozen published studies, and hides all twelve from
+the reader. The same trap is waiting in every other section, which is why the rule
+is now about the page rather than the folder.
+
+**The test is mechanical, and it is the one `episodes/episode-161` already
+passed:** does the page carry a **retrievable identifier** — a DOI, a `doi.org`
+link, a PubMed id, or a «منابع» block listing them? If yes it is basket 2, whatever
+type the page is. If no, and the متن is the author's own reasoning, it is basket 1.
+Naming a study in prose without an identifier is **not** basket 2 and does not
+trigger basket 3 either: `metanotes/meta-14` quotes one figure from «مطالعه
+Morimoto» and then argues from it under its own heading «تحلیل و تفکر خارج از
+چارچوب» — the page is a write-up of the author's analysis, not of the review, and
+it scores COMMENTARY. Basket 3 is only for a page that plainly IS a write-up of a
+study while naming no way to retrieve it.
+
+**2. RESEARCH with a determinate source.** The publish writes up one or more
+identifiable studies, **and** each is pinned down well enough to retrieve its
+abstract. It qualifies when any of these holds:
+- a **paper file was attached** (Question 4.7 → step 4.10 already resolves its DOI);
+- the **متن or the page names the paper and carries its DOI** (the DentAI
+  citation-card precedent, e.g. `dentai/dentai-21.html`);
+- the page carries a **references list with DOIs** (the episode precedent, e.g.
+  `episodes/episode-161.html`'s «منابع» — three DOIs, therefore three separately
+  scored sources).
+
+A reference in that block with **no** DOI — a textbook, a glossary, a standard — is a
+source too (step 4.13 records it `NOT_APPRAISABLE`), and from spec v3.1 it gets a
+FIDELITY call whenever its text is in hand: the score and the fidelity are two
+questions, and the gate is the text, never the score.
+
+Record the DOI(s) and carry them to step 4.13, which resolves each into its own
+`source_text` and scores each one separately — **one DES record per cited source,
+never one blended score for the page.**
+
+**Follow the chain one level when the cited source is a SECONDARY REPORT.** A
+consensus statement, a clinical guideline or a conference synthesis is not the
+study it reports: its methods live in the papers it summarises, which it cites by
+DOI in its own reference list. Scoring the wrapper asks AMSTAR-2 whether *it*
+searched databases and appraised studies, when the answer is five pages away in a
+different document — so when a cited source names its primary studies with
+retrievable identifiers, **score those instead of the wrapper**, one record each.
+The wrapper then gets no record of its own; it is the page's citation, not the
+page's evidence.
+
+Recognise the case mechanically: the source is labelled a consensus statement,
+guideline, position paper or conference report, **and** its own text names the
+studies behind it with a DOI/PubMed id. If it names them, follow. If it does not
+— an expert-panel consensus that rests on nothing retrievable — score the wrapper
+itself with `text_basis: SECONDARY_REPORT` (spec v2.2), which rates its silences
+as `NR` rather than as absent safeguards.
+
+This was found on `dentai/dentai-29` (2026-08-16). The SSRD/SEPES/PROSEC
+consensus statement was scored as though it were the review, earning `high` on
+search strategy, risk-of-bias appraisal and excluded studies — three claims that
+are false: the two systematic reviews it summarises searched three and five
+databases and both appraised their studies independently. The tell was that the
+same class of document scored 55/C from its abstract alone and 30/D once the full
+text was read, i.e. **reading more of it made it worse**, which never happens when
+the tool fits the document.
+
+**3. INDETERMINATE — research-shaped content with no identified paper. ASK.**
+The content plainly rests on the literature but no specific study is pinned down:
+an episode with only a caption and audio and no «منابع» block, a NoteCast
+summarizing "the studies" without naming one, a متن that reports findings with no
+DOI anywhere. **This case never resolves itself and never gets a guessed answer**
+(Hard Rule 13 — a DOI you did not receive or verify is not a fact you have). Stop
+and ask, as a two-option menu:
+
+> این مطلب به مقالهٔ مشخصی وصل نیست. یکی از این دو رو انتخاب کن:
+> ۱) DOI مقاله (یا مقاله‌ها) رو می‌دم تا امتیاز DES حساب بشه.
+> ۲) این مطلب بدون DES منتشر بشه.
+
+- **User supplies DOI(s)** → the publish becomes basket 2; carry them to step 4.13.
+- **User picks «بدون DES»** → the publish carries **no DES record at all**, and step
+  4.13 is a documented skip ("4.13: skipped — کاربر انتخاب کرد بدون DES منتشر شود").
+  It does **not** quietly fall back to the COMMENTARY track: scoring a
+  research-derived piece as though it were the author's own opinion is a false
+  statement about what the page is, and a band E on a paper summary is worse than no
+  band at all.
+- **There is no third option.** Do not go hunting for "probably this paper", do not
+  score the caption as commentary just to have *something*, and do not defer the
+  question to the final report.
+
+### Question 4.9 — چالش؟
+
+**Skip when the user already said so at Question 1.** Otherwise, on every publish,
+ask: «این پست آزمون است یا مطلب معمولی؟» A چالش is a **post whose body is a
+question** — published through this same router, into an existing folder, taking
+that folder's next number and its ordinary brain shape (never a new `type`, never a
+new folder — see step 4.14/RULE 15 in `.dentcast/challenge-handoff.md`).
+
+When it **is** a چالش, collect four things from the founder: the **question**, the
+**image**, the **answer**, and **3–5 نکات کلیدی**. Propose the key points yourself
+from the answer and have the user confirm or rewrite them — they are the grading
+rubric a model will compare a reader's answer against, so getting them right here is
+what makes the whole feature work. Hard Rule 16 applies to every string the user
+supplies: copied, never re-typed.
+
+**Question 3.5's de-AI pass runs on the question and the answer as usual.** The key
+points are not prose a reader ever sees and are exempt.
+
+When the answer is «مطلب معمولی» (the ordinary case), proceed exactly as before —
+this question changes nothing about the rest of the publish.
+
+### Question 5 — Pulse sentence
+
+**No spoilers — the Pulse line names the piece, it never narrates it.** A Pulse line announces that something new was published; it is not a summary and must never reveal the content's decision, mechanism, finding, or conclusion. Reference the **title only** (verbatim or near-verbatim as the link text, optionally inside a short announcement frame like «یک اینسایت بالینی با عنوانِ «…» منتشر شد») — never a clause describing *what the piece is about* beyond its own title («درباره‌ی تصمیمِ …», «راهکاری برای …» that paraphrases the finding, etc.). If the title itself is the natural link text, that is sufficient and preferred. This applies to every category and every future publish — it is not a one-off preference.
+
+Per **Hard Rule 14**: if this category has an established Pulse phrasing convention (previous entries of this type follow a consistent pattern), draft the sentence yourself in that pattern — including which word gets hyperlinked — and state it directly rather than asking an open question; the hyperlink target is the new content's page URL in its own category's directory. Report the drafted line plainly so the user can correct it if they want something different. **Older Pulse lines that describe content beyond the title are a backlog, not a pattern to copy forward (Hard Rule 11's spirit)** — always draft the new line to the no-spoiler standard above, even where precedent doesn't.
+
+Only ask when there is genuine ambiguity — no established convention to follow, or the category's Pulse phrasing varies enough that a pick isn't obvious:
+
+> جمله‌ی پالس چی باشه و کدوم کلمه‌ش لینک بشه؟
+
+If for some category Pulse announcements aren't customary (you can tell by checking if previous Pulse entries reference that category), draft a line anyway but flag it: «این نوع معمولاً تو پالس اعلان نمی‌شه — همین‌طوری درج کنم یا رد شم؟» (a yes/no option, not an open question).
+
+## Phase C — Execute
+
+Run, in order:
+
+### 0. LiteCast branch — isolated track (overrides the general steps)
+
+**Check the locked category first (from Phase B Question 1).** If it is **LiteCast**, this branch's rules **override** the corresponding general steps below. LiteCast is **non-specialist (general-audience)** content, deliberately kept **separate** from the rest of the site's specialist ecosystem: it has its own source of truth, its own internal link structure, and must **not** be cross-linked with specialist content. If the locked category is anything other than LiteCast, ignore this section and proceed normally from step 1.
+
+**0.1 — Source of truth is `litecast/lite-glossary.json`, not `dentcast-brain.json`.**
+- The file is a JSON **object** whose entries live under the top-level **`LightGlossary`** key — an array of LiteCast entries (despite the filename, this is LiteCast *content*, not a glossary of terms). The current entry shape is `type` (`"litecast"`), `id` (`litecast-N`), `title`, `caption`, `hashtags`, `keywords`, `page_url` (a path like `litecast/lite-CAST-N.html`). There is **no** `pillar` field — confirm the live shape from the file rather than trusting this list.
+- Infer **all** LiteCast structure from `litecast/lite-glossary.json`: required fields, schema shape, directory/URL pattern, and media requirements. Read it the way Phase A reads the brain — find the **most recent** entry in `LightGlossary` and use it as both the **schema** and **structural** template.
+- The new LiteCast entry is **appended to the `LightGlossary` array** in `litecast/lite-glossary.json`, matching its format **exactly** (identical keys/nesting/ordering to the previous entry — no extra fields, no missing fields).
+- Do **NOT** add a LiteCast entry to `dentcast-brain.json`. This replaces the normal step 5 brain-entry write (and the step 2.4 pillar/subtopic determination — see 0.4).
+
+**0.2 — Isolation: no cross-linking with specialist content.** This is the core of LiteCast's separateness. For a LiteCast publish, **skip these steps entirely**:
+- **Step 2.5** (site-wide capsule block) — do **NOT** inject the دانشنامه / فهرست موضوعی capsules on LiteCast pages; those point into the specialist ecosystem. LiteCast is a **SKIP** case for the *specialist* capsules in the step 2.5 conditional. **The «کاوش بیشتر» section itself is NOT skipped or left empty, though** — it is filled with **LiteCast-internal** capsule links instead, per **step 0.6**.
+- **Step 4.7** (glossary back-link to the new content) — do **NOT** add LiteCast links into any glossary "کاوش بیشتر" section.
+- **Step 4.8** (in-body links from the article to glossary terms / episodes) — LiteCast bodies do **NOT** get inline links to specialist content. (The LiteCast-internal in-body equivalent — inline links to *other LiteCast* items only — is **step 0.5** below.)
+- **Step 4.9** (semantic "کاوش بیشتر" links from the new page to brain entries) — do **NOT** link a LiteCast page out to specialist brain entries.
+
+The rule is symmetric: the rest of the site must not link **to** LiteCast, and LiteCast must not link **out** to specialist content.
+
+**0.3 — LiteCast's own internal structure.** LiteCast items link **only among themselves**. When building the new page, **clone the previous LiteCast page's structure exactly**, including whatever internal LiteCast-to-LiteCast linking it already uses, and swap values. Do **NOT** invent a new internal-linking scheme — derive it from how existing LiteCast pages already link to each other. If existing LiteCast pages have **no** internal-link mechanism, do not fabricate one; leave it as the template has it and note that to the user.
+
+**0.4 — What still runs (keyed to `litecast/lite-glossary.json` and the LiteCast directory, not the brain).** Everything that is **not** cross-linking still applies in LiteCast-appropriate form:
+- **Step 1 & Step 4** (template lock + integrity hash) — against the previous LiteCast page.
+- **Step 2** (build the new page) — clone the previous LiteCast page; per 0.3.
+- **Step 3** (date / meta audit) — runs normally.
+- **Step 2.4 (determination) and Step 5 / 5.5** — replaced by 0.1: the entry goes to `litecast/lite-glossary.json` only, and step 2.4 is **skipped**. LiteCast lives **outside** the specialist pillar taxonomy, so do **not** assign a specialist pillar/subtopic and do **not** pull from the `PILLARS` taxonomy; fill a pillar-like field only if `litecast/lite-glossary.json`'s own schema has one, per its own convention.
+- **Step 6** (Pulse) — follow the existing Pulse convention for this type (including the «این نوع معمولاً تو پالس اعلان نمی‌شه — مطمئنی می‌خوای؟» check from Phase B Question 5 if LiteCast isn't customarily announced).
+- **Step 0.6** (LiteCast «کاوش بیشتر» internal links) — the LiteCast counterpart of step 4.9: populate the new page's «کاوش بیشتر» section with capsule links to other LiteCast items only. Replaces the skipped step 2.5 specialist capsules.
+- **Step 7** (cache-bust) and **Step 8** (rebuild) — run, keyed to LiteCast's own files.
+
+Rule of thumb: **anything about LiteCast's own files runs (including LiteCast-to-LiteCast linking); anything that bridges LiteCast to the specialist ecosystem is skipped.**
+
+**0.5 — In-body semantic linking within LiteCast (LiteCast-only; the LiteCast counterpart of step 4.8).** This is the *only* in-body linking LiteCast gets: inline links from the new item's body text out to **other LiteCast** items, drawn **exclusively** from `litecast/lite-glossary.json`. It is exclusive to LiteCast — it runs only when the locked category is LiteCast, never applies to any other type, and no other type's linking steps (4.7/4.8/4.9) apply to LiteCast. Run it after the new LiteCast page is built (0.3) and before the rebuild (step 8).
+
+#### Step 1 — Semantic analysis of the new body against existing LiteCast entries
+
+Read `litecast/lite-glossary.json` end-to-end. Perform a genuinely **semantic** analysis of the new LiteCast item's body text against the **existing LiteCast entries** — **not** keyword/string matching. For each existing entry the question is conceptual: where the new body text discusses something an existing LiteCast entry is about, that spot is a linking candidate.
+
+**Hard rules for matching:**
+- **Real conceptual relevance only** — link only where the word/phrase in context actually refers to the existing entry's concept.
+- **No junk/generic words** — never link common filler words that merely coincide with a term.
+- **When in doubt, DON'T propose it.**
+- **Candidates come ONLY from `litecast/lite-glossary.json`** — never a specialist glossary term or episode.
+- **Never link the item to itself.**
+- **First occurrence only** — link only the **first** place each matched concept appears in the body; never link the same target twice.
+
+#### Step 2 — Auto-apply high-confidence matches; ask only for the rest
+
+Per **Hard Rule 14**: for a match where the word/phrase unmistakably refers to the existing entry's concept, proceed to Step 3 directly — state it plainly (matched phrase + context, target, one-line reason) rather than waiting for a yes. For a real-but-borderline match, present it in a numbered list — matched word/phrase with context, target LiteCast entry, its URL, one-line reason — and ask for confirmation before inserting. The user may approve all, a subset, or none of the presented ones.
+
+#### Step 3 — Insert links
+
+Insert the auto-applied matches and any user-approved matches into the new item's body, each on the **first occurrence** of its matched phrase, using the **same inline link markup/classes the LiteCast body already uses** (derive the style from how existing LiteCast bodies link — do not introduce a new link style).
+
+#### Step 4 — Hash & verify
+
+**Hash the new LiteCast page before and after this step.** The only allowed diff is the approved inline link insertions. Report before/after hashes. Do not break HTML structure (no link inside an existing link or heading).
+
+**0.6 — LiteCast «کاوش بیشتر» internal links (LiteCast-only; the LiteCast counterpart of step 4.9).** This is the LiteCast equivalent of step 4.9. Where the general step 4.9 fills the new page's «کاوش بیشتر» section with links to semantically related **brain** entries, this step fills the **LiteCast** page's «کاوش بیشتر» section with links to semantically related **other LiteCast** items only — drawn **exclusively** from `litecast/lite-glossary.json`. It runs only when the locked category is LiteCast. **No specialist capsules (دانشنامه / فهرست موضوعی), no glossary terms, and no brain entries ever appear in a LiteCast «کاوش بیشتر» section** — it is LiteCast-to-LiteCast only. Run it after the new page is built (0.3) and the in-body pass (0.5), and before the rebuild (step 8).
+
+#### Step 1 — Semantic comparison against other LiteCast items
+
+Read `litecast/lite-glossary.json` end-to-end. Perform a genuinely **semantic** comparison of the new LiteCast item against **every other LiteCast entry** — **not** keyword/string matching. Rank candidates by strength of semantic relationship; strongest first. **Never link the item to itself.** **When in doubt, DON'T propose it** — a few strong links beat a pile of weak ones.
+
+#### Step 2 — Cap
+
+The «کاوش بیشتر» section holds **at most 5** links total (consistent with Hard Rule 9's ceiling). Because LiteCast carries **no** specialist capsules, all slots are available for LiteCast-internal links — but keep the set tight (typically 2–4 strong matches); do not pad with weak ones.
+
+#### Step 3 — Markup
+
+Use the **same** `dc-related-section` / `dc-related-capsules` / `dc-related-capsule` markup the LiteCast template already uses for «کاوش بیشتر»; only the `href` (the target LiteCast page URL) and the capsule label (a short Persian title of the target LiteCast item) differ. **Replace** the cloned template's specialist capsules (دانشنامه / فهرست موضوعی) with these LiteCast-internal capsules — the section ends up containing LiteCast links only.
+
+#### Step 4 — Auto-apply high-confidence matches; ask only for the rest
+
+Per **Hard Rule 14**: strong, unmistakable relatedness gets inserted directly (state it plainly — target, URL, label, one-line reason). Real-but-borderline candidates get presented as a numbered list — target LiteCast item, its URL, proposed short label, one-line reason — with the user asked to confirm before inserting. The user may approve all, a subset, or none of the presented ones.
+
+#### Step 5 — Hash & verify
+
+**Hash the new LiteCast page before and after this step.** The only allowed diff is the «کاوش بیشتر» capsule swap (specialist capsules removed, LiteCast capsules added). Report before/after hashes. Verify the section contains **only** LiteCast links — no دانشنامه / فهرست موضوعی / glossary / brain links remain.
+
+### 1. Template lock & hash
+
+Identify the previous same-category page on disk (if the type has on-disk pages). Compute SHA-256, store it. This is the structural template and must remain untouched at the end.
+
+### 2. Build the new page
+
+Clone the previous same-category page exactly — identical HTML tree, CSS classes, component order, schema scaffolding. Replace only:
+- Body text → new text from intake.
+- Meta tags (`<title>`, description, OG, Twitter, canonical) → adapted to new content.
+- JSON-LD field VALUES → adapted; schema shape stays identical.
+- Media sources (image, audio, video, etc.) → from intake.
+- All URLs/slugs → new identifier.
+
+**Identity invariant (domain follows the clone).** The page's identity **is** the cloned predecessor's domain: the clone swaps the **PATH only** and **keeps the domain** — never domain-swap during a clone. For the **LiteCast** category that domain is `https://dentcast.ir` — the full `.ir` profile (`<link rel="canonical">`, `og:url`, and every JSON-LD `/litecast/` value on `.ir`), with **NO hreflang** tags and **root-relative** internal links (`/litecast/…`). **Every other category stays on `https://dentcast.org`.** Because you clone the previous same-category page, this propagates automatically — just verify the cloned domain survived and was not rewritten. (LiteCast's hreflang-absence is additionally enforced by `.github/scripts/inject_hreflang.py`, which skips any page whose canonical is on `dentcast.ir`.)
+
+If the category has no on-disk page (data-only), skip this and go to step 4.
+
+**Scope of the clone (Hard Rule 11):** this clone fidelity governs **structure only**. It does **not** satisfy, replace, or pre-empt the semantic-enrichment steps (4.7, 4.8, 4.9). Whatever inline or related links the previous page did or didn't have is irrelevant to those steps — they run independently and mandatorily later. Do **not** treat "matched the cloned page" as having done 4.8/4.9.
+
+**Google Analytics tag (every page).** The deferred GA4 snippet (measurement ID `G-GMM0WC8X3M`) must be present in the new page's `<head>`. Because you cloned the previous same-category page — which already carries it — it should come across automatically; **verify it survived the clone and appears exactly once**. If it's missing (e.g. an older template), run `python3 .github/scripts/inject_ga.py` to backfill it (idempotent — it skips pages that already have it). It is the lazy-loaded pattern (loads `gtag.js` only on the `load` event) — never swap in Google's default async snippet. The `.org`/`.ir` mirrors share this tag; no per-domain logic. If you ever introduce a Content-Security-Policy, it must allow `script-src https://www.googletagmanager.com` and `connect-src https://*.google-analytics.com https://*.analytics.google.com`.
+
+**API preconnect (every page).** The new page's `<head>` must open with the two
+preconnect links — `<link rel="preconnect" href="https://api.dentcast.ir" crossorigin>`
+and the same for `https://api.dentcast.org` — at the very top, before anything
+else. Like GA4 this rides in on the clone, so **verify it survived and appears
+exactly once per host**; if it's missing (older template), backfill with
+`python3 .github/scripts/inject_preconnect.py` (idempotent; `--check` fails on
+any page missing it). Three things that are not optional and are easy to
+"clean up" by mistake: **`crossorigin` is required** — the API is called with
+credentials and a connection opened anonymously is not reused for a
+credentialed CORS request, so dropping the attribute silently undoes the whole
+thing; **both hosts are listed on every page on purpose** (the `.org`/`.ir`
+codebases are mirrors and per-domain logic is forbidden — the unused socket is
+idle and the browser drops it); and this is a **paid-sponsor correctness**
+matter, not a micro-optimisation — the Spot card cannot render until `/me`
+answers, so without preconnect the cold DNS+TLS handshake sits directly in
+front of the sponsor's impression (measured 2.7–3.0s to first card vs.
+70–170ms warm).
+
+**E-NAMAD seal — never clone it onto a content page.** The trust seal
+(نماد اعتماد الکترونیکی) lives on exactly three surfaces (`index.html`'s footer,
+`index.html`'s col-A sidebar row, `about.html`'s contact box) and is **not** a
+per-page element. If a template or an edit ever drags `.dc-trustseal` markup
+onto a content page, remove it — every copy is a request to enamad's server for
+zero trust value on an article page. It is also **the one deliberate exception
+to "no per-domain logic"** (the seal is issued for `dentcast.ir` and renders as
+*invalid* off the `.org` mirror, which is why the `dc-no-seal` guard and the
+`dc-nav.js` removal block exist): never "fix" that guard, and never rewrite the
+`referrerpolicy`/`id`/`Code`/`code` attributes enamad verifies. Details in
+`AGENTS.md` §۸.
+
+**Opening paragraph before any list (body-structure requirement).** The body must
+open with at least one real `<p>` of prose **before** the first `<ul>`/`<ol>`. This is
+not a style preference — it is load-bearing for ad placement. The in-article Spot card
+is positioned by counting **body blocks** (`p, ul, ol, blockquote, figure, table, pre`
+— headings are labels and never count, `.dc-disclaimer` never counts; see
+`spot/README.md`). A body that is a single `<ul>` has **one** block and therefore **no
+interior boundary**, so the engine has nowhere to put the card and drops it to the end
+of the text — the position least likely to ever be seen. Two blocks (an opening
+paragraph + the list) are enough: the card lands between them, in the upper half.
+
+This bites the **Insight** template hardest — its house style is `h3` label + `h3`
+thesis + one `<ul>` of sections — but the requirement is type-agnostic and applies to
+any page whose body would otherwise be list-only. NoteCast and DentAI pages have
+drifted into the same shape and are equally affected.
+
+Write a genuine 2–4 sentence lead that **adds** something — the clinical situation, the
+decision at stake, what the reader will get — never a restatement of the `h3` thesis
+directly above it. Then mirror the same paragraph into the en version in Phase D (the
+en page is placed by the identical rule and has the identical problem).
+
+**This lead paragraph is authored text, not derived from the user's own words —
+it MUST be shown to the user for approval before it's written to the page,
+every time, no exceptions.** Draft it, present it plainly (fa, and the en
+mirror once translated), and wait for a yes/edit before proceeding to write
+the file. Do not fold this into a larger batched confirmation and do not
+skip it because the rest of the publish was auto-applied per Hard Rule 14 —
+unlike a title/hashtag proposal (which draws its words from the user's own
+text), this paragraph is fully self-composed prose sitting under the user's
+byline, so it gets its own explicit sign-off. Match the register of the
+user's own writing (their vocabulary for the procedure — e.g. «سمان کردن»
+for cementing a crown — not a generic paraphrase), and keep it tight; when in
+doubt, shorter is safer than padded.
+
+To check a page you just built:
+`node -e` against `spot/spot.js`'s `bodyBlocks()`, or simply confirm by eye that a
+paragraph precedes the first list. Pages already published that fail this are a known
+backlog, not a pattern to copy forward (**Hard Rule 11**).
+
+### 2.4. Semantic pillar & subtopic determination (propose + confirm)
+
+Decide the entry's `pillar.primary` and — when that pillar is structured — its `pillar.subtopic` **here, once**, before any step consumes them (the pillar capsule in step 2.5, and the brain write in step 5). Per **Hard Rule 6**, this is the **only** place the decision is made; later steps (5, 5.5) record and verify it but never re-decide it. Matching is genuinely **semantic** (conceptual relevance of the new content), **never** keyword/string matching.
+
+**LiteCast exception:** LiteCast lives outside the specialist pillar taxonomy — **skip this step entirely** for LiteCast (see Phase C step 0). It assigns no specialist pillar/subtopic.
+
+#### Step 1 — Read the live taxonomy (from a state that reflects `main`)
+
+Per **Hard Rules 7 & 8**, read the live structured-pillar set at runtime from `tools/build_pillar.py`'s `PILLARS` dict (never a baked copy), from a working state that reflects `main`. The pillar slugs shown on the `/pillar/` page are exactly `list(PILLARS.keys())`, each with its Persian title (`PILLARS[slug]['title_fa']`) and its live subtopic list (`PILLARS[slug]['subtopics']`, each `{"slug": ..., "title_fa": ..., ...}`). One-liner:
+
+```bash
+python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"
+```
+
+#### Step 2 — Semantically pick the pillar (auto-apply if clear, else propose options)
+
+Compare the **conceptual subject** of the new content against each pillar in the live set. Per **Hard Rule 14**:
+
+- **One pillar is clearly, unambiguously the best conceptual fit and no other pillar is plausibly competitive** → set `pillar.primary` to that slug directly and state the decision plainly (e.g. «با توجه به محتوا، پیلار: «[title_fa]» (`[slug]`)»). No need to wait for a yes — just report it.
+- **Genuinely ambiguous** (two or more pillars are each a real plausible fit, or the content doesn't clearly belong to any one pillar) → stop and ask, presenting the competing candidates plus the option of none:
+  > با توجه به محتوا، این پیلارها هر دو محتمل به نظر می‌رسن: «[A]» یا «[B]». پیلارهای موجود: [title_fa فهرست همه‌ی پیلارها]. کدوم درسته؟ (یا «هیچ‌کدوم»)
+
+- **User confirms / picks another (when asked)** → use that slug **exactly** as it appears in `PILLARS` (same spelling/format, no normalization).
+- **No pillar applies** (auto-detected or user says none) → `pillar.primary` stays `null`; **skip Step 3** (no subtopic). The فهرست موضوعی capsule in step 2.5 then falls back to the sitewide `/pillar/`.
+
+Either way, report the pillar decision in the running commentary before it's written to the brain (step 5) — auto-applied is not silent.
+
+#### Step 3 — Semantically pick the subtopic (structured pillars only; auto-apply if clear, else propose options)
+
+- **Confirmed pillar is NOT structured** (`pillar.primary not in PILLARS`) → there is no subtopic. `pillar.subtopic` stays `null` (the key is still present). State it:
+  > پیلار «[X]» فعلاً جزو پیلارهای ساختاریافته نیست — ساب‌تاپیک خالی می‌مونه، بعداً دستی اضافه‌ش کن.
+- **Confirmed pillar IS structured** → semantically compare the content against `PILLARS[primary]['subtopics']`. Per **Hard Rule 14**:
+  - **One subtopic is clearly the best fit** → set it directly and state the decision plainly (e.g. «ساب‌تاپیک: «[best['title_fa']]»»).
+  - **Two or more subtopics are each plausible, or none of the existing ones fit well** → stop and ask, listing the live options plus a "propose new" option:
+    > پیلار: «[PILLARS[primary]['title_fa']]». چند ساب‌تاپیک این پیلار به این محتوا نزدیکن؛ کدوم درسته؟
+    > 1. [subtopics[0]['title_fa']]
+    > 2. [subtopics[1]['title_fa']]
+    > … N. پیشنهاد یه ساب‌تاپیک جدید
+  - **User picks an existing subtopic (when asked)** → use its slug **exactly** as stored in `PILLARS[primary]['subtopics'][i]['slug']` (no re-casing, no normalization).
+  - **A genuinely new subtopic is needed** (no existing one fits, even at high confidence) → this always goes through the ask-with-options path, never auto-applied — propose slug + `title_fa` in the same style as that pillar's existing subtopics (kebab-case English slug, short Persian noun phrase — match the siblings), flag it **NEW**, and get explicit confirmation before adding it to `PILLARS[primary]['subtopics']` in `tools/build_pillar.py` (copying the exact shape of an existing sibling subtopic). **A new pillar is never created here.**
+
+#### Step 4 — Hold the confirmed values
+
+Hold the confirmed `pillar.primary` and `pillar.subtopic` for the rest of the run. Step 2.5 uses `pillar.primary` for the capsule `href`; step 5 writes both into the brain entry; step 5.5 only verifies them. Do not re-decide them anywhere downstream.
+
+### 2.5. Inject the "کاوش بیشتر" capsule section (site-wide nav)
+
+After the new page is cloned and field values are swapped (step 2), add the "کاوش بیشتر" / pillar-link block on the **new** page, using the pillar confirmed in step 2.4. This is separate from step 4.5, which mutates a different page (the parent episode). For typed-brain and glossary pages this step uses the site-wide `dc-related-*` capsule classes defined in `dc-theme.css`; for the **Episode branch** it instead uses the page's existing `ep-related-link` markup inside «محتوای مرتبط» (see the Episode branch below).
+
+**Conditional — based on the locked category from Phase B Question 1:**
+
+| Locked category source | What goes in the section |
+|---|---|
+| Typed brain entry (any entry in `dentcast-brain.json` with a `type` field — NoteCast, Insight, Clinical, Chairside, DentAI, MetaNote, PhotoCast, ShareHub, DentCast+, DentCast, …) | **Both** capsules: دانشنامه + فهرست موضوعی (the فهرست موضوعی capsule points to the entry's own pillar — see below) |
+| Glossary term page (sourced from `glossary/glossary.json`, not from the brain) | **Only** the فهرست موضوعی capsule (pointing to the term's own pillar) |
+| Core podcast episode (no `type` field — `/episodes/episode-XX.html`) | **No `dc-related-section`.** Instead add the pillar link into the episode's existing «محتوای مرتبط» (`ep-section`) block using `ep-related-link` — see the **Episode branch** below. |
+| **LiteCast** (isolated track — see Phase C step 0) | **Skip the specialist capsules** (دانشنامه / فهرست موضوعی point into the specialist ecosystem; LiteCast must not link into it). The «کاوش بیشتر» section itself is **kept** and filled with **LiteCast-internal** capsule links instead — see step 0.6. |
+
+The conditional is decided by where the locked category came from. **Capsule link targets:** the دانشنامه capsule is **fixed sitewide** (`/glossary/`). The فهرست موضوعی capsule, by contrast, points to the entry's **own** pillar — `href="/pillar/<pillar.primary>/"` — using the **canonical pillar-page format**: lowercase slug, **trailing slash, no `index.html`**, matching that pillar page's own `<link rel="canonical">` (e.g. `https://dentcast.org/pillar/fixed-pros/` → internal link `/pillar/fixed-pros/`). `pillar.primary` is the value **confirmed in step 2.4**. The link targets the pillar **root**, not a subtopic anchor. **Fallback:** if `pillar.primary` is `null` (no pillar confirmed) or not a real pillar slug, the فهرست موضوعی capsule falls back to the sitewide `/pillar/` landing page. (This per-pillar target is the established site convention.)
+
+**Markup to inject** (use the global classes — NOT `ep-*`, which are inlined per-episode and not styled on other page types):
+
+```html
+<div class="dc-related-section">
+  <h2 class="dc-related-label">کاوش بیشتر</h2>
+  <div class="dc-related-capsules">
+    <a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+    <a href="/pillar/<pillar.primary>/" class="dc-related-capsule">فهرست موضوعی</a>
+  </div>
+</div>
+```
+
+For glossary term pages, omit the first `<a>` (the دانشنامه capsule) — they ARE the glossary. The فهرست موضوعی capsule still points to the term's own pillar (`/pillar/<pillar.primary>/`), same canonical format and fallback as above.
+
+**Episode branch (core podcast episodes — the «محتوای مرتبط» case).** Core episodes do **not** get a `dc-related-section`. Instead, add the pillar link into the episode page's existing **«محتوای مرتبط»** block — the `ep-section` whose label is `<h2 class="ep-section-label">محتوای مرتبط</h2>`. Use the **same `ep-related-link` markup/classes already used in that block** (the same style as the NoteCast link, e.g. `<a href="…" class="ep-related-link">…</a>`) — **not** `dc-related-capsule` — so it stays visually consistent with the rest of that section. Only the `href` and label differ:
+
+- `href="/pillar/<pillar.primary>/"` — same canonical pillar-page format (trailing slash, no `index.html`) and same `null`/unknown fallback rule as above; here, if `pillar.primary` is `null`, **skip** the episode pillar link entirely (there is no specific pillar to point to).
+- Label: a short pillar label in the register of the sibling links, e.g. «فهرست موضوعی: [PILLARS[primary]['title_fa']]».
+
+Add it **once**; if the «محتوای مرتبط» block already links to that pillar, leave it and just confirm. If the episode has no «محتوای مرتبط» block at all, follow the same fallback the NoteCast flow uses (clone the block from the previous episode — see step 4.5) before adding the pillar link. Hash the episode page before/after; the only diff is the added pillar link.
+
+**Placement on the new page:** at the bottom of the main content area — after the body content and before any next/prev navigation or footer. If the cloned template already has a "کاوش بیشتر" section (rare for non-episode types — most don't), insert the capsules **into that existing section** alongside whatever's already there, rather than creating a duplicate. Never remove anything pre-existing in that section.
+
+**Why this is step 2.5 and not later:** the capsule injection mutates the new page itself, so it belongs adjacent to step 2 (the clone-and-swap) and before step 3 (the date audit then sees the final page state including the section).
+
+**Cap note:** the capsules injected here count toward the global 5-link cap on the "کاوش بیشتر" section (Hard Rule 9). Because step 2.5 runs first, these capsules consume their slots first; step 4.9 later fills only whatever budget remains.
+
+**Verify after injection:**
+- The section appears once on the new page (no duplicate).
+- The correct number of capsules is present for the locked category (2 for typed-brain, 1 for glossary, 0 specialist capsules for core episode and for LiteCast — but core episodes use the **Episode branch** (a single `ep-related-link` pillar link in «محتوای مرتبط») and LiteCast hits the skip branch for the *specialist* capsules, so neither reaches this `dc-related-section` verification; LiteCast's «کاوش بیشتر» is instead filled with LiteCast-internal links and verified in step 0.6).
+- The فهرست موضوعی capsule's `href` is `/pillar/<pillar.primary>/` in the canonical format (trailing slash, no `index.html`), with `pillar.primary` exactly the slug confirmed in step 2.4 — or the `/pillar/` fallback when no pillar was confirmed.
+- For the `dc-related-section` (typed-brain / glossary) the page uses `dc-related-*` classes only — never `ep-*`. For the **Episode branch** the opposite holds: the pillar link uses the existing `ep-related-link` markup of the «محتوای مرتبط» block, not `dc-related-capsule`.
+- The injection is the only diff vs the cloned template, beyond the swaps already specified in step 2.
+
+### 2.6. Update the content type's landing/index page
+
+Every content type has its own landing page that lists its entries (e.g. `/sharehub/index.html`, `/notecast/index.html`, `/insight/index.html`, …). When new content of that type is published, **its own landing page must gain a link to the new entry** — otherwise the entry is reachable only via the brain widget and Pulse, never from its own section's index. This is separate from step 6 (the homepage Pulse) and from the homepage latest-content widget.
+
+**Determine how the landing page is produced — generated vs hand-maintained:**
+- **If it's generated by a builder** (look for an auto-generated marker, a `fetch('…brain.json…')` client render, or a `tools/` script that writes it): do NOT hand-edit it. Just ensure the new brain entry exists (step 5) and run the appropriate builder in step 8; the entry will appear on rebuild. Note in the report which builder regenerates it.
+- **If it's hand-maintained static HTML** (no generator, an explicit list of entries): add the new entry's link **manually**, matching the existing list items **exactly** (same markup, classes, wording pattern) and placing it in the correct position (mirror the existing order — typically newest-first at the top of the list). Swap only the URL and the human-readable label; copy the label style of the sibling items (for ShareHub the convention is `<title> (مطلبی از <author>)`).
+
+**A numbered series states the position in the row — the landing page is the only
+place a reader can see where the series starts and ends.** When the type is an
+ordered series (پلاک صفر, پرامپتولوژیست, any «قسمت N» run), the row reads
+**«قسمت N — <title>»**: the number first, then the title **with the series name
+stripped**. The series name is dropped on purpose — the landing page IS that
+series, so repeating it on every row spends the width that the number needs and
+tells the reader nothing. Founder decision, 2026-09-18, after four parts of
+پلاک صفر shipped as bare «پلاک صفر — <title>» rows: every row looked alike, and
+somebody arriving could not tell which part was the first, which was the newest,
+or how many there were.
+
+Three things this rule depends on:
+
+- **N is the part's position in the series, taken from the id** (`plak1-5` → ۵),
+  in Persian digits, and it is **not** invented for a series that has no
+  numbering of its own.
+- **Chapters keep their own numbering, they do not flatten.** پرامپتولوژیست is
+  already correct and is not to be renumbered: its rows sit under «فصل N — …»
+  headings and restart at «قسمت ۱» inside each chapter, matching each page's own
+  badge («فصل ۷ · قسمت ۱»). The rule is that the row carries the position, not
+  that every series counts from one to twenty.
+- **The brain title does not change.** It keeps the series prefix
+  («پلاک صفر — بیمار چه تایپ می‌کند») because that is what the homepage rail,
+  the pillar page, up-board and search render, where there is no surrounding
+  context to supply it. So the landing row is a **second legitimate label**, the
+  same shape `episodes.html` already has — and `tools/verify_publish.py` knows
+  it (`numbered_series_label`): the row passes when it carries a «قسمت N» marker
+  **and** the brain title's own tail verbatim. A drifted title still fails, and a
+  row that merely lost its number fails too, so the exception cannot be used to
+  ship a truncated label.
+
+A series whose landing rows already carry their number inside the title
+(`chairside/` → «Chairside 02 — …», `metanotes/` → «متانوت نوزده: …»,
+`notecast/` → «نوت‌کست چهلم — …») already satisfies this and is left alone.
+An **unnumbered** type (`insight/`, `sharehub/`) is not a series and gets no
+number — «قسمت N» on a standalone note would be a sequence that does not exist.
+
+**Glossary note:** author the individual term page through steps 1–2 using the same-type template. Register its metadata in `glossary/glossary.json`, not `dentcast-brain.json`. `tools/build_pillar.py glossary` (part of `all`) generates **only** `/glossary/index.html` from that JSON; it does not create term pages. Never hand-edit `/glossary/index.html`; let step 8 regenerate it.
+
+**Episodes note:** the episodes landing page is `/episodes.html` (not `/episodes/index.html`, which is only a redirect). It is a **fully static** page (NOT client-rendered) generated by `tools/build_episodes.py` from `dentcast.json` + `dentcast-brain.json` + the verbatim shell `tools/episodes_template.html`. Appending to `dentcast.json` in step 5 is **not enough** — the builder must run in **step 8** (builder #3). Never hand-edit `/episodes.html` (it's overwritten); to change page chrome, edit `tools/episodes_template.html` then rebuild.
+
+**Verify after edit:** the landing page now links to the new entry exactly once, the only diff is that single added link (for hand-maintained pages), and the link target/label are correct.
+
+### 3. Date / meta double-check
+
+Resolve today's date in every format the template uses. Audit every meta/OG/Twitter/JSON-LD field and visible body dates. Flag STALE / DIVERGENT / MISSING. Print audit table before & after. Set `datePublished` and `dateModified` to today. Fix everything until all rows = OK.
+
+### 4. Integrity check
+
+Recompute SHA-256 of the template page. Must match step 1. If not, stop and report.
+
+### 4.5. Update parent episode's related content (NoteCast only)
+
+Only when the locked category is **NoteCast**. Skip entirely for every other type.
+
+After the new NoteCast page is built and verified, locate the parent episode page at `/episodes/episode-XX.html` (same XX as the NoteCast). Open it and find the related-content block.
+
+**If a related-content block exists in the parent episode:**
+- If it already links to `/notecast/episode-XX.html` → leave it alone, just confirm.
+- If it doesn't link to the new NoteCast yet → add the link, matching the exact HTML structure, classes, and labeling used by the same block in the **previous episode's page** (`/episodes/episode-(XX-1).html`). Use the previous episode's NoteCast-related-content markup as the template — only swap the URL and any episode number references.
+
+**If no related-content block exists in the parent episode at all:**
+- Pull the entire block from `/episodes/episode-(XX-1).html` and insert it at the same structural position in `/episodes/episode-XX.html`. Swap URL and number references.
+
+**If the previous episode also has no related-content block:**
+- Stop and ask the user where the block should go and what markup to use. Don't improvise.
+
+Hash the parent episode page before editing and after. Report both. The only diff allowed is the related-content insertion.
+
+### 4.5-ب. Shared evidence base — DES score and article credit mirror across the episode/NoteCast pair
+
+**A NoteCast is the written version of its episode.** When either side of the
+pair cites a scientific source, they are citing the **same** source — so a DES
+record (step 4.13) and a first-author→DOI/PubMed credit (step 4.10 Part 3) are
+not a property of the page they were written on, they are a property of the
+**paper**, and belong on **both** pages of the pair whenever the paper is
+identified on either one. Runs whenever the publish is a **NoteCast** or a
+core **episode**, in either direction:
+
+- **Publishing a NoteCast whose Question 4.8 basket 2 source is already scored
+  on the parent episode** (`plus/des-scores.json` has a `episodes/episode-XX`
+  record, or the parent episode page already carries a `.author`/«منابع»
+  credit for that source): copy the DES `sources[]` array **verbatim** into
+  `notecast/episode-XX` (new `scored_at` = today), and add the same
+  first-author→DOI/PubMed credit link to the NoteCast page, in the NoteCast's
+  own credit-block convention (`.author` block, «نویسنده:» label, placed
+  right after the article body — add the `.author` CSS rule to the page's
+  `<style>` if the template doesn't already carry it).
+- **Publishing/editing a core episode whose cited source is already scored on
+  its NoteCast** (the reverse case): copy the NoteCast's DES record into
+  `episodes/episode-XX` and add the credit block to the episode page (right
+  before «محتوای مرتبط», the precedent placement — see `episodes/episode-12.html`).
+- **Neither side has a record yet:** run step 4.13 once, on whichever page is
+  being published, then immediately mirror the result to the sibling per the
+  rule above — never score the same source twice independently. Two
+  independent scoring runs of the identical source are not guaranteed to
+  agree token-for-token even when the arithmetic lands the same, and mirroring
+  is what keeps the pair's numbers *identical*, not just close.
+- **No DOI exists for the source:** never fabricate one. Ask the user what to
+  link the credit to (a PubMed/PMID record, a publisher page, ResearchGate,
+  or no link at all) — the same standard as step 4.10 Part 3 — and reuse that
+  same answer on both pages rather than asking twice.
+
+**Found on `episodes/episode-40` / `notecast/episode-40` (2026-09-01).** The
+NoteCast was published first (basket 2, Fages & Bennasar 2013, no DOI — the
+user supplied the paper and confirmed a PubMed credit link), and got a DES
+record and credit. The parent episode, which discusses the exact same source,
+was never touched — until the user pointed out that a NoteCast and its
+episode are the same evidence claim told twice, so a reader landing on either
+page should see the same score and the same source. Nothing in steps 4.5,
+4.10, or 4.13 as originally written said to check the sibling page at all;
+each treated its own publish as the entire scope. This step closes that gap
+going forward. **This is a real gap on old pairs, not just a future rule**:
+`episodes/episode-6`/`notecast/episode-6` and `episode-7`/`notecast/episode-7`
+already had matching DES records but no credit link on the NoteCast side, and
+`episode-12`/`-13`'s NoteCasts had neither — all four were backfilled by hand
+when this rule was written and are not migrated automatically by anything.
+When touching an older episode/NoteCast pair for an unrelated reason, check
+this in passing per Hard Rule 11's spirit (a gap on an old page is something
+to fix on its own, never a pattern to copy forward) rather than leaving it.
+
+Verify & report: for the sibling page touched, its before/after hash (the only
+diffs allowed are the DES record's `scored_at` in `plus/des-scores.json` plus,
+on the page itself, the added `.author` block and its CSS rule); confirm the
+mirrored `sources[]` array is byte-for-byte identical to the original record
+except `scored_at`; confirm the credit link target matches the original
+(same DOI/PubMed/other URL, never re-resolved independently).
+
+### 4.6. Promptologist series prev/next navigation (Promptologist only)
+
+Only when the locked category is **Promptologist**. Skip entirely for every other type.
+
+Promptologist parts are an **ordered series** (id format `prompt<season>-<part>` — e.g. `prompt1-1`, `prompt1-2`; page at `/dentai/promptologist/<id>.html`). Each part's page ends with an **`ep-nav` block** — the very last element inside `<main>`, after the `.ep-box` — exactly like a core episode's prev/next bar:
+
+```html
+<div class="ep-nav">
+  <span class="ep-nav-btn ep-nav-empty"></span>
+  <span class="ep-nav-btn ep-nav-empty">قسمت بعدی &#8594;</span>
+</div>
+```
+
+It has two slots, in DOM order: **first = previous part**, **second = next part**. An **active** slot is an anchor — `<a href="/dentai/promptologist/<id>.html" class="ep-nav-btn">…</a>`; an **empty/placeholder** slot is a `<span class="ep-nav-btn ep-nav-empty">…</span>` (the `ep-nav-empty` class greys it out and disables the pointer). This mirrors the core-episode nav, whose active form is e.g. `<a href="/episodes/episode-151.html" class="ep-nav-btn">اپیزود 151 &#8594;</a>`.
+
+Because step 2 cloned the previous part **verbatim**, the new page arrives with **both** slots still empty (copied straight from the template). **Two pages must be fixed** — the new part's own nav, and the previous part's "next" slot:
+
+**A) On the NEW part's page — wire its «previous» slot.**
+- Convert the **first (previous)** slot from the empty placeholder into a real link to the immediately-preceding part (`prompt<season>-<part − 1>`):
+  `<a href="/dentai/promptologist/<prev-id>.html" class="ep-nav-btn">&#8592; قسمت قبلی</a>`
+- Leave the **second (next)** slot as the empty placeholder `<span class="ep-nav-btn ep-nav-empty">قسمت بعدی &#8594;</span>` — there is no next part yet. (When a later part is published, *that* publish converts this slot per (B).)
+
+**B) On the PREVIOUS part's page — wire its «next» slot to the new part.**
+- Open `/dentai/promptologist/<prev-id>.html` and find its `ep-nav` block. Its **second (next)** slot is currently the empty placeholder `<span class="ep-nav-btn ep-nav-empty">قسمت بعدی &#8594;</span>`.
+- **Replace it in place** with a real link to the new part, keeping the **visible text identical**:
+  `<a href="/dentai/promptologist/<new-id>.html" class="ep-nav-btn">قسمت بعدی &#8594;</a>`
+- Leave the previous part's own **first (previous)** slot untouched.
+- **Hash the previous part's page before and after.** The only allowed diff is that one slot turning from a `<span … ep-nav-empty>` placeholder into an `<a … class="ep-nav-btn">` link (tag swapped, `href` added, `ep-nav-empty` removed; visible text unchanged).
+
+Match the label register to whatever the series already uses for these buttons (the placeholders read «قسمت قبلی» / «قسمت بعدی»). If the previous part has **no** `ep-nav` block at all (an older template), **stop and ask the user** before improvising one.
+
+**Verify after write:**
+- The new page's **previous** slot links to `<prev-id>.html`, and its **next** slot is still the empty placeholder.
+- The previous page's **next** slot now links to `<new-id>.html` and no longer carries `ep-nav-empty`.
+- Both pages' `ep-nav` blocks still have **exactly two** slots, and no other diff was introduced on either page.
+
+### 4.7. Semantic glossary back-linking (all content types)
+
+Runs whenever new content is published, regardless of category. The goal is to surface the new content from the glossary terms it genuinely relates to — by adding a single back-link on each truly-related term's page.
+
+**This step is narrower than its name suggests, and the gap is a separate workflow, not something to widen it into.** Its candidate pool is `glossary/glossary.json` only — an insight, a chairside or an episode is never a candidate here — and it writes only into a «کاوش بیشتر» section, never into prose. So the direction *"an already-published article's BODY should link a term published later"* is **not** covered by this step, by 4.8 (which only ever runs on the page in flight, pointing outward), or by 4.9. That direction has one owner: **`.dentcast/workflows/cross-link.md`**, reached two ways — automatically and **scoped to the new slug** by **step 4.7-ب** on a glossary publish, and as an unscoped backlog sweep on its own trigger. The unscoped sweep is what must never run from inside a publish: it opens every page in the corpus, which this publish's gate cannot verify.
+
+#### Step 1 — Semantic review of glossary terms
+
+Read `glossary/glossary.json`. Perform a genuinely **semantic** review of its terms — **not** keyword/string matching. Compare the *conceptual subject* of the new content against each glossary term's meaning and scope, and identify the terms whose topic is genuinely conceptually related to the new content.
+
+Be **conservative**: link only where the relationship is real and would genuinely help a reader, not tangential. Per **Hard Rule 14**: when a term's relatedness is genuinely unmistakable (the new content is clearly, substantively about that exact concept), proceed to Step 2 directly for that term — no need to ask. When you are uncertain whether a term is related enough (real but borderline/tangential relevance), **list that candidate and ask the user to confirm** (a simple link-it/skip-it choice) before editing — do not guess, and do not silently drop a genuine-but-uncertain candidate without asking.
+
+#### Step 2 — Per-term back-link (independent, per page)
+
+For each glossary term judged semantically related (auto-applied or user-confirmed), treat it **independently** — one related term may get the link (under the cap) while another is skipped (at the cap):
+
+- Open that glossary term's page on disk.
+- Find its **"کاوش بیشتر"** section.
+- Apply the **global 5-link cap (Hard Rule 9)**: count every link already present in that section. If it is already at 5, skip that glossary page entirely — add nothing, remove/reorder nothing. If there is room, add a link to the **new** content at the **bottom** of that section's link list, matching the exact form, classes, and styling of the other links already there. Use link text that fits naturally and descriptively for the new content, written in the same style/register as the sibling links — meaningful and specific, never a generic label.
+
+#### Step 3 — Constraints
+
+- **Add only** — never remove, reorder, or restyle existing links in any glossary "کاوش بیشتر" section.
+- The added link's markup must match the sibling links **exactly** (same classes, same structure); only the URL and the descriptive text differ.
+- The link text must be meaningful and specific to the new content, in the same style/register as the existing links in that section — not generic.
+- If a glossary page has **no** "کاوش بیشتر" section, skip it — do not invent one — unless this document's conventions elsewhere already define how that section is created, in which case follow that.
+- **Hash each glossary page before and after editing.** The only allowed diff is the single appended link. Report before/after hashes for every edited page.
+
+#### Verify after write
+
+- Each edited page differs from its pre-edit state by exactly one appended link, nothing else (confirmed by the before/after hashes and a diff).
+- No page that was at the 5-link cap was touched.
+- Report the full candidate list, which terms were linked, which were skipped (and why: cap reached / no section / judged unrelated), and the link text used on each edited page.
+
+### 4.7-ب. Cross-link the new TERM into existing bodies (glossary publishes only)
+
+**Runs only when the locked category is `glossary`.** Every other type reports it
+as a documented skip ("4.7-ب: skipped — not a glossary publish") and moves on:
+this step is about a newly published *term*, and a NoteCast or an Insight
+publishes no term.
+
+A glossary term is born with **zero** inbound in-body links, and nothing in this
+workflow would ever give it one: 4.7 links only *from glossary pages* and only
+into a «کاوش بیشتر» section, and 4.8 runs on the page in flight pointing
+outward. So a term's inbound link count is a function of how much content is
+published *after* it — which for a term published today is nothing, forever.
+This step closes that at the moment it opens.
+
+**Run `.dentcast/workflows/cross-link.md` scoped to the slug just published**, the
+same way Phase D hands the finished page to `en-version.md`:
+
+```bash
+python3 tools/cross_link_candidates.py --slug <the new slug> --json /tmp/cross-link.json > /tmp/cross-link.md
+```
+
+Then follow that workflow's Phases B → E. Everything it says applies unchanged —
+anchors only with the mechanical text gate, the ZWNJ word-boundary rule, the
+AUTO/ASK split, the density ceiling, `episodes/`+LiteCast+en out of scope. It
+writes **no** brain entry, runs **no** builder, and needs **no** version bump, so
+it does not disturb the ordering of steps 5–8; run it here, before the brain
+write, so its page edits are in the same commit as the publish.
+
+**Do not run the unscoped sweep from inside a publish.** `--slug` is what keeps
+this bounded (today's `dental-implant` produced 32 candidates; the full sweep
+opens 71 pages, which this publish's gate cannot verify).
+
+**Report:** the candidate count for the new slug, what was applied, and every ASK
+with its verdict — or the explicit "0 candidates: every tagged page already links
+it or does not say the term in its body", which is a real and common outcome.
+
+### 4.8. Suggest in-article internal links (all content types)
+
+**MANDATORY on every publish, for every type (core episodes included) — see Hard Rule 11.** This is the **inverse** of step 4.7: where 4.7 links existing pages *to* the new content, this step enriches the new article's **own body** with internal links pointing **out** to existing glossary terms and episodes. It operates on the new content's page, so it belongs with the page-mutation steps.
+
+**This step is NOT governed by the template/clone or by what the previous same-category page contained (Hard Rule 11).** You **must** run a fresh semantic analysis of *this* body regardless of whether the cloned page had inline links. Any link that merely came across in the clone does **not** count as executing this step. **For core episodes, the "body" is the «درباره این اپیزود» (`ep-caption`) text.** Skipping is allowed **only** when, after the analysis below, there are **zero genuinely-qualifying candidates** — and you must then report that explicit empty result (never silence, never "matched the previous page").
+
+#### Step 1 — Build the candidate target list
+
+Read **both** `glossary/glossary.json` **and** `dentcast-brain.json`. Build one candidate target list:
+- Every glossary term, with its page URL.
+- Every episode, with its page URL, from `dentcast-brain.json`.
+
+#### Step 2 — Semantic analysis of the article body
+
+Perform a genuinely **semantic** analysis of the new article's body — **not** surface keyword/string matching. For each candidate target the question is conceptual: does this exact place in the article actually refer to the concept that the glossary term or episode is about? A term qualifies **only** when the word/phrase, in its real context, carries the meaning of the target concept — not merely because the same letters appear.
+
+**Hard rules for matching:**
+- **No junk/generic words.** Do not propose links on common, generic, or filler words that merely coincide with a term string (ordinary verbs, common adjectives, everyday nouns not used as the technical concept). If a reader wouldn't gain anything from the link, it's junk — discard it.
+- **Sense-disambiguation required.** If a word has both an everyday meaning and a technical/glossary meaning, link it **only** where it is clearly used in the technical sense. Skip everyday-sense occurrences entirely.
+- **Conceptual relevance over lexical coincidence.** A match is valid only when the linked concept is genuinely the thing being discussed at that point, and the link would genuinely help the reader go deeper.
+- **When in doubt, DON'T propose it.** Precision beats coverage. A short list of strong, meaningful links is the goal — never a flood of weak matches.
+
+#### Step 3 — First-occurrence only
+
+For each term that survives the semantic filter, the link targets **only the FIRST occurrence** of that word/phrase in the article body (the first place it appears in the qualifying technical sense). Do not link later occurrences of the same term. **One link per term, on its first qualifying appearance, in reading order.**
+
+#### Step 4 — Auto-apply high-confidence matches; ask only for the rest
+
+Per **Hard Rule 14**, split the surviving candidates by confidence:
+
+- **Unmistakable matches** (the word is clearly being used in its technical sense to discuss exactly that concept, per Step 2's sense-disambiguation rule) → proceed straight to Step 5 for these; no confirmation round-trip needed. State them plainly in the running commentary (matched phrase, target, one-line reason) so the user can see and override afterward.
+- **Borderline or judgment-call matches** (plausible but not unmistakable — a looser conceptual connection, a term that could be read either technically or generically here) → **do not** insert yet. Present these as a numbered review list — matched phrase with context, target type, target URL, one-line reason — and ask the user which (if any) to apply. The user may approve all, a subset, or reject.
+
+#### Step 5 — Insert links
+
+Insert the auto-applied matches and any user-approved matches, each on the **first qualifying occurrence** of its term in the body, using the **same anchor markup/classes the article body already uses for inline links** (match the existing in-body link style exactly — do not introduce a new link style).
+
+#### Step 6 — Constraints
+
+- **First occurrence only, one link per term** — never link the same term twice.
+- **Semantic, not lexical** — never link a word purely because its characters match a term; the concept must actually be present at that spot.
+- **No self-links** — if the new content IS the glossary page for "X", don't link "X" in its own body to itself.
+- **Don't break structure** — never create a link inside an existing link, inside a heading, or anywhere it would break the HTML.
+- **Hash the new page before and after this step.** The only allowed diffs are the approved anchor insertions. Report before/after hashes.
+
+### 4.9. Semantic "کاوش بیشتر" links on the new page (all content types)
+
+**MANDATORY on every publish, for every type (core episodes included) — see Hard Rule 11.** Enriches the **new content's own** "کاوش بیشتر" section with links pointing **out** to semantically related existing brain entries.
+
+**Episode mapping (Hard Rule 11):** core episodes have **no** `dc-related-section` "کاوش بیشتر" — for an episode this step targets the **«محتوای مرتبط»** (`ep-related-link`) block instead, filling its free slots (under the Hard-Rule-9 cap) with related brain entries; **the sibling parts of a multi-part series are the highest-priority candidates** and must be proposed first. The «محتوای مرتبط» / «کاوش بیشتر» naming difference is **not** grounds to skip. As with 4.8, this step is **template-independent**: that the cloned/previous page held only the pillar capsule is **not** a reason to leave it at one link. Skipping a slot is allowed **only** when the section is at the 5-link cap or there are **zero qualifying candidates**, and that empty result must be **reported explicitly**.
+
+Direction matters — don't confuse this with the neighbouring steps:
+- Step 4.7 adds a link **to** the new content **from** related glossary pages' "کاوش بیشتر" sections.
+- Step 4.8 adds inline in-body links **from** the new article's text to glossary terms / episodes.
+- **This step (4.9)** adds links **into** the new content's **own** "کاوش بیشتر" section, pointing to semantically related entries from `dentcast-brain.json`.
+
+It mutates the new page, so it sits with the page-mutation steps. It runs **after** step 2.5 has already injected the site-wide capsule block, so the "کاوش بیشتر" section already exists on the new page.
+
+#### Step 1 — Semantic comparison against the whole brain
+
+Read `dentcast-brain.json` end-to-end and perform a genuinely **semantic** comparison of the new content against **all** existing entries (every type, plus core episodes) — **not** keyword/string matching. For each entry the question is conceptual: is this entry's subject genuinely, substantively related to the new content, such that a reader would want to go there next?
+
+**Hard rules for matching:**
+- **Real conceptual relatedness only.** No tangential or coincidental matches — discard weak/adjacent ones.
+- **Rank** candidates by strength of semantic relationship; strongest first.
+- **When in doubt, DON'T propose it.** A few strong links beat a pile of weak ones.
+- **Never link the new content to itself.**
+
+#### Step 2 — Apply the global cap
+
+Locate the new page's "کاوش بیشتر" section (injected in step 2.5) and apply the **global 5-link cap (Hard Rule 9)**: count the links already present (the site-wide capsules count). If already at 5, skip entirely. If fewer, you may add only up to the remaining slots, filling them with the **highest-ranked** semantic matches from Step 1, strongest first.
+
+#### Step 3 — Markup for each added link
+
+- Use the **same** button/capsule markup, classes, and styling as the links already in that section — only `href` and label differ.
+- The label is a **short, semantically meaningful Persian title** derived from the target entry — a concise descriptive phrase, not the raw long title and not a generic word.
+- The `href` is the target entry's page URL.
+
+#### Step 4 — Auto-apply high-confidence matches; ask only for the rest
+
+Per **Hard Rule 14**, split the ranked candidates within the available slots by confidence:
+
+- **Strong, unmistakable relatedness** (a reader would obviously want to go there next) → insert directly, filling the available slots strongest-first; no confirmation round-trip needed. State the additions plainly (target, URL, label, one-line reason) so the user can see and override afterward.
+- **Real but borderline relatedness** (worth surfacing, but not obviously a must-include) → present these as a numbered list — target, URL, proposed label, one-line reason — and ask which (if any) to add. The user may approve all, a subset, or none; respect the global cap on whatever subset they approve.
+
+#### Step 5 — Constraints
+
+- **Defer to the global 5-link cap (Hard Rule 9)** — never exceed it.
+- **Only add** — never remove, reorder, or restyle existing links.
+- Added links must match the existing capsule markup/classes **exactly** — only `href` and label differ.
+- Labels must be **short, semantic, Persian, and specific** to the target — never generic.
+- **Hash the new page before and after this step.** The only allowed diffs are the approved capsule additions. Report before/after hashes.
+
+### 4.10. Attached-paper branch (ANY type — triggered by the paper file, not the category)
+
+**Runs whenever the user supplied an accompanying research paper/article file —
+for EVERY type, not just DentAI** (the branch armed in Phase B Question 4.7; the
+trigger keys off the **file**, not the locked category). For publishes with **no**
+paper file, skip this entire section and **say so in the report** ("4.10: skipped
+— no attached paper"). This branch is **additive** — it adds the paper actions on
+top of whatever normal publish is running and overrides nothing.
+
+**Which parts run depends on whether a page is being published (Phase 0 routing):**
+- **Paper file + text/content (any type):** run **all three parts** — Parts 1 & 2
+  (Drive + catalog) and Part 3 (first-author→DOI credit on the published page).
+- **Paper file only, no text (paper-only fast path):** run **Parts 1 & 2 only**.
+  **Skip Part 3** — there is no published page to put a credit under — and skip the
+  rest of the normal publish flow entirely (see Phase 0). Report "Part 3: skipped —
+  no published page (paper-only)".
+
+**Overarching rule for this whole branch — ASK, don't guess (the user's
+explicit instruction «اگر جایی شک داشتی سوال کن عمل نکن»).** Anywhere in the
+parts below where you are not confident — the right Drive subfolder, the correct
+topic/tags, the paper's real title, its DOI, or its first author — **stop and ask
+the user before acting.** Never invent a subfolder, a DOI, an author, or a tag. A
+wrong guess here mis-files a paper and publishes a false citation; a question
+costs nothing.
+
+Parts 1 and 2 are data operations (Drive + catalog) and **always** run when a
+paper file is present. Part 3 mutates the published page and runs **only when
+there is a page** (text-bearing publish). Run them in order; when a page exists,
+all three run before the rebuild (step 8).
+
+#### Part 1 — File the paper into Google Drive (correct topical subfolder)
+
+The DentCast paper cabinet lives in this Drive folder:
+`https://drive.google.com/drive/folders/1iDwq4Uj-y7_FO99-QW1Th0hVRN5yfk9f`
+(folder id `1iDwq4Uj-y7_FO99-QW1Th0hVRN5yfk9f`). It is organised into **topical
+subfolders** whose names mirror the `topic_path` values already in
+`dentcast_cabinet_full_catalog.json` (e.g. `abutment`, `zirconia`, `fresh
+socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
+`biomimetic/Bonding`, `zirconia/flexural strength`, …).
+
+1. **Read the live subfolder set.** Use the Google Drive MCP tools to list the
+   subfolders actually present under the parent folder (don't trust this list —
+   it's illustrative). Cross-reference with the distinct `topic_path` values in
+   the catalog so you know the canonical filing taxonomy.
+2. **Determine the paper's subject semantically** — conceptual relevance of the
+   paper's actual topic, **never** keyword/string matching on the filename — and
+   choose the single best-matching existing subfolder.
+3. **Upload the file into that subfolder.** Keep the paper's real filename.
+   Capture the resulting Drive identifiers for Part 2:
+   - `drive_id` = the uploaded file's id
+   - `drive_view` = `https://drive.google.com/file/d/<drive_id>/view`
+   - `drive_download` = `https://drive.google.com/uc?export=download&id=<drive_id>`
+4. **Ambiguity → ASK.** If no existing subfolder clearly fits, or two fit
+   equally, **ask the user** which subfolder to use (or whether to create a new
+   one). **Never create a new subfolder without explicit confirmation.**
+
+#### Part 2 — Enrich `dentcast_cabinet_full_catalog.json` (root)
+
+`dentcast_cabinet_full_catalog.json` at the repo root is a JSON **object** whose
+`papers` key holds a flat array of paper entries. Add the new paper here.
+
+1. **Next id.** `P` + the zero-padded successor of the current max `P####`
+   (e.g. after `P2876` → `P2877`). Confirm the max by scanning `papers`.
+2. **Match the ENRICHED entry shape exactly.** Use a recent
+   `semantic_tagged: true` entry as the schema template — same keys, nesting,
+   and order, no extras, no omissions. Its key set is: `id`, `title`,
+   `file_name`, `topic`, `topic_path`, `type`, `local_path`, `file_size`,
+   `key_finding`, `clinical_bottom_line`, `linked_episodes`, `drive_link`,
+   `status`, `drive_download`, `drive_view`, `drive_id`, `tags`, `name_bucket`,
+   `semantic_tagged`, `real_title`, `doi`, `journal`, `crossref_year`,
+   `subjects`, `abstract`, `display_title`. **Confirm the live shape from the
+   file rather than trusting this list**, and never add a field that isn't on
+   the template entry.
+3. **Fill from the paper + the DOI lookup (Part 3 finds the DOI/metadata):**
+   - `real_title` / `title` / `display_title` → the paper's real title (the
+     search page `dentcast_cabinet_search.html` shows
+     `display_title || real_title || title`).
+   - `topic` and `topic_path` → the subfolder chosen in Part 1 (the search
+     page's topic filter reads `topic`).
+   - `doi`, `journal`, `crossref_year`, `abstract` → from the metadata lookup.
+   - `file_name` → the real filename; `file_size` → the file's byte size.
+   - **`drive_link` / `drive_view` / `drive_download` / `drive_id` → the Drive
+     URLs/id captured in Part 1.** (Putting the paper's Drive link into the JSON
+     is the whole point of this part.)
+   - `status` → match the template (e.g. `"linked"`); `semantic_tagged` → `true`.
+   - `linked_episodes` → the page being published, if any (follow the template's
+     value shape); on the **paper-only fast path** there is no page, so leave it
+     as the template's empty shape (e.g. `[]`). `key_finding` /
+     `clinical_bottom_line` may stay `""` as on most entries unless the content
+     gives them clearly.
+4. **Hashtags (`tags`) — the user's rule: semantic + the article's own name.**
+   Generate genuinely **semantic** tags describing the paper's concepts, in the
+   **same lowercase-kebab style as existing `tags`** (e.g. `marginal-bone-loss`,
+   `rct`, `clinical-trial`), **include the `topic:<subfolder>` tag** that the
+   catalog convention uses, **and include a tag derived from the article's own
+   title/name.** No junk/generic tags. If the right topic or any tag is unclear
+   → **ask, don't guess.**
+5. **Top-level counters.** If the catalog's roll-up integers are meant to track
+   the array (`unique_papers`, `total_files_scanned`, the relevant drive-match
+   count), keep them consistent with the added entry. Do **not** rewrite the
+   derived analytics blocks (`tag_index`, `semantic_pass`, `enrichment`,
+   `drive_match_breakdown`) by hand — if you're unsure whether a counter should
+   move, **ask** rather than guess.
+6. **Verify:** the new entry is appended to `papers`, the JSON is well-formed,
+   its key set matches the template enriched entry exactly, the Drive link is
+   present, and the paper now appears/filters correctly in
+   `dentcast_cabinet_search.html` (title, topic, tags, View/Download links).
+   **Open that page directly** — from the site the library is premium-gated
+   (`plus/js/library-gate.js`, installed from `plus/js/header.js` on every page,
+   gates the *destination*: the archive card, the desktop topbar icon and the
+   hamburger's «کتابخانه» all open only for `tier === 'premium'`), so tapping
+   any of the three doors is not a way to check your work.
+   The page itself is still a plain static file and opens for anyone who knows
+   the URL; the gate is a product gate, not access control.
+7. **The paper-count claim.** The library is advertised with a number — «بیش از
+   ۲۲۰۰ مقاله» on the `#card-library` card (`index.html`) and the same figure in
+   the premium gate sheet, whose copy lives in `plus/js/library-gate.js`. It is
+   a hand-written claim, not a count read from the catalog, so it drifts as
+   papers are added. After adding the entry, count, then find every place the
+   number lives — **two files, not one**:
+
+   ```bash
+   python3 -c "import json;print(len(json.load(open('dentcast_cabinet_full_catalog.json'))['papers']))"
+   grep -rn '۲۲۰۰' index.html plus/js/library-gate.js   # card copy + gate-sheet copy
+   ```
+
+   While the total is still under the next round hundred the claim stands and
+   nothing changes. Once it crosses one, update **every** hit in the same
+   commit — one sentence living on several surfaces, so Hard Rule 17's sweep
+   logic applies: never fix one and leave the others. One version bump is now
+   needed with it: `index.html`'s copy is its own, but the gate sheet's text is
+   in a shared module, so run `python3 tools/asset_version.py --bump` in the same
+   commit (see the cache-buster rule) or returning browsers keep the old figure.
+
+#### Part 3 — Find the DOI on the web and add a first-author → DOI credit on the page (ShareHub style)
+
+**Runs only when a page is being published** (text-bearing publish, any type). On
+the **paper-only fast path** there is no page — skip this part entirely and report
+the skip. This is the on-page action and mirrors how **ShareHub** credits its
+source: a `.author` block reading «نویسنده:» followed by a single hyperlinked
+name. Here the linked name is the **paper's first author** and the link target is
+the **DOI**.
+
+1. **Find the DOI + first author on the web.** Search the net for the paper's
+   **DOI** and its **first author** — use `WebSearch` and/or the article-lookup
+   MCP tools (`search_articles`, `lookup_article_by_citation`,
+   `get_article_metadata`, `convert_article_ids`). Cross-check the DOI resolves
+   to the correct paper (matching title/journal/year). **If you cannot confidently
+   determine the DOI or the first author, ASK the user — never fabricate either.**
+   The DOI/journal/year found here also feed Part 2's catalog fields.
+2. **Add the credit under the article body.** On the published page (whatever its
+   type), **below the article body**, add a source-credit block crediting the
+   paper's first author, where the **first author's name is an anchor to the DOI**:
+   ```html
+   <div class="author">
+     نویسنده:
+     <a href="https://doi.org/<doi>" target="_blank" rel="noopener noreferrer">First Author</a>
+   </div>
+   ```
+   - Use the **same markup/style precedent the page's own type already uses** for
+     a source credit. DentAI, for instance, has a source-citation precedent (e.g.
+     `dentai/dentai-3.html`: a citation card with the paper title, authors,
+     journal, and DOI, plus a JSON-LD `isBasedOn` → `doi.org` reference). If such a
+     citation card is present on the page, **enhance it** by making the **first
+     author** a real `<a href="https://doi.org/<doi>">` link (ShareHub style)
+     rather than adding a visually duplicate block; if no such block exists, add
+     the ShareHub-style `.author` credit above, and ensure its `.author` CSS exists
+     in the page (it does on ShareHub-derived pages; add it if the type's template
+     lacks it).
+   - **This is the SOURCE paper's author** — do **not** confuse it with, or
+     overwrite, any existing site author credit (e.g. DentCast's `.author-note`,
+     دکتر فواد شهابیان, the narrator/site author). The two coexist.
+3. **Keep JSON-LD consistent.** If the page's template carries an `isBasedOn`
+   (CreativeWork) reference, set its `url` to `https://doi.org/<doi>` and its
+   `name` to the paper title — matching the `dentai-3` precedent.
+4. **Hash the new page before and after Part 3.** The only allowed diffs are the
+   first-author→DOI credit (and any `isBasedOn` value update). Report before/after
+   hashes. Don't break HTML (no link inside an existing link or heading).
+
+**Verify after the branch:** report the Drive subfolder the paper landed in (and
+its `drive_view` URL); the new catalog entry's `id`, `topic`/`topic_path`,
+`tags`, and Drive link; and — when a page was published — the DOI + first author
+used for the on-page credit (with the rendered anchor), or the "Part 3 skipped —
+paper-only" note otherwise. Explicitly flag anything you had to ask the user
+about, and confirm nothing was guessed.
+
+### 4.11. Flashcards (Leitner) — semantic `DefinedTermSet` in the FAQ corpus
+
+**Runs for EVERY type, on EVERY publish that produces a page — LiteCast and
+DentCast+ (`dentcast_plus`) are the two exceptions.** LiteCast stays outside
+the specialist ecosystem, same as the glossary/pillar linking it skips in
+step 0. **DentCast+ is optional, not skipped:** a video's real content is
+in the video itself, not in re-typable prose — the page's own text is often
+just a one-line caption — so authoring a card/question requires the founder
+to supply the actual clinical tips from the recording. When that text is
+available, run this step normally (same standard as every other type). When
+it is not, and the founder declines to supply it, no cards are written and
+that is a **documented skip**, never a fabricated card standing in for real
+content (Hard Rule 13; a thin or fabricated card is worse than no card —
+see the "ask, don't guess" note below). Decided 2026-08-22 on
+`dentcast-plus/video-10`; `tools/verify_publish.py`'s `FLASHCARD_OPTIONAL_TYPES`
+enforces the same two-type exception so the gate reports a skip, not a FAIL.
+A flashcard is **a concept, not a
+question** — so it lives in schema.org's real vocabulary for exactly that:
+`DefinedTermSet` → `hasDefinedTerm[]` of `DefinedTerm { name, description }`.
+This block is written into **`plus/faq-corpus.json`, under the new page's
+content id** — **never into the page's own JSON-LD**. FAQ/flashcards used to
+live on the page itself; that shipped hidden markup with no visible rendering
+at scale and was an SEO liability, so it was migrated into this corpus (see
+`.dentcast/faq-schema-removal-handoff.md`). `verify_publish.py` fails any page
+whose own HTML still carries a `#flashcards`-tagged `DefinedTermSet`.
+`plus/flashcards-index.json` (the premium app's Leitner-seed catalog) is
+**generated**, never edited directly: run
+`node tools/build_flashcards_index.mjs` (added to step 8's rebuild list) to
+read every content id's `DefinedTermSet` out of the corpus and regenerate it.
+**This step never touches `dentcast-brain.json`** — Hard Rule 6 (brain schema
+is sacred; never add a field absent from the previous same-category entry)
+makes the brain the wrong home for a feature being rolled out prospectively
+while older entries wait for a later, separate backfill pass.
+
+**Card content must be semantic, never a mechanical FAQ dump.** Each
+`DefinedTerm` tests recall of **one concept**: `name` is a tight recall
+prompt, `description` is the complete, precise answer to that one concept —
+never a verbatim copy of a FAQ question/answer pair.
+
+**"Verbatim" includes the near-copy — this is the step's most common failure.**
+Deleting the answer's opening verdict («بله؛ …» → «…») and shipping the rest
+unchanged is **not** a rewrite; neither is reordering a clause or swapping one
+word. The test is whether the text was **re-authored as a definition**: a FAQ
+answer argues a case *about this article*, while a card states what a concept
+*is*, standing alone, for a reader meeting it cold months later. If your
+`description` would still read as an answer to the question it came from, it
+has not been rewritten. Phase F fails the publish on a description that matches
+a FAQ answer with or without its verdict prefix, so this is enforced, not
+advisory.
+
+**FAQ → flashcard compression, but judged, not mechanical.** Where this
+content's corpus entry already carries a FAQPage node, walk its `mainEntity`
+and classify each Q/A pair:
+- **Genuinely "define/explain X" shaped** (the question names one concept,
+  the answer explains it) → compress it into one `DefinedTerm`: rewrite the
+  question into a `name` recall prompt, rewrite the answer into a complete
+  `description` for that one concept. If the answer bundles more than one
+  concept, split it into multiple atomic terms instead of one crowded one.
+- **Comparison/decision/procedural shaped** (e.g. "ایمپلنت کوتاه یا سینوس
+  لیفت؟", "کدوم بهتره؟") — these have no single concept to define. **Skip
+  them** rather than forcing a card; note the skip in the report.
+- **Ambiguous cases** — ask the user rather than guessing which bucket a Q/A
+  pair falls into.
+
+Where no FAQ exists yet, author `DefinedTerm`s directly from the published
+body using the same atomicity rule.
+
+**Ask, don't guess — same standard as step 4.10's paper branch.** Anywhere
+you're not confident a candidate concept is genuinely atomic, clinically
+accurate, or worth a card at all, stop and present it to the user rather than
+forcing a term into existence. A thin or fabricated card is worse than no
+card.
+
+Written into `plus/faq-corpus.json`, under this content id's
+`definedTermSets` array (the node's own shape — including the `@id`
+convention below — is unchanged from the old on-page form; only its storage
+location moved):
+
+```html
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  "@id": "https://dentcast.org/insight/insight-12.html#flashcards",
+  "hasDefinedTerm": [
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://dentcast.org/insight/insight-12.html#flashcards-c1",
+      "name": "single-concept recall prompt",
+      "description": "complete, precise answer to that one concept",
+      "source": "faq",
+      "sourceFaqIndex": 2
+    }
+  ]
+}
+</script>
+```
+
+- `@id` on each `DefinedTerm` ends in `#flashcards-c<n>`, 1-indexed per page,
+  stable once published — a later wording fix must not renumber existing ids
+  (the backend's `card_state` rows key off the fragment).
+- `source` and `sourceFaqIndex` are non-standard but harmless extra
+  properties (ignored by anything reading strict schema.org): `source` is
+  `"faq"` or `"authored"`; `sourceFaqIndex` is present **only** when `source`
+  is `"faq"`, pointing at the FAQPage `mainEntity` index the term was derived
+  from, for traceability if that FAQ entry changes later.
+- No other properties beyond real `DefinedTerm`/`DefinedTermSet` fields plus
+  these two. Match this shape exactly on every future publish — this is now
+  the schema template.
+
+**Verify:** confirm the `DefinedTermSet` node is present in
+`plus/faq-corpus.json` and is valid JSON; that every `DefinedTerm` has a
+unique `@id`; that no `name`/`description` is a verbatim copy of a FAQ Q/A
+pair; and report the count of terms written, how many came from `faq` vs
+`authored`, and which FAQ entries (if any) were judged comparison/decision-
+shaped and skipped.
+
+### 4.12. Quiz-ready FAQ + scored binary bank
+
+**Runs for EVERY type, on EVERY publish that produces a page — LiteCast is the
+sole exception** (same scope as flashcards: LiteCast is patient-facing and
+stays out of the specialist quiz/flashcard ecosystem). The FAQPage node
+authored for this content — written into `plus/faq-corpus.json` under its
+content id, **never into the page's own JSON-LD** (see step 4.11) — feeds
+two premium surfaces: the Leitner flashcards (step 4.11) **and** a scored
+yes/no quiz (`plus/quiz-index.json`, awarding premium XP). Both consume the
+same corpus entry, so FAQ questions must be authored to a
+**standalone-quiz standard**, not written as page-bound reading aids. Two
+hard requirements on every FAQ Question:
+
+**(a) Self-contained — no article deixis.** Each question must be
+understandable and answerable by a dentist who read the article a month ago and
+remembers only the concept, not which article it was. **Forbidden in a
+question `name`:** «این کیس», «این بیمار», «این مطالعه», «این متن», «این
+ویدیو», «این تکنیک/روش/وضعیت/تصمیم/خطا», or any other reference that only
+resolves by seeing this specific page. Case-based content (chairside, insight
+case-studies, dentcast-plus videos) must embed the case's key conditions **into
+the question itself** — turn «چرا MTA برای این کیس انتخاب شد؟» into «در تحلیلِ
+خارجیِ سرویکالِ (ECR) پیشرفته، چرا MTA ماده‌ی مناسبی برای ترمیم است؟». A
+question that is pure narrative recall of one unnamed patient («تصمیمِ نهایی
+برای این بیمار چه بود؟») with no concept to generalize does not belong in the
+FAQ at all — don't author it. The answer stays 100% grounded in the body;
+never add a clinical claim the article doesn't make.
+
+**(b) Binary answers open with an explicit verdict.** `tools/build_quiz_index.mjs`
+selects the yes/no subset mechanically: a question qualifies only when it is
+phrased as a yes/no question (opens with «آیا»/«مگر», or ends «… درست است؟» /
+«… امکان دارد؟» etc.) **and** its answer's **first clause** states «بله» or
+«خیر»/«نه». So whenever a FAQ question is yes/no-shaped, **write the answer to
+open with the verdict** — «خیر؛ …», «بله، …», or a short concession then the
+verdict («برخلافِ باورِ قدیمی، خیر؛ …»). That one word becomes the graded
+answer key. If the honest answer is genuinely "it depends" (no clean yes/no),
+that's fine — write it hedged and it is correctly **excluded** from the scored
+bank (it still serves as a flashcard / reference FAQ entry). Never contort a real "it
+depends" into a false yes/no just to get it scored: accuracy over coverage,
+the bank must never grade against a guessed key.
+
+The builder is generated-only, run in step 8 (never hand-edit
+`plus/quiz-index.json`); its `content_id` is the page path without `.html`, and
+each question keeps its `source_faq_index` so a later FAQ edit is traceable to
+its quiz entry — the same identifier convention as flashcards, so the premium
+app maps "reader finished article X" → X's quiz questions and flashcards alike.
+
+**When to run — and fix, not just flag.** This is an authoring gate, not a
+report-only check: it runs on the FAQ **before** the corpus entry is
+finalized (right after the step-2 clone establishes the new page, alongside
+the step-4.11 flashcard pass which reads the same FAQ). Walk every
+`mainEntity` question and **bring it into compliance in place** — a
+cloned/adapted question that still carries deixis (per (a)) gets
+**rewritten standalone or removed here**, and a yes/no-shaped question whose
+answer buries or omits the verdict gets its answer **reopened with
+«بله»/«خیر» (per (b))** — so the corpus entry is already correct and never
+needs a later correction pass. Editing is confined to the corpus entry's
+FAQPage node; the answer stays grounded in the body.
+
+**Ask, don't guess — same standard as steps 4.10/4.11.** Where a call is
+genuinely borderline, stop and ask the user rather than deciding silently:
+whether a case-bound question can be rewritten into a self-contained vignette
+**or** should be dropped entirely; whether an answer is truly a clean yes/no
+**or** an honest "it depends" (so it should stay hedged and fall out of the
+scored bank); or whether embedding the case conditions would smuggle in a claim
+the body doesn't actually make. A wrong auto-decision here ships a
+misleading quiz key or an unanswerable question — exactly the outcomes worth a
+one-line question to prevent. Phrase it as a concrete rewrite-vs-drop choice,
+not an open question.
+
+**Verify:** after step 8's quiz build, report how many binary questions this
+page contributed (and, if zero, confirm its FAQ is intentionally all
+open/comparison-shaped); confirm no question `name` on the page contains a
+deictic reference per (a); and list any question you rewrote/dropped for
+compliance and anything you asked the user about.
+
+### 4.13. DES — DentCast Evidence Score (run the scoring prompt, store the record)
+
+**Runs for EVERY type, on EVERY publish that produced a page**, in the basket
+decided at **Phase B Question 4.8**. Two documented skips and no others:
+**LiteCast** (outside the specialist ecosystem, Hard Rule 10 — report "4.13:
+skipped — LiteCast") and a publish whose Question 4.8 answer was **«بدون DES»**.
+Everything else scores.
+
+**Order matters: this runs after 4.10 on purpose.** When a paper file was attached,
+step 4.10 Part 3 has already found and cross-checked the DOI — reuse it rather than
+looking it up a second time and risking a different answer.
+
+**The one rule this entire step rests on: the model never fetches, so `source_text`
+must exist before the prompt runs.** DES spec Core Rule 4 is absolute. A DOI whose
+abstract you could not retrieve is **not scorable** and must end in
+`INSUFFICIENT_TEXT` — never a score assembled from the DentCast متن about the paper,
+from the paper's title, or from what you happen to know about the study.
+
+#### Part 1 — Resolve `source_text` (never skipped, never improvised)
+
+**COMMENTARY basket:** `source_text` is the page's **own body text** — the متن of
+record from Question 3.5 (the post-decision text, edited if rewrites were approved),
+exactly as it will ship. `text_basis` is `FULL_TEXT`. No DOI, no lookup, done.
+
+**RESEARCH basket:** first confirm Question 4.8's **secondary-report** decision is
+already made — if a cited source is a consensus statement/guideline that names its
+primary studies, the DOIs you resolve here are **those studies', not the
+wrapper's**. Then resolve **each** DOI through this ladder, stopping at the first
+real hit:
+
+1. **The local cabinet first** — `dentcast_cabinet_full_catalog.json` already holds
+   abstracts for a large share of the library, and a local hit is free and cannot
+   fail. Look the DOI up directly:
+   ```bash
+   python3 -c "
+   import json,sys
+   doi=sys.argv[1].strip().lower()
+   d=json.load(open('dentcast_cabinet_full_catalog.json'))
+   m=[p for p in d['papers'] if (p.get('doi') or '').strip().lower()==doi]
+   print(json.dumps(m[0], ensure_ascii=False, indent=2) if m else 'NOT IN CABINET')
+   " "10.1111/clr.13849"
+   ```
+   A hit hands you `abstract`, `real_title`, `journal`, `crossref_year` and
+   `authors` in one read. **Compare DOIs case-insensitively** — the catalog stores
+   them as found, so `episode-161`'s reference `10.1111/CLR.13672` lives there as
+   `10.1111/clr.13672` and an exact-match lookup misses it.
+2. **PubMed / article-lookup MCP** — `get_article_metadata`, `search_articles`,
+   `lookup_article_by_citation`, `convert_article_ids`.
+3. **The DOI/publisher page via `WebFetch`** — last resort, and only to read the
+   abstract text.
+
+**If none of the three yields a real abstract, that source is not scorable.** The
+spec's own error output is the correct result, and it is what gets recorded:
+```json
+{"des_version":"2.5","error":"INSUFFICIENT_TEXT"}
+```
+Per the capability protocol (`agent-parity.md` §2), when the blocker is a **missing
+tool** rather than a missing abstract, **ask the user to paste the abstract** —
+never downgrade the result silently.
+
+**A source with no method to appraise still needs its text** (spec v3.1). For a
+textbook, a glossary or a standard in the «منابع» block the ladder is: the cabinet;
+`WebFetch` for an open glossary or standard (the Glossary of Prosthodontic Terms
+is open access, so the cited entry is retrievable); and then **the founder's own
+copy** — show him the page's sentences that lean on that source and ask for the
+chapter or page range they come from, as a gate question (`agent-parity.md`
+§1), never from memory. The SOURCE call then runs on that text with
+`text_basis: EXCERPT` (a part of the work — a chapter, a page range, one entry)
+or `FULL_TEXT` (the whole cited work), returns `NOT_APPRAISABLE`, and the
+FIDELITY call (Part 2b) reads the same text. «ندارم» is a legal answer: the
+SOURCE call then runs on the reference line alone and records
+`text_basis: CITATION_ONLY`, so the citation reaches the card, and the fidelity
+slot is the spec's own `{"des_version":"3.1","error":"INSUFFICIENT_TEXT"}` —
+reported, never silent. `EXCERPT` and `CITATION_ONLY` exist for this content
+type only; a paper is scored from its abstract or its full text, never a chosen
+part.
+
+**`text_basis` is a fact, not a formality.** It is `ABSTRACT_ONLY` whenever what you
+resolved is an abstract — the normal case for every cabinet and lookup hit — and
+`FULL_TEXT` only when you genuinely hold the paper's body. Getting this wrong is not
+cosmetic: `ABSTRACT_ONLY` caps the methodology multiplier at 0.75 and forces
+`provisional: true`, so labelling an abstract as full text silently inflates every
+score built on it.
+
+#### Part 2 — Run the prompt file
+
+**Load `.dentcast/dentcast-evidence-score-v3.4.md` as the system prompt — the whole
+file, verbatim, minus the appendix.**
+
+**v3.3 is the current spec, and its change from 3.2 is one FIDELITY rule** (F0, F2,
+F6, appendix rule 8; founder 1405/07/20): a `SECONDARY_REPORT` source — a consensus
+statement or a guideline, read whole — is a **complete text** for the FIDELITY
+question. Its silence is `NOT_IN_SOURCE` (never `NOT_ASSESSABLE`), the F2-v grains
+apply, and the result is **not provisional**. The basis belongs to the SOURCE
+question, where it still caps the multiplier and marks the score provisional;
+fidelity only asks whether the page says what the document says and nothing changed
+on the way into Persian, and how strong the source is never enters that call.
+`sharehub/share-33` is why: written from a national consensus statement, every claim
+checked against its full text, and still «مقدماتی» only because the consensus is a
+secondary report. Silence has been outside the denominator since v2.8, so no score
+moves; records below 3.3 stay valid under their own stamp
+(`tools/des_fidelity_units.py --merge` and `tools/verify_publish.py` are
+version-gated).
+
+**v3.2's change from 3.1 is one assignment rule** (F6,
+founder 1405/07/20): on a page that names SOME of its sources, the units that
+name none of them go to the cited source(s) no unit names — `sharehub/share-10`
+names its glossary and textbooks in two sentences and writes the other
+twenty-nine from a paper it never names, and under v3.1 that paper received
+nothing. `tools/des_fidelity_units.py` applies it; markers are read from every
+cited source, so a sentence naming a `CITATION_ONLY` book still reaches no call;
+several unnamed sources are not pooled yet (the tool says so). No stored record
+moves.
+
+**v3.1's change from 3.0 cuts the FIDELITY track loose
+from the score** (founder, 1405/07/19). A source recorded `NOT_APPRAISABLE` used
+to get no FIDELITY call by rule, although nothing in the track reads a band: «how
+strong is the source?» and «did we say what it says?» are two questions. Now
+`source_kind` is `book`, `glossary` or `standard` (closed; a guideline stays on
+`SECONDARY_REPORT`); a NOT_APPRAISABLE record states what text was in hand through
+its own `text_basis` list — `FULL_TEXT`, `EXCERPT` (new) or `CITATION_ONLY` (new;
+a reference line alone is admissible for this one content type); the FIDELITY call
+runs on the same text under the same basis, with `EXCERPT`'s silence
+`NOT_ASSESSABLE` and its result provisional; and a fidelity slot on such a source
+holds the F5 object, or the spec's `INSUFFICIENT_TEXT` error object when the text
+was not in hand, or `null` only when no call was owed. No SOURCE score moves and
+no verdict changes; every 2.8–3.0 record stays valid under its own stamp, and
+`sharehub/share-14`'s 1.9 book record gets a fidelity slot only by a re-run.
+
+**v3.0's change from 2.9 is one FIDELITY rule:**
+a study-scope formula (*under the conditions of this study*, *within the
+limitations of this study* …) is not a hedge, so a claim that leaves it out is
+not «قاطع‌تر از منبع» — every finding belongs to its study, the page cites the
+study and the DES card grades it (founder, 1405/07/17). Real hedges (*may*,
+*suggests*, *appears to* …) still count. No SOURCE score moves; a 2.9 record
+stays valid under its own stamp.
+
+**v2.9's change from 2.8 is four FIDELITY verdict
+rules, plus the way the FIDELITY call is run (Part 2c).** No SOURCE score
+moves. A ranking («قوی‌ترین», «مطمئن‌ترین», «بیشتر از») is one claim wherever
+it appears; a relation between sources («تنها مطالعه‌ای که…», «هم X و هم
+بقیه…», «تعارض ندارند») is silence in a one-source call; one governing
+sentence decides the verdict, the `change_kind` and the quote, and a faithful
+sentence must carry the claim's modifiers too; and an absolute word the source
+does not use («فقط», «همیشه», «هرگز», «همه‌ی»…) is `HEDGE_REMOVED`, never
+silence (founder, 1405/07/17). `sharehub/share-18` is why: two v2.8 runs over
+the same five full texts agreed on 57 of 61 units, and three Sonnet rounds
+under the v2.9 drafts took one source from 16/19 to 18/19 identical units with
+the flagged sentences identical from round 2 on. A 2.8 record is re-run, never
+re-labelled.
+
+**v2.8's change from 2.7 is the FIDELITY arithmetic
+only: F4 scores the claims the source ADDRESSES** (`MATCHES` + `ALTERED` +
+`REVERSED`). A sentence the source is silent about (`NOT_IN_SOURCE`) is counted
+and shown, never scored — under a full text it is almost always the author's own
+background knowledge or clinical reasoning, and scoring it zero took
+`sharehub/share-23` from 98 to 91 for explaining. No verdict changes and no
+SOURCE score moves; a 2.7 record is re-scored by recomputing F4 from its stored
+verdicts and re-stamped 2.8 (no model call). The card's headline is the
+firmer/wider/reversed claims themselves, not the percentage (appendix rule 5).
+
+**v2.7's change from 2.6 is that the FIDELITY call
+reads the SAME text the SOURCE call scored, on the same basis** — a page written
+from a full text is judged against the full text, never its abstract; the tool
+refuses a mismatch (spec F0, appendix rule 11). Under `FULL_TEXT` the most
+specific sentence governs (F2-v), and a sentence naming two conditions together
+(«saliva or blood») is a general finding, not a statement about either (F2-iv
+item 4). `sharehub/share-23` is why: judged against its abstracts, three of its
+stage-by-stage blood claims read as `REVERSED`; the full texts support them. No
+SOURCE score moves.
+
+**v2.6's change from 2.5 is the FIDELITY track made
+to work on DentCast's own prose and on pages that cite several sources** — F1/F2
+rules for an author who explains rather than reports, F2-iii (instructions),
+F2-iv (claims that tell conditions apart), F6 (several sources, `POOLED` when
+none is named), and `tools/des_fidelity_units.py`, which is the caller's split
+and assignment as code. No SOURCE score moves.
+
+**v2.5's change from 2.4 was a SECOND call: the
+FIDELITY track.** No SOURCE score moves — Steps 0-5 and the COMMENTARY track
+are untouched except for a `mode` field whose absence means `SOURCE`. The new
+call takes the page's own text and the source it cites and answers one
+question: does each claim the page attributes to the source appear in the
+source, unchanged in direction, hedge and scope? It is run **after** the SOURCE
+call for that source, per source, and is described in **Part 2b** below. Its
+release precision test is recorded in the spec's own Versioning entry (41
+independent runs, three inputs, every verdict and score identical from the
+second round on).
+
+**v2.2's change from 2.1 is `text_basis:
+SECONDARY_REPORT` (Step 0 + Step 1).** A document that reports work published
+elsewhere — a consensus statement, a guideline, a conference synthesis — rates
+silence about a method as `NR` rather than `high`, and caps the multiplier at
+0.75, exactly as `ABSTRACT_ONLY` does: an abstract condenses by length, a
+secondary report condenses by role, and in neither is a missing method evidence
+that the study skipped it. It is the **fallback**, not the default — Question
+4.8's chain rule scores the primary studies wherever they are retrievable, and
+this basis is for the wrapper you could not get past. Only records scored
+`FULL_TEXT` against a secondary report move under this bump; the four
+consensus/guideline sources already on record were all `ABSTRACT_ONLY` and are
+arithmetically unchanged.
+
+**v2.1's change from 2.0 is that the AMSTAR-2
+excluded-studies domain has THREE outcomes instead of two (Step 3b-iii).** A
+review that published no per-study list of excluded full-text studies is now
+`some_concerns` rather than `high` **when it reported both** a screening account
+with counts (a PRISMA flow diagram, or records screened → full texts assessed →
+included) **and** explicit inclusion/exclusion criteria; a review that documented
+neither, or only one of the two, is still `high`, and that `high` still counts
+toward AMSTAR-2 *critically low*. The reason is that the old rule failed **9 of
+the 9** full-text reviews on record — a domain nothing can pass carries no
+information, and it was rating a PROSPERO-registered five-database review with a
+PRISMA flow identically to a narrative review with no Methods section at all.
+Under `ABSTRACT_ONLY` nothing changes: silence there stays `NR`. Two scores moved
+when this landed, both systematic reviews cited by `sharehub/share-9`, from 55/C
+to 80/A; everything else on record is arithmetically identical.
+
+**v2.0 remains in force for everything else, and its change from 1.x is that a transparency
+penalty is a SHARE of the design anchor, not a flat deduction (Step 4a).** The
+table's numbers are now `base_points`, and what gets subtracted is
+`max(1, round_half_up(base_points × S_design ÷ 100))`. Every penalty object
+therefore carries **both** `base_points` (the row's table weight, always 8/5/5/3)
+and `points` (what was actually subtracted); Phase F recomputes the scaling from
+the pair and fails a mismatch, so writing the old flat value is caught rather
+than shipped. The reason is that `S_design` ceilings differ by almost seven times:
+a flat −8 was 8% of an SR's achievable range and 53% of a narrative review's, and
+below a certain anchor it exceeded the whole range, so weak-design papers piled
+up on a floored 0 and stopped being distinguishable. **Version-gated:** records
+stamped `1.x` keep validating against the flat table they were written under —
+only `2.0` and later are checked for scaling. Across the 47 RESEARCH sources on
+record only 5 carried a penalty at all and **no band moved**, so a page's
+reader-facing band is unaffected either way.
+
+**The determinism rules from v1.5/v1.6 are unchanged and still binding.** Two of
+them exist because a blind reproducibility run found them missing, so do not
+treat them as pedantry: **quality judgment is out of the domain rating**
+(present-vs-absent, plus the closed threshold table in 3b-i — if you are arguing
+that a described method is *bad enough* to count as absent, the answer is
+`some_concerns`), and **an absence-based `high` must name the sections you
+actually read** (3b-ii). Do not decide absence by keyword search alone: a paper
+can appraise its studies without ever writing the word "quality", and a grep
+that misses that produces a confidently wrong `high`. Phase F fails any
+absence-based `high` that carries no note. Every place
+v1.3 left a decision to the scorer is now decided: one tool per design, a fixed
+domain list, an explicit rating rule (under `FULL_TEXT`, silence about a
+safeguard is `high`, not `NR`), routing for the designs that matched no anchor,
+a narrowed funding penalty, and round-half-up on exact decimals. Follow the
+rules even where your own judgment differs — **a score everyone reproduces is
+worth more than a slightly better score nobody can.** Any RESEARCH record still
+stamped `des_version` below `1.5` predates this and must be regenerated before its
+number is compared with a new one; v1.6 changed nothing on the RESEARCH side, so
+`1.5` and `1.6` research scores are directly comparable.
+
+**The COMMENTARY track's one carve-out is why a Chairside, MetaNote or Insight
+page now scores 3 higher than it did.** Checklist item 4 («صریحاً تجربه/دیدگاه
+نامیده شده») can be earned from the section's own published declaration rather
+than a sentence inside the page — for `chairside/`, `metanotes/` and `insight/`
+only, because those three landing pages carry such a declaration and the spec
+quotes all three verbatim in a closed table. When you use it, the
+`evidence_quote` is that declaration copied from the landing page and the item's
+`note` is MANDATORY and names the file it came from.
+
+**The list is closed and has exactly one entrance, which `insight/` is the
+precedent for: the section's landing page gets an explicit declaration first,
+and the spec version bumps after.** Never add a section because it resembles one
+already listed. `insight/` did not qualify under v1.6, when its page said the
+series covers «تجربه‌های بالینی **و** یافته‌های علمی» and therefore could not
+tell a reader which of the two the page in front of them was; v1.7 added it
+because that page was rewritten to declare the section. Any COMMENTARY record in
+`chairside/` or `metanotes/` stamped `des_version` below `1.6`, or in `insight/`
+below `1.7`, is scoring low by 3 and must be regenerated. The appendix says so itself ("NOT part of the
+model instruction … Do not include this appendix if the file is loaded verbatim as a
+system prompt"): those checks are yours to run in Part 3, not the model's.
+
+The user turn is the spec's Step 0 input block, **one block per source**:
+
+```
+doi:               <the DOI, or empty for COMMENTARY>
+source_text:       <the text resolved in Part 1>
+text_basis:        FULL_TEXT | ABSTRACT_ONLY
+metadata:          title / authors / year / journal (from the cabinet hit or the lookup)
+clinical_question: <omit unless this publish explicitly answers one>
+```
+
+- **`journal_quartile` has no source anywhere in this repo.** Neither the cabinet nor
+  any other file carries a Scopus/JCR quartile, so leave it out of `metadata` and
+  expect `{"value":"NR","source":"NR"}` back. Never fill it from memory: it is
+  barred from influencing any rating anyway, but a fabricated Q1 is still a false
+  claim shipped on a page.
+- **One run per source, never merged.** A page citing three papers produces three
+  input blocks and three DES objects. Never concatenate sources into one block and
+  never average their scores.
+
+#### Part 2b — Run the FIDELITY call (spec v2.5, v2.7, v3.1, v3.2, v3.3), once per source whose text is in hand
+
+**When.** For every source in basket 2 whose SOURCE call read a text — RESEARCH,
+COMMENTARY, **or `NOT_APPRAISABLE` with `text_basis` `FULL_TEXT` or `EXCERPT`**
+(spec v3.1: a textbook chapter or a glossary entry has sentences, and whether the
+page says what they say is a separate question from whether the source is strong).
+Skip it, and store `null` in its slot, when the SOURCE call returned an error
+(`INSUFFICIENT_TEXT`, `DOI_TEXT_MISMATCH`) and for the page's own COMMENTARY
+self-record (a text cannot be unfaithful to itself). A `NOT_APPRAISABLE` source
+recorded `CITATION_ONLY` (its text was sought and not found, Part 1) gets no call
+and its slot is the spec's own error object
+`{"des_version":"3.1","error":"INSUFFICIENT_TEXT"}` — never a silent `null`; the
+reader is told nothing about it (what is not there is not announced — founder,
+1405/07/19), the record and the publish report are. Basket 1 pages never reach this call: fidelity needs a
+cited source. No classifier decides whether the page «is a report of the paper»
+— spec F1 decides per unit, and a page that merely lists the paper in its
+references attributes fewer than three claims to it and lands on
+`INSUFFICIENT_CLAIMS` by itself (spec appendix rule 9).
+
+**The model must not have seen the page's text in the SOURCE call, and must not
+see the SOURCE score here.** Two calls, two contexts. A model that read the
+write-up before scoring the paper can be led by it; a model that knows the band
+before judging the write-up confuses a weak paper with an unfaithful summary.
+
+**Build the input blocks with the tool, never by hand** (spec F0, F6, appendix rules 7 and 10):
+
+```bash
+python3 tools/des_fidelity_units.py <content_id>                 # which calls, how many units each
+python3 tools/des_fidelity_units.py <content_id> \
+  --texts texts.json --build <dir>                                 # one input block per call
+```
+
+`texts.json` maps each source's DOI — or, for a DOI-less source, its position tag
+`S<n>` — to the `source_text` and `text_basis` the SOURCE call scored — **the same
+text, never a shorter one** (a book's `EXCERPT` included): a source scored
+`FULL_TEXT` from the cabinet is judged here on that full text, because the
+page was written from it. `--build` exits non-zero when a basis differs from
+the stored SOURCE record (spec v2.7 appendix rule 11).
+The tool decides the scope: one source → every unit to it;
+several named in the prose → one call per named source with only its units,
+and (v3.2) the units naming none of them to the one source no unit names;
+several and none named → `POOLED`, which is one ordinary `SOURCE` call **per
+source** (`input-pooled-S<n>.json`, every unit in each, `pooled_part` set) and
+then `python3 tools/des_fidelity_units.py <content_id> --merge <dir>` over the
+answers saved as `out-S<n>.json`, which writes the one pooled object by spec
+F6's fold — the model never reads two papers in one call (v2.7). Each block it
+writes has this shape:
+
+```
+mode:              FIDELITY
+scope:             SOURCE (always; POOLED exists only as the merge's output)
+pooled_part:       <«S<n>» on a POOLED page's per-source blocks, absent otherwise>
+source_text:       <exactly the source_text the SOURCE call scored>
+text_basis:        <exactly the SOURCE call's text_basis>
+units:             <the page's body, split by the rule below, as [{id:"u1", text:"…"}, …]>
+derivative_url:    <the page's canonical URL — provenance only>
+source_conclusion: <the LAST sentence of source_text (FULL_TEXT: of its last Conclusion section), copied verbatim>
+```
+
+The split and the assignment are deterministic and are **the tool's, never the
+model's**: it reads the rendered prose (title, headings and body, in order; the
+region `verify_publish.py`'s `article_region()` reads), stops at the citation
+block, splits on line breaks and sentence terminators, marks headings, and
+numbers units `u1…uN` over the whole page — so a call that received only some
+units sees ids with gaps, which is correct. Model segmentation and attribution
+were the two largest sources of run-to-run disagreement in the release tests and
+were taken out of the model's hands for exactly that reason.
+
+**The output** is the spec's F5 object. Validate it in Part 3(5), then store it
+in Part 4.
+
+#### Part 2c — How the FIDELITY call is run: two independent checker runs, a tie-break, a stronger reviewer
+
+The FIDELITY call is an independent agent per input block, reading
+`.dentcast/des-v3.4-knowledge.md` (the spec minus its appendix) as its
+instruction and the block as its user turn. **The roles are provider-neutral:**
+choose a capable, lighter reasoning model as the **checker**, and a stronger
+reasoning model as the **reviewer/adjudicator**. Sonnet and Opus name the original
+Claude implementation, not a requirement to use Anthropic.
+
+| Environment | Checker: both full runs + disagreement-only third run | Stronger reviewer/adjudicator |
+|---|---|---|
+| Claude / Anthropic | Sonnet | Opus |
+| ChatGPT / Codex / OpenAI | e.g. `gpt-6.1-sol`, when exposed by the execution environment | e.g. `gpt-6-astra`, when exposed by the execution environment |
+| Grok / xAI | an available lighter **reasoning** model, e.g. a Fast reasoning variant | the available stronger flagship reasoning model, e.g. Grok 4.7 |
+| Any future provider | a capable lighter reasoning model available to the agent | an available stronger reasoning model |
+
+These are role examples, not fixed versions, cross-provider quality equivalences,
+or a claim that an app subscription exposes every model or multi-agent tools.
+Verify actual model IDs and delegation capabilities before starting. For Grok,
+consult the live official model list (`https://docs.x.ai/developers/models`);
+if a Fast variant is not available, do not invent one. If separate agents or a
+stronger reviewer are unavailable, report the missing stage; never label one
+model's repeated self-review as the completed two-tier protocol.
+
+**Mandatory model-routing preflight (before any FIDELITY checker call).** Inspect the execution environment's *actual* model/delegation controls, not the example model names above. Resolve and record (a) the exact provider/model ID and reasoning settings for the lighter checker, (b) the exact provider/model ID and reasoning settings for the stronger reviewer/adjudicator, and (c) whether independent checker contexts and per-role model selection are actually supported. Verify that the checker is genuinely the lower-cost role using available provider pricing/usage information; never infer cost from a model nickname. If these facts cannot be verified, **STOP before launching FIDELITY agents**, report which capability or cost evidence is missing and request the founder's explicit choice to defer or use a documented fallback. Never silently run all roles on the default model, claim savings without evidence, or present repeated calls to one model/context as independent agents. Record the preflight outcome and actual model IDs/settings in the publish report; if the runtime does not expose actual executed model IDs, mark them UNVERIFIED rather than claiming compliance. This gate does not change DES/FIDELITY scoring rules, stored JSON, or historical records.
+
+**The model is part of the measurement:** freeze the same checker model/version
+and reasoning settings for runs 1, 2 and 3 of a record; the stronger reviewer is
+a separate role, not a third checker vote. Give the first two agents identical
+spec/source/unit inputs but separate contexts; neither sees the other's output.
+The third checker sees only the disagreement units and their source/context,
+not the earlier verdicts. Record actual provider/model IDs, reasoning settings
+and each run's role in the publish report (outside the spec's score objects).
+Keep historical records and their provenance unchanged.
+
+1. **Two full runs per input block** — `<dir>/out-src<k>-1.json` and `-2.json`.
+   Two, not one: a sentence one run calls `MATCHES` is otherwise never looked
+   at again, and a missed firmer-than-the-source sentence is the error nobody
+   sees (share-18: «لبه‌ی نازک» was caught by some runs and missed by others).
+2. **Tie-break only where they differ.** `--vote <dir>` lists every unit the
+   two runs answered differently (any verdict or kind, flagged or not); build
+   blocks for those alone (`--build <dir2> --only u…`), run them once, save
+   as `out-src<k>-3.json`. Units the two runs agree on are settled.
+3. **Vote**: `python3 tools/des_fidelity_units.py <content_id> --vote <dir>`.
+   Two agreeing votes win; with three, the `(verdict, change_kind)` pair two
+   share wins, quote and note from the earliest run in it. Three different
+   answers → the designated stronger reviewer/adjudicator decides that unit in
+   `<dir>/adjudicate.json` (`{"src<k>": {"u…": {verdict, change_kind,
+   source_quote, note}}}`).
+4. **The stronger reviewer reviews every unit the vote leaves `ALTERED`/`REVERSED`** — not only
+   the unresolved ones. More checker votes cure random disagreement but not a
+   shared misreading (share-18: two of three runs read Saker's «internal», an
+   average of the other areas, as a third surface). The reviewer reads the
+   unit, its neighbours, the sentences the runs quoted and, where a term is
+   defined there, the source's Methods, then writes
+   `<dir>/review.json` (`{"src<k>": {"u…": {"agree": true|false, "reason":
+   "…"}}}`). A dissent never flips the verdict: `--vote` appends it to the
+   unit's `note`, and Part 3b shows the founder both reasons side by side.
+
+`--vote` exits non-zero while any unit still needs a tie-break run, an
+adjudication or a review. `voted-src<k>.json` is what Part 3 validates and
+Part 4 stores — one object per source, the spec's own shape. `--vote` is for
+SOURCE scope; a POOLED page is not voted yet (it runs one call per part and
+`--merge`, as before).
+
+#### Part 3 — Validate the output mechanically (the appendix's contract)
+
+The prompt returns a single raw JSON object. Before anything is stored, run the
+appendix's checks yourself — an output that fails these is not a score:
+
+1. **Quote verification.** Every `evidence_quote` must be a **verbatim substring** of
+   the `source_text` you supplied, after normalizing both sides (collapse whitespace
+   runs, strip soft hyphens and line-break hyphenation, expand fi/fl ligatures,
+   straighten curly quotes, nbsp → space, Unicode NFKC). A failure is **flagged for
+   manual review, not silently dropped** — the appendix notes that recurrent failures
+   usually mean bad PDF text extraction rather than model fabrication.
+   **One quote is checked against a different file:** a `chairside/`, `metanotes/`
+   or `insight/` COMMENTARY item 4 earned from the section-level declaration quotes
+   that section's `index.html`, not the article, and must carry a `note` saying so.
+   Phase F knows both haystacks and refuses the note-less version.
+2. **Arithmetic recomputation.** RESEARCH:
+   `des_score == round(s_design.value × q_method.multiplier) − Σ penalty points`,
+   floored at 0. COMMENTARY: `des_score == 5 + Σ checklist points`. A mismatch
+   invalidates the record — re-run it, never hand-patch the number.
+3. **Band agreement.** `band` must be the one `des_score` actually falls into
+   (A 80–100 · B 60–79 · C 40–59 · D 20–39 · E 0–19). For COMMENTARY the band is
+   **always `E`** with a score in 5–19; anything else means the model took the wrong
+   track and the run is void.
+4. **Schema.** Exactly the spec's key set, no extras. `question_type` is the literal
+   `null` (unquoted) for COMMENTARY; `s_design` / `q_method` / `penalties` are `null`
+   for COMMENTARY; `commentary_checklist` is `null` for RESEARCH.
+5. **FIDELITY (spec appendix rule 8).** One `claims` object per unit, in input
+   order and with the input's ids, `claim_quote` byte-equal to the unit's text;
+   `scope` copied from the input, and `source_ref` an «S<n>» tag on every quoted
+   claim under `POOLED` and `null` otherwise; every non-empty
+   `source_quote` a verbatim substring of `source_text` by the rule in (1), and
+   ONE whole sentence; no `NOT_IN_SOURCE` under `ABSTRACT_ONLY`/`SECONDARY_REPORT`
+   and no `NOT_ASSESSABLE` under `FULL_TEXT`; every `ALTERED` carries a
+   `change_kind` from the closed F2-i list and no other verdict carries one;
+   `counts` equal the tally of `claims`; `assessable` = matches + altered +
+   reversed (from v2.8; + not_in_source on a 2.5–2.7 record); `fidelity_score` and `level` recompute by F4 (score
+   `null` and level `INSUFFICIENT_CLAIMS` below three assessable claims; any
+   `REVERSED` caps the level at `MEDIUM`); `provisional` is true exactly when
+   `text_basis` is not `FULL_TEXT`; `source_conclusion` is echoed unchanged.
+
+**These five are also enforced mechanically.** Phase F re-runs all of them over
+every record in `plus/des-scores.json` (rows tagged `4.13 DES`), so a mistake
+here fails the publish rather than shipping. Running them yourself first is
+still the job — the gate tells you *that* something is wrong, not what the
+right score was.
+
+**Reproducibility check (appendix §6) on the first score of any new question type:**
+score the same input three times. A one- or two-point drift in the number is
+acceptable; **a band change is not** — it means the anchors were read loosely and the
+run is unusable.
+
+#### Part 3b — Offer the founder a fix for every differing sentence (founder gate, never automatic)
+
+**The fidelity grade exists to make the writing better, and the goal is
+«کاملاً مطابق»** (founder, 1405/07/17). So when a validated FIDELITY result
+carries any `ALTERED` or `REVERSED` unit, the publish **stops here, before
+Part 4 stores anything**, and the founder is shown each such sentence and asked
+whether to fix it. This is a gate of `agent-parity.md` §1 (never batched into
+the final report, never skipped because the grade is already high).
+
+For **each** `ALTERED` / `REVERSED` unit, one block, in this order:
+
+1. the page's own sentence, **verbatim** (copied from the page, never re-typed —
+   Hard Rule 16);
+2. what is different, in plain Persian («قاطع‌تر از منبع»، «گسترده‌تر از منبع»،
+   «برعکسِ منبع»…), from `change_kind`;
+3. the source's own sentence (`source_quote`), and which source it is;
+4. **one proposed rewrite with the smallest change that makes it match** —
+   add the source's own qualifier («ممکن است», «در برخی مطالعات»), narrow the
+   scope back to what was tested («در یونیورسال‌ها» for «در همه‌ی سیستم‌ها»),
+   or, for a `REVERSED`, state the source's direction or drop the claim. Keep
+   the founder's wording, rhythm and terms everywhere else in the sentence;
+   change nothing a `MATCHES` sentence says; a ZWNJ stays a ZWNJ;
+5. the question, with exactly three named answers: **«اصلاح کن»** (apply the
+   proposal as shown), **«خودم می‌نویسم»** (the founder types the sentence; it
+   is copied verbatim), **«همین بماند»** (no change — the author's right; the
+   sentence stays flagged in the record).
+
+Sentences the sources do not address (`NOT_IN_SOURCE`) are **not** offered:
+they are not faults and do not lower the grade (spec v2.8 F4). Never edit a
+sentence without its own «اصلاح کن» / «خودم می‌نویسم»; a «بله» to one is
+never a «بله» to the others.
+
+**After any accepted edit:**
+
+- Apply it to the page body exactly as approved, and to the **same sentence in
+  the en mirror** (Phase D) — translated, nothing else touched. If the edited
+  sentence also lives on another surface (the lead used for the description,
+  the brain `summary`, the Pulse line), that is a **sweep** (Hard Rule 17): every
+  surface in the same commit.
+- **Re-check only the edited sentences** (founder, 1405/07/17) — the last
+  full run already judged every other sentence, and judging them again buys
+  nothing but fresh run-to-run noise on sentences nobody touched. Build blocks
+  for the edited units alone (`--build <dir2> --only u…`, same `source_text`,
+  same basis), run them by Part 2c (two runs, a tie-break where they differ, a stronger-model
+  review of anything still flagged), then
+  `python3 tools/des_fidelity_units.py <content_id> --vote <dir2> --base <dir1>`,
+  where `<dir1>` holds the `voted-src<k>.json` of the last full run. The tool
+  keeps the base verdict for every unit not re-checked, recomputes counts,
+  score, level and the Persian lines, and **refuses** when the edit shifted the
+  page's unit ids (a sentence split or joined), when a changed unit was not
+  re-checked, or when a re-check judged old text — in those cases, and only
+  those, run the full step again. Never patch a verdict by hand.
+- Report the grade **before → after** («تطابق خیلی بالا → کاملاً مطابق»). If the
+  new run still flags a sentence — including one just rewritten — offer it
+  again; the loop ends when nothing is flagged or the founder says «همین بماند».
+
+Only then go on to Part 4, which stores the **final** result.
+
+**For a page already published** (trigger **«تطابق X رو کامل کن»**, «عدم
+انطباق‌های X رو نشونم بده»): read its stored `fidelity` from
+`plus/des-scores.json`, run this same Part 3b on it, then the re-run above,
+then Part 4 (replace the record's `fidelity` and its `scored_at`), Phase F,
+and `tools/stamp-version.py` last. Resolve `source_text` again by Part 1 (the
+scratch copy does not survive a session) — and from the **same** basis the
+SOURCE record was scored on, or the tool refuses it.
+
+#### Part 4 — Store the record
+
+**The score does NOT go in `dentcast-brain.json`.** Hard Rule 5 forbids adding a
+field previous same-category entries do not have, and no brain entry has ever
+carried one. It lives in its own versioned file, exactly as `plus/pathways.json` and
+`plus/badges.json` do:
+
+**`plus/des-scores.json`** — a JSON object keyed by `content_id` (the page path
+without the leading `/` and without `.html` — the same id Phase F takes):
+
+```json
+{
+  "episodes/episode-161": {
+    "scored_at": "2026-08-14",
+    "sources":  [ { "des_version": "2.5", "content_type": "RESEARCH", "...": "..." } ],
+    "fidelity": [ { "des_version": "2.5", "mode": "FIDELITY", "...": "..." } ]
+  }
+}
+```
+
+**`fidelity` is an array PARALLEL to `sources` by index** — same length, slot
+`i` is the FIDELITY object for `sources[i]`; the spec's own error object
+`{"des_version":"3.1","error":"INSUFFICIENT_TEXT"}` where the source is
+`NOT_APPRAISABLE` / `CITATION_ONLY` (its text was sought and not found — v3.1);
+and `null` only where no FIDELITY call was owed (Part 2b's skip cases, plus a
+source no unit of the page names). Phase F is version-gated: a fidelity object
+on a `NOT_APPRAISABLE` source must be stamped ≥ 3.1 over a `FULL_TEXT`/`EXCERPT`
+record, and a `null` on such a source in a record with no 3.1 slot is still what
+the rule then said. **Under `POOLED` scope it is the one pooled object instead of an array**,
+because that call judged the page against all its sources at once. It is omitted entirely on a record
+written before v2.5 or on a basket-1 page; Phase F accepts both shapes and
+rejects a `fidelity` whose length differs from `sources`. Parallel by index
+rather than keyed by DOI because the spec's output object carries no
+identifier of its own, and inventing one would be a second copy of
+`citation.doi`.
+
+Two invariants and nothing else. **`sources` and `fidelity` hold the spec's output objects
+verbatim** — the spec owns both shapes, so never reshape, rename, reorder or trim them.
+And **nothing derivable is stored beside them**: no wrapper-level `band`, no `track`,
+no display strings. `content_type`, `band`, `question_type` and `provisional` already
+live inside each object, and a second copy is a second source of truth that can drift
+out of agreement with the first. `scored_at` is stored precisely because nothing else
+can derive it.
+
+For a skipped publish, write **no key at all** — an absent `content_id` is how the
+display knows there is nothing to show. Never write an empty or placeholder entry.
+
+#### Part 5 — The display is a shared module, never page markup
+
+**No page carries DES markup.** This is the same rule the article action row already
+runs on: zero article pages carry that markup either, which is exactly why changing
+it costs no page edits. The renderer reads `plus/des-scores.json` by `content_id` and
+draws the band chip above the prose and the evaluation card after the body — the full
+display contract (placements, the five discrete band blocks, the «تجربهٔ بالینی»
+commentary variant, the colour rule) lives in **CLAUDE.md § "DES display"**.
+
+**This step's obligation ends at the record.** It writes data; it does not edit the
+page. Status as of 2026-08-14: the record format and this step are live, the shared
+renderer is not built yet — which costs nothing, because every record written now
+lights up the moment that module ships. **`fidelity` is drawn too, from spec 2.8 on
+(1405/07/17):** `plus/js/des.js` adds a second chip («تطابق با منابع: …», one
+word, never a number) beside the band chip and a «تطابق با منابع» tab in the
+card, read from the record this step writes — so a 2.8 fidelity object goes
+live the moment it is stored, and an older stamp is ignored (approved mockup
+`.dentcast/des-fidelity-v28-mockup.html`; display rules in CLAUDE.md § DES).
+Several per-source fidelity objects are drawn as **one** box — one tally, one
+word, each differing sentence naming its paper, a collapsed «به تفکیک منبع»
+row — by `des.js` alone; this step still stores one object per source.
+A publish therefore needs nothing on the page for it: the record is the whole
+job. Do **not** compensate by inlining markup or CSS into the published page.
+
+#### Verify & report
+
+Per source: the DOI (or «متنِ خودِ مطلب» for COMMENTARY); where `source_text` came
+from (cabinet hit / MCP lookup / WebFetch / pasted by the user); the `text_basis` and
+why; the resulting `des_score`, `band`, `question_type` and whether `provisional` is
+true; and the outcome of each of the five Part-3 checks. Per FIDELITY slot: the
+`level` and the word the reader will see for it («تطابق خیلی بالا», spec v2.8
+appendix rule 5), the count line («۵۰ از ۵۲ ادعایی که منابع به آن پرداخته‌اند
+مطابق است؛ ۴ جملهٔ دیگر در منابع نیامده»), every `ALTERED` and `REVERSED` unit
+with its `change_kind`, or the reason for a `null` or `INSUFFICIENT_TEXT` slot. And Part 3b's outcome: each
+offered sentence with the founder's answer («اصلاح کن» / «خودم می‌نویسم» /
+«همین بماند»), and the grade before → after the re-run. For a skip, the documented
+reason line. Explicitly confirm that no DOI, abstract, or quartile was guessed.
+
+### 4.14. چالش — public half on the page, private half in the admin queue
+
+**Runs only when Question 4.9 answered «چالش».** Full design in
+`.dentcast/challenge-handoff.md`; this step is a summary of its §11.3, not a
+second source of truth for it — read the handoff before touching this step.
+
+Two halves, two homes, and mixing them up is the one mistake that cannot be
+walked back once it is in git history (RULE 2):
+
+1. **The public half — the question + image — goes ON THE PAGE**, inside the
+   folder's normal prose box, the same place an ordinary post's body would go
+   (a چالش clones the same page template; only the body differs). Mark up the
+   question element with `data-dc-challenge-question` and the image with
+   `data-dc-challenge-image` — `tools/build_challenge_index.mjs` reads exactly
+   that markup. **Never** put the answer or the key points on the page, in the
+   brain entry, or in any committed file.
+
+   **Copy insight-68's markup exactly (RULE 18, handoff §11.3) — it is the
+   reference implementation, not just the first example:**
+   ```html
+   <p data-dc-challenge-question data-dc-challenge-image="/insight/insight68.webp">
+     …the question, verbatim…
+   </p>
+   ```
+   Two things this is not allowed to drift on: **no separate `<img>` tag** —
+   the image lives only as that data-attribute value, because insight-68's
+   first draft had a real `<img>` *and* the live JS block redrawing the same
+   image, so the question and the photo both rendered twice on the page
+   before that was fixed. And the path is **site-absolute** (`/insight/
+   insight68.webp`), never a bare filename — a bare filename happens to work
+   on the standalone page but 404s on the desktop 3-column shell, which
+   injects the article in place inside `index.html` rather than in an
+   iframe. Both are enforced by `tools/build_challenge_index.mjs` (throws on
+   a non-absolute path) and re-checked by `tools/verify_publish.py`'s چالش
+   row — do not rely on memory for either.
+2. Run `node tools/build_challenge_index.mjs` in step 8 (after the pillar
+   builder, before `build_plus_index.mjs`) so this `content_id` lands in the
+   generated `plus/challenges.json`.
+
+Then **print the founder's paste box** into the publish report, for
+`GET /admin` → «صندوق چالش»:
+
+```json
+{ "content_id": "chairside/chairside-31",
+  "answer_fa": "…",
+  "key_points": [ { "id": "kp1", "text": "…" }, … ] }
+```
+
+**Say explicitly, in the report, that the چالش is not live until that paste
+happens** — until the founder posts this to `/admin/challenges/upsert`, the
+page renders the question with no answer box at all (`GET /challenge/:id`
+answers `{exists:false}` and the block removes itself), so a half-published
+چالش is invisible rather than broken. This is expected, not a defect to fix
+in this step.
+
+**A چالش skips the article-shaped steps** that assume prose to work from —
+give each its own explicit verdict in the report, never a silent skip
+(Hard Rule 11):
+
+| step | on a چالش |
+|---|---|
+| 4.11 flashcards | **skip** — no FAQ; a چالش has no prose to define terms from |
+| 4.12 quiz-ready FAQ | **skip** — same reason (and see RULE 1: never confuse this with `quiz-index.json`) |
+| 4.13 DES | **skip, reported** — a question cites nothing and appraises nothing; write **no key** in `des-scores.json` |
+| 5.6 / 5.6-ب pathways & bundles | **skip** — a pathway step is something to read |
+| Phase D en mirror | **skip — decided** (RULE 16, the second documented exception to Hard Rule 12 alongside LiteCast) |
+
+Steps 2.4 (pillar), 2.5 (کاوش بیشتر), 2.6 (landing page), 5.0 (hashtags), 5
+(brain entry, per RULE 15 — the folder's ordinary shape, never a new `type`),
+6 (Pulse), and Phase E/F all **run** exactly as they would for an ordinary
+post in that folder.
+
+### 5.0. Hashtag standardization against the reference library (Hard Rule 15)
+
+The entry's `hashtags` are a **standardized vocabulary** governed by `dentcast-hashtag-reference.json` — the canonical library the AI case-assistant search reads (mirrored into `plus/content-index.json`, which the live API loads with auto-reload). Settle the **final canonical hashtag list here**, before it is consumed by the brain write (step 5) and the page's visible chips. This runs on **every publish that writes a brain entry** — LiteCast included (its brain is `litecast/lite-glossary.json`; run the same discipline against the library). The `dentcast_cabinet_full_catalog.json` paper `tags` are a **separate** kebab-style system and are **out of scope here** (step 4.10 owns them).
+
+**Step 1 — Draft the concepts.** From the confirmed text, draft the genuinely semantic concepts the article *resolves* (Rule: tag what it resolves, not what it merely mentions) — golden length **2–3 words**, no junk/generic tags, and include the article's own series/name tag where the type uses one. These are concepts to look up, not final tags yet. They remain proposals under Hard Rule 13 (shown to the user).
+
+**Step 2 — Resolve each against the library. Reuse before you mint.**
+```bash
+python3 tools/hashtag_ref.py --simulate "<concept phrase a dentist would type>"
+```
+The phrase is tokenized through the alias layer, so a concept already in the library under **any** spelling surfaces as the top canonical `#tag`. If a real concept already covers it → use that **canonical `#tag`** verbatim on the article. **Never invent a second spelling; never write the alias form as the tag** (Hard Rule 15). (`--words "<tag>"` shows how the engine tokenizes something; `--backlog <type>` lists brain tags with no reference entry.)
+
+**Step 3 — Mint only what's genuinely new.** For a concept the library truly lacks, add a canonical entry via a batch file, then apply it:
+```jsonc
+// .dentcast/hashtag-batches/NNN-<short-name>.json  (NNN = next number in that dir)
+{ "type": "<locked-type>",
+  "concepts": [{
+    "tag": "#<canonical>",                 // 2–3 words, same Persian underscore style as neighbours
+    "domain": "clinical | ai | brand",
+    "definition": "<what the concept IS>",  // real; never fabricate to fill the field
+    "use_when": "<when an article may carry it>",
+    "aliases": ["<english equivalent>", "<spelling/script variant>", "<synonym a dentist types>"]
+  }],
+  "articles": { "<content_id>": ["#<canonical>", "…the article's full canonical tag list…"] } }
+```
+```bash
+python3 tools/hashtag_ref.py --apply .dentcast/hashtag-batches/NNN-<short-name>.json
+```
+Rules for a new concept: **only non-canonical spellings go in `aliases`** — an existing canonical `#tag` is **never** filed as another concept's alias (Hard Rule 15); an alias must not equal another concept's word-set or an alias already in use (the compiler reports collisions — heed them). The guard **refuses** any tag lacking a library entry and any door-closing merge/rename — **fix what it flags, never force it** (`allow_lossy` is almost never right).
+
+**Step 4 — Write canonical tags everywhere, then verify.** Only canonical `#tag`s reach the brain `hashtags` (step 5) and the page's visible chips. **For episodes**, `--apply` rewrites the on-page chips from the brain and `tools/build_episodes.py` (step 8) regenerates `episodes.html`; **for other types**, set the cloned page's chip markup to the canonical list by hand so page and brain agree. Then:
+```bash
+python3 tools/hashtag_ref.py --sync      # recompute counts + compile the alias table into the reference
+node tools/build_plus_index.mjs          # mirror tags+aliases into plus/content-index.json (the live search reads this)
+python3 tools/hashtag_ref.py --check     # every enforced type carries only canonical tags — MUST pass
+python3 tools/hashtag_ref.py --simulate "<a real question a dentist would type at this article>"   # confirm it is reachable, ideally rank-1
+```
+**Report:** which proposed concepts **reused** an existing canonical tag, which were **newly minted** (and their aliases), plus the `--check` result and the `--simulate` rank. (`build_plus_index.mjs` also runs in step 8's rebuild list — running it here too is idempotent and keeps the live index current immediately.)
+
+### 5. Brain entry
+
+`dentcast-brain.json` is a **single flat array of all entries — there are no per-type sections.** Read it. Find the most recent entry of the LOCKED category and use it as the **schema template**.
+
+**The `hashtags` field is the canonical list resolved in step 5.0 (Hard Rule 15) — do not re-invent or re-spell tags here.** Every tag written must already be a canonical concept in `dentcast-hashtag-reference.json`; if step 5.0 was skipped, go back and run it before writing this entry.
+
+**Schema templating stays category-locked, even though physical placement does not.** Match the locked category by its `type` field — or, for the core podcast episodes, by the **absence of a `type` field** (the 202 episode entries have no `type` key at all). Don't confuse "where to put it" (end of the whole array) with "what shape to give it" (the most recent same-category entry).
+
+Build the new entry with **identical keys, nesting, and ordering** as the previous same-category entry. Fill all fields based on new content + today's date + new URL — including the entire `pillar` object, using the values **confirmed in step 2.4**: `pillar.primary` (the confirmed pillar slug, or `null` if the user chose no pillar), `pillar.secondary` (matches previous entries' shape — usually `[]`), and `pillar.subtopic` (the confirmed subtopic slug for a structured pillar, otherwise `null`). The `subtopic` key is **always present** under `pillar` (that is the brain's convention — never omit it). Do **not** re-decide the pillar or subtopic here — just record exactly what step 2.4 confirmed; step 5.5 then verifies it.
+
+**Critical constraints:**
+- Do NOT add any field that doesn't exist on the previous same-category entry.
+- Do NOT remove any field that exists on the previous entry — every key must be present.
+- **Episode entries have NO `type` field.** When the user picks "Episode", treat absence of `type` as the category marker. Do NOT invent a `type: "episode"` field — that would break schema parity with the previous 202 episode entries.
+- If the category's schema has a `pillar` field, fill it with the assigned pillar value only. Do NOT add reasoning, notes, justifications, or any extra commentary field. The JSON shape must remain identical to the previous entry.
+
+**Append the new entry at the absolute END of the flat `dentcast-brain.json` array** — it becomes the last element of the whole file, regardless of type. This is non-negotiable — the latest-content widget reads the last 30 entries globally, so physical tail position is what makes the new entry visible.
+
+Re-read the file and confirm:
+- Entry is the **last element of the array**.
+- It has exactly the same set of keys as the previous same-category entry — no extras, no missing.
+- For episode entries: confirm **no `type` field was added**.
+- It's well-formed and contains no stale data from previous entries.
+
+### 5.5. Verify the recorded pillar & subtopic
+
+The pillar and subtopic were **decided and confirmed in step 2.4** and **written into the brain entry in step 5**. This step only **verifies** them — it does **not** re-classify, re-guess, or overwrite anything (Hard Rule 6). Read the live `PILLARS` taxonomy (from a state that reflects `main`, per Hard Rule 8) to check the invariants:
+
+```bash
+python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"
+```
+
+Re-read the brain entry and confirm:
+- `pillar.primary` is **identical** to the slug the user confirmed in step 2.4 (or `null` if they chose no pillar) — exact spelling/format, no normalization.
+- `pillar.subtopic` is either a valid subtopic slug for `pillar.primary` in the live `PILLARS` taxonomy (when the pillar is structured) or `null` (when the pillar is not structured, or no pillar was assigned) — and the `subtopic` key is **present** in every case.
+- The `pillar` object has **no extra keys** beyond the previous same-category entry's shape (no `pillar_reasoning`, no `subtopic_reasoning`, no notes), and the entry's overall key set is unchanged from end-of-step-5.
+- If a **new** subtopic was confirmed in step 2.4, confirm it was added to `PILLARS[primary]['subtopics']` in `tools/build_pillar.py` (sibling shape copied exactly) and that the brain entry uses that exact new slug.
+- The فهرست موضوعی capsule injected in step 2.5 (or the episode pillar link) points to `/pillar/<pillar.primary>/` consistent with this confirmed `pillar.primary` (or to the `/pillar/` fallback when it is `null`).
+
+### 5.6. Learning-pathway placement (all specialist types)
+
+**MANDATORY on every publish that wrote a specialist brain entry** (i.e. every
+type **except LiteCast** — LiteCast is patient-facing and excluded from
+professional pathways, so for LiteCast this step is a documented skip, same
+spirit as Phase D). It runs **after** step 5 (the `content_id` now exists in
+the brain) and step 5.5 (pillar/subtopic confirmed), because placement consumes
+both.
+
+**Principle — pathways are INDEPENDENT of pillars; do not conflate them.**
+- A **pillar** is where the item *lives*: exactly **one** home per item, decided
+  in step 2.4. That decision is done and is **not** revisited here.
+- A **pathway** is a curated **learning journey** defined by *"what must a
+  person know to learn topic X, and in what order?"* The **same item can and
+  often should belong to several pathways**, placed at the right position in
+  each.
+- **An item's pillar neither determines nor limits its pathways.** Placement is
+  decided purely on **conceptual relevance to each pathway's own content / the
+  learner's need** — never by matching the item's pillar or subtopic to a
+  pathway. A `bonding` item can belong to esthetics, ceramics, fixed-pros and
+  biomimetic pathways at once; an `occlusion` item can belong to the implant and
+  prosthetics pathways. Pillar is irrelevant to this step (the tool prints it as
+  FYI only).
+
+The catalog and governing doctrine live in `plus/pathways.json` and
+`reports/pathways-catalog-2026-07-22.md`; **read the catalog before placing.**
+`plus/pathways.json` is the single source of truth (spec §5 schema: each pathway
+is `{id, title_fa, description_fa, premium, steps:[{content_id, milestone}],
+reserved}`; `content_id` = page path without leading `/` and `.html`).
+
+**This is a genuinely semantic decision — never keyword/string matching** (same
+standard as the pillar decision in 2.4 and the link steps 4.7–4.9). Judge the
+new content's actual subject against what a learner of each pathway needs.
+
+**Procedure.**
+
+1. Generate ranked candidates (an aid, not the decision):
+   ```bash
+   python3 tools/pathway_place.py <content_id>
+   ```
+   It prints, per pathway, a score, a **confidence flag**, and a **suggested
+   anchor** (`after <existing content_id>`) so the item lands *inside the right
+   conceptual block*, in prerequisite→advanced order — not just appended. It
+   scores each pathway purely on **conceptual overlap with that pathway's own
+   content** (it ignores pillar). It marks a pathway **STRONG** only when a real
+   conceptual **cluster** exists there (several related steps + a close
+   neighbour); everything thinner is **ASK**.
+
+   **Three guards decide what the tool may call STRONG and where it may
+   anchor — none of them is yours to relax** (added after the 2026-09-14
+   re-curation, when the 64 items published since the July curation had
+   averaged 2.64 pathways each against 1.38 for the curated set, `fixed-pros`
+   had re-grown the post-and-core block it was deliberately split from, and
+   eight series had a stranger between part 1 and part 2):
+   - **STRONG is measured against the pathway's frozen CORE**
+     (`.dentcast/pathway-core.json` — its steps as the founder last curated
+     them), never its live list. The live list ranks and supplies the anchor,
+     but cannot promote: scoring against the live list is how every placement
+     raised the score of the next similar item until `evidence-literacy`
+     ranked a post-and-core article first. A pathway with no frozen core is
+     never STRONG. `--freeze-core` re-freezes every full pathway from the live
+     file and is run **only after a founder curation pass** — never after a
+     publish, which would re-admit exactly the drift the core measures against.
+   - **A third pathway is always a question.** An item already in two full
+     pathways gets ASK for every further candidate, and `--insert` refuses to
+     make it a member of a third without `--confirmed` — pass that flag only
+     after the founder said yes to *that* placement; it is the record of the
+     answer, not a way around the question. Bundles are outside this count
+     (they have their own gate, 5.6-ب).
+   - **The anchor never splits a series.** Consecutive podcast episodes (an
+     episode and its NoteCast are one unit), chapter-style ids
+     (`prompt6-1 → prompt6-4`) and consecutive «قسمت/بخش N» titles with one
+     stem are one run; the suggested anchor is the run's **last** step, and
+     `--insert --after` a step inside a run is refused without `--confirmed`.
+     The nearest neighbour of a new item is, in a series, part N — which is
+     how Biological Width part 1 came to be followed by four chairside cases
+     and then part 2.
+   The scorer also ignores brand/series hashtags (`domain: brand|web` in the
+   hashtag reference) and corpus-generic words (`دندان`, `ایمپلنت`, `روکش`… —
+   measured, anything in >10% of entries): «Share_Hub» made every ShareHub
+   item a neighbour of every other, and the title word «دندان» inside the
+   keyword «اسپارتینا و دندانپزشکی» made a tirzepatide note STRONG for Goodacre's
+   prep principles.
+2. Decide membership **semantically**, per **Hard Rule 14** — judged on the
+   content's actual subject vs. what each pathway's learner needs, **never** on
+   the item's pillar:
+   - **STRONG / unmistakable homes** (the item clearly belongs — e.g. a new
+     adhesion/bonding piece into every bonded-restoration pathway, a new
+     screw-loosening piece into the implant-prosthetic and failure pathways):
+     **place them directly** and report each placement (pathway + anchor +
+     milestone flag).
+   - **Borderline / cross-cutting judgment calls** (a plausible but not obvious
+     fit, a brand-new theme with no clear home, or genuine uncertainty about the
+     exact position): **ASK the user first**, presenting concrete named options
+     (which pathway(s), after which step) — never guess, never silently drop a
+     real candidate. This is the explicit **«اگر شک داشتی سوال کن، عمل نکن»**
+     guard for pathways.
+   - A single item routinely belongs to **several** pathways — place it in each
+     one whose learner needs it, at the right position in each. The reach is
+     conceptual, not pillar-bound (bonding basics reach esthetics/ceramics;
+     occlusion reaches the implant and prosthetics pathways).
+3. Apply each confirmed placement mechanically (this is the only writer of
+   `plus/pathways.json`; it refuses duplicates, refuses LiteCast, refuses a
+   third full pathway and refuses an anchor inside a series — the last two
+   only without `--confirmed`, which you pass after the founder's yes):
+   ```bash
+   python3 tools/pathway_place.py --insert <content_id> --pathway <id> --after <anchor_id> [--milestone] [--confirmed]
+   # or --at-end instead of --after <anchor_id>
+   # or --at-start, when the item is the new FIRST step (a foundation the rest builds on;
+   #   تراز شواهد قسمت ۱ opening evidence-literacy is the precedent) — never on a bundle's finish
+   ```
+   **A تراز شواهد part (`taraz/`) is never a scoring question for
+   `evidence-literacy`: it is a required step there** (founder, 1405/07/03),
+   placed `--after` the part before it so the series keeps its order; other
+   pathways it may join go through the ordinary judgment above. Phase F
+   enforces both membership and order (`5.6 pathway`).
+   Set `--milestone` only if the item becomes the new end of its conceptual
+   block (rare; usually a new item is mid-block, milestone=false).
+4. Verify coverage and report:
+   ```bash
+   python3 tools/pathway_place.py --coverage
+   ```
+   Confirm the new `content_id` is now in **≥1** pathway (or, if you and the
+   user deliberately left it out — a meta/equipment/orphan piece — state that
+   explicitly, never silently). Report every pathway it joined and where, and
+   the `full pathways: … per item` line — the curated baseline is **1.38**;
+   if it moves, say so in the report rather than letting it creep.
+
+**Scope / non-effects.** This step edits **only** `plus/pathways.json` — no
+builder, no rebuild, no version bump. It does **not** touch the brain, the page,
+capsules, or links (those are steps 4.7–4.9 and 5). Do not add pathway data to
+the brain entry (Hard Rule 6).
+
+**Pathways are LIVE — this edit is user-visible, it is not staging.** (The
+"pathways are inert, nothing reads them yet" note that used to sit here was
+true only before the premium Phase 3 launch; it is not true now.) `/plus/pathways.html`,
+`/plus/pathway.html?id=`, and the «مسیر یادگیری» block on the `/plus/` dashboard
+all render this file, and `GET /me`'s `active_pathway` reads through it. It
+still needs **no API redeploy** — `plus-api/src/content-refresh.ts` re-fetches
+the published `plus/pathways.json` from the live site every few minutes
+(validated, upgrade-only, last-good-copy on failure), so the baked copy is only
+a boot value. Two practical consequences: a wrong placement is visible to real
+subscribers rather than parked for later, so the **«اگر شک داشتی سوال کن»**
+guard above is about live UI, not about data hygiene; and the file must be
+valid JSON at commit time (`python3 -m json.tool plus/pathways.json > /dev/null`),
+because a broken publish is what the API's last-good fallback would be holding.
+
+### 5.6-ب. Bundle check (runs after every full-pathway placement)
+
+Alongside the 15 full pathways, `plus/pathways.json` carries **starter
+bundles** (`kind: "bundle"` entries — 5–8-step "just the core" subsets of a
+pathway; catalog + doctrine in `.dentcast/bundles-handoff.md`). After the
+item's full-pathway placements are done, run this check. It is written as a
+**gate chain**: every gate is a yes/no question answerable from the item's
+folder, title, and the bundle's current step list alone — no taste, no
+"feels core". **The default is NO.** An item enters a bundle automatically
+ONLY when every gate below passes with a confident yes; one uncertain answer
+anywhere = ASK the founder («اگر شک داشتی سوال کن، عمل نکن») — asking is
+never wrong, silently adding is.
+
+**Candidates.** Check only bundles whose `continues_pathway` is one of the
+full pathways the item just joined in 5.6 (nothing else can be relevant).
+Zero candidates → write «باندل: بدون کاندید» in the report and stop.
+
+**The gates — walk them in order, stop at the first NO:**
+
+1. **GATE ۱ — Type (mechanical).** The item's folder is `episodes/`,
+   `notecast/`, `sharehub/` or `dentai/`. Anything else — `insight/`,
+   `chairside/`, `metanotes/`, `photocast/`, `dentcast-plus/`, `litecast/` —
+   is **NO, always**: those types are by construction نکته/کیس/جستار, exactly
+   what a bundle excludes. No judgment may override this gate.
+2. **GATE ۲ — Shape (from the title alone).** The title names a whole
+   concept a beginner must learn (اصول X، طبقه‌بندی X، راهنمای جامع X،
+   مقدمه‌ای بر X، انتخاب X، «X — قسمت اول»). It is **NO** if the title
+   describes one situation or patient («وقتی…», «چرا برای این بیمار…»,
+   «بیمار با…»), a trick/pearl (راهکار، ترفند، نکته), an exception or
+   complication, or a deep continuation («قسمت سوم» of a series whose قسمت
+   اول is not in the bundle).
+3. **GATE ۳ — Coverage (against the bundle's current steps).** Read the
+   bundle's step titles. The item must cover a core sub-topic that **no
+   existing step covers** — i.e. a beginner finishing the bundle today would
+   have a hole where this item goes. If it adds depth/detail/an update to a
+   concept already represented, it is **NO** — its home is the full pathway.
+   (An item that looks like a **better replacement** for an existing step is
+   never automatic — that is an ASK.)
+4. **GATE ۴ — Twin (mechanical).** If the bundle already contains this
+   item's twin — the episode of this notecast, the notecast of this episode,
+   or any same-numbered sibling — it is **NO** (قانون «یک مفهوم = یک قدم»).
+5. **GATE ۵ — Size (mechanical).** After insertion the bundle must have
+   **≤ 8 steps**. 9 or more = ASK (something must leave first, and removal
+   is founder-only).
+
+**If all five gates pass — insert, with two hard mechanics:**
+
+- Anchor semantically and insert **mid-list only**:
+  ```bash
+  python3 tools/pathway_place.py --insert <content_id> --pathway <bundle-id> --after <anchor_id>
+  ```
+  where `<anchor_id>` is the existing step the item most directly follows.
+  **Never `--at-end` on a bundle and never place after the current final
+  step**: the final step carries `milestone: true` (the finish flag 🏁), and
+  appending would strand the flag mid-list. If the only right position seems
+  to be at the very end, that is an ASK, not an insert.
+- **Sweep the two hand-maintained mirrors in the same commit** (a bundle
+  edit that skips these ships a lie): the bundle's step count in
+  `plus/js/home-bundles.js`'s `BUNDLES` array, then
+  `python3 tools/asset_version.py --bump`.
+
+**Report — mandatory either way.** The publish report names every candidate
+bundle with one of exactly three verdicts: «وارد شد (بعد از کدام قدم)»,
+«رد شد (گیت N)», or «سوال شد». Silence about a candidate bundle is a
+workflow violation — a NO must be as visible as a YES.
+
+### 6. Pulse update
+
+Use the sentence + hyperlink word from intake Question 5. **No spoilers (see Question 5): the line names the piece by its title and never narrates its decision/mechanism/finding/conclusion.** If the drafted sentence describes content beyond the title, rewrite it before inserting — never ship a Pulse line that summarizes the article.
+
+- Locate the Pulse section in `index.html` (or its data source if data-driven).
+- Insert the new sentence at the **absolute top** of the Pulse section — it becomes the first (highest) line, above every existing line.
+- Remove the **bottom-most** (lowest) line of the Pulse section entirely — no empty containers left behind. (This is the oldest announcement; the rule is positional: always the lowest line.)
+- The chosen word is hyperlinked to the new content's page URL.
+- Match exact HTML/classes of other Pulse items.
+
+### 7. Bump the site content version (cache-bust)
+
+Every publish must change a **site-wide version** so browsers (and the PWA service worker) are forced to pick up the new content instead of serving stale caches. The version is **derived from a hash of the content sources of truth** (`dentcast-brain.json` + `glossary/glossary.json` + `litecast/lite-glossary.json`) **plus the shared cached assets** (`dc-theme.css`, `dc-article.css`, `dc-nav.css`, `dc-nav.js`, `global-search.css`, `global-search.js`, `global-search-ui.js`, `episodes-drawer.js`), so it changes automatically whenever any content **or** any of those assets changes — never hand-pick or manually increment a number. (`service-worker.js` itself is deliberately excluded from the hash because the stamper rewrites its `CACHE_NAME`; hashing it would make the version unstable.)
+
+This is done by a builder, not by hand:
+
+```bash
+python tools/stamp-version.py
+```
+
+It computes `ver = sha256(content sources)[:10]` and stamps it into **two** places, keeping them consistent:
+- **`service-worker.js`** → `CACHE_NAME = 'dentcast-assets-<ver>'`. The worker is now **no-cache** (network-only; it deletes every cache on activate and never stores anything). The stamp's only job here is changing the worker's bytes so browsers fetch and activate the new worker promptly. Freshness of CSS/JS rides on the `?v=` asset URLs and normal HTTP caching.
+- Every **`dentcast-brain.json?v=<ver>`** fetch URL in the HTML (currently `index.html` ×2 and `player.html`) → so any intermediary/CDN cache that ignores `no-store` is still defeated.
+
+This step is part of the rebuild (step 8) and must run from a state that reflects `main` (same as the other builders). Report the old → new version.
+
+**CI re-stamps on `main`, and that is a net — never a reason to skip this step.** `.github/workflows/sitemap_only.yml` runs `tools/stamp-version.py` on every push to `main` (step 2c, after the sitemap and plus-index generators) and commits the result. It exists for the one case a single branch cannot get right: **two publishes merged in sequence.** The hash covers `dentcast-brain.json`, both glossaries, `dentcast-music.json` and eight shared assets — so branch A stamps correctly at its own head, branch B (cut earlier) stamps correctly at *its* head, and whichever merges second carries A's `dc-nav.js` (or brain, or CSS) alongside B's older stamp. Nothing errors, because the version still *changed* and caches still bust; it is simply no longer derived from what the site serves, and the drift compounds on every later publish. Found in production 2026-09-15: PR #695 changed `dc-nav.js` after PR #696's branch had stamped `93d26c6b4f`, and the merge shipped that stamp against a tree whose true hash was `45759b6606`. **Your branch must still be self-consistent before you commit** — Phase F fails a publish whose stamped version does not equal its own content hash, and that check is what catches a forgotten step 7 *within* one branch, which CI cannot distinguish from a legitimate concurrent merge.
+
+**Builder consistency:** if any builder template ever emits a `dentcast-brain.json?v=` URL or a `CACHE_NAME`, it must NOT hard-code a stale value — let `tools/stamp-version.py` own the version and run it **last** in the build so it overwrites whatever the other builders emitted. (Today the generated pillar/glossary pages don't fetch the brain with a version and don't define `CACHE_NAME`, so only `service-worker.js`, `index.html`, and `player.html` carry the version.)
+
+### 8. Rebuild
+
+**Per Hard Rule 8, run these builders only from a working state that reflects `main`** (run from `main`, or merge `main` into the working branch first) — a feature branch's builder scripts may be stale.
+
+Run the builders from the project root, in this order. Capture stdout/stderr for each; on error, stop and report verbatim.
+
+1. **Homepage / main-index builder.** Run `python tools/update-homepage-counters.py`. Besides the three COUNTER stats it now also refreshes the homepage's **static fallbacks** from the brain: the hero card (badge episode number, title, audio `data-src`) and each «تازه‌های دنت‌کست» rail card (`data-cat` → that category's newest entry). The homepage JS does the same at runtime; this keeps the no-JS/SEO text equally fresh. A url-less newest entry leaves its card untouched. It also refreshes the **«دسته‌های محتوا» grid's per-category counts** (one `COUNTER:CAT_*:START/END` marker per card) — every card counts its brain `type`, except episodes (`dentcast.json`) and **LiteCast**, which counts `litecast/lite-glossary.json` directly: LiteCast migrated off the brain, so its 19 old `type: "litecast"` brain rows are pre-migration leftovers kept for history only and are never counted or grown. Never hand-edit a number in that grid; it is overwritten on every run.
+2. **Pillar builder — always run `all`.** Run `python tools/build_pillar.py all` (rebuilds every `/pillar/<slug>/index.html`, the pillar landing page, AND `/glossary/index.html`). **It also writes a `structure.json` next to each of those pages, and those files are part of the build — commit them with the HTML.** A pillar page is now two outputs, not one: the **page** is the flat, date-ordered list of every item in that pillar (newest first, undated items last), which is what every visitor and every crawler gets; the **sidecar** carries the subtopic foldering and the reading-chain order, which `/pillar/premium-index.js` layers onto the same URL after `/me` confirms a premium subscription. The split is deliberate — shipping both arrangements in one document would put the same links on the page twice and hand Google a duplicate of a page it already has — so **never** hand-add subtopic cards back into a pillar page's HTML, and never edit a `structure.json` by hand; both come out of this builder. `pillar/structure.json` (the hub's sidecar) is the same idea for the landing page's per-pillar subtopic breakdown. Run unconditionally, regardless of whether the new content's pillar is structured or not — the call is cheap, idempotent, and catches cross-pillar effects. The `glossary` target is part of `all`; if you ever touch `glossary/glossary.json` directly (adding/editing a term, fixing a URL, etc.) you MUST re-run at minimum `python tools/build_pillar.py glossary` — the page is no longer client-rendered, so a JSON edit alone will not surface on the live page until the build runs. Never hand-edit `/glossary/index.html`; it is generated. Other build targets: `python tools/build_pillar.py <pillar-slug>` (single pillar), `python tools/build_pillar.py index` (pillar landing only), `python tools/build_pillar.py glossary` (glossary only). **Asset-version guard:** this builder **hardcodes** the shared-asset cache-bust suffixes it emits into the page chrome (e.g. `dc-nav.js?v=NN`). Those hardcodes are NOT owned by `stamp-version.py`, so if the live pages' asset version is bumped directly without updating this builder, a routine `all` run **silently rolls the asset version back on every pillar page**. Before committing a rebuild, verify the regenerated pages did not regress a `?v=` (e.g. `git diff -G'\\?v=' pillar/`); if they did, bump the builder's hardcoded suffix to match the live pages and re-run — never ship the rollback.
+3. **Episodes landing-page builder — MANDATORY whenever the publish touched `dentcast.json` (any episode publish).** Run `python tools/build_episodes.py`. `episodes.html` is **fully static** (episode list, stats and Jalali dates baked in — **not** client-rendered, so appending to `dentcast.json` alone does NOT surface the new episode under `/episodes/`; the builder must run). The builder injects the dynamic bits — the episode `<li>` list (newest-first → top of `<ol id="episodeList">`) and the `@@EP_COUNT@@`/`@@HOURS@@`/`@@YEARS@@` stats — into the verbatim page shell stored in **`tools/episodes_template.html`**. It reads only `dentcast.json` + `dentcast-brain.json` + the template, and writes only `episodes.html`; it never touches individual `/episodes/episode-*.html` pages, so hand-added cross-links (steps 4.8/4.9) are safe. Skip this step only for non-episode types that don't write to `dentcast.json`. (`episodes/index.html` is just a redirect — never hand-edit it.)
+
+   **Never hand-edit `episodes.html`** (the builder overwrites it; hand-edits silently desync from the builder — the failure that motivated this template split). To change page **chrome** (CSS/JS/layout/nav/the sort-toggle/pagination/`dc-jump`/the search filter row/asset-version bumps), edit **`tools/episodes_template.html`**, then run the builder. The template carries those features verbatim, so a normal run preserves them; the only build-to-build deltas are the new episode, the stats, and any brain-driven hashtag/caption changes.
+4. **Flashcards index builder — run whenever step 4.11 added a `DefinedTermSet` to the corpus.** Run `node tools/build_flashcards_index.mjs`. It reads `plus/faq-corpus.json` (never page HTML — pages carry no `DefinedTermSet` of their own, see step 4.11) for every content id's `DefinedTermSet`, skipping LiteCast and `/en/` entries, and regenerates `plus/flashcards-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. Skip only on the documented "4.11: skipped — LiteCast" publishes.
+4b. **Quiz index builder — run on every non-LiteCast publish that produced a page (step 4.12).** Run `node tools/build_quiz_index.mjs`. It reads `plus/faq-corpus.json` (never page HTML) for every content id's `FAQPage`, skipping LiteCast, `/en/` entries, and the homepage, keeps only the binary (yes/no) questions whose answer opens with an explicit «بله»/«خیر» verdict, and regenerates `plus/quiz-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. It prints `<pages>, <questions> binary questions (of <N> FAQ items scanned)`; the "scanned − kept" gap is the open/hedged questions correctly left out of the scored bank. Skip only on the documented "4.12: skipped — LiteCast" publishes.
+4c. **چالش index builder — run whenever step 4.14 fired (a چالش publish).** Run `node tools/build_challenge_index.mjs`. It walks the specialist content folders for the `data-dc-challenge-question`/`data-dc-challenge-image` markup step 4.14 wrote and regenerates `plus/challenges.json` from scratch — **never hand-edit that file**, this builder is its only writer, and it never carries `answer_fa`/`key_points` (it asserts so itself). Runs after the pillar builder (step 2) and before the plus content-index builder (step 5b). Skip on any publish that did not answer «چالش» at Question 4.9.
+5. **Image attributes backfill.** Run `python3 .github/scripts/inject_img_attrs.py` (idempotent, cheap). New pages cloned in this publish may carry images without intrinsic `width`/`height` (CLS) or `alt`; this backfills them site-wide. `--check` mode exists for CI.
+5b. **Plus content-index builder — run on every publish that wrote/changed a brain entry (i.e. every non-paper-only publish).** Run `node tools/build_plus_index.mjs`. It regenerates `plus/content-index.json` from `dentcast-brain.json` (+ `glossary/glossary.json`, the pillar hub page for the categories, and **each pillar's `structure.json` for the subtopics** — it used to scrape those out of the pillar pages' HTML, which no longer contains them). **That makes step 2 a hard prerequisite of this one:** run the pillar builder first, or a missing/stale sidecar silently costs the میز کار tree its subcategories. The builder warns on a missing one rather than failing, so read its output. It is the single taxonomy model the **DentCast Plus «میز کار» dashboard navigation tree** and the homepage "last read" resolver both read (`content_id` → `{cluster, subtopic, type, title, url}`). **It also mirrors the standardized hashtag vocabulary** — every real `#tag` and the compiled **alias table** from `dentcast-hashtag-reference.json` — into `content-index.json`, which is what the AI case-assistant search folds queries and hashtags through (Hard Rule 15 / step 5.0). If step 5.0 minted or re-aliased any concept, this run is what carries it to the live search, so it must run after that. **A stale content-index silently drops the new page from the میز کار tree**, so this builder must run whenever brain content changes. It is the only writer of `plus/content-index.json` — never hand-edit that file. (Note: the `notify-new-articles` Action's sibling CI job `sitemap_only.yml` also runs this builder — and `gen_sitemap.py` — on push to `main`, so the live site self-heals even if this local step is missed; running it here keeps the committed tree correct and the local step-8 verification honest. The **«seen» ticks and study-mode/میز کار activation are separate and path-based** — they need no builder, only that the page lives under a ticked folder and appears on its landing page.)
+5c. **up-board catalog builder — run on every publish that wrote/changed a brain entry (same trigger as 5b).** Run `python3 tools/build_upboard_index.py`. It regenerates `up-board/index.json` — the id/title/type/url/date list that `/up-board/` draws BOTH of its arrangements from — and it is the only writer of that file; never hand-edit it. Two things it takes from the brain that nothing else can supply: the **global publication order** (the brain array is one flat, append-ordered list with the types interleaved, so its index is the only place on the site that knows how a NoteCast and a Chairside sort against each other — Hard Rule 4's append rule is what makes that true, and a per-type list cannot answer it), and each item's **date**, read from the page's own JSON-LD `datePublished` via `build_pillar.py`'s helpers, so the two builders can never disagree about what a date is. **A stale index silently leaves the new page off up-board entirely** — it will not appear under «تازه‌ترین» and cannot be ranked under «بالاترین», even once readers heart it, because the board returns ids and the catalog is what turns an id into a row. The builder reads both `page_url` and `url` (the brain carries two schemas) and derives the type from the URL folder, so a new content type needs no edit here. It does NOT carry heart counts: those live in the API (`GET /votes/board`) and change by the minute. `/up-board/` is `noindex, follow` and stays out of the sitemap by design (`gen_sitemap.py` drops it on its own), and `up-board/index.json` is disallowed in `robots.txt` — do not "fix" either.
+
+6. **Version stamper — always run LAST.** Run `python tools/stamp-version.py` (step 7). It must run **after** the other builders so the content hash reflects the final state and so it overwrites any version strings they emitted. Report the old → new content version.
+
+   **"Last" means last in wall-clock order, not last in this list.** The stamp is a hash *of the content*, so any write to `dentcast-brain.json`, either glossary, or a shared asset **after** the stamper silently invalidates it — and nothing reports an error, because the version still *changed* and caches still bust. The site is simply no longer carrying a version derived from what it serves, and the drift then compounds on every later publish. The usual culprits are steps that run "one more small write" afterwards: `hashtag_ref.py --apply` (it writes tags into the brain), a late caption/title correction, or a Hard-Rule-17 sweep. **If anything at all touched a hashed source after the stamper, run the stamper again.** Verify rather than remember:
+
+   ```bash
+   python tools/stamp-version.py     # re-running is idempotent and free when already current
+   ```
+
+   Phase F fails the publish when the stamped version does not equal the recomputed content hash, so this is checked, not trusted.
+
+After the pillar builder finishes, verify **both** outputs — the page and its sidecar are written by one run, but only one of them is visible when you open the page, so a half-finished build looks fine on screen:
+- **When the entry's pillar is structured:** the new content appears **twice**, once in each output. (a) In the regenerated `/pillar/<pillar.primary>/index.html`, in the flat list — and because the list is newest-first, a same-day publish should be **at or near the top**; if it is buried, its page is missing a `datePublished` in its JSON-LD (undated items sort to the very end) and that is the thing to fix, not the ordering. (b) In `/pillar/<pillar.primary>/structure.json`, under the confirmed subtopic. Report the position in the list and the subtopic it landed under. Phase F's gate checks both (`8 pillar` / `8 pillar-structure`).
+- **When the entry's pillar is not structured:** confirm explicitly that the entry was **not** forced into any pillar page (it has no structured pillar to belong to, and `pillar.subtopic` is `null`). Note this in the report rather than skipping the check.
+
+**For episode publishes, also verify the episodes builder took:** confirm the new episode now appears as a real `<a href="/episodes/episode-N.html">` in the regenerated `episodes.html` (e.g. `grep -c "episode-N.html" episodes.html` ≥ 1). If it's missing, `build_episodes.py` did not run — the publish is incomplete.
+
+## Phase D — English mirror & language toggle (MANDATORY; Hard Rule 12)
+
+**This phase is not optional and is not the «… رو انگلیسی کن» trigger — it runs automatically at the end of every `.org` publish.** A publish that produced a new fa page but no English counterpart + working toggle is **incomplete**. The recurring failure this prevents: shipping an insight/notecast/etc. page with **no language toggle** because the cloned template never had one. The toggle is meaningless without its target, so the en page and the toggle are produced together, here, by reusing the existing English-version machinery.
+
+**Two documented skips, and no others:** if the locked category is **LiteCast**,
+skip Phase D entirely and **say so in the report** ("Phase D: skipped — LiteCast
+is `.ir`-only, no hreflang/en mirror per Hard Rule 10"). If Question 4.9 answered
+**چالش**, skip Phase D too and say so ("Phase D: skipped — چالش ships with no
+English mirror, RULE 16 of `.dentcast/challenge-handoff.md`: the mirror would be a
+different `content_id` with no row in `challenges`, so the toggle would lead to a
+page missing the only thing on it"). Every other publish runs it.
+
+**Steps:**
+
+1. **Hand off to the English-version workflow.** Treat the page you just published (`{type}/{file}.html`) as the source and run **`.dentcast/workflows/en-version.md`** against it. That workflow already owns every detail correctly — do not re-improvise them here:
+   - en page at `/{type}/en/{file}.html`; **English chrome cloned from `metanotes/en/meta-1.html`** (`<html lang="en" dir="ltr" data-dc-no-header>`, English topbar/toolbar labels, the `.lang-btn` CSS + markup), GA4 present exactly once.
+   - **Body, box/section CSS classes, and JSON-LD `@type`/shape inherited from THIS page's own type** (e.g. the insight `.glass-box` structure), rendered LTR and **translated** structure-faithfully (same headings, same number of `<li>` items, nothing added or dropped).
+   - **Scripts/analytics follow this type's conventions, not meta-1's extras.**
+   - en page carries **no** specialist «کاوش بیشتر» capsules / glossary back-links / brain links (en pages stay out of the brain ecosystem — en-version Hard Rule 8): no brain entry, no Pulse line, no 4.7/4.8/4.9 for the en page.
+2. **Wire the toggle on BOTH sides (en-version step 4).** On the new en page: `.lang-btn` → `../{file}.html` (label «فارسی»). On the source fa page: add `.lang-btn` → `en/{file}.html` (label «English»), placed/styled per the fa-side precedent (`metanotes/meta-1.html`), and **ensure the `.lang-btn` CSS exists in the fa page's inline `<style>`** (current templates carry it, but older clones may not — adding the button without its CSS is the "missing toggle = CSS issue" failure; add both when missing). The two targets must be exact inverses and neither may point at meta-1.
+3. **noindex + hreflang enforcement (en-version step 7).** The en mirrors are unreviewed AI translations and stay OUT of search (2026-08-11 SEO audit): the new en page must carry `<meta name="robots" content="noindex, follow">`, no hreflang block, and never enters the sitemap; the fa page keeps its standard 3-line hreflang block and gains **no** `en` alternate. Run `python3 .github/scripts/inject_hreflang.py` (strips/normalizes both sides, idempotent) and `python3 tools/noindex_en_mirrors.py --check` (fails if any en page is indexable — fix by running it without `--check`). Also run `python3 .github/scripts/gen_sitemap.py` (it drops noindexed pages itself) and re-run `python tools/stamp-version.py` **last**.
+4. **Verify (en-version step 9).** Confirm: en page has `<html lang="en" dir="ltr" data-dc-no-header>`, self-canonical `.org`, robots meta `noindex, follow`, **zero** hreflang lines, `inLanguage`/`lang`/`og:locale` all `en`, the same JSON-LD `@type` as this type, GA4 exactly once; both toggles are exact inverses; the chrome standard `metanotes/en/meta-1.html` is **untouched** (hash unchanged). Report the two file paths created/modified (new en page + the toggle edit on the source fa page).
+
+**Why Phase D and not a step inside Phase C:** it consumes the *finished* fa page (after all of Phase C's swaps, enrichment, and rebuild), and it deliberately reuses a **separate, already-correct workflow** rather than duplicating its logic. Keep it last so the English mirror reflects the final published state.
+
+## Phase E — Mark the page for the new-article push
+
+**Runs at the very end of every `.org` page publish, once, after Phase D.** The
+actual notification is **automated** by the `notify-new-articles` GitHub Action on
+push to `main` — this phase's only job is to add the explicit **publish marker** so
+that push counts as a real editorial publish. The Action then fires the API's
+`article_published` event: **premium is notified immediately; free is batched into
+the 21:00 Asia/Tehran digest** (published_at + 24h, effective delay «۱ تا ۲ روز»).
+The free/premium split and delivery model live in the API — see
+`plus-api/src/services/article-notify.ts` (Layer 1) and the web-push provider
+(Layer 2). A push counts as a new article ONLY when all three hold, enforced by
+`tools/notify_new_articles.py` (not by the file diff):
+
+1. **Article content type** — the type is the page's top folder (first segment of
+   its canonical `content_id`). Everything counts EXCEPT `glossary` and `litecast`.
+2. **The publish marker** — `<meta name="dc-notify" content="true">` in `<head>`.
+3. **Canonical `content_id` not notified before** — taken from `<link rel="canonical">`
+   (the SEO-frozen slug), never the file path, so a move/rename that keeps the slug is
+   not a new article. The API dedups on `content_id` (idempotency = retry-safety only).
+
+**Do in this phase:** ensure the just-published page's `<head>` contains exactly
+`<meta name="dc-notify" content="true">` (add it if the clone didn't carry it; it is
+idempotent — never add a second copy). That is all. The commit + push to `main` does
+the rest.
+
+**Skip cases (do NOT add the marker; report the skip line):**
+- **Paper-only fast path** (no page was published) — nothing to announce.
+- **LiteCast** — `.ir`-only, outside the Plus push ecosystem (a `/litecast/…` push
+  would break for `.org` subscribers). Report "Phase E: skipped — LiteCast".
+- **Glossary** — reference type, not an article. Report the skip.
+- Every other category adds the marker.
+
+**One-time go-live step (before the Action is enabled the first time):** record all
+existing pages as already-notified so editing an old article never fires premium:
+
+```bash
+curl -u "$ADMIN_USER:$ADMIN_PASSWORD" -X POST "$PLUS_API_BASE/admin/articles/backfill"
+```
+
+**Manual fallback (ops / when running outside CI)** — announce a single page directly
+(idempotent; safe to re-run). Pass the **full `https://dentcast.org/…` URL**:
+
+```bash
+ADMIN_USER=… ADMIN_PASSWORD=… PLUS_API_BASE=https://api.dentcast.org \
+  python tools/notify_new_article.py --url https://dentcast.org/{type}/{file}.html \
+    --title "<the page's Persian title>"
+```
+
+**Verify / report:** confirm the marker is present on the new page (or the documented
+skip line for paper-only / LiteCast / glossary). Delivery reaches only users who
+enabled «نوتیف مطلب جدید» and have a push subscription; everyone else is skipped
+silently — expected, not an error.
+
+## Phase F — The mechanical gate (MANDATORY; the publish is not done until this is green)
+
+**Run last, after Phase E, and treat its exit code as the definition of "finished".**
+
+```bash
+python3 tools/verify_publish.py <content_id> \
+  --expect-title "<the title exactly as the user wrote it>" \
+  --expect-caption "<the caption exactly as the user wrote it>"
+```
+
+`<content_id>` is the page path without the leading `/` and without `.html` —
+e.g. `chairside/chairside-28`. Drop the two `--expect-*` flags only when the
+user genuinely supplied neither string in their own words (Hard Rule 16).
+
+**Why this phase exists.** Everything it checks is already written above as
+prose. Prose is not enforceable: this document is ~1300 lines and roughly
+seventy separate obligations, and the recurring failure is not disagreement
+with a rule but *silently not reaching it* — the enrichment step that never
+ran, the builder that ran in the wrong order, the surface a correction missed,
+the invisible character that changed. None of those raise an error anywhere;
+each ships a live page that is quietly wrong. The gate turns that checklist
+into an exit code, so "I think I did everything" is replaced by a command that
+either passes or names the file, the exact mismatch, and the fix.
+
+**What it verifies** (each row names the step it belongs to, so a failure points
+straight back into this document): brain tail position and key-set parity with
+the previous same-category entry · pillar/subtopic against the **live**
+`PILLARS` · GA4 exactly once · canonical on the right domain · **title and
+caption identical across every surface, and identical to the user's own text
+when `--expect-*` is passed** · `datePublished == dateModified` · a prose
+paragraph before the first list · one «کاوش بیشتر» section, ≤5 links, correct
+pillar capsule, no self-link · FAQ questions free of article deixis and binary
+answers opening with an explicit verdict · flashcards present, uniquely and
+sequentially `@id`-ed, and **not re-pasted FAQ answers** · the en mirror,
+its chrome, its noindex + zero-hreflang state, and both halves of the fa↔en
+toggle as exact inverses · the fa page's 3-line hreflang block (no `en`
+alternate) · the `dc-notify` marker · landing page, Pulse, homepage rail,
+sitemap, pillar page · `content-index` / `flashcards-index` / `quiz-index` /
+`pathways` membership · **every DES record's arithmetic, band agreement, track
+shape, `ABSTRACT_ONLY` multiplier cap and verbatim quotes** (step 4.13 Part 3,
+run mechanically) · and **the content version stamp actually matching the
+content it stamps**, which is what catches `stamp-version.py` not having run
+last.
+
+**On the DES rows specifically:** a record that exists is validated hard, but a
+**missing** record is a `warn`, never a `FAIL`. The workflow allows two
+documented skips — LiteCast and the founder's own «بدون DES» — and an episode
+that is only a caption legitimately has no record at all; the gate cannot tell
+those from a forgotten step 4.13, so it says so out loud instead of guessing in
+either direction. Read the warn and confirm which case it is. The checks that
+*do* fail hard are the ones prose cannot enforce: the first three records
+written by hand shipped two sources at multiplier `0.80` while marked
+`ABSTRACT_ONLY`, which the spec caps at `0.75` — an error that moved one paper
+from band C to band D and was invisible to re-reading.
+
+LiteCast, glossary and episode branches are handled: rows that do not apply to
+a type report `--` with the reason, so a documented skip is visible rather than
+silently absent.
+
+**Rules for using it:**
+
+1. **Green is the only acceptable end state.** A non-zero exit means the
+   publish is incomplete. Fix what it names and re-run — do not report the
+   publish as done, and do not explain a `FAIL` away in prose.
+2. **Every `FAIL` row prints its own fix command.** Run that, then re-run the
+   gate. Most are a builder that did not run, or did not run last.
+3. **`warn` rows are not failures** — they mark places where the site
+   measurably has more than one convention (a search snippet that deliberately
+   differs from the caption; an `<h1>` that carries a series prefix). Read each
+   one and confirm it is deliberate rather than leftover.
+4. **Paste the gate's summary line into the final report** so the user can see
+   the publish was verified mechanically, not just asserted.
+5. **It does not replace any step.** It cannot tell whether your 4.7/4.8/4.9
+   semantic analysis was any good — only that the structural results exist. The
+   judgment steps still run in full; the gate catches what judgment forgets.
+
+**Regression sweep (not part of a publish):**
+`python3 tools/verify_publish.py --all` runs the same checks over every
+published page. It exits 0 by design: its `FAIL` rows are the site's **backlog**
+(flashcards, quiz, en mirrors and the notify marker were all rolled out
+prospectively), and per **Hard Rule 11** a gap on an old page is something to
+fix on its own, never a pattern to copy forward.
+
+## Final output summary
+
+- Category locked
+- Writing-style check (Question 3.5): flagged AI-tell spots presented (or the explicit "no changes needed" result); which rewrites were approved/applied vs rejected; confirmation the text used from this point on is the post-decision text (edited if approved, original otherwise)
+- Auto-discovered next number (and whether user overrode it)
+- Template page path + SHA-256 before/after (must match)
+- Media sources gathered (and which were auto-fetched vs asked)
+- Audit table after fixes (all OK)
+- Pillar & subtopic determination (step 2.4): the live pillar set read from `PILLARS`; the proposed-then-confirmed `pillar.primary` (or `null`); whether the pillar is structured; the proposed-then-confirmed `pillar.subtopic` (slug if structured, else `null`); whether a new subtopic was created (and user-confirmed)
+- "کاوش بیشتر" capsule injection (step 2.5): which branch fired (typed-brain → 2 capsules / glossary → 1 capsule / core episode → `ep-related-link` pillar link in «محتوای مرتبط»); the exact block inserted (or the episode `ep-related-link`); the فهرست موضوعی capsule's `href` = `/pillar/<pillar.primary>/` (canonical format) or the `/pillar/` fallback; confirmation that `dc-related-*` classes were used for the section (and `ep-related-link` for the episode branch) and that no other diff was introduced beyond step 2's swaps
+- Landing/index page (step 2.6): the type's landing page path (e.g. `/sharehub/index.html`); whether it's generated (regenerated by which builder) or hand-maintained (the exact link added and its position); confirmation it now links to the new entry exactly once
+- **Hashtag standardization (step 5.0 — Hard Rule 15):** which proposed concepts **reused** an existing canonical `#tag` from `dentcast-hashtag-reference.json` (matched directly or through an alias), which were **newly minted** (their canonical tag + `definition`/`use_when`/`aliases`), confirmation that only canonical tags reached the brain `hashtags` and the page chips (no alias-as-tag, no tag-as-alias, no duplicate), and the `hashtag_ref.py --check` result (green) plus a `--simulate` confirming the article is reachable (with its rank)
+- New brain entry (printed as it now exists at the end of the flat array) — confirmation that it's the last element, that its key set matches the previous same-category entry exactly, and (for episodes) that no `type` field was added
+- Pulse: which line was removed (the bottom one), and where the new line was inserted (one above the new bottom), with before/after diff
+- For NoteCast: parent episode page path; whether the related-content block existed already or was created; before/after hash of the parent episode page; diff of the inserted markup
+- For Promptologist (step 4.6): the new part's `ep-nav` previous slot wired to `<prev-id>.html` (next slot left as the empty placeholder); the previous part's page path with before/after hash, confirming its empty «next» placeholder was converted into a link to `<new-id>.html` (only that slot changed)
+- For any publish with an attached paper file (step 4.10 — triggered by the file, any type) — or the documented "skipped — no attached paper" line otherwise: **Part 1** — the Drive subfolder the paper was filed into (chosen semantically) and its `drive_view` URL; **Part 2** — the new `dentcast_cabinet_full_catalog.json` entry's `id`, `topic`/`topic_path`, `tags` (semantic + article-name), and the Drive link, with confirmation the key set matches the enriched-entry template and the paper surfaces in `dentcast_cabinet_search.html` (opened directly — the on-site route is premium-gated), plus the new `papers` total and whether it crossed a round hundred (if it did, the two paper-count strings in `index.html` were swept together; if not, say so explicitly); **Part 3** (only when a page was published) — the DOI and first author found on the web, the rendered first-author→DOI credit anchor (ShareHub `.author` style) and any `isBasedOn` update, with before/after page hash — or the "Part 3 skipped — paper-only (no page)" note on the paper-only fast path. Explicitly list anything you asked the user about and confirm nothing (subfolder/DOI/author/tags) was guessed
+- **Flashcards (step 4.11)** — or the documented "skipped — LiteCast" line: the `DefinedTermSet` node written into `plus/faq-corpus.json` (term count and their `@id`s); how many came from `source: "faq"` vs `"authored"`; which FAQ entries (if any) were judged comparison/decision-shaped and skipped; confirmation no `name`/`description` is a verbatim FAQ copy; anything you asked the user about; confirmation `node tools/build_flashcards_index.mjs` was re-run in step 8 so `plus/flashcards-index.json` reflects the new page
+- **Quiz (step 4.12)** — or the documented "skipped — LiteCast" line: confirmation every FAQ question `name` is standalone (no article deixis per 4.12(a)); how many of the content's FAQ questions are binary/scored vs open (and that any binary answer opens with an explicit «بله»/«خیر» verdict); confirmation `node tools/build_quiz_index.mjs` was re-run in step 8 and the new content's binary count appears in `plus/quiz-index.json`
+- **DES (Question 4.8 + step 4.13)** — or one of the two documented skip lines ("skipped — LiteCast" / "skipped — کاربر انتخاب کرد بدون DES منتشر شود"): which **basket** Question 4.8 landed in (COMMENTARY / RESEARCH / INDETERMINATE-then-asked) and, when it was asked, which of the two options the user picked; then **per source**: the DOI (or «متنِ خودِ مطلب» for COMMENTARY), where `source_text` was resolved from (cabinet hit / MCP lookup / WebFetch / pasted by the user), the `text_basis` with its justification, and the resulting `des_score` + `band` + `question_type` + `provisional`; the outcome of all four Part-3 validation checks (quote verification, arithmetic recomputation, band agreement, schema) and the reproducibility run when one was required; confirmation the record was written to `plus/des-scores.json` under the correct `content_id` with the spec objects **verbatim** and **no** derivable wrapper fields, that nothing was added to the brain entry (Hard Rule 5), and that **no page markup or CSS was inlined** (Part 5); explicit confirmation that no DOI, abstract, or journal quartile was guessed, and that any unscorable source is recorded as `INSUFFICIENT_TEXT` rather than scored from the DentCast متن about it
+- **چالش (Question 4.9 + step 4.14)** — or the documented "4.9: مطلب معمولی" line when it is not one: the question + image markup written on the page (and confirmation it carries no answer/key points anywhere); the paste-box JSON printed for `GET /admin` → «صندوق چالش», with an explicit note that the چالش is not live until the founder pastes it; confirmation `node tools/build_challenge_index.mjs` ran in step 8 and this `content_id` now appears in `plus/challenges.json`; and an explicit per-step verdict for 4.11/4.12/4.13/5.6/5.6-ب/Phase D (all skip, per the table in step 4.14) so none reads as a silent omission (Hard Rule 11)
+- **Cross-linking completion gate (Hard Rule 11) — REQUIRED; the publish is incomplete if any of these is missing.** For **each** of steps 4.7, 4.8, 4.9, report its explicit outcome — never leave one unstated:
+  - **4.7 (glossary → new content):** the candidate terms considered, which were linked (auto-applied vs. asked-and-confirmed, per Hard Rule 14, with the link text used), and which were skipped and why (at 5-cap / no section / judged unrelated / asked-and-declined). An empty result is acceptable **only** as a documented "analyzed, 0 qualifying terms".
+  - **4.7-ب (the new TERM into existing bodies — glossary publishes only):** the scoped candidate count for the new slug, what was applied, every ASK with its verdict — or the documented "0 candidates" / "skipped — not a glossary publish".
+  - **4.8 (in-body inline links on the new page):** confirmation that a **fresh** semantic analysis of *this* body was run (NOT inherited from the clone); which candidates were auto-applied at high confidence vs. presented to the user (Hard Rule 14); which of the presented ones were approved/inserted (first-occurrence) and which rejected. For episodes, confirm the «درباره این اپیزود» caption was the analyzed body. An empty result is acceptable **only** as a documented "analyzed body, 0 qualifying glossary/episode candidates".
+  - **4.9 (related links on the new page):** for episodes, confirm this targeted the **«محتوای مرتبط»** block (not skipped due to the naming difference); the related brain entries considered (sibling series parts first), how many slots were free under the 5-cap, which links were auto-applied vs. presented to the user (Hard Rule 14) and which of those were approved/added, and the remaining-budget math. An empty result is acceptable **only** as a documented "at cap" / "0 qualifying entries".
+  - Explicitly confirm that **none** of 4.7/4.8/4.9 was skipped on the grounds that the cloned/previous/sibling page lacked such links (a Hard-Rule-11 violation).
+- Pillar/subtopic verification (step 5.5): confirmation that the recorded `pillar.primary` and `pillar.subtopic` are **identical** to what was confirmed in step 2.4 (untouched by steps 5/5.5); resulting `pillar.subtopic` (slug if structured, `null` if not); confirmation that no new keys were added to the `pillar` object or as siblings, that the `subtopic` key is present in every case, and that the step-2.5 capsule / episode pillar link is consistent with `pillar.primary`
+- **Pathways & bundles (steps 5.6 + 5.6-ب)** — or the documented "skipped — LiteCast" line: every full pathway the item joined (pathway id + anchor + milestone flag), the `--coverage` line confirming membership in ≥1 pathway (or the explicit deliberate-orphan note); then, for **every candidate bundle** (each bundle whose `continues_pathway` is a pathway just joined — or «باندل: بدون کاندید»), exactly one verdict: «وارد شد (بعد از کدام قدم)» with confirmation the bundle's last step still carries the only `milestone: true` and that `plus/js/home-bundles.js`'s step count was updated in the same commit, «رد شد (گیت N)», or «سوال شد». A candidate bundle with no verdict = incomplete publish.
+- Builder runs: each command + full stdout/stderr (`python tools/update-homepage-counters.py`, `python tools/build_pillar.py all`, `python tools/build_episodes.py` for episode publishes, `node tools/build_flashcards_index.mjs` unless step 4.11 was skipped, `node tools/build_plus_index.mjs` for the میز کار nav-tree unless paper-only, and `python tools/stamp-version.py` LAST); confirmation that the new content appears in the regenerated pillar page when a structured pillar was assigned, **and (for episodes) that the new episode now appears in the regenerated `episodes.html`** with no feature regression.
+- **Phase D (English mirror & toggle — Hard Rule 12; REQUIRED unless LiteCast):** the en page path created (`/{type}/en/{file}.html`); confirmation the body was translated structure-faithfully from THIS type (not rendered as a metanote) with GA4 once and `lang`/`inLanguage`/`og:locale` all `en`; confirmation the en page carries `noindex, follow` and zero hreflang lines and stays out of the sitemap (`inject_hreflang.py` + `noindex_en_mirrors.py --check` both run); both toggle targets (exact inverses, no meta-1 hardcode) and that the fa page got both the `.lang-btn` markup **and** its CSS; chrome standard `metanotes/en/meta-1.html` hash unchanged. For LiteCast, the documented skip line instead.
+- **Phase E (new-article push marker — REQUIRED unless paper-only/LiteCast/glossary):**
+  confirmation that `<meta name="dc-notify" content="true">` is present exactly once
+  in the published page's `<head>` (so the `notify-new-articles` Action fires the
+  `article_published` event on push); or the documented skip line ("paper-only" /
+  "LiteCast" / "glossary").
+- Confirmation the new entry appears in the latest-content widget data
+- **Phase F (mechanical gate — REQUIRED):** the exact `verify_publish.py` command
+  run (including the `--expect-title` / `--expect-caption` values when the user
+  supplied them) and its summary line pasted verbatim, showing `0 failed`. Any
+  `warn` rows listed with a one-line note confirming each is deliberate. A
+  publish reported without a green gate is not reported as finished.
+- List of all modified file paths

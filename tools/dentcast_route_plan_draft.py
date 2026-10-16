@@ -1,0 +1,139 @@
+#!/usr/bin/env python3
+"""Staging-only read-only DentCast route planner. No publishing or side effects."""
+import argparse
+import json
+import sys
+from pathlib import Path
+
+MODULES = ("intake", "taxonomy", "page", "navigation", "semantic-links",
+           "paper-cabinet", "learning-assets", "evidence", "challenge",
+           "brain", "pathways", "english", "notification", "build", "verify")
+CLOSED = {"dentai", "photocast"}
+ROOT = Path(__file__).resolve().parents[1]
+BRAIN = ROOT / "dentcast-brain.json"
+CONTRACT = ROOT / ".dentcast/workflows/modules/MODULE-CONTRACTS.v1.json"
+
+
+def plan(request, contract=None):
+    """Return a conservative PLAN ONLY. Unknown inputs block; never guess."""
+    contract = contract or json.loads(CONTRACT.read_text(encoding="utf-8"))
+    registry = {m["id"]: m for m in contract["modules"]}
+    assert len(registry) == len(contract["modules"]), "duplicate module IDs"
+    assert set(MODULES) <= set(registry), "missing module contract"
+    content = request.get("has_text")
+    paper = request.get("has_paper")
+    category = request.get("category")
+    if type(content) is not bool or type(paper) is not bool:
+        return {"status": "blocked", "code": "ROUTE_INPUT_UNKNOWN",
+                "reason": "has_text and has_paper must be explicit booleans",
+                "no_side_effects": True}
+    if not content and not paper:
+        return {"status": "blocked", "code": "ROUTE_EMPTY",
+                "reason": "No text or paper; ask user what to do", "no_side_effects": True}
+    if content and (not isinstance(category, str) or not category.strip()):
+        return {"status": "blocked", "code": "CATEGORY_UNRESOLVED",
+                "reason": "Category must be locked from live brain; do not infer",
+                "no_side_effects": True}
+    category = category.lower().strip() if isinstance(category, str) else None
+    if content and category in CLOSED:
+        return {"status": "blocked", "code": "CATEGORY_CLOSED",
+                "reason": "No new DentAI/PhotoCast content", "no_side_effects": True}
+    live_entries = json.loads(BRAIN.read_text(encoding="utf-8"))
+    if not isinstance(live_entries, list):
+        raise ValueError("brain must be a flat array")
+    live_categories = {str(e["type"]).lower() for e in live_entries if isinstance(e, dict) and isinstance(e.get("type"), str)}
+    if any(isinstance(e, dict) and "episode" in e for e in live_entries):
+        live_categories.add("episode")
+    # Glossary uses its own canonical registry, never a fabricated brain type.
+    glossary = json.loads((ROOT / "glossary/glossary.json").read_text(encoding="utf-8"))
+    if isinstance(glossary.get("glossary"), list) and glossary["glossary"]:
+        live_categories.add("glossary")
+    if content and category not in live_categories:
+        return {"status": "blocked", "code": "CATEGORY_RULES_NOT_MAPPED",
+                "reason": "This conservative prototype has no audited predicate for this category",
+                "no_side_effects": True}
+    if content and category in {"litecast", "glossary"} and request.get("challenge") is True:
+        return {"status": "blocked", "code": "CHALLENGE_CATEGORY_CONFLICT",
+                "reason": "LiteCast+Challenge combination needs separate rule audit", "no_side_effects": True}
+
+    challenge = request.get("challenge") if content else False
+    if type(challenge) is not bool:
+        return {"status": "blocked", "code": "CHALLENGE_UNRESOLVED", "no_side_effects": True}
+    route = "paper-only" if not content else ("litecast" if category == "litecast" else "challenge" if challenge else "publication")
+    if content and paper:
+        route += "+paper"
+    selected = ["intake"]
+    if content:
+        selected += ["page"]
+        if category != "litecast":
+            selected += ["taxonomy"]
+        if category != "litecast":
+            selected += ["navigation"]
+        # Specialist 4.7-4.9 or LiteCast internal equivalents 0.5/0.6.
+        selected += ["semantic-links"]
+        if paper:
+            selected += ["paper-cabinet"]
+        if challenge:
+            selected += ["challenge"]
+        if category != "litecast":
+            selected += ["brain"]
+            if not challenge and category != "glossary":
+                selected += ["pathways"]
+        # C6 Pulse runs even on LiteCast; phase E push-marker is a distinct
+        # conditional notification invocation AFTER phase D, not a second module.
+        selected += ["notification", "build"]
+        if category != "litecast" and not challenge:
+            selected += ["english"]
+        selected += ["verify"]
+    else:
+        selected += ["paper-cabinet"]
+    unresolved = []
+    if content:
+        unresolved += ["learning-assets eligibility requires canonical Q4 and type-specific rules",
+                       "evidence eligibility requires source-basket/Q4.8/Q4.13 audit",
+                       "pathways placement requires canonical relevance/bundle gates when scheduled",
+                       "module order and side-effect boundaries require clause-level parity",
+                       "notification phase E needs a SECOND phase-scoped invocation after D (not a repeat full module)"]
+    if category == "litecast":
+        unresolved += ["LiteCast semantic-links executes ONLY internal 0.5/0.6; 2.5/4.7/4.8/4.9 specialist actions are excluded"]
+    if challenge:
+        unresolved += ["Challenge exclusions and private handoff require full source mapping"]
+    if paper:
+        unresolved += ["paper cabinet requires verified Drive capability and citation metadata"]
+    if not content:
+        unresolved += ["paper-only requires Drive Part 1 + catalog Part 2, commit; NO Part 3 credit"]
+    skipped = []
+    for mid in MODULES:
+        if mid not in selected:
+            reason = ("not applicable: paper-only path (Phase 0)" if not content else
+                      "not selected by conservative route skeleton; eligibility may be unresolved")
+            skipped.append({"module": mid, "status": "not_scheduled_pending_rule_audit",
+                            "reason": reason})
+    return {"status": "draft_requires_audit", "route": route, "category": category, "challenge": challenge, "no_side_effects": True,
+            "ordered_modules": [{"id": mid, "contract": registry[mid]["source_of_truth"]}
+                                for mid in selected],
+            "not_scheduled": skipped, "unresolved": unresolved,
+            "authority": ".dentcast/workflows/modules/02-routing-intake.md Phase 0",
+            "warning": "Not an executable plan. Do not treat omissions as authorized skips."}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--request", help="JSON request path (otherwise stdin)")
+    args = parser.parse_args()
+    try:
+        raw = Path(args.request).read_text(encoding="utf-8") if args.request else sys.stdin.read()
+        request = json.loads(raw)
+        if not isinstance(request, dict):
+            raise ValueError("request must be an object")
+        result = plan(request)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result["status"] != "blocked" else 2
+    except (ValueError, OSError, AssertionError) as exc:
+        print(json.dumps({"status": "blocked", "code": "PLANNER_ERROR",
+                          "reason": str(exc), "no_side_effects": True}), file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

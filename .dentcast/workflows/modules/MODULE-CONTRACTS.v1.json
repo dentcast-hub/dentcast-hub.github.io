@@ -1,0 +1,1261 @@
+{
+  "schema_version": "1.0-draft",
+  "status": "contracts-specified-not-executable",
+  "objective": "bounded ownership, round-trip contracts, fault isolation, resumability",
+  "canonical_source": ".dentcast/workflows/README.md",
+  "notes": [
+    "This registry defines interfaces, NOT executable conditions or parity-certified implementation.",
+    "Dependencies are minimum inputs, NOT an exhaustive executable DAG. Canonical ordering and cross-step constraints remain binding.",
+    "DES/Fidelity scientific engine remains opaque and independently versioned.",
+    "No writes to production or merge authorized.",
+    "All requires arrays express unconditional prerequisites only. Conditional prerequisites (e.g. taxonomy for specialist page, build for publish verification) are declared in inputs and must be compiled into the route-specific DAG; never use requires as the whole execution graph.",
+    "Route plans must explicitly distinguish paper-only, LiteCast, Challenge and standard publication; skip receipts must cite canonical authority.",
+    "Module interface contract validated structurally; complete clause-level canonical parity is still pending.",
+    "Stage 2: build->brain is conditional on specialist routes, never unconditional on LiteCast; verify is ledger-driven, not automatically build-dependent on paper-only.",
+    "Stage 2: phase-scoped module invocation identity is module:substep. notification has two invocations C6 and E; module-level one-pass sequencing is NOT sufficient; phase E marker cannot be executed during C6 Pulse.",
+    "Stage 2: source sequence is page draft C2 -> taxonomy lock C2.4 -> navigation C2.5/2.6 -> specialist links OR LiteCast 0.5/0.6 -> brain where applicable -> pathways -> C6 Pulse -> C7 stamp -> C8 build -> D English where applicable -> E marker where applicable -> F verify.",
+    "Stage 2 contract audit complete; do not treat this as executable behavioral parity certification. The 12 source slices and every hard rule are checked by tools/audit_dentcast_stage2_contract.py."
+  ],
+  "request_schema": {
+    "required": [
+      "run_id",
+      "module_id",
+      "contract_version",
+      "source_revision",
+      "input_fingerprint",
+      "inputs",
+      "dependency_receipts",
+      "approval_receipts"
+    ]
+  },
+  "response_schema": {
+    "required": [
+      "run_id",
+      "module_id",
+      "status",
+      "input_fingerprint",
+      "outputs",
+      "artifact_receipts",
+      "verification",
+      "error"
+    ],
+    "statuses": [
+      "completed",
+      "skipped_with_reason",
+      "awaiting_approval",
+      "blocked",
+      "failed"
+    ]
+  },
+  "modules": [
+    {
+      "id": "intake",
+      "contract_version": "1.0-draft",
+      "owner": "editorial-routing",
+      "source_of_truth": ".dentcast/workflows/modules/02-routing-intake.md",
+      "trigger": {
+        "name": "all",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [],
+      "inputs": [
+        {
+          "name": "user_request",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "attachments",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "brain_snapshot",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "route",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "category",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "exact_user_strings",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "approval_requests",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "content_plan"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "only documented canonical skip; must record reason"
+      ],
+      "invalidated_by": [
+        "user_input",
+        "route_rules"
+      ],
+      "failure_codes": [
+        "INTAKE_ROUTE_UNKNOWN",
+        "INTAKE_UNAPPROVED_REWRITE"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test"
+      ],
+      "privacy_class": "public-safe-metadata-only",
+      "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "page",
+      "contract_version": "1.0-draft",
+      "owner": "page-generation",
+      "source_of_truth": ".dentcast/workflows/modules/03-litecast-and-page.md",
+      "trigger": {
+        "name": "new_page",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [
+        "intake"
+      ],
+      "inputs": [
+        {
+          "name": "content_plan",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "same_type_template",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "media",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "taxonomy_lock_if_required",
+          "required": "only_after_step_2_4_before_taxonomy_dependent_write_never_draft_creation"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "draft_page",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "media_manifest",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "page_identity",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "content_page"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "paper-only: no page; LiteCast follows its special branch"
+      ],
+      "invalidated_by": [
+        "user_input",
+        "template",
+        "category"
+      ],
+      "failure_codes": [
+        "PAGE_WRONG_CATEGORY_TEMPLATE",
+        "PAGE_INVALID_MEDIA"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test"
+      ],
+      "privacy_class": "public-safe-metadata-only",
+      "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "taxonomy",
+      "contract_version": "1.0-draft",
+      "owner": "classification",
+      "source_of_truth": ".dentcast/workflows/modules/04-taxonomy-and-navigation.md",
+      "trigger": {
+        "name": "specialist_page",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [
+        "intake",
+        "page"
+      ],
+      "inputs": [
+        {
+          "name": "content_plan",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "live_main_taxonomy",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "approved_body",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "live_taxonomy_and_semantic_body",
+          "required": "for_specialist_taxonomy"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "locked_pillar",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "locked_subtopic",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "taxonomy_lock"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "LiteCast has no specialist pillar/subtopic"
+      ],
+      "invalidated_by": [
+        "body",
+        "taxonomy",
+        "founder_override"
+      ],
+      "failure_codes": [
+        "TAXONOMY_AMBIGUOUS_CLASSIFICATION",
+        "TAXONOMY_STALE_TAXONOMY"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test"
+      ],
+      "privacy_class": "public-safe-metadata-only",
+      "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "navigation",
+      "contract_version": "1.0-draft",
+      "owner": "page-navigation",
+      "source_of_truth": ".dentcast/workflows/modules/04-taxonomy-and-navigation.md",
+      "trigger": {
+        "name": "page_navigation",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [
+        "page",
+        "taxonomy"
+      ],
+      "inputs": [
+        {
+          "name": "draft_page",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "taxonomy_lock",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "series_context",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "navigation_changes",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "link_slots_used",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "page_navigation"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "LiteCast uses internal links only"
+      ],
+      "invalidated_by": [
+        "taxonomy_lock",
+        "page_identity",
+        "series_context"
+      ],
+      "failure_codes": [
+        "NAVIGATION_MISSING_PARENT",
+        "NAVIGATION_LINK_CAP_EXCEEDED"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test"
+      ],
+      "privacy_class": "public-safe-metadata-only",
+      "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "semantic-links",
+      "contract_version": "1.0-draft",
+      "owner": "semantic-enrichment",
+      "source_of_truth": ".dentcast/workflows/modules/05-semantic-linking.md",
+      "trigger": {
+        "name": "page_semantic_analysis",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [
+        "page"
+      ],
+      "inputs": [
+        {
+          "name": "approved_body",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "navigation_changes",
+          "required": "only_on_specialist_routes"
+        },
+        {
+          "name": "brain_snapshot",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "glossary_snapshot",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "analysis_report",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "inline_links",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "related_links",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "total_related_links",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "semantic_link_changes"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "LiteCast specialist 2.5/4.7/4.8/4.9 skipped; ALWAYS execute LiteCast-internal 0.5/0.6 on a LiteCast page",
+        "ordinary specialist publishes always perform fresh semantic steps 4.7/4.8/4.9 or source-authorized no-op",
+        "Glossary uses semantic-links:glossary: C4.7 then C4.7-ب scoped cross-link handoff then C4.8 and C4.9, preserving all ASK gates"
+      ],
+      "invalidated_by": [
+        "body",
+        "glossary",
+        "brain",
+        "navigation"
+      ],
+      "failure_codes": [
+        "SEMANTIC_LINKS_NO_FRESH_ANALYSIS",
+        "SEMANTIC_LINKS_LINK_CAP_EXCEEDED"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test"
+      ],
+      "privacy_class": "public-safe-metadata-only",
+      "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED",
+      "additional_sources": [
+        ".dentcast/workflows/modules/03-litecast-and-page.md"
+      ]
+    },
+    {
+      "id": "paper-cabinet",
+      "contract_version": "1.0-draft",
+      "owner": "paper-library",
+      "source_of_truth": ".dentcast/workflows/modules/06-paper-ingestion.md",
+      "trigger": {
+        "name": "attached_paper",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [
+        "intake"
+      ],
+      "inputs": [
+        {
+          "name": "paper_attachment",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "citation_metadata",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "available_drive_access",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "catalog_changes",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "paper_credit",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "ingestion_receipts",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "cabinet_catalog"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "only documented canonical skip; must record reason"
+      ],
+      "invalidated_by": [
+        "paper_file",
+        "citation_metadata"
+      ],
+      "failure_codes": [
+        "PAPER_CABINET_MISSING_FILE",
+        "PAPER_CABINET_UNVERIFIED_DOI",
+        "PAPER_CABINET_DRIVE_UNAVAILABLE"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test"
+      ],
+      "privacy_class": "restricted-inputs-private-store",
+      "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "learning-assets",
+      "contract_version": "1.0-draft",
+      "owner": "learning-content",
+      "source_of_truth": ".dentcast/workflows/modules/07-flashcards-and-quiz.md",
+      "trigger": {
+        "name": "eligible_learning_content",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [
+        "page"
+      ],
+      "inputs": [
+        {
+          "name": "approved_content",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "category",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "challenge_flag",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "flashcards",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "quiz",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "skip_reason",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "learning_indexes"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "challenge-specific exclusions; category rules from canonical source"
+      ],
+      "invalidated_by": [
+        "approved_content",
+        "category",
+        "challenge_flag"
+      ],
+      "failure_codes": [
+        "LEARNING_ASSETS_WRONG_SKIP",
+        "LEARNING_ASSETS_INVALID_SCHEMA"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test"
+      ],
+      "privacy_class": "public-safe-metadata-only",
+      "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "evidence",
+      "contract_version": "1.0-draft",
+      "owner": "external-scientific-subsystem",
+      "source_of_truth": ".dentcast/workflows/modules/08-des-fidelity.md",
+      "trigger": {
+        "name": "canonical_evidence_basket",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [
+        "intake",
+        "page"
+      ],
+      "inputs": [
+        {
+          "name": "approved_claims",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "source_units",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "source_basis",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "engine_version",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "engine_record",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "scientific_approval_requests",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "engine_receipt",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "des_record"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "preserve original Q4.8 basket and 4.13 eligibility; no scientific engine changes"
+      ],
+      "invalidated_by": [
+        "claims",
+        "source_units",
+        "engine_version"
+      ],
+      "failure_codes": [
+        "EVIDENCE_BASIS_MISMATCH",
+        "EVIDENCE_UNAPPROVED_SCIENTIFIC_CHANGE",
+        "EVIDENCE_INCOMPLETE_VOTE"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test"
+      ],
+      "privacy_class": "restricted-inputs-private-store",
+      "checkpoint_policy": "orchestrator stores invocation and final validated return only; scientific engine independently owns per-agent checkpoints",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "challenge",
+      "contract_version": "1.0-draft",
+      "owner": "challenge-publication",
+      "source_of_truth": ".dentcast/workflows/modules/09-challenge.md",
+      "trigger": {
+        "name": "challenge_selected",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [
+        "intake",
+        "page"
+      ],
+      "inputs": [
+        {
+          "name": "approved_question",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "public_media",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "private_answer_reference",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "challenge_markup",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "private_handoff_reference",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "skip_reasons",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "public_challenge_markup"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "private answer must never enter public git"
+      ],
+      "invalidated_by": [
+        "question",
+        "media",
+        "challenge_route"
+      ],
+      "failure_codes": [
+        "CHALLENGE_PRIVATE_ANSWER_LEAK",
+        "CHALLENGE_INVALID_MARKUP"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test"
+      ],
+      "privacy_class": "restricted-inputs-private-store",
+      "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "brain",
+      "contract_version": "1.0-draft",
+      "owner": "brain-data",
+      "source_of_truth": ".dentcast/workflows/modules/10-brain-and-pathways.md",
+      "trigger": {
+        "name": "specialist_brain_entry",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [
+        "page",
+        "taxonomy"
+      ],
+      "inputs": [
+        {
+          "name": "final_page_metadata",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "brain_snapshot",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "taxonomy_lock",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "hashtags",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "brain_entry",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "append_receipt",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "tag_reference_updates",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "brain_array",
+        "hashtag_reference",
+        "glossary_registry_only_for_glossary",
+        "episode_catalog_only_for_episode"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "LiteCast uses lite-glossary.json, not specialist brain",
+        "Glossary uses brain:glossary-register for glossary/glossary.json; no specialist brain append or hashtag minting"
+      ],
+      "invalidated_by": [
+        "page",
+        "taxonomy",
+        "hashtags",
+        "brain_snapshot",
+        "glossary_snapshot",
+        "episode_catalog"
+      ],
+      "failure_codes": [
+        "BRAIN_SCHEMA_DRIFT",
+        "BRAIN_NOT_ABSOLUTE_TAIL"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test"
+      ],
+      "privacy_class": "public-safe-metadata-only",
+      "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED",
+      "additional_sources": [
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md"
+      ]
+    },
+    {
+      "id": "pathways",
+      "contract_version": "1.0-draft",
+      "owner": "learning-pathways",
+      "source_of_truth": ".dentcast/workflows/modules/10-brain-and-pathways.md",
+      "trigger": {
+        "name": "eligible_specialist_pathway",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [
+        "brain"
+      ],
+      "inputs": [
+        {
+          "name": "brain_entry",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "pathway_snapshot",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "category",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "pathway_changes",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "bundle_gate",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "pathways"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "LiteCast/challenge exclusions according to original workflow"
+      ],
+      "invalidated_by": [
+        "brain_entry",
+        "pathway_snapshot"
+      ],
+      "failure_codes": [
+        "PATHWAYS_INVALID_PATHWAY",
+        "PATHWAYS_UNRESOLVED_BUNDLE_GATE"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test"
+      ],
+      "privacy_class": "public-safe-metadata-only",
+      "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "build",
+      "contract_version": "1.0-draft",
+      "owner": "build-system",
+      "source_of_truth": ".dentcast/workflows/modules/11-build-and-version.md",
+      "trigger": {
+        "name": "new_page_finalize",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [
+        "page"
+      ],
+      "inputs": [
+        {
+          "name": "all_content_changes",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "build_tool_revision",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "asset_versions",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "build_receipts",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "version_stamp",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "generated_indexes",
+        "asset_versions"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "only documented canonical skip; must record reason"
+      ],
+      "invalidated_by": [
+        "content_changes",
+        "tool_revision"
+      ],
+      "failure_codes": [
+        "BUILD_STALE_BUILD",
+        "BUILD_STAMP_BEFORE_FINAL_WRITE"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test"
+      ],
+      "privacy_class": "public-safe-metadata-only",
+      "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "english",
+      "contract_version": "1.0-draft",
+      "owner": "translation-workflow",
+      "source_of_truth": ".dentcast/workflows/modules/12-english-notify-verify.md",
+      "trigger": {
+        "name": "org_nonchallenge_page",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [
+        "page"
+      ],
+      "inputs": [
+        {
+          "name": "final_persian_page",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "category",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "challenge_flag",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "english_workflow",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "english_page",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "toggle_receipts",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "skip_reason",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "english_mirror",
+        "language_toggle"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "LiteCast and challenge: documented skip"
+      ],
+      "invalidated_by": [
+        "final_persian_page",
+        "route"
+      ],
+      "failure_codes": [
+        "ENGLISH_PHANTOM_TOGGLE",
+        "ENGLISH_INCORRECT_EXCEPTION"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test"
+      ],
+      "privacy_class": "public-safe-metadata-only",
+      "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED",
+      "phase_invocations": [
+        {
+          "invocation_id": "english:mirror",
+          "canonical_step": "D",
+          "requires": [
+            "build:C8"
+          ],
+          "skip_only": [
+            "litecast",
+            "challenge"
+          ],
+          "canonical_authority": "README Phase D after C8 build; stamp-version rerun last after mirror modifications"
+        }
+      ]
+    },
+    {
+      "id": "notification",
+      "contract_version": "1.0-draft",
+      "owner": "publication-notification",
+      "source_of_truth": ".dentcast/workflows/modules/12-english-notify-verify.md",
+      "trigger": {
+        "name": "canonical_notification_route",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [
+        "page"
+      ],
+      "inputs": [
+        {
+          "name": "route",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "content_page",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "publication_state",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "pulse_result",
+          "required": "every_page_publish_canonical_C6"
+        },
+        {
+          "name": "notification_marker",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "skip_reason",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "pulse",
+        "notification_marker"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "Phase C6 assesses the category convention for every page, including LiteCast; glossary has the documented not-customary Pulse skip (Phase F)",
+        "Phase E marker skips paper-only, LiteCast, glossary; Challenge is NOT a Phase E skip"
+      ],
+      "invalidated_by": [
+        "route",
+        "content_page"
+      ],
+      "failure_codes": [
+        "NOTIFICATION_INCORRECT_NOTIFICATION",
+        "NOTIFICATION_WRONG_SKIP"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test"
+      ],
+      "privacy_class": "public-safe-metadata-only",
+      "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED",
+      "phase_invocations": [
+        {
+          "invocation_id": "notification:pulse",
+          "canonical_step": "C6",
+          "requires": [
+            "page"
+          ],
+          "must_precede": [
+            "build:C8"
+          ],
+          "canonical_authority": "README Phase C Step 6"
+        },
+        {
+          "invocation_id": "notification:push-marker",
+          "canonical_step": "E",
+          "requires": [
+            "build:C8"
+          ],
+          "must_follow": [
+            "english:D_if_applicable"
+          ],
+          "may_skip_for": [
+            "paper-only",
+            "litecast",
+            "glossary"
+          ],
+          "canonical_authority": "README Phase E"
+        }
+      ],
+      "additional_sources": [
+        ".dentcast/workflows/modules/11-build-and-version.md"
+      ]
+    },
+    {
+      "id": "verify",
+      "contract_version": "1.0-draft",
+      "owner": "publication-quality-gate",
+      "source_of_truth": ".dentcast/workflows/modules/12-english-notify-verify.md",
+      "trigger": {
+        "name": "publish_completion",
+        "authority": "CANONICAL_README_CONDITIONS",
+        "status": "requires executable predicate mapping"
+      },
+      "requires": [
+        "intake"
+      ],
+      "inputs": [
+        {
+          "name": "expected_title",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "expected_caption",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "content_id",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "all_module_receipts",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "route_execution_ledger",
+          "required": "always"
+        },
+        {
+          "name": "required_stage_receipts",
+          "required": "all_applicable_modules"
+        },
+        {
+          "name": "founder_approval_receipts",
+          "required": "all_applicable_gates"
+        },
+        {
+          "name": "phase_f_execution_result",
+          "required": "all_publish_routes"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "phase_f_result",
+          "required": "conditional_per_canonical_route"
+        },
+        {
+          "name": "final_report",
+          "required": "conditional_per_canonical_route"
+        }
+      ],
+      "reads": "restricted_to_declared_inputs_and_authoritative_sources",
+      "writes": [
+        "verification_receipt"
+      ],
+      "side_effects": "explicit receipts and idempotency checks required",
+      "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",
+      "skip_conditions": [
+        "paper-only and nonpublication routes must not be falsely reported as published"
+      ],
+      "invalidated_by": [
+        "any_final_artifact",
+        "approval",
+        "version_stamp"
+      ],
+      "failure_codes": [
+        "VERIFY_NONZERO_GATE",
+        "VERIFY_UNRESOLVED_STAGE",
+        "VERIFY_APPROVAL_MISSING"
+      ],
+      "retry_policy": "only after fingerprint, approval, and side-effect reconciliation",
+      "verification": [
+        "source rule coverage",
+        "input/output schema validation",
+        "positive route test",
+        "negative exception test",
+        "downstream invalidation test",
+        "route-complete ledger with no unresolved mandatory module, approval or side effect"
+      ],
+      "privacy_class": "public-safe-metadata-only",
+      "checkpoint_policy": "persist validated result; replay only exact fingerprint with side-effect reconciliation",
+      "adapter": "NOT_IMPLEMENTED",
+      "schema_validator": "NOT_IMPLEMENTED"
+    }
+  ],
+  "activation_guards": {
+    "contracts_described": true,
+    "executable_predicates_implemented": false,
+    "adapters_implemented": false,
+    "schemas_enforced": false,
+    "behavior_parity_passed": false,
+    "founder_approval_required": true
+  },
+  "validation": {
+    "date": "2026-10-15",
+    "method": "GitHub source fetch, JSON parse, unique ID/dependency/cycle checks, targeted canonical excerpt inspection",
+    "result": "structural_pass_with_behavioral_blockers",
+    "issues_fixed_in_draft": [
+      "taxonomy no longer waits for a created page",
+      "verification now requires complete route ledger rather than only build",
+      "conditional dependencies separated from unconditional requires"
+    ],
+    "still_blocked": [
+      "all 15 adapters absent",
+      "all 15 validators absent",
+      "canonical clause-by-clause rule mapping absent",
+      "route-specific DAG and state machine absent",
+      "end-to-end parity untested"
+    ]
+  },
+  "interface_versions": {
+    "future_target": "1.0-draft",
+    "current_intake_staging": "0.1",
+    "adapter_compatibility": "Existing staging-only intake adapter uses module_contract_version, attempt, dependencies, approvals, artifacts. Stage 3 MUST implement explicit v0.1->v1.0 translation and result schema validation; these versions are NOT interchangeable."
+  }
+}

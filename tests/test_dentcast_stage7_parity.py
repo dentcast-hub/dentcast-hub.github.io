@@ -1,0 +1,433 @@
+"""Stage 7 independent parity oracle: actual sandbox outputs, not agent assertions."""
+import hashlib
+import importlib.util
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+DIGEST = "a" * 64
+REVISION = "b" * 40
+
+
+def load(label, relative):
+    spec = importlib.util.spec_from_file_location(label, ROOT / relative)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+oracle = load("stage7_parity_oracle", "tools/audit_dentcast_stage7_parity.py")
+pairwise = load("stage7_pairwise_oracle", "tools/audit_dentcast_stage7_pairwise.py")
+routes = load("stage7_compiler", "tools/dentcast_stage3_route.py")
+runner = load("stage7_runner", "tools/dentcast_stage3_orchestrator.py")
+patcher = load("stage7_patcher", "tools/dentcast_stage3_apply.py")
+bridge = load("stage7_bridge", "tools/dentcast_stage3_bridge.py")
+
+
+def fa(category, filename, *, en=False, challenge=False, count=2,
+       marker=True, specialist_link=False):
+    domain = "dentcast.ir" if category == "litecast" else "dentcast.org"
+    current = category + ("/en/" if en else "/") + filename
+    canonical = "https://" + domain + "/" + current
+    links = "".join(
+        '<a href="/litecast/lite-CAST1.html">Relevant</a>' if category == "litecast"
+        else '<a href="/sharehub/share-18.html">Relevant</a>'
+        for _ in range(count)
+    )
+    if specialist_link:
+        links += '<a href="/glossary/margin.html">Specialist concept</a>'
+    lang = 'lang="en" dir="ltr"' if en else 'lang="fa" dir="rtl"'
+    toggle = ('<a class="lang-btn" href="../' + filename + '">فارسی</a>'
+              if en else
+              ("" if category == "litecast" or challenge
+               else '<a class="lang-btn" href="en/' + filename + '">English</a>'))
+    notify = '<meta name="dc-notify" content="true">' if marker and not en else ""
+    noindex = '<meta name="robots" content="noindex, follow">' if en else ""
+    return (f'<html {lang}><head><link rel="canonical" href="{canonical}">'
+            f'<meta property="og:url" content="{canonical}">{notify}{noindex}'
+            f'</head><body>{toggle}<div class="dc-related-section">{links}</div>'
+            f'<h1>عنوان ساختگی برای تست</h1></body></html>')
+
+
+def request(category="sharehub", paper=False, challenge=False):
+    return {"has_text": True, "has_paper": paper,
+            "category": category, "challenge": challenge}
+
+
+def synthetic_report(inv):
+    values = {}
+    type_defaults = {
+        "digest": DIGEST, "optional_digest": DIGEST,
+        "text": "synthetic", "bool_true": True, "bool_false": False,
+        "nonnegative": 0, "positive": 1, "zero": 0, "one": 1,
+        "list": [], "mapping": {},
+    }
+    for field, typ in inv["required_output_schema"].items():
+        values[field] = type_defaults[typ]
+    if inv["step"]["step_id"] == "intake:route":
+        values["route"] = inv["context"]["route"]
+    return {
+        "step_id": inv["step"]["step_id"],
+        "module_id": inv["step"]["module_id"],
+        "input_digest": inv["input_digest"],
+        "status": "completed",
+        "outputs": values,
+        "external_receipt_digest": DIGEST,
+        "approval_receipt_digest": None,
+        "error": None,
+    }
+
+
+class IndependentParityTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+        marker = self.root / bridge.SANDBOX_MARKER
+        marker.write_text(json.dumps({
+            "purpose": "dentcast-stage3-disposable-test",
+            "allow_real_publication": False,
+            "allow_remote_mutation": False,
+        }), encoding="utf-8")
+
+    def write_pair(self, category="sharehub", filename="share-999.html",
+                   with_english=True, challenge=False, count=2,
+                   marker=True, specialist_link=False):
+        folder = self.root / category
+        folder.mkdir(exist_ok=True)
+        (folder / filename).write_text(
+            fa(category, filename, challenge=challenge, count=count,
+               marker=marker, specialist_link=specialist_link),
+            encoding="utf-8")
+        if with_english:
+            en = folder / "en"
+            en.mkdir(exist_ok=True)
+            (en / filename).write_text(
+                fa(category, filename, en=True, count=0, marker=False),
+                encoding="utf-8")
+        return folder / filename
+
+    def test_all_seven_canonical_routes_have_mechanical_barriers(self):
+        queries = [
+            request(), request(paper=True), request(category="litecast"),
+            request(category="litecast", paper=True),
+            request(challenge=True), request(challenge=True, paper=True),
+            {"has_text": False, "has_paper": True},
+        ]
+        for q in queries:
+            with self.subTest(query=q):
+                plan = routes.compile_steps(q)
+                self.assertEqual(plan["status"],
+                                 "compiled_staging_requires_operator")
+                self.assertEqual(oracle.inspect_route(plan), [])
+                self.assertFalse(plan["execution_authorized"])
+
+    def test_missing_litecast_registry_write_fails_independent_oracle(self):
+        plan = routes.compile_steps(request(category="litecast"))
+        self.assertIn("page:litecast-register",
+                      [step["step_id"] for step in plan["ordered_steps"]])
+        plan["ordered_steps"] = [x for x in plan["ordered_steps"]
+                                 if x["step_id"] != "page:litecast-register"]
+        self.assertIn("MISSING_REQUIRED_STEP:page:litecast-register",
+                      oracle.inspect_route(plan))
+
+    def test_bad_stamp_order_is_caught_even_if_module_contracts_accept_it(self):
+        plan = routes.compile_steps(request())
+        steps = plan["ordered_steps"]
+        last = next(s for s in steps if s["step_id"] == "build:version-final")
+        steps.remove(last)
+        target = next(i for i, s in enumerate(steps)
+                      if s["step_id"] == "build:rebuild")
+        steps.insert(target, last)
+        self.assertTrue(any("STAMP" in s or "CANONICAL_ORDER" in s
+                            for s in oracle.inspect_route(plan)))
+
+
+
+    def test_glossary_has_separate_registry_and_inbound_handoff(self):
+        plan = routes.compile_steps(request(category="glossary"))
+        self.assertEqual(plan["status"], "compiled_staging_requires_operator")
+        steps = [s["step_id"] for s in plan["ordered_steps"]]
+        self.assertIn("brain:glossary-register", steps)
+        self.assertIn("semantic-links:glossary", steps)
+        self.assertNotIn("brain:append", steps)
+        self.assertNotIn("pathways:place", steps)
+        self.assertFalse(plan["execution_authorized"])
+
+    def test_glossary_phase_e_exception_is_not_a_false_failure(self):
+        # Verify the actual glossary plan; a route is not publication permission.
+        plan = routes.compile_steps(request(category="glossary"))
+        self.assertEqual(oracle.inspect_route(plan), [])
+        self.write_pair(category="glossary", filename="term-999.html", marker=False)
+        self.assertEqual(oracle.inspect_page_pair(
+            self.root, "glossary", "term-999.html"), [])
+
+    def test_litecast_relative_and_protocol_relative_specialist_escape_blocked(self):
+        page = self.write_pair(category="litecast", filename="lite-CAST99.html",
+                               with_english=False, marker=False)
+        original = page.read_text()
+        for href in ("../glossary/ferrule.html", "//dentcast.org/glossary/",
+                     "/pillar/fixed-pros/", "https://dentcast.ir/sharehub/share-1.html"):
+            with self.subTest(href=href):
+                page.write_text(original + '<a href="' + href + '">cross-track</a>')
+                self.assertIn("LITECAST_SPECIALIST_LINK_FORBIDDEN",
+                              oracle.inspect_page_pair(
+                                  self.root, "litecast", "lite-CAST99.html"))
+
+    def test_forbidden_extra_scientific_and_paper_steps_cannot_hide(self):
+        for category, challenge, injected in (
+            ("litecast", False, "evidence:des-fidelity"),
+            ("sharehub", True, "learning-assets:quiz"),
+            ("sharehub", False, "paper-cabinet:catalog"),
+        ):
+            with self.subTest(category=category, challenge=challenge,
+                              extra=injected):
+                plan = routes.compile_steps(request(category=category,
+                                                    challenge=challenge))
+                self.assertEqual(oracle.inspect_route(plan), [])
+                extra = dict(plan["ordered_steps"][0], step_id=injected)
+                plan["ordered_steps"].insert(-2, extra)
+                self.assertIn("FORBIDDEN_STEP:" + injected,
+                              oracle.inspect_route(plan))
+
+    def test_real_existing_site_pages_are_independent_baselines(self):
+        # Read existing published pages, without changing a byte.
+        # These are output specimens from the current canonical workflow.
+        for cat, name in (("chairside", "chairside-41.html"),
+                          ("sharehub", "share-18.html"),
+                          ("litecast", "lite-CAST39.html")):
+            with self.subTest(category=cat):
+                self.assertEqual(
+                    oracle.inspect_page_pair(ROOT, cat, name), [],
+                    "Baseline itself fails, so do not claim new-route parity")
+
+    def test_missing_bilingual_mirror_is_not_an_accepted_publish(self):
+        self.write_pair(with_english=False)
+        issues = oracle.inspect_page_pair(self.root, "sharehub", "share-999.html")
+        self.assertIn("EN_MIRROR_MISSING", issues)
+
+    def test_complete_pair_has_reverse_toggles_noindex_and_push_marker(self):
+        self.write_pair()
+        self.assertEqual(oracle.inspect_page_pair(
+            self.root, "sharehub", "share-999.html"), [])
+
+    def test_phantom_fa_toggle_or_wrong_en_link_rejected(self):
+        p = self.write_pair()
+        en = self.root / "sharehub/en/share-999.html"
+        en.write_text(en.read_text().replace("../share-999.html", "../other.html"))
+        self.assertIn("EN_TOGGLE_WRONG",
+                      oracle.inspect_page_pair(self.root, "sharehub", "share-999.html"))
+        en.write_text(en.read_text().replace("../other.html", "../share-999.html")
+                      .replace('name="robots" content="noindex, follow"',
+                               'name="robots" content="index, follow"'))
+        self.assertIn("EN_NOINDEX_MISSING",
+                      oracle.inspect_page_pair(self.root, "sharehub", "share-999.html"))
+
+    def test_total_five_link_budget_crosses_every_related_link_kind(self):
+        self.write_pair(count=6)
+        self.assertIn("RELATED_LINKS_EXCEED_5",
+                      oracle.inspect_page_pair(self.root, "sharehub", "share-999.html"))
+
+    def test_litecast_ir_domain_and_no_specialist_links_or_language_toggle(self):
+        self.write_pair(category="litecast", filename="lite-CAST99.html",
+                        with_english=False, marker=False)
+        self.assertEqual(oracle.inspect_page_pair(
+            self.root, "litecast", "lite-CAST99.html"), [])
+        p = self.root / "litecast/lite-CAST99.html"
+        p.write_text(p.read_text() +
+                     '<a href="/glossary/ferrule.html">Not allowed</a>')
+        self.assertIn("LITECAST_SPECIALIST_LINK_FORBIDDEN",
+                      oracle.inspect_page_pair(self.root, "litecast", "lite-CAST99.html"))
+
+    def test_litecast_never_inherits_org_canonical(self):
+        p = self.write_pair(category="litecast", filename="lite-CAST99.html",
+                            with_english=False, marker=False)
+        p.write_text(p.read_text().replace("dentcast.ir", "dentcast.org"))
+        self.assertIn("FA_CANONICAL_IDENTITY",
+                      oracle.inspect_page_pair(self.root, "litecast", "lite-CAST99.html"))
+
+    def test_challenge_has_no_mirror_but_keeps_push_marker(self):
+        self.write_pair(category="sharehub", challenge=True, with_english=False)
+        self.assertEqual(oracle.inspect_page_pair(
+            self.root, "sharehub", "share-999.html", challenge=True), [])
+        p = self.root / "sharehub/share-999.html"
+        p.write_text(p.read_text().replace(
+            '<meta name="dc-notify" content="true">', ""))
+        self.assertIn("PUSH_MARKER_INCORRECT",
+                      oracle.inspect_page_pair(self.root, "sharehub", "share-999.html",
+                                               challenge=True))
+
+    def test_real_staging_edit_receipt_passes_but_incomplete_page_is_caught(self):
+        self.write_pair(with_english=False)
+        existing = self.root / "sharehub/share-999.html"
+        state = runner.begin(request(), "stage7-local", REVISION)
+        state = runner.submit(state, synthetic_report(runner.next_invocation(state)))
+        inv = runner.next_invocation(state)
+        self.assertEqual(inv["step"]["step_id"], "page:draft")
+        new_content = existing.read_text().replace("عنوان ساختگی", "عنوان نهایی")
+        intent = {
+            "step_id": "page:draft", "input_digest": inv["input_digest"],
+            "author_asserted_gates": inv["step"]["approval_gates"],
+            "edits": [{"path": "sharehub/share-999.html",
+                       "before_sha256": hashlib.sha256(existing.read_bytes()).hexdigest(),
+                       "content_utf8": new_content}],
+        }
+        execution = patcher.apply_intent(state, intent, self.root)
+        self.assertEqual(execution["status"], "staging_files_applied")
+        receipt = self.root / "integrity-receipt.json"
+        receipt.write_text(json.dumps(execution["artifact_receipt"]))
+        completed = bridge.verify_local_receipt(
+            state, synthetic_report(inv) |
+            {"external_receipt_digest": execution["artifact_receipt_digest"]},
+            receipt, self.root)
+        self.assertEqual(completed["next_index"], 2)
+        self.assertTrue(completed["history"][-1]["local_artifact_integrity_verified"])
+        # Passing self-reported staging receipts is NOT proof of canonical page.
+        self.assertIn("EN_MIRROR_MISSING",
+                      oracle.inspect_page_pair(self.root, "sharehub", "share-999.html"))
+        # Independent operator supplies the missing counterpart: now check passes.
+        en = self.root / "sharehub/en"
+        en.mkdir()
+        (en / "share-999.html").write_text(
+            fa("sharehub", "share-999.html", en=True, count=0, marker=False))
+        self.assertEqual(oracle.inspect_page_pair(
+            self.root, "sharehub", "share-999.html"), [])
+
+    def test_corrupt_or_missing_page_fails_closed(self):
+        self.assertEqual(oracle.inspect_page_pair(
+            self.root, "sharehub", "share-999.html"), ["MISSING_FA_PAGE"])
+        self.assertIn("INVALID_PUBLIC_PAGE_IDENTITY", oracle.inspect_page_pair(
+            self.root, "../tools", "script.py"))
+
+
+
+class PairwiseParityTests(unittest.TestCase):
+    """Byte-level side-by-side receipts cannot be mistaken for semantic parity."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.a = Path(self.tmp.name) / "legacy"
+        self.b = Path(self.tmp.name) / "modular"
+        for root in (self.a, self.b):
+            root.mkdir()
+            (root / bridge.SANDBOX_MARKER).write_text(json.dumps({
+                "purpose": "dentcast-stage3-disposable-test",
+                "allow_real_publication": False,
+                "allow_remote_mutation": False,
+            }), encoding="utf-8")
+
+    def copy_specimens(self):
+        import shutil
+        files = ("sharehub/share-18.html", "sharehub/en/share-18.html")
+        for name in files:
+            for root in (self.a, self.b):
+                target = root / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / name, target)
+        return files
+
+    def test_real_existing_published_pair_byte_identity(self):
+        files = self.copy_specimens()
+        result = pairwise.compare(self.a, self.b, files)
+        self.assertEqual(result["status"], "PAIRED_BYTES_EQUAL")
+        self.assertFalse(result["full_behavioral_parity_proven"])
+        self.assertFalse(result["published"])
+        self.assertEqual(set(result["legacy_manifest"]), set(files))
+
+    def test_mutated_mirror_and_extraneous_output_detected(self):
+        files = self.copy_specimens()
+        target = self.b / "sharehub/en/share-18.html"
+        target.write_bytes(target.read_bytes() + b"<!-- staging mutation -->")
+        extra = self.b / "unexpected.json"
+        extra.write_text("{}")
+        result = pairwise.compare(self.a, self.b, files)
+        self.assertEqual(result["status"], "PAIRED_BYTES_DIFFER")
+        self.assertEqual(result["issues"]["different_bytes"],
+                         ["sharehub/en/share-18.html"])
+        self.assertEqual(result["issues"]["only_modular"], ["unexpected.json"])
+
+    def test_missing_artifact_rejected_even_when_shared_subset_equal(self):
+        self.copy_specimens()
+        missing = "plus/content-index.json"
+        result = pairwise.compare(self.a, self.b, ["sharehub/share-18.html", missing])
+        self.assertEqual(result["issues"]["required_missing_legacy"], [missing])
+        self.assertEqual(result["issues"]["required_missing_modular"], [missing])
+        self.assertEqual(result["status"], "PAIRED_BYTES_DIFFER")
+
+    def test_live_root_and_symlink_and_no_expected_manifest_rejected(self):
+        with self.assertRaisesRegex(ValueError, "LIVE_REPO_NOT_DISPOSABLE"):
+            pairwise.compare(ROOT, self.b, ["sharehub/share-18.html"])
+        with self.assertRaisesRegex(ValueError, "EXPLICIT_REQUIRED_ARTIFACTS_MANDATORY"):
+            pairwise.compare(self.a, self.b, [])
+        (self.b / "escapes").symlink_to(ROOT, target_is_directory=True)
+        with self.assertRaisesRegex(ValueError, "SYMLINK_IN_COMPARISON"):
+            pairwise.compare(self.a, self.b, ["sharehub/share-18.html"])
+
+class ClosureRouteTests(unittest.TestCase):
+    def test_all_requested_categories_and_paper_variants(self):
+        for category in ("clinical", "chairside", "sharehub", "litecast", "notecast", "episode", "glossary"):
+            for paper in (False, True):
+                with self.subTest(category=category, paper=paper):
+                    p = routes.compile_steps(request(category, paper))
+                    self.assertEqual(p["status"], "compiled_staging_requires_operator")
+                    self.assertEqual(oracle.inspect_route(p), [])
+                    self.assertEqual(p["ordered_steps"][-1]["step_id"], "verify:phase-f")
+
+    def test_missing_science_learning_or_pathway_is_rejected(self):
+        import copy
+        original = routes.compile_steps(request("clinical"))
+        for step in ("evidence:des-fidelity", "learning-assets:quiz", "learning-assets:flashcards", "pathways:place"):
+            changed = copy.deepcopy(original)
+            changed["ordered_steps"] = [s for s in changed["ordered_steps"] if s["step_id"] != step]
+            self.assertIn("MISSING_REQUIRED_STEP:" + step, oracle.inspect_route(changed))
+
+    def test_marker_cannot_precede_english_even_with_final_stamp(self):
+        p = routes.compile_steps(request("chairside"))
+        steps = p["ordered_steps"]
+        marker = next(x for x in steps if x["step_id"] == "notification:push-marker")
+        steps.remove(marker)
+        steps.insert(steps.index(next(x for x in steps if x["step_id"] == "english:mirror")), marker)
+        self.assertIn("CANONICAL_ORDER:english:mirror->notification:push-marker", oracle.inspect_route(p))
+
+    def test_no_source_is_not_a_des_skip_and_video_skip_is_scoped(self):
+        handlers = routes._load("closure_handlers", "dentcast_stage3_modules.py")
+        for category, sid, skip in (
+            ("clinical", "evidence:des-fidelity", "CANONICAL_NO_CITED_SOURCE_ELIGIBLE"),
+            ("sharehub", "learning-assets:flashcards", "DENTCAST_PLUS_SOURCE_TIPS_NOT_PROVIDED"),
+            ("chairside", "learning-assets:quiz", "DENTCAST_PLUS_SOURCE_TIPS_NOT_PROVIDED"),
+            ("clinical", "notification:pulse", "GLOSSARY_NOT_CUSTOMARY"),
+        ):
+            p = routes.compile_steps(request(category))
+            step = next(x for x in p["ordered_steps"] if x["step_id"] == sid)
+            report = {"step_id": sid, "module_id": step["module_id"], "input_digest": DIGEST,
+                      "status": "skipped_with_reason", "outputs": {"canonical_skip_rule": skip},
+                      "external_receipt_digest": None, "approval_receipt_digest": DIGEST, "error": None}
+            with self.subTest(category=category, sid=sid), self.assertRaises(ValueError):
+                handlers.validate_report(step, report, {"category": category}, DIGEST)
+
+    def test_human_pause_cannot_be_recovered_with_its_own_hash(self):
+        state = runner.begin(request(), "approval-barrier", REVISION)
+        report = synthetic_report(runner.next_invocation(state))
+        report.update(status="awaiting_approval", outputs={}, external_receipt_digest=None,
+                      error="FOUNDER_GATE")
+        paused = runner.submit(state, report)
+        digest = runner.modules.hash_public(paused["receipts"]["intake:route"])
+        with self.assertRaisesRegex(ValueError, "TRUSTED_HUMAN_APPROVAL_REQUIRED"):
+            runner.recover(paused, digest)
+        self.assertEqual(paused["next_index"], 0)
+        self.assertTrue(paused["paused"])
+
+    def test_internal_symlink_cannot_bypass_protected_write_scope(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "tools").mkdir()
+            (root / "article-alias").symlink_to(root / "tools", target_is_directory=True)
+            with self.assertRaisesRegex(ValueError, "SYMLINK_EDIT_ANCESTOR"):
+                patcher._target(root, "article-alias/hidden.html")
+
+
+if __name__ == "__main__":
+    unittest.main()

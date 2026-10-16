@@ -1,0 +1,250 @@
+{
+  "schema_version": "0.1-draft",
+  "status": "staging-not-executable",
+  "objective": "modular ownership, bidirectional invocation, fault isolation, resumability",
+  "canonical_source": ".dentcast/workflows/README.md",
+  "orchestrator_contract": ".dentcast/workflows/modules/ORCHESTRATOR-CONTRACT.md",
+  "core_contracts": [
+    ".dentcast/workflows/modules/01-hard-rules.md",
+    ".dentcast/workflows/agent-parity.md"
+  ],
+  "module_definitions": [
+    {
+      "id": "intake",
+      "source": ".dentcast/workflows/modules/02-routing-intake.md",
+      "depends_on": [],
+      "outputs": [
+        "route",
+        "user_input"
+      ],
+      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "page",
+      "source": ".dentcast/workflows/modules/03-litecast-and-page.md",
+      "depends_on": [
+        "intake"
+      ],
+      "outputs": [
+        "page_draft"
+      ],
+      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "taxonomy",
+      "source": ".dentcast/workflows/modules/04-taxonomy-and-navigation.md",
+      "depends_on": [
+        "intake",
+        "page"
+      ],
+      "outputs": [
+        "locked_pillar"
+      ],
+      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "navigation",
+      "source": ".dentcast/workflows/modules/04-taxonomy-and-navigation.md",
+      "depends_on": [
+        "page",
+        "taxonomy"
+      ],
+      "outputs": [
+        "navigation"
+      ],
+      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "semantic-links",
+      "source": ".dentcast/workflows/modules/05-semantic-linking.md",
+      "depends_on": [
+        "page"
+      ],
+      "outputs": [
+        "semantic_links"
+      ],
+      "eligibility": "Every page: specialist 4.7/4.8/4.9; LiteCast INTERNAL 0.5/0.6 only",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED",
+      "conditional_dependencies": {
+        "specialist": [
+          "navigation"
+        ],
+        "litecast": []
+      }
+    },
+    {
+      "id": "paper-cabinet",
+      "source": ".dentcast/workflows/modules/06-paper-ingestion.md",
+      "depends_on": [
+        "intake"
+      ],
+      "outputs": [
+        "paper_metadata"
+      ],
+      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "learning-assets",
+      "source": ".dentcast/workflows/modules/07-flashcards-and-quiz.md",
+      "depends_on": [
+        "page"
+      ],
+      "outputs": [
+        "learning_assets"
+      ],
+      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "evidence",
+      "source": ".dentcast/workflows/modules/08-des-fidelity.md",
+      "depends_on": [
+        "intake",
+        "page"
+      ],
+      "outputs": [
+        "evidence_result"
+      ],
+      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "challenge",
+      "source": ".dentcast/workflows/modules/09-challenge.md",
+      "depends_on": [
+        "intake",
+        "page"
+      ],
+      "outputs": [
+        "challenge_handoff"
+      ],
+      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "brain",
+      "source": ".dentcast/workflows/modules/10-brain-and-pathways.md",
+      "depends_on": [
+        "taxonomy",
+        "page"
+      ],
+      "outputs": [
+        "brain_entry"
+      ],
+      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "pathways",
+      "source": ".dentcast/workflows/modules/10-brain-and-pathways.md",
+      "depends_on": [
+        "brain"
+      ],
+      "outputs": [
+        "pathway_result"
+      ],
+      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "build",
+      "source": ".dentcast/workflows/modules/11-build-and-version.md",
+      "depends_on": [
+        "page"
+      ],
+      "outputs": [
+        "built_artifacts"
+      ],
+      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "english",
+      "source": ".dentcast/workflows/modules/12-english-notify-verify.md",
+      "depends_on": [
+        "page"
+      ],
+      "outputs": [
+        "english_mirror"
+      ],
+      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED",
+      "conditional_dependencies": {
+        "ordinary_org": [
+          "build"
+        ],
+        "litecast_challenge_skip": []
+      }
+    },
+    {
+      "id": "notification",
+      "source": ".dentcast/workflows/modules/12-english-notify-verify.md",
+      "depends_on": [
+        "page"
+      ],
+      "outputs": [
+        "notification_marker"
+      ],
+      "eligibility": "Every page C6 Pulse; E marker conditional with paper-only/LiteCast/glossary skip",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED",
+      "phase_invocations": [
+        "C6:Pulse before C8 build",
+        "E:push marker after D English if applicable and before F verification"
+      ]
+    },
+    {
+      "id": "verify",
+      "source": ".dentcast/workflows/modules/12-english-notify-verify.md",
+      "depends_on": [
+        "intake"
+      ],
+      "outputs": [
+        "verification_report"
+      ],
+      "eligibility": "UNRESOLVED_REQUIRES_CANONICAL_RULE_MAPPING",
+      "adapter": "NOT_IMPLEMENTED",
+      "validation": "NOT_IMPLEMENTED",
+      "conditional_dependencies": {
+        "page_publish": [
+          "Phase F after E"
+        ],
+        "paper_only": [
+          "Drive and catalog and commit; no Phase F"
+        ]
+      }
+    }
+  ],
+  "activation_guards": {
+    "no_merge_without_approval": true,
+    "no_router_activation_without_approval": true,
+    "source_parity_passed": true,
+    "behavior_parity_passed": false,
+    "contracts_implemented": false
+  },
+  "notes": [
+    "Dependencies are unconditional minimum prerequisites, not a complete route DAG.",
+    "Build requires page on publication routes; brain is route-conditional and absent on LiteCast.",
+    "Verify consumes all applicable completed stage receipts, including Phase F for page publication; paper-only has separate completion criteria.",
+    "Canonical README remains authoritative; no behavioral parity is claimed.",
+    "Staging route planner lists each owner once. Notification has two ordered phase-scoped invocations C6 and E; future executable route plans MUST expand them."
+  ]
+}

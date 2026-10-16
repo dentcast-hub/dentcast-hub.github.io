@@ -1,5 +1,7 @@
 # DentCast Agent-Parity Contract
 
+**STAGING_ONLY_NO_LIVE_PUBLISH** — the full original shared behavior contract remains byte-identical at `.dentcast/workflows/agent-parity.legacy.md`. This *feature branch only* routes new publishing requests through `.dentcast/workflows/README.md` and the 12 verbatim source slices. The 2,598-line complete original `.dentcast/workflows/README.legacy.md` still has ultimate authority for approvals, exceptions, DES/Fidelity and semantic completeness. On this branch, NEVER perform real publishing, main merge, sensitive Git storage, deploy, external Drive/Admin/notification side effects, or infer founder consent from a hash. Agent global rules are preserved at `CLAUDE.legacy.md`, `AGENTS.legacy.md` §§6–8 and `.dentcast/workflows/legacy/cursor/`. **All rules below still apply.**
+
 **هدف:** خروجیِ انتشار در این ریپو باید **مستقل از اینکه کدام ایجنت آن را اجرا
 می‌کند** یکسان باشد — Claude Code، Cursor، Codex/GPT، یا هر ایجنت دیگری. این
 فایل «قانونِ رفتاری» مشترک است: چیزی که Claude Code به‌صورت ضمنی (از روی
@@ -41,7 +43,7 @@
    مهر نماد (سه سطح، `.ir`-only، روی صفحهٔ محتوا کلون نمی‌شود) — و قاعدهٔ
    بامپِ `asset_version.py` برای هر اسِتِ مشترک در بخش ۶ است.
 3. اگر ابزارت فایل را تکه‌تکه می‌خواند (محدودیت context)، همهٔ تکه‌ها را بخوان.
-   `README.md` بیش از ۱۵۰۰ خط است؛ خواندن ۵۰۰ خط اول و شروع کار یک نقض است.
+   `README.legacy.md` بیش از ۱۵۰۰ خط است؛ خواندن ۵۰۰ خط اول و شروع کار یک نقض است.
 4. اگر لوکال در دسترس نبود، نسخهٔ کانونی روی گیت‌هاب:
    `https://github.com/dentcast-hub/dentcast-hub.github.io/blob/main/<path>`
 5. ترتیب اولویت هنگام تعارض: فایل کانونیِ ورکفلو > `CLAUDE.md`/`AGENTS.md` >
