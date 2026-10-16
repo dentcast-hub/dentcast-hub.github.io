@@ -146,9 +146,9 @@ def check_intent(state, intent, workspace):
             valid = ((path.lower().endswith(".webp") and
                       payload.startswith(b"RIFF") and payload[8:12] == b"WEBP") or
                      (path.lower().endswith(".png") and
-                      payload.startswith(b"\\x89PNG\\r\\n\\x1a\\n")) or
+                      payload.startswith(b"\x89PNG\r\n\x1a\n")) or
                      (path.lower().endswith((".jpg", ".jpeg")) and
-                      payload.startswith(b"\\xff\\xd8\\xff")))
+                      payload.startswith(b"\xff\xd8\xff")))
             fail(valid, "IMAGE_MAGIC_BYTES_MISMATCH")
         fail(len(payload) <= 5_000_000, "INVALID_EDIT_SIZE")
         fail(path not in seen, "DUPLICATE_WRITE")
