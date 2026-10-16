@@ -96,6 +96,7 @@ class Stage2ContractTests(unittest.TestCase):
     def fixture_root(folder):
         root = Path(folder)
         paths = [".dentcast/workflows/README.md",
+                 ".dentcast/workflows/README.legacy.md",
                  ".dentcast/workflows/modules/MODULE-CONTRACTS.v1.json",
                  ".dentcast/workflows/modules/MODULE-REGISTRY.draft.json",
                  *audit_module.ENTRYPOINTS,

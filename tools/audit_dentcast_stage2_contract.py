@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CANONICAL = ROOT / ".dentcast/workflows/README.md"
+CANONICAL = ROOT / ".dentcast/workflows/README.legacy.md"
 BASE = ROOT / ".dentcast/workflows/modules"
 SLICES = {
     "01-hard-rules.md": ("intake", "verify"),
@@ -81,7 +81,7 @@ RULE_OWNERS = {
 
 def audit(root=ROOT):
     issues = []
-    canonical = (root / ".dentcast/workflows/README.md").read_text(encoding="utf-8")
+    canonical = (root / ".dentcast/workflows/README.legacy.md").read_text(encoding="utf-8")
     covered = bytearray(len(canonical))
     assigned = [set() for _ in canonical]
     ranges = {}
@@ -174,6 +174,11 @@ def audit(root=ROOT):
     if versions.get("current_intake_staging") != "0.1" or versions.get("future_target") != "1.0-draft":
         issues.append("STAGING_VS_TARGET_SCHEMA_VERSION_NOT_EXPLICIT")
 
+    router = root / ".dentcast/workflows/README.md"
+    if not router.is_file():
+        issues.append("MISSING_ACTIVE_MODULAR_ROUTER")
+    elif "STAGING_ONLY_NO_LIVE_PUBLISH" not in router.read_text(encoding="utf-8"):
+        issues.append("UNSAFE_MODULAR_ROUTER_NO_STAGING_BOUNDARY")
     for path in ENTRYPOINTS:
         entry = (root / path).read_text(encoding="utf-8")
         if ".dentcast/workflows/README.md" not in entry:

@@ -13,7 +13,7 @@ from pathlib import Path
 from urllib.parse import urljoin, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-CANONICAL = ROOT / ".dentcast/workflows/README.md"
+CANONICAL = ROOT / ".dentcast/workflows/README.legacy.md"
 
 class PageParser(HTMLParser):
     def __init__(self):
