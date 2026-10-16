@@ -95,6 +95,10 @@ SCHEMAS = {
         "build_artifact_digest": "digest", "canonical_builder_order": "bool_true",
         "build_tools_main_sourced": "bool_true", "finished_before_english": "bool_true",
     },
+    "build:version-final": {
+        "content_version_digest": "digest", "stamp_after_writes": "bool_true",
+        "stamp_recomputed_from_final_sources": "bool_true",
+    },
     "english:mirror": {
         "english_page_artifact_digest": "digest", "fa_en_toggle_both_directions": "bool_true",
         "english_noindex": "bool_true", "no_english_hreflang": "bool_true",
