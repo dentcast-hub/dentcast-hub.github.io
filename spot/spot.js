@@ -479,6 +479,21 @@ a.dc-spot-link:active { transform: scale(0.99); }
 .dc-spot--dashboard, .dc-spot--profile { margin: 1.125rem 0; }
 .dc-spot--search { margin: 0.75rem 0; }
 .dc-spot--search .dc-spot-link { padding: 0.75rem 1rem; }
+/* Keep the sponsored placement from consuming the search results viewport.
+   The creative remains fully accessible by scrolling inside its own card. */
+body.dc-desktop-ui.dc-search-mode .dc-spot--search {
+  flex: 0 0 auto;
+  max-height: min(22vh, 180px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  min-height: 0;
+}
+body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-art-img {
+  max-height: 135px;
+  width: 100%;
+  object-fit: contain;
+}
+
 .dc-spot--archive { margin: 1.25rem 0 0.75rem; }
 /* The desktop sidebar is 220px wide and its rows are 203px: the card matches
    «خرید اشتراک پریمیوم» directly below it in width, radius and gutter, so the
