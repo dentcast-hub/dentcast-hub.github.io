@@ -1623,6 +1623,7 @@ body.dc-desktop-ui.dc-search-mode #dcSearchOverlayBody{
   min-height:0 !important; overflow:hidden !important;
 }
 body.dc-desktop-ui.dc-search-mode #dcGlobalBox{
+  order:0 !important;
   position:relative !important; inset:auto !important;
   transform:none !important; width:100% !important;
   height:auto !important; flex:1 1 0 !important; min-height:0 !important;
@@ -1633,6 +1634,13 @@ body.dc-desktop-ui.dc-search-mode #dcGlobalBox{
 }
 body.dc-desktop-ui.dc-search-mode #dcGlobalBox .dc-search-input,
 body.dc-desktop-ui.dc-search-mode #dcGlobalBox .dc-filter-list{flex-shrink:0;}
+/* Reopening search appends its box again; keep results before the sponsor
+   regardless of insertion order, and center the sponsor in the column. */
+body.dc-desktop-ui.dc-search-mode .dc-spot--search{
+  order:1 !important;
+  align-self:center !important;
+  margin-inline:auto !important;
+}
 /* No query: do not reserve the entire reader column for an empty results pane.
    The search sponsor follows #dcGlobalBox, so it now sits immediately below
    the filters rather than under a giant blank panel. */
