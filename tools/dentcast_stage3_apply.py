@@ -9,6 +9,8 @@ proposed changes with old-hash compare-and-swap, no network, and no publish.
 No operation here is proof of human approval or scientific correctness.
 """
 import argparse
+import base64
+import binascii
 import hashlib
 import importlib.util
 import json
@@ -121,10 +123,34 @@ def check_intent(state, intent, workspace):
     checked = []
     for edit in intent["edits"]:
         fail(isinstance(edit, dict) and
-             set(edit) == {"path", "before_sha256", "content_utf8"}, "BAD_EDIT_SCHEMA")
-        path, before, text = edit["path"], edit["before_sha256"], edit["content_utf8"]
-        fail(isinstance(text, str) and len(text.encode("utf-8")) <= 5_000_000,
-             "INVALID_EDIT_TEXT")
+             set(edit) in ({"path", "before_sha256", "content_utf8"},
+                           {"path", "before_sha256", "content_base64"}),
+             "BAD_EDIT_SCHEMA")
+        path, before = edit["path"], edit["before_sha256"]
+        if "content_utf8" in edit:
+            text = edit["content_utf8"]
+            fail(isinstance(text, str), "INVALID_EDIT_TEXT")
+            payload = text.encode("utf-8")
+            fail(not path.lower().endswith((".webp", ".png", ".jpg", ".jpeg")),
+                 "BINARY_ASSET_REQUIRES_BASE64")
+        else:
+            encoded = edit["content_base64"]
+            fail(isinstance(encoded, str) and len(encoded) <= 7_000_000,
+                 "INVALID_BINARY_ASSET_SIZE")
+            try:
+                payload = base64.b64decode(encoded, validate=True)
+            except (binascii.Error, ValueError):
+                raise ValueError("INVALID_BASE64_ASSET") from None
+            fail(path.lower().endswith((".webp", ".png", ".jpg", ".jpeg")),
+                 "BASE64_ONLY_FOR_SUPPORTED_IMAGE_ASSETS")
+            valid = ((path.lower().endswith(".webp") and
+                      payload.startswith(b"RIFF") and payload[8:12] == b"WEBP") or
+                     (path.lower().endswith(".png") and
+                      payload.startswith(b"\\x89PNG\\r\\n\\x1a\\n")) or
+                     (path.lower().endswith((".jpg", ".jpeg")) and
+                      payload.startswith(b"\\xff\\xd8\\xff")))
+            fail(valid, "IMAGE_MAGIC_BYTES_MISMATCH")
+        fail(len(payload) <= 5_000_000, "INVALID_EDIT_SIZE")
         fail(path not in seen, "DUPLICATE_WRITE")
         seen.add(path)
         allowed(step["module_id"], path)
@@ -148,7 +174,7 @@ def check_intent(state, intent, workspace):
         fail(before is None if existing is None else
              isinstance(before, str) and re.fullmatch(r"[0-9a-f]{64}", before) and
              sha(existing) == before, "STALE_EDIT_PRECONDITION:" + path)
-        checked.append((target, existing, text.encode("utf-8")))
+        checked.append((target, existing, payload))
     fail(bool(checked), "NO_LOCAL_CHANGES")
     return checked
 
