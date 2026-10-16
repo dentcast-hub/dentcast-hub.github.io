@@ -77,6 +77,21 @@ class Stage3ApplyTests(unittest.TestCase):
             "edits": [{"path": path, "before_sha256": before, "content_utf8": text}],
         }
 
+
+    def test_stage7_canonical_write_ownership_fail_closed(self):
+        # Test the concrete canonical paths, not only permissive wildcard scopes.
+        patcher.allowed("evidence", "plus/des-scores.json")
+        patcher.allowed("learning-assets", "plus/faq-corpus.json")
+        patcher.allowed("page", "litecast/lite-glossary.json")
+        for owner, path in (
+            ("evidence", "des-scores.json"),
+            ("learning-assets", "plus/quiz-index.json"),
+            ("brain", "litecast/lite-glossary.json"),
+        ):
+            with self.subTest(owner=owner, path=path):
+                with self.assertRaisesRegex(ValueError, "MODULE_WRITE_SCOPE_FORBIDDEN"):
+                    patcher.allowed(owner, path)
+
     def test_actual_edit_receipt_and_runner_advance(self):
         result = patcher.apply_intent(self.state, self.intent(), self.workspace)
         self.assertEqual(self.target.read_text(encoding="utf-8"), "<h1>After</h1>")

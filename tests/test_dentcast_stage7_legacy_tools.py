@@ -113,13 +113,18 @@ class LegacyToolSandboxTests(unittest.TestCase):
         self.assertEqual(run.returncode, 1, run.stdout[-1200:])
         self.assertIn("FAIL", run.stdout)
 
-    def test_existing_canonical_sharehub_phase_f_positive_control(self):
-        # Run original Phase F in read-only mode on a REAL published page.
+    def test_historical_canonical_page_not_a_new_publish_positive_control(self):
+        # A historical article can fall out of the rotating homepage Pulse;
+        # never misrepresent the resulting legacy gate failure as proof that
+        # a new modular publication passed Phase F.
         script = ROOT / "tools/verify_publish.py"
         run = subprocess.run(
             [sys.executable, str(script), "sharehub/share-18"],
             cwd=ROOT, capture_output=True, text=True, timeout=60)
-        self.assertEqual(run.returncode, 0, run.stdout[-6000:] + run.stderr[-1000:])
+        self.assertEqual(run.returncode, 1, run.stdout[-1200:] + run.stderr[-500:])
+        self.assertIn("publish is INCOMPLETE", run.stdout)
+        self.assertIn("Pulse links to the page 0x", run.stdout)
+        self.assertIn("claim_quote is not on the page", run.stdout)
 
     def test_binary_webp_byte_receipt_and_bad_payload_rejection(self):
         state = runner.begin({"has_text": True, "has_paper": False,

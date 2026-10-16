@@ -145,6 +145,13 @@ class IndependentParityTests(unittest.TestCase):
                             for s in oracle.inspect_route(plan)))
 
 
+
+    def test_glossary_unsupported_route_remains_explicitly_blocked(self):
+        plan = routes.compile_steps(request(category="glossary"))
+        self.assertEqual(plan["status"], "blocked")
+        self.assertEqual(plan["code"], "GLOSSARY_SPECIAL_SOURCE_ROUTE_NOT_YET_MAPPED")
+        self.assertFalse(plan["execution_authorized"])
+
     def test_glossary_phase_e_exception_is_not_a_false_failure(self):
         # Oracle checks the canonical exception independent of the incomplete
         # glossary route compiler; this does NOT claim glossary can be published.
