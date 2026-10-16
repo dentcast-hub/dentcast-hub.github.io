@@ -483,9 +483,12 @@ a.dc-spot-link:active { transform: scale(0.99); }
    Artwork scales proportionally and stays fully visible (no cropping). */
 body.dc-desktop-ui.dc-search-mode .dc-spot--search {
   flex: 0 0 auto;
-  margin: 0.375rem 0;
+  margin: 0.25rem auto;
   min-height: 0;
-  overflow: visible;
+  max-height: 96px;
+  max-width: 320px;
+  width: 100%;
+  overflow: hidden;
 }
 body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-link {
   padding: 0.375rem 0.625rem;
@@ -1178,11 +1181,16 @@ function setupSearchSlot(cfg, audienceNow) {
     const input = document.getElementById('dcSearch');
     const updatePlacement = () => {
       const desktop = document.body.classList.contains('dc-desktop-ui');
-      const searching = !!input && input.value.trim().length >= 2;
-      // Results take priority; no sponsored card above or alongside live results.
-      card.style.display = desktop && searching ? 'none' : '';
-      if (desktop && results.nextSibling !== card) results.after(card);
-      else if (!desktop && results.previousSibling !== card) results.before(card);
+      const overlayBody = document.getElementById('dcSearchOverlayBody');
+      if (desktop && overlayBody && overlayBody.contains(box)) {
+        // Outside the search box, as a small footer AFTER the complete search UI.
+        if (card.parentElement !== overlayBody || box.nextElementSibling !== card) box.after(card);
+        card.style.display = '';
+      } else {
+        // Keep the existing mobile placement inside the shared search box.
+        if (card.parentElement !== box || results.previousElementSibling !== card) results.before(card);
+        card.style.display = '';
+      }
     };
     updatePlacement();
     input?.addEventListener('input', updatePlacement);
