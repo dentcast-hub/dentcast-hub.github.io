@@ -47,7 +47,6 @@ SOURCE_STEPS = {
     "notification:pulse": ("notification", "C6", "11-build-and-version.md"),
     "build:version": ("build", "C7", "11-build-and-version.md"),
     "build:rebuild": ("build", "C8", "11-build-and-version.md"),
-    "build:restamp-final": ("build", "C8 final stamp / D3 restamp", "12-english-notify-verify.md"),
     "build:version-final": ("build", "C8 final stamp; D restamp if applicable", "12-english-notify-verify.md"),
     "english:mirror": ("english", "D", "12-english-notify-verify.md"),
     "notification:push-marker": ("notification", "E", "12-english-notify-verify.md"),
@@ -128,9 +127,6 @@ def compile_steps(request, contract=None):
         steps += ["notification:pulse", "build:version", "build:rebuild"]
         if not litecast and not challenge:
             steps += ["english:mirror"]
-        # README C8: stamper must run LAST among all builders. README D3:
-        # after English/hreflang/sitemap rerun stamp-version.py LAST again.
-        steps += ["build:restamp-final"]
         if not litecast and category != "glossary":
             steps += ["notification:push-marker"]
         # Canonical C8 requires a LAST stamp after builders; English D can
