@@ -26,6 +26,12 @@ SCHEMAS = {
         "original_user_text_preserved": "bool_true", "intro_gate_satisfied": "bool_true",
         "category_identity_verified": "bool_true",
     },
+    "page:litecast-register": {
+        "litecast_index_artifact_digest": "digest",
+        "LightGlossary_entry_appended_at_tail": "bool_true",
+        "same_type_key_set_verified": "bool_true",
+        "specialist_brain_unchanged": "bool_true",
+    },
     "taxonomy:lock": {
         "live_main_taxonomy_digest": "digest", "decision_digest": "digest",
         "decision_announced": "bool_true", "ambiguous_decision": "bool_false",
@@ -94,6 +100,11 @@ SCHEMAS = {
     "build:rebuild": {
         "build_artifact_digest": "digest", "canonical_builder_order": "bool_true",
         "build_tools_main_sourced": "bool_true", "finished_before_english": "bool_true",
+    },
+    "build:restamp-final": {
+        "final_stamp_artifact_digest": "digest",
+        "stamp_matches_current_inputs": "bool_true",
+        "stamp_ran_after_all_build_and_mirror_updates": "bool_true",
     },
     "build:version-final": {
         "content_version_digest": "digest", "stamp_after_writes": "bool_true",
@@ -171,6 +182,8 @@ def intake(step_id, output, ctx):
 
 def page(step_id, output, ctx):
     _validate_fields(step_id, output)
+    if step_id == "page:litecast-register":
+        _require(ctx["route"].startswith("litecast"), "NOT_LITECAST_SOURCE_REGISTER")
 
 
 def taxonomy(step_id, output, ctx):
