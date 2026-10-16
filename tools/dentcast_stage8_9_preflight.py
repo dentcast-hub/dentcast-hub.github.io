@@ -17,6 +17,7 @@ ENTRYPOINTS = (
     "CLAUDE.md", "AGENTS.md",
     ".cursor/rules/dentcast-router.mdc",
     ".cursor/rules/dentcast-publishing.mdc",
+    ".cursor/rules/dentcast-operating-protocol.mdc",
     ".dentcast/workflows/agent-parity.md",
 )
 SCIENTIFIC = (".dentcast/des-v3.4-knowledge.md",
@@ -29,6 +30,7 @@ LEGACY_ARCHIVE = {
     "AGENTS.md": "AGENTS.legacy.md",
     ".cursor/rules/dentcast-router.mdc": ".dentcast/workflows/legacy/cursor/dentcast-router.mdc",
     ".cursor/rules/dentcast-publishing.mdc": ".dentcast/workflows/legacy/cursor/dentcast-publishing.mdc",
+    ".cursor/rules/dentcast-operating-protocol.mdc": ".dentcast/workflows/legacy/cursor/dentcast-operating-protocol.mdc",
     ".dentcast/workflows/agent-parity.md": ".dentcast/workflows/agent-parity.legacy.md",
     ACTIVE_ROUTER: CANONICAL,
 }
