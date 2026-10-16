@@ -36,6 +36,8 @@ still required at activation time.
 Stage 8, the baseline comparison may block until changes are reviewed and the
 feature branch reconciled. Do not silently approve drift.
 
+**Verified staging CI:** https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/38855544071 — 223 passing unit tests; Stage 2 source audit PASS; read-only CLI output `STAGING_INTEGRATION_PASS`, 17 routes and no issues. The live-entrypoint and scientific baseline was identical to `origin/main`.
+
 ## Acceptance
 
 The Stage 8 staging integration is accepted only when:

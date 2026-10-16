@@ -1,5 +1,13 @@
 # Cross-agent modularization handoff — STAGING ONLY
 
+**LATEST STAGING INTEGRATION STATUS:** Stage 7 offline accepted;
+Stage 8 read-only route/baseline integration and Stage 9 pre-activation package
+are documented in `STAGE-8-INTEGRATION.md` and
+`STAGE-9-PRE-ACTIVATION.md`. Their CLI
+`tools/dentcast_stage8_9_preflight.py` is safe for local CI use only.
+All real publication, external approval, DES independent-model proof, live
+entrypoint activation and main merge remain separately blocked.
+
 **CURRENT IMPLEMENTATION STATUS (after Stages 1–5):** Read [STAGE-2-ACCEPTANCE.md](STAGE-2-ACCEPTANCE.md), [STAGE-3-ACCEPTANCE.md](STAGE-3-ACCEPTANCE.md), [STAGE-4-ACCEPTANCE.md](STAGE-4-ACCEPTANCE.md) and [STAGE-5-ACCEPTANCE.md](STAGE-5-ACCEPTANCE.md) first. The GitHub memory writer is `tools/dentcast_github_memory.py`; per-unit scientific resume is `tools/dentcast_fidelity_resume.py`; the portable staging orchestration is `tools/dentcast_stage3_orchestrator.py`. All remain STAGING ONLY and must not publish or activate the live router. The older audit notes below describe historical defects, not current implementation status.
 
 **Purpose:** Claude Code, Cursor, Codex/GPT and Work must continue the SAME modularization project from the SAME GitHub branch and evidence, not restart from memory or a platform-specific prompt.

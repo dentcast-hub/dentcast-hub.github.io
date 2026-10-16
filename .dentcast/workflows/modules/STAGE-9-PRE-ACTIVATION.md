@@ -7,6 +7,8 @@ Stage 8 provides a new read-only 17-case integration and live-instruction drift 
 This document defines the Stage 9 handoff, without changing any active
 publication path or weakening any approval gate.
 
+**Integration evidence:** https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/38855544071 — 223 passing tests and Stage 8 preflight with 17 checked routes and zero issues. No gate below was opened by those tests.
+
 ## Verified staging package
 
 - Route compiler: `tools/dentcast_stage3_route.py`
