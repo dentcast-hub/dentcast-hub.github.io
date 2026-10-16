@@ -113,6 +113,14 @@ class LegacyToolSandboxTests(unittest.TestCase):
         self.assertEqual(run.returncode, 1, run.stdout[-1200:])
         self.assertIn("FAIL", run.stdout)
 
+    def test_existing_canonical_sharehub_phase_f_positive_control(self):
+        # Run original Phase F in read-only mode on a REAL published page.
+        script = ROOT / "tools/verify_publish.py"
+        run = subprocess.run(
+            [sys.executable, str(script), "sharehub/share-18"],
+            cwd=ROOT, capture_output=True, text=True, timeout=60)
+        self.assertEqual(run.returncode, 0, run.stdout[-6000:] + run.stderr[-1000:])
+
     def test_binary_webp_byte_receipt_and_bad_payload_rejection(self):
         state = runner.begin({"has_text": True, "has_paper": False,
                               "category": "litecast", "challenge": False},

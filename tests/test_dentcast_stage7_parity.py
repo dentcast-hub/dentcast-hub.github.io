@@ -19,6 +19,7 @@ def load(label, relative):
 
 
 oracle = load("stage7_parity_oracle", "tools/audit_dentcast_stage7_parity.py")
+pairwise = load("stage7_pairwise_oracle", "tools/audit_dentcast_stage7_pairwise.py")
 routes = load("stage7_compiler", "tools/dentcast_stage3_route.py")
 runner = load("stage7_runner", "tools/dentcast_stage3_orchestrator.py")
 patcher = load("stage7_patcher", "tools/dentcast_stage3_apply.py")
@@ -294,6 +295,71 @@ class IndependentParityTests(unittest.TestCase):
             self.root, "sharehub", "share-999.html"), ["MISSING_FA_PAGE"])
         self.assertIn("INVALID_PUBLIC_PAGE_IDENTITY", oracle.inspect_page_pair(
             self.root, "../tools", "script.py"))
+
+
+
+class PairwiseParityTests(unittest.TestCase):
+    """Byte-level side-by-side receipts cannot be mistaken for semantic parity."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.a = Path(self.tmp.name) / "legacy"
+        self.b = Path(self.tmp.name) / "modular"
+        for root in (self.a, self.b):
+            root.mkdir()
+            (root / bridge.SANDBOX_MARKER).write_text(json.dumps({
+                "purpose": "dentcast-stage3-disposable-test",
+                "allow_real_publication": False,
+                "allow_remote_mutation": False,
+            }), encoding="utf-8")
+
+    def copy_specimens(self):
+        import shutil
+        files = ("sharehub/share-18.html", "sharehub/en/share-18.html")
+        for name in files:
+            for root in (self.a, self.b):
+                target = root / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / name, target)
+        return files
+
+    def test_real_existing_published_pair_byte_identity(self):
+        files = self.copy_specimens()
+        result = pairwise.compare(self.a, self.b, files)
+        self.assertEqual(result["status"], "PAIRED_BYTES_EQUAL")
+        self.assertFalse(result["full_behavioral_parity_proven"])
+        self.assertFalse(result["published"])
+        self.assertEqual(set(result["legacy_manifest"]), set(files))
+
+    def test_mutated_mirror_and_extraneous_output_detected(self):
+        files = self.copy_specimens()
+        target = self.b / "sharehub/en/share-18.html"
+        target.write_bytes(target.read_bytes() + b"<!-- staging mutation -->")
+        extra = self.b / "unexpected.json"
+        extra.write_text("{}")
+        result = pairwise.compare(self.a, self.b, files)
+        self.assertEqual(result["status"], "PAIRED_BYTES_DIFFER")
+        self.assertEqual(result["issues"]["different_bytes"],
+                         ["sharehub/en/share-18.html"])
+        self.assertEqual(result["issues"]["only_modular"], ["unexpected.json"])
+
+    def test_missing_artifact_rejected_even_when_shared_subset_equal(self):
+        self.copy_specimens()
+        missing = "plus/content-index.json"
+        result = pairwise.compare(self.a, self.b, ["sharehub/share-18.html", missing])
+        self.assertEqual(result["issues"]["required_missing_legacy"], [missing])
+        self.assertEqual(result["issues"]["required_missing_modular"], [missing])
+        self.assertEqual(result["status"], "PAIRED_BYTES_DIFFER")
+
+    def test_live_root_and_symlink_and_no_expected_manifest_rejected(self):
+        with self.assertRaisesRegex(ValueError, "LIVE_REPO_NOT_DISPOSABLE"):
+            pairwise.compare(ROOT, self.b, ["sharehub/share-18.html"])
+        with self.assertRaisesRegex(ValueError, "EXPLICIT_REQUIRED_ARTIFACTS_MANDATORY"):
+            pairwise.compare(self.a, self.b, [])
+        (self.b / "escapes").symlink_to(ROOT, target_is_directory=True)
+        with self.assertRaisesRegex(ValueError, "SYMLINK_IN_COMPARISON"):
+            pairwise.compare(self.a, self.b, ["sharehub/share-18.html"])
 
 
 if __name__ == "__main__":

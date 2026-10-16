@@ -36,6 +36,7 @@ on:
       - 'tools/dentcast_stage6_handoff.py'
       - 'tests/test_dentcast_stage6_handoff.py'
       - 'tools/audit_dentcast_stage7_parity.py'
+      - 'tools/audit_dentcast_stage7_pairwise.py'
       - 'tests/test_dentcast_stage7_parity.py'
       - 'tests/test_dentcast_stage7_legacy_tools.py'
       - '.dentcast/workflows/README.md'
