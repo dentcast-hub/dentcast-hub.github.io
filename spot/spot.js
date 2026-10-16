@@ -504,7 +504,7 @@ body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-art-img {
   width: auto;
   max-width: 100%;
   height: auto;
-  max-height: min(17vh + 50px, 195px);
+  max-height: min(calc(17vh + 50px), 195px);
   object-fit: contain;
 }
 body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-badge {
