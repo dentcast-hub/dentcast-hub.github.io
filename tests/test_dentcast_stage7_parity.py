@@ -123,6 +123,15 @@ class IndependentParityTests(unittest.TestCase):
                 self.assertEqual(oracle.inspect_route(plan), [])
                 self.assertFalse(plan["execution_authorized"])
 
+    def test_missing_litecast_registry_write_fails_independent_oracle(self):
+        plan = routes.compile_steps(request(category="litecast"))
+        self.assertIn("page:litecast-register",
+                      [step["step_id"] for step in plan["ordered_steps"]])
+        plan["ordered_steps"] = [x for x in plan["ordered_steps"]
+                                 if x["step_id"] != "page:litecast-register"]
+        self.assertIn("MISSING_REQUIRED_STEP:page:litecast-register",
+                      oracle.inspect_route(plan))
+
     def test_bad_stamp_order_is_caught_even_if_module_contracts_accept_it(self):
         plan = routes.compile_steps(request())
         steps = plan["ordered_steps"]
