@@ -1174,7 +1174,20 @@ function setupSearchSlot(cfg, audienceNow) {
     if (adsKilled || !slotAllows(cfg, 'search', audienceNow())) return;
     const creative = pickCreative(cfg, 'search', audienceNow());
     if (!creative) return;
-    results.parentNode.insertBefore(buildCard(creative, 'search'), results);
+    const card = buildCard(creative, 'search');
+    const input = document.getElementById('dcSearch');
+    const updatePlacement = () => {
+      const desktop = document.body.classList.contains('dc-desktop-ui');
+      const searching = !!input && input.value.trim().length >= 2;
+      // Results take priority; no sponsored card above or alongside live results.
+      card.style.display = desktop && searching ? 'none' : '';
+      if (desktop && results.nextSibling !== card) results.after(card);
+      else if (!desktop && results.previousSibling !== card) results.before(card);
+    };
+    updatePlacement();
+    input?.addEventListener('input', updatePlacement);
+    // The same shared search sheet moves between desktop and mobile layouts.
+    window.addEventListener('resize', updatePlacement);
   };
   if (isOpen()) { seat(); return; }
   const observer = new MutationObserver(() => {
