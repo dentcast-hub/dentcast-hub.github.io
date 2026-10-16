@@ -68,7 +68,7 @@ class Stage3RouteTests(unittest.TestCase):
             "learning-assets:quiz", "evidence:des-fidelity", "brain:append",
             "pathways:place", "notification:pulse", "build:version",
             "build:rebuild", "english:mirror", "notification:push-marker",
-            "verify:phase-f",
+            "build:version-final", "verify:phase-f",
         ])
         self.assertFalse(p["execution_authorized"])
         self.assertEqual(p["side_effects_permitted"], [])
@@ -96,6 +96,8 @@ class Stage3RouteTests(unittest.TestCase):
                 else:
                     self.assertEqual(s[-1], "verify:phase-f")
                     self.assertLess(s.index("notification:pulse"), s.index("build:rebuild"))
+                    self.assertLess(s.index("build:rebuild"), s.index("build:version-final"))
+                    self.assertEqual(s[-2], "build:version-final")
                     if "english:mirror" in s:
                         self.assertLess(s.index("build:rebuild"), s.index("english:mirror"))
                     if "notification:push-marker" in s:
