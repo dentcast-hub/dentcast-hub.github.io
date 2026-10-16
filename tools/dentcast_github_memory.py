@@ -385,9 +385,8 @@ class RemoteMemory:
         # same verified scientific check twice. Replay old immutable receipt.
         # The original actor remains authoritative; a new caller cannot
         # impersonate it by submitting a duplicate.
-        if kind in {"step_completed", "fidelity_checkpoint"}:
-            require(safe_digest(input_digest) and safe_digest(output_digest),
-                    "VERIFIED_STEP_DIGEST_REQUIRED")
+        if kind in {"step_completed", "fidelity_checkpoint"} and (
+                safe_digest(input_digest) and safe_digest(output_digest)):
             existing = [ev for ev in snap["events"]
                         if ev["kind"] == kind and ev["step_id"] == step_id]
             if existing:
@@ -416,6 +415,9 @@ class RemoteMemory:
                     "FIDELITY_REQUIRES_ENGINE_RECEIPT")
         if kind == "staging_finished":
             require(old["status"] == "active", "FINISH_REQUIRES_ACTIVE")
+        if kind in {"step_completed", "fidelity_checkpoint"}:
+            require(safe_digest(input_digest) and safe_digest(output_digest),
+                    "VERIFIED_STEP_DIGEST_REQUIRED")
         folder = run_folder(run_id)
         object_files = {}
         # Full scientific outputs require a public-release approval reference.
