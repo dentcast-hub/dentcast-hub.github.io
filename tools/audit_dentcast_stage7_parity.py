@@ -142,6 +142,9 @@ def inspect_route(plan):
                  "STAMP_NOT_LAST_BEFORE_PHASE_F", problems)
         if litecast:
             required("semantic-links:litecast")
+            required("page:litecast-register")
+            earlier("semantic-links:litecast", "page:litecast-register")
+            earlier("page:litecast-register", "notification:pulse")
             for s in ("brain:append", "taxonomy:lock", "navigation:publish",
                       "semantic-links:specialist", "english:mirror",
                       "notification:push-marker"):
