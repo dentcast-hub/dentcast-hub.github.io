@@ -485,10 +485,10 @@ body.dc-desktop-ui.dc-search-mode .dc-spot--search {
   flex: 0 0 auto;
   margin: 0.25rem auto;
   min-height: 0;
-  max-height: 96px;
+  max-height: 180px;
   max-width: 320px;
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
 }
 body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-link {
   padding: 0.375rem 0.625rem;
@@ -504,7 +504,7 @@ body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-art-img {
   width: auto;
   max-width: 100%;
   height: auto;
-  max-height: min(14vh, 120px);
+  max-height: min(17vh, 145px);
   object-fit: contain;
 }
 body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-badge {
