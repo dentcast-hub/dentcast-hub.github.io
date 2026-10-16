@@ -108,7 +108,7 @@ class RemoteMemoryTests(unittest.TestCase):
         self.assertEqual(len(first["events"]), 1)
         self.assertFalse(first["state"]["execution_authorized"])
         self.store.append(run, ACTORS["claude"], "step_completed", "intake:route",
-                          input_digest=D, gate="local_integrity_checked", **RECEIPT_KW)
+                          input_digest=D, output_digest=D, gate="local_integrity_checked", **RECEIPT_KW)
         self.store.append(run, ACTORS["cursor"], "step_paused", "page:draft",
                           input_digest=D, gate="blocked")
         blocked = self.store.snapshot(run)
@@ -118,6 +118,7 @@ class RemoteMemoryTests(unittest.TestCase):
                               receipt_digest=D, gate="local_integrity_checked")
         self.store.append(run, ACTORS["cursor"], "step_recovered", "page:draft")
         self.store.append(run, ACTORS["codex"], "step_completed", "page:draft",
+                          input_digest=D, output_digest=D,
                           gate="local_integrity_checked", **RECEIPT_KW)
         last = self.store.snapshot(run)
         self.assertEqual(last["state"]["revision"], 5)
@@ -131,11 +132,13 @@ class RemoteMemoryTests(unittest.TestCase):
         run = self.start()
         def winner():
             self.store.append(run, ACTORS["cursor"], "step_completed",
-                              "intake:route", gate="local_integrity_checked", **RECEIPT_KW)
+                              "intake:route", input_digest=D, output_digest=D,
+                              gate="local_integrity_checked", **RECEIPT_KW)
         self.api.inject_race = winner
         with self.assertRaisesRegex(m.Conflict, "CONCURRENT_WRITER_LOST"):
             self.store.append(run, ACTORS["claude"], "step_completed",
-                              "page:draft", gate="local_integrity_checked", **RECEIPT_KW)
+                              "page:draft", input_digest=D, output_digest=D,
+                              gate="local_integrity_checked", **RECEIPT_KW)
         snap = self.store.snapshot(run)
         self.assertEqual(snap["state"]["completed_steps"], ["intake:route"])
         self.assertEqual(snap["state"]["revision"], 2)
@@ -164,7 +167,7 @@ class RemoteMemoryTests(unittest.TestCase):
 
     def test_forged_or_missing_event_replay_blocks(self):
         run = self.start()
-        self.store.append(run, ACTORS["claude"], "step_completed", "intake:route",
+        self.store.append(run, ACTORS["claude"], "step_completed", "intake:route", input_digest=D, output_digest=D,
                           gate="engine_verified", **RECEIPT_KW)
         filemap = self.api.commits[self.api.head_ref]["files"]
         state = filemap[m.run_folder(run) + "/state.json"]
@@ -231,17 +234,19 @@ class RemoteMemoryTests(unittest.TestCase):
                "public_release_approval_digest": None, "payload": {"a": 1}}
         with self.assertRaisesRegex(ValueError, "ARTIFACT_PUBLIC_RELEASE_GATE_MISSING"):
             self.store.append(run, ACTORS["claude"], "fidelity_checkpoint",
-                              "evidence:src0:checker1", gate="engine_verified",
+                              "evidence:src0:checker1", input_digest=D, output_digest=D,
+                              gate="engine_verified",
                               artifact_digests=[m.digest(obj)], public_artifacts=[obj],
                               **RECEIPT_KW)
         with self.assertRaisesRegex(ValueError, "MISSING_CONTENT_ADDRESSED_ARTIFACT"):
             self.store.append(run, ACTORS["claude"], "fidelity_checkpoint",
-                              "evidence:src0:checker1", gate="engine_verified",
+                              "evidence:src0:checker1", input_digest=D, output_digest=D,
+                              gate="engine_verified",
                               artifact_digests=[D], **RECEIPT_KW)
         with self.assertRaisesRegex(ValueError, "VERIFIED_RECEIPT_OBJECT_REQUIRED"):
             self.store.append(run, ACTORS["claude"], "step_completed",
-                              "page:draft", gate="engine_verified",
-                              receipt_digest=D)
+                              "page:draft", input_digest=D, output_digest=D,
+                              gate="engine_verified", receipt_digest=D)
 
     def test_finished_is_staging_only(self):
         run = self.start()
