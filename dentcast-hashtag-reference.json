@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 113,
+   "count": 114,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -373,7 +373,8 @@
     "insight/insight-91",
     "insight/insight-92",
     "insight/insight-93",
-    "insight/insight-94"
+    "insight/insight-94",
+    "insight/insight-95"
    ]
   },
   {
@@ -576,7 +577,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 48,
+   "count": 49,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-25",
@@ -625,7 +626,8 @@
     "chairside/chairside-38",
     "insight/insight-84",
     "insight/insight-89",
-    "chairside/chairside-41"
+    "chairside/chairside-41",
+    "insight/insight-95"
    ]
   },
   {
@@ -2320,6 +2322,43 @@
    ]
   },
   {
+   "key": "روکش_موقت",
+   "tag": "#روکش_موقت",
+   "domain": null,
+   "words": 2,
+   "definition": "پروویژنالی که فقط یک مرحله‌ی گذرا نیست، بلکه مرجعِ طراحیِ نهایی است.",
+   "use_when": "مقاله نقشِ موقتی را در تعیینِ کارِ نهایی جدی بگیرد.",
+   "aliases": [
+    "provisional",
+    "موقتی",
+    "temporary crown",
+    "پروویژنال",
+    "تمپ",
+    "موقت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 16,
+   "content_ids": [
+    "episodes/episode-125-2",
+    "insight/insight-2",
+    "insight/insight-12",
+    "insight/insight-19",
+    "insight/insight-21",
+    "chairside/chairside-2",
+    "insight/insight-42",
+    "insight/insight-55",
+    "insight/insight-63",
+    "dentcast-plus/video-8",
+    "insight/insight-77",
+    "sharehub/share-21",
+    "insight/insight-81",
+    "chairside/chairside-39",
+    "insight/insight-88",
+    "insight/insight-95"
+   ]
+  },
+  {
    "key": "افزایش_طول_تاج",
    "tag": "#افزایش_طول_تاج",
    "domain": null,
@@ -2352,42 +2391,6 @@
     "sharehub/share-19",
     "sharehub/share-24",
     "insight/insight-93"
-   ]
-  },
-  {
-   "key": "روکش_موقت",
-   "tag": "#روکش_موقت",
-   "domain": null,
-   "words": 2,
-   "definition": "پروویژنالی که فقط یک مرحله‌ی گذرا نیست، بلکه مرجعِ طراحیِ نهایی است.",
-   "use_when": "مقاله نقشِ موقتی را در تعیینِ کارِ نهایی جدی بگیرد.",
-   "aliases": [
-    "provisional",
-    "موقتی",
-    "temporary crown",
-    "پروویژنال",
-    "تمپ",
-    "موقت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 15,
-   "content_ids": [
-    "episodes/episode-125-2",
-    "insight/insight-2",
-    "insight/insight-12",
-    "insight/insight-19",
-    "insight/insight-21",
-    "chairside/chairside-2",
-    "insight/insight-42",
-    "insight/insight-55",
-    "insight/insight-63",
-    "dentcast-plus/video-8",
-    "insight/insight-77",
-    "sharehub/share-21",
-    "insight/insight-81",
-    "chairside/chairside-39",
-    "insight/insight-88"
    ]
   },
   {
@@ -2858,6 +2861,40 @@
    ]
   },
   {
+   "key": "پروگنوز_دندان",
+   "tag": "#پروگنوز_دندان",
+   "domain": null,
+   "words": 2,
+   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
+   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
+   "aliases": [
+    "پروگنوز",
+    "prognosis",
+    "پیش آگهی دندان"
+   ],
+   "variants": [
+    "#پروگنوز",
+    "#ارزیابی_دندان"
+   ],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "insight/insight-7",
+    "insight/insight-14",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-9",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-21",
+    "chairside/chairside-30",
+    "insight/insight-95"
+   ]
+  },
+  {
    "key": "افتادن_روکش",
    "tag": "#افتادن_روکش",
    "domain": "clinical",
@@ -2926,39 +2963,6 @@
     "sharehub/share-27",
     "insight/insight-91",
     "insight/insight-92"
-   ]
-  },
-  {
-   "key": "پروگنوز_دندان",
-   "tag": "#پروگنوز_دندان",
-   "domain": null,
-   "words": 2,
-   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
-   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
-   "aliases": [
-    "پروگنوز",
-    "prognosis",
-    "پیش آگهی دندان"
-   ],
-   "variants": [
-    "#پروگنوز",
-    "#ارزیابی_دندان"
-   ],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-150-2",
-    "episodes/episode-151",
-    "insight/insight-7",
-    "insight/insight-14",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-4",
-    "chairside/chairside-9",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-21",
-    "chairside/chairside-30"
    ]
   },
   {
@@ -3947,6 +3951,33 @@
    ]
   },
   {
+   "key": "بازسازی_کامل_دهان",
+   "tag": "#بازسازی_کامل_دهان",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "Full mouth rehabilitation — بازسازی همه‌ی دندان‌ها در یک طرح واحد.",
+   "use_when": "مقاله تصمیمش را در مقیاس کل دهان بگیرد، نه یک دندان.",
+   "aliases": [
+    "فول ماوس",
+    "ریهبیلیتیشن دهان"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Full_Mouth_Rehabilitation"
+   ],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-131",
+    "insight/insight-2",
+    "insight/insight-21",
+    "episodes/episode-155",
+    "metanotes/meta-17",
+    "insight/insight-60",
+    "insight/insight-87",
+    "insight/insight-95"
+   ]
+  },
+  {
    "key": "تراش_لمینیت",
    "tag": "#تراش_لمینیت",
    "domain": "clinical",
@@ -4268,32 +4299,6 @@
     "notecast/episode-3",
     "insight/insight-59",
     "chairside/chairside-40"
-   ]
-  },
-  {
-   "key": "بازسازی_کامل_دهان",
-   "tag": "#بازسازی_کامل_دهان",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "Full mouth rehabilitation — بازسازی همه‌ی دندان‌ها در یک طرح واحد.",
-   "use_when": "مقاله تصمیمش را در مقیاس کل دهان بگیرد، نه یک دندان.",
-   "aliases": [
-    "فول ماوس",
-    "ریهبیلیتیشن دهان"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#Full_Mouth_Rehabilitation"
-   ],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-131",
-    "insight/insight-2",
-    "insight/insight-21",
-    "episodes/episode-155",
-    "metanotes/meta-17",
-    "insight/insight-60",
-    "insight/insight-87"
    ]
   },
   {
@@ -6622,6 +6627,32 @@
    ]
   },
   {
+   "key": "توالی_درمان",
+   "tag": "#توالی_درمان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ترتیبی که مراحل درمان یک بیمار چندمشکلی در آن انجام می‌شوند؛ هر فاز شرایط فنیِ لازم برای فاز بعد را می‌سازد، پس جابه‌جا شدنشان کار فاز بعدی را باطل یا تکراری می‌کند.",
+   "use_when": "مقاله خودِ ترتیب یا زمان‌بندیِ مراحل را موضوع قرار دهد — کدام کار پیش از کدام، و اگر رعایت نشود چه از دست می‌رود — نه فقط محتوای یکی از مراحل.",
+   "aliases": [
+    "treatment sequencing",
+    "sequence of treatment",
+    "ترتیب درمان",
+    "فازبندی درمان",
+    "فازهای درمان",
+    "توالی فازها",
+    "مراحل درمان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "sharehub/share-19",
+    "insight/insight-77",
+    "chairside/chairside-39",
+    "insight/insight-95"
+   ]
+  },
+  {
    "key": "حفظ_مینا",
    "tag": "#حفظ_مینا",
    "domain": "clinical",
@@ -8308,31 +8339,6 @@
     "photocast/episode-1",
     "insight/insight-29",
     "metanotes/meta-12"
-   ]
-  },
-  {
-   "key": "توالی_درمان",
-   "tag": "#توالی_درمان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ترتیبی که مراحل درمان یک بیمار چندمشکلی در آن انجام می‌شوند؛ هر فاز شرایط فنیِ لازم برای فاز بعد را می‌سازد، پس جابه‌جا شدنشان کار فاز بعدی را باطل یا تکراری می‌کند.",
-   "use_when": "مقاله خودِ ترتیب یا زمان‌بندیِ مراحل را موضوع قرار دهد — کدام کار پیش از کدام، و اگر رعایت نشود چه از دست می‌رود — نه فقط محتوای یکی از مراحل.",
-   "aliases": [
-    "treatment sequencing",
-    "sequence of treatment",
-    "ترتیب درمان",
-    "فازبندی درمان",
-    "فازهای درمان",
-    "توالی فازها",
-    "مراحل درمان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "sharehub/share-19",
-    "insight/insight-77",
-    "chairside/chairside-39"
    ]
   },
   {
@@ -22939,6 +22945,7 @@
   "پوسیدگی دندان": "پوسیدگی",
   "implant screw": "پیچ ایمپلنت",
   "اسکرو ایمپلنت": "پیچ ایمپلنت",
+  "glass ionomer": "گلاس آینومر",
   "ضایعه سرویکال": "nccl",
   "آلوده شدن سطح": "آلودگی",
   "discoloration": "پایداری رنگ",
@@ -22952,7 +22959,6 @@
   "پوسیدگی ثانوی": "پوسیدگی عودکننده",
   "اسکرو اباتمنت": "پیچ اباتمنت",
   "بند آوردن خون": "کنترل خونریزی",
-  "glass ionomer": "گلاس آینومر",
   "دی سمانتاسیون": "debonding",
   "نوت بوک ال ام": "notebooklm",
   "گایدلاین تراش": "اصول تراش",
@@ -23691,8 +23697,8 @@
   "لنگویج مدل": "مدل زبانی",
   "اینله آنله": "ترمیم غیرمستقیم",
   "کانسرواتیو": "درمان محافظه کارانه",
-  "tooth wear": "سایش دندان",
   "fiber post": "فایبر پست",
+  "tooth wear": "سایش دندان",
   "کندگی روکش": "افتادن روکش",
   "extraction": "کشیدن دندان",
   "پریودونتال": "پریودنتال",
@@ -23722,6 +23728,7 @@
   "ایمپلنت کج": "ایمپلنت زاویه دار",
   "full crown": "روکش دندان",
   "ضایعه عمیق": "پوسیدگی عمیق",
+  "گلس آینومر": "گلاس آینومر",
   "کانسپت دال": "dahl concept",
   "دال کانسپت": "dahl concept",
   "decoupling": "dwt",
@@ -23738,7 +23745,6 @@
   "نشستن روکش": "نشست روکش",
   "ونیر پرسلن": "ونیر سرامیکی",
   "hemostasis": "کنترل خونریزی",
-  "گلس آینومر": "گلاس آینومر",
   "پلیمر peek": "peek",
   "attachment": "اتچمنت",
   "گیره پروتز": "اتچمنت",
@@ -23928,22 +23934,22 @@
   "play store": "گوگل پلی",
   "کامپلیکیشن": "عوارض",
   "پلن درمان": "طرح درمان",
-  "occlusion": "اکلوژن",
   "پست دندان": "پست و کور",
+  "occlusion": "اکلوژن",
   "chairside": "چیرساید",
   "گزارش کیس": "کیس اینسایت",
   "دنت ای آی": "dentai",
   "زیرکونیوم": "زیرکونیا",
   "زیرکونیای": "زیرکونیا",
   "aesthetic": "زیبایی",
-  "meta note": "متانوت",
   "سمان رزین": "سمان رزینی",
+  "meta note": "متانوت",
   "پروویژنال": "روکش موقت",
+  "پست فایبر": "فایبر پست",
   "composite": "کامپوزیت",
   "bone loss": "تحلیل استخوان",
   "precision": "دقت اسکن",
   "attrition": "سایش دندان",
-  "پست فایبر": "فایبر پست",
   "prognosis": "پروگنوز دندان",
   "اکستراکشن": "کشیدن دندان",
   "پریودنتیت": "پریودنتال",
@@ -24201,10 +24207,10 @@
   "metanote": "متانوت",
   "chat gpt": "chatgpt",
   "جی پی تی": "chatgpt",
+  "فایبرپست": "فایبر پست",
   "adhesive": "ادهزیو",
   "trueness": "دقت اسکن",
   "صحت اسکن": "دقت اسکن",
-  "فایبرپست": "فایبر پست",
   "اوردنچور": "اوردنچر",
   "اکسترکشن": "کشیدن دندان",
   "ایزولیشن": "ایزولاسیون",

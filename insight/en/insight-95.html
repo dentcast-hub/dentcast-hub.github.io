@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full-Mouth Rehabilitation: Where Do We Start Treatment?</title>
+<meta name="description" content="A roadmap for full-mouth rehabilitation in a patient with severe tooth destruction, multiple edentulous spans, and the need to coordinate prosthetic, surgical, and occlusal care.">
+
+<link rel="canonical" href="https://dentcast.org/insight/en/insight-95.html">
+
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="DentCast">
+<meta property="og:title" content="Full-Mouth Rehabilitation: Where Do We Start Treatment?">
+<meta property="og:description" content="A roadmap for full-mouth rehabilitation in a patient with severe tooth destruction, multiple edentulous spans, and the need to coordinate prosthetic, surgical, and occlusal care.">
+<meta property="og:url" content="https://dentcast.org/insight/en/insight-95.html">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Full-Mouth Rehabilitation: Where Do We Start Treatment?">
+<meta name="twitter:description" content="A roadmap for full-mouth rehabilitation in a patient with severe tooth destruction, multiple edentulous spans, and the need to coordinate prosthetic, surgical, and occlusal care.">
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css?v=7">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
+
+  <!-- Theme init — no flash -->
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
+      --text:#111;
+      --muted:#444;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.2);
+    }
+
+    html,body { margin:0; padding:0; height:100%; }
+
+    body {
+      font-family:'vazirmatn', sans-serif;
+      background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+      color: var(--text);
+      max-width: 56.25rem;
+      margin: 0 auto;
+      padding: 3.75rem 1.625rem 6.25rem;line-height:1.9;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 1.9rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .glass-box {
+      background: rgba(255,255,255,0.99);
+      border: 1px solid rgba(11,95,255,0.25);
+      border-radius: var(--radius);
+      padding: 1.75rem 2.25rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    p { margin: 0.875rem 0;font-size:1.02rem; }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 1.25rem 0 0.625rem 0;
+      border-bottom: 2px solid var(--lightblue);
+      padding-bottom: 0.25rem;
+    }
+
+.author-note{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:0.375rem 0.625rem;
+  margin:2.5rem auto 1rem;
+  padding-top:1.25rem;
+  border-top:1px solid rgba(120,140,170,0.18);
+  color:var(--txt3);
+  font-size:.78rem;
+}
+.author-note .author-link{
+  color:var(--txt2);
+  font-weight:600;
+  text-decoration:none;
+}
+.author-note .author-link:hover{
+  color:var(--ac);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.author-note .author-role{
+  color:var(--txt3);
+}
+
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 0 1.125rem auto;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Full-Mouth Rehabilitation: Where Do We Start Treatment?",
+      "description": "A roadmap for full-mouth rehabilitation in a patient with severe tooth destruction, multiple edentulous spans, and the need to coordinate prosthetic, surgical, and occlusal care.",
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/insight/en/insight-95.html"
+      },
+      "url": "https://dentcast.org/insight/en/insight-95.html",
+      "articleSection": "Full Mouth Rehabilitation, Treatment Planning, Prosthodontics",
+      "keywords": "full-mouth rehabilitation, prosthetic treatment planning, vertical dimension of occlusion, provisional, implant, shortened dental arch, tooth prognosis, treatment roadmap",
+      "inLanguage": "en",
+      "datePublished": "2026-10-16",
+      "dateModified": "2026-10-16",
+      "proficiencyLevel": "Expert"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/insight/en/insight-95.html#webpage",
+      "url": "https://dentcast.org/insight/en/insight-95.html",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalWebPage",
+  "@id": "https://dentcast.org/insight/en/insight-95.html#medicalwebpage",
+  "url": "https://dentcast.org/insight/en/insight-95.html",
+  "name": "Full-Mouth Rehabilitation: Where Do We Start Treatment? | DentCast",
+  "description": "A roadmap for full-mouth rehabilitation in a patient with severe tooth destruction, multiple edentulous spans, and the need to coordinate prosthetic, surgical, and occlusal care.",
+  "datePublished": "2026-10-16",
+      "dateModified": "2026-10-16",
+  "inLanguage": "en",
+  "isPartOf": { "@id": "https://dentcast.org/#website" },
+  "author": { "@id": "https://dentcast.org/#person-foad" },
+  "reviewedBy": { "@id": "https://dentcast.org/#person-foad" },
+  "lastReviewed": "2026-10-16",
+  "audience": {
+    "@type": "MedicalAudience",
+    "audienceType": "Dentist",
+    "healthCondition": {
+      "@type": "MedicalCondition",
+      "name": "Full Mouth Rehabilitation"
+    }
+  },
+  "specialty": "Dentistry",
+  "medicalAudience": "Dentist"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "DentCast", "item": "https://dentcast.org/" },
+    { "@type": "ListItem", "position": 2, "name": "Clinical Insight", "item": "https://dentcast.org/insight/" },
+    { "@type": "ListItem", "position": 3, "name": "Full-Mouth Rehabilitation: Where Do We Start Treatment?", "item": "https://dentcast.org/insight/en/insight-95.html" }
+  ]
+}
+</script>
+  <meta name="theme-color" content="#0b5fff">
+</head>
+
+<body>
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<h1><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Insight 95 — Full-Mouth Rehabilitation: Where Do We Start Treatment?</h1>
+  <div class="dc-trustline" aria-label="Author and review information">
+    <span>Published: <time datetime="2026-10-16">2026-10-16</time></span>
+    <span>Last reviewed: <time datetime="2026-10-16">2026-10-16</time></span>
+  </div>
+
+
+<div class="glass-box">
+
+  <a class="lang-btn" href="../insight-95.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+<h3>Clinical explanation</h3>
+<p>This patient presented with severe tooth destruction, multiple edentulous spans, and occlusal problems. We plan a full-mouth rehabilitation, but the issue is not only which teeth receive crowns or where implants are placed. The main challenge is designing a treatment path whose stages stay coordinated with one another.</p>
+
+<p>I want to explain the roadmap I have in mind for treating this patient.</p>
+
+<h3>Current patient status</h3>
+
+<p>The maxillary anterior teeth are severely destroyed, with much of their enamel lost. From the history, the patient had been using lemon juice while brushing for a period, which likely involved a combination of erosion and abrasion in producing this situation.</p>
+
+<p>In the mandibular anterior region there is an implant-supported bridge whose form and dimensions are unsuitable, and I intend to replace it. Posteriorly there are also multiple edentulous spans whose reconstruction with implants is part of the treatment plan.</p>
+
+<img src="/insight/insight95-1.webp" alt="Panoramic radiograph of the patient before full-mouth rehabilitation" loading="lazy" style="display:block;max-width:100%;height:auto;margin:1.25rem auto;border-radius:0.75rem;" width="2157" height="1080">
+
+<img src="/insight/insight95-2.webp" alt="Intraoral view of the patient before full-mouth rehabilitation" loading="lazy" style="display:block;max-width:100%;height:auto;margin:1.25rem auto;border-radius:0.75rem;" width="1920" height="1118">
+
+<p>An important point is that I do not make completing the rehabilitation of the remaining teeth dependent on the posterior implants being ready. We can restore the remaining teeth and reach an acceptable, stable occlusion even if the posterior prostheses have not yet been delivered.</p>
+
+<p>This approach aligns with the Shortened Dental Arch (SDA) concept: acceptable function does not necessarily require replacing every posterior tooth. Whether it can be applied depends on the number and distribution of occlusal units and the patient’s functional conditions.</p>
+
+<p>So the posterior implants are part of the comprehensive plan, but finishing them is not a precondition for completing the rehabilitation of the remaining teeth.</p>
+
+<h3>Stage 1: Tooth assessment and prosthetic design</h3>
+
+<p>Before any intervention, the prognosis of each tooth must be established. For that we assess remaining sound structure, periodontal and endodontic status, the feasibility of an adequate ferrule, and whether each tooth can be restored reliably.</p>
+
+<p>This assessment must happen from the start so we know which teeth will be retained and which cannot be kept. We then base the prosthetic design on the teeth we can truly count on preserving.</p>
+
+<p>Next, an intraoral scan, jaw-relation records, and the required images are obtained.</p>
+
+<p>One of the important decisions at this stage is determining the vertical dimension of occlusion (VDO). Severe tooth destruction does not necessarily mean a reduced VDO; we must decide whether the existing vertical dimension is appropriate or whether changing it is needed to provide restorative space and achieve desirable occlusal relations.</p>
+
+<p>After these reviews, we do a digital design or diagnostic wax-up with a facially driven approach: tooth positions are designed with the face, lips, and smile in mind, while functional, phonetic, and occlusal constraints are considered at the same time.</p>
+
+<p>Provisionals are fabricated from this design.</p>
+
+<p>For me, provisionals are not merely temporary crowns; they are meant to be the treatment roadmap. With them we can try the proposed design in the mouth, check occlusal relations and esthetics, and change them if needed.</p>
+
+<h3>Stage 2: Initial surgery</h3>
+
+<p>Teeth judged non-restorable in the initial assessment are extracted at the earliest suitable time. The timing of each extraction is set according to any likely role that tooth may play in supporting the provisionals and the order of treatment stages.</p>
+
+<p>The aim is that these teeth are decided from the outset, so we are not forced mid-rehabilitation to change the prosthetic plan because of a late decision.</p>
+
+<p>At the same stage we also place the posterior implants according to the prosthetic plan so that their osseointegration period runs in parallel with the continuing rehabilitation stages.</p>
+
+<p>In this way, treatment of the remaining teeth continues without a mandatory dependence on completing the posterior implants.</p>
+
+<h3>Stage 3: Preparing the remaining teeth</h3>
+
+<p>Endodontic, restorative, and periodontal treatments are carried out according to each tooth’s needs.</p>
+
+<p>In severely destroyed teeth, achieving an adequate ferrule is one of the main issues. If ferrule or restorative space is insufficient, we first review the available options.</p>
+
+<p>Clinical crown lengthening is one of those options, but it is not done routinely. Especially in the maxillary anterior region, we must weigh its esthetic and periodontal consequences and the change in crown-to-root ratio.</p>
+
+<p>Root canal treatment and core build-up are performed only for teeth that truly indicate them.</p>
+
+<p>Throughout this stage, the provisionals are adjusted as needed so they stay coordinated with changes in the teeth and surrounding tissues.</p>
+
+<h3>Stage 4: Evaluating and confirming the provisionals</h3>
+
+<p>Before fabricating the definitive restorations, we must be sure the proposed design is also acceptable in the patient’s mouth.</p>
+
+<p>At this stage we review esthetics, phonetics, occlusal relations, patient comfort, and the feasibility of hygiene. If VDO has been changed, the patient’s tolerance of that change is also assessed.</p>
+
+<p>Once an acceptable, stable situation is reached, we record the information from the approved provisionals so they become the basis for fabricating the definitive restorations.</p>
+
+<p>The goal is that the definitive restorations are built from a design already tried and revised in the mouth, not solely from an initial wax-up.</p>
+
+<h3>Stage 5: Delivering the definitive restorations</h3>
+
+<p>After the necessary treatments are complete, the definitive restorations are fabricated from the approved design.</p>
+
+<p>Material and restoration type depend on each site’s conditions, available space, esthetic needs, and occlusal status. The quality of finishing and polishing of occlusal surfaces—especially after adjustments—matters for limiting wear of opposing teeth.</p>
+
+<p>The mandibular anterior implant bridge will also be replaced with a new design.</p>
+
+<p>Posterior reconstruction proceeds according to implant status and at the appropriate time. As posterior prostheses are added, occlusal relations are rechecked and adjusted if needed.</p>
+
+<h3>Stage 6: Protection and follow-up</h3>
+
+<p>Delivering the restorations does not end the work.</p>
+
+<p>Controlling the factors that caused tooth destruction—especially the habit of using lemon juice while brushing—is an important part of treatment.</p>
+
+<p>The patient’s parafunctional status is also reviewed, and if indicated a hard occlusal splint will be made to reduce the risk of damage to teeth and restorations.</p>
+
+<p>Periodic follow-up of occlusion, restorations, periodontal tissues, and implants is also part of the treatment plan.</p>
+
+<h3>Closing note</h3>
+
+<p>In this case, the main challenge is not only restoring destroyed teeth; it is coordinating the different stages of treatment.</p>
+
+<p>I prefer that tooth prognoses are clear from the start and that the prosthetic plan is set around retainable teeth. I then use provisionals as the treatment roadmap and carry surgical, endodontic, and restorative steps within that framework.</p>
+
+<p>Of course not every decision is meant to be final on day one. Some of them—such as keeping or changing VDO and the final details of the rehabilitation—are settled after further review and evaluation of the provisionals.</p>
+
+<p>What matters is knowing from the outset where we want to go, while keeping enough flexibility along the way to revise decisions.</p>
+
+<p class="dc-disclaimer">The content of this page is intended for the educational use of dentists and dental students.</p>
+</div>
+
+  <div class="author-note">
+  <a href="/about.html" class="author-link">Dr. Foad Shahabian</a>
+  <span class="author-role">Prosthodontist &amp; Implant Specialist</span>
+</div>
+
+<footer class="dc-site-footer" style="text-align:center; margin-top:2.8125rem; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+  <div style="margin-bottom:1.375rem;">
+    <a href="/"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Back to DentCast
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=14" defer></script>
+<script src="/dc-nav.js?v=278" defer></script>
+</body>
+</html>
