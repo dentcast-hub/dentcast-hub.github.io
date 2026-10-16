@@ -11,12 +11,16 @@ Branch: `refactor/publishing-modular-workflow` only. This is NOT an authorizatio
 - Independent fixtures: `tests/test_dentcast_stage7_parity.py`, including a **real Stage 3 file edit** and an independently read and checked resulting HTML page. A valid write/receipt **does not** make the publish pass if its English mirror is missing.
 - Existing canonical published-page specimens checked **read-only** against the same observable invariants: `chairside/chairside-41.html` + its en mirror; `sharehub/share-18.html` + its en mirror; `litecast/lite-CAST39.html` on the .ir-only track.
 - Seven route variants: ordinary, ordinary+paper, LiteCast, LiteCast+paper, Challenge, Challenge+paper, paper-only. Adversarial fixtures detect wrong stamp sequencing, missing LiteCast registry update, phantom language toggle, English page missing noindex, wrong canonical domain, forbidden cross-ecosystem LiteCast links, >5 links in one `dc-related-section`, missing phase-E push marker and missing page.
-- **FINAL CI**: https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/38848025544 — **187 tests passed**, including 13 Stage 7 content-level tests, and the canonical source/contract audit returned zero issues. The CI suite remains staging-only and read-only with respect to GitHub remote publication.
+- **LATEST VERIFIED CI:** https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/38848195289 — **191 tests passed**, including the Stage 7 independent content probes and four new canonical-tool sandbox tests; the source/contract auditor returned zero issues. These tests run without publication, deployment or touching `main`.
+- **Original legacy tools actually executed** in controlled conditions: the unchanged `tools/stamp-version.py` stamped a disposable site, was idempotent, and changed its version when the copied LiteCast index changed; the unchanged `tools/verify_publish.py` rejected a nonexistent test publication with a failing exit code. These are important positive/negative mechanical controls, **not** a successful new end-to-end publish.
+- **Actual sandbox edits** were verified for an appended synthetic LiteCast `LightGlossary` item (all previous entries preserved, live source unchanged), and binary WebP byte transport with an independently hashed receipt. An image-container header check is **not** visual validation of a converted clinical image.
 
 ## Behavior mismatches found and corrected in staging
 
 1. **Final content/version stamp incorrectly happened before last writes/build.** The original canonical C8 and Phase D demand an idempotent LAST stamp. The staging plan now explicitly includes `build:version-final` **after builders, English mirror if applicable and push marker, immediately before Phase F**; the independent auditor fails a regression to early stamping.
 2. **LiteCast index update was at risk of being omitted by a generic brain path.** The staging compiler now requires `page:litecast-register` in the LiteCast route; a separate regression fails when removed. LiteCast has **no specialist brain, taxonomy, English mirror or Phase E push marker**.
+
+3. **The staging editor could not accept actual binary WebP images.** It now accepts binary asset bytes via strict Base64 and signature/size checks in a marked disposable workspace. It does **not** produce or evaluate image conversions; an authorized image operator remains necessary.
 
 All corrections are isolated to the feature branch. Merely checking these routes does not prove semantic link quality or actual clinical evidence analysis.
 
