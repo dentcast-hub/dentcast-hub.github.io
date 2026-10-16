@@ -46,6 +46,7 @@ SOURCE_STEPS = {
     "notification:pulse": ("notification", "C6", "11-build-and-version.md"),
     "build:version": ("build", "C7", "11-build-and-version.md"),
     "build:rebuild": ("build", "C8", "11-build-and-version.md"),
+    "build:version-final": ("build", "C8 final stamp; D restamp if applicable", "12-english-notify-verify.md"),
     "english:mirror": ("english", "D", "12-english-notify-verify.md"),
     "notification:push-marker": ("notification", "E", "12-english-notify-verify.md"),
     "verify:phase-f": ("verify", "F", "12-english-notify-verify.md"),
@@ -126,7 +127,9 @@ def compile_steps(request, contract=None):
             steps += ["english:mirror"]
         if not litecast and category != "glossary":
             steps += ["notification:push-marker"]
-        steps += ["verify:phase-f"]
+        # Canonical C8 requires a LAST stamp after builders; English D can
+        # change content again, so the final idempotent restamp runs after D/E.
+        steps += ["build:version-final", "verify:phase-f"]
 
     if len(steps) != len(set(steps)):
         raise AssertionError("duplicate step IDs")
