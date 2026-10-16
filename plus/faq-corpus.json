@@ -37483,6 +37483,70 @@
           ]
         }
       ]
+    },
+    "insight/insight-95": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/insight/insight-95.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا در بازسازی کامل دهان باید قبل از هر اقدامی پروگنوز تک‌تک دندان‌ها مشخص شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ میزان ساختار سالم، وضعیت پریودنتال و اندودنتیک، امکان فرول مناسب و قابلیت بازسازی قابل‌اعتماد هر دندان پیش از اقدام بررسی می‌شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا پروویژن‌ها در این رویکرد فقط روکش موقت‌اند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ پروویژن‌ها نقشه راه درمان‌اند و برای آزمودن طراحی، اکلوژن و زیبایی و اصلاح در صورت نیاز به کار می‌روند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا تکمیل ایمپلنت‌های خلفی پیش‌شرط پایان بازسازی دندان‌های موجود است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ طبق رویکرد Shortened Dental Arch، برای عملکرد قابل‌قبول الزاماً نیازی به جایگزینی تمام دندان‌های خلفی نیست و بازسازی دندان‌های موجود می‌تواند مستقل پیش برود."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/insight/insight-95.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-95.html#flashcards-c1",
+              "name": "پروویژن به‌عنوان نقشه راه",
+              "description": "پروویژن فقط روکش موقت نیست؛ طراحی پیشنهادی را در دهان می‌آزماید، اکلوژن و زیبایی را می‌سنجد و در صورت نیاز اصلاح می‌شود تا مبنای رستوریشن نهایی شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-95.html#flashcards-c2",
+              "name": "استیج‌بندی بازسازی کامل دهان",
+              "description": "اول پروگنوز و طرح پروتزی روی دندان‌های قابل‌نگهداری، بعد پروویژن به‌عنوان نقشه راه، سپس جراحی و اندو و ترمیم در همان چارچوب؛ تصمیم‌هایی مثل VDO پس از ارزیابی پروویژن قطعی می‌شوند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-95.html#flashcards-c3",
+              "name": "Shortened Dental Arch در بازسازی",
+              "description": "برای عملکرد قابل‌قبول الزاماً نیازی به جایگزینی تمام دندان‌های خلفی نیست؛ امکان اجرا به تعداد و توزیع واحدهای اکلوزالی و شرایط عملکردی بیمار بستگی دارد.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
