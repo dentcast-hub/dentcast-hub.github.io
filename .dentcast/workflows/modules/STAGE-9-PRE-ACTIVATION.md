@@ -22,6 +22,12 @@ publication path or weakening any approval gate.
 
 **Project disposition:** development and offline/Sandbox validation of all nine stages is complete. **The modular replacement is not active or proven to save tokens in real publishing sessions**; genuine operator/science/approval and full old/new end-to-end verification are intentionally deferred to a separately authorized activation effort. No `STAGING_FINAL_ACCEPTED` label can override those seven gates.
 
+## Feature-branch entrypoint migration (after offline Stage 9 acceptance)
+
+A new staging-only migration preserves the full original `README.md` as `README.legacy.md`, original root `CLAUDE.md` / `AGENTS.md` as `*.legacy.md`, original `agent-parity.md` as `agent-parity.legacy.md`, and three Cursor rules in `.dentcast/workflows/legacy/cursor/`. The active equivalents on **this feature branch only** now point to a guarded 12-module staging router. The original scientific engine and prompt remain unchanged.
+
+All original-byte tests now check the preserved legacy files against `origin/main`; the new active connectors are **deliberately different** and are required to include `STAGING_ONLY_NO_LIVE_PUBLISH`. Do NOT confuse this with the earlier static Stage 9 check that required the ACTIVE entrypoints to match main. The branch must again pass CI after the migration. Full runtime and seven external production gates remain CLOSED. No merge, publication or live activation is authorized by staging tests.
+
 ## Verified staging package
 
 - Route compiler: `tools/dentcast_stage3_route.py`

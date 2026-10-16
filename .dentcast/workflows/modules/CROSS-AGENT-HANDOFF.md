@@ -16,7 +16,7 @@ entrypoint activation and main merge remain separately blocked.
 
 1. Confirm repository `dentcast-hub/dentcast-hub.github.io` and branch `refactor/publishing-modular-workflow`. Record HEAD SHA. **Never default to main for edits.**
 2. Read this handoff, `ORCHESTRATOR-CONTRACT.md`, `MODULE-CONTRACTS.v1.json`, `MODULE-REGISTRY.draft.json`, and `INTERNAL-VALIDATION-AND-ROUTE-PLAN.md`.
-3. Read the canonical `.dentcast/workflows/README.md` and `.dentcast/workflows/agent-parity.md` plus the relevant original source slices. For any real publishing request, the original live instructions remain authoritative.
+3. Read the STAGING modular connector `.dentcast/workflows/README.md`, canonical unchanged original `.dentcast/workflows/README.legacy.md` for full contract and rollback, `.dentcast/workflows/agent-parity.md`, legacy global agent rules and selected exact source slices. On this feature branch, STOP any real publication request.
 4. Inspect `tools/dentcast_route_plan_draft.py`, `tools/validate_dentcast_route_plan_draft.py`, `tools/dentcast_checkpoint_draft.py`, `tools/dentcast_checkpoint_store_draft.py`, `tests/test_dentcast_*draft.py`, `tests/test_dentcast_staging_integration.py`, and the GitHub Actions staging workflow. Inspect actual code and logs; don't trust prior agent summaries.
 5. Run tests, identify a concrete defect or missing invariant, fix on the staging branch only, rerun tests and record precise pass/fail and source revision. Never claim a test ran unless its output was inspected.
 
@@ -63,4 +63,4 @@ For each change report: branch and commit SHA, affected files, tests actually ru
 
 ## Shared instructions
 
-`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/dentcast-router.mdc` and `.dentcast/workflows/agent-parity.md` remain active and untouched by this staging handoff. They already route live publishing to the canonical README. The handoff is for modularization development only, and must not change active publishing behavior.
+`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/dentcast-router.mdc` and `.dentcast/workflows/agent-parity.md` have now been updated ON THE FEATURE BRANCH to dispatch STAGING ONLY into the modular `README.md`. Exact originals were copied to `.legacy.md` counterparts (Cursor originals under `.dentcast/workflows/legacy/cursor/`). `main` retains its untouched active read-all router. This is NOT a verified real runtime cutover. The handoff is for modularization development only, and must not change active publishing behavior.

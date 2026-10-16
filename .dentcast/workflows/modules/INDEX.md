@@ -1,6 +1,6 @@
 # Publishing modules — staging index
 
-**Status: extracted and dependency-audited; NOT ACTIVATED. DES/Fidelity is an immutable opaque subsystem.** The canonical `../README.md`, `CLAUDE.md`, `AGENTS.md`, Cursor routing and `../agent-parity.md` remain unchanged.
+**Status: modular STAGING connector now wired on the feature branch only; NO production activation or main merge.** The canonical 2,598-line original is preserved verbatim as `../README.legacy.md`; the short staging router is `../README.md`. Original `CLAUDE.legacy.md`, `AGENTS.legacy.md`, `../agent-parity.legacy.md` and `../legacy/cursor/` are available for full instructions and rollback. DES/Fidelity is unchanged.
 
 ## Proposed execution-order modules (verbatim source slices)
 
@@ -30,7 +30,7 @@ The earlier 8-file extraction is retained temporarily as a reference, not as an 
 - [STAGE-9-PRE-ACTIVATION.md](STAGE-9-PRE-ACTIVATION.md) — final offline Stage 9 PASS (235 tests); seven production activation gates remain closed.
 - `python tools/dentcast_stage8_9_preflight.py --baseline-ref origin/main` — run in a full-history checkout; outputs staging status, never approval.
 
-**Offline Stage 8 and Stage 9 preparation are complete; live publishing activation, main merge and removal of read-all instructions are not authorized.**
+**Offline Stage 8 and 9 preparation plus feature-branch native entrypoint wiring are complete. Original complete global rules remain mandatory. Actual Claude/Cursor/Codex runtime loading, real publishing, main merge, and release are NOT authorized or certified.**
 
 ## Supporting design files
 
