@@ -134,6 +134,17 @@ class IndependentParityTests(unittest.TestCase):
         self.assertTrue(any("STAMP" in s or "CANONICAL_ORDER" in s
                             for s in oracle.inspect_route(plan)))
 
+    def test_real_existing_site_pages_are_independent_baselines(self):
+        # Read existing published pages, without changing a byte.
+        # These are output specimens from the current canonical workflow.
+        for cat, name in (("chairside", "chairside-41.html"),
+                          ("sharehub", "share-18.html"),
+                          ("litecast", "lite-CAST39.html")):
+            with self.subTest(category=cat):
+                self.assertEqual(
+                    oracle.inspect_page_pair(ROOT, cat, name), [],
+                    "Baseline itself fails, so do not claim new-route parity")
+
     def test_missing_bilingual_mirror_is_not_an_accepted_publish(self):
         self.write_pair(with_english=False)
         issues = oracle.inspect_page_pair(self.root, "sharehub", "share-999.html")
