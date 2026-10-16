@@ -3,6 +3,7 @@
 > [STAGE-7-STAGING-ACCEPTANCE.md](STAGE-7-STAGING-ACCEPTANCE.md) for current fixes,
 > executed evidence, limitations and pre-activation gates. The text below is the
 > preserved historical audit, not the current glossary implementation status.
+> Verified staging CI: https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/38854740524 — 218 tests passed.
 
 # Stage 7 — Independent sandbox parity audit (NO-GO for activation)
 

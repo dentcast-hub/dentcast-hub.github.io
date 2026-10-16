@@ -70,9 +70,14 @@ python -m unittest discover -s tests -p 'test_dentcast*.py' -v
 python tools/audit_dentcast_stage2_contract.py
 ```
 
-Local result: **218 tests passed**, including behavioral filesystem/builder
-scenarios; source/contract audit **PASS**, zero issues. CI evidence is recorded
-below after the branch push. All executed canonical builders and Phase F were
+Local and GitHub CI result: **218 tests passed**, including behavioral filesystem/builder
+scenarios; source/contract audit **PASS**, zero issues.
+
+**Verified CI:** https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/38854740524
+— success on code commit `82f75c4c6fc16b1ac296d65c563c8aeebc755ded`.
+Downloaded job logs confirm all 17 suites total 218 tests and the new synthetic
+LiteCast Phase F line is `23 passed, 0 warned, 0 failed`. The later commit only
+records this evidence; it does not change executable code. All executed canonical builders and Phase F were
 compared with the fetched main revision and were byte-identical; main was not
 merged or changed. Test directories are disposable and no browser opens their
 analytics markup.
