@@ -485,7 +485,7 @@ body.dc-desktop-ui.dc-search-mode .dc-spot--search {
   flex: 0 0 auto;
   margin: 0.25rem auto;
   min-height: 0;
-  max-height: 180px;
+  max-height: 230px;
   max-width: 320px;
   width: 100%;
   overflow: visible;
@@ -504,7 +504,7 @@ body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-art-img {
   width: auto;
   max-width: 100%;
   height: auto;
-  max-height: min(17vh, 145px);
+  max-height: min(17vh + 50px, 195px);
   object-fit: contain;
 }
 body.dc-desktop-ui.dc-search-mode .dc-spot--search .dc-spot-badge {
