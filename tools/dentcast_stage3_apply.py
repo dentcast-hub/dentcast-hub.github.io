@@ -36,7 +36,7 @@ handlers = load("stage3_exe_handlers", "dentcast_stage3_modules.py")
 # publication router, scientific engine, workflow, CI, settings, or secrets.
 # These are writable *staging* paths; canonical rules still decide eligibility.
 ALLOWED = {
-    "page": ("*.html", "*.webp", "*.jpg", "*.png", "litecast/lite-glossary.json"),
+    "page": ("*.html", "*.webp", "*.jpg", "*.jpeg", "*.png", "litecast/lite-glossary.json"),
     "navigation": ("*.html",),
     "semantic-links": ("*.html",),
     "paper-cabinet": ("dentcast_cabinet_full_catalog.json", "*.html"),

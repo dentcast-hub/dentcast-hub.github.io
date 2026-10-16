@@ -188,6 +188,33 @@ class Stage3ApplyTests(unittest.TestCase):
         self.assertTrue(updated["history"][-1]["local_artifact_integrity_verified"])
         self.assertFalse(updated["real_publish_completed"])
 
+    def test_cycle3_jpeg_extension_uses_same_binary_transport_as_jpg(self):
+        import base64
+        # Header-level validation only, NOT image-content or clinical proof.
+        blob = b"\\xff\\xd8\\xff" + b"test synthetic bytes"
+        intent = self.intent()
+        intent["edits"] = [{
+            "path": "clinical/synthetic.jpeg", "before_sha256": None,
+            "content_base64": base64.b64encode(blob).decode("ascii"),
+        }]
+        result = patcher.apply_intent(self.state, intent, self.workspace)
+        self.assertEqual(
+            (self.workspace / "clinical" / "synthetic.jpeg").read_bytes(), blob)
+        self.assertEqual(result["status"], "staging_files_applied")
+        self.assertFalse(result["published"])
+        self.assertFalse(result["execution_authorized"])
+
+    def test_cycle3_jpeg_with_wrong_magic_is_rejected(self):
+        import base64
+        intent = self.intent()
+        intent["edits"] = [{
+            "path": "clinical/forged.jpeg", "before_sha256": None,
+            "content_base64": base64.b64encode(b"GIF89a").decode("ascii"),
+        }]
+        with self.assertRaisesRegex(ValueError, "IMAGE_MAGIC_BYTES_MISMATCH"):
+            patcher.apply_intent(self.state, intent, self.workspace)
+        self.assertFalse((self.workspace / "clinical" / "forged.jpeg").exists())
+
     def test_cycle2_symlinked_ancestor_cannot_launder_receipt(self):
         result = patcher.apply_intent(self.state, self.intent(), self.workspace)
         alias = self.workspace / "clinical" / "alias"

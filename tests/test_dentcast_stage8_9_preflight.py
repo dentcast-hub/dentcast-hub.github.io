@@ -66,6 +66,25 @@ class OfflineIntegrationTests(unittest.TestCase):
                             for s in result["issues"]), result["issues"])
         self.assertFalse(result["activation_authorized"])
 
+    def test_cycle3_independent_missing_route_steps_fail_closed(self):
+        route = preflight._load("cycle3_route", "tools/dentcast_stage3_route.py")
+        oracle = preflight._load("cycle3_oracle", "tools/audit_dentcast_stage7_parity.py")
+        for cat, challenge, omitted in (
+            ("glossary", False, "brain:glossary-register"),
+            ("litecast", False, "page:litecast-register"),
+            ("sharehub", False, "english:mirror"),
+            ("sharehub", True, "challenge:public"),
+        ):
+            with self.subTest(category=cat, challenge=challenge):
+                request = {"has_text": True, "has_paper": False,
+                           "category": cat, "challenge": challenge}
+                plan = route.compile_steps(request)
+                self.assertEqual(oracle.inspect_route(plan), [])
+                plan["ordered_steps"] = [s for s in plan["ordered_steps"]
+                                         if s["step_id"] != omitted]
+                self.assertIn("MISSING_REQUIRED_STEP:" + omitted,
+                              oracle.inspect_route(plan))
+
     def test_real_stage9_cannot_be_self_certified_by_a_boolean(self):
         with patch.object(preflight, "baseline_check", return_value=[]):
             result = preflight.analyze("origin/main")
