@@ -101,11 +101,6 @@ SCHEMAS = {
         "build_artifact_digest": "digest", "canonical_builder_order": "bool_true",
         "build_tools_main_sourced": "bool_true", "finished_before_english": "bool_true",
     },
-    "build:restamp-final": {
-        "final_stamp_artifact_digest": "digest",
-        "stamp_matches_current_inputs": "bool_true",
-        "stamp_ran_after_all_build_and_mirror_updates": "bool_true",
-    },
     "build:version-final": {
         "content_version_digest": "digest", "stamp_after_writes": "bool_true",
         "stamp_recomputed_from_final_sources": "bool_true",
