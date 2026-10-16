@@ -65,8 +65,13 @@ export async function memberPayments(userId: string, offset: number, limit: numb
   const result = await query(`
     select * from (
       select id, 'gateway' as rail, gateway as kind, status, amount_rial,
-             ref_id, order_id, bank_ref, null::text as reference, months, created_at, verified_at as reviewed_at
-        from payments where user_id = $1
+             ref_id, order_id, coalesce(nullif(bank_ref, ''), (
+               select nullif(a.meta->>'ref_number', '') from user_activity a
+                where a.user_id = p.user_id and a.action = 'subscription_activated'
+                  and a.meta->>'payment_id' = p.id::text
+                order by a.created_at desc, a.id desc limit 1
+             )) as bank_ref, null::text as reference, months, created_at, verified_at as reviewed_at
+        from payments p where user_id = $1
       union all
       select id, 'manual' as rail, kind, status, amount_rial,
              null::text, null::text, null::text, reference, months, created_at, reviewed_at

@@ -84,6 +84,15 @@ describe('member review', () => {
     expect(users.find((u: { id: string }) => u.id === active).is_premium).toBe(true);
     expect(users.find((u: { id: string }) => u.id === expired).is_premium).toBe(false);
   });
+  it('recovers historical bank references already stored in activation audit metadata', async () => {
+    const id = await member();
+    const payment = (await pool.query("insert into payments (user_id, amount_rial, gateway, ref_id, status, months) values ($1, 1000, 'zibal', 'legacy-track', 'paid', 1) returning id", [id])).rows[0].id;
+    await pool.query("insert into user_activity (user_id, action, meta) values ($1, 'subscription_activated', $2)", [id, JSON.stringify({ payment_id: payment, ref_number: 'legacy-bank-ref', source: 'payment' })]);
+    const response = await app.inject({ url: '/admin/users/' + id + '/payments', headers });
+    expect(response.statusCode).toBe(200);
+    expect(response.json().payments[0].bank_ref).toBe('legacy-bank-ref');
+    expect((await pool.query('select bank_ref from payments where id = $1', [payment])).rows[0].bank_ref).toBeNull();
+  });
   it('pages both ledgers and exposes existing references, not gift bearer codes', async () => {
     const id = await member();
     await pool.query("insert into payments (user_id, amount_rial, gateway, ref_id, order_id, bank_ref, status, months) values ($1, 1000, 'zibal', 'track', 'order', 'bank', 'canceled', 1)", [id]);
