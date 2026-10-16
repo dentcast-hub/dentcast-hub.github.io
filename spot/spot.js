@@ -69,7 +69,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=187';
+import { findProseRoot } from '/plus/js/config.js?v=189';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -163,7 +163,7 @@ function report(kind, slotName, creativeId) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ [key]: name, content_id: contentId }),
   });
-  import('/plus/js/api.js?v=187')
+  import('/plus/js/api.js?v=189')
     .then((m) => m.apiBase())
     .then((base) => {
       if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
@@ -182,7 +182,7 @@ function report(kind, slotName, creativeId) {
       // A network-level failure (not an HTTP error) may mean the cached base is
       // dead — self-heal so the NEXT event, and the next page's /me, re-probe
       // instead of retrying the same unreachable host all session.
-      import('/plus/js/api.js?v=187').then((m) => m.forgetBase()).catch(() => {});
+      import('/plus/js/api.js?v=189').then((m) => m.forgetBase()).catch(() => {});
     });
 }
 
@@ -205,7 +205,7 @@ function allowedIn(creative, slotName, audience) {
 // visitor — so artwork alone is enough to render. A creative with neither is an
 // empty placeholder (the `example-sponsor` stub) and still renders never.
 function renderable(creative) {
-  return !!(creative.url || creative.image);
+  return !!(creative.url || creative.image || creative.title || creative.text);
 }
 
 // A HOUSE creative is one of ours: the premium card, or a sponsor-array entry
@@ -276,10 +276,12 @@ function rotationSequence(cfg) {
  * of the code: change the sequence in spot-config.json and this follows.
  */
 function pinnedCreative(cfg, slotName, audience) {
+  if (cfg.slots?.[slotName]?.creative) return cfg.slots[slotName].creative;
   return resolveStep(cfg, rotationSequence(cfg)[0], slotName, audience);
 }
 
 function pickCreative(cfg, slotName, audience) {
+  if (cfg.slots?.[slotName]?.creative) return cfg.slots[slotName].creative;
   const seq = rotationSequence(cfg);
   return resolveStep(cfg, seq[lsGet(K_TICK) % seq.length], slotName, audience);
 }
@@ -1294,7 +1296,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=187')
+  return import('/plus/js/api.js?v=189')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
@@ -1339,6 +1341,20 @@ async function main() {
     if (!res.ok) return;
     cfg = await res.json();
   } catch (_) { return; }
+  // Untouched placements retain the checked-in rotation and targeting. Only
+  // explicitly saved placements have a database override. Public read, no login.
+  try {
+    const { apiBase } = await import('/plus/js/api.js?v=189');
+    const base = await apiBase();
+    const response = await fetch(base + '/spot/config', { cache: 'no-store', signal: AbortSignal.timeout(2500) });
+    if (response.ok) {
+      const saved = await response.json();
+      for (const [name, value] of Object.entries(saved.slots || {})) {
+        if (!cfg.slots?.[name] || typeof value.enabled !== 'boolean') continue;
+        cfg.slots[name] = { ...cfg.slots[name], enabled: value.enabled, creative: value.creative };
+      }
+    }
+  } catch (_) { /* API unavailable: retain the published configuration. */ }
   if (!cfg || !cfg.enabled) return; // master off → zero trace
 
   // Decide up front whether this page view may move the rotation, and keep the
@@ -1450,3 +1466,4 @@ if (document.readyState === 'loading') {
 } else {
   main().catch(() => {});
 }
+

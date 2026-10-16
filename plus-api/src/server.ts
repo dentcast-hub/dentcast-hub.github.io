@@ -1,3 +1,4 @@
+import { spotRoutes } from './routes/spot.js';
 import Fastify, { type FastifyInstance } from 'fastify';
 import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
@@ -153,6 +154,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(dashboardRoutes);
   await app.register(supportRoutes);
   await app.register(adminRoutes);
+  await app.register(spotRoutes);
   await app.register(pushRoutes);
   await app.register(payRoutes);
   await app.register(referralRoutes);
@@ -166,3 +168,4 @@ export async function buildServer(): Promise<FastifyInstance> {
 
   return app;
 }
+
