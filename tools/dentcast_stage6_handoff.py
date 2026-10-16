@@ -44,7 +44,8 @@ def handoff(store, run_id, plan):
     done = state["completed_steps"]
     remote.require(done == ids[:len(done)], "GAP_OR_OUT_OF_ORDER_REMOTE_COMPLETION")
     remote.require(state["pending_step"] is None or
-                   state["pending_step"] == ids[len(done)],
+                   (len(done) < len(ids) and
+                    state["pending_step"] == ids[len(done)]),
                    "PAUSE_NOT_AT_NEXT_UNFINISHED_STEP")
     remote.require(state["status"] != "finished_staging" or
                    len(done) == len(ids),
