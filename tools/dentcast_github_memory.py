@@ -391,6 +391,18 @@ class RemoteMemory:
         actor_check(actor)
         snap = self.snapshot(run_id)
         old, manifest, head = snap["state"], snap["manifest"], snap["head"]
+        # Pause/recovery/finish retries are also idempotent after a lost ACK,
+        # provided no newer event has superseded the original transition.
+        if kind in {"step_paused", "step_recovered", "staging_finished"}:
+            last = snap["events"][-1]
+            if (last["kind"] == kind and last["step_id"] == step_id and
+                    last["input_digest"] == input_digest and
+                    last["output_digest"] == output_digest and
+                    last["receipt_digest"] == receipt_digest and
+                    last["gate"] == gate and
+                    last["artifact_digests"] == list(artifact_digests)):
+                return {"commit": head, "state": old,
+                        "event_digest": digest(last), "idempotent_replay": True}
         # Retry after lost GitHub acknowledgement must NOT launch or record the
         # same verified scientific check twice. Replay old immutable receipt.
         # The original actor remains authoritative; a new caller cannot
