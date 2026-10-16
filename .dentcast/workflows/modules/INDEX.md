@@ -27,7 +27,7 @@ The earlier 8-file extraction is retained temporarily as a reference, not as an 
 
 - [STAGE-7-STAGING-ACCEPTANCE.md](STAGE-7-STAGING-ACCEPTANCE.md) — Stage 7 accepted only for offline/Sandbox behavior.
 - [STAGE-8-INTEGRATION.md](STAGE-8-INTEGRATION.md) — verified read-only 17-route integration and main-baseline drift check.
-- [STAGE-9-PRE-ACTIVATION.md](STAGE-9-PRE-ACTIVATION.md) — final handoff and the seven **closed** external activation gates.
+- [STAGE-9-PRE-ACTIVATION.md](STAGE-9-PRE-ACTIVATION.md) — final offline Stage 9 PASS (235 tests); seven production activation gates remain closed.
 - `python tools/dentcast_stage8_9_preflight.py --baseline-ref origin/main` — run in a full-history checkout; outputs staging status, never approval.
 
 **Offline Stage 8 and Stage 9 preparation are complete; live publishing activation, main merge and removal of read-all instructions are not authorized.**

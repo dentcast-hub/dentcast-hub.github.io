@@ -9,6 +9,19 @@ publication path or weakening any approval gate.
 
 **Integration evidence:** https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/38855544071 — 223 passing tests and Stage 8 preflight with 17 checked routes and zero issues. No gate below was opened by those tests.
 
+## Final Stage 9 offline acceptance — 2026-10-16
+
+**OFFLINE STAGE 9: PASS. Production activation and main merge: NOT PERMITTED.**
+
+- [Verified GitHub Actions run 38862612815](https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/38862612815) passed **235 tests across 19 suites**, including 4 new release-scope/rejection tests.
+- The independent original Stage 2 source/contract audit passed; the Stage 8 route audit checked **17 variants** without issues and the unchanged original Phase F LiteCast synthetic fixture remains passing.
+- `tools/dentcast_stage9_release_dossier.py --baseline-ref origin/main` returned `FINAL_STAGING_HANDOFF_PASS`, with **96 changed files, 0 outside the permitted staging paths**, five active entrypoints and the two scientific core files byte-identical to the fetched main baseline, and all **seven external activation gates closed**.
+- CI tested executable SHA `88ca484a4451b4f0a6d6abd6cc01538a20efb516`; main baseline `aeab61a5b5c5e29925ae2d591c2e60144b783806`. At the time of this run, the long-lived feature branch was **one commit behind main**. This must be reconciled and rechecked before any future merge; it is not permission to do that now.
+- The final gate can be rerun in a full-history checkout using the CLI above. It reports the current candidate SHA and exact baseline automatically; the documented SHA is *audit evidence*, not an automatically updated release pointer.
+- No site content, real article, live publication entrypoint, scientific engine or real external service was changed by this stage. The only new executable capability is a **read-only, fail-closed release inspection**.
+
+**Project disposition:** development and offline/Sandbox validation of all nine stages is complete. **The modular replacement is not active or proven to save tokens in real publishing sessions**; genuine operator/science/approval and full old/new end-to-end verification are intentionally deferred to a separately authorized activation effort. No `STAGING_FINAL_ACCEPTED` label can override those seven gates.
+
 ## Verified staging package
 
 - Route compiler: `tools/dentcast_stage3_route.py`
