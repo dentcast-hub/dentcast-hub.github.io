@@ -30,6 +30,7 @@ router = load("s7_route", "tools/dentcast_stage3_route.py")
 runner = load("s7_runner", "tools/dentcast_stage3_orchestrator.py")
 editor = load("s7_editor", "tools/dentcast_stage3_apply.py")
 bridge = load("s7_bridge", "tools/dentcast_stage3_bridge.py")
+pairwise = load("s7_pairwise", "tools/audit_dentcast_stage7_pairwise.py")
 
 
 def fake_report(inv, receipt=D):
@@ -102,6 +103,86 @@ class LegacyToolSandboxTests(unittest.TestCase):
         self.assertEqual(source_fingerprints, {
             str(rel): hashlib.sha256((ROOT / rel).read_bytes()).hexdigest()
             for rel in rels if str(rel) in source_fingerprints})
+
+    def test_paired_legacy_vs_modular_real_litecast_write_and_stamper(self):
+        # Same public-safe synthetic LiteCast input, two independently prepared
+        # disposable trees. Legacy follows the documented JSON append directly;
+        # modular uses the real Stage 3 editor plus verified artifact receipt.
+        # Both execute the UNCHANGED original version stamper.
+        legacy = self.sandbox / "legacy"
+        modular = self.sandbox / "modular"
+        rel = "litecast/lite-glossary.json"
+        old_data = json.loads((ROOT / rel).read_text(encoding="utf-8"))
+        new_data = json.loads(json.dumps(old_data))
+        previous = list(new_data["LightGlossary"])
+        entry = dict(previous[-1], id="litecast-stage7-synthetic",
+                     title="آزمایش ایزوله", page_url="litecast/lite-CAST999998.html")
+        new_data["LightGlossary"].append(entry)
+        intended = json.dumps(new_data, ensure_ascii=False, indent=2)
+        for workspace in (legacy, modular):
+            workspace.mkdir()
+            (workspace / bridge.SANDBOX_MARKER).write_text(json.dumps({
+                "purpose": "dentcast-stage3-disposable-test",
+                "allow_real_publication": False,
+                "allow_remote_mutation": False,
+            }))
+            for path in stamp.VERSION_INPUTS:
+                relative = path.relative_to(ROOT)
+                destination = workspace / relative
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                if path.exists():
+                    shutil.copyfile(path, destination)
+            (workspace / "tools").mkdir()
+            shutil.copyfile(ROOT / "tools/stamp-version.py",
+                            workspace / "tools/stamp-version.py")
+            shutil.copyfile(ROOT / "service-worker.js",
+                            workspace / "service-worker.js")
+            (workspace / "index.html").write_text(
+                '<script src="dentcast-brain.json?v=old"></script>')
+            (workspace / "player.html").write_text(
+                '<script src="dentcast-brain.json?v=old"></script>')
+
+        # Canonical legacy file operation: append matching same-type entry.
+        (legacy / rel).write_text(intended, encoding="utf-8")
+        state = runner.begin({"has_text": True, "has_paper": False,
+                              "category": "litecast", "challenge": False},
+                             "real-paired-litecast", REV)
+        while runner.next_invocation(state)["step"]["step_id"] != "page:litecast-register":
+            state = runner.submit(state, fake_report(runner.next_invocation(state)))
+        inv = runner.next_invocation(state)
+        raw = (modular / rel).read_bytes()
+        intent = {"step_id": inv["step"]["step_id"],
+                  "input_digest": inv["input_digest"],
+                  "author_asserted_gates": inv["step"]["approval_gates"],
+                  "edits": [{"path": rel,
+                             "before_sha256": hashlib.sha256(raw).hexdigest(),
+                             "content_utf8": intended}]}
+        outcome = editor.apply_intent(state, intent, modular)
+        receipt = modular / "receipt.json"
+        receipt.write_text(json.dumps(outcome["artifact_receipt"]))
+        bridge.verify_local_receipt(
+            state, fake_report(inv, outcome["artifact_receipt_digest"]),
+            receipt, modular)
+        self.assertEqual(json.loads((modular / rel).read_text())["LightGlossary"][:-1],
+                         previous)
+        # Neither operator may affect the real source file.
+        self.assertEqual(json.loads((ROOT / rel).read_text()), old_data)
+
+        for workspace in (legacy, modular):
+            run = subprocess.run(
+                [sys.executable, str(workspace / "tools/stamp-version.py")],
+                cwd=workspace, capture_output=True, text=True, timeout=30)
+            self.assertEqual(run.returncode, 0, run.stderr)
+        # Receipts are local audit metadata, not site outputs; only compare the
+        # actual published artifact paths, using an independently hashed manifest.
+        receipt.unlink()
+        required = [rel, "service-worker.js", "index.html", "player.html"]
+        verdict = pairwise.compare(legacy, modular, required)
+        self.assertEqual(verdict["status"], "PAIRED_BYTES_EQUAL", verdict["issues"])
+        self.assertFalse(verdict["full_behavioral_parity_proven"])
+        for path in required:
+            self.assertEqual(verdict["legacy_manifest"][path]["sha256"],
+                             verdict["modular_manifest"][path]["sha256"])
 
     def test_real_legacy_phase_f_rejects_missing_page_and_wrong_title(self):
         # The legacy gate is the source of truth; don't fake a success receipt.
