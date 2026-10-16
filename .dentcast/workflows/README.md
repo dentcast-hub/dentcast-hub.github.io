@@ -1,16 +1,15 @@
-# DentCast Publishing — modular STAGING router
+# DentCast Publishing — modular LIVE router
 
-**STAGING_ONLY_NO_LIVE_PUBLISH — FEATURE BRANCH ONLY.** The original complete 2,598-line contract was preserved without changes at [README.legacy.md](README.legacy.md). The 12 exact verbatim source slices are documented in [modules/INDEX.md](modules/INDEX.md). This router is not authorized for real publishing, live page changes, deployment, admin calls or merge.
+**LIVE_MODULAR_PUBLISHING_ENABLED.** Real new-content publishing is authorized via the existing canonical workflow and its twelve verbatim source slices. The complete original contract is preserved at [README.legacy.md](README.legacy.md). No original approval, exception or mandatory validation is waived.
 
-## Always-load contract before routing
+## Always-load before routing
 
-Read your entire applicable legacy client rules (`CLAUDE.legacy.md` or `AGENTS.legacy.md`, including §§6–8, and archived Cursor rule if applicable), **all** of `.dentcast/workflows/agent-parity.md`, **all** of [modules/01-hard-rules.md](modules/01-hard-rules.md), and **all** of [modules/02-routing-intake.md](modules/02-routing-intake.md). Maintain original source precedence: original complete [README.legacy.md](README.legacy.md) > global agent rules > shared parity > client summaries. Do not drop an invariant to save context.
+Read the applicable COMPLETE original global client instructions (`CLAUDE.legacy.md` or `AGENTS.legacy.md`, including §§6–8, and archived Cursor rules), the complete `agent-parity.md`, complete [modules/01-hard-rules.md](modules/01-hard-rules.md), and complete [modules/02-routing-intake.md](modules/02-routing-intake.md). Original source precedence: [README.legacy.md](README.legacy.md) > original global rules > shared parity > Cursor summaries. If a required rule is missing from a slice, follow the legacy source rather than omitting it.
 
-## New-publication dispatch (SANDBOX only)
+## New-publication dispatch
 
-1. Resolve new publishing versus specialty work; identify has_text, has_paper, actual category and challenge decision without guessing. In particular paper-only is a distinct route.
-2. For synthetic inputs, compile a read-only ordered plan using `tools/dentcast_stage3_route.py`. Its `compiled_staging_requires_operator` status does NOT mean execution is permitted. Follow `tools/dentcast_stage3_orchestrator.py` and `tools/dentcast_stage6_handoff.py` for validated per-step task and receipt handoff.
-3. After the always-read 01/02, read the FULL text of each applicable slice immediately before that stage, in original order:
+1. Classify actual text, attached research paper, selected category, media, scientific citation basis and route using Phase 0/Phase A/B of module 02, including all user approval gates.
+2. Follow the original publishing workflow step by step, loading the FULL applicable source slice immediately before its step, in the original order:
    - `modules/03-litecast-and-page.md`
    - `modules/04-taxonomy-and-navigation.md`
    - `modules/05-semantic-linking.md`
@@ -21,14 +20,15 @@ Read your entire applicable legacy client rules (`CLAUDE.legacy.md` or `AGENTS.l
    - `modules/10-brain-and-pathways.md`
    - `modules/11-build-and-version.md`
    - `modules/12-english-notify-verify.md`
-4. Every canonical step, skip and human approval must be resolved explicitly. Never skip semantic analysis because a cloned page lacks links. Preserve last-position flat-brain append, LiteCast `.ir` isolation, Challenge secrecy, source-dependent DES, bilingual exemptions, original builder/stamper ordering, exact title/caption and final original Phase F.
-5. DES/Fidelity remains an **opaque original scientific subsystem** (unchanged prompt/engine `tools/des_fidelity_units.py`). Synthetic cross-client recovery may use `tools/dentcast_github_memory.py` and `tools/dentcast_fidelity_resume.py` with original input/output fingerprints, never private/licensed material in public Git.
-6. **Stop at the staging boundary:** no real content, production builders, external Drive/Admin/notifications, publication, push or main merge; no claimed complete behavioral parity without the seven Stage 9 external gates.
+3. All category exceptions, source-dependent DES/Fidelity model calls, founder approvals, semantic decisions, original builders, English mirror, notices, hash versioning and full Phase F remain mandatory. Use `README.legacy.md` to resolve any ambiguity, omission, dependency or stage-order conflict.
+4. Execute actual required publishing actions through available approved tools. Stop and clearly report a genuine missing capability or failed gate; **do not substitute staging mock responses or simulated receipts** for original scientific, external, or founder decisions.
+5. The `tools/dentcast_stage3_route.py`, `tools/dentcast_stage3_orchestrator.py`, `tools/dentcast_stage6_handoff.py` and GitHub memory tooling are OPTIONAL staging-grade helpers. They do not enforce live founder authorization, perform science or publish content on their own. For interrupted runs use only validated matching persistent receipts and state; when none exist, report that and do not pretend resume succeeded.
+6. Never place restricted/private material in public GitHub execution memory. User-provided public-safe publishing text/assets may be written only after applying the original user approval requirements. Do not merge arbitrary branches; never infer consent from hashes or Boolean assertions.
 
-## Other requests (unchanged specialty routes)
+## Specialty routes
 
-Existing-page English → `en-version.md`; ads → `ads.md`; ad stats → `spot-report.md`; glossary text drafting → `.claude/skills/glossary-writer/SKILL.md`; existing-page glossary cross-link → `cross-link.md`; new section → `new-section.md`; offline planning → `.dentcast/offline-publish.md`; external Fidelity → `external-fidelity.md`. Trigger selection remains in the preserved legacy client instructions.
+Existing-page English → `en-version.md`; ads → `ads.md`; ad stats → `spot-report.md`; glossary drafting → `.claude/skills/glossary-writer/SKILL.md`; cross-link → `cross-link.md`; new section → `new-section.md`; offline planning → `.dentcast/offline-publish.md`; external Fidelity → `external-fidelity.md`. Use original triggers from the archived global files.
 
-## Verification and rollback
+## Completion and rollback
 
-The source of truth for 12 exact slices and Stage 2/7 text parity is now **`README.legacy.md`**, not this router. The original Claude, AGENTS, Cursor and parity rules are archived alongside it. Use [modules/AGENT-ENTRYPOINT-STAGING.md](modules/AGENT-ENTRYPOINT-STAGING.md) and [modules/CROSS-AGENT-HANDOFF.md](modules/CROSS-AGENT-HANDOFF.md) for resume steps; success is staging-only. Rollback is a coordinated restoration of every legacy counterpart — never a partial renaming or a silent cutover.
+Real publication is complete ONLY after the original relevant approval gates, builder order and Phase F succeed. Preserve the exact `README.legacy.md` and `*.legacy.md` snapshots for transparent rollback. The existence of module extracts or checkpoint records alone never constitutes a successful publication.
