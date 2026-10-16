@@ -1,11 +1,11 @@
-# DentCast — Claude Code modular staging entrypoint
+# DentCast — Claude Code modular publishing entrypoint
 
-**STAGING_ONLY_NO_LIVE_PUBLISH** — this branch does not authorize real publishing, external uploads, main merge or production deployments.
+**LIVE_MODULAR_PUBLISHING_ENABLED** — new real publications use the modular route below. Follow all canonical founder approval gates, original DES/Fidelity requirements, and Phase F. Do not infer a specific approval from this general activation.
 
-The previous complete instructions are preserved **byte-for-byte** at `CLAUDE.legacy.md`. Before working on DentCast content, read `CLAUDE.legacy.md` and `.dentcast/workflows/agent-parity.md`; load the original global obligations in `AGENTS.legacy.md` §§6–8. Do not treat this short connector as a replacement for those rules.
+Read `CLAUDE.legacy.md` (complete original global rules), `AGENTS.legacy.md` §§6–8, and `.dentcast/workflows/agent-parity.md` before content changes.
 
-**New content → `.dentcast/workflows/README.md`** (the feature-branch modular router). Begin with all of `.dentcast/workflows/modules/01-hard-rules.md` and `02-routing-intake.md`; load the subsequent canonical source slices in route/dependency order. The full original 2,598-line contract is `.dentcast/workflows/README.legacy.md` and remains authoritative for all exceptions, approvals, scientific checks and final Phase F.
+**New content → `.dentcast/workflows/README.md`.** Load full `modules/01-hard-rules.md` and `02-routing-intake.md`, then each applicable stage in canonical order. The complete original `.dentcast/workflows/README.legacy.md` is authoritative where any extraction or route is ambiguous. Never skip, auto-approve or weaken any original rule.
 
-For English-only, ads, glossary drafting, cross-linking and other specialties use the original trigger destinations from `CLAUDE.legacy.md`; the modular route is for **new publication only**.
+Specialty routes (English-only, ads, glossary drafting, cross-linking etc.) retain the original triggers from `CLAUDE.legacy.md`.
 
-Only marked, isolated Sandbox tests using synthetic content and verified staging checkpoint/receipt tools are allowed on this branch. No real patient/scientific inputs to public Git memory, no silent founder approval, no live builder modifications. A green staging report cannot authorize an actual publish or router cutover.
+The staging compiler/orchestrator is a planning and checkpoint aid, **not** a substitute for the original real publishing steps. Perform real authoring, original scientific checks, builders and final verification with the original canonical instructions. GitHub execution memory may contain only public-safe material; checkpoint success is not publication. Do not merge or deploy unrelated changes without explicit authorization.
