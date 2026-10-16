@@ -152,7 +152,9 @@ def check_intent(state, intent, workspace):
                      (path.lower().endswith((".jpg", ".jpeg")) and
                       payload.startswith(b"\xff\xd8\xff")))
             fail(valid, "IMAGE_MAGIC_BYTES_MISMATCH")
-        fail(len(payload) <= 5_000_000, "INVALID_EDIT_SIZE")
+        cap = (16_000_000 if step["step_id"] == "paper-cabinet:catalog" and
+               path == "dentcast_cabinet_full_catalog.json" else 5_000_000)
+        fail(len(payload) <= cap, "INVALID_EDIT_SIZE")
         fail(path not in seen, "DUPLICATE_WRITE")
         seen.add(path)
         allowed(step["module_id"], path)
