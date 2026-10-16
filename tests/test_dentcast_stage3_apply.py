@@ -124,6 +124,23 @@ class Stage3ApplyTests(unittest.TestCase):
                                             "BUILDER_SOURCE_MUTATION_FORBIDDEN"):
                     patcher.check_intent(state, intent(rebuild, name), self.workspace)
 
+    def test_stage7_generated_index_ownership_fail_closed(self):
+        # Canonical builder outputs must not be manually overwritten by
+        # challenge/page modules before the builder runs.
+        with self.assertRaisesRegex(ValueError, "MODULE_WRITE_SCOPE_FORBIDDEN"):
+            patcher.allowed("challenge", "plus/challenges.json")
+        for path in ("index.html", "episodes.html", "glossary/index.html",
+                     "pillar/index.html", "pillar/fixed-pros/index.html"):
+            with self.subTest(path=path):
+                with self.assertRaisesRegex(
+                        ValueError, "PAGE_DRAFT_GENERATED_INDEX_FORBIDDEN"):
+                    patcher.check_intent(self.state,
+                                         self.intent(path=path, before=None),
+                                         self.workspace)
+        # An ordinary page draft remains writable in the marked sandbox.
+        self.assertEqual(len(patcher.check_intent(
+            self.state, self.intent(), self.workspace)), 1)
+
     def test_actual_edit_receipt_and_runner_advance(self):
         result = patcher.apply_intent(self.state, self.intent(), self.workspace)
         self.assertEqual(self.target.read_text(encoding="utf-8"), "<h1>After</h1>")
