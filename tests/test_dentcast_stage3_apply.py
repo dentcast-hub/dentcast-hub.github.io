@@ -191,7 +191,7 @@ class Stage3ApplyTests(unittest.TestCase):
     def test_cycle3_jpeg_extension_uses_same_binary_transport_as_jpg(self):
         import base64
         # Header-level validation only, NOT image-content or clinical proof.
-        blob = b"\\xff\\xd8\\xff" + b"test synthetic bytes"
+        blob = b"\xff\xd8\xff" + b"test synthetic bytes"
         intent = self.intent()
         intent["edits"] = [{
             "path": "clinical/synthetic.jpeg", "before_sha256": None,
