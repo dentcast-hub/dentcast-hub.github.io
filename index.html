@@ -1607,10 +1607,21 @@ body.dc-desktop-ui.dc-search-mode .dc-global-filter-box{
   max-height:unset !important; opacity:1 !important;
   visibility:visible !important; overflow:visible !important; margin:0 !important;
 }
-body.dc-desktop-ui.dc-search-mode #dcGlobalBox{
-  height:100% !important; display:flex !important;
-  flex-direction:column !important; overflow:hidden !important;
+body.dc-desktop-ui.dc-search-mode #dcSearchOverlayBody{
+  display:flex !important; flex-direction:column !important;
+  min-height:0 !important; overflow:hidden !important;
 }
+body.dc-desktop-ui.dc-search-mode #dcGlobalBox{
+  position:relative !important; inset:auto !important;
+  transform:none !important; width:100% !important;
+  height:auto !important; flex:1 1 0 !important; min-height:0 !important;
+  display:flex !important; flex-direction:column !important;
+  overflow:hidden !important; padding:0 !important;
+  background:transparent !important; box-shadow:none !important;
+  border:0 !important; margin:0 !important;
+}
+body.dc-desktop-ui.dc-search-mode #dcGlobalBox .dc-search-input,
+body.dc-desktop-ui.dc-search-mode #dcGlobalBox .dc-filter-list{flex-shrink:0;}
 body.dc-desktop-ui.dc-search-mode #dcResults{
   display:block !important; flex:1 1 auto !important;
   max-height:none !important; overflow:auto !important;
