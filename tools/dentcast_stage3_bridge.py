@@ -110,6 +110,22 @@ def prepare_task(state, source_root=ROOT):
     }
 
 
+def _artifact_target(root, name):
+    """Reject noncanonical file identities and all symlink ancestors."""
+    _need(isinstance(name, str) and bool(name) and "\x00" not in name
+          and len(name) < 512, "INVALID_ARTIFACT_PATH")
+    relative = Path(name)
+    _need(not relative.is_absolute() and relative.as_posix() == name
+          and not any(part in (".", "..") for part in relative.parts),
+          "ARTIFACT_PATH_TRAVERSAL")
+    target = root / relative
+    _need(not target.is_symlink() and not any(
+        parent.is_symlink() for parent in target.parents
+        if parent != root and parent.is_relative_to(root)
+    ), "ARTIFACT_SYMLINK_FORBIDDEN")
+    return target
+
+
 def verify_local_receipt(state, report, receipt_path, workspace):
     """Independently compare local artifact bytes with an operator receipt.
 
@@ -150,16 +166,10 @@ def verify_local_receipt(state, report, receipt_path, workspace):
         _need(isinstance(item, dict) and set(item) == {"path", "sha256"},
               "INVALID_ARTIFACT_ENTRY")
         name, sha = item["path"], item["sha256"]
-        _need(isinstance(name, str) and bool(name) and "\x00" not in name
-              and _is_digest(sha), "INVALID_ARTIFACT_IDENTITY")
-        relative = Path(name)
-        _need(not relative.is_absolute() and
-              not any(part in (".", "..") for part in relative.parts),
-              "ARTIFACT_PATH_TRAVERSAL")
+        _need(_is_digest(sha), "INVALID_ARTIFACT_IDENTITY")
+        target = _artifact_target(root, name)
         _need(name not in seen, "DUPLICATE_ARTIFACT")
         seen.add(name)
-        target = root / relative
-        _need(not target.is_symlink(), "ARTIFACT_SYMLINK_FORBIDDEN")
         actual = target.resolve(strict=True)
         _need(actual.is_relative_to(root) and actual.is_file(),
               "ARTIFACT_OUTSIDE_SANDBOX")
@@ -186,12 +196,8 @@ def attest_sample_receipt(state, workspace, relative_paths):
     _need(task is not None, "NO_PENDING_STEP")
     artifacts = []
     for name in relative_paths:
-        candidate = Path(name)
-        _need(not candidate.is_absolute() and ".." not in candidate.parts,
-              "ARTIFACT_PATH_TRAVERSAL")
-        target = root / candidate
-        _need(target.is_file() and not target.is_symlink()
-              and target.resolve(strict=True).is_relative_to(root),
+        target = _artifact_target(root, name)
+        _need(target.is_file() and target.resolve(strict=True).is_relative_to(root),
               "INVALID_ARTIFACT_PATH")
         artifacts.append({"path": name, "sha256": _file_hash(target)})
     return {

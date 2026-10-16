@@ -188,6 +188,41 @@ class Stage3ApplyTests(unittest.TestCase):
         self.assertTrue(updated["history"][-1]["local_artifact_integrity_verified"])
         self.assertFalse(updated["real_publish_completed"])
 
+    def test_cycle2_symlinked_ancestor_cannot_launder_receipt(self):
+        result = patcher.apply_intent(self.state, self.intent(), self.workspace)
+        alias = self.workspace / "clinical" / "alias"
+        alias.symlink_to(self.workspace / "clinical", target_is_directory=True)
+        forged = json.loads(json.dumps(result["artifact_receipt"]))
+        forged["artifacts"][0]["path"] = "clinical/alias/insight-test.html"
+        receipt = self.workspace / "alias-receipt.json"
+        receipt.write_text(json.dumps(forged), encoding="utf-8")
+        fake_report = report(self.inv, bridge.handlers.hash_public(forged))
+        with self.assertRaisesRegex(ValueError, "ARTIFACT_SYMLINK_FORBIDDEN"):
+            bridge.verify_local_receipt(self.state, fake_report, receipt,
+                                        self.workspace)
+        with self.assertRaisesRegex(ValueError, "ARTIFACT_SYMLINK_FORBIDDEN"):
+            bridge.attest_sample_receipt(
+                self.state, self.workspace,
+                ["clinical/alias/insight-test.html"])
+
+    def test_cycle2_noncanonical_receipt_cannot_duplicate_artifacts(self):
+        result = patcher.apply_intent(self.state, self.intent(), self.workspace)
+        forged = json.loads(json.dumps(result["artifact_receipt"]))
+        forged["artifacts"].append({
+            "path": "clinical//insight-test.html",
+            "sha256": forged["artifacts"][0]["sha256"],
+        })
+        receipt = self.workspace / "duplicate-receipt.json"
+        receipt.write_text(json.dumps(forged), encoding="utf-8")
+        fake_report = report(self.inv, bridge.handlers.hash_public(forged))
+        with self.assertRaisesRegex(ValueError, "ARTIFACT_PATH_TRAVERSAL"):
+            bridge.verify_local_receipt(self.state, fake_report, receipt,
+                                        self.workspace)
+        with self.assertRaisesRegex(ValueError, "ARTIFACT_PATH_TRAVERSAL"):
+            bridge.attest_sample_receipt(
+                self.state, self.workspace,
+                ["clinical//insight-test.html"])
+
     def test_phone_friendly_cli_task_apply_confirm_round_trip(self):
         state_path = self.workspace / "checkpoint.json"
         intent_path = self.workspace / "intent.json"
