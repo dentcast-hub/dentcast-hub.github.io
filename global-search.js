@@ -54,7 +54,10 @@ const TYPE_MAP = {
   async function loadDB() {
     try {
       const res = await fetch("/dentcast-brain.json", { cache: "no-store" });
-      DB = await res.json();
+      if (!res.ok) throw new Error("Search index HTTP " + res.status);
+      const data = await res.json();
+      if (!Array.isArray(data)) throw new Error("Invalid search index");
+      DB = data;
       /* اگه کاربر قبل از لود دیتابیس سرچ کرده بود (مثلاً از URL) */
       if (searchInput.value.trim()) {
         performSearch(searchInput.value.trim());
@@ -66,6 +69,8 @@ const TYPE_MAP = {
       }
     } catch (err) {
       console.error("Error loading dentcast-brain.json", err);
+      resultsBox.style.display = "block";
+      resultsBox.textContent = "بارگذاری اطلاعات جست‌وجو ناموفق بود. صفحه را دوباره بارگذاری کنید.";
     }
   }
 
