@@ -149,6 +149,8 @@ def state_check(state, manifest):
             "INVALID_COMPLETED_STEPS")
     require(state["pending_step"] is None or safe_atom(state["pending_step"]),
             "INVALID_PENDING_STEP")
+    require((state["status"] == "paused") == (state["pending_step"] is not None),
+            "RUN_PAUSE_STATE_MISMATCH")
     return True
 
 
@@ -261,6 +263,7 @@ class RemoteMemory:
         previous = None
         completed = []
         status = "active"
+        replay_pending = None
         for seq, h in enumerate(state["event_digests"], start=1):
             event = self.read_json(head, self.event_path(run_id, seq, h))
             event_check(event, manifest)
@@ -276,10 +279,15 @@ class RemoteMemory:
                         event["status"] == "completed_staging", "DUPLICATE_COMPLETE")
                 completed.append(event["step_id"])
             if event["kind"] == "step_paused":
+                require(status == "active", "DUPLICATE_PAUSE")
                 status = "paused"
+                replay_pending = event["step_id"]
             elif event["kind"] == "step_recovered":
-                require(status == "paused", "RECOVER_WITHOUT_PAUSE")
+                require(status == "paused" and
+                        event["step_id"] == replay_pending,
+                        "RECOVER_WITHOUT_MATCHING_PAUSE")
                 status = "active"
+                replay_pending = None
             elif event["kind"] == "staging_finished":
                 status = "finished_staging"
             for art in event["artifact_digests"]:
@@ -289,11 +297,17 @@ class RemoteMemory:
                 h_receipt = event["receipt_digest"]
                 require(safe_digest(h_receipt), "RECEIPT_HASH_MISSING")
                 obj = self.read_json(head, folder + "/receipts/" + h_receipt + ".json")
-                require(digest(obj) == h_receipt, "RECEIPT_REPLAY_INTEGRITY_FAILURE")
+                require(digest(obj) == h_receipt and
+                        obj.get("input_digest") == event["input_digest"] and
+                        obj.get("output_digest") == event["output_digest"] and
+                        obj.get("source_revision") == manifest["source_revision"],
+                        "RECEIPT_REPLAY_INTEGRITY_FAILURE")
             previous = h
             events.append(event)
         require(state["completed_steps"] == completed and
-                state["status"] == status, "STATE_EVENT_REPLAY_DIVERGENCE")
+                state["status"] == status and
+                state["pending_step"] == replay_pending,
+                "STATE_EVENT_REPLAY_DIVERGENCE")
         return {"head": head, "manifest": manifest, "state": state,
                 "events": events}
 
@@ -367,6 +381,27 @@ class RemoteMemory:
         actor_check(actor)
         snap = self.snapshot(run_id)
         old, manifest, head = snap["state"], snap["manifest"], snap["head"]
+        # Retry after lost GitHub acknowledgement must NOT launch or record the
+        # same verified scientific check twice. Replay old immutable receipt.
+        # The original actor remains authoritative; a new caller cannot
+        # impersonate it by submitting a duplicate.
+        if kind in {"step_completed", "fidelity_checkpoint"}:
+            require(safe_digest(input_digest) and safe_digest(output_digest),
+                    "VERIFIED_STEP_DIGEST_REQUIRED")
+            existing = [ev for ev in snap["events"]
+                        if ev["kind"] == kind and ev["step_id"] == step_id]
+            if existing:
+                ev = existing[-1]
+                if (len(existing) == 1 and
+                    ev["input_digest"] == input_digest and
+                    ev["output_digest"] == output_digest and
+                    ev["receipt_digest"] == receipt_digest and
+                    ev["artifact_digests"] == list(artifact_digests) and
+                    ev["gate"] == gate):
+                    return {"commit": head, "state": old,
+                            "event_digest": digest(ev),
+                            "idempotent_replay": True}
+                raise Conflict("COMPLETED_STEP_ALREADY_EXISTS_WITH_DIFFERENT_OUTPUT")
         require(old["status"] != "finished_staging", "RUN_ALREADY_FINISHED")
         if old["status"] == "paused":
             require(kind == "step_recovered", "PAUSED_REQUIRES_EXPLICIT_RECOVERY")
@@ -427,6 +462,10 @@ class RemoteMemory:
                     safe_digest(public_receipt["input_digest"]) and
                     safe_digest(public_receipt["output_digest"]),
                     "UNVERIFIED_PUBLIC_RECEIPT")
+            if kind in {"step_completed", "fidelity_checkpoint"}:
+                require(public_receipt["input_digest"] == input_digest and
+                        public_receipt["output_digest"] == output_digest,
+                        "RECEIPT_NOT_BOUND_TO_EVENT_INPUT_AND_OUTPUT")
             hr = digest(public_receipt)
             require(receipt_digest == hr, "RECEIPT_DIGEST_MISMATCH")
             path = folder + "/receipts/" + hr + ".json"
