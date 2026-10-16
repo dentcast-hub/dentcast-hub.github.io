@@ -34,7 +34,7 @@ handlers = load("stage3_exe_handlers", "dentcast_stage3_modules.py")
 # publication router, scientific engine, workflow, CI, settings, or secrets.
 # These are writable *staging* paths; canonical rules still decide eligibility.
 ALLOWED = {
-    "page": ("*.html", "*.webp", "*.jpg", "*.png"),
+    "page": ("*.html", "*.webp", "*.jpg", "*.png", "litecast/lite-glossary.json"),
     "navigation": ("*.html",),
     "semantic-links": ("*.html",),
     "paper-cabinet": ("dentcast_cabinet_full_catalog.json", "*.html"),
@@ -128,6 +128,13 @@ def check_intent(state, intent, workspace):
         fail(path not in seen, "DUPLICATE_WRITE")
         seen.add(path)
         allowed(step["module_id"], path)
+        if step["module_id"] == "page":
+            if step["step_id"] == "page:litecast-register":
+                fail(path == "litecast/lite-glossary.json",
+                     "LITECAST_REGISTRATION_MUST_EDIT_OWN_JSON_ONLY")
+            else:
+                fail(path != "litecast/lite-glossary.json",
+                     "LITECAST_INDEX_ONLY_IN_REGISTER_STEP")
         if step["module_id"] == "paper-cabinet":
             fail(step["step_id"] == "paper-cabinet:credit" or
                  path == "dentcast_cabinet_full_catalog.json",
