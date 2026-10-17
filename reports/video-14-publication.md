@@ -110,3 +110,8 @@ Exactly one related section, two canonical navigation capsules inherited intact:
 ## C.2.6
 Executed and checked; see committed files and GitHub Actions log.
 
+Meta audit: canonical, fa hreflang, OG/Twitter title/description, VideoObject dates, media and toggle all OK. Publication date: 2026-10-17
+
+## C.3
+Executed and checked; see committed files and GitHub Actions log.
+
