@@ -115,3 +115,8 @@ Meta audit: canonical, fa hreflang, OG/Twitter title/description, VideoObject da
 ## C.3
 Executed and checked; see committed files and GitHub Actions log.
 
+Template SHA256 before = after = ec14322eb5ece313fe0bfa76d528fef21e731e525b5f11e57ac6df325bd7040b
+
+## C.4
+Executed and checked; see committed files and GitHub Actions log.
+
