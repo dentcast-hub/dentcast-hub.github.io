@@ -173,3 +173,6 @@ DES SOURCE: own caption, FULL_TEXT, COMMENTARY, 12/E, provisional=false. Exact q
 ## C.4.13
 Executed and checked; see committed files and GitHub Actions log.
 
+## C.4.14
+Ordinary video, not a challenge.
+

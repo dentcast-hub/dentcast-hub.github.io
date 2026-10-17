@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 120
-- Updated at (UTC): 2026-10-17T10:05:13+00:00
+- Generation: 123
+- Updated at (UTC): 2026-10-17T10:05:25+00:00
 - Content: "dentcast-plus/video-14"
 - Status: in_progress
-- Next canonical step: "C.4.14"
+- Next canonical step: "C.5.0"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 120,
-  "previous_sha256": "0077216cbaf51f87a4b4227c7544092fccef83e5510457f5290d2d5ae5680c28",
+  "generation": 123,
+  "previous_sha256": "c3cf4a39269f8966e6cdd9a123f789e8eb0d37c41d3ca87b218fbdb11dc2e98e",
   "publication": {
     "blocker": null,
     "category": "dentcast_plus",
@@ -398,8 +398,8 @@ Its compact snapshot is a verification baseline, not current Git status.
         "evidence": [],
         "id": "C.4.14",
         "module": "09-challenge.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "Ordinary video, not a challenge.",
+        "status": "skipped"
       },
       {
         "evidence": [],
@@ -496,9 +496,7 @@ Its compact snapshot is a verification baseline, not current Git status.
   },
   "reconciliation": {
     "note": "Reviewed actual scoped work, current handoff, and previous remote delivery",
-    "observed_changes": [
-      "HEAD_CHANGED_REVIEW_REQUIRED"
-    ]
+    "observed_changes": []
   },
   "schema": "publish-handoff-v2",
   "snapshot": {
@@ -527,7 +525,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "reports/video-14-publication.md": {
         "executable": false,
         "kind": "file",
-        "sha256": "d132ee2ff684c47554b40eb9f6a5354f3b1d773950a84202d97c9237ee5e576d"
+        "sha256": "ad079f374dd01f79ffe09b43171b0cc5137a5ec56ebbf8475a8ce7cdae7f406c"
       }
     },
     "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
@@ -559,7 +557,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "b6170660c69a9602a47b9d81fc1df944bebaddfe",
-  "updated_at": "2026-10-17T10:05:13+00:00"
+  "updated_at": "2026-10-17T10:05:25+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
