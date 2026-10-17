@@ -95,3 +95,6 @@ Locked template dentcast-plus/video-13.html SHA256 ec14322eb5ece313fe0bfa76d528f
 ## C.2
 Executed and checked; see committed files and GitHub Actions log.
 
+## C.0.5
+LiteCast-only internal linking; specialist steps apply instead.
+
