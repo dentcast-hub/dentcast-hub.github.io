@@ -41,3 +41,6 @@ AGENTS.md SHA256 5d405a7a6161e79b487058ea3c15c1f5a011eaabe29c4b6c96c2fa2fb8423aa
 ## rules
 Active workflow sources loaded, category exceptions and user override reviewed; exact source fingerprints below.
 
+## 0
+Text and media supplied, no attached research paper; normal video publish. Preflight scanned every remote ref for fixed handoff: none found.
+
