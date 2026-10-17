@@ -68,3 +68,6 @@ No accompanying paper file; image is video-host metadata.
 ## B.4.8
 COMMENTARY: own clinical case reasoning, no retrievable paper cited; source_text is exact caption, FULL_TEXT.
 
+## B.4.9
+Ordinary instructional video, not challenge; explicit user no-quiz instruction.
+
