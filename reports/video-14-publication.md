@@ -101,3 +101,6 @@ LiteCast-only internal linking; specialist steps apply instead.
 ## C.0.6
 LiteCast-only internal linking; specialist steps apply instead.
 
+## C.2.4
+Unambiguous subject: fixed-pros / post-and-core. No taxonomy changes.
+
