@@ -218,3 +218,8 @@ Executed and checked; see committed files and GitHub Actions log.
 ## C.5.5
 Executed and checked; see committed files and GitHub Actions log.
 
+Semantic placement: post-and-core after video-13 (post fabrication/cementation -> fit troubleshooting); failure-troubleshooting after insight-54 (recurrent crown loss -> unstable post/core). milestone=false in both. No third pathway: fixed-pros is deliberately the crown/preparation track, separate from its post/core sibling.
+
+## C.5.6
+Executed and checked; see committed files and GitHub Actions log.
+
