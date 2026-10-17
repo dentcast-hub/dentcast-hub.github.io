@@ -45,7 +45,7 @@ jobs:
                           assert norm(h1)==norm(TITLE), ("title",h1)
                           region=re.search(r'<div class="text-box">([\s\S]*?)</div>',doc).group(1)
                           paragraphs=re.findall(r"<p(?:\s[^>]*)?>([\s\S]*?)</p>",region)
-                          assert norm("\n\n".join(text(p) for p in paragraphs))==norm(CAPTION),"caption"
+                          assert norm("\n\n".join(text(p) for p in paragraphs))==norm(CAPTION),("caption",norm("\\n\\n".join(text(p) for p in paragraphs))[-240:],norm(CAPTION)[-240:])
                           assert "M9a0Oxm7ve/origin_config.json" in doc
                           assert "youtube.com/embed/uRwMJoWCEdw" in doc
                           assert 'href="en/video-14.html"' in doc
