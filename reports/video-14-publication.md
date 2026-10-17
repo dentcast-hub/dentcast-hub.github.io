@@ -250,3 +250,126 @@ Executed and checked; see committed files and GitHub Actions log.
 ## E
 Exactly one dc-notify marker; standard main push notification workflow owns delivery.
 
+Existing CRLF file formats preserved for focused diffs: dentcast-brain.json, dentcast-hashtag-reference.json, dentcast-plus/index.html, glossary/index.html, pillar/bonding/index.html, pillar/bonding/structure.json, pillar/ceramics/index.html, pillar/ceramics/structure.json, pillar/digital/index.html, pillar/digital/structure.json, pillar/esthetic/index.html, pillar/esthetic/structure.json, pillar/fixed-pros/index.html, pillar/fixed-pros/structure.json, pillar/implantology/index.html, pillar/implantology/structure.json, pillar/index.html, pillar/occlusion/index.html, pillar/occlusion/structure.json, pillar/operative/index.html, pillar/operative/structure.json, pillar/practice-infrastructure/index.html, pillar/practice-infrastructure/structure.json, pillar/removable-pros/index.html, pillar/removable-pros/structure.json, pillar/structure.json, pillar/treatment-planning/index.html, pillar/treatment-planning/structure.json, plus/des-scores.json, plus/pathways.json, up-board/index.json
+
+Final changes reviewed against main. Temporary GitHub execution script and workflow are removed from the release tree after guarded handoff cleanup.
+
+- dentcast-brain.json
+- dentcast-hashtag-reference.json
+- dentcast-plus/en/video-14.html
+- dentcast-plus/index.html
+- dentcast-plus/video-14.html
+- glossary/index.html
+- index.html
+- pillar/bonding/index.html
+- pillar/bonding/structure.json
+- pillar/ceramics/index.html
+- pillar/ceramics/structure.json
+- pillar/digital/index.html
+- pillar/digital/structure.json
+- pillar/esthetic/index.html
+- pillar/esthetic/structure.json
+- pillar/fixed-pros/index.html
+- pillar/fixed-pros/structure.json
+- pillar/implantology/index.html
+- pillar/implantology/structure.json
+- pillar/index.html
+- pillar/occlusion/index.html
+- pillar/occlusion/structure.json
+- pillar/operative/index.html
+- pillar/operative/structure.json
+- pillar/practice-infrastructure/index.html
+- pillar/practice-infrastructure/structure.json
+- pillar/removable-pros/index.html
+- pillar/removable-pros/structure.json
+- pillar/structure.json
+- pillar/treatment-planning/index.html
+- pillar/treatment-planning/structure.json
+- player.html
+- plus/content-index.json
+- plus/des-scores.json
+- plus/pathways.json
+- reports/video-14-publication.md
+- service-worker.js
+- sitemap.xml
+- up-board/index.json
+
+Exact mechanical gate: `python3 tools/verify_publish.py dentcast-plus/video-14 --expect-title <confirmed author title> --expect-caption <exact original caption>`
+
+61 passed, 0 warned, 0 failed  — publish is COMPLETE
+
+```text
+
+── verify_publish: dentcast-plus/video-14 ──────────────────────────────
+  ok  5 brain              entry is the last element (559/559)
+  ok  5 brain              key set + order identical to ?
+  ok  5 brain              id None is unique within dentcast_plus
+  ok  2.4 pillar           subtopic key present
+  ok  2.4 pillar           fixed-pros / post-and-core — both live in PILLARS
+  ok  2 page               dentcast-plus/video-14.html (26,515 bytes)
+  ok  GA4                  deferred GA4 snippet present exactly once
+  ok  2 identity           canonical = https://dentcast.org/dentcast-plus/video-14.html
+  ok  16 verbatim          brain title is codepoint-identical to the user's text
+  ok  16 verbatim          brain caption is codepoint-identical to the user's text
+  ok  16 title             <h1> is codepoint-identical to the brain title
+  ok  16 title             <title> carries the exact title
+  ok  16 title             og:title carries the exact title
+  ok  16 title             twitter:title carries the exact title
+  ok  16 caption           meta description is codepoint-identical to the brain caption
+  ok  16 caption           og:description present
+  ok  16 caption           twitter:description present
+  ok  16 caption           og and twitter descriptions agree
+  ok  3 dates              datePublished == dateModified (2026-10-17)
+  ok  2 body               prose paragraph precedes the first list (Spot card has an interior boundary)
+  ok  2.5 related          exactly one «کاوش بیشتر» section
+  ok  9 cap                5/5 links in «کاوش بیشتر»
+  ok  2.5 related          uses dc-related-* classes only
+  ok  2.5 related          فهرست موضوعی → /pillar/fixed-pros/
+  ok  4.9 related          no self-link
+  ok  4.12 no-page-schema  page carries no FAQPage/flashcards JSON-LD
+ --  4.12 quiz            dentcast_plus: flashcards/quiz are optional — no FAQ authored
+ --  4.11 cards           dentcast_plus: flashcards/quiz are optional — no cards authored
+  ok  4.13 DES             record carries only scored_at + sources (+ fidelity)
+  ok  4.13 DES             src0 carries des_version
+  ok  4.13 DES             src0 is scored from an abstract or a full text
+  ok  4.13 DES             src0 arithmetic checks out (12)
+  ok  4.13 DES             src0 band E matches its score
+  ok  4.13 DES             src0 commentary is band E in 5–19
+  ok  4.13 DES             src0 commentary nulls are correct
+  ok  4.13 DES             src0 all 2 evidence quotes are verbatim
+  ok  D en-mirror          dentcast-plus/en/video-14.html exists
+  ok  D en-mirror          en page has the English chrome attributes
+  ok  D en-mirror          en page carries GA4 once
+  ok  D en-mirror          en page is self-canonical
+  ok  D en-mirror          og:locale = en_US
+  ok  D en-mirror          inLanguage = en
+  ok  D en-mirror          en page carries no specialist capsules
+  ok  E notify             en mirror carries no notify marker
+  ok  D en-noindex         en mirror is noindexed
+  ok  D en-noindex         en mirror carries no hreflang
+  ok  D toggle             fa toggle → en/video-14.html
+  ok  D toggle             en toggle → ../video-14.html
+  ok  D en-mirror          structure-faithful translation (0 list items on both sides)
+  ok  D hreflang           3-line hreflang block present (no en — mirrors are noindexed)
+  ok  E notify             publish marker present exactly once
+  ok  2.6 landing          dentcast-plus/index.html links to the page
+  ok  6 pulse              exactly one Pulse line links to the page
+  ok  17 sweep             homepage rail card title matches the brain title
+  ok  8 sitemap            page is in sitemap.xml
+  ok  8 sitemap            en mirror stays out of sitemap.xml (noindexed)
+  ok  8 pillar             listed on /pillar/fixed-pros/index.html
+  ok  8 pillar-structure   in /pillar/fixed-pros/structure.json (premium subtopic view)
+  ok  8 pillar-structure   subtopic 'post-and-core' exists in /pillar/fixed-pros/structure.json
+  ok  8 plus-index         in plus/content-index.json
+ --  8 flashcards         dentcast_plus: flashcards/quiz are optional — no cards authored
+  ok  7 version            content version f0bde1d279 matches the stamp
+  ok  7 version            index.html ?v= is current
+  ok  7 version            player.html ?v= is current
+────────────────────────────────────────────────────
+61 passed, 0 warned, 0 failed  — publish is COMPLETE
+
+```
+
+## G
+Final report with actual Phase F output, scoped changed files, category exceptions and branch delivery receipts.
+

@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 156
-- Updated at (UTC): 2026-10-17T10:07:16+00:00
+- Generation: 162
+- Updated at (UTC): 2026-10-17T10:07:22+00:00
 - Content: "dentcast-plus/video-14"
 - Status: in_progress
-- Next canonical step: "G"
+- Next canonical step: null
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 156,
-  "previous_sha256": "8d08c3db0ba2c3f30d40a74b3cd0b0120cd13f5b636e1c2eefca8b518eecdaf5",
+  "generation": 162,
+  "previous_sha256": "e6e37cdcb3d0c646c04da40c5e89da07599a040e6ae1c121ed0d2bda2bfca68d",
   "publication": {
     "blocker": null,
     "category": "dentcast_plus",
@@ -39,7 +39,16 @@ Its compact snapshot is a verification baseline, not current Git status.
           "quiz": "No quiz or FAQ: explicit user instruction"
         }
       ],
-      "delivery": [],
+      "delivery": [
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/39023657827",
+            "phase_f:28d41c3c3b5749d4deb4b61f9d5e65cb9e6d540f3b753e1b5ec19ded9a565cca",
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/tree/codex/publish-video-14"
+          ],
+          "scope": "Verified publication files and full checkpoint history delivered on authorized working branch for main release"
+        }
+      ],
       "inputs": [
         {
           "caption": "\u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 \u062a\u0648\u06cc \u062f\u0646\u062f\u0648\u0646 \u0644\u0642 \u0645\u06cc\u200c\u062e\u0648\u0631\u0647 \u0648 \u062b\u0628\u0627\u062a \u0646\u062f\u0627\u0631\u0647\u060c \u062d\u0627\u0644\u0627 \u0686\u06cc\u200c\u06a9\u0627\u0631 \u06a9\u0646\u06cc\u0645\u061f\n\n\u0648\u0642\u062a\u06cc \u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 \u0631\u0648\u06cc \u062f\u0646\u062f\u0648\u0646 \u062b\u0628\u0627\u062a \u0646\u062f\u0627\u0631\u0647\u060c \u06cc\u06a9\u06cc \u0627\u0632 \u0627\u0648\u0644\u06cc\u0646 \u0686\u06cc\u0632\u0627\u06cc\u06cc \u06a9\u0647 \u0628\u0647 \u0630\u0647\u0646\u0645 \u0645\u06cc\u200c\u0631\u0633\u0647 \u06cc\u0647 \u0646\u0642\u0637\u0647 \u062a\u06cc\u0632\u0647\u060c \u0686\u0647 \u0631\u0648\u06cc \u062f\u0646\u062f\u0648\u0646 \u0686\u0647 \u0631\u0648\u06cc \u062e\u0648\u062f \u067e\u0633\u062a \u0648 \u06a9\u0648\u0631\u060c \u06a9\u0647 \u0646\u0645\u06cc\u200c\u0630\u0627\u0631\u0647 \u067e\u0633\u062a \u06a9\u0627\u0645\u0644 \u0628\u0646\u0634\u06cc\u0646\u0647.\n\n\u0645\u062b\u0644\u0627\u064b \u06cc\u0647 \u0642\u0633\u0645\u062a\u06cc \u0627\u0632 \u062f\u0646\u062f\u0648\u0646 \u062a\u06cc\u0632 \u0628\u0648\u062f\u0647 \u0648 \u0645\u0646 \u0628\u0627 \u062f\u0648\u0631\u0627\u0644\u06cc \u0631\u0648\u0634 \u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 \u0633\u0627\u062e\u062a\u0645. \u0627\u0648\u0644\u0634 \u06a9\u06cc\u067e \u0628\u0648\u062f\u0647 \u0648 \u062b\u0628\u0627\u062a \u062f\u0627\u0634\u062a\u0647\u060c \u0648\u0644\u06cc \u0628\u0639\u062f \u0627\u0632 \u0631\u06cc\u062e\u062a\u06af\u06cc \u0647\u0645\u0648\u0646 \u0646\u0642\u0637\u0647 \u062a\u06cc\u0632 \u0645\u0627\u0646\u0639 \u0646\u0634\u0633\u062a\u0646 \u06a9\u0627\u0645\u0644 \u0634\u062f\u0647. \u06cc\u0627 \u0646\u0648\u06a9 \u067e\u0633\u062a \u062e\u06cc\u0644\u06cc \u062a\u06cc\u0632 \u0628\u0648\u062f\u0647 \u0648 \u0628\u0639\u062f \u0627\u0632 \u062a\u0628\u062f\u06cc\u0644 \u0634\u062f\u0646 \u0628\u0647 \u0641\u0644\u0632\u060c \u0646\u062f\u0648\u0644\u06cc \u06cc\u0627 \u0636\u0627\u06cc\u0639\u0647\u200c\u0627\u06cc \u0631\u0648\u0634 \u0627\u06cc\u062c\u0627\u062f \u0634\u062f\u0647 \u0648 \u0646\u0645\u06cc\u200c\u0630\u0627\u0631\u0647 \u0628\u0634\u06cc\u0646\u0647.\n\n\u0628\u0631\u0627\u06cc \u0647\u0645\u06cc\u0646 \u062a\u0648\u06cc \u0647\u0645\u0686\u06cc\u0646 \u062d\u0627\u0644\u062a\u06cc \u0627\u0648\u0644 \u0628\u0631\u0645\u06cc\u200c\u06af\u0631\u062f\u0645 \u062c\u0627\u06cc \u062a\u06cc\u0632 \u0631\u0648 \u0628\u0631\u0631\u0633\u06cc \u0645\u06cc\u200c\u06a9\u0646\u0645 \u0648 \u0627\u06af\u0647 \u0644\u0627\u0632\u0645 \u0628\u0648\u062f \u0627\u0635\u0644\u0627\u062d\u0634 \u0645\u06cc\u200c\u06a9\u0646\u0645. \u062e\u06cc\u0644\u06cc \u0648\u0642\u062a\u0627 \u0647\u0645\u06cc\u0646 \u0645\u0634\u06a9\u0644 \u0631\u0648 \u062d\u0644 \u0645\u06cc\u200c\u06a9\u0646\u0647\u060c \u0627\u0645\u0627 \u062a\u0648 \u0627\u06cc\u0646 \u0645\u0648\u0631\u062f \u062d\u0644 \u0646\u0634\u062f.\n\n\u067e\u0633 \u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 \u0631\u0648 \u0627\u0632 \u0627\u0648\u0644 \u062a\u06a9\u0631\u0627\u0631 \u06a9\u0631\u062f\u0645. \u0686\u0648\u0646 \u0628\u0627 \u0627\u06cc\u0646 \u0639\u062f\u0645 \u062b\u0628\u0627\u062a \u0646\u0645\u06cc\u200c\u062a\u0648\u0646\u06cc \u0631\u0648\u06a9\u0634 \u0631\u0648 \u0631\u0648\u0634 \u0628\u0630\u0627\u0631\u06cc. \u0648\u0642\u062a\u06cc \u0631\u0648\u06a9\u0634 \u0648\u0627\u0631\u062f \u0633\u06cc\u06a9\u0644 \u062c\u0648\u06cc\u062f\u0646 \u0628\u0634\u0647 \u0648 \u0646\u06cc\u0631\u0648\u0647\u0627\u06cc \u062c\u0648\u06cc\u062f\u0646 \u0628\u0647\u0634 \u0648\u0627\u0631\u062f \u0628\u0634\u0647\u060c \u0627\u06af\u0647 \u062b\u0628\u0627\u062a \u0646\u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u06cc\u0645\u060c \u0627\u06cc\u0646 \u0646\u06cc\u0631\u0648\u0647\u0627 \u0628\u0647 \u0627\u06cc\u0646\u062a\u0631\u0641\u06cc\u0633 \u0633\u0645\u0627\u0646 \u0648 \u067e\u0633\u062a \u0645\u0646\u062a\u0642\u0644 \u0645\u06cc\u0634\u0647\u060c \u0646\u06cc\u0631\u0648\u06cc \u0628\u0631\u0634\u06cc \u0627\u06cc\u062c\u0627\u062f \u0645\u06cc\u06a9\u0646\u0647 \u0648 \u062f\u0631 \u0646\u0647\u0627\u06cc\u062a \u0631\u0648\u06a9\u0634 \u0647\u0645\u0631\u0627\u0647 \u0628\u0627 \u0633\u0645\u0627\u0646 \u0627\u0632 \u062f\u0646\u062f\u0648\u0646 \u062f\u0631 \u0645\u06cc\u0627\u062f.",
@@ -59,6 +68,23 @@ Its compact snapshot is a verification baseline, not current Git status.
           "kind": "phase_f",
           "output_sha256": "d5263504768e0654a19b638a1684072f2783f6af861f2f91f6bf0b85d0053419",
           "recorded_at": "2026-10-17T10:06:12+00:00",
+          "summary": "61 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+        },
+        {
+          "evidence": [
+            "reports/video-14-publication.md"
+          ],
+          "kind": "release_review",
+          "result": "Reviewed scoped content, preserved source file line endings, reran version stamper after all hashed-source writes"
+        },
+        {
+          "content_id": "dentcast-plus/video-14",
+          "exit_code": 0,
+          "expected_caption": "\u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 \u062a\u0648\u06cc \u062f\u0646\u062f\u0648\u0646 \u0644\u0642 \u0645\u06cc\u200c\u062e\u0648\u0631\u0647 \u0648 \u062b\u0628\u0627\u062a \u0646\u062f\u0627\u0631\u0647\u060c \u062d\u0627\u0644\u0627 \u0686\u06cc\u200c\u06a9\u0627\u0631 \u06a9\u0646\u06cc\u0645\u061f\n\n\u0648\u0642\u062a\u06cc \u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 \u0631\u0648\u06cc \u062f\u0646\u062f\u0648\u0646 \u062b\u0628\u0627\u062a \u0646\u062f\u0627\u0631\u0647\u060c \u06cc\u06a9\u06cc \u0627\u0632 \u0627\u0648\u0644\u06cc\u0646 \u0686\u06cc\u0632\u0627\u06cc\u06cc \u06a9\u0647 \u0628\u0647 \u0630\u0647\u0646\u0645 \u0645\u06cc\u200c\u0631\u0633\u0647 \u06cc\u0647 \u0646\u0642\u0637\u0647 \u062a\u06cc\u0632\u0647\u060c \u0686\u0647 \u0631\u0648\u06cc \u062f\u0646\u062f\u0648\u0646 \u0686\u0647 \u0631\u0648\u06cc \u062e\u0648\u062f \u067e\u0633\u062a \u0648 \u06a9\u0648\u0631\u060c \u06a9\u0647 \u0646\u0645\u06cc\u200c\u0630\u0627\u0631\u0647 \u067e\u0633\u062a \u06a9\u0627\u0645\u0644 \u0628\u0646\u0634\u06cc\u0646\u0647.\n\n\u0645\u062b\u0644\u0627\u064b \u06cc\u0647 \u0642\u0633\u0645\u062a\u06cc \u0627\u0632 \u062f\u0646\u062f\u0648\u0646 \u062a\u06cc\u0632 \u0628\u0648\u062f\u0647 \u0648 \u0645\u0646 \u0628\u0627 \u062f\u0648\u0631\u0627\u0644\u06cc \u0631\u0648\u0634 \u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 \u0633\u0627\u062e\u062a\u0645. \u0627\u0648\u0644\u0634 \u06a9\u06cc\u067e \u0628\u0648\u062f\u0647 \u0648 \u062b\u0628\u0627\u062a \u062f\u0627\u0634\u062a\u0647\u060c \u0648\u0644\u06cc \u0628\u0639\u062f \u0627\u0632 \u0631\u06cc\u062e\u062a\u06af\u06cc \u0647\u0645\u0648\u0646 \u0646\u0642\u0637\u0647 \u062a\u06cc\u0632 \u0645\u0627\u0646\u0639 \u0646\u0634\u0633\u062a\u0646 \u06a9\u0627\u0645\u0644 \u0634\u062f\u0647. \u06cc\u0627 \u0646\u0648\u06a9 \u067e\u0633\u062a \u062e\u06cc\u0644\u06cc \u062a\u06cc\u0632 \u0628\u0648\u062f\u0647 \u0648 \u0628\u0639\u062f \u0627\u0632 \u062a\u0628\u062f\u06cc\u0644 \u0634\u062f\u0646 \u0628\u0647 \u0641\u0644\u0632\u060c \u0646\u062f\u0648\u0644\u06cc \u06cc\u0627 \u0636\u0627\u06cc\u0639\u0647\u200c\u0627\u06cc \u0631\u0648\u0634 \u0627\u06cc\u062c\u0627\u062f \u0634\u062f\u0647 \u0648 \u0646\u0645\u06cc\u200c\u0630\u0627\u0631\u0647 \u0628\u0634\u06cc\u0646\u0647.\n\n\u0628\u0631\u0627\u06cc \u0647\u0645\u06cc\u0646 \u062a\u0648\u06cc \u0647\u0645\u0686\u06cc\u0646 \u062d\u0627\u0644\u062a\u06cc \u0627\u0648\u0644 \u0628\u0631\u0645\u06cc\u200c\u06af\u0631\u062f\u0645 \u062c\u0627\u06cc \u062a\u06cc\u0632 \u0631\u0648 \u0628\u0631\u0631\u0633\u06cc \u0645\u06cc\u200c\u06a9\u0646\u0645 \u0648 \u0627\u06af\u0647 \u0644\u0627\u0632\u0645 \u0628\u0648\u062f \u0627\u0635\u0644\u0627\u062d\u0634 \u0645\u06cc\u200c\u06a9\u0646\u0645. \u062e\u06cc\u0644\u06cc \u0648\u0642\u062a\u0627 \u0647\u0645\u06cc\u0646 \u0645\u0634\u06a9\u0644 \u0631\u0648 \u062d\u0644 \u0645\u06cc\u200c\u06a9\u0646\u0647\u060c \u0627\u0645\u0627 \u062a\u0648 \u0627\u06cc\u0646 \u0645\u0648\u0631\u062f \u062d\u0644 \u0646\u0634\u062f.\n\n\u067e\u0633 \u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 \u0631\u0648 \u0627\u0632 \u0627\u0648\u0644 \u062a\u06a9\u0631\u0627\u0631 \u06a9\u0631\u062f\u0645. \u0686\u0648\u0646 \u0628\u0627 \u0627\u06cc\u0646 \u0639\u062f\u0645 \u062b\u0628\u0627\u062a \u0646\u0645\u06cc\u200c\u062a\u0648\u0646\u06cc \u0631\u0648\u06a9\u0634 \u0631\u0648 \u0631\u0648\u0634 \u0628\u0630\u0627\u0631\u06cc. \u0648\u0642\u062a\u06cc \u0631\u0648\u06a9\u0634 \u0648\u0627\u0631\u062f \u0633\u06cc\u06a9\u0644 \u062c\u0648\u06cc\u062f\u0646 \u0628\u0634\u0647 \u0648 \u0646\u06cc\u0631\u0648\u0647\u0627\u06cc \u062c\u0648\u06cc\u062f\u0646 \u0628\u0647\u0634 \u0648\u0627\u0631\u062f \u0628\u0634\u0647\u060c \u0627\u06af\u0647 \u062b\u0628\u0627\u062a \u0646\u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u06cc\u0645\u060c \u0627\u06cc\u0646 \u0646\u06cc\u0631\u0648\u0647\u0627 \u0628\u0647 \u0627\u06cc\u0646\u062a\u0631\u0641\u06cc\u0633 \u0633\u0645\u0627\u0646 \u0648 \u067e\u0633\u062a \u0645\u0646\u062a\u0642\u0644 \u0645\u06cc\u0634\u0647\u060c \u0646\u06cc\u0631\u0648\u06cc \u0628\u0631\u0634\u06cc \u0627\u06cc\u062c\u0627\u062f \u0645\u06cc\u06a9\u0646\u0647 \u0648 \u062f\u0631 \u0646\u0647\u0627\u06cc\u062a \u0631\u0648\u06a9\u0634 \u0647\u0645\u0631\u0627\u0647 \u0628\u0627 \u0633\u0645\u0627\u0646 \u0627\u0632 \u062f\u0646\u062f\u0648\u0646 \u062f\u0631 \u0645\u06cc\u0627\u062f.",
+          "expected_title": "\u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 \u062a\u0648\u06cc \u062f\u0646\u062f\u0648\u0646 \u0644\u0642 \u0645\u06cc\u200c\u062e\u0648\u0631\u0647 \u0648 \u062b\u0628\u0627\u062a \u0646\u062f\u0627\u0631\u0647\u060c \u062d\u0627\u0644\u0627 \u0686\u06cc\u200c\u06a9\u0627\u0631 \u06a9\u0646\u06cc\u0645\u061f",
+          "kind": "phase_f",
+          "output_sha256": "28d41c3c3b5749d4deb4b61f9d5e65cb9e6d540f3b753e1b5ec19ded9a565cca",
+          "recorded_at": "2026-10-17T10:07:21+00:00",
           "summary": "61 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
         }
       ]
@@ -514,7 +540,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       },
       {
         "evidence": [
-          "phase_f:d5263504768e0654a19b638a1684072f2783f6af861f2f91f6bf0b85d0053419"
+          "phase_f:28d41c3c3b5749d4deb4b61f9d5e65cb9e6d540f3b753e1b5ec19ded9a565cca"
         ],
         "id": "F",
         "module": "12-english-notify-verify.md",
@@ -522,11 +548,14 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "reports/video-14-publication.md#G",
+          "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/39023657827"
+        ],
         "id": "G",
         "module": "12-english-notify-verify.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -563,6 +592,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "pillar/treatment-planning/structure.json",
       "player.html",
       "plus/content-index.json",
+      "plus/des-scores.json",
       "plus/pathways.json",
       "reports/video-14-publication.md",
       "service-worker.js",
@@ -572,9 +602,7 @@ Its compact snapshot is a verification baseline, not current Git status.
   },
   "reconciliation": {
     "note": "Reviewed actual scoped work, current handoff, and previous remote delivery",
-    "observed_changes": [
-      "HEAD_CHANGED_REVIEW_REQUIRED"
-    ]
+    "observed_changes": []
   },
   "schema": "publish-handoff-v2",
   "snapshot": {
@@ -583,12 +611,12 @@ Its compact snapshot is a verification baseline, not current Git status.
       "dentcast-brain.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "b2caa700a0a49c4f8cd126bcbecf197893bfc1b51c1453b908c77ec16ec34968"
+        "sha256": "3f371896099ac972b9cdef7c9032b0dddf16e39a117b1dc61e56a00f19922c03"
       },
       "dentcast-hashtag-reference.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "b63d2a7377770ee9ff1351621e48d914666dd299e46e044550de07487b64232b"
+        "sha256": "8de021cc55cd8327c95c7e971834c48cc84eb22637b094588c58fe440a3cf2ed"
       },
       "dentcast-plus/en/video-14.html": {
         "executable": false,
@@ -598,7 +626,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "dentcast-plus/index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "a7e6d217303dd3c57f73e38e7253f7fb849220daff1a139cc1556b04a1855c37"
+        "sha256": "6fd54a46144b3874d7430c2bb2e1bc426f5bba90db70a5794794640df18114e4"
       },
       "dentcast-plus/video-14.html": {
         "executable": false,
@@ -608,157 +636,162 @@ Its compact snapshot is a verification baseline, not current Git status.
       "glossary/index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "0aa66214468cda619ee6f40987541ac54a838057f232effde978931ae04a45b7"
+        "sha256": "1ae6cdc7abf4ff168cbe4f367c15e26dd99b811258489ed9b95bf520c8e2bdd4"
       },
       "index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "c28a0b22f91b431291e86199dc4a1526e17f558bc409b5152bfa8a26d727fe80"
+        "sha256": "c1929199f24091358efb99d5d696687d0f6d2fd8b10098db8c3254ecaf01aeb1"
       },
       "pillar/bonding/index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "59214c2958a870a3995d9889f86b2ad415dbcba7081efbb872567f9c289e2ccf"
+        "sha256": "2829b65356cc0e3f113cd99754f8b620f4787635f85240b2e7cc67d81ee4a549"
       },
       "pillar/bonding/structure.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "cde539ec63730bc36cee70ea0a7c75bdc2a7ed0e1ec43d321999dd1b91c96920"
+        "sha256": "b5c541fb04542fe7b17be66bc803acbc88e4f5dcfd85dcd9217f56d631df2692"
       },
       "pillar/ceramics/index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "3bca21bfb46c1e2d9c6f0a32e02ae8919b88d276c5e064b138e658d14c7ee8d0"
+        "sha256": "ae991cd2a2b518ff723f55839c5b961e8e2212d0e03f690b0303c1ff7cac7f67"
       },
       "pillar/ceramics/structure.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "3f506b458ded633748fa6119dcfdcc753c32f519924d18a90f736f98bb35e431"
+        "sha256": "532d96ee108f0306610e70e7e9c40f93114bab6f6a4c8f6fd7cc1f154eeb3d4a"
       },
       "pillar/digital/index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "bafcd329862aa3eaf21624e16902a4cd5d165b2150481eadec74ba9de9d2f5d6"
+        "sha256": "d70b991b1844c900b5ecadb2fa04e0f94c554f36eb445ce0d4c16d75c528f9d9"
       },
       "pillar/digital/structure.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "0e336b50f544fbc0972b74e5cfcdde003b5a3d45edc70ce2e7981eac29bb31df"
+        "sha256": "c66d50f7e0e12e1e9151bde463c2750d910f49c29419b0635d23125bbeeed275"
       },
       "pillar/esthetic/index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "2f3f1be3d8f07a485f4701313f22e9639d00110b27bcce430790f840105099db"
+        "sha256": "c446dc7a076b2d11df4b661d08b89e4c29e55504d6abac975a0ec3b2137fda65"
       },
       "pillar/esthetic/structure.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "3b73992ac5c01c49be1de14bfa87d1796493a2105183b831d82ff4e22f436993"
+        "sha256": "9d7cfef6958d88182d715581e59e7bed857c5f78a9b11975a71c0f2ce1fa869d"
       },
       "pillar/fixed-pros/index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "03b00478f4aee35abe19612843ac82a16173850e1766e5890e14d08aa0c96fb0"
+        "sha256": "4734350c200c9f365626ea1403bc2d447cb1e5ffa22607d4e99c02a4eba749f9"
       },
       "pillar/fixed-pros/structure.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "cfdbb7240303d198b560c603bba158d8873650309d204811ca9c49fd2b67c54f"
+        "sha256": "acacf97dc11be94ad2a76f738cade5b74e9305a39a77297856fc1fbf96dcd645"
       },
       "pillar/implantology/index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "685e994334269c90eee7b26a9250f943515aa7e781ddc972f0f84f6bb9ae1b48"
+        "sha256": "f1717a701fb35a24a46361729cff26b848a6d87222852612ca9efb636704a128"
       },
       "pillar/implantology/structure.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "8f9c4c2a1df5132df86a7b3ae56e5915f93eef003dee593d2b89a1483c937808"
+        "sha256": "0075bf22606549b104d5c09022da59731868d1b7e212ffdd0872af34c6681373"
       },
       "pillar/index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "3a4a08627e10f3e978a5fd139b08d7af9e3e681cc9d9a0594cb6e433fb87285c"
+        "sha256": "c90177d73da4e1e03b2fa83d76048c551821d60e3a310007e273a3882c2703ca"
       },
       "pillar/occlusion/index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "1b547491757b57414e2f1392c74906bf1c4a5cbfba17618023f05e6f04f5091f"
+        "sha256": "388798b8d18813739de2b321c756f0c4e27e489f900c3f646f424686b20660da"
       },
       "pillar/occlusion/structure.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "4cf031ce655ed3aa21366f6afaef1168eef21e8423e32ca9a8000b9df614cb2f"
+        "sha256": "eaad88f414db9975bb3d5c91defd2cd877c2d6450d9eb25ced33757d7349a953"
       },
       "pillar/operative/index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "15bf17d7f64393d4689e8b48cd21a3afe4d67437c1f736394d207611b71ea96b"
+        "sha256": "7a9d31fadb0d0e22fbad5a2cd9eed48f5134253792d988e936178c90828da4db"
       },
       "pillar/operative/structure.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "3b35c45402bf45f64e66c3bfc0c56899f85a28660bf425aee34cdaef5644fe04"
+        "sha256": "a755fe75dbdc211420869f1b4bdba6eef8a30b3de229d6b3a52b67a01390a23e"
       },
       "pillar/practice-infrastructure/index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "6db31092147994223e3dba1c6ddbbac0319a09cba7eb1837621a9c93c0ceb78b"
+        "sha256": "fb3f16384a63260829df8dbc8c65a7b2ccfdf24cc07b7ab02b9f16ae62eefb77"
       },
       "pillar/practice-infrastructure/structure.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "aefdb12f6ab97fafc144482858aa8229e87fd70f5662988eef029fa473714110"
+        "sha256": "e40411f9f2bb86b5e527c51733af0f79735258c8b6bc5041516d8cb3ff0b19bd"
       },
       "pillar/removable-pros/index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "405d03f904d63c83d8d5b0506dd3fd4af9b2d8f8dcb6f11b53727e86823b1c46"
+        "sha256": "fea0347fd20f22b75e05e3011e7c32a97f5b4486096f5c574e6b709ba56191c3"
       },
       "pillar/removable-pros/structure.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "c1ffdda4412a41a9fb92fd063d27ff0fe51d38f59cca06a15dbbc30f3885bc39"
+        "sha256": "b1e1c450e42626726de9f8a86806c505c4042ec04adb78f9314b91a3bbf6f84b"
       },
       "pillar/structure.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "9893bb7de5e796d1664c2606afe8621c1520e8f5787a66dd68fc5dc1e5c7b2dc"
+        "sha256": "aa29c42c9442ddfd0cc9569a2b3ac989a145162a62f55396bda12e8167076e84"
       },
       "pillar/treatment-planning/index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "6e391ce0d79e56d3955e1f21c277cc88b1bc3d4f12a0b9d10ec4159bac6997b0"
+        "sha256": "913c611b9fc3d714be292ef2f03dbd45c3bdf8c521f2a39d5517564ba694b68f"
       },
       "pillar/treatment-planning/structure.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "5e8e472c57d293de1d40445ef803d439df25754eb343cb07391a5e01c100f6b5"
+        "sha256": "73da37f6abe34f25b065d944b51fe3dbdd2ea3b8ca1bcf94825b2d4d0f0651b6"
       },
       "player.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "4ef122891f973c79d4e964aa2b9ee97d02b79fb14e07713c1bb66fa61ebf0a43"
+        "sha256": "737c0d2c18308d5b318fc4b4fda95a80884c8e4bdc2d1128c9b61289b2ca8f33"
       },
       "plus/content-index.json": {
         "executable": false,
         "kind": "file",
         "sha256": "01c4bcd44ed8dc378ccfbc0fdcba2ada521bd541d627ec3991a99ade748e0522"
       },
+      "plus/des-scores.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "76b55139aec49d1229b721f29e2b688741761420cb78445ee6afe9f572d9069a"
+      },
       "plus/pathways.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "50a957b893ce9be51998779fdb302d1f27a77c22785b6e5f03da954a0e5f6e14"
+        "sha256": "de25efbd7176fca7d9e3e37a259510412ca6096e0faac93a6bedc6ce1008c530"
       },
       "reports/video-14-publication.md": {
         "executable": false,
         "kind": "file",
-        "sha256": "b402c9fbd6f0dbc055030bb1a45758f7d7077a8724c3ab2a4e0b1b1b1c66d718"
+        "sha256": "d807f0fbaff705eeab2b3906dbcce23ced24f76f3daa3c369a64a15657113c21"
       },
       "service-worker.js": {
         "executable": false,
         "kind": "file",
-        "sha256": "222f42eb1037068cceb287984a89f77914f979da766d38a4e09d6e2c3c5976a9"
+        "sha256": "4a87871834045fab10d9eb52ab9a038d05a7330e9194e582983e4fe56566f924"
       },
       "sitemap.xml": {
         "executable": false,
@@ -768,7 +801,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "up-board/index.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "0f4b402bf42cee2b36aa8e47853937ef3edbe170d77c87d339bdbc5e817c3cd2"
+        "sha256": "5c662eaf0817c39ad64bef7feb7b8d109bea673704bc6cc6a4a8c49d4fc56e4f"
       }
     },
     "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
@@ -800,7 +833,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "b6170660c69a9602a47b9d81fc1df944bebaddfe",
-  "updated_at": "2026-10-17T10:07:16+00:00"
+  "updated_at": "2026-10-17T10:07:22+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
