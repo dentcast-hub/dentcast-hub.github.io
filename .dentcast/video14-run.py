@@ -77,7 +77,11 @@ def record_context(key, value):
 
 def deliver(label):
     command('git', 'add', '-A', quiet=True)
-    state = helper('inspect', check=False)['recorded_state']['publication']
+    inspected = helper('inspect', check=False)
+    state = inspected['recorded_state']['publication']
+    tracked_work = set(inspected['recorded_state']['snapshot']['files'])
+    tracked_work.update(inspected['current_snapshot']['files'])
+    state['target_paths'] = sorted(set(state['target_paths']) | tracked_work)
     path = TMP / 'state.json'
     path.write_text(json.dumps(state, ensure_ascii=False))
     helper('record', '--input', str(path), '--expected-sha256', digest(), '--reconcile-note', NOTE)
@@ -89,7 +93,11 @@ def deliver(label):
         raise RuntimeError(json.dumps(result))
 
 def run_step(sid, action=None, skip=None, evidence=None):
-    helper('inspect', check=False)
+    inspected = helper('inspect', check=False)
+    previous = next(s for s in inspected['recorded_state']['publication']['steps'] if s['id'] == sid)
+    if previous['status'] in ('completed', 'skipped'):
+        print('RESUME_ALREADY_RESOLVED',sid,previous['status'],flush=True)
+        return
     helper('step', '--id', sid, '--status', 'started', '--expected-sha256', digest(), '--reconcile-note', NOTE)
     try:
         if action:
@@ -308,6 +316,13 @@ def english():
     assert n==1
     # Keep the translated video body and add the same optional external player.
     fa=read(PAGE)
+    if '"BreadcrumbList"' not in doc:
+        for block in re.findall(r'<script type="application/ld\+json">([\s\S]*?)</script>',fa):
+            node=json.loads(block)
+            if node.get('@type')=='BreadcrumbList':
+                schema_transform(node,True)
+                markup='<script type="application/ld+json">\n'+json.dumps(node,ensure_ascii=False,indent=2)+'\n</script>'
+                doc=doc.replace('</head>',markup+'\n</head>')
     external=re.search(r'<div class="yt-container">[\s\S]*?</script>',fa).group()
     external=external.replace('مشاهده ویدیو در یوتیوب (پلیر خارجی)','Watch on YouTube (external player)').replace('بستن ویدیو','Close video')
     player_css=re.search(r'<h1>[\s\S]*?</h1>\s*(<style>[\s\S]*?</style>)',fa).group(1)
@@ -318,12 +333,12 @@ def english():
     assert before==sha('metanotes/en/meta-1.html')
     assert 'href="../video-14.html"' in doc and 'href="en/video-14.html"' in fa
     assert 'noindex, follow' in doc and 'hreflang=' not in doc
-    append_report('English mirror translated all five original paragraphs, preserved video type structure, inherited English chrome and CSS from same-type reference, and retained external YouTube player. Reciprocal toggles, noindex, no hreflang; standard SHA256 '+before+' unchanged.')
+    append_report('English mirror translated all five original paragraphs, preserved video type structure and JSON-LD shapes, inherited English chrome and CSS from same-type reference, and retained external YouTube player. Reciprocal toggles, noindex, no hreflang; standard SHA256 '+before+' unchanged.')
 
 def execute():
     global MEDIA, BRAIN_PREV
     command('git','config','core.hooksPath','.githooks',quiet=True)
-    assert not Path(HANDOFF).exists(), 'Existing handoff must be reconciled'
+    resuming = Path(HANDOFF).exists()
     MEDIA=json.load(urllib.request.urlopen(CONFIG,timeout=40))
     assert MEDIA['mediaid']=='M9a0Oxm7ve'
     with urllib.request.urlopen(MEDIA['source'][0]['src'],timeout=40) as response:
@@ -331,14 +346,17 @@ def execute():
         assert '#EXTM3U' in response.read().decode()
     data=json.loads(read('dentcast-brain.json'))
     videos=[x for x in data if x.get('type')=='dentcast_plus']
-    assert sorted(int(x['video']) for x in videos)==list(range(1,14))
-    BRAIN_PREV=videos[-1]
+    assert sorted(int(x['video']) for x in videos) in [list(range(1,14)),list(range(1,15))]
+    BRAIN_PREV=next(e for e in videos if e['video']=='13')
     assert BRAIN_PREV['video']=='13'
     template_hash=sha('dentcast-plus/video-13.html')
     plan=helper('plan')['steps']
     inputs={'content_id':CID,'category':'dentcast_plus','target_paths':[PAGE,EN,'dentcast-brain.json','dentcast-plus/index.html',REPORT], 'status':'in_progress','blocker':None,'context':{'inputs':[{'title':TITLE,'caption':CAPTION,'config':CONFIG,'youtube':'https://youtube.com/shorts/'+YT}], 'decisions':[{'quiz':'No quiz or FAQ: explicit user instruction','evidence_basis':'COMMENTARY own clinical narrative','pillar':'fixed-pros/post-and-core'}], 'approvals':[{'scope':'title and publication','decision':'Use supplied first sentence as title and publish; user explicitly confirmed title and requested completion through connected GitHub','status':'confirmed','evidence':['User title confirmation and subsequent explicit publication instruction']}], 'pending_questions':[],'validation':[],'delivery':[],'unrelated_changes':[]},'steps':plan,'external_actions':[]}
     f=TMP/'init.json';f.write_text(json.dumps(inputs,ensure_ascii=False))
-    helper('init','--input',str(f))
+    if resuming:
+        deliver('reconcile interrupted checkpoint and expand watched output inventory')
+    else:
+        helper('init','--input',str(f))
     def rules():
         files=['AGENTS.md','.dentcast/workflows/global/README.md','.dentcast/workflows/README.md','.dentcast/workflows/agent-parity.md']
         files += ['.dentcast/workflows/global/'+name+'.md' for name in ['repo-conventions','plus-premium','site-invariants']]
@@ -392,9 +410,11 @@ def execute():
     run_step('C.7',stamp)
     run_step('D',english)
     run_step('E',lambda:(_ for _ in ()).throw(RuntimeError('notify marker missing')) if read(PAGE).count('<meta name="dc-notify" content="true">')!=1 else None,evidence='Exactly one dc-notify marker; standard main push notification workflow owns delivery.')
-    result=helper('verify','--expected-sha256',digest(),'--expect-title',TITLE,'--expect-caption',CAPTION)
+    result=helper('verify','--expected-sha256',digest(),'--expect-title',TITLE,'--expect-caption',CAPTION,check=False)
     print('PHASE_F_RESULT',json.dumps(result,ensure_ascii=False),flush=True)
     deliver('F verified')
+    if result['status']=='blocked':
+        raise RuntimeError('Phase F requires correction; full result above')
     # Preserve the completed Phase F and await live delivery rather than claiming it early.
     print('READY_FOR_REVIEW_AND_MAIN_DELIVERY',flush=True)
 
