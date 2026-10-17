@@ -71,3 +71,6 @@ COMMENTARY: own clinical case reasoning, no retrievable paper cited; source_text
 ## B.4.9
 Ordinary instructional video, not challenge; explicit user no-quiz instruction.
 
+## B.5
+Pulse announcement follows title-only pattern: new DentCast Plus video, linked approved title. No clinical finding revealed.
+
