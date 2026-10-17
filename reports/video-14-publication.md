@@ -242,3 +242,8 @@ Content version 9463ba49d1 -> 382ca3c329
 ## C.7
 Executed and checked; see committed files and GitHub Actions log.
 
+English mirror translated all five original paragraphs, preserved video type structure and JSON-LD shapes, inherited English chrome and CSS from same-type reference, and retained external YouTube player. Reciprocal toggles, noindex, no hreflang; standard SHA256 f369179d3715d57a76a2c13e939e515b43f6c1bd9dcd5eaea07eff07ce65ba00 unchanged.
+
+## D
+Executed and checked; see committed files and GitHub Actions log.
+
