@@ -83,12 +83,13 @@ const CONFIG = {
 
 let posts: Array<{ url: string; body: any }> = [];
 let controls: Record<string, unknown> = {};
+let campaign: any = null;
 
 function stubFetch(activityStatus = 204) {
   globalThis.fetch = vi.fn(async (input: any, init: any) => {
     const url = String(input);
     if (url.includes('spot-config.json')) return { ok: true, json: async () => structuredClone(CONFIG) } as any;
-    if (url.endsWith('/spot/config')) return { ok: true, json: async () => ({ slots: controls }) } as any;
+    if (url.endsWith('/spot/config')) return { ok: true, json: async () => ({ slots: controls, ...(campaign ? { campaign } : {}) }) } as any;
     posts.push({ url, body: JSON.parse(init.body) });
     if (url.includes('/activity') && activityStatus !== 204) return { ok: false, status: activityStatus } as any;
     return { ok: true, status: 204 } as any;
@@ -116,6 +117,7 @@ beforeEach(() => {
   vi.useFakeTimers();
   posts = [];
   controls = {};
+  campaign = null;
   observers = [];
   localStorage.clear();
   me.user = null; me.status = 'anon'; me.delayMs = 0;
@@ -545,5 +547,26 @@ describe('saved placement controls', () => {
     controls = { home: { enabled: true, creative: { id: 'managed-home', title: 'saved' } } };
     me.user = { tier: 'premium' }; me.status = 'user';
     await boot(); expect(cards()).toBe(0); expect(posts).toHaveLength(0);
+  });
+  it('uses the first enabled campaign from the admin three-visit schedule', async () => {
+    campaign = { sessions: [
+      { enabled: true, creative: { id: 'managed-session-1', title: 'visit one', text: '', url: 'https://brand.test/', image: null } },
+      { enabled: true, creative: { id: 'managed-session-2', title: 'visit two', text: '', url: '/plus/', image: null } },
+      { enabled: false, creative: { id: 'managed-session-3', title: '', text: '', url: '', image: null } },
+    ] };
+    await boot();
+    expect(creativeShown()).toBe('managed-session-1');
+    expect(document.querySelector('.dc-spot-title')?.textContent).toBe('visit one');
+    expect(document.querySelector('.dc-spot a')?.getAttribute('rel')).toContain('sponsored');
+  });
+  it('treats an intentionally empty visit as empty instead of falling back to another campaign', async () => {
+    campaign = { sessions: [
+      { enabled: true, creative: { id: 'managed-session-1', title: 'visit one', text: '', url: '', image: null } },
+      { enabled: false, creative: { id: 'managed-session-2', title: '', text: '', url: '', image: null } },
+      { enabled: true, creative: { id: 'managed-session-3', title: 'visit three', text: '', url: '', image: null } },
+    ] };
+    localStorage.setItem('dcAds.tick', '1');
+    await boot();
+    expect(cards()).toBe(0);
   });
 });

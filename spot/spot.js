@@ -69,7 +69,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=189';
+import { findProseRoot } from '/plus/js/config.js?v=190';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -163,7 +163,7 @@ function report(kind, slotName, creativeId) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ [key]: name, content_id: contentId }),
   });
-  import('/plus/js/api.js?v=189')
+  import('/plus/js/api.js?v=190')
     .then((m) => m.apiBase())
     .then((base) => {
       if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
@@ -182,7 +182,7 @@ function report(kind, slotName, creativeId) {
       // A network-level failure (not an HTTP error) may mean the cached base is
       // dead — self-heal so the NEXT event, and the next page's /me, re-probe
       // instead of retrying the same unreachable host all session.
-      import('/plus/js/api.js?v=189').then((m) => m.forgetBase()).catch(() => {});
+      import('/plus/js/api.js?v=190').then((m) => m.forgetBase()).catch(() => {});
     });
 }
 
@@ -287,6 +287,7 @@ function pickCreative(cfg, slotName, audience) {
 }
 
 function resolveStep(cfg, step, slotName, audience) {
+  if (step === 'none') return null;
   // A `premium` step means "this beat belongs to the house". The house card is
   // audience-split (the anon «شروع رایگان» creative vs. the signed-in «جایزهٔ
   // لیگ» one), so for the audience the premium creative is NOT targeted at, the
@@ -1296,7 +1297,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=189')
+  return import('/plus/js/api.js?v=190')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
@@ -1344,7 +1345,7 @@ async function main() {
   // Untouched placements retain the checked-in rotation and targeting. Only
   // explicitly saved placements have a database override. Public read, no login.
   try {
-    const { apiBase } = await import('/plus/js/api.js?v=189');
+    const { apiBase } = await import('/plus/js/api.js?v=190');
     const base = await apiBase();
     const response = await fetch(base + '/spot/config', { cache: 'no-store', signal: AbortSignal.timeout(2500) });
     if (response.ok) {
@@ -1352,6 +1353,17 @@ async function main() {
       for (const [name, value] of Object.entries(saved.slots || {})) {
         if (!cfg.slots?.[name] || typeof value.enabled !== 'boolean') continue;
         cfg.slots[name] = { ...cfg.slots[name], enabled: value.enabled, creative: value.creative };
+      }
+      // Admin-managed campaigns replace the published rotation only after an
+      // explicit save. Each entry is one visit; "none" is a deliberate empty
+      // visit and must not fall through to another campaign.
+      const sessions = saved.campaign && saved.campaign.sessions;
+      if (Array.isArray(sessions) && sessions.length === 3 && sessions.every((s) => s && typeof s.enabled === 'boolean' && s.creative)) {
+        const managed = sessions.filter((s) => s.enabled).map((s) => ({ ...s.creative, enabled: true }));
+        cfg.creatives = cfg.creatives || {};
+        cfg.creatives.sponsors = (cfg.creatives.sponsors || []).filter((c) => !/^managed-session-[1-3]$/.test(c && c.id)).concat(managed);
+        cfg.rotation = { ...(cfg.rotation || {}), advance: 'session', session_minutes: 30,
+          sequence: sessions.map((s, i) => s.enabled ? 'managed-session-' + (i + 1) : 'none') };
       }
     }
   } catch (_) { /* API unavailable: retain the published configuration. */ }

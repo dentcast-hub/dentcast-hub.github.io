@@ -13,8 +13,21 @@ export function renderMemberSpotControls(): string {
   </div>
   <button id="memberMore" type="button" hidden>اعضای بیشتر</button>
   <div class="muted">وضعیت از اشتراک و جایزهٔ ثبت‌شده محاسبه می‌شود؛ سطح کش‌شدهٔ حساب معیار نیست. لغو یا شکست پرداخت به معنای لغو اشتراک نیست.</div>
-  <h3 style="margin-top:26px">مدیریت جایگاه‌های تبلیغ</h3>
-  <div class="muted">هر جایگاه به‌طور مستقل قابل جایگزینی است. تا پیش از ذخیره، تنظیمات فعلی سایت و چرخش تبلیغ‌ها برقرار می‌ماند. پریمیوم همچنان تبلیغ نمی‌بیند.</div>
+  <h3 style="margin-top:26px">برنامهٔ سه‌بازدیدی تبلیغ‌ها</h3>
+  <div class="muted">برای هر یک از سه بازدید، محتوای جدا انتخاب کن: تصویر، متن یا ترکیب هر دو؛ لینک هم اختیاری است. برنامه فقط بعد از ذخیره فعال می‌شود. «یک بازدید» تا وقتی ۳۰ دقیقه صفحه‌ای باز نکنی ادامه دارد. ستون کنارِ دسکتاپ همیشه محتوای بازدید اول را نشان می‌دهد. کاربران پریمیوم همچنان تبلیغ نمی‌بینند.</div>
+  <div id="campaignStatus" role="status" aria-live="polite">در حال خواندن…</div>
+  <form id="campaignForm" hidden>
+    <div id="campaignSessions"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+      <button id="campaignSave" type="submit">ذخیرهٔ برنامهٔ سه‌بازدیدی</button>
+      <button id="campaignReset" type="button">استفاده از برنامهٔ فعلی سایت</button>
+    </div>
+  </form>
+  <details style="margin-top:18px">
+    <summary>تنظیم جداگانهٔ محل‌های نمایش (پیشرفته)</summary>
+    <div class="muted">این گزینه‌ها فقط مشخص می‌کنند تبلیغ در کدام بخش‌های سایت نمایش داده شود. برای تغییر محتوای سه بازدید از برنامهٔ بالا استفاده کن.</div>
+  <h4 style="margin-top:14px">جایگاه‌های نمایش</h4>
+  <div class="muted">هر جایگاه به‌طور مستقل قابل جایگزینی است. تا پیش از ذخیره، تنظیمات فعلی سایت و چرخش تبلیغ‌ها برقرار می‌ماند.</div>
   <div id="spotControlStatus" role="status" aria-live="polite">در حال خواندن…</div>
   <form id="spotControlForm" hidden>
     <label for="spotPlacement">جایگاه</label><select id="spotPlacement"></select>
@@ -34,6 +47,7 @@ export function renderMemberSpotControls(): string {
     <button id="spotSave" type="submit">ذخیرهٔ جایگاه</button>
     <button id="spotReset" type="button">بازگشت به چرخش فعلی سایت</button>
   </form>
+  </details>
   <script>
   (function () {
     function el(id) { return document.getElementById(id); }
@@ -112,6 +126,85 @@ export function renderMemberSpotControls(): string {
 
     var saved = {}, site = {}, objectUrl = null, uploading = false;
     var fields = { badge: 'spotBadge', title: 'spotTitle', text: 'spotText', cta: 'spotCta', url: 'spotUrl', image: 'spotImage' };
+    var campaignUploading = false;
+    function sessionId(i, key) { return 'campaign' + i + key; }
+    function campaignCard(i) {
+      var host = document.createElement('section'); host.className = 'card'; host.style.cssText = 'margin-top:12px;padding:14px;border:1px solid #dce4f2;border-radius:14px;background:#fff';
+      host.innerHTML = '<h4>بازدید ' + i + '</h4>'
+        + '<label><input id="' + sessionId(i, 'Enabled') + '" type="checkbox"> این بازدید تبلیغ داشته باشد</label>'
+        + '<label for="' + sessionId(i, 'Kind') + '">نوع محتوا</label><select id="' + sessionId(i, 'Kind') + '"><option value="image">فقط تصویر</option><option value="text">فقط متن</option><option value="mixed">تصویر و متن</option></select>'
+        + '<div class="campaign-text"><label>برچسب کوتاه</label><input id="' + sessionId(i, 'Badge') + '" maxlength="100" placeholder="مثلاً حمایت‌شده یا دنت‌کست"></div>'
+        + '<div class="campaign-text"><label>عنوان</label><input id="' + sessionId(i, 'Title') + '" maxlength="300"></div>'
+        + '<div class="campaign-text"><label>متن</label><textarea id="' + sessionId(i, 'Text') + '" maxlength="2000"></textarea></div>'
+        + '<div class="campaign-image"><label>مسیر تصویر</label><input id="' + sessionId(i, 'Image') + '" dir="ltr" placeholder="/spot/img/…webp"></div>'
+        + '<label>لینک مقصد (اختیاری؛ خالی بماند کارت لینک ندارد)</label><input id="' + sessionId(i, 'Url') + '" dir="ltr" maxlength="2000" placeholder="https://… یا /plus/">'
+        + '<div class="campaign-text"><label>متن لینک/دکمه (اختیاری)</label><input id="' + sessionId(i, 'Cta') + '" maxlength="100"></div>'
+        + '<label>بارگذاری تصویر</label><input id="' + sessionId(i, 'Upload') + '" type="file" accept="image/webp,image/png,image/jpeg,image/gif">'
+        + '<button type="button" id="' + sessionId(i, 'UploadButton') + '">آپلود تصویر همین بازدید</button>'
+        + '<div id="' + sessionId(i, 'Preview') + '" class="card" style="margin-top:8px"></div>';
+      return host;
+    }
+    function campaignValue(i) {
+      var kind = el(sessionId(i, 'Kind')).value, enabled = el(sessionId(i, 'Enabled')).checked;
+      return { enabled: enabled, badge: kind === 'image' ? '' : el(sessionId(i, 'Badge')).value.trim(),
+        title: kind === 'image' ? '' : el(sessionId(i, 'Title')).value.trim(), text: kind === 'image' ? '' : el(sessionId(i, 'Text')).value.trim(),
+        cta: kind === 'image' ? '' : el(sessionId(i, 'Cta')).value.trim(), url: el(sessionId(i, 'Url')).value.trim(),
+        image: kind === 'text' ? null : (el(sessionId(i, 'Image')).value.trim() || null) };
+    }
+    function campaignPreview(i) {
+      var v = campaignValue(i), out = el(sessionId(i, 'Preview')); out.replaceChildren();
+      if (!v.enabled) { out.textContent = 'خاموش — در این بازدید چیزی نمایش داده نمی‌شود.'; return; }
+      if (v.badge) out.appendChild(text('small', v.badge));
+      if (v.title) out.appendChild(text('h4', v.title));
+      if (v.text) out.appendChild(text('p', v.text));
+      if (v.image && /^\/spot\/img\/[a-z0-9._-]+\.(webp|png|jpe?g|gif)$/i.test(v.image)) { var img = document.createElement('img'); img.src = new URL(v.image, 'https://dentcast.ir').href; img.alt = ''; img.style.maxWidth = '100%'; img.style.maxHeight = '180px'; out.appendChild(img); }
+      if (v.url && safeLink(v.url)) { var a = text('a', v.cta || v.url); a.href = new URL(v.url, 'https://dentcast.ir').href; a.rel = 'sponsored noopener'; a.target = '_blank'; out.appendChild(a); }
+    }
+    function setCampaignSessions(sessions) {
+      var host = el('campaignSessions'); host.replaceChildren();
+      for (var i = 1; i <= 3; i++) {
+        var value = sessions && sessions[i - 1] || { enabled: false, creative: {} }, c = value.creative || {};
+        host.appendChild(campaignCard(i));
+        el(sessionId(i, 'Enabled')).checked = !!value.enabled;
+        el(sessionId(i, 'Kind')).value = c.image && (c.title || c.text) ? 'mixed' : c.image ? 'image' : 'text';
+        ['Badge','Title','Text','Cta','Url','Image'].forEach(function (key) {
+          var field = key.toLowerCase(); el(sessionId(i, key)).value = c[field] || '';
+        });
+        (function (n) {
+          var card = host.children[n - 1];
+          function update() { var kind = el(sessionId(n, 'Kind')).value; card.querySelectorAll('.campaign-text').forEach(function (x) { x.hidden = kind === 'image'; }); card.querySelectorAll('.campaign-image').forEach(function (x) { x.hidden = kind === 'text'; }); campaignPreview(n); }
+          card.addEventListener('input', function () { campaignPreview(n); });
+          el(sessionId(n, 'Kind')).onchange = update; update();
+          el(sessionId(n, 'UploadButton')).disabled = !uploadConfigured;
+          el(sessionId(n, 'UploadButton')).onclick = function () {
+            var file = el(sessionId(n, 'Upload')).files[0]; if (!file || campaignUploading) return;
+            if (file.size > 5 * 1024 * 1024 || !['image/webp','image/png','image/jpeg','image/gif'].includes(file.type)) { el('campaignStatus').textContent = 'نوع یا حجم تصویر مجاز نیست.'; return; }
+            campaignUploading = true; el(sessionId(n, 'UploadButton')).disabled = true;
+            request('/admin/spot/image', { method: 'POST', headers: { 'content-type': file.type }, body: file }).then(function (j) {
+              el(sessionId(n, 'Image')).value = j.image; campaignPreview(n); el('campaignStatus').textContent = 'تصویر بازدید ' + n + ' بارگذاری شد. پس از انتشار فایل سایت، برنامه را ذخیره کن.';
+            }).catch(function (e) { el('campaignStatus').textContent = 'آپلود نشد: ' + e.message; })
+              .finally(function () { campaignUploading = false; el(sessionId(n, 'UploadButton')).disabled = !uploadConfigured; });
+          };
+        })(i);
+      }
+    }
+    var uploadConfigured = false;
+    el('campaignForm').onsubmit = function (e) {
+      e.preventDefault(); if (campaignUploading) return;
+      var sessions = [1,2,3].map(function (i) { return campaignValue(i); });
+      for (var i = 0; i < sessions.length; i++) {
+        if (sessions[i].enabled && !(sessions[i].title || sessions[i].text || sessions[i].image)) { el('campaignStatus').textContent = 'برای بازدید ' + (i + 1) + ' متن یا تصویر وارد کن، یا آن را خاموش بگذار.'; return; }
+        if (!safeLink(sessions[i].url)) { el('campaignStatus').textContent = 'لینک بازدید ' + (i + 1) + ' معتبر نیست.'; return; }
+      }
+      el('campaignSave').disabled = true;
+      request('/admin/spot/campaign', { method: 'PUT', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ sessions: sessions }) }).then(function () {
+        el('campaignStatus').textContent = 'برنامه ذخیره شد؛ برای هر بازدید یک نوبت نمایش داده می‌شود و بعد از ۳۰ دقیقه بی‌فعالیتی نوبت بعد شروع می‌شود.';
+      }).catch(function (e) { el('campaignStatus').textContent = 'ذخیره نشد: ' + e.message; }).finally(function () { el('campaignSave').disabled = false; });
+    };
+    el('campaignReset').onclick = function () {
+      request('/admin/spot/campaign/reset', { method: 'POST' }).then(function () { setCampaignSessions(null); el('campaignStatus').textContent = 'برنامهٔ فعلی سایت دوباره فعال شد.'; })
+        .catch(function (e) { el('campaignStatus').textContent = 'بازنشانی نشد: ' + e.message; });
+    };
     function revokePreview() { if (objectUrl) URL.revokeObjectURL(objectUrl); objectUrl = null; }
     function formValue() { var v = { enabled: el('spotEnabled').checked }; Object.keys(fields).forEach(function (key) { v[key] = el(fields[key]).value.trim(); }); v.image = v.image || null; return v; }
     function safeLink(url) {
@@ -150,10 +243,21 @@ export function renderMemberSpotControls(): string {
       saved = j.slots;
       Object.keys(j.placements).forEach(function (key) { var option = text('option', j.placements[key] + ' (' + key + ')'); option.value = key; el('spotPlacement').appendChild(option); });
       el('spotUploadButton').disabled = !j.upload_configured;
+      uploadConfigured = !!j.upload_configured;
       el('spotStorageStatus').textContent = j.upload_configured ? 'تصویر در spot/img مخزن ذخیره می‌شود؛ نمایش عمومی پس از انتشار فایل سایت آماده است.' : 'آپلود به SPOT_GITHUB_TOKEN با دسترسی Contents:write همین مخزن در API نیاز دارد؛ مسیر تصاویر فعلی همچنان قابل استفاده است.';
       return request('/admin/spot/defaults');
-    }).then(function (j) { site = j; el('spotControlForm').hidden = false; el('spotControlStatus').textContent = ''; choose(); })
-      .catch(function (e) { el('spotControlForm').hidden = true; el('spotControlStatus').textContent = e.message === 'spot_defaults_unavailable' ? 'تنظیمات فعلی سایت دریافت نشد؛ صفحه را دوباره بارگذاری کنید. وضعیت جایگاه‌ها هنوز مشخص نیست.' : 'خوانده نشد: ' + e.message; });
+    }).then(function (j) { site = j; return request('/admin/spot/campaign'); })
+      .then(function (j) {
+        setCampaignSessions(j.sessions);
+        el('campaignForm').hidden = false;
+        el('campaignStatus').textContent = j.sessions ? 'برنامهٔ سه‌بازدیدی ذخیره‌شده فعال است.' : 'هنوز برنامهٔ اختصاصی ذخیره نشده؛ برنامهٔ فعلی سایت برقرار است.';
+        el('spotControlForm').hidden = false; el('spotControlStatus').textContent = ''; choose();
+      })
+      .catch(function (e) {
+        el('spotControlForm').hidden = true; el('campaignForm').hidden = true;
+        var message = e.message === 'spot_defaults_unavailable' ? 'تنظیمات فعلی سایت دریافت نشد؛ صفحه را دوباره بارگذاری کن. وضعیت جایگاه‌ها هنوز مشخص نیست.' : 'تنظیمات خوانده نشد: ' + e.message;
+        el('campaignStatus').textContent = message; el('spotControlStatus').textContent = message;
+      });
     el('spotPlacement').onchange = choose;
     el('spotControlForm').addEventListener('input', preview);
     el('spotImage').addEventListener('input', function () { revokePreview(); preview(); });

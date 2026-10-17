@@ -79,6 +79,38 @@ export async function saveSpotControl(slot: SpotSlot, value: { enabled: boolean;
   [slot, value.enabled, JSON.stringify(value.creative)]);
 }
 
+export interface SpotCampaignSession { enabled: boolean; creative: SpotCreative }
+
+// This is an optional, API-backed three-visit schedule. Until the admin saves
+// one, the published JSON remains the only source of rotation behavior.
+export async function spotCampaign(): Promise<SpotCampaignSession[] | null> {
+  const result = await query<{ sessions: SpotCampaignSession[] }>(
+    'select sessions from spot_campaign_controls where id = true and not use_default',
+  );
+  return result.rows[0]?.sessions ?? null;
+}
+
+export function parseSpotCampaign(body: unknown): SpotCampaignSession[] | null {
+  if (!body || typeof body !== 'object' || Array.isArray(body)) return null;
+  const sessions = (body as Record<string, unknown>).sessions;
+  if (!Array.isArray(sessions) || sessions.length !== 3) return null;
+  const parsed: SpotCampaignSession[] = [];
+  for (let index = 0; index < sessions.length; index++) {
+    const value = parseSpotCreative('home', sessions[index]);
+    if (!value) return null;
+    value.creative.id = `managed-session-${index + 1}`;
+    parsed.push(value);
+  }
+  return parsed;
+}
+
+export async function saveSpotCampaign(sessions: SpotCampaignSession[]) {
+  await query(`insert into spot_campaign_controls (id, sessions, use_default)
+    values (true, $1::jsonb, false)
+    on conflict (id) do update set sessions = excluded.sessions, use_default = false, updated_at = now()`,
+  [JSON.stringify(sessions)]);
+}
+
 export const MAX_SPOT_IMAGE_BYTES = 5 * 1024 * 1024;
 export function spotImageExtension(buffer: Buffer, contentType: string): string | null {
   if (buffer.length < 12 || buffer.length > MAX_SPOT_IMAGE_BYTES) return null;
