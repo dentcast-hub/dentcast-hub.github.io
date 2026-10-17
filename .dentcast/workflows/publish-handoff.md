@@ -46,7 +46,7 @@ Allow one active publication in this fixed file; concurrent publication attempts
 
 ## Required state template
 
-Use the following sections in `.dentcast/PUBLISH-HANDOFF.md`; unknown values must say `unknown`, not guessed values.
+The supported writer is `tools/dentcast_publish_handoff.py`; read [the tool guide](publish-handoff-tool.md) for `init`, `record`, and `inspect`. It writes a generated Markdown summary plus a canonical JSON record in the same fixed file. That record carries the semantic fields below; unavailable machine values are null/unknown, never guessed. Do not edit the rendered summary separately. The following template documents the required recovery information for manual inspection; a pre-existing manual file must be explicitly reconciled before conversion, never silently overwritten by `init`.
 
 ```markdown
 # Publication handoff
@@ -98,5 +98,4 @@ Use the following sections in `.dentcast/PUBLISH-HANDOFF.md`; unknown values mus
 
 ## Rollout
 
-This contract and entrypoint discovery are stage 1 of the repair.
-Automated state writing, validation, per-step wiring, and recovery tests are not yet implemented by this document. Agents following the instructions maintain the state manually until those stages are delivered.
+Stages 1–3 provide shared entrypoint discovery, active modular/global rules, and the live checkpoint writer/inspector. Use the helper to record each step and inspect an interrupted run. It verifies Git state and ledger structure, not the actual truth of approvals, semantic decisions or scientific results. Automatic per-step enforcement, CI wiring and guarded cleanup are stage 4; complete cross-checkout/client recovery scenarios remain stage 5. Existing staging helpers are separate from this live handoff and do not replace it.
