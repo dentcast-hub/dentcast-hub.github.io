@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 40
-- Updated at (UTC): 2026-10-17T10:02:45+00:00
+- Generation: 43
+- Updated at (UTC): 2026-10-17T10:02:48+00:00
 - Content: "dentcast-plus/video-14"
 - Status: in_progress
-- Next canonical step: "C.0.1"
+- Next canonical step: "C.0.2"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 40,
-  "previous_sha256": "a989072ae91f4531887b9eec2fe627a7704d82b9a998778ff1dec8929cb167a4",
+  "generation": 43,
+  "previous_sha256": "56a4e925245c4627c85c060a204937fb98dfcfb9986b1ffbff2749b87fba4d74",
   "publication": {
     "blocker": null,
     "category": "dentcast_plus",
@@ -183,8 +183,8 @@ Its compact snapshot is a verification baseline, not current Git status.
         "evidence": [],
         "id": "C.0.1",
         "module": "03-litecast-and-page.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "Not LiteCast; category is dentcast_plus.",
+        "status": "skipped"
       },
       {
         "evidence": [],
@@ -492,7 +492,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "reports/video-14-publication.md": {
         "executable": false,
         "kind": "file",
-        "sha256": "a2f64fa306a08633d7727f3531bc0ea098ef8c5a77445f9862de96b7afc2910c"
+        "sha256": "8e361019991f8ccd05e96c90e94c6e98abc7fab9ce40e7ba96d12589f58396fe"
       }
     },
     "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
@@ -524,7 +524,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "b6170660c69a9602a47b9d81fc1df944bebaddfe",
-  "updated_at": "2026-10-17T10:02:45+00:00"
+  "updated_at": "2026-10-17T10:02:48+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->

@@ -77,3 +77,6 @@ Pulse announcement follows title-only pattern: new DentCast Plus video, linked a
 ## C.0
 Not LiteCast; category is dentcast_plus.
 
+## C.0.1
+Not LiteCast; category is dentcast_plus.
+
