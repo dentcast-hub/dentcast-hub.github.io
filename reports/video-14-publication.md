@@ -176,3 +176,6 @@ Executed and checked; see committed files and GitHub Actions log.
 ## C.4.14
 Ordinary video, not a challenge.
 
+## C.5.0
+Executed and checked; see committed files and GitHub Actions log.
+
