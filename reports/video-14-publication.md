@@ -47,3 +47,6 @@ Text and media supplied, no attached research paper; normal video publish. Prefl
 ## A
 Read live flat brain and glossary; all category shapes discovered. Latest dentcast_plus is video 13. PILLARS read from main-based builder.
 
+## B.1
+dentcast_plus explicitly selected by user.
+
