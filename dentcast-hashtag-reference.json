@@ -648,7 +648,7 @@
     "#پست و کور"
    ],
    "co_tags": [],
-   "count": 44,
+   "count": 45,
    "content_ids": [
     "episodes/episode-36",
     "episodes/episode-42",
@@ -693,7 +693,8 @@
     "insight/insight-88",
     "sharehub/share-30",
     "sharehub/share-31",
-    "sharehub/share-34"
+    "sharehub/share-34",
+    "dentcast-plus/video-14"
    ]
   },
   {
@@ -2600,6 +2601,36 @@
    ]
   },
   {
+   "key": "دنتکست_پلاس",
+   "tag": "#دنتکست_پلاس",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سری ویدیوهای دنتکست پلاس.",
+   "use_when": "روی هر مدخل dentcast-plus، و هیچ‌جای دیگر.",
+   "aliases": [
+    "dentcast plus"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "dentcast-plus/video-1",
+    "dentcast-plus/video-2",
+    "dentcast-plus/video-3",
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5",
+    "dentcast-plus/video-6",
+    "dentcast-plus/video-7",
+    "dentcast-plus/video-8",
+    "dentcast-plus/video-9",
+    "dentcast-plus/video-10",
+    "dentcast-plus/video-11",
+    "dentcast-plus/video-12",
+    "dentcast-plus/video-13",
+    "dentcast-plus/video-14"
+   ]
+  },
+  {
    "key": "دندان_اندوشده",
    "tag": "#دندان_اندوشده",
    "domain": null,
@@ -2763,35 +2794,6 @@
     "insight/insight-51",
     "insight/insight-60",
     "metanotes/meta-22"
-   ]
-  },
-  {
-   "key": "دنتکست_پلاس",
-   "tag": "#دنتکست_پلاس",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سری ویدیوهای دنتکست پلاس.",
-   "use_when": "روی هر مدخل dentcast-plus، و هیچ‌جای دیگر.",
-   "aliases": [
-    "dentcast plus"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "dentcast-plus/video-1",
-    "dentcast-plus/video-2",
-    "dentcast-plus/video-3",
-    "dentcast-plus/video-4",
-    "dentcast-plus/video-5",
-    "dentcast-plus/video-6",
-    "dentcast-plus/video-7",
-    "dentcast-plus/video-8",
-    "dentcast-plus/video-9",
-    "dentcast-plus/video-10",
-    "dentcast-plus/video-11",
-    "dentcast-plus/video-12",
-    "dentcast-plus/video-13"
    ]
   },
   {
@@ -21901,12 +21903,12 @@
   "translucent zirconia": "نسل زیرکونیا",
   "decoupling with time": "dwt",
   "پروتز ثابت چند واحدی": "بریج",
+  "treatment sequencing": "توالی درمان",
   "resin matrix ceramic": "سرامیک هیبرید",
   "dual step impression": "قالبگیری دو مرحله ای",
   "periodontal ligament": "pdl",
   "کانسپت بیو رستوریتیو": "بیو رستوریتیو",
   "vertical preparation": "تراش عمودی",
-  "treatment sequencing": "توالی درمان",
   "self adhesive cement": "سمان سلف ادهزیو",
   "مفصل تمپورومندیبولار": "مفصل فکی",
   "درمان نگهدارنده پریو": "spt",
@@ -22301,12 +22303,12 @@
   "taraz e shavahed": "تراز شواهد",
   "استخوان مارژینال": "تحلیل استخوان کرستال",
   "digital presence": "حضور آنلاین دندانپزشک",
+  "ریهبیلیتیشن دهان": "بازسازی کامل دهان",
   "فاصله بین دندانی": "دیاستم",
   "practice website": "سایت مطب",
   "temporary cement": "سمان موقت",
   "bonding protocol": "پروتکل باند",
   "cement selection": "انتخاب سمان",
-  "ریهبیلیتیشن دهان": "بازسازی کامل دهان",
   "بیومیمتیک ترمیمی": "ترمیم بیومیمتیک",
   "درمان با ایمپلنت": "درمان ایمپلنت",
   "فرم دهی بافت نرم": "مدیریت بافت نرم",
@@ -22949,6 +22951,7 @@
   "ضایعه سرویکال": "nccl",
   "آلوده شدن سطح": "آلودگی",
   "discoloration": "پایداری رنگ",
+  "فازبندی درمان": "توالی درمان",
   "resin coating": "رزین کوتینگ",
   "ceramic crown": "روکش سرامیکی",
   "کراون سرامیکی": "روکش سرامیکی",
@@ -22971,7 +22974,6 @@
   "cleansability": "بهداشت پذیری",
   "vertical prep": "تراش عمودی",
   "باز بودن تماس": "تماس باز",
-  "فازبندی درمان": "توالی درمان",
   "tooth display": "خط لب",
   "high lip line": "خط لب",
   "دیستورشن اسکن": "خطای اسکن",
@@ -23217,6 +23219,7 @@
   "بررسی مطالعه": "تحلیل مطالعه",
   "خواندن مقاله": "تحلیل مطالعه",
   "interference": "تداخل اکلوزال",
+  "فازهای درمان": "توالی درمان",
   "متال پالاتال": "روکش pfm",
   "شل شدن اسکرو": "شل شدن پیچ",
   "مالکیت محتوا": "مالکیت پلتفرم",
@@ -23239,7 +23242,6 @@
   "تداخل داروها": "تداخل دارویی",
   "تراش ورتیکال": "تراش عمودی",
   "dentin crack": "ترک عاجی",
-  "فازهای درمان": "توالی درمان",
   "درآوردن قطعه": "تکنیک خارج سازی",
   "ریپلیس دندان": "جایگزینی دندان",
   "حرکات لترالی": "حرکات اکسکورسیو",
@@ -23464,6 +23466,9 @@
   "اورال هایژن": "بهداشت دهان",
   "تجهیزات مطب": "تجهیزات دندانپزشکی",
   "دیس کالریشن": "پایداری رنگ",
+  "ترتیب درمان": "توالی درمان",
+  "توالی فازها": "توالی درمان",
+  "مراحل درمان": "توالی درمان",
   "متال سرامیک": "روکش pfm",
   "روکش سرامیک": "روکش سرامیکی",
   "لق شدن روکش": "شل شدن پیچ",
@@ -23483,9 +23488,6 @@
   "برداشت روکش": "برداشت ترمیم",
   "تشخیص کاریز": "تشخیص پوسیدگی",
   "کشف پوسیدگی": "تشخیص پوسیدگی",
-  "ترتیب درمان": "توالی درمان",
-  "توالی فازها": "توالی درمان",
-  "مراحل درمان": "توالی درمان",
   "نمایش دندان": "خط لب",
   "انحراف اسکن": "خطای اسکن",
   "فارماکولوژی": "داروشناسی",
@@ -24219,9 +24221,9 @@
   "آی دی اس": "ids",
   "تی ام دی": "tmd",
   "اندوکران": "اندوکراون",
+  "فول ماوس": "بازسازی کامل دهان",
   "diastema": "دیاستم",
   "سمان تمپ": "سمان موقت",
-  "فول ماوس": "بازسازی کامل دهان",
   "پرپ روکش": "تراش روکش",
   "لبه روکش": "مارجین روکش",
   "کانتیلور": "کانتی لیور",

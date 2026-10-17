@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 126
-- Updated at (UTC): 2026-10-17T10:05:28+00:00
+- Generation: 129
+- Updated at (UTC): 2026-10-17T10:05:40+00:00
 - Content: "dentcast-plus/video-14"
 - Status: in_progress
-- Next canonical step: "C.5"
+- Next canonical step: "C.5.5"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 126,
-  "previous_sha256": "97d838ccca1393af6529112e7057ef28e1c73c8ca47225acc8d9496a01c74694",
+  "generation": 129,
+  "previous_sha256": "77ea4b9bcef495acc828d29457e69b5a07ede3a56eaec2d5f1bfde72ac866adc",
   "publication": {
     "blocker": null,
     "category": "dentcast_plus",
@@ -412,11 +412,14 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "reports/video-14-publication.md#C.5",
+          "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/39023528344"
+        ],
         "id": "C.5",
         "module": "10-brain-and-pathways.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -491,6 +494,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     ],
     "target_paths": [
       "dentcast-brain.json",
+      "dentcast-hashtag-reference.json",
       "dentcast-plus/en/video-14.html",
       "dentcast-plus/index.html",
       "dentcast-plus/video-14.html",
@@ -508,7 +512,12 @@ Its compact snapshot is a verification baseline, not current Git status.
       "dentcast-brain.json": {
         "executable": false,
         "kind": "file",
-        "sha256": "f147d57eca7683fa20a628989e83d990aed00206322c53391713998aaafa5360"
+        "sha256": "b2caa700a0a49c4f8cd126bcbecf197893bfc1b51c1453b908c77ec16ec34968"
+      },
+      "dentcast-hashtag-reference.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "b63d2a7377770ee9ff1351621e48d914666dd299e46e044550de07487b64232b"
       },
       "dentcast-plus/en/video-14.html": {
         "executable": false,
@@ -528,7 +537,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "reports/video-14-publication.md": {
         "executable": false,
         "kind": "file",
-        "sha256": "4fda7a554b724ee096febb89e1c450241b8a72e9f300067266faef4b60e50bf6"
+        "sha256": "1790abdbad4289cf19d94d3697d7f1e4675805e0e756f2d20c4556e9e22fba09"
       }
     },
     "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
@@ -560,7 +569,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "b6170660c69a9602a47b9d81fc1df944bebaddfe",
-  "updated_at": "2026-10-17T10:05:28+00:00"
+  "updated_at": "2026-10-17T10:05:40+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->

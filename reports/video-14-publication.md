@@ -179,3 +179,39 @@ Ordinary video, not a challenge.
 ## C.5.0
 Executed and checked; see committed files and GitHub Actions log.
 
+Brain entry appended at global tail with exact same ordered keys as video 13. Canonical tags reused: #دنتکست_پلاس, #پست_و_کور; no new concept minted.
+```json
+{
+  "type": "dentcast_plus",
+  "video": "14",
+  "title": "پست و کور توی دندون لق می‌خوره و ثبات نداره، حالا چی‌کار کنیم؟",
+  "caption": "پست و کور توی دندون لق می‌خوره و ثبات نداره، حالا چی‌کار کنیم؟\n\nوقتی پست و کور روی دندون ثبات نداره، یکی از اولین چیزایی که به ذهنم می‌رسه یه نقطه تیزه، چه روی دندون چه روی خود پست و کور، که نمی‌ذاره پست کامل بنشینه.\n\nمثلاً یه قسمتی از دندون تیز بوده و من با دورالی روش پست و کور ساختم. اولش کیپ بوده و ثبات داشته، ولی بعد از ریختگی همون نقطه تیز مانع نشستن کامل شده. یا نوک پست خیلی تیز بوده و بعد از تبدیل شدن به فلز، ندولی یا ضایعه‌ای روش ایجاد شده و نمی‌ذاره بشینه.\n\nبرای همین توی همچین حالتی اول برمی‌گردم جای تیز رو بررسی می‌کنم و اگه لازم بود اصلاحش می‌کنم. خیلی وقتا همین مشکل رو حل می‌کنه، اما تو این مورد حل نشد.\n\nپس پست و کور رو از اول تکرار کردم. چون با این عدم ثبات نمی‌تونی روکش رو روش بذاری. وقتی روکش وارد سیکل جویدن بشه و نیروهای جویدن بهش وارد بشه، اگه ثبات نداشته باشیم، این نیروها به اینترفیس سمان و پست منتقل میشه، نیروی برشی ایجاد میکنه و در نهایت روکش همراه با سمان از دندون در میاد.",
+  "hashtags": [
+    "#دنتکست_پلاس",
+    "#پست_و_کور"
+  ],
+  "keywords": [
+    "لق خوردن پست و کور",
+    "عدم ثبات پست و کور",
+    "نشستن کامل پست",
+    "نقطه تیز پست و کور",
+    "ندول ریختگی",
+    "نیروی برشی سمان",
+    "cast post and core instability",
+    "post and core rocking",
+    "incomplete post seating",
+    "casting nodule",
+    "cement interface shear forces"
+  ],
+  "page_url": "/dentcast-plus/video-14.html",
+  "pillar": {
+    "primary": "fixed-pros",
+    "secondary": [],
+    "subtopic": "post-and-core"
+  }
+}
+```
+
+## C.5
+Executed and checked; see committed files and GitHub Actions log.
+
