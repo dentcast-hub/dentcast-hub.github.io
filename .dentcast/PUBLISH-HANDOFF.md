@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 118
-- Updated at (UTC): 2026-10-17T10:04:01+00:00
+- Generation: 119
+- Updated at (UTC): 2026-10-17T10:04:04+00:00
 - Content: "dentcast-plus/video-14"
 - Status: in_progress
 - Next canonical step: "C.4.14"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 118,
-  "previous_sha256": "cbb10feea5dbe873585e3f48e947f504967591f035a4a237428f4e9ea19c4a77",
+  "generation": 119,
+  "previous_sha256": "86ed138bbfb92c88dfaf84ac98e6ba25b38fb781781134f214b1e05b688532cb",
   "publication": {
     "blocker": null,
     "category": "dentcast_plus",
@@ -496,7 +496,9 @@ Its compact snapshot is a verification baseline, not current Git status.
   },
   "reconciliation": {
     "note": "Reviewed actual scoped work, current handoff, and previous remote delivery",
-    "observed_changes": []
+    "observed_changes": [
+      "WORK_OR_INDEX_CHANGED"
+    ]
   },
   "schema": "publish-handoff-v2",
   "snapshot": {
@@ -521,11 +523,6 @@ Its compact snapshot is a verification baseline, not current Git status.
         "executable": false,
         "kind": "file",
         "sha256": "feb7e89240dd494cca88076dd93cf52290a0a842c3ade94e0f9efb7c964d7165"
-      },
-      "plus/des-scores.json": {
-        "executable": false,
-        "kind": "file",
-        "sha256": "c300b34018e19c5de80e8962a732b3141e266c3c524226808859e08c3f5c57d9"
       },
       "reports/video-14-publication.md": {
         "executable": false,
@@ -562,7 +559,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "b6170660c69a9602a47b9d81fc1df944bebaddfe",
-  "updated_at": "2026-10-17T10:04:01+00:00"
+  "updated_at": "2026-10-17T10:04:04+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
