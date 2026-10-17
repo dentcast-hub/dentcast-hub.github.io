@@ -148,3 +148,8 @@ Fresh semantic inline analysis: post-and-core and dental-cement are exact techni
 ## C.4.8
 Executed and checked; see committed files and GitHub Actions log.
 
+Fresh semantic comparison: video-10 addresses direct acrylic cast-post fabrication; meta-20 addresses cast post fit; insight-54 addresses recurrent decementation. Two navigation capsules + three related slots = 5/5. No additional links or removals at this step.
+
+## C.4.9
+Executed and checked; see committed files and GitHub Actions log.
+
