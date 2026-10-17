@@ -105,4 +105,3 @@ describe('admin member and Spot UI', () => {
     expect(el('spotControlMode').textContent).toContain('چرخش فعلی سایت');
   });
 });
-

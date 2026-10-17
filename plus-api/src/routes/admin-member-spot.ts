@@ -68,4 +68,3 @@ export async function adminMemberSpotRoutes(app: FastifyInstance): Promise<void>
     }
   });
 }
-

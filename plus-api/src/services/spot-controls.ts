@@ -17,7 +17,7 @@ export async function publishedSpotDefaults() {
   for (const host of ['https://dentcast.ir', 'https://dentcast.org']) {
     try {
       const response = await fetch(`${host}/spot/spot-config.json?_dc=${Date.now()}`, {
-        cache: 'no-store', signal: AbortSignal.timeout(4000),
+        headers: { 'cache-control': 'no-cache' }, signal: AbortSignal.timeout(4000),
       });
       if (!response.ok) continue;
       const cfg = await response.json() as {
@@ -104,4 +104,3 @@ export async function uploadSpotImage(buffer: Buffer, extension: string): Promis
   if (!response.ok) throw new Error(`spot_storage_http_${response.status}`);
   return '/' + path;
 }
-

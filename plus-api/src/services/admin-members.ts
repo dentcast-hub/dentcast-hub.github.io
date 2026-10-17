@@ -80,4 +80,3 @@ export async function memberPayments(userId: string, offset: number, limit: numb
   `, [userId, limit + 1, offset]);
   return { ok: true, payments: result.rows.slice(0, limit), next_offset: result.rows.length > limit ? offset + limit : null };
 }
-

@@ -214,4 +214,3 @@ describe('persistent Spot controls', () => {
     expect(failed.statusCode).toBe(502); expect(failed.json().error).toBe('spot_storage_http_403');
   });
 });
-

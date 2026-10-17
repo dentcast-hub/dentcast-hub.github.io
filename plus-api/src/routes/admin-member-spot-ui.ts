@@ -186,4 +186,3 @@ export function renderMemberSpotControls(): string {
   })();
   </script>`;
 }
-
