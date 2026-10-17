@@ -1,6 +1,14 @@
 # DentCast Agent-Parity Contract
 
-**LIVE_MODULAR_PUBLISHING_ENABLED** — new real publishing follows `.dentcast/workflows/README.md` and its applicable full source slices. The original full `README.legacy.md`, `agent-parity.legacy.md`, and archived global client rules remain binding. Original founder approvals, scientific DES/Fidelity calls, builder ordering and Phase F remain mandatory; staging mock receipts do not authorize any real decision. **All rules below still apply.**
+**LIVE_MODULAR_PUBLISHING_ENABLED.** Legacy files are backup only; do not read them for execution or use them as authority.
+
+Before content changes, read `.dentcast/workflows/global/README.md`, its three complete active global rule files, and `.dentcast/workflows/agent-parity.md`. All clients use these same rules.
+
+New publication → `.dentcast/workflows/README.md`. Read complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then each applicable full module in canonical order. Preserve all approvals, source-dependent DES/Fidelity, category exceptions, builders, English and final Phase F. Stage-only planning tools and synthetic receipts do not perform or authorize live publication.
+
+## Interrupted publication
+
+For «انتشار ناقص داشتم», «ادامه انتشار», "resume publishing", or equivalent, first read `.dentcast/PUBLISH-HANDOFF.md`, then `.dentcast/workflows/publish-handoff.md`. Check the same fixed path before a new publication. Never overwrite unfinished work. Update it after every canonical step and before handing off; delete it only after verified completion. A missing file or unavailable work must be reported, not invented. Local commits and dirty files are not automatically available in another checkout.
 
 **هدف:** خروجیِ انتشار در این ریپو باید **مستقل از اینکه کدام ایجنت آن را اجرا
 می‌کند** یکسان باشد — Claude Code، Cursor، Codex/GPT، یا هر ایجنت دیگری. این
@@ -26,28 +34,14 @@
 
 ---
 
-## Rule 0 — فایل کانونی را کامل بخوان، هر بار
+## Rule 0 — فایل فعال را کامل بخوان
 
-1. قبل از هر اقدامی روی محتوا، فایل کانونیِ آن مسیر را **از اول تا آخر** بخوان.
-   خلاصه، از حفظ، یا «قبلاً خوانده‌ام» **مجاز نیست**. این فایل‌ها Hard Rule
-   دارند و یک بندِ نخوانده = یک صفحهٔ خرابِ منتشرشده.
-2. **`AGENTS.legacy.md` را هم بخوان — این تنها جایی است که برابریِ ایجنت‌ها خودبه‌خود
-   برقرار نیست.** Claude Code فایلِ `CLAUDE.md` را در **هر نوبت، خودکار** در
-   context دارد؛ Cursor و Codex ندارند — آن‌ها فقط چیزی را می‌بینند که
-   خودشان باز کرده‌اند. پس هر «ثابتِ سراسری» که در ورکفلو تکرار نشده، برای
-   کلود بدیهی است و برای بقیه **نامرئی**. جبرانش مکانیکی است: قبل از هر
-   انتشار/ویرایشِ صفحه، **بخش ۶ (قراردادهای ریپو)، بخش ۷ (سطوح Plus/Premium) و
-   بخش ۸ (ثابت‌های سراسری سایت)** از `AGENTS.legacy.md` را بخوان — همان محتوایی که
-   کلود مجانی دارد. بخش ۸ چیزهایی را نگه می‌دارد که یک صفحهٔ تازه می‌تواند
-   بی‌سروصدا خرابشان کند — GA4ِ deferred، دو `preconnect` با `crossorigin`، و
-   مهر نماد (سه سطح، `.ir`-only، روی صفحهٔ محتوا کلون نمی‌شود) — و قاعدهٔ
-   بامپِ `asset_version.py` برای هر اسِتِ مشترک در بخش ۶ است.
-3. اگر ابزارت فایل را تکه‌تکه می‌خواند (محدودیت context)، همهٔ تکه‌ها را بخوان.
-   `README.legacy.md` بیش از ۱۵۰۰ خط است؛ خواندن ۵۰۰ خط اول و شروع کار یک نقض است.
-4. اگر لوکال در دسترس نبود، نسخهٔ کانونی روی گیت‌هاب:
-   `https://github.com/dentcast-hub/dentcast-hub.github.io/blob/main/<path>`
-5. ترتیب اولویت هنگام تعارض: فایل کانونیِ ورکفلو > `CLAUDE.md`/`AGENTS.md` >
-   این فایل > قواعد Cursor. هیچ‌وقت برعکس.
+1. پیش از انتشار یا ویرایش محتوا، `.dentcast/workflows/global/README.md` و هر سه فایل فعال معرفی‌شده در آن را کامل بخوان؛ این منبع مشترک Cursor، Codex و Claude است. قواعد سراسری دیگر در فایل‌های بزرگِ ورودی یا بک‌آپ خوانده نمی‌شوند.
+2. برای انتشار جدید، روتر `.dentcast/workflows/README.md`، دو ماژول 01 و 02 و سپس هر ماژولِ مربوط را کامل و به ترتیب کانونی بخوان. خلاصه، حافظهٔ جلسه و خواندن بخشی از ماژول جای متن کامل آن را نمی‌گیرد.
+3. برای مسیرهای تخصصی، فایل کانونی همان مسیر کامل خوانده می‌شود؛ `routing-details.md` تریگرها و شرایط مسیرها را نگه می‌دارد.
+4. اگر ابزار فایل را تکه‌تکه می‌خواند، همهٔ تکه‌های فایل فعالِ لازم را بخوان. legacy فقط بک‌آپ است و در اجرا خوانده نمی‌شود.
+5. نسخهٔ گیت‌هاب را از برنچ کاری و revision تأییدشده بخوان؛ برای ادامهٔ انتشار، نبود فایل روی main دلیل نبود آن روی برنچ کاری نیست.
+6. اولویت: ورکفلوی کانونی و ماژول‌های فعال > قواعد سراسری فعال > این فایل > خلاصه‌های کلاینت. دستور کاربر مقدم است؛ تعارض واقعی را گزارش کن، به بک‌آپ برنگرد.
 
 ---
 
@@ -309,7 +303,11 @@ publishِ بلوکه‌شده، پس عمداً صفر برمی‌گرداند.
 | **گامی که آرتیفکتِ Plus/Premium می‌نویسد** | جدولِ `.cursor/rules/dentcast-plus-premium.mdc` |
 | تغییر در فهرست بیلدرها یا ترتیبشان | بخش ۳ همین فایل |
 | تغییر در گیت‌های تأیید یا Hard Ruleها | بخش ۱ و ۴ همین فایل |
-| ثابتِ سراسریِ تازه در `AGENTS.md` §۸ که یک صفحهٔ تازه می‌تواند خرابش کند | گام ۲ `README.md` (بررسیِ بقای کلون) + ردیفِ `C.2` بخش ۴ |
+| ثابتِ سراسریِ تازه در `global/site-invariants.md` که یک صفحهٔ تازه می‌تواند خرابش کند | گام ۲ `README.md` (بررسیِ بقای کلون) + ردیفِ `C.2` بخش ۴ |
 
 قاعده: **منطق در فایل کانونی، مسیر در روترها، رفتار در همین فایل.** هیچ‌کدام
 محتوای دیگری را کپی نمی‌کند.
+
+## Mandatory per-step checkpoints
+
+Read `.dentcast/workflows/publish-checkpoints.md`. Use the full canonical ledger from `tools/dentcast_publish_handoff.py plan`; write `started` before each action and its actual result afterward using `step`/`record`. Phase F uses the real `verify` command. Completion is `finish`, authorized cleanup commit/push, then `confirm-cleanup`; restore the same fixed handoff with `restore-cleanup` if cleanup fails. Hooks are supplemental and never mark scientific or semantic work complete.

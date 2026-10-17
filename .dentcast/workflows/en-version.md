@@ -146,7 +146,7 @@ Create `{type}/en/{file}.html` by composing two strictly-separated regions:
 - `<!DOCTYPE html>` + the opt-out comment + `<html lang="en" dir="ltr"
   data-dc-no-header>`.
 - The deferred GA4 snippet (measurement ID `G-GMM0WC8X3M`) — present exactly
-  once (per `CLAUDE.md` site-wide invariant).
+  once (per `.dentcast/workflows/global/site-invariants.md`).
 - The English topbar/header, toolbar drawer, radar overlay, and global-search
   chrome.
 - The `.lang-btn` CSS + button markup (its `href` is set in step 4).

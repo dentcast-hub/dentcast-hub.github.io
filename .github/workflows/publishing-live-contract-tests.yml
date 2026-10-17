@@ -1,0 +1,49 @@
+name: Live publishing contracts and recovery guards
+on:
+  push:
+    branches: [main, 'fix/**', 'refactor/**']
+    paths:
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - '.cursor/**'
+      - '.claude/**'
+      - '.codex/**'
+      - '.dentcast/PUBLISH-HANDOFF.md'
+      - '.dentcast/workflows/**'
+      - 'tools/dentcast_publish*.py'
+      - 'tools/verify_publish.py'
+      - 'tests/test_dentcast_publish*.py'
+      - 'tests/test_dentcast_agent_entrypoint_migration.py'
+      - 'tests/publishing-hooks.test.mjs'
+      - 'scripts/*publishing*.mjs'
+      - 'scripts/publishing-stop-guard.py'
+      - 'scripts/cursor-parity-notice.mjs'
+      - '.githooks/pre-commit'
+      - '.workflow-sync.json'
+      - '.github/workflows/publishing-live-contract-tests.yml'
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  live-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check active entrypoints and preserved source rules
+        run: python3 -m unittest discover -s tests -p test_dentcast_agent_entrypoint_migration.py -v
+      - name: Check live checkpoint and completion lifecycle
+        run: python3 -m unittest discover -s tests -p 'test_dentcast_publish*.py' -v
+      - name: Check hook adapters and shared rule routing
+        run: node --test tests/publishing-hooks.test.mjs
+      - name: Inspect committed checkpoint or cleanup boundary
+        run: python3 tools/dentcast_publish_handoff.py guard --phase ci

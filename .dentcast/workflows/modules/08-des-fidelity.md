@@ -1,3 +1,8 @@
+<!-- dentcast-checkpoint-protocol:v1 -->
+> **Live publication checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md`. Before EACH canonical step below, inspect the fixed `.dentcast/PUBLISH-HANDOFF.md` and mark that step `started` with `tools/dentcast_publish_handoff.py step`. After EACH completed/skipped/blocked/failed step, write its real evidence/reason with the same tool before continuing or handing off. Never auto-mark semantic or scientific work complete.
+> Checkpoint IDs for this module: C.4.13. Category exceptions require explicit skip reasons. The protocol defines dependency ordering (builders before final stamping; LiteCast links after page construction). Phase F completion uses the real `verify` command.
+<!-- /dentcast-checkpoint-protocol:v1 -->
+
 ### 4.13. DES — DentCast Evidence Score (run the scoring prompt, store the record)
 
 **Runs for EVERY type, on EVERY publish that produced a page**, in the basket
@@ -598,7 +603,7 @@ runs on: zero article pages carry that markup either, which is exactly why chang
 it costs no page edits. The renderer reads `plus/des-scores.json` by `content_id` and
 draws the band chip above the prose and the evaluation card after the body — the full
 display contract (placements, the five discrete band blocks, the «تجربهٔ بالینی»
-commentary variant, the colour rule) lives in **CLAUDE.md § "DES display"**.
+commentary variant, the colour rule) lives in **.dentcast/workflows/global/plus-premium.md — DES display**.
 
 **This step's obligation ends at the record.** It writes data; it does not edit the
 page. Status as of 2026-08-14: the record format and this step are live, the shared
@@ -608,7 +613,7 @@ lights up the moment that module ships. **`fidelity` is drawn too, from spec 2.8
 word, never a number) beside the band chip and a «تطابق با منابع» tab in the
 card, read from the record this step writes — so a 2.8 fidelity object goes
 live the moment it is stored, and an older stamp is ignored (approved mockup
-`.dentcast/des-fidelity-v28-mockup.html`; display rules in CLAUDE.md § DES).
+`.dentcast/des-fidelity-v28-mockup.html`; display rules in .dentcast/workflows/global/plus-premium.md — DES).
 Several per-source fidelity objects are drawn as **one** box — one tally, one
 word, each differing sentence naming its paper, a collapsed «به تفکیک منبع»
 row — by `des.js` alone; this step still stores one object per source.

@@ -1,12 +1,17 @@
 ---
-description: DentCast NEW content publishing via twelve modular source slices and unchanged founder gates.
+description: New content through the active twelve-module workflow and fixed publication handoff.
 alwaysApply: false
 ---
 
-# DentCast Cursor publishing — live modular connector
+# Cursor publishing
 
-**LIVE_MODULAR_PUBLISHING_ENABLED.** Read `.dentcast/workflows/agent-parity.md`, `AGENTS.legacy.md` §§6–8 and archived client rule `.dentcast/workflows/legacy/cursor/dentcast-publishing.mdc`.
+**LIVE_MODULAR_PUBLISHING_ENABLED.** Read `.dentcast/workflows/README.md`, `.dentcast/workflows/agent-parity.md` and the shared active files listed in `.dentcast/workflows/global/README.md`.
+Load complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then every applicable full module in the order listed in README. Preserve human approvals, source-based DES/Fidelity, category exceptions, builders, English, notification and Phase F. Staging utilities cannot replace real steps. Legacy files are backup only; do not read them for execution.
 
-Read `.dentcast/workflows/README.md`, all of `modules/01-hard-rules.md` and `02-routing-intake.md`, followed by each applicable full module in original order. `.dentcast/workflows/README.legacy.md` is the complete original authority; preserve all original approval gates, source-dependent DES/Fidelity, link decisions, build and final Phase F.
+## Interrupted publication
 
-Publish actual content through original authorized tooling. Do not mistake staging synthetic runners, mock scientific results or unverified checkpoint hashes for production execution.
+For «انتشار ناقص داشتم», «ادامه انتشار», "resume publishing", or equivalent, first read `.dentcast/PUBLISH-HANDOFF.md`, then `.dentcast/workflows/publish-handoff.md`. Check the same fixed path before a new publication. Never overwrite unfinished work. Update it after every canonical step and before handing off; delete it only after verified completion. A missing file or unavailable work must be reported, not invented. Local commits and dirty files are not automatically available in another checkout.
+
+## Mandatory per-step checkpoints
+
+Read `.dentcast/workflows/publish-checkpoints.md`. Use the full canonical ledger from `tools/dentcast_publish_handoff.py plan`; write `started` before each action and its actual result afterward using `step`/`record`. Phase F uses the real `verify` command. Completion is `finish`, authorized cleanup commit/push, then `confirm-cleanup`; restore the same fixed handoff with `restore-cleanup` if cleanup fails. Hooks are supplemental and never mark scientific or semantic work complete.

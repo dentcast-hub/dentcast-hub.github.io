@@ -1,3 +1,8 @@
+<!-- dentcast-checkpoint-protocol:v1 -->
+> **Live publication checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md`. Before EACH canonical step below, inspect the fixed `.dentcast/PUBLISH-HANDOFF.md` and mark that step `started` with `tools/dentcast_publish_handoff.py step`. After EACH completed/skipped/blocked/failed step, write its real evidence/reason with the same tool before continuing or handing off. Never auto-mark semantic or scientific work complete.
+> Checkpoint IDs for this module: C.4.10.1, C.4.10.2, C.4.10.3. Category exceptions require explicit skip reasons. The protocol defines dependency ordering (builders before final stamping; LiteCast links after page construction). Phase F completion uses the real `verify` command.
+<!-- /dentcast-checkpoint-protocol:v1 -->
+
 ### 4.10. Attached-paper branch (ANY type — triggered by the paper file, not the category)
 
 **Runs whenever the user supplied an accompanying research paper/article file —

@@ -1,3 +1,15 @@
+# Historical modularization development record — not live instructions
+
+This document records staging development at its original revision. Its former branch directions, activation status, backup-reading requirements and proposed workflow routes are historical, not current execution instructions.
+For live work read `.dentcast/workflows/README.md`, `.dentcast/workflows/global/README.md` and `.dentcast/workflows/agent-parity.md`.
+For «انتشار ناقص داشتم», first read `.dentcast/PUBLISH-HANDOFF.md`, then `.dentcast/workflows/publish-handoff.md`.
+Staging utilities remain restricted to staging. Do not follow the historical steps below to resume a real publication or assume their test results describe the current branch.
+Current repair branch and status: `.dentcast/workflows/PUBLISHING-REPAIR-PLAN.md`.
+
+---
+
+## Historical record (non-operative)
+
 # Independent high-effort review brief — DentCast publishing refactor
 
 ## Objective
