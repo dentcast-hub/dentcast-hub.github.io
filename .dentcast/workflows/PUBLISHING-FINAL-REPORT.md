@@ -1,8 +1,9 @@
 # Modular publication and recovery — implementation acceptance
 
 All five original repair stages and all four delivery follow-up stages are
-implemented on `fix/publishing-resume-contract`. They have not been merged into
-main. Clients using an older main checkout continue to see its older rules.
+implemented on `fix/publishing-resume-contract`. Integration into main is tracked
+in [PR #914](https://github.com/dentcast-hub/dentcast-hub.github.io/pull/914).
+Clients using an older checkout continue to see its older rules until updated.
 No content publication was performed by this repair.
 
 ## Resulting behavior
@@ -101,5 +102,6 @@ the 1,000-branch scan bound block incomplete discovery. Windows locking is
 implemented but not runtime-tested. A real authorized full publication and
 native-client observation remain operational evidence to collect later.
 
-Main integration is a separate action. Until it is authorized and completed,
-use the repair branch to inspect these instructions and implementations.
+Use a checkout containing the changes integrated through PR #914. Existing
+clones must update to that revision; merging cannot refresh another agent's
+already-open checkout or a client's cached instructions automatically.

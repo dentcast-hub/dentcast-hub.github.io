@@ -7,7 +7,8 @@ The active modular workflow and fixed `.dentcast/PUBLISH-HANDOFF.md` recovery
 contract are implemented on `fix/publishing-resume-contract`. They apply when
 that branch (or a later integration containing these changes) is checked out.
 An agent on an older main checkout still sees the older instructions. This
-repair has not merged main or published content.
+original acceptance preceded main integration and did not publish content.
+Later main integration is tracked in PR #914.
 
 ## Observed acceptance
 
