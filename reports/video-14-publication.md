@@ -50,3 +50,6 @@ Read live flat brain and glossary; all category shapes discovered. Latest dentca
 ## B.1
 dentcast_plus explicitly selected by user.
 
+## B.2
+Series 1..13 contiguous; next identifier video-14.
+
