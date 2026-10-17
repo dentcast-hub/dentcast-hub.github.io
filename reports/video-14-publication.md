@@ -140,3 +140,6 @@ resistance: at cap (5); unchanged c01a169c1b336582e6ab70c61076dcc0b41a104afd1169
 ## C.4.7
 Executed and checked; see committed files and GitHub Actions log.
 
+## C.4.7-b
+Not a glossary term publication.
+
