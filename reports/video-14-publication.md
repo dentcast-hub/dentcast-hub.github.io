@@ -226,3 +226,9 @@ Executed and checked; see committed files and GitHub Actions log.
 ## C.5.6-b
 bundle-post-core rejected at Gate 1: dentcast-plus is a case/video type, not a foundational bundle type. No failure-troubleshooting bundle. No bundle changed.
 
+Pulse top line: <li>یک ویدیوی تازه در دنت‌کست پلاس با عنوانِ «<a href="/dentcast-plus/video-14.html">پست و کور توی دندون لق می‌خوره و ثبات نداره، حالا چی‌کار کنیم؟</a>» منتشر شد</li>
+Removed lowest: <li>یک <a href="/sharehub/share-32.html">مطلب تازه در Share Hub</a> با عنوانِ «ویتا انامیک در کار روزمره» منتشر شد · ۱۹ مهر</li>
+
+## C.6
+Executed and checked; see committed files and GitHub Actions log.
+
