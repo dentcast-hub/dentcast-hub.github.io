@@ -1,5 +1,13 @@
 # DentCast Agent-Parity Contract
 
+## Interrupted publication — shared priority rule
+
+Legacy files are backup only; do not read them for execution. Older instructions below that require legacy reads are superseded; their remaining migration is tracked in `.dentcast/workflows/PUBLISHING-REPAIR-PLAN.md`.
+For «انتشار ناقص داشتم», «ادامه انتشار», "resume publishing", or equivalent: **first read `.dentcast/PUBLISH-HANDOFF.md`**, then `.dentcast/workflows/publish-handoff.md`. Also check that fixed path before starting a new publication; never overwrite an unfinished run.
+Maintain that temporary file after every canonical step and before handoff, record actual Git/work/approval/verification state, and remove it only after verified publication completion under the contract. If missing, report it and inspect available evidence; never invent resume state.
+The permanent contract is `.dentcast/workflows/publish-handoff.md`; the similarly named modularization handoff is historical development documentation.
+
+
 **LIVE_MODULAR_PUBLISHING_ENABLED** — new real publishing follows `.dentcast/workflows/README.md` and its applicable full source slices. The original full `README.legacy.md`, `agent-parity.legacy.md`, and archived global client rules remain binding. Original founder approvals, scientific DES/Fidelity calls, builder ordering and Phase F remain mandatory; staging mock receipts do not authorize any real decision. **All rules below still apply.**
 
 **هدف:** خروجیِ انتشار در این ریپو باید **مستقل از اینکه کدام ایجنت آن را اجرا

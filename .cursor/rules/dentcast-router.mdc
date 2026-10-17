@@ -3,6 +3,14 @@ description: DentCast Cursor always-on content router for live modular new publi
 alwaysApply: true
 ---
 
+## Interrupted publication — shared priority rule
+
+Legacy files are backup only; do not read them for execution. Older instructions below that require legacy reads are superseded; their remaining migration is tracked in `.dentcast/workflows/PUBLISHING-REPAIR-PLAN.md`.
+For «انتشار ناقص داشتم», «ادامه انتشار», "resume publishing", or equivalent: **first read `.dentcast/PUBLISH-HANDOFF.md`**, then `.dentcast/workflows/publish-handoff.md`. Also check that fixed path before starting a new publication; never overwrite an unfinished run.
+Maintain that temporary file after every canonical step and before handoff, record actual Git/work/approval/verification state, and remove it only after verified publication completion under the contract. If missing, report it and inspect available evidence; never invent resume state.
+The permanent contract is `.dentcast/workflows/publish-handoff.md`; the similarly named modularization handoff is historical development documentation.
+
+
 # DentCast Cursor live modular routing
 
 **LIVE_MODULAR_PUBLISHING_ENABLED.** Read complete archived global rules: `.dentcast/workflows/legacy/cursor/dentcast-router.mdc`, `AGENTS.legacy.md` §§6–8 and `CLAUDE.legacy.md`, plus the whole `.dentcast/workflows/agent-parity.md`.

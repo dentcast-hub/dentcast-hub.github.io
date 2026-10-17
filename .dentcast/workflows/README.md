@@ -1,5 +1,13 @@
 # DentCast Publishing — modular LIVE router
 
+## Interrupted publication — shared priority rule
+
+Legacy files are backup only; do not read them for execution. Older instructions below that require legacy reads are superseded; their remaining migration is tracked in `.dentcast/workflows/PUBLISHING-REPAIR-PLAN.md`.
+For «انتشار ناقص داشتم», «ادامه انتشار», "resume publishing", or equivalent: **first read `.dentcast/PUBLISH-HANDOFF.md`**, then `.dentcast/workflows/publish-handoff.md`. Also check that fixed path before starting a new publication; never overwrite an unfinished run.
+Maintain that temporary file after every canonical step and before handoff, record actual Git/work/approval/verification state, and remove it only after verified publication completion under the contract. If missing, report it and inspect available evidence; never invent resume state.
+The permanent contract is `.dentcast/workflows/publish-handoff.md`; the similarly named modularization handoff is historical development documentation.
+
+
 **LIVE_MODULAR_PUBLISHING_ENABLED.** Real new-content publishing is authorized via the existing canonical workflow and its twelve verbatim source slices. The complete original contract is preserved at [README.legacy.md](README.legacy.md). No original approval, exception or mandatory validation is waived.
 
 ## Always-load before routing
