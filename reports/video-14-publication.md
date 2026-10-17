@@ -237,3 +237,8 @@ All page-publish builders ran in canonical order. Episode and challenge builders
 ## C.8
 Executed and checked; see committed files and GitHub Actions log.
 
+Content version 9463ba49d1 -> 382ca3c329
+
+## C.7
+Executed and checked; see committed files and GitHub Actions log.
+
