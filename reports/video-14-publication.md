@@ -44,3 +44,6 @@ Active workflow sources loaded, category exceptions and user override reviewed; 
 ## 0
 Text and media supplied, no attached research paper; normal video publish. Preflight scanned every remote ref for fixed handoff: none found.
 
+## A
+Read live flat brain and glossary; all category shapes discovered. Latest dentcast_plus is video 13. PILLARS read from main-based builder.
+
