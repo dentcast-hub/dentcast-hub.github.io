@@ -126,3 +126,6 @@ Not a NoteCast; no parent episode mutation.
 ## C.4.5-b
 Not an episode/NoteCast pair.
 
+## C.4.6
+Not a Promptologist sequence.
+
