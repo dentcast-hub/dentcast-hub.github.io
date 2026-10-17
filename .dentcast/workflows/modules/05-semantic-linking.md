@@ -1,3 +1,8 @@
+<!-- dentcast-checkpoint-protocol:v1 -->
+> **Live publication checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md`. Before EACH canonical step below, inspect the fixed `.dentcast/PUBLISH-HANDOFF.md` and mark that step `started` with `tools/dentcast_publish_handoff.py step`. After EACH completed/skipped/blocked/failed step, write its real evidence/reason with the same tool before continuing or handing off. Never auto-mark semantic or scientific work complete.
+> Checkpoint IDs for this module: C.4.7, C.4.7-b, C.4.8, C.4.9. Category exceptions require explicit skip reasons. The protocol defines dependency ordering (builders before final stamping; LiteCast links after page construction). Phase F completion uses the real `verify` command.
+<!-- /dentcast-checkpoint-protocol:v1 -->
+
 ### 4.7. Semantic glossary back-linking (all content types)
 
 Runs whenever new content is published, regardless of category. The goal is to surface the new content from the glossary terms it genuinely relates to — by adding a single back-link on each truly-related term's page.

@@ -406,6 +406,8 @@ class HandoffTests(unittest.TestCase):
         self.assertEqual(code, 2)
         self.assertEqual(json.loads(err.getvalue())["error"], "HANDOFF_MISSING")
         inp = self.base / "operator-input.json"
+        import dentcast_publish_lifecycle as lifecycle
+        self.p["steps"] = lifecycle.plan()
         inp.write_text(json.dumps(self.p))
         with redirect_stdout(io.StringIO()):
             self.assertEqual(h.main(["--repo", str(self.root), "init", "--input", str(inp)]), 0)

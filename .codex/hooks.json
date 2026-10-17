@@ -6,9 +6,20 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"${CLAUDE_PROJECT_DIR:-.}/scripts/cursor-parity-notice.mjs\" 2>/dev/null || true",
+            "command": "node \"${CLAUDE_PROJECT_DIR:-${CODEX_PROJECT_DIR:-.}}/scripts/cursor-parity-notice.mjs\"",
             "timeout": 10,
             "statusMessage": "بررسی همسانی Codex/Cursor"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PROJECT_DIR:-${CODEX_PROJECT_DIR:-.}}/scripts/publishing-stop-guard.py\"",
+            "timeout": 25
           }
         ]
       }

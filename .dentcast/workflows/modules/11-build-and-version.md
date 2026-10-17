@@ -1,3 +1,8 @@
+<!-- dentcast-checkpoint-protocol:v1 -->
+> **Live publication checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md`. Before EACH canonical step below, inspect the fixed `.dentcast/PUBLISH-HANDOFF.md` and mark that step `started` with `tools/dentcast_publish_handoff.py step`. After EACH completed/skipped/blocked/failed step, write its real evidence/reason with the same tool before continuing or handing off. Never auto-mark semantic or scientific work complete.
+> Checkpoint IDs for this module: C.6, C.8, C.7. Category exceptions require explicit skip reasons. The protocol defines dependency ordering (builders before final stamping; LiteCast links after page construction). Phase F completion uses the real `verify` command.
+<!-- /dentcast-checkpoint-protocol:v1 -->
+
 ### 6. Pulse update
 
 Use the sentence + hyperlink word from intake Question 5. **No spoilers (see Question 5): the line names the piece by its title and never narrates its decision/mechanism/finding/conclusion.** If the drafted sentence describes content beyond the title, rewrite it before inserting — never ship a Pulse line that summarizes the article.

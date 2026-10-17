@@ -1,3 +1,8 @@
+<!-- dentcast-checkpoint-protocol:v1 -->
+> **Live publication checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md`. Before EACH canonical step below, inspect the fixed `.dentcast/PUBLISH-HANDOFF.md` and mark that step `started` with `tools/dentcast_publish_handoff.py step`. After EACH completed/skipped/blocked/failed step, write its real evidence/reason with the same tool before continuing or handing off. Never auto-mark semantic or scientific work complete.
+> Checkpoint IDs for this module: C.2.4, C.2.5, C.2.6, C.3, C.4, C.4.5, C.4.5-b, C.4.6. Category exceptions require explicit skip reasons. The protocol defines dependency ordering (builders before final stamping; LiteCast links after page construction). Phase F completion uses the real `verify` command.
+<!-- /dentcast-checkpoint-protocol:v1 -->
+
 ### 2.4. Semantic pillar & subtopic determination (propose + confirm)
 
 Decide the entry's `pillar.primary` and — when that pillar is structured — its `pillar.subtopic` **here, once**, before any step consumes them (the pillar capsule in step 2.5, and the brain write in step 5). Per **Hard Rule 6**, this is the **only** place the decision is made; later steps (5, 5.5) record and verify it but never re-decide it. Matching is genuinely **semantic** (conceptual relevance of the new content), **never** keyword/string matching.

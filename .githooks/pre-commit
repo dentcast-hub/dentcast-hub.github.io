@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Pre-commit guards. Two independent checks, in order:
+# Pre-commit guards. Checks, in order:
 #   1. Reject staged TEXT files containing NUL bytes.
-#   2. Warn when the hand-maintained instruction files drift apart.
+#   2. Check the active publication handoff or guarded cleanup.
+#   3. Warn when the hand-maintained client entrypoints drift apart.
 #
 # ── 1. NUL bytes ────────────────────────────────────────────────────────────
 #
@@ -42,6 +43,13 @@ if ((${#bad[@]})); then
   echo "  Clean with:  python3 tools/strip_text_nuls.py <file>" >&2
   echo "  Override (only if certain):  git commit --no-verify" >&2
   echo "" >&2
+  exit 1
+fi
+
+# Live publication recovery must be current before the commit. Paused runs are
+# allowed; a stale checkpoint, unstaged state or unguarded deletion is not.
+if ! python3 tools/dentcast_publish_handoff.py guard --phase pre-commit >/dev/null; then
+  echo "Commit blocked: reconcile and stage the latest publication checkpoint." >&2
   exit 1
 fi
 

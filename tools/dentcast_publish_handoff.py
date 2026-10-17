@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Fixed-path live publication checkpoint: init, record, inspect (no publishing).
+"""Fixed-path live publication checkpoint and guarded completion (no content authoring).
 
 Only writes .dentcast/PUBLISH-HANDOFF.md and an advisory lock in Git metadata.
-Never commits, pushes, fetches, restores files, runs receipts, or deletes state.
+Never commits, pushes, fetches, or restores content. Completion reruns the real
+mechanical gate and stages a recoverable handoff cleanup; see lifecycle commands.
 Network observation is opt-in --check-remote (git ls-remote, no fetch).
 """
 import argparse
@@ -15,8 +16,11 @@ from pathlib import Path, PurePosixPath
 import re
 import stat
 import subprocess
+import sys
 import tempfile
 from urllib.parse import urlsplit
+
+sys.dont_write_bytecode = True
 
 STATE_PATH = ".dentcast/PUBLISH-HANDOFF.md"
 SCHEMA = "publish-handoff-v1"
@@ -36,6 +40,8 @@ WORKFLOW_PATHS = (
     ".dentcast/workflows/global/plus-premium.md",
     ".dentcast/workflows/global/site-invariants.md",
     "tools/dentcast_publish_handoff.py",
+    "tools/dentcast_publish_lifecycle.py", "tools/verify_publish.py",
+    ".dentcast/workflows/publish-checkpoints.md",
 ) + tuple(".dentcast/workflows/modules/" + m for m in MODULES)
 BEGIN = "<!-- dentcast-publish-state-v1 -->\n```json\n"
 END = "\n```\n<!-- /dentcast-publish-state-v1 -->\n"
@@ -352,6 +358,11 @@ def load_state(root):
     require(path.is_file(), "HANDOFF_MISSING")
     require(path.stat().st_size <= LIMIT, "HANDOFF_TOO_LARGE")
     raw = path.read_bytes()
+    return parse_state(raw)
+
+
+def parse_state(raw):
+    require(len(raw) <= LIMIT, "HANDOFF_TOO_LARGE")
     try:
         text = raw.decode("utf-8")
         require(text.count(BEGIN) == 1 and text.count(END) == 1, "HANDOFF_FORMAT_INVALID")
@@ -497,6 +508,8 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
     validate_publication(publication)
     require(note is None or nonempty(note), "RECONCILIATION_NOTE_EMPTY")
     with locked(root):
+        import dentcast_publish_lifecycle as lifecycle
+        require(not lifecycle.pending(root), "CLEANUP_DELIVERY_PENDING")
         path = safe_path(root, STATE_PATH)
         if initial:
             require(not path.exists(), "HANDOFF_ALREADY_EXISTS")
@@ -598,6 +611,10 @@ def inspect(root, check_remote=False):
 
 
 def main(argv=None):
+    # Keep one Blocked class when the CLI entrypoint lazily imports lifecycle.
+    import sys
+    sys.modules.setdefault("dentcast_publish_handoff", sys.modules[__name__])
+    import dentcast_publish_lifecycle as lifecycle
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--repo", default=".", help="Any path within the intended Git checkout")
     sub = ap.add_subparsers(dest="command", required=True)
@@ -609,15 +626,73 @@ def main(argv=None):
             if command == "record":
                 p.add_argument("--expected-sha256", required=True)
                 p.add_argument("--reconcile-note")
+    p = sub.add_parser("plan")
+    p.add_argument("--paper-only", action="store_true")
+    p = sub.add_parser("step")
+    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--id", required=True)
+    p.add_argument("--status", choices=("started", "completed", "skipped", "blocked", "failed"), required=True)
+    p.add_argument("--evidence", action="append", default=[])
+    p.add_argument("--reason")
+    p.add_argument("--reconcile-note")
+    p = sub.add_parser("verify")
+    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--expect-title")
+    p.add_argument("--expect-caption")
+    p.add_argument("--catalog-id")
+    p = sub.add_parser("bind")
+    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--content-id", required=True)
+    p.add_argument("--category", required=True)
+    p.add_argument("--target-path", action="append", required=True)
+    p.add_argument("--evidence", required=True)
+    p = sub.add_parser("finish")
+    p.add_argument("--expected-sha256", required=True)
+    sub.add_parser("confirm-cleanup")
+    sub.add_parser("restore-cleanup")
+    p = sub.add_parser("guard")
+    p.add_argument("--phase", choices=("stop", "pre-commit", "ci"), required=True)
     args = ap.parse_args(argv)
     try:
-        root = Path(text_git(Path(args.repo).resolve(), "rev-parse", "--show-toplevel")).resolve()
-        if args.command == "inspect":
+        root = None if args.command == "plan" else Path(text_git(Path(args.repo).resolve(), "rev-parse", "--show-toplevel")).resolve()
+        if args.command == "plan":
+            result = {"status": "plan_template", "steps": lifecycle.plan(args.paper_only), "publication_completed": False}
+        elif args.command == "inspect":
+            if not safe_path(root, STATE_PATH).exists() and lifecycle.pending(root):
+                raise Blocked("CLEANUP_DELIVERY_PENDING:confirm-cleanup_or_restore-cleanup")
             result = inspect(root, args.check_remote)
+            lifecycle.require_plan(result["recorded_state"]["publication"])
+        elif args.command == "step":
+            result = lifecycle.step(root, args.expected_sha256, args.id, args.status,
+                                    args.evidence, args.reason, args.reconcile_note)
+        elif args.command == "verify":
+            result = lifecycle.verify(root, args.expected_sha256, args.expect_title, args.expect_caption, args.catalog_id)
+        elif args.command == "bind":
+            result = lifecycle.bind(root, args.expected_sha256, args.content_id, args.category, args.target_path, args.evidence)
+        elif args.command == "finish":
+            result = lifecycle.finish(root, args.expected_sha256)
+        elif args.command == "confirm-cleanup":
+            result = lifecycle.confirm_cleanup(root)
+        elif args.command == "restore-cleanup":
+            result = lifecycle.restore_cleanup(root)
+        elif args.command == "guard":
+            result = lifecycle.guard(root, args.phase)
         else:
             path = Path(args.input)
             require(path.stat().st_size <= LIMIT, "INPUT_TOO_LARGE")
             publication = decode_json(path.read_text(encoding="utf-8"))
+            lifecycle.require_plan(publication)
+            if args.command == "init":
+                require(all(s["status"] == "pending" for s in publication["steps"]), "INIT_REQUIRES_PENDING_PLAN")
+            else:
+                previous, _ = load_state(root)
+                old_f = next((s for s in previous["publication"]["steps"] if s["id"] == "F"), None)
+                new_f = next((s for s in publication["steps"] if s["id"] == "F"), None)
+                require(not new_f or new_f["status"] != "completed" or (old_f and old_f["status"] == "completed"),
+                        "USE_REAL_VERIFY_FOR_PHASE_F")
+                for receipt in previous["publication"]["context"]["validation"]:
+                    if isinstance(receipt, dict) and receipt.get("kind") in ("phase_f", "paper_catalog_gate"):
+                        require(receipt in publication["context"]["validation"], "MECHANICAL_RECEIPT_HISTORY_REQUIRED")
             result = save(root, publication, initial=args.command == "init",
                           expected=getattr(args, "expected_sha256", None),
                           note=getattr(args, "reconcile_note", None), check_remote=args.check_remote)

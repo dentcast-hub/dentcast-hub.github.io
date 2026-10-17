@@ -1,4 +1,4 @@
-# Live handoff helper — stage 3
+# Live handoff helper
 
 The temporary file is always `.dentcast/PUBLISH-HANDOFF.md`. The permanent contract is `publish-handoff.md`. Use Python 3.9+ and Git from the intended checkout (Python 3.11 is tested). The same CLI is available to Cursor, Claude Code and Codex when they have a local checkout and shell. GitHub-only agents can read the fixed Markdown file and public branch evidence; they cannot inspect an absent local checkout with this helper.
 
@@ -23,11 +23,11 @@ When actual files/index/HEAD have changed, inspect and reconcile the real change
 python3 tools/dentcast_publish_handoff.py record --input /tmp/publish-input.json --expected-sha256 <digest> --reconcile-note 'Reviewed the actual changes and rechecked affected evidence'
 ```
 
-A reconciliation note records the operator's review; it does not prove that review occurred. Do not use it to hide missing work. Workflow fingerprint changes require invalidating all steps to pending. Replacing existing input references after resolved steps also requires invalidation. Changing the plan or a resolved step requires a note. The helper refuses rebinding an existing run to another content ID, category, repository identity or branch. Resolve branch migration deliberately outside this initial tool scope rather than silently changing the saved identity.
+A reconciliation note records the operator's review; it does not prove that review occurred. Do not use it to hide missing work. Workflow fingerprint changes require invalidating all steps to pending. Replacing existing input references after resolved steps also requires invalidation. Changing the plan or a resolved step requires a note. The helper refuses rebinding an actual run to another content ID, category, repository identity or branch. The sole exception is a one-time `bind` of an unchanged `unassigned`/`pending` intake before authoring or side effects; see `publish-checkpoints.md`. Resolve branch migration deliberately outside this initial tool scope rather than silently changing the saved identity.
 
 ## Publication input
 
-This is a **shape example**, not a complete execution plan. Enumerate the actual applicable canonical substeps from the active modules; do not substitute two example steps for the real workflow. Intake can refine the plan with an explicit reconciliation note.
+This is a **shape example**, not a complete execution plan. Replace its `steps` with the full output of `plan` (or `plan --paper-only`); CLI init/record reject incomplete plans. New init plans must be pending. Enumerate the actual applicable canonical substeps from the active modules; do not substitute two example steps for the real workflow. Intake can refine the plan with an explicit reconciliation note.
 
 ```json
 {
@@ -73,12 +73,12 @@ The state is Markdown with a generated summary and one canonical fenced JSON rec
 - `unknown`: the remote/history has not been verified. Offline operation is allowed in the same checkout with operator review; cached refs never become fresh remote proof.
 - `yes`: the checkpoint bytes and clean local Git snapshot are available on the freshly observed remote branch, with no detected reconciliation blocker. This does not verify private inputs, external services, semantic receipts, missing approval requirements, or publication completion. The receiving checkout must still verify its own state.
 
-A commit containing only the handoff is permitted after the recorded HEAD so committing the checkpoint does not invalidate itself. Other HEAD changes require review. Refresh after actual work commits; do not recursively commit solely to record the checkpoint's own commit SHA. The helper never writes work files, commits, pushes, fetches, resets, restores content, executes receipt commands, or deletes the state. Structured success always includes `requires_operator_review: true` and `publication_completed: false`.
+A commit containing only the handoff is permitted after the recorded HEAD so committing the checkpoint does not invalidate itself. Other HEAD changes require review. Refresh after actual work commits; do not recursively commit solely to record the checkpoint's own commit SHA. The helper never writes content files, commits, pushes, fetches, resets, restores content, or executes arbitrary receipt commands. `finish` reruns the fixed mechanical gate and removes the temporary state only under the guarded protocol. Its Git-metadata recovery receipt persists until the cleanup deletion is delivered and `confirm-cleanup` verifies it. Other checkpoint commands do not claim publication success.
 
-Exit code 0 means the command wrote a checkpoint or found a structurally consistent checkpoint awaiting operator review. Exit code 2 means blocked/error. It never means a publication succeeded. Read the result before acting; do not suppress errors with `|| true`.
+Exit code 0 means the command wrote a checkpoint or found a structurally consistent checkpoint awaiting operator review. Exit code 2 means blocked/error. For init/record/inspect/step/bind/verify it never means a publication succeeded. Only `confirm-cleanup` can return verified completion of the delivered cleanup boundary. Read the result before acting; do not suppress errors with `|| true`.
 
 ## Boundaries and rollout
 
 The checkpoint is a cooperative recovery aid, not signed proof of an action, a semantic validator or a crash-proof work backup. Abrupt interruption after a side effect but before its receipt remains an unknown outcome. Git hashes preserve identity, not the actual bytes of missing work. Transfer, attachment retrieval and Git delivery remain explicit authorized actions. The state is limited to 2 MiB and does not support dirty submodules or special files in its watched inventory.
 
-The Linux implementation is tested using real local Git repositories and bare remotes. Windows lock support is implemented but has not been runtime-tested here. No cross-client runtime parity claim is made. Mandatory per-step wiring, CI integration and guarded completion cleanup arrive in stage 4; full receiving-agent recovery scenarios remain stage 5. Do not delete the state merely because all supplied ledger rows say completed.
+The Linux implementation is tested using real local Git repositories and bare remotes. Windows lock support is implemented but has not been runtime-tested here. No cross-client runtime parity claim is made. Per-step wiring, active CI and guarded cleanup are supplied in stage 4; see `publish-checkpoints.md` for the mandatory protocol. Full receiving-agent recovery scenarios remain stage 5. Do not delete the state merely because all supplied ledger rows say completed.

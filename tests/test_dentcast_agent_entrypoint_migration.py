@@ -68,7 +68,11 @@ class EntrypointMigrationTests(unittest.TestCase):
    with self.subTest(module=name):
     expected="".join(src[a-1:b])
     for old,new in EDITS.get(name,{}).items(): expected=expected.replace(old,new)
-    self.assertEqual(read(".dentcast/workflows/modules/"+name).rstrip("\n"),expected.rstrip("\n"))
+    actual=read(".dentcast/workflows/modules/"+name)
+    self.assertTrue(actual.startswith("<!-- dentcast-checkpoint-protocol:v1 -->"))
+    self.assertIn(".dentcast/workflows/publish-checkpoints.md",actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->",1)[0])
+    body=actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->\n\n",1)[1]
+    self.assertEqual(body.rstrip("\n"),expected.rstrip("\n"))
     positions.append(router.index("`modules/"+name+"`",start))
   self.assertEqual(positions,sorted(positions))
   for left,right in zip(RANGES,RANGES[1:]): self.assertEqual(left[1]+1,right[0])
