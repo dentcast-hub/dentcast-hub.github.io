@@ -1,0 +1,43 @@
+name: Video 14 publication runner
+on:
+  push:
+    branches: [codex/publish-video-14]
+    paths:
+      - '.github/workflows/codex-video-14.yml'
+      - '.dentcast/video14-run.py'
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run publication task
+        run: |
+          git config user.name "dentcast-hub"
+          git config user.email "241556184+dentcast-hub@users.noreply.github.com"
+          if [ -f .dentcast/video14-run.py ]; then
+            python3 .dentcast/video14-run.py
+          else
+            python3 - <<'PY'
+          import json, urllib.request
+          from pathlib import Path
+          req=urllib.request.Request('https://dentcast.arvanvod.ir/vkxeWA47OD/M9a0Oxm7ve/origin_config.json')
+          try:
+              data=urllib.request.urlopen(req,timeout=40).read().decode()
+              print('MEDIA_CONFIG_BEGIN')
+              print(data)
+              print('MEDIA_CONFIG_END')
+          except Exception as e:
+              print(type(e).__name__,str(e))
+          PY
+          fi
