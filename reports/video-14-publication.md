@@ -232,3 +232,8 @@ Removed lowest: <li>یک <a href="/sharehub/share-32.html">مطلب تازه د�
 ## C.6
 Executed and checked; see committed files and GitHub Actions log.
 
+All page-publish builders ran in canonical order. Episode and challenge builders inapplicable; no new flashcards/quiz authored for optional video type. Pillar flat list and post-and-core sidecar verified. Existing shared asset suffixes reviewed through git diff.
+
+## C.8
+Executed and checked; see committed files and GitHub Actions log.
+

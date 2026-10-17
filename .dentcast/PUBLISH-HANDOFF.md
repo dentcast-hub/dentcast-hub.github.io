@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 141
-- Updated at (UTC): 2026-10-17T10:05:53+00:00
+- Generation: 144
+- Updated at (UTC): 2026-10-17T10:05:58+00:00
 - Content: "dentcast-plus/video-14"
 - Status: in_progress
-- Next canonical step: "C.8"
+- Next canonical step: "C.7"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 141,
-  "previous_sha256": "9a3e9f44d483e25346611de95c63cb579d00d1d5524b645e9cf83e0996d5fd1b",
+  "generation": 144,
+  "previous_sha256": "b3e86ecbeadc6a262c2448f1402494a298a32ea8d5b64051459632c0448623f1",
   "publication": {
     "blocker": null,
     "category": "dentcast_plus",
@@ -462,11 +462,14 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "reports/video-14-publication.md#C.8",
+          "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/39023528344"
+        ],
         "id": "C.8",
         "module": "11-build-and-version.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -510,9 +513,37 @@ Its compact snapshot is a verification baseline, not current Git status.
       "dentcast-plus/en/video-14.html",
       "dentcast-plus/index.html",
       "dentcast-plus/video-14.html",
+      "glossary/index.html",
       "index.html",
+      "pillar/bonding/index.html",
+      "pillar/bonding/structure.json",
+      "pillar/ceramics/index.html",
+      "pillar/ceramics/structure.json",
+      "pillar/digital/index.html",
+      "pillar/digital/structure.json",
+      "pillar/esthetic/index.html",
+      "pillar/esthetic/structure.json",
+      "pillar/fixed-pros/index.html",
+      "pillar/fixed-pros/structure.json",
+      "pillar/implantology/index.html",
+      "pillar/implantology/structure.json",
+      "pillar/index.html",
+      "pillar/occlusion/index.html",
+      "pillar/occlusion/structure.json",
+      "pillar/operative/index.html",
+      "pillar/operative/structure.json",
+      "pillar/practice-infrastructure/index.html",
+      "pillar/practice-infrastructure/structure.json",
+      "pillar/removable-pros/index.html",
+      "pillar/removable-pros/structure.json",
+      "pillar/structure.json",
+      "pillar/treatment-planning/index.html",
+      "pillar/treatment-planning/structure.json",
+      "plus/content-index.json",
       "plus/pathways.json",
-      "reports/video-14-publication.md"
+      "reports/video-14-publication.md",
+      "sitemap.xml",
+      "up-board/index.json"
     ]
   },
   "reconciliation": {
@@ -548,10 +579,140 @@ Its compact snapshot is a verification baseline, not current Git status.
         "kind": "file",
         "sha256": "feb7e89240dd494cca88076dd93cf52290a0a842c3ade94e0f9efb7c964d7165"
       },
+      "glossary/index.html": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "0aa66214468cda619ee6f40987541ac54a838057f232effde978931ae04a45b7"
+      },
       "index.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "e1244a1c449fcb6ecb2b505019756696bc63b9f2bc19fbb75f74e96dccbcfa9b"
+        "sha256": "e2a23fb52864e9a58b426f8a3739a21d149de08ac8bd79e745e1bf43c199465c"
+      },
+      "pillar/bonding/index.html": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "59214c2958a870a3995d9889f86b2ad415dbcba7081efbb872567f9c289e2ccf"
+      },
+      "pillar/bonding/structure.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "cde539ec63730bc36cee70ea0a7c75bdc2a7ed0e1ec43d321999dd1b91c96920"
+      },
+      "pillar/ceramics/index.html": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "3bca21bfb46c1e2d9c6f0a32e02ae8919b88d276c5e064b138e658d14c7ee8d0"
+      },
+      "pillar/ceramics/structure.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "3f506b458ded633748fa6119dcfdcc753c32f519924d18a90f736f98bb35e431"
+      },
+      "pillar/digital/index.html": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "bafcd329862aa3eaf21624e16902a4cd5d165b2150481eadec74ba9de9d2f5d6"
+      },
+      "pillar/digital/structure.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "0e336b50f544fbc0972b74e5cfcdde003b5a3d45edc70ce2e7981eac29bb31df"
+      },
+      "pillar/esthetic/index.html": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "2f3f1be3d8f07a485f4701313f22e9639d00110b27bcce430790f840105099db"
+      },
+      "pillar/esthetic/structure.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "3b73992ac5c01c49be1de14bfa87d1796493a2105183b831d82ff4e22f436993"
+      },
+      "pillar/fixed-pros/index.html": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "03b00478f4aee35abe19612843ac82a16173850e1766e5890e14d08aa0c96fb0"
+      },
+      "pillar/fixed-pros/structure.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "cfdbb7240303d198b560c603bba158d8873650309d204811ca9c49fd2b67c54f"
+      },
+      "pillar/implantology/index.html": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "685e994334269c90eee7b26a9250f943515aa7e781ddc972f0f84f6bb9ae1b48"
+      },
+      "pillar/implantology/structure.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "8f9c4c2a1df5132df86a7b3ae56e5915f93eef003dee593d2b89a1483c937808"
+      },
+      "pillar/index.html": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "3a4a08627e10f3e978a5fd139b08d7af9e3e681cc9d9a0594cb6e433fb87285c"
+      },
+      "pillar/occlusion/index.html": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "1b547491757b57414e2f1392c74906bf1c4a5cbfba17618023f05e6f04f5091f"
+      },
+      "pillar/occlusion/structure.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "4cf031ce655ed3aa21366f6afaef1168eef21e8423e32ca9a8000b9df614cb2f"
+      },
+      "pillar/operative/index.html": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "15bf17d7f64393d4689e8b48cd21a3afe4d67437c1f736394d207611b71ea96b"
+      },
+      "pillar/operative/structure.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "3b35c45402bf45f64e66c3bfc0c56899f85a28660bf425aee34cdaef5644fe04"
+      },
+      "pillar/practice-infrastructure/index.html": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "6db31092147994223e3dba1c6ddbbac0319a09cba7eb1837621a9c93c0ceb78b"
+      },
+      "pillar/practice-infrastructure/structure.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "aefdb12f6ab97fafc144482858aa8229e87fd70f5662988eef029fa473714110"
+      },
+      "pillar/removable-pros/index.html": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "405d03f904d63c83d8d5b0506dd3fd4af9b2d8f8dcb6f11b53727e86823b1c46"
+      },
+      "pillar/removable-pros/structure.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "c1ffdda4412a41a9fb92fd063d27ff0fe51d38f59cca06a15dbbc30f3885bc39"
+      },
+      "pillar/structure.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "9893bb7de5e796d1664c2606afe8621c1520e8f5787a66dd68fc5dc1e5c7b2dc"
+      },
+      "pillar/treatment-planning/index.html": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "6e391ce0d79e56d3955e1f21c277cc88b1bc3d4f12a0b9d10ec4159bac6997b0"
+      },
+      "pillar/treatment-planning/structure.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "5e8e472c57d293de1d40445ef803d439df25754eb343cb07391a5e01c100f6b5"
+      },
+      "plus/content-index.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "01c4bcd44ed8dc378ccfbc0fdcba2ada521bd541d627ec3991a99ade748e0522"
       },
       "plus/pathways.json": {
         "executable": false,
@@ -561,7 +722,17 @@ Its compact snapshot is a verification baseline, not current Git status.
       "reports/video-14-publication.md": {
         "executable": false,
         "kind": "file",
-        "sha256": "19c22331ea56079b8055e2d1d5e3ee40b0a1711ba4c7c6a340956bc575bef11d"
+        "sha256": "016c9dcd9ead77e1eaf23a59336c2638170b8d126b78852d99ac55bb5f1f484d"
+      },
+      "sitemap.xml": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "1494d13c7dbde356a4a145b6525ce69a2cb5e3fe7bfcf92c102c8cb175c44c67"
+      },
+      "up-board/index.json": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "0f4b402bf42cee2b36aa8e47853937ef3edbe170d77c87d339bdbc5e817c3cd2"
       }
     },
     "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
@@ -593,7 +764,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "b6170660c69a9602a47b9d81fc1df944bebaddfe",
-  "updated_at": "2026-10-17T10:05:53+00:00"
+  "updated_at": "2026-10-17T10:05:58+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
