@@ -247,3 +247,6 @@ English mirror translated all five original paragraphs, preserved video type str
 ## D
 Executed and checked; see committed files and GitHub Actions log.
 
+## E
+Exactly one dc-notify marker; standard main push notification workflow owns delivery.
+
