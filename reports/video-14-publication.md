@@ -143,3 +143,8 @@ Executed and checked; see committed files and GitHub Actions log.
 ## C.4.7-b
 Not a glossary term publication.
 
+Fresh semantic inline analysis: post-and-core and dental-cement are exact technical concepts; linked once each. No generic "forces" or "stability" links. Episodes about cement types/bonding were excluded because their specific material protocols are not discussed here.
+
+## C.4.8
+Executed and checked; see committed files and GitHub Actions log.
+
