@@ -89,3 +89,6 @@ Not LiteCast; category is dentcast_plus.
 ## C.0.4
 Not LiteCast; category is dentcast_plus.
 
+## C.1
+Locked template dentcast-plus/video-13.html SHA256 ec14322eb5ece313fe0bfa76d528fef21e731e525b5f11e57ac6df325bd7040b
+
