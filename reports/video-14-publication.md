@@ -168,3 +168,8 @@ DentCast+ optional educational bank; this publication is video and caption only,
 ## C.4.12
 Explicit user instruction: no quiz. No FAQPage or scored questions authored.
 
+DES SOURCE: own caption, FULL_TEXT, COMMENTARY, 12/E, provisional=false. Exact quotes, arithmetic, band and null track fields checked. No paper/DOI was inferred. FIDELITY does not run on a self-commentary record.
+
+## C.4.13
+Executed and checked; see committed files and GitHub Actions log.
+
