@@ -114,7 +114,13 @@ export function renderMemberSpotControls(): string {
     var fields = { badge: 'spotBadge', title: 'spotTitle', text: 'spotText', cta: 'spotCta', url: 'spotUrl', image: 'spotImage' };
     function revokePreview() { if (objectUrl) URL.revokeObjectURL(objectUrl); objectUrl = null; }
     function formValue() { var v = { enabled: el('spotEnabled').checked }; Object.keys(fields).forEach(function (key) { v[key] = el(fields[key]).value.trim(); }); v.image = v.image || null; return v; }
-    function safeLink(url) { return !url || (!/[\s\\\u0000-\u001f\u007f]/.test(url) && (/^\/(?!\/)/.test(url) || /^https?:\/\//i.test(url))); }
+    function safeLink(url) {
+      if (!url) return true;
+      if (/[\s\\\u0000-\u001f\u007f]/.test(url)) return false;
+      if (/^\/(?!\/)/.test(url)) return true;
+      try { var parsed = new URL(url); return ['http:', 'https:'].includes(parsed.protocol) && !parsed.username && !parsed.password; }
+      catch (_) { return false; }
+    }
     function preview() {
       var v = formValue(), out = el('spotPreview'); out.replaceChildren();
       if (!v.enabled) { out.textContent = 'غیرفعال — در سایت نمایش داده نمی‌شود.'; return; }
@@ -145,9 +151,9 @@ export function renderMemberSpotControls(): string {
       Object.keys(j.placements).forEach(function (key) { var option = text('option', j.placements[key] + ' (' + key + ')'); option.value = key; el('spotPlacement').appendChild(option); });
       el('spotUploadButton').disabled = !j.upload_configured;
       el('spotStorageStatus').textContent = j.upload_configured ? 'تصویر در spot/img مخزن ذخیره می‌شود؛ نمایش عمومی پس از انتشار فایل سایت آماده است.' : 'آپلود به SPOT_GITHUB_TOKEN با دسترسی Contents:write همین مخزن در API نیاز دارد؛ مسیر تصاویر فعلی همچنان قابل استفاده است.';
-      return fetch('https://dentcast.ir/spot/spot-config.json', { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('site_config_unavailable'); return r.json(); }).catch(function () { return {}; });
+      return request('/admin/spot/defaults');
     }).then(function (j) { site = j; el('spotControlForm').hidden = false; el('spotControlStatus').textContent = ''; choose(); })
-      .catch(function (e) { el('spotControlStatus').textContent = 'خوانده نشد: ' + e.message; });
+      .catch(function (e) { el('spotControlForm').hidden = true; el('spotControlStatus').textContent = e.message === 'spot_defaults_unavailable' ? 'تنظیمات فعلی سایت دریافت نشد؛ صفحه را دوباره بارگذاری کنید. وضعیت جایگاه‌ها هنوز مشخص نیست.' : 'خوانده نشد: ' + e.message; });
     el('spotPlacement').onchange = choose;
     el('spotControlForm').addEventListener('input', preview);
     el('spotImage').addEventListener('input', function () { revokePreview(); preview(); });
@@ -180,3 +186,4 @@ export function renderMemberSpotControls(): string {
   })();
   </script>`;
 }
+

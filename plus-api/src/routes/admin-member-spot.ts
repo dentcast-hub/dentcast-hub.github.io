@@ -1,7 +1,7 @@
 import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { listMembers, memberCursor, memberPayments } from '../services/admin-members.js';
 import { one, query } from '../db.js';
-import { isSpotSlot, SPOT_PLACEMENTS, parseSpotCreative, spotControls, saveSpotControl,
+import { isSpotSlot, SPOT_PLACEMENTS, parseSpotCreative, spotControls, saveSpotControl, publishedSpotDefaults,
   MAX_SPOT_IMAGE_BYTES, spotImageExtension, uploadSpotImage } from '../services/spot-controls.js';
 
 // Registered INSIDE adminRoutes, after its onRequest requireAdmin hook. Public
@@ -35,6 +35,10 @@ export async function adminMemberSpotRoutes(app: FastifyInstance): Promise<void>
   });
   app.get('/admin/spot/config', async () => ({ ok: true, placements: SPOT_PLACEMENTS,
     slots: await spotControls(), upload_configured: !!process.env.SPOT_GITHUB_TOKEN }));
+  app.get('/admin/spot/defaults', async (_request, reply) => {
+    try { return await publishedSpotDefaults(); }
+    catch { return reply.code(503).send({ error: 'spot_defaults_unavailable' }); }
+  });
   app.put('/admin/spot/config/:slot', async (request, reply) => {
     const { slot } = request.params as { slot: string };
     if (!isSpotSlot(slot)) return reply.code(400).send({ error: 'invalid_slot' });
@@ -64,3 +68,4 @@ export async function adminMemberSpotRoutes(app: FastifyInstance): Promise<void>
     }
   });
 }
+

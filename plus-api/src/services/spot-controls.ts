@@ -10,6 +10,28 @@ export const SPOT_PLACEMENTS = {
 export type SpotSlot = keyof typeof SPOT_PLACEMENTS;
 export function isSpotSlot(slot: string): slot is SpotSlot { return Object.hasOwn(SPOT_PLACEMENTS, slot); }
 
+// The admin page runs on the API origin; browser fetches to the static site
+// depend on that site's CORS policy. Read the published defaults server-side
+// instead. Failure stays unknown and must never become enabled=false in the UI.
+export async function publishedSpotDefaults() {
+  for (const host of ['https://dentcast.ir', 'https://dentcast.org']) {
+    try {
+      const response = await fetch(`${host}/spot/spot-config.json?_dc=${Date.now()}`, {
+        cache: 'no-store', signal: AbortSignal.timeout(4000),
+      });
+      if (!response.ok) continue;
+      const cfg = await response.json() as {
+        enabled?: unknown; slots?: Record<string, { enabled?: unknown }>; creatives?: unknown;
+      };
+      if (typeof cfg?.enabled !== 'boolean' || !cfg.creatives || typeof cfg.creatives !== 'object'
+        || Array.isArray(cfg.creatives)
+        || !Object.keys(SPOT_PLACEMENTS).every(slot => typeof cfg.slots?.[slot]?.enabled === 'boolean')) continue;
+      return cfg;
+    } catch { /* the second mirror may still be available */ }
+  }
+  throw new Error('spot_defaults_unavailable');
+}
+
 export interface SpotCreative { id: string; badge: string; title: string; text: string; cta: string; url: string; image: string | null }
 
 export function validSpotLink(value: string): boolean {
@@ -82,3 +104,4 @@ export async function uploadSpotImage(buffer: Buffer, extension: string): Promis
   if (!response.ok) throw new Error(`spot_storage_http_${response.status}`);
   return '/' + path;
 }
+

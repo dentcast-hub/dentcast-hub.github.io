@@ -34,7 +34,7 @@ export async function listMembers(input: MemberQuery) {
                when s.expires_at <= now() then 'expired' else 'active' end) end as subscription,
            coalesce(s.status = 'active' and (s.expires_at is null or s.expires_at > now()), false)
              or exists(select 1 from premium_grants g where g.user_id = p.id
-               and g.revoked_at is null and not g.extends_subscription and g.expires_at > now()) as is_premium,
+               and g.revoked_at is null and g.expires_at > now()) as is_premium,
            (select jsonb_build_object('granted_at', g.granted_at, 'expires_at', g.expires_at,
                      'revoked_at', g.revoked_at, 'extends_subscription', g.extends_subscription)
               from premium_grants g where g.user_id = p.id order by g.expires_at desc, g.id desc limit 1) as league_grant,
@@ -80,3 +80,4 @@ export async function memberPayments(userId: string, offset: number, limit: numb
   `, [userId, limit + 1, offset]);
   return { ok: true, payments: result.rows.slice(0, limit), next_offset: result.rows.length > limit ? offset + limit : null };
 }
+

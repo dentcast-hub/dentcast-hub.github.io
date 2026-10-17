@@ -72,3 +72,9 @@ npm test -- test/admin-member-spot.test.ts test/admin-member-spot.dom.test.ts te
 The scoped Actions workflow runs this same build and these tests with PostgreSQL
 16, plus the repository's asset-version check. Tests use a dedicated test
 database and mocked image uploads, with no payment or notification delivery.
+
+The admin preview reads published static defaults through the same-origin
+`GET /admin/spot/defaults` endpoint. The API tries the .ir and .org mirrors with
+bounded timeouts and validates the placement switches. A failed read leaves the
+form unavailable with an explicit unknown-state message; it never becomes a
+fictional disabled placement. This read does not use the GitHub upload token.
