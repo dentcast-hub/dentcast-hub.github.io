@@ -52,7 +52,7 @@ Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details
 
 ## Completion
 
-Complete all applicable actions and approvals, verify Phase F and required delivery, provide the final report, then remove the temporary handoff as the completion contract specifies. Hashes or checkpoints alone are not publication. See `PUBLISHING-REPAIR-PLAN.md` for the ongoing repair status; per-step checkpointing and guarded cleanup follow `publish-checkpoints.md`; actual cross-client recovery exercises remain stage 5.
+Complete all applicable actions and approvals, verify Phase F and required delivery, provide the final report, then remove the temporary handoff as the completion contract specifies. Hashes or checkpoints alone are not publication. Read `publish-checkpoints.md` for per-step delivery/guarded cleanup and `publish-discovery.md` for remote recovery. `PUBLISHING-FINAL-REPORT.md` records delivered repair stages, integrated acceptance and the native-client/live-publication limits; the repair has not merged main.
 
 ## Mandatory per-step checkpoints
 

@@ -9,7 +9,7 @@ This follow-up is separate from the five delivered repair stages.
 | 1 | Mandatory per-step commit/push and confirmed-delivery barrier | Implemented; tests and CI verified in the stage commit report |
 | 2 | Simplify handoff around semantic progress, decisions, external outcomes and next action; derive Git facts from Git | Implemented in v2; compact verification evidence retained; validation below |
 | 3 | Discover active handoffs on GitHub branches; handle missing/multiple candidates without newest-branch guessing | Implemented; complete stable pagination, immutable-head file reads, unique selection and shared retrieval protocol |
-| 4 | Full delivery/discovery/recovery acceptance and report | Pending |
+| 4 | Full delivery/discovery/recovery acceptance and report | Implemented; two-clone integrated acceptance and bounded final report |
 
 Stage 1 changes the shared live protocol used by all client entrypoints. The
 writer blocks advancement until the current checkpoint/work is on the freshly
@@ -92,3 +92,18 @@ Recorded real responses were also passed through the production selector:
 This exercised connected GitHub reads and the selector; the standalone Python
 HTTP transport was tested with controlled responses, not a live configured token.
 No synthetic handoff was created on GitHub and no publication was performed.
+
+## Stage 4
+
+The [final implementation report](PUBLISHING-FINAL-REPORT.md) records the complete
+shared behavior and remaining native-client/live-publication limits. Four new
+integrated scenarios use fresh production CLI processes, actual Git checkouts
+and a bare remote with a Git-backed discovery API adapter: full synthetic
+paper-only handoff/cleanup, a genuinely rejected push, transferred unknown
+external outcomes, and interrupted cleanup restoration. One additional compact
+test verifies that a committed work+handoff checkpoint is reconstructed from Git
+without a redundant metadata rewrite. Unknown-outcome retries/raw-record bypass
+and stale post-commit local observations were fixed after integration exposed
+them. All 125 local checks passed (111 Python, 8 migration, 6 Node). The stage
+commit's actual CI is verified after push, not assumed from workflow presence.
+No main merge, scientific execution or real publication was performed.

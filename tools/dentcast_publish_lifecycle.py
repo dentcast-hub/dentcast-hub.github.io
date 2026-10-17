@@ -101,6 +101,8 @@ def guard_step_transition(root, state, publication, expected):
                and s['status'] in ('started', 'completed', 'skipped')]
     h.require(len(entered) <= 1, 'ONE_STEP_PER_CHECKPOINT_REQUIRED')
     for row in entered:
+        h.require(not any(a['status'] in ('started', 'outcome_unknown') for a in publication['external_actions']),
+                  'EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY')
         h.require(row['id'] == h.next_step(state['publication']),
                   'START_NEXT_STEP_IN_SEPARATE_CHECKPOINT')
         before = state['publication']['steps']
@@ -118,6 +120,9 @@ def step(root, expected, sid, status, evidence, reason, note=None):
               "BIND_INTAKE_IDENTITY_BEFORE_AUTHORING")
     h.require(not (sid == "F" and status == "completed"), "USE_REAL_VERIFY_FOR_PHASE_F")
     h.require(status != "completed" or row["status"] == "started", "STEP_MUST_BE_STARTED_FIRST")
+    if status == 'started':
+        h.require(not any(a['status'] in ('started', 'outcome_unknown') for a in p['external_actions']),
+                  'EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY')
     row.update(status=status, evidence=evidence, reason=reason)
     p["status"] = "blocked" if status in ("blocked", "failed") else "in_progress"
     p["blocker"] = f"{sid}: {reason}" if p["status"] == "blocked" else None

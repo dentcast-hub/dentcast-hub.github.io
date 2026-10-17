@@ -404,7 +404,8 @@ def remember_observation(root, state, sha):
 
 def hydrate_observation(root, state, sha):
     path = observation_path(root)
-    if path.is_file():
+    committed = git(root, 'show', 'HEAD:' + STATE_PATH, optional=True)
+    if not (committed is not None and digest(committed) == sha) and path.is_file():
         require(path.stat().st_size <= LIMIT * 2, 'OBSERVATION_TOO_LARGE')
         cached = decode_json(path.read_text(encoding='utf-8'))
         if cached.get('sha256') == sha:
@@ -413,8 +414,8 @@ def hydrate_observation(root, state, sha):
             candidate, _ = parse_full_state(render_full(candidate).encode(), limit=LIMIT * 2)
             require(digest(render(candidate).encode()) == sha, 'OBSERVATION_BASELINE_MISMATCH')
             return candidate
-    # A fresh checkout has no private observation. Reconstruct its delivered
-    # baseline from Git, never adopt current dirty index/status as prior evidence.
+    # Once committed, Git supersedes the pre-commit private observation even
+    # in the same checkout. Never adopt current dirty index/status as evidence.
     revision = None
     # Locate the commit that wrote these checkpoint bytes, not a later HEAD
     # that happens to retain them while changing publication work elsewhere.

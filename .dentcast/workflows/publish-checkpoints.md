@@ -48,11 +48,12 @@ authorize starting the next step. An uncertain external result is reconciled
 before any retry. The helper observes Git; it does not automatically commit,
 push, grant publication authorization, or transfer files.
 
-A work commit changes HEAD/index relative to the pre-commit checkpoint.
-Review the actual commit and use a specific `--reconcile-note` when starting
-the next step; the writer snapshots the current Git state while checking the
-previous delivered handoff. A note cannot bypass delivery. Do not create an
-endless checkpoint-only commit loop just to embed a commit's own SHA.
+A work commit changes HEAD/index relative to its pre-commit observation. Once
+the exact handoff is committed, Git supplies that baseline in the original
+checkout as well as a fresh clone; unchanged expected fingerprints do not
+require a redundant metadata rewrite. Actual later changes still require
+review and a specific reconciliation note. A note cannot bypass delivery.
+Do not create a checkpoint-only commit loop to embed a commit's own SHA.
 
 The v2 handoff stores semantic state and compact verification fingerprints.
 Current Git facts are computed at inspection/delivery, not copied into the
@@ -72,6 +73,10 @@ For repeating scientific checks or other dynamic substeps, add explicit ledger I
 
 Before an external action, record a unique action ID with `started`; afterward record the observed outcome/evidence. Unknown outcomes block a retry until reconciled. The registry aggregate does not excuse recording per-action and per-unit progress.
 
+The step command and transition writer reject starting/restarting a step while
+an external outcome is started/unknown; raw `record` cannot bypass that guard.
+Keep the blocker/receipt, verify the real outcome, then reconcile it explicitly.
+
 ## Verification and completion
 
 At page Phase F run the helper's **real verification** command, which executes the repository's fixed `tools/verify_publish.py` on the single actual content ID:
@@ -87,7 +92,7 @@ For paper-only, after Parts 1/2 and before reporting, run `verify --expected-sha
 Finish the report at G and record its real reference. Record `context.delivery` as objects with nonempty `scope` and nonempty `evidence` reference lists for actual required deployment/live/delivery checks. A bare Boolean is rejected; the agent must verify the evidence. Persist the public-safe checkpoint and work on the authorized branch before cleanup:
 
 1. Stage only the scoped public work. Refresh the handoff **after staging**, with reviewed state/evidence, then stage the latest handoff. The pre-commit guard checks the staged state matches the current file and the captured work/index.
-2. Commit and push through the normal authorized Git workflow. After a work commit, refresh metadata with `record` and a reconciliation note; a subsequent handoff-only commit is recognized without self-reference loops. Verify current remote state with `inspect --check-remote`.
+2. Commit and push through the normal authorized Git workflow. Verify current remote state with `inspect --check-remote`. An exact committed checkpoint is reconstructed from Git; refresh with `record` and a reconciliation note only for actual additional changes/evidence, not merely to embed the commit's SHA.
 3. Run `finish --expected-sha256 <digest>`. It requires the full resolved ledger, no unresolved recorded gates, evidence references, clean watched work, the exact delivered handoff and a freshly synchronized remote. It reruns the actual applicable mechanical gate and checks work did not change during it. Only then does it remove the fixed temporary file locally.
 4. `finish` returns **cleanup_pending_delivery**, not publication success. A durable private recovery receipt is kept in Git metadata; it is not a second publication handoff in the repository. Commit/push **only the handoff deletion**, then run `confirm-cleanup`. Success requires the deletion to be observed on the synchronized remote branch and unchanged publication work. The private recovery receipt is then removed.
 5. If cleanup/push fails or is interrupted, run `restore-cleanup`. It restores the same fixed `.dentcast/PUBLISH-HANDOFF.md` as `cleanup_pending`, preserving the old work fingerprint so drift is still reported. It never restores content or repeats an external action. Keep it until reconciliation and successful delivery.
@@ -101,4 +106,4 @@ The helper never commits, pushes, deploys or runs an external receipt's commands
 - Install local Git hooks once per checkout with `git config core.hooksPath .githooks`. The pre-commit guard permits consistent paused handoffs, blocks stale/unstaged checkpoints and unguarded deletion, and validates cleanup-only commits. It does not infer a publication from arbitrary content edits when no handoff exists. GitHub API commits bypass local hooks, so agents using them must preserve the same contract and CI verifies committed checkpoints/cleanup boundaries.
 - `.github/workflows/publishing-live-contract-tests.yml` runs on main, fix/refactor branches and PRs. It tests active contracts, recovery/cleanup, hooks, and the committed-state boundary, including nested module/global changes. Historical staging CI remains separate and is not the active live-workflow certification.
 
-Full cross-client continuation exercises and actual content publication verification remain stage 5. Tests that use fixture verifiers prove guard behavior, not scientific correctness or a real published page.
+Read `PUBLISHING-FINAL-REPORT.md` for integrated CLI/Git/discovery acceptance and remaining native-client/live-publication limits. Tests that use fixture verifiers prove guard behavior, not scientific correctness or a real published page.

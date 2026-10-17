@@ -74,6 +74,20 @@ class CompactHandoffTests(unittest.TestCase):
         view = self.cli('inspect', code=2)
         self.assertIn('WORK_OR_INDEX_CHANGED', view['issues'])
 
+    def test_committed_work_supersedes_stale_local_index_without_rewriting_handoff(self):
+        self.prepare()
+        (self.root/'note.html').write_text('fixture:recorded work')
+        run(self.root, 'add', 'note.html')
+        self.init()
+        before = (self.root/h.STATE_PATH).read_bytes()
+        run(self.root, 'add', h.STATE_PATH)
+        run(self.root, 'commit', '-m', 'work and checkpoint together')
+        run(self.root, 'push', 'origin', 'main')
+        view = self.cli('inspect', '--check-remote')
+        self.assertEqual(view['issues'], [])
+        self.assertEqual(view['git_snapshot_portable'], 'yes')
+        self.assertEqual((self.root/h.STATE_PATH).read_bytes(), before)
+
     def test_fresh_clone_does_not_hide_work_commits_after_the_checkpoint(self):
         self.prepare()
         self.init()

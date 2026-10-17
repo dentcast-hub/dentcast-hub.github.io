@@ -1,5 +1,8 @@
 # Publication recovery acceptance — 2026-10-17
 
+This records the original recovery acceptance. The delivery follow-up's latest
+integrated result and operational limits are in `PUBLISHING-FINAL-REPORT.md`.
+
 The active modular workflow and fixed `.dentcast/PUBLISH-HANDOFF.md` recovery
 contract are implemented on `fix/publishing-resume-contract`. They apply when
 that branch (or a later integration containing these changes) is checked out.
