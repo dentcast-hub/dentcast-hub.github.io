@@ -7,26 +7,31 @@ const user = (id: string) => ({ id, display_name: '<member>', created_at: '2026-
 const controls = { home: { enabled: true, creative: {
   badge: 'b', title: '<title>', text: 'body', cta: '', url: '', image: null,
 } } };
-let calls: { url: string; opts: any }[], members: any[];
+let calls: { url: string; opts: any }[], members: any[], defaultsFailure: boolean;
+let fetcher: ReturnType<typeof vi.fn>;
 const response = (body: unknown) => ({ ok: true, json: async () => body });
 const flush = async () => { for (let i = 0; i < 20; i++) await Promise.resolve(); };
 function el<T extends HTMLElement>(id: string): T { return document.getElementById(id) as T; }
 
+function bootPanel() {
+  const html = renderMemberSpotControls();
+  document.body.innerHTML = html.replace(/<script>[\s\S]*?<\/script>/g, '');
+  const script = html.match(/<script>([\s\S]*?)<\/script>/)![1];
+  new Function('document', 'fetch', 'URL', script)(document, fetcher, URL);
+}
+
 beforeEach(() => {
-  calls = []; members = [{ users: [user('one')], next_cursor: 'next' }, { users: [user('two')], next_cursor: null }];
-  const fetcher = vi.fn(async (url: string, opts: any = {}) => {
+  defaultsFailure = false; calls = []; members = [{ users: [user('one')], next_cursor: 'next' }, { users: [user('two')], next_cursor: null }];
+  fetcher = vi.fn(async (url: string, opts: any = {}) => {
     calls.push({ url: String(url), opts });
     if (String(url).startsWith('/admin/users?')) {
       return response(members.shift() || { users: [], next_cursor: null });
     }
     if (url === '/admin/spot/config') return response({ placements: { home: 'خانه', article: 'مقاله', sidebar: 'کنار' }, slots: structuredClone(controls), upload_configured: false });
-    if (String(url).includes('spot-config.json')) return response({ slots: { home: { enabled: true } }, creatives: {}, rotation: { sequence: ['premium'] } });
+    if (url === '/admin/spot/defaults') return defaultsFailure ? { ok: false, json: async () => ({ error: 'spot_defaults_unavailable' }) } : response({ slots: { home: { enabled: true } }, creatives: {}, rotation: { sequence: ['premium'] } });
     return response({ ok: true });
   });
-  const html = renderMemberSpotControls();
-  document.body.innerHTML = html.replace(/<script>[\s\S]*?<\/script>/g, '');
-  const script = html.match(/<script>([\s\S]*?)<\/script>/)![1];
-  new Function('document', 'fetch', 'URL', script)(document, fetcher, URL);
+  bootPanel();
 });
 afterEach(() => { document.body.replaceChildren(); vi.restoreAllMocks(); });
 
@@ -73,6 +78,29 @@ describe('admin member and Spot UI', () => {
     el('spotControlForm').dispatchEvent(new Event('submit', { cancelable: true })); await flush();
     expect(calls.some(c => c.opts.method === 'PUT')).toBe(false);
     expect(el('spotControlStatus').textContent).toContain('معتبر نیست');
+  });
+  it('keeps preview running and blocks saving malformed destinations', async () => {
+    await flush();
+    for (const value of ['https://', 'http://[', 'https://user:pass@example.com/']) {
+      el<HTMLInputElement>('spotUrl').value = value;
+      el('spotControlForm').dispatchEvent(new Event('input', { bubbles: true }));
+      expect(el('spotPreview').querySelector('a')).toBeNull();
+      el('spotControlForm').dispatchEvent(new Event('submit', { cancelable: true }));
+      await flush();
+      expect(el('spotControlStatus').textContent).toContain('معتبر نیست');
+    }
+    expect(calls.some(c => c.opts.method === 'PUT')).toBe(false);
+    el<HTMLInputElement>('spotUrl').value = 'https://example.com/';
+    el('spotControlForm').dispatchEvent(new Event('input', { bubbles: true }));
+    expect(el('spotPreview').querySelector('a')?.href).toBe('https://example.com/');
+  });
+  it('uses a same-origin defaults request and keeps failed loads explicitly unknown', async () => {
+    await flush(); defaultsFailure = true; calls = []; bootPanel(); await flush();
+    expect(calls.some(c => c.url === '/admin/spot/defaults')).toBe(true);
+    expect(calls.some(c => c.url.startsWith('https://dentcast.'))).toBe(false);
+    expect(el('spotControlForm').hidden).toBe(true);
+    expect(el('spotControlStatus').textContent).toContain('وضعیت جایگاه‌ها هنوز مشخص نیست');
+    expect(calls.some(c => c.opts.method === 'PUT')).toBe(false);
   });
   it('resets the selected placement through the authenticated server endpoint', async () => {
     await flush(); el<HTMLButtonElement>('spotReset').click(); await flush();

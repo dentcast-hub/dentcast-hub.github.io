@@ -4,8 +4,8 @@ import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb } from './helpers.js';
 import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
-import { activateDays, revokeSubscription } from '../src/services/subscription.js';
-import { MAX_SPOT_IMAGE_BYTES } from '../src/services/spot-controls.js';
+import { activateDays, revokeSubscription, sweepExpiredSubscriptions, subscriptionReport } from '../src/services/subscription.js';
+import { MAX_SPOT_IMAGE_BYTES, SPOT_PLACEMENTS } from '../src/services/spot-controls.js';
 
 let app: FastifyInstance;
 const headers = { authorization: 'Basic ' + Buffer.from(`${config.admin.user}:${config.admin.password}`).toString('base64') };
@@ -31,6 +31,7 @@ describe('member review', () => {
       { method: 'GET' as const, url: '/admin/users/search?q=عضو' },
       { method: 'GET' as const, url: '/admin/users/bad/payments' },
       { method: 'GET' as const, url: '/admin/spot/config' },
+      { method: 'GET' as const, url: '/admin/spot/defaults' },
       { method: 'PUT' as const, url: '/admin/spot/config/home', payload: '{', headers: { 'content-type': 'application/json' } },
       { method: 'POST' as const, url: '/admin/spot/image', payload: 'not an image', headers: { 'content-type': 'image/webp' } },
       { method: 'POST' as const, url: '/admin/spot/config/home/reset' },
@@ -84,6 +85,21 @@ describe('member review', () => {
     expect(users.find((u: { id: string }) => u.id === active).is_premium).toBe(true);
     expect(users.find((u: { id: string }) => u.id === expired).is_premium).toBe(false);
   });
+  it('agrees with the canonical subscription sweep/report when a stacked prize survives revocation', async () => {
+    const id = await member('stacked prize');
+    await activateDays(id, 2, { source: 'admin' });
+    await pool.query(`insert into premium_grants (user_id, week_start, expires_at, extends_subscription)
+      values ($1, '2026-01-03', now() + interval '1 day', true)`, [id]);
+    await revokeSubscription(id, { source: 'admin' });
+    await sweepExpiredSubscriptions();
+    expect((await pool.query('select tier from profiles where id = $1', [id])).rows[0].tier).toBe('premium');
+    expect((await subscriptionReport()).totals.league_premium_now).toBe(1);
+    const response = await app.inject({ url: '/admin/users', headers });
+    expect(response.json().users.find((u: { id: string }) => u.id === id)).toMatchObject({ is_premium: true, subscription: null });
+    await pool.query('update premium_grants set revoked_at = now() where user_id = $1', [id]);
+    const revoked = await app.inject({ url: '/admin/users', headers });
+    expect(revoked.json().users.find((u: { id: string }) => u.id === id).is_premium).toBe(false);
+  });
   it('recovers historical bank references already stored in activation audit metadata', async () => {
     const id = await member();
     const payment = (await pool.query("insert into payments (user_id, amount_rial, gateway, ref_id, status, months) values ($1, 1000, 'zibal', 'legacy-track', 'paid', 1) returning id", [id])).rows[0].id;
@@ -105,6 +121,35 @@ describe('member review', () => {
     expect(rows.find((r: { rail: string }) => r.rail === 'gateway')).toMatchObject({ ref_id: 'track', order_id: 'order', bank_ref: 'bank', status: 'canceled' });
     expect(rows.find((r: { rail: string }) => r.rail === 'manual').reference).toBe('DENT-123');
     expect(JSON.stringify(rows)).not.toContain('private-code');
+  });
+});
+
+describe('published Spot defaults', () => {
+  const defaults = { enabled: true, slots: Object.fromEntries(Object.keys(SPOT_PLACEMENTS).map(slot => [slot, { enabled: true }])),
+    rotation: { sequence: ['premium'] }, creatives: { premium: { title: 'published' }, sponsors: [] } };
+  it('reads published defaults server-side without a GitHub token', async () => {
+    const remote = vi.fn().mockResolvedValue(new Response(JSON.stringify(defaults), { status: 200 }));
+    vi.stubGlobal('fetch', remote);
+    const response = await app.inject({ url: '/admin/spot/defaults', headers });
+    expect(response.statusCode).toBe(200); expect(response.json()).toEqual(defaults);
+    expect(remote.mock.calls[0][0]).toMatch(/^https:\/\/dentcast\.ir\/spot\/spot-config\.json\?_dc=/);
+    expect(response.headers['cache-control']).toBe('no-store');
+    expect(JSON.stringify(remote.mock.calls)).not.toContain('authorization');
+  });
+  it('uses the second published mirror when the first fails', async () => {
+    const remote = vi.fn().mockRejectedValueOnce(new Error('network')).mockResolvedValueOnce(new Response(JSON.stringify(defaults), { status: 200 }));
+    vi.stubGlobal('fetch', remote);
+    expect((await app.inject({ url: '/admin/spot/defaults', headers })).json()).toEqual(defaults);
+    expect(remote.mock.calls[1][0]).toContain('https://dentcast.org/spot/spot-config.json');
+  });
+  it('reports unavailable or malformed defaults without inventing disabled placements', async () => {
+    for (const body of ['{}', 'null', JSON.stringify({ enabled: true, slots: {}, creatives: {} })]) {
+      vi.stubGlobal('fetch', vi.fn().mockImplementation(async () => new Response(body, { status: 200 })));
+      const response = await app.inject({ url: '/admin/spot/defaults', headers });
+      expect(response.statusCode).toBe(503); expect(response.json()).toEqual({ error: 'spot_defaults_unavailable' });
+    }
+    vi.stubGlobal('fetch', vi.fn().mockImplementation(async () => new Response('{}', { status: 503 })));
+    expect((await app.inject({ url: '/admin/spot/defaults', headers })).statusCode).toBe(503);
   });
 });
 
