@@ -1,0 +1,41 @@
+name: Deploy video 14 correction files
+on:
+  push:
+    branches: [codex/correct-video-14-post]
+    paths: ['.github/workflows/correct-video-14-fast-deploy.yml']
+permissions:
+  contents: read
+jobs:
+  deploy-correction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: e08b941c50a69aa43fef3174fc7f0954d4a5e2c7
+          persist-credentials: false
+      - name: Install existing deploy client
+        run: pip install awscli --quiet
+      - name: Upload exact correction files with cache headers
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_KEY }}
+          AWS_EC2_METADATA_DISABLED: 'true'
+          ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}
+          ARVAN_ENDPOINT: ${{ secrets.ARVAN_ENDPOINT }}
+        run: |
+          python3 - <<'PY'
+          import os, subprocess
+          files = {
+              'dentcast-plus/video-14.html': 'text/html; charset=utf-8',
+              'dentcast-plus/en/video-14.html': 'text/html; charset=utf-8',
+              'dentcast-brain.json': 'application/json; charset=utf-8',
+              'index.html': 'text/html; charset=utf-8',
+              'player.html': 'text/html; charset=utf-8',
+              'plus/des-scores.json': 'application/json; charset=utf-8',
+              'service-worker.js': 'application/javascript; charset=utf-8',
+          }
+          for path, mime in files.items():
+              subprocess.run(['aws','s3','cp',path,'s3://'+os.environ['ARVAN_BUCKET']+'/'+path,'--endpoint-url',os.environ['ARVAN_ENDPOINT'],'--cache-control','no-cache','--content-type',mime,'--only-show-errors'],check=True)
+              print('CORRECTION_UPLOADED',path,flush=True)
+          PY
