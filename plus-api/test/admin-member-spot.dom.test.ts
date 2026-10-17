@@ -8,13 +8,21 @@ const controls = { home: { enabled: true, creative: {
   badge: 'b', title: '<title>', text: 'body', cta: '', url: '', image: null,
 } } };
 let calls: { url: string; opts: any }[], members: any[], defaultsFailure: boolean;
+let fetcher: ReturnType<typeof vi.fn>;
 const response = (body: unknown) => ({ ok: true, json: async () => body });
 const flush = async () => { for (let i = 0; i < 20; i++) await Promise.resolve(); };
 function el<T extends HTMLElement>(id: string): T { return document.getElementById(id) as T; }
 
+function bootPanel() {
+  const html = renderMemberSpotControls();
+  document.body.innerHTML = html.replace(/<script>[\s\S]*?<\/script>/g, '');
+  const script = html.match(/<script>([\s\S]*?)<\/script>/)![1];
+  new Function('document', 'fetch', 'URL', script)(document, fetcher, URL);
+}
+
 beforeEach(() => {
   defaultsFailure = false; calls = []; members = [{ users: [user('one')], next_cursor: 'next' }, { users: [user('two')], next_cursor: null }];
-  const fetcher = vi.fn(async (url: string, opts: any = {}) => {
+  fetcher = vi.fn(async (url: string, opts: any = {}) => {
     calls.push({ url: String(url), opts });
     if (String(url).startsWith('/admin/users?')) {
       return response(members.shift() || { users: [], next_cursor: null });
@@ -23,10 +31,7 @@ beforeEach(() => {
     if (url === '/admin/spot/defaults') return defaultsFailure ? { ok: false, json: async () => ({ error: 'spot_defaults_unavailable' }) } : response({ slots: { home: { enabled: true } }, creatives: {}, rotation: { sequence: ['premium'] } });
     return response({ ok: true });
   });
-  const html = renderMemberSpotControls();
-  document.body.innerHTML = html.replace(/<script>[\s\S]*?<\/script>/g, '');
-  const script = html.match(/<script>([\s\S]*?)<\/script>/)![1];
-  new Function('document', 'fetch', 'URL', script)(document, fetcher, URL);
+  bootPanel();
 });
 afterEach(() => { document.body.replaceChildren(); vi.restoreAllMocks(); });
 
@@ -90,7 +95,7 @@ describe('admin member and Spot UI', () => {
     expect(el('spotPreview').querySelector('a')?.href).toBe('https://example.com/');
   });
   it('uses a same-origin defaults request and keeps failed loads explicitly unknown', async () => {
-    defaultsFailure = true; await flush();
+    await flush(); defaultsFailure = true; calls = []; bootPanel(); await flush();
     expect(calls.some(c => c.url === '/admin/spot/defaults')).toBe(true);
     expect(calls.some(c => c.url.startsWith('https://dentcast.'))).toBe(false);
     expect(el('spotControlForm').hidden).toBe(true);
