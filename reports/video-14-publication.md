@@ -120,3 +120,6 @@ Template SHA256 before = after = ec14322eb5ece313fe0bfa76d528fef21e731e525b5f11e
 ## C.4
 Executed and checked; see committed files and GitHub Actions log.
 
+## C.4.5
+Not a NoteCast; no parent episode mutation.
+

@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 79
-- Updated at (UTC): 2026-10-17T10:03:23+00:00
+- Generation: 82
+- Updated at (UTC): 2026-10-17T10:03:25+00:00
 - Content: "dentcast-plus/video-14"
 - Status: in_progress
-- Next canonical step: "C.4.5"
+- Next canonical step: "C.4.5-b"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 79,
-  "previous_sha256": "ee7b443f97194c02cb18374a76e856088cecf32f34b21eab4571e05a5292d502",
+  "generation": 82,
+  "previous_sha256": "db59181c38227522b12199ffe895540d798549a75aa8c60f3bd86f4bac7eaad6",
   "publication": {
     "blocker": null,
     "category": "dentcast_plus",
@@ -295,8 +295,8 @@ Its compact snapshot is a verification baseline, not current Git status.
         "evidence": [],
         "id": "C.4.5",
         "module": "04-taxonomy-and-navigation.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "Not a NoteCast; no parent episode mutation.",
+        "status": "skipped"
       },
       {
         "evidence": [],
@@ -513,7 +513,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "reports/video-14-publication.md": {
         "executable": false,
         "kind": "file",
-        "sha256": "bd7ca59534d68e818b823e99f37bc17cdd8adff9f49042eb39436e6f5de906dc"
+        "sha256": "934e95bf88bd9e9a75a0f5150d9a8fe7b8a20829892559b32e0945356ff9e831"
       }
     },
     "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
@@ -545,7 +545,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "b6170660c69a9602a47b9d81fc1df944bebaddfe",
-  "updated_at": "2026-10-17T10:03:23+00:00"
+  "updated_at": "2026-10-17T10:03:25+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
