@@ -418,5 +418,51 @@ def execute():
     # Preserve the completed Phase F and await live delivery rather than claiming it early.
     print('READY_FOR_REVIEW_AND_MAIN_DELIVERY',flush=True)
 
+def finalize():
+    command('git','config','core.hooksPath','.githooks',quiet=True)
+    deliver('review final verification and reconcile runner update')
+    def report_and_verify():
+        changed=command('git','diff','--name-only','origin/main...HEAD',quiet=True).stdout.splitlines()
+        restored=[]
+        def restore_endings(paths):
+            for path in paths:
+                current=Path(path)
+                if not current.is_file():
+                    continue
+                old=subprocess.run(['git','show','origin/main:'+path],capture_output=True)
+                if old.returncode or b'\x00' in old.stdout:
+                    continue
+                if old.stdout.count(b'\r\n') > old.stdout.count(b'\n') / 2:
+                    data=current.read_bytes()
+                    updated=data.replace(b'\r\n',b'\n').replace(b'\n',b'\r\n')
+                    if data!=updated:
+                        current.write_bytes(updated)
+                        restored.append(path)
+        restore_endings(changed)
+        command('python3','tools/stamp-version.py')
+        restore_endings(['index.html','player.html','service-worker.js'])
+        append_report('Existing CRLF file formats preserved for focused diffs: '+', '.join(restored))
+        append_report('Final changes reviewed against main. Temporary GitHub execution script and workflow are removed from the release tree after guarded handoff cleanup.\n\n'+ '\n'.join('- '+p for p in changed if p not in [HANDOFF,'.dentcast/video14-run.py','.github/workflows/codex-video-14.yml']))
+        command('git','add','-A',quiet=True)
+        record_context('validation',{'kind':'release_review','evidence':[REPORT],'result':'Reviewed scoped content, preserved source file line endings, reran version stamper after all hashed-source writes'})
+        result=helper('verify','--expected-sha256',digest(),'--expect-title',TITLE,'--expect-caption',CAPTION,check=False)
+        print('FINAL_PHASE_F',json.dumps(result,ensure_ascii=False),flush=True)
+        if result['status']=='blocked':
+            raise RuntimeError(result['verification']['summary'])
+        receipt=result['verification']
+        append_report('Exact mechanical gate: `python3 tools/verify_publish.py dentcast-plus/video-14 --expect-title <confirmed author title> --expect-caption <exact original caption>`\n\n'+receipt['summary']+'\n\n```text\n'+receipt['output']+'\n```')
+        record_context('delivery',{'scope':'Verified publication files and full checkpoint history delivered on authorized working branch for main release','evidence':['https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/'+os.environ['GITHUB_RUN_ID'],'phase_f:'+receipt['output_sha256'],'https://github.com/dentcast-hub/dentcast-hub.github.io/tree/codex/publish-video-14']})
+    run_step('G',report_and_verify,evidence='Final report with actual Phase F output, scoped changed files, category exceptions and branch delivery receipts.')
+    result=helper('finish','--expected-sha256',digest())
+    print('FINISH_RESULT',json.dumps(result,ensure_ascii=False),flush=True)
+    if result['status']!='cleanup_pending_delivery':
+        raise RuntimeError('Guarded completion did not authorize cleanup')
+    command('git','add','-u','--',HANDOFF,quiet=True)
+    command('git','commit','-m','Complete video 14 publication handoff cleanup',quiet=True)
+    command('git','push','origin','HEAD:codex/publish-video-14',quiet=True)
+    result=helper('confirm-cleanup')
+    print('CLEANUP_CONFIRMED',json.dumps(result,ensure_ascii=False),flush=True)
+
+
 if __name__ == '__main__':
-    execute()
+    finalize()
