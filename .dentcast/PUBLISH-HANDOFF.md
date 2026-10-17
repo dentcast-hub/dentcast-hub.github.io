@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 100
-- Updated at (UTC): 2026-10-17T10:03:43+00:00
+- Generation: 103
+- Updated at (UTC): 2026-10-17T10:03:46+00:00
 - Content: "dentcast-plus/video-14"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.4.10.2"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 100,
-  "previous_sha256": "e848f207eaf466057477f2bb19ddbdbcc4960891c129f2f7a32e11e58138c570",
+  "generation": 103,
+  "previous_sha256": "2716e2a668d1075cc14dc254fcbed52f32801bb7e06d06cec785e399537a4c1a",
   "publication": {
     "blocker": null,
     "category": "dentcast_plus",
@@ -353,8 +353,8 @@ Its compact snapshot is a verification baseline, not current Git status.
         "evidence": [],
         "id": "C.4.10.1",
         "module": "06-paper-ingestion.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "No attached paper; no Drive/catalog/citation action.",
+        "status": "skipped"
       },
       {
         "evidence": [],
@@ -522,7 +522,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "reports/video-14-publication.md": {
         "executable": false,
         "kind": "file",
-        "sha256": "7c512497843416e2068a195c2136cdb6a1aa5f1e7529349c1bc4fefe4bb6ab51"
+        "sha256": "e5b062a0a754d15b00c325ab412d3be62e4c86e39f3d63856a51df4de18a7fbf"
       }
     },
     "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
@@ -554,7 +554,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "b6170660c69a9602a47b9d81fc1df944bebaddfe",
-  "updated_at": "2026-10-17T10:03:43+00:00"
+  "updated_at": "2026-10-17T10:03:46+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->

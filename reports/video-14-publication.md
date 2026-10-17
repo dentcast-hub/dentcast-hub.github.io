@@ -153,3 +153,6 @@ Fresh semantic comparison: video-10 addresses direct acrylic cast-post fabricati
 ## C.4.9
 Executed and checked; see committed files and GitHub Actions log.
 
+## C.4.10.1
+No attached paper; no Drive/catalog/citation action.
+
