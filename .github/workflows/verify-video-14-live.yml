@@ -15,7 +15,7 @@ jobs:
           import html, json, re, time, urllib.request
           from html.parser import HTMLParser
           TITLE = json.loads("\"پست و کور توی دندون لق می‌خوره و ثبات نداره، حالا چی‌کار کنیم؟\"")
-          CAPTION = json.loads("\"پست و کور توی دندون لق می‌خوره و ثبات نداره، حالا چی‌کار کنیم؟\\n\\nوقتی پست و کور روی دندون ثبات نداره، یکی از اولین چیزایی که به ذهنم می‌رسه یه نقطه تیزه، چه روی دندون چه روی خود پست و کور، که نمی‌ذاره پست کامل بنشینه.\\n\\nمثلاً یه قسمتی از دندون تیز بوده و من با دورالی روش پست و کور ساختم. اولش کیپ بوده و ثبات داشته، ولی بعد از ریختگی همون نقطه تیز مانع نشستن کامل شده. یا نوک پست خیلی تیز بوده و بعد از تبدیل شدن به فلز، ندولی یا ضایعه‌ای روش ایجاد شده و نمی‌ذاره بشینه.\\n\\nبرای همین توی همچین حالتی اول برمی‌گردم جای تیز رو بررسی می‌کنم و اگه لازم بود اصلاحش می‌کنم. خیلی وقتا همین مشکل رو حل می‌کنه، اما تو این مورد حل نشد.\\n\\nپس پست و کور رو از اول تکرار کردم. چون با این عدم ثبات نمی‌تونی روکش رو روش بذاری. وقتی روکش وارد سیکل جویدن بشه و نیروهای جویدن بهش وارد بشه، اگه ثبات نداشته باشیم، این نیروها به اینترفیس سمان و پست منتقل میشه، نیروی برشی ایجاد میکنه و در نهایت روکش همراه با سمان از دندون در میاد.\"")
+          CAPTION = json.loads("\"پست و کور توی دندون لق می‌خوره و ثبات نداره، حالا چی‌کار کنیم؟\\n\\nوقتی پست و کور روی دندون ثبات نداره، یکی از اولین چیزایی که به ذهنم می‌رسه یه نقطه تیزه، چه روی دندون چه روی خود پست و کور، که نمی‌ذاره پست کامل بنشینه.\\n\\nمثلاً یه قسمتی از دندون تیز بوده و من با دورالی روش پست و کور ساختم. اولش کیپ بوده و ثبات داشته، ولی بعد از ریختگی همون نقطه تیز مانع نشستن کامل شده. یا نوک پست خیلی تیز بوده و بعد از تبدیل شدن به فلز، ندولی یا ضایعه‌ای روش ایجاد شده و نمی‌ذاره بشینه.\\n\\nبرای همین توی همچین حالتی اول برمی‌گردم جای تیز رو بررسی می‌کنم و اگه لازم بود اصلاحش می‌کنم. خیلی وقتا همین مشکل رو حل می‌کنه، اما تو این مورد حل نشد.\\n\\nپس پست و کور رو از اول تکرار کردم. چون با این عدم ثبات نمی‌تونی روکش رو روش بذاری. وقتی روکش وارد سیکل جویدن بشه و نیروهای جویدن بهش وارد بشه، اگه ثبات نداشته باشیم، این نیروها به اینترفیس سمان و پست منتقل میشه، نیروی برشی ایجاد میکنه و در نهایت روکش همراه با پست از دندان خارج میشه\"")
           def norm(s): return re.sub(r"\s+"," ",s).strip()
           class Text(HTMLParser):
               def __init__(self): super().__init__(); self.parts=[]
@@ -33,7 +33,7 @@ jobs:
            ("ir-search","https://dentcast.ir/plus/content-index.json?t=video14-a17cc1b","catalog")
           ]
           for name,url,kind in checks:
-              for attempt in range(1,2):
+              for attempt in range(1,17):
                   try:
                       req=urllib.request.Request(url,headers={"User-Agent":"DentCast-Publication-Check/1.0","Cache-Control":"no-cache"})
                       with urllib.request.urlopen(req,timeout=30) as r:
@@ -52,6 +52,8 @@ jobs:
                           assert '"FAQPage"' not in doc
                       elif kind=="en":
                           assert "noindex, follow" in doc
+                          assert "the crown comes out of the tooth together with the post." in doc
+                          assert "the crown comes off the tooth together with the cement." not in doc
                           assert 'href="../video-14.html"' in doc
                           assert "M9a0Oxm7ve/origin_config.json" in doc
                       elif kind=="index":
@@ -62,7 +64,7 @@ jobs:
                       break
                   except Exception as e:
                       print("LIVE_RETRY",name,attempt,type(e).__name__,str(e)[:200],flush=True)
-                      if attempt==1: raise
+                      if attempt==16: raise
                       time.sleep(15)
           print("LIVE_VERIFICATION_COMPLETE: 8/8",flush=True)
           
