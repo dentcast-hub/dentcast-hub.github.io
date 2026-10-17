@@ -74,3 +74,6 @@ Ordinary instructional video, not challenge; explicit user no-quiz instruction.
 ## B.5
 Pulse announcement follows title-only pattern: new DentCast Plus video, linked approved title. No clinical finding revealed.
 
+## C.0
+Not LiteCast; category is dentcast_plus.
+

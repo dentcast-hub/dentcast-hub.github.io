@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 37
-- Updated at (UTC): 2026-10-17T10:02:41+00:00
+- Generation: 40
+- Updated at (UTC): 2026-10-17T10:02:45+00:00
 - Content: "dentcast-plus/video-14"
 - Status: in_progress
-- Next canonical step: "C.0"
+- Next canonical step: "C.0.1"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 37,
-  "previous_sha256": "4036825026e686a1a26e6df1f1ec461e4226ae395e78dd55ce2e510d63a905be",
+  "generation": 40,
+  "previous_sha256": "a989072ae91f4531887b9eec2fe627a7704d82b9a998778ff1dec8929cb167a4",
   "publication": {
     "blocker": null,
     "category": "dentcast_plus",
@@ -176,8 +176,8 @@ Its compact snapshot is a verification baseline, not current Git status.
         "evidence": [],
         "id": "C.0",
         "module": "03-litecast-and-page.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "Not LiteCast; category is dentcast_plus.",
+        "status": "skipped"
       },
       {
         "evidence": [],
@@ -492,7 +492,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "reports/video-14-publication.md": {
         "executable": false,
         "kind": "file",
-        "sha256": "07da0ed09093b92171c615b94e61c48b2c7a14b6d03cf22364266223bb5e6b38"
+        "sha256": "a2f64fa306a08633d7727f3531bc0ea098ef8c5a77445f9862de96b7afc2910c"
       }
     },
     "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
@@ -524,7 +524,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "b6170660c69a9602a47b9d81fc1df944bebaddfe",
-  "updated_at": "2026-10-17T10:02:41+00:00"
+  "updated_at": "2026-10-17T10:02:45+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
