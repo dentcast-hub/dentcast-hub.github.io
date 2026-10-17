@@ -373,3 +373,10 @@ Exact mechanical gate: `python3 tools/verify_publish.py dentcast-plus/video-14 -
 ## G
 Final report with actual Phase F output, scoped changed files, category exceptions and branch delivery receipts.
 
+
+
+## اصلاح جمله به درخواست نویسنده
+
+«روکش همراه با سمان از دندون در میاد.» با «روکش همراه با پست از دندان خارج میشه» جایگزین شد. متن فارسی، کپشن برین، تمام متاها و JSON-LD، نقل‌قول DES و ترجمهٔ انگلیسی هماهنگ شدند. متن‌های قبلی این گزارش، سوابق انتشار اولیه‌اند و این اصلاح جایگزین آن جمله است.
+
+61 passed, 0 warned, 0 failed  — publish is COMPLETE
