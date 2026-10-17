@@ -13,7 +13,7 @@ const creative = { enabled: true, badge: 'حمایت‌شده', title: 'آزمو
 
 beforeEach(async () => {
   await resetDb();
-  await pool.query('truncate spot_controls');
+  await pool.query('truncate spot_controls, spot_campaign_controls');
   vi.unstubAllGlobals();
   delete process.env.SPOT_GITHUB_TOKEN;
   if (!app) app = await makeApp();
@@ -31,10 +31,13 @@ describe('member review', () => {
       { method: 'GET' as const, url: '/admin/users/search?q=عضو' },
       { method: 'GET' as const, url: '/admin/users/bad/payments' },
       { method: 'GET' as const, url: '/admin/spot/config' },
+      { method: 'GET' as const, url: '/admin/spot/campaign' },
       { method: 'GET' as const, url: '/admin/spot/defaults' },
       { method: 'PUT' as const, url: '/admin/spot/config/home', payload: '{', headers: { 'content-type': 'application/json' } },
       { method: 'POST' as const, url: '/admin/spot/image', payload: 'not an image', headers: { 'content-type': 'image/webp' } },
       { method: 'POST' as const, url: '/admin/spot/config/home/reset' },
+      { method: 'PUT' as const, url: '/admin/spot/campaign', payload: '{}' },
+      { method: 'POST' as const, url: '/admin/spot/campaign/reset' },
     ]) expect((await app.inject(request)).statusCode).toBe(401);
   });
   it('pages past the old cap in both directions, including microsecond timestamp ties', async () => {
@@ -212,5 +215,41 @@ describe('persistent Spot controls', () => {
     process.env.SPOT_GITHUB_TOKEN = 'test-token'; vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}', { status: 403 })));
     const failed = await call(Buffer.from('RIFF0000WEBPVP8 fake'));
     expect(failed.statusCode).toBe(502); expect(failed.json().error).toBe('spot_storage_http_403');
+  });
+});
+
+describe('three-visit Spot campaign controls', () => {
+  const sessions = [
+    { ...creative, title: 'اسپانسر', url: 'https://example.com/' },
+    { ...creative, title: 'معرفی دنت‌کست', url: '/plus/' },
+    { ...creative, enabled: false, title: '', text: '', url: '', image: null },
+  ];
+  it('validates exactly three sessions and persists their selected content', async () => {
+    for (const body of [{ sessions: [] }, { sessions: sessions.slice(0, 2) }, { sessions: [...sessions.slice(0, 2), { ...creative, url: 'javascript:alert(1)' }] }]) {
+      expect((await app.inject({ method: 'PUT', url: '/admin/spot/campaign', headers, payload: body })).statusCode).toBe(400);
+    }
+    const saved = await app.inject({ method: 'PUT', url: '/admin/spot/campaign', headers, payload: { sessions } });
+    expect(saved.statusCode).toBe(200);
+    const publicConfig = await app.inject('/spot/config');
+    expect(publicConfig.json().campaign.sessions).toHaveLength(3);
+    expect(publicConfig.json().campaign.sessions.map((s: { enabled: boolean }) => s.enabled)).toEqual([true, true, false]);
+    expect(publicConfig.json().campaign.sessions[0].creative).toMatchObject({ id: 'managed-session-1', title: 'اسپانسر', url: 'https://example.com/' });
+    expect(publicConfig.json().campaign.sessions[1].creative.url).toBe('/plus/');
+    await app.close(); app = await makeApp();
+    expect((await app.inject({ url: '/admin/spot/campaign', headers })).json().sessions).toHaveLength(3);
+    await app.inject({ method: 'POST', url: '/admin/spot/campaign/reset', headers });
+    expect((await app.inject('/spot/config')).json()).toEqual({ slots: {} });
+    expect((await pool.query('select sessions, use_default from spot_campaign_controls where id = true')).rows[0].use_default).toBe(true);
+  });
+  it('accepts image-only, text-only and mixed campaign cards', async () => {
+    const values = [
+      { ...creative, title: '', text: '', url: '', image: '/spot/img/banner.webp' },
+      { ...creative, title: 'فقط متن', image: null },
+      { ...creative, title: 'ترکیبی', image: '/spot/img/banner.webp', url: '/plus/' },
+    ];
+    expect((await app.inject({ method: 'PUT', url: '/admin/spot/campaign', headers, payload: { sessions: values } })).statusCode).toBe(200);
+    expect((await app.inject('/spot/config')).json().campaign.sessions.map((s: any) => [s.creative.title, s.creative.image])).toEqual([
+      ['', '/spot/img/banner.webp'], ['فقط متن', null], ['ترکیبی', '/spot/img/banner.webp'],
+    ]);
   });
 });

@@ -2,7 +2,7 @@ import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { listMembers, memberCursor, memberPayments } from '../services/admin-members.js';
 import { one, query } from '../db.js';
 import { isSpotSlot, SPOT_PLACEMENTS, parseSpotCreative, spotControls, saveSpotControl, publishedSpotDefaults,
-  MAX_SPOT_IMAGE_BYTES, spotImageExtension, uploadSpotImage } from '../services/spot-controls.js';
+  MAX_SPOT_IMAGE_BYTES, spotImageExtension, uploadSpotImage, spotCampaign, parseSpotCampaign, saveSpotCampaign } from '../services/spot-controls.js';
 
 // Registered INSIDE adminRoutes, after its onRequest requireAdmin hook. Public
 // settings are a separate encapsulated plugin (spot.ts).
@@ -38,6 +38,17 @@ export async function adminMemberSpotRoutes(app: FastifyInstance): Promise<void>
   app.get('/admin/spot/defaults', async (_request, reply) => {
     try { return await publishedSpotDefaults(); }
     catch { return reply.code(503).send({ error: 'spot_defaults_unavailable' }); }
+  });
+  app.get('/admin/spot/campaign', async () => ({ sessions: await spotCampaign() }));
+  app.put('/admin/spot/campaign', async (request, reply) => {
+    const sessions = parseSpotCampaign(request.body);
+    if (!sessions) return reply.code(400).send({ error: 'invalid_campaign' });
+    await saveSpotCampaign(sessions);
+    return { ok: true };
+  });
+  app.post('/admin/spot/campaign/reset', async () => {
+    await query('update spot_campaign_controls set use_default = true, updated_at = now() where id = true');
+    return { ok: true };
   });
   app.put('/admin/spot/config/:slot', async (request, reply) => {
     const { slot } = request.params as { slot: string };

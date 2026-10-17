@@ -1,7 +1,7 @@
 # Member and Spot administration
 
 The existing Basic-auth `/admin` page now includes **فهرست اعضا** and
-**مدیریت جایگاه‌های تبلیغ**. All admin endpoints inherit the same `onRequest`
+**مدیریت کمپین‌های Spot**. All admin endpoints inherit the same `onRequest`
 authentication hook; ordinary member sessions confer no admin privileges.
 
 Members use `(created_at, id)` keyset pagination in both directions. The cursor
@@ -16,20 +16,29 @@ history is paged across `payments` and `gift_redemptions`, including the stored
 gateway track ID, bank reference, order ID and manual-payment reference. Gift
 bearer codes and settings are not returned. Subscription granting is unchanged.
 
-Migration **0069_member_spot_controls** adds a profile ordering index and an
-initially empty `spot_controls` table. It does not rewrite or remove existing
-data. Its down migration retains these additive structures so rollback cannot
-discard saved campaigns. Resetting a placement retains its saved creative and
-sets `use_default`; an explicit save reactivates its override.
+Migration **0069_member_spot_controls** adds a profile ordering index and the
+per-placement `spot_controls` table. Migration **0070_spot_campaign_sessions**
+adds one optional three-visit campaign schedule. Both migrations are additive;
+their down migrations retain saved controls so rollback cannot discard them.
+The admin page leads with three plain-language visit cards. Each can be off,
+image-only, text-only, or mixed, with an optional link. Saving makes the
+schedule advance once per visit; a visit continues until 30 minutes without a
+page view. Resetting resumes the published static rotation. An empty/unsaved
+schedule leaves published behavior unchanged.
 
-The checked-in Spot configuration currently contains eleven placement keys,
-not three. Each existing key is editable independently, covering any selection
-of three without inventing or relocating placements. An untouched placement
-continues using `spot/spot-config.json`, including rotation and targeting. A saved
-override applies only to its placement, for its existing audiences, preserving
-the premium exclusion and impression/click reporting. The public read endpoint
-is `GET /spot/config`. On an API outage the renderer retains the published static
-configuration. Reload a page to pick up a saved change.
+The detailed per-placement editor remains under **«تنظیم جداگانهٔ محل‌های
+نمایش (پیشرفته)»**. It controls eleven technical placements, not campaign
+visits. Resetting one placement retains its saved creative and sets
+`use_default`; an explicit save reactivates its override.
+
+The checked-in Spot configuration currently contains eleven placement keys.
+The three-visit schedule is separate from those placements: it chooses the
+campaign for each visit, while the placement switches determine where a card
+can appear. A saved campaign schedule is applied by `GET /spot/config`; existing
+placement overrides continue to take precedence for their own placement. The
+schedule preserves premium exclusion and impression/click reporting. On an API
+outage the renderer retains the published static configuration. Reload a page
+to pick up a saved change.
 
 ## Image storage
 

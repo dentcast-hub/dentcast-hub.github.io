@@ -29,6 +29,7 @@ beforeEach(() => {
     }
     if (url === '/admin/spot/config') return response({ placements: { home: 'خانه', article: 'مقاله', sidebar: 'کنار' }, slots: structuredClone(controls), upload_configured: false });
     if (url === '/admin/spot/defaults') return defaultsFailure ? { ok: false, json: async () => ({ error: 'spot_defaults_unavailable' }) } : response({ slots: { home: { enabled: true } }, creatives: {}, rotation: { sequence: ['premium'] } });
+    if (url === '/admin/spot/campaign') return response({ sessions: null });
     return response({ ok: true });
   });
   bootPanel();
@@ -108,5 +109,26 @@ describe('admin member and Spot UI', () => {
       url: '/admin/spot/config/home/reset', opts: { method: 'POST', credentials: 'include' },
     });
     expect(el('spotControlMode').textContent).toContain('چرخش فعلی سایت');
+  });
+  it('offers three clear visit cards and saves image/text/link choices as one schedule', async () => {
+    await flush();
+    expect(el('campaignForm').hidden).toBe(false);
+    expect(el('campaignSessions').children).toHaveLength(3);
+    el<HTMLInputElement>('campaign1Enabled').checked = true;
+    el<HTMLSelectElement>('campaign1Kind').value = 'text';
+    el<HTMLInputElement>('campaign1Title').value = 'آگهی بیرونی';
+    el<HTMLInputElement>('campaign1Url').value = 'https://brand.example/';
+    el<HTMLInputElement>('campaign2Enabled').checked = true;
+    el<HTMLSelectElement>('campaign2Kind').value = 'text';
+    el<HTMLInputElement>('campaign2Title').value = 'دنت‌کست';
+    el<HTMLInputElement>('campaign2Url').value = '/plus/';
+    el('campaignForm').dispatchEvent(new Event('submit', { cancelable: true })); await flush();
+    const save = calls.find(c => c.url === '/admin/spot/campaign' && c.opts.method === 'PUT')!;
+    const body = JSON.parse(save.opts.body);
+    expect(body.sessions).toHaveLength(3);
+    expect(body.sessions.map((s: any) => s.enabled)).toEqual([true, true, false]);
+    expect(body.sessions[0]).toMatchObject({ title: 'آگهی بیرونی', url: 'https://brand.example/' });
+    expect(body.sessions[1]).toMatchObject({ title: 'دنت‌کست', url: '/plus/' });
+    expect(el('campaignStatus').textContent).toContain('برنامه ذخیره شد');
   });
 });
