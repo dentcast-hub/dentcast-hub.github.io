@@ -59,3 +59,6 @@ Exact public-safe caption retained in context.inputs; title separately confirmed
 ## B.3.5
 Natural conversational clinical narrative. No AI-style rewrites needed or applied.
 
+## B.4
+Arvan config, HLS master and media ID successfully fetched; YouTube ID from user. HLS is verified contentUrl; OCR MP4 failed validation and was not used.
+
