@@ -53,3 +53,6 @@ dentcast_plus explicitly selected by user.
 ## B.2
 Series 1..13 contiguous; next identifier video-14.
 
+## B.3
+Exact public-safe caption retained in context.inputs; title separately confirmed by user.
+
