@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 135
-- Updated at (UTC): 2026-10-17T10:05:48+00:00
+- Generation: 138
+- Updated at (UTC): 2026-10-17T10:05:50+00:00
 - Content: "dentcast-plus/video-14"
 - Status: in_progress
-- Next canonical step: "C.5.6-b"
+- Next canonical step: "C.6"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 135,
-  "previous_sha256": "17fbfda5ac5317d00f70cd6d3c3cac9f4170dab2914040fad818990b881f31e0",
+  "generation": 138,
+  "previous_sha256": "2a67927774e6b9f3ea9e4554ae36555a87c0fa0f3e68f79859c83197824360ee",
   "publication": {
     "blocker": null,
     "category": "dentcast_plus",
@@ -442,11 +442,14 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "reports/video-14-publication.md#C.5.6-b",
+          "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/39023528344"
+        ],
         "id": "C.5.6-b",
         "module": "10-brain-and-pathways.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -549,7 +552,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "reports/video-14-publication.md": {
         "executable": false,
         "kind": "file",
-        "sha256": "1142127c0475f87216db832f10d58b2a691a48d5f02e0c8e1a4a9b15eedcb87a"
+        "sha256": "e09f6ab4cf235c4fddc479bd1f0c23e892f6671e5170484db253b16ba38c439a"
       }
     },
     "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
@@ -581,7 +584,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "b6170660c69a9602a47b9d81fc1df944bebaddfe",
-  "updated_at": "2026-10-17T10:05:48+00:00"
+  "updated_at": "2026-10-17T10:05:50+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->

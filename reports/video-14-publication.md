@@ -223,3 +223,6 @@ Semantic placement: post-and-core after video-13 (post fabrication/cementation -
 ## C.5.6
 Executed and checked; see committed files and GitHub Actions log.
 
+## C.5.6-b
+bundle-post-core rejected at Gate 1: dentcast-plus is a case/video type, not a foundational bundle type. No failure-troubleshooting bundle. No bundle changed.
+
