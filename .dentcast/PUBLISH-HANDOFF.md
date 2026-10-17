@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 25
-- Updated at (UTC): 2026-10-17T10:02:30+00:00
+- Generation: 28
+- Updated at (UTC): 2026-10-17T10:02:33+00:00
 - Content: "dentcast-plus/video-14"
 - Status: in_progress
-- Next canonical step: "B.4.7"
+- Next canonical step: "B.4.8"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 25,
-  "previous_sha256": "11c9727b61a8f120b38e5134ac8aa6fb1d437836ecb5686534540e6563097167",
+  "generation": 28,
+  "previous_sha256": "3f0394d8b300451abcf88287f41bfaed906d01bfadbd956a7dc0d12fa05663d3",
   "publication": {
     "blocker": null,
     "category": "dentcast_plus",
@@ -139,8 +139,8 @@ Its compact snapshot is a verification baseline, not current Git status.
         "evidence": [],
         "id": "B.4.7",
         "module": "02-routing-intake.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "No accompanying paper file; image is video-host metadata.",
+        "status": "skipped"
       },
       {
         "evidence": [],
@@ -483,7 +483,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "reports/video-14-publication.md": {
         "executable": false,
         "kind": "file",
-        "sha256": "6edf01fab61955ba3b65a258d1d472fabe27483c55626aaee1df2cf7e0a154bd"
+        "sha256": "c723e7dfbb0ec7f2400bae6562969e08e4d1bd6d52468b2d88308f0de120f428"
       }
     },
     "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
@@ -515,7 +515,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "b6170660c69a9602a47b9d81fc1df944bebaddfe",
-  "updated_at": "2026-10-17T10:02:30+00:00"
+  "updated_at": "2026-10-17T10:02:33+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->

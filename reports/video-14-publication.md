@@ -62,3 +62,6 @@ Natural conversational clinical narrative. No AI-style rewrites needed or applie
 ## B.4
 Arvan config, HLS master and media ID successfully fetched; YouTube ID from user. HLS is verified contentUrl; OCR MP4 failed validation and was not used.
 
+## B.4.7
+No accompanying paper file; image is video-host metadata.
+
