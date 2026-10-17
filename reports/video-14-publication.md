@@ -129,3 +129,14 @@ Not an episode/NoteCast pair.
 ## C.4.6
 Not a Promptologist sequence.
 
+post-and-core: at cap (6); unchanged 5965f6f58c4c516c1eab551a4785eb01b023c5af2053669e3be2239d1dc40c5c
+
+dental-cement: at cap (5); unchanged aeb2e0ac0f330113e70c8c7417924acf954a6623ab05e577de199080c16fceab
+
+retention: at cap (5); unchanged a84bbedef789340c408839a44ebc6df99cb9aa40effae9799f3083b8aecc14ca
+
+resistance: at cap (5); unchanged c01a169c1b336582e6ab70c61076dcc0b41a104afd1169ab1a30bc16b3852878
+
+## C.4.7
+Executed and checked; see committed files and GitHub Actions log.
+
