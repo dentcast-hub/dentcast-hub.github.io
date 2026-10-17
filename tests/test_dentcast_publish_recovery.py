@@ -108,7 +108,7 @@ class RecoveryAcceptanceTests(unittest.TestCase):
         self.assertFalse(view['publication_completed'])
         self.assertEqual((clone / h.STATE_PATH).read_bytes(), before)
 
-    def test_committed_transfer_requires_reconciliation_and_keeps_resolved_prefix(self):
+    def test_committed_transfer_rebuilds_git_facts_and_keeps_resolved_prefix(self):
         self.prepare()
         initial = self.init()
         started = self.cli('step', '--id', 'rules', '--status', 'started', '--expected-sha256', initial['sha256'])
@@ -121,8 +121,9 @@ class RecoveryAcceptanceTests(unittest.TestCase):
         run(self.root, 'commit', '-m', 'deliver work and checkpoint')
         run(self.root, 'push', 'origin', 'main')
         clone = self.clone()
-        view = self.cli('inspect', '--check-remote', root=clone, code=2)
-        self.assertIn('HEAD_CHANGED_REVIEW_REQUIRED', view['issues'])
+        view = self.cli('inspect', '--check-remote', root=clone)
+        self.assertEqual(view['issues'], [])
+        self.assertEqual(view['git_snapshot_portable'], 'yes')
         self.assertEqual((clone / 'note.html').read_text(), 'transferred work')
         refreshed = self.record(view['recorded_state']['publication'], view['sha256'], root=clone,
                                 note='Verified transferred page SHA and resolved evidence in receiving checkout')
@@ -214,6 +215,7 @@ class RecoveryAcceptanceTests(unittest.TestCase):
         self.cli('confirm-cleanup', code=2)
         run(self.root, 'push', 'origin', 'main')
         self.assertTrue(self.cli('confirm-cleanup')['publication_completed'])
+        self.assertFalse(h.observation_path(self.root).exists())
         clone = self.clone()
         self.assertFalse((clone / h.STATE_PATH).exists())
         self.cli('guard', '--phase', 'ci', root=clone)

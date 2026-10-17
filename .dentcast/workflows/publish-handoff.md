@@ -29,7 +29,7 @@ Before resuming:
 - Update it after **every canonical step**, including completed, skipped, blocked, and failed steps; write the reason and evidence.
 - After every step, commit its scoped public-safe work together with this handoff and push to the authorized working branch. Confirm delivery before starting the next step; failure or unknown remote state blocks progression. Follow the enforced boundary in `publish-checkpoints.md`; do not defer delivery until turn end.
 - Before each external action, record intended action, target, and status `started`; afterward record its verified result or `outcome_unknown`.
-- Update it before ending a turn, switching agents, committing, or handing off. After a commit/push, refresh the locally observed Git state. Do not recursively commit just to put a commit's own SHA inside itself.
+- Update semantic progress before ending a turn, switching agents, committing, or handing off. After commit/push, inspect Git directly; do not duplicate current HEAD, index, status, ahead/behind or remote observations in the handoff. Do not recursively commit just to put a commit's own SHA inside itself.
 - If interrupted mid-step, the next agent verifies the actual state rather than assuming the last checkpoint is current. A Markdown file cannot guarantee recovery from every crash.
 - Keep the file on any failure, pending approval, failed verification, unknown external outcome, or incomplete delivery.
 - Delete it only after all applicable steps and approvals, the complete Phase F, required publication delivery and its verification, and the final report are complete. Commit/push cleanup when Git delivery is part of the authorized publication. A cleanup push failure remains incomplete and must be reported; restore a local handoff describing it.
@@ -38,8 +38,8 @@ Before resuming:
 ## Local work versus portable handoff
 
 A Markdown summary does not transfer uncommitted files or unpushed commits.
-For the same checkout, record and verify modified, staged, and untracked files, their hashes, and local commit SHAs.
-For another checkout/client, the handoff must state whether the actual work is available remotely. Transfer all required public-safe files and commits to the authorized working branch, or identify a retrievable patch/bundle and assets with hashes. Do not mark the run portable until the receiving agent can retrieve and verify both the state and the work.
+For the same checkout, inspect modified, staged and untracked work directly in Git. The compact checkpoint retains expected file/workflow fingerprints as verification evidence, not a second copy of Git status/history.
+For another checkout/client, determine remote availability using Git and `inspect --check-remote`, not a saved portability Boolean. Transfer all required public-safe files and commits to the authorized working branch, or identify a retrievable patch/bundle and assets with hashes. Do not claim portability until the receiving agent can retrieve and verify both the state and the work.
 If transfer is unavailable, explicitly block remote resume and identify the original checkout or missing artifact. Never reconstruct exact author text from memory.
 Keep secrets, private inputs, private approval transcripts, and restricted scientific inputs out of public Git. Record safe references and availability instead; missing private inputs block dependent steps.
 Never silently publish drafts or create a remote checkpoint without the user's existing authorization. The present refactor's commit/push authorization does not authorize future content publications.
@@ -51,7 +51,7 @@ The supported writer is `tools/dentcast_publish_handoff.py`; read [the tool guid
 
 ```markdown
 # Publication handoff
-- Schema: publish-handoff-v1
+- Schema: publish-handoff-v2
 - Updated at (UTC):
 - Status: in_progress | blocked | verifying | cleanup_pending
 - Repository:
@@ -74,16 +74,12 @@ The supported writer is `tools/dentcast_publish_handoff.py`; read [the tool guid
 |---|---|---|---|
 | ... | pending / started / completed / skipped / blocked / failed | ... | ... |
 
-## Git and work preservation
-- Observed local HEAD and observation time:
-- Last observed remote HEAD, branch, observation time, fetch result:
-- Upstream and ahead/behind, or unknown:
-- Unpushed commits:
-- Modified / staged / untracked paths and hashes:
-- Unrelated changes to preserve:
-- Transfer artifact / branch and verification:
-- Portable to another checkout: yes / no / unknown; reason:
-- Do not include this file's own hash; distinguish checkpoint observation from current HEAD.
+## Verification evidence
+- Required input/output references and expected fingerprints:
+- Workflow source reference and expected fingerprints:
+- Unrelated work to preserve (intent/context that Git cannot explain):
+- Non-Git transfer artifact reference, if required:
+- Read current branch/HEAD/status/index/history/remote availability directly from Git.
 
 ## External action ledger
 | Action / target | started at | Verified outcome or outcome_unknown | Receipt / reconciliation needed |

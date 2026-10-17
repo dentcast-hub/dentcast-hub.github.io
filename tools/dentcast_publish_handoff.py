@@ -24,7 +24,7 @@ from urllib.parse import urlsplit
 sys.dont_write_bytecode = True
 
 STATE_PATH = ".dentcast/PUBLISH-HANDOFF.md"
-SCHEMA = "publish-handoff-v1"
+SCHEMA = "publish-handoff-v2"
 LIMIT = 2 * 1024 * 1024
 MODULES = (
     "01-hard-rules.md", "02-routing-intake.md", "03-litecast-and-page.md",
@@ -336,13 +336,13 @@ def next_step(p):
     return next((s["id"] for s in p["steps"] if s["status"] not in ("completed", "skipped")), None)
 
 
-def render(state):
+def render_full(state):
     p = state["publication"]
     # JSON quotes keep multiline/operator content from injecting Markdown headings.
     quote = lambda v: json.dumps(v, ensure_ascii=True)
     summary = ("# Publication handoff\n\n"
                "Generated checkpoint; receipts and approvals still require operator verification.\n"
-               f"- Schema: {SCHEMA}\n- Generation: {state['generation']}\n"
+               f"- Schema: {state['schema']}\n- Generation: {state['generation']}\n"
                f"- Updated at (UTC): {state['updated_at']}\n"
                f"- Content: {quote(p['content_id'])}\n- Status: {p['status']}\n"
                f"- Branch: {quote(state['snapshot']['branch'])}\n"
@@ -354,16 +354,130 @@ def render(state):
     return summary + BEGIN + json.dumps(state, ensure_ascii=True, indent=2, sort_keys=True) + END
 
 
+def compact_snapshot(snap):
+    return {"repository": snap["repository"], "branch": snap["branch"],
+            "files": {name: {k: info[k] for k in ("kind", "sha256", "executable")}
+                      for name, info in snap["files"].items()}, "workflow": snap["workflow"]}
+
+
+def render(state):
+    if state['schema'] == 'publish-handoff-v1':
+        return render_full(state)
+    wire = {**state, 'snapshot': compact_snapshot(state['snapshot'])}
+    p = state['publication']
+    quote = lambda value: json.dumps(value, ensure_ascii=True)
+    summary = ("# Publication handoff\n\n"
+               "Semantic progress and evidence; current Git facts are read from Git.\n"
+               f"- Schema: {state['schema']}\n- Generation: {state['generation']}\n"
+               f"- Updated at (UTC): {state['updated_at']}\n"
+               f"- Content: {quote(p['content_id'])}\n- Status: {p['status']}\n"
+               f"- Next canonical step: {quote(next_step(p))}\n"
+               f"- Blocker: {quote(p['blocker'])}\n\n"
+               "The structured record preserves decisions, approvals, step evidence and external outcomes.\n"
+               "Its compact snapshot is a verification baseline, not current Git status.\n\n")
+    return summary + BEGIN + json.dumps(wire, ensure_ascii=True, indent=2, sort_keys=True) + END
+
+
+def observation_path(root):
+    path = Path(text_git(root, 'rev-parse', '--git-path', 'dentcast-publish-observation.json'))
+    path = path if path.is_absolute() else root / path
+    require(not path.is_symlink(), 'UNSAFE_OBSERVATION_METADATA')
+    return path
+
+
+def remember_observation(root, state, sha):
+    # Non-portable Git observations stay in Git metadata, not in the handoff.
+    path = observation_path(root)
+    data = json.dumps({'sha256': sha, 'snapshot': state['snapshot']}, ensure_ascii=True).encode()
+    require(len(data) <= LIMIT * 2, 'OBSERVATION_TOO_LARGE')
+    fd, temporary = tempfile.mkstemp(prefix='.publish-observation-', dir=path.parent)
+    try:
+        with os.fdopen(fd, 'wb') as f:
+            f.write(data)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(temporary, path)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+
+
+def hydrate_observation(root, state, sha):
+    path = observation_path(root)
+    if path.is_file():
+        require(path.stat().st_size <= LIMIT * 2, 'OBSERVATION_TOO_LARGE')
+        cached = decode_json(path.read_text(encoding='utf-8'))
+        if cached.get('sha256') == sha:
+            candidate = {**state, 'snapshot': cached.get('snapshot')}
+            # Validate full metadata as strictly as v1 and bind it to these bytes.
+            candidate, _ = parse_full_state(render_full(candidate).encode(), limit=LIMIT * 2)
+            require(digest(render(candidate).encode()) == sha, 'OBSERVATION_BASELINE_MISMATCH')
+            return candidate
+    # A fresh checkout has no private observation. Reconstruct its delivered
+    # baseline from Git, never adopt current dirty index/status as prior evidence.
+    revision = None
+    # Locate the commit that wrote these checkpoint bytes, not a later HEAD
+    # that happens to retain them while changing publication work elsewhere.
+    candidates = text_git(root, 'log', '-n', '128', '--format=%H', '--', STATE_PATH).splitlines()
+    for commit in candidates:
+        raw = git(root, 'show', commit + ':' + STATE_PATH, optional=True)
+        if raw is not None and digest(raw) == sha:
+            revision = text_git(root, 'rev-parse', commit)
+            break
+    revision = revision or state['source_revision']
+    snap = state['snapshot']
+    snap['head'] = revision
+    for name, info in snap['files'].items():
+        listing = git(root, 'ls-tree', '-z', revision, '--', name, optional=True)
+        info['status'], info['index'] = None, []
+        if listing:
+            rows = [r for r in listing.split(b'\0') if r]
+            exact = [r.split(b'\t', 1)[0] for r in rows
+                     if r.split(b'\t', 1)[1].decode('utf-8', 'surrogateescape') == name]
+            if exact:
+                mode, kind, oid = exact[0].decode('ascii').split()
+                require(kind == 'blob', 'UNSUPPORTED_DELIVERED_FILE')
+                info['index'] = [{'mode': mode, 'oid': oid, 'stage': 0}]
+    snap['remote'] = remote_observation(root, revision, snap['branch'], False)
+    return state
+
+
 def load_state(root):
     path = safe_path(root, STATE_PATH)
     require(path.is_file(), "HANDOFF_MISSING")
     require(path.stat().st_size <= LIMIT, "HANDOFF_TOO_LARGE")
     raw = path.read_bytes()
-    return parse_state(raw)
+    state, sha = parse_state(raw)
+    if state['schema'] == SCHEMA:
+        state = hydrate_observation(root, state, sha)
+    return state, sha
 
 
 def parse_state(raw):
-    require(len(raw) <= LIMIT, "HANDOFF_TOO_LARGE")
+    require(len(raw) <= LIMIT, 'HANDOFF_TOO_LARGE')
+    try:
+        text = raw.decode('utf-8')
+        require(text.count(BEGIN) == 1 and text.count(END) == 1, 'HANDOFF_FORMAT_INVALID')
+        state = decode_json(text.split(BEGIN, 1)[1].split(END, 1)[0])
+        if state.get('schema') != SCHEMA:
+            return parse_full_state(raw)
+        snap = state['snapshot']
+        require(set(snap) == {'repository', 'branch', 'files', 'workflow'}, 'COMPACT_BASELINE_INVALID')
+        for info in snap['files'].values():
+            require(set(info) == {'kind', 'sha256', 'executable'}, 'COMPACT_FILE_BASELINE_INVALID')
+            info.update(status=None, index=[])
+        snap.update(head=state['source_revision'], remote={})
+        state, _ = parse_full_state(render_full(state).encode(), limit=LIMIT * 2)
+        require(render(state) == text, 'HANDOFF_SUMMARY_OR_ENCODING_CHANGED')
+        return state, digest(raw)
+    except Blocked:
+        raise
+    except (UnicodeError, ValueError, KeyError, TypeError, AttributeError, RecursionError):
+        raise Blocked('HANDOFF_FORMAT_INVALID') from None
+
+
+def parse_full_state(raw, limit=LIMIT):
+    require(len(raw) <= limit, "HANDOFF_TOO_LARGE")
     try:
         text = raw.decode("utf-8")
         require(text.count(BEGIN) == 1 and text.count(END) == 1, "HANDOFF_FORMAT_INVALID")
@@ -371,7 +485,7 @@ def parse_state(raw):
         require(isinstance(state, dict) and set(state) == {
             "schema", "generation", "updated_at", "source_revision", "publication",
             "snapshot", "previous_sha256", "reconciliation"}, "STATE_FIELDS_INVALID")
-        require(state["schema"] == SCHEMA and type(state["generation"]) is int
+        require(state["schema"] in (SCHEMA, 'publish-handoff-v1') and type(state["generation"]) is int
                 and state["generation"] >= 1, "STATE_VERSION_INVALID")
         require(isinstance(state["updated_at"], str), "STATE_TIME_INVALID")
         require(datetime.fromisoformat(state["updated_at"]).utcoffset() is not None, "STATE_TIME_INVALID")
@@ -410,7 +524,7 @@ def parse_state(raw):
                             r"[0-9a-f]{40}|[0-9a-f]{64}", entry["oid"])
                         and type(entry["stage"]) is int and entry["stage"] in (0, 1, 2, 3), "INDEX_RECORD_INVALID")
         require(isinstance(snap["remote"], dict), "REMOTE_OBSERVATION_INVALID")
-        require(render(state) == text, "HANDOFF_SUMMARY_OR_ENCODING_CHANGED")
+        require(render_full(state) == text, "HANDOFF_SUMMARY_OR_ENCODING_CHANGED")
     except Blocked:
         raise
     except (UnicodeError, ValueError, KeyError, TypeError, AttributeError, RecursionError):
@@ -456,6 +570,8 @@ def write_atomic(root, state):
     path.parent.mkdir(parents=True, exist_ok=True)
     data = render(state).encode("utf-8")
     require(len(data) <= LIMIT, "HANDOFF_TOO_LARGE")
+    if state['schema'] == SCHEMA:
+        remember_observation(root, state, digest(data))
     fd, temporary = tempfile.mkstemp(prefix=".publish-handoff-", dir=path.parent)
     try:
         with os.fdopen(fd, "wb") as f:

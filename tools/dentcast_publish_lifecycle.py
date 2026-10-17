@@ -321,6 +321,9 @@ def confirm_cleanup(root):
                   "CLEANUP_NOT_DELIVERED")
         listing = h.git(root, "ls-tree", remote["head"], "--", h.STATE_PATH, optional=True)
         h.require(listing == b"", "REMOTE_HANDOFF_NOT_REMOVED")
+        observation = h.observation_path(root)
+        if observation.exists():
+            observation.unlink()
         metadata_path(root).unlink()
         return {"status": "publication_completed", "publication_completed": True,
                 "cleanup_commit": current["head"], "content_id": state["publication"]["content_id"]}

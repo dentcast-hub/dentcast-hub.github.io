@@ -18,7 +18,7 @@ fixture verifier. All remote operations in these tests are local Git operations.
 | Same checkout, uncommitted page, new CLI process | Exact bytes preserved; completed rules retained; next step is `0`; portability is no |
 | Local commit not pushed | Reported as local-only; fresh clone has neither that work nor its handoff |
 | Only handoff copied to fresh clone | Missing work detected by snapshot comparison; inspection blocks and leaves the handoff untouched |
-| Work and checkpoint committed and pushed | Receiving clone retrieves exact bytes; requires explicit reconciliation of changed HEAD/index; preserves resolved prefix; refreshed checkpoint-only commit becomes portable after push |
+| Work and checkpoint committed and pushed | Receiving clone retrieves exact bytes and preserves resolved prefix. The follow-up v2 loader reconstructs delivered Git facts from that commit; expected file/workflow fingerprints and semantic gates remain checked |
 | Corrupt or stale checkpoint | Inspection blocks without overwriting the file or work |
 | Ambiguous external outcome | `outcome_unknown` preserved and retry prohibition reported; no external action executed |
 | Actual page verifier, content absent from indexes | Production verifier exits 1 with INCOMPLETE; failed F persisted; finish refuses cleanup |

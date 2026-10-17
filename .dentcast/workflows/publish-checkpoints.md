@@ -53,6 +53,12 @@ the next step; the writer snapshots the current Git state while checking the
 previous delivered handoff. A note cannot bypass delivery. Do not create an
 endless checkpoint-only commit loop just to embed a commit's own SHA.
 
+The v2 handoff stores semantic state and compact verification fingerprints.
+Current Git facts are computed at inspection/delivery, not copied into the
+file. A fresh checkout reconstructs the baseline from the commit that wrote
+the exact checkpoint bytes; later work commits still require review. The
+private same-checkout observation contains no semantic publication ledger.
+
 The Stop guard also requires the latest active handoff/work to be delivered
 before normal turn completion. This applies when the native client actually
 executes that hook; explicit CLI discipline remains mandatory elsewhere. If

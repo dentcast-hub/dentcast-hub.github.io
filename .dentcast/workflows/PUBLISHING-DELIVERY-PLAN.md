@@ -7,7 +7,7 @@ This follow-up is separate from the five delivered repair stages.
 | Stage | Scope | Status |
 |---|---|---|
 | 1 | Mandatory per-step commit/push and confirmed-delivery barrier | Implemented; tests and CI verified in the stage commit report |
-| 2 | Simplify handoff around semantic progress, decisions, external outcomes and next action; derive Git facts from Git | Pending |
+| 2 | Simplify handoff around semantic progress, decisions, external outcomes and next action; derive Git facts from Git | Implemented in v2; compact verification evidence retained; validation below |
 | 3 | Discover active handoffs on GitHub branches; handle missing/multiple candidates without newest-branch guessing | Pending |
 | 4 | Full delivery/discovery/recovery acceptance and report | Pending |
 
@@ -32,3 +32,29 @@ Local validation: 75 checkpoint/lifecycle/delivery/recovery tests, 8 active
 entrypoint/migration checks and 6 Node advisory checks passed (89 total).
 GitHub Actions for the stage commit separately verifies the same groups and
 the committed-state guard; its result is reported after the push.
+
+## Stage 2
+
+The v2 handoff omits current HEAD, porcelain status, index entries and remote
+observations. Publication decisions, approvals, full ordered step evidence,
+external outcomes and blockers survive unchanged. Repository/branch identity,
+workflow source reference and expected file/workflow fingerprints remain to
+check identity and invalidate stale evidence; these are not a saved latest-SHA
+or synchronization claim. Git supplies current facts at inspection and delivery.
+
+Before a checkpoint is committed, same-checkout comparisons use a private
+Git-observation cache containing no semantic publication state. New checkouts
+reconstruct facts from the exact delivered checkpoint in Git without that cache.
+Unknown/missing work still blocks and stage 1's fresh delivery barrier remains.
+Structured v1 files are read unchanged; explicit records upgrade to v2 under
+normal reconciliation rules. Inspection remains read-only. Confirmed cleanup
+also removes the observation cache. Active handoff discovery across GitHub
+branches is stage 3, not supplied by this change.
+
+Stage 2 local validation: 84 Python checkpoint/lifecycle/delivery/compact/recovery
+tests, 8 active-entrypoint/migration checks and 6 Node checks passed (98 total).
+Nine compact-format tests cover omitted Git facts, semantic/unknown-outcome
+preservation, reconstruction without a cache, dirty-work detection after cache
+loss, later work commits after the checkpoint, cache baseline binding, v1 read
+and explicit upgrade, canonical smaller encoding and ignored required inputs.
+Cleanup acceptance also verifies removal of the local observation cache.
