@@ -4,7 +4,8 @@
 Only writes .dentcast/PUBLISH-HANDOFF.md and an advisory lock in Git metadata.
 Never commits, pushes, fetches, or restores content. Completion reruns the real
 mechanical gate and stages a recoverable handoff cleanup; see lifecycle commands.
-Network observation is opt-in --check-remote (git ls-remote, no fetch).
+Inspection uses opt-in --check-remote; advancing a step requires a fresh
+read-only origin observation (git ls-remote, no fetch).
 """
 import argparse
 from contextlib import contextmanager
@@ -553,6 +554,7 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
                 require(all(s["status"] == "pending" for s in publication["steps"]),
                         "WORKFLOW_CHANGE_REQUIRES_STEP_INVALIDATION")
             require(not issues or nonempty(note), "RECONCILIATION_REQUIRED:" + ",".join(issues))
+            lifecycle.guard_step_transition(root, previous, publication, old_digest)
         state = {"schema": SCHEMA, "generation": previous["generation"]+1 if previous else 1,
                  "updated_at": now(), "source_revision": previous["source_revision"]
                  if previous and "WORKFLOW_CHANGED" not in issues else current["head"],

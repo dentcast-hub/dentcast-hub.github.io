@@ -69,6 +69,46 @@ def state_for_update(root, expected):
     return state
 
 
+def require_step_delivery(root, state, expected):
+    """Fresh read-only origin check; never commit/push or trust cached upstream."""
+    current = h.snapshot(root, state['publication']['target_paths'], check_remote=True)
+    remote = current['remote']
+    h.require(remote['status'] == 'observed' and remote['head'] == current['head'],
+              'PREVIOUS_STEP_PUSH_NOT_CONFIRMED')
+    h.require(not h.status_paths(root), 'PREVIOUS_STEP_WORK_NOT_COMMITTED')
+    delivered = h.git(root, 'show', current['head'] + ':' + h.STATE_PATH, optional=True)
+    h.require(delivered is not None and h.digest(delivered) == expected,
+              'PREVIOUS_STEP_HANDOFF_NOT_DELIVERED')
+    h.require(current['repository'] == state['snapshot']['repository']
+              and current['branch'] == state['snapshot']['branch'], 'REPOSITORY_OR_BRANCH_CHANGED')
+    index = h.index_entries(root)
+    for name, info in state['snapshot']['files'].items():
+        actual = h.file_info(root, name)
+        h.require(all(actual[k] == info[k] for k in actual), 'DELIVERED_STEP_WORK_MISMATCH:' + name)
+        h.require(actual['kind'] == 'missing' or bool(index.get(name)),
+                  'PREVIOUS_STEP_REQUIRED_FILE_NOT_TRACKED:' + name)
+    h.require(current['workflow'] == state['snapshot']['workflow'], 'DELIVERED_STEP_WORKFLOW_MISMATCH')
+
+
+def guard_step_transition(root, state, publication, expected):
+    old = {s['id']: s for s in state['publication']['steps']}
+    h.require(all(s['id'] in old or s['status'] == 'pending' for s in publication['steps']),
+              'NEW_SUBSTEPS_MUST_START_PENDING')
+    # Bulk record cannot bypass the per-step boundary. Metadata reconciliation
+    # and invalidation remain possible without remote access.
+    entered = [s for s in publication['steps'] if s['id'] in old
+               and old[s['id']]['status'] not in ('started', 'completed', 'skipped')
+               and s['status'] in ('started', 'completed', 'skipped')]
+    h.require(len(entered) <= 1, 'ONE_STEP_PER_CHECKPOINT_REQUIRED')
+    for row in entered:
+        h.require(row['id'] == h.next_step(state['publication']),
+                  'START_NEXT_STEP_IN_SEPARATE_CHECKPOINT')
+        before = state['publication']['steps']
+        index = next(i for i, s in enumerate(before) if s['id'] == row['id'])
+        if index and all(s['status'] in ('completed', 'skipped') for s in before[:index]):
+            require_step_delivery(root, state, expected)
+
+
 def step(root, expected, sid, status, evidence, reason, note=None):
     state = state_for_update(root, expected)
     p = copy.deepcopy(state["publication"])
@@ -162,6 +202,9 @@ def verify(root, expected, expect_title=None, expect_caption=None, catalog_id=No
     p = copy.deepcopy(state["publication"])
     paper = p["category"] == "paper-only"
     h.require(h.next_step(p) in (("G", None) if paper else ("F", "G", None)), "VERIFICATION_NOT_AT_CANONICAL_BOUNDARY")
+    boundary = next((s for s in p['steps'] if s['id'] == h.next_step(p)), None)
+    if boundary and boundary['status'] == 'pending':
+        require_step_delivery(root, state, expected)
     current = h.snapshot(root, p["target_paths"])
     h.require(not h.differences(root, state, current), "RECORD_CURRENT_WORK_BEFORE_VERIFICATION")
     view = h.inspect(root)
@@ -352,4 +395,6 @@ def guard(root, phase):
         if phase == "pre-commit":
             h.require(h.git(root, "show", ":" + h.STATE_PATH, optional=True) == path.read_bytes(),
                       "LATEST_HANDOFF_MUST_BE_STAGED")
+        elif phase == 'stop':
+            require_step_delivery(root, state, h.digest(path.read_bytes()))
     return {"status": "guard_passed", "publication_completed": False}

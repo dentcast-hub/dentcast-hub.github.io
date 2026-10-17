@@ -64,6 +64,11 @@ class RecoveryAcceptanceTests(unittest.TestCase):
         run(clone, 'config', 'user.email', 'receiver@example.invalid')
         return clone
 
+    def deliver_checkpoint(self):
+        run(self.root, 'add', h.STATE_PATH)
+        run(self.root, 'commit', '-m', 'deliver boundary checkpoint')
+        run(self.root, 'push', 'origin', 'main')
+
     def test_same_checkout_fresh_process_keeps_dirty_bytes_and_resumes_next_step(self):
         self.prepare()
         (self.root / 'note.html').write_text('uncommitted operator work')
@@ -164,6 +169,7 @@ class RecoveryAcceptanceTests(unittest.TestCase):
                 break
             row.update(status='completed', evidence=['fixture:boundary setup'])
         initial = h.save(self.root, self.p, initial=True)
+        self.deliver_checkpoint()
         result = self.cli('verify', '--expected-sha256', initial['sha256'], code=2)
         self.assertEqual(result['verification']['exit_code'], 1)
         self.assertIn('no entry whose page_url/url', result['verification']['output'])
@@ -188,8 +194,10 @@ class RecoveryAcceptanceTests(unittest.TestCase):
         run(self.root, 'add', '.')
         run(self.root, 'commit', '-m', 'synthetic catalog')
         initial = h.save(self.root, self.p, initial=True)
+        self.deliver_checkpoint()
         verified = self.cli('verify', '--catalog-id', 'synthetic-paper', '--expected-sha256', initial['sha256'])
         self.assertEqual(verified['verification']['kind'], 'paper_catalog_gate')
+        self.deliver_checkpoint()
         state, sha = h.load_state(self.root)
         started = self.cli('step', '--id', 'G', '--status', 'started', '--expected-sha256', sha)
         done = self.cli('step', '--id', 'G', '--status', 'completed', '--evidence', 'fixture:report',

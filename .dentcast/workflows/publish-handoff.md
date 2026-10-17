@@ -27,6 +27,7 @@ Before resuming:
 
 - Create the state file before the first publication mutation or external action.
 - Update it after **every canonical step**, including completed, skipped, blocked, and failed steps; write the reason and evidence.
+- After every step, commit its scoped public-safe work together with this handoff and push to the authorized working branch. Confirm delivery before starting the next step; failure or unknown remote state blocks progression. Follow the enforced boundary in `publish-checkpoints.md`; do not defer delivery until turn end.
 - Before each external action, record intended action, target, and status `started`; afterward record its verified result or `outcome_unknown`.
 - Update it before ending a turn, switching agents, committing, or handing off. After a commit/push, refresh the locally observed Git state. Do not recursively commit just to put a commit's own SHA inside itself.
 - If interrupted mid-step, the next agent verifies the actual state rather than assuming the last checkpoint is current. A Markdown file cannot guarantee recovery from every crash.

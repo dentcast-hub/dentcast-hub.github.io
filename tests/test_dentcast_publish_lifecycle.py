@@ -112,6 +112,7 @@ class LifecycleTests(unittest.TestCase):
         for s in state['publication']['steps']:
             if s['id'] in ('F','G'):s.update(status='pending',evidence=[],reason=None)
         sha=h.write_atomic(self.root,state)
+        self.deliver()
         with patch.dict(os.environ,{'DENTCAST_FIXTURE_FAIL':'1'}):
             result=lc.verify(self.root,sha,'exact-title','exact-caption')
         self.assertEqual(result['status'],'blocked')
@@ -219,7 +220,7 @@ class LifecycleTests(unittest.TestCase):
         self.assert_blocked('CI_UNFINISHED_HANDOFF_DELETION',lc.guard,self.root,'ci')
 
     def test_native_stop_adapter_checks_real_state_without_mutating_it(self):
-        self.prepare()
+        self.prepare();self.deliver()
         script=ROOT/'scripts/publishing-stop-guard.py'
         env={**os.environ,'CLAUDE_PROJECT_DIR':str(self.root)}
         before=(self.root/h.STATE_PATH).read_bytes()
