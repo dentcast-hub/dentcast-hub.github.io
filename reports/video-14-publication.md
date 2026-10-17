@@ -98,3 +98,6 @@ Executed and checked; see committed files and GitHub Actions log.
 ## C.0.5
 LiteCast-only internal linking; specialist steps apply instead.
 
+## C.0.6
+LiteCast-only internal linking; specialist steps apply instead.
+
