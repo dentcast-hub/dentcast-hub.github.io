@@ -86,3 +86,6 @@ Not LiteCast; category is dentcast_plus.
 ## C.0.3
 Not LiteCast; category is dentcast_plus.
 
+## C.0.4
+Not LiteCast; category is dentcast_plus.
+

@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 49
-- Updated at (UTC): 2026-10-17T10:02:54+00:00
+- Generation: 52
+- Updated at (UTC): 2026-10-17T10:02:57+00:00
 - Content: "dentcast-plus/video-14"
 - Status: in_progress
-- Next canonical step: "C.0.4"
+- Next canonical step: "C.1"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 49,
-  "previous_sha256": "09966678ef90895ceb0e3ebe34c230b2e458bf033e0a39c5596bc9d1a3bb57c1",
+  "generation": 52,
+  "previous_sha256": "ebaf0d73ea685a3d5ebe406667988bbfc6aa31b8af661750fdf2c113d61b2678",
   "publication": {
     "blocker": null,
     "category": "dentcast_plus",
@@ -204,8 +204,8 @@ Its compact snapshot is a verification baseline, not current Git status.
         "evidence": [],
         "id": "C.0.4",
         "module": "03-litecast-and-page.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "Not LiteCast; category is dentcast_plus.",
+        "status": "skipped"
       },
       {
         "evidence": [],
@@ -492,7 +492,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "reports/video-14-publication.md": {
         "executable": false,
         "kind": "file",
-        "sha256": "fb99613719d008d95cb6e8858bcf932046990b70588cb60a2897a1113fe1733d"
+        "sha256": "7ae2bf1f89c0e49a1a5c774fdc9c8a3086c15102c3d2f359fd8a2bf317acd146"
       }
     },
     "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
@@ -524,7 +524,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "b6170660c69a9602a47b9d81fc1df944bebaddfe",
-  "updated_at": "2026-10-17T10:02:54+00:00"
+  "updated_at": "2026-10-17T10:02:57+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
