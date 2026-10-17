@@ -746,6 +746,9 @@ def main(argv=None):
                 p.add_argument("--reconcile-note")
     p = sub.add_parser("plan")
     p.add_argument("--paper-only", action="store_true")
+    p = sub.add_parser('discover')
+    p.add_argument('--repository', help='GitHub owner/repo; otherwise inferred from checkout origin')
+    p.add_argument('--token-env', help='Optional explicitly named environment variable for GitHub authentication')
     p = sub.add_parser("step")
     p.add_argument("--expected-sha256", required=True)
     p.add_argument("--id", required=True)
@@ -772,8 +775,12 @@ def main(argv=None):
     p.add_argument("--phase", choices=("stop", "pre-commit", "ci"), required=True)
     args = ap.parse_args(argv)
     try:
-        root = None if args.command == "plan" else Path(text_git(Path(args.repo).resolve(), "rev-parse", "--show-toplevel")).resolve()
-        if args.command == "plan":
+        root = None if args.command == "plan" or (args.command == 'discover' and args.repository) else Path(text_git(Path(args.repo).resolve(), "rev-parse", "--show-toplevel")).resolve()
+        if args.command == 'discover':
+            import dentcast_publish_discovery as discovery
+            repository = args.repository or discovery.infer_repository(root)
+            result = discovery.discover(repository, discovery.GitHubReader(args.token_env))
+        elif args.command == "plan":
             result = {"status": "plan_template", "steps": lifecycle.plan(args.paper_only), "publication_completed": False}
         elif args.command == "inspect":
             if not safe_path(root, STATE_PATH).exists() and lifecycle.pending(root):

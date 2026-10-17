@@ -10,12 +10,16 @@ Prepare a public-safe publication JSON outside the checkout, using the shape bel
 python3 tools/dentcast_publish_handoff.py init --input /tmp/publish-input.json
 python3 tools/dentcast_publish_handoff.py inspect
 python3 tools/dentcast_publish_handoff.py inspect --check-remote
+python3 tools/dentcast_publish_handoff.py discover
+python3 tools/dentcast_publish_handoff.py discover --repository dentcast-hub/dentcast-hub.github.io
 python3 tools/dentcast_publish_handoff.py record --input /tmp/publish-input.json --expected-sha256 <digest-from-last-read>
 ```
 
 From another directory put `--repo /path/to/checkout` before the subcommand. On Windows use a suitable private input-file path instead of `/tmp`. `inspect --check-remote` reads `origin`'s branch matching the current local branch, independent of the configured upstream. Advancing to a subsequent step, verification entry and the Stop guard require this fresh observation automatically. It uses `git ls-remote`; it does not fetch or upload. A failed observation remains unknown and blocks progression. Cached upstream commits are labeled separately and are never proof of unpushed work. Missing remote commit objects remain unknown until the operator supplies history through their normal authorized Git workflow.
 
 `init` refuses any existing state file. `record` requires the SHA-256 returned by the last successful read/write; a stale writer is rejected. Both use an advisory OS lock in Git metadata and atomic file replacement. Another cooperating writer in that checkout is rejected while the lock is held. This is not a distributed lock across clones or protection against a process bypassing the tool.
+
+`discover` is a read-only GitHub branch scan, implemented by `dentcast_publish_discovery.py`. Without `--repository` it infers a GitHub repository from the checkout's origin; with an explicit owner/repo it needs no Git checkout. It paginates every branch, reads the fixed handoff at immutable head SHAs, validates identity/plan, and rechecks all heads before selecting a unique candidate. Check `discovery_complete`, `selected`, and `errors`. Multiple/invalid candidates, changed heads, API/auth/rate failures or a branch limit block selection. Use `--token-env <configured-variable>` when authenticated REST is required, or the same reads through connected GitHub tools. Read `publish-discovery.md` for retrieval and GitHub-only agents; a found handoff does not certify that its content is ready to publish.
 
 When actual files/index/HEAD have changed, inspect and reconcile the real changes before recording:
 

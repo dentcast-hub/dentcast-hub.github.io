@@ -8,7 +8,7 @@ This follow-up is separate from the five delivered repair stages.
 |---|---|---|
 | 1 | Mandatory per-step commit/push and confirmed-delivery barrier | Implemented; tests and CI verified in the stage commit report |
 | 2 | Simplify handoff around semantic progress, decisions, external outcomes and next action; derive Git facts from Git | Implemented in v2; compact verification evidence retained; validation below |
-| 3 | Discover active handoffs on GitHub branches; handle missing/multiple candidates without newest-branch guessing | Pending |
+| 3 | Discover active handoffs on GitHub branches; handle missing/multiple candidates without newest-branch guessing | Implemented; complete stable pagination, immutable-head file reads, unique selection and shared retrieval protocol |
 | 4 | Full delivery/discovery/recovery acceptance and report | Pending |
 
 Stage 1 changes the shared live protocol used by all client entrypoints. The
@@ -58,3 +58,37 @@ preservation, reconstruction without a cache, dirty-work detection after cache
 loss, later work commits after the checkpoint, cache baseline binding, v1 read
 and explicit upgrade, canonical smaller encoding and ignored required inputs.
 Cleanup acceptance also verifies removal of the local observation cache.
+
+## Stage 3
+
+The read-only `discover` command supports explicit GitHub owner/repo without a
+checkout or inference from a GitHub origin. It scans all branch pages, reads the
+fixed handoff at each observed head, validates repository/branch/full-ledger
+identity, and rechecks the whole head map before selecting. Its result exposes
+the latest observed commit alongside the handoff URL/digest and semantic state;
+no latest SHA is copied into the handoff. Multiple candidates, malformed or
+inherited/mismatched files, partial scans, changed heads and API failures never
+produce an automatic selection. Contents files over 1 MiB use pinned blob reads.
+There are no Git mutations, branch switches, content actions or automatic retries.
+All clients reach the shared discovery/retrieval procedure through the existing
+mandatory handoff contract and per-step protocol. Existing structured v1/v2
+checkpoints remain supported; discovery is separate from semantic publication
+fingerprints so adding the reader does not change the persisted baseline shape.
+
+Local validation: 106 Python checkpoint/lifecycle/discovery/recovery checks,
+8 active-entrypoint/migration checks and 6 Node checks (120 total). Twenty-two new
+discovery tests include a 600-branch paginated fixture, stable/changed heads,
+missing/multiple/corrupt/mismatched files, v1, API failure/rate limits, branch
+limits, CLI without a checkout, HTTP error sanitization, content-read access
+before accepting masked 404s, and large blob fallback.
+
+Live GitHub validation used the connected GitHub API: 600 branch heads across
+six full pages plus the empty seventh page, 600 immutable-head Contents reads,
+then the complete list again. All file reads returned confirmed 404s and the
+head maps matched; repository content-read access was verified with immutable
+Git commit reads. No active fixed handoff was found at those observed heads.
+Recorded real responses were also passed through the production selector:
+`not_found`, `discovery_complete: true`, 600 checked, no errors or selection.
+This exercised connected GitHub reads and the selector; the standalone Python
+HTTP transport was tested with controlled responses, not a live configured token.
+No synthetic handoff was created on GitHub and no publication was performed.

@@ -13,7 +13,7 @@ Every agent (Cursor, Claude Code, Codex, Work, or another client following repos
 Also check for the state file before starting any new publication. Never overwrite an unfinished run with a new one; resolve the existing run with the user first.
 
 If the file is missing, report that no handoff was found. Inspect available Git evidence and ask only for missing publication context; do not invent completed steps or claim successful resume.
-With GitHub-only access, inspect the user's known working branch. A missing file on main does not establish that no work exists elsewhere.
+For remote recovery or a missing local file, follow [GitHub handoff discovery](publish-discovery.md). Run `python3 tools/dentcast_publish_handoff.py discover` (or `discover --repository owner/repo` without a checkout), or perform the same complete, immutable-head reads through connected GitHub tools. A missing file on main does not establish that no work exists elsewhere. Select only the unique verified active handoff after a complete stable scan; never guess from branch recency. Multiple, malformed or identity-mismatched handoffs and incomplete scans block selection. Preserve local-only work and verify the selected latest head/checkout before continuing.
 
 Before resuming:
 1. Verify repository, branch, content identity, recorded source revision, and local versus remote state.
