@@ -165,3 +165,6 @@ No attached paper; no Drive/catalog/citation action.
 ## C.4.11
 DentCast+ optional educational bank; this publication is video and caption only, no separate flashcards authored.
 
+## C.4.12
+Explicit user instruction: no quiz. No FAQPage or scored questions authored.
+

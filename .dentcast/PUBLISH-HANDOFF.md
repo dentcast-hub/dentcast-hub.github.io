@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 112
-- Updated at (UTC): 2026-10-17T10:03:55+00:00
+- Generation: 115
+- Updated at (UTC): 2026-10-17T10:03:58+00:00
 - Content: "dentcast-plus/video-14"
 - Status: in_progress
-- Next canonical step: "C.4.12"
+- Next canonical step: "C.4.13"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 112,
-  "previous_sha256": "afb9b112c240bc14eb8d82e75e710709a2ea9a842fa0e5f4fd1b82e4389a841e",
+  "generation": 115,
+  "previous_sha256": "1a047cf0bd5a83f9a9132310d18619f0e9c236eb8b11e545f100e5e9d3b9d685",
   "publication": {
     "blocker": null,
     "category": "dentcast_plus",
@@ -381,8 +381,8 @@ Its compact snapshot is a verification baseline, not current Git status.
         "evidence": [],
         "id": "C.4.12",
         "module": "07-flashcards-and-quiz.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "Explicit user instruction: no quiz. No FAQPage or scored questions authored.",
+        "status": "skipped"
       },
       {
         "evidence": [],
@@ -522,7 +522,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "reports/video-14-publication.md": {
         "executable": false,
         "kind": "file",
-        "sha256": "c1cf86702a21dbff2ef0c7e159b3350a71ad8da559185a0bdaa574245710e8c2"
+        "sha256": "e01c33a2429315147716f866a731ebfc18faef3eabb24ea07a84f3233aa32cc3"
       }
     },
     "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
@@ -554,7 +554,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "b6170660c69a9602a47b9d81fc1df944bebaddfe",
-  "updated_at": "2026-10-17T10:03:55+00:00"
+  "updated_at": "2026-10-17T10:03:58+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
