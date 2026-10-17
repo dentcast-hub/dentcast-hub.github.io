@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 155
-- Updated at (UTC): 2026-10-17T10:06:13+00:00
+- Generation: 156
+- Updated at (UTC): 2026-10-17T10:07:16+00:00
 - Content: "dentcast-plus/video-14"
 - Status: in_progress
 - Next canonical step: "G"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 155,
-  "previous_sha256": "295f3aba5f9e8f9cd5ba4b14579be8ff59bb94ec0f01c32555486e0dedb6d07d",
+  "generation": 156,
+  "previous_sha256": "8d08c3db0ba2c3f30d40a74b3cd0b0120cd13f5b636e1c2eefca8b518eecdaf5",
   "publication": {
     "blocker": null,
     "category": "dentcast_plus",
@@ -572,7 +572,9 @@ Its compact snapshot is a verification baseline, not current Git status.
   },
   "reconciliation": {
     "note": "Reviewed actual scoped work, current handoff, and previous remote delivery",
-    "observed_changes": []
+    "observed_changes": [
+      "HEAD_CHANGED_REVIEW_REQUIRED"
+    ]
   },
   "schema": "publish-handoff-v2",
   "snapshot": {
@@ -798,7 +800,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "b6170660c69a9602a47b9d81fc1df944bebaddfe",
-  "updated_at": "2026-10-17T10:06:13+00:00"
+  "updated_at": "2026-10-17T10:07:16+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
