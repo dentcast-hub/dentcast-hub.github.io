@@ -123,3 +123,6 @@ Executed and checked; see committed files and GitHub Actions log.
 ## C.4.5
 Not a NoteCast; no parent episode mutation.
 
+## C.4.5-b
+Not an episode/NoteCast pair.
+
