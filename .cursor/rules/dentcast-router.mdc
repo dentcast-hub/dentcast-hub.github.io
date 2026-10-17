@@ -1,22 +1,32 @@
 ---
-description: DentCast Cursor always-on content router for live modular new publishing and original specialty routes.
+description: Shared DentCast live modular publication and interrupted-publication routing.
 alwaysApply: true
 ---
 
-## Interrupted publication — shared priority rule
+# DentCast Cursor router
 
-Legacy files are backup only; do not read them for execution. Older instructions below that require legacy reads are superseded; their remaining migration is tracked in `.dentcast/workflows/PUBLISHING-REPAIR-PLAN.md`.
-For «انتشار ناقص داشتم», «ادامه انتشار», "resume publishing", or equivalent: **first read `.dentcast/PUBLISH-HANDOFF.md`**, then `.dentcast/workflows/publish-handoff.md`. Also check that fixed path before starting a new publication; never overwrite an unfinished run.
-Maintain that temporary file after every canonical step and before handoff, record actual Git/work/approval/verification state, and remove it only after verified publication completion under the contract. If missing, report it and inspect available evidence; never invent resume state.
-The permanent contract is `.dentcast/workflows/publish-handoff.md`; the similarly named modularization handoff is historical development documentation.
+**LIVE_MODULAR_PUBLISHING_ENABLED.** Legacy files are backup only; do not read them for execution or use them as authority.
 
+Before content changes, read `.dentcast/workflows/global/README.md`, its three complete active global rule files, and `.dentcast/workflows/agent-parity.md`. All clients use these same rules.
 
-# DentCast Cursor live modular routing
+New publication → `.dentcast/workflows/README.md`. Read complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then each applicable full module in canonical order. Preserve all approvals, source-dependent DES/Fidelity, category exceptions, builders, English and final Phase F. Stage-only planning tools and synthetic receipts do not perform or authorize live publication.
 
-**LIVE_MODULAR_PUBLISHING_ENABLED.** Read complete archived global rules: `.dentcast/workflows/legacy/cursor/dentcast-router.mdc`, `AGENTS.legacy.md` §§6–8 and `CLAUDE.legacy.md`, plus the whole `.dentcast/workflows/agent-parity.md`.
+## Interrupted publication
 
-**New content → `.dentcast/workflows/README.md`.** Read full `modules/01-hard-rules.md`, `02-routing-intake.md` and each applicable stage slice. Full original `.dentcast/workflows/README.legacy.md` wins for rule priority, approvals, completeness and conflicts.
+For «انتشار ناقص داشتم», «ادامه انتشار», "resume publishing", or equivalent, first read `.dentcast/PUBLISH-HANDOFF.md`, then `.dentcast/workflows/publish-handoff.md`. Check the same fixed path before a new publication. Never overwrite unfinished work. Update it after every canonical step and before handing off; delete it only after verified completion. A missing file or unavailable work must be reported, not invented. Local commits and dirty files are not automatically available in another checkout.
 
-Specialty requests keep their original routes: English → `en-version.md`; ads → `ads.md`; ad stats → `spot-report.md`; glossary drafting → `.claude/skills/glossary-writer/SKILL.md`; cross-link → `cross-link.md`; offline → `.dentcast/offline-publish.md`; new section → `new-section.md`; external Fidelity → `external-fidelity.md`.
+## Routes
 
-Real publication actions are permitted **only under all original human/science/verification gates**. Synthetic staging tools and hash receipts never grant permission or replace execution.
+| Request | Active workflow |
+|---|---|
+| New content or attached paper (with or without text) | `.dentcast/workflows/README.md` |
+| Existing-page English | `.dentcast/workflows/en-version.md` |
+| Ads | `.dentcast/workflows/ads.md` |
+| Ad statistics | `.dentcast/workflows/spot-report.md` |
+| Glossary authoring | `.claude/skills/glossary-writer/SKILL.md` |
+| Cross-linking | `.dentcast/workflows/cross-link.md` |
+| New section | `.dentcast/workflows/new-section.md` |
+| Offline publishing | `.dentcast/offline-publish.md` |
+| External Fidelity | `.dentcast/workflows/external-fidelity.md` |
+
+Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details.md`. Read the selected specialty workflow completely. New content uses the modular sequence, including paper-only and category exceptions.

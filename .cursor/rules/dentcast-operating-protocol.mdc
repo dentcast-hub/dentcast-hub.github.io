@@ -1,10 +1,13 @@
 ---
-description: DentCast Cursor always-on original behavior, approval and live modular publishing contract.
+description: Shared DentCast behavior, global rules and interrupted-publication contract.
 alwaysApply: true
 ---
 
-# DentCast Cursor operating protocol
+# Cursor operating protocol
 
-**LIVE_MODULAR_PUBLISHING_ENABLED.** Read complete original rules at `.dentcast/workflows/legacy/cursor/dentcast-operating-protocol.mdc`, `AGENTS.legacy.md` §§6–8 and `.dentcast/workflows/agent-parity.md`. Preserve ALL original consent gates, build/version ordering, scientific and final publication verification.
+**LIVE_MODULAR_PUBLISHING_ENABLED.** Read `.dentcast/workflows/global/README.md` and all three active global files, plus the complete `.dentcast/workflows/agent-parity.md`. They govern conversation, approvals, capability failures, Git, builders and final verification. Legacy files are backup only; do not read them for execution.
+New publication follows `.dentcast/workflows/README.md` and the applicable full modules. Staging receipts never replace scientific execution or founder consent.
 
-New content uses `.dentcast/workflows/README.md` with the selected modules and full original legacy fallback. Real publish is allowed when the original specific approvals and checks are satisfied; staging checkpoint receipts alone are never founder consent or scientific proof.
+## Interrupted publication
+
+For «انتشار ناقص داشتم», «ادامه انتشار», "resume publishing", or equivalent, first read `.dentcast/PUBLISH-HANDOFF.md`, then `.dentcast/workflows/publish-handoff.md`. Check the same fixed path before a new publication. Never overwrite unfinished work. Update it after every canonical step and before handing off; delete it only after verified completion. A missing file or unavailable work must be reported, not invented. Local commits and dirty files are not automatically available in another checkout.

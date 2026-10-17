@@ -1,3 +1,15 @@
+# Historical modularization development record — not live instructions
+
+This document records staging development at its original revision. Its former branch directions, activation status, backup-reading requirements and proposed workflow routes are historical, not current execution instructions.
+For live work read `.dentcast/workflows/README.md`, `.dentcast/workflows/global/README.md` and `.dentcast/workflows/agent-parity.md`.
+For «انتشار ناقص داشتم», first read `.dentcast/PUBLISH-HANDOFF.md`, then `.dentcast/workflows/publish-handoff.md`.
+Staging utilities remain restricted to staging. Do not follow the historical steps below to resume a real publication or assume their test results describe the current branch.
+Current repair branch and status: `.dentcast/workflows/PUBLISHING-REPAIR-PLAN.md`.
+
+---
+
+## Historical record (non-operative)
+
 # Shared GitHub execution memory — implemented staging contract v0.2 (NOT ACTIVE)
 
 **Implementation:** `tools/dentcast_github_memory.py` provides atomic GitHub Git-Data commit/branch CAS, full manifest/state/event chain replay and immutable artifacts/receipts. `tools/dentcast_fidelity_resume.py` implements per-unit cross-agent scientific checkpoints using the *unchanged* DES v3.4 engine. See `STAGE-4-ACCEPTANCE.md` and `STAGE-5-ACCEPTANCE.md`. This remains **staging only**; CI uses synthetic data and a real GitHub write smoke was performed. No public data upload is safe merely because a SHA attestation is present.

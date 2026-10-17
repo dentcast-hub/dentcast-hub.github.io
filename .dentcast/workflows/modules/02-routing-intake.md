@@ -61,7 +61,7 @@ Ask:
 they are, but no new entry is ever appended to either. A single- or multi-paper
 reading is **`sharehub`**. If the user names one of the closed types, say so and
 ask which living section it goes to (`sharehub` for a reading) — never create
-`dentai-36` or `photocast/episode-4` (CLAUDE.md → Repo conventions).
+`dentai-36` or `photocast/episode-4` (.dentcast/workflows/global/repo-conventions.md).
 
 Wait. Lock the chosen category for the rest of the run.
 
