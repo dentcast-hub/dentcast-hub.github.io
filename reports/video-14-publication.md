@@ -107,3 +107,6 @@ Unambiguous subject: fixed-pros / post-and-core. No taxonomy changes.
 ## C.2.5
 Exactly one related section, two canonical navigation capsules inherited intact: /glossary/ and /pillar/fixed-pros/.
 
+## C.2.6
+Executed and checked; see committed files and GitHub Actions log.
+
