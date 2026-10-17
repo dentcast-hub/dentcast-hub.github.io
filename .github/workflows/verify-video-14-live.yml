@@ -30,7 +30,7 @@ jobs:
            ("org-list","https://dentcast.org/dentcast-plus/index.html","index"),
            ("ir-list","https://dentcast.ir/dentcast-plus/index.html","index"),
            ("org-search","https://dentcast.org/plus/content-index.json","catalog"),
-           ("ir-search","https://dentcast.ir/plus/content-index.json","catalog")
+           ("ir-search","https://dentcast.ir/plus/content-index.json?t=video14-a17cc1b","catalog")
           ]
           for name,url,kind in checks:
               for attempt in range(1,2):
