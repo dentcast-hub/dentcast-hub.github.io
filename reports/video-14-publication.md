@@ -104,3 +104,6 @@ LiteCast-only internal linking; specialist steps apply instead.
 ## C.2.4
 Unambiguous subject: fixed-pros / post-and-core. No taxonomy changes.
 
+## C.2.5
+Exactly one related section, two canonical navigation capsules inherited intact: /glossary/ and /pillar/fixed-pros/.
+
