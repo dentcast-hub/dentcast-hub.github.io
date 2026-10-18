@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 35
-- Updated at (UTC): 2026-10-18T09:40:21+00:00
+- Generation: 36
+- Updated at (UTC): 2026-10-18T09:41:00+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "C.0.4"
+- Next canonical step: "C.1"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 35,
-  "previous_sha256": "5e6ffac3f73003c49fc008c480384fd42748e98b93fa17f606cc03927cf856a2",
+  "generation": 36,
+  "previous_sha256": "2ea2dd2ffed2a9dc1a513c96578e86aad34db10e006ac49694313be92e20e89b",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -252,13 +252,11 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "skipped"
       },
       {
-        "evidence": [
-          "C.0.3 skip delivered at 6aa85340a287ba6bf8276fc8c008198eb32275e3."
-        ],
+        "evidence": [],
         "id": "C.0.4",
         "module": "03-litecast-and-page.md",
-        "reason": null,
-        "status": "started"
+        "reason": "LiteCast-only pillar and brain overrides do not apply; ShareHub uses its ordinary taxonomy and brain workflow.",
+        "status": "skipped"
       },
       {
         "evidence": [],
@@ -550,7 +548,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:40:21+00:00"
+  "updated_at": "2026-10-18T09:41:00+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
