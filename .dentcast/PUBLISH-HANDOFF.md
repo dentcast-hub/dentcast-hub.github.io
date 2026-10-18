@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 47
-- Updated at (UTC): 2026-10-18T10:30:26+00:00
+- Generation: 48
+- Updated at (UTC): 2026-10-18T10:31:23+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "C.0.6"
+- Next canonical step: "C.2.4"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 47,
-  "previous_sha256": "d54462c640cfe692b222fc47630f7e6de1489ef12abce86a62aac097c2b7c56a",
+  "generation": 48,
+  "previous_sha256": "04342dafdbb11252fbb0b59b5e57675a244c81c1cd3fd6e1f270b78b52ec750a",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -321,13 +321,11 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "skipped"
       },
       {
-        "evidence": [
-          "ShareHub category confirmed; checking LiteCast-only related-capsule applicability."
-        ],
+        "evidence": [],
         "id": "C.0.6",
         "module": "03-litecast-and-page.md",
-        "reason": null,
-        "status": "started"
+        "reason": "LiteCast-only related capsules; publication category is ShareHub.",
+        "status": "skipped"
       },
       {
         "evidence": [],
@@ -551,7 +549,10 @@ Its compact snapshot is a verification baseline, not current Git status.
       "sharehub/share-35.html"
     ]
   },
-  "reconciliation": null,
+  "reconciliation": {
+    "note": "Verified the locked ShareHub category; ordinary ShareHub capsules and semantic-link steps apply instead.",
+    "observed_changes": []
+  },
   "schema": "publish-handoff-v2",
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
@@ -591,7 +592,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:30:26+00:00"
+  "updated_at": "2026-10-18T10:31:23+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
