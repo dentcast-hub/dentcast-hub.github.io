@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 12
-- Updated at (UTC): 2026-10-18T09:18:07+00:00
+- Generation: 13
+- Updated at (UTC): 2026-10-18T09:18:36+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "B.3"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 12,
-  "previous_sha256": "dad69b7db1839b30a91e8508acc8c0215a600a62c61c2e9c3cf5f822ebd0d15b",
+  "generation": 13,
+  "previous_sha256": "40298263239e27a46193e2a2c37519acbd26493e3c3eba244aee2bbb36bdb86c",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -161,11 +161,13 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "B.2 completion commit a0db81cb29232e69f5768a73d43a6098f1ee7f23 observed on origin."
+        ],
         "id": "B.3",
         "module": "02-routing-intake.md",
         "reason": null,
-        "status": "pending"
+        "status": "started"
       },
       {
         "evidence": [],
@@ -534,7 +536,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:18:07+00:00"
+  "updated_at": "2026-10-18T09:18:36+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
