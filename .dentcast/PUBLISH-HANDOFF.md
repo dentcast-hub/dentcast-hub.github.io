@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 51
-- Updated at (UTC): 2026-10-18T10:34:59+00:00
+- Generation: 52
+- Updated at (UTC): 2026-10-18T10:35:59+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "C.2.5"
+- Next canonical step: "C.2.6"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 51,
-  "previous_sha256": "e2cd595a9aea02910310d67ab77fa91978917b5095661d6bc4fb8e812fcebdbf",
+  "generation": 52,
+  "previous_sha256": "f8a5175d77849edda39525263ec58f8fd363102c759fd774cd43f2b989b76b58",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -338,12 +338,12 @@ Its compact snapshot is a verification baseline, not current Git status.
       },
       {
         "evidence": [
-          "Typed ShareHub page requires both fixed \u062f\u0627\u0646\u0634\u0646\u0627\u0645\u0647 capsule and a pillar capsule pointing to the confirmed implantology pillar."
+          "HTML parse verified exactly one dc-related-section with exactly two capsules: /glossary/ and /pillar/implantology/; remote checkpoint and page already delivered."
         ],
         "id": "C.2.5",
         "module": "04-taxonomy-and-navigation.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -553,7 +553,10 @@ Its compact snapshot is a verification baseline, not current Git status.
       "sharehub/share-35.html"
     ]
   },
-  "reconciliation": null,
+  "reconciliation": {
+    "note": "Confirmed the rendered ShareHub navigation matches the locked category and confirmed main pillar.",
+    "observed_changes": []
+  },
   "schema": "publish-handoff-v2",
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
@@ -593,7 +596,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:34:59+00:00"
+  "updated_at": "2026-10-18T10:35:59+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
