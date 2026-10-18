@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 25
-- Updated at (UTC): 2026-10-18T09:27:33+00:00
+- Generation: 26
+- Updated at (UTC): 2026-10-18T09:28:04+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "B.5"
+- Next canonical step: "C.0"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 25,
-  "previous_sha256": "bda3aaae7eaee3eeb9792077ab0878f6ac187188b15b57a994d4b330239913ee",
+  "generation": 26,
+  "previous_sha256": "963478930125a1905d48a2b3c65bc67bbe3a134c4e14c3d3dba6c60121d4b25b",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -216,12 +216,12 @@ Its compact snapshot is a verification baseline, not current Git status.
       },
       {
         "evidence": [
-          "B.4.9 completion checkpoint 0d0b14eab4e1523075cfdcd4c82bd20d3355965d is on origin."
+          "Pulse pattern in index.html from ShareHub 34 reviewed. Draft: title-only link with no spoiler, no inferred date: \u00ab\u06cc\u06a9 \u0645\u0637\u0644\u0628 \u062a\u0627\u0632\u0647 \u062f\u0631 Share Hub \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab\u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u200c\u0647\u0627\u06cc \u0645\u0639\u0645\u0648\u0644\u06cc \u0648 \u0628\u0627\u0632\u0627\u0644\u061b \u062f\u0648 \u0631\u0648\u06cc\u06a9\u0631\u062f \u0645\u062a\u0641\u0627\u0648\u062a \u062f\u0631 \u062f\u0631\u0645\u0627\u0646 \u0628\u06cc\u200c\u062f\u0646\u062f\u0627\u0646\u06cc\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f\u00bb.,"
         ],
         "id": "B.5",
         "module": "02-routing-intake.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -548,7 +548,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:27:33+00:00"
+  "updated_at": "2026-10-18T09:28:04+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
