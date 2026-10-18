@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 56
-- Updated at (UTC): 2026-10-18T10:42:35+00:00
+- Generation: 57
+- Updated at (UTC): 2026-10-18T10:44:05+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "C.3"
+- Next canonical step: "C.4"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 56,
-  "previous_sha256": "289676df6be51123a668da22935b1979a05fadfc903c7b3f8f54780aa6d9a592",
+  "generation": 57,
+  "previous_sha256": "b9de9715f0107752b73fa4683d7b22c56f566c331df295e02dbc69af2d19ea99",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -355,11 +355,13 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "Audited share-35 JSON-LD and OG/Twitter metadata; datePublished/dateModified corrected to 2026-10-18, inherited unrelated fiber-post keywords replaced with implant-specific terms; visible source year 2026 retained."
+        ],
         "id": "C.3",
         "module": "04-taxonomy-and-navigation.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -556,8 +558,10 @@ Its compact snapshot is a verification baseline, not current Git status.
     ]
   },
   "reconciliation": {
-    "note": "Verified C.2.6 completion checkpoint and hand-maintained index delivery on synchronized remote branch; reviewed clean Git state.",
-    "observed_changes": []
+    "note": "Reviewed C.3 before/after audit: both structured dates match 2026-10-18, titles/descriptions and social metadata are present, unrelated template keywords removed; visible source publication year remains intact.",
+    "observed_changes": [
+      "WORK_OR_INDEX_CHANGED"
+    ]
   },
   "schema": "publish-handoff-v2",
   "snapshot": {
@@ -566,7 +570,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "sharehub/share-35.html": {
         "executable": false,
         "kind": "file",
-        "sha256": "2e2164a89fe9aa34a3ce8fa00b86dde380be0599368be53c95cae05623528b40"
+        "sha256": "e9dfdcb53d32d03de8d0b651f2648ba3bb5d6443a96727ad52a6bc9828317015"
       }
     },
     "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
@@ -598,7 +602,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:42:35+00:00"
+  "updated_at": "2026-10-18T10:44:05+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
