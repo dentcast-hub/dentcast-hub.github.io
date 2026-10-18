@@ -38381,5 +38381,1208 @@
         "interpretation_fa": "ارزش این روایت در نشان‌دادن مسیر بررسی نشست ناقص پست و کور و تصمیم به تکرار آن پس از رفع‌نشدن عدم ثبات است. متن، استدلال بالینی نویسنده را توضیح می‌دهد و گزارش یک پژوهش نیست."
       }
     ]
+  },
+  "sharehub/share-35": {
+    "scored_at": "2026-10-18",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Conventional and Basal Implantology: A Narrative Review of Current Evidence, Clinical Decision-Making, and Future Perspectives",
+          "authors": "Megha Joshi, Mayur Kaushik, Mohd Nazar Rana, Soumya Kaushik",
+          "year": 2026,
+          "journal": "Cureus",
+          "doi": "10.7759/cureus.113703"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "Narrative review (THERAPY narrative-review row, 15)",
+          "evidence_quote": "A Narrative Review of Current Evidence, Clinical Decision-Making, and Future Perspectives"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence: read Methods (Literature search strategy) and the full text through Disclosures; no protocol-registration statement or identifier is reported."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "Electronic databases, including PubMed/MEDLINE, Scopus, Google Scholar, Web of Science, and Cochrane Library, were searched for articles published between 2000 and 2025.",
+              "note": ""
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence: Methods reports inclusion/exclusion criteria and title/abstract/full-text screening, but no screening counts or PRISMA flow (records screened → full texts assessed → included), and no individually identified excluded-study list; read the complete Methods and article text."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence: read the full Methods, Results, Discussion, and Additional Information; no risk-of-bias or methodological-quality appraisal of included studies is reported."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence: read Methods and Results; the article is a narrative review and reports no meta-analysis or pooled statistical synthesis."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence: read Methods, Results, and Discussion; no publication-bias assessment is reported."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / undisclosed product manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "Conflicts of interest: In compliance with the ICMJE uniform disclosure form, all authors declare the",
+            "note": "Conflict-of-interest and financial-support disclosures are present; no qualifying manufacturer-product conflict is reported."
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "Not applicable to this narrative review; it is not a clinical trial."
+          },
+          {
+            "item": "no sample-size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "Not applicable to this narrative review; it has no study sample to power."
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "survival rates exceeding 95% over a decade",
+            "note": "The review reports decade-scale survival and a four-year BCS cohort; no reported follow-up under three years supports this penalty."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 5,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "امتیاز DES این مرور روایتیِ درمانی ۵ از ۱۰۰ و در باند E است.",
+        "interpretation_fa": "این مقاله مرور روایتی مفیدی برای صورت‌بندی تفاوت‌های طراحی و کاربرد ایمپلنت‌های معمولی و بازال است، اما نبود پروتکل ثبت‌شده، ارزیابی خطر سوگیری و گزارش شفاف غربالگری مطالعات، اتکاپذیری روش‌شناختی آن را محدود می‌کند. یافته‌ها بازتابی روایتی از ادبیات منتخب‌اند و برآورد مستقلی از برتری بالینی ارائه نمی‌کنند."
+      }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.4",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "ایمپلنت‌های معمولی و بازال؛ دو رویکرد متفاوت در درمان بی‌دندانی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "language label"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "آیا می‌توان فکی را که استخوان آن به‌شدت تحلیل رفته، بدون پیوند استخوان و با بارگذاری فوری بازسازی کرد؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "question with no answer"
+          },
+          {
+            "id": "u4",
+            "claim_quote": "ایمپلنت‌های بازال (Basal Implants) با هدف فراهم کردن چنین امکانی توسعه پیدا کرده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Basal\n                                                implants, in contrast, anchor into the dense cortical bone, enabling immediate loading without bone\n                                                grafting.",
+            "source_ref": null
+          },
+          {
+            "id": "u5",
+            "claim_quote": "این سیستم‌ها به‌جای اتکای اصلی به استخوان آلوئولار، از نواحی متراکم‌تر استخوان کورتیکال برای دستیابی به ثبات اولیه استفاده می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Basal dental implants are designed to anchor into this robust basal bone, providing a durable\n                                                  and infection-resistant solution.",
+            "source_ref": null
+          },
+          {
+            "id": "u6",
+            "claim_quote": "اما تفاوت آن‌ها با ایمپلنت‌های معمولی فقط در محل قرارگیری یا سرعت درمان نیست؛ طراحی ایمپلنت، نحوه انتقال نیروها و رویکرد پروتزی نیز متفاوت است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The aim of this review is to critically compare conventional and basal implant systems with respect to their\n                                                  biological principles, design characteristics, surgical protocols, clinical indications, advantages, limitations,\n                                                  and treatment outcomes, thereby providing clinicians with evidence-based guidance for implant selection.",
+            "source_ref": null
+          },
+          {
+            "id": "u7",
+            "claim_quote": "در مقاله‌ای از نوع Narrative Review که در سال ۲۰۲۶ در مجله Cureus منتشر شده، Joshi و همکاران ایمپلنت‌های Conventional و Basal را از نظر اصول بیولوژیک، طراحی، تکنیک جراحی، پروتکل‌های بارگذاری و نتایج بالینی مقایسه کرده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Open Access Review Article\n\n\n\n                                                Conventional and Basal Implantology: A\n                                                Narrative Review of Current Evidence, Clinical\nReview began 07/17/2026\n                                                Decision-Making, and Future Perspectives\nReview ended 07/27/2026\nPublished 07/31/2026                            Megha Joshi 1 , Mayur Kaushik 2 , Mohd Nazar Rana 3, Soumya Kaushik 4\n\n© Copyright 2026\nJoshi et al.",
+            "source_ref": null
+          },
+          {
+            "id": "u8",
+            "claim_quote": "ایمپلنت‌های معمولی؛ رویکردی با پشتوانه علمی گسترده",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u9",
+            "claim_quote": "ایمپلنت‌های Conventional یا Crestal رایج‌ترین سیستم‌های مورد استفاده در ایمپلنتولوژی هستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Conventional implantology\n                                                  Conventional, or crestal, implants are endosseous implants placed into the alveolar bone and are the most\n                                                  commonly used in current dental practice (Figure 1).",
+            "source_ref": null
+          },
+          {
+            "id": "u10",
+            "claim_quote": "این ایمپلنت‌ها عمدتاً در استخوان آلوئولار قرار می‌گیرند و ثبات بلندمدت آن‌ها بر پایه Osseointegration شکل می‌گیرد؛ یعنی ایجاد اتصال مستقیم بین استخوان و سطح ایمپلنت، بدون حضور بافت نرم واسطه.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Basal (cortical) implantology\n                                                  Basal implantology (also known as bicortical or cortical implantology) (Figure 2) is a dental implant system\n                                                  that utilizes the dense basal cortical bone of the jaw for implant retention, unlike conventional implants that\n                                                  rely on the softer alveolar bone.",
+            "source_ref": null
+          },
+          {
+            "id": "u11",
+            "claim_quote": "در طراحی‌های امروزی، ایمپلنت‌های پیچی یا Screw-shaped رایج‌ترند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Currently, screw-shaped implants represent the most widely used implant design due to their superior\n                                                  primary stability, predictable osseointegration, and versatility.",
+            "source_ref": null
+          },
+          {
+            "id": "u12",
+            "claim_quote": "تغییرات طراحی رزوه‌ها، هندسه ایمپلنت و ویژگی‌های سطحی با هدف بهبود ثبات اولیه و تسهیل تشکیل استخوان در تماس با ایمپلنت انجام می‌شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Advanced surface modifications and loading\n                                                  protocols aim to reduce this dip.",
+            "source_ref": null
+          },
+          {
+            "id": "u13",
+            "claim_quote": "پس از قرارگیری ایمپلنت، ثبات اولیه که ماهیتی مکانیکی دارد، به‌تدریج با ثبات ثانویه ناشی از تشکیل استخوان جدید همراه می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "As healing progresses, secondary\n                                                  stability develops through osseointegration, where new bone forms around the implant, anchoring it\n                                                  biologically.",
+            "source_ref": null
+          },
+          {
+            "id": "u14",
+            "claim_quote": "مرحلهٔ بعدی بازسازی استخوان شامل Stability Dip است؛ دوره‌ای که در آن ثبات اولیه، پیش از ایجاد ثبات ثانویهٔ کافی، کاهش می‌یابد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The subsequent bone remodeling phase includes a “stability dip,” where primary stability\n                                                  declines before sufficient secondary stability is established.",
+            "source_ref": null
+          },
+          {
+            "id": "u15",
+            "claim_quote": "(توضیح تکمیلی نویسنده: منظور از Stability Dip دوره‌ای است که بخشی از ثبات مکانیکی اولیه به دلیل بازسازی استخوان کاهش پیدا کرده، اما ثبات بیولوژیک حاصل از تشکیل استخوان جدید هنوز به میزان کافی ایجاد نشده است.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author explanation marker: توضیح تکمیلی نویسنده"
+          },
+          {
+            "id": "u16",
+            "claim_quote": "شدت و زمان وقوع این پدیده در همه ایمپلنت‌ها یکسان نیست.)",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u17",
+            "claim_quote": "بارگذاری ایمپلنت‌های Conventional می‌تواند فوری، زودهنگام یا تأخیری باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Prosthetic loading may be immediate, early, or delayed based on implant stability and the clinical\n                                                scenario [2].",
+            "source_ref": null
+          },
+          {
+            "id": "u18",
+            "claim_quote": "بنابراین بارگذاری فوری ویژگی انحصاری ایمپلنت‌های بازال نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Prosthetic loading may be immediate, early, or delayed based on implant stability and the clinical\n                                                scenario [2].",
+            "source_ref": null
+          },
+          {
+            "id": "u19",
+            "claim_quote": "انتخاب پروتکل بارگذاری به ثبات اولیه، کیفیت استخوان و شرایط بالینی بستگی دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Prosthetic loading may be immediate, early, or delayed based on implant stability and the clinical\n                                                scenario [2].",
+            "source_ref": null
+          },
+          {
+            "id": "u20",
+            "claim_quote": "پشتوانه اصلی ایمپلنت‌های Conventional، مطالعات بالینی گسترده و نتایج بلندمدت قابل‌پیش‌بینی آن‌هاست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Advantages and limitations of conventional implants\n                                                  Conventional dental implants are widely recognized for their clinical reliability and predictability, offering a\n                                                  long-term success rate exceeding 90-95% over a 10-year period.",
+            "source_ref": null
+          },
+          {
+            "id": "u21",
+            "claim_quote": "نویسندگان مقاله نرخ موفقیت بیش از ۹۰ تا ۹۵ درصد را در پیگیری‌های ده‌ساله گزارش می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Advantages and limitations of conventional implants\n                                                  Conventional dental implants are widely recognized for their clinical reliability and predictability, offering a\n                                                  long-term success rate exceeding 90-95% over a 10-year period.",
+            "source_ref": null
+          },
+          {
+            "id": "u22",
+            "claim_quote": "بااین‌حال، در فک‌هایی که استخوان به‌شدت تحلیل رفته، قرار دادن ایمپلنت ممکن است نیازمند پیوند استخوان، سینوس‌لیفت یا سایر روش‌های بازسازی استخوان باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Successful\n                                                  placement is highly dependent on the presence of sufficient alveolar bone volume, which may necessitate\n                                                  additional grafting procedures in cases of resorbed ridges.",
+            "source_ref": null
+          },
+          {
+            "id": "u23",
+            "claim_quote": "این درمان‌های تکمیلی می‌توانند زمان، هزینه و پیچیدگی درمان را افزایش دهند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not state this additional explanation or conclusion"
+          },
+          {
+            "id": "u24",
+            "claim_quote": "ایمپلنت‌های بازال؛ استفاده از استخوان کورتیکال برای دستیابی به ثبات",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u25",
+            "claim_quote": "فلسفه ایمپلنت‌های بازال بر استفاده از نواحی استخوانی متراکم‌تر و مقاوم‌تر در برابر تحلیل استوار است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Basal (cortical) implantology\n                                                  Basal implantology (also known as bicortical or cortical implantology) (Figure 2) is a dental implant system\n                                                  that utilizes the dense basal cortical bone of the jaw for implant retention, unlike conventional implants that\n                                                  rely on the softer alveolar bone.",
+            "source_ref": null
+          },
+          {
+            "id": "u26",
+            "claim_quote": "پس از کشیدن دندان، استخوان آلوئولار به‌تدریج تحلیل می‌رود، اما بخش‌هایی از استخوان بازال و کورتیکال معمولاً پایداری بیشتری دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The\n                                                  rationale behind basal implantology lies in the natural process of bone resorption following tooth loss,\n                                                  where the alveolar bone, the primary support for teeth, gradually diminishes.",
+            "source_ref": null
+          },
+          {
+            "id": "u27",
+            "claim_quote": "ایمپلنت‌های بازال با درگیر کردن این نواحی تلاش می‌کنند حتی در شرایط کاهش شدید ارتفاع یا عرض ریج، ثبات اولیه مناسبی ایجاد کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Basal dental implants are designed to anchor into this robust basal bone, providing a durable\n                                                  and infection-resistant solution.",
+            "source_ref": null
+          },
+          {
+            "id": "u28",
+            "claim_quote": "بسیاری از این ایمپلنت‌ها طراحی یک‌قطعه‌ای یا Monoblock دارند؛ یعنی فیکسچر و اباتمنت یکپارچه‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Parts of a basal implant\n                                                  Single-piece basal implants are characterized by a monoblock design in which the implant body and\n                                                  abutment are integrated into a single unit, thereby eliminating the implant-abutment interface and\n                                                  reducing complications associated with microgaps, screw loosening, and component failure seen in multi-\n                                                  piece implant systems.",
+            "source_ref": null
+          },
+          {
+            "id": "u29",
+            "claim_quote": "در نتیجه، مشکلات مرتبط با اتصال ایمپلنت و اباتمنت، مانند شل شدن پیچ اباتمنت یا وجود میکروگپ در این اتصال، مطرح نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Parts of a basal implant\n                                                  Single-piece basal implants are characterized by a monoblock design in which the implant body and\n                                                  abutment are integrated into a single unit, thereby eliminating the implant-abutment interface and\n                                                  reducing complications associated with microgaps, screw loosening, and component failure seen in multi-\n                                                  piece implant systems.",
+            "source_ref": null
+          },
+          {
+            "id": "u30",
+            "claim_quote": "سطح ایمپلنت‌های بازال نیز معمولاً صیقلی یا Polished طراحی می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The implant surface is highly polished to minimize bacterial plaque accumulation\n                                                  and reduce the risk of peri-implant inflammation.",
+            "source_ref": null
+          },
+          {
+            "id": "u31",
+            "claim_quote": "نویسندگان هدف از این طراحی را کاهش تجمع پلاک و محدود کردن التهاب بافت‌های اطراف ایمپلنت عنوان می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The implant surface is highly polished to minimize bacterial plaque accumulation\n                                                  and reduce the risk of peri-implant inflammation.",
+            "source_ref": null
+          },
+          {
+            "id": "u32",
+            "claim_quote": "(توضیح تکمیلی نویسنده: صیقلی بودن سطح، خطر عفونت یا عوارض پری‌ایمپلنت را حذف نمی‌کند.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author explanation marker: توضیح تکمیلی نویسنده"
+          },
+          {
+            "id": "u33",
+            "claim_quote": "همچنین برای قضاوت درباره میزان کاهش این عوارض در مقایسه با سایر ایمپلنت‌ها، به شواهد بالینی مقایسه‌ای نیاز داریم.)",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u34",
+            "claim_quote": "در برخی طراحی‌ها، گردن ایمپلنت قابلیت خم شدن در محدوده حدود ۱۵ تا ۲۵ درجه را دارد تا بتوان جهت بخش پروتزی را اصلاح کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Additionally, the implant neck is designed to permit abutment bending by approximately 15°-25°,\n                                                  depending on the implant length, when anchored in dense cortical bone, allowing prosthetic alignment\n                                                  without compromising implant stability.",
+            "source_ref": null
+          },
+          {
+            "id": "u35",
+            "claim_quote": "این ویژگی به طراحی سیستم و مشخصات ایمپلنت وابسته است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u36",
+            "claim_quote": "آیا ایمپلنت‌های بازال Osseointegration ندارند؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u37",
+            "claim_quote": "مقاله برای توصیف مکانیسم ثبات ایمپلنت‌های بازال از اصطلاح Osseoadaptation استفاده می‌کند و آن را در مقابل Osseointegration قرار می‌دهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Only “osseoadaptation” occurs.\n\n               Loading\n                                  Delayed loading: three to six months                     Immediate loading: 72 hours\n               protocol\n\n                                  Very often more complex surgical procedures are\n               Implant            necessary, spread over two to three sittings in a        Single sitting surgical procedure and very often flapless (no\n               procedure          period of three to six months (implant placement,        open surgical procedures are necessary).\n                                  healing screw placement, and abutment placement)\n\n                                  Complex – a wide array of instruments are required       Simple – the implant surgery kit is very simple with very few\n               Armamentarium\n                                  for placement of two-piece implants                      instruments.\n\n               Cost               Expensive                                                Cost effective\n\n               Basic design       Two- piece system                                        One-piece system\n\n                                  Crestal alveolar bone, bone is more prone to             Basal bone more dense, mineralized and less prone to bone\n               Bone\n                                  resorption                                               resorption\n\n               Flexibility        Rigid                                                    Bendable\n\n               Placement in\n                                  Good quality bone                                        Atrophied jaw\n               the jaws\n\n               Fit with gums      Fits well after healing                                  May have gaps over time\n\n\n\n              TABLE 1: Comparison between conventional and basal implants\n\n\n                                                  Conversely, conventional implants, with their established protocols and extensive supporting evidence,\n                                                  remain the standard of care in implant dentistry.",
+            "source_ref": null
+          },
+          {
+            "id": "u38",
+            "claim_quote": "نویسندگان در جدول مقایسه توضیح می‌دهند که در ایمپلنت‌های پیچی بازال، گیر در استخوان کورتیکال امکان دستیابی به ثبات اولیه بالا را فراهم می‌کند و برای توصیف این وضعیت از Osseoadaptation استفاده می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Owing to their engagement with dense cortical bone, basal implants achieve high primary\n                                                  stability, allowing immediate loading.",
+            "source_ref": null
+          },
+          {
+            "id": "u39",
+            "claim_quote": "(نقد نویسنده: این تقابل از نظر بیولوژیک دقیق نیست.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author opinion marker: نقد نویسنده"
+          },
+          {
+            "id": "u40",
+            "claim_quote": "گیر مکانیکی اولیه در استخوان کورتیکال به معنای عدم وقوع Osseointegration نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Therefore, rigid splinting of the\n                                                  implants is essential during this period to distribute occlusal forces evenly and prevent implant overload,\n                                                  thereby promoting predictable osseointegration and long-term clinical success [19].",
+            "source_ref": null
+          },
+          {
+            "id": "u41",
+            "claim_quote": "حتی خود مقاله در توضیح مراحل ترمیم ایمپلنت‌های بازال به Osseointegration اشاره می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Therefore, rigid splinting of the\n                                                  implants is essential during this period to distribute occlusal forces evenly and prevent implant overload,\n                                                  thereby promoting predictable osseointegration and long-term clinical success [19].",
+            "source_ref": null
+          },
+          {
+            "id": "u42",
+            "claim_quote": "بنابراین بهتر است تفاوت اصلی را در محل و نحوه دستیابی به ثبات اولیه بدانیم، نه در وقوع یا عدم وقوع اتصال مستقیم استخوان به ایمپلنت.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "F1 inference rule: the conclusion recommends locating the main distinction in primary stability rather than direct bone contact. Neither the healing paragraph nor the comparison table states that conclusion. The prior body-unit commentary context is not an opinion marker in this unit or a heading; بهتر است alone is explicitly not AUTHOR_VIEW."
+          },
+          {
+            "id": "u43",
+            "claim_quote": "همچنین مقاله تعریف بیولوژیک مستقلی از Osseoadaptation ارائه نمی‌کند که بتوان آن را جایگزین Osseointegration دانست.)",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The claim is that the article provides no independent biological definition capable of replacing osseointegration. The source describes cortical anchorage and labels it osseoadaptation, but does not state this evaluative conclusion about its own definition. Closing parentheses do not supply an F1 opinion marker; the opinion-marker inheritance rule applies to headings, not earlier body units."
+          },
+          {
+            "id": "u44",
+            "claim_quote": "همه ایمپلنت‌های بازال طراحی یکسانی ندارند",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u45",
+            "claim_quote": "یکی از نکات مهم مقاله این است که ایمپلنت بازال، نام یک طراحی واحد نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Classification of basal implants (based on morphology)\n                                                  Based on their morphology, basal implants are classified into disk-form implants, including the transosseous\n                                                  implant (TOI), basal osseointegrated implant (BOI), and lateral implant; screw-form implants, comprising\n                                                  the bi-cortical screw, compression screw (KOS), and the combined KOS Plus implant; plate-form implants,\n                                                  including the BOI-BAC and BOI-BAC2 designs; and other specialized forms, such as the tuberopterygoid\n                                                  (TPG) implant and the zygoma screw implant (ZSI) [16].",
+            "source_ref": null
+          },
+          {
+            "id": "u46",
+            "claim_quote": "این ایمپلنت‌ها در شکل‌های مختلفی توسعه یافته‌اند که دو گروه مهم آن‌ها عبارت‌اند از:",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Based on their morphology, basal implants are classified into disk-form implants, including the transosseous\n                                                  implant (TOI), basal osseointegrated implant (BOI), and lateral implant; screw-form implants, comprising\n                                                  the bi-cortical screw, compression screw (KOS), and the combined KOS Plus implant; plate-form implants,\n                                                  including the BOI-BAC and BOI-BAC2 designs; and other specialized forms, such as the tuberopterygoid\n                                                  (TPG) implant and the zygoma screw implant (ZSI) [16].",
+            "source_ref": null,
+            "note": "The opening clause independently asserts that basal implants have developed in multiple forms; it is not solely a colon signpost. The two groups are introduced for the following units rather than claimed to exhaust the classification."
+          },
+          {
+            "id": "u47",
+            "claim_quote": "ایمپلنت‌های پیچی کورتیکال؛ BCS (Basal Cortical Screw)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u48",
+            "claim_quote": "این ایمپلنت‌ها طراحی پیچی دارند و با درگیر کردن نواحی متراکم استخوان کورتیکال، ثبات اولیه ایجاد می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Classification of basal implants (based on morphology)\n                                                  Based on their morphology, basal implants are classified into disk-form implants, including the transosseous\n                                                  implant (TOI), basal osseointegrated implant (BOI), and lateral implant; screw-form implants, comprising\n                                                  the bi-cortical screw, compression screw (KOS), and the combined KOS Plus implant; plate-form implants,\n                                                  including the BOI-BAC and BOI-BAC2 designs; and other specialized forms, such as the tuberopterygoid\n                                                  (TPG) implant and the zygoma screw implant (ZSI) [16].",
+            "source_ref": null
+          },
+          {
+            "id": "u49",
+            "claim_quote": "مقاله توضیح می‌دهد که ثبات این سیستم‌ها عمدتاً به انکوریج کورتیکال وابسته است و برای کنترل میکروموومنت و توزیع نیروهای عملکردی، اسپلینتینگ ایمپلنت‌ها اهمیت زیادی دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "BCS implants, which primarily depend on vertical cortical anchorage for stability, particularly\n                                                  require splinting to minimize functional stresses and prevent micromovement.",
+            "source_ref": null
+          },
+          {
+            "id": "u50",
+            "claim_quote": "ایمپلنت‌های دیسکی؛ BOI (Basal Osseointegrated Implant)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u51",
+            "claim_quote": "در این سیستم‌ها، بخش نگهدارنده ایمپلنت به شکل دیسک طراحی شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Classification of basal implants (based on morphology)\n                                                  Based on their morphology, basal implants are classified into disk-form implants, including the transosseous\n                                                  implant (TOI), basal osseointegrated implant (BOI), and lateral implant; screw-form implants, comprising\n                                                  the bi-cortical screw, compression screw (KOS), and the combined KOS Plus implant; plate-form implants,\n                                                  including the BOI-BAC and BOI-BAC2 designs; and other specialized forms, such as the tuberopterygoid\n                                                  (TPG) implant and the zygoma screw implant (ZSI) [16].",
+            "source_ref": null
+          },
+          {
+            "id": "u52",
+            "claim_quote": "برخلاف ایمپلنت‌های پیچی که در امتداد مسیر استئوتومی وارد استخوان می‌شوند، ایمپلنت‌های BOI از طریق دسترسی لترال قرار می‌گیرند و با استفاده از بخش دیسکی خود در استخوان انکوریج پیدا می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "By contrast, BOI require a more\n                                                  invasive technique involving lateral flap elevation and the preparation of a T-shaped osteotomy using disk\n                                                  drills.",
+            "source_ref": null
+          },
+          {
+            "id": "u53",
+            "claim_quote": "این تفاوت طراحی، رفتار بیومکانیکی آن‌ها را نیز متفاوت می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Although BOIs exhibit\n                                                  greater resistance to vertical forces because of their lateral cortical engagement, they still require protection\n                                                  from lateral and shear forces through rigid splinting.",
+            "source_ref": null
+          },
+          {
+            "id": "u54",
+            "claim_quote": "روش جراحی این دو گروه هم یکسان نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "By contrast, BOI require a more\n                                                  invasive technique involving lateral flap elevation and the preparation of a T-shaped osteotomy using disk\n                                                  drills.",
+            "source_ref": null
+          },
+          {
+            "id": "u55",
+            "claim_quote": "برخی ایمپلنت‌های پیچی را می‌توان با روش‌های کم‌تهاجمی و بدون فلپ قرار داد، درحالی‌که ایمپلنت‌های دیسکی BOI معمولاً به کنار زدن فلپ و آماده‌سازی استخوان با استئوتومی T شکل نیاز دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Compression screw, combination, and BCS implants require only a single\n                                                  osteotomy, which is prepared using manual drills to ensure precise and controlled bone preparation.",
+            "source_ref": null
+          },
+          {
+            "id": "u56",
+            "claim_quote": "(توضیح تکمیلی نویسنده: در این روش، دسترسی به استخوان از سمت لترال ایجاد می‌شود و استئوتومی به شکلی آماده می‌شود که بخش دیسکی ایمپلنت بتواند در موقعیت مورد نظر قرار بگیرد.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author explanation marker: توضیح تکمیلی نویسنده"
+          },
+          {
+            "id": "u57",
+            "claim_quote": "بنابراین BOI صرفاً یک ایمپلنت پیچی با رزوه‌های متفاوت نیست؛ طراحی و مسیر قرارگیری آن نیز متفاوت است.)",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The implant is inserted laterally into the cortical bone, and the surgical site is subsequently closed\n                                                  with sutures.",
+            "source_ref": null
+          },
+          {
+            "id": "u58",
+            "claim_quote": "مقاله علاوه بر این دو گروه، انواع دیگری مانند KOS یا Compression Screw، طراحی‌های پلیت‌فرم و ایمپلنت‌های تخصصی توبروپتریگوئید و زایگوماتیک را نیز در طبقه‌بندی ایمپلنت‌های بازال معرفی می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Classification of basal implants (based on morphology)\n                                                  Based on their morphology, basal implants are classified into disk-form implants, including the transosseous\n                                                  implant (TOI), basal osseointegrated implant (BOI), and lateral implant; screw-form implants, comprising\n                                                  the bi-cortical screw, compression screw (KOS), and the combined KOS Plus implant; plate-form implants,\n                                                  including the BOI-BAC and BOI-BAC2 designs; and other specialized forms, such as the tuberopterygoid\n                                                  (TPG) implant and the zygoma screw implant (ZSI) [16].",
+            "source_ref": null
+          },
+          {
+            "id": "u59",
+            "claim_quote": "(توضیح تکمیلی نویسنده: این طبقه‌بندی نشان می‌دهد که ایمپلنت‌های بازال از نظر طراحی و نحوه انکوریج، گروهی ناهمگون هستند.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author explanation marker: توضیح تکمیلی نویسنده"
+          },
+          {
+            "id": "u60",
+            "claim_quote": "بنابراین نتایج بالینی یک سیستم را نمی‌توان الزاماً به تمام سیستم‌های این گروه تعمیم داد.)",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u61",
+            "claim_quote": "بارگذاری فوری؛ چرا اسپلینتینگ اهمیت دارد؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u62",
+            "claim_quote": "یکی از ویژگی‌های برجسته ایمپلنت‌های بازال، امکان بارگذاری فوری است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Often designed as single-piece implants, they allow for immediate loading and eliminate\n                                                the need for bone augmentation, offering a faster, more cost-effective solution-particularly beneficial for\n                                                medically compromised patients or high-demand cases [3].",
+            "source_ref": null
+          },
+          {
+            "id": "u63",
+            "claim_quote": "در پروتکل‌های توصیف‌شده در مقاله، پروتز معمولاً در ۷۲ ساعت نخست پس از جراحی تحویل داده می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Immediate loading: 72 hours",
+            "source_ref": null
+          },
+          {
+            "id": "u64",
+            "claim_quote": "اما نکته اصلی صرفاً سرعت تحویل پروتز نیست؛ بلکه کنترل نیروهایی است که از همان ابتدای درمان به ایمپلنت‌ها وارد می‌شوند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u65",
+            "claim_quote": "در بازسازی‌های متکی بر چند ایمپلنت بازال، اتصال ریجید ایمپلنت‌ها به یکدیگر نقش مهمی در کاهش میکروموومنت و توزیع نیروهای اکلوزالی دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Splinting is a critical component of the immediate loading protocol for basal implants, as it enhances\n                                                  biomechanical stability and ensures favorable load distribution.",
+            "source_ref": null
+          },
+          {
+            "id": "u66",
+            "claim_quote": "در واقع، اسپلینتینگ ریجید (Rigid Splinting) به این معناست که ایمپلنت‌ها با یک ساختار صلب به یکدیگر متصل شوند تا حرکت نسبی آن‌ها کاهش پیدا کند و مجموعه بتواند نیروهای عملکردی را به‌صورت هماهنگ‌تری تحمل کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Implants are commonly splinted using rigid\n                                                  metal frameworks fabricated through intraoral welding (syncrystallization) to create a unified prosthetic\n\n\n                                                  structure [19].",
+            "source_ref": null
+          },
+          {
+            "id": "u67",
+            "claim_quote": "مقاله توضیح می‌دهد که این اتصال معمولاً با فریم‌ورک فلزی انجام می‌شود و در برخی پروتکل‌ها برای ساخت آن از تکنیکی به نام Intraoral Welding یا Syncrystallization استفاده می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Implants are commonly splinted using rigid\n                                                  metal frameworks fabricated through intraoral welding (syncrystallization) to create a unified prosthetic\n\n\n                                                  structure [19].",
+            "source_ref": null
+          },
+          {
+            "id": "u68",
+            "claim_quote": "(توضیح تکمیلی نویسنده، برگرفته از منابع مستقل: Intraoral Welding یا جوش داخل‌دهانی، برخلاف تصور اولیه، به معنای استفاده از شعله یا جوشکاری صنعتی در دهان بیمار نیست.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author explanation marker: توضیح تکمیلی نویسنده"
+          },
+          {
+            "id": "u69",
+            "claim_quote": "در یکی از روش‌های رایج، از دستگاه مخصوص Electric Resistance Welding استفاده می‌شود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u70",
+            "claim_quote": "یک بار تیتانیومی با اباتمنت‌های ایمپلنت تماس داده می‌شود و دستگاه با اعمال پالس بسیار کوتاه جریان الکتریکی، اتصال موضعی قطعات فلزی را ایجاد می‌کند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u71",
+            "claim_quote": "پالس معمولاً در حد چند میلی‌ثانیه است و حرارت عمدتاً در نقطه اتصال ایجاد می‌شود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u72",
+            "claim_quote": "برای محدود کردن انتقال حرارت به بافت‌های اطراف، طراحی الکترودها، کنترل انرژی و روش‌های خنک‌سازی اهمیت دارند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u73",
+            "claim_quote": "بنابراین اگرچه این تکنیک واقعاً در محیط دهان انجام می‌شود، اجرای آن به تجهیزات تخصصی و رعایت دقیق ملاحظات ایمنی نیاز دارد و نباید آن را روشی بدون خطر تلقی کرد.)",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u74",
+            "claim_quote": "از نظر بیومکانیکی، ایمپلنت‌های پیچی BCS و دیسکی BOI رفتار یکسانی ندارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "BCS implants, which primarily depend on vertical cortical anchorage for stability, particularly\n                                                  require splinting to minimize functional stresses and prevent micromovement.",
+            "source_ref": null
+          },
+          {
+            "id": "u75",
+            "claim_quote": "نویسندگان توضیح می‌دهند که ایمپلنت‌های BCS عمدتاً از طریق انکوریج کورتیکال در راستای عمودی به ثبات می‌رسند و اسپلینتینگ برای کاهش تنش‌های عملکردی و میکروموومنت آن‌ها اهمیت دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "BCS implants, which primarily depend on vertical cortical anchorage for stability, particularly\n                                                  require splinting to minimize functional stresses and prevent micromovement.",
+            "source_ref": null
+          },
+          {
+            "id": "u76",
+            "claim_quote": "در مقابل، BOIها به دلیل انکوریج لترال، مقاومت بیشتری در برابر نیروهای عمودی دارند، اما همچنان برای مقابله با نیروهای جانبی و Shear به اسپلینتینگ ریجید نیاز دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Although BOIs exhibit\n                                                  greater resistance to vertical forces because of their lateral cortical engagement, they still require protection\n                                                  from lateral and shear forces through rigid splinting.",
+            "source_ref": null
+          },
+          {
+            "id": "u77",
+            "claim_quote": "(Shear یا نیروی برشی، نیرویی است که تمایل دارد دو سطح یا دو بخش مجاور را نسبت به یکدیگر جابه‌جا کند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u78",
+            "claim_quote": "در اینجا منظور نیروهایی است که می‌توانند در محل اتصال ایمپلنت و استخوان، تنش‌های برشی ایجاد کنند.)",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u79",
+            "claim_quote": "نویسندگان همچنین توضیح می‌دهند که بازسازی استخوان حدود ۷۲ ساعت پس از جراحی آغاز می‌شود و ممکن است به کاهش موقتی استحکام استخوان منجر شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, as bone remodeling begins approximately 72 hours after\n                                                  implant placement, there is a temporary reduction in bone strength [18].",
+            "source_ref": null
+          },
+          {
+            "id": "u80",
+            "claim_quote": "بر همین اساس، بر ضرورت اسپلینتینگ ریجید در این دوره تأکید می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Therefore, rigid splinting of the\n                                                  implants is essential during this period to distribute occlusal forces evenly and prevent implant overload,\n                                                  thereby promoting predictable osseointegration and long-term clinical success [19].",
+            "source_ref": null
+          },
+          {
+            "id": "u81",
+            "claim_quote": "(نقد نویسنده: اگرچه کنترل میکروموومنت و توزیع مناسب نیروها اهمیت دارد، اما شواهد ارائه‌شده در این مقاله برای اثبات اینکه دقیقاً ۷۲ ساعت یک مرز بیولوژیک قطعی است کافی نیست.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author critique marker: نقد نویسنده"
+          },
+          {
+            "id": "u82",
+            "claim_quote": "بنابراین بهتر است این زمان را بخشی از پروتکل بارگذاری فوری سیستم‌های مورد بحث بدانیم، نه قانونی که الزاماً برای تمام ایمپلنت‌ها صدق می‌کند.)",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "F1 inference rule: the conclusion limits the 72-hour statement to the discussed loading protocols and denies its status as a universal biological rule. The source reports the timing and protocol but does not state this limiting conclusion. The preceding نقد نویسنده marker is in a body unit, not this unit or an opinion-marked heading; بهتر است does not itself exempt a recommendation."
+          },
+          {
+            "id": "u83",
+            "claim_quote": "در یکی از مطالعات مورد اشاره مقاله، Lazarov نتایج بارگذاری فوری ایمپلنت‌های کورتیکال یک‌قطعه‌ای را بررسی کرده و برای ۱۰۱۹ ایمپلنت BCS، نرخ بقای تجمعی حدود ۹۷.۵ درصد طی چهار سال گزارش کرده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Lazarov [20] evaluated immediate functional\n                                                  loading of one-piece cortically anchored Strategic Implants® and reported a four-year cumulative survival\n                                                  rate of approximately 97.5%, based on the clinical performance of 1,019 BCS® implants, demonstrating the\n                                                  predictability and long-term success of splinted basal implant systems [21].",
+            "source_ref": null
+          },
+          {
+            "id": "u84",
+            "claim_quote": "(توضیح تکمیلی نویسنده: این عدد مربوط به یک مطالعه روی یک سیستم و پروتکل مشخص است و نرخ بقای عمومی تمام ایمپلنت‌های بازال محسوب نمی‌شود.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author explanation marker: توضیح تکمیلی نویسنده"
+          },
+          {
+            "id": "u85",
+            "claim_quote": "همچنین Survival یا بقای ایمپلنت با Success یا موفقیت درمان یکسان نیست؛ باقی ماندن ایمپلنت در دهان به‌تنهایی اطلاعات کافی درباره عوارض بیولوژیک، مشکلات پروتزی یا رضایت بیمار نمی‌دهد.)",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u86",
+            "claim_quote": "ایمپلنت‌های بازال چه زمانی می‌توانند مطرح شوند؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u87",
+            "claim_quote": "مهم‌ترین کاربردی که مقاله برای ایمپلنت‌های بازال مطرح می‌کند، بازسازی فک‌های شدیداً تحلیل‌رفته است؛ به‌ویژه زمانی که حجم استخوان موجود برای درمان متداول کافی نیست یا پیوند استخوان امکان‌پذیر نیست، منع مصرف دارد یا قبلاً با شکست مواجه شده است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "no corresponding source statement located"
+          },
+          {
+            "id": "u88",
+            "claim_quote": "مقاله حذف پیوند استخوان و کوتاه‌تر شدن مدت درمان را از مزایای ایمپلنت‌های بازال برمی‌شمارد؛ البته این مزایا به‌تنهایی برتری بالینی آن‌ها را ثابت نمی‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "An important advantage\n                                                  is the elimination of bone grafting procedures, significantly shortening the overall treatment duration while\n                                                  enabling immediate functional loading, thereby avoiding any edentulous phase.",
+            "source_ref": null
+          },
+          {
+            "id": "u89",
+            "claim_quote": "مقاله همچنین به کاربرد این سیستم‌ها در بیمارانی با بی‌دندانی‌های متعدد، نیاز به کشیدن چند دندان، سابقه شکست ایمپلنت‌های Conventional و قرار دادن فوری ایمپلنت پس از کشیدن دندان اشاره می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Indications and contraindications of basal implants\n                                                  Basal implants are indicated in patients with multiple missing teeth or those requiring multiple extractions,\n                                                  in cases of failure of conventional two-stage implant systems, and when bone augmentation procedures\n                                                  have failed or are contraindicated.",
+            "source_ref": null
+          },
+          {
+            "id": "u90",
+            "claim_quote": "نویسندگان حتی امکان کاشت فوری در ساکت‌های عفونی را نیز از مزایای این سیستم‌ها معرفی کرده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Basal implants are well\n                                                  suited for one-stage surgical protocols and permit simultaneous tooth extraction and implant placement,\n                                                  even in infected extraction sites, making them particularly beneficial in complex or compromised clinical\n                                                  situations.",
+            "source_ref": null
+          },
+          {
+            "id": "u91",
+            "claim_quote": "(توضیح تکمیلی نویسنده: این عبارت نباید به معنای مناسب بودن تمام ساکت‌های عفونی برای کاشت فوری تعبیر شود.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author explanation marker: توضیح تکمیلی نویسنده"
+          },
+          {
+            "id": "u92",
+            "claim_quote": "انتخاب بیمار و محل جراحی همچنان به ارزیابی وضعیت عفونت، امکان دستیابی به ثبات اولیه و شرایط عمومی بیمار نیاز دارد.)",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "This unit prescribes evaluation of infection status, achievable primary stability, and general patient condition together. The source discusses indications, systemic contraindications, and stability, but does not state this combined selection requirement. Under F3 a single predicate with a list of objects is one claim, not separable supported halves. The preceding body-unit author marker does not satisfy F1 for this unit."
+          },
+          {
+            "id": "u93",
+            "claim_quote": "محدودیت‌ها و عوارض احتمالی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u94",
+            "claim_quote": "در کنار مزایای مطرح‌شده، ایمپلنت‌های بازال محدودیت‌هایی دارند که هنگام انتخاب درمان نباید نادیده گرفته شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Despite these benefits, basal implants have certain limitations.",
+            "source_ref": null
+          },
+          {
+            "id": "u95",
+            "claim_quote": "اول، محدودیت‌های زیبایی و بافت نرم.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "F1 topic signpost: the ordinal plus noun phrase labels the aesthetic/soft-tissue topic developed in u96; it contains no independent subject-and-predicate assertion."
+          },
+          {
+            "id": "u96",
+            "claim_quote": "در نواحی قدامی، به‌خصوص برای جایگزینی یک دندان، دستیابی به Emergence Profile و کانتور مطلوب لثه ممکن است دشوارتر باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "They may produce compromised esthetic\n                                                  outcomes in single-tooth anterior restorations or in cases requiring an ideal gingival contour and emergence\n                                                  profile.",
+            "source_ref": null
+          },
+          {
+            "id": "u97",
+            "claim_quote": "همچنین با تغییرات بافت نرم در طول زمان، احتمال ایجاد فاصله بین پروتز و لثه وجود دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Cost               Expensive                                                Cost effective\n\n               Basic design       Two- piece system                                        One-piece system\n\n                                  Crestal alveolar bone, bone is more prone to             Basal bone more dense, mineralized and less prone to bone\n               Bone\n                                  resorption                                               resorption\n\n               Flexibility        Rigid                                                    Bendable\n\n               Placement in\n                                  Good quality bone                                        Atrophied jaw\n               the jaws\n\n               Fit with gums      Fits well after healing                                  May have gaps over time\n\n\n\n              TABLE 1: Comparison between conventional and basal implants\n\n\n                                                  Conversely, conventional implants, with their established protocols and extensive supporting evidence,\n                                                  remain the standard of care in implant dentistry.",
+            "source_ref": null
+          },
+          {
+            "id": "u98",
+            "claim_quote": "دوم، حساسیت بالای تکنیک جراحی.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Their placement is highly technique-sensitive and demands advanced surgical expertise and\n                                                  comprehensive knowledge of maxillofacial anatomy.",
+            "source_ref": null
+          },
+          {
+            "id": "u99",
+            "claim_quote": "درگیری نواحی کورتیکال و بعضی ساختارهای آناتومیک عمیق‌تر، به مهارت جراحی و شناخت دقیق آناتومی نیاز دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Their placement is highly technique-sensitive and demands advanced surgical expertise and\n                                                  comprehensive knowledge of maxillofacial anatomy.",
+            "source_ref": null
+          },
+          {
+            "id": "u100",
+            "claim_quote": "سوم، وابستگی نتیجه به طراحی بیومکانیکی.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "F1 topic signpost: the ordinal plus noun phrase introduces the biomechanical-planning topic developed in u101; this is an enumerated topic label rather than an independent subject-and-predicate assertion."
+          },
+          {
+            "id": "u101",
+            "claim_quote": "توزیع نامناسب نیروها یا اضافه‌بار می‌تواند باعث Overload Osteolysis شود؛ یعنی تحلیل استخوان در ارتباط با بارگذاری مکانیکی بیش‌ازحد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In addition, inadequate biomechanical planning or\n                                                  improper occlusal force distribution may lead to overload osteolysis, potentially compromising long-term\n                                                  implant stability and clinical success [22].",
+            "source_ref": null
+          },
+          {
+            "id": "u102",
+            "claim_quote": "چهارم، دشواری مدیریت شکست.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "F1 topic signpost: the ordinal plus noun phrase labels failure management, whose substantive difficulty is stated in u103; this unit has no independent subject-and-predicate assertion."
+          },
+          {
+            "id": "u103",
+            "claim_quote": "خارج کردن یا جایگزینی بعضی ایمپلنت‌های بازال شکست‌خورده ممکن است پیچیده باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, replacing a failed basal implant can be challenging.",
+            "source_ref": null
+          },
+          {
+            "id": "u104",
+            "claim_quote": "مقاله همچنین به احتمال ناراحتی بیشتر حین جراحی، طولانی‌تر شدن مدت جراحی در برخی شرایط، تحلیل استخوان و ریسشن بافت نرم اشاره می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Patients may experience\n                                                  more intraoperative discomfort and longer surgical duration compared to conventional methods, and there\n                                                  may be minor bone loss and recession of the surrounding gum tissue [26].",
+            "source_ref": null
+          },
+          {
+            "id": "u105",
+            "claim_quote": "در نهایت، این روش برای همه بیماران مناسب نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, they are contraindicated in patients who\n                                                  are unable to achieve balanced mastication due to neuromuscular disorders or muscular dysfunctions\n                                                  affecting occlusion, as well as in individuals with recent or unstable systemic conditions such as myocardial\n                                                  infarction or cerebrovascular accident (stroke) [15].",
+            "source_ref": null
+          },
+          {
+            "id": "u106",
+            "claim_quote": "نویسندگان اختلالات عصبی‌عضلانی مؤثر بر عملکرد جویدن و بعضی شرایط سیستمیک اخیر یا ناپایدار، مانند سکته قلبی یا مغزی، را از موارد منع مصرف مطرح کرده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, they are contraindicated in patients who\n                                                  are unable to achieve balanced mastication due to neuromuscular disorders or muscular dysfunctions\n                                                  affecting occlusion, as well as in individuals with recent or unstable systemic conditions such as myocardial\n                                                  infarction or cerebrovascular accident (stroke) [15].",
+            "source_ref": null
+          },
+          {
+            "id": "u107",
+            "claim_quote": "شواهد علمی درباره ایمپلنت‌های بازال چقدر قابل اتکاست؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u108",
+            "claim_quote": "این شاید مهم‌ترین بخش برای تصمیم‌گیری بالینی باشد.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "importance judgment only"
+          },
+          {
+            "id": "u109",
+            "claim_quote": "مقاله حاضر یک Narrative Review است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Open Access Review Article\n\n\n\n                                                Conventional and Basal Implantology: A\n                                                Narrative Review of Current Evidence, Clinical\nReview began 07/17/2026\n                                                Decision-Making, and Future Perspectives\nReview ended 07/27/2026\nPublished 07/31/2026                            Megha Joshi 1 , Mayur Kaushik 2 , Mohd Nazar Rana 3, Soumya Kaushik 4\n\n© Copyright 2026\nJoshi et al.",
+            "source_ref": null
+          },
+          {
+            "id": "u110",
+            "claim_quote": "نویسندگان گزارش می‌کنند که مطالعات منتشرشده بین سال‌های ۲۰۰۰ تا ۲۰۲۵ را در چند پایگاه علمی جست‌وجو کرده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Electronic databases, including PubMed/MEDLINE, Scopus, Google Scholar,\n                                                  Web of Science, and Cochrane Library, were searched for articles published between 2000 and 2025.",
+            "source_ref": null
+          },
+          {
+            "id": "u111",
+            "claim_quote": "بااین‌حال، مقاله متاآنالیز، ارزیابی ساختاریافته Risk of Bias و درجه‌بندی رسمی قطعیت شواهد را ارائه نکرده است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u112",
+            "claim_quote": "(نقد نویسنده: اگرچه نویسندگان استراتژی جست‌وجو و معیارهای کلی انتخاب مطالعات را توضیح داده‌اند، اما اطلاعات کافی درباره تعداد نهایی مطالعات واردشده، فرایند انتخاب و کیفیت تک‌تک آن‌ها ارائه نشده است.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author critique marker: نقد نویسنده"
+          },
+          {
+            "id": "u113",
+            "claim_quote": "در نتیجه، امکان ارزیابی مستقل و دقیق قدرت شواهد از طریق این مقاله محدود است.)",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u114",
+            "claim_quote": "در مقابل، ایمپلنت‌های Conventional از پشتوانه پژوهشی گسترده‌تر و مطالعات بلندمدت بیشتری برخوردارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Cost               Expensive                                                Cost effective\n\n               Basic design       Two- piece system                                        One-piece system\n\n                                  Crestal alveolar bone, bone is more prone to             Basal bone more dense, mineralized and less prone to bone\n               Bone\n                                  resorption                                               resorption\n\n               Flexibility        Rigid                                                    Bendable\n\n               Placement in\n                                  Good quality bone                                        Atrophied jaw\n               the jaws\n\n               Fit with gums      Fits well after healing                                  May have gaps over time\n\n\n\n              TABLE 1: Comparison between conventional and basal implants\n\n\n                                                  Conversely, conventional implants, with their established protocols and extensive supporting evidence,\n                                                  remain the standard of care in implant dentistry.",
+            "source_ref": null
+          },
+          {
+            "id": "u115",
+            "claim_quote": "نویسندگان نیز در بخش Discussion تأکید می‌کنند که شواهد موجود برای توصیه ایمپلنت‌های بازال به‌جای ایمپلنت‌های Conventional کافی نیست و به مطالعات مقایسه‌ای بلندمدت نیاز داریم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "While basal dental implants have\n                                                  shown promising results in cases with deficient bone [27], there is insufficient evidence to recommend them\n                                                  over conventional (crestal) implants and hence requires further research in terms of their clinical efficacy.",
+            "source_ref": null
+          },
+          {
+            "id": "u116",
+            "claim_quote": "(نقد نویسنده: برخی مقایسه‌های جدول مقاله بیش‌ازحد ساده‌سازی شده‌اند.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author critique marker: نقد نویسنده"
+          },
+          {
+            "id": "u117",
+            "claim_quote": "برای مثال، بارگذاری فوری در مقابل بارگذاری تأخیری یا Osseoadaptation در مقابل Osseointegration به‌صورت تفاوت‌هایی کاملاً مجزا معرفی شده‌اند؛ درحالی‌که خود مقاله نیز بارگذاری فوری را برای ایمپلنت‌های Conventional امکان‌پذیر می‌داند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Prosthetic loading may be immediate, early, or delayed based on implant stability and the clinical\n                                                scenario [2].",
+            "source_ref": null,
+            "note": "The comparison table juxtaposes delayed versus immediate loading and osseointegration versus osseoadaptation; the quoted conventional-implant paragraph explicitly allows immediate loading. The unit reports both features of the same source. A prior body-unit نقد نویسنده marker does not make this unit AUTHOR_VIEW. The source’s may and the claim’s امکان‌پذیر preserve possibility."
+          },
+          {
+            "id": "u118",
+            "claim_quote": "همچنین طراحی یک‌قطعه‌ای و استفاده از انکوریج کورتیکال لزوماً ویژگی‌های انحصاری ایمپلنت‌های بازال نیستند.)",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The source explicitly gives conventional implants one-piece configurations, but does not state that cortical anchorage is nonexclusive to basal implants. Here one predicate of nonexclusivity governs a list of two features; F3 expressly treats a single predicate with a list of objects as one claim, so the supported one-piece item cannot be split off to award MATCHES. A closing parenthesis and a previous body-unit author marker do not meet F1 attribution exemptions."
+          },
+          {
+            "id": "u119",
+            "claim_quote": "نویسندگان در پایان بر ضرورت مطالعات آینده‌نگر، مقایسه‌های بلندمدت و استانداردسازی گزارش نتایج تأکید کرده‌اند؛ مطالعاتی که علاوه بر نرخ بقا، رفتار بیومکانیکی و پیامدهای مرتبط با بیمار را نیز بررسی کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In basal implantology, future research should focus on well-\n                                                  designed prospective clinical trials and long-term comparative studies to establish stronger evidence\n                                                  regarding survival rates, biomechanical behavior, and patient-centered outcomes compared with\n                                                  conventional implant systems.",
+            "source_ref": null
+          },
+          {
+            "id": "u120",
+            "claim_quote": "در نهایت کدام رویکرد بهتر است؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u121",
+            "claim_quote": "ایمپلنت‌های Conventional با پشتوانه علمی گسترده و نتایج قابل‌پیش‌بینی، همچنان رویکرد استاندارد درمان در بسیاری از شرایط بالینی هستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Cost               Expensive                                                Cost effective\n\n               Basic design       Two- piece system                                        One-piece system\n\n                                  Crestal alveolar bone, bone is more prone to             Basal bone more dense, mineralized and less prone to bone\n               Bone\n                                  resorption                                               resorption\n\n               Flexibility        Rigid                                                    Bendable\n\n               Placement in\n                                  Good quality bone                                        Atrophied jaw\n               the jaws\n\n               Fit with gums      Fits well after healing                                  May have gaps over time\n\n\n\n              TABLE 1: Comparison between conventional and basal implants\n\n\n                                                  Conversely, conventional implants, with their established protocols and extensive supporting evidence,\n                                                  remain the standard of care in implant dentistry.",
+            "source_ref": null
+          },
+          {
+            "id": "u122",
+            "claim_quote": "ایمپلنت‌های بازال نیز رویکرد متفاوتی برای استفاده از استخوان کورتیکال ارائه می‌کنند که می‌تواند در برخی بیماران با تحلیل شدید استخوان، به‌ویژه در بازسازی‌های چندواحدی و فول‌آرچ، ارزش بررسی داشته باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "While basal dental implants have\n                                                  shown promising results in cases with deficient bone [27], there is insufficient evidence to recommend them\n                                                  over conventional (crestal) implants and hence requires further research in terms of their clinical efficacy.",
+            "source_ref": null
+          },
+          {
+            "id": "u123",
+            "claim_quote": "اما امکان درمان سریع‌تر و بدون پیوند استخوان، به‌تنهایی نشانه برتری یک سیستم نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "While basal dental implants have\n                                                  shown promising results in cases with deficient bone [27], there is insufficient evidence to recommend them\n                                                  over conventional (crestal) implants and hence requires further research in terms of their clinical efficacy.",
+            "source_ref": null
+          },
+          {
+            "id": "u124",
+            "claim_quote": "در واقع، مسئله این نیست که ایمپلنت بازال بهتر است یا Conventional؛ مسئله این است که در چه شرایطی استفاده از انکوریج کورتیکال می‌تواند مزیتی ایجاد کند که با روش‌های متداول، با همان میزان پیش‌بینی‌پذیری یا سادگی، قابل دستیابی نباشد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full source text does not state this claim."
+          },
+          {
+            "id": "u125",
+            "claim_quote": "فعلاً شواهد موجود برای توصیه عمومی ایمپلنت‌های بازال به‌عنوان جایگزین ایمپلنت‌های Conventional کافی نیست، اما این موضوع به معنای نادیده گرفتن کاربرد احتمالی آن‌ها در موارد انتخاب‌شده هم نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "While basal dental implants have\n                                                  shown promising results in cases with deficient bone [27], there is insufficient evidence to recommend them\n                                                  over conventional (crestal) implants and hence requires further research in terms of their clinical efficacy.",
+            "source_ref": null
+          },
+          {
+            "id": "u126",
+            "claim_quote": "---",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "separator"
+          },
+          {
+            "id": "u127",
+            "claim_quote": "منبع اصلی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          }
+        ],
+        "counts": {
+          "matches": 73,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 23,
+          "not_assessable": 0,
+          "author_view": 11,
+          "not_a_claim": 20
+        },
+        "assessable": 73,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "Overall, implants restore function, appearance, and quality of life, representing a major advancement in dental rehabilitation.",
+        "fact_fa": "از ۷۳ ادعایی که منبع به آن پرداخته‌اند، ۷۳ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۲۳ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
+    ]
   }
 }

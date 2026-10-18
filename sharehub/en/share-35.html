@@ -1,0 +1,496 @@
+<!doctype html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Conventional and Basal Implants: Two Different Approaches to Treating Edentulism | Share Hub – DentCast</title>
+
+<meta name="description" content="A full-text narrative review compares conventional and basal implants, their designs, biomechanics, clinical uses, limitations, and the strength of current evidence.">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/en/share-35.html">
+
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="DentCast">
+<meta property="og:title" content="Conventional and Basal Implants: Two Different Approaches to Treating Edentulism | Share Hub – DentCast">
+<meta property="og:description" content="A full-text narrative review compares conventional and basal implants, their designs, biomechanics, clinical uses, limitations, and the strength of current evidence.">
+<meta property="og:url" content="https://dentcast.org/sharehub/en/share-35.html">
+<meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Conventional and Basal Implants: Two Different Approaches to Treating Edentulism | Share Hub – DentCast">
+<meta name="twitter:description" content="A full-text narrative review compares conventional and basal implants, their designs, biomechanics, clinical uses, limitations, and the strength of current evidence.">
+<meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css?v=7">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+
+  <!-- Theme init — no flash -->
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --radius:18px;
+    }
+
+    html,body { margin:0; padding:0; }
+
+    body {
+      font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+      direction: ltr;
+      background: #f0f2f5;
+      color: #0a1a33;
+      max-width: 47.5rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 6.25rem;line-height:1.9;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0a1020;
+      font-weight: 800;
+      font-size: 1.7rem;
+      line-height: 1.35;
+      margin: 0 0 1.875rem;
+    }
+
+    .glass-box {
+      background: #fff;
+      border: 1px solid rgba(2,35,96,.09);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.875rem;
+      box-shadow: 0 10px 30px rgba(2,35,96,.06);
+    }
+
+    p { margin: 0.875rem 0; font-size: 1.02rem; text-align: left; }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 1.5rem 0 0.625rem;
+      border-left: 4px solid #0b5fff;
+      padding-left: 0.75rem;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* summary tables — LTR counterpart of the .text-box table pattern used elsewhere on the site */
+    .glass-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .glass-box table th,
+    .glass-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:left;
+      vertical-align:top;
+    }
+    .glass-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .glass-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+    @media (max-width:768px){
+      .glass-box table{font-size:.9rem;}
+      .glass-box table th,.glass-box table td{padding:0.45rem 0.5rem;}
+    }
+
+    .text-divider {
+      margin: 1.75rem 0;
+      border: 0;
+      height: 0.0625rem;
+      background-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0),
+        rgba(11,95,255,0.4),
+        rgba(0,0,0,0)
+      );
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { margin: 1.25rem 0; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.7;
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: #4a5568;
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img, .glass-box figure img { width: 100%; height: auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+    /* permission chips */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* Persian-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 0 1.125rem auto;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      h1 { font-size: 1.4rem; }
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  </style>
+
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/en/share-35.html",
+      "url": "https://dentcast.org/sharehub/en/share-35.html",
+      "name": "Conventional and Basal Implants: Two Different Approaches to Treating Edentulism",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/en/share-35.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/en/share-35.html#creativework",
+      "name": "Conventional and Basal Implants: Two Different Approaches to Treating Edentulism",
+      "headline": "Conventional and Basal Implants: Two Different Approaches to Treating Edentulism",
+      "description": "A full-text narrative review compares conventional and basal implants, their designs, biomechanics, clinical uses, limitations, and the strength of current evidence.",
+      "inLanguage": "en",
+      "author": [
+        { "@type": "Person", "name": "Megha Joshi" },
+        { "@type": "Person", "name": "Mayur Kaushik" },
+        { "@type": "Person", "name": "Mohd Nazar Rana" },
+        { "@type": "Person", "name": "Soumya Kaushik" }
+      ],
+      "creator": [
+        { "@type": "Person", "name": "Megha Joshi" },
+        { "@type": "Person", "name": "Mayur Kaushik" },
+        { "@type": "Person", "name": "Mohd Nazar Rana" },
+        { "@type": "Person", "name": "Soumya Kaushik" }
+      ],
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/en/share-35.html"
+      },
+      "datePublished": "2026-10-18",
+      "dateModified": "2026-10-18",
+      "genre": "Dental Education",
+      "keywords": [
+        "conventional implants",
+        "basal implants",
+        "cortical anchorage",
+        "immediate loading",
+        "osseointegration",
+        "BCS",
+        "BOI",
+        "evidence appraisal"
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DentCast",
+      "item": "https://dentcast.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Share Hub",
+      "item": "https://dentcast.org/sharehub/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Conventional and Basal Implants: Two Different Approaches to Treating Edentulism | Share Hub – DentCast",
+      "item": "https://dentcast.org/sharehub/en/share-35.html"
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<div class="sh-kicker"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Share Hub</div>
+<h1>Conventional and Basal Implants: Two Different Approaches to Treating Edentulism</h1>
+<div class="glass-box">
+<a class="lang-btn" href="../share-35.html" rel="noopener"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی</a>
+<div class="sh-dialogue">
+<p>Can a jaw with severe bone resorption be restored without bone grafting and with immediate loading?</p>
+<p>Basal implants were developed to offer this possibility. Rather than relying primarily on alveolar bone, these systems use denser cortical bone regions to achieve primary stability.</p>
+<p>Their differences from conventional implants involve more than placement or treatment speed: implant design, force transfer, and the prosthetic approach also differ.</p>
+<p>In a narrative review published in Cureus in 2026, Joshi and colleagues compared conventional and basal implants in terms of biological principles, design, surgical techniques, loading protocols, and clinical outcomes.</p>
+<div class="sh-pair"><figure><img src="/assets/share-35-conventional-implant.webp" alt="Conventional implant" loading="lazy"></figure><figure><img src="/assets/share-35-basal-implant.webp" alt="Basal implant" loading="lazy"></figure></div>
+<h2>Conventional implants: an approach supported by extensive evidence</h2>
+<p>Conventional, or crestal, implants are the most commonly used systems in implant dentistry. They are placed mainly in alveolar bone, and their long-term stability is based on <a href="/glossary/osseointegration.html">osseointegration</a>: a direct connection between bone and the implant surface, without intervening soft tissue.</p>
+<p>In current designs, screw-shaped implants are more common. Changes to thread design, implant geometry, and surface characteristics aim to improve primary stability and facilitate bone formation in contact with the implant.</p>
+<p>After implant placement, mechanical primary stability is gradually accompanied by secondary stability from new bone formation. The subsequent bone-remodelling phase includes a Stability Dip, when primary stability declines before sufficient secondary stability has developed.</p>
+<p><strong>Author's explanatory note:</strong> The Stability Dip is the period when some initial mechanical stability is lost during bone remodelling, before biologic stability from new bone formation has developed sufficiently. Its timing and severity are not the same for every implant.</p>
+<p><a href="/episodes/episode-45.html">Conventional implants</a> may be loaded immediately, early, or after a delay. Immediate loading is therefore not exclusive to basal implants. The loading protocol depends on primary stability, bone quality, and the clinical situation.</p>
+<p>The main strength of conventional implants is their extensive clinical evidence and predictable long-term outcomes. The review reports success rates above 90–95% at ten-year follow-up.</p>
+<p>However, in jaws with severe bone resorption, implant placement may require bone grafting, sinus lift, or other bone-augmentation procedures. These additional treatments can increase treatment time, cost, and complexity.</p>
+<h2>Basal implants: using cortical bone to achieve stability</h2>
+<p>The rationale for basal implants is to use denser bone regions that are more resistant to resorption.</p>
+<p>After tooth extraction, alveolar bone gradually resorbs, while parts of the basal and cortical bone are generally more stable. By engaging these regions, basal implants aim to provide adequate primary stability even when ridge height or width is severely reduced.</p>
+<p>Many of these implants have a one-piece, or monoblock, design, in which the fixture and abutment are integrated. This removes the implant–abutment connection and its associated issues, such as abutment-screw loosening or a microgap at that junction.</p>
+<p>Basal implants also commonly have a polished surface. The authors describe this design as intended to reduce plaque accumulation and limit inflammation in the surrounding tissues.</p>
+<p><strong>Author's explanatory note:</strong> A polished surface does not eliminate the risk of infection or peri-implant complications. Comparative clinical evidence is needed to judge how much it reduces these risks relative to other implants.</p>
+<p>In some designs, the implant neck can be bent by approximately 15°–25° to correct the prosthetic direction. This feature depends on the system design and implant specifications.</p>
+<h2>Do basal implants lack osseointegration?</h2>
+<p>The review uses the term osseoadaptation to describe the stability mechanism of basal implants and contrasts it with osseointegration.</p>
+<p>In its comparison table, the authors explain that cortical engagement in basal screw implants can provide high primary stability, and they use osseoadaptation to describe this situation.</p>
+<p><strong>Author's critique:</strong> This contrast is not biologically precise. Mechanical engagement in cortical bone does not mean that osseointegration does not occur. The review itself refers to osseointegration when describing healing in basal implants. It is therefore more accurate to distinguish where and how primary stability is achieved, rather than whether direct bone-to-implant contact occurs. The review also provides no separate biological definition of osseoadaptation that could establish it as a replacement for osseointegration.</p>
+<h2>Basal implants do not all have the same design</h2>
+<p>An important point in the review is that “basal implant” does not refer to a single design.</p>
+<p>These implants have been developed in several forms. Two important groups are:</p>
+<h2>Cortical screw implants: BCS (Basal Cortical Screw)</h2>
+<p>These implants have a screw design and achieve primary stability by engaging dense cortical bone. The review explains that their stability depends mainly on cortical anchorage, making splinting important for limiting micromotion and distributing functional forces.</p>
+<h2>Disk implants: BOI (Basal Osseointegrated Implant)</h2>
+<p>In these systems, the anchoring part of the implant is disk-shaped. Unlike screw implants, which are inserted along an osteotomy path, BOI implants are placed through lateral access and anchor in bone with their disk component.</p>
+<p>This design difference also gives them different biomechanical behaviour.</p>
+<p>The surgical techniques for these two groups also differ. Some screw implants can be placed with minimally invasive, flapless techniques, whereas disk-shaped BOI implants generally require flap elevation and preparation of a T-shaped osteotomy.</p>
+<p><strong>Author's explanatory note:</strong> In this technique, the bone is accessed laterally and the osteotomy is shaped so the disk component can be placed in the intended position. BOI is therefore not simply a screw implant with different threads; its design and path of insertion are also different.</p>
+<p>In addition to these two groups, the review classifies other types as basal implants, including KOS or compression screws, plate-form designs, and specialized tubero-pterygoid and zygomatic implants.</p>
+<p><strong>Author's explanatory note:</strong> This classification shows that basal implants are heterogeneous in design and anchorage. Clinical outcomes from one system cannot necessarily be generalized to every system in this group.</p>
+<h2>Immediate loading: why does splinting matter?</h2>
+<p>A prominent feature of basal implants is the possibility of immediate loading. In the protocols described in the review, the prosthesis is usually delivered within the first 72 hours after surgery.</p>
+<p>The central issue is not simply how quickly the prosthesis is delivered; it is how forces applied to the implants are controlled from the beginning of treatment.</p>
+<p>In reconstructions supported by multiple basal implants, rigidly connecting the implants helps reduce micromotion and distribute occlusal forces.</p>
+<p>Rigid splinting means connecting implants with a rigid structure to reduce relative movement and help the group withstand functional forces in a more coordinated way.</p>
+<p>The review explains that this connection is usually made with a metal framework. Some protocols use a technique called Intraoral Welding or syncrystallization to fabricate it.</p>
+<p><strong>Author's explanatory note, based on independent sources:</strong> Intraoral welding does not mean using a flame or industrial welding inside the patient's mouth. One common method uses a dedicated electric resistance welding device. A titanium bar is brought into contact with the implant abutments, and the device applies a very brief electrical pulse to create a localized metal joint. The pulse usually lasts only a few milliseconds, with heat generated mainly at the connection point. Electrode design, energy control, and cooling methods are important to limit heat transfer to surrounding tissues. Although the technique is performed intraorally, it requires specialized equipment and careful attention to safety; it should not be considered risk-free.</p>
+<p>From a biomechanical perspective, BCS screw implants and BOI disk implants do not behave in the same way.</p>
+<p>The authors explain that BCS implants achieve stability mainly through cortical anchorage along the vertical axis, and that splinting is important for reducing functional stresses and micromotion.</p>
+<p>By contrast, because of their lateral anchorage, BOI implants offer greater resistance to vertical forces, but still require rigid splinting to counter lateral and shear forces.</p>
+<p><strong>Definition:</strong> Shear is a force that tends to move two adjacent surfaces or parts relative to one another. Here, it refers to forces that can create shear stress at the implant–bone interface.</p>
+<p>The authors also explain that bone remodelling begins about 72 hours after surgery and may temporarily reduce bone strength. On this basis, they emphasize the need for rigid splinting during this period.</p>
+<p><strong>Author's critique:</strong> Although controlling micromotion and distributing forces appropriately are important, the evidence in this review is not sufficient to establish exactly 72 hours as a definite biological boundary. This timing is better understood as part of the immediate-loading protocol for the systems discussed, rather than a rule that necessarily applies to every implant.</p>
+<p>In one study cited by the review, Lazarov assessed immediate loading of one-piece cortical implants and reported a cumulative survival rate of about 97.5% over four years for 1,019 BCS implants.</p>
+<p><strong>Author's explanatory note:</strong> This figure comes from one study of a specific system and protocol; it is not a general survival rate for all basal implants. Implant survival is also different from treatment success: an implant remaining in the mouth alone does not describe biological complications, prosthetic problems, or patient satisfaction.</p>
+<h2>When might basal implants be considered?</h2>
+<p>The main indication discussed in the review is rehabilitation of severely resorbed jaws, especially when the available bone volume is insufficient for conventional treatment, or when grafting is not feasible, is contraindicated, or has previously failed.</p>
+<p>The review lists elimination of bone grafting and shorter treatment time among the advantages of basal implants; these claims alone do not establish clinical superiority.</p>
+<p>The review also discusses these systems for patients with multiple missing teeth, a need for several extractions, previous failure of conventional implants, and immediate implant placement after extraction.</p>
+<p>The authors also present immediate placement in infected sockets as a potential advantage of these systems.</p>
+<p><strong>Author's explanatory note:</strong> This statement should not be interpreted to mean that every infected socket is suitable for immediate placement. Patient and site selection still requires assessment of infection status, the possibility of achieving primary stability, and the patient's general condition.</p>
+<h2>Limitations and possible complications</h2>
+<p>Alongside the proposed advantages, basal implants have limitations that should not be overlooked when selecting treatment.</p>
+<p>First, esthetic and soft-tissue limitations. In anterior regions, particularly when replacing a single tooth, achieving an ideal emergence profile and gingival contour may be more difficult. Changes in the soft tissues over time may also leave a gap between the prosthesis and the gingiva.</p>
+<p>Second, the surgical technique is highly sensitive. Engaging cortical regions and some deeper anatomical structures requires surgical skill and detailed anatomical knowledge.</p>
+<p>Third, outcomes depend on biomechanical planning. Improper force distribution or overload can cause <a href="/episodes/episode-23.html">overload osteolysis</a>, meaning bone loss associated with excessive mechanical loading.</p>
+<p>Fourth, managing failure can be difficult. Removing or replacing some failed basal implants may be complex. The review also mentions the possibility of greater discomfort during surgery, longer operating time in some circumstances, bone loss, and soft-tissue recession.</p>
+<p>Finally, this approach is not suitable for every patient. The authors list neuromuscular disorders that affect chewing and some recent or unstable systemic conditions, such as myocardial infarction or stroke, among contraindications.</p>
+<h2>How reliable is the scientific evidence on basal implants?</h2>
+<p>This may be the most important issue for clinical decision-making.</p>
+<p>This article is a narrative review. The authors report searching several scientific databases for studies published between 2000 and 2025.</p>
+<p>However, the review does not provide a meta-analysis, a structured risk-of-bias assessment, or a formal grading of certainty of evidence.</p>
+<p><strong>Author's critique:</strong> Although the authors describe their search strategy and general study-selection criteria, they do not provide enough information about the final number of included studies, the selection process, or the quality of each study. This limits independent and detailed assessment of the strength of evidence from this review.</p>
+<p>By comparison, conventional implants have a broader research base and more long-term studies.</p>
+<p>In the Discussion, the authors also emphasize that current evidence is insufficient to recommend basal implants over conventional implants and that long-term comparative studies are needed.</p>
+<p><strong>Author's critique:</strong> Some comparisons in the review's table are oversimplified. For example, immediate versus delayed loading and osseoadaptation versus osseointegration are presented as fully separate contrasts, even though the review also recognizes that immediate loading is possible with conventional implants. Likewise, one-piece design and cortical anchorage are not necessarily exclusive to basal implants.</p>
+<p>The authors conclude by calling for prospective studies, long-term comparisons, and standardized outcome reporting that assess not only survival rates but also biomechanical behaviour and patient-relevant outcomes.</p>
+<h2>Which approach is better?</h2>
+<p>With extensive evidence and predictable outcomes, conventional implants remain the standard treatment approach in many clinical situations.</p>
+<p>Basal implants offer a different way to use cortical bone and may be worth considering for selected patients with severe bone resorption, particularly in multi-unit and full-arch rehabilitation.</p>
+<p>However, faster treatment without bone grafting does not, by itself, mean that one system is superior.</p>
+<p>The question is not whether basal or conventional implants are better in general. It is when cortical anchorage can provide an advantage that cannot be achieved with conventional methods with comparable predictability or simplicity.</p>
+<p>Current evidence is not sufficient to recommend basal implants as a general replacement for conventional implants, but that does not mean their potential use in selected cases should be ignored.</p>
+<p>---</p>
+<h2>Primary source</h2>
+<p>Joshi M, Kaushik M, Rana MN, Kaushik S. Conventional and Basal Implantology: A Narrative Review of Current Evidence, Clinical Decision-Making, and Future Perspectives. Cureus. 2026;18(7):e113703.</p>
+<p>DOI: <a href="https://doi.org/10.7759/cureus.113703" target="_blank" rel="noopener noreferrer">10.7759/cureus.113703</a></p>
+<h2>Supplementary sources for the Intraoral Welding explanation</h2>
+<p>Soldering in Dentistry: An Updated Technical Review. 2024.</p>
+<p><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10856638/" target="_blank" rel="noopener noreferrer">https://pmc.ncbi.nlm.nih.gov/articles/PMC10856638/</a></p>
+<p>Ferraris S, et al. Intraoral welding of titanium dental implants: Characterization of the joints. Journal of Materials Processing Technology. 2016.</p>
+<p>DOI: <a href="https://doi.org/10.1016/j.jmatprotec.2016.04.018" target="_blank" rel="noopener noreferrer">10.1016/j.jmatprotec.2016.04.018</a></p>
+</div>
+<div class="author">Source article authors: <a href="https://doi.org/10.7759/cureus.113703" target="_blank" rel="noopener noreferrer">Megha Joshi, Mayur Kaushik, Mohd Nazar Rana, and Soumya Kaushik</a></div>
+</div>
+</main>
+
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=15" defer></script>
+<script src="/dc-nav.js?v=284" defer></script>
+</body>
+</html>
