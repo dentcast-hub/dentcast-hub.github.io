@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 39
-- Updated at (UTC): 2026-10-18T09:44:16+00:00
+- Generation: 40
+- Updated at (UTC): 2026-10-18T09:46:35+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "C.2"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 39,
-  "previous_sha256": "67213ba964740c2af847f01de3960e75750eaa29a080fb0900589611e3eda508",
+  "generation": 40,
+  "previous_sha256": "442a70127cfbb6a025e399d6751e76c6cadaae812c7aaba08cccacd0c5c063ef",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -269,7 +269,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       },
       {
         "evidence": [
-          "C.1 template lock checkpoint delivered at 077c56a7256b27a9754e9fd20022240bf8e5217c; ready to create sharehub/share-35.html."
+          "inspect --check-remote at 1ddf75652e0bf0202b269cace050f362949ec540; target sharehub/share-35.html missing"
         ],
         "id": "C.2",
         "module": "03-litecast-and-page.md",
@@ -512,7 +512,10 @@ Its compact snapshot is a verification baseline, not current Git status.
       "sharehub/share-35.html"
     ]
   },
-  "reconciliation": null,
+  "reconciliation": {
+    "note": "Fresh inspection confirms prior C.2 start is the sole unfinished step; target page remains absent, working tree is clean, and local/remote HEAD match. No page action has occurred.",
+    "observed_changes": []
+  },
   "schema": "publish-handoff-v2",
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
@@ -552,7 +555,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:44:16+00:00"
+  "updated_at": "2026-10-18T09:46:35+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
