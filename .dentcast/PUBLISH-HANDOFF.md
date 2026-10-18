@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 50
-- Updated at (UTC): 2026-10-18T10:33:57+00:00
+- Generation: 51
+- Updated at (UTC): 2026-10-18T10:34:59+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "C.2.5"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 50,
-  "previous_sha256": "5ea12c31c1946f5d3dd1f31a74c3394d9c3b556c099985e86303862933b9ac42",
+  "generation": 51,
+  "previous_sha256": "e2cd595a9aea02910310d67ab77fa91978917b5095661d6bc4fb8e812fcebdbf",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -337,11 +337,13 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "Typed ShareHub page requires both fixed \u062f\u0627\u0646\u0634\u0646\u0627\u0645\u0647 capsule and a pillar capsule pointing to the confirmed implantology pillar."
+        ],
         "id": "C.2.5",
         "module": "04-taxonomy-and-navigation.md",
         "reason": null,
-        "status": "pending"
+        "status": "started"
       },
       {
         "evidence": [],
@@ -551,10 +553,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "sharehub/share-35.html"
     ]
   },
-  "reconciliation": {
-    "note": "Applied the single clear taxonomy match from live main; no new taxonomy values were proposed.",
-    "observed_changes": []
-  },
+  "reconciliation": null,
   "schema": "publish-handoff-v2",
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
@@ -594,7 +593,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:33:57+00:00"
+  "updated_at": "2026-10-18T10:34:59+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
