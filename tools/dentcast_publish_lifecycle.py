@@ -90,12 +90,12 @@ def require_step_delivery(root, state, expected):
     h.require(current['workflow'] == state['snapshot']['workflow'], 'DELIVERED_STEP_WORKFLOW_MISMATCH')
 
 
-def guard_step_transition(root, state, publication, expected):
+def guard_step_transition(state, publication):
     old = {s['id']: s for s in state['publication']['steps']}
     h.require(all(s['id'] in old or s['status'] == 'pending' for s in publication['steps']),
               'NEW_SUBSTEPS_MUST_START_PENDING')
-    # Bulk record cannot bypass the per-step boundary. Metadata reconciliation
-    # and invalidation remain possible without remote access.
+    # Preserve one semantic checkpoint per step; commits may group multiple
+    # checkpoints into a coherent delivery unit.
     entered = [s for s in publication['steps'] if s['id'] in old
                and old[s['id']]['status'] not in ('started', 'completed', 'skipped')
                and s['status'] in ('started', 'completed', 'skipped')]
@@ -105,10 +105,8 @@ def guard_step_transition(root, state, publication, expected):
                   'EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY')
         h.require(row['id'] == h.next_step(state['publication']),
                   'START_NEXT_STEP_IN_SEPARATE_CHECKPOINT')
-        before = state['publication']['steps']
-        index = next(i for i, s in enumerate(before) if s['id'] == row['id'])
-        if index and all(s['status'] in ('completed', 'skipped') for s in before[:index]):
-            require_step_delivery(root, state, expected)
+        # Step completion is checkpointed locally after each canonical action.
+        # Delivery is a turn/side-effect boundary, not a per-step boundary.
 
 
 def step(root, expected, sid, status, evidence, reason, note=None):
@@ -150,7 +148,7 @@ def bind(root, expected, content_id, category, targets, evidence):
                           for row in plan(paper_only=True)]
         p["context"]["decisions"].append({"kind": "intake_identity_bound", "evidence": evidence})
         require_plan(p)
-        state.update(publication=p, snapshot=h.snapshot(root, targets), generation=state["generation"]+1,
+        state.update(schema=h.SCHEMA, publication=p, snapshot=h.snapshot(root, targets), generation=state["generation"]+1,
                      updated_at=h.now(), previous_sha256=expected,
                      reconciliation={"note": "Resolved previously unassigned intake identity", "observed_changes": ["IDENTITY_BOUND_ONCE"]})
         sha = h.write_atomic(root, state)
@@ -207,9 +205,6 @@ def verify(root, expected, expect_title=None, expect_caption=None, catalog_id=No
     p = copy.deepcopy(state["publication"])
     paper = p["category"] == "paper-only"
     h.require(h.next_step(p) in (("G", None) if paper else ("F", "G", None)), "VERIFICATION_NOT_AT_CANONICAL_BOUNDARY")
-    boundary = next((s for s in p['steps'] if s['id'] == h.next_step(p)), None)
-    if boundary and boundary['status'] == 'pending':
-        require_step_delivery(root, state, expected)
     current = h.snapshot(root, p["target_paths"])
     h.require(not h.differences(root, state, current), "RECORD_CURRENT_WORK_BEFORE_VERIFICATION")
     view = h.inspect(root)
@@ -365,7 +360,9 @@ def guard(root, phase):
         elif phase == "ci":
             previous = h.git(root, "show", "HEAD^:" + h.STATE_PATH, optional=True)
             if previous is not None:
-                state, _ = h.parse_state(previous)
+                state, checkpoint_sha = h.parse_state(previous)
+                if state['schema'] == h.SCHEMA:
+                    state = h.hydrate_v3(root, state, checkpoint_sha)
                 require_plan(state["publication"])
                 p = state["publication"]
                 h.require(h.next_step(p) is None and not p["blocker"]

@@ -104,7 +104,7 @@ class RecoveryAcceptanceTests(unittest.TestCase):
         shutil.copyfile(self.root / h.STATE_PATH, clone / h.STATE_PATH)
         before = (clone / h.STATE_PATH).read_bytes()
         view = self.cli('inspect', '--check-remote', root=clone, code=2)
-        self.assertIn('WORK_OR_INDEX_CHANGED', view['issues'])
+        self.assertIn('HANDOFF_BASELINE_UNAVAILABLE', view['error'])
         self.assertFalse(view['publication_completed'])
         self.assertEqual((clone / h.STATE_PATH).read_bytes(), before)
 

@@ -4,7 +4,7 @@
 
 ## Interrupted publication
 
-For «انتشار ناقص داشتم», «ادامه انتشار», "resume publishing", or equivalent, first read `.dentcast/PUBLISH-HANDOFF.md`, then `.dentcast/workflows/publish-handoff.md`. Check the same fixed path before a new publication. Never overwrite unfinished work. Update it after every canonical step and before handing off; delete it only after verified completion. A missing file or unavailable work must be reported, not invented. Local commits and dirty files are not automatically available in another checkout.
+For «انتشار ناقص داشتم» or an explicit request to resume a publication the user identifies as incomplete/interrupted, read `.dentcast/PUBLISH-HANDOFF.md` exactly once, then `.dentcast/workflows/publish-handoff.md`. A generic «ادامه بده» or «ادامه انتشار» alone does not trigger recovery. During the active run, keep state in the current session and do not reread the handoff before each step; use the latest helper digest. Before a new publication, check only whether the file exists. If it does, make no changes and ask whether the user means to resume; read it only after explicit confirmation. Never overwrite unfinished work. Update the handoff after every canonical step and before handing off; delete it only after verified completion. A missing file or unavailable work must be reported, not invented. Local commits and dirty files are not automatically available in another checkout.
 
 ## Always-load before routing
 
@@ -52,8 +52,8 @@ Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details
 
 ## Completion
 
-Complete all applicable actions and approvals, verify Phase F and required delivery, provide the final report, then remove the temporary handoff as the completion contract specifies. Hashes or checkpoints alone are not publication. Read `publish-checkpoints.md` for per-step delivery/guarded cleanup and `publish-discovery.md` for remote recovery. `PUBLISHING-FINAL-REPORT.md` records delivered repair stages, integrated acceptance and the native-client/live-publication limits; main integration is tracked in [PR #914](https://github.com/dentcast-hub/dentcast-hub.github.io/pull/914). Existing clones must update to a revision containing these changes.
+Complete all applicable actions and approvals, verify Phase F and required delivery, provide the final report, then remove the temporary handoff as the completion contract specifies. Hashes or checkpoints alone are not publication. Read `publish-checkpoints.md` for coherent delivery batches and guarded cleanup, and `publish-discovery.md` for remote recovery. `PUBLISHING-FINAL-REPORT.md` records delivered repair stages, integrated acceptance and the native-client/live-publication limits; main integration is tracked in [PR #914](https://github.com/dentcast-hub/dentcast-hub.github.io/pull/914). Existing clones must update to a revision containing these changes.
 
-## Mandatory per-step checkpoints
+## Per-step checkpoints and delivery batches
 
 Read `.dentcast/workflows/publish-checkpoints.md`. Use the full canonical ledger from `tools/dentcast_publish_handoff.py plan`; write `started` before each action and its actual result afterward using `step`/`record`. Phase F uses the real `verify` command. Completion is `finish`, authorized cleanup commit/push, then `confirm-cleanup`; restore the same fixed handoff with `restore-cleanup` if cleanup fails. Hooks are supplemental and never mark scientific or semantic work complete.

@@ -8,31 +8,7 @@ New publication → `.dentcast/workflows/README.md`. Read complete `modules/01-h
 
 ## Interrupted publication
 
-For «انتشار ناقص داشتم», «ادامه انتشار», "resume publishing", or equivalent, first read `.dentcast/PUBLISH-HANDOFF.md`, then `.dentcast/workflows/publish-handoff.md`. Check the same fixed path before a new publication. Never overwrite unfinished work. Update it after every canonical step and before handing off; delete it only after verified completion. A missing file or unavailable work must be reported, not invented. Local commits and dirty files are not automatically available in another checkout.
-
-**هدف:** خروجیِ انتشار در این ریپو باید **مستقل از اینکه کدام ایجنت آن را اجرا
-می‌کند** یکسان باشد — Claude Code، Cursor، Codex/GPT، یا هر ایجنت دیگری. این
-فایل «قانونِ رفتاری» مشترک است: چیزی که Claude Code به‌صورت ضمنی (از روی
-`CLAUDE.md` و ساختار ابزارهایش) انجام می‌دهد، اینجا **صریح** نوشته شده تا هر
-ایجنت دیگری هم دقیقاً همان را انجام دهد.
-
-این فایل **منطق هیچ ورکفلویی را تکرار نمی‌کند.** منطق فقط و فقط در فایل‌های
-کانونی زیر است و آن‌ها قانون‌اند:
-
-| مسیر | فایل کانونی |
-|---|---|
-| انتشار محتوای جدید (هر نوع) | `.dentcast/workflows/README.md` |
-| نسخهٔ انگلیسیِ یک صفحهٔ موجود | `.dentcast/workflows/en-version.md` |
-| انتشار/مدیریت تبلیغ | `.dentcast/workflows/ads.md` |
-| گزارش آمار تبلیغ | `.dentcast/workflows/spot-report.md` |
-| نوشتن ترم دانشنامه | `.claude/skills/glossary-writer/SKILL.md` |
-| نقشهٔ ریپو و تریگرها | `CLAUDE.md` (کلود) و `AGENTS.md` (بقیهٔ ایجنت‌ها) |
-| سیستم تبلیغات | `spot/README.md` + `spot/PRICING.md` |
-
-روترها (`AGENTS.md`, `.cursor/rules/*.mdc`, `CLAUDE.md`) فقط **مسیر** را نشان
-می‌دهند؛ هیچ‌کدام جایگزین خواندن فایل کانونی نیستند.
-
----
+For «انتشار ناقص داشتم» or an explicit request to resume a publication the user identifies as incomplete/interrupted, read `.dentcast/PUBLISH-HANDOFF.md` exactly once, then `.dentcast/workflows/publish-handoff.md`. A generic «ادامه بده» or «ادامه انتشار» alone does not trigger recovery. During the active run, keep state in the current session and do not reread the handoff before each step; use the latest helper digest. Before a new publication, check only whether the file exists. If it does, make no changes and ask whether the user means to resume; read it only after explicit confirmation. Never overwrite unfinished work. Update the handoff after every canonical step and before handing off; delete it only after verified completion. A missing file or unavailable work must be reported, not invented. Local commits and dirty files are not automatically available in another checkout.
 
 ## Rule 0 — فایل فعال را کامل بخوان
 
@@ -52,8 +28,14 @@ For «انتشار ناقص داشتم», «ادامه انتشار», "resume p
 - **یک سوال در یک پیام، با گزینه‌های مشخص.** طبق Hard Rule 14 ورکفلوی انتشار:
   تصمیمِ روشن را مستقیم اعمال کن و **اعلام** کن؛ تصمیمِ واقعاً مبهم را با
   گزینه‌های نام‌برده بپرس، نه سوال باز.
-- **گزارشِ در جریان.** هر مرحله که تمام شد، نتیجه‌اش را همان‌جا بگو (چه اعمال شد،
-  چه اسکیپ شد و چرا). سکوت تا آخرِ کار مجاز نیست.
+- **گزارشِ در جریان، کوتاه و به‌موقع.** ابتدای کار بگو اکنون روی کدام بخش هستی؛
+  بعد از هر مرحلهٔ معنادار، نتیجه و قدم بعد را در یک پیام کوتاه اعلام کن. اگر
+  عملیاتی بیش از ۶۰ ثانیه طول می‌کشد، هنگام شروع بگو و تا پایان هر ۶۰ ثانیه یک
+  وضعیت کوتاه بده. برای هر دستور، فایل‌خوانی یا چکِ ریز پیام جدا نفرست. خطا،
+  وابستگیِ بیرونی یا گیتِ تأیید را همان لحظه با علت و اثرش گزارش کن؛ اگر تصمیمی
+  از بنیان‌گذار لازم است، همان‌جا سؤال دقیق را بپرس و کارهای مستقلی را که به آن
+  تصمیم وابسته نیستند ادامه بده. گزارشِ پایان هر مرحله باید بگوید چه انجام شد،
+  چه اسکیپ/متوقف ماند و قدم بعد چیست. سکوت تا آخرِ کار مجاز نیست.
 - **هیچ‌وقت حدس نزن (Hard Rule 13).** اگر واقعیتی نه از کاربر آمده، نه از فایلی
   در ریپو قابل خواندن است، نه از تاکسونومی زندهٔ runtime، و نه از یک منبع واقعی
   fetch شده — **آن را نمی‌دانی**. بپرس.
@@ -116,7 +98,7 @@ For «انتشار ناقص داشتم», «ادامه انتشار», "resume p
 | آپلود در Google Drive | Google Drive MCP | معمولاً ندارد | معمولاً ندارد |
 | probe فایل صوتی | curl/ffprobe | همان | همان |
 
-**FIDELITY و انتخاب مدل:** نقش‌های بررسی‌کنندهٔ سبک‌تر و بازبین/داور قوی‌تر مستقل از شرکت سازنده‌اند؛ مثال‌های Claude، OpenAI و Grok و قواعد استقلال اجراها، ثابت‌بودن مدل رأی‌دهنده و ثبت مدل واقعی در گام ۴.۱۳ بخش 2c فایل کانونی انتشار آمده‌اند. پیش از اجرا، دسترسی واقعی به مدل‌ها و ایجنت‌های جدا بررسی می‌شود؛ نبودن این قابلیت انجام‌نشده گزارش می‌شود، نه اجرای شبیه‌سازی‌شده.
+**FIDELITY و انتخاب مدل:** نقش‌های بررسی‌کنندهٔ سبک‌تر و بازبین/داور قوی‌تر مستقل از شرکت سازنده‌اند؛ مثال‌های Claude، OpenAI و Grok و قواعد استقلال اجراها، ثابت‌بودن مدل رأی‌دهنده و ثبت مدل واقعی در گام ۴.۱۳ بخش 2c فایل کانونی انتشار آمده‌اند. اگر محیط ابزار واگذاری به ایجنت جدا و انتخاب مدل را دارد، دو بررسی کامل را با ورودی یکسان و زمینه‌های جداگانه هم‌زمان اجرا کن؛ برای داوری از نقش قوی‌تر استفاده کن. قیمت دقیق اگر در دسترس نیست «UNVERIFIED» ثبت می‌شود و مانع اجرا نیست؛ نبودِ خودِ ایجنت جدا، انتخاب مدل، یا مدل سبکِ توانمند باید با ذکر دقیقِ قابلیتِ موجودنبود و مرحلهٔ متأثر گزارش شود، نه با اجرای شبیه‌سازی‌شده.
 
 ### پروتکل «توانمندی ندارم» — تنها مسیر مجاز
 
@@ -308,6 +290,6 @@ publishِ بلوکه‌شده، پس عمداً صفر برمی‌گرداند.
 قاعده: **منطق در فایل کانونی، مسیر در روترها، رفتار در همین فایل.** هیچ‌کدام
 محتوای دیگری را کپی نمی‌کند.
 
-## Mandatory per-step checkpoints
+## Per-step checkpoints and delivery batches
 
 Read `.dentcast/workflows/publish-checkpoints.md`. Use the full canonical ledger from `tools/dentcast_publish_handoff.py plan`; write `started` before each action and its actual result afterward using `step`/`record`. Phase F uses the real `verify` command. Completion is `finish`, authorized cleanup commit/push, then `confirm-cleanup`; restore the same fixed handoff with `restore-cleanup` if cleanup fails. Hooks are supplemental and never mark scientific or semantic work complete.

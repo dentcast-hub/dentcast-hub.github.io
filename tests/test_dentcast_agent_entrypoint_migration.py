@@ -24,6 +24,11 @@ EDITS = {"02-routing-intake.md":{"CLAUDE.md → Repo conventions":".dentcast/wor
  "CLAUDE.md § DES":".dentcast/workflows/global/plus-premium.md — DES"}}
 def read(p): return (ROOT/p).read_text(encoding="utf-8")
 class EntrypointMigrationTests(unittest.TestCase):
+ def test_progress_reporting_is_timely_without_per_command_noise(self):
+  s=read(".dentcast/workflows/agent-parity.md")
+  for term in ("۶۰ ثانیه", "برای هر دستور، فایل‌خوانی یا چکِ ریز پیام جدا نفرست",
+   "همان‌جا سؤال دقیق را بپرس", "نتیجه و قدم بعد"):
+   with self.subTest(term=term): self.assertIn(term,s)
  def test_clients_use_active_authority(self):
   for p in ENTRYPOINTS:
    with self.subTest(path=p):
@@ -72,6 +77,22 @@ class EntrypointMigrationTests(unittest.TestCase):
     self.assertTrue(actual.startswith("<!-- dentcast-checkpoint-protocol:v1 -->"))
     self.assertIn(".dentcast/workflows/publish-checkpoints.md",actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->",1)[0])
     body=actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->\n\n",1)[1]
+    if name == "08-des-fidelity.md":
+     # Part 2c is the one approved execution-routing amendment; the scientific
+     # prompt, scoring engine and all other canonical source text stay intact.
+     marker="#### Part 2c — How the FIDELITY call is run: two independent checker runs, a tie-break, a stronger reviewer"
+     after="**The model is part of the measurement:**"
+     expected_before,expected_rest=expected.split(marker,1)
+     expected_after=expected_rest.split(after,1)[1]
+     actual_before,actual_rest=body.split(marker,1)
+     actual_after=actual_rest.split(after,1)[1]
+     self.assertEqual(actual_before.rstrip("\n"),expected_before.rstrip("\n"))
+     self.assertEqual(actual_after.rstrip("\n"),expected_after.rstrip("\n"))
+     for required in ("`gpt-6-luna`", "Launch both full checker runs in parallel",
+       "exact price verification is not a start gate", "record it as UNVERIFIED",
+       "If the runtime does not expose independent contexts"):
+      self.assertIn(required,actual_rest.split(after,1)[0])
+     continue
     self.assertEqual(body.rstrip("\n"),expected.rstrip("\n"))
     positions.append(router.index("`modules/"+name+"`",start))
   self.assertEqual(positions,sorted(positions))

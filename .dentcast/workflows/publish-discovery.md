@@ -1,9 +1,6 @@
 # Find an interrupted publication on GitHub
 
-Use this active shared procedure for «انتشار ناقص داشتم», "resume publishing"
-and equivalent requests when work must be recovered from GitHub or the local
-fixed handoff is missing. First read any local `.dentcast/PUBLISH-HANDOFF.md`
-and preserve dirty/local-only work. Discovery does not transfer that work.
+Use this active shared procedure only after the user explicitly says a publication is incomplete/interrupted or asks to resume one while explicitly identifying it as incomplete/interrupted. A generic «ادامه بده» alone does not trigger recovery. At recovery, read an existing local `.dentcast/PUBLISH-HANDOFF.md` once and preserve dirty/local-only work; during that recovery do not reread it. If the handoff is missing, follow the discovery steps below. Discovery does not transfer local-only work.
 Do not choose the newest-named, newest-created or most recently committed branch.
 The active fixed handoff and its recorded run identity determine candidates.
 
@@ -80,9 +77,11 @@ Run `inspect --check-remote` in that checkout. Verify file/workflow fingerprints
 required inputs, completed evidence, approvals and external outcomes. An
 ambiguous upload/notification must be reconciled before retry. Read the active
 modular workflow and continue the first unfinished canonical step only when
-its prerequisites hold. The mandatory per-step commit/push barrier still
-applies. Discovery never switches branches, fetches, writes a handoff, publishes,
-performs external actions, or certifies semantic completion.
+its prerequisites hold. Group work and the latest handoff into a coherent
+delivery before ending a turn, switching agents/checkouts, performing an
+irreversible external action, or cleaning up; do not require a commit after
+every canonical step. Discovery never switches branches, fetches, writes a
+handoff, publishes, performs external actions, or certifies semantic completion.
 
 All agents use this shared procedure through `publish-handoff.md` and
 `publish-checkpoints.md`. Native hook execution remains client-dependent;

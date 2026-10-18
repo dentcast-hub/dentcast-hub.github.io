@@ -8,15 +8,15 @@ Legacy files are backup snapshots only: do not load them as execution instructio
 
 ## Discovery and resume
 
-Triggers include «انتشار ناقص داشتم»، «انتشار ناتمام»، «ادامه انتشار»، "resume publishing", and any equivalent request to continue an interrupted publication.
-Every agent (Cursor, Claude Code, Codex, Work, or another client following repository instructions) must first read the fixed state file, then this contract and the active workflow.
-Also check for the state file before starting any new publication. Never overwrite an unfinished run with a new one; resolve the existing run with the user first.
+Recovery is triggered only when the user explicitly says that a publication is incomplete/interrupted (for example, «انتشار ناقص داشتم»). A request to resume counts only if it identifies the publication as incomplete/interrupted. A generic «ادامه بده» or «ادامه انتشار» without identifying an incomplete publication does not trigger recovery.
+At that recovery point, read the fixed state file once and run the inspector once. Then keep the semantic state in the current session and use the latest digest returned by the helper; do not reread or re-inspect the handoff before each step. If the user later explicitly reports another interruption, treat it as a new recovery and read once then.
+Before a new publication, check only whether the fixed state file exists; do not read its contents. If it exists, make no publication changes and ask whether the user means to resume the incomplete publication. Read it only after that explicit confirmation. Never overwrite an unfinished run.
 
 If the file is missing, report that no handoff was found. Inspect available Git evidence and ask only for missing publication context; do not invent completed steps or claim successful resume.
 For remote recovery or a missing local file, follow [GitHub handoff discovery](publish-discovery.md). Run `python3 tools/dentcast_publish_handoff.py discover` (or `discover --repository owner/repo` without a checkout), or perform the same complete, immutable-head reads through connected GitHub tools. A missing file on main does not establish that no work exists elsewhere. Select only the unique verified active handoff after a complete stable scan; never guess from branch recency. Multiple, malformed or identity-mismatched handoffs and incomplete scans block selection. Preserve local-only work and verify the selected latest head/checkout before continuing.
 
 Before resuming:
-1. Verify repository, branch, content identity, recorded source revision, and local versus remote state.
+1. Verify the repository/branch selected through the checkout or discovery result, content identity, and local versus remote state. The v3 handoff does not store Git identity or source revision; locate its exact checkpoint in Git history.
 2. Inspect `git status --short --untracked-files=all`, `git diff`, `git diff --cached`, and `git log`. Discover the upstream; after a successful authorized fetch, compare it with HEAD. Record unknown remote state as unknown, never as synchronized.
 3. Compare actual files and hashes, commits, test output, and external receipts with the handoff. A checked box or an agent's claim is not evidence.
 4. Preserve unrelated changes. Do not reset, clean, force-push, switch away from dirty work, or blindly pull/merge to make the handoff appear consistent.
@@ -27,7 +27,7 @@ Before resuming:
 
 - Create the state file before the first publication mutation or external action.
 - Update it after **every canonical step**, including completed, skipped, blocked, and failed steps; write the reason and evidence.
-- After every step, commit its scoped public-safe work together with this handoff and push to the authorized working branch. Confirm delivery before starting the next step; failure or unknown remote state blocks progression. Follow the enforced boundary in `publish-checkpoints.md`; do not defer delivery until turn end.
+- After every step, save its real result in the local handoff. Commit/push scoped work with the latest handoff at coherent milestones, before ending a turn or switching agents/checkouts, and before irreversible external actions. Record and deliver `started` before performing an external action; reconcile unknown outcomes before retrying. See `publish-checkpoints.md` for the delivery boundaries.
 - Before each external action, record intended action, target, and status `started`; afterward record its verified result or `outcome_unknown`.
 - Update semantic progress before ending a turn, switching agents, committing, or handing off. After commit/push, inspect Git directly; do not duplicate current HEAD, index, status, ahead/behind or remote observations in the handoff. Do not recursively commit just to put a commit's own SHA inside itself.
 - If interrupted mid-step, the next agent verifies the actual state rather than assuming the last checkpoint is current. A Markdown file cannot guarantee recovery from every crash.
@@ -38,7 +38,7 @@ Before resuming:
 ## Local work versus portable handoff
 
 A Markdown summary does not transfer uncommitted files or unpushed commits.
-For the same checkout, inspect modified, staged and untracked work directly in Git. The compact checkpoint retains expected file/workflow fingerprints as verification evidence, not a second copy of Git status/history.
+For the same checkout, inspect modified, staged and untracked work directly in Git. The handoff contains no Git status, commit, branch, file inventory or fingerprint data; the helper derives its verification baseline from Git history or private local Git metadata.
 For another checkout/client, determine remote availability using Git and `inspect --check-remote`, not a saved portability Boolean. Transfer all required public-safe files and commits to the authorized working branch, or identify a retrievable patch/bundle and assets with hashes. Do not claim portability until the receiving agent can retrieve and verify both the state and the work.
 If transfer is unavailable, explicitly block remote resume and identify the original checkout or missing artifact. Never reconstruct exact author text from memory.
 Keep secrets, private inputs, private approval transcripts, and restricted scientific inputs out of public Git. Record safe references and availability instead; missing private inputs block dependent steps.
@@ -47,24 +47,23 @@ Allow one active publication in this fixed file; concurrent publication attempts
 
 ## Required state template
 
-The supported writer is `tools/dentcast_publish_handoff.py`; read [the tool guide](publish-handoff-tool.md) for `init`, `record`, and `inspect`. It writes a generated Markdown summary plus a canonical JSON record in the same fixed file. That record carries the semantic fields below; unavailable machine values are null/unknown, never guessed. Do not edit the rendered summary separately. The following template documents the required recovery information for manual inspection; a pre-existing manual file must be explicitly reconciled before conversion, never silently overwritten by `init`.
+The supported writer is `tools/dentcast_publish_handoff.py`; read [the tool guide](publish-handoff-tool.md) for `init`, `record`, and `inspect`. It writes a generated Markdown summary plus a canonical JSON record in the same fixed file. Keep only semantic facts that are not recoverable from committed files: important decisions, required approvals and open questions, DES/Fidelity scores and results, external-action outcomes, and non-Git input/result references. File changes and Git state are reconstructed from commits and the checkout. Do not duplicate them here or edit the rendered summary separately. A pre-existing manual file must be explicitly reconciled before conversion, never silently overwritten by `init`.
 
 ```markdown
 # Publication handoff
-- Schema: publish-handoff-v2
-- Updated at (UTC):
+- Schema: publish-handoff-v3
 - Status: in_progress | blocked | verifying | cleanup_pending
-- Repository:
-- Working branch:
-- Workflow source revision:
 - Content ID / category / target paths:
 - Last completed canonical step:
 - Next canonical step:
 - Current blocker:
 
+## Scientific results not recoverable from committed files
+- DES score/result and evidence reference, if not committed:
+- Fidelity scores/result and evidence reference, if not committed:
+
 ## Inputs and decisions
-- Exact public-safe title/caption, or retrievable reference and hash:
-- Required assets/source inputs, locations, hashes, availability:
+- Non-Git source/input references and hashes, only when not recoverable from committed files:
 - Confirmed routing and category exceptions:
 - Each required approval: decision, scope, evidence reference, verified/unknown:
 - Pending questions (never infer consent):
@@ -75,18 +74,15 @@ The supported writer is `tools/dentcast_publish_handoff.py`; read [the tool guid
 | ... | pending / started / completed / skipped / blocked / failed | ... | ... |
 
 ## Verification evidence
-- Required input/output references and expected fingerprints:
-- Workflow source reference and expected fingerprints:
 - Unrelated work to preserve (intent/context that Git cannot explain):
 - Non-Git transfer artifact reference, if required:
-- Read current branch/HEAD/status/index/history/remote availability directly from Git.
 
 ## External action ledger
 | Action / target | started at | Verified outcome or outcome_unknown | Receipt / reconciliation needed |
 |---|---|---|---|
 
 ## Validation and completion
-- Commands actually run, exit codes, output references and source revision:
+- Important validation results that are not recorded in committed files:
 - Phase F result and applicable content ID:
 - Required delivery, deployment/live checks, and their actual results:
 - Remaining work and exact next safe action:
