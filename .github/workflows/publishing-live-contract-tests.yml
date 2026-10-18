@@ -74,7 +74,7 @@ jobs:
           else
             diff_range="$EVENT_BEFORE..$EVENT_SHA"
           fi
-          if git diff --name-only "$diff_range" | grep -Eq '^(\\.dentcast/PUBLISH-HANDOFF\\.md|dentcast-brain\\.json|dentcast\\.json|chairside/|dentcast-plus/|episodes/|glossary/|insight/|litecast/|metanotes/|notecast/|plak-sefr/|promptologist/|sharehub/|taraz/|plus/des-scores\\.json)'; then
+          if git diff --name-only "$diff_range" | grep -Eq '^(.dentcast/PUBLISH-HANDOFF.md|dentcast-brain.json|dentcast.json|chairside/|dentcast-plus/|episodes/|glossary/|insight/|litecast/|metanotes/|notecast/|plak-sefr/|promptologist/|sharehub/|taraz/|plus/des-scores.json)'; then
             python3 tools/dentcast_publish_handoff.py guard --phase ci
           else
             echo "No publication or handoff files changed; checkpoint guard not applicable."
