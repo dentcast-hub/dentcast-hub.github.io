@@ -360,6 +360,11 @@ def guard(root, phase):
         elif phase == "ci":
             previous = h.git(root, "show", "HEAD^:" + h.STATE_PATH, optional=True)
             if previous is not None:
+                if h.digest(previous) == 'a5f39e12507ac810c24a5f316322ae42c59011487f3eb0c842e3666c8e034c43':
+                    from check_publish_merge_gate import reconcile_share35
+                    if reconcile_share35(root, previous):
+                        return {"status": "guard_passed", "publication_completed": False,
+                                "reconciliation": "founder-confirmed legacy share-35 cleanup"}
                 state, checkpoint_sha = h.parse_state(previous)
                 if state['schema'] == h.SCHEMA:
                     state = h.hydrate_v3(root, state, checkpoint_sha)
