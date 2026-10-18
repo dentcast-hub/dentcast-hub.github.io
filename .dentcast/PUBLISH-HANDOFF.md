@@ -2,12 +2,12 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 1
-- Updated at (UTC): 2026-10-18T09:01:07+00:00
+- Generation: 2
+- Updated at (UTC): 2026-10-18T09:05:29+00:00
 - Content: "sharehub/share-35"
-- Status: blocked
+- Status: in_progress
 - Next canonical step: "rules"
-- Blocker: "Exact complete Persian article text from the prior conversation is not available in this execution context. User explicitly forbids reconstruction; waiting for the original text."
+- Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
 Its compact snapshot is a verification baseline, not current Git status.
@@ -15,10 +15,10 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 1,
-  "previous_sha256": null,
+  "generation": 2,
+  "previous_sha256": "2017312f81281e8ed5e8677a32acdb77a30dd3f4be5616567451bc7e2fdfefcf",
   "publication": {
-    "blocker": "Exact complete Persian article text from the prior conversation is not available in this execution context. User explicitly forbids reconstruction; waiting for the original text.",
+    "blocker": null,
     "category": "sharehub",
     "content_id": "sharehub/share-35",
     "context": {
@@ -67,8 +67,8 @@ Its compact snapshot is a verification baseline, not current Git status.
         },
         {
           "kind": "user_text",
-          "note": "Must be pasted/retrieved verbatim before any authoring or scientific review.",
-          "ref": "prior conversation message referenced by user; exact body unavailable in this execution context",
+          "note": "Complete article text supplied verbatim in the current user turn; preserve codepoints exactly when creating the page.",
+          "ref": "current user message in this conversation; exact body now available",
           "sha256": null
         },
         {
@@ -90,9 +90,7 @@ Its compact snapshot is a verification baseline, not current Git status.
           "sha256": null
         }
       ],
-      "pending_questions": [
-        "User to provide the exact complete Persian article body verbatim, unless the original message becomes accessible in this execution context."
-      ],
+      "pending_questions": [],
       "unrelated_changes": [],
       "validation": [
         {
@@ -115,7 +113,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       ]
     },
     "external_actions": [],
-    "status": "blocked",
+    "status": "in_progress",
     "steps": [
       {
         "evidence": [],
@@ -486,7 +484,14 @@ Its compact snapshot is a verification baseline, not current Git status.
       "sharehub/share-35.html"
     ]
   },
-  "reconciliation": null,
+  "reconciliation": {
+    "note": "The exact complete article text has now been provided verbatim in the current user message; the prior blocker and pending question are resolved. No publication step has been completed.",
+    "observed_changes": [
+      "PENDING_QUESTIONS_CHANGED",
+      "RECORDED_BLOCKER_CHANGED",
+      "INPUT_REFERENCES_CHANGED"
+    ]
+  },
   "schema": "publish-handoff-v2",
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
@@ -526,7 +531,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:01:07+00:00"
+  "updated_at": "2026-10-18T09:05:29+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
