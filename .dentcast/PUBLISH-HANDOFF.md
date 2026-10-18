@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 53
-- Updated at (UTC): 2026-10-18T10:37:13+00:00
+- Generation: 54
+- Updated at (UTC): 2026-10-18T10:39:16+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "C.2.6"
+- Next canonical step: "C.3"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 53,
-  "previous_sha256": "55b78cce1fa3c4f64606babc562c9429161c637545bbf854075219865c063f79",
+  "generation": 54,
+  "previous_sha256": "49d1dc52709ff1968259ae80e3d6c173e10b547dee5786e321f273b7f90ea812",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -347,12 +347,12 @@ Its compact snapshot is a verification baseline, not current Git status.
       },
       {
         "evidence": [
-          "sharehub/index.html is a hand-maintained static list, newest-first; C.2.6 requires a single newest ShareHub row."
+          "sharehub/index.html contains one exact newest-first ShareHub 35 link credited to Megha Joshi; verified target and placement"
         ],
         "id": "C.2.6",
         "module": "04-taxonomy-and-navigation.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -555,11 +555,21 @@ Its compact snapshot is a verification baseline, not current Git status.
       "sharehub/share-35.html"
     ]
   },
-  "reconciliation": null,
+  "reconciliation": {
+    "note": "Reviewed C.2.6 diff: exactly one added hand-maintained ShareHub row, correctly placed before ShareHub 34; page link target and source-author label verified.",
+    "observed_changes": [
+      "WORK_OR_INDEX_CHANGED"
+    ]
+  },
   "schema": "publish-handoff-v2",
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
     "files": {
+      "sharehub/index.html": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "a65de8f9b5c69ce9fc121542d88c4ed50edf212e68db707cc2aab04d2461b61d"
+      },
       "sharehub/share-35.html": {
         "executable": false,
         "kind": "file",
@@ -595,7 +605,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:37:13+00:00"
+  "updated_at": "2026-10-18T10:39:16+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
