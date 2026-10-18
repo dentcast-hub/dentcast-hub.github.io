@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 48
-- Updated at (UTC): 2026-10-18T10:31:23+00:00
+- Generation: 49
+- Updated at (UTC): 2026-10-18T10:32:59+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "C.2.4"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 48,
-  "previous_sha256": "04342dafdbb11252fbb0b59b5e57675a244c81c1cd3fd6e1f270b78b52ec750a",
+  "generation": 49,
+  "previous_sha256": "8639aa4b5ff631b2abeaa3d2002c1d3782c24063a5d3d8d7ae9227b9d8c920a5",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -328,11 +328,13 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "skipped"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "Live taxonomy read from origin/main tools/build_pillar.py; semantic mapping identifies implantology as clear primary pillar and surgical-planning as direct fit for cortical anchorage, loading protocols, indications, and technique."
+        ],
         "id": "C.2.4",
         "module": "04-taxonomy-and-navigation.md",
         "reason": null,
-        "status": "pending"
+        "status": "started"
       },
       {
         "evidence": [],
@@ -549,10 +551,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "sharehub/share-35.html"
     ]
   },
-  "reconciliation": {
-    "note": "Verified the locked ShareHub category; ordinary ShareHub capsules and semantic-link steps apply instead.",
-    "observed_changes": []
-  },
+  "reconciliation": null,
   "schema": "publish-handoff-v2",
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
@@ -592,7 +591,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:31:23+00:00"
+  "updated_at": "2026-10-18T10:32:59+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
