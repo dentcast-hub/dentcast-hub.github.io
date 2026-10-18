@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 46
-- Updated at (UTC): 2026-10-18T10:29:26+00:00
+- Generation: 47
+- Updated at (UTC): 2026-10-18T10:30:26+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "C.0.6"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 46,
-  "previous_sha256": "34c8fb5724059dc267ca1225e2e2b132583093cbc93bcc71dd582b8b88df5f84",
+  "generation": 47,
+  "previous_sha256": "d54462c640cfe692b222fc47630f7e6de1489ef12abce86a62aac097c2b7c56a",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -321,11 +321,13 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "skipped"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "ShareHub category confirmed; checking LiteCast-only related-capsule applicability."
+        ],
         "id": "C.0.6",
         "module": "03-litecast-and-page.md",
         "reason": null,
-        "status": "pending"
+        "status": "started"
       },
       {
         "evidence": [],
@@ -549,10 +551,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "sharehub/share-35.html"
     ]
   },
-  "reconciliation": {
-    "note": "Verified the locked ShareHub category; no LiteCast in-body links were added.",
-    "observed_changes": []
-  },
+  "reconciliation": null,
   "schema": "publish-handoff-v2",
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
@@ -592,7 +591,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:29:26+00:00"
+  "updated_at": "2026-10-18T10:30:26+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
