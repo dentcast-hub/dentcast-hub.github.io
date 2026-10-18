@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 15
-- Updated at (UTC): 2026-10-18T09:19:20+00:00
+- Generation: 16
+- Updated at (UTC): 2026-10-18T09:19:41+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "B.3.5"
+- Next canonical step: "B.4"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 15,
-  "previous_sha256": "f06a61e0aea937aa2c1d480e09dec2e8726347a456c518f8c312be23d044049c",
+  "generation": 16,
+  "previous_sha256": "b98a6047b33e2b32d34c65ff521aa07454470e5e77f1d3d8248256b3e65e0324",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -171,12 +171,12 @@ Its compact snapshot is a verification baseline, not current Git status.
       },
       {
         "evidence": [
-          "B.3 completed; commit a5181dc659a80de6549708abc0bfdd0e06de0d73 observed on origin."
+          "Style-only scan of the complete submitted article found no concrete AI clich\u00e9/filler requiring a proposal; no fact or wording was changed. Exact-preservation instruction controls."
         ],
         "id": "B.3.5",
         "module": "02-routing-intake.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -538,7 +538,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:19:20+00:00"
+  "updated_at": "2026-10-18T09:19:41+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
