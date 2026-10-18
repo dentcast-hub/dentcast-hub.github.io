@@ -8,9 +8,9 @@ Legacy files are backup snapshots only: do not load them as execution instructio
 
 ## Discovery and resume
 
-Triggers include «انتشار ناقص داشتم»، «انتشار ناتمام»، «ادامه انتشار»، "resume publishing", and any equivalent request to continue an interrupted publication.
-Every agent (Cursor, Claude Code, Codex, Work, or another client following repository instructions) must first read the fixed state file, then this contract and the active workflow.
-Also check for the state file before starting any new publication. Never overwrite an unfinished run with a new one; resolve the existing run with the user first.
+Recovery is triggered only when the user explicitly says that a publication is incomplete/interrupted (for example, «انتشار ناقص داشتم»). A request to resume counts only if it identifies the publication as incomplete/interrupted. A generic «ادامه بده» or «ادامه انتشار» without identifying an incomplete publication does not trigger recovery.
+At that recovery point, read the fixed state file once and run the inspector once. Then keep the semantic state in the current session and use the latest digest returned by the helper; do not reread or re-inspect the handoff before each step. If the user later explicitly reports another interruption, treat it as a new recovery and read once then.
+Before a new publication, check only whether the fixed state file exists; do not read its contents. If it exists, make no publication changes and ask whether the user means to resume the incomplete publication. Read it only after that explicit confirmation. Never overwrite an unfinished run.
 
 If the file is missing, report that no handoff was found. Inspect available Git evidence and ask only for missing publication context; do not invent completed steps or claim successful resume.
 For remote recovery or a missing local file, follow [GitHub handoff discovery](publish-discovery.md). Run `python3 tools/dentcast_publish_handoff.py discover` (or `discover --repository owner/repo` without a checkout), or perform the same complete, immutable-head reads through connected GitHub tools. A missing file on main does not establish that no work exists elsewhere. Select only the unique verified active handoff after a complete stable scan; never guess from branch recency. Multiple, malformed or identity-mismatched handoffs and incomplete scans block selection. Preserve local-only work and verify the selected latest head/checkout before continuing.

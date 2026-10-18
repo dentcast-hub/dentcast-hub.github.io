@@ -8,31 +8,7 @@ New publication → `.dentcast/workflows/README.md`. Read complete `modules/01-h
 
 ## Interrupted publication
 
-For «انتشار ناقص داشتم», «ادامه انتشار», "resume publishing", or equivalent, first read `.dentcast/PUBLISH-HANDOFF.md`, then `.dentcast/workflows/publish-handoff.md`. Check the same fixed path before a new publication. Never overwrite unfinished work. Update it after every canonical step and before handing off; delete it only after verified completion. A missing file or unavailable work must be reported, not invented. Local commits and dirty files are not automatically available in another checkout.
-
-**هدف:** خروجیِ انتشار در این ریپو باید **مستقل از اینکه کدام ایجنت آن را اجرا
-می‌کند** یکسان باشد — Claude Code، Cursor، Codex/GPT، یا هر ایجنت دیگری. این
-فایل «قانونِ رفتاری» مشترک است: چیزی که Claude Code به‌صورت ضمنی (از روی
-`CLAUDE.md` و ساختار ابزارهایش) انجام می‌دهد، اینجا **صریح** نوشته شده تا هر
-ایجنت دیگری هم دقیقاً همان را انجام دهد.
-
-این فایل **منطق هیچ ورکفلویی را تکرار نمی‌کند.** منطق فقط و فقط در فایل‌های
-کانونی زیر است و آن‌ها قانون‌اند:
-
-| مسیر | فایل کانونی |
-|---|---|
-| انتشار محتوای جدید (هر نوع) | `.dentcast/workflows/README.md` |
-| نسخهٔ انگلیسیِ یک صفحهٔ موجود | `.dentcast/workflows/en-version.md` |
-| انتشار/مدیریت تبلیغ | `.dentcast/workflows/ads.md` |
-| گزارش آمار تبلیغ | `.dentcast/workflows/spot-report.md` |
-| نوشتن ترم دانشنامه | `.claude/skills/glossary-writer/SKILL.md` |
-| نقشهٔ ریپو و تریگرها | `CLAUDE.md` (کلود) و `AGENTS.md` (بقیهٔ ایجنت‌ها) |
-| سیستم تبلیغات | `spot/README.md` + `spot/PRICING.md` |
-
-روترها (`AGENTS.md`, `.cursor/rules/*.mdc`, `CLAUDE.md`) فقط **مسیر** را نشان
-می‌دهند؛ هیچ‌کدام جایگزین خواندن فایل کانونی نیستند.
-
----
+For «انتشار ناقص داشتم» or an explicit request to resume a publication the user identifies as incomplete/interrupted, read `.dentcast/PUBLISH-HANDOFF.md` exactly once, then `.dentcast/workflows/publish-handoff.md`. A generic «ادامه بده» or «ادامه انتشار» alone does not trigger recovery. During the active run, keep state in the current session and do not reread the handoff before each step; use the latest helper digest. Before a new publication, check only whether the file exists. If it does, make no changes and ask whether the user means to resume; read it only after explicit confirmation. Never overwrite unfinished work. Update the handoff after every canonical step and before handing off; delete it only after verified completion. A missing file or unavailable work must be reported, not invented. Local commits and dirty files are not automatically available in another checkout.
 
 ## Rule 0 — فایل فعال را کامل بخوان
 

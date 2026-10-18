@@ -1,9 +1,6 @@
 # Find an interrupted publication on GitHub
 
-Use this active shared procedure for «انتشار ناقص داشتم», "resume publishing"
-and equivalent requests when work must be recovered from GitHub or the local
-fixed handoff is missing. First read any local `.dentcast/PUBLISH-HANDOFF.md`
-and preserve dirty/local-only work. Discovery does not transfer that work.
+Use this active shared procedure only after the user explicitly says a publication is incomplete/interrupted or asks to resume one while explicitly identifying it as incomplete/interrupted. A generic «ادامه بده» alone does not trigger recovery. At recovery, read an existing local `.dentcast/PUBLISH-HANDOFF.md` once and preserve dirty/local-only work; during that recovery do not reread it. If the handoff is missing, follow the discovery steps below. Discovery does not transfer local-only work.
 Do not choose the newest-named, newest-created or most recently committed branch.
 The active fixed handoff and its recorded run identity determine candidates.
 
