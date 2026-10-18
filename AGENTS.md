@@ -28,6 +28,6 @@ Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details
 
 Update AGENTS.md, CLAUDE.md and Cursor routing together when shared routes change. Never store private inputs in public Git history.
 
-## Mandatory per-step checkpoints
+## Per-step checkpoints and delivery batches
 
 Read `.dentcast/workflows/publish-checkpoints.md`. Use the full canonical ledger from `tools/dentcast_publish_handoff.py plan`; write `started` before each action and its actual result afterward using `step`/`record`. Phase F uses the real `verify` command. Completion is `finish`, authorized cleanup commit/push, then `confirm-cleanup`; restore the same fixed handoff with `restore-cleanup` if cleanup fails. Hooks are supplemental and never mark scientific or semantic work complete.

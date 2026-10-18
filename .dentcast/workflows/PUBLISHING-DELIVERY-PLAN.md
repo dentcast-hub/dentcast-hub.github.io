@@ -1,8 +1,10 @@
-# Per-step delivery follow-up
+# Publishing delivery follow-up
 
-Owner instruction: each publication step must commit/push its work together
-with the fixed handoff, and another agent must recover from GitHub.
-This follow-up is separate from the five delivered repair stages.
+The original per-step delivery instruction is recorded below as historical
+context. The current owner decision is to keep a local handoff update after
+each step, while grouping Git delivery at coherent milestones and required
+side-effect/turn/cleanup boundaries. This follow-up is separate from the five
+delivered repair stages.
 
 | Stage | Scope | Status |
 |---|---|---|
@@ -10,16 +12,19 @@ This follow-up is separate from the five delivered repair stages.
 | 2 | Simplify handoff around semantic progress, decisions, external outcomes and next action; derive Git facts from Git | Implemented in v2; compact verification evidence retained; validation below |
 | 3 | Discover active handoffs on GitHub branches; handle missing/multiple candidates without newest-branch guessing | Implemented; complete stable pagination, immutable-head file reads, unique selection and shared retrieval protocol |
 | 4 | Full delivery/discovery/recovery acceptance and report | Implemented; two-clone integrated acceptance and bounded final report |
+| 5 | Replace per-step commits with coherent delivery batches while preserving every-step local checkpoints | Implemented in PR #923; 112 publication tests passed locally |
 
-Stage 1 changes the shared live protocol used by all client entrypoints. The
-writer blocks advancement until the current checkpoint/work is on the freshly
-observed origin branch. It rejects batching step boundaries through `record`.
-Failed pushes and remote outages keep work local and block progression; they
-do not prevent recording a blocker. The helper never commits or pushes itself.
+Stage 1 records the original shared live protocol used by all client entrypoints;
+stage 5 below supersedes its per-step delivery requirement. The original
+writer blocked advancement until the current checkpoint/work was on the freshly
+observed origin branch. It rejected batching step boundaries through `record`.
+Failed pushes and remote outages kept work local and blocked progression; they
+did not prevent recording a blocker. The helper never commits or pushes itself.
 First-step initialization, same-step progress/evidence updates and invalidation
-remain possible; end-of-step delivery is required by the protocol and checked
-before the subsequent step. This does not claim every arbitrary client obeys
-instructions or every direct filesystem write is intercepted.
+remained possible; end-of-step delivery was required by the original protocol.
+This historical contract was later relaxed to allow coherent delivery batches.
+It did not claim every arbitrary client obeyed instructions or that every
+direct filesystem write was intercepted.
 
 Validation includes ten new tests using real local Git/bare remotes, covering
 unpushed/uncommitted checkpoints, exact delivered handoffs, genuinely unavailable
@@ -45,7 +50,8 @@ or synchronization claim. Git supplies current facts at inspection and delivery.
 Before a checkpoint is committed, same-checkout comparisons use a private
 Git-observation cache containing no semantic publication state. New checkouts
 reconstruct facts from the exact delivered checkpoint in Git without that cache.
-Unknown/missing work still blocks and stage 1's fresh delivery barrier remains.
+Unknown/missing work still blocks; the historical stage 1 delivery barrier
+was later replaced by stage 5's coherent-batch policy.
 Structured v1 files are read unchanged; explicit records upgrade to v2 under
 normal reconciliation rules. Inspection remains read-only. Confirmed cleanup
 also removes the observation cache. Active handoff discovery across GitHub

@@ -787,7 +787,7 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
                 require(all(s["status"] == "pending" for s in publication["steps"]),
                         "WORKFLOW_CHANGE_REQUIRES_STEP_INVALIDATION")
             require(not issues or nonempty(note), "RECONCILIATION_REQUIRED:" + ",".join(issues))
-            lifecycle.guard_step_transition(root, previous, publication, old_digest)
+            lifecycle.guard_step_transition(previous, publication)
         state = {"schema": SCHEMA, "generation": previous["generation"]+1 if previous else 1,
                  "updated_at": now(), "source_revision": previous["source_revision"]
                  if previous and "WORKFLOW_CHANGED" not in issues else current["head"],

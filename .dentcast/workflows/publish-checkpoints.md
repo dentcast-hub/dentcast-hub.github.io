@@ -21,32 +21,33 @@ python3 tools/dentcast_publish_handoff.py step --id <canonical-id> --status comp
 
 Use `skipped --reason <canonical-exception>` for an inapplicable step, or `blocked`/`failed` with a real reason. Record before pausing. A completed checkpoint must first have been started; neither the hook nor the CLI performs semantic work or creates a scientific result. Add actual decisions, approvals, input references, validation and delivery receipts via `record` using the full current `recorded_state.publication` object, never by replacing it with a partial example. Known approval scopes and external action history cannot disappear.
 
-### Mandatory commit/push boundary after each step
+### Checkpoint every step; deliver coherent batches
 
 After **each** canonical step or dynamic substep (including a skip, failure or
-block), commit its scoped public-safe work **together with the current fixed
-handoff** and push to the authorized working branch. Do not wait until the end
-of the turn/publication. Private inputs stay outside public Git; record safe
-references. Stage scoped work first, refresh the handoff with `record` and an
-actual reconciliation note after staging, then stage the updated handoff. Use
-the normal Git commit/push workflow and verify with `inspect --check-remote`.
+block), save its real result in the local handoff before continuing. Keep one
+step transition per handoff write; do not combine finishing one step with
+starting the next or resolve multiple new steps in one write. This preserves
+precise recovery state without forcing a tiny Git commit after every action.
 
-Before a subsequent step starts or is skipped/resolved, the helper requires a
-fresh successful observation of `origin` on the current branch, remote HEAD
-equal to local HEAD, the **exact current handoff** in that commit, committed
-work matching the recorded bytes, and unchanged workflow sources. Cached
-upstream/a successful old push is insufficient. Page F and paper-only gate
-entry apply the same boundary before executing verification. Bulk `record`
-cannot combine finishing one step with starting the next, or resolve multiple
-new steps in one write. Newly added substeps must start pending.
+Group scoped public-safe work and its latest handoff into a commit/push when a
+coherent unit is complete: for example, after a meaningful phase or related
+set of steps, before ending a turn or switching agents/checkouts, and before
+any irreversible external action. For an external action, first record
+`started`, then deliver that checkpoint before performing the action; record
+the observed outcome immediately afterward. Unknown outcomes must be
+reconciled before retrying. Private inputs stay outside public Git; record safe
+references. Use `inspect --check-remote` at delivery boundaries.
 
-If push/network access fails, stop before the next action; retain local work
-and handoff, record the delivery blocker and actual error with safe references,
-then retry only delivery when possible. Blocker/failed-state recording,
-inspection and evidence reconciliation remain available offline; they do not
-authorize starting the next step. An uncertain external result is reconciled
-before any retry. The helper observes Git; it does not automatically commit,
-push, grant publication authorization, or transfer files.
+The Stop guard still requires the latest handoff and watched work to be
+delivered before a turn ends. Phase F and paper-only verification can run from
+a locally consistent checkpoint; save their results and include them in the
+next delivery batch. `finish` still requires a freshly synchronized remote,
+exact delivered handoff and completed gates before cleanup. If push/network
+access fails at a delivery boundary, preserve local work, record the blocker
+and actual error, and do not end the turn or cross an external side-effect
+boundary until delivery is resolved. The helper observes Git; it does not
+automatically commit, push, grant publication authorization, or transfer
+files.
 
 A work commit changes HEAD/index relative to its pre-commit observation. Once
 the exact handoff is committed, the helper rebuilds the baseline from that
@@ -66,9 +67,10 @@ publication ledger.
 
 The Stop guard also requires the latest active handoff/work to be delivered
 before normal turn completion. This applies when the native client actually
-executes that hook; explicit CLI discipline remains mandatory elsewhere. If
-delivery is unavailable, preserve the checkpoint and report the blocked state;
-do not repeatedly perform publication actions or claim delivery succeeded.
+executes that hook; explicit CLI discipline remains mandatory elsewhere. A
+coherent batch may contain multiple canonical steps. If delivery is
+unavailable, preserve the checkpoint and report the blocked state; do not
+repeatedly perform publication actions or claim delivery succeeded.
 
 The lifecycle registry in `tools/dentcast_publish_lifecycle.py` maps every canonical phase/question/top-level action and the paper-ingestion parts to a module. Its order preserves two source dependencies: **C.8 builders before C.7 stamping**, and **LiteCast C.0.5/C.0.6 after C.2 page construction**. Canonical skip rules still come from the full source, not a guessed category map. All inventory checkpoints remain present on page publications, with explicit skips where applicable. `rules`, Phase `0`, Phase `F` and final report `G` cannot be skipped.
 
