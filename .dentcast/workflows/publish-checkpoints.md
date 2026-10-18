@@ -104,6 +104,49 @@ Finish the report at G and record its real reference. Record `context.delivery` 
 
 The helper never commits, pushes, deploys or runs an external receipt's commands. `finish` is authorized by the publication's completion contract, not by a Boolean claiming founder consent. Its mechanical checks cannot independently prove private approvals, semantic quality, external service outcomes or that omitted approval requirements do not exist; the executing agent must verify those original gates. A stale/missing/corrupt state is not success.
 
+## Missing DES/Fidelity results are not warnings
+
+Phase F fails on absent DES unless the category is LiteCast/Challenge or a
+content-specific exemption is recorded in `.dentcast/des-exemptions.json`.
+This registry is publication metadata, not part of the closed scoring spec;
+never add exemption fields to `plus/des-scores.json` or change scientific prompts.
+
+For an actual founder decision to publish without DES, store an entry keyed by
+the exact content ID with these fields only:
+
+```json
+{
+  "sharehub/share-N": {
+    "content_id": "sharehub/share-N",
+    "page_sha256": "SHA256 of the final UTF-8 page text",
+    "reason": "founder_without_des",
+    "approval": {
+      "status": "confirmed",
+      "decision": "Concise exact scope of the founder's real decision",
+      "evidence": ["Public-safe reference to that decision"]
+    }
+  }
+}
+```
+
+`unsourced_audio_caption` is the other allowed reason, only for an episode
+whose audio-only/caption status was explicitly confirmed. Neither reason can
+be inferred from missing results. Never fabricate approval or copy one from
+another publication. Keep private conversations out of Git. The verifier
+checks the reference's presence and scope; the agent must verify its truth.
+Hash with `hashlib.sha256(Path(page).read_text(encoding="utf-8").encode("utf-8")).hexdigest()`
+after builders finish. Any later page change invalidates the record: reconcile
+its scope with the real approval before updating it, and rerun Phase F. Add
+`.dentcast/des-exemptions.json` to this run's watched target paths when used.
+
+An absent Fidelity field or null source slot must satisfy the existing source
+exceptions (COMMENTARY, source errors, pre-3.1 NOT_APPRAISABLE) or a freshly
+computed zero-unit SOURCE assignment from `des_fidelity_units.py`. A manual
+claim of "no units" does not count; pooled units require a result. CITATION_ONLY
+from v3.1 still requires the spec's INSUFFICIENT_TEXT result object. Missing or
+unreadable assignment evidence fails closed. Existing complete results are
+validated without rerunning model calls; scoring prompts and voting are unchanged.
+
 ## Hook and CI coverage
 
 - `scripts/cursor-parity-notice.mjs` recognizes active nested modules/global rules, avoids backup snapshots, reminds shared client edits and active-run checkpointing, and never writes a state or marks work done.

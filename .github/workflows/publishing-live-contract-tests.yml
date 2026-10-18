@@ -12,6 +12,7 @@ on:
       - '.dentcast/workflows/**'
       - 'tools/dentcast_publish*.py'
       - 'tools/verify_publish.py'
+      - '.dentcast/des-exemptions.json'
       - 'tests/test_dentcast_publish*.py'
       - 'tests/test_dentcast_agent_entrypoint_migration.py'
       - 'tests/publishing-hooks.test.mjs'
