@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 59
-- Updated at (UTC): 2026-10-18T10:45:42+00:00
+- Generation: 60
+- Updated at (UTC): 2026-10-18T10:46:26+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "C.4.5"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 59,
-  "previous_sha256": "f7959858763e302074c344466c645a6e406b92a48328b02dffe32a6acd2439e1",
+  "generation": 60,
+  "previous_sha256": "ef7d2766a1a913db69309414613679c7f3c31c69f1eaea844e16157549d583e1",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -377,7 +377,7 @@ Its compact snapshot is a verification baseline, not current Git status.
         "id": "C.4.5",
         "module": "04-taxonomy-and-navigation.md",
         "reason": null,
-        "status": "pending"
+        "status": "started"
       },
       {
         "evidence": [],
@@ -560,7 +560,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     ]
   },
   "reconciliation": {
-    "note": "Verified the original share-34 template bytes at the recorded baseline hash; the ShareHub 35 page is distinct and modified for this publication.",
+    "note": "Verified C.4 template integrity completion on synchronized remote; this publication is ShareHub.",
     "observed_changes": []
   },
   "schema": "publish-handoff-v2",
@@ -602,7 +602,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:45:42+00:00"
+  "updated_at": "2026-10-18T10:46:26+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
