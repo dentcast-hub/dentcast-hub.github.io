@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 2
-- Updated at (UTC): 2026-10-18T09:05:29+00:00
+- Generation: 3
+- Updated at (UTC): 2026-10-18T09:06:35+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "rules"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 2,
-  "previous_sha256": "2017312f81281e8ed5e8677a32acdb77a30dd3f4be5616567451bc7e2fdfefcf",
+  "generation": 3,
+  "previous_sha256": "4c1c74aaa06608720edd4a7e937973d8656cb64c57ed412816e93c6d83481065",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -120,7 +120,7 @@ Its compact snapshot is a verification baseline, not current Git status.
         "id": "rules",
         "module": "01-hard-rules.md",
         "reason": null,
-        "status": "pending"
+        "status": "started"
       },
       {
         "evidence": [],
@@ -485,12 +485,8 @@ Its compact snapshot is a verification baseline, not current Git status.
     ]
   },
   "reconciliation": {
-    "note": "The exact complete article text has now been provided verbatim in the current user message; the prior blocker and pending question are resolved. No publication step has been completed.",
-    "observed_changes": [
-      "PENDING_QUESTIONS_CHANGED",
-      "RECORDED_BLOCKER_CHANGED",
-      "INPUT_REFERENCES_CHANGED"
-    ]
+    "note": "The exact article was supplied in the current user message; verified the previous checkpoint is committed on the observed remote branch before starting rules.",
+    "observed_changes": []
   },
   "schema": "publish-handoff-v2",
   "snapshot": {
@@ -531,7 +527,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:05:29+00:00"
+  "updated_at": "2026-10-18T09:06:35+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
