@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 43
-- Updated at (UTC): 2026-10-18T10:23:50+00:00
+- Generation: 44
+- Updated at (UTC): 2026-10-18T10:27:20+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "C.0.5"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 43,
-  "previous_sha256": "086f0be3eee00de469bfb432ce876d7b0ffd95e8d306d015b44f8135132e0c0c",
+  "generation": 44,
+  "previous_sha256": "61a9ca0a1152ac106e27cfa1824005a3f2d49095b82f7a7bb77e1eee03575319",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -57,7 +57,16 @@ Its compact snapshot is a verification baseline, not current Git status.
           "scope": "branch and merge boundary"
         }
       ],
-      "delivery": [],
+      "delivery": [
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/commit/a3420d11978751b86e1b61e8cfa3d3741df48616",
+            "GitHub compare 9d75d462af97c59a411e2403b1ad0875e5...a3420d11978751b86e1b61e8cfa3d3741df48616 lists exactly the page, two assets, and handoff",
+            "inspect --check-remote observes local and remote HEAD a3420d11978751b86e1b61e8cfa3d3741df48616"
+          ],
+          "scope": "C.2 page and two verified image assets delivered to authorized branch"
+        }
+      ],
       "inputs": [
         {
           "kind": "manual_handoff",
@@ -128,6 +137,15 @@ Its compact snapshot is a verification baseline, not current Git status.
           ],
           "kind": "C.2_staged_work_review",
           "result": "Staged C.2 scope contains exactly sharehub/share-35.html plus the two verified WebP assets. Full article text is represented in 87 source blocks in original order; media checksums match the Drive downloads."
+        },
+        {
+          "evidence": [
+            "github_compare_commits",
+            "github_fetch_file page and handoff",
+            "git fetch/reset and inspect --check-remote"
+          ],
+          "kind": "C.2_remote_delivery",
+          "result": "C.2 commit a3420d11978751b86e1b61e8cfa3d3741df48616 is on the authorized remote branch. Page and handoff contents read back exactly; local and remote HEAD match; both image blobs are committed and match the verified Drive SHA-256 values."
         }
       ]
     },
@@ -532,7 +550,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     ]
   },
   "reconciliation": {
-    "note": "Staged only the actual C.2 page and verified figures, then recorded the staged diff review before delivery.",
+    "note": "Reconciled the C.2 checkpoint against the committed page/assets and fresh remote observation; local index is clean after reset and remote delivery is verified.",
     "observed_changes": [
       "WORK_OR_INDEX_CHANGED"
     ]
@@ -541,16 +559,6 @@ Its compact snapshot is a verification baseline, not current Git status.
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
     "files": {
-      "assets/share-35-basal-implant.webp": {
-        "executable": false,
-        "kind": "file",
-        "sha256": "cc28b266c41e5fb0feae0c6a5df934ce024f256971f5bfd7f1e9d3c127318c27"
-      },
-      "assets/share-35-conventional-implant.webp": {
-        "executable": false,
-        "kind": "file",
-        "sha256": "61151c3a934480226bc444467723264d54ad793a2e28ef989b268d116dc71014"
-      },
       "sharehub/share-35.html": {
         "executable": false,
         "kind": "file",
@@ -586,7 +594,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:23:50+00:00"
+  "updated_at": "2026-10-18T10:27:20+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
