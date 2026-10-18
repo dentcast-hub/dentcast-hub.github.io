@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail pull requests that change published content while a live handoff remains."""
+"""Fail content PRs with unfinished handoffs or stale homepage counters."""
 import json
 import os
 from pathlib import PurePosixPath
@@ -10,14 +10,14 @@ import sys
 STATE_PATH = ".dentcast/PUBLISH-HANDOFF.md"
 CONTENT_ROOTS = {
     "chairside", "dentcast-plus", "episodes", "glossary", "insight", "litecast",
-    "metanotes", "notecast", "pillar", "plak-sefr", "promptologist", "sharehub",
-    "taraz",
+    "metanotes", "notecast", "plak-sefr", "promptologist", "sharehub", "taraz",
 }
 CONTENT_FILES = {
     "dentcast-brain.json", "dentcast.json", "dentcast-music.json",
     "dentcast-hashtag-reference.json", "glossary/glossary.json",
     "litecast/lite-glossary.json", "plus/des-scores.json",
 }
+FA_DIGITS = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
 
 
 def is_publication_path(path):
@@ -48,7 +48,43 @@ def parse_handoff(text):
     return publication
 
 
-def check_merge(changed_paths, handoff_text):
+def marker_values(index_html, name):
+    pattern = re.compile(
+        r"<!-- COUNTER:" + re.escape(name) + r":START -->(.*?)"
+        r"<!-- COUNTER:" + re.escape(name) + r":END -->",
+        re.DOTALL,
+    )
+    return [value.strip() for value in pattern.findall(index_html)]
+
+
+def verify_homepage_counters(index_html, brain_text, glossary_text, lite_text):
+    try:
+        brain = json.loads(brain_text)
+        glossary = json.loads(glossary_text)["glossary"]
+        lite = json.loads(lite_text)["LightGlossary"]
+    except (json.JSONDecodeError, KeyError, TypeError) as exc:
+        return False, f"COUNTER_SOURCE_INVALID: {exc}"
+    if not isinstance(brain, list) or not isinstance(glossary, list) or not isinstance(lite, list):
+        return False, "COUNTER_SOURCE_INVALID: expected arrays"
+    total = len(brain) + len(glossary) + len(lite)
+    share_count = sum(
+        1 for entry in brain
+        if isinstance(entry, dict) and entry.get("type") in ("sharehub", "dentai", "photocast")
+    )
+    expected = {
+        "CONTENT": str(total).translate(FA_DIGITS),
+        "CAT_SHAREHUB": str(share_count).translate(FA_DIGITS),
+    }
+    for name, value in expected.items():
+        actual = marker_values(index_html, name)
+        if not actual:
+            return False, f"COUNTER_MARKER_MISSING: {name}"
+        if any(item != value for item in actual):
+            return False, f"STALE_HOMEPAGE_COUNTER: {name} expected {value}, found {actual}"
+    return True, f"homepage counters verified: CONTENT={expected['CONTENT']}, CAT_SHAREHUB={expected['CAT_SHAREHUB']}"
+
+
+def check_merge(changed_paths, handoff_text, counter_sources=None):
     if not any(is_publication_path(path) for path in changed_paths):
         return True, "no publication content changed"
     try:
@@ -58,9 +94,12 @@ def check_merge(changed_paths, handoff_text):
     if publication is not None:
         return False, (
             "UNFINISHED_PUBLICATION_HANDOFF: "
-            f"{publication.get('content_id')} is still {publication.get('status')}"
+            f"{publication.get('content_id')} is still {publication.get('status')}; "
+            "the handoff must be completed and cleaned up before merge"
         )
-    return True, "no active handoff remains"
+    if not counter_sources:
+        return False, "COUNTER_INPUT_REQUIRED"
+    return verify_homepage_counters(**counter_sources)
 
 
 def changed_paths(base_ref):
@@ -78,6 +117,14 @@ def changed_paths(base_ref):
             for p in result.stdout.split(b"\0") if p]
 
 
+def read_optional(path):
+    try:
+        with open(path, encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        return None
+
+
 def main():
     base_ref = os.environ.get("BASE_REF")
     if not base_ref:
@@ -85,12 +132,16 @@ def main():
         return 2
     try:
         paths = changed_paths(base_ref)
-        try:
-            with open(STATE_PATH, encoding="utf-8") as f:
-                handoff_text = f.read()
-        except FileNotFoundError:
-            handoff_text = None
-        ok, reason = check_merge(paths, handoff_text)
+        handoff_text = read_optional(STATE_PATH)
+        counter_sources = {
+            "index_html": read_optional("index.html"),
+            "brain_text": read_optional("dentcast-brain.json"),
+            "glossary_text": read_optional("glossary/glossary.json"),
+            "lite_text": read_optional("litecast/lite-glossary.json"),
+        }
+        if any(value is None for value in counter_sources.values()):
+            counter_sources = None
+        ok, reason = check_merge(paths, handoff_text, counter_sources)
     except (OSError, subprocess.CalledProcessError, ValueError) as exc:
         reason = str(exc) or "PUBLISH_MERGE_GATE_FAILED"
         ok = False
