@@ -3,13 +3,23 @@
 > Checkpoint IDs for this module: C.4.13. Category exceptions require explicit skip reasons. The protocol defines dependency ordering (builders before final stamping; LiteCast links after page construction). Phase F completion uses the real `verify` command.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
-### 4.13. DES — DentCast Evidence Score (run the scoring prompt, store the record)
+### 4.13. DES — DentCast Evidence Score (run or consume the record)
 
 **Runs for EVERY type, on EVERY publish that produced a page**, in the basket
 decided at **Phase B Question 4.8**. Two documented skips and no others:
 **LiteCast** (outside the specialist ecosystem, Hard Rule 10 — report "4.13:
 skipped — LiteCast") and a publish whose Question 4.8 answer was **«بدون DES»**.
 Everything else scores.
+
+#### Conditional path for founder-supplied results
+
+Before starting Part 1, check whether the founder explicitly supplied a completed DES/Fidelity result packet for this publication. A packet counts as supplied only when the current request or its attached publication materials clearly identify it as the result for this content; a project Knowledge instruction, an older `plus/des-scores.json` entry, or a result for another page is not a packet.
+
+A usable packet must include the exact `content_id`, the final page text (or the exact generated Fidelity input blocks), the source text and `text_basis` used for every applicable call, the exact DES/Fidelity spec version used, the complete canonical JSON result objects in their original shapes, and a concise run receipt showing that the required calls, tie-breaks/reviews and founder decisions in Parts 2b/2c were completed. A score alone, summary, partial object or unverified claim that the work was done is insufficient.
+
+Regenerate the expected Fidelity units and source assignments with `tools/des_fidelity_units.py`; compare the packet's content identity, final text, sources, basis and version to the current publication; then run the normal Part 3 checks and the final Phase F verifier. If every check passes, do not repeat any DES/Fidelity model calls or recalculate their judgments: carry the supplied objects forward verbatim to Part 4, store them in `plus/des-scores.json`, and record the packet and validation evidence in the publication handoff. Do not put private source text or restricted material in public Git.
+
+If no packet is supplied, run the full Parts 1–4 below. If a packet is supplied but incomplete, stale or mismatched, reject it, record 4.13 as blocked with the specific reason, and report what must be corrected; never silently accept it or mark the step complete. Any later change to the final page text, source text/basis or applicable spec version invalidates the packet and requires a fresh evaluation.
 
 **Order matters: this runs after 4.10 on purpose.** When a paper file was attached,
 step 4.10 Part 3 has already found and cross-checked the DOI — reuse it rather than
