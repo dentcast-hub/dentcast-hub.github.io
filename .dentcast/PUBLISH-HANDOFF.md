@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 13
-- Updated at (UTC): 2026-10-18T09:18:36+00:00
+- Generation: 14
+- Updated at (UTC): 2026-10-18T09:18:56+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "B.3"
+- Next canonical step: "B.3.5"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 13,
-  "previous_sha256": "40298263239e27a46193e2a2c37519acbd26493e3c3eba244aee2bbb36bdb86c",
+  "generation": 14,
+  "previous_sha256": "692ac50151cd165c8971d78767a1d9ea0aac7a8b184fc47c7f8b26814fe82ff8",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -162,12 +162,12 @@ Its compact snapshot is a verification baseline, not current Git status.
       },
       {
         "evidence": [
-          "B.2 completion commit a0db81cb29232e69f5768a73d43a6098f1ee7f23 observed on origin."
+          "Complete Persian article text, title, scientific caveats, and source list were provided verbatim in the current user message; exact text is the content of record. The requested title/author metadata will use the full Joshi article, not a title or author inferred from an abstract."
         ],
         "id": "B.3",
         "module": "02-routing-intake.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -536,7 +536,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:18:36+00:00"
+  "updated_at": "2026-10-18T09:18:56+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
