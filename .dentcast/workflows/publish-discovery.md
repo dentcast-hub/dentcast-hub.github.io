@@ -77,9 +77,11 @@ Run `inspect --check-remote` in that checkout. Verify file/workflow fingerprints
 required inputs, completed evidence, approvals and external outcomes. An
 ambiguous upload/notification must be reconciled before retry. Read the active
 modular workflow and continue the first unfinished canonical step only when
-its prerequisites hold. The mandatory per-step commit/push barrier still
-applies. Discovery never switches branches, fetches, writes a handoff, publishes,
-performs external actions, or certifies semantic completion.
+its prerequisites hold. Group work and the latest handoff into a coherent
+delivery before ending a turn, switching agents/checkouts, performing an
+irreversible external action, or cleaning up; do not require a commit after
+every canonical step. Discovery never switches branches, fetches, writes a
+handoff, publishes, performs external actions, or certifies semantic completion.
 
 All agents use this shared procedure through `publish-handoff.md` and
 `publish-checkpoints.md`. Native hook execution remains client-dependent;

@@ -16,7 +16,7 @@ If the file is missing, report that no handoff was found. Inspect available Git 
 For remote recovery or a missing local file, follow [GitHub handoff discovery](publish-discovery.md). Run `python3 tools/dentcast_publish_handoff.py discover` (or `discover --repository owner/repo` without a checkout), or perform the same complete, immutable-head reads through connected GitHub tools. A missing file on main does not establish that no work exists elsewhere. Select only the unique verified active handoff after a complete stable scan; never guess from branch recency. Multiple, malformed or identity-mismatched handoffs and incomplete scans block selection. Preserve local-only work and verify the selected latest head/checkout before continuing.
 
 Before resuming:
-1. Verify repository, branch, content identity, recorded source revision, and local versus remote state.
+1. Verify the repository/branch selected through the checkout or discovery result, content identity, and local versus remote state. The v3 handoff does not store Git identity or source revision; locate its exact checkpoint in Git history.
 2. Inspect `git status --short --untracked-files=all`, `git diff`, `git diff --cached`, and `git log`. Discover the upstream; after a successful authorized fetch, compare it with HEAD. Record unknown remote state as unknown, never as synchronized.
 3. Compare actual files and hashes, commits, test output, and external receipts with the handoff. A checked box or an agent's claim is not evidence.
 4. Preserve unrelated changes. Do not reset, clean, force-push, switch away from dirty work, or blindly pull/merge to make the handoff appear consistent.
@@ -27,7 +27,7 @@ Before resuming:
 
 - Create the state file before the first publication mutation or external action.
 - Update it after **every canonical step**, including completed, skipped, blocked, and failed steps; write the reason and evidence.
-- After every step, commit its scoped public-safe work together with this handoff and push to the authorized working branch. Confirm delivery before starting the next step; failure or unknown remote state blocks progression. Follow the enforced boundary in `publish-checkpoints.md`; do not defer delivery until turn end.
+- After every step, save its real result in the local handoff. Commit/push scoped work with the latest handoff at coherent milestones, before ending a turn or switching agents/checkouts, and before irreversible external actions. Record and deliver `started` before performing an external action; reconcile unknown outcomes before retrying. See `publish-checkpoints.md` for the delivery boundaries.
 - Before each external action, record intended action, target, and status `started`; afterward record its verified result or `outcome_unknown`.
 - Update semantic progress before ending a turn, switching agents, committing, or handing off. After commit/push, inspect Git directly; do not duplicate current HEAD, index, status, ahead/behind or remote observations in the handoff. Do not recursively commit just to put a commit's own SHA inside itself.
 - If interrupted mid-step, the next agent verifies the actual state rather than assuming the last checkpoint is current. A Markdown file cannot guarantee recovery from every crash.

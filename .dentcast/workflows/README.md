@@ -52,8 +52,8 @@ Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details
 
 ## Completion
 
-Complete all applicable actions and approvals, verify Phase F and required delivery, provide the final report, then remove the temporary handoff as the completion contract specifies. Hashes or checkpoints alone are not publication. Read `publish-checkpoints.md` for per-step delivery/guarded cleanup and `publish-discovery.md` for remote recovery. `PUBLISHING-FINAL-REPORT.md` records delivered repair stages, integrated acceptance and the native-client/live-publication limits; main integration is tracked in [PR #914](https://github.com/dentcast-hub/dentcast-hub.github.io/pull/914). Existing clones must update to a revision containing these changes.
+Complete all applicable actions and approvals, verify Phase F and required delivery, provide the final report, then remove the temporary handoff as the completion contract specifies. Hashes or checkpoints alone are not publication. Read `publish-checkpoints.md` for coherent delivery batches and guarded cleanup, and `publish-discovery.md` for remote recovery. `PUBLISHING-FINAL-REPORT.md` records delivered repair stages, integrated acceptance and the native-client/live-publication limits; main integration is tracked in [PR #914](https://github.com/dentcast-hub/dentcast-hub.github.io/pull/914). Existing clones must update to a revision containing these changes.
 
-## Mandatory per-step checkpoints
+## Per-step checkpoints and delivery batches
 
 Read `.dentcast/workflows/publish-checkpoints.md`. Use the full canonical ledger from `tools/dentcast_publish_handoff.py plan`; write `started` before each action and its actual result afterward using `step`/`record`. Phase F uses the real `verify` command. Completion is `finish`, authorized cleanup commit/push, then `confirm-cleanup`; restore the same fixed handoff with `restore-cleanup` if cleanup fails. Hooks are supplemental and never mark scientific or semantic work complete.

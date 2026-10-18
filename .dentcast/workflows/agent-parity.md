@@ -284,6 +284,6 @@ publishِ بلوکه‌شده، پس عمداً صفر برمی‌گرداند.
 قاعده: **منطق در فایل کانونی، مسیر در روترها، رفتار در همین فایل.** هیچ‌کدام
 محتوای دیگری را کپی نمی‌کند.
 
-## Mandatory per-step checkpoints
+## Per-step checkpoints and delivery batches
 
 Read `.dentcast/workflows/publish-checkpoints.md`. Use the full canonical ledger from `tools/dentcast_publish_handoff.py plan`; write `started` before each action and its actual result afterward using `step`/`record`. Phase F uses the real `verify` command. Completion is `finish`, authorized cleanup commit/push, then `confirm-cleanup`; restore the same fixed handoff with `restore-cleanup` if cleanup fails. Hooks are supplemental and never mark scientific or semantic work complete.
