@@ -1,4 +1,4 @@
-"""Unit tests for the pre-merge publication completion gate."""
+"""Unit tests for the pre-merge publication completion and counter gate."""
 import sys
 from pathlib import Path
 import unittest
@@ -18,24 +18,46 @@ def handoff(status="in_progress"):
     )
 
 
+def counters(content="۱", share="۱"):
+    return (
+        "<!-- COUNTER:CONTENT:START -->" + content + "<!-- COUNTER:CONTENT:END -->"
+        + "<!-- COUNTER:CAT_SHAREHUB:START -->" + share
+        + "<!-- COUNTER:CAT_SHAREHUB:END -->"
+    )
+
+
+def sources(index=None):
+    return {
+        "index_html": index if index is not None else counters(),
+        "brain_text": '[{"type":"sharehub"}]',
+        "glossary_text": '{"glossary":[{}]}',
+        "lite_text": '{"LightGlossary":[{}]}',
+    }
+
+
 class PublicationMergeGateTests(unittest.TestCase):
     def test_active_handoff_blocks_publication_changes(self):
-        ok, reason = gate.check_merge(["sharehub/share-35.html"], handoff())
+        ok, reason = gate.check_merge(["sharehub/share-35.html"], handoff(), sources())
         self.assertFalse(ok)
         self.assertIn("UNFINISHED_PUBLICATION_HANDOFF", reason)
 
     def test_non_content_pr_ignores_existing_handoff(self):
-        ok, reason = gate.check_merge([".github/workflows/sitemap_only.yml"], handoff())
+        ok, reason = gate.check_merge([".github/workflows/sitemap_only.yml"], handoff(), None)
         self.assertTrue(ok)
         self.assertEqual(reason, "no publication content changed")
 
-    def test_removed_handoff_allows_content_after_completion(self):
-        ok, reason = gate.check_merge(["sharehub/share-35.html"], None)
+    def test_clean_handoff_requires_correct_generated_counters(self):
+        ok, reason = gate.check_merge(["sharehub/share-35.html"], None, sources())
         self.assertTrue(ok)
-        self.assertEqual(reason, "no active handoff remains")
+        self.assertIn("CONTENT=۳", reason)
+
+    def test_stale_counters_block_publication_merge(self):
+        ok, reason = gate.check_merge(["dentcast-brain.json"], None, sources(counters("۲", "۰")))
+        self.assertFalse(ok)
+        self.assertIn("STALE_HOMEPAGE_COUNTER", reason)
 
     def test_malformed_handoff_fails_closed_for_publication(self):
-        ok, reason = gate.check_merge(["dentcast-brain.json"], "not a handoff")
+        ok, reason = gate.check_merge(["dentcast-brain.json"], "not a handoff", sources())
         self.assertFalse(ok)
         self.assertEqual(reason, "PUBLISH_HANDOFF_FORMAT_INVALID")
 
