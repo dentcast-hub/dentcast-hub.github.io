@@ -70,3 +70,15 @@
 | PR / merge / live publication | **not done** | PR may be opened for this handoff; NO merge |
 
 Last update: 2026-10-18, preparation by ChatGPT via GitHub/Google Drive connectors.
+
+## Resume observations — 2026-10-18, current ChatGPT session
+
+This section reconciles newly observed inputs only. This remains a manual recovery note, NOT an official checkpoint or a completed canonical step.
+
+- The founder re-pasted the complete Persian article in the current conversation, beginning with the exact title above and ending with the Ferraris DOI. The missing-author-text blocker is resolved **for this conversation only**. The exact article body has not been written into Git; another agent must retrieve that message verbatim rather than reconstruct it from this note.
+- The founder reiterated that Joshi is the full-text primary source and the other two references are supplementary abstract-level sources. Preserve the Persian body exactly. Verify the original article's title and author metadata against Joshi's full text.
+- Fresh Drive metadata reads confirmed all three existing files share parent `1qvocmy1EedPZEHpPO7001ahJIymFyT60`: PDF `1tJaXUhMIS5oqJjwPXUB4XcEz97UOAsRu` (`application/pdf`, 2,827,728 bytes); conventional image `1mQ69mcm5lxskCWWuq7jBjQOTwP9flIvJ` (`image/webp`, 56,246 bytes); basal image `17f0zqo55EZ4SRPypRiPQN6LndAR8hxQl` (`image/webp`, 194,290 bytes). Binary download and SHA-256 verification remain pending.
+- The connected Drive text fetch returned the Joshi article through page 11 of 11, including references. This fetch does not constitute a DES or Fidelity run.
+- Read the fixed handoff, root AGENTS.md, and active handoff/checkpoint contracts through the GitHub connector. No executable checkout is available in the current workspace. Shell `git clone` failed with `Failed to connect to proxy port 8080`; permission-enabled attempts were aborted before a successful clone. No local helper, builder, scientific check or Phase F has been executed.
+- GitHub connector reads work. Founder explicitly authorized branch writes and PR creation; no new verbal authorization is required. The remaining execution problem is distinct from GitHub account permissions. Preserve the original prohibition on merging to main.
+- Next safe action: obtain a real executable checkout, inspect actual Git state, preserve/reconcile this manual evidence, then use the supported helper to generate the full canonical ledger. Do not mark rules/intake/scientific checks complete from these observations.
