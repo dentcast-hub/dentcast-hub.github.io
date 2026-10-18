@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 65
-- Updated at (UTC): 2026-10-18T10:50:02+00:00
+- Generation: 66
+- Updated at (UTC): 2026-10-18T10:51:08+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "C.4.7"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 65,
-  "previous_sha256": "112a7cc50c01d2af2be2548c34b4cc65a68eaf6fe57641e1c71725a1f22cf4ae",
+  "generation": 66,
+  "previous_sha256": "c300caf1b9b2f331541b2deb9c4f210301cbda0686e58746eb6afeee96ca2c89",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -398,7 +398,7 @@ Its compact snapshot is a verification baseline, not current Git status.
         "id": "C.4.7",
         "module": "05-semantic-linking.md",
         "reason": null,
-        "status": "pending"
+        "status": "started"
       },
       {
         "evidence": [],
@@ -560,7 +560,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     ]
   },
   "reconciliation": {
-    "note": "Verified start checkpoint delivery and confirmed ShareHub category; Promptologist series navigation does not apply.",
+    "note": "Verified C.4.6 category skip delivery remotely; current ShareHub page and handoff are synchronized.",
     "observed_changes": []
   },
   "schema": "publish-handoff-v2",
@@ -602,7 +602,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:50:02+00:00"
+  "updated_at": "2026-10-18T10:51:08+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
