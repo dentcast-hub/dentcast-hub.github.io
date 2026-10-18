@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 3
-- Updated at (UTC): 2026-10-18T09:06:35+00:00
+- Generation: 4
+- Updated at (UTC): 2026-10-18T09:12:24+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "rules"
+- Next canonical step: "0"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 3,
-  "previous_sha256": "4c1c74aaa06608720edd4a7e937973d8656cb64c57ed412816e93c6d83481065",
+  "generation": 4,
+  "previous_sha256": "07416f161d823ec52059289f152e9e908dffa8b5d42705d04faedc65e5cb0ef8",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -116,11 +116,13 @@ Its compact snapshot is a verification baseline, not current Git status.
     "status": "in_progress",
     "steps": [
       {
-        "evidence": [],
+        "evidence": [
+          "Read active publication router, hard rules, routing intake, AGENTS.md, complete agent-parity contract, and all three active global rule files; branch HEAD and remote restored and confirmed."
+        ],
         "id": "rules",
         "module": "01-hard-rules.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -484,10 +486,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "sharehub/share-35.html"
     ]
   },
-  "reconciliation": {
-    "note": "The exact article was supplied in the current user message; verified the previous checkpoint is committed on the observed remote branch before starting rules.",
-    "observed_changes": []
-  },
+  "reconciliation": null,
   "schema": "publish-handoff-v2",
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
@@ -527,7 +526,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:06:35+00:00"
+  "updated_at": "2026-10-18T09:12:24+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
