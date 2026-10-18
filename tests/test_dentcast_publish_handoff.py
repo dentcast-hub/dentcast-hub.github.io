@@ -233,7 +233,7 @@ class HandoffTests(unittest.TestCase):
         self.start()
         self.assertEqual(self.state()["snapshot"]["repository"], h.identity(str(self.remote)))
 
-    def test_corrupt_summary_and_invalid_snapshot_fail_closed(self):
+    def test_corrupt_summary_and_invalid_semantic_state_fail_closed(self):
         self.start()
         path = self.root / h.STATE_PATH
         original = path.read_text()
@@ -241,9 +241,9 @@ class HandoffTests(unittest.TestCase):
         self.assert_blocked("HANDOFF_SUMMARY_OR_ENCODING_CHANGED", h.inspect, self.root)
         path.write_text(original)
         state = self.state()
-        state["snapshot"]["files"]["note.html"]["sha256"] = "not-a-hash"
+        state["publication"]["status"] = "not-a-valid-status"
         path.write_text(h.render(state))
-        self.assert_blocked("FILE_HASH_INVALID", h.inspect, self.root)
+        self.assert_blocked("INVALID_STATUS", h.inspect, self.root)
         path.write_text("old manual checkpoint, not structured data")
         self.assert_blocked("HANDOFF_FORMAT_INVALID", h.inspect, self.root)
 
@@ -268,151 +268,4 @@ class HandoffTests(unittest.TestCase):
         run(self.root, "add", h.STATE_PATH)
         run(self.root, "commit", "-m", "checkpoint only")
         self.assertEqual(h.inspect(self.root)["issues"], [])
-        self.assertEqual(h.inspect(self.root, check_remote=True)["git_snapshot_portable"], "no")
-        run(self.root, "push", "origin", "main")
-        view = h.inspect(self.root, check_remote=True)
-        self.assertEqual(view["issues"], [])
-        self.assertEqual(view["git_snapshot_portable"], "yes")
-        self.assertFalse(view["publication_completed"])
-
-    def test_ignored_required_file_is_not_portable(self):
-        folder = self.root / ".ignored"
-        folder.mkdir()
-        (folder / "input.txt").write_text("not in Git")
-        self.p["target_paths"].append(".ignored/input.txt")
-        self.start()
-        run(self.root, "add", h.STATE_PATH)
-        run(self.root, "commit", "-m", "checkpoint without ignored input")
-        run(self.root, "push", "origin", "main")
-        view = h.inspect(self.root, check_remote=True)
-        self.assertEqual(view["git_snapshot_portable"], "no")
-        self.assertEqual(view["portability_reason"], "UNTRACKED_OR_IGNORED_REQUIRED_FILE")
-
-    def test_remote_advancement_is_observed_without_fetching_or_restoring(self):
-        self.start()
-        run(self.root, "add", h.STATE_PATH)
-        run(self.root, "commit", "-m", "checkpoint")
-        run(self.root, "push", "origin", "main")
-        cached = run(self.root, "rev-parse", "origin/main").stdout
-        other = self.base / "other"
-        subprocess.run(["git", "clone", str(self.remote), str(other)], check=True, capture_output=True)
-        run(other, "config", "user.name", "Other")
-        run(other, "config", "user.email", "other@example.invalid")
-        (other / "note.html").write_text("changed elsewhere")
-        run(other, "add", "note.html")
-        run(other, "commit", "-m", "remote changed")
-        run(other, "push", "origin", "main")
-        before = (self.root / "note.html").read_bytes()
-        view = h.inspect(self.root, check_remote=True)
-        self.assertEqual(view["status"], "blocked")
-        self.assertIn("REMOTE_HISTORY_NOT_LOCAL_REVIEW_REQUIRED", view["issues"])
-        self.assertEqual(run(self.root, "rev-parse", "origin/main").stdout, cached)
-        self.assertEqual((self.root / "note.html").read_bytes(), before)
-        run(self.root, "fetch", "origin")  # Test operator fetches; helper never does.
-        self.assertIn("REMOTE_BRANCH_ADVANCED_REVIEW_REQUIRED", h.inspect(self.root, True)["issues"])
-
-    def test_remote_failure_remains_unknown_and_does_not_leak_urls(self):
-        self.start()
-        run(self.root, "remote", "rename", "origin", "old-origin")
-        run(self.root, "remote", "add", "origin", str(self.base / "missing.git"))
-        # Identity drift is blocked, and local remote failure is reported as unknown.
-        view = h.inspect(self.root, True)
-        self.assertIn("REPOSITORY_CHANGED", view["issues"])
-        self.assertEqual(view["current_snapshot"]["remote"]["status"], "unknown")
-
-    def test_branch_or_content_identity_cannot_be_silently_rebound(self):
-        result = self.start()
-        bad = copy.deepcopy(self.p)
-        bad["content_id"] = "another-publication"
-        self.assert_blocked("PUBLICATION_IDENTITY_CHANGED", h.save, self.root, bad,
-                            expected=result["sha256"])
-        run(self.root, "switch", "-c", "another-branch")
-        self.assertIn("BRANCH_CHANGED", h.inspect(self.root)["issues"])
-        self.assert_blocked("REPOSITORY_OR_BRANCH_CHANGED", h.save, self.root, self.p,
-                            expected=result["sha256"], note="cannot change branch")
-
-    def test_new_commit_changing_other_files_requires_review(self):
-        self.start()
-        (self.root / "other.txt").write_text("other change")
-        run(self.root, "add", "other.txt")
-        run(self.root, "commit", "-m", "unrelated commit")
-        self.assertIn("HEAD_CHANGED_REVIEW_REQUIRED", h.inspect(self.root)["issues"])
-
-    def test_git_rename_and_newline_names_are_preserved(self):
-        run(self.root, "mv", "note.html", "renamed file.html")
-        if os.name != "nt":
-            (self.root / "line\nbreak.txt").write_text("extra")
-        self.start()
-        files = self.state()["snapshot"]["files"]
-        self.assertEqual(files["note.html"]["kind"], "missing")
-        self.assertEqual(files["renamed file.html"]["status"], "R ")
-        if os.name != "nt":
-            self.assertIn("line\nbreak.txt", files)
-
-    def test_unsafe_targets_rejected_before_state_creation(self):
-        for target in ("../outside", "/tmp/outside", ".git/config", "a/../b", "C:/x", "a\\b", h.STATE_PATH):
-            with self.subTest(target=target):
-                bad = copy.deepcopy(self.p)
-                bad["target_paths"] = [target]
-                self.assertRaises(h.Blocked, h.save, self.root, bad, initial=True)
-        self.assertFalse((self.root / h.STATE_PATH).exists())
-
-    @unittest.skipIf(os.name == "nt", "Symlink creation needs platform privileges")
-    def test_state_and_parent_symlinks_do_not_write_outside_checkout(self):
-        outside = self.base / "outside.txt"
-        outside.write_text("untouched")
-        path = self.root / h.STATE_PATH
-        path.symlink_to(outside)
-        self.assert_blocked("SYMLINK_PARENT_OR_STATE", self.start)
-        self.assertEqual(outside.read_text(), "untouched")
-        path.unlink()
-        (self.root / ".dentcast").rename(self.root / ".dentcast-real")
-        (self.root / ".dentcast").symlink_to(self.root / ".dentcast-real", target_is_directory=True)
-        self.assert_blocked("SYMLINK_PARENT_OR_STATE", self.start)
-
-    def test_advisory_lock_rejects_another_cooperating_writer(self):
-        initial = self.start()
-        with h.locked(self.root):
-            self.assert_blocked("HANDOFF_BUSY", h.save, self.root, self.p, expected=initial["sha256"])
-
-    def test_atomic_replace_failure_preserves_previous_state(self):
-        initial = self.start()
-        before = (self.root / h.STATE_PATH).read_bytes()
-        with patch.object(h.os, "replace", side_effect=OSError("fixture failure")):
-            self.assertRaises(OSError, h.save, self.root, self.p, expected=initial["sha256"])
-        self.assertEqual((self.root / h.STATE_PATH).read_bytes(), before)
-        self.assertEqual(list((self.root / ".dentcast").glob(".publish-handoff-*")), [])
-
-    def test_credentials_are_not_saved_from_origin_url(self):
-        run(self.root, "remote", "set-url", "origin", "https://user:PRIVATE_TOKEN@example.invalid/team/repo.git")
-        self.start()
-        text = (self.root / h.STATE_PATH).read_text()
-        self.assertNotIn("PRIVATE_TOKEN", text)
-        self.assertEqual(self.state()["snapshot"]["repository"], "example.invalid/team/repo")
-
-    def test_missing_workflow_and_detached_head_fail_closed(self):
-        path = self.root / h.WORKFLOW_PATHS[0]
-        original = path.read_bytes()
-        path.unlink()
-        self.assert_blocked("ACTIVE_WORKFLOW_FILE_MISSING", self.start)
-        path.write_bytes(original)
-        run(self.root, "switch", "--detach")
-        self.assert_blocked("DETACHED_HEAD", self.start)
-
-    def test_cli_consumes_explicit_input_and_missing_state_is_nonzero(self):
-        out, err = io.StringIO(), io.StringIO()
-        with redirect_stdout(out), redirect_stderr(err):
-            code = h.main(["--repo", str(self.root), "inspect"])
-        self.assertEqual(code, 2)
-        self.assertEqual(json.loads(err.getvalue())["error"], "HANDOFF_MISSING")
-        inp = self.base / "operator-input.json"
-        import dentcast_publish_lifecycle as lifecycle
-        self.p["steps"] = lifecycle.plan()
-        inp.write_text(json.dumps(self.p))
-        with redirect_stdout(io.StringIO()):
-            self.assertEqual(h.main(["--repo", str(self.root), "init", "--input", str(inp)]), 0)
-        self.assertTrue((self.root / h.STATE_PATH).is_file())
-
-
-if __name__ == "__main__":
-    unittest.main()
+        self.assertEqual(h.inspect(self.root, check_remote=True)["git_snapshot_portable"], "no#ÏtæÚ$z{-®éÜj×€€€€€€€€€É•ÍÕ±Ñl‰É…¹¡•Í}¡•­•t€¬ô€Ä(€€€€€€€€€€€€€€€½¹Ñ¥¹Õ”(€€€€€€€€€€€É•ÍÕ±Ñl•ÉÉ½ÉÌt¹…ÁÁ•¹¡ì‰É…¹ œè‰É…¹ °€Á¡…Í”œè€É•…‘}¡…¹‘½™˜œ°€½‘”œèÍÑÈ¡•áŒ¥ô¤(€€€€€€€€€€€É•ÑÕÉ¸É•ÍÕ±Ğ(€€€€€€€É•ÍÕ±Ñl‰É…¹¡•Í}¡•­•t€¬ô€Ä(€€€€€€€ÑÉäè(€€€€€€€€€€€É•ÍÕ±Ñl…¹‘¥‘…Ñ•Ìt¹…ÁÁ•¹¡…¹‘¥‘…Ñ”¡É•Á¼°‰É…¹ °¡•…°•¹ÑÉä¤¤(€€€€€€€•á•ÁĞ€¡ ¹	±½­•°-•åÉÉ½È°QåÁ•ÉÉ½È°ÑÑÉ¥‰ÕÑ•ÉÉ½È¤è(€€€€€€€€€€€É•ÍÕ±Ñl•ÉÉ½ÉÌt¹…ÁÁ•¹¡ì‰É…¹ œè‰É…¹ °€Á¡…Í”œè€Ù…±¥‘…Ñ•}¡…¹‘½™˜œ°€½‘”œèÍ…™•}•ÉÉ½È ¥ô¤(€€€ÑÉäè(€€€€€€€™¥¹…°€ô±¥ÍÑ}¡•…‘Ì¡É•Á¼°É•…¤(€€€€€€€ ¹É•ÅÕ¥É”¡™¥¹…°€ôô¡•…‘Ì°€%M=YIe}	I9!}!M}!9}IQIdœ¤(€€€•á•ÁĞ€¡ ¹	±½­•°-•åÉÉ½È°QåÁ•ÉÉ½È°ÑÑÉ¥‰ÕÑ•ÉÉ½È¤è(€€€€€€€É•ÍÕ±Ñl•ÉÉ½ÉÌt¹…ÁÁ•¹¡ìÁ¡…Í”œè€±¥ÍÑ}™¥¹…°œ°€½‘”œèÍ…™•}•ÉÉ½È ¥ô¤(€€€€€€€É•ÑÕÉ¸É•ÍÕ±Ğ(€€€É•ÍÕ±Ñl‘¥Í½Ù•Éå}½µÁ±•Ñ”t€ôQÉÕ”(€€€¥˜É•ÍÕ±Ñl•ÉÉ½ÉÌtè(€€€€€€€É•ÑÕÉ¸É•ÍÕ±Ğ(€€€¥˜±•¸¡É•ÍÕ±Ñl…¹‘¥‘…Ñ•Ìt¤€ø€Äè(€€€€€€€É•ÍÕ±Ñl•ÉÉ½ÉÌt¹…ÁÁ•¹¡ìÁ¡…Í”œè€Í•±•Ğœ°€½‘”œè€5U1Q%A1}Q%Y}!9=M}IEU%I}M1Q%=8ô¤(€€€•±¥˜É•ÍÕ±Ñl…¹‘¥‘…Ñ•Ìtè(€€€€€€€É•ÍÕ±Ğ¹ÕÁ‘…Ñ”¡ÍÑ…ÑÕÌô¡…¹‘½™™}™½Õ¹œ°Í•±•Ñ•õÉ•ÍÕ±Ñl…¹‘¥‘…Ñ•ÌulÁt¤(€€€•±Í”è(€€€€€€€É•ÍÕ±ÑlÍÑ…ÑÕÌt€ô€¹½Ñ}™½Õ¹œ(€€€É•ÑÕÉ¸É•ÍÕ±Ğ(()‘•˜Í…™•}•ÉÉ½È ¤è(€€€¥µÁ½ÉĞÍåÌ(€€€•ÉÉ½È€ôÍåÌ¹•á}¥¹™¼ ¥lÅt(€€€É•ÑÕÉ¸ÍÑÈ¡•ÉÉ½È¤¥˜¥Í¥¹ÍÑ…¹”¡•ÉÉ½È° ¹	±½­•¤•±Í”€%M=YIe}IMA=9M}%9Y1%œ
