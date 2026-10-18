@@ -78,19 +78,32 @@ class EntrypointMigrationTests(unittest.TestCase):
     self.assertIn(".dentcast/workflows/publish-checkpoints.md",actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->",1)[0])
     body=actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->\n\n",1)[1]
     if name == "08-des-fidelity.md":
-     # Part 2c is the one approved execution-routing amendment; the scientific
-     # prompt, scoring engine and all other canonical source text stay intact.
+     # Part 2c remains the original approved execution-routing amendment.
+     # The explicit precomputed-result branch is a second, narrowly allowed
+     # workflow addition; remove only that block before checking source parity.
      marker="#### Part 2c — How the FIDELITY call is run: two independent checker runs, a tie-break, a stronger reviewer"
      after="**The model is part of the measurement:**"
      expected_before,expected_rest=expected.split(marker,1)
      expected_after=expected_rest.split(after,1)[1]
      actual_before,actual_rest=body.split(marker,1)
      actual_after=actual_rest.split(after,1)[1]
-     self.assertEqual(actual_before.rstrip("\n"),expected_before.rstrip("\n"))
+     condition_start=actual_before.index("#### Conditional path for founder-supplied results")
+     condition_end=actual_before.index("**Order matters:",condition_start)
+     conditional=actual_before[condition_start:condition_end]
+     normalized_before=actual_before[:condition_start]+actual_before[condition_end:]
+     normalized_before=normalized_before.replace(
+      "### 4.13. DES — DentCast Evidence Score (run or consume the record)",
+      "### 4.13. DES — DentCast Evidence Score (run the scoring prompt, store the record)")
+     self.assertEqual(normalized_before.rstrip("\n"),expected_before.rstrip("\n"))
      self.assertEqual(actual_after.rstrip("\n"),expected_after.rstrip("\n"))
-     for required in ("`gpt-6-luna`", "Launch both full checker runs in parallel",
-       "exact price verification is not a start gate", "record it as UNVERIFIED",
-       "If the runtime does not expose independent contexts"):
+     for required in ("complete DES/Fidelity result packet","exact `content_id`",
+      "`tools/des_fidelity_units.py`","do not repeat any DES/Fidelity model calls",
+      "If no packet is supplied, run the full Parts 1–4 below.",
+      "record 4.13 as blocked","invalidates the packet"):
+      with self.subTest(required=required): self.assertIn(required,conditional)
+     for required in ("`gpt-6-luna`","Launch both full checker runs in parallel",
+      "exact price verification is not a start gate","record it as UNVERIFIED",
+      "If the runtime does not expose independent contexts"):
       self.assertIn(required,actual_rest.split(after,1)[0])
      continue
     self.assertEqual(body.rstrip("\n"),expected.rstrip("\n"))
