@@ -24,6 +24,11 @@ EDITS = {"02-routing-intake.md":{"CLAUDE.md → Repo conventions":".dentcast/wor
  "CLAUDE.md § DES":".dentcast/workflows/global/plus-premium.md — DES"}}
 def read(p): return (ROOT/p).read_text(encoding="utf-8")
 class EntrypointMigrationTests(unittest.TestCase):
+ def test_progress_reporting_is_timely_without_per_command_noise(self):
+  s=read(".dentcast/workflows/agent-parity.md")
+  for term in ("۶۰ ثانیه", "برای هر دستور، فایل‌خوانی یا چکِ ریز پیام جدا نفرست",
+   "همان‌جا سؤال دقیق را بپرس", "نتیجه و قدم بعد"):
+   with self.subTest(term=term): self.assertIn(term,s)
  def test_clients_use_active_authority(self):
   for p in ENTRYPOINTS:
    with self.subTest(path=p):
