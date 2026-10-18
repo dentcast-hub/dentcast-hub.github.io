@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 38
-- Updated at (UTC): 2026-10-18T09:43:10+00:00
+- Generation: 39
+- Updated at (UTC): 2026-10-18T09:44:16+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "C.2"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 38,
-  "previous_sha256": "a1672abae30a9347bc251ef3eda28db4483c8541273ddc3b689876eb25ff8941",
+  "generation": 39,
+  "previous_sha256": "67213ba964740c2af847f01de3960e75750eaa29a080fb0900589611e3eda508",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -268,11 +268,13 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "C.1 template lock checkpoint delivered at 077c56a7256b27a9754e9fd20022240bf8e5217c; ready to create sharehub/share-35.html."
+        ],
         "id": "C.2",
         "module": "03-litecast-and-page.md",
         "reason": null,
-        "status": "pending"
+        "status": "started"
       },
       {
         "evidence": [],
@@ -550,7 +552,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:43:10+00:00"
+  "updated_at": "2026-10-18T09:44:16+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
