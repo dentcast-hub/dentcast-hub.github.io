@@ -48,6 +48,8 @@ jobs:
         env:
           BASE_REF: ${{ github.base_ref }}
         run: python3 tools/check_publish_merge_gate.py
+      - name: Check publication merge gate and builder ordering
+        run: python3 -m unittest discover -s tests -p test_publish_merge_gate.py -v
       - name: Check active entrypoints and preserved source rules
         run: python3 -m unittest discover -s tests -p test_dentcast_agent_entrypoint_migration.py -v
       - name: Check live checkpoint and completion lifecycle
