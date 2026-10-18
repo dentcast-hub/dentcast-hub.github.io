@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 40
-- Updated at (UTC): 2026-10-18T09:46:35+00:00
+- Generation: 41
+- Updated at (UTC): 2026-10-18T09:48:48+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "C.2"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 40,
-  "previous_sha256": "442a70127cfbb6a025e399d6751e76c6cadaae812c7aaba08cccacd0c5c063ef",
+  "generation": 41,
+  "previous_sha256": "1ec39d115f7c04b8e24cee670c4a00418c6dcd0d9222af771347c0873616b5e5",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -109,6 +109,16 @@ Its compact snapshot is a verification baseline, not current Git status.
           ],
           "kind": "manual_handoff_inspection",
           "result": "Official inspect returned HANDOFF_FORMAT_INVALID because existing file is manual, not v2. No canonical steps are verified complete."
+        },
+        {
+          "evidence": [
+            "/tmp/share35-assets/joshi.pdf",
+            "/tmp/share35-assets/share-35-conventional-implant.webp",
+            "/tmp/share35-assets/share-35-basal-implant.webp",
+            "B.4.7 full-text inspection"
+          ],
+          "kind": "source_asset_reconciliation",
+          "result": "The historical input notes above record initial Drive references and their then-pending binary retrieval. Subsequent completed work is evidenced by B.4/B.4.7: PDF 2,827,728 bytes, 11 pages, SHA-256 a0dc0699ef573f82db6439c9a3a7b5a784806f3cd5a1222e1c6f759f477842f3; conventional WebP 56,246 bytes, 1600\u00d71194, SHA-256 61151c3a934480226bc444467723264d54ad793a2e28ef989b268d116dc71014; basal WebP 194,290 bytes, 1600\u00d7677, SHA-256 cc28b266c41e5fb0feae0c6a5df934ce024f256971f5bfd7f1e9d3c127318c27. Full PDF text confirmed Joshi et al. title and authors."
         }
       ]
     },
@@ -513,7 +523,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     ]
   },
   "reconciliation": {
-    "note": "Fresh inspection confirms prior C.2 start is the sole unfinished step; target page remains absent, working tree is clean, and local/remote HEAD match. No page action has occurred.",
+    "note": "Added a dated reconciliation note clarifying that the retained intake references predate the separately completed binary download and hash verification already evidenced in B.4/B.4.7.",
     "observed_changes": []
   },
   "schema": "publish-handoff-v2",
@@ -555,7 +565,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:46:35+00:00"
+  "updated_at": "2026-10-18T09:48:48+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
