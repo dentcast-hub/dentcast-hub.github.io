@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 11
-- Updated at (UTC): 2026-10-18T09:17:44+00:00
+- Generation: 12
+- Updated at (UTC): 2026-10-18T09:18:07+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "B.2"
+- Next canonical step: "B.3"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 11,
-  "previous_sha256": "ce49afab4478941c622bae75b0a8eadcd996c4155e0772fd919f4444ccaea86c",
+  "generation": 12,
+  "previous_sha256": "dad69b7db1839b30a91e8508acc8c0215a600a62c61c2e9c3cf5f822ebd0d15b",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -153,12 +153,12 @@ Its compact snapshot is a verification baseline, not current Git status.
       },
       {
         "evidence": [
-          "B.1 completion commit 7740895600edecd18d82ec34663d4ee03bacb48c observed on origin."
+          "ShareHub IDs are contiguous 1\u201334 with maximum 34; next ID is 35 and target URL is /sharehub/share-35.html."
         ],
         "id": "B.2",
         "module": "02-routing-intake.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -534,7 +534,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:17:44+00:00"
+  "updated_at": "2026-10-18T09:18:07+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
