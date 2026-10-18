@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 19
-- Updated at (UTC): 2026-10-18T09:23:52+00:00
+- Generation: 20
+- Updated at (UTC): 2026-10-18T09:24:28+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "B.4.7"
+- Next canonical step: "B.4.8"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 19,
-  "previous_sha256": "c89216198ab63c291689d91b86deea70b33c3cce15b26997eef8f2baeeb3ac82",
+  "generation": 20,
+  "previous_sha256": "87ebecc2a537576c92855d54b962a45bf74de53a6567a39148f70876ef91b238",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -189,12 +189,12 @@ Its compact snapshot is a verification baseline, not current Git status.
       },
       {
         "evidence": [
-          "Canonical media checkpoint commit 18e2e7a57b52d853b2c1103e5f89f6ccb8f12159 verified by inspect --check-remote."
+          "A real Drive PDF was supplied and downloaded (2,827,728 bytes, 11 pages, SHA-256 a0dc0699ef573f82db6439c9a3a7b5a784806f3cd5a1222e1c6f759f477842f3); its full text confirms the article title and four authors Megha Joshi, Mayur Kaushik, Mohd Nazar Rana, Soumya Kaushik. This activates Phase C 4.10 Parts 1\u20133."
         ],
         "id": "B.4.7",
         "module": "02-routing-intake.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -542,7 +542,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:23:52+00:00"
+  "updated_at": "2026-10-18T09:24:28+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
