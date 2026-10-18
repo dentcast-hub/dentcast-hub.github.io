@@ -1,84 +1,532 @@
-# Publication handoff — sharehub/share-35
+# Publication handoff
 
-- Schema: manual recovery note; NOT a generated publish-handoff-v2 checkpoint.
-- Status: blocked — awaiting proper live-workflow init/reconciliation in an executable checkout.
-- Repository: `dentcast-hub/dentcast-hub.github.io`
-- Working branch: `content/sharehub-35-basal-implants`
-- Intended content ID/category: `sharehub/share-35` / `sharehub` (revalidate numbering on resume).
-- User title, verbatim: **ایمپلنت‌های معمولی و بازال؛ دو رویکرد متفاوت در درمان بی‌دندانی**
-- Last completed canonical step: **none verified in the live checkpoint ledger**.
-- Next action: reconcile this pre-existing manual file using `tools/dentcast_publish_handoff.py` and the real branch/checkout, then initialize a complete canonical step ledger without overwriting this evidence or skipping gates.
+Semantic progress and evidence; current Git facts are read from Git.
+- Schema: publish-handoff-v2
+- Generation: 1
+- Updated at (UTC): 2026-10-18T09:01:07+00:00
+- Content: "sharehub/share-35"
+- Status: blocked
+- Next canonical step: "rules"
+- Blocker: "Exact complete Persian article text from the prior conversation is not available in this execution context. User explicitly forbids reconstruction; waiting for the original text."
 
-## User's explicit instructions
-1. Preserve the complete Persian text exactly as provided by the founder in the 2026-10-18 ChatGPT conversation; do not rewrite, shorten, or change words. If the exact text cannot be retrieved from the original chat/session, ask founder to paste the original. Do NOT recreate the author text from a summary or this note. This handoff **does not contain the complete article body**.
-2. ShareHub publication; include **two original figures from the Joshi PDF** in the Persian page, image captions/credit, with meaningful alt text. Use short display labels for all hyperlinks, never naked long URLs.
-3. DES and Fidelity should be computed using **the full original Joshi review**, not abstracts and not the supplementary welding references. Supplemental references are only for attribution of the parenthetical intraoral-welding explanation; they are not extra studies to DES-score.
-4. Complete full active modular publication workflow and real Phase F; do not fabricate scores, approvals, tests, publish results or merge permission. Create PR; do not merge without an explicit new instruction.
+The structured record preserves decisions, approvals, step evidence and external outcomes.
+Its compact snapshot is a verification baseline, not current Git status.
 
-## Verified resources — completed OUTSIDE canonical live-workflow ledger
-
-**Original full-text PDF:** Joshi M, Kaushik M, Rana MN, Kaushik S. *Conventional and Basal Implantology: A Narrative Review of Current Evidence, Clinical Decision-Making, and Future Perspectives*. Cureus 2026;18(7):e113703. DOI: https://doi.org/10.7759/cureus.113703
-- Original PDF, already correctly named and filed by the preceding Codex work:
-  https://drive.google.com/file/d/1tJaXUhMIS5oqJjwPXUB4XcEz97UOAsRu/view
-- Parent Drive folder: https://drive.google.com/drive/folders/1qvocmy1EedPZEHpPO7001ahJIymFyT60
-- Both PDF and folder metadata/parent relationships confirmed on 2026-10-18. Folder is under Paper farzad.
-- PDF is a **FULL_TEXT** source; the 11-page text was read for an initial spot-check. Not an official DES/Fidelity run.
-- Cureus displays CC-BY 4.0 credit conditions. Include appropriate image attribution.
-
-**Two extracted and WebP-converted original figures, uploaded to the same Drive folder on 2026-10-18:**
-1. Figure 1 **Conventional implant** (original journal Figure 1, PDF p.3): `share-35-conventional-implant.webp`, 56,246 bytes, https://drive.google.com/file/d/1mQ69mcm5lxskCWWuq7jBjQOTwP9flIvJ/view
-2. Figure 2 **Basal implant** (original journal Figure 2, PDF p.5): `share-35-basal-implant.webp`, 194,290 bytes, https://drive.google.com/file/d/17f0zqo55EZ4SRPypRiPQN6LndAR8hxQl/view
-- Both files were visually inspected in the source session and uploaded successfully to Google Drive. Download/verify the actual binary files, check SHA-256, then put WebP files in the correct repository images folder as prescribed by the active workflow. These binaries are NOT yet in GitHub.
-- Suggested placements (do not edit founder's text): Fig 1 near “ایمپلنت‌های معمولی؛ رویکردی با پشتوانه علمی گسترده”; Fig 2 near “ایمپلنت‌های بازال؛ استفاده از استخوان کورتیکال برای دستیابی به ثبات”.
-
-**Supplementary references** (NOT DES/Fidelity source records):
-- *Soldering in Dentistry: An Updated Technical Review*. 2024. https://pmc.ncbi.nlm.nih.gov/articles/PMC10856638/
-- Ferraris S et al., *Intraoral welding of titanium dental implants: Characterization of the joints*. 2016. https://doi.org/10.1016/j.jmatprotec.2016.04.018
-
-## Quick primary-text spot-check — NOT a scored review
-- Joshi full text reports 10-year conventional clinical success exceeding 90–95%, and conventional immediate loading as possible.
-- Conventional Stability Dip, basal cortical engagement, 15–25° neck bending, 72-hour loading protocol, 1,019 BCS implants / ~97.5% 4-year cumulative survival appear in the full text.
-- Caveat: a source mention is NOT a Fidelity pass. Complete systematic unit splitting and independent model checks are pending.
-
-## Verified GitHub observations at preparation
-- Working branch `content/sharehub-35-basal-implants` was identical to `main` at `b645ff5165d10074afefbac4c12177733362bbc5` (zero branch-only commits) when checked before this handoff.
-- `sharehub/share-35.html` did not exist on main. No open PR and no existing fixed handoff existed on working branch at that moment.
-- No article page, cabinet record, brain entry, English mirror, official DES/Fidelity record or Phase F result has been made by this assistant.
-- No merge to main and no live release authorized.
-
-## Resume and reconciliation instructions
-1. This Markdown file is a **manually authored rescue handoff**, not a valid machine-generated JSON record. Before any canonical step, reconcile and explicitly convert it using `.dentcast/workflows/publish-handoff.md`, `publish-handoff-tool.md` and `publish-checkpoints.md` in an actual executable checkout. Do NOT run `init` over this file, and do not claim that checkpoints were already completed. Preserve it until evidence has been transferred into a valid canonical record.
-2. Verify branch/HEAD/upstream and `git status`/diff; reconcile any unpushed work from a different Codex checkout without cleaning it.
-3. Retrieve the exact complete user-authored Persian text from the source session (or founder re-paste); only then build the page. Preserve verbatim.
-4. Retrieve the original PDF and both WebP files from Drive; verify file contents/identities, then place WebPs in repo with source attribution.
-5. Follow all outstanding mandatory workflow gates. Record `started`/actual outcome; commit+push per canonical step, and verify remote before the next step. Do not automatically mark the Drive filing as a previously completed canonical step without reconciling receipt evidence.
-6. Run independent SOURCE/FIDELITY checks with the full Joshi text and actual available model identities, generate/stamp data according to current DES v3.4 rules, then build + English + Phase F as required.
-7. Create PR and report link, checks and blockers. **DO NOT MERGE** without a separate explicit instruction.
-
-## Outstanding steps and evidence
-| Work | Status | Evidence |
-|---|---|---|
-| Original article name/folder in Drive | observed completed before this turn | PDF and folder metadata reads |
-| Extract/conversion of Figures 1 & 2 to WebP | completed outside canonical workflow | WebP source files and visual inspection |
-| Upload both WebPs to Drive | completed outside canonical workflow | Google Drive upload receipts/IDs above |
-| Full Persian user text preserved inside Git | **not done** | must recover exact original text |
-| Place WebPs in GitHub repository | **not done** | binaries currently retrievable from Drive |
-| Canonical handoff-v2/ledger | **not done** | this manual rescue record must be reconciled |
-| Page/brain/catalog/en/language links | **not done** | pending |
-| DES SOURCE and independent FIDELITY | **not done** | pending real model runs |
-| All live gates / Phase F / final verification | **not done** | pending executable checkout |
-| PR / merge / live publication | **not done** | PR may be opened for this handoff; NO merge |
-
-Last update: 2026-10-18, preparation by ChatGPT via GitHub/Google Drive connectors.
-
-## Resume observations — 2026-10-18, current ChatGPT session
-
-This section reconciles newly observed inputs only. This remains a manual recovery note, NOT an official checkpoint or a completed canonical step.
-
-- The founder re-pasted the complete Persian article in the current conversation, beginning with the exact title above and ending with the Ferraris DOI. The missing-author-text blocker is resolved **for this conversation only**. The exact article body has not been written into Git; another agent must retrieve that message verbatim rather than reconstruct it from this note.
-- The founder reiterated that Joshi is the full-text primary source and the other two references are supplementary abstract-level sources. Preserve the Persian body exactly. Verify the original article's title and author metadata against Joshi's full text.
-- Fresh Drive metadata reads confirmed all three existing files share parent `1qvocmy1EedPZEHpPO7001ahJIymFyT60`: PDF `1tJaXUhMIS5oqJjwPXUB4XcEz97UOAsRu` (`application/pdf`, 2,827,728 bytes); conventional image `1mQ69mcm5lxskCWWuq7jBjQOTwP9flIvJ` (`image/webp`, 56,246 bytes); basal image `17f0zqo55EZ4SRPypRiPQN6LndAR8hxQl` (`image/webp`, 194,290 bytes). Binary download and SHA-256 verification remain pending.
-- The connected Drive text fetch returned the Joshi article through page 11 of 11, including references. This fetch does not constitute a DES or Fidelity run.
-- Read the fixed handoff, root AGENTS.md, and active handoff/checkpoint contracts through the GitHub connector. No executable checkout is available in the current workspace. Shell `git clone` failed with `Failed to connect to proxy port 8080`; permission-enabled attempts were aborted before a successful clone. No local helper, builder, scientific check or Phase F has been executed.
-- GitHub connector reads work. Founder explicitly authorized branch writes and PR creation; no new verbal authorization is required. The remaining execution problem is distinct from GitHub account permissions. Preserve the original prohibition on merging to main.
-- Next safe action: obtain a real executable checkout, inspect actual Git state, preserve/reconcile this manual evidence, then use the supported helper to generate the full canonical ledger. Do not mark rules/intake/scientific checks complete from these observations.
+<!-- dentcast-publish-state-v1 -->
+```json
+{
+  "generation": 1,
+  "previous_sha256": null,
+  "publication": {
+    "blocker": "Exact complete Persian article text from the prior conversation is not available in this execution context. User explicitly forbids reconstruction; waiting for the original text.",
+    "category": "sharehub",
+    "content_id": "sharehub/share-35",
+    "context": {
+      "approvals": [
+        {
+          "decision": "Authorized by user",
+          "evidence": [
+            "user instruction in current request"
+          ],
+          "scope": "commit/push on content/sharehub-35-basal-implants and create PR",
+          "status": "confirmed"
+        },
+        {
+          "decision": "Not authorized; requires a separate explicit instruction",
+          "evidence": [
+            "user instruction in current request"
+          ],
+          "scope": "merge to main",
+          "status": "not_required"
+        }
+      ],
+      "decisions": [
+        {
+          "decision": "Use the full Joshi et al. 2026 Cureus paper only as the primary scored source. The two intraoral-welding sources are supplemental explanation sources, not independent DES records.",
+          "evidence": [
+            "user instruction in current request",
+            "manual handoff at git:d172683918276b4e263801a4d8668b64a67529e2:.dentcast/PUBLISH-HANDOFF.md"
+          ],
+          "scope": "DES/Fidelity source"
+        },
+        {
+          "decision": "Commit, push and create a PR on content/sharehub-35-basal-implants; do not merge to main without separate explicit instruction.",
+          "evidence": [
+            "user instruction in current request"
+          ],
+          "scope": "branch and merge boundary"
+        }
+      ],
+      "delivery": [],
+      "inputs": [
+        {
+          "kind": "manual_handoff",
+          "note": "Original manual recovery handoff retained verbatim in Git history; it is not a canonical checkpoint.",
+          "ref": "git:d172683918276b4e263801a4d8668b64a67529e2:.dentcast/PUBLISH-HANDOFF.md",
+          "sha256": "2e58d42d9a38c06d1c0492498305a28c297dc9d757a52b63123f9fe666c03e81"
+        },
+        {
+          "kind": "user_text",
+          "note": "Must be pasted/retrieved verbatim before any authoring or scientific review.",
+          "ref": "prior conversation message referenced by user; exact body unavailable in this execution context",
+          "sha256": null
+        },
+        {
+          "kind": "source_pdf",
+          "note": "Drive metadata noted in manual handoff; binary download and local hash verification pending.",
+          "ref": "https://drive.google.com/file/d/1tJaXUhMIS5oqJjwPXUB4XcEz97UOAsRu/view",
+          "sha256": null
+        },
+        {
+          "kind": "figure",
+          "note": "Conventional implant WebP; binary retrieval and hash verification pending.",
+          "ref": "https://drive.google.com/file/d/1mQ69mcm5lxskCWWuq7jBjQOTwP9flIvJ/view",
+          "sha256": null
+        },
+        {
+          "kind": "figure",
+          "note": "Basal implant WebP; binary retrieval and hash verification pending.",
+          "ref": "https://drive.google.com/file/d/17f0zqo55EZ4SRPypRiPQN6LndAR8hxQlJ/view",
+          "sha256": null
+        }
+      ],
+      "pending_questions": [
+        "User to provide the exact complete Persian article body verbatim, unless the original message becomes accessible in this execution context."
+      ],
+      "unrelated_changes": [],
+      "validation": [
+        {
+          "evidence": [
+            "git status --short --branch",
+            "git rev-parse HEAD",
+            "git ls-remote origin refs/heads/content/sharehub-35-basal-implants"
+          ],
+          "kind": "git_resume_reconciliation",
+          "result": "HEAD is d172683918276b4e263801a4d8668b64a67529e2; working tree was clean; branch upstream is origin/content/sharehub-35-basal-implants; fresh ls-remote reported the same HEAD."
+        },
+        {
+          "evidence": [
+            "python tools/dentcast_publish_handoff.py inspect",
+            "manual handoff Git blob d172683918276b4e263801a4d8668b64a67529e2:.dentcast/PUBLISH-HANDOFF.md"
+          ],
+          "kind": "manual_handoff_inspection",
+          "result": "Official inspect returned HANDOFF_FORMAT_INVALID because existing file is manual, not v2. No canonical steps are verified complete."
+        }
+      ]
+    },
+    "external_actions": [],
+    "status": "blocked",
+    "steps": [
+      {
+        "evidence": [],
+        "id": "rules",
+        "module": "01-hard-rules.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "0",
+        "module": "02-routing-intake.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "A",
+        "module": "02-routing-intake.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "B.1",
+        "module": "02-routing-intake.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "B.2",
+        "module": "02-routing-intake.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "B.3",
+        "module": "02-routing-intake.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "B.3.5",
+        "module": "02-routing-intake.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "B.4",
+        "module": "02-routing-intake.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "B.4.7",
+        "module": "02-routing-intake.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "B.4.8",
+        "module": "02-routing-intake.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "B.4.9",
+        "module": "02-routing-intake.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "B.5",
+        "module": "02-routing-intake.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.0",
+        "module": "03-litecast-and-page.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.0.1",
+        "module": "03-litecast-and-page.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.0.2",
+        "module": "03-litecast-and-page.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.0.3",
+        "module": "03-litecast-and-page.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.0.4",
+        "module": "03-litecast-and-page.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.1",
+        "module": "03-litecast-and-page.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.2",
+        "module": "03-litecast-and-page.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.0.5",
+        "module": "03-litecast-and-page.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.0.6",
+        "module": "03-litecast-and-page.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.2.4",
+        "module": "04-taxonomy-and-navigation.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.2.5",
+        "module": "04-taxonomy-and-navigation.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.2.6",
+        "module": "04-taxonomy-and-navigation.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.3",
+        "module": "04-taxonomy-and-navigation.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4",
+        "module": "04-taxonomy-and-navigation.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.5",
+        "module": "04-taxonomy-and-navigation.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.5-b",
+        "module": "04-taxonomy-and-navigation.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.6",
+        "module": "04-taxonomy-and-navigation.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.7",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.7-b",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.8",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.9",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.8",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "C.7",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "D",
+        "module": "12-english-notify-verify.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "E",
+        "module": "12-english-notify-verify.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "F",
+        "module": "12-english-notify-verify.md",
+        "reason": null,
+        "status": "pending"
+      },
+      {
+        "evidence": [],
+        "id": "G",
+        "module": "12-english-notify-verify.md",
+        "reason": null,
+        "status": "pending"
+      }
+    ],
+    "target_paths": [
+      "sharehub/share-35.html"
+    ]
+  },
+  "reconciliation": null,
+  "schema": "publish-handoff-v2",
+  "snapshot": {
+    "branch": "content/sharehub-35-basal-implants",
+    "files": {
+      "sharehub/share-35.html": {
+        "executable": false,
+        "kind": "missing",
+        "sha256": null
+      }
+    },
+    "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
+    "workflow": {
+      ".dentcast/workflows/README.md": "b95374a9179bb82fe993f96e8696d06e1399293cb9081cbc58645ac3c5254c32",
+      ".dentcast/workflows/agent-parity.md": "e547f273f2d72441666352fe831418e3c8b52320840e5af2828fef550b22bfc1",
+      ".dentcast/workflows/global/README.md": "0d10946f9e6abf2a9f6d997035db453f8f7253b1ef21a876e97158d104998866",
+      ".dentcast/workflows/global/plus-premium.md": "3905b8017be9601666541145aa732469a664c2c3b0e229dfb40e063123668987",
+      ".dentcast/workflows/global/repo-conventions.md": "07ad6321a9539898c555b795249699b4a67786c06ebf0d8242864dbc845e92a3",
+      ".dentcast/workflows/global/site-invariants.md": "806db16666dc3d42468f143ec279ba704718d3997ca96ce8316f2d17abbc6398",
+      ".dentcast/workflows/modules/01-hard-rules.md": "92a4a297a1163dbe6d1b91c03512f4ce1d34a341bfbd2d284939999183f11775",
+      ".dentcast/workflows/modules/02-routing-intake.md": "d49e7a8e4b17ee67d5ed76e9a439ec76e8e80e57dee9ab2757af2fd8af1c79f9",
+      ".dentcast/workflows/modules/03-litecast-and-page.md": "58ffb9d846189df26f19d905f3350bcbedb0caf35bb06d6b0ac275cad4df7a9d",
+      ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "30f3d513b85fd3601b4b0abfb0545164b7845a3b6cbe1c572f0b51634e4ca48c",
+      ".dentcast/workflows/modules/05-semantic-linking.md": "584b98498373904fea376f08666b152d089ed444c04aec977c309693d1b3ea72",
+      ".dentcast/workflows/modules/06-paper-ingestion.md": "0750fad903784190a1f2cc448d733c923de225d3c954197bd8b2ee4c1469d93b",
+      ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "df19796c39fd7bbcb3baf54d7579a648dc563d911b4532325e399708e1bf5669",
+      ".dentcast/workflows/modules/08-des-fidelity.md": "d68e53bc517eef74c34412c2f974195549b968c18da05b6280c68c53f815d48e",
+      ".dentcast/workflows/modules/09-challenge.md": "a8879369f30774f999e0c20b5538517f8822b3de2250d8be7a8d516093bb7e57",
+      ".dentcast/workflows/modules/10-brain-and-pathways.md": "136123ea53078073e14a4de2adafe5e7c1cfe14e48db9bf1e488115d7807f7a5",
+      ".dentcast/workflows/modules/11-build-and-version.md": "b1c38c6f861f4b531bfd32a054133a65800d0f13df035c94ee251b5359c09150",
+      ".dentcast/workflows/modules/12-english-notify-verify.md": "de9972aaa32350207d514cb85ad317b5ecf78cbe4259c682e016b45b9c99d5bf",
+      ".dentcast/workflows/publish-checkpoints.md": "146f065121e5b6813ba3f40ddfdaff11b51c5da94d8e40e90645397b7fa603ad",
+      ".dentcast/workflows/publish-handoff.md": "ca9f415761f503c1806bec7cd5a0273ae2546c85ecb7d38eca368c537520ff96",
+      ".dentcast/workflows/routing-details.md": "3e698a41fe79f82133b433b508c948ac7fbab95b03cebbb8c2ceb450e1eab552",
+      "tools/dentcast_publish_handoff.py": "18c4964abd72f9d6c8abb78b8accbea327da1ba0ff20cd5ccf3705c378ea3a2f",
+      "tools/dentcast_publish_lifecycle.py": "a5a96d8a598ed24523cddf70deec7002e9336db54975f38038b9fd9ddc0bfc78",
+      "tools/verify_publish.py": "6d9d0663afaa54fe12f297f3e405ab072821164edc700589c766314217b05f48"
+    }
+  },
+  "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
+  "updated_at": "2026-10-18T09:01:07+00:00"
+}
+```
+<!-- /dentcast-publish-state-v1 -->
