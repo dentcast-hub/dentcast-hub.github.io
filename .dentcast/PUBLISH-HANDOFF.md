@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 52
-- Updated at (UTC): 2026-10-18T10:35:59+00:00
+- Generation: 53
+- Updated at (UTC): 2026-10-18T10:37:13+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "C.2.6"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 52,
-  "previous_sha256": "f8a5175d77849edda39525263ec58f8fd363102c759fd774cd43f2b989b76b58",
+  "generation": 53,
+  "previous_sha256": "55b78cce1fa3c4f64606babc562c9429161c637545bbf854075219865c063f79",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -346,11 +346,13 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "sharehub/index.html is a hand-maintained static list, newest-first; C.2.6 requires a single newest ShareHub row."
+        ],
         "id": "C.2.6",
         "module": "04-taxonomy-and-navigation.md",
         "reason": null,
-        "status": "pending"
+        "status": "started"
       },
       {
         "evidence": [],
@@ -553,10 +555,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "sharehub/share-35.html"
     ]
   },
-  "reconciliation": {
-    "note": "Confirmed the rendered ShareHub navigation matches the locked category and confirmed main pillar.",
-    "observed_changes": []
-  },
+  "reconciliation": null,
   "schema": "publish-handoff-v2",
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
@@ -596,7 +595,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:35:59+00:00"
+  "updated_at": "2026-10-18T10:37:13+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
