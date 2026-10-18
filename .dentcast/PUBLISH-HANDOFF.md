@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 58
-- Updated at (UTC): 2026-10-18T10:44:53+00:00
+- Generation: 59
+- Updated at (UTC): 2026-10-18T10:45:42+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "C.4"
+- Next canonical step: "C.4.5"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 58,
-  "previous_sha256": "a033c801fad27353b79778627eb6d57c5f004251c45104a84dacc299ca2b6e4f",
+  "generation": 59,
+  "previous_sha256": "f7959858763e302074c344466c645a6e406b92a48328b02dffe32a6acd2439e1",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -364,11 +364,13 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "sharehub/share-34.html SHA-256 4d5b1825e3c3e5b6f865ba87564800fe52606c46addd13cc284383b2fb0ec3c7 matches the locked template hash recorded in Phase 0; current ShareHub 35 page hash is e9dfdcb53d32d03de8d0b651f2648ba3bb5d6443a96727ad52a6bc9828317015."
+        ],
         "id": "C.4",
         "module": "04-taxonomy-and-navigation.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -558,7 +560,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     ]
   },
   "reconciliation": {
-    "note": "Verified C.3 metadata commit and synchronized remote handoff; clean status and branch head match.",
+    "note": "Verified the original share-34 template bytes at the recorded baseline hash; the ShareHub 35 page is distinct and modified for this publication.",
     "observed_changes": []
   },
   "schema": "publish-handoff-v2",
@@ -600,7 +602,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:44:53+00:00"
+  "updated_at": "2026-10-18T10:45:42+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
