@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 57
-- Updated at (UTC): 2026-10-18T10:44:05+00:00
+- Generation: 58
+- Updated at (UTC): 2026-10-18T10:44:53+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "C.4"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 57,
-  "previous_sha256": "b9de9715f0107752b73fa4683d7b22c56f566c331df295e02dbc69af2d19ea99",
+  "generation": 58,
+  "previous_sha256": "a033c801fad27353b79778627eb6d57c5f004251c45104a84dacc299ca2b6e4f",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -368,7 +368,7 @@ Its compact snapshot is a verification baseline, not current Git status.
         "id": "C.4",
         "module": "04-taxonomy-and-navigation.md",
         "reason": null,
-        "status": "pending"
+        "status": "started"
       },
       {
         "evidence": [],
@@ -558,10 +558,8 @@ Its compact snapshot is a verification baseline, not current Git status.
     ]
   },
   "reconciliation": {
-    "note": "Reviewed C.3 before/after audit: both structured dates match 2026-10-18, titles/descriptions and social metadata are present, unrelated template keywords removed; visible source publication year remains intact.",
-    "observed_changes": [
-      "WORK_OR_INDEX_CHANGED"
-    ]
+    "note": "Verified C.3 metadata commit and synchronized remote handoff; clean status and branch head match.",
+    "observed_changes": []
   },
   "schema": "publish-handoff-v2",
   "snapshot": {
@@ -602,7 +600,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:44:05+00:00"
+  "updated_at": "2026-10-18T10:44:53+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
