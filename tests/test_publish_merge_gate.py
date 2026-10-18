@@ -18,7 +18,7 @@ def handoff(status="in_progress"):
     )
 
 
-def counters(content="۱", share="۱"):
+def counters(content="۳", share="۱"):
     return (
         "<!-- COUNTER:CONTENT:START -->" + content + "<!-- COUNTER:CONTENT:END -->"
         + "<!-- COUNTER:CAT_SHAREHUB:START -->" + share
