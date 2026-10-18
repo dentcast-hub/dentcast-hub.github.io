@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 23
-- Updated at (UTC): 2026-10-18T09:26:15+00:00
+- Generation: 24
+- Updated at (UTC): 2026-10-18T09:26:46+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "B.4.9"
+- Next canonical step: "B.5"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 23,
-  "previous_sha256": "12c03b057e3f9bed50bd8281be20ef6d5feca4f6d204f6e81e38ce15905131c0",
+  "generation": 24,
+  "previous_sha256": "9c958ebdc81588a1a3be4761e0a0aff07c821cc0510b52a872472933a9995dd5",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -207,12 +207,12 @@ Its compact snapshot is a verification baseline, not current Git status.
       },
       {
         "evidence": [
-          "B.4.8 source basket and user scoring-source decision checkpoint 635dcc7ad6f1b6ad0494db64e6e4fb5a63dbc863 verified."
+          "The supplied body is a clinical evidence review article, not a challenge prompt; ordinary publish path applies."
         ],
         "id": "B.4.9",
         "module": "02-routing-intake.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -546,7 +546,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:26:15+00:00"
+  "updated_at": "2026-10-18T09:26:46+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
