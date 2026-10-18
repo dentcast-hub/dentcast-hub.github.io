@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 7
-- Updated at (UTC): 2026-10-18T09:15:00+00:00
+- Generation: 8
+- Updated at (UTC): 2026-10-18T09:16:17+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "A"
+- Next canonical step: "B.1"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 7,
-  "previous_sha256": "012ad8017d1c12329993bdfa4befe04d41fd623b07201b477dcaafcb6a3c7fac",
+  "generation": 8,
+  "previous_sha256": "e878062147d1739b215d78197a44110bd831880d3e7a60cf4c94c4c575cab036",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -135,12 +135,12 @@ Its compact snapshot is a verification baseline, not current Git status.
       },
       {
         "evidence": [
-          "Phase 0 completed and checkpoint commit c0021da7c7d63fc23c9b965c3694b206cf5aea9b verified on origin before discovery."
+          "Parsed full dentcast-brain.json (559 entries, 14 values of type including legacy untyped episodes); 34 ShareHub entries are contiguous 1\u201334. Latest ShareHub 34 shape/fields and sharehub/share-34.html template checked (hash 4d5b1825e3c3e5b6f865ba87564800fe52606c46addd13cc284383b2fb0ec3c7); target sharehub/share-35.html is absent. Read PILLARS from detached origin/main worktree; taxonomy not merged into feature branch. Source full-text title/authors confirmed from downloaded PDF."
         ],
         "id": "A",
         "module": "02-routing-intake.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -530,7 +530,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:15:00+00:00"
+  "updated_at": "2026-10-18T09:16:17+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
