@@ -544,5 +544,3 @@ Its compact snapshot is a verification baseline, not current Git status.
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
-18508 .dentcast/PUBLISH-HANDOFF.md
-c89216198ab63c291689d91b86deea70b33c3cce15b26997eef8f2baeeb3ac82  .dentcast/PUBLISH-HANDOFF.md
