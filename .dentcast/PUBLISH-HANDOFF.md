@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 49
-- Updated at (UTC): 2026-10-18T10:32:59+00:00
+- Generation: 50
+- Updated at (UTC): 2026-10-18T10:33:57+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "C.2.4"
+- Next canonical step: "C.2.5"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 49,
-  "previous_sha256": "8639aa4b5ff631b2abeaa3d2002c1d3782c24063a5d3d8d7ae9227b9d8c920a5",
+  "generation": 50,
+  "previous_sha256": "5ea12c31c1946f5d3dd1f31a74c3394d9c3b556c099985e86303862933b9ac42",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -329,12 +329,12 @@ Its compact snapshot is a verification baseline, not current Git status.
       },
       {
         "evidence": [
-          "Live taxonomy read from origin/main tools/build_pillar.py; semantic mapping identifies implantology as clear primary pillar and surgical-planning as direct fit for cortical anchorage, loading protocols, indications, and technique."
+          "Live origin/main taxonomy: pillar implantology (\u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u0648\u0644\u0648\u0698\u06cc), subtopic surgical-planning (\u062c\u0631\u0627\u062d\u06cc\u060c \u062c\u0627\u06cc\u06af\u0630\u0627\u0631\u06cc \u0648 \u0637\u0631\u062d \u062f\u0631\u0645\u0627\u0646); semantic match to cortical anchorage, loading, surgical approach, and clinical indications."
         ],
         "id": "C.2.4",
         "module": "04-taxonomy-and-navigation.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -551,7 +551,10 @@ Its compact snapshot is a verification baseline, not current Git status.
       "sharehub/share-35.html"
     ]
   },
-  "reconciliation": null,
+  "reconciliation": {
+    "note": "Applied the single clear taxonomy match from live main; no new taxonomy values were proposed.",
+    "observed_changes": []
+  },
   "schema": "publish-handoff-v2",
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
@@ -591,7 +594,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:32:59+00:00"
+  "updated_at": "2026-10-18T10:33:57+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
