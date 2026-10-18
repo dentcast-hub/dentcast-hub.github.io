@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 41
-- Updated at (UTC): 2026-10-18T09:48:48+00:00
+- Generation: 43
+- Updated at (UTC): 2026-10-18T10:23:50+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "C.2"
+- Next canonical step: "C.0.5"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 41,
-  "previous_sha256": "1ec39d115f7c04b8e24cee670c4a00418c6dcd0d9222af771347c0873616b5e5",
+  "generation": 43,
+  "previous_sha256": "086f0be3eee00de469bfb432ce876d7b0ffd95e8d306d015b44f8135132e0c0c",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -119,6 +119,15 @@ Its compact snapshot is a verification baseline, not current Git status.
           ],
           "kind": "source_asset_reconciliation",
           "result": "The historical input notes above record initial Drive references and their then-pending binary retrieval. Subsequent completed work is evidenced by B.4/B.4.7: PDF 2,827,728 bytes, 11 pages, SHA-256 a0dc0699ef573f82db6439c9a3a7b5a784806f3cd5a1222e1c6f759f477842f3; conventional WebP 56,246 bytes, 1600\u00d71194, SHA-256 61151c3a934480226bc444467723264d54ad793a2e28ef989b268d116dc71014; basal WebP 194,290 bytes, 1600\u00d7677, SHA-256 cc28b266c41e5fb0feae0c6a5df934ce024f256971f5bfd7f1e9d3c127318c27. Full PDF text confirmed Joshi et al. title and authors."
+        },
+        {
+          "evidence": [
+            "git status --short",
+            "git diff --cached --stat",
+            "SHA-256 and source-block comparison"
+          ],
+          "kind": "C.2_staged_work_review",
+          "result": "Staged C.2 scope contains exactly sharehub/share-35.html plus the two verified WebP assets. Full article text is represented in 87 source blocks in original order; media checksums match the Drive downloads."
         }
       ]
     },
@@ -279,12 +288,12 @@ Its compact snapshot is a verification baseline, not current Git status.
       },
       {
         "evidence": [
-          "inspect --check-remote at 1ddf75652e0bf0202b269cace050f362949ec540; target sharehub/share-35.html missing"
+          "sharehub/share-35.html; SHA-256 2e2164a89fe9aa34a3ce8fa00b86dde380be0599368be53c95cae05623528b40; all 87 source text blocks verified codepoint-for-codepoint in original order; assets SHA-256 61151c3a934480226bc444467723264d54ad793a2e28ef989b268d116dc71014 and cc28b266c41e5fb0feae0c6a5df934ce024f256971f5bfd7f1e9d3c127318c27"
         ],
         "id": "C.2",
         "module": "03-litecast-and-page.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -523,17 +532,29 @@ Its compact snapshot is a verification baseline, not current Git status.
     ]
   },
   "reconciliation": {
-    "note": "Added a dated reconciliation note clarifying that the retained intake references predate the separately completed binary download and hash verification already evidenced in B.4/B.4.7.",
-    "observed_changes": []
+    "note": "Staged only the actual C.2 page and verified figures, then recorded the staged diff review before delivery.",
+    "observed_changes": [
+      "WORK_OR_INDEX_CHANGED"
+    ]
   },
   "schema": "publish-handoff-v2",
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
     "files": {
+      "assets/share-35-basal-implant.webp": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "cc28b266c41e5fb0feae0c6a5df934ce024f256971f5bfd7f1e9d3c127318c27"
+      },
+      "assets/share-35-conventional-implant.webp": {
+        "executable": false,
+        "kind": "file",
+        "sha256": "61151c3a934480226bc444467723264d54ad793a2e28ef989b268d116dc71014"
+      },
       "sharehub/share-35.html": {
         "executable": false,
-        "kind": "missing",
-        "sha256": null
+        "kind": "file",
+        "sha256": "2e2164a89fe9aa34a3ce8fa00b86dde380be0599368be53c95cae05623528b40"
       }
     },
     "repository": "github.com/dentcast-hub/dentcast-hub.github.io",
@@ -565,7 +586,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:48:48+00:00"
+  "updated_at": "2026-10-18T10:23:50+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
