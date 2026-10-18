@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 55
-- Updated at (UTC): 2026-10-18T10:41:02+00:00
+- Generation: 56
+- Updated at (UTC): 2026-10-18T10:42:35+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "C.3"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 55,
-  "previous_sha256": "c9dc099425c2cb7522e5625c6252aa9b270b85a04db529895b5cc9d50fac1edc",
+  "generation": 56,
+  "previous_sha256": "289676df6be51123a668da22935b1979a05fadfc903c7b3f8f54780aa6d9a592",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -359,7 +359,7 @@ Its compact snapshot is a verification baseline, not current Git status.
         "id": "C.3",
         "module": "04-taxonomy-and-navigation.md",
         "reason": null,
-        "status": "pending"
+        "status": "started"
       },
       {
         "evidence": [],
@@ -556,10 +556,8 @@ Its compact snapshot is a verification baseline, not current Git status.
     ]
   },
   "reconciliation": {
-    "note": "Reviewed the delivered commit 1ca840a2ca516f569c44b794757b5f0bc6bb2d94; ShareHub index row is present once in the correct position and the remote handoff matches. Reconciled the committed work snapshot after delivery.",
-    "observed_changes": [
-      "WORK_OR_INDEX_CHANGED"
-    ]
+    "note": "Verified C.2.6 completion checkpoint and hand-maintained index delivery on synchronized remote branch; reviewed clean Git state.",
+    "observed_changes": []
   },
   "schema": "publish-handoff-v2",
   "snapshot": {
@@ -600,7 +598,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:41:02+00:00"
+  "updated_at": "2026-10-18T10:42:35+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
