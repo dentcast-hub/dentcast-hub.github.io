@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 54
-- Updated at (UTC): 2026-10-18T10:39:16+00:00
+- Generation: 55
+- Updated at (UTC): 2026-10-18T10:41:02+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "C.3"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 54,
-  "previous_sha256": "49d1dc52709ff1968259ae80e3d6c173e10b547dee5786e321f273b7f90ea812",
+  "generation": 55,
+  "previous_sha256": "c9dc099425c2cb7522e5625c6252aa9b270b85a04db529895b5cc9d50fac1edc",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -556,7 +556,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     ]
   },
   "reconciliation": {
-    "note": "Reviewed C.2.6 diff: exactly one added hand-maintained ShareHub row, correctly placed before ShareHub 34; page link target and source-author label verified.",
+    "note": "Reviewed the delivered commit 1ca840a2ca516f569c44b794757b5f0bc6bb2d94; ShareHub index row is present once in the correct position and the remote handoff matches. Reconciled the committed work snapshot after delivery.",
     "observed_changes": [
       "WORK_OR_INDEX_CHANGED"
     ]
@@ -565,11 +565,6 @@ Its compact snapshot is a verification baseline, not current Git status.
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
     "files": {
-      "sharehub/index.html": {
-        "executable": false,
-        "kind": "file",
-        "sha256": "a65de8f9b5c69ce9fc121542d88c4ed50edf212e68db707cc2aab04d2461b61d"
-      },
       "sharehub/share-35.html": {
         "executable": false,
         "kind": "file",
@@ -605,7 +600,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:39:16+00:00"
+  "updated_at": "2026-10-18T10:41:02+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
