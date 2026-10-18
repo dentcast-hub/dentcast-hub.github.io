@@ -21,6 +21,10 @@ on:
       - '.githooks/pre-commit'
       - '.workflow-sync.json'
       - '.github/workflows/publishing-live-contract-tests.yml'
+      - '.github/workflows/sitemap_only.yml'
+      - 'tools/update-homepage-counters.py'
+      - 'tools/check_publish_merge_gate.py'
+      - 'tests/test_publish_merge_gate.py'
   pull_request:
   workflow_dispatch:
 permissions:
@@ -39,6 +43,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Reject pull requests with an unfinished publication
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: python3 tools/check_publish_merge_gate.py
       - name: Check active entrypoints and preserved source rules
         run: python3 -m unittest discover -s tests -p test_dentcast_agent_entrypoint_migration.py -v
       - name: Check live checkpoint and completion lifecycle
