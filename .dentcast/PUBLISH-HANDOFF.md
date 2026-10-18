@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 64
-- Updated at (UTC): 2026-10-18T10:49:17+00:00
+- Generation: 65
+- Updated at (UTC): 2026-10-18T10:50:02+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "C.4.6"
+- Next canonical step: "C.4.7"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 64,
-  "previous_sha256": "3828676a15098ef439527d9e2d03448be6b3c33a526ed6dcbdcd53e1013bc22b",
+  "generation": 65,
+  "previous_sha256": "112a7cc50c01d2af2be2548c34b4cc65a68eaf6fe57641e1c71725a1f22cf4ae",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -390,8 +390,8 @@ Its compact snapshot is a verification baseline, not current Git status.
         "evidence": [],
         "id": "C.4.6",
         "module": "04-taxonomy-and-navigation.md",
-        "reason": null,
-        "status": "started"
+        "reason": "Only applies to Promptologist numbered-series pages; this publication is ShareHub.",
+        "status": "skipped"
       },
       {
         "evidence": [],
@@ -560,7 +560,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     ]
   },
   "reconciliation": {
-    "note": "Verified C.4.5-b skip checkpoint on synchronized remote; category ShareHub.",
+    "note": "Verified start checkpoint delivery and confirmed ShareHub category; Promptologist series navigation does not apply.",
     "observed_changes": []
   },
   "schema": "publish-handoff-v2",
@@ -602,7 +602,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:49:17+00:00"
+  "updated_at": "2026-10-18T10:50:02+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
