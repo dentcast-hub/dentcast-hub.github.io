@@ -150,7 +150,7 @@ def bind(root, expected, content_id, category, targets, evidence):
                           for row in plan(paper_only=True)]
         p["context"]["decisions"].append({"kind": "intake_identity_bound", "evidence": evidence})
         require_plan(p)
-        state.update(publication=p, snapshot=h.snapshot(root, targets), generation=state["generation"]+1,
+        state.update(schema=h.SCHEMA, publication=p, snapshot=h.snapshot(root, targets), generation=state["generation"]+1,
                      updated_at=h.now(), previous_sha256=expected,
                      reconciliation={"note": "Resolved previously unassigned intake identity", "observed_changes": ["IDENTITY_BOUND_ONCE"]})
         sha = h.write_atomic(root, state)
@@ -365,7 +365,9 @@ def guard(root, phase):
         elif phase == "ci":
             previous = h.git(root, "show", "HEAD^:" + h.STATE_PATH, optional=True)
             if previous is not None:
-                state, _ = h.parse_state(previous)
+                state, checkpoint_sha = h.parse_state(previous)
+                if state['schema'] == h.SCHEMA:
+                    state = h.hydrate_v3(root, state, checkpoint_sha)
                 require_plan(state["publication"])
                 p = state["publication"]
                 h.require(h.next_step(p) is None and not p["blocker"]

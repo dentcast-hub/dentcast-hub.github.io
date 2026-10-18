@@ -24,7 +24,7 @@ from urllib.parse import urlsplit
 sys.dont_write_bytecode = True
 
 STATE_PATH = ".dentcast/PUBLISH-HANDOFF.md"
-SCHEMA = "publish-handoff-v2"
+SCHEMA = "publish-handoff-v3"
 LIMIT = 2 * 1024 * 1024
 MODULES = (
     "01-hard-rules.md", "02-routing-intake.md", "03-litecast-and-page.md",
@@ -363,18 +363,28 @@ def compact_snapshot(snap):
 def render(state):
     if state['schema'] == 'publish-handoff-v1':
         return render_full(state)
-    wire = {**state, 'snapshot': compact_snapshot(state['snapshot'])}
+    if state['schema'] == 'publish-handoff-v2':
+        wire = {**state, 'snapshot': compact_snapshot(state['snapshot'])}
+        snapshot_note = "Its compact snapshot is a verification baseline, not current Git status."
+    else:
+        # Git facts are reconstructed from the checkpoint commit, or held in
+        # private .git metadata until that checkpoint is committed.
+        wire = {key: value for key, value in state.items()
+                if key not in ('snapshot', 'source_revision', 'generation', 'updated_at',
+                               'previous_sha256')}
+        if isinstance(wire.get('reconciliation'), dict):
+            wire['reconciliation'] = {'note': wire['reconciliation']['note']}
+        snapshot_note = "Git facts are reconstructed from Git and are not duplicated in this handoff."
     p = state['publication']
     quote = lambda value: json.dumps(value, ensure_ascii=True)
     summary = ("# Publication handoff\n\n"
                "Semantic progress and evidence; current Git facts are read from Git.\n"
-               f"- Schema: {state['schema']}\n- Generation: {state['generation']}\n"
-               f"- Updated at (UTC): {state['updated_at']}\n"
+               f"- Schema: {state['schema']}\n"
                f"- Content: {quote(p['content_id'])}\n- Status: {p['status']}\n"
                f"- Next canonical step: {quote(next_step(p))}\n"
                f"- Blocker: {quote(p['blocker'])}\n\n"
-               "The structured record preserves decisions, approvals, step evidence and external outcomes.\n"
-               "Its compact snapshot is a verification baseline, not current Git status.\n\n")
+               "The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.\n"
+               + snapshot_note + "\n\n")
     return summary + BEGIN + json.dumps(wire, ensure_ascii=True, indent=2, sort_keys=True) + END
 
 
@@ -388,7 +398,10 @@ def observation_path(root):
 def remember_observation(root, state, sha):
     # Non-portable Git observations stay in Git metadata, not in the handoff.
     path = observation_path(root)
-    data = json.dumps({'sha256': sha, 'snapshot': state['snapshot']}, ensure_ascii=True).encode()
+    encoded_snapshot = json.dumps(state['snapshot'], ensure_ascii=True, sort_keys=True).encode()
+    data = json.dumps({'sha256': sha, 'snapshot': state['snapshot'],
+                       'snapshot_sha256': digest(encoded_snapshot)},
+                      ensure_ascii=True).encode()
     require(len(data) <= LIMIT * 2, 'OBSERVATION_TOO_LARGE')
     fd, temporary = tempfile.mkstemp(prefix='.publish-observation-', dir=path.parent)
     try:
@@ -443,6 +456,95 @@ def hydrate_observation(root, state, sha):
     return state
 
 
+def checkpoint_revision(root, sha):
+    """Find the commit containing these exact handoff bytes, if available."""
+    candidates = text_git(root, 'log', '-n', '128', '--format=%H', '--', STATE_PATH).splitlines()
+    for commit in candidates:
+        raw = git(root, 'show', commit + ':' + STATE_PATH, optional=True)
+        if raw is not None and digest(raw) == sha:
+            return text_git(root, 'rev-parse', commit)
+    return None
+
+
+def snapshot_from_commit(root, publication, revision):
+    """Rebuild the verification baseline from Git without storing it in handoff."""
+    # CI commonly checks out a commit directly. Branch identity is deliberately
+    # absent from v3, so use the local symbolic ref when available and leave it
+    # unknown for detached checkouts; CI's content verification does not need it.
+    current_branch = text_git(root, 'symbolic-ref', '--quiet', '--short', 'HEAD', optional=True)
+    origin = config(root, 'remote.origin.url')
+    require(bool(origin), 'ORIGIN_REQUIRED')
+    changed = git(root, 'diff-tree', '--root', '--no-commit-id', '--name-only', '-r', '-z',
+                  revision, optional=True)
+    require(changed is not None, 'HANDOFF_BASELINE_UNAVAILABLE')
+    names = {row.decode('utf-8', 'surrogateescape') for row in changed.split(b'\0') if row}
+    names.update(publication['target_paths'])
+    names.discard(STATE_PATH)
+    files = {}
+    for name in sorted(names):
+        rows = git(root, 'ls-tree', '-z', revision, '--', name, optional=True)
+        exact = []
+        if rows:
+            for row in rows.split(b'\0'):
+                if not row:
+                    continue
+                meta, path = row.split(b'\t', 1)
+                if path.decode('utf-8', 'surrogateescape') == name:
+                    exact.append(meta.decode('ascii').split())
+        if not exact:
+            files[name] = {'kind': 'missing', 'sha256': None, 'executable': False,
+                           'status': None, 'index': []}
+            continue
+        mode, kind, oid = exact[0]
+        require(kind == 'blob', 'UNSUPPORTED_DELIVERED_FILE')
+        body = git(root, 'show', revision + ':' + name)
+        is_link = mode == '120000'
+        files[name] = {'kind': 'symlink' if is_link else 'file', 'sha256': digest(body),
+                       'executable': mode == '100755', 'status': None,
+                       'index': [{'mode': mode, 'oid': oid, 'stage': 0}]}
+    workflow = {}
+    for name in WORKFLOW_PATHS:
+        rows = git(root, 'ls-tree', '-z', revision, '--', name, optional=True)
+        require(bool(rows), 'ACTIVE_WORKFLOW_FILE_MISSING_OR_SYMLINK:' + name)
+        meta, _ = next(row.split(b'\t', 1) for row in rows.split(b'\0') if row)
+        mode, kind, _ = meta.decode('ascii').split()
+        require(kind == 'blob' and mode != '120000',
+                'ACTIVE_WORKFLOW_FILE_MISSING_OR_SYMLINK:' + name)
+        workflow[name] = digest(git(root, 'show', revision + ':' + name))
+    return {'repository': identity(origin, root), 'branch': current_branch, 'head': revision,
+            'files': files, 'workflow': workflow,
+            'remote': remote_observation(root, revision, current_branch, False)}
+
+
+def hydrate_v3(root, state, sha):
+    """Attach ephemeral Git observations reconstructed outside the handoff."""
+    path = observation_path(root)
+    committed = git(root, 'show', 'HEAD:' + STATE_PATH, optional=True)
+    if not (committed is not None and digest(committed) == sha) and path.is_file():
+        require(path.stat().st_size <= LIMIT * 2, 'OBSERVATION_TOO_LARGE')
+        cached = decode_json(path.read_text(encoding='utf-8'))
+        if cached.get('sha256') == sha:
+            snapshot = cached.get('snapshot')
+            encoded_snapshot = json.dumps(snapshot, ensure_ascii=True, sort_keys=True).encode()
+            require(cached.get('snapshot_sha256') == digest(encoded_snapshot),
+                    'OBSERVATION_BASELINE_MISMATCH')
+            state['snapshot'] = snapshot
+            state['source_revision'] = state['snapshot']['head']
+            state.setdefault('generation', 1)
+            state.setdefault('updated_at', now())
+            state.setdefault('previous_sha256', None)
+            require(digest(render(state).encode()) == sha, 'OBSERVATION_BASELINE_MISMATCH')
+            return state
+    revision = checkpoint_revision(root, sha)
+    require(revision is not None, 'HANDOFF_BASELINE_UNAVAILABLE')
+    state['source_revision'] = revision
+    state['snapshot'] = snapshot_from_commit(root, state['publication'], revision)
+    state.setdefault('generation', 1)
+    state.setdefault('updated_at', now())
+    state.setdefault('previous_sha256', None)
+    return state
+
+
 def load_state(root):
     path = safe_path(root, STATE_PATH)
     require(path.is_file(), "HANDOFF_MISSING")
@@ -450,6 +552,8 @@ def load_state(root):
     raw = path.read_bytes()
     state, sha = parse_state(raw)
     if state['schema'] == SCHEMA:
+        state = hydrate_v3(root, state, sha)
+    elif state['schema'] == 'publish-handoff-v2':
         state = hydrate_observation(root, state, sha)
     return state, sha
 
@@ -460,7 +564,19 @@ def parse_state(raw):
         text = raw.decode('utf-8')
         require(text.count(BEGIN) == 1 and text.count(END) == 1, 'HANDOFF_FORMAT_INVALID')
         state = decode_json(text.split(BEGIN, 1)[1].split(END, 1)[0])
-        if state.get('schema') != SCHEMA:
+        if state.get('schema') == SCHEMA:
+            require(set(state) == {'schema', 'publication', 'reconciliation'}, 'STATE_FIELDS_INVALID')
+            require(state['reconciliation'] is None or (
+                isinstance(state['reconciliation'], dict)
+                and set(state['reconciliation']) == {'note'}
+                and nonempty(state['reconciliation']['note'])
+                ),
+                'RECONCILIATION_INVALID')
+            validate_publication(state['publication'])
+            require(render(state) == text, 'HANDOFF_SUMMARY_OR_ENCODING_CHANGED')
+            state.update(generation=1, updated_at=now(), previous_sha256=None)
+            return state, digest(raw)
+        if state.get('schema') != 'publish-handoff-v2':
             return parse_full_state(raw)
         snap = state['snapshot']
         require(set(snap) == {'repository', 'branch', 'files', 'workflow'}, 'COMPACT_BASELINE_INVALID')
@@ -486,7 +602,7 @@ def parse_full_state(raw, limit=LIMIT):
         require(isinstance(state, dict) and set(state) == {
             "schema", "generation", "updated_at", "source_revision", "publication",
             "snapshot", "previous_sha256", "reconciliation"}, "STATE_FIELDS_INVALID")
-        require(state["schema"] in (SCHEMA, 'publish-handoff-v1') and type(state["generation"]) is int
+        require(state["schema"] in ('publish-handoff-v2', 'publish-handoff-v1') and type(state["generation"]) is int
                 and state["generation"] >= 1, "STATE_VERSION_INVALID")
         require(isinstance(state["updated_at"], str), "STATE_TIME_INVALID")
         require(datetime.fromisoformat(state["updated_at"]).utcoffset() is not None, "STATE_TIME_INVALID")

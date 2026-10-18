@@ -38,7 +38,7 @@ Before resuming:
 ## Local work versus portable handoff
 
 A Markdown summary does not transfer uncommitted files or unpushed commits.
-For the same checkout, inspect modified, staged and untracked work directly in Git. The compact checkpoint retains expected file/workflow fingerprints as verification evidence, not a second copy of Git status/history.
+For the same checkout, inspect modified, staged and untracked work directly in Git. The handoff contains no Git status, commit, branch, file inventory or fingerprint data; the helper derives its verification baseline from Git history or private local Git metadata.
 For another checkout/client, determine remote availability using Git and `inspect --check-remote`, not a saved portability Boolean. Transfer all required public-safe files and commits to the authorized working branch, or identify a retrievable patch/bundle and assets with hashes. Do not claim portability until the receiving agent can retrieve and verify both the state and the work.
 If transfer is unavailable, explicitly block remote resume and identify the original checkout or missing artifact. Never reconstruct exact author text from memory.
 Keep secrets, private inputs, private approval transcripts, and restricted scientific inputs out of public Git. Record safe references and availability instead; missing private inputs block dependent steps.
@@ -47,24 +47,23 @@ Allow one active publication in this fixed file; concurrent publication attempts
 
 ## Required state template
 
-The supported writer is `tools/dentcast_publish_handoff.py`; read [the tool guide](publish-handoff-tool.md) for `init`, `record`, and `inspect`. It writes a generated Markdown summary plus a canonical JSON record in the same fixed file. That record carries the semantic fields below; unavailable machine values are null/unknown, never guessed. Do not edit the rendered summary separately. The following template documents the required recovery information for manual inspection; a pre-existing manual file must be explicitly reconciled before conversion, never silently overwritten by `init`.
+The supported writer is `tools/dentcast_publish_handoff.py`; read [the tool guide](publish-handoff-tool.md) for `init`, `record`, and `inspect`. It writes a generated Markdown summary plus a canonical JSON record in the same fixed file. Keep only semantic facts that are not recoverable from committed files: important decisions, required approvals and open questions, DES/Fidelity scores and results, external-action outcomes, and non-Git input/result references. File changes and Git state are reconstructed from commits and the checkout. Do not duplicate them here or edit the rendered summary separately. A pre-existing manual file must be explicitly reconciled before conversion, never silently overwritten by `init`.
 
 ```markdown
 # Publication handoff
-- Schema: publish-handoff-v2
-- Updated at (UTC):
+- Schema: publish-handoff-v3
 - Status: in_progress | blocked | verifying | cleanup_pending
-- Repository:
-- Working branch:
-- Workflow source revision:
 - Content ID / category / target paths:
 - Last completed canonical step:
 - Next canonical step:
 - Current blocker:
 
+## Scientific results not recoverable from committed files
+- DES score/result and evidence reference, if not committed:
+- Fidelity scores/result and evidence reference, if not committed:
+
 ## Inputs and decisions
-- Exact public-safe title/caption, or retrievable reference and hash:
-- Required assets/source inputs, locations, hashes, availability:
+- Non-Git source/input references and hashes, only when not recoverable from committed files:
 - Confirmed routing and category exceptions:
 - Each required approval: decision, scope, evidence reference, verified/unknown:
 - Pending questions (never infer consent):
@@ -75,18 +74,15 @@ The supported writer is `tools/dentcast_publish_handoff.py`; read [the tool guid
 | ... | pending / started / completed / skipped / blocked / failed | ... | ... |
 
 ## Verification evidence
-- Required input/output references and expected fingerprints:
-- Workflow source reference and expected fingerprints:
 - Unrelated work to preserve (intent/context that Git cannot explain):
 - Non-Git transfer artifact reference, if required:
-- Read current branch/HEAD/status/index/history/remote availability directly from Git.
 
 ## External action ledger
 | Action / target | started at | Verified outcome or outcome_unknown | Receipt / reconciliation needed |
 |---|---|---|---|
 
 ## Validation and completion
-- Commands actually run, exit codes, output references and source revision:
+- Important validation results that are not recorded in committed files:
 - Phase F result and applicable content ID:
 - Required delivery, deployment/live checks, and their actual results:
 - Remaining work and exact next safe action:

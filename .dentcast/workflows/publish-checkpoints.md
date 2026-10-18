@@ -49,17 +49,20 @@ before any retry. The helper observes Git; it does not automatically commit,
 push, grant publication authorization, or transfer files.
 
 A work commit changes HEAD/index relative to its pre-commit observation. Once
-the exact handoff is committed, Git supplies that baseline in the original
-checkout as well as a fresh clone; unchanged expected fingerprints do not
-require a redundant metadata rewrite. Actual later changes still require
-review and a specific reconciliation note. A note cannot bypass delivery.
-Do not create a checkpoint-only commit loop to embed a commit's own SHA.
+the exact handoff is committed, the helper rebuilds the baseline from that
+commit in the original checkout or a fresh clone. Actual later changes still
+require review and a specific reconciliation note. A note cannot bypass
+delivery. Do not create a checkpoint-only commit loop to embed a commit's own
+SHA.
 
-The v2 handoff stores semantic state and compact verification fingerprints.
-Current Git facts are computed at inspection/delivery, not copied into the
-file. A fresh checkout reconstructs the baseline from the commit that wrote
-the exact checkpoint bytes; later work commits still require review. The
-private same-checkout observation contains no semantic publication ledger.
+The v3 handoff stores semantic state only: important decisions and approvals,
+DES/Fidelity scores and results, external outcomes, and other information
+that committed files do not contain. It does not repeat branch names, file
+status, commits, hashes, or Git fingerprints. Current Git facts are computed
+at inspection/delivery. A fresh checkout reconstructs the baseline from the
+commit that wrote the exact checkpoint bytes; later work commits still
+require review. The private same-checkout observation contains no semantic
+publication ledger.
 
 The Stop guard also requires the latest active handoff/work to be delivered
 before normal turn completion. This applies when the native client actually

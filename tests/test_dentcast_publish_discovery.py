@@ -55,7 +55,8 @@ class DiscoveryTests(unittest.TestCase):
     def entry(self, branch='publish/work', repository=REPO, schema=h.SCHEMA):
         state = copy.deepcopy(self.template)
         state['schema'] = schema
-        state['snapshot'].update(repository='github.com/' + repository, branch=branch)
+        if schema in ('publish-handoff-v1', 'publish-handoff-v2'):
+            state['snapshot'].update(repository='github.com/' + repository, branch=branch)
         raw = h.render(state).encode()
         return {'path': h.STATE_PATH, 'type': 'file', 'encoding': 'base64',
                 'size': len(raw), 'content': base64.b64encode(raw).decode()}
@@ -126,15 +127,18 @@ class DiscoveryTests(unittest.TestCase):
         self.assertEqual(result['status'], 'blocked')
         self.assertIsNone(result['selected'])
 
-    def test_inherited_handoff_wrong_branch_is_reported(self):
+    def test_branch_identity_is_taken_from_discovery_not_repeated_in_handoff(self):
         result = d.discover(REPO, MemoryGitHub({'copied-branch': 'a'*40}, {'a'*40: self.entry()}))
-        self.assertEqual(result['errors'][0]['code'], 'HANDOFF_BRANCH_IDENTITY_MISMATCH')
-        self.assertIsNone(result['selected'])
+        self.assertEqual(result['selected']['branch'], 'copied-branch')
+        wire = self.entry()
+        raw = base64.b64decode(wire['content'])
+        self.assertNotIn('snapshot', h.decode_json(raw.decode().split(h.BEGIN, 1)[1].split(h.END, 1)[0]))
 
-    def test_wrong_repository_identity_is_reported(self):
+    def test_repository_identity_is_taken_from_discovery_not_repeated_in_handoff(self):
         result = d.discover(REPO, MemoryGitHub({'publish/work': 'a'*40},
                             {'a'*40: self.entry(repository='other/repo')}))
-        self.assertEqual(result['errors'][0]['code'], 'HANDOFF_REPOSITORY_IDENTITY_MISMATCH')
+        self.assertEqual(result['status'], 'handoff_found')
+        self.assertEqual(result['selected']['branch'], 'publish/work')
 
     def test_changed_branch_head_requires_retry(self):
         result = d.discover(REPO, MemoryGitHub({'publish/work': 'a'*40}, {'a'*40: self.entry()},
