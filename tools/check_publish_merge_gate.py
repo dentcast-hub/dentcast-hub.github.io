@@ -186,6 +186,7 @@ def reconcile_share35(root, raw):
     # Freeze every publication asset/data file to the confirmed main revision.
     allowed = {STATE_PATH, "tools/check_publish_merge_gate.py",
                "tools/dentcast_publish_lifecycle.py", "tests/test_publish_merge_gate.py", "tests/test_dentcast_publish_handoff.py",
+               "tests/test_dentcast_agent_entrypoint_migration.py",
                ".github/workflows/publishing-live-contract-tests.yml"}
     changed = set(h.text_git(root, "diff", "--name-only", baseline, "HEAD").splitlines())
     h.require(changed <= allowed, "LEGACY_CLEANUP_PUBLICATION_CHANGED")

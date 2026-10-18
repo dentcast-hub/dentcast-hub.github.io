@@ -77,6 +77,13 @@ class EntrypointMigrationTests(unittest.TestCase):
     self.assertTrue(actual.startswith("<!-- dentcast-checkpoint-protocol:v1 -->"))
     self.assertIn(".dentcast/workflows/publish-checkpoints.md",actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->",1)[0])
     body=actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->\n\n",1)[1]
+    if name == "01-hard-rules.md":
+     # PR #920 intentionally amended scoped approval and continuing independent
+     # work. Pin that approved text exactly; the legacy snapshot predates it.
+     self.assertEqual(hashlib.sha256(body.rstrip("\n").encode()).hexdigest(),
+                      "faafa8f2bb732c8bdb96f426dbd9570bee426f12338a5206839c9c5abfbfc71f")
+     positions.append(router.index("`modules/"+name+"`",start))
+     continue
     if name == "08-des-fidelity.md":
      # Part 2c remains the original approved execution-routing amendment.
      # The explicit precomputed-result branch is a second, narrowly allowed
