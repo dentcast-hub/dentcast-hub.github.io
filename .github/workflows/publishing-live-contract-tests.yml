@@ -21,6 +21,10 @@ on:
       - '.githooks/pre-commit'
       - '.workflow-sync.json'
       - '.github/workflows/publishing-live-contract-tests.yml'
+      - '.github/workflows/sitemap_only.yml'
+      - 'tools/update-homepage-counters.py'
+      - 'tools/check_publish_merge_gate.py'
+      - 'tests/test_publish_merge_gate.py'
   pull_request:
   workflow_dispatch:
 permissions:
@@ -39,6 +43,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Reject pull requests with an unfinished publication
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: python3 tools/check_publish_merge_gate.py
+      - name: Check publication merge gate and builder ordering
+        run: python3 -m unittest discover -s tests -p test_publish_merge_gate.py -v
       - name: Check active entrypoints and preserved source rules
         run: python3 -m unittest discover -s tests -p test_dentcast_agent_entrypoint_migration.py -v
       - name: Check live checkpoint and completion lifecycle
@@ -46,4 +57,25 @@ jobs:
       - name: Check hook adapters and shared rule routing
         run: node --test tests/publishing-hooks.test.mjs
       - name: Inspect committed checkpoint or cleanup boundary
-        run: python3 tools/dentcast_publish_handoff.py guard --phase ci
+        env:
+          PR_BASE_REF: ${{ github.base_ref }}
+          EVENT_BEFORE: ${{ github.event.before }}
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            echo "Manual non-publication dispatch; checkpoint guard not applicable."
+            exit 0
+          fi
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            git fetch --no-tags origin "refs/heads/$PR_BASE_REF"
+            diff_range="FETCH_HEAD...HEAD"
+          else
+            diff_range="$EVENT_BEFORE..$EVENT_SHA"
+          fi
+          if git diff --name-only "$diff_range" | grep -Eq '^(.dentcast/PUBLISH-HANDOFF.md|dentcast-brain.json|dentcast.json|chairside/|dentcast-plus/|episodes/|glossary/|insight/|litecast/|metanotes/|notecast/|plak-sefr/|promptologist/|sharehub/|taraz/|plus/des-scores.json)'; then
+            python3 tools/dentcast_publish_handoff.py guard --phase ci
+          else
+            echo "No publication or handoff files changed; checkpoint guard not applicable."
+          fi

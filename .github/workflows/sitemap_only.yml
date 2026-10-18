@@ -38,7 +38,12 @@ jobs:
         # the freshest articles (a stale index silently drops new pages).
         run: node tools/build_plus_index.mjs
 
-      - name: 2c. Re-stamp the site content version
+      - name: 2c. Rebuild homepage counters and static fallbacks
+        # Safety net: publication runs must build these before merging; this
+        # post-merge rebuild also keeps static counters/SEO fallbacks current.
+        run: python3 tools/update-homepage-counters.py
+
+      - name: 2d. Re-stamp the site content version
         # A SAFETY NET, not a replacement for step 7 of the publishing workflow —
         # every publish still stamps before it commits, and verify_publish.py
         # still fails a branch whose stamp does not match its own content.

@@ -88,5 +88,12 @@ class EntrypointMigrationTests(unittest.TestCase):
     self.assertIn(".dentcast/PUBLISH-HANDOFF.md",s)
   self.assertIn("LIVE_MODULAR_PUBLISHING_ENABLED",read(".dentcast/workflows/modules/INDEX.md"))
  def test_no_fake_live_publication_created(self):
-  self.assertFalse((ROOT/".dentcast/PUBLISH-HANDOFF.md").exists())
+  fixtures=list((ROOT/"tests").rglob("PUBLISH-HANDOFF.md"))
+  self.assertEqual(fixtures,[])
+ def test_homepage_counter_builder_runs_before_version_stamp(self):
+  workflow=read(".github/workflows/sitemap_only.yml")
+  counters=workflow.index("run: python3 tools/update-homepage-counters.py")
+  stamp=workflow.index("run: python3 tools/stamp-version.py")
+  self.assertLess(counters,stamp)
+  self.assertIn("git add -u -- '*.html'",workflow)
 if __name__=="__main__": unittest.main()
