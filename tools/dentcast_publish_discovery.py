@@ -87,9 +87,6 @@ def candidate(repo, branch, head, entry):
     h.require(len(raw) == entry['size'], 'DISCOVERY_HANDOFF_SIZE_MISMATCH')
     state, sha = h.parse_state(raw)
     lc.require_plan(state['publication'])
-    h.require(state['snapshot']['branch'] == branch, 'HANDOFF_BRANCH_IDENTITY_MISMATCH')
-    h.require(state['snapshot']['repository'].casefold() == ('github.com/' + repo).casefold(),
-              'HANDOFF_REPOSITORY_IDENTITY_MISMATCH')
     return {'branch': branch, 'head_sha': head, 'handoff_sha256': sha, 'schema': state['schema'],
             'handoff_url': f'https://github.com/{repo}/blob/{head}/{h.STATE_PATH}',
             'publication': state['publication'], 'next_step': h.next_step(state['publication']),

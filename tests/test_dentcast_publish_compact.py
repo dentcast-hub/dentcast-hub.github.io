@@ -28,15 +28,27 @@ class CompactHandoffTests(unittest.TestCase):
         (self.root/'note.html').write_text('working')
         self.init()
         state = self.wire()
-        self.assertEqual(state['schema'], 'publish-handoff-v2')
-        self.assertEqual(set(state['snapshot']), {'repository', 'branch', 'files', 'workflow'})
-        self.assertEqual(set(state['snapshot']['files']['note.html']), {'kind', 'sha256', 'executable'})
-        self.assertNotIn('remote', state['snapshot'])
-        self.assertNotIn('head', state['snapshot'])
-        self.assertNotIn('index', state['snapshot']['files']['note.html'])
+        self.assertEqual(state['schema'], 'publish-handoff-v3')
+        self.assertNotIn('snapshot', state)
+        self.assertNotIn('source_revision', state)
+        self.assertNotIn('generation', state)
+        self.assertNotIn('updated_at', state)
+        self.assertNotIn('previous_sha256', state)
+        self.assertIsNone(state['reconciliation'])
         view = self.cli('inspect', '--check-remote')
         self.assertEqual(view['current_snapshot']['files']['note.html']['status'], 'MM')
         self.assertEqual(view['current_snapshot']['remote']['status'], 'observed')
+
+    def test_semantic_checkpoint_contains_scientific_results_but_no_git_inventory(self):
+        self.prepare()
+        self.p['context']['decisions'] = [{'kind': 'DES', 'score': 88},
+                                         {'kind': 'Fidelity', 'score': 100, 'result': 'HIGH'}]
+        self.init()
+        state = self.wire()
+        self.assertEqual(state['publication']['context']['decisions'], self.p['context']['decisions'])
+        text = (self.root/h.STATE_PATH).read_text()
+        for value in ('branch', 'repository', 'snapshot', 'commit_sha', 'file_sha256'):
+            self.assertNotIn('"' + value + '"', text)
 
     def test_semantic_progress_and_unknown_external_receipts_survive_round_trip(self):
         self.prepare()
@@ -125,7 +137,7 @@ class CompactHandoffTests(unittest.TestCase):
         self.assertEqual(loaded['schema'], 'publish-handoff-v1')
         self.assertEqual((self.root/h.STATE_PATH).read_bytes(), raw)
         h.save(self.root, loaded['publication'], expected=sha)
-        self.assertEqual(self.wire()['schema'], 'publish-handoff-v2')
+        self.assertEqual(self.wire()['schema'], 'publish-handoff-v3')
         self.assertEqual(self.wire()['publication'], self.p)
 
     def test_compact_encoding_is_smaller_and_canonical(self):
@@ -145,8 +157,9 @@ class CompactHandoffTests(unittest.TestCase):
         path.parent.mkdir()
         path.write_text('fixture:private source')
         self.init()
+        self.deliver_checkpoint()
         h.observation_path(self.root).unlink()
-        view = self.cli('inspect', '--check-remote')
+        view = self.cli('inspect', '--check-remote', code=2)
         self.assertEqual(view['git_snapshot_portable'], 'no')
         self.assertEqual(view['portability_reason'], 'UNTRACKED_OR_IGNORED_REQUIRED_FILE')
 

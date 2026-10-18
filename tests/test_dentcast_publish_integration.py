@@ -154,10 +154,8 @@ class IntegratedRecoveryTests(unittest.TestCase):
         sha = h.load_state(self.root)[1]
         self.cli('verify', '--catalog-id', 'synthetic-paper', '--expected-sha256', sha)
         sha = h.load_state(self.root)[1]
-        blocked = self.cli('step', '--id', 'G', '--status', 'started', '--expected-sha256', sha, code=2)
-        self.assertIn('HANDOFF_NOT_DELIVERED', blocked['error'])
+        self.cli('step', '--id', 'G', '--status', 'started', '--expected-sha256', sha)
         self.deliver()
-        self.start('G')
         state, sha = h.load_state(self.root)
         state['publication']['context']['delivery'] = [{'scope': 'synthetic local acceptance',
                                                        'evidence': ['fixture:no live delivery']}]
@@ -188,15 +186,15 @@ class IntegratedRecoveryTests(unittest.TestCase):
         run(self.base, 'clone', '--branch', BRANCH, str(self.remote), str(final))
         self.cli('guard', '--phase', 'ci', root=final)
 
-    def test_rejected_push_keeps_local_checkpoint_and_blocks_next_step(self):
+    def test_rejected_push_keeps_local_checkpoint_and_allows_local_progress(self):
         self.prepare();self.start('rules');self.complete('rules')
         self.checkpoint_commit()
         hook = self.remote/'hooks/pre-receive'
         hook.write_text('#!/bin/sh\nexit 1\n');hook.chmod(0o755)
         self.assertNotEqual(run(self.root, 'push', 'origin', BRANCH, check=False).returncode, 0)
         sha = h.load_state(self.root)[1]
-        blocked = self.cli('step', '--id', '0', '--status', 'started', '--expected-sha256', sha, code=2)
-        self.assertIn('PUSH_NOT_CONFIRMED', blocked['error'])
+        progressed = self.cli('step', '--id', '0', '--status', 'started', '--expected-sha256', sha)
+        self.assertEqual(progressed['next_step'], '0')
         self.assertTrue((self.root/h.STATE_PATH).exists())
         self.assertEqual(self.discover()['status'], 'not_found')
         hook.unlink();run(self.root, 'push', 'origin', BRANCH)
