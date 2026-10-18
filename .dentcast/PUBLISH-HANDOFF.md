@@ -2,8 +2,8 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 44
-- Updated at (UTC): 2026-10-18T10:27:20+00:00
+- Generation: 45
+- Updated at (UTC): 2026-10-18T10:28:28+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
 - Next canonical step: "C.0.5"
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 44,
-  "previous_sha256": "61a9ca0a1152ac106e27cfa1824005a3f2d49095b82f7a7bb77e1eee03575319",
+  "generation": 45,
+  "previous_sha256": "ba99672593b89eebd747fcb9d01c0cb98772ab30a4f6d9adb128d7d0b4c6af40",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -314,11 +314,13 @@ Its compact snapshot is a verification baseline, not current Git status.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "ShareHub category locked in B.1; checking LiteCast-only semantic-link applicability."
+        ],
         "id": "C.0.5",
         "module": "03-litecast-and-page.md",
         "reason": null,
-        "status": "pending"
+        "status": "started"
       },
       {
         "evidence": [],
@@ -549,12 +551,7 @@ Its compact snapshot is a verification baseline, not current Git status.
       "sharehub/share-35.html"
     ]
   },
-  "reconciliation": {
-    "note": "Reconciled the C.2 checkpoint against the committed page/assets and fresh remote observation; local index is clean after reset and remote delivery is verified.",
-    "observed_changes": [
-      "WORK_OR_INDEX_CHANGED"
-    ]
-  },
+  "reconciliation": null,
   "schema": "publish-handoff-v2",
   "snapshot": {
     "branch": "content/sharehub-35-basal-implants",
@@ -594,7 +591,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T10:27:20+00:00"
+  "updated_at": "2026-10-18T10:28:28+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
