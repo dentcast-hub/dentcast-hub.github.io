@@ -139499,6 +139499,53 @@
       "authors": [
         "Oral Health Care During Pregnancy Expert Workgroup"
       ]
+    },
+    {
+      "id": "P2942",
+      "title": "Conventional and Basal Implantology: A Narrative Review of Current Evidence, Clinical Decision-Making, and Future Perspectives",
+      "file_name": "Conventional and Basal Implantology: A Narrative Review of Current Evidence, Clinical Decision-Making, and Future Perspectives.pdf",
+      "topic": "Conventional and Basal Implantology",
+      "topic_path": "Conventional and Basal Implantology",
+      "type": "narrative review",
+      "local_path": "",
+      "file_size": 2827728,
+      "key_finding": "The review concludes that current evidence is insufficient to recommend basal implants over conventional implants; it calls for long-term comparative studies and standardized outcomes.",
+      "clinical_bottom_line": "Conventional implants remain the standard approach for many cases. Basal implants may be considered selectively for severe atrophy, especially multi-unit or full-arch rehabilitation, with attention to case selection, biomechanics, and surgical expertise.",
+      "linked_episodes": [
+        "sharehub/share-35"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1tJaXUhMIS5oqJjwPXUB4XcEz97UOAsRu/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1tJaXUhMIS5oqJjwPXUB4XcEz97UOAsRu",
+      "drive_view": "https://drive.google.com/file/d/1tJaXUhMIS5oqJjwPXUB4XcEz97UOAsRu/view",
+      "drive_id": "1tJaXUhMIS5oqJjwPXUB4XcEz97UOAsRu",
+      "tags": [
+        "basal-implants",
+        "conventional-implants",
+        "cortical-bone",
+        "immediate-loading",
+        "implantology",
+        "narrative-review",
+        "topic:conventional-and-basal-implantology",
+        "conventional-and-basal-implantology-a-narrative-review-of-current-evidence"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Conventional and Basal Implantology: A Narrative Review of Current Evidence, Clinical Decision-Making, and Future Perspectives",
+      "doi": "10.7759/cureus.113703",
+      "journal": "Cureus",
+      "crossref_year": 2026,
+      "subjects": [
+        "Dentistry"
+      ],
+      "abstract": "The review compares conventional implants, which rely primarily on alveolar bone and osseointegration, with basal implants that engage dense cortical bone and may enable immediate loading without grafting. It discusses implant design, surgery, loading protocols, biomechanics, indications, complications, and the limited comparative evidence, concluding that the two approaches have distinct roles and that stronger long-term studies are needed.",
+      "display_title": "Conventional and Basal Implantology: A Narrative Review of Current Evidence, Clinical Decision-Making, and Future Perspectives",
+      "authors": [
+        "Megha Joshi",
+        "Mayur Kaushik",
+        "Mohd Nazar Rana",
+        "Soumya Kaushik"
+      ]
     }
   ],
   "drive_matched": 2849,

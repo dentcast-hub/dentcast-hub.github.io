@@ -393,7 +393,7 @@
     "#Implant"
    ],
    "co_tags": [],
-   "count": 93,
+   "count": 94,
    "content_ids": [
     "episodes/episode-23",
     "episodes/episode-24",
@@ -487,7 +487,8 @@
     "episodes/episode-161",
     "chairside/chairside-36",
     "episodes/episode-162",
-    "chairside/chairside-38"
+    "chairside/chairside-38",
+    "sharehub/share-35"
    ]
   },
   {
@@ -942,6 +943,59 @@
    ]
   },
   {
+   "key": "curated_content",
+   "tag": "#Curated_Content",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
+   "use_when": "روی مدخل‌های بازنشر.",
+   "aliases": [
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 35,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28",
+    "sharehub/share-29",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-32",
+    "sharehub/share-33",
+    "sharehub/share-34",
+    "sharehub/share-35"
+   ]
+  },
+  {
    "key": "dentai",
    "tag": "#DentAI",
    "domain": "brand",
@@ -994,58 +1048,6 @@
    ]
   },
   {
-   "key": "curated_content",
-   "tag": "#Curated_Content",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
-   "use_when": "روی مدخل‌های بازنشر.",
-   "aliases": [
-    "محتوای گلچین شده",
-    "کیوریتد",
-    "بازنشر محتوا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 34,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27",
-    "sharehub/share-28",
-    "sharehub/share-29",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-32",
-    "sharehub/share-33",
-    "sharehub/share-34"
-   ]
-  },
-  {
    "key": "share_hub",
    "tag": "#Share_Hub",
    "domain": "brand",
@@ -1058,7 +1060,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 34,
+   "count": 35,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1093,7 +1095,8 @@
     "sharehub/share-31",
     "sharehub/share-32",
     "sharehub/share-33",
-    "sharehub/share-34"
+    "sharehub/share-34",
+    "sharehub/share-35"
    ]
   },
   {
@@ -3093,6 +3096,35 @@
    ]
   },
   {
+   "key": "تراز_شواهد",
+   "tag": "#تراز_شواهد",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سری «تراز شواهد».",
+   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
+   "aliases": [
+    "taraz shavahed",
+    "taraz-e shavahed",
+    "تراز‌شواهد"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "taraz/taraz1-1",
+    "taraz/taraz1-2",
+    "taraz/taraz1-3",
+    "taraz/taraz1-4",
+    "taraz/taraz1-5",
+    "taraz/taraz1-6",
+    "taraz/taraz1-7",
+    "taraz/taraz1-8",
+    "taraz/taraz1-9",
+    "taraz/taraz1-10",
+    "sharehub/share-35"
+   ]
+  },
+  {
    "key": "تنظیم_اکلوژن",
    "tag": "#تنظیم_اکلوژن",
    "domain": "clinical",
@@ -3439,34 +3471,6 @@
     "episodes/episode-159-1",
     "metanotes/meta-14",
     "dentai/dentai-29"
-   ]
-  },
-  {
-   "key": "تراز_شواهد",
-   "tag": "#تراز_شواهد",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سری «تراز شواهد».",
-   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
-   "aliases": [
-    "taraz shavahed",
-    "taraz-e shavahed",
-    "تراز‌شواهد"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "taraz/taraz1-1",
-    "taraz/taraz1-2",
-    "taraz/taraz1-3",
-    "taraz/taraz1-4",
-    "taraz/taraz1-5",
-    "taraz/taraz1-6",
-    "taraz/taraz1-7",
-    "taraz/taraz1-8",
-    "taraz/taraz1-9",
-    "taraz/taraz1-10"
    ]
   },
   {
@@ -4901,6 +4905,30 @@
    ]
   },
   {
+   "key": "بارگذاری_ایمپلنت",
+   "tag": "#بارگذاری_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "implant loading",
+    "لود ایمپلنت",
+    "بارگذاری فیکسچر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-26",
+    "episodes/episode-45",
+    "episodes/episode-52",
+    "litecast/lite-CAST13",
+    "sharehub/share-13",
+    "sharehub/share-35"
+   ]
+  },
+  {
    "key": "براکسیسم",
    "tag": "#براکسیسم",
    "domain": "clinical",
@@ -5788,29 +5816,6 @@
     "litecast/lite-CAST13",
     "litecast/lite-CAST15",
     "episodes/episode-157"
-   ]
-  },
-  {
-   "key": "بارگذاری_ایمپلنت",
-   "tag": "#بارگذاری_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "implant loading",
-    "لود ایمپلنت",
-    "بارگذاری فیکسچر"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-26",
-    "episodes/episode-45",
-    "episodes/episode-52",
-    "litecast/lite-CAST13",
-    "sharehub/share-13"
    ]
   },
   {
@@ -13077,6 +13082,23 @@
    ]
   },
   {
+   "key": "basal_implant",
+   "tag": "#Basal_Implant",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Dental implant systems that seek primary stability through engagement with dense cortical or basal bone.",
+   "use_when": "Use when an article specifically discusses the design, anchorage, loading, indications, or outcomes of basal dental implants.",
+   "aliases": [],
+   "variants": [
+    "#Basal_Implants"
+   ],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-35"
+   ]
+  },
+  {
    "key": "bewe",
    "tag": "#BEWE",
    "domain": null,
@@ -15152,6 +15174,21 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-110-1"
+   ]
+  },
+  {
+   "key": "ایمپلنت_بازال",
+   "tag": "#ایمپلنت_بازال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "گروهی از ایمپلنت‌های دندانی که برای دستیابی به ثبات اولیه، از درگیری استخوان کورتیکال و بازال استفاده می‌کنند.",
+   "use_when": "مطلب مشخصاً درباره طراحی، انکوریج، بارگذاری، کاربرد یا پیامدهای ایمپلنت‌های بازال باشد.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-35"
    ]
   },
   {
@@ -22298,9 +22335,9 @@
   "طبقه بندی سرامیک": "سرامیک دندانی",
   "لیتیوم دیسیلیکات": "لیتیوم دی سیلیکات",
   "افزایش بعد عمودی": "افزایش vd",
+  "taraz e shavahed": "تراز شواهد",
   "سلکتیو گرایندینگ": "تنظیم اکلوژن",
   "peri implantitis": "پری ایمپلنتیتیس",
-  "taraz e shavahed": "تراز شواهد",
   "استخوان مارژینال": "تحلیل استخوان کرستال",
   "digital presence": "حضور آنلاین دندانپزشک",
   "ریهبیلیتیشن دهان": "بازسازی کامل دهان",
@@ -22513,13 +22550,13 @@
   "canine guidance": "کانین رایز",
   "کور ریختگی فلزی": "کور ریختگی",
   "global analysis": "global diagnosis",
+  "implant loading": "بارگذاری ایمپلنت",
+  "بارگذاری فیکسچر": "بارگذاری ایمپلنت",
   "بیولوژیکال ویدث": "بیولوژیک ویدث",
   "implant surgery": "جراحی ایمپلنت",
   "پرسلن فلدسپاتیک": "فلدسپاتیک",
   "digital implant": "ایمپلنت دیجیتال",
   "دیجیتال ایمپلنت": "ایمپلنت دیجیتال",
-  "implant loading": "بارگذاری ایمپلنت",
-  "بارگذاری فیکسچر": "بارگذاری ایمپلنت",
   "ترمیم کم تهاجمی": "حداقل تهاجم",
   "مطالعه غیرتجربی": "مطالعه مشاهده ای",
   "جداسازی با زمان": "dwt",
@@ -22707,9 +22744,9 @@
   "طول عمر سرامیک": "دوام ترمیم",
   "پیش آگهی دندان": "پروگنوز دندان",
   "caries removal": "برداشت پوسیدگی",
+  "taraz shavahed": "تراز شواهد",
   "anterior teeth": "دندان قدامی",
   "مرور سیستماتیک": "متاآنالیز",
-  "taraz shavahed": "تراز شواهد",
   "clinic website": "سایت مطب",
   "پروتکل باندینگ": "پروتکل باند",
   "group function": "گروپ فانکشن",
@@ -22909,10 +22946,10 @@
   "افتراق تشخیصی": "تشخیص افتراقی",
   "کراون لنتنینگ": "افزایش طول تاج",
   "اسکنر دیجیتال": "اسکنر داخل دهانی",
+  "dentcast plus": "دنتکست پلاس",
   "ساییدگی دندان": "سایش دندان",
   "ایمپلنت متحرک": "اوردنچر",
   "دایمنشن عمودی": "بعد عمودی",
-  "dentcast plus": "دنتکست پلاس",
   "فینیشینگ لاین": "فینیش لاین",
   "تنظیم اکلوزال": "تنظیم اکلوژن",
   "دندان های جلو": "دندان قدامی",
@@ -23442,6 +23479,7 @@
   "linkevicius": "کتاب لینکویچیوس",
   "لینکوییسیوس": "کتاب لینکویچیوس",
   "ball o ring": "اتچمنت اوردنچر",
+  "لود ایمپلنت": "بارگذاری ایمپلنت",
   "over torque": "تورک پیچ",
   "findability": "جستجوپذیری محتوا",
   "ایمیدیت لود": "زمان بارگذاری ایمپلنت",
@@ -23452,7 +23490,6 @@
   "فود ایمپکشن": "گیر غذایی",
   "اسکرو ریتین": "اتصال پیچ شونده",
   "ساپورت خلفی": "استاپ خلفی",
-  "لود ایمپلنت": "بارگذاری ایمپلنت",
   "تعویض پروتز": "تعویض روکش",
   "tooth crown": "روکش دندان",
   "کراون دندان": "روکش دندان",
@@ -24392,8 +24429,8 @@
   "insight": "اینسایت",
   "implant": "ایمپلنت",
   "پست کور": "پست و کور",
-  "dent ai": "dentai",
   "کیوریتد": "curated content",
+  "dent ai": "dentai",
   "bonding": "باندینگ",
   "ferrule": "فرول",
   "ceramic": "سرامیک",

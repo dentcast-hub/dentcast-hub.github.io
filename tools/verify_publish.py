@@ -431,7 +431,14 @@ def des_check_fidelity(rep, ftag, f, scope, basis_expected, page_hay, source_hay
         rep.check(not bad_r, "4.13 DES", f"{ftag} source_ref follows the scope",
                   f"{ftag} source_ref is wrong on {bad_r} — an «S<n>» tag on every quoted claim under "
                   f"POOLED, null under SOURCE", "spec v2.6 F5/F6")
-    bad_c = [c.get("id") for c in claims if des_norm(c.get("claim_quote") or "") not in page_hay]
+    # A punctuation-only separator may be emitted as a NOT_A_CLAIM unit by
+    # the official splitter, while text_of() intentionally drops it from the
+    # page text. The unit remains auditable in the Fidelity record; it is not
+    # a prose claim that needs a normalized text match.
+    bad_c = [c.get("id") for c in claims
+             if not (c.get("verdict") == "NOT_A_CLAIM"
+                     and not re.search(r"\w", c.get("claim_quote") or ""))
+             and des_norm(c.get("claim_quote") or "") not in page_hay]
     rep.check(not bad_c, "4.13 DES", f"{ftag} every claim_quote is verbatim from this page",
               f"{ftag} claim_quote is not on the page for {bad_c} — units are the page's own sentences, "
               f"copied whole", "spec F0 — claim_quote is the unit's text, verbatim")

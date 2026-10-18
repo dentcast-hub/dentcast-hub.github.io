@@ -1,0 +1,33 @@
+{
+  "type": "sharehub",
+  "enforce": true,
+  "note": "sharehub/share-35 — add requested Persian and English basal-implant canonical tags; reuse existing Share Hub, curated-content, implant, loading, and evidence concepts.",
+  "concepts": [
+    {
+      "tag": "#ایمپلنت_بازال",
+      "domain": "clinical",
+      "definition": "گروهی از ایمپلنت‌های دندانی که برای دستیابی به ثبات اولیه، از درگیری استخوان کورتیکال و بازال استفاده می‌کنند.",
+      "use_when": "مطلب مشخصاً درباره طراحی، انکوریج، بارگذاری، کاربرد یا پیامدهای ایمپلنت‌های بازال باشد."
+    },
+    {
+      "tag": "#Basal_Implant",
+      "domain": "clinical",
+      "definition": "Dental implant systems that seek primary stability through engagement with dense cortical or basal bone.",
+      "use_when": "Use when an article specifically discusses the design, anchorage, loading, indications, or outcomes of basal dental implants."
+    }
+  ],
+  "articles": {
+    "sharehub/share-35": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#ایمپلنت_بازال",
+      "#Basal_Implant",
+      "#ایمپلنت",
+      "#بارگذاری_ایمپلنت",
+      "#تراز_شواهد"
+    ]
+  },
+  "renames": {
+    "#Basal_Implants": "#Basal_Implant"
+  }
+}
