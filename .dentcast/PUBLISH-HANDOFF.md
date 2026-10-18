@@ -2,11 +2,11 @@
 
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v2
-- Generation: 5
-- Updated at (UTC): 2026-10-18T09:13:14+00:00
+- Generation: 6
+- Updated at (UTC): 2026-10-18T09:14:24+00:00
 - Content: "sharehub/share-35"
 - Status: in_progress
-- Next canonical step: "0"
+- Next canonical step: "A"
 - Blocker: null
 
 The structured record preserves decisions, approvals, step evidence and external outcomes.
@@ -15,8 +15,8 @@ Its compact snapshot is a verification baseline, not current Git status.
 <!-- dentcast-publish-state-v1 -->
 ```json
 {
-  "generation": 5,
-  "previous_sha256": "8e6d7dd24ddcb763226037cb0ecd28ddbe984dd893a9042f04e42afc21f9ae89",
+  "generation": 6,
+  "previous_sha256": "0dfb2dff5f5d5f52ed317f11046e735afd474ff2294154a1658634d7b3e412a4",
   "publication": {
     "blocker": null,
     "category": "sharehub",
@@ -126,12 +126,12 @@ Its compact snapshot is a verification baseline, not current Git status.
       },
       {
         "evidence": [
-          "Fresh remote verification: commit 60b01d94e5c35223beeae018300aefd71890ef30 contains the completed rules checkpoint; single-file diff confirmed."
+          "Phase 0 route: user supplied the complete Persian article body and an identifiable full-text PDF plus two figures; ordinary ShareHub publication and attached-paper step 4.10 Part 1\u20133 both apply. Paper-only route does not apply."
         ],
         "id": "0",
         "module": "02-routing-intake.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -528,7 +528,7 @@ Its compact snapshot is a verification baseline, not current Git status.
     }
   },
   "source_revision": "d172683918276b4e263801a4d8668b64a67529e2",
-  "updated_at": "2026-10-18T09:13:14+00:00"
+  "updated_at": "2026-10-18T09:14:24+00:00"
 }
 ```
 <!-- /dentcast-publish-state-v1 -->
