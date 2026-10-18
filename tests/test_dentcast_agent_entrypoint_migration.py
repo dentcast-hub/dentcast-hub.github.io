@@ -96,7 +96,7 @@ class EntrypointMigrationTests(unittest.TestCase):
       "### 4.13. DES — DentCast Evidence Score (run the scoring prompt, store the record)")
      self.assertEqual(normalized_before.rstrip("\n"),expected_before.rstrip("\n"))
      self.assertEqual(actual_after.rstrip("\n"),expected_after.rstrip("\n"))
-     for required in ("complete DES/Fidelity result packet","exact `content_id`",
+     for required in ("completed DES/Fidelity result packet","exact `content_id`",
       "`tools/des_fidelity_units.py`","do not repeat any DES/Fidelity model calls",
       "If no packet is supplied, run the full Parts 1–4 below.",
       "record 4.13 as blocked","invalidates the packet"):
