@@ -86,6 +86,17 @@ class EntrypointMigrationTests(unittest.TestCase):
      for term in ("technical evidence checklist", "explicit", "Never hide failed gates", "exact Phase F summary"):
       self.assertIn(term,block.group(0))
      body=body[:block.start()]+body[block.end():]
+     # Strip only the bounded, approved fail-closed clarification for legacy parity.
+     first=body.index("<!-- des-fail-closed-policy:v1 -->")
+     last=body.index("<!-- /des-fail-closed-policy:v1 -->",first)+len("<!-- /des-fail-closed-policy:v1 -->\n\n")
+     policy=body[first:last]
+     for term in ("missing DES record is `FAIL`", "LiteCast", "Challenge",
+                  "founder_without_des", "unsourced_audio_caption",
+                  "without rerunning DES", "Fidelity", "Phase F"):
+      self.assertIn(term,policy)
+     old_first=expected.index("**On the DES rows specifically:**")
+     old_last=expected.index("LiteCast, glossary and episode branches",old_first)
+     body=body[:first]+expected[old_first:old_last]+body[last:]
      expected=expected.replace("one above the new bottom", "at the absolute top (first line; exactly 7 lines remain)").replace("each command + full stdout/stderr", "each command + a retrievable stdout/stderr log reference")
     if name == "01-hard-rules.md":
      # PR #920 intentionally amended scoped approval and continuing independent
@@ -113,10 +124,11 @@ class EntrypointMigrationTests(unittest.TestCase):
       "### 4.13. DES — DentCast Evidence Score (run the scoring prompt, store the record)")
      self.assertEqual(normalized_before.rstrip("\n"),expected_before.rstrip("\n"))
      self.assertEqual(actual_after.rstrip("\n"),expected_after.rstrip("\n"))
-     for required in ("completed DES/Fidelity result packet","exact `content_id`",
-      "`tools/des_fidelity_units.py`","do not repeat any DES/Fidelity model calls",
-      "If no packet is supplied, run the full Parts 1–4 below.",
-      "record 4.13 as blocked","invalidates the packet"):
+     for required in ("independent DES and Fidelity tracks", "exact `content_id`",
+      "`tools/des_fidelity_units.py`", "DO NOT rerun the DES/SOURCE/COMMENTARY model calls",
+      "DO NOT rerun Fidelity model calls", "run **only the missing Fidelity calls**",
+      "separate model-run receipt is **not required for a valid DES JSON**",
+      "record 4.13 as blocked", "Never silently rerun the founder's supplied result"):
       with self.subTest(required=required): self.assertIn(required,conditional)
      for required in ("`gpt-6-luna`","Launch both full checker runs in parallel",
       "exact price verification is not a start gate","record it as UNVERIFIED",
@@ -129,6 +141,27 @@ class EntrypointMigrationTests(unittest.TestCase):
   for left,right in zip(RANGES,RANGES[1:]): self.assertEqual(left[1]+1,right[0])
   # Published extraction ranges include the final empty line after a trailing newline.
   self.assertIn(len(src),(RANGES[-1][1]-1,RANGES[-1][1]))
+ def test_des_fail_closed_and_founder_json_reuse_policy(self):
+  m8=read(".dentcast/workflows/modules/08-des-fidelity.md")
+  m12=read(".dentcast/workflows/modules/12-english-notify-verify.md")
+  protocol=read(".dentcast/workflows/publish-checkpoints.md")
+  router=read(".dentcast/workflows/README.md")
+  parity=read(".dentcast/workflows/agent-parity.md")
+  verifier=read("tools/verify_publish.py")
+  self.assertIn("missing DES record is `FAIL`",m12)
+  self.assertNotIn("**missing** record is a `warn`",m12)
+  for item in ("is_lite", "is_challenge", "des_absence_allowed",
+               "rep.fail(\"4.13 DES\"", "rep.skip(\"4.13 DES\""):
+   self.assertIn(item,verifier)
+  for item in ("founder_without_des","unsourced_audio_caption","page_sha256"):
+   self.assertIn(item,protocol)
+  self.assertIn("DO NOT rerun the DES/SOURCE/COMMENTARY model calls",m8)
+  self.assertIn("run **only the missing Fidelity calls**",m8)
+  self.assertIn("DO NOT rerun Fidelity model calls",m8)
+  self.assertIn("Never silently rerun the founder's supplied result",m8)
+  self.assertIn("without rerunning DES",router)
+  self.assertIn("run only any still-owed Fidelity",parity)
+  self.assertIn("validated and reused **without rerunning DES**",protocol)
  def test_development_records_are_explicitly_historical(self):
   for p in (ROOT/".dentcast/workflows/modules").glob("*.md"):
    if re.match(r"\d\d-",p.name) or p.name=="INDEX.md": continue
