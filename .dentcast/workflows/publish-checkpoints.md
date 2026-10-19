@@ -21,11 +21,42 @@ python3 tools/dentcast_publish_handoff.py step --id <canonical-id> --status comp
 
 Use `skipped --reason <canonical-exception>` for an inapplicable step, or `blocked`/`failed` with a real reason. Record before pausing. A completed checkpoint must first have been started; neither the hook nor the CLI performs semantic work or creates a scientific result. Add actual decisions, approvals, input references, validation and delivery receipts via `record` using the full current `recorded_state.publication` object, never by replacing it with a partial example. Known approval scopes and external action history cannot disappear.
 
+### Prefer one command per verified action
+
+Use `advance` to reduce manual calls and digest copying. After completing and
+reviewing an already-started step, record its real evidence and start the next
+ready step in one command:
+
+```bash
+python3 tools/dentcast_publish_handoff.py advance --id <current-id> --evidence <actual-receipt-reference> --start-next --expected-sha256 <digest> --reconcile-note '<review of actual changes>'
+```
+
+Read the full applicable module before requesting `--start-next`; omit that
+flag at an unread-module boundary, an approval wait, an external-action delivery
+boundary, or the end of the turn. The tool records progress only: it never
+executes the next action, grants approval or evaluates scientific work.
+
+For consecutive genuinely inapplicable pending steps, supply repeated
+`--skip '<id>=<canonical exception and reason>'` arguments in canonical order.
+These may follow `--id`, or be used without it. The agent must establish each
+exception from its applicable module; the tool does not guess category skips.
+Each skip still gets its own durable checkpoint. Use `--start-next` alone to
+start the first ready pending step, if needed. Failure/blocking results still
+use `step --status failed/blocked`; Phase F still uses the real `verify` command.
+
+The helper preflights the requested sequence, then saves each transition
+separately and passes the new digest internally. Only one CLI response is needed.
+On interruption, earlier writes survive; on an observed mid-sequence failure,
+`transitions_written` and the last successful digest identify saved progress.
+Do not replay a completed action or assume the whole request was atomic.
+Normal stale-write, identity, ordering, approval and external-outcome guards
+remain in force. This changes command overhead, not the 52-step canonical ledger.
+
 ### Checkpoint every step; deliver coherent batches
 
 After **each** canonical step or dynamic substep (including a skip, failure or
 block), save its real result in the local handoff before continuing. Keep one
-step transition per handoff write; do not combine finishing one step with
+step transition per handoff write (the `advance` helper automates these separate writes); do not combine finishing one step with
 starting the next or resolve multiple new steps in one write. This preserves
 precise recovery state without forcing a tiny Git commit after every action.
 

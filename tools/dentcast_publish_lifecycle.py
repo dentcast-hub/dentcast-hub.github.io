@@ -128,6 +128,58 @@ def step(root, expected, sid, status, evidence, reason, note=None):
     return h.save(root, p, expected=expected, note=note)
 
 
+def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False, note=None):
+    """Reduce CLI round trips while preserving a durable write per transition.
+
+    This records operator-verified results, never performs semantic actions.
+    Preflight the complete requested sequence before writing any checkpoint.
+    """
+    state = state_for_update(root, expected)
+    p = copy.deepcopy(state["publication"])
+    operations = []
+    if sid is not None:
+        h.require(sid == h.next_step(p), "NOT_NEXT_CANONICAL_STEP")
+        row = next(s for s in p["steps"] if s["id"] == sid)
+        h.require(sid != "F", "USE_REAL_VERIFY_FOR_PHASE_F")
+        h.require(row["status"] == "started", "STEP_MUST_BE_STARTED_FIRST")
+        row.update(status="completed", evidence=evidence or [], reason=None)
+        operations.append((sid, "completed", evidence or [], None))
+        require_plan(p)
+    for skip_id, reason in skips:
+        h.require(skip_id == h.next_step(p), "NOT_NEXT_CANONICAL_STEP")
+        row = next(s for s in p["steps"] if s["id"] == skip_id)
+        h.require(row["status"] == "pending", "ONLY_PENDING_STEPS_CAN_BE_BATCH_SKIPPED")
+        row.update(status="skipped", evidence=[], reason=reason)
+        operations.append((skip_id, "skipped", [], reason))
+        require_plan(p)
+    if start_next and h.next_step(p) is not None:
+        next_id = h.next_step(p)
+        row = next(s for s in p["steps"] if s["id"] == next_id)
+        h.require(row["status"] == "pending", "NEXT_STEP_NOT_PENDING")
+        row.update(status="started", evidence=[], reason=None)
+        operations.append((next_id, "started", [], None))
+        require_plan(p)
+    h.require(bool(operations), "NO_CHECKPOINT_TRANSITIONS_REQUESTED")
+    h.require(not any(a["status"] in ("started", "outcome_unknown") for a in p["external_actions"]),
+              "EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY")
+    for op_id, _, _, _ in operations:
+        h.require(op_id in GROUPS[0]+GROUPS[1] or
+                  (p["content_id"] != "unassigned" and p["category"] != "pending"),
+                  "BIND_INTAKE_IDENTITY_BEFORE_AUTHORING")
+    written = []
+    result = {"sha256": expected, "publication_completed": False}
+    try:
+        for op_id, status, refs, reason in operations:
+            result = step(root, result["sha256"], op_id, status, refs, reason, note)
+            written.append({"id": op_id, "status": status})
+    except (h.Blocked, OSError) as exc:
+        # Never undo a saved checkpoint or replay an action. A concurrent write
+        # may have superseded this digest; the normal CAS guard will reject it.
+        return {**result, "status": "blocked", "error": str(exc),
+                "transitions_written": written, "publication_completed": False}
+    return {**result, "transitions_written": written, "publication_completed": False}
+
+
 def bind(root, expected, content_id, category, targets, evidence):
     """Resolve an intake placeholder once, before any authoring or side effect."""
     with h.locked(root):

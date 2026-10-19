@@ -90,3 +90,13 @@ Exit code 0 means the command wrote a checkpoint or found a structurally consist
 The checkpoint is a cooperative recovery aid, not signed proof of an action, a semantic validator or a crash-proof work backup. Abrupt interruption after a side effect but before its receipt remains an unknown outcome. Git hashes preserve identity, not the actual bytes of missing work. Transfer, attachment retrieval and Git delivery remain explicit authorized actions. The state is limited to 2 MiB and does not support dirty submodules or special files in its watched inventory.
 
 The Linux implementation is tested using real local Git repositories and bare remotes. Windows lock support is implemented but has not been runtime-tested here. No cross-client runtime parity claim is made. See `publish-checkpoints.md` for the mandatory protocol and `PUBLISHING-FINAL-REPORT.md` for integrated receiving-agent acceptance and actual client/live-publication limits. Do not delete the state merely because all supplied ledger rows say completed.
+
+## Low-overhead progress recording
+
+Prefer `advance --id <already-started-step> --evidence <verified-result>
+--start-next --expected-sha256 <digest>` when the next module is loaded and its
+action is ready. Add explicit consecutive `--skip ID=REASON` entries for canonical
+exceptions. Each transition is persisted separately; digests are passed internally.
+Omit `--start-next` at a pause or delivery boundary. `advance` never runs actions
+or replaces Phase F `verify`; see `publish-checkpoints.md` for recovery on partial
+progress. No approval or completed result is inferred.
