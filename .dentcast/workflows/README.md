@@ -8,7 +8,7 @@ For «انتشار ناقص داشتم» or an explicit request to resume a publ
 
 ## Always-load before routing
 
-Read `.dentcast/workflows/global/README.md` and its three complete active global rule files, the complete `.dentcast/workflows/agent-parity.md`, and complete `modules/01-hard-rules.md` and `modules/02-routing-intake.md`. For detailed routing triggers use `.dentcast/workflows/routing-details.md`.
+Read `.dentcast/workflows/global/README.md` and the complete active sections selected by that router for the current edit scope, the complete `.dentcast/workflows/agent-parity.md`, and complete `modules/01-hard-rules.md` and `modules/02-routing-intake.md`. For detailed routing triggers use `.dentcast/workflows/routing-details.md`.
 
 Authority: applicable canonical workflow and active modules > active shared global rules > agent-parity > client summaries. User instructions take priority. Surface genuine active-rule conflicts; do not silently fall back to backups.
 

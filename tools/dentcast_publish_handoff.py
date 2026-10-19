@@ -37,6 +37,8 @@ WORKFLOW_PATHS = (
     ".dentcast/workflows/README.md", ".dentcast/workflows/agent-parity.md",
     ".dentcast/workflows/publish-handoff.md", ".dentcast/workflows/routing-details.md",
     ".dentcast/workflows/global/README.md",
+    ".dentcast/workflows/global/LOAD-MAP.json",
+    "tools/dentcast_global_rules.py",
     ".dentcast/workflows/global/repo-conventions.md",
     ".dentcast/workflows/global/plus-premium.md",
     ".dentcast/workflows/global/site-invariants.md",
