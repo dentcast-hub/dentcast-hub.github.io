@@ -873,6 +873,13 @@ def main(argv=None):
     p.add_argument("--evidence", action="append", default=[])
     p.add_argument("--reason")
     p.add_argument("--reconcile-note")
+    p = sub.add_parser("advance", help="Record a verified result, explicit skips, and optionally start the next step")
+    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--id", help="Already-started step whose result the operator verified")
+    p.add_argument("--evidence", action="append", default=[])
+    p.add_argument("--skip", action="append", default=[], metavar="ID=REASON")
+    p.add_argument("--start-next", action="store_true", help="Next module has been read and the next action is ready")
+    p.add_argument("--reconcile-note")
     p = sub.add_parser("verify")
     p.add_argument("--expected-sha256", required=True)
     p.add_argument("--expect-title")
@@ -907,6 +914,15 @@ def main(argv=None):
         elif args.command == "step":
             result = lifecycle.step(root, args.expected_sha256, args.id, args.status,
                                     args.evidence, args.reason, args.reconcile_note)
+        elif args.command == "advance":
+            skips = []
+            for item in args.skip:
+                sid, sep, reason = item.partition("=")
+                require(bool(sep) and nonempty(sid) and nonempty(reason), "SKIP_REQUIRES_ID_AND_REASON")
+                skips.append((sid, reason))
+            require(args.id is not None or not args.evidence, "EVIDENCE_REQUIRES_COMPLETED_STEP_ID")
+            result = lifecycle.advance(root, args.expected_sha256, args.id, args.evidence,
+                                       skips, args.start_next, args.reconcile_note)
         elif args.command == "verify":
             result = lifecycle.verify(root, args.expected_sha256, args.expect_title, args.expect_caption, args.catalog_id)
         elif args.command == "bind":
