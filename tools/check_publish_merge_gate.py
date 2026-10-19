@@ -158,7 +158,9 @@ def verify_publication_history(root, base, added_paths):
         if url and url not in old_urls:
             from urllib.parse import urlparse
             needed.update(publication_ids([urlparse(url).path.lstrip("/")]))
-    deletions = h.text_git(root, "log", "--format=%H", "--diff-filter=D",
+    # PR merge checkouts are TREESAME to main for the deleted handoff path.
+    # Default path simplification prunes the feature branch and its receipt.
+    deletions = h.text_git(root, "log", "--full-history", "--format=%H", "--diff-filter=D",
                            base + "..HEAD", "--", STATE_PATH).splitlines()
     verified = set()
     for commit in deletions:
