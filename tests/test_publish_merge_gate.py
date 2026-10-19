@@ -104,6 +104,39 @@ class CompletionEvidenceTests(unittest.TestCase):
             self.assertEqual(self.history(["sharehub/share-99.html"], deleted="earlier-cleanup"), {"sharehub/share-99"})
             validate.assert_called_once()
 
+    def test_receipt_survives_synthetic_pr_merge_checkout(self):
+        import subprocess
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            def git(*args):
+                return subprocess.check_output(["git", *args], cwd=root, text=True).strip()
+            git("init", "-q")
+            git("config", "user.name", "Test")
+            git("config", "user.email", "test@example.invalid")
+            (root / "dentcast-brain.json").write_text("[]")
+            git("add", ".")
+            git("commit", "-qm", "base")
+            base = git("rev-parse", "HEAD")
+            state = root / gate.STATE_PATH
+            state.parent.mkdir()
+            state.write_text("completed receipt")
+            git("add", ".")
+            git("commit", "-qm", "completed publication")
+            checkpoint = git("rev-parse", "HEAD")
+            state.unlink()
+            git("add", "-u")
+            git("commit", "-qm", "cleanup")
+            tip = git("rev-parse", "HEAD")
+            merge = git("commit-tree", "HEAD^{tree}", "-p", base, "-p", tip,
+                        "-m", "synthetic PR merge")
+            git("reset", "--hard", merge)
+            self.assertEqual(h.checkpoint_revision(root, h.digest(b"completed receipt")), checkpoint)
+            with patch.object(gate, "reconcile_share35", return_value=False), patch.object(
+                    gate, "validate_completion", return_value="sharehub/share-99") as validate:
+                self.assertEqual(gate.verify_publication_history(
+                    root, base, ["sharehub/share-99.html"]), {"sharehub/share-99"})
+                validate.assert_called_once_with(root, b"completed receipt")
+
     def test_receipt_for_another_page_does_not_authorize_new_page(self):
         with patch.object(gate, "reconcile_share35", return_value=False), patch.object(
                 gate, "validate_completion", return_value="sharehub/share-98"):

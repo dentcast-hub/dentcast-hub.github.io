@@ -446,7 +446,8 @@ def hydrate_observation(root, state, sha):
     revision = None
     # Locate the commit that wrote these checkpoint bytes, not a later HEAD
     # that happens to retain them while changing publication work elsewhere.
-    candidates = text_git(root, 'log', '-n', '128', '--format=%H', '--', STATE_PATH).splitlines()
+    # Retain the checkpoint side branch on synthetic PR merge checkouts.
+    candidates = text_git(root, 'log', '--full-history', '-n', '128', '--format=%H', '--', STATE_PATH).splitlines()
     for commit in candidates:
         raw = git(root, 'show', commit + ':' + STATE_PATH, optional=True)
         if raw is not None and digest(raw) == sha:
@@ -472,7 +473,8 @@ def hydrate_observation(root, state, sha):
 
 def checkpoint_revision(root, sha):
     """Find the commit containing these exact handoff bytes, if available."""
-    candidates = text_git(root, 'log', '-n', '128', '--format=%H', '--', STATE_PATH).splitlines()
+    # Retain the checkpoint side branch on synthetic PR merge checkouts.
+    candidates = text_git(root, 'log', '--full-history', '-n', '128', '--format=%H', '--', STATE_PATH).splitlines()
     for commit in candidates:
         raw = git(root, 'show', commit + ':' + STATE_PATH, optional=True)
         if raw is not None and digest(raw) == sha:
