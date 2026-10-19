@@ -37663,6 +37663,78 @@
           ]
         }
       ]
+    },
+    "sharehub/share-36": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/sharehub/share-36.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا تعیین موقعیت اینسایزال اج سانترال ماگزیلا فقط برای زیبایی اهمیت دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ این موقعیت همراه با دندان‌های قدامی مندیبل در هدایت پروتروزیو نیز نقش دارد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا پلن اکلوزال موجود در بیمار دارای دندان‌های خلفی ساییده، اکسترودشده یا نامناسب بازسازی‌شده، همیشه رفرنس قابل اعتماد است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ موقعیت فعلی دندان‌های خلفی باید بررسی شود و در صورت نامعتبر بودن آن، از رفرنس‌های دیگر کمک گرفت."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا موقعیت پیشنهادی دندان‌ها را می‌توان پیش از رستوریشن نهایی با پروویژنال ارزیابی و اصلاح کرد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ پروویژنال امکان بررسی زیبایی، فونتیک و فانکشن و اصلاح طرح را پیش از ساخت رستوریشن نهایی فراهم می‌کند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا موقعیت مناسب رستوریشن از نظر زیبایی، به‌تنهایی فانکشن مطلوب را تضمین می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ VDO، روابط فکی، هدایت قدامی، پلن اکلوزال و سایر مؤلفه‌های اکلوژن همچنان نیاز به بررسی دارند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/sharehub/share-36.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-36.html#flashcards-c1",
+              "name": "موقعیت اینسایزال اج سانترال ماگزیلا",
+              "description": "جایگاه لبهٔ برندهٔ سانترال بالا، یکی از نقاط شروع طراحی درمان است که با رفرنس‌های صورت و لب، فونتیک و رابطه با سایر دندان‌ها ارزیابی می‌شود و در زیبایی و هدایت پروتروزیو نقش دارد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-36.html#flashcards-c2",
+              "name": "رفرنس فونتیک F و V",
+              "description": "رابطهٔ لبهٔ دندان‌های قدامی بالا با لب پایین هنگام تلفظ F و V، یک رفرنس بالینی برای ارزیابی موقعیت پیشنهادی لبهٔ اینسایزال است.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-36.html#flashcards-c3",
+              "name": "ارزیابی طرح با پروویژنال",
+              "description": "رستوریشن موقت فرصتی برای بررسی زیبایی، فونتیک و فانکشن و اصلاح طرح پیش از ساخت رستوریشن نهایی فراهم می‌کند.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

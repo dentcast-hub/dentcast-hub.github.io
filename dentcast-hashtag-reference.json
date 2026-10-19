@@ -578,7 +578,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 49,
+   "count": 50,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-25",
@@ -628,7 +628,8 @@
     "insight/insight-84",
     "insight/insight-89",
     "chairside/chairside-41",
-    "insight/insight-95"
+    "insight/insight-95",
+    "sharehub/share-36"
    ]
   },
   {
@@ -713,7 +714,7 @@
     "#Occlusion"
    ],
    "co_tags": [],
-   "count": 43,
+   "count": 44,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-23",
@@ -757,7 +758,8 @@
     "chairside/chairside-36",
     "sharehub/share-21",
     "insight/insight-87",
-    "insight/insight-94"
+    "insight/insight-94",
+    "sharehub/share-36"
    ]
   },
   {
@@ -956,7 +958,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 35,
+   "count": 36,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -992,7 +994,61 @@
     "sharehub/share-32",
     "sharehub/share-33",
     "sharehub/share-34",
-    "sharehub/share-35"
+    "sharehub/share-35",
+    "sharehub/share-36"
+   ]
+  },
+  {
+   "key": "share_hub",
+   "tag": "#Share_Hub",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
+   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
+   "aliases": [
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 36,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28",
+    "sharehub/share-29",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-32",
+    "sharehub/share-33",
+    "sharehub/share-34",
+    "sharehub/share-35",
+    "sharehub/share-36"
    ]
   },
   {
@@ -1045,58 +1101,6 @@
     "dentai/dentai-33",
     "dentai/dentai-34",
     "dentai/dentai-35"
-   ]
-  },
-  {
-   "key": "share_hub",
-   "tag": "#Share_Hub",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
-   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
-   "aliases": [
-    "شیرهاب",
-    "شر هاب"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 35,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27",
-    "sharehub/share-28",
-    "sharehub/share-29",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-32",
-    "sharehub/share-33",
-    "sharehub/share-34",
-    "sharehub/share-35"
    ]
   },
   {
@@ -3740,6 +3744,34 @@
    ]
   },
   {
+   "key": "بازسازی_کامل_دهان",
+   "tag": "#بازسازی_کامل_دهان",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "Full mouth rehabilitation — بازسازی همه‌ی دندان‌ها در یک طرح واحد.",
+   "use_when": "مقاله تصمیمش را در مقیاس کل دهان بگیرد، نه یک دندان.",
+   "aliases": [
+    "فول ماوس",
+    "ریهبیلیتیشن دهان"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Full_Mouth_Rehabilitation"
+   ],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-131",
+    "insight/insight-2",
+    "insight/insight-21",
+    "episodes/episode-155",
+    "metanotes/meta-17",
+    "insight/insight-60",
+    "insight/insight-87",
+    "insight/insight-95",
+    "sharehub/share-36"
+   ]
+  },
+  {
    "key": "تحلیل_استخوان_کرستال",
    "tag": "#تحلیل_استخوان_کرستال",
    "domain": null,
@@ -3954,33 +3986,6 @@
     "episodes/episode-159-1",
     "metanotes/meta-14",
     "sharehub/share-18"
-   ]
-  },
-  {
-   "key": "بازسازی_کامل_دهان",
-   "tag": "#بازسازی_کامل_دهان",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "Full mouth rehabilitation — بازسازی همه‌ی دندان‌ها در یک طرح واحد.",
-   "use_when": "مقاله تصمیمش را در مقیاس کل دهان بگیرد، نه یک دندان.",
-   "aliases": [
-    "فول ماوس",
-    "ریهبیلیتیشن دهان"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#Full_Mouth_Rehabilitation"
-   ],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-131",
-    "insight/insight-2",
-    "insight/insight-21",
-    "episodes/episode-155",
-    "metanotes/meta-17",
-    "insight/insight-60",
-    "insight/insight-87",
-    "insight/insight-95"
    ]
   },
   {
@@ -14716,6 +14721,25 @@
    ]
   },
   {
+   "key": "اسپیر",
+   "tag": "#اسپیر",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "فرانک اسپیر، دندان‌پزشک و نویسندهٔ مباحث طرح درمان پروتزی و زیبایی.",
+   "use_when": "مطلب به مقاله یا رویکرد بالینی فرانک اسپیر ارجاع مستقیم داشته باشد.",
+   "aliases": [
+    "Spear",
+    "Frank Spear",
+    "فرانک اسپیر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-36"
+   ]
+  },
+  {
    "key": "اسکن_سطح_براق",
    "tag": "#اسکن_سطح_براق",
    "domain": "clinical",
@@ -23723,6 +23747,8 @@
   "canker sore": "آفت دهان",
   "mouth ulcer": "آفت دهان",
   "semaglutide": "تیرزپاتاید",
+  "frank spear": "اسپیر",
+  "فرانک اسپیر": "اسپیر",
   "بایومیمتیک": "بیومیمتیک",
   "بیو میمتیک": "بیومیمتیک",
   "بیومی متیک": "بیومیمتیک",
@@ -24702,6 +24728,7 @@
   "بالچه": "وینگ لمینیت",
   "بک آپ": "پشتیبان گیری",
   "piezo": "پیزو",
+  "spear": "اسپیر",
   "glp 1": "داروهای لاغری",
   "پارشل": "پارشیال",
   "emax": "لیتیوم دی سیلیکات",
