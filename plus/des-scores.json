@@ -39584,5 +39584,594 @@
         "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]
+  },
+  "sharehub/share-36": {
+    "scored_at": "2026-10-19",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "The Maxillary Central Incisal Edge: A Key to Esthetic and Functional Treatment Planning",
+          "authors": "Frank Spear",
+          "year": 1999,
+          "journal": "Compendium",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "This incisor becomes critical in developing the occlusal treatment plan because it, along with the lower incisors, determines the pattern of protrusive guidance."
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "In 1978, Vig and Brundo examined a sample of women and came up with the following averages for the amount of tooth that is displayed at rest for different ages:"
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "Using the posterior teeth as described above is useful for starting to position central incisal edges; however, it cannot always be used. In many patients, the posterior teeth may be missing, worn away, overerupted, or improperly restored, so other methods are necessary."
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": ""
+          }
+        ],
+        "des_score": 16,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله با امتیاز ۱۶ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "مقاله سه روش بالینی برای تعیین موقعیت لبهٔ اینسایزال دندان‌های مرکزی فک بالا را با منطق کاربردی، ارجاع به داده‌های پیشین و محدودیت‌های هر روش توضیح می‌دهد. این متن راهنمای روایی مفیدی برای برنامه‌ریزی زیبایی و عملکردی است، اما مطالعهٔ پژوهشی یا ارزیابی نظام‌مند شواهد نیست."
+      },
+      {
+        "des_version": "3.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "بازسازی اکلوژن در کیس‌های پیچیده؛ چرا از قدام بالا شروع می‌کنم؟",
+          "authors": "",
+          "year": null,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "برای من مزیت اصلی این روش همین سادگی، انعطاف‌پذیری و قابلیت تکرارشه؛ اینکه بتونم یک درمان پیچیده رو به مجموعه‌ای از تصمیم‌های قابل ارزیابی و اصلاح تبدیل کنم."
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "مرور مقالهٔ Spear نشون داد که نقطهٔ شروع انتخابی من با یک رویکرد شناخته‌شده در طرح درمان پروتز همخوانی داره."
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "یکی از چالش‌هایی که گاهی در بازسازی‌های پیچیده باهاش مواجه می‌شم، اینه که هیچ رفرنس قابل اعتمادی از وضعیت اولیهٔ دندان‌های بیمار ندارم."
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "البته سادگی و قابلیت تکراری که در این روش تجربه می‌کنم، برداشت بالینی خودمه، نه نتیجهٔ یک مقایسهٔ علمی بین دو روش."
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این متن دیدگاه و تجربهٔ بالینی نویسنده است و بر اساس چک‌لیست شفافیت DES امتیاز 19 از ۱۰۰، باند E می‌گیرد.",
+        "interpretation_fa": "متن یک مسیر بالینی بیمارمحور را توضیح می‌دهد، استدلال خود را روشن می‌کند و آن را با رویکرد Spear مقایسه می‌کند. این امتیاز نشان‌دهندهٔ شفافیت گزارش تجربه است، نه اثبات برتری بالینی روش."
+      }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.4",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "بازسازی اکلوژن در کیس‌های پیچیده؛ چرا از قدام بالا شروع می‌کنم؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "یکی از چالش‌هایی که گاهی در بازسازی‌های پیچیده باهاش مواجه می‌شم، اینه که هیچ رفرنس قابل اعتمادی از وضعیت اولیهٔ دندان‌های بیمار ندارم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "first-person experience"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "دندان‌ها به‌شدت ساییده شده‌اند، جابه‌جا شده‌اند یا بارها بازسازی شده‌اند.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "F1(2a): the first-person heading u1 («چرا از قدام بالا شروع می‌کنم؟») labels every following unit through u22, until the next heading u23. Thus u3 is the author’s clinical narrative under that heading, consistent with neighbouring u2 and u4; it is not attributed to Spear. No source comparison or source quote is applicable."
+          },
+          {
+            "id": "u4",
+            "claim_quote": "در چنین شرایطی حتی نمی‌دونم اکلوژن بیمار قبلاً چطور بوده که بخوام به اون برگردم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "first-person experience"
+          },
+          {
+            "id": "u5",
+            "claim_quote": "از دورهٔ تخصص یادمه که برای بازسازی اکلوژن، روشی رو یاد می‌گرفتیم که نقطهٔ شروعش کانین پایین بود.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "first-person memory of training"
+          },
+          {
+            "id": "u6",
+            "claim_quote": "ابتدا موقعیت مناسب کانین پایین رو با توجه به رفرنس‌های لبی تعیین می‌کردیم و بعد با استفاده از تکنیک‌هایی مثل Broadrick Flag سراغ بازسازی پلن اکلوزال می‌رفتیم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author-described clinical training approach"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "این روش اصول و منطق خودش رو داره، اما حقیقت اینه که بعد از دورهٔ تخصص هیچ‌وقت در کار بالینی ازش استفاده نکردم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "first-person clinical experience"
+          },
+          {
+            "id": "u8",
+            "claim_quote": "من همیشه به ساده‌کردن کارهای پیچیده گرایش داشتم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "first-person preference"
+          },
+          {
+            "id": "u9",
+            "claim_quote": "به نظرم یک روش درمانی هرچقدر هم دقیق باشه، اگر اجرای اون پیچیده باشه و نتونیم در بیماران مختلف تکرارش کنیم، کاربرد بالینی محدودی خواهد داشت.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: به نظرم"
+          },
+          {
+            "id": "u10",
+            "claim_quote": "برای من سادگی به معنی کاهش دقت نیست؛ دنبال روشی هستم که در عین دقت بالا، قابل اجرا و تکرار باشه.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: برای من"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "از طرف دیگه، با دیدگاه John Kois و کانسپت Facially Generated Treatment Planning آشنا بودم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "first-person experience"
+          },
+          {
+            "id": "u12",
+            "claim_quote": "سال‌ها پیش کتاب Global Diagnosis رو مطالعه کرده بودم و در مجموعهٔ پنج‌قسمتی اپیزودهای ۱۱۶ تا ۱۲۰ دنت‌کست هم دربارهٔ اون صحبت کرده بودم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "autobiographical account of reading Global Diagnosis and discussing it on DentCast"
+          },
+          {
+            "id": "u13",
+            "claim_quote": "این دیدگاه برای من منطقی‌تر بود و در بازسازی‌های پیچیده ازش استفاده می‌کنم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: برای من"
+          },
+          {
+            "id": "u14",
+            "claim_quote": "ابتدا سعی می‌کنم موقعیت مناسب دندان‌های قدامی ماگزیلا، به‌خصوص اینسایزال اج سانترال‌ها رو با توجه به صورت، لب‌ها، لبخند و فونتیک بیمار تعیین کنم و بعد طراحی بقیهٔ اکلوژن رو پیش ببرم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "first-person clinical approach"
+          },
+          {
+            "id": "u15",
+            "claim_quote": "چیزی که این روش رو برای من جذاب‌تر می‌کنه، شباهتش به اصول پروتز کامله.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: برای من"
+          },
+          {
+            "id": "u16",
+            "claim_quote": "در پروتز کامل هم لزوماً اطلاعی از موقعیت قبلی دندان‌های بیمار نداریم.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The source compares the starting point to denture prosthetics but does not state that prior tooth positions are unknown."
+          },
+          {
+            "id": "u17",
+            "claim_quote": "با استفاده از رفرنس‌های صورت، لب‌ها، فونتیک و روابط فکی، موقعیت دندان‌ها رو تعیین می‌کنیم و به‌تدریج به یک اکلوژن مناسب می‌رسیم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author-described clinical method"
+          },
+          {
+            "id": "u18",
+            "claim_quote": "به نظرم وقتی اصول پروتز کامل رو بلد باشیم، می‌تونیم از همین منطق در بازسازی‌های پیچیده هم استفاده کنیم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: به نظرم"
+          },
+          {
+            "id": "u19",
+            "claim_quote": "مهم‌تر اینکه لازم نیست تمام تصمیم‌ها رو از ابتدا قطعی بدونیم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author framing of clinical decision-making"
+          },
+          {
+            "id": "u20",
+            "claim_quote": "موقعیت پیشنهادی دندان‌ها رو طراحی می‌کنیم، پروویژنال می‌سازیم و اون رو در شرایط واقعی دهان بیمار ارزیابی می‌کنیم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author-described clinical method"
+          },
+          {
+            "id": "u21",
+            "claim_quote": "زیبایی، فونتیک و فانکشن رو بررسی می‌کنیم و هرجا لازم بود طرح رو اصلاح می‌کنیم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author-described clinical method"
+          },
+          {
+            "id": "u22",
+            "claim_quote": "برای من مزیت اصلی این روش همین سادگی، انعطاف‌پذیری و قابلیت تکرارشه؛ اینکه بتونم یک درمان پیچیده رو به مجموعه‌ای از تصمیم‌های قابل ارزیابی و اصلاح تبدیل کنم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: برای من"
+          },
+          {
+            "id": "u23",
+            "claim_quote": "بررسی مقاله",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u24",
+            "claim_quote": "برای بررسی دوبارهٔ پشتوانهٔ این رویکرد، سراغ مقاله‌ای از Frank Spear رفتم که در سال ۱۹۹۹ با عنوان The Maxillary Central Incisal Edge: A Key to Esthetic and Functional Treatment Planning منتشر شده.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "F1(1), applied before F1(2a): this unit introduces the article that the following units will discuss, identifying its author, year and title, but states no finding of its own. It functions as a source-naming signpost after u23; u25 begins the substantive account. «برای بررسی دوبارهٔ پشتوانهٔ این رویکرد» gives the purpose of consulting the article, not an asserted scientific result. The first-person «رفتم» would independently mark author narration if the unit were an assertion, but the signpost rule has precedence. Bibliographic identification does not require inventing a whole-sentence scientific source quote."
+          },
+          {
+            "id": "u25",
+            "claim_quote": "Spear بحث رو با یک نکتهٔ ساده شروع می‌کنه: وقتی می‌خوایم موقعیت دندان‌ها رو طراحی کنیم، درست مثل پروتز کامل، بهتره از سانترال‌های ماگزیلا شروع کنیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "As in denture prosthetics, the starting point for tooth position is the maxillary central incisor.",
+            "source_ref": null
+          },
+          {
+            "id": "u26",
+            "claim_quote": "اما چرا سانترال بالا؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "question with no claim"
+          },
+          {
+            "id": "u27",
+            "claim_quote": "چون موقعیت لبهٔ اینسایزال این دندان فقط روی زیبایی لبخند تأثیر نداره؛ در فانکشن هم نقش مهمی ایفا می‌کنه.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This incisor becomes critical in developing the occlusal treatment plan because it, along with the lower incisors, determines the pattern of protrusive guidance.",
+            "source_ref": null
+          },
+          {
+            "id": "u28",
+            "claim_quote": "برای مثال، موقعیت این لبه در کنار دندان‌های قدامی مندیبل، روی مسیر حرکت فک پایین هنگام پروتروژن و در نتیجه Protrusive Guidance تأثیر می‌ذاره.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This incisor becomes critical in developing the occlusal treatment plan because it, along with the lower incisors, determines the pattern of protrusive guidance.",
+            "source_ref": null
+          },
+          {
+            "id": "u29",
+            "claim_quote": "حالا سؤال اینه که از کجا بفهمیم لبهٔ اینسایزال سانترال بالا باید کجا قرار بگیره؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "question with no claim"
+          },
+          {
+            "id": "u30",
+            "claim_quote": "Spear سه رفرنس رو مطرح می‌کنه:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost introducing the three methods"
+          },
+          {
+            "id": "u31",
+            "claim_quote": "دندان‌های دیگه و پلن اکلوزال: بررسی می‌کنیم لبهٔ اینسایزال سانترال بالا نسبت به سایر دندان‌های ماگزیلا و پلن اکلوزال در چه موقعیتی قرار داره.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The first method I use is to evaluate the central incisal edge relative to the other teeth in the maxillary arch.",
+            "source_ref": null
+          },
+          {
+            "id": "u32",
+            "claim_quote": "فونتیک: هنگام تلفظ صداهایی مثل F و V، رابطهٔ لبهٔ دندان‌های قدامی بالا با لب پایین می‌تونه به ما در تعیین موقعیت مناسب کمک کنه.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "What we look for when using “F” and “V” sounds is light contact of the centrals on the “wet-dry” line of the lower lip (Figure 7).",
+            "source_ref": null
+          },
+          {
+            "id": "u33",
+            "claim_quote": "لب‌ها و صورت بیمار: بررسی می‌کنیم دندان‌های قدامی بالا در حالت استراحت و هنگام لبخند چقدر دیده می‌شن و موقعیتشون با ویژگی‌های صورت بیمار چه هماهنگی‌ای داره.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The final method I use when positioning the incisal edges of central incisors is a combination of two elements: the amount of tooth displayed at rest and lip mobility, which is the amount of lip movement that occurs in a smile.",
+            "source_ref": null
+          },
+          {
+            "id": "u34",
+            "claim_quote": "(این‌ها همون رفرنس‌های آشنایی هستند که بارها در ساخت پروتز کامل ازشون استفاده کرده‌ایم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "first-person claim, under parenthetical author framing"
+          },
+          {
+            "id": "u35",
+            "claim_quote": "بنابراین برای دندان‌پزشکی که اصول پروتز کامل رو بلده، منطق تعیین موقعیت دندان‌ها در این رویکرد چندان ناآشنا نیست.)",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "inference conclusion: the claim that the logic is familiar to dentists is not stated by the source"
+          },
+          {
+            "id": "u36",
+            "claim_quote": "نکتهٔ مهم اینه که این رفرنس‌ها همیشه به یک اندازه قابل اعتماد نیستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Using the posterior teeth as described above is useful for starting to position central incisal edges; however, it cannot always be used.",
+            "source_ref": null
+          },
+          {
+            "id": "u37",
+            "claim_quote": "مثلاً ممکنه بخوایم موقعیت سانترال رو با توجه به پلن اکلوزال موجود تعیین کنیم، اما دندان‌های خلفی بیمار از دست رفته باشند، به‌شدت ساییده شده باشند، اکستروژن پیدا کرده باشند یا با رستوریشن‌های نامناسب بازسازی شده باشند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In many patients, the posterior teeth may be missing, worn away, overerupted, or improperly restored, so other methods are necessary.",
+            "source_ref": null
+          },
+          {
+            "id": "u38",
+            "claim_quote": "در چنین شرایطی طبیعتاً نمی‌تونیم موقعیت فعلی اون‌ها رو بدون بررسی، مبنای طراحی قرار بدیم و باید از رفرنس‌های دیگه کمک بگیریم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In many patients, the posterior teeth may be missing, worn away, overerupted, or improperly restored, so other methods are necessary.",
+            "source_ref": null
+          },
+          {
+            "id": "u39",
+            "claim_quote": "از طرف دیگه، تعیین موقعیت اینسایزال اج به معنی قطعی‌شدن طرح درمان نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "After the teeth are placed on the same plane as the posteriors, either through orthodontics or provisional restorations, the position can be refined for the most pleasing appearance.",
+            "source_ref": null
+          },
+          {
+            "id": "u40",
+            "claim_quote": "می‌تونیم موقعیت پیشنهادی رو با پروویژنال‌ها در دهان بیمار امتحان کنیم و در صورت نیاز تغییرش بدیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "After the teeth are placed on the same plane as the posteriors, either through orthodontics or provisional restorations, the position can be refined for the most pleasing appearance.",
+            "source_ref": null
+          },
+          {
+            "id": "u41",
+            "claim_quote": "Spear در عین حال یادآوری می‌کنه که تغییر موقعیت سانترال نباید فقط با هدف بهبود زیبایی انجام بشه.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This article addresses the esthetic considerations of the central incisal edge, but clinicians should recognize that any changes made to the central position must address the functional etiology which caused the central incisor to be in that position and how the occlusion will be altered to produce a predictable result with the new incisal edge position.",
+            "source_ref": null
+          },
+          {
+            "id": "u42",
+            "claim_quote": "باید بررسی کنیم چرا دندان در موقعیت قبلی قرار گرفته و جابه‌جایی اون چه تأثیری روی فانکشن و روابط اکلوژنی خواهد داشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This article addresses the esthetic considerations of the central incisal edge, but clinicians should recognize that any changes made to the central position must address the functional etiology which caused the central incisor to be in that position and how the occlusion will be altered to produce a predictable result with the new incisal edge position.",
+            "source_ref": null
+          },
+          {
+            "id": "u43",
+            "claim_quote": "چیزی که من از این مقاله می‌گیرم اینه که موقعیت سانترال ماگزیلا یک نقطهٔ شروع مهم برای طراحی درمانه؛ نقطه‌ای که هم زیبایی رو در نظر می‌گیره و هم از همون ابتدا ما رو به فکر فانکشن می‌اندازه.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: چیزی که من از این مقاله می‌گیرم"
+          },
+          {
+            "id": "u44",
+            "claim_quote": "جمع‌بندی من",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u45",
+            "claim_quote": "نمی‌خوام بگم روش مبتنی بر کانین پایین اشتباهه یا شروع از قدام ماگزیلا همیشه نتیجهٔ بهتری می‌ده.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "first-person author framing under heading جمع‌بندی من"
+          },
+          {
+            "id": "u46",
+            "claim_quote": "هر دو رویکرد منطق خودشون رو دارند.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author framing under heading جمع‌بندی من"
+          },
+          {
+            "id": "u47",
+            "claim_quote": "همچنین قرارگرفتن رستوریشن در موقعیت صحیح از نظر زیبایی، به‌تنهایی فانکشن مناسب رو تضمین نمی‌کنه.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This article addresses the esthetic considerations of the central incisal edge, but clinicians should recognize that any changes made to the central position must address the functional etiology which caused the central incisor to be in that position and how the occlusion will be altered to produce a predictable result with the new incisal edge position.",
+            "source_ref": null
+          },
+          {
+            "id": "u48",
+            "claim_quote": "هنوز باید VDO، روابط فکی، Anterior Guidance، پلن اکلوزال و سایر مؤلفه‌های اکلوژن رو بررسی کنیم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author framing under heading جمع‌بندی من"
+          },
+          {
+            "id": "u49",
+            "claim_quote": "اما برای من، شروع از قدام ماگزیلا با شیوهٔ فکرکردن و کارکردنم سازگارتره.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: برای من"
+          },
+          {
+            "id": "u50",
+            "claim_quote": "از رفرنس‌های خود بیمار شروع می‌کنم، از اصولی که در پروتز کامل یاد گرفته‌ام کمک می‌گیرم و با پروویژنال‌ها فرصت دارم نتیجه رو قبل از ساخت رستوریشن نهایی آزمایش و اصلاح کنم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "first-person clinical approach"
+          },
+          {
+            "id": "u51",
+            "claim_quote": "مرور مقالهٔ Spear نشون داد که نقطهٔ شروع انتخابی من با یک رویکرد شناخته‌شده در طرح درمان پروتز همخوانی داره.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker in heading: جمع‌بندی من"
+          },
+          {
+            "id": "u52",
+            "claim_quote": "البته سادگی و قابلیت تکراری که در این روش تجربه می‌کنم، برداشت بالینی خودمه، نه نتیجهٔ یک مقایسهٔ علمی بین دو روش.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "explicitly identified as personal clinical impression"
+          },
+          {
+            "id": "u53",
+            "claim_quote": "وقتی نمی‌دونم دندان‌های بیمار قبلاً کجا بوده‌اند، ترجیح می‌دم به‌جای تلاش برای بازسازی یک موقعیت نامعلوم، موقعیت مناسبی برای اون‌ها طراحی کنم؛ موقعیتی که هم از نظر زیبایی قابل قبول باشه و هم بتونم فانکشن مطلوبی بر اساس اون ایجاد کنم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "first-person preference"
+          }
+        ],
+        "counts": {
+          "matches": 14,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 2,
+          "not_assessable": 0,
+          "author_view": 30,
+          "not_a_claim": 7
+        },
+        "assessable": 14,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "Given the importance of esthetics and the fact that ultimately the entire treatment plan can be altered when a decision is made to change incisal edge position, it is critical that we learn and use these techniques when evaluating patients.",
+        "fact_fa": "از ۱۴ ادعایی که منبع به آن پرداخته‌اند، ۱۴ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۲ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      null
+    ]
   }
 }

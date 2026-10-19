@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="dc-notify" content="true">
+
+<title>بازسازی اکلوژن در کیس‌های پیچیده؛ چرا از قدام بالا شروع می‌کنم؟ | Share Hub – دنت‌کست</title>
+
+<meta name="description" content="یکی از چالش‌هایی که گاهی در بازسازی‌های پیچیده باهاش مواجه می‌شم، اینه که هیچ رفرنس قابل اعتمادی از وضعیت اولیهٔ دندان‌های بیمار ندارم.">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/share-36.html">
+<link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/sharehub/share-36.html">
+<link rel="alternate" hreflang="fa" href="https://dentcast.org/sharehub/share-36.html">
+<link rel="alternate" hreflang="x-default" href="https://dentcast.org/sharehub/share-36.html">
+
+  <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css?v=6">
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
+      --text:#111;
+      --muted:#444;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.2);
+    }
+
+    p { margin: 0.875rem 0; }
+
+
+    ul {
+      list-style: none;
+      padding-right: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* summary tables — same pattern as .text-box table elsewhere on the site */
+    .glass-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .glass-box table th,
+    .glass-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:right;
+      vertical-align:top;
+    }
+    .glass-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .glass-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+    @media (max-width:768px){
+      .glass-box table{font-size:.9rem;}
+      .glass-box table th,.glass-box table td{padding:0.45rem 0.5rem;}
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { margin: 1.25rem 0; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.8;
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      direction: ltr;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img, .glass-box figure img { width: 100%; height: auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+
+    /* permission chips (مجاز / با محدودیت / استفاده نکن) */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* English-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 auto 1.125rem 0;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  </style>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/share-36.html",
+      "url": "https://dentcast.org/sharehub/share-36.html",
+      "name": "بازسازی اکلوژن در کیس‌های پیچیده؛ چرا از قدام بالا شروع می‌کنم؟",
+      "inLanguage": "fa",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/share-36.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/share-36.html#creativework",
+      "name": "بازسازی اکلوژن در کیس‌های پیچیده؛ چرا از قدام بالا شروع می‌کنم؟",
+      "headline": "بازسازی اکلوژن در کیس‌های پیچیده؛ چرا از قدام بالا شروع می‌کنم؟",
+      "description": "یکی از چالش‌هایی که گاهی در بازسازی‌های پیچیده باهاش مواجه می‌شم، اینه که هیچ رفرنس قابل اعتمادی از وضعیت اولیهٔ دندان‌های بیمار ندارم.",
+      "inLanguage": "fa",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "دکتر فواد شهابیان"
+        }
+      ],
+      "creator": [
+        {
+          "@type": "Person",
+          "name": "دکتر فواد شهابیان"
+        }
+      ],
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/share-36.html"
+      },
+      "datePublished": "2026-10-19",
+      "dateModified": "2026-10-19",
+      "genre": "Dental Education",
+      "keywords": []
+    }
+  ]
+}
+</script>
+
+    <link rel="stylesheet" href="/dc-theme.css?v=7">
+<link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="بازسازی اکلوژن در کیس‌های پیچیده؛ چرا از قدام بالا شروع می‌کنم؟ | Share Hub – دنت‌کست">
+  <meta property="og:description" content="یکی از چالش‌هایی که گاهی در بازسازی‌های پیچیده باهاش مواجه می‌شم، اینه که هیچ رفرنس قابل اعتمادی از وضعیت اولیهٔ دندان‌های بیمار ندارم.">
+  <meta property="og:url" content="https://dentcast.org/sharehub/share-36.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="بازسازی اکلوژن در کیس‌های پیچیده؛ چرا از قدام بالا شروع می‌کنم؟ | Share Hub – دنت‌کست">
+  <meta name="twitter:description" content="یکی از چالش‌هایی که گاهی در بازسازی‌های پیچیده باهاش مواجه می‌شم، اینه که هیچ رفرنس قابل اعتمادی از وضعیت اولیهٔ دندان‌های بیمار ندارم.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DentCast",
+      "item": "https://dentcast.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Share Hub",
+      "item": "https://dentcast.org/sharehub/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "بازسازی اکلوژن در کیس‌های پیچیده؛ چرا از قدام بالا شروع می‌کنم؟ | Share Hub – دنت‌کست",
+      "item": "https://dentcast.org/sharehub/share-36.html"
+    }
+  ]
+}
+</script>
+  <meta name="robots" content="index, follow, max-image-preview:large">
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<div class="sh-kicker"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Share Hub</div>
+<h1>بازسازی اکلوژن در کیس‌های پیچیده؛ چرا از قدام بالا شروع می‌کنم؟</h1>
+
+<div class="glass-box">
+<div class="sh-dialogue">
+<p>یکی از چالش‌هایی که گاهی در بازسازی‌های پیچیده باهاش مواجه می‌شم، اینه که هیچ رفرنس قابل اعتمادی از وضعیت اولیهٔ دندان‌های بیمار ندارم. دندان‌ها به‌شدت ساییده شده‌اند، جابه‌جا شده‌اند یا بارها بازسازی شده‌اند. در چنین شرایطی حتی نمی‌دونم اکلوژن بیمار قبلاً چطور بوده که بخوام به اون برگردم.</p>
+<p>از دورهٔ تخصص یادمه که برای بازسازی اکلوژن، روشی رو یاد می‌گرفتیم که نقطهٔ شروعش کانین پایین بود. ابتدا موقعیت مناسب کانین پایین رو با توجه به رفرنس‌های لبی تعیین می‌کردیم و بعد با استفاده از تکنیک‌هایی مثل Broadrick Flag سراغ بازسازی پلن اکلوزال می‌رفتیم.</p>
+<p>این روش اصول و منطق خودش رو داره، اما حقیقت اینه که بعد از دورهٔ تخصص هیچ‌وقت در کار بالینی ازش استفاده نکردم.</p>
+<p>من همیشه به ساده‌کردن کارهای پیچیده گرایش داشتم. به نظرم یک روش درمانی هرچقدر هم دقیق باشه، اگر اجرای اون پیچیده باشه و نتونیم در بیماران مختلف تکرارش کنیم، کاربرد بالینی محدودی خواهد داشت. برای من سادگی به معنی کاهش دقت نیست؛ دنبال روشی هستم که در عین دقت بالا، قابل اجرا و تکرار باشه.</p>
+<p>از طرف دیگه، با دیدگاه <strong>John Kois</strong> و کانسپت Facially Generated Treatment Planning آشنا بودم. سال‌ها پیش کتاب <em>Global Diagnosis</em> رو مطالعه کرده بودم و در <a href="https://dentcast.org/episodes/episode-116.html">مجموعهٔ پنج‌قسمتی اپیزودهای ۱۱۶ تا ۱۲۰ دنت‌کست</a> هم دربارهٔ اون صحبت کرده بودم.</p>
+<p>این دیدگاه برای من منطقی‌تر بود و در بازسازی‌های پیچیده ازش استفاده می‌کنم.</p>
+<p>ابتدا سعی می‌کنم موقعیت مناسب دندان‌های قدامی ماگزیلا، به‌خصوص اینسایزال اج سانترال‌ها رو با توجه به صورت، لب‌ها، لبخند و فونتیک بیمار تعیین کنم و بعد طراحی بقیهٔ اکلوژن رو پیش ببرم.</p>
+<p>چیزی که این روش رو برای من جذاب‌تر می‌کنه، شباهتش به اصول پروتز کامله.</p>
+<p>در پروتز کامل هم لزوماً اطلاعی از موقعیت قبلی دندان‌های بیمار نداریم. با استفاده از رفرنس‌های صورت، لب‌ها، فونتیک و روابط فکی، موقعیت دندان‌ها رو تعیین می‌کنیم و به‌تدریج به یک اکلوژن مناسب می‌رسیم.</p>
+<p>به نظرم وقتی اصول پروتز کامل رو بلد باشیم، می‌تونیم از همین منطق در بازسازی‌های پیچیده هم استفاده کنیم.</p>
+<p>مهم‌تر اینکه لازم نیست تمام تصمیم‌ها رو از ابتدا قطعی بدونیم. موقعیت پیشنهادی دندان‌ها رو طراحی می‌کنیم، پروویژنال می‌سازیم و اون رو در شرایط واقعی دهان بیمار ارزیابی می‌کنیم. زیبایی، فونتیک و فانکشن رو بررسی می‌کنیم و هرجا لازم بود طرح رو اصلاح می‌کنیم.</p>
+<p><strong>برای من مزیت اصلی این روش همین سادگی، انعطاف‌پذیری و قابلیت تکرارشه؛ اینکه بتونم یک درمان پیچیده رو به مجموعه‌ای از تصمیم‌های قابل ارزیابی و اصلاح تبدیل کنم.</strong></p>
+<h2>بررسی مقاله</h2>
+<p>برای بررسی دوبارهٔ پشتوانهٔ این رویکرد، سراغ مقاله‌ای از <strong>Frank Spear</strong> رفتم که در سال ۱۹۹۹ با عنوان <em>The Maxillary Central Incisal Edge: A Key to Esthetic and Functional Treatment Planning</em> منتشر شده.</p>
+<p>Spear بحث رو با یک نکتهٔ ساده شروع می‌کنه: وقتی می‌خوایم موقعیت دندان‌ها رو طراحی کنیم، درست مثل پروتز کامل، بهتره از سانترال‌های ماگزیلا شروع کنیم.</p>
+<p>اما چرا سانترال بالا؟</p>
+<p>چون موقعیت لبهٔ اینسایزال این دندان فقط روی زیبایی لبخند تأثیر نداره؛ در فانکشن هم نقش مهمی ایفا می‌کنه. برای مثال، موقعیت این لبه در کنار دندان‌های قدامی مندیبل، روی مسیر حرکت فک پایین هنگام پروتروژن و در نتیجه Protrusive Guidance تأثیر می‌ذاره.</p>
+<p>حالا سؤال اینه که از کجا بفهمیم لبهٔ اینسایزال سانترال بالا باید کجا قرار بگیره؟</p>
+<p>Spear سه رفرنس رو مطرح می‌کنه:</p>
+<ol>
+<li><strong>دندان‌های دیگه و پلن اکلوزال:</strong> بررسی می‌کنیم لبهٔ اینسایزال سانترال بالا نسبت به سایر دندان‌های ماگزیلا و پلن اکلوزال در چه موقعیتی قرار داره.</li>
+<li><strong>فونتیک:</strong> هنگام تلفظ صداهایی مثل F و V، رابطهٔ لبهٔ دندان‌های قدامی بالا با لب پایین می‌تونه به ما در تعیین موقعیت مناسب کمک کنه.</li>
+<li><strong>لب‌ها و صورت بیمار:</strong> بررسی می‌کنیم دندان‌های قدامی بالا در حالت استراحت و هنگام لبخند چقدر دیده می‌شن و موقعیتشون با ویژگی‌های صورت بیمار چه هماهنگی‌ای داره.</li>
+</ol>
+<p>(این‌ها همون رفرنس‌های آشنایی هستند که بارها در ساخت پروتز کامل ازشون استفاده کرده‌ایم. بنابراین برای دندان‌پزشکی که اصول پروتز کامل رو بلده، منطق تعیین موقعیت دندان‌ها در این رویکرد چندان ناآشنا نیست.)</p>
+<p>نکتهٔ مهم اینه که این رفرنس‌ها همیشه به یک اندازه قابل اعتماد نیستند.</p>
+<p>مثلاً ممکنه بخوایم موقعیت سانترال رو با توجه به پلن اکلوزال موجود تعیین کنیم، اما دندان‌های خلفی بیمار از دست رفته باشند، به‌شدت ساییده شده باشند، اکستروژن پیدا کرده باشند یا با رستوریشن‌های نامناسب بازسازی شده باشند. در چنین شرایطی طبیعتاً نمی‌تونیم موقعیت فعلی اون‌ها رو بدون بررسی، مبنای طراحی قرار بدیم و باید از رفرنس‌های دیگه کمک بگیریم.</p>
+<p>از طرف دیگه، تعیین موقعیت اینسایزال اج به معنی قطعی‌شدن طرح درمان نیست. می‌تونیم موقعیت پیشنهادی رو با پروویژنال‌ها در دهان بیمار امتحان کنیم و در صورت نیاز تغییرش بدیم.</p>
+<p>Spear در عین حال یادآوری می‌کنه که تغییر موقعیت سانترال نباید فقط با هدف بهبود زیبایی انجام بشه. باید بررسی کنیم چرا دندان در موقعیت قبلی قرار گرفته و جابه‌جایی اون چه تأثیری روی فانکشن و روابط اکلوژنی خواهد داشت.</p>
+<p><strong>چیزی که من از این مقاله می‌گیرم اینه که موقعیت سانترال ماگزیلا یک نقطهٔ شروع مهم برای طراحی درمانه؛ نقطه‌ای که هم زیبایی رو در نظر می‌گیره و هم از همون ابتدا ما رو به فکر فانکشن می‌اندازه.</strong></p>
+<h2>جمع‌بندی من</h2>
+<p>نمی‌خوام بگم روش مبتنی بر کانین پایین اشتباهه یا شروع از قدام ماگزیلا همیشه نتیجهٔ بهتری می‌ده. هر دو رویکرد منطق خودشون رو دارند.</p>
+<p>همچنین قرارگرفتن رستوریشن در موقعیت صحیح از نظر زیبایی، به‌تنهایی فانکشن مناسب رو تضمین نمی‌کنه. هنوز باید VDO، روابط فکی، Anterior Guidance، پلن اکلوزال و سایر مؤلفه‌های اکلوژن رو بررسی کنیم.</p>
+<p>اما برای من، شروع از قدام ماگزیلا با شیوهٔ فکرکردن و کارکردنم سازگارتره. از رفرنس‌های خود بیمار شروع می‌کنم، از اصولی که در پروتز کامل یاد گرفته‌ام کمک می‌گیرم و با پروویژنال‌ها فرصت دارم نتیجه رو قبل از ساخت رستوریشن نهایی آزمایش و اصلاح کنم.</p>
+<p>مرور مقالهٔ Spear نشون داد که نقطهٔ شروع انتخابی من با یک رویکرد شناخته‌شده در طرح درمان پروتز همخوانی داره. البته سادگی و قابلیت تکراری که در این روش تجربه می‌کنم، برداشت بالینی خودمه، نه نتیجهٔ یک مقایسهٔ علمی بین دو روش.</p>
+<p><strong>وقتی نمی‌دونم دندان‌های بیمار قبلاً کجا بوده‌اند، ترجیح می‌دم به‌جای تلاش برای بازسازی یک موقعیت نامعلوم، موقعیت مناسبی برای اون‌ها طراحی کنم؛ موقعیتی که هم از نظر زیبایی قابل قبول باشه و هم بتونم فانکشن مطلوبی بر اساس اون ایجاد کنم.</strong></p>
+<hr><h2>منبع</h2><p dir="ltr">Spear FM. The maxillary central incisal edge: A key to esthetic and functional treatment planning. <em>Compend Contin Educ Dent.</em> 1999;20(6):512–516. PMID: 10650364.</p><p><a href="https://go.digitalsmiledesign.com/hubfs/DSD%20Articles/Articles%20by%20others/Spear%20The%20maxillary%20central%20incisal%20edge%20is%20the%20key%201999.pdf" target="_blank" rel="noopener noreferrer">مطالعه متن کامل مقاله (PDF)</a></p>
+</div>
+</div>
+
+  <footer class="dc-site-footer">
+  <div style="margin-bottom:1.375rem;">
+    <a href="index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=15" defer></script>
+<script src="/dc-nav.js?v=284" defer></script>
+</body>
+</html>
