@@ -5,7 +5,7 @@ alwaysApply: false
 
 # Cursor publishing
 
-**LIVE_MODULAR_PUBLISHING_ENABLED.** Read `.dentcast/workflows/README.md`, `.dentcast/workflows/agent-parity.md` and the shared active files listed in `.dentcast/workflows/global/README.md`.
+**LIVE_MODULAR_PUBLISHING_ENABLED.** Read `.dentcast/workflows/README.md`, `.dentcast/workflows/agent-parity.md` and the complete active sections selected for the current edit scope by `.dentcast/workflows/global/README.md`.
 Load complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then every applicable full module in the order listed in README. Preserve human approvals, source-based DES/Fidelity, category exceptions, builders, English, notification and Phase F. Staging utilities cannot replace real steps. Legacy files are backup only; do not read them for execution.
 
 ## Interrupted publication

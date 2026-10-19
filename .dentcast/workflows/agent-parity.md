@@ -2,7 +2,7 @@
 
 **LIVE_MODULAR_PUBLISHING_ENABLED.** Legacy files are backup only; do not read them for execution or use them as authority.
 
-Before content changes, read `.dentcast/workflows/global/README.md`, its three complete active global rule files, and `.dentcast/workflows/agent-parity.md`. All clients use these same rules.
+Before content changes, read `.dentcast/workflows/global/README.md`, the complete active sections selected by that router for the current edit scope, and `.dentcast/workflows/agent-parity.md`. All clients use these same rules.
 
 New publication → `.dentcast/workflows/README.md`. Read complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then each applicable full module in canonical order. Preserve all approvals, category exceptions, builders, English and final Phase F. At step 4.13, consume complete, validated founder-supplied DES/Fidelity results for this publication without rerunning those calls; if no valid result packet is supplied, perform the canonical source-dependent procedure. Stage-only planning tools and synthetic receipts do not perform or authorize live publication.
 
@@ -12,7 +12,7 @@ For «انتشار ناقص داشتم» or an explicit request to resume a publ
 
 ## Rule 0 — فایل فعال را کامل بخوان
 
-1. پیش از انتشار یا ویرایش محتوا، `.dentcast/workflows/global/README.md` و هر سه فایل فعال معرفی‌شده در آن را کامل بخوان؛ این منبع مشترک Cursor، Codex و Claude است. قواعد سراسری دیگر در فایل‌های بزرگِ ورودی یا بک‌آپ خوانده نمی‌شوند.
+1. پیش از انتشار یا ویرایش محتوا، `.dentcast/workflows/global/README.md` و تمام بخش‌های فعالی را که روتر برای محدودهٔ کار انتخاب می‌کند کامل بخوان؛ پیش از تغییر فایل‌های جدید، انتخاب را با مسیرهای جدید به‌روز کن. اگر محدوده ناشناخته یا ابزار انتخاب نامعتبر بود، هر سه فایل کانونی را کامل بخوان؛ این منبع مشترک Cursor، Codex و Claude است. قواعد سراسری دیگر در فایل‌های بزرگِ ورودی یا بک‌آپ خوانده نمی‌شوند.
 2. برای انتشار جدید، روتر `.dentcast/workflows/README.md`، دو ماژول 01 و 02 و سپس هر ماژولِ مربوط را کامل و به ترتیب کانونی بخوان. خلاصه، حافظهٔ جلسه و خواندن بخشی از ماژول جای متن کامل آن را نمی‌گیرد.
 3. برای مسیرهای تخصصی، فایل کانونی همان مسیر کامل خوانده می‌شود؛ `routing-details.md` تریگرها و شرایط مسیرها را نگه می‌دارد.
 4. اگر ابزار فایل را تکه‌تکه می‌خواند، همهٔ تکه‌های فایل فعالِ لازم را بخوان. legacy فقط بک‌آپ است و در اجرا خوانده نمی‌شود.

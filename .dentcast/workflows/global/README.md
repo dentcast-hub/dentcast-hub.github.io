@@ -1,11 +1,40 @@
 # Shared active global rules
 
-Before content publication or editing, every agent reads these three active files completely:
-- `.dentcast/workflows/global/repo-conventions.md` — repo conventions (former §6).
-- `.dentcast/workflows/global/plus-premium.md` — Plus/Premium surfaces (former §7), including DES display.
-- `.dentcast/workflows/global/site-invariants.md` — site-wide invariants (former §8).
+Before content work, read this router and the complete `agent-parity.md` once.
+Then run `python3 tools/dentcast_global_rules.py --read` to load all core
+sections. These include repository/content restrictions, publishing data,
+cache rules, ads integration, publication surfaces, DES display and every
+site-wide invariant. Full canonical publication modules remain mandatory.
 
-These are complete migrated rules, not summaries. AGENTS, CLAUDE and Cursor all use the same active files; no client must read another client's archived rules. Read `.dentcast/workflows/routing-details.md` for detailed specialty triggers. Read the applicable canonical workflow, not historical development plans.
+Before editing any file, run the selector with **every planned path**:
+`python3 tools/dentcast_global_rules.py --path <path> --path <other-path>`.
+Read every newly required section using the same arguments plus `--read`.
+Repeat when scope expands, before touching the added files. Use repeated
+`--loaded <section-id>` only for sections already read completely in this same
+session and unchanged source revision. This avoids rereading core rules.
+A new session or changed source invalidates that loaded list.
+
+The map covers all lines of the three canonical sources, without summaries:
+- `.dentcast/workflows/global/repo-conventions.md`
+- `.dentcast/workflows/global/plus-premium.md`
+- `.dentcast/workflows/global/site-invariants.md`
+
+Pathway data changes additionally load the complete pathway/certificate/exam
+operations section; episode/audio paths load the audio-hub rules. Unknown
+paths (including API/admin, unfamiliar shared code, new categories and
+unmapped specialty tasks) load **all sections**. For non-file operations,
+external actions, uncertain scope or an explicit subsystem task, use `--all`.
+If the selector is unavailable or its source hash/coverage check fails, read
+all three canonical files completely; do not proceed with a guessed subset.
+Source references from a module must still be followed: load the named full
+section even if an edit-path trigger has not fired yet. Selection never grants
+a category exemption or changes a required publication action.
+
+`LOAD-MAP.json` is a byte-preserving load index, not a second rule authority.
+The source files remain authoritative and unchanged. If their text changes,
+update ranges and hashes and run `test_dentcast_global_rules.py`; every line
+must remain covered exactly once. Existing references to the full canonical
+files remain valid; use `--all --read` whenever their full context is required.
 
 Execution authority: applicable canonical workflow and its active modules > these global rules > agent-parity > client routing summaries. For new publication the twelve modules in `../modules/INDEX.md` are the complete instruction sequence; README routes them, not a monolithic fallback. User instructions take priority. A genuine contradiction in active instructions must be surfaced rather than resolved by loading backups.
 
