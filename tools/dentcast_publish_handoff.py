@@ -192,9 +192,17 @@ def status_paths(root):
     return result
 
 
-def index_entries(root):
+def index_entries(root, raw=None):
+    """Parse a previously observed full index; avoid parsing it twice per snapshot.
+
+    With raw=None, keep the original public helper behavior. Snapshot compares
+    the entire second raw Git output for its concurrency guard, not a filtered
+    subset of index entries.
+    """
     result = {}
-    for row in git(root, "ls-files", "--stage", "-z").split(b"\x00"):
+    if raw is None:
+        raw = git(root, "ls-files", "--stage", "-z")
+    for row in raw.split(b"\x00"):
         if row:
             meta, path = row.split(b"\t", 1)
             mode, oid, stage = meta.decode("ascii").split()
@@ -245,7 +253,10 @@ def snapshot(root, targets, check_remote=False):
     origin = config(root, "remote.origin.url")
     require(bool(origin), "ORIGIN_REQUIRED")
     paths = status_paths(root)
-    index = index_entries(root)
+    # Preserve the full-index race guard, but build its large Python mapping
+    # only once. The second Git read is still mandatory and byte-compared.
+    index_raw = git(root, "ls-files", "--stage", "-z")
+    index = index_entries(root, raw=index_raw)
     watched = sorted(set(paths) | set(targets))
     files = {p: {**file_info(root, p), "status": paths.get(p),
                  "index": index.get(p, [])} for p in watched if p != STATE_PATH}
@@ -254,7 +265,8 @@ def snapshot(root, targets, check_remote=False):
         info = file_info(root, p)
         require(info["kind"] == "file", "ACTIVE_WORKFLOW_FILE_MISSING_OR_SYMLINK:" + p)
         workflow[p] = info["sha256"]
-    require(paths == status_paths(root) and index == index_entries(root)
+    require(paths == status_paths(root)
+            and index_raw == git(root, "ls-files", "--stage", "-z")
             and first_head == text_git(root, "rev-parse", "HEAD")
             and first_branch == branch(root), "GIT_CHANGED_DURING_SNAPSHOT")
     for p in files:

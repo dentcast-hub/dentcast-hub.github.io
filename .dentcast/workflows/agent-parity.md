@@ -4,7 +4,7 @@
 
 Before content changes, read `.dentcast/workflows/global/README.md`, the complete active sections selected by that router for the current edit scope, and `.dentcast/workflows/agent-parity.md`. All clients use these same rules.
 
-New publication → `.dentcast/workflows/README.md`. Read complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then each applicable full module in canonical order. Preserve all approvals, category exceptions, builders, English and final Phase F. At step 4.13, consume complete, validated founder-supplied DES/Fidelity results for this publication without rerunning those calls; if no valid result packet is supplied, perform the canonical source-dependent procedure. Stage-only planning tools and synthetic receipts do not perform or authorize live publication.
+New publication → `.dentcast/workflows/README.md`. Read complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then each applicable full module in canonical order. Preserve all approvals, category exceptions, builders, English and final Phase F. At step 4.13, independently validate and reuse founder-supplied complete DES score JSON and Fidelity JSON for this exact publication, without rerunning accepted tracks. If only valid DES JSON was supplied, run only any still-owed Fidelity; block on supplied incomplete/stale results rather than silently rescoring. If neither is supplied, perform the canonical source-dependent procedure; Phase F remains mandatory. Stage-only planning tools and synthetic receipts do not perform or authorize live publication.
 
 ## Interrupted publication
 
