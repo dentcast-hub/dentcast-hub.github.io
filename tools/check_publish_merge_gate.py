@@ -2,7 +2,7 @@
 """Fail content PRs with unfinished handoffs or stale homepage counters."""
 import json
 import os
-from pathlib import PurePosixPath
+from pathlib import Path, PurePosixPath
 import re
 import subprocess
 import sys
@@ -102,6 +102,101 @@ def check_merge(changed_paths, handoff_text, counter_sources=None):
     return verify_homepage_counters(**counter_sources)
 
 
+def publication_ids(paths):
+    """New leaf pages, excluding English mirrors and generated landing pages."""
+    return {str(PurePosixPath(p).with_suffix("")) for p in paths
+            if len(PurePosixPath(p).parts) == 2
+            and PurePosixPath(p).parts[0] in CONTENT_ROOTS
+            and p.endswith(".html")
+            and PurePosixPath(p).stem not in {"index", "archive"}}
+
+
+def validate_completion(root, raw):
+    """Check a real completed ledger against the current tree and rerun Phase F."""
+    import dentcast_publish_handoff as h
+    import dentcast_publish_lifecycle as lifecycle
+    state, digest = h.parse_state(raw)
+    if state["schema"] == h.SCHEMA:
+        state = h.hydrate_v3(root, state, digest)
+    publication = state["publication"]
+    lifecycle.require_plan(publication)
+    h.require(h.next_step(publication) is None and not publication["blocker"]
+              and not publication["context"]["pending_questions"]
+              and all(a["status"] in ("confirmed", "not_required")
+                      for a in publication["context"]["approvals"])
+              and all(a["status"] not in ("started", "outcome_unknown", "failed")
+                      for a in publication["external_actions"]), "INCOMPLETE_PUBLICATION_RECEIPT")
+    h.require(bool(publication["context"]["delivery"]) and all(
+        isinstance(d, dict) and h.nonempty(d.get("scope")) and d.get("evidence")
+        for d in publication["context"]["delivery"]), "DELIVERY_EVIDENCE_REQUIRED")
+    for name, info in state["snapshot"]["files"].items():
+        actual = h.file_info(root, name)
+        h.require(all(actual[k] == info[k] for k in actual), "PUBLICATION_CHANGED_AFTER_COMPLETION:" + name)
+    receipts = [r for r in publication["context"]["validation"]
+                if isinstance(r, dict) and r.get("kind") in ("phase_f", "paper_catalog_gate")]
+    h.require(bool(receipts) and receipts[-1].get("exit_code") == 0, "COMPLETION_RECEIPT_REQUIRED")
+    last = receipts[-1]
+    result = lifecycle.gate(root, publication, last.get("expected_title"),
+                            last.get("expected_caption"), last.get("catalog_id"))
+    h.require(result["exit_code"] == 0, "CURRENT_PUBLICATION_VERIFICATION_FAILED")
+    print(result["summary"])
+    return publication["content_id"]
+
+
+def verify_publication_history(root, base, added_paths):
+    """Use the whole PR range, not HEAD^ (which is main on PR merge checkouts)."""
+    import dentcast_publish_handoff as h
+    needed = publication_ids(added_paths)
+    # A new brain entry must have completion evidence even if its page was staged earlier.
+    old_raw = h.git(root, "show", base + ":dentcast-brain.json")
+    old = json.loads(old_raw)
+    new = json.loads((root / "dentcast-brain.json").read_text())
+    old_urls = {(e.get("page_url") or e.get("url")) for e in old}
+    for entry in new:
+        url = entry.get("page_url") or entry.get("url")
+        if url and url not in old_urls:
+            from urllib.parse import urlparse
+            needed.update(publication_ids([urlparse(url).path.lstrip("/")]))
+    deletions = h.text_git(root, "log", "--format=%H", "--diff-filter=D",
+                           base + "..HEAD", "--", STATE_PATH).splitlines()
+    verified = set()
+    for commit in deletions:
+        raw = h.git(root, "show", commit + "^:" + STATE_PATH)
+        if reconcile_share35(root, raw):
+            verified.add("sharehub/share-35")
+        else:
+            verified.add(validate_completion(root, raw))
+    h.require(needed <= verified, "PUBLICATION_COMPLETION_RECEIPT_MISSING:" + ",".join(sorted(needed - verified)))
+    return verified
+
+
+
+def reconcile_share35(root, raw):
+    """One-time founder-authorized cleanup of the exact legacy Share 35 state.
+
+    Authorized 2026-10-18 after publication, independently verified 118/0/0.
+    Never converts its stale pending steps into completed steps.
+    """
+    import hashlib
+    import dentcast_publish_handoff as h
+    import dentcast_publish_lifecycle as lifecycle
+    if hashlib.sha256(raw).hexdigest() != 'a5f39e12507ac810c24a5f316322ae42c59011487f3eb0c842e3666c8e034c43':
+        return False
+    baseline = "463feff77d40e28633635e9ea654bf3c056bb188"
+    # Freeze every publication asset/data file to the confirmed main revision.
+    allowed = {STATE_PATH, "tools/check_publish_merge_gate.py",
+               "tools/dentcast_publish_lifecycle.py", "tests/test_publish_merge_gate.py", "tests/test_dentcast_publish_handoff.py",
+               "tests/test_dentcast_agent_entrypoint_migration.py",
+               ".github/workflows/publishing-live-contract-tests.yml"}
+    changed = set(h.text_git(root, "diff", "--name-only", baseline, "HEAD").splitlines())
+    h.require(changed <= allowed, "LEGACY_CLEANUP_PUBLICATION_CHANGED")
+    result = lifecycle.gate(root, {"category": "sharehub", "content_id": "sharehub/share-35",
+                                  "target_paths": ["sharehub/share-35.html"]})
+    h.require(result["exit_code"] == 0, "LEGACY_CLEANUP_VERIFICATION_FAILED")
+    print(result["summary"])
+    return True
+
+
 def changed_paths(base_ref):
     if not re.fullmatch(r"[A-Za-z0-9._/-]+", base_ref) or ".." in base_ref.split("/"):
         raise ValueError("INVALID_BASE_REF")
@@ -142,7 +237,12 @@ def main():
         if any(value is None for value in counter_sources.values()):
             counter_sources = None
         ok, reason = check_merge(paths, handoff_text, counter_sources)
-    except (OSError, subprocess.CalledProcessError, ValueError) as exc:
+        if ok:
+            root = Path.cwd()
+            base = subprocess.check_output(["git", "merge-base", "FETCH_HEAD", "HEAD"], text=True).strip()
+            added = subprocess.check_output(["git", "diff", "--name-only", "--diff-filter=A", base + "...HEAD"], text=True).splitlines()
+            verify_publication_history(root, base, added)
+    except (OSError, subprocess.CalledProcessError, ValueError, RuntimeError) as exc:
         reason = str(exc) or "PUBLISH_MERGE_GATE_FAILED"
         ok = False
     if not ok:
