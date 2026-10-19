@@ -77,6 +77,16 @@ class EntrypointMigrationTests(unittest.TestCase):
     self.assertTrue(actual.startswith("<!-- dentcast-checkpoint-protocol:v1 -->"))
     self.assertIn(".dentcast/workflows/publish-checkpoints.md",actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->",1)[0])
     body=actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->\n\n",1)[1]
+    if name == "11-build-and-version.md":
+     body=body.replace("- Keep exactly **7** Pulse lines. Phase F checks the count, first position, and preservation of the previous first six lines when a new URL is added against main.\n", "")
+     self.assertIn("Keep exactly **7**",actual)
+    if name == "12-english-notify-verify.md":
+     block=re.search(r"\n<!-- concise-publication-report:v1 -->.*?<!-- /concise-publication-report:v1 -->\n",body,re.S)
+     self.assertIsNotNone(block)
+     for term in ("technical evidence checklist", "explicit", "Never hide failed gates", "exact Phase F summary"):
+      self.assertIn(term,block.group(0))
+     body=body[:block.start()]+body[block.end():]
+     expected=expected.replace("one above the new bottom", "at the absolute top (first line; exactly 7 lines remain)").replace("each command + full stdout/stderr", "each command + a retrievable stdout/stderr log reference")
     if name == "01-hard-rules.md":
      # PR #920 intentionally amended scoped approval and continuing independent
      # work. Pin that approved text exactly; the legacy snapshot predates it.
