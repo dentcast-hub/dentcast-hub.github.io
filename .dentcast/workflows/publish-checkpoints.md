@@ -175,8 +175,13 @@ exceptions (COMMENTARY, source errors, pre-3.1 NOT_APPRAISABLE) or a freshly
 computed zero-unit SOURCE assignment from `des_fidelity_units.py`. A manual
 claim of "no units" does not count; pooled units require a result. CITATION_ONLY
 from v3.1 still requires the spec's INSUFFICIENT_TEXT result object. Missing or
-unreadable assignment evidence fails closed. Existing complete results are
-validated without rerunning model calls; scoring prompts and voting are unchanged.
+unreadable assignment evidence fails closed. Founder-supplied complete canonical DES score JSON for this exact page is
+validated and reused **without rerunning DES**, independently of Fidelity.
+If only DES is supplied, run only still-owed Fidelity; if both tracks are
+complete and valid, rerun neither. An incomplete, mismatched or stale supplied
+result blocks the publish pending correction; it is not a DES exemption or
+permission to rescore silently. Existing complete results are validated
+without rerunning model calls; scoring prompts and voting are unchanged.
 
 ## Hook and CI coverage
 

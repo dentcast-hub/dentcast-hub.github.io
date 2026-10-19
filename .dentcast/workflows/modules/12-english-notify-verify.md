@@ -125,16 +125,24 @@ run mechanically) · and **the content version stamp actually matching the
 content it stamps**, which is what catches `stamp-version.py` not having run
 last.
 
-**On the DES rows specifically:** a record that exists is validated hard, but a
-**missing** record is a `warn`, never a `FAIL`. The workflow allows two
-documented skips — LiteCast and the founder's own «بدون DES» — and an episode
-that is only a caption legitimately has no record at all; the gate cannot tell
-those from a forgotten step 4.13, so it says so out loud instead of guessing in
-either direction. Read the warn and confirm which case it is. The checks that
-*do* fail hard are the ones prose cannot enforce: the first three records
-written by hand shipped two sources at multiplier `0.80` while marked
-`ABSTRACT_ONLY`, which the spec caps at `0.75` — an error that moved one paper
-from band C to band D and was invisible to re-reading.
+<!-- des-fail-closed-policy:v1 -->
+**DES/Fidelity fail closed.** The authoritative mechanical outcome is
+`tools/verify_publish.py`: a **missing DES record is `FAIL`**, not `WARN`,
+except for **LiteCast** and **Challenge** (canonical `SKIP`), or a valid,
+current, exact-page entry in `.dentcast/des-exemptions.json` for an explicit
+founder decision `founder_without_des` or a confirmed episode
+`unsourced_audio_caption`. The exemption's `page_sha256`, reason and scoped
+approval must match the final text; a missing result never implies an exemption.
+
+A founder-supplied **complete DES score JSON** for this exact publication
+is **not** a missing record or `SKIP`: validate and reuse it under module 08
+**without rerunning DES**. Independently accept valid supplied Fidelity JSON
+without a new Fidelity run; if only DES is supplied, run **only any owed
+Fidelity**. If supplied JSON is missing, invalid or stale, block and ask for
+corrected data; never silently rescore it. The final Phase F still validates
+record structure, source basis, quotes, DES arithmetic and Fidelity obligations.
+Any missing Fidelity outside canonical exceptions also fails the gate.
+<!-- /des-fail-closed-policy:v1 -->
 
 LiteCast, glossary and episode branches are handled: rows that do not apply to
 a type report `--` with the reason, so a documented skip is visible rather than
