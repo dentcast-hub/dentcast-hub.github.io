@@ -16,6 +16,7 @@ CONTENT_FILES = {
     "dentcast-brain.json", "dentcast.json", "dentcast-music.json",
     "dentcast-hashtag-reference.json", "glossary/glossary.json",
     "litecast/lite-glossary.json", "plus/des-scores.json",
+    ".dentcast/des-exemptions.json",
 }
 FA_DIGITS = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
 

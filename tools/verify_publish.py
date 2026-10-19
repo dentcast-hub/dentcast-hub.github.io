@@ -470,6 +470,75 @@ def des_check_fidelity(rep, ftag, f, scope, basis_expected, page_hay, source_hay
               "spec F0 — provisional iff not a complete text (FULL_TEXT; SECONDARY_REPORT from v3.3)")
 
 
+DES_EXEMPTIONS = ".dentcast/des-exemptions.json"
+
+
+def des_absence_allowed(content_id, doc, etype):
+    """An explicit, content-bound decision; never infer approval from no record."""
+    if not exists(DES_EXEMPTIONS):
+        return False, "no recorded DES exemption"
+    try:
+        records = json.loads(read(DES_EXEMPTIONS))
+        if not isinstance(records, dict):
+            raise ValueError("exemption registry must be an object")
+        exemption = records.get(content_id)
+        if not isinstance(exemption, dict):
+            raise ValueError("no exemption for this content_id")
+        if set(exemption) != {"content_id", "page_sha256", "reason", "approval"}:
+            raise ValueError("invalid exemption fields")
+        if exemption["content_id"] != content_id:
+            raise ValueError("exemption belongs to another publication")
+        if exemption["page_sha256"] != hashlib.sha256(doc.encode("utf-8")).hexdigest():
+            raise ValueError("exemption is stale: page changed")
+        reason = exemption["reason"]
+        if reason not in {"founder_without_des", "unsourced_audio_caption"}:
+            raise ValueError("unknown DES exemption")
+        if reason == "unsourced_audio_caption" and etype not in {"episode", "dentcast"}:
+            raise ValueError("audio-caption exemption is only for episodes")
+        approval = exemption["approval"]
+        if not isinstance(approval, dict) or set(approval) != {"status", "decision", "evidence"}:
+            raise ValueError("invalid exemption approval")
+        evidence = approval["evidence"]
+        if (approval["status"] != "confirmed" or not isinstance(approval["decision"], str)
+                or not approval["decision"].strip() or not isinstance(evidence, list)
+                or not evidence or not all(isinstance(e, str) and e.strip() for e in evidence)):
+            raise ValueError("explicit confirmed approval and evidence are required")
+        return True, reason
+    except (ValueError, TypeError, KeyError) as exc:
+        return False, str(exc)
+
+
+def fidelity_absence_allowed(content_id, sources, index, assignment=None):
+    """Apply canonical exemptions or recompute the existing tool's unit plan.
+
+    assignment is a per-verification cache, not a stored claim of zero units.
+    """
+    source = sources[index]
+    if source.get("error") or source.get("content_type") == "COMMENTARY":
+        return True, "source error or COMMENTARY: no Fidelity call"
+    if source.get("content_type") == "NOT_APPRAISABLE":
+        if not des_ge(source.get("des_version"), (3, 1)):
+            return True, "pre-3.1 NOT_APPRAISABLE source"
+        if source.get("text_basis") == "CITATION_ONLY":
+            return False, "CITATION_ONLY requires its INSUFFICIENT_TEXT Fidelity object"
+    try:
+        if assignment is None:
+            assignment = {}
+        if "result" not in assignment:
+            import des_fidelity_units as units_tool
+            units = units_tool.split_page(content_id, sources)
+            mode, plan = units_tool.assign(units, sources)
+            assignment["result"] = (units, mode, plan)
+        units, mode, plan = assignment["result"]
+        if not units:
+            return False, "no units could be extracted; cannot prove an exemption"
+        if mode == "SOURCE" and not plan.get(index):
+            return True, "canonical unit assignment gives this source zero units"
+        return False, "canonical unit assignment requires a Fidelity result"
+    except (OSError, ValueError, KeyError, TypeError, SystemExit) as exc:
+        return False, "unit assignment could not be verified: " + str(exc)
+
+
 def des_fidelity_owed(s):
     """A source the FIDELITY call runs against (README step 4.13 Part 2b): any
     scored source, and from spec v3.1 a NOT_APPRAISABLE source whose SOURCE
@@ -983,11 +1052,9 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
     # ABSTRACT_ONLY, which the spec caps at 0.75 — a mistake that moved one
     # paper from band C to band D and was invisible to re-reading.
     #
-    # ABSENCE IS A WARN, NEVER A FAIL. The workflow allows two documented
-    # skips — LiteCast, and the founder answering «بدون DES» at Question 4.8 —
-    # and an audio episode that is only a caption legitimately has no record at
-    # all. The gate cannot tell those apart from a forgotten step, so it says
-    # so out loud instead of guessing in either direction.
+    # Missing results fail closed. Category exceptions stay explicit; other
+    # DES exemptions require a current page-bound approval. Null Fidelity is
+    # accepted only by the canonical source rules or recomputed unit assignment.
     if is_lite:
         rep.skip("4.13 DES", "LiteCast is outside the DES ecosystem (Hard Rule 10)")
     elif is_challenge:
@@ -996,10 +1063,16 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
         des_all = json.loads(read("plus/des-scores.json")) if exists("plus/des-scores.json") else {}
         rec = des_all.get(content_id)
         if not rec:
-            rep.warn("4.13 DES", "no DES record — confirm this is «بدون DES» or an unsourced episode, "
-                                 "not a forgotten step 4.13",
-                     "step 4.13 / Question 4.8 — score it, or record why it has none")
+            allowed, reason = des_absence_allowed(content_id, doc, etype)
+            if allowed:
+                rep.skip("4.13 DES", "recorded exemption: " + reason)
+            else:
+                rep.fail("4.13 DES", "missing DES without a valid exemption: " + reason,
+                         "run step 4.13, or record the founder's actual scoped approval in " + DES_EXEMPTIONS)
         else:
+            if not isinstance(rec, dict):
+                rep.fail("4.13 DES", "DES record must be an object")
+                return rep
             # `fidelity` (spec v2.5) is the one other key: an array parallel
             # to `sources`, holding the FIDELITY call's own output objects —
             # data the spec owns, not something derivable from `sources`.
@@ -1011,6 +1084,18 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                       f"band/content_type/question_type live INSIDE each source and a second copy "
                       f"is a second source of truth",
                       "step 4.13 Part 4 — nothing derivable is stored beside the sources")
+            srcs = rec.get("sources") or []
+            valid_sources = isinstance(srcs, list) and bool(srcs) and all(isinstance(s, dict) for s in srcs)
+            rep.check(valid_sources, "4.13 DES", "nonempty source records present",
+                      "DES sources must be a nonempty array of source objects", "step 4.13")
+            if not valid_sources:
+                return rep
+            assignment = {}
+            if valid_sources and "fidelity" not in rec:
+                for i in range(len(srcs)):
+                    allowed, reason = fidelity_absence_allowed(content_id, srcs, i, assignment)
+                    rep.check(allowed, "4.13 DES", f"fid{i}: {reason}",
+                              f"fid{i} missing: {reason}", "step 4.13 Part 2b")
             if "fidelity" in rec:
                 fid = rec.get("fidelity")
                 srcs = rec.get("sources") or []
@@ -1039,29 +1124,16 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                                f"{len(srcs)} sources — slot i is the FIDELITY object "
                                f"for sources[i], null where no call ran",
                                "step 4.13 Part 4 — one slot per source, same order"):
-                    # v3.1: the record's own fidelity stamp decides which rule a
-                    # null on a NOT_APPRAISABLE source is read under
-                    rec31 = any(isinstance(f, dict) and des_ge(f.get("des_version"), (3, 1)) for f in fid)
+                    # Missing slots are checked against each source's version
+                    # and the current canonical unit assignment.
                     for i, f in enumerate(fid):
                         ftag = f"fid{i}"
                         src_i = srcs[i] or {}
                         is_na = src_i.get("content_type") == "NOT_APPRAISABLE"
                         if f is None:
-                            # A null slot is legal for an error, the page's own
-                            # COMMENTARY record, or (v2.6) a source no unit of the
-                            # page names — the last is not visible from the record, so
-                            # a null on a scored RESEARCH source is a warning, not a fail.
-                            # A book (NOT_APPRAISABLE) was a null by rule until v3.1;
-                            # from 3.1 it is judged like any source whose text was in
-                            # hand, so on a 3.1 record a null there is the same warning.
-                            if src_i.get("error") or src_i.get("content_type") == "COMMENTARY" or (is_na and not rec31):
-                                rep.ok("4.13 DES", f"{ftag} is null for a source that gets no fidelity call")
-                            else:
-                                rep.warn("4.13 DES", f"{ftag} is null on a source the FIDELITY call is owed to — confirm "
-                                         f"tools/des_fidelity_units.py gave it no units"
-                                         + (" (v3.1: a book whose text was in hand is judged; one whose text "
-                                            "was not is CITATION_ONLY with an INSUFFICIENT_TEXT slot)" if is_na else ""),
-                                         "step 4.13 Part 2b — run the call if the tool assigned it units")
+                            allowed, reason = fidelity_absence_allowed(content_id, srcs, i, assignment)
+                            rep.check(allowed, "4.13 DES", f"{ftag}: {reason}",
+                                      f"{ftag} is null: {reason}", "step 4.13 Part 2b")
                             continue
                         if isinstance(f, dict) and f.get("error"):
                             # spec v3.1 appendix rule 8: the spec's own error object in
