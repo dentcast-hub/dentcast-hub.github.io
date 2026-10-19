@@ -28,6 +28,7 @@ import html
 import json
 import re
 import sys
+import subprocess
 import unicodedata
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
@@ -705,6 +706,37 @@ def load_entry(content_id):
 # --------------------------------------------------------------------------
 # the checks
 # --------------------------------------------------------------------------
+
+def pulse_items(home):
+    block = re.search(r'<ul\b[^>]*class=["\'][^"\']*\bdc-pulse-list\b[^"\']*["\'][^>]*>(.*?)</ul>', home, re.S)
+    return re.findall(r'<li\b[^>]*>.*?</li>', block.group(1), re.S) if block else []
+
+
+def check_pulse(rep, home, url, sweep=False, previous_home=None):
+    items = pulse_items(home)
+    def links(item):
+        return re.findall(r'href=["\']([^"\']+)["\']', item)
+    matches = [i for i, item in enumerate(items) if url in links(item)]
+    rep.check(len(items) == 7, '6 pulse', 'Pulse has exactly 7 lines',
+              f'Pulse has {len(items)} lines (expected 7)', 'step 6 — remove oldest bottom lines')
+    if sweep and not matches:
+        rep.skip('6 pulse', 'older content has rolled off Pulse')
+        return
+    rep.check(len(matches) == 1 and sum(links(item).count(url) for item in items) == 1,
+              '6 pulse', 'exactly one Pulse line links to the page',
+              'Pulse must link to this page exactly once', 'step 6')
+    if sweep:
+        return  # Older retained items need not be first.
+    rep.check(matches == [0], '6 pulse', 'new Pulse item is the first line',
+              'new Pulse item is not the first line', 'step 6 — insert at absolute top')
+    if previous_home is not None:
+        previous = pulse_items(previous_home)
+        if any(url in links(item) for item in previous):
+            return  # Already published in the baseline; do not insert again.
+        rep.check(len(previous) == 7 and items[1:] == previous[:-1], '6 pulse',
+                  'previous bottom line removed; other Pulse lines preserved in order',
+                  'Pulse must drop only the previous bottom line and preserve the other six', 'step 6')
+
 
 def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False):
     """`sweep` = this is a site-wide regression pass over already-published
@@ -1560,21 +1592,21 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
 
     home = read("index.html")
     url = "/" + page_rel
-    pulse = re.search(r'<ul class="dc-pulse-list">(.*?)</ul>', home, re.S)
-    n_pulse = pulse.group(1).count(url) if pulse else 0
     if is_lite:
         pass
     elif is_gloss:
-        # Established convention (glossary/treatment-plan, glossary/dental-implant):
-        # glossary terms are not announced in Pulse — Question 5's "not
-        # customary for this type" branch, applied consistently.
-        rep.skip("6 pulse", "glossary: not customary in Pulse (no prior glossary term has one)")
-    elif sweep and n_pulse == 0:
-        rep.skip("6 pulse", "Pulse holds only the newest lines — this one has rolled off")
+        rep.skip("6 pulse", "glossary: not customary in Pulse")
     else:
-        rep.check(n_pulse == 1, "6 pulse",
-                  "exactly one Pulse line links to the page",
-                  f"Pulse links to the page {n_pulse}x (expected 1)", "step 6")
+        previous_home = None
+        if not sweep:
+            try:
+                previous_home = subprocess.check_output(
+                    ['git', 'show', 'origin/main:index.html'], cwd=ROOT,
+                    stderr=subprocess.DEVNULL, timeout=10).decode('utf-8')
+            except (OSError, subprocess.SubprocessError, UnicodeError):
+                rep.fail('6 pulse', 'cannot verify previous Pulse: local origin/main:index.html unavailable',
+                         'fetch the main baseline before final verification')
+        check_pulse(rep, home, url, sweep, previous_home)
 
     rail = re.search(r'<a class="dc-rail-card"[^>]*href="%s">(.*?)</a>' % re.escape(url), home, re.S)
     if rail:

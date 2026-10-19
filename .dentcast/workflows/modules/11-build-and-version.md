@@ -12,6 +12,7 @@ Use the sentence + hyperlink word from intake Question 5. **No spoilers (see Que
 - Remove the **bottom-most** (lowest) line of the Pulse section entirely — no empty containers left behind. (This is the oldest announcement; the rule is positional: always the lowest line.)
 - The chosen word is hyperlinked to the new content's page URL.
 - Match exact HTML/classes of other Pulse items.
+- Keep exactly **7** Pulse lines. Phase F checks the count, first position, and preservation of the previous first six lines when a new URL is added against main.
 
 ### 7. Bump the site content version (cache-bust)
 
