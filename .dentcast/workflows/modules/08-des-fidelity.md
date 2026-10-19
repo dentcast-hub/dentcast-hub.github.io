@@ -5,11 +5,32 @@
 
 ### 4.13. DES — DentCast Evidence Score (run or consume the record)
 
-**Runs for EVERY type, on EVERY publish that produced a page**, in the basket
-decided at **Phase B Question 4.8**. Two documented skips and no others:
-**LiteCast** (outside the specialist ecosystem, Hard Rule 10 — report "4.13:
-skipped — LiteCast") and a publish whose Question 4.8 answer was **«بدون DES»**.
-Everything else scores.
+**Run step 4.13 on every ordinary page publish**, using the source basis
+from Phase B Question 4.8, except where an explicit canonical skip applies:
+
+- **LiteCast** — outside the specialist DES ecosystem (Hard Rule 10);
+  record `C.4.13: skipped — LiteCast`.
+- **چالش / Challenge** — when Phase B Question 4.9 identified the post as a
+  چالش, record `C.4.13: skipped — چالش` with that reason, **without invoking
+  any DES or Fidelity model**, and create **no entry for this content ID** in
+  `plus/des-scores.json`. This is the rule in `modules/09-challenge.md` and
+  `.dentcast/challenge-handoff.md` §11.3, **not** Question 4.8's
+  `INDETERMINATE` research basket: never ask for a DOI or score the challenge's
+  private answer. The challenge may live in an ordinary content folder; the
+  folder itself never grants this skip. Step 4.14 must still place the real
+  `data-dc-challenge-question` markup on the public page; Phase F detects
+  that markup and validates the Challenge-specific skips. Missing/incorrect
+  markup is not a license to skip DES on an otherwise ordinary article.
+- **Founder explicitly chose «بدون DES»** at Question 4.8 — apply only the
+  existing scoped, page-bound approval/exemption process in
+  `.dentcast/workflows/publish-checkpoints.md`; do not infer consent.
+  The separately documented confirmed `unsourced_audio_caption` exception
+  is subject to the same page-bound verification.
+
+**All other applicable pages must have a valid DES record.** A Challenge
+skip is an explicit, evidenced step-ledger `skipped` result, not a missing
+record accepted by accident; it does not skip Challenge publication's other
+applicable steps or final Phase F.
 
 #### Conditional path for founder-supplied results (independent DES and Fidelity tracks)
 

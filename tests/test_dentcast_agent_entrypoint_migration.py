@@ -98,6 +98,9 @@ class EntrypointMigrationTests(unittest.TestCase):
      old_last=expected.index("LiteCast, glossary and episode branches",old_first)
      body=body[:first]+expected[old_first:old_last]+body[last:]
      expected=expected.replace("one above the new bottom", "at the absolute top (first line; exactly 7 lines remain)").replace("each command + full stdout/stderr", "each command + a retrievable stdout/stderr log reference")
+     expected=expected.replace(
+      '**DES (Question 4.8 + step 4.13)** — or one of the two documented skip lines ("skipped — LiteCast" / "skipped — کاربر انتخاب کرد بدون DES منتشر شود")',
+      '**DES (Question 4.8 + step 4.13)** — or an explicit canonical skip ("skipped — LiteCast" / "skipped — چالش" / "skipped — کاربر انتخاب کرد بدون DES منتشر شود" with valid page-bound approval / verified "unsourced_audio_caption" episode exemption)')
     if name == "01-hard-rules.md":
      # PR #920 intentionally amended scoped approval and continuing independent
      # work. Pin that approved text exactly; the legacy snapshot predates it.
@@ -122,6 +125,21 @@ class EntrypointMigrationTests(unittest.TestCase):
      normalized_before=normalized_before.replace(
       "### 4.13. DES — DentCast Evidence Score (run or consume the record)",
       "### 4.13. DES — DentCast Evidence Score (run the scoring prompt, store the record)")
+     # Permit exactly the scoped Challenge/DES exception clarification in the
+     # active module; preserve the remainder of the legacy extracted contract.
+     updated_head=normalized_before.index("**Run step 4.13 on every ordinary page publish**")
+     updated_tail=normalized_before.index("**Order matters:",updated_head)
+     legacy_head=expected_before.index("**Runs for EVERY type, on EVERY publish")
+     legacy_tail=expected_before.index("**Order matters:",legacy_head)
+     challenge_exception=normalized_before[updated_head:updated_tail]
+     for term in ("Phase B Question 4.9", "C.4.13: skipped — چالش",
+                  "without invoking", "no entry for this content ID",
+                  "data-dc-challenge-question", "Phase F",
+                  "All other applicable pages must have a valid DES record"):
+      self.assertIn(term,challenge_exception)
+     normalized_before=(normalized_before[:updated_head]+
+                        expected_before[legacy_head:legacy_tail]+
+                        normalized_before[updated_tail:])
      self.assertEqual(normalized_before.rstrip("\n"),expected_before.rstrip("\n"))
      self.assertEqual(actual_after.rstrip("\n"),expected_after.rstrip("\n"))
      for required in ("independent DES and Fidelity tracks", "exact `content_id`",
@@ -162,6 +180,32 @@ class EntrypointMigrationTests(unittest.TestCase):
   self.assertIn("without rerunning DES",router)
   self.assertIn("run only any still-owed Fidelity",parity)
   self.assertIn("validated and reused **without rerunning DES**",protocol)
+ def test_challenge_is_an_explicit_des_exemption_not_a_research_basket(self):
+  m8=read(".dentcast/workflows/modules/08-des-fidelity.md")
+  m9=read(".dentcast/workflows/modules/09-challenge.md")
+  m12=read(".dentcast/workflows/modules/12-english-notify-verify.md")
+  parity=read(".dentcast/workflows/agent-parity.md")
+  handoff=read(".dentcast/challenge-handoff.md")
+  checkpoint=read(".dentcast/workflows/publish-checkpoints.md")
+  verifier=read("tools/verify_publish.py")
+  for part in (m8,m9,m12,parity,handoff):
+   with self.subTest(source=part[:55]):
+    self.assertIn("چالش",part)
+    self.assertIn("4.13",part)
+  self.assertIn("C.4.13: skipped — چالش",m8)
+  self.assertIn("**All other applicable pages must have a valid DES record.**",m8)
+  self.assertIn("without invoking",m8)
+  self.assertIn("no entry for this content ID",m8)
+  self.assertIn("data-dc-challenge-question",m8)
+  self.assertIn("4.13 DES | **skip, reported**",m9)
+  self.assertIn("4.13 DES | **skip, reported**",handoff)
+  self.assertIn("data-dc-challenge-question",verifier)
+  self.assertIn('elif is_challenge:',verifier)
+  self.assertIn('rep.skip("4.13 DES", "چالش:',verifier)
+  self.assertIn('rep.fail("4.13 DES", "missing DES without a valid exemption:',verifier)
+  self.assertIn("LiteCast/Challenge",checkpoint)
+  self.assertNotIn("two documented skip lines",m12)
+  self.assertIn("چالش هیچ رکورد DES ندارد",parity)
  def test_development_records_are_explicitly_historical(self):
   for p in (ROOT/".dentcast/workflows/modules").glob("*.md"):
    if re.match(r"\d\d-",p.name) or p.name=="INDEX.md": continue
