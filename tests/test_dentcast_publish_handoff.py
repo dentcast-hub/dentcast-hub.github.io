@@ -349,6 +349,47 @@ class HandoffTests(unittest.TestCase):
         if os.name != "nt":
             self.assertIn("line\nbreak.txt", files)
 
+    def test_git_index_snapshot_parses_only_once_and_keeps_full_index_guard(self):
+        # Include pathspec-like filenames: the safety check must cover ALL
+        # tracked files and not accidentally become a scoped ls-files query.
+        for name in ("literal[1].txt", "star*.txt", "some?file.txt"):
+            (self.root / name).write_text("tracked\\n")
+        run(self.root, "add", "--", "literal[1].txt", "star*.txt", "some?file.txt")
+        full = h.index_entries(self.root)
+        with patch.object(h, "index_entries", wraps=h.index_entries) as parse:
+            with patch.object(h, "git", wraps=h.git) as git_call:
+                snap = h.snapshot(self.root, ["note.html"])
+        self.assertEqual(parse.call_count, 1)
+        index_calls = [
+            call.args[1:] for call in git_call.call_args_list
+            if len(call.args) > 1 and call.args[1] == "ls-files"
+        ]
+        self.assertEqual(index_calls, [
+            ("ls-files", "--stage", "-z"), ("ls-files", "--stage", "-z")
+        ])
+        for name in ("literal[1].txt", "star*.txt", "some?file.txt", "note.html"):
+            self.assertEqual(snap["files"][name]["index"], full.get(name, []))
+
+    def test_git_index_change_between_snapshot_reads_fails_closed(self):
+        # Simulate another process staging a file after the second status
+        # scan but before the second index read: stale snapshots must fail.
+        original = h.git
+        index_reads = 0
+
+        def mutate_between_index_reads(root, *args, **kwargs):
+            nonlocal index_reads
+            if args == ("ls-files", "--stage", "-z"):
+                index_reads += 1
+                if index_reads == 2:
+                    (self.root / "concurrent-stage.txt").write_text("external")
+                    run(self.root, "add", "--", "concurrent-stage.txt")
+            return original(root, *args, **kwargs)
+
+        with patch.object(h, "git", side_effect=mutate_between_index_reads):
+            self.assert_blocked("GIT_CHANGED_DURING_SNAPSHOT", h.snapshot, self.root,
+                                ["note.html"])
+        self.assertEqual(index_reads, 2)
+
     def test_unsafe_targets_rejected_before_state_creation(self):
         for target in ("../outside", "/tmp/outside", ".git/config", "a/../b", "C:/x", "a\\b", h.STATE_PATH):
             with self.subTest(target=target):
