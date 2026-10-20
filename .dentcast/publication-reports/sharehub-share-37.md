@@ -1,6 +1,6 @@
 # ShareHub 37 publication evidence — 2026-10-20
 
-Status: complete candidate on `publish/share-37-printed-definitive-crowns`; merge explicitly authorized on2026-10-20; live deployment verification in progress. A passing local gate is not evidence of deployment. No PR or automatic merge was made.
+Status: merged in PR936 and live on2026-10-20. Public HTTP200 readback verified the Persian article including ایجینگ (aging), and the live cabinet catalog contains P2943.
 
 ## Editorial and page
 
@@ -33,7 +33,7 @@ Cabinet record **P2943**, topic `Printer`, enriched schema identical to P2942, l
 
 `3d-printing, definitive-restorations, resin-composites, mechanical-properties, color-stability, post-curing, systematic-review, topic:printer, properties-of-3d-printed-resins-for-definitive-dental-restorations`
 
-Actual papers array 2257→2258 and total_papers=2258; historic drive-scan counters retained. No round-hundred threshold crossed, so homepage “over 2200” remains accurate. Cabinet search reads this same catalog; live rendering of the new record remains pending merge/deployment.
+Actual papers array 2257→2258 and total_papers=2258; historic drive-scan counters retained. No round-hundred threshold crossed, so homepage “over 2200” remains accurate. Cabinet search reads this same catalog; live catalog readback confirms the new record after deployment.
 
 ## Taxonomy, search and study aids
 
@@ -156,4 +156,4 @@ No warned rows. The earlier sitemap failure came from checking while its generat
 
 ## Delivery boundary
 
-All applicable preparation is complete; actual branch push, remote tree equality and merge approval are recorded in the publication checkpoint. Founder authorized merge. Live article and cabinet readback are being checked after deployment. The fixed checkpoint must be retained until verified completion and authorized cleanup.
+Founder authorized merge; PR936 merged as37af8c269ab111a58e60f5e929a6d4d71f72ed06. GitHub Pages deployment39389345718 completed successfully. Direct HTTP200 readback verified https://dentcast.org/sharehub/share-37.html and its requested aging spelling; the live cabinet catalog contains P2943, with original PDF Drive linkage preserved. No live-publication blocker remains. Final checkpoint cleanup follows the completion protocol.

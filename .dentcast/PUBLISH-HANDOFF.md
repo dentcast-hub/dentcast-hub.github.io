@@ -55,6 +55,15 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             ".dentcast/publication-reports/sharehub-share-37.md"
           ],
           "scope": "Prepared article verification"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/pull/936 merged37af8c269ab111a58e60f5e929a6d4d71f72ed06",
+            "GitHub Pages run39389345718 completed success",
+            "HTTP200 https://dentcast.org/sharehub/share-37.html contains requested aging spelling",
+            "HTTP200 live dentcast_cabinet_full_catalog.json includes P2943"
+          ],
+          "scope": "Merged publication and live deployment"
         }
       ],
       "inputs": [
@@ -566,7 +575,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Explicit founder merge authorization resolves previous approval blocker; content unchanged"
+    "note": "Merge explicitly authorized and successful; actual public article and cabinet readbacks verified"
   },
   "schema": "publish-handoff-v3"
 }
