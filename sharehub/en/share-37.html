@@ -1,0 +1,452 @@
+<!doctype html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Permanent Printed Crowns: How Much Can We Trust Them? | Share Hub – DentCast</title>
+
+<meta name="description" content="What are the capabilities and limitations of permanent printed crowns? A clinical look at strength, color stability, bonding, and fabrication quality based on a systematic review.">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/en/share-37.html">
+
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="DentCast">
+<meta property="og:title" content="Permanent Printed Crowns: How Much Can We Trust Them? | Share Hub – DentCast">
+<meta property="og:description" content="What are the capabilities and limitations of permanent printed crowns? A clinical look at strength, color stability, bonding, and fabrication quality based on a systematic review.">
+<meta property="og:url" content="https://dentcast.org/sharehub/en/share-37.html">
+<meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Permanent Printed Crowns: How Much Can We Trust Them? | Share Hub – DentCast">
+<meta name="twitter:description" content="What are the capabilities and limitations of permanent printed crowns? A clinical look at strength, color stability, bonding, and fabrication quality based on a systematic review.">
+<meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css?v=7">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+
+  <!-- Theme init — no flash -->
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --radius:18px;
+    }
+
+    html,body { margin:0; padding:0; }
+
+    body {
+      font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+      direction: ltr;
+      background: #f0f2f5;
+      color: #0a1a33;
+      max-width: 47.5rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 6.25rem;line-height:1.9;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0a1020;
+      font-weight: 800;
+      font-size: 1.7rem;
+      line-height: 1.35;
+      margin: 0 0 1.875rem;
+    }
+
+    .glass-box {
+      background: #fff;
+      border: 1px solid rgba(2,35,96,.09);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.875rem;
+      box-shadow: 0 10px 30px rgba(2,35,96,.06);
+    }
+
+    p { margin: 0.875rem 0; font-size: 1.02rem; text-align: left; }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 1.5rem 0 0.625rem;
+      border-left: 4px solid #0b5fff;
+      padding-left: 0.75rem;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* summary tables — LTR counterpart of the .text-box table pattern used elsewhere on the site */
+    .glass-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .glass-box table th,
+    .glass-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:left;
+      vertical-align:top;
+    }
+    .glass-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .glass-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+    @media (max-width:768px){
+      .glass-box table{font-size:.9rem;}
+      .glass-box table th,.glass-box table td{padding:0.45rem 0.5rem;}
+    }
+
+    .text-divider {
+      margin: 1.75rem 0;
+      border: 0;
+      height: 0.0625rem;
+      background-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0),
+        rgba(11,95,255,0.4),
+        rgba(0,0,0,0)
+      );
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { margin: 1.25rem 0; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.7;
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: #4a5568;
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img, .glass-box figure img { width: 100%; height: auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+    /* permission chips */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* Persian-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 0 1.125rem auto;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      h1 { font-size: 1.4rem; }
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  </style>
+
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/en/share-37.html",
+      "url": "https://dentcast.org/sharehub/en/share-37.html",
+      "name": "Permanent Printed Crowns: How Much Can We Trust Them?",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/en/share-37.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/en/share-37.html#creativework",
+      "name": "Permanent Printed Crowns: How Much Can We Trust Them?",
+      "headline": "Permanent Printed Crowns: How Much Can We Trust Them?",
+      "description": "What are the capabilities and limitations of permanent printed crowns? A clinical look at strength, color stability, bonding, and fabrication quality based on a systematic review.",
+      "inLanguage": "en",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Yohann Flottes"
+        }
+      ],
+      "creator": [
+        {
+          "@type": "Person",
+          "name": "Dr. Foad Shahabian"
+        }
+      ],
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/en/share-37.html"
+      },
+      "datePublished": "2026-10-20",
+      "dateModified": "2026-10-20",
+      "genre": "Dental Education",
+      "keywords": [
+        "permanent printed crowns",
+        "printable resin",
+        "post-curing",
+        "aging",
+        "Crowntec",
+        "Permanent Crown",
+        "VarseoSmile Crown"
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DentCast",
+      "item": "https://dentcast.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Share Hub",
+      "item": "https://dentcast.org/sharehub/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Permanent Printed Crowns: How Much Can We Trust Them? | Share Hub – DentCast",
+      "item": "https://dentcast.org/sharehub/en/share-37.html"
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<!-- ── TOP BAR ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<!-- ── MAIN CONTENT ── -->
+
+<main class="article-content-wrap">
+<div class="sh-kicker"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Share Hub</div>
+<h1>Permanent Printed Crowns: How Much Can We Trust Them?</h1>
+<div class="glass-box">
+<a class="lang-btn" href="../share-37.html" rel="noopener"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی</a>
+<div class="sh-dialogue">
+<p>Resins intended for definitive restorations have taken 3D printing beyond provisional restorations. Lower material consumption and potentially lower production costs are appealing, but how well does the term “permanent” align with the evidence?</p>
+<p>The review by Flottes and colleagues examined 42 studies of these materials. <strong>All were laboratory studies, so their findings do not establish the long-term intraoral durability of crowns.</strong></p>
+<h2>Are these materials really ceramics?</h2>
+<p>The materials reviewed are mainly resin composites containing fillers: reinforcing mineral or ceramic particles. <strong>Ceramic fillers do not turn them into zirconia or lithium disilicate.</strong> The resin component still affects strength, water absorption, and discoloration.</p>
+<p>Most information concerned Crowntec, Permanent Crown, and VarseoSmile Crown; their findings cannot be generalized to all printable resins.</p>
+<h2>How strong are they?</h2>
+<p>These resins showed promising strength in many tests, but overall their mechanical properties were lower than those of milled composite blocks: blocks from which a machine cuts the restoration. Direct composites also performed better for some properties.</p>
+<p>In several studies, <strong>aging</strong>—exposing specimens to water, temperature changes, or repeated loading to simulate aspects of the oral environment—reduced material performance. The extent varied between products.</p>
+<p>Withstanding a large load in a fracture test therefore does not, by itself, show that a crown will endure years of chewing forces.</p>
+<h2>How important is fabrication?</h2>
+<p>Final quality depends on more than the resin name. Print orientation, layer thickness, washing, and <strong>post-curing, meaning additional polymerization after printing,</strong> can change material properties.</p>
+<p>In some studies, post-curing significantly increased strength. Conversely, prolonged ethanol washing weakened bonding to cement in one study.</p>
+<p><strong>Longer processing is therefore not necessarily better; the material-specific instructions matter.</strong></p>
+<h2>What about the surface and color?</h2>
+<p>Surface hardness was lower in many comparisons. Surface roughness also depended on the material and finishing method, which matters for restoration appearance and plaque accumulation.</p>
+<p>Polishing and some light-cured protective coatings—coatings hardened with light—improved surface quality or resistance to staining, but results were not the same for every product.</p>
+<p>Color stability in water or artificial saliva was sometimes acceptable, whereas tea and coffee caused substantial discoloration in several tests. <strong>An appropriate shade at delivery does not mean that shade will remain unchanged over time.</strong></p>
+<h2>How should they be bonded?</h2>
+<p>Sandblasting, meaning roughening the surface with abrasive particles, improved bonding in several studies. However, the effects of silane, primer, and acid etching varied between materials.</p>
+<p>This review <strong>does not provide one bonding protocol for all printable resins.</strong> Ceramic particles alone do not justify repeating a glass-ceramic bonding protocol.</p>
+<p>(Surface preparation should follow the instructions for the particular resin and cement system.)</p>
+<h2>Are they biologically reliable?</h2>
+<p>Most cell studies found acceptable results, but some unfavorable findings were also reported. Information about monomer release—unreacted resin molecules—and long-term effects remains limited. These laboratory findings alone establish neither clinical harm nor long-term safety.</p>
+<h2>What does this mean clinically?</h2>
+<p>These materials have potential for single-unit definitive restorations, but <strong>their performance cannot yet be considered equivalent to established materials.</strong> Fabrication quality, bonding, surface finishing, and color stability all matter when evaluating them.</p>
+<p>(This review alone is insufficient to endorse their use for multi-unit bridges, extensive rehabilitations, or patients with high loading forces.)</p>
+<p><strong>“Permanent” describes the product's proposed use; long-term durability must be demonstrated in clinical studies.</strong></p>
+
+</div>
+<div class="author">Source article: <a href="https://doi.org/10.1016/j.prosdent.2025.11.040" target="_blank" rel="noopener noreferrer">Yohann Flottes</a></div>
+</div>
+<footer class="dc-site-footer"><a href="/sharehub/">← Back to Share Hub</a><div>© 2026 DentCast</div></footer>
+</main>
+
+<script src="/global-search.js?v=15" defer></script>
+<script src="/dc-nav.js?v=284" defer></script>
+</body>
+</html>

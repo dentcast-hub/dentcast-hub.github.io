@@ -37735,6 +37735,86 @@
           ]
         }
       ]
+    },
+    "sharehub/share-37": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/sharehub/share-37.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا وجود فیلر سرامیکی در رزین پرینتی، آن را به زیرکونیا یا لیتیوم دی‌سیلیکات تبدیل می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ این مواد همچنان دارای بخش رزینی‌اند و خواص آن‌ها با سرامیک‌های مذکور یکسان نیست."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا مقاومت مناسب رزین پرینتی در تست شکست، به‌تنهایی دوام چندسالهٔ روکش داخل دهان را ثابت می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ تحمل یک بار در آزمایش با حفظ عملکرد زیر بارهای تکراری و شرایط دهان متفاوت است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا شرایط پست‌کیور می‌تواند خواص نهایی رزین پرینتی را تغییر دهد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ زمان و شرایط پلیمریزاسیون تکمیلی از عوامل مؤثر بر خواص ماده‌اند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا شست‌وشوی طولانی‌تر رزین پرینتی همیشه اتصال آن به سمان را بهتر می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ در یک مطالعه شست‌وشوی طولانی در اتانول اتصال به سمان را کاهش داده بود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا یک پروتکل آماده‌سازی سطح برای تمام رزین‌های پرینتی مناسب است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ پاسخ به آماده‌سازی سطح بین مواد متفاوت است و دستورالعمل همان رزین و سیستم سمان باید در نظر گرفته شود."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/sharehub/share-37.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-37.html#flashcards-c1",
+              "name": "ماهیت رزین پرینتیِ حاوی فیلر سرامیکی",
+              "description": "یک مادهٔ رزین‌ماتریکس است که ذرات معدنی یا سرامیکی آن را تقویت می‌کنند؛ وجود این ذرات به معنی یکسان‌بودن ماده با زیرکونیا یا لیتیوم دی‌سیلیکات نیست.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-37.html#flashcards-c2",
+              "name": "پست‌کیور رستوریشن پرینتی",
+              "description": "مرحلهٔ تکمیل پلیمریزاسیون پس از پرینت است؛ شرایط اجرای آن می‌تواند خواص نهایی رزین را تغییر دهد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-37.html#flashcards-c3",
+              "name": "ایجینگ (aging) آزمایشگاهی",
+              "description": "مواجههٔ کنترل‌شدهٔ نمونه با عواملی مانند رطوبت، تغییرات دما یا نیروهای تکراری برای شبیه‌سازی بخشی از شرایط دهان است؛ جایگزین پیگیری بالینی بلندمدت نیست.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
