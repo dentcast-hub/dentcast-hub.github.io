@@ -17046,5 +17046,34 @@
       "secondary": [],
       "subtopic": "comprehensive-diagnosis"
     }
+  },
+  {
+    "type": "sharehub",
+    "id": "37",
+    "title": "روکش‌های پرینتیِ دائم؛ چقدر می‌توان به آن‌ها اعتماد کرد؟",
+    "caption": "روکش‌های پرینتیِ دائم چه قابلیت‌ها و محدودیت‌هایی دارند؟ نگاهی بالینی به مقاومت، ثبات رنگ، باند و کیفیت ساخت بر اساس یک ریویوی سیستماتیک.",
+    "author": "Yohann Flottes",
+    "source": "https://doi.org/10.1016/j.prosdent.2025.11.040",
+    "hashtags": [
+      "#پرینت_سه_بعدی",
+      "#روکش",
+      "#انتخاب_متریال",
+      "#دندانپزشکی_دیجیتال"
+    ],
+    "keywords": [
+      "روکش پرینتی دائم",
+      "رزین پرینتی",
+      "پست‌کیور",
+      "aging",
+      "Crowntec",
+      "Permanent Crown",
+      "VarseoSmile Crown"
+    ],
+    "url": "/sharehub/share-37.html",
+    "pillar": {
+      "primary": "digital",
+      "secondary": [],
+      "subtopic": "cad-cam"
+    }
   }
 ]

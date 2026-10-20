@@ -2073,6 +2073,43 @@
    ]
   },
   {
+   "key": "انتخاب_متریال",
+   "tag": "#انتخاب_متریال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخاب جنس رستوریشن بر اساس شرایط کیس.",
+   "use_when": "مقاله بین متریال‌ها انتخاب کند.",
+   "aliases": [
+    "material selection",
+    "انتخاب ماده",
+    "انتخاب جنس رستوریشن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 19,
+   "content_ids": [
+    "episodes/episode-15",
+    "episodes/episode-18",
+    "episodes/episode-41",
+    "episodes/episode-69",
+    "episodes/episode-89",
+    "episodes/episode-98",
+    "episodes/episode-141",
+    "dentai/dentai-6",
+    "insight/insight-10",
+    "notecast/episode-8",
+    "notecast/episode-29",
+    "notecast/episode-30",
+    "insight/insight-27",
+    "insight/insight-42",
+    "episodes/episode-158",
+    "episodes/episode-159-1",
+    "insight/insight-57",
+    "notecast/episode-41",
+    "sharehub/share-37"
+   ]
+  },
+  {
    "key": "تشخیص_افتراقی",
    "tag": "#تشخیص_افتراقی",
    "domain": "clinical",
@@ -2106,42 +2143,6 @@
     "chairside/chairside-28",
     "sharehub/share-12",
     "chairside/chairside-29"
-   ]
-  },
-  {
-   "key": "انتخاب_متریال",
-   "tag": "#انتخاب_متریال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخاب جنس رستوریشن بر اساس شرایط کیس.",
-   "use_when": "مقاله بین متریال‌ها انتخاب کند.",
-   "aliases": [
-    "material selection",
-    "انتخاب ماده",
-    "انتخاب جنس رستوریشن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 18,
-   "content_ids": [
-    "episodes/episode-15",
-    "episodes/episode-18",
-    "episodes/episode-41",
-    "episodes/episode-69",
-    "episodes/episode-89",
-    "episodes/episode-98",
-    "episodes/episode-141",
-    "dentai/dentai-6",
-    "insight/insight-10",
-    "notecast/episode-8",
-    "notecast/episode-29",
-    "notecast/episode-30",
-    "insight/insight-27",
-    "insight/insight-42",
-    "episodes/episode-158",
-    "episodes/episode-159-1",
-    "insight/insight-57",
-    "notecast/episode-41"
    ]
   },
   {
@@ -2186,6 +2187,81 @@
    ]
   },
   {
+   "key": "دندانپزشکی_دیجیتال",
+   "tag": "#دندانپزشکی_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "digital dentistry",
+    "دندونپزشکی دیجیتال",
+    "دیجیتال دنتیستری"
+   ],
+   "variants": [
+    "#دیجیتال",
+    "#DigitalDentistry",
+    "#Digital_Dentistry"
+   ],
+   "co_tags": [],
+   "count": 18,
+   "content_ids": [
+    "episodes/episode-97",
+    "episodes/episode-98",
+    "episodes/episode-105",
+    "episodes/episode-106-2",
+    "episodes/episode-122-2",
+    "episodes/episode-123-1",
+    "episodes/episode-128-1",
+    "episodes/episode-144-2",
+    "episodes/episode-147-9",
+    "episodes/episode-149-2",
+    "episodes/episode-150-1",
+    "litecast/lite-CAST9",
+    "sharehub/share-2",
+    "litecast/lite-CAST14",
+    "episodes/episode-156",
+    "metanotes/meta-15",
+    "metanotes/meta-16",
+    "sharehub/share-37"
+   ]
+  },
+  {
+   "key": "روکش",
+   "tag": "#روکش",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "چترِ عامِ روکش.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "crown",
+    "کراون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 18,
+   "content_ids": [
+    "episodes/episode-2",
+    "episodes/episode-8",
+    "dentcast-plus/video-6",
+    "metanotes/meta-12",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "chairside/chairside-15",
+    "insight/insight-49",
+    "chairside/chairside-22",
+    "chairside/chairside-27",
+    "chairside/chairside-29",
+    "insight/insight-61",
+    "sharehub/share-15",
+    "dentcast-plus/video-9",
+    "insight/insight-76",
+    "sharehub/share-30",
+    "insight/insight-94",
+    "sharehub/share-37"
+   ]
+  },
+  {
    "key": "chatgpt",
    "tag": "#ChatGPT",
    "domain": "ai",
@@ -2219,79 +2295,6 @@
     "dentai/promptologist/prompt6-2",
     "dentai/promptologist/prompt6-3",
     "dentai/promptologist/prompt7-1"
-   ]
-  },
-  {
-   "key": "دندانپزشکی_دیجیتال",
-   "tag": "#دندانپزشکی_دیجیتال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "digital dentistry",
-    "دندونپزشکی دیجیتال",
-    "دیجیتال دنتیستری"
-   ],
-   "variants": [
-    "#دیجیتال",
-    "#DigitalDentistry",
-    "#Digital_Dentistry"
-   ],
-   "co_tags": [],
-   "count": 17,
-   "content_ids": [
-    "episodes/episode-97",
-    "episodes/episode-98",
-    "episodes/episode-105",
-    "episodes/episode-106-2",
-    "episodes/episode-122-2",
-    "episodes/episode-123-1",
-    "episodes/episode-128-1",
-    "episodes/episode-144-2",
-    "episodes/episode-147-9",
-    "episodes/episode-149-2",
-    "episodes/episode-150-1",
-    "litecast/lite-CAST9",
-    "sharehub/share-2",
-    "litecast/lite-CAST14",
-    "episodes/episode-156",
-    "metanotes/meta-15",
-    "metanotes/meta-16"
-   ]
-  },
-  {
-   "key": "روکش",
-   "tag": "#روکش",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "چترِ عامِ روکش.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "crown",
-    "کراون"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 17,
-   "content_ids": [
-    "episodes/episode-2",
-    "episodes/episode-8",
-    "dentcast-plus/video-6",
-    "metanotes/meta-12",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "chairside/chairside-15",
-    "insight/insight-49",
-    "chairside/chairside-22",
-    "chairside/chairside-27",
-    "chairside/chairside-29",
-    "insight/insight-61",
-    "sharehub/share-15",
-    "dentcast-plus/video-9",
-    "insight/insight-76",
-    "sharehub/share-30",
-    "insight/insight-94"
    ]
   },
   {
@@ -12654,6 +12657,28 @@
    ]
   },
   {
+   "key": "پرینت_سه_بعدی",
+   "tag": "#پرینت_سه_بعدی",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "پرینتِ سه‌بعدی در دندانپزشکی — ساختِ افزایشیِ گاید، مدل و قطعاتِ سفارشی.",
+   "use_when": "مقاله پرینتِ سه‌بعدی را موضوع داشته باشد.",
+   "aliases": [
+    "3d printing",
+    "پرینت سه بعدی",
+    "پرینت سه‌بعدی",
+    "additive manufacturing",
+    "چاپ سه بعدی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-147-9",
+    "sharehub/share-37"
+   ]
+  },
+  {
    "key": "پلان_اکلوژن",
    "tag": "#پلان_اکلوژن",
    "domain": "clinical",
@@ -20375,27 +20400,6 @@
    ]
   },
   {
-   "key": "پرینت_سه_بعدی",
-   "tag": "#پرینت_سه_بعدی",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "پرینتِ سه‌بعدی در دندانپزشکی — ساختِ افزایشیِ گاید، مدل و قطعاتِ سفارشی.",
-   "use_when": "مقاله پرینتِ سه‌بعدی را موضوع داشته باشد.",
-   "aliases": [
-    "3d printing",
-    "پرینت سه بعدی",
-    "پرینت سه‌بعدی",
-    "additive manufacturing",
-    "چاپ سه بعدی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-147-9"
-   ]
-  },
-  {
    "key": "پست_زیرکونیا",
    "tag": "#پست_زیرکونیا",
    "domain": "clinical",
@@ -21893,6 +21897,7 @@
   "اتصال دندان به ایمپلنت": "بریج دندان ایمپلنت",
   "step by step prompting": "شکستن کار",
   "oxygen inhibited layer": "لایه مهار اکسیژن",
+  "additive manufacturing": "پرینت سه بعدی",
   "cementoenamel junction": "cej",
   "crack removal endpoint": "crre",
   "gap فضای اطراف ایمپلنت": "jumping gap",
@@ -21910,7 +21915,6 @@
   "supragingival material": "متریال سوپراجینجیوال",
   "مطالعه بدون گروه کنترل": "مطالعه بدون کنترل",
   "peri implant mucositis": "موکوزیت پری ایمپلنت",
-  "additive manufacturing": "پرینت سه بعدی",
   "zirconium dioxide post": "پست زیرکونیا",
   "پیچ شکسته داخل ایمپلنت": "شکست پیچ ایمپلنت",
   "deep margin elevation": "dme",
@@ -22362,9 +22366,9 @@
   "taraz e shavahed": "تراز شواهد",
   "سلکتیو گرایندینگ": "تنظیم اکلوژن",
   "peri implantitis": "پری ایمپلنتیتیس",
+  "ریهبیلیتیشن دهان": "بازسازی کامل دهان",
   "استخوان مارژینال": "تحلیل استخوان کرستال",
   "digital presence": "حضور آنلاین دندانپزشک",
-  "ریهبیلیتیشن دهان": "بازسازی کامل دهان",
   "فاصله بین دندانی": "دیاستم",
   "practice website": "سایت مطب",
   "temporary cement": "سمان موقت",
@@ -23602,6 +23606,8 @@
   "روشنایی رنگ": "ولیو",
   "پاپیلای لثه": "پاپیلا",
   "الگوی رزینی": "پترن رزین",
+  "3d printing": "پرینت سه بعدی",
+  "چاپ سه بعدی": "پرینت سه بعدی",
   "پلن اکلوزال": "پلان اکلوژن",
   "سطح اکلوزال": "پلان اکلوژن",
   "قند سه ماهه": "کنترل قند خون",
@@ -23625,6 +23631,8 @@
   "اسثتیک ویدث": "زیبایی ویدث",
   "smear layer": "اسمیر لایر",
   "reverse jig": "اسپرو",
+  "frank spear": "اسپیر",
+  "فرانک اسپیر": "اسپیر",
   "الکتروکوتری": "الکتروسرجری",
   "پذیرش بیمار": "انتخاب بیمار",
   "سلکشن بیمار": "انتخاب کیس",
@@ -23716,8 +23724,6 @@
   "کنترل حرکتی": "هماهنگی عصبی عضلانی",
   "home bleach": "هوم بلیچ",
   "veneer wing": "وینگ لمینیت",
-  "3d printing": "پرینت سه بعدی",
-  "چاپ سه بعدی": "پرینت سه بعدی",
   "پست سرامیکی": "پست زیرکونیا",
   "پست و کراون": "پست و روکش",
   "air syringe": "پوآر",
@@ -23747,8 +23753,6 @@
   "canker sore": "آفت دهان",
   "mouth ulcer": "آفت دهان",
   "semaglutide": "تیرزپاتاید",
-  "frank spear": "اسپیر",
-  "فرانک اسپیر": "اسپیر",
   "بایومیمتیک": "بیومیمتیک",
   "بیو میمتیک": "بیومیمتیک",
   "بیومی متیک": "بیومیمتیک",
@@ -24281,10 +24285,10 @@
   "ایزولیشن": "ایزولاسیون",
   "all on 4": "ایمپلنت بیمار بی دندان",
   "all on 6": "ایمپلنت بیمار بی دندان",
+  "فول ماوس": "بازسازی کامل دهان",
   "آی دی اس": "ids",
   "تی ام دی": "tmd",
   "اندوکران": "اندوکراون",
-  "فول ماوس": "بازسازی کامل دهان",
   "diastema": "دیاستم",
   "سمان تمپ": "سمان موقت",
   "پرپ روکش": "تراش روکش",
@@ -24714,6 +24718,7 @@
   "ریدیم": "redeem",
   "ساکسس": "success",
   "sprue": "اسپرو",
+  "spear": "اسپیر",
   "alara": "ایمنی پرتو",
   "botox": "بوتاکس",
   "stela": "جایگزین آمالگام",
@@ -24728,7 +24733,6 @@
   "بالچه": "وینگ لمینیت",
   "بک آپ": "پشتیبان گیری",
   "piezo": "پیزو",
-  "spear": "اسپیر",
   "glp 1": "داروهای لاغری",
   "پارشل": "پارشیال",
   "emax": "لیتیوم دی سیلیکات",
