@@ -960,7 +960,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 36,
+   "count": 37,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -997,7 +997,8 @@
     "sharehub/share-33",
     "sharehub/share-34",
     "sharehub/share-35",
-    "sharehub/share-36"
+    "sharehub/share-36",
+    "sharehub/share-38"
    ]
   },
   {
@@ -1013,7 +1014,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 36,
+   "count": 37,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1050,7 +1051,8 @@
     "sharehub/share-33",
     "sharehub/share-34",
     "sharehub/share-35",
-    "sharehub/share-36"
+    "sharehub/share-36",
+    "sharehub/share-38"
    ]
   },
   {
@@ -2148,6 +2150,47 @@
    ]
   },
   {
+   "key": "دندانپزشکی_دیجیتال",
+   "tag": "#دندانپزشکی_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "digital dentistry",
+    "دندونپزشکی دیجیتال",
+    "دیجیتال دنتیستری"
+   ],
+   "variants": [
+    "#دیجیتال",
+    "#DigitalDentistry",
+    "#Digital_Dentistry"
+   ],
+   "co_tags": [],
+   "count": 19,
+   "content_ids": [
+    "episodes/episode-97",
+    "episodes/episode-98",
+    "episodes/episode-105",
+    "episodes/episode-106-2",
+    "episodes/episode-122-2",
+    "episodes/episode-123-1",
+    "episodes/episode-128-1",
+    "episodes/episode-144-2",
+    "episodes/episode-147-9",
+    "episodes/episode-149-2",
+    "episodes/episode-150-1",
+    "litecast/lite-CAST9",
+    "sharehub/share-2",
+    "litecast/lite-CAST14",
+    "episodes/episode-156",
+    "metanotes/meta-15",
+    "metanotes/meta-16",
+    "sharehub/share-37",
+    "sharehub/share-38"
+   ]
+  },
+  {
    "key": "ترمیم_غیرمستقیم",
    "tag": "#ترمیم_غیرمستقیم",
    "domain": "clinical",
@@ -2186,46 +2229,6 @@
     "dentai/dentai-29",
     "insight/insight-84",
     "sharehub/share-32"
-   ]
-  },
-  {
-   "key": "دندانپزشکی_دیجیتال",
-   "tag": "#دندانپزشکی_دیجیتال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "digital dentistry",
-    "دندونپزشکی دیجیتال",
-    "دیجیتال دنتیستری"
-   ],
-   "variants": [
-    "#دیجیتال",
-    "#DigitalDentistry",
-    "#Digital_Dentistry"
-   ],
-   "co_tags": [],
-   "count": 18,
-   "content_ids": [
-    "episodes/episode-97",
-    "episodes/episode-98",
-    "episodes/episode-105",
-    "episodes/episode-106-2",
-    "episodes/episode-122-2",
-    "episodes/episode-123-1",
-    "episodes/episode-128-1",
-    "episodes/episode-144-2",
-    "episodes/episode-147-9",
-    "episodes/episode-149-2",
-    "episodes/episode-150-1",
-    "litecast/lite-CAST9",
-    "sharehub/share-2",
-    "litecast/lite-CAST14",
-    "episodes/episode-156",
-    "metanotes/meta-15",
-    "metanotes/meta-16",
-    "sharehub/share-37"
    ]
   },
   {
@@ -3483,6 +3486,44 @@
    ]
   },
   {
+   "key": "ایمپلنت_فول_آرچ",
+   "tag": "#ایمپلنت_فول_آرچ",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
+   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
+   "aliases": [
+    "all on 4",
+    "all-on-4",
+    "آل آن فور",
+    "allon4",
+    "ایمپلنت تمام فک",
+    "all on 6",
+    "all on four",
+    "all-on-four",
+    "allonfour"
+   ],
+   "variants": [
+    "#AllOn4"
+   ],
+   "co_tags": [
+    "#Full_Arch_Implant"
+   ],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-108",
+    "episodes/episode-144-1",
+    "insight/insight-51",
+    "metanotes/meta-17",
+    "sharehub/share-11",
+    "insight/insight-60",
+    "dentai/dentai-31",
+    "insight/insight-80",
+    "insight/insight-82",
+    "sharehub/share-38"
+   ]
+  },
+  {
    "key": "زیبایی_قدامی",
    "tag": "#زیبایی_قدامی",
    "domain": null,
@@ -3709,43 +3750,6 @@
     "sharehub/share-22",
     "sharehub/share-23",
     "metanotes/meta-21"
-   ]
-  },
-  {
-   "key": "ایمپلنت_فول_آرچ",
-   "tag": "#ایمپلنت_فول_آرچ",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
-   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
-   "aliases": [
-    "all on 4",
-    "all-on-4",
-    "آل آن فور",
-    "allon4",
-    "ایمپلنت تمام فک",
-    "all on 6",
-    "all on four",
-    "all-on-four",
-    "allonfour"
-   ],
-   "variants": [
-    "#AllOn4"
-   ],
-   "co_tags": [
-    "#Full_Arch_Implant"
-   ],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-108",
-    "episodes/episode-144-1",
-    "insight/insight-51",
-    "metanotes/meta-17",
-    "sharehub/share-11",
-    "insight/insight-60",
-    "dentai/dentai-31",
-    "insight/insight-80",
-    "insight/insight-82"
    ]
   },
   {
@@ -4918,6 +4922,34 @@
    ]
   },
   {
+   "key": "اسکن_بادی",
+   "tag": "#اسکن_بادی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "قطعه‌ی اسکن‌بادی روی ایمپلنت.",
+   "use_when": "مقاله انتخاب یا رفتار اسکن‌بادی را دخیل بداند.",
+   "aliases": [
+    "scanbody",
+    "اسکن بادی ایمپلنت",
+    "scan body"
+   ],
+   "variants": [
+    "#Scan_Body"
+   ],
+   "co_tags": [
+    "#Scan_Body"
+   ],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-133",
+    "sharehub/share-2",
+    "insight/insight-26",
+    "insight/insight-31",
+    "insight/insight-35",
+    "sharehub/share-38"
+   ]
+  },
+  {
    "key": "انتخاب_پایه",
    "tag": "#انتخاب_پایه",
    "domain": null,
@@ -5704,33 +5736,6 @@
     "metanotes/meta-10",
     "notecast/episode-31",
     "insight/insight-86"
-   ]
-  },
-  {
-   "key": "اسکن_بادی",
-   "tag": "#اسکن_بادی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "قطعه‌ی اسکن‌بادی روی ایمپلنت.",
-   "use_when": "مقاله انتخاب یا رفتار اسکن‌بادی را دخیل بداند.",
-   "aliases": [
-    "scanbody",
-    "اسکن بادی ایمپلنت",
-    "scan body"
-   ],
-   "variants": [
-    "#Scan_Body"
-   ],
-   "co_tags": [
-    "#Scan_Body"
-   ],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-133",
-    "sharehub/share-2",
-    "insight/insight-26",
-    "insight/insight-31",
-    "insight/insight-35"
    ]
   },
   {
@@ -14003,6 +14008,26 @@
    ]
   },
   {
+   "key": "reverse_scan_body",
+   "tag": "#Reverse_Scan_Body",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "روش دیجیتال برای بازسازی موقعیت اتصالات ایمپلنت از اسکن‌بادی‌هایی که به سطح داخلی یک پروتز موقت با فیت تأییدشده متصل شده‌اند، نه از اسکن مستقیم داخل‌دهانی.",
+   "use_when": "مطلب مشخصاً دربارهٔ فلسفه، مراحل، محدودیت‌ها یا مقایسهٔ Reverse Scan Body با اسکن‌بادی معمول / فوتوگرامتری باشد.",
+   "aliases": [
+    "reverse scan body",
+    "اسکن‌بادی معکوس",
+    "اسکن بادی معکوس",
+    "RSB"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-38"
+   ]
+  },
+  {
    "key": "role_prompting",
    "tag": "#Role_Prompting",
    "domain": "ai",
@@ -22031,9 +22056,9 @@
   "بالا بردن بعد عمودی": "افزایش vd",
   "سایت شخصی دندانپزشک": "سایت مطب",
   "monolithic zirconia": "زیرکونیا مونولیتیک",
-  "انتخاب اباتمنت پایه": "انتخاب پایه",
   "از دست رفتن ایمپلنت": "شکست ایمپلنت",
   "ناموفق بودن ایمپلنت": "شکست ایمپلنت",
+  "انتخاب اباتمنت پایه": "انتخاب پایه",
   "immediate placement": "ایمپلنت فوری",
   "دندانپزشکی کم تهاجم": "حداقل تهاجم",
   "observational study": "مطالعه مشاهده ای",
@@ -22108,8 +22133,8 @@
   "canker sore trigger": "محرک آفت",
   "روکش گذاری ایمپلنت": "پروتز ایمپلنت",
   "material selection": "انتخاب متریال",
-  "رستوریشن غیرمستقیم": "ترمیم غیرمستقیم",
   "دندونپزشکی دیجیتال": "دندانپزشکی دیجیتال",
+  "رستوریشن غیرمستقیم": "ترمیم غیرمستقیم",
   "lithium disilicate": "لیتیوم دی سیلیکات",
   "tooth preservation": "حفظ دندان",
   "digital impression": "قالبگیری دیجیتال",
@@ -22128,6 +22153,7 @@
   "cuspal inclination": "شیب کاسپی",
   "platform ownership": "مالکیت پلتفرم",
   "content permanence": "ماندگاری محتوا",
+  "پروتز پارسیل متحرک": "پروتز پارشیال",
   "universal adhesive": "یونیورسال باند",
   "ایمپلنت ناحیه قدام": "ایمپلنت قدامی",
   "ایمپلنت زون زیبایی": "ایمپلنت قدامی",
@@ -22139,7 +22165,6 @@
   "incomplete seating": "نشست ناقص",
   "digital prosthesis": "پروتز دیجیتال",
   "پروتز زیبایی دندان": "پروتز زیبایی",
-  "پروتز پارسیل متحرک": "پروتز پارشیال",
   "implant connection": "کانکشن ایمپلنت",
   "implant components": "اجزای ایمپلنت",
   "name address phone": "اطلاعات مطب",
@@ -22234,12 +22259,12 @@
   "implant treatment": "درمان ایمپلنت",
   "بالا آوردن مارجین": "dme",
   "دیپ مارژین الویشن": "dme",
+  "اسکن بادی ایمپلنت": "اسکن بادی",
   "immediate loading": "زمان بارگذاری ایمپلنت",
   "clinical judgment": "قضاوت اینسایت",
   "دستورالعمل بالینی": "گایدلاین",
   "بعد عمودی اکلوزال": "vdo",
   "surface treatment": "آماده سازی سرامیک",
-  "اسکن بادی ایمپلنت": "اسکن بادی",
   "crown replacement": "تعویض روکش",
   "primary stability": "ثبات اولیه",
   "مطالعات مشاهده ای": "مطالعه مشاهده ای",
@@ -22562,9 +22587,9 @@
   "نگه داشتن دندان": "حفظ دندان",
   "tooth retention": "حفظ دندان",
   "پری ایمپلنتایتس": "پری ایمپلنتیتیس",
+  "ایمپلنت تمام فک": "ایمپلنت بیمار بی دندان",
   "shade selection": "انتخاب shade",
   "ceramic etching": "اچ سرامیک",
-  "ایمپلنت تمام فک": "ایمپلنت بیمار بی دندان",
   "online presence": "حضور آنلاین دندانپزشک",
   "silane coupling": "سایلان",
   "اختلال مفصل فکی": "tmd",
@@ -22599,6 +22624,8 @@
   "ضد چرخش اباتمنت": "ضد چرخش",
   "لبه برنده لمینت": "لبه اینسایزال",
   "retraction cord": "نخ زیرلثه",
+  "partial denture": "پروتز پارشیال",
+  "پارسیل دفینیتیو": "پروتز پارشیال",
   "کانتور رستوریشن": "کانتور ترمیم",
   "markdown format": "markdown",
   "جدا کردن کانتکت": "باز کردن کانتکت",
@@ -22616,8 +22643,6 @@
   "فالو آپ ایمپلنت": "پیگیری زمانی ایمپلنت",
   "لایبرری ایمپلنت": "لایبرری دیجیتال",
   "risk management": "مدیریت ریسک",
-  "partial denture": "پروتز پارشیال",
-  "پارسیل دفینیتیو": "پروتز پارشیال",
   "polycrystalline": "پلی کریستالین",
   "تماس پروگزیمالی": "کانتکت پروگزیمال",
   "کنترل لابراتوار": "کنترل کار لابراتوار",
@@ -22668,6 +22693,7 @@
   "بازیابی و تولید": "rag",
   "مطالعه راسپرینی": "rasperini",
   "maryland bridge": "rbfdp",
+  "اسکن بادی معکوس": "reverse اسکن بادی",
   "prompt chaining": "شکستن کار",
   "type 2 diabetes": "type2 دیابت",
   "implant abscess": "آبسه ایمپلنت",
@@ -22994,6 +23020,7 @@
   "اسپلینت تراپی": "اسپلینت",
   "ترمیم زیر لثه": "ترمیم ساب جینجیوال",
   "ایمپلنت تراپی": "درمان ایمپلنت",
+  "فیلور ایمپلنت": "شکست ایمپلنت",
   "مرجین سرامیکی": "مارجین روکش",
   "مهندسی پرامپت": "پرامپت نویسی",
   "titanium base": "تیتانیوم لاینر",
@@ -23002,7 +23029,6 @@
   "fact checking": "راستی آزمایی",
   "excess cement": "سمان باقیمانده",
   "supraeruption": "سوپرااراپشن",
-  "فیلور ایمپلنت": "شکست ایمپلنت",
   "قضاوت کلینیکی": "قضاوت اینسایت",
   "ایمپکشن غذایی": "گیر غذایی",
   "food trapping": "گیر غذایی",
@@ -23490,12 +23516,12 @@
   "دندان جلویی": "دندان قدامی",
   "تنسایل باند": "قدرت باند",
   "periodontal": "پریودنتال",
+  "all on four": "ایمپلنت بیمار بی دندان",
   "زیبایی قدام": "زیبایی قدامی",
   "فضای پروتزی": "فضای رستوریتیو",
   "آگاهی بیمار": "آگاهی درمانی",
   "هیدروفلوریک": "اچ سرامیک",
   "ایزوله کردن": "ایزولاسیون",
-  "all on four": "ایمپلنت بیمار بی دندان",
   "plak e sefr": "پلاک صفر",
   "وب سایت مطب": "سایت مطب",
   "طراحی پژوهش": "طراحی مطالعه",
@@ -24007,8 +24033,8 @@
   "play store": "گوگل پلی",
   "کامپلیکیشن": "عوارض",
   "پلن درمان": "طرح درمان",
-  "پست دندان": "پست و کور",
   "occlusion": "اکلوژن",
+  "پست دندان": "پست و کور",
   "chairside": "چیرساید",
   "گزارش کیس": "کیس اینسایت",
   "دنت ای آی": "dentai",
@@ -24026,10 +24052,10 @@
   "prognosis": "پروگنوز دندان",
   "اکستراکشن": "کشیدن دندان",
   "پریودنتیت": "پریودنتال",
-  "قالب گیری": "قالبگیری",
-  "isolation": "ایزولاسیون",
   "آل آن فور": "ایمپلنت بیمار بی دندان",
   "allonfour": "ایمپلنت بیمار بی دندان",
+  "قالب گیری": "قالبگیری",
+  "isolation": "ایزولاسیون",
   "plak sefr": "پلاک صفر",
   "endocrown": "اندوکراون",
   "تراش ونیر": "تراش لمینیت",
@@ -24039,6 +24065,7 @@
   "بدون تراش": "درمان غیرتهاجمی",
   "کانتیلیور": "کانتی لیور",
   "cast core": "کور ریختگی",
+  "scan body": "اسکن بادی",
   "پرپ دندان": "تراش دندان",
   "روت کانال": "درمان ریشه",
   "پانورامیک": "رادیوگرافی تشخیصی",
@@ -24049,7 +24076,6 @@
   "اینتگریشن": "استئواینتگریشن",
   "تماس خلفی": "استاپ خلفی",
   "اسکروسمنت": "اسکرو سمنتد",
-  "scan body": "اسکن بادی",
   "embrasure": "امبراژور",
   "کاشت فوری": "ایمپلنت فوری",
   "lab error": "خطای لابراتوار",
@@ -24286,9 +24312,9 @@
   "صحت اسکن": "دقت اسکن",
   "اوردنچور": "اوردنچر",
   "اکسترکشن": "کشیدن دندان",
-  "ایزولیشن": "ایزولاسیون",
   "all on 4": "ایمپلنت بیمار بی دندان",
   "all on 6": "ایمپلنت بیمار بی دندان",
+  "ایزولیشن": "ایزولاسیون",
   "فول ماوس": "بازسازی کامل دهان",
   "آی دی اس": "ids",
   "تی ام دی": "tmd",
@@ -24301,6 +24327,7 @@
   "دی ام ای": "dme",
   "بار کلیپ": "اتچمنت اوردنچر",
   "bar clip": "اتچمنت اوردنچر",
+  "scanbody": "اسکن بادی",
   "بروکسیسم": "براکسیسم",
   "براکسیزم": "براکسیسم",
   "بروکسیزم": "براکسیسم",
@@ -24311,7 +24338,6 @@
   "فیت روکش": "فیت پروتز",
   "عدم نشست": "نشست ناقص",
   "وی دی او": "vdo",
-  "scanbody": "اسکن بادی",
   "کم تهاجم": "حداقل تهاجم",
   "عامل خطر": "ریسک فاکتور",
   "توتال اچ": "اچ اند رینس",
@@ -24598,8 +24624,8 @@
   "خط ختم": "فینیش لاین",
   "میلینگ": "cad cam",
   "cadcam": "cad cam",
-  "رابردم": "ایزولاسیون",
   "allon4": "ایمپلنت بیمار بی دندان",
+  "رابردم": "ایزولاسیون",
   "silane": "سایلان",
   "اورلای": "اورلی",
   "splint": "اسپلینت",
@@ -24798,11 +24824,11 @@
   "fpd": "بریج",
   "rnc": "سرامیک هیبرید",
   "rmc": "سرامیک هیبرید",
+  "rpd": "پروتز پارشیال",
   "rct": "کارآزمایی تصادفی",
   "پیک": "peek",
   "tmj": "مفصل فکی",
   "عقل": "مولر سوم",
-  "rpd": "پروتز پارشیال",
   "cdd": "پوسیدگی detector",
   "svc": "smart ونت روکش",
   "toc": "total occlusal convergence",
@@ -24817,6 +24843,7 @@
   "ریگ": "پترن رزین",
   "asc": "کانال پیچ زاویه دار",
   "درگ": "کشیدگی قالب",
+  "rsb": "reverse اسکن بادی",
   "رنچ": "آچار ایمپلنت",
   "vme": "رشد عمودی فک بالا",
   "gsc": "سرچ کنسول",
