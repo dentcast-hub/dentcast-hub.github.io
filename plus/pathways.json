@@ -402,11 +402,11 @@
     "premium": true,
     "steps": [
       {
-        "content_id": "sharehub/share-38",
+        "content_id": "episodes/episode-106-2",
         "milestone": false
       },
       {
-        "content_id": "episodes/episode-106-2",
+        "content_id": "sharehub/share-38",
         "milestone": false
       },
       {
@@ -1101,10 +1101,6 @@
     "premium": true,
     "steps": [
       {
-        "content_id": "sharehub/share-38",
-        "milestone": false
-      },
-      {
         "content_id": "episodes/episode-80",
         "milestone": false
       },
@@ -1170,6 +1166,10 @@
       },
       {
         "content_id": "episodes/episode-144-2",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-38",
         "milestone": false
       },
       {

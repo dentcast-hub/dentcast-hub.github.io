@@ -1,0 +1,29 @@
+{
+  "type": "sharehub",
+  "enforce": true,
+  "note": "sharehub/share-38 completion — mint Reverse Scan Body; reuse existing full-arch implant and scan-body tags instead of the three out-of-library spellings that failed --check.",
+  "concepts": [
+    {
+      "tag": "#Reverse_Scan_Body",
+      "domain": "clinical",
+      "definition": "روش دیجیتال برای بازسازی موقعیت اتصالات ایمپلنت از اسکن‌بادی‌هایی که به سطح داخلی یک پروتز موقت با فیت تأییدشده متصل شده‌اند، نه از اسکن مستقیم داخل‌دهانی.",
+      "use_when": "مطلب مشخصاً دربارهٔ فلسفه، مراحل، محدودیت‌ها یا مقایسهٔ Reverse Scan Body با اسکن‌بادی معمول / فوتوگرامتری باشد.",
+      "aliases": [
+        "reverse scan body",
+        "اسکن‌بادی معکوس",
+        "اسکن بادی معکوس",
+        "RSB"
+      ]
+    }
+  ],
+  "articles": {
+    "sharehub/share-38": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#Reverse_Scan_Body",
+      "#ایمپلنت_فول_آرچ",
+      "#دندانپزشکی_دیجیتال",
+      "#اسکن_بادی"
+    ]
+  }
+}
