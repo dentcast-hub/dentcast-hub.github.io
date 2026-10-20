@@ -33684,7 +33684,7 @@
               "evidence_quote": "A software program (Reviewer Manager 5; Cochrane Group) was used for the meta-analysis and to elaborate the funnel plots."
             }
           ],
-          "multiplier": 1.0
+          "multiplier": 1
         },
         "penalties": [
           {
@@ -33782,7 +33782,7 @@
               "evidence_quote": "Funnel plots were generated to assess the presence of publication bias."
             }
           ],
-          "multiplier": 1.0
+          "multiplier": 1
         },
         "penalties": [
           {
@@ -40737,6 +40737,65 @@
         "provisional": false,
         "fact_fa": "این متن تألیفی با امتیاز شفافیت ۱۵ از ۱۹ در باند E قرار می‌گیرد.",
         "interpretation_fa": "این تحلیل بالینی، شکست چند فیکسچر قدامی را نقطهٔ شروع بررسی توزیع نیرو و نقش پارسیل فک پایین قرار می‌دهد. ارزش آن در کنار هم گذاشتن کیفیت تماس‌ها و نحوهٔ استفاده از پروتز است؛ اثبات علت شکست به بررسی بالینی نیاز دارد و متن گزارشی از یک پژوهش نیست."
+      }
+    ],
+    "fidelity": [
+      null
+    ]
+  },
+  "sharehub/share-38": {
+    "scored_at": "2026-10-20",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Reverse Scan Body چیست و چرا به آن نیاز داریم؟",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "نبود لندمارک‌های ثابت، فاصله زیاد بین ایمپلنت‌ها و خطاهای احتمالی هنگام اتصال تصاویر متوالی اسکنر (Stitching) می‌توانند باعث شوند موقعیت ثبت‌شدهٔ ایمپلنت‌ها با موقعیت واقعی آن‌ها اختلاف داشته باشد.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "متن به پژوهش منتشرشده‌ای ارجاع نمی‌دهد و نسبت خود را با ادبیات علمی نیز مشخص نمی‌کند."
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "این روش را باید یک مسیر جایگزین برای انتقال دیجیتال موقعیت ایمپلنت‌ها دانست، نه روشی که در تمام شرایط الزاماً دقیق‌تر از اسکن داخل‌دهانی یا فوتوگرامتری باشد.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "متن خود را به‌صراحت تجربه یا دیدگاه شخصی معرفی نمی‌کند؛ ShareHub این امتیاز را از اعلان سطح بخش نمی‌گیرد."
+          }
+        ],
+        "des_score": 12,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این یادداشت در مسیر COMMENTARY امتیاز ۱۲ از ۱۰۰ و باند E گرفته است.",
+        "interpretation_fa": "متن زنجیرهٔ استدلال و محدودیت‌های روش را روشن می‌کند و از ادعای برتری همیشگی پرهیز دارد. بااین‌حال، نسبت خود را با شواهد منتشرشده مشخص نمی‌کند و به‌صراحت به‌عنوان تجربه یا دیدگاه شخصی برچسب نخورده است. این امتیاز شفافیت متن را می‌سنجد، نه دقت یا درستی بالینی آن."
       }
     ],
     "fidelity": [

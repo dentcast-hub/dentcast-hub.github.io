@@ -402,6 +402,10 @@
     "premium": true,
     "steps": [
       {
+        "content_id": "sharehub/share-38",
+        "milestone": false
+      },
+      {
         "content_id": "episodes/episode-106-2",
         "milestone": false
       },
@@ -1096,6 +1100,10 @@
     "description_fa": "نیمه‌ی پروتزیِ ایمپلنتولوژی — از کانکشن‌ها و اباتمنت‌ها و اسکن دیجیتال دقیق تا اکلوژنِ ایمپلنت، عیب‌یابی پیچ، مدیریت سمان و طراحی رستوریشن با کانسپت Zero Bone Loss؛ از پایه تا پیشرفته.",
     "premium": true,
     "steps": [
+      {
+        "content_id": "sharehub/share-38",
+        "milestone": false
+      },
       {
         "content_id": "episodes/episode-80",
         "milestone": false
