@@ -172,3 +172,14 @@ Pre-existing unrelated `.dentcast/work/share-38-phasef.txt` preserved and exclud
 ────────────────────────────────────────────────────
 95 passed, 0 warned, 0 failed  — publish is COMPLETE
 ```
+
+## Verified live delivery
+
+- Founder-authorized fast-forward merge into main: publication commit `69fea5651285d49c66dab47d8d7a3ad572ccda49`; feature ref and main were freshly observed at this exact commit.
+- Persian page, English mirror and WebP on both dentcast.org and dentcast.ir returned HTTP 200. Every response SHA256 equals its committed local file (six exact byte matches).
+- WebP SHA256: `92b6a2ecfadb3ba19ef44789221a2e1c6dc1891c4cf310e74187308267aa14f8`.
+- [GitHub Pages deployment](https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/39487398661): success.
+- [Live publishing contract tests](https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/39487400601): success.
+- [Article notification automation](https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/39487400358): success. This proves the workflow completed, not delivery to every subscriber.
+- Asset-version, Spot-version, NUL-byte and generated-index workflows: success. Independent committed-byte check also found zero NULs in all 22 changed text files after the local grep locale warning.
+- [Arvan deployment](https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/39487400370) was still finishing its repository-wide sync/header work at the six-file live check; the actual new publication files on .ir were already delivered byte-for-byte. No claim about unobserved later job status is made.

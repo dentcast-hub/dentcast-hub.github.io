@@ -67,7 +67,35 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "Founder confirmed only two pathways; no additional esthetic/fixed-pros membership",
         "Technical report records all applicable canonical outcomes and skips at .dentcast/publication-reports/chairside-42.md"
       ],
-      "delivery": [],
+      "delivery": [
+        {
+          "evidence": [
+            "Git remote main and publication feature both observed at 69fea5651285d49c66dab47d8d7a3ad572ccda49",
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/commit/69fea5651285d49c66dab47d8d7a3ad572ccda49"
+          ],
+          "scope": "Authorized feature delivery and fast-forward merge into main"
+        },
+        {
+          "evidence": [
+            "https://dentcast.org/chairside/chairside-42.html",
+            "https://dentcast.org/chairside/en/chairside-42.html",
+            "https://dentcast.org/chairside/chairside42.webp",
+            "https://dentcast.ir/chairside/chairside-42.html",
+            "https://dentcast.ir/chairside/en/chairside-42.html",
+            "https://dentcast.ir/chairside/chairside42.webp",
+            ".dentcast/publication-reports/chairside-42.md"
+          ],
+          "scope": "Live Persian page, English mirror and WebP on both .org and .ir; six HTTP 200 responses and SHA256 equality with committed bytes"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/39487398661",
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/39487400601",
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/39487400358"
+          ],
+          "scope": "Pages deployment, live contract checks, new-article notification and asset guards observed successful"
+        }
+      ],
       "inputs": [
         "User supplied Chairside text and clinical image in current session"
       ],
@@ -99,7 +127,8 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "recorded_at": "2026-10-20T19:49:50+00:00",
           "summary": "95 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
         },
-        "Final rendered Persian prose equals the approved lead followed by all 14 original paragraphs codepoint-for-codepoint"
+        "Final rendered Persian prose equals the approved lead followed by all 14 original paragraphs codepoint-for-codepoint",
+        "All six live publication files returned HTTP 200 and exact committed SHA256; remaining Arvan repository-wide header/sync run reported separately, not assumed successful"
       ]
     },
     "external_actions": [],
