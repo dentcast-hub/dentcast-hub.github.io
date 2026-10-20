@@ -165,3 +165,11 @@ Replaced exactly the four founder-approved Persian passages: milled composite-bl
 Six changed canonical Fidelity units (u13,u15,u16,u25,u41,u42) independently rechecked twice with gpt-6-luna medium, then rebased with the canonical tool against the last complete result. Both runs agree: five MATCHES and one NOT_IN_SOURCE; no altered/reversed claims, no tie-break needed. All unchanged unit verdicts retained and source DES55/C reused. FIDELITY100/HIGH before→100/HIGH after; full-text quotes independently checked.
 
 Stamp881e3c5ed0 unchanged (body-only edit); brain-driven builders not required because no source/index assignment changed. Final gate: **104 passed, 0 warned, 0 failed  — publish is COMPLETE**. Existing PDF Drive and cabinet links preserved.
+
+## Current committed evidence audit — 2026-10-20
+
+The initial-review tally above is historical. The current committed record in `plus/des-scores.json`, after the approved readability edits, contains **26 MATCHES, 9 NOT_IN_SOURCE and 10 NOT_A_CLAIM**, with zero ALTERED/REVERSED. The stored tally matches the 45 individual verdicts. Assessable=26; Fidelity=100/HIGH. Source DES remains 55/C. The initial 27/8 tally must not be presented as the final post-edit result.
+
+Read-only inspection of main `c717ad405cae0c5ec5a2ebee3f53bc08c7a71898` confirms the Persian and English pages, inverse language toggles, English noindex/zero-hreflang, one Persian head notification marker, the DES/Fidelity record, three generated flashcards, four generated binary quiz questions, two pathway memberships, content-index membership, up-board membership and Persian sitemap entry. No missing repository file was found among the Persian page's root-relative links/assets.
+
+No article, scientific record, approved wording or study assignment was changed by this audit. The last recorded article-specific Phase F result remains **104 passed, 0 warned, 0 failed — publish is COMPLETE** from the approved edit. It was not rerun in this audit: command execution was unavailable. Current main's successful Actions builders/deployments are separate evidence and do not replace a new article-specific Phase F run.
