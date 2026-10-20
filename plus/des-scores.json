@@ -40389,7 +40389,7 @@
           },
           {
             "id": "u13",
-            "claim_quote": "این رزین‌ها در بسیاری از تست‌ها مقاومت امیدوارکننده‌ای داشتند، اما در مجموع، خواص مکانیکی آن‌ها از بلوک‌های کامپوزیتی میل‌شونده پایین‌تر بود؛ بلوک‌هایی که رستوریشن با تراش دستگاه از داخلشان ساخته می‌شود.",
+            "claim_quote": "این رزین‌ها در بسیاری از تست‌ها مقاومت امیدوارکننده‌ای داشتند، اما در مجموع، خواص مکانیکی این رزین‌ها ضعیف‌تر از کامپوزیت‌هایی بود که به شکل بلوک آماده عرضه می‌شوند و دستگاه میلینگ با تراش آن‌ها، رستوریشن را می‌سازد.",
             "verdict": "MATCHES",
             "change_kind": null,
             "source_quote": "The mechanical performance of all 3D printing resins, particularly in terms of flexural strength, surface roughness, and Vickers hardness, remained below that of most computer-aided design and computer-aided manufacturing (CAD- CAM) composite resin blocks.",
@@ -40405,18 +40405,18 @@
           },
           {
             "id": "u15",
-            "claim_quote": "در تعدادی از مطالعات، ایجینگ (aging) ــ یعنی قرار دادن نمونه در معرض آب، تغییرات دما یا نیروهای تکراری برای شبیه‌سازی بخشی از شرایط دهان ــ عملکرد ماده را کاهش داده بود.",
+            "claim_quote": "در بعضی مطالعات، نمونه‌ها را در معرض آب، تغییرات دما یا نیروهای تکراری قرار داده بودند تا بخشی از شرایط دهان شبیه‌سازی شود؛ به این کار ایجینگ (aging) می‌گویند.",
             "verdict": "MATCHES",
             "change_kind": null,
-            "source_quote": "The mean values decreased after aging but only significantly for VSC (P=.034).",
+            "source_quote": "The 3D printed tested resins were subjected to various aging protocols to simulate intraoral conditions.",
             "source_ref": null
           },
           {
             "id": "u16",
-            "claim_quote": "شدت این تغییر بین محصولات متفاوت بود.",
+            "claim_quote": "بعد از ایجینگ، عملکرد بعضی مواد افت کرده بود، اما میزان این افت در همهٔ محصولات یکسان نبود.",
             "verdict": "MATCHES",
             "change_kind": null,
-            "source_quote": "The evaluation of 3D printed resins for definitive restorations revealed property variability.",
+            "source_quote": "Variations in aging protocols caused differing material degradation and affected resin performance.",
             "source_ref": null
           },
           {
@@ -40489,7 +40489,7 @@
           },
           {
             "id": "u25",
-            "claim_quote": "سختی سطحی این رزین‌ها در بسیاری از مقایسه‌ها پایین‌تر بود.",
+            "claim_quote": "سختی سطحی (surface hardness) این رزین‌ها در بسیاری از مقایسه‌ها پایین‌تر بود.",
             "verdict": "MATCHES",
             "change_kind": null,
             "source_quote": "The mechanical performance of all 3D printing resins, particularly in terms of flexural strength, surface roughness, and Vickers hardness, remained below that of most computer-aided design and computer-aided manufacturing (CAD- CAM) composite resin blocks.",
@@ -40624,19 +40624,20 @@
           },
           {
             "id": "u41",
-            "claim_quote": "این مواد برای رستوریشن‌های نهایی تک‌واحدی ظرفیت دارند، اما هنوز نمی‌توان عملکردشان را هم‌سطح مواد تثبیت‌شده دانست.",
+            "claim_quote": "این مواد برای ساخت رستوریشن‌های نهایی تک‌واحدی امیدوارکننده‌اند، اما هنوز شواهد کافی نداریم که بگوییم به اندازهٔ مواد رایجِ مورد استفاده برای رستوریشن نهایی قابل‌اعتمادند.",
             "verdict": "MATCHES",
             "change_kind": null,
-            "source_quote": "They were found to exhibit favorable mechanical and optical properties and potentially favorable biological properties for definitive single-unit restorations, but they remain mechanically and optically inferior to CAD-CAM composite resin blocks.",
+            "source_quote": "Further research is essential to ensure the clinical reliability of these materials.",
             "source_ref": null
           },
           {
             "id": "u42",
-            "claim_quote": "کیفیت ساخت، باند، پرداخت سطح و ثبات رنگ، همگی در قضاوت دربارهٔ آن‌ها مهم‌اند.",
-            "verdict": "MATCHES",
+            "claim_quote": "برای ارزیابی آن‌ها باید علاوه بر مقاومت، به کیفیت ساخت، باند، پرداخت سطح و حفظ رنگ در طول زمان هم توجه کنیم.",
+            "verdict": "NOT_IN_SOURCE",
             "change_kind": null,
-            "source_quote": "The evaluation of mechanical performance, biological behavior, and optical stability is crucial before their routine use in definitive restorations because variation in printing parameters and postprocessing protocols may impact mechanical performance.",
-            "source_ref": null
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The full text does not state this recommendation."
           },
           {
             "id": "u43",
@@ -40667,20 +40668,20 @@
           }
         ],
         "counts": {
-          "matches": 27,
+          "matches": 26,
           "altered": 0,
           "reversed": 0,
-          "not_in_source": 8,
+          "not_in_source": 9,
           "not_assessable": 0,
           "author_view": 0,
           "not_a_claim": 10
         },
-        "assessable": 27,
+        "assessable": 26,
         "fidelity_score": 100,
         "level": "HIGH",
         "provisional": false,
         "source_conclusion": "Comparison of optical properties in",
-        "fact_fa": "از ۲۷ ادعایی که منبع به آن پرداخته‌اند، ۲۷ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۸ جمله‌ی دیگر در منبع نیامده است.",
+        "fact_fa": "از ۲۶ ادعایی که منبع به آن پرداخته‌اند، ۲۶ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۹ جمله‌ی دیگر در منبع نیامده است.",
         "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]

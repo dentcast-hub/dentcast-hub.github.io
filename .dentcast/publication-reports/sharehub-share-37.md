@@ -157,3 +157,11 @@ No warned rows. The earlier sitemap failure came from checking while its generat
 ## Delivery boundary
 
 Founder authorized merge; PR936 merged as37af8c269ab111a58e60f5e929a6d4d71f72ed06. GitHub Pages deployment39389345718 completed successfully. Direct HTTP200 readback verified https://dentcast.org/sharehub/share-37.html and its requested aging spelling; the live cabinet catalog contains P2943, with original PDF Drive linkage preserved. No live-publication blocker remains. Final checkpoint cleanup follows the completion protocol.
+
+## Approved readability edit — 2026-10-20
+
+Replaced exactly the four founder-approved Persian passages: milled composite-block explanation, aging explanation, surface hardness English gloss, and the final clinical interpretation. Updated the corresponding four English paragraphs. All other paragraphs and all metadata retained; no PDF or cabinet change. Explicit founder authorization includes merge.
+
+Six changed canonical Fidelity units (u13,u15,u16,u25,u41,u42) independently rechecked twice with gpt-6-luna medium, then rebased with the canonical tool against the last complete result. Both runs agree: five MATCHES and one NOT_IN_SOURCE; no altered/reversed claims, no tie-break needed. All unchanged unit verdicts retained and source DES55/C reused. FIDELITY100/HIGH before→100/HIGH after; full-text quotes independently checked.
+
+Stamp881e3c5ed0 unchanged (body-only edit); brain-driven builders not required because no source/index assignment changed. Final gate: **104 passed, 0 warned, 0 failed  — publish is COMPLETE**. Existing PDF Drive and cabinet links preserved.
