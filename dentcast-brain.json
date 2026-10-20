@@ -17075,5 +17075,29 @@
       "secondary": [],
       "subtopic": "cad-cam"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-96",
+    "title": "شکست چند فیکسچر ایمپلنت؛ علت چه می‌تواند باشد؟",
+    "caption": "چند فیکسچر در ناحیهٔ قدام، مدت کوتاهی پس از درمان شکسته‌اند؛ بررسی علت را از کجا شروع کنیم؟",
+    "hashtags": [
+      "#اینسایت",
+      "#شکست_ایمپلنت",
+      "#پروتز_پارسیل",
+      "#اکلوژن"
+    ],
+    "keywords": [
+      "شکست فیکسچر",
+      "بارگذاری بیش‌ازحد",
+      "حمایت اکلوژنی خلفی",
+      "پارسیل انتهای آزاد"
+    ],
+    "page_url": "/insight/insight-96.html",
+    "pillar": {
+      "primary": "occlusion",
+      "secondary": [],
+      "subtopic": "occlusal-analysis-adjustment"
+    }
   }
 ]
