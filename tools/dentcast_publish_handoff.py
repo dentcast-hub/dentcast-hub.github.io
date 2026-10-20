@@ -1046,8 +1046,15 @@ def main(argv=None):
         import sys
         exc = sys.exc_info()[1]
         code = str(exc) if isinstance(exc, Blocked) else "INVALID_INPUT_OR_STATE"
+        action = "Resolve the named blocker in the current run; preserve work and review actual changes before reconciliation. Do not repeat an unchanged failed command or discover branches."
+        if code == "HANDOFF_MISSING":
+            action = "Restore the exact current-run receipt; initialize only if no publication action began. A missing receipt does not authorize branch discovery."
+        elif code.startswith("PR_"):
+            action = "Preserve local work, freshly read the exact PR and destination refs, and revise delivery for their actual state; do not write to the old branch automatically."
+        elif code.startswith("RECOVERY_REQUEST_REQUIRED"):
+            action = "Continue the active run without branch discovery; discovery requires an explicit user request identifying an incomplete publication."
         print(json.dumps({"status": "blocked", "error": code,
-                          "next_action": ("Restore the exact current-run receipt; initialize only if no publication action began. Missing receipts and checkpoint errors do not authorize branch discovery. Review the current-run diff before reconciliation; do not repeat the same failed command unchanged."),
+                          "next_action": action,
                           "publication_completed": False}), file=sys.stderr)
         return 2
 
